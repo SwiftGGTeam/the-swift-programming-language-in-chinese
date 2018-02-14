@@ -9,7 +9,7 @@
 > 翻译+校对：[DianQK](https://github.com/DianQK)
 
 > 2.1
-> 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18  
+> 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18
 > 
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-13
@@ -187,8 +187,8 @@ ovenLight.next()
 
 实例方法是被某个类型的实例调用的方法。你也可以定义在类型本身上调用的方法，这种方法就叫做*类型方法*。在方法的`func`关键字之前加上关键字`static`，来指定类型方法。类还可以用关键字`class`来允许子类重写父类的方法实现。
 
-> 注意  
-> 在 Objective-C 中，你只能为 Objective-C 的类类型（classes）定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法。每一个类型方法都被它所支持的类型显式包含。  
+> 注意
+> 在 Objective-C 中，你只能为 Objective-C 的类类型（classes）定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法。每一个类型方法都被它所支持的类型显式包含。
 
 类型方法和实例方法一样用点语法调用。但是，你是在类型上调用这个方法，而不是在实例上调用。下面是如何在`SomeClass`类上调用类型方法的例子：
 

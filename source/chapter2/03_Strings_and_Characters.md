@@ -16,7 +16,7 @@
 > 校对：[SketchK](https://github.com/SketchK)
 
 > 3.0
-> 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13   
+> 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
 > 3.0.1, shanks, 2016-11-11
  
 > 4.0
@@ -41,15 +41,15 @@
 
 *字符串*是例如`"hello, world"`，`"albatross"`这样的有序的`Character`（字符）类型的值的集合。通过`String`类型来表示。
 一个`String`的内容可以用许多方式读取，包括作为一个`Character`值的集合。 
-     
+
 Swift 的`String`和`Character`类型提供了快速和兼容 Unicode 的方式供你的代码使用。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
-字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。  
-   
+字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。
+
 尽管语法简易，但`String`类型是一种快速、现代化的字符串实现。
 每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式（representations）。
 
-> 注意：    
-> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。Foundation 也可以对`String`进行扩展，暴露在`NSString`中定义的方法。 这意味着，如果你在`String`中调用这些`NSString`的方法，将不用进行转换。  
+> 注意：
+> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。Foundation 也可以对`String`进行扩展，暴露在`NSString`中定义的方法。 这意味着，如果你在`String`中调用这些`NSString`的方法，将不用进行转换。
 > 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 4)](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)*。
 
 <a name="string_literals"></a>
@@ -182,7 +182,7 @@ constantString += " and another Highlander"
 // 这会报告一个编译错误 (compile-time error) - 常量字符串不可以被修改。
 ```
 
-> 注意：   
+> 注意：
 在 Objective-C 和 Cocoa 中，您需要通过选择两个不同的类(`NSString`和`NSMutableString`)来指定字符串是否可以被修改。
 
 <a name="strings_are_value_types"></a>
@@ -259,7 +259,7 @@ welcome.append(exclamationMark)
 // welcome 现在等于 "hello there!"
 ```
 
-> 注意：  
+> 注意：
 您不能将一个字符串或者字符添加到一个已经存在的字符变量上，因为字符变量只能包含一个字符。
 
 如果你需要使用多行字符串字面量来拼接字符串，并且你需要字符串每一行都以换行符结尾，包括最后一行：
@@ -310,7 +310,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 该表达式计算`Double(multiplier) * 2.5`的值并将结果 (`7.5`) 插入到字符串中。
 在这个例子中，表达式写为`\(Double(multiplier) * 2.5)`并包含在字符串字面量中。
 
-> 注意：     
+> 注意：
 > 插值字符串中写在括号中的表达式不能包含非转义反斜杠 (`\`)，并且不能包含回车或换行符。不过，插值字符串可以包含其他字面量。
 
 <a name="unicode"></a>
@@ -337,7 +337,7 @@ Unicode 标量是对应字符或者修饰符的唯一的21位数字，例如`U+0
 ### 可扩展的字形群集
 
 每一个 Swift 的`Character`类型代表一个*可扩展的字形群*。
-一个可扩展的字形群是一个或多个可生成人类可读的字符 Unicode 标量的有序排列。   
+一个可扩展的字形群是一个或多个可生成人类可读的字符 Unicode 标量的有序排列。
 举个例子，字母`é`可以用单一的 Unicode 标量`é`(`LATIN SMALL LETTER E WITH ACUTE`, 或者`U+00E9`)来表示。然而一个标准的字母`e`(`LATIN SMALL LETTER E`或者`U+0065`) 加上一个急促重音(`COMBINING ACTUE ACCENT`)的标量(`U+0301`)，这样一对标量就表示了同样的字母`é`。
 这个急促重音的标量形象的将`e`转换成了`é`。
 
@@ -400,7 +400,7 @@ print("the number of characters in \(word) is \(word.count)")
 // 打印输出 "the number of characters in café is 4"
 ```
 
-> 注意：   
+> 注意：
 > 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意`count`属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
 >
 > 另外需要注意的是通过`count`属性返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。
@@ -452,7 +452,7 @@ for index in greeting.indices {
 // 打印输出 "G u t e n   T a g ! "
 ```
 
-> 注意：  
+> 注意：
 > 您可以使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法在任意一个确认的并遵循 `Collection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set`中。 
 
 <a name="inserting_and_removing"></a>
@@ -556,7 +556,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 // 打印 "These two characters are not equivalent"
 ```
 
-> 注意：   
+> 注意：
 > 在 Swift 中，字符串和字符并不区分地域(not locale-sensitive)。
 
 <a name="prefix_and_suffix_equality"></a>
@@ -611,7 +611,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 // 打印输出 "6 mansion scenes; 2 cell scenes"
 ```
 
-> 注意：   
+> 注意：
 > `hasPrefix(_:)`和`hasSuffix(_:)`方法都是在每个字符串中逐字符比较其可扩展的字符群集是否标准相等，详细描述在[字符串/字符相等](#string_and_character_equality)。
 
 <a name="unicode_representations_of_strings"></a>

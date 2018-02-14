@@ -15,7 +15,7 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
 > 
 > 3.0
-> 翻译+校对：[mmoaay](https://github.com/mmoaay) 2016-09-20   
+> 翻译+校对：[mmoaay](https://github.com/mmoaay) 2016-09-20
 > 3.0.1：shanks，2016-11-13
 
 本页内容包括：
@@ -307,7 +307,7 @@ signedOverflow = signedOverflow &- 1
 
 如果想查看完整的 Swift 运算符优先级和结合性规则，请参考[表达式](../chapter3/04_Expressions.html)。如果想查看 Swift 标准库提供所有的运算符，请查看 [Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
-> 注意  
+> 注意
 > 相对 C 语言和 Objective-C 来说，Swift 的运算符优先级和结合性规则更加简洁和可预测。但是，这也意味着它们相较于 C 语言及其衍生语言并不是完全一致的。在对现有的代码进行移植的时候，要注意确保运算符的行为仍然符合你的预期。
 
 <a name="operator_functions"></a>
@@ -396,7 +396,7 @@ original += vectorToAdd
 // original 的值现在为 (4.0, 6.0)
 ```
 
-> 注意  
+> 注意
 > 不能对默认的赋值运算符（`=`）进行重载。只有组合赋值运算符可以被重载。同样地，也无法对三目条件运算符 （`a ? b : c`） 进行重载。
 
 <a name="equivalence_operators"></a>
@@ -481,5 +481,5 @@ let plusMinusVector = firstVector +- secondVector
 
 这个运算符把两个向量的 `x` 值相加，同时用第一个向量的 `y` 值减去第二个向量的 `y` 值。因为它本质上是属于“相加型”运算符，所以将它放置 `+` 和 `-` 等默认的中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](#operator_declaration)
 
-> 注意  
+> 注意
 > 当定义前缀与后缀运算符的时候，我们并没有指定优先级。然而，如果对同一个值同时使用前缀与后缀运算符，则后缀运算符会先参与运算。

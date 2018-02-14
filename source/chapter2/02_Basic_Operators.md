@@ -12,7 +12,7 @@
 > 校对：[shanks](http://codebuild.me)
 
 > 2.2
-> 翻译+校对：[Cee](https://github.com/Cee) 校对：[SketchK](https://github.com/SketchK)，2016-05-11    
+> 翻译+校对：[Cee](https://github.com/Cee) 校对：[SketchK](https://github.com/SketchK)，2016-05-11
 > 3.0.1，shanks，2016-11-11
 
 > 4.0
@@ -107,7 +107,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 *求余运算符*（`a % b`）是计算 `b` 的多少倍刚刚好可以容入`a`，返回多出来的那部分（余数）。
 
-> 注意：  
+> 注意：
 求余运算符（`%`）在其他语言也叫*取模运算符*。但是严格说来，我们看该运算符对负数的操作结果，「求余」比「取模」更合适些。
 
 我们来谈谈取余是怎么回事，计算 `9 % 4`，你先计算出 `4` 的多少倍会刚好可以容入 `9` 中：
@@ -182,7 +182,7 @@ a += 2
 
 表达式 `a += 2` 是 `a = a + 2` 的简写，一个组合加运算就是把加法运算和赋值运算组合成进一个运算符里，同时完成两个运算任务。
 
-> 注意：  
+> 注意：
 复合赋值运算没有返回值，`let b = a += 2`这类代码是错误。这不同于上面提到的自增和自减运算符。
 
 更多 Swift 标准库运算符的信息，请看[运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
@@ -244,7 +244,7 @@ if name == "world" {
 ("blue", false) < ("purple", true) // 错误，因为 < 不能比较布尔类型
 ```
 
->注意：    
+>注意：
 Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
 
 <a name="ternary_conditional_operator"></a>

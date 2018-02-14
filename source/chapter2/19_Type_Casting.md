@@ -12,7 +12,7 @@
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 > 
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16  
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
 > 3.0.1，shanks，2016-11-13
 
 > 4.0
@@ -153,7 +153,7 @@ for item in library {
 
 若向下转型成功，然后 `movie` 的属性将用于打印一个 `Movie` 实例的描述，包括它的导演的名字 `director`。相似的原理被用来检测 `Song` 实例，当 `Song` 被找到时则打印它的描述（包含 `artist` 的名字）。
 
-> 注意  
+> 注意
 > 转换没有真的改变实例或它的值。根本的实例保持不变；只是简单地把它作为它被转换成的类型来使用。
 
 <a name="type_casting_for_any_and_anyobject"></a>
@@ -221,7 +221,7 @@ for thing in things {
 // Hello, Michael
 ```
 
-> 注意   
+> 注意
 > `Any`类型可以表示所有类型的值，包括可选类型。Swift 会在你用`Any`类型来表示一个可选值的时候，给你一个警告。如果你确实想使用`Any`类型来承载可选值，你可以使用`as`操作符显式转换为`Any`，如下所示：
 > 
 ```swift
