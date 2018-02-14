@@ -5,21 +5,14 @@
 > 翻译：[superkam](https://github.com/superkam)
 > 校对：[numbbbbb](https://github.com/numbbbbb)
 
-
-
 > 2.0
 > 翻译+校对：[buginux](https://github.com/buginux)
-
-
 
 > 2.1
 > 翻译：[mmoaay](https://github.com/mmoaay)
 
-
-
 > 2.2
 > 翻译+校对：[星夜暮晨](https://github.com/semperidem)，2016-04-06
-
 
 本页包含内容：
 

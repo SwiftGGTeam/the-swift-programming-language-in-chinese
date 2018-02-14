@@ -16,7 +16,7 @@
 > 翻译+校对：[SketchK](https://github.com/SketchK) 
 > 
 > 3.0
-> 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13   
+> 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
 > 3.0.1，shanks，2016-11-13
 
 本页包含内容：
@@ -189,7 +189,7 @@ print("And another one: \(generator.random())")
 
 如果你在协议中定义了一个实例方法，该方法会改变遵循该协议的类型的实例，那么在定义协议时需要在方法前加 `mutating` 关键字。这使得结构体和枚举能够遵循此协议并满足此方法要求。
 
-> 注意  
+> 注意
 > 实现协议中的 `mutating` 方法时，若是类类型，则不用写 `mutating` 关键字。而对于结构体和枚举，则必须写 `mutating` 关键字。
 
 如下所示，`Togglable` 协议只要求实现一个名为 `toggle` 的实例方法。根据名称的暗示，`toggle()` 方法将改变实例属性，从而切换遵循该协议类型的实例的状态。
@@ -250,7 +250,7 @@ class SomeClass: SomeProtocol {
 
 关于 `required` 构造器的更多内容，请参考[必要构造器](./14_Initialization.html#required_initializers)。
 
-> 注意  
+> 注意
 > 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见[防止重写](./13_Inheritance.html#preventing_overrides)。
 
 如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，那么该构造器的实现需要同时标注 `required` 和 `override` 修饰符：
@@ -292,7 +292,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 * 作为常量、变量或属性的类型
 * 作为数组、字典或其他容器中的元素类型
 
-> 注意  
+> 注意
 > 协议是一种类型，因此协议类型的名称应与其他类型（例如 `Int`，`Double`，`String`）的写法相同，使用大写字母开头的驼峰式写法，例如（`FullyNamed` 和 `RandomNumberGenerator`）。
 
 下面是将协议作为类型使用的例子：
@@ -450,7 +450,7 @@ game.play()
 
 即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在[扩展](./21_Extensions.html)章节中查看。
 
-> 注意  
+> 注意
 > 通过扩展令已有类型遵循并符合协议时，该类型的所有实例也会随之获得协议中定义的各项功能。
 
 例如下面这个 `TextRepresentable` 协议，任何想要通过文本表示一些内容的类型都可以实现该协议。这些想要表示的内容可以是实例本身的描述，也可以是实例当前状态的文本描述：
@@ -517,7 +517,7 @@ print(somethingTextRepresentable.textualDescription)
 // 打印 “A hamster named Simon”
 ```
 
-> 注意  
+> 注意
 > 即使满足了协议的所有要求，类型也不会自动遵循协议，必须显式地遵循协议。
 
 <a name="collections_of_protocol_types"></a>
@@ -611,7 +611,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 
 在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型遵循。如果尝试让结构体或枚举类型遵循该协议，则会导致编译错误。
 
-> 注意  
+> 注意
 > 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
 
 <a name="protocol_composition"></a>
@@ -758,7 +758,6 @@ for object in objects {
 
 使用可选要求时（例如，可选的方法或者属性），它们的类型会自动变成可选的。比如，一个类型为 `(Int) -> String` 的方法会变成 `((Int) -> String)?`。需要注意的是整个函数类型是可选的，而不是函数的返回值。
 
-
 协议中的可选要求可通过可选链式调用来使用，因为遵循协议的类型可能没有实现这些可选要求。类似 `someOptionalMethod?(someArgument)` 这样，你可以在可选方法名称后加上 `?` 来调用可选方法。详细内容可在[可选链式调用](./17_Optional_Chaining.html)章节中查看。
 
 下面的例子定义了一个名为 `Counter` 的用于整数计数的类，它使用外部的数据源来提供每次的增量。数据源由 `CounterDataSource` 协议定义，包含两个可选要求：
@@ -772,7 +771,7 @@ for object in objects {
 
 `CounterDataSource` 协议定义了一个可选方法 `increment(forCount:)` 和一个可选属性 `fiexdIncrement`，它们使用了不同的方法来从数据源中获取适当的增量值。
 
-> 注意  
+> 注意
 > 严格来讲，`CounterDataSource` 协议中的方法和属性都是可选的，因此遵循协议的类可以不实现这些要求，尽管技术上允许这样做，不过最好不要这样写。
 
 `Counter` 类含有 `CounterDataSource?` 类型的可选属性 `dataSource`，如下所示：
@@ -796,7 +795,6 @@ class Counter {
 `increment()` 方法首先试图使用 `increment(forCount:)` 方法来得到每次的增量。`increment()` 方法使用可选链式调用来尝试调用 `increment(forCount:)`，并将当前的 `count` 值作为参数传入。
 
 这里使用了两层可选链式调用。首先，由于 `dataSource` 可能为 `nil`，因此在 `dataSource` 后边加上了 `?`，以此表明只在 `dataSource` 非空时才去调用 `increment(forCount:)` 方法。其次，即使 `dataSource` 存在，也无法保证其是否实现了 `increment(forCount:)` 方法，因为这个方法是可选的。因此，`increment(forCount:)` 方法同样使用可选链式调用进行调用，只有在该方法被实现的情况下才能调用它，所以在 `increment(forCount:)` 方法后边也加上了 `?`。
-
 
 调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` 类型。虽然在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于这一点的更多信息，请查阅[连接多层可选链式调用](./17_Optional_Chaining)
 
@@ -893,7 +891,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 
 可以通过协议扩展来为协议要求的属性、方法以及下标提供默认的实现。如果遵循协议的类型为这些要求提供了自己的实现，那么这些自定义实现将会替代扩展中的默认实现被使用。
 
-> 注意  
+> 注意
 > 通过协议扩展为协议要求提供的默认实现和可选的协议要求不同。虽然在这两种情况下，遵循协议的类型都无需自己实现这些要求，但是通过扩展提供的默认实现可以直接调用，而无需使用可选链式调用。
 
 例如，`PrettyTextRepresentable` 协议继承自 `TextRepresentable` 协议，可以为其提供一个默认的 `prettyTextualDescription` 属性，只是简单地返回 `textualDescription` 属性的值：
@@ -940,5 +938,5 @@ print(hamsters.textualDescription)
 // 打印 “[A hamster named Murray, A hamster named Morgan, A hamster named Maurice]”
 ```
 
-> 注意  
+> 注意
 > 如果多个协议扩展都为同一个协议要求提供了默认实现，而遵循协议的类型又同时满足这些协议扩展的限制条件，那么将会使用限制条件最多的那个协议扩展提供的默认实现。

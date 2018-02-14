@@ -26,12 +26,11 @@
 - [类和结构体的选择](#choosing_between_classes_and_structures)
 - [字符串、数组、和字典类型的赋值与复制行为](#assignment_and_copy_behavior_for_strings_arrays_and_dictionaries)
 
-
 *类*和*结构体*是人们构建代码所用的一种通用且灵活的构造体。我们可以使用完全相同的语法规则来为类和结构体定义属性（常量、变量）和添加方法，从而扩展类和结构体的功能。
 
 与其他编程语言所不同的是，Swift 并不要求你为自定义类和结构去创建独立的接口和实现文件。你所要做的是在一个单一文件中定义一个类或者结构体，系统将会自动生成面向其它代码的外部接口。
 
-> 注意  
+> 注意
 > 通常一个*类*的实例被称为*对象*。然而在 Swift 中，类和结构体的关系要比在其他语言中更加的密切，本章中所讨论的大部分功能都可以用在类和结构体上。因此，我们会主要使用*实例*。
 
 <a name="comparing_classes_and_structures"></a>
@@ -57,7 +56,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 更多信息请参见[继承](./13_Inheritance.html)，[类型转换](./19_Type_Casting.html)，[析构过程](./15_Deinitialization.html)，和[自动引用计数](./16_Automatic_Reference_Counting.html)。
 
-> 注意  
+> 注意
 > 结构体总是通过被复制的方式在代码中传递，不使用引用计数。
 
 <a name="definition_syntax"></a>
@@ -74,7 +73,7 @@ struct SomeStructure {
 }
 ```
 
-> 注意  
+> 注意
 > 在你每次定义一个新类或者结构体的时候，实际上你是定义了一个新的 Swift 类型。因此请使用`UpperCamelCase`这种方式来命名（如`SomeClass`和`SomeStructure`等），以便符合标准 Swift 类型的大写命名风格（如`String`，`Int`和`Bool`）。相反的，请使用`lowerCamelCase`这种方式为属性和方法命名（如`framerate`和`incrementCount`），以便和类型名区分。
 
 以下是定义结构体和定义类的示例：
@@ -137,7 +136,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 // 打印 "The width of someVideoMode is now 1280"
 ```
 
-> 注意  
+> 注意
 > 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新为整个`resolution`属性设置新值。
 
 <a name="memberwise_initializers_for_structure_types"></a>
@@ -305,5 +304,5 @@ Swift 中，许多基本类型，诸如`String`，`Array`和`Dictionary`类型�
 
 Objective-C 中`NSString`，`NSArray`和`NSDictionary`类型均以类的形式实现，而并非结构体。它们在被赋值或者被传入函数或方法时，不会发生值拷贝，而是传递现有实例的引用。
 
-> 注意  
+> 注意
 > 以上是对字符串、数组、字典的“拷贝”行为的描述。在你的代码中，拷贝行为看起来似乎总会发生。然而，Swift 在幕后只在绝对必要时才执行实际的拷贝。Swift 管理所有的值拷贝以确保性能最优化，所以你没必要去回避赋值来保证性能最优化。

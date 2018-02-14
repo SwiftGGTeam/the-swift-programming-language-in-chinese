@@ -579,9 +579,6 @@ Swift定义了`Never`类型，它表示函数或者方法不会返回给它的�
 > <a name="default-argument-clause"></a>
 > *默认参数子句* → **=** [*表达式*](04_Expressions.md#expression)  
 
-
-
-
 <a name="enumeration_declaration"></a>
 ## 枚举声明
 
@@ -1211,7 +1208,6 @@ postfix operator 运算符名称 {}
 <a name="infix-operator-group"></a>
 > *中缀运算符组* → [*优先级组名称*](#precedence-group-name)
 
-
 <a name="precedence_group_declaration_modifiers"></a>
 
 ## 优先级组声明
@@ -1262,7 +1258,6 @@ Swift定义了大量的优先级组来与标准库的运算符配合使用,例�
 > *多优先级组名称* → [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name)
 <a name="precedence-group-name"></a>
 > *优先级组名称* →[*标识符*](02_Lexical_Structure.md#identifier) 
-
 
 ## 声明修饰符
 

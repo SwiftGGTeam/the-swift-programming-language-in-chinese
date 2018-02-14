@@ -10,7 +10,6 @@
 - [Mutation（修改）在安全中扮演的角色](#act-in=mutation)
 - [如何选择类型](#how-to-choose)
 
-
 ### Swift里面的类型分为两种：
  
 * **值类型(Value Types)**：每个实例都保留了一分独有的数据拷贝，一般以结构体 `（struct）`、`枚举（enum）` 或者`元组（tuple）`的形式出现。

@@ -30,8 +30,7 @@
 - [函数类型](#Function_Types)
 - [嵌套函数](#Nested_Functions)
 
-
-*函数*是一段完成特定任务的独立代码片段。你可以通过给函数命名来标识某个函数的功能，这个名字可以被用来在需要的时候"调用"这个函数来完成它的任务。   
+*函数*是一段完成特定任务的独立代码片段。你可以通过给函数命名来标识某个函数的功能，这个名字可以被用来在需要的时候"调用"这个函数来完成它的任务。
 
 Swift 统一的函数语法非常的灵活，可以用来表示任何函数，包括从最简单的没有参数名字的 C 风格函数，到复杂的带局部和外部参数名的 Objective-C 风格函数。参数可以提供默认值，以简化函数调用。参数也可以既当做传入参数，也当做传出参数，也就是说，一旦函数执行结束，传入的参数值将被修改。
 
@@ -44,9 +43,7 @@ Swift 统一的函数语法非常的灵活，可以用来表示任何函数，�
 
 每个函数有个*函数名*，用来描述函数执行的任务。要使用一个函数时，用函数名来“调用”这个函数，并传给它匹配的输入值（称作 *实参* ）。函数的实参必须与函数参数表里参数的顺序一致。
 
-
 下面例子中的函数的名字是`greet(person:)`，之所以叫这个名字，是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `person` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
-
 
 ```swift
 func greet(person: String) -> String {
@@ -68,9 +65,8 @@ print(greet(person: "Brian"))
 
 调用 `greet(person:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet(person: "Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以`greet ` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
 
->注意   
+>注意
 `print(_:separator:terminator:)` 函数的第一个参数并没有设置一个标签，而其他的参数因为已经有了默认值，因此是可选的。关于这些函数语法上的变化详见下方关于 函数参数标签和参数名 以及 默认参数值。
-
 
 在 `greet(person:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时，把对 `personName` 的问候消息赋值给了 `greeting` 。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
 
@@ -142,9 +138,8 @@ greet(person: "Dave")
 
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
 
->注意  
+>注意
 严格上来说，虽然没有返回值被定义，`greet(person:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的`Void`值。它其实是一个空的元组（tuple），没有任何元素，可以写成()。
-
 
 被调用时，一个函数的返回值可以被忽略：
 
@@ -164,9 +159,8 @@ printWithoutCounting(string: "hello, world")
 
 第一个函数 `printAndCount(string:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting(string:)`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
->注意:  
+>注意:
 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误（compile-time error）。
-
 
 <a name="functions_with_multiple_return_values"></a>
 ### 多重返回值函数
@@ -212,11 +206,9 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 >注意
 可选元组类型如 `(Int, Int)?` 与元组包含可选类型如 `(Int?, Int?)` 是不同的.可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
 
-
 前面的 `minMax(array:)` 函数返回了一个包含两个 `Int` 值的元组。但是函数不会对传入的数组执行任何安全检查，如果 `array` 参数是一个空数组，如上定义的 `minMax(array:)` 在试图访问 `array[0]` 时会触发一个运行时错误(runtime error)。
 
 为了安全地处理这个“空数组”问题，将 `minMax(array:)` 函数改写为使用可选元组返回类型，并且当数组为空时返回 `nil`：
-
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
@@ -242,7 +234,6 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 }
 // 打印 "min is -6 and max is 109"
 ```
-
 
 <a name="Function_Argument_Labels_and_Parameter_Names"></a>
 ## 函数参数标签和参数名称
@@ -333,7 +324,7 @@ arithmeticMean(3, 8.25, 18.75)
 // 返回 10.0, 是这 3 个数的平均数。
 ```
 
->注意：   
+>注意：
 一个函数最多只能拥有一个可变参数。
 
 <a name="in_out_parameters"></a>
@@ -347,7 +338,6 @@ arithmeticMean(3, 8.25, 18.75)
 
 >注意
 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。
-
 
 下例中，`swapTwoInts(_:_:)` 函数有两个分别叫做 `a` 和 `b` 的输入输出参数：
 
@@ -373,9 +363,8 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 从上面这个例子中，我们可以看到 `someInt` 和 `anotherInt` 的原始值在 `swapTwoInts(_:_:)` 函数中被修改，尽管它们的定义在函数体外。
 
->注意：  
+>注意：
 输入输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
-
 
 <a name="Function_Types"></a>
 ## 函数类型
@@ -430,7 +419,6 @@ print("Result: \(mathFunction(2, 3))")
 ```
 
 有相同匹配类型的不同函数可以被赋值给同一个变量，就像非函数类型的变量一样：
-
 
 ```swift
 mathFunction = multiplyTwoInts

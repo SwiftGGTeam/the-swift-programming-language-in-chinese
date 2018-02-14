@@ -86,7 +86,6 @@ enum OCBool{
     case ocFalse
 }
 
-
 extension OCBool: BooleanLiteralConvertible{
 static func convertFromBooleanLiteral( value: Bool) ->OCBool{
     return value ? ocTrue : ocFalse
@@ -142,7 +141,6 @@ enum OCBool{
     case ocFalse
 }
 
-
 extension OCBool: BooleanLiteralConvertible{
 static func convertFromBooleanLiteral( value: Bool) ->OCBool{
     return value ? ocTrue : ocFalse
@@ -162,7 +160,6 @@ extension OCBool: LogicValue{
         return boolValue
     }
 }
-
 
 var isSuccess:OCBool = true
 
@@ -208,7 +205,6 @@ extension OCBool{
 
 var mmResult: Bool = true
 var ocResult:OCBool = OCBool(mmResult)
-
 
 if ocResult {
     println( "老码没钱，郭美美请你吃火锅！")
@@ -280,7 +276,6 @@ func &= (inout left:OCBool, right:OCBool ){
     left = left & right
 }
 
-
 var isHasMoney:OCBool = true
 var isHasWife:OCBool = true
 var isHasHealty:OCBool = true
@@ -300,7 +295,5 @@ if (isHasMoney | isHasHealty) & isHasHealty{
 ```
 
 好了，到这里就到这里了，窗外的雷声叫醒了老码，现在应该去吃饭了，以上老码给大家展示了如果制造一个自己的类型，记得老码的示例是在Xcode6 Beta4下测试的，至于Beta5的改变还没有涉及，小伙伴们要好生练习，以后各种自定类型都是基于这个思想。还有这个章节不是老码的原创，老码认真的阅读了苹果的官方博客，且自己的练习总结，如果小伙伴们费了吃奶的劲还是看不懂，请找度娘谷歌，还是看不懂请到老码官方微博：http://weibo.com/u/5241713117咆哮。
-
-
 
 本文由翻译自Apple Swift Blog ：https://developer.apple.com/swift/blog/?id=8

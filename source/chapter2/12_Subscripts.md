@@ -9,15 +9,14 @@
 > 翻译+校对：[shanks](http://codebuild.me)
 
 > 2.1
-> 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)  
+> 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)
 
 > 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13  
+> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
 > 3.0.1，shanks，2016-11-13
  
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
 
 本页包含内容：
 
@@ -74,8 +73,8 @@ print("six times three is \(threeTimesTable[6])")
 
 你可以通过下标访问`threeTimesTable`实例，例如上面演示的`threeTimesTable[6]`。这条语句查询了`3`的乘法表中的第六个元素，返回`3`的`6`倍即`18`。
 
-> 注意  
-> `TimesTable`例子基于一个固定的数学公式，对`threeTimesTable[someIndex]`进行赋值操作并不合适，因此下标定义为只读的。  
+> 注意
+> `TimesTable`例子基于一个固定的数学公式，对`threeTimesTable[someIndex]`进行赋值操作并不合适，因此下标定义为只读的。
 
 <a name="subscript_usage"></a>
 ## 下标用法
@@ -93,8 +92,8 @@ numberOfLegs["bird"] = 2
 
 更多关于`Dictionary`下标的信息请参考[读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
 
-> 注意  
-> Swift 的`Dictionary`类型的下标接受并返回可选类型的值。上例中的`numberOfLegs`字典通过下标返回的是一个`Int?`或者说“可选的int”。`Dictionary`类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为`nil`即可。  
+> 注意
+> Swift 的`Dictionary`类型的下标接受并返回可选类型的值。上例中的`numberOfLegs`字典通过下标返回的是一个`Int?`或者说“可选的int”。`Dictionary`类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为`nil`即可。
 
 <a name="subscript_options"></a>
 ## 下标选项

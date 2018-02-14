@@ -17,11 +17,11 @@
 > 校对：[SketchK](https://github.com/SketchK)
 
 > 3.0
-> 翻译：[Realank](https://github.com/realank) 2016-09-13  
+> 翻译：[Realank](https://github.com/realank) 2016-09-13
 > 3.0.1，shanks，2016-11-12
 
 > 3.1
-> 翻译：[qhd](https://github.com/qhd) 2017-04-17  
+> 翻译：[qhd](https://github.com/qhd) 2017-04-17
 
 > 4.0
 > 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
@@ -46,7 +46,7 @@ Swift 的`switch`语句比 C 语言中更加强大。case 还可以匹配很多�
 
 你可以使用 `for-in` 循环来遍历一个集合中的所有元素，例如数组中的元素、范围内的数字或者字符串中的字符。
 
-以下例子使用 `for-in` 遍历一个数组所有元素：  
+以下例子使用 `for-in` 遍历一个数组所有元素：
 
 ```swift
 let names = ["Anna", "Alex", "Brian", "Jack"]
@@ -59,7 +59,7 @@ for name in names {
 // Hello, Jack!
 ```
 
-你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键声明会为 `animalName` 常量，字典的值会声明为 `legCount` 常量：  
+你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键声明会为 `animalName` 常量，字典的值会声明为 `legCount` 常量：
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -71,9 +71,9 @@ for (animalName, legCount) in numberOfLegs {
 // cats have 4 legs
 ```
 
-字典的内容理论上是无序的，遍历元素时的顺序是无法确定的。将元素插入字典的顺序并不会决定它们被遍历的顺序。关于数组和字典的细节，参见[集合类型](./04_Collection_Types.html)。  
+字典的内容理论上是无序的，遍历元素时的顺序是无法确定的。将元素插入字典的顺序并不会决定它们被遍历的顺序。关于数组和字典的细节，参见[集合类型](./04_Collection_Types.html)。
 
-`for-in` 循环还可以使用数字范围。下面的例子用来输出乘法表的一部分内容：  
+`for-in` 循环还可以使用数字范围。下面的例子用来输出乘法表的一部分内容：
 
 ```swift
 for index in 1...5 {
@@ -86,11 +86,11 @@ for index in 1...5 {
 // 5 times 5 is 25
 ```
 
-例子中用来进行遍历的元素是使用闭区间操作符（`...`）表示的从 `1` 到 `5` 的数字区间。`index` 被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前 `index` 值所对应的乘 5 乘法表的结果。该语句执行后，`index` 的值被更新为闭区间中的第二个数字（`2`），之后 `print(_:separator:terminator:)` 函数会再执行一次。整个过程会进行到闭区间结尾为止。  
+例子中用来进行遍历的元素是使用闭区间操作符（`...`）表示的从 `1` 到 `5` 的数字区间。`index` 被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前 `index` 值所对应的乘 5 乘法表的结果。该语句执行后，`index` 的值被更新为闭区间中的第二个数字（`2`），之后 `print(_:separator:terminator:)` 函数会再执行一次。整个过程会进行到闭区间结尾为止。
 
-上面的例子中，`index` 是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index` 在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用 `let` 关键字声明。  
+上面的例子中，`index` 是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index` 在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用 `let` 关键字声明。
 
-如果你不需要区间序列内每一项的值，你可以使用下划线（`_`）替代变量名来忽略这个值：  
+如果你不需要区间序列内每一项的值，你可以使用下划线（`_`）替代变量名来忽略这个值：
 
 ```swift
 let base = 3
@@ -103,9 +103,9 @@ print("\(base) to the power of \(power) is \(answer)")
 // 输出 "3 to the power of 10 is 59049"
 ```
 
-这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（ `3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。  
+这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（ `3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。
 
-在某些情况下，你可能不想使用闭区间，包括两个端点。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。  
+在某些情况下，你可能不想使用闭区间，包括两个端点。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。
 
 ```
 let minutes = 60
@@ -114,7 +114,7 @@ for tickMark in 0..<minutes {
 }
 ```
 
-一些用户可能在其UI中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。  
+一些用户可能在其UI中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。
 
 ```
 let minuteInterval = 5
@@ -123,7 +123,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 }
 ```
 
-可以在闭区间使用 `stride(from:through:by:)` 起到同样作用：  
+可以在闭区间使用 `stride(from:through:by:)` 起到同样作用：
 
 ```
 let hours = 12
@@ -149,7 +149,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 下面是 `while` 循环的一般格式：
 
 ```
-while condition {  
+while condition {
 	statements
 }
 ```
@@ -204,20 +204,19 @@ print("Game over!")
 
 掷完骰子后，玩家向前移动`diceRoll`个方格，如果玩家移动超过了第 25 个方格，这个时候游戏将会结束，为了应对这种情况，代码会首先判断`square`的值是否小于`board`的`count`属性，只有小于才会在`board[square]`上增加`square`，来向前或向后移动（遇到了梯子或者蛇）。
 
-> 注意：   
+> 注意：
 > 如果没有这个检测（`square < board.count`），`board[square]`可能会越界访问`board`数组，导致错误。
 
 当本轮`while`循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为`false`，此时游戏结束。
 
 `while` 循环比较适合本例中的这种情况，因为在 `while` 循环开始时，我们并不知道游戏要跑多久，只有在达成指定条件时循环才会结束。
 
-
 <a name="repeat_while"></a>
 ### Repeat-While
 
 `while`循环的另外一种形式是`repeat-while`，它和`while`的区别是在判断循环条件之前，先执行一次循环的代码块。然后重复循环直到条件为`false`。
 
-> 注意：   
+> 注意：
 > Swift语言的`repeat-while`循环和其他语言中的`do-while`循环是类似的。
 
 下面是 `repeat-while`循环的一般格式：
@@ -344,7 +343,6 @@ default:
 }
 ```
 
-
 `switch`语句由*多个 case* 构成，每个由`case`关键字开始。为了匹配某些更特定的值，Swift 提供了几种方法来进行更复杂的模式匹配，这些模式将在本节的稍后部分提到。
 
 与`if`语句类似，每一个 case 都是代码执行的一条分支。`switch`语句会决定哪一条分支应该被执行，这个流程被称作根据给定的值*切换(switching)*。
@@ -352,7 +350,6 @@ default:
 `switch`语句必须是完备的。这就是说，每一个可能的值都必须至少有一个 case 分支与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认（`default`）分支来涵盖其它所有没有对应的值，这个默认分支必须在`switch`语句的最后面。
 
 下面的例子使用`switch`语句来匹配一个名为`someCharacter`的小写字符：
-
 
 ```swift
 let someCharacter: Character = "z"
@@ -369,7 +366,6 @@ default:
 
 在这个例子中，第一个 case 分支用于匹配第一个英文字母`a`，第二个 case 分支用于匹配最后一个字母`z`。
 因为`switch`语句必须有一个case分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以switch语句使用`default`分支来匹配除了`a`和`z`外的所有值，这个分支保证了swith语句的完备性。
-
 
 <a name="no_implicit_fallthrough"></a>
 #### 不存在隐式的贯穿
@@ -440,8 +436,6 @@ print("There are \(naturalCount) \(countedThings).")
 
 在上例中，`approximateCount`在一个`switch`声明中被评估。每一个`case`都与之进行比较。因为`approximateCount`落在了 12 到 100 的区间，所以`naturalCount`等于`"dozens of"`值，并且此后的执行跳出了`switch`语句。
 
-
-
 <a name="tuples"></a>
 #### 元组
 
@@ -471,7 +465,6 @@ default:
 在上面的例子中，`switch`语句会判断某个点是否是原点(0, 0)，是否在红色的x轴上，是否在橘黄色的y轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
 
 不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点(0, 0)会首先匹配`case (0, 0)`，因此剩下的能够匹配的分支都会被忽视掉。
-
 
 <a name="value_bindings"></a>
 #### 值绑定（Value Bindings）
@@ -567,7 +560,6 @@ default:
 ```
 
 上面的case有两个模式：`(let distance, 0)`匹配了在x轴上的值，`(0, let distance)`匹配了在y轴上的值。两个模式都绑定了`distance`，并且`distance`在两种模式下，都是整型——这意味着分支体内的代码，只要case匹配，都可以获取到`distance`值
-
 
 <a name="control_transfer_statements"></a>
 ## 控制转移语句
@@ -751,7 +743,7 @@ print("Game over!")
 - 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环，开始下一次循环。
 - 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动 `diceRoll` 个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。接着本次循环结束，控制跳转到`while`循环体的条件判断语句处，再决定是否需要继续执行下次循环。
 
->注意：   
+>注意：
 如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
 同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
@@ -759,7 +751,6 @@ print("Game over!")
 ## 提前退出
 
 像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`从句，如果条件不为真则执行`else`从句中的代码。
-
 
 ```swift
 func greet(person: [String: String]) {

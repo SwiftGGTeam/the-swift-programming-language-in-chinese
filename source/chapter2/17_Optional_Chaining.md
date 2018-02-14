@@ -10,10 +10,10 @@
 > 翻译+校对：[lyojo](https://github.com/lyojo)
 
 > 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-31  
->  
+> 校对：[shanks](http://codebuild.me)，2015-10-31
+>
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15   
+> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
 > 3.0.1，shanks，2016-11-13
 
 > 4.0
@@ -31,7 +31,7 @@
 
 *可选链式调用*是一种可以在当前值可能为`nil`的可选值上请求和调用属性、方法及下标的方法。如果可选值有值，那么调用就会成功；如果可选值是`nil`，那么调用将返回`nil`。多个调用可以连接在一起形成一个调用链，如果其中任何一个节点为`nil`，整个调用链都会失败，即返回`nil`。
 
-> 注意  
+> 注意
 Swift 的可选链式调用和 Objective-C 中向`nil`发送消息有些相像，但是 Swift 的可选链式调用可以应用于任意类型，并且能检查调用是否成功。
 
 <a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a>
@@ -57,7 +57,7 @@ class Residence {
 }
 ```
 
-`Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。  
+`Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。
 
 假如你创建了一个新的`Person`实例,它的`residence`属性由于是是可选型而将初始化为`nil`,在下面的代码中,`john`有一个值为`nil`的`residence`属性：
 
@@ -273,7 +273,7 @@ if (john.residence?.address = someAddress) != nil {
 
 通过可选链式调用，我们可以在一个可选值上访问下标，并且判断下标调用是否成功。
 
-> 注意  
+> 注意
 通过可选链式调用访问可选值的下标时，应该将问号放在下标方括号的前面而不是后面。可选链式调用的问号一般直接跟在可选表达式的后面。
 
 下面这个例子用下标访问`john.residence`属性存储的`Residence`实例的`rooms`数组中的第一个房间的名称，因为`john.residence`为`nil`，所以下标调用失败了：
@@ -404,5 +404,5 @@ if let beginsWithThe =
 // 打印 “John's building identifier begins with "The".”
 ```
 
-> 注意  
+> 注意
 在上面的例子中，在方法的圆括号后面加上问号是因为你要在`buildingIdentifier()`方法的可选返回值上进行可选链式调用，而不是方法本身。

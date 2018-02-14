@@ -134,7 +134,6 @@ while 条件 {
 <a name="optional-binding-condition"></a>
 > *可选绑定条件* →  **let** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer) | **var**  [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer)    
 
-
 <a name="repeat-while_statements"></a>
 ### Repeat-While 语句
 
