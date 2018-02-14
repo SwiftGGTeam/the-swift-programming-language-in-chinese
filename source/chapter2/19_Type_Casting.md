@@ -25,7 +25,6 @@
 - [向下转型](#downcasting)
 - [`Any` 和 `AnyObject` 的类型转换](#type_casting_for_any_and_anyobject)
 
-
 _类型转换_ 可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。

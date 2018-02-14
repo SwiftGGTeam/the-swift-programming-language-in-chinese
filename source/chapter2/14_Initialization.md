@@ -34,7 +34,6 @@
 - [必要构造器](#required_initializers)
 - [通过闭包或函数设置属性的默认值](#setting_a_default_property_value_with_a_closure_or_function)
 
-
 *构造过程*是使用类、结构体或枚举类型的实例之前的准备过程。在新实例可用前必须执行这个过程，具体操作包括设置实例中每个存储型属性的初始值和执行其他必须的设置或初始化工作。
 
 通过定义*构造器*来实现构造过程，就像用来创建特定类型新实例的特殊方法。与 Objective-C 中的构造器不同，Swift 的构造器无需返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化。
@@ -569,7 +568,6 @@ print("Bicycle: \(bicycle.description)")
 > 注意  
 子类可以在初始化时修改继承来的变量属性，但是不能修改继承来的常量属性。
 
-
 <a name="automatic_initializer_inheritance"></a>
 ### 构造器的自动继承
 
@@ -863,7 +861,6 @@ if unknownUnit == nil {
 可失败构造器也可以代理到其它的非可失败构造器。通过这种方式，你可以增加一个可能的失败状态到现有的构造过程中。
 
 下面这个例子，定义了一个名为`CartItem`的`Product`类的子类。这个类建立了一个在线购物车中的物品的模型，它有一个名为`quantity`的常量存储型属性，并确保该属性的值至少为`1`：
-
 
 ```swift
 class Product {

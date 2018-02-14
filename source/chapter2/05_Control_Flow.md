@@ -211,7 +211,6 @@ print("Game over!")
 
 `while` 循环比较适合本例中的这种情况，因为在 `while` 循环开始时，我们并不知道游戏要跑多久，只有在达成指定条件时循环才会结束。
 
-
 <a name="repeat_while"></a>
 ### Repeat-While
 
@@ -344,7 +343,6 @@ default:
 }
 ```
 
-
 `switch`语句由*多个 case* 构成，每个由`case`关键字开始。为了匹配某些更特定的值，Swift 提供了几种方法来进行更复杂的模式匹配，这些模式将在本节的稍后部分提到。
 
 与`if`语句类似，每一个 case 都是代码执行的一条分支。`switch`语句会决定哪一条分支应该被执行，这个流程被称作根据给定的值*切换(switching)*。
@@ -352,7 +350,6 @@ default:
 `switch`语句必须是完备的。这就是说，每一个可能的值都必须至少有一个 case 分支与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认（`default`）分支来涵盖其它所有没有对应的值，这个默认分支必须在`switch`语句的最后面。
 
 下面的例子使用`switch`语句来匹配一个名为`someCharacter`的小写字符：
-
 
 ```swift
 let someCharacter: Character = "z"
@@ -369,7 +366,6 @@ default:
 
 在这个例子中，第一个 case 分支用于匹配第一个英文字母`a`，第二个 case 分支用于匹配最后一个字母`z`。
 因为`switch`语句必须有一个case分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以switch语句使用`default`分支来匹配除了`a`和`z`外的所有值，这个分支保证了swith语句的完备性。
-
 
 <a name="no_implicit_fallthrough"></a>
 #### 不存在隐式的贯穿
@@ -440,8 +436,6 @@ print("There are \(naturalCount) \(countedThings).")
 
 在上例中，`approximateCount`在一个`switch`声明中被评估。每一个`case`都与之进行比较。因为`approximateCount`落在了 12 到 100 的区间，所以`naturalCount`等于`"dozens of"`值，并且此后的执行跳出了`switch`语句。
 
-
-
 <a name="tuples"></a>
 #### 元组
 
@@ -471,7 +465,6 @@ default:
 在上面的例子中，`switch`语句会判断某个点是否是原点(0, 0)，是否在红色的x轴上，是否在橘黄色的y轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
 
 不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点(0, 0)会首先匹配`case (0, 0)`，因此剩下的能够匹配的分支都会被忽视掉。
-
 
 <a name="value_bindings"></a>
 #### 值绑定（Value Bindings）
@@ -567,7 +560,6 @@ default:
 ```
 
 上面的case有两个模式：`(let distance, 0)`匹配了在x轴上的值，`(0, let distance)`匹配了在y轴上的值。两个模式都绑定了`distance`，并且`distance`在两种模式下，都是整型——这意味着分支体内的代码，只要case匹配，都可以获取到`distance`值
-
 
 <a name="control_transfer_statements"></a>
 ## 控制转移语句
@@ -759,7 +751,6 @@ print("Game over!")
 ## 提前退出
 
 像`if`语句一样，`guard`的执行取决于一个表达式的布尔值。我们可以使用`guard`语句来要求条件必须为真时，以执行`guard`语句后的代码。不同于`if`语句，一个`guard`语句总是有一个`else`从句，如果条件不为真则执行`else`从句中的代码。
-
 
 ```swift
 func greet(person: [String: String]) {

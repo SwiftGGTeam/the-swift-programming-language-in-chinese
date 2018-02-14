@@ -579,7 +579,6 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 > *选择器表达式* → __#selector__ **(** [*getter:表达式*](#expression) **)**  
 > *选择器表达式* → __#selector__ **(** [*setter:表达式*](#expression) **)**
 
-
 <a name="postfix_expressions"></a>
 ## 后缀表达式
 

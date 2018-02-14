@@ -80,7 +80,6 @@
 </tbody>
 </table>
 
-
 <a name="swift_3_0"></a>
 ### Swift 3.0 更新
 
@@ -123,7 +122,6 @@
         </li>
  		  <li>
             更新<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID179">泛型</a>章节中<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID192">泛型 Where 语句</a>一节和<a href="https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/doc/uid/TP40014097-CH37-ID406">泛型形参和实参</a>章节，现在泛型的 where 语句写在一个声明的最后。
-
 
         </li>
         <li>
@@ -453,7 +451,6 @@
 </tbody>
 </table>
 
-
 <a name="swift_1_2"></a>
 ### Swift 1.2 更新
 <a name="xcode6_3"></a>
@@ -538,7 +535,6 @@
   </tr>
 </tbody>
 </table>
-
 
 <a name="swift_1_1"></a>
 ### Swift 1.1 更新

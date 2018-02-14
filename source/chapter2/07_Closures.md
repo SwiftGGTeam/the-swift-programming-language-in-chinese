@@ -54,7 +54,6 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 <a name="closure_expressions"></a>
 ## 闭包表达式
 
-
 [嵌套函数](./06_Functions.html#nested_function)是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。当然，有时候编写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在你处理一些函数并需要将另外一些函数作为该函数的参数时。
 
 *闭包表达式*是一种利用简洁语法构建内联闭包的方式。闭包表达式提供了一些语法优化，使得撰写闭包变得简单明了。下面闭包表达式的例子通过使用几次迭代展示了 `sorted(by:)` 方法定义和语法优化的方式。每一次迭代都用更简洁的方式描述了相同的功能。
@@ -359,7 +358,6 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
 `someFunctionWithEscapingClosure(_:)` 函数接受一个闭包作为参数，该闭包被添加到一个函数外定义的数组中。如果你不将这个参数标记为 `@escaping`，就会得到一个编译错误。
 
 将一个闭包标记为 `@escaping` 意味着你必须在闭包中显式地引用 `self`。比如说，在下面的代码中，传递到 `someFunctionWithEscapingClosure(_:)` 中的闭包是一个逃逸闭包，这意味着它需要显式地引用 `self`。相对的，传递到 `someFunctionWithNonescapingClosure(_:)` 中的闭包是一个非逃逸闭包，这意味着它可以隐式引用 `self`。
-
 
 ```swift
 func someFunctionWithNonescapingClosure(closure: () -> Void) {

@@ -18,7 +18,6 @@
 > 校对：[shanks](http://codebuild.me) ，2016-10-09   
 > 3.0.1，shanks，2016-11-12
 
-
 本页包含内容：
 
 - [集合的可变性](#mutability_of_collections)
@@ -197,7 +196,6 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 
 > 注意：  
 不可以用下标访问的形式去在数组尾部添加新项。
-
 
 调用数组的`insert(_:at:)`方法来在某个具体索引值之前添加数据项：
 

@@ -73,7 +73,6 @@ counter.reset()
 
 函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[指定外部参数名](./06_Functions.html#specifying_external_parameter_names)。方法参数也一样，因为方法就是函数，只是这个函数与某个类型相关联了。
 
-
 <a name="the_self_property"></a>
 ### self 属性
 

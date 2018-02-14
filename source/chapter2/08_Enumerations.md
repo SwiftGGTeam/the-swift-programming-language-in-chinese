@@ -15,7 +15,6 @@
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-13
 
-
 > 3.0
 > 翻译+校对：[shanks](https://codebuild.me) 2016-09-24   
 > 3.0.1，shanks，2016-11-12
@@ -220,7 +219,6 @@ enum ASCIIControlCharacter: Character {
 
 枚举类型`ASCIIControlCharacter`的原始值类型被定义为`Character`，并设置了一些比较常见的 ASCII 控制字符。`Character`的描述详见[字符串和字符](./03_Strings_and_Characters.html)部分。
 
-
 原始值可以是字符串，字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
 > 注意    
@@ -303,7 +301,6 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 
 <a name="recursive_enumerations"></a>
 ## 递归枚举
-
 
 *递归枚举*是一种枚举类型，它有一个或多个枚举成员使用该枚举类型的实例作为关联值。使用递归枚举时，编译器会插入一个间接层。你可以在枚举成员前加上`indirect`来表示该成员可递归。  
 

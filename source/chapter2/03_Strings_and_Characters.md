@@ -52,7 +52,6 @@ Swift 的`String`和`Character`类型提供了快速和兼容 Unicode 的方式�
 > Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。Foundation 也可以对`String`进行扩展，暴露在`NSString`中定义的方法。 这意味着，如果你在`String`中调用这些`NSString`的方法，将不用进行转换。  
 > 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 4)](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)*。
 
-
 <a name="string_literals"></a>
 ## 字符串字面量
 
@@ -168,7 +167,6 @@ if emptyString.isEmpty {
 // 打印输出："Nothing to see here"
 ```
 
-
 <a name="string_mutability"></a>
 ## 字符串可变性
 
@@ -187,7 +185,6 @@ constantString += " and another Highlander"
 > 注意：   
 在 Objective-C 和 Cocoa 中，您需要通过选择两个不同的类(`NSString`和`NSMutableString`)来指定字符串是否可以被修改。
 
-
 <a name="strings_are_value_types"></a>
 ## 字符串是值类型
 
@@ -201,7 +198,6 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 您可以确信传递的字符串不会被修改，除非你自己去修改它。
 
 在实际编译时，Swift 编译器会优化字符串的使用，使实际的复制只发生在绝对必要的情况下，这意味着您将字符串作为值类型的同时可以获得极高的性能。
-
 
 <a name="working_with_characters"></a>
 ## 使用字符
@@ -317,14 +313,12 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 > 注意：     
 > 插值字符串中写在括号中的表达式不能包含非转义反斜杠 (`\`)，并且不能包含回车或换行符。不过，插值字符串可以包含其他字面量。
 
-
 <a name="unicode"></a>
 ## Unicode
 
 *Unicode*是一个国际标准，用于文本的编码和表示。
 它使您可以用标准格式表示来自任意语言几乎所有的字符，并能够对文本文件或网页这样的外部资源中的字符进行读写操作。
 Swift 的`String`和`Character`类型是完全兼容 Unicode 标准的。
-
 
 <a name="unicode_scalars"></a>
 ### Unicode 标量
@@ -338,7 +332,6 @@ Unicode 标量是对应字符或者修饰符的唯一的21位数字，例如`U+0
 注意不是所有的21位 Unicode 标量都代表一个字符，因为有一些标量是留作未来分配的。已经代表一个典型字符的标量都有自己的名字，例如上面例子中的`LATIN SMALL LETTER A`和`FRONT-FACING BABY CHICK`。
 
 <a name="special_characters_in_string_literals"></a>
-
 
 <a name="extended_grapheme_clusters"></a>
 ### 可扩展的字形群集
@@ -361,7 +354,6 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e 后面加上  ́
 例如，来自朝鲜语字母表的韩语音节能表示为组合或分解的有序排列。
 在 Swift 都会表示为同一个单一的`Character`值：
 
-
 ```swift
 let precomposed: Character = "\u{D55C}"                  // 한
 let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
@@ -376,7 +368,6 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 ```
 
 地域性指示符号的 Unicode 标量可以组合成一个单一的`Character`值，例如`REGIONAL INDICATOR SYMBOL LETTER U`(`U+1F1FA`)和`REGIONAL INDICATOR SYMBOL LETTER S`(`U+1F1F8`)：
-
 
 ```swift
 let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
@@ -413,7 +404,6 @@ print("the number of characters in \(word) is \(word.count)")
 > 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意`count`属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
 >
 > 另外需要注意的是通过`count`属性返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。`NSString`的`length`属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。
-
 
 <a name="accessing_and_modifying_a_string"></a>
 ## 访问和修改字符串
@@ -569,7 +559,6 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 > 注意：   
 > 在 Swift 中，字符串和字符并不区分地域(not locale-sensitive)。
 
-
 <a name="prefix_and_suffix_equality"></a>
 ### 前缀/后缀相等
 
@@ -624,7 +613,6 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 
 > 注意：   
 > `hasPrefix(_:)`和`hasSuffix(_:)`方法都是在每个字符串中逐字符比较其可扩展的字符群集是否标准相等，详细描述在[字符串/字符相等](#string_and_character_equality)。
-
 
 <a name="unicode_representations_of_strings"></a>
 ## 字符串的 Unicode 表示形式
@@ -690,7 +678,6 @@ let dogString = "Dog‼🐶"
  </tr>
 </table>
 
-
 ```swift
 for codeUnit in dogString.utf8 {
     print("\(codeUnit) ", terminator: "")
@@ -702,7 +689,6 @@ print("")
 上面的例子中，前三个10进制`codeUnit`值 (`68`, `111`, `103`) 代表了字符`D`、`o`和 `g`，它们的 UTF-8 表示与 ASCII 表示相同。
 接下来的三个10进制`codeUnit`值 (`226`, `128`, `188`) 是`DOUBLE EXCLAMATION MARK`的3字节 UTF-8 表示。
 最后的四个`codeUnit`值 (`240`, `159`, `144`, `182`) 是`DOG FACE`的4字节 UTF-8 表示。
-
 
 <a name="UTF-16_representation"></a>
 ### UTF-16 表示
@@ -739,7 +725,6 @@ print("")
  </tr>
 </table>
 
-
 ```swift
 for codeUnit in dogString.utf16 {
     print("\(codeUnit) ", terminator: "")
@@ -763,7 +748,6 @@ print("")
 `UnicodeScalar`是21位的 Unicode 代码点。
 
 每一个`UnicodeScalar`拥有一个`value`属性，可以返回对应的21位数值，用`UInt32`来表示：
-
 
 <table style='text-align:center'>
  <tr height="77">
@@ -791,7 +775,6 @@ print("")
   <td>4</td>
  </tr>
 </table>
-
 
 ```swift
 for scalar in dogString.unicodeScalars {

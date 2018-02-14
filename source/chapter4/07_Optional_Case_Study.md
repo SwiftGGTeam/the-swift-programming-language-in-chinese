@@ -13,7 +13,6 @@
 
 可选类型是Swift中新引入的，功能很强大。在这篇博文里讨论的，是在Swift里，如何通过可选类型来保证强类型的安全性。作为例子，我们来创建一个Objective-C API的Swift版本，但实际上Swift本身并不需要这样的API。
 
-
 <a name="#add-function"></a>
 #### 为Dictionary增加objectsForKeys函数
 
@@ -30,7 +29,6 @@ extension Dictionary{
 ```
 
 以上就是我们实现的Swift版本，这个和Objective-C版本有很大区别。在Swift中，因为其强类型的原因限制了返回的结果数组只能包含单一类型的元素，所以我们不能放```NSNull```在字符串数组中，但是，Swift有更好的选择，我们可以返回一个可选类型数据。我们所有的值都封包在可选类型中，而不是```NSNull```, 我们只用```nil```就可以了。
-
 
 ```swift
 extension Dictionary{

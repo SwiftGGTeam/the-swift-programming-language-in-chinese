@@ -101,7 +101,6 @@
  
 > *else从句(Clause)* → **else** [*代码块*](../chapter3/05_Declarations.html#code_block) | **else** [*if语句*](../chapter3/10_Statements.html#if_statement)  
 
-
 <!-- -->
 >Guard 语句语法
 >*guard语句* → **guard** [*条件从句*](TODO) **else** [*代码块*](TODO) 
@@ -197,8 +196,6 @@
 >*catch-clauses* → [*catch-clause*](TODO) [*catch-clauses*](TODO) _可选_
 
 >*catch-clauses* → **catch** [*模式(pattern)*](TODO) _可选_  [*where-clause*](TODO) _可选_ [*代码块(code-block)*](TODO) _可选_
-
-
 
 <a name="generic_parameters_and_arguments"></a>
 ## 泛型参数
@@ -508,7 +505,6 @@
 > 可选模式语法
 > *可选模式* → [*识别符模式*](TODO) **?**
 
-
 <!-- -->
 
 > 类型转换模式语法  
@@ -554,7 +550,6 @@
 > try表达式语法
 > *try-operator* → **try** | **try !**  
 
-
 <!-- -->
 
 > 二元表达式语法  
@@ -584,8 +579,6 @@
 > *类型转换运算符* → **as ?** [*类型*](../chapter3/03_Types.html#type) 
 
 > *类型转换运算符* → **as !** [*类型*](../chapter3/03_Types.html#type) 
-
-
 
 <!-- -->
 

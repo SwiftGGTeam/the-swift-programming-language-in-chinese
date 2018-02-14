@@ -46,7 +46,6 @@ Swift 支持 C 语言中的全部位运算符，接下来会一一介绍。
 
 *按位取反运算符（`~`）*可以对一个数值的全部比特位进行取反：
 
-
 ![Art/bitwiseNOT_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitwiseNOT_2x.png)
 
 按位取反运算符是一个前缀运算符，需要直接放在运算的数之前，并且它们之间不能添加任何空格：
@@ -397,7 +396,6 @@ original += vectorToAdd
 // original 的值现在为 (4.0, 6.0)
 ```
 
-
 > 注意  
 > 不能对默认的赋值运算符（`=`）进行重载。只有组合赋值运算符可以被重载。同样地，也无法对三目条件运算符 （`a ? b : c`） 进行重载。
 
@@ -452,7 +450,6 @@ extension Vector2D {
         return vector
     }
 }
-
 
 var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
 let afterDoubling = +++toBeDoubled

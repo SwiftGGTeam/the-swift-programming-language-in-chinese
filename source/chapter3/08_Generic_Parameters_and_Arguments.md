@@ -36,7 +36,6 @@
 
 约束用于指明该类型形参继承自某个类或者符合某个协议或协议组合。例如，在下面的泛型函数中，泛型形参 `T: Comparable` 表示任何用于替代类型形参 `T` 的类型实参必须满足 `Comparable` 协议。
 
-
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
     if x < y {
@@ -93,7 +92,6 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 > *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)  
 <a name="same-type-requirement"></a>
 > *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)  
-
 
 <a name="generic_argument"></a>
 ## 泛型实参子句

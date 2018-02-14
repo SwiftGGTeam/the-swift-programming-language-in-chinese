@@ -5,15 +5,12 @@
 > 翻译：[shinyzhu](https://github.com/shinyzhu)
 > 校对：[pp-prog](https://github.com/pp-prog) [yangsiy](https://github.com/yangsiy)
 
-
 > 2.0
 > 翻译+校对：[yangsiy](https://github.com/yangsiy)
-
 
 > 2.1
 > 翻译：[buginux](https://github.com/buginux)
 > 校对：[shanks](http://codebuild.me)，2015-10-29
-
 
 > 2.2
 > 翻译：[saitjr](https://github.com/saitjr)，2016-04-11，[SketchK](https://github.com/SketchK) 2016-05-13
@@ -239,7 +236,6 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 *属性观察器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，即使新值和当前值相同的时候也不例外。
 
 可以为除了延迟存储属性之外的其他存储属性添加属性观察器，也可以通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。你不必为非重写的计算属性添加属性观察器，因为可以通过它的 setter 直接监控和响应值的变化。 属性重写请参考[重写](./13_Inheritance.html#overriding)。  
-
 
 可以为属性添加如下的一个或全部观察器：
 

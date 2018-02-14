@@ -19,7 +19,6 @@
 > 
 > 3.1 校对: [SketchK](https://github.com/SketchK) 2017-04-08
 
-
 > 4.0
 > 翻译+校对：[muhlenxi](https://github.com/muhlenxi) 2017-09-26
 
@@ -522,7 +521,6 @@ let sideLength = optionalSquare?.sideLength
 <a name="enumerations_and_structure"></a>
 ## 枚举和结构体
 
-
 使用 `enum` 来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。
 
 ```swift
@@ -629,7 +627,6 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 
 > 练习：  
 > 给 `Card` 添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
-
 
 <a name="protocols_and_extensions"></a>
 ## 协议和扩展

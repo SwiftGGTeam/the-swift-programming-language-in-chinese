@@ -285,7 +285,6 @@ extension Int {
 
 现在，这个嵌套枚举可以和任意 `Int` 值一起使用了：
 
-
 ```swift
 func printIntegerKinds(_ numbers: [Int]) {
     for number in numbers {
