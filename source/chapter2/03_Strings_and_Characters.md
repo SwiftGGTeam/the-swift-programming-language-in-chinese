@@ -133,9 +133,9 @@ It also ends with a line break.
 ```swift
 let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
 // "Imageination is more important than knowledge" - Enistein
-let dollarSign = "\u{24}"             // $, Unicode 标量 U+0024
-let blackHeart = "\u{2665}"           // ♥, Unicode 标量 U+2665
-let sparklingHeart = "\u{1F496}"      // 💖, Unicode 标量 U+1F496
+let dollarSign = "\u{24}"             // $，Unicode 标量 U+0024
+let blackHeart = "\u{2665}"           // ♥，Unicode 标量 U+2665
+let sparklingHeart = "\u{1F496}"      // 💖，Unicode 标量 U+1F496
 ```
 
 由于多行字符串字面量使用了三个双引号，而不是一个，所以你可以在多行字符串字面量里直接使用双引号（`"`）而不必加上转义符（`\`）。要在多行字符串字面量中使用 `"""` 的话，就需要使用至少一个转义符（`\`）：
@@ -394,7 +394,7 @@ var word = "cafe"
 print("the number of characters in \(word) is \(word.count)")
 // 打印输出 "the number of characters in cafe is 4"
 
-word += "\u{301}"    // 拼接一个重音, U+0301
+word += "\u{301}"    // 拼接一个重音，U+0301
 
 print("the number of characters in \(word) is \(word.count)")
 // 打印输出 "the number of characters in café is 4"

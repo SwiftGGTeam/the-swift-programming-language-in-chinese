@@ -692,5 +692,5 @@ extension Container {
 - 下标使用的单一的参数，`indices`，必须是 `Indices` 的实例。
 - 泛型 `where` 子句要求 Sequence（Indices）的迭代器，其所有的元素都是 `Int` 类型。这样就能确保在序列（Sequence）中的索引和容器(Container)里面的索引类型是一致的。
 
-综合一下，这些约束意味着，传入到 `indices` 下标，是一个整型的序列.
+综合一下，这些约束意味着，传入到 `indices` 下标，是一个整型的序列。
 (译者：原来的 `Container` 协议，`subscript` 必须是 `Int` 型的，扩展中新的 `subscript`，允许下标是一个的序列，而非单一的值。)

@@ -116,7 +116,7 @@ class MyClass {
 
 `discardableResult`
 
-该特性用于的函数或方法声明,以抑制编译器中 函数或方法的返回值被调而没有使用其结果的警告。
+该特性用于的函数或方法声明，以抑制编译器中 函数或方法的返回值被调而没有使用其结果的警告。
 
 `GKInspectable`
 
@@ -153,7 +153,7 @@ var enabled: Bool {
 
 在类上使用该特性表示该类是应用程序委托类，使用该特性与调用 `NSApplicationMain`(\_:_:) 函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
-如果你不想使用这个特性，可以提供一个 main.swift 文件，并在代码**顶层**调用`NSApplicationMain`(\_:_:) 函数,如下所示:
+如果你不想使用这个特性，可以提供一个 main.swift 文件，并在代码**顶层**调用`NSApplicationMain`(\_:_:) 函数，如下所示:
 
 ```swift
 import AppKit
@@ -171,7 +171,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 `testable`
 
-在导入允许测试的编译模块时，该特性用于修饰 `import` 声明，这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用`internal`或者`public`访问级别修饰符标记的类和类成员,就像它们是`open`访问修饰符声明的。
+在导入允许测试的编译模块时，该特性用于修饰 `import` 声明，这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用`internal`或者`public`访问级别修饰符标记的类和类成员，就像它们是`open`访问修饰符声明的。
 
 `UIApplicationMain`
 
