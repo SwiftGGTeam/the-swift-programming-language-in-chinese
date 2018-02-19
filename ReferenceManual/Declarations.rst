@@ -2242,7 +2242,12 @@ The following example declares the ``TitledLoggable`` protocol,
 which inherits from ``Loggable``,
 and a generic ``Pair`` type that stores two values of a particular type.
 
+.. This test needs to be compiled so that it will recognize Pair's
+   CustomStringConvertible conformance -- the deprecated REPL doesn't
+   seem to use the description property at all.
+
 .. testcode:: conditional-conformance
+   :compile: true
 
    >> protocol Loggable {
    >>   func log()
@@ -2293,7 +2298,7 @@ the specialized version containing the title string is used.
    -> let oneAndTwo = Pair(first: "one", second: "two")
    << // oneAndTwo : Pair<String> = REPL.Pair<Swift.String>(first: "one", second: "two")
    -> oneAndTwo.log()
-   <- Pair of 'String': Pair<String>(first: "one", second: "two")
+   <- Pair of 'String': (one, two)
    
 However, when a ``Pair`` instance is used in a generic context
 or as an instance of the ``Loggable`` protocol,
@@ -2309,7 +2314,7 @@ the default implementation given by the ``Loggable`` protocol is used instead.
          x.log()
       }
       doSomething(with: oneAndTwo)
-   <- Pair<String>(first: "one", second: "two")
+   <- (one, two)
 
 When ``log()`` is called on the ``Pair`` instance that's passed to ``doSomething(_:)``,
 the customized title is omitted from the logged string.
