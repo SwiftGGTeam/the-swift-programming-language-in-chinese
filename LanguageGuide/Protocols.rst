@@ -687,7 +687,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
       }
 
 For a description of the *Snakes and Ladders* gameplay,
-see :ref:`ControlFlow_Break` section of the :doc:`ControlFlow`.
+see :ref:`ControlFlow_Break`.
 
 This version of the game is wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
