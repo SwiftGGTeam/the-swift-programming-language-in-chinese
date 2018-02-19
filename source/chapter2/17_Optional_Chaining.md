@@ -59,7 +59,7 @@ class Residence {
 
 `Residence`有一个`Int`类型的属性`numberOfRooms`，其默认值为`1`。`Person`具有一个可选的`residence`属性，其类型为`Residence?`。
 
-假如你创建了一个新的`Person`实例,它的`residence`属性由于是是可选型而将初始化为`nil`,在下面的代码中,`john`有一个值为`nil`的`residence`属性：
+假如你创建了一个新的`Person`实例，它的`residence`属性由于是是可选型而将初始化为`nil`,在下面的代码中，`john`有一个值为`nil`的`residence`属性：
 
 ```swift
 let john = Person()

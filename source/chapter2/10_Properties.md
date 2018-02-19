@@ -41,7 +41,7 @@
 
 可以在定义存储属性的时候指定默认值，请参考[默认构造器](./14_Initialization.html#default_initializers)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程中常量属性的修改](./14_Initialization.html#assigning_constant_properties_during_initialization)一节。
 
-下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的范围，且这个范围值在被创建后不能被修改.
+下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的范围，且这个范围值在被创建后不能被修改。
 
 ```swift
 struct FixedLengthRange {
@@ -77,7 +77,7 @@ rangeOfFourItems.firstValue = 6
 <a name="lazy_stored_properties"></a>
 ### 延迟存储属性
 
-*延迟存储属*性是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用 `lazy` 来标示一个延迟存储属性。
+*延迟存储属性*是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用 `lazy` 来标示一个延迟存储属性。
 
 > 注意
 > 必须将延迟存储属性声明成变量（使用 `var` 关键字），因为属性的初始值可能在实例构造完成之后才会得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。
@@ -285,9 +285,9 @@ stepCounter.totalSteps = 896
 
 `didSet` 观察器在 `totalSteps` 的值改变后被调用，它把新值和旧值进行对比，如果总步数增加了，就输出一个消息表示增加了多少步。`didSet` 没有为旧值提供自定义名称，所以默认值 `oldValue` 表示旧值的参数名。
 
->注意
->
->如果将属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
+> 注意
+> 
+> 如果将属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
 
 <a name="global_and_local_variables"></a>
 ## 全局变量和局部变量

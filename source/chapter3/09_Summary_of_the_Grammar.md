@@ -529,8 +529,8 @@
 > *平衡令牌* → **(** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_ **)**  
 > *平衡令牌* → **[** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_ **]**  
 > *平衡令牌* → **{** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_ **}**  
-> *平衡令牌* → **任意标识符, 关键字, 字面量或运算符**  
-> *平衡令牌* → **任意标点除了(, ), [, ], {, 或 }**
+> *平衡令牌* → **任意标识符、关键字、字面量或运算符**  
+> *平衡令牌* → **任意标点除了(, )、[, ]、{, 或 }**
 
 <a name="expressions"></a>
 ## 表达式

@@ -291,7 +291,7 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 
 对于值类型，你可以使用 `self.init` 在自定义的构造器中引用相同类型中的其它构造器。并且你只能在构造器内部调用 `self.init`。
 
-请注意，如果你为某个值类型定义了一个自定义的构造器，你将无法访问到默认构造器（如果是结构体，还将无法访问逐一成员构造器）。这种限制可以防止你为值类型增加了一个额外的且十分复杂的构造器之后,仍然有人错误的使用自动生成的构造器
+请注意，如果你为某个值类型定义了一个自定义的构造器，你将无法访问到默认构造器（如果是结构体，还将无法访问逐一成员构造器）。这种限制可以防止你为值类型增加了一个额外的且十分复杂的构造器之后，仍然有人错误的使用自动生成的构造器
 
 > 注意
 假如你希望默认构造器、逐一成员构造器以及你自己的自定义构造器都能用来创建实例，可以将自定义的构造器写到扩展（`extension`）中，而不是写在值类型的原始定义中。想查看更多内容，请查看[扩展](./21_Extensions.html)章节。
@@ -736,7 +736,7 @@ if let valueMaintained = Int(exactly: wholeNumber) {
 // 打印 "12345.0 conversion to Int maintains value of 12345"
  
 let valueChanged = Int(exactly: pi)
-// valueChanged 是 Int? 类型, 不是 Int 类型
+// valueChanged 是 Int? 类型，不是 Int 类型
  
 if valueChanged == nil {
     print("\(pi) conversion to Int does not maintain value")

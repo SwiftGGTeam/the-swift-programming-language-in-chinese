@@ -554,9 +554,9 @@ class SomeClass: NSObject {
 let selectorForMethod = #selector(SomeClass.doSomething(_:))
 let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 ```
-当为属性的getter创建选择器时,属性名可以是变量属性或者常量属性的引用。但是当为属性的setter创建选择器时,属性名只可以是对变量属性的引用。
+当为属性的getter创建选择器时，属性名可以是变量属性或者常量属性的引用。但是当为属性的setter创建选择器时，属性名只可以是对变量属性的引用。
 
-方法名称可以包含圆括号来进行分组,并使用as 操作符来区分具有相同方法名但类型不同的方法, 例如:
+方法名称可以包含圆括号来进行分组，并使用as 操作符来区分具有相同方法名但类型不同的方法，例如:
 
 ```swift
 extension SomeClass {
@@ -765,7 +765,7 @@ let x = [10, 3, 20, 15, 4]
 <a name="dynamic_type_expression"></a>
 ### dynamicType 表达式
 
-dynamicType 表达式由类似[函数调用表达式(Function Call Expression)](#function-call-expression)的特殊语法表达式组成,形式如下:
+dynamicType 表达式由类似[函数调用表达式(Function Call Expression)](#function-call-expression)的特殊语法表达式组成，形式如下:
 
 > type(of:`表达式`)
 

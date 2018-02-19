@@ -95,7 +95,7 @@ func increment() {
 ```swift
 struct Point {
     var x = 0.0, y = 0.0
-    func isToTheRightOfX(x: Double) -> Bool {
+    func isToTheRightOfX(_ x: Double) -> Bool {
         return self.x > x
     }
 }
@@ -120,7 +120,7 @@ if somePoint.isToTheRightOfX(1.0) {
 ```swift
 struct Point {
     var x = 0.0, y = 0.0
-    mutating func moveByX(deltaX: Double, y deltaY: Double) {
+    mutating func moveByX(_ deltaX: Double, y deltaY: Double) {
         x += deltaX
         y += deltaY
     }
