@@ -6,6 +6,18 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2018-02-06  * Updated for Swift 4.1.
+
+            * Added the :ref:`Protocols_DeclaringConditionalConformanceToAProtocol` section
+              with information about conditional protocol conformance.
+
+            * Added information about recursive protocol constraints
+              to the :ref:`Generics_RecursiveProtocol` section.
+
+            * Added information about
+              the ``canImport()`` and ``targetEnvironment()`` platform conditions
+              to :ref:`Statements_BuildConfigurationStatement`.
+----------  ----------------------------------------------------------------------------------------------
 2017-12-04  * Updated for Swift 4.0.3.
 
             * Updated the :ref:`Expression_TypedKeyPathExpression` section,

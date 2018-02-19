@@ -568,7 +568,7 @@ a type alias can give a shorter and more convenient name
 to a type that is used frequently.
 For example:
 
-.. code-block:: swift
+.. testcode:: typealias-in-prototol
 
     -> protocol Sequence {
            associatedtype Iterator: IteratorProtocol
@@ -579,10 +579,6 @@ For example:
            // ...
     >>     return 9000
        }
-
-.. The code above shadows a protocol in the stdlib,
-   which causes a stack trace in the REPL.
-   Filed <rdar://problem/36549499>
 
 Without this type alias,
 the ``sum`` function would have to refer to the associated type
@@ -2134,8 +2130,8 @@ see :doc:`../LanguageGuide/Deinitialization`.
 
     deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 
-.. _Declarations_ExtensionDeclaration:
 
+.. _Declarations_ExtensionDeclaration:
 
 Extension Declaration
 ---------------------
