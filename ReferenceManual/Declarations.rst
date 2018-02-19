@@ -568,7 +568,7 @@ a type alias can give a shorter and more convenient name
 to a type that is used frequently.
 For example:
 
-.. testcode:: typealias-in-prototol
+.. code-block:: swift
 
     -> protocol Sequence {
            associatedtype Iterator: IteratorProtocol
@@ -579,6 +579,10 @@ For example:
            // ...
     >>     return 9000
        }
+
+.. The code above shadows a protocol in the stdlib,
+   which causes a stack trace in the REPL.
+   Filed <rdar://problem/36549499>
 
 Without this type alias,
 the ``sum`` function would have to refer to the associated type
@@ -2130,8 +2134,8 @@ see :doc:`../LanguageGuide/Deinitialization`.
 
     deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 
-
 .. _Declarations_ExtensionDeclaration:
+
 
 Extension Declaration
 ---------------------
@@ -2215,6 +2219,7 @@ to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
    ---
       extension Array: Loggable where Element == Int {}
       extension Array: Loggable where Element == String {}
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
    !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
    !! extension Array: Loggable where Element == String {}
    !! ^
@@ -2292,7 +2297,6 @@ the specialized version containing the title string is used.
 .. testcode:: conditional-conformance
 
    -> let oneAndTwo = Pair(first: "one", second: "two")
-   << // oneAndTwo : Pair<String> = REPL.Pair<Swift.String>(first: "one", second: "two")
    -> oneAndTwo.log()
    <- Pair of 'String': (one, two)
    
@@ -2360,6 +2364,7 @@ resulting in an error:
    >> protocol TitledLoggable : Loggable {}
    -> extension Array: Loggable where Element: TitledLoggable {}
       extension Array: Loggable where Element: MarkedLoggable {} 
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
    !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
    !! extension Array: Loggable where Element: MarkedLoggable {}
    !! ^
