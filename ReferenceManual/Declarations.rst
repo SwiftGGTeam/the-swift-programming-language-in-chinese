@@ -2219,7 +2219,12 @@ to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
    ---
       extension Array: Loggable where Element == Int {}
       extension Array: Loggable where Element == String {}
-   !! error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! extension Array: Loggable where Element == String {}
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
+   !! extension Array: Loggable where Element == Int {}
+   !! ^
 
 .. NOTE:
     Should this give a resolving example about how to implement this?
@@ -2285,8 +2290,10 @@ the specialized version containing the title string is used.
 
 .. testcode:: conditional-conformance
 
-   -> Pair(first: "one", second: "two").log()
-   <- Pair of 'String': (one, two)
+   -> let oneAndTwo = Pair(first: "one", second: "two")
+   << // oneAndTwo : Pair<String> = REPL.Pair<Swift.String>(first: "one", second: "two")
+   -> oneAndTwo.log()
+   <- Pair of 'String': Pair<String>(first: "one", second: "two")
    
 However, when a ``Pair`` instance is used in a generic context
 or as an instance of the ``Loggable`` protocol,
@@ -2301,8 +2308,8 @@ the default implementation given by the ``Loggable`` protocol is used instead.
    -> func doSomething<T: Loggable>(with x: T) {
          x.log()
       }
-      doSomething(with: Pair(first: "one", second: "two"))
-   <- (one, two)
+      doSomething(with: oneAndTwo)
+   <- Pair<String>(first: "one", second: "two")
 
 When ``log()`` is called on the ``Pair`` instance that's passed to ``doSomething(_:)``,
 the customized title is omitted from the logged string.
