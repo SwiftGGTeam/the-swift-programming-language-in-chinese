@@ -637,15 +637,15 @@ by any game that involves dice.
 The ``DiceGameDelegate`` protocol can be adopted
 to track the progress of a ``DiceGame``.
 To prevent strong reference cycles,
-delegates should be declared as weak references.
-For more information about weak references,
+delegates are declared as weak references.
+For information about weak references,
 see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances`.
-Marking the protocol as class-only will later allow you to declare that
-the delegate must use a weak reference.
-You mark a protocol as being class-only
-by inheriting from ``AnyObject``,
+Marking the protocol as class-only
+lets the ``SnakesAndLadders`` class later in this chapter
+declare that its delegate must use a weak reference.
+A class-only protocol
+is marked by its inheritance from ``AnyObject``
 as discussed in :ref:`Protocols_ClassOnlyProtocols`.
-
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version is adapted to use a ``Dice`` instance for its dice-rolls;
