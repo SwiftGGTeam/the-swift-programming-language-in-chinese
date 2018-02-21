@@ -867,7 +867,7 @@ such as when the type's generic parameter conforms to the protocol.
 You can make a generic type conditionally conform to a protocol
 by listing constraints when extending the type.
 Write these constraints after the name of the protocol you're adopting
-using a generic ``where`` clause,
+by writing a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
 .. testcode:: protocols
@@ -1628,10 +1628,10 @@ When you define a protocol extension,
 you can specify constraints that conforming types
 must satisfy before the methods and properties of the extension are available.
 You write these constraints after the name of the protocol you're extending
-using a generic ``where`` clause,
+by writing a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
-For instance,
+For example,
 you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
 to the ``Equatable`` protocol.
