@@ -75,28 +75,6 @@
             </ul>
         </td>
     </tr>
-	<tr>
-		<td scope="row">2016-10-27</td>
-		<td>
-			<ul class="list-bullet">
-			 	<li>
-	            更新至 Swift 3.0.1。
-	        	</li>
-	        	<li>
-	            更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48">自动引用计数</a>章节中关于 weak 和 unowned 引用的讨论。
-	        	</li>
-	        	<li>
-	            增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID381">声明标识符</a>章节中关于新的标识符`unowned`，`unowend(safe)`和`unowned(unsafe)`的描述。
-	        	</li>
-	        	<li>
-	            增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID342">Any 和 AnyObject 的类型转换</a>一节中关于使用类型`Any`作为可选值的描述。
-	        	</li>
-	        	<li>
-	            更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383">表达式</a>章节，把括号表达式和元组表达式的描述分开。
-	        	</li>
-	    	</ul>
-	    </td>
-    </tr>
 </tbody>
 </table>
 
@@ -111,7 +89,29 @@
     </tr>
 </thead>
 <tbody>
-	 <tr>
+    <tr>
+        <td scope="row">2016-10-27</td>
+        <td>
+            <ul class="list-bullet">
+                <li>
+                更新至 Swift 3.0.1。
+                </li>
+                <li>
+                更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48">自动引用计数</a>章节中关于 weak 和 unowned 引用的讨论。
+                </li>
+                <li>
+                增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID381">声明标识符</a>章节中关于新的标识符`unowned`，`unowend(safe)`和`unowned(unsafe)`的描述。
+                </li>
+                <li>
+                增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID342">Any 和 AnyObject 的类型转换</a>一节中关于使用类型`Any`作为可选值的描述。
+                </li>
+                <li>
+                更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383">表达式</a>章节，把括号表达式和元组表达式的描述分开。
+                </li>
+            </ul>
+        </td>
+    </tr>
+	<tr>
     <td scope="row">2016-09-13</td>
     <td><ul class="list-bullet">
         <li>
