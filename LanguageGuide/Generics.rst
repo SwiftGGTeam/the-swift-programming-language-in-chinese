@@ -796,12 +796,11 @@ After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_ConstrainAssociatedType:
 
-Using Type Annotations to Constrain an Associated Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding Constraints to an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can add a type annotation to an associated type in a protocol,
-to require that conforming types satisfy the constraints
-described by the type annotation.
+You can add type constraints to an associated type in a protocol
+to require that conforming types satisfy those constraints.
 For example,
 the following code defines a version of ``Container``
 that requires the items in the container to be equatable.
