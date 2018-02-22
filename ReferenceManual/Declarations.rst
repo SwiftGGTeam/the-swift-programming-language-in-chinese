@@ -2198,29 +2198,34 @@ and therefore you can specify only a list of protocols after the *type name* and
 
 A concrete type can conform to a particular protocol only once,
 even if the requirements on multiple extensions are mutually exclusive.
-This restriction is demonstrated in the example below, in which two extension declarations attempt to add conditional conformance
-to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
+This restriction is demonstrated in the example below,
+in which two extension declarations attempt to add conditional conformance
+to the ``Serializable`` protocol for arrays with ``Int`` and ``String`` elements:
 
 .. testcode:: multiple-conformances
 
-   -> protocol Loggable {
-        func log()
+   -> protocol Serializable {
+         func serialize() -> Any
       }
    ---
-      extension Loggable {
-        func log() {
-          print(self)
-        }
+      extension Array: Serializable where Element == Int {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
       }
-   ---
-      extension Array: Loggable where Element == Int {}
-      extension Array: Loggable where Element == String {}
-      // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
-   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
-   !! extension Array: Loggable where Element == String {}
+      extension Array: Serializable where Element == String {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! extension Array: Serializable where Element == String {
    !! ^
-   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
-   !! extension Array: Loggable where Element == Int {}
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+   !! extension Array: Serializable where Element == Int {
    !! ^
 
 If you need to add conditional conformance based on multiple concrete types,
@@ -2229,12 +2234,17 @@ and use that protocol as the requirement when declaring conditional conformance.
 
 .. testcode:: multiple-conformances-success
 
-   >> protocol Loggable {}
-   -> protocol LoggableInArray {}
+   >> protocol Serializable {}
+   -> protocol SerializableInArray {}
+      extension Int: SerializableInArray {}
+      extension String: SerializableInArray {}
    ---
-   -> extension String: LoggableInArray {}
-      extension Int: LoggableInArray {}
-      extension Array: Loggable where Element: LoggableInArray {}
+   -> extension Array: Serializable where Element: SerializableInArray {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
 
 Extensions for Conditional Conformance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2242,9 +2252,9 @@ Extensions for Conditional Conformance
 When using types that get behavior from conditional conformance,
 specialized implementations of protocol requirements are not called
 when used in particular generic contexts.
-The following example declares the ``TitledLoggable`` protocol, 
-which inherits from ``Loggable``,
-and a generic ``Pair`` type that stores two values of a particular type.
+To illustrate this behavior,
+the following example defines two protocols
+and a generic type that conditionally conforms to each of them.
 
 .. This test needs to be compiled so that it will recognize Pair's
    CustomStringConvertible conformance -- the deprecated REPL doesn't
@@ -2253,18 +2263,18 @@ and a generic ``Pair`` type that stores two values of a particular type.
 .. testcode:: conditional-conformance
    :compile: true
 
-   >> protocol Loggable {
-   >>   func log()
-   >> }
-   >> extension Loggable {
-   >>   func log() {
-   >>     print(self)
-   >>   }
-   >> }
-   -> protocol TitledLoggable: Loggable { 
-        static var logTitle: String { get }
+   -> protocol Loggable {
+        func log()
+      }
+      extension Loggable {
+        func log() {
+          print(self)
+        }
       }
    ---
+      protocol TitledLoggable: Loggable {
+        static var logTitle: String { get }
+      }
       extension TitledLoggable {
         func log() {
           print("\(Self.logTitle): \(self)")
@@ -2294,7 +2304,10 @@ and a generic ``Pair`` type that stores two values of a particular type.
       
 The ``Pair`` structure conforms to ``Loggable`` and ``TitledLoggable``
 whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
-When the ``log()`` method is called on a ``Pair`` instance directly,
+In the example below,
+``oneAndTwo`` conforms to ``TitledLoggable`` because it's an instance of ``Pair<String>``,
+and ``String`` conforms to ``TitledLoggable``.
+When the ``log()`` method is called on ``oneAndTwo`` directly,
 the specialized version containing the title string is used.
 
 .. testcode:: conditional-conformance
@@ -2303,7 +2316,7 @@ the specialized version containing the title string is used.
    -> oneAndTwo.log()
    <- Pair of 'String': (one, two)
    
-However, when a ``Pair`` instance is used in a generic context
+However, when ``oneAndTwo`` is used in a generic context
 or as an instance of the ``Loggable`` protocol,
 the specialized version is not used.
 Swift picks which implementation of ``log()`` to call 
@@ -2319,7 +2332,7 @@ the default implementation given by the ``Loggable`` protocol is used instead.
       doSomething(with: oneAndTwo)
    <- (one, two)
 
-When ``log()`` is called on the ``Pair`` instance that's passed to ``doSomething(_:)``,
+When ``log()`` is called on the instance that's passed to ``doSomething(_:)``,
 the customized title is omitted from the logged string.
 
 Explicit Inheritance of Protocol Conformance
