@@ -34,11 +34,15 @@
 > 
 > 3.1
 > 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
+> 
+> 4.0
+> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
 
+- [Swift 4.0 更新](#swift_4_0)
 - [Swift 3.1 更新](#swift_3_1)
 - [Swift 3.0 更新](#swift_3_0)
 - [Swift 2.2 更新](#swift_2_2)
@@ -47,6 +51,28 @@
 - [Swift 1.2 更新](#swift_1_2)
 - [Swift 1.1 更新](#swift_1_1)
 - [Swift 1.0 更新](#swift_1_0)
+
+<a name="swift_4_0"></a>
+### Swift 4.0 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td scope="row">2017-12-04</td>
+        <td>
+            <ul class="list-bullet">
+                <li>更新至 Swift 4.0.3。</li>
+                <li>更新 <a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID563'>Key-Path 表达式</a>，现在 key path 支持下标子路径。</li>
+            </ul>
+        </td>
+    </tr>
+</tbody>
 
 <a name="swift_3_1"></a>
 ### Swift 3.1 更新
@@ -63,7 +89,7 @@
         <td scope="row">2017-03-27</td>
         <td>
             <ul class="list-bullet">
-                <li>更新到 Swift 3.1。</li>
+                <li>更新至 Swift 3.1。</li>
                 <li>增加<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID553'>通用 Where 子句扩展</a>，其中包含需要的扩展信息。</li>
                 <li>增加了一个区间迭代的例子到<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID121'>For-In 循环</a>章节。</li>
                 <li>增加一个可失败数值转换的例子到<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID224'>可失败构造器</a>章节。</li>
