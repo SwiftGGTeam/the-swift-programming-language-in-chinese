@@ -37,11 +37,15 @@
 > 
 > 4.0
 > 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
+> 
+> 4.1
+> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
 
+- [Swift 4.0 更新](#swift_4_1)
 - [Swift 4.0 更新](#swift_4_0)
 - [Swift 3.1 更新](#swift_3_1)
 - [Swift 3.0 更新](#swift_3_0)
@@ -51,6 +55,31 @@
 - [Swift 1.2 更新](#swift_1_2)
 - [Swift 1.1 更新](#swift_1_1)
 - [Swift 1.0 更新](#swift_1_0)
+
+<a name="swift_4_1"></a>
+### Swift 4.1 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td scope="row">2018-02-06</td>
+        <td>
+            <ul class="list-bullet">
+                <li>更新至 Swift 4.1。</li>
+                <li>添加了<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID574'>有条件遵守协议</a>章节，其中包含有关调节协议一致性的内容。</li>
+                <li>在<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID575'>在其关联类型约束中使用协议</a>章节添加了递归协议约束的内容。</li>
+                <li>在<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID539'>条件编译块</a>章节中添加有关 <code>canImport()</code> 和 <code>targetEnvironment()</code> 平台条件的内容。</li>
+            </ul>
+        </td>
+    </tr>
+</tbody>
+</table>
 
 <a name="swift_4_0"></a>
 ### Swift 4.0 更新
@@ -73,6 +102,7 @@
         </td>
     </tr>
 </tbody>
+</table>
 
 <a name="swift_3_1"></a>
 ### Swift 3.1 更新
