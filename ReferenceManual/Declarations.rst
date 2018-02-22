@@ -2130,8 +2130,8 @@ see :doc:`../LanguageGuide/Deinitialization`.
 
     deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 
-.. _Declarations_ExtensionDeclaration:
 
+.. _Declarations_ExtensionDeclaration:
 
 Extension Declaration
 ---------------------
