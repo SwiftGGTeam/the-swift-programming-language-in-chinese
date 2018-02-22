@@ -2223,11 +2223,18 @@ to the ``Loggable`` protocol for arrays with ``Int`` and ``String`` elements:
    !! extension Array: Loggable where Element == Int {}
    !! ^
 
-.. NOTE:
-    Should this give a resolving example about how to implement this?
-    We could show making a dummy protocol, adding conformance to Int
-    and String, and then extending Array to conform to Loggable where
-    the element conforms to the dummy protocol.
+If you need to add conditional conformance based on multiple concrete types,
+create a new protocol that each type can conform to
+and use that protocol as the requirement when declaring conditional conformance.
+
+.. testcode:: multiple-conformances-success
+
+   >> protocol Loggable {}
+   -> protocol LoggableInArray {}
+   ---
+   -> extension String: LoggableInArray {}
+      extension Int: LoggableInArray {}
+      extension Array: Loggable where Element: LoggableInArray {}
 
 Extensions for Conditional Conformance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2285,7 +2292,7 @@ and a generic ``Pair`` type that stores two values of a particular type.
          }
       }
       
-The ``Pair`` type conforms to ``Loggable`` and ``TitledLoggable``
+The ``Pair`` structure conforms to ``Loggable`` and ``TitledLoggable``
 whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
 When the ``log()`` method is called on a ``Pair`` instance directly,
 the specialized version containing the title string is used.
@@ -2322,7 +2329,8 @@ When a type conditionally conforms to a protocol,
 that type implicitly conforms to any parent protocols with the same requirements.
 
 If a type must conditionally conform to two protocols that inherit from a single parent,
-conformance to the parent must be declared explicitly. This avoids implicitly conforming to the parent protocol twice with different requirements.
+conformance to the parent must be declared explicitly.
+This avoids implicitly conforming to the parent protocol twice with different requirements.
 
 The following example explicitly declares the conditional conformance of ``Array`` to ``Loggable``
 to avoid a conflict when declaring its conditional conformance
