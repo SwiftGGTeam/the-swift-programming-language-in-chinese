@@ -136,7 +136,7 @@ Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
 The example below shows a closure expression version of the ``backward(_:_:)`` function
-from earlier:
+from above:
 
 .. testcode:: closureSyntax
 

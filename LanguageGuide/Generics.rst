@@ -691,7 +691,8 @@ the type of the items in a ``Container``,
 and to define a type for use with the ``append(_:)`` method and subscript,
 to ensure that the expected behavior of any ``Container`` is enforced.
 
-Here's a version of the nongeneric ``IntStack`` type from earlier,
+Here's a version of the nongeneric ``IntStack`` type
+from :ref:`Generics_GenericTypes` above,
 adapted to conform to the ``Container`` protocol:
 
 .. testcode:: associatedTypes
@@ -849,7 +850,8 @@ as the container's ``Item`` type.
 The constraint on ``Item`` is a generic ``where`` clause,
 which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
 
-Here's an extension of the ``Stack`` type from earlier
+Here's an extension of the ``Stack`` type
+from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above
 that adds conformance to the ``SuffixableContainer`` protocol:
 
 .. testcode:: associatedTypes

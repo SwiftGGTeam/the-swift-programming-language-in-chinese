@@ -816,7 +816,11 @@ This might be a description of itself, or a text version of its current state:
          var textualDescription: String { get }
       }
 
-The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRepresentable``:
+The ``Dice`` class from above can be extended to adopt and conform to ``TextRepresentable``:
+
+.. No "from above" xref because
+   even though Dice isn't defined in the section immediately previous
+   it's part of a running example and Dice is used in that section.
 
 .. testcode:: protocols
    :compile: true
