@@ -6,6 +6,9 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2018-03-05  * Added information about conditional conformance
+              to the :ref:`Declarations_ExtensionDeclaration` section.
+----------  ----------------------------------------------------------------------------------------------
 2018-02-06  * Updated for Swift 4.1.
 
             * Added the :ref:`Protocols_DeclaringConditionalConformanceToAProtocol` section
