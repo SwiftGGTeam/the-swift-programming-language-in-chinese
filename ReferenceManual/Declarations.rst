@@ -2188,13 +2188,19 @@ class, structure, or enumeration type by specifying *adopted protocols*:
        <#declarations#>
     }
 
-You add :newTerm:`conditional conformance` to a protocol
-by including requirements in an extension declaration.
-When a type is extended to conditionally conform to a protocol,
-only instances of the extended type that satisfy the requirements gain that conformance.
-
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
+
+Conditional Conformance
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You add conditional conformance to a protocol
+by including *requirements* in an extension declaration.
+When a type is extended to conditionally conform to a protocol,
+only instances of the extended type that satisfy the *requirements* gain that conformance.
+
+Singular Conformance to a Protocol
+++++++++++++++++++++++++++++++++++
 
 A concrete type can conform to a particular protocol only once,
 even if the requirements on multiple extensions are mutually exclusive.
@@ -2246,8 +2252,8 @@ and use that protocol as the requirement when declaring conditional conformance.
    ->     }
       }
 
-Extensions for Conditional Conformance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Overridden Default Implementations
+++++++++++++++++++++++++++++++++++
 
 When using types that get behavior from conditional conformance,
 specialized implementations of protocol requirements are not called
@@ -2336,7 +2342,7 @@ When ``log()`` is called on the instance that's passed to ``doSomething(_:)``,
 the customized title is omitted from the logged string.
 
 Explicit Inheritance of Protocol Conformance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+++++++++++++++++++++++++++++++++++++++++++++
 
 When a type conditionally conforms to a protocol,
 that type implicitly conforms to any parent protocols with the same requirements.
