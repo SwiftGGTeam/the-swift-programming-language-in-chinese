@@ -2197,7 +2197,7 @@ Conditional Conformance
 You add conditional conformance to a protocol
 by including *requirements* in an extension declaration.
 When a type is extended to conditionally conform to a protocol,
-only instances of the extended type that satisfy the *requirements* gain that conformance.
+only instances of the extended type that satisfy the requirements gain that conformance.
 
 Singular Conformance to a Protocol
 ++++++++++++++++++++++++++++++++++
