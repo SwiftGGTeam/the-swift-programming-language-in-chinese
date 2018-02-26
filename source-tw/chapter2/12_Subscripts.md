@@ -100,7 +100,7 @@ struct Matrix {
     init(rows: Int, columns: Int) {
       self.rows = rows
       self.columns = columns
-      grid = Array(count: rows * columns, repeatedValue: 0.0)
+      grid = Array(repeating: 0.0, count: rows * columns)
     }
     func indexIsValidForRow(row: Int, column: Int) -> Bool {
         return row >= 0 && row < rows && column >= 0 && column < columns
