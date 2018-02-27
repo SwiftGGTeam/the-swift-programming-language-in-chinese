@@ -1780,7 +1780,6 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
-
 Protocol Subscript Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2191,73 +2190,26 @@ class, structure, or enumeration type by specifying *adopted protocols*:
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
 
+.. _Declarations_ConditionalConformance:
+
 Conditional Conformance
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+You can extend a generic type
+to conditionally conform to a protocol,
+so that instances of the type conform to the protocol
+only when certain requirements are met.
 You add conditional conformance to a protocol
 by including *requirements* in an extension declaration.
-When a type is extended to conditionally conform to a protocol,
-only instances of the extended type that satisfy the requirements gain that conformance.
 
-Singular Conformance to a Protocol
-++++++++++++++++++++++++++++++++++
+.. _Declarations_OverrideConformance:
 
-A concrete type can conform to a particular protocol only once,
-even if the requirements on multiple extensions are mutually exclusive.
-This restriction is demonstrated in the example below,
-in which two extension declarations attempt to add conditional conformance
-to the ``Serializable`` protocol for arrays with ``Int`` and ``String`` elements:
-
-.. testcode:: multiple-conformances
-
-   -> protocol Serializable {
-         func serialize() -> Any
-      }
-   ---
-      extension Array: Serializable where Element == Int {
-          func serialize() -> Any {
-              // implementation
-   >>         return 0
-   ->     }
-      }
-      extension Array: Serializable where Element == String {
-          func serialize() -> Any {
-              // implementation
-   >>         return 0
-   ->     }
-      }
-      // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
-   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
-   !! extension Array: Serializable where Element == String {
-   !! ^
-   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
-   !! extension Array: Serializable where Element == Int {
-   !! ^
-
-If you need to add conditional conformance based on multiple concrete types,
-create a new protocol that each type can conform to
-and use that protocol as the requirement when declaring conditional conformance.
-
-.. testcode:: multiple-conformances-success
-
-   >> protocol Serializable {}
-   -> protocol SerializableInArray {}
-      extension Int: SerializableInArray {}
-      extension String: SerializableInArray {}
-   ---
-   -> extension Array: Serializable where Element: SerializableInArray {
-          func serialize() -> Any {
-              // implementation
-   >>         return 0
-   ->     }
-      }
-
-Overridden Default Implementations
-++++++++++++++++++++++++++++++++++
+Overridden Requirements Aren't Used in Some Generic Contexts
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 When using types that get behavior from conditional conformance,
 specialized implementations of protocol requirements are not called
-when used in particular generic contexts.
+when used in some generic contexts.
 To illustrate this behavior,
 the following example defines two protocols
 and a generic type that conditionally conforms to each of them.
@@ -2341,17 +2293,95 @@ the default implementation given by the ``Loggable`` protocol is used instead.
 When ``log()`` is called on the instance that's passed to ``doSomething(_:)``,
 the customized title is omitted from the logged string.
 
-Explicit Inheritance of Protocol Conformance
-++++++++++++++++++++++++++++++++++++++++++++
+.. _Declarations_NoRedundantConformance:
 
-When a type conditionally conforms to a protocol,
-that type implicitly conforms to any parent protocols with the same requirements.
+Protocol Conformance Must Not Be Redundant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a type must conditionally conform to two protocols that inherit from a single parent,
-conformance to the parent must be declared explicitly.
-This avoids implicitly conforming to the parent protocol twice with different requirements.
+A concrete type can conform to a particular protocol only once.
+Swift marks redundant protocol conformances as an error.
+You're likely to encounter this kind of error
+in two kinds of situations.
+The first situation is when
+you explicitly conform to the same protocol multiple times,
+but with different requirements.
+The second situation is when
+you implicitly inherit from the same protocol multiple times.
+These situations are discussed in the sections below.
 
-The following example explicitly declares the conditional conformance of ``Array`` to ``Loggable``
+.. _Declarations_NoRedundantConformance:
+
+Resolving Explicit Redundancy
++++++++++++++++++++++++++++++
+
+Multiple extensions on a concrete type
+can't add conformance to the same protocol,
+even if the extensions' requirements are mutually exclusive.
+This restriction is demonstrated in the example below,
+in which two extension declarations attempt to add conditional conformance
+to the ``Serializable`` protocol for arrays with ``Int`` and ``String`` elements:
+
+.. testcode:: multiple-conformances
+
+   -> protocol Serializable {
+         func serialize() -> Any
+      }
+   ---
+      extension Array: Serializable where Element == Int {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      extension Array: Serializable where Element == String {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! extension Array: Serializable where Element == String {
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+   !! extension Array: Serializable where Element == Int {
+   !! ^
+
+If you need to add conditional conformance based on multiple concrete types,
+create a new protocol that each type can conform to
+and use that protocol as the requirement when declaring conditional conformance.
+
+.. testcode:: multiple-conformances-success
+
+   >> protocol Serializable {}
+   -> protocol SerializableInArray {}
+      extension Int: SerializableInArray {}
+      extension String: SerializableInArray {}
+   ---
+   -> extension Array: Serializable where Element: SerializableInArray {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+
+.. _Declarations_ExplicitConformanceInheritance:
+
+Resolving Implicit Redundancy
++++++++++++++++++++++++++++++
+
+When a concrete type conditionally conforms to a protocol,
+that type implicitly conforms to any parent protocols
+with the same requirements.
+
+If you need a type to conditionally conform to two protocols
+that inherit from a single parent,
+explicitly declare conformance to the parent protocol.
+This avoids implicitly conforming to the parent protocol twice
+with different requirements.
+
+The following example explicitly declares
+the conditional conformance of ``Array`` to ``Loggable``
 to avoid a conflict when declaring its conditional conformance
 to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
 
@@ -2376,7 +2406,8 @@ to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
       }
       extension Array: MarkedLoggable where Element: MarkedLoggable {}
       
-Without the extension to explicitly declare conditional conformance to ``Loggable``,
+Without the extension
+to explicitly declare conditional conformance to ``Loggable``,
 the other ``Array`` extensions would implicitly create these declarations, 
 resulting in an error:
 
@@ -2451,6 +2482,7 @@ resulting in an error:
 
     extension-members --> extension-member extension-members-OPT
     extension-member --> declaration | compiler-control-statement
+
 
 .. _Declarations_SubscriptDeclaration:
 
