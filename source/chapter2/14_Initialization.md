@@ -751,7 +751,8 @@ struct Animal {
     let species: String
     init?(species: String) {
         if species.isEmpty { 
-        	return nil }
+        	return nil
+        }
         self.species = species
     }
 }
@@ -1051,8 +1052,7 @@ struct Chessboard {
         }
         return temporaryBoard
     }()
-    
-    func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
+    func squareIsBlackAt(row: Int, column: Int) -> Bool {
         return boardColors[(row * 8) + column]
     }
 }
@@ -1062,8 +1062,8 @@ struct Chessboard {
 
 ```swift
 let board = Chessboard()
-print(board.squareIsBlackAtRow(0, column: 1))
-// 打印 "true"
-print(board.squareIsBlackAtRow(7, column: 7))
-// 打印 "false"
+print(board.squareIsBlackAt(row: 0, column: 1))
+// Prints "true"
+print(board.squareIsBlackAt(row: 7, column: 7))
+// Prints "false”
 ```
