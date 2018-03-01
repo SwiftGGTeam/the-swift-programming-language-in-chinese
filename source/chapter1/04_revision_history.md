@@ -31,18 +31,78 @@
 > 
 > 3.0.1
 > 翻译+校对：[shanks](http://codebuild.me)，2016-11-10
+> 
+> 3.1
+> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
+> 
+> 4.0
+> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
+> 
+> 4.1
+> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
 
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：
--   [Swift 3.1 更新](#swift_3_1)
--   [Swift 3.0 更新](#swift_3_0)
--   [Swift 2.2 更新](#swift_2_2)
--   [Swift 2.1 更新](#swift_2_1)
--   [Swift 2.0 更新](#swift_2_0)
--   [Swift 1.2 更新](#swift_1_2)
--   [Swift 1.1 更新](#swift_1_1)
--   [Swift 1.0 更新](#swift_1_0)
+
+- [Swift 4.0 更新](#swift_4_1)
+- [Swift 4.0 更新](#swift_4_0)
+- [Swift 3.1 更新](#swift_3_1)
+- [Swift 3.0 更新](#swift_3_0)
+- [Swift 2.2 更新](#swift_2_2)
+- [Swift 2.1 更新](#swift_2_1)
+- [Swift 2.0 更新](#swift_2_0)
+- [Swift 1.2 更新](#swift_1_2)
+- [Swift 1.1 更新](#swift_1_1)
+- [Swift 1.0 更新](#swift_1_0)
+
+<a name="swift_4_1"></a>
+### Swift 4.1 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td scope="row">2018-02-06</td>
+        <td>
+            <ul class="list-bullet">
+                <li>更新至 Swift 4.1。</li>
+                <li>添加了<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID574'>有条件遵守协议</a>章节，其中包含有关调节协议一致性的内容。</li>
+                <li>在<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID575'>在其关联类型约束中使用协议</a>章节添加了递归协议约束的内容。</li>
+                <li>在<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID539'>条件编译块</a>章节中添加有关 <code>canImport()</code> 和 <code>targetEnvironment()</code> 平台条件的内容。</li>
+            </ul>
+        </td>
+    </tr>
+</tbody>
+</table>
+
+<a name="swift_4_0"></a>
+### Swift 4.0 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td scope="row">2017-12-04</td>
+        <td>
+            <ul class="list-bullet">
+                <li>更新至 Swift 4.0.3。</li>
+                <li>更新 <a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID563'>Key-Path 表达式</a>，现在 key path 支持下标子路径。</li>
+            </ul>
+        </td>
+    </tr>
+</tbody>
+</table>
 
 <a name="swift_3_1"></a>
 ### Swift 3.1 更新
@@ -55,27 +115,21 @@
     </tr>
 </thead>
 <tbody>
-	 <tr>
-    	<td scope="row">2016-10-27</td>
-		<td>
-			<ul class="list-bullet">
-			 	<li>
-	            更新至 Swift 3.0.1。
-	        	</li>
-	        	<li>
-	            更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48">自动引用计数</a>章节中关于 weak 和 unowned 引用的讨论。
-	        	</li>
-	        	<li>
-	            增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID381">声明标识符</a>章节中关于新的标识符`unowned`，`unowend(safe)`和`unowned(unsafe)`的描述。
-	        	</li>
-	        	<li>
-	            增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID342">Any 和 AnyObject 的类型转换</a>一节中关于使用类型`Any`作为可选值的描述。
-	        	</li>
-	        	<li>
-	            更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383">表达式</a>章节，把括号表达式和元组表达式的描述分开。
-	        	</li>
-	    	</ul>
-	    </td>
+    <tr>
+        <td scope="row">2017-03-27</td>
+        <td>
+            <ul class="list-bullet">
+                <li>更新至 Swift 3.1。</li>
+                <li>增加<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID553'>通用 Where 子句扩展</a>，其中包含需要的扩展信息。</li>
+                <li>增加了一个区间迭代的例子到<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID121'>For-In 循环</a>章节。</li>
+                <li>增加一个可失败数值转换的例子到<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID224'>可失败构造器</a>章节。</li>
+                <li>增加关于使用 Swift 语言版本的 <code>available</code> 特性信息到<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID348'>声明特性</a>章节。</li>
+                <li>更新了<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449'>函数类型</a>章节中的描述，注意在写函数类型时不允许使用参数标签。</li>
+                <li>更新了<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID539'>条件编译块</a>章节中的 Swift 语言版本号的描述，现在可以使用可选的补丁版本号。</li>
+                <li>更新了<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/doc/uid/TP40014097-CH31-ID449'>函数类型</a>章节的描述，现在 Swift 区分了采用多参数的函数和采用元组类型的单个参数的函数。</li>
+                <li>从<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383'>表达式</a>章节中删除了动态表达式的部分，现在 <code>type(of:)</code> 是 Swift 标准库函数。</li>
+            </ul>
+        </td>
     </tr>
 </tbody>
 </table>
@@ -91,7 +145,29 @@
     </tr>
 </thead>
 <tbody>
-	 <tr>
+    <tr>
+        <td scope="row">2016-10-27</td>
+        <td>
+            <ul class="list-bullet">
+                <li>
+                更新至 Swift 3.0.1。
+                </li>
+                <li>
+                更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-ID48">自动引用计数</a>章节中关于 weak 和 unowned 引用的讨论。
+                </li>
+                <li>
+                增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID381">声明标识符</a>章节中关于新的标识符`unowned`，`unowend(safe)`和`unowned(unsafe)`的描述。
+                </li>
+                <li>
+                增加<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID342">Any 和 AnyObject 的类型转换</a>一节中关于使用类型`Any`作为可选值的描述。
+                </li>
+                <li>
+                更新<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID383">表达式</a>章节，把括号表达式和元组表达式的描述分开。
+                </li>
+            </ul>
+        </td>
+    </tr>
+	<tr>
     <td scope="row">2016-09-13</td>
     <td><ul class="list-bullet">
         <li>

@@ -369,7 +369,7 @@ Swift 为类类型提供了两种构造器来确保实例中所有存储型属�
 
 *指定构造器*是类中最主要的构造器。一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类合适的构造器来实现父类的初始化。
 
-类倾向于拥有少量指定构造器，普遍的是一个类拥有一个指定构造器。指定构造器在初始化的地方通过 "管道" 将初始化过程持续到父类链。 
+类倾向于拥有少量指定构造器，普遍的是一个类拥有一个指定构造器。指定构造器在初始化的地方通过“管道”将初始化过程持续到父类链。 
 
 每一个类都必须至少拥有一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。具体内容请参考后续章节[构造器的自动继承](#automatic_initializer_inheritance)。
 
@@ -751,7 +751,8 @@ struct Animal {
     let species: String
     init?(species: String) {
         if species.isEmpty { 
-        	return nil }
+        	return nil
+        }
         self.species = species
     }
 }
@@ -1051,8 +1052,7 @@ struct Chessboard {
         }
         return temporaryBoard
     }()
-    
-    func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
+    func squareIsBlackAt(row: Int, column: Int) -> Bool {
         return boardColors[(row * 8) + column]
     }
 }
@@ -1062,8 +1062,8 @@ struct Chessboard {
 
 ```swift
 let board = Chessboard()
-print(board.squareIsBlackAtRow(0, column: 1))
-// 打印 "true"
-print(board.squareIsBlackAtRow(7, column: 7))
-// 打印 "false"
+print(board.squareIsBlackAt(row: 0, column: 1))
+// Prints "true"
+print(board.squareIsBlackAt(row: 7, column: 7))
+// Prints "false”
 ```
