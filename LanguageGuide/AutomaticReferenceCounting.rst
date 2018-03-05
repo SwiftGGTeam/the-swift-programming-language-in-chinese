@@ -957,7 +957,8 @@ This enables you to check for their existence within the closure's body.
    rather than a weak reference.
 
 An unowned reference is the appropriate capture method to use to resolve
-the strong reference cycle in the ``HTMLElement`` example from earlier.
+the strong reference cycle in the ``HTMLElement`` example
+from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above.
 Here's how you write the ``HTMLElement`` class to avoid the cycle:
 
 .. testcode:: unownedReferencesForClosures

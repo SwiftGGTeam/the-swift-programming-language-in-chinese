@@ -360,10 +360,19 @@ The ``catch`` clauses don't have to handle every possible error
 that the code in the ``do`` clause can throw.
 If none of the ``catch`` clauses handle the error,
 the error propagates to the surrounding scope.
-However, the error must be handled by *some* surrounding scope ---
-either by an enclosing ``do``-``catch`` clause
-that handles the error
-or by being inside a throwing function.
+However, the propagated error
+must be handled by *some* surrounding scope.
+In a nonthrowing function,
+an enclosing ``do``-``catch`` clause
+must handle the error.
+In a throwing function,
+either an enclosing ``do``-``catch`` clause
+or the caller
+must handle the error.
+If the error propagates to the top-level scope
+without being handled,
+you'll get a runtime error.
+
 For example, the above example can be written so any
 error that isn't a ``VendingMachineError`` is instead
 caught by the calling function:
