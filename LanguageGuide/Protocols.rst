@@ -871,8 +871,11 @@ such as when the type's generic parameter conforms to the protocol.
 You can make a generic type conditionally conform to a protocol
 by listing constraints when extending the type.
 Write these constraints after the name of the protocol you're adopting
-by writing a generic ``where`` clause,
-as described in :ref:`Generics_WhereClauses`.
+by writing a generic ``where`` clause.
+
+With the following extension,
+``Array`` instances conform to the ``TextRepresentable`` protocol
+whenever they store elements of a type that conforms to ``TextRepresentable``.
 
 .. testcode:: protocols
    :compile: true
@@ -887,9 +890,7 @@ as described in :ref:`Generics_WhereClauses`.
    -> print(myDice.textualDescription)
    <- [A 6-sided dice, A 12-sided dice]
 
-With this extension,
-``Array`` instances conform to the ``TextRepresentable`` protocol
-whenever they store elements of a type that conforms to ``TextRepresentable``.
+For more on generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
 
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
 
@@ -1632,8 +1633,8 @@ When you define a protocol extension,
 you can specify constraints that conforming types
 must satisfy before the methods and properties of the extension are available.
 You write these constraints after the name of the protocol you're extending
-by writing a generic ``where`` clause,
-as described in :ref:`Generics_WhereClauses`.
+by writing a generic ``where`` clause.
+For more about generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
 
 For example,
 you can define an extension to the ``Collection`` protocol

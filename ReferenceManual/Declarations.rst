@@ -2138,8 +2138,7 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend
 the behavior of existing types.
-Extension declarations are declared using the ``extension`` keyword
-and have the following form:
+Declare extension declarations using the ``extension`` keyword, as follows:
 
 .. syntax-outline::
 
@@ -2153,6 +2152,7 @@ instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
+Declarations in a protocol extension's body can't be marked ``final``.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
@@ -2160,8 +2160,6 @@ If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
 the extension extends all types that conform to that protocol.
-Declarations in a protocol extension's body
-can't be marked ``final``.
 
 Extension declarations that extend a generic type
 or a protocol with associated types
@@ -2213,7 +2211,7 @@ specialized implementations of protocol requirements are not called
 when used in some generic contexts.
 To illustrate this behavior,
 the following example defines two protocols
-and a generic type that conditionally conforms to each of them.
+and a generic type that conditionally conforms to both protocols.
 
 .. This test needs to be compiled so that it will recognize Pair's
    CustomStringConvertible conformance -- the deprecated REPL doesn't
