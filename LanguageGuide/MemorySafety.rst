@@ -277,7 +277,7 @@ For example:
     << // playerTwoScore : Int = 30
     -> balance(&playerOneScore, &playerTwoScore)  // OK
     -> balance(&playerOneScore, &playerOneScore)
-    // Error: Conflicting accesses to playerOneScore
+    // Error: conflicting accesses to playerOneScore
     !! <REPL Input>:1:26: error: inout arguments are not allowed to alias each other
     !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~

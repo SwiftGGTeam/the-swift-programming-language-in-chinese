@@ -637,15 +637,15 @@ by any game that involves dice.
 The ``DiceGameDelegate`` protocol can be adopted
 to track the progress of a ``DiceGame``.
 To prevent strong reference cycles,
-delegates should be declared as weak references.
-For more information about weak references,
+delegates are declared as weak references.
+For information about weak references,
 see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances`.
-Marking the protocol as class-only will later allow you to declare that
-the delegate must use a weak reference.
-You mark a protocol as being class-only
-by inheriting from ``AnyObject``,
+Marking the protocol as class-only
+lets the ``SnakesAndLadders`` class later in this chapter
+declare that its delegate must use a weak reference.
+A class-only protocol
+is marked by its inheritance from ``AnyObject``
 as discussed in :ref:`Protocols_ClassOnlyProtocols`.
-
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version is adapted to use a ``Dice`` instance for its dice-rolls;
@@ -687,7 +687,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
       }
 
 For a description of the *Snakes and Ladders* gameplay,
-see :ref:`ControlFlow_Break` section of the :doc:`ControlFlow`.
+see :ref:`ControlFlow_Break`.
 
 This version of the game is wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
@@ -816,7 +816,11 @@ This might be a description of itself, or a text version of its current state:
          var textualDescription: String { get }
       }
 
-The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRepresentable``:
+The ``Dice`` class from above can be extended to adopt and conform to ``TextRepresentable``:
+
+.. No "from above" xref because
+   even though Dice isn't defined in the section immediately previous
+   it's part of a running example and Dice is used in that section.
 
 .. testcode:: protocols
    :compile: true
@@ -867,7 +871,7 @@ such as when the type's generic parameter conforms to the protocol.
 You can make a generic type conditionally conform to a protocol
 by listing constraints when extending the type.
 Write these constraints after the name of the protocol you're adopting
-using a generic ``where`` clause,
+by writing a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
 .. testcode:: protocols
@@ -1628,10 +1632,10 @@ When you define a protocol extension,
 you can specify constraints that conforming types
 must satisfy before the methods and properties of the extension are available.
 You write these constraints after the name of the protocol you're extending
-using a generic ``where`` clause,
+by writing a generic ``where`` clause,
 as described in :ref:`Generics_WhereClauses`.
 
-For instance,
+For example,
 you can define an extension to the ``Collection`` protocol
 that applies to any collection whose elements conform
 to the ``Equatable`` protocol.

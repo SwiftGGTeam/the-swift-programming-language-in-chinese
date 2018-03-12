@@ -316,7 +316,7 @@ and so you don't need to store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
-The preceding example creates a new ``Rect`` variable called ``square``.
+The example above creates a new ``Rect`` variable called ``square``.
 The ``square`` variable is initialized with an origin point of ``(0, 0)``,
 and a width and height of ``10``.
 This square is represented by the blue square in the diagram below.

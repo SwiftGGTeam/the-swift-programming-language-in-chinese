@@ -207,7 +207,7 @@ an appropriate row and column count to its initializer:
    -> var matrix = Matrix(rows: 2, columns: 2)
    << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
 
-The preceding example creates a new ``Matrix`` instance with two rows and two columns.
+The example above creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
 is effectively a flattened version of the matrix,
 as read from top left to bottom right:
