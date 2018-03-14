@@ -2138,7 +2138,8 @@ Extension Declaration
 
 An :newTerm:`extension declaration` allows you to extend
 the behavior of existing types.
-Declare extension declarations using the ``extension`` keyword, as follows:
+Extension declarations are declared using the ``extension`` keyword
+and have the following form:
 
 .. syntax-outline::
 

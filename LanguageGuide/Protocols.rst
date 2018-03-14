@@ -872,6 +872,7 @@ You can make a generic type conditionally conform to a protocol
 by listing constraints when extending the type.
 Write these constraints after the name of the protocol you're adopting
 by writing a generic ``where`` clause.
+For more on generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
 
 With the following extension,
 ``Array`` instances conform to the ``TextRepresentable`` protocol
@@ -889,8 +890,6 @@ whenever they store elements of a type that conforms to ``TextRepresentable``.
       let myDice = [d6, d12]
    -> print(myDice.textualDescription)
    <- [A 6-sided dice, A 12-sided dice]
-
-For more on generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
 
 .. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
 
