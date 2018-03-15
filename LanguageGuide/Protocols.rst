@@ -872,7 +872,7 @@ You can make a generic type conditionally conform to a protocol
 by listing constraints when extending the type.
 Write these constraints after the name of the protocol you're adopting
 by writing a generic ``where`` clause.
-For more on generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
+For more about generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
 
 With the following extension,
 ``Array`` instances conform to the ``TextRepresentable`` protocol
