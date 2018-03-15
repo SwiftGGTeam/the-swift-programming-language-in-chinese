@@ -412,7 +412,7 @@ see :ref:`Initialization_RequiredInitializers`.
    You don't need to mark protocol initializer implementations with the ``required`` modifier
    on classes that are marked with the ``final`` modifier,
    because final classes can't subclassed.
-   For more on the ``final`` modifier, see :ref:`Inheritance_PreventingOverrides`.
+   For more about the ``final`` modifier, see :ref:`Inheritance_PreventingOverrides`.
 
 .. assertion:: finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements
 
@@ -1073,7 +1073,7 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    Use a class-only protocol when the behavior defined by that protocol's requirements
    assumes or requires that a conforming type has
    reference semantics rather than value semantics.
-   For more on reference and value semantics,
+   For more about reference and value semantics,
    see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`
    and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
 

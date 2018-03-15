@@ -341,7 +341,7 @@ such as the ``if`` statement:
    << hello, world
    // Prints "hello, world", because name is indeed equal to "world".
 
-For more on the ``if`` statement, see :doc:`ControlFlow`.
+For more about the ``if`` statement, see :doc:`ControlFlow`.
 
 You can compare
 two tuples if they have the same type and the same number of values.
@@ -598,7 +598,7 @@ such as with a ``for``-``in`` loop:
    </ 4 times 5 is 20
    </ 5 times 5 is 25
 
-For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
+For more about ``for``-``in`` loops, see :doc:`ControlFlow`.
 
 .. _BasicOperators_HalfClosedRangeOperator:
 
@@ -652,7 +652,7 @@ Note that the array contains four items,
 but ``0..<count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it's a half-open range.
-For more on arrays, see :ref:`CollectionTypes_Arrays`.
+For more about arrays, see :ref:`CollectionTypes_Arrays`.
 
 .. _BasicOperators_OneSidedRanges:
 

@@ -1050,7 +1050,7 @@ This is known as :newTerm:`forced unwrapping` of the optional's value:
       }
    <- convertedNumber has an integer value of 123.
 
-For more on the ``if`` statement, see :doc:`ControlFlow`.
+For more about the ``if`` statement, see :doc:`ControlFlow`.
 
 .. note::
 

@@ -21,7 +21,7 @@ you will retrieve from a collection.
 .. note::
 
    Swift's array, set, and dictionary types are implemented as :newTerm:`generic collections`.
-   For more on generic types and collections, see :doc:`Generics`.
+   For more about generic types and collections, see :doc:`Generics`.
 
 .. TODO: should I mention the Collection protocol, to which both of these conform?
 

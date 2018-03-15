@@ -66,7 +66,7 @@ in which they will be retrieved.
 In particular,
 the order you insert items into a ``Dictionary``
 doesn't define the order they are iterated.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.
+For more about arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
@@ -141,7 +141,7 @@ Consider drawing the tick marks for every minute on a watch face.
 You want to draw ``60`` tick marks, starting with the ``0`` minute.
 Use the half-open range operator (``..<``) to include the
 lower bound but not the upper bound.
-For more on ranges, see :ref:`BasicOperators_RangeOperators`.
+For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 
 .. testcode:: forLoops
 
