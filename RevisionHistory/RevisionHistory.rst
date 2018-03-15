@@ -4,13 +4,12 @@ Document Revision History
 This table describes the changes to *The Swift Programming Language*.
 
 .. write-me::
-   Need a real ship date.
    Combine entries for guide/reference conditional conformance
 
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-9999-99-99  * Updated for Swift 4.1.
+2018-03-29  * Updated for Swift 4.1.
 
             * Added information about conditional conformance
               to the :ref:`Declarations_ExtensionDeclaration` section.
