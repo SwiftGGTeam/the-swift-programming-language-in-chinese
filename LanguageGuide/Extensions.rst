@@ -204,7 +204,7 @@ as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
 
 If you use an extension to add an initializer to a structure
 from a module other than the module that declares that structure,
-the new initializer must call one of the initializers from the original declaration
+the new initializer must call one of the initializers from the original module
 before using or changing ``self``.
 
 The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
