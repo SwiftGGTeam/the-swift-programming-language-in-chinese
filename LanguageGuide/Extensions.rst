@@ -202,6 +202,11 @@ This wouldn't be the case if you had written the initializer
 as part of the value type's original implementation,
 as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
 
+If you use an extension to add an initializer to a structure
+from a module other than the module that declares that structure,
+the new initializer must call one of the initializers from the original declaration
+before using or changing ``self``.
+
 The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
 The example also defines two supporting structures called ``Size`` and ``Point``,
 both of which provide default values of ``0.0`` for all of their properties:
