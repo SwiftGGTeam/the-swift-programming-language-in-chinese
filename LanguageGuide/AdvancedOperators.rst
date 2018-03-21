@@ -738,7 +738,7 @@ In the context of ``Vector2D``,
 it makes sense to consider “equal” as meaning
 “both instances have the same ``x`` values and ``y`` values”,
 and so this is the logic used by the operator implementation.
-A default implementation of the “not equal to” operator (``!=``) is provided by the ``Equatable`` protocol,
+The standard library provides a default implementation of the “not equal to” operator (``!=``),
 which simply returns the inverse of the result of the “equal to” operator.
 
 You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
@@ -754,12 +754,13 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
       }
    <- These two vectors are equivalent.
 
-If your custom structure has only stored properties that conform to the ``Equatable`` protocol,
-or your custom enumeration has no associated types
-or only associated types that conform to the ``Equatable`` protocol,
-your type can receive automatically synthesized default implementations of the equivalence operators.
-To receive these synthesized default implementations,
-declare ``Equatable`` conformance as part of the types original declaration.
+Swift provides default implementations of the equivalence operators for certain kinds of custom types:
+
+- structures that have only stored properties that conform to the ``Equatable`` protocol
+- enumerations that have only associated types that conform to the ``Equatable`` protocol
+- enumerations with no associated types
+
+Declare ``Equatable`` conformance as part of the type's original declaration to receive these default implementations.
 
 This example defines a ``Vector3D`` structure
 for a three-dimensional position vector ``(x, y, z)``,
