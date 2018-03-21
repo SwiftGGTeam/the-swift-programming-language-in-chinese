@@ -874,8 +874,8 @@ Write these constraints after the name of the protocol you're adopting
 by writing a generic ``where`` clause.
 For more about generic ``where`` clauses, see :ref:`Generics_WhereClauses`.
 
-With the following extension,
-``Array`` instances conform to the ``TextRepresentable`` protocol
+The following extension
+makes ``Array`` instances conform to the ``TextRepresentable`` protocol
 whenever they store elements of a type that conforms to ``TextRepresentable``.
 
 .. testcode:: protocols
