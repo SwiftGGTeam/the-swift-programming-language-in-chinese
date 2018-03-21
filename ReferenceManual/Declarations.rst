@@ -1847,7 +1847,7 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     !! ^
     ---
     // This syntax is preferred.
-    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
+    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 .. TODO: Finish writing this section after WWDC.
 
@@ -2153,7 +2153,7 @@ instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
-Declarations in a protocol extension's body can't be marked ``final``.
+Declarations in a protocol extension can't be marked ``final``.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
@@ -2207,9 +2207,10 @@ by including *requirements* in an extension declaration.
 Overridden Requirements Aren't Used in Some Generic Contexts
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-When using types that get behavior from conditional conformance,
-specialized implementations of protocol requirements are not called
-when used in some generic contexts.
+In some generic contexts,
+types that get behavior from conditional conformance to a protocol
+don't always use the specialized implementations
+of that protocol's requirements.
 To illustrate this behavior,
 the following example defines two protocols
 and a generic type that conditionally conforms to both protocols.
@@ -2247,7 +2248,7 @@ and a generic type that conditionally conforms to both protocols.
           }
       }
    ---
-      extension Pair: Loggable where T: Loggable {}      
+      extension Pair: Loggable where T: Loggable { }
       extension Pair: TitledLoggable where T: TitledLoggable {
           static var logTitle: String {
               return "Pair of '\(T.logTitle)'"
@@ -2259,12 +2260,13 @@ and a generic type that conditionally conforms to both protocols.
             return "String"
          }
       }
-      
+
 The ``Pair`` structure conforms to ``Loggable`` and ``TitledLoggable``
 whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
 In the example below,
-``oneAndTwo`` conforms to ``TitledLoggable`` because it's an instance of ``Pair<String>``,
-and ``String`` conforms to ``TitledLoggable``.
+``oneAndTwo`` is an instance of ``Pair<String>``,
+which conforms to ``TitledLoggable``
+because ``String`` conforms to ``TitledLoggable``.
 When the ``log()`` method is called on ``oneAndTwo`` directly,
 the specialized version containing the title string is used.
 
@@ -2273,14 +2275,14 @@ the specialized version containing the title string is used.
    -> let oneAndTwo = Pair(first: "one", second: "two")
    -> oneAndTwo.log()
    <- Pair of 'String': (one, two)
-   
+
 However, when ``oneAndTwo`` is used in a generic context
 or as an instance of the ``Loggable`` protocol,
-the specialized version is not used.
-Swift picks which implementation of ``log()`` to call 
+the specialized version isn't used.
+Swift picks which implementation of ``log()`` to call
 by consulting only the minimum requirements that ``Pair`` needs to conform to ``Loggable``.
-For this reason, 
-the default implementation given by the ``Loggable`` protocol is used instead.
+For this reason,
+the default implementation provided by the ``Loggable`` protocol is used instead.
 
 .. testcode:: conditional-conformance
 
@@ -2309,7 +2311,7 @@ The second situation is when
 you implicitly inherit from the same protocol multiple times.
 These situations are discussed in the sections below.
 
-.. _Declarations_NoRedundantConformance:
+.. _Declarations_ResolvingExplicitRedundancy:
 
 Resolving Explicit Redundancy
 +++++++++++++++++++++++++++++
@@ -2317,9 +2319,11 @@ Resolving Explicit Redundancy
 Multiple extensions on a concrete type
 can't add conformance to the same protocol,
 even if the extensions' requirements are mutually exclusive.
-This restriction is demonstrated in the example below,
-in which two extension declarations attempt to add conditional conformance
-to the ``Serializable`` protocol for arrays with ``Int`` and ``String`` elements:
+This restriction is demonstrated in the example below.
+Two extension declarations attempt to add conditional conformance
+to the ``Serializable`` protocol,
+one for for arrays with ``Int`` elements,
+and one for arrays with ``String`` elements.
 
 .. testcode:: multiple-conformances
 
@@ -2353,10 +2357,10 @@ and use that protocol as the requirement when declaring conditional conformance.
 
 .. testcode:: multiple-conformances-success
 
-   >> protocol Serializable {}
-   -> protocol SerializableInArray {}
-      extension Int: SerializableInArray {}
-      extension String: SerializableInArray {}
+   >> protocol Serializable { }
+   -> protocol SerializableInArray { }
+      extension Int: SerializableInArray { }
+      extension String: SerializableInArray { }
    ---
    -> extension Array: Serializable where Element: SerializableInArray {
           func serialize() -> Any {
@@ -2398,56 +2402,56 @@ to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
          }
       }
    ---
-      extension Array: Loggable where Element: Loggable {}
+      extension Array: Loggable where Element: Loggable { }
       extension Array: TitledLoggable where Element: TitledLoggable {
          static var logTitle: String {
             return "Array of '\(Element.logTitle)'"
          }
       }
-      extension Array: MarkedLoggable where Element: MarkedLoggable {}
-      
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+
 Without the extension
 to explicitly declare conditional conformance to ``Loggable``,
-the other ``Array`` extensions would implicitly create these declarations, 
+the other ``Array`` extensions would implicitly create these declarations,
 resulting in an error:
 
 .. testcode:: conditional-conformance-implicit-overlap
 
-   >> protocol Loggable {}
-   >> protocol MarkedLoggable : Loggable {}
-   >> protocol TitledLoggable : Loggable {}
-   -> extension Array: Loggable where Element: TitledLoggable {}
-      extension Array: Loggable where Element: MarkedLoggable {} 
+   >> protocol Loggable { }
+   >> protocol MarkedLoggable : Loggable { }
+   >> protocol TitledLoggable : Loggable { }
+   -> extension Array: Loggable where Element: TitledLoggable { }
+      extension Array: Loggable where Element: MarkedLoggable { }
       // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
    !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
-   !! extension Array: Loggable where Element: MarkedLoggable {}
+   !! extension Array: Loggable where Element: MarkedLoggable { }
    !! ^
    !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
-   !! extension Array: Loggable where Element: TitledLoggable {}
+   !! extension Array: Loggable where Element: TitledLoggable { }
    !! ^
 
 .. assertion:: types-cant-have-multiple-implict-conformances
 
-   >> protocol Loggable {}
-      protocol TitledLoggable: Loggable {}
-      protocol MarkedLoggable: Loggable {}
+   >> protocol Loggable { }
+      protocol TitledLoggable: Loggable { }
+      protocol MarkedLoggable: Loggable { }
       extension Array: TitledLoggable where Element: TitledLoggable {
           // ...
       }
-      extension Array: MarkedLoggable where Element: MarkedLoggable {} 
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! <REPL Input>:1:1: error: type 'Element' does not conform to protocol 'TitledLoggable'
-   !! extension Array: MarkedLoggable where Element: MarkedLoggable {}
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
    !! <REPL Input>:1:1: error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
-   !! extension Array: MarkedLoggable where Element: MarkedLoggable {}
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
    !! <REPL Input>:1:1: note: requirement specified as 'Element' : 'TitledLoggable'
-   !! extension Array: MarkedLoggable where Element: MarkedLoggable {}
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
    !! <REPL Input>:1:1: note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
-   !! extension Array: MarkedLoggable where Element: MarkedLoggable {}
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
-   
+
 .. assertion:: extension-can-have-where-clause
 
    >> extension Array where Element: Equatable {
