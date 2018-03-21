@@ -207,6 +207,7 @@
     "declarations-accesscontrollevels": "ID382", 
     "declarations-classdeclaration": "ID368", 
     "declarations-computedvariablesandcomputedproperties": "ID358", 
+    "declarations-conditionalconformance": "ID576", 
     "declarations-constantdeclaration": "ID355", 
     "declarations-declarationmodifiers": "ID381", 
     "declarations-deinitializerdeclaration": "ID377", 
@@ -214,6 +215,7 @@
     "declarations-enumerationswithcasesofanytype": "ID365", 
     "declarations-enumerationswithindirection": "ID537", 
     "declarations-enumerationswithrawcasevalues": "ID366", 
+    "declarations-explicitconformanceinheritance": "ID580", 
     "declarations-extensiondeclaration": "ID378", 
     "declarations-failableinitializers": "ID376", 
     "declarations-functiondeclaration": "ID362", 
@@ -221,7 +223,9 @@
     "declarations-importdeclaration": "ID354", 
     "declarations-initializerdeclaration": "ID375", 
     "declarations-inoutparameters": "ID545", 
+    "declarations-noredundantconformance": "ID578", 
     "declarations-operatordeclaration": "ID380", 
+    "declarations-overrideconformance": "ID577", 
     "declarations-precedencegroupdeclaration": "ID550", 
     "declarations-protocolassociatedtypedeclaration": "ID374", 
     "declarations-protocoldeclaration": "ID369", 
@@ -229,6 +233,7 @@
     "declarations-protocolmethoddeclaration": "ID371", 
     "declarations-protocolpropertydeclaration": "ID370", 
     "declarations-protocolsubscriptdeclaration": "ID373", 
+    "declarations-resolvingexplicitredundancy": "ID579", 
     "declarations-rethrowingfunctionsandmethods": "ID531", 
     "declarations-staticvariableproperties": "ID360", 
     "declarations-storedvariableobserversandpropertyobservers": "ID359", 
@@ -593,5 +598,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 576
+  "next_id": 581
 }

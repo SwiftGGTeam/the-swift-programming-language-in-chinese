@@ -28,7 +28,7 @@ Enumerations can also define initializers to provide an initial case value;
 can be extended to expand their functionality beyond their original implementation;
 and can conform to protocols to provide standard functionality.
 
-For more on these capabilities, see
+For more about these capabilities, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 

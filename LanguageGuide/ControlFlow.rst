@@ -66,7 +66,7 @@ in which they will be retrieved.
 In particular,
 the order you insert items into a ``Dictionary``
 doesn't define the order they are iterated.
-For more on arrays and dictionaries, see :doc:`CollectionTypes`.
+For more about arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
@@ -141,7 +141,7 @@ Consider drawing the tick marks for every minute on a watch face.
 You want to draw ``60`` tick marks, starting with the ``0`` minute.
 Use the half-open range operator (``..<``) to include the
 lower bound but not the upper bound.
-For more on ranges, see :ref:`BasicOperators_RangeOperators`.
+For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 
 .. testcode:: forLoops
 
@@ -1479,16 +1479,7 @@ the availability condition takes a list of platform names and versions.
 You use platform names such as ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` ---
 for the full list, see :ref:`Attributes_DeclarationAttributes`.
 In addition to specifying major version numbers like iOS 8 or macOS 10.10,
-you can specify minor versions numbers like iOS 8.3 and macOS 10.10.3.
-
-.. FIXME: In the above line, changed "OS X 10.10.3" to "macOS 10.10.3",
-    even though the new editorial guidelines state to only use "macOS"
-    for versions of the OS that are 10.12 and later.
-    However, in the context in which this appears,
-    the more helpful thing to do is to use "macOS",
-    especially because that's what you're going to use in the language.
-    When we have an minor version of 10.12 to use as an example here,
-    we should use that instead.
+you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
 
 .. syntax-outline::
 
