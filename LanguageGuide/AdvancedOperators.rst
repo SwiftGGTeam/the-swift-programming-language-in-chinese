@@ -769,7 +769,7 @@ for a three-dimensional position vector ``(x, y, z)``,
 similar to the ``Vector2D`` structure.
 Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
 ``Vector3D`` receives default implementations
-of the "equal to" and "not equal to" operators.
+of the equivalence operators.
 
 .. testcode:: equatable_synthesis
 
