@@ -193,17 +193,19 @@ but they cannot add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers
 must always be provided by the original class implementation.
 
-.. note::
+If you use an extension to add an initializer to a value type that provides
+default values for all of its stored properties
+and does not define any custom initializers,
+you can call the default initializer and memberwise initializer for that value type
+from within your extension's initializer.
+This wouldn't be the case if you had written the initializer
+as part of the value type's original implementation,
+as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
 
-   If you use an extension to add an initializer to a value type that provides
-   default values for all of its stored properties
-   and does not define any custom initializers,
-   you can call the default initializer and memberwise initializer for that value type
-   from within your extension's initializer.
-
-   This would not be the case if you had written the initializer
-   as part of the value type's original implementation,
-   as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
+If you use an extension to add an initializer to a structure
+that was declared in another module,
+the new initializer can't access ``self`` until it calls
+an initializer from the defining module.
 
 The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
 The example also defines two supporting structures called ``Size`` and ``Point``,
