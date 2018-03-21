@@ -757,9 +757,9 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
 Swift provides synthesized implementations of the equivalence operators
 for the following kinds of custom types:
 
-- structures that have only stored properties that conform to the ``Equatable`` protocol
-- enumerations that have only associated types that conform to the ``Equatable`` protocol
-- enumerations that have no associated types
+* structures that have only stored properties that conform to the ``Equatable`` protocol
+* enumerations that have only associated types that conform to the ``Equatable`` protocol
+* enumerations that have no associated types
 
 Declare ``Equatable`` conformance as part of the type's original declaration
 to receive these default implementations.
