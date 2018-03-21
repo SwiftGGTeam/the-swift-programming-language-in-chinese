@@ -1781,7 +1781,6 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
-
 Protocol Subscript Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1848,7 +1847,7 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     !! ^
     ---
     // This syntax is preferred.
-    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
+    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 .. TODO: Finish writing this section after WWDC.
 
@@ -2154,6 +2153,7 @@ instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
+Declarations in a protocol extension can't be marked ``final``.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
@@ -2161,8 +2161,6 @@ If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
 the extension extends all types that conform to that protocol.
-Declarations in a protocol extension's body
-can't be marked ``final``.
 
 Extension declarations that extend a generic type
 or a protocol with associated types
@@ -2189,11 +2187,270 @@ class, structure, or enumeration type by specifying *adopted protocols*:
        <#declarations#>
     }
 
-If an extension that adds protocol conformance also includes requirements,
-only instances of the extended type that satisfy the requirements gain that conformance.
-
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
+
+.. _Declarations_ConditionalConformance:
+
+Conditional Conformance
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can extend a generic type
+to conditionally conform to a protocol,
+so that instances of the type conform to the protocol
+only when certain requirements are met.
+You add conditional conformance to a protocol
+by including *requirements* in an extension declaration.
+
+.. _Declarations_OverrideConformance:
+
+Overridden Requirements Aren't Used in Some Generic Contexts
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+In some generic contexts,
+types that get behavior from conditional conformance to a protocol
+don't always use the specialized implementations
+of that protocol's requirements.
+To illustrate this behavior,
+the following example defines two protocols
+and a generic type that conditionally conforms to both protocols.
+
+.. This test needs to be compiled so that it will recognize Pair's
+   CustomStringConvertible conformance -- the deprecated REPL doesn't
+   seem to use the description property at all.
+
+.. testcode:: conditional-conformance
+   :compile: true
+
+   -> protocol Loggable {
+          func log()
+      }
+      extension Loggable {
+          func log() {
+              print(self)
+          }
+      }
+   ---
+      protocol TitledLoggable: Loggable {
+          static var logTitle: String { get }
+      }
+      extension TitledLoggable {
+          func log() {
+              print("\(Self.logTitle): \(self)")
+          }
+      }
+   ---
+      struct Pair<T>: CustomStringConvertible {
+          let first: T
+          let second: T
+          var description: String {
+              return "(\(first), \(second))"
+          }
+      }
+   ---
+      extension Pair: Loggable where T: Loggable { }
+      extension Pair: TitledLoggable where T: TitledLoggable {
+          static var logTitle: String {
+              return "Pair of '\(T.logTitle)'"
+          }
+      }
+   ---
+      extension String: TitledLoggable {
+         static var logTitle: String {
+            return "String"
+         }
+      }
+
+The ``Pair`` structure conforms to ``Loggable`` and ``TitledLoggable``
+whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
+In the example below,
+``oneAndTwo`` is an instance of ``Pair<String>``,
+which conforms to ``TitledLoggable``
+because ``String`` conforms to ``TitledLoggable``.
+When the ``log()`` method is called on ``oneAndTwo`` directly,
+the specialized version containing the title string is used.
+
+.. testcode:: conditional-conformance
+
+   -> let oneAndTwo = Pair(first: "one", second: "two")
+   -> oneAndTwo.log()
+   <- Pair of 'String': (one, two)
+
+However, when ``oneAndTwo`` is used in a generic context
+or as an instance of the ``Loggable`` protocol,
+the specialized version isn't used.
+Swift picks which implementation of ``log()`` to call
+by consulting only the minimum requirements that ``Pair`` needs to conform to ``Loggable``.
+For this reason,
+the default implementation provided by the ``Loggable`` protocol is used instead.
+
+.. testcode:: conditional-conformance
+
+   -> func doSomething<T: Loggable>(with x: T) {
+         x.log()
+      }
+      doSomething(with: oneAndTwo)
+   <- (one, two)
+
+When ``log()`` is called on the instance that's passed to ``doSomething(_:)``,
+the customized title is omitted from the logged string.
+
+.. _Declarations_NoRedundantConformance:
+
+Protocol Conformance Must Not Be Redundant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A concrete type can conform to a particular protocol only once.
+Swift marks redundant protocol conformances as an error.
+You're likely to encounter this kind of error
+in two kinds of situations.
+The first situation is when
+you explicitly conform to the same protocol multiple times,
+but with different requirements.
+The second situation is when
+you implicitly inherit from the same protocol multiple times.
+These situations are discussed in the sections below.
+
+.. _Declarations_ResolvingExplicitRedundancy:
+
+Resolving Explicit Redundancy
++++++++++++++++++++++++++++++
+
+Multiple extensions on a concrete type
+can't add conformance to the same protocol,
+even if the extensions' requirements are mutually exclusive.
+This restriction is demonstrated in the example below.
+Two extension declarations attempt to add conditional conformance
+to the ``Serializable`` protocol,
+one for for arrays with ``Int`` elements,
+and one for arrays with ``String`` elements.
+
+.. testcode:: multiple-conformances
+
+   -> protocol Serializable {
+         func serialize() -> Any
+      }
+   ---
+      extension Array: Serializable where Element == Int {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      extension Array: Serializable where Element == String {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! extension Array: Serializable where Element == String {
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+   !! extension Array: Serializable where Element == Int {
+   !! ^
+
+If you need to add conditional conformance based on multiple concrete types,
+create a new protocol that each type can conform to
+and use that protocol as the requirement when declaring conditional conformance.
+
+.. testcode:: multiple-conformances-success
+
+   >> protocol Serializable { }
+   -> protocol SerializableInArray { }
+      extension Int: SerializableInArray { }
+      extension String: SerializableInArray { }
+   ---
+   -> extension Array: Serializable where Element: SerializableInArray {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+
+.. _Declarations_ExplicitConformanceInheritance:
+
+Resolving Implicit Redundancy
++++++++++++++++++++++++++++++
+
+When a concrete type conditionally conforms to a protocol,
+that type implicitly conforms to any parent protocols
+with the same requirements.
+
+If you need a type to conditionally conform to two protocols
+that inherit from a single parent,
+explicitly declare conformance to the parent protocol.
+This avoids implicitly conforming to the parent protocol twice
+with different requirements.
+
+The following example explicitly declares
+the conditional conformance of ``Array`` to ``Loggable``
+to avoid a conflict when declaring its conditional conformance
+to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
+
+.. testcode:: conditional-conformance
+
+   -> protocol MarkedLoggable: Loggable {
+         func markAndLog()
+      }
+   ---
+      extension MarkedLoggable {
+         func markAndLog() {
+            print("----------")
+            log()
+         }
+      }
+   ---
+      extension Array: Loggable where Element: Loggable { }
+      extension Array: TitledLoggable where Element: TitledLoggable {
+         static var logTitle: String {
+            return "Array of '\(Element.logTitle)'"
+         }
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+
+Without the extension
+to explicitly declare conditional conformance to ``Loggable``,
+the other ``Array`` extensions would implicitly create these declarations,
+resulting in an error:
+
+.. testcode:: conditional-conformance-implicit-overlap
+
+   >> protocol Loggable { }
+   >> protocol MarkedLoggable : Loggable { }
+   >> protocol TitledLoggable : Loggable { }
+   -> extension Array: Loggable where Element: TitledLoggable { }
+      extension Array: Loggable where Element: MarkedLoggable { }
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! extension Array: Loggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
+   !! extension Array: Loggable where Element: TitledLoggable { }
+   !! ^
+
+.. assertion:: types-cant-have-multiple-implict-conformances
+
+   >> protocol Loggable { }
+      protocol TitledLoggable: Loggable { }
+      protocol MarkedLoggable: Loggable { }
+      extension Array: TitledLoggable where Element: TitledLoggable {
+          // ...
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! <REPL Input>:1:1: error: type 'Element' does not conform to protocol 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: requirement specified as 'Element' : 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
 
 .. assertion:: extension-can-have-where-clause
 
@@ -2229,6 +2486,7 @@ and therefore you can specify only a list of protocols after the *type name* and
 
     extension-members --> extension-member extension-members-OPT
     extension-member --> declaration | compiler-control-statement
+
 
 .. _Declarations_SubscriptDeclaration:
 
