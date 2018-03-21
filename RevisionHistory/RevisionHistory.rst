@@ -8,6 +8,9 @@ Date        Notes
 ==========  ==============================================================================================
 2018-03-29  * Updated for Swift 4.1.
 
+            * Added information about synthesized implementations of equivalence operators
+              to the :ref:`AdvancedOperators_EquivalenceOperators` section.
+
             * Added information about conditional protocol conformance
               to the :ref:`Declarations_ExtensionDeclaration` section
               of the :doc:`../ReferenceManual/Declarations` chapter,
