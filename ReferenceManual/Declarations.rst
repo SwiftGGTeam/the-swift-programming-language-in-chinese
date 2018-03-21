@@ -2222,36 +2222,36 @@ and a generic type that conditionally conforms to both protocols.
    :compile: true
 
    -> protocol Loggable {
-        func log()
+          func log()
       }
       extension Loggable {
-        func log() {
-          print(self)
-        }
+          func log() {
+              print(self)
+          }
       }
    ---
       protocol TitledLoggable: Loggable {
-        static var logTitle: String { get }
+          static var logTitle: String { get }
       }
       extension TitledLoggable {
-        func log() {
-          print("\(Self.logTitle): \(self)")
-        }
+          func log() {
+              print("\(Self.logTitle): \(self)")
+          }
       }
    ---
       struct Pair<T>: CustomStringConvertible {
-        let first: T
-        let second: T
-        var description: String {
-          return "(\(first), \(second))"
-        }
+          let first: T
+          let second: T
+          var description: String {
+              return "(\(first), \(second))"
+          }
       }
    ---
       extension Pair: Loggable where T: Loggable {}      
       extension Pair: TitledLoggable where T: TitledLoggable {
-        static var logTitle: String {
-          return "Pair of '\(T.logTitle)'"
-        }
+          static var logTitle: String {
+              return "Pair of '\(T.logTitle)'"
+          }
       }
    ---
       extension String: TitledLoggable {
