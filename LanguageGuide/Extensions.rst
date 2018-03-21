@@ -203,9 +203,9 @@ as part of the value type's original implementation,
 as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
 
 If you use an extension to add an initializer to a structure
-from a module other than the module that declares that structure,
-the new initializer must call one of the initializers from the original module
-before using or changing ``self``.
+that was declared in another module,
+the new initializer can't access ``self`` until it calls
+an initializer from the defining module.
 
 The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
 The example also defines two supporting structures called ``Size`` and ``Point``,
