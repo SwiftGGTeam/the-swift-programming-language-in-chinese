@@ -49,7 +49,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
@@ -126,6 +126,18 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+    !! <REPL Input>:1:38: note: did you mean to use 'try'?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try
+    !! <REPL Input>:1:38: note: did you mean to handle error as optional value?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try?
+    !! <REPL Input>:1:38: note: did you mean to disable error propagation?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try!
 
 A ``try`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator
@@ -170,7 +182,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -294,7 +306,7 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` try-operator-OPT expression ``:``
+    conditional-operator --> ``?`` expression ``:``
 
 
 .. _Expressions_Type-CastingOperators:
@@ -801,6 +813,21 @@ The following closure expressions are equivalent:
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
 
+Closure expressions can be used
+without being stored in a variable or constant,
+such as when you immediately use a closure as part of a function call.
+The closure expressions passed to ``myFunction`` in code above are
+examples of this kind of immediate use.
+As a result,
+whether a closure expression is escaping or nonescaping depends
+on the surrounding context of the expression.
+A closure expression is nonescaping
+if it is called immediately
+or passed as a nonescaping function argument.
+Otherwise, the closure expression is escaping.
+
+For more information about escaping closures, see :ref:`Closures_Noescape`.
+
 .. _Expressions_CaptureLists:
 
 Capture Lists
@@ -1126,39 +1153,54 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A key-path expression lets you
-refer to a property
-for use in key-value coding and key-value observing APIs.
-It has the following form:
+A :newTerm:`key-path expression`
+refers to a property or subscript of a type.
+You use key-path expressions
+in dynamic programming tasks,
+such as key-value observing.
+They have the following form:
 
 .. syntax-outline::
 
-   \<#type name#>.<#property names#>
+   \<#type name#>.<#path#>
 
-The *property names* must be a reference to a property.
-At compile time, the key-path expression
-is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
-Key paths can be used to access properties
-by passing them to the ``subscript(keyPath:)`` subscript.
-(This subscript is available on all Swift types.)
+The *type name* is the name of a concrete type,
+including any generic parameters,
+such as ``String``, ``[Int]``, or ``Set<Int>``.
+
+The *path* consists of
+property names, subscripts, optional chaining expressions, 
+and forced unwrapping expressions.
+Each of these key-path components
+can be repeated as many times as needed,
+in any order.
+
+At compile time, a key-path expression
+is replaced by an instance
+of the `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ class.
+
+To access a value using a key path,
+pass the key path to the ``subscript(keyPath:)`` subscript,
+which is available on all types.
 For example:
 
 .. The subscript name subscript(keyPath:) above is a little odd,
-   but it matches what should be displayed on the web
-   when this API actually lands.
+   but it matches what would be displayed on the web.
+   There isn't actually an extension on Any that implements this subscript;
+   it's a special case in the compiler.
 
 .. testcode:: keypath-expression
 
    -> struct SomeStructure {
-         var someProperty: Int
+          var someValue: Int
       }
    ---
-   -> let s = SomeStructure(someProperty: 12)
-   << // s : SomeStructure = REPL.SomeStructure(someProperty: 12)
-   -> let keyPath = \SomeStructure.someProperty
-   << // keyPath : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
+   -> let s = SomeStructure(someValue: 12)
+   << // s : SomeStructure = REPL.SomeStructure(someValue: 12)
+   -> let pathToProperty = \SomeStructure.someValue
+   << // pathToProperty : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
    ---
-   -> let value = s[keyPath: keyPath]
+   -> let value = s[keyPath: pathToProperty]
    << // value : Int = 12
    /> value is \(value)
    </ value is 12
@@ -1166,11 +1208,10 @@ For example:
 The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
-For example,
-the following code uses ``\.someProperty``:
+The following code uses ``\.someProperty``
+instead of ``\SomeClass.someProperty``:
 
-
-.. testcode:: keypath-expression-TEMP
+.. testcode:: keypath-expression-implicit-type-name
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1183,55 +1224,30 @@ the following code uses ``\.someProperty``:
    -> let c = SomeClass(someProperty: 10)
    <~ // c : SomeClass = <REPL.SomeClass:
    -> c.observe(\.someProperty) { object, change in
-         // ...
+          // ...
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
 
-.. Omitting the type doesn't work properly in some places in beta 1
-   <rdar://problem/32237567> This keypath code doesn't ever complete executing
-
-   To get \.foo to compile, you have to pass an explicit type,
-   so the subscript works, which defeats the whole point:
-
-   // OK
-   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
-   let implied = s[keyPath: key]
-
-   // OK
-   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
-
-   // NOPE
-   s[keyPath: \.someProperty] as Int
-
-    .. testcode:: keypath-expression
-
-       -> let implied = s[keyPath: \.someProperty]
-       << // implied : Int = 12
-       /> implied is \(implied)
-       </ implied is 12
-
-.. FIXME This is similar to an implicit member expression --
-   likely worth calling out,
-   assuming I can confirm that it's the same kind of type-inference context
-   that lets both of them be used.
-
-The *property names* can contain multiple property names, separated by periods,
-which lets you access a property of the given property's value.
-For example,
-the following code uses ``\OuterStructure.outerProperty.someProperty``:
+The *path* can contain multiple property names, 
+separated by periods,
+to refer to a property of a property's value.
+This code uses the key path expression
+``\OuterStructure.outer.someValue``
+to access the ``someValue`` property
+of the ``OuterStructure`` type's ``outer`` property:
 
 .. testcode:: keypath-expression
 
    -> struct OuterStructure {
-         var outerProperty: SomeStructure
-         init(someProperty: Int) {
-             self.outerProperty = SomeStructure(someProperty: someProperty)
-         }
+          var outer: SomeStructure
+          init(someValue: Int) {
+              self.outer = SomeStructure(someValue: someValue)
+          }
       }
    ---
-   -> let nested = OuterStructure(someProperty: 24)
-   << // nested : OuterStructure = REPL.OuterStructure(outerProperty: REPL.SomeStructure(someProperty: 24))
-   -> let nestedKeyPath = \OuterStructure.outerProperty.someProperty
+   -> let nested = OuterStructure(someValue: 24)
+   << // nested : OuterStructure = REPL.OuterStructure(outer: REPL.SomeStructure(someValue: 24))
+   -> let nestedKeyPath = \OuterStructure.outer.someValue
    << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
    ---
    -> let nestedValue = nested[keyPath: nestedKeyPath]
@@ -1239,8 +1255,98 @@ the following code uses ``\OuterStructure.outerProperty.someProperty``:
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+The *path* can include subscripts using brackets,
+as long as the subscript's parameter type conforms to the ``Hashable`` protocol.
+This example uses a subscript in a key path
+to access the second element of an array:
+
+.. testcode:: keypath-expression
+
+   -> let greetings = ["hello", "hola", "bonjour", "안녕"]
+   << // greetings : [String] = ["hello", "hola", "bonjour", "안녕"]
+   -> let myGreeting = greetings[keyPath: \[String].[1]]
+   << // myGreeting : String = "hola"
+   /> myGreeting is '\(myGreeting)'
+   </ myGreeting is 'hola'
+
+.. TODO: Update examples here and below to remove type names once
+   inference bugs are fixed. The compiler currently gives an error
+   that the usage is ambiguous.
+   <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
+
+The value used in a subscript can be a named value or a literal.
+Values are captured in key paths using value semantics.
+The following code uses the variable ``index``
+in both a key-path expression and in a closure to access
+the third element of the ``greetings`` array.
+When ``index`` is modified,
+the key-path expression still references the third element,
+while the closure uses the new index.
+
+.. testcode:: keypath-expression
+
+   -> var index = 2
+   << // index : Int = 2
+   -> let path = \[String].[index]
+   << // path : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
+   -> let fn: ([String]) -> String = { strings in strings[index] }
+   <~ // fn :
+   ---
+   -> print(greetings[keyPath: path])
+   <- bonjour
+   -> print(fn(greetings))
+   <- bonjour
+   ---
+   // Setting 'index' to a new value doesn't affect 'path'
+   -> index += 1
+   -> print(greetings[keyPath: path])
+   <- bonjour
+   ---
+   // Because 'fn' closes over 'index', it uses the new value
+   -> print(fn(greetings))
+   <- 안녕
+   
+The *path* can use optional chaining and forced unwrapping.
+This code uses optional chaining in a key path
+to access a property of an optional string:
+
+.. testcode:: keypath-expression
+
+   -> let firstGreeting: String? = greetings.first
+   << // firstGreeting : String? = Optional("hello")
+   -> print(firstGreeting?.count as Any)
+   <- Optional(5)
+   ---
+   // Do the same thing using a key path.
+   -> let count = greetings[keyPath: \[String].first?.count]
+   << // count : Int? = Optional(5)
+   -> print(count as Any)
+   <- Optional(5)
+
+You can mix and match components of key paths to access values
+that are deeply nested within a type.
+The following code accesses different values and properties
+of a dictionary of arrays 
+by using key-path expressions 
+that combine these components.
+
+.. testcode:: keypath-expression
+
+   -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 15],
+                                "triangular": [1, 3, 6, 10, 15, 21, 28],
+                                "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   << // interestingNumbers : [String : [Int]] = ["prime": [2, 3, 5, 7, 11, 13, 15], "triangular": [1, 3, 6, 10, 15, 21, 28], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
+   <- Optional([2, 3, 5, 7, 11, 13, 15])
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
+   <- 2
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
+   <- 7
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
+   <- 64
+                                
 For more information about using key paths
-in Swift code that interacts with Objective-C APIs,
+in code that interacts with Objective-C APIs,
 see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
 in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 For information about key-value coding and key-value observing,
@@ -1253,17 +1359,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier
-
-.. FUTURE syntax-grammar
-
-   As of 2017-04-19 Joe Groff says he expects to only implement property names
-   for WWDC.  More stuff will land later.
-
-   key-path-expression --> ``\`` type-OPT ``.`` key-path-components
-
-   key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+   key-path-component --> identifier key-path-postfixes-OPT | key-path-postfixes
 
    key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
    key-path-postfix --> ``?`` | ``!`` | ``[`` function-call-argument-list ``]``
@@ -1446,7 +1542,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. langref-grammar
 

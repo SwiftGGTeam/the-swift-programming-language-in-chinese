@@ -125,10 +125,10 @@ For example:
    include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
-Use three double quotes (``"""``) for strings
+Use three double quotation marks (``"""``) for strings
 that take up multiple lines.
 Indentation at the start of each quoted line is removed,
-as long as it matches the indentation of the closing quote.
+as long as it matches the indentation of the closing quotation marks.
 For example:
 
 .. testcode:: guided-tour-compiled
@@ -138,13 +138,12 @@ For example:
    >> let apples = 3
    >> let oranges = 5
    -> let quotation = """
-          Even though there's whitespace to the left,
-          the actual lines aren't indented.
-              Except for this line.
-          Double quotes (") can appear without being escaped.
+      I said "I have \(apples) apples."
+      And then I said "I have \(apples + oranges) pieces of fruit."
+      """
 
-          I still have \(apples + oranges) pieces of fruit.
-          """
+.. Can't show an example of indentation in the triple-quoted string above.
+   <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
 
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing

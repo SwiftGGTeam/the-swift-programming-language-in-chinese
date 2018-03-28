@@ -10,7 +10,7 @@ Stored properties are provided only by classes and structures.
 .. assertion:: enumerationsCantProvideStoredProperties
 
    -> enum E { case a, b; var x = 0 }
-   !! <REPL Input>:1:25: error: enums may not contain stored properties
+   !! <REPL Input>:1:25: error: enums must not contain stored properties
    !! enum E { case a, b; var x = 0 }
    !! ^
 
@@ -67,7 +67,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed once it is created:
+whose range length cannot be changed after it is created:
 
 .. testcode:: storedProperties
 
@@ -316,7 +316,7 @@ and so you don't need to store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
-The preceding example creates a new ``Rect`` variable called ``square``.
+The example above creates a new ``Rect`` variable called ``square``.
 The ``square`` variable is initialized with an origin point of ``(0, 0)``,
 and a width and height of ``10``.
 This square is represented by the blue square in the diagram below.
@@ -396,10 +396,12 @@ and can be accessed through dot syntax, but cannot be set to a different value.
       }
    !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be computed properties
    !! let x: Int { return 42 }
-   !! ^
+   !! ~~~        ^
+   !! var
    !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be computed properties
    !! let y: Int { get { return 42 } set {} }
-   !! ^
+   !! ~~~        ^
+   !! var
 
 You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
@@ -474,7 +476,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
             didSet { print("C didSet x from \(oldValue)") }
          }
       }
-   !! <REPL Input>:2:6: error: lazy properties may not have observers
+   !! <REPL Input>:2:6: error: lazy properties must not have observers
    !! lazy var x: Int = 0 {
    !! ^~~~~
    !!-

@@ -28,7 +28,7 @@ Enumerations can also define initializers to provide an initial case value;
 can be extended to expand their functionality beyond their original implementation;
 and can conform to protocols to provide standard functionality.
 
-For more on these capabilities, see
+For more about these capabilities, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
@@ -74,7 +74,7 @@ You use the ``case`` keyword to introduce new enumeration cases.
    do not implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
    Instead, the different enumeration cases are fully-fledged values in their own right,
-   with an explicitly-defined type of ``CompassPoint``.
+   with an explicitly defined type of ``CompassPoint``.
 
 Multiple cases can appear on a single line, separated by commas:
 
@@ -107,7 +107,7 @@ you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 The type of ``directionToHead`` is already known,
 and so you can drop the type when setting its value.
-This makes for highly readable code when working with explicitly-typed enumeration values.
+This makes for highly readable code when working with explicitly typed enumeration values.
 
 .. _Enumerations_MatchingEnumerationValuesWithASwitchStatement:
 
@@ -459,8 +459,8 @@ For example, here is an enumeration that stores simple arithmetic expressions:
            indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
        }
 
-You can also write ``indirect`` before the beginning of the enumeration,
-to enable indirection for all of the enumeration's cases that need it:
+You can also write ``indirect`` before the beginning of the enumeration
+to enable indirection for all of the enumeration's cases that have an associated value:
 
 .. testcode:: recursive-enum
 

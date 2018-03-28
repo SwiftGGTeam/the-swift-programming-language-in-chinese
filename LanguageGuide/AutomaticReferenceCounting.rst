@@ -17,11 +17,9 @@ Using ARC in Swift is very similar to the approach described in
 `Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
 for using ARC with Objective-C.
 
-.. note::
-
-   Reference counting only applies to instances of classes.
-   Structures and enumerations are value types, not reference types,
-   and are not stored and passed by reference.
+Reference counting applies only to instances of classes.
+Structures and enumerations are value types, not reference types,
+and are not stored and passed by reference.
 
 .. _AutomaticReferenceCounting_HowARCWorks:
 
@@ -584,7 +582,7 @@ after the ``john`` variable is set to ``nil``.
     you need to disable runtime safety checks ---
     for example, for performance reasons.
     As with all unsafe operations,
-    you take on the responsiblity for checking that code for safety.
+    you take on the responsibility for checking that code for safety.
 
     You indicate an unsafe unowned reference by writing ``unowned(unsafe)``.
     If you try to access an unsafe unowned reference
@@ -959,7 +957,8 @@ This enables you to check for their existence within the closure's body.
    rather than a weak reference.
 
 An unowned reference is the appropriate capture method to use to resolve
-the strong reference cycle in the ``HTMLElement`` example from earlier.
+the strong reference cycle in the ``HTMLElement`` example
+from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above.
 Here's how you write the ``HTMLElement`` class to avoid the cycle:
 
 .. testcode:: unownedReferencesForClosures
@@ -1021,3 +1020,4 @@ as can be seen from the printing of its deinitializer message in the example bel
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
+

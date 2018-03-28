@@ -247,7 +247,8 @@ If you do not want to use an argument label for an initializer parameter,
 write an underscore (``_``) instead of an explicit argument label for that parameter
 to override the default behavior.
 
-Here's an expanded version of the ``Celsius`` example from earlier,
+Here's an expanded version of the ``Celsius`` example
+from :ref:`Initialization_InitializationParameters` above,
 with an additional initializer to create a new ``Celsius`` instance
 from a ``Double`` value that is already in the Celsius scale:
 

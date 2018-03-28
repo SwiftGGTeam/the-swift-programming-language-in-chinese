@@ -2,9 +2,10 @@ Declarations
 ============
 
 A :newTerm:`declaration` introduces a new name or construct into your program.
-For example, you use declarations to introduce functions and methods, variables and constants,
-and to define new, named enumeration, structure, class,
-and protocol types. You can also use a declaration to extend the behavior
+For example, you use declarations to introduce functions and methods,
+to introduce variables and constants,
+and to define enumeration, structure, class, and protocol types.
+You can also use a declaration to extend the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
 
 In Swift, most declarations are also definitions in the sense that they are implemented
@@ -165,7 +166,7 @@ is made available in the current scope.
 
     import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
-    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
+    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``let`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
     import-path-identifier --> identifier | operator
 
@@ -645,6 +646,13 @@ as the return type of the function.
 
 A function definition can appear inside another function declaration.
 This kind of function is known as a :newTerm:`nested function`.
+
+A nested function is nonescaping if it captures
+a value that is guaranteed to never escape---
+such as an in-out parameter---
+or passed as a nonescaping function argument.
+Otherwise, the nested function is an escaping function.
+
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.
 
@@ -735,48 +743,21 @@ Write your code using the model given by copy-in copy-out,
 without depending on the call-by-reference optimization,
 so that it behaves correctly with or without the optimization.
 
-Do not access the value that was passed as an in-out argument,
-even if the original argument is available in the current scope.
-When the function returns,
-your changes to the original are overwritten
-with the value of the copy.
-Do not depend on the implementation of the call-by-reference optimization
-to try to keep the changes from being overwritten.
+Within a function, don't access a value that was passed as an in-out argument,
+even if the original value is available in the current scope.
+Accessing the original is a simultaneous access of the value,
+which violates Swift's memory exclusivity guarantee.
+For the same reason,
+you can't pass the same value to multiple in-out parameters.
+
+For more information about memory safety and memory exclusivity,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. When the call-by-reference optimization is in play,
    it would happen to do what you want.
    But you still shouldn't do that --
    as noted above, you're not allowed to depend on
    behavioral differences that happen because of call by reference.
-
-You can't pass the same argument to multiple in-out parameters
-because the order in which the copies are written back
-is not well defined,
-which means the final value of the original
-would also not be well defined.
-For example:
-
-.. testcode:: cant-pass-inout-aliasing
-
-   -> var x = 10
-   << // x : Int = 10
-   -> func f(a: inout Int, b: inout Int) {
-          a += 1
-          b += 10
-      }
-   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!             ^~
-   !! <REPL Input>:1:6: note: previous aliasing argument
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!      ^~
-   !! <REPL Input>:1:6: error: overlapping accesses to 'x', but modification requires exclusive access; consider copying to a local variable
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!             ^~
-   !! <REPL Input>:1:13: note: conflicting access is here
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!      ^~
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
@@ -909,8 +890,11 @@ that doesn't override a superclass method.
 
 Methods associated with a type
 rather than an instance of a type
-must be marked with the ``static`` declaration modifier for enumerations and structures
-or the ``class`` declaration modifier for classes.
+must be marked with the ``static`` declaration modifier for enumerations and structures,
+or with either the ``static`` or ``class`` declaration modifier for classes.
+A class type method marked with the ``class`` declaration modifier
+can be overridden by a subclass implementation;
+a class type method marked with ``static`` can't be overridden.
 
 .. _Declarations_ThrowingFunctionsAndMethods:
 
@@ -1166,6 +1150,7 @@ the compiler must insert a layer of indirection.
 
 To enable indirection for a particular enumeration case,
 mark it with the ``indirect`` declaration modifier.
+An indirect case must have an associated value.
 
 .. TODO The word "enable" is kind of a weasle word.
    Better to have a more concrete discussion of exactly when
@@ -1185,13 +1170,12 @@ mark it with the ``indirect`` declaration modifier.
    << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
    << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
 
-To enable indirection for all the cases of an enumeration,
+To enable indirection for all the cases of an enumeration
+that have an associated value,
 mark the entire enumeration with the ``indirect`` modifier ---
 this is convenient when the enumeration contains many cases
 that would each need to be marked with the ``indirect`` modifier.
 
-An enumeration case that's marked with the ``indirect`` modifier
-must have an associated value.
 An enumeration that is marked with the ``indirect`` modifier
 can contain a mixture of cases that have associated values and cases those that don't.
 That said,
@@ -1797,7 +1781,6 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
-
 Protocol Subscript Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1864,7 +1847,7 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     !! ^
     ---
     // This syntax is preferred.
-    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
+    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 .. TODO: Finish writing this section after WWDC.
 
@@ -2147,21 +2130,18 @@ see :doc:`../LanguageGuide/Deinitialization`.
 
     deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 
-.. _Declarations_ExtensionDeclaration:
 
+.. _Declarations_ExtensionDeclaration:
 
 Extension Declaration
 ---------------------
 
 An :newTerm:`extension declaration` allows you to extend
 the behavior of existing types.
-Extension declarations are declared using the ``extension`` keyword and have the following forms:
+Extension declarations are declared using the ``extension`` keyword
+and have the following form:
 
 .. syntax-outline::
-
-    extension <#type name#>: <#adopted protocols#> {
-       <#declarations#>
-    }
 
     extension <#type name#> where <#requirements#> {
        <#declarations#>
@@ -2173,6 +2153,7 @@ instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
+Declarations in a protocol extension can't be marked ``final``.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
@@ -2180,36 +2161,296 @@ If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
 the extension extends all types that conform to that protocol.
-Declarations in a protocol extension's body
-can't be marked ``final``.
 
-Extension declarations can add protocol conformance to an existing
-class, structure, and enumeration type in the *adopted protocols*.
-Extension declarations can't add class inheritance to an existing class,
-and therefore you can specify only a list of protocols after the *type name* and colon.
-
-Extension declarations that extend a generic type can include *requirements*.
-If an instance of the extended type satisfies the *requirements*,
+Extension declarations that extend a generic type
+or a protocol with associated types
+can include *requirements*.
+If an instance of the extended type
+or of a type that conforms to the extended protocol
+satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
-
-Properties, methods, and initializers of an existing type
-can't be overridden in an extension of that type.
 
 Extension declarations can contain initializer declarations. That said,
 if the type you're extending is defined in another module,
 an initializer declaration must delegate to an initializer already defined in that module
 to ensure members of that type are properly initialized.
 
-.. TODO: TR: Verify that this is indeed the correct about initializers.
-    For example, the Language Guide says:
-    "If you provide a new initializer via an extension,
-    you are still responsible for making sure that each instance is fully initialized
-    once the initializer has completed, as described in
-    :ref:`ClassesAndStructures_DefiniteInitialization`.
-    Depending on the type you are extending, you may need to
-    delegate to another initializer or call a superclass initializer
-    at the end of your own initializer,
-    to ensure that all instance properties are fully initialized."
+Properties, methods, and initializers of an existing type
+can't be overridden in an extension of that type.
+
+Extension declarations can add protocol conformance to an existing
+class, structure, or enumeration type by specifying *adopted protocols*:
+
+.. syntax-outline::
+
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+       <#declarations#>
+    }
+
+Extension declarations can't add class inheritance to an existing class,
+and therefore you can specify only a list of protocols after the *type name* and colon.
+
+.. _Declarations_ConditionalConformance:
+
+Conditional Conformance
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can extend a generic type
+to conditionally conform to a protocol,
+so that instances of the type conform to the protocol
+only when certain requirements are met.
+You add conditional conformance to a protocol
+by including *requirements* in an extension declaration.
+
+.. _Declarations_OverrideConformance:
+
+Overridden Requirements Aren't Used in Some Generic Contexts
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+In some generic contexts,
+types that get behavior from conditional conformance to a protocol
+don't always use the specialized implementations
+of that protocol's requirements.
+To illustrate this behavior,
+the following example defines two protocols
+and a generic type that conditionally conforms to both protocols.
+
+.. This test needs to be compiled so that it will recognize Pair's
+   CustomStringConvertible conformance -- the deprecated REPL doesn't
+   seem to use the description property at all.
+
+.. testcode:: conditional-conformance
+   :compile: true
+
+   -> protocol Loggable {
+          func log()
+      }
+      extension Loggable {
+          func log() {
+              print(self)
+          }
+      }
+   ---
+      protocol TitledLoggable: Loggable {
+          static var logTitle: String { get }
+      }
+      extension TitledLoggable {
+          func log() {
+              print("\(Self.logTitle): \(self)")
+          }
+      }
+   ---
+      struct Pair<T>: CustomStringConvertible {
+          let first: T
+          let second: T
+          var description: String {
+              return "(\(first), \(second))"
+          }
+      }
+   ---
+      extension Pair: Loggable where T: Loggable { }
+      extension Pair: TitledLoggable where T: TitledLoggable {
+          static var logTitle: String {
+              return "Pair of '\(T.logTitle)'"
+          }
+      }
+   ---
+      extension String: TitledLoggable {
+         static var logTitle: String {
+            return "String"
+         }
+      }
+
+The ``Pair`` structure conforms to ``Loggable`` and ``TitledLoggable``
+whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
+In the example below,
+``oneAndTwo`` is an instance of ``Pair<String>``,
+which conforms to ``TitledLoggable``
+because ``String`` conforms to ``TitledLoggable``.
+When the ``log()`` method is called on ``oneAndTwo`` directly,
+the specialized version containing the title string is used.
+
+.. testcode:: conditional-conformance
+
+   -> let oneAndTwo = Pair(first: "one", second: "two")
+   -> oneAndTwo.log()
+   <- Pair of 'String': (one, two)
+
+However, when ``oneAndTwo`` is used in a generic context
+or as an instance of the ``Loggable`` protocol,
+the specialized version isn't used.
+Swift picks which implementation of ``log()`` to call
+by consulting only the minimum requirements that ``Pair`` needs to conform to ``Loggable``.
+For this reason,
+the default implementation provided by the ``Loggable`` protocol is used instead.
+
+.. testcode:: conditional-conformance
+
+   -> func doSomething<T: Loggable>(with x: T) {
+         x.log()
+      }
+      doSomething(with: oneAndTwo)
+   <- (one, two)
+
+When ``log()`` is called on the instance that's passed to ``doSomething(_:)``,
+the customized title is omitted from the logged string.
+
+.. _Declarations_NoRedundantConformance:
+
+Protocol Conformance Must Not Be Redundant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A concrete type can conform to a particular protocol only once.
+Swift marks redundant protocol conformances as an error.
+You're likely to encounter this kind of error
+in two kinds of situations.
+The first situation is when
+you explicitly conform to the same protocol multiple times,
+but with different requirements.
+The second situation is when
+you implicitly inherit from the same protocol multiple times.
+These situations are discussed in the sections below.
+
+.. _Declarations_ResolvingExplicitRedundancy:
+
+Resolving Explicit Redundancy
++++++++++++++++++++++++++++++
+
+Multiple extensions on a concrete type
+can't add conformance to the same protocol,
+even if the extensions' requirements are mutually exclusive.
+This restriction is demonstrated in the example below.
+Two extension declarations attempt to add conditional conformance
+to the ``Serializable`` protocol,
+one for for arrays with ``Int`` elements,
+and one for arrays with ``String`` elements.
+
+.. testcode:: multiple-conformances
+
+   -> protocol Serializable {
+         func serialize() -> Any
+      }
+   ---
+      extension Array: Serializable where Element == Int {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      extension Array: Serializable where Element == String {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !! extension Array: Serializable where Element == String {
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+   !! extension Array: Serializable where Element == Int {
+   !! ^
+
+If you need to add conditional conformance based on multiple concrete types,
+create a new protocol that each type can conform to
+and use that protocol as the requirement when declaring conditional conformance.
+
+.. testcode:: multiple-conformances-success
+
+   >> protocol Serializable { }
+   -> protocol SerializableInArray { }
+      extension Int: SerializableInArray { }
+      extension String: SerializableInArray { }
+   ---
+   -> extension Array: Serializable where Element: SerializableInArray {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+
+.. _Declarations_ExplicitConformanceInheritance:
+
+Resolving Implicit Redundancy
++++++++++++++++++++++++++++++
+
+When a concrete type conditionally conforms to a protocol,
+that type implicitly conforms to any parent protocols
+with the same requirements.
+
+If you need a type to conditionally conform to two protocols
+that inherit from a single parent,
+explicitly declare conformance to the parent protocol.
+This avoids implicitly conforming to the parent protocol twice
+with different requirements.
+
+The following example explicitly declares
+the conditional conformance of ``Array`` to ``Loggable``
+to avoid a conflict when declaring its conditional conformance
+to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
+
+.. testcode:: conditional-conformance
+
+   -> protocol MarkedLoggable: Loggable {
+         func markAndLog()
+      }
+   ---
+      extension MarkedLoggable {
+         func markAndLog() {
+            print("----------")
+            log()
+         }
+      }
+   ---
+      extension Array: Loggable where Element: Loggable { }
+      extension Array: TitledLoggable where Element: TitledLoggable {
+         static var logTitle: String {
+            return "Array of '\(Element.logTitle)'"
+         }
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+
+Without the extension
+to explicitly declare conditional conformance to ``Loggable``,
+the other ``Array`` extensions would implicitly create these declarations,
+resulting in an error:
+
+.. testcode:: conditional-conformance-implicit-overlap
+
+   >> protocol Loggable { }
+   >> protocol MarkedLoggable : Loggable { }
+   >> protocol TitledLoggable : Loggable { }
+   -> extension Array: Loggable where Element: TitledLoggable { }
+      extension Array: Loggable where Element: MarkedLoggable { }
+      // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! extension Array: Loggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
+   !! extension Array: Loggable where Element: TitledLoggable { }
+   !! ^
+
+.. assertion:: types-cant-have-multiple-implict-conformances
+
+   >> protocol Loggable { }
+      protocol TitledLoggable: Loggable { }
+      protocol MarkedLoggable: Loggable { }
+      extension Array: TitledLoggable where Element: TitledLoggable {
+          // ...
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! <REPL Input>:1:1: error: type 'Element' does not conform to protocol 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: requirement specified as 'Element' : 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
 
 .. assertion:: extension-can-have-where-clause
 
@@ -2223,15 +2464,14 @@ to ensure members of that type are properly initialized.
    >> x.f(x: y)
    << // r0 : Int = 7
 
-.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
+.. assertion:: extensions-can-have-where-clause-and-inheritance-together
 
-   >> protocol P { func foo() }
+   >> protocol P { func foo() -> Int }
    >> extension Array: P where Element: Equatable {
-   >>    func foo() {}
+   >>    func foo() -> Int { return 0 }
    >> }
-   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
-   !!    extension Array: P where Element: Equatable {
-   !!    ^                ~
+   >> [1, 2, 3].foo()
+   << // r0 : Int = 0
 
 .. langref-grammar
 
@@ -2241,12 +2481,12 @@ to ensure members of that type are properly initialized.
 
     Grammar of an extension declaration
 
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT generic-where-clause-OPT extension-body
     extension-body --> ``{`` extension-members-OPT ``}``
 
     extension-members --> extension-member extension-members-OPT
     extension-member --> declaration | compiler-control-statement
+
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -2462,9 +2702,9 @@ For example, the addition (``+``) and subtraction (``-``) operators
 belong to the ``AdditionPrecedence`` group,
 and the multiplication (``*``) and division (``/``) operators
 belong to the ``MultiplicationPrecedence`` group.
-For a complete list of operators and precedence groups
+For a complete list of precedence groups
 provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 The *associativity* of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.

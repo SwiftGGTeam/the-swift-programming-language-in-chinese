@@ -946,13 +946,15 @@ The *compilation condition* can include the ``true`` and ``false`` Boolean liter
 an identifier used with the ``-D`` command line flag, or any of the platform
 conditions listed in the table below.
 
-====================  ===================================================
-Platform condition    Valid arguments
-====================  ===================================================
-``os()``              ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
-``arch()``            ``i386``, ``x86_64``, ``arm``, ``arm64``
-``swift()``           ``>=`` followed by a version number
-====================  ===================================================
+========================  ===================================================
+Platform condition        Valid arguments
+========================  ===================================================
+``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
+``swift()``               ``>=`` followed by a version number
+``canImport()``           A module name
+``targetEnvironment()``   ``simulator``
+========================  ===================================================
 
 .. This table is duplicated in USWCAOC in Interoperability/InteractingWithCAPIs.rst
 
@@ -964,6 +966,17 @@ The version number for the ``swift()`` platform condition
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
+
+The argument for the ``canImport()`` platform condition
+is the name of a module that may not be present on all platforms.
+This condition tests whether it's possible to import the module,
+but doesn't actually import it.
+If the module is present, the platform condition returns ``true``;
+otherwise, it returns ``false``.
+
+The ``targetEnvironment()`` platform condition
+returns ``true`` when code is compiled for a simulator;
+otherwise, it returns ``false``.
 
 .. note::
 
@@ -999,6 +1012,8 @@ There must not be whitespace between ``>=`` and the version number.
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
+These operators have the same associativity and precedence as the
+logical operators that are used to combine ordinary Boolean expressions.
 
 Similar to an ``if`` statement,
 you can add multiple conditional branches to test for different compilation conditions.
@@ -1057,10 +1072,15 @@ have the following form:
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
+    platform-condition --> ``canImport`` ``(`` module-name ``)``
+    platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
+    
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
+    module-name --> identifier
+    environment --> ``simulator``
 
 .. Testing notes:
 
