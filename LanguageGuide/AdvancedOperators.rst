@@ -715,23 +715,20 @@ and uses it to set the left value to be the left value plus the right value:
 Equivalence Operators
 ~~~~~~~~~~~~~~~~~~~~~
 
-Custom classes and structures do not receive a default implementation of
+By default, custom classes and structures do not receive a default implementation of
 the :newTerm:`equivalence operators`,
 known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
-It is not possible for Swift to guess what would qualify as “equal” for your own custom types,
-because the meaning of “equal” depends on the roles that those types play in your code.
 
 To use the equivalence operators to check for equivalence of your own custom type,
-provide an implementation of the operators in the same way as for other infix operators:
+provide an implementation of the "equal to" operator
+in the same way as for other infix operators,
+and add conformance to the standard library's ``Equatable`` protocol:
 
 .. testcode:: customOperators
 
-   -> extension Vector2D {
+   -> extension Vector2D: Equatable {
           static func == (left: Vector2D, right: Vector2D) -> Bool {
              return (left.x == right.x) && (left.y == right.y)
-          }
-          static func != (left: Vector2D, right: Vector2D) -> Bool {
-             return !(left == right)
           }
       }
 
@@ -741,7 +738,7 @@ In the context of ``Vector2D``,
 it makes sense to consider “equal” as meaning
 “both instances have the same ``x`` values and ``y`` values”,
 and so this is the logic used by the operator implementation.
-The example also implements the “not equal to” operator (``!=``),
+The standard library provides a default implementation of the “not equal to” operator (``!=``),
 which simply returns the inverse of the result of the “equal to” operator.
 
 You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
@@ -756,6 +753,38 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
          print("These two vectors are equivalent.")
       }
    <- These two vectors are equivalent.
+
+Swift provides synthesized implementations of the equivalence operators
+for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the ``Equatable`` protocol
+* Enumerations that have only associated types that conform to the ``Equatable`` protocol
+* Enumerations that have no associated types
+
+Declare ``Equatable`` conformance as part of the type's original declaration
+to receive these default implementations.
+
+The example below defines a ``Vector3D`` structure
+for a three-dimensional position vector ``(x, y, z)``,
+similar to the ``Vector2D`` structure.
+Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
+``Vector3D`` receives default implementations
+of the equivalence operators.
+
+.. testcode:: equatable_synthesis
+
+   -> struct Vector3D: Equatable {
+         var x = 0.0, y = 0.0, z = 0.0
+      }
+   ---
+   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   << // twoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
+   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   << // anotherTwoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
+   -> if twoThreeFour == anotherTwoThreeFour {
+          print("These two vectors are also equivalent.")
+      }
+   <- These two vectors are also equivalent.
 
 .. _AdvancedOperators_CustomOperators:
 

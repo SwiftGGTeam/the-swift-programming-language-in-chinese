@@ -6,10 +6,16 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
-2018-02-06  * Updated for Swift 4.1.
+2018-03-29  * Updated for Swift 4.1.
 
-            * Added the :ref:`Protocols_DeclaringConditionalConformanceToAProtocol` section
-              with information about conditional protocol conformance.
+            * Added information about synthesized implementations of equivalence operators
+              to the :ref:`AdvancedOperators_EquivalenceOperators` section.
+
+            * Added information about conditional protocol conformance
+              to the :ref:`Declarations_ExtensionDeclaration` section
+              of the :doc:`../ReferenceManual/Declarations` chapter,
+              and to the :ref:`Protocols_DeclaringConditionalConformanceToAProtocol` section
+              of the :doc:`../LanguageGuide/Protocols` chapter.
 
             * Added information about recursive protocol constraints
               to the :ref:`Generics_RecursiveProtocol` section.
