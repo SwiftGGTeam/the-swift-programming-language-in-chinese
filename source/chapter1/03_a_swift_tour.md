@@ -22,6 +22,9 @@
 > 4.0
 > 翻译+校对：[muhlenxi](https://github.com/muhlenxi) 2017-09-26
 
+> 4.1
+> 翻译：[mylittleswift](https://github.com/mylittleswift)
+
 本页内容包括：
 
 -   [简单值（Simple Values）](#simple_values)
@@ -44,7 +47,8 @@ print("Hello, world!")
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解到。
 
 > 注意：
-> 在 Mac 中下载 Playground 文件并用双击的方式在 Xcode 中打开：[https://developer.apple.com/go/?id=swift-tour](https://developer.apple.com/go/?id=swift-tour)
+> 最好的体验是把这一章作为Playground文件在Xcode中打开。 Playgrounds允许你可以编辑代码并立刻看到输出结果。             
+> [Download Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
 ## 简单值
@@ -57,7 +61,7 @@ myVariable = 50
 let myConstant = 42
 ```
 
-常量或者变量的类型必须和你赋给它们的值一样。然而，你不用明确地声明类型。当你通过一个值来声明变量和常量时，编译器会自动推断其类型。在上面的例子中，编译器推断出 `myVariable` 是一个整数类型（integer）因为它的初始值是整数。
+常量或者变量的类型必须和你赋给它们的值一样。然而，你不用明确地声明类型。当你通过一个值来声明变量和常量时，编译器会自动推断其类型。在上面的例子中，编译器推断出 `myVariable` 是一个整数类型，因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
@@ -67,7 +71,7 @@ let implicitDouble = 70.0
 let explicitDouble: Double = 70
 ```
 
-> 练习：
+> 练习                                          
 > 创建一个常量，显式指定类型为 `Float` 并指定初始值为 4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
@@ -96,12 +100,8 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 ```swift
 let quotation = """
-Even though there's whitespace to the left,
-the actual lines aren't indented.
-Except for this line.
-Double quotes (") can appear without being escaped.
-
-I still have \(apples + oranges) pieces of fruit.
+I said "I have \(apples) apples."
+And then I said "I have \(apples + oranges) pieces of fruit."
 """
 ```
 
@@ -792,7 +792,7 @@ func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
     }
     return result
 }
-repeatItem(repeating: "knock", numberOfTimes:4)
+makeArray(repeating: "knock", numberOfTimes: 4)
 ```
 
 你也可以创建泛型函数、方法、类、枚举和结构体。
