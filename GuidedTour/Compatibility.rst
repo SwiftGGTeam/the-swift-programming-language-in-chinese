@@ -2,8 +2,8 @@ Version Compatibility
 =====================
 
 This book describes Swift 4.1,
-the default version of Swift that's included in Xcode 9.2.
-You can use Xcode 9.2 to build targets
+the default version of Swift that's included in Xcode 9.3.
+You can use Xcode 9.3 to build targets
 that are written in either Swift 4 or Swift 3.
 
 .. assertion:: swift-version
