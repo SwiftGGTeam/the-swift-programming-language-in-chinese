@@ -48,7 +48,7 @@ enum VendingMachineError: Error {
 抛出一个错误可以让你表明有意外情况发生，导致正常的执行流程无法继续执行。抛出错误使用`throw`关键字。例如，下面的代码抛出一个错误，提示贩卖机还需要`5`个硬币：
 
 ```swift
-throw VendingMachineError. insufficientFunds(coinsNeeded: 5)
+throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 ```
 
 <a name="handling_errors"></a>
