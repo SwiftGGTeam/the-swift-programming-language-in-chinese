@@ -18,6 +18,9 @@
 > 4.0
 > 翻译+校对：[kemchenj](https://kemchenj.github.io)
 
+> 4.1
+> 校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [术语](#terminology)
@@ -68,7 +71,7 @@ let (x, y) = (1, 2)
 // 现在 x 等于 1，y 等于 2
 ```
 
-与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以以下代码是错误的：
+与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以以下陈述时无效的：
 
 ```swift
 if x = y {
@@ -76,7 +79,7 @@ if x = y {
 }
 ```
 
-这个特性使你无法把（`==`）错写成（`=`），由于 `if x = y` 是错误代码，Swift 能帮你避免此类错误发生。
+这个特性使你无法把（`==`）错写成（`=`），由于 `if x = y` 是无效的，Swift 能帮你避免此类错误发生。
 
 <a name="arithmetic_operators"></a>
 ## 算术运算符
@@ -248,11 +251,11 @@ if name == "world" {
 Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
 
 <a name="ternary_conditional_operator"></a>
-## 三目运算符（Ternary Conditional Operator）
+## 三元运算符（Ternary Conditional Operator）
 
-*三目运算符*的特殊在于它是有三个操作数的运算符，它的形式是 `问题 ? 答案 1 : 答案 2`。它简洁地表达根据 `问题`成立与否作出二选一的操作。如果 `问题` 成立，返回 `答案 1` 的结果；反之返回 `答案 2` 的结果。
+*三元运算符*的特殊在于它是有三个操作数的运算符，它的形式是 `问题 ? 答案 1 : 答案 2`。它简洁地表达根据 `问题`成立与否作出二选一的操作。如果 `问题` 成立，返回 `答案 1` 的结果；反之返回 `答案 2` 的结果。
 
-三目运算符是以下代码的缩写形式：
+三元运算符是以下代码的缩写形式：
 
 ```swift
 if question {
@@ -285,9 +288,9 @@ if hasHeader {
 // rowHeight 现在是 90
 ```
 
-第一段代码例子使用了三目运算，所以一行代码就能让我们得到正确答案。这比第二段代码简洁得多，无需将 `rowHeight` 定义成变量，因为它的值无需在 `if` 语句中改变。
+第一段代码例子使用了三元运算，所以一行代码就能让我们得到正确答案。这比第二段代码简洁得多，无需将 `rowHeight` 定义成变量，因为它的值无需在 `if` 语句中改变。
 
-三目运算提供有效率且便捷的方式来表达二选一的选择。需要注意的事，过度使用三目运算符会使简洁的代码变的难懂。我们应避免在一个组合语句中使用多个三目运算符。
+三元运算提供有效率且便捷的方式来表达二选一的选择。需要注意的事，过度使用三元运算符会使简洁的代码变的难懂。我们应避免在一个组合语句中使用多个三元运算符。
 
 <a name="nil_coalescing_operator"></a>
 ## 空合运算符（Nil Coalescing Operator）
@@ -300,7 +303,7 @@ if hasHeader {
 a != nil ? a! : b
 ```
 
-上述代码使用了三目运算符。当可选类型 `a` 的值不为空时，进行强制解封（`a!`），访问 `a` 中的值；反之返回默认值 `b`。无疑空合运算符（`??`）提供了一种更为优雅的方式去封装条件判断和解封两种行为，显得简洁以及更具可读性。
+上述代码使用了三元运算符。当可选类型 `a` 的值不为空时，进行强制解封（`a!`），访问 `a` 中的值；反之返回默认值 `b`。无疑空合运算符（`??`）提供了一种更为优雅的方式去封装条件判断和解封两种行为，显得简洁以及更具可读性。
 
 > 注意：
 如果 `a` 为非空值（`non-nil`），那么值 `b` 将不会被计算。这也就是所谓的*短路求值*。
@@ -318,7 +321,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 `userDefinedColorName` 变量被定义为一个可选的 `String` 类型，默认值为 `nil`。由于 `userDefinedColorName` 是一个可选类型，我们可以使用空合运算符去判断其值。在上一个例子中，通过空合运算符为一个名为 `colorNameToUse` 的变量赋予一个字符串类型初始值。
 由于 `userDefinedColorName` 值为空，因此表达式 `userDefinedColorName ?? defaultColorName` 返回 `defaultColorName` 的值，即 `red`。
 
-另一种情况，分配一个非空值（`non-nil`）给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在 `userDefaultColorName` 中的值，而非默认值。
+如果你分配一个非空值（`non-nil`）给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在 `userDefaultColorName` 中的值，而非默认值。
 
 ```swift
 userDefinedColorName = "green"
@@ -333,8 +336,8 @@ Swift 提供了几种方便表达一个区间的值的*区间运算符*。
 
 ### 闭区间运算符
 
-*闭区间运算符*（`a...b`）定义一个包含从 `a` 到 `b`（包括 `a` 和 `b`）的所有值的区间。`a` 的值不能超过 `b`。
-‌
+*闭区间运算符*（`a...b`）定义一个包含从 `a` 到 `b`（包括 `a` 和 `b`）的所有值的区间。`a` 的值不能超过 `b`。    
+
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在 `for-in` 循环中：
 
 ```swift
@@ -348,7 +351,8 @@ for index in 1...5 {
 // 5 * 5 = 25
 ```
 
-关于 `for-in`，请看[控制流](../chapter2/05_Control_Flow.html)。
+关于 `for-in`循环，请看[控制流](../chapter2/05_Control_Flow.html)。                         
+
 
 ### 半开区间运算符
 
