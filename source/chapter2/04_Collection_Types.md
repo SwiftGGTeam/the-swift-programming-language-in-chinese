@@ -18,6 +18,9 @@
 > 校对：[shanks](http://codebuild.me) ，2016-10-09
 > 3.0.1，shanks，2016-11-12
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [集合的可变性](#mutability_of_collections)
@@ -30,7 +33,7 @@ Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的*集合类型
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/CollectionTypes_intro_2x.png)
 
-Swift 语言中的`Arrays`、`Sets`和`Dictionaries`中存储的数据值类型必须明确。这意味着我们不能把不正确的数据类型插入其中。同时这也说明我们完全可以对取回值的类型非常自信。
+Swift 语言中的`Arrays`、`Sets`和`Dictionaries`中存储的数据值类型必须明确。这意味着我们不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
 
 > 注意：
 Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
@@ -38,7 +41,7 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。�
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
 
-如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着我们可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
+如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着你可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
 > 注意：
 在我们不需要改变集合的时候创建不可变集合是很好的实践。如此 Swift 编译器可以优化我们创建的集合。
