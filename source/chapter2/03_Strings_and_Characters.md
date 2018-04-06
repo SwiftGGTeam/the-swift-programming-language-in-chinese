@@ -22,6 +22,9 @@
 > 4.0
 > 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21 
 
+> 4.1
+> 校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [字符串字面量](#string_literals)
@@ -39,17 +42,16 @@
 - [比较字符串](#comparing_strings)
 - [字符串的 Unicode 表示形式](#unicode_representations_of_strings)
 
-*字符串*是例如`"hello, world"`，`"albatross"`这样的有序的`Character`（字符）类型的值的集合。通过`String`类型来表示。
+*字符串*是是一系列字符的集合，例如`"hello, world"`，`"albatross"`。Swift的字符串通过`String`类型来表示。
 一个`String`的内容可以用许多方式读取，包括作为一个`Character`值的集合。 
 
-Swift 的`String`和`Character`类型提供了快速和兼容 Unicode 的方式供你的代码使用。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
-字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。
+Swift 的`String`和`Character`类型提供了快速和兼容 Unicode 的方式供你的代码使用。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。字符串连接操作只需要简单地通过`+`符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。
 
 尽管语法简易，但`String`类型是一种快速、现代化的字符串实现。
-每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式（representations）。
+每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式。
 
 > 注意：
-> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。Foundation 也可以对`String`进行扩展，暴露在`NSString`中定义的方法。 这意味着，如果你在`String`中调用这些`NSString`的方法，将不用进行转换。
+> Swift 的`String`类型与 Foundation `NSString`类进行了无缝桥接。Foundation也可以对`String`进行扩展，暴露在`NSString`中定义的方法。 这意味着，如果你在`String`中调用这些`NSString`的方法，将不用进行转换。
 > 更多关于在 Foundation 和 Cocoa 中使用`String`的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 4)](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)*。
 
 <a name="string_literals"></a>
@@ -68,7 +70,7 @@ let someString = "Some string literal value"
 <a name="multiline_string_literals"></a>
 ### 多行字符串字面量
 
-如果你需要一个字符串是跨越多行的，那就使用多行字符串字面量 —— 由一对三个双引号包裹着的具有固定顺序的文本字符集：
+如果你需要一个字符串是跨越多行的，那就使用多行字符串字面量 — 由一对三个双引号包裹着的具有固定顺序的文本字符集：
 
 ```swift
 let quotation = """
@@ -784,7 +786,8 @@ print("")
 // 68 111 103 8252 128054
 ```
 
-前三个`UnicodeScalar`值(`68`, `111`, `103`)的`value`属性仍然代表字符`D`、`o`和`g`。
+前三个`UnicodeScalar`值(`68`, `111`, `103`)的`value`属性仍然代表字符`D`、`o`和`g`。      
+
 第四个`codeUnit`值(`8252`)仍然是一个等于十六进制`203C`的十进制值。这个代表了`DOUBLE EXCLAMATION MARK`字符的 Unicode 标量`U+203C`。
 
 第五个`UnicodeScalar`值的`value`属性，`128054`，是一个十六进制`1F436`的十进制表示。其等同于`DOG FACE`的 Unicode 标量`U+1F436`。
