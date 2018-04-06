@@ -53,7 +53,7 @@ Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。�
 
 > 注意:
  Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。
- 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+ 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
@@ -275,7 +275,7 @@ for (index, value) in shoppingList. enumerated() {
 
 > 注意：
 > Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。
-> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值
@@ -492,7 +492,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
 
 > 注意：
 > Swift 的`Dictionary`类型被桥接到`Foundation`的`NSDictionary`类。
-> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="dictionary_type_shorthand_syntax"></a>
 ### 字典类型简化语法
