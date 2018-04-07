@@ -23,6 +23,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)             
+
 本页包含内容：
 - [函数定义与调用](#Defining_and_Calling_Functions)
 - [函数参数与返回值](#Function_Parameters_and_Return_Values)
@@ -139,7 +142,7 @@ greet(person: "Dave")
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
 
 >注意
-严格上来说，虽然没有返回值被定义，`greet(person:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的`Void`值。它其实是一个空的元组（tuple），没有任何元素，可以写成()。
+严格上来说，虽然没有返回值被定义，`greet(person:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的`Void`值。它其实是一个空的元组，没有任何元素，可以写成()。
 
 被调用时，一个函数的返回值可以被忽略：
 
@@ -160,7 +163,7 @@ printWithoutCounting(string: "hello, world")
 第一个函数 `printAndCount(string:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting(string:)`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
 >注意:
-返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误（compile-time error）。
+返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误。
 
 <a name="functions_with_multiple_return_values"></a>
 ### 多重返回值函数
@@ -201,12 +204,12 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 <a name="optional_tuple_return_types"></a>
 ### 可选元组返回类型
 
-如果函数返回的元组类型有可能整个元组都“没有值”，你可以使用可选的（ `optional` ） 元组返回类型反映整个元组可以是`nil`的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如 `(Int, Int)?` 或 `(String, Int, Bool)?`
+如果函数返回的元组类型有可能整个元组都“没有值”，你可以使用*可选的* 元组返回类型反映整个元组可以是`nil`的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如 `(Int, Int)?` 或 `(String, Int, Bool)?`
 
 >注意
 可选元组类型如 `(Int, Int)?` 与元组包含可选类型如 `(Int?, Int?)` 是不同的。可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
 
-前面的 `minMax(array:)` 函数返回了一个包含两个 `Int` 值的元组。但是函数不会对传入的数组执行任何安全检查，如果 `array` 参数是一个空数组，如上定义的 `minMax(array:)` 在试图访问 `array[0]` 时会触发一个运行时错误(runtime error)。
+前面的 `minMax(array:)` 函数返回了一个包含两个 `Int` 值的元组。但是函数不会对传入的数组执行任何安全检查，如果 `array` 参数是一个空数组，如上定义的 `minMax(array:)` 在试图访问 `array[0]` 时会触发一个运行时错误。
 
 为了安全地处理这个“空数组”问题，将 `minMax(array:)` 函数改写为使用可选元组返回类型，并且当数组为空时返回 `nil`：
 
@@ -330,7 +333,7 @@ arithmeticMean(3, 8.25, 18.75)
 <a name="in_out_parameters"></a>
 ### 输入输出参数
 
-函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误(compile-time error)。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为*输入输出参数（In-Out Parameters）*。
+函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为*输入输出参数（In-Out Parameters）*。
 
 定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个`输入输出参数`有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看[输入输出参数](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID545)一节。
 
@@ -384,7 +387,9 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 
 这个例子中定义了两个简单的数学函数：`addTwoInts` 和 `multiplyTwoInts`。这两个函数都接受两个 `Int` 值， 返回一个 `Int` 值。
 
-这两个函数的类型是 `(Int, Int) -> Int`，可以解读为“这个函数类型有两个 `Int` 型的参数并返回一个 `Int` 型的值。”。
+这两个函数的类型是 `(Int, Int) -> Int`，可以解读为:     
+
+“这个函数类型有两个 `Int` 型的参数并返回一个 `Int` 型的值”。
 
 下面是另一个例子，一个没有参数，也没有返回值的函数：
 
