@@ -26,6 +26,9 @@
 > 4.0
 > 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [For-In 循环](#for_in_loops)
@@ -525,7 +528,7 @@ case let (x, y):
 就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认分支。
 
 <a name="compound_cases"></a>
-#### 复合匹配
+#### 复合型 Cases
 
 当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个`case`后面，并且用逗号隔开。当case后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
 
@@ -650,7 +653,7 @@ if let integerValue = possibleIntegerValue {
 在上面的例子中，想要把`Character`所有的的可能性都枚举出来是不现实的，所以使用`default`分支来包含所有上面没有匹配到字符的情况。由于这个`default`分支不需要执行任何动作，所以它只写了一条`break`语句。一旦落入到`default`分支中后，`break`语句就完成了该分支的所有代码操作，代码继续向下，开始执行`if let`语句。
 
 <a name="fallthrough"></a>
-### 贯穿
+### 贯穿 (Fallthrough)
 
 在 Swift 里，`switch`语句不会从上一个 case 分支跳转到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
@@ -797,7 +800,7 @@ if #available(iOS 10, macOS 10.12, *) {
 
 以上可用性条件指定，`if`语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
 
-在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 8.3 以及 macOS 10.10.3 的小版本号。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 
 ```swift
 if #available(platform name version, ..., *) {
