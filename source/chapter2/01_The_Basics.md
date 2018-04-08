@@ -24,7 +24,7 @@
 > 校对：[kemchenj](https://kemchenj.github.io)
 
 > 4.1
-> 校对：[mylittleswift](https://github.com/mylittleswift)
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -58,7 +58,7 @@
 
 Swift 是一门开发 iOS, macOS, watchOS 和 tvOS 应用的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 
-Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整型值； `Double` 和 `Float` 表示浮点型值； `Bool` 是布尔型值；`String` 是文本型数据。 Swift 还提供了三个基本的集合类型，`Array` ，`Set` 和 `Dictionary` ，详见[集合类型](04_Collection_Types.html)。
+Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int`表示整型值； `Double` 和 `Float` 表示浮点型值； `Bool` 是布尔型值；`String` 是文本型数据。 Swift 还提供了三个基本的集合类型，`Array` ，`Set` 和 `Dictionary` ，详见[集合类型](./04_Collection_Types.html)。
 
 就像 C 语言一样，Swift 使用变量来进行存储并通过变量名来关联值。在 Swift 中，广泛的使用着值不可变的变量，它们就是常量，而且比 C 语言的常量更强大。在 Swift 中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更清晰地表达你的意图。
 
@@ -620,7 +620,7 @@ if convertedNumber != nil {
 // 输出 "convertedNumber has an integer value of 123."
 ```
 
-更多关于 `if` 语句的内容，请参考[控制流](05_Control_Flow.html)。
+更多关于 `if` 语句的内容，请参考[控制流](./05_Control_Flow.html)。
 
 > 注意：
 使用 `!` 来获取一个不存在的可选值会导致运行时错误。使用 `!` 来强制解析值之前，一定要确定可选包含一个非 `nil` 的值。
@@ -676,7 +676,7 @@ if let firstNumber = Int("4") {
 ```
 
 > 注意：
-> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中(`body`)中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow#early_exit.html)。
+> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中(`body`)中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.html#early_exit)。
 
 <a name="implicityly_unwrapped_optionals"></a>
 ### 隐式解析可选类型
@@ -687,7 +687,7 @@ if let firstNumber = Int("4") {
 
 这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
-当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](./16_Automatic_Reference_Counting.html#unowned_references_and_implicitly_unwrapped_optional_properties)。
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](./23_Automatic_Reference_Counting.html#unowned_references_and_implicitly_unwrapped_optional_properties)。
 
 一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型 `String` 和隐式解析可选类型 `String` 之间的区别：
 
@@ -774,7 +774,7 @@ do {
 
 如果没有错误被抛出，`eatASandwich()` 函数会被调用。如果一个匹配 `SandwichError.outOfCleanDishes` 的错误被抛出，`washDishes()` 函数会被调用。如果一个匹配 `SandwichError.missingIngredients` 的错误被抛出，`buyGroceries(_:)` 函数会被调用，并且使用 `catch` 所捕捉到的关联值 `[String]` 作为参数。
 
-抛出，捕捉，以及传播错误会在[错误处理](./18_Error_Handling.html)章节详细说明。
+抛出，捕捉，以及传播错误会在[错误处理](./17_Error_Handling.html)章节详细说明。
 
 <a name="assertions_and_Preconditions"></a>
 ## 断言和先决条件
@@ -783,7 +783,7 @@ do {
 
 你使用断言和先决条件来表达你所做的假设和你在编码时候的期望。你可以将这些包含在你的代码中。断言帮助你在开发阶段找到错误和不正确的假设，先决条件帮助你在生产环境中探测到存在的问题。
 
-除了在运行时验证你的期望值，断言和先决条件也变成了一个在你的代码中的有用的文档形式。和在上面讨论过的[错误处理](./18_Error_Handling.html)不同，断言和先决条件并不是用来处理可以恢复的或者可预期的错误。因为一个断言失败表明了程序正处于一个无效的状态，没有办法去捕获一个失败的断言。
+除了在运行时验证你的期望值，断言和先决条件也变成了一个在你的代码中的有用的文档形式。和在上面讨论过的[错误处理](./17_Error_Handling.html)不同，断言和先决条件并不是用来处理可以恢复的或者可预期的错误。因为一个断言失败表明了程序正处于一个无效的状态，没有办法去捕获一个失败的断言。
 
 使用断言和先决条件不是一个能够避免出现程序出现无效状态的编码方法。然而，如果一个无效状态程序产生了，断言和先决条件可以强制检查你的数据和程序状态，使得你的程序可预测的中止（译者：不是系统强制的，被动的中止），并帮助使这个问题更容易调试。一旦探测到无效的状态，执行则被中止，防止无效的状态导致的进一步对于系统的伤害。
 

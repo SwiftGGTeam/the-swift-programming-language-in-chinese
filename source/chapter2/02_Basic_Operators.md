@@ -19,7 +19,7 @@
 > 翻译+校对：[kemchenj](https://kemchenj.github.io)
 
 > 4.1
-> 校对：[mylittleswift](https://github.com/mylittleswift)
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -35,11 +35,11 @@
 
 *运算符*是检查、改变、合并值的特殊符号或短语。例如，加号（`+`）将两个数相加（如 `let i = 1 + 2`）。更复杂的运算例子包括逻辑与运算符 `&&`（如 `if enteredDoorCode && passedRetinaScan`）。
 
-Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减少常规编码错误。如：赋值符（`=`）不返回值，以防止把想要判断相等运算符（`==`）的地方写成赋值符导致的错误。算术运算符（`+`，`-`，`*`，`/`，`%`等）会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](../chapter2/25_Advanced_Operators.html#overflow_operators)。
+Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减少常规编码错误。如：赋值符（`=`）不返回值，以防止把想要判断相等运算符（`==`）的地方写成赋值符导致的错误。算术运算符（`+`，`-`，`*`，`/`，`%`等）会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](./26_Advanced_Operators.html#overflow_operators)。
 
 Swift 还提供了 C 语言没有的区间运算符，例如 `a..<b` 或 `a...b`，这方便我们表达一个区间内的数值。
 
-本章节只描述了 Swift 中的基本运算符，[高级运算符](../chapter2/25_Advanced_Operators.html)这章会包含 Swift 中的高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
+本章节只描述了 Swift 中的基本运算符，[高级运算符](./26_Advanced_Operators.html)这章会包含 Swift 中的高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
 
 <a name="terminology"></a>
 ## 术语
@@ -98,7 +98,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 10.0 / 2.5  // 等于 4.0
 ```
 
-与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如 `a &+ b`）。详情参见[溢出运算符](../chapter2/25_Advanced_Operators.html#overflow_operators)。
+与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如 `a &+ b`）。详情参见[溢出运算符](./26_Advanced_Operators.html#overflow_operators)。
 
 加法运算符也可用于 `String` 的拼接：
 
@@ -203,7 +203,7 @@ a += 2
 - 小于等于（`a <= b`）
 
 > 注意：
-Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](../chapter2/09_Classes_and_Structures.html)。
+Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.html)。
 
 每个比较运算都返回了一个标识表达式是否成立的布尔值：
 
@@ -228,7 +228,7 @@ if name == "world" {
 // 输出 "hello, world", 因为 `name` 就是等于 "world"
 ```
 
-关于 `if` 语句，请看[控制流](../chapter2/05_Control_Flow.html)。
+关于 `if` 语句，请看[控制流](./05_Control_Flow.html)。
 
 如果两个元组的元素相同，且长度相同的话，元组就可以被比较。比较元组大小会按照从左到右、逐值比较的方式，直到发现有两个值不等时停止。如果所有的值都相等，那么这一对元组我们就称它们是相等的。例如：
 
@@ -351,7 +351,7 @@ for index in 1...5 {
 // 5 * 5 = 25
 ```
 
-关于 `for-in`循环，请看[控制流](../chapter2/05_Control_Flow.html)。                         
+关于 `for-in`循环，请看[控制流](./05_Control_Flow.html)。                         
 
 
 ### 半开区间运算符
@@ -373,7 +373,7 @@ for i in 0..<count {
 // 第 4 个人叫 Jack
 ```
 
-数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](../chapter2/04_Collection_Types.html#arrays)。
+数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](./04_Collection_Types.html#arrays)。
 
 ### 单侧区间
 

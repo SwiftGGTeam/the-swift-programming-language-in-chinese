@@ -23,7 +23,7 @@
 > 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21 
 
 > 4.1
-> 校对：[mylittleswift](https://github.com/mylittleswift)
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 

@@ -22,6 +22,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页内容包含：
 
 - [枚举语法](#enumeration_syntax)
@@ -38,7 +41,7 @@
 
 在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类（class）所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
 
-想了解更多相关信息，请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)和[协议](./22_Protocols.html)。
+想了解更多相关信息，请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[构造过程](./14_Initialization.html)，[扩展](./20_Extensions.html)和[协议](./21_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -75,7 +78,7 @@ enum Planet {
 }
 ```
 
-每个枚举定义了一个全新的类型。像 Swift 中其他类型一样，它们的名字（例如`CompassPoint`和`Planet`）应该以一个大写字母开头。给枚举类型起一个单数名字而不是复数名字，以便于读起来更加容易理解：
+每个枚举定义了一个全新的类型。像 Swift 中其他类型一样，它们的名字（例如`CompassPoint`和`Planet`）应该以一个大写字母开头。给枚举类型起一个单数名字而不是复数名字，以便于：
 
 ```swift
 var directionToHead = CompassPoint.west

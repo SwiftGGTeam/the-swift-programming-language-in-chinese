@@ -18,6 +18,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [类和结构体对比](#comparing_classes_and_structures)
@@ -40,12 +43,12 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 * 定义属性用于存储值
 * 定义方法用于提供功能
-* 定义下标操作使得可以通过下标语法来访问实例所包含的值
+* 定义下标操作通过下标语法可以访问它们的值
 * 定义构造器用于生成初始化值
 * 通过扩展以增加默认实现的功能
-* 实现协议以提供某种标准功能
+* 遵循协议以提供某种标准功能
 
-更多信息请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标](./12_Subscripts.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)，和[协议](./22_Protocols.html)。
+更多信息请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[下标](./12_Subscripts.html)，[构造过程](./14_Initialization.html)，[扩展](./20_Extensions.html)，和[协议](./21_Protocols.html)。
 
 与结构体相比，类还有如下的附加功能：
 
@@ -54,7 +57,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 * 析构器允许一个类实例释放任何其所被分配的资源
 * 引用计数允许对一个类的多次引用
 
-更多信息请参见[继承](./13_Inheritance.html)，[类型转换](./19_Type_Casting.html)，[析构过程](./15_Deinitialization.html)，和[自动引用计数](./16_Automatic_Reference_Counting.html)。
+更多信息请参见[继承](./13_Inheritance.html)，[类型转换](./18_Type_Casting.html)，[析构过程](./15_Deinitialization.html)，和[自动引用计数](./23_Automatic_Reference_Counting.html)。
 
 > 注意
 > 结构体总是通过被复制的方式在代码中传递，不使用引用计数。
@@ -155,7 +158,7 @@ let vga = Resolution(width: 640, height: 480)
 
 *值类型*被赋予给一个变量、常量或者被传递给一个函数的时候，其值会被*拷贝*。
 
-在之前的章节中，我们已经大量使用了值类型。实际上，在 Swift 中，所有的基本类型：整数（Integer）、浮点数（floating-point）、布尔值（Boolean）、字符串（string)、数组（array）和字典（dictionary），都是值类型，并且在底层都是以结构体的形式所实现。
+在之前的章节中，我们已经大量使用了值类型。实际上，在 Swift 中，所有的基本类型：整数（Integers）、浮点数（floating-point numbers）、布尔值（Booleans）、字符串（strings)、数组（arrays）和字典（dictionaries），都是值类型，并且在底层都是以结构体的形式所实现。
 
 在 Swift 中，所有的结构体和枚举类型都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。
 
@@ -268,7 +271,7 @@ if tenEighty === alsoTenEighty {
 * “等价于”表示两个类类型（class type）的常量或者变量引用同一个类实例。
 * “等于”表示两个实例的值“相等”或“相同”，判定时要遵照设计者定义的评判标准，因此相对于“相等”来说，这是一种更加合适的叫法。
 
-当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[等价操作符](./25_Advanced_Operators.html#equivalence_operators)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
+当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[等价操作符](./26_Advanced_Operators.html#equivalence_operators)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
 
 <a name="pointers"></a>
 ### 指针

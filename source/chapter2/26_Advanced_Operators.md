@@ -23,7 +23,7 @@
 - [位运算符](#bitwise_operators)
 - [溢出运算符](#overflow_operators)
 - [优先级和结合性](#precedence_and_associativity)
-- [运算符函数](#operator_functions)
+- [运算符函数](#operator_methods)
 - [自定义运算符](#custom_operators)
 
 除了在之前介绍过的[基本运算符](./02_Basic_Operators.html)，Swift 中还有许多可以对数值进行复杂运算的高级运算符。这些高级运算符包含了在 C 和 Objective-C 中已经被大家所熟知的位运算符和移位运算符。
