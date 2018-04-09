@@ -15,6 +15,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [定义一个基类](#defining_a_base_class)
@@ -226,7 +229,7 @@ class AutomaticCar: Car {
 }
 ```
 
-当你设置`AutomaticCar`的`currentSpeed`属性，属性的`didSet`观察器就会自动地设置`gear`属性，为新的速度选择一个合适的挡位。具体来说就是，属性观察器将新的速度值除以`10`，然后向下取得最接近的整数值，最后加`1`来得到档位`gear`的值。例如，速度为`35.0`时，挡位为`4`：
+无论何时当你设置`AutomaticCar`的`currentSpeed`属性，属性的`didSet`观察器就会自动地设置`gear`属性，为新的速度选择一个合适的挡位。具体来说就是，属性观察器将新的速度值除以`10`，然后向下取得最接近的整数值，最后加`1`来得到档位`gear`的值。例如，速度为`35.0`时，挡位为`4`：
 
 ```swift
 let automatic = AutomaticCar()
@@ -240,6 +243,6 @@ print("AutomaticCar: \(automatic.description)")
 
 你可以通过把方法，属性或下标标记为*`final`*来防止它们被重写，只需要在声明关键字前加上`final`修饰符即可（例如：`final var`，`final func`，`final class func`，以及`final subscript`）。
 
-如果你重写了带有`final`标记的方法、属性或下标，在编译时会报错。在类扩展中的方法，属性或下标也可以在扩展的定义里标记为 final 的。
+任何试图对带有`final`标记的方法、属性或下标进行重写，都会在编译时会报错。在类扩展中的方法，属性或下标也可以在扩展的定义里标记为 final 的。
 
 你可以通过在关键字`class`前添加`final`修饰符（`final class`）来将整个类标记为 final 的。这样的类是不可被继承的，试图继承这样的类会导致编译报错。

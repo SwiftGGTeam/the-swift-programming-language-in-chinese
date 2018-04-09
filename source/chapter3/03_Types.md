@@ -12,7 +12,7 @@
 > 翻译：[mmoaay](https://github.com/mmoaay)
 
 > 4.1
-> 翻译：[mylittleswift](https://github.com/mylittleswift)
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 

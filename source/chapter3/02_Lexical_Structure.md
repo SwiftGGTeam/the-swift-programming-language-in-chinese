@@ -15,7 +15,7 @@
 > 翻译+校对：[星夜暮晨](https://github.com/semperidem)
 
 > 4.1
-> 翻译：[mylittleswift](https://github.com/mylittleswift)
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 

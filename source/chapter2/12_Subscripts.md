@@ -18,6 +18,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [下标语法](#subscript_syntax)
@@ -129,7 +132,7 @@ struct Matrix {
 }
 ```
 
-`Matrix`提供了一个接受两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个`Double`类型的值的数组。通过传入数组长度和初始值`0.0`到数组的构造器，将矩阵中每个位置的值初始化为`0.0`。关于数组的这种构造方法请参考[创建一个空数组](./04_Collection_Types.html#creating_an_empty_array)。
+`Matrix`提供了一个接受两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个`Double`类型的值的数组。通过传入数组长度和初始值`0.0`到数组的构造器，将矩阵中每个位置的值初始化为`0.0`。关于数组的这种构造方法请参考[创建一个带有默认值的数组](./04_Collection_Types.html#creating_an_array_with_a_default_value)。
 
 你可以通过传入合适的`row`和`column`的数量来构造一个新的`Matrix`实例：
 

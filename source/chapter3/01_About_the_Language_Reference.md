@@ -9,7 +9,7 @@
 > 翻译+校对：[KYawn](https://github.com/KYawn)
 
 > 4.1
-> 翻译：[mylittleswift](https://github.com/mylittleswift)
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页内容包括：
 
