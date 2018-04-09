@@ -19,6 +19,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)
@@ -405,4 +408,4 @@ if let beginsWithThe =
 ```
 
 > 注意
-在上面的例子中，在方法的圆括号后面加上问号是因为你要在`buildingIdentifier()`方法的可选返回值上进行可选链式调用，而不是方法本身。
+在上面的例子中，在方法的圆括号后面加上问号是因为你要在`buildingIdentifier()`方法的可选返回值上进行可选链式调用，而不是`buildingIdentifier()`方法本身。
