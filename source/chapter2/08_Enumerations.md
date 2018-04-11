@@ -68,6 +68,7 @@ enum CompassPoint {
 枚举中定义的值（如 `north `，`south`，`east`和`west`）是这个枚举的*成员值*（或*成员*）。你可以使用`case`关键字来定义一个新的枚举成员值。
 
 > 注意
+> 
 > 与 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoint`例子中，`north`，`south`，`east`和`west`不会被隐式地赋值为`0`，`1`，`2`和`3`。相反，这些枚举成员本身就是完备的值，这些值的类型是已经明确定义好的`CompassPoint`类型。
 
 多个成员值可以出现在同一行上，用逗号隔开：
@@ -225,6 +226,7 @@ enum ASCIIControlCharacter: Character {
 原始值可以是字符串，字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
 > 注意
+> 
 > 原始值和关联值是不同的。原始值是在定义枚举时被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终不变。关联值是创建一个基于枚举成员的常量或变量时才设置的值，枚举成员的关联值可以变化。
 
 <a name="implicitly_assigned_raw_values"></a>
@@ -281,6 +283,7 @@ let possiblePlanet = Planet(rawValue: 7)
 然而，并非所有`Int`值都可以找到一个匹配的行星。因此，原始值构造器总是返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或者说“可选的`Planet`”。
 
 > 注意
+> 
 > 原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations.html#failable_initializers)
 
 如果你试图寻找一个位置为`11`的行星，通过原始值构造器返回的可选`Planet`值将是`nil`：

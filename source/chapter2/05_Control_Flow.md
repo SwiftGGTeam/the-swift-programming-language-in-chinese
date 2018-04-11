@@ -207,7 +207,8 @@ print("Game over!")
 
 掷完骰子后，玩家向前移动`diceRoll`个方格，如果玩家移动超过了第 25 个方格，这个时候游戏将会结束，为了应对这种情况，代码会首先判断`square`的值是否小于`board`的`count`属性，只有小于才会在`board[square]`上增加`square`，来向前或向后移动（遇到了梯子或者蛇）。
 
-> 注意：
+> 注意
+> 
 > 如果没有这个检测（`square < board.count`），`board[square]`可能会越界访问`board`数组，导致错误。
 
 当本轮`while`循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为`false`，此时游戏结束。
@@ -219,7 +220,8 @@ print("Game over!")
 
 `while`循环的另外一种形式是`repeat-while`，它和`while`的区别是在判断循环条件之前，先执行一次循环的代码块。然后重复循环直到条件为`false`。
 
-> 注意：
+> 注意
+> 
 > Swift语言的`repeat-while`循环和其他语言中的`do-while`循环是类似的。
 
 下面是 `repeat-while`循环的一般格式：
@@ -375,7 +377,8 @@ default:
 
 与 C 和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
-> 注意：
+> 注意
+> 
 虽然在Swift中`break`不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用`break`跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
@@ -407,8 +410,9 @@ default:
 ```
 为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)
 
-> 注意：
-如果想要显式贯穿case分支，请使用`fallthrough`语句，详情请参考[贯穿](#fallthrough)。
+> 注意
+> 
+> 如果想要显式贯穿case分支，请使用`fallthrough`语句，详情请参考[贯穿](#fallthrough)。
 
 <a name="interval_matching"></a>
 #### 区间匹配
@@ -618,8 +622,9 @@ print(puzzleOutput)
 
 这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
 
->注意：
-当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你应该使用`break`来忽略某个分支。
+>注意
+>
+>当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你应该使用`break`来忽略某个分支。
 
 下面的例子通过`switch`来判断一个`Character`值是否代表下面四种语言之一。为了简洁，多个值被包含在了同一个分支情况中。
 
@@ -679,7 +684,8 @@ print(description)
 
 当`switch`代码块执行完后，使用`print(_:separator:terminator:)`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
 
-> 注意：
+> 注意
+> 
 > `fallthrough`关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough`简单地使代码继续连接到下一个 case 中的代码，这和 C 语言标准中的`switch`语句特性是一样的。
 
 <a name="labeled_statements"></a>
@@ -691,9 +697,11 @@ print(description)
 
 声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字(introducor keyword)，并且该标签后面跟随一个冒号。下面是一个针对`while`循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
 
-> `label name`: while `condition` {
->     `statements`
-> }
+```swift
+ label name: while condition {
+     statements
+ }
+```
 
 下面的例子是前面章节中*蛇和梯子*的适配版本，在此版本中，我们将使用一个带有标签的`while`循环体中调用`break`和`continue`语句。这次，游戏增加了一条额外的规则：
 
@@ -746,9 +754,11 @@ print("Game over!")
 - 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环，开始下一次循环。
 - 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动 `diceRoll` 个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。接着本次循环结束，控制跳转到`while`循环体的条件判断语句处，再决定是否需要继续执行下次循环。
 
->注意：
-如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
-同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
+>注意
+>
+>如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
+>
+>同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
 <a name="early_exit"></a>
 ## 提前退出

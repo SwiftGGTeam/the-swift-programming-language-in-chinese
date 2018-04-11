@@ -83,6 +83,7 @@ rangeOfFourItems.firstValue = 6
 *延迟存储属性*是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用 `lazy` 来标示一个延迟存储属性。
 
 > 注意
+> 
 > 必须将延迟存储属性声明成变量（使用 `var` 关键字），因为属性的初始值可能在实例构造完成之后才会得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。
 
 延迟属性很有用，当属性的值依赖于在实例的构造过程结束后才会知道影响值的外部因素时，或者当获得属性的初始值需要复杂或大量计算时，可以只在需要的时候计算它。
@@ -126,6 +127,7 @@ print(manager.importer.fileName)
 ```
 
 > 注意
+> 
 > 如果一个被标记为 `lazy` 的属性在没有初始化时就同时被多个线程访问，则无法保证该属性只会被初始化一次。
 
 <a name="stored_properties_and_instance_variables"></a>
@@ -215,6 +217,7 @@ struct AlternativeRect {
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
 > 注意
+> 
 > 必须使用 `var` 关键字定义计算属性，包括只读计算属性，因为它们的值不是固定的。`let` 关键字只用来声明常量属性，表示初始化后再也无法修改的值。
 
 只读计算属性的声明可以去掉 `get` 关键字和花括号：
@@ -250,7 +253,9 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 同样，`didSet` 观察器会将旧的属性值作为参数传入，可以为该参数命名或者使用默认参数名 `oldValue`。如果在 `didSet` 方法中再次对该属性赋值，那么新值会覆盖旧的值。
 
 > 注意
+> 
 > 父类的属性在子类的构造器中被赋值时，它在父类中的 `willSet` 和 `didSet` 观察器会被调用，随后才会调用子类的观察器。在父类初始化方法调用之前，子类给属性赋值时，观察器不会被调用。
+> 
 > 有关构造器代理的更多信息，请参考[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)和[类的构造器代理规则](./14_Initialization.html#initializer_delegation_for_class_types)。
 
 下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
@@ -302,7 +307,9 @@ stepCounter.totalSteps = 896
 另外，在全局或局部范围都可以定义*计算型变量*和为存储型变量定义观察器。计算型变量跟计算属性一样，返回一个计算结果而不是存储值，声明格式也完全一样。
 
 > 注意
+> 
 > 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`修饰符。
+> 
 > 局部范围的常量或变量从不延迟计算。
 
 <a name="type_properties"></a>
@@ -317,7 +324,9 @@ stepCounter.totalSteps = 896
 存储型类型属性可以是变量或常量，计算型类型属性跟实例的计算型属性一样只能定义成变量属性。
 
 > 注意
+> 
 > 跟实例的存储型属性不同，必须给存储型类型属性指定默认值，因为类型本身没有构造器，也就无法在初始化过程中使用构造器给类型属性赋值。
+> 
 > 存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用 `lazy` 修饰符。
 
 <a name="type_property_syntax"></a>
@@ -352,6 +361,7 @@ class SomeClass {
 ```
 
 > 注意
+> 
 > 例子中的计算型类型属性是只读的，但也可以定义可读可写的计算型类型属性，跟计算型实例属性的语法相同。
 
 <a name="querying_and_setting_type_properties"></a>
@@ -410,6 +420,7 @@ struct AudioChannel {
 - 如果修正后的 `currentLevel` 值大于静态类型属性 `maxInputLevelForAllChannels` 的值，属性观察器就将新值保存在 `maxInputLevelForAllChannels` 中。
 
 > 注意
+> 
 > 在第一个检查过程中，`didSet` 属性观察器将 `currentLevel` 设置成了不同的值，但这不会造成属性观察器被再次调用。
 
 可以使用结构体 `AudioChannel` 创建两个声道 `leftChannel` 和 `rightChannel`，用以表示立体声系统的音量：
