@@ -144,7 +144,8 @@ true		    // 布尔值字面量
 
 当为一个字面量值指定了类型标注的时候，这个标注的类型必须能通过这个字面量值实例化。也就是说，这个类型必须符合这些 Swift 标准库协议中的一个：整数字面量的 `IntegerLiteralConvertible` 协议、浮点数字面量的 `FloatingPointLiteralConvertible` 协议、字符串字面量的 `StringLiteralConvertible` 协议以及布尔值字面量的 `BooleanLiteralConvertible` 协议。比如，`Int8` 符合 `IntegerLiteralConvertible` 协议，因此它能在 `let x: Int8 = 42` 这个声明中作为整数字面量 `42` 的类型标注。
 
-> 字面量语法  
+> 字面量语法
+>  
 > *字面量* → [*数值字面量*](#numeric-literal) | [*字符串字面量*](#string-literal) | [*布尔值字面量*](#boolean-literal) | [*nil 字面量*](#nil-literal)    
 
 <a id="numeric-literal"></a>    
@@ -168,7 +169,7 @@ true		    // 布尔值字面量
 除非特别指定，整数字面量的默认推导类型为 Swift 标准库类型中的 `Int`。Swift 标准库还定义了其他不同长度以及是否带符号的整数类型，请参考 [整数](../chapter2/01_The_Basics.html#integers)。
 
 > 整数字面量语法  
-
+> 
 <a id="integer-literal"></a>
 > *整数字面量* → [*二进制字面量*](#binary-literal)  
 > *整数字面量* → [*八进制字面量*](#octal-literal)  
@@ -231,7 +232,7 @@ true		    // 布尔值字面量
 除非特别指定，浮点数字面量的默认推导类型为 Swift 标准库类型中的 `Double`，表示 64 位浮点数。Swift 标准库也定义了 `Float` 类型，表示 32 位浮点数。
 
 > 浮点数字面量语法  
-
+> 
 <a id="floating-point-literal"></a> 
 > *浮点数字面量* → [*十进制字面量*](#decimal-literal) [*十进制分数*](#decimal-fraction)<sub>可选</sub> [*十进制指数*](#decimal-exponent)<sub>可选</sub>      
 > *浮点数字面量* → [*十六进制字面量*](#hexadecimal-literal) [*十六进制分数*](#hexadecimal-fraction)<sub>可选</sub> [*十六进制指数*](#hexadecimal-exponent)
@@ -310,7 +311,7 @@ let textB = "Hello world"
 ```
 
 > 字符串字面量语法  
-
+> 
 <a id="string-literal"></a>
 > *字符串字面量* → [*静态字符串字面量*](#static-string-literal) | [*插值字符串字面量*](#interpolated-string-literal) 
 
@@ -346,7 +347,8 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 虽然您可以用问号 `?` 来自定义运算符，但是这个运算符不能只包含单独的一个问号。此外，虽然运算符可以包含一个惊叹号 `!`，但是前缀运算符不能够以问号或者惊叹号开头。
 
-> 注意  
+> 注意
+>  
 > 以下这些标记 `=`、`->`、`//`、`/*`、`*/`、`.`、`<`（前缀运算符）、`&`、`?`、`?`（中缀运算符）、`>`（后缀运算符）、`!` 、`?` 是被系统保留的。这些符号不能被重载，也不能用于自定义运算符。
 
 运算符两侧的空白被用来区分该运算符是否为前缀运算符、后缀运算符或二元运算符。规则总结如下：
@@ -365,7 +367,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/25_Advanced_Operators.html#custom_operators) 和 [运算符声明](05_Declarations.html#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/25_Advanced_Operators.html#operator_functions)。
 
 > 运算符语法  
-
+> 
 <a id="operator"></a>
 > *运算符* → [*头部运算符*](#operator-head) [*运算符字符组*](#operator-characters)<sub>可选</sub>  
 > *运算符* → [*头部点运算符*](#dot-operator-head) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>    
