@@ -46,8 +46,10 @@ print("Hello, world!")
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解到。
 
-> 注意：
-> 最好的体验是把这一章作为Playground文件在Xcode中打开。 Playgrounds允许你可以编辑代码并立刻看到输出结果。             
+> 注意
+> 
+> 最好的体验是把这一章作为Playground文件在Xcode中打开。 Playgrounds允许你可以编辑代码并立刻看到输出结果。
+>            
 > [Download Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
@@ -71,7 +73,8 @@ let implicitDouble = 70.0
 let explicitDouble: Double = 70
 ```
 
-> 练习                                          
+> 练习
+>                                          
 > 创建一个常量，显式指定类型为 `Float` 并指定初始值为 4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
@@ -81,7 +84,8 @@ let label = "The width is"
 let width = 94
 let widthLabel = label + String(width)
 ```
-> 练习：
+> 练习
+> 
 > 删除最后一行中的 `String`，错误提示是什么？
 
 有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠（\）。例如：
@@ -93,7 +97,8 @@ let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
-> 练习：
+> 练习
+> 
 > 使用 `\()` 来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
 使用一对三个单引号（`"""`）来包含多行字符串内容，字符串中的内容（包括引号、空格、换行符等）都会保留下来。举个例子：
@@ -165,7 +170,8 @@ if let name = optionalName {
 }
 ```
 
-> 练习：
+> 练习
+> 
 > 把 `optionalName` 改成 `nil`，greeting 会是什么？添加一个 `else` 语句，当 `optionalName` 是 `nil` 时给 greeting 赋一个不同的值。
 
 如果变量的可选值是 `nil`，条件会判断为 `false`，大括号中的代码会被跳过。如果不是 `nil`，会将值解包并赋给 `let` 后面的常量，这样代码块中就可以使用这个值了。
@@ -193,7 +199,8 @@ default:
 }
 ```
 
-> 练习：
+> 练习
+> 
 > 删除 `default` 语句，看看会有什么错误？
 
 注意 `let` 在上述例子的等式中是如何使用的，它将匹配等式的值赋给常量 `x`。
@@ -219,7 +226,8 @@ for (kind, numbers) in interestingNumbers {
 print(largest)
 ```
 
-> 练习：
+> 练习
+> 
 > 添加另一个变量来记录最大数字的种类(kind)，同时仍然记录这个最大数字的值。
 
 使用 `while` 来重复运行一段代码直到条件改变。循环条件也可以在结尾，保证能至少循环一次。
@@ -262,7 +270,8 @@ func greet(person: String, day: String) -> String {
 greet(person:"Bob", day: "Tuesday")
 ```
 
-> 练习：
+> 练习
+> 
 > 删除 `day` 参数，添加一个参数来表示今天吃了什么午饭。
 
 默认情况下，函数使用它们的参数名称作为它们参数的标签，在参数名称前可以自定义参数标签，或者使用 `_` 表示不使用参数标签。
@@ -353,7 +362,8 @@ numbers.map({
 })
 ```
 
-> 练习：
+> 练习
+> 
 > 重写闭包，对所有奇数返回 0。
 
 有很多种创建更简洁的闭包的方法。如果一个闭包的类型已知，比如作为一个代理的回调，你可以忽略参数，返回值，甚至两个都忽略。单个语句闭包会把它语句的值当做结果返回。
@@ -384,7 +394,8 @@ class Shape {
 }
 ```
 
-> 练习：
+> 练习
+> 
 > 使用 `let` 添加一个常量属性，再添加一个接收一个参数的方法。
 
 要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。
@@ -443,7 +454,8 @@ test.area()
 test.simpleDescription()
 ```
 
-> 练习：
+> 练习
+> 
 > 创建 `NamedShape` 的另一个子类 `Circle`，构造器接收两个参数，一个是半径一个是名称，在子类 `Circle` 中实现 `area()` 和 `simpleDescription()` 方法。
 
 除了储存简单的属性之外，属性可以有 getter 和 setter 。
@@ -547,7 +559,8 @@ let ace = Rank.ace
 let aceRawValue = ace.rawValue
 ```
 
-> 练习：
+> 练习
+> 
 > 写一个函数，通过比较它们的原始值来比较两个 `Rank` 值。
 
 默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值，不过你可以通过显式赋值进行改变。在上面的例子中，`Ace` 被显式赋值为 1，并且剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用 `rawValue` 属性来访问一个枚举成员的原始值。
@@ -582,7 +595,8 @@ let hearts = Suit.hearts
 let heartsDescription = hearts.simpleDescription()
 ```
 
-> 练习：
+> 练习
+> 
 > 给 `Suit` 添加一个 `color()` 方法，对 `spades` 和 `clubs` 返回 “black” ，对 `hearts` 和 `diamonds` 返回 “red” 。
 
 注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，枚举成员 `Suit.hearts` 需要用全名来引用，因为常量没有显式指定类型。在 `switch` 里，枚举成员使用缩写 `.hearts` 来引用，因为 `self` 的值已经是一个 `suit` 类型，在已知变量类型的情况下可以使用缩写。
@@ -606,7 +620,8 @@ case let .failure(message):
 }
 ```
 
-> 练习：
+> 练习
+> 
 > 给 `ServerResponse` 和 switch 添加第三种情况。
 
 注意日升和日落时间是如何从 `ServerResponse` 中提取到并与 `switch` 的 `case` 相匹配的。
@@ -625,7 +640,8 @@ let threeOfSpades = Card(rank: .three, suit: .spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
 
-> 练习：
+> 练习
+> 
 > 给 `Card` 添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
 <a name="protocols_and_extensions"></a>
@@ -665,7 +681,8 @@ b.adjust()
 let bDescription = b.simpleDescription
 ```
 
-> 练习：
+> 练习
+> 
 > 写一个实现这个协议的枚举。
 
 注意声明 `SimpleStructure` 时候 `mutating` 关键字用来标记一个会修改结构体的方法。`SimpleClass` 的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
@@ -684,7 +701,8 @@ extension Int: ExampleProtocol {
 print(7.simpleDescription)
 ```
 
-> 练习：
+> 练习
+> 
 > 给 `Double` 类型写一个扩展，添加 `absoluteValue` 属性。
 
 你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
@@ -732,7 +750,8 @@ do {
 }
 ```
 
-> 练习：
+> 练习
+> 
 > 将 printer name 改为 `"Never Has Toner"` 使 `send(job:toPrinter:)` 函数抛出错误。
 
 可以使用多个 `catch` 块来处理特定的错误。参照 switch 中的 `case` 风格来写 `catch`。
@@ -750,7 +769,8 @@ do {
 }
 ```
 
-> 练习：
+> 练习
+> 
 > 在 `do` 代码块中添加抛出错误的代码。你需要抛出哪种错误来使第一个 `catch` 块进行接收？怎么使第二个和第三个 `catch` 进行接收呢？
 
 另一种处理错误的方式使用 `try?` 将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为 `nil`。否则，结果会是一个包含函数返回值的可选值。
@@ -824,7 +844,8 @@ func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
 anyCommonElements([1, 2, 3], [3])
 ```
 
-> 练习：
+> 练习
+> 
 > 修改 `anyCommonElements(_:_:)` 函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
 `<T: Equatable>` 和 `<T> ... where T: Equatable>` 的写法是等价的。
