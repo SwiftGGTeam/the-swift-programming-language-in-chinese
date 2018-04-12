@@ -26,6 +26,9 @@
 > 4.0
 > 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [For-In 循环](#for_in_loops)
@@ -204,7 +207,8 @@ print("Game over!")
 
 掷完骰子后，玩家向前移动`diceRoll`个方格，如果玩家移动超过了第 25 个方格，这个时候游戏将会结束，为了应对这种情况，代码会首先判断`square`的值是否小于`board`的`count`属性，只有小于才会在`board[square]`上增加`square`，来向前或向后移动（遇到了梯子或者蛇）。
 
-> 注意：
+> 注意
+> 
 > 如果没有这个检测（`square < board.count`），`board[square]`可能会越界访问`board`数组，导致错误。
 
 当本轮`while`循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为`false`，此时游戏结束。
@@ -216,7 +220,8 @@ print("Game over!")
 
 `while`循环的另外一种形式是`repeat-while`，它和`while`的区别是在判断循环条件之前，先执行一次循环的代码块。然后重复循环直到条件为`false`。
 
-> 注意：
+> 注意
+> 
 > Swift语言的`repeat-while`循环和其他语言中的`do-while`循环是类似的。
 
 下面是 `repeat-while`循环的一般格式：
@@ -372,7 +377,8 @@ default:
 
 与 C 和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
-> 注意：
+> 注意
+> 
 虽然在Swift中`break`不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用`break`跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
@@ -404,8 +410,9 @@ default:
 ```
 为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)
 
-> 注意：
-如果想要显式贯穿case分支，请使用`fallthrough`语句，详情请参考[贯穿](#fallthrough)。
+> 注意
+> 
+> 如果想要显式贯穿case分支，请使用`fallthrough`语句，详情请参考[贯穿](#fallthrough)。
 
 <a name="interval_matching"></a>
 #### 区间匹配
@@ -525,7 +532,7 @@ case let (x, y):
 就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认分支。
 
 <a name="compound_cases"></a>
-#### 复合匹配
+#### 复合型 Cases
 
 当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个`case`后面，并且用逗号隔开。当case后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
 
@@ -615,8 +622,9 @@ print(puzzleOutput)
 
 这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
 
->注意：
-当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你应该使用`break`来忽略某个分支。
+>注意
+>
+>当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你应该使用`break`来忽略某个分支。
 
 下面的例子通过`switch`来判断一个`Character`值是否代表下面四种语言之一。为了简洁，多个值被包含在了同一个分支情况中。
 
@@ -650,7 +658,7 @@ if let integerValue = possibleIntegerValue {
 在上面的例子中，想要把`Character`所有的的可能性都枚举出来是不现实的，所以使用`default`分支来包含所有上面没有匹配到字符的情况。由于这个`default`分支不需要执行任何动作，所以它只写了一条`break`语句。一旦落入到`default`分支中后，`break`语句就完成了该分支的所有代码操作，代码继续向下，开始执行`if let`语句。
 
 <a name="fallthrough"></a>
-### 贯穿
+### 贯穿 (Fallthrough)
 
 在 Swift 里，`switch`语句不会从上一个 case 分支跳转到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显式地插入`break`语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
@@ -676,7 +684,8 @@ print(description)
 
 当`switch`代码块执行完后，使用`print(_:separator:terminator:)`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
 
-> 注意：
+> 注意
+> 
 > `fallthrough`关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough`简单地使代码继续连接到下一个 case 中的代码，这和 C 语言标准中的`switch`语句特性是一样的。
 
 <a name="labeled_statements"></a>
@@ -688,9 +697,11 @@ print(description)
 
 声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字(introducor keyword)，并且该标签后面跟随一个冒号。下面是一个针对`while`循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
 
-> `label name`: while `condition` {
->     `statements`
-> }
+```swift
+ label name: while condition {
+     statements
+ }
+```
 
 下面的例子是前面章节中*蛇和梯子*的适配版本，在此版本中，我们将使用一个带有标签的`while`循环体中调用`break`和`continue`语句。这次，游戏增加了一条额外的规则：
 
@@ -743,9 +754,11 @@ print("Game over!")
 - 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环，开始下一次循环。
 - 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动 `diceRoll` 个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。接着本次循环结束，控制跳转到`while`循环体的条件判断语句处，再决定是否需要继续执行下次循环。
 
->注意：
-如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
-同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
+>注意
+>
+>如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`语句而不是`while`循环。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
+>
+>同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
 <a name="early_exit"></a>
 ## 提前退出
@@ -797,7 +810,7 @@ if #available(iOS 10, macOS 10.12, *) {
 
 以上可用性条件指定，`if`语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
 
-在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 8.3 以及 macOS 10.10.3 的小版本号。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是`iOS`，`macOS`，`watchOS`和`tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 
 ```swift
 if #available(platform name version, ..., *) {

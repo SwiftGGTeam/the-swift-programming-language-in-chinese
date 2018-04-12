@@ -18,6 +18,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)
@@ -25,14 +28,14 @@
 - [向下转型](#downcasting)
 - [`Any` 和 `AnyObject` 的类型转换](#type_casting_for_any_and_anyobject)
 
-_类型转换_ 可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
+*类型转换*可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](./22_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
+你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](./21_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
-## 定义一个类层次作为例子
+## 为类型转换定义类层次
 
 你可以将类型转换用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。下面的三个代码段定义了一个类层次和一个包含了这些类实例的数组，作为类型转换的例子。
 
@@ -85,7 +88,7 @@ let library = [
 <a name="checking_type"></a>
 ## 检查类型
 
-用类型检查操作符（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
+用*类型检查操作符*（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
 
 下面的例子定义了两个变量，`movieCount` 和 `songCount`，用来计算数组 `library` 中 `Movie` 和 `Song` 类型的实例数量：
 
@@ -154,6 +157,7 @@ for item in library {
 若向下转型成功，然后 `movie` 的属性将用于打印一个 `Movie` 实例的描述，包括它的导演的名字 `director`。相似的原理被用来检测 `Song` 实例，当 `Song` 被找到时则打印它的描述（包含 `artist` 的名字）。
 
 > 注意
+> 
 > 转换没有真的改变实例或它的值。根本的实例保持不变；只是简单地把它作为它被转换成的类型来使用。
 
 <a name="type_casting_for_any_and_anyobject"></a>
@@ -164,7 +168,7 @@ Swift 为不确定类型提供了两种特殊的类型别名：
 * `Any` 可以表示任何类型，包括函数类型。
 * `AnyObject` 可以表示任何类类型的实例。
 
-只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。在你的代码里使用你期望的明确类型总是更好的。
+只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。当你期望你的代码可以工作，最好还是要确定类型。
 
 这里有个示例，使用 `Any` 类型来和混合的不同类型一起工作，包括函数类型和非类类型。它创建了一个可以存储 `Any` 类型的数组 `things`：
 
@@ -222,7 +226,9 @@ for thing in things {
 ```
 
 > 注意
+> 
 > `Any`类型可以表示所有类型的值，包括可选类型。Swift 会在你用`Any`类型来表示一个可选值的时候，给你一个警告。如果你确实想使用`Any`类型来承载可选值，你可以使用`as`操作符显式转换为`Any`，如下所示：
+> 
 > 
 ```swift
 let optionalNumber: Int? = 3

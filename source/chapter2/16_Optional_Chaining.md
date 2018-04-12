@@ -19,6 +19,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)
@@ -32,7 +35,8 @@
 *可选链式调用*是一种可以在当前值可能为`nil`的可选值上请求和调用属性、方法及下标的方法。如果可选值有值，那么调用就会成功；如果可选值是`nil`，那么调用将返回`nil`。多个调用可以连接在一起形成一个调用链，如果其中任何一个节点为`nil`，整个调用链都会失败，即返回`nil`。
 
 > 注意
-Swift 的可选链式调用和 Objective-C 中向`nil`发送消息有些相像，但是 Swift 的可选链式调用可以应用于任意类型，并且能检查调用是否成功。
+>    
+> Swift 的可选链式调用和 Objective-C 中向`nil`发送消息有些相像，但是 Swift 的可选链式调用可以应用于任意类型，并且能检查调用是否成功。
 
 <a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a>
 ## 使用可选链式调用代替强制展开
@@ -274,7 +278,8 @@ if (john.residence?.address = someAddress) != nil {
 通过可选链式调用，我们可以在一个可选值上访问下标，并且判断下标调用是否成功。
 
 > 注意
-通过可选链式调用访问可选值的下标时，应该将问号放在下标方括号的前面而不是后面。可选链式调用的问号一般直接跟在可选表达式的后面。
+> 
+> 通过可选链式调用访问可选值的下标时，应该将问号放在下标方括号的前面而不是后面。可选链式调用的问号一般直接跟在可选表达式的后面。
 
 下面这个例子用下标访问`john.residence`属性存储的`Residence`实例的`rooms`数组中的第一个房间的名称，因为`john.residence`为`nil`，所以下标调用失败了：
 
@@ -405,4 +410,5 @@ if let beginsWithThe =
 ```
 
 > 注意
-在上面的例子中，在方法的圆括号后面加上问号是因为你要在`buildingIdentifier()`方法的可选返回值上进行可选链式调用，而不是方法本身。
+> 
+> 在上面的例子中，在方法的圆括号后面加上问号是因为你要在`buildingIdentifier()`方法的可选返回值上进行可选链式调用，而不是`buildingIdentifier()`方法本身。

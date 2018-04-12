@@ -16,14 +16,19 @@
 > 
 > 3.0
 > 翻译+校对：[mmoaay](https://github.com/mmoaay) 2016-09-20
-> 3.0.1：shanks，2016-11-13
+
+> 3.0.1
+> shanks，2016-11-13
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页内容包括：
 
 - [位运算符](#bitwise_operators)
 - [溢出运算符](#overflow_operators)
 - [优先级和结合性](#precedence_and_associativity)
-- [运算符函数](#operator_functions)
+- [运算符函数](#operator_methods)
 - [自定义运算符](#custom_operators)
 
 除了在之前介绍过的[基本运算符](./02_Basic_Operators.html)，Swift 中还有许多可以对数值进行复杂运算的高级运算符。这些高级运算符包含了在 C 和 Objective-C 中已经被大家所熟知的位运算符和移位运算符。
@@ -308,6 +313,7 @@ signedOverflow = signedOverflow &- 1
 如果想查看完整的 Swift 运算符优先级和结合性规则，请参考[表达式](../chapter3/04_Expressions.html)。如果想查看 Swift 标准库提供所有的运算符，请查看 [Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
 > 注意
+> 
 > 相对 C 语言和 Objective-C 来说，Swift 的运算符优先级和结合性规则更加简洁和可预测。但是，这也意味着它们相较于 C 语言及其衍生语言并不是完全一致的。在对现有的代码进行移植的时候，要注意确保运算符的行为仍然符合你的预期。
 
 <a name="operator_functions"></a>
@@ -397,6 +403,7 @@ original += vectorToAdd
 ```
 
 > 注意
+> 
 > 不能对默认的赋值运算符（`=`）进行重载。只有组合赋值运算符可以被重载。同样地，也无法对三目条件运算符 （`a ? b : c`） 进行重载。
 
 <a name="equivalence_operators"></a>
@@ -404,15 +411,12 @@ original += vectorToAdd
 
 自定义的类和结构体没有对*等价运算符*进行默认实现，等价运算符通常被称为“相等”运算符（`==`）与“不等”运算符（`!=`）。对于自定义类型，Swift 无法判断其是否“相等”，因为“相等”的含义取决于这些自定义类型在你的代码中所扮演的角色。
 
-为了使用等价运算符能对自定义的类型进行判等运算，需要为其提供自定义实现，实现的方法与其它中缀运算符一样：
+为了使用等价运算符能对自定义的类型进行判等运算，需要为其提供自定义实现，实现的方法与其它中缀运算符一样, 并且增加对标准库 `Equatable` 协议的遵循：
 
 ```swift
-extension Vector2D {
+extension Vector2D: Equatable {
     static func == (left: Vector2D, right: Vector2D) -> Bool {
         return (left.x == right.x) && (left.y == right.y)
-    }
-    static func != (left: Vector2D, right: Vector2D) -> Bool {
-        return !(left == right)
     }
 }
 ```
@@ -428,6 +432,28 @@ if twoThree == anotherTwoThree {
     print("These two vectors are equivalent.")
 }
 // 打印 “These two vectors are equivalent.”
+```
+Swift 为以下自定义类型提等价运算符供合成实现：
+
+- 只拥有遵循 `Equatable` 协议存储属性的结构体；
+- 只拥有遵循 `Equatable` 协议关联类型的枚举；
+- 没有关联类型的枚举。
+
+在类型原本的声明中声明遵循 `Equatable` 来接收这些默认实现。
+
+下面为三维位置向量 `(x, y, z)` 定义的 `Vector3D` 结构体，与 `Vector2D` 类似，由于 `x` ， `y` 和 `z` 属性都是 `Equatable` 类型， `Vector3D` 就收到默认的等价运算符实现了。
+
+```swift
+struct Vector3D: Equatable {
+    var x = 0.0, y = 0.0, z = 0.0
+}
+ 
+let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+if twoThreeFour == anotherTwoThreeFour {
+    print("These two vectors are also equivalent.")
+}
+// Prints "These two vectors are also equivalent."
 ```
 
 <a name="custom_operators"></a>
@@ -482,4 +508,5 @@ let plusMinusVector = firstVector +- secondVector
 这个运算符把两个向量的 `x` 值相加，同时用第一个向量的 `y` 值减去第二个向量的 `y` 值。因为它本质上是属于“相加型”运算符，所以将它放置 `+` 和 `-` 等默认的中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [Swift Standard Library Operators Reference](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](#operator_declaration)
 
 > 注意
+> 
 > 当定义前缀与后缀运算符的时候，我们并没有指定优先级。然而，如果对同一个值同时使用前缀与后缀运算符，则后缀运算符会先参与运算。

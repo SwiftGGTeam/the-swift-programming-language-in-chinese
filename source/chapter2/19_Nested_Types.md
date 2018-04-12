@@ -18,6 +18,9 @@
 > 4.0
 > 翻译+校对：[EyreFree](https://www.eyrefree.org/) 2017-10-19
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [嵌套类型实践](#nested_types_in_action)

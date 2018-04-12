@@ -1,4 +1,12 @@
 # 内存安全
+--------------------
+
+> 4.0
+> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 
 本页包含内容：
 
@@ -122,7 +130,8 @@ balance(&playerOneScore, &playerOneScore)
 上面的 `balance(_:_:)` 函数会将传入的两个参数平均化。将 `playerOneScore` 和 `playerTwoScore` 作为参数传入不会产生错误 —— 有两个访问重叠了，但它们访问的是不同的内存位置。相反，将 `playerOneScore` 作为参数同时传入就会产生冲突，因为它会发起两个写访问，同时访问同一个的存储地址。
 
 > 注意
-因为操作符也是函数，它们也会对 in-out 参数进行长期访问。例如，假设 `balance(_:_:)` 是一个名为 `<^>` 的操作符函数，那么 `playerOneScore <^> playerOneScore` 也会造成像 `balance(&playerOneScore, &playerOneScore)` 一样的冲突。
+> 
+> 因为操作符也是函数，它们也会对 in-out 参数进行长期访问。例如，假设 `balance(_:_:)` 是一个名为 `<^>` 的操作符函数，那么 `playerOneScore <^> playerOneScore` 也会造成像 `balance(&playerOneScore, &playerOneScore)` 一样的冲突。
 
 <a name="conflicting_access_to_self_in_methods"></a>
 ## 方法里 self 的访问冲突
@@ -210,8 +219,4 @@ func someFunction() {
 
 如果编译器无法保证访问的安全性，它就不会允许访问。
 
-<a name="revision_history"></a>
-## 更新历史
 
-> 4.0
-> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21

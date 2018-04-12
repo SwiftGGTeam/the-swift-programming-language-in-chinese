@@ -1,6 +1,5 @@
 # 泛型
-
-------
+-------------------
 
 > 1.0
 > 翻译：[takalard](https://github.com/takalard)
@@ -21,6 +20,9 @@
 
 > 4.0
 > 翻译+校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -87,7 +89,8 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 在实际应用中，通常需要一个更实用更灵活的函数来交换两个任意类型的值，幸运的是，泛型代码帮你解决了这种问题。（这些函数的泛型版本已经在下面定义好了。）
 
 > 注意
-在上面三个函数中，`a` 和 `b` 类型必须相同。如果 `a` 和 `b` 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 `String` 类型的变量和一个 `Double` 类型的变量互换值。试图这样做将导致编译错误。
+> 
+> 在上面三个函数中，`a` 和 `b` 类型必须相同。如果 `a` 和 `b` 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 `String` 类型的变量和一个 `Double` 类型的变量互换值。试图这样做将导致编译错误。
 
 <a name="generic_functions"></a>
 ## 泛型函数
@@ -131,7 +134,8 @@ swapTwoValues(&someString, &anotherString)
 ```
 
 > 注意
-上面定义的 `swapTwoValues(_:_:)` 函数是受 `swap(_:_:)` 函数启发而实现的。后者存在于 Swift 标准库，你可以在你的应用程序中使用它。如果你在代码中需要类似 `swapTwoValues(_:_:)` 函数的功能，你可以使用已存在的 `swap(_:_:)` 函数。
+> 
+> 上面定义的 `swapTwoValues(_:_:)` 函数是受 `swap(_:_:)` 函数启发而实现的。后者存在于 Swift 标准库，你可以在你的应用程序中使用它。如果你在代码中需要类似 `swapTwoValues(_:_:)` 函数的功能，你可以使用已存在的 `swap(_:_:)` 函数。
 
 <a name="type_parameters"></a>
 ## 类型参数
@@ -148,17 +152,19 @@ swapTwoValues(&someString, &anotherString)
 在大多数情况下，类型参数具有一个描述性名字，例如 `Dictionary<Key, Value>` 中的 `Key` 和 `Value`，以及 `Array<Element>` 中的 `Element`，这可以告诉阅读代码的人这些类型参数和泛型函数之间的关系。然而，当它们之间没有有意义的关系时，通常使用单个字母来命名，例如 `T`、`U`、`V`，正如上面演示的 `swapTwoValues(_:_:)` 函数中的 `T` 一样。
 
 > 注意
-请始终使用大写字母开头的驼峰命名法（例如 `T` 和 `MyTypeParameter`）来为类型参数命名，以表明它们是占位类型，而不是一个值。
+> 
+> 请始终使用大写字母开头的驼峰命名法（例如 `T` 和 `MyTypeParameter`）来为类型参数命名，以表明它们是占位类型，而不是一个值。
 
 <a name="generic_types"></a>
 ## 泛型类型
 
-除了泛型函数，Swift 还允许你定义泛型类型。这些自定义类、结构体和枚举可以适用于任何类型，类似于 `Array` 和 `Dictionary`。
+除了泛型函数，Swift 还允许你定义*泛型*类型。这些自定义类、结构体和枚举可以适用于*任何*类型，类似于 `Array` 和 `Dictionary`。
 
-这部分内容将向你展示如何编写一个名为 `Stack` （栈）的泛型集合类型。栈是一系列值的有序集合，和 `Array` 类似，但它相比 Swift 的 `Array` 类型有更多的操作限制。数组允许在数组的任意位置插入新元素或是删除其中任意位置的元素。而栈只允许在集合的末端添加新的元素（称之为入*栈*）。类似的，栈也只能从末端移除元素（称之为*出*栈）。
+这部分内容将向你展示如何编写一个名为 `Stack` （栈）的泛型集合类型。栈是一系列值的有序集合，和 `Array` 类似，但它相比 Swift 的 `Array` 类型有更多的操作限制。数组允许在数组的任意位置插入新元素或是删除其中任意位置的元素。而栈只允许在集合的末端添加新的元素（称之为*入*栈）。类似的，栈也只能从末端移除元素（称之为*出*栈）。
 
 > 注意
-栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的“后进先出”方式来管理集合，栈都是最实用的模型。
+> 
+> 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的“后进先出”方式来管理集合，栈都是最实用的模型。
 
 下图展示了一个栈的入栈（push）和出栈（pop）的行为：
 
@@ -241,7 +247,7 @@ let fromTheTop = stackOfStrings.pop()
 <a name="extending_a_generic_type"></a>
 ## 扩展一个泛型类型
 
-当你扩展一个泛型类型的时候，你并不需要在扩展的定义中提供类型参数列表。原始类型定义中声明的类型参数列表在扩展中可以直接使用，并且这些来自原始类型中的参数名称会被用作原始定义中类型参数的引用。
+当你扩展一个泛型类型的时候，你并不需要在扩展的定义中提供类型参数列表。*原始*类型定义中声明的类型参数列表在扩展中可以直接使用，并且这些来自原始类型中的参数名称会被用作原始定义中类型参数的引用。
 
 下面的例子扩展了泛型类型 `Stack`，为其添加了一个名为 `topItem` 的只读计算型属性，它将会返回当前栈顶端的元素而不会将其从栈中移除：
 
@@ -454,9 +460,9 @@ struct Stack<Element>: Container {
 <a name="extending_an_existing_type_to_specify_an_associated_type"></a>
 ### 通过扩展一个存在的类型来指定关联类型
 
-[通过扩展添加协议一致性](./22_Protocols.html#adding_protocol_conformance_with_an_extension)中描述了如何利用扩展让一个已存在的类型符合一个协议，这包括使用了关联类型的协议。
+[通过扩展添加协议一致性](./21_Protocols.html#adding_protocol_conformance_with_an_extension)中描述了如何利用扩展让一个已存在的类型符合一个协议，这包括使用了关联类型的协议。
 
-Swift 的 `Array` 类型已经提供 `append(_:)` 方法，一个 `count` 属性，以及一个接受 `Int` 类型索引值的下标用以检索其元素。这三个功能都符合 `Container` 协议的要求，也就意味着你只需简单地声明 `Array` 采纳该协议就可以扩展 `Array`，使其遵从 `Container` 协议。你可以通过一个空扩展来实现这点，正如[通过扩展采纳协议](./22_Protocols.html#declaring_protocol_adoption_with_an_extension)中的描述：
+Swift 的 `Array` 类型已经提供 `append(_:)` 方法，一个 `count` 属性，以及一个接受 `Int` 类型索引值的下标用以检索其元素。这三个功能都符合 `Container` 协议的要求，也就意味着你只需简单地声明 `Array` 采纳该协议就可以扩展 `Array`，使其遵从 `Container` 协议。你可以通过一个空扩展来实现这点，正如[通过扩展采纳协议](./21_Protocols.html#declaring_protocol_adoption_with_an_extension)中的描述：
 
 ```swift
 extension Array: Container {}
@@ -465,7 +471,7 @@ extension Array: Container {}
 如同上面的泛型 `Stack` 结构体一样，`Array` 的 `append(_:)` 方法和下标确保了 Swift 可以推断出 `ItemType` 的类型。定义了这个扩展后，你可以将任意 `Array` 当作 `Container` 来使用。
 
 <a name="using_type_annotations_to_constrain_an_associated_type"></a>
-### 约束关联类型
+### 给关联类型添加约束
 
 你可以给协议里的关联类型添加类型注释，让遵守协议的类型必须遵循这个约束条件。例如，下面的代码定义了一个 `Item` 必须遵循 `Equatable` 的 `Container` 类型：
 
@@ -480,8 +486,59 @@ protocol Container {
 
 为了遵守了 `Container` 协议，Item 类型也必须遵守 `Equatable` 协议。
 
+<a name="Using_a_Protocol_in_Its_Associated_Type’s_Constraints"></a>
+### 在关联类型约束里使用协议
+
+协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个 `suffix(_:)` 方法。 `suffix(_:)` 方法返回容器中从后往前给定数量的元素，把它们存储在一个 `Suffix` 类型的实例里。
+
+```swift
+protocol SuffixableContainer: Container {
+    associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
+    func suffix(_ size: Int) -> Suffix
+}
+```
+
+在这个协议里， `Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。 `Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。 `Item` 的约束是一个 `wher`e 分句，它在下面[带有泛型 Where 分句的扩展](#extensions_with_a_generic_where_clause)中有讨论。
+
+这里有一个来自[闭包的循环强引用](./23_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)的 Stack 类型的扩展，它添加了对 `SuffixableContainer` 协议的遵循：
+
+```swift
+extension Stack: SuffixableContainer {
+    func suffix(_ size: Int) -> Stack {
+        var result = Stack()
+        for index in (count-size)..<count {
+            result.append(self[index])
+        }
+        return result
+    }
+    // Inferred that Suffix is Stack.
+}
+var stackOfInts = Stack<Int>()
+stackOfInts.append(10)
+stackOfInts.append(20)
+stackOfInts.append(30)
+let suffix = stackOfInts.suffix(2)
+// suffix contains 20 and 30
+```
+
+在上面的例子中， `Suffix` 是 `Stack` 的关联类型，也就是 `Stack` ，所以 `Stack` 的后缀运算返回另一个 `Stack` 。另外，遵循 `SuffixableContainer` 的类型可以拥有一个与它自己不同的 `Suffix` 类型——也就是说后缀运算可以返回不同的类型。比如说，这里有一个非泛型 `IntStack` 类型的扩展，它添加了 `SuffixableContainer` 遵循，使用 `Stack<Int>` 作为它的后缀类型而不是 `IntStack` ：
+
+```swift
+extension IntStack: SuffixableContainer {
+    func suffix(_ size: Int) -> Stack<Int> {
+        var result = Stack<Int>()
+        for index in (count-size)..<count {
+            result.append(self[index])
+        }
+        return result
+    }
+    // Inferred that Suffix is Stack<Int>.
+}
+```
+
+
 <a name="where_clauses"></a>
-## 泛型 where 语句
+## 泛型 Where 语句
 
 [类型约束](#type_constraints)让你能够为泛型函数，下标，类型的类型参数定义一些强制要求。
 
@@ -562,7 +619,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 上面的例子创建了一个 `Stack` 实例来存储一些 `String` 值，然后将三个字符串压入栈中。这个例子还通过数组字面量创建了一个 `Array` 实例，数组中包含同栈中一样的三个字符串。即使栈和数组是不同的类型，但它们都遵从 `Container` 协议，而且它们都包含相同类型的值。因此你可以用这两个容器作为参数来调用 `allItemsMatch(_:_:)` 函数。在上面的例子中，`allItemsMatch(_:_:)` 函数正确地显示了这两个容器中的所有元素都是相互匹配的。
 
 <a name="extensions_with_a_generic_where_clause"></a>
-## 具有泛型 where 子句的扩展
+## 具有泛型 Where 子句的扩展
 
 你也可以使用泛型 `where` 子句作为扩展的一部分。基于以前的例子，下面的示例扩展了泛型 `Stack` 结构体，添加一个 `isTop(_:)` 方法。
 
@@ -642,7 +699,7 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。
 
 <a name="associated_types_with_a_generic_where_clause"></a>
-## 具有泛型 where 子句的关联类型
+## 具有泛型 Where 子句的关联类型
 
 你可以在关联类型后面加上具有泛型 `where` 的字句。例如，建立一个包含迭代器（Iterator）的容器，就像是标准库中使用的 `Sequence` 协议那样。你应该这么写：
 
@@ -693,4 +750,4 @@ extension Container {
 - 泛型 `where` 子句要求 Sequence（Indices）的迭代器，其所有的元素都是 `Int` 类型。这样就能确保在序列（Sequence）中的索引和容器(Container)里面的索引类型是一致的。
 
 综合一下，这些约束意味着，传入到 `indices` 下标，是一个整型的序列。
-(译者：原来的 `Container` 协议，`subscript` 必须是 `Int` 型的，扩展中新的 `subscript`，允许下标是一个的序列，而非单一的值。)
+
