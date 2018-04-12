@@ -72,7 +72,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 <a name="property_requirements"></a>
 ## 属性要求
 
-协议可以要求遵循协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是可读的还是可读可写的。
+协议可以要求遵循协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属型还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是可读的还是可读可写的。
 
 如果协议要求属性是可读可写的，那么该属性不能是常量属性或只读的计算型属性。如果协议只要求属性是可读的，那么该属性不仅可以是可读的，如果代码需要的话，还可以是可写的。
 
@@ -363,7 +363,7 @@ class SnakesAndLadders: DiceGame {
 	var square = 0
 	var board: [Int]
 	init() {
-		board = [Int](count: finalSquare + 1, repeatedValue: 0)
+		board = [Int](repeating: 0, count: finalSquare + 1)
 		board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 		board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 	}
