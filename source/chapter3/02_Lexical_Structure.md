@@ -12,7 +12,10 @@
 > 翻译：[mmoaay](https://github.com/mmoaay)
 
 > 2.2
-> 翻译+校对：[星夜暮晨](https://github.com/semperidem)，2016-04-06
+> 翻译+校对：[星夜暮晨](https://github.com/semperidem)
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -25,7 +28,7 @@
   - [字符串字面量](#string_literals)
 - [运算符](#operators)
 
-Swift 的*“词法结构 (lexical structure)”* 描述了能构成该语言中合法符号 (token) 的字符序列。这些合法符号组成了语言中最底层的构建基块，并在之后的章节中用于描述语言的其他部分。一个合法符号由一个标识符 (identifier)、关键字 (keyword)、标点符号 (punctuation)、字面量 (literal) 或运算符 (operator) 组成。
+Swift 的*“词法结构 (lexical structure)”* 描述了能构成该语言中有效符号 (token) 的字符序列。这些合法符号组成了语言中最底层的构建基块，并在之后的章节中用于描述语言的其他部分。一个合法符号由一个标识符 (identifier)、关键字 (keyword)、标点符号 (punctuation)、字面量 (literal) 或运算符 (operator) 组成。
 
 通常情况下，通过考虑输入文本当中可能的最长子串，并且在随后将介绍的语法约束之下，根据随后将介绍的语法约束生成的，根据 Swift 源文件当中的字符来生成相应的“符号”。这种方法称为*“最长匹配 (longest match)”*，或者*“最大适合(maximal munch)”*。
 
@@ -36,7 +39,31 @@ Swift 的*“词法结构 (lexical structure)”* 描述了能构成该语言中
 
 注释被编译器当作空白处理。单行注释由 `//` 开始直至遇到换行符（U+000A）或者回车符（U+000D）。多行注释由 `/*` 开始，以 `*/` 结束。注释允许嵌套，但注释标记必须匹配。
 
-正如 [*Markup Formatting Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497) 所述，注释可以包含附加的格式和标记。
+> 空白语法
+
+<a id="whitespace"></a>
+> *空白* → [*空白项*](#whitespace-item) [*空白*](#whitespace)<sub>可选</sub>  
+> *空白项* → [*断行符*](#line-break)        
+> *空白项* → [*注释*](#comment)  
+> *空白项* → [*多行注释*](#multiline-comment)      
+> *空白项* → U+0000，U+0009，U+000B，U+000C 或者 U+0020
+
+<a id="line-break"></a>
+> *断行符* → U+000A      
+> *断行符* → U+000D     
+> *断行符* → U+000D 接着是 U+000A
+
+<a id="comment"></a>        
+> *注释* → // [*注释内容 断行*](#comment-text line-break)     
+> *多行注释* → `/*` [*多行注释内容*](#multiline-commnet-text) `*/`    
+> *注释内容* → [*注释内容项*](#comment-text-item) [*注释内容*](#comment-text)<sub>可选</sub>    
+> *注释内容项* → 任何Unicode标量值， 除了 U+000A 或者 U+000D    
+> *多行注释内容* → [*多行注释内容项*](#multiline-comment-text-item) [*多行注释内容*](#multiline-comment-text)<sub>可选</sub>      
+> *多行注释内容项* → [*多行注释*](#multiline-comment).          
+> *多行注释内容项* → [*注释内容项*](#comment-text-item)     
+> *多行注释内容项* → 任何Unicode标量值， 除了 `/*` 或者 `*/` 
+
+注释可以包含额外的格式和标记，正如 [*Markup Formatting Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497) 所述。
 
 <a id="identifiers"></a>
 ## 标识符
@@ -117,7 +144,8 @@ true		    // 布尔值字面量
 
 当为一个字面量值指定了类型标注的时候，这个标注的类型必须能通过这个字面量值实例化。也就是说，这个类型必须符合这些 Swift 标准库协议中的一个：整数字面量的 `IntegerLiteralConvertible` 协议、浮点数字面量的 `FloatingPointLiteralConvertible` 协议、字符串字面量的 `StringLiteralConvertible` 协议以及布尔值字面量的 `BooleanLiteralConvertible` 协议。比如，`Int8` 符合 `IntegerLiteralConvertible` 协议，因此它能在 `let x: Int8 = 42` 这个声明中作为整数字面量 `42` 的类型标注。
 
-> 字面量语法  
+> 字面量语法
+>  
 > *字面量* → [*数值字面量*](#numeric-literal) | [*字符串字面量*](#string-literal) | [*布尔值字面量*](#boolean-literal) | [*nil 字面量*](#nil-literal)    
 
 <a id="numeric-literal"></a>    
@@ -141,7 +169,7 @@ true		    // 布尔值字面量
 除非特别指定，整数字面量的默认推导类型为 Swift 标准库类型中的 `Int`。Swift 标准库还定义了其他不同长度以及是否带符号的整数类型，请参考 [整数](../chapter2/01_The_Basics.html#integers)。
 
 > 整数字面量语法  
-
+> 
 <a id="integer-literal"></a>
 > *整数字面量* → [*二进制字面量*](#binary-literal)  
 > *整数字面量* → [*八进制字面量*](#octal-literal)  
@@ -204,7 +232,7 @@ true		    // 布尔值字面量
 除非特别指定，浮点数字面量的默认推导类型为 Swift 标准库类型中的 `Double`，表示 64 位浮点数。Swift 标准库也定义了 `Float` 类型，表示 32 位浮点数。
 
 > 浮点数字面量语法  
-
+> 
 <a id="floating-point-literal"></a> 
 > *浮点数字面量* → [*十进制字面量*](#decimal-literal) [*十进制分数*](#decimal-fraction)<sub>可选</sub> [*十进制指数*](#decimal-exponent)<sub>可选</sub>      
 > *浮点数字面量* → [*十六进制字面量*](#hexadecimal-literal) [*十六进制分数*](#hexadecimal-fraction)<sub>可选</sub> [*十六进制指数*](#hexadecimal-exponent)
@@ -229,11 +257,26 @@ true		    // 布尔值字面量
 <a id="string_literals"></a>
 ### 字符串字面量
 
-字符串字面量由被包在双引号中的一串字符组成，形式如下：
+字符串字面量是被引号包括的一串字符组成。 单行字符串字面量被包在双引号中的一串字符组成，形式如下：
 
 > "`字符`"
 
 字符串字面量中不能包含未转义的双引号（`"`）、未转义的反斜线（`\`）、回车符、换行符。
+
+多行字符串字面量被包在三个双引号中的一串字符组成，形式如下：
+> """     
+> `字符`    
+> """     
+
+与单行字符串字面量不同的是，多行字符串字面量可以包含不转义的双引号( " )，回车以及换行。它不能包含三个非转义的连续双引号。
+
+""" 之后的回车或者换行开始多行字符串字面量，不是字符串的一部分。 """ 之前回车或者换行结束字面量，也不是字符串的一部分。要让多行字符串字面量的开始或结束带有换行，就在第一行或者最后一行写一个空行。
+
+多行字符串字面量可以使用任何空格或制表符组合进行缩进；这些缩进不会包含在字符串中。 """ 的结束符号决定了缩进：字面量中的任何一个非空行必须起始于多行字符串字面量结束符号的前面；空格和制表符不会被转换。你可以包在缩进后含额外的空格和制表符；这些空格和制表符会在字符串中出现。
+
+多行字符串字面量中的一行结束使用规范化的换行符号。尽管你的源代码混用了回车和换行符，字符串中所有的行结束都必须一样.
+
+在多行字符串字面量里， 在行末用反斜线（`\`）可以省略字符串行间中断。 反斜线之间的空白和行间中断也可以省略。 你可以在你的代码里用这种语法硬包裹多行字符串字面量，不需要改变产生的字符串的值。
 
 可以在字符串字面量中使用的转义特殊符号如下：
 
@@ -246,7 +289,7 @@ true		    // 布尔值字面量
 * 单引号 `\'`
 * Unicode 标量 `\u{`n`}`，n 为一到八位的十六进制数字
 
-字符串字面量允许在反斜杠 (`\`) 后的括号 `()` 中插入表达式的值。插入表达式可以包含字符串字面量，但不能包含未转义的双引号 (`"`)、未转义的反斜线 (`\`)、回车符以及换行符。
+字符串字面量允许在反斜杠 (`\`) 后的括号 `()` 中插入表达式的值。插入表达式可以包含字符串字面量，但不能包含未转义的反斜线 (`\`)、回车符以及换行符。
 
 例如，以下所有字符串字面量的值都是相同的：
 
@@ -258,7 +301,7 @@ true		    // 布尔值字面量
 let x = 3; "1 2 \(x)"
 ```
 
-字符串字面量的默认推导类型为 `String`。更多有关 `String` 类型的信息请参考 [字符串和字符](../chapter2/03_Strings_and_Characters.html) 以及 [*String Structure Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_String_Structure/index.html#//apple_ref/doc/uid/TP40015181)。
+字符串字面量的默认推导类型为 `String`。更多有关 `String` 类型的信息请参考 [字符串和字符](../chapter2/03_Strings_and_Characters.html) 以及 [*字符串结构参考*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_String_Structure/index.html#//apple_ref/doc/uid/TP40015181)。
 
 用 `＋` 操作符连接的字符型字面量是在编译时进行连接的。比如下面的 `textA` 和 `textB` 是完全一样的，`textA` 没有任何运行时的连接操作。
 
@@ -268,7 +311,7 @@ let textB = "Hello world"
 ```
 
 > 字符串字面量语法  
-
+> 
 <a id="string-literal"></a>
 > *字符串字面量* → [*静态字符串字面量*](#static-string-literal) | [*插值字符串字面量*](#interpolated-string-literal) 
 
@@ -304,7 +347,8 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 虽然您可以用问号 `?` 来自定义运算符，但是这个运算符不能只包含单独的一个问号。此外，虽然运算符可以包含一个惊叹号 `!`，但是前缀运算符不能够以问号或者惊叹号开头。
 
-> 注意  
+> 注意
+>  
 > 以下这些标记 `=`、`->`、`//`、`/*`、`*/`、`.`、`<`（前缀运算符）、`&`、`?`、`?`（中缀运算符）、`>`（后缀运算符）、`!` 、`?` 是被系统保留的。这些符号不能被重载，也不能用于自定义运算符。
 
 运算符两侧的空白被用来区分该运算符是否为前缀运算符、后缀运算符或二元运算符。规则总结如下：
@@ -323,7 +367,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/25_Advanced_Operators.html#custom_operators) 和 [运算符声明](05_Declarations.html#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/25_Advanced_Operators.html#operator_functions)。
 
 > 运算符语法  
-
+> 
 <a id="operator"></a>
 > *运算符* → [*头部运算符*](#operator-head) [*运算符字符组*](#operator-characters)<sub>可选</sub>  
 > *运算符* → [*头部点运算符*](#dot-operator-head) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>    

@@ -14,7 +14,12 @@
 > 
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
-> 3.0.1，shanks，2016-11-13
+
+> 3.0.1
+> shanks，2016-11-13
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -30,7 +35,8 @@ Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程
 然而在少数情况下，为了能帮助你管理内存，ARC 需要更多的，代码之间关系的信息。本章描述了这些情况，并且为你示范怎样才能使 ARC 来管理你的应用程序的所有内存。在 Swift 使用 ARC 与在 Obejctive-C 中使用 ARC 非常类似，具体请参考[过渡到 ARC 的发布说明](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226)
 
 > 注意
-引用计数仅仅应用于类的实例。结构体和枚举类型是值类型，不是引用类型，也不是通过引用的方式存储和传递。
+> 
+> 引用计数仅仅应用于类的实例。结构体和枚举类型是值类型，不是引用类型，也不是通过引用的方式存储和传递。
 
 <a name="how_arc_works"></a>
 ## 自动引用计数的工作机制
@@ -203,6 +209,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 你可以像其他可选值一样，检查弱引用的值是否存在，你将永远不会访问已销毁的实例的引用。
 
 > 注意
+> 
 > 当 ARC 设置弱引用为`nil`时，属性观察不会被触发。 
 
 下面的例子跟上面`Person`和`Apartment`的例子一致，但是有一个重要的区别。这一次，`Apartment`的`tenant`属性被声明为弱引用：
@@ -275,7 +282,9 @@ unit4A = nil
 无主引用通常都被期望拥有值。不过 ARC 无法在实例被销毁后将无主引用设为`nil`，因为非可选类型的变量不允许被赋值为`nil`。
 
 > 重要
-> 使用无主引用，你*必须*确保引用始终指向一个未销毁的实例。
+> 
+> 使用无主引用，你*必须*确保引用始终指向一个未销毁的实例。                
+> 
 > 如果你试图在实例被销毁后，访问该实例的无主引用，会触发运行时错误。
 
 下面的例子定义了两个类，`Customer`和`CreditCard`，模拟了银行客户和客户的信用卡。这两个类中，每一个都将另外一个类的实例作为自身的属性。这种关系可能会造成循环强引用。
@@ -295,9 +304,7 @@ class Customer {
     }
     deinit { print("\(name) is being deinitialized") }
 }
-```
 
-```swift
 class CreditCard {
     let number: UInt64
     unowned let customer: Customer
@@ -310,6 +317,7 @@ class CreditCard {
 ```
 
 > 注意
+> 
 > `CreditCard`类的`number`属性被定义为`UInt64`类型而不是`Int`类型，以确保`number`属性的存储量在 32 位和 64 位系统上都能足够容纳 16 位的卡号。
 
 下面的代码片段定义了一个叫`john`的可选类型`Customer`变量，用来保存某个特定客户的引用。由于是可选类型，所以变量被初始化为`nil`：
@@ -350,7 +358,7 @@ john = nil
 > 你可以通过`unowned(unsafe)`来声明不安全无主引用。如果你试图在实例被销毁后，访问该实例的不安全无主引用，你的程序会尝试访问该实例之前所在的内存地址，这是一个不安全的操作。
 
 <a name="unowned_references_and_implicitly_unwrapped_optional_properties"></a>
-### 无主引用以及隐式解析可选属性
+### 无主引用和隐式解析可选属性
 
 上面弱引用和无主引用的例子涵盖了两种常用的需要打破循环强引用的场景。
 
@@ -403,7 +411,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 在上面的例子中，使用隐式解析可选值意味着满足了类的构造函数的两个构造阶段的要求。`capitalCity`属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
 
 <a name="strong_reference_cycles_for_closures"></a>
-## 闭包引起的循环强引用
+## 闭包的循环强引用
 
 前面我们看到了循环强引用是在两个类实例属性互相保持对方的强引用时产生的，还知道了如何用弱引用和无主引用来打破这些循环强引用。
 
@@ -462,7 +470,8 @@ print(heading.asHTML())
 ```
 
 > 注意
-`asHTML`声明为`lazy`属性，因为只有当元素确实需要被处理为 HTML 输出的字符串时，才需要使用`asHTML`。也就是说，在默认的闭包中可以使用`self`，因为只有当初始化完成以及`self`确实存在后，才能访问`lazy`属性。
+> 
+> `asHTML`声明为`lazy`属性，因为只有当元素确实需要被处理为 HTML 输出的字符串时，才需要使用`asHTML`。也就是说，在默认的闭包中可以使用`self`，因为只有当初始化完成以及`self`确实存在后，才能访问`lazy`属性。
 
 `HTMLElement`类只提供了一个构造函数，通过`name`和`text`（如果有的话）参数来初始化一个新元素。该类也定义了一个析构函数，当`HTMLElement`实例被销毁时，打印一条消息。
 
@@ -475,7 +484,8 @@ print(paragraph!.asHTML())
 ```
 
 > 注意
-上面的`paragraph`变量定义为可选类型的`HTMLElement`，因此我们可以赋值`nil`给它来演示循环强引用。
+> 
+> 上面的`paragraph`变量定义为可选类型的`HTMLElement`，因此我们可以赋值`nil`给它来演示循环强引用。
 
 不幸的是，上面写的`HTMLElement`类产生了类实例和作为`asHTML`默认值的闭包之间的循环强引用。循环强引用如下图所示：
 
@@ -484,7 +494,8 @@ print(paragraph!.asHTML())
 实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包捕获了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考[值捕获](./07_Closures.html#capturing_values)）。
 
 > 注意
-虽然闭包多次使用了`self`，它只捕获`HTMLElement`实例的一个强引用。
+> 
+> 虽然闭包多次使用了`self`，它只捕获`HTMLElement`实例的一个强引用。
 
 如果设置`paragraph`变量为`nil`，打破它持有的`HTMLElement`实例的强引用，`HTMLElement`实例和它的闭包都不会被销毁，也是因为循环强引用：
 
@@ -495,12 +506,13 @@ paragraph = nil
 注意，`HTMLElement`的析构函数中的消息并没有被打印，证明了`HTMLElement`实例并没有被销毁。
 
 <a name="resolving_strong_reference_cycles_for_closures"></a>
-## 解决闭包引起的循环强引用
+## 解决闭包的循环强引用
 
 在定义闭包时同时定义捕获列表作为闭包的一部分，通过这种方式可以解决闭包和类实例之间的循环强引用。捕获列表定义了闭包体内捕获一个或者多个引用类型的规则。跟解决两个类实例间的循环强引用一样，声明每个捕获的引用为弱引用或无主引用，而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。
 
 > 注意
-Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod()`（而不只是`someProperty`或`someMethod()`）。这提醒你可能会一不小心就捕获了`self`。
+> 
+> Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod()`（而不只是`someProperty`或`someMethod()`）。这提醒你可能会一不小心就捕获了`self`。
 
 <a name="defining_a_capture_list"></a>
 ### 定义捕获列表
@@ -533,7 +545,8 @@ lazy var someClosure: Void -> String = {
 相反的，在被捕获的引用可能会变为`nil`时，将闭包内的捕获定义为`弱引用`。弱引用总是可选类型，并且当引用的实例被销毁后，弱引用的值会自动置为`nil`。这使我们可以在闭包体内检查它们是否存在。
 
 > 注意
-如果被捕获的引用绝对不会变为`nil`，应该用无主引用，而不是弱引用。
+> 
+> 如果被捕获的引用绝对不会变为`nil`，应该用无主引用，而不是弱引用。
 
 前面的`HTMLElement`例子中，无主引用是正确的解决循环强引用的方法。这样编写`HTMLElement`类来避免循环强引用：
 

@@ -22,6 +22,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页内容包含：
 
 - [枚举语法](#enumeration_syntax)
@@ -38,7 +41,7 @@
 
 在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类（class）所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
 
-想了解更多相关信息，请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[构造过程](./14_Initialization.html)，[扩展](./21_Extensions.html)和[协议](./22_Protocols.html)。
+想了解更多相关信息，请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[构造过程](./14_Initialization.html)，[扩展](./20_Extensions.html)和[协议](./21_Protocols.html)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -65,6 +68,7 @@ enum CompassPoint {
 枚举中定义的值（如 `north `，`south`，`east`和`west`）是这个枚举的*成员值*（或*成员*）。你可以使用`case`关键字来定义一个新的枚举成员值。
 
 > 注意
+> 
 > 与 C 和 Objective-C 不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的`CompassPoint`例子中，`north`，`south`，`east`和`west`不会被隐式地赋值为`0`，`1`，`2`和`3`。相反，这些枚举成员本身就是完备的值，这些值的类型是已经明确定义好的`CompassPoint`类型。
 
 多个成员值可以出现在同一行上，用逗号隔开：
@@ -75,7 +79,7 @@ enum Planet {
 }
 ```
 
-每个枚举定义了一个全新的类型。像 Swift 中其他类型一样，它们的名字（例如`CompassPoint`和`Planet`）应该以一个大写字母开头。给枚举类型起一个单数名字而不是复数名字，以便于读起来更加容易理解：
+每个枚举定义了一个全新的类型。像 Swift 中其他类型一样，它们的名字（例如`CompassPoint`和`Planet`）应该以一个大写字母开头。给枚举类型起一个单数名字而不是复数名字，以便于：
 
 ```swift
 var directionToHead = CompassPoint.west
@@ -222,6 +226,7 @@ enum ASCIIControlCharacter: Character {
 原始值可以是字符串，字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
 > 注意
+> 
 > 原始值和关联值是不同的。原始值是在定义枚举时被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终不变。关联值是创建一个基于枚举成员的常量或变量时才设置的值，枚举成员的关联值可以变化。
 
 <a name="implicitly_assigned_raw_values"></a>
@@ -278,6 +283,7 @@ let possiblePlanet = Planet(rawValue: 7)
 然而，并非所有`Int`值都可以找到一个匹配的行星。因此，原始值构造器总是返回一个*可选*的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或者说“可选的`Planet`”。
 
 > 注意
+> 
 > 原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见[可失败构造器](../chapter3/05_Declarations.html#failable_initializers)
 
 如果你试图寻找一个位置为`11`的行星，通过原始值构造器返回的可选`Planet`值将是`nil`：

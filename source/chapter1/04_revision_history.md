@@ -45,7 +45,8 @@
 
 本页内容包括：
 
-- [Swift 4.0 更新](#swift_4_1)
+- [Swift 4.1 更新](#swift_4_1)
+- [Swift 4.0.3 更新](#swift_4_0_3)
 - [Swift 4.0 更新](#swift_4_0)
 - [Swift 3.1 更新](#swift_3_1)
 - [Swift 3.0 更新](#swift_3_0)
@@ -68,13 +69,36 @@
 </thead>
 <tbody>
     <tr>
-        <td scope="row">2018-02-06</td>
+        <td scope="row">2018-03-29</td>
         <td>
             <ul class="list-bullet">
                 <li>更新至 Swift 4.1。</li>
                 <li>添加了<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25-ID574'>有条件遵守协议</a>章节，其中包含有关调节协议一致性的内容。</li>
                 <li>在<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID575'>在其关联类型约束中使用协议</a>章节添加了递归协议约束的内容。</li>
                 <li>在<a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/doc/uid/TP40014097-CH33-ID539'>条件编译块</a>章节中添加有关 <code>canImport()</code> 和 <code>targetEnvironment()</code> 平台条件的内容。</li>
+            </ul>
+        </td>
+    </tr>
+</tbody>
+</table>
+
+<a name="swift_4_0_3"></a>
+### Swift 4.0.3 更新
+
+<table class="graybox" border="0" cellspacing="0" cellpadding="5">
+<thead>
+    <tr>
+        <th scope="col" width="100">发布日期</th>
+        <th scope="col">语法变更记录</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td scope="row">2017-12-04</td>
+        <td>
+            <ul class="list-bullet">
+                <li>更新至 Swift 4.0.3。</li>
+                <li>更新 <a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID563'>Key-Path 表达式</a>，现在 key path 支持下标子路径。</li>
             </ul>
         </td>
     </tr>
@@ -93,11 +117,18 @@
 </thead>
 <tbody>
     <tr>
-        <td scope="row">2017-12-04</td>
+        <td scope="row">2017-09-19</td>
         <td>
             <ul class="list-bullet">
-                <li>更新至 Swift 4.0.3。</li>
-                <li>更新 <a href='https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/doc/uid/TP40014097-CH32-ID563'>Key-Path 表达式</a>，现在 key path 支持下标子路径。</li>
+                <li>更新至 Swift 4.0。</li>
+                <li>Added information about exclusive access to memory to the Memory Safety chapter.</li>
+                <li>Added the Associated Types with a Generic Where Clause section, now that you can use generic where clauses to constrain associated types.</li>
+                <li>Added information about multiline string literals to the String Literals section of the Strings and Characters chapter, and to the String Literals section of the Lexical Structure chapter.</li>
+                 <li>Updated the discussion of the objc attribute in Declaration Attributes, now that this attribute is inferred in fewer places.</li>
+                 <li>Added the Generic Subscripts section, now that subscripts can be generic.</li>
+                 <li>Updated the discussion in the Protocol Composition section of the Protocols chapter, and in the Protocol Composition Type section of the Types chapter, now that protocol composition types can contain a superclass requirement.</li>
+                 <li>Updated the discussion of protocol extensions in Extension Declaration now that final isn’t allowed in them.</li>
+                 <li>Added information about preconditions and fatal errors to the Assertions and Preconditions section.</li>
             </ul>
         </td>
     </tr>

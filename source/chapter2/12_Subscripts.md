@@ -18,6 +18,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [下标语法](#subscript_syntax)
@@ -74,6 +77,7 @@ print("six times three is \(threeTimesTable[6])")
 你可以通过下标访问`threeTimesTable`实例，例如上面演示的`threeTimesTable[6]`。这条语句查询了`3`的乘法表中的第六个元素，返回`3`的`6`倍即`18`。
 
 > 注意
+> 
 > `TimesTable`例子基于一个固定的数学公式，对`threeTimesTable[someIndex]`进行赋值操作并不合适，因此下标定义为只读的。
 
 <a name="subscript_usage"></a>
@@ -93,6 +97,7 @@ numberOfLegs["bird"] = 2
 更多关于`Dictionary`下标的信息请参考[读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
 
 > 注意
+> 
 > Swift 的`Dictionary`类型的下标接受并返回可选类型的值。上例中的`numberOfLegs`字典通过下标返回的是一个`Int?`或者说“可选的int”。`Dictionary`类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为`nil`即可。
 
 <a name="subscript_options"></a>
@@ -129,7 +134,7 @@ struct Matrix {
 }
 ```
 
-`Matrix`提供了一个接受两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个`Double`类型的值的数组。通过传入数组长度和初始值`0.0`到数组的构造器，将矩阵中每个位置的值初始化为`0.0`。关于数组的这种构造方法请参考[创建一个空数组](./04_Collection_Types.html#creating_an_empty_array)。
+`Matrix`提供了一个接受两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳`rows * columns`个`Double`类型的值的数组。通过传入数组长度和初始值`0.0`到数组的构造器，将矩阵中每个位置的值初始化为`0.0`。关于数组的这种构造方法请参考[创建一个带有默认值的数组](./04_Collection_Types.html#creating_an_array_with_a_default_value)。
 
 你可以通过传入合适的`row`和`column`的数量来构造一个新的`Matrix`实例：
 

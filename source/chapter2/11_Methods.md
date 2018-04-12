@@ -18,6 +18,9 @@
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [实例方法](#instance_methods)
@@ -188,6 +191,7 @@ ovenLight.next()
 实例方法是被某个类型的实例调用的方法。你也可以定义在类型本身上调用的方法，这种方法就叫做*类型方法*。在方法的`func`关键字之前加上关键字`static`，来指定类型方法。类还可以用关键字`class`来允许子类重写父类的方法实现。
 
 > 注意
+> 
 > 在 Objective-C 中，你只能为 Objective-C 的类类型（classes）定义类型方法（type-level methods）。在 Swift 中，你可以为所有的类、结构体和枚举定义类型方法。每一个类型方法都被它所支持的类型显式包含。
 
 类型方法和实例方法一样用点语法调用。但是，你是在类型上调用这个方法，而不是在实例上调用。下面是如何在`SomeClass`类上调用类型方法的例子：
@@ -240,7 +244,7 @@ struct LevelTracker {
 
 除了类型属性和类型方法，`LevelTracker`还监测每个玩家的进度。它用实例属性`currentLevel`来监测每个玩家当前的等级。
 
-为了便于管理`currentLevel`属性，`LevelTracker`定义了实例方法`advance(to:)`。这个方法会在更新`currentLevel`之前检查所请求的新等级是否已经解锁。`advance(to:)`方法返回布尔值以指示是否能够设置`currentLevel`。因为允许在调用`advance(to:)`时候忽略返回值，不会产生编译警告，所以函数被标注为`@ discardableResult`属性，更多关于属性信息，请参考[属性](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/doc/uid/TP40014097-CH35-ID347)章节。
+为了便于管理`currentLevel`属性，`LevelTracker`定义了实例方法`advance(to:)`。这个方法会在更新`currentLevel`之前检查所请求的新等级是否已经解锁。`advance(to:)`方法返回布尔值以指示是否能够设置`currentLevel`。因为允许在调用`advance(to:)`时候忽略返回值，不会产生编译警告，所以函数被标注为`@ discardableResult`属性，更多关于属性信息，请参考[属性](../chapter3/07_Attributes.html)章节。
 
 下面，`Player`类使用`LevelTracker`来监测和更新每个玩家的发展进度：
 

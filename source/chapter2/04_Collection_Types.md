@@ -18,6 +18,9 @@
 > 校对：[shanks](http://codebuild.me) ，2016-10-09
 > 3.0.1，shanks，2016-11-12
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [集合的可变性](#mutability_of_collections)
@@ -30,27 +33,29 @@ Swift 语言提供`Arrays`、`Sets`和`Dictionaries`三种基本的*集合类型
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/CollectionTypes_intro_2x.png)
 
-Swift 语言中的`Arrays`、`Sets`和`Dictionaries`中存储的数据值类型必须明确。这意味着我们不能把不正确的数据类型插入其中。同时这也说明我们完全可以对取回值的类型非常自信。
+Swift 语言中的`Arrays`、`Sets`和`Dictionaries`中存储的数据值类型必须明确。这意味着我们不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
 
-> 注意：
-Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
+> 注意
+> 
+> Swift 的`Arrays`、`Sets`和`Dictionaries`类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
 
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
 
-如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着我们可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
+如果创建一个`Arrays`、`Sets`或`Dictionaries`并且把它分配成一个变量，这个集合将会是*可变的*。这意味着你可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把`Arrays`、`Sets`或`Dictionaries`分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
-> 注意：
-在我们不需要改变集合的时候创建不可变集合是很好的实践。如此 Swift 编译器可以优化我们创建的集合。
+> 注意
+> 
+> 在我们不需要改变集合的时候创建不可变集合是很好的实践。如此 Swift 编译器可以优化我们创建的集合。
 
 <a name="arrays"></a>
 ## 数组(Arrays)
 
 *数组*使用有序列表存储同一类型的多个值。相同的值可以多次出现在一个数组的不同位置中。
 
-> 注意:
- Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。
- 更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 注意
+> 
+> Swift 的`Array`类型被桥接到`Foundation`中的`NSArray`类。更多关于在`Foundation`和`Cocoa`中使用`Array`的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
@@ -118,8 +123,9 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 
 `shoppingList`变量被声明为“字符串值类型的数组“，记作`[String]`。 因为这个数组被规定只有`String`一种数据结构，所以只有`String`类型可以在其中被存取。 在这里，`shoppingList`数组由两个`String`值（`"Eggs"` 和`"Milk"`）构造，并且由数组字面量定义。
 
-> 注意：
-`shoppingList`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
+> 注意
+> 
+> `shoppingList`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
 
 在这个例子中，字面量仅仅包含两个`String`值。匹配了该数组的变量声明（只能包含`String`的数组），所以这个字面量的分配过程可以作为用两个初始项来构造`shoppingList`的一种方式。
 
@@ -177,8 +183,9 @@ var firstItem = shoppingList[0]
 // 第一项是 "Eggs"
 ```
 
-> 注意：
-第一项在数组中的索引值是`0`而不是`1`。 Swift 中的数组索引总是从零开始。
+> 注意
+> 
+> 第一项在数组中的索引值是`0`而不是`1`。 Swift 中的数组索引总是从零开始。
 
 我们也可以用下标来改变某个已有索引值对应的数据值：
 
@@ -194,8 +201,9 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 // shoppingList 现在有6项
 ```
 
-> 注意：
-不可以用下标访问的形式去在数组尾部添加新项。
+> 注意
+> 
+> 不可以用下标访问的形式去在数组尾部添加新项。
 
 调用数组的`insert(_:at:)`方法来在某个具体索引值之前添加数据项：
 
@@ -215,8 +223,9 @@ let mapleSyrup = shoppingList.remove(at: 0)
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
 // mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
 ```
-> 注意：
-如果我们试着对索引越界的数据进行检索或者设置新值的操作，会引发一个运行期错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于 0 时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。
+> 注意
+> 
+> 如果我们试着对索引越界的数据进行检索或者设置新值的操作，会引发一个运行期错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于 0 时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。
 
 数据项被移除后数组中的空出项会被自动填补，所以现在索引值为`0`的数据项的值再次等于`"Six eggs"`：
 
@@ -270,9 +279,10 @@ for (index, value) in shoppingList. enumerated() {
 
 *集合(Set)*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
-> 注意：
+> 注意
 > Swift的`Set`类型被桥接到`Foundation`中的`NSSet`类。
-> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 
+> 关于使用`Foundation`和`Cocoa`中`Set`的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="hash_values_for_set_types"></a>
 #### 集合类型的哈希值
@@ -281,9 +291,10 @@ for (index, value) in shoppingList. enumerated() {
 
 Swift 的所有基本类型(比如`String`,`Int`,`Double`和`Bool`)默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值(在[枚举](./08_Enumerations.html)有讲述)默认也是可哈希化的。
 
-> 注意：
+> 注意
+> 
 > 你可以使用你自定义的类型作为集合的值的类型或者是字典的键的类型，但你需要使你的自定义类型符合 Swift 标准库中的`Hashable`协议。符合`Hashable`协议的类型需要提供一个类型为`Int`的可读属性`hashValue`。由类型的`hashValue`属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
-
+> 
 > 因为`Hashable`协议符合`Equatable`协议，所以遵循该协议的类型也必须提供一个"是否相等"运算符(`==`)的实现。这个`Equatable`协议要求任何符合`==`实现的实例间都是一种相等的关系。也就是说，对于`a,b,c`三个值来说，`==`的实现必须满足下面三种情况：
 
 > * `a == a`(自反性)
@@ -308,7 +319,8 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 // 打印 "letters is of type Set<Character> with 0 items."
 ```
 
-> 注意：
+> 注意
+> 
 > 通过构造器，这里的`letters`变量的类型被推断为`Set<Character>`。
 
 此外，如果上下文提供了类型信息，比如作为函数的参数或者已知类型的变量或常量，我们可以通过一个空的数组字面量创建一个空的`Set`：
@@ -334,7 +346,8 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 
 这个`favoriteGenres`变量被声明为“一个`String`值的集合”，写为`Set<String>`。由于这个特定的集合含有指定`String`类型的值，所以它只允许存储`String`类型值。这里的`favoriteGenres`变量有三个`String`类型的初始值(`"Rock"`，`"Classical"`和`"Hip hop"`)，并以数组字面量的方式出现。
 
-> 注意：
+> 注意
+> 
 > `favoriteGenres`被声明为一个变量(拥有`var`标示符)而不是一个常量(拥有`let`标示符),因为它里面的元素将会在下面的例子中被增加或者移除。
 
 一个`Set`类型不能从数组字面量中被单独推断出来，因此`Set`类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个`Set`并且该数组字面量中的所有元素类型相同，那么你无须写出`Set`的具体类型。`favoriteGenres`的构造形式可以采用简化的方式代替：
@@ -487,16 +500,19 @@ farmAnimals.isDisjoint(with: cityAnimals)
 
 *字典*是一种存储多个相同类型的值的容器。每个值（value）都关联唯一的键（key），键作为字典中的这个值数据的标识符。和数组中的数据项不同，字典中的数据项并没有具体顺序。我们在需要通过标识符（键）访问数据的时候使用字典，这种方法很大程度上和我们在现实世界中使用字典查字义的方法一样。
 
-> 注意：
+> 注意
+> 
 > Swift 的`Dictionary`类型被桥接到`Foundation`的`NSDictionary`类。
-> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 3.0.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
+> 
+> 更多关于在`Foundation`和`Cocoa`中使用`Dictionary`类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="dictionary_type_shorthand_syntax"></a>
 ### 字典类型简化语法
 
 Swift 的字典使用`Dictionary<Key, Value>`定义，其中`Key`是字典中键的数据类型，`Value`是字典中对应于这些键所存储值的数据类型。
 
-> 注意：
+> 注意
+> 
 > 一个字典的`Key`类型必须遵循`Hashable`协议，就像`Set`的值类型。
 
 我们也可以用`[Key: Value]`这样简化的形式去创建一个字典类型。虽然这两种形式功能上相同，但是后者是首选，并且这本指导书涉及到字典类型时通篇采用后者。
@@ -541,7 +557,8 @@ var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 `airports`字典被声明为一种`[String: String]`类型，这意味着这个字典的键和值都是`String`类型。
 
-> 注意：
+> 注意
+> 
 > `airports`字典被声明为变量（用`var`关键字）而不是常量（`let`关键字）因为后来更多的机场信息会被添加到这个示例字典中。
 
 `airports`字典使用字典字面量初始化，包含两个键值对。第一对的键是`YYZ`，值是`Toronto Pearson`。第二对的键是`DUB`，值是`Dublin`。

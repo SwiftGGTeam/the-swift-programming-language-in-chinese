@@ -17,7 +17,12 @@
 > 
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
-> 3.0.1，shanks，2016-11-13
+
+> 3.0.1
+> shanks，2016-11-13
+
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -72,7 +77,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 <a name="property_requirements"></a>
 ## 属性要求
 
-协议可以要求遵循协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属型还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是可读的还是可读可写的。
+协议可以要求遵循协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储型属性还是计算型属性，它只指定属性的名称和类型。此外，协议还指定属性是可读的还是*可读可写的*。
 
 如果协议要求属性是可读可写的，那么该属性不能是常量属性或只读的计算型属性。如果协议只要求属性是可读的，那么该属性不仅可以是可读的，如果代码需要的话，还可以是可写的。
 
@@ -158,7 +163,7 @@ protocol RandomNumberGenerator {
 }
 ```
 
-`RandomNumberGenerator` 协议要求遵循协议的类型必须拥有一个名为 `random`， 返回值类型为 `Double` 的实例方法。尽管这里并未指明，但是我们假设返回值在 `[0.0,1.0)` 区间内。
+`RandomNumberGenerator` 协议要求遵循协议的类型必须拥有一个名为 `random`， 返回值类型为 `Double` 的实例方法。尽管这里并未指明，但是我们假设返回值是从0.0到（但不包括）1.0。
 
 `RandomNumberGenerator` 协议并不关心每一个随机数是怎样生成的，它只要求必须提供一个随机数生成器。
 
@@ -183,13 +188,14 @@ print("And another one: \(generator.random())")
 ```
 
 <a name="mutating_method_requirements"></a>
-## Mutating 方法要求
+## 异变方法要求
 
-有时需要在方法中改变方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在[在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods)章节中有详细描述。
+有时需要在方法中改变（或*异变*）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在[在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods)章节中有详细描述。
 
 如果你在协议中定义了一个实例方法，该方法会改变遵循该协议的类型的实例，那么在定义协议时需要在方法前加 `mutating` 关键字。这使得结构体和枚举能够遵循此协议并满足此方法要求。
 
 > 注意
+> 
 > 实现协议中的 `mutating` 方法时，若是类类型，则不用写 `mutating` 关键字。而对于结构体和枚举，则必须写 `mutating` 关键字。
 
 如下所示，`Togglable` 协议只要求实现一个名为 `toggle` 的实例方法。根据名称的暗示，`toggle()` 方法将改变实例属性，从而切换遵循该协议类型的实例的状态。
@@ -220,7 +226,7 @@ enum OnOffSwitch: Togglable {
 }
 var lightSwitch = OnOffSwitch.off
 lightSwitch.toggle()
-// lightSwitch 现在的值为 .On
+// lightSwitch 现在的值为 .on
 ```
 
 <a name="initializer_requirements"></a>
@@ -234,7 +240,7 @@ protocol SomeProtocol {
 }
 ```
 
-### 构造器要求在类中的实现
+### 协议构造器要求的类实现
 
 你可以在遵循协议的类中实现构造器，无论是作为指定构造器，还是作为便利构造器。无论哪种情况，你都必须为构造器实现标上 `required` 修饰符：
 
@@ -251,6 +257,7 @@ class SomeClass: SomeProtocol {
 关于 `required` 构造器的更多内容，请参考[必要构造器](./14_Initialization.html#required_initializers)。
 
 > 注意
+> 
 > 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见[防止重写](./13_Inheritance.html#preventing_overrides)。
 
 如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，那么该构造器的实现需要同时标注 `required` 和 `override` 修饰符：
@@ -293,6 +300,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 * 作为数组、字典或其他容器中的元素类型
 
 > 注意
+> 
 > 协议是一种类型，因此协议类型的名称应与其他类型（例如 `Int`，`Double`，`String`）的写法相同，使用大写字母开头的驼峰式写法，例如（`FullyNamed` 和 `RandomNumberGenerator`）。
 
 下面是将协议作为类型使用的例子：
@@ -334,7 +342,7 @@ for _ in 1...5 {
 ```
 
 <a name="delegation"></a>
-## 委托（代理）模式
+## 委托
 
 *委托*是一种设计模式，它允许类或结构体将一些需要它们负责的功能委托给其他类型的实例。委托模式的实现很简单：定义协议来封装那些需要被委托的功能，这样就能确保遵循协议的类型能提供这些功能。委托模式可以用来响应特定的动作，或者接收外部数据源提供的数据，而无需关心外部数据源的类型。
 
@@ -389,7 +397,7 @@ class SnakesAndLadders: DiceGame {
 }
 ```
 
-关于这个蛇梯棋游戏的详细描述请参阅 [控制流](./05_Control_Flow.html) 章节中的 [Break](./05_Control_Flow.html#break) 部分。
+关于这个*蛇梯棋*游戏的详细描述请参阅 [中断（Break）](./05_Control_Flow.html#break)。
 
 这个版本的游戏封装到了 `SnakesAndLadders` 类中，该类遵循了 `DiceGame` 协议，并且提供了相应的可读的 `dice` 属性和 `play()` 方法。（ `dice` 属性在构造之后就不再改变，且协议只要求 `dice` 为可读的，因此将 `dice` 声明为常量属性。）
 
@@ -446,11 +454,12 @@ game.play()
 ```
 
 <a name="adding_protocol_conformance_with_an_extension"></a>
-## 通过扩展添加协议一致性
+## 在扩展里添加协议遵循
 
-即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在[扩展](./21_Extensions.html)章节中查看。
+即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在[扩展](./20_Extensions.html)章节中查看。
 
 > 注意
+> 
 > 通过扩展令已有类型遵循并符合协议时，该类型的所有实例也会随之获得协议中定义的各项功能。
 
 例如下面这个 `TextRepresentable` 协议，任何想要通过文本表示一些内容的类型都可以实现该协议。这些想要表示的内容可以是实例本身的描述，也可以是实例当前状态的文本描述：
@@ -493,10 +502,29 @@ print(game.textualDescription)
 // 打印 “A game of Snakes and Ladders with 25 squares”
 ```
 
-<a name="declaring_protocol_adoption_with_an_extension"></a>
-## 通过扩展遵循协议
+<a name="Conditionally_Conforming_to_a_Protocol"></a>
+## 有条件地遵循协议
 
-当一个类型已经符合了某个协议中的所有要求，却还没有声明遵循该协议时，可以通过空扩展体的扩展来遵循该协议：
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where`分句。更多关于泛型 `where` 分句，见[泛型Where分句](./22_Generics.html##where_clauses)。
+
+下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable`协议的元素时就遵循 `TextRepresentable` 协议。
+
+```swift
+extension Array: TextRepresentable where Element: TextRepresentable {
+    var textualDescription: String {
+        let itemsAsText = self.map { $0.textualDescription }
+        return "[" + itemsAsText.joined(separator: ", ") + "]"
+    }
+}
+let myDice = [d6, d12]
+print(myDice.textualDescription)
+// 打印 "[A 6-sided dice, A 12-sided dice]"
+```
+
+<a name="declaring_protocol_adoption_with_an_extension"></a>
+## 在扩展里声明采纳协议
+
+当一个类型已经符合了某个协议中的所有要求，却还没有声明采纳该协议时，可以通过空扩展体的扩展采纳该协议：
 
 ```swift
 struct Hamster {
@@ -518,12 +546,13 @@ print(somethingTextRepresentable.textualDescription)
 ```
 
 > 注意
+> 
 > 即使满足了协议的所有要求，类型也不会自动遵循协议，必须显式地遵循协议。
 
 <a name="collections_of_protocol_types"></a>
 ## 协议类型的集合
 
-协议类型可以在数组或者字典这样的集合中使用，在[协议类型](./22_Protocols.html##protocols_as_types)提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
+协议类型可以在数组或者字典这样的集合中使用，在[协议类型](./21_Protocols.html##protocols_as_types)提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
 
 ```swift
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
@@ -599,25 +628,28 @@ print(game.prettyTextualDescription)
 ```
 
 <a name="class_only_protocol"></a>
-## 类类型专属协议
+## 类专属的协议
 
-你可以在协议的继承列表中，通过添加 `class` 关键字来限制协议只能被类类型遵循，而结构体或枚举不能遵循该协议。`class` 关键字必须第一个出现在协议的继承列表中，在其他继承的协议之前：
+你通过添加 `AnyObject` 关键字到协议的继承列表，就可以限制协议只能被类类型采纳（以及非结构体或者非枚举的类型）。
 
 ```swift
 protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
-    // 这里是类类型专属协议的定义部分
+    // 这里是类专属协议的定义部分
 }
 ```
 
-在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型遵循。如果尝试让结构体或枚举类型遵循该协议，则会导致编译错误。
+在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型采纳。如果尝试让结构体或枚举类型采纳`SomeClassOnlyProtocol`，则会导致编译时错误。
 
 > 注意
+> 
 > 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看[结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types)和[类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
 
 <a name="protocol_composition"></a>
 ## 协议合成
 
-有时候需要同时遵循多个协议，你可以将多个协议采用 `SomeProtocol & AnotherProtocol` 这样的格式进行组合，称为 *协议合成（protocol composition）*。你可以罗列任意多个你想要遵循的协议，以与符号(`&`)分隔。
+要求一个类型同时遵循多个协议是很有用的。你可以使用*协议组合*来复合多个协议到一个要求里。协议组合行为就和你定义的临时局部协议一样拥有构成中所有协议的需求。协议组合不定义任何新的协议类型。
+
+协议组合使用 `SomeProtocol & AnotherProtocol` 的形式。你可以列举任意数量的协议，用和符号（`&`）分开。除了协议列表，协议组合也能包含类类型，这允许你标明一个需要的父类。
 
 下面的例子中，将 `Named` 和 `Aged` 两个协议按照上述语法组合成一个协议，作为函数参数的类型：
 
@@ -640,9 +672,9 @@ wishHappyBirthday(to: birthdayPerson)
 // 打印 “Happy birthday Malcolm - you're 21!”
 ```
 
-`Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体遵循了这两个协议。
+`Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体采纳了这两个协议。
 
-`wishHappyBirthday(to:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`。这意味着它不关心参数的具体类型，只要参数符合这两个协议即可。
+`wishHappyBirthday(to:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`， 这意味着“任何同时遵循 Named 和 Aged 的协议”。它不关心参数的具体类型，只要参数符合这两个协议即可。
 
 上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(to:)` 函数。因为 `Person` 同时符合这两个协议，所以这个参数合法，函数将打印生日问候语。
 
@@ -680,7 +712,7 @@ beginConcert(in: seattle)
 <a name="checking_for_protocol_conformance"></a>
 ## 检查协议一致性
 
-你可以使用[类型转换](./20_Type_Casting.html)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换到某个协议类型在语法上和类型的检查和转换完全相同：
+你可以使用[类型转换](./18_Type_Casting.html)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换到某个协议类型在语法上和类型的检查和转换完全相同：
 
 * `is` 用来检查实例是否符合某个协议，若符合则返回 `true`，否则返回 `false`。
 * `as?` 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 `nil`。
@@ -758,7 +790,7 @@ for object in objects {
 
 使用可选要求时（例如，可选的方法或者属性），它们的类型会自动变成可选的。比如，一个类型为 `(Int) -> String` 的方法会变成 `((Int) -> String)?`。需要注意的是整个函数类型是可选的，而不是函数的返回值。
 
-协议中的可选要求可通过可选链式调用来使用，因为遵循协议的类型可能没有实现这些可选要求。类似 `someOptionalMethod?(someArgument)` 这样，你可以在可选方法名称后加上 `?` 来调用可选方法。详细内容可在[可选链式调用](./17_Optional_Chaining.html)章节中查看。
+协议中的可选要求可通过可选链式调用来使用，因为遵循协议的类型可能没有实现这些可选要求。类似 `someOptionalMethod?(someArgument)` 这样，你可以在可选方法名称后加上 `?` 来调用可选方法。详细内容可在[可选链式调用](./16_Optional_Chaining.html)章节中查看。
 
 下面的例子定义了一个名为 `Counter` 的用于整数计数的类，它使用外部的数据源来提供每次的增量。数据源由 `CounterDataSource` 协议定义，包含两个可选要求：
 
@@ -796,7 +828,7 @@ class Counter {
 
 这里使用了两层可选链式调用。首先，由于 `dataSource` 可能为 `nil`，因此在 `dataSource` 后边加上了 `?`，以此表明只在 `dataSource` 非空时才去调用 `increment(forCount:)` 方法。其次，即使 `dataSource` 存在，也无法保证其是否实现了 `increment(forCount:)` 方法，因为这个方法是可选的。因此，`increment(forCount:)` 方法同样使用可选链式调用进行调用，只有在该方法被实现的情况下才能调用它，所以在 `increment(forCount:)` 方法后边也加上了 `?`。
 
-调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` 类型。虽然在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于这一点的更多信息，请查阅[连接多层可选链式调用](./17_Optional_Chaining)
+调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` 类型。虽然在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于这一点的更多信息，请查阅[连接多层可选链式调用](./16_Optional_Chaining)
 
 在调用 `increment(forCount:)` 方法后，`Int?` 型的返回值通过可选绑定解包并赋值给常量 `amount`。如果可选值确实包含一个数值，也就是说，数据源和方法都存在，数据源方法返回了一个有效值。之后便将解包后的 `amount` 加到 `count` 上，增量操作完成。
 
@@ -892,6 +924,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 可以通过协议扩展来为协议要求的属性、方法以及下标提供默认的实现。如果遵循协议的类型为这些要求提供了自己的实现，那么这些自定义实现将会替代扩展中的默认实现被使用。
 
 > 注意
+> 
 > 通过协议扩展为协议要求提供的默认实现和可选的协议要求不同。虽然在这两种情况下，遵循协议的类型都无需自己实现这些要求，但是通过扩展提供的默认实现可以直接调用，而无需使用可选链式调用。
 
 例如，`PrettyTextRepresentable` 协议继承自 `TextRepresentable` 协议，可以为其提供一个默认的 `prettyTextualDescription` 属性，只是简单地返回 `textualDescription` 属性的值：
@@ -907,36 +940,42 @@ extension PrettyTextRepresentable  {
 <a name="adding_constraints_to_protocol_extensions"></a>
 ### 为协议扩展添加限制条件
 
-在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[Where子句](./23_Generics.html#where_clauses)中所描述的。
+在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型Where子句](./22_Generics.html#where_clauses)中所描述的。
 
-例如，你可以扩展 `CollectionType` 协议，但是只适用于集合中的元素遵循了 `TextRepresentable` 协议的情况：
+例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵 `Equatable` 协议， 作为标准库的一部分， 你可以使用`==`和`!=`操作符来检查两个元素的等价性和非等价性。
 
 ```swift
-extension Collection where Iterator.Element: TextRepresentable {
-	var textualDescription: String {
-		let itemsAsText = self.map { $0.textualDescription }
-		return "[" + itemsAsText.joined(separator: ", ") + "]"
-	}
+extension Collection where Element: Equatable {
+    func allEqual() -> Bool {
+        for element in self {
+            if element != self.first {
+                return false
+            }
+        }
+        return true
+    }
 }
 ```
 
-`textualDescription` 属性返回整个集合的文本描述，它将集合中的每个元素的文本描述以逗号分隔的方式连接起来，包在一对方括号中。
+如果集合中的所有元素都一致，`allEqual()` 方法才返回 `true`。
 
-现在我们来看看先前的 `Hamster` 结构体，它符合 `TextRepresentable` 协议，同时这里还有个装有 `Hamster` 的实例的数组：
+
+看看两个整数数组，一个数组的所有元素都是一样的，另一个不一样：
 
 ```swift
-let murrayTheHamster = Hamster(name: "Murray")
-let morganTheHamster = Hamster(name: "Morgan")
-let mauriceTheHamster = Hamster(name: "Maurice")
-let hamsters = [murrayTheHamster, morganTheHamster, mauriceTheHamster]
+let equalNumbers = [100, 100, 100, 100, 100]
+let differentNumbers = [100, 100, 200, 100, 200]
 ```
+由于数组遵循`Collection`而且整数遵循`Equatable`，  `equalNumbers` 和 `differentNumbers` 都可以使用 `allEqual()` 方法。
 
-因为 `Array` 符合 `CollectionType` 协议，而数组中的元素又符合 `TextRepresentable` 协议，所以数组可以使用 `textualDescription` 属性得到数组内容的文本表示：
 
 ```swift
-print(hamsters.textualDescription)
-// 打印 “[A hamster named Murray, A hamster named Morgan, A hamster named Maurice]”
+print(equalNumbers.allEqual())
+// 打印 "true"
+print(differentNumbers.allEqual())
+// 打印 "false"
 ```
 
 > 注意
-> 如果多个协议扩展都为同一个协议要求提供了默认实现，而遵循协议的类型又同时满足这些协议扩展的限制条件，那么将会使用限制条件最多的那个协议扩展提供的默认实现。
+> 
+> 如果一个遵循的类型满足了为同一方法或属性提供实现的多个限制型扩展的要求， Swift 使用这个实现方法去匹配那个最特殊的限制。
