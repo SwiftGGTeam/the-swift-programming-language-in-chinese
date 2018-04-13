@@ -178,13 +178,13 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 - `Size` 封装了一个 `width` 和一个 `height`
 - `Rect` 表示一个有原点和尺寸的矩形
 
-`Rect`也提供了一个名为`center` 的计算属性。一个矩形的中心点可以从原点（`origin`）和大小（`size`）算出，所以不需要将它以显式声明的 `Point` 来保存。`Rect` 的计算属性 `center` 提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
+`Rect` 也提供了一个名为 `center` 的计算属性。一个矩形的中心点可以从原点（`origin`）和大小（`size`）算出，所以不需要将它以显式声明的 `Point` 来保存。`Rect` 的计算属性 `center` 提供了自定义的 getter 和 setter 来获取和设置矩形的中心点，就像它有一个存储属性一样。
 
 上述例子中创建了一个名为 `square` 的 `Rect` 实例，初始值原点是 `(0, 0)`，宽度高度都是 `10`。如下图中蓝色正方形所示。
 
 `square` 的 `center` 属性可以通过点运算符（`square.center`）来访问，这会调用该属性的 getter 来获取它的值。跟直接返回已经存在的值不同，getter 实际上通过计算然后返回一个新的 `Point` 来表示 `square` 的中心点。如代码所示，它正确返回了中心点 `(5, 5)`。
 
-`center` 属性之后被设置了一个新的值 `(15, 15)`，表示向右上方移动正方形到如下图橙色正方形所示的位置。设置属性`center`的值会调用它的 setter 来修改属性 `origin` 的 `x` 和 `y` 的值，从而实现移动正方形到新的位置。
+`center` 属性之后被设置了一个新的值 `(15, 15)`，表示向右上方移动正方形到如下图橙色正方形所示的位置。设置属性 `center` 的值会调用它的 setter 来修改属性 `origin` 的 `x` 和 `y` 的值，从而实现移动正方形到新的位置。
 
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
@@ -308,7 +308,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`lazy`修饰符。
+> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记 `lazy` 修饰符。
 > 
 > 局部范围的常量或变量从不延迟计算。
 
@@ -410,7 +410,7 @@ struct AudioChannel {
 
 结构 `AudioChannel` 定义了 2 个存储型类型属性来实现上述功能。第一个是 `thresholdLevel`，表示音量的最大上限阈值，它是一个值为 `10` 的常量，对所有实例都可见，如果音量高于 `10`，则取最大上限值 `10`（见后面描述）。
 
-第二个类型属性是变量存储型属性 `maxInputLevelForAllChannels`，它用来表示所有 `AudioChannel` 实例的最大音量，初始值是`0`。
+第二个类型属性是变量存储型属性 `maxInputLevelForAllChannels`，它用来表示所有 `AudioChannel` 实例的最大音量，初始值是 `0`。
 
 `AudioChannel` 也定义了一个名为 `currentLevel` 的存储型实例属性，表示当前声道现在的音量，取值为 `0` 到 `10`。
 

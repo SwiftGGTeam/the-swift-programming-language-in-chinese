@@ -433,7 +433,7 @@ class DiceGameTracker: DiceGameDelegate {
 
 `DiceGameTracker` 实现了 `DiceGameDelegate` 协议要求的三个方法，用来记录游戏已经进行的轮数。当游戏开始时，`numberOfTurns` 属性被赋值为 `0`，然后在每新一轮中递增，游戏结束后，打印游戏的总轮数。
 
-`gameDidStart(_:)` 方法从 `game` 参数获取游戏信息并打印。`game` 参数是 `DiceGame` 类型而不是 `SnakeAndLadders` 类型，所以在`gameDidStart(_:)` 方法中只能访问 `DiceGame` 协议中的内容。当然了，`SnakeAndLadders` 的方法也可以在类型转换之后调用。在上例代码中，通过 `is` 操作符检查 `game` 是否为 `SnakesAndLadders` 类型的实例，如果是，则打印出相应的消息。
+`gameDidStart(_:)` 方法从 `game` 参数获取游戏信息并打印。`game` 参数是 `DiceGame` 类型而不是 `SnakeAndLadders` 类型，所以在 `gameDidStart(_:)` 方法中只能访问 `DiceGame` 协议中的内容。当然了，`SnakeAndLadders` 的方法也可以在类型转换之后调用。在上例代码中，通过 `is` 操作符检查 `game` 是否为 `SnakesAndLadders` 类型的实例，如果是，则打印出相应的消息。
 
 无论当前进行的是何种游戏，由于 `game` 符合 `DiceGame` 协议，可以确保 `game` 含有 `dice` 属性。因此在 `gameDidStart(_:)` 方法中可以通过传入的 `game` 参数来访问 `dice` 属性，进而打印出 `dice` 的 `sides` 属性的值。
 
@@ -505,9 +505,9 @@ print(game.textualDescription)
 <a name="Conditionally_Conforming_to_a_Protocol"></a>
 ## 有条件地遵循协议
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where`分句。更多关于泛型 `where` 分句，见[泛型Where分句](./22_Generics.html##where_clauses)。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见[泛型Where分句](./22_Generics.html##where_clauses)。
 
-下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable`协议的元素时就遵循 `TextRepresentable` 协议。
+下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时就遵循 `TextRepresentable` 协议。
 
 ```swift
 extension Array: TextRepresentable where Element: TextRepresentable {
@@ -638,7 +638,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 }
 ```
 
-在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型采纳。如果尝试让结构体或枚举类型采纳`SomeClassOnlyProtocol`，则会导致编译时错误。
+在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型采纳。如果尝试让结构体或枚举类型采纳 `SomeClassOnlyProtocol`，则会导致编译时错误。
 
 > 注意
 > 
@@ -705,9 +705,9 @@ beginConcert(in: seattle)
 // Prints "Hello, Seattle!"
 ```
 
-`beginConcert(in:)`方法接受一个类型为 `Location & Named` 的参数，这意味着"任何Location的子类，并且遵循Named协议"。例如，City就满足这样的条件。
+`beginConcert(in:)` 方法接受一个类型为 `Location & Named` 的参数，这意味着"任何Location的子类，并且遵循Named协议"。例如，City就满足这样的条件。
 
-将 birthdayPerson 传入`beginConcert(in:)`函数是不合法的，因为 Person不是一个Location的子类。就像，如果你新建一个类继承与Location，但是没有遵循Named协议，你用这个类的实例去调用`beginConcert(in:)`函数也是不合法的。
+将 birthdayPerson 传入 `beginConcert(in:)` 函数是不合法的，因为 Person不是一个Location的子类。就像，如果你新建一个类继承与Location，但是没有遵循Named协议，你用这个类的实例去调用 `beginConcert(in:)` 函数也是不合法的。
 
 <a name="checking_for_protocol_conformance"></a>
 ## 检查协议一致性
@@ -786,7 +786,7 @@ for object in objects {
 <a name="optional_protocol_requirements"></a>
 ## 可选的协议要求
 
-协议可以定义*可选要求*，遵循协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。可选要求用在你需要和 Objective-C 打交道的代码中。协议和可选要求都必须带上`@objc`属性。标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类遵循，其他类以及结构体和枚举均不能遵循这种协议。
+协议可以定义*可选要求*，遵循协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。可选要求用在你需要和 Objective-C 打交道的代码中。协议和可选要求都必须带上 `@objc` 属性。标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类遵循，其他类以及结构体和枚举均不能遵循这种协议。
 
 使用可选要求时（例如，可选的方法或者属性），它们的类型会自动变成可选的。比如，一个类型为 `(Int) -> String` 的方法会变成 `((Int) -> String)?`。需要注意的是整个函数类型是可选的，而不是函数的返回值。
 
@@ -943,7 +943,7 @@ extension PrettyTextRepresentable  {
 
 在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型Where子句](./22_Generics.html#where_clauses)中所描述的。
 
-例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵 `Equatable` 协议， 作为标准库的一部分， 你可以使用`==`和`!=`操作符来检查两个元素的等价性和非等价性。
+例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵 `Equatable` 协议， 作为标准库的一部分， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
 
 ```swift
 extension Collection where Element: Equatable {
@@ -967,7 +967,7 @@ extension Collection where Element: Equatable {
 let equalNumbers = [100, 100, 100, 100, 100]
 let differentNumbers = [100, 100, 200, 100, 200]
 ```
-由于数组遵循`Collection`而且整数遵循`Equatable`，  `equalNumbers` 和 `differentNumbers` 都可以使用 `allEqual()` 方法。
+由于数组遵循 `Collection` 而且整数遵循 `Equatable`，  `equalNumbers` 和 `differentNumbers` 都可以使用 `allEqual()` 方法。
 
 
 ```swift

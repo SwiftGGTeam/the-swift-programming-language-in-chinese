@@ -68,7 +68,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // 打印 “someInt is now 107, and anotherInt is now 3”
 ```
 
-诚然，`swapTwoInts(_:_:)` 函数挺有用，但是它只能交换 `Int` 值，如果你想要交换两个 `String` 值或者 `Double`值，就不得不写更多的函数，例如 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)`，如下所示：
+诚然，`swapTwoInts(_:_:)` 函数挺有用，但是它只能交换 `Int` 值，如果你想要交换两个 `String` 值或者 `Double` 值，就不得不写更多的函数，例如 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)`，如下所示：
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
@@ -576,7 +576,7 @@ func allItemsMatch<C1: Container, C2: Container>
 
 - `C1` 必须符合 `Container` 协议（写作 `C1: Container`）。
 - `C2` 必须符合 `Container` 协议（写作 `C2: Container`）。
-- `C1` 的 `Item` 必须和 `C2` 的 `Item`类型相同（写作 `C1.Item == C2.Item`）。
+- `C1` 的 `Item` 必须和 `C2` 的 `Item` 类型相同（写作 `C1.Item == C2.Item`）。
 - `C1` 的 `Item` 必须符合 `Equatable` 协议（写作 `C1.Item: Equatable`）。
 
 第三个和第四个要求被定义为一个 `where` 子句，写在关键字 `where` 后面，它们也是泛型函数类型参数列表的一部分。

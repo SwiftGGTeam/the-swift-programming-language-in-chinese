@@ -41,9 +41,9 @@
 > 
 > Swift 中的类并不是从一个通用的基类继承而来。如果你不为你定义的类指定一个超类的话，这个类就自动成为基类。
 
-下面的例子定义了一个叫`Vehicle`的基类。这个基类声明了一个名为`currentSpeed `，默认值是`0.0`的存储属性（属性类型推断为`Double`）。`currentSpeed`属性的值被一个`String`类型的只读计算型属性`description`使用，用来创建车辆的描述。
+下面的例子定义了一个叫 `Vehicle` 的基类。这个基类声明了一个名为 `currentSpeed `，默认值是 `0.0` 的存储属性（属性类型推断为 `Double`）。`currentSpeed` 属性的值被一个 `String` 类型的只读计算型属性 `description` 使用，用来创建车辆的描述。
 
-`Vehicle`基类也定义了一个名为`makeNoise`的方法。这个方法实际上不为`Vehicle`实例做任何事，但之后将会被`Vehicle`的子类定制：
+`Vehicle` 基类也定义了一个名为 `makeNoise` 的方法。这个方法实际上不为 `Vehicle` 实例做任何事，但之后将会被 `Vehicle` 的子类定制：
 
 ```swift
 class Vehicle {
@@ -57,20 +57,20 @@ class Vehicle {
 }
 ```
 
-您可以用初始化语法创建一个`Vehicle`的新实例，即类名后面跟一个空括号：
+您可以用初始化语法创建一个 `Vehicle` 的新实例，即类名后面跟一个空括号：
 
 ```swift
 let someVehicle = Vehicle()
 ```
 
-现在已经创建了一个`Vehicle`的新实例，你可以访问它的`description`属性来打印车辆的当前速度：
+现在已经创建了一个 `Vehicle` 的新实例，你可以访问它的 `description` 属性来打印车辆的当前速度：
 
 ```swift
 print("Vehicle: \(someVehicle.description)")
 // 打印 "Vehicle: traveling at 0.0 miles per hour"
 ```
 
-`Vehicle`类定义了一个通用特性的车辆类，实际上没什么用处。为了让它变得更加有用，需要完善它从而能够描述一个更加具体类型的车辆。
+`Vehicle` 类定义了一个通用特性的车辆类，实际上没什么用处。为了让它变得更加有用，需要完善它从而能够描述一个更加具体类型的车辆。
 
 <a name="subclassing"></a>
 ## 子类生成
@@ -85,7 +85,7 @@ class SomeClass: SomeSuperclass {
 }
 ```
 
-下一个例子，定义一个叫`Bicycle`的子类，继承成父类`Vehicle`：
+下一个例子，定义一个叫 `Bicycle` 的子类，继承成父类 `Vehicle`：
 
 ```swift
 class Bicycle: Vehicle {
@@ -93,18 +93,18 @@ class Bicycle: Vehicle {
 }
 ```
 
-新的`Bicycle`类自动获得`Vehicle`类的所有特性，比如`currentSpeed`和`description`属性，还有它的`makeNoise()`方法。
+新的 `Bicycle` 类自动获得 `Vehicle` 类的所有特性，比如 `currentSpeed` 和 `description` 属性，还有它的 `makeNoise()` 方法。
 
-除了它所继承的特性，`Bicycle`类还定义了一个默认值为`false`的存储型属性`hasBasket`（属性推断为`Bool`）。
+除了它所继承的特性，`Bicycle` 类还定义了一个默认值为 `false` 的存储型属性 `hasBasket`（属性推断为 `Bool`）。
 
-默认情况下，你创建任何新的`Bicycle`实例将不会有一个篮子（即`hasBasket`属性默认为`false`），创建该实例之后，你可以为特定的`Bicycle`实例设置`hasBasket`属性为`ture`：
+默认情况下，你创建任何新的 `Bicycle` 实例将不会有一个篮子（即 `hasBasket` 属性默认为 `false`），创建该实例之后，你可以为特定的 `Bicycle` 实例设置 `hasBasket` 属性为 `ture`：
 
 ```swift
 let bicycle = Bicycle()
 bicycle.hasBasket = true
 ```
 
-你还可以修改`Bicycle`实例所继承的`currentSpeed`属性，和查询实例所继承的`description`属性：
+你还可以修改 `Bicycle` 实例所继承的 `currentSpeed` 属性，和查询实例所继承的 `description` 属性：
 
 ```swift
 bicycle.currentSpeed = 15.0
@@ -112,7 +112,7 @@ print("Bicycle: \(bicycle.description)")
 // 打印 "Bicycle: traveling at 15.0 miles per hour"
 ```
 
-子类还可以继续被其它类继承，下面的示例为`Bicycle`创建了一个名为`Tandem`（双人自行车）的子类：
+子类还可以继续被其它类继承，下面的示例为 `Bicycle` 创建了一个名为 `Tandem`（双人自行车）的子类：
 
 ```swift
 class Tandem: Bicycle {
@@ -120,9 +120,9 @@ class Tandem: Bicycle {
 }
 ```
 
-`Tandem`从`Bicycle`继承了所有的属性与方法，这又使它同时继承了`Vehicle`的所有属性与方法。`Tandem`也增加了一个新的叫做`currentNumberOfPassengers`的存储型属性，默认值为`0`。
+`Tandem` 从 `Bicycle` 继承了所有的属性与方法，这又使它同时继承了 `Vehicle` 的所有属性与方法。`Tandem` 也增加了一个新的叫做 `currentNumberOfPassengers` 的存储型属性，默认值为 `0`。
 
-如果你创建了一个`Tandem`的实例，你可以使用它所有的新属性和继承的属性，还能查询从`Vehicle`继承来的只读属性`description`：
+如果你创建了一个 `Tandem` 的实例，你可以使用它所有的新属性和继承的属性，还能查询从 `Vehicle` 继承来的只读属性 `description`：
 
 ```swift
 let tandem = Tandem()
@@ -138,25 +138,25 @@ print("Tandem: \(tandem.description)")
 
 子类可以为继承来的实例方法，类方法，实例属性，或下标提供自己定制的实现。我们把这种行为叫*重写*。
 
-如果要重写某个特性，你需要在重写定义的前面加上`override`关键字。这么做，你就表明了你是想提供一个重写版本，而非错误地提供了一个相同的定义。意外的重写行为可能会导致不可预知的错误，任何缺少`override`关键字的重写都会在编译时被诊断为错误。
+如果要重写某个特性，你需要在重写定义的前面加上 `override` 关键字。这么做，你就表明了你是想提供一个重写版本，而非错误地提供了一个相同的定义。意外的重写行为可能会导致不可预知的错误，任何缺少 `override` 关键字的重写都会在编译时被诊断为错误。
 
-`override`关键字会提醒 Swift 编译器去检查该类的超类（或其中一个父类）是否有匹配重写版本的声明。这个检查可以确保你的重写定义是正确的。
+`override` 关键字会提醒 Swift 编译器去检查该类的超类（或其中一个父类）是否有匹配重写版本的声明。这个检查可以确保你的重写定义是正确的。
 
 ### 访问超类的方法，属性及下标
 
 当你在子类中重写超类的方法，属性或下标时，有时在你的重写版本中使用已经存在的超类实现会大有裨益。比如，你可以完善已有实现的行为，或在一个继承来的变量中存储一个修改过的值。
 
-在合适的地方，你可以通过使用`super`前缀来访问超类版本的方法，属性或下标：
+在合适的地方，你可以通过使用 `super` 前缀来访问超类版本的方法，属性或下标：
 
-* 在方法`someMethod()`的重写实现中，可以通过`super.someMethod()`来调用超类版本的`someMethod()`方法。
-* 在属性`someProperty`的 getter 或 setter 的重写实现中，可以通过`super.someProperty`来访问超类版本的`someProperty`属性。
-* 在下标的重写实现中，可以通过`super[someIndex]`来访问超类版本中的相同下标。
+* 在方法 `someMethod()` 的重写实现中，可以通过 `super.someMethod()` 来调用超类版本的 `someMethod()` 方法。
+* 在属性 `someProperty` 的 getter 或 setter 的重写实现中，可以通过 `super.someProperty` 来访问超类版本的 `someProperty` 属性。
+* 在下标的重写实现中，可以通过 `super[someIndex]` 来访问超类版本中的相同下标。
 
 ### 重写方法
 
 在子类中，你可以重写继承来的实例方法或类方法，提供一个定制或替代的方法实现。
 
-下面的例子定义了`Vehicle`的一个新的子类，叫`Train`，它重写了从`Vehicle`类继承来的`makeNoise()`方法：
+下面的例子定义了 `Vehicle` 的一个新的子类，叫 `Train`，它重写了从 `Vehicle` 类继承来的 `makeNoise()` 方法：
 
 ```swift
 class Train: Vehicle {
@@ -166,7 +166,7 @@ class Train: Vehicle {
 }
 ```
 
-如果你创建一个`Train`的新实例，并调用了它的`makeNoise()`方法，你就会发现`Train`版本的方法被调用：
+如果你创建一个 `Train` 的新实例，并调用了它的 `makeNoise()` 方法，你就会发现 `Train` 版本的方法被调用：
 
 ```swift
 let train = Train()
@@ -186,9 +186,9 @@ train.makeNoise()
 
 > 注意
 > 
-> 如果你在重写属性中提供了 setter，那么你也一定要提供 getter。如果你不想在重写版本中的 getter 里修改继承来的属性值，你可以直接通过`super.someProperty`来返回继承来的值，其中`someProperty`是你要重写的属性的名字。
+> 如果你在重写属性中提供了 setter，那么你也一定要提供 getter。如果你不想在重写版本中的 getter 里修改继承来的属性值，你可以直接通过 `super.someProperty` 来返回继承来的值，其中 `someProperty` 是你要重写的属性的名字。
 
-以下的例子定义了一个新类，叫`Car`，它是`Vehicle`的子类。这个类引入了一个新的存储型属性叫做`gear`，默认值为整数`1`。`Car`类重写了继承自`Vehicle`的`description`属性，提供包含当前档位的自定义描述：
+以下的例子定义了一个新类，叫 `Car`，它是 `Vehicle` 的子类。这个类引入了一个新的存储型属性叫做 `gear`，默认值为整数 `1`。`Car` 类重写了继承自 `Vehicle` 的 `description` 属性，提供包含当前档位的自定义描述：
 
 ```swift
 class Car: Vehicle {
@@ -199,9 +199,9 @@ class Car: Vehicle {
 }
 ```
 
-重写的`description`属性首先要调用`super.description`返回`Vehicle`类的`description`属性。之后，`Car`类版本的`description`在末尾增加了一些额外的文本来提供关于当前档位的信息。
+重写的 `description` 属性首先要调用 `super.description` 返回 `Vehicle` 类的 `description` 属性。之后，`Car` 类版本的 `description` 在末尾增加了一些额外的文本来提供关于当前档位的信息。
 
-如果你创建了`Car`的实例并且设置了它的`gear`和`currentSpeed`属性，你可以看到它的`description`返回了`Car`中的自定义描述：
+如果你创建了 `Car` 的实例并且设置了它的 `gear` 和 `currentSpeed` 属性，你可以看到它的 `description` 返回了 `Car` 中的自定义描述：
 
 ```swift
 let car = Car()
@@ -218,10 +218,10 @@ print("Car: \(car.description)")
 
 > 注意
 > 
-> 你不可以为继承来的常量存储型属性或继承来的只读计算型属性添加属性观察器。这些属性的值是不可以被设置的，所以，为它们提供`willSet`或`didSet`实现是不恰当。
+> 你不可以为继承来的常量存储型属性或继承来的只读计算型属性添加属性观察器。这些属性的值是不可以被设置的，所以，为它们提供 `willSet` 或 `didSet` 实现是不恰当。
 此外还要注意，你不可以同时提供重写的 setter 和重写的属性观察器。如果你想观察属性值的变化，并且你已经为那个属性提供了定制的 setter，那么你在 setter 中就可以观察到任何值变化了。
 
-下面的例子定义了一个新类叫`AutomaticCar`，它是`Car`的子类。`AutomaticCar`表示自动挡汽车，它可以根据当前的速度自动选择合适的挡位:
+下面的例子定义了一个新类叫 `AutomaticCar`，它是 `Car` 的子类。`AutomaticCar` 表示自动挡汽车，它可以根据当前的速度自动选择合适的挡位:
 
 ```swift
 class AutomaticCar: Car {
@@ -233,7 +233,7 @@ class AutomaticCar: Car {
 }
 ```
 
-无论何时当你设置`AutomaticCar`的`currentSpeed`属性，属性的`didSet`观察器就会自动地设置`gear`属性，为新的速度选择一个合适的挡位。具体来说就是，属性观察器将新的速度值除以`10`，然后向下取得最接近的整数值，最后加`1`来得到档位`gear`的值。例如，速度为`35.0`时，挡位为`4`：
+无论何时当你设置 `AutomaticCar` 的 `currentSpeed` 属性，属性的 `didSet` 观察器就会自动地设置 `gear` 属性，为新的速度选择一个合适的挡位。具体来说就是，属性观察器将新的速度值除以 `10`，然后向下取得最接近的整数值，最后加 `1` 来得到档位 `gear` 的值。例如，速度为 `35.0` 时，挡位为 `4`：
 
 ```swift
 let automatic = AutomaticCar()
@@ -245,8 +245,8 @@ print("AutomaticCar: \(automatic.description)")
 <a name="preventing_overrides"></a>
 ## 防止重写
 
-你可以通过把方法，属性或下标标记为*`final`*来防止它们被重写，只需要在声明关键字前加上`final`修饰符即可（例如：`final var`，`final func`，`final class func`，以及`final subscript`）。
+你可以通过把方法，属性或下标标记为*`final`*来防止它们被重写，只需要在声明关键字前加上 `final` 修饰符即可（例如：`final var`，`final func`，`final class func`，以及 `final subscript`）。
 
-任何试图对带有`final`标记的方法、属性或下标进行重写，都会在编译时会报错。在类扩展中的方法，属性或下标也可以在扩展的定义里标记为 final 的。
+任何试图对带有 `final` 标记的方法、属性或下标进行重写，都会在编译时会报错。在类扩展中的方法，属性或下标也可以在扩展的定义里标记为 final 的。
 
-你可以通过在关键字`class`前添加`final`修饰符（`final class`）来将整个类标记为 final 的。这样的类是不可被继承的，试图继承这样的类会导致编译报错。
+你可以通过在关键字 `class` 前添加 `final` 修饰符（`final class`）来将整个类标记为 final 的。这样的类是不可被继承的，试图继承这样的类会导致编译报错。

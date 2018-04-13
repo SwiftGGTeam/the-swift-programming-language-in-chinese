@@ -715,7 +715,7 @@ print(protocolValue.simpleDescription)
 // print(protocolValue.anotherProperty)  // 去掉注释可以看到错误
 ```
 
-即使 `protocolValue` 变量运行时的类型是 `simpleClass` ，编译器还是会把它的类型当做`ExampleProtocol`。这表示你不能调用在协议之外的方法或者属性。
+即使 `protocolValue` 变量运行时的类型是 `simpleClass` ，编译器还是会把它的类型当做 `ExampleProtocol`。这表示你不能调用在协议之外的方法或者属性。
 
 <a name="error_handling"></a>
 ## 错误处理
