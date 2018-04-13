@@ -29,14 +29,14 @@
 
 本页内容包括：
 
--   [简单值（Simple Values）](#simple_values)
--   [控制流（Control Flow）](#control_flow)
--   [函数和闭包（Functions and Closures）](#functions_and_closures)
--   [对象和类（Objects and Classes）](#objects_and_classes)
--   [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
--   [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
--   [错误处理（Error Handling）](#error_handling)
--   [泛型（Generics）](#generics)
+- [简单值（Simple Values）](#simple_values)
+- [控制流（Control Flow）](#control_flow)
+- [函数和闭包（Functions and Closures）](#functions_and_closures)
+- [对象和类（Objects and Classes）](#objects_and_classes)
+- [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
+- [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
+- [错误处理（Error Handling）](#error_handling)
+- [泛型（Generics）](#generics)
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印 “Hello, world”。在 Swift 中，可以用一行代码实现：
 
