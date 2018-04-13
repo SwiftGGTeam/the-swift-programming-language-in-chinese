@@ -798,7 +798,7 @@ print("")
 // 68 111 103 8252 128054
 ```
 
-前三个 `UnicodeScalar` 值(`68`, `111`, `103`)的 `value` 属性仍然代表字符 `D`、`o` 和 `g`。      
+前三个 `UnicodeScalar` 值(`68`, `111`, `103`)的 `value` 属性仍然代表字符 `D`、`o` 和 `g`。
 
 第四个 `codeUnit` 值(`8252`)仍然是一个等于十六进制 `203C` 的十进制值。这个代表了 `DOUBLE EXCLAMATION MARK` 字符的 Unicode 标量 `U+203C`。
 

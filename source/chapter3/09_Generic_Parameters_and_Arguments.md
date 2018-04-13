@@ -26,7 +26,7 @@
 
 泛型形参子句指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
 
-> <`泛型形参列表`>  
+> <`泛型形参列表`>
 
 泛型形参列表中泛型形参用逗号分开，其中每一个采用以下形式：
 
@@ -69,29 +69,29 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 
 更多关于泛型 where 从句的信息和关于泛型函数声明的例子，可以看一看 [泛型 where 子句](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/23_Generics.md#where_clauses)
 
-> 泛型形参子句语法  
+> 泛型形参子句语法
 
 <a name="generic-parameter-clause"></a>
-> *泛型形参子句* → **<** [*泛型形参列表*](#generic-parameter-list) [*约束子句*](#requirement-clause)<sub>可选</sub> **>**  
+> *泛型形参子句* → **<** [*泛型形参列表*](#generic-parameter-list) [*约束子句*](#requirement-clause)<sub>可选</sub> **>**
 <a name="generic-parameter-list"></a>
-> *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)  
+> *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)
 <a name="generic-parameter"></a>
-> *泛形形参* → [*类型名称*](03_Types.html#type-name)  
-> *泛形形参* → [*类型名称*](03_Types.html#type-name) **:** [*类型标识符*](03_Types.html#type-identifier)  
-> *泛形形参* → [*类型名称*](03_Types.html#type-name) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)  
+> *泛形形参* → [*类型名称*](03_Types.html#type-name)
+> *泛形形参* → [*类型名称*](03_Types.html#type-name) **:** [*类型标识符*](03_Types.html#type-identifier)
+> *泛形形参* → [*类型名称*](03_Types.html#type-name) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
 
 <a name="requirement-clause"></a>
-> *约束子句* → **where** [*约束列表*](#requirement-list)  
+> *约束子句* → **where** [*约束列表*](#requirement-list)
 <a name="requirement-list"></a>
-> *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)  
+> *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)
 <a name="requirement"></a>
-> *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)  
+> *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)
 
 <a name="conformance-requirement"></a>
-> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)  
-> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)  
+> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)
+> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
 <a name="same-type-requirement"></a>
-> *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)  
+> *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)
 
 <a name="generic_argument"></a>
 ## 泛型实参子句
@@ -118,10 +118,10 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 如 [泛型形参子句](#generic_parameter) 所述，不能用泛型实参子句来指定泛型函数或构造器的类型实参。
 
-> 泛型实参子句语法  
+> 泛型实参子句语法
 <a name="generic-argument-clause"></a>
-> *泛型实参子句* → **<** [*泛型实参列表*](#generic-argument-list) **>**  
+> *泛型实参子句* → **<** [*泛型实参列表*](#generic-argument-list) **>**
 <a name="generic-argument-list"></a>
-> *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)  
+> *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)
 <a name="generic-argument"></a>
-> *泛型实参* → [*类型*](03_Types.html#type)  
+> *泛型实参* → [*类型*](03_Types.html#type)

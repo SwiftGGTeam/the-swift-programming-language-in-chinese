@@ -25,13 +25,13 @@
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
 > 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)             
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
-本页包含内容：     
-- [函数定义与调用](#Defining_and_Calling_Functions)     
-- [函数参数与返回值](#Function_Parameters_and_Return_Values)      
-- [函数参数标签和参数名称](#Function_Argument_Labels_and_Parameter_Names)     
-- [函数类型](#Function_Types)    
+本页包含内容：
+- [函数定义与调用](#Defining_and_Calling_Functions)
+- [函数参数与返回值](#Function_Parameters_and_Return_Values)
+- [函数参数标签和参数名称](#Function_Argument_Labels_and_Parameter_Names)
+- [函数类型](#Function_Types)
 - [嵌套函数](#Nested_Functions)
 
 *函数*是一段完成特定任务的独立代码片段。你可以通过给函数命名来标识某个函数的功能，这个名字可以被用来在需要的时候"调用"这个函数来完成它的任务。
@@ -395,7 +395,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 
 这个例子中定义了两个简单的数学函数：`addTwoInts` 和 `multiplyTwoInts`。这两个函数都接受两个 `Int` 值， 返回一个 `Int` 值。
 
-这两个函数的类型是 `(Int, Int) -> Int`，可以解读为:     
+这两个函数的类型是 `(Int, Int) -> Int`，可以解读为:
 
 “这个函数类型有两个 `Int` 型的参数并返回一个 `Int` 型的值”。
 

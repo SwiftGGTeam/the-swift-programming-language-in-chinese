@@ -51,7 +51,7 @@ print("Hello, world!")
 > 注意
 > 
 > 最好的体验是把这一章作为 Playground 文件在 Xcode 中打开。 Playgrounds 允许你可以编辑代码并立刻看到输出结果。
->            
+> 
 > [Download Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
@@ -76,7 +76,7 @@ let explicitDouble: Double = 70
 ```
 
 > 练习
->                                          
+> 
 > 创建一个常量，显式指定类型为 `Float` 并指定初始值为 4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。

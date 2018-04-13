@@ -1,6 +1,6 @@
 # WWDC 里面的那个“大炮打气球”
 
-> 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)  
+> 翻译：[老码团队翻译组-Arya](http://weibo.com/littlekok/)
 > 校对：[老码团队翻译组-](Jame)
 
 ![Ballon playground](https://devimages.apple.com.edgekey.net/swift/images/swift-screenshot.jpg)

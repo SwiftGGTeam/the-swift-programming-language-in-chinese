@@ -52,11 +52,11 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 通过前缀表达式和二元表达式可以对简单表达式使用各种运算符。基本表达式从概念上讲是最简单的一种表达式，它是一种访问值的方式。后缀表达式则允许你建立复杂的表达式，例如函数调用和成员访问。每种表达式都在下面有详细论述。
 
 > 表达式语法 
->  
+> 
 <a name="expression"></a>
-> *表达式* → [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>  
+> *表达式* → [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>
 <a name="expression-list"></a>
-> *表达式列表* → [*表达式*](#expression) | [*表达式*](#expression) **,** [*表达式列表*](#expression-list)  
+> *表达式列表* → [*表达式*](#expression) | [*表达式*](#expression) **,** [*表达式列表*](#expression-list)
 
 <a name="prefix_expressions"></a>
 ## 前缀表达式
@@ -70,12 +70,12 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
 
 > 前缀表达式语法 
->  
+> 
 <a name="prefix-expression"></a>
-> *前缀表达式* → [*前缀运算符*](02_Lexical_Structure.md#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)  
-> *前缀表达式* → [*输入输出表达式*](#in-out-expression)  
+> *前缀表达式* → [*前缀运算符*](02_Lexical_Structure.md#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)
+> *前缀表达式* → [*输入输出表达式*](#in-out-expression)
 <a name="in-out-expression"></a>
-> *输入输出表达式* → **&** [*标识符*](02_Lexical_Structure.md#identifier)  
+> *输入输出表达式* → **&** [*标识符*](02_Lexical_Structure.md#identifier)
 
 <a name="try_operator"></a>
 ### Try 运算符
@@ -108,7 +108,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 关于 `try`、`try?` 和 `try!` 的更多信息，以及该如何使用的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.html)。
 > Try 表达式语法
->   
+> 
 <a name="try-operator"></a> 
 > *try 运算符* → **try** | **try?** | **try!**
 
@@ -123,17 +123,17 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
-> 注意  
+> 注意
 > 
 > 在解析时，一个二元表达式将作为一个扁平列表表示，然后根据运算符的优先级，再进一步进行组合。例如，`2 + 3 * 5` 首先被看作具有五个元素的列表，即 `2`、`+`、`3`、`*`、`5`，随后根据运算符优先级组合为 `(2 + (3 * 5))`。
 
 <a name="binary-expression"></a>
 > 二元表达式语法 
->  
-> *二元表达式* → [*二元运算符*](02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)  
-> *二元表达式* → [*赋值运算符*](#assignment-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
-> *二元表达式* → [*条件运算符*](#conditional-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
-> *二元表达式* → [*类型转换运算符*](#type-casting-operator)  
+> 
+> *二元表达式* → [*二元运算符*](02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)
+> *二元表达式* → [*赋值运算符*](#assignment-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)
+> *二元表达式* → [*条件运算符*](#conditional-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)
+> *二元表达式* → [*类型转换运算符*](#type-casting-operator)
 <a name="binary-expressions"></a>
 > *二元表达式列表* → [*二元表达式*](#binary-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>
 
@@ -154,9 +154,9 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 赋值运算符不返回任何值。
 
 > 赋值运算符语法 
->  
+> 
 <a name="assignment-operator"></a>
-> *赋值运算符* → **=**  
+> *赋值运算符* → **=**
 
 <a name="ternary_conditional_operator"></a>
 ### 三元条件运算符
@@ -170,22 +170,22 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 关于使用三元条件运算符的例子，请参阅 [三元条件运算符](../chapter2/02_Basic_Operators.md#ternary_conditional_operator)。
 
 > 三元条件运算符语法 
->  
+> 
 <a name="conditional-operator"></a>
-> *三元条件运算符* → **?** [try 运算符](#try-operator)<sub>可选</sub> [*表达式*](#expression) **:**  
+> *三元条件运算符* → **?** [try 运算符](#try-operator)<sub>可选</sub> [*表达式*](#expression) **:**
 
 <a name="type-casting_operators"></a>
 ### 类型转换运算符
 
 有 4 种类型转换运算符：`is`、`as`、`as? ` 和 `as!`。它们有如下的形式：
 
-> `表达式` is `类型`  
+> `表达式` is `类型`
 > 
-> `表达式` as `类型`  
+> `表达式` as `类型`
 > 
-> `表达式` as? `类型`  
+> `表达式` as? `类型`
 > 
-> `表达式` as! `类型`  
+> `表达式` as! `类型`
 
 `is` 运算符在运行时检查表达式能否向下转化为指定的类型，如果可以则返回 `ture`，否则返回 `false`。
 
@@ -216,11 +216,11 @@ f(x as Any)
 
 <a name="type-casting-operator"></a>
 > 类型转换运算符语法 
->  
-> *类型转换运算符* → **is** [*类型*](03_Types.md#type)  
-> *类型转换运算符* → **as** [*类型*](03_Types.md#type)  
-> *类型转换运算符* → **as** **?** [*类型*](03_Types.md#type)  
-> *类型转换运算符* → **as** **!** [*类型*](03_Types.md#type)   
+> 
+> *类型转换运算符* → **is** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **as** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **as** **?** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **as** **!** [*类型*](03_Types.md#type)
 
 <a name="primary_expressions"></a>
 ## 基本表达式
@@ -228,16 +228,16 @@ f(x as Any)
 基本表达式是最基本的表达式。它们可以单独使用，也可以跟前缀表达式、二元表达式、后缀表达式组合使用。
 
 > 基本表达式语法
->   
+> 
 <a name="primary-expression"></a>
-> *基本表达式* → [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
-> *基本表达式* → [*字面量表达式*](#literal-expression)  
-> *基本表达式* → [*self 表达式*](#self-expression)  
-> *基本表达式* → [*超类表达式*](#superclass-expression)  
-> *基本表达式* → [*闭包表达式*](#closure-expression)  
-> *基本表达式* → [*圆括号表达式*](#parenthesized-expression)  
-> *基本表达式* → [*隐式成员表达式*](#implicit-member-expression)  
-> *基本表达式* → [*通配符表达式*](#wildcard-expression)  
+> *基本表达式* → [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
+> *基本表达式* → [*字面量表达式*](#literal-expression)
+> *基本表达式* → [*self 表达式*](#self-expression)
+> *基本表达式* → [*超类表达式*](#superclass-expression)
+> *基本表达式* → [*闭包表达式*](#closure-expression)
+> *基本表达式* → [*圆括号表达式*](#parenthesized-expression)
+> *基本表达式* → [*隐式成员表达式*](#implicit-member-expression)
+> *基本表达式* → [*通配符表达式*](#wildcard-expression)
 > *基本表达式* → [*选择器表达式*](#selector-expression)
 
 <a name="literal_expression"></a>
@@ -288,36 +288,36 @@ var emptyArray: [Double] = []
 var emptyDictionary: [String : Double] = [:]
 ```
 
-> 字面量表达式语法  
+> 字面量表达式语法
 > 
 <a name="literal-expression"></a>
-> *字面量表达式* → [*字面量*](02_Lexical_Structure.md#literal)  
-> *字面量表达式* → [*数组字面量*](#array-literal) | [*字典字面量*](#dictionary-literal)  
-> *字面量表达式* → **#file** | **#line** | **#column** | **#function**  
+> *字面量表达式* → [*字面量*](02_Lexical_Structure.md#literal)
+> *字面量表达式* → [*数组字面量*](#array-literal) | [*字典字面量*](#dictionary-literal)
+> *字面量表达式* → **#file** | **#line** | **#column** | **#function**
 
 <a name="array-literal"></a>
-> *数组字面量* → **[** [*数组字面量项列表*](#array-literal-items)<sub>可选</sub> **]**  
+> *数组字面量* → **[** [*数组字面量项列表*](#array-literal-items)<sub>可选</sub> **]**
 <a name="array-literal-items"></a>
-> *数组字面量项列表* → [*数组字面量项*](#array-literal-item) **,**<sub>可选</sub> | [*数组字面量项*](#array-literal-item) **,** [*数组字面量项列表*](#array-literal-items)  
+> *数组字面量项列表* → [*数组字面量项*](#array-literal-item) **,**<sub>可选</sub> | [*数组字面量项*](#array-literal-item) **,** [*数组字面量项列表*](#array-literal-items)
 <a name="array-literal-item"></a>
-> *数组字面量项* → [*表达式*](#expression)  
+> *数组字面量项* → [*表达式*](#expression)
 
 <a name="dictionary-literal"></a>
-> *字典字面量* → **[** [*字典字面量项列表*](#dictionary-literal-items) **]** | **[** **:** **]**  
+> *字典字面量* → **[** [*字典字面量项列表*](#dictionary-literal-items) **]** | **[** **:** **]**
 <a name="dictionary-literal-items"></a>
-> *字典字面量项列表* → [*字典字面量项*](#dictionary-literal-item) **,**<sub>可选</sub> | [*字典字面量项*](#dictionary-literal-item) **,** [*字典字面量项列表*](#dictionary-literal-items)  
+> *字典字面量项列表* → [*字典字面量项*](#dictionary-literal-item) **,**<sub>可选</sub> | [*字典字面量项*](#dictionary-literal-item) **,** [*字典字面量项列表*](#dictionary-literal-items)
 <a name="dictionary-literal-item"></a>
-> *字典字面量项* → [*表达式*](#expression) **:** [*表达式*](#expression)  
+> *字典字面量项* → [*表达式*](#expression) **:** [*表达式*](#expression)
 
 <a name="self_expression"></a>
 ### Self 表达式
 
 `self` 表达式是对当前类型或者当前实例的显式引用，它有如下形式：
 
-> self  
-> self.`成员名称`  
-> self[`下标索引`]  
-> self(`构造器参数`)  
+> self
+> self.`成员名称`
+> self[`下标索引`]
+> self(`构造器参数`)
 > self.init(`构造器参数`)
 
 如果在构造器、下标、实例方法中，`self` 引用的是当前类型的实例。在一个类型方法中，`self` 引用的是当前的类型。
@@ -350,19 +350,19 @@ struct Point {
 > *self 表达式* → **self**  | [*self 方法表达式*](#self-method-expression) ｜ [*self 下标表达式*](#self-subscript-expression) | [*self 构造器表达式*](#self-initializer-expression)
 >
 <a name="self-method-expression"></a>
-> *self 方法表达式* → **self** **.** [*标识符*](02_Lexical_Structure.md#identifier)  
+> *self 方法表达式* → **self** **.** [*标识符*](02_Lexical_Structure.md#identifier)
 <a name="self-subscript-expression"></a>
 > *self 下标表达式* → **self** **[** [*表达式*](#expression) **]** 
 <a name="self-initializer-expression"></a> 
-> *self 构造器表达式* → **self** **.** **init**  
+> *self 构造器表达式* → **self** **.** **init**
 
 <a name="superclass_expression"></a>
 ### 父类表达式
 
 *父类*表达式可以使我们在某个类中访问它的超类，它有如下形式：
 
-> super.`成员名称`  
-> super[`下标索引`]  
+> super.`成员名称`
+> super[`下标索引`]
 > super.init(`构造器参数`)
 
 第一种形式用来访问超类的某个成员，第二种形式用来访问超类的下标，第三种形式用来访问超类的构造器。
@@ -370,16 +370,16 @@ struct Point {
 子类可以通过超类表达式在它们的成员、下标和构造器中使用超类中的实现。
 
 > 父类表达式语法 
->  
+> 
 <a name="superclass-expression"></a>
 > *超类表达式* → [*超类方法表达式*](#superclass-method-expression) | [*超类下标表达式*](#superclass-subscript-expression) | [*超类构造器表达式*](#superclass-initializer-expression) 
->  
+> 
 <a name="superclass-method-expression"></a>
-> *超类方法表达式* → **super** **.** [*标识符*](02_Lexical_Structure.md#identifier)  
+> *超类方法表达式* → **super** **.** [*标识符*](02_Lexical_Structure.md#identifier)
 <a name="superclass-subscript-expression"></a>
-> *超类下标表达式* → **super** **[** [*表达式*](#expression) **]**  
+> *超类下标表达式* → **super** **[** [*表达式*](#expression) **]**
 <a name="superclass-initializer-expression"></a>
-> *超类构造器表达式* → **super** **.** **init**  
+> *超类构造器表达式* → **super** **.** **init**
 
 <a name="closure_expression"></a>
 ### 闭包表达式
@@ -387,8 +387,8 @@ struct Point {
 闭包表达式会创建一个闭包，在其他语言中也叫 *lambda* 或*匿名*函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
 
 ```swift
-{ (parameters) -> return type in  
-    statements  
+{ (parameters) -> return type in
+    statements
 }
 ```
 
@@ -480,26 +480,26 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.md#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/16_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_for_closures)。
 
-> 闭包表达式语法  
+> 闭包表达式语法
 > 
 <a name="closure-expression"></a>
-> *闭包表达式* → **{** [*闭包签名*](#closure-signature)<sub>可选</sub> [*语句*](10_Statements.md#statements) **}**  
+> *闭包表达式* → **{** [*闭包签名*](#closure-signature)<sub>可选</sub> [*语句*](10_Statements.md#statements) **}**
 
 <a name="closure-signature"></a>
-> *闭包签名* → [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
-> *闭包签名* → [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
-> *闭包签名* → [*捕获列表*](#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
-> *闭包签名* → [*捕获列表*](#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**  
-> *闭包签名* → [*捕获列表*](#capture-list) **in**  
+> *闭包签名* → [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](#capture-list) **in**
 
 <a name="capture-list"></a>
-> *捕获列表* → **[** [*捕获列表项列表*](#capture-list-items) **]**  
+> *捕获列表* → **[** [*捕获列表项列表*](#capture-list-items) **]**
 <a name="capture-list-items"></a>
 > *捕获列表项列表* → [*捕获列表项*](#capture-list-item) | [*捕获列表项*](#capture-list-item) **,** [*捕获列表项列表*](#capture-list-items)
-<a name="capture-list-item"></a>  
+<a name="capture-list-item"></a>
 > *捕获列表项* → [*捕获说明符*](#capture-specifier)<sub>可选</sub> [*表达式*](#expression)
-<a name="capture-specifier"></a>  
-> *捕获说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**  
+<a name="capture-specifier"></a>
+> *捕获说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**
 
 <a name="implicit_member_expression"></a>
 ### 隐式成员表达式
@@ -516,16 +516,16 @@ x = .AnotherValue
 ```
 
 > 隐式成员表达式语法 
->  
+> 
 <a name="implicit-member-expression"></a>
-> *隐式成员表达式* → **.** [*标识符*](02_Lexical_Structure.md#identifier)  
+> *隐式成员表达式* → **.** [*标识符*](02_Lexical_Structure.md#identifier)
 
 <a name="parenthesized_expression"></a>
 ### 圆括号表达式
 
 *圆括号表达式*是由圆括号包围的表达式。你可以用圆括号说明成组的表达式的先后操作。成组的圆括号不会改变表达式的类型 - 例如 `(1)` 的类型就是简单的 `Int`。
 
-> 圆括号表达式语法  
+> 圆括号表达式语法
 > 
 <a name="parenthesized-expression"></a>
 > *圆括号表达式* → **( [*表达式*](#expression) )**
@@ -539,14 +539,14 @@ x = .AnotherValue
 
 元组表达式可以一个表达式都没有，也可以包含两个或是更多的表达式。单个表达式用括号括起来就是括号表达式了。
 
-> 元组表达式语法  
+> 元组表达式语法
 > 
 <a name="tuple-expression"></a>
 > *元组表达式* → **( )** | **(**[*元组元素*](#tuple-element)， [*元组元素列表*](#tuple-element-list) **)**
-<a name="tuple-element-list"></a>  
+<a name="tuple-element-list"></a>
 > *元组元素列表* → [*元组元素*](#tuple-element) | [*元组元素*](#tuple-element) **,** [*元组元素列表*](#tuple-element-list)
-<a name="tuple-element"></a>  
-> *元组元素* → [*表达式*](#expression) | [*标识符*](identifier) **:** [*表达式*](#expression)  
+<a name="tuple-element"></a>
+> *元组元素* → [*表达式*](#expression) | [*标识符*](identifier) **:** [*表达式*](#expression)
 
 <a name="wildcard_expression"></a>
 ### 通配符表达式
@@ -559,9 +559,9 @@ x = .AnotherValue
 ```
 
 > 通配符表达式语法 
->  
+> 
 <a name="wildcard-expression"></a>
-> *通配符表达式* → **_**  
+> *通配符表达式* → **_**
 
 <a name="selector_expression"></a>
 ### 选择器表达式
@@ -607,10 +607,10 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 
 更多关于如何在 Swift 代码中使用选择器来与 Objective-C API 进行交互的信息，请参阅 [Using Swift with Cocoa and Objective-C (Swift 3)](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[Objective-C Selectors](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID59)部分。
 
-> 选择器表达式语法  
+> 选择器表达式语法
 <a name="selector-expression"></a>
-> *选择器表达式* → __#selector__ **(** [*表达式*](#expression) **)**  
-> *选择器表达式* → __#selector__ **(** [*getter:表达式*](#expression) **)**  
+> *选择器表达式* → __#selector__ **(** [*表达式*](#expression) **)**
+> *选择器表达式* → __#selector__ **(** [*getter:表达式*](#expression) **)**
 > *选择器表达式* → __#selector__ **(** [*setter:表达式*](#expression) **)**
 
 <a name="postfix_expressions"></a>
@@ -622,17 +622,17 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
 
-> 后缀表达式语法  
+> 后缀表达式语法
 <a name="postfix-expression"></a>
-> *后缀表达式* → [*基本表达式*](#primary-expression)  
-> *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)  
-> *后缀表达式* → [*函数调用表达式*](#function-call-expression)  
-> *后缀表达式* → [*构造器表达式*](#initializer-expression)  
-> *后缀表达式* → [*显式成员表达式*](#explicit-member-expression)  
-> *后缀表达式* → [*后缀 self 表达式*](#postfix-self-expression)  
-> *后缀表达式* → [*dynamicType 表达式*](#dynamic-type-expression)  
-> *后缀表达式* → [*下标表达式*](#subscript-expression)  
-> *后缀表达式* → [*强制取值表达式*](#forced-value-expression)  
+> *后缀表达式* → [*基本表达式*](#primary-expression)
+> *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)
+> *后缀表达式* → [*函数调用表达式*](#function-call-expression)
+> *后缀表达式* → [*构造器表达式*](#initializer-expression)
+> *后缀表达式* → [*显式成员表达式*](#explicit-member-expression)
+> *后缀表达式* → [*后缀 self 表达式*](#postfix-self-expression)
+> *后缀表达式* → [*dynamicType 表达式*](#dynamic-type-expression)
+> *后缀表达式* → [*下标表达式*](#subscript-expression)
+> *后缀表达式* → [*强制取值表达式*](#forced-value-expression)
 > *后缀表达式* → [*可选链表达式*](#optional-chaining-expression)
 
 <a name="function_call_expression"></a>
@@ -664,12 +664,12 @@ myData.someMethod() {$0 == 13}
 myData.someMethod {$0 == 13}
 ```
 
-> 函数调用表达式语法  
+> 函数调用表达式语法
 <a name="function-call-expression"></a>
-> *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*圆括号表达式*](#parenthesized-expression)  
-> *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*圆括号表达式*](#parenthesized-expression)<sub>可选</sub> [*尾随闭包*](#trailing-closure)  
+> *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*圆括号表达式*](#parenthesized-expression)
+> *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*圆括号表达式*](#parenthesized-expression)<sub>可选</sub> [*尾随闭包*](#trailing-closure)
 <a name="trailing-closure"></a>
-> *尾随闭包* → [*闭包表达式*](#closure-expression)  
+> *尾随闭包* → [*闭包表达式*](#closure-expression)
 
 <a name="initializer_expression"></a>
 ### 构造器表达式
@@ -709,9 +709,9 @@ let s4 = someValue.dynamicType(data: 5)      // 错误
 let s3 = someValue.dynamicType.init(data: 7) // 有效
 ```
 
-> 构造器表达式语法  
+> 构造器表达式语法
 <a name="initializer-expression"></a>
-> *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init**  
+> *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init**
 > *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init** **(** [*参数名称*](#argument-names) **)**
 
 <a name="explicit_member_expression"></a>
@@ -769,9 +769,9 @@ let x = [10, 3, 20, 15, 4]
     .map { $0 * 100 }
 ```
 
-> 显式成员表达式语法  
+> 显式成员表达式语法
 <a name="explicit-member-expression"></a>
-> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit)  
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit)
 > *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/> 
 > *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) **(** [*参数名称*](#argument-names) **)**
 > 
@@ -785,16 +785,16 @@ let x = [10, 3, 20, 15, 4]
 
 后缀 `self` 表达式由某个表达式或类型名紧跟 `.self` 组成，其形式如下：
 
-> `表达式`.self  
-> `类型`.self  
+> `表达式`.self
+> `类型`.self
 
 第一种形式返回表达式的值。例如：`x.self` 返回 `x`。
 
 第二种形式返回相应的类型。我们可以用它来获取某个实例的类型作为一个值来使用。例如，`SomeClass.self` 会返回 `SomeClass` 类型本身，你可以将其传递给相应函数或者方法作为参数。
 
-> 后缀 self 表达式语法  
+> 后缀 self 表达式语法
 <a name="postfix-self-expression"></a>
-> *后缀 self 表达式* → [*后缀表达式*](#postfix-expression) **.** **self**  
+> *后缀 self 表达式* → [*后缀表达式*](#postfix-expression) **.** **self**
 
 <a name="dynamic_type_expression"></a>
 ### dynamicType 表达式
@@ -823,9 +823,9 @@ type(of: someInstance).printClassName()
 // 打印 “SomeSubClass”
 ```
 
-> 动态类型表达式语法  
+> 动态类型表达式语法
 <a name="dynamic-type-expression"></a>
-> *动态类型表达式* → type(of:表达式) **.** **dynamicType**  
+> *动态类型表达式* → type(of:表达式) **.** **dynamicType**
 
 <a name="subscript_expression"></a>
 ### 下标表达式
@@ -838,9 +838,9 @@ type(of: someInstance).printClassName()
 
 关于下标的声明，请参阅 [协议下标声明](05_Declarations.md#protocol_subscript_declaration)。
 
-> 下标表达式语法  
+> 下标表达式语法
 <a name="subscript-expression"></a>
-> *下标表达式* → [*后缀表达式*](#postfix-expression) **[** [*表达式列表*](#expression-list) **]**  
+> *下标表达式* → [*后缀表达式*](#postfix-expression) **[** [*表达式列表*](#expression-list) **]**
 
 <a name="forced-Value_expression"></a>
 ### 强制取值表达式
@@ -863,9 +863,9 @@ someDictionary["a"]![0] = 100
 // someDictionary 现在是 [b: [10, 20], a: [100, 2, 3]] 
 ```
 
-> 强制取值语法  
+> 强制取值语法
 <a name="forced-value-expression"></a>
-> *强制取值表达式* → [*后缀表达式*](#postfix-expression) **!**  
+> *强制取值表达式* → [*后缀表达式*](#postfix-expression) **!**
 
 <a name="optional-chaining_expression"></a>
 ### 可选链表达式
@@ -913,6 +913,6 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 // someDictionary 现在是 ["b": [10, 20], "a": [42, 2, 3]]
 ```
 
-> 可选链表达式语法  
+> 可选链表达式语法
 <a name="optional-chaining-expression"></a>
-> *可选链表达式* → [*后缀表达式*](#postfix-expression) **?**  
+> *可选链表达式* → [*后缀表达式*](#postfix-expression) **?**
