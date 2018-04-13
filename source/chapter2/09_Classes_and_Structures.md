@@ -231,7 +231,7 @@ tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
 
-以上示例中，声明了一个名为 `tenEighty` 的常量，其引用了一个 `VideoMode` 类的新实例。在之前的示例中，这个视频模式（video mode）被赋予了HD分辨率（`1920`*`1080`）的一个拷贝（即 `hd` 实例）。同时设置为 `interlaced`，命名为 `“1080i”`。最后，其帧率是 `25.0` 帧每秒。
+以上示例中，声明了一个名为 `tenEighty` 的常量，其引用了一个 `VideoMode` 类的新实例。在之前的示例中，这个视频模式（video mode）被赋予了 HD 分辨率（`1920`*`1080`）的一个拷贝（即 `hd` 实例）。同时设置为 `interlaced`，命名为 `“1080i”`。最后，其帧率是 `25.0` 帧每秒。
 
 然后，`tenEighty` 被赋予名为 `alsoTenEighty` 的新常量，同时对 `alsoTenEighty` 的帧率进行修改：
 

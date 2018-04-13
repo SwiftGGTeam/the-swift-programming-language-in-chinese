@@ -284,10 +284,10 @@ var 变量名称: 类型 = 表达式 {
 <a name="variable-declaration"></a>
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*模式构造器列表*](#pattern-initializer-list)  
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*代码块*](#code-block)  
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter代码块*](#getter-setter-block)  
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter关键字代码块*](#getter-setter-keyword-block)   
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*构造器*](#initializer) [*willSet-didSet代码块*](#willSet-didSet-block)   
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*构造器*](#initializer)<sub>可选</sub> [*willSet-didSet代码块*](#willSet-didSet-block)  
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter 代码块*](#getter-setter-block)  
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)   
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*构造器*](#initializer) [*willSet-didSet 代码块*](#willSet-didSet-block)   
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*构造器*](#initializer)<sub>可选</sub> [*willSet-didSet 代码块*](#willSet-didSet-block)  
 
 <a name="variable-declaration-head"></a>
 > *变量声明头* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **var**  
@@ -296,30 +296,30 @@ var 变量名称: 类型 = 表达式 {
 
 <a name="getter-setter-block"></a>
 > *getter-setter 代码块* → [*代码块*](#code-block)  
-> *getter-setter 代码块* → **{** [*getter子句*](#getter-clause) [*setter子句*](#setter-clause)<sub>可选</sub> **}**  
-> *getter-setter 代码块* → **{** [*setter子句*](#setter-clause) [*getter子句*](#getter-clause) **}**  
+> *getter-setter 代码块* → **{** [*getter 子句*](#getter-clause) [*setter 子句*](#setter-clause)<sub>可选</sub> **}**  
+> *getter-setter 代码块* → **{** [*setter 子句*](#setter-clause) [*getter 子句*](#getter-clause) **}**  
 > <a name="getter-clause"></a>
 > *getter 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **get** [*代码块*](#code-block)  
 > <a name="setter-clause"></a>
-> *setter 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **set** [*setter名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)  
+> *setter 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **set** [*setter 名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)  
 > <a name="setter-name"></a>
 > *setter 名称* → **(** [*标识符*](02_Lexical_Structure.md#identifier) **)**  
 
 <a name="getter-setter-keyword-block"></a>
-> *getter-setter 关键字代码块* → **{** [*getter关键字子句*](#getter-keyword-clause) [*setter关键字子句*](#setter-keyword-clause)<sub>可选</sub> **}**  
-> *getter-setter 关键字代码块* → **{** [*setter关键字子句*](#setter-keyword-clause) [*getter关键字子句*](#getter-keyword-clause) **}**  
+> *getter-setter 关键字代码块* → **{** [*getter 关键字子句*](#getter-keyword-clause) [*setter 关键字子句*](#setter-keyword-clause)<sub>可选</sub> **}**  
+> *getter-setter 关键字代码块* → **{** [*setter 关键字子句*](#setter-keyword-clause) [*getter 关键字子句*](#getter-keyword-clause) **}**  
 > <a name="getter-keyword-clause"></a>
 > *getter 关键字子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **get**  
 > <a name="setter-keyword-clause"></a>
 > *setter 关键字子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **set**  
 
 <a name="willSet-didSet-block"></a>
-> *willSet-didSet 代码块* → **{** [*willSet子句*](#willSet-clause) [*didSet子句*](#didSet-clause)<sub>可选</sub> **}**  
-> *willSet-didSet 代码块* → **{** [*didSet子句*](#didSet-clause) [*willSet子句*](#willSet-clause)<sub>可选</sub> **}**  
+> *willSet-didSet 代码块* → **{** [*willSet 子句*](#willSet-clause) [*didSet 子句*](#didSet-clause)<sub>可选</sub> **}**  
+> *willSet-didSet 代码块* → **{** [*didSet 子句*](#didSet-clause) [*willSet 子句*](#willSet-clause)<sub>可选</sub> **}**  
 > <a name="willSet-clause"></a>
-> *willSet 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **willSet** [*setter名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)  
+> *willSet 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **willSet** [*setter 名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)  
 > <a name="didSet-clause"></a>
-> *didSet 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **didSet** [*setter名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)  
+> *didSet 子句* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> **didSet** [*setter 名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)  
 
 <a name="type_alias_declaration"></a>
 ## 类型别名声明
@@ -355,7 +355,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
     // ...
 }
 ```
-假如没有类型别名，sum函数将必须引用关联类型通过T.Iterator.Element的形式来替代 T.Element。
+假如没有类型别名，sum 函数将必须引用关联类型通过 T.Iterator.Element 的形式来替代 T.Element。
 
 另请参阅 [协议关联类型声明](#protocol_associated_type_declaration)。
 
@@ -540,9 +540,9 @@ func someFunction(callback: () throws -> Void) rethrows {
 <a name="functions_that_never_return"></a>
 ### 永不返回的函数
 
-Swift定义了 `Never` 类型，它表示函数或者方法不会返回给它的调用者。`Never` 返回类型的函数或方法可以称为不归，不归函数、方法要么引发不可恢复的错误，要么永远不停地运作，这会使调用后本应执行得代码就不再执行了。但即使是不归函数、方法，抛错函数和重抛出函数也可以将程序控制转移到合适的 `catch` 代码块。
+Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它的调用者。`Never` 返回类型的函数或方法可以称为不归，不归函数、方法要么引发不可恢复的错误，要么永远不停地运作，这会使调用后本应执行得代码就不再执行了。但即使是不归函数、方法，抛错函数和重抛出函数也可以将程序控制转移到合适的 `catch` 代码块。
 
-不归函数、方法可以在guard语句的else字句中调用，具体讨论在[*Guard语句*](10_Statements.md#guard_statements)。  
+不归函数、方法可以在 guard 语句的 else 字句中调用，具体讨论在[*Guard 语句*](10_Statements.md#guard_statements)。  
 你可以重载一个不归方法，但是新的方法必须保持原有的返回类型和没有返回的行为。
 
 <a name="grammer_of_a_function_declaration"></a>
@@ -894,7 +894,7 @@ var 属性名: 类型 { get set }
 <a name="grammer_of_an_import_declaration"></a>
 > 协议属性声明语法  
 > <a name="protocol-property-declaration"></a>
-> *协议属性声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter关键字代码块*](#getter-setter-keyword-block)  
+> *协议属性声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)  
 
 <a name="protocol_method_declaration"></a>
 ### 协议方法声明
@@ -944,7 +944,7 @@ subscript (参数列表) -> 返回类型 { get set }
 <a name="grammer_of_a_protocol_subscript_declaration"></a>
 > 协议下标声明语法  
 > <a name="protocol-subscript-declaration"></a>
-> *协议下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*getter-setter关键字代码块*](#getter-setter-keyword-block)  
+> *协议下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)  
 
 <a name="protocol_associated_type_declaration"></a>
 ### 协议关联类型声明
@@ -1150,8 +1150,8 @@ subscript (参数列表) -> 返回类型 {
 > 下标声明语法  
 > <a name="subscript-declaration"></a>
 > *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*代码块*](#code-block)  
-> *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*getter-setter代码块*](#getter-setter-block)  
-> *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*getter-setter关键字代码块*](#getter-setter-keyword-block)  
+> *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*getter-setter 代码块*](#getter-setter-block)  
+> *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)  
 > <a name="subscript-head"></a>
 > *下标头* → [*特性列表*](06_Attributes.md#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **subscript** [*参数子句*](#parameter-clause)  
 > <a name="subscript-result"></a>
@@ -1174,7 +1174,7 @@ infix operator 运算符名称: 优先级组
 
 中缀运算符是二元运算符，置于两个运算对象之间，例如加法运算符（`+`）位于表达式 `1 + 2` 的中间。
 
-中缀运算符可以选择指定优先级组。如果没有为运算符设置优先级组，Swift会设置默认优先级组 `DefaultPrecedence`,它的优先级比三目优先级 `TernaryPrecedence` 要高，更多内容参考[*优先级组声明*](#precedence_group_declaration_modifiers)  
+中缀运算符可以选择指定优先级组。如果没有为运算符设置优先级组，Swift 会设置默认优先级组 `DefaultPrecedence`,它的优先级比三目优先级 `TernaryPrecedence` 要高，更多内容参考[*优先级组声明*](#precedence_group_declaration_modifiers)  
 
 下面的形式声明了一个新的前缀运算符：
 
@@ -1236,11 +1236,11 @@ precedencegroup 优先级组名称{
 > 
 > 使用较低和较高优先级组相互联系的优先级组必须保持单一层次关系，但它们不必是线性关系。这意味着优先级组也许会有未定义的相关优先级。这些优先级组的运算符在没有用圆括号分组的情况下是不能紧邻着使用的。  
 
-Swift定义了大量的优先级组来与标准库的运算符配合使用，例如相加(`+`)和相减(`-`)属于 `AdditionPrecedence` 组，相乘(`*`)和相除(`/`)属于 `MultiplicationPrecedence` 组，详细关于Swift标准库中一系列运算符和优先级组内容，参阅[Swift标准库操作符参考](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)。  
+Swift 定义了大量的优先级组来与标准库的运算符配合使用，例如相加(`+`)和相减(`-`)属于 `AdditionPrecedence` 组，相乘(`*`)和相除(`/`)属于 `MultiplicationPrecedence` 组，详细关于 Swift 标准库中一系列运算符和优先级组内容，参阅[Swift 标准库操作符参考](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)。  
 
 运算符的结合性表示在没有圆括号分组的情况下，同样优先级的一系列运算符是如何被分组的。你可以指定运算符的结合性通过上下文关键字 `left`、`right` 或者 `none`,如果没有指定结合性，默认是 `none` 关键字。左关联性的运算符是从左至右分组的，例如，相减操作符(-)是左关联性的，所以表达式 `4 - 5 - 6` 被分组为 `(4 - 5) - 6`,得出结果-7。右关联性的运算符是从右往左分组的，指定为 `none` 结合性的运算符就没有结合性。同样优先级没有结合性的运算符不能相邻出现，例如 `<` 运算符是 `none` 结合性，那表示 `1 < 2 < 3` 就不是一个有效表达式。  
 
-优先级组的赋值性表示在包含可选链操作时的运算符优先级。当设为true时，与优先级组对应的运算符在可选链操作中使用和标准库中赋值运算符同样的分组规则，当设为false或者不设置，该优先级组的运算符与不赋值的运算符遵循同样的可选链规则。
+优先级组的赋值性表示在包含可选链操作时的运算符优先级。当设为 true 时，与优先级组对应的运算符在可选链操作中使用和标准库中赋值运算符同样的分组规则，当设为 false 或者不设置，该优先级组的运算符与不赋值的运算符遵循同样的可选链规则。
 
 <a name="grammer_of_a_precedence_group_declaration"></a>
 > 优先级组声明语法  

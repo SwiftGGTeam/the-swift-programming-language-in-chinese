@@ -624,7 +624,7 @@ class Food {
 
 下图中展示了 `Food` 的构造器链：
 
-![Food构造器链](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/initializersExample01_2x.png)
+![Food 构造器链](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/initializersExample01_2x.png)
 
 类类型没有默认的逐一成员构造器，所以 `Food` 类提供了一个接受单一参数 `name` 的指定构造器。这个构造器可以使用一个特定的名字来创建新的 `Food` 实例：
 
@@ -659,7 +659,7 @@ class RecipeIngredient: Food {
 
 下图中展示了 `RecipeIngredient` 类的构造器链：
 
-![RecipeIngredient构造器](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/initializersExample02_2x.png)
+![RecipeIngredient 构造器](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/initializersExample02_2x.png)
 
 `RecipeIngredient` 类拥有一个指定构造器 `init(name: String, quantity: Int)`，它可以用来填充 `RecipeIngredient` 实例的所有属性值。这个构造器一开始先将传入的 `quantity` 参数赋值给 `quantity` 属性，这个属性也是唯一在 `RecipeIngredient` 中新引入的属性。随后，构造器向上代理到父类 `Food` 的 `init(name: String)`。这个过程满足[两段式构造过程](#two_phase_initialization)中的安全检查 1。
 

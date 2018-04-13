@@ -9,7 +9,7 @@
 > 翻译+校对：[KYawn](https://github.com/KYawn)
 
 > 2.1
-> 翻译：[小铁匠Linus](https://github.com/kevin833752)
+> 翻译：[小铁匠 Linus](https://github.com/kevin833752)
 
 本页内容包括：
 
@@ -17,7 +17,7 @@
 - [Interface Builder 使用的声明特性](#declaration_attributes_used_by_interface_builder)
 - [类型特性](#type_attributes)
 
-特性提供了有关声明和类型的更多信息。在Swift中有两种特性，分别用于修饰声明和类型。
+特性提供了有关声明和类型的更多信息。在 Swift 中有两种特性，分别用于修饰声明和类型。
 
 您可以通过以下方式指定一个特性:符号 `@` 后跟特性的名称和特性接收的任何参数：
 
@@ -120,7 +120,7 @@ class MyClass {
 
 `GKInspectable`
 
-应用此属性，暴露一个自定义GameplayKit组件属性给SpriteKit编辑器UI。
+应用此属性，暴露一个自定义 GameplayKit 组件属性给 SpriteKit 编辑器 UI。
 
 `objc`
 

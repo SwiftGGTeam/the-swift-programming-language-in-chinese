@@ -45,11 +45,11 @@
    * [泛型参数](chapter3/09_Generic_Parameters_and_Arguments.md)
    * [语法总结](chapter3/10_Summary_of_the_Grammar.md)
 
-* 苹果官方Blog官方翻译
+* 苹果官方 Blog 官方翻译
    * [Access Control 权限控制的黑与白](chapter4/01_Access_Control.md)
-   * [造个类型不是梦-白话Swift类型创建](chapter4/02_Type_Custom.md)
-   * [WWDC里面的那个“大炮打气球”](chapter4/03_Ballons.md)
-   * [Swift与C语言指针友好合作](chapter4/04_Interacting_with_C_Pointers.md)
+   * [造个类型不是梦-白话 Swift 类型创建](chapter4/02_Type_Custom.md)
+   * [WWDC 里面的那个“大炮打气球”](chapter4/03_Ballons.md)
+   * [Swift 与 C 语言指针友好合作](chapter4/04_Interacting_with_C_Pointers.md)
    * [引用类型和值类型的恩怨](chapter4/05_Value_and_Reference_Types.md)
-   * [访问控制和Protected](chapter4/06_Access_Control_and_Protected.md)
+   * [访问控制和 Protected](chapter4/06_Access_Control_and_Protected.md)
    * [可选类型完美解决占位问题](chapter4/07_Optional_Case_Study.md)

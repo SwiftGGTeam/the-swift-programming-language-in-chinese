@@ -38,7 +38,7 @@
 - [提前退出](#early_exit)
 - [检测 API 可用性](#checking_api_availability)
 
-Swift提供了多种流程控制结构，包括可以多次执行任务的 `while` 循环，基于特定条件选择执行不同代码分支的 `if`、`guard` 和 `switch` 语句，还有控制流程跳转到其他代码位置的 `break` 和 `continue` 语句。
+Swift 提供了多种流程控制结构，包括可以多次执行任务的 `while` 循环，基于特定条件选择执行不同代码分支的 `if`、`guard` 和 `switch` 语句，还有控制流程跳转到其他代码位置的 `break` 和 `continue` 语句。
 
 Swift 还提供了 `for-in` 循环，用来更简单地遍历数组（Array），字典（Dictionary），区间（Range），字符串（String）和其他序列类型。
 
@@ -117,7 +117,7 @@ for tickMark in 0..<minutes {
 }
 ```
 
-一些用户可能在其UI中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。
+一些用户可能在其 UI 中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。
 
 ```
 let minuteInterval = 5
@@ -222,7 +222,7 @@ print("Game over!")
 
 > 注意
 > 
-> Swift语言的 `repeat-while` 循环和其他语言中的 `do-while` 循环是类似的。
+> Swift 语言的 `repeat-while` 循环和其他语言中的 `do-while` 循环是类似的。
 
 下面是 `repeat-while` 循环的一般格式：
 
@@ -370,7 +370,7 @@ default:
 ```
 
 在这个例子中，第一个 case 分支用于匹配第一个英文字母 `a`，第二个 case 分支用于匹配最后一个字母 `z`。
-因为 `switch` 语句必须有一个case分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以switch语句使用 `default` 分支来匹配除了 `a` 和 `z` 外的所有值，这个分支保证了swith语句的完备性。
+因为 `switch` 语句必须有一个 case 分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以 switch 语句使用 `default` 分支来匹配除了 `a` 和 `z` 外的所有值，这个分支保证了 swith 语句的完备性。
 
 <a name="no_implicit_fallthrough"></a>
 #### 不存在隐式的贯穿
@@ -379,7 +379,7 @@ default:
 
 > 注意
 > 
-虽然在Swift中 `break` 不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用 `break` 跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
+虽然在 Swift 中 `break` 不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用 `break` 跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
 
@@ -397,7 +397,7 @@ default:
 
 不像 C 语言里的 `switch` 语句，在 Swift 中，`switch` 语句不会一起匹配 `"a"` 和 `"A"`。相反的，上面的代码会引起编译期错误：`case "a": 不包含任何可执行语句 `——这就避免了意外地从一个 case 分支贯穿到另外一个，使得代码更安全、也更直观。
 
-为了让单个case同时匹配 `a` 和 `A`，可以将这个两个值组合成一个复合匹配，并且用逗号分开：
+为了让单个 case 同时匹配 `a` 和 `A`，可以将这个两个值组合成一个复合匹配，并且用逗号分开：
 ```swift
 let anotherCharacter: Character = "a"
 switch anotherCharacter {
@@ -412,7 +412,7 @@ default:
 
 > 注意
 > 
-> 如果想要显式贯穿case分支，请使用 `fallthrough` 语句，详情请参考[贯穿](#fallthrough)。
+> 如果想要显式贯穿 case 分支，请使用 `fallthrough` 语句，详情请参考[贯穿](#fallthrough)。
 
 <a name="interval_matching"></a>
 #### 区间匹配
@@ -469,14 +469,14 @@ default:
 
 ![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphSimple_2x.png)
 
-在上面的例子中，`switch` 语句会判断某个点是否是原点(0, 0)，是否在红色的x轴上，是否在橘黄色的y轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
+在上面的例子中，`switch` 语句会判断某个点是否是原点(0, 0)，是否在红色的 x 轴上，是否在橘黄色的 y 轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
 
 不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点(0, 0)会首先匹配 `case (0, 0)`，因此剩下的能够匹配的分支都会被忽视掉。
 
 <a name="value_bindings"></a>
 #### 值绑定（Value Bindings）
 
-case 分支允许将匹配的值声明为临时常量或变量，并且在case分支体内使用 —— 这种行为被称为*值绑定*（value binding），因为匹配的值在case分支体内，与临时的常量或变量绑定。
+case 分支允许将匹配的值声明为临时常量或变量，并且在 case 分支体内使用 —— 这种行为被称为*值绑定*（value binding），因为匹配的值在 case 分支体内，与临时的常量或变量绑定。
 
 下面的例子将下图中的点(x, y)，使用 `(Int, Int)` 类型的元组表示，然后分类表示：
 
@@ -495,7 +495,7 @@ case let (x, y):
 
 ![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphMedium_2x.png)
 
-在上面的例子中，`switch` 语句会判断某个点是否在红色的x轴上，是否在橘黄色的y轴上，或者不在坐标轴上。
+在上面的例子中，`switch` 语句会判断某个点是否在红色的 x 轴上，是否在橘黄色的 y 轴上，或者不在坐标轴上。
 
 这三个 case 都声明了常量 `x` 和 `y` 的占位符，用于临时获取元组 `anotherPoint` 的一个或两个值。第一个 case ——`case (let x, 0)` 将匹配一个纵坐标为 `0` 的点，并把这个点的横坐标赋给临时的常量 `x`。类似的，第二个 case ——`case (0, let y)` 将匹配一个横坐标为 `0` 的点，并把这个点的纵坐标赋给临时的常量 `y`。
 
@@ -534,7 +534,7 @@ case let (x, y):
 <a name="compound_cases"></a>
 #### 复合型 Cases
 
-当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个 `case` 后面，并且用逗号隔开。当case后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
+当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个 `case` 后面，并且用逗号隔开。当 case 后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
 
 ```swift
 let someCharacter: Character = "e"
@@ -550,7 +550,7 @@ default:
 // 输出 "e is a vowel"
 ```
 
-这个 `switch` 语句中的第一个case，匹配了英语中的五个小写元音字母。相似的，第二个case匹配了英语中所有的小写辅音字母。最终，`default` 分支匹配了其它所有字符。
+这个 `switch` 语句中的第一个 case，匹配了英语中的五个小写元音字母。相似的，第二个 case 匹配了英语中所有的小写辅音字母。最终，`default` 分支匹配了其它所有字符。
 复合匹配同样可以包含值绑定。复合匹配里所有的匹配模式，都必须包含相同的值绑定。并且每一个绑定都必须获取到相同类型的值。这保证了，无论复合匹配中的哪个模式发生了匹配，分支体内的代码，都能获取到绑定的值，并且绑定的值都有一样的类型。
 
 ```swift
@@ -566,7 +566,7 @@ default:
 
 ```
 
-上面的case有两个模式：`(let distance, 0)` 匹配了在x轴上的值，`(0, let distance)` 匹配了在y轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要case匹配，都可以获取到 `distance` 值
+上面的 case 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 case 匹配，都可以获取到 `distance` 值
 
 <a name="control_transfer_statements"></a>
 ## 控制转移语句
@@ -794,11 +794,11 @@ greet(["name": "Jane", "location": "Cupertino"])
 <a name="checking_api_availability"></a>
 ## 检测 API 可用性
 
-Swift内置支持检查 API 可用性，这可以确保我们不会在当前部署机器上，不小心地使用了不可用的API。
+Swift 内置支持检查 API 可用性，这可以确保我们不会在当前部署机器上，不小心地使用了不可用的 API。
 
 编译器使用 SDK 中的可用信息来验证我们的代码中使用的所有 API 在项目指定的部署目标上是否可用。如果我们尝试使用一个不可用的 API，Swift 会在编译时报错。
 
-我们在 `if` 或 `guard` 语句中使用 `可用性条件（availability condition)`去有条件的执行一段代码，来在运行时判断调用的API是否可用。编译器使用从可用性条件语句中获取的信息去验证，在这个代码块中调用的 API 是否可用。
+我们在 `if` 或 `guard` 语句中使用 `可用性条件（availability condition)`去有条件的执行一段代码，来在运行时判断调用的 API 是否可用。编译器使用从可用性条件语句中获取的信息去验证，在这个代码块中调用的 API 是否可用。
 
 ```swift
 if #available(iOS 10, macOS 10.12, *) {
@@ -808,7 +808,7 @@ if #available(iOS 10, macOS 10.12, *) {
 }
 ```
 
-以上可用性条件指定，`if` 语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if语句的代码块将会运行。
+以上可用性条件指定，`if` 语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if 语句的代码块将会运行。
 
 在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS` 和 `tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 

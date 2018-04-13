@@ -153,7 +153,7 @@ func someFunction(left: Int, right: Int) {}
 func anotherFunction(left: Int, right: Int) {}
 func functionWithDifferentLabels(top: Int, bottom: Int) {}
  
-var f = someFunction // 函数f的类型为 (Int, Int) -> Void, 而不是 (left: Int, right: Int) -> Void.
+var f = someFunction // 函数 f 的类型为 (Int, Int) -> Void, 而不是 (left: Int, right: Int) -> Void.
 f = anotherFunction              // 正确
 f = functionWithDifferentLabels  // 正确
  
@@ -178,7 +178,7 @@ var operation: (Int, Int) -> Int                // 正确
 
 <a name="Restrictions for Nonescaping Closures"></a>
 ### 对非逃逸闭包的限制
-非逃逸闭包函数不能作为参数传递到另一个非逃逸闭包函数的参数。这样的限制可以让Swift在编译时就完成更多的内存访问冲突检查， 而不是在运行时。举个例子：
+非逃逸闭包函数不能作为参数传递到另一个非逃逸闭包函数的参数。这样的限制可以让 Swift 在编译时就完成更多的内存访问冲突检查， 而不是在运行时。举个例子：
 
 ```
 let external: (Any) -> Void = { _ in () }
@@ -389,7 +389,7 @@ type(of: someInstance).printClassName()
 // 打印 “SomeSubClass”
 ```
 
-更多信息可以查看Swift标准库里的 `type(of:)`。
+更多信息可以查看 Swift 标准库里的 `type(of:)`。
 
 可以使用初始化表达式从某个类型的元类型构造出一个该类型的实例。对于类实例，被调用的构造器必须使用 `required` 关键字标记，或者整个类使用 `final` 关键字标记。
 

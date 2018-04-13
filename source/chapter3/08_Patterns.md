@@ -193,11 +193,11 @@ for case let number? in arrayOfOptinalInts {
 
 > 类型转换模式语法  
 <a name="type-casting-pattern"></a>
-> *类型转换模式* → [*is模式*](#is-pattern) | [*as模式*](#as-pattern)  
+> *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)  
 <a name="is-pattern"></a>
-> *is模式* → **is** [*类型*](03_Types.md#type)  
+> *is 模式* → **is** [*类型*](03_Types.md#type)  
 <a name="as-pattern"></a>
-> *as模式* → [*模式*](#pattern) **as** [*类型*](03_Types.md#type)  
+> *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.md#type)  
 
 <a name="expression_pattern"></a>
 ## 表达式模式（Expression Pattern）

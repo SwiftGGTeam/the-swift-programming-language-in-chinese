@@ -57,11 +57,11 @@ Swift 的*“词法结构 (lexical structure)”* 描述了能构成该语言中
 > *注释* → // [*注释内容 断行*](#comment-text line-break)     
 > *多行注释* → `/*` [*多行注释内容*](#multiline-commnet-text) `*/`    
 > *注释内容* → [*注释内容项*](#comment-text-item) [*注释内容*](#comment-text)<sub>可选</sub>    
-> *注释内容项* → 任何Unicode标量值， 除了 U+000A 或者 U+000D    
+> *注释内容项* → 任何 Unicode 标量值， 除了 U+000A 或者 U+000D    
 > *多行注释内容* → [*多行注释内容项*](#multiline-comment-text-item) [*多行注释内容*](#multiline-comment-text)<sub>可选</sub>      
 > *多行注释内容项* → [*多行注释*](#multiline-comment).          
 > *多行注释内容项* → [*注释内容项*](#comment-text-item)     
-> *多行注释内容项* → 任何Unicode标量值， 除了 `/*` 或者 `*/` 
+> *多行注释内容项* → 任何 Unicode 标量值， 除了 `/*` 或者 `*/` 
 
 注释可以包含额外的格式和标记，正如 [*Markup Formatting Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497) 所述。
 

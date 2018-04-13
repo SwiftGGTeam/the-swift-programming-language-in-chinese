@@ -50,7 +50,7 @@ print("Hello, world!")
 
 > 注意
 > 
-> 最好的体验是把这一章作为Playground文件在Xcode中打开。 Playgrounds允许你可以编辑代码并立刻看到输出结果。
+> 最好的体验是把这一章作为 Playground 文件在 Xcode 中打开。 Playgrounds 允许你可以编辑代码并立刻看到输出结果。
 >            
 > [Download Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 

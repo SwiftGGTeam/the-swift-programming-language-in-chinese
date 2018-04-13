@@ -54,7 +54,7 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 > 表达式语法 
 >  
 <a name="expression"></a>
-> *表达式* → [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>  
+> *表达式* → [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>  
 <a name="expression-list"></a>
 > *表达式列表* → [*表达式*](#expression) | [*表达式*](#expression) **,** [*表达式列表*](#expression-list)  
 
@@ -131,8 +131,8 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 二元表达式语法 
 >  
 > *二元表达式* → [*二元运算符*](02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)  
-> *二元表达式* → [*赋值运算符*](#assignment-operator) [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
-> *二元表达式* → [*条件运算符*](#conditional-operator) [*try运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
+> *二元表达式* → [*赋值运算符*](#assignment-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
+> *二元表达式* → [*条件运算符*](#conditional-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)  
 > *二元表达式* → [*类型转换运算符*](#type-casting-operator)  
 <a name="binary-expressions"></a>
 > *二元表达式列表* → [*二元表达式*](#binary-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>
@@ -172,7 +172,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 三元条件运算符语法 
 >  
 <a name="conditional-operator"></a>
-> *三元条件运算符* → **?** [try运算符](#try-operator)<sub>可选</sub> [*表达式*](#expression) **:**  
+> *三元条件运算符* → **?** [try 运算符](#try-operator)<sub>可选</sub> [*表达式*](#expression) **:**  
 
 <a name="type-casting_operators"></a>
 ### 类型转换运算符
@@ -232,7 +232,7 @@ f(x as Any)
 <a name="primary-expression"></a>
 > *基本表达式* → [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>  
 > *基本表达式* → [*字面量表达式*](#literal-expression)  
-> *基本表达式* → [*self表达式*](#self-expression)  
+> *基本表达式* → [*self 表达式*](#self-expression)  
 > *基本表达式* → [*超类表达式*](#superclass-expression)  
 > *基本表达式* → [*闭包表达式*](#closure-expression)  
 > *基本表达式* → [*圆括号表达式*](#parenthesized-expression)  
@@ -566,7 +566,7 @@ x = .AnotherValue
 <a name="selector_expression"></a>
 ### 选择器表达式
 
-选择器表达式可以让你通过选择器来引用在Objective-C中方法(method)和属性(property)的setter和getter方法。
+选择器表达式可以让你通过选择器来引用在 Objective-C 中方法(method)和属性(property)的 setter 和 getter 方法。
 
 > \#selector(方法名)
 \#selector(getter: 属性名)
@@ -587,9 +587,9 @@ class SomeClass: NSObject {
 let selectorForMethod = #selector(SomeClass.doSomething(_:))
 let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 ```
-当为属性的getter创建选择器时，属性名可以是变量属性或者常量属性的引用。但是当为属性的setter创建选择器时，属性名只可以是对变量属性的引用。
+当为属性的 getter 创建选择器时，属性名可以是变量属性或者常量属性的引用。但是当为属性的 setter 创建选择器时，属性名只可以是对变量属性的引用。
 
-方法名称可以包含圆括号来进行分组，并使用as 操作符来区分具有相同方法名但类型不同的方法，例如:
+方法名称可以包含圆括号来进行分组，并使用 as 操作符来区分具有相同方法名但类型不同的方法，例如:
 
 ```swift
 extension SomeClass {

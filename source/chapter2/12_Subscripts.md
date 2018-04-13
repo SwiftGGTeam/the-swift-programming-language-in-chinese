@@ -98,7 +98,7 @@ numberOfLegs["bird"] = 2
 
 > 注意
 > 
-> Swift 的 `Dictionary` 类型的下标接受并返回可选类型的值。上例中的 `numberOfLegs` 字典通过下标返回的是一个 `Int?` 或者说“可选的int”。`Dictionary` 类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为 `nil` 即可。
+> Swift 的 `Dictionary` 类型的下标接受并返回可选类型的值。上例中的 `numberOfLegs` 字典通过下标返回的是一个 `Int?` 或者说“可选的 int”。`Dictionary` 类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为 `nil` 即可。
 
 <a name="subscript_options"></a>
 ## 下标选项

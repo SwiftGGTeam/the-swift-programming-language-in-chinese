@@ -98,7 +98,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 // 打印 “theAceOfSpades: suit is ♠, value is 1 or 11”
 ```
 
-尽管 `Rank` 和 `Suit` 嵌套在 `BlackjackCard` 中，但它们的类型仍可从上下文中推断出来，所以在初始化实例时能够单独通过成员名称（`.ace` 和 `.spades`）引用枚举实例。在上面的例子中，`description` 属性正确地反映了黑桃A牌具有 `1` 和 `11` 两个值。
+尽管 `Rank` 和 `Suit` 嵌套在 `BlackjackCard` 中，但它们的类型仍可从上下文中推断出来，所以在初始化实例时能够单独通过成员名称（`.ace` 和 `.spades`）引用枚举实例。在上面的例子中，`description` 属性正确地反映了黑桃 A 牌具有 `1` 和 `11` 两个值。
 
 <a name="referring_to_nested_types"></a>
 ## 引用嵌套类型

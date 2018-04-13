@@ -280,7 +280,7 @@ for (index, value) in shoppingList. enumerated() {
 *集合(Set)*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
 > 注意
-> Swift的 `Set` 类型被桥接到 `Foundation` 中的 `NSSet` 类。
+> Swift 的 `Set` 类型被桥接到 `Foundation` 中的 `NSSet` 类。
 > 
 > 关于使用 `Foundation` 和 `Cocoa` 中 `Set` 的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 

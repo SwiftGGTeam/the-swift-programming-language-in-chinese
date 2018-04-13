@@ -9,7 +9,7 @@
 > 翻译+校对：[futantan](https://github.com/futantan)
 
 > 2.1
-> 翻译：[小铁匠Linus](https://github.com/kevin833752)
+> 翻译：[小铁匠 Linus](https://github.com/kevin833752)
 > 校对：[shanks](http://codebuild.me)
 > 
 > 2.2
@@ -505,7 +505,7 @@ print(game.textualDescription)
 <a name="Conditionally_Conforming_to_a_Protocol"></a>
 ## 有条件地遵循协议
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见[泛型Where分句](./22_Generics.html##where_clauses)。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见[泛型 Where 分句](./22_Generics.html##where_clauses)。
 
 下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时就遵循 `TextRepresentable` 协议。
 
@@ -678,7 +678,7 @@ wishHappyBirthday(to: birthdayPerson)
 
 上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(to:)` 函数。因为 `Person` 同时符合这两个协议，所以这个参数合法，函数将打印生日问候语。
 
-这里有一个例子：将Location类和前面的Named协议进行组合：
+这里有一个例子：将 Location 类和前面的 Named 协议进行组合：
 
 ```swift
 class Location {
@@ -705,9 +705,9 @@ beginConcert(in: seattle)
 // Prints "Hello, Seattle!"
 ```
 
-`beginConcert(in:)` 方法接受一个类型为 `Location & Named` 的参数，这意味着"任何Location的子类，并且遵循Named协议"。例如，City就满足这样的条件。
+`beginConcert(in:)` 方法接受一个类型为 `Location & Named` 的参数，这意味着"任何 Location 的子类，并且遵循 Named 协议"。例如，City 就满足这样的条件。
 
-将 birthdayPerson 传入 `beginConcert(in:)` 函数是不合法的，因为 Person不是一个Location的子类。就像，如果你新建一个类继承与Location，但是没有遵循Named协议，你用这个类的实例去调用 `beginConcert(in:)` 函数也是不合法的。
+将 birthdayPerson 传入 `beginConcert(in:)` 函数是不合法的，因为 Person 不是一个 Location 的子类。就像，如果你新建一个类继承与 Location，但是没有遵循 Named 协议，你用这个类的实例去调用 `beginConcert(in:)` 函数也是不合法的。
 
 <a name="checking_for_protocol_conformance"></a>
 ## 检查协议一致性
@@ -941,7 +941,7 @@ extension PrettyTextRepresentable  {
 <a name="adding_constraints_to_protocol_extensions"></a>
 ### 为协议扩展添加限制条件
 
-在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型Where子句](./22_Generics.html#where_clauses)中所描述的。
+在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型 Where 子句](./22_Generics.html#where_clauses)中所描述的。
 
 例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵 `Equatable` 协议， 作为标准库的一部分， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
 

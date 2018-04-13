@@ -93,7 +93,7 @@ for item in collection {
 > for-in 语句语法 
 >  
 <a name="for-in-statement"></a>
-> *for-in 语句* → **for** **case**<sub>可选</sub> [*模式*](07_Patterns.md#pattern) **in** [*表达式*](04_Expressions.md#expression) [*where子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)  
+> *for-in 语句* → **for** **case**<sub>可选</sub> [*模式*](07_Patterns.md#pattern) **in** [*表达式*](04_Expressions.md#expression) [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)  
 
 <a name="while_statements"></a>
 ### While 语句
@@ -115,7 +115,7 @@ while condition {
 
 由于会在执行循环体中的语句前判断条件的值，因此循环体中的语句可能会被执行若干次，也可能一次也不会被执行。
 
-条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > while 语句语法  
 > 
@@ -125,7 +125,7 @@ while condition {
 <a name="condition-clause"></a>
 > *条件子句* → [*表达式*](04_Expressions.md#expression)  | [*表达式*](04_Expressions.md#expression) **,** [*条件列表*](#condition-list)      
 <a name="condition"></a>
-> *条件* → [*表达式*](04_Expressions.md#expression) |[*可用性条件*](#availability-condition) | [*case条件*](#case-condition) | [*可选绑定条件*](#optional-binding-condition)    
+> *条件* → [*表达式*](04_Expressions.md#expression) |[*可用性条件*](#availability-condition) | [*case 条件*](#case-condition) | [*可选绑定条件*](#optional-binding-condition)    
 <a name="case-condition"></a>
 > *case 条件* → **case** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer)     
 <a name="optional-binding-condition"></a>
@@ -151,7 +151,7 @@ repeat {
 
 由于条件的值是在循环体中的语句执行后才进行判断，因此循环体中的语句至少会被执行一次。
 
-条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > repeat-while 语句语法
 >   
@@ -209,14 +209,14 @@ if condition 1 {
 }
 ```
 
-`if` 语句中条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+`if` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > if 语句语法 
 > 
 <a name="if-statement"></a>
-> *if 语句* → **if** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block) [*else子句*](#else-clause)<sub>可选</sub>  
+> *if 语句* → **if** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block) [*else 子句*](#else-clause)<sub>可选</sub>  
 <a name="else-clause"></a>
-> *else 子句* → **else** [*代码块*](05_Declarations.md#code-block) | **else** [*if语句*](#if-statement)     
+> *else 子句* → **else** [*代码块*](05_Declarations.md#code-block) | **else** [*if 语句*](#if-statement)     
 
 <a name="guard_statements"></a>
 ### Guard 语句    
@@ -231,7 +231,7 @@ guard condition else {
 }    
 ```
 
-`guard` 语句中条件的结果必须是Bool类型或者Bool的桥接类型。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
+`guard` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
  
 在 `guard` 语句中进行可选绑定的常量或者变量，其可用范围从声明开始直到作用域结束。
  
@@ -297,21 +297,21 @@ case let (x, y) where x == y:
 > switch 语句语法  
 > 
 <a name="switch-statement"></a>
-> *switch 语句* → **switch** [*表达式*](04_Expressions.md#expression) **{** [*switch-case列表*](#switch-cases)<sub>可选</sub> **}**  
+> *switch 语句* → **switch** [*表达式*](04_Expressions.md#expression) **{** [*switch-case 列表*](#switch-cases)<sub>可选</sub> **}**  
 <a name="switch-cases"></a>
-> *switch case 列表* → [*switch-case*](#switch-case) [*switch-case列表*](#switch-cases)<sub>可选</sub>  
+> *switch case 列表* → [*switch-case*](#switch-case) [*switch-case 列表*](#switch-cases)<sub>可选</sub>  
 <a name="switch-case"></a>
-> *switch case* → [*case标签*](#case-label) [*多条语句*](#statements) | [*default标签*](#default-label) [*多条语句*](#statements)  
+> *switch case* → [*case 标签*](#case-label) [*多条语句*](#statements) | [*default 标签*](#default-label) [*多条语句*](#statements)  
 
 <a name="case-label"></a>
-> *case 标签* → **case** [*case项列表*](#case-item-list) **:**  
+> *case 标签* → **case** [*case 项列表*](#case-item-list) **:**  
 <a name="case-item-list"></a>
-> *case 项列表* → [*模式*](07_Patterns.md#pattern) [*where子句*](#where-clause)<sub>可选</sub> | [*模式*](07_Patterns.md#pattern) [*where子句*](#where-clause)<sub>可选</sub> **,** [*case项列表*](#case-item-list)  
+> *case 项列表* → [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> | [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> **,** [*case 项列表*](#case-item-list)  
 <a name="default-label"></a>
 > *default 标签* → **default** **:**  
 
 <a name="where-clause"></a>
-> *where-clause* → **where** [*where表达式*](#where-expression)  
+> *where-clause* → **where** [*where 表达式*](#where-expression)  
 <a name="where-expression"></a>
 > *where-expression* → [*表达式*](04_Expressions.md#expression)  
 
@@ -327,7 +327,7 @@ case let (x, y) where x == y:
 > 带标签的语句语法 
 >  
 <a name="labeled-statement"></a>
-> *带标签的语句* → [*语句标签*](#statement-label) [*循环语句*](#loop-statement) | [*语句标签*](#statement-label) [*if语句*](#if-statement) | [*语句标签*](#statement-label) [*switch语句*](#switch-statement)  
+> *带标签的语句* → [*语句标签*](#statement-label) [*循环语句*](#loop-statement) | [*语句标签*](#statement-label) [*if 语句*](#if-statement) | [*语句标签*](#statement-label) [*switch 语句*](#switch-statement)  
 <a name="statement-label"></a>
 > *语句标签* → [*标签名称*](#label-name) **:**  
 <a name="label-name"></a>
@@ -513,11 +513,11 @@ do {
 > do 语句语法 
 >  
 <a name="do-statement"></a>
-> *do 语句* → **do** [*代码块*](05_Declarations.md#code-block) [*多条 catch子句*](#catch-clauses)<sub>可选</sub>  
+> *do 语句* → **do** [*代码块*](05_Declarations.md#code-block) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>  
 <a name="catch-clauses"></a>
-> *多条 catch 子句* → [*catch子句*](#catch-clause) [*多条 catch子句*](#catch-clauses)<sub>可选</sub>   
+> *多条 catch 子句* → [*catch 子句*](#catch-clause) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>   
 <a name="catch-clause"></a>
-> *catch 子句* → **catch** [*模式*](07_Patterns.md#pattern)<sub>可选</sub> [*where子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
+> *catch 子句* → **catch** [*模式*](07_Patterns.md#pattern)<sub>可选</sub> [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
 
 <a name="compiler_control_statements"></a>
 ## 编译器控制语句
@@ -581,9 +581,9 @@ statements to compile if both compilation conditions are false
 > 编译配置语句语法  
 > 
 <a name="build-configuration-statement"></a>
-> *单个编译配置语句* → **#if** [*编译配置*](#build-configuration) [*语句*](#statements)<sub>可选</sub> [*多个编译配置elseif子句*](#build-configuration-elseif-clauses)<sub>可选</sub> **-** [*单个编译配置else子句*](#build-configuration-else-clause)<sub>可选</sub> **#endif**  
+> *单个编译配置语句* → **#if** [*编译配置*](#build-configuration) [*语句*](#statements)<sub>可选</sub> [*多个编译配置 elseif 子句*](#build-configuration-elseif-clauses)<sub>可选</sub> **-** [*单个编译配置 else 子句*](#build-configuration-else-clause)<sub>可选</sub> **#endif**  
 <a name="build-configuration-elseif-clauses"></a>
-> *多个编译配置 elseif 子句* → [*单个编译配置elseif子句*](#build-configuration-elseif-clause) [*多个编译配置elseif子句*](build-configuration-elseif-clauses)<sub>可选</sub>  
+> *多个编译配置 elseif 子句* → [*单个编译配置 elseif 子句*](#build-configuration-elseif-clause) [*多个编译配置 elseif 子句*](build-configuration-elseif-clauses)<sub>可选</sub>  
 <a name="build-configuration-elseif-clause"></a>
 > *单个编译配置 elseif 子句* → **#elseif** [*编译配置*](#build-configuration) [*语句*](#statements)<sub>可选</sub>  
 <a name="build-configuration-else-clause"></a>
@@ -603,7 +603,7 @@ statements to compile if both compilation conditions are false
 > *平台检测函数* → **os** **(** [*操作系统*](#operating-system) **)**  
 > *平台检测函数* → **arch** **(** [*架构*](#architecture) **)**  
 <a name="language-version-testing-function"></a>
-> *语言版本检测函数* → **swift** **(** **>=** [*swift版本*](#swift-version) **)**  
+> *语言版本检测函数* → **swift** **(** **>=** [*swift 版本*](#swift-version) **)**  
 <a name="operating-system"></a>
 > *操作系统* → **OSX** | **iOS** | **watchOS** | **tvOS**  
 <a name="architecture"></a>
