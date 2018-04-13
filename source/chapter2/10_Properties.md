@@ -118,7 +118,7 @@ manager.data.append("Some more data")
 
 `DataManager` 管理数据时也可能不从文件中导入数据。所以当 `DataManager` 的实例被创建时，没必要创建一个 `DataImporter` 的实例，更明智的做法是第一次用到 `DataImporter` 的时候才去创建它。
 
-由于使用了 `lazy` ，`importer` 属性只有在第一次被访问的时候才被创建。比如访问它的属性 `fileName` 时：
+由于使用了 `lazy`，`importer` 属性只有在第一次被访问的时候才被创建。比如访问它的属性 `fileName` 时：
 
 ```swift
 print(manager.importer.fileName)

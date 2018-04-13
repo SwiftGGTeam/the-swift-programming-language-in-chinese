@@ -35,7 +35,7 @@
 
 下面这个例子定义了一个结构体 `BlackjackCard`（二十一点），用来模拟 `BlackjackCard` 中的扑克牌点数。`BlackjackCard`  结构体包含两个嵌套定义的枚举类型 `Suit` 和 `Rank`。
 
-在 `BlackjackCard` 中，`Ace` 牌可以表示 `1` 或者 `11` ，`Ace` 牌的这一特征通过一个嵌套在 `Rank` 枚举中的结构体 `Values` 来表示：
+在 `BlackjackCard` 中，`Ace` 牌可以表示 `1` 或者 `11`，`Ace` 牌的这一特征通过一个嵌套在 `Rank` 枚举中的结构体 `Values` 来表示：
 
 ```swift
 struct BlackjackCard {

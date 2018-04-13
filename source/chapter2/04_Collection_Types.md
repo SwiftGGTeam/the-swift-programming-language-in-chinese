@@ -129,7 +129,7 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 
 在这个例子中，字面量仅仅包含两个 `String` 值。匹配了该数组的变量声明（只能包含 `String` 的数组），所以这个字面量的分配过程可以作为用两个初始项来构造 `shoppingList` 的一种方式。
 
-由于 Swift 的类型推断机制，当我们用字面量构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 `shoppingList` 的构造也可以这样写：
+由于 Swift 的类型推断机制，当我们用字面量构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。`shoppingList` 的构造也可以这样写：
 
 ```swift
 var shoppingList = ["Eggs", "Milk"]

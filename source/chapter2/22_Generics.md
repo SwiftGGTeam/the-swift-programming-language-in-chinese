@@ -354,7 +354,7 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
 }
 ```
 
-`findIndex(of:in:)` 唯一的类型参数写做 `T: Equatable`，也就意味着“任何符合 `Equatable` 协议的类型 `T` ”。
+`findIndex(of:in:)` 唯一的类型参数写做 `T: Equatable`，也就意味着“任何符合 `Equatable` 协议的类型 `T`”。
 
 `findIndex(of:in:)` 函数现在可以成功编译了，并且可以作用于任何符合 `Equatable` 的类型，如 `Double` 或 `String`：
 
@@ -489,7 +489,7 @@ protocol Container {
 <a name="Using_a_Protocol_in_Its_Associated_Type’s_Constraints"></a>
 ### 在关联类型约束里使用协议
 
-协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个 `suffix(_:)` 方法。 `suffix(_:)` 方法返回容器中从后往前给定数量的元素，把它们存储在一个 `Suffix` 类型的实例里。
+协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个 `suffix(_:)` 方法。`suffix(_:)` 方法返回容器中从后往前给定数量的元素，把它们存储在一个 `Suffix` 类型的实例里。
 
 ```swift
 protocol SuffixableContainer: Container {
@@ -498,7 +498,7 @@ protocol SuffixableContainer: Container {
 }
 ```
 
-在这个协议里， `Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。 `Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。 `Item` 的约束是一个 `wher`e 分句，它在下面[带有泛型 Where 分句的扩展](#extensions_with_a_generic_where_clause)中有讨论。
+在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `wher`e 分句，它在下面[带有泛型 Where 分句的扩展](#extensions_with_a_generic_where_clause)中有讨论。
 
 这里有一个来自[闭包的循环强引用](./23_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)的 Stack 类型的扩展，它添加了对 `SuffixableContainer` 协议的遵循：
 
@@ -521,7 +521,7 @@ let suffix = stackOfInts.suffix(2)
 // suffix contains 20 and 30
 ```
 
-在上面的例子中， `Suffix` 是 `Stack` 的关联类型，也就是 `Stack` ，所以 `Stack` 的后缀运算返回另一个 `Stack` 。另外，遵循 `SuffixableContainer` 的类型可以拥有一个与它自己不同的 `Suffix` 类型——也就是说后缀运算可以返回不同的类型。比如说，这里有一个非泛型 `IntStack` 类型的扩展，它添加了 `SuffixableContainer` 遵循，使用 `Stack<Int>` 作为它的后缀类型而不是 `IntStack` ：
+在上面的例子中，`Suffix` 是 `Stack` 的关联类型，也就是 `Stack` ，所以 `Stack` 的后缀运算返回另一个 `Stack` 。另外，遵循 `SuffixableContainer` 的类型可以拥有一个与它自己不同的 `Suffix` 类型——也就是说后缀运算可以返回不同的类型。比如说，这里有一个非泛型 `IntStack` 类型的扩展，它添加了 `SuffixableContainer` 遵循，使用 `Stack<Int>` 作为它的后缀类型而不是 `IntStack`：
 
 ```swift
 extension IntStack: SuffixableContainer {

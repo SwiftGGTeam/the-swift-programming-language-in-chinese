@@ -41,7 +41,7 @@
 > 
 > Swift 中的类并不是从一个通用的基类继承而来。如果你不为你定义的类指定一个超类的话，这个类就自动成为基类。
 
-下面的例子定义了一个叫 `Vehicle` 的基类。这个基类声明了一个名为 `currentSpeed `，默认值是 `0.0` 的存储属性（属性类型推断为 `Double`）。`currentSpeed` 属性的值被一个 `String` 类型的只读计算型属性 `description` 使用，用来创建车辆的描述。
+下面的例子定义了一个叫 `Vehicle` 的基类。这个基类声明了一个名为 `currentSpeed`，默认值是 `0.0` 的存储属性（属性类型推断为 `Double`）。`currentSpeed` 属性的值被一个 `String` 类型的只读计算型属性 `description` 使用，用来创建车辆的描述。
 
 `Vehicle` 基类也定义了一个名为 `makeNoise` 的方法。这个方法实际上不为 `Vehicle` 实例做任何事，但之后将会被 `Vehicle` 的子类定制：
 

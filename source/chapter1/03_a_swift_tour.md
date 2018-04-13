@@ -142,7 +142,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、 `while` 和 `repeat-while` 来进行循环。包裹条件和循环变量的括号可以省略，但是语句体的大括号是必须的。
+使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、`while` 和 `repeat-while` 来进行循环。包裹条件和循环变量的括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]

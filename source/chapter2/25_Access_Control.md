@@ -133,7 +133,7 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅[默认访问级别](#default_access_levels)这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 仍然拥有隐式的 `internal` ：
+除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅[默认访问级别](#default_access_levels)这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 仍然拥有隐式的 `internal`：
 
 ```swift
 class SomeInternalClass {}   // 隐式 internal

@@ -671,7 +671,7 @@ class RecipeIngredient: Food {
 
 在这个例子中，`RecipeIngredient` 的父类是 `Food`，它有一个便利构造器 `init()`。这个便利构造器会被 `RecipeIngredient` 继承。这个继承版本的 `init()` 在功能上跟 `Food` 提供的版本是一样的，只是它会代理到 `RecipeIngredient` 版本的 `init(name: String)` 而不是 `Food` 提供的版本。
 
-所有的这三种构造器都可以用来创建新的 `RecipeIngredient ` 实例：
+所有的这三种构造器都可以用来创建新的 `RecipeIngredient` 实例：
 
 ```swift
 let oneMysteryItem = RecipeIngredient()
@@ -1056,7 +1056,7 @@ class SomeClass {
 
 ![西洋跳棋棋盘](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/chessBoard_2x.png)
 
-为了呈现这副游戏棋盘，`Chessboard ` 结构体定义了一个属性 `boardColors`，它是一个包含 `64` 个 `Bool` 值的数组。在数组中，值为 `true` 的元素表示一个黑格，值为 `false` 的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
+为了呈现这副游戏棋盘，`Chessboard` 结构体定义了一个属性 `boardColors`，它是一个包含 `64` 个 `Bool` 值的数组。在数组中，值为 `true` 的元素表示一个黑格，值为 `false` 的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
 
 `boardColors` 数组是通过一个闭包来初始化并设置颜色值的：
 

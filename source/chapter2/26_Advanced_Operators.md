@@ -441,7 +441,7 @@ Swift 为以下自定义类型提等价运算符供合成实现：
 
 在类型原本的声明中声明遵循 `Equatable` 来接收这些默认实现。
 
-下面为三维位置向量 `(x, y, z)` 定义的 `Vector3D` 结构体，与 `Vector2D` 类似，由于 `x` ， `y` 和 `z` 属性都是 `Equatable` 类型， `Vector3D` 就收到默认的等价运算符实现了。
+下面为三维位置向量 `(x, y, z)` 定义的 `Vector3D` 结构体，与 `Vector2D` 类似，由于 `x`，`y` 和 `z` 属性都是 `Equatable` 类型，`Vector3D` 就收到默认的等价运算符实现了。
 
 ```swift
 struct Vector3D: Equatable {

@@ -67,7 +67,7 @@ print(greet(person: "Brian"))
 // 打印 "Hello, Brian!"
 ```
 
-调用 `greet(person:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet(person: "Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以 `greet ` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
+调用 `greet(person:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet(person: "Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以 `greet` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
 
 > 注意
 > 

@@ -876,7 +876,7 @@ for _ in 1...4 {
 }
 ```
 
-`TowardsZeroSource` 实现了 `CounterDataSource` 协议中的 `increment(forCount:) ` 方法，以 `count` 参数为依据，计算出每次的增量。如果 `count` 已经为 `0`，此方法返回 `0`，以此表明之后不应再有增量操作发生。
+`TowardsZeroSource` 实现了 `CounterDataSource` 协议中的 `increment(forCount:)` 方法，以 `count` 参数为依据，计算出每次的增量。如果 `count` 已经为 `0`，此方法返回 `0`，以此表明之后不应再有增量操作发生。
 
 你可以使用 `TowardsZeroSource` 实例将 `Counter` 实例来从 `-4` 增加到 `0`。一旦增加到 `0`，数值便不会再有变动：
 
@@ -967,7 +967,7 @@ extension Collection where Element: Equatable {
 let equalNumbers = [100, 100, 100, 100, 100]
 let differentNumbers = [100, 100, 200, 100, 200]
 ```
-由于数组遵循 `Collection` 而且整数遵循 `Equatable`，  `equalNumbers` 和 `differentNumbers` 都可以使用 `allEqual()` 方法。
+由于数组遵循 `Collection` 而且整数遵循 `Equatable`，`equalNumbers` 和 `differentNumbers` 都可以使用 `allEqual()` 方法。
 
 
 ```swift
