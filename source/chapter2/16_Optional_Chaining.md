@@ -11,9 +11,10 @@
 
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-10-31
->
+
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
+
 > 3.0.1，shanks，2016-11-13
 
 > 4.0

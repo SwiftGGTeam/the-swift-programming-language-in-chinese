@@ -804,6 +804,7 @@ for object in objects {
 `CounterDataSource` 协议定义了一个可选方法 `increment(forCount:)` 和一个可选属性 `fiexdIncrement`，它们使用了不同的方法来从数据源中获取适当的增量值。
 
 > 注意
+> 
 > 严格来讲，`CounterDataSource` 协议中的方法和属性都是可选的，因此遵循协议的类可以不实现这些要求，尽管技术上允许这样做，不过最好不要这样写。
 
 `Counter` 类含有 `CounterDataSource?` 类型的可选属性 `dataSource`，如下所示：

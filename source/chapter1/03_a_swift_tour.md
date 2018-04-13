@@ -10,13 +10,15 @@
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
 > 2.2
-> 翻译：[175](https://github.com/Brian175)，2016-04-09 校对：[SketchK](https://github.com/SketchK)，2016-05-11
-> 
+> 翻译：[175](https://github.com/Brian175)，2016-04-09
+> 校对：[SketchK](https://github.com/SketchK)，2016-05-11
+
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
-> 3.0.1 review: 2016-11-09
-> 
+> 3.0.1
+> review: 2016-11-09
+
 > 3.1 校对: [SketchK](https://github.com/SketchK) 2017-04-08
 
 > 4.0

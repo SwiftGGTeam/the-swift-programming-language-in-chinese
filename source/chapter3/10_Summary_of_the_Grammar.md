@@ -63,7 +63,7 @@
 
 > *条件从句* → [*表达式*](TODO) *,* [*表达式集*]()
 
->*条件从句* → [*表达式集*](TODO)
+> *条件从句* → [*表达式集*](TODO)
 
 > *条件从句* → [*可用条件 (availability-condition*)](TODO) *|* [*表达式集*]()
 
@@ -102,8 +102,8 @@
 > *else从句(Clause)* → **else** [*代码块*](../chapter3/05_Declarations.html#code_block) | **else** [*if语句*](../chapter3/10_Statements.html#if_statement)  
 
 <!-- -->
->Guard 语句语法
->*guard语句* → **guard** [*条件从句*](TODO) **else** [*代码块*](TODO) 
+> Guard 语句语法
+> *guard语句* → **guard** [*条件从句*](TODO) **else** [*代码块*](TODO) 
 
  
 <!-- -->
@@ -156,46 +156,46 @@
 > *return语句* → **return** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_  
 
 <!-- -->
->可用条件(Availability Condition)语法
+> 可用条件(Availability Condition)语法
 
->*可用条件(availability-condition)* → **#available** **(** [*多可用参数*(availability-arguments)](TODO) **)** 
+> *可用条件(availability-condition)* → **#available** **(** [*多可用参数*(availability-arguments)](TODO) **)** 
 
->*多可用参数(availability- arguments)* → [*可用参数(availability-argument)*](TODO)|[*可用参数(availability-argument)*](TODO) , [多可用参数(availability-arguments)](TODO)
+> *多可用参数(availability- arguments)* → [*可用参数(availability-argument)*](TODO)|[*可用参数(availability-argument)*](TODO) , [多可用参数(availability-arguments)](TODO)
 
->*可用参数(availability- argument)* → [*平台名(platform-name)*](TODO) [*平台版本(platform-version)*](TODO)
+> *可用参数(availability- argument)* → [*平台名(platform-name)*](TODO) [*平台版本(platform-version)*](TODO)
 
->*可用参数(availability- argument)* → *
+> *可用参数(availability- argument)* → *
 
->*平台名* → **iOS** | **iOSApplicationExtension**
+> *平台名* → **iOS** | **iOSApplicationExtension**
 
->*平台名* → **OSX** | **OSXApplicationExtension**
+> *平台名* → **OSX** | **OSXApplicationExtension**
 
->*平台名* → **watchOS** 
+> *平台名* → **watchOS** 
 
->*平台版本* → [*十进制数(decimal-digits)*](TODO)
+> *平台版本* → [*十进制数(decimal-digits)*](TODO)
 
->*平台版本* → [*十进制数(decimal-digits)*](TODO) . [*十进制数(decimal-digits)*](TODO) 
+> *平台版本* → [*十进制数(decimal-digits)*](TODO) . [*十进制数(decimal-digits)*](TODO) 
 
->*平台版本* → [*十进制数(decimal-digits)*](TODO) **.** [*十进制数(decimal-digits)*](TODO) **.** [*十进制数（decimal-digits)*](TODO))
-
-<!-- -->
->抛出语句(Throw Statement)语法
-
->*抛出语句(throw-statement)* → **throw** [*表达式(expression)*](TODO)
+> *平台版本* → [*十进制数(decimal-digits)*](TODO) **.** [*十进制数(decimal-digits)*](TODO) **.** [*十进制数（decimal-digits)*](TODO))
 
 <!-- -->
->延迟语句 (defer-statement)语法
+> 抛出语句(Throw Statement)语法
 
->*延迟语句(defer-statement)* → **defer** [*代码块*](TODO)
+> *抛出语句(throw-statement)* → **throw** [*表达式(expression)*](TODO)
 
 <!-- -->
->执行语句(do-statement)语法
+> 延迟语句 (defer-statement)语法
 
->*执行语句(do-statement)* → **do** [*代码块*](TODO) [*catch-clauses*](TODO) _可选_
+> *延迟语句(defer-statement)* → **defer** [*代码块*](TODO)
 
->*catch-clauses* → [*catch-clause*](TODO) [*catch-clauses*](TODO) _可选_
+<!-- -->
+> 执行语句(do-statement)语法
 
->*catch-clauses* → **catch** [*模式(pattern)*](TODO) _可选_  [*where-clause*](TODO) _可选_ [*代码块(code-block)*](TODO) _可选_
+> *执行语句(do-statement)* → **do** [*代码块*](TODO) [*catch-clauses*](TODO) _可选_
+
+> *catch-clauses* → [*catch-clause*](TODO) [*catch-clauses*](TODO) _可选_
+
+> *catch-clauses* → **catch** [*模式(pattern)*](TODO) _可选_  [*where-clause*](TODO) _可选_ [*代码块(code-block)*](TODO) _可选_
 
 <a name="generic_parameters_and_arguments"></a>
 ## 泛型参数

@@ -11,12 +11,13 @@
 > 2.1
 > 翻译：[100mango](https://github.com/100mango), [magicdict](https://github.com/magicdict)
 > 校对：[shanks](http://codebuild.me)
->
+
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
->
+
 > 3.0
 > 翻译：[Lanford](https://github.com/LanfordCai) 2016-09-19
+
 > 3.0.1，shanks，2016-11-12
 
 > 4.0
@@ -39,6 +40,7 @@
 闭包可以捕获和存储其所在上下文中任意常量和变量的引用。被称为*包裹*常量和变量。 Swift 会为你管理在捕获过程中涉及到的所有内存操作。
 
 > 注意
+> 
 > 如果你不熟悉捕获（capturing）这个概念也不用担心，你可以在[值捕获](#capturing_values)章节对其进行详细了解。
 
 在[函数](./06_Functions.md)章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：

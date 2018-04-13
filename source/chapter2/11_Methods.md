@@ -10,9 +10,10 @@
 
 > 2.1
 > 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18
-> 
+
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-13
+
 > 3.0.1，shanks，2016-11-13
 
 > 4.0

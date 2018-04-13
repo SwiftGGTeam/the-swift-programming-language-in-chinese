@@ -13,7 +13,7 @@
 
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 2016-05-11
->
+
 > 3.0
 > 校对：[shanks](http://codebuild.me) ，2016-10-09
 > 3.0.1，shanks，2016-11-12

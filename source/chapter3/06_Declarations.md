@@ -187,7 +187,8 @@ print("The second number is \(secondNumber).")
 
 变量声明有几种不同的形式，可以声明不同种类的命名值和可变值，如存储型和计算型变量和属性，属性观察器，以及静态变量属性。所使用的声明形式取决于变量声明的适用范围和打算声明的变量类型。
 
-> 注意  
+> 注意
+> 
 > 也可以在协议声明中声明属性，详情请参阅 [协议属性声明](#protocol_property_declaration)。
 
 可以在子类中重写继承来的变量属性，使用 `override` 声明修饰符标记属性的声明即可，详情请参阅 [重写](../chapter2/13_Inheritance.md#overriding)。
@@ -273,7 +274,8 @@ var 变量名称: 类型 = 表达式 {
 
 要声明一个类型变量属性，用 `static` 声明修饰符标记该声明。类可以改用 `class` 声明修饰符标记类的类型计算型属性从而允许子类重写超类的实现。类型属性在 [类型属性](../chapter2/10_Properties.md#type_properties) 章节有详细讨论。
 
-> 注意  
+> 注意
+> 
 > 在一个类声明中，使用关键字 `static` 与同时使用 `class` 和 `final` 去标记一个声明的效果相同。
 
 <a name="grammer_of_a_variable_declaration"></a>
@@ -829,7 +831,8 @@ protocol 协议名称: 继承的协议 {
 
 协议类型可以继承自任意数量的其它协议。当一个协议类型继承自其它协议的时候，来自其它协议的所有要求会聚合在一起，而且采纳当前协议的类型必须符合所有的这些要求。关于如何使用协议继承的例子，请参阅 [协议继承](../chapter2/22_Protocols.md#protocol_inheritance)。
 
-> 注意  
+> 注意
+> 
 > 也可以使用协议合成类型来聚合多个协议的一致性要求，请参阅 [协议合成类型](03_Types.md#protocol_composition_type) 和 [协议合成](../chapter2/22_Protocols.md#protocol_composition)。
 
 可以通过类型的扩展声明来采纳协议，从而为之前声明的类型添加协议一致性。在扩展中，必须实现所有采纳协议的要求。如果该类型已经实现了所有的要求，可以让这个扩展声明的主体留空。
@@ -846,7 +849,8 @@ protocol SomeProtocol: class {
 
 任何继承自标记有 `class` 关键字的协议的协议也仅能被类类型采纳。
 
-> 注意  
+> 注意
+> 
 > 如果协议已经用 `objc` 特性标记了，`class` 要求就隐式地应用于该协议，无需显式使用 `class` 关键字。
 
 协议类型是命名的类型，因此它们可以像其他命名类型一样使用，正如 [协议作为类型](../chapter2/22_Protocols.md#protocols_as_types) 所讨论的。然而，不能构造一个协议的实例，因为协议实际上不提供它们指定的要求的实现。
@@ -991,7 +995,8 @@ convenience init(参数列表) {
 
 和方法、属性和下标一样，需要使用 `override` 声明修饰符标记重写的指定构造器。
 
-> 注意  
+> 注意
+> 
 > 如果使用 `required` 声明修饰符标记一个构造器，在子类中重写这种构造器时，无需使用 `override` 修饰符。
 
 就像函数和方法，构造器也可以抛出或者重抛错误，你可以在构造器参数列表的圆括号之后使用 `throws` 或 `rethrows` 关键字来表明相应的抛出行为。
@@ -1223,9 +1228,11 @@ precedencegroup 优先级组名称{
     assignment: 赋值性
 }
 ```  
+
 较低优先级组和较高优先级组的名称说明了新建的优先级组是依赖于现存的优先级组的。 `lowerThan`优先级组的属性只可以引用当前模块外的优先级组。当两个运算符为同一个操作数竞争时，比如表达式`2 + 3 * 5`,优先级更高的运算符将优先参与运算。 
 
-> 注意  
+> 注意
+> 
 > 使用较低和较高优先级组相互联系的优先级组必须保持单一层次关系，但它们不必是线性关系。这意味着优先级组也许会有未定义的相关优先级。这些优先级组的运算符在没有用圆括号分组的情况下是不能紧邻着使用的。  
 
 Swift定义了大量的优先级组来与标准库的运算符配合使用，例如相加(`+`)和相减(`-`)属于`AdditionPrecedence`组，相乘(`*`)和相除(`/`)属于` MultiplicationPrecedence`组，详细关于Swift标准库中一系列运算符和优先级组内容，参阅[Swift标准库操作符参考](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)。  
@@ -1320,6 +1327,6 @@ Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`
 > *声明修饰符列表* → [*声明修饰符*](#declaration-modifier) [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub>
 
 <a name="access-level-modifier"></a>
->访问级别修饰符 → **internal** | **internal ( set )**  
->访问级别修饰符 → **private** | **private ( set )**  
->访问级别修饰符 → **public** | **public ( set )**  
+> 访问级别修饰符 → **internal** | **internal ( set )**  
+> 访问级别修饰符 → **private** | **private ( set )**  
+> 访问级别修饰符 → **public** | **public ( set )**  

@@ -8,10 +8,14 @@
 > 2.0
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
-> 3.0 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
-> 3.0.1 review : 2016-11-09
+> 3.0
+> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
-> 3.1 校对: [SketchK](https://github.com/SketchK) 2017-04-08
+> 3.0.1
+> review : 2016-11-09
+
+> 3.1
+> 校对: [SketchK](https://github.com/SketchK) 2017-04-08
 
 > 4.0
 > 翻译：[rain2540](https://github.com/rain2540) 2017-09-21

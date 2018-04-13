@@ -250,9 +250,9 @@ if name == "world" {
 ("blue", false) < ("purple", true) // 错误，因为 < 不能比较布尔类型
 ```
 
->注意
->
->Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
+> 注意
+> 
+> Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
 
 <a name="ternary_conditional_operator"></a>
 ## 三元运算符（Ternary Conditional Operator）

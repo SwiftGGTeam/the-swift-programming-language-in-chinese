@@ -11,13 +11,13 @@
 > 2.1
 > 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，[overtrue](https://github.com/overtrue)
-> 
+
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK) 
-> 
+
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)，版本时间2016-09-13
-> 
+
 > 3.0.1, 2016-11-11，shanks
 
 > 4.0
@@ -95,7 +95,8 @@ var currentLoginAttempt = 0
 var x = 0.0, y = 0.0, z = 0.0
 ```
 
-> 注意：
+> 注意
+> 
 > 如果你的代码中有不需要改变的值，请使用 `let` 关键字将它声明为常量。只将需要改变的值声明为变量。
 
 <a name="type_annotations"></a>
@@ -850,4 +851,4 @@ precondition(index > 0, "Index must be greater than zero.")
 > 
 > 如果你使用unchecked模式（-Ounchecked）编译代码，先决条件将不会进行检查。编译器假设所有的先决条件总是为true（真），他将优化你的代码。然而，`fatalError(_:file:line:)`函数总是中断执行，无论你怎么进行优化设定。
 > 
->你能使用 `fatalError(_:file:line:)`函数在设计原型和早期开发阶段，这个阶段只有方法的声明，但是没有具体实现，你可以在方法体中写上fatalError("Unimplemented")作为具体实现。因为fatalError不会像断言和先决条件那样被优化掉，所以你可以确保当代码执行到一个没有被实现的方法时，程序会被中断。
+> 你能使用 `fatalError(_:file:line:)`函数在设计原型和早期开发阶段，这个阶段只有方法的声明，但是没有具体实现，你可以在方法体中写上fatalError("Unimplemented")作为具体实现。因为fatalError不会像断言和先决条件那样被优化掉，所以你可以确保当代码执行到一个没有被实现的方法时，程序会被中断。

@@ -4,12 +4,13 @@
 > 2.1
 > 翻译+校对：[lyojo](https://github.com/lyojo) [ray16897188](https://github.com/ray16897188) 2015-10-23
 > 校对：[shanks](http://codebuild.me) 2015-10-24
->
+
 > 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
->
+
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me) 2016-09-24
+
 > 3.0.1，shanks，2016-11-13
 
 > 4.0

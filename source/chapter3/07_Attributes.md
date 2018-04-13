@@ -213,7 +213,7 @@ convention 特性总是与下面的参数之一一起出现。
 `escaping`
 在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](http://wiki.jikexueyuan.com/project/swift/chapter2/07_Closures.html)。
 
->特性语法
+> 特性语法
 
 > *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>
 
