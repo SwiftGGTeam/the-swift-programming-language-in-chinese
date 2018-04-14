@@ -16,7 +16,7 @@
 <a name="#add-function"></a>
 #### 为 Dictionary 增加 objectsForKeys 函数
 
-在 Objective-C 中，```NSDictionary```有一个方法```-objectsForKeys:NoFoundMarker:```, 这个方法需要一个```NSArray```数组作为键值参数，然后返回一个包含相关值的数组。文档里写到："返回数组中的第 N 个值，和输入数组中的第 N 个值相对应"，那如果有某个键值在字典里不存在呢？于是就有了```notFoundMarker```作为返回提示。比如第三个键值没有找到，那么在返回数组中第三个值就是这个```notFoundMarker```，而不是字典中的第三个值，但是这个值只是用来提醒原字典中没有找到对应值，但在返回数组中该元素存在，且用```notFoundMarker```作为占位符，因为这个对象不能直接使用，所以在 Foundation 框架中有个专门的类处理这个情况：```NSNull```。
+在 Objective-C 中，```NSDictionary```有一个方法```-objectsForKeys:NoFoundMarker:```, 这个方法需要一个```NSArray```数组作为键值参数，然后返回一个包含相关值的数组。文档里写到：“返回数组中的第 N 个值，和输入数组中的第 N 个值相对应”，那如果有某个键值在字典里不存在呢？于是就有了```notFoundMarker```作为返回提示。比如第三个键值没有找到，那么在返回数组中第三个值就是这个```notFoundMarker```，而不是字典中的第三个值，但是这个值只是用来提醒原字典中没有找到对应值，但在返回数组中该元素存在，且用```notFoundMarker```作为占位符，因为这个对象不能直接使用，所以在 Foundation 框架中有个专门的类处理这个情况：```NSNull```。
 
 在 Swift 中，```Dictionary```类没有类似```objectsForKeys```的函数，为了说明问题，我们动手加一个，并且使其成为操作字典值的通用方法。我们可以用```extension```来实现：
 

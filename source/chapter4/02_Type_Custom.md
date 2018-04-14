@@ -124,7 +124,7 @@ protocol BooleanLiteralConvertible {
 var isSuccess:OCBool = true
 
 if isSuccess {
-    println( "老码请你吃火锅！")
+    println("老码请你吃火锅！")
 }
 ```
 
@@ -171,7 +171,7 @@ extension OCBool: LogicValue{
 var isSuccess:OCBool = true
 
 if isSuccess {
-    println( "老码请你吃火锅！")
+    println("老码请你吃火锅！")
 }
 ```
 
@@ -214,7 +214,7 @@ var mmResult: Bool = true
 var ocResult:OCBool = OCBool(mmResult)
 
 if ocResult {
-    println( "老码没钱，郭美美请你吃火锅！")
+    println("老码没钱，郭美美请你吃火锅！")
 }
 ```
 
@@ -295,7 +295,7 @@ isHasWife ^ isHasLover
 isHasWife = !isHasLover
 
 if (isHasMoney | isHasHealty) & isHasHealty{
-    println( "人生赢家，就像老码一样！")
+    println("人生赢家，就像老码一样！")
 }else
 {
     println("人生最苦的事事，人死了钱没花了，人生最苦的事是，人活着，钱没了！")
