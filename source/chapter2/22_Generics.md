@@ -103,7 +103,6 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
     a = b
     b = temporaryA
 }
-
 ```
 
 `swapTwoValues(_:_:)` 的函数主体和 `swapTwoInts(_:_:)` 函数是一样的，它们只在第一行有点不同，如下所示：

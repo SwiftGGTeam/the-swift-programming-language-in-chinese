@@ -223,6 +223,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
 // mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
 ```
+
 > 注意
 > 
 > 如果我们试着对索引越界的数据进行检索或者设置新值的操作，会引发一个运行期错误。我们可以使用索引值和数组的 `count` 属性进行比较来在使用某个索引之前先检验是否有效。除了当 `count` 等于 0 时（说明这是个空数组），最大索引值一直是 `count - 1`，因为数组都是零起索引。

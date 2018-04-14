@@ -174,7 +174,7 @@ private class SomePrivateClass {                // 显式 private 类
     func somePrivateMethod() {}                  // 隐式 private 类成员
 }
 
-```
+```swift
 <a name="tuple_types"></a>
 ### 元组类型
 

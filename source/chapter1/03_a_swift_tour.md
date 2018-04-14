@@ -86,6 +86,7 @@ let label = "The width is"
 let width = 94
 let widthLabel = label + String(width)
 ```
+
 > 练习
 > 
 > 删除最后一行中的 `String`，错误提示是什么？

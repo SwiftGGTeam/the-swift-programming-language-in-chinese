@@ -89,7 +89,6 @@ var t = dict.valuesForKeys(["3", "9"]).last
 
 var t = dict.valuesForKeys([]).last
 // 结果为：nil
-
 ```
 
 小伙伴们立马迷糊了，为什么会出现两层包含的可选类型呢？，特别对第二种情况的```Optional(nil)```，这是什么节奏？
@@ -128,7 +127,7 @@ extension Dictionary {
 }
 ```
 
-```
+```swift
 dict.valuesForKeys(["1", "5"], notFoundMarker: "Anonymous")
 ```
 

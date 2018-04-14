@@ -64,6 +64,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。命名型�
 let someTuple: (Double, Double) = (3.14159, 2.71828)
 func someFunction(a: Int) { /* ... */ }
 ```
+
 在第一个例子中，表达式 `someTuple` 的类型被指定为 `(Double, Double)`。在第二个例子中，函数 `someFunction` 的参数 `a` 的类型被指定为 `Int`。
 
 类型注解可以在类型之前包含一个类型特性的可选列表。
@@ -166,7 +167,7 @@ f = functionWithDifferentNumberOfArguments // 错误
 
 由于变量标签不是函数类型的一部分，你可以在写函数类型的时候省略它们。
 
-```
+```swift
 var operation: (lhs: Int, rhs: Int) -> Int      // 错误
 var operation: (_ lhs: Int, _ rhs: Int) -> Int  // 正确
 var operation: (Int, Int) -> Int                // 正确
@@ -180,7 +181,7 @@ var operation: (Int, Int) -> Int                // 正确
 ### 对非逃逸闭包的限制
 非逃逸闭包函数不能作为参数传递到另一个非逃逸闭包函数的参数。这样的限制可以让 Swift 在编译时就完成更多的内存访问冲突检查， 而不是在运行时。举个例子：
 
-```
+```swift
 let external: (Any) -> Void = { _ in () }
 func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
     first(first)    // 错误
@@ -193,6 +194,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
     external(first) // 正确
 }
 ```
+
 在上面代码里，`takesTwoFunctions(first:second:)` 的两个参数都是函数。 它们都没有标记为 `@escaping`, 因此它们都是非逃逸的。
 
 上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为第一个和第二个参数是非逃逸函数，它们不能够被当作变量被传递到另一个非闭包函数参数。与此相反, 标记“正确”的两个函数不回产生编译错误。这些函数调用不会违反限制， 因为 `外部(external)` 不是 `takesTwoFunctions(first:second:)` 里的一个参数。

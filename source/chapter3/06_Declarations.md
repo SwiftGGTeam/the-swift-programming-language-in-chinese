@@ -102,6 +102,7 @@ Swift 的源文件中的顶级代码 (top-level code) 由零个或多个语句�
 	语句
 }
 ```
+
 代码块中的“语句”包括声明、表达式和各种其他类型的语句，它们按照在源码中的出现顺序被依次执行。
 
 > 代码块语法
@@ -332,6 +333,7 @@ typealias 类型别名 = 现存类型
 
 当声明一个类型的别名后，可以在程序的任何地方使用“别名”来代替现有类型。现有类型可以是具有命名的类型或者混合类型。类型别名不产生新的类型，它只是使用别名来引用现有类型。
 类型别名声明可以通过泛型参数来给一个现有泛型类型提供名称。类型别名为现有类型的一部分或者全部泛型参数提供具体类型。例如:
+
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
  
@@ -339,12 +341,16 @@ typealias StringDictionary<Value> = Dictionary<String, Value>
 var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
 ```
+
 当一个类型别名带着泛型参数一起被声明时，这些参数的约束必须与现有参数的约束完全匹配。例如:
+
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 ```
+
 因为类型别名可以和现有类型相互交换使用，类型别名不可以引入额外的类型约束。
 在协议声明中，类型别名可以为那些经常使用的类型提供一个更短更方便的名称，例如:
+
 ```swift
 protocol Sequence {
     associatedtype Iterator: IteratorProtocol
@@ -355,6 +361,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
     // ...
 }
 ```
+
 假如没有类型别名，sum 函数将必须引用关联类型通过 T.Iterator.Element 的形式来替代 T.Element。
 
 另请参阅 [协议关联类型声明](#protocol_associated_type_declaration)。
@@ -1096,6 +1103,7 @@ extension 类型名称 where 要求 {
 	声明语句
 }
 ```
+
 扩展声明体可包含零个或多个声明语句。这些声明语句可以包括计算型属性、计算型类型属性、实例方法、类型方法、构造器、下标声明，甚至是类、结构体和枚举声明。扩展声明不能包含析构器、协议声明、存储型属性、属性观察器或其他扩展声明。关于扩展声明的详细讨论，以及各种扩展声明的例子，请参阅 [扩展](../chapter2/21_Extensions.md)。
 
 如果类型为类，结构体，或枚举类型，则扩展声明会扩展相应的类型。如果类型为协议类型，则扩展声明会扩展所有遵守这个协议的类型。在扩展的协议体中声明语句不能使用 `final` 标识符。
