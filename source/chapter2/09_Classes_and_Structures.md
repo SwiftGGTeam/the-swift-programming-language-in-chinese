@@ -67,7 +67,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 <a name="definition_syntax"></a>
 ### 定义语法
 
-类和结构体有着类似的定义方式。我们通过关键字`class`和`struct`来分别表示类和结构体，并在一对大括号中定义它们的具体内容：
+类和结构体有着类似的定义方式。我们通过关键字 `class` 和 `struct` 来分别表示类和结构体，并在一对大括号中定义它们的具体内容：
 
 ```swift
 class SomeClass {
@@ -80,7 +80,7 @@ struct SomeStructure {
 
 > 注意
 > 
-> 在你每次定义一个新类或者结构体的时候，实际上你是定义了一个新的 Swift 类型。因此请使用`UpperCamelCase`这种方式来命名（如`SomeClass`和`SomeStructure`等），以便符合标准 Swift 类型的大写命名风格（如`String`，`Int`和`Bool`）。相反的，请使用`lowerCamelCase`这种方式为属性和方法命名（如`framerate`和`incrementCount`），以便和类型名区分。
+> 在你每次定义一个新类或者结构体的时候，实际上你是定义了一个新的 Swift 类型。因此请使用 `UpperCamelCase` 这种方式来命名（如 `SomeClass` 和 `SomeStructure` 等），以便符合标准 Swift 类型的大写命名风格（如 `String`，`Int` 和 `Bool`）。相反的，请使用 `lowerCamelCase` 这种方式为属性和方法命名（如 `framerate` 和 `incrementCount`），以便和类型名区分。
 
 以下是定义结构体和定义类的示例：
 
@@ -97,14 +97,14 @@ class VideoMode {
 }
 ```
 
-在上面的示例中我们定义了一个名为`Resolution`的结构体，用来描述一个显示器的像素分辨率。这个结构体包含了两个名为`width`和`height`的存储属性。存储属性是被捆绑和存储在类或结构体中的常量或变量。当这两个属性被初始化为整数`0`的时候，它们会被推断为`Int`类型。
+在上面的示例中我们定义了一个名为 `Resolution` 的结构体，用来描述一个显示器的像素分辨率。这个结构体包含了两个名为 `width` 和 `height` 的存储属性。存储属性是被捆绑和存储在类或结构体中的常量或变量。当这两个属性被初始化为整数 `0` 的时候，它们会被推断为 `Int` 类型。
 
-在上面的示例中我们还定义了一个名为`VideoMode`的类，用来描述一个视频显示器的特定模式。这个类包含了四个变量存储属性。第一个是`分辨率`，它被初始化为一个新的`Resolution`结构体的实例，属性类型被推断为`Resolution`。新`VideoMode`实例同时还会初始化其它三个属性，它们分别是，初始值为`false`的`interlaced`，初始值为`0.0`的`frameRate`，以及值为可选`String`的`name`。`name`属性会被自动赋予一个默认值`nil`，意为“没有`name`值”，因为它是一个可选类型。
+在上面的示例中我们还定义了一个名为 `VideoMode` 的类，用来描述一个视频显示器的特定模式。这个类包含了四个变量存储属性。第一个是 `分辨率`，它被初始化为一个新的 `Resolution` 结构体的实例，属性类型被推断为 `Resolution`。新 `VideoMode` 实例同时还会初始化其它三个属性，它们分别是，初始值为 `false` 的 `interlaced`，初始值为 `0.0` 的 `frameRate`，以及值为可选 `String` 的 `name`。`name` 属性会被自动赋予一个默认值 `nil`，意为“没有 `name` 值”，因为它是一个可选类型。
 
 <a name="class_and_structure_instances"></a>
 ### 类和结构体实例
 
-`Resolution`结构体和`VideoMode`类的定义仅描述了什么是`Resolution`和`VideoMode`。它们并没有描述一个特定的分辨率（resolution）或者视频模式（video mode）。为了描述一个特定的分辨率或者视频模式，我们需要生成一个它们的实例。
+`Resolution` 结构体和 `VideoMode` 类的定义仅描述了什么是 `Resolution` 和 `VideoMode`。它们并没有描述一个特定的分辨率（resolution）或者视频模式（video mode）。为了描述一个特定的分辨率或者视频模式，我们需要生成一个它们的实例。
 
 生成结构体和类实例的语法非常相似：
 
@@ -113,7 +113,7 @@ let someResolution = Resolution()
 let someVideoMode = VideoMode()
 ```
 
-结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一对空括号，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](./14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
+结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一对空括号，如 `Resolution()` 或 `VideoMode()`。通过这种方式所创建的类或者结构体实例，其属性均会被初始化为默认值。[构造过程](./14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
 
 <a name="accessing_properties"></a>
 ### 属性访问
@@ -125,9 +125,9 @@ print("The width of someResolution is \(someResolution.width)")
 // 打印 "The width of someResolution is 0"
 ```
 
-在上面的例子中，`someResolution.width`引用`someResolution`的`width`属性，返回`width`的初始值`0`。
+在上面的例子中，`someResolution.width` 引用 `someResolution` 的 `width` 属性，返回 `width` 的初始值 `0`。
 
-你也可以访问子属性，如`VideoMode`中`Resolution`属性的`width`属性：
+你也可以访问子属性，如 `VideoMode` 中 `Resolution` 属性的 `width` 属性：
 
 ```swift
 print("The width of someVideoMode is \(someVideoMode.resolution.width)")
@@ -144,7 +144,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 
 > 注意
 > 
-> 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要重新为整个`resolution`属性设置新值。
+> 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了 `someVideoMode` 中 `resolution` 属性的 `width` 这个子属性，以上操作并不需要重新为整个 `resolution` 属性设置新值。
 
 <a name="memberwise_initializers_for_structure_types"></a>
 ### 结构体类型的成员逐一构造器
@@ -166,38 +166,38 @@ let vga = Resolution(width: 640, height: 480)
 
 在 Swift 中，所有的结构体和枚举类型都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。
 
-请看下面这个示例，其使用了前一个示例中的`Resolution`结构体：
+请看下面这个示例，其使用了前一个示例中的 `Resolution` 结构体：
 
 ```swift
 let hd = Resolution(width: 1920, height: 1080)
 var cinema = hd
 ```
 
-在以上示例中，声明了一个名为`hd`的常量，其值为一个初始化为全高清视频分辨率（`1920` 像素宽，`1080` 像素高）的`Resolution`实例。
+在以上示例中，声明了一个名为 `hd` 的常量，其值为一个初始化为全高清视频分辨率（`1920` 像素宽，`1080` 像素高）的 `Resolution` 实例。
 
-然后示例中又声明了一个名为`cinema`的变量，并将`hd`赋值给它。因为`Resolution`是一个结构体，所以`cinema`的值其实是`hd`的一个拷贝副本，而不是`hd`本身。尽管`hd`和`cinema`有着相同的宽（width）和高（height），但是在幕后它们是两个完全不同的实例。
+然后示例中又声明了一个名为 `cinema` 的变量，并将 `hd` 赋值给它。因为 `Resolution` 是一个结构体，所以 `cinema` 的值其实是 `hd` 的一个拷贝副本，而不是 `hd` 本身。尽管 `hd` 和 `cinema` 有着相同的宽（width）和高（height），但是在幕后它们是两个完全不同的实例。
 
-下面，为了符合数码影院放映的需求（`2048` 像素宽，`1080` 像素高），`cinema`的`width`属性需要作如下修改：
+下面，为了符合数码影院放映的需求（`2048` 像素宽，`1080` 像素高），`cinema` 的 `width` 属性需要作如下修改：
 
 ```swift
 cinema.width = 2048
 ```
 
-这里，将会显示`cinema`的`width`属性确已改为了`2048`：
+这里，将会显示 `cinema` 的 `width` 属性确已改为了 `2048`：
 
 ```swift
 print("cinema is now  \(cinema.width) pixels wide")
 // 打印 "cinema is now 2048 pixels wide"
 ```
 
-然而，初始的`hd`实例中`width`属性还是`1920`：
+然而，初始的 `hd` 实例中 `width` 属性还是 `1920`：
 
 ```swift
 print("hd is still \(hd.width) pixels wide")
 // 打印 "hd is still 1920 pixels wide"
 ```
 
-在将`hd`赋予给`cinema`的时候，实际上是将`hd`中所存储的值进行拷贝，然后将拷贝的数据存储到新的`cinema`实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将`cinema`的`width`修改为`2048`并不会影响`hd`中的`width`的值。
+在将 `hd` 赋予给 `cinema` 的时候，实际上是将 `hd` 中所存储的值进行拷贝，然后将拷贝的数据存储到新的 `cinema` 实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将 `cinema` 的 `width` 修改为 `2048` 并不会影响 `hd` 中的 `width` 的值。
 
 枚举也遵循相同的行为准则：
 
@@ -214,14 +214,14 @@ if rememberedDirection == .West {
 // 打印 "The remembered direction is still .West"
 ```
 
-上例中`rememberedDirection`被赋予了`currentDirection`的值，实际上它被赋予的是值的一个拷贝。赋值过程结束后再修改`currentDirection`的值并不影响`rememberedDirection`所储存的原始值的拷贝。
+上例中 `rememberedDirection` 被赋予了 `currentDirection` 的值，实际上它被赋予的是值的一个拷贝。赋值过程结束后再修改 `currentDirection` 的值并不影响 `rememberedDirection` 所储存的原始值的拷贝。
 
 <a name="classes_are_reference_types"></a>
 ## 类是引用类型
 
 与值类型不同，*引用类型*在被赋予到一个变量、常量或者被传递到一个函数时，其值不会被拷贝。因此，引用的是已存在的实例本身而不是其拷贝。
 
-请看下面这个示例，其使用了之前定义的`VideoMode`类：
+请看下面这个示例，其使用了之前定义的 `VideoMode` 类：
 
 ```swift
 let tenEighty = VideoMode()
@@ -231,25 +231,25 @@ tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
 
-以上示例中，声明了一个名为`tenEighty`的常量，其引用了一个`VideoMode`类的新实例。在之前的示例中，这个视频模式（video mode）被赋予了HD分辨率（`1920`*`1080`）的一个拷贝（即`hd`实例）。同时设置为`interlaced`，命名为`“1080i”`。最后，其帧率是`25.0`帧每秒。
+以上示例中，声明了一个名为 `tenEighty` 的常量，其引用了一个 `VideoMode` 类的新实例。在之前的示例中，这个视频模式（video mode）被赋予了 HD 分辨率（`1920`*`1080`）的一个拷贝（即 `hd` 实例）。同时设置为 `interlaced`，命名为 `“1080i”`。最后，其帧率是 `25.0` 帧每秒。
 
-然后，`tenEighty`被赋予名为`alsoTenEighty`的新常量，同时对`alsoTenEighty`的帧率进行修改：
+然后，`tenEighty` 被赋予名为 `alsoTenEighty` 的新常量，同时对 `alsoTenEighty` 的帧率进行修改：
 
 ```swift
 let alsoTenEighty = tenEighty
 alsoTenEighty.frameRate = 30.0
 ```
 
-因为类是引用类型，所以`tenEight`和`alsoTenEight`实际上引用的是相同的`VideoMode`实例。换句话说，它们是同一个实例的两种叫法。
+因为类是引用类型，所以 `tenEight` 和 `alsoTenEight` 实际上引用的是相同的 `VideoMode` 实例。换句话说，它们是同一个实例的两种叫法。
 
-下面，通过查看`tenEighty`的`frameRate`属性，我们会发现它正确的显示了所引用的`VideoMode`实例的新帧率，其值为`30.0`：
+下面，通过查看 `tenEighty` 的 `frameRate` 属性，我们会发现它正确的显示了所引用的 `VideoMode` 实例的新帧率，其值为 `30.0`：
 
 ```swift
 print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 // 打印 "The frameRate property of theEighty is now 30.0"
 ```
 
-需要注意的是`tenEighty`和`alsoTenEighty`被声明为常量而不是变量。然而你依然可以改变`tenEighty.frameRate`和`alsoTenEighty.frameRate`，因为`tenEighty`和`alsoTenEighty`这两个常量的值并未改变。它们并不“存储”这个`VideoMode`实例，而仅仅是对`VideoMode`实例的引用。所以，改变的是被引用的`VideoMode`的`frameRate`属性，而不是引用`VideoMode`的常量的值。
+需要注意的是 `tenEighty` 和 `alsoTenEighty` 被声明为常量而不是变量。然而你依然可以改变 `tenEighty.frameRate` 和 `alsoTenEighty.frameRate`，因为 `tenEighty` 和 `alsoTenEighty` 这两个常量的值并未改变。它们并不“存储”这个 `VideoMode` 实例，而仅仅是对 `VideoMode` 实例的引用。所以，改变的是被引用的 `VideoMode` 的 `frameRate` 属性，而不是引用 `VideoMode` 的常量的值。
 
 <a name="identity_operators"></a>
 ### 恒等运算符
@@ -298,18 +298,18 @@ if tenEighty === alsoTenEighty {
 
 举例来说，以下情境中适合使用结构体：
 
-* 几何形状的大小，封装一个`width`属性和`height`属性，两者均为`Double`类型。
-* 一定范围内的路径，封装一个`start`属性和`length`属性，两者均为`Int`类型。
-* 三维坐标系内一点，封装`x`，`y`和`z`属性，三者均为`Double`类型。
+* 几何形状的大小，封装一个 `width` 属性和 `height` 属性，两者均为 `Double` 类型。
+* 一定范围内的路径，封装一个 `start` 属性和 `length` 属性，两者均为 `Int` 类型。
+* 三维坐标系内一点，封装 `x`，`y` 和 `z` 属性，三者均为 `Double` 类型。
 
 在所有其它案例中，定义一个类，生成一个它的实例，并通过引用来管理和传递。实际中，这意味着绝大部分的自定义数据构造都应该是类，而非结构体。
 
 <a name="assignment_and_copy_behavior_for_strings_arrays_and_dictionaries"></a>
 ## 字符串、数组、和字典类型的赋值与复制行为
 
-Swift 中，许多基本类型，诸如`String`，`Array`和`Dictionary`类型均以结构体的形式实现。这意味着被赋值给新的常量或变量，或者被传入函数或方法中时，它们的值会被拷贝。
+Swift 中，许多基本类型，诸如 `String`，`Array` 和 `Dictionary` 类型均以结构体的形式实现。这意味着被赋值给新的常量或变量，或者被传入函数或方法中时，它们的值会被拷贝。
 
-Objective-C 中`NSString`，`NSArray`和`NSDictionary`类型均以类的形式实现，而并非结构体。它们在被赋值或者被传入函数或方法时，不会发生值拷贝，而是传递现有实例的引用。
+Objective-C 中 `NSString`，`NSArray` 和 `NSDictionary` 类型均以类的形式实现，而并非结构体。它们在被赋值或者被传入函数或方法时，不会发生值拷贝，而是传递现有实例的引用。
 
 > 注意
 > 

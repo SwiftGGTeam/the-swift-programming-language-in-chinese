@@ -68,7 +68,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // 打印 “someInt is now 107, and anotherInt is now 3”
 ```
 
-诚然，`swapTwoInts(_:_:)` 函数挺有用，但是它只能交换 `Int` 值，如果你想要交换两个 `String` 值或者 `Double`值，就不得不写更多的函数，例如 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)`，如下所示：
+诚然，`swapTwoInts(_:_:)` 函数挺有用，但是它只能交换 `Int` 值，如果你想要交换两个 `String` 值或者 `Double` 值，就不得不写更多的函数，例如 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)`，如下所示：
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
@@ -354,7 +354,7 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
 }
 ```
 
-`findIndex(of:in:)` 唯一的类型参数写做 `T: Equatable`，也就意味着“任何符合 `Equatable` 协议的类型 `T` ”。
+`findIndex(of:in:)` 唯一的类型参数写做 `T: Equatable`，也就意味着“任何符合 `Equatable` 协议的类型 `T`”。
 
 `findIndex(of:in:)` 函数现在可以成功编译了，并且可以作用于任何符合 `Equatable` 的类型，如 `Double` 或 `String`：
 
@@ -373,14 +373,14 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 <a name="associated_types_in_action"></a>
 ### 关联类型实践
 
-下面例子定义了一个 `Container` 协议，该协议定义了一个关联类型 `ItemType`：
+下面例子定义了一个 `Container` 协议，该协议定义了一个关联类型 `Item`：
 
 ```swift
 protocol Container {
-    associatedtype ItemType
-    mutating func append(_ item: ItemType)
+    associatedtype Item
+    mutating func append(_ item: Item)
     var count: Int { get }
-    subscript(i: Int) -> ItemType { get }
+    subscript(i: Int) -> Item { get }
 }
 ```
 
@@ -396,7 +396,7 @@ protocol Container {
 
 为了定义这三个条件，`Container` 协议需要在不知道容器中元素的具体类型的情况下引用这种类型。`Container` 协议需要指定任何通过 `append(_:)` 方法添加到容器中的元素和容器中的元素是相同类型，并且通过容器下标返回的元素的类型也是这种类型。
 
-为了达到这个目的，`Container` 协议声明了一个关联类型 `ItemType`，写作 `associatedtype ItemType`。这个协议无法定义 `ItemType` 是什么类型的别名，这个信息将留给遵从协议的类型来提供。尽管如此，`ItemType` 别名提供了一种方式来引用 `Container` 中元素的类型，并将之用于 `append(_:)` 方法和下标，从而保证任何 `Container` 的行为都能够正如预期地被执行。
+为了达到这个目的，`Container` 协议声明了一个关联类型 `Item`，写作 `associatedtype Item`。这个协议无法定义 `Item` 是什么类型的别名，这个信息将留给遵从协议的类型来提供。尽管如此，`Item` 别名提供了一种方式来引用 `Container` 中元素的类型，并将之用于 `append(_:)` 方法和下标，从而保证任何 `Container` 的行为都能够正如预期地被执行。
 
 下面是先前的非泛型的 `IntStack` 类型，这一版本采纳并符合了 `Container` 协议：
 
@@ -411,7 +411,7 @@ struct IntStack: Container {
         return items.removeLast()
     }
     // Container 协议的实现部分
-    typealias ItemType = Int
+    typealias Item = Int
     mutating func append(_ item: Int) {
         self.push(item)
     }
@@ -426,9 +426,9 @@ struct IntStack: Container {
 
 `IntStack` 结构体实现了 `Container` 协议的三个要求，其原有功能也不会和这些要求相冲突。
 
-此外，`IntStack` 在实现 `Container` 的要求时，指定 `ItemType` 为 `Int` 类型，即 `typealias ItemType = Int`，从而将 `Container` 协议中抽象的 `ItemType` 类型转换为具体的 `Int` 类型。
+此外，`IntStack` 在实现 `Container` 的要求时，指定 `Item` 为 `Int` 类型，即 `typealias Item = Int`，从而将 `Container` 协议中抽象的 `Item` 类型转换为具体的 `Int` 类型。
 
-由于 Swift 的类型推断，你实际上不用在 `IntStack` 的定义中声明 `ItemType` 为 `Int`。因为 `IntStack` 符合 `Container` 协议的所有要求，Swift 只需通过 `append(_:)` 方法的 `item` 参数类型和下标返回值的类型，就可以推断出 `ItemType` 的具体类型。事实上，如果你在上面的代码中删除了 `typealias ItemType = Int` 这一行，一切仍旧可以正常工作，因为 Swift 清楚地知道 `ItemType` 应该是哪种类型。
+由于 Swift 的类型推断，你实际上不用在 `IntStack` 的定义中声明 `Item` 为 `Int`。因为 `IntStack` 符合 `Container` 协议的所有要求，Swift 只需通过 `append(_:)` 方法的 `item` 参数类型和下标返回值的类型，就可以推断出 `Item` 的具体类型。事实上，如果你在上面的代码中删除了 `typealias Item = Int` 这一行，一切仍旧可以正常工作，因为 Swift 清楚地知道 `Item` 应该是哪种类型。
 
 你也可以让泛型 `Stack` 结构体遵从 `Container` 协议：
 
@@ -455,7 +455,7 @@ struct Stack<Element>: Container {
 }
 ```
 
-这一次，占位类型参数 `Element` 被用作 `append(_:)` 方法的 `item` 参数和下标的返回类型。Swift 可以据此推断出 `Element` 的类型即是 `ItemType` 的类型。
+这一次，占位类型参数 `Element` 被用作 `append(_:)` 方法的 `item` 参数和下标的返回类型。Swift 可以据此推断出 `Element` 的类型即是 `Item` 的类型。
 
 <a name="extending_an_existing_type_to_specify_an_associated_type"></a>
 ### 通过扩展一个存在的类型来指定关联类型
@@ -468,7 +468,7 @@ Swift 的 `Array` 类型已经提供 `append(_:)` 方法，一个 `count` 属性
 extension Array: Container {}
 ```
 
-如同上面的泛型 `Stack` 结构体一样，`Array` 的 `append(_:)` 方法和下标确保了 Swift 可以推断出 `ItemType` 的类型。定义了这个扩展后，你可以将任意 `Array` 当作 `Container` 来使用。
+如同上面的泛型 `Stack` 结构体一样，`Array` 的 `append(_:)` 方法和下标确保了 Swift 可以推断出 `Item` 的类型。定义了这个扩展后，你可以将任意 `Array` 当作 `Container` 来使用。
 
 <a name="using_type_annotations_to_constrain_an_associated_type"></a>
 ### 给关联类型添加约束
@@ -489,7 +489,7 @@ protocol Container {
 <a name="Using_a_Protocol_in_Its_Associated_Type’s_Constraints"></a>
 ### 在关联类型约束里使用协议
 
-协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个 `suffix(_:)` 方法。 `suffix(_:)` 方法返回容器中从后往前给定数量的元素，把它们存储在一个 `Suffix` 类型的实例里。
+协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个 `suffix(_:)` 方法。`suffix(_:)` 方法返回容器中从后往前给定数量的元素，把它们存储在一个 `Suffix` 类型的实例里。
 
 ```swift
 protocol SuffixableContainer: Container {
@@ -498,7 +498,7 @@ protocol SuffixableContainer: Container {
 }
 ```
 
-在这个协议里， `Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。 `Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。 `Item` 的约束是一个 `wher`e 分句，它在下面[带有泛型 Where 分句的扩展](#extensions_with_a_generic_where_clause)中有讨论。
+在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `wher`e 分句，它在下面[带有泛型 Where 分句的扩展](#extensions_with_a_generic_where_clause)中有讨论。
 
 这里有一个来自[闭包的循环强引用](./23_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)的 Stack 类型的扩展，它添加了对 `SuffixableContainer` 协议的遵循：
 
@@ -521,7 +521,7 @@ let suffix = stackOfInts.suffix(2)
 // suffix contains 20 and 30
 ```
 
-在上面的例子中， `Suffix` 是 `Stack` 的关联类型，也就是 `Stack` ，所以 `Stack` 的后缀运算返回另一个 `Stack` 。另外，遵循 `SuffixableContainer` 的类型可以拥有一个与它自己不同的 `Suffix` 类型——也就是说后缀运算可以返回不同的类型。比如说，这里有一个非泛型 `IntStack` 类型的扩展，它添加了 `SuffixableContainer` 遵循，使用 `Stack<Int>` 作为它的后缀类型而不是 `IntStack` ：
+在上面的例子中，`Suffix` 是 `Stack` 的关联类型，也就是 `Stack` ，所以 `Stack` 的后缀运算返回另一个 `Stack` 。另外，遵循 `SuffixableContainer` 的类型可以拥有一个与它自己不同的 `Suffix` 类型——也就是说后缀运算可以返回不同的类型。比如说，这里有一个非泛型 `IntStack` 类型的扩展，它添加了 `SuffixableContainer` 遵循，使用 `Stack<Int>` 作为它的后缀类型而不是 `IntStack`：
 
 ```swift
 extension IntStack: SuffixableContainer {
@@ -551,7 +551,7 @@ extension IntStack: SuffixableContainer {
 ```swift
 func allItemsMatch<C1: Container, C2: Container>
     (_ someContainer: C1, _ anotherContainer: C2) -> Bool
-    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
+    where C1.Item == C2.Item, C1.Item: Equatable {
         
         // 检查两个容器含有相同数量的元素
         if someContainer.count != anotherContainer.count {
@@ -576,8 +576,8 @@ func allItemsMatch<C1: Container, C2: Container>
 
 - `C1` 必须符合 `Container` 协议（写作 `C1: Container`）。
 - `C2` 必须符合 `Container` 协议（写作 `C2: Container`）。
-- `C1` 的 `ItemType` 必须和 `C2` 的 `ItemType`类型相同（写作 `C1.ItemType == C2.ItemType`）。
-- `C1` 的 `ItemType` 必须符合 `Equatable` 协议（写作 `C1.ItemType: Equatable`）。
+- `C1` 的 `Item` 必须和 `C2` 的 `Item` 类型相同（写作 `C1.Item == C2.Item`）。
+- `C1` 的 `Item` 必须符合 `Equatable` 协议（写作 `C1.Item: Equatable`）。
 
 第三个和第四个要求被定义为一个 `where` 子句，写在关键字 `where` 后面，它们也是泛型函数类型参数列表的一部分。
 

@@ -18,19 +18,20 @@
 > 3.0
 > 翻译: [crayygy](https://github.com/crayygy) 2016-09-12
 > 校对: [shanks](http://codebuild.me) 2016-09-27
+
 > 3.0.1，shanks，2016-11-12
 
 > 4.0
 > 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
 > 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)             
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
-本页包含内容：     
-- [函数定义与调用](#Defining_and_Calling_Functions)     
-- [函数参数与返回值](#Function_Parameters_and_Return_Values)      
-- [函数参数标签和参数名称](#Function_Argument_Labels_and_Parameter_Names)     
-- [函数类型](#Function_Types)    
+本页包含内容：
+- [函数定义与调用](#Defining_and_Calling_Functions)
+- [函数参数与返回值](#Function_Parameters_and_Return_Values)
+- [函数参数标签和参数名称](#Function_Argument_Labels_and_Parameter_Names)
+- [函数类型](#Function_Types)
 - [嵌套函数](#Nested_Functions)
 
 *函数*是一段完成特定任务的独立代码片段。你可以通过给函数命名来标识某个函数的功能，这个名字可以被用来在需要的时候"调用"这个函数来完成它的任务。
@@ -46,7 +47,7 @@ Swift 统一的函数语法非常的灵活，可以用来表示任何函数，�
 
 每个函数有个*函数名*，用来描述函数执行的任务。要使用一个函数时，用函数名来“调用”这个函数，并传给它匹配的输入值（称作 *实参* ）。函数的实参必须与函数参数表里参数的顺序一致。
 
-下面例子中的函数的名字是`greet(person:)`，之所以叫这个名字，是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `person` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
+下面例子中的函数的名字是 `greet(person:)`，之所以叫这个名字，是因为这个函数用一个人的名字当做输入，并返回向这个人问候的语句。为了完成这个任务，你需要定义一个输入参数——一个叫做 `person` 的 `String` 值，和一个包含给这个人问候语的 `String` 类型的返回值：
 
 ```swift
 func greet(person: String) -> String {
@@ -66,15 +67,15 @@ print(greet(person: "Brian"))
 // 打印 "Hello, Brian!"
 ```
 
-调用 `greet(person:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet(person: "Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以`greet ` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
+调用 `greet(person:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet(person: "Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以 `greet` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
 
->注意
->
->`print(_:separator:terminator:)` 函数的第一个参数并没有设置一个标签，而其他的参数因为已经有了默认值，因此是可选的。关于这些函数语法上的变化详见下方关于 函数参数标签和参数名 以及 默认参数值。
+> 注意
+> 
+> `print(_:separator:terminator:)` 函数的第一个参数并没有设置一个标签，而其他的参数因为已经有了默认值，因此是可选的。关于这些函数语法上的变化详见下方关于 函数参数标签和参数名 以及 默认参数值。
 
 在 `greet(person:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，同时，把对 `personName` 的问候消息赋值给了 `greeting` 。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数结束它的执行并返回 `greeting` 的当前值。
 
-你可以用不同的输入值多次调用 `greet(person:)`。上面的例子展示的是用`"Anna"`和`"Brian"`调用的结果，该函数分别返回了不同的结果。
+你可以用不同的输入值多次调用 `greet(person:)`。上面的例子展示的是用 `"Anna"` 和 `"Brian"` 调用的结果，该函数分别返回了不同的结果。
 
 为了简化这个函数的定义，可以将问候消息的创建和返回写成一句：
 
@@ -125,12 +126,12 @@ print(greet(person: "Tim", alreadyGreeted: true))
 // 打印 "Hello again, Tim!"
 ```
 
-你可以通过在括号内使用逗号分隔来传递一个`String`参数值和一个标识为`alreadyGreeted`的`Bool`值，来调用`greet(person:alreadyGreeted:)`函数。注意这个函数和上面`greet(person:)`是不同的。虽然它们都有着同样的名字`greet`，但是`greet(person:alreadyGreeted:)`函数需要两个参数，而`greet(person:)`只需要一个参数。
+你可以通过在括号内使用逗号分隔来传递一个 `String` 参数值和一个标识为 `alreadyGreeted` 的 `Bool` 值，来调用 `greet(person:alreadyGreeted:)` 函数。注意这个函数和上面 `greet(person:)` 是不同的。虽然它们都有着同样的名字 `greet`，但是 `greet(person:alreadyGreeted:)` 函数需要两个参数，而 `greet(person:)` 只需要一个参数。
 
 <a name="functions_without_return_values"></a>
 ### 无返回值函数
 
-函数可以没有返回值。下面是 `greet(person:)` 函数的另一个版本，这个函数直接打印一个`String`值，而不是返回它：
+函数可以没有返回值。下面是 `greet(person:)` 函数的另一个版本，这个函数直接打印一个 `String` 值，而不是返回它：
 
 ```swift
 func greet(person: String) {
@@ -142,9 +143,9 @@ greet(person: "Dave")
 
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
 
->注意
->
->严格上来说，虽然没有返回值被定义，`greet(person:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的`Void`值。它其实是一个空的元组，没有任何元素，可以写成()。
+> 注意
+> 
+> 严格上来说，虽然没有返回值被定义，`greet(person:)` 函数依然返回了值。没有定义返回类型的函数会返回一个特殊的 `Void` 值。它其实是一个空的元组，没有任何元素，可以写成()。
 
 被调用时，一个函数的返回值可以被忽略：
 
@@ -162,10 +163,11 @@ printWithoutCounting(string: "hello, world")
 // 打印 "hello, world" 但是没有返回任何值
 ```
 
-第一个函数 `printAndCount(string:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting(string:)`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
+第一个函数 `printAndCount(string:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting(string:)` 调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
->注意:
-返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误。
+> 注意
+> 
+> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误。
 
 <a name="functions_with_multiple_return_values"></a>
 ### 多重返回值函数
@@ -206,11 +208,11 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 <a name="optional_tuple_return_types"></a>
 ### 可选元组返回类型
 
-如果函数返回的元组类型有可能整个元组都“没有值”，你可以使用*可选的* 元组返回类型反映整个元组可以是`nil`的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如 `(Int, Int)?` 或 `(String, Int, Bool)?`
+如果函数返回的元组类型有可能整个元组都“没有值”，你可以使用*可选的* 元组返回类型反映整个元组可以是 `nil` 的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如 `(Int, Int)?` 或 `(String, Int, Bool)?`
 
->注意
->
->可选元组类型如 `(Int, Int)?` 与元组包含可选类型如 `(Int?, Int?)` 是不同的。可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
+> 注意
+> 
+> 可选元组类型如 `(Int, Int)?` 与元组包含可选类型如 `(Int?, Int?)` 是不同的。可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
 
 前面的 `minMax(array:)` 函数返回了一个包含两个 `Int` 值的元组。但是函数不会对传入的数组执行任何安全检查，如果 `array` 参数是一个空数组，如上定义的 `minMax(array:)` 在试图访问 `array[0]` 时会触发一个运行时错误。
 
@@ -330,22 +332,22 @@ arithmeticMean(3, 8.25, 18.75)
 // 返回 10.0, 是这 3 个数的平均数。
 ```
 
->注意
->
->一个函数最多只能拥有一个可变参数。
+> 注意
+> 
+> 一个函数最多只能拥有一个可变参数。
 
 <a name="in_out_parameters"></a>
 ### 输入输出参数
 
 函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为*输入输出参数（In-Out Parameters）*。
 
-定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个`输入输出参数`有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看[输入输出参数](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID545)一节。
+定义一个输入输出参数时，在参数定义前加 `inout` 关键字。一个 `输入输出参数`有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看[输入输出参数](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID545)一节。
 
 你只能传递变量给输入输出参数。你不能传入常量或者字面量，因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数名前加 `&` 符，表示这个值可以被函数修改。
 
->注意
->
->输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。
+> 注意
+> 
+> 输入输出参数不能有默认值，而且可变参数不能用 `inout` 标记。
 
 下例中，`swapTwoInts(_:_:)` 函数有两个分别叫做 `a` 和 `b` 的输入输出参数：
 
@@ -371,9 +373,9 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 从上面这个例子中，我们可以看到 `someInt` 和 `anotherInt` 的原始值在 `swapTwoInts(_:_:)` 函数中被修改，尽管它们的定义在函数体外。
 
->注意
->
->输入输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
+> 注意
+> 
+> 输入输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
 
 <a name="Function_Types"></a>
 ## 函数类型
@@ -393,7 +395,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 
 这个例子中定义了两个简单的数学函数：`addTwoInts` 和 `multiplyTwoInts`。这两个函数都接受两个 `Int` 值， 返回一个 `Int` 值。
 
-这两个函数的类型是 `(Int, Int) -> Int`，可以解读为:     
+这两个函数的类型是 `(Int, Int) -> Int`，可以解读为:
 
 “这个函数类型有两个 `Int` 型的参数并返回一个 `Int` 型的值”。
 
@@ -470,7 +472,7 @@ printMathResult(addTwoInts, 3, 5)
 
 你可以用函数类型作为另一个函数的返回类型。你需要做的是在返回箭头（->）后写一个完整的函数类型。
 
-下面的这个例子中定义了两个简单函数，分别是 `stepForward(_:)` 和 `stepBackward(_:)`。`stepForward(_:)`函数返回一个比输入值大 `1` 的值。`stepBackward(_:)` 函数返回一个比输入值小 `1` 的值。这两个函数的类型都是 `(Int) -> Int`：
+下面的这个例子中定义了两个简单函数，分别是 `stepForward(_:)` 和 `stepBackward(_:)`。`stepForward(_:)` 函数返回一个比输入值大 `1` 的值。`stepBackward(_:)` 函数返回一个比输入值小 `1` 的值。这两个函数的类型都是 `(Int) -> Int`：
 
 ```swift
 func stepForward(_ input: Int) -> Int {
@@ -499,7 +501,7 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 
 上面这个例子中计算出从 `currentValue` 逐渐接近到0是需要向正数走还是向负数走。`currentValue` 的初始值是 `3`，这意味着 `currentValue > 0` 为真（true），这将使得 `chooseStepFunction(_:)` 返回 `stepBackward(_:)` 函数。一个指向返回的函数的引用保存在了 `moveNearerToZero` 常量中。
 
-现在，`moveNearerToZero`指向了正确的函数，它可以被用来数到零：
+现在，`moveNearerToZero` 指向了正确的函数，它可以被用来数到零：
 
 ```swift
 print("Counting to zero:")

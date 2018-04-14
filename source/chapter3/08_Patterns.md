@@ -30,16 +30,16 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 
 第二类模式用于全模式匹配，这种情况下你试图匹配的值在运行时可能不存在。此类模式包括枚举用例模式、可选模式、表达式模式和类型转换模式。你在 `switch` 语句的 `case` 标签中，`do` 语句的 `catch` 子句中，或者在 `if`、`while`、`guard` 和 `for-in` 语句的 `case` 条件句中使用这类模式。
 
-> 模式语法  
+> 模式语法
 <a name="pattern"></a>
-> *模式* → [*通配符模式*](#wildcard_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>  
-> *模式* → [*标识符模式*](#identifier_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>  
-> *模式* → [*值绑定模式*](#value-binding-pattern)  
-> *模式* → [*元组模式*](#tuple-pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>  
-> *模式* → [*枚举用例模式*](#enum-case-pattern)  
-> *模式* → [*可选模式*](#optional-pattern)  
-> *模式* → [*类型转换模式*](#type-casting-pattern)  
-> *模式* → [*表达式模式*](#expression-pattern)  
+> *模式* → [*通配符模式*](#wildcard_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [*标识符模式*](#identifier_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [*值绑定模式*](#value-binding-pattern)
+> *模式* → [*元组模式*](#tuple-pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [*枚举用例模式*](#enum-case-pattern)
+> *模式* → [*可选模式*](#optional-pattern)
+> *模式* → [*类型转换模式*](#type-casting-pattern)
+> *模式* → [*表达式模式*](#expression-pattern)
 
 <a name="wildcard_pattern"></a>
 ## 通配符模式（Wildcard Pattern）
@@ -52,9 +52,9 @@ for _ in 1...3 {
 }
 ```
 
-> 通配符模式语法  
+> 通配符模式语法
 <a name="wildcard-pattern"></a>
-> *通配符模式* → **_**  
+> *通配符模式* → **_**
 
 <a name="identifier_pattern"></a>
 ## 标识符模式（Identifier Pattern）
@@ -69,9 +69,9 @@ let someValue = 42
 
 如果一个变量或常量声明的左边是一个标识符模式，那么这个标识符模式是值绑定模式的子模式。
 
-> 标识符模式语法  
+> 标识符模式语法
 <a name="identifier-pattern"></a>
-> *标识符模式* → [*标识符*](02_Lexical_Structure.md#identifier)  
+> *标识符模式* → [*标识符*](02_Lexical_Structure.md#identifier)
 
 <a name="value-binding_pattern"></a>
 ## 值绑定模式（Value-Binding Pattern）
@@ -92,9 +92,9 @@ case let (x, y):
 
 在上面这个例子中，`let` 会分配到元组模式 `(x, y)` 中的各个标识符模式。因此，`switch` 语句中 `case let (x, y):` 和 `case (let x, let y):` 的匹配效果是一样的。
 
-> 值绑定模式语法  
+> 值绑定模式语法
 <a name="value-binding-pattern"></a>
-> *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)  
+> *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)
 
 <a name="tuple_pattern"></a>
 ## 元组模式
@@ -121,13 +121,13 @@ let (a) = 2      // a: Int = 2
 let (a): Int = 2 // a: Int = 2
 ```
 
-> 元组模式语法  
+> 元组模式语法
 <a name="tuple-pattern"></a>
-> *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**  
+> *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**
 <a name="tuple-pattern-element-list"></a>
-> *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element) **,** [*元组模式元素列表*](#tuple-pattern-element-list)  
+> *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element) **,** [*元组模式元素列表*](#tuple-pattern-element-list)
 <a name="tuple-pattern-element"></a>
-> *元组模式元素* → [*模式*](#pattern)  
+> *元组模式元素* → [*模式*](#pattern)
 
 <a name="enumeration_case_pattern"></a>
 ## 枚举用例模式（Enumeration Case Pattern）
@@ -136,9 +136,9 @@ let (a): Int = 2 // a: Int = 2
 
 如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../chapter2/08_Enumerations.md#associated_values)。
 
-> 枚举用例模式语法  
+> 枚举用例模式语法
 <a name="enum-case-pattern"></a>
-> *枚举用例模式* → [*类型标识*](03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](05_Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>  
+> *枚举用例模式* → [*类型标识*](03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](05_Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
 
 <a name="optional_pattern"></a>
 ## 可选模式（Optional Pattern）
@@ -173,7 +173,7 @@ for case let number? in arrayOfOptinalInts {
 // Found a 5
 ```
 
-> 可选模式语法  
+> 可选模式语法
 <a name="optional-pattern"></a>
 > *可选模式* → [*标识符模式*](03_Types.md#type-identifier) **?**
 
@@ -182,7 +182,7 @@ for case let number? in arrayOfOptinalInts {
 
 有两种类型转换模式，`is` 模式和 `as` 模式。`is` 模式只出现在 `switch` 语句中的 `case` 标签中。`is` 模式和 `as` 模式形式如下：
 
-> is `类型`  
+> is `类型`
 > `模式` as `类型`
 
 `is` 模式仅当一个值的类型在运行时和 `is` 模式右边的指定类型一致，或者是其子类的情况下，才会匹配这个值。`is` 模式和 `is` 运算符有相似表现，它们都进行类型转换，但是 `is` 模式没有返回类型。
@@ -191,13 +191,13 @@ for case let number? in arrayOfOptinalInts {
 
 关于使用 `switch` 语句配合 `is` 模式和 `as` 模式来匹配值的例子，请参阅 [Any 和 AnyObject 的类型转换](../chapter2/19_Type_Casting.md#type_casting_for_any_and_anyobject)。
 
-> 类型转换模式语法  
+> 类型转换模式语法
 <a name="type-casting-pattern"></a>
-> *类型转换模式* → [*is模式*](#is-pattern) | [*as模式*](#as-pattern)  
+> *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)
 <a name="is-pattern"></a>
-> *is模式* → **is** [*类型*](03_Types.md#type)  
+> *is 模式* → **is** [*类型*](03_Types.md#type)
 <a name="as-pattern"></a>
-> *as模式* → [*模式*](#pattern) **as** [*类型*](03_Types.md#type)  
+> *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.md#type)
 
 <a name="expression_pattern"></a>
 ## 表达式模式（Expression Pattern）
@@ -236,6 +236,6 @@ default:
 // 打印 “The point is at (1, 2).”
 ```
 
-> 表达式模式语法  
+> 表达式模式语法
 <a name="expression-pattern"></a>
-> *表达式模式* → [*表达式*](04_Expressions.md#expression)  
+> *表达式模式* → [*表达式*](04_Expressions.md#expression)

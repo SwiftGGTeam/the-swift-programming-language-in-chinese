@@ -7,11 +7,11 @@
 
 > 2.0
 > 翻译+校对：[mmoaay](https://github.com/mmoaay)
->
+
 > 2.1
 > 翻译：[Prayer](https://github.com/futantan)
 > 校对：[shanks](http://codebuild.me)，2015-11-01
->
+
 > 2.2 
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
 
@@ -133,7 +133,7 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅[默认访问级别](#default_access_levels)这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 仍然拥有隐式的 `internal` ：
+除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅[默认访问级别](#default_access_levels)这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 仍然拥有隐式的 `internal`：
 
 ```swift
 class SomeInternalClass {}   // 隐式 internal
@@ -147,7 +147,7 @@ var someInternalConstant = 0 // 隐式 internal
 
 一个类型的访问级别也会影响到类型*成员*（属性、方法、构造器、下标）的默认访问级别。如果你将类型指定为 `private` 或者 `fileprivate` 级别，那么该类型的所有成员的默认访问级别也会变成 `private` 或者 `fileprivate` 级别。如果你将类型指定为公开或者 `internal` （或者不明确指定访问级别，而使用默认的 `internal` ），那么该类型的所有成员的默认访问级别将是内部访问。
 
-> 重要
+> 重点
 > 
 > 上面提到，一个 `public` 类型的所有成员的访问级别默认为 `internal` 级别，而不是 `public` 级别。如果你想将某个成员指定为 `public` 级别，那么你必须显式指定。这样做的好处是，在你定义公共接口的时候，可以明确地选择哪些接口是需要公开的，哪些是内部使用的，避免不小心将内部使用的接口公开。
 
@@ -434,7 +434,7 @@ extension SomeStruct: SomeProtocol {
 <a name="type_aliases"></a>
 ## 类型别名
 
-你定义的任何类型别名都会被当作不同的类型，以便于进行访问控制。类型别名的访问级别不可高于其表示的类型的访问级别。例如，`private` 级别的类型别名可以作为 `private`，`file-private`，`internal`，`public`或者`open`类型的别名，但是 `public` 级别的类型别名只能作为 `public` 类型的别名，不能作为 `internal`，`file-private`，或 `private` 类型的别名。
+你定义的任何类型别名都会被当作不同的类型，以便于进行访问控制。类型别名的访问级别不可高于其表示的类型的访问级别。例如，`private` 级别的类型别名可以作为 `private`，`file-private`，`internal`，`public` 或者 `open` 类型的别名，但是 `public` 级别的类型别名只能作为 `public` 类型的别名，不能作为 `internal`，`file-private`，或 `private` 类型的别名。
 
 > 注意
 > 

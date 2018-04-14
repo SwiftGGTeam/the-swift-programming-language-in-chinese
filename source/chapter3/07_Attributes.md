@@ -9,7 +9,7 @@
 > 翻译+校对：[KYawn](https://github.com/KYawn)
 
 > 2.1
-> 翻译：[小铁匠Linus](https://github.com/kevin833752)
+> 翻译：[小铁匠 Linus](https://github.com/kevin833752)
 
 本页内容包括：
 
@@ -17,9 +17,9 @@
 - [Interface Builder 使用的声明特性](#declaration_attributes_used_by_interface_builder)
 - [类型特性](#type_attributes)
 
-特性提供了有关声明和类型的更多信息。在Swift中有两种特性，分别用于修饰声明和类型。
+特性提供了有关声明和类型的更多信息。在 Swift 中有两种特性，分别用于修饰声明和类型。
 
-您可以通过以下方式指定一个特性:符号`@`后跟特性的名称和特性接收的任何参数：
+您可以通过以下方式指定一个特性:符号 `@` 后跟特性的名称和特性接收的任何参数：
 
 > @ `特性名`
 
@@ -50,38 +50,38 @@
 当然，你也可以用一个星号（*）来表示上面提到的所有平台。
 其余的参数，可以按照任何顺序出现，并且可以添加关于声明生命周期的附加信息，包括重要事件。
 
-- `unavailable`参数表示该声明在指定的平台上是无效的。
+- `unavailable` 参数表示该声明在指定的平台上是无效的。
 - `introduced` 参数表示指定平台从哪一版本开始引入该声明。格式如下：
 
-`introduced`=`版本号`
+`introduced`=` 版本号 `
 
 *版本号*由一个或多个正整数构成，由句点分隔的。
 
-- `deprecated`参数表示指定平台从哪一版本开始弃用该声明。格式如下：
+- `deprecated` 参数表示指定平台从哪一版本开始弃用该声明。格式如下：
 
-`deprecated`=`版本号`
+`deprecated`=` 版本号 `
 
 可选的*版本号*由一个或多个正整数构成，由句点分隔的。省略版本号表示该声明目前已弃用，当弃用出现时无需给出任何有关信息。如果你省略了版本号，冒号（:）也可省略。
 
 - `obsoleted` 参数表示指定平台从哪一版本开始废弃该声明。当一个声明被废弃后，它就从平台中移除，不能再被使用。格式如下：
 
-`obsoleted`=`版本号`
+`obsoleted`=` 版本号 `
 
 *版本号*由一个或多个正整数构成，由句点分隔的。
 
 - `message` 参数用来提供文本信息。当使用被弃用或者被废弃的声明时，编译器会抛出警告或错误信息。格式如下：
 
-`message`=`信息内容`
+`message`=` 信息内容 `
 
 信息内容由一个字符串构成。
 
 - `renamed` 参数用来提供文本信息，用以表示被重命名的声明的新名字。当使用声明的旧名字时，编译器会报错提示新名字。格式如下：
 
-`renamed`=`新名字`
+`renamed`=` 新名字 `
 
 新名字由一个字符串构成。
 
-你可以将`renamed` 参数和 `unavailable` 参数以及类型别名声明组合使用，以此向用户表示某个声明已经被重命名。当某个声明的名字在一个框架或者库的不同发布版本间发生变化时，这会相当有用。
+你可以将 `renamed` 参数和 `unavailable` 参数以及类型别名声明组合使用，以此向用户表示某个声明已经被重命名。当某个声明的名字在一个框架或者库的不同发布版本间发生变化时，这会相当有用。
 
 ```swift
 // 首发版本
@@ -120,7 +120,7 @@ class MyClass {
 
 `GKInspectable`
 
-应用此属性，暴露一个自定义GameplayKit组件属性给SpriteKit编辑器UI。
+应用此属性，暴露一个自定义 GameplayKit 组件属性给 SpriteKit 编辑器 UI。
 
 `objc`
 
@@ -153,7 +153,7 @@ var enabled: Bool {
 
 在类上使用该特性表示该类是应用程序委托类，使用该特性与调用 `NSApplicationMain`(\_:_:) 函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
-如果你不想使用这个特性，可以提供一个 main.swift 文件，并在代码**顶层**调用`NSApplicationMain`(\_:_:) 函数，如下所示:
+如果你不想使用这个特性，可以提供一个 main.swift 文件，并在代码**顶层**调用 `NSApplicationMain`(\_:_:) 函数，如下所示:
 
 ```swift
 import AppKit
@@ -167,26 +167,26 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 `NSManaged`
 
-该特性用于修饰 `NSManagedObject` 子类中的实例方法或存储型变量属性，表明它们的实现由 `Core Data` 在运行时基于相关实体描述动态提供。对于标记了 `NSManaged` 特性的属性，`Core Data` 也会在运行时为其提供存储。应用这个特性也意味着`objc`特性。
+该特性用于修饰 `NSManagedObject` 子类中的实例方法或存储型变量属性，表明它们的实现由 `Core Data` 在运行时基于相关实体描述动态提供。对于标记了 `NSManaged` 特性的属性，`Core Data` 也会在运行时为其提供存储。应用这个特性也意味着 `objc` 特性。
 
 `testable`
 
-在导入允许测试的编译模块时，该特性用于修饰 `import` 声明，这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用`internal`或者`public`访问级别修饰符标记的类和类成员，就像它们是`open`访问修饰符声明的。
+在导入允许测试的编译模块时，该特性用于修饰 `import` 声明，这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用 `internal` 或者 `public` 访问级别修饰符标记的类和类成员，就像它们是 `open` 访问修饰符声明的。
 
 `UIApplicationMain`
 
-在类上使用该特性表示该类是应用程序委托类，使用该特性与调用 `UIApplicationMain`函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
+在类上使用该特性表示该类是应用程序委托类，使用该特性与调用 `UIApplicationMain` 函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
 如果你不想使用这个特性，可以提供一个 main.swift 文件，并在代码顶层调用 `UIApplicationMain`(\_:\_:\_:) 函数。比如，如果你的应用程序使用一个继承于 UIApplication 的自定义子类作为主要类，你可以调用 `UIApplicationMain`(\_:\_:\_:) 函数而不是使用该特性。
 
 <a name="declaration_attributes_used_by_interface_builder"></a>
 ###Interface Builder 使用的声明特性
 
-`Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBOutlet`，`IBDesignable`，以及`IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
+`Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBOutlet`，`IBDesignable`，以及 `IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
 
 `IBOutlet` 和 `IBInspectable` 用于修饰一个类的属性声明，`IBAction` 特性用于修饰一个类的方法声明，`IBDesignable` 用于修饰类的声明。
 
-`IBAction` 和 `IBOutlet` 特性都意味着`objc`特性。
+`IBAction` 和 `IBOutlet` 特性都意味着 `objc` 特性。
 
 <a name="type_attributes"></a>
 ##类型特性
@@ -213,7 +213,7 @@ convention 特性总是与下面的参数之一一起出现。
 `escaping`
 在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](http://wiki.jikexueyuan.com/project/swift/chapter2/07_Closures.html)。
 
->特性语法
+> 特性语法
 
 > *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>
 

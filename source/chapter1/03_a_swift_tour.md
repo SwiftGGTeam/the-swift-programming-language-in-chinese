@@ -10,13 +10,15 @@
 > 翻译+校对：[xtymichael](https://github.com/xtymichael)
 
 > 2.2
-> 翻译：[175](https://github.com/Brian175)，2016-04-09 校对：[SketchK](https://github.com/SketchK)，2016-05-11
-> 
+> 翻译：[175](https://github.com/Brian175)，2016-04-09
+> 校对：[SketchK](https://github.com/SketchK)，2016-05-11
+
 > 3.0
 > 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
 
-> 3.0.1 review: 2016-11-09
-> 
+> 3.0.1
+> review: 2016-11-09
+
 > 3.1 校对: [SketchK](https://github.com/SketchK) 2017-04-08
 
 > 4.0
@@ -27,14 +29,14 @@
 
 本页内容包括：
 
--   [简单值（Simple Values）](#simple_values)
--   [控制流（Control Flow）](#control_flow)
--   [函数和闭包（Functions and Closures）](#functions_and_closures)
--   [对象和类（Objects and Classes）](#objects_and_classes)
--   [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
--   [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
--   [错误处理（Error Handling）](#error_handling)
--   [泛型（Generics）](#generics)
+- [简单值（Simple Values）](#simple_values)
+- [控制流（Control Flow）](#control_flow)
+- [函数和闭包（Functions and Closures）](#functions_and_closures)
+- [对象和类（Objects and Classes）](#objects_and_classes)
+- [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
+- [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
+- [错误处理（Error Handling）](#error_handling)
+- [泛型（Generics）](#generics)
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印 “Hello, world”。在 Swift 中，可以用一行代码实现：
 
@@ -48,8 +50,8 @@ print("Hello, world!")
 
 > 注意
 > 
-> 最好的体验是把这一章作为Playground文件在Xcode中打开。 Playgrounds允许你可以编辑代码并立刻看到输出结果。
->            
+> 最好的体验是把这一章作为 Playground 文件在 Xcode 中打开。 Playgrounds 允许你可以编辑代码并立刻看到输出结果。
+> 
 > [Download Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
@@ -74,7 +76,7 @@ let explicitDouble: Double = 70
 ```
 
 > 练习
->                                          
+> 
 > 创建一个常量，显式指定类型为 `Float` 并指定初始值为 4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
@@ -140,7 +142,7 @@ occupations = [:]
 <a name="control_flow"></a>
 ## 控制流
 
-使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、 `while` 和 `repeat-while` 来进行循环。包裹条件和循环变量的括号可以省略，但是语句体的大括号是必须的。
+使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、`while` 和 `repeat-while` 来进行循环。包裹条件和循环变量的括号可以省略，但是语句体的大括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -157,7 +159,7 @@ print(teamScore)
 
 在 `if` 语句中，条件必须是一个布尔表达式——这意味着像 `if score { ... }` 这样的代码将报错，而不会隐形地与 0 做对比。
 
-你可以一起使用 `if` 和 `let` 一起来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是 `nil` 以表示值缺失。在类型后面加一个问号（`?ß`）来标记这个变量的值是可选的。
+你可以一起使用 `if` 和 `let` 一起来处理值缺失的情况。这些值可由可选值来代表。一个可选的值是一个具体的值或者是 `nil` 以表示值缺失。在类型后面加一个问号（`?`）来标记这个变量的值是可选的。
 
 ```swift
 var optionalString: String? = "Hello"
@@ -713,7 +715,7 @@ print(protocolValue.simpleDescription)
 // print(protocolValue.anotherProperty)  // 去掉注释可以看到错误
 ```
 
-即使 `protocolValue` 变量运行时的类型是 `simpleClass` ，编译器还是会把它的类型当做`ExampleProtocol`。这表示你不能调用在协议之外的方法或者属性。
+即使 `protocolValue` 变量运行时的类型是 `simpleClass` ，编译器还是会把它的类型当做 `ExampleProtocol`。这表示你不能调用在协议之外的方法或者属性。
 
 <a name="error_handling"></a>
 ## 错误处理
