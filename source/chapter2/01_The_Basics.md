@@ -820,7 +820,7 @@ assert(age >= 0, "A person's age cannot be less than zero")
 
 ```swift
 assert(age >= 0)
-``` 
+```
 
 如果代码已经检查了条件，你可以使用 `assertionFailure(_:file:line:)` 函数来表明断言失败了，例如：
 
