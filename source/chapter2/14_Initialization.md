@@ -808,7 +808,7 @@ if anonymousCreature == nil {
 
 你可以通过一个带一个或多个参数的可失败构造器来获取枚举类型中特定的枚举成员。如果提供的参数无法匹配任何枚举成员，则构造失败。
 
-下例中，定义了一个名为 `TemperatureUnit` 的枚举类型。其中包含了三个可能的枚举成员(`Kelvin`，`Celsius`，和 `Fahrenheit`)，以及一个根据 `Character` 值找出所对应的枚举成员的可失败构造器：
+下例中，定义了一个名为 `TemperatureUnit` 的枚举类型。其中包含了三个可能的枚举成员(`Kelvin`、`Celsius` 和 `Fahrenheit`)，以及一个根据 `Character` 值找出所对应的枚举成员的可失败构造器：
 
 ```swift
 enum TemperatureUnit {

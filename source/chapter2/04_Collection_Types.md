@@ -194,7 +194,7 @@ shoppingList[0] = "Six eggs"
 // 其中的第一项现在是 "Six eggs" 而不是 "Eggs"
 ```
 
-还可以利用下标来一次改变一系列数据值，即使新数据和原有数据的数量是不一样的。下面的例子把 `"Chocolate Spread"`，`"Cheese"`，和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
+还可以利用下标来一次改变一系列数据值，即使新数据和原有数据的数量是不一样的。下面的例子把 `"Chocolate Spread"`、`"Cheese"` 和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
 
 ```swift
 shoppingList[4...6] = ["Bananas", "Apples"]
