@@ -39,6 +39,7 @@ case ocFalse
 ####实现默认值
 
 行，我们给了一个漂亮的定义，不过按照传统语言的经验，Bool 值默认情况下是假， 所以我们的 OCBool 也应该如此，我们使用类型扩展技术增加这个默认特性：
+
 ```swift
 extension OCBool{
      init(){
@@ -65,14 +66,17 @@ var result1:OCBool = .ocTrue
 
 正如上述代码所述，我们只能通过类型或者枚举项目赋值，这是组合类型的用法，但是编码的日子里，我们总是希望和 true，false 直接打交道，也就是说，我们希望这么做，
 代码示例如下：
+
 ```swift
 var isSuccess:OCBool = true
 ```
 
 如果小伙伴们直接这么用，则会出现如下错误：
+
 ```
 /Users/tyrion-OldCoder/Documents/Learning/BoolType/BoolType/main.swift:30:24: Type 'OCBool' does not conform to protocol 'BooleanLiteralConvertible'
 ```
+
 编译器咆哮的原因是，我们的类型没有遵从“布尔字面量转换协议”，接下来修正这个问题，
 #####代码示例如下：
 
@@ -99,6 +103,7 @@ var isSuccess:OCBool = true
 
 - 代码中的第11行是重点，我的类型 OCBool 支持了 BooleanLiteralConvertible 协议，这个协到底是干什么的呢，小伙伴们在 Xcode 代码编辑器，按住 Command 键，然后点击第11行中的 BooleanLiteralConvertible 协议名，则会进入它的定义，
 #####其定义如下：
+
 ```swift
 protocol BooleanLiteralConvertible {
     typealias BooleanLiteralType
@@ -119,14 +124,16 @@ protocol BooleanLiteralConvertible {
 var isSuccess:OCBool = true
 
 if isSuccess {
-    println( "老码请你吃火锅！")
+    println("老码请你吃火锅！")
 }
 ```
 
 你永远吃不到老码的火锅，因为这里编译器会咆哮：
+
 ```
 /Users/tyrion-OldCoder/Documents/Learning/BoolType/BoolType/main.swift:27:4: Type 'OCBool' does not conform to protocol 'LogicValue'
 ```
+
 OCBool 现在只能用 bool 类型初始化，而不能直接返回 bool 型，小火把们还记得在《老码说编程之白话 Swift 江湖》中，老码多次提到，妈妈再也不担心我们 if a = 1{}的写法了， 因为等号不支持值返回了， 所以在 if 判断是后面的条件必须有返回值，OCBool 没有，所以编译器哭了。我们解决这个问题。
 
 #####代码示例如下：
@@ -164,7 +171,7 @@ extension OCBool: LogicValue{
 var isSuccess:OCBool = true
 
 if isSuccess {
-    println( "老码请你吃火锅！")
+    println("老码请你吃火锅！")
 }
 ```
 
@@ -207,7 +214,7 @@ var mmResult: Bool = true
 var ocResult:OCBool = OCBool(mmResult)
 
 if ocResult {
-    println( "老码没钱，郭美美请你吃火锅！")
+    println("老码没钱，郭美美请你吃火锅！")
 }
 ```
 
@@ -218,6 +225,7 @@ Hello, World!
 老码没钱，郭美美请你吃火锅！
 Program ended with exit code: 0
 ```
+
 漂亮！我们的 OCBool 类型现在支持了所有的逻辑变量初始化。
 
 #####注意：
@@ -287,7 +295,7 @@ isHasWife ^ isHasLover
 isHasWife = !isHasLover
 
 if (isHasMoney | isHasHealty) & isHasHealty{
-    println( "人生赢家，就像老码一样！")
+    println("人生赢家，就像老码一样！")
 }else
 {
     println("人生最苦的事事，人死了钱没花了，人生最苦的事是，人活着，钱没了！")

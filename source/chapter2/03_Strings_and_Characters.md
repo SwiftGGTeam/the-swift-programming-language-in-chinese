@@ -227,6 +227,7 @@ for character in "Dog!🐶" {
 ```swift
 let exclamationMark: Character = "!"
 ```
+
 字符串可以通过传递一个值类型为 `Character` 的数组作为自变量来初始化：
 
 ```swift

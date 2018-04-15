@@ -144,6 +144,7 @@ var enabled: Bool {
 }
 }
 ```
+
 `nonobjc`
 
 该特性用于方法、属性、下标、或构造器的声明，这些声明本可以在 Objective-C 代码中使用，而使用 `nonobjc` 特性则告诉编译器这个声明不能在 Objective-C 代码中使用。
@@ -162,6 +163,7 @@ var enabled: Bool {
 import AppKit
 NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
+
 `NSCopying`
 
 该特性用于修饰一个类的存储型变量属性。该特性将使属性的设值方法使用传入值的副本进行赋值，这个值由传入值的 `copyWithZone`(\_:) 方法返回。该属性的类型必需符合 `NSCopying` 协议。

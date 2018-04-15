@@ -137,6 +137,7 @@ struct Rect {
     var size = Size()
 }
 ```
+
 因为结构体 `Rect` 未提供定制的构造器，因此它会获得一个逐一成员构造器。又因为它为所有存储型属性提供了默认值，它又会获得一个默认构造器。详情请参阅[默认构造器](./14_Initialization.html#default_initializers)。这些构造器可以用于构造新的 `Rect` 实例：
 
 ```swift

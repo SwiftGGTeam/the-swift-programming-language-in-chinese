@@ -16,11 +16,14 @@ Objective-C 和 C 的 API 常常会需要用到指针。Swift 中的数据类型
 ####用以输入/输出的参数指针
 
 C 和 Objective-C 并不支持多返回值，所以 Cocoa API 中常常将指针作为一种在方法间传递额外数据的方式。Swift 允许指针被当作 `inout` 参数使用，所以你可以用符号 `&` 将对一个变量的引用作为指针参数传递。举例来说：`UIColor` 中的 `getRed(_:green:blue:alpha:)` 方法需要四个 `CGFloat*` 指针来接收颜色的组成信息，我们使用 `&` 来将这些组成信息捕获为本地变量：
+
 ```swift
 var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
 color.getRed(&r, green: &g, blue: &b, alpha: &a)
 ```
+
 另一种常见的情况是 Cocoa 中 `NSError` 的习惯用法。许多方法会使用一个 `NSError**` 参数来储存可能的错误的信息。举例来说：我们用 `NSFileManager` 的 `contentOfDirectoryAtPath(_:error:)` 方法来将目录下的内容列表，并将潜在的错误指向一个 `NSError?` 变量：
+
 ```swift
 var maybeError: NSError?
 if let contents = NSFileManager.defaultManager()
@@ -30,11 +33,13 @@ if let contents = NSFileManager.defaultManager()
 	// Handle the error
 }
 ```
+
 为了安全性，Swift 要求被使用 `&` 传递的变量已经初始化。因为无法确定这个方法会不会在写入数据前尝试从指针中读取数据。
 
 ####作为数组使用的参数指针
 
 在 C 语言中，数组和指针的联系十分紧密，而 Swift 允许数组能够作为指针使用，从而与基于数组的 C 语言 API 协同工作更加简单。一个固定的数组可以使用一个常量指针直接传递，一个变化的数组可以用 `&` 运算符将一个非常量指针传递。就和输入/输出参数指针一样。举例来说：我们可以用 Accelerate 框架中的 `vDSP_vadd` 方法让两个数组 `a` 和 `b` 相加，并将结果写入第三个数组 `result`。
+
 ```swift
 import Accelerate
 
@@ -50,6 +55,7 @@ vDSP_vadd(a, 1, b, 1, &result, 1, 4)
 ## 用作字符串参数的指针
 
 C 语言中用 `cont char*` 指针来作为传递字符串的基本方式。Swift 中的 `String` 可以被当作一个无限长度 UTF-8编码的 `const char*` 指针来传递给方法。举例来说：我们可以直接传递一个字符串给一个标准 C 和 POSIX 库方法
+
 ```swift
 puts("Hello from libc")
 let fd = open("/tmp/scratch.txt", O_WRONLY|O_CREAT, 0o666)

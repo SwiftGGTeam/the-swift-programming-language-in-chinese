@@ -174,7 +174,7 @@ private class SomePrivateClass {                // 显式 private 类
     func somePrivateMethod() {}                  // 隐式 private 类成员
 }
 
-```
+```swift
 <a name="tuple_types"></a>
 ### 元组类型
 
@@ -434,7 +434,7 @@ extension SomeStruct: SomeProtocol {
 <a name="type_aliases"></a>
 ## 类型别名
 
-你定义的任何类型别名都会被当作不同的类型，以便于进行访问控制。类型别名的访问级别不可高于其表示的类型的访问级别。例如，`private` 级别的类型别名可以作为 `private`，`file-private`，`internal`，`public` 或者 `open` 类型的别名，但是 `public` 级别的类型别名只能作为 `public` 类型的别名，不能作为 `internal`，`file-private`，或 `private` 类型的别名。
+你定义的任何类型别名都会被当作不同的类型，以便于进行访问控制。类型别名的访问级别不可高于其表示的类型的访问级别。例如，`private` 级别的类型别名可以作为 `private`、`file-private`、`internal`、`public` 或者 `open` 类型的别名，但是 `public` 级别的类型别名只能作为 `public` 类型的别名，不能作为 `internal`、`file-private` 或 `private` 类型的别名。
 
 > 注意
 > 
