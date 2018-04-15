@@ -110,7 +110,7 @@ print("\(base) to the power of \(power) is \(answer)")
 
 在某些情况下，你可能不想使用闭区间，包括两个端点。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。
 
-```
+```swift
 let minutes = 60
 for tickMark in 0..<minutes {
     // 每一分钟都渲染一个刻度线（60次）
@@ -119,7 +119,7 @@ for tickMark in 0..<minutes {
 
 一些用户可能在其 UI 中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。
 
-```
+```swift
 let minuteInterval = 5
 for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
     // 每5分钟渲染一个刻度线 (0, 5, 10, 15 ... 45, 50, 55)
@@ -128,7 +128,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 
 可以在闭区间使用 `stride(from:through:by:)` 起到同样作用：
 
-```
+```swift
 let hours = 12
 let hourInterval = 3
 for tickMark in stride(from: 3, through: hours, by: hourInterval) {
@@ -151,7 +151,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 
 下面是 `while` 循环的一般格式：
 
-```
+```swift
 while condition {
 	statements
 }
@@ -234,7 +234,7 @@ repeat {
 
 还是*蛇和梯子*的游戏，使用 `repeat-while` 循环来替代 `while` 循环。`finalSquare`、`board`、`square` 和 `diceRoll` 的值初始化同 `while` 循环时一样：
 
-``` swift
+```swift
 let finalSquare = 25
 var board = [Int](repeating: 0, count: finalSquare + 1)
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
@@ -398,6 +398,7 @@ default:
 不像 C 语言里的 `switch` 语句，在 Swift 中，`switch` 语句不会一起匹配 `"a"` 和 `"A"`。相反的，上面的代码会引起编译期错误：`case "a": 不包含任何可执行语句 `——这就避免了意外地从一个 case 分支贯穿到另外一个，使得代码更安全、也更直观。
 
 为了让单个 case 同时匹配 `a` 和 `A`，可以将这个两个值组合成一个复合匹配，并且用逗号分开：
+
 ```swift
 let anotherCharacter: Character = "a"
 switch anotherCharacter {
@@ -408,6 +409,7 @@ default:
 }
 // 输出 "The letter A
 ```
+
 为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)
 
 > 注意
@@ -563,7 +565,6 @@ default:
 }
 
 // 输出 "On an axis, 9 from the origin"
-
 ```
 
 上面的 case 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 case 匹配，都可以获取到 `distance` 值

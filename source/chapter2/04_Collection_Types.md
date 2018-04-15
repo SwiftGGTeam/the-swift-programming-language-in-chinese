@@ -194,7 +194,7 @@ shoppingList[0] = "Six eggs"
 // 其中的第一项现在是 "Six eggs" 而不是 "Eggs"
 ```
 
-还可以利用下标来一次改变一系列数据值，即使新数据和原有数据的数量是不一样的。下面的例子把 `"Chocolate Spread"`，`"Cheese"`，和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
+还可以利用下标来一次改变一系列数据值，即使新数据和原有数据的数量是不一样的。下面的例子把 `"Chocolate Spread"`、`"Cheese"` 和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
 
 ```swift
 shoppingList[4...6] = ["Bananas", "Apples"]
@@ -223,6 +223,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
 // mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
 ```
+
 > 注意
 > 
 > 如果我们试着对索引越界的数据进行检索或者设置新值的操作，会引发一个运行期错误。我们可以使用索引值和数组的 `count` 属性进行比较来在使用某个索引之前先检验是否有效。除了当 `count` 等于 0 时（说明这是个空数组），最大索引值一直是 `count - 1`，因为数组都是零起索引。
@@ -295,7 +296,7 @@ Swift 的所有基本类型(比如 `String`,`Int`,`Double` 和 `Bool`)默认都�
 > 
 > 你可以使用你自定义的类型作为集合的值的类型或者是字典的键的类型，但你需要使你的自定义类型符合 Swift 标准库中的 `Hashable` 协议。符合 `Hashable` 协议的类型需要提供一个类型为 `Int` 的可读属性 `hashValue`。由类型的 `hashValue` 属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
 > 
-> 因为 `Hashable` 协议符合 `Equatable` 协议，所以遵循该协议的类型也必须提供一个"是否相等"运算符(`==`)的实现。这个 `Equatable` 协议要求任何符合 `==` 实现的实例间都是一种相等的关系。也就是说，对于 `a,b,c` 三个值来说，`==` 的实现必须满足下面三种情况：
+> 因为 `Hashable` 协议符合 `Equatable` 协议，所以遵循该协议的类型也必须提供一个“是否相等”运算符(`==`)的实现。这个 `Equatable` 协议要求任何符合 `==` 实现的实例间都是一种相等的关系。也就是说，对于 `a,b,c` 三个值来说，`==` 的实现必须满足下面三种情况：
 
 > * `a == a`(自反性)
 > * `a == b` 意味着 `b == a`(对称性)
@@ -608,7 +609,7 @@ airports["LHR"] = "London"
 
 ```swift
 airports["LHR"] = "London Heathrow"
-// "LHR"对应的值 被改为 "London Heathrow
+// “LHR”对应的值被改为“London Heathrow”
 ```
 
 作为另一种下标方法，字典的 `updateValue(_:forKey:)` 方法可以设置或者更新特定键对应的值。就像上面所示的下标示例，`updateValue(_:forKey:)` 方法在这个键不存在对应值的时候会设置新值或者在存在时更新已存在的值。和上面的下标方法不同的，`updateValue(_:forKey:)` 这个方法返回更新值之前的原值。这样使得我们可以检查更新是否成功。

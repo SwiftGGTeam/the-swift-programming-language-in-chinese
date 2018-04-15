@@ -380,6 +380,7 @@ let negative = -positive
 let alsoPositive = -negative
 // alsoPositive 是一个值为 (3.0, 4.0) 的 Vector2D 实例
 ```
+
 <a name="compound_assignment_operators"></a>
 ### 复合赋值运算符
 
@@ -433,6 +434,7 @@ if twoThree == anotherTwoThree {
 }
 // 打印 “These two vectors are equivalent.”
 ```
+
 Swift 为以下自定义类型提等价运算符供合成实现：
 
 - 只拥有遵循 `Equatable` 协议存储属性的结构体；

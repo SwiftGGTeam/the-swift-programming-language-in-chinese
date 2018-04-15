@@ -223,7 +223,7 @@ enum ASCIIControlCharacter: Character {
 
 枚举类型 `ASCIIControlCharacter` 的原始值类型被定义为 `Character`，并设置了一些比较常见的 ASCII 控制字符。`Character` 的描述详见[字符串和字符](./03_Strings_and_Characters.html)部分。
 
-原始值可以是字符串，字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
+原始值可以是字符串、字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
 > 注意
 > 

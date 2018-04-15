@@ -388,7 +388,7 @@ if let johnsStreet = john.residence?.address?.street {
 上面的例子展示了如何在一个可选值上通过可选链式调用来获取它的属性值。我们还可以在一个可选值上通过可选链式调用来调用方法，并且可以根据需要继续在方法的可选返回值上进行可选链式调用。
 
 在下面的例子中，通过可选链式调用来调用 `Address` 的 `buildingIdentifier()` 方法。这个方法返回 `String?` 类型的值。如上所述，通过可选链式调用来调用该方法，最终的返回值依旧会是 `String?` 类型：
- 
+
 ```swift
 if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
     print("John's building identifier is \(buildingIdentifier).")
