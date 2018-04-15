@@ -11,6 +11,9 @@
 > 3.0
 > 翻译+校对：[chenmingjia](https:github.com/chenmingjia)
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页包含内容：
 
 - [泛型形参子句](#generic_parameter)
@@ -19,12 +22,12 @@
 
 本节涉及泛型类型、泛型函数以及泛型构造器的参数，包括形参和实参。声明泛型类型、函数或构造器时，须指定相应的类型参数。类型参数相当于一个占位符，当实例化泛型类型、调用泛型函数或泛型构造器时，就用具体的类型实参替代之。
 
-关于 Swift 语言的泛型概述，请参阅 [泛型](../chapter2/23_Generics.md)。
+关于 Swift 语言的泛型概述，请参阅 [泛型](../chapter2/22_Generics.html)。
 
 <a name="generic_parameter"></a>
 ## 泛型形参子句
 
-泛型形参子句指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
+*泛型形参子句*指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型形参列表`>
 
@@ -67,36 +70,36 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 
 泛型函数或构造器可以重载，但在泛型形参子句中的类型形参必须有不同的约束或要求，抑或二者皆不同。当调用重载的泛型函数或构造器时，编译器会根据这些约束来决定调用哪个重载函数或构造器。
 
-更多关于泛型 where 从句的信息和关于泛型函数声明的例子，可以看一看 [泛型 where 子句](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/23_Generics.md#where_clauses)
+更多关于泛型 where 从句的信息和关于泛型函数声明的例子，可以看一看 [泛型 where 子句](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/22_Generics.html#where_clauses)
 
 > 泛型形参子句语法
-
+> 
 <a name="generic-parameter-clause"></a>
-> *泛型形参子句* → **<** [*泛型形参列表*](#generic-parameter-list) [*约束子句*](#requirement-clause)<sub>可选</sub> **>**
+> *泛型形参子句* → **<** [*泛型形参列表*](#generic-parameter-list) [*约束子句*](#requirement-clause)<sub>可选</sub> **>**   
 <a name="generic-parameter-list"></a>
-> *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)
+> *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)   
 <a name="generic-parameter"></a>
-> *泛形形参* → [*类型名称*](03_Types.html#type-name)
-> *泛形形参* → [*类型名称*](03_Types.html#type-name) **:** [*类型标识符*](03_Types.html#type-identifier)
-> *泛形形参* → [*类型名称*](03_Types.html#type-name) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
+> *泛形形参* → [*类型名称*](03_Types.html#type-name)   
+> *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*类型标识符*](03_Types.html#type-identifier)   
+> *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*协议合成类型*](03_Types.html#protocol-composition-type)   
 
 <a name="requirement-clause"></a>
-> *约束子句* → **where** [*约束列表*](#requirement-list)
+> *约束子句* → **where** [*约束列表*](#requirement-list)   
 <a name="requirement-list"></a>
-> *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)
+> *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)   
 <a name="requirement"></a>
-> *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)
+> *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)    
 
 <a name="conformance-requirement"></a>
-> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)
-> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
+> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)   
+> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)   
 <a name="same-type-requirement"></a>
-> *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)
+> *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)   
 
 <a name="generic_argument"></a>
 ## 泛型实参子句
 
-泛型实参子句指定泛型类型的类型实参。泛型实参子句用尖括号（`<>`）包住，形式如下：
+*泛型实参子句*指定泛型类型的类型实参。泛型实参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型实参列表`>
 
@@ -119,9 +122,10 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 如 [泛型形参子句](#generic_parameter) 所述，不能用泛型实参子句来指定泛型函数或构造器的类型实参。
 
 > 泛型实参子句语法
+> 
 <a name="generic-argument-clause"></a>
-> *泛型实参子句* → **<** [*泛型实参列表*](#generic-argument-list) **>**
+> *泛型实参子句* → **<** [*泛型实参列表*](#generic-argument-list) **>**    
 <a name="generic-argument-list"></a>
-> *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)
+> *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)    
 <a name="generic-argument"></a>
 > *泛型实参* → [*类型*](03_Types.html#type)
