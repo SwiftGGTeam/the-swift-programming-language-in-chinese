@@ -11,6 +11,9 @@
 > 2.1
 > 翻译：[小铁匠 Linus](https://github.com/kevin833752)
 
+> 4.1
+> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+
 本页内容包括：
 
 - [声明特性](#declaration_attributes)
@@ -214,23 +217,15 @@ convention 特性总是与下面的参数之一一起出现。
 在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](http://wiki.jikexueyuan.com/project/swift/chapter2/07_Closures.html)。
 
 > 特性语法
-
-> *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>
-
-> *特性名* → <font color = 0x3386c8>标识符
-
-> *特性参数子句* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )
-
-> *特性列表* → <font color = 0x3386c8>特性 特性列表</font><sub>可选</sub>
-
-> *均衡令牌列表* → <font color = 0x3386c8>均衡令牌 均衡令牌列表</font><sub>可选</sub>
-
-> *均衡令牌* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )
-
-> *均衡令牌* → [ <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> ]
-
-> *均衡令牌* → { <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub>}
-
-> *均衡令牌* → 任意标识符，关键字，字面量或运算符
-
-> *均衡令牌* → 任意标点除了 (，)，[，]，{，或 }
+> 
+> *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>   
+> *特性名* → <font color = 0x3386c8>标识符   
+> *特性参数子句* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )   
+> *特性列表* → <font color = 0x3386c8>特性 特性列表</font><sub>可选</sub>    
+> 
+> *均衡令牌列表* → <font color = 0x3386c8>均衡令牌 均衡令牌列表</font><sub>可选</sub>    
+> *均衡令牌* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )   
+> *均衡令牌* → [ <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> ]   
+> *均衡令牌* → { <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub>}   
+> *均衡令牌* → 任意标识符，关键字，字面量或运算符   
+> *均衡令牌* → 任意标点除了 (，)，[，]，{，或 }   
