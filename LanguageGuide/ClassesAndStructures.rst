@@ -57,6 +57,8 @@ and :doc:`AutomaticReferenceCounting`.
    Structures are always copied when they are passed around in your code,
    and do not use reference counting.
 
+.. XXX Structs use COW to behave as if copied.
+
 .. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
@@ -79,7 +81,7 @@ Both place their entire definition within a pair of braces:
 .. note::
 
    Whenever you define a new class or structure,
-   you effectively define a brand new Swift type.
+   you define a brand new Swift type.
    Give types ``UpperCamelCase`` names
    (such as ``SomeClass`` and ``SomeStructure`` here)
    to match the capitalization of standard Swift types
@@ -151,8 +153,6 @@ with any properties initialized to their default values.
 Class and structure initialization is described in more detail
 in :doc:`Initialization`.
 
-.. TODO: add more detail about inferring a variable's type when using initializer syntax.
-
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 
@@ -165,6 +165,8 @@ You can access the properties of an instance using :newTerm:`dot syntax`.
 In dot syntax, you write the property name immediately after the instance name,
 separated by a period (``.``), without any spaces:
 
+.. XXX Whitespace is actually allowed in dot notation
+
 .. testcode:: ClassesAndStructures
 
    -> print("The width of someResolution is \(someResolution.width)")
@@ -176,6 +178,8 @@ and returns its default initial value of ``0``.
 
 You can drill down into sub-properties,
 such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
+
+.. XXX Confirm hyphenation of "sub-properties"
 
 .. testcode:: ClassesAndStructures
 
@@ -197,6 +201,9 @@ You can also use dot syntax to assign a new value to a variable property:
    In the last example above,
    the ``width`` property of the ``resolution`` property of ``someVideoMode`` is set directly,
    without your needing to set the entire ``resolution`` property to a new value.
+
+.. XXX Is this note still helpful/meaningful?
+   I'm not even completely sure it's true for C or Obj-C.
 
 .. _ClassesAndStructures_MemberwiseInitializersForStructureTypes:
 
@@ -524,6 +531,9 @@ and class instances are always passed by *reference*.
 This means that they are suited to different kinds of tasks.
 As you consider the data constructs and functionality that you need for a project,
 decide whether each data construct should be defined as a class or as a structure.
+
+.. XXX From here to the end of the section needs to reframe
+   with structs as the default abstraction.
 
 As a general guideline, consider creating a structure when
 one or more of these conditions apply:
