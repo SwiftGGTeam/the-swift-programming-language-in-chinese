@@ -572,6 +572,8 @@ not structures.
 Assignment and Copy Behavior for Strings, Arrays, and Dictionaries
 ------------------------------------------------------------------
 
+.. XXX do we even need this section?
+
 In Swift,
 many basic data types such as ``String``, ``Array``, and ``Dictionary``
 are implemented as structures.
