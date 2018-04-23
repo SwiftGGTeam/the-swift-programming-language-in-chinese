@@ -593,14 +593,11 @@ This means that data such as strings, arrays, and dictionaries
 are copied when they are assigned to
 a new constant or variable, or when they are passed to a function or method.
 
-This behavior is different from Foundation:
-``NSString``, ``NSArray``, and ``NSDictionary``
-are implemented as classes, not structures.
-Strings, arrays, and dictionaries in Foundation are always
-assigned and passed around as a reference to an existing instance,
-rather than as a copy.
-
 .. note::
 
-   The description above refers to the “copying” of
-   strings, arrays, and dictionaries.
+   This behavior is different from Foundation:
+   ``NSString``, ``NSArray``, and ``NSDictionary``
+   are implemented as classes, not structures.
+   Strings, arrays, and dictionaries in Foundation are always
+   assigned and passed around as a reference to an existing instance,
+   rather than as a copy.
