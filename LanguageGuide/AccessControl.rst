@@ -899,18 +899,30 @@ on any type that adopts the protocol.
    !! public var publicProperty: Int { get }
    !! ^~~~~~~
    !!-
+   !! <REPL Input>:2:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !! public var publicProperty: Int { get }
+   !! ^
    !! <REPL Input>:3:6: error: 'internal' modifier cannot be used in protocols
    !! internal var internalProperty: Int { get }
    !! ^~~~~~~~~
    !!-
+   !! <REPL Input>:3:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !! internal var internalProperty: Int { get }
+   !! ^
    !! <REPL Input>:4:6: error: 'fileprivate' modifier cannot be used in protocols
    !! fileprivate var filePrivateProperty: Int { get }
    !! ^~~~~~~~~~~~
    !!-
+   !! <REPL Input>:4:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !! fileprivate var filePrivateProperty: Int { get }
+   !! ^
    !! <REPL Input>:5:6: error: 'private' modifier cannot be used in protocols
    !! private var privateProperty: Int { get }
    !! ^~~~~~~~
    !!-
+   !! <REPL Input>:5:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !! private var privateProperty: Int { get }
+   !! ^
 
 .. note::
 
