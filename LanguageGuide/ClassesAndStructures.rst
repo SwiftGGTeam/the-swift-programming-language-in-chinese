@@ -57,13 +57,13 @@ Instead, structures follow the model that instances
 are always copied when they are passed around in your code.
 However, this model doesn't require the performance cost
 of actually making a copy immediately.
-Swift uses an optimization called :newTerm:`copy on write`:
 Swift uses the same memory
 for the original instance of a structure and its copy,
 without actually making any copies,
 as long as neither instance is modified.
 Before modifying one of them, Swift makes a copy,
 and then modifies the copy.
+(This optimization is called :newTerm:`copy on write`.)
 The behavior you see in your code for structures
 is always as if a copy took place immediately.
 
