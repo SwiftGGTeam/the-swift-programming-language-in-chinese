@@ -319,6 +319,26 @@ Because they are separate instances,
 setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``.
 
+.. XXX Fix image
+
+::
+
+    BEFORE
+
+    hd --> Resolution
+           width = 1920
+
+    AFTER
+
+    hd --> Resolution
+           width = 1920
+
+    cinema --> Resolution
+               width = 2048
+
+.. image:: ../images/sharedStateStruct_2x.png
+   :align: center
+
 The same behavior applies to enumerations:
 
 .. testcode:: ClassesAndStructures
@@ -382,6 +402,23 @@ and the frame rate of ``alsoTenEighty`` is modified:
 Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
 Effectively, they are just two different names for the same single instance.
+
+.. XXX Fix image
+
+::
+
+   BEFORE
+   tenEighty --> VideoMode
+                 (...)
+                 frameRate = 25.0
+
+   AFTER
+   tenEighty ------> VideoMode
+   alsoTenEighty --> (...)
+                     frameRate = 30
+
+.. image:: ../images/sharedStateClass_2x.png
+   :align: center
 
 Checking the ``frameRate`` property of ``tenEighty``
 shows that it correctly reports the new frame rate of ``30.0``
