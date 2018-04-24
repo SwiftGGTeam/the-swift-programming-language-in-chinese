@@ -192,10 +192,8 @@ In this example,
 ``someResolution.width`` refers to the ``width`` property of ``someResolution``,
 and returns its default initial value of ``0``.
 
-You can drill down into sub-properties,
+You can drill down into subproperties,
 such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
-
-.. XXX Confirm hyphenation of "sub-properties"
 
 .. testcode:: ClassesAndStructures
 
@@ -213,7 +211,7 @@ You can also use dot syntax to assign a new value to a variable property:
 .. note::
 
    Unlike Objective-C,
-   Swift enables you to set sub-properties of a structure property directly.
+   Swift enables you to set subproperties of a structure property directly.
    In the last example above,
    the ``width`` property of the ``resolution`` property of ``someVideoMode`` is set directly,
    without your needing to set the entire ``resolution`` property to a new value.
