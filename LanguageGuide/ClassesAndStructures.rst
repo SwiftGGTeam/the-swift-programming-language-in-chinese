@@ -326,14 +326,17 @@ doesn't affect the width stored in ``hd``.
     BEFORE
 
     hd --> Resolution
+           height = 1080
            width = 1920
 
     AFTER
 
     hd --> Resolution
+           height = 1080
            width = 1920
 
     cinema --> Resolution
+               height = 1080
                width = 2048
 
 .. image:: ../images/sharedStateStruct_2x.png
