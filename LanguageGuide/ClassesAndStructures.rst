@@ -1,14 +1,14 @@
-Classes and Structures
+Structures and Classes
 ======================
 
-:newTerm:`Classes` and :newTerm:`structures` are general-purpose,
+:newTerm:`Structures` and :newTerm:`classes` are general-purpose,
 flexible constructs that become the building blocks of your program's code.
-You define properties and methods to add functionality to your classes and structures
+You define properties and methods to add functionality to your structures and classes
 by using exactly the same syntax as for constants, variables, and functions.
 
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
-for custom classes and structures.
+for custom structures and classes.
 In Swift, you define a class or a structure in a single file,
 and the external interface to that class or structure is
 automatically made available for other code to use.
@@ -16,7 +16,7 @@ automatically made available for other code to use.
 .. note::
 
    An instance of a *class* is traditionally known as an :newTerm:`object`.
-   However, Swift classes and structures
+   However, Swift structures and classes
    are much closer in functionality than in other languages,
    and much of this chapter describes functionality that can apply to
    instances of *either* a class or a structure type.
@@ -24,10 +24,10 @@ automatically made available for other code to use.
 
 .. _ClassesAndStructures_ComparingClassesAndStructures:
 
-Comparing Classes and Structures
+Comparing Structures and Classes
 --------------------------------
 
-Classes and structures in Swift have many things in common.
+Structures and classes in Swift have many things in common.
 Both can:
 
 * Define properties to store values
@@ -71,28 +71,30 @@ is always as if a copy took place immediately.
    is in terms of the model (and talks about eager copying),
    or audit the rest of the chapter & book to rephrase those.
 
+.. XXX forward reference to the "choosing" section below
+
 .. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
 ~~~~~~~~~~~~~~~~~
 
-Classes and structures have a similar definition syntax.
-You introduce classes with the ``class`` keyword
-and structures with the ``struct`` keyword.
+Structures and classes have a similar definition syntax.
+You introduce structures with the ``struct`` keyword
+and classes with the ``class`` keyword.
 Both place their entire definition within a pair of braces:
 
 .. testcode:: ClassesAndStructures
 
-   -> class SomeClass {
-         // class definition goes here
-      }
    -> struct SomeStructure {
          // structure definition goes here
+      }
+   -> class SomeClass {
+         // class definition goes here
       }
 
 .. note::
 
-   Whenever you define a new class or structure,
+   Whenever you define a new structure or class,
    you define a brand new Swift type.
    Give types ``UpperCamelCase`` names
    (such as ``SomeClass`` and ``SomeStructure`` here)
@@ -140,7 +142,7 @@ or “no ``name`` value”, because it is of an optional type.
 
 .. _ClassesAndStructures_ClassAndStructureInstances:
 
-Class and Structure Instances
+Structure and Class Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Resolution`` structure definition and the ``VideoMode`` class definition
@@ -517,7 +519,7 @@ does not mean the same thing as “equal to” (represented by two equals signs,
   two instances are considered “equal” or “equivalent” in value,
   for some appropriate meaning of “equal”, as defined by the type's designer.
 
-When you define your own custom classes and structures,
+When you define your own custom structures and classes,
 it is your responsibility to decide what qualifies as two instances being “equal”.
 The process of defining your own implementations of the “equal to” and “not equal to” operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
@@ -574,10 +576,10 @@ Instead, these references are defined like any other constant or variable in Swi
 
 .. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
 
-Choosing Between Classes and Structures
+Choosing Between Structures and Classes
 ---------------------------------------
 
-You can use both classes and structures to define custom data types to use as
+You can use both structures and classes to define custom data types to use as
 the building blocks of your program's code.
 
 However, structure instances are always passed by *value*,
