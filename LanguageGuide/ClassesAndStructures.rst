@@ -317,7 +317,8 @@ The end result is two completely separate instances,
 which just happened to contain the same numeric values.
 Because they are separate instances,
 setting the width of ``cinema`` to ``2048``
-doesn't affect the width stored in ``hd``.
+doesn't affect the width stored in ``hd``,
+as shown in the figure below:
 
 .. XXX Fix image
 
@@ -404,7 +405,8 @@ and the frame rate of ``alsoTenEighty`` is modified:
 
 Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
-Effectively, they are just two different names for the same single instance.
+Effectively, they are just two different names for the same single instance,
+as shown in the figure below:
 
 .. XXX Fix image
 
