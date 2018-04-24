@@ -41,9 +41,7 @@ For more information, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
-Classes have additional capabilities that structures do not:
-
-.. XXX replace "capabilities" with a less attractive word
+Classes have additional capabilities that structures don't have:
 
 * Inheritance enables one class to inherit the characteristics of another.
 * Type casting enables you to check and interpret the type of a class instance at runtime.
@@ -54,26 +52,20 @@ For more information, see
 :doc:`Inheritance`, :doc:`TypeCasting`, :doc:`Deinitialization`,
 and :doc:`AutomaticReferenceCounting`.
 
-Structures don't use reference counting.
-Instead, structures follow the model that instances
-are always copied when they are passed around in your code.
-However, this model doesn't require the performance cost
-of actually making a copy immediately.
-Swift uses the same memory
-for the original instance of a structure and its copy,
-without actually making any copies,
-as long as neither instance is modified.
-Before modifying one of them, Swift makes a copy,
-and then modifies the copy.
-(This optimization is called :newTerm:`copy on write`.)
-The behavior you see in your code for structures
-is always as if a copy took place immediately.
+The additional capabilities that classes support
+come at the cost of increased complexity.
+As a general guideline,
+prefer structures and enumerations because they're easier to reason about,
+and use classes when they're appropriate or necessary.
+In practice, this means most of the custom data types you define
+will be structures and enumerations.
 
-.. XXX Either add a caveat here that the rest of the struct discussion
-   is in terms of the model (and talks about eager copying),
-   or audit the rest of the chapter & book to rephrase those.
+.. XXX Add link to end of para above
+    Article is tracked by <rdar://problem/39444658>.
+    URL should be stable after curation signoff.
 
-.. XXX forward reference to the "choosing" section below
+    For a more detailed comparison,
+    see `Choosing Between Structures and Classes <....>`_.
 
 .. _ClassesAndStructures_DefinitionSyntax:
 
@@ -149,7 +141,7 @@ Structure and Class Instances
 
 The ``Resolution`` structure definition and the ``VideoMode`` class definition
 only describe what a ``Resolution`` or ``VideoMode`` will look like.
-They themselves do not describe a specific resolution or video mode.
+They themselves don't describe a specific resolution or video mode.
 To do that, you need to create an instance of the structure or class.
 
 The syntax for creating instances is very similar for both structures and classes:
@@ -180,8 +172,6 @@ Accessing Properties
 You can access the properties of an instance using :newTerm:`dot syntax`.
 In dot syntax, you write the property name immediately after the instance name,
 separated by a period (``.``), without any spaces:
-
-.. XXX Whitespace is actually allowed in dot notation
 
 .. testcode:: ClassesAndStructures
 
@@ -234,7 +224,7 @@ can be passed to the memberwise initializer by name:
    -> let vga = Resolution(width: 640, height: 480)
    << // vga : Resolution = REPL.Resolution(width: 640, height: 480)
 
-Unlike structures, class instances do not receive a default memberwise initializer.
+Unlike structures, class instances don't receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
 
 .. assertion:: classesDontHaveADefaultMemberwiseInitializer
@@ -253,10 +243,6 @@ Structures and Enumerations Are Value Types
 A :newTerm:`value type` is a type whose value is *copied*
 when it's assigned to a variable or constant,
 or when it's passed to a function.
-
-.. XXX Fold in as another way to position this:
-   think of a structure as being like one big value.
-   When you change one of its properties, you're actually changing its overall value.
 
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift ---
@@ -370,6 +356,23 @@ the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
+.. note::
+
+    The model in Swift is that instances of a value type
+    are always copied when they are passed around in your code.
+    However, this model doesn't require the performance cost
+    of actually making a copy *immediately*.
+    Swift uses the same memory
+    for the original instance and its copy,
+    without actually making any copies,
+    as long as neither instance is modified.
+    Before modifying one of them, Swift makes a copy,
+    and then modifies the copy.
+    This optimization is called :newTerm:`copy on write`
+    and is sometimes abbreviated COW.
+    The behavior you see in your code for structures and enumerations
+    is always as if a copy took place immediately.
+
 .. _ClassesAndStructures_ClassesAreReferenceTypes:
 
 Classes Are Reference Types
@@ -437,11 +440,21 @@ from the underlying ``VideoMode`` instance:
    -> print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
    <- The frameRate property of tenEighty is now 30.0
 
+This example also shows how reference types can be harder to reason about.
+If ``tenEighty`` and ``alsoTenEighty`` were far apart in your program's code,
+it could be difficult to find all the ways that the video mode is changed.
+Wherever you use ``tenEighty`` in your code,
+you also have to think about the code that interacts with ``alsoTenEighty``,
+and vice versa.
+In contrast, value types are easier to reason about
+because all of the code that interacts with the same value
+is close together in your source files.
+
 Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
 rather than variables.
 However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameRate`` because
-the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
-``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance ---
+the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves don't actually change.
+``tenEighty`` and ``alsoTenEighty`` themselves don't “store” the ``VideoMode`` instance ---
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
 It's the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
@@ -569,79 +582,12 @@ but isn't a direct pointer to an address in memory,
 and does not require you to write an asterisk (``*``)
 to indicate that you are creating a reference.
 Instead, these references are defined like any other constant or variable in Swift.
+The standard library provides types like
+`UnsafePointer <//apple_ref/swift/struct/s:SP>`_
+that you can use if you need to interact with pointers directly.
 
 .. TODO: functions aren't "instances". This needs clarifying.
 
 .. TODO: Add a justification here to say why this is a good thing.
 
-.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
-
-Choosing Between Structures and Classes
----------------------------------------
-
-You can use both structures and classes to define custom data types to use as
-the building blocks of your program's code.
-
-However, structure instances are always passed by *value*,
-and class instances are always passed by *reference*.
-This means that they are suited to different kinds of tasks.
-As you consider the data constructs and functionality that you need for a project,
-decide whether each data construct should be defined as a class or as a structure.
-
-.. XXX From here to the end of the section needs to reframe
-   with structs as the default abstraction.
-
-As a general guideline, consider creating a structure when
-one or more of these conditions apply:
-
-* The structure's primary purpose is to encapsulate a few relatively simple data values.
-* It's reasonable to expect that the encapsulated values will be copied rather than referenced
-  when you assign or pass around an instance of that structure.
-* Any properties stored by the structure are themselves value types,
-  which would also be expected to be copied rather than referenced.
-* The structure does not need to inherit properties or behavior from another existing type.
-
-Examples of good candidates for structures include:
-
-* The size of a geometric shape,
-  perhaps encapsulating a ``width`` property and a ``height`` property,
-  both of type ``Double``.
-* A way to refer to ranges within a series,
-  perhaps encapsulating a ``start`` property and a ``length`` property,
-  both of type ``Int``.
-* A point in a 3D coordinate system,
-  perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``.
-
-In all other cases, define a class, and create instances of that class
-to be managed and passed by reference.
-In practice, this means that most custom data constructs should be classes,
-not structures.
-
 .. QUESTION: what's the deal with tuples and reference types / value types?
-
-.. TODO: Tim has suggested using Window as a good example here ---
-   its location is a structure, but it doesn't make sense for Window
-   to be a value type, as it isn't copied when passed around.
-
-.. _ClassesAndStructures_AssignmentAndCopyBehaviorForStringsArraysAndDictionaries:
-
-Assignment and Copy Behavior for Strings, Arrays, and Dictionaries
-------------------------------------------------------------------
-
-.. XXX do we even need this section?
-
-In Swift,
-many basic data types such as ``String``, ``Array``, and ``Dictionary``
-are implemented as structures.
-This means that data such as strings, arrays, and dictionaries
-are copied when they are assigned to
-a new constant or variable, or when they are passed to a function or method.
-
-.. note::
-
-   This behavior is different from Foundation:
-   ``NSString``, ``NSArray``, and ``NSDictionary``
-   are implemented as classes, not structures.
-   Strings, arrays, and dictionaries in Foundation are always
-   assigned and passed around as a reference to an existing instance,
-   rather than as a copy.
