@@ -43,6 +43,8 @@ For more information, see
 
 Classes have additional capabilities that structures do not:
 
+.. XXX replace "capabilities" with a less attractive word
+
 * Inheritance enables one class to inherit the characteristics of another.
 * Type casting enables you to check and interpret the type of a class instance at runtime.
 * Deinitializers enable an instance of a class to free up any resources it has assigned.
@@ -138,7 +140,7 @@ an ``interlaced`` setting of ``false`` (meaning “noninterlaced video”),
 a playback frame rate of ``0.0``,
 and an optional ``String`` value called ``name``.
 The ``name`` property is automatically given a default value of ``nil``,
-or “no ``name`` value”, because it is of an optional type.
+or “no ``name`` value”, because it's of an optional type.
 
 .. _ClassesAndStructures_ClassAndStructureInstances:
 
@@ -251,10 +253,11 @@ Structures and Enumerations Are Value Types
 -------------------------------------------
 
 A :newTerm:`value type` is a type whose value is *copied*
-when it is assigned to a variable or constant,
-or when it is passed to a function.
+when it's assigned to a variable or constant,
+or when it's passed to a function.
 
-.. TODO: Another way to position this: think of a structure as being like one big value.
+.. XXX Fold in as another way to position this:
+   think of a structure as being like one big value.
    When you change one of its properties, you're actually changing its overall value.
 
 You've actually been using value types extensively throughout the previous chapters.
@@ -363,7 +366,7 @@ The same behavior applies to enumerations:
    <- The remembered direction is still .west
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
-it is actually set to a copy of that value.
+it's actually set to a copy of that value.
 Changing the value of ``currentDirection`` thereafter does not affect
 the copy of the original value that was stored in ``rememberedDirection``.
 
@@ -377,7 +380,7 @@ Classes Are Reference Types
 Unlike value types, :newTerm:`reference types` are *not* copied
 when they are assigned to a variable or constant,
 or when they are passed to a function.
-Rather than a copy, a reference to the same existing instance is used instead.
+Rather than a copy, a reference to the same existing instance is used.
 
 Here's an example, using the ``VideoMode`` class defined above:
 
@@ -393,8 +396,8 @@ Here's an example, using the ``VideoMode`` class defined above:
 This example declares a new constant called ``tenEighty``
 and sets it to refer to a new instance of the ``VideoMode`` class.
 The video mode is assigned a copy of the HD resolution of ``1920`` by ``1080`` from before.
-It is set to be interlaced, and is given a name of ``"1080i"``.
-Finally, it is set to a frame rate of ``25.0`` frames per second.
+It's set to be interlaced, and is given a name of ``"1080i"``.
+Finally, it's set to a frame rate of ``25.0`` frames per second.
 
 Next, ``tenEighty`` is assigned to a new constant, called ``alsoTenEighty``,
 and the frame rate of ``alsoTenEighty`` is modified:
@@ -442,7 +445,7 @@ However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameR
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
 ``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance ---
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
-It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
+It's the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
 
 .. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
@@ -458,9 +461,9 @@ Identity Operators
 ~~~~~~~~~~~~~~~~~~
 
 Because classes are reference types,
-it is possible for multiple constants and variables to refer to
+it's possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
-(The same is not true for structures and enumerations,
+(The same isn't true for structures and enumerations,
 because they are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
@@ -494,7 +497,7 @@ or passed to a function.)
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
 
-It can sometimes be useful to find out if two constants or variables refer to
+It can sometimes be useful to find out whether two constants or variables refer to
 exactly the same instance of a class.
 To enable this, Swift provides two identity operators:
 
@@ -511,16 +514,15 @@ Use these operators to check whether two constants or variables refer to the sam
    <- tenEighty and alsoTenEighty refer to the same VideoMode instance.
 
 Note that “identical to” (represented by three equals signs, or ``===``)
-does not mean the same thing as “equal to” (represented by two equals signs, or ``==``):
-
-* “Identical to” means that
-  two constants or variables of class type refer to exactly the same class instance.
-* “Equal to” means that
-  two instances are considered “equal” or “equivalent” in value,
-  for some appropriate meaning of “equal”, as defined by the type's designer.
+does not mean the same thing as “equal to” (represented by two equals signs, or ``==``).
+“Identical to” means that
+two constants or variables of class type refer to exactly the same class instance.
+“Equal to” means that
+two instances are considered “equal” or “equivalent” in value,
+for some appropriate meaning of “equal”, as defined by the type's designer.
 
 When you define your own custom structures and classes,
-it is your responsibility to decide what qualifies as two instances being “equal”.
+it's your responsibility to decide what qualifies as two instances being “equal”.
 The process of defining your own implementations of the “equal to” and “not equal to” operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
@@ -565,7 +567,7 @@ If you have experience with C, C++, or Objective-C,
 you may know that these languages use :newTerm:`pointers` to refer to addresses in memory.
 A Swift constant or variable that refers to an instance of some reference type
 is similar to a pointer in C,
-but is not a direct pointer to an address in memory,
+but isn't a direct pointer to an address in memory,
 and does not require you to write an asterisk (``*``)
 to indicate that you are creating a reference.
 Instead, these references are defined like any other constant or variable in Swift.
@@ -595,7 +597,7 @@ As a general guideline, consider creating a structure when
 one or more of these conditions apply:
 
 * The structure's primary purpose is to encapsulate a few relatively simple data values.
-* It is reasonable to expect that the encapsulated values will be copied rather than referenced
+* It's reasonable to expect that the encapsulated values will be copied rather than referenced
   when you assign or pass around an instance of that structure.
 * Any properties stored by the structure are themselves value types,
   which would also be expected to be copied rather than referenced.
@@ -621,7 +623,7 @@ not structures.
 
 .. TODO: Tim has suggested using Window as a good example here ---
    its location is a structure, but it doesn't make sense for Window
-   to be a value type, as it is not copied when passed around.
+   to be a value type, as it isn't copied when passed around.
 
 .. _ClassesAndStructures_AssignmentAndCopyBehaviorForStringsArraysAndDictionaries:
 
