@@ -4,7 +4,7 @@ Structures and Classes
 :newTerm:`Structures` and :newTerm:`classes` are general-purpose,
 flexible constructs that become the building blocks of your program's code.
 You define properties and methods to add functionality to your structures and classes
-by using exactly the same syntax as for constants, variables, and functions.
+using the same syntax you use to define constants, variables, and functions.
 
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
@@ -15,10 +15,10 @@ automatically made available for other code to use.
 
 .. note::
 
-   An instance of a *class* is traditionally known as an :newTerm:`object`.
+   An instance of a class is traditionally known as an :newTerm:`object`.
    However, Swift structures and classes
    are much closer in functionality than in other languages,
-   and much of this chapter describes functionality that can apply to
+   and much of this chapter describes functionality that applies to
    instances of *either* a class or a structure type.
    Because of this, the more general term :newTerm:`instance` is used.
 
@@ -91,10 +91,10 @@ Both place their entire definition within a pair of braces:
    Whenever you define a new structure or class,
    you define a brand new Swift type.
    Give types ``UpperCamelCase`` names
-   (such as ``SomeClass`` and ``SomeStructure`` here)
+   (such as ``SomeStructure`` and ``SomeClass`` here)
    to match the capitalization of standard Swift types
    (such as ``String``, ``Int``, and ``Bool``).
-   Conversely, always give properties and methods ``lowerCamelCase`` names
+   Give properties and methods ``lowerCamelCase`` names
    (such as ``frameRate`` and ``incrementCount``)
    to differentiate them from type names.
 
@@ -117,7 +117,7 @@ The example above defines a new structure called ``Resolution``,
 to describe a pixel-based display resolution.
 This structure has two stored properties called ``width`` and ``height``.
 Stored properties are constants or variables that are bundled up and stored
-as part of the class or structure.
+as part of the structure or class.
 These two properties are inferred to be of type ``Int``
 by setting them to an initial integer value of ``0``.
 
@@ -254,6 +254,8 @@ This means that any structure and enumeration instances you create ---
 and any value types they have as properties ---
 are always copied when they are passed around in your code.
 
+.. XXX try moving the COW note here
+
 Consider this example, which uses the ``Resolution`` structure from the previous example:
 
 .. testcode:: ClassesAndStructures
@@ -266,7 +268,7 @@ Consider this example, which uses the ``Resolution`` structure from the previous
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
 the width and height of full HD video
-(``1920`` pixels wide by ``1080`` pixels high).
+(1920 pixels wide by 1080 pixels high).
 
 It then declares a variable called ``cinema``
 and sets it to the current value of ``hd``.
@@ -278,7 +280,7 @@ they are two completely different instances behind the scenes.
 
 Next, the ``width`` property of ``cinema`` is amended to be
 the width of the slightly-wider 2K standard used for digital cinema projection
-(``2048`` pixels wide and ``1080`` pixels high):
+(2048 pixels wide and 1080 pixels high):
 
 .. testcode:: ClassesAndStructures
 
@@ -443,8 +445,8 @@ from the underlying ``VideoMode`` instance:
 This example also shows how reference types can be harder to reason about.
 If ``tenEighty`` and ``alsoTenEighty`` were far apart in your program's code,
 it could be difficult to find all the ways that the video mode is changed.
-Wherever you use ``tenEighty`` in your code,
-you also have to think about the code that interacts with ``alsoTenEighty``,
+Wherever you use ``tenEighty``,
+you also have to think about the code that uses ``alsoTenEighty``,
 and vice versa.
 In contrast, value types are easier to reason about
 because all of the code that interacts with the same value
