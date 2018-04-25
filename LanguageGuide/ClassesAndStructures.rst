@@ -254,7 +254,22 @@ This means that any structure and enumeration instances you create ---
 and any value types they have as properties ---
 are always copied when they are passed around in your code.
 
-.. XXX try moving the COW note here
+.. note::
+
+    The model in Swift is that instances of a value type
+    are always copied when they are passed around in your code.
+    However, this model doesn't require the performance cost
+    of actually making a copy *immediately*.
+    Swift uses the same memory
+    for the original instance and its copy,
+    without actually making any copies,
+    as long as neither instance is modified.
+    Before modifying one of them, Swift makes a copy,
+    and then modifies the copy.
+    This optimization is called :newTerm:`copy on write`
+    and is sometimes abbreviated COW.
+    The behavior you see in your code for structures and enumerations
+    is always as if a copy took place immediately.
 
 Consider this example, which uses the ``Resolution`` structure from the previous example:
 
@@ -357,23 +372,6 @@ Changing the value of ``currentDirection`` thereafter does not affect
 the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
-
-.. note::
-
-    The model in Swift is that instances of a value type
-    are always copied when they are passed around in your code.
-    However, this model doesn't require the performance cost
-    of actually making a copy *immediately*.
-    Swift uses the same memory
-    for the original instance and its copy,
-    without actually making any copies,
-    as long as neither instance is modified.
-    Before modifying one of them, Swift makes a copy,
-    and then modifies the copy.
-    This optimization is called :newTerm:`copy on write`
-    and is sometimes abbreviated COW.
-    The behavior you see in your code for structures and enumerations
-    is always as if a copy took place immediately.
 
 .. _ClassesAndStructures_ClassesAreReferenceTypes:
 
