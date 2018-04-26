@@ -163,6 +163,47 @@ you can provide a ``default`` case to cover any cases that are not addressed exp
       }
    <- Mostly harmless
 
+.. _Enumerations_AllCases:
+
+Iterating over Enumeration Cases
+--------------------------------
+
+If you want to be able to iterate over all the cases of an enumeration,
+write ``: CaseIterable`` after the enumeration's name.
+This syntax marks the enumeration as conforming to the ``CaseIterable`` protocol.
+For information about protocols, see :doc:`Protocols`.
+Here's an example:
+
+.. XXX live link to CaseIterable reference
+
+.. testcode:: enums
+
+    -> enum Beverage: CaseIterable {
+           case coffee, tea, juice
+       }
+    ---
+    -> print("\(Beverage.allCases.count) choices available:")
+    -> for beverage in Beverage.allCases {
+           print(beverage)
+       }
+    << 3 choices available:
+    << coffee
+    << tea
+    << juice
+    // 3 choices available:
+    // coffee
+    // tea
+    // juice
+
+In the example above,
+writing ``Beverage.allCases`` lets you access a collection
+that contains all of that enumeration's cases.
+This collection is used to print the number of beverage choices
+and to print a list of all the available options.
+By using the ``allCases`` property,
+the printed information always matches the enumeration,
+even if cases are added or removed later on.
+
 .. _Enumerations_AssociatedValues:
 
 Associated Values
