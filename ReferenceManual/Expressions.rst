@@ -962,11 +962,13 @@ to the expression's value.
     >> class C {
     >> let title = "Title"
     >> func method() {
-    -> myFunction { print(self.title) }                    // strong capture
+    -> myFunction { print(self.title) }                    // implicit strong capture
+    -> myFunction { [self] in print(self.title) }          // explicit strong capture
     -> myFunction { [weak self] in print(self!.title) }    // weak capture
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
     >> } }
     >> C().method()
+    << Title
     << Title
     << Title
     << Title
