@@ -213,6 +213,19 @@ You can apply a declaration attribute to declarations only.
     .. See also <rdar://problem/27287369> Document @GKInspectable attribute
        which we will want to link to, once it's written.
 
+``inlinable``
+    Apply this attribute to a
+    function, method, computed property, subscript,
+    convenience initializer, or deinitializer declaration
+    to expose that declaration's implementation
+    as part of the module's public interface.
+
+    This attribute can't be applied
+    to ``fileprivate`` or ``private`` declaration
+    or to nested declarations.
+    Functions and closures that are defined inside a public inlinable function
+    are implicitly inlinable.
+
 ``nonobjc``
     Apply this attribute to a
     method, property, subscript, or initializer declaration
@@ -395,6 +408,23 @@ You can apply a declaration attribute to declarations only.
     as its principal class,
     call the ``UIApplicationMain(_:_:_:_:)`` function
     instead of using this attribute.
+
+``usableFromInline``
+    Apply this attribute to a
+    function, method, computed property, subscript,
+    initializer, or deinitializer declaration
+    to allow that symbol to be used in inlinable code
+    that's defined in the same module as the declaration.
+    The declaration must have the ``internal`` access level modifier.
+
+    This attribute and the ``public`` access level modifier
+    both expose the declaration as part of the module's public interface.
+    Unlike ``public``,
+    the compiler doesn't allow declarations marked with ``usableFromInline``
+    to be used by code outside the module,
+    even though the declaration's symbol is exported.
+    However, code outside the module might still be able to interact
+    use the declaration's symbol using runtime behavior.
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
