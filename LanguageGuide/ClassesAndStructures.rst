@@ -326,26 +326,6 @@ setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``,
 as shown in the figure below:
 
-.. XXX Fix image
-
-::
-
-    BEFORE
-
-    hd --> Resolution
-           height = 1080
-           width = 1920
-
-    AFTER
-
-    hd --> Resolution
-           height = 1080
-           width = 1920
-
-    cinema --> Resolution
-               height = 1080
-               width = 2048
-
 .. image:: ../images/sharedStateStruct_2x.png
    :align: center
 
@@ -413,20 +393,6 @@ Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
 Effectively, they are just two different names for the same single instance,
 as shown in the figure below:
-
-.. XXX Fix image
-
-::
-
-   BEFORE
-   tenEighty --> VideoMode
-                 (...)
-                 frameRate = 25.0
-
-   AFTER
-   tenEighty ------> VideoMode
-   alsoTenEighty --> (...)
-                     frameRate = 30
 
 .. image:: ../images/sharedStateClass_2x.png
    :align: center
