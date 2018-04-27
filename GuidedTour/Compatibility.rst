@@ -1,16 +1,16 @@
 Version Compatibility
 =====================
 
-This book describes Swift 4.1,
-the default version of Swift that's included in Xcode 9.3.
-You can use Xcode 9.3 to build targets
+This book describes Swift 4.2,
+the default version of Swift that's included in Xcode 10.0.
+You can use Xcode 10.0 to build targets
 that are written in either Swift 4 or Swift 3.
 
 .. assertion:: swift-version
 
-   >> #if swift(>=4.1.1)
+   >> #if swift(>=4.2.1)
    >>     print("Too new")
-   >> #elseif swift(>=4.1)
+   >> #elseif swift(>=4.2)
    >>     print("Just right")
    >> #else
    >>     print("Too old")
@@ -19,10 +19,10 @@ that are written in either Swift 4 or Swift 3.
 
 .. note::
 
-    When the Swift 4 compiler is working with Swift 3 code,
-    it identifies its language version as 3.2.
+    When the Swift 4.2 compiler is working with Swift 3 code,
+    it identifies its language version as 3.3.
     As a result, you can use conditional compilation blocks
-    like ``#if swift(>=3.2)`` to write code
+    like ``#if swift(>=3.3)`` to write code
     that's compatible with multiple versions of the Swift compiler.
 
 .. The incantation to determine which Swift you're on:
