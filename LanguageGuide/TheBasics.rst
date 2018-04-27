@@ -1194,9 +1194,12 @@ when accessing their wrapped value as an explicit ``String``:
    << // forcedString : String = "An optional string."
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = Optional("An implicitly unwrapped optional string.")
+   << // assumedString : String? = Optional("An implicitly unwrapped optional string.")
    -> let implicitString: String = assumedString // no need for an exclamation mark
    << // implicitString : String = "An implicitly unwrapped optional string."
+
+.. XXX String! is no longer a type
+   Point out that both possibleString and assumedString have type String?.
 
 You can think of an implicitly unwrapped optional as
 giving permission for the optional to be unwrapped automatically whenever it's used.
