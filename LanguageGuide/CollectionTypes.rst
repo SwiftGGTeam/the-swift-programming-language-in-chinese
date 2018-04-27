@@ -644,8 +644,8 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
          print("\(genre)")
       }
    </ [Tool J]
-   </ Hip hop
    </ Classical
+   </ Hip hop
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -695,11 +695,11 @@ with the results of various set operations represented by the shaded regions.
 .. testcode:: setOperations
 
    -> let oddDigits: Set = [1, 3, 5, 7, 9]
-   << // oddDigits : Set<Int> = Set([5, 7, 3, 1, 9])
+   << // oddDigits : Set<Int> = Set([5, 1, 9, 7, 3])
    -> let evenDigits: Set = [0, 2, 4, 6, 8]
-   << // evenDigits : Set<Int> = Set([6, 2, 0, 4, 8])
+   << // evenDigits : Set<Int> = Set([4, 2, 6, 0, 8])
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-   << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
+   << // singleDigitPrimeNumbers : Set<Int> = Set([2, 5, 7, 3])
    ---
    -> oddDigits.union(evenDigits).sorted()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -741,11 +741,11 @@ because they share no elements in common.
 .. testcode:: setOperations
 
    -> let houseAnimals: Set = ["🐶", "🐱"]
-   << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
+   << // houseAnimals : Set<String> = Set(["🐱", "🐶"])
    -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-   << // farmAnimals : Set<String> = Set(["🐮", "🐔", "🐑", "🐶", "🐱"])
+   << // farmAnimals : Set<String> = Set(["🐑", "🐶", "🐱", "🐔", "🐮"])
    -> let cityAnimals: Set = ["🐦", "🐭"]
-   << // cityAnimals : Set<String> = Set(["🐦", "🐭"])
+   << // cityAnimals : Set<String> = Set(["🐭", "🐦"])
    ---
    -> houseAnimals.isSubset(of: farmAnimals)
    << // r4 : Bool = true
@@ -859,7 +859,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
+   << // airports : [String : String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -890,7 +890,7 @@ The initialization of ``airports`` could have been written in a shorter form ins
 .. testcode:: dictionariesInferred
 
    -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
+   << // airports : [String : String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
