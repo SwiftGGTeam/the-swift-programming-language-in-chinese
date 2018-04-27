@@ -219,12 +219,30 @@ You can apply a declaration attribute to declarations only.
     convenience initializer, or deinitializer declaration
     to expose that declaration's implementation
     as part of the module's public interface.
+    The compiler is allowed to inline calls to this declaration
+    by inserting a copy of its implementation at the call site
+    instead of using an actual call.
 
     This attribute can't be applied
-    to ``fileprivate`` or ``private`` declaration
+    to ``fileprivate`` or ``private`` declaration,
     or to nested declarations.
     Functions and closures that are defined inside a public inlinable function
     are implicitly inlinable.
+
+    .. XXX Add an assertion like
+       @inline private func f() { }
+
+    Because inlined copies of a function aren't necessarily updated
+    if the function's implementation changes,
+    an inlinable function must be prepared to interact with
+    every past version of that function.
+    In most cases, this means
+    externally visible aspects of their implementation can't be changed.
+    For example,
+    an inlinable hash function can't change what algorithm is used ---
+    inlined copies would use the old algorithm
+    and the noninlined copy would use the new algorithm,
+    yielding inconsistent results.
 
 ``nonobjc``
     Apply this attribute to a
@@ -425,6 +443,15 @@ You can apply a declaration attribute to declarations only.
     even though the declaration's symbol is exported.
     However, code outside the module might still be able to interact
     use the declaration's symbol using runtime behavior.
+    
+    Declarations marked with the ``inlinable`` attribute
+    are implicitly usable from inlinable code.
+    Although either ``inlinable`` or ``usableFromInline``
+    can be applied to ``internal`` declarations,
+    applying both attributes is an error.
+
+    .. XXX Add an assertion like
+       @usableFromInline @inline internal func f() { }
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
