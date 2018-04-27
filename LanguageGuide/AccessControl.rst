@@ -633,7 +633,7 @@ the constant, variable, property, or subscript must also be marked as ``private`
 .. testcode:: accessControl
 
    -> private var privateInstance = SomePrivateClass()
-   <~ // privateInstance : SomePrivateClass = REPL.(SomePrivateClass in
+   <~ // privateInstance : SomePrivateClass =
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
 
