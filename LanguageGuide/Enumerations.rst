@@ -168,10 +168,14 @@ you can provide a ``default`` case to cover any cases that are not addressed exp
 Iterating over Enumeration Cases
 --------------------------------
 
-If you want to be able to iterate over all the cases of an enumeration,
-write ``: CaseIterable`` after the enumeration's name.
+For some enumerations,
+it's useful to have a collection of all of that enumeration's cases.
+You can enable this by
+writing ``: CaseIterable`` after the enumeration's name.
 This syntax marks the enumeration as conforming to the ``CaseIterable`` protocol.
 For information about protocols, see :doc:`Protocols`.
+Swift exposes a collection of all the cases
+as an ``allCases`` property of the enumeration.
 Here's an example:
 
 .. XXX live link to CaseIterable reference
@@ -181,12 +185,22 @@ Here's an example:
     -> enum Beverage: CaseIterable {
            case coffee, tea, juice
        }
-    ---
-    -> print("\(Beverage.allCases.count) choices available:")
+    -> let numberOfChoices = Beverage.allCases.count
+    -> print("\(numberOfChoices) beverages available")
+    << 3 beverages available
+
+In the example above,
+writing ``Beverage.allCases`` lets you access a collection
+that contains all of that enumeration's cases.
+You can use ``allCases`` like any other collection ---
+the example above counts how many cases there are,
+and the example below uses a ``for`` loop to iterate over all the cases.
+
+.. testcode:: enums
+
     -> for beverage in Beverage.allCases {
            print(beverage)
        }
-    << 3 choices available:
     << coffee
     << tea
     << juice
@@ -195,11 +209,8 @@ Here's an example:
     // tea
     // juice
 
-In the example above,
-writing ``Beverage.allCases`` lets you access a collection
-that contains all of that enumeration's cases.
-This collection is used to print the number of beverage choices
-and to print a list of all the available options.
+The ``for`` loop above iterates over the cases that ``Beverage`` has
+and prints them in a list.
 By using the ``allCases`` property,
 the printed information always matches the enumeration,
 even if cases are added or removed later on.
