@@ -1132,6 +1132,27 @@ resets the source code location back to the default line numbering and filename.
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
 
+.. _Statements_ErrorWarning:
+
+Compile-Time Diagnostic Statement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-outline::
+
+   #error(<#error message#>)
+   #warning(<#warning message#>)
+
+.. syntax-grammar::
+
+   Grammar of a compile-time diagnostic statement
+
+   diagnostic-statement --> ``#error`` ``(`` diagnostic-message ``)``
+   diagnostic-statement --> ``#warning`` ``(`` diagnostic-message ``)``
+
+   diagnostic-message --> static-string-literal
+
+.. As of Swift 4.2 (swiftlang-1000.0.9) both single- and multi-line
+   string literals are valid for the message.
 
 .. _Statements_AvailabilityCondition:
 

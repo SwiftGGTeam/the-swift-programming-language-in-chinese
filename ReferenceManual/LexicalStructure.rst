@@ -339,14 +339,16 @@ so they must be escaped with backticks in that context.
   ``#else``,
   ``#elseif``,
   ``#endif``,
-  ``#file``,
+  ``#error``,
   ``#fileLiteral``,
+  ``#file``,
   ``#function``,
   ``#if``,
   ``#imageLiteral``,
   ``#line``,
   ``#selector``,
-  and ``#sourceLocation``.
+  ``#sourceLocation``,
+  and ``#warning``.
 
 .. langref-grammar
 
