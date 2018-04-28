@@ -1137,10 +1137,23 @@ resets the source code location back to the default line numbering and filename.
 Compile-Time Diagnostic Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+A compile-time diagnostic statement causes the compiler
+to emit an error or warning during compilation.
+A compile-time diagnostic statement has the following forms:
+
 .. syntax-outline::
 
-   #error(<#error message#>)
-   #warning(<#warning message#>)
+   #error("<#error message#>")
+   #warning("<#warning message#>")
+
+The first form emits the *error message* as a fatal error
+and terminates the compilation process.
+The second form emits the *warning message* as a nonfatal warning
+and allows compilation to proceed.
+You write the diagnostic message as a static string literal,
+which can't use features like compile-time string concatenation
+or string interpolation,
+but can be a multiline string literal.
 
 .. syntax-grammar::
 
@@ -1151,8 +1164,36 @@ Compile-Time Diagnostic Statement
 
    diagnostic-message --> static-string-literal
 
-.. As of Swift 4.2 (swiftlang-1000.0.9) both single- and multi-line
-   string literals are valid for the message.
+.. assertion:: good-diagnostic-statement-messages
+   :compile: true
+
+   >> #warning("Single-line static string")
+   !! /tmp/swifttest.swift:1:10: warning: Single-line static string
+   !! #warning("Single-line static string")
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   >> #warning(
+      """
+      Multi-line string literal
+      warning message
+      """)
+   !! /tmp/swifttest.swift:3:1: warning: Multi-line string literal
+   !! warning message
+   !! """
+   !! ^~~
+
+.. assertion:: bad-diagnostic-statement-messages
+   :compile: true
+
+   >> #warning("Interpolated \(1+1) string")
+   !! /tmp/swifttest.swift:1:10: error: string interpolation is not allowed in #warning directives
+   !! #warning("Interpolated \(1+1) string")
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   >> #warning("Concatenated " + "strings")
+   !! /tmp/swifttest.swift:2:26: error: extra tokens following #warning directive
+   !! #warning("Concatenated " + "strings")
+   !! ^
 
 .. _Statements_AvailabilityCondition:
 
