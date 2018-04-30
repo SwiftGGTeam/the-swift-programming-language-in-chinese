@@ -7,7 +7,7 @@ You define properties and methods to add functionality to your structures and cl
 using the same syntax you use to define constants, variables, and functions.
 
 Unlike other programming languages,
-Swift does not require you to create separate interface and implementation files
+Swift doesn't require you to create separate interface and implementation files
 for custom structures and classes.
 In Swift, you define a structure or class in a single file,
 and the external interface to that class or structure is
@@ -214,7 +214,7 @@ You can also use dot syntax to assign a new value to a variable property:
 Memberwise Initializers for Structure Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-All structures have an automatically-generated :newTerm:`memberwise initializer`,
+All structures have an automatically generated :newTerm:`memberwise initializer`,
 which you can use to initialize the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
@@ -293,7 +293,7 @@ Even though ``hd`` and ``cinema`` now have the same width and height,
 they are two completely different instances behind the scenes.
 
 Next, the ``width`` property of ``cinema`` is amended to be
-the width of the slightly-wider 2K standard used for digital cinema projection
+the width of the slightly wider 2K standard used for digital cinema projection
 (2048 pixels wide and 1080 pixels high):
 
 .. testcode:: ClassesAndStructures
@@ -319,8 +319,8 @@ still has the old value of ``1920``:
 When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
 The end result is two completely separate instances,
-which just happened to contain the same numeric values.
-Because they are separate instances,
+contained the same numeric values.
+However, because they are separate instances,
 setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``,
 as shown in the figure below:
@@ -489,16 +489,16 @@ Use these operators to check whether two constants or variables refer to the sam
       }
    <- tenEighty and alsoTenEighty refer to the same VideoMode instance.
 
-Note that “identical to” (represented by three equals signs, or ``===``)
-does not mean the same thing as “equal to” (represented by two equals signs, or ``==``).
-“Identical to” means that
+Note that *identical to* (represented by three equals signs, or ``===``)
+does not mean the same thing as *equal to* (represented by two equals signs, or ``==``).
+*Identical to* means that
 two constants or variables of class type refer to exactly the same class instance.
-“Equal to” means that
-two instances are considered “equal” or “equivalent” in value,
-for some appropriate meaning of “equal”, as defined by the type's designer.
+*Equal to* means that
+two instances are considered equal or equivalent in value,
+for some appropriate meaning of *equal*, as defined by the type's designer.
 
 When you define your own custom structures and classes,
-it's your responsibility to decide what qualifies as two instances being “equal”.
+it's your responsibility to decide what qualifies as two instances being equal.
 The process of defining your own implementations of the “equal to” and “not equal to” operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
@@ -544,7 +544,7 @@ you may know that these languages use :newTerm:`pointers` to refer to addresses 
 A Swift constant or variable that refers to an instance of some reference type
 is similar to a pointer in C,
 but isn't a direct pointer to an address in memory,
-and does not require you to write an asterisk (``*``)
+and doesn't require you to write an asterisk (``*``)
 to indicate that you are creating a reference.
 Instead, these references are defined like any other constant or variable in Swift.
 The standard library provides types like
