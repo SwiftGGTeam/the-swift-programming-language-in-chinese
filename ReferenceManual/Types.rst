@@ -343,6 +343,17 @@ Restrictions for Nonescaping Closures
 +++++++++++++++++++++++++++++++++++++
 
 A parameter that's a nonescaping function
+can't be stored in a property, variable, or constant of type ``Any``,
+because that might allow the value to escape.
+
+.. assertion:: cant-store-nonescaping-as-Any
+
+    -> func f(g: ()->Void) { let x: Any = g }
+    !! <REPL Input>:1:36: error: converting non-escaping value to 'Any' may allow it to escape
+    !! func f(g: ()->Void) { let x: Any = g }
+    !!                                    ^
+
+A parameter that's a nonescaping function
 can't be passed as an argument to another nonescaping function parameter.
 This restriction helps Swift perform
 more of its checks for conflicting access to memory
@@ -351,30 +362,30 @@ For example:
 
 .. testcode:: memory-nonescaping-functions
 
-    -> let external: (Any) -> Void = { _ in () }
-    << // external : (Any) -> Void = (Function)
-    -> func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
-           first(first)    // Error
-           second(second)  // Error
+    -> let external: (() -> Void) -> Void = { _ in () }
+    << // external : (() -> Void) -> Void = (Function)
+    -> func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
+           first { first {} }       // Error
+           second { second {}  }    // Error
 
-           first(second)   // Error
-           second(first)   // Error
+           first { second {} }      // Error
+           second { first {} }      // Error
 
-           first(external) // OK
-           external(first) // OK
+           first { external {} }    // OK
+           external { first {} }    // OK
        }
-    !! <REPL Input>:2:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! first(first)    // Error
-    !! ^     ~~~~~
-    !! <REPL Input>:3:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! second(second)  // Error
-    !! ^      ~~~~~~
-    !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! first(second)   // Error
-    !! ^     ~~~~~~
-    !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
-    !! second(first)   // Error
-    !! ^      ~~~~~
+    !! <REPL Input>:2:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first { first {} }       // Error
+    !! ^     ~~~~~~~~~~~~
+    !! <REPL Input>:3:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second { second {}  }    // Error
+    !! ^      ~~~~~~~~~~~~~~
+    !! <REPL Input>:5:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first { second {} }      // Error
+    !! ^     ~~~~~~~~~~~~~
+    !! <REPL Input>:6:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second { first {} }      // Error
+    !! ^      ~~~~~~~~~~~~
 
 In the code above,
 both of the parameters to ``takesTwoFunctions(first:second:)`` are functions.

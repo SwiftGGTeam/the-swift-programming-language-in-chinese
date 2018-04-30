@@ -541,7 +541,7 @@ For example:
    // The following dictionaries have the same type.
    -> var dictionary1: StringDictionary<Int> = [:]
    -> var dictionary2: Dictionary<String, Int> = [:]
-   << // dictionary1 : Dictionary<String, Int> = [:]
+   << // dictionary1 : StringDictionary<Int> = [:]
    << // dictionary2 : Dictionary<String, Int> = [:]
 
 When a type alias is declared with generic parameters, the constraints on those

@@ -184,7 +184,7 @@ A comma is allowed after the last element.
            "Malcolm": "Captain",
            "Kaylee": "Mechanic",
         ]
-    << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
+    << // occupations : [String : String] = ["Malcolm": "Captain", "Kaylee": "Mechanic"]
     -> occupations["Jayne"] = "Public Relations"
 
 To create an empty array or dictionary,
@@ -376,7 +376,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : [Int]] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
+   << // interestingNumbers : [String : [Int]] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13], "Square": [1, 4, 9, 16, 25]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
