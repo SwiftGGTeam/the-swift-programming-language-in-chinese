@@ -363,18 +363,18 @@ For example:
            first(external) // OK
            external(first) // OK
        }
-    !! <REPL Input>:2:13: error: converting non-escaping value to 'Any' may allow it to escape
+    !! <REPL Input>:2:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first(first)    // Error
-    !!       ^
-    !! <REPL Input>:3:14: error: converting non-escaping value to 'Any' may allow it to escape
+    !! ^     ~~~~~
+    !! <REPL Input>:3:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second(second)  // Error
-    !!        ^
-    !! <REPL Input>:5:13: error: converting non-escaping value to 'Any' may allow it to escape
+    !! ^      ~~~~~~
+    !! <REPL Input>:5:7: error: passing a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first(second)   // Error
-    !!       ^
-    !! <REPL Input>:6:14: error: converting non-escaping value to 'Any' may allow it to escape
+    !! ^     ~~~~~~
+    !! <REPL Input>:6:7: error: passing a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second(first)   // Error
-    !!        ^
+    !! ^      ~~~~~
 
 In the code above,
 both of the parameters to ``takesTwoFunctions(first:second:)`` are functions.
