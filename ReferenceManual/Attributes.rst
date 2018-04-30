@@ -224,7 +224,7 @@ You can apply a declaration attribute to declarations only.
     instead of using an actual call.
 
     This attribute can't be applied
-    to ``fileprivate`` or ``private`` declaration,
+    to ``fileprivate`` or ``private`` declarations,
     or to nested declarations.
     Functions and closures that are defined inside a public inlinable function
     are implicitly inlinable.
