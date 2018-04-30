@@ -443,7 +443,7 @@ You can apply a declaration attribute to declarations only.
     even though the declaration's symbol is exported.
     However, code outside the module might still be able to interact
     use the declaration's symbol using runtime behavior.
-    
+
     Declarations marked with the ``inlinable`` attribute
     are implicitly usable from inlinable code.
     Although either ``inlinable`` or ``usableFromInline``
