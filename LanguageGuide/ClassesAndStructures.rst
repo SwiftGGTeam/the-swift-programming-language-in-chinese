@@ -9,7 +9,7 @@ using the same syntax you use to define constants, variables, and functions.
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
 for custom structures and classes.
-In Swift, you define a class or a structure in a single file,
+In Swift, you define a structure or class in a single file,
 and the external interface to that class or structure is
 automatically made available for other code to use.
 
