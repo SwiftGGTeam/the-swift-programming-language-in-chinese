@@ -260,14 +260,13 @@ are always copied when they are passed around in your code.
     are always copied when they are passed around in your code.
     However, this model doesn't require the performance cost
     of actually making a copy *immediately*.
+    In most cases,
     Swift uses the same memory
     for the original instance and its copy,
     without actually making any copies,
     as long as neither instance is modified.
     Before modifying one of them, Swift makes a copy,
     and then modifies the copy.
-    This optimization is called :newTerm:`copy on write`
-    and is sometimes abbreviated COW.
     The behavior you see in your code for structures and enumerations
     is always as if a copy took place immediately.
 
