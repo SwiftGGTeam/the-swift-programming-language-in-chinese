@@ -343,6 +343,17 @@ Restrictions for Nonescaping Closures
 +++++++++++++++++++++++++++++++++++++
 
 A parameter that's a nonescaping function
+can't be stored in a property, variable, or constant of type ``Any``,
+because that might allow the value to escape.
+
+.. assertion:: cant-store-nonescaping-as-Any
+
+    -> func f(g: ()->Void) { let x: Any = g }
+    !! <REPL Input>:1:36: error: converting non-escaping value to 'Any' may allow it to escape
+    !! func f(g: ()->Void) { let x: Any = g }
+    !!                                    ^
+
+A parameter that's a nonescaping function
 can't be passed as an argument to another nonescaping function parameter.
 This restriction helps Swift perform
 more of its checks for conflicting access to memory
