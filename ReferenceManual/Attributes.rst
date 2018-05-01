@@ -240,7 +240,7 @@ You can apply a declaration attribute to declarations only.
     externally visible aspects of their implementation can't be changed.
     For example,
     an inlinable hash function can't change what algorithm is used ---
-    inlined copies would use the old algorithm
+    inlined copies outside the module would use the old algorithm
     and the noninlined copy would use the new algorithm,
     yielding inconsistent results.
 
@@ -439,10 +439,10 @@ You can apply a declaration attribute to declarations only.
     both expose the declaration as part of the module's public interface.
     Unlike ``public``,
     the compiler doesn't allow declarations marked with ``usableFromInline``
-    to be used by code outside the module,
+    to be referenced by name in code outside the module,
     even though the declaration's symbol is exported.
-    However, code outside the module might still be able to interact
-    use the declaration's symbol using runtime behavior.
+    However, code outside the module might still be able
+    to interact with the declaration's symbol using runtime behavior.
 
     Declarations marked with the ``inlinable`` attribute
     are implicitly usable from inlinable code.
