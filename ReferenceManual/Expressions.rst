@@ -1782,7 +1782,6 @@ For example:
 The members of a module access
 the top-level declarations of that module.
 
-.. TR: Confirm?
 
 To distinguish between methods or initializers
 whose names differ only by the names of their arguments,
