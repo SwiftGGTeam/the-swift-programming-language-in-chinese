@@ -962,11 +962,13 @@ to the expression's value.
     >> class C {
     >> let title = "Title"
     >> func method() {
-    -> myFunction { print(self.title) }                    // strong capture
+    -> myFunction { print(self.title) }                    // implicit strong capture
+    -> myFunction { [self] in print(self.title) }          // explicit strong capture
     -> myFunction { [weak self] in print(self!.title) }    // weak capture
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
     >> } }
     >> C().method()
+    << Title
     << Title
     << Title
     << Title
@@ -1333,7 +1335,7 @@ that combine these components.
    -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 15],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
                                 "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-   << // interestingNumbers : [String : [Int]] = ["prime": [2, 3, 5, 7, 11, 13, 15], "triangular": [1, 3, 6, 10, 15, 21, 28], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "hexagonal": [1, 6, 15, 28, 45, 66, 91], "prime": [2, 3, 5, 7, 11, 13, 15]]
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
    <- Optional([2, 3, 5, 7, 11, 13, 15])
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
