@@ -481,11 +481,13 @@ even if every case of the enumeration already has a corresponding switch case.
 You can apply the ``@unknown`` attribute to the default case,
 which indicates that the default case should only match enumeration cases
 that are added in the future.
-If the default case matches
-any enumeration case that is known at compiler time,
-the compiler produces a warning.
-This warning lets you know that the library author
-has added a new case to the enumeration
+In Swift 4.2, this attribute lets you signal your intent
+but it has no effect on the compiler or on the program's behavior.
+Later versions of Swift will produce a warning or error
+if the default case matches
+any enumeration case that is known at compiler time.
+This future warning will let you know that the library author
+added a new case to the enumeration
 that has no corresponding switch case.
 
 
