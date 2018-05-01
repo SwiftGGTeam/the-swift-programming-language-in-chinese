@@ -470,6 +470,20 @@ You can apply type attributes to types only.
     see :ref:`Closures_Noescape`.
 
 
+.. _Attributes_SwitchCaseAttributes:
+
+Switch Case Attributes
+----------------------
+
+``unknown``
+    Apply this attribute to a switch case
+    to indicate that it isn't expected to be matched
+    by a case of the enumeration that is known
+    at the time the code is compiled.
+    For an example of how to use the ``unknown`` attribute,
+    see :ref:`Statements_SwitchStatementsMustBeExhaustive`.
+
+
 .. langref-grammar
 
     attribute-list        ::= /*empty*/
