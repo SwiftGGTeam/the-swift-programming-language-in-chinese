@@ -186,6 +186,7 @@ Here's an example:
            case coffee, tea, juice
        }
     -> let numberOfChoices = Beverage.allCases.count
+    << // numberOfChoices : Int = 3
     -> print("\(numberOfChoices) beverages available")
     << 3 beverages available
 
