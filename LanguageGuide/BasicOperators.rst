@@ -570,13 +570,12 @@ The value of ``a`` must not be greater than ``b``.
 .. assertion:: closedRangeStartCanBeLessThanEnd
 
    -> let range = 1...2
-   << // range : CountableClosedRange<Int> = CountableClosedRange(1...2)
-
+   << // range : ClosedRange<Int> = ClosedRange(1...2)
 
 .. assertion:: closedRangeStartCanBeTheSameAsEnd
 
    -> let range = 1...1
-   << // range : CountableClosedRange<Int> = CountableClosedRange(1...1)
+   << // range : ClosedRange<Int> = ClosedRange(1...1)
 
 .. assertion:: closedRangeStartCannotBeGreaterThanEnd
 
@@ -618,12 +617,12 @@ then the resulting range will be empty.
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
 
    -> let range = 1..<2
-   << // range : CountableRange<Int> = CountableRange(1..<2)
+   << // range : Range<Int> = Range(1..<2)
 
 .. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
 
    -> let range = 1..<1
-   << // range : CountableRange<Int> = CountableRange(1..<1)
+   << // range : Range<Int> = Range(1..<1)
 
 .. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
 
