@@ -466,6 +466,32 @@ When this simply isn’t feasible
 (for instance, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
+Enumerations that are defined by another module
+are either frozen or nonfrozen ---
+switching over a nonfrozen enumeration requires extra consideration.
+When a library's authors mark an enumeration as nonfrozen,
+they reserve the right to add new enumeration cases,
+and any code that interacts with that enumeration
+must be able to handle those future cases without being recompiled.
+Enumerations are frozen unless marked as nonfrozen.
+Only the standard library,
+Swift overlays for Apple frameworks,
+and imported C can use nonfrozen enumerations.
+
+When you switch over a frozen enumeration value,
+you always include a default case,
+even if every case of the enumeration already has a corresponding switch case.
+To help you during development,
+you can apply the ``@unknown`` attribute to the default case,
+which indicates that the default case should only match enumeration cases
+that are added in the future.
+If the default case matches
+any enumeration case that is known at compiler time,
+the compiler produces a warning.
+This warning lets you know that the library author
+has added a new case to the enumeration
+that has no corresponding switch case.
+
 
 .. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
 
