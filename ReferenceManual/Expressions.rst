@@ -1782,6 +1782,10 @@ For example:
 The members of a module access
 the top-level declarations of that module.
 
+The members of an instance of a type
+whose declaration is marked with the ``dynamicMemberLookup`` attribute
+include members that are looked up at runtime,
+as described in :doc:`Attributes`.
 
 To distinguish between methods or initializers
 whose names differ only by the names of their arguments,
