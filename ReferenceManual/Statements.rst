@@ -500,12 +500,16 @@ see :ref:`Statements_FallthroughStatement` below.
     switch-cases --> switch-case switch-cases-OPT
     switch-case --> case-label statements | default-label statements
 
-    case-label --> ``case`` case-item-list ``:``
+    case-label --> attributes-OPT ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
-    default-label --> ``default`` ``:``
+    default-label --> attributes-OPT ``default`` ``:``
 
     where-clause --> ``where`` where-expression
     where-expression --> expression
+
+.. The grammar above uses attributes-OPT to match what's used
+   in all other places where attributes are allowed,
+   although as of Swift 4.2 only a single attribute (@unknown) is allowed.
 
 
 .. _Statements_LabeledStatement:
