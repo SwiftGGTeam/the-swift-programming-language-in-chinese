@@ -209,7 +209,7 @@ You can apply a declaration attribute to declarations only.
    Apply this attribute to enable members to be looked up by name at runtime.
    In an explicit member expression,
    if there is no corresponding declaration for the named member,
-   the expression is understood as call to
+   the expression is understood as a call to
    the type's ``subscript(dynamicMemberLookup:)`` subscript,
    passing a string literal that contains the member's name as the argument.
    The subscript's parameter type can be any type
