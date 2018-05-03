@@ -173,12 +173,16 @@ it's useful to have a collection of all of that enumeration's cases.
 You can enable this by
 writing ``: CaseIterable`` after the enumeration's name.
 This syntax marks the enumeration as conforming to the ``CaseIterable`` protocol.
-For information about protocols, see :doc:`Protocols`.
 Swift exposes a collection of all the cases
-as an ``allCases`` property of the enumeration.
+as an ``allCases`` property of the enumeration type.
+For information about protocols, see :doc:`Protocols`;
+for type properties, see :ref:`Properties_TypeProperties`.
+
 Here's an example:
 
 .. XXX live link to CaseIterable reference
+   URL is probably something like
+   https://docs.Developer Publications.apple.com/documentation/swift/caseiterable
 
 .. testcode:: enums
 
@@ -192,9 +196,11 @@ Here's an example:
 
 In the example above,
 writing ``Beverage.allCases`` lets you access a collection
-that contains all of that enumeration's cases.
+that contains all of the ``Beverage`` enumeration's cases
 You can use ``allCases`` like any other collection ---
-the example above counts how many cases there are,
+the collection's elements are instances of the enumeration type,
+so in this case they're ``Beverage`` values.
+The example above counts how many cases there are,
 and the example below uses a ``for`` loop to iterate over all the cases.
 
 .. testcode:: enums
