@@ -215,6 +215,7 @@ You can apply a declaration attribute to declarations only.
    The subscript's parameter type can be any type
    that conforms to ``ExpressibleByStringLiteral`` protocol,
    and its return type can be any type.
+   In most cases, the subscript's parameter is a ``String`` value.
    For example:
 
    .. testcode:: dynamicMemberLookup
