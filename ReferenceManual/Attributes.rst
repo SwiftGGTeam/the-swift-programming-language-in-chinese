@@ -223,8 +223,10 @@ You can apply a declaration attribute to declarations only.
 
       -> @dynamicMemberLookup
       -> struct DynamicStruct {
+             let dictionary = ["someDynamicMember": 325,
+                               "someOtherMember": 787]
              subscript(dynamicMember member: String) -> Int {
-                 return member.count
+                 return dictionary[member] ?? 1054
              }
          }
       -> let s = DynamicStruct()
@@ -232,7 +234,7 @@ You can apply a declaration attribute to declarations only.
       // Using dynamic member lookup
       -> let dynamic = s.someDynamicMember
       -> print(dynamic)
-      <- 17
+      <- 325
       ---
       // Calling the underlying subscript directly
       -> let equivalent = s[dynamicMember: "someDynamicMember"]
