@@ -220,14 +220,14 @@ convention 特性总是与下面的参数之一一起出现。
 
 > 特性语法
 > 
-> *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>   
-> *特性名* → <font color = 0x3386c8>标识符   
-> *特性参数子句* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )   
-> *特性列表* → <font color = 0x3386c8>特性 特性列表</font><sub>可选</sub>    
+> *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>
+> *特性名* → <font color = 0x3386c8>标识符
+> *特性参数子句* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )
+> *特性列表* → <font color = 0x3386c8>特性 特性列表</font><sub>可选</sub>
 > 
-> *均衡令牌列表* → <font color = 0x3386c8>均衡令牌 均衡令牌列表</font><sub>可选</sub>    
-> *均衡令牌* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )   
-> *均衡令牌* → [ <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> ]   
-> *均衡令牌* → { <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub>}   
-> *均衡令牌* → 任意标识符，关键字，字面量或运算符   
-> *均衡令牌* → 任意标点除了 (，)，[，]，{，或 }   
+> *均衡令牌列表* → <font color = 0x3386c8>均衡令牌 均衡令牌列表</font><sub>可选</sub>
+> *均衡令牌* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )
+> *均衡令牌* → [ <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> ]
+> *均衡令牌* → { <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub>}
+> *均衡令牌* → 任意标识符，关键字，字面量或运算符
+> *均衡令牌* → 任意标点除了 (，)，[，]，{，或 }

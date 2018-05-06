@@ -2,7 +2,7 @@
 -----------------
 
 > 翻译：[老码团队翻译组-Relly](http://weibo.com/penguinliong/)
-> 校对：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117) 
+> 校对：[老码团队翻译组-Tyrion](http://weibo.com/u/5241713117)
 
 本页包含内容：
 

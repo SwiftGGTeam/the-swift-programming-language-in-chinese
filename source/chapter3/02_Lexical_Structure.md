@@ -23,7 +23,7 @@
 - [标识符](#identifiers)
 - [关键字和标点符号](#keywords)
 - [字面量](#literals)
-  - [整数字面量](#integer_literals) 
+  - [整数字面量](#integer_literals)
   - [浮点数字面量](#floating_point_literals)
   - [字符串字面量](#string_literals)
 - [运算符](#operators)
@@ -61,7 +61,7 @@ Swift 的*“词法结构 (lexical structure)”* 描述了能构成该语言中
 > *多行注释内容* → [*多行注释内容项*](#multiline-comment-text-item) [*多行注释内容*](#multiline-comment-text)<sub>可选</sub>
 > *多行注释内容项* → [*多行注释*](#multiline-comment).
 > *多行注释内容项* → [*注释内容项*](#comment-text-item)
-> *多行注释内容项* → 任何 Unicode 标量值， 除了 `/*` 或者 `*/` 
+> *多行注释内容项* → 任何 Unicode 标量值， 除了 `/*` 或者 `*/`
 
 注释可以包含额外的格式和标记，正如 [*Markup Formatting Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497) 所述。
 
@@ -150,9 +150,9 @@ true		    // 布尔值字面量
 
 <a id="numeric-literal"></a>
 > *数值字面量* → **-**<sub>可选</sub> [*整数字面量*](#integer-literal) | **-**<sub>可选</sub> [*浮点数字面量*](#floating-point-literal)
-> <a id="boolean-literal"></a> 
+> <a id="boolean-literal"></a>
 > *布尔值字面量* → **true** | **false**
-> <a id="nil-literal"></a> 
+> <a id="nil-literal"></a>
 > *nil 字面量* → **nil**
 
 <a id="integer_literals"></a>
@@ -177,21 +177,21 @@ true		    // 布尔值字面量
 > *整数字面量* → [*十六进制字面量*](#hexadecimal-literal)
 
 <a id="binary-literal"></a>
-> *二进制字面量* → **0b** [*二进制数字*](#binary-digit) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub> 
+> *二进制字面量* → **0b** [*二进制数字*](#binary-digit) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
 > <a id="binary-digit"></a>
 > *二进制数字* → 数值 0 到 1
-> <a id="binary-literal-character"></a> 
+> <a id="binary-literal-character"></a>
 > *二进制字面量字符* → [*二进制数字*](#binary-digit) | _
-> <a id="binary-literal-characters"></a> 
+> <a id="binary-literal-characters"></a>
 > *二进制字面量字符组* → [*二进制字面量字符*](#binary-literal-character) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
 
 <a id="octal-literal"></a>
 > *八进制字面量* → **0o** [*八进字数字*](#octal-digit) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
 > <a id="octal-digit"></a>
 > *八进字数字* → 数值 0 到 7
-> <a id="octal-literal-character"></a> 
+> <a id="octal-literal-character"></a>
 > *八进制字符* → [*八进字数字*](#octal-digit) | _
-> <a id="octal-literal-characters"></a> 
+> <a id="octal-literal-characters"></a>
 > *八进制字符组* → [*八进制字符*](#octal-literal-character) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
 
 <a id="decimal-literal"></a>
@@ -203,7 +203,7 @@ true		    // 布尔值字面量
 > <a id="decimal-literal-character"></a>
 > *十进制字符* → [*十进制数字*](#decimal-digit) | _
 > <a id="decimal-literal-characters"></a>
-> *十进制字符组* → [*十进制字符*](#decimal-literal-character) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub> 
+> *十进制字符组* → [*十进制字符*](#decimal-literal-character) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
 
 <a id="hexadecimal-literal"></a>
 > *十六进制字面量* → **0x** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
@@ -233,12 +233,12 @@ true		    // 布尔值字面量
 
 > 浮点数字面量语法
 > 
-<a id="floating-point-literal"></a> 
+<a id="floating-point-literal"></a>
 > *浮点数字面量* → [*十进制字面量*](#decimal-literal) [*十进制分数*](#decimal-fraction)<sub>可选</sub> [*十进制指数*](#decimal-exponent)<sub>可选</sub>
 > *浮点数字面量* → [*十六进制字面量*](#hexadecimal-literal) [*十六进制分数*](#hexadecimal-fraction)<sub>可选</sub> [*十六进制指数*](#hexadecimal-exponent)
 
 <a id="decimal-fraction"></a>
-> *十进制分数* → **.** [*十进制字面量*](#decimal-literal) 
+> *十进制分数* → **.** [*十进制字面量*](#decimal-literal)
 > <a id="decimal-exponent"></a>
 > *十进制指数* → [*十进制指数 e*](#floating-point-e) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
 
@@ -313,20 +313,20 @@ let textB = "Hello world"
 > 字符串字面量语法
 > 
 <a id="string-literal"></a>
-> *字符串字面量* → [*静态字符串字面量*](#static-string-literal) | [*插值字符串字面量*](#interpolated-string-literal) 
+> *字符串字面量* → [*静态字符串字面量*](#static-string-literal) | [*插值字符串字面量*](#interpolated-string-literal)
 
 <a id="static-string-literal"></a>
 > *静态字符串字面量* → **"**[*引用文本*](#quoted-text)<sub>可选</sub>**"**
-> <a id="quoted-text"></a> 
-> *引用文本* → [*引用文本项*](#quoted-text-item) [*引用文本*](#quoted-text)<sub>可选</sub> 
+> <a id="quoted-text"></a>
+> *引用文本* → [*引用文本项*](#quoted-text-item) [*引用文本*](#quoted-text)<sub>可选</sub>
 > <a id="quoted-text-item"></a>
 > *引用文本项* → [*转义字符*](#escaped-character)
 > *引用文本项* → 除了 **"**、**\\**、U+000A、U+000D 以外的所有 Unicode 字符
 
 <a id="interpolated-string-literal"></a>
 > *插值字符串字面量* → **"**[*插值文本*](#interpolated-text)<sub>可选</sub>**"**
-> <a id="interpolated-text"></a> 
-> *插值文本* → [*插值文本项*](#interpolated-text-item) [*插值文本*](#interpolated-text)<sub>可选</sub> 
+> <a id="interpolated-text"></a>
+> *插值文本* → [*插值文本项*](#interpolated-text-item) [*插值文本*](#interpolated-text)<sub>可选</sub>
 > <a id="interpolated-text-item"></a>
 > *插值文本项* → **\\****(**[*表达式*](./04_Expressions.html)**)** | [*引用文本项*](#quoted-text-item)
 
@@ -354,7 +354,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 运算符两侧的空白被用来区分该运算符是否为前缀运算符、后缀运算符或二元运算符。规则总结如下：
 
 * 如果运算符两侧都有空白或两侧都无空白，将被看作二元运算符。例如：`a+++b` 和 `a +++ b` 当中的 `+++` 运算符会被看作二元运算符。
-* 如果运算符只有左侧空白，将被看作一元前缀运算符。例如 `a +++b` 中的 `+++` 运算符会被看做是一元前缀运算符。 
+* 如果运算符只有左侧空白，将被看作一元前缀运算符。例如 `a +++b` 中的 `+++` 运算符会被看做是一元前缀运算符。
 * 如果运算符只有右侧空白，将被看作一元后缀运算符。例如 `a+++ b` 中的 `+++` 运算符会被看作是一元后缀运算符。
 * 如果运算符左侧没有空白并紧跟 `.`，将被看作一元后缀运算符。例如 `a+++.b` 中的 `+++` 运算符会被视为一元后缀运算符（即上式被视为 `a+++ .b` 而不是 `a +++ .b`）。
 
@@ -387,7 +387,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > *头部运算符* → U+2794–U+2BFF
 > *头部运算符* → U+2E00–U+2E7F
 > *头部运算符* → U+3001–U+3003
-> *头部运算符* → U+3008–U+3030 
+> *头部运算符* → U+3008–U+3030
 
 <a id="operator-character"></a>
 > *运算符字符* → [*头部运算符*](#operator-head)
@@ -402,9 +402,9 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 <a id="dot-operator-head"></a>
 > *头部点运算符* → **..**
-> <a id="dot-operator-character"></a> 
+> <a id="dot-operator-character"></a>
 > *点运算符字符* → **.** | [*运算符字符*](#operator-character)
-> <a id="dot-operator-characters"></a> 
+> <a id="dot-operator-characters"></a>
 > *点运算符字符组* → [*点运算符字符*](#dot-operator-character) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>
 
 <a id="binary-operator"></a>

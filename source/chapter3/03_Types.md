@@ -94,7 +94,7 @@ let origin: Point = (0, 0)
 var someValue: ExampleModule.MyType
 ```
 
-> 类型标识符语法 
+> 类型标识符语法
 > 
 <a name="type-identifier"></a>
 > *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
@@ -153,14 +153,14 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 func someFunction(left: Int, right: Int) {}
 func anotherFunction(left: Int, right: Int) {}
 func functionWithDifferentLabels(top: Int, bottom: Int) {}
- 
+
 var f = someFunction // 函数 f 的类型为 (Int, Int) -> Void, 而不是 (left: Int, right: Int) -> Void.
 f = anotherFunction              // 正确
 f = functionWithDifferentLabels  // 正确
- 
+
 func functionWithDifferentArgumentTypes(left: Int, right: String) {}
 func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
- 
+
 f = functionWithDifferentArgumentTypes     // 错误
 f = functionWithDifferentNumberOfArguments // 错误
 ```
@@ -215,7 +215,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 <a name="function-type-argument"></a>
 > *函数类型参数* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
 <a name="argument-label"></a>
-> *参数标签* → [*标识符*](02_Lexical_Structure.html#identifier) 
+> *参数标签* → [*标识符*](02_Lexical_Structure.html#identifier)
 
 <a name="array_type"></a>
 ## 数组类型
@@ -273,7 +273,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 > 字典类型语法
 > 
 <a name="dictionary-type"></a>
-> *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]** 
+> *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]**
 
 <a name="optional_type"></a>
 ## 可选类型
@@ -324,7 +324,7 @@ var explicitlyUnwrappedString: Optional<String>
 ```swift
 let tupleOfImplicitlyUnwrappedElements: (Int!, Int!)  // 错误
 let implicitlyUnwrappedTuple: (Int, Int)!             // 正确
- 
+
 let arrayOfImplicitlyUnwrappedElements: [Int!]        // 错误
 let implicitlyUnwrappedArray: [Int]!                  // 正确
 ```
@@ -337,7 +337,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 关于隐式解析可选类型的更多细节，请参阅 [隐式解析可选类型](../chapter2/01_The_Basics.html#implicityly_unwrapped_optionals)。
 
-> 隐式解析可选类型语法 
+> 隐式解析可选类型语法
 > 
 <a name="implicitly-unwrapped-optional-type"></a>
 > *隐式解析可选类型* → [*类型*](#type) **!**
@@ -362,7 +362,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 <a name="protocol-composition-continuation"></a>
 > *协议合成延续* → [*协议标识符*](#protocol-identifier) | [*协议合成类型*](#protocol-composition-type)
 <a name="protocol-identifier"></a>
-> *协议标识符* → [*类型标识符*](#type-identifier) 
+> *协议标识符* → [*类型标识符*](#type-identifier)
 
 <a name="metatype_type"></a>
 ## 元类型
@@ -412,7 +412,7 @@ let anotherInstance = metatype.init(string: "some string")
 > 元类型语法
 > 
 <a name="metatype-type"></a>
-> *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol** 
+> *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol**
 
 <a name="type_inheritance_clause"></a>
 ## 类型继承子句
@@ -425,7 +425,7 @@ let anotherInstance = metatype.init(string: "some string")
 
 枚举定义中的类型继承子句可以是一系列协议，或是枚举的原始值类型的命名型类型。在枚举定义中使用类型继承子句来指定原始值类型的例子，请参阅 [原始值](../chapter2/08_Enumerations.html#raw_values)。
 
-> 类型继承子句语法 
+> 类型继承子句语法
 > 
 <a name="type_inheritance_clause"></a>
 > *类型继承子句* → **:** [*类型继承列表*](#type-inheritance-list)

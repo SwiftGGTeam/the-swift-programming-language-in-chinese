@@ -13,4 +13,4 @@ Ballons 不但展现了 playgrounds 许多很赞的特性，还让我们看到�
 
 这个 playground 文件用到了 SpriteKit 的新特性，因此需要最新 beta 版本的 Xcode 6和 Yosemite 系统来支持它运行。
 
-本文由翻译自 Apple Swift Blog 的博文：[Ballons](https://developer.apple.com/swift/blog/?id=9) 
+本文由翻译自 Apple Swift Blog 的博文：[Ballons](https://developer.apple.com/swift/blog/?id=9)

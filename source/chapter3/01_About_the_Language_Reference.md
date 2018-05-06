@@ -33,13 +33,13 @@ Swift 语言相对较小，这是由于 Swift 代码中在各种地方出现的�
 
 举个例子，getter-setter 方法块的语法定义如下：
 
-> getter-setter 方法块语法 
+> getter-setter 方法块语法
 > 
 > *getter-setter 方法块* → { [*getter 子句*](05_Declarations.html#getter-clause) [*setter 子句*](05_Declarations.html#setter-clause)<sub>可选</sub> } | { [*setter 子句*](05_Declarations.html#setter-clause) [*getter 子句*](05_Declarations.html#getter-clause) }
 
 这个定义表明，一个 getter-setter 方法块可以由一个 getter 分句后跟一个可选的 setter 分句构成，然后用大括号括起来，或者由一个 setter 分句后跟一个 getter 分句构成，然后用大括号括起来。上述的语法产式等价于下面的两个语法产式, ：
 
-> getter-setter 方法块语法 
+> getter-setter 方法块语法
 > 
 > getter-setter 方法块 → { [*getter 子句*](05_Declarations.html#getter-clause)  [*setter 子句*](05_Declarations.html#setter-clause)<sub>可选</sub> }
 > getter-setter 方法块 → { [*setter 子句*](05_Declarations.html#setter-clause) [*getter 子句*](05_Declarations.html#getter-clause) }

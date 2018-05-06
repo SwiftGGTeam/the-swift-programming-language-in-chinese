@@ -13,7 +13,7 @@
 > 校对：[shanks](http://codebuild.me)，[overtrue](https://github.com/overtrue)
 
 > 2.2
-> 校对：[SketchK](https://github.com/SketchK) 
+> 校对：[SketchK](https://github.com/SketchK)
 
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)，版本时间2016-09-13
@@ -676,7 +676,7 @@ if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secon
     print("\(firstNumber) < \(secondNumber) < 100")
 }
 // 输出 "4 < 42 < 100"
- 
+
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
         if firstNumber < secondNumber && secondNumber < 100 {
@@ -774,7 +774,7 @@ do {
 func makeASandwich() throws {
     // ...
 }
- 
+
 do {
     try makeASandwich()
     eatASandwich()

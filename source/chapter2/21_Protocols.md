@@ -13,7 +13,7 @@
 > 校对：[shanks](http://codebuild.me)
 > 
 > 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 
+> 翻译+校对：[SketchK](https://github.com/SketchK)
 > 
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
@@ -699,7 +699,7 @@ class City: Location, Named {
 func beginConcert(in location: Location & Named) {
     print("Hello, \(location.name)!")
 }
- 
+
 let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
 beginConcert(in: seattle)
 // Prints "Hello, Seattle!"

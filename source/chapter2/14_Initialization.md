@@ -9,7 +9,7 @@
 > 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
 
 > 2.1
-> 翻译：[Channe](https://github.com/Channe)，[Realank](https://github.com/Realank) 
+> 翻译：[Channe](https://github.com/Channe)，[Realank](https://github.com/Realank)
 > 校对：[shanks](http://codebuild.me)，2016-1-23
 
 > 2.2
@@ -377,7 +377,7 @@ Swift 为类类型提供了两种构造器来确保实例中所有存储型属�
 
 *指定构造器*是类中最主要的构造器。一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类合适的构造器来实现父类的初始化。
 
-类倾向于拥有少量指定构造器，普遍的是一个类拥有一个指定构造器。指定构造器在初始化的地方通过“管道”将初始化过程持续到父类链。 
+类倾向于拥有少量指定构造器，普遍的是一个类拥有一个指定构造器。指定构造器在初始化的地方通过“管道”将初始化过程持续到父类链。
 
 每一个类都必须至少拥有一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。具体内容请参考后续章节[构造器的自动继承](#automatic_initializer_inheritance)。
 
@@ -746,15 +746,15 @@ for item in breakfastList {
 ```swift
 let wholeNumber: Double = 12345.0
 let pi = 3.14159
- 
+
 if let valueMaintained = Int(exactly: wholeNumber) {
     print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
 }
 // 打印 "12345.0 conversion to Int maintains value of 12345"
- 
+
 let valueChanged = Int(exactly: pi)
 // valueChanged 是 Int? 类型，不是 Int 类型
- 
+
 if valueChanged == nil {
     print("\(pi) conversion to Int does not maintain value")
 }
@@ -767,7 +767,7 @@ if valueChanged == nil {
 struct Animal {
     let species: String
     init?(species: String) {
-        if species.isEmpty { 
+        if species.isEmpty {
         	return nil
         }
         self.species = species
@@ -994,7 +994,7 @@ class UntitledDocument: Document {
 在这个例子中，如果在调用父类的可失败构造器 `init?(name:)` 时传入的是空字符串，那么强制解包操作会引发运行时错误。不过，因为这里是通过非空的字符串常量来调用它，所以并不会发生运行时错误。
 
 <a name="the_init!_failable_initializer"></a>
-### init!可失败构造器 
+### init!可失败构造器
 
 通常来说我们通过在 `init` 关键字后添加问号的方式（`init?`）来定义一个可失败构造器，但你也可以通过在 `init` 后面添加惊叹号的方式来定义一个可失败构造器（`init!`），该可失败构造器将会构建一个对应类型的隐式解包可选类型的对象。
 
