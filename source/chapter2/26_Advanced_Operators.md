@@ -11,7 +11,7 @@
 > 2.1
 > 校对：[shanks](http://codebuild.me)，2015-11-01
 > 
-> 2.2 
+> 2.2
 > 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
 > 
 > 3.0
@@ -329,7 +329,7 @@ signedOverflow = signedOverflow &- 1
 struct Vector2D {
     var x = 0.0, y = 0.0
 }
- 
+
 extension Vector2D {
     static func + (left: Vector2D, right: Vector2D) -> Vector2D {
         return Vector2D(x: left.x + right.x, y: left.y + right.y)
@@ -449,7 +449,7 @@ Swift 为以下自定义类型提等价运算符供合成实现：
 struct Vector3D: Equatable {
     var x = 0.0, y = 0.0, z = 0.0
 }
- 
+
 let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
 let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
 if twoThreeFour == anotherTwoThreeFour {

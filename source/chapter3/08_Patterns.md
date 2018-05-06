@@ -36,14 +36,14 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > 模式语法
 > 
 <a name="pattern"></a>
-> *模式* → [*通配符模式*](#wildcard_pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>  
-> *模式* → [*标识符模式*](#identifier_pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>   
-> *模式* → [*值绑定模式*](#value-binding-pattern)   
-> *模式* → [*元组模式*](#tuple-pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>   
-> *模式* → [*枚举用例模式*](#enum-case-pattern)   
-> *模式* → [*可选模式*](#optional-pattern)   
-> *模式* → [*类型转换模式*](#type-casting-pattern)   
-> *模式* → [*表达式模式*](#expression-pattern)   
+> *模式* → [*通配符模式*](#wildcard_pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>
+> *模式* → [*标识符模式*](#identifier_pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>
+> *模式* → [*值绑定模式*](#value-binding-pattern)
+> *模式* → [*元组模式*](#tuple-pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>
+> *模式* → [*枚举用例模式*](#enum-case-pattern)
+> *模式* → [*可选模式*](#optional-pattern)
+> *模式* → [*类型转换模式*](#type-casting-pattern)
+> *模式* → [*表达式模式*](#expression-pattern)
 
 <a name="wildcard_pattern"></a>
 ## 通配符模式（Wildcard Pattern）
@@ -59,7 +59,7 @@ for _ in 1...3 {
 > 通配符模式语法
 > 
 <a name="wildcard-pattern"></a>
-> *通配符模式* → **_**   
+> *通配符模式* → **_**
 
 <a name="identifier_pattern"></a>
 ## 标识符模式（Identifier Pattern）
@@ -101,7 +101,7 @@ case let (x, y):
 > 值绑定模式语法
 > 
 <a name="value-binding-pattern"></a>
-> *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)   
+> *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)
 
 <a name="tuple_pattern"></a>
 ## 元组模式
@@ -131,11 +131,11 @@ let (a): Int = 2 // a: Int = 2
 > 元组模式语法
 > 
 <a name="tuple-pattern"></a>
-> *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**   
+> *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**
 <a name="tuple-pattern-element-list"></a>
-> *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element)  **,** [*元组模式元素列表*](#tuple-pattern-element-list)   
+> *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element)  **,** [*元组模式元素列表*](#tuple-pattern-element-list)
 <a name="tuple-pattern-element"></a>
-> *元组模式元素* → [*模式*](#pattern)  
+> *元组模式元素* → [*模式*](#pattern)
 
 <a name="enumeration_case_pattern"></a>
 ## 枚举用例模式（Enumeration Case Pattern）
@@ -147,7 +147,7 @@ let (a): Int = 2 // a: Int = 2
 > 枚举用例模式语法
 > 
 <a name="enum-case-pattern"></a>
-> *枚举用例模式* → [*类型标识*](03_Types.html#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](05_Declarations.html#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>   
+> *枚举用例模式* → [*类型标识*](03_Types.html#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](05_Declarations.html#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
 
 <a name="optional_pattern"></a>
 ## 可选模式（Optional Pattern）
@@ -185,7 +185,7 @@ for case let number? in arrayOfOptinalInts {
 > 可选模式语法
 > 
 <a name="optional-pattern"></a>
-> *可选模式* → [*标识符模式*](03_Types.html#type-identifier) **?**  
+> *可选模式* → [*标识符模式*](03_Types.html#type-identifier) **?**
 
 <a name="type-casting_patterns"></a>
 ## 类型转换模式（Type-Casting Patterns）
@@ -204,11 +204,11 @@ for case let number? in arrayOfOptinalInts {
 > 类型转换模式语法
 > 
 <a name="type-casting-pattern"></a>
-> *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)   
+> *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)
 <a name="is-pattern"></a>
-> *is 模式* → **is** [*类型*](03_Types.html#type)    
+> *is 模式* → **is** [*类型*](03_Types.html#type)
 <a name="as-pattern"></a>
-> *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.html#type)   
+> *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.html#type)
 
 <a name="expression_pattern"></a>
 ## 表达式模式（Expression Pattern）
@@ -250,4 +250,4 @@ default:
 > 表达式模式语法
 > 
 <a name="expression-pattern"></a>
-> *表达式模式* → [*表达式*](04_Expressions.html#expression)   
+> *表达式模式* → [*表达式*](04_Expressions.html#expression)

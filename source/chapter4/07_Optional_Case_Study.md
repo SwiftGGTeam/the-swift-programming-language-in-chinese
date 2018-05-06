@@ -63,7 +63,7 @@ extension Dictionary {
 ```swift
 var dic: Dictionary = [ "1": 2, "3":3, "4":5 ]
 
-var t = dic.valuesForKeys(["1", "4"]) 
+var t = dic.valuesForKeys(["1", "4"])
 //结果为：[Optional(2), Optional(5)]
 
 var t = dict.valuesForKeys(["3", "9"])

@@ -10,7 +10,7 @@
 
 > 2.1
 > 翻译：[DianQK](https://github.com/DianQK)
-> 校对：[shanks](http://codebuild.me), [Realank](https://github.com/Realank), 
+> 校对：[shanks](http://codebuild.me), [Realank](https://github.com/Realank),
 
 > 2.2
 > 校对：[SketchK](https://github.com/SketchK)
@@ -18,9 +18,9 @@
 > 3.0
 > 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
 > 3.0.1, shanks, 2016-11-11
- 
+
 > 4.0
-> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21 
+> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
 
 > 4.1
 > 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
@@ -43,7 +43,7 @@
 - [字符串的 Unicode 表示形式](#unicode_representations_of_strings)
 
 *字符串*是是一系列字符的集合，例如 `"hello, world"`，`"albatross"`。Swift 的字符串通过 `String` 类型来表示。
-一个 `String` 的内容可以用许多方式读取，包括作为一个 `Character` 值的集合。 
+一个 `String` 的内容可以用许多方式读取，包括作为一个 `Character` 值的集合。
 
 Swift 的 `String` 和 `Character` 类型提供了快速和兼容 Unicode 的方式供你的代码使用。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。字符串连接操作只需要简单地通过 `+` 符号将两个字符串相连即可。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你也可以在字符串内插过程中使用字符串插入常量、变量、字面量表达成更长的字符串，这样可以很容易的创建自定义的字符串值，进行展示、存储以及打印。
 
@@ -78,7 +78,7 @@ let someString = "Some string literal value"
 let quotation = """
 The White Rabbit put on his spectacles.  "Where shall I begin,
 please your Majesty?" he asked.
- 
+
 "Begin at the beginning," the King said gravely, "and go on
 till you come to the end; then stop."
 """
@@ -99,7 +99,7 @@ These are the same.
 let softWrappedQuotation = """
 The White Rabbit put on his spectacles.  "Where shall I begin, \
 please your Majesty?" he asked.
- 
+
 "Begin at the beginning," the King said gravely, "and go on \
 till you come to the end; then stop."
 """
@@ -109,10 +109,10 @@ till you come to the end; then stop."
 
 ```swift
 let lineBreaks = """
- 
+
 This string starts with a line break.
 It also ends with a line break.
- 
+
 """
 ```
 
@@ -283,11 +283,11 @@ print(badStart + end)
 // 打印两行:
 // one
 // twothree
- 
+
 let goodStart = """
 one
 two
- 
+
 """
 print(goodStart + end)
 // 打印三行:
@@ -464,7 +464,7 @@ for index in greeting.indices {
 
 > 注意
 > 
-> 您可以使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法在任意一个确认的并遵循 `Collection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。 
+> 您可以使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法在任意一个确认的并遵循 `Collection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
 
 <a name="inserting_and_removing"></a>
 ### 插入和删除
@@ -475,7 +475,7 @@ for index in greeting.indices {
 var welcome = "hello"
 welcome.insert("!", at: welcome.endIndex)
 // welcome 变量现在等于 "hello!"
- 
+
 welcome.insert(contentsOf:" there", at: welcome.index(before: welcome.endIndex))
 // welcome 变量现在等于 "hello there!"
 ```
@@ -485,7 +485,7 @@ welcome.insert(contentsOf:" there", at: welcome.index(before: welcome.endIndex))
 ```swift
 welcome.remove(at: welcome.index(before: welcome.endIndex))
 // welcome 现在等于 "hello there"
- 
+
 let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
 welcome.removeSubrange(range)
 // welcome 现在等于 "hello"
@@ -493,7 +493,7 @@ welcome.removeSubrange(range)
 
 > 注意
 > 
-> 您可以使用 `insert(_:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(_:)` 方法在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。 
+> 您可以使用 `insert(_:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(_:)` 方法在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
 
 <a name="substrings"></a>
 ## 子字符串
@@ -505,7 +505,7 @@ let greeting = "Hello, world!"
 let index = greeting.index(of: ",") ?? greeting.endIndex
 let beginning = greeting[..<index]
 // beginning 的值为 "Hello"
- 
+
 // 把结果转化为 String 以便长期存储。
 let newString = String(beginning)
 ```
