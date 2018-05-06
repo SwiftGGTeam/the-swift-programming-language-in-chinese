@@ -29,34 +29,34 @@
 本页包含内容：
 
 - [常量和变量](#constants_and_variables)
-<!-- - [声明常量和变量](#declaring) -->
-<!-- - [类型标注](#type_annotations) -->
-<!-- - [常量和变量的命名](#naming) -->
-<!-- - [输出常量和变量](#printing) -->
+	- [声明常量和变量](#declaring)
+	- [类型标注](#type_annotations)
+	- [常量和变量的命名](#naming)
+	- [输出常量和变量](#printing)
 - [注释](#comments)
 - [分号](#semicolons)
 - [整数](#integers)
-<!-- - [整数范围](#integer_bounds) -->
-<!-- - [Int](#Int) -->
-<!-- - [UInt](#UInt) -->
+	- [整数范围](#integer_bounds)
+	- [Int](#Int)
+	- [UInt](#UInt)
 - [浮点数](#floating-point_numbers)
 - [类型安全和类型推断](#type_safety_and_type_inference)
 - [数值型字面量](#numeric_literals)
 - [数值型类型转换](#numeric_type_conversion)
-<!-- - [整数转换](#integer_conversion) -->
-<!-- - [数整数和浮点数转换](#integer_and_floating_point_conversion) -->
+	- [整数转换](#integer_conversion)
+	- [数整数和浮点数转换](#integer_and_floating_point_conversion)
 - [类型别名](#type_aliases)
 - [布尔值](#booleans)
 - [元组](#tuples)
 - [可选类型](#optionals)
-<!-- - [nil](#nil) -->
-<!-- - [if 语句以及强制解析](#if) -->
-<!-- - [可选绑定](#optional_binding) -->
-<!-- - [隐式解析可选类型](#implicityly_unwrapped_optionals) -->
+	- [nil](#nil)
+	- [if 语句以及强制解析](#if)
+	- [可选绑定](#optional_binding)
+	- [隐式解析可选类型](#implicityly_unwrapped_optionals)
 - [错误处理](#error_handling)
 - [断言和先决条件](#assertions_and_preconditions)
-<!-- - [使用断言进行调试](#debugging_with_assertions) -->
-<!-- - [强制执行先决条件](#enforcing_preconditions) -->
+	- [使用断言进行调试](#debugging_with_assertions)
+	- [强制执行先决条件](#enforcing_preconditions)
 
 Swift 是一门开发 iOS, macOS, watchOS 和 tvOS 应用的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 

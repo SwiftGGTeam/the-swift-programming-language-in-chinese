@@ -25,9 +25,28 @@
 
 - [集合的可变性](#mutability_of_collections)
 - [数组](#arrays)
+    - [创建一个空数组](#creating_an_empty_array)
+    - [创建一个带有默认值的数组](#creating_an_array_with_a_default_value)
+    - [通过两个数组相加创建一个数组](#creating_an_array_by_adding_two_arrays_together)
+    - [用数组字面量构造数组](#creating_an_array_with_an_array_literals)
+    - [访问和修改数组](#accessing_and_modifying_an_array)
+    - [数组的遍历](#iterating_over_an_array)
 - [集合](#sets)
+    - [集合类型的哈希值](#hash_values_for_set_types)
+    - [集合类型语法](#set_type_syntax)
+    - [创建和构造一个空的集合](#creating_and_initalizing_an_empty_set)
+    - [用数组字面量创建集合](#creating_a_set_with_an_array_literal)
+    - [访问和修改一个集合](#accesing_and_modifying_a_set)
+    - [遍历一个集合](#iterating_over_a_set)
 - [集合操作](#performing_set_operations)
+    - [基本集合操作](#fundamental_set_operations)
+    - [集合成员关系和相等](#set_membership_and_equality)
 - [字典](#dictionaries)
+    - [字典类型简化语法](#dictionary_type_shorthand_syntax)
+    - [创建一个空字典](#creating_an_empty_dictionary)
+    - [用字典字面量创建字典](#creating_a_dictionary_with_a_dictionary_literal)
+    - [访问和修改字典](#accessing_and_modifying_a_dictionary)
+    - [字典遍历](#iterating_over_a_dictionary)
 
 Swift 语言提供 `Arrays`、`Sets` 和 `Dictionaries` 三种基本的*集合类型*用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
 
@@ -286,7 +305,7 @@ for (index, value) in shoppingList. enumerated() {
 > 关于使用 `Foundation` 和 `Cocoa` 中 `Set` 的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
 <a name="hash_values_for_set_types"></a>
-#### 集合类型的哈希值
+### 集合类型的哈希值
 
 一个类型为了存储在集合中，该类型必须是*可哈希化*的--也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
 
