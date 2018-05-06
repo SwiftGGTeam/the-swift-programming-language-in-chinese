@@ -247,7 +247,7 @@ let minValue = UInt8.min  // minValue 为 0，是 UInt8 类型
 let maxValue = UInt8.max  // maxValue 为 255，是 UInt8 类型
 ```
 
-`min` 和 `max` 所传回值的类型，正是其所对的整数类型(如上例 UInt8, 所传回的类型是 UInt8)，可用在表达式中相同类型值旁。
+`min` 和 `max` 所传回值的类型，正是其所对的整数类型（如上例 UInt8, 所传回的类型是 UInt8），可用在表达式中相同类型值旁。
 
 <a name="Int"></a>
 ### Int
@@ -691,7 +691,7 @@ if let firstNumber = Int("4") {
 
 > 注意
 > 
-> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中(`body`)中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.html#early_exit)。
+> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中（`body`）中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.html#early_exit)。
 
 <a name="implicityly_unwrapped_optionals"></a>
 ### 隐式解析可选类型

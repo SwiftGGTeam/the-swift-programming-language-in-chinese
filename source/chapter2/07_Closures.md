@@ -246,7 +246,7 @@ let strings = numbers.map {
 
 > 注意
 > 
-> 字典 `digitNames` 下标后跟着一个叹号（`!`），因为字典下标返回一个可选值（optional value），表明该键不存在时会查找失败。在上例中，由于可以确定 `number % 10` 总是 `digitNames` 字典的有效下标，因此叹号可以用于强制解包 (force-unwrap) 存储在下标的可选类型的返回值中的 `String` 类型的值。
+> 字典 `digitNames` 下标后跟着一个叹号（`!`），因为字典下标返回一个可选值（optional value），表明该键不存在时会查找失败。在上例中，由于可以确定 `number % 10` 总是 `digitNames` 字典的有效下标，因此叹号可以用于强制解包（force-unwrap）存储在下标的可选类型的返回值中的 `String` 类型的值。
 
 从 `digitNames` 字典中获取的字符串被添加到 `output` 的*前部*，逆序建立了一个字符串版本的数字。（在表达式 `number % 10` 中，如果 `number` 为 `16`，则返回 `6`，`58` 返回 `8`，`510` 返回 `0`。）
 

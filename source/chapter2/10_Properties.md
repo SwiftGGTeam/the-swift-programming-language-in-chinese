@@ -1,4 +1,4 @@
-# 属性 (Properties)
+# 属性（Properties）
 ---
 
 > 1.0

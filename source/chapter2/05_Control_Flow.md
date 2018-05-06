@@ -122,7 +122,7 @@ for tickMark in 0..<minutes {
 ```swift
 let minuteInterval = 5
 for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
-    // 每5分钟渲染一个刻度线 (0, 5, 10, 15 ... 45, 50, 55)
+    // 每5分钟渲染一个刻度线（0, 5, 10, 15 ... 45, 50, 55）
 }
 ```
 
@@ -132,7 +132,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 let hours = 12
 let hourInterval = 3
 for tickMark in stride(from: 3, through: hours, by: hourInterval) {
-    // 每3小时渲染一个刻度线 (3, 6, 9, 12)
+    // 每3小时渲染一个刻度线（3, 6, 9, 12）
 }
 ```
 
@@ -350,7 +350,7 @@ default:
 
 `switch` 语句由*多个 case* 构成，每个由 `case` 关键字开始。为了匹配某些更特定的值，Swift 提供了几种方法来进行更复杂的模式匹配，这些模式将在本节的稍后部分提到。
 
-与 `if` 语句类似，每一个 case 都是代码执行的一条分支。`switch` 语句会决定哪一条分支应该被执行，这个流程被称作根据给定的值*切换(switching)*。
+与 `if` 语句类似，每一个 case 都是代码执行的一条分支。`switch` 语句会决定哪一条分支应该被执行，这个流程被称作根据给定的值*切换（switching）*。
 
 `switch` 语句必须是完备的。这就是说，每一个可能的值都必须至少有一个 case 分支与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认（`default`）分支来涵盖其它所有没有对应的值，这个默认分支必须在 `switch` 语句的最后面。
 
@@ -450,7 +450,7 @@ print("There are \(naturalCount) \(countedThings).")
 
 我们可以使用元组在同一个 `switch` 语句中测试多个值。元组中的元素可以是值，也可以是区间。另外，使用下划线（`_`）来匹配所有可能的值。
 
-下面的例子展示了如何使用一个 `(Int, Int)` 类型的元组来分类下图中的点(x, y)：
+下面的例子展示了如何使用一个 `(Int, Int)` 类型的元组来分类下图中的点 (x, y)：
 
 ```swift
 let somePoint = (1, 1)
@@ -471,16 +471,16 @@ default:
 
 ![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphSimple_2x.png)
 
-在上面的例子中，`switch` 语句会判断某个点是否是原点(0, 0)，是否在红色的 x 轴上，是否在橘黄色的 y 轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
+在上面的例子中，`switch` 语句会判断某个点是否是原点 (0, 0)，是否在红色的 x 轴上，是否在橘黄色的 y 轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
 
-不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点(0, 0)会首先匹配 `case (0, 0)`，因此剩下的能够匹配的分支都会被忽视掉。
+不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点 (0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点 (0, 0)会首先匹配 `case (0, 0)`，因此剩下的能够匹配的分支都会被忽视掉。
 
 <a name="value_bindings"></a>
 #### 值绑定（Value Bindings）
 
 case 分支允许将匹配的值声明为临时常量或变量，并且在 case 分支体内使用 —— 这种行为被称为*值绑定*（value binding），因为匹配的值在 case 分支体内，与临时的常量或变量绑定。
 
-下面的例子将下图中的点(x, y)，使用 `(Int, Int)` 类型的元组表示，然后分类表示：
+下面的例子将下图中的点 (x, y)，使用 `(Int, Int)` 类型的元组表示，然后分类表示：
 
 ```swift
 let anotherPoint = (2, 0)
@@ -510,7 +510,7 @@ case let (x, y):
 
 case 分支的模式可以使用 `where` 语句来判断额外的条件。
 
-下面的例子把下图中的点(x, y)进行了分类：
+下面的例子把下图中的点 (x, y)进行了分类：
 
 ```swift
 let yetAnotherPoint = (1, -1)
@@ -529,7 +529,7 @@ case let (x, y):
 
 在上面的例子中，`switch` 语句会判断某个点是否在绿色的对角线 `x == y` 上，是否在紫色的对角线 `x == -y` 上，或者不在对角线上。
 
-这三个 case 都声明了常量 `x` 和 `y` 的占位符，用于临时获取元组 `yetAnotherPoint` 的两个值。这两个常量被用作 `where` 语句的一部分，从而创建一个动态的过滤器(filter)。当且仅当 `where` 语句的条件为 `true` 时，匹配到的 case 分支才会被执行。
+这三个 case 都声明了常量 `x` 和 `y` 的占位符，用于临时获取元组 `yetAnotherPoint` 的两个值。这两个常量被用作 `where` 语句的一部分，从而创建一个动态的过滤器（filter）。当且仅当 `where` 语句的条件为 `true` 时，匹配到的 case 分支才会被执行。
 
 就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch` 语句就已经完备了，因此不需要再书写默认分支。
 
@@ -614,12 +614,12 @@ print(puzzleOutput)
 <a name="break_in_a_loop_statement"></a>
 #### 循环语句中的 break
 
-当在一个循环体中使用 `break` 时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号(`}`)后的第一行代码。不会再有本次循环的代码被执行，也不会再有下次的循环产生。
+当在一个循环体中使用 `break` 时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号（`}`）后的第一行代码。不会再有本次循环的代码被执行，也不会再有下次的循环产生。
 
 <a name="break_in_a_switch_statement"></a>
 #### Switch 语句中的 break
 
-当在一个 `switch` 代码块中使用 `break` 时，会立即中断该 `switch` 代码块的执行，并且跳转到表示 `switch` 代码块结束的大括号(`}`)后的第一行代码。
+当在一个 `switch` 代码块中使用 `break` 时，会立即中断该 `switch` 代码块的执行，并且跳转到表示 `switch` 代码块结束的大括号（`}`）后的第一行代码。
 
 这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的 `switch` 需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上 `break` 语句。当那个分支被匹配到时，分支内的 `break` 语句立即结束 `switch` 代码块。
 
@@ -659,7 +659,7 @@ if let integerValue = possibleIntegerValue {
 在上面的例子中，想要把 `Character` 所有的的可能性都枚举出来是不现实的，所以使用 `default` 分支来包含所有上面没有匹配到字符的情况。由于这个 `default` 分支不需要执行任何动作，所以它只写了一条 `break` 语句。一旦落入到 `default` 分支中后，`break` 语句就完成了该分支的所有代码操作，代码继续向下，开始执行 `if let` 语句。
 
 <a name="fallthrough"></a>
-### 贯穿 (Fallthrough)
+### 贯穿（Fallthrough）
 
 在 Swift 里，`switch` 语句不会从上一个 case 分支跳转到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个 `switch` 代码块完成了它的执行。相比之下，C 语言要求你显式地插入 `break` 语句到每个 case 分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的 `switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
@@ -696,7 +696,7 @@ print(description)
 
 为了实现这个目的，你可以使用标签（*statement label*）来标记一个循环体或者条件语句，对于一个条件语句，你可以使用 `break` 加标签的方式，来结束这个被标记的语句。对于一个循环语句，你可以使用 `break` 或者 `continue` 加标签，来结束或者继续这条被标记语句的执行。
 
-声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字(introducor keyword)，并且该标签后面跟随一个冒号。下面是一个针对 `while` 循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
+声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字（introducor keyword），并且该标签后面跟随一个冒号。下面是一个针对 `while` 循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
 
 ```swift
  label name: while condition {

@@ -567,7 +567,7 @@ x = .AnotherValue
 <a name="selector_expression"></a>
 ### 选择器表达式
 
-*选择器表达式*可以让你通过选择器来引用在 Objective-C 中方法(method)和属性(property)的 setter 和 getter 方法。
+*选择器表达式*可以让你通过选择器来引用在 Objective-C 中方法（method）和属性（property）的 setter 和 getter 方法。
 
 > \#selector(方法名)
 \#selector(getter: 属性名)

@@ -1,4 +1,4 @@
-# 集合类型 (Collection Types)
+# 集合类型（Collection Types）
 -----------------
 
 > 1.0
@@ -49,7 +49,7 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类
 > 在我们不需要改变集合的时候创建不可变集合是很好的实践。如此 Swift 编译器可以优化我们创建的集合。
 
 <a name="arrays"></a>
-## 数组(Arrays)
+## 数组（Arrays）
 
 *数组*使用有序列表存储同一类型的多个值。相同的值可以多次出现在一个数组的不同位置中。
 
@@ -278,7 +278,7 @@ for (index, value) in shoppingList. enumerated() {
 <a name="sets"></a>
 ## 集合（Sets）
 
-*集合(Set)*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
+*集合（Set）*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
 > 注意
 > Swift 的 `Set` 类型被桥接到 `Foundation` 中的 `NSSet` 类。
@@ -290,13 +290,13 @@ for (index, value) in shoppingList. enumerated() {
 
 一个类型为了存储在集合中，该类型必须是*可哈希化*的--也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
 
-Swift 的所有基本类型(比如 `String`,`Int`,`Double` 和 `Bool`)默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值(在[枚举](./08_Enumerations.html)有讲述)默认也是可哈希化的。
+Swift 的所有基本类型（比如 `String`,`Int`,`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.html)有讲述）默认也是可哈希化的。
 
 > 注意
 > 
 > 你可以使用你自定义的类型作为集合的值的类型或者是字典的键的类型，但你需要使你的自定义类型符合 Swift 标准库中的 `Hashable` 协议。符合 `Hashable` 协议的类型需要提供一个类型为 `Int` 的可读属性 `hashValue`。由类型的 `hashValue` 属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
 > 
-> 因为 `Hashable` 协议符合 `Equatable` 协议，所以遵循该协议的类型也必须提供一个“是否相等”运算符(`==`)的实现。这个 `Equatable` 协议要求任何符合 `==` 实现的实例间都是一种相等的关系。也就是说，对于 `a,b,c` 三个值来说，`==` 的实现必须满足下面三种情况：
+> 因为 `Hashable` 协议符合 `Equatable` 协议，所以遵循该协议的类型也必须提供一个“是否相等”运算符（`==`）的实现。这个 `Equatable` 协议要求任何符合 `==` 实现的实例间都是一种相等的关系。也就是说，对于 `a,b,c` 三个值来说，`==` 的实现必须满足下面三种情况：
 
 > * `a == a`(自反性)
 > * `a == b` 意味着 `b == a`(对称性)
@@ -345,11 +345,11 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 // favoriteGenres 被构造成含有三个初始值的集合
 ```
 
-这个 `favoriteGenres` 变量被声明为“一个 `String` 值的集合”，写为 `Set<String>`。由于这个特定的集合含有指定 `String` 类型的值，所以它只允许存储 `String` 类型值。这里的 `favoriteGenres` 变量有三个 `String` 类型的初始值(`"Rock"`，`"Classical"` 和 `"Hip hop"`)，并以数组字面量的方式出现。
+这个 `favoriteGenres` 变量被声明为“一个 `String` 值的集合”，写为 `Set<String>`。由于这个特定的集合含有指定 `String` 类型的值，所以它只允许存储 `String` 类型值。这里的 `favoriteGenres` 变量有三个 `String` 类型的初始值（`"Rock"`，`"Classical"` 和 `"Hip hop"`），并以数组字面量的方式出现。
 
 > 注意
 > 
-> `favoriteGenres` 被声明为一个变量(拥有 `var` 标示符)而不是一个常量(拥有 `let` 标示符),因为它里面的元素将会在下面的例子中被增加或者移除。
+> `favoriteGenres` 被声明为一个变量（拥有 `var` 标示符）而不是一个常量（拥有 `let` 标示符）,因为它里面的元素将会在下面的例子中被增加或者移除。
 
 一个 `Set` 类型不能从数组字面量中被单独推断出来，因此 `Set` 类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个 `Set` 并且该数组字面量中的所有元素类型相同，那么你无须写出 `Set` 的具体类型。`favoriteGenres` 的构造形式可以采用简化的方式代替：
 
@@ -477,11 +477,11 @@ oddDigits. symmetricDifference(singleDigitPrimeNumbers).sorted()
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setEulerDiagram_2x.png)
 
-* 使用“是否相等”运算符(`==`)来判断两个集合是否包含全部相同的值。
+* 使用“是否相等”运算符（`==`）来判断两个集合是否包含全部相同的值。
 * 使用 `isSubset(of:)` 方法来判断一个集合中的值是否也被包含在另外一个集合中。
 * 使用 `isSuperset(of:)` 方法来判断一个集合中包含另一个集合中所有的值。
 * 使用 `isStrictSubset(of:)` 或者 `isStrictSuperset(of:)` 方法来判断一个集合是否是另外一个集合的子集合或者父集合并且两个集合并不相等。
-* 使用 `isDisjoint(with:)` 方法来判断两个集合是否不含有相同的值(是否没有交集)。
+* 使用 `isDisjoint(with:)` 方法来判断两个集合是否不含有相同的值（是否没有交集）。
 
 ```swift
 let houseAnimals: Set = ["🐶", "🐱"]
@@ -540,7 +540,7 @@ namesOfIntegers = [:]
 ```
 
 <a name="creating_a_dictionary_with_a_dictionary_literal"></a>
-## 用字典字面量创建字典
+### 用字典字面量创建字典
 
 我们可以使用*字典字面量*来构造字典，这和我们刚才介绍过的数组字面量拥有相似语法。字典字面量是一种将一个或多个键值对写作 `Dictionary` 集合的快捷途径。
 
