@@ -442,7 +442,7 @@ You can apply a declaration attribute to declarations only.
     to be referenced by name in code outside the module,
     even though the declaration's symbol is exported.
     However, code outside the module might still be able
-    to interact with the declaration's symbol using runtime behavior.
+    to interact with the declaration's symbol by using runtime behavior.
 
     Declarations marked with the ``inlinable`` attribute
     are implicitly usable from inlinable code.
