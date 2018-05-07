@@ -196,7 +196,7 @@ Here's an example:
 
 In the example above,
 writing ``Beverage.allCases`` lets you access a collection
-that contains all of the ``Beverage`` enumeration's cases
+that contains all of the cases of the ``Beverage`` enumeration.
 You can use ``allCases`` like any other collection ---
 the collection's elements are instances of the enumeration type,
 so in this case they're ``Beverage`` values.
