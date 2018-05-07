@@ -29,32 +29,34 @@
 本页包含内容：
 
 - [常量和变量](#constants_and_variables)
-- [声明常量和变量](#declaring)
-- [类型标注](#type_annotations)
-- [常量和变量的命名](#naming)
-- [输出常量和变量](#printing)
+	- [声明常量和变量](#declaring)
+	- [类型标注](#type_annotations)
+	- [常量和变量的命名](#naming)
+	- [输出常量和变量](#printing)
 - [注释](#comments)
 - [分号](#semicolons)
 - [整数](#integers)
-- [整数范围](#integer_bounds)
-- [Int](#Int)
-- [UInt](#UInt)
+	- [整数范围](#integer_bounds)
+	- [Int](#Int)
+	- [UInt](#UInt)
 - [浮点数](#floating-point_numbers)
 - [类型安全和类型推断](#type_safety_and_type_inference)
 - [数值型字面量](#numeric_literals)
 - [数值型类型转换](#numeric_type_conversion)
-- [整数转换](#integer_conversion)
-- [数整数和浮点数转换](#integer_and_floating_point_conversion)
+	- [整数转换](#integer_conversion)
+	- [数整数和浮点数转换](#integer_and_floating_point_conversion)
 - [类型别名](#type_aliases)
 - [布尔值](#booleans)
 - [元组](#tuples)
-- [可选](#optionals)
-- [nil](#nil)
-- [if 语句以及强制解析](#if)
-- [可选绑定](#optional_binding)
-- [隐式解析可选类型](#implicityly_unwrapped_optionals)
+- [可选类型](#optionals)
+	- [nil](#nil)
+	- [if 语句以及强制解析](#if)
+	- [可选绑定](#optional_binding)
+	- [隐式解析可选类型](#implicityly_unwrapped_optionals)
 - [错误处理](#error_handling)
-- [断言和先决条件](#assertions_and_Preconditions)
+- [断言和先决条件](#assertions_and_preconditions)
+	- [使用断言进行调试](#debugging_with_assertions)
+	- [强制执行先决条件](#enforcing_preconditions)
 
 Swift 是一门开发 iOS, macOS, watchOS 和 tvOS 应用的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 
@@ -245,7 +247,7 @@ let minValue = UInt8.min  // minValue 为 0，是 UInt8 类型
 let maxValue = UInt8.max  // maxValue 为 255，是 UInt8 类型
 ```
 
-`min` 和 `max` 所传回值的类型，正是其所对的整数类型(如上例 UInt8, 所传回的类型是 UInt8)，可用在表达式中相同类型值旁。
+`min` 和 `max` 所传回值的类型，正是其所对的整数类型（如上例 UInt8, 所传回的类型是 UInt8），可用在表达式中相同类型值旁。
 
 <a name="Int"></a>
 ### Int
@@ -689,7 +691,7 @@ if let firstNumber = Int("4") {
 
 > 注意
 > 
-> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中(`body`)中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.html#early_exit)。
+> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中（`body`）中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.html#early_exit)。
 
 <a name="implicityly_unwrapped_optionals"></a>
 ### 隐式解析可选类型
@@ -791,7 +793,7 @@ do {
 
 抛出，捕捉，以及传播错误会在[错误处理](./17_Error_Handling.html)章节详细说明。
 
-<a name="assertions_and_Preconditions"></a>
+<a name="assertions_and_preconditions"></a>
 ## 断言和先决条件
 
 断言和先决条件是在运行时所做的检查。你可以用他们来检查在执行后续代码之前是否一个必要的条件已经被满足了。如果断言或者先决条件中的布尔条件评估的结果为 true（真），则代码像往常一样继续执行。如果布尔条件评估结果为 false（假），程序的当前状态是无效的，则代码执行结束，应用程序中止。
@@ -804,6 +806,7 @@ do {
 
 断言和先决条件的不同点是，他们什么时候进行状态检测：断言仅在调试环境运行，而先决条件则在调试环境和生产环境中运行。在生产环境中，断言的条件将不会进行评估。这个意味着你可以使用很多断言在你的开发阶段，但是这些断言在生产环境中不会产生任何影响。
 
+<a name="debugging_with_assertions"></a>
 ### 使用断言进行调试
 
 你可以调用 Swift 标准库的 `assert(_:_:file:line:)` 函数来写一个断言。向这个函数传入一个结果为 `true` 或者 `false` 的表达式以及一条信息，当表达式的结果为 `false` 的时候这条信息会被显示：
@@ -834,6 +837,7 @@ if age > 10 {
 }
 ```
 
+<a name="enforcing_preconditions"></a>
 ### 强制执行先决条件
 
 当一个条件可能为假，但是继续执行代码要求条件必须为真的时候，需要使用先决条件。例如使用先决条件来检查是否下标越界，或者来检查是否将一个正确的参数传给函数。

@@ -118,7 +118,7 @@ let someVideoMode = VideoMode()
 <a name="accessing_properties"></a>
 ### 属性访问
 
-通过使用*点语法*，你可以访问实例的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(`.`)连接：
+通过使用*点语法*，你可以访问实例的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号（`.`）连接：
 
 ```swift
 print("The width of someResolution is \(someResolution.width)")

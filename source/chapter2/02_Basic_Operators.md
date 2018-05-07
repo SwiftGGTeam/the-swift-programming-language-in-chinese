@@ -26,11 +26,17 @@
 - [术语](#terminology)
 - [赋值运算符](#assignment_operator)
 - [算术运算符](#arithmetic_operators)
+	- [求余运算符](#remainder_operator)
+	- [一元负号运算符](#unary_minus_operator)
+	- [一元正号运算符](#unary_plus_operator)
 - [组合赋值运算符](#compound_assignment_operators)
 - [比较运算符](#comparison_operators)
 - [三目运算符](#ternary_conditional_operator)
 - [空合运算符](#nil_coalescing_operator)
 - [区间运算符](#range_operators)
+	- [闭区间运算符](#closed_range_operator)
+	- [半开区间运算符](#half-open_range_operator)
+	- [单侧区间](#one-sided_ranges)
 - [逻辑运算符](#logical_operators)
 
 *运算符*是检查、改变、合并值的特殊符号或短语。例如，加号（`+`）将两个数相加（如 `let i = 1 + 2`）。更复杂的运算例子包括逻辑与运算符 `&&`（如 `if enteredDoorCode && passedRetinaScan`）。
@@ -106,6 +112,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 "hello, " + "world"  // 等于 "hello, world"
 ```
 
+<a name="remainder_operator"></a>
 ### 求余运算符
 
 *求余运算符*（`a % b`）是计算 `b` 的多少倍刚刚好可以容入 `a`，返回多出来的那部分（余数）。
@@ -150,6 +157,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 在对负数 `b` 求余时，`b` 的符号会被忽略。这意味着 `a % b` 和 `a % -b` 的结果是相同的。
 
+<a name="unary_minus_operator"></a>
 ### 一元负号运算符
 
 数值的正负号可以使用前缀 `-`（即*一元负号符*）来切换：
@@ -162,6 +170,7 @@ let plusThree = -minusThree   // plusThree 等于 3, 或 "负负3"
 
 一元负号符（`-`）写在操作数之前，中间没有空格。
 
+<a name="unary_plus_operator"></a>
 ### 一元正号运算符
 
 *一元正号符*（`+`）不做任何改变地返回操作数的值：
@@ -339,6 +348,7 @@ colorNameToUse = userDefinedColorName ?? defaultColorName
 
 Swift 提供了几种方便表达一个区间的值的*区间运算符*。
 
+<a name="closed_range_operator"></a>
 ### 闭区间运算符
 
 *闭区间运算符*（`a...b`）定义一个包含从 `a` 到 `b`（包括 `a` 和 `b`）的所有值的区间。`a` 的值不能超过 `b`。
@@ -358,7 +368,7 @@ for index in 1...5 {
 
 关于 `for-in` 循环，请看[控制流](./05_Control_Flow.html)。
 
-
+<a name="half-open_range_operator"></a>
 ### 半开区间运算符
 
 *半开区间运算符*（`a..<b`）定义一个从 `a` 到 `b` 但不包括 `b` 的区间。
@@ -380,6 +390,7 @@ for i in 0..<count {
 
 数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](./04_Collection_Types.html#arrays)。
 
+<a name="one-sided_ranges"></a>
 ### 单侧区间
 
 闭区间操作符有另一个表达形式，可以表达往一侧无限延伸的区间 —— 例如，一个包含了数组从索引 2 到结尾的所有值的区间。在这些情况下，你可以省略掉区间操作符一侧的值。这种区间叫做单侧区间，因为操作符只有一侧有值。例如：
