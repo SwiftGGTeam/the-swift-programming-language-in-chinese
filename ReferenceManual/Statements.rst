@@ -1138,7 +1138,7 @@ Compile-Time Diagnostic Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A compile-time diagnostic statement causes the compiler
-to emit an error or warning during compilation.
+to emit an error or a warning during compilation.
 A compile-time diagnostic statement has the following forms:
 
 .. syntax-outline::
