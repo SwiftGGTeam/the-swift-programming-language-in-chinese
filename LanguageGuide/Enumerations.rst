@@ -192,10 +192,10 @@ Here's an example:
     -> let numberOfChoices = Beverage.allCases.count
     << // numberOfChoices : Int = 3
     -> print("\(numberOfChoices) beverages available")
-    << 3 beverages available
+    <- 3 beverages available
 
 In the example above,
-writing ``Beverage.allCases`` lets you access a collection
+you write ``Beverage.allCases`` to access a collection
 that contains all of the cases of the ``Beverage`` enumeration.
 You can use ``allCases`` like any other collection ---
 the collection's elements are instances of the enumeration type,
@@ -211,16 +211,9 @@ and the example below uses a ``for`` loop to iterate over all the cases.
     << coffee
     << tea
     << juice
-    // 3 choices available:
     // coffee
     // tea
     // juice
-
-The ``for`` loop above iterates over the cases that ``Beverage`` has
-and prints them in a list.
-By using the ``allCases`` property,
-the printed information always matches the enumeration,
-even if cases are added or removed later on.
 
 .. _Enumerations_AssociatedValues:
 
