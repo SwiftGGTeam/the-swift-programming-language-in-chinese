@@ -170,7 +170,7 @@ Iterating over Enumeration Cases
 
 For some enumerations,
 it's useful to have a collection of all of that enumeration's cases.
-You can enable this by
+You enable this by
 writing ``: CaseIterable`` after the enumeration's name.
 This syntax marks the enumeration as conforming to the ``CaseIterable`` protocol.
 Swift exposes a collection of all the cases
