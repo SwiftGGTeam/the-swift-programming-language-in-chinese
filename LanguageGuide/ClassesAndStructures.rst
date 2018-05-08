@@ -257,16 +257,20 @@ are always copied when they are passed around in your code.
 .. note::
 
     The model in Swift is that instances of a value type
-    are always copied when they are passed around in your code.
+    behave as if they were always copied when they're passed around in your code.
     However, this model doesn't require the performance cost
     of actually making a copy *immediately*.
     In most cases,
-    Swift uses the same memory
-    for the original instance and its copy,
-    without actually making any copies,
-    as long as neither instance is modified.
-    Before modifying one of them, Swift makes a copy,
-    and then modifies the copy.
+    Swift uses the same memory to store
+    the original instance and any copies,
+    without actually duplicating anything.
+    As long as none of the copies is modified,
+    they can all share the same memory.
+    Before modifying one of the copies,
+    Swift does the work of setting aside new memory for this copy,
+    populating that memory with the same information
+    that the original has,
+    and then modifying the copy's memory.
     The behavior you see in your code for structures and enumerations
     is always as if a copy took place immediately.
 
@@ -347,7 +351,7 @@ The same behavior applies to enumerations:
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it's actually set to a copy of that value.
-Changing the value of ``currentDirection`` thereafter does not affect
+Changing the value of ``currentDirection`` thereafter doesn't affect
 the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
@@ -490,7 +494,7 @@ Use these operators to check whether two constants or variables refer to the sam
    <- tenEighty and alsoTenEighty refer to the same VideoMode instance.
 
 Note that *identical to* (represented by three equals signs, or ``===``)
-does not mean the same thing as *equal to* (represented by two equals signs, or ``==``).
+doesn't mean the same thing as *equal to* (represented by two equals signs, or ``==``).
 *Identical to* means that
 two constants or variables of class type refer to exactly the same class instance.
 *Equal to* means that
