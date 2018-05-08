@@ -264,7 +264,7 @@ are always copied when they are passed around in your code.
     Swift uses the same memory to store
     the original instance and any copies,
     without actually duplicating anything.
-    As long as none of the copies is modified,
+    As long as none of the copies are modified,
     they can all share the same memory.
     Before modifying one of the copies,
     Swift does the work of setting aside new memory for this copy,
