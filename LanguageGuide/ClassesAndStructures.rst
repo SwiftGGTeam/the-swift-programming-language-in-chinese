@@ -267,10 +267,10 @@ are always copied when they are passed around in your code.
     As long as none of the copies are modified,
     they can all share the same memory.
     Before modifying one of the copies,
-    Swift does the work of setting aside new memory for this copy,
-    populating that memory with the same information
+    Swift sets aside new memory for this copy,
+    populates that memory with the same information
     that the original has,
-    and then modifying the copy's memory.
+    and then modifies the copy's memory.
     The behavior you see in your code for structures and enumerations
     is always as if a copy took place immediately.
 
