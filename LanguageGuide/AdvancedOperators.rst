@@ -761,7 +761,8 @@ for the following kinds of custom types:
 * Enumerations that have only associated types that conform to the ``Equatable`` protocol
 * Enumerations that have no associated types
 
-Declare ``Equatable`` conformance as part of the type's original declaration
+Declare ``Equatable`` conformance
+in the file that contains the original declaration
 to receive these default implementations.
 
 The example below defines a ``Vector3D`` structure
