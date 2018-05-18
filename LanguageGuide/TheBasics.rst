@@ -1214,10 +1214,8 @@ is treated like an ordinary optional:
 
 .. testcode:: implicitlyUnwrappedOptionals
 
-   -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String? = Optional("An implicitly unwrapped optional string.")
    -> let optionalString = assumedString
-   << // implicitString : String? = "An implicitly unwrapped optional string."
+   << // optionalString : String? = Optional("An implicitly unwrapped optional string.")
    // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
 
 If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
