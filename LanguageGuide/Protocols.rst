@@ -380,7 +380,7 @@ see :ref:`Initialization_RequiredInitializers`.
    -> class C2: P {
          init(s: String) {}
       }
-   !! <REPL Input>:2:6: error: initializer requirement 'init(s:)' can only be satisfied by a `required` initializer in non-final class 'C2'
+   !! <REPL Input>:2:6: error: initializer requirement 'init(s:)' can only be satisfied by a 'required' initializer in non-final class 'C2'
    !! init(s: String) {}
    !! ^
    !! required
