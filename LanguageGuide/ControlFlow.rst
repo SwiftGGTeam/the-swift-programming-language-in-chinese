@@ -52,13 +52,13 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["cat": 4, "spider": 8, "ant": 6]
+   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
    -> for (animalName, legCount) in numberOfLegs {
          print("\(animalName)s have \(legCount) legs")
       }
+   </ ants have 6 legs
    </ cats have 4 legs
    </ spiders have 8 legs
-   </ ants have 6 legs
 
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order

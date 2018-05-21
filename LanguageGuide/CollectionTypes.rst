@@ -643,8 +643,8 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
    -> for genre in favoriteGenres {
          print("\(genre)")
       }
-   </ [Tool J]
    </ Classical
+   </ [Tool J]
    </ Hip hop
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
@@ -741,9 +741,9 @@ because they share no elements in common.
 .. testcode:: setOperations
 
    -> let houseAnimals: Set = ["🐶", "🐱"]
-   << // houseAnimals : Set<String> = Set(["🐱", "🐶"])
+   << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
    -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-   << // farmAnimals : Set<String> = Set(["🐑", "🐶", "🐱", "🐔", "🐮"])
+   << // farmAnimals : Set<String> = Set(["🐮", "🐔", "🐑", "🐶", "🐱"])
    -> let cityAnimals: Set = ["🐦", "🐭"]
    << // cityAnimals : Set<String> = Set(["🐭", "🐦"])
    ---
@@ -859,7 +859,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -890,7 +890,7 @@ The initialization of ``airports`` could have been written in a shorter form ins
 .. testcode:: dictionariesInferred
 
    -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,

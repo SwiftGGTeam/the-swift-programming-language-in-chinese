@@ -1335,7 +1335,7 @@ that combine these components.
    -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 15],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
                                 "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "hexagonal": [1, 6, 15, 28, 45, 66, 91], "prime": [2, 3, 5, 7, 11, 13, 15]]
+   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "prime": [2, 3, 5, 7, 11, 13, 15], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
    <- Optional([2, 3, 5, 7, 11, 13, 15])
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
@@ -2000,10 +2000,10 @@ For example:
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
+   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
 
 .. langref-grammar
 
@@ -2092,20 +2092,20 @@ For example:
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : [Int]] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
-   </ someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
+   </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
+   </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
 
 .. langref-grammar
 
