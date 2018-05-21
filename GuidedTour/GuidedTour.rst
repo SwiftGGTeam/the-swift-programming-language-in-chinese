@@ -795,7 +795,7 @@ properties can have a getter and a setter.
     << 9.3
     -> triangle.perimeter = 9.9
     -> print(triangle.sideLength)
-    << 3.3
+    << 3.3000000000000003
 
 In the setter for ``perimeter``,
 the new value has the implicit name ``newValue``.

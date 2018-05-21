@@ -235,7 +235,7 @@ a *linear congruential generator*:
       }
    -> let generator = LinearCongruentialGenerator()
    -> print("Here's a random number: \(generator.random())")
-   <- Here's a random number: 0.37464991998171
+   <- Here's a random number: 0.3746499199817101
    -> print("And another one: \(generator.random())")
    <- And another one: 0.729023776863283
 
@@ -1564,7 +1564,7 @@ without any additional modification.
    >> do {
    -> let generator = LinearCongruentialGenerator()
    -> print("Here's a random number: \(generator.random())")
-   <- Here's a random number: 0.37464991998171
+   <- Here's a random number: 0.3746499199817101
    -> print("And here's a random Boolean: \(generator.randomBool())")
    <- And here's a random Boolean: true
    >> }
