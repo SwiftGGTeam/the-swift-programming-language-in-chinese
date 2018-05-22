@@ -198,17 +198,6 @@ You can also use dot syntax to assign a new value to a variable property:
    -> print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is now 1280
 
-.. note::
-
-   Unlike Objective-C,
-   Swift enables you to set subproperties of a structure property directly.
-   In the last example above,
-   the ``width`` property of the ``resolution`` property of ``someVideoMode`` is set directly,
-   without your needing to set the entire ``resolution`` property to a new value.
-
-.. XXX Is this note still helpful/meaningful?
-   I'm not even completely sure it's true for C or Obj-C.
-
 .. _ClassesAndStructures_MemberwiseInitializersForStructureTypes:
 
 Memberwise Initializers for Structure Types
