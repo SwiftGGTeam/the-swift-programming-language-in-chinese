@@ -59,13 +59,8 @@ prefer structures and enumerations because they're easier to reason about,
 and use classes when they're appropriate or necessary.
 In practice, this means most of the custom data types you define
 will be structures and enumerations.
-
-.. XXX Add link to end of para above
-    Article is tracked by <rdar://problem/39444658>.
-    URL should be stable after curation signoff.
-
-    For a more detailed comparison,
-    see `Choosing Between Structures and Classes <....>`_.
+For a more detailed comparison,
+see `Choosing Between Structures and Classes <https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes>`_.
 
 .. _ClassesAndStructures_DefinitionSyntax:
 
