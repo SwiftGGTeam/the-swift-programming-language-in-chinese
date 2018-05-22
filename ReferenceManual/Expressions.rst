@@ -1782,7 +1782,9 @@ For example:
 The members of a module access
 the top-level declarations of that module.
 
-.. TR: Confirm?
+Types declared with the ``dynamicMemberLookup`` attribute
+include members that are looked up at runtime,
+as described in :doc:`Attributes`.
 
 To distinguish between methods or initializers
 whose names differ only by the names of their arguments,

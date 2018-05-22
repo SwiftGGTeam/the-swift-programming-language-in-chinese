@@ -205,6 +205,45 @@ You can apply a declaration attribute to declarations only.
    when the function or method that returns a value
    is called without using its result.
 
+``dynamicMemberLookup``
+   Apply this attribute to a class, structure, enumeration, or protocol
+   to enable members to be looked up by name at runtime.
+   The type must implement a ``subscript(dynamicMemberLookup:)`` subscript.
+
+   In an explicit member expression,
+   if there isn't a corresponding declaration for the named member,
+   the expression is understood as a call to
+   the type's ``subscript(dynamicMemberLookup:)`` subscript,
+   passing a string literal that contains the member's name as the argument.
+   The subscript's parameter type can be any type
+   that conforms to the ``ExpressibleByStringLiteral`` protocol,
+   and its return type can be any type.
+   In most cases, the subscript's parameter is a ``String`` value.
+   For example:
+
+   .. testcode:: dynamicMemberLookup
+      :compile: true
+
+      -> @dynamicMemberLookup
+      -> struct DynamicStruct {
+             let dictionary = ["someDynamicMember": 325,
+                               "someOtherMember": 787]
+             subscript(dynamicMember member: String) -> Int {
+                 return dictionary[member] ?? 1054
+             }
+         }
+      -> let s = DynamicStruct()
+      ---
+      // Using dynamic member lookup
+      -> let dynamic = s.someDynamicMember
+      -> print(dynamic)
+      <- 325
+      ---
+      // Calling the underlying subscript directly
+      -> let equivalent = s[dynamicMember: "someDynamicMember"]
+      -> print(dynamic == equivalent)
+      <- true
+
 ``GKInspectable``
     Apply this attribute to expose a custom GameplayKit component property
     to the SpriteKit editor UI.
