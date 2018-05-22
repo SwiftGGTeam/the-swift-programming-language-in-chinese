@@ -219,15 +219,17 @@ You can apply a declaration attribute to declarations only.
     convenience initializer, or deinitializer declaration
     to expose that declaration's implementation
     as part of the module's public interface.
-    The compiler is allowed to inline calls to this declaration
-    by inserting a copy of its implementation at the call site
-    instead of using an actual call.
+    The compiler is allowed to replace calls to an inlinable symbol
+    with a copy of the symbol's implementation at the call site.
 
-    This attribute can't be applied
-    to ``fileprivate`` or ``private`` declarations,
-    or to nested declarations.
     Functions and closures that are defined inside a public inlinable function
     are implicitly inlinable.
+    This attribute can't be applied
+    to nested declarations
+    or to ``fileprivate`` or ``private`` declarations.
+
+    .. XXX Query engineering about "nested declarations" above.
+       Seems to contradict the previous sentence about public inlinable functions.
 
     .. assertion:: cant-inline-private
 
@@ -236,9 +238,11 @@ You can apply a declaration attribute to declarations only.
        !! @inlinable private func f() { }
        !! ^~~~~~~~~~~
 
-    Because inlined copies of a function aren't necessarily updated
-    if the function's implementation changes,
-    an inlinable function must be prepared to interact with
+    If a project uses a module that includes inlinable functions,
+    the inlined copies aren't necessarily updated
+    when the module's implementation of the function changes.
+    For this reason,
+    an inlinable function must be compatible with
     every past version of that function.
     In most cases, this means
     externally visible aspects of their implementation can't be changed.
