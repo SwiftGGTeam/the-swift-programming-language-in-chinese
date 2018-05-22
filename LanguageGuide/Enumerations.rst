@@ -176,10 +176,6 @@ Swift exposes a collection of all the cases
 as an ``allCases`` property of the enumeration type.
 Here's an example:
 
-.. XXX live link to CaseIterable reference
-   URL is probably something like
-   https://docs.Developer Publications.apple.com/documentation/swift/caseiterable
-
 .. testcode:: enums
 
     -> enum Beverage: CaseIterable {
@@ -212,7 +208,8 @@ and the example below uses a ``for`` loop to iterate over all the cases.
     // juice
 
 The syntax used in the examples above
-marks the enumeration as conforming to the ``CaseIterable`` protocol.
+marks the enumeration as conforming to the
+`CaseIterable <//apple_ref/swift/fake/CaseIterable>`_ protocol.
 For information about protocols, see :doc:`Protocols`.
 
 .. _Enumerations_AssociatedValues:
