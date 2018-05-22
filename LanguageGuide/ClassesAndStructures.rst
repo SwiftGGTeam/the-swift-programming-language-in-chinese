@@ -555,9 +555,9 @@ but isn't a direct pointer to an address in memory,
 and doesn't require you to write an asterisk (``*``)
 to indicate that you are creating a reference.
 Instead, these references are defined like any other constant or variable in Swift.
-The standard library provides types like
-`UnsafePointer <//apple_ref/swift/struct/s:SP>`_
-that you can use if you need to interact with pointers directly.
+The standard library provides pointer and buffer types
+that you can use if you need to interact with pointers directly ---
+see `Manual Memory Management <https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management>`_.
 
 .. TODO: functions aren't "instances". This needs clarifying.
 
