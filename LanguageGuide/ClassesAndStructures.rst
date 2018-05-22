@@ -348,10 +348,10 @@ The same behavior applies to enumerations:
    << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
    -> currentDirection.turnNorth()
    ---
-   -> print("The current direction is \(currentDirection).")
-   -> print("The remembered direction is \(rememberedDirection).")
-   <- The current direction is north.
-   <- The remembered direction is west.
+   -> print("The current direction is \(currentDirection)")
+   -> print("The remembered direction is \(rememberedDirection)")
+   <- The current direction is north
+   <- The remembered direction is west
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it's actually set to a copy of that value.
