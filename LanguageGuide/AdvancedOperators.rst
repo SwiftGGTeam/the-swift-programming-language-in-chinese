@@ -739,9 +739,9 @@ it makes sense to consider “equal” as meaning
 “both instances have the same ``x`` values and ``y`` values”,
 and so this is the logic used by the operator implementation.
 If you've implemented an "equal to" operator,
-you usually don't need to implement a "not equal to" operator(``!=``) yourself.
+you usually don't need to implement a "not equal to" operator (``!=``) yourself.
 The standard library provides a default implementation of the “not equal to” operator,
-which simply returns the inverse of the result of the “equal to” operator
+which simply negates the result of the “equal to” operator
 that you implemented.
 
 You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
