@@ -715,9 +715,9 @@ and uses it to set the left value to be the left value plus the right value:
 Equivalence Operators
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default, custom classes and structures do not receive a default implementation of
+By default, custom classes and structures don't receive a default implementation of
 the :newTerm:`equivalence operators`,
-known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
+known as the *equal to* operator (``==``) and *not equal to* operator (``!=``).
 
 To use the equivalence operators to check for equivalence of your own custom type,
 provide an implementation of the "equal to" operator
@@ -733,13 +733,16 @@ and add conformance to the standard library's ``Equatable`` protocol:
       }
 
 The above example implements an “equal to” operator (``==``)
-to check if two ``Vector2D`` instances have equivalent values.
+to check whether two ``Vector2D`` instances have equivalent values.
 In the context of ``Vector2D``,
 it makes sense to consider “equal” as meaning
 “both instances have the same ``x`` values and ``y`` values”,
 and so this is the logic used by the operator implementation.
-The standard library provides a default implementation of the “not equal to” operator (``!=``),
-which simply returns the inverse of the result of the “equal to” operator.
+If you've implemented an "equal to" operator,
+you usually don't need to implement a "not equal to" operator (``!=``) yourself.
+The standard library provides a default implementation of the “not equal to” operator,
+which simply negates the result of the “equal to” operator
+that you implemented.
 
 You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
 
@@ -754,7 +757,9 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
       }
    <- These two vectors are equivalent.
 
-Swift provides synthesized implementations of the equivalence operators
+In many simple cases, you can ask Swift
+to provide synthesized implementations of the equivalence operators for you.
+Swift provides synthesized implementations
 for the following kinds of custom types:
 
 * Structures that have only stored properties that conform to the ``Equatable`` protocol
@@ -763,7 +768,7 @@ for the following kinds of custom types:
 
 Declare ``Equatable`` conformance
 in the file that contains the original declaration
-to receive these default implementations.
+to receive these implementations.
 
 The example below defines a ``Vector3D`` structure
 for a three-dimensional position vector ``(x, y, z)``,
