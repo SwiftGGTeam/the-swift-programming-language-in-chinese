@@ -907,8 +907,10 @@ Compiler Control Statements
 ---------------------------
 
 Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has two compiler control statements: a conditional compilation block
-and a line control statement.
+Swift has three compiler control statements:
+a conditional compilation block
+a line control statement,
+and a compile-time diagnostic statement.
 
 .. syntax-grammar::
 
@@ -916,6 +918,7 @@ and a line control statement.
 
     compiler-control-statement --> conditional-compilation-block
     compiler-control-statement --> line-control-statement
+    compiler-control-statement --> diagnostic-statement
 
 
 .. _Statements_BuildConfigurationStatement:
@@ -1132,6 +1135,68 @@ resets the source code location back to the default line numbering and filename.
     line-number --> A decimal integer greater than zero
     file-name --> static-string-literal
 
+.. _Statements_ErrorWarning:
+
+Compile-Time Diagnostic Statement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A compile-time diagnostic statement causes the compiler
+to emit an error or a warning during compilation.
+A compile-time diagnostic statement has the following forms:
+
+.. syntax-outline::
+
+   #error("<#error message#>")
+   #warning("<#warning message#>")
+
+The first form emits the *error message* as a fatal error
+and terminates the compilation process.
+The second form emits the *warning message* as a nonfatal warning
+and allows compilation to proceed.
+You write the diagnostic message as a static string literal.
+Static string literals can't use features like
+string interpolation or concatenation,
+but they can use the multiline string literal syntax.
+
+.. syntax-grammar::
+
+   Grammar of a compile-time diagnostic statement
+
+   diagnostic-statement --> ``#error`` ``(`` diagnostic-message ``)``
+   diagnostic-statement --> ``#warning`` ``(`` diagnostic-message ``)``
+
+   diagnostic-message --> static-string-literal
+
+.. assertion:: good-diagnostic-statement-messages
+   :compile: true
+
+   >> #warning("Single-line static string")
+   !! /tmp/swifttest.swift:1:10: warning: Single-line static string
+   !! #warning("Single-line static string")
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   >> #warning(
+      """
+      Multi-line string literal
+      warning message
+      """)
+   !! /tmp/swifttest.swift:3:1: warning: Multi-line string literal
+   !! warning message
+   !! """
+   !! ^~~
+
+.. assertion:: bad-diagnostic-statement-messages
+   :compile: true
+
+   >> #warning("Interpolated \(1+1) string")
+   !! /tmp/swifttest.swift:1:10: error: string interpolation is not allowed in #warning directives
+   !! #warning("Interpolated \(1+1) string")
+   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ---
+   >> #warning("Concatenated " + "strings")
+   !! /tmp/swifttest.swift:2:26: error: extra tokens following #warning directive
+   !! #warning("Concatenated " + "strings")
+   !! ^
 
 .. _Statements_AvailabilityCondition:
 
