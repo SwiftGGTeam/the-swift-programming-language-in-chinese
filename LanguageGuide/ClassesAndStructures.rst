@@ -244,7 +244,8 @@ are always copied when they are passed around in your code.
     behave as if they were always copied when they're passed around in your code.
     However, this model doesn't require the performance cost
     of actually making a copy *immediately*.
-    In most cases,
+    For collections defined by the standard library,
+    like arrays and strings,
     Swift uses the same memory to store
     the original instance and any copies,
     without actually duplicating anything.
