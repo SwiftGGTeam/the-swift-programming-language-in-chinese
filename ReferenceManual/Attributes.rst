@@ -443,8 +443,9 @@ You can apply a declaration attribute to declarations only.
     that's defined in the same module as the declaration.
     The declaration must have the ``internal`` access level modifier.
 
-    This attribute and the ``public`` access level modifier
-    both expose the declaration as part of the module's public interface.
+    Like the ``public`` access level modifier,
+    this attribute
+    exposes the declaration as part of the module's public interface.
     Unlike ``public``,
     the compiler doesn't allow declarations marked with ``usableFromInline``
     to be referenced by name in code outside the module,
