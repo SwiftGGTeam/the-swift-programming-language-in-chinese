@@ -459,8 +459,12 @@ You can apply a declaration attribute to declarations only.
     can be applied to ``internal`` declarations,
     applying both attributes is an error.
 
-    .. XXX Add an assertion like
-       @usableFromInline @inline internal func f() { }
+    .. assertion:: usableFromInline-and-inlinable-is-redundant
+
+       >> @usableFromInline @inlinable internal func f() { }
+       !! <REPL Input>:1:1: warning: '@inlinable' declaration is already '@usableFromInline'
+       !! @usableFromInline @inlinable internal func f() { }
+       !! ^~~~~~~~~~~~~~~~~~
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
