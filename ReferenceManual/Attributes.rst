@@ -229,8 +229,12 @@ You can apply a declaration attribute to declarations only.
     Functions and closures that are defined inside a public inlinable function
     are implicitly inlinable.
 
-    .. XXX Add an assertion like
-       @inline private func f() { }
+    .. assertion:: cant-inline-private
+
+       >> @inlinable private func f() { }
+       !! <REPL Input>:1:1: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+       !! @inlinable private func f() { }
+       !! ^~~~~~~~~~~
 
     Because inlined copies of a function aren't necessarily updated
     if the function's implementation changes,
