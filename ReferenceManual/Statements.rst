@@ -1153,10 +1153,10 @@ The first form emits the *error message* as a fatal error
 and terminates the compilation process.
 The second form emits the *warning message* as a nonfatal warning
 and allows compilation to proceed.
-You write the diagnostic message as a static string literal,
-which can't use features like compile-time string concatenation
-or string interpolation,
-but can be a multiline string literal.
+You write the diagnostic message as a static string literal.
+Static string literals can't use features like
+string interpolation or concatenation,
+but they can use the multiline string literal syntax.
 
 .. syntax-grammar::
 
