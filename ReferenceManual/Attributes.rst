@@ -213,7 +213,7 @@ You can apply a declaration attribute to declarations only.
    the type's ``subscript(dynamicMemberLookup:)`` subscript,
    passing a string literal that contains the member's name as the argument.
    The subscript's parameter type can be any type
-   that conforms to ``ExpressibleByStringLiteral`` protocol,
+   that conforms to the ``ExpressibleByStringLiteral`` protocol,
    and its return type can be any type.
    In most cases, the subscript's parameter is a ``String`` value.
    For example:
