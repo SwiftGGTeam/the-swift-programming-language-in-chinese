@@ -206,7 +206,10 @@ You can apply a declaration attribute to declarations only.
    is called without using its result.
 
 ``dynamicMemberLookup``
-   Apply this attribute to enable members to be looked up by name at runtime.
+   Apply this attribute to a class, structure, enumeration, or protocol
+   to enable members to be looked up by name at runtime.
+   The type must implement a ``subscript(dynamicMemberLookup:)`` subscript.
+
    In an explicit member expression,
    if there isn't a corresponding declaration for the named member,
    the expression is understood as a call to
