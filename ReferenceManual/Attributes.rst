@@ -222,14 +222,12 @@ You can apply a declaration attribute to declarations only.
     The compiler is allowed to replace calls to an inlinable symbol
     with a copy of the symbol's implementation at the call site.
 
-    Functions and closures that are defined inside a public inlinable function
-    are implicitly inlinable.
     This attribute can't be applied
-    to nested declarations
+    to declarations that are nested inside functions
     or to ``fileprivate`` or ``private`` declarations.
-
-    .. XXX Query engineering about "nested declarations" above.
-       Seems to contradict the previous sentence about public inlinable functions.
+    Functions and closures that are defined inside an inlinable function
+    are implicitly inlinable,
+    even though they can't be marked with this attribute.
 
     .. assertion:: cant-inline-private
 
@@ -238,19 +236,29 @@ You can apply a declaration attribute to declarations only.
        !! @inlinable private func f() { }
        !! ^~~~~~~~~~~
 
-    If a project uses a module that includes inlinable functions,
-    the inlined copies aren't necessarily updated
-    when the module's implementation of the function changes.
-    For this reason,
-    an inlinable function must be compatible with
-    every past version of that function.
-    In most cases, this means
-    externally visible aspects of their implementation can't be changed.
-    For example,
-    an inlinable hash function can't change what algorithm is used ---
-    inlined copies outside the module would use the old algorithm
-    and the noninlined copy would use the new algorithm,
-    yielding inconsistent results.
+    .. assertion:: cant-inline-nested
+
+       >> public func outer() {
+       >> @inlinable func f() { }
+       >> }
+
+    .. TODO: When we get resilience, this will actually be a problem.
+       Until then, per discussion with [Contributor 6004], there's no (supported) way
+       for folks to get into the state where this behavior would be triggered.
+
+        If a project uses a module that includes inlinable functions,
+        the inlined copies aren't necessarily updated
+        when the module's implementation of the function changes.
+        For this reason,
+        an inlinable function must be compatible with
+        every past version of that function.
+        In most cases, this means
+        externally visible aspects of their implementation can't be changed.
+        For example,
+        an inlinable hash function can't change what algorithm is used ---
+        inlined copies outside the module would use the old algorithm
+        and the noninlined copy would use the new algorithm,
+        yielding inconsistent results.
 
 ``nonobjc``
     Apply this attribute to a
