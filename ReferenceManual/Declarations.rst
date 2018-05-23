@@ -2343,8 +2343,8 @@ and one for arrays with ``String`` elements.
    >>         return 0
    ->     }
       }
-      // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
-   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !!  <REPL Input>:1:18: error: conflicting conformance of 'Array<Element>' to protocol 'Serializable'; there cannot be more than one conformance, even with different conditional bounds
    !! extension Array: Serializable where Element == String {
    !! ^
    !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
@@ -2422,8 +2422,8 @@ resulting in an error:
    >> protocol TitledLoggable : Loggable { }
    -> extension Array: Loggable where Element: TitledLoggable { }
       extension Array: Loggable where Element: MarkedLoggable { }
-      // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
-   !! <REPL Input>:1:18: error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! <REPL Input>:1:18: error: conflicting conformance of 'Array<Element>' to protocol 'Loggable'; there cannot be more than one conformance, even with different conditional bounds
    !! extension Array: Loggable where Element: MarkedLoggable { }
    !! ^
    !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
@@ -2439,6 +2439,12 @@ resulting in an error:
           // ...
       }
       extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !!  <REPL Input>:1:1: error: conditional conformance of type 'Array<Element>' to protocol 'TitledLoggable' does not imply conformance to inherited protocol 'Loggable'
+   !! extension Array: TitledLoggable where Element: TitledLoggable {
+   !! ^
+   !! <REPL Input>:1:1: note: did you mean to explicitly state the conformance like 'extension Array: Loggable where ...'?
+   !! extension Array: TitledLoggable where Element: TitledLoggable {
+   !! ^
    !! <REPL Input>:1:1: error: type 'Element' does not conform to protocol 'TitledLoggable'
    !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^

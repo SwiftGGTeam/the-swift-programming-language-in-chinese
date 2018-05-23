@@ -69,7 +69,7 @@ to the function or initializer.
     -> simpleMax(17, 42) // T is inferred to be Int
     << // r0 : Int = 42
     -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
-    << // r1 : Double = 3.1415899999999999
+    << // r1 : Double = 3.14159
 
 
 .. _GenericParametersAndArguments_WhereClauses:
