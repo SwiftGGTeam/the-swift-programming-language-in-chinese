@@ -6,6 +6,22 @@ This table describes the changes to *The Swift Programming Language*.
 ==========  ==============================================================================================
 Date        Notes
 ==========  ==============================================================================================
+2018-06-04  * Updated for Swift 4.2.
+
+            * Added information about accessing all of an enumeration's cases
+              to the :ref:`Enumerations_AllCases` section.
+
+            * Added information about ``#error`` and ``#warning``
+              to the :ref:`Statements_ErrorWarning` section.
+
+            * Added information about inlining
+              to the :ref:`Attributes_DeclarationAttributes` section
+              under the ``inlinable`` and  ``usableFromInline`` attributes.
+
+            * Added information about members that are looked up by name at runtime
+              to the :ref:`Attributes_DeclarationAttributes` section
+              under the ``dynamicMemberLookup`` attribute.
+----------  ----------------------------------------------------------------------------------------------
 2018-03-29  * Updated for Swift 4.1.
 
             * Added information about synthesized implementations of equivalence operators
