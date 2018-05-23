@@ -252,6 +252,53 @@ You can apply a declaration attribute to declarations only.
     .. See also <rdar://problem/27287369> Document @GKInspectable attribute
        which we will want to link to, once it's written.
 
+``inlinable``
+    Apply this attribute to a
+    function, method, computed property, subscript,
+    convenience initializer, or deinitializer declaration
+    to expose that declaration's implementation
+    as part of the module's public interface.
+    The compiler is allowed to replace calls to an inlinable symbol
+    with a copy of the symbol's implementation at the call site.
+
+    This attribute can't be applied
+    to declarations that are nested inside functions
+    or to ``fileprivate`` or ``private`` declarations.
+    Functions and closures that are defined inside an inlinable function
+    are implicitly inlinable,
+    even though they can't be marked with this attribute.
+
+    .. assertion:: cant-inline-private
+
+       >> @inlinable private func f() { }
+       !! <REPL Input>:1:1: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+       !! @inlinable private func f() { }
+       !! ^~~~~~~~~~~
+
+    .. assertion:: cant-inline-nested
+
+       >> public func outer() {
+       >> @inlinable func f() { }
+       >> }
+
+    .. TODO: When we get resilience, this will actually be a problem.
+       Until then, per discussion with [Contributor 6004], there's no (supported) way
+       for folks to get into the state where this behavior would be triggered.
+
+        If a project uses a module that includes inlinable functions,
+        the inlined copies aren't necessarily updated
+        when the module's implementation of the function changes.
+        For this reason,
+        an inlinable function must be compatible with
+        every past version of that function.
+        In most cases, this means
+        externally visible aspects of their implementation can't be changed.
+        For example,
+        an inlinable hash function can't change what algorithm is used ---
+        inlined copies outside the module would use the old algorithm
+        and the noninlined copy would use the new algorithm,
+        yielding inconsistent results.
+
 ``nonobjc``
     Apply this attribute to a
     method, property, subscript, or initializer declaration
@@ -434,6 +481,37 @@ You can apply a declaration attribute to declarations only.
     as its principal class,
     call the ``UIApplicationMain(_:_:_:_:)`` function
     instead of using this attribute.
+
+``usableFromInline``
+    Apply this attribute to a
+    function, method, computed property, subscript,
+    initializer, or deinitializer declaration
+    to allow that symbol to be used in inlinable code
+    that's defined in the same module as the declaration.
+    The declaration must have the ``internal`` access level modifier.
+
+    Like the ``public`` access level modifier,
+    this attribute
+    exposes the declaration as part of the module's public interface.
+    Unlike ``public``,
+    the compiler doesn't allow declarations marked with ``usableFromInline``
+    to be referenced by name in code outside the module,
+    even though the declaration's symbol is exported.
+    However, code outside the module might still be able
+    to interact with the declaration's symbol by using runtime behavior.
+
+    Declarations marked with the ``inlinable`` attribute
+    are implicitly usable from inlinable code.
+    Although either ``inlinable`` or ``usableFromInline``
+    can be applied to ``internal`` declarations,
+    applying both attributes is an error.
+
+    .. assertion:: usableFromInline-and-inlinable-is-redundant
+
+       >> @usableFromInline @inlinable internal func f() { }
+       !! <REPL Input>:1:1: warning: '@inlinable' declaration is already '@usableFromInline'
+       !! @usableFromInline @inlinable internal func f() { }
+       !! ^~~~~~~~~~~~~~~~~~
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
