@@ -644,7 +644,7 @@ and the default name of ``oldValue`` is used instead.
    << didSet
 
 .. TODO: If you add a property observer to a stored property of structure type,
-   that property observer is fired whenever any of the sub-properties
+   that property observer is fired whenever any of the subproperties
    of that structure instance are set. This is cool, but nonobvious.
    Provide an example of it here.
 

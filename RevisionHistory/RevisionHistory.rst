@@ -761,8 +761,7 @@ Date        Notes
             * Swift's ``Array`` type now has full value semantics.
               Updated the information about :ref:`CollectionTypes_MutabilityOfCollections`
               and :ref:`CollectionTypes_Arrays` to reflect the new approach.
-              Also clarified the
-              :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForStringsArraysAndDictionaries`.
+              Also clarified the assignment and copy behavior for strings arrays and dictionaries.
 
             * :ref:`CollectionTypes_ArrayTypeShorthandSyntax` is now written as
               ``[SomeType]`` rather than ``SomeType[]``.
