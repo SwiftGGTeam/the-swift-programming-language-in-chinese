@@ -240,23 +240,15 @@ are always copied when they are passed around in your code.
 
 .. note::
 
-    The model in Swift is that instances of a value type
-    behave as if they were always copied when they're passed around in your code.
-    However, this model doesn't require the performance cost
-    of actually making a copy *immediately*.
-    For collections defined by the standard library,
-    like arrays and strings,
-    Swift uses the same memory to store
-    the original instance and any copies,
-    without actually duplicating anything.
-    As long as none of the copies are modified,
-    they can all share the same memory.
-    Before modifying one of the copies,
-    Swift sets aside new memory for this copy,
-    populates that memory with the same information
-    that the original has,
-    and then modifies the copy's memory.
-    The behavior you see in your code for structures and enumerations
+    Collections defined by the standard library
+    like arrays, dictionaries, and strings
+    use an optimization to reduce the performance cost of copying.
+    Instead of making a copy immediately,
+    these collections share the memory where the elements are stored
+    between the original instance and any copies.
+    If one of the copies of the collection is modified,
+    the elements are copied just before the modification.
+    The behavior you see in your code
     is always as if a copy took place immediately.
 
 Consider this example, which uses the ``Resolution`` structure from the previous example:
