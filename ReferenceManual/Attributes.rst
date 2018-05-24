@@ -280,6 +280,10 @@ You can apply a declaration attribute to declarations only.
        >> public func outer() {
        >> @inlinable func f() { }
        >> }
+       !! <REPL Input>:2:3: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+       !! @inlinable func f() { }
+       !! ^~~~~~~~~~~
+       !!-
 
     .. TODO: When we get resilience, this will actually be a problem.
        Until then, per discussion with [Contributor 6004], there's no (supported) way
