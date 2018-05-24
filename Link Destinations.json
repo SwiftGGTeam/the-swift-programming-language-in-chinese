@@ -22,7 +22,8 @@
     "//apple_ref/swift/intf/s:Ps8Sequence": "https://developer.apple.com/documentation/swift/sequence", 
     "//apple_ref/swift/intf/s:s14StringProtocolP": "https://developer.apple.com/documentation/swift/stringprotocol", 
     "//apple_ref/swift/struct/s:SS": "https://developer.apple.com/documentation/swift/string", 
-    "//apple_ref/swift/struct/s:s9SubstringV": "https://developer.apple.com/documentation/swift/substring"
+    "//apple_ref/swift/struct/s:s9SubstringV": "https://developer.apple.com/documentation/swift/substring",
+    "//apple_ref/swift/fake/CaseIterable": "https://developer.apple.com/documentation/swift/caseiterable"
   }, 
   "destinations": {
     "GuidedTour/AboutSwift": "ID0", 
