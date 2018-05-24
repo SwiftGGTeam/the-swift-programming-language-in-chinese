@@ -1025,9 +1025,8 @@ to create a cryptic puzzle phrase:
    -> for character in puzzleInput {
          if charactersToRemove.contains(character) {
             continue
-         } else {
-            puzzleOutput.append(character)
          }
+         puzzleOutput.append(character)
       }
    -> print(puzzleOutput)
    <- grtmndsthnklk
