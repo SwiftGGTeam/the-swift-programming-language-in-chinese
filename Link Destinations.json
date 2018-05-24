@@ -271,6 +271,7 @@
     "declarations-variabledeclaration": "ID356", 
     "deinitialization-deinitializersinaction": "ID144", 
     "deinitialization-howdeinitializationworks": "ID143", 
+    "enumerations-allcases": "ID581", 
     "enumerations-and-structures": "ID465", 
     "enumerations-associatedvalues": "ID148", 
     "enumerations-enumerationsyntax": "ID146", 
@@ -502,6 +503,7 @@
     "statements-deferstatement": "ID532", 
     "statements-do-whilestatement": "ID433", 
     "statements-dostatement": "ID533", 
+    "statements-errorwarning": "ID582", 
     "statements-executiondoesnotfallthroughcasesimplicitly": "ID438", 
     "statements-fallthroughstatement": "ID443", 
     "statements-for-instatement": "ID431", 
@@ -623,5 +625,5 @@
     "operator-methods", 
     "generic-where-clauses"
   ], 
-  "next_id": 581
+  "next_id": 583
 }
