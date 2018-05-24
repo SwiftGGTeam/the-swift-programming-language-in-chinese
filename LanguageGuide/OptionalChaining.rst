@@ -562,7 +562,7 @@ you can access the value of the ``street`` property through multilevel optional 
 In this example,
 the attempt to set the ``address`` property of ``john.residence`` will succeed,
 because the value of ``john.residence``
-currently contains a valid ``Address`` instance.
+currently contains a valid ``Residence`` instance.
 
 .. _OptionalChaining_ChainingOnMethodsWithOptionalReturnValues:
 
