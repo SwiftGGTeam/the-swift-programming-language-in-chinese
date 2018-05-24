@@ -553,8 +553,9 @@ Here, the ``favoriteGenres`` set is initialized with three ``String`` values
 A set type cannot be inferred from an array literal alone,
 so the type ``Set`` must be explicitly declared.
 However, because of Swift's type inference,
-you don't have to write the type of the set
-if you're initializing it with an array literal containing values of the same type.
+you don't have to write the type of the set's elements
+if you're initializing it with an array literal
+that contains values of just one type.
 The initialization of ``favoriteGenres`` could have been written in a shorter form instead:
 
 .. testcode:: setsInferred
