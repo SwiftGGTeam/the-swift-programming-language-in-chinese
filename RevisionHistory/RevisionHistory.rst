@@ -1,7 +1,7 @@
 Document Revision History
 =========================
 
-2018-06-04
+**2018-06-04**
 
 * Updated for Swift 4.2.
 
@@ -19,7 +19,7 @@ Document Revision History
   to the :ref:`Attributes_DeclarationAttributes` section
   under the ``dynamicMemberLookup`` attribute.
 
-2018-03-29
+**2018-03-29**
 
 * Updated for Swift 4.1.
 
@@ -39,14 +39,14 @@ Document Revision History
   the ``canImport()`` and ``targetEnvironment()`` platform conditions
   to :ref:`Statements_BuildConfigurationStatement`.
 
-2017-12-04
+**2017-12-04**
 
 * Updated for Swift 4.0.3.
 
 * Updated the :ref:`Expression_TypedKeyPathExpression` section,
   now that key paths support subscript components.
 
-2017-09-19
+**2017-09-19**
 
 * Updated for Swift 4.0.
 
@@ -84,7 +84,7 @@ Document Revision History
 * Added information about preconditions and fatal errors
   to the :ref:`TheBasics_Assertions` section.
 
-2017-03-27
+**2017-03-27**
 
 * Updated for Swift 3.1.
 
@@ -116,7 +116,7 @@ Document Revision History
   from the :doc:`../ReferenceManual/Expressions` chapter,
   now that ``type(of:)`` is a Swift standard library function.
 
-2016-10-27
+**2016-10-27**
 
 * Updated for Swift 3.0.1.
 
@@ -133,7 +133,7 @@ Document Revision History
 * Updated the :doc:`../ReferenceManual/Expressions` chapter
   to separate the discussion of parenthesized expressions and tuple expressions.
 
-2016-09-13
+**2016-09-13**
 
 * Updated for Swift 3.0.
 
@@ -261,7 +261,7 @@ Document Revision History
 * Corrected the discussion of the ``@NSApplicationMain`` attribute
   in the :ref:`Attributes_DeclarationAttributes` section.
 
-2016-03-21
+**2016-03-21**
 
 * Updated for Swift 2.2.
 
@@ -322,7 +322,7 @@ Document Revision History
 * Removed discussion of variable function arguments
   and the special syntax for curried functions.
 
-2015-10-20
+**2015-10-20**
 
 * Updated for Swift 2.1.
 
@@ -354,7 +354,7 @@ Document Revision History
 * Added an example that uses the ``??`` operator
   to the :doc:`../GuidedTour/GuidedTour` chapter.
 
-2015-09-16
+**2015-09-16**
 
 * Updated for Swift 2.0.
 
@@ -513,7 +513,7 @@ Document Revision History
   with a more precise definition of Unicode scalars.
 
 
-2015-04-08
+**2015-04-08**
 
 * Updated for Swift 1.2.
 
@@ -591,7 +591,7 @@ Document Revision History
   and type casts that are guaranteed not to fail use the ``as`` operator.
   For more information, see :ref:`Expressions_Type-CastingOperators`.
 
-2014-10-16
+**2014-10-16**
 
 * Updated for Swift 1.1.
 
@@ -622,7 +622,7 @@ Document Revision History
   Removed a duplicate description of the valid set of operator characters
   from :ref:`AdvancedOperators_CustomOperators`.
 
-2014-08-18
+**2014-08-18**
 
 * New document that describes Swift 1.0,
   Apple’s new programming language for building iOS and OS X apps.
