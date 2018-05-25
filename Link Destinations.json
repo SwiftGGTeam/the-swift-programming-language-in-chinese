@@ -12,6 +12,7 @@
     "//apple_ref/doc/uid/TP40014216-CH7-ID10": "https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10", 
     "//apple_ref/doc/uid/TP40016497": "https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html", 
     "//apple_ref/swift/cl/s:s7KeyPathC": "https://developer.apple.com/documentation/swift/keypath", 
+    "//apple_ref/swift/fake/CaseIterable": "https://developer.apple.com/documentation/swift/caseiterable", 
     "//apple_ref/swift/func/c:@F@UIApplicationMain": "https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain", 
     "//apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/": "https://developer.apple.com/documentation/swift/1540960-precondition", 
     "//apple_ref/swift/func/s:Fs16assertionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/": "https://developer.apple.com/documentation/swift/1539616-assertionfailure", 
@@ -22,8 +23,7 @@
     "//apple_ref/swift/intf/s:Ps8Sequence": "https://developer.apple.com/documentation/swift/sequence", 
     "//apple_ref/swift/intf/s:s14StringProtocolP": "https://developer.apple.com/documentation/swift/stringprotocol", 
     "//apple_ref/swift/struct/s:SS": "https://developer.apple.com/documentation/swift/string", 
-    "//apple_ref/swift/struct/s:s9SubstringV": "https://developer.apple.com/documentation/swift/substring",
-    "//apple_ref/swift/fake/CaseIterable": "https://developer.apple.com/documentation/swift/caseiterable"
+    "//apple_ref/swift/struct/s:s9SubstringV": "https://developer.apple.com/documentation/swift/substring"
   }, 
   "destinations": {
     "GuidedTour/AboutSwift": "ID0", 
