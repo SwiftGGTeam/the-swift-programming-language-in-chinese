@@ -84,7 +84,7 @@ Multiple cases can appear on a single line, separated by commas:
          case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
       }
 
-Each enumeration definition defines a brand new type.
+Each enumeration definition defines a new type.
 Like other types in Swift, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.

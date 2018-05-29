@@ -84,7 +84,7 @@ Both place their entire definition within a pair of braces:
 .. note::
 
    Whenever you define a new structure or class,
-   you define a brand new Swift type.
+   you define a new Swift type.
    Give types ``UpperCamelCase`` names
    (such as ``SomeStructure`` and ``SomeClass`` here)
    to match the capitalization of standard Swift types
@@ -299,8 +299,8 @@ still has the old value of ``1920``:
 
 When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
-The end result is two completely separate instances,
-contained the same numeric values.
+The end result is two completely separate instances
+that contain the same numeric values.
 However, because they are separate instances,
 setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``,
