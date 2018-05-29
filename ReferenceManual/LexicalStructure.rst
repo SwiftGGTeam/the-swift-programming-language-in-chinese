@@ -43,6 +43,9 @@ Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting multiline comments is allowed,
 but the comment markers must be balanced.
 
+Comments can contain additional formatting and markup,
+as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
+
 .. langref-grammar
 
     whitespace ::= ' '
@@ -80,9 +83,6 @@ but the comment markers must be balanced.
    multiline-comment-text-item --> multiline-comment
    multiline-comment-text-item --> comment-text-item
    multiline-comment-text-item --> Any Unicode scalar value except ``/*`` or ``*/``
-
-Comments can contain additional formatting and markup,
-as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
 
 .. _LexicalStructure_Identifiers:
 
