@@ -33,8 +33,7 @@ and provides support for accessing those characters in various Unicode represent
    you can access those ``NSString`` methods on ``String`` without casting.
 
    For more information about using ``String`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between String and NSString <https://developer.apple.com/documentation/swift/string#2919514>`_.
 
 .. _StringsAndCharacters_Literals:
 

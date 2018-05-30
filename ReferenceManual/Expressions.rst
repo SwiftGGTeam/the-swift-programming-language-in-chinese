@@ -392,8 +392,7 @@ a Swift standard library type such as ``String``
 as its corresponding Foundation type such as ``NSString``
 without needing to create a new instance.
 For more information on bridging,
-see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Working with Foundation Types <https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types>`_.
 
 The ``as?`` operator
 performs a conditional cast of the *expression*
@@ -1347,8 +1346,7 @@ that combine these components.
                                 
 For more information about using key paths
 in code that interacts with Objective-C APIs,
-see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift#2993760>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
@@ -1433,8 +1431,7 @@ and that they're exposed to the Objective-C runtime.
 
 For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
-see `Objective-C Selectors <//apple_ref/doc/uid/TP40014216-CH4-ID59>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 
 .. syntax-grammar::
 
@@ -1510,8 +1507,7 @@ and that the property is exposed to the Objective-C runtime.
 
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
-see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift#2993760>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.

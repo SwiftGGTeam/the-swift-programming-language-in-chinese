@@ -64,8 +64,7 @@ The same value can appear in an array multiple times at different positions.
    Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
 
    For more information about using ``Array`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Array and NSArray <https://developer.apple.com/documentation/swift/array#2846730>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -432,8 +431,7 @@ or when you need to ensure that an item only appears once.
    Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
 
    For more information about using ``Set`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Set and NSSet <https://developer.apple.com/documentation/swift/set#2845530>`_.
 
 .. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 
@@ -778,8 +776,7 @@ the definition for a particular word.
    Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
 
    For more information about using ``Dictionary`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Dictionary and NSDictionary <https://developer.apple.com/documentation/swift/dictionary#2846239>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
