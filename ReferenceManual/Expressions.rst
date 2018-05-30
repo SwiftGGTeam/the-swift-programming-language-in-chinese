@@ -1346,7 +1346,7 @@ that combine these components.
                                 
 For more information about using key paths
 in code that interacts with Objective-C APIs,
-see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift#2993760>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
@@ -1431,7 +1431,7 @@ and that they're exposed to the Objective-C runtime.
 
 For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
-see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift#2993760>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 
 .. syntax-grammar::
 
@@ -1507,7 +1507,7 @@ and that the property is exposed to the Objective-C runtime.
 
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
-see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift#2993760>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
