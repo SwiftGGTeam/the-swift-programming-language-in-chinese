@@ -1431,7 +1431,7 @@ and that they're exposed to the Objective-C runtime.
 
 For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
-see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift#2993760>`_.
 
 .. syntax-grammar::
 
