@@ -588,9 +588,9 @@ Negative floating-point literals are expressed by prepending a minus sign (``-``
 to a floating-point literal, as in ``-42.5``.
 
 Underscores (``_``) are allowed between digits for readability,
-but are ignored and therefore don't affect the value of the literal.
+but they're ignored and therefore don't affect the value of the literal.
 Floating-point literals can begin with leading zeros (``0``),
-but are likewise ignored and don't affect the base or value of the literal.
+but they're likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
 the default inferred type of a floating-point literal is the Swift standard library type ``Double``,
