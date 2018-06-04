@@ -1376,7 +1376,7 @@ However,
 using them to enforce valid data and state
 causes your app to terminate more predictably
 if an invalid state occurs,
-and helps makes the problem easier to debug.
+and helps make the problem easier to debug.
 Stopping execution as soon as an invalid state is detected
 also helps limit the damage caused by that invalid state.
 
