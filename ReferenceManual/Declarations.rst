@@ -2812,11 +2812,11 @@ that introduces the declaration.
     for example, when you're not sure whether a conforming type implements them---
     see :ref:`Protocols_OptionalProtocolRequirements`.
 
-.. TODO: Currently, you can't check for an optional initializer,
-    so we're leaving those out of the documentation, even though you can mark
-    an initializer with the @optional attribute. It's still being decided by the
-    compiler team. Update this section if they decide to make everything work
-    properly for optional initializer requirements.
+    .. TODO: Currently, you can't check for an optional initializer,
+        so we're leaving those out of the documentation, even though you can mark
+        an initializer with the @optional attribute. It's still being decided by the
+        compiler team. Update this section if they decide to make everything work
+        properly for optional initializer requirements.
 
 ``required``
     Apply this modifier to a designated or convenience initializer
