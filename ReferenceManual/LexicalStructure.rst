@@ -738,7 +738,7 @@ For example, all of the following string literals have the same value:
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
-and `String<//apple_ref/swift/struct/s:SS>`_.
+and `String <//apple_ref/swift/struct/s:SS>`_.
 
 String literals that are concatenated by the ``+`` operator
 are concatenated at compile time.
