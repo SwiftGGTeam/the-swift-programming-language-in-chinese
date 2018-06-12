@@ -1087,11 +1087,11 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = Int(possibleNumber) {
-         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
+         print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("\"\(possibleNumber)\" could not be converted to an integer")
+         print("The string \"\(possibleNumber)\" could not be converted to an integer")
       }
-   <- "123" has an integer value of 123
+   <- The string "123" has an integer value of 123
 
 This code can be read as:
 
@@ -1376,7 +1376,7 @@ However,
 using them to enforce valid data and state
 causes your app to terminate more predictably
 if an invalid state occurs,
-and helps makes the problem easier to debug.
+and helps make the problem easier to debug.
 Stopping execution as soon as an invalid state is detected
 also helps limit the damage caused by that invalid state.
 

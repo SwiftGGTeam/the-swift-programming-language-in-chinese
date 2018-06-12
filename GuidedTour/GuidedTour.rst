@@ -138,12 +138,13 @@ For example:
    >> let apples = 3
    >> let oranges = 5
    -> let quotation = """
-      I said "I have \(apples) apples."
-      And then I said "I have \(apples + oranges) pieces of fruit."
-      """
+          Even though there's whitespace to the left,
+          the actual lines aren't indented.
+              Except for this line.
+          Double quotes (") can appear without being escaped.
 
-.. Can't show an example of indentation in the triple-quoted string above.
-   <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
+          I still have \(apples + oranges) pieces of fruit.
+          """
 
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
