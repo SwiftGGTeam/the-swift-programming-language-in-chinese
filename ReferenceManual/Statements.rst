@@ -920,6 +920,18 @@ and a compile-time diagnostic statement.
     compiler-control-statement --> line-control-statement
     compiler-control-statement --> diagnostic-statement
 
+.. The test below will start failing when this feature lands.
+   <rdar://problem/41015722> TSPL: SE-0212 Compiler Version Directive
+
+.. assertion:: swift-4.2-doesnt-support-#compiler
+
+    >> #if compiler(>=4.2)
+    >> // Code targeting the Swift 4.2 compiler and above.
+    >> #endif
+    !! <REPL Input>:1:5: error: unexpected platform condition (expected 'os', 'arch', or 'swift')
+    !! #if compiler(>=4.2)
+    !!     ^
+
 
 .. _Statements_BuildConfigurationStatement:
 
