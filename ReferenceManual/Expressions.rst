@@ -1335,9 +1335,9 @@ that combine these components.
    -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
                                 "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "prime": [2, 3, 5, 7, 11, 13, 15], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "prime": [2, 3, 5, 7, 11, 13, 17], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
-   <- Optional([2, 3, 5, 7, 11, 13, 15])
+   <- Optional([2, 3, 5, 7, 11, 13, 17])
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
    <- 2
    -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
