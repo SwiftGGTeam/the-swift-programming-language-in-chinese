@@ -1332,7 +1332,7 @@ that combine these components.
 
 .. testcode:: keypath-expression
 
-   -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 15],
+   -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
                                 "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
    << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "prime": [2, 3, 5, 7, 11, 13, 15], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
