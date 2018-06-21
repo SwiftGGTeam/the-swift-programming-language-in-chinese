@@ -236,9 +236,9 @@ For example, suppose an inventory tracking system needs to
 track products by two different types of barcode.
 Some products are labeled with 1D barcodes in UPC format,
 which uses the numbers ``0`` to ``9``.
-Each barcode has a “number system” digit,
-followed by five “manufacturer code” digits and five “product code” digits.
-These are followed by a “check” digit to verify that the code has been scanned correctly:
+Each barcode has a number system digit,
+followed by five manufacturer code digits and five product code digits.
+These are followed by a check digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC_2x.png
    :align: center
