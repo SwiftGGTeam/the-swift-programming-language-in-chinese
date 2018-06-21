@@ -67,13 +67,13 @@ You use the ``case`` keyword to introduce new enumeration cases.
 
 .. note::
 
-   Unlike C and Objective-C,
-   Swift enumeration cases are not assigned a default integer value when they are created.
+   Swift enumeration cases don't have an integer value set by default,
+   unlike languages like C and Objective-C.
    In the ``CompassPoint`` example above,
    ``north``, ``south``, ``east`` and ``west``
-   do not implicitly equal
+   don't implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
-   Instead, the different enumeration cases are fully-fledged values in their own right,
+   Instead, the different enumeration cases are values in their own right,
    with an explicitly defined type of ``CompassPoint``.
 
 Multiple cases can appear on a single line, separated by commas:
