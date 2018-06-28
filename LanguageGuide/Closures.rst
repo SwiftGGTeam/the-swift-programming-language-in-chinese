@@ -601,7 +601,7 @@ both of those constants or variables refer to the same closure.
    -> incrementByTen()
    << // r6 : Int = 60
    /> returns a value of \(r6)
-   << returns a value of 60
+   </ returns a value of 60
 
 The example above shows that calling ``alsoIncrementByTen``
 is the same as calling ``incrementByTen``.
