@@ -8,3 +8,4 @@ Contents
     LanguageGuide/LanguageGuidePart
     ReferenceManual/ReferenceManualPart
     RevisionHistory/RevisionHistoryPart
+    Trademarks <Trademarks>
