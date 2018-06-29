@@ -718,11 +718,18 @@ Equivalence Operators
 By default, custom classes and structures don't have an implementation of
 the :newTerm:`equivalence operators`,
 known as the *equal to* operator (``==``) and *not equal to* operator (``!=``).
+There are two ways to implement the equivalence operators:
+You can implement the ``==`` operator yourself,
+or for many types, you can ask Swift to synthesize
+an implementation of the ``==`` operator for you.
+In both cases,
+you add conformance to the standard library's ``Equivalence`` protocol.
+You don't usually implement a ``!=`` operator yourself.
+The standard library provides a default implementation of the ``!=`` operator
+that negates the result of the ``==`` operator.
 
-To use the equivalence operators to check for equivalence of your own custom type,
-provide an implementation of the "equal to" operator
-in the same way as for other infix operators,
-and add conformance to the standard library's ``Equatable`` protocol:
+You provide an implementation of the ``==`` operator
+in the same way as you implement other infix operators:
 
 .. testcode:: customOperators
 
@@ -732,19 +739,14 @@ and add conformance to the standard library's ``Equatable`` protocol:
           }
       }
 
-The above example implements an “equal to” operator (``==``)
+The example above implements an ``==`` operator
 to check whether two ``Vector2D`` instances have equivalent values.
 In the context of ``Vector2D``,
 it makes sense to consider “equal” as meaning
 “both instances have the same ``x`` values and ``y`` values”,
 and so this is the logic used by the operator implementation.
-If you've implemented an "equal to" operator,
-you usually don't need to implement a "not equal to" operator (``!=``) yourself.
-The standard library provides a default implementation of the “not equal to” operator,
-which simply negates the result of the “equal to” operator
-that you implemented.
 
-You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
+You can now use this operator to check whether two ``Vector2D`` instances are equivalent:
 
 .. testcode:: customOperators
 
@@ -766,15 +768,18 @@ for the following kinds of custom types:
 * Enumerations that have only associated types that conform to the ``Equatable`` protocol
 * Enumerations that have no associated types
 
-Declare ``Equatable`` conformance
-in the file that contains the original declaration
-to receive these implementations.
+To receive a synthesized implementation of ``==``,
+declare ``Equatable`` conformance
+in the file that contains the original declaration,
+without implementing an ``==`` operator yourself.
+
+.. XXX: Add a cross reference to a definition of synthesyzed implementation.
 
 The example below defines a ``Vector3D`` structure
 for a three-dimensional position vector ``(x, y, z)``,
 similar to the ``Vector2D`` structure.
 Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
-``Vector3D`` receives default implementations
+``Vector3D`` receives synthesized implementations
 of the equivalence operators.
 
 .. testcode:: equatable_synthesis
