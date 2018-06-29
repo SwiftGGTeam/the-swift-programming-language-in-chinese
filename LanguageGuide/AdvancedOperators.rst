@@ -715,7 +715,7 @@ and uses it to set the left value to be the left value plus the right value:
 Equivalence Operators
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default, custom classes and structures don't receive a default implementation of
+By default, custom classes and structures don't have an implementation of
 the :newTerm:`equivalence operators`,
 known as the *equal to* operator (``==``) and *not equal to* operator (``!=``).
 
