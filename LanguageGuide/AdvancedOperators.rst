@@ -704,11 +704,11 @@ and uses it to set the left value to be the left value plus the right value:
 
 .. note::
 
-   It is not possible to overload the default
+   It isn't possible to overload the default
    assignment operator (``=``).
    Only the compound assignment operators can be overloaded.
    Similarly, the ternary conditional operator
-   (``a ? b : c``) cannot be overloaded.
+   (``a ? b : c``) can't be overloaded.
 
 .. _AdvancedOperators_EquivalenceOperators:
 
