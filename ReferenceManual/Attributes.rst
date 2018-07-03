@@ -36,7 +36,7 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only.
 
 ``available``
-    Apply this attribute to indicate a declaration's lifecycle
+    Apply this attribute to indicate a declaration's life cycle
     relative to certain Swift language versions
     or certain platforms and operating system versions.
 
@@ -62,7 +62,7 @@ You can apply a declaration attribute to declarations only.
     use the asterisk.
 
     The remaining arguments can appear in any order
-    and specify additional information about the declaration's lifecycle,
+    and specify additional information about the declaration's life cycle,
     including important milestones.
 
     * The ``unavailable`` argument indicates that the declaration isn't available on the specified platform.
@@ -95,7 +95,7 @@ You can apply a declaration attribute to declarations only.
           obsoleted: <#version number#>
 
       The *version number* consists of one to three positive integers, separated by periods.
-    * The ``message`` argument is used to provide a textual message that's displayed by the compiler
+    * The ``message`` argument is used to provide a textual message that the compiler displays
       when emitting a warning or error about the use of a deprecated or obsoleted declaration.
       It has the following form:
 
@@ -106,7 +106,8 @@ You can apply a declaration attribute to declarations only.
       The *message* consists of a string literal.
     * The ``renamed`` argument is used to provide a textual message
       that indicates the new name for a declaration that's been renamed.
-      The new name is displayed by the compiler when emitting an error about the use of a renamed declaration.
+      The compiler displays the new name
+      when emitting an error about the use of a renamed declaration.
       It has the following form:
 
       .. syntax-outline::
@@ -147,7 +148,7 @@ You can apply a declaration attribute to declarations only.
     The declaration that the ``available`` attribute applies to
     is ignored if the attribute specifies
     a platform or language version that doesn't match the current target.
-    If you use multiple ``available`` attributes
+    If you use multiple ``available`` attributes,
     the effective availability is the combination of
     the platform and Swift availabilities.
 
