@@ -920,18 +920,6 @@ and a compile-time diagnostic statement.
     compiler-control-statement --> line-control-statement
     compiler-control-statement --> diagnostic-statement
 
-.. The test below will start failing when this feature lands.
-   <rdar://problem/41015722> TSPL: SE-0212 Compiler Version Directive
-
-.. assertion:: swift-4.2-doesnt-support-#compiler
-
-    >> #if compiler(>=4.2)
-    >> // Code targeting the Swift 4.2 compiler and above.
-    >> #endif
-    !! <REPL Input>:1:5: error: unexpected platform condition (expected 'os', 'arch', or 'swift')
-    !! #if compiler(>=4.2)
-    !!     ^
-
 
 .. _Statements_BuildConfigurationStatement:
 
@@ -967,6 +955,7 @@ Platform condition        Valid arguments
 ``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``               ``>=`` followed by a version number
+``compiler()``            ``>=`` followed by a version number
 ``canImport()``           A module name
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
@@ -977,10 +966,15 @@ Platform condition        Valid arguments
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
 
-The version number for the ``swift()`` platform condition
+The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
+The version for ``compiler()`` is the compiler version,
+regardless of the Swift Version setting passed to the compiler.
+The version for ``swift()`` is the language version currently being compiled.
+For example, if you compile code using the Swift 4.2 compiler in Swift 3 mode,
+the compiler version is 4.2 and the language version in 3.3.
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
@@ -1023,6 +1017,12 @@ otherwise, it returns ``false``.
           print(5)
       #endif
    << 5
+
+.. assertion:: pound-if-compiler-version
+
+    >> #if compiler(>=4.2)
+    >> // Code targeting the Swift 4.2 compiler and above.
+    >> #endif
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
