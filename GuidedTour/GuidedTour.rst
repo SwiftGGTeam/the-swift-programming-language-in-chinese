@@ -1409,7 +1409,8 @@ or to require a class to have a particular superclass.
 .. testcode:: guided-tour
 
    -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
-          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+          where T.Element: Equatable, T.Element == U.Element
+      {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
