@@ -1145,7 +1145,8 @@ Classes, enumerations, and structs can all adopt protocols.
 
 .. admonition:: Experiment
 
-   Write an enumeration that conforms to this protocol.
+   Add another requirement to ``ExampleProtocol``.
+   What other changes do you need to make?
 
 Notice the use of the ``mutating`` keyword
 in the declaration of ``SimpleStructure``
