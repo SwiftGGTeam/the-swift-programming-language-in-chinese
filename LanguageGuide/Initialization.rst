@@ -860,7 +860,7 @@ There are no further superclasses to initialize,
 and so no further delegation is needed.
 
 As soon as all properties of the superclass have an initial value,
-its memory is considered fully initialized, and Phase 1 is complete.
+its memory is considered fully initialized, and phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
@@ -1065,6 +1065,42 @@ to see how its ``numberOfWheels`` property has been updated:
    << // bicycle : Bicycle = REPL.Bicycle
    -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
+
+If a subclass initializer performs no customization
+in phase 2 of the initialization process,
+and the superclass has a zero-argument designated initializer,
+you can omit a call to ``super.init()``
+after assigning values to all of the subclass's stored properties.
+
+This example defines another subclass of ``Vehicle``, called ``Hoverboard``.
+In its initializer, the ``Hoverboard`` class sets only its ``color`` property.
+Instead of calling ``super.init()`` explicitly,
+this initializer relies on implicit superclass initialization
+to complete the process.
+
+.. testcode:: initializerInheritance
+
+   -> class Hoverboard: Vehicle { 
+          var color: String 
+          init(color: String) { 
+              self.color = color
+          } 
+          override var description: String { 
+              return "\(super.description) in a beautiful \(color)"
+          } 
+      }
+
+.. Should we add a "// super.init() implicitly called here" comment in
+   the Hoverboard initializer?
+
+An instance of ``Hoverboard`` uses the default number of wheels
+supplied by the ``Vehicle`` initializer.
+
+.. testcode:: initializerInheritance
+
+   -> let hoverboard = Hoverboard(color: "silver")
+   -> print("Hoverboard: \(hoverboard.description)")
+   </ Hoverboard: 0 wheel(s) in a beautiful silver
 
 .. note::
 
