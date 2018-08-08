@@ -960,8 +960,6 @@ Platform condition        Valid arguments
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
 
-.. This table is duplicated in USWCAOC in Interoperability/InteractingWithCAPIs.rst
-
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
