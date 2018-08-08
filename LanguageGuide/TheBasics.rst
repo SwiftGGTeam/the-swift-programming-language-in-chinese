@@ -171,7 +171,7 @@ including Unicode characters:
    << // 🐶🐮 : String = "dogcow"
 
 Constant and variable names can't contain
-whitespace characters, mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values,
 or line- and box-drawing characters.
 Nor can they begin with a number,
 although numbers may be included elsewhere within the name.

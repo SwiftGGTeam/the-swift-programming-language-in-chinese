@@ -177,9 +177,8 @@ String literals can include the following special characters:
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quotation mark) and ``\'`` (single quotation mark)
 
-* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+* An arbitrary Unicode scalar value, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
   where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
   (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
 
 .. assertion:: stringLiteralUnicodeScalar
