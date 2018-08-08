@@ -177,8 +177,8 @@ A comma is allowed after the last element.
 
 .. testcode:: guided-tour
 
-    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    << // shoppingList : [String] = ["catfish", "water", "tulips", "blue paint"]
+    -> var shoppingList = ["catfish", "water", "tulips"]
+    << // shoppingList : [String] = ["catfish", "water", "tulips"]
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
@@ -187,6 +187,14 @@ A comma is allowed after the last element.
         ]
     << // occupations : [String : String] = ["Malcolm": "Captain", "Kaylee": "Mechanic"]
     -> occupations["Jayne"] = "Public Relations"
+
+Arrays automatically grow as you add elements.
+
+.. testcode:: guided-tour
+
+    -> shoppingList.append("blue paint")
+    -> print(shoppingList)
+    << ["catfish", "bottle of water", "tulips", "blue paint"]
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -1092,7 +1100,7 @@ but classes are passed by reference.
 
 .. admonition:: Experiment
 
-   Add a method to ``Card`` that creates
+   Write a function that returns a ``[Card]`` array containing
    a full deck of cards,
    with one card of each combination of rank and suit.
 
