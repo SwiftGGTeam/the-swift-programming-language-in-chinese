@@ -555,6 +555,16 @@ For example:
 Because the type alias and the existing type can be used interchangeably,
 the type alias can't introduce additional generic constraints.
 
+A type alias can forward an existing type's generic parameters
+by omitting all generic parameters from the declaration.
+For example,
+the ``Diccionario`` type alias declared here
+has the same generic parameters and constraints as ``Dictionary``.
+
+.. testcode:: typealias-using-shorthand
+
+   -> typealias Diccionario = Dictionary
+
 .. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
      typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 
