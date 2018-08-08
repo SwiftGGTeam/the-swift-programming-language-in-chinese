@@ -13,7 +13,7 @@ In Swift, this can be done in a single line:
 .. testcode:: guided-tour
 
    -> print("Hello, world!")
-   << Hello, world!
+   <- Hello, world!
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you ---
@@ -234,7 +234,7 @@ Braces around the body are required.
            }
        }
     -> print(teamScore)
-    << 11
+    <- 11
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
@@ -272,7 +272,7 @@ to mark the value as optional.
    -> var optionalString: String? = "Hello"
    << // optionalString : String? = Optional("Hello")
    -> print(optionalString == nil)
-   << false
+   <- false
    ---
    -> var optionalName: String? = "John Appleseed"
    << // optionalName : String? = Optional("John Appleseed")
@@ -337,7 +337,7 @@ and tests for equality.
           default:
               print("Everything tastes good in soup.")
       }
-   << Is it a spicy red pepper?
+   <- Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -389,7 +389,7 @@ in an arbitrary order.
           }
       }
    -> print(largest)
-   << 25
+   <- 25
 
 .. admonition:: Experiment
 
@@ -414,7 +414,7 @@ ensuring that the loop is run at least once.
           n *= 2
       }
    -> print(n)
-   << 128
+   <- 128
    ---
    -> var m = 2
    << // m : Int = 2
@@ -422,7 +422,7 @@ ensuring that the loop is run at least once.
           m *= 2
       } while m < 100
    -> print(m)
-   << 128
+   <- 128
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -437,7 +437,7 @@ by using ``..<`` to make a range of indexes.
           total += i
       }
    -> print(total)
-   << 6
+   <- 6
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
@@ -516,9 +516,9 @@ either by name or by number.
     -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
-    << 120
+    <- 120
     -> print(statistics.2)
-    << 120
+    <- 120
 
 Functions can be nested.
 Nested functions have access to variables
@@ -611,7 +611,7 @@ of their only statement.
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> print(mappedNumbers)
     <$ : [Int] = [60, 57, 21, 36]
-    << [60, 57, 21, 36]
+    <- [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -625,7 +625,7 @@ you can omit the parentheses entirely.
     -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
-    << [20, 19, 12, 7]
+    <- [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
@@ -793,10 +793,10 @@ properties can have a getter and a setter.
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
     << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
     -> print(triangle.perimeter)
-    << 9.3
+    <- 9.3
     -> triangle.perimeter = 9.9
     -> print(triangle.sideLength)
-    << 3.3000000000000003
+    <- 3.3000000000000003
 
 In the setter for ``perimeter``,
 the new value has the implicit name ``newValue``.
@@ -847,12 +847,12 @@ is always the same as the side length of its square.
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
    -> print(triangleAndSquare.square.sideLength)
-   << 10.0
+   <- 10.0
    -> print(triangleAndSquare.triangle.sideLength)
-   << 10.0
+   <- 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
    -> print(triangleAndSquare.triangle.sideLength)
-   << 50.0
+   <- 50.0
 
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
@@ -1058,7 +1058,7 @@ or it responds with a description of what went wrong.
            case let .failure(message):
                print("Failure...  \(message)")
        }
-    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
+    <- Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
 .. admonition:: Experiment
 
@@ -1171,7 +1171,7 @@ or even to a type that you imported from a library or framework.
            }
         }
     -> print(7.simpleDescription)
-    << The number 7
+    <- The number 7
 
 .. admonition:: Experiment
 
@@ -1190,7 +1190,7 @@ methods outside the protocol definition are not available.
     -> let protocolValue: ExampleProtocol = a
     << // protocolValue : ExampleProtocol = REPL.SimpleClass
     -> print(protocolValue.simpleDescription)
-    << A very simple class.  Now 100% adjusted.
+    <- A very simple class.  Now 100% adjusted.
     // print(protocolValue.anotherProperty)  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
@@ -1261,7 +1261,7 @@ unless you give it a different name.
        } catch {
            print(error)
        }
-    << Job sent
+    <- Job sent
 
 .. admonition:: Experiment
 
@@ -1278,7 +1278,7 @@ unless you give it a different name.
        } catch {
            print(error)
        }
-    << noToner
+    <- noToner
 
 You can provide multiple ``catch`` blocks
 that handle specific errors.
@@ -1300,7 +1300,7 @@ after ``case`` in a switch.
        } catch {
            print(error)
        }
-    << Job sent
+    <- Job sent
 
 .. admonition:: Experiment
 
@@ -1349,7 +1349,7 @@ even though they need to be executed at different times.
     -> fridgeContains("banana")
     <$ : Bool = false
     -> print(fridgeIsOpen)
-    << false
+    <- false
 
 Generics
 --------
