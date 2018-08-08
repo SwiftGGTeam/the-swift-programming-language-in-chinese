@@ -498,6 +498,7 @@ see :ref:`Statements_FallthroughStatement` below.
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
+    switch-cases --> conditional-compilation-block switch-cases-OPT
     switch-case --> case-label statements | default-label statements
 
     case-label --> ``case`` case-item-list ``:``
