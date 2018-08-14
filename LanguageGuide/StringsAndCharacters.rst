@@ -516,16 +516,16 @@ Unicode Scalars
 ~~~~~~~~~~~~~~~
 
 Behind the scenes,
-Swift's native ``String`` type is built from :newTerm:`Unicode scalar` values.
-A Unicode scalar is a unique 21-bit number for a character or modifier,
+Swift's native ``String`` type is built from :newTerm:`Unicode scalar values`.
+A Unicode scalar value is a unique 21-bit number for a character or modifier,
 such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
 .. note::
 
-   A Unicode scalar is any Unicode :newTerm:`code point` in the range
+   A Unicode scalar value is any Unicode :newTerm:`code point` in the range
    ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
-   Unicode scalars don't include the Unicode :newTerm:`surrogate pair` code points,
+   Unicode scalar values don't include the Unicode :newTerm:`surrogate pair` code points,
    which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
 
 Note that not all 21-bit Unicode scalars are assigned to a character ---
