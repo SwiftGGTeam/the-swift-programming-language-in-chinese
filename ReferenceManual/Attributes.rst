@@ -471,9 +471,26 @@ You can apply a declaration attribute to declarations only.
 ``requires_stored_property_inits``
     Apply this attribute to a class declaration
     to require all stored properties within the class
-    to provide initial values.
+    to provide default values as part of their definitions.
     This attribute is inferred for any class
     that inherits from ``NSManagedObject``.
+
+    .. assertion:: requires_stored_property_inits-requires-default-values
+
+       >> @requires_stored_property_inits class DefaultValueProvided {
+              var value: Int = -1
+              init() { self.value = 0 }
+          }
+          @requires_stored_property_inits class NoDefaultValue {
+              var value: Int
+              init() { self.value = 0 }
+          }
+       !! <REPL Input>:2:7: error: stored property 'value' requires an initial value
+       !! var value: Int
+       !! ^
+       !! <REPL Input>:1:39: note: class 'NoDefaultValue' requires all stored properties to have initial values
+       !! @requires_stored_property_inits class NoDefaultValue {
+       !! ^
 
 ``testable``
     Apply this attribute to ``import`` declarations
