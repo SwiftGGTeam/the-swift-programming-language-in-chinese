@@ -1084,14 +1084,12 @@ to complete the process.
           var color: String 
           init(color: String) { 
               self.color = color
+              // super.init() implicitly called here
           } 
           override var description: String { 
               return "\(super.description) in a beautiful \(color)"
           } 
       }
-
-.. Should we add a "// super.init() implicitly called here" comment in
-   the Hoverboard initializer?
 
 An instance of ``Hoverboard`` uses the default number of wheels
 supplied by the ``Vehicle`` initializer.
