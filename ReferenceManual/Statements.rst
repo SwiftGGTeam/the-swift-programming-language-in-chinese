@@ -1049,9 +1049,6 @@ otherwise, it returns ``false``.
    -> #if compiler(>=4.2) && false
           print(3)
       #endif
-   -> #if compiler(>=5.0)
-          print(4)
-      #endif
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
