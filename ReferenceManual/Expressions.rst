@@ -495,7 +495,7 @@ Literal         Type                  Value
 ``#line``       ``Int``               The line number on which it appears.
 ``#column``     ``Int``               The column number in which it begins.
 ``#function``   ``String``            The name of the declaration in which it appears.
-``#dsohandle``  ``UnsafeRawPointer``  The DSO (Dynamic Shared Object) handle in use where it appears.
+``#dsohandle``  ``UnsafeRawPointer``  The DSO (dynamic shared object) handle in use where it appears.
 ==============  ====================  ==========================================
 
 Inside a function,
