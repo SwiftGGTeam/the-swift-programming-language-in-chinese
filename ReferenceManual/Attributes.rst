@@ -558,9 +558,12 @@ You can apply a declaration attribute to declarations only.
     with the same name that are accessible from the same location.
 
     For example,
-    the Swift standard library includes both a top-level `min(_:_:)` function
-    and a `min()` method for sequences with comparable elements.
-    The sequence method is declared with the `@warn_unqualified_access` attribute
+    the Swift standard library includes both a top-level
+    `min(_:_:) <https://developer.apple.com/documentation/swift/1538339-min/>`_
+    function and a
+    `min() <https://developer.apple.com/documentation/swift/sequence/1641174-min>`_
+    method for sequences with comparable elements.
+    The sequence method is declared with the ``warn_unqualified_access`` attribute
     to help reduce confusion
     when attempting to use one or the other from within a ``Sequence`` extension.
 
