@@ -1102,7 +1102,7 @@ but classes are passed by reference.
 
 .. admonition:: Experiment
 
-   Write a function that returns a ``[Card]`` array containing
+   Write a function that returns an array containing
    a full deck of cards,
    with one card of each combination of rank and suit.
 
