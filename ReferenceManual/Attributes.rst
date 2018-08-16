@@ -554,8 +554,8 @@ You can apply a declaration attribute to declarations only.
     to trigger warnings when that function or method is used
     without a preceding qualifier,
     such as a module name, type name, or instance variable or constant.
-    Use this attribute help discourage ambiguity between functions
-    with the same name that are accessible from the same location.
+    Use this attribute to help discourage ambiguity between functions
+    with the same name that are accessible from the same scope.
 
     For example,
     the Swift standard library includes both a top-level
