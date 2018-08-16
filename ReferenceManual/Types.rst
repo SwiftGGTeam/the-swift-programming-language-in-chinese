@@ -861,11 +861,11 @@ or a closure or function type.
 
 .. testcode:: any-type
 
-    >> let mixed: [Any] = ["one", 2, true, (4, 5), { () -> Int in return 6 }]
+    -> let mixed: [Any] = ["one", 2, true, (4, 5), { () -> Int in return 6 }]
     << // mixed : [Any] = ["one", 2, true, (4, 5), (Function)]
 
 When you use ``Any`` as a concrete type for an instance,
-you need to cast the instance back to a known type
+you need to cast the instance to a known type
 before you can access its properties or methods.
 Instances with a concrete type of ``Any``
 maintain their original dynamic type
@@ -878,7 +878,7 @@ to a ``String``.
 
 .. testcode:: any-type
 
-   >> if let first = mixed.first as? String {
+   -> if let first = mixed.first as? String {
           print("The first item, '\(first)', is a string.")
       }
    <- The first item, 'one', is a string.
