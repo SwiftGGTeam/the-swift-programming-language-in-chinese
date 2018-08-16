@@ -825,7 +825,6 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
 
 .. testcode::
 
-   // option 1, simple but more clear
    -> func f() {
           defer { print("First defer") }
           defer { print("Second defer") }
@@ -835,35 +834,6 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
    <- End of function
    <- Second defer
    <- First defer
-
-
-.. testcode::
-
-   // option 2, trying to approximate actual code
-   -> func loadResource(_ name: String) -> Resource? {
-          let p1 = UnsafeMutablePointer<Int>.allocate(capacity: 1)
-          defer { 
-              print("Deallocating 'p1'")
-              p1.deallocate()
-          }
-          guard true == ResourceLoader.loadSize(for: name, into: p1)
-              else { return nil }
-   ---    
-   ->     let p2 = UnsafeMutableRawPointer.allocate(capacity: p1.pointee)
-          defer { 
-              print("Deallocating 'p2'")
-              p2.deallocate()
-          }
-          guard true == ResourceLoader.load(name, into: p2)
-              else { return nil }
-   ---          
-   ->     print("Resource loaded")
-          return p2.load(as: Resource.self)
-      }
-   -> _ = loadResource("flying-pigs.mov")
-   <- Resource loaded
-   <- Deallocating 'p2'
-   <- Deallocating 'p1'
 
 The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.
