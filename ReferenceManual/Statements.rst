@@ -498,8 +498,13 @@ see :ref:`Statements_FallthroughStatement` below.
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
-    switch-cases --> conditional-compilation-block switch-cases-OPT
-    switch-case --> case-label statements | default-label statements
+    switch-case --> conditional-compilation-clause-OPT case-label statements
+    switch-case --> conditional-compilation-clause-OPT default-label statements
+
+    conditional-compilation-clause --> if-directive compilation-condition
+    conditional-compilation-clause --> elseif-directive compilation-condition
+    conditional-compilation-clause --> else-directive compilation-condition
+    conditional-compilation-clause --> endif-directive
 
     case-label --> ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
