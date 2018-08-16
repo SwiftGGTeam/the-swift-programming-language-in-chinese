@@ -1074,8 +1074,8 @@ after assigning values to all of the subclass's stored properties.
 
 This example defines another subclass of ``Vehicle``, called ``Hoverboard``.
 In its initializer, the ``Hoverboard`` class sets only its ``color`` property.
-Instead of calling ``super.init()`` explicitly,
-this initializer relies on implicit superclass initialization
+Instead of making an explicit call to ``super.init()``,
+this initializer relies on the implicit superclass initialization
 to complete the process.
 
 .. testcode:: initializerInheritance
