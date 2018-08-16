@@ -57,7 +57,7 @@ and describes the type inference behavior of Swift.
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
     type --> metatype-type
-    type --> ``Any``
+    type --> any-type
     type --> ``Self``
     type --> ``(`` type ``)``
 
@@ -846,6 +846,50 @@ or the entire class marked with the ``final`` keyword.
     Grammar of a metatype type
 
     metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
+
+.. _Types_AnyType:
+
+Any Type
+--------
+
+The ``Any`` type is a type that can contain values from all other types.
+``Any`` can be used as the concrete type for an instance of any type:
+a class, struct, or enumeration;
+a metatype, such as ``Int.self``;
+a tuple with any types of components;
+or a closure or function type.
+
+.. testcode:: any-type
+
+    >> let mixed: [Any] = ["one", 2, true, (4, 5), { () -> Int in return 6 }]
+    << // mixed : [Any] = ["one", 2, true, (4, 5), (Function)]
+
+When you use ``Any`` as a concrete type for an instance,
+you need to cast the instance back to a known type
+before you can access its properties or methods.
+Instances with a concrete type of ``Any``
+maintain their original dynamic type
+and can be cast to that type using one of the type-cast operators
+(``as``, ``as?``, or ``as!``).
+
+For example,
+use ``as?`` to conditionally downcast the first object in a heterogeneous array
+to a ``String``.
+
+.. testcode:: any-type
+
+   >> if let first = mixed.first as? String {
+          print("The first item, '\(first)', is a string.")
+      }
+   <- The first item, 'one', is a string.
+   
+For more information about casting, see :doc:`../LanguageGuide/TypeCasting`.
+
+.. syntax-grammar::
+
+    Grammar of an Any type
+
+    any-type --> ``Any``
 
 .. _Types_TypeInheritanceClause:
 
