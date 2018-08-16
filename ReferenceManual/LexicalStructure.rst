@@ -1018,7 +1018,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3020, U+3030
+    operator-head --> U+3008--U+3020 or U+3030
 
     operator-character --> operator-head
     operator-character --> U+0300--U+036F
