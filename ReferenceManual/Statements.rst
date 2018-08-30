@@ -826,14 +826,14 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
 .. testcode::
 
    -> func f() {
-          defer { print("First") }
-          defer { print("Second") }
-          defer { print("Third") }
+          defer { print("First defer") }
+          defer { print("Second defer") }
+          print("End of function")
       }
-   -> f()
-   <- Third
-   <- Second
-   <- First
+      f()
+   <- End of function
+   <- Second defer
+   <- First defer
 
 The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.
