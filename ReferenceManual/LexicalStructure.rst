@@ -34,7 +34,7 @@ and null (U+0000).
 
 .. Whitespace characters are listed roughly from
    most salient/common to least,
-   not in order of Unicode codepoints.
+   not in order of Unicode scalar value.
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with ``//``

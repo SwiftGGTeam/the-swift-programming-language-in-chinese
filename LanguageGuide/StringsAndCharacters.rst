@@ -177,9 +177,8 @@ String literals can include the following special characters:
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quotation mark) and ``\'`` (single quotation mark)
 
-* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+* An arbitrary Unicode scalar value, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
   where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
   (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
 
 .. assertion:: stringLiteralUnicodeScalar
@@ -513,25 +512,18 @@ as described in this section.
 
 .. _StringsAndCharacters_StringsAreUnicodeScalars:
 
-Unicode Scalars
-~~~~~~~~~~~~~~~
+Unicode Scalar Values
+~~~~~~~~~~~~~~~~~~~~~
 
 Behind the scenes,
-Swift's native ``String`` type is built from :newTerm:`Unicode scalar` values.
-A Unicode scalar is a unique 21-bit number for a character or modifier,
+Swift's native ``String`` type is built from :newTerm:`Unicode scalar values`.
+A Unicode scalar value is a unique 21-bit number for a character or modifier,
 such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
-.. note::
-
-   A Unicode scalar is any Unicode :newTerm:`code point` in the range
-   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
-   Unicode scalars don't include the Unicode :newTerm:`surrogate pair` code points,
-   which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
-
-Note that not all 21-bit Unicode scalars are assigned to a character ---
-some scalars are reserved for future assignment.
-Scalars that have been assigned to a character typically also have a name,
+Note that not all 21-bit Unicode scalar values are assigned to a character ---
+some scalars are reserved for future assignment or for use in UTF-16 encoding.
+Scalar values that have been assigned to a character typically also have a name,
 such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples above.
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:
