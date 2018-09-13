@@ -1097,6 +1097,7 @@ supplied by the ``Vehicle`` initializer.
 .. testcode:: initializerInheritance
 
    -> let hoverboard = Hoverboard(color: "silver")
+   << // hoverboard : Hoverboard = REPL.Hoverboard
    -> print("Hoverboard: \(hoverboard.description)")
    </ Hoverboard: 0 wheel(s) in a beautiful silver
 
