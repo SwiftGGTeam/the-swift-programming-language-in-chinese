@@ -955,20 +955,44 @@ Platform condition        Valid arguments
 ``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``               ``>=`` followed by a version number
+``compiler()``            ``>=`` followed by a version number
 ``canImport()``           A module name
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
-
-.. This table is duplicated in USWCAOC in Interoperability/InteractingWithCAPIs.rst
 
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
 
-The version number for the ``swift()`` platform condition
+The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
 There must not be whitespace between ``>=`` and the version number.
+The version for ``compiler()`` is the compiler version,
+regardless of the Swift version setting passed to the compiler.
+The version for ``swift()`` is the language version currently being compiled.
+For example, if you compile your code using the Swift 4.2 compiler in Swift 3 mode,
+the compiler version is 4.2 and the language version is 3.3.
+With those settings,
+the following code prints only the first and last messages:
+
+.. testcode::
+
+   -> #if compiler(>=4.2)
+      print("Compiled with the Swift 4.2 compiler or later")
+      #endif
+      #if swift(>=4.2)
+      print("Compiled in Swift 4.2 mode or later")
+      #endif
+      #if swift(>=3.0)
+      print("Compiled in Swift 3.0 mode or later")
+      #endif
+   <- Compiled with the Swift 4.2 compiler or later
+   << Compiled in Swift 4.2 mode or later
+   <- Compiled in Swift 3.0 mode or later
+
+.. That testcode is cheating by hiding the second line of output,
+   since it's not actually running in Swift 3 mode.
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
@@ -1011,6 +1035,20 @@ otherwise, it returns ``false``.
           print(5)
       #endif
    << 5
+
+.. assertion:: pound-if-compiler-version
+
+   -> #if compiler(>=4.2)
+          print(1)
+      #endif
+   << 1
+   -> #if compiler(>=4.2) && true
+          print(2)
+      #endif
+   << 2
+   -> #if compiler(>=4.2) && false
+          print(3)
+      #endif
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
@@ -1075,6 +1113,7 @@ have the following form:
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
+    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)``
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
