@@ -27,7 +27,7 @@ Document Revision History
   to the :ref:`Statements_BuildConfigurationStatement` section.
 
 * Added information about ``#dsohandle``
-  to the :ref:`_Expressions_LiteralExpression` section.
+  to the :ref:`Expressions_LiteralExpression` section.
 
 **2018-03-29**
 
