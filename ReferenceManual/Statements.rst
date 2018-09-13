@@ -498,7 +498,9 @@ see :ref:`Statements_FallthroughStatement` below.
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-label statements | default-label statements
+    switch-case --> case-label statements
+    switch-case --> default-label statements
+    switch-case --> conditional-switch-case
 
     case-label --> ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
@@ -506,6 +508,12 @@ see :ref:`Statements_FallthroughStatement` below.
 
     where-clause --> ``where`` where-expression
     where-expression --> expression
+
+    conditional-switch-case --> switch-if-directive-clause switch-elseif-directive-clauses-OPT switch-else-directive-clause-OPT endif-directive
+    switch-if-directive-clause --> if-directive compilation-condition switch-cases-OPT
+    switch-elseif-directive-clauses --> elseif-directive-clause switch-elseif-directive-clauses-OPT
+    switch-elseif-directive-clause --> elseif-directive compilation-condition switch-cases-OPT
+    switch-else-directive-clause --> else-directive switch-cases-OPT
 
 
 .. _Statements_LabeledStatement:
