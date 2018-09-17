@@ -267,9 +267,6 @@ so they must be escaped with backticks in that context.
   ``#sourceLocation``,
   and ``#warning``.
 
-.. NOTE: This list of context-sensitive keywords
-   is derived from the file "swift/include/swift/AST/Attr.def"
-
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
@@ -299,6 +296,9 @@ so they must be escaped with backticks in that context.
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
+
+.. NOTE: The list of context-sensitive keywords above
+   is derived from the file "swift/include/swift/AST/Attr.def"
 
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
