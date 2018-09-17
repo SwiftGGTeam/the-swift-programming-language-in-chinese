@@ -33,17 +33,6 @@ For example, ``(Int)`` is equivalent to ``Int``.
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
-.. langref-grammar
-
-    type ::= type-function
-    type ::= type-array
-    type-simple ::= type-identifier
-    type-simple ::= type-tuple
-    type-simple ::= type-composition
-    type-simple ::= type-metatype
-    type-simple ::= type-optional
-    type-annotation ::= attribute-list type
-
 .. syntax-grammar::
 
     Grammar of a type
@@ -130,11 +119,6 @@ that is declared in the ``ExampleModule`` module.
     !! var someValue: ExampleModule.MyType
     !!                ^~~~~~~~~~~~~
 
-.. langref-grammar
-
-    type-identifier ::= type-identifier-component ('.' type-identifier-component)*
-    type-identifier-component ::= identifier generic-args?
-
 .. syntax-grammar::
 
     Grammar of a type identifier
@@ -174,13 +158,6 @@ that name is part of the type.
 
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
-
-.. langref-grammar
-
-    type-tuple ::= '(' type-tuple-body? ')'
-    type-tuple-body ::= type-tuple-element (',' type-tuple-element)* '...'?
-    type-tuple-element ::= identifier ':' type-annotation
-    type-tuple-element ::= type-annotation
 
 .. syntax-grammar::
 
@@ -408,10 +385,6 @@ by using the ``withoutActuallyEscaping(_:do:)`` function.
 For information about avoiding conflicting access to memory,
 see :doc:`../LanguageGuide/MemorySafety`.
 
-.. langref-grammar
-
-    type-function ::= type-tuple '->' type-annotation
-
 .. syntax-grammar::
 
     Grammar of a function type
@@ -493,13 +466,6 @@ the example above, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
 
 For a detailed discussion of the Swift standard library ``Array`` type,
 see :ref:`CollectionTypes_Arrays`.
-
-.. langref-grammar
-
-    type-array ::= type-simple
-    type-array ::= type-array '[' ']'
-    type-array ::= type-array '[' expr ']'
-
 
 .. syntax-grammar::
 
@@ -618,13 +584,6 @@ no operation is performed and therefore no runtime error is produced.
 
 For more information and to see examples that show how to use optional types,
 see :ref:`TheBasics_Optionals`.
-
-.. langref-grammar
-
-    type-optional ::= type-simple '?'-postfix
-
-.. NOTE: The -postfix disambiguates between two terminals
-    which have the same text but which have different whitespace.
 
 .. syntax-grammar::
 
@@ -754,11 +713,6 @@ is equivalent to ``P & Q & R``.
     -> typealias PQ = P & Q
     -> typealias PQR = PQ & Q & R
 
-.. langref-grammar
-
-    type-composition ::= 'protocol' '<' type-composition-list? '>'
-    type-composition-list ::= type-identifier (',' type-identifier)*
-
 .. syntax-grammar::
 
     Grammar of a protocol composition type
@@ -836,11 +790,6 @@ or the entire class marked with the ``final`` keyword.
     -> let anotherInstance = metatype.init(string: "some string")
     << // anotherInstance : AnotherSubClass = REPL.AnotherSubClass
 
-
-.. langref-grammar
-
-    type-metatype ::= type-simple '.' 'metatype'
-
 .. syntax-grammar::
 
     Grammar of a metatype type
@@ -877,10 +826,6 @@ or in the case of an enumeration that assigns raw values to its cases,
 a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
 to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
-
-.. langref-grammar
-
-    inheritance ::= ':' type-identifier (',' type-identifier)*
 
 .. syntax-grammar::
 

@@ -21,16 +21,6 @@ and a ``defer`` statement for running cleanup actions just before the current sc
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.
 
-.. langref-grammar
-
-    stmt ::= stmt-semicolon
-    stmt ::= stmt-if
-    stmt ::= stmt-while
-    stmt ::= stmt-for-c-style
-    stmt ::= stmt-for-each
-    stmt ::= stmt-switch
-    stmt ::= stmt-control-transfer
-
 .. syntax-grammar::
 
     Grammar of a statement
@@ -112,10 +102,6 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
 
-.. langref-grammar
-
-    stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
-
 .. syntax-grammar::
 
     Grammar of a for-in statement
@@ -155,10 +141,6 @@ The value of the *condition*
 must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
-
-.. langref-grammar
-
-    stmt-while ::= 'while' expr-basic brace-item-list
 
 .. syntax-grammar::
 
@@ -206,10 +188,6 @@ The value of the *condition*
 must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
-
-.. langref-grammar
-
-    stmt-repeat-while ::= 'repeat' brace-item-list 'while' expr
 
 .. syntax-grammar::
 
@@ -294,12 +272,6 @@ The value of any condition in an ``if`` statement
 must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
-
-.. langref-grammar
-
-    stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
-    stmt-if-else ::= 'else' brace-item-list
-    stmt-if-else ::= 'else' stmt-if
 
 .. syntax-grammar::
 
@@ -482,16 +454,6 @@ in the case from which you want execution to continue.
 For more information about the ``fallthrough`` statement,
 see :ref:`Statements_FallthroughStatement` below.
 
-.. langref-grammar
-
-    stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
-    stmt-switch-case ::= (case-label | default-label) brace-item+
-    stmt-switch-case ::= (case-label | default-label) ';'
-
-    case-label ::= 'case' pattern ('where' expr)? (',' pattern ('where' expr)?)* ':'
-    default-label ::= 'default' ':'
-
-
 .. syntax-grammar::
 
     Grammar of a switch statement
@@ -573,14 +535,6 @@ by unconditionally transferring program control from one piece of code to anothe
 Swift has five control transfer statements: a ``break`` statement, a ``continue`` statement,
 a ``fallthrough`` statement, a ``return`` statement, and a ``throw`` statement.
 
-.. langref-grammar
-
-    stmt-control-transfer ::= stmt-break
-    stmt-control-transfer ::= stmt-continue
-    stmt-control-transfer ::= stmt-fallthrough
-    stmt-control-transfer ::= stmt-return
-    stmt-control-transfer ::= stmt-throw
-
 .. syntax-grammar::
 
     Grammar of a control transfer statement
@@ -624,10 +578,6 @@ For examples of how to use a ``break`` statement,
 see :ref:`ControlFlow_Break` and :ref:`ControlFlow_LabeledStatements`
 in :doc:`../LanguageGuide/ControlFlow`.
 
-.. langref-grammar
-
-    stmt-break ::= 'break' (Note: the langref grammar contained a typo)
-
 .. syntax-grammar::
 
     Grammar of a break statement
@@ -670,11 +620,6 @@ For examples of how to use a ``continue`` statement,
 see :ref:`ControlFlow_Continue` and :ref:`ControlFlow_LabeledStatements`
 in :doc:`../LanguageGuide/ControlFlow`.
 
-.. langref-grammar
-
-    stmt-continue ::= 'continue' (Note: the langref grammar contained a typo)
-
-
 .. syntax-grammar::
 
     Grammar of a continue statement
@@ -704,10 +649,6 @@ whose pattern contains value binding patterns.
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
 see :ref:`ControlFlow_ControlTransferStatements`
 in :doc:`../LanguageGuide/ControlFlow`.
-
-.. langref-grammar
-
-    stmt-fallthrough ::= 'fallthrough'
 
 .. syntax-grammar::
 
@@ -752,11 +693,6 @@ When a ``return`` statement is not followed by an expression,
 it can be used only to return from a function or method that does not return a value
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 
-.. langref-grammar
-
-    stmt-return ::= 'return' expr
-    stmt-return ::= 'return'
-
 .. syntax-grammar::
 
     Grammar of a return statement
@@ -790,10 +726,6 @@ the ``Error`` protocol.
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`
 in :doc:`../LanguageGuide/ErrorHandling`.
-
-.. langref-grammar
-
-    stmt-throw ::= 'throw' expr
 
 .. syntax-grammar::
 

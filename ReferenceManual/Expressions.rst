@@ -17,16 +17,6 @@ using postfixes such as function calls and member access.
 Each kind of expression is described in detail
 in the sections below.
 
-.. langref-grammar
-
-    expr          ::= expr-basic
-    expr          ::= expr-trailing-closure expr-cast?
-
-    expr-basic    ::= expr-sequence expr-cast?
-
-    expr-sequence ::= expr-unary expr-binary*
-
-
 .. syntax-grammar::
 
     Grammar of an expression
@@ -58,10 +48,6 @@ For more information and to see an example,
 see :ref:`Functions_InOutParameters`.
 
 .. TODO: Need to a brief write up on the in-out-expression.
-
-.. langref-grammar
-
-    expr-unary   ::= operator-prefix* expr-postfix
 
 .. syntax-grammar::
 
@@ -213,13 +199,6 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
     ``2``, ``+``, ``3``, ``*``, and ``5``.
     This process transforms it into the tree (2 + (3 * 5)).
 
-.. langref-grammar
-
-    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
-    op-binary-or-ternary ::= operator-binary
-    op-binary-or-ternary ::= '='
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
-
 .. syntax-grammar::
 
     Grammar of a binary expression
@@ -264,10 +243,6 @@ For example:
 
 The assignment operator does not return any value.
 
-.. langref-grammar
-
-    op-binary-or-ternary ::= '='
-
 .. syntax-grammar::
 
     Grammar of an assignment operator
@@ -297,10 +272,6 @@ The unused expression is not evaluated.
 
 For an example that uses the ternary conditional operator,
 see :ref:`BasicOperators_TernaryConditionalOperator`.
-
-.. langref-grammar
-
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
 
 .. syntax-grammar::
 
@@ -414,11 +385,6 @@ For more information about type casting
 and to see examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
 
-.. langref-grammar
-
-    expr-cast ::= 'is' type
-    expr-cast ::= 'as' type
-
 .. syntax-grammar::
 
     Grammar of a type-casting operator
@@ -439,16 +405,6 @@ are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
 to make prefix expressions, binary expressions, and postfix expressions.
-
-.. langref-grammar
-
-    expr-primary  ::= expr-literal
-    expr-primary  ::= expr-identifier
-    expr-primary  ::= expr-super
-    expr-primary  ::= expr-closure
-    expr-primary  ::= expr-anon-closure-arg
-    expr-primary  ::= expr-paren
-    expr-primary  ::= expr-delayed-identifier
 
 .. syntax-grammar::
 

@@ -30,18 +30,6 @@ statement, a ``catch`` clause of a ``do`` statement,
 or in the case condition of an ``if``, ``while``,
 ``guard``, or ``for``-``in`` statement.
 
-.. langref-grammar
-
-    pattern-atom ::= pattern-var
-    pattern-atom ::= pattern-any
-    pattern-atom ::= pattern-tuple
-    pattern-atom ::= pattern-is
-    pattern-atom ::= pattern-enum-element
-    pattern-atom ::= expr
-    pattern      ::= pattern-atom
-    pattern      ::= pattern-typed
-    pattern-typed ::= pattern-atom ':' type-annotation
-
 .. syntax-grammar::
 
     Grammar of a pattern
@@ -71,10 +59,6 @@ ignoring the current value of the range on each iteration of the loop:
     -> for _ in 1...3 {
           // Do something three times.
        }
-
-.. langref-grammar
-
-    pattern-any ::= '_'
 
 .. syntax-grammar::
 
@@ -142,11 +126,6 @@ corresponding identifier pattern.
 In the example above, ``let`` distributes to each identifier pattern in the
 tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
 ``case let (x, y):`` and ``case (let x, let y):`` match the same values.
-
-.. langref-grammar
-
-    pattern-var ::= 'var' pattern
-    pattern-var ::= 'let' pattern
 
 .. syntax-grammar::
 
@@ -222,13 +201,6 @@ equivalent:
    !! let a = 2        // a: Int = 2
    !! ^
 
-.. langref-grammar
-
-    pattern-tuple ::= '(' pattern-tuple-body? ')'
-    pattern-tuple-body ::= pattern-tuple-element (',' pattern-tuple-body)* '...'?
-    pattern-tuple-element ::= pattern
-    pattern-tuple-element ::= pattern '=' expr
-
 .. syntax-grammar::
 
     Grammar of a tuple pattern
@@ -253,10 +225,6 @@ the corresponding enumeration case pattern must specify a tuple pattern that con
 one element for each associated value. For an example that uses a ``switch`` statement
 to match enumeration cases containing associated values,
 see :ref:`Enumerations_AssociatedValues`.
-
-.. langref-grammar
-
-    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
 
 .. syntax-grammar::
 
@@ -346,11 +314,6 @@ of the ``as`` pattern.
 For an example that uses a ``switch`` statement
 to match values with ``is`` and ``as`` patterns,
 see :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`.
-
-.. langref-grammar
-
-    pattern-is ::= 'is' type
-    pattern-as ::= pattern 'as' type
 
 .. syntax-grammar::
 

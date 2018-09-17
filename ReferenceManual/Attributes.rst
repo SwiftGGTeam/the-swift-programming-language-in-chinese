@@ -640,20 +640,6 @@ You can apply type attributes to types only.
     For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
 
-
-.. langref-grammar
-
-    attribute-list        ::= /*empty*/
-    attribute-list        ::= attribute-list-clause attribute-list
-    attribute-list-clause ::= '@' attribute
-    attribute-list-clause ::= '@' attribute ','? attribute-list-clause
-    attribute      ::= attribute-infix
-    attribute      ::= attribute-resilience
-    attribute      ::= attribute-inout
-    attribute      ::= attribute-autoclosure
-
-.. NOTE: LangRef grammar is way out of date.
-
 .. syntax-grammar::
 
     Grammar of an attribute
