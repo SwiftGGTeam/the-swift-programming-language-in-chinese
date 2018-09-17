@@ -120,19 +120,6 @@ For more information about generic ``where`` clauses and to see an example
 of one in a generic function declaration,
 see :ref:`Generics_WhereClauses`.
 
-.. langref-grammar
-
-    generic-params ::= '<' generic-param (',' generic-param)* where-clause? '>'
-    generic-param ::= identifier
-    generic-param ::= identifier ':' type-identifier
-    generic-param ::= identifier ':' type-composition
-    where-clause ::= 'where' requirement (',' requirement)*
-    requirement ::= conformance-requirement
-                ::= same-type-requirement
-    conformance-requirement ::= type-identifier ':' type-identifier
-    conformance-requirement ::= type-identifier ':' type-composition
-    same-type-requirement ::= type-identifier '==' type-identifier
-
 .. syntax-grammar::
 
     Grammar of a generic parameter clause
@@ -207,11 +194,6 @@ to form an array whose elements are themselves arrays of integers.
 As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
-
-.. langref-grammar
-
-    generic-args ::= '<' generic-arg (',' generic-arg)* '>'
-    generic-arg ::= type
 
 .. syntax-grammar::
 
