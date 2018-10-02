@@ -559,9 +559,9 @@ You can apply a declaration attribute to declarations only.
 
     For example,
     the Swift standard library includes both a top-level
-    `min(_:_:) <https://developer.apple.com/documentation/swift/1538339-min/>`_
+    `min(_:_:) <//apple_ref/swift/func/s:s3minyxx_xtSLRzlF>`_
     function and a
-    `min() <https://developer.apple.com/documentation/swift/sequence/1641174-min>`_
+    `min() <//apple_ref/swift/intfm/Sequence/s:STsSL7ElementRpzrlE3minABSgyF>`_
     method for sequences with comparable elements.
     The sequence method is declared with the ``warn_unqualified_access`` attribute
     to help reduce confusion
