@@ -262,6 +262,13 @@ You can apply a declaration attribute to declarations only.
     The compiler is allowed to replace calls to an inlinable symbol
     with a copy of the symbol's implementation at the call site.
 
+    Inlinable code
+    can interact with ``public`` symbols declared in any module,
+    and it can interact with ``internal`` symbols
+    declared in the same module
+    that are marked with the ``usableFromInline`` attribute.
+    Inlinable code can't interact with ``private`` or ``fileprivate`` symbols.
+
     This attribute can't be applied
     to declarations that are nested inside functions
     or to ``fileprivate`` or ``private`` declarations.
@@ -462,6 +469,30 @@ You can apply a declaration attribute to declarations only.
        The performance of linking and launch are slower
        because of the larger symbol table slowing dyld down.
 
+``requires_stored_property_inits``
+    Apply this attribute to a class declaration
+    to require all stored properties within the class
+    to provide default values as part of their definitions.
+    This attribute is inferred for any class
+    that inherits from ``NSManagedObject``.
+
+    .. assertion:: requires_stored_property_inits-requires-default-values
+
+       >> @requires_stored_property_inits class DefaultValueProvided {
+              var value: Int = -1
+              init() { self.value = 0 }
+          }
+          @requires_stored_property_inits class NoDefaultValue {
+              var value: Int
+              init() { self.value = 0 }
+          }
+       !! <REPL Input>:2:7: error: stored property 'value' requires an initial value
+       !! var value: Int
+       !! ^
+       !! <REPL Input>:1:39: note: class 'NoDefaultValue' requires all stored properties to have initial values
+       !! @requires_stored_property_inits class NoDefaultValue {
+       !! ^
+
 ``testable``
     Apply this attribute to ``import`` declarations
     for modules compiled with testing enabled
@@ -517,6 +548,25 @@ You can apply a declaration attribute to declarations only.
        !! <REPL Input>:1:1: warning: '@inlinable' declaration is already '@usableFromInline'
        !! @usableFromInline @inlinable internal func f() { }
        !! ^~~~~~~~~~~~~~~~~~
+
+``warn_unqualified_access``
+    Apply this attribute to a
+    top-level function, instance method, or class or static method
+    to trigger warnings when that function or method is used
+    without a preceding qualifier,
+    such as a module name, type name, or instance variable or constant.
+    Use this attribute to help discourage ambiguity between functions
+    with the same name that are accessible from the same scope.
+
+    For example,
+    the Swift standard library includes both a top-level
+    `min(_:_:) <//apple_ref/swift/func/s:s3minyxx_xtSLRzlF>`_
+    function and a
+    `min() <//apple_ref/swift/intfm/Sequence/s:STsSL7ElementRpzrlE3minABSgyF>`_
+    method for sequences with comparable elements.
+    The sequence method is declared with the ``warn_unqualified_access`` attribute
+    to help reduce confusion
+    when attempting to use one or the other from within a ``Sequence`` extension.
 
 .. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
@@ -590,20 +640,6 @@ You can apply type attributes to types only.
     require explicit use of ``self.`` for properties or methods.
     For an example of how to use the ``escaping`` attribute,
     see :ref:`Closures_Noescape`.
-
-
-.. langref-grammar
-
-    attribute-list        ::= /*empty*/
-    attribute-list        ::= attribute-list-clause attribute-list
-    attribute-list-clause ::= '@' attribute
-    attribute-list-clause ::= '@' attribute ','? attribute-list-clause
-    attribute      ::= attribute-infix
-    attribute      ::= attribute-resilience
-    attribute      ::= attribute-inout
-    attribute      ::= attribute-autoclosure
-
-.. NOTE: LangRef grammar is way out of date.
 
 .. syntax-grammar::
 

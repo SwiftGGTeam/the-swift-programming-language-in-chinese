@@ -34,7 +34,7 @@ and null (U+0000).
 
 .. Whitespace characters are listed roughly from
    most salient/common to least,
-   not in order of Unicode codepoints.
+   not in order of Unicode scalar value.
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with ``//``
@@ -45,19 +45,6 @@ but the comment markers must be balanced.
 
 Comments can contain additional formatting and markup,
 as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
-
-.. langref-grammar
-
-    whitespace ::= ' '
-    whitespace ::= '\n'
-    whitespace ::= '\r'
-    whitespace ::= '\t'
-    whitespace ::= '\0'
-
-    comment    ::= //.*[\n\r]
-    comment    ::= /* .... */
-
-.. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
 
 .. syntax-grammar::
 
@@ -109,36 +96,6 @@ The backticks aren't considered part of the identifier;
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
-
-.. langref-grammar
-
-    identifier ::= id-start id-continue*
-    id-start ::= [A-Za-z_]
-
-    // BMP alphanum non-combining
-    id-start ::= [\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-00BA]
-    id-start ::= [\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]
-    id-start ::= [\u0100-\u02FF\u0370-\u167F\u1681-\u180D\u180F-\u1DBF]
-    id-start ::= [\u1E00-\u1FFF]
-    id-start ::= [\u200B-\u200D\u202A-\u202E\u203F-\u2040\u2054\u2060-\u206F]
-    id-start ::= [\u2070-\u20CF\u2100-\u218F\u2460-\u24FF\u2776-\u2793]
-    id-start ::= [\u2C00-\u2DFF\u2E80-\u2FFF]
-    id-start ::= [\u3004-\u3007\u3021-\u302F\u3031-\u303F\u3040-\uD7FF]
-    id-start ::= [\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE1F\uFE30-FE44]
-    id-start ::= [\uFE47-\uFFFD]
-
-    // non-BMP non-PUA
-    id-start ::= [\u10000-\u1FFFD\u20000-\u2FFFD\u30000-\u3FFFD\u40000-\u4FFFD]
-    id-start ::= [\u50000-\u5FFFD\u60000-\u6FFFD\u70000-\u7FFFD\u80000-\u8FFFD]
-    id-start ::= [\u90000-\u9FFFD\uA0000-\uAFFFD\uB0000-\uBFFFD\uC0000-\uCFFFD]
-    id-start ::= [\uD0000-\uDFFFD\uE0000-\uEFFFD]
-
-    id-continue ::= [0-9]
-    // combining
-    id-continue ::= [\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]
-    id-continue ::= id-start
-
-    dollarident ::= '$' id-continue+
 
 .. syntax-grammar::
 
@@ -230,46 +187,6 @@ so they must be escaped with backticks in that context.
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
 
-.. langref-grammar
-
-    keyword ::= 'class'
-    keyword ::= 'do'
-    keyword ::= 'extension'
-    keyword ::= 'import'
-    keyword ::= 'init'
-    keyword ::= 'def'
-    keyword ::= 'metatype'
-    keyword ::= 'enum'
-    keyword ::= 'protocol'
-    keyword ::= 'type'
-    keyword ::= 'struct'
-    keyword ::= 'subscript'
-    keyword ::= 'typealias'
-    keyword ::= 'var'
-    keyword ::= 'where'
-    keyword ::= 'break'
-    keyword ::= 'case'
-    keyword ::= 'continue'
-    keyword ::= 'default'
-    keyword ::= 'repeat'
-    keyword ::= 'else'
-    keyword ::= 'if'
-    keyword ::= 'in'
-    keyword ::= 'for'
-    keyword ::= 'return'
-    keyword ::= 'switch'
-    keyword ::= 'then'
-    keyword ::= 'while'
-    keyword ::= 'as'
-    keyword ::= 'is'
-    keyword ::= 'new'
-    keyword ::= 'super'
-    keyword ::= 'self'
-    keyword ::= 'Self'
-    keyword ::= '#column'
-    keyword ::= '#file'
-    keyword ::= '#line'
-
 * Keywords used in declarations:
   ``associatedtype``,
   ``class``,
@@ -350,19 +267,6 @@ so they must be escaped with backticks in that context.
   ``#sourceLocation``,
   and ``#warning``.
 
-.. langref-grammar
-
-    get
-    infix
-    operator
-    postfix
-    prefix
-    set
-    type
-
-.. NOTE: This list of context-sensitive keywords
-   is derived from the file "swift/include/swift/AST/Attr.def"
-
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
@@ -392,6 +296,9 @@ so they must be escaped with backticks in that context.
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
+
+.. NOTE: The list of context-sensitive keywords above
+   is derived from the file "swift/include/swift/AST/Attr.def"
 
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
@@ -503,17 +410,9 @@ as described in :ref:`TheBasics_Integers`.
    Also, are adjacent underscores meant to be allowed, like 5__000?
    (REPL supports them as of swift-1.21 but it seems odd.)
 
-.. langref-grammar
-
-    integer_literal ::= [0-9][0-9_]*
-    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= 0o[0-7][0-7_]*
-    integer_literal ::= 0b[01][01_]*
-
-.. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
+.. NOTE: Updated the syntax-grammar to reflect [Contributor 7746]'s comment in
     <rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
     This feels very strange from a grammatical point of view.
-    Updated the syntax-grammar below as well.
     Update: This is a parser hack, not a lexer hack. Therefore,
     it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
     (Doug confirmed this, 4/2/2014.)
@@ -597,14 +496,6 @@ the default inferred type of a floating-point literal is the Swift standard libr
 which represents a 64-bit floating-point number.
 The Swift standard library also defines a ``Float`` type,
 which represents a 32-bit floating-point number.
-
-.. langref-grammar
-
-    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
-    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-    floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-    floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
-                           (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
 
 .. syntax-grammar::
 
@@ -752,20 +643,6 @@ no runtime concatenation is performed.
   -> let textB = "Hello world"
   << // textA : String = "Hello world"
   << // textB : String = "Hello world"
-
-.. langref-grammar
-
-    character_literal ::= '[^'\\\n\r]|character_escape'
-    character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
-    character_escape  ::= [\]x hex hex
-    character_escape  ::= [\]u hex hex hex hex
-    character_escape  ::= [\]U hex hex hex hex hex hex hex hex
-
-    string_literal   ::= ["]([^"\\\n\r]|character_escape|escape_expr)*["]
-    escape_expr      ::= [\]escape_expr_body
-    escape_expr_body ::= [(]escape_expr_body[)]
-    escape_expr_body ::= [^\n\r"()]
-
 
 .. syntax-grammar::
 
@@ -958,41 +835,6 @@ see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDecl
 To learn how to overload existing operators,
 see :ref:`AdvancedOperators_OperatorFunctions`.
 
-.. langref-grammar
-
-    operator ::= [/=-+*%<>!&|^~]+
-    operator ::= \.+
-
-      Note: excludes '=', see [1]
-            excludes '->', see [2]
-            excludes unary '&', see [3]
-            excludes '//', '/*', and '*/', see [4]
-
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-
-    any-identifier ::= identifier | operator
-
-.. langref-grammar
-
-    punctuation ::= '('
-    punctuation ::= ')'
-    punctuation ::= '{'
-    punctuation ::= '}'
-    punctuation ::= '['
-    punctuation ::= ']'
-    punctuation ::= '.'
-    punctuation ::= ','
-    punctuation ::= ';'
-    punctuation ::= ':'
-    punctuation ::= '='
-    punctuation ::= '->'
-    punctuation ::= '&' // unary prefix operator
-
 .. NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
    monad -- the ? is actually a monadic bind operator.  It is like a burrito.
    The current list of reserved punctuation is in Tokens.def.
@@ -1018,7 +860,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3030
+    operator-head --> U+3008--U+3020 or U+3030
 
     operator-character --> operator-head
     operator-character --> U+0300--U+036F

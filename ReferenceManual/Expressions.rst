@@ -17,16 +17,6 @@ using postfixes such as function calls and member access.
 Each kind of expression is described in detail
 in the sections below.
 
-.. langref-grammar
-
-    expr          ::= expr-basic
-    expr          ::= expr-trailing-closure expr-cast?
-
-    expr-basic    ::= expr-sequence expr-cast?
-
-    expr-sequence ::= expr-unary expr-binary*
-
-
 .. syntax-grammar::
 
     Grammar of an expression
@@ -58,10 +48,6 @@ For more information and to see an example,
 see :ref:`Functions_InOutParameters`.
 
 .. TODO: Need to a brief write up on the in-out-expression.
-
-.. langref-grammar
-
-    expr-unary   ::= operator-prefix* expr-postfix
 
 .. syntax-grammar::
 
@@ -213,13 +199,6 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
     ``2``, ``+``, ``3``, ``*``, and ``5``.
     This process transforms it into the tree (2 + (3 * 5)).
 
-.. langref-grammar
-
-    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
-    op-binary-or-ternary ::= operator-binary
-    op-binary-or-ternary ::= '='
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
-
 .. syntax-grammar::
 
     Grammar of a binary expression
@@ -264,10 +243,6 @@ For example:
 
 The assignment operator does not return any value.
 
-.. langref-grammar
-
-    op-binary-or-ternary ::= '='
-
 .. syntax-grammar::
 
     Grammar of an assignment operator
@@ -297,10 +272,6 @@ The unused expression is not evaluated.
 
 For an example that uses the ternary conditional operator,
 see :ref:`BasicOperators_TernaryConditionalOperator`.
-
-.. langref-grammar
-
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
 
 .. syntax-grammar::
 
@@ -414,11 +385,6 @@ For more information about type casting
 and to see examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
 
-.. langref-grammar
-
-    expr-cast ::= 'is' type
-    expr-cast ::= 'as' type
-
 .. syntax-grammar::
 
     Grammar of a type-casting operator
@@ -439,16 +405,6 @@ are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
 to make prefix expressions, binary expressions, and postfix expressions.
-
-.. langref-grammar
-
-    expr-primary  ::= expr-literal
-    expr-primary  ::= expr-identifier
-    expr-primary  ::= expr-super
-    expr-primary  ::= expr-closure
-    expr-primary  ::= expr-anon-closure-arg
-    expr-primary  ::= expr-paren
-    expr-primary  ::= expr-delayed-identifier
 
 .. syntax-grammar::
 
@@ -488,14 +444,15 @@ an array or dictionary literal,
 a playground literal,
 or one of the following special literals:
 
-=============    ===========  ===============================================
-Literal          Type         Value
-=============    ===========  ===============================================
-``#file``        ``String``   The name of the file in which it appears.
-``#line``        ``Int``      The line number on which it appears.
-``#column``      ``Int``      The column number in which it begins.
-``#function``    ``String``   The name of the declaration in which it appears.
-=============    ===========  ===============================================
+==============  ====================  ==========================================
+Literal         Type                  Value
+==============  ====================  ==========================================
+``#file``       ``String``            The name of the file in which it appears.
+``#line``       ``Int``               The line number on which it appears.
+``#column``     ``Int``               The column number in which it begins.
+``#function``   ``String``            The name of the declaration in which it appears.
+``#dsohandle``  ``UnsafeRawPointer``  The DSO (dynamic shared object) handle in use where it appears.
+==============  ====================  ==========================================
 
 Inside a function,
 the value of ``#function`` is the name of that function,
@@ -604,24 +561,13 @@ For information on using playground literals in Xcode,
 see `Add a color, file, or image literal <https://help.apple.com/xcode/mac/current/#/dev4c60242fc>`_
 in Xcode Help.
 
-
-.. langref-grammar
-
-    expr-literal ::= integer_literal
-    expr-literal ::= floating_literal
-    expr-literal ::= character_literal
-    expr-literal ::= string_literal
-    expr-literal ::= '#file'
-    expr-literal ::= '#line'
-    expr-literal ::= '#column'
-
 .. syntax-grammar::
 
     Grammar of a literal expression
 
     literal-expression --> literal
     literal-expression --> array-literal | dictionary-literal | playground-literal
-    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
+    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
     array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
@@ -727,15 +673,6 @@ The third form is used to access an initializer of the superclass.
 Subclasses can use a superclass expression
 in their implementation of members, subscripting, and initializers
 to make use of the implementation in their superclass.
-
-.. langref-grammar
-
-    expr-super ::= expr-super-method
-    expr-super ::= expr-super-subscript
-    expr-super ::= expr-super-constructor
-    expr-super-method ::= 'super' '.' expr-identifier
-    expr-super-subscript ::= 'super' '[' expr ']'
-    expr-super-constructor ::= 'super' '.' 'init'
 
 .. syntax-grammar::
 
@@ -997,13 +934,6 @@ see :ref:`Closures_ClosureExpressions`.
 For more information and examples of capture lists,
 see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
-.. langref-grammar
-
-    expr-closure ::= '{' closure-signature? brace-item* '}'
-    closure-signature ::= pattern-tuple func-signature-result? 'in'
-    closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
-    expr-anon-closure-arg ::= dollarident
-
 .. syntax-grammar::
 
     Grammar of a closure expression
@@ -1048,10 +978,6 @@ For example:
     -> var x = MyEnumeration.someValue
     << // x : MyEnumeration = REPL.MyEnumeration.someValue
     -> x = .anotherValue
-
-.. langref-grammar
-
-    expr-delayed-identifier ::= '.' identifier
 
 .. syntax-grammar::
 
@@ -1108,12 +1034,6 @@ A single expression inside parentheses is a parenthesized expression.
    you can use it to write an empty tuple type.
    However, like all type aliases, ``Void`` is always a type ---
    you can't use it to write an empty tuple expression.
-
-.. langref-grammar
-
-    expr-paren      ::= '(' ')'
-    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
-    expr-paren-element ::= (identifier ':')? expr
 
 .. syntax-grammar::
 
@@ -1541,19 +1461,6 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 For information about the operators provided by the Swift standard library,
 see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
-.. langref-grammar
-
-    expr-postfix  ::= expr-primary
-    expr-postfix  ::= expr-postfix operator-postfix
-    expr-postfix  ::= expr-new
-    expr-postfix  ::= expr-init
-    expr-postfix  ::= expr-dot
-    expr-postfix  ::= expr-metatype
-    expr-postfix  ::= expr-subscript
-    expr-postfix  ::= expr-call
-    expr-postfix  ::= expr-optional
-    expr-force-value  ::= expr-force-value (typo in the langref; lhs should be expr-postfix)
-
 .. syntax-grammar::
 
     Grammar of a postfix expression
@@ -1633,11 +1540,6 @@ the parentheses can be omitted.
     << // r0 : Bool = false
     -> myData.someMethod {$0 == 13}
     << // r1 : Bool = false
-
-.. langref-grammar
-
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
 
 .. syntax-grammar::
 
@@ -1724,10 +1626,6 @@ In all other cases, you must use an initializer expression.
     !! let s4 = type(of: someValue)(data: 5)       // Error
     !!                              ^
     !!                              .init
-
-.. langref-grammar
-
-    expr-init ::= expr-postfix '.' 'init'
 
 .. syntax-grammar::
 
@@ -1855,11 +1753,6 @@ split over several lines:
    >> print(x)
    << [1000, 1500, 2000]
 
-.. langref-grammar
-
-    expr-dot ::= expr-postfix '.' dollarident
-    expr-dot ::= expr-postfix '.' expr-identifier
-
 .. syntax-grammar::
 
     Grammar of an explicit member expression
@@ -1942,10 +1835,6 @@ the subscript setter is called in the same way.
 For information about subscript declarations,
 see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
-.. langref-grammar
-
-    expr-subscript ::= expr-postfix '[' expr ']'
-
 .. syntax-grammar::
 
     Grammar of a subscript expression
@@ -2003,10 +1892,6 @@ For example:
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
-
-.. langref-grammar
-
-    expr-force-value ::= expr-postfix '!'
 
 .. syntax-grammar::
 
@@ -2105,10 +1990,6 @@ For example:
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
-
-.. langref-grammar
-
-    expr-optional ::= expr-postfix '?'-postfix
 
 .. syntax-grammar::
 
