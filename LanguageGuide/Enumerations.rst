@@ -1,4 +1,4 @@
-Enumerations
+Enumeration
 ============
 
 An :newTerm:`enumeration` defines a common type for a group of related values
@@ -7,8 +7,8 @@ and enables you to work with those values in a type-safe way within your code.
 If you are familiar with C,
 you will know that C enumerations assign related names to a set of integer values.
 Enumerations in Swift are much more flexible,
-and do not have to provide a value for each case of the enumeration.
-If a value (known as a “raw” value) *is* provided for each enumeration case,
+and don't have to provide a value for each case of the enumeration.
+If a value (known as a *raw* value) is provided for each enumeration case,
 the value can be a string, a character,
 or a value of any integer or floating-point type.
 
@@ -87,7 +87,7 @@ Multiple cases can appear on a single line, separated by commas:
 Each enumeration definition defines a new type.
 Like other types in Swift, their names
 (such as ``CompassPoint`` and ``Planet``)
-should start with a capital letter.
+start with a capital letter.
 Give enumeration types singular rather than plural names,
 so that they read as self-evident:
 
@@ -97,7 +97,7 @@ so that they read as self-evident:
    << // directionToHead : CompassPoint = REPL.CompassPoint.west
 
 The type of ``directionToHead`` is inferred
-when it is initialized with one of the possible values of ``CompassPoint``.
+when it's initialized with one of the possible values of ``CompassPoint``.
 Once ``directionToHead`` is declared as a ``CompassPoint``,
 you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
@@ -144,12 +144,12 @@ print ``"Watch out for penguins"``.”
 As described in :doc:`ControlFlow`,
 a ``switch`` statement must be exhaustive when considering an enumeration's cases.
 If the ``case`` for ``.west`` is omitted,
-this code does not compile,
-because it does not consider the complete list of ``CompassPoint`` cases.
-Requiring exhaustiveness ensures that enumeration cases are not accidentally omitted.
+this code doesn't compile,
+because it doesn't consider the complete list of ``CompassPoint`` cases.
+Requiring exhaustiveness ensures that enumeration cases aren't accidentally omitted.
 
-When it is not appropriate to provide a ``case`` for every enumeration case,
-you can provide a ``default`` case to cover any cases that are not addressed explicitly:
+When it isn't appropriate to provide a ``case`` for every enumeration case,
+you can provide a ``default`` case to cover any cases that aren't addressed explicitly:
 
 .. testcode:: enums
 
@@ -221,7 +221,7 @@ The examples in the previous section show how the cases of an enumeration are
 a defined (and typed) value in their own right.
 You can set a constant or variable to ``Planet.earth``,
 and check for this value later.
-However, it is sometimes useful to be able to store
+However, it's sometimes useful to be able to store
 :newTerm:`associated values` of other types alongside these case values.
 This enables you to store additional custom information along with the case value,
 and permits this information to vary each time you use that case in your code.
@@ -250,7 +250,7 @@ and can encode a string up to 2,953 characters long:
 .. image:: ../images/barcode_QR_2x.png
    :align: center
 
-It would be convenient for an inventory tracking system to be able to store UPC barcodes
+It's convenient for an inventory tracking system to store UPC barcodes
 as a tuple of four integers,
 and QR code barcodes as a string of any length.
 
@@ -270,7 +270,7 @@ which can take either a value of ``upc``
 with an associated value of type (``Int``, ``Int``, ``Int``, ``Int``),
 or a value of ``qrCode`` with an associated value of type ``String``.”
 
-This definition does not provide any actual ``Int`` or ``String`` values ---
+This definition doesn't provide any actual ``Int`` or ``String`` values ---
 it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
 when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
@@ -379,9 +379,9 @@ Implicitly Assigned Raw Values
 
 When you're working with enumerations that store integer or string raw values,
 you don't have to explicitly assign a raw value for each case.
-When you don't, Swift will automatically assign the values for you.
+When you don't, Swift automatically assigns the values for you.
 
-For instance, when integers are used for raw values,
+For example, when integers are used for raw values,
 the implicit value for each case is one more than the previous case.
 If the first case doesn't have a value set, its value is ``0``.
 
@@ -480,7 +480,7 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
 This example uses optional binding to try to access a planet with a raw value of ``11``.
 The statement ``if let somePlanet = Planet(rawValue: 11)`` creates an optional ``Planet``,
 and sets ``somePlanet`` to the value of that optional ``Planet`` if it can be retrieved.
-In this case, it is not possible to retrieve a planet with a position of ``11``,
+In this case, it isn't possible to retrieve a planet with a position of ``11``,
 and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
