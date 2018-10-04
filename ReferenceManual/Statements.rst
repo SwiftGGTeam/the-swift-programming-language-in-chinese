@@ -975,6 +975,10 @@ otherwise, it returns ``false``.
           print(5)
       #endif
    << 5
+   -> #if !swift(<3)
+          print(6)
+      #endif
+   << 6
 
 .. assertion:: pound-if-compiler-version
 
@@ -989,6 +993,10 @@ otherwise, it returns ``false``.
    -> #if compiler(>=4.2) && false
           print(3)
       #endif
+   -> #if !compiler(<4.2)
+          print(4)
+      #endif
+   << 4
 
 You can negate compilation conditions using the negation operator ``!``
 and combine conditions using the logical operators ``&&`` and ``||``.
