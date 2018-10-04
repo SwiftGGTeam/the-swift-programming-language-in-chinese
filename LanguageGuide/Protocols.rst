@@ -1689,6 +1689,39 @@ and integers conform to ``Equatable``,
        but we should wait until we have a better narrative that shows how this
        works with some examples.
 
+.. _Protocols_SynthesizedImplementations:
+
+Synthesized Implementations
+---------------------------
+
+.. XXX OUTLINE
+
+   Sometimes you can ask Swift to write the implementation for you.
+   This lets you avoid writing boilerplate code.
+
+   For example, the stdlib protocol Hashable
+   marks types that can be, for example, the keys in a dictionary.
+   To conform, you implement hash(into:)
+
+   To receive a synthesized implementation,
+   declare conformance to Hashable
+   but don't implement anything.
+
+   For a list of the circumstances then Swift can implement hash(into:) for you
+   see Hashable.
+
+   Swift can also implement the requirements for Equatable,
+   as shown in :ref:`AdvancedOperators_EquivalenceOperators`.
+
+   . . .
+
+   A synthesized implementation is code that implements a piece of functionality,
+   like the == operator, but that you don't write yourself.
+   You ask the compiler to write this code by conforming to a protocol
+   without implementing the protocol's requirements.
+   The compiler synthesizes an implementation of that protocol requirement
+   when it builds your code.
+
 .. TODO: Other things to be included
    ---------------------------------
    Class-only protocols
