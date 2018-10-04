@@ -990,11 +990,11 @@ otherwise, it returns ``false``.
           print(3)
       #endif
 
-You can combine compilation conditions using the logical operators
-``&&``, ``||``, and ``!``
-and use parentheses for grouping.
+You can negate compilation conditions using the negation operator ``!``
+and combine conditions using the logical operators ``&&`` and ``||``.
 These operators have the same associativity and precedence as the
 logical operators that are used to combine ordinary Boolean expressions.
+Use parentheses for grouping.
 
 Similar to an ``if`` statement,
 you can add multiple conditional branches to test for different compilation conditions.
@@ -1018,9 +1018,9 @@ have the following form:
     Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
     However, there is an exception
-    if the compilation condition includes a ``swift()`` platform condition:
+    if the compilation condition includes a ``swift()`` or ``compiler()`` platform condition:
     The statements are parsed
-    only if the compiler's version of Swift matches
+    only if the language or compiler version, respectively, matches
     what is specified in the platform condition.
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
