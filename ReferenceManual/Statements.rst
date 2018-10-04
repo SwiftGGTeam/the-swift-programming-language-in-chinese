@@ -358,7 +358,7 @@ As a result, you must include at least one statement
 following the colon (``:``) of each case label. Use a single ``break`` statement
 if you don't intend to execute any code in the body of a matched case.
 
-The values of expressions your code can branch on are very flexible. For instance,
+The values of expressions your code can branch on are very flexible. For example,
 in addition to the values of scalar types, such as integers and characters,
 your code can branch on the values of any type, including floating-point numbers, strings,
 tuples, instances of custom classes, and optionals.
@@ -374,7 +374,7 @@ before a pattern in a case is considered matched to the *control expression*.
 If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
-For instance, a *control expression* matches the case in the example below
+For example, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
@@ -435,7 +435,7 @@ In Swift,
 every possible value of the control expression’s type
 must match the value of at least one pattern of a case.
 When this simply isn’t feasible
-(for instance, when the control expression’s type is ``Int``),
+(for example, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
 
