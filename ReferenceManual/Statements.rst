@@ -894,8 +894,8 @@ Platform condition        Valid arguments
 ========================  ===================================================
 ``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
-``swift()``               ``>=`` followed by a version number
-``compiler()``            ``>=`` followed by a version number
+``swift()``               ``>=`` or ``<``, followed by a version number
+``compiler()``            ``>=`` or ``<``, followed by a version number
 ``canImport()``           A module name
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
@@ -907,7 +907,7 @@ Platform condition        Valid arguments
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
-There must not be whitespace between ``>=`` and the version number.
+There must not be whitespace between the comparison operator and the version number.
 The version for ``compiler()`` is the compiler version,
 regardless of the Swift version setting passed to the compiler.
 The version for ``swift()`` is the language version currently being compiled.
@@ -1052,13 +1052,14 @@ have the following form:
 
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
-    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)``
+    platform-condition --> ``swift`` ``(`` swift-version-condition ``)``
+    platform-condition --> ``compiler`` ``(`` swift-version-condition ``)``
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
+    swift-version-condition --> ``>=`` swift-version | ``<`` swift-version
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
     module-name --> identifier
