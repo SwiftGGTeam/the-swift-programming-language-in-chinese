@@ -10,10 +10,13 @@ and those that apply to types.
     I'm keeping this paragraph in a note so I can bring it back after
     we have a suitable replacement attribute to include in the example.
 
-    For instance, the ``required`` attribute---when applied to a designated or convenience initializer
-    declaration of a class---indicates that every subclass must implement that initializer.
-    And the ``noreturn`` attribute---when applied to a function or method type---indicates that
-    the function or method doesn't return to its caller.
+    For instance, the ``required`` attribute ---
+    when applied to a designated or convenience
+    initializer declaration of a class ---
+    indicates that every subclass must implement that initializer.
+    And the ``noreturn`` attribute ---
+    when applied to a function or method type ---
+    indicates that the function or method doesn't return to its caller.
 
 You specify an attribute by writing the ``@`` symbol followed by the attribute's name
 and any arguments that the attribute accepts:
@@ -23,9 +26,11 @@ and any arguments that the attribute accepts:
     @<#attribute name#>
     @<#attribute name#>(<#attribute arguments#>)
 
-Some declaration attributes accept arguments that specify more information about the attribute
-and how it applies to a particular declaration. These *attribute arguments* are enclosed
-in parentheses, and their format is defined by the attribute they belong to.
+Some declaration attributes accept arguments
+that specify more information about the attribute
+and how it applies to a particular declaration.
+These *attribute arguments* are enclosed in parentheses,
+and their format is defined by the attribute they belong to.
 
 
 .. _Attributes_DeclarationAttributes:
@@ -70,32 +75,39 @@ The remaining arguments can appear in any order
 and specify additional information about the declaration's life cycle,
 including important milestones.
 
-* The ``unavailable`` argument indicates that the declaration isn't available on the specified platform.
+* The ``unavailable`` argument indicates that the declaration
+  isn't available on the specified platform.
   This argument can't be used when specifying Swift version availability.
 
-* The ``introduced`` argument indicates the first version of the specified platform or language in which the declaration was introduced.
+* The ``introduced`` argument indicates the first version
+  of the specified platform or language in which the declaration was introduced.
   It has the following form:
 
   .. syntax-outline::
 
      introduced: <#version number#>
 
-  The *version number* consists of one to three positive integers, separated by periods.
+  The *version number* consists of one to three positive integers,
+  separated by periods.
 
-* The ``deprecated`` argument indicates the first version of the specified platform or language in which the declaration was deprecated.
+* The ``deprecated`` argument indicates the first version
+  of the specified platform or language in which the declaration was deprecated.
   It has the following form:
 
   .. syntax-outline::
 
      deprecated: <#version number#>
 
-  The optional *version number* consists of one to three positive integers, separated by periods.
+  The optional *version number* consists of one to three positive integers,
+  separated by periods.
   Omitting the version number indicates that the declaration is currently deprecated,
   without giving any information about when the deprecation occurred.
   If you omit the version number, omit the colon (``:``) as well.
 
-* The ``obsoleted`` argument indicates the first version of the specified platform or language in which the declaration was obsoleted.
-  When a declaration is obsoleted, it's removed from the specified platform or language and can no longer be used.
+* The ``obsoleted`` argument indicates the first version
+  of the specified platform or language in which the declaration was obsoleted.
+  When a declaration is obsoleted,
+  it's removed from the specified platform or language and can no longer be used.
   It has the following form:
 
   .. syntax-outline::
