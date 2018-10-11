@@ -578,13 +578,14 @@ that inherits from ``NSManagedObject``.
 testable
 ~~~~~~~~
 
-Apply this attribute to ``import`` declarations
-for modules compiled with testing enabled
-to access any entities marked with the ``internal`` access-level modifier
+Apply this attribute to an ``import`` declaration
+to access entities in that module
+that are marked with the ``internal`` access-level modifier
 as if they were declared with the ``public`` access-level modifier.
 Tests can also access classes and class members
 that are marked with the ``internal`` or ``public`` access-level modifier
 as if they were declared with the ``open`` access-level modifier.
+The imported module must be compiled with testing enabled.
 
 
 .. _Attributes_UIApplicationMain:
@@ -704,7 +705,7 @@ You can apply type attributes to types only.
 autoclosure
 ~~~~~~~~~~~
 
-This attribute is used to delay the evaluation of an expression
+Apply this attribute to delay the evaluation of an expression
 by automatically wrapping that expression in a closure with no arguments.
 Apply this attribute to a parameter's type in a method or function declaration,
 for a parameter of a function type that takes no arguments
