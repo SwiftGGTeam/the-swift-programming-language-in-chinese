@@ -735,38 +735,16 @@ one of the attribute arguments below.
 * The ``c`` argument indicates a C function reference.
   The function value carries no context and uses the C calling convention.
 
-In many cases,
-functions are implicitly converted between calling conventions,
-which lets you use a function with one calling convention
-in a setting where a different calling convention is needed.
-The supported conversions are as follows:
-
-- A nongeneric global function
-  can be used as a function with the C function calling convention.
-
-- A local function or a closure
-  that doesn't capture any local variables
-  can be used as a function with the C function calling convention.
-
-- A function with the Objective-C block calling convention
-  can be used as a function with the Swift function calling convention,
-  and a function with the Swift function calling convention
-  can be used a function with the Objective-C block calling convention.
-
-- A function with the C function calling convention
-  can be used as a function with the Objective-C block calling convention,
-  or as a function with the Swift function calling convention.
-  
-
-.. If I have this row's thing, can I convert it to the thing in each column?
-
-            Swift    Obj-C       C
-   Swift    -        Yes         Yes*
-   Obj-C    Yes      -           ?
-   C        Yes      Yes         -
-
-  * Nongeneric global functions, and local functions/closures
-    that don't capture anything
+With a few exceptions,
+a function of any calling convention can be used
+when a function any other calling convention is needed.
+A nongeneric global function,
+a local function that doesn't capture any local variables
+or a closure that doesn't capture any local variables
+can be converted to the C calling convention.
+Other Swift functions can't be converted to the C calling convention.
+A function with the Objective-C block calling convention
+can't be converted to the C calling convention.
 
 
 .. _Attributes_escaping:
