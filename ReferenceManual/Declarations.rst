@@ -2707,7 +2707,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2725,7 +2725,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
