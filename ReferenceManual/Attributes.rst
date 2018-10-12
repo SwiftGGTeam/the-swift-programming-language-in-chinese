@@ -1,22 +1,13 @@
 Attributes
 ==========
 
-:newTerm:`Attributes` provide more information about a declaration or type.
+:newTerm:`Attributes` provide additional information about a declaration or type.
 There are two kinds of attributes in Swift, those that apply to declarations
 and those that apply to types.
-
-.. NOTE: The first example isn't relevant anymore,
-    because ``required`` is now a CS-keyword and no longer an attribute.
-    I'm keeping this paragraph in a note so I can bring it back after
-    we have a suitable replacement attribute to include in the example.
-
-    For instance, the ``required`` attribute ---
-    when applied to a designated or convenience
-    initializer declaration of a class ---
-    indicates that every subclass must implement that initializer.
-    And the ``noreturn`` attribute ---
-    when applied to a function or method type ---
-    indicates that the function or method doesn't return to its caller.
+For example,
+the ``discardableResult`` attribute on a function declaration indicates that,
+although the function returns a value,
+the compiler shouldn't generate a warning if the return value is unused.
 
 You specify an attribute by writing the ``@`` symbol followed by the attribute's name
 and any arguments that the attribute accepts:
@@ -116,7 +107,7 @@ including important milestones.
 
   The *version number* consists of one to three positive integers, separated by periods.
 
-* The ``message`` argument is used to provide a textual message that the compiler displays
+* The ``message`` argument provides a textual message that the compiler displays
   when emitting a warning or error about the use of a deprecated or obsoleted declaration.
   It has the following form:
 
@@ -126,7 +117,7 @@ including important milestones.
 
   The *message* consists of a string literal.
 
-* The ``renamed`` argument is used to provide a textual message
+* The ``renamed`` argument provides a textual message
   that indicates the new name for a declaration that's been renamed.
   The compiler displays the new name
   when emitting an error about the use of a renamed declaration.
@@ -138,10 +129,13 @@ including important milestones.
 
   The *new name* consists of a string literal.
 
-  You can use the ``renamed`` argument in conjunction with the ``unavailable``
-  argument and a type alias declaration to indicate to clients of your code
-  that a declaration has been renamed. For example, this is useful when the name
-  of a declaration is changed between releases of a framework or library.
+  You can apply the ``available`` attribute
+  with the ``renamed`` and ``unavailable`` arguments
+  to a type alias declaration, as shown below,
+  to indicate that the name of a declaration changed
+  between releases of a framework or library.
+  This combination results in a compile-time error
+  that the declaration has been renamed.
 
   .. testcode:: renamed1
      :compile: true
@@ -184,7 +178,7 @@ the platform and Swift availabilities.
 
 If an ``available`` attribute only specifies an ``introduced`` argument
 in addition to a platform or language name argument,
-the following shorthand syntax can be used instead:
+you can use the following shorthand syntax instead:
 
 .. syntax-outline::
 
@@ -193,8 +187,8 @@ the following shorthand syntax can be used instead:
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-The shorthand syntax for ``available`` attributes allows for
-availability for multiple platforms to be expressed concisely.
+The shorthand syntax for ``available`` attributes
+concisely expresses availability for multiple platforms.
 Although the two forms are functionally equivalent,
 the shorthand form is preferred whenever possible.
 
@@ -472,12 +466,12 @@ from protocols that aren't marked with this attribute.
 The ``objc`` attribute is also implicitly added in the following cases:
 
 * The declaration is an override in a subclass,
-and the superclass's declaration has the ``objc`` attribute.
+  and the superclass's declaration has the ``objc`` attribute.
 * The declaration satisfies a requirement
-from a protocol that has the ``objc`` attribute.
+  from a protocol that has the ``objc`` attribute.
 * The declaration has the ``IBAction``, ``IBOutlet``,
-``IBDesignable``, ``IBInspectable``,
-``NSManaged``, or ``GKInspectable`` attribute.
+  ``IBDesignable``, ``IBInspectable``,
+  ``NSManaged``, or ``GKInspectable`` attribute.
 
 If you apply the ``objc`` attribute to an enumeration,
 each enumeration case is exposed to Objective-C code
@@ -522,10 +516,9 @@ rather than just as the name of the property itself.
 objcMembers
 ~~~~~~~~~~~
 
-Apply this attribute to any class declaration
-that can have the ``objc`` attribute.
-The ``objc`` attribute is implicitly added
-to Objective-C compatible members of the class,
+Apply this attribute to a class declaration,
+to implicitly apply the ``objc`` attribute
+to all Objective-C compatible members of the class,
 its extensions, its subclasses, and all of the extensions of its subclasses.
 
 Most code should use the ``objc`` attribute instead,
@@ -579,12 +572,14 @@ testable
 ~~~~~~~~
 
 Apply this attribute to an ``import`` declaration
-to access entities in that module
+to import that module with changes to its access control
+that simplify testing the module's code.
+Entities in the imported module
 that are marked with the ``internal`` access-level modifier
-as if they were declared with the ``public`` access-level modifier.
-Tests can also access classes and class members
+are imported as if they were declared with the ``public`` access-level modifier.
+Classes and class members
 that are marked with the ``internal`` or ``public`` access-level modifier
-as if they were declared with the ``open`` access-level modifier.
+are imported as if they were declared with the ``open`` access-level modifier.
 The imported module must be compiled with testing enabled.
 
 
