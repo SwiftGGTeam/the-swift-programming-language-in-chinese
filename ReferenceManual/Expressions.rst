@@ -1089,7 +1089,7 @@ including any generic parameters,
 such as ``String``, ``[Int]``, or ``Set<Int>``.
 
 The *path* consists of
-property names, subscripts, optional chaining expressions, 
+property names, subscripts, optional-chaining expressions,
 and forced unwrapping expressions.
 Each of these key-path components
 can be repeated as many times as needed,
