@@ -725,23 +725,48 @@ to indicate its calling conventions.
 The ``convention`` attribute always appears with
 one of the attribute arguments below.
 
-* The ``swift`` argument is used to indicate a Swift function reference.
+* The ``swift`` argument indicates a Swift function reference.
   This is the standard calling convention for function values in Swift.
-* The ``block`` argument is used to indicate an Objective-C compatible block reference.
+* The ``block`` argument indicates an Objective-C compatible block reference.
   The function value is represented as a reference to the block object,
   which is an ``id``-compatible Objective-C object that embeds its invocation
   function within the object.
   The invocation function uses the C calling convention.
-* The ``c`` argument is used to indicate a C function reference.
+* The ``c`` argument indicates a C function reference.
   The function value carries no context and uses the C calling convention.
 
-A function with C function calling conventions can be used as
-a function with Objective-C block calling conventions,
-and a function with Objective-C block calling conventions can be used as
-a function with Swift function calling conventions.
-However, only nongeneric global functions, and
-local functions or closures that don't capture any local variables,
-can be used as a function with C function calling conventions.
+In many cases,
+functions are implicitly converted between calling conventions,
+which lets you use a function with one calling convention
+in a setting where a different calling convention is needed.
+The supported conversions are as follows:
+
+- A nongeneric global function
+  can be used as a function with the C function calling convention.
+
+- A local function or a closure
+  that doesn't capture any local variables
+  can be used as a function with the C function calling convention.
+
+- A function with the Objective-C block calling convention
+  can be used as a function with the Swift function calling convention,
+  and a function with the Swift function calling convention
+  can be used a function with the Objective-C block calling convention.
+
+- A function with the C function calling convention
+  can be used as a function with the Objective-C block calling convention,
+  or as a function with the Swift function calling convention.
+  
+
+.. If I have this row's thing, can I convert it to the thing in each column?
+
+            Swift    Obj-C       C
+   Swift    -        Yes         Yes*
+   Obj-C    Yes      -           ?
+   C        Yes      Yes         -
+
+  * Nongeneric global functions, and local functions/closures
+    that don't capture anything
 
 
 .. _Attributes_escaping:
