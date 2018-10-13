@@ -55,7 +55,7 @@ and :doc:`AutomaticReferenceCounting`.
 The additional capabilities that classes support
 come at the cost of increased complexity.
 As a general guideline,
-prefer structures and enumerations because they're easier to reason about,
+prefer structures because they're easier to reason about,
 and use classes when they're appropriate or necessary.
 In practice, this means most of the custom data types you define
 will be structures and enumerations.
@@ -361,8 +361,9 @@ Here's an example, using the ``VideoMode`` class defined above:
 This example declares a new constant called ``tenEighty``
 and sets it to refer to a new instance of the ``VideoMode`` class.
 The video mode is assigned a copy of the HD resolution of ``1920`` by ``1080`` from before.
-It's set to be interlaced, and is given a name of ``"1080i"``.
-Finally, it's set to a frame rate of ``25.0`` frames per second.
+It's set to be interlaced,
+its name is set to ``"1080i"``,
+and its frame rate is set to ``25.0`` frames per second.
 
 Next, ``tenEighty`` is assigned to a new constant, called ``alsoTenEighty``,
 and the frame rate of ``alsoTenEighty`` is modified:
@@ -484,7 +485,7 @@ for some appropriate meaning of *equal*, as defined by the type's designer.
 
 When you define your own custom structures and classes,
 it's your responsibility to decide what qualifies as two instances being equal.
-The process of defining your own implementations of the “equal to” and “not equal to” operators
+The process of defining your own implementations of the ``==`` and ``!=`` operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
 .. assertion:: classesDontGetEqualityByDefault
