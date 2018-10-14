@@ -9,11 +9,11 @@
 
 # 在线阅读
 
-使用 Gitbook 制作，可以直接[在线阅读](http://swiftguide.cn/)。
+使用 GitBook 制作，可以直接[在线阅读](http://swiftguide.cn/)。
 
 # 当前阶段
 
-Swift 4.2 翻译中，请到 issue 中认领章节。
+Swift 4.2 翻译中，请到 Issues 中认领章节。
 
 - 更新到 Swift 3.0。 2016-09-23
 
@@ -25,17 +25,16 @@ Swift 4.2 翻译中，请到 issue 中认领章节。
 - 提出修改建议
 - 提出术语翻译建议
 
-
 # 翻译建议
 
 如果你愿意一起校对的话，请仔细阅读：
 
 - 相关术语请严格按照术语表来翻译，如果实在有问题可以发 Issues 大家一起讨论
-- 使用markdown进行翻译，文件名必须使用英文，因为中文的话gitbook编译的时候会出问题
-- 翻译后的文档请放到source文件夹下的对应章节中，然后pull request即可，我会用gitbook编译成网页
-- 工作分支为gh-pages，用于GitHub的pages服务
-- fork过去之后新建一个分支进行翻译，完成后pull request这个分支，没问题的话我会合并到gh-pages分支中
-- 有其他任何问题都欢迎发issue，我看到了会尽快回复
+- 使用 Markdown 进行翻译，文件名必须使用英文，因为中文的话 GitBook 编译的时候会出问题
+- 翻译后的文档请放到 source 文件夹下的对应章节中，然后 pull request 即可，我会用 GitBook 编译成网页
+- 工作分支为 gh-pages，用于 GitHub 的 pages 服务
+- Fork 过去之后新建一个分支进行翻译，完成后 pull request 这个分支，没问题的话我会合并到 gh-pages 分支中
+- 有其他任何问题都欢迎发 Issue，我看到了会尽快回复
 - 翻译排版格式要求参考 SwiftGG 博客翻译要求[详见](https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md)
 - 翻译流程参考 SwiftGG 博客翻译流程[详见](https://github.com/SwiftGGTeam/translation/blob/master/翻译流程详细说明.md#翻译)
 
@@ -123,16 +122,16 @@ Swift 4.2 翻译中，请到 issue 中认领章节。
 
 有些朋友可能不太清楚如何帮忙翻译，我这里写一个简单的流程，大家可以参考一下：
 
-1. 首先 fork 我的项目
-2. 把 fork 过去的项目也就是你的项目 clone 到你的本地
+1. 首先 Fork 我们的项目
+2. 把 Fork 过去的项目也就是你的项目 clone 到你的本地
 3. 在命令行运行 `git branch develop` 来创建一个新分支
 4. 运行 `git checkout develop` 来切换到新分支
 5. 运行 `git remote add upstream https://github.com/numbbbbb/the-swift-programming-language-in-chinese.git` 把我的库添加为远端库
-6. 运行 `git remote update`更新
+6. 运行 `git remote update` 更新
 7. 运行 `git fetch upstream gh-pages` 拉取我的库的更新到本地
 8. 运行 `git rebase upstream/gh-pages` 将我的更新合并到你的分支
 
-这是一个初始化流程，只需要做一遍就行，之后请一直在develop分支进行修改。
+这是一个初始化流程，只需要做一遍就行，之后请一直在 develop 分支进行修改。
 
 如果修改过程中我的库有了更新，请重复 6、7、8 步。
 

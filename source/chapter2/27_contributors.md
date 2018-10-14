@@ -1,6 +1,6 @@
 # 翻译历史记录
 
-## The Basic 章节
+## The Basic
 
 > 1.0
 > 翻译：[numbbbbb](https://github.com/numbbbbb), [lyuka](https://github.com/lyuka), [JaySurplus](https://github.com/JaySurplus)
@@ -27,7 +27,7 @@
 > 4.1
 > 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
-## Basic_Operators 章节
+## Basic_Operators
 
 > 1.0
 > 翻译：[XieLingWang](https://github.com/xielingwang)
@@ -49,7 +49,7 @@
 > 4.1
 > 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
-## Strings_and_Characters 章节
+## Strings_and_Characters
 
 > 1.0
 > 翻译：[wh1100717](https://github.com/wh1100717)
