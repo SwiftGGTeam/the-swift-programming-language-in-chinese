@@ -13,7 +13,7 @@
 
 # 当前阶段
 
-Swift 4.2 翻译中，请到 Issues 中认领章节（把 Issue 的 Assignee 设置成你自己就表示认领，不要认领已经有人认领的章节）。
+Swift 4.2 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（把 Issue 的 Assignee 设置成你自己就表示认领，不要认领已经有人认领的章节）。
 
 - 更新到 Swift 3.0。 2016-09-23
 
