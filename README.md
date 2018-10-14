@@ -21,26 +21,28 @@ Swift 4.2 翻译中，请到 Issues 中认领章节。
 
 如果想做出贡献的话，你可以：
 
+- 参与翻译
 - 帮忙校对，挑错别字、病句等等
 - 提出修改建议
 - 提出术语翻译建议
 
 # 翻译建议
 
-如果你愿意一起校对的话，请仔细阅读：
+如果你有兴趣参与项目，请仔细阅读说明：
 
-- 相关术语请严格按照术语表来翻译，如果实在有问题可以发 Issues 大家一起讨论
-- 使用 Markdown 进行翻译，文件名必须使用英文，因为中文的话 GitBook 编译的时候会出问题
-- 翻译后的文档请放到 source 文件夹下的对应章节中，然后 pull request 即可，我会用 GitBook 编译成网页
-- 工作分支为 gh-pages，用于 GitHub 的 pages 服务
-- Fork 过去之后新建一个分支进行翻译，完成后 pull request 这个分支，没问题的话我会合并到 gh-pages 分支中
-- 有其他任何问题都欢迎发 Issue，我看到了会尽快回复
-- 翻译排版格式要求参考 SwiftGG 博客翻译要求[详见](https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md)
-- 翻译流程参考 SwiftGG 博客翻译流程[详见](https://github.com/SwiftGGTeam/translation/blob/master/翻译流程详细说明.md#翻译)
+排版格式和流程说明：
 
-谢谢！
+- 翻译排版格式要求参考 SwiftGG [排版指南](https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md)
+- Pull Request 发起方式参考 SwiftGG [Pull Request 说明](https://github.com/SwiftGGTeam/translation/blob/master/%E7%BF%BB%E8%AF%91%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0%E5%8F%8APR%E8%AF%B4%E6%98%8E.md#%E5%A6%82%E4%BD%95%E5%8F%91%E8%B5%B7-pull-request)
 
-# 关于术语
+其他说明：
+
+- 相关术语请严格按照术语表来翻译，如果有问题可以发 Issue 大家一起讨论
+- 使用 Markdown 进行翻译，文件名必须使用英文
+- 翻译后的文档请放到 source 文件夹下的对应章节中，然后 Pull Request 即可，我们会用 GitBook 编译成网页
+- 有其他任何问题都欢迎发 Issue
+
+# 术语表
 
 翻译术语的时候请参考这个对照表：
 
@@ -114,29 +116,6 @@ Swift 4.2 翻译中，请到 Issues 中认领章节。
 | alias | 别名 |
 | Assertion | 断言 |
 
-- 尽量保证和已翻译的内容一致
-- 如果对术语参照表有疑问或者建议可以提 Issues 进行讨论
-- 如果以上两条都没有找到合适的结果，请自己决定一个合适的翻译或者直接使用英文原文，后期校对的时候会进行统一
-
-# Fork 工作流参考流程
-
-有些朋友可能不太清楚如何帮忙翻译，我这里写一个简单的流程，大家可以参考一下：
-
-1. 首先 Fork 我们的项目
-2. 把 Fork 过去的项目也就是你的项目 clone 到你的本地
-3. 在命令行运行 `git branch develop` 来创建一个新分支
-4. 运行 `git checkout develop` 来切换到新分支
-5. 运行 `git remote add upstream https://github.com/numbbbbb/the-swift-programming-language-in-chinese.git` 把我的库添加为远端库
-6. 运行 `git remote update` 更新
-7. 运行 `git fetch upstream gh-pages` 拉取我的库的更新到本地
-8. 运行 `git rebase upstream/gh-pages` 将我的更新合并到你的分支
-
-这是一个初始化流程，只需要做一遍就行，之后请一直在 develop 分支进行修改。
-
-如果修改过程中我的库有了更新，请重复 6、7、8 步。
-
-修改之后，首先 push 到你的库，然后登录 GitHub，在你的库的首页可以看到一个 `pull request` 按钮，点击它，填写一些说明信息，然后提交即可。
-
 # 贡献历史
 
 ## 简体中文版贡献历史
@@ -144,5 +123,5 @@ Swift 4.2 翻译中，请到 Issues 中认领章节。
 1. Welcome To Swift 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/source/chapter1/05_contributors.md)
 2. Language Guide 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/27_contributors.md)
 
-# 开源协议
-基于[WTFPL](http://en.wikipedia.org/wiki/WTFPL)协议开源。
+# 协议
+和 [苹果官方文档](https://swift.org/documentation/) 协议一致：[Creative Commons Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/)。
