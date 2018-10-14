@@ -1,31 +1,4 @@
-# 方法（Methods）
------------------
-
-> 1.0
-> 翻译：[pp-prog](https://github.com/pp-prog)
-> 校对：[zqp](https://github.com/zqp)
-
-> 2.0
-> 翻译+校对：[DianQK](https://github.com/DianQK)
-
-> 2.1
-> 翻译：[DianQK](https://github.com/DianQK)，[Realank](https://github.com/Realank) 校对：[shanks](http://codebuild.me)，2016-01-18
-
-> 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
-
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [实例方法](#instance_methods)
-- [类型方法](#type_methods)
+# 方法
 
 *方法*是与某些特定类型相关联的函数。类、结构体、枚举都可以定义实例方法；实例方法为给定类型的实例封装了具体的任务与功能。类、结构体、枚举也可以定义类型方法；类型方法与类型本身相关联。类型方法与 Objective-C 中的类方法（class methods）相似。
 

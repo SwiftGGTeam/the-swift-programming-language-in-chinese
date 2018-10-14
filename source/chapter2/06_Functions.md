@@ -1,38 +1,4 @@
-# 函数（Functions）
------------------
-
-> 1.0
-> 翻译：[honghaoz](https://github.com/honghaoz)
-> 校对：[LunaticM](https://github.com/LunaticM)
-
-> 2.0
-> 翻译+校对：[dreamkidd](https://github.com/dreamkidd)
-
-> 2.1
-> 翻译：[DianQK](https://github.com/DianQK)
-> 定稿：[shanks](http://codebuild.me)
-
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
-
-> 3.0
-> 翻译: [crayygy](https://github.com/crayygy) 2016-09-12
-> 校对: [shanks](http://codebuild.me) 2016-09-27
-
-> 3.0.1，shanks，2016-11-12
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-- [函数定义与调用](#Defining_and_Calling_Functions)
-- [函数参数与返回值](#Function_Parameters_and_Return_Values)
-- [函数参数标签和参数名称](#Function_Argument_Labels_and_Parameter_Names)
-- [函数类型](#Function_Types)
-- [嵌套函数](#Nested_Functions)
+# 函数
 
 *函数*是一段完成特定任务的独立代码片段。你可以通过给函数命名来标识某个函数的功能，这个名字可以被用来在需要的时候“调用”这个函数来完成它的任务。
 

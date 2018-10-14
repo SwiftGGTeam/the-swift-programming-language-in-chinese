@@ -1,11 +1,4 @@
 # 版本兼容性
------------------
-
-> 4.0
-> 翻译：[muhlenXi](https://github.com/muhlenxi)  2017-09-25
-
-> 4.1
-> 翻译：[mylittleswift](https://github.com/mylittleswift)
 
 本书描述的是 Swift 4.1，是 Xcode 9.2 中包含的默认版本。你可以用 Xcode 9.2 来构建用 Swift 4 或 Swift 3 写的项目。
 

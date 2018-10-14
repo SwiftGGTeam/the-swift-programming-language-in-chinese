@@ -1,46 +1,4 @@
-# 字符串和字符（Strings and Characters）
----
-
-> 1.0
-> 翻译：[wh1100717](https://github.com/wh1100717)
-> 校对：[Hawstein](https://github.com/Hawstein)
-
-> 2.0
-> 翻译+校对：[DianQK](https://github.com/DianQK)
-
-> 2.1
-> 翻译：[DianQK](https://github.com/DianQK)
-> 校对：[shanks](http://codebuild.me), [Realank](https://github.com/Realank),
-
-> 2.2
-> 校对：[SketchK](https://github.com/SketchK)
-
-> 3.0
-> 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
-> 3.0.1, shanks, 2016-11-11
-
-> 4.0
-> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [字符串字面量](#string_literals)
-- [字面量中的特殊字符](#special_characters_in_string_literals)
-- [初始化空字符串](#initializing_an_empty_string)
-- [字符串可变性](#string_mutability)
-- [字符串是值类型](#strings_are_value_types)
-- [使用字符](#working_with_characters)
-- [连接字符串和字符](#concatenating_strings_and_characters)
-- [字符串插值](#string_interpolation)
-- [Unicode](#unicode)
-- [计算字符数量](#counting_characters)
-- [访问和修改字符串](#accessing_and_modifying_a_string)
-- [子字符串](#substrings)
-- [比较字符串](#comparing_strings)
-- [字符串的 Unicode 表示形式](#unicode_representations_of_strings)
+# 字符串和字符
 
 *字符串*是是一系列字符的集合，例如 `"hello, world"`，`"albatross"`。Swift 的字符串通过 `String` 类型来表示。
 一个 `String` 的内容可以用许多方式读取，包括作为一个 `Character` 值的集合。

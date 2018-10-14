@@ -1,29 +1,4 @@
 # 错误处理
------------------
-
-> 2.1
-> 翻译+校对：[lyojo](https://github.com/lyojo) [ray16897188](https://github.com/ray16897188) 2015-10-23
-> 校对：[shanks](http://codebuild.me) 2015-10-24
-
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
-
-> 3.0
-> 翻译+校对：[shanks](http://codebuild.me) 2016-09-24
-
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 翻译+校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [表示并抛出错误](#representing_and_throwing_errors)
-- [处理错误](#handling_errors)
-- [指定清理操作](#specifying_cleanup_actions)
 
 *错误处理（Error handling）*是响应错误以及从错误中恢复的过程。Swift 提供了在运行时对可恢复错误的抛出、捕获、传递和操作的一等公民支持。
 

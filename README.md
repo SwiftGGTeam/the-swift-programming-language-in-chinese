@@ -17,108 +17,6 @@ Swift 4.2 翻译中，请到 issue 中认领章节。
 
 - 更新到 Swift 3.0。 2016-09-23
 
-# 3.0 译者记录
-相关[issue](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/issues/628)
-- Functions: [crayygy](https://github.com/crayygy)
-- Control Flow: [Realank](https://github.com/Realank)
-- Closures: [LanfordCai](https://github.com/LanfordCai)
-- Protocols: [chenmingbiao](https://github.com/chenmingbiao)
-- The Basics:[chenmingbiao](https://github.com/chenmingbiao)
-- Advanced Operators: [mmoaay](https://github.com/mmoaay)
-
-Language Reference:
-- Attributes: [WhoJave](https://github.com/WhoJave)
-- Statements: [chenmingjia](https://github.com/chenmingjia)
-- Declarations: [chenmingjia](https://github.com/chenmingjia)
-- Expressions: [chenmingjia](https://github.com/chenmingjia)
-- Types: [lettleprince](https://github.com/lettleprince)
-- Generic Parameters and Arguments: [chenmingjia](https://github.com/chenmingjia)
-
-# 2.1 & 2.2 译者记录
-
-详见各章节开头位置。
-
-# 2.0 译者记录
-
-- About Swift （[xtymichael](https://github.com/xtymichael)）
-- A Swift Tour（[xtymichael](https://github.com/xtymichael)）
-- The Basics（[xtymichael](https://github.com/xtymichael)）
-- Basic Operators（[AlanMelody](https://github.com/AlanMelody)）
-- Strings and Characters（[DianQK](https://github.com/DianQK)）
-- Collection Types（[AlanMelody](https://github.com/AlanMelody)）
-- Control Flow（[AlanMelody](https://github.com/AlanMelody)）
-- Functions（[dreamkidd](https://github.com/dreamkidd)）
-- Closures（[100mango](https://github.com/100mango)）
-- Enumerations（[futantan](https://github.com/futantan)）
-- Classes and Structures（[SkyJean](https://github.com/SkyJean)）
-- Properties（[yangsiy](https://github.com/yangsiy)）
-- Methods（[DianQK](https://github.com/DianQK)）
-- Subscripts（[shanksyang](https://github.com/shanksyang)）
-- Inheritance（[shanksyang](https://github.com/shanksyang)）
-- Initialization（[chenmingbiao](https://github.com/chenmingbiao)）
-- Deinitialization（[chenmingbiao](https://github.com/chenmingbiao)）
-- Automatic Reference Counting（[Channe](https://github.com/Channe)）
-- Optional Chaining（[lyojo](https://github.com/lyojo)）
-- Error Handling（[lyojo](https://github.com/lyojo)）
-- Type Casting（[yangsiy](https://github.com/yangsiy)）
-- Nested Types（[SergioChan](https://github.com/SergioChan)）
-- Extensions（[shanksyang](https://github.com/shanksyang)）
-- Protocols（[futantan](https://github.com/futantan)）
-- Generics（[SergioChan](https://github.com/SergioChan)）
-- Access Control（[mmoaay](https://github.com/mmoaay)）
-- Advanced Operators（[buginux](https://github.com/buginux)）
-- About the Language Reference（[KYawn](https://github.com/KYawn)）
-- Lexical Structure（[buginux](https://github.com/buginux)）
-- Types（[EudeMorgen](https://github.com/EudeMorgen)）
-- Expressions（[EudeMorgen](https://github.com/EudeMorgen)）
-- Statements（[littledogboy](https://github.com/littledogboy)）
-- Declarations（[Lenhoon](https://github.com/Lenhoon)）
-- Attributes（[KYawn](https://github.com/KYawn)）
-- Patterns（[ray16897188](https://github.com/ray16897188)）
-- Generic Parameters and Arguments（[wardenNScaiyi](https://github.com/wardenNScaiyi)）
-- Summary of the Grammar（[miaosiqi](https://github.com/miaosiqi)）
-
-# 1.0 译者记录
-
-* 欢迎使用 Swift
-   * 关于 Swift ([numbbbbb])
-   * Swift 初见 ([numbbbbb])
-* Swift 教程
-   * 基础部分 ([numbbbbb], [lyuka], [JaySurplus])
-   * 基本操作符 ([xielingwang])
-   * 字符串和字符 ([wh1100717])
-   * 集合类型 ([zqp])
-   * 控制流 ([vclwei], [coverxit], [NicePiao])
-   * 函数 ([honghaoz])
-   * 闭包 ([wh1100717])
-   * 枚举 ([yankuangshi])
-   * 类和结构体 ([JaySurplus])
-   * 属性 ([shinyzhu])
-   * 方法 ([pp-prog])
-   * 下标 ([siemenliu])
-   * 继承 ([Hawstein])
-   * 构造过程 ([lifedim])
-   * 析构过程 ([bruce0505])
-   * 自动引用计数 ([TimothyYe])
-   * 可选链 ([Jasonbroker])
-   * 类型检查 ([xiehurricane])
-   * 嵌套类型 ([Lin-H])
-   * 扩展 ([lyuka])
-   * 协议 ([geek5nan])
-   * 泛型 ([takalard])
-   * 高级操作符 ([xielingwang])
-* 语言参考
-   * 关于语言参考 ([dabing1022])
-   * 词法结构 ([superkam])
-   * 类型 ([lyuka])
-   * 表达式 ([sg552] )
-   * 语句 ([coverxit])
-   * 声明 ([marsprince])
-   * 特性 ([Hawstein])
-   * 模式 ([honghaoz])
-   * 泛型参数 ([fd5788])
-   * 语法总结 ([StanZhai])
-
 # 贡献力量
 
 如果想做出贡献的话，你可以：
@@ -126,9 +24,6 @@ Language Reference:
 - 帮忙校对，挑错别字、病句等等
 - 提出修改建议
 - 提出术语翻译建议
-
-# 翻译术语参照表
-
 
 
 # 翻译建议
@@ -141,6 +36,8 @@ Language Reference:
 - 工作分支为gh-pages，用于GitHub的pages服务
 - fork过去之后新建一个分支进行翻译，完成后pull request这个分支，没问题的话我会合并到gh-pages分支中
 - 有其他任何问题都欢迎发issue，我看到了会尽快回复
+- 翻译排版格式要求参考 SwiftGG 博客翻译要求[详见](https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md)
+- 翻译流程参考 SwiftGG 博客翻译流程[详见](https://github.com/SwiftGGTeam/translation/blob/master/翻译流程详细说明.md#翻译)
 
 谢谢！
 
@@ -222,7 +119,7 @@ Language Reference:
 - 如果对术语参照表有疑问或者建议可以提 Issues 进行讨论
 - 如果以上两条都没有找到合适的结果，请自己决定一个合适的翻译或者直接使用英文原文，后期校对的时候会进行统一
 
-# 参考流程
+# Fork 工作流参考流程
 
 有些朋友可能不太清楚如何帮忙翻译，我这里写一个简单的流程，大家可以参考一下：
 
@@ -241,65 +138,12 @@ Language Reference:
 
 修改之后，首先 push 到你的库，然后登录 GitHub，在你的库的首页可以看到一个 `pull request` 按钮，点击它，填写一些说明信息，然后提交即可。
 
+# 贡献历史
+
+## 简体中文版贡献历史
+
+1. Welcome To Swift 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/source/chapter1/05_contributors.md)
+2. Language Guide 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/27_contributors.md)
 
 # 开源协议
 基于[WTFPL](http://en.wikipedia.org/wiki/WTFPL)协议开源。
-
-
-
-[numbbbbb]:https://github.com/numbbbbb
-[stanzhai]:https://github.com/stanzhai
-[coverxit]:https://github.com/coverxit
-[wh1100717]:https://github.com/wh1100717
-[TimothyYe]:https://github.com/TimothyYe
-[honghaoz]:https://github.com/honghaoz
-[lyuka]:https://github.com/lyuka
-[JaySurplus]:https://github.com/JaySurplus
-[Hawstein]:https://github.com/Hawstein
-[geek5nan]:https://github.com/geek5nan
-[yankuangshi]:https://github.com/yankuangshi
-[xielingwang]:https://github.com/xielingwang
-[yulingtianxia]:https://github.com/yulingtianxia
-[twlkyao]:https://github.com/twlkyao
-[dabing1022]:https://github.com/dabing1022
-[vclwei]:https://github.com/vclwei
-[fd5788]:https://github.com/fd5788
-[siemenliu]:https://github.com/siemenliu
-[youkugems]:https://github.com/youkugems
-[haolloyin]:https://github.com/haolloyin
-[wxstars]:https://github.com/wxstars
-[IceskYsl]:https://github.com/IceskYsl
-[sg552]:https://github.com/sg552
-[superkam]:https://github.com/superkam
-[zac1st1k]:https://github.com/zac1st1k
-[bzsy]:https://github.com/bzsy
-[pyanfield]:https://github.com/pyanfield
-[ericzyh]:https://github.com/ericzyh
-[peiyucn]:https://github.com/peiyucn
-[sunfiled]:https://github.com/sunfiled
-[lzw120]:https://github.com/lzw120
-[viztor]:https://github.com/viztor
-[wongzigii]:https://github.com/wongzigii
-[umcsdon]:https://github.com/umcsdon
-[zq54zquan]:https://github.com/zq54zquan
-[xiehurricane]:https://github.com/xiehurricane
-[Jasonbroker]:https://github.com/Jasonbroker
-[tualatrix]:https://github.com/tualatrix
-[pp-prog]:https://github.com/pp-prog
-[088haizi]:https://github.com/088haizi
-[baocaixiong]:https://github.com/baocaixiong
-[yeahdongcn]:https://github.com/yeahdongcn
-[shinyzhu]:https://github.com/shinyzhu
-[lslxdx]:https://github.com/lslxdx
-[Evilcome]:https://github.com/Evilcome
-[zqp]:https://github.com/zqp
-[NicePiao]:https://github.com/NicePiao
-[LunaticM]:https://github.com/LunaticM
-[menlongsheng]:https://github.com/menlongsheng
-[lifedim]:https://github.com/lifedim
-[happyming]:https://github.com/happyming
-[bruce0505]:https://github.com/bruce0505
-[Lin-H]:https://github.com/Lin-H
-[takalard]:https://github.com/takalard
-[dabing1022]:https://github.com/dabing1022
-[marsprince]:https://github.com/marsprince

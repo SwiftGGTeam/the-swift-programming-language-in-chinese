@@ -1,47 +1,4 @@
 # 协议
------------------
-
-> 1.0
-> 翻译：[geek5nan](https://github.com/geek5nan)
-> 校对：[dabing1022](https://github.com/dabing1022)
-
-> 2.0
-> 翻译+校对：[futantan](https://github.com/futantan)
-
-> 2.1
-> 翻译：[小铁匠 Linus](https://github.com/kevin833752)
-> 校对：[shanks](http://codebuild.me)
-> 
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK)
-> 
-> 3.0
-> 校对：[CMB](https://github.com/chenmingbiao)，版本日期：2016-09-13
-
-> 3.0.1
-> shanks，2016-11-13
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [协议语法](#protocol_syntax)
-- [属性要求](#property_requirements)
-- [方法要求（Method Requirements）](#method_requirements)
-- [Mutating 方法要求](#mutating_method_requirements)
-- [构造器要求](#initializer_requirements)
-- [协议作为类型](#protocols_as_types)
-- [委托（代理）模式](#delegation)
-- [通过扩展添加协议一致性](#adding_protocol_conformance_with_an_extension)
-- [通过扩展遵循协议](#declaring_protocol_adoption_with_an_extension)
-- [协议类型的集合](#collections_of_protocol_types)
-- [协议的继承](#protocol_inheritance)
-- [类类型专属协议](#class_only_protocol)
-- [协议合成](#protocol_composition)
-- [检查协议一致性](#checking_for_protocol_conformance)
-- [可选的协议要求](#optional_protocol_requirements)
-- [协议扩展](#protocol_extensions)
 
 *协议* 定义了一个蓝图，规定了用来实现某一特定任务或者功能的方法、属性，以及其他需要的东西。类、结构体或枚举都可以遵循协议，并为协议定义的这些要求提供具体实现。某个类型能够满足某个协议的要求，就可以说该类型*遵循*这个协议。
 

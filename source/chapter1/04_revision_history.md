@@ -1,46 +1,5 @@
 # Swift 文档修订历史
 
----
-
-> 1.0
-> 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)
-> 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-[changkun](http://changkun.us/about/)
-> 
-> 1.1
-> 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)
-> 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-[changkun](http://changkun.us/about/)
-> 
-> 1.2
-> 翻译：[成都老码团队翻译组-Arya](http://weibo.com/littlekok/)
-> 校对：[成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-[changkun](http://changkun.us/about/)
-> 
-> 2.0
-> 翻译+校对：[changkun](http://changkun.us/about/)
-> 
-> 2.1
-> 翻译+校对：[changkun](http://changkun.us/about/)
-> 
-> 2.2
-> 翻译+校对：[changkun](http://changkun.us/about/)
-> 
-> 3.0
-> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
-> 
-> 3.0.1
-> 翻译+校对：[shanks](http://codebuild.me)，2016-11-10
-> 
-> 3.1
-> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
-> 
-> 4.0
-> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
-> 
-> 4.1
-> 翻译+校对：[bq](https://github.com/bqlin)，2018-02-22
-
 本页面根据 [Document Revision History](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/RevisionHistory.html) 进行适配更新。
 
 本页内容包括：

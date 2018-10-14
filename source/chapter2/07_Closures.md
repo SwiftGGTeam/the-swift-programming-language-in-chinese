@@ -1,39 +1,4 @@
-# 闭包（Closures）
------------------
-
-> 1.0
-> 翻译：[wh1100717](https://github.com/wh1100717)
-> 校对：[lyuka](https://github.com/lyuka)
-
-> 2.0
-> 翻译+校对：[100mango](https://github.com/100mango)
-
-> 2.1
-> 翻译：[100mango](https://github.com/100mango), [magicdict](https://github.com/magicdict)
-> 校对：[shanks](http://codebuild.me)
-
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-12
-
-> 3.0
-> 翻译：[Lanford](https://github.com/LanfordCai) 2016-09-19
-
-> 3.0.1，shanks，2016-11-12
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [闭包表达式](#closure_expressions)
-- [尾随闭包](#trailing_closures)
-- [值捕获](#capturing_values)
-- [闭包是引用类型](#closures_are_reference_types)
-- [逃逸闭包](#escaping_closures)
-- [自动闭包](#autoclosures)
+# 闭包
 
 *闭包*是自包含的函数代码块，可以在代码中被传递和使用。Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他一些编程语言中的匿名函数比较相似。
 

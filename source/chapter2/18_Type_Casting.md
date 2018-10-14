@@ -1,32 +1,4 @@
 # 类型转换
------------------
-
-> 1.0
-> 翻译：[xiehurricane](https://github.com/xiehurricane)
-> 校对：[happyming](https://github.com/happyming)
-
-> 2.0
-> 翻译+校对：[yangsiy](https://github.com/yangsiy)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)，2015-11-01
-> 
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)
-- [检查类型](#checking_type)
-- [向下转型](#downcasting)
-- [`Any` 和 `AnyObject` 的类型转换](#type_casting_for_any_and_anyobject)
 
 *类型转换*可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 

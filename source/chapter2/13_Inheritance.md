@@ -1,30 +1,4 @@
 # 继承
--------------------
-
-> 1.0
-> 翻译：[Hawstein](https://github.com/Hawstein)
-> 校对：[menlongsheng](https://github.com/menlongsheng)
-
-> 2.0，2.1
-> 翻译+校对：[shanks](http://codebuild.me)
-
-> 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
-
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [定义一个基类](#defining_a_base_class)
-- [子类生成](#subclassing)
-- [重写](#overriding)
-- [防止重写](#preventing_overrides)
 
 一个类可以*继承*另一个类的方法，属性和其它特性。当一个类继承其它类时，继承类叫*子类*，被继承类叫*超类（或父类）*。在 Swift 中，继承是区分「类」与其它类型的一个基本特征。
 

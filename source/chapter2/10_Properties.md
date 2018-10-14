@@ -1,35 +1,4 @@
-# 属性（Properties）
----
-
-> 1.0
-> 翻译：[shinyzhu](https://github.com/shinyzhu)
-> 校对：[pp-prog](https://github.com/pp-prog) [yangsiy](https://github.com/yangsiy)
-
-> 2.0
-> 翻译+校对：[yangsiy](https://github.com/yangsiy)
-
-> 2.1
-> 翻译：[buginux](https://github.com/buginux)
-> 校对：[shanks](http://codebuild.me)，2015-10-29
-
-> 2.2
-> 翻译：[saitjr](https://github.com/saitjr)，2016-04-11，[SketchK](https://github.com/SketchK) 2016-05-13
-> 
-> 3.0.1，shanks，2016-11-12
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [存储属性](#stored_properties)
-- [计算属性](#computed_properties)
-- [属性观察器](#property_observers)
-- [全局变量和局部变量](#global_and_local_variables)
-- [类型属性](#type_properties)
+# 属性
 
 *属性*将值跟特定的类、结构或枚举关联。存储属性存储常量或变量作为实例的一部分，而计算属性计算（不是存储）一个值。计算属性可以用于类、结构体和枚举，存储属性只能用于类和结构体。
 

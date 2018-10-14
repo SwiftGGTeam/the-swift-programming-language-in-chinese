@@ -1,43 +1,4 @@
 # 泛型
--------------------
-
-> 1.0
-> 翻译：[takalard](https://github.com/takalard)
-> 校对：[lifedim](https://github.com/lifedim)
-
-> 2.0
-> 翻译+校对： [SergioChan](https://github.com/SergioChan)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)，2015-11-01
-
-> 2.2：翻译+校对：[Lanford](https://github.com/LanfordCai)，2016-04-08 [SketchK](https://github.com/SketchK) 2016-05-16
-
-> 3.0：翻译+校对：[chenmingjia](https://github.com/chenmingjia)，2016-09-12
-> 3.0.1，shanks，2016-11-13
-
-> 3.1：翻译：[qhd](https://github.com/qhd)，2017-04-10
-
-> 4.0
-> 翻译+校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [泛型所解决的问题](#the_problem_that_generics_solve)
-- [泛型函数](#generic_functions)
-- [类型参数](#type_parameters)
-- [命名类型参数](#naming_type_parameters)
-- [泛型类型](#generic_types)
-- [扩展一个泛型类型](#extending_a_generic_type)
-- [类型约束](#type_constraints)
-- [关联类型](#associated_types)
-- [泛型 Where 语句](#where_clauses)
-- [具有泛型 where 子句的扩展](#extensions_with_a_generic_where_clause)
-- [具有泛型 Where 子句的关联类型](#associated_types_with_a_generic_where_clause)
-- [泛型下标](#generic_subscripts)
 
 *泛型代码*让你能够根据自定义的需求，编写出适用于任意类型、灵活可重用的函数及类型。它能让你避免代码的重复，用一种清晰和抽象的方式来表达代码的意图。
 

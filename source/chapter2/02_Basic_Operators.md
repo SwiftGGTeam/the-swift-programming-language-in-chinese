@@ -1,43 +1,4 @@
-# 基本运算符（Basic Operators）
------------------
-
-> 1.0
-> 翻译：[XieLingWang](https://github.com/xielingwang)
-> 校对：[EvilCome](https://github.com/Evilcome)
-
-> 2.0
-> 翻译+校对：[JackAlan](https://github.com/AlanMelody)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)
-
-> 2.2
-> 翻译+校对：[Cee](https://github.com/Cee) 校对：[SketchK](https://github.com/SketchK)，2016-05-11
-> 3.0.1，shanks，2016-11-11
-
-> 4.0
-> 翻译+校对：[kemchenj](https://kemchenj.github.io)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [术语](#terminology)
-- [赋值运算符](#assignment_operator)
-- [算术运算符](#arithmetic_operators)
-	- [求余运算符](#remainder_operator)
-	- [一元负号运算符](#unary_minus_operator)
-	- [一元正号运算符](#unary_plus_operator)
-- [组合赋值运算符](#compound_assignment_operators)
-- [比较运算符](#comparison_operators)
-- [三目运算符](#ternary_conditional_operator)
-- [空合运算符](#nil_coalescing_operator)
-- [区间运算符](#range_operators)
-	- [闭区间运算符](#closed_range_operator)
-	- [半开区间运算符](#half-open_range_operator)
-	- [单侧区间](#one-sided_ranges)
-- [逻辑运算符](#logical_operators)
+# 基本运算符
 
 *运算符*是检查、改变、合并值的特殊符号或短语。例如，加号（`+`）将两个数相加（如 `let i = 1 + 2`）。更复杂的运算例子包括逻辑与运算符 `&&`（如 `if enteredDoorCode && passedRetinaScan`）。
 

@@ -1,34 +1,4 @@
 # 自动引用计数
------------------
-
-> 1.0
-> 翻译：[TimothyYe](https://github.com/TimothyYe)
-> 校对：[Hawstein](https://github.com/Hawstein)
-
-> 2.0
-> 翻译+校对：[Channe](https://github.com/Channe)
-
-> 2.1
-> 翻译：[Channe](https://github.com/Channe)
-> 校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank) ，2016-01-23
-> 
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
-
-> 3.0.1
-> shanks，2016-11-13
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [自动引用计数的工作机制](#how_arc_works)
-- [自动引用计数实践](#arc_in_action)
-- [类实例之间的循环强引用](#strong_reference_cycles_between_class_instances)
-- [解决实例之间的循环强引用](#resolving_strong_reference_cycles_between_class_instances)
-- [闭包引起的循环强引用](#strong_reference_cycles_for_closures)
-- [解决闭包引起的循环强引用](#resolving_strong_reference_cycles_for_closures)
 
 Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程序的内存。通常情况下，Swift 内存管理机制会一直起作用，你无须自己来考虑内存的管理。ARC 会在类的实例不再被使用时，自动释放其占用的内存。
 

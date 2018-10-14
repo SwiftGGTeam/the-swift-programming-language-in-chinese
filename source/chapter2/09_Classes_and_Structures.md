@@ -1,34 +1,5 @@
 # 类和结构体
 
-> 1.0
-> 翻译：[JaySurplus](https://github.com/JaySurplus)
-> 校对：[sg552](https://github.com/sg552)
-
-> 2.0
-> 翻译+校对：[SkyJean](https://github.com/SkyJean)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-29
-
-> 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
-> 
-> 3.0.1， shanks， 2016-11-12
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [类和结构体对比](#comparing_classes_and_structures)
-- [结构体和枚举是值类型](#structures_and_enumerations_are_value_types)
-- [类是引用类型](#classes_are_reference_types)
-- [类和结构体的选择](#choosing_between_classes_and_structures)
-- [字符串、数组、和字典类型的赋值与复制行为](#assignment_and_copy_behavior_for_strings_arrays_and_dictionaries)
-
 *类*和*结构体*是人们构建代码所用的一种通用且灵活的构造体。我们可以使用完全相同的语法规则来为类和结构体定义属性（常量、变量）和添加方法，从而扩展类和结构体的功能。
 
 与其他编程语言所不同的是，Swift 并不要求你为自定义类和结构去创建独立的接口和实现文件。你所要做的是在一个单一文件中定义一个类或者结构体，系统将会自动生成面向其它代码的外部接口。
