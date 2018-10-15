@@ -299,8 +299,8 @@ still has the old value of ``1920``:
 
 When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
-The end result is two completely separate instances
-that contain the same numeric values.
+The end result was two completely separate instances
+that contained the same numeric values.
 However, because they are separate instances,
 setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``,
