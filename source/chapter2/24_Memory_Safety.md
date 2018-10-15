@@ -1,20 +1,4 @@
 # 内存安全
---------------------
-
-> 4.0
-> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-
-本页包含内容：
-
-- [理解内存访问冲突](#understanding_conflicting_access_to_memory)
-- [In-Out 参数的访问冲突](#conflicting_access_to_in-out_parameters)
-- [函数里 self 的访问冲突](#conflicting_access_to_self_in_methods)
-- [属性的访问冲突](#conflicting_access_to_properties)
-- [更新历史](#revision_history)
 
 默认情况下，Swift 会阻止你代码里不安全的行为。例如，Swift 会保证变量在使用之前就完成初始化，在内存被回收之后就无法被访问，并且数组的索引会做越界检查。
 

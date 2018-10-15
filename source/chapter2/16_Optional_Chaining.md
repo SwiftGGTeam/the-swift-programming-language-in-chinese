@@ -1,38 +1,5 @@
 # 可选链式调用
 
------------------
-
-> 1.0
-> 翻译：[Jasonbroker](https://github.com/Jasonbroker)
-> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[lyojo](https://github.com/lyojo)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)，2015-10-31
-
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-15
-
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)
-- [为可选链式调用定义模型类](#defining_model_classes_for_optional_chaining)
-- [通过可选链式调用访问属性](#accessing_properties_through_optional_chaining)
-- [通过可选链式调用调用方法](#calling_methods_through_optional_chaining)
-- [通过可选链式调用访问下标](#accessing_subscripts_through_optional_chaining)
-- [连接多层可选链式调用](#linking_multiple_levels_of_chaining)
-- [在方法的可选返回值上进行可选链式调用](#chaining_on_methods_with_optional_return_values)
-
 *可选链式调用*是一种可以在当前值可能为 `nil` 的可选值上请求和调用属性、方法及下标的方法。如果可选值有值，那么调用就会成功；如果可选值是 `nil`，那么调用将返回 `nil`。多个调用可以连接在一起形成一个调用链，如果其中任何一个节点为 `nil`，整个调用链都会失败，即返回 `nil`。
 
 > 注意

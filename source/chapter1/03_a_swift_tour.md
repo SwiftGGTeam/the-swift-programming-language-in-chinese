@@ -1,42 +1,4 @@
-# Swift 初见（A Swift Tour）
-
----
-
-> 1.0
-> 翻译：[numbbbbb](https://github.com/numbbbbb)
-> 校对：[shinyzhu](https://github.com/shinyzhu), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[xtymichael](https://github.com/xtymichael)
-
-> 2.2
-> 翻译：[175](https://github.com/Brian175)，2016-04-09
-> 校对：[SketchK](https://github.com/SketchK)，2016-05-11
-
-> 3.0
-> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
-
-> 3.0.1
-> review: 2016-11-09
-
-> 3.1 校对: [SketchK](https://github.com/SketchK) 2017-04-08
-
-> 4.0
-> 翻译+校对：[muhlenxi](https://github.com/muhlenxi) 2017-09-26
-
-> 4.1
-> 翻译：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包括：
-
-- [简单值（Simple Values）](#simple_values)
-- [控制流（Control Flow）](#control_flow)
-- [函数和闭包（Functions and Closures）](#functions_and_closures)
-- [对象和类（Objects and Classes）](#objects_and_classes)
-- [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
-- [协议和扩展（Protocols and Extensions）](#protocols_and_extensions)
-- [错误处理（Error Handling）](#error_handling)
-- [泛型（Generics）](#generics)
+# Swift 初见
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印 “Hello, world”。在 Swift 中，可以用一行代码实现：
 

@@ -1,34 +1,4 @@
 # 扩展
----------------
-
-> 1.0
-> 翻译：[lyuka](https://github.com/lyuka)
-> 校对：[Hawstein](https://github.com/Hawstein)
-
-> 2.0
-> 翻译+校对：[shanks](http://codebuild.me)
-
-> 2.1
-> 校对：[shanks](http://codebuild.me)
-> 
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [扩展语法](#extension_syntax)
-- [计算型属性](#computed_properties)
-- [构造器](#initializers)
-- [方法](#methods)
-- [下标](#subscripts)
-- [嵌套类型](#nested_types)
 
 *扩展* 就是为一个已有的类、结构体、枚举类型或者协议类型添加新功能。这包括在没有权限获取原始源代码的情况下扩展类型的能力（即 *逆向建模* ）。扩展和 Objective-C 中的分类类似。（与 Objective-C 不同的是，Swift 的扩展没有名字。）
 

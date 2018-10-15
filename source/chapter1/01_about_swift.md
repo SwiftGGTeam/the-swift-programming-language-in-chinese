@@ -1,27 +1,4 @@
-# 关于 Swift（About Swift）
------------------
-
-> 1.0
-> 翻译：[numbbbbb](https://github.com/numbbbbb)
-> 校对：[yeahdongcn](https://github.com/yeahdongcn)
-
-> 2.0
-> 翻译+校对：[xtymichael](https://github.com/xtymichael)
-
-> 3.0
-> 翻译+校对：[shanks](http://codebuild.me)，2016-10-06
-
-> 3.0.1
-> review : 2016-11-09
-
-> 3.1
-> 校对: [SketchK](https://github.com/SketchK) 2017-04-08
-
-> 4.0
-> 翻译：[rain2540](https://github.com/rain2540) 2017-09-21
-
-> 4.1
-> 翻译：[mylittleswift](https://github.com/mylittleswift)
+# 关于 Swift
 
 Swift 是一种非常好的编写软件的方式，无论是手机，台式机，服务器，还是其他运行代码的设备。它是一种安全，快速和互动的编程语言，将现代编程语言的精华和苹果工程师文化的智慧，以及来自开源社区的多样化贡献结合了起来。编译器对性能进行了优化，编程语言对开发进行了优化，两者互不干扰，鱼与熊掌兼得。
 

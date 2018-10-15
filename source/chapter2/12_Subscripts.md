@@ -1,31 +1,4 @@
 # 下标
------------------
-
-> 1.0
-> 翻译：[siemenliu](https://github.com/siemenliu)
-> 校对：[zq54zquan](https://github.com/zq54zquan)
-
-> 2.0
-> 翻译+校对：[shanks](http://codebuild.me)
-
-> 2.1
-> 翻译+校对：[shanks](http://codebuild.me)，[Realank](https://github.com/Realank)
-
-> 2.2
-> 校对：[SketchK](https://github.com/SketchK) 2016-05-13
-> 3.0.1，shanks，2016-11-13
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [下标语法](#subscript_syntax)
-- [下标用法](#subscript_usage)
-- [下标选项](#subscript_options)
 
 *下标*可以定义在类、结构体和枚举中，是访问集合、列表或序列中元素的快捷方式。可以使用下标的索引，设置和获取值，而不需要再调用对应的存取方法。举例来说，用下标访问一个 `Array` 实例中的元素可以写作 `someArray[index]`，访问 `Dictionary` 实例中的元素可以写作 `someDictionary[key]`。
 

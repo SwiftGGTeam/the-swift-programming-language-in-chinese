@@ -1,41 +1,4 @@
 # 构造过程
------------------
-
-> 1.0
-> 翻译：[lifedim](https://github.com/lifedim)
-> 校对：[lifedim](https://github.com/lifedim)
-
-> 2.0
-> 翻译+校对：[chenmingbiao](https://github.com/chenmingbiao)
-
-> 2.1
-> 翻译：[Channe](https://github.com/Channe)，[Realank](https://github.com/Realank)
-> 校对：[shanks](http://codebuild.me)，2016-1-23
-
-> 2.2
-> 翻译：[pmst](https://github.com/colourful987)
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-14
-> 3.0.1，shanks，2016-11-13
-
-> 3.1
-> 翻译：[qhd](https://github.com/qhd) 2017-04-18
-
-> 4.0
-> 翻译：[muhlenXi](https://github.com/muhlenxi) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [存储属性的初始赋值](#setting_initial_values_for_stored_properties)
-- [自定义构造过程](#customizing_initialization)
-- [默认构造器](#default_initializers)
-- [值类型的构造器代理](#initializer_delegation_for_value_types)
-- [类的继承和构造过程](#class_inheritance_and_initialization)
-- [可失败构造器](#failable_initializers)
-- [必要构造器](#required_initializers)
-- [通过闭包或函数设置属性的默认值](#setting_a_default_property_value_with_a_closure_or_function)
 
 *构造过程*是使用类、结构体或枚举类型的实例之前的准备过程。在新实例可用前必须执行这个过程，具体操作包括设置实例中每个存储型属性的初始值和执行其他必须的设置或初始化工作。
 

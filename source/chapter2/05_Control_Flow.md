@@ -1,42 +1,4 @@
-# 控制流（Control Flow）
------------------
-
-> 1.0
-> 翻译：[vclwei](https://github.com/vclwei), [coverxit](https://github.com/coverxit), [NicePiao](https://github.com/NicePiao)
-> 校对：[coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[JackAlan](https://github.com/AlanMelody)
-
-> 2.1
-> 翻译：[Prayer](https://github.com/futantan)
-> 校对：[shanks](http://codebuild.me)
-
-> 2.2
-> 翻译：[LinusLing](https://github.com/linusling)
-> 校对：[SketchK](https://github.com/SketchK)
-
-> 3.0
-> 翻译：[Realank](https://github.com/realank) 2016-09-13
-> 3.0.1，shanks，2016-11-12
-
-> 3.1
-> 翻译：[qhd](https://github.com/qhd) 2017-04-17
-
-> 4.0
-> 翻译：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [For-In 循环](#for_in_loops)
-- [While 循环](#while_loops)
-- [条件语句](#conditional_statement)
-- [控制转移语句（Control Transfer Statements）](#control_transfer_statements)
-- [提前退出](#early_exit)
-- [检测 API 可用性](#checking_api_availability)
+# 控制流
 
 Swift 提供了多种流程控制结构，包括可以多次执行任务的 `while` 循环，基于特定条件选择执行不同代码分支的 `if`、`guard` 和 `switch` 语句，还有控制流程跳转到其他代码位置的 `break` 和 `continue` 语句。
 

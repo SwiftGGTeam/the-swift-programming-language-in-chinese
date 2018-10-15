@@ -1,37 +1,4 @@
-# 枚举（Enumerations）
----
-
-> 1.0
-> 翻译：[yankuangshi](https://github.com/yankuangshi)
-> 校对：[shinyzhu](https://github.com/shinyzhu)
-
-> 2.0
-> 翻译+校对：[futantan](https://github.com/futantan)
-
-> 2.1
-> 翻译：[Channe](https://github.com/Channe)
-> 校对：[shanks](http://codebuild.me)
-
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-13
-
-> 3.0
-> 翻译+校对：[shanks](https://codebuild.me) 2016-09-24
-> 3.0.1，shanks，2016-11-12
-
-> 4.0
-> 校对：[kemchenj](https://kemchenj.github.io/) 2017-09-21
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包含：
-
-- [枚举语法](#enumeration_syntax)
-- [使用 Switch 语句匹配枚举值](#matching_enumeration_values_with_a_switch_statement)
-- [关联值](#associated_values)
-- [原始值](#raw_values)
-- [递归枚举](#recursive_enumerations)
+# 枚举
 
 *枚举*为一组相关的值定义了一个共同的类型，使你可以在你的代码中以类型安全的方式来使用这些值。
 

@@ -1,42 +1,4 @@
 # 访问控制
-------------------
-
-> 1.0
-> 翻译：[JaceFu](http://www.devtalking.com/)
-> 校对：[ChildhoodAndy](http://childhood.logdown.com)
-
-> 2.0
-> 翻译+校对：[mmoaay](https://github.com/mmoaay)
-
-> 2.1
-> 翻译：[Prayer](https://github.com/futantan)
-> 校对：[shanks](http://codebuild.me)，2015-11-01
-
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-17
-
-> 3.0.1
-> 翻译+校对： shanks，2016-11-13
-
-> 4.0
-> 翻译：kemchenj，2017-09-23
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包括：
-
-- [模块和源文件](#modules_and_source_files)
-- [访问级别](#access_levels)
-- [访问控制语法](#access_control_syntax)
-- [自定义类型](#custom_types)
-- [子类](#subclassing)
-- [常量、变量、属性、下标](#constants_variables_properties_subscripts)
-- [构造器](#initializers)
-- [协议](#protocols)
-- [Extension](#extensions)
-- [泛型](#generics)
-- [类型别名](#type_aliases)
 
 *访问控制*可以限定其它源文件或模块中的代码对你的代码的访问级别。这个特性可以让我们隐藏代码的一些实现细节，并且可以为其他人可以访问和使用的代码提供接口。
 
