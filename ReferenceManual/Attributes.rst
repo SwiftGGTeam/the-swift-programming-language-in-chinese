@@ -702,8 +702,8 @@ autoclosure
 
 Apply this attribute to delay the evaluation of an expression
 by automatically wrapping that expression in a closure with no arguments.
-Apply this attribute to a parameter's type in a method or function declaration,
-for a parameter of a function type that takes no arguments
+You apply it to a parameter's type in a method or function declaration,
+for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression.
 For an example of how to use the ``autoclosure`` attribute,
 see :ref:`Closures_Autoclosures` and :ref:`Types_FunctionType`.
@@ -718,7 +718,7 @@ Apply this attribute to the type of a function
 to indicate its calling conventions.
 
 The ``convention`` attribute always appears with
-one of the attribute arguments below.
+one of the following arguments:
 
 * The ``swift`` argument indicates a Swift function reference.
   This is the standard calling convention for function values in Swift.
@@ -747,13 +747,13 @@ can't be converted to the C calling convention.
 escaping
 ~~~~~~~~
 
-    Apply this attribute to a parameter's type in a method or function declaration
-    to indicate that the parameter's value can be stored for later execution.
-    This means that the value is allowed to outlive the lifetime of the call.
-    Function type parameters with the ``escaping`` type attribute
-    require explicit use of ``self.`` for properties or methods.
-    For an example of how to use the ``escaping`` attribute,
-    see :ref:`Closures_Noescape`.
+Apply this attribute to a parameter's type in a method or function declaration
+to indicate that the parameter's value can be stored for later execution.
+This means that the value is allowed to outlive the lifetime of the call.
+Function type parameters with the ``escaping`` type attribute
+require explicit use of ``self.`` for properties or methods.
+For an example of how to use the ``escaping`` attribute,
+see :ref:`Closures_Noescape`.
 
 
 .. syntax-grammar::
