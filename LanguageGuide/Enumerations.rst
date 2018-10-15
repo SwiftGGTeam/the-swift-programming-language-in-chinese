@@ -275,7 +275,7 @@ it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
 when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
 
-New barcodes can then be created using either type:
+You can then create new barcodes using either type:
 
 .. testcode:: enums
 
@@ -286,7 +286,7 @@ This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.upc``
 with an associated tuple value of ``(8, 85909, 51226, 3)``.
 
-The same product can be assigned a different type of barcode:
+You can assign same product a different type of barcode:
 
 .. testcode:: enums
 
@@ -297,10 +297,13 @@ the original ``Barcode.upc`` and its integer values are replaced by
 the new ``Barcode.qrCode`` and its string value.
 Constants and variables of type ``Barcode`` can store either a ``.upc`` or a ``.qrCode``
 (together with their associated values),
-but they can only store one of them at any given time.
+but they can store only one of them at any given time.
 
-The different barcode types can be checked using a switch statement, as before.
-This time, however, the associated values can be extracted as part of the switch statement.
+You can check the different barcode types using a switch statement,
+similar to the example in
+:ref:`Enumerations_MatchingEnumerationValuesWithASwitchStatement`.
+This time, however,
+the associated values are extracted as part of the switch statement.
 You extract each associated value as a constant (with the ``let`` prefix)
 or a variable (with the ``var`` prefix)
 for use within the ``switch`` case's body:
