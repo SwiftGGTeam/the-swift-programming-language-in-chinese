@@ -59,7 +59,7 @@ var welcomeMessage: String
 
 “声明一个类型为 `String` ，名字为 `welcomeMessage` 的变量。”
 
-“类型为 `String` ”的意思是“可以存储任意 `String` 类型的值。”
+“类型为 `String` ”的意思是“可以存储任意 `String` 类型的值。” 可以把它理解成可以存储的“事物类型”（或“某类事物”）。 
 
 `welcomeMessage` 变量现在可以被设置成任意字符串：
 
