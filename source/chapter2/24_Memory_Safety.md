@@ -187,7 +187,7 @@ var holly = Player(name: "Holly", health: 10, energy: 10)
 balance(&holly.health, &holly.energy)  // 错误
 ```
 
-在实践中，大多数对于结构体属性的访问都会安全的重叠。例如，将上面例子里的变量 `holly` 改为本地变量而非全局变量，编译器就会可以保证这个重叠访问是y安全的：
+在实践中，大多数对于结构体属性的访问都会安全的重叠。例如，将上面例子里的变量 `holly` 改为本地变量而非全局变量，编译器就会可以保证这个重叠访问是安全的：
 
 ```swift
 func someFunction() {
