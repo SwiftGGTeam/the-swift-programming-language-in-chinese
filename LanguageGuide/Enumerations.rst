@@ -286,7 +286,7 @@ This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.upc``
 with an associated tuple value of ``(8, 85909, 51226, 3)``.
 
-You can assign same product a different type of barcode:
+You can assign the same product a different type of barcode:
 
 .. testcode:: enums
 
