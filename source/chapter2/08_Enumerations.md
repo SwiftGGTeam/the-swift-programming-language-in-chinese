@@ -68,14 +68,14 @@ directionToHead = .east
 ```swift
 directionToHead = .south
 switch directionToHead {
-	case .north:
-	    print("Lots of planets have a north")
-	case .south:
-	    print("Watch out for penguins")
-	case .east:
-	    print("Where the sun rises")
-	case .west:
-	    print("Where the skies are blue")
+case .north:
+	print("Lots of planets have a north")
+case .south:
+	print("Watch out for penguins")
+case .east:
+	print("Where the sun rises")
+case .west:
+	print("Where the skies are blue")
 }
 // 打印 "Watch out for penguins”
 ```
@@ -101,20 +101,49 @@ default:
 // 打印 "Mostly harmless”
 ```
 
+<a name="iterating over enumeration cases"></a>
+## 枚举成员的遍历
+
+在一些情况下，你会需要得到一个包含枚举所有成员的集合。可以通过如下代码实现：
+
+令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。下面是一个例子：
+
+```swift
+enum Beverage: CaseIterable {
+    case coffee, tea, juice
+}
+let numberOfChoices = Beverage.allCases.count
+print("\(numberOfChoices) beverages available")
+// 打印 "3 beverages available"
+```
+
+在前面的例子中，通过 `Beverage.allCases` 可以访问到包含 `Beverage` 枚举所有成员的集合。`allCases` 的使用方法和其它一般集合一样——集合中的元素是枚举类型的实例，所以在上面的情况中，这些元素是 `Beverage` 值。在前面的例子中，统计了总共有多少个枚举成员。而在下面的例子中，则使用 `for` 循环来遍历所有枚举成员。
+
+```swift
+for beverage in Beverage.allCases {
+    print(beverage)
+}
+// coffee
+// tea
+// juice
+```
+
+在前面的例子中，使用的语法表明这个枚举遵循 [CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) 协议。想了解 protocols 相关信息，请参见[协议](./21_Protocols.html)。
+
 <a name="associated_values"></a>
 ## 关联值
 
-上一小节的例子演示了如何定义和分类枚举的成员。你可以为 `Planet.earth` 设置一个常量或者变量，并在赋值之后查看这个值。然而，有时候能够把其他类型的*关联值*和成员值一起存储起来会很有用。这能让你连同成员值一起存储额外的自定义信息，并且你每次在代码中使用该枚举成员时，还可以修改这个关联值。
+枚举语法那一小节的例子演示了如何定义和分类枚举的成员。你可以为 `Planet.earth` 设置一个常量或者变量，并在赋值之后查看这个值。然而，有时候能够把其他类型的*关联值*和成员值一起存储起来会很有用。这能让你连同成员值一起存储额外的自定义信息，并且你每次在代码中使用该枚举成员时，还可以修改这个关联值。
 
 你可以定义 Swift 枚举来存储任意类型的关联值，如果需要的话，每个枚举成员的关联值类型可以各不相同。枚举的这种特性跟其他语言中的可识别联合（discriminated unions），标签联合（tagged unions），或者变体（variants）相似。
 
 例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有使用 `0` 到 `9` 的数字的 UPC 格式的一维条形码。每一个条形码都有一个代表“数字系统”的数字，该数字后接五位代表“厂商代码”的数字，接下来是五位代表“产品代码”的数字。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
 
-<img width="252" height="120" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_UPC_2x.png">
+<img width="252" height="120" alt="" src="https://docs.swift.org/swift-book/_images/barcode_UPC_2x.png">
 
 其他商品上标有 QR 码格式的二维码，它可以使用任何 ISO 8859-1 字符，并且可以编码一个最多拥有 2,953 个字符的字符串：
 
-<img width="169" height="169" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_QR_2x.png">
+<img width="169" height="169" alt="" src="https://docs.swift.org/swift-book/_images/barcode_QR_2x.png">
 
 这便于库存跟踪系统用包含四个整型值的元组存储 UPC 码，以及用任意长度的字符串储存 QR 码。
 
@@ -170,7 +199,7 @@ case let .upc(numberSystem, manufacturer, product, check):
 case let .qrCode(productCode):
     print("QR code: \(productCode).")
 }
-// 输出 "QR code: ABCDEFGHIJKLMNOP."
+// 打印 "QR code: ABCDEFGHIJKLMNOP."
 ```
 
 <a name="raw_values"></a>
@@ -240,7 +269,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 
 如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法接收一个叫做 `rawValue` 的参数，参数类型即为原始值类型，返回值则是枚举成员或 `nil`。你可以使用这个初始化方法来创建一个新的枚举实例。
 
-这个例子利用原始值 `7` 创建了枚举成员 `uranus`：
+这个例子利用原始值 `7` 创建了枚举成员 `Uranus`：
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
@@ -267,7 +296,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 } else {
     print("There isn't a planet at position \(positionToFind)")
 }
-// 输出 "There isn't a planet at position 11
+// 打印 "There isn't a planet at position 11"
 ```
 
 这个例子使用了可选绑定（optional binding），试图通过原始值 `11` 来访问一个行星。`if let somePlanet = Planet(rawValue: 11)` 语句创建了一个可选 `Planet`，如果可选 `Planet` 的值存在，就会赋值给 `somePlanet`。在这个例子中，无法检索到位置为 `11` 的行星，所以 `else` 分支被执行。
