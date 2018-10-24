@@ -48,6 +48,8 @@ Swift 4.2 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-p
 
 | 术语 | 备选翻译 |
 | --- | --- |
+| argument | 实参 |
+| parameter | 形参 |
 | associatedtype | 关联类型 |
 | range | 区间 |
 | type property | 类型属性 |
