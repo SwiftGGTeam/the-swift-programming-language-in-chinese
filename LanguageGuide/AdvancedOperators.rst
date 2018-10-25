@@ -718,15 +718,15 @@ Equivalence Operators
 By default, custom classes and structures don't have an implementation of
 the :newTerm:`equivalence operators`,
 known as the *equal to* operator (``==``) and *not equal to* operator (``!=``).
-There are two ways to implement the equivalence operators:
-You can implement the ``==`` operator yourself,
+You usually implement the ``==`` operator,
+and use the standard library's default implementation of the ``!=`` operator
+that negates the result of the ``==`` operator.
+There are two ways to implement the ``==`` operator:
+You can implement it yourself,
 or for many types, you can ask Swift to synthesize
-an implementation of the ``==`` operator for you.
+an implementation for you.
 In both cases,
 you add conformance to the standard library's ``Equivalence`` protocol.
-You don't usually implement a ``!=`` operator yourself.
-The standard library provides a default implementation of the ``!=`` operator
-that negates the result of the ``==`` operator.
 
 You provide an implementation of the ``==`` operator
 in the same way as you implement other infix operators:
