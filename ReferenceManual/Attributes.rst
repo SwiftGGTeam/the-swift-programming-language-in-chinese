@@ -59,8 +59,9 @@ These arguments begin with one of the following platform or language names:
 
 You can also use an asterisk (``*``) to indicate the
 availability of the declaration on all of the platform names listed above.
-An ``available`` attribute specifying a Swift version availability can't
-use the asterisk.
+An ``available`` attribute
+that specifies availability using a Swift version number
+can't use the asterisk.
 
 The remaining arguments can appear in any order
 and specify additional information about the declaration's life cycle,
@@ -202,8 +203,9 @@ the shorthand form is preferred whenever possible.
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-An ``available`` attribute specifying a Swift version availability can't
-additionally specify a declaration's platform availability.
+An ``available`` attribute
+that specifies availability using a Swift version number
+can't additionally specify a declaration's platform availability.
 Instead, use separate ``available`` attributes to specify a Swift
 version availability and one or more platform availabilities.
 
