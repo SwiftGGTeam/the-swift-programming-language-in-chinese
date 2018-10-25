@@ -222,9 +222,9 @@ a defined (and typed) value in their own right.
 You can set a constant or variable to ``Planet.earth``,
 and check for this value later.
 However, it's sometimes useful to be able to store
-:newTerm:`associated values` of other types alongside these case values.
-This enables you to store additional custom information along with the case value,
-and permits this information to vary each time you use that case in your code.
+values of other types alongside these case values.
+This additional information is called an :newTerm:`associated value`,
+and it varies each time you use that case as a value in your code.
 
 You can define Swift enumerations to store associated values of any given type,
 and the value types can be different for each case of the enumeration if needed.
