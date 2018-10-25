@@ -1,9 +1,9 @@
 Attributes
 ==========
 
-:newTerm:`Attributes` provide additional information about a declaration or type.
-There are two kinds of attributes in Swift, those that apply to declarations
-and those that apply to types.
+There are two kinds of attributes in Swift ---
+those that apply to declarations and those that apply to types.
+An attribute provides additional information about the declaration or type.
 For example,
 the ``discardableResult`` attribute on a function declaration indicates that,
 although the function returns a value,
