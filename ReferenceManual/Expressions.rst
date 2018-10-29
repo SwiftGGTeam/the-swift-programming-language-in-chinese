@@ -1871,7 +1871,7 @@ It has the following form:
 
 If the value of the *expression* is not ``nil``,
 the optional value is unwrapped
-and returned with the corresponding nonoptional type.
+and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
 
 The unwrapped value of a forced-value expression can be modified,
