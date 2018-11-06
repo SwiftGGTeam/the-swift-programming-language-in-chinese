@@ -1,6 +1,6 @@
 # 错误处理
 
-*错误处理（ Error handling ）* 是响应错误以及从错误中恢复的过程。Swift 在运行时提供了抛出、捕获、传递和操作可恢复错误（ recoverable errors ）的一等支持（ first-class support ）。
+*错误处理（Error handling）* 是响应错误以及从错误中恢复的过程。Swift 在运行时提供了抛出、捕获、传递和操作可恢复错误（recoverable errors）的一等支持（first-class support）。
 
 某些操作无法保证总是执行完所有代码或生成有用的结果。可选类型用来表示值缺失，但是当某个操作失败时，理解造成失败的原因有助于你的代码作出相应的应对。
 
@@ -195,7 +195,7 @@ do {
 // 打印 "Invalid selection, out of stock, or not enough money."
 ```
 
-如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误， `nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会·将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
+如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误，`nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
 
 ### 将错误转换成可选值
 
