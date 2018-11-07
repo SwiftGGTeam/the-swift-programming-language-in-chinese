@@ -1,6 +1,6 @@
 # 扩展
 
-*扩展*可以给一个现有的类，结构体，枚举，还有协议添加新的功能。它还拥有，不需要访问被扩展类型源代码就能完成扩展的能力（即*逆向建模*）。扩展和 Objective-C 的分类很相似。（与 Objective-C 分类不同的是，Swift 扩展是没有名字的。）  
+*扩展*可以给一个现有的类，结构体，枚举，还有协议添加新的功能。它还拥有不需要访问被扩展类型源代码就能完成扩展的能力（即*逆向建模*）。扩展和 Objective-C 的分类很相似。（与 Objective-C 分类不同的是，Swift 扩展是没有名字的。）  
 
 Swift 中的扩展可以：  
 
@@ -9,9 +9,9 @@ Swift 中的扩展可以：
  - 提供新的构造器  
  - 定义下标  
  - 定义和使用新的嵌套类型  
- - 使已经存在的类型 conform（遵循）一个协议  
+ - 使已经存在的类型遵循（conform）一个协议  
 
-在Swift中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。你可以从[协议扩展](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID521)获取更多细节。
+在 Swift 中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。你可以从 [协议扩展](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID521) 获取更多细节。
 
 > 注意  
 > 
@@ -20,32 +20,32 @@ Swift 中的扩展可以：
 ## 扩展的语法
 使用 **extension** 关键字声明扩展：  
 
-```
+```swift
 extension SomeType {
-	// 在这里给 SomeType 添加新的功能
+  // 在这里给 SomeType 添加新的功能
 }
 ```  
 
 扩展可以扩充一个现有的类型，给它添加一个或多个协议。协议名称的写法和类或者结构体一样：  
 
-```
+```swift
 extension SomeType: SomeProtocol, AnotherProtocol {
-	// 协议所需要的实现写在这里
+  // 协议所需要的实现写在这里
 }
 ```  
 
-通过这种方式遵循协议在[使用扩展遵循协议](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID277)中有描述。  
+这种遵循协议的方式在 [使用扩展遵循协议](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID277) 中有描述。  
 
-扩展可以使用在现有范型类型上，就像[扩展范型类型](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID185)中描述的一样。你还可以使用扩展给泛型类型有条件的添加功能，就像[扩展一个带有 Where 字句的范型](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID553)中描述的一样。  
+扩展可以使用在现有范型类型上，就像 [扩展范型类型](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID185) 中描述的一样。你还可以使用扩展给泛型类型有条件的添加功能，就像 [扩展一个带有 Where 字句的范型](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID553) 中描述的一样。  
 
 > 注意  
 > 
-> 对一个现有的类型，如果你定义了一个扩展来添加新的功能，那么这个类型的所有实例都可以使用这个新功能，甚至是定义扩展之前就被创建的。
+> 对一个现有的类型，如果你定义了一个扩展来添加新的功能，那么这个类型的所有实例都可以使用这个新功能，包括那些在扩展定义之前就存在的实例。
 
 ## 计算型属性
 扩展可以给现有类型添加计算型实例属性和计算型类属性。这个例子给 Swift 内建的 **Double** 类型添加了五个计算型实例属性，从而提供与距离单位相关工作的基本支持：  
 
-```
+```swift
 extension Double {
     var km: Double { return self * 1_000.0 }
     var m: Double { return self }
@@ -61,15 +61,15 @@ print("Three feet is \(threeFeet) meters")
 // 打印“三英尺是 0.914399970739201 米”
 ```  
 
-这些计算型属性表示应该将 **Double** 类型的值看作一个长度单位。即使它们被实现为计算型属性，但是这些属性的名称可以通过点语法附加到浮点小数上，作为一种方式来使用文字执行距离转换。  
+这些计算型属性表示的含义是把一个 **Double** 值看作是某单位下的长度值。即使它们被实现为计算型属性，但这些属性的名字仍可紧接一个浮点型字面值，从而通过点语法来使用，并以此实现距离转换。 
 
 在上述例子中，**Double** 类型的 **1.0** 代表的是“一米”。这就是为什么计算型属性 **m** 返回的是 **self** - 表达式 **1.m** 被认为是计算一个 **Double** 类型的 **1.0**。  
 
-其他单位使用米表示的时候需要进行一些转换。One kilometer（一千米）等于 1,000 meters（米），所以 **km** 计算型属性将值乘以 **1_000.00** 转换成单位为米的值。类似的，一米等于 3.28084 英尺，所以 **ft** 计算型属性将给予的 **Double** 值除以 **3.28084**，用以将英尺转换成米。  
+其它单位则需要一些单位换算。一千米等于 1,000 米，所以计算型属性 **km** 要把值乘以 **1_000.00** 来实现千米到米的单位换算。类似地，一米有 3.28084 英尺，所以计算型属性 **ft** 要把对应的 **Double** 值除以 **3.28084**，来实现英尺到米的单位换算。  
 
-这些属性都是只读的计算型属性，所以为了简便，他们的表达式里面都不包含 **get** 关键字。它们使用 **Double** 作为返回值类型，并可用于所有接受 **Double** 类型的数学计算中：  
+这些属性都是只读的计算型属性，所以为了简便，它们的表达式里面都不包含 **get** 关键字。它们使用 **Double** 作为返回值类型，并可用于所有接受 **Double** 类型的数学计算中：  
 
-```
+```swift
 let aMarathon = 42.km + 195.m
 print("A marathon is \(aMarathon) meters long")
 // 打印“马拉松赛跑全长 42195.0 米。”
@@ -84,13 +84,13 @@ print("A marathon is \(aMarathon) meters long")
 
 扩展可以给一个类添加新的便利构造器，但是它们不能给类添加新的指定构造器或者析构器。指定构造器和析构器必须始终由类的原始实现提供。  
 
-如果你使用扩展给一个值类型添加构造器只是用于给所有的存储属性提供默认值，并且没有定义任何自定义构造器，那么你可以在该值类型扩展的构造器中使用默认构造器和成员构造器。如果你把构造器写到了值类型的原始实现中，就像[值类型的构造器委托](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID215)中描述的这样，那么就不是上面我们所提到的情况。  
+如果你使用扩展给一个值类型添加构造器只是用于给所有的存储属性提供默认值，并且没有定义任何自定义构造器，那么你可以在该值类型扩展的构造器中使用默认构造器和成员构造器。如果你把构造器写到了值类型的原始实现中，就像 [值类型的构造器委托](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID215) 中所描述的，那么就不属于在扩展中添加构造器。  
 
 如果你使用扩展给另一个模块中定义的结构体添加构造器，那么新的构造器直到定义模块中使用一个构造器之前，不能访问 **self**。  
 
 在下面的例子中，自定义了一个的 **Rect** 结构体用来表示一个几何矩形。这个例子中还定义了两个给予支持的结构体 **Size** 和 **Point**，它们都把属性的默认值设置为 **0.0**：  
 
-```
+```swift
 struct Size {
     var width = 0.0, height = 0.0
 }
@@ -103,9 +103,9 @@ struct Rect {
 }
 ```  
 
-因为 **Rect** 结构体给所有的属性都提供了默认值，所以它自动获得了一个默认构造器和一个成员构造器，就像[默认构造器](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID213)中描述的一样。这些构造器可以用来创建新的 **Rect** 实例：  
+因为 **Rect** 结构体给所有的属性都提供了默认值，所以它自动获得了一个默认构造器和一个成员构造器，就像 [默认构造器](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID213) 中描述的一样。这些构造器可以用来创建新的 **Rect** 实例：  
 
-```
+```swift
 let defaultRect = Rect()
 let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
    size: Size(width: 5.0, height: 5.0))
@@ -113,7 +113,7 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
 
 你可以通过扩展 **Rect** 结构体来提供一个允许指定 point 和 size 的构造器：  
 
-```
+```swift
 extension Rect {
     init(center: Point, size: Size) {
         let originX = center.x - (size.width / 2)
@@ -125,7 +125,7 @@ extension Rect {
 
 这个新的构造器首先根据提供的 **center** 和 **size** 计算一个适当的原点。然后这个构造器调用结构体自带的成员构造器 **init(origin:size:)**，它会将新的 origin 和 size 值储存在适当的属性中：  
 
-```
+```swift
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
                       size: Size(width: 3.0, height: 3.0))
 // centerRect 的 origin 是 (2.5, 2.5) 并且它的 size 是 (3.0, 3.0)
@@ -138,7 +138,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 ## 方法
 扩展可以给现有类型添加新的实例方法和类方法。在下面的例子中，给 **Int** 类型添加了一个新的实例方法叫做 **repetitions**：  
 
-```
+```swift
 extension Int {
     func repetitions(task: () -> Void) {
         for _ in 0..<self {
@@ -151,7 +151,8 @@ extension Int {
 **repetitions(task:)** 方法仅接收一个 **() -> Void** 类型的参数，它表示一个没有参数没有返回值的方法。  
 
 定义了这个扩展之后，你可以对任意整形数值调用 **repetitions(task:)** 方法，来执行对应次数的任务：  
-```
+
+```swift
 3.repetitions {
     print("Hello!")
 }
@@ -165,7 +166,7 @@ extension Int {
 
 在下面的例子中，对 Swift 的 **Int** 类型添加了一个新的 mutating 方法，叫做 **square**，它将原始值求平方：  
 
-```
+```swift
 extension Int {
     mutating func square() {
         self = self * self
@@ -183,7 +184,7 @@ someInt.square()
 - **123456789[1]** returns **8**  
 
 ……以此类推：  
-```
+```swift
 extension Int {
     subscript(digitIndex: Int) -> Int {
         var decimalBase = 1
@@ -205,7 +206,7 @@ extension Int {
 
 如果操作的 **Int** 值没有足够的位数满足所请求的下标，那么下标的现实将返回 **0**，将好像在数字的左边补上了 0：  
 
-```
+```swift
 746381295[9]
 // 返回 0，就好像你进行了这个请求：
 0746381295[9]
@@ -214,7 +215,7 @@ extension Int {
 ## 嵌套类型
 扩展可以给现有的类，结构体，还有枚举添加新的嵌套类型：  
 
-```
+```swift
 extension Int {
     enum Kind {
         case negative, zero, positive
@@ -238,7 +239,7 @@ extension Int {
 
 现在，任意 **Int** 的值都可以使用这个嵌套类型：  
 
-```
+```swift
 func printIntegerKinds(_ numbers: [Int]) {
     for number in numbers {
         switch number.kind {
@@ -253,7 +254,7 @@ func printIntegerKinds(_ numbers: [Int]) {
     print("")
 }
 printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-// Prints "+ + - 0 - 0 + "
+// 打印 "+ + - 0 - 0 + "
 ```
 
 方法 **printIntegerKinds(_:)**，使用一个 **Int** 类型的数组作为输入，然后依次迭代这些值。对于数组中的每一个整数，方法会检查它的 **kind** 计算型属性，然后打印适当的描述。  
