@@ -145,14 +145,8 @@ class Address {
     func buildingIdentifier() -> String? {
         if buildingName != nil {
             return buildingName
-        } else if buildingNumber != nil && street != nil {
+        } else if let buildingNumber = buildingNumber, let street = street {
             return "\(buildingNumber) \(street)"
-        }
-
-        if let buildingNumber = buildingNumber, let street = street {
-            
-        } else if buildingName != nil {
-            return buildingName
         } else {
             return nil
         }
