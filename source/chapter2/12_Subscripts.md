@@ -116,7 +116,7 @@ var matrix = Matrix(rows: 2, columns: 2)
 
 上例中创建了一个 `Matrix` 实例来表示两行两列的矩阵。该 `Matrix` 实例的 `grid` 数组按照从左上到右下的阅读顺序将矩阵扁平化存储：
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix01_2x.png)
+![](https://docs.swift.org/swift-book/_images/subscriptMatrix01_2x.png)
 
 将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔：
 
@@ -127,7 +127,7 @@ matrix[1, 0] = 3.2
 
 上面两条语句分别调用下标的 setter 将矩阵右上角位置（即 `row` 为 `0`、`column` 为 `1` 的位置）的值设置为 `1.5`，将矩阵左下角位置（即 `row` 为 `1`、`column` 为 `0` 的位置）的值设置为 `3.2`：
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix02_2x.png)
+![](https://docs.swift.org/swift-book/_images/subscriptMatrix02_2x.png)
 
 `Matrix` 下标的 getter 和 setter 中都含有断言，用来检查下标入参 `row` 和 `column` 的值是否有效。为了方便进行断言，`Matrix` 包含了一个名为 `indexIsValid(row:column:)` 的便利方法，用来检查入参 `row` 和 `column` 的值是否在矩阵范围内：
 
