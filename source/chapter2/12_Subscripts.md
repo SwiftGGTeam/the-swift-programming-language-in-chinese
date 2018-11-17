@@ -66,7 +66,7 @@ numberOfLegs["bird"] = 2
 
 上例定义一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型被推断为 `[String: Int]`。字典创建完成后，该例子通过下标将 `String` 类型的键 `bird` 和 `Int` 类型的值 `2` 添加到字典中。
 
-更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
+更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)。
 
 > 注意
 > 
