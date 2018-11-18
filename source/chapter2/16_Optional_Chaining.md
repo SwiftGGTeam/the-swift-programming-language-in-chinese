@@ -13,7 +13,7 @@
 
 为了反映可选链式调用可以在空值（`nil`）上调用的事实，不论这个调用的属性、方法及下标返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来判断你的可选链式调用是否调用成功，如果调用有返回值则说明调用成功，返回 `nil` 则说明调用失败。
 
-特别地，可选链式调用的返回结果与原本的返回结果具有相同的类型，但是被包装成了一个可选值。例如，使用可选链式调用访问属性，当可选链式调用成功时，如果属性原本的返回结果是 `Int` 类型，则会变为 `Int?` 类型。
+这里需要特别指出，可选链式调用的返回结果与原本的返回结果具有相同的类型，但是被包装成了一个可选值。例如，使用可选链式调用访问属性，当可选链式调用成功时，如果属性原本的返回结果是 `Int` 类型，则会变为 `Int?` 类型。
 
 下面几段代码将解释可选链式调用和强制展开的不同。
 
@@ -31,7 +31,7 @@ class Residence {
 
 `Residence` 有一个 `Int` 类型的属性 `numberOfRooms`，其默认值为 `1`。`Person` 具有一个可选的 `residence` 属性，其类型为 `Residence?`。
 
-假如你创建了一个新的 `Person` 实例，它的 `residence` 属性由于是是可选型而将初始化为 `nil`,在下面的代码中，`john` 有一个值为 `nil` 的 `residence` 属性：
+假如你创建了一个新的 `Person` 实例，它的 `residence` 属性由于是是可选类型而将被初始化为 `nil`，在下面的代码中，`john` 有一个值为 `nil` 的 `residence` 属性：
 
 ```swift
 let john = Person()
@@ -44,7 +44,7 @@ let roomCount = john.residence!.numberOfRooms
 // 这会引发运行时错误
 ```
 
-`john.residence` 为非 `nil` 值的时候，上面的调用会成功，并且把 `roomCount` 设置为 `Int` 类型的房间数量。正如上面提到的，当 `residence` 为 `nil` 的时候上面这段代码会触发运行时错误。
+`john.residence` 为非 `nil` 值的时候，上面的调用会成功，并且把 `roomCount` 设置为 `Int` 类型的房间数量。正如上面提到的，当 `residence` 为 `nil` 的时候，上面这段代码会触发运行时错误。
 
 可选链式调用提供了另一种访问 `numberOfRooms` 的方式，使用问号（`?`）来替代原来的叹号（`!`）：
 
@@ -83,7 +83,7 @@ if let roomCount = john.residence?.numberOfRooms {
 <a name="defining_model_classes_for_optional_chaining"></a>
 ## 为可选链式调用定义模型类
 
-通过使用可选链式调用可以调用多层属性、方法和下标。这样可以在复杂的模型中向下访问各种子属性，并且判断能否访问子属性的属性、方法或下标。
+通过使用可选链式调用可以调用多层属性、方法和下标。这样可以在复杂的模型中向下访问各种子属性，并且判断能否访问子属性的属性、方法和下标。
 
 下面这段代码定义了四个模型类，这些例子包括多层可选链式调用。为了方便说明，在 `Person` 和 `Residence` 的基础上增加了 `Room` 类和 `Address` 类，以及相关的属性、方法以及下标。
 
@@ -135,7 +135,7 @@ class Room {
 }
 ```
 
-最后一个类是 `Address`，这个类有三个 `String?` 类型的可选属性。`buildingName` 以及 `buildingNumber` 属性分别表示某个大厦的名称和号码，第三个属性 `street` 表示大厦所在街道的名称：
+最后一个类是 `Address`，这个类有三个 `String?` 类型的可选属性。`buildingName` 以及 `buildingNumber` 属性分别表示大厦的名称和号码，第三个属性 `street` 表示大厦所在街道的名称：
 
 ```swift
 class Address {
@@ -145,7 +145,7 @@ class Address {
     func buildingIdentifier() -> String? {
         if buildingName != nil {
             return buildingName
-        } else if buildingNumber != nil && street != nil {
+        } else if let buildingNumber = buildingNumber, let street = street {
             return "\(buildingNumber) \(street)"
         } else {
             return nil
@@ -154,14 +154,14 @@ class Address {
 }
 ```
 
-`Address` 类提供了 `buildingIdentifier()` 方法，返回值为 `String?`。 如果 `buildingName` 有值则返回 `buildingName`。或者，如果 `buildingNumber` 和 `street` 均有值则返回 `buildingNumber`。否则，返回 `nil`。
+`Address` 类提供了 `buildingIdentifier()` 方法，返回值为 `String?`。 如果 `buildingName` 有值则返回 `buildingName`。或者，如果 `buildingNumber` 和 `street` 均有值，则返回两者拼接得到的字符串。否则，返回 `nil`。
 
 <a name="accessing_properties_through_optional_chaining"></a>
 ## 通过可选链式调用访问属性
 
 正如[使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)中所述，可以通过可选链式调用在一个可选值上访问它的属性，并判断访问是否成功。
 
-下面的代码创建了一个 `Person` 实例，然后像之前一样，尝试访问 `numberOfRooms` 属性：
+使用前面定义过的类，创建一个 `Person` 实例，然后像之前一样，尝试访问 `numberOfRooms` 属性：
 
 ```swift
 let john = Person()
@@ -186,7 +186,7 @@ john.residence?.address = someAddress
 
 在这个例子中，通过 `john.residence` 来设定 `address` 属性也会失败，因为 `john.residence` 当前为 `nil`。
 
-上面代码中的赋值过程是可选链式调用的一部分，这意味着可选链式调用失败时，等号右侧的代码不会被执行。对于上面的代码来说，很难验证这一点，因为像这样赋值一个常量没有任何副作用。下面的代码完成了同样的事情，但是它使用一个函数来创建 `Address` 实例，然后将该实例返回用于赋值。该函数会在返回前打印“Function was called”，这使你能验证等号右侧的代码是否被执行。
+上面代码中的赋值过程是可选链式调用的一部分，这意味着可选链式调用失败时，等号右侧的代码不会被执行。对于上面的代码来说，很难验证这一点，因为像这样赋值一个常量没有任何副作用。下面的代码完成了同样的事情，但是它使用一个函数来创建 `Address` 实例，然后将该实例返回用于赋值。该函数会在返回前打印 “Function was called”，这使你能验证等号右侧的代码是否被执行。
 
 ```swift
 func createAddress() -> Address {
@@ -299,7 +299,7 @@ testScores["Brian"]?[0] = 72
 // "Dave" 数组现在是 [91, 82, 84]，"Bev" 数组现在是 [80, 94, 81]
 ```
 
-上面的例子中定义了一个 `testScores` 数组，包含了两个键值对，把 `String` 类型的键映射到一个 `Int` 值的数组。这个例子用可选链式调用把 `"Dave"` 数组中第一个元素设为 `91`，把 `"Bev"` 数组的第一个元素 `+1`，然后尝试把 `"Brian"` 数组中的第一个元素设为 `72`。前两个调用成功，因为 `testScores` 字典中包含 `"Dave"` 和 `"Bev"` 这两个键。但是 `testScores` 字典中没有 `"Brian"` 这个键，所以第三个调用失败。
+上面的例子中定义了一个 `testScores` 数组，包含了两个键值对，分别把 `String` 类型的键映射到一个 `Int` 值的数组。这个例子用可选链式调用把 `"Dave"` 数组中第一个元素设为 `91`，把 `"Bev"` 数组的第一个元素 `+1`，然后尝试把 `"Brian"` 数组中的第一个元素设为 `72`。前两个调用成功，因为 `testScores` 字典中包含 `"Dave"` 和 `"Bev"` 这两个键。但是 `testScores` 字典中没有 `"Brian"` 这个键，所以第三个调用失败。
 
 <a name="linking_multiple_levels_of_chaining"></a>
 ## 连接多层可选链式调用
@@ -367,6 +367,7 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 
 ```swift
 if let beginsWithThe =
+
 	john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
 		if beginsWithThe {
 			print("John's building identifier begins with \"The\".")
