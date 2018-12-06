@@ -641,11 +641,11 @@ if let firstNumber = Int("4") {
 
 如上所述，可选类型暗示了常量或者变量可以“没有值”。可选可以通过 `if` 语句来判断是否有值，如果有值的话可以通过可选绑定来解析值。
 
-有时候在程序架构中，第一次被赋值之后，可以确定一个可选类型_总会_有值。在这种情况下，每次都要判断和解析可选值是非常低效的，因为可以确定它总会有值。
+有时候在程序架构中，第一次被赋值之后，可以确定一个可选类型 *总会* 有值。在这些情况下，移除每次访问可选类型时都要检查和解析它的值的将会是很有用的，因为可以安全地假定它始终具有值。
 
 这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
-当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](./23_Automatic_Reference_Counting.html#unowned_references_and_implicitly_unwrapped_optional_properties)。
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](https://github.com/iversonwool/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/23_Automatic_Reference_Counting.md#unowned_references_and_implicitly_unwrapped_optional_properties)。
 
 一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型 `String` 和隐式解析可选类型 `String` 之间的区别：
 
@@ -667,7 +667,7 @@ let implicitString: String = assumedString  // 不需要感叹号
 
 ```swift
 if assumedString != nil {
-    print(assumedString)
+    print(assumedString!)
 }
 // 输出 "An implicitly unwrapped optional string."
 ```
