@@ -77,7 +77,7 @@ let john = Person(fullName: "John Appleseed")
 
 这个例子中定义了一个叫做 `Person` 的结构体，用来表示一个具有名字的人。从第一行代码可以看出，它遵循了 `FullyNamed` 协议。
 
-`Person` 结构体的每一个实例都有一个 `String` 类型的存储型属性 `fullName`。这正好满足了 `FullyNamed` 协议的要求，也就意味着 `Person` 结构体正确地符合了协议。（如果协议要求未被完全满足，在编译时会报错。）
+`Person` 结构体的每一个实例都有一个 `String` 类型的存储型属性 `fullName`。这正好遵循了 `FullyNamed` 协议的要求，也就意味着 `Person` 结构体正确地遵循了协议。（如果协议要求未被完全遵循，在编译时会报错。）
 
 下面是一个更为复杂的类，它适配并遵循了 `FullyNamed` 协议：
 
@@ -124,7 +124,7 @@ protocol RandomNumberGenerator {
 
 `RandomNumberGenerator` 协议并不关心每一个随机数是怎样生成的，它只要求必须提供一个随机数生成器。
 
-如下所示，下边是一个遵循并符合 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 *线性同余生成器（linear congruential generator）* 的伪随机数算法。
+如下所示，下边是一个遵循 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 *线性同余生成器（linear congruential generator）* 的伪随机数算法。
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
@@ -209,7 +209,7 @@ class SomeClass: SomeProtocol {
 }
 ```
 
-使用 `required` 修饰符可以确保所有子类也必须提供此构造器实现，从而也能符合协议。
+使用 `required` 修饰符可以确保所有子类也必须提供此构造器实现，从而也能遵循协议。
 
 关于 `required` 构造器的更多内容，请参考[必要构造器](./14_Initialization.html#required_initializers)。
 
@@ -392,7 +392,7 @@ class DiceGameTracker: DiceGameDelegate {
 
 `gameDidStart(_:)` 方法从 `game` 参数获取游戏信息并打印。`game` 参数是 `DiceGame` 类型而不是 `SnakeAndLadders` 类型，所以在 `gameDidStart(_:)` 方法中只能访问 `DiceGame` 协议中的内容。当然了，`SnakeAndLadders` 的方法也可以在类型转换之后调用。在上例代码中，通过 `is` 操作符检查 `game` 是否为 `SnakesAndLadders` 类型的实例，如果是，则打印出相应的消息。
 
-无论当前进行的是何种游戏，由于 `game` 符合 `DiceGame` 协议，可以确保 `game` 含有 `dice` 属性。因此在 `gameDidStart(_:)` 方法中可以通过传入的 `game` 参数来访问 `dice` 属性，进而打印出 `dice` 的 `sides` 属性的值。
+无论当前进行的是何种游戏，由于 `game` 遵循 `DiceGame` 协议，可以确保 `game` 含有 `dice` 属性。因此在 `gameDidStart(_:)` 方法中可以通过传入的 `game` 参数来访问 `dice` 属性，进而打印出 `dice` 的 `sides` 属性的值。
 
 `DiceGameTracker` 的运行情况如下所示：
 
@@ -413,11 +413,11 @@ game.play()
 <a name="adding_protocol_conformance_with_an_extension"></a>
 ## 在扩展里添加协议遵循
 
-即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在[扩展](./20_Extensions.html)章节中查看。
+即便无法修改源代码，依然可以通过扩展令已有类型遵循协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以遵循协议中的相应要求。详情请在[扩展](./20_Extensions.html)章节中查看。
 
 > 注意
 > 
-> 通过扩展令已有类型遵循并符合协议时，该类型的所有实例也会随之获得协议中定义的各项功能。
+> 通过扩展令已有类型遵循协议时，该类型的所有实例也会随之获得协议中定义的各项功能。
 
 例如下面这个 `TextRepresentable` 协议，任何想要通过文本表示一些内容的类型都可以实现该协议。这些想要表示的内容可以是实例本身的描述，也可以是实例当前状态的文本描述：
 
@@ -427,7 +427,7 @@ protocol TextRepresentable {
 }
 ```
 
-可以通过扩展，令先前提到的 `Dice` 类遵循并符合 `TextRepresentable` 协议：
+可以通过扩展，令先前提到的 `Dice` 类遵循 `TextRepresentable` 协议：
 
 ```swift
 extension Dice: TextRepresentable {
@@ -437,7 +437,7 @@ extension Dice: TextRepresentable {
 }
 ```
 
-通过扩展遵循并符合协议，和在原始定义中遵循并符合协议的效果完全相同。协议名称写在类型名之后，以冒号隔开，然后在扩展的大括号内实现协议要求的内容。
+通过扩展遵循协议，和在原始定义中遵循协议的效果完全相同。协议名称写在类型名之后，以冒号隔开，然后在扩展的大括号内实现协议要求的内容。
 
 现在所有 `Dice` 的实例都可以看做 `TextRepresentable` 类型：
 
@@ -447,7 +447,7 @@ print(d12.textualDescription)
 // 打印 “A 12-sided dice”
 ```
 
-同样，`SnakesAndLadders` 类也可以通过扩展遵循并符合 `TextRepresentable` 协议：
+同样，`SnakesAndLadders` 类也可以通过扩展遵循 `TextRepresentable` 协议：
 
 ```swift
 extension SnakesAndLadders: TextRepresentable {
@@ -462,7 +462,7 @@ print(game.textualDescription)
 <a name="Conditionally_Conforming_to_a_Protocol"></a>
 ## 有条件地遵循协议
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见[泛型 Where 分句](./22_Generics.html##where_clauses)。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你遵循协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见[泛型 Where 分句](./22_Generics.html##where_clauses)。
 
 下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时就遵循 `TextRepresentable` 协议。
 
@@ -479,9 +479,9 @@ print(myDice.textualDescription)
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
-## 在扩展里声明采纳协议
+## 在扩展里声明遵循协议
 
-当一个类型已经符合了某个协议中的所有要求，却还没有声明采纳该协议时，可以通过空扩展体的扩展采纳该协议：
+当一个类型已经遵循了某个协议中的所有要求，却还没有声明遵循该协议时，可以通过空扩展体的扩展遵循该协议：
 
 ```swift
 struct Hamster {
@@ -549,7 +549,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 
 例子中定义了一个新的协议 `PrettyTextRepresentable`，它继承自 `TextRepresentable` 协议。任何遵循 `PrettyTextRepresentable` 协议的类型在满足该协议的要求时，也必须满足 `TextRepresentable` 协议的要求。在这个例子中，`PrettyTextRepresentable` 协议额外要求遵循协议的类型提供一个返回值为 `String` 类型的 `prettyTextualDescription` 属性。
 
-如下所示，扩展 `SnakesAndLadders`，使其遵循并符合 `PrettyTextRepresentable` 协议：
+如下所示，扩展 `SnakesAndLadders`，使其遵循 `PrettyTextRepresentable` 协议：
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
@@ -587,7 +587,7 @@ print(game.prettyTextualDescription)
 <a name="class_only_protocol"></a>
 ## 类专属的协议
 
-你通过添加 `AnyObject` 关键字到协议的继承列表，就可以限制协议只能被类类型采纳（以及非结构体或者非枚举的类型）。
+你通过添加 `AnyObject` 关键字到协议的继承列表，就可以限制协议只能被类类型遵循（以及非结构体或者非枚举的类型）。
 
 ```swift
 protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
@@ -595,7 +595,7 @@ protocol SomeClassOnlyProtocol: class, SomeInheritedProtocol {
 }
 ```
 
-在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型采纳。如果尝试让结构体或枚举类型采纳 `SomeClassOnlyProtocol`，则会导致编译时错误。
+在以上例子中，协议 `SomeClassOnlyProtocol` 只能被类类型遵循。如果尝试让结构体或枚举类型遵循 `SomeClassOnlyProtocol` 协议，则会导致编译时错误。
 
 > 注意
 > 
@@ -629,11 +629,11 @@ wishHappyBirthday(to: birthdayPerson)
 // 打印 “Happy birthday Malcolm - you're 21!”
 ```
 
-`Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体采纳了这两个协议。
+`Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体遵循了这两个协议。
 
-`wishHappyBirthday(to:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`， 这意味着“任何同时遵循 Named 和 Aged 的协议”。它不关心参数的具体类型，只要参数符合这两个协议即可。
+`wishHappyBirthday(to:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`， 这意味着“任何同时遵循 Named 和 Aged 的协议”。它不关心参数的具体类型，只要参数遵循这两个协议即可。
 
-上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(to:)` 函数。因为 `Person` 同时符合这两个协议，所以这个参数合法，函数将打印生日问候语。
+上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(to:)` 函数。因为 `Person` 同时遵循这两个协议，所以这个参数合法，函数将打印生日问候语。
 
 这里有一个例子：将 Location 类和前面的 Named 协议进行组合：
 
@@ -667,12 +667,12 @@ beginConcert(in: seattle)
 将 birthdayPerson 传入 `beginConcert(in:)` 函数是不合法的，因为 Person 不是一个 Location 的子类。就像，如果你新建一个类继承与 Location，但是没有遵循 Named 协议，你用这个类的实例去调用 `beginConcert(in:)` 函数也是不合法的。
 
 <a name="checking_for_protocol_conformance"></a>
-## 检查协议一致性
+## 检查协议遵循
 
-你可以使用[类型转换](./18_Type_Casting.html)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换到某个协议类型在语法上和类型的检查和转换完全相同：
+你可以使用[类型转换](./18_Type_Casting.html)中描述的 `is` 和 `as` 操作符来检查协议遵循，即是否遵循了某协议，并且可以转换到指定的协议类型。检查和转换到某个协议类型在语法上和类型的检查和转换完全相同：
 
-* `is` 用来检查实例是否符合某个协议，若符合则返回 `true`，否则返回 `false`。
-* `as?` 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 `nil`。
+* `is` 用来检查实例是否遵循某个协议，若遵循则返回 `true`，否则返回 `false`。
+* `as?` 返回一个可选值，当实例遵循某个协议时，返回类型为协议类型的可选值，否则返回 `nil`。
 * `as!` 将实例强制向下转换到某个协议类型，如果强转失败，会引发运行时错误。
 
 下面的例子定义了一个 `HasArea` 协议，该协议定义了一个 `Double` 类型的可读属性 `area`：
@@ -698,7 +698,7 @@ class Country: HasArea {
 }
 ```
 
-`Circle` 类把 `area` 属性实现为基于存储型属性 `radius` 的计算型属性。`Country` 类则把 `area` 属性实现为存储型属性。这两个类都正确地符合了 `HasArea` 协议。
+`Circle` 类把 `area` 属性实现为基于存储型属性 `radius` 的计算型属性。`Country` 类则把 `area` 属性实现为存储型属性。这两个类都正确地遵循了 `HasArea` 协议。
 
 如下所示，`Animal` 是一个未遵循 `HasArea` 协议的类：
 
@@ -721,7 +721,7 @@ let objects: [AnyObject] = [
 
 `objects` 数组使用字面量初始化，数组包含一个 `radius` 为 `2` 的 `Circle` 的实例，一个保存了英国国土面积的 `Country` 实例和一个 `legs` 为 `4` 的 `Animal` 实例。
 
-如下所示，`objects` 数组可以被迭代，并对迭代出的每一个元素进行检查，看它是否符合 `HasArea` 协议：
+如下所示，`objects` 数组可以被迭代，并对迭代出的每一个元素进行检查，看它是否遵循 `HasArea` 协议：
 
 ```swift
 for object in objects {
@@ -736,7 +736,7 @@ for object in objects {
 // Something that doesn't have an area
 ```
 
-当迭代出的元素符合 `HasArea` 协议时，将 `as?` 操作符返回的可选值通过可选绑定，绑定到 `objectWithArea` 常量上。`objectWithArea` 是 `HasArea` 协议类型的实例，因此 `area` 属性可以被访问和打印。
+当迭代出的元素遵循 `HasArea` 协议时，将 `as?` 操作符返回的可选值通过可选绑定，绑定到 `objectWithArea` 常量上。`objectWithArea` 是 `HasArea` 协议类型的实例，因此 `area` 属性可以被访问和打印。
 
 `objects` 数组中的元素的类型并不会因为强转而丢失类型信息，它们仍然是 `Circle`，`Country`，`Animal` 类型。然而，当它们被赋值给 `objectWithArea` 常量时，只被视为 `HasArea` 类型，因此只有 `area` 属性能够被访问。
 
@@ -900,7 +900,7 @@ extension PrettyTextRepresentable  {
 
 在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型 Where 子句](./22_Generics.html#where_clauses)中所描述的。
 
-例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵 `Equatable` 协议， 作为标准库的一部分， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
+例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵循 `Equatable` 协议， 作为标准库的一部分， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
 
 ```swift
 extension Collection where Element: Equatable {
