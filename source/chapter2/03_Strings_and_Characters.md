@@ -118,7 +118,7 @@ var anotherEmptyString = String()  // 初始化方法
 // 两个字符串均为空并等价。
 ```
 
-您可以通过检查 `Bool` 类型的 `isEmpty` 属性来判断该字符串是否为空：
+你可以通过检查 `Bool` 类型的 `isEmpty` 属性来判断该字符串是否为空：
 
 ```swift
 if emptyString.isEmpty {
@@ -130,7 +130,7 @@ if emptyString.isEmpty {
 <a name="string_mutability"></a>
 ## 字符串可变性
 
-您可以通过将一个特定字符串分配给一个变量来对其进行修改，或者分配给一个常量来保证其不会被修改：
+你可以通过将一个特定字符串分配给一个变量来对其进行修改，或者分配给一个常量来保证其不会被修改：
 
 ```swift
 var variableString = "Horse"
@@ -144,21 +144,21 @@ constantString += " and another Highlander"
 
 > 注意
 > 
-> 在 Objective-C 和 Cocoa 中，您需要通过选择两个不同的类（`NSString` 和 `NSMutableString`）来指定字符串是否可以被修改。
+> 在 Objective-C 和 Cocoa 中，需要通过选择两个不同的类（`NSString` 和 `NSMutableString`）来指定字符串是否可以被修改。
 
 <a name="strings_are_value_types"></a>
 ## 字符串是值类型
 
-在 Swift 中 `String` 类型是*值类型*。如果您创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值操作。值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了详细描述。
+在 Swift 中 `String` 类型是*值类型*。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了详细描述。
 
-Swift 默认拷贝字符串的行为保证了在函数/方法向你传递的字符串所属权属于你，无论该值来自于哪里。您可以确信传递的字符串不会被修改，除非你自己去修改它。
+Swift 默认拷贝字符串的行为保证了在函数/方法向你传递的字符串所属权属于你，无论该值来自于哪里。你可以确信传递的字符串不会被修改，除非你自己去修改它。
 
-在实际编译时，Swift 编译器会优化字符串的使用，使实际的复制只发生在绝对必要的情况下，这意味着您将字符串作为值类型的同时可以获得极高的性能。
+在实际编译时，Swift 编译器会优化字符串的使用，使实际的复制只发生在绝对必要的情况下，这意味着你将字符串作为值类型的同时可以获得极高的性能。
 
 <a name="working_with_characters"></a>
 ## 使用字符
 
-您可通过 `for-in` 循环来遍历字符串，获取字符串中每一个字符的值：
+你可通过 `for-in` 循环来遍历字符串，获取字符串中每一个字符的值：
 
 ```swift
 for character in "Dog!🐶" {
@@ -200,7 +200,7 @@ var welcome = string1 + string2
 // welcome 现在等于 "hello there"
 ```
 
-您也可以通过加法赋值运算符（`+=`）将一个字符串添加到一个已经存在字符串变量上：
+你也可以通过加法赋值运算符（`+=`）将一个字符串添加到一个已经存在字符串变量上：
 
 ```swift
 var instruction = "look over"
@@ -208,7 +208,7 @@ instruction += string2
 // instruction 现在等于 "look over there"
 ```
 
-您可以用 `append()` 方法将一个字符附加到一个字符串变量的尾部：
+你可以用 `append()` 方法将一个字符附加到一个字符串变量的尾部：
 
 ```swift
 let exclamationMark: Character = "!"
@@ -218,7 +218,7 @@ welcome.append(exclamationMark)
 
 > 注意
 > 
-> 您不能将一个字符串或者字符添加到一个已经存在的字符变量上，因为字符变量只能包含一个字符。
+> 你不能将一个字符串或者字符添加到一个已经存在的字符变量上，因为字符变量只能包含一个字符。
 
 如果你需要使用多行字符串字面量来拼接字符串，并且你需要字符串每一行都以换行符结尾，包括最后一行：
 
@@ -252,7 +252,7 @@ print(goodStart + end)
 <a name="string_interpolation"></a>
 ## 字符串插值
 
-*字符串插值*是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。**字符串字面量**和**多行字符串字面量**都可以使用字符串插值。您插入的字符串字面量的每一项都在以反斜线为前缀的圆括号中：
+*字符串插值*是一种构建新字符串的方式，可以在其中包含常量、变量、字面量和表达式。**字符串字面量**和**多行字符串字面量**都可以使用字符串插值。你插入的字符串字面量的每一项都在以反斜线为前缀的圆括号中：
 
 ```swift
 let multiplier = 3
@@ -271,7 +271,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 <a name="unicode"></a>
 ## Unicode
 
-*Unicode*是一个用于在不同书写系统中对文本进行编码、表示和处理的国际标准。它使您可以用标准格式表示来自任意语言几乎所有的字符，并能够对文本文件或网页这样的外部资源中的字符进行读写操作。Swift 的 `String` 和 `Character` 类型是完全兼容 Unicode 标准的。
+*Unicode*是一个用于在不同书写系统中对文本进行编码、表示和处理的国际标准。它使你可以用标准格式表示来自任意语言几乎所有的字符，并能够对文本文件或网页这样的外部资源中的字符进行读写操作。Swift 的 `String` 和 `Character` 类型是完全兼容 Unicode 标准的。
 
 <a name="unicode_scalars"></a>
 ### Unicode 标量
@@ -346,7 +346,7 @@ print("the number of characters in \(word) is \(word.count)")
 
 > 注意
 > 
-> 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果您正在处理一个长字符串，需要注意 `count` 属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
+> 可扩展的字符群集可以组成一个或者多个 Unicode 标量。这意味着不同的字符以及相同字符的不同表示方式可能需要不同数量的内存空间来存储。所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间数量。因此在没有获取字符串的可扩展的字符群的范围时候，就不能计算出字符串的字符数量。如果你正在处理一个长字符串，需要注意 `count` 属性必须遍历全部的 Unicode 标量，来确定字符串的字符数量。
 >
 > 另外需要注意的是通过 `count` 属性返回的字符数量并不总是与包含相同字符的 `NSString` 的 `length` 属性相同。`NSString` 的 `length` 属性是利用 UTF-16 表示的十六位代码单元数字，而不是 Unicode 可扩展的字符群集。
 
@@ -364,7 +364,7 @@ print("the number of characters in \(word) is \(word.count)")
 
 使用 `startIndex` 属性可以获取一个 `String` 的第一个 `Character` 的索引。使用 `endIndex` 属性可以获取最后一个 `Character` 的后一个位置的索引。因此，`endIndex` 属性不能作为一个字符串的有效下标。如果 `String` 是空串，`startIndex` 和 `endIndex` 是相等的。
 
-通过调用 `String` 的 `index(before:)` 或 `index(after:)` 方法，可以立即得到前面或后面的一个索引。您还可以通过调用 `index(_:offsetBy:)` 方法来获取对应偏移量的索引，这种方式可以避免多次调用 `index(before:)` 或 `index(after:)` 方法。
+通过调用 `String` 的 `index(before:)` 或 `index(after:)` 方法，可以立即得到前面或后面的一个索引。你还可以通过调用 `index(_:offsetBy:)` 方法来获取对应偏移量的索引，这种方式可以避免多次调用 `index(before:)` 或 `index(after:)` 方法。
 
 你可以使用下标语法来访问 `String` 特定索引的 `Character`。
 
@@ -399,7 +399,7 @@ for index in greeting.indices {
 
 > 注意
 > 
-> 您可以使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法在任意一个确认的并遵循 `Collection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
+> 你可以使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法在任意一个确认的并遵循 `Collection` 协议的类型里面，如上文所示是使用在 `String` 中，你也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
 
 <a name="inserting_and_removing"></a>
 ### 插入和删除
@@ -428,7 +428,7 @@ welcome.removeSubrange(range)
 
 > 注意
 > 
-> 您可以使用 `insert(_:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(_:)` 方法在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面，如上文所示是使用在 `String` 中，您也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
+> 你可以使用 `insert(_:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(_:)` 方法在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面，如上文所示是使用在 `String` 中，你也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
 
 <a name="substrings"></a>
 ## 子字符串
@@ -531,7 +531,7 @@ let romeoAndJuliet = [
 ]
 ```
 
-您可以调用 `hasPrefix(_:)` 方法来计算话剧中第一幕的场景数：
+你可以调用 `hasPrefix(_:)` 方法来计算话剧中第一幕的场景数：
 
 ```swift
 var act1SceneCount = 0
@@ -544,7 +544,7 @@ print("There are \(act1SceneCount) scenes in Act 1")
 // 打印输出 "There are 5 scenes in Act 1"
 ```
 
-相似地，您可以用 `hasSuffix(_:)` 方法来计算发生在不同地方的场景数：
+相似地，你可以用 `hasSuffix(_:)` 方法来计算发生在不同地方的场景数：
 
 ```swift
 var mansionCount = 0
@@ -569,7 +569,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 
 当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种 `编码格式`（encoding forms）编码。每一个字符串中的小块编码都被称 `代码单元`（code units）。这些包括 UTF-8 编码格式（编码字符串为 8 位的代码单元）， UTF-16 编码格式（编码字符串位 16 位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
 
-Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。您可以利用 `for-in` 来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个 `Character` 值。该过程在 [使用字符](#working_with_characters) 中进行了描述。
+Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。你可以利用 `for-in` 来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个 `Character` 值。该过程在 [使用字符](#working_with_characters) 中进行了描述。
 
 另外，能够以其他三种 Unicode 兼容的方式访问字符串的值：
 
@@ -586,7 +586,7 @@ let dogString = "Dog‼🐶"
 <a name="UTF-8_representation"></a>
 ### UTF-8 表示
 
-您可以通过遍历 `String` 的 `utf8` 属性来访问它的 `UTF-8` 表示。其为 `String.UTF8View` 类型的属性，`UTF8View` 是无符号 8 位（`UInt8`）值的集合，每一个 `UInt8` 值都是一个字符的 UTF-8 表示：
+你可以通过遍历 `String` 的 `utf8` 属性来访问它的 `UTF-8` 表示。其为 `String.UTF8View` 类型的属性，`UTF8View` 是无符号 8 位（`UInt8`）值的集合，每一个 `UInt8` 值都是一个字符的 UTF-8 表示：
 
 <table style='text-align:center'>
  <tr height="77">
@@ -638,7 +638,7 @@ print("")
 <a name="UTF-16_representation"></a>
 ### UTF-16 表示
 
-您可以通过遍历 `String` 的 `utf16` 属性来访问它的 `UTF-16` 表示。其为 `String.UTF16View` 类型的属性，`UTF16View` 是无符号16位（`UInt16`）值的集合，每一个 `UInt16` 都是一个字符的 UTF-16 表示：
+你可以通过遍历 `String` 的 `utf16` 属性来访问它的 `UTF-16` 表示。其为 `String.UTF16View` 类型的属性，`UTF16View` 是无符号16位（`UInt16`）值的集合，每一个 `UInt16` 都是一个字符的 UTF-16 表示：
 
 <table style='text-align:center'>
  <tr height="77">
@@ -686,7 +686,7 @@ print("")
 <a name="unicode_scalars_representation"></a>
 ### Unicode 标量表示
 
-您可以通过遍历 `String` 值的 `unicodeScalars` 属性来访问它的 Unicode 标量表示。其为 `UnicodeScalarView` 类型的属性，`UnicodeScalarView` 是 `UnicodeScalar` 类型的值的集合。
+你可以通过遍历 `String` 值的 `unicodeScalars` 属性来访问它的 Unicode 标量表示。其为 `UnicodeScalarView` 类型的属性，`UnicodeScalarView` 是 `UnicodeScalar` 类型的值的集合。
 
 每一个 `UnicodeScalar` 拥有一个 `value` 属性，可以返回对应的 21 位数值，用 `UInt32` 来表示：
 
