@@ -23,7 +23,7 @@ Swift 的 `String` 和 `Character` 类型提供了一种快速且兼容 Unicode 
 let someString = "Some string literal value"
 ```
 
-注意 Swift 之所以推断 `someString` 常量为字符串类型，是因为它使用了字面量方式进行初始化。
+注意，Swift 之所以推断 `someString` 常量为字符串类型，是因为它使用了字面量方式进行初始化。
 
 <a name="multiline_string_literals"></a>
 ### 多行字符串字面量
