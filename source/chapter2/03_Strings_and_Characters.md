@@ -474,7 +474,7 @@ if quotation == sameQuotation {
 // 打印输出 "These two strings are considered equal"
 ```
 
-如果两个字符串（或者两个字符）的可扩展的字形群集是标准相等，那就认为它们是相等的。即使可扩展的字形群集是由不同的 Unicode 标量构成，只要它们有同样的语言意义和外观则认为它们标准相等。
+如果两个字符串（或者两个字符）的可扩展的字形群集是标准相等，那就认为它们是相等的。只要可扩展的字形群集有同样的语言意义和外观则认为它们标准相等，即使它们是由不同的 Unicode 标量构成。
 
 例如，`LATIN SMALL LETTER E WITH ACUTE`(`U+00E9`)就是标准相等于 `LATIN SMALL LETTER E`(`U+0065`)后面加上 `COMBINING ACUTE ACCENT`(`U+0301`)。这两个字符群集都是表示字符 `é` 的有效方式，所以它们被认为是标准相等的：
 
