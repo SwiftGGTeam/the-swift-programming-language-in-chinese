@@ -4,7 +4,7 @@
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符分别提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](/21_Protocols.md#checking_for_protocol_conformance)部分讲述的一样。
+你也可以用它来检查一个类型是否遵循了某个协议，就像在[检验协议遵循](./21_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
 ## 为类型转换定义类层次
@@ -52,10 +52,10 @@ let library = [
     Song(name: "The One And Only", artist: "Chesney Hawkes"),
     Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
 ]
-// the type of "library" is inferred to be [MediaItem]
+// 数组 library 的类型被推断为 [MediaItem]
 ```
 
-在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不会转为 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
+在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
 
 <a name="checking_type"></a>
 ## 检查类型
@@ -208,6 +208,4 @@ let optionalNumber: Int? = 3
 things.append(optionalNumber)        // 警告
 things.append(optionalNumber as Any) // 没有警告
 ```
-
-
 
