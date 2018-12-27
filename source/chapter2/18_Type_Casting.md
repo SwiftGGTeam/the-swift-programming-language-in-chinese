@@ -2,9 +2,9 @@
 
 *类型转换*可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
-类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
+类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符分别提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](./21_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
+你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](/21_Protocols.md#checking_for_protocol_conformance)部分讲述的一样。
 
 <a name="defining_a_class_hierarchy_for_type_casting"></a>
 ## 为类型转换定义类层次
@@ -52,10 +52,10 @@ let library = [
     Song(name: "The One And Only", artist: "Chesney Hawkes"),
     Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
 ]
-// 数组 library 的类型被推断为 [MediaItem]
+// the type of "library" is inferred to be [MediaItem]
 ```
 
-在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
+在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不会转为 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
 
 <a name="checking_type"></a>
 ## 检查类型
@@ -77,11 +77,11 @@ for item in library {
 }
 
 print("Media library contains \(movieCount) movies and \(songCount) songs")
-// 打印 “Media library contains 2 movies and 3 songs”
+// 打印 "Media library contains 2 movies and 3 songs"
 ```
 
 示例迭代了数组 `library` 中的所有项。每一次，`for-in` 循环设置
-`item` 为数组中的下一个 `MediaItem`。
+`item` 常量为数组中的下一个 `MediaItem` 实例。
 
 若当前 `MediaItem` 是一个 `Movie` 类型的实例，`item is Movie` 返回
 `true`，否则返回 `false`。同样的，`item is Song` 检查 `item` 是否为 `Song` 类型的实例。在循环结束后，`movieCount` 和 `songCount` 的值就是被找到的属于各自类型的实例的数量。
@@ -89,7 +89,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 <a name="downcasting"></a>
 ## 向下转型
 
-某类型的一个常量或变量可能在幕后实际上属于一个子类。当确定是这种情况时，你可以尝试向下转到它的子类型，用*类型转换操作符*（`as?` 或 `as!`）。
+某类型的一个常量或变量可能在幕后实际上属于一个子类。当确定是这种情况时，你可以尝试用*类型转换操作符*（`as?` 或 `as!`）向下转到它的子类型。
 
 因为向下转型可能会失败，类型转型操作符带有两种不同形式。条件形式 `as?` 返回一个你试图向下转成的类型的可选值。强制形式 `as!` 把试图向下转型和强制解包转换结果结合为一个操作。
 
@@ -104,17 +104,17 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 ```swift
 for item in library {
     if let movie = item as? Movie {
-        print("Movie: '\(movie.name)', dir. \(movie.director)")
+        print("Movie: \(movie.name), dir. \(movie.director)")
     } else if let song = item as? Song {
-        print("Song: '\(song.name)', by \(song.artist)")
+        print("Song: \(song.name), by \(song.artist)")
     }
 }
 
-// Movie: 'Casablanca', dir. Michael Curtiz
-// Song: 'Blue Suede Shoes', by Elvis Presley
-// Movie: 'Citizen Kane', dir. Orson Welles
-// Song: 'The One And Only', by Chesney Hawkes
-// Song: 'Never Gonna Give You Up', by Rick Astley
+// Movie: Casablanca, dir. Michael Curtiz
+// Song: Blue Suede Shoes, by Elvis Presley
+// Movie: Citizen Kane, dir. Orson Welles
+// Song: The One And Only, by Chesney Hawkes
+// Song: Never Gonna Give You Up, by Rick Astley
 ```
 
 示例首先试图将 `item` 下转为 `Movie`。因为 `item` 是一个 `MediaItem`
@@ -140,7 +140,7 @@ Swift 为不确定类型提供了两种特殊的类型别名：
 * `Any` 可以表示任何类型，包括函数类型。
 * `AnyObject` 可以表示任何类类型的实例。
 
-只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。当你期望你的代码可以工作，最好还是要确定类型。
+只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。最好还是在代码中指明需要使用的类型。
 
 这里有个示例，使用 `Any` 类型来和混合的不同类型一起工作，包括函数类型和非类类型。它创建了一个可以存储 `Any` 类型的数组 `things`：
 
@@ -179,7 +179,7 @@ for thing in things {
     case let (x, y) as (Double, Double):
         print("an (x, y) point at \(x), \(y)")
     case let movie as Movie:
-        print("a movie called '\(movie.name)', dir. \(movie.director)")
+        print("a movie called \(movie.name), dir. \(movie.director)")
     case let stringConverter as (String) -> String:
         print(stringConverter("Michael"))
     default:
@@ -193,7 +193,7 @@ for thing in things {
 // a positive double value of 3.14159
 // a string value of "hello"
 // an (x, y) point at 3.0, 5.0
-// a movie called 'Ghostbusters', dir. Ivan Reitman
+// a movie called Ghostbusters, dir. Ivan Reitman
 // Hello, Michael
 ```
 
@@ -208,3 +208,6 @@ let optionalNumber: Int? = 3
 things.append(optionalNumber)        // 警告
 things.append(optionalNumber as Any) // 没有警告
 ```
+
+
+
