@@ -128,7 +128,7 @@ swapTwoValues(&someString, &anotherString)
 
 下图展示了一个栈的入栈（push）和出栈（pop）的行为：
 
-![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png)
+![此处输入图片的描述](https://docs.swift.org/swift-book/_images/stackPushPop_2x.png)
 
 1. 现在有三个值在栈中。
 2. 第四个值被压入到栈的顶部。
@@ -191,7 +191,7 @@ stackOfStrings.push("cuatro")
 
 下图展示了 `stackOfStrings` 如何将这四个值入栈：
 
-![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushedFourStrings_2x.png)
+![此处输入图片的描述](https://docs.swift.org/swift-book/_images/stackPushedFourStrings_2x.png)
 
 移除并返回栈顶部的值 `"cuatro"`，即将其出栈：
 
@@ -202,7 +202,7 @@ let fromTheTop = stackOfStrings.pop()
 
 下图展示了 `stackOfStrings` 如何将顶部的值出栈：
 
-![此处输入图片的描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPoppedOneString_2x.png)
+![此处输入图片的描述](https://docs.swift.org/swift-book/_images/stackPoppedOneString_2x.png)
 
 <a name="extending_a_generic_type"></a>
 ## 扩展一个泛型类型

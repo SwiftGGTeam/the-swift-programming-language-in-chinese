@@ -2,7 +2,7 @@
 
 Swift 语言提供 `Arrays`、`Sets` 和 `Dictionaries` 三种基本的*集合类型*用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/CollectionTypes_intro_2x.png)
+![](https://docs.swift.org/swift-book/_images/CollectionTypes_intro_2x.png)
 
 Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类型必须明确。这意味着我们不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
 
@@ -419,7 +419,7 @@ for genre in favoriteGenres.sorted() {
 
 下面的插图描述了两个集合-`a` 和 `b`-以及通过阴影部分的区域显示集合各种操作的结果。
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setVennDiagram_2x.png)
+![](https://docs.swift.org/swift-book/_images/setVennDiagram_2x.png)
 
 * 使用 `intersection(_:)` 方法根据两个集合中都包含的值创建的一个新的集合。
 * 使用 `symmetricDifference(_:)` 方法根据在一个集合中但不在两个集合中的值创建一个新的集合。
@@ -446,7 +446,7 @@ oddDigits. symmetricDifference(singleDigitPrimeNumbers).sorted()
 
 下面的插图描述了三个集合-`a`,`b` 和 `c`,以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的父集合，因为 `a` 包含了 `b` 中所有的元素，相反的，集合 `b` 是集合 `a` 的子集合，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 彼此不关联，因为它们之间没有共同的元素。
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setEulerDiagram_2x.png)
+![](https://docs.swift.org/swift-book/_images/setEulerDiagram_2x.png)
 
 * 使用“是否相等”运算符（`==`）来判断两个集合是否包含全部相同的值。
 * 使用 `isSubset(of:)` 方法来判断一个集合中的值是否也被包含在另外一个集合中。

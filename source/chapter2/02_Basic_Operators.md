@@ -84,7 +84,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 我们来谈谈取余是怎么回事，计算 `9 % 4`，你先计算出 `4` 的多少倍会刚好可以容入 `9` 中：
 
-![Art/remainderInteger_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderInteger_2x.png "Art/remainderInteger_2x.png")
+![Art/remainderInteger_2x.png](https://docs.swift.org/swift-book/_images/remainderInteger_2x.png "Art/remainderInteger_2x.png")
 
 你可以在 `9` 中放入两个 `4`，那余数是 1（用橙色标出）。
 

@@ -10,7 +10,7 @@ Swift 的 `String` 和 `Character` 类型提供了一种快速且兼容 Unicode 
 > 
 > Swift 的 `String` 类型与 Foundation `NSString` 类进行了无缝桥接。Foundation 还对 `String` 进行扩展使其可以访问 `NSString` 类型中定义的方法。这意味着调用那些 `NSString` 的方法，你无需进行任何类型转换。
 > 
-> 更多关于在 Foundation 和 Cocoa 中使用 `String` 的信息请查看 *[Using Swift with Cocoa and Objective-C (Swift 4)](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)*。
+> 更多关于在 Foundation 和 Cocoa 中使用 `String` 的信息请查看 *[Bridging Between String and NSString](https://developer.apple.com/documentation/swift/string#2919514)*。
 
 <a name="string_literals"></a>
 ## 字符串字面量
@@ -74,7 +74,7 @@ It also ends with a line break.
 
 一个多行字符串字面量能够缩进来匹配周围的代码。关闭引号（`"""`）之前的空白字符串告诉 Swift 编译器其他各行多少空白字符串需要忽略。然而，如果你在某行的前面写的空白字符串超出了关闭引号（`"""`）之前的空白字符串，则超出部分将被包含在多行字符串字面量中。
 
-![](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Art/multilineStringWhitespace_2x.png)
+![](https://docs.swift.org/swift-book/_images/multilineStringWhitespace_2x.png)
 
 在上面的例子中，尽管整个多行字符串字面量都是缩进的（源代码缩进），第一行和最后一行没有以空白字符串开始（实际的变量值）。中间一行的缩进用空白字符串（源代码缩进）比关闭引号（`"""`）之前的空白字符串多，所以，它的行首将有4个空格。
 
@@ -449,7 +449,7 @@ let newString = String(beginning)
 
 上面的例子，`greeting` 是一个 `String`，意味着它在内存里有一片空间保存字符集。而由于 `beginning` 是 `greeting` 的 `SubString`，它重用了 `greeting` 的内存空间。相反，`newString` 是一个 `String` —— 它是使用 `SubString` 创建的，拥有一片自己的内存空间。下面的图展示了他们之间的关系：
 
-![](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stringSubstring_2x.png)
+![](https://docs.swift.org/swift-book/_images/stringSubstring_2x.png)
 
 > 注意
 > 
