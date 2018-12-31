@@ -14,7 +14,6 @@ subscript(index: Int) -> Int {
     get {
       // 返回一个适当的 Int 类型的值
     }
-
     set(newValue) {
       // 执行适当的赋值操作
     }
@@ -67,7 +66,7 @@ numberOfLegs["bird"] = 2
 
 上例定义一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型被推断为 `[String: Int]`。字典创建完成后，该例子通过下标将 `String` 类型的键 `bird` 和 `Int` 类型的值 `2` 添加到字典中。
 
-更多关于 `Dictionary` 下标的信息请参考[读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)
+更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)。
 
 > 注意
 > 
@@ -107,7 +106,7 @@ struct Matrix {
 }
 ```
 
-`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考[创建一个带有默认值的数组](./04_Collection_Types.html#creating_an_array_with_a_default_value)。
+`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考 [创建一个带有默认值的数组](./04_Collection_Types.html#creating_an_array_with_a_default_value)。
 
 你可以通过传入合适的 `row` 和 `column` 的数量来构造一个新的 `Matrix` 实例：
 
@@ -117,7 +116,7 @@ var matrix = Matrix(rows: 2, columns: 2)
 
 上例中创建了一个 `Matrix` 实例来表示两行两列的矩阵。该 `Matrix` 实例的 `grid` 数组按照从左上到右下的阅读顺序将矩阵扁平化存储：
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix01_2x.png)
+![](https://docs.swift.org/swift-book/_images/subscriptMatrix01_2x.png)
 
 将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔：
 
@@ -128,7 +127,7 @@ matrix[1, 0] = 3.2
 
 上面两条语句分别调用下标的 setter 将矩阵右上角位置（即 `row` 为 `0`、`column` 为 `1` 的位置）的值设置为 `1.5`，将矩阵左下角位置（即 `row` 为 `1`、`column` 为 `0` 的位置）的值设置为 `3.2`：
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/subscriptMatrix02_2x.png)
+![](https://docs.swift.org/swift-book/_images/subscriptMatrix02_2x.png)
 
 `Matrix` 下标的 getter 和 setter 中都含有断言，用来检查下标入参 `row` 和 `column` 的值是否有效。为了方便进行断言，`Matrix` 包含了一个名为 `indexIsValid(row:column:)` 的便利方法，用来检查入参 `row` 和 `column` 的值是否在矩阵范围内：
 

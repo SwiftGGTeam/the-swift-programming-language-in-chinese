@@ -667,7 +667,7 @@ let implicitString: String = assumedString  // 不需要感叹号
 
 ```swift
 if assumedString != nil {
-    print(assumedString)
+    print(assumedString!)
 }
 // 输出 "An implicitly unwrapped optional string."
 ```
