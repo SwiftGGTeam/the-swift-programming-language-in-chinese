@@ -29,7 +29,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // 打印 "someInt is now 107, and anotherInt is now 3"
 
 ```
-`swapTwoInts(_:_:)` 函数很实用，但它只能作用于 `Int` 类型。如果你想交换两个 `String` 类型值，或者两个 `Double` 类型值，你必须编写对应的函数，类似下面 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数：
+`swapTwoInts(_:_:)` 函数很实用，但它只能作用于 `Int` 类型。如果你想交换两个 `String` 类型值，或者 `Double` 类型值，你必须编写对应的函数，类似下面 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数：
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
@@ -54,7 +54,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 
 ## 泛型函数
 
-泛型函数可以适用于任意类型，这里是上面函数 `swapTwoInts(_:_:)` 的泛型版本，命名为 `swapTwoValues(_:_:)`：
+泛型函数可适用于任意类型，下面是函数 `swapTwoInts(_:_:)` 的泛型版本，命名为 `swapTwoValues(_:_:)`：
 
 ```swift
 func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
@@ -73,14 +73,14 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 -----
 
 
-泛型版本的函数使用`占位`类型名（这里叫做 T ），而不是实际类型名（例如 `Int`、`String` 或 `Double`），`占位`类型名并不关心 T 具体的类型，但它要求 a 和 b 必须是相同的类型，T 的实际类型由每次调用 `swapTwoValues(_:_:)` 来决定。
+泛型版本的函数使用`占位符`类型名（这里叫做 `T` ），而不是 *实际*类型名（例如 `Int`、`String` 或 `Double`），`占位符`类型名并不关心 `T` 具体的类型，但它要求 `a` 和` b` 必须是相同的类型，`T` 的实际类型由每次调用 `swapTwoValues(_:_:)` 来决定。
 
 
-泛型函数和非泛型函数的另外一个不同之处，在于这个泛型函数名（swapTwoValues(_:_:)）后面跟着占位类型名（T），并用尖括号括起来（<T>）。这个尖括号告诉 Swift 那个 T 是 swapTwoValues(_:_:) 函数定义内的一个占位类型名，因此 Swift 不会去查找名为 T 的实际类型。
+泛型函数和非泛型函数的另外一个不同之处在于这个泛型函数名（`swapTwoValues(_:_:)`）后面跟着占位类型名（`T`），并用尖括号括起来（`<T>`）。这个尖括号告诉 Swift 那个 `T` 是 `swapTwoValues(_:_:)` 函数定义内的一个占位类型名，因此 Swift 不会去查找名为 `T `的实际类型。
 
-swapTwoValues(_:_:) 函数现在可以像 swapTwoInts(_:_:) 那样调用，不同的是它能接受两个任意类型的值，条件是这两个值有着相同的类型。swapTwoValues(_:_:) 函数被调用时，T 所代表的类型都会由传入的值的类型推断出来。
+`swapTwoValues(_:_:)` 函数现在可以像 `swapTwoInts(_:_:)` 那样调用，不同的是它能接受两个任意类型的值，条件是这两个值有着相同的类型。`swapTwoValues(_:_:)` 函数被调用时，`T ` 所代表的类型都会由传入的值的类型推断出来。
 
-在下面的两个例子中，T 分别代表 Int 和 String：
+在下面的两个例子中，`T` 分别代表 ` Int`  和 `String`：
 
 ```swift
 var someInt = 3
@@ -97,7 +97,7 @@ swapTwoValues(&someString, &anotherString)
 
 > 注意
 
-> 上面定义的 swapTwoValues(_:_:) 函数是受 swap(_:_:) 函数启发而实现的。后者存在于 Swift 标准库，你可以在你的应用程序中使用它。如果你在代码中需要类似 swapTwoValues(_:_:) 函数的功能，你可以使用已存在的 swap(_:_:) 函数。
+> 上面定义的 `swapTwoValues(_:_:)` 函数是受 `swap(_:_:)` 函数启发而实现的。后者存在于 Swift 标准库，你可以在你的应用程序中使用它。如果你在代码中需要类似 `swapTwoValues(_:_:)` 函数的功能，你可以使用已存在的 `swap(_:_:)` 函数。
 
 ## 类型参数
 
@@ -116,7 +116,7 @@ swapTwoValues(&someString, &anotherString)
 
 ## 泛型类型
 
-除了泛型函数，Swift 还允许自定义泛型类型。这些自定义类、结构体和枚举可以适用于任何类型，类似于 `Array` 和 `Dictionary`。
+除了泛型函数，Swift 还允许自定义*泛型类型*。这些自定义类、结构体和枚举可以适用于*任意类型*，类似于 `Array` 和 `Dictionary`。
 
 本节将向你展示如何编写一个名为 `Stack`（栈）的泛型集合类型。栈是值的有序集合，和数组类似，但比数组有更严格的操作限制。数组允许在其中任意位置插入或是删除元素。而栈只允许在集合的末端添加新的元素（称之为入栈）。类似的，栈也只能从末端移除元素（称之为出栈）。
 
@@ -133,7 +133,7 @@ swapTwoValues(&someString, &anotherString)
 4. 栈中最顶部的那个值被移除出栈。
 5. 一个值移除出栈后，现在栈又只有三个值了。
 
-下面展示如何编写一个非泛型版本的栈，以 Int 型的栈为例：
+下面展示如何编写一个非泛型版本的栈，以 `Int` 型的栈为例：
 
 ```swift
 struct IntStack {
@@ -164,7 +164,7 @@ struct Stack<Element> {
     }
 }
 ```
-注意，`Stack` 基本上和 `IntStack` 相同，只是用占位类型参数 `Element` 代替了实际的 `Int` 类型。这个类型参数包裹在紧随结构体名的一对尖括号里（`<Element>`）。
+注意，`Stack` 基本上和 `IntStack` 相同，只是用占位类型参数 `Element` 代替了实际的 `Int` 类型。这个类型参数包裹在紧随结构体名的一对尖括号里（<`Element`>）。
 
 `Element` 为待提供的类型定义了一个占位名。这种待提供的类型可以在结构体的定义中通过 `Element` 来引用。在这个例子中，`Element` 在如下三个地方被用作占位符：
 
@@ -172,7 +172,7 @@ struct Stack<Element> {
 + 指定 `push(_:)` 方法的唯一参数 `item` 的类型必须是 `Element` 类型。
 + 指定 `pop()` 方法的返回值类型必须是 `Element` 类型。
 
-由于 `Stack` 是泛型类型，因此可以用来创建 Swift 中任意有效类型的栈，就像 `Array` 和 `Dictionary` 那样。
+由于 `Stack` 是泛型类型，因此可以用来创建适用于 Swift 中任意有效类型的栈，就像 `Array` 和 `Dictionary` 那样。
 
 你可以通过在尖括号中写出栈中需要存储的数据类型来创建并初始化一个 `Stack` 实例。例如，要创建一个 `String` 类型的栈，可以写成 `Stack<String>()`：
 
@@ -185,7 +185,7 @@ stackOfStrings.push("cuatro")
 // 栈中现在有 4 个字符串
 ```
 
-下图展示了 stackOfStrings 如何将这四个值压栈：
+下图展示了 `stackOfStrings` 如何将这四个值压栈：
 
 ![](https://docs.swift.org/swift-book/_images/stackPushedFourStrings_2x.png)
 
@@ -227,9 +227,9 @@ if let topItem = stackOfStrings.topItem {
 
 ## 类型约束
 
-`swapTwoValues(_:_:)` 函数和 `Stack` 类型适用于任意类型。不过，如果能对泛型函数或泛型类型中添加特定的*类型约束*，这将在某些情况下非常的有用。类型约束指定类型参数必须继承自指定类、遵循特定的协议或协议组合。
+`swapTwoValues(_:_:)` 函数和 `Stack` 适用于任意类型。不过，如果能对泛型函数或泛型类型中添加特定的*类型约束*，这将在某些情况下非常有用。类型约束指定类型参数必须继承自指定类、遵循特定的协议或协议组合。
 
-例如，Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在[字典的描述](https://docs.swift.org/swift-book/LanguageGuide/CollectionTypes.html#ID113)中，字典的键的类型必须是可哈希（hashable）的。也就是说，必须有一种方法能够唯一地表示它。字典的键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
+例如，Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 [字典的描述](https://docs.swift.org/swift-book/LanguageGuide/CollectionTypes.html#ID113) 中，字典键的类型必须是可哈希（hashable）的。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
 
 这个要求通过 `Dictionary` 键类型上的类型约束实现，它指明了键必须遵循 Swift 标准库中定义的 `Hashable` 协议。所有 Swift 的基本类型（例如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希的。
 
@@ -284,11 +284,11 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
 }
 ```
 
-上面所写的函数无法通过编译。问题出在相等性检查上，即 "`if value == valueToFind`"。不是所有的 Swift 类型都可以用等式符（`==`）进行比较。例如，如果你自定义类或结构体来描述复杂的数据模型，对于这个类或结构体而言，Swift 无法明确知道“相等”意味着什么。正因如此，这部分代码无法保证适用于每个可能的类型 `T`，当你试图编译这部分代码时会出现相应的错误。
+上面所写的函数无法通过编译。问题出在相等性检查上，即 "`if value == valueToFind`"。不是所有的 Swift 类型都可以用等式符（`==`）进行比较。例如，如果你自定义类或结构体来描述复杂的数据模型，对于这个类或结构体而言，Swift 无法明确知道“相等”意味着什么。正因如此，这部分代码无法保证适用于任意类型 `T`，当你试图编译这部分代码时就会出现相应的错误。
 
-不过，所有的这些并不会让我们无从下手。Swift 标准库中定义了一个 `Equatable` 协议，该协议要求任何遵循该协议的类型必须实现等式符（`==`）及不等符（!=），从而能对该类型的任意两个值进行比较。所有的 Swift 标准类型自动支持 `Equatable` 协议。
+不过，所有的这些并不会让我们无从下手。Swift 标准库中定义了一个 `Equatable` 协议，该协议要求任何遵循该协议的类型必须实现等式符（`==`）及不等符（`!=`），从而能对该类型的任意两个值进行比较。所有的 Swift 标准类型自动支持 `Equatable` 协议。
 
-遵循 `Equatable` 协议的类型都可以安全地用于 `findIndex(of:in:)` 函数，因为其保证支持等式操作符。为了说明这个事实，当你定义一个函数时，你可以定义一个 `Equatable` 类型约束作为类型参数定义的一部分：
+遵循 `Equatable` 协议的类型都可以安全地用于 `findIndex(of:in:)` 函数，因为其保证支持等式操作符。为了说明这个事情，当定义一个函数时，你可以定义一个 `Equatable` 类型约束作为类型参数定义的一部分：
 
 ```swift
 func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
@@ -313,7 +313,7 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 
 ## 关联类型
 
-定义一个协议时，有时声明一个或多个关联类型作为协议定义的一部分将会非常有用。关联类型为协议中的某个类型提供了一个占位符名称，其代表的实际类型在协议被遵循时才会被指定。关联类型通过 `associatedtype` 关键字来指定。
+定义一个协议时，声明一个或多个关联类型作为协议定义的一部分将会非常有用。关联类型为协议中的某个类型提供了一个占位符名称，其代表的实际类型在协议被遵循时才会被指定。关联类型通过 `associatedtype` 关键字来指定。
 
 ### 关联类型实践
 
@@ -475,7 +475,7 @@ extension IntStack: SuffixableContainer {
 
 [类型约束](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID186)让你能够为泛型函数、下标、类型的类型参数定义一些强制要求。
 
-对关联类型定义约束通常也是非常有用的。你可以通过定义一个泛型 `where` 分句来实现。你能通过泛型 `where` 子句要求一个关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 `where` 子句。
+对关联类型添加约束通常是非常有用的。你可以通过定义一个泛型 `where` 子句来实现。通过泛型 `where` 子句让关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 `where` 子句。
 
 下面的例子定义了一个名为 `allItemsMatch` 的泛型函数，用来检查两个 `Container` 实例是否包含相同顺序的相同元素。如果所有的元素能够匹配，那么返回 `true`，否则返回 `false`。
 
