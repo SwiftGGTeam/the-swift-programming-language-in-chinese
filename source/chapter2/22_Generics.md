@@ -294,6 +294,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 ```
 上面这个函数有两个类型参数。第一个类型参数 `T` 必须是 `SomeClass` 子类；第二个类型参数 `U` 必须符合 `SomeProtocol` 协议。
 
+<a name="type_constraints_in_action"></a>
 ### 类型约束实践
 
 这里有个名为 `findIndex(ofString:in:)` 的非泛型函数，该函数的功能是在一个 `String` 数组中查找给定 `String` 值的索引。若查找到匹配的字符串，`findIndex(ofString:in:)` 函数返回该字符串在数组中的索引值，否则返回 `nil`：
@@ -422,7 +423,7 @@ struct IntStack: Container {
 
 由于 Swift 的类型推断，实际上在 `IntStack` 的定义中不需要声明 `Item` 为 `Int`。因为 `IntStack` 符合 `Container` 协议的所有要求，Swift 只需通过 `append(_:)` 方法的 `item` 参数类型和下标返回值的类型，就可以推断出 `Item` 的具体类型。事实上，如果你在上面的代码中删除了 `typealias Item = Int` 这一行，一切也可正常工作，因为 Swift 清楚地知道 `Item` 应该是哪种类型。
 
-你也可以让泛型 `Stack` 结构体遵从 `Container` 协议：
+你也可以让泛型 `Stack` 结构体遵循 `Container` 协议：
 
 ```swift
 struct Stack<Element>: Container {
@@ -473,6 +474,7 @@ protocol Container {
 ```
 要遵守 `Container` 协议，`Item` 类型也必须遵守 `Equatable` 协议。
 
+<a name="Using_a_Protocol_in_Its_Associated_Type’s_Constraints"></a>
 ### 在关联类型约束里使用协议
 
 协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个` suffix(_:)` 方法。`suffix(_:)` 方法返回容器中从后往前给定数量的元素，并把它们存储在一个 `Suffix` 类型的实例里。
@@ -597,9 +599,9 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
     print("Not all items match.")
 }
 // 打印 “All items match.”
-
 ```
 上面的例子创建 `Stack` 实例来存储 `String` 值，然后将三个字符串压栈。这个例子还通过数组字面量创建了一个 `Array` 实例，数组中包含同栈中一样的三个字符串。即使栈和数组是不同的类型，但它们都遵从 `Container` 协议，而且它们都包含相同类型的值。因此你可以用这两个容器作为参数来调用 `allItemsMatch(_:_:)` 函数。在上面的例子中，`allItemsMatch(_:_:)` 函数正确地显示了这两个容器中的所有元素都是相互匹配的。
+
 
 <a name="extensions_with_a_generic_where_clause"></a>
 
@@ -617,6 +619,7 @@ extension Stack where Element: Equatable {
     }
 }
 ```
+
 这个新的 `isTop(_:)` 方法首先检查这个栈是不是空的，然后比较给定的元素与栈顶部的元素。如果你尝试不用泛型 `where` 子句，会有一个问题：在 `isTop(_:)` 里面使用了 `==` 运算符，但是 `Stack` 的定义没有要求它的元素是符合 `Equatable` 协议的，所以使用 `==` 运算符导致编译时错误。使用泛型 `where` 子句可以为扩展添加新的条件，因此只有当栈中的元素符合 `Equatable` 协议时，扩展才会添加 `isTop(_:)` 方法。
 
 以下是 `isTop(_:)` 方法的调用方式：
@@ -629,6 +632,7 @@ if stackOfStrings.isTop("tres") {
 }
 // 打印 "Top element is tres."
 ```
+
 如果尝试在其元素不符合 `Equatable` 协议的栈上调用 `isTop(_:)` 方法，则会收到编译时错误。
 
 ```swift
@@ -647,6 +651,7 @@ extension Container where Item: Equatable {
     }
 }
 ```
+
 这个 `startsWith(_:)` 方法首先确保容器至少有一个元素，然后检查容器中的第一个元素是否与给定的元素相等。任何符合 `Container` 协议的类型都可以使用这个新的 `startsWith(_:)` 方法，包括上面使用的栈和数组，只要容器的元素是符合 `Equatable` 协议的。
 
 ```swift
@@ -658,7 +663,7 @@ if [9, 9, 9].startsWith(42) {
 // 打印 "Starts with something else."
 ```
 
-上述示例中的泛型 `where` 子句要求 `Item` 符合协议，但也可以编写一个泛型 `where` 子句去要求 `Item` 为特定类型。例如：
+上述示例中的泛型 `where` 子句要求 `Item` 遵循协议，但也可以编写一个泛型 `where` 子句去要求 `Item` 为特定类型。例如：
 
 ```swift
 extension Container where Item == Double {
