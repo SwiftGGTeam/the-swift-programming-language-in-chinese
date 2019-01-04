@@ -234,7 +234,7 @@ for item in shoppingList {
 如果我们同时需要每个数据项的值和索引值，可以使用 `enumerated()` 方法来进行数组遍历。`enumerated()` 返回一个由每一个数据项索引值和数据值组成的元组。我们可以把这个元组分解成临时常量或者变量来进行遍历：
 
 ```swift
-for (index, value) in shoppingList. enumerated() {
+for (index, value) in shoppingList.enumerated() {
     print("Item \(String(index + 1)): \(value)")
 }
 // Item 1: Six eggs
@@ -259,9 +259,9 @@ for (index, value) in shoppingList. enumerated() {
 <a name="hash_values_for_set_types"></a>
 ### 集合类型的哈希值
 
-一个类型为了存储在集合中，该类型必须是*可哈希化*的--也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
+一个类型为了存储在集合中，该类型必须是*可哈希化*的——也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
 
-Swift 的所有基本类型（比如 `String`,`Int`,`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.html)有讲述）默认也是可哈希化的。
+Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.html)有讲述）默认也是可哈希化的。
 
 > 注意
 > 
@@ -301,7 +301,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 letters.insert("a")
 // letters 现在含有1个 Character 类型的值
 letters = []
-// letters 现在是一个空的 Set, 但是它依然是 Set<Character> 类型
+// letters 现在是一个空的 Set，但是它依然是 Set<Character> 类型
 ```
 
 <a name="creating_a_set_with_an_array_literal"></a>
@@ -417,7 +417,7 @@ for genre in favoriteGenres.sorted() {
 <a name="fundamental_set_operations"></a>
 ### 基本集合操作
 
-下面的插图描述了两个集合-`a` 和 `b`-以及通过阴影部分的区域显示集合各种操作的结果。
+下面的插图描述了两个集合 `a` 和 `b`，以及通过阴影部分的区域显示集合各种操作的结果。
 
 ![](https://docs.swift.org/swift-book/_images/setVennDiagram_2x.png)
 
@@ -433,18 +433,18 @@ let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
 
 oddDigits.union(evenDigits).sorted()
 // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-oddDigits. intersection(evenDigits).sorted()
+oddDigits.intersection(evenDigits).sorted()
 // []
 oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
 // [1, 9]
-oddDigits. symmetricDifference(singleDigitPrimeNumbers).sorted()
+oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 // [1, 2, 9]
 ```
 
 <a name="set_membership_and_equality"></a>
 ### 集合成员关系和相等
 
-下面的插图描述了三个集合-`a`,`b` 和 `c`,以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的父集合，因为 `a` 包含了 `b` 中所有的元素，相反的，集合 `b` 是集合 `a` 的子集合，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 彼此不关联，因为它们之间没有共同的元素。
+下面的插图描述了三个集合 `a`、`b` 和 `c`,以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的父集合，因为 `a` 包含了 `b` 中所有的元素，相反的，集合 `b` 是集合 `a` 的子集合，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 彼此不关联，因为它们之间没有共同的元素。
 
 ![](https://docs.swift.org/swift-book/_images/setEulerDiagram_2x.png)
 
@@ -619,7 +619,7 @@ airports["APL"] = nil
 此外，`removeValue(forKey:)` 方法也可以用来在字典中移除键值对。这个方法在键值对存在的情况下会移除该键值对并且返回被移除的值或者在没有值的情况下返回 `nil`：
 
 ```swift
-if let removedValue = airports. removeValue(forKey: "DUB") {
+if let removedValue = airports.removeValue(forKey: "DUB") {
     print("The removed airport's name is \(removedValue).")
 } else {
     print("The airports dictionary does not contain a value for DUB.")
