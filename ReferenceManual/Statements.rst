@@ -894,8 +894,8 @@ Platform condition        Valid arguments
 ========================  ===================================================
 ``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
-``swift()``               ``>=`` followed by a version number
-``compiler()``            ``>=`` followed by a version number
+``swift()``               ``>=`` or ``<`` followed by a version number
+``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
@@ -907,7 +907,7 @@ Platform condition        Valid arguments
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
-There must not be whitespace between ``>=`` and the version number.
+There must not be whitespace between the comparison operator and the version number.
 The version for ``compiler()`` is the compiler version,
 regardless of the Swift version setting passed to the compiler.
 The version for ``swift()`` is the language version currently being compiled.
@@ -927,6 +927,9 @@ the following code prints only the first and last messages:
       #if swift(>=3.0)
       print("Compiled in Swift 3.0 mode or later")
       #endif
+      #if swift(<3)
+      print("Compiled in Swift 3 mode or earlier")
+      endif
    <- Compiled with the Swift 4.2 compiler or later
    << Compiled in Swift 4.2 mode or later
    <- Compiled in Swift 3.0 mode or later
@@ -1052,8 +1055,8 @@ have the following form:
 
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
-    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)``
+    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)`` | ``swift`` ``(`` ``<`` swift-version ``)``
+    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)`` | ``compiler`` ``(`` ``<`` swift-version ``)``
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
