@@ -726,7 +726,7 @@ You can implement it yourself,
 or for many types, you can ask Swift to synthesize
 an implementation for you.
 In both cases,
-you add conformance to the standard library's ``Equivalence`` protocol.
+you add conformance to the standard library's ``Equatable`` protocol.
 
 You provide an implementation of the ``==`` operator
 in the same way as you implement other infix operators:
@@ -772,8 +772,6 @@ To receive a synthesized implementation of ``==``,
 declare ``Equatable`` conformance
 in the file that contains the original declaration,
 without implementing an ``==`` operator yourself.
-
-.. XXX: Add a cross reference to a definition of synthesyzed implementation.
 
 The example below defines a ``Vector3D`` structure
 for a three-dimensional position vector ``(x, y, z)``,
