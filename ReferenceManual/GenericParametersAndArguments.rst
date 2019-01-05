@@ -38,14 +38,14 @@ each of which has the following form:
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. A :newTerm:`type parameter` is simply the name
 of a placeholder type
-(for instance, ``T``, ``U``, ``V``, ``Key``, ``Value``, and so on).
+(for example, ``T``, ``U``, ``V``, ``Key``, ``Value``, and so on).
 You have access to the type parameters (and any of their associated types) in the rest of the
 type, function, or initializer declaration, including in the signature of the function
 or initializer.
 
 The *constraint* specifies that a type parameter inherits
 from a specific class or conforms to a protocol or protocol composition.
-For instance, in the generic function below, the generic parameter ``T: Comparable``
+For example, in the generic function below, the generic parameter ``T: Comparable``
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
@@ -91,9 +91,9 @@ The *requirements* in a generic ``where`` clause specify that a type parameter i
 a class or conforms to a protocol or protocol composition.
 Although the generic ``where`` clause provides syntactic
 sugar for expressing simple constraints on type parameters
-(for instance, ``<T: Comparable>`` is equivalent to ``<T> where T: Comparable`` and so on),
+(for example, ``<T: Comparable>`` is equivalent to ``<T> where T: Comparable`` and so on),
 you can use it to provide more complex constraints on type parameters
-and their associated types. For instance,
+and their associated types. For example,
 you can constrain the associated types of type parameters to conform to protocols.
 For example, ``<S: Sequence> where S.Iterator.Element: Equatable``
 specifies that ``S`` conforms to the ``Sequence`` protocol

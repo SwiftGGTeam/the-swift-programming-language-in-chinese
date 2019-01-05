@@ -22,7 +22,7 @@ discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_Extension
 A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
 There are two compound types: function types and tuple types.
 A compound type may contain named types and other compound types.
-For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
+For example, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
@@ -633,7 +633,7 @@ have the same ``Optional<Wrapped>`` type as optional values,
 you can use implicitly unwrapped optionals
 in all the same places in your code
 that you can use optionals.
-For instance, you can assign values of implicitly unwrapped
+For example, you can assign values of implicitly unwrapped
 optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
@@ -846,7 +846,7 @@ instead of writing ``var x: Int = 0``, you can write ``var x = 0``,
 omitting the type completely ---
 the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
-For instance, if you write ``let dict: Dictionary = ["A": 1]``,
+For example, if you write ``let dict: Dictionary = ["A": 1]``,
 the compiler infers that ``dict`` has the type ``Dictionary<String, Int>``.
 
 In both of the examples above,

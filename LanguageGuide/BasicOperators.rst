@@ -307,7 +307,7 @@ Swift supports all standard C :newTerm:`comparison operators`:
 
    Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
    which you use to test whether two object references both refer to the same object instance.
-   For more information, see :doc:`ClassesAndStructures`.
+   For more information, see :ref:`ClassesAndStructures_IdentityOperators`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 

@@ -760,7 +760,7 @@ A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
 A function can have at most one variadic parameter.
 A variadic parameter is treated as an array that contains elements of the base type name.
-For instance, the variadic parameter ``Int...`` is treated as ``[Int]``.
+For example, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,
 see :ref:`Functions_VariadicParameters`.
 
@@ -2788,7 +2788,7 @@ and private members declared in one extension
 can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
+which consists of the ``set`` keyword enclosed in parentheses (for example, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
