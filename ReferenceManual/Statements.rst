@@ -927,9 +927,9 @@ the following code prints only the first and last messages:
       #if swift(>=3.0)
       print("Compiled in Swift 3.0 mode or later")
       #endif
-      #if swift(<3)
-      print("Compiled in Swift 3 mode or earlier")
-      endif
+      #if compiler(>=5) && swift(<5)
+      print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
+      #endif
    <- Compiled with the Swift 4.2 compiler or later
    << Compiled in Swift 4.2 mode or later
    <- Compiled in Swift 3.0 mode or later
