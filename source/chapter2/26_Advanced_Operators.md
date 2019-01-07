@@ -36,7 +36,7 @@ let invertedBits = ~initialBits // 等于 0b11110000
 <a name="bitwise_and_operator"></a>
 ### Bitwise AND Operator（按位与运算符）
 
-*按位与运算符（`&`）*对两个数的比特位进行合并。它返回一个新的数，只有当两个数的对应位*都*为 `1` 的时候，新数的对应位才为 `1`：
+*按位与运算符（`&`）* 对两个数的比特位进行合并。它返回一个新的数，只有当两个数的对应位*都*为 `1` 的时候，新数的对应位才为 `1`：
 
 ![Art/bitwiseAND_2x.png](https://docs.swift.org/swift-book/_images/bitwiseAND_2x.png)
 
@@ -51,7 +51,7 @@ let middleFourBits = firstSixBits & lastSixBits // 等于 00111100
 <a name="bitwise_or_operator"></a>
 ### Bitwise OR Operator（按位或运算符）
 
-*按位或运算符（`|`）*可以对两个数的比特位进行比较。它返回一个新的数，只要两个数的对应位中有*任意一个*为 `1` 时，新数的对应位就为 `1`：
+*按位或运算符（`|`）* 可以对两个数的比特位进行比较。它返回一个新的数，只要两个数的对应位中有*任意一个*为 `1` 时，新数的对应位就为 `1`：
 
 ![Art/bitwiseOR_2x.png](https://docs.swift.org/swift-book/_images/bitwiseOR_2x.png)
 
@@ -81,7 +81,7 @@ let outputBits = firstBits ^ otherBits // 等于 00010001
 <a name="bitwise_left_and_right_shift_operators"></a>
 ### Bitwise Left and Right Shift Operators（按位左移、右移运算符）
 
-*按位左移运算符（`<<`）*和*按位右移运算符（`>>`）*可以对一个数的所有位进行指定位数的左移和右移，但是需要遵守下面定义的规则。
+*按位左移运算符（`<<`）* 和 *按位右移运算符（`>>`）*可以对一个数的所有位进行指定位数的左移和右移，但是需要遵守下面定义的规则。
 
 对一个数进行按位左移或按位右移，相当于对这个数进行乘以 2 或除以 2 的运算。将一个整数左移一位，等价于将这个数乘以 2，同样地，将一个整数右移一位，等价于将这个数除以 2。
 
@@ -476,7 +476,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [Operator Declarations](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[Operator Declaration](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID380)
+这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID380)
 
 > 注意
 > 

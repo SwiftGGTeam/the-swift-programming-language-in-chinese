@@ -155,7 +155,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 `center` 属性之后被设置了一个新的值 `(15, 15)`，表示向右上方移动正方形到如下图橙色正方形所示的位置。设置属性 `center` 的值会调用它的 setter 来修改属性 `origin` 的 `x` 和 `y` 的值，从而实现移动正方形到新的位置。
 
-<img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
+<img src="https://docs.swift.org/swift-book/_images/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
 <a name="shorthand_setter_declaration"></a>
 ### 简化 Setter 声明
@@ -354,7 +354,7 @@ print(SomeClass.computedTypeProperty)
 
 下图展示了如何把两个声道结合来模拟立体声的音量。当声道的音量是 `0`，没有一个灯会亮；当声道的音量是 `10`，所有灯点亮。本图中，左声道的音量是 `9`，右声道的音量是 `7`：
 
-<img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/staticPropertiesVUMeter_2x.png" alt="Static Properties VUMeter" width="243" height="357" />
+<img src="https://docs.swift.org/swift-book/_images/staticPropertiesVUMeter_2x.png" alt="Static Properties VUMeter" width="243" height="357" />
 
 上面所描述的声道模型使用 `AudioChannel` 结构体的实例来表示：
 
