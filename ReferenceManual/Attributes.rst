@@ -238,14 +238,12 @@ dynamicCallable
 ~~~~~~~~~~~~~~~
 
 Apply this attribute to a class, structure, enumeration, or protocol
-to enable the use of function call expressions on instances.
+to treat instances of the type as callable functions.
 The type must implement either a ``dynamicallyCall(withArguments:)`` method
 or a ``dynamicallyCall(withKeywordArguments:)`` method.
 
-Instances of a dynamically callable type support flexible arguments lists
-when you call them like a method.
-You use dynamically callable instances to handle different numbers of arguments
-to a method call at runtime. 
+You can call an instance of a dynamically callable type
+as if it's a function that takes any number of arguments.
 
 .. testcode:: dynamicCallable
    :compile: true
@@ -261,20 +259,22 @@ to a method call at runtime.
           }
       }
    ---
-      let callNumber = TelephoneExchange()
+      let dial = TelephoneExchange()
    ---
       // Using a dynamic method call.
-      callNumber(4, 1, 1)
+      dial(4, 1, 1)
       // Prints "Get Swift help on forums.swift.org".
    ---
-      callNumber(8, 6, 7, 5, 3, 0, 9)
+      dial(8, 6, 7, 5, 3, 0, 9)
       // Prints "Unrecognized number".
    ---
       // Calling the underlying method directly
-      callNumber.dynamicallyCall(withArguments: [4, 1, 1])
+      dial.dynamicallyCall(withArguments: [4, 1, 1])
 
 The parameter type for the ``dynamicallyCall(withArguments:)`` method
-can be any type that conforms to ``ExpressibleByArrayLiteral``,
+can be any type that conforms to
+`ExpressibleByArrayLiteral <//apple_ref/swift/fake/ExpressibleByArrayLiteral>`_
+---like ``[Int]`` in the example above---
 and any return type is permitted.
 
 You can include labels in a dynamic method call
@@ -286,37 +286,35 @@ if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
       struct Repeater {
           func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
               return pairs
-                  .map { pair in
-                       (0..<pair.1).reduce("") { result, value in
-                           "\(result)\(pair.0)"
-                       }
+                  .map { label, count in
+                      repeatElement(label, count: count).joined(separator: " ")
                   }
                   .joined(separator: "\n")
-   ---
-      //        for (key, value) in arguments {
-      //            (0..<value).forEach { _ in
-      //                print(key, terminator: " ")
-      //            }
-      //            print("")
-      //        }
           }
       }
    ---
-      let `repeat` = Repeater()
-      print(`repeat`(a: 1, b: 2, c: 3, b: 2, a: 1))
-      /* Prints:
-         a
-         b b
-         c c c
-         b b
-         a
-      */
+      let repeatLabels = Repeater()
+      print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
+      // a
+      // b b
+      // c c c
+      // b b
+      // a
+   << a
+   << b b
+   << c c c
+   << b b
+   << a
 
 The parameter type for the ``dynamicallyCall(withKeywordArguments:)`` method
-can be any type that conforms to ``ExpressibleByDictionaryLiteral``,
+can be any type that conforms to
+`ExpressibleByDictionaryLiteral <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral>`_,
 and any return type is permitted.
-The parameter's ``Key`` must be ``ExpressibleByStringLiteral``.
-The previous example uses ``KeyValuePairs`` as the parameter type
+The parameter's `Key <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral.Key>`_
+must be
+`ExpressibleByStringLiteral <//apple_ref/swift/fake/ExpressibleByStringLiteral>`_.
+The previous example uses `KeyValuePairs <//apple_ref/swift/fake/KeyValuePairs>`_
+as the parameter type
 so that callers can include duplicate parameter labels---
 ``a`` and ``b`` are used multiple times in the call to ``repeat``.
 
