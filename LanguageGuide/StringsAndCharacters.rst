@@ -234,6 +234,39 @@ For example:
    << Escaping the first quotation mark """
    << Escaping all three quotation marks """
 
+.. _StringsAndCharacters_RawStringLiterals:
+
+Raw String Literals
+~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`raw string literal` is a string literal
+that's surrounded by one or more pound symbols (``#``).
+Use raw string literals to include special characters in a string
+without their special effects taking effect.
+For example, printing the raw string literal ``#"Line 1\nLine 2"#``
+prints the line feed escape sequence
+rather than printing the string across two lines.
+
+If you need the special effects of a character in a raw string literal,
+match the number of pound signs you use in between the backslash
+with the number of pound signs you use to surround the string literal.
+For example, ``#"Line 1\#nLine 2"#`` prints across two lines
+because the pound signs are balanced.
+Similarly, ``###"Line 1\###nLine 2"###`` prints across two lines.
+
+Raw string literals can be multiline string literals too.
+You can use raw string literals to include the text ``"""`` in a multiline string,
+overriding the default behavior that ends the literal. For example:
+
+.. testcode:: raw-string-literals
+   :compile: true
+
+   -> let threeMoreDoubleQuotationMarks = #"""
+      Here are three more double quotes: """
+      """#
+   >> print(threeMoreDoubleQuotationMarks)
+   << Here are three more double quotes: """
+
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
 Initializing an Empty String
