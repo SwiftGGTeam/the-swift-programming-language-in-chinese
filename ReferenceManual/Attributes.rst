@@ -261,21 +261,21 @@ as if it's a function that takes any number of arguments.
    ---
       let dial = TelephoneExchange()
    ---
-      // Using a dynamic method call.
+      // Use a dynamic method call.
       dial(4, 1, 1)
       // Prints "Get Swift help on forums.swift.org".
    ---
       dial(8, 6, 7, 5, 3, 0, 9)
       // Prints "Unrecognized number".
    ---
-      // Calling the underlying method directly
+      // Call the underlying method directly.
       dial.dynamicallyCall(withArguments: [4, 1, 1])
 
-The parameter type for the ``dynamicallyCall(withArguments:)`` method
-can be any type that conforms to
+The ``dynamicallyCall(withArguments:)`` method's first and only parameter
+can be of any type that conforms to
 `ExpressibleByArrayLiteral <//apple_ref/swift/fake/ExpressibleByArrayLiteral>`_
 ---like ``[Int]`` in the example above---
-and any return type is permitted.
+and the return type can be any type.
 
 You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
@@ -295,21 +295,16 @@ if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
    ---
       let repeatLabels = Repeater()
       print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
-      // a
-      // b b
-      // c c c
-      // b b
-      // a
-   << a
-   << b b
-   << c c c
-   << b b
-   << a
+   </ a
+   </ b b
+   </ c c c
+   </ b b
+   </ a
 
-The parameter type for the ``dynamicallyCall(withKeywordArguments:)`` method
-can be any type that conforms to
+The ``dynamicallyCall(withKeywordArguments:)`` method's first and only parameter
+can be of any type that conforms to
 `ExpressibleByDictionaryLiteral <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral>`_,
-and any return type is permitted.
+and the return type can be any type.
 The parameter's `Key <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral.Key>`_
 must be
 `ExpressibleByStringLiteral <//apple_ref/swift/fake/ExpressibleByStringLiteral>`_.
@@ -357,12 +352,12 @@ For example:
       }
    -> let s = DynamicStruct()
    ---
-   // Using dynamic member lookup
+   // Use dynamic member lookup.
    -> let dynamic = s.someDynamicMember
    -> print(dynamic)
    <- 325
    ---
-   // Calling the underlying subscript directly
+   // Call the underlying subscript directly.
    -> let equivalent = s[dynamicMember: "someDynamicMember"]
    -> print(dynamic == equivalent)
    <- true
