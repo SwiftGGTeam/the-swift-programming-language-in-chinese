@@ -40,7 +40,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// 打印 "The default temperature is 32.0° Fahrenheit"
+// 打印 “The default temperature is 32.0° Fahrenheit”
 ```
 
 这个结构体定义了一个不带形参的构造器 `init`，并在里面将存储型属性 `temperature` 的值初始化为 `32.0`（华氏温度下水的冰点）。
@@ -184,7 +184,7 @@ class SurveyQuestion {
 
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
-// 打印 "Do you like cheese?"
+// 打印 “Do you like cheese?”
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
@@ -214,7 +214,7 @@ class SurveyQuestion {
 }
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
-// 打印 "How about beets?"
+// 打印 “How about beets?”
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
@@ -540,7 +540,7 @@ class Bicycle: Vehicle {
 ```swift
 let bicycle = Bicycle()
 print("Bicycle: \(bicycle.description)")
-// 打印 "Bicycle: 2 wheel(s)"
+// 打印 “Bicycle: 2 wheel(s)”
 ```
 
 如果父类的构造器没有在阶段 2 过程中做自定义操作，并且父类有一个无参数的自定义构造器。你可以在所有父类的存储属性赋值之后省略 `super.init()` 的调用。
@@ -742,7 +742,7 @@ let pi = 3.14159
 if let valueMaintained = Int(exactly: wholeNumber) {
     print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
 }
-// 打印 "12345.0 conversion to Int maintains value of 12345"
+// 打印 “12345.0 conversion to Int maintains value of 12345”
 
 let valueChanged = Int(exactly: pi)
 // valueChanged 是 Int? 类型，不是 Int 类型
@@ -750,7 +750,7 @@ let valueChanged = Int(exactly: pi)
 if valueChanged == nil {
     print("\(pi) conversion to Int does not maintain value")
 }
-// 打印 "3.14159 conversion to Int does not maintain value"
+// 打印 “3.14159 conversion to Int does not maintain value”
 ```
 
 下例中，定义了一个名为 `Animal` 的结构体，其中有一个名为 `species` 的 `String` 类型的常量属性。同时该结构体还定义了一个接受一个名为 `species` 的 `String` 类型形参的可失败构造器。这个可失败构造器检查传入的`species` 值是否为一个空字符串。如果为空字符串，则构造失败。否则，`species` 属性被赋值，构造成功。
@@ -776,7 +776,7 @@ let someCreature = Animal(species: "Giraffe")
 if let giraffe = someCreature {
     print("An animal was initialized with a species of \(giraffe.species)")
 }
-// 打印 "An animal was initialized with a species of Giraffe"
+// 打印 “An animal was initialized with a species of Giraffe”
 ```
 
 如果你给该可失败构造器传入一个空字符串到形参 `species`，则会导致构造失败：
@@ -788,7 +788,7 @@ let anonymousCreature = Animal(species: "")
 if anonymousCreature == nil {
     print("The anonymous creature could not be initialized")
 }
-// 打印 "The anonymous creature could not be initialized"
+// 打印 “The anonymous creature could not be initialized”
 ```
 
 > 注意
@@ -827,13 +827,13 @@ let fahrenheitUnit = TemperatureUnit(symbol: "F")
 if fahrenheitUnit != nil {
     print("This is a defined temperature unit, so initialization succeeded.")
 }
-// 打印 "This is a defined temperature unit, so initialization succeeded."
+// 打印 “This is a defined temperature unit, so initialization succeeded.”
 
 let unknownUnit = TemperatureUnit(symbol: "X")
 if unknownUnit == nil {
     print("This is not a defined temperature unit, so initialization failed.")
 }
-// 打印 "This is not a defined temperature unit, so initialization failed."
+// 打印 “This is not a defined temperature unit, so initialization failed.”
 ```
 
 <a name="failable_initializers_for_enumerations_with_raw_values"></a>
@@ -852,13 +852,13 @@ let fahrenheitUnit = TemperatureUnit(rawValue: "F")
 if fahrenheitUnit != nil {
     print("This is a defined temperature unit, so initialization succeeded.")
 }
-// 打印 "This is a defined temperature unit, so initialization succeeded."
+// 打印 “This is a defined temperature unit, so initialization succeeded.”
 
 let unknownUnit = TemperatureUnit(rawValue: "X")
 if unknownUnit == nil {
     print("This is not a defined temperature unit, so initialization failed.")
 }
-// 打印 "This is not a defined temperature unit, so initialization failed."
+// 打印 “This is not a defined temperature unit, so initialization failed.”
 ```
 
 <a name="propagation_of_initialization_failure"></a>
@@ -901,7 +901,7 @@ class CartItem: Product {
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
     print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
-// 打印 "Item: sock, quantity: 2"
+// 打印 “Item: sock, quantity: 2”
 ```
 
 倘若你以一个值为 0 的 `quantity` 来创建一个 `CartItem` 实例，那么将导致 `CartItem` 构造器失败：
@@ -912,7 +912,7 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 } else {
     print("Unable to initialize zero shirts")
 }
-// 打印 "Unable to initialize zero shirts"
+// 打印 “Unable to initialize zero shirts”
 ```
 
 同样地，如果你尝试传入一个值为空字符串的 `name` 来创建一个 `CartItem` 实例，那么将导致父类 `Product` 的构造过程失败：
@@ -923,7 +923,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 } else {
     print("Unable to initialize one unnamed product")
 }
-// 打印 "Unable to initialize one unnamed product"
+// 打印 “Unable to initialize one unnamed product”
 ```
 
 <a name="overriding_a_failable_initializer"></a>
@@ -1077,7 +1077,7 @@ struct Chessboard {
 ```swift
 let board = Chessboard()
 print(board.squareIsBlackAt(row: 0, column: 1))
-// 打印 "true"
+// 打印 “true”
 print(board.squareIsBlackAt(row: 7, column: 7))
-// 打印 "false”
+// 打印 “false”
 ```

@@ -186,7 +186,7 @@ john.residence?.address = someAddress
 
 在这个例子中，通过 `john.residence` 来设定 `address` 属性也会失败，因为 `john.residence` 当前为 `nil`。
 
-上面代码中的赋值过程是可选链式调用的一部分，这意味着可选链式调用失败时，等号右侧的代码不会被执行。对于上面的代码来说，很难验证这一点，因为像这样赋值一个常量没有任何副作用。下面的代码完成了同样的事情，但是它使用一个函数来创建 `Address` 实例，然后将该实例返回用于赋值。该函数会在返回前打印 “Function was called”，这使你能验证等号右侧的代码是否被执行。
+上面代码中的赋值过程是可选链式调用的一部分，这意味着可选链式调用失败时，等号右侧的代码不会被执行。对于上面的代码来说，很难验证这一点，因为像这样赋值一个常量没有任何副作用。下面的代码完成了同样的事情，但是它使用一个函数来创建 `Address` 实例，然后将该实例返回用于赋值。该函数会在返回前打印“Function was called”，这使你能验证等号右侧的代码是否被执行。
 
 ```swift
 func createAddress() -> Address {
@@ -367,7 +367,6 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 
 ```swift
 if let beginsWithThe =
-
 	john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
 		if beginsWithThe {
 			print("John's building identifier begins with \"The\".")

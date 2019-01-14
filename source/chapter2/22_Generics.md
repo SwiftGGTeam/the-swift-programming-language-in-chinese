@@ -65,7 +65,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// 打印 "someInt is now 107, and anotherInt is now 3"
+// 打印 “someInt is now 107, and anotherInt is now 3”
 
 ```
 `swapTwoInts(_:_:)` 函数很实用，但它只能作用于 `Int` 类型。如果你想交换两个 `String` 类型值，或者 `Double` 类型值，你必须编写对应的函数，类似下面 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数：
@@ -630,7 +630,7 @@ if stackOfStrings.isTop("tres") {
 } else {
     print("Top element is something else.")
 }
-// 打印 "Top element is tres."
+// 打印 “Top element is tres.”
 ```
 
 如果尝试在其元素不符合 `Equatable` 协议的栈上调用 `isTop(_:)` 方法，则会收到编译时错误。
@@ -660,7 +660,7 @@ if [9, 9, 9].startsWith(42) {
 } else {
     print("Starts with something else.")
 }
-// 打印 "Starts with something else."
+// 打印 “Starts with something else.”
 ```
 
 上述示例中的泛型 `where` 子句要求 `Item` 遵循协议，但也可以编写一个泛型 `where` 子句去要求 `Item` 为特定类型。例如：
@@ -676,7 +676,7 @@ extension Container where Item == Double {
     }
 }
 print([1260.0, 1200.0, 98.6, 37.0].average())
-// 打印 "648.9"
+// 打印 “648.9”
 ```
 此示例将一个 `average()` 方法添加到 `Item` 类型为 `Double` 的容器中。此方法遍历容器中的元素将其累加，并除以容器的数量计算平均值。它将数量从 `Int` 转换为 `Double` 确保能够进行浮点除法。
 

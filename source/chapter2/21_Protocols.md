@@ -475,7 +475,7 @@ extension Array: TextRepresentable where Element: TextRepresentable {
 }
 let myDice = [d6, d12]
 print(myDice.textualDescription)
-// 打印 "[A 6-sided dice, A 12-sided dice]"
+// 打印 “[A 6-sided dice, A 12-sided dice]”
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
@@ -930,9 +930,9 @@ let differentNumbers = [100, 100, 200, 100, 200]
 
 ```swift
 print(equalNumbers.allEqual())
-// 打印 "true"
+// 打印 “true”
 print(differentNumbers.allEqual())
-// 打印 "false"
+// 打印 “false”
 ```
 
 > 注意

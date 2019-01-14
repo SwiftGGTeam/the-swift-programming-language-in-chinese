@@ -138,7 +138,7 @@ var square = Rect(origin: Point(x: 0.0, y: 0.0),
 let initialSquareCenter = square.center
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-// 打印 "square.origin is now at (10.0, 10.0)”
+// 打印 “square.origin is now at (10.0, 10.0)”
 ```
 
 这个例子定义了 3 个结构体来描述几何形状：
@@ -200,7 +200,7 @@ struct Cuboid {
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-// 打印 "the volume of fourByFiveByTwo is 40.0"
+// 打印 “the volume of fourByFiveByTwo is 40.0”
 ```
 
 这个例子定义了一个名为 `Cuboid` 的结构体，表示三维空间的立方体，包含 `width`、`height` 和 `depth` 属性。结构体还有一个名为 `volume` 的只读计算属性用来返回立方体的体积。为 `volume` 提供 setter 毫无意义，因为无法确定如何修改 `width`、`height` 和 `depth` 三者的值来匹配新的 `volume`。然而，`Cuboid` 提供一个只读计算属性来让外部用户直接获取体积是很有用的。
@@ -264,7 +264,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 如果将属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
+> 如果将属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)。
 
 <a name="global_and_local_variables"></a>
 ## 全局变量和局部变量
@@ -340,14 +340,14 @@ class SomeClass {
 
 ```swift
 print(SomeStructure.storedTypeProperty)
-// 打印 "Some value."
+// 打印 “Some value.”
 SomeStructure.storedTypeProperty = "Another value."
 print(SomeStructure.storedTypeProperty)
-// 打印 "Another value.”
+// 打印 “Another value.”
 print(SomeEnumeration.computedTypeProperty)
-// 打印 "6"
+// 打印 “6”
 print(SomeClass.computedTypeProperty)
-// 打印 "27"
+// 打印 “27”
 ```
 
 下面的例子定义了一个结构体，使用两个存储型类型属性来表示两个声道的音量，每个声道具有 `0` 到 `10` 之间的整数音量。
