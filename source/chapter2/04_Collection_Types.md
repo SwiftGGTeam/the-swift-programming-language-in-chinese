@@ -41,7 +41,7 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类
 ```swift
 var someInts = [Int]()
 print("someInts is of type [Int] with \(someInts.count) items.")
-// 打印 "someInts is of type [Int] with 0 items."
+// 打印“someInts is of type [Int] with 0 items.”
 ```
 
 注意，通过构造函数的类型，`someInts` 的值类型被推断为 `[Int]`。
@@ -128,7 +128,7 @@ if shoppingList.isEmpty {
 } else {
     print("The shopping list is not empty.")
 }
-// 打印 "The shopping list is not empty."（shoppinglist 不是空的）
+// 打印“The shopping list is not empty.”（shoppinglist 不是空的）
 ```
 
 也可以使用 `append(_:)` 方法在数组后面添加新的数据项：
@@ -288,7 +288,7 @@ Swift 中的 `Set` 类型被写为 `Set<Element>`，这里的 `Element` 表示 `
 ```swift
 var letters = Set<Character>()
 print("letters is of type Set<Character> with \(letters.count) items.")
-// 打印 "letters is of type Set<Character> with 0 items."
+// 打印“letters is of type Set<Character> with 0 items.”
 ```
 
 > 注意
@@ -339,7 +339,7 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 
 ```swift
 print("I have \(favoriteGenres.count) favorite music genres.")
-// 打印 "I have 3 favorite music genres."
+// 打印“I have 3 favorite music genres.”
 ```
 
 使用布尔属性 `isEmpty` 作为一个缩写形式去检查 `count` 属性是否为 `0`：
@@ -350,7 +350,7 @@ if favoriteGenres.isEmpty {
 } else {
     print("I have particular music preferences.")
 }
-// 打印 "I have particular music preferences."
+// 打印“I have particular music preferences.”
 ```
 
 你可以通过调用 `Set` 的 `insert(_:)` 方法来添加一个新元素：
@@ -368,7 +368,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 } else {
     print("I never much cared for that.")
 }
-// 打印 "Rock? I'm over it."
+// 打印“Rock? I'm over it.”
 ```
 
 使用 `contains(_:)` 方法去检查 `Set` 中是否包含一个特定的值：
@@ -379,7 +379,7 @@ if favoriteGenres.contains("Funk") {
 } else {
     print("It's too funky in here.")
 }
-// 打印 "It's too funky in here."
+// 打印“It's too funky in here.”
 ```
 
 <a name="iterating_over_a_set"></a>
@@ -555,7 +555,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 ```swift
 print("The dictionary of airports contains \(airports.count) items.")
-// 打印 "The dictionary of airports contains 2 items."（这个字典有两个数据项）
+// 打印“The dictionary of airports contains 2 items.”（这个字典有两个数据项）
 ```
 
 使用布尔属性 `isEmpty` 作为一个缩写形式去检查 `count` 属性是否为 `0`：
@@ -566,7 +566,7 @@ if airports.isEmpty {
 } else {
     print("The airports dictionary is not empty.")
 }
-// 打印 "The airports dictionary is not empty."
+// 打印“The airports dictionary is not empty.”
 ```
 
 我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个恰当类型的键作为下标索引，并且分配恰当类型的新值：
@@ -604,7 +604,7 @@ if let airportName = airports["DUB"] {
 } else {
     print("That airport is not in the airports dictionary.")
 }
-// 打印 "The name of the airport is Dublin Airport."
+// 打印“The name of the airport is Dublin Airport.”
 ```
 
 我们还可以使用下标语法来通过给某个键的对应值赋值为 `nil` 来从字典里移除一个键值对：

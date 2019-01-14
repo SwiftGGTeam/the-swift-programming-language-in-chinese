@@ -41,7 +41,7 @@ let someVehicle = Vehicle()
 
 ```swift
 print("Vehicle: \(someVehicle.description)")
-// 打印 "Vehicle: traveling at 0.0 miles per hour"
+// 打印“Vehicle: traveling at 0.0 miles per hour”
 ```
 
 `Vehicle` 类定义了一个具有通用特性的车辆类，但实际上对于它本身来说没什么用处。为了让它变得更加有用，还需要进一步完善它，从而能够描述一个具体类型的车辆。
@@ -83,7 +83,7 @@ bicycle.hasBasket = true
 ```swift
 bicycle.currentSpeed = 15.0
 print("Bicycle: \(bicycle.description)")
-// 打印 "Bicycle: traveling at 15.0 miles per hour"
+// 打印“Bicycle: traveling at 15.0 miles per hour”
 ```
 
 子类还可以继续被其它类继承，下面的示例为 `Bicycle` 创建了一个名为 `Tandem`（双人自行车）的子类：
@@ -104,7 +104,7 @@ tandem.hasBasket = true
 tandem.currentNumberOfPassengers = 2
 tandem.currentSpeed = 22.0
 print("Tandem: \(tandem.description)")
-// 打印："Tandem: traveling at 22.0 miles per hour"
+// 打印：“Tandem: traveling at 22.0 miles per hour”
 ```
 
 <a name="overriding"></a>
@@ -145,7 +145,7 @@ class Train: Vehicle {
 ```swift
 let train = Train()
 train.makeNoise()
-// 打印 "Choo Choo"
+// 打印“Choo Choo”
 ```
 
 ### 重写属性
@@ -182,7 +182,7 @@ let car = Car()
 car.currentSpeed = 25.0
 car.gear = 3
 print("Car: \(car.description)")
-// 打印 "Car: traveling at 25.0 miles per hour in gear 3"
+// 打印“Car: traveling at 25.0 miles per hour in gear 3”
 ```
 
 <a name="overriding_property_observers"></a>
@@ -213,7 +213,7 @@ class AutomaticCar: Car {
 let automatic = AutomaticCar()
 automatic.currentSpeed = 35.0
 print("AutomaticCar: \(automatic.description)")
-// 打印 "AutomaticCar: traveling at 35.0 miles per hour in gear 4"
+// 打印“AutomaticCar: traveling at 35.0 miles per hour in gear 4”
 ```
 
 <a name="preventing_overrides"></a>

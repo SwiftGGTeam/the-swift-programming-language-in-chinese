@@ -477,9 +477,9 @@ func f() {
     defer { print("Third") }
 }
 f()
-// 打印 “Third”
-// 打印 “Second”
-// 打印 “First”
+// 打印“Third”
+// 打印“Second”
+// 打印“First”
 ```
 
 `defer` 语句中的语句无法将控制权转移到 `defer` 语句外部。

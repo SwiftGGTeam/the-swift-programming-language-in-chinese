@@ -28,9 +28,9 @@ func greet(person: String) -> String {
 
 ```swift
 print(greet(person: "Anna"))
-// 打印 "Hello, Anna!"
+// 打印“Hello, Anna!”
 print(greet(person: "Brian"))
-// 打印 "Hello, Brian!"
+// 打印“Hello, Brian!”
 ```
 
 调用 `greet(person:)` 函数时，在圆括号中传给它一个 `String` 类型的实参，例如 `greet(person: "Anna")`。正如上面所示，因为这个函数返回一个 `String` 类型的值，所以 `greet` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值。
@@ -50,7 +50,7 @@ func greetAgain(person: String) -> String {
     return "Hello again, " + person + "!"
 }
 print(greetAgain(person: "Anna"))
-// 打印 "Hello again, Anna!"
+// 打印“Hello again, Anna!”
 ```
 
 <a name="Function_Parameters_and_Return_Values"></a>
@@ -68,7 +68,7 @@ func sayHelloWorld() -> String {
     return "hello, world"
 }
 print(sayHelloWorld())
-// 打印 "hello, world"
+// 打印“hello, world”
 ```
 
 尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
@@ -89,7 +89,7 @@ func greet(person: String, alreadyGreeted: Bool) -> String {
     }
 }
 print(greet(person: "Tim", alreadyGreeted: true))
-// 打印 "Hello again, Tim!"
+// 打印“Hello again, Tim!”
 ```
 
 你可以通过在括号内使用逗号分隔来传递一个 `String` 参数值和一个标识为 `alreadyGreeted` 的 `Bool` 值，来调用 `greet(person:alreadyGreeted:)` 函数。注意这个函数和上面 `greet(person:)` 是不同的。虽然它们都有着同样的名字 `greet`，但是 `greet(person:alreadyGreeted:)` 函数需要两个参数，而 `greet(person:)` 只需要一个参数。
@@ -104,7 +104,7 @@ func greet(person: String) {
     print("Hello, \(person)!")
 }
 greet(person: "Dave")
-// 打印 "Hello, Dave!"
+// 打印“Hello, Dave!”
 ```
 
 因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
@@ -124,9 +124,9 @@ func printWithoutCounting(string: String) {
     let _ = printAndCount(string: string)
 }
 printAndCount(string: "hello, world")
-// 打印 "hello, world" 并且返回值 12
+// 打印“hello, world”，并且返回值 12
 printWithoutCounting(string: "hello, world")
-// 打印 "hello, world" 但是没有返回任何值
+// 打印“hello, world”，但是没有返回任何值
 ```
 
 第一个函数 `printAndCount(string:)`，输出一个字符串并返回 `Int` 类型的字符数。第二个函数 `printWithoutCounting(string:)` 调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
@@ -166,7 +166,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
-// 打印 "min is -6 and max is 109"
+// 打印“min is -6 and max is 109”
 ```
 
 需要注意的是，元组的成员不需要在元组从函数中返回时命名，因为它们的名字已经在函数返回类型中指定了。
@@ -206,7 +206,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
-// 打印 "min is -6 and max is 109"
+// 打印“min is -6 and max is 109”
 ```
 
 <a name="Function_Argument_Labels_and_Parameter_Names"></a>
@@ -241,7 +241,7 @@ func greet(person: String, from hometown: String) -> String {
     return "Hello \(person)!  Glad you could visit from \(hometown)."
 }
 print(greet(person: "Bill", from: "Cupertino"))
-// 打印 "Hello Bill!  Glad you could visit from Cupertino."
+// 打印“Hello Bill!  Glad you could visit from Cupertino.”
 ```
 
 参数标签的使用能够让一个函数在调用时更有表达力，更类似自然语言，并且仍保持了函数内部的可读性以及清晰的意图。
@@ -334,7 +334,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// 打印 "someInt is now 107, and anotherInt is now 3"
+// 打印“someInt is now 107, and anotherInt is now 3”
 ```
 
 从上面这个例子中，我们可以看到 `someInt` 和 `anotherInt` 的原始值在 `swapTwoInts(_:_:)` 函数中被修改，尽管它们的定义在函数体外。
@@ -424,7 +424,7 @@ func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
     print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
-// 打印 "Result: 8"
+// 打印“Result: 8”
 ```
 
 这个例子定义了 `printMathResult(_:_:_:)` 函数，它有三个参数：第一个参数叫 `mathFunction`，类型是 `(Int, Int) -> Int`，你可以传入任何这种类型的函数；第二个和第三个参数叫 `a` 和 `b`，它们的类型都是 `Int`，这两个值作为已给出的函数的输入值。

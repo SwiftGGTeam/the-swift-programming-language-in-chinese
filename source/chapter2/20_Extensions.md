@@ -254,7 +254,7 @@ func printIntegerKinds(_ numbers: [Int]) {
     print("")
 }
 printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-// 打印 "+ + - 0 - 0 + "
+// 打印“+ + - 0 - 0 + ”
 ```
 
 方法 **printIntegerKinds(_:)**，使用一个 **Int** 类型的数组作为输入，然后依次迭代这些值。对于数组中的每一个整数，方法会检查它的 **kind** 计算型属性，然后打印适当的描述。  

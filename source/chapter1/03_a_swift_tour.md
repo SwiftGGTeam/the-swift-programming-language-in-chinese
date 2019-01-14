@@ -1,6 +1,6 @@
 # Swift 初见
 
-通常来说，编程语言教程中的第一个程序应该在屏幕上打印 “Hello, world”。在 Swift 中，可以用一行代码实现：
+通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
 ```swift
 print("Hello, world!")

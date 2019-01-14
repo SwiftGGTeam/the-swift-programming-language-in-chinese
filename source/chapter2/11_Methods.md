@@ -80,7 +80,7 @@ let somePoint = Point(x: 4.0, y: 5.0)
 if somePoint.isToTheRightOfX(1.0) {
     print("This point is to the right of the line where x == 1.0")
 }
-// 打印 "This point is to the right of the line where x == 1.0"
+// 打印“This point is to the right of the line where x == 1.0”
 ```
 
 如果不使用 `self` 前缀，Swift 就认为两次使用的 `x` 都指的是名称为 `x` 的函数参数。
@@ -105,7 +105,7 @@ struct Point {
 var somePoint = Point(x: 1.0, y: 1.0)
 somePoint.moveByX(2.0, y: 3.0)
 print("The point is now at (\(somePoint.x), \(somePoint.y))")
-// 打印 "The point is now at (3.0, 4.0)"
+// 打印“The point is now at (3.0, 4.0)”
 ```
 
 上面的 `Point` 结构体定义了一个可变方法 `moveByX(_:y:)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
@@ -244,7 +244,7 @@ class Player {
 var player = Player(name: "Argyrios")
 player.complete(level: 1)
 print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-// 打印 "highest unlocked level is now 2"
+// 打印“highest unlocked level is now 2”
 ```
 
 如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，那么试图设置玩家当前等级将会失败：
@@ -256,5 +256,5 @@ if player.tracker.advance(to: 6) {
 } else {
     print("level 6 has not yet been unlocked")
 }
-// 打印 "level 6 has not yet been unlocked"
+// 打印“level 6 has not yet been unlocked”
 ```

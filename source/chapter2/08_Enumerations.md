@@ -77,7 +77,7 @@ case .east:
 case .west:
 	print("Where the skies are blue")
 }
-// 打印 "Watch out for penguins”
+// 打印“Watch out for penguins”
 ```
 
 你可以这样理解这段代码：
@@ -98,7 +98,7 @@ case .earth:
 default:
     print("Not a safe place for humans")
 }
-// 打印 "Mostly harmless”
+// 打印“Mostly harmless”
 ```
 
 <a name="iterating over enumeration cases"></a>
@@ -114,7 +114,7 @@ enum Beverage: CaseIterable {
 }
 let numberOfChoices = Beverage.allCases.count
 print("\(numberOfChoices) beverages available")
-// 打印 "3 beverages available"
+// 打印“3 beverages available”
 ```
 
 在前面的例子中，通过 `Beverage.allCases` 可以访问到包含 `Beverage` 枚举所有成员的集合。`allCases` 的使用方法和其它一般集合一样——集合中的元素是枚举类型的实例，所以在上面的情况中，这些元素是 `Beverage` 值。在前面的例子中，统计了总共有多少个枚举成员。而在下面的例子中，则使用 `for` 循环来遍历所有枚举成员。
@@ -187,7 +187,7 @@ case .upc(let numberSystem, let manufacturer, let product, let check):
 case .qrCode(let productCode):
     print("QR code: \(productCode).")
 }
-// 打印 "QR code: ABCDEFGHIJKLMNOP."
+// 打印“QR code: ABCDEFGHIJKLMNOP.”
 ```
 
 如果一个枚举成员的所有关联值都被提取为常量，或者都被提取为变量，为了简洁，你可以只在成员名称前标注一个 `let` 或者 `var`：
@@ -199,7 +199,7 @@ case let .upc(numberSystem, manufacturer, product, check):
 case let .qrCode(productCode):
     print("QR code: \(productCode).")
 }
-// 打印 "QR code: ABCDEFGHIJKLMNOP."
+// 打印“QR code: ABCDEFGHIJKLMNOP.”
 ```
 
 <a name="raw_values"></a>
@@ -296,7 +296,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 } else {
     print("There isn't a planet at position \(positionToFind)")
 }
-// 打印 "There isn't a planet at position 11"
+// 打印“There isn't a planet at position 11”
 ```
 
 这个例子使用了可选绑定（optional binding），试图通过原始值 `11` 来访问一个行星。`if let somePlanet = Planet(rawValue: 11)` 语句创建了一个可选 `Planet`，如果可选 `Planet` 的值存在，就会赋值给 `somePlanet`。在这个例子中，无法检索到位置为 `11` 的行星，所以 `else` 分支被执行。
@@ -350,7 +350,7 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
 }
 
 print(evaluate(product))
-// 打印 "18"
+// 打印“18”
 ```
 
 该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法运算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。

@@ -166,9 +166,9 @@ let (firstNumber, secondNumber) = (10, 42)
 
 ```swift
 print("The first number is \(firstNumber).")
-// 打印 “The first number is 10.”
+// 打印“The first number is 10.”
 print("The second number is \(secondNumber).")
-// 打印 “The second number is 42.”
+// 打印“The second number is 42.”
 ```
 
 当常量名称的类型（`:` 类型）可以被推断出时，类型标注在常量声明中是可选的，正如 [类型推断](03_Types.html#type_inference) 中所描述的。
@@ -479,7 +479,7 @@ var x = 10
 let f = outer(&x)
 f()
 print(x)
-// 打印 “10”
+// 打印“10”
 ```
 
 调用嵌套函数 `inner()` 对 `a` 递增后，`x` 的值并未发生改变，因为 `inner()` 在外层函数 `outer()` 返回后才被调用。若要改变 `x` 的值，必须在 `outer()` 返回前调用 `inner()`。

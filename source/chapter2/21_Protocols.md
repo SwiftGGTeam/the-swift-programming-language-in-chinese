@@ -139,9 +139,9 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
 }
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 打印 “Here's a random number: 0.37464991998171”
+// 打印“Here's a random number: 0.37464991998171”
 print("And another one: \(generator.random())")
-// 打印 “And another one: 0.729023776863283”
+// 打印“And another one: 0.729023776863283”
 ```
 
 <a name="mutating_method_requirements"></a>
@@ -444,7 +444,7 @@ extension Dice: TextRepresentable {
 ```swift
 let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
 print(d12.textualDescription)
-// 打印 “A 12-sided dice”
+// 打印“A 12-sided dice”
 ```
 
 同样，`SnakesAndLadders` 类也可以通过扩展遵循 `TextRepresentable` 协议：
@@ -456,7 +456,7 @@ extension SnakesAndLadders: TextRepresentable {
 	}
 }
 print(game.textualDescription)
-// 打印 “A game of Snakes and Ladders with 25 squares”
+// 打印“A game of Snakes and Ladders with 25 squares”
 ```
 
 <a name="Conditionally_Conforming_to_a_Protocol"></a>
@@ -475,7 +475,7 @@ extension Array: TextRepresentable where Element: TextRepresentable {
 }
 let myDice = [d6, d12]
 print(myDice.textualDescription)
-// 打印 "[A 6-sided dice, A 12-sided dice]"
+// 打印“[A 6-sided dice, A 12-sided dice]”
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
@@ -499,7 +499,7 @@ extension Hamster: TextRepresentable {}
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
 print(somethingTextRepresentable.textualDescription)
-// 打印 “A hamster named Simon”
+// 打印“A hamster named Simon”
 ```
 
 > 注意
@@ -626,7 +626,7 @@ func wishHappyBirthday(to celebrator: Named & Aged) {
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(to: birthdayPerson)
-// 打印 “Happy birthday Malcolm - you're 21!”
+// 打印“Happy birthday Malcolm - you're 21!”
 ```
 
 `Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体遵循了这两个协议。
@@ -871,9 +871,9 @@ extension RandomNumberGenerator {
 ```swift
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 打印 “Here's a random number: 0.37464991998171”
+// 打印“Here's a random number: 0.37464991998171”
 print("And here's a random Boolean: \(generator.randomBool())")
-// 打印 “And here's a random Boolean: true”
+// 打印“And here's a random Boolean: true”
 ```
 
 <a name="providing_default_implementations"></a>
@@ -930,9 +930,9 @@ let differentNumbers = [100, 100, 200, 100, 200]
 
 ```swift
 print(equalNumbers.allEqual())
-// 打印 "true"
+// 打印“true”
 print(differentNumbers.allEqual())
-// 打印 "false"
+// 打印“false”
 ```
 
 > 注意
