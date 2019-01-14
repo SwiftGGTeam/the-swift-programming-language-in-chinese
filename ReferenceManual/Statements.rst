@@ -911,31 +911,28 @@ There must not be whitespace between the comparison operator and the version num
 The version for ``compiler()`` is the compiler version,
 regardless of the Swift version setting passed to the compiler.
 The version for ``swift()`` is the language version currently being compiled.
-For example, if you compile your code using the Swift 4.2 compiler in Swift 3 mode,
-the compiler version is 4.2 and the language version is 3.3.
+For example, if you compile your code using the Swift 5 compiler in Swift 4.2 mode,
+the compiler version is 5 and the language version is 4.2.
 With those settings,
-the following code prints only the first and last messages:
+the following code prints all three messages:
 
 .. testcode::
 
-   -> #if compiler(>=4.2)
-      print("Compiled with the Swift 4.2 compiler or later")
+   -> #if compiler(>=5)
+      print("Compiled with the Swift 5 compiler or later")
       #endif
       #if swift(>=4.2)
       print("Compiled in Swift 4.2 mode or later")
       #endif
-      #if swift(>=3.0)
-      print("Compiled in Swift 3.0 mode or later")
-      #endif
       #if compiler(>=5) && swift(<5)
       print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
       #endif
-   <- Compiled with the Swift 4.2 compiler or later
-   << Compiled in Swift 4.2 mode or later
-   <- Compiled in Swift 3.0 mode or later
+   <- Compiled with the Swift 5 compiler or later
+   -> // Prints "Compiled in Swift 4.2 mode or later"
+   <- Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5
 
-.. That testcode is cheating by hiding the second line of output,
-   since it's not actually running in Swift 3 mode.
+.. That testcode is cheating by explicitly printing the second line of output,
+   since it's not actually running in Swift 4.2 mode.
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
