@@ -351,11 +351,11 @@ class SomeClass {
 let instance = SomeClass()
 instance.doSomething()
 print(instance.x)
-// 打印出 “200”
+// 打印出“200”
 
 completionHandlers.first?()
 print(instance.x)
-// 打印出 “100”
+// 打印出“100”
 ```
 
 <a name="autoclosures"></a>
@@ -370,16 +370,16 @@ print(instance.x)
 ```swift
 var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 print(customersInLine.count)
-// 打印出 “5”
+// 打印出“5”
 
 let customerProvider = { customersInLine.remove(at: 0) }
 print(customersInLine.count)
-// 打印出 “5”
+// 打印出“5”
 
 print("Now serving \(customerProvider())!")
 // Prints "Now serving Chris!"
 print(customersInLine.count)
-// 打印出 “4”
+// 打印出“4”
 ```
 
 尽管在闭包的代码中，`customersInLine` 的第一个元素被移除了，不过在闭包被调用之前，这个元素是不会被移除的。如果这个闭包永远不被调用，那么在闭包里面的表达式将永远不会执行，那意味着列表中的元素永远不会被移除。请注意，`customerProvider` 的类型不是 `String`，而是 `() -> String`，一个没有参数且返回值为 `String` 的函数。
@@ -392,7 +392,7 @@ func serve(customer customerProvider: () -> String) {
     print("Now serving \(customerProvider())!")
 }
 serve(customer: { customersInLine.remove(at: 0) } )
-// 打印出 “Now serving Alex!”
+// 打印出“Now serving Alex!”
 ```
 
 上面的 `serve(customer:)` 函数接受一个返回顾客名字的显式的闭包。下面这个版本的 `serve(customer:)` 完成了相同的操作，不过它并没有接受一个显式的闭包，而是通过将参数标记为 `@autoclosure` 来接收一个自动闭包。现在你可以将该函数当作接受 `String` 类型参数（而非闭包）的函数来调用。`customerProvider` 参数将自动转化为一个闭包，因为该参数被标记了 `@autoclosure` 特性。
@@ -403,7 +403,7 @@ func serve(customer customerProvider: @autoclosure () -> String) {
     print("Now serving \(customerProvider())!")
 }
 serve(customer: customersInLine.remove(at: 0))
-// 打印 “Now serving Ewa!”
+// 打印“Now serving Ewa!”
 ```
 
 > 注意
@@ -422,12 +422,12 @@ collectCustomerProviders(customersInLine.remove(at: 0))
 collectCustomerProviders(customersInLine.remove(at: 0))
 
 print("Collected \(customerProviders.count) closures.")
-// 打印 “Collected 2 closures.”
+// 打印“Collected 2 closures.”
 for customerProvider in customerProviders {
     print("Now serving \(customerProvider())!")
 }
-// 打印 “Now serving Barry!”
-// 打印 “Now serving Daniella!”
+// 打印“Now serving Barry!”
+// 打印“Now serving Daniella!”
 ```
 
 在上面的代码中，`collectCustomerProviders(_:)` 函数并没有调用传入的 `customerProvider` 闭包，而是将闭包追加到了 `customerProviders` 数组中。这个数组定义在函数作用域范围外，这意味着数组内的闭包能够在函数返回之后被调用。因此，`customerProvider` 参数必须允许“逃逸”出函数作用域。

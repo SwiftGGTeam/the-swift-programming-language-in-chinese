@@ -401,7 +401,7 @@ let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
 if twoThree == anotherTwoThree {
     print("These two vectors are equivalent.")
 }
-// 打印 “These two vectors are equivalent.”
+// 打印“These two vectors are equivalent.”
 ```
 
 Swift 为以下数种自定义类型提供等价运算符的默认实现：

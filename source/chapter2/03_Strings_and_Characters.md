@@ -326,7 +326,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 ```swift
 let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 print("unusualMenagerie has \(unusualMenagerie.count) characters")
-// 打印输出 “unusualMenagerie has 40 characters”
+// 打印输出“unusualMenagerie has 40 characters”
 ```
 
 注意在 Swift 中，使用可拓展的字符群集作为 `Character` 值来连接或改变字符串时，并不一定会更改字符串的字符数量。
@@ -336,12 +336,12 @@ print("unusualMenagerie has \(unusualMenagerie.count) characters")
 ```swift
 var word = "cafe"
 print("the number of characters in \(word) is \(word.count)")
-// 打印输出 “the number of characters in cafe is 4”
+// 打印输出“the number of characters in cafe is 4”
 
 word += "\u{301}"    // 拼接一个重音，U+0301
 
 print("the number of characters in \(word) is \(word.count)")
-// 打印输出 “the number of characters in café is 4”
+// 打印输出“the number of characters in café is 4”
 ```
 
 > 注意
@@ -394,7 +394,7 @@ greeting.index(after: endIndex) // error
 for index in greeting.indices {
    print("\(greeting[index]) ", terminator: "")
 }
-// 打印输出 “G u t e n   T a g ! ”
+// 打印输出“G u t e n   T a g ! ”
 ```
 
 > 注意
@@ -471,7 +471,7 @@ let sameQuotation = "We're a lot alike, you and I."
 if quotation == sameQuotation {
     print("These two strings are considered equal")
 }
-// 打印输出 “These two strings are considered equal”
+// 打印输出“These two strings are considered equal”
 ```
 
 如果两个字符串（或者两个字符）的可扩展的字形群集是标准相等，那就认为它们是相等的。只要可扩展的字形群集有同样的语言意义和外观则认为它们标准相等，即使它们是由不同的 Unicode 标量构成。
@@ -488,7 +488,7 @@ let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
 if eAcuteQuestion == combinedEAcuteQuestion {
     print("These two strings are considered equal")
 }
-// 打印输出 “These two strings are considered equal”
+// 打印输出“These two strings are considered equal”
 ```
 
 相反，英语中的 `LATIN CAPITAL LETTER A`(`U+0041`，或者 `A`)不等于俄语中的 `CYRILLIC CAPITAL LETTER A`(`U+0410`，或者 `A`)。两个字符看着是一样的，但却有不同的语言意义：
@@ -501,7 +501,7 @@ let cyrillicCapitalLetterA: Character = "\u{0410}"
 if latinCapitalLetterA != cyrillicCapitalLetterA {
     print("These two characters are not equivalent")
 }
-// 打印 “These two characters are not equivalent”
+// 打印“These two characters are not equivalent”
 ```
 
 > 注意
@@ -541,7 +541,7 @@ for scene in romeoAndJuliet {
     }
 }
 print("There are \(act1SceneCount) scenes in Act 1")
-// 打印输出 “There are 5 scenes in Act 1”
+// 打印输出“There are 5 scenes in Act 1”
 ```
 
 相似地，你可以用 `hasSuffix(_:)` 方法来计算发生在不同地方的场景数：
@@ -557,7 +557,7 @@ for scene in romeoAndJuliet {
     }
 }
 print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-// 打印输出 “6 mansion scenes; 2 cell scenes”
+// 打印输出“6 mansion scenes; 2 cell scenes”
 ```
 
 > 注意

@@ -93,7 +93,7 @@ switch point {
 case let (x, y):
     print("The point is at (\(x), \(y)).")
 }
-// 打印 “The point is at (3, 2).”
+// 打印“The point is at (3, 2).”
 ```
 
 在上面这个例子中，`let` 会分配到元组模式 `(x, y)` 中的各个标识符模式。因此，`switch` 语句中 `case let (x, y):` 和 `case (let x, let y):` 的匹配效果是一样的。
@@ -227,7 +227,7 @@ case (-2...2, -2...2):
 default:
     print("The point is at (\(point.0), \(point.1)).")
 }
-// 打印 “(1, 2) is near the origin.”
+// 打印“(1, 2) is near the origin.”
 ```
 
 你可以重载 `~=` 运算符来提供自定义的表达式匹配行为。比如你可以重写上面的例子，将 `point` 表达式与字符串形式表示的点进行比较。
@@ -244,7 +244,7 @@ case ("0", "0"):
 default:
     print("The point is at (\(point.0), \(point.1)).")
 }
-// 打印 “The point is at (1, 2).”
+// 打印“The point is at (1, 2).”
 ```
 
 > 表达式模式语法
