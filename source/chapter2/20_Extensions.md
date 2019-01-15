@@ -57,10 +57,10 @@ extension Double {
 }
 let oneInch = 25.4.mm
 print("One inch is \(oneInch) meters")
-// 打印“一英寸是 0.0254 米”
+// 打印“One inch is 0.0254 meters”
 let threeFeet = 3.ft
 print("Three feet is \(threeFeet) meters")
-// 打印“三英尺是 0.914399970739201 米”
+// 打印“Three feet is 0.914399970739201 meters”
 ```
 
 这些计算型属性表示的含义是把一个 **Double** 值看作是某单位下的长度值。即使它们被实现为计算型属性，但这些属性的名字仍可紧接一个浮点型字面值，从而通过点语法来使用，并以此实现距离转换。
@@ -74,7 +74,7 @@ print("Three feet is \(threeFeet) meters")
 ```swift
 let aMarathon = 42.km + 195.m
 print("A marathon is \(aMarathon) meters long")
-// 打印“马拉松赛跑全长 42195.0 米。”
+// 打印“A marathon is 42195.0 meters long”
 ```
 
 > 注意
@@ -201,13 +201,13 @@ extension Int {
     }
 }
 746381295[0]
-// returns 5
+// 返回 5
 746381295[1]
-// returns 9
+// 返回 9
 746381295[2]
-// returns 2
+// 返回 2
 746381295[8]
-// returns 7
+// 返回 7
 ```
 
 如果操作的 **Int** 值没有足够的位数满足所请求的下标，那么下标的现实将返回 **0**，将好像在数字的左边补上了 0：
