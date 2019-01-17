@@ -240,7 +240,7 @@ Raw String Literals
 ~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`raw string literal` is a string literal
-that's surrounded by one or more pound symbols (``#``).
+that's surrounded by one or more number signs (``#``).
 Use raw string literals to include special characters in a string
 without their special effects taking effect.
 For example, printing the raw string literal ``#"Line 1\nLine 2"#``
@@ -248,18 +248,26 @@ prints the line feed escape sequence
 rather than printing the string across two lines.
 
 If you need the special effects of a character in a raw string literal,
-match the number of pound signs you use in between the backslash
-with the number of pound signs you use to surround the string literal.
-For example, ``#"Line 1\#nLine 2"#`` prints across two lines
-because the pound signs are balanced.
-Similarly, ``###"Line 1\###nLine 2"###`` prints across two lines.
+match the number of number signs you use in between the backslash
+with the number of number signs you use to surround the string literal.
+Both of the raw string literals in the example below 
+print across two lines because the number signs are balanced.
 
-Raw string literals can be multiline string literals too.
+.. testcode:: raw-string-literals
+   :compile: true
+
+   -> print(#"Line 1\#nLine 2"#)
+   </ Line 1
+   </ Line 2
+   -> print(###"Line 1\###nLine 2"###)
+   </ Line 1
+   </ Line 2
+
+Raw string literals can also be multiline string literals.
 You can use raw string literals to include the text ``"""`` in a multiline string,
 overriding the default behavior that ends the literal. For example:
 
 .. testcode:: raw-string-literals
-   :compile: true
 
    -> let threeMoreDoubleQuotationMarks = #"""
       Here are three more double quotes: """
