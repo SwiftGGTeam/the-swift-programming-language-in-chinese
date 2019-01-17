@@ -627,7 +627,7 @@ For example, all of the following string literals have the same value:
    <$ : String = "1 2 3"
 
 A raw string literal is a sequence of characters surrounded by quotation marks
-and a balanced set of one or more number signs.
+and a balanced set of one or more number signs (``#``).
 A raw literal has the following forms:
 
 .. syntax-outline::
@@ -646,6 +646,43 @@ that would ordinarily have a special effect
 such as generating a string interpolation,
 starting an escape sequence,
 or terminating the string.
+
+The following example shows a string literal and a raw string literal
+that create equivalent string values.
+
+.. testcode:: raw-string-literals
+
+    -> let raw = #"\(x) \ " \u{2603}"#
+       let escaped = "\\(x) \\ \" \\u{2603}"
+    -> print(raw)
+    <- \(x) \ " \u{2603}
+    -> print(raw == escaped)
+    <- true
+
+If you use more than one number sign to form a raw string literal,
+there must not be any whitespace in between the number signs.
+
+.. testcode:: raw-string-literals
+
+    -> print(###"Line 1\###nLine 2"###) // OK
+    << Line 1
+    << Line 2
+    -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !! print(###"Line 1\###nLine 2"###) // OK
+    !! ^
+    !! <REPL Input>:1:18: error: invalid escape sequence in literal
+    !! print(###"Line 1\###nLine 2"###) // OK
+    !! ^
+    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+    !! <REPL Input>:1:20: error: invalid escape sequence in literal
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+
+Raw string literals that are also multiline string literals
+have the same indentation requirements as regular multiline string literals. 
 
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
