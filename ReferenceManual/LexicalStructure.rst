@@ -670,12 +670,6 @@ no runtime concatenation is performed.
     Grammar of a string literal
 
     string-literal --> static-string-literal | interpolated-string-literal
-    
-    raw-string-literal --> ``#`` string-literal ``#``
-    raw-string-literal --> ``#`` raw-string-literal ``#``
-
-    static-string-literal --> ``"`` quoted-text-OPT ``"``
-    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
@@ -685,6 +679,17 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> escaped-character
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
     multiline-quoted-text-item --> escaped-newline
+    
+    raw-string-literal -->  ``#"`` raw-quoted-text ``"#`` | ``#`` raw-string-literal ``#``
+    raw-quoted-text --> raw-quoted-text-item raw-quoted-text-OPT
+    raw-quoted-text-item --> Any Unicode scalar value except U+000A or U+000D
+    
+    raw-multiline-string-literal --> ``#"""`` raw-multiline-quoted-text ``"""#`` | ``#`` raw-multiline-string-literal ``#``
+    raw-multiline-quoted-text --> raw-multiline-quoted-text-item raw-multiline-quoted-text-OPT
+    raw-multiline-quoted-text-item --> Any Unicode scalar value.
+
+    static-string-literal --> ``"`` quoted-text-OPT ``"``
+    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
     interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
