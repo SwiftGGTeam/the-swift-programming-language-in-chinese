@@ -706,7 +706,7 @@ no runtime concatenation is performed.
 
     Grammar of a string literal
 
-    string-literal --> static-string-literal | interpolated-string-literal
+    string-literal --> static-string-literal | interpolated-string-literal | raw-string-literal | raw-multiline-string-literal
 
     static-string-literal --> ``"`` quoted-text-OPT ``"``
     static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
