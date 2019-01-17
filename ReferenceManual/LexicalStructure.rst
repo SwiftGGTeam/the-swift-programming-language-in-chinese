@@ -726,7 +726,7 @@ no runtime concatenation is performed.
     
     raw-multiline-string-literal --> ``#"""`` raw-multiline-quoted-text ``"""#`` | ``#`` raw-multiline-string-literal ``#``
     raw-multiline-quoted-text --> raw-multiline-quoted-text-item raw-multiline-quoted-text-OPT
-    raw-multiline-quoted-text-item --> Any Unicode scalar value.
+    raw-multiline-quoted-text-item --> Any Unicode scalar value
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
     interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
