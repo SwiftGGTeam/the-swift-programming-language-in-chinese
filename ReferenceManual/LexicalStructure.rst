@@ -626,6 +626,27 @@ For example, all of the following string literals have the same value:
    << // x : Int = 3
    <$ : String = "1 2 3"
 
+A raw string literal is a sequence of characters surrounded by quotation marks
+and a balanced set of one or more number signs.
+A raw literal has the following forms:
+
+.. syntax-outline::
+
+    #"<#raw characters#>"#
+    
+    #"""
+    <#raw characters#>
+    """#
+
+Special characters in a raw string literal
+are incorporated into the resulting string as normal characters
+rather than as special characters.
+You can use raw string literals to create strings with characters
+that would ordinarily have a special effect
+such as generating a string interpolation,
+starting an escape sequence,
+or terminating the string.
+
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
@@ -649,6 +670,9 @@ no runtime concatenation is performed.
     Grammar of a string literal
 
     string-literal --> static-string-literal | interpolated-string-literal
+    
+    raw-string-literal --> ``#`` string-literal ``#``
+    raw-string-literal --> ``#`` raw-string-literal ``#``
 
     static-string-literal --> ``"`` quoted-text-OPT ``"``
     static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
