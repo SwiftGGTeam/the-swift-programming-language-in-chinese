@@ -244,7 +244,7 @@ that's surrounded by one or more number signs (``#``).
 Use raw string literals to include special characters in a string
 without their special effects taking effect.
 For example, printing the raw string literal ``#"Line 1\nLine 2"#``
-prints the line feed escape sequence
+prints the line feed escape sequence (``\n``)
 rather than printing the string across two lines.
 
 If you need the special effects of a character in a raw string literal,
