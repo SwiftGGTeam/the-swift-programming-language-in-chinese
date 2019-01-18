@@ -72,7 +72,7 @@ struct Person: FullyNamed {
 	var fullName: String
 }
 let john = Person(fullName: "John Appleseed")
-// john.fullName 为 "John Appleseed"
+// john.fullName 为“John Appleseed”
 ```
 
 这个例子中定义了一个叫做 `Person` 的结构体，用来表示一个具有名字的人。从第一行代码可以看出，它遵循了 `FullyNamed` 协议。
@@ -94,7 +94,7 @@ class Starship: FullyNamed {
     }
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-// ncc1701.fullName 是 "USS Enterprise"
+// ncc1701.fullName 是“USS Enterprise”
 ```
 
 `Starship` 类把 `fullName` 属性实现为只读的计算型属性。每一个 `Starship` 类的实例都有一个名为 `name` 的非可选属性和一个名为 `prefix` 的可选属性。 当 `prefix` 存在时，计算型属性 `fullName` 会将 `prefix` 插入到 `name` 之前，从而为星际飞船构建一个全名。
@@ -659,7 +659,7 @@ func beginConcert(in location: Location & Named) {
 
 let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
 beginConcert(in: seattle)
-// Prints "Hello, Seattle!"
+// 打印“Hello, Seattle!”
 ```
 
 `beginConcert(in:)` 方法接受一个类型为 `Location & Named` 的参数，这意味着“任何 Location 的子类，并且遵循 Named 协议”。例如，City 就满足这样的条件。
@@ -753,7 +753,7 @@ for object in objects {
 
 ```swift
 @objc protocol CounterDataSource {
-    @objc optional func incrementForCount(count: Int) -> Int
+    @objc optional func increment(forCount count: Int) -> Int
     @objc optional var fixedIncrement: Int { get }
 }
 ```
@@ -771,7 +771,7 @@ class Counter {
     var count = 0
     var dataSource: CounterDataSource?
     func increment() {
-        if let amount = dataSource?.incrementForCount?(count) {
+        if let amount = dataSource?.increment?(forCount: count) {
             count += amount
         } else if let amount = dataSource?.fixedIncrement {
             count += amount
@@ -916,7 +916,6 @@ extension Collection where Element: Equatable {
 ```
 
 如果集合中的所有元素都一致，`allEqual()` 方法才返回 `true`。
-
 
 看看两个整数数组，一个数组的所有元素都是一样的，另一个不一样：
 
