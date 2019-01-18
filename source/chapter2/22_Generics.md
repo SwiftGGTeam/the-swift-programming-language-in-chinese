@@ -50,6 +50,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 在实际应用中，通常需要一个更实用更灵活的函数来交换两个任意类型的值，幸运的是，泛型代码帮你解决了这种问题。（这些函数的泛型版本已经在下面定义好了。）
 
 > 注意
+> 
 > 在上面三个函数中，`a` 和 `b` 类型必须相同。如果 `a` 和 `b` 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 `String` 类型的变量和一个 `Double` 类型的变量互换值。试图这样做将导致编译错误。
 
 <a name="generic_functions"></a>
@@ -84,16 +85,16 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 var someInt = 3
 var anotherInt = 107
 swapTwoValues(&someInt, &anotherInt)
-// someInt 现在 107, and anotherInt 现在 3
+// someInt 现在是 107，anotherInt 现在是 3
 
 var someString = "hello"
 var anotherString = "world"
 swapTwoValues(&someString, &anotherString)
-// someString 现在 "world", and anotherString 现在 "hello"
-
+// someString 现在是“world”，anotherString 现在是“hello”
 ```
 
 > 注意
+> 
 > 上面定义的 `swapTwoValues(_:_:)` 函数是受 `swap(_:_:)` 函数启发而实现的。后者存在于 Swift 标准库，你可以在你的应用程序中使用它。如果你在代码中需要类似 `swapTwoValues(_:_:)` 函数的功能，你可以使用已存在的 `swap(_:_:)` 函数。
 
 <a name="type_parameters"></a>
@@ -110,7 +111,8 @@ swapTwoValues(&someString, &anotherString)
 
 大多情况下，类型参数具有描述下的名称，例如字典 `Dictionary<Key, Value>` 中的 `Key` 和 `Value` 及数组 `Array<Element>` 中的 `Element`，这能告诉阅读代码的人这些参数类型与泛型类型或函数之间的关系。然而，当它们之间没有有意义的关系时，通常使用单个字符来表示，例如 `T`、`U`、`V`，例如上面演示函数 `swapTwoValues(_:_:)` 中的 `T`。
 
-> 注意：
+> 注意
+> 
 > 请始终使用大写字母开头的驼峰命名法（例如 `T` 和 `MyTypeParameter`）来为类型参数命名，以表明它们是占位类型，而不是一个值。
 
 <a name="generic_types"></a>
@@ -121,6 +123,7 @@ swapTwoValues(&someString, &anotherString)
 本节将向你展示如何编写一个名为 `Stack`（栈）的泛型集合类型。栈是值的有序集合，和数组类似，但比数组有更严格的操作限制。数组允许在其中任意位置插入或是删除元素。而栈只允许在集合的末端添加新的元素（称之为入栈）。类似的，栈也只能从末端移除元素（称之为出栈）。
 
 > 注意
+> 
 > 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的”后进先出”方式来管理集合，栈都是最实用的模型。
 
 下图展示了入栈（push）和出栈（pop）的行为：
@@ -190,11 +193,11 @@ stackOfStrings.push("cuatro")
 
 ![](https://docs.swift.org/swift-book/_images/stackPushedFourStrings_2x.png)
 
-移除并返回栈顶部的值 "cuatro"，即出栈：
+移除并返回栈顶部的值“cuatro”，即出栈：
 
 ```swift
 let fromTheTop = stackOfStrings.pop()
-// fromTheTop 的值为 "cuatro"，现在栈中还有 3 个字符串
+// fromTheTop 的值为“cuatro”，现在栈中还有 3 个字符串
 ```
 
 下图展示了如何将顶部的值出栈：
@@ -468,14 +471,14 @@ extension Stack: SuffixableContainer {
         }
         return result
     }
-    // Inferred that Suffix is Stack.
+    // 推断 suffix 结果是Stack。
 }
 var stackOfInts = Stack<Int>()
 stackOfInts.append(10)
 stackOfInts.append(20)
 stackOfInts.append(30)
 let suffix = stackOfInts.suffix(2)
-// suffix contains 20 and 30
+// suffix 包含 20 和 30
 ```
 
 在上面的例子中，`Suffix` 是 `Stack` 的关联类型，也是 `Stack` ，所以 `Stack` 的后缀运算返回另一个 `Stack` 。另外，遵循 `SuffixableContainer` 的类型可以拥有一个与它自己不同的 `Suffix` 类型——也就是说后缀运算可以返回不同的类型。比如说，这里有一个非泛型 `IntStack` 类型的扩展，它遵循了 `SuffixableContainer` 协议，使用 `Stack<Int>` 作为它的后缀类型而不是 `IntStack`：
@@ -489,7 +492,7 @@ extension IntStack: SuffixableContainer {
         }
         return result
     }
-    // Inferred that Suffix is Stack<Int>.
+    // 推断 suffix 结果是 Stack<Int>。
 }
 ```
 
