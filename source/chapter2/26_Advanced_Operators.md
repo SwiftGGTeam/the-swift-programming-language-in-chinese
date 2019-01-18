@@ -70,7 +70,7 @@ let combinedbits = someBits | moreBits // 等于 11111110
 
 ![Art/bitwiseXOR_2x.png](https://docs.swift.org/swift-book/_images/bitwiseXOR_2x.png)
 
-在下面的示例当中，`firstBits` 和 `otherBits` 都有一个自己为 `1`，而对方为 `0` 的位。按位异或运算符将新数的这两个位都设置为 `1`。在其余的位上 `firstBits` 和 `otherBits` 是相同的，所以设置为 `0`：  
+在下面的示例当中，`firstBits` 和 `otherBits` 都有一个自己为 `1`，而对方为 `0` 的位。按位异或运算符将新数的这两个位都设置为 `1`。在其余的位上 `firstBits` 和 `otherBits` 是相同的，所以设置为 `0`：
 
 ```swift
 let firstBits: UInt8 = 0b00010100
@@ -207,7 +207,7 @@ unsignedOverflow = unsignedOverflow &+ 1
 
 ![Art/overflowAddition_2x.png](https://docs.swift.org/swift-book/_images/overflowAddition_2x.png)
 
-当允许对一个无符号整数进行下溢运算时也会产生类似的情况。这里有一个使用溢出减法运算符（`&-`）的例子：  
+当允许对一个无符号整数进行下溢运算时也会产生类似的情况。这里有一个使用溢出减法运算符（`&-`）的例子：
 
 ```swift
 var unsignedOverflow = UInt8.min
@@ -257,7 +257,7 @@ signedOverflow = signedOverflow &- 1
 
 但是正确答案是 `17` 而不是 `5`。优先级高的运算符要先于优先级低的运算符进行计算。与 C 语言类似，在 Swift 中，乘法运算符（`*`）与取余运算符（`%`）的优先级高于加法运算符（`+`）。因此，它们的计算顺序要先于加法运算。
 
-而乘法运算与取余运算的优先级*相同*。这时为了得到正确的运算顺序，还需要考虑结合性。乘法运算与取余运算都是左结合的。可以将这考虑成，从它们的左边开始为这两部分表达式都隐式地加上括号：  
+而乘法运算与取余运算的优先级*相同*。这时为了得到正确的运算顺序，还需要考虑结合性。乘法运算与取余运算都是左结合的。可以将这考虑成，从它们的左边开始为这两部分表达式都隐式地加上括号：
 
 ```swift
 2 + ((3 % 4) * 5)
@@ -275,9 +275,9 @@ signedOverflow = signedOverflow &- 1
 2 + 15
 ```
 
-因此计算结果为 `17`。  
+因此计算结果为 `17`。
 
-有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见[操作符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。  
+有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见[操作符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。
 
 > 注意
 > 
@@ -351,9 +351,9 @@ let alsoPositive = -negative
 <a name="compound_assignment_operators"></a>
 ### 复合赋值运算符
 
-*复合赋值运算符*将赋值运算符（`=`）与其它运算符进行结合。例如，将加法与赋值结合成加法赋值运算符（`+=`）。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。  
+*复合赋值运算符*将赋值运算符（`=`）与其它运算符进行结合。例如，将加法与赋值结合成加法赋值运算符（`+=`）。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。
 
-在下面的例子中，对 `Vector2D` 实例实现了一个加法赋值运算符函数：  
+在下面的例子中，对 `Vector2D` 实例实现了一个加法赋值运算符函数：
 
 ```swift
 extension Vector2D {
@@ -391,7 +391,7 @@ extension Vector2D: Equatable {
 }
 ```
 
-上述代码实现了“相等”运算符（`==`）来判断两个 `Vector2D` 实例是否相等。对于 `Vector2D` 来说，“相等”意味着“两个实例的 `x` 和 `y` 都相等”，这也是代码中用来进行判等的逻辑。如果你已经实现了“相等”运算符，通常情况下你并不需要自己再去实现“不等”运算符（`!=`）。标准库对于“不等”运算符提供了默认的实现，它简单地将“相等”运算符的结果进行取反后返回。  
+上述代码实现了“相等”运算符（`==`）来判断两个 `Vector2D` 实例是否相等。对于 `Vector2D` 来说，“相等”意味着“两个实例的 `x` 和 `y` 都相等”，这也是代码中用来进行判等的逻辑。如果你已经实现了“相等”运算符，通常情况下你并不需要自己再去实现“不等”运算符（`!=`）。标准库对于“不等”运算符提供了默认的实现，它简单地将“相等”运算符的结果进行取反后返回。
 
 现在我们可以使用这两个运算符来判断两个 `Vector2D` 实例是否相等：
 

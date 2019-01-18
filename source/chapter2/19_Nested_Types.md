@@ -62,7 +62,7 @@ struct BlackjackCard {
 
 `Rank` 还定义了一个计算型属性 `values`，它将会返回一个 `Values` 结构体的实例。这个计算型属性会根据牌的面值，用适当的数值去初始化 `Values` 实例。对于 `J`、`Q`、`K`、`Ace` 这四种牌，会使用特殊数值。对于数字面值的牌，使用枚举实例的 `Int` 类型的原始值。
 
-`BlackjackCard` 结构体拥有两个属性—— `rank` 与 `suit`。它也同样定义了一个计算型属性 `description`，`description` 属性用 `rank` 和 `suit` 中的内容来构建对扑克牌名字和数值的描述。该属性使用可选绑定来检查可选类型 `second` 是否有值，若有值，则在原有的描述中增加对 `second` 的描述。
+`BlackjackCard` 结构体拥有两个属性——`rank` 与 `suit`。它也同样定义了一个计算型属性 `description`，`description` 属性用 `rank` 和 `suit` 中的内容来构建对扑克牌名字和数值的描述。该属性使用可选绑定来检查可选类型 `second` 是否有值，若有值，则在原有的描述中增加对 `second` 的描述。
 
 因为 `BlackjackCard` 是一个没有自定义构造器的结构体，在[结构体的逐一成员构造器](./14_Initialization.html#memberwise_initializers_for_structure_types)中可知，结构体有默认的成员构造器，所以你可以用默认的构造器去初始化新常量 `theAceOfSpades`：
 
@@ -81,7 +81,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 
 ```swift
 let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
-// 红心符号为 “♡”
+// 红心符号为“♡”
 ```
 
 对于上面这个例子，这样可以使 `Suit`、`Rank` 和 `Values` 的名字尽可能的短，因为它们的名字可以由定义它们的上下文来限定。
