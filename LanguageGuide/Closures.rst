@@ -587,7 +587,7 @@ it is the choice of closure that ``incrementByTen`` *refers to* that is constant
 and not the contents of the closure itself.
 
 This also means that if you assign a closure to two different constants or variables,
-both of those constants or variables will refer to the same closure:
+both of those constants or variables refer to the same closure.
 
 .. testcode:: closures
 
@@ -597,6 +597,16 @@ both of those constants or variables will refer to the same closure:
    << // r5 : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
+   ---
+   -> incrementByTen()
+   << // r6 : Int = 60
+   /> returns a value of \(r6)
+   </ returns a value of 60
+
+The example above shows that calling ``alsoIncrementByTen``
+is the same as calling ``incrementByTen``.
+Because both of them refer to the same closure,
+they both increment and return the same running total.
 
 
 .. _Closures_Noescape:

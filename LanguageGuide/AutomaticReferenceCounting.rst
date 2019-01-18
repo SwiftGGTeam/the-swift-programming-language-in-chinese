@@ -454,7 +454,7 @@ before a property or variable declaration.
 An unowned reference is expected to always have a value.
 As a result,
 ARC never sets an unowned reference's value to ``nil``,
-which means that unowned references are defined using nonoptional types.
+which means that unowned references are defined using non-optional types.
 
 ..  Everything that unowned can do, weak can do slower and more awkwardly
    (but still correctly).
@@ -482,7 +482,7 @@ In this data model, a customer may or may not have a credit card,
 but a credit card will *always* be associated with a customer.
 A ``CreditCard`` instance never outlives the ``Customer`` that it refers to.
 To represent this, the ``Customer`` class has an optional ``card`` property,
-but the ``CreditCard`` class has an unowned (and nonoptional) ``customer`` property.
+but the ``CreditCard`` class has an unowned (and non-optional) ``customer`` property.
 
 Furthermore, a new ``CreditCard`` instance can *only* be created
 by passing a ``number`` value and a ``customer`` instance
@@ -695,7 +695,7 @@ without needing to use an exclamation mark to unwrap its optional value:
 
 In the example above, the use of an implicitly unwrapped optional
 means that all of the two-phase class initializer requirements are satisfied.
-The ``capitalCity`` property can be used and accessed like a nonoptional value
+The ``capitalCity`` property can be used and accessed like a non-optional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 

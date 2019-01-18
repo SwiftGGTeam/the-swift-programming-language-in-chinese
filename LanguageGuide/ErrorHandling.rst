@@ -28,8 +28,7 @@ and to communicate to the user any errors it can't resolve.
    Error handling in Swift interoperates with error handling patterns
    that use the ``NSError`` class in Cocoa and Objective-C.
    For more information about this class,
-   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Handling Cocoa Errors in Swift <https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift>`_.
 
 .. _ErrorHandling_Represent:
 
@@ -236,7 +235,7 @@ propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)``
           "Bob": "Licorice",
           "Eve": "Pretzels",
       ]
-   << // favoriteSnacks : [String : String] = ["Alice": "Chips", "Eve": "Pretzels", "Bob": "Licorice"]
+   << // favoriteSnacks : [String : String] = ["Alice": "Chips", "Bob": "Licorice", "Eve": "Pretzels"]
    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
           let snackName = favoriteSnacks[person] ?? "Candy Bar"
           try vendingMachine.vend(itemNamed: snackName)

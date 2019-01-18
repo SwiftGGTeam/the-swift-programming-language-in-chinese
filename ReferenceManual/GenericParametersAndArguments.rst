@@ -38,14 +38,14 @@ each of which has the following form:
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. A :newTerm:`type parameter` is simply the name
 of a placeholder type
-(for instance, ``T``, ``U``, ``V``, ``Key``, ``Value``, and so on).
+(for example, ``T``, ``U``, ``V``, ``Key``, ``Value``, and so on).
 You have access to the type parameters (and any of their associated types) in the rest of the
 type, function, or initializer declaration, including in the signature of the function
 or initializer.
 
 The *constraint* specifies that a type parameter inherits
 from a specific class or conforms to a protocol or protocol composition.
-For instance, in the generic function below, the generic parameter ``T: Comparable``
+For example, in the generic function below, the generic parameter ``T: Comparable``
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
@@ -69,7 +69,7 @@ to the function or initializer.
     -> simpleMax(17, 42) // T is inferred to be Int
     << // r0 : Int = 42
     -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
-    << // r1 : Double = 3.1415899999999999
+    << // r1 : Double = 3.14159
 
 
 .. _GenericParametersAndArguments_WhereClauses:
@@ -91,9 +91,9 @@ The *requirements* in a generic ``where`` clause specify that a type parameter i
 a class or conforms to a protocol or protocol composition.
 Although the generic ``where`` clause provides syntactic
 sugar for expressing simple constraints on type parameters
-(for instance, ``<T: Comparable>`` is equivalent to ``<T> where T: Comparable`` and so on),
+(for example, ``<T: Comparable>`` is equivalent to ``<T> where T: Comparable`` and so on),
 you can use it to provide more complex constraints on type parameters
-and their associated types. For instance,
+and their associated types. For example,
 you can constrain the associated types of type parameters to conform to protocols.
 For example, ``<S: Sequence> where S.Iterator.Element: Equatable``
 specifies that ``S`` conforms to the ``Sequence`` protocol
@@ -119,19 +119,6 @@ or initializer to invoke.
 For more information about generic ``where`` clauses and to see an example
 of one in a generic function declaration,
 see :ref:`Generics_WhereClauses`.
-
-.. langref-grammar
-
-    generic-params ::= '<' generic-param (',' generic-param)* where-clause? '>'
-    generic-param ::= identifier
-    generic-param ::= identifier ':' type-identifier
-    generic-param ::= identifier ':' type-composition
-    where-clause ::= 'where' requirement (',' requirement)*
-    requirement ::= conformance-requirement
-                ::= same-type-requirement
-    conformance-requirement ::= type-identifier ':' type-identifier
-    conformance-requirement ::= type-identifier ':' type-composition
-    same-type-requirement ::= type-identifier '==' type-identifier
 
 .. syntax-grammar::
 
@@ -207,11 +194,6 @@ to form an array whose elements are themselves arrays of integers.
 As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
-
-.. langref-grammar
-
-    generic-args ::= '<' generic-arg (',' generic-arg)* '>'
-    generic-arg ::= type
 
 .. syntax-grammar::
 

@@ -235,7 +235,7 @@ a *linear congruential generator*:
       }
    -> let generator = LinearCongruentialGenerator()
    -> print("Here's a random number: \(generator.random())")
-   <- Here's a random number: 0.37464991998171
+   <- Here's a random number: 0.3746499199817101
    -> print("And another one: \(generator.random())")
    <- And another one: 0.729023776863283
 
@@ -380,7 +380,7 @@ see :ref:`Initialization_RequiredInitializers`.
    -> class C2: P {
          init(s: String) {}
       }
-   !! <REPL Input>:2:6: error: initializer requirement 'init(s:)' can only be satisfied by a `required` initializer in non-final class 'C2'
+   !! <REPL Input>:2:6: error: initializer requirement 'init(s:)' can only be satisfied by a 'required' initializer in non-final class 'C2'
    !! init(s: String) {}
    !! ^
    !! required
@@ -1430,7 +1430,7 @@ This is why ``increment(forCount:)`` is also written with a question mark after 
 Because the call to ``increment(forCount:)`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
 This is true even though ``increment(forCount:)`` is defined as returning
-a nonoptional ``Int`` value in the definition of ``CounterDataSource``.
+a non-optional ``Int`` value in the definition of ``CounterDataSource``.
 Even though there are two optional chaining operations,
 one after another,
 the result is still wrapped in a single optional.
@@ -1452,7 +1452,7 @@ then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
 so its value is an optional ``Int`` value,
-even though ``fixedIncrement`` is defined as a nonoptional ``Int`` property
+even though ``fixedIncrement`` is defined as a non-optional ``Int`` property
 as part of the ``CounterDataSource`` protocol definition.
 
 Here's a simple ``CounterDataSource`` implementation where the data source
@@ -1564,7 +1564,7 @@ without any additional modification.
    >> do {
    -> let generator = LinearCongruentialGenerator()
    -> print("Here's a random number: \(generator.random())")
-   <- Here's a random number: 0.37464991998171
+   <- Here's a random number: 0.3746499199817101
    -> print("And here's a random Boolean: \(generator.randomBool())")
    <- And here's a random Boolean: true
    >> }

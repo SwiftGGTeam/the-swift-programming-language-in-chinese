@@ -38,7 +38,7 @@ If part of your code requires a ``String``,
 type safety prevents you from passing it an ``Int`` by mistake.
 Likewise, type safety prevents you from
 accidentally passing an optional ``String``
-to a piece of code that requires a nonoptional ``String``.
+to a piece of code that requires a non-optional ``String``.
 Type safety helps you catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
@@ -164,14 +164,14 @@ including Unicode characters:
 .. testcode:: constantsAndVariables
 
    -> let π = 3.14159
-   << // π : Double = 3.1415899999999999
+   << // π : Double = 3.14159
    -> let 你好 = "你好世界"
    << // 你好 : String = "你好世界"
    -> let 🐶🐮 = "dogcow"
    << // 🐶🐮 : String = "dogcow"
 
 Constant and variable names can't contain
-whitespace characters, mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values,
 or line- and box-drawing characters.
 Nor can they begin with a number,
 although numbers may be included elsewhere within the name.
@@ -490,7 +490,7 @@ Swift infers that you want to create a ``Double``:
 .. testcode:: typeInference
 
    -> let pi = 3.14159
-   << // pi : Double = 3.1415899999999999
+   << // pi : Double = 3.14159
    // pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -502,7 +502,7 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
    -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Double = 3.1415899999999999
+   << // anotherPi : Double = 3.14159
    // anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
@@ -688,9 +688,9 @@ Conversions between integer and floating-point numeric types must be made explic
    -> let three = 3
    << // three : Int = 3
    -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double = 0.14158999999999999
+   << // pointOneFourOneFiveNine : Double = 0.14159
    -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Double = 3.1415899999999999
+   << // pi : Double = 3.14159
    /> pi equals \(pi), and is inferred to be of type Double
    </ pi equals 3.14159, and is inferred to be of type Double
 
@@ -996,7 +996,7 @@ by assigning it the special value ``nil``:
 
 .. note::
 
-   You can't use ``nil`` with nonoptional constants and variables.
+   You can't use ``nil`` with non-optional constants and variables.
    If a constant or variable in your code needs to work with
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
@@ -1087,11 +1087,11 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = Int(possibleNumber) {
-         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
+         print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("\"\(possibleNumber)\" could not be converted to an integer")
+         print("The string \"\(possibleNumber)\" could not be converted to an integer")
       }
-   <- "123" has an integer value of 123
+   <- The string "123" has an integer value of 123
 
 This code can be read as:
 
@@ -1180,7 +1180,7 @@ The primary use of implicitly unwrapped optionals in Swift is during class initi
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
-but can also be used like a nonoptional value,
+but can also be used like a non-optional value,
 without the need to unwrap the optional value each time it's accessed.
 The following example shows the difference in behavior between
 an optional string and an implicitly unwrapped optional string
@@ -1376,7 +1376,7 @@ However,
 using them to enforce valid data and state
 causes your app to terminate more predictably
 if an invalid state occurs,
-and helps makes the problem easier to debug.
+and helps make the problem easier to debug.
 Stopping execution as soon as an invalid state is detected
 also helps limit the damage caused by that invalid state.
 
@@ -1446,7 +1446,7 @@ For example:
 
    -> if age > 10 {
           print("You can ride the roller-coaster or the ferris wheel.")
-      } else if age > 0 {
+      } else if age >= 0 {
           print("You can ride the ferris wheel.")
       } else {
           assertionFailure("A person's age can't be less than zero.")

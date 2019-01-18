@@ -64,8 +64,7 @@ The same value can appear in an array multiple times at different positions.
    Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
 
    For more information about using ``Array`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Array and NSArray <https://developer.apple.com/documentation/swift/array#2846730>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -432,8 +431,7 @@ or when you need to ensure that an item only appears once.
    Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
 
    For more information about using ``Set`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Set and NSSet <https://developer.apple.com/documentation/swift/set#2845530>`_.
 
 .. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 
@@ -553,8 +551,9 @@ Here, the ``favoriteGenres`` set is initialized with three ``String`` values
 A set type cannot be inferred from an array literal alone,
 so the type ``Set`` must be explicitly declared.
 However, because of Swift's type inference,
-you don't have to write the type of the set
-if you're initializing it with an array literal containing values of the same type.
+you don't have to write the type of the set's elements
+if you're initializing it with an array literal
+that contains values of just one type.
 The initialization of ``favoriteGenres`` could have been written in a shorter form instead:
 
 .. testcode:: setsInferred
@@ -643,8 +642,8 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
    -> for genre in favoriteGenres {
          print("\(genre)")
       }
-   </ [Tool J]
    </ Classical
+   </ [Tool J]
    </ Hip hop
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
@@ -741,9 +740,9 @@ because they share no elements in common.
 .. testcode:: setOperations
 
    -> let houseAnimals: Set = ["🐶", "🐱"]
-   << // houseAnimals : Set<String> = Set(["🐱", "🐶"])
+   << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
    -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-   << // farmAnimals : Set<String> = Set(["🐑", "🐶", "🐱", "🐔", "🐮"])
+   << // farmAnimals : Set<String> = Set(["🐮", "🐔", "🐑", "🐶", "🐱"])
    -> let cityAnimals: Set = ["🐦", "🐭"]
    << // cityAnimals : Set<String> = Set(["🐭", "🐦"])
    ---
@@ -778,8 +777,7 @@ the definition for a particular word.
    Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
 
    For more information about using ``Dictionary`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Dictionary and NSDictionary <https://developer.apple.com/documentation/swift/dictionary#2846239>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
@@ -859,7 +857,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -890,7 +888,7 @@ The initialization of ``airports`` could have been written in a shorter form ins
 .. testcode:: dictionariesInferred
 
    -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
