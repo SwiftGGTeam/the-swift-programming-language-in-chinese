@@ -17,7 +17,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 }
 ```
 
-这个函数使用输入输出参数（`inout`）来交换 `a` 和 `b` 的值，具体请参考[输入输出参数](./06_Functions.html#in_out_parameters)
+这个函数使用输入输出参数（`inout`）来交换 `a` 和 `b` 的值，具体请参考[输入输出参数](./06_Functions.html#in_out_parameters)。
 
 `swapTwoInts(_:_:)` 函数将 `b` 的原始值换成了 `a`，将 `a` 的原始值换成了 `b`，你可以调用这个函数来交换两个 `Int` 类型变量：
 
@@ -124,7 +124,7 @@ swapTwoValues(&someString, &anotherString)
 
 > 注意
 > 
-> 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的”后进先出”方式来管理集合，栈都是最实用的模型。
+> 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的“后进先出”方式来管理集合，栈都是最实用的模型。
 
 下图展示了入栈（push）和出栈（pop）的行为：
 
@@ -538,7 +538,7 @@ func allItemsMatch<C1: Container, C2: Container>
 + `C1` 的 `Item` 必须和 `C2` 的 `Item` 类型相同（写作 `C1.Item == C2.Item`）。
 + `C1` 的 `Item` 必须符合 `Equatable` 协议（写作 `C1.Item: Equatable`）。
 
-前两个要求定义在函数的类型形式参数列表里，后两个要求定义在了函数的泛型 `where` 分句中
+前两个要求定义在函数的类型形式参数列表里，后两个要求定义在了函数的泛型 `where` 分句中。
 
 这些要求意味着：
 
