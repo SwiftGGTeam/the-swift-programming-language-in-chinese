@@ -155,7 +155,7 @@ private class SomePrivateClass {                // 显式 private 类
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   	// 此处是函数实现部分
+    // 此处是函数实现部分
 }
 ```
 
@@ -165,7 +165,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   	// 此处是函数实现部分
+    // 此处是函数实现部分
 }
 ```
 
@@ -180,10 +180,10 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 ```swift
 public enum CompassPoint {
-   	case North
-   	case South
-   	case East
-   	case West
+    case north
+    case south
+    case east
+    case west
 }
 ```
 
@@ -208,11 +208,11 @@ public enum CompassPoint {
 
 ```swift
 public class A {
-   	private func someMethod() {}
+    private func someMethod() {}
 }
 
 internal class B: A {
-   	override internal func someMethod() {}
+    override internal func someMethod() {}
 }
 ```
 
