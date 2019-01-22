@@ -240,7 +240,7 @@ signedOverflow = signedOverflow &- 1
 
 运算符的*优先级*使得一些运算符优先于其他运算符；它们会先被执行。
 
-*结合性*定义了相同优先级的运算符是如何结合的，也就是说，是与左边结合为一组，还是与右边结合为一组。可以将其理解为“它们是与左边的表达式结合的，”或者“它们是与右边的表达式结合的。”
+*结合性*定义了相同优先级的运算符是如何结合的，也就是说，是与左边结合为一组，还是与右边结合为一组。可以将其理解为“它们是与左边的表达式结合的”，或者“它们是与右边的表达式结合的”。
 
 当考虑一个复合表达式的计算顺序时，运算符的优先级和结合性是非常重要的。举例来说，运算符优先级解释了为什么下面这个表达式的运算结果会是 `17`。
 
@@ -424,7 +424,7 @@ let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
 if twoThreeFour == anotherTwoThreeFour {
     print("These two vectors are also equivalent.")
 }
-// Prints "These two vectors are also equivalent."
+// 打印“These two vectors are also equivalent.”
 ```
 
 <a name="custom_operators"></a>
@@ -476,7 +476,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID380)
+这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID380)。
 
 > 注意
 > 
