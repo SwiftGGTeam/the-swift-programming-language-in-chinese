@@ -81,7 +81,7 @@ Swift 中的访问级别遵循一个基本原则：*不可以在某个实体中�
 <a name="access_control_syntax"></a>
 ## 访问控制语法
 
-通过修饰符 `open`，`public`，`internal`，`fileprivate`，`private` 来声明实体的访问级别：
+通过修饰符 `open`、`public`、`internal`、`fileprivate`、`private` 来声明实体的访问级别：
 
 ```swift
 public class SomePublicClass {}
@@ -135,8 +135,7 @@ fileprivate class SomeFilePrivateClass {        // 显式 fileprivate 类
 private class SomePrivateClass {                // 显式 private 类
     func somePrivateMethod() {}                  // 隐式 private 类成员
 }
-
-```swift
+```
 <a name="tuple_types"></a>
 ### 元组类型
 
@@ -208,7 +207,11 @@ public enum CompassPoint {
 
 ```swift
 public class A {
+<<<<<<< HEAD
     private func someMethod() {}
+=======
+    fileprivate func someMethod() {}
+>>>>>>> /25_Access_Control 修正标点使用，更新代码
 }
 
 internal class B: A {
@@ -220,7 +223,7 @@ internal class B: A {
 
 ```swift
 public class A {
-    private func someMethod() {}
+    fileprivate func someMethod() {}
 }
 
 internal class B: A {
@@ -370,7 +373,7 @@ Extension 可以在访问级别允许的情况下对类、结构体、枚举进�
 
 ```swift
 protocol SomeProtocol {
-    func doSomething() {}
+    func doSomething()
 }
 ```
 
