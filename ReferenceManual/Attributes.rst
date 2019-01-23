@@ -272,7 +272,7 @@ as if it's a function that takes any number of arguments.
       // Call the underlying method directly.
       dial.dynamicallyCall(withArguments: [4, 1, 1])
 
-The  declaration of the ``dynamicallyCall(withArguments:)`` method
+The declaration of the ``dynamicallyCall(withArguments:)`` method
 must have a single parameter that conforms to the
 `ExpressibleByArrayLiteral <//apple_ref/swift/fake/ExpressibleByArrayLiteral>`_
 protocol---like ``[Int]`` in the example above---
