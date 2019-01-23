@@ -29,6 +29,17 @@ that are written in either Swift 5, Swift 4.2, or Swift 4.
        print("An older compiler")
    #endif
 
+When you use Xcode 10.2 to build Swift 4 and Swift 4.2 code,
+most Swift 5 functionality is available.
+That said,
+the following changes are available only to Swift 5 code:
+
+- The ``try?`` expression doesn't introduce an extra level of optionality
+  to expressions that already return optionals.
+- Large integer literal initialization expressions are inferred
+  to be of the correct integer type.
+  For example, ``UInt64(0xffff_ffff_ffff_ffff)`` evaluates to the correct value
+  rather than overflowing.
 
 A target written in Swift 5 can depend on
 a target that's written in Swift 4.2 or Swift 4,
