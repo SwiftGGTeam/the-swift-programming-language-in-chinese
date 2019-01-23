@@ -860,6 +860,25 @@ For an example of how to use the ``escaping`` attribute,
 see :ref:`Closures_Noescape`.
 
 
+.. _Attributes_SwitchCaseAttributes:
+
+Switch Case Attributes
+----------------------
+
+You can apply switch case attributes to switch cases only.
+
+.. _Attributes_unknown:
+
+unknown
+~~~~~~~
+
+Apply this attribute to a switch case
+to indicate that it isn't expected to be matched
+by any case of the enumeration that's known
+at the time the code is compiled.
+For an example of how to use the ``unknown`` attribute,
+see :ref:`Statements_SwitchingOverFutureEnumerationCases`.
+
 .. syntax-grammar::
 
     Grammar of an attribute

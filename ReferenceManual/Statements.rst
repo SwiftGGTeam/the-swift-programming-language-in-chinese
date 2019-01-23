@@ -438,6 +438,61 @@ When this simply isn’t feasible
 (for example, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
+.. _Statements_SwitchingOverFutureEnumerationCases:
+
+Switching over Future Enumeration Cases
++++++++++++++++++++++++++++++++++++++++
+
+A :newTerm:`nonfrozen enumeration` is a special kind of enumeration
+that may gain new enumeration cases in the future---
+even after you compile and ship an app.  
+Switching over a nonfrozen enumeration requires extra consideration.
+When a library's authors mark an enumeration as nonfrozen,
+they reserve the right to add new enumeration cases,
+and any code that interacts with that enumeration
+*must* be able to handle those future cases without being recompiled.
+Only the standard library,
+Swift overlays for Apple frameworks,
+and C and Objective-C code can declare nonfrozen enumerations.
+Enumerations you declare in Swift can't be nonfrozen. 
+
+When you switch over a nonfrozen enumeration value,
+you always need to include a default case,
+even if every case of the enumeration already has a corresponding switch case.
+You can apply the ``@unknown`` attribute to the default case,
+which indicates that the default case should match only enumeration cases
+that are added in the future.
+Swift produces a warning
+if the default case matches
+any enumeration case that is known at compiler time.
+This future warning will let you know that the library author
+added a new case to the enumeration
+that has no corresponding switch case.
+
+The following example switches over all three existing cases of
+the standard library's `Mirror.AncestorRepresentation <//apple_ref/swift/fake/Mirror.AncestorRepresentation>`_
+enumeration.
+If additional cases are added in the future,
+a warning will be generated,
+indicating that the switch statement
+should be updated to take the new case or cases into account.
+
+.. testcode:: unknown-case
+
+   -> let representation: Mirror.AncestorRepresentation = .generated
+   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
+   -> switch representation {
+      case .customized:
+          print("Use the nearest ancestor’s implementation.")
+      case .generated:
+          print("Generate a default mirror for all ancestor classes.")
+      case .suppressed:
+          print("Suppress the representation of all ancestor classes.")
+      @unknown default:
+          print("Use a representation that was unknown when this code was compiled.")
+      }
+   <- Generate a default mirror for all ancestor classes.
+
 
 .. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
 
@@ -464,9 +519,9 @@ see :ref:`Statements_FallthroughStatement` below.
     switch-case --> default-label statements
     switch-case --> conditional-switch-case
 
-    case-label --> ``case`` case-item-list ``:``
+    case-label --> attributes-OPT ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
-    default-label --> ``default`` ``:``
+    default-label --> attributes-OPT ``default`` ``:``
 
     where-clause --> ``where`` where-expression
     where-expression --> expression
@@ -476,6 +531,10 @@ see :ref:`Statements_FallthroughStatement` below.
     switch-elseif-directive-clauses --> elseif-directive-clause switch-elseif-directive-clauses-OPT
     switch-elseif-directive-clause --> elseif-directive compilation-condition switch-cases-OPT
     switch-else-directive-clause --> else-directive switch-cases-OPT
+
+.. The grammar above uses attributes-OPT to match what's used
+   in all other places where attributes are allowed,
+   although as of Swift 4.2 only a single attribute (@unknown) is allowed.
 
 
 .. _Statements_LabeledStatement:
@@ -894,8 +953,8 @@ Platform condition        Valid arguments
 ========================  ===================================================
 ``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
-``swift()``               ``>=`` followed by a version number
-``compiler()``            ``>=`` followed by a version number
+``swift()``               ``>=`` or ``<`` followed by a version number
+``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
@@ -907,32 +966,32 @@ Platform condition        Valid arguments
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
-There must not be whitespace between ``>=`` and the version number.
+There must not be whitespace between the comparison operator and the version number.
 The version for ``compiler()`` is the compiler version,
 regardless of the Swift version setting passed to the compiler.
 The version for ``swift()`` is the language version currently being compiled.
-For example, if you compile your code using the Swift 4.2 compiler in Swift 3 mode,
-the compiler version is 4.2 and the language version is 3.3.
+For example, if you compile your code using the Swift 5 compiler in Swift 4.2 mode,
+the compiler version is 5 and the language version is 4.2.
 With those settings,
-the following code prints only the first and last messages:
+the following code prints all three messages:
 
 .. testcode::
 
-   -> #if compiler(>=4.2)
-      print("Compiled with the Swift 4.2 compiler or later")
+   -> #if compiler(>=5)
+      print("Compiled with the Swift 5 compiler or later")
       #endif
       #if swift(>=4.2)
       print("Compiled in Swift 4.2 mode or later")
       #endif
-      #if swift(>=3.0)
-      print("Compiled in Swift 3.0 mode or later")
+      #if compiler(>=5) && swift(<5)
+      print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
       #endif
-   <- Compiled with the Swift 4.2 compiler or later
-   << Compiled in Swift 4.2 mode or later
-   <- Compiled in Swift 3.0 mode or later
+   <- Compiled with the Swift 5 compiler or later
+   -> // Prints "Compiled in Swift 4.2 mode or later"
+   <- Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5
 
-.. That testcode is cheating by hiding the second line of output,
-   since it's not actually running in Swift 3 mode.
+.. That testcode is cheating by explicitly printing the second line of output,
+   since it's not actually running in Swift 4.2 mode.
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
@@ -1052,8 +1111,8 @@ have the following form:
 
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
-    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
-    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)``
+    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)`` | ``swift`` ``(`` ``<`` swift-version ``)``
+    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)`` | ``compiler`` ``(`` ``<`` swift-version ``)``
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
