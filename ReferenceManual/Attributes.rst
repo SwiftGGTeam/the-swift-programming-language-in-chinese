@@ -775,7 +775,7 @@ to indicate that it isn't expected to be matched
 by any case of the enumeration that's known
 at the time the code is compiled.
 For an example of how to use the ``unknown`` attribute,
-see :ref:`Statements_SwitchStatementsMustBeExhaustive`.
+see :ref:`Statements_SwitchingOverFutureEnumerationCases`.
 
 .. syntax-grammar::
 
