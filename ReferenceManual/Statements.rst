@@ -440,7 +440,7 @@ you can include a default case to satisfy the requirement.
 
 .. _Statements_SwitchingOverFutureEnumerationCases:
 
-Switching Over Future Enumeration Cases
+Switching over Future Enumeration Cases
 +++++++++++++++++++++++++++++++++++++++
 
 A :newTerm:`nonfrozen enumeration` is a special kind of enumeration
