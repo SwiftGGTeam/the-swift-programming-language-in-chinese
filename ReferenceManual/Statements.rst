@@ -475,7 +475,8 @@ should be updated to take to the new case or cases into account.
 .. testcode:: unknown-case
 
    -> let representation: Mirror.AncestorRepresentation = .generated
-      switch representation {
+   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
+   -> switch representation {
       case .customized:
           print("Use the nearest ancestor’s implementation.")
       case .generated:
