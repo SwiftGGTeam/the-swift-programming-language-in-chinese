@@ -232,6 +232,108 @@ when the function or method that returns a value
 is called without using its result.
 
 
+.. _Attributes_dynamicCallable:
+
+dynamicCallable
+~~~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, enumeration, or protocol
+to treat instances of the type as callable functions.
+The type must implement either a ``dynamicallyCall(withArguments:)`` method,
+a ``dynamicallyCall(withKeywordArguments:)`` method,
+or both.
+
+You can call an instance of a dynamically callable type
+as if it's a function that takes any number of arguments.
+
+.. testcode:: dynamicCallable
+   :compile: true
+
+   -> @dynamicCallable
+   -> struct TelephoneExchange {
+          func dynamicallyCall(withArguments phoneNumber: [Int]) {
+              if phoneNumber == [4, 1, 1] {
+                  print("Get Swift help on forums.swift.org")
+              } else {
+                  print("Unrecognized number")
+              }
+          }
+      }
+   ---
+      let dial = TelephoneExchange()
+   ---
+      // Use a dynamic method call.
+      dial(4, 1, 1)
+      // Prints "Get Swift help on forums.swift.org".
+   ---
+      dial(8, 6, 7, 5, 3, 0, 9)
+      // Prints "Unrecognized number".
+   ---
+      // Call the underlying method directly.
+      dial.dynamicallyCall(withArguments: [4, 1, 1])
+
+The declaration of the ``dynamicallyCall(withArguments:)`` method
+must have a single parameter that conforms to the
+`ExpressibleByArrayLiteral <//apple_ref/swift/fake/ExpressibleByArrayLiteral>`_
+protocol---like ``[Int]`` in the example above---
+and the return type can be any type.
+
+You can include labels in a dynamic method call
+if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
+
+.. testcode:: dynamicCallable
+
+   -> @dynamicCallable
+      struct Repeater {
+          func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+              return pairs
+                  .map { label, count in
+                      repeatElement(label, count: count).joined(separator: " ")
+                  }
+                  .joined(separator: "\n")
+          }
+      }
+   ---
+      let repeatLabels = Repeater()
+      print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
+   </ a
+   </ b b
+   </ c c c
+   </ b b
+   </ a
+
+The declaration of the ``dynamicallyCall(withKeywordArguments:)`` method
+must have a single parameter that conforms to the 
+`ExpressibleByDictionaryLiteral <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral>`_
+protocol,
+and the return type can be any type.
+The parameter's `Key <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral.Key>`_
+must be
+`ExpressibleByStringLiteral <//apple_ref/swift/fake/ExpressibleByStringLiteral>`_.
+The previous example uses `KeyValuePairs <//apple_ref/swift/fake/KeyValuePairs>`_
+as the parameter type
+so that callers can include duplicate parameter labels---
+``a`` and ``b`` are used multiple times in the call to ``repeat``.
+
+If you implement both ``dynamicallyCall`` methods,
+``dynamicallyCall(withKeywordArguments:)`` is called
+when the method call includes keyword arguments.
+Otherwise, the ``dynamicallyCall(withArguments:)`` method is called.
+
+You can only call a dynamically callable instance
+with arguments and a return value that match the types you specify
+in one of your ``dynamicallyCall`` method implementations.
+The call in the following example doesn't compile because
+there isn't an implementation of ``dynamicallyCall(withArguments:)``
+that takes ``KeyValuePairs<String, String>``.
+
+.. testcode:: dynamicCallable
+
+   -> repeatLabels(a: "four") // Error
+   !! /tmp/swifttest.swift:27:13: error: cannot call value of non-function type 'Repeater'
+   !! repeatLabels(a: "four") // Error
+   !! ~~~~~~~~~~~~^
+
 .. _Attributes_dynamicMemberLookup:
 
 dynamicMemberLookup
@@ -265,12 +367,12 @@ For example:
       }
    -> let s = DynamicStruct()
    ---
-   // Using dynamic member lookup
+   // Use dynamic member lookup.
    -> let dynamic = s.someDynamicMember
    -> print(dynamic)
    <- 325
    ---
-   // Calling the underlying subscript directly
+   // Call the underlying subscript directly.
    -> let equivalent = s[dynamicMember: "someDynamicMember"]
    -> print(dynamic == equivalent)
    <- true
