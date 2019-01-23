@@ -482,7 +482,7 @@ should be updated to take to the new case or cases into account.
       case .generated:
           print("Generate a default mirror for all ancestor classes.")
       case .suppressed:
-          print("Suppresses the representation of all ancestor classes.")
+          print("Suppress the representation of all ancestor classes.")
       @unknown default:
           print("Use a representation that was unknown when this code was compiled.")
       }
