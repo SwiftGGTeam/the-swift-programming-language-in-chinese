@@ -323,6 +323,9 @@ Otherwise, the ``dynamicallyCall(withArguments:)`` method is called.
 You can only call a dynamically callable instance
 with arguments and a return value that match the types you specify
 in one of your ``dynamicallyCall`` method implementations.
+The call in the following example doesn't compile because
+there isn't an implementation of ``dynamicallyCall(withArguments:)``
+that takes ``KeyValuePairs<String, String>``.
 
 .. testcode:: dynamicCallable
 
