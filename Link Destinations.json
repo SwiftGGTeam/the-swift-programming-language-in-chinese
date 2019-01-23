@@ -129,6 +129,7 @@
     "attributes-declarationattributes": "ID348",
     "attributes-declarationattributesusedbyinterfacebuilder": "ID349",
     "attributes-discardableresult": "ID584",
+    "attributes-dynamiccallable": "ID603",
     "attributes-dynamicmemberlookup": "ID585",
     "attributes-escaping": "ID601",
     "attributes-gkinspectable": "ID586",
@@ -140,9 +141,11 @@
     "attributes-objc": "ID592",
     "attributes-objcmembers": "ID593",
     "attributes-requires-stored-property-inits": "ID594",
+    "attributes-switchcaseattributes": "ID604",
     "attributes-testable": "ID595",
     "attributes-typeattributes": "ID350",
     "attributes-uiapplicationmain": "ID596",
+    "attributes-unknown": "ID605",
     "attributes-usablefrominline": "ID597",
     "attributes-warn-unqualified-access": "ID598",
     "automaticreferencecounting-arcinaction": "ID50",
@@ -542,6 +545,7 @@
     "statements-linecontrolstatement": "ID540",
     "statements-loopstatements": "ID429",
     "statements-returnstatement": "ID444",
+    "statements-switchingoverfutureenumerationcases": "ID602",
     "statements-switchstatement": "ID436",
     "statements-switchstatementsmustbeexhaustive": "ID437",
     "statements-throwstatement": "ID518",
@@ -653,5 +657,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 602
+  "next_id": 606
 }
