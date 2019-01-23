@@ -239,8 +239,9 @@ dynamicCallable
 
 Apply this attribute to a class, structure, enumeration, or protocol
 to treat instances of the type as callable functions.
-The type must implement either a ``dynamicallyCall(withArguments:)`` method
-or a ``dynamicallyCall(withKeywordArguments:)`` method.
+The type must implement either a ``dynamicallyCall(withArguments:)`` method,
+a ``dynamicallyCall(withKeywordArguments:)`` method,
+or both.
 
 You can call an instance of a dynamically callable type
 as if it's a function that takes any number of arguments.
@@ -271,10 +272,10 @@ as if it's a function that takes any number of arguments.
       // Call the underlying method directly.
       dial.dynamicallyCall(withArguments: [4, 1, 1])
 
-The ``dynamicallyCall(withArguments:)`` method's first and only parameter
-can be of any type that conforms to
+The  declaration of the ``dynamicallyCall(withArguments:)`` method
+must have a single parameter that conforms to the
 `ExpressibleByArrayLiteral <//apple_ref/swift/fake/ExpressibleByArrayLiteral>`_
----like ``[Int]`` in the example above---
+protocol---like ``[Int]`` in the example above---
 and the return type can be any type.
 
 You can include labels in a dynamic method call
@@ -301,9 +302,10 @@ if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
    </ b b
    </ a
 
-The ``dynamicallyCall(withKeywordArguments:)`` method's first and only parameter
-can be of any type that conforms to
-`ExpressibleByDictionaryLiteral <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral>`_,
+The declaration of the ``dynamicallyCall(withKeywordArguments:)`` method
+must have a single parameter that conforms to the 
+`ExpressibleByDictionaryLiteral <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral>`_
+protocol,
 and the return type can be any type.
 The parameter's `Key <//apple_ref/swift/fake/ExpressibleByDictionaryLiteral.Key>`_
 must be
@@ -318,6 +320,16 @@ If you implement both ``dynamicallyCall`` methods,
 when the method call includes keyword arguments.
 Otherwise, the ``dynamicallyCall(withArguments:)`` method is called.
 
+You can only call a dynamically callable instance
+with arguments and a return value that match the types you specify
+in one of your ``dynamicallyCall`` method implementations.
+
+.. testcode:: dynamicCallable
+
+   -> repeatLabels(a: "four") // Error
+   !! /tmp/swifttest.swift:27:13: error: cannot call value of non-function type 'Repeater'
+   !! repeatLabels(a: "four") // Error
+   !! ~~~~~~~~~~~~^
 
 .. _Attributes_dynamicMemberLookup:
 
