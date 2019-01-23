@@ -438,6 +438,11 @@ When this simply isn’t feasible
 (for example, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
+.. _Statements_SwitchingOverFutureEnumerationCases:
+
+Switching Over Future Enumeration Cases
++++++++++++++++++++++++++++++++++++++++
+
 A :newTerm:`nonfrozen enumeration` is a special kind of enumeration
 that may gain new enumeration cases in the future---
 even after you compile and ship an app.  
@@ -455,7 +460,7 @@ When you switch over a nonfrozen enumeration value,
 you always need to include a default case,
 even if every case of the enumeration already has a corresponding switch case.
 You can apply the ``@unknown`` attribute to the default case,
-which indicates that the default case should only match enumeration cases
+which indicates that the default case should match only enumeration cases
 that are added in the future.
 Swift produces a warning
 if the default case matches
@@ -470,7 +475,7 @@ enumeration.
 If additional cases are added in the future,
 a warning will be generated,
 indicating that the switch statement
-should be updated to take to the new case or cases into account.
+should be updated to take the new case or cases into account.
 
 .. testcode:: unknown-case
 
