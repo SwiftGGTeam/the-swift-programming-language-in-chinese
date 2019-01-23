@@ -438,29 +438,54 @@ When this simply isn’t feasible
 (for example, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
+A :newTerm:`nonfrozen enumeration` is a special kind of enumeration
+that may gain new enumeration cases in the future---
+even after you compile and ship an app.  
 Switching over a nonfrozen enumeration requires extra consideration.
 When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
-must be able to handle those future cases without being recompiled.
+*must* be able to handle those future cases without being recompiled.
 Only the standard library,
 Swift overlays for Apple frameworks,
-and imported C can use nonfrozen enumerations.
+and C and Objective-C code can declare nonfrozen enumerations.
+Enumerations you declare in Swift can't be nonfrozen. 
 
-When you switch over a frozen enumeration value,
-you always include a default case,
+When you switch over a nonfrozen enumeration value,
+you always need to include a default case,
 even if every case of the enumeration already has a corresponding switch case.
 You can apply the ``@unknown`` attribute to the default case,
 which indicates that the default case should only match enumeration cases
 that are added in the future.
-In Swift 4.2, this attribute lets you signal your intent
-but it has no effect on the compiler or on the program's behavior.
-Later versions of Swift will produce a warning or error
+Swift produces a warning
 if the default case matches
 any enumeration case that is known at compiler time.
 This future warning will let you know that the library author
 added a new case to the enumeration
 that has no corresponding switch case.
+
+The following example switches over all three existing cases of
+the standard library's `Mirror.AncestorRepresentation <//apple_ref/swift/fake/Mirror.AncestorRepresentation>`_
+enumeration.
+If additional cases are added in the future,
+a warning will be generated,
+indicating that the switch statement
+should be updated to take to the new case or cases into account.
+
+.. testcode:: unknown-case
+
+   -> let representation: Mirror.AncestorRepresentation = .generated
+      switch representation {
+      case .customized:
+          print("Use the nearest ancestor’s implementation.")
+      case .generated:
+          print("Generate a default mirror for all ancestor classes.")
+      case .suppressed:
+          print("Suppresses the representation of all ancestor classes.")
+      @unknown default:
+          print("Use a representation that was unknown when this code was compiled.")
+      }
+   <- Generate a default mirror for all ancestor classes.
 
 
 .. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
