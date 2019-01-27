@@ -729,20 +729,24 @@ print("Game over!")
 
 ```swift
 func greet(person: [String: String]) {
-	guard let name = person["name"] else {
-		return
-	}
-	print("Hello \(name)")
-	guard let location = person["location"] else {
-		print("I hope the weather is nice near you.")
-		return
-	}
-	print("I hope the weather is nice in \(location).")
+    guard let name = person["name"] else {
+        return
+    }
+
+    print("Hello \(name)!")
+
+    guard let location = person["location"] else {
+        print("I hope the weather is nice near you.")
+        return
+    }
+
+    print("I hope the weather is nice in \(location).")
 }
-greet(["name": "John"])
+
+greet(person: ["name": "John"])
 // 输出“Hello John!”
 // 输出“I hope the weather is nice near you.”
-greet(["name": "Jane", "location": "Cupertino"])
+greet(person: ["name": "Jane", "location": "Cupertino"])
 // 输出“Hello Jane!”
 // 输出“I hope the weather is nice in Cupertino.”
 ```
