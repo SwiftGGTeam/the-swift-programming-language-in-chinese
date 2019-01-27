@@ -81,7 +81,7 @@ Swift 中的访问级别遵循一个基本原则：*不可以在某个实体中�
 <a name="access_control_syntax"></a>
 ## 访问控制语法
 
-通过修饰符 `open`，`public`，`internal`，`fileprivate`，`private` 来声明实体的访问级别：
+通过修饰符 `open`、`public`、`internal`、`fileprivate`、`private` 来声明实体的访问级别：
 
 ```swift
 public class SomePublicClass {}
@@ -135,8 +135,7 @@ fileprivate class SomeFilePrivateClass {        // 显式 fileprivate 类
 private class SomePrivateClass {                // 显式 private 类
     func somePrivateMethod() {}                  // 隐式 private 类成员
 }
-
-```swift
+```
 <a name="tuple_types"></a>
 ### 元组类型
 
@@ -155,7 +154,7 @@ private class SomePrivateClass {                // 显式 private 类
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   	// 此处是函数实现部分
+    // 此处是函数实现部分
 }
 ```
 
@@ -165,7 +164,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   	// 此处是函数实现部分
+    // 此处是函数实现部分
 }
 ```
 
@@ -180,10 +179,10 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 ```swift
 public enum CompassPoint {
-   	case North
-   	case South
-   	case East
-   	case West
+    case north
+    case south
+    case east
+    case west
 }
 ```
 
@@ -208,11 +207,15 @@ public enum CompassPoint {
 
 ```swift
 public class A {
-   	private func someMethod() {}
+<<<<<<< HEAD
+    private func someMethod() {}
+=======
+    fileprivate func someMethod() {}
+>>>>>>> /25_Access_Control 修正标点使用，更新代码
 }
 
 internal class B: A {
-   	override internal func someMethod() {}
+    override internal func someMethod() {}
 }
 ```
 
@@ -220,7 +223,7 @@ internal class B: A {
 
 ```swift
 public class A {
-    private func someMethod() {}
+    fileprivate func someMethod() {}
 }
 
 internal class B: A {
@@ -279,7 +282,7 @@ stringToEdit.value = "This string will be tracked."
 stringToEdit.value += " This edit will increment numberOfEdits."
 stringToEdit.value += " So will this one."
 print("The number of edits is \(stringToEdit.numberOfEdits)")
-// 打印 “The number of edits is 3”
+// 打印“The number of edits is 3”
 ```
 
 虽然你可以在其他的源文件中实例化该结构体并且获取到 `numberOfEdits` 属性的值，但是你不能对其进行赋值。这一限制保护了该记录功能的实现细节，同时还提供了方便的访问方式。
@@ -370,7 +373,7 @@ Extension 可以在访问级别允许的情况下对类、结构体、枚举进�
 
 ```swift
 protocol SomeProtocol {
-    func doSomething() {}
+    func doSomething()
 }
 ```
 

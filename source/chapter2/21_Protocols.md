@@ -72,7 +72,7 @@ struct Person: FullyNamed {
 	var fullName: String
 }
 let john = Person(fullName: "John Appleseed")
-// john.fullName 为 "John Appleseed"
+// john.fullName 为“John Appleseed”
 ```
 
 这个例子中定义了一个叫做 `Person` 的结构体，用来表示一个具有名字的人。从第一行代码可以看出，它遵循了 `FullyNamed` 协议。
@@ -94,7 +94,7 @@ class Starship: FullyNamed {
     }
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-// ncc1701.fullName 是 "USS Enterprise"
+// ncc1701.fullName 是“USS Enterprise”
 ```
 
 `Starship` 类把 `fullName` 属性实现为只读的计算型属性。每一个 `Starship` 类的实例都有一个名为 `name` 的非可选属性和一个名为 `prefix` 的可选属性。 当 `prefix` 存在时，计算型属性 `fullName` 会将 `prefix` 插入到 `name` 之前，从而为星际飞船构建一个全名。
@@ -139,9 +139,9 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
 }
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 打印 “Here's a random number: 0.37464991998171”
+// 打印“Here's a random number: 0.37464991998171”
 print("And another one: \(generator.random())")
-// 打印 “And another one: 0.729023776863283”
+// 打印“And another one: 0.729023776863283”
 ```
 
 <a name="mutating_method_requirements"></a>
@@ -444,7 +444,7 @@ extension Dice: TextRepresentable {
 ```swift
 let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
 print(d12.textualDescription)
-// 打印 “A 12-sided dice”
+// 打印“A 12-sided dice”
 ```
 
 同样，`SnakesAndLadders` 类也可以通过扩展遵循 `TextRepresentable` 协议：
@@ -456,7 +456,7 @@ extension SnakesAndLadders: TextRepresentable {
 	}
 }
 print(game.textualDescription)
-// 打印 “A game of Snakes and Ladders with 25 squares”
+// 打印“A game of Snakes and Ladders with 25 squares”
 ```
 
 <a name="Conditionally_Conforming_to_a_Protocol"></a>
@@ -475,7 +475,7 @@ extension Array: TextRepresentable where Element: TextRepresentable {
 }
 let myDice = [d6, d12]
 print(myDice.textualDescription)
-// 打印 "[A 6-sided dice, A 12-sided dice]"
+// 打印“[A 6-sided dice, A 12-sided dice]”
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
@@ -499,7 +499,7 @@ extension Hamster: TextRepresentable {}
 let simonTheHamster = Hamster(name: "Simon")
 let somethingTextRepresentable: TextRepresentable = simonTheHamster
 print(somethingTextRepresentable.textualDescription)
-// 打印 “A hamster named Simon”
+// 打印“A hamster named Simon”
 ```
 
 > 注意
@@ -626,7 +626,7 @@ func wishHappyBirthday(to celebrator: Named & Aged) {
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(to: birthdayPerson)
-// 打印 “Happy birthday Malcolm - you're 21!”
+// 打印“Happy birthday Malcolm - you're 21!”
 ```
 
 `Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体遵循了这两个协议。
@@ -659,7 +659,7 @@ func beginConcert(in location: Location & Named) {
 
 let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
 beginConcert(in: seattle)
-// Prints "Hello, Seattle!"
+// 打印“Hello, Seattle!”
 ```
 
 `beginConcert(in:)` 方法接受一个类型为 `Location & Named` 的参数，这意味着“任何 Location 的子类，并且遵循 Named 协议”。例如，City 就满足这样的条件。
@@ -753,7 +753,7 @@ for object in objects {
 
 ```swift
 @objc protocol CounterDataSource {
-    @objc optional func incrementForCount(count: Int) -> Int
+    @objc optional func increment(forCount count: Int) -> Int
     @objc optional var fixedIncrement: Int { get }
 }
 ```
@@ -771,7 +771,7 @@ class Counter {
     var count = 0
     var dataSource: CounterDataSource?
     func increment() {
-        if let amount = dataSource?.incrementForCount?(count) {
+        if let amount = dataSource?.increment?(forCount: count) {
             count += amount
         } else if let amount = dataSource?.fixedIncrement {
             count += amount
@@ -871,9 +871,9 @@ extension RandomNumberGenerator {
 ```swift
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
-// 打印 “Here's a random number: 0.37464991998171”
+// 打印“Here's a random number: 0.37464991998171”
 print("And here's a random Boolean: \(generator.randomBool())")
-// 打印 “And here's a random Boolean: true”
+// 打印“And here's a random Boolean: true”
 ```
 
 <a name="providing_default_implementations"></a>
@@ -917,7 +917,6 @@ extension Collection where Element: Equatable {
 
 如果集合中的所有元素都一致，`allEqual()` 方法才返回 `true`。
 
-
 看看两个整数数组，一个数组的所有元素都是一样的，另一个不一样：
 
 ```swift
@@ -930,9 +929,9 @@ let differentNumbers = [100, 100, 200, 100, 200]
 
 ```swift
 print(equalNumbers.allEqual())
-// 打印 "true"
+// 打印“true”
 print(differentNumbers.allEqual())
-// 打印 "false"
+// 打印“false”
 ```
 
 > 注意

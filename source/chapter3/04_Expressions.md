@@ -196,14 +196,14 @@ func f(any: Any) { print("Function for Any") }
 func f(int: Int) { print("Function for Int") }
 let x = 10
 f(x)
-// 打印 “Function for Int”
+// 打印“Function for Int”
 
 let y: Any = x
 f(y)
-// 打印 “Function for Any”
+// 打印“Function for Any”
 
 f(x as Any)
-// 打印 “Function for Any”
+// 打印“Function for Any”
 ```
 
 桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Using Swift with Cocoa and Objective-C (Swift4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的 [Working with Cocoa Data Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)。
@@ -265,7 +265,7 @@ func logFunctionName(string: String = #function) {
 func myFunction() {
     logFunctionName()
 }
-myFunction() // 打印 “myFunction()”
+myFunction() // 打印“myFunction()”
 ```
 
 数组字面量是值的有序集合，形式如下：
@@ -441,7 +441,7 @@ let closure = { [a] in
 a = 10
 b = 10
 closure()
-// 打印 “0 10”
+// 打印“0 10”
 ```
 
 在示例中，变量 `b` 只有一个，然而，变量 `a` 有两个，一个在闭包外，一个在闭包内。闭包内的变量 `a` 会在闭包创建时用闭包外的变量 `a` 的值来初始化，除此之外它们并无其他联系。这意味着在闭包创建后，改变某个 `a` 的值都不会对另一个 `a` 的值造成任何影响。与此相反，闭包内外都是同一个变量 `b`，因此在闭包外改变其值，闭包内的值也会受影响。
@@ -461,7 +461,7 @@ let closure = { [x] in
 x.value = 10
 y.value = 10
 closure()
-// 打印 “10 10”
+// 打印“10 10”
 ```
 
 如果捕获列表中的值是类类型，你可以使用 `weak` 或者 `unowned` 来修饰它，闭包会分别用弱引用和无主引用来捕获该值。
@@ -698,7 +698,7 @@ class SomeSubClass: SomeSuperClass {
 let initializer: Int -> String = String.init
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
 print(oneTwoThree)
-// 打印 “123”
+// 打印“123”
 ```
 
 如果通过名字来指定某个类型，可以不用构造器表达式而直接使用类型的构造器。在其他情况下，你必须使用构造器表达式。

@@ -169,7 +169,7 @@ do {
 } catch {
     print("Unexpected error: \(error).")
 }
-// 打印 “Insufficient funds. Please insert an additional 2 coins.”
+// 打印“Insufficient funds. Please insert an additional 2 coins.”
 ```
 
 上面的例子中，`buyFavoriteSnack(person:vendingMachine:)` 函数在一个 `try` 表达式中被调用，是因为它能抛出错误。如果错误被抛出，相应的执行会马上转移到 `catch` 子句中，并判断这个错误是否要被继续传递下去。如果错误没有被匹配，它会被最后一个 `catch` 语句捕获，并赋值给一个 `error` 常量。如果没有错误被抛出，`do` 子句中余下的语句就会被执行。
@@ -192,14 +192,14 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-// 打印 "Invalid selection, out of stock, or not enough money."
+// 打印“Invalid selection, out of stock, or not enough money.”
 ```
 
 如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误，`nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
 
 ### 将错误转换成可选值
 
-可以使用 `try?` 通过将错误转换成一个可选值来处理错误。如果在评估 `try?` 表达式时一个错误被抛出，那么表达式的值就是 `nil`。例如，在下面的代码中，`x` 和 `y` 有着相同的数值和等价的含义：
+可以使用 `try?` 通过将错误转换成一个可选值来处理错误。如果是在计算 `try?` 表达式时抛出错误，该表达式的结果就为 `nil`。例如，在下面的代码中，`x` 和 `y` 有着相同的数值和等价的含义：
 
 ```swift
 func someThrowingFunction() throws -> Int {

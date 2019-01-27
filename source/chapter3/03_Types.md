@@ -388,7 +388,7 @@ let someInstance: SomeBaseClass = SomeSubClass()
 // someInstance 在编译期是 SomeBaseClass 类型，
 // 但是在运行期则是 SomeSubClass 类型
 type(of: someInstance).printClassName()
-// 打印 “SomeSubClass”
+// 打印“SomeSubClass”
 ```
 
 更多信息可以查看 Swift 标准库里的 `type(of:)`。
