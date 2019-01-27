@@ -1,24 +1,4 @@
 # 特性（Attributes）
------------------
-
-> 1.0
-> 翻译：[Hawstein](https://github.com/Hawstein)
-> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[KYawn](https://github.com/KYawn)
-
-> 2.1
-> 翻译：[小铁匠 Linus](https://github.com/kevin833752)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包括：
-
-- [声明特性](#declaration_attributes)
-- [Interface Builder 使用的声明特性](#declaration_attributes_used_by_interface_builder)
-- [类型特性](#type_attributes)
 
 特性提供了有关声明和类型的更多信息。在 Swift 中有两种特性，分别用于修饰声明和类型。
 

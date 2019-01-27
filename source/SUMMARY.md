@@ -1,12 +1,11 @@
 # Summary
 
-* [欢迎使用 Swift](chapter1/chapter1.md)
+* 欢迎使用 Swift
    * [关于 Swift](chapter1/01_about_swift.md)
    * [版本兼容性](chapter1/02_version_compatibility.md)
    * [Swift 初见](chapter1/03_a_swift_tour.md)
    * [Swift 版本历史记录](chapter1/04_revision_history.md)
-   * [Swift 1.0 发布内容](v1.0.md)
-* [Swift 教程](chapter2/chapter2.md)
+* Swift 教程
    * [基础部分](chapter2/01_The_Basics.md)
    * [基本运算符](chapter2/02_Basic_Operators.md)
    * [字符串和字符](chapter2/03_Strings_and_Characters.md)
@@ -44,12 +43,5 @@
    * [模式](chapter3/08_Patterns.md)
    * [泛型参数](chapter3/09_Generic_Parameters_and_Arguments.md)
    * [语法总结](chapter3/10_Summary_of_the_Grammar.md)
-
-* 苹果官方 Blog 官方翻译
-   * [Access Control 权限控制的黑与白](chapter4/01_Access_Control.md)
-   * [造个类型不是梦-白话 Swift 类型创建](chapter4/02_Type_Custom.md)
-   * [WWDC 里面的那个“大炮打气球”](chapter4/03_Ballons.md)
-   * [Swift 与 C 语言指针友好合作](chapter4/04_Interacting_with_C_Pointers.md)
-   * [引用类型和值类型的恩怨](chapter4/05_Value_and_Reference_Types.md)
-   * [访问控制和 Protected](chapter4/06_Access_Control_and_Protected.md)
-   * [可选类型完美解决占位问题](chapter4/07_Optional_Case_Study.md)
+* 翻译贡献者
+  * [翻译贡献者](contributors.md)

@@ -1,24 +1,4 @@
 # 泛型参数（Generic Parameters and Arguments）
----------
-
-> 1.0
-> 翻译：[fd5788](https://github.com/fd5788)
-> 校对：[yankuangshi](https://github.com/yankuangshi), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[wardenNScaiyi](https:github.com/wardenNScaiyi)
-
-> 3.0
-> 翻译+校对：[chenmingjia](https:github.com/chenmingjia)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [泛型形参子句](#generic_parameter)
-    - [Where 子句](#where_clauses)
-- [泛型实参子句](#generic_argument)
 
 本节涉及泛型类型、泛型函数以及泛型构造器的参数，包括形参和实参。声明泛型类型、函数或构造器时，须指定相应的类型参数。类型参数相当于一个占位符，当实例化泛型类型、调用泛型函数或泛型构造器时，就用具体的类型实参替代之。
 
