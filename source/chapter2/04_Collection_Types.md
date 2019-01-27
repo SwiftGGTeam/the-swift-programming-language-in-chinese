@@ -117,7 +117,7 @@ var shoppingList = ["Eggs", "Milk"]
 
 ```swift
 print("The shopping list contains \(shoppingList.count) items.")
-// 输出 "The shopping list contains 2 items."（这个数组有2个项）
+// 输出“The shopping list contains 2 items.”（这个数组有2个项）
 ```
 
 使用布尔属性 `isEmpty` 作为一个缩写形式去检查 `count` 属性是否为 `0`：
@@ -151,7 +151,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 
 ```swift
 var firstItem = shoppingList[0]
-// 第一项是 "Eggs"
+// 第一项是“Eggs”
 ```
 
 > 注意
@@ -162,7 +162,7 @@ var firstItem = shoppingList[0]
 
 ```swift
 shoppingList[0] = "Six eggs"
-// 其中的第一项现在是 "Six eggs" 而不是 "Eggs"
+// 其中的第一项现在是“Six eggs”而不是“Eggs”
 ```
 
 还可以利用下标来一次改变一系列数据值，即使新数据和原有数据的数量是不一样的。下面的例子把 `"Chocolate Spread"`、`"Cheese"` 和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
@@ -181,7 +181,7 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 ```swift
 shoppingList.insert("Maple Syrup", at: 0)
 // shoppingList 现在有7项
-// "Maple Syrup" 现在是这个列表中的第一项
+// 现在是这个列表中的第一项是“Maple Syrup”
 ```
 
 这次 `insert(_:at:)` 方法调用把值为 `"Maple Syrup"` 的新数据项插入列表的最开始位置，并且使用 `0` 作为索引值。
@@ -192,7 +192,7 @@ shoppingList.insert("Maple Syrup", at: 0)
 let mapleSyrup = shoppingList.remove(at: 0)
 // 索引值为0的数据项被移除
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
-// mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
+// mapleSyrup 常量的值等于被移除数据项“Maple Syrup”的值
 ```
 
 > 注意
@@ -203,7 +203,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 ```swift
 firstItem = shoppingList[0]
-// firstItem 现在等于 "Six eggs"
+// firstItem 现在等于“Six eggs”
 ```
 
 如果我们只想把数组中的最后一项移除，可以使用 `removeLast()` 方法而不是 `remove(at:)` 方法来避免我们需要获取数组的 `count` 属性。就像后者一样，前者也会返回被移除的数据项：
@@ -212,7 +212,7 @@ firstItem = shoppingList[0]
 let apples = shoppingList.removeLast()
 // 数组的最后一项被移除了
 // shoppingList 现在只有5项，不包括 Apples
-// apples 常量的值现在等于 "Apples" 字符串
+// apples 常量的值现在等于“Apples”字符串
 ```
 
 <a name="iterating_over_an_array"></a>
@@ -404,9 +404,9 @@ Swift 的 `Set` 类型没有确定的顺序，为了按照特定顺序来遍历�
 for genre in favoriteGenres.sorted() {
     print("\(genre)")
 }
-// prints "Classical"
-// prints "Hip hop"
-// prints "Jazz
+// Classical
+// Hip hop
+// Jazz
 ```
 
 <a name="performing_set_operations"></a>
@@ -593,7 +593,7 @@ airports["LHR"] = "London Heathrow"
 if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
     print("The old value for DUB was \(oldValue).")
 }
-// 输出 "The old value for DUB was Dublin."
+// 输出“The old value for DUB was Dublin.”
 ```
 
 我们也可以使用下标语法来在字典中检索特定键对应的值。因为有可能请求的键没有对应的值存在，字典的下标访问会返回对应值的类型的可选值。如果这个字典包含请求键所对应的值，下标会返回一个包含这个存在值的可选值，否则将返回 `nil`：
@@ -611,7 +611,7 @@ if let airportName = airports["DUB"] {
 
 ```swift
 airports["APL"] = "Apple Internation"
-// "Apple Internation" 不是真的 APL 机场，删除它
+// “Apple Internation”不是真的 APL 机场，删除它
 airports["APL"] = nil
 // APL 现在被移除了
 ```
@@ -624,7 +624,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 } else {
     print("The airports dictionary does not contain a value for DUB.")
 }
-// prints "The removed airport's name is Dublin Airport."
+// 打印“The removed airport's name is Dublin Airport.”
 ```
 
 <a name="iterating_over_a_dictionary"></a>
