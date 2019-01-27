@@ -1,32 +1,4 @@
 # 词法结构（Lexical Structure）
------------------
-
-> 1.0
-> 翻译：[superkam](https://github.com/superkam)
-> 校对：[numbbbbb](https://github.com/numbbbbb)
-
-> 2.0
-> 翻译+校对：[buginux](https://github.com/buginux)
-
-> 2.1
-> 翻译：[mmoaay](https://github.com/mmoaay)
-
-> 2.2
-> 翻译+校对：[星夜暮晨](https://github.com/semperidem)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [空白与注释](#whitespace_and_comments)
-- [标识符](#identifiers)
-- [关键字和标点符号](#keywords)
-- [字面量](#literals)
-  - [整数字面量](#integer_literals)
-  - [浮点数字面量](#floating_point_literals)
-  - [字符串字面量](#string_literals)
-- [运算符](#operators)
 
 Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言中有效符号（token）的字符序列。这些合法符号组成了语言中最底层的构建基块，并在之后的章节中用于描述语言的其他部分。一个合法符号由一个标识符（identifier）、关键字（keyword）、标点符号（punctuation）、字面量（literal）或运算符（operator）组成。
 

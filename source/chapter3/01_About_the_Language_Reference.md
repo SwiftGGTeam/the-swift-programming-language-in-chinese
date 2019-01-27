@@ -1,17 +1,4 @@
 # 关于语言参考（About the Language Reference）
------------------
-
-> 1.0
-> 翻译：[dabing1022](https://github.com/dabing1022)
-> 校对：[numbbbbb](https://github.com/numbbbbb)
-
-> 2.0
-> 翻译+校对：[KYawn](https://github.com/KYawn)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包括：
 
 - [如何阅读语法](#how_to_read_the_grammar)
 

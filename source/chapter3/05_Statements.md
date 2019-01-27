@@ -1,46 +1,5 @@
 <a name="statement_statements"></a>
 # 语句（Statements）
------------------
-
-> 1.0
-> 翻译：[coverxit](https://github.com/coverxit)
-> 校对：[numbbbbb](https://github.com/numbbbbb), [coverxit](https://github.com/coverxit), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[littledogboy](https://github.com/littledogboy)
-
-> 2.2
-> 翻译：[chenmingbiao](https://github.com/chenmingbiao)
-
-> 3.0
-> 翻译：[chenmingjia](https://github.com/chenmingjia)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-- [循环语句](#loop_statements)
-	- [For-In 语句](#for-in_statements)
-	- [While 语句](#while_statements)
-	- [Repeat-While 语句](#repeat-while_statements)
-- [分支语句](#branch_statements)
-	- [If 语句](#if_statements)
-	- [Guard 语句](#guard_statements)
-	- [Switch 语句](#switch_statements)
-- [带标签的语句](#labeled_statements)
-- [控制转移语句](#control_transfer_statements)
-	- [Break 语句](#break_statement)
-	- [Continue 语句](#continue_statement)
-	- [Fallthrough 语句](#fallthrough_statements)
-	- [Return 语句](#return_statements)
-	- [Throw 语句](#throw_statements)
-- [Defer 语句](#defer_statements)
-- [Do 语句](#do_statements)
-- [编译器控制语句](#compiler_control_statements)
-	- [编译配置语句](#build_config_statements)
-	- [行控制语句](#line_control_statements)
-- [可用性条件](#availability_condition)
 
 在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和行控制语句。
 

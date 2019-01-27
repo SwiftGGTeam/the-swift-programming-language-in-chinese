@@ -1,29 +1,4 @@
 # 模式（Patterns）
------------------
-
-> 1.0
-> 翻译：[honghaoz](https://github.com/honghaoz)
-> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[ray16897188](https://github.com/ray16897188),
-
-> 2.1
-> 翻译：[BridgeQ](https://github.com/WXGBridgeQ)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包括：
-
-- [通配符模式（Wildcard Pattern）](#wildcard_pattern)
-- [标识符模式（Identifier Pattern）](#identifier_pattern)
-- [值绑定模式（Value-Binding Pattern）](#value-binding_pattern)
-- [元组模式（Tuple Pattern）](#tuple_pattern)
-- [枚举用例模式（Enumeration Case Pattern）](#enumeration_case_pattern)
-- [可选模式（Optional Pattern）](#optional_pattern)
-- [类型转换模式（Type-Casting Pattern）](#type-casting_patterns)
-- [表达式模式（Expression Pattern）](#expression_pattern)
 
 *模式*代表单个值或者复合值的结构。例如，元组 `(1, 2)` 的结构是由逗号分隔的，包含两个元素的列表。因为模式代表一种值的结构，而不是特定的某个值，你可以利用模式来匹配各种各样的值。比如，`(x, y)` 可以匹配元组 `(1, 2)`，以及任何含两个元素的元组。除了利用模式匹配一个值以外，你可以从复合值中提取出部分或全部值，然后分别把各个部分的值和一个常量或变量绑定起来。
 
