@@ -404,9 +404,9 @@ var rightChannel = AudioChannel()
 ```swift
 leftChannel.currentLevel = 7
 print(leftChannel.currentLevel)
-// 输出 "7"
+// 输出“7”
 print(AudioChannel.maxInputLevelForAllChannels)
-// 输出 "7"
+// 输出“7”
 ```
 
 如果试图将右声道的 `currentLevel` 设置成 `11`，它会被修正到最大值 `10`，同时 `maxInputLevelForAllChannels` 的值也会更新到 `10`：
@@ -414,7 +414,7 @@ print(AudioChannel.maxInputLevelForAllChannels)
 ```swift
 rightChannel.currentLevel = 11
 print(rightChannel.currentLevel)
-// 输出 "10"
+// 输出“10”
 print(AudioChannel.maxInputLevelForAllChannels)
-// 输出 "10"
+// 输出“10”
 ```

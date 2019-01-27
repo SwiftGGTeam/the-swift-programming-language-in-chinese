@@ -65,7 +65,7 @@ for _ in 1...power {
     answer *= base
 }
 print("\(base) to the power of \(power) is \(answer)")
-// 输出 "3 to the power of 10 is 59049"
+// 输出“3 to the power of 10 is 59049”
 ```
 
 这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（`3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。
@@ -243,7 +243,7 @@ var temperatureInFahrenheit = 30
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 }
-// 输出 "It's very cold. Consider wearing a scarf."
+// 输出“It's very cold. Consider wearing a scarf.”
 ```
 
 上面的例子会判断温度是否小于等于 32 华氏度（水的冰点）。如果是，则打印一条消息；否则，不打印任何消息，继续执行 `if` 块后面的代码。
@@ -257,7 +257,7 @@ if temperatureInFahrenheit <= 32 {
 } else {
     print("It's not that cold. Wear a t-shirt.")
 }
-// 输出 "It's not that cold. Wear a t-shirt."
+// 输出“It's not that cold. Wear a t-shirt.”
 ```
 
 显然，这两条分支中总有一条会被执行。由于温度已升至 40 华氏度，不算太冷，没必要再围围巾。因此，`else` 分支就被触发了。
@@ -273,7 +273,7 @@ if temperatureInFahrenheit <= 32 {
 } else {
     print("It's not that cold. Wear a t-shirt.")
 }
-// 输出 "It's really warm. Don't forget to wear sunscreen."
+// 输出“It's really warm. Don't forget to wear sunscreen.”
 ```
 
 在上面的例子中，额外的 `if` 语句用于判断是不是特别热。而最后的 `else` 语句被保留了下来，用于打印既不冷也不热时的消息。
@@ -328,7 +328,7 @@ case "z":
 default:
     print("Some other character")
 }
-// 输出 "The last letter of the alphabet"
+// 输出“The last letter of the alphabet”
 ```
 
 在这个例子中，第一个 case 分支用于匹配第一个英文字母 `a`，第二个 case 分支用于匹配最后一个字母 `z`。因为 `switch` 语句必须有一个 case 分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以 switch 语句使用 `default` 分支来匹配除了 `a` 和 `z` 外的所有值，这个分支保证了 swith 语句的完备性。
@@ -401,7 +401,7 @@ default:
     naturalCount = "many"
 }
 print("There are \(naturalCount) \(countedThings).")
-// 输出 "There are dozens of moons orbiting Saturn."
+// 输出“There are dozens of moons orbiting Saturn.”
 ```
 
 在上例中，`approximateCount` 在一个 `switch` 声明中被评估。每一个 `case` 都与之进行比较。因为 `approximateCount` 落在了 12 到 100 的区间，所以 `naturalCount` 等于 `"dozens of"` 值，并且此后的执行跳出了 `switch` 语句。
@@ -427,7 +427,7 @@ case (-2...2, -2...2):
 default:
     print("\(somePoint) is outside of the box")
 }
-// 输出 "(1, 1) is inside the box"
+// 输出“(1, 1) is inside the box”
 ```
 
 ![image](https://docs.swift.org/swift-book/_images/coordinateGraphSimple_2x.png)
@@ -453,7 +453,7 @@ case (0, let y):
 case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
-// 输出 "on the x-axis with an x value of 2"
+// 输出“on the x-axis with an x value of 2”
 ```
 
 ![image](https://docs.swift.org/swift-book/_images/coordinateGraphMedium_2x.png)
@@ -483,7 +483,7 @@ case let (x, y) where x == -y:
 case let (x, y):
     print("(\(x), \(y)) is just some arbitrary point")
 }
-// 输出 "(1, -1) is on the line x == -y"
+// 输出“(1, -1) is on the line x == -y”
 ```
 
 ![image](https://docs.swift.org/swift-book/_images/coordinateGraphComplex_2x.png)
@@ -510,7 +510,7 @@ case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
 default:
     print("\(someCharacter) is not a vowel or a consonant")
 }
-// 输出 "e is a vowel"
+// 输出“e is a vowel”
 ```
 
 这个 `switch` 语句中的第一个 case，匹配了英语中的五个小写元音字母。相似的，第二个 case 匹配了英语中所有的小写辅音字母。最终，`default` 分支匹配了其它所有字符。
@@ -525,7 +525,7 @@ case (let distance, 0), (0, let distance):
 default:
     print("Not on an axis")
 }
-// 输出 "On an axis, 9 from the origin"
+// 输出“On an axis, 9 from the origin”
 ```
 
 上面的 case 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 case 匹配，都可以获取到 `distance` 值。
@@ -562,7 +562,7 @@ for character in puzzleInput {
     }
 }
 print(puzzleOutput)
-    // 输出 "grtmndsthnklk"
+    // 输出“grtmndsthnklk”
 ```
 
 在上面的代码中，只要匹配到元音字母或者空格字符，就调用 `continue` 语句，使本次循环结束，重新开始下次循环。这种行为使 `switch` 匹配到元音字母和空格字符时不做处理，而不是让每一个匹配到的字符都被打印。
@@ -610,7 +610,7 @@ if let integerValue = possibleIntegerValue {
 } else {
     print("An integer value could not be found for \(numberSymbol).")
 }
-// 输出 "The integer value of 三 is 3."
+// 输出“The integer value of 三 is 3.”
 ```
 
 这个例子检查 `numberSymbol` 是否是拉丁，阿拉伯，中文或者泰语中的 `1` 到 `4` 之一。如果被匹配到，该 `switch` 分支语句给 `Int?` 类型变量 `possibleIntegerValue` 设置一个整数值。
@@ -637,7 +637,7 @@ default:
     description += " an integer."
 }
 print(description)
-// 输出 "The number 5 is a prime number, and also an integer."
+// 输出“The number 5 is a prime number, and also an integer.”
 ```
 
 这个例子定义了一个 `String` 类型的变量 `description` 并且给它设置了一个初始值。函数使用 `switch` 逻辑来判断 `integerToDescribe` 变量的值。当 `integerToDescribe` 的值属于列表中的质数之一时，该函数在 `description` 后添加一段文字，来表明这个数字是一个质数。然后它使用 `fallthrough` 关键字来“贯穿”到 `default` 分支中。`default` 分支在 `description` 的最后添加一段额外的文字，至此 `switch` 代码块执行完了。
@@ -740,11 +740,11 @@ func greet(person: [String: String]) {
 	print("I hope the weather is nice in \(location).")
 }
 greet(["name": "John"])
-// 输出 "Hello John!"
-// 输出 "I hope the weather is nice near you."
+// 输出“Hello John!”
+// 输出“I hope the weather is nice near you.”
 greet(["name": "Jane", "location": "Cupertino"])
-// 输出 "Hello Jane!"
-// 输出 "I hope the weather is nice in Cupertino."
+// 输出“Hello Jane!”
+// 输出“I hope the weather is nice in Cupertino.”
 ```
 
 如果 `guard` 语句的条件被满足，则继续执行 `guard` 语句大括号后的代码。将变量或者常量的可选绑定作为 `guard` 语句的条件，都可以保护 `guard` 语句后面的代码。
