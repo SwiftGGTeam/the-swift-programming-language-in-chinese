@@ -128,7 +128,7 @@ Swift 用*字符串插值（string interpolation）*的方式把常量名或者�
 
 ```swift
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
-// 输出 "The current value of friendlyWelcome is Bonjour!
+// 输出“The current value of friendlyWelcome is Bonjour!”
 ```
 
 > 注意

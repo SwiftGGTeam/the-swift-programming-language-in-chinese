@@ -368,7 +368,7 @@ case "a", "A":
 default:
     print("Not the letter A")
 }
-// 输出 "The letter A
+// 输出“The letter A”
 ```
 
 为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)

@@ -21,9 +21,9 @@ struct FixedLengthRange {
     let length: Int
 }
 var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-// 该区间表示整数0，1，2
+// 该区间表示整数 0，1，2
 rangeOfThreeItems.firstValue = 6
-// 该区间现在表示整数6，7，8
+// 该区间现在表示整数 6，7，8
 ```
 
 `FixedLengthRange` 的实例包含一个名为 `firstValue` 的变量存储属性和一个名为 `length` 的常量存储属性。在上面的例子中，`length` 在创建实例的时候被初始化，且之后无法修改它的值，因为它是一个常量存储属性。
@@ -35,7 +35,7 @@ rangeOfThreeItems.firstValue = 6
 
 ```swift
 let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-// 该区间表示整数0，1，2，3
+// 该区间表示整数 0，1，2，3
 rangeOfFourItems.firstValue = 6
 // 尽管 firstValue 是个可变属性，但这里还是会报错
 ```
@@ -92,7 +92,7 @@ manager.data.append("Some more data")
 ```swift
 print(manager.importer.fileName)
 // DataImporter 实例的 importer 属性现在被创建了
-// 输出 "data.txt”
+// 输出“data.txt”
 ```
 
 > 注意
@@ -138,7 +138,7 @@ var square = Rect(origin: Point(x: 0.0, y: 0.0),
 let initialSquareCenter = square.center
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-// 打印 "square.origin is now at (10.0, 10.0)”
+// 打印“square.origin is now at (10.0, 10.0)”
 ```
 
 这个例子定义了 3 个结构体来描述几何形状：
@@ -200,7 +200,7 @@ struct Cuboid {
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-// 打印 "the volume of fourByFiveByTwo is 40.0"
+// 打印“the volume of fourByFiveByTwo is 40.0”
 ```
 
 这个例子定义了一个名为 `Cuboid` 的结构体，表示三维空间的立方体，包含 `width`、`height` 和 `depth` 属性。结构体还有一个名为 `volume` 的只读计算属性用来返回立方体的体积。为 `volume` 提供 setter 毫无意义，因为无法确定如何修改 `width`、`height` 和 `depth` 三者的值来匹配新的 `volume`。然而，`Cuboid` 提供一个只读计算属性来让外部用户直接获取体积是很有用的。
@@ -340,14 +340,14 @@ class SomeClass {
 
 ```swift
 print(SomeStructure.storedTypeProperty)
-// 打印 "Some value."
+// 打印“Some value.”
 SomeStructure.storedTypeProperty = "Another value."
 print(SomeStructure.storedTypeProperty)
-// 打印 "Another value.”
+// 打印“Another value.”
 print(SomeEnumeration.computedTypeProperty)
-// 打印 "6"
+// 打印“6”
 print(SomeClass.computedTypeProperty)
-// 打印 "27"
+// 打印“27”
 ```
 
 下面的例子定义了一个结构体，使用两个存储型类型属性来表示两个声道的音量，每个声道具有 `0` 到 `10` 之间的整数音量。
