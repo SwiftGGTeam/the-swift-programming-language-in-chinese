@@ -1,6 +1,6 @@
 # 特性（Attributes）
 
-在 Swift 中有两种特性，分别用于修饰声明和类型。特性提供了有关声明和类型的更多信息。例如，使用 `discardableResult` 特性声明的函数，表明该函数虽然有返回值，但如果没有使用跟返回值，编译器不会产生警告。
+在 Swift 中有两种特性，分别用于修饰声明和类型。特性提供了有关声明和类型的更多信息。例如，使用 `discardableResult` 特性声明的函数，表明该函数虽然有返回值，但如果没有使用该返回值，编译器不会产生警告。
 
 您可以通过以下方式指定一个特性，通过符号 `@` 后跟特性的名称和特性接收的任何参数：
 
@@ -32,11 +32,11 @@
 - `tvOSApplicationExtension`
 - `swift`
 
-当然，你也可以用一个星号（`*`）来表示上面提到的所有平台。用 Swift 版本指定的 `available` 特性，不能使用星号表示。
+当然，你也可以用一个星号（`*`）来表示上面提到的所有平台。指定 Swift 版本的 `available` 特性参数，不能使用星号表示。
 
 其余的参数，可以按照任何顺序出现，并且可以添加关于声明生命周期的附加信息，包括重要事件。
 
-- `unavailable` 参数表示该声明在指定的平台上是无效的。当指定 Swift 版本可用性时不能使用该参数。
+- `unavailable` 参数表示该声明在指定的平台上是无效的。当指定 Swift 版本可用性时不可使用该参数。
 - `introduced` 参数表示指定平台从哪一版本开始引入该声明。格式如下：
 
 `introduced`: `版本号`
@@ -67,7 +67,7 @@ _信息内容_由一个字符串构成。
 
 _新名字_由一个字符串构成。
 
-你可以将 `renamed` 参数和 `unavailable` 参数用于 `available` 特性，来表示声明在不同平台和 Swift 版本上的可用性。如下所示，表示声明的名字在一个框架或者库的不同发布版本间发生了变化。以此组合表示该声明以被重命名的编译错误。
+你可以将 `renamed` 参数和 `unavailable` 参数用于 `available` 特性，来表示声明在不同平台和 Swift 版本上的可用性。如下所示，表示声明的名字在一个框架或者库的不同发布版本间发生了变化。以此组合表示该声明被重命名的编译错误。
 
 ```swift
 // 首发版本
@@ -102,7 +102,7 @@ class MyClass {
 }
 ```
 
-当 `available` 特性需要指定同时指定 Swift 版本和平台可用性，需要使用单独的 `available` 特性来声明。
+当 `available` 特性需要同时指定 Swift 版本和平台可用性，需要使用单独的 `available` 特性来声明。
 
 ```swift
 @available(swift 3.0.2)
@@ -120,7 +120,7 @@ struct MyStruct {
 <a name="dynamiccallable"></a>
 ### `dynamicCallable`
 
-该特性用于类、结构体、枚举或协议，以将该类型的实例视为可调用的函数。该类型必须实现 `dynamicallyCall(withArguments:)`、`dynamicallyCall(withKeywordArguments:)` 之一，或两者同时实现。
+该特性用于类、结构体、枚举或协议，以将该类型的实例视为可调用的函数。该类型必须实现 `dynamicallyCall(withArguments:)`、`dynamicallyCall(withKeywordArguments:)` 方法之一，或两者同时实现。
 
 你可以调用 `dynamicCallable` 特性的实例，就像是调用一个任意数量参数的函数。
 
@@ -149,7 +149,7 @@ dial(8, 6, 7, 5, 3, 0, 9)
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
 
-该 `dynamicallyCall(withArguments:)` 方法的声明必须至少有一个参数遵循 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 协议，如 `[Int]`，而返回值类型可以是任何类型。
+`dynamicallyCall(withArguments:)` 方法的声明必须至少有一个参数遵循 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 协议，如 `[Int]`，而返回值类型可以是任意类型。
 
 ```swift
 @dynamicCallable
@@ -172,7 +172,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 // a
 ```
 
-`dynamicallyCall(withKeywordArguments:)` 方法声明必须至少有一个参数遵循 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 协议，返回值可以任意类型。参数的 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 必须遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/caseiterable) 协议。上述的示例使用 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 作为参数类型，以便调用者可以加入重复的参数标签，`a` 和 `b` 在调用 `repeat`中多次使用。
+`dynamicallyCall(withKeywordArguments:)` 方法声明必须至少有一个参数遵循 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 协议，返回值可以任意类型。参数的 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 必须遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/caseiterable) 协议。上述的示例使用 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 作为参数类型，以便调用者可以传入重复的参数标签，`a` 和 `b` 在调用 `repeat`中多次使用。
 
 如果你同时实现两种 `dynamicallyCall` 方法，则当在方法调用中包含关键字参数时，会调用 `dynamicallyCall(withKeywordArguments:)` 方法，否则调用 `dynamicallyCall(withArguments:)` 方法。
 
@@ -223,7 +223,7 @@ print(dynamic == equivalent)
 
 内联代码可以与任意模块中 `public` 标记的符号进行交互，它在相同模块中标记 `usableFromInline` 特性的部分，可以与 `internal` 标记的符号进行交互。
 
-该特性不能用于嵌套在函数内的声明，或标记为 `fileprivate` 或 `private` 的声明。在内联函数定义的函数和闭包是隐式非内联的，即使他们不能标记该特性。
+该特性不能用于嵌套在函数内的声明，或标记了 `fileprivate` 或 `private` 的声明。在内联函数定义的函数和闭包是隐式非内联的，即使他们不能标记该特性。
 
 <a name="nonobjc"></a>
 ### `nonobjc`
@@ -372,13 +372,11 @@ convention 特性总是与下面的参数之一一起出现。
 <a name="switch_case_attributes"></a>
 ## Switch Case 特性
 
-You can apply switch case attributes to switch cases only.
-
 你只能在 switch cases 中使用 switch case 特性。
 
 ### `unknown`
 
-次特性用于 switch case，在编译代码时表示该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [Switching over Future Enumeration Cases](https://docs.swift.org/swift-book/ReferenceManual/Statements.html#ID602)。
+次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [Switching over Future Enumeration Cases](https://docs.swift.org/swift-book/ReferenceManual/Statements.html#ID602)。
 
 > 特性语法
 > 
