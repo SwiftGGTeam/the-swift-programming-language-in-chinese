@@ -13,7 +13,7 @@
 
 # 当前阶段
 
-Swift 5.0 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（在 issue 中直接回复”认领“即可，如果有操作权限也可以把自己设置成 Assignee）。
+Swift 5.0 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（在 issue 中直接回复”认领“即可，如果有操作权限也可以把自己设置成 assignee）。
 
 - 更新到 Swift 4.2，2019-01-27，
 - 更新到 Swift 4.1，2018-04-12，感谢[@Mylittleswift](https://github.com/Mylittleswift)
