@@ -119,6 +119,7 @@ Swift 5.0 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-p
 | literal value | 字面量 |
 | alias | 别名 |
 | Assertion | 断言 |
+| conditional compilation | 条件编译 |
 
 # 贡献历史
 
