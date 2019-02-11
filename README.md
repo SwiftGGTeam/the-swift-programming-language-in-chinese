@@ -123,13 +123,13 @@ diff 操作如下：
 | literal value | 字面量 |
 | alias | 别名 |
 | Assertion | 断言 |
+| conditional compilation | 条件编译 |
 
-# 贡献历史
+# 贡献者
 
-## 简体中文版贡献历史
+[贡献者列表](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/contributors.md)，感谢大家！
 
-1. Welcome To Swift 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/source/chapter1/05_contributors.md)
-2. Language Guide 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/27_contributors.md)
+
 
 # 协议
 和 [苹果官方文档](https://swift.org/documentation/) 协议一致：[Creative Commons Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/)。

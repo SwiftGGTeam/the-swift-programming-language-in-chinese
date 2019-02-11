@@ -198,7 +198,7 @@ if name == "world" {
 } else {
 	print("I'm sorry \(name), but I don't recognize you")
 }
-// 输出 "hello, world", 因为 `name` 就是等于 "world"
+// 输出“hello, world", 因为 `name` 就是等于 "world”
 ```
 
 关于 `if` 语句，请看[控制流](./05_Control_Flow.html)。
@@ -410,7 +410,7 @@ let allowedEntry = false
 if !allowedEntry {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 `if !allowedEntry` 语句可以读作「如果非 allowedEntry」，接下一行代码只有在「非 allowedEntry」为 `true`，即 `allowEntry` 为 `false` 时被执行。
@@ -433,7 +433,7 @@ if enteredDoorCode && passedRetinaScan {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 ### 逻辑或运算符
@@ -452,7 +452,7 @@ if hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 ### 逻辑运算符组合计算
@@ -465,7 +465,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这个例子使用了含多个 `&&` 和 `||` 的复合逻辑。但无论怎样，`&&` 和 `||` 始终只能操作两个值。所以这实际是三个简单逻辑连续操作的结果。我们来解读一下：
@@ -488,7 +488,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。可读性比简洁性更重要，请在可以让你代码变清晰的地方加个括号吧！

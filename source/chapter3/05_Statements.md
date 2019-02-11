@@ -29,7 +29,7 @@
 通过 `break` 语句和 `continue` 语句可以改变循环语句的控制流。有关这两条语句，详情参见 [Break 语句](#break_statement) 和 [Continue 语句](#continue_statement)。
 
 > 循环语句语法
-> 
+>
 <a name="loop-statement"></a>
 > *循环语句* → [*for-in 语句*](#for-in-statement)
 > *循环语句* → [*while 语句*](#while-statement)
@@ -48,10 +48,10 @@ for item in collection {
 }
 ```
 
-`for-in` 语句在循环开始前会调用集合表达式的 `generate()` 方法来获取一个实现了 `GeneratorType` 协议的类型的值。接下来循环开始，反复调用该值的 `next()` 方法。如果其返回值不是 `None`，它将会被赋给“项”，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
+`for-in` 语句在循环开始前会调用集合表达式（`collection expression`）的 `makeIterator()` 方法来获取一个实现了 `IteratorProtocol` 协议的迭代器类型。接下来循环开始，反复调用该迭代器的 `next()` 方法。如果其返回值不是 `nil`，它将会被赋给 `item`，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
 
 > for-in 语句语法
-> 
+>
 <a name="for-in-statement"></a>
 > *for-in 语句* → **for** **case**<sub>可选</sub> [*模式*](07_Patterns.md#pattern) **in** [*表达式*](04_Expressions.md#expression) [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
 
@@ -70,7 +70,7 @@ while condition {
 
 `while` 语句的执行流程如下：
 
-1. 判断条件的值。如果为 `true`，转到第 2 步；如果为 `false`，`while` 语句至此执行完毕。
+1. 判断条件（`condition`）的值。如果为 `true`，转到第 2 步；如果为 `false`，`while` 语句至此执行完毕。
 2. 执行循环体中的语句，然后重复第 1 步。
 
 由于会在执行循环体中的语句前判断条件的值，因此循环体中的语句可能会被执行若干次，也可能一次也不会被执行。
@@ -78,7 +78,7 @@ while condition {
 条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > while 语句语法
-> 
+>
 <a name="while-statement"></a>
 > *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block)
 
@@ -86,7 +86,7 @@ while condition {
 > *条件子句* → [*表达式*](04_Expressions.md#expression)  | [*表达式*](04_Expressions.md#expression) **,** [*条件列表*](#condition-list)
 <a name="condition"></a>
 > *条件* → [*表达式*](04_Expressions.md#expression) |[*可用性条件*](#availability-condition) | [*case 条件*](#case-condition) | [*可选绑定条件*](#optional-binding-condition)
-> 
+>
 <a name="case-condition"></a>
 > *case 条件* → **case** [*模式*](07_Patterns.md#pattern) [*构造器*](05_Declarations.md#initializer)
 <a name="optional-binding-condition"></a>
@@ -115,19 +115,19 @@ repeat {
 条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > repeat-while 语句语法
-> 
+>
 <a name="repeat-while-statement"></a>
 > *repeat-while 语句* → **repeat** [*代码块*](05_Declarations.md#code-block) **while** [*表达式*](04_Expressions.md#expression)
 
 <a name="branch_statements"></a>
 ## 分支语句
 
-分支语句会根据一个或者多个条件来执行指定部分的代码。分支语句中的条件将会决定程序如何分支以及执行哪部分代码。Swift 提供两种类型的分支语句：`if` 语句和 `switch` 语句。
+分支语句会根据一个或者多个条件来执行指定部分的代码。分支语句中的条件将会决定程序如何分支以及执行哪部分代码。Swift 提供三种类型的分支语句：`if` 语句、 `guard` 语句和 `switch` 语句。
 
 `if` 语句和 `switch` 语句中的控制流可以用 `break` 语句改变，请参阅 [Break 语句](#break_statement)。
 
 > 分支语句语法
-> 
+>
 <a name="branch-statement"></a>
 > *分支语句* → [*if 语句*](#if-statement)
 > *分支语句* → [*guard 语句*](#guard-statement)
@@ -148,17 +148,17 @@ if condition {
 }
 ```
 
-第二种形式是在第一种形式的基础上添加 `else` 语句，当只有一个 `else` 语句时，像下面这样：
+第二种形式是在第一种形式的基础上添加 `else` 语句（通过引入 `else` 关键字），并且用于：当条件为真时执行一部分代码，当这同一个条件为假的时候执行另一部分代码。当只有一个 `else` 语句时，`if` 语句具有以下的形式：
 
 ```swift
-if ondition {
+if condition {
     statements to execute if condition is true
 } else {
     statements to execute if condition is false
 }
 ```
 
-`else` 语句也可包含 `if` 语句，从而形成一条链来测试更多的条件，像下面这样：
+`if` 语句的 `else` 语句也可包含另一个 `if` 语句，从而形成一条链来测试更多的条件，像下面这样：
 
 ```swift
 if condition 1 {
@@ -173,7 +173,7 @@ if condition 1 {
 `if` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
 
 > if 语句语法
-> 
+>
 <a name="if-statement"></a>
 > *if 语句* → **if** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block) [*else 子句*](#else-clause)<sub>可选</sub>
 <a name="else-clause"></a>
@@ -182,7 +182,7 @@ if condition 1 {
 <a name="guard_statements"></a>
 ### Guard 语句
 
-如果一个或者多个条件不成立，可用 `guard` 语句用来退出当前作用域。
+如果一个或者多个条件不成立，可用 `guard` 语句来退出当前作用域。
 
 `guard` 语句的格式如下：
 
@@ -194,9 +194,9 @@ guard condition else {
 
 `guard` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.html#optional_binding)。
 
-在 `guard` 语句中进行可选绑定的常量或者变量，其可用范围从声明开始直到作用域结束。
+在 `guard` 语句中进行可选绑定的任何常量或者变量，其可用范围从声明开始直到作用域结束。
 
-`guard` 语句必须有 `else` 子句，而且必须在该子句中调用 `Never` 返回类型的函数，或者使用下面的语句退出当前作用域：
+`guard` 语句必须有 `else` 子句，而且必须在该子句中调用返回类型是 `Never` 的函数，或者使用下面的语句退出当前作用域：
 
  *  `return`
  *  `break`
@@ -206,7 +206,7 @@ guard condition else {
 关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。关于 `Never` 返回类型的函数，请参阅 [永不返回的函数](05_Declarations.md#rethrowing_functions_and_methods)。
 
 > guard 语句语法
-> 
+>
 <a name="guard-statement"></a>
 > *guard 语句* → **guard** [*条件子句*](#condition-clause) **else** [*代码块*]      (05_Declarations.html#code-block)
 
@@ -231,7 +231,7 @@ default:
 }
 ```
 
-`switch` 语句会先计算*控制表达式*的值，然后与每一个 `case` 的模式进行匹配。如果匹配成功，程序将会执行对应的 `case` 中的语句。另外，每一个 `case` 都不能为空，也就是说在每一个 `case` 中必须至少有一条语句。如果你不想在匹配到的 `case` 中执行代码，只需在该 `case` 中写一条 `break` 语句即可。
+`switch` 语句会先计算*控制表达式*的值，然后与每一个 `case` 的模式进行匹配。如果匹配成功，程序将会执行对应的 `case` 中的语句。另外，每一个 `case` 的作用域都不能为空，也就是说在每一个 `case` 的冒号（`:`）后面必须至少有一条语句。如果你不想在匹配到的 `case` 中执行代码，只需在该 `case` 中写一条 `break` 语句即可。
 
 可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 [控制流](../chapter2/05_Control_Flow.html) 一章中的 [Switch](../chapter2/05_Control_Flow.html#switch)。
 
@@ -247,34 +247,68 @@ case let (x, y) where x == y:
 
 `switch` 语句中 `case` 的匹配顺序和源代码中的书写顺序保持一致。因此，当多个模式都能匹配控制表达式时，只有第一个匹配的 `case` 中的代码会被执行。
 
-#### Switch 语句不能有遗漏
+#### Switch 语句必须是详尽的
 
 在 Swift 中，`switch` 语句中控制表达式的每一个可能的值都必须至少有一个 `case` 与之对应。在某些无法面面俱到的情况下（例如，表达式的类型是 `Int`），你可以使用 `default` 分支满足该要求。
+
+#### 对未来枚举的 `case` 进行 `switch`
+
+非冻结枚举（`nonfronzen enumeration`）是一种特殊的枚举类型，它可能在未来会增加新的枚举 `case`，即使这时候你已经编译并且发布了你的应用，所以在 switch 非冻结枚举前需要深思熟虑。当一个库的作者们把一个枚举标记为非冻结的，这意味着他们保留了增加新的枚举 `case` 的权利，并且任何和这个枚举交互的代码都要在不需要重新编译的条件下能够处理那些未来可能新加入的 `case` 。只有那些标准库，比如用 Swift 实现的苹果的一些框架，C 以及 Objective-C 代码才能够声明非冻结枚举。你在 Swift 中声明的枚举不能是非冻结的。
+
+当你对未来枚举进行 switch 时，你总是需要有一个 `default case`，即使每种枚举类型都已经有对应的 `case` 了。你可以在 default 前标注 `@unknown` ，意思是这个 `case` 应该只匹配未来加入的枚举 `case` 。如果你的 `default case` 中匹配了任何在编译时就能确定的枚举 `case` ，Swift 会抛出一个警告。这可以很好地提醒你库的作者已经新增了一种 `case` ，并且你还没有去处理。
+
+以下就是一个例子，我们对标准库的 [Mirror.AncestorRepresentation](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation) 枚举进行 switch 操作。每当有新的 `case` 加入，我们会得到一个警告，提示我们要去处理它。
+
+```swift
+let representation: Mirror.AncestorRepresentation = .generated
+switch representation {
+case .customized:
+    print("Use the nearest ancestor’s implementation.")
+case .generated:
+    print("Generate a default mirror for all ancestor classes.")
+case .suppressed:
+    print("Suppress the representation of all ancestor classes.")
+@unknown default:
+    print("Use a representation that was unknown when this code was compiled.")
+}
+// Prints "Generate a default mirror for all ancestor classes."
+```
 
 #### 不存在隐式落入
 
 当匹配到的 `case` 中的代码执行完毕后，`switch` 语句会直接退出，而不会继续执行下一个 `case` 。这就意味着，如果你想执行下一个 `case`，需要显式地在当前 `case` 中使用 `fallthrough` 语句。关于 `fallthrough` 语句的更多信息，请参阅 [Fallthrough 语句](#fallthrough_statements)。
 
 > switch 语句语法
-> 
+>
 <a name="switch-statement"></a>
 > *switch 语句* → **switch** [*表达式*](04_Expressions.html#expression) **{** [*switch-case 列表*](#switch-cases)<sub>可选</sub> **}**
 <a name="switch-cases"></a>
 > *switch case 列表* → [*switch-case*](#switch-case) [*switch-case 列表*](#switch-cases)<sub>可选</sub>
 <a name="switch-case"></a>
-> *switch case* → [*case 标签*](#case-label) [*多条语句*](#statements) | [*default 标签*](#default-label) [*多条语句*](#statements)
+> *switch case* → [*case 标签*](#case-label) [*多条语句*](#statements) | [*default 标签*](#default-label) [*多条语句*](#statements) | [*conditional-switch-case*](#conditional-switch-case-label)
 
 <a name="case-label"></a>
-> *case 标签* → **case** [*case 项列表*](#case-item-list) **:**
+> *case 标签* → [*属性*](#switch-case-attributes-label)<sub>可选</sub> **case** [*case 项列表*](#case-item-list) **:**
 <a name="case-item-list"></a>
 > *case 项列表* → [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> | [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> **,** [*case 项列表*](#case-item-list)
 <a name="default-label"></a>
-> *default 标签* → **default** **:**
-> 
+> *default 标签* → [*属性*](#switch-case-attributes-label)<sub>可选</sub> **default** **:**
+>
 <a name="where-clause"></a>
 > *where-clause* → **where** [*where 表达式*](#where-expression)
 <a name="where-expression"></a>
 > *where-expression* → [*表达式*](04_Expressions.md#expression)
+>
+<a name="grammar_conditional-switch-case"></a>
+> *conditional-switch-case* → [*switch-if-directive-clause*](#switch-case-attributes-label) [*switch-elseif-directive-clauses*](#switch-case-attributes-label) <sub>可选</sub> [*switch-else-directive-clause*](#switch-case-attributes-label) <sub>可选</sub> [*endif-directive*](#switch-case-attributes-label)
+<a name="grammar_switch-if-directive-clause"></a>
+> *switch-if-directive 语句* → [*if-directive*](#switch-case-attributes-label) [*compilation-condition*](#switch-case-attributes-label) [*switch-cases*](#switch-case-attributes-label) <sub>可选</sub>
+<a name="grammar_switch-elseif-directive-clauses"></a>
+> *switch-elseif-directive 语句（复数）* → [*elseif-directive-clause*](#switch-case-attributes-label)  [*switch-elseif-directive-clauses*](#switch-case-attributes-label)<sub>可选</sub>
+<a name="grammar_switch-elseif-directive-clause"></a>
+> *switch-elseif-directive 语句* → [*elseif-directive*](#switch-case-attributes-label)  [*compilation-condition*](#switch-case-attributes-label) [*switch-cases*](#switch-case-attributes-label)<sub>可选</sub>
+<a name="grammar_switch-else-directive-clause"></a>
+> *switch-else-directive 语句* → [*else-directive*](#switch-case-attributes-label) [*switch-cases*](#switch-case-attributes-label) <sub>可选</sub>
 
 <a name="labeled_statements"></a>
 ## 带标签的语句
@@ -286,9 +320,9 @@ case let (x, y) where x == y:
 关于使用带标签的语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.html) 一章中的 [带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > 带标签的语句语法
-> 
+>
 <a name="labeled-statement"></a>
-> *带标签的语句* → [*语句标签*](#statement-label) [*循环语句*](#loop-statement)
+> *带标签的语句* → [*语句标签*](#statement-label) [*循环语句*](#grammar_loop-statement)
 > *带标签的语句* → [*语句标签*](#statement-label) [*if 语句*](#if-statement)
 > *带标签的语句* → [*语句标签*](#statement-label) [*switch 语句*](#switch-statement)
 > > *带标签的语句* → [*语句标签*](#statement-label) [*do 语句*](#sdo-statement)
@@ -303,7 +337,7 @@ case let (x, y) where x == y:
 控制转移语句能够无条件地把控制权从一片代码转移到另一片代码，从而改变代码执行的顺序。Swift 提供五种类型的控制转移语句：`break` 语句、`continue` 语句、`fallthrough` 语句、`return` 语句和 `throw` 语句。
 
 > 控制转移语句语法
-> 
+>
 <a name="control-transfer-statement"></a>
 > *控制转移语句* → [*break 语句*](#break-statement)
 > *控制转移语句* → [*continue 语句*](#continue-statement)
@@ -328,7 +362,7 @@ case let (x, y) where x == y:
 关于使用 `break` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.html) 一章的 [Break](../chapter2/05_Control_Flow.html#break) 和 [带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > break 语句语法
-> 
+>
 <a name="break-statement"></a>
 > *break 语句* → **break** [*标签名称*](#label-name)<sub>可选</sub>
 
@@ -351,7 +385,7 @@ case let (x, y) where x == y:
 关于使用 `continue` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.html) 一章的 [Continue](../chapter2/05_Control_Flow.html#continue) 和 [带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > continue 语句语法
-> 
+>
 <a name="continue-statement"></a>
 > *continue 语句* → **continue** [*标签名称*](#label-name)<sub>可选</sub>
 
@@ -365,7 +399,7 @@ case let (x, y) where x == y:
 关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.html) 一章的 [控制转移语句](../chapter2/05_Control_Flow.html#control_transfer_statements)。
 
 > fallthrough 语句语法
-> 
+>
 <a name="fallthrough-statement"></a>
 > *fallthrough 语句* → **fallthrough**
 
@@ -382,13 +416,13 @@ case let (x, y) where x == y:
 当 `return` 语句后面带表达式时，表达式的值将会返回给调用函数或方法。如果表达式的值的类型与函数或者方法声明的返回类型不匹配，Swift 则会在返回表达式的值之前将表达式的值的类型转换为返回类型。
 
 > 注意
-> 
+>
 > 正如 [可失败构造器](05_Declarations.html#failable_initializers) 中所描述的，`return nil` 在可失败构造器中用于表明构造失败。
 
 而只写 `return` 时，仅仅是从该函数或方法中返回，而不返回任何值（也就是说，函数或方法的返回类型为 `Void` 或者说 `()`）。
 
 > return 语句语法
-> 
+>
 <a name="return-statement"></a>
 > *return 语句* → **return** [*表达式*](04_Expressions.html#expression)<sub>可选</sub>
 
@@ -408,7 +442,7 @@ case let (x, y) where x == y:
 关于如何使用 `throw` 语句的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.html) 一章的 [用 throwing 函数传递错误](../chapter2/18_Error_Handling.html#propagating_errors_using_throwing_functions)。
 
 > throw 语句语法
-> 
+>
 <a name="throw-statement"></a>
 > *throw 语句* → **throw**  [*表达式*](04_Expressions.html#expression)
 
@@ -444,7 +478,7 @@ f()
 `defer` 语句中的语句无法将控制权转移到 `defer` 语句外部。
 
 > defer 语句语法
-> 
+>
 <a name="defer-statement"></a>
 > *延迟语句* → **defer** [*代码块*](05_Declarations.html#code-block)
 
@@ -475,7 +509,7 @@ do {
 关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.html#handling_errors)。
 
 > do 语句语法
-> 
+>
 <a name="do-statement"></a>
 > *do 语句* → **do** [*代码块*](05_Declarations.html#code-block) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>
 <a name="catch-clauses"></a>
@@ -486,20 +520,21 @@ do {
 <a name="compiler_control_statements"></a>
 ## 编译器控制语句
 
-编译器控制语句允许程序改变编译器的行为。Swift 有两种编译器控制语句：编译配置语句和线路控制语句。
+编译器控制语句允许程序改变编译器的行为。Swift 有三种编译器控制语句：条件编译语句、线路控制语句和编译时诊断语句。
 
 > 编译器控制语句语法
-> 
+>
 <a name="compiler-control-statement"></a>
-> *编译器控制语句* → [*编译配置语句*](#build-config-statement)
+> *编译器控制语句* → [*条件编译语句*](#grammar_conditional-compilation-block)
 > *编译器控制语句* → [*线路控制语句*](#line-control-statement)
+> *编译器控制语句* → [*诊断语句*](#grammar_diagnostic-statement)
 
 <a name="Conditional_Compilation_Block"></a>
-### 条件性编译块
+### 条件编译代码块
 
-条件性编译块可以根据一个或多个配置来有条件地编译代码。
+条件编译代码块可以根据一个或多个配置来有条件地编译代码。
 
-每一个条件性编译块都以 `#if` 开始，`#endif` 结束。如下是一个简单的条件性编译块：
+每一个条件编译代码块都以 `#if` 开始，`#endif` 结束。如下：
 
 ```swift
 #if compilation condition
@@ -515,12 +550,34 @@ statements
 | --- | --- |
 | `os()` | `OSX`, `iOS`, `watchOS`, `tvOS`, `Linux` |
 | `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
-| `swift()` | `>=` 后跟版本号 |
+| `swift()` | `>=` 或 `<` 后跟版本号 |
+| `compiler()` | `>=` 或 `<` 后跟版本号 |
+| `canImport()` | 模块名 |
+| `targetEnvironment()` | 模拟器 |
 
-`swift()`（语言版本检测函数）的版本号参数主要由主版本号和次版本号组成并且使用点号（`.`）分隔开，`>=` 和版本号之间不能有空格。
+在 `swift()` 和 `compiler()` 之后的版本号包含有主版本号，可选副版本号，可选补丁版本号类似，并且用（`.`）来分隔。在比较符和版本号之间不能有空格，版本号与前面的函数相对应，比如 `compiler()` 对应的就是这个编译器的版本号，`swift()` 对应的就是你要编译的 `Swift` 语言的版本号。举个简单的例子，如果你在使用 `Swift 5` 的编译器，想编译 `Swift 4.2` ，可以看下面的例子：
+
+```swift
+#if compiler(>=5)
+print("Compiled with the Swift 5 compiler or later")
+#endif
+#if swift(>=4.2)
+print("Compiled in Swift 4.2 mode or later")
+#endif
+#if compiler(>=5) && swift(<5)
+print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
+#endif
+// Prints "Compiled with the Swift 5 compiler or later"
+// Prints "Compiled in Swift 4.2 mode or later"
+// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+```
+
+`canImport()` 后面跟的变量是模块的名字，这里这个模块可能并不是每个平台上都存在的。使用它来检测是否可以导入这个模块，如果模块存在就返回 `true` 否则返回 `false` 。
+
+`targetEnvironment()` 当为模拟器编译时返回 `true`，否则返回 `false` 。
 
 > 注意
-> 
+>
 > `arch(arm)` 平台检测函数在 ARM 64 位设备上不会返回 `true`。如果代码在 32 位的 iOS 模拟器上编译，`arch(i386)` 平台检测函数会返回 `true`。
 
 你可以使用逻辑操作符 `&&`、`||` 和 `!` 来组合多个编译配置，还可以使用圆括号来进行分组。
@@ -538,42 +595,63 @@ statements to compile if both compilation conditions are false
 ```
 
 > 注意
-> 
+>
 > 即使没有被编译，编译配置中的语句仍然会被解析。然而，唯一的例外是编译配置语句中包含语言版本检测函数：仅当 `Swift` 编译器版本和语言版本检测函数中指定的版本号匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
 <a name="build-config-statement"></a>
-> 编译配置语句语法
-> 
-<a name="build-configuration-statement"></a>
-> *单个编译配置语句* → **if** [*编译配置*](#build-configuration) [*语句*](#statements)<sub>可选</sub> [*多个编译配置 elseif 子句*](#build-configuration-elseif-clauses)<sub>可选</sub> **-** [*单个编译配置 else 子句*](#build-configuration-else-clause)<sub>可选</sub> **#endif**
-<a name="build-configuration-elseif-clauses"></a>
-> *多个编译配置 elseif 子句* → [*单个编译配置 elseif 子句*](#build-configuration-elseif-clause) [*多个编译配置 elseif 子句*](build-configuration-elseif-clauses)<sub>可选</sub>
-<a name="build-configuration-elseif-clause"></a>
-> *单个编译配置 elseif 子句* → **#elseif** [*编译配置*](#build-configuration) [*语句*](#statements)<sub>可选</sub>
-<a name="build-configuration-else-clause"></a>
-> *单个编译配置 else 子句* → **#else** [*语句*](#statements)<sub>可选</sub>
+> 条件编译代码块语法
+>
+<a name="grammar_conditional-compilation-block"></a>
+> *条件编译代码块* → [*if-directive 语句*](#grammar_if-directive-clause) [*elseif-directive 语句（复数）*](#grammar_elseif-directive-clauses)<sub>可选</sub> [*else-directive 语句*](#grammar_else-directive-clause)<sub>可选</sub> [*endif-directive*](#grammar_endif-directive)
+<a name="grammar_if-directive-clause"></a>
+> *if-directive 语句* → [*if-directive*](#grammar_if-directive) [*编译条件*](#compilation-condition) [*语句（复数）*](#statements)<sub>可选</sub>
+<a name="grammar_elseif-directive-clauses"></a>
+> *elseif-directive 语句（复数）* → [*elseif-directive 语句*](#grammar_elseif-directive-clause) [*elseif-directive 语句（复数）*](#grammar_elseif-directive-clauses)
+<a name="grammar_elseif-directive-clauses"></a>
+> *elseif-directive 语句* → [*elseif-directive*](#grammar_elseif-directive) [*编译条件*](#compilation-condition) [*语句（复数）*](#statements)<sub>可选</sub>
+<a name="grammar_else-directive-clause"></a>
+> *else-directive 语句* → [*else-directive*](#grammar_else-directive) [*语句（复数）*](#statements)<sub>可选</sub>
 
-<a name="build-configuration"></a>
-> *编译配置* → [*平台检测函数*](#platform-testing-function)
-> *编译配置* → [*语言版本检测函数*](#language-version-testing-function)
-> *编译配置* → [*标识符*](02_Lexical_Structure.md#identifier)
-> *编译配置* → [*布尔值字面量*](02_Lexical_Structure.md#boolean-literal)
-> *编译配置* → **(** [*编译配置*](#build-configuration) **)**
-> *编译配置* → **!** [*编译配置*](#build-configuration)
-> *编译配置* → [*编译配置*](#build-configuration) **&&** [*编译配置*](#build-configuration)
-> *编译配置* → [*编译配置*](#build-configuration) **||** [*编译配置*](#build-configuration)
 
-<a name="platform-testing-function"></a>
-> *平台检测函数* → **os** **(** [*操作系统*](#operating-system) **)**
-> *平台检测函数* → **arch** **(** [*架构*](#architecture) **)**
-<a name="language-version-testing-function"></a>
-> *语言版本检测函数* → **swift** **(** **>=** [*swift 版本*](#swift-version) **)**
+> *if-directive* → **#if**
+> *elseif-directive* → **#elseif**
+> *else-directive* → **#else**
+> *endif-directive* → **#endif**
+
+<a name="compilation-condition"></a>
+> *编译条件* → [*平台条件*](#grammar_platform-condition)
+> *编译条件* → [*标识符*](02_Lexical_Structure.md#identifier)
+> *编译条件* → [*布尔值字面量*](02_Lexical_Structure.md#boolean-literal)
+> *编译条件* → **(** [*编译条件*](#compilation-condition) **)**
+> *编译条件* → **!** [*编译条件*](#compilation-condition)
+> *编译条件* → [*编译条件*](#compilation-condition) **&&** [*编译条件*](#compilation-condition)
+> *编译条件* → [*编译条件*](#compilation-condition) **||** [*编译条件*](#compilation-condition)
+
+<a name="grammar_platform-condition"></a>
+<a name="grammar_platform-condition-os"></a>
+> *平台条件* → **os ( [*操作系统*](#operating-system) )**
+<a name="grammar_platform-condition-arch"></a>
+> *平台条件* → **arch ( [*架构*](#architecture) )**
+<a name="grammar_platform-condition-swift"></a>
+> *平台条件* → **swift ( >= [*swift 版本*](#swift-version) )** | **swift ( < [*swift 版本*](#swift-version) )**
+<a name="grammar_platform-condition-compiler"></a>
+> *平台条件* → **compiler ( >= [*swift 版本*](#swift-version) )** | **compiler ( < [*swift 版本*](#swift-version) )**
+<a name="grammar_platform-condition-canImport"></a>
+> *平台条件* → **canImport ( [*模块名*](#grammar_module-name) )**
+<a name="grammar_platform-condition-targetEnvironment"></a>
+> *平台条件* → **targetEnvironment ( [*环境*](#grammar_environment) )**
 <a name="operating-system"></a>
-> *操作系统* → **OSX** | **iOS** | **watchOS** | **tvOS**
+> *操作系统* → **macOS** | **iOS** | **watchOS** | **tvOS**
 <a name="architecture"></a>
 > *架构* → **i386** | **x86_64** | **arm** | **arm64**
 <a name="swift-version"></a>
-> *swift 版本* → [*十进制数字*](02_Lexical_Structure.md#decimal-digit) ­**.** ­[*十进制数字*](02_Lexical_Structure.md#decimal-digit)
+> *swift 版本* → [*十进制数字*](02_Lexical_Structure.md#decimal-digit) ­**.** ­[*swift 版本延续*](#grammar_swift-version-continuation) <sub>可选</sub>
+<a name="grammar_swift-version-continuation"></a>
+> *swift 版本延续* → **.** [*十进制数字*](02_Lexical_Structure.md#decimal-digit) [*swift 版本延续*](#grammar_swift-version-continuation) <sub>可选</sub>
+<a name="grammar_module-name"></a>
+> *模块名* → [*identifier*](02_Lexical_Structure.md#identifier)
+<a name="grammar_environment"></a>
+> *环境* → **模拟器**
 
 <a name="line_control_statements"></a>
 ### 行控制语句
@@ -592,7 +670,7 @@ statements to compile if both compilation conditions are false
 
 <a name="line-control-statement"></a>
 > 行控制语句语法
-> 
+>
 > *行控制语句* → **#sourceLocation(file:[*文件名*](#file-name),line:[*行号*](#line-number))**
 > *行控制语句* → **#sourceLocation()**
 <a name="line-number"></a>
@@ -600,8 +678,27 @@ statements to compile if both compilation conditions are false
 <a name="file-name"></a>
 > *文件名* → [*静态字符串字面量*](02_Lexical_Structure.md#static-string-literal)
 
+### 编译时诊断语句
+
+编译时诊断语句允许编译器在编译的时候可以发出错误或者警告。语句形式如下：
+
+```swift
+#error("error message")
+#warning("warning message")
+```
+
+第一句会抛出错误信息并终止编译，第二句会发出警告信息但是编译会继续进行。你可以通过静态字符串字面量来书写诊断信息，静态字符串字面量不能使用字符串 `interpolation` 或者 `concatenation`，但可以使用多行的形式。
+
+> 编译时诊断语句语法
+>
+<a name="grammar_compile-time-diagnostic-statement"></a>
+> *诊断语句* → **#error** **(** [*diagnostic-message*](#grammar_diagnostic-message) **)**
+> *诊断语句* → **#warning** **(** [*diagnostic-message*](#grammar_diagnostic-message) **)**
+<a name="grammar_diagnostic-message"></a>
+> *诊断语句* → [*静态字符串字面量*](02_Lexical_Structure.md#static-string-literal)
+
 <a name="availability_condition"></a>
-### 可用性条件
+## 可用性条件
 
 可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。
 
@@ -622,7 +719,7 @@ if #available(platform name version, ..., *) {
 与布尔类型的条件不同，不能用逻辑运算符 `&&` 和 `||` 组合可用性条件。
 
 > 可用性条件语法
-> 
+>
 <a name="availability-condition"></a>
 > *可用性条件* → **#available** **(** [*可用性参数列表*](#availability-arguments) **)**
 <a name="availability-arguments"></a>
@@ -630,7 +727,7 @@ if #available(platform name version, ..., *) {
 <a name="availability-argument"></a>
 > *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)
 > *可用性条件* → __*__
-> 
+>
 <a name="platform-name"></a>
 > *平台名称* → **iOS** | **iOSApplicationExtension**
 > *平台名称* → **OSX** | **macOSApplicationExtension**
