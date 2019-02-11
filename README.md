@@ -15,7 +15,7 @@
 
 Swift 5.0 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（把 Issue 的 Assignee 设置成你自己就表示认领，不要认领已经有人认领的章节）。
 
-在翻译时可以通过 Calibre 软件对 [document 目录下](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/document)不同历史版本文档进行 diff，检查待更新部分。
+在翻译时可以通过 Calibre 软件对 [document 目录下](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/document) 不同版本的文档进行 diff，检查待更新部分。
 
 diff 操作如下：
 
