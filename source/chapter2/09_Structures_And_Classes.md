@@ -31,7 +31,7 @@ Swift 中结构体和类有很多共同点。两者都可以：
 
 更多信息请参见 [继承](./13_Inheritance.html)、[类型转换](./18_Type_Casting.html)、[析构过程](./15_Deinitialization.html) 和 [自动引用计数](./23_Automatic_Reference_Counting.html)。
 
-类支持的附加功能是以增加复杂性为代价的。作为一般准则，优先使用结构体和枚举，因为它们更容易理解，仅在适当或必要时才使用类。实际上，这意味着你的大多数自定义数据类型都会是结构体和枚举。更多详细的比较参见 [在结构和类之间进行选择](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes)。
+类支持的附加功能是以增加复杂性为代价的。作为一般准则，优先使用结构体，因为它们更容易理解，仅在适当或必要时才使用类。实际上，这意味着你的大多数自定义数据类型都会是结构体和枚举。更多详细的比较参见 [在结构和类之间进行选择](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes)。
 
 <a name="definition_syntax"></a>
 ### 类型定义的语法
@@ -206,7 +206,7 @@ tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
 
-以上示例中，声明了一个名为 `tenEighty` 的常量，并让其引用一个 `VideoMode` 类的新实例。它的视频模式（video mode）被赋值为之前创建的 HD 分辨率（`1920`\*`1080`）的一个拷贝。然后将它设置为隔行视频，命名为 `“1080i”`。最后，将帧率设置为 `25.0` 帧每秒。
+以上示例中，声明了一个名为 `tenEighty` 的常量，并让其引用一个 `VideoMode` 类的新实例。它的视频模式（video mode）被赋值为之前创建的 HD 分辨率（`1920`\*`1080`）的一个拷贝。然后将它设置为隔行视频，名字设为 `“1080i”`，并将帧率设置为 `25.0` 帧每秒。
 
 接下来，将 `tenEighty` 赋值给一个名为 `alsoTenEighty` 的新常量，并修改 `alsoTenEighty` 的帧率：
 
@@ -251,7 +251,7 @@ if tenEighty === alsoTenEighty {
 
 请注意，“相同”（用三个等号表示，`===`）与“等于”（用两个等号表示，`==`）的不同。“相同”表示两个类类型（class type）的常量或者变量引用同一个类实例。“等于”表示两个实例的值“相等”或“等价”，判定时要遵照设计者定义的评判标准。
 
-当在定义你的自定义结构体和类的时候，你有义务来决定判定两个实例“相等”的标准。在章节 [等价操作符](./26_Advanced_Operators.html#equivalence_operators) 中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
+当在定义你的自定义结构体和类的时候，你有义务来决定判定两个实例“相等”的标准。在章节 [等价操作符](./26_Advanced_Operators.html#equivalence_operators) 中将会详细介绍实现自定义 == 和 !== 运算符的流程。
 
 <a name="pointers"></a>
 ### 指针
