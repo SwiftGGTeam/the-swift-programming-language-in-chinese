@@ -626,9 +626,9 @@ For example, all of the following string literals have the same value:
    << // x : Int = 3
    <$ : String = "1 2 3"
 
-A string delimited by enhanced delimiters is a sequence of characters
+A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number signs (``#``).
-A string delimited by enhanced delimiters has the following forms:
+A string delimited by extended delimiters has the following forms:
 
 .. syntax-outline::
 
@@ -638,20 +638,20 @@ A string delimited by enhanced delimiters has the following forms:
     <#characters#>
     """#
 
-Special characters in a string delimited by enhanced delimiters
+Special characters in a string delimited by extended delimiters
 are incorporated into the resulting string as normal characters
 rather than as special characters.
-You can use enhanced delimiters to create strings with characters
+You can use extended delimiters to create strings with characters
 that would ordinarily have a special effect
 such as generating a string interpolation,
 starting an escape sequence,
 or terminating the string.
 
 The following example shows a string literal
-and a string delimited by enhanced delimiters
+and a string delimited by extended delimiters
 that create equivalent string values.
 
-.. testcode:: enhanced-string-delimiters
+.. testcode:: extended-string-delimiters
 
     -> let string = #"\(x) \ " \u{2603}"#
        let escaped = "\\(x) \\ \" \\u{2603}"
@@ -661,10 +661,10 @@ that create equivalent string values.
     <- true
 
 If you use more than one number sign to form
-a string delimited by enhanced delimiters,
+a string delimited by extended delimiters,
 there must not be any whitespace in between the number signs.
 
-.. testcode:: enhanced-string-delimiters
+.. testcode:: extended-string-delimiters
 
     -> print(###"Line 1\###nLine 2"###) // OK
     << Line 1
@@ -683,7 +683,7 @@ there must not be any whitespace in between the number signs.
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
-Multiline string literals that are delimited using enhanced delimiters
+Multiline string literals that are delimited using extended delimiters
 have the same indentation requirements as regular multiline string literals. 
 
 The default inferred type of a string literal is ``String``.
@@ -710,15 +710,15 @@ no runtime concatenation is performed.
 
     string-literal --> static-string-literal | interpolated-string-literal
 
-    string-literal-opening-delimiter --> enhanced-string-literal-delimiter ``"``
-    string-literal-closing-delimiter --> ``"`` enhanced-string-literal-delimiter
+    string-literal-opening-delimiter --> extended-string-literal-delimiter ``"``
+    string-literal-closing-delimiter --> ``"`` extended-string-literal-delimiter
 
     static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
     static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
     
-    multiline-string-literal-opening-delimiter --> enhanced-string-literal-delimiter ``"""``
-    multiline-string-literal-closing-delimiter --> ``"""`` enhanced-string-literal-delimiter
-    enhanced-string-literal-delimiter --> ``#``-OPT | ``#`` enhanced-string-literal-delimiter
+    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
+    extended-string-literal-delimiter --> ``#``-OPT | ``#`` extended-string-literal-delimiter
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
@@ -738,7 +738,7 @@ no runtime concatenation is performed.
     multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
     multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
-    escape-sequence --> ``\`` enhanced-string-literal-delimiter
+    escape-sequence --> ``\`` extended-string-literal-delimiter
     escaped-character --> escape-sequence ``0`` | escape-sequence ``\`` | escape-sequence ``t`` | escape-sequence ``n`` | escape-sequence ``r`` | escape-sequence ``"`` | escape-sequence ``'``
     escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits

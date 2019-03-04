@@ -234,14 +234,14 @@ For example:
    << Escaping the first quotation mark """
    << Escaping all three quotation marks """
 
-.. _StringsAndCharacters_EnhancedDelimiters:
+.. _StringsAndCharacters_ExtendedDelimiters:
 
-Enhanced String Delimiters
+Extended String Delimiters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A string literal that's surrounded by :newTerm:`enhanced delimiters`
+A string literal that's surrounded by :newTerm:`extended delimiters`
 uses one or more number signs (``#``) in addition to double quotation marks (``"``).
-Use enhanced delimiters to include special characters in a string
+Use extended delimiters to include special characters in a string
 without their special effects taking effect.
 For example, printing the string literal ``#"Line 1\nLine 2"#``
 prints the line feed escape sequence (``\n``)
@@ -253,7 +253,7 @@ with the number of number signs you use to surround the string literal.
 Both of the raw string literals in the example below 
 print across two lines because the number signs are balanced.
 
-.. testcode:: enhanced-string-delimeters
+.. testcode:: extended-string-delimeters
    :compile: true
 
    -> print(#"Line 1\#nLine 2"#)
@@ -263,11 +263,11 @@ print across two lines because the number signs are balanced.
    </ Line 1
    </ Line 2
 
-String literals created using enhanced delimiters can also be multiline string literals.
-You can use enhanced delimiters to include the text ``"""`` in a multiline string,
+String literals created using extended delimiters can also be multiline string literals.
+You can use extended delimiters to include the text ``"""`` in a multiline string,
 overriding the default behavior that ends the literal. For example:
 
-.. testcode:: enhanced-string-delimeters
+.. testcode:: extended-string-delimeters
 
    -> let threeMoreDoubleQuotationMarks = #"""
       Here are three more double quotes: """
@@ -530,7 +530,7 @@ and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
 when it's included inside the string literal.
 
-You can use enhanced string delimiters to create a string that contains
+You can use extended string delimiters to create a string that contains
 characters that would otherwise be treated as a string interpolation.
 For example: 
 
