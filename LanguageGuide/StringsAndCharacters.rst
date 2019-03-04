@@ -234,26 +234,26 @@ For example:
    << Escaping the first quotation mark """
    << Escaping all three quotation marks """
 
-.. _StringsAndCharacters_RawStringLiterals:
+.. _StringsAndCharacters_EnhancedDelimiters:
 
-Raw String Literals
-~~~~~~~~~~~~~~~~~~~
+Enhanced String Delimiters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`raw string literal` is a string literal
-that's surrounded by one or more number signs (``#``).
-Use raw string literals to include special characters in a string
+A string literal that's surrounded by :newTerm:`enhanced delimiters`
+uses one or more number signs (``#``) in addition to double quotation marks (``"``).
+Use enhanced delimiters to include special characters in a string
 without their special effects taking effect.
-For example, printing the raw string literal ``#"Line 1\nLine 2"#``
+For example, printing the string literal ``#"Line 1\nLine 2"#``
 prints the line feed escape sequence (``\n``)
 rather than printing the string across two lines.
 
-If you need the special effects of a character in a raw string literal,
+If you need the special effects of a character in a string literal,
 match the number of number signs you use in between the backslash
 with the number of number signs you use to surround the string literal.
 Both of the raw string literals in the example below 
 print across two lines because the number signs are balanced.
 
-.. testcode:: raw-string-literals
+.. testcode:: enhanced-string-delimeters
    :compile: true
 
    -> print(#"Line 1\#nLine 2"#)
@@ -263,11 +263,11 @@ print across two lines because the number signs are balanced.
    </ Line 1
    </ Line 2
 
-Raw string literals can also be multiline string literals.
-You can use raw string literals to include the text ``"""`` in a multiline string,
+String literals created using enhanced delimiters can also be multiline string literals.
+You can use enhanced delimiters to include the text ``"""`` in a multiline string,
 overriding the default behavior that ends the literal. For example:
 
-.. testcode:: raw-string-literals
+.. testcode:: enhanced-string-delimeters
 
    -> let threeMoreDoubleQuotationMarks = #"""
       Here are three more double quotes: """
@@ -529,6 +529,15 @@ This expression calculates the value of ``Double(multiplier) * 2.5``
 and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
 when it's included inside the string literal.
+
+You can use enhanced string delimiters to create a string that contains
+characters that would otherwise be treated as a string interpolation.
+For example: 
+
+.. testcode:: stringInterpolation
+
+   -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
+   <- Write an interpolated string in Swift using \(multiplier).
 
 .. note::
 

@@ -626,43 +626,45 @@ For example, all of the following string literals have the same value:
    << // x : Int = 3
    <$ : String = "1 2 3"
 
-A raw string literal is a sequence of characters surrounded by quotation marks
-and a balanced set of one or more number signs (``#``).
-A raw literal has the following forms:
+A string delimited by enhanced delimiters is a sequence of characters
+surrounded by quotation marks and a balanced set of one or more number signs (``#``).
+A string delimited by enhanced delimiters has the following forms:
 
 .. syntax-outline::
 
-    #"<#raw characters#>"#
+    #"<#characters#>"#
     
     #"""
-    <#raw characters#>
+    <#characters#>
     """#
 
-Special characters in a raw string literal
+Special characters in a string delimited by enhanced delimiters
 are incorporated into the resulting string as normal characters
 rather than as special characters.
-You can use raw string literals to create strings with characters
+You can use enhanced delimiters to create strings with characters
 that would ordinarily have a special effect
 such as generating a string interpolation,
 starting an escape sequence,
 or terminating the string.
 
-The following example shows a string literal and a raw string literal
+The following example shows a string literal
+and a string delimited by enhanced delimiters
 that create equivalent string values.
 
-.. testcode:: raw-string-literals
+.. testcode:: enhanced-string-delimiters
 
-    -> let raw = #"\(x) \ " \u{2603}"#
+    -> let string = #"\(x) \ " \u{2603}"#
        let escaped = "\\(x) \\ \" \\u{2603}"
-    -> print(raw)
+    -> print(string)
     <- \(x) \ " \u{2603}
-    -> print(raw == escaped)
+    -> print(string == escaped)
     <- true
 
-If you use more than one number sign to form a raw string literal,
+If you use more than one number sign to form
+a string delimited by enhanced delimiters,
 there must not be any whitespace in between the number signs.
 
-.. testcode:: raw-string-literals
+.. testcode:: enhanced-string-delimiters
 
     -> print(###"Line 1\###nLine 2"###) // OK
     << Line 1
@@ -681,7 +683,7 @@ there must not be any whitespace in between the number signs.
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
-Raw string literals that are also multiline string literals
+Multiline string literals that are delimited using enhanced delimiters
 have the same indentation requirements as regular multiline string literals. 
 
 The default inferred type of a string literal is ``String``.
@@ -706,10 +708,17 @@ no runtime concatenation is performed.
 
     Grammar of a string literal
 
-    string-literal --> static-string-literal | interpolated-string-literal | raw-string-literal | raw-multiline-string-literal
+    string-literal --> static-string-literal | interpolated-string-literal
 
-    static-string-literal --> ``"`` quoted-text-OPT ``"``
-    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
+    string-literal-opening-delimiter --> enhanced-string-literal-delimiter ``"``
+    string-literal-closing-delimiter --> ``"`` enhanced-string-literal-delimiter
+
+    static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
+    static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
+    
+    multiline-string-literal-opening-delimiter --> enhanced-string-literal-delimiter ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` enhanced-string-literal-delimiter
+    enhanced-string-literal-delimiter --> ``#``-OPT | ``#`` enhanced-string-literal-delimiter
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
@@ -719,14 +728,6 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> escaped-character
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
     multiline-quoted-text-item --> escaped-newline
-    
-    raw-string-literal -->  ``#"`` raw-quoted-text ``"#`` | ``#`` raw-string-literal ``#``
-    raw-quoted-text --> raw-quoted-text-item raw-quoted-text-OPT
-    raw-quoted-text-item --> Any Unicode scalar value except U+000A or U+000D
-    
-    raw-multiline-string-literal --> ``#"""`` raw-multiline-quoted-text ``"""#`` | ``#`` raw-multiline-string-literal ``#``
-    raw-multiline-quoted-text --> raw-multiline-quoted-text-item raw-multiline-quoted-text-OPT
-    raw-multiline-quoted-text-item --> Any Unicode scalar value
 
     interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
     interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
@@ -737,11 +738,12 @@ no runtime concatenation is performed.
     multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
     multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
-    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
+    escape-sequence --> ``\`` enhanced-string-literal-delimiter
+    escaped-character --> escape-sequence ``0`` | escape-sequence ``\`` | escape-sequence ``t`` | escape-sequence ``n`` | escape-sequence ``r`` | escape-sequence ``"`` | escape-sequence ``'``
+    escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
-    escaped-newline --> ``\`` whitespace-OPT line-break
+    escaped-newline -->  escape-sequence whitespace-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
