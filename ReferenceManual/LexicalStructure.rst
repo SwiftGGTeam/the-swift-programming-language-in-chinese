@@ -710,15 +710,15 @@ no runtime concatenation is performed.
 
     string-literal --> static-string-literal | interpolated-string-literal
 
-    string-literal-opening-delimiter --> extended-string-literal-delimiter ``"``
-    string-literal-closing-delimiter --> ``"`` extended-string-literal-delimiter
+    string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"``
+    string-literal-closing-delimiter --> ``"`` extended-string-literal-delimiter-OPT
 
     static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
     static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
     
     multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
     multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
-    extended-string-literal-delimiter --> ``#``-OPT | ``#`` extended-string-literal-delimiter
+    extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
