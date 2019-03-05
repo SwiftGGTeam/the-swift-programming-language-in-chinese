@@ -746,7 +746,7 @@ no runtime concatenation is performed.
     escaped-newline -->  escape-sequence whitespace-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
-   the quoted-texts rule which allows repetition; no need to allow
+   the quoted-text rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
 
 .. Now that single quotes are gone, we don't have a character literal.
