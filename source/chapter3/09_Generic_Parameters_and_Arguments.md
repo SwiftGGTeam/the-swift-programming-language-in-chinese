@@ -62,15 +62,13 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 > *泛形形参* → [*类型名称*](03_Types.html#type-name)
 > *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*类型标识符*](03_Types.html#type-identifier)
 > *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
-
-<a name="requirement-clause"></a>
+> <a name="requirement-clause"></a>
 > *约束子句* → **where** [*约束列表*](#requirement-list)
 <a name="requirement-list"></a>
 > *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)
 <a name="requirement"></a>
 > *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)
-
-<a name="conformance-requirement"></a>
+> <a name="conformance-requirement"></a>
 > *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)
 > *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
 <a name="same-type-requirement"></a>
