@@ -221,9 +221,9 @@ print(dynamic == equivalent)
 
 该特性用于函数、方法、计算属性、下标、便利构造器或析构器的声明，以将该声明的实现公开为模块公开接口的一部分。编译器允许在调用处把 `inlinable` 标记的符号替换为符号实现的副本。
 
-内联代码可以与任意模块中 `public` 标记的符号进行交互，它在相同模块中标记 `usableFromInline` 特性的部分，可以与 `internal` 标记的符号进行交互。
+内联代码可以与任意模块中 `public` 访问级别的符号进行交互，同时可以与在相同模块中标记 `usableFromInline` 特性的 `internal` 访问级别的符号进行交互。内联代码不能与 `private` 或 `fileprivate` 级别的符号进行交互。
 
-该特性不能用于嵌套在函数内的声明，或标记了 `fileprivate` 或 `private` 的声明。在内联函数定义的函数和闭包是隐式非内联的，即使他们不能标记该特性。
+该特性不能用于嵌套在函数内的声明，也不能用于 `fileprivate` 或 `private` 访问级别的声明。在内联函数定义的函数和闭包是隐式非内联的，即使他们不能标记该特性。
 
 <a name="nonobjc"></a>
 ### `nonobjc`
@@ -327,7 +327,7 @@ class ExampleClass: NSObject {
 
 该特性应用于顶级函数、实例方法、类方法或静态方法，以在没有前置限定符（例如模块名称、类型名称、实例变量或常量）的情况下使用该函数或方法时触发警告。使用该特性可以帮助减少在同一作用于访问同名函数之间的歧义。
 
-例如，Swift 标准库包含 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 顶级函数和用于序列比较元素的 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。序列方法声明使用了 `warn_unqualified_access`，以减少在 `Sequence` 扩展中使用它们的歧义。
+例如，Swift 标准库包含 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 顶级函数和用于序列比较元素的 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。序列方法声明使用了  `warn_unqualified_access`，以减少在 `Sequence` 扩展中使用它们的歧义。
 
 <a name="declaration_attributes_used_by_interface_builder"></a>
 
@@ -337,7 +337,7 @@ class ExampleClass: NSObject {
 
 `IBOutlet` 和 `IBInspectable` 用于修饰一个类的属性声明，`IBAction` 特性用于修饰一个类的方法声明，`IBDesignable` 用于修饰类的声明。
 
-`IBAction` 和 `IBOutlet` 特性都意味着 `objc` 特性。
+应用 `IBAction`、`IBOutlet`、`IBDesignable` 或者 `IBInspectable`  特性都意味着同时应用 `objc` 特性。
 
 <a name="type_attributes"></a>
 ## 类型特性
@@ -379,15 +379,21 @@ convention 特性总是与下面的参数之一一起出现。
 次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [Switching over Future Enumeration Cases](https://docs.swift.org/swift-book/ReferenceManual/Statements.html#ID602)。
 
 > 特性语法
-> 
-> *特性 *→ @ <font color = 0x3386c8>特性名 特性参数子句</font><sub>可选</sub>
-> *特性名* → <font color = 0x3386c8>标识符
-> *特性参数子句* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )
-> *特性列表* → <font color = 0x3386c8>特性 特性列表</font><sub>可选</sub>
-> 
-> *均衡令牌列表* → <font color = 0x3386c8>均衡令牌 均衡令牌列表</font><sub>可选</sub>
-> *均衡令牌* → ( <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> )
-> *均衡令牌* → [ <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub> ]
-> *均衡令牌* → { <font color = 0x3386c8>均衡令牌列表</font><sub>可选</sub>}
+>
+> <a name="attribute"></a>
+> *特性*→ [特性名](#attribute_name) [特性参数子句](#atribute_argument_clause)<sub>可选</sub>
+> <a name="attribute_name"></a>
+> *特性名* → [标识符](02_Lexical_Structure.html#identifier)
+> <a name="atribute_argument_clause"></a>
+> *特性参数子句* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> <a name="attributes"></a>
+> *特性列表* → [特性](#attribute) [特性列表](#attributes)<sub>可选</sub>
+>
+> <a name="balanced_tokens"></a>
+> *均衡令牌列表* → [均衡令牌](#balanced_token) [均衡令牌列表](#balanced_tokens)<sub>可选</sub>
+> <a name="balanced_token"></a>
+> *均衡令牌* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> *均衡令牌* → **\[** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **\]**
+> *均衡令牌* → **{** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **}**
 > *均衡令牌* → 任意标识符，关键字，字面量或运算符
-> *均衡令牌* → 任意标点除了 (，)，[，]，{，或 }
+> *均衡令牌* → 任意标点除了 **(**，**)**，**[**，**]**，**{**，或 **}**
