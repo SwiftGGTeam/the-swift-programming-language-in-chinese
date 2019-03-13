@@ -239,35 +239,29 @@ For example:
 Extended String Delimiters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A string literal that's surrounded by :newTerm:`extended delimiters`
-uses one or more number signs (``#``) in addition to double quotation marks (``"``).
-Use extended delimiters to include special characters in a string
-without their special effects taking effect.
+You can place a string literal within :newTerm:`extended delimiters`
+to include special characters in a string
+without invoking their effect.
+You place your string within quotation marks (``"``)
+and surround that with number signs (``#``).
 For example, printing the string literal ``#"Line 1\nLine 2"#``
 prints the line feed escape sequence (``\n``)
 rather than printing the string across two lines.
 
 If you need the special effects of a character in a string literal,
-match the number of number signs you use in between the backslash
-with the number of number signs you use to surround the string literal.
-Both of the raw string literals in the example below 
-print across two lines because the number signs are balanced.
-
-.. testcode:: extended-string-delimeters
-   :compile: true
-
-   -> print(#"Line 1\#nLine 2"#)
-   </ Line 1
-   </ Line 2
-   -> print(###"Line 1\###nLine 2"###)
-   </ Line 1
-   </ Line 2
+match the number of number signs within the string
+following the escape character (``\``).
+For example, if your string is ``#"Line 1\nLine 2"#``
+and you want to break the line,
+you can use ``#"Line 1\#nLine 2"#`` instead.
+Similarly, ``###"Line1\###nLine2"###`` also breaks the line.
 
 String literals created using extended delimiters can also be multiline string literals.
 You can use extended delimiters to include the text ``"""`` in a multiline string,
 overriding the default behavior that ends the literal. For example:
 
-.. testcode:: extended-string-delimeters
+.. testcode:: extended-string-delimiters
+   :compile: true
 
    -> let threeMoreDoubleQuotationMarks = #"""
       Here are three more double quotes: """

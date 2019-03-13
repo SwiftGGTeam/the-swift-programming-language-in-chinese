@@ -639,7 +639,7 @@ A string delimited by extended delimiters has the following forms:
     """#
 
 Special characters in a string delimited by extended delimiters
-are incorporated into the resulting string as normal characters
+appear in the resulting string as normal characters
 rather than as special characters.
 You can use extended delimiters to create strings with characters
 that would ordinarily have a special effect
@@ -649,7 +649,7 @@ or terminating the string.
 
 The following example shows a string literal
 and a string delimited by extended delimiters
-that create equivalent string values.
+that create equivalent string values:
 
 .. testcode:: extended-string-delimiters
 
@@ -662,7 +662,7 @@ that create equivalent string values.
 
 If you use more than one number sign to form
 a string delimited by extended delimiters,
-there must not be any whitespace in between the number signs.
+don't place whitespace in between the number signs:
 
 .. testcode:: extended-string-delimiters
 
@@ -683,7 +683,7 @@ there must not be any whitespace in between the number signs.
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
-Multiline string literals that are delimited using extended delimiters
+Multiline string literals that you create using extended delimiters
 have the same indentation requirements as regular multiline string literals. 
 
 The default inferred type of a string literal is ``String``.
