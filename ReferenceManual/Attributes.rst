@@ -275,8 +275,8 @@ as if it's a function that takes any number of arguments.
 The declaration of the ``dynamicallyCall(withArguments:)`` method
 must have a single parameter that conforms to the
 `ExpressibleByArrayLiteral <//apple_ref/swift/fake/ExpressibleByArrayLiteral>`_
-protocol---like ``[Int]`` in the example above---
-and the return type can be any type.
+protocol---like ``[Int]`` in the example above.
+The return type can be any type.
 
 You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
@@ -313,12 +313,12 @@ must be
 The previous example uses `KeyValuePairs <//apple_ref/swift/fake/KeyValuePairs>`_
 as the parameter type
 so that callers can include duplicate parameter labels---
-``a`` and ``b`` are used multiple times in the call to ``repeat``.
+``a`` and ``b`` appear multiple times in the call to ``repeat``.
 
 If you implement both ``dynamicallyCall`` methods,
-``dynamicallyCall(withKeywordArguments:)`` is called
+Swift calls ``dynamicallyCall(withKeywordArguments:)``
 when the method call includes keyword arguments.
-Otherwise, the ``dynamicallyCall(withArguments:)`` method is called.
+Otherwise, Swift calls the ``dynamicallyCall(withArguments:)`` method.
 
 You can only call a dynamically callable instance
 with arguments and a return value that match the types you specify
