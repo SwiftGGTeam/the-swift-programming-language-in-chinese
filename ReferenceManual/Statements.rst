@@ -440,7 +440,7 @@ you can include a default case to satisfy the requirement.
 
 .. _Statements_SwitchingOverFutureEnumerationCases:
 
-Switching over Future Enumeration Cases
+Switching Over Future Enumeration Cases
 +++++++++++++++++++++++++++++++++++++++
 
 A :newTerm:`nonfrozen enumeration` is a special kind of enumeration
@@ -450,13 +450,13 @@ Switching over a nonfrozen enumeration requires extra consideration.
 When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
-*must* be able to handle those future cases without being recompiled.
+*must* be able to handle those future cases without recompiling.
 Only the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
 Enumerations you declare in Swift can't be nonfrozen. 
 
-When you switch over a nonfrozen enumeration value,
+When switching over a nonfrozen enumeration value,
 you always need to include a default case,
 even if every case of the enumeration already has a corresponding switch case.
 You can apply the ``@unknown`` attribute to the default case,
@@ -465,17 +465,16 @@ that are added in the future.
 Swift produces a warning
 if the default case matches
 any enumeration case that is known at compiler time.
-This future warning will let you know that the library author
+This future warning informs you that the library author
 added a new case to the enumeration
-that has no corresponding switch case.
+that doesn't have a corresponding switch case.
 
 The following example switches over all three existing cases of
 the standard library's `Mirror.AncestorRepresentation <//apple_ref/swift/fake/Mirror.AncestorRepresentation>`_
 enumeration.
-If additional cases are added in the future,
-a warning will be generated,
-indicating that the switch statement
-should be updated to take the new case or cases into account.
+If you add additional cases in the future,
+it generates a warning to indicate that you need to update the switch statement
+to take the new case or cases into account.
 
 .. testcode:: unknown-case
 
@@ -489,7 +488,7 @@ should be updated to take the new case or cases into account.
       case .suppressed:
           print("Suppress the representation of all ancestor classes.")
       @unknown default:
-          print("Use a representation that was unknown when this code was compiled.")
+          print("Use a representation that was unknown when compiling this code.")
       }
    <- Generate a default mirror for all ancestor classes.
 
