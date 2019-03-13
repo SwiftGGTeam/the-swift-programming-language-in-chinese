@@ -524,7 +524,7 @@ and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
 when it's included inside the string literal.
 
-You can use extended string delimiters to create a string that contains
+You can use extended string delimiters to create strings containing
 characters that would otherwise be treated as a string interpolation.
 For example: 
 
