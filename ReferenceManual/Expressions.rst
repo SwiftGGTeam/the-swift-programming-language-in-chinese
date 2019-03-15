@@ -1807,7 +1807,7 @@ you can pass it to a function or method that accepts a type-level argument.
 
 .. syntax-grammar::
 
-    Grammar of a self expression
+    Grammar of a postfix self expression
 
     postfix-self-expression --> postfix-expression ``.`` ``self``
 
