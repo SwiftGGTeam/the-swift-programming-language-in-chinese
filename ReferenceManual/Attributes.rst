@@ -316,9 +316,9 @@ so that callers can include duplicate parameter labels---
 ``a`` and ``b`` appear multiple times in the call to ``repeat``.
 
 If you implement both ``dynamicallyCall`` methods,
-Swift calls ``dynamicallyCall(withKeywordArguments:)``
+``dynamicallyCall(withKeywordArguments:)`` is called
 when the method call includes keyword arguments.
-Otherwise, Swift calls the ``dynamicallyCall(withArguments:)`` method.
+In all other cases, ``dynamicallyCall(withArguments:)`` is called.
 
 You can only call a dynamically callable instance
 with arguments and a return value that match the types you specify
