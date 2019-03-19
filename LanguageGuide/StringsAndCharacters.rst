@@ -533,6 +533,17 @@ For example:
    -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
    <- Write an interpolated string in Swift using \(multiplier).
 
+To use string interpolation
+inside a string that uses extended delimiters,
+match the number of number signs before the backslash
+to the number of number signs at the beginning and end of the string.
+For example:
+
+.. testcode:: stringInterpolation
+
+   -> print(#"6 times 7 is \#(6 * 7)."#)
+   <- 6 times 7 is 42.
+
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
