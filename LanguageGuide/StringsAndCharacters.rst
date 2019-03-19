@@ -539,8 +539,6 @@ For example:
    can't contain an unescaped backslash (``\``), a carriage return, or a line feed.
    However, they can contain other string literals.
 
-.. TODO: add a bit here about making things Printable.
-
 .. _StringsAndCharacters_Unicode:
 
 Unicode
