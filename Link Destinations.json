@@ -554,6 +554,7 @@
     "stringsandcharacters-comparingstrings": "ID298",
     "stringsandcharacters-concatenatingstringsandcharacters": "ID291",
     "stringsandcharacters-countingcharacters": "ID297",
+    "stringsandcharacters-extendeddelimiters": "ID606",
     "stringsandcharacters-extendedgraphemeclusters": "ID296",
     "stringsandcharacters-initializinganemptystring": "ID287",
     "stringsandcharacters-insertingandremoving": "ID496",
@@ -657,5 +658,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 606
+  "next_id": 607
 }
