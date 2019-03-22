@@ -3,7 +3,7 @@ Document Revision History
 
 **2019-03-25**
 
-* Updated for Swift 5.
+* Updated for Swift 5.0.
 
 * Added the :ref:`StringsAndCharacters_ExtendedDelimiters` section
   and updated the :ref:`LexicalStructure_StringLiterals` section
