@@ -1,9 +1,13 @@
 Document Revision History
 =========================
 
-**2019-01-24**
+**2019-03-25**
 
 * Updated for Swift 5.
+
+* Added the :ref:`StringsAndCharacters_ExtendedDelimiters` section
+  and updated the :ref:`LexicalStructure_StringLiterals` section
+  with information about extended string delimiters.
 
 * Added the :ref:`Attributes_dynamicCallable` section
   with information about dynamically calling instances as functions
