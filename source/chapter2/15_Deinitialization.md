@@ -68,9 +68,9 @@ class Player {
 ```swift
 var playerOne: Player? = Player(coins: 100)
 print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
-// 打印 "A new player has joined the game with 100 coins"
+// 打印“A new player has joined the game with 100 coins”
 print("There are now \(Bank.coinsInBank) coins left in the bank")
-// 打印 "There are now 9900 coins left in the bank"
+// 打印“There are now 9900 coins left in the bank”
 ```
 
 创建一个 `Player` 实例的时候，会向 `Bank` 对象申请得到 100 个硬币，前提是有足够的硬币可用。这个 `Player` 实例存储在一个名为 `playerOne` 的可选类型的变量中。这里使用了一个可选类型的变量，是因为玩家可以随时离开游戏，设置为可选使你可以追踪玩家当前是否在游戏中。
@@ -80,9 +80,9 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 ```swift
 playerOne!.win(coins: 2_000)
 print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
-// 打印 "PlayerOne won 2000 coins & now has 2100 coins"
+// 打印“PlayerOne won 2000 coins & now has 2100 coins”
 print("The bank now only has \(Bank.coinsInBank) coins left")
-// 打印 "The bank now only has 7900 coins left"
+// 打印“The bank now only has 7900 coins left”
 ```
 
 在这里，玩家已经赢得了 2,000 枚硬币，所以玩家的钱包中现在有 2,100 枚硬币，而 `Bank` 对象只剩余 7,900 枚硬币。
@@ -90,9 +90,9 @@ print("The bank now only has \(Bank.coinsInBank) coins left")
 ```swift
 playerOne = nil
 print("PlayerOne has left the game")
-// 打印 "PlayerOne has left the game"
+// 打印“PlayerOne has left the game”
 print("The bank now has \(Bank.coinsInBank) coins")
-// 打印 "The bank now has 10000 coins"
+// 打印“The bank now has 10000 coins”
 ```
 
 玩家现在已经离开了游戏。这通过将可选类型的 `playerOne` 变量设置为 `nil` 来表示，意味着“没有 `Player` 实例”。当这一切发生时，`playerOne` 变量对 `Player` 实例的引用被破坏了。没有其它属性或者变量引用 `Player` 实例，因此该实例会被释放，以便回收内存。在这之前，该实例的析构器被自动调用，玩家的硬币被返还给银行。

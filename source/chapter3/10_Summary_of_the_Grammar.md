@@ -1,26 +1,4 @@
 # 语法总结（Summary of the Grammar）
------
-
-> 1.0
-> 翻译：[stanzhai](https://github.com/stanzhai)
-> 校对：[xielingwang](https://github.com/xielingwang)
-
-> 2.0
-> 翻译+校对：[miaosiqi](https://github.com/miaosiqi)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页包含内容：
-
-* [语句（Statements）](#statements)
-* [泛型参数（Generic Parameters and Arguments）](#generic_parameters_and_arguments)
-* [声明（Declarations）](#declarations)
-* [模式（Patterns）](#patterns)
-* [属性（Attributes）](#attributes)
-* [表达式（Expressions）](#expressions)
-* [词法结构（Lexical Structure）](#lexical_structure)
-* [类型（Types）](#types)
 
 <a name="statements"></a>
 ## 语句

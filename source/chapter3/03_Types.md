@@ -1,18 +1,4 @@
 # 类型（Types）
------------------
-
-> 1.0
-> 翻译：[lyuka](https://github.com/lyuka)
-> 校对：[numbbbbb](https://github.com/numbbbbb), [stanzhai](https://github.com/stanzhai)
-
-> 2.0
-> 翻译+校对：[EudeMorgen](https://github.com/EudeMorgen)
-
-> 2.1
-> 翻译：[mmoaay](https://github.com/mmoaay)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
 
 本页包含内容：
 
@@ -388,7 +374,7 @@ let someInstance: SomeBaseClass = SomeSubClass()
 // someInstance 在编译期是 SomeBaseClass 类型，
 // 但是在运行期则是 SomeSubClass 类型
 type(of: someInstance).printClassName()
-// 打印 “SomeSubClass”
+// 打印“SomeSubClass”
 ```
 
 更多信息可以查看 Swift 标准库里的 `type(of:)`。

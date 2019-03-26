@@ -3,9 +3,9 @@
 
 中文版 Apple 官方 Swift 教程《The Swift Programming Language》
 
-[英文原版在线版](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0)
+[英文原版在线版](https://docs.swift.org/swift-book/)
 
-[英文原版ePub版](https://swift.org/documentation/)
+[英文原版ePub版](https://docs.swift.org/swift-book/TheSwiftProgrammingLanguageSwift5.epub)
 
 # 在线阅读
 
@@ -13,8 +13,15 @@
 
 # 当前阶段
 
-Swift 4.2 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（把 Issue 的 Assignee 设置成你自己就表示认领，不要认领已经有人认领的章节）。
+Swift 5.0 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（把 Issue 的 Assignee 设置成你自己就表示认领，不要认领已经有人认领的章节）。
 
+在翻译时可以通过 Calibre 软件对 [document 目录下](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/document) 不同版本的文档进行 diff，检查待更新部分。
+
+diff 操作如下：
+
+将最新文档加入到 Calibre 中，点击 **Edit Book**，然后在编辑界面选择 **File** -> **Compare to other book** 检查各模块的更新内容，详见[链接](https://manual.calibre-ebook.com/diff.html)。
+
+- 更新到 Swift 4.2，2019-01-29
 - 更新到 Swift 4.1，2018-04-12，感谢[@Mylittleswift](https://github.com/Mylittleswift)
 - 更新到 Swift 3.0，2016-09-23
 
@@ -118,13 +125,13 @@ Swift 4.2 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-p
 | literal value | 字面量 |
 | alias | 别名 |
 | Assertion | 断言 |
+| conditional compilation | 条件编译 |
 
-# 贡献历史
+# 贡献者
 
-## 简体中文版贡献历史
+[贡献者列表](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/contributors.md)，感谢大家！
 
-1. Welcome To Swift 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/source/chapter1/05_contributors.md)
-2. Language Guide 翻译贡献榜[详情](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/27_contributors.md)
+
 
 # 协议
 和 [苹果官方文档](https://swift.org/documentation/) 协议一致：[Creative Commons Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/)。

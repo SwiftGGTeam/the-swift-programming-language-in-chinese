@@ -119,7 +119,7 @@ languageName = "Swift++"
 
 ```swift
 print(friendlyWelcome)
-// 输出 "Bonjour!"
+// 输出“Bonjour!”
 ```
 
 `print(_:separator:terminator:)` 是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)` 将会输出内容到“console”面板上。`separator` 和 `terminator` 参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给 `terminator` 参数--例如，`print(someValue, terminator:"")` 。关于参数默认值的更多信息，请参考[默认参数值](./06_Functions.html#default_parameter_values)。
@@ -128,7 +128,7 @@ Swift 用*字符串插值（string interpolation）*的方式把常量名或者�
 
 ```swift
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
-// 输出 "The current value of friendlyWelcome is Bonjour!
+// 输出“The current value of friendlyWelcome is Bonjour!”
 ```
 
 > 注意
@@ -170,7 +170,7 @@ Swift 中的注释与 C 语言的注释非常相似。单行注释以双正斜�
 
 ```swift
 let cat = "🐱"; print(cat)
-// 输出 "🐱"
+// 输出“🐱”
 ```
 
 <a name="integers"></a>
@@ -413,7 +413,7 @@ if turnipsAreDelicious {
 } else {
     print("Eww, turnips are horrible.")
 }
-// 输出 "Eww, turnips are horrible."
+// 输出“Eww, turnips are horrible.”
 ```
 
 条件语句，例如 `if`，请参考[控制流](./05_Control_Flow.html)。
@@ -461,9 +461,9 @@ let http404Error = (404, "Not Found")
 ```swift
 let (statusCode, statusMessage) = http404Error
 print("The status code is \(statusCode)")
-// 输出 "The status code is 404"
+// 输出“The status code is 404”
 print("The status message is \(statusMessage)")
-// 输出 "The status message is Not Found"
+// 输出“The status message is Not Found”
 ```
 
 如果你只需要一部分元组值，分解的时候可以把要忽略的部分用下划线（`_`）标记：
@@ -471,16 +471,16 @@ print("The status message is \(statusMessage)")
 ```swift
 let (justTheStatusCode, _) = http404Error
 print("The status code is \(justTheStatusCode)")
-// 输出 "The status code is 404"
+// 输出“The status code is 404”
 ```
 
 此外，你还可以通过下标来访问元组中的单个元素，下标从零开始：
 
 ```swift
 print("The status code is \(http404Error.0)")
-// 输出 "The status code is 404"
+// 输出“The status code is 404”
 print("The status message is \(http404Error.1)")
-// 输出 "The status message is Not Found"
+// 输出“The status message is Not Found”
 ```
 
 你可以在定义元组的时候给单个元素命名：
@@ -493,9 +493,9 @@ let http200Status = (statusCode: 200, description: "OK")
 
 ```swift
 print("The status code is \(http200Status.statusCode)")
-// 输出 "The status code is 200"
+// 输出“The status code is 200”
 print("The status message is \(http200Status.description)")
-// 输出 "The status message is OK"
+// 输出“The status message is OK”
 ```
 
 作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个 `(Int, String)` 元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值](./06_Functions.html#Function_Parameters_and_Return_Values)。
@@ -564,7 +564,7 @@ var surveyAnswer: String?
 if convertedNumber != nil {
     print("convertedNumber contains some integer value.")
 }
-// 输出 "convertedNumber contains some integer value."
+// 输出“convertedNumber contains some integer value.”
 ```
 
 当你确定可选类型确实包含值之后，你可以在可选的名字后面加一个感叹号（`!`）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的*强制解析（forced unwrapping）*：
@@ -573,7 +573,7 @@ if convertedNumber != nil {
 if convertedNumber != nil {
     print("convertedNumber has an integer value of \(convertedNumber!).")
 }
-// 输出 "convertedNumber has an integer value of 123."
+// 输出“convertedNumber has an integer value of 123.”
 ```
 
 更多关于 `if` 语句的内容，请参考[控制流](./05_Control_Flow.html)。
@@ -603,7 +603,7 @@ if let actualNumber = Int(possibleNumber) {
 } else {
     print("\'\(possibleNumber)\' could not be converted to an integer")
 }
-// 输出 "'123' has an integer value of 123"
+// 输出“'123' has an integer value of 123”
 ```
 
 这段代码可以被理解为：
@@ -620,7 +620,7 @@ if let actualNumber = Int(possibleNumber) {
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
-// 输出 "4 < 42 < 100"
+// 输出“4 < 42 < 100”
 
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
@@ -629,7 +629,7 @@ if let firstNumber = Int("4") {
         }
     }
 }
-// 输出 "4 < 42 < 100"
+// 输出“4 < 42 < 100”
 ```
 
 > 注意
@@ -667,9 +667,9 @@ let implicitString: String = assumedString  // 不需要感叹号
 
 ```swift
 if assumedString != nil {
-    print(assumedString)
+    print(assumedString!)
 }
-// 输出 "An implicitly unwrapped optional string."
+// 输出“An implicitly unwrapped optional string.”
 ```
 
 你也可以在可选绑定中使用隐式解析可选类型来检查并解析它的值：
@@ -678,7 +678,7 @@ if assumedString != nil {
 if let definiteString = assumedString {
     print(definiteString)
 }
-// 输出 "An implicitly unwrapped optional string."
+// 输出“An implicitly unwrapped optional string.”
 ```
 
 > 注意

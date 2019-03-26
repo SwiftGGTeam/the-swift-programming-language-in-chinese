@@ -4,7 +4,7 @@ Swift 提供了多种流程控制结构，包括可以多次执行任务的 `whi
 
 Swift 还提供了 `for-in` 循环，用来更简单地遍历数组（Array），字典（Dictionary），区间（Range），字符串（String）和其他序列类型。
 
-Swift 的 `switch` 语句比 C 语言中更加强大。case 还可以匹配很多不同的模式，包括范围匹配，元组（tuple）和特定类型匹配。`switch` 语句的 case 中匹配的值可以声明为临时常量或变量，在 case 作用域内使用，也可以配合 `where` 来描述更复杂的匹配条件。
+Swift 的 `switch` 语句比许多类 C 语言要更加强大。case 还可以匹配很多不同的模式，包括范围匹配，元组（tuple）和特定类型匹配。`switch` 语句的 case 中匹配的值可以声明为临时常量或变量，在 case 作用域内使用，也可以配合 `where` 来描述更复杂的匹配条件。
 
 <a name="for_in_loops"></a>
 ## For-In 循环
@@ -65,12 +65,12 @@ for _ in 1...power {
     answer *= base
 }
 print("\(base) to the power of \(power) is \(answer)")
-// 输出 "3 to the power of 10 is 59049"
+// 输出“3 to the power of 10 is 59049”
 ```
 
 这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（`3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。
 
-在某些情况下，你可能不想使用闭区间，包括两个端点。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。
+在某些情况下，你可能不想使用包括两个端点的闭区间。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.html#range_operators)。
 
 ```swift
 let minutes = 60
@@ -79,7 +79,7 @@ for tickMark in 0..<minutes {
 }
 ```
 
-一些用户可能在其 UI 中可能需要较少的刻度。他们可以每5分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。
+一些用户可能在其 UI 中可能需要较少的刻度。他们可以每 5 分钟作为一个刻度。使用 `stride(from:to:by:)` 函数跳过不需要的标记。
 
 ```swift
 let minuteInterval = 5
@@ -121,7 +121,7 @@ while condition {
 
 下面的例子来玩一个叫做*蛇和梯子*（也叫做*滑道和梯子*）的小游戏：
 
-![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png)
+![image](https://docs.swift.org/swift-book/_images/snakesAndLadders_2x.png)
 
 游戏的规则如下：
 
@@ -171,7 +171,7 @@ print("Game over!")
 
 > 注意
 > 
-> 如果没有这个检测（`square < board.count`），`board[square]` 可能会越界访问 `board` 数组，导致错误。
+> 如果没有这个检测（`square < board.count`），`board[square]` 可能会越界访问 `board` 数组，导致运行时错误。
 
 当本轮 `while` 循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为 `false`，此时游戏结束。
 
@@ -243,7 +243,7 @@ var temperatureInFahrenheit = 30
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 }
-// 输出 "It's very cold. Consider wearing a scarf."
+// 输出“It's very cold. Consider wearing a scarf.”
 ```
 
 上面的例子会判断温度是否小于等于 32 华氏度（水的冰点）。如果是，则打印一条消息；否则，不打印任何消息，继续执行 `if` 块后面的代码。
@@ -257,7 +257,7 @@ if temperatureInFahrenheit <= 32 {
 } else {
     print("It's not that cold. Wear a t-shirt.")
 }
-// 输出 "It's not that cold. Wear a t-shirt."
+// 输出“It's not that cold. Wear a t-shirt.”
 ```
 
 显然，这两条分支中总有一条会被执行。由于温度已升至 40 华氏度，不算太冷，没必要再围围巾。因此，`else` 分支就被触发了。
@@ -273,7 +273,7 @@ if temperatureInFahrenheit <= 32 {
 } else {
     print("It's not that cold. Wear a t-shirt.")
 }
-// 输出 "It's really warm. Don't forget to wear sunscreen."
+// 输出“It's really warm. Don't forget to wear sunscreen.”
 ```
 
 在上面的例子中，额外的 `if` 语句用于判断是不是特别热。而最后的 `else` 语句被保留了下来，用于打印既不冷也不热时的消息。
@@ -328,20 +328,19 @@ case "z":
 default:
     print("Some other character")
 }
-// 输出 "The last letter of the alphabet"
+// 输出“The last letter of the alphabet”
 ```
 
-在这个例子中，第一个 case 分支用于匹配第一个英文字母 `a`，第二个 case 分支用于匹配最后一个字母 `z`。
-因为 `switch` 语句必须有一个 case 分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以 switch 语句使用 `default` 分支来匹配除了 `a` 和 `z` 外的所有值，这个分支保证了 swith 语句的完备性。
+在这个例子中，第一个 case 分支用于匹配第一个英文字母 `a`，第二个 case 分支用于匹配最后一个字母 `z`。因为 `switch` 语句必须有一个 case 分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以 switch 语句使用 `default` 分支来匹配除了 `a` 和 `z` 外的所有值，这个分支保证了 swith 语句的完备性。
 
 <a name="no_implicit_fallthrough"></a>
 #### 不存在隐式的贯穿
 
-与 C 和 Objective-C 中的 `switch` 语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止 `switch` 语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用 `break` 语句。这使得 `switch` 语句更安全、更易用，也避免了因忘记写 `break` 语句而产生的错误。
+与 C 和 Objective-C 中的 `switch` 语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止 `switch` 语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用 `break` 语句。这使得 `switch` 语句更安全、更易用，也避免了漏写 `break` 语句导致多个语言被执行的错误。
 
 > 注意
 > 
-虽然在 Swift 中 `break` 不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用 `break` 跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
+> 虽然在 Swift 中 `break` 不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用 `break` 跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
 
@@ -369,7 +368,7 @@ case "a", "A":
 default:
     print("Not the letter A")
 }
-// 输出 "The letter A
+// 输出“The letter A”
 ```
 
 为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)
@@ -402,7 +401,7 @@ default:
     naturalCount = "many"
 }
 print("There are \(naturalCount) \(countedThings).")
-// 输出 "There are dozens of moons orbiting Saturn."
+// 输出“There are dozens of moons orbiting Saturn.”
 ```
 
 在上例中，`approximateCount` 在一个 `switch` 声明中被评估。每一个 `case` 都与之进行比较。因为 `approximateCount` 落在了 12 到 100 的区间，所以 `naturalCount` 等于 `"dozens of"` 值，并且此后的执行跳出了 `switch` 语句。
@@ -428,10 +427,10 @@ case (-2...2, -2...2):
 default:
     print("\(somePoint) is outside of the box")
 }
-// 输出 "(1, 1) is inside the box"
+// 输出“(1, 1) is inside the box”
 ```
 
-![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphSimple_2x.png)
+![image](https://docs.swift.org/swift-book/_images/coordinateGraphSimple_2x.png)
 
 在上面的例子中，`switch` 语句会判断某个点是否是原点 (0, 0)，是否在红色的 x 轴上，是否在橘黄色的 y 轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
 
@@ -454,10 +453,10 @@ case (0, let y):
 case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
-// 输出 "on the x-axis with an x value of 2"
+// 输出“on the x-axis with an x value of 2”
 ```
 
-![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphMedium_2x.png)
+![image](https://docs.swift.org/swift-book/_images/coordinateGraphMedium_2x.png)
 
 在上面的例子中，`switch` 语句会判断某个点是否在红色的 x 轴上，是否在橘黄色的 y 轴上，或者不在坐标轴上。
 
@@ -484,10 +483,10 @@ case let (x, y) where x == -y:
 case let (x, y):
     print("(\(x), \(y)) is just some arbitrary point")
 }
-// 输出 "(1, -1) is on the line x == -y"
+// 输出“(1, -1) is on the line x == -y”
 ```
 
-![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphComplex_2x.png)
+![image](https://docs.swift.org/swift-book/_images/coordinateGraphComplex_2x.png)
 
 在上面的例子中，`switch` 语句会判断某个点是否在绿色的对角线 `x == y` 上，是否在紫色的对角线 `x == -y` 上，或者不在对角线上。
 
@@ -511,10 +510,11 @@ case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
 default:
     print("\(someCharacter) is not a vowel or a consonant")
 }
-// 输出 "e is a vowel"
+// 输出“e is a vowel”
 ```
 
 这个 `switch` 语句中的第一个 case，匹配了英语中的五个小写元音字母。相似的，第二个 case 匹配了英语中所有的小写辅音字母。最终，`default` 分支匹配了其它所有字符。
+
 复合匹配同样可以包含值绑定。复合匹配里所有的匹配模式，都必须包含相同的值绑定。并且每一个绑定都必须获取到相同类型的值。这保证了，无论复合匹配中的哪个模式发生了匹配，分支体内的代码，都能获取到绑定的值，并且绑定的值都有一样的类型。
 
 ```swift
@@ -525,11 +525,10 @@ case (let distance, 0), (0, let distance):
 default:
     print("Not on an axis")
 }
-
-// 输出 "On an axis, 9 from the origin"
+// 输出“On an axis, 9 from the origin”
 ```
 
-上面的 case 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 case 匹配，都可以获取到 `distance` 值
+上面的 case 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 case 匹配，都可以获取到 `distance` 值。
 
 <a name="control_transfer_statements"></a>
 ## 控制转移语句
@@ -563,7 +562,7 @@ for character in puzzleInput {
     }
 }
 print(puzzleOutput)
-    // 输出 "grtmndsthnklk"
+    // 输出“grtmndsthnklk”
 ```
 
 在上面的代码中，只要匹配到元音字母或者空格字符，就调用 `continue` 语句，使本次循环结束，重新开始下次循环。这种行为使 `switch` 匹配到元音字母和空格字符时不做处理，而不是让每一个匹配到的字符都被打印。
@@ -611,7 +610,7 @@ if let integerValue = possibleIntegerValue {
 } else {
     print("An integer value could not be found for \(numberSymbol).")
 }
-// 输出 "The integer value of 三 is 3."
+// 输出“The integer value of 三 is 3.”
 ```
 
 这个例子检查 `numberSymbol` 是否是拉丁，阿拉伯，中文或者泰语中的 `1` 到 `4` 之一。如果被匹配到，该 `switch` 分支语句给 `Int?` 类型变量 `possibleIntegerValue` 设置一个整数值。
@@ -638,7 +637,7 @@ default:
     description += " an integer."
 }
 print(description)
-// 输出 "The number 5 is a prime number, and also an integer."
+// 输出“The number 5 is a prime number, and also an integer.”
 ```
 
 这个例子定义了一个 `String` 类型的变量 `description` 并且给它设置了一个初始值。函数使用 `switch` 逻辑来判断 `integerToDescribe` 变量的值。当 `integerToDescribe` 的值属于列表中的质数之一时，该函数在 `description` 后添加一段文字，来表明这个数字是一个质数。然后它使用 `fallthrough` 关键字来“贯穿”到 `default` 分支中。`default` 分支在 `description` 的最后添加一段额外的文字，至此 `switch` 代码块执行完了。
@@ -674,7 +673,7 @@ print(description)
 
 游戏的棋盘和之前一样：
 
-![image](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png)
+![image](https://docs.swift.org/swift-book/_images/snakesAndLadders_2x.png)
 
 `finalSquare`、`board`、`square` 和 `diceRoll` 值被和之前一样的方式初始化：
 
@@ -730,27 +729,31 @@ print("Game over!")
 
 ```swift
 func greet(person: [String: String]) {
-	guard let name = person["name"] else {
-		return
-	}
-	print("Hello \(name)")
-	guard let location = person["location"] else {
-		print("I hope the weather is nice near you.")
-		return
-	}
-	print("I hope the weather is nice in \(location).")
+    guard let name = person["name"] else {
+        return
+    }
+
+    print("Hello \(name)!")
+
+    guard let location = person["location"] else {
+        print("I hope the weather is nice near you.")
+        return
+    }
+
+    print("I hope the weather is nice in \(location).")
 }
-greet(["name": "John"])
-// 输出 "Hello John!"
-// 输出 "I hope the weather is nice near you."
-greet(["name": "Jane", "location": "Cupertino"])
-// 输出 "Hello Jane!"
-// 输出 "I hope the weather is nice in Cupertino."
+
+greet(person: ["name": "John"])
+// 输出“Hello John!”
+// 输出“I hope the weather is nice near you.”
+greet(person: ["name": "Jane", "location": "Cupertino"])
+// 输出“Hello Jane!”
+// 输出“I hope the weather is nice in Cupertino.”
 ```
 
 如果 `guard` 语句的条件被满足，则继续执行 `guard` 语句大括号后的代码。将变量或者常量的可选绑定作为 `guard` 语句的条件，都可以保护 `guard` 语句后面的代码。
 
-如果条件不被满足，在 `else` 分支上的代码就会被执行。这个分支必须转移控制以退出 `guard` 语句出现的代码段。它可以用控制转移语句如 `return`,`break`,`continue` 或者 `throw` 做这件事，或者调用一个不返回的方法或函数，例如 `fatalError()`。
+如果条件不被满足，在 `else` 分支上的代码就会被执行。这个分支必须转移控制以退出 `guard` 语句出现的代码段。它可以用控制转移语句如 `return`、`break`、`continue` 或者 `throw` 做这件事，或者调用一个不返回的方法或函数，例如 `fatalError()`。
 
 相比于可以实现同样功能的 `if` 语句，按需使用 `guard` 语句会提升我们代码的可读性。它可以使你的代码连贯的被执行而不需要将它包在 `else` 块中，它可以使你在紧邻条件判断的地方，处理违规的情况。
 
@@ -776,7 +779,7 @@ if #available(iOS 10, macOS 10.12, *) {
 在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS` 和 `tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 
 ```swift
-if #available(platform name version, ..., *) {
+if #available(平台名称 版本号, ..., *) {
     APIs 可用，语句将执行
 } else {
     APIs 不可用，语句将不执行

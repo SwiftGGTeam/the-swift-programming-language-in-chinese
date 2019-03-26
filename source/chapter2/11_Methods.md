@@ -72,18 +72,18 @@ func increment() {
 ```swift
 struct Point {
     var x = 0.0, y = 0.0
-    func isToTheRightOfX(_ x: Double) -> Bool {
+    func isToTheRightOf(x: Double) -> Bool {
         return self.x > x
     }
 }
 let somePoint = Point(x: 4.0, y: 5.0)
-if somePoint.isToTheRightOfX(1.0) {
+if somePoint.isToTheRightOf(x: 1.0) {
     print("This point is to the right of the line where x == 1.0")
 }
-// 打印 "This point is to the right of the line where x == 1.0"
+// 打印“This point is to the right of the line where x == 1.0”
 ```
 
-如果不使用 `self` 前缀，Swift 就认为两次使用的 `x` 都指的是名称为 `x` 的函数参数。
+如果不使用 `self` 前缀，Swift会认为 `x` 的两个用法都引用了名为 `x` 的方法参数。
 
 <a name="modifying_value_types_from_within_instance_methods"></a>
 ### 在实例方法中修改值类型
@@ -97,24 +97,24 @@ if somePoint.isToTheRightOfX(1.0) {
 ```swift
 struct Point {
     var x = 0.0, y = 0.0
-    mutating func moveByX(_ deltaX: Double, y deltaY: Double) {
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
         x += deltaX
         y += deltaY
     }
 }
 var somePoint = Point(x: 1.0, y: 1.0)
-somePoint.moveByX(2.0, y: 3.0)
+somePoint.moveBy(x: 2.0, y: 3.0)
 print("The point is now at (\(somePoint.x), \(somePoint.y))")
-// 打印 "The point is now at (3.0, 4.0)"
+// 打印“The point is now at (3.0, 4.0)”
 ```
 
-上面的 `Point` 结构体定义了一个可变方法 `moveByX(_:y:)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
+上面的 `Point` 结构体定义了一个可变方法 `moveBy（x：y :)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
 
 注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
-fixedPoint.moveByX(2.0, y: 3.0)
+fixedPoint.moveBy(x: 2.0, y: 3.0)
 // 这里将会报告一个错误
 ```
 
@@ -138,26 +138,26 @@ struct Point {
 
 ```swift
 enum TriStateSwitch {
-    case Off, Low, High
+    case off, low, high
     mutating func next() {
         switch self {
-        case .Off:
-            self = .Low
-        case .Low:
-            self = .High
-        case .High:
-            self = .Off
+        case .off:
+            self = .low
+        case .low:
+            self = .high
+        case .high:
+            self = .off
         }
     }
 }
-var ovenLight = TriStateSwitch.Low
+var ovenLight = TriStateSwitch.low
 ovenLight.next()
-// ovenLight 现在等于 .High
+// ovenLight 现在等于 .high
 ovenLight.next()
-// ovenLight 现在等于 .Off
+// ovenLight 现在等于 .off
 ```
 
-上面的例子中定义了一个三态开关的枚举。每次调用 `next()` 方法时，开关在不同的电源状态（`Off`，`Low`，`High`）之间循环切换。
+上面的例子中定义了一个三态切换的枚举。每次调用 `next()` 方法时，开关在不同的电源状态（`off`, `low`, `high`）之间循环切换。
 
 <a name="type_methods"></a>
 ## 类型方法
@@ -179,7 +179,7 @@ class SomeClass {
 SomeClass.someTypeMethod()
 ```
 
-在类型方法的方法体（body）中，`self` 指向这个类型本身，而不是类型的某个实例。这意味着你可以用 `self` 来消除类型属性和类型方法参数之间的歧义（类似于我们在前面处理实例属性和实例方法参数时做的那样）。
+在类型方法的方法体（body）中，`self` 属性指向这个类型本身，而不是类型的某个实例。这意味着你可以用 `self` 来消除类型属性和类型方法参数之间的歧义（类似于我们在前面处理实例属性和实例方法参数时做的那样）。
 
 一般来说，在类型方法的方法体中，任何未限定的方法和属性名称，可以被本类中其他的类型方法和类型属性引用。一个类型方法可以直接通过类型方法的名称调用本类中的其它类型方法，而无需在方法名称前面加上类型名称。类似地，在结构体和枚举中，也能够直接通过类型属性的名称访问本类中的类型属性，而不需要前面加上类型名称。
 
@@ -218,7 +218,7 @@ struct LevelTracker {
 
 除了类型属性和类型方法，`LevelTracker` 还监测每个玩家的进度。它用实例属性 `currentLevel` 来监测每个玩家当前的等级。
 
-为了便于管理 `currentLevel` 属性，`LevelTracker` 定义了实例方法 `advance(to:)`。这个方法会在更新 `currentLevel` 之前检查所请求的新等级是否已经解锁。`advance(to:)` 方法返回布尔值以指示是否能够设置 `currentLevel`。因为允许在调用 `advance(to:)` 时候忽略返回值，不会产生编译警告，所以函数被标注为 `@ discardableResult` 属性，更多关于属性信息，请参考[属性](../chapter3/07_Attributes.html)章节。
+为了便于管理 `currentLevel` 属性，`LevelTracker` 定义了实例方法 `advance(to:)`。这个方法会在更新 `currentLevel` 之前检查所请求的新等级是否已经解锁。`advance(to:)` 方法返回布尔值以指示是否能够设置 `currentLevel`。因为允许在调用 `advance(to:)` 时候忽略返回值，不会产生编译警告，所以函数被标注为 `@discardableResult` 属性，更多关于属性信息，请参考[特性](../chapter3/07_Attributes.html)章节。
 
 下面，`Player` 类使用 `LevelTracker` 来监测和更新每个玩家的发展进度：
 
@@ -244,7 +244,7 @@ class Player {
 var player = Player(name: "Argyrios")
 player.complete(level: 1)
 print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-// 打印 "highest unlocked level is now 2"
+// 打印“highest unlocked level is now 2”
 ```
 
 如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，那么试图设置玩家当前等级将会失败：
@@ -256,5 +256,5 @@ if player.tracker.advance(to: 6) {
 } else {
     print("level 6 has not yet been unlocked")
 }
-// 打印 "level 6 has not yet been unlocked"
+// 打印“level 6 has not yet been unlocked”
 ```
