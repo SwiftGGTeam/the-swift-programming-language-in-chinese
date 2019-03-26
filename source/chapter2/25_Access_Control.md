@@ -207,11 +207,7 @@ public enum CompassPoint {
 
 ```swift
 public class A {
-<<<<<<< HEAD
-    private func someMethod() {}
-=======
     fileprivate func someMethod() {}
->>>>>>> /25_Access_Control 修正标点使用，更新代码
 }
 
 internal class B: A {
