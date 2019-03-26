@@ -127,7 +127,7 @@
 * 增加了在[捕获列表]一节中关于指定闭包捕获列表被捕获时捕获值的相关内容。
 * 更新了使用[可选链式调用访问属性]一节，阐明了如何通过可选链式调用进行赋值。
 * 改进了[自动闭包]一节中对自闭包的讨论。
-* 在[Swift 初见]()一节中更新了一个使用 `??` 操作符的例子。
+* 在[Swift 初见](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.html)一节中更新了一个使用 `??` 操作符的例子。
 
 ### 2015-09-16
 
@@ -137,7 +137,7 @@
 * 在[将错误装换成可选值](https://docs.swift.org/swift-book/LanguageGuide/ErrorHandling.html#ID542)一节增加了 `try` 关键字相关信息。
 * 在[枚举](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html)一章的[递归枚举](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html#ID536)部分以及以及[声明](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)一章的[任意类型用例的枚举](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID365)一节中新增了递归枚举相关信息。
 * 在[控制流](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html)一章的[API 可用性检查](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html#ID523)一节和[语句](https://docs.swift.org/swift-book/ReferenceManual/Statements.html)一章的[可用性条件一节](https://docs.swift.org/swift-book/ReferenceManual/Statements.html#ID522)中增加了关于 API 可用性检查相关的内容。
-* 在[控制流](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html)一章的[尽早退出]()一节和[语句](https://docs.swift.org/swift-book/ReferenceManual/Statements.html)一章的[Guard 语句]部分新增了与 `guard` 语句相关的内容。
+* 在[控制流](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html)一章的[尽早退出](https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html#ID525)一节和[语句](https://docs.swift.org/swift-book/ReferenceManual/Statements.html)一章的[Guard 语句]部分新增了与 `guard` 语句相关的内容。
 * 在[协议](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html)一章中[协议扩展](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID521)一节中新增了关于协议扩展的内容。
 * 在[访问控制](https://docs.swift.org/swift-book/LanguageGuide/AccessControl.html)一章的[单元测试 target 的访问级别](https://docs.swift.org/swift-book/LanguageGuide/AccessControl.html#ID519)一节中新增了关于单元测试访问控制相关的内容。
 * 在[模式](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html)一章的[可选模式](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#ID520)一节中增加了可选模式相关内容。
@@ -236,7 +236,7 @@
 * 更新[字符串字面量](https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html#ID286)章节：在一个字符串中，Unicode 标量（Unicode scalars）以 `\u{n}`的形式来表示，`n` 是一个最大可以有8位的16进制数。
 * `NSString` `length` 属性已被映射到 Swift 的内建 `String`类型。（注意，这两属性的类型是`utf16Count`，而非 `utf16count`）。
 * Swift 的内建 `String` 类型不再拥有 `uppercaseString` 和 `lowercaseString` 属性。其对应部分在章节[字符串和字符](https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html)已经被删除，并且各种对应的代码用例也已被更新。
-* 加入新的章节[没有外部名的构造器参数]()https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID210。
+* 加入新的章节[没有外部名的构造器参数](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID210)。
 * 加入新的章节[Required 构造器](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID231)。
 * 加入新的章节[可选元组返回类型](https://docs.swift.org/swift-book/LanguageGuide/Functions.html#ID165)。
 * 更新了[类型标注](https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html#ID312)章节：多个相关变量可以用"类型标注”在同一行中声明为同一类型。
