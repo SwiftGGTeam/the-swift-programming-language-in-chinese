@@ -7,7 +7,7 @@
 
 > 语句语法
 > 
-statement {#statement}
+######  {#statement}
 > *语句* → [*表达式*](./04_Expressions.md#expression) **;**<sub>可选</sub>
 > 
 > *语句* → [*声明*](./06_Declarations.md#declaration) **;**<sub>可选</sub>
@@ -26,7 +26,7 @@ statement {#statement}
 > 
 > *语句* → [*编译器控制语句*](#compiler-control-statement)
 > 
-statements {#statements}
+######  {#statements}
 > *多条语句* → [*语句*](#statement) [*多条语句*](#statements)<sub>可选</sub>
 > 
 
@@ -38,7 +38,7 @@ statements {#statements}
 > 循环语句语法
 > 
 >
-loop-statement {#loop-statement}
+######  {#loop-statement}
 > *循环语句* → [*for-in 语句*](#for-in-statement)
 > 
 > *循环语句* → [*while 语句*](#while-statement)
@@ -62,7 +62,7 @@ for item in collection {
 > for-in 语句语法
 > 
 >
-for-in-statement {#for-in-statement}
+######  {#for-in-statement}
 > *for-in 语句* → **for** **case**<sub>可选</sub> [*模式*](./08_Patterns.md#pattern) **in** [*表达式*](./04_Expressions.md#expression) [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
 > 
 
@@ -89,21 +89,21 @@ while condition {
 > while 语句语法
 > 
 >
-while-statement {#while-statement}
+######  {#while-statement}
 > *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block)
 > 
 
-condition-clause {#condition-clause}
+######  {#condition-clause}
 > *条件子句* → [*表达式*](./04_Expressions.md#expression)  | [*表达式*](./04_Expressions.md#expression) **,** [*条件列表*](#condition-list)
 > 
-condition {#condition}
+######  {#condition}
 > *条件* → [*表达式*](./04_Expressions.md#expression) |[*可用性条件*](#availability-condition) | [*case 条件*](#case-condition) | [*可选绑定条件*](#optional-binding-condition)
 > 
 >
-case-condition {#case-condition}
+######  {#case-condition}
 > *case 条件* → **case** [*模式*](./08_Patterns.md#pattern) [*构造器*](./06_Declarations.md#initializer)
 > 
-optional-binding-condition {#optional-binding-condition}
+######  {#optional-binding-condition}
 > *可选绑定条件* →  **let** [*模式*](./08_Patterns.md#pattern) [*构造器*](./06_Declarations.md#initializer) | **var**  [*模式*](./08_Patterns.md#pattern) [*构造器*](./06_Declarations.md#initializer)
 > 
 
@@ -130,7 +130,7 @@ repeat {
 > repeat-while 语句语法
 > 
 >
-repeat-while-statement {#repeat-while-statement}
+######  {#repeat-while-statement}
 > *repeat-while 语句* → **repeat** [*代码块*](./06_Declarations.md#code-block) **while** [*表达式*](./04_Expressions.md#expression)
 > 
 
@@ -142,7 +142,7 @@ repeat-while-statement {#repeat-while-statement}
 > 分支语句语法
 > 
 >
-branch-statement {#branch-statement}
+######  {#branch-statement}
 > *分支语句* → [*if 语句*](#if-statement)
 > 
 > *分支语句* → [*guard 语句*](#guard-statement)
@@ -190,10 +190,10 @@ if condition 1 {
 > if 语句语法
 > 
 >
-if-statement {#if-statement}
+######  {#if-statement}
 > *if 语句* → **if** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block) [*else 子句*](#else-clause)<sub>可选</sub>
 > 
-else-clause {#else-clause}
+######  {#else-clause}
 > *else 子句* → **else** [*代码块*](./06_Declarations.md#code-block) | **else** [*if 语句*](#if-statement)
 > 
 
@@ -224,7 +224,7 @@ guard condition else {
 > guard 语句语法
 > 
 >
-guard-statement {#guard-statement}
+######  {#guard-statement}
 > *guard 语句* → **guard** [*条件子句*](#condition-clause) **else** [*代码块*]      (05_Declarations.md#code-block)
 > 
 
@@ -296,46 +296,46 @@ case .suppressed:
 > switch 语句语法
 > 
 >
-switch-statement {#switch-statement}
+######  {#switch-statement}
 > *switch 语句* → **switch** [*表达式*](./04_Expressions.md#expression) **{** [*switch-case 列表*](#switch-cases)<sub>可选</sub> **}**
 > 
-switch-cases {#switch-cases}
+######  {#switch-cases}
 > *switch case 列表* → [*switch-case*](#switch-case) [*switch-case 列表*](#switch-cases)<sub>可选</sub>
 > 
-switch-case {#switch-case}
+######  {#switch-case}
 > *switch case* → [*case 标签*](#case-label) [*多条语句*](#statements) | [*default 标签*](#default-label) [*多条语句*](#statements) | [*conditional-switch-case*](#conditional-switch-case-label)
 > 
 
-case-label {#case-label}
+######  {#case-label}
 > *case 标签* → [*属性*](#switch-case-attributes-label)<sub>可选</sub> **case** [*case 项列表*](#case-item-list) **:**
 > 
-case-item-list {#case-item-list}
+######  {#case-item-list}
 > *case 项列表* → [*模式*](./08_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> | [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> **,** [*case 项列表*](#case-item-list)
 > 
-default-label {#default-label}
+######  {#default-label}
 > *default 标签* → [*属性*](#switch-case-attributes-label)<sub>可选</sub> **default** **:**
 > 
 >
-where-clause {#where-clause}
+######  {#where-clause}
 > *where-clause* → **where** [*where 表达式*](#where-expression)
 > 
-where-expression {#where-expression}
+######  {#where-expression}
 > *where-expression* → [*表达式*](./04_Expressions.md#expression)
 > 
 >
-grammar_conditional-switch-case {#grammar_conditional-switch-case}
+######  {#grammar_conditional-switch-case}
 > *conditional-switch-case* → [*switch-if-directive-clause*](#switch-case-attributes-label) [*switch-elseif-directive-clauses*](#switch-case-attributes-label) <sub>可选</sub> [*switch-else-directive-clause*](#switch-case-attributes-label) <sub>可选</sub> [*endif-directive*](#switch-case-attributes-label)
 > 
-grammar_switch-if-directive-clause {#grammar_switch-if-directive-clause}
+######  {#grammar_switch-if-directive-clause}
 > *switch-if-directive 语句* → [*if-directive*](#switch-case-attributes-label) [*compilation-condition*](#switch-case-attributes-label) [*switch-cases*](#switch-case-attributes-label) <sub>可选</sub>
 > 
-grammar_switch-elseif-directive-clauses {#grammar_switch-elseif-directive-clauses}
+######  {#grammar_switch-elseif-directive-clauses}
 > *switch-elseif-directive 语句（复数）* → [*elseif-directive-clause*](#switch-case-attributes-label)  [*switch-elseif-directive-clauses*](#switch-case-attributes-label)<sub>可选</sub>
 > 
-grammar_switch-elseif-directive-clause {#grammar_switch-elseif-directive-clause}
+######  {#grammar_switch-elseif-directive-clause}
 > *switch-elseif-directive 语句* → [*elseif-directive*](#switch-case-attributes-label)  [*compilation-condition*](#switch-case-attributes-label) [*switch-cases*](#switch-case-attributes-label)<sub>可选</sub>
 > 
-grammar_switch-else-directive-clause {#grammar_switch-else-directive-clause}
+######  {#grammar_switch-else-directive-clause}
 > *switch-else-directive 语句* → [*else-directive*](#switch-case-attributes-label) [*switch-cases*](#switch-case-attributes-label) <sub>可选</sub>
 > 
 
@@ -349,7 +349,7 @@ grammar_switch-else-directive-clause {#grammar_switch-else-directive-clause}
 > 带标签的语句语法
 > 
 >
-labeled-statement {#labeled-statement}
+######  {#labeled-statement}
 > *带标签的语句* → [*语句标签*](#statement-label) [*循环语句*](#grammar_loop-statement)
 > 
 > *带标签的语句* → [*语句标签*](#statement-label) [*if 语句*](#if-statement)
@@ -358,10 +358,10 @@ labeled-statement {#labeled-statement}
 > 
 > > *带标签的语句* → [*语句标签*](#statement-label) [*do 语句*](#sdo-statement)
 > 
-statement-label {#statement-label}
+######  {#statement-label}
 > *语句标签* → [*标签名称*](#label-name) **:**
 > 
-label-name {#label-name}
+######  {#label-name}
 > *标签名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
@@ -371,7 +371,7 @@ label-name {#label-name}
 > 控制转移语句语法
 > 
 >
-control-transfer-statement {#control-transfer-statement}
+######  {#control-transfer-statement}
 > *控制转移语句* → [*break 语句*](#break-statement)
 > 
 > *控制转移语句* → [*continue 语句*](#continue-statement)
@@ -402,7 +402,7 @@ control-transfer-statement {#control-transfer-statement}
 > break 语句语法
 > 
 >
-break-statement {#break-statement}
+######  {#break-statement}
 > *break 语句* → **break** [*标签名称*](#label-name)<sub>可选</sub>
 > 
 
@@ -427,7 +427,7 @@ break-statement {#break-statement}
 > continue 语句语法
 > 
 >
-continue-statement {#continue-statement}
+######  {#continue-statement}
 > *continue 语句* → **continue** [*标签名称*](#label-name)<sub>可选</sub>
 > 
 
@@ -441,7 +441,7 @@ continue-statement {#continue-statement}
 > fallthrough 语句语法
 > 
 >
-fallthrough-statement {#fallthrough-statement}
+######  {#fallthrough-statement}
 > *fallthrough 语句* → **fallthrough**
 > 
 
@@ -468,7 +468,7 @@ fallthrough-statement {#fallthrough-statement}
 > return 语句语法
 > 
 >
-return-statement {#return-statement}
+######  {#return-statement}
 > *return 语句* → **return** [*表达式*](./04_Expressions.md#expression)<sub>可选</sub>
 > 
 
@@ -489,7 +489,7 @@ return-statement {#return-statement}
 > throw 语句语法
 > 
 >
-throw-statement {#throw-statement}
+######  {#throw-statement}
 > *throw 语句* → **throw**  [*表达式*](./04_Expressions.md#expression)
 > 
 
@@ -525,7 +525,7 @@ f()
 > defer 语句语法
 > 
 >
-defer-statement {#defer-statement}
+######  {#defer-statement}
 > *延迟语句* → **defer** [*代码块*](./06_Declarations.md#code-block)
 > 
 
@@ -556,13 +556,13 @@ do {
 > do 语句语法
 > 
 >
-do-statement {#do-statement}
+######  {#do-statement}
 > *do 语句* → **do** [*代码块*](./06_Declarations.md#code-block) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>
 > 
-catch-clauses {#catch-clauses}
+######  {#catch-clauses}
 > *多条 catch 子句* → [*catch 子句*](#catch-clause) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>
 > 
-catch-clause {#catch-clause}
+######  {#catch-clause}
 > *catch 子句* → **catch** [*模式*](./08_Patterns.md#pattern)<sub>可选</sub> [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
 > 
 
@@ -572,7 +572,7 @@ catch-clause {#catch-clause}
 > 编译器控制语句语法
 > 
 >
-compiler-control-statement {#compiler-control-statement}
+######  {#compiler-control-statement}
 > *编译器控制语句* → [*条件编译语句*](#grammar_conditional-compilation-block)
 > 
 > *编译器控制语句* → [*线路控制语句*](#line-control-statement)
@@ -651,23 +651,23 @@ statements to compile if both compilation conditions are false
 > 即使没有被编译，编译配置中的语句仍然会被解析。然而，唯一的例外是编译配置语句中包含语言版本检测函数：仅当 `Swift` 编译器版本和语言版本检测函数中指定的版本号匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 > 
 
-build-config-statement {#build-config-statement}
+######  {#build-config-statement}
 > 条件编译代码块语法
 > 
 >
-grammar_conditional-compilation-block {#grammar_conditional-compilation-block}
+######  {#grammar_conditional-compilation-block}
 > *条件编译代码块* → [*if-directive 语句*](#grammar_if-directive-clause) [*elseif-directive 语句（复数）*](#grammar_elseif-directive-clauses)<sub>可选</sub> [*else-directive 语句*](#grammar_else-directive-clause)<sub>可选</sub> [*endif-directive*](#grammar_endif-directive)
 > 
-grammar_if-directive-clause {#grammar_if-directive-clause}
+######  {#grammar_if-directive-clause}
 > *if-directive 语句* → [*if-directive*](#grammar_if-directive) [*编译条件*](#compilation-condition) [*语句（复数）*](#statements)<sub>可选</sub>
 > 
-grammar_elseif-directive-clauses {#grammar_elseif-directive-clauses}
+######  {#grammar_elseif-directive-clauses}
 > *elseif-directive 语句（复数）* → [*elseif-directive 语句*](#grammar_elseif-directive-clause) [*elseif-directive 语句（复数）*](#grammar_elseif-directive-clauses)
 > 
-grammar_elseif-directive-clauses {#grammar_elseif-directive-clauses}
+######  {#grammar_elseif-directive-clauses}
 > *elseif-directive 语句* → [*elseif-directive*](#grammar_elseif-directive) [*编译条件*](#compilation-condition) [*语句（复数）*](#statements)<sub>可选</sub>
 > 
-grammar_else-directive-clause {#grammar_else-directive-clause}
+######  {#grammar_else-directive-clause}
 > *else-directive 语句* → [*else-directive*](#grammar_else-directive) [*语句（复数）*](#statements)<sub>可选</sub>
 > 
 
@@ -681,7 +681,7 @@ grammar_else-directive-clause {#grammar_else-directive-clause}
 > *endif-directive* → **#endif**
 > 
 
-compilation-condition {#compilation-condition}
+######  {#compilation-condition}
 > *编译条件* → [*平台条件*](#grammar_platform-condition)
 > 
 > *编译条件* → [*标识符*](./02_Lexical_Structure.md#identifier)
@@ -697,41 +697,41 @@ compilation-condition {#compilation-condition}
 > *编译条件* → [*编译条件*](#compilation-condition) **||** [*编译条件*](#compilation-condition)
 > 
 
-grammar_platform-condition {#grammar_platform-condition}
-grammar_platform-condition-os {#grammar_platform-condition-os}
+######  {#grammar_platform-condition}
+######  {#grammar_platform-condition-os}
 > *平台条件* → **os ( [*操作系统*](#operating-system) )**
 > 
-grammar_platform-condition-arch {#grammar_platform-condition-arch}
+######  {#grammar_platform-condition-arch}
 > *平台条件* → **arch ( [*架构*](#architecture) )**
 > 
-grammar_platform-condition-swift {#grammar_platform-condition-swift}
+######  {#grammar_platform-condition-swift}
 > *平台条件* → **swift ( >= [*swift 版本*](#swift-version) )** | **swift ( < [*swift 版本*](#swift-version) )**
 > 
-grammar_platform-condition-compiler {#grammar_platform-condition-compiler}
+######  {#grammar_platform-condition-compiler}
 > *平台条件* → **compiler ( >= [*swift 版本*](#swift-version) )** | **compiler ( < [*swift 版本*](#swift-version) )**
 > 
-grammar_platform-condition-canImport {#grammar_platform-condition-canImport}
+######  {#grammar_platform-condition-canImport}
 > *平台条件* → **canImport ( [*模块名*](#grammar_module-name) )**
 > 
-grammar_platform-condition-targetEnvironment {#grammar_platform-condition-targetEnvironment}
+######  {#grammar_platform-condition-targetEnvironment}
 > *平台条件* → **targetEnvironment ( [*环境*](#grammar_environment) )**
 > 
-operating-system {#operating-system}
+######  {#operating-system}
 > *操作系统* → **macOS** | **iOS** | **watchOS** | **tvOS**
 > 
-architecture {#architecture}
+######  {#architecture}
 > *架构* → **i386** | **x86_64** | **arm** | **arm64**
 > 
-swift-version {#swift-version}
+######  {#swift-version}
 > *swift 版本* → [*十进制数字*](./02_Lexical_Structure.md#decimal-digit) ­**.** ­[*swift 版本延续*](#grammar_swift-version-continuation) <sub>可选</sub>
 > 
-grammar_swift-version-continuation {#grammar_swift-version-continuation}
+######  {#grammar_swift-version-continuation}
 > *swift 版本延续* → **.** [*十进制数字*](./02_Lexical_Structure.md#decimal-digit) [*swift 版本延续*](#grammar_swift-version-continuation) <sub>可选</sub>
 > 
-grammar_module-name {#grammar_module-name}
+######  {#grammar_module-name}
 > *模块名* → [*identifier*](./02_Lexical_Structure.md#identifier)
 > 
-grammar_environment {#grammar_environment}
+######  {#grammar_environment}
 > *环境* → **模拟器**
 > 
 
@@ -750,7 +750,7 @@ grammar_environment {#grammar_environment}
 
 第二种的行控制语句，`#sourceLocation()`，会将源代码的定位信息重置回默认的行号和文件名。
 
-line-control-statement {#line-control-statement}
+######  {#line-control-statement}
 > 行控制语句语法
 > 
 >
@@ -758,10 +758,10 @@ line-control-statement {#line-control-statement}
 > 
 > *行控制语句* → **#sourceLocation()**
 > 
-line-number {#line-number}
+######  {#line-number}
 > *行号* → 大于 0 的十进制整数
 > 
-file-name {#file-name}
+######  {#file-name}
 > *文件名* → [*静态字符串字面量*](./02_Lexical_Structure.md#static-string-literal)
 > 
 
@@ -779,12 +779,12 @@ file-name {#file-name}
 > 编译时诊断语句语法
 > 
 >
-grammar_compile-time-diagnostic-statement {#grammar_compile-time-diagnostic-statement}
+######  {#grammar_compile-time-diagnostic-statement}
 > *诊断语句* → **#error** **(** [*diagnostic-message*](#grammar_diagnostic-message) **)**
 > 
 > *诊断语句* → **#warning** **(** [*diagnostic-message*](#grammar_diagnostic-message) **)**
 > 
-grammar_diagnostic-message {#grammar_diagnostic-message}
+######  {#grammar_diagnostic-message}
 > *诊断语句* → [*静态字符串字面量*](./02_Lexical_Structure.md#static-string-literal)
 > 
 
@@ -810,19 +810,19 @@ if #available(platform name version, ..., *) {
 > 可用性条件语法
 > 
 >
-availability-condition {#availability-condition}
+######  {#availability-condition}
 > *可用性条件* → **#available** **(** [*可用性参数列表*](#availability-arguments) **)**
 > 
-availability-arguments {#availability-arguments}
+######  {#availability-arguments}
 > *可用性参数列表* → [*可用性参数*](#availability-argument) | [*可用性参数*](#availability-argument) **,** [*可用性参数列表*](#availability-arguments)
 > 
-availability-argument {#availability-argument}
+######  {#availability-argument}
 > *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)
 > 
 > *可用性条件* → __*__
 > 
 >
-platform-name {#platform-name}
+######  {#platform-name}
 > *平台名称* → **iOS** | **iOSApplicationExtension**
 > 
 > *平台名称* → **OSX** | **macOSApplicationExtension**
@@ -831,7 +831,7 @@ platform-name {#platform-name}
 > 
 > *平台名称* → **tvOS**
 > 
-platform-version {#platform-version}
+######  {#platform-version}
 > *平台版本* → [十进制数字](./02_Lexical_Structure.md#decimal-digits)
 > 
 > *平台版本* → [十进制数字](./02_Lexical_Structure.md#decimal-digits) **.** [十进制数字](./02_Lexical_Structure.md#decimal-digits)

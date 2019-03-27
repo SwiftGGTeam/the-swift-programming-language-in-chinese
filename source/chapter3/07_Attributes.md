@@ -358,28 +358,28 @@ convention 特性总是与下面的参数之一一起出现。
 > 特性语法
 > 
 >
-> attribute {#attribute}
+> ######  attribute {#attribute}
 > 
 > *特性*→ [特性名](#attribute_name) [特性参数子句](#atribute_argument_clause)<sub>可选</sub>
 > 
-> attribute_name {#attribute_name}
+> ######  attribute_name {#attribute_name}
 > 
 > *特性名* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
-> atribute_argument_clause {#atribute_argument_clause}
+> ######  atribute_argument_clause {#atribute_argument_clause}
 > 
 > *特性参数子句* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
 > 
-> attributes {#attributes}
+> ######  attributes {#attributes}
 > 
 > *特性列表* → [特性](#attribute) [特性列表](#attributes)<sub>可选</sub>
 > 
 >
-> balanced_tokens {#balanced_tokens}
+> ######  balanced_tokens {#balanced_tokens}
 > 
 > *均衡令牌列表* → [均衡令牌](#balanced_token) [均衡令牌列表](#balanced_tokens)<sub>可选</sub>
 > 
-> balanced_token {#balanced_token}
+> ######  balanced_token {#balanced_token}
 > 
 > *均衡令牌* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
 > 
