@@ -137,7 +137,7 @@ reversedNames = names.sorted(by: { $0 > $1 } )
 reversedNames = names.sorted(by: >)
 ```
 
-更多关于运算符方法的内容请查看[运算符方法](./26_Advanced_Operators.html#operator_methods)。
+更多关于运算符方法的内容请查看[运算符方法](./26_Advanced_Operators.md#operator_methods)。
 
 <a name="trailing_closures"></a>
 ## 尾随闭包
@@ -243,7 +243,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
 }
 ```
 
-`makeIncrementer` 返回类型为 `() -> Int`。这意味着其返回的是一个*函数*，而非一个简单类型的值。该函数在每次调用时不接受参数，只返回一个 `Int` 类型的值。关于函数返回其他函数的内容，请查看[函数类型作为返回类型](./06_Functions.html#function_types_as_return_types)。
+`makeIncrementer` 返回类型为 `() -> Int`。这意味着其返回的是一个*函数*，而非一个简单类型的值。该函数在每次调用时不接受参数，只返回一个 `Int` 类型的值。关于函数返回其他函数的内容，请查看[函数类型作为返回类型](./06_Functions.md#function_types_as_return_types)。
 
 `makeIncrementer(forIncrement:)` 函数定义了一个初始值为 `0` 的整型变量 `runningTotal`，用来存储当前总计数值。该值为 `incrementer` 的返回值。
 
@@ -300,7 +300,7 @@ incrementByTen()
 
 > 注意
 > 
-> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考[闭包引起的循环强引用](./23_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures)。
+> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考[闭包引起的循环强引用](./23_Automatic_Reference_Counting.md#strong_reference_cycles_for_closures)。
 
 <a name="closures_are_reference_types"></a>
 ## 闭包是引用类型

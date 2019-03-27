@@ -8,7 +8,7 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类
 
 > 注意
 > 
-> Swift 的 `Arrays`、`Sets` 和 `Dictionaries` 类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.html)章节。
+> Swift 的 `Arrays`、`Sets` 和 `Dictionaries` 类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.md)章节。
 
 <a name="mutability_of_collections"></a>
 ## 集合的可变性
@@ -261,7 +261,7 @@ for (index, value) in shoppingList.enumerated() {
 
 一个类型为了存储在集合中，该类型必须是*可哈希化*的——也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
 
-Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.html)有讲述）默认也是可哈希化的。
+Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.md)有讲述）默认也是可哈希化的。
 
 > 注意
 > 
@@ -273,7 +273,7 @@ Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）�
 > * `a == b` 意味着 `b == a`(对称性)
 > * `a == b && b == c` 意味着 `a == c`(传递性)
 
-关于遵循协议的更多信息，请看[协议](./22_Protocols.html)。
+关于遵循协议的更多信息，请看[协议](./22_Protocols.md)。
 
 <a name="set_type_syntax"></a>
 ### 集合类型语法
@@ -396,7 +396,7 @@ for genre in favoriteGenres {
 // Hip hop
 ```
 
-更多关于 `for-in` 循环的信息，参见[For 循环](./05_Control_Flow.html#for_loops)。
+更多关于 `for-in` 循环的信息，参见[For 循环](./05_Control_Flow.md#for_loops)。
 
 Swift 的 `Set` 类型没有确定的顺序，为了按照特定顺序来遍历一个 `Set` 中的值可以使用 `sorted()` 方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符'<'对元素进行比较的结果来确定。
 
@@ -640,7 +640,7 @@ for (airportCode, airportName) in airports {
 // LHR: London Heathrow
 ```
 
-更多关于 `for-in` 循环的信息，参见[For 循环](./05_Control_Flow.html#for_loops)。
+更多关于 `for-in` 循环的信息，参见[For 循环](./05_Control_Flow.md#for_loops)。
 
 通过访问 `keys` 或者 `values` 属性，我们也可以遍历字典的键或者值：
 

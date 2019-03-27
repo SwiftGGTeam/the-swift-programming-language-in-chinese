@@ -11,7 +11,7 @@
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
-可以在定义存储属性的时候指定默认值，请参考[默认构造器](./14_Initialization.html#default_initializers)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程中常量属性的修改](./14_Initialization.html#assigning_constant_properties_during_initialization)一节。
+可以在定义存储属性的时候指定默认值，请参考[默认构造器](./14_Initialization.md#default_initializers)一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考[构造过程中常量属性的修改](./14_Initialization.md#assigning_constant_properties_during_initialization)一节。
 
 下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的区间，且这个范围值在被创建后不能被修改。
 
@@ -210,7 +210,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 属性观察器监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，即使新值和当前值相同的时候也不例外。
 
-你可以为除了延时加载存储属性之外的其他存储属性添加属性观察器，你也可以在子类中通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。你不必为非重写的计算属性添加属性观察器，因为你可以直接通过它的 setter 监控和响应值的变化。属性重写请参考[重写](./13_Inheritance.html#overriding)。
+你可以为除了延时加载存储属性之外的其他存储属性添加属性观察器，你也可以在子类中通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。你不必为非重写的计算属性添加属性观察器，因为你可以直接通过它的 setter 监控和响应值的变化。属性重写请参考[重写](./13_Inheritance.md#overriding)。
 
 可以为属性添加其中一个或两个观察器：
 
@@ -225,7 +225,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 在父类初始化方法调用之后，在子类构造器中给父类的属性赋值时，会调用父类属性的 `willSet` 和 `didSet` 观察器。而在父类初始化方法调用之前，给子类的属性赋值时不会调用子类属性的观察器。
 > 
-> 有关构造器代理的更多信息，请参考[值类型的构造器代理](./14_Initialization.html#initializer_delegation_for_value_types)和[类的构造器代理](./14_Initialization.html#initializer_delegation_for_class_types)。
+> 有关构造器代理的更多信息，请参考[值类型的构造器代理](./14_Initialization.md#initializer_delegation_for_value_types)和[类的构造器代理](./14_Initialization.md#initializer_delegation_for_class_types)。
 
 下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 

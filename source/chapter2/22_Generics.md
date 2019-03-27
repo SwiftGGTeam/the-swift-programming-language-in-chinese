@@ -17,7 +17,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 }
 ```
 
-这个函数使用输入输出参数（`inout`）来交换 `a` 和 `b` 的值，具体请参考[输入输出参数](./06_Functions.html#in_out_parameters)。
+这个函数使用输入输出参数（`inout`）来交换 `a` 和 `b` 的值，具体请参考[输入输出参数](./06_Functions.md#in_out_parameters)。
 
 `swapTwoInts(_:_:)` 函数将 `b` 的原始值换成了 `a`，将 `a` 的原始值换成了 `b`，你可以调用这个函数来交换两个 `Int` 类型变量：
 
@@ -237,7 +237,7 @@ if let topItem = stackOfStrings.topItem {
 
 `swapTwoValues(_:_:)` 函数和 `Stack` 适用于任意类型。不过，如果能对泛型函数或泛型类型中添加特定的*类型约束*，这将在某些情况下非常有用。类型约束指定类型参数必须继承自指定类、遵循特定的协议或协议组合。
 
-例如，Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 [字典的描述](./04_Collection_Types.html#dictionaries) 中，字典键的类型必须是可哈希（hashable）的。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
+例如，Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 [字典的描述](./04_Collection_Types.md#dictionaries) 中，字典键的类型必须是可哈希（hashable）的。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
 
 这个要求通过 `Dictionary` 键类型上的类型约束实现，它指明了键必须遵循 Swift 标准库中定义的 `Hashable` 协议。所有 Swift 的基本类型（例如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希的。
 
@@ -420,7 +420,7 @@ struct Stack<Element>: Container {
 <a name="extending_an_existing_type_to_specify_an_associated_type"></a>
 ### 扩展现有类型来指定关联类型
 
-[在扩展添加协议一致性](./21_Protocols.html#adding_protocol_conformance_with_an_extension)中描述了如何利用扩展让一个已存在的类型符合一个协议，这包括使用了关联类型协议。
+[在扩展添加协议一致性](./21_Protocols.md#adding_protocol_conformance_with_an_extension)中描述了如何利用扩展让一个已存在的类型符合一个协议，这包括使用了关联类型协议。
 
 Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都符合 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循`Container` 协议，就可以扩展 Array，使其遵从 Container 协议。你可以通过一个空扩展来实现这点，正如通过扩展采纳协议中的描述：
 
@@ -460,7 +460,7 @@ protocol SuffixableContainer: Container {
 
 在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `where` 分句，它在下面带有泛型 `Where` 分句的扩展中有讨论。
 
-这是上面 [强引用循环闭包](./23_Automatic_Reference_Counting.html#strong_reference_cycles_for_closures) 中 `Stack` 类型的扩展，它遵循了 SuffixableContainer 协议：
+这是上面 [强引用循环闭包](./23_Automatic_Reference_Counting.md#strong_reference_cycles_for_closures) 中 `Stack` 类型的扩展，它遵循了 SuffixableContainer 协议：
 
 ```swift
 extension Stack: SuffixableContainer {

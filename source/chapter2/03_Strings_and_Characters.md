@@ -149,7 +149,7 @@ constantString += " and another Highlander"
 <a name="strings_are_value_types"></a>
 ## 字符串是值类型
 
-在 Swift 中 `String` 类型是*值类型*。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 中进行了详细描述。
+在 Swift 中 `String` 类型是*值类型*。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures_and_enumerations_are_value_types) 中进行了详细描述。
 
 Swift 默认拷贝字符串的行为保证了在函数/方法向你传递的字符串所属权属于你，无论该值来自于哪里。你可以确信传递的字符串不会被修改，除非你自己去修改它。
 
@@ -171,7 +171,7 @@ for character in "Dog!🐶" {
 // 🐶
 ```
 
-`for-in` 循环在 [For 循环](./05_Control_Flow.html#for_loops) 中进行了详细描述。
+`for-in` 循环在 [For 循环](./05_Control_Flow.md#for_loops) 中进行了详细描述。
 
 另外，通过标明一个 `Character` 类型并用字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
@@ -463,7 +463,7 @@ Swift 提供了三种方式来比较文本值：字符串字符相等、前缀�
 <a name="string_and_character_equality"></a>
 ### 字符串/字符相等
 
-字符串/字符可以用等于操作符（`==`）和不等于操作符（`!=`），详细描述在[比较运算符](./02_Basic_Operators.html#comparison_operators)：
+字符串/字符可以用等于操作符（`==`）和不等于操作符（`!=`），详细描述在[比较运算符](./02_Basic_Operators.md#comparison_operators)：
 
 ```swift
 let quotation = "We're a lot alike, you and I."

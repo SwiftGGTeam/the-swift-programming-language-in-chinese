@@ -48,7 +48,7 @@ counter.reset()
 // 计数值现在是0
 ```
 
-函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[指定外部参数名](./06_Functions.html#specifying_external_parameter_names)。方法参数也一样，因为方法就是函数，只是这个函数与某个类型相关联了。
+函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[指定外部参数名](./06_Functions.md#specifying_external_parameter_names)。方法参数也一样，因为方法就是函数，只是这个函数与某个类型相关联了。
 
 <a name="the_self_property"></a>
 ### self 属性
@@ -110,7 +110,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的 `Point` 结构体定义了一个可变方法 `moveBy（x：y :)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
 
-注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见[常量结构体的存储属性](./10_Properties.html#stored_properties_of_constant_structure_instances)：
+注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见[常量结构体的存储属性](./10_Properties.md#stored_properties_of_constant_structure_instances)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)

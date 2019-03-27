@@ -300,14 +300,14 @@ public struct TrackedString {
 <a name="initializers"></a>
 ## 构造器
 
-自定义构造器的访问级别可以低于或等于其所属类型的访问级别。唯一的例外是[必要构造器](./14_Initialization.html#required_initializers)，它的访问级别必须和所属类型的访问级别相同。
+自定义构造器的访问级别可以低于或等于其所属类型的访问级别。唯一的例外是[必要构造器](./14_Initialization.md#required_initializers)，它的访问级别必须和所属类型的访问级别相同。
 
 如同函数或方法的参数，构造器参数的访问级别也不能低于构造器本身的访问级别。
 
 <a name="default_initializers"></a>
 ### 默认构造器
 
-如[默认构造器](./14_Initialization.html#default_initializers)所述，Swift 会为结构体和类提供一个默认的无参数的构造器，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
+如[默认构造器](./14_Initialization.md#default_initializers)所述，Swift 会为结构体和类提供一个默认的无参数的构造器，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
 
 默认构造器的访问级别与所属类型的访问级别相同，除非类型的访问级别是 `public`。如果一个类型被指定为 `public` 级别，那么默认构造器的访问级别将为 `internal`。如果你希望一个 `public` 级别的类型也能在其他模块中使用这种无参数的默认构造器，你只能自己提供一个 `public` 访问级别的无参数构造器。
 

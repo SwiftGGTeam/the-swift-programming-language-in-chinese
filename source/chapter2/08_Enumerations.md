@@ -8,7 +8,7 @@
 
 在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类（class）所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
 
-想了解更多相关信息，请参见[属性](./10_Properties.html)，[方法](./11_Methods.html)，[构造过程](./14_Initialization.html)，[扩展](./20_Extensions.html)和[协议](./21_Protocols.html)。
+想了解更多相关信息，请参见[属性](./10_Properties.md)，[方法](./11_Methods.md)，[构造过程](./14_Initialization.md)，[扩展](./20_Extensions.md)和[协议](./21_Protocols.md)。
 
 <a name="enumeration_syntax"></a>
 ## 枚举语法
@@ -86,7 +86,7 @@ case .west:
 
 ……以此类推。
 
-正如在[控制流](./05_Control_Flow.html)中介绍的那样，在判断一个枚举类型的值时，`switch` 语句必须穷举所有情况。如果忽略了 `.west` 这种情况，上面那段代码将无法通过编译，因为它没有考虑到 `CompassPoint` 的全部成员。强制穷举确保了枚举成员不会被意外遗漏。
+正如在[控制流](./05_Control_Flow.md)中介绍的那样，在判断一个枚举类型的值时，`switch` 语句必须穷举所有情况。如果忽略了 `.west` 这种情况，上面那段代码将无法通过编译，因为它没有考虑到 `CompassPoint` 的全部成员。强制穷举确保了枚举成员不会被意外遗漏。
 
 当不需要匹配每个枚举成员的时候，你可以提供一个 `default` 分支来涵盖所有未明确处理的枚举成员：
 
@@ -128,7 +128,7 @@ for beverage in Beverage.allCases {
 // juice
 ```
 
-在前面的例子中，使用的语法表明这个枚举遵循 [CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) 协议。想了解 protocols 相关信息，请参见[协议](./21_Protocols.html)。
+在前面的例子中，使用的语法表明这个枚举遵循 [CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) 协议。想了解 protocols 相关信息，请参见[协议](./21_Protocols.md)。
 
 <a name="associated_values"></a>
 ## 关联值
@@ -217,7 +217,7 @@ enum ASCIIControlCharacter: Character {
 }
 ```
 
-枚举类型 `ASCIIControlCharacter` 的原始值类型被定义为 `Character`，并设置了一些比较常见的 ASCII 控制字符。`Character` 的描述详见[字符串和字符](./03_Strings_and_Characters.html)部分。
+枚举类型 `ASCIIControlCharacter` 的原始值类型被定义为 `Character`，并设置了一些比较常见的 ASCII 控制字符。`Character` 的描述详见[字符串和字符](./03_Strings_and_Characters.md)部分。
 
 原始值可以是字符串、字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 

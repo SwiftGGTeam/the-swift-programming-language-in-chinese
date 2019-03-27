@@ -14,7 +14,7 @@
    * [函数](chapter2/06_Functions.md)
    * [闭包](chapter2/07_Closures.md)
    * [枚举](chapter2/08_Enumerations.md)
-   * [类和结构体](chapter2/09_Classes_and_Structures.md)
+   * [类和结构体](chapter2/09_Structures_And_Classes.md)
    * [属性](chapter2/10_Properties.md)
    * [方法](chapter2/11_Methods.md)
    * [下标](chapter2/12_Subscripts.md)

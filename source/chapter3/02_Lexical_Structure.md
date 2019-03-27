@@ -300,7 +300,7 @@ let textB = "Hello world"
 > <a id="interpolated-text"></a>
 > *插值文本* → [*插值文本项*](#interpolated-text-item) [*插值文本*](#interpolated-text)<sub>可选</sub>
 > <a id="interpolated-text-item"></a>
-> *插值文本项* → **\\****(**[*表达式*](./04_Expressions.html)**)** | [*引用文本项*](#quoted-text-item)
+> *插值文本项* → **\\****(**[*表达式*](./04_Expressions.md)**)** | [*引用文本项*](#quoted-text-item)
 
 <a id="escaped-character"></a>
 > *转义字符* → **\\****0** | **\\****\\** | **\t** | **\n** | **\r** | **\\"** | **\\'**

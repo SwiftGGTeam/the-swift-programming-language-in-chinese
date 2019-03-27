@@ -3,7 +3,7 @@
 
 Swift 是一门开发 iOS, macOS, watchOS 和 tvOS 应用的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 
-Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int` 表示整型值； `Double` 和 `Float` 表示浮点型值； `Bool` 是布尔型值；`String` 是文本型数据。 Swift 还提供了三个基本的集合类型，`Array`、`Set` 和 `Dictionary` ，详见[集合类型](./04_Collection_Types.html)。
+Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int` 表示整型值； `Double` 和 `Float` 表示浮点型值； `Bool` 是布尔型值；`String` 是文本型数据。 Swift 还提供了三个基本的集合类型，`Array`、`Set` 和 `Dictionary` ，详见[集合类型](./04_Collection_Types.md)。
 
 就像 C 语言一样，Swift 使用变量来进行存储并通过变量名来关联值。在 Swift 中，广泛的使用着值不可变的变量，它们就是常量，而且比 C 语言的常量更强大。在 Swift 中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更清晰地表达你的意图。
 
@@ -122,7 +122,7 @@ print(friendlyWelcome)
 // 输出“Bonjour!”
 ```
 
-`print(_:separator:terminator:)` 是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)` 将会输出内容到“console”面板上。`separator` 和 `terminator` 参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给 `terminator` 参数--例如，`print(someValue, terminator:"")` 。关于参数默认值的更多信息，请参考[默认参数值](./06_Functions.html#default_parameter_values)。
+`print(_:separator:terminator:)` 是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)` 将会输出内容到“console”面板上。`separator` 和 `terminator` 参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给 `terminator` 参数--例如，`print(someValue, terminator:"")` 。关于参数默认值的更多信息，请参考[默认参数值](./06_Functions.md#default_parameter_values)。
 
 Swift 用*字符串插值（string interpolation）*的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
 
@@ -133,7 +133,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 
 > 注意
 > 
-> 字符串插值所有可用的选项，请参考[字符串插值](./03_Strings_and_Characters.html#string_interpolation)。
+> 字符串插值所有可用的选项，请参考[字符串插值](./03_Strings_and_Characters.md#string_interpolation)。
 
 <a name="comments"></a>
 ## 注释
@@ -344,7 +344,7 @@ let twoThousandAndOne = twoThousand + UInt16(one)
 
 现在两个数字的类型都是 `UInt16`，可以进行相加。目标常量 `twoThousandAndOne` 的类型被推断为 `UInt16`，因为它是两个 `UInt16` 值的和。
 
-`SomeType(ofInitialValue)` 是调用 Swift 构造器并传入一个初始值的默认方法。在语言内部，`UInt16` 有一个构造器，可以接受一个 `UInt8` 类型的值，所以这个构造器可以用现有的 `UInt8` 来创建一个新的 `UInt16`。注意，你并不能传入任意类型的值，只能传入 `UInt16` 内部有对应构造器的值。不过你可以扩展现有的类型来让它可以接收其他类型的值（包括自定义类型），请参考[扩展](./20_Extensions.html)。
+`SomeType(ofInitialValue)` 是调用 Swift 构造器并传入一个初始值的默认方法。在语言内部，`UInt16` 有一个构造器，可以接受一个 `UInt8` 类型的值，所以这个构造器可以用现有的 `UInt8` 来创建一个新的 `UInt16`。注意，你并不能传入任意类型的值，只能传入 `UInt16` 内部有对应构造器的值。不过你可以扩展现有的类型来让它可以接收其他类型的值（包括自定义类型），请参考[扩展](./20_Extensions.md)。
 
 <a name="integer_and_floating_point_conversion"></a>
 ### 整数和浮点数转换
@@ -416,7 +416,7 @@ if turnipsAreDelicious {
 // 输出“Eww, turnips are horrible.”
 ```
 
-条件语句，例如 `if`，请参考[控制流](./05_Control_Flow.html)。
+条件语句，例如 `if`，请参考[控制流](./05_Control_Flow.md)。
 
 如果你在需要使用 `Bool` 类型的地方使用了非布尔值，Swift 的类型安全机制会报错。下面的例子会报告一个编译时错误：
 
@@ -436,7 +436,7 @@ if i == 1 {
 }
 ```
 
-`i == 1` 的比较结果是 `Bool` 类型，所以第二个例子可以通过类型检查。类似 `i == 1` 这样的比较，请参考[基本操作符](./05_Control_Flow.html)。
+`i == 1` 的比较结果是 `Bool` 类型，所以第二个例子可以通过类型检查。类似 `i == 1` 这样的比较，请参考[基本操作符](./05_Control_Flow.md)。
 
 和 Swift 中的其他类型安全的例子一样，这个方法可以避免错误并保证这块代码的意图总是清晰的。
 
@@ -498,11 +498,11 @@ print("The status message is \(http200Status.description)")
 // 输出“The status message is OK”
 ```
 
-作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个 `(Int, String)` 元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值](./06_Functions.html#Function_Parameters_and_Return_Values)。
+作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个 `(Int, String)` 元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值](./06_Functions.md#Function_Parameters_and_Return_Values)。
 
 > 注意
 > 
-> 元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考[类和结构体](./09_Classes_and_Structures.html)。
+> 元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考[类和结构体](./09_Classes_and_Structures.md)。
 
 <a name="optionals"></a>
 ## 可选类型
@@ -576,7 +576,7 @@ if convertedNumber != nil {
 // 输出“convertedNumber has an integer value of 123.”
 ```
 
-更多关于 `if` 语句的内容，请参考[控制流](./05_Control_Flow.html)。
+更多关于 `if` 语句的内容，请参考[控制流](./05_Control_Flow.md)。
 
 > 注意
 > 
@@ -585,7 +585,7 @@ if convertedNumber != nil {
 <a name="optional_binding"></a>
 ### 可选绑定
 
-使用*可选绑定（optional binding）*来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在 `if` 和 `while` 语句中，这条语句不仅可以用来判断可选类型中是否有值，同时可以将可选类型中的值赋给一个常量或者变量。`if` 和 `while` 语句，请参考[控制流](./05_Control_Flow.html)。
+使用*可选绑定（optional binding）*来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在 `if` 和 `while` 语句中，这条语句不仅可以用来判断可选类型中是否有值，同时可以将可选类型中的值赋给一个常量或者变量。`if` 和 `while` 语句，请参考[控制流](./05_Control_Flow.md)。
 
 像下面这样在 `if` 语句中写一个可选绑定：
 
@@ -595,7 +595,7 @@ if let constantName = someOptional {
 }
 ```
 
-你可以像上面这样使用可选绑定来重写 在[可选类型](./01_The_Basics.html#optionals)举出的 `possibleNumber` 例子：
+你可以像上面这样使用可选绑定来重写 在[可选类型](./01_The_Basics.md#optionals)举出的 `possibleNumber` 例子：
 
 ```swift
 if let actualNumber = Int(possibleNumber) {
@@ -634,7 +634,7 @@ if let firstNumber = Int("4") {
 
 > 注意
 > 
-> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中（`body`）中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.html#early_exit)。
+> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中（`body`）中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考[提前退出](./05_Control_Flow.md#early_exit)。
 
 <a name="implicityly_unwrapped_optionals"></a>
 ### 隐式解析可选类型
@@ -645,7 +645,7 @@ if let firstNumber = Int("4") {
 
 这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
-当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](./23_Automatic_Reference_Counting.html#unowned_references_and_implicitly_unwrapped_optional_properties)。
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考[无主引用以及隐式解析可选属性](./23_Automatic_Reference_Counting.md#unowned_references_and_implicitly_unwrapped_optional_properties)。
 
 一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型 `String` 和隐式解析可选类型 `String` 之间的区别：
 
@@ -734,7 +734,7 @@ do {
 
 如果没有错误被抛出，`eatASandwich()` 函数会被调用。如果一个匹配 `SandwichError.outOfCleanDishes` 的错误被抛出，`washDishes()` 函数会被调用。如果一个匹配 `SandwichError.missingIngredients` 的错误被抛出，`buyGroceries(_:)` 函数会被调用，并且使用 `catch` 所捕捉到的关联值 `[String]` 作为参数。
 
-抛出，捕捉，以及传播错误会在[错误处理](./17_Error_Handling.html)章节详细说明。
+抛出，捕捉，以及传播错误会在[错误处理](./17_Error_Handling.md)章节详细说明。
 
 <a name="assertions_and_preconditions"></a>
 ## 断言和先决条件
@@ -743,7 +743,7 @@ do {
 
 你使用断言和先决条件来表达你所做的假设和你在编码时候的期望。你可以将这些包含在你的代码中。断言帮助你在开发阶段找到错误和不正确的假设，先决条件帮助你在生产环境中探测到存在的问题。
 
-除了在运行时验证你的期望值，断言和先决条件也变成了一个在你的代码中的有用的文档形式。和在上面讨论过的[错误处理](./17_Error_Handling.html)不同，断言和先决条件并不是用来处理可以恢复的或者可预期的错误。因为一个断言失败表明了程序正处于一个无效的状态，没有办法去捕获一个失败的断言。
+除了在运行时验证你的期望值，断言和先决条件也变成了一个在你的代码中的有用的文档形式。和在上面讨论过的[错误处理](./17_Error_Handling.md)不同，断言和先决条件并不是用来处理可以恢复的或者可预期的错误。因为一个断言失败表明了程序正处于一个无效的状态，没有办法去捕获一个失败的断言。
 
 使用断言和先决条件不是一个能够避免出现程序出现无效状态的编码方法。然而，如果一个无效状态程序产生了，断言和先决条件可以强制检查你的数据和程序状态，使得你的程序可预测的中止（译者：不是系统强制的，被动的中止），并帮助使这个问题更容易调试。一旦探测到无效的状态，执行则被中止，防止无效的状态导致的进一步对于系统的伤害。
 
