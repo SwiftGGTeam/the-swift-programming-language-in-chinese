@@ -2,14 +2,13 @@
 
 *运算符*是检查、改变、合并值的特殊符号或短语。例如，加号（`+`）将两个数相加（如 `let i = 1 + 2`）。更复杂的运算例子包括逻辑与运算符 `&&`（如 `if enteredDoorCode && passedRetinaScan`）。
 
-Swift 支持大部分标准 C 语言的运算符，且为了减少常见编码错误做了部分改进。如：赋值符（`=`）不再有返回值，这样就消除了手误将判等运算符（`==`）写成赋值符导致代码错误的缺陷。算术运算符（`+`，`-`，`*`，`/`，`%` 等）的结果会被检测并禁止值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](./26_Advanced_Operators.html#overflow_operators)。
+Swift 支持大部分标准 C 语言的运算符，且为了减少常见编码错误做了部分改进。如：赋值符（`=`）不再有返回值，这样就消除了手误将判等运算符（`==`）写成赋值符导致代码错误的缺陷。算术运算符（`+`，`-`，`*`，`/`，`%` 等）的结果会被检测并禁止值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见[溢出运算符](./26_Advanced_Operators.md#overflow_operators)。
 
 Swift 还提供了 C 语言没有的区间运算符，例如 `a..<b` 或 `a...b`，这方便我们表达一个区间内的数值。
 
-本章节只描述了 Swift 中的基本运算符，[高级运算符](./26_Advanced_Operators.html)这章会包含 Swift 中的高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
+本章节只描述了 Swift 中的基本运算符，[高级运算符](./26_Advanced_Operators.md)这章会包含 Swift 中的高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。
 
-<a name="terminology"></a>
-## 术语
+## 术语 {#terminology}
 
 运算符分为一元、二元和三元运算符:
 
@@ -19,8 +18,7 @@ Swift 还提供了 C 语言没有的区间运算符，例如 `a..<b` 或 `a...b`
 
 受运算符影响的值叫*操作数*，在表达式 `1 + 2` 中，加号 `+` 是二元运算符，它的两个操作数是值 `1` 和 `2`。
 
-<a name="assignment_operator"></a>
-## 赋值运算符
+## 赋值运算符 {#assignment_operator}
 
 *赋值运算符*（`a = b`），表示用 `b` 的值来初始化或更新 `a` 的值：
 
@@ -48,8 +46,7 @@ if x = y {
 
 通过将 `if x = y` 标记为无效语句，Swift 能帮你避免把 （`==`）错写成（`=`）这类错误的出现。
 
-<a name="arithmetic_operators"></a>
-## 算术运算符
+## 算术运算符 {#arithmetic_operators}
 
 Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
@@ -65,7 +62,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 10.0 / 2.5  // 等于 4.0
 ```
 
-与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如 `a &+ b`）。详情参见[溢出运算符](./26_Advanced_Operators.html#overflow_operators)。
+与 C 语言和 Objective-C 不同的是，Swift 默认情况下不允许在数值运算中出现溢出情况。但是你可以使用 Swift 的溢出运算符来实现溢出运算（如 `a &+ b`）。详情参见[溢出运算符](./26_Advanced_Operators.md#overflow_operators)。
 
 加法运算符也可用于 `String` 的拼接：
 
@@ -73,8 +70,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 "hello, " + "world"  // 等于 "hello, world"
 ```
 
-<a name="remainder_operator"></a>
-### 求余运算符
+### 求余运算符 {#remainder_operator}
 
 *求余运算符*（`a % b`）是计算 `b` 的多少倍刚刚好可以容入 `a`，返回多出来的那部分（余数）。
 
@@ -84,7 +80,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 我们来谈谈取余是怎么回事，计算 `9 % 4`，你先计算出 `4` 的多少倍会刚好可以容入 `9` 中：
 
-![Art/remainderInteger_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderInteger_2x.png "Art/remainderInteger_2x.png")
+![Art/remainderInteger_2x.png](https://docs.swift.org/swift-book/_images/remainderInteger_2x.png "Art/remainderInteger_2x.png")
 
 你可以在 `9` 中放入两个 `4`，那余数是 1（用橙色标出）。
 
@@ -118,8 +114,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 在对负数 `b` 求余时，`b` 的符号会被忽略。这意味着 `a % b` 和 `a % -b` 的结果是相同的。
 
-<a name="unary_minus_operator"></a>
-### 一元负号运算符
+### 一元负号运算符 {#unary_minus_operator}
 
 数值的正负号可以使用前缀 `-`（即*一元负号符*）来切换：
 
@@ -131,8 +126,7 @@ let plusThree = -minusThree   // plusThree 等于 3, 或 "负负3"
 
 一元负号符（`-`）写在操作数之前，中间没有空格。
 
-<a name="unary_plus_operator"></a>
-### 一元正号运算符
+### 一元正号运算符 {#unary_plus_operator}
 
 *一元正号符*（`+`）不做任何改变地返回操作数的值：
 
@@ -143,8 +137,7 @@ let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
 
 虽然一元正号符什么都不会改变，但当你在使用一元负号来表达负数时，你可以使用一元正号来表达正数，如此你的代码会具有对称美。
 
-<a name="compound_assignment_operators"></a>
-## 组合赋值运算符
+## 组合赋值运算符 {#compound_assignment_operators}
 
 如同 C 语言，Swift 也提供把其他运算符和赋值运算（`=`）组合的*组合赋值运算符*，组合加运算（`+=`）是其中一个例子：
 
@@ -162,8 +155,7 @@ a += 2
 
 更多 Swift 标准库运算符的信息，请看[运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 ‌
-<a name="comparison_operators"></a>
-## 比较运算符（Comparison Operators）
+## 比较运算符（Comparison Operators） {#comparison_operators}
 
 所有标准 C 语言中的*比较运算符*都可以在 Swift 中使用：
 
@@ -176,7 +168,7 @@ a += 2
 
 > 注意
 > 
-> Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.html)。
+> Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.md)章节的 **Identity Operators** 部分。
 
 每个比较运算都返回了一个标识表达式是否成立的布尔值：
 
@@ -198,10 +190,10 @@ if name == "world" {
 } else {
 	print("I'm sorry \(name), but I don't recognize you")
 }
-// 输出 "hello, world", 因为 `name` 就是等于 "world"
+// 输出“hello, world", 因为 `name` 就是等于 "world”
 ```
 
-关于 `if` 语句，请看[控制流](./05_Control_Flow.html)。
+关于 `if` 语句，请看[控制流](./05_Control_Flow.md)。
 
 如果两个元组的元素相同，且长度相同的话，元组就可以被比较。比较元组大小会按照从左到右、逐值比较的方式，直到发现有两个值不等时停止。如果所有的值都相等，那么这一对元组我们就称它们是相等的。例如：
 
@@ -224,8 +216,7 @@ if name == "world" {
 > 
 > Swift 标准库只能比较七个以内元素的元组比较函数。如果你的元组元素超过七个时，你需要自己实现比较运算符。
 
-<a name="ternary_conditional_operator"></a>
-## 三元运算符（Ternary Conditional Operator）
+## 三元运算符（Ternary Conditional Operator） {#ternary_conditional_operator}
 
 *三元运算符*的特殊在于它是有三个操作数的运算符，它的形式是 `问题 ? 答案 1 : 答案 2`。它简洁地表达根据 `问题`成立与否作出二选一的操作。如果 `问题` 成立，返回 `答案 1` 的结果；反之返回 `答案 2` 的结果。
 
@@ -266,8 +257,7 @@ if hasHeader {
 
 三元运算为二选一场景提供了一个非常便捷的表达形式。不过需要注意的是，滥用三元运算符会降低代码可读性。所以我们应避免在一个复合语句中使用多个三元运算符。
 
-<a name="nil_coalescing_operator"></a>
-## 空合运算符（Nil Coalescing Operator）
+## 空合运算符（Nil Coalescing Operator） {#nil_coalescing_operator}
 
 *空合运算符*（`a ?? b`）将对可选类型 `a` 进行空判断，如果 `a` 包含一个值就进行解包，否则就返回一个默认值 `b`。表达式 `a` 必须是 Optional 类型。默认值 `b` 的类型必须要和 `a` 存储值的类型保持一致。
 
@@ -304,13 +294,11 @@ colorNameToUse = userDefinedColorName ?? defaultColorName
 // userDefinedColorName 非空，因此 colorNameToUse 的值为 "green"
 ```
 
-<a name="range_operators"></a>
-## 区间运算符（Range Operators）
+## 区间运算符（Range Operators） {#range_operators}
 
 Swift 提供了几种方便表达一个区间的值的*区间运算符*。
 
-<a name="closed_range_operator"></a>
-### 闭区间运算符
+### 闭区间运算符 {#closed_range_operator}
 
 *闭区间运算符*（`a...b`）定义一个包含从 `a` 到 `b`（包括 `a` 和 `b`）的所有值的区间。`a` 的值不能超过 `b`。
 
@@ -327,10 +315,9 @@ for index in 1...5 {
 // 5 * 5 = 25
 ```
 
-关于 `for-in` 循环，请看[控制流](./05_Control_Flow.html)。
+关于 `for-in` 循环，请看[控制流](./05_Control_Flow.md)。
 
-<a name="half-open_range_operator"></a>
-### 半开区间运算符
+### 半开区间运算符 {#half-open_range_operator}
 
 *半开区间运算符*（`a..<b`）定义一个从 `a` 到 `b` 但不包括 `b` 的区间。
 之所以称为*半开区间*，是因为该区间包含第一个值而不包括最后的值。
@@ -349,10 +336,9 @@ for i in 0..<count {
 // 第 4 个人叫 Jack
 ```
 
-数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](./04_Collection_Types.html#arrays)。
+数组有 4 个元素，但 `0..<count` 只数到3（最后一个元素的下标），因为它是半开区间。关于数组，请查阅[数组](./04_Collection_Types.md#arrays)。
 
-<a name="one-sided_ranges"></a>
-### 单侧区间
+### 单侧区间 {#one-sided_ranges}
 
 闭区间操作符有另一个表达形式，可以表达往一侧无限延伸的区间 —— 例如，一个包含了数组从索引 2 到结尾的所有值的区间。在这些情况下，你可以省略掉区间操作符一侧的值。这种区间叫做单侧区间，因为操作符只有一侧有值。例如：
 
@@ -390,8 +376,7 @@ range.contains(4)   // true
 range.contains(-1)  // true
 ```
 
-<a name="logical_operators"></a>
-## 逻辑运算符（Logical Operators）
+## 逻辑运算符（Logical Operators） {#logical_operators}
 
 *逻辑运算符*的操作对象是逻辑布尔值。Swift 支持基于 C 语言的三个标准逻辑运算。
 
@@ -410,7 +395,7 @@ let allowedEntry = false
 if !allowedEntry {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 `if !allowedEntry` 语句可以读作「如果非 allowedEntry」，接下一行代码只有在「非 allowedEntry」为 `true`，即 `allowEntry` 为 `false` 时被执行。
@@ -433,7 +418,7 @@ if enteredDoorCode && passedRetinaScan {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 ### 逻辑或运算符
@@ -452,7 +437,7 @@ if hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 ### 逻辑运算符组合计算
@@ -465,7 +450,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这个例子使用了含多个 `&&` 和 `||` 的复合逻辑。但无论怎样，`&&` 和 `||` 始终只能操作两个值。所以这实际是三个简单逻辑连续操作的结果。我们来解读一下：
@@ -488,7 +473,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。可读性比简洁性更重要，请在可以让你代码变清晰的地方加个括号吧！

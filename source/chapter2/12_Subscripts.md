@@ -4,8 +4,7 @@
 
 一个类型可以定义多个下标，通过不同索引类型进行重载。下标不限于一维，你可以定义具有多个入参的下标满足自定义类型的需求。
 
-<a name="subscript_syntax"></a>
-## 下标语法
+## 下标语法 {#subscript_syntax}
 
 下标允许你通过在实例名称后面的方括号中传入一个或者多个索引值来对实例进行存取。语法类似于实例方法语法和计算型属性语法的混合。与定义实例方法类似，定义下标使用 `subscript` 关键字，指定一个或多个输入参数和返回类型；与实例方法不同的是，下标可以设定为读写或只读。这种行为由 getter 和 setter 实现，有点类似计算型属性：
 
@@ -41,7 +40,7 @@ struct TimesTable {
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
-// 打印 "six times three is 18"
+// 打印“six times three is 18”
 ```
 
 在上例中，创建了一个 `TimesTable` 实例，用来表示整数 `3` 的乘法表。数值 `3` 被传递给结构体的构造函数，作为实例成员 `multiplier` 的值。
@@ -52,8 +51,7 @@ print("six times three is \(threeTimesTable[6])")
 > 
 > `TimesTable` 例子基于一个固定的数学公式，对 `threeTimesTable[someIndex]` 进行赋值操作并不合适，因此下标定义为只读的。
 
-<a name="subscript_usage"></a>
-## 下标用法
+## 下标用法 {#subscript_usage}
 
 下标的确切含义取决于使用场景。下标通常作为访问集合，列表或序列中元素的快捷方式。你可以针对自己特定的类或结构体的功能来自由地以最恰当的方式实现下标。
 
@@ -66,14 +64,13 @@ numberOfLegs["bird"] = 2
 
 上例定义一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型被推断为 `[String: Int]`。字典创建完成后，该例子通过下标将 `String` 类型的键 `bird` 和 `Int` 类型的值 `2` 添加到字典中。
 
-更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.html#accessing_and_modifying_a_dictionary)。
+更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.md#accessing_and_modifying_a_dictionary)。
 
 > 注意
 > 
 > Swift 的 `Dictionary` 类型的下标接受并返回可选类型的值。上例中的 `numberOfLegs` 字典通过下标返回的是一个 `Int?` 或者说“可选的 int”。`Dictionary` 类型之所以如此实现下标，是因为不是每个键都有个对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为 `nil` 即可。
 
-<a name="subscript_options"></a>
-## 下标选项
+## 下标选项 {#subscript_options}
 
 下标可以接受任意数量的入参，并且这些入参可以是任意类型。下标的返回值也可以是任意类型。下标可以使用变量参数和可变参数，但不能使用输入输出参数，也不能给参数设置默认值。
 
@@ -106,7 +103,7 @@ struct Matrix {
 }
 ```
 
-`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考 [创建一个带有默认值的数组](./04_Collection_Types.html#creating_an_array_with_a_default_value)。
+`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考 [创建一个带有默认值的数组](./04_Collection_Types.md#creating_an_array_with_a_default_value)。
 
 你可以通过传入合适的 `row` 和 `column` 的数量来构造一个新的 `Matrix` 实例：
 
