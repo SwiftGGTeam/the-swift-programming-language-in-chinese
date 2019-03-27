@@ -192,7 +192,7 @@ protocol SomeProtocol {
 }
 ```
 
-### 协议构造器要求的类实现
+### 协议构造器要求的类实现 {#class_implementations_of_protocol_initializer_requirements}
 
 你可以在遵循协议的类中实现构造器，无论是作为指定构造器，还是作为便利构造器。无论哪种情况，你都必须为构造器实现标上 `required` 修饰符：
 
@@ -234,7 +234,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 }
 ```
 
-### 可失败构造器要求
+### 可失败构造器要求 {#failable_initializer_requirements}
 
 协议还可以为遵循协议的类型定义可失败构造器要求，详见 [可失败构造器](./14_Initialization.md#failable_initializers)。
 

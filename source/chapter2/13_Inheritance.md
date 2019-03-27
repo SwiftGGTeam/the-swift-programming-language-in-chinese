@@ -113,7 +113,7 @@ print("Tandem: \(tandem.description)")
 
 `override` 关键字会提醒 Swift 编译器去检查该类的超类（或其中一个父类）是否有匹配重写版本的声明。这个检查可以确保你的重写定义是正确的。
 
-### 访问超类的方法，属性及下标
+### 访问超类的方法，属性及下标 {#accessing_superclass_methods_properties_and_subscripts}
 
 当你在子类中重写超类的方法，属性或下标时，有时在你的重写版本中使用已经存在的超类实现会大有裨益。比如，你可以完善已有实现的行为，或在一个继承来的变量中存储一个修改过的值。
 
@@ -123,7 +123,7 @@ print("Tandem: \(tandem.description)")
 * 在属性 `someProperty` 的 getter 或 setter 的重写实现中，可以通过 `super.someProperty` 来访问超类版本的 `someProperty` 属性。
 * 在下标的重写实现中，可以通过 `super[someIndex]` 来访问超类版本中的相同下标。
 
-### 重写方法
+### 重写方法 {#overriding_methods}
 
 在子类中，你可以重写继承来的实例方法或类方法，提供一个定制或替代的方法实现。
 
@@ -145,11 +145,11 @@ train.makeNoise()
 // 打印“Choo Choo”
 ```
 
-### 重写属性
+### 重写属性 {#overriding_properties}
 
 你可以重写继承来的实例属性或类型属性，提供自己定制的 getter 和 setter，或添加属性观察器，使重写的属性可以观察到底层的属性值什么时候发生改变。
 
-#### 重写属性的 Getters 和 Setters
+#### 重写属性的 Getters 和 Setters {#overriding_property_etters_and_setters}
 
 你可以提供定制的 getter（或 setter）来重写任何一个继承来的属性，无论这个属性是存储型还是计算型属性。子类并不知道继承来的属性是存储型的还是计算型的，它只知道继承来的属性会有一个名字和类型。你在重写一个属性时，必须将它的名字和类型都写出来。这样才能使编译器去检查你重写的属性是与超类中同名同类型的属性相匹配的。
 

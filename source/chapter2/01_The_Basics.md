@@ -1,6 +1,5 @@
 # 基础部分
 
-
 Swift 是一门开发 iOS, macOS, watchOS 和 tvOS 应用的新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。
 
 Swift 包含了 C 和 Objective-C 上所有基础数据类型，`Int` 表示整型值； `Double` 和 `Float` 表示浮点型值； `Bool` 是布尔型值；`String` 是文本型数据。 Swift 还提供了三个基本的集合类型，`Array`、`Set` 和 `Dictionary` ，详见[集合类型](./04_Collection_Types.md)。
