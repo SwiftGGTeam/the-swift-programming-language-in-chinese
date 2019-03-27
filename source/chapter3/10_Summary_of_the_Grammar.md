@@ -1,7 +1,6 @@
 # 语法总结（Summary of the Grammar）
 
-<a name="statements"></a>
-## 语句
+## 语句 {#statements}
 
 > 语句语法
 > 
@@ -243,8 +242,7 @@
 > *catch-clauses* → **catch** [*模式（pattern）*](TODO) _可选_  [*where-clause*](TODO) _可选_ [*代码块（code-block）*](TODO) _可选_
 > 
 
-<a name="generic_parameters_and_arguments"></a>
-## 泛型参数
+## 泛型参数 {#generic_parameters_and_arguments}
 
 > 泛型形参从句（Generic Parameter Clause）语法
 > 
@@ -283,8 +281,7 @@
 > *泛型参数* → [*类型*](./03_Types.md#type)
 > 
 
-<a name="declarations"></a>
-## 声明（Declarations）
+## 声明（Declarations） {#declarations}
 
 > 声明语法
 > 
@@ -666,8 +663,7 @@
 > *访问级别修改器集* →[*访问级别修改器*](TODO) [*访问级别修改器集*](TODO) _可选_
 > 
 
-<a name="patterns"></a>
-## 模式
+## 模式 {#patterns}
 
 > 模式（Patterns）语法
 > 
@@ -751,8 +747,7 @@
 > *表达式模式* → [*表达式*](./04_Expressions.md#expression)
 > 
 
-<a name="attributes"></a>
-## 属性
+## 属性 {#attributes}
 
 > 属性语法
 > 
@@ -777,8 +772,7 @@
 > *平衡令牌* → **任意标点除了(、)、[、]、{ 或 }**
 > 
 
-<a name="expressions"></a>
-## 表达式
+## 表达式 {#expressions}
 
 > 表达式语法
 > 
@@ -1049,8 +1043,7 @@
 > *可选链表达式* → [*后置表达式*](./04_Expressions.md#postfix_expression) **?**
 > 
 
-<a name="lexical_structure"></a>
-## 词法结构
+## 词法结构 {#lexical_structure}
 
 > 标识符语法
 > 
@@ -1277,8 +1270,7 @@
 > *后置运算符* → [*运算符*](./02_Lexical_Structure.md#operator)
 > 
 
-<a name="types"></a>
-## 类型
+## 类型 {#types}
 
 > 类型语法
 > 

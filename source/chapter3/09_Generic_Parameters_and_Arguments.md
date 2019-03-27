@@ -4,9 +4,7 @@
 
 关于 Swift 语言的泛型概述，请参阅 [泛型](../chapter2/22_Generics.md)。
 
-<a name="generic_parameter"></a>
-## 泛型形参子句
-
+## 泛型形参子句 {#generic_parameter}
 *泛型形参子句*指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型形参列表`>
@@ -38,9 +36,7 @@ simpleMax(17, 42) // T 被推断为 Int 类型
 simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 ```
 
-<a name="where_clauses"></a>
-### Where 子句
-
+### Where 子句 {#where_clauses}
 要想对类型形参及其关联类型指定额外要求，可以在函数体或者类型的大括号之前添加 `where` 子句。`where` 子句由关键字 `where` 及其后的用逗号分隔的一个或多个要求组成。
 
 > `where` : `类型要求`
@@ -60,42 +56,40 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 
 > 泛型形参子句语法
 > 
-<a name="generic-parameter-clause"></a>
+generic-parameter-clause {#generic-parameter-clause}
 > *泛型形参子句* → **<** [*泛型形参列表*](#generic-parameter-list) [*约束子句*](#requirement-clause)<sub>可选</sub> **>**
 > 
-<a name="generic-parameter-list"></a>
+generic-parameter-list {#generic-parameter-list}
 > *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)
 > 
-<a name="generic-parameter"></a>
+generic-parameter {#generic-parameter}
 > *泛形形参* → [*类型名称*](./03_Types.md#type-name)
 > 
 > *泛形形参* → [*类型名称*](./03_Types.md#type-name)    **:** [*类型标识符*](./03_Types.md#type-identifier)
 > 
 > *泛形形参* → [*类型名称*](./03_Types.md#type-name)    **:** [*协议合成类型*](./03_Types.md#protocol-composition-type)
 > 
-> <a name="requirement-clause"></a>
+> requirement-clause {#requirement-clause}
 > 
 > *约束子句* → **where** [*约束列表*](#requirement-list)
 > 
-<a name="requirement-list"></a>
+requirement-list {#requirement-list}
 > *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)
 > 
-<a name="requirement"></a>
+requirement {#requirement}
 > *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)
 > 
-> <a name="conformance-requirement"></a>
+> conformance-requirement {#conformance-requirement}
 > 
 > *一致性约束* → [*类型标识符*](./03_Types.md#type-identifier) **:** [*类型标识符*](./03_Types.md#type-identifier)
 > 
 > *一致性约束* → [*类型标识符*](./03_Types.md#type-identifier) **:** [*协议合成类型*](./03_Types.md#protocol-composition-type)
 > 
-<a name="same-type-requirement"></a>
+same-type-requirement {#same-type-requirement}
 > *同类型约束* → [*类型标识符*](./03_Types.md#type-identifier) **==** [*类型*](./03_Types.md#type)
 > 
 
-<a name="generic_argument"></a>
-## 泛型实参子句
-
+## 泛型实参子句 {#generic_argument}
 *泛型实参子句*指定泛型类型的类型实参。泛型实参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型实参列表`>
@@ -122,12 +116,12 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 > 泛型实参子句语法
 > 
-<a name="generic-argument-clause"></a>
+generic-argument-clause {#generic-argument-clause}
 > *泛型实参子句* → **<** [*泛型实参列表*](#generic-argument-list) **>**
 > 
-<a name="generic-argument-list"></a>
+generic-argument-list {#generic-argument-list}
 > *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)
 > 
-<a name="generic-argument"></a>
+generic-argument {#generic-argument}
 > *泛型实参* → [*类型*](./03_Types.md#type)
 > 

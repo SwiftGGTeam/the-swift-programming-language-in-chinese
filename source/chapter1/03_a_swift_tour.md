@@ -16,8 +16,7 @@ print("Hello, world!")
 > 
 > [Download Playground](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.playground.zip)
 
-<a name="simple_values"></a>
-## 简单值
+## 简单值 {#simple_values}
 
 使用 `let` 来声明常量，使用 `var` 来声明变量。一个常量的值，在编译的时候，并不需要有明确的值，但是你只能为它赋值一次。这说明你可以用一个常量来命名一个值，一次赋值就即可在多个地方使用。
 
@@ -102,8 +101,7 @@ shoppingList = []
 occupations = [:]
 ```
 
-<a name="control_flow"></a>
-## 控制流
+## 控制流 {#control_flow}
 
 使用 `if` 和 `switch` 来进行条件操作，使用 `for-in`、`while` 和 `repeat-while` 来进行循环。包裹条件和循环变量的括号可以省略，但是语句体的大括号是必须的。
 
@@ -223,8 +221,7 @@ print(total)
 
 使用 `..<` 创建的范围不包含上界，如果想包含的话需要使用 `...`。
 
-<a name="functions_and_closures"></a>
-## 函数和闭包
+## 函数和闭包 {#functions_and_closures}
 
 使用 `func` 来声明一个函数，使用名字和参数来调用函数。使用 `->` 来指定函数返回值的类型。
 
@@ -345,8 +342,7 @@ let sortedNumbers = numbers.sorted { $0 > $1 }
 print(sortedNumbers)
 ```
 
-<a name="objects_and_classes"></a>
-## 对象和类
+## 对象和类 {#objects_and_classes}
 
 使用 `class` 和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是类。同样，方法和函数声明也一样。
 
@@ -495,8 +491,7 @@ let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
 let sideLength = optionalSquare?.sideLength
 ```
 
-<a name="enumerations_and_structure"></a>
-## 枚举和结构体
+## 枚举和结构体 {#enumerations_and_structure}
 
 使用 `enum` 来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。
 
@@ -609,8 +604,7 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 > 
 > 给 `Card` 添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
-<a name="protocols_and_extensions"></a>
-## 协议和扩展
+## 协议和扩展 {#protocols_and_extensions}
 
 使用 `protocol` 来声明一个协议。
 
@@ -680,8 +674,7 @@ print(protocolValue.simpleDescription)
 
 即使 `protocolValue` 变量运行时的类型是 `simpleClass` ，编译器还是会把它的类型当做 `ExampleProtocol`。这表示你不能调用在协议之外的方法或者属性。
 
-<a name="error_handling"></a>
-## 错误处理
+## 错误处理 {#error_handling}
 
 使用采用 `Error` 协议的类型来表示错误。
 
@@ -764,8 +757,7 @@ fridgeContains("banana")
 print(fridgeIsOpen)
 ```
 
-<a name="generics"></a>
-## 泛型
+## 泛型 {#generics}
 
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 

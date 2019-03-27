@@ -6,8 +6,7 @@ Swift 统一的函数语法非常的灵活，可以用来表示任何函数，�
 
 在 Swift 中，每个函数都有一个由函数的参数值类型和返回值类型组成的类型。你可以把函数类型当做任何其他普通变量类型一样处理，这样就可以更简单地把函数当做别的函数的参数，也可以从其他函数中返回函数。函数的定义可以写在其他函数定义中，这样可以在嵌套函数范围内实现功能封装。
 
-<a name="Defining_and_Calling_Functions"></a>
-## 函数的定义与调用
+## 函数的定义与调用 {#Defining_and_Calling_Functions}
 
 当你定义一个函数时，你可以定义一个或多个有名字和类型的值，作为函数的输入，称为*参数*，也可以定义某种类型的值作为函数执行结束时的输出，称为*返回类型*。
 
@@ -53,13 +52,11 @@ print(greetAgain(person: "Anna"))
 // 打印“Hello again, Anna!”
 ```
 
-<a name="Function_Parameters_and_Return_Values"></a>
-## 函数参数与返回值
+## 函数参数与返回值 {#Function_Parameters_and_Return_Values}
 
 函数参数与返回值在 Swift 中非常的灵活。你可以定义任何类型的函数，包括从只带一个未名参数的简单函数到复杂的带有表达性参数名和不同参数选项的复杂函数。
 
-<a name="functions_without_parameters"></a>
-### 无参数函数
+### 无参数函数 {#functions_without_parameters}
 
 函数可以没有参数。下面这个函数就是一个无参数函数，当被调用时，它返回固定的 `String` 消息：
 
@@ -73,8 +70,7 @@ print(sayHelloWorld())
 
 尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
 
-<a name="functions_with_multiple_parameters"></a>
-### 多参数函数
+### 多参数函数 {#functions_with_multiple_parameters}
 
 函数可以有多种输入参数，这些参数被包含在函数的括号之中，以逗号分隔。
 
@@ -94,8 +90,7 @@ print(greet(person: "Tim", alreadyGreeted: true))
 
 你可以通过在括号内使用逗号分隔来传递一个 `String` 参数值和一个标识为 `alreadyGreeted` 的 `Bool` 值，来调用 `greet(person:alreadyGreeted:)` 函数。注意这个函数和上面 `greet(person:)` 是不同的。虽然它们都有着同样的名字 `greet`，但是 `greet(person:alreadyGreeted:)` 函数需要两个参数，而 `greet(person:)` 只需要一个参数。
 
-<a name="functions_without_return_values"></a>
-### 无返回值函数
+### 无返回值函数 {#functions_without_return_values}
 
 函数可以没有返回值。下面是 `greet(person:)` 函数的另一个版本，这个函数直接打印一个 `String` 值，而不是返回它：
 
@@ -135,8 +130,7 @@ printWithoutCounting(string: "hello, world")
 > 
 > 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误。
 
-<a name="functions_with_multiple_return_values"></a>
-### 多重返回值函数
+### 多重返回值函数 {#functions_with_multiple_return_values}
 
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
@@ -171,8 +165,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 
 需要注意的是，元组的成员不需要在元组从函数中返回时命名，因为它们的名字已经在函数返回类型中指定了。
 
-<a name="optional_tuple_return_types"></a>
-### 可选元组返回类型
+### 可选元组返回类型 {#optional_tuple_return_types}
 
 如果函数返回的元组类型有可能整个元组都“没有值”，你可以使用*可选的* 元组返回类型反映整个元组可以是 `nil` 的事实。你可以通过在元组类型的右括号后放置一个问号来定义一个可选元组，例如 `(Int, Int)?` 或 `(String, Int, Bool)?`
 
@@ -209,8 +202,7 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 // 打印“min is -6 and max is 109”
 ```
 
-<a name="Function_Argument_Labels_and_Parameter_Names"></a>
-## 函数参数标签和参数名称
+## 函数参数标签和参数名称 {#Function_Argument_Labels_and_Parameter_Names}
 
 每个函数参数都有一个*参数标签（argument label）*以及一个*参数名称（parameter name）*。参数标签在调用函数的时候使用；调用的时候需要将函数的参数标签写在对应的参数前面。参数名称在函数的实现中使用。默认情况下，函数参数使用参数名称来作为它们的参数标签。
 
@@ -223,8 +215,7 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
 
 所有的参数都必须有一个独一无二的名字。虽然多个参数拥有同样的参数标签是可能的，但是一个唯一的函数标签能够使你的代码更具可读性。
 
-<a name="specifying_argument_labels"></a>
-### 指定参数标签
+### 指定参数标签 {#specifying_argument_labels}
 
 你可以在参数名称前指定它的参数标签，中间以空格分隔：
 
@@ -246,8 +237,7 @@ print(greet(person: "Bill", from: "Cupertino"))
 
 参数标签的使用能够让一个函数在调用时更有表达力，更类似自然语言，并且仍保持了函数内部的可读性以及清晰的意图。
 
-<a name="omitting_argument_labels"></a>
-### 忽略参数标签
+### 忽略参数标签 {#omitting_argument_labels}
 
 如果你不希望为某个参数添加一个标签，可以使用一个下划线（`_`）来代替一个明确的参数标签。
 
@@ -260,8 +250,7 @@ someFunction(1, secondParameterName: 2)
 
 如果一个参数有一个标签，那么在调用的时候必须使用标签来标记这个参数。
 
-<a name="default_parameter_values"></a>
-### 默认参数值
+### 默认参数值 {#default_parameter_values}
 
 你可以在函数体中通过给参数赋值来为任意一个参数定义*默认值（Deafult Value）*。当默认值被定义后，调用这个函数时可以忽略这个参数。
 
@@ -275,8 +264,7 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault = 12
 
 将不带有默认值的参数放在函数参数列表的最前。一般来说，没有默认值的参数更加的重要，将不带默认值的参数放在最前保证在函数调用时，非默认参数的顺序是一致的，同时也使得相同的函数在不同情况下调用时显得更为清晰。
 
-<a name="variadic_parameters"></a>
-### 可变参数
+### 可变参数 {#variadic_parameters}
 
 一个*可变参数（variadic parameter）*可以接受零个或多个值。函数调用时，你可以用可变参数来指定函数参数可以被传入不确定数量的输入值。通过在变量类型名后面加入（`...`）的方式来定义可变参数。
 
@@ -302,8 +290,7 @@ arithmeticMean(3, 8.25, 18.75)
 > 
 > 一个函数最多只能拥有一个可变参数。
 
-<a name="in_out_parameters"></a>
-### 输入输出参数
+### 输入输出参数 {#in_out_parameters}
 
 函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为*输入输出参数（In-Out Parameters）*。
 
@@ -343,8 +330,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 > 
 > 输入输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
 
-<a name="Function_Types"></a>
-## 函数类型
+## 函数类型 {#Function_Types}
 
 每个函数都有种特定的*函数类型*，函数的类型由函数的参数类型和返回类型组成。
 
@@ -375,8 +361,7 @@ func printHelloWorld() {
 
 这个函数的类型是：`() -> Void`，或者叫“没有参数，并返回 `Void` 类型的函数”。
 
-<a name="using_function_types"></a>
-### 使用函数类型
+### 使用函数类型 {#using_function_types}
 
 在 Swift 中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将适当的函数赋值给它：
 
@@ -412,8 +397,7 @@ let anotherMathFunction = addTwoInts
 // anotherMathFunction 被推断为 (Int, Int) -> Int 类型
 ```
 
-<a name="function_types_as_parameter_types"></a>
-### 函数类型作为参数类型
+### 函数类型作为参数类型 {#function_types_as_parameter_types}
 
 你可以用 `(Int, Int) -> Int` 这样的函数类型作为另一个函数的参数类型。这样你可以将函数的一部分实现留给函数的调用者来提供。
 
@@ -433,8 +417,7 @@ printMathResult(addTwoInts, 3, 5)
 
 `printMathResult(_:_:_:)` 函数的作用就是输出另一个适当类型的数学函数的调用结果。它不关心传入函数是如何实现的，只关心传入的函数是不是一个正确的类型。这使得 `printMathResult(_:_:_:)` 能以一种类型安全（type-safe）的方式将一部分功能转给调用者实现。
 
-<a name="function_types_as_return_types"></a>
-### 函数类型作为返回类型
+### 函数类型作为返回类型 {#function_types_as_return_types}
 
 你可以用函数类型作为另一个函数的返回类型。你需要做的是在返回箭头（->）后写一个完整的函数类型。
 
@@ -483,8 +466,7 @@ print("zero!")
 // zero!
 ```
 
-<a name="Nested_Functions"></a>
-## 嵌套函数
+## 嵌套函数 {#Nested_Functions}
 
 到目前为止本章中你所见到的所有函数都叫*全局函数（global functions）*，它们定义在全局域中。你也可以把函数定义在别的函数体中，称作 *嵌套函数（nested functions）*。
 

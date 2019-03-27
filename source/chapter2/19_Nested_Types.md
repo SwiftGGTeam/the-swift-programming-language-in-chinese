@@ -4,8 +4,7 @@
 
 要在一个类型中嵌套另一个类型，将嵌套类型的定义写在其外部类型的 `{}` 内，而且可以根据需要定义多级嵌套。
 
-<a name="nested_types_in_action"></a>
-## 嵌套类型实践
+## 嵌套类型实践 {#nested_types_in_action}
 
 下面这个例子定义了一个结构体 `BlackjackCard`（二十一点），用来模拟 `BlackjackCard` 中的扑克牌点数。`BlackjackCard` 结构体包含两个嵌套定义的枚举类型 `Suit` 和 `Rank`。
 
@@ -74,8 +73,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 
 尽管 `Rank` 和 `Suit` 嵌套在 `BlackjackCard` 中，但它们的类型仍可从上下文中推断出来，所以在初始化实例时能够单独通过成员名称（`.ace` 和 `.spades`）引用枚举实例。在上面的例子中，`description` 属性正确地反映了黑桃 A 牌具有 `1` 和 `11` 两个值。
 
-<a name="referring_to_nested_types"></a>
-## 引用嵌套类型
+## 引用嵌套类型 {#referring_to_nested_types}
 
 在外部引用嵌套类型时，在嵌套类型的类型名前加上其外部类型的类型名作为前缀：
 

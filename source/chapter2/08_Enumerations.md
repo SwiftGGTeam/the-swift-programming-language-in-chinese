@@ -10,8 +10,7 @@
 
 想了解更多相关信息，请参见[属性](./10_Properties.md)，[方法](./11_Methods.md)，[构造过程](./14_Initialization.md)，[扩展](./20_Extensions.md)和[协议](./21_Protocols.md)。
 
-<a name="enumeration_syntax"></a>
-## 枚举语法
+## 枚举语法 {#enumeration_syntax}
 
 使用 `enum` 关键词来创建枚举并且把它们的整个定义放在一对大括号内：
 
@@ -60,8 +59,7 @@ directionToHead = .east
 
 当 `directionToHead` 的类型已知时，再次为其赋值可以省略枚举类型名。在使用具有显式类型的枚举值时，这种写法让代码具有更好的可读性。
 
-<a name="matching_enumeration_values_with_a_switch_statement"></a>
-## 使用 Switch 语句匹配枚举值
+## 使用 Switch 语句匹配枚举值 {#matching_enumeration_values_with_a_switch_statement}
 
 你可以使用 `switch` 语句匹配单个枚举值：
 
@@ -101,8 +99,7 @@ default:
 // 打印“Mostly harmless”
 ```
 
-<a name="iterating over enumeration cases"></a>
-## 枚举成员的遍历
+## 枚举成员的遍历 {#iterating over enumeration cases}
 
 在一些情况下，你会需要得到一个包含枚举所有成员的集合。可以通过如下代码实现：
 
@@ -130,8 +127,7 @@ for beverage in Beverage.allCases {
 
 在前面的例子中，使用的语法表明这个枚举遵循 [CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) 协议。想了解 protocols 相关信息，请参见[协议](./21_Protocols.md)。
 
-<a name="associated_values"></a>
-## 关联值
+## 关联值 {#associated_values}
 
 枚举语法那一小节的例子演示了如何定义和分类枚举的成员。你可以为 `Planet.earth` 设置一个常量或者变量，并在赋值之后查看这个值。然而，有时候把其他类型的值和成员值一起存储起来会很有用。这额外的信息称为*关联值*，并且你每次在代码中使用该枚举成员时，还可以修改这个关联值。
 
@@ -202,8 +198,7 @@ case let .qrCode(productCode):
 // 打印“QR code: ABCDEFGHIJKLMNOP.”
 ```
 
-<a name="raw_values"></a>
-## 原始值
+## 原始值 {#raw_values}
 
 在[关联值](#associated_values)小节的条形码例子中，演示了如何声明存储不同类型关联值的枚举成员。作为关联值的替代选择，枚举成员可以被默认值（称为*原始值*）预填充，这些原始值的类型必须相同。
 
@@ -225,8 +220,7 @@ enum ASCIIControlCharacter: Character {
 > 
 > 原始值和关联值是不同的。原始值是在定义枚举时被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终不变。关联值是创建一个基于枚举成员的常量或变量时才设置的值，枚举成员的关联值可以变化。
 
-<a name="implicitly_assigned_raw_values"></a>
-### 原始值的隐式赋值
+### 原始值的隐式赋值 {#implicitly_assigned_raw_values}
 
 在使用原始值为整数或者字符串类型的枚举时，不需要显式地为每一个枚举成员设置原始值，Swift 将会自动为你赋值。
 
@@ -264,8 +258,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 // sunsetDirection 值为 "west"
 ```
 
-<a name="initializing_from_a_raw_value"></a>
-### 使用原始值初始化枚举实例
+### 使用原始值初始化枚举实例 {#initializing_from_a_raw_value}
 
 如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个初始化方法，这个方法接收一个叫做 `rawValue` 的参数，参数类型即为原始值类型，返回值则是枚举成员或 `nil`。你可以使用这个初始化方法来创建一个新的枚举实例。
 
@@ -301,8 +294,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 
 这个例子使用了可选绑定（optional binding），试图通过原始值 `11` 来访问一个行星。`if let somePlanet = Planet(rawValue: 11)` 语句创建了一个可选 `Planet`，如果可选 `Planet` 的值存在，就会赋值给 `somePlanet`。在这个例子中，无法检索到位置为 `11` 的行星，所以 `else` 分支被执行。
 
-<a name="recursive_enumerations"></a>
-## 递归枚举
+## 递归枚举 {#recursive_enumerations}
 
 *递归枚举*是一种枚举类型，它有一个或多个枚举成员使用该枚举类型的实例作为关联值。使用递归枚举时，编译器会插入一个间接层。你可以在枚举成员前加上 `indirect` 来表示该成员可递归。
 

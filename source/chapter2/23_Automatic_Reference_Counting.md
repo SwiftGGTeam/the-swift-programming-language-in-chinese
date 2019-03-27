@@ -8,9 +8,7 @@ Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程
 > 
 > 引用计数仅仅应用于类的实例。结构体和枚举类型是值类型，不是引用类型，也不是通过引用的方式存储和传递。
 
-<a name="how_arc_works"></a>
-
-## 自动引用计数的工作机制
+## 自动引用计数的工作机制 {#how_arc_works}
 
 当你每次创建一个类的新的实例的时候，ARC 会分配一块内存来储存该实例信息。内存中会包含实例的类型信息，以及这个实例所有相关的存储型属性的值。
 
@@ -22,8 +20,7 @@ Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程
 
 为了使上述成为可能，无论你将实例赋值给属性、常量或变量，它们都会创建此实例的强引用。之所以称之为“强”引用，是因为它会将实例牢牢地保持住，只要强引用还在，实例是不允许被销毁的。
 
-<a name="arc_in_action"></a>
-## 自动引用计数实践
+## 自动引用计数实践 {#arc_in_action}
 
 下面的例子展示了自动引用计数的工作机制。例子以一个简单的 `Person` 类开始，并定义了一个叫 `name` 的常量属性：
 
@@ -84,8 +81,7 @@ reference3 = nil
 // 打印“John Appleseed is being deinitialized”
 ```
 
-<a name="strong_reference_cycles_between_class_instances"></a>
-## 类实例之间的循环强引用
+## 类实例之间的循环强引用 {#strong_reference_cycles_between_class_instances}
 
 在上面的例子中，ARC 会跟踪你所新创建的 `Person` 实例的引用数量，并且会在 `Person` 实例不再被需要时销毁它。
 
@@ -161,9 +157,7 @@ unit4A = nil
 
 `Person` 和 `Apartment` 实例之间的强引用关系保留了下来并且不会被断开。
 
-<a name="resolving_strong_reference_cycles_between_class_instances"></a>
-
-## 解决实例之间的循环强引用
+## 解决实例之间的循环强引用 {#resolving_strong_reference_cycles_between_class_instances}
 
 Swift 提供了两种办法用来解决你在使用类的属性时所遇到的循环强引用问题：弱引用（weak reference）和无主引用（unowned reference）。
 
@@ -171,8 +165,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 
 当其他的实例有更短的生命周期时，使用弱引用，也就是说，当其他实例析构在先时。在上面公寓的例子中，很显然一个公寓在它的生命周期内会在某个时间段没有它的主人，所以一个弱引用就加在公寓类里面，避免循环引用。相比之下，当其他实例有相同的或者更长生命周期时，请使用无主引用。
 
-<a name="weak_references"></a>
-### 弱引用
+### 弱引用 {#weak_references}
 
 *弱引用*不会对其引用的实例保持强引用，因而不会阻止 ARC 销毁被引用的实例。这个特性阻止了引用变为循环强引用。声明属性或者变量时，在前面加上 `weak` 关键字表明这是一个弱引用。
 
@@ -245,8 +238,7 @@ unit4A = nil
 > 
 > 在使用垃圾收集的系统里，弱指针有时用来实现简单的缓冲机制，因为没有强引用的对象只会在内存压力触发垃圾收集时才被销毁。但是在 ARC 中，一旦值的最后一个强引用被移除，就会被立即销毁，这导致弱引用并不适合上面的用途。
 
-<a name="unowned_references"></a>
-### 无主引用
+### 无主引用 {#unowned_references}
 
 和弱引用类似，*无主引用*不会牢牢保持住引用的实例。和弱引用不同的是，无主引用在其他实例有相同或者更长的生命周期时使用。你可以在声明属性或者变量时，在前面加上关键字 `unowned` 表示这是一个无主引用。
 
@@ -329,8 +321,7 @@ john = nil
 > 上面的例子展示了如何使用安全的无主引用。对于需要禁用运行时的安全检查的情况（例如，出于性能方面的原因），Swift 还提供了不安全的无主引用。与所有不安全的操作一样，你需要负责检查代码以确保其安全性。
 > 你可以通过 `unowned(unsafe)` 来声明不安全无主引用。如果你试图在实例被销毁后，访问该实例的不安全无主引用，你的程序会尝试访问该实例之前所在的内存地址，这是一个不安全的操作。
 
-<a name="unowned_references_and_implicitly_unwrapped_optional_properties"></a>
-### 无主引用和隐式解包可选值属性
+### 无主引用和隐式解包可选值属性 {#unowned_references_and_implicitly_unwrapped_optional_properties}
 
 上面弱引用和无主引用的例子涵盖了两种常用的需要打破循环强引用的场景。
 
@@ -382,8 +373,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 
 在上面的例子中，使用隐式解包可选值值意味着满足了类的构造器的两个构造阶段的要求。`capitalCity` 属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
 
-<a name="strong_reference_cycles_for_closures"></a>
-## 闭包的循环强引用
+## 闭包的循环强引用 {#strong_reference_cycles_for_closures}
 
 前面我们看到了循环强引用是在两个类实例属性互相保持对方的强引用时产生的，还知道了如何用弱引用和无主引用来打破这些循环强引用。
 
@@ -477,8 +467,7 @@ paragraph = nil
 
 注意，`HTMLElement` 的析构器中的消息并没有被打印，证明了 `HTMLElement` 实例并没有被销毁。
 
-<a name="resolving_strong_reference_cycles_for_closures"></a>
-## 解决闭包的循环强引用
+## 解决闭包的循环强引用 {#resolving_strong_reference_cycles_for_closures}
 
 在定义闭包时同时定义捕获列表作为闭包的一部分，通过这种方式可以解决闭包和类实例之间的循环强引用。捕获列表定义了闭包体内捕获一个或者多个引用类型的规则。跟解决两个类实例间的循环强引用一样，声明每个捕获的引用为弱引用或无主引用，而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。
 
@@ -486,8 +475,7 @@ paragraph = nil
 > 
 > Swift 有如下要求：只要在闭包内使用 `self` 的成员，就要用 `self.someProperty` 或者 `self.someMethod()`（而不只是 `someProperty` 或 `someMethod()`）。这提醒你可能会一不小心就捕获了 `self`。
 
-<a name="defining_a_capture_list"></a>
-### 定义捕获列表
+### 定义捕获列表 {#defining_a_capture_list}
 
 捕获列表中的每一项都由一对元素组成，一个元素是 `weak` 或 `unowned` 关键字，另一个元素是类实例的引用（例如 `self`）或初始化过的变量（如 `delegate = self.delegate!`）。这些项在方括号中用逗号分开。
 
@@ -509,8 +497,7 @@ lazy var someClosure: () -> String = {
 }
 ```
 
-<a name="weak_and_unowned_references"></a>
-### 弱引用和无主引用
+### 弱引用和无主引用 {#weak_and_unowned_references}
 
 在闭包和捕获的实例总是互相引用并且总是同时销毁时，将闭包内的捕获定义为 `无主引用`。
 

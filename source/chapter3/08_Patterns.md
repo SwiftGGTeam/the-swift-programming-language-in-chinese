@@ -10,7 +10,7 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 
 > 模式语法
 > 
-<a name="pattern"></a>
+pattern {#pattern}
 > *模式* → [*通配符模式*](#wildcard_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
 > 
 > *模式* → [*标识符模式*](#identifier_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
@@ -40,13 +40,11 @@ for _ in 1...3 {
 
 > 通配符模式语法
 > 
-<a name="wildcard-pattern"></a>
+wildcard-pattern {#wildcard-pattern}
 > *通配符模式* → **_**
 > 
 
-<a name="identifier_pattern"></a>
-## 标识符模式（Identifier Pattern）
-
+## 标识符模式（Identifier Pattern） {#identifier_pattern}
 *标识符模式*匹配任何值，并将匹配的值和一个变量或常量绑定起来。例如，在下面的常量声明中，`someValue` 是一个标识符模式，匹配了 `Int` 类型的 `42`：
 
 ```swift
@@ -59,13 +57,11 @@ let someValue = 42
 
 > 标识符模式语法
 > 
-<a name="identifier-pattern"></a>
+identifier-pattern {#identifier-pattern}
 > *标识符模式* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-<a name="value-binding_pattern"></a>
-## 值绑定模式（Value-Binding Pattern）
-
+## 值绑定模式（Value-Binding Pattern） {#value-binding_pattern}
 *值绑定模式*把匹配到的值绑定给一个变量或常量。把匹配到的值绑定给常量时，用关键字 `let`，绑定给变量时，用关键字 `var`。
 
 在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。
@@ -84,13 +80,11 @@ case let (x, y):
 
 > 值绑定模式语法
 > 
-<a name="value-binding-pattern"></a>
+value-binding-pattern {#value-binding-pattern}
 > *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)
 > 
 
-<a name="tuple_pattern"></a>
-## 元组模式
-
+## 元组模式 {#tuple_pattern}
 *元组模式*是由逗号分隔的，具有零个或多个模式的列表，并由一对圆括号括起来。元组模式匹配相应元组类型的值。
 
 你可以使用类型标注去限制一个元组模式能匹配哪种元组类型。例如，在常量声明 `let (x, y): (Int, Int) = (1, 2)` 中的元组模式 `(x, y): (Int, Int)` 只匹配两个元素都是 `Int` 类型的元组。
@@ -115,32 +109,28 @@ let (a): Int = 2 // a: Int = 2
 
 > 元组模式语法
 > 
-<a name="tuple-pattern"></a>
+tuple-pattern {#tuple-pattern}
 > *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**
 > 
-<a name="tuple-pattern-element-list"></a>
+tuple-pattern-element-list {#tuple-pattern-element-list}
 > *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element)  **,** [*元组模式元素列表*](#tuple-pattern-element-list)
 > 
-<a name="tuple-pattern-element"></a>
+tuple-pattern-element {#tuple-pattern-element}
 > *元组模式元素* → [*模式*](#pattern)
 > 
 
-<a name="enumeration_case_pattern"></a>
-## 枚举用例模式（Enumeration Case Pattern）
-
+## 枚举用例模式（Enumeration Case Pattern） {#enumeration_case_pattern}
 *枚举用例模式*匹配现有的某个枚举类型的某个用例。枚举用例模式出现在 `switch` 语句中的 `case` 标签中，以及 `if`、`while`、`guard` 和 `for-in` 语句的 `case` 条件中。
 
 如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../chapter2/08_Enumerations.md#associated_values)。
 
 > 枚举用例模式语法
 > 
-<a name="enum-case-pattern"></a>
+enum-case-pattern {#enum-case-pattern}
 > *枚举用例模式* → [*类型标识*](./03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](./06_Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
 > 
 
-<a name="optional_pattern"></a>
-## 可选模式（Optional Pattern）
-
+## 可选模式（Optional Pattern） {#optional_pattern}
 *可选模式*匹配包装在一个 `Optional(Wrapped)` 或者 `ExplicitlyUnwrappedOptional(Wrapped)` 枚举中的 `Some(Wrapped)` 用例中的值。可选模式由一个标识符模式和紧随其后的一个问号组成，可以像枚举用例模式一样使用。
 
 由于可选模式是 `Optional` 和 `ImplicitlyUnwrappedOptional` 枚举用例模式的语法糖，下面两种写法是等效的：
@@ -173,13 +163,11 @@ for case let number? in arrayOfOptinalInts {
 
 > 可选模式语法
 > 
-<a name="optional-pattern"></a>
+optional-pattern {#optional-pattern}
 > *可选模式* → [*标识符模式*](./03_Types.md#type-identifier) **?**
 > 
 
-<a name="type-casting_patterns"></a>
-## 类型转换模式（Type-Casting Patterns）
-
+## 类型转换模式（Type-Casting Patterns） {#type-casting_patterns}
 有两种类型转换模式，`is` 模式和 `as` 模式。`is` 模式只出现在 `switch` 语句中的 `case` 标签中。`is` 模式和 `as` 模式形式如下：
 
 > is `类型`
@@ -195,19 +183,17 @@ for case let number? in arrayOfOptinalInts {
 
 > 类型转换模式语法
 > 
-<a name="type-casting-pattern"></a>
+type-casting-pattern {#type-casting-pattern}
 > *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)
 > 
-<a name="is-pattern"></a>
+is-pattern {#is-pattern}
 > *is 模式* → **is** [*类型*](./03_Types.md#type)
 > 
-<a name="as-pattern"></a>
+as-pattern {#as-pattern}
 > *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.md#type)
 > 
 
-<a name="expression_pattern"></a>
-## 表达式模式（Expression Pattern）
-
+## 表达式模式（Expression Pattern） {#expression_pattern}
 *表达式模式*代表表达式的值。表达式模式只出现在 `switch` 语句中的 `case` 标签中。
 
 表达式模式代表的表达式会使用 Swift 标准库中的 `~=` 运算符与输入表达式的值进行比较。如果 `~=` 运算符返回 `true`，则匹配成功。默认情况下，`~=` 运算符使用 `==` 运算符来比较两个相同类型的值。它也可以将一个整型数值与一个 `Range` 实例中的一段整数区间做匹配，正如下面这个例子所示：
@@ -245,6 +231,6 @@ default:
 
 > 表达式模式语法
 > 
-<a name="expression-pattern"></a>
+expression-pattern {#expression-pattern}
 > *表达式模式* → [*表达式*](./04_Expressions.md#expression)
 > 
