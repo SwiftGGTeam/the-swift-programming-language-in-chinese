@@ -29,17 +29,29 @@ Swift 语言存在两种类型：命名型类型和复合型类型。命名型�
 > 
 <a name="type"></a>
 > *类型* → [*数组类型*](#array-type)
+> 
 > *类型* → [*字典类型*](#dictionary-type)
+> 
 > *类型* → [*函数类型*](#function-type)
+> 
 > *类型* → [*类型标识*](#type-identifier)
+> 
 > *类型* → [*元组类型*](#tuple-type)
+> 
 > *类型* → [*可选类型*](#optional-type)
+> 
 > *类型* → [*隐式解析可选类型*](#implicitly-unwrapped-optional-type)
+> 
 > *类型* → [*协议合成类型*](#protocol-composition-type)
+> 
 > *类型* → [*元型类型*](#metatype-type)
+> 
 > *类型* → **任意类型**
+> 
 > *类型* → **自身类型**
+> 
 > *类型* → [*(类型)*](#type)
+> 
 
 <a name="type_annotation"></a>
 ## 类型注解
@@ -59,6 +71,7 @@ func someFunction(a: Int) { /* ... */ }
 > 
 <a name="type-annotation"></a>
 > *类型注解* → **:** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
+> 
 
 <a name="type_identifier"></a>
 ## 类型标识符
@@ -84,8 +97,10 @@ var someValue: ExampleModule.MyType
 > 
 <a name="type-identifier"></a>
 > *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
+> 
 <a name="type-name"></a>
 > *类型名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 
 <a name="tuple_type"></a>
 ## 元组类型
@@ -109,12 +124,16 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > 
 <a name="tuple-type"></a>
 > *元组类型* → **(** [*元组类型元素列表*](#tuple-type-element-list) <sub>可选</sub> **)**
+> 
 <a name="tuple-type-element-list"></a>
 > *元组类型元素列表* → [*元组类型元素*](#tuple-type-element) | [*元组类型元素*](#tuple-type-element) **,** [*元组类型元素列表*](#tuple-type-element-list)
+> 
 <a name="tuple-type-element"></a>
 > *元组类型元素* → [*元素名*](#element-name) [*类型注解*](#type-annotation) | [*类型*](#type)
+> 
 <a name="element-name"></a>
 > *元素名* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 
 <a name="function_type"></a>
 ## 函数类型
@@ -122,16 +141,19 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 函数类型表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
 
 > `参数类型` -> `返回值类型`
+> 
 
 参数类型是由逗号间隔的类型列表。由于参数类型和返回值类型可以是元组类型，所以函数类型支持多参数与多返回值的函数与方法。
 
 你可以对函数参数 `() -> T`（其中 T 是任何类型）使用 `autoclosure` 特性。这会自动将参数表达式转化为闭包，表达式的结果即闭包返回值。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为参数的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.html#autoclosures) 。
+> 
 
 函数类型可以拥有一个可变长参数作为参数类型中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变长参数的例子，请参阅 [可变参数](../chapter2/06_Functions.html#variadic_parameters)。
 
 为了指定一个 `in-out` 参数，可以在参数类型前加 `inout` 前缀。但是你不可以对可变长参数或返回值类型使用 `inout`。关于这种参数的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
 
 如果一个函数类型只有一个形式参数而且形式参数的类型是元组类型，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组  `(Int, Int)`  作为形式参数的函数的类型。与此相反，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 形式参数并且不返回任何值的函数的类型。相似地，因为 `Void` 是空元组类型 `()` 的别名， 函数类型 `(Void)-> Void` 与一个空元组的变量的函数类型 `(()) -> ()` 是一样的。但这些类型和无变量的函数类型 `() -> ()` 是不一样的。
+> 
 
 函数和方法中的变量名并不是函数类型的一部分。例如：
 
@@ -141,6 +163,7 @@ func anotherFunction(left: Int, right: Int) {}
 func functionWithDifferentLabels(top: Int, bottom: Int) {}
 
 var f = someFunction // 函数 f 的类型为 (Int, Int) -> Void, 而不是 (left: Int, right: Int) -> Void.
+> 
 f = anotherFunction              // 正确
 f = functionWithDifferentLabels  // 正确
 
@@ -155,11 +178,15 @@ f = functionWithDifferentNumberOfArguments // 错误
 
 ```swift
 var operation: (lhs: Int, rhs: Int) -> Int      // 错误
+> 
 var operation: (_ lhs: Int, _ rhs: Int) -> Int  // 正确
+> 
 var operation: (Int, Int) -> Int                // 正确
+> 
 ```
 
 如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `Int -> Int -> Int` 可以理解为 `Int -> (Int -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数类型。
+> 
 
 函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](05_Declarations.html#throwing_functions_and_methods) 和 [重抛函数与方法](05_Declarations.html#rethrowing_functions_and_methods)。
 
@@ -169,7 +196,9 @@ var operation: (Int, Int) -> Int                // 正确
 
 ```swift
 let external: (Any) -> Void = { _ in () }
+> 
 func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
+> 
     first(first)    // 错误
     second(second)  // 错误
     
@@ -192,16 +221,23 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > 
 <a name="function-type"></a>
 > *函数类型* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
+> 
 > *函数类型* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
+> 
 <a name="function-type-argument-clause"></a>
 > *函数类型子句* → (­)­
+> 
 > *函数类型子句* → ([*函数类型参数列表*](#function-type-argument-list)*...*­<sub>可选</sub>)­
+> 
 <a name="function-type-argument-list"></a>
 > *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)， [*函数类型参数列表*](#function-type-argument-list)
+> 
 <a name="function-type-argument"></a>
 > *函数类型参数* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
+> 
 <a name="argument-label"></a>
 > *参数标签* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 
 <a name="array_type"></a>
 ## 数组类型
@@ -209,11 +245,13 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 Swift 语言为标准库中定义的 `Array<Element>` 类型提供了如下语法糖：
 
 > [`类型`]
+> 
 
 换句话说，下面两个声明是等价的：
 
 ```swift
 let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+> 
 let someArray: [String] = ["Alex", "Brian", "Dave"]
 ```
 
@@ -233,6 +271,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 > 
 <a name="array-type"></a>
 > *数组类型* → **[** [*类型*](#type) **]**
+> 
 
 <a name="dictionary_type"></a>
 ## 字典类型
@@ -240,12 +279,14 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 Swift 语言为标准库中定义的 `Dictionary<Key, Value>` 类型提供了如下语法糖：
 
 > [`键类型` : `值类型`]
+> 
 
 换句话说，下面两个声明是等价的：
 
 ```swift
 let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
 let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+> 
 ```
 
 上面两种情况，常量 `someDictionary` 被声明为一个字典，其中键为 `String` 类型，值为 `Int` 类型。
@@ -260,6 +301,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 > 
 <a name="dictionary-type"></a>
 > *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]**
+> 
 
 <a name="optional_type"></a>
 ## 可选类型
@@ -292,6 +334,7 @@ optionalInteger! // 42
 > 
 <a name="optional-type"></a>
 > *可选类型* → [*类型*](#type) **?**
+> 
 
 <a name="implicitly_unwrapped_optional_type"></a>
 ## 隐式解析可选类型
@@ -327,6 +370,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 > 
 <a name="implicitly-unwrapped-optional-type"></a>
 > *隐式解析可选类型* → [*类型*](#type) **!**
+> 
 
 <a name="protocol_composition_type"></a>
 ## 协议合成类型
@@ -336,6 +380,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 协议合成类型的形式如下：
 
 > `Protocol 1` & `Procotol 2`
+> 
 
 协议合成类型允许你指定一个值，其类型符合多个协议的要求且不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议 `Protocol D`，很显然这样做有效率的多，甚至不需引入一个新名字。
 
@@ -345,10 +390,13 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 > 
 <a name="protocol-composition-type"></a>
 > *协议合成类型* → [*协议标识符*](#protocol-identifier) & [*协议合成延续*](#protocol-composition-continuation)
+> 
 <a name="protocol-composition-continuation"></a>
 > *协议合成延续* → [*协议标识符*](#protocol-identifier) | [*协议合成类型*](#protocol-composition-type)
+> 
 <a name="protocol-identifier"></a>
 > *协议标识符* → [*类型标识符*](#type-identifier)
+> 
 
 <a name="metatype_type"></a>
 ## 元类型
@@ -399,6 +447,7 @@ let anotherInstance = metatype.init(string: "some string")
 > 
 <a name="metatype-type"></a>
 > *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol**
+> 
 
 <a name="type_inheritance_clause"></a>
 ## 类型继承子句
@@ -415,8 +464,10 @@ let anotherInstance = metatype.init(string: "some string")
 > 
 <a name="type_inheritance_clause"></a>
 > *类型继承子句* → **:** [*类型继承列表*](#type-inheritance-list)
+> 
 <a name="type-inheritance-list"></a>
 > *类型继承列表* → [*类型标识符*](#type-identifier) | [*类型标识符*](#type-identifier) **,** [*类型继承列表*](#type-inheritance-list)
+> 
 <a name="class-requirement"></a>
 
 

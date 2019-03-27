@@ -7,23 +7,41 @@
 在 Swift 中，大多数声明在某种意义上讲也是定义，因为它们在声明时往往伴随着实现或初始化。由于协议并不提供实现，大多数协议成员仅仅只是声明而已。为了方便起见，也是因为这些区别在 Swift 中并不是很重要，“声明”这个术语同时包含了声明和定义两种含义。
 
 > 声明语法
+> 
 > <a name="declaration"></a>
+> 
 > *声明* → [*导入声明*](#import-declaration)
+> 
 > *声明* → [*常量声明*](#constant-declaration)
+> 
 > *声明* → [*变量声明*](#variable-declaration)
+> 
 > *声明* → [*类型别名声明*](#typealias-declaration)
+> 
 > *声明* → [*函数声明*](#function-declaration)
+> 
 > *声明* → [*枚举声明*](#enum-declaration)
+> 
 > *声明* → [*结构体声明*](#struct-declaration)
+> 
 > *声明* → [*类声明*](#class-declaration)
+> 
 > *声明* → [*协议声明*](#protocol-declaration)
+> 
 > *声明* → [*构造器声明*](#initializer-declaration)
+> 
 > *声明* → [*析构器声明*](#deinitializer-declaration)
+> 
 > *声明* → [*扩展声明*](#extension-declaration)
+> 
 > *声明* → [*下标声明*](#subscript-declaration)
+> 
 > *声明* → [*运算符声明*](#operator-declaration)
+> 
 > <a name="declarations"></a>
+> 
 > *多条声明* → [*声明*](#declaration) [*多条声明*](#declarations)<sub>可选</sub>
+> 
 
 <a name="top-level_code"></a>
 ## 顶级代码
@@ -33,6 +51,7 @@ Swift 的源文件中的顶级代码（top-level code）由零个或多个语句
 > 顶级声明语法
 > 
 > *顶级声明* → [*多条语句*](10_Statements.html#statements)<sub>可选</sub>
+> 
 
 <a name="code_blocks"></a>
 ## 代码块
@@ -50,7 +69,9 @@ Swift 的源文件中的顶级代码（top-level code）由零个或多个语句
 > 代码块语法
 > 
 > <a name="code-block"></a>
+> 
 > *代码块* → **{** [*多条语句*](10_Statements.html#statements)<sub>可选</sub> **}**
+> 
 
 <a name="import_declaration"></a>
 ## 导入声明
@@ -72,14 +93,21 @@ import 模块.子模块
 > 导入声明语法
 > 
 > <a name="import-declaration"></a>
+> 
 > *导入声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **import** [*导入类型*](#import-kind)<sub>可选</sub> [*导入路径*](#import-path)
 > 
 > <a name="import-kind"></a>
+> 
 > *导入类型* → **typealias** | **struct** | **class** | **enum** | **protocol** | **let** | **var** | **func**
+> 
 > <a name="import-path"></a>
+> 
 > *导入路径* → [*导入路径标识符*](#import-path-identifier) | [*导入路径标识符*](#import-path-identifier) **.** [*导入路径*](#import-path)
+> 
 > <a name="import-path-identifier"></a>
+> 
 > *导入路径标识符* → [*标识符*](02_Lexical_Structure.html#identifier) | [*运算符*](02_Lexical_Structure.html#operator)
+> 
 
 <a name="constant_declaration"></a>
 ## 常量声明
@@ -119,13 +147,21 @@ print("The second number is \(secondNumber).")
 > 常量声明语法
 > 
 > <a name="constant-declaration"></a>
+> 
 > *常量声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub>  **let** [*模式构造器列表*](pattern-initializer-list)
+> 
 > <a name="pattern-initializer-list"></a>
+> 
 > *模式构造器列表* → [*模式构造器*](#pattern-initializer) | [*模式构造器*](#pattern-initializer) **,** [*模式构造器列表*](#pattern-initializer-list)
+> 
 > <a name="pattern-initializer"></a>
+> 
 > *模式构造器* → [*模式*](07_Patterns.html#pattern) [*构造器*](#initializer)<sub>可选</sub>
+> 
 > <a name="initializer"></a>
+> 
 > *构造器* → **=** [*表达式*](04_Expressions.html#expression)
+> 
 
 <a name="variable_declaration"></a>
 
@@ -138,6 +174,7 @@ print("The second number is \(secondNumber).")
 > 注意
 > 
 > 也可以在协议声明中声明属性，详情请参阅 [协议属性声明](#protocol_property_declaration)。
+> 
 
 可以在子类中重写继承来的变量属性，使用 `override` 声明修饰符标记属性的声明即可，详情请参阅 [重写](../chapter2/13_Inheritance.html#overriding)。
 
@@ -225,49 +262,80 @@ var 变量名称: 类型 = 表达式 {
 > 注意
 > 
 > 在一个类声明中，使用关键字 `static` 与同时使用 `class` 和 `final` 去标记一个声明的效果相同。
+> 
 
 <a name="grammer_of_a_variable_declaration"></a>
 > 变量声明语法
 > 
 <a name="variable-declaration"></a>
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*模式构造器列表*](#pattern-initializer-list)
+> 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.html#type-annotation) [*代码块*](#code-block)
+> 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.html#type-annotation) [*getter-setter 代码块*](#getter-setter-block)
+> 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.html#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
+> 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*构造器*](#initializer) [*willSet-didSet 代码块*](#willSet-didSet-block)
+> 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.html#type-annotation) [*构造器*](#initializer)<sub>可选</sub> [*willSet-didSet 代码块*](#willSet-didSet-block)
+> 
 
 <a name="variable-declaration-head"></a>
 > *变量声明头* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **var**
+> 
 > <a name="variable-name"></a>
+> 
 > *变量名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 
 <a name="getter-setter-block"></a>
 > *getter-setter 代码块* → [*代码块*](#code-block)
+> 
 > *getter-setter 代码块* → **{** [*getter 子句*](#getter-clause) [*setter 子句*](#setter-clause)<sub>可选</sub> **}**
+> 
 > *getter-setter 代码块* → **{** [*setter 子句*](#setter-clause) [*getter 子句*](#getter-clause) **}**
+> 
 > <a name="getter-clause"></a>
+> 
 > *getter 子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **get** [*代码块*](#code-block)
+> 
 > <a name="setter-clause"></a>
+> 
 > *setter 子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **set** [*setter 名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)
+> 
 > <a name="setter-name"></a>
+> 
 > *setter 名称* → **(** [*标识符*](02_Lexical_Structure.html#identifier) **)**
+> 
 
 <a name="getter-setter-keyword-block"></a>
 > *getter-setter 关键字代码块* → **{** [*getter 关键字子句*](#getter-keyword-clause) [*setter 关键字子句*](#setter-keyword-clause)<sub>可选</sub> **}**
+> 
 > *getter-setter 关键字代码块* → **{** [*setter 关键字子句*](#setter-keyword-clause) [*getter 关键字子句*](#getter-keyword-clause) **}**
+> 
 > <a name="getter-keyword-clause"></a>
+> 
 > *getter 关键字子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **get**
+> 
 > <a name="setter-keyword-clause"></a>
+> 
 > *setter 关键字子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **set**
+> 
 
 <a name="willSet-didSet-block"></a>
 > *willSet-didSet 代码块* → **{** [*willSet 子句*](#willSet-clause) [*didSet 子句*](#didSet-clause)<sub>可选</sub> **}**
+> 
 > *willSet-didSet 代码块* → **{** [*didSet 子句*](#didSet-clause) [*willSet 子句*](#willSet-clause)<sub>可选</sub> **}**
+> 
 > <a name="willSet-clause"></a>
+> 
 > *willSet 子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **willSet** [*setter 名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)
+> 
 > <a name="didSet-clause"></a>
+> 
 > *didSet 子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **didSet** [*setter 名称*](#setter-name)<sub>可选</sub> [*代码块*](#code-block)
+> 
 
 <a name="type_alias_declaration"></a>
 ## 类型别名声明
@@ -284,16 +352,20 @@ typealias 类型别名 = 现存类型
 
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
+> 
 
 // 下列两个字典拥有同样的类型
 var dictionary1: StringDictionary<Int> = [:]
+> 
 var dictionary2: Dictionary<String, Int> = [:]
+> 
 ```
 
 当一个类型别名带着泛型参数一起被声明时，这些参数的约束必须与现有参数的约束完全匹配。例如:
 
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+> 
 ```
 
 因为类型别名可以和现有类型相互交换使用，类型别名不可以引入额外的类型约束。
@@ -313,6 +385,7 @@ protocol Sequence {
 }
 
 func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+> 
     // ...
 }
 ```
@@ -323,13 +396,20 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 <a name="grammer_of_a_type_alias_declaration"></a>
 > 类型别名声明语法
+> 
 >
 > <a name="typealias-declaration"></a>
+> 
 > *类型别名声明*  → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*访问级别修饰符*](#access-level-modifier)<sub>可选</sub> **typealias** [*类型别名名称*](#typealias-name) [*类型别子句*](#typealias-clause) [*类型别名赋值*](#typealias-assignment)
+> 
 > <a name="typealias-name"></a>
+> 
 > *类型别名名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 > <a name="typealias-assignment"></a>
+> 
 > *类型别名赋值* → **=** [*类型*](03_Types.html#type)
+> 
 
 <a name="function_declaration"></a>
 ## 函数声明
@@ -338,6 +418,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 ```swift
 func 函数名称(参数列表) -> 返回类型 {
+> 
 	语句
 }
 ```
@@ -371,6 +452,7 @@ func 函数名称(参数列表) {
 
 ```swift
 func f(x: Int, y: Int) -> Int { return x + y }
+> 
 f(x: 1, y: 2) // 参数 x 和 y 都有标签
 ```
 
@@ -411,6 +493,7 @@ repeatGreeting("Hello, world!", count: 2) //  count 有标签, greeting 没有
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
+> 
     return { [a] in return a + 1 }
 }
 ```
@@ -453,6 +536,7 @@ _ : 参数类型
 
 ```swift
 func f(x: Int = 42) -> Int { return x }
+> 
 f()     // 有效，使用默认值
 f(7)    // 有效，提供了值
 f(x: 7) // 无效，该参数没有外部名称
@@ -474,6 +558,7 @@ f(x: 7) // 无效，该参数没有外部名称
 
 ```swift
 func 函数名称(参数列表) throws -> 返回类型 {
+> 
 	语句
 }
 ```
@@ -493,6 +578,7 @@ func 函数名称(参数列表) throws -> 返回类型 {
 
 ```swift
 func someFunction(callback: () throws -> Void) rethrows {
+> 
     try callback()
 }
 ```
@@ -504,6 +590,7 @@ func alwaysThrows() throws {
     throw SomeError.error
 }
 func someFunction(callback: () throws -> Void) rethrows {
+> 
     do {
         try callback()
         try alwaysThrows()  // 非法, alwaysThrows() 不是一个抛出函数类型的参数
@@ -529,35 +616,60 @@ Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它�
 > 
 <a name="function-declaration"></a>
 > *函数声明* → [*函数头*](#function-head) [*函数名*](#function-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*函数签名*](#function-signature) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause) [*函数体*](#function-body)<sub>可选</sub>
+> 
 
 <a name="function-head"></a>
 > *函数头* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub>    **func**
+> 
 > <a name="function-name"></a>
+> 
 > *函数名* → [*标识符*](02_Lexical_Structure.html#identifier) | [*运算符*](02_Lexical_Structure.html#operator)
+> 
 >
 > <a name="function-signature"></a>
+> 
 >
 > *函数签名* → [*参数子句列表*](#parameter-clauses) **throws**<sub>可选</sub> [*函数结果*](#function-result)<sub>可选</sub>
+> 
 > *函数签名* → [*参数子句列表*](#parameter-clauses) **rethrows** [*函数结果*](#function-result)<sub>可选</sub>
+> 
 > <a name="function-result"></a>
+> 
 > *函数结果* → **->** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*类型*](03_Types.html#type)
+> 
 > <a name="function-body"></a>
+> 
 > *函数体* → [*代码块*](#code-block)
+> 
 
 > <a name="parameter-clause"></a>
+> 
 > *参数子句* → **(** **)** | **(** [*参数列表*](#parameter-list) **)**
+> 
 > <a name="parameter-list"></a>
+> 
 > *参数列表* → [*参数*](#parameter) | [*参数*](#parameter) **,** [*参数列表*](#parameter-list)
+> 
 > <a name="parameter"></a>
+> 
 > *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型标注*](03_Types.html#type-annotation) [*默认参数子句*](#default-argument-clause)<sub>可选</sub>
+> 
 > *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型标注*](03_Types.html#type-annotation)
+> 
 > *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型标注*](03_Types.html#type-annotation) **...**
+> 
 > <a name="external-parameter-name"></a>
+> 
 > *外部参数名* → [*标识符*](02_Lexical_Structure.html#identifier) | **_**
+> 
 > <a name="local-parameter-name"></a>
+> 
 > *内部参数名* → [*标识符*](02_Lexical_Structure.html#identifier) | **_**
+> 
 > <a name="default-argument-clause"></a>
+> 
 > *默认参数子句* → **=** [*表达式*](04_Expressions.html#expression)
+> 
 
 <a name="enumeration_declaration"></a>
 
@@ -600,6 +712,7 @@ enum Number {
 }
 
 // f 的类型为 (Int) -> Number
+> 
 let f = Number.integer
 
 // 利用 f 把一个整数数组转成 Number 数组
@@ -617,6 +730,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 ```swift
 enum Tree<T> {
+> 
 	case empty
 	indirect case node(value: T, left: Tree, right:Tree)
 }
@@ -671,44 +785,79 @@ enum GamePlayMode: String {
 
 <a name="grammer_of_an_enumeration_declaration"></a>
 > 枚举声明语法
+> 
 >
 > <a name="enum-declaration"></a>
+> 
 > *枚举声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*访问级别修饰符*](#access-level-modifier)<sub>可选</sub> [*联合风格枚举*](#union-style-enum)
+> 
 > *枚举声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*访问级别修饰符*](#access-level-modifier) <sub>可选</sub> [*原始值风格枚举*](#raw-value-style-enum)
+> 
 >
 > *联合风格枚举* → **indirect**<sub>可选</sub> **enum** [*枚举名称*](#enum-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [类型继承子句](03_Types.html#type-inheritance-clause)<sub>可选</sub> **{** [*多个联合风格枚举成员*](#union-style-enum-members)<sub>可选</sub> **}**
+> 
 > <a name="union-style-enum-members"></a>
+> 
 > *多个联合风格枚举成员* → [*联合风格枚举成员*](#union-style-enum-member) [*多个联合风格枚举成员*](#union-style-enum-members)<sub>可选</sub>
+> 
 > <a name="union-style-enum-member"></a>
+> 
 > *联合风格枚举成员* → [*声明*](#declaration) | [*联合风格枚举用例子句*](#union-style-enum-case-clause) | [*编译控制流语句*](05_Statements.html#compiler-control-statement)
+> 
 > <a name="union-style-enum-case-clause"></a>
+> 
 > *联合风格枚举用例子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **indirect**<sub>可选</sub> **case** [*联合风格枚举用例列表*](#union-style-enum-case-list)
+> 
 > <a name="union-style-enum-case-list"></a>
+> 
 > *联合风格枚举用例列表* → [*联合风格枚举用例*](#union-style-enum-case) | [*联合风格枚举用例*](#union-style-enum-case) **,** [*联合风格枚举用例列表*](#union-style-enum-case-list)
+> 
 > <a name="union-style-enum-case"></a>
+> 
 > *联合风格枚举用例* → [*枚举用例名称*](#enum-case-name) [*元组类型*](03_Types.html#tuple-type)<sub>可选</sub>
+> 
 > <a name="enum-name"></a>
+> 
 > *枚举名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 > <a name="enum-case-name"></a>
+> 
 > *枚举用例名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 >
 > <a name="raw-value-style-enum"></a>
+> 
 >
 > *原始值风格枚举* → **enum** [*枚举名称*](#enum-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*类型继承子句*](03_Types.html#type-inheritance-clause)  [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause) **{** [*多个原始值风格枚举成员*](#raw-value-style-enum-members) **}**
+> 
 > <a name="raw-value-style-enum-members"></a>
+> 
 > *多个原始值风格枚举成员* → [*原始值风格枚举成员*](#raw-value-style-enum-member) [*多个原始值风格枚举成员*](#raw-value-style-enum-members)<sub>可选</sub>
+> 
 > <a name="raw-value-style-enum-member"></a>
+> 
 > *原始值风格枚举成员* → [*声明*](#declaration) | [*原始值风格枚举用例子句*](#raw-value-style-enum-case-clause) | [*编译控制流语句*](05_Statements.html#compiler-control-statement)
+> 
 > <a name="raw-value-style-enum-case-clause"></a>
+> 
 > *原始值风格枚举用例子句* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **case** [*原始值风格枚举用例列表*](#raw-value-style-enum-case-list)
+> 
 > <a name="raw-value-style-enum-case-list"></a>
+> 
 > *原始值风格枚举用例列表* → [*原始值风格枚举用例*](#raw-value-style-enum-case) | [*原始值风格枚举用例*](#raw-value-style-enum-case) **,** [*原始值风格枚举用例列表*](#raw-value-style-enum-case-list)
+> 
 > <a name="raw-value-style-enum-case"></a>
+> 
 > *原始值风格枚举用例* → [*枚举用例名称*](#enum-case-name) [*原始值赋值*](#raw-value-assignment)<sub>可选</sub>
+> 
 > <a name="raw-value-assignment"></a>
+> 
 > *原始值赋值* → **=** [*原始值字面量*](#raw-value-literal)
+> 
 > <a name="raw-value-literal"></a>
+> 
 > *原始值字面量* → [数字型字面量](02_Lexical_Structure.html#numeric-literal) | [字符串型字面量](02_Lexical_Structure.html#static-string-literal) | [布尔型字面量](02_Lexical_Structure.html#boolean-literal)
+> 
 
 <a name="structure_declaration"></a>
 ## 结构体声明
@@ -744,18 +893,29 @@ struct 结构体名称: 采纳的协议 {
 
 <a name="grammer_of_a_structure_declaration"></a>
 > 结构体声明语法
+> 
 >
 > <a name="struct-declaration"></a>
+> 
 > *结构体声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*访问级别修饰符*](#access-level-modifier) <sub>可选</sub> **struct** [*结构体名称*](#struct-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*类型继承子句*](03_Types.html#type-inheritance-clause)<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*结构体主体*](#struct-body)
+> 
 > <a name="struct-name"></a>
+> 
 > *结构体名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 > <a name="struct-body"></a>
+> 
 > *结构体主体* → **{** [*多条声明*](#declarations)<sub>可选</sub> **}**
+> 
 > <a name="struct-name"></a>
+> 
 >
 > *结构体多个成员* → [*结构体成员*](#struct-member) [*结构体多个成员*](#struct-members)<sub>可选</sub>  
+> 
 > <a name="struct-member"></a>
+> 
 > *结构体成员* →  [*声明*](#declaration) | [*编译控制流语句*](05_Statements.html#compiler-control-statement)
+> 
 
 <a name="class_declaration"></a>
 
@@ -795,18 +955,29 @@ class 类名: 超类, 采纳的协议 {
 
 <a name="grammer_of_a_class_declaration"></a>
 > 类声明语法
+> 
 >
 > <a name="class-declaration"></a>
+> 
 > *类声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [访问级别修饰符](#access-level-modifier)<sub>可选</sub> **final**<sub>可选</sub> **class** [*类名*](#class-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*类型继承子句*](03_Types.html#type-inheritance-clause)<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*类主体*](#class-body)
+> 
 > *类声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **final** [访问级别修饰符](#access-level-modifier)<sub>可选</sub> **class** [*类名*](#class-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*类型继承子句*](03_Types.html#type-inheritance-clause)<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*类主体*](#class-body)
+> 
 > <a name="class-name"></a>
+> 
 > *类名* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 > <a name="class-body"></a>
+> 
 > *类主体* → **{** [*多条声明*](#declarations)<sub>可选</sub> **}**
+> 
 >
 > *类多个成员* → [*类成员*](#class-member) [*类多个成员*](#class-members)<sub>可选</sub>  
+> 
 > <a name="class-member"></a>
+> 
 > *类成员* →  [*声明*](#declaration) | [*编译控制流语句*](05_Statements.html#compiler-control-statement)
+> 
 
 <a name="protocol_declaration"></a>
 ## 协议声明
@@ -826,6 +997,7 @@ protocol 协议名称: 继承的协议 {
 > 注意
 > 
 > 也可以使用协议合成类型来聚合多个协议的一致性要求，请参阅 [协议合成类型](03_Types.html#protocol_composition_type) 和 [协议合成](../chapter2/21_Protocols.html#protocol_composition)。
+> 
 
 可以通过类型的扩展声明来采纳协议，从而为之前声明的类型添加协议一致性。在扩展中，必须实现所有采纳协议的要求。如果该类型已经实现了所有的要求，可以让这个扩展声明的主体留空。
 
@@ -844,6 +1016,7 @@ protocol SomeProtocol: AnyObject {
 > 注意
 > 
 > 如果协议已经用 `objc` 特性标记了，`AnyObject` 要求就隐式地应用于该协议，无需显式使用 `AnyObject` 关键字。
+> 
 
 协议类型是命名的类型，因此它们可以像其他命名类型一样使用，正如 [协议作为类型](../chapter2/21_Protocols.html#protocols_as_types) 所讨论的。然而，不能构造一个协议的实例，因为协议实际上不提供它们指定的要求的实现。
 
@@ -851,26 +1024,44 @@ protocol SomeProtocol: AnyObject {
 
 <a name="grammer_of_a_protocol_declaration"></a>
 > 协议声明语法
+> 
 >
 > <a name="protocol-declaration"></a>
+> 
 > *协议声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*访问级别修饰符*](#access-level-modifier)<sub>可选</sub> **protocol** [*协议名称*](#protocol-name) [*类型继承子句*](03_Types.html#type-inheritance-clause)<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*协议主体*](#protocol-body)
+> 
 > <a name="protocol-name"></a>
+> 
 > *协议名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> 
 > <a name="protocol-body"></a>
+> 
 > *协议主体* → **{** [*协议成员声明列表*](#protocol-member-declarations)<sub>可选</sub> **}**
+> 
 >
 > *协议多个成员* → [*协议成员*](#protocol-member) [*协议多个成员*](#protocol-members)<sub>可选</sub>  
+> 
 > <a name="protocol-member"></a>
+> 
 > *协议成员* →  [*协议成员声明*](#protocol-member-declaration) | [*编译控制流语句*](05_Statements.html#compiler-control-statement)
+> 
 >
 > <a name="protocol-member-declaration"></a>
+> 
 > *协议成员声明* → [*协议属性声明*](#protocol-property-declaration)
+> 
 > *协议成员声明* → [*协议方法声明*](#protocol-method-declaration)
+> 
 > *协议成员声明* → [*协议构造器声明*](#protocol-initializer-declaration)
+> 
 > *协议成员声明* → [*协议下标声明*](#protocol-subscript-declaration)
+> 
 > *协议成员声明* → [*协议关联类型声明*](#protocol-associated-type-declaration)
+> 
 > <a name="protocol-member-declarations"></a>
+> 
 > *协议成员声明列表* → [*协议成员声明*](#protocol-member-declaration) [*协议成员声明列表*](#protocol-member-declarations)<sub>可选</sub>
+> 
 
 <a name="protocol_property_declaration"></a>
 ### 协议属性声明
@@ -891,7 +1082,9 @@ var 属性名: 类型 { get set }
 > 协议属性声明语法
 > 
 > <a name="protocol-property-declaration"></a>
+> 
 > *协议属性声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.html#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
+> 
 
 <a name="protocol_method_declaration"></a>
 ### 协议方法声明
@@ -906,7 +1099,9 @@ var 属性名: 类型 { get set }
 > 协议方法声明语法
 > 
 > <a name="protocol-method-declaration"></a>
+> 
 > *协议方法声明* → [*函数头*](#function-head) [*函数名*](#function-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*函数签名*](#function-signature) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub>
+> 
 
 <a name="protocol_initializer_declaration"></a>
 
@@ -925,8 +1120,11 @@ var 属性名: 类型 { get set }
 > 协议构造器声明语法
 > 
 > <a name="protocol-initializer-declaration"></a>
+> 
 > *协议构造器声明* → [*构造器头*](#initializer-head) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*参数子句*](#parameter-clause)  **throws**<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub>
+> 
 > *协议构造器声明* → [*构造器头*](#initializer-head) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*参数子句*](#parameter-clause)  **rethrows** [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub>
+> 
 
 <a name="protocol_subscript_declaration"></a>
 ### 协议下标声明
@@ -935,6 +1133,7 @@ var 属性名: 类型 { get set }
 
 ```swift
 subscript (参数列表) -> 返回类型 { get set }
+> 
 ```
 
 下标声明只为符合类型声明了 getter 和 setter 要求。如果下标声明包含 `get` 和 `set` 关键字，符合类型也必须实现 getter 和 setter 子句。如果下标声明只包含 `get` 关键字，符合类型必须实现 getter 子句，可以选择是否实现 setter 子句。
@@ -943,8 +1142,11 @@ subscript (参数列表) -> 返回类型 { get set }
 
 <a name="grammer_of_a_protocol_subscript_declaration"></a>
 > 协议下标声明语法
+> 
 > <a name="protocol-subscript-declaration"></a>
+> 
 > *协议下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
+> 
 
 <a name="protocol_associated_type_declaration"></a>
 
@@ -976,7 +1178,9 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 > 协议关联类型声明语法
 > 
 > <a name="protocol-associated-type-declaration"></a>
+> 
 > *协议关联类型声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*访问级别修饰符*](#access-level-modifier)<sub>可选</sub> **associatedtype** [*类型别名头*](#typealias-head) [*类型继承子句*](03_Types.html#type-inheritance-clause)<sub>可选</sub> [*类型别名赋值*](#typealias-assignment)<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub>
+> 
 
 <a name="initializer_declaration"></a>
 ## 构造器声明
@@ -1018,6 +1222,7 @@ convenience init(参数列表) {
 > 注意
 > 
 > 如果使用 `required` 声明修饰符标记一个构造器，在子类中重写这种构造器时，无需使用 `override` 修饰符。
+> 
 
 就像函数和方法，构造器也可以抛出或者重抛错误，你可以在构造器参数列表的圆括号之后使用 `throws` 或 `rethrows` 关键字来表明相应的抛出行为。
 
@@ -1068,14 +1273,23 @@ if let actualInstance = SomeStruct(input: "Hello") {
 > 构造器声明语法
 > 
 > <a name="initializer-declaration"></a>
+> 
 > *构造器声明* → [*构造器头*](#initializer-head) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*参数子句*](#parameter-clause) **throws**<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*构造器主体*](#initializer-body)
+> 
 > *构造器声明* → [*构造器头*](#initializer-head) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub> [*参数子句*](#parameter-clause) **rethrows**<sub>可选</sub> [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*构造器主体*](#initializer-body)
+> 
 > <a name="initializer-head"></a>
+> 
 > *构造器头* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **init**
+> 
 > *构造器头* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **init** **?**
+> 
 > *构造器头* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **init** **!**
+> 
 > <a name="initializer-body"></a>
+> 
 > *构造器主体* → [*代码块*](#code-block)
+> 
 
 <a name="deinitializer_declaration"></a>
 ## 析构器声明
@@ -1100,7 +1314,9 @@ deinit {
 > 析构器声明语法
 > 
 > <a name="deinitializer-declaration"></a>
+> 
 > *析构器声明* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **deinit** [*代码块*](#code-block)
+> 
 
 <a name="extension_declaration"></a>
 ## 扩展声明
@@ -1221,15 +1437,18 @@ doSomething(with: oneAndTwo)
 ```swift
 protocol Serializable {
     func serialize() -> Any
+> 
 }
 
 extension Array: Serializable where Element == Int {
     func serialize() -> Any {
+> 
         // implementation
     }
 }
 extension Array: Serializable where Element == String {
     func serialize() -> Any {
+> 
         // implementation
     }
 }
@@ -1245,6 +1464,7 @@ extension String: SerializableInArray { }
 
 extension Array: Serializable where Element: SerializableInArray {
     func serialize() -> Any {
+> 
         // 具体实现
     }
 }
@@ -1292,13 +1512,20 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 <a name="grammer_of_an_extension_declaration"></a>
 > 扩展声明语法
+> 
 >
 > <a name="extension-declaration"></a>
+> 
 > *扩展声明* → [特性](06_Attributes.html#type_attributes)<sub>可选</sub> [访问级别修饰符](#access-level-modifier)<sub>可选</sub> **extension** [*类型标识符*](03_Types.html#type-identifier) [*类型-继承-子句*](03_Types.html#type-inheritance-clause)<sub>可选</sub>  [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*扩展主体*](#extension-body)
+> 
 > <a name="extension-body"></a>
+> 
 > *扩展主体* → **{** [*多条声明*](#declarations)<sub>可选</sub> **}**
+> 
 > *多条声明* → [单条声明](#subscript_declaration) [多条声明](#declarations) <sub>可选</sub>
+> 
 > *单条声明* → [声明语句](#declarations) | [*编译控制流语句*](05_Statements.html#compiler-control-statement)
+> 
 
 <a name="subscript_declaration"></a>
 
@@ -1308,6 +1535,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 ```swift
 subscript (参数列表) -> 返回类型 {
+> 
 	get {
 		语句
 	}
@@ -1335,15 +1563,24 @@ subscript (参数列表) -> 返回类型 {
 
 <a name="grammer_of_a_subscript_declaration"></a>
 > 下标声明语法
+> 
 >
 > <a name="subscript-declaration"></a>
+> 
 > *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*代码块*](#code-block)
+> 
 > *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*getter-setter 代码块*](#getter-setter-block)
+> 
 > *下标声明* → [*下标头*](#subscript-head) [*下标结果*](#subscript-result) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.html#generic-where-clause)<sub>可选</sub> [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
+> 
 > <a name="subscript-head"></a>
+> 
 > *下标头* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **subscript**  [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic-parameter-clause)<sub>可选</sub>  [*参数子句*](#parameter-clause)
+> 
 > <a name="subscript-result"></a>
+> 
 > *下标结果* → **->** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*类型*](03_Types.html#type)
+> 
 
 <a name="operator_declaration"></a>
 ## 运算符声明
@@ -1394,13 +1631,18 @@ postfix operator 运算符名称 {}
 > 
 <a name="prefix-operator-declaration"></a>
 > *前缀运算符声明* → **prefix** **运算符** [*运算符*](02_Lexical_Structure.html#operator) **{** **}**
+> 
 > <a name="postfix-operator-declaration"></a>
+> 
 > *后缀运算符声明* → **postfix** **运算符** [*运算符*] (02_Lexical_Structure.html#operator) **{** **}**
+> 
 > <a name="infix-operator-declaration"></a>
+> 
 > *中缀运算符声明* → **infix** **运算符** [*运算符*](02_Lexical_Structure.html#operator) **{** [*中缀运算符属性*](#infix-operator-attributes)<sub>可选</sub> **}**
 > 
 <a name="infix-operator-group"></a>
 > *中缀运算符组* → [*优先级组名称*](#precedence-group-name)
+> 
 
 <a name="precedence_group_declaration_modifiers"></a>
 ## 优先级组声明
@@ -1422,6 +1664,7 @@ precedencegroup 优先级组名称{
 > 注意
 > 
 > 使用较低和较高优先级组相互联系的优先级组必须保持单一层次关系，但它们不必是线性关系。这意味着优先级组也许会有未定义的相关优先级。这些优先级组的运算符在没有用圆括号分组的情况下是不能紧邻着使用的。
+> 
 
 Swift 定义了大量的优先级组来与标准库的运算符配合使用，例如相加（`+`）和相减（`-`）属于 `AdditionPrecedence` 组，相乘（`*`）和相除（`/`）属于 `MultiplicationPrecedence` 组，详细关于 Swift 标准库中一系列运算符和优先级组内容，参阅[Swift 标准库操作符参考](https://developer.apple.com/reference/swift/1851035-swift_standard_library_operators)。
 
@@ -1434,26 +1677,40 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 > 
 <a name="precedence-group-declaration"></a>
 > *优先级组声明* → **precedence**[*优先级组名称*](#precedence-group-name){[*多优先级组属性*](#precedence-group-attributes)<sub>可选</sub> }
+> 
 <a name="precedence-group-attributes"></a>
 > *优先级组属性* → [*优先级组属性*](#precedence-group-attribute)[*多优先级组属性*](#precedence-group-attributes)<sub>可选</sub> **{** **}**
+> 
 <a name="precedence-group-attribute"></a>
 > *优先级组属性* → [*优先级组关系*](#precedence-group-relation)
+> 
 > *优先级组属性* → [*优先级组赋值性*](#precedence-group-assignment)
+> 
 > *优先级组属性* → [*优先级组相关性*](#precedence-group-associativity)
+> 
 > <a name="precedence-group-relation"></a>
+> 
 > *优先级组关系* → **higherThan:**[*多优先级组名称*](#precedence-group-names)
+> 
 > *优先级组关系* → **lowerThan:**[*多优先级组名称*](#precedence-group-names)
+> 
 > <a name="precedence-group-assignment"></a>
+> 
 > *优先级组赋值* → **assignment:**[*布尔字面值*](02_Lexical_Structure.html#boolean-literal)
+> 
 <a name="precedence-group-associativity"></a>
 > *优先级组结合性* → **associativity:left**
+> 
 > *优先级组结合性* → **associativity:right**
+> 
 > *优先级组结合性* → **associativity:none**
 > 
 <a name="precedence-group-names"></a>
 > *多优先级组名称* → [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name)
+> 
 <a name="precedence-group-name"></a>
 > *优先级组名称* →[*标识符*](02_Lexical_Structure.html#identifier)
+> 
 
 <a name="Declaration_Modifiers"></a>
 ## 声明修饰符
@@ -1524,11 +1781,17 @@ Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`
 > 
 <a name="declaration-modifier"></a>
 > *声明修饰符* → **class** | **convenience**| **dynamic** | **final** | **infix** | **lazy** | **mutating** | **nonmutating** | **optional** | **override** | **postfix** | **prefix** | **required** | **static** | **unowned** | **unowned ( safe )** | **unowned ( unsafe )** | **weak**
+> 
 > 声明修饰符 → [*访问级别修饰符*](#access-level-modifier)
+> 
 > <a name="declaration-modifiers"></a>
+> 
 > *声明修饰符列表* → [*声明修饰符*](#declaration-modifier) [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub>
 > 
 <a name="access-level-modifier"></a>
 > 访问级别修饰符 → **internal** | **internal ( set )**
+> 
 > 访问级别修饰符 → **private** | **private ( set )**
+> 
 > 访问级别修饰符 → **public** | **public ( set )**
+> 

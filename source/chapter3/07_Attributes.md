@@ -155,6 +155,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 @dynamicCallable
 struct Repeater {
     func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+> 
         return pairs
             .map { label, count in
                 repeatElement(label, count: count).joined(separator: " ")
@@ -195,6 +196,7 @@ struct DynamicStruct {
     let dictionary = ["someDynamicMember": 325,
                       "someOtherMember": 787]
     subscript(dynamicMember member: String) -> Int {
+> 
         return dictionary[member] ?? 1054
     }
 }
@@ -379,21 +381,38 @@ convention 特性总是与下面的参数之一一起出现。
 次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [Switching over Future Enumeration Cases](https://docs.swift.org/swift-book/ReferenceManual/Statements.html#ID602)。
 
 > 特性语法
+> 
 >
 > <a name="attribute"></a>
+> 
 > *特性*→ [特性名](#attribute_name) [特性参数子句](#atribute_argument_clause)<sub>可选</sub>
+> 
 > <a name="attribute_name"></a>
+> 
 > *特性名* → [标识符](02_Lexical_Structure.html#identifier)
+> 
 > <a name="atribute_argument_clause"></a>
+> 
 > *特性参数子句* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> 
 > <a name="attributes"></a>
+> 
 > *特性列表* → [特性](#attribute) [特性列表](#attributes)<sub>可选</sub>
+> 
 >
 > <a name="balanced_tokens"></a>
+> 
 > *均衡令牌列表* → [均衡令牌](#balanced_token) [均衡令牌列表](#balanced_tokens)<sub>可选</sub>
+> 
 > <a name="balanced_token"></a>
+> 
 > *均衡令牌* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> 
 > *均衡令牌* → **\[** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **\]**
+> 
 > *均衡令牌* → **{** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **}**
+> 
 > *均衡令牌* → 任意标识符，关键字，字面量或运算符
+> 
 > *均衡令牌* → 任意标点除了 **(**，**)**，**[**，**]**，**{**，或 **}**
+> 

@@ -10,10 +10,12 @@
 *泛型形参子句*指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型形参列表`>
+> 
 
 泛型形参列表中泛型形参用逗号分开，其中每一个采用以下形式：
 
 > `类型形参` : `约束`
+> 
 
 泛型形参由两部分组成：类型形参及其后的可选约束。类型形参只是占位符类型（如 `T`，`U`，`V`，`Key`，`Value` 等）的名字而已。你可以在泛型类型、函数的其余部分或者构造器声明，包括函数或构造器的签名中使用它（以及它的关联类型）。
 
@@ -21,6 +23,7 @@
 
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
+> 
     if x < y {
         return y
     }
@@ -41,10 +44,13 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 要想对类型形参及其关联类型指定额外要求，可以在函数体或者类型的大括号之前添加 `where` 子句。`where` 子句由关键字 `where` 及其后的用逗号分隔的一个或多个要求组成。
 
 > `where` : `类型要求`
+> 
 
 `where` 子句中的要求用于指明该类型形参继承自某个类或符合某个协议或协议组合。尽管 `where` 子句提供了语法糖使其有助于表达类型形参上的简单约束（如 `<T: Comparable>` 等同于 `<T> where T: Comparable`，等等），但是依然可以用来对类型形参及其关联类型提供更复杂的约束，例如你可以强制形参的关联类型遵守协议，如，`<S: Sequence> where S.Iterator.Element: Equatable` 表示泛型类型 `S` 遵守 `Sequence` 协议并且关联类型 `S.Iterator.Element` 遵守 `Equatable` 协议，这个约束确保队列的每一个元素都是符合 `Equatable` 协议的。
+> 
 
 也可以用操作符 `==` 来指定两个类型必须相同。例如，泛型形参子句 `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element` 表示 `S1` 和 `S2` 必须都符合 `SequenceType` 协议，而且两个序列中的元素类型必须相同。
+> 
 
 当然，替代类型形参的类型实参必须满足所有的约束和要求。
 
@@ -56,23 +62,36 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 > 
 <a name="generic-parameter-clause"></a>
 > *泛型形参子句* → **<** [*泛型形参列表*](#generic-parameter-list) [*约束子句*](#requirement-clause)<sub>可选</sub> **>**
+> 
 <a name="generic-parameter-list"></a>
 > *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)
+> 
 <a name="generic-parameter"></a>
 > *泛形形参* → [*类型名称*](03_Types.html#type-name)
+> 
 > *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*类型标识符*](03_Types.html#type-identifier)
+> 
 > *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
+> 
 > <a name="requirement-clause"></a>
+> 
 > *约束子句* → **where** [*约束列表*](#requirement-list)
+> 
 <a name="requirement-list"></a>
 > *约束列表* → [*约束*](#requirement) | [*约束*](#requirement) **,** [*约束列表*](#requirement-list)
+> 
 <a name="requirement"></a>
 > *约束* → [*一致性约束*](#conformance-requirement) | [*同类型约束*](#same-type-requirement)
+> 
 > <a name="conformance-requirement"></a>
+> 
 > *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)
+> 
 > *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
+> 
 <a name="same-type-requirement"></a>
 > *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)
+> 
 
 <a name="generic_argument"></a>
 ## 泛型实参子句
@@ -80,6 +99,7 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 *泛型实参子句*指定泛型类型的类型实参。泛型实参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型实参列表`>
+> 
 
 泛型实参列表中类型实参用逗号分开。类型实参是实际具体类型的名字，用来替代泛型类型的泛型形参子句中的相应的类型形参。从而得到泛型类型的一个特化版本。例如，Swift 标准库中的泛型字典类型的的简化定义如下：
 
@@ -95,6 +115,7 @@ struct Dictionary<Key: Hashable, Value>: CollectionType, DictionaryLiteralConver
 
 ```swift
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+> 
 ```
 
 如 [泛型形参子句](#generic_parameter) 所述，不能用泛型实参子句来指定泛型函数或构造器的类型实参。
@@ -103,7 +124,10 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 > 
 <a name="generic-argument-clause"></a>
 > *泛型实参子句* → **<** [*泛型实参列表*](#generic-argument-list) **>**
+> 
 <a name="generic-argument-list"></a>
 > *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)
+> 
 <a name="generic-argument"></a>
 > *泛型实参* → [*类型*](03_Types.html#type)
+> 

@@ -8,8 +8,10 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 > 
 <a name="expression"></a>
 > *表达式* → [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>
+> 
 <a name="expression-list"></a>
 > *表达式列表* → [*表达式*](#expression) | [*表达式*](#expression) **,** [*表达式列表*](#expression-list)
+> 
 
 <a name="prefix_expressions"></a>
 ## 前缀表达式
@@ -26,9 +28,12 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 > 
 <a name="prefix-expression"></a>
 > *前缀表达式* → [*前缀运算符*](02_Lexical_Structure.md#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)
+> 
 > *前缀表达式* → [*输入输出表达式*](#in-out-expression)
+> 
 <a name="in-out-expression"></a>
 > *输入输出表达式* → **&** [*标识符*](02_Lexical_Structure.md#identifier)
+> 
 
 <a name="try_operator"></a>
 ### Try 运算符
@@ -36,16 +41,19 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 try 表达式由 `try` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 > try `可抛出错误的表达式`
+> 
 
 可选的 try 表达式由 `try?` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 > try? `可抛出错误的表达式`
+> 
 
 如果可抛出错误的表达式没有抛出错误，整个表达式返回的可选值将包含可抛出错误的表达式的返回值，否则，该可选值为 `nil`。
 
 强制的 try 表达式由 `try!` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 > try! `可抛出错误的表达式`
+> 
 
 如果可抛出错误的表达式抛出了错误，将会引发运行时错误。
 
@@ -64,6 +72,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 
 <a name="try-operator"></a>
 > *try 运算符* → **try** | **try?** | **try!**
+> 
 
 <a name="binary_expressions"></a>
 ## 二元表达式
@@ -71,6 +80,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 *二元表达式*由中缀运算符和左右参数表达式组成。形式如下：
 
 > `左侧参数` `二元运算符` `右侧参数`
+> 
 
 关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/26_Advanced_Operators.html)。
 
@@ -79,16 +89,22 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 注意
 > 
 > 在解析时，一个二元表达式将作为一个扁平列表表示，然后根据运算符的优先级，再进一步进行组合。例如，`2 + 3 * 5` 首先被看作具有五个元素的列表，即 `2`、`+`、`3`、`*`、`5`，随后根据运算符优先级组合为 `(2 + (3 * 5))`。
+> 
 
 <a name="binary-expression"></a>
 > 二元表达式语法
 > 
 > *二元表达式* → [*二元运算符*](02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)
+> 
 > *二元表达式* → [*赋值运算符*](#assignment-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)
+> 
 > *二元表达式* → [*条件运算符*](#conditional-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)
+> 
 > *二元表达式* → [*类型转换运算符*](#type-casting-operator)
+> 
 <a name="binary-expressions"></a>
 > *二元表达式列表* → [*二元表达式*](#binary-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>
+> 
 
 <a name="assignment_operator"></a>
 ### 赋值表达式
@@ -96,6 +112,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 赋值表达式会为某个给定的表达式赋值，形式如下；
 
 > `表达式` = `值`
+> 
 
 右边的值会被赋值给左边的表达式。如果左边表达式是一个元组，那么右边必须是一个具有同样元素个数的元组。（嵌套元组也是允许的。）右边的值中的每一部分都会被赋值给左边的表达式中的相应部分。例如：
 
@@ -110,6 +127,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 
 <a name="assignment-operator"></a>
 > *赋值运算符* → **=**
+> 
 
 <a name="ternary_conditional_operator"></a>
 ### 三元条件运算符
@@ -117,6 +135,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 *三元条件运算符*会根据条件来对两个给定表达式中的一个进行求值，形式如下：
 
 > `条件` ? `表达式（条件为真则使用）` : `表达式（条件为假则使用）`
+> 
 
 如果条件为真，那么对第一个表达式进行求值并返回结果。否则，对第二个表达式进行求值并返回结果。未使用的表达式不会进行求值。
 
@@ -126,6 +145,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > 
 <a name="conditional-operator"></a>
 > *三元条件运算符* → **?** [*表达式*](#expression) **:**
+> 
 
 <a name="type-casting_operators"></a>
 ### 类型转换运算符
@@ -139,6 +159,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > `表达式` as? `类型`
 > 
 > `表达式` as! `类型`
+> 
 
 `is` 运算符在运行时检查表达式能否向下转化为指定的类型，如果可以则返回 `ture`，否则返回 `false`。
 
@@ -171,9 +192,13 @@ f(x as Any)
 > 类型转换运算符语法
 > 
 > *类型转换运算符* → **is** [*类型*](03_Types.md#type)
+> 
 > *类型转换运算符* → **as** [*类型*](03_Types.md#type)
+> 
 > *类型转换运算符* → **as** **?** [*类型*](03_Types.md#type)
+> 
 > *类型转换运算符* → **as** **!** [*类型*](03_Types.md#type)
+> 
 
 <a name="primary_expressions"></a>
 ## 基本表达式
@@ -184,15 +209,25 @@ f(x as Any)
 > 
 <a name="primary-expression"></a>
 > *基本表达式* → [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
+> 
 > *基本表达式* → [*字面量表达式*](#literal-expression)
+> 
 > *基本表达式* → [*self 表达式*](#self-expression)
+> 
 > *基本表达式* → [*父类表达式*](#superclass-expression)
+> 
 > *基本表达式* → [*闭包表达式*](#closure-expression)
+> 
 > *基本表达式* → [*圆括号表达式*](#parenthesized-expression)
+> 
 > *基本表达式* → [*隐式成员表达式*](#implicit-member-expression)
+> 
 > *基本表达式* → [*通配符表达式*](#wildcard-expression)
+> 
 > *基本表达式* → [*选择器表达式*](#selector-expression)
+> 
 > *基本表达式* → [*key-path字符串表达式*](#key-patch-string-expression)
+> 
 
 <a name="literal_expression"></a>
 ### 字面量表达式
@@ -224,6 +259,7 @@ myFunction() // 打印“myFunction()”
 数组字面量是值的有序集合，形式如下：
 
 > [`值 1`, `值 2`, `...`]
+> 
 
 数组中的最后一个表达式可以紧跟一个逗号。数组字面量的类型是 `[T]`，这个 `T` 就是数组中元素的类型。如果数组中包含多种类型，`T` 则是跟这些类型最近的的公共父类型。空数组字面量由一组方括号定义，可用来创建特定类型的空数组。
 
@@ -234,6 +270,7 @@ var emptyArray: [Double] = []
 字典字面量是一个包含无序键值对的集合，形式如下：
 
 > [`键 1` : `值 1`, `键 2` : `值 2`, `...`]
+> 
 
 字典中的最后一个表达式可以紧跟一个逗号。字典字面量的类型是 `[Key : Value]`，`Key` 表示键的类型，`Value` 表示值的类型。如果字典中包含多种类型，那么 `Key` 表示的类型则为所有键最接近的公共父类型，`Value` 与之相似。一个空的字典字面量由方括号中加一个冒号组成（`[:]`），从而与空数组字面量区分开，可以使用空字典字面量来创建特定类型的字典。
 
@@ -246,40 +283,66 @@ Xcode 使用 playground 字面量对程序编辑器中的颜色、文件或者�
 更多关于在 Xcode 中使用 playground 字面量的信息，请参阅 [添加颜色、文件或图片字面量](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)
 
 > 字面量表达式语法
+> 
 >
 > <a name="literal-expression"></a>
+> 
 > *字面量表达式* → [*字面量*](02_Lexical_Structure.md#literal)
+> 
 > *字面量表达式* → [*数组字面量*](#array-literal) | [*字典字面量*](#dictionary-literal) | [*练习场字面量*](#playground-literal)
+> 
 > *字面量表达式* → **#file** | **#line** | **#column** | **#function**
+> 
 
 
 > <a name="array-literal"></a>
+> 
 > *数组字面量* → [[*数组字面量项列表*](#array-literal-items)<sub>可选</sub> **]**
+> 
 > <a name="array-literal-items"></a>
+> 
 > *数组字面量项列表* → [*数组字面量项*](#array-literal-item) **,**<sub>可选</sub> | [*数组字面量项*](#array-literal-item) **,** [*数组字面量项列表*](#array-literal-items)
+> 
 > <a name="array-literal-item"></a>
+> 
 > *数组字面量项* → [*表达式*](#expression)
+> 
 >
 > <a name="dictionary-literal"></a>
+> 
 > *字典字面量* → [[*字典字面量项列表*](#dictionary-literal-items) **]** | **[** **:** **]**
+> 
 > <a name="dictionary-literal-items"></a>
+> 
 > *字典字面量项列表* → [*字典字面量项*](#dictionary-literal-item) **,**<sub>可选</sub> | [*字典字面量项*](#dictionary-literal-item) **,** [*字典字面量项列表*](#dictionary-literal-items)
+> 
 > <a name="dictionary-literal-item"></a>
+> 
 > *字典字面量项* → [*表达式*](#expression) **:** [*表达式*](#expression)。
+> 
 > <a name="playground-literal"></a>
+> 
 > *playground 字面量* → **#colorLiteral ( red :  [*表达式*](#expression) , green :[*表达式*](#expression) [*表达式*](#e[*表达式*](#expression) xpression) ,  blue :[*表达式*](#expression) , alpha : [*表达式*](#expression) )**
+> 
 > *playground 字面量* → **#fileLiteral ( resourceName : [*表达式*](#expression) )**
+> 
 > playground 字面量* → **#imageLiteral ( resourceName : [*表达式*](#expression) )**<a name="self_expression"></a>
+> 
 
 ### Self 表达式
 
 `self` 表达式是对当前类型或者当前实例的显式引用，它有如下形式：
 
 > self
+> 
 > self.`成员名称`
+> 
 > self[`下标索引`]
+> 
 > self(`构造器参数`)
+> 
 > self.init(`构造器参数`)
+> 
 
 如果在构造器、下标、实例方法中，`self` 引用的是当前类型的实例。在一个类型方法中，`self` 引用的是当前的类型。
 
@@ -309,13 +372,17 @@ struct Point {
 > 
 <a name="self-expression"></a>
 > *self 表达式* → **self**  | [*self 方法表达式*](#self-method-expression) ｜ [*self 下标表达式*](#self-subscript-expression) | [*self 构造器表达式*](#self-initializer-expression)
+> 
 >
 <a name="self-method-expression"></a>
 > *self 方法表达式* → **self** **.** [*标识符*](02_Lexical_Structure.md#identifier)
+> 
 <a name="self-subscript-expression"></a>
 > *self 下标表达式* → **self** **[** [*函数调用参数表*](#function-call-argument-list­) **]**
+> 
 <a name="self-initializer-expression"></a>
 > *self 构造器表达式* → **self** **.** **init**
+> 
 
 <a name="superclass_expression"></a>
 ### 父类表达式
@@ -323,8 +390,11 @@ struct Point {
 *父类*表达式可以使我们在某个类中访问它的父类，它有如下形式：
 
 > super.`成员名称`
+> 
 > super[`下标索引`]
+> 
 > super.init(`构造器参数`)
+> 
 
 第一种形式用来访问父类的某个成员，第二种形式用来访问父类的下标，第三种形式用来访问父类的构造器。
 
@@ -337,10 +407,13 @@ struct Point {
 > 
 <a name="superclass-method-expression"></a>
 > *父类方法表达式* → **super** **.** [*标识符*](02_Lexical_Structure.md#identifier)
+> 
 <a name="superclass-subscript-expression"></a>
 > *父类下标表达式* → **super** [[*函数调用参数表*](#function-call-argument-list­) **]**
+> 
 <a name="superclass-initializer-expression"></a>
 > *父类构造器表达式* → **super** **.** **init**
+> 
 
 <a name="closure_expression"></a>
 ### 闭包表达式
@@ -349,6 +422,7 @@ struct Point {
 
 ```swift
 { (parameters) -> return type in
+> 
     statements
 }
 ```
@@ -366,6 +440,7 @@ struct Point {
 ```swift
 myFunction {
     (x: Int, y: Int) -> Int in
+> 
     return x + y
 }
 
@@ -447,27 +522,44 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.html#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/23_Automatic_Reference_Counting.html#resolving_strong_reference_cycles_for_closures)。
 
 > 闭包表达式语法
+> 
 >
 > <a name="closure-expression"></a>
+> 
 > *闭包表达式* → **{** [*闭包签名*](#closure-signature)<sub>可选</sub> [*语句*](#statements) **}**
+> 
 >
 > <a name="closure-signature"></a>
+> 
 >
 > 闭包签名* → [*参数子句*](#parameter-clause) [*函数结果*](05_Declarations.html#function-result)<sub>可选</sub> **in**
+> 
 > *闭包签名* → [*标识符列表*](#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> 
 > *闭包签名* → [*捕获列表*](#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> 
 > *闭包签名* → [*捕获列表*](#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> 
 > *闭包签名* → [*捕获列表*](#capture-list) **in**
+> 
 >
 > <a name="capture-list"></a>
+> 
 >
 > 捕获列表* → [ [*捕获列表项列表*](#capture-list-items) **]**
+> 
 > <a name="capture-list-items"></a>
+> 
 > *捕获列表项列表* → [*捕获列表项*](#capture-list-item) | [*捕获列表项*](#capture-list-item) **,** [*捕获列表项列表*](#capture-list-items)
+> 
 > <a name="capture-list-item"></a>
+> 
 > *捕获列表项* → [*捕获说明符*](#capture-specifier)<sub>可选</sub> [*表达式*](#expression)
+> 
 > <a name="capture-specifier"></a>
+> 
 > *捕获说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**
+> 
 
 <a name="implicit_member_expression"></a>
 ### 隐式成员表达式
@@ -475,6 +567,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 若类型可被推断出来，可以使用*隐式成员表达式*来访问某个类型的成员（例如某个枚举成员或某个类型方法），形式如下：
 
 > .`成员名称`
+> 
 
 例如：
 
@@ -487,6 +580,7 @@ x = .AnotherValue
 > 
 <a name="implicit-member-expression"></a>
 > *隐式成员表达式* → **.** [*标识符*](02_Lexical_Structure.md#identifier)
+> 
 
 <a name="parenthesized_expression"></a>
 ### 圆括号表达式
@@ -497,6 +591,7 @@ x = .AnotherValue
 > 
 <a name="parenthesized-expression"></a>
 > *圆括号表达式* → **( [*表达式*](#expression) )**
+> 
 
 <a name="Tuple_Expression"></a>
 ### 元组表达式
@@ -504,22 +599,28 @@ x = .AnotherValue
 *元组表达式*由圆括号和其中多个逗号分隔的子表达式组成。每个子表达式前面可以有一个标识符，用冒号隔开。元组表达式形式如下：
 
 > (`标识符 1` : `表达式 1`, `标识符 2` : `表达式 2`, `...`)
+> 
 
 元组表达式可以一个表达式都没有，也可以包含两个或是更多的表达式。单个表达式用括号括起来就是括号表达式了。
 
 > 注意
+> 
 >
 > 在 Swift 中，空的元组表达式和空的元组类型都写作 `()`。由于 `Void` 是 `()` 的类型别名，因此可以使用它来表示空的元组类型。虽然如此，`Void` 就像所有的类型别名一样，永远是一个类型——不能表示空的元组表达式。
+> 
 
 
 > 元组表达式语法
 > 
 <a name="tuple-expression"></a>
 > *元组表达式* → **( )** | **(**[*元组元素*](#tuple-element)， [*元组元素列表*](#tuple-element-list) **)**
+> 
 <a name="tuple-element-list"></a>
 > *元组元素列表* → [*元组元素*](#tuple-element) | [*元组元素*](#tuple-element) **,** [*元组元素列表*](#tuple-element-list)
+> 
 <a name="tuple-element"></a>
 > *元组元素* → [*表达式*](#expression) | [*标识符*](identifier) **:** [*表达式*](#expression)
+> 
 
 <a name="wildcard_expression"></a>
 
@@ -536,6 +637,7 @@ x = .AnotherValue
 > 
 <a name="wildcard-expression"></a>
 > *通配符表达式* → **_**
+> 
 
 
 <a name="key-path_expression"></a>
@@ -544,6 +646,7 @@ x = .AnotherValue
 Key-path 表达式引用一个类型的属性或下标。在动态语言中使场景可以使用 Key-path 表达式，例如观察键值对。格式为：
 
 > **\类型名.路径**
+> 
 
 *类型名*是一个具体类型的名称，包含任何泛型参数，例如 `String`、`[Int]` 或 `Set<Int>`。
 
@@ -620,6 +723,7 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 var index = 2
 let path = \[String].[index]
 let fn: ([String]) -> String = { strings in strings[index] }
+> 
 
 print(greetings[keyPath: path])
 // 打印 "bonjour"
@@ -668,17 +772,26 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)
 
 > key-path 表达式语法
+> 
 >
 > <a name="key-path-expression"></a>
+> 
 > *key-path 表达式* → **\\**  [类型](03_Types.md#type)<sub>可选</sub>  **.**  [多个 key-path 组件](#key-path-components)
+> 
 > <a name="key-path-components"></a>
+> 
 > *多个 key-path 组件* → [key-path 组件](#key-path-component) | [key-path 组件](#key-path-component) **.** [多个 key-path 组件](#key-path-components)
+> 
 > <a name="key-path-component"></a>
+> 
 > *key-path 组件* →  [标识符](02_Lexical_Structure.html#identifier) [多个 key-path 后缀](#key-path-postfixes)<sub>可选<sub> | [多个 key-path 后缀](#key-path-postfixes)
+> 
 > <a name="key-path-postfixes"></a>
-> *多个 key-path 后缀* →  [key-path 后缀](#key-path-postfix) [多个 key-path 后缀](#key-path-postfixes)<sub>可选<sub> 
-> <a name="key-path-postfixes"></a>
+> 
+> *多个 key-path 后缀* →  [key-path 后缀](#key-path-postfix) [多个 key-path 后缀](#key-path-postfixes)<sub>可选<sub> <a name="key-path-postfixes"></a>
+> 
 > *key-path 后缀* → **?** | **!** | **self** | **\[** [函数调用参数表](#function-call-argument-list) **\]** 
+> 
 
 
 
@@ -689,6 +802,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 *选择器表达式*可以让你通过选择器来引用在 Objective-C 中方法（method）和属性（property）的 setter 和 getter 方法。
 
 > \#selector(方法名)
+> 
 \#selector(getter: 属性名)
 \#selector(setter: 属性名)
 
@@ -718,6 +832,7 @@ extension SomeClass {
     func doSomething(_ x: String) { }
 }
 let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
+> 
 ```
 
 由于选择器是在编译时创建的，因此编译器可以检查方法或者属性是否存在，以及是否在运行时暴露给了 Objective-C 。
@@ -725,14 +840,19 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 > 注意
 > 
 > 虽然方法名或者属性名是个表达式，但是它不会被求值。
+> 
 
 更多关于如何在 Swift 代码中使用选择器来与 Objective-C API 进行交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。
 
 > 选择器表达式语法
+> 
 <a name="selector-expression"></a>
 > *选择器表达式* → __#selector__ **(** [*表达式*](#expression) **)**
+> 
 > *选择器表达式* → __#selector__ **(** [*getter:表达式*](#expression) **)**
+> 
 > *选择器表达式* → __#selector__ **(** [*setter:表达式*](#expression) **)**
+> 
 
 <a name="key-path_string_expressions"></a>
 
@@ -741,6 +861,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 key-path 字符串表达式可以访问一个引用 Objective-C 属性的字符串，通常在 key-value 编程和 key-value 观察 APIs 中使用。其格式如下：
 
 > `#keyPath` ( `属性名` )
+> 
 
 属性名必须是一个可以在 Objective-C 运行时使用的属性的引用。在编译期，key-path 字符串表达式会被一个字符串字面量替换。例如：
 
@@ -766,6 +887,7 @@ if let value = c.value(forKey: keyPath) {
 ```swift
 extension SomeClass {
     func getSomeKeyPath() -> String {
+> 
         return #keyPath(someProperty)
     }
 }
@@ -778,12 +900,17 @@ print(keyPath == c.getSomeKeyPath())
 关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)
 
 > 注意
+> 
 >
 > 尽管*属性名*是一个表达式，但它永远不会被求值
+> 
 
 > key-path 字符串表达式语法
+> 
 > <a name="key-path-string-expression"></a>
+> 
 > *key-path 字符串表达式* → **#keyPath (** [表达式](#expression)  **)**
+> 
 
 <a name="postfix_expressions"></a>
 
@@ -796,17 +923,28 @@ print(keyPath == c.getSomeKeyPath())
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [运算符定义](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 > 后缀表达式语法
+> 
 <a name="postfix-expression"></a>
 > *后缀表达式* → [*基本表达式*](#primary-expression)
+> 
 > *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)
+> 
 > *后缀表达式* → [*函数调用表达式*](#function-call-expression)
+> 
 > *后缀表达式* → [*构造器表达式*](#initializer-expression)
+> 
 > *后缀表达式* → [*显式成员表达式*](#explicit-member-expression)
+> 
 > *后缀表达式* → [*后缀 self 表达式*](#postfix-self-expression)
+> 
 > *后缀表达式* → [*dynamicType 表达式*](#dynamic-type-expression)
+> 
 > *后缀表达式* → [*下标表达式*](#subscript-expression)
+> 
 > *后缀表达式* → [*强制取值表达式*](#forced-value-expression)
+> 
 > *后缀表达式* → [*可选链表达式*](#optional-chaining-expression)
+> 
 
 <a name="function_call_expression"></a>
 ### 函数调用表达式
@@ -814,12 +952,14 @@ print(keyPath == c.getSomeKeyPath())
 *函数调用表达式*由函数名和参数列表组成，形式如下：
 
 > `函数名`(`参数 1`, `参数 2`)
+> 
 
 函数名可以是值为函数类型的任意表达式。
 
 如果函数声明中指定了参数的名字，那么在调用的时候也必须得写出来。这种函数调用表达式具有以下形式：
 
 > `函数名`(`参数名 1`: `参数 1`, `参数名 2`: `参数 2`)
+> 
 
 如果函数的最后一个参数是函数类型，可以在函数调用表达式的尾部（右圆括号之后）加上一个闭包，该闭包会作为函数的最后一个参数。如下两种写法是等价的：
 
@@ -838,20 +978,33 @@ myData.someMethod {$0 == 13}
 ```
 
 > 函数调用表达式语法
+> 
 > <a name="function-call-expression"></a>
+> 
 > *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*函数调用参数子句*](#function-call-argument-clause)
+> 
 > *函数调用表达式* → [*后缀表达式*](#postfix-expression) [*函数调用参数子句*](#function-call-argument-clause)<sub>可选</sub> [*尾随闭包*](#trailing-closure)
+> 
 >
 > <a name="function-call-argument-clause"></a>
+> 
 > *函数调用参数子句* → **(**  **)**  | **(** [*函数调用参数表*](#function-call-argument-list) **)**
+> 
 > <a name="function-call-argument-list"></a>
+> 
 > *函数调用参数表* → [函数调用参数](#function-call-argument) | [函数调用参数](#function-call-argument) **,** [*函数调用参数表*](#function-call-argument-list)
+> 
 > <a name="function-call-argument"></a>
+> 
 > *函数调用参数* → [表达式](#expression) | [标识符](02_Lexical_Structure.html#identifier) **:** [*表达式*](#expression)
+> 
 > *函数调用参数* → [运算符](02_Lexical_Structure.html#operator) | [标识符](02_Lexical_Structure.html#identifier) **:** [*运算符*](02_Lexical_Structure.html#operator)
+> 
 >
 > <a name="trailing-closure"></a>
+> 
 > *尾随闭包* → [*闭包表达式*](#closure-expression)
+> 
 
 <a name="initializer_expression"></a>
 ### 构造器表达式
@@ -859,6 +1012,7 @@ myData.someMethod {$0 == 13}
 *构造器表达式*用于访问某个类型的构造器，形式如下：
 
 > `表达式`.init(`构造器参数`)
+> 
 
 你可以在函数调用表达式中使用构造器表达式来初始化某个类型的新实例。也可以使用构造器表达式来代理给父类构造器。
 
@@ -876,6 +1030,7 @@ class SomeSubClass: SomeSuperClass {
 ```swift
 // 类型注解是必须的，因为 String 类型有多种构造器
 let initializer: Int -> String = String.init
+> 
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
 print(oneTwoThree)
 // 打印“123”
@@ -892,9 +1047,12 @@ let s3 = someValue.dynamicType.init(data: 7) // 有效
 ```
 
 > 构造器表达式语法
+> 
 <a name="initializer-expression"></a>
 > *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init**
+> 
 > *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init** **(** [*参数名称*](#argument-names) **)**
+> 
 
 <a name="explicit_member_expression"></a>
 ### 显式成员表达式
@@ -902,6 +1060,7 @@ let s3 = someValue.dynamicType.init(data: 7) // 有效
 *显式成员表达式*允许我们访问命名类型、元组或者模块的成员，其形式如下：
 
 > `表达式`.`成员名`
+> 
 
 命名类型的某个成员在原始实现或者扩展中定义，例如：
 
@@ -942,6 +1101,7 @@ let b = instance.someMethod(_:y:)        // 无歧义
 let d = instance.overloadedMethod        // 有歧义
 let d = instance.overloadedMethod(_:y:)  // 有歧义
 let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // 无歧义
+> 
 ```
 
 如果点号（`.`）出现在行首，它会被视为显式成员表达式的一部分，而不是隐式成员表达式的一部分。例如如下代码所展示的被分为多行的链式方法调用：
@@ -950,19 +1110,25 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // 无歧义
 let x = [10, 3, 20, 15, 4]
     .sort()
     .filter { $0 > 5 }
+> 
     .map { $0 * 100 }
 ```
 
 > 显式成员表达式语法
+> 
 <a name="explicit-member-expression"></a>
 > *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*]    (02_Lexical_Structure.html#decimal-digit)
+> 
 > *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.html#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.html#generic-argument-clause)<sub>可选</sub><br/>
+> 
 > *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*]    (02_Lexical_Structure.html#identifier) **(** [*参数名称*](#argument-names) **)**
 > 
 <a name="argument-names"></a>
 > *参数名称* → [*参数名*](#argument-name) [*参数名称*](#argument-names)<sub>可选</sub><br/>
+> 
 <a name="argument-name"></a>
 > *参数名* → [*标识符*](02_Lexical_Structure.html#identifier) **:**
+> 
 
 <a name="postfix_self_expression"></a>
 ### 后缀 self 表达式
@@ -970,7 +1136,9 @@ let x = [10, 3, 20, 15, 4]
 后缀 `self` 表达式由某个表达式或类型名紧跟 `.self` 组成，其形式如下：
 
 > `表达式`.self
+> 
 > `类型`.self
+> 
 
 第一种形式返回表达式的值。例如：`x.self` 返回 `x`。
 
@@ -980,6 +1148,7 @@ let x = [10, 3, 20, 15, 4]
 > 
 <a name="postfix-self-expression"></a>
 > *后缀 self 表达式* → [*后缀表达式*](#postfix-expression) **.** **self**
+> 
 
 
 <a name="subscript_expression"></a>
@@ -988,6 +1157,7 @@ let x = [10, 3, 20, 15, 4]
 可通过*下标表达式*访问相应的下标，形式如下：
 
 > `表达式`[`索引表达式`]
+> 
 
 要获取下标表达式的值，可将索引表达式作为下标表达式的参数来调用下标 getter。下标 setter 的调用方式与之一样。
 
@@ -997,6 +1167,7 @@ let x = [10, 3, 20, 15, 4]
 > 
 <a name="subscript-expression"></a>
 > *下标表达式* → [*后缀表达式*](#postfix-expression) **[** [*表达式列表*](#expression-list) **]**
+> 
 
 <a name="forced-Value_expression"></a>
 ### 强制取值表达式
@@ -1004,6 +1175,7 @@ let x = [10, 3, 20, 15, 4]
 当你确定可选值不是 `nil` 时，可以使用*强制取值表达式*来强制解包，形式如下：
 
 > `表达式`!
+> 
 
 如果该表达式的值不是 `nil`，则返回解包后的值。否则，抛出运行时错误。
 
@@ -1023,6 +1195,7 @@ someDictionary["a"]![0] = 100
 > 
 <a name="forced-value-expression"></a>
 > *强制取值表达式* → [*后缀表达式*](#postfix-expression) **!**
+> 
 
 <a name="optional-chaining_expression"></a>
 ### 可选链表达式
@@ -1030,6 +1203,7 @@ someDictionary["a"]![0] = 100
 *可选链表达式*提供了一种使用可选值的便捷方法，形式如下：
 
 > `表达式`?
+> 
 
 后缀 `?` 运算符会根据表达式生成可选链表达式而不会改变表达式的值。
 
@@ -1055,6 +1229,7 @@ if let unwrappedC = c {
 
 ```swift
 func someFunctionWithSideEffects() -> Int {
+> 
     // 译者注：为了能看出此函数是否被执行，加上了一句打印
     print("someFunctionWithSideEffects")
     return 42
@@ -1074,3 +1249,4 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 > 
 <a name="optional-chaining-expression"></a>
 > *可选链表达式* → [*后缀表达式*](#postfix-expression) **?**
+> 
