@@ -18,7 +18,7 @@ Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程
 
 然而，当 ARC 收回和释放了正在被使用中的实例，该实例的属性和方法将不能再被访问和调用。实际上，如果你试图访问这个实例，你的应用程序很可能会崩溃。
 
-为了确保使用中的实例不会被销毁，ARC 会跟踪和计算每一个实例正在被多少属性，常量和变量所引用。哪怕实例的引用数为1，ARC 都不会销毁这个实例。
+为了确保使用中的实例不会被销毁，ARC 会跟踪和计算每一个实例正在被多少属性，常量和变量所引用。哪怕实例的引用数为 1，ARC 都不会销毁这个实例。
 
 为了使上述成为可能，无论你将实例赋值给属性、常量或变量，它们都会创建此实例的强引用。之所以称之为“强”引用，是因为它会将实例牢牢地保持住，只要强引用还在，实例是不允许被销毁的。
 
@@ -54,7 +54,7 @@ var reference3: Person?
 
 ```swift
 reference1 = Person(name: "John Appleseed")
-// 打印 "John Appleseed is being initialized"
+// 打印“John Appleseed is being initialized”
 ```
 
 应当注意到当你调用 `Person` 类的构造器的时候，`"John Appleseed is being initialized"` 会被打印出来。由此可以确定构造器被执行。
@@ -81,7 +81,7 @@ reference2 = nil
 
 ```swift
 reference3 = nil
-// 打印 "John Appleseed is being deinitialized"
+// 打印“John Appleseed is being deinitialized”
 ```
 
 <a name="strong_reference_cycles_between_class_instances"></a>
@@ -223,7 +223,7 @@ unit4A!.tenant = john
 
 ```swift
 john = nil
-// 打印 "John Appleseed is being deinitialized"
+// 打印“John Appleseed is being deinitialized”
 ```
 
 由于再也没有指向 `Person` 实例的强引用，该实例会被销毁，且 `tenant` 属性会被赋值为 `nil`：
@@ -234,7 +234,7 @@ john = nil
 
 ```swift
 unit4A = nil
-// 打印 "Apartment 4A is being deinitialized"
+// 打印“Apartment 4A is being deinitialized”
 ```
 
 由于再也没有指向 `Person` 实例的强引用，该实例会被销毁：
@@ -318,13 +318,14 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 ```swift
 john = nil
-// 打印 "John Appleseed is being deinitialized"
-// 打印 "Card #1234567890123456 is being deinitialized"
+// 打印“John Appleseed is being deinitialized”
+// 打印“Card #1234567890123456 is being deinitialized”
 ```
 
 最后的代码展示了在 `john` 变量被设为 `nil` 后 `Customer` 实例和 `CreditCard` 实例的析构器都打印出了“销毁”的信息。
 
 > 注意
+> 
 > 上面的例子展示了如何使用安全的无主引用。对于需要禁用运行时的安全检查的情况（例如，出于性能方面的原因），Swift 还提供了不安全的无主引用。与所有不安全的操作一样，你需要负责检查代码以确保其安全性。
 > 你可以通过 `unowned(unsafe)` 来声明不安全无主引用。如果你试图在实例被销毁后，访问该实例的不安全无主引用，你的程序会尝试访问该实例之前所在的内存地址，这是一个不安全的操作。
 
@@ -376,7 +377,7 @@ class City {
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
 print("\(country.name)'s capital city is called \(country.capitalCity.name)")
-// 打印 "Canada's capital city is called Ottawa"
+// 打印“Canada's capital city is called Ottawa”
 ```
 
 在上面的例子中，使用隐式解包可选值值意味着满足了类的构造器的两个构造阶段的要求。`capitalCity` 属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
@@ -437,7 +438,7 @@ heading.asHTML = {
     return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
 }
 print(heading.asHTML())
-// 打印 "<h1>some default text</h1>"
+// 打印“<h1>some default text</h1>”
 ```
 
 > 注意
@@ -451,7 +452,7 @@ print(heading.asHTML())
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// 打印 "<p>hello, world</p>"
+// 打印“<p>hello, world</p>”
 ```
 
 > 注意
@@ -502,7 +503,7 @@ lazy var someClosure: (Int, String) -> String = {
 如果闭包没有指明参数列表或者返回类型，它们会通过上下文推断，那么可以把捕获列表和关键字 `in` 放在闭包最开始的地方：
 
 ```swift
-lazy var someClosure: Void -> String = {
+lazy var someClosure: () -> String = {
     [unowned self, weak delegate = self.delegate!] in
     // 这里是闭包的函数体
 }
@@ -527,7 +528,7 @@ class HTMLElement {
     let name: String
     let text: String?
 
-    lazy var asHTML: Void -> String = {
+    lazy var asHTML: () -> String = {
         [unowned self] in
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"
@@ -555,7 +556,7 @@ class HTMLElement {
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// 打印 "<p>hello, world</p>"
+// 打印“<p>hello, world</p>”
 ```
 
 使用捕获列表后引用关系如下图所示：
@@ -566,7 +567,7 @@ print(paragraph!.asHTML())
 
 ```swift
 paragraph = nil
-// 打印 "p is being deinitialized"
+// 打印“p is being deinitialized”
 ```
 
 你可以查看[捕获列表](../chapter3/04_Expressions.html)章节，获取更多关于捕获列表的信息。

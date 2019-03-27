@@ -2,7 +2,7 @@
 
 Swift 语言提供 `Arrays`、`Sets` 和 `Dictionaries` 三种基本的*集合类型*用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/CollectionTypes_intro_2x.png)
+![](https://docs.swift.org/swift-book/_images/CollectionTypes_intro_2x.png)
 
 Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类型必须明确。这意味着我们不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
 
@@ -41,7 +41,7 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类
 ```swift
 var someInts = [Int]()
 print("someInts is of type [Int] with \(someInts.count) items.")
-// 打印 "someInts is of type [Int] with 0 items."
+// 打印“someInts is of type [Int] with 0 items.”
 ```
 
 注意，通过构造函数的类型，`someInts` 的值类型被推断为 `[Int]`。
@@ -117,7 +117,7 @@ var shoppingList = ["Eggs", "Milk"]
 
 ```swift
 print("The shopping list contains \(shoppingList.count) items.")
-// 输出 "The shopping list contains 2 items."（这个数组有2个项）
+// 输出“The shopping list contains 2 items.”（这个数组有2个项）
 ```
 
 使用布尔属性 `isEmpty` 作为一个缩写形式去检查 `count` 属性是否为 `0`：
@@ -128,7 +128,7 @@ if shoppingList.isEmpty {
 } else {
     print("The shopping list is not empty.")
 }
-// 打印 "The shopping list is not empty."（shoppinglist 不是空的）
+// 打印“The shopping list is not empty.”（shoppinglist 不是空的）
 ```
 
 也可以使用 `append(_:)` 方法在数组后面添加新的数据项：
@@ -151,7 +151,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 
 ```swift
 var firstItem = shoppingList[0]
-// 第一项是 "Eggs"
+// 第一项是“Eggs”
 ```
 
 > 注意
@@ -162,7 +162,7 @@ var firstItem = shoppingList[0]
 
 ```swift
 shoppingList[0] = "Six eggs"
-// 其中的第一项现在是 "Six eggs" 而不是 "Eggs"
+// 其中的第一项现在是“Six eggs”而不是“Eggs”
 ```
 
 还可以利用下标来一次改变一系列数据值，即使新数据和原有数据的数量是不一样的。下面的例子把 `"Chocolate Spread"`、`"Cheese"` 和 `"Butter"` 替换为 `"Bananas"` 和 `"Apples"`：
@@ -181,7 +181,7 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 ```swift
 shoppingList.insert("Maple Syrup", at: 0)
 // shoppingList 现在有7项
-// "Maple Syrup" 现在是这个列表中的第一项
+// 现在是这个列表中的第一项是“Maple Syrup”
 ```
 
 这次 `insert(_:at:)` 方法调用把值为 `"Maple Syrup"` 的新数据项插入列表的最开始位置，并且使用 `0` 作为索引值。
@@ -192,7 +192,7 @@ shoppingList.insert("Maple Syrup", at: 0)
 let mapleSyrup = shoppingList.remove(at: 0)
 // 索引值为0的数据项被移除
 // shoppingList 现在只有6项，而且不包括 Maple Syrup
-// mapleSyrup 常量的值等于被移除数据项的值 "Maple Syrup"
+// mapleSyrup 常量的值等于被移除数据项“Maple Syrup”的值
 ```
 
 > 注意
@@ -203,7 +203,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 ```swift
 firstItem = shoppingList[0]
-// firstItem 现在等于 "Six eggs"
+// firstItem 现在等于“Six eggs”
 ```
 
 如果我们只想把数组中的最后一项移除，可以使用 `removeLast()` 方法而不是 `remove(at:)` 方法来避免我们需要获取数组的 `count` 属性。就像后者一样，前者也会返回被移除的数据项：
@@ -212,7 +212,7 @@ firstItem = shoppingList[0]
 let apples = shoppingList.removeLast()
 // 数组的最后一项被移除了
 // shoppingList 现在只有5项，不包括 Apples
-// apples 常量的值现在等于 "Apples" 字符串
+// apples 常量的值现在等于“Apples”字符串
 ```
 
 <a name="iterating_over_an_array"></a>
@@ -234,7 +234,7 @@ for item in shoppingList {
 如果我们同时需要每个数据项的值和索引值，可以使用 `enumerated()` 方法来进行数组遍历。`enumerated()` 返回一个由每一个数据项索引值和数据值组成的元组。我们可以把这个元组分解成临时常量或者变量来进行遍历：
 
 ```swift
-for (index, value) in shoppingList. enumerated() {
+for (index, value) in shoppingList.enumerated() {
     print("Item \(String(index + 1)): \(value)")
 }
 // Item 1: Six eggs
@@ -259,9 +259,9 @@ for (index, value) in shoppingList. enumerated() {
 <a name="hash_values_for_set_types"></a>
 ### 集合类型的哈希值
 
-一个类型为了存储在集合中，该类型必须是*可哈希化*的--也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
+一个类型为了存储在集合中，该类型必须是*可哈希化*的——也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
 
-Swift 的所有基本类型（比如 `String`,`Int`,`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.html)有讲述）默认也是可哈希化的。
+Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合的值的类型或者字典的键的类型。没有关联值的枚举成员值（在[枚举](./08_Enumerations.html)有讲述）默认也是可哈希化的。
 
 > 注意
 > 
@@ -288,7 +288,7 @@ Swift 中的 `Set` 类型被写为 `Set<Element>`，这里的 `Element` 表示 `
 ```swift
 var letters = Set<Character>()
 print("letters is of type Set<Character> with \(letters.count) items.")
-// 打印 "letters is of type Set<Character> with 0 items."
+// 打印“letters is of type Set<Character> with 0 items.”
 ```
 
 > 注意
@@ -301,7 +301,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 letters.insert("a")
 // letters 现在含有1个 Character 类型的值
 letters = []
-// letters 现在是一个空的 Set, 但是它依然是 Set<Character> 类型
+// letters 现在是一个空的 Set，但是它依然是 Set<Character> 类型
 ```
 
 <a name="creating_a_set_with_an_array_literal"></a>
@@ -339,7 +339,7 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 
 ```swift
 print("I have \(favoriteGenres.count) favorite music genres.")
-// 打印 "I have 3 favorite music genres."
+// 打印“I have 3 favorite music genres.”
 ```
 
 使用布尔属性 `isEmpty` 作为一个缩写形式去检查 `count` 属性是否为 `0`：
@@ -350,7 +350,7 @@ if favoriteGenres.isEmpty {
 } else {
     print("I have particular music preferences.")
 }
-// 打印 "I have particular music preferences."
+// 打印“I have particular music preferences.”
 ```
 
 你可以通过调用 `Set` 的 `insert(_:)` 方法来添加一个新元素：
@@ -368,7 +368,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 } else {
     print("I never much cared for that.")
 }
-// 打印 "Rock? I'm over it."
+// 打印“Rock? I'm over it.”
 ```
 
 使用 `contains(_:)` 方法去检查 `Set` 中是否包含一个特定的值：
@@ -379,7 +379,7 @@ if favoriteGenres.contains("Funk") {
 } else {
     print("It's too funky in here.")
 }
-// 打印 "It's too funky in here."
+// 打印“It's too funky in here.”
 ```
 
 <a name="iterating_over_a_set"></a>
@@ -404,9 +404,9 @@ Swift 的 `Set` 类型没有确定的顺序，为了按照特定顺序来遍历�
 for genre in favoriteGenres.sorted() {
     print("\(genre)")
 }
-// prints "Classical"
-// prints "Hip hop"
-// prints "Jazz
+// Classical
+// Hip hop
+// Jazz
 ```
 
 <a name="performing_set_operations"></a>
@@ -417,9 +417,9 @@ for genre in favoriteGenres.sorted() {
 <a name="fundamental_set_operations"></a>
 ### 基本集合操作
 
-下面的插图描述了两个集合-`a` 和 `b`-以及通过阴影部分的区域显示集合各种操作的结果。
+下面的插图描述了两个集合 `a` 和 `b`，以及通过阴影部分的区域显示集合各种操作的结果。
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setVennDiagram_2x.png)
+![](https://docs.swift.org/swift-book/_images/setVennDiagram_2x.png)
 
 * 使用 `intersection(_:)` 方法根据两个集合中都包含的值创建的一个新的集合。
 * 使用 `symmetricDifference(_:)` 方法根据在一个集合中但不在两个集合中的值创建一个新的集合。
@@ -433,20 +433,20 @@ let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
 
 oddDigits.union(evenDigits).sorted()
 // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-oddDigits. intersection(evenDigits).sorted()
+oddDigits.intersection(evenDigits).sorted()
 // []
 oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
 // [1, 9]
-oddDigits. symmetricDifference(singleDigitPrimeNumbers).sorted()
+oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 // [1, 2, 9]
 ```
 
 <a name="set_membership_and_equality"></a>
 ### 集合成员关系和相等
 
-下面的插图描述了三个集合-`a`,`b` 和 `c`,以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的父集合，因为 `a` 包含了 `b` 中所有的元素，相反的，集合 `b` 是集合 `a` 的子集合，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 彼此不关联，因为它们之间没有共同的元素。
+下面的插图描述了三个集合 `a`、`b` 和 `c`,以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的父集合，因为 `a` 包含了 `b` 中所有的元素，相反的，集合 `b` 是集合 `a` 的子集合，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 彼此不关联，因为它们之间没有共同的元素。
 
-![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/setEulerDiagram_2x.png)
+![](https://docs.swift.org/swift-book/_images/setEulerDiagram_2x.png)
 
 * 使用“是否相等”运算符（`==`）来判断两个集合是否包含全部相同的值。
 * 使用 `isSubset(of:)` 方法来判断一个集合中的值是否也被包含在另外一个集合中。
@@ -555,7 +555,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 ```swift
 print("The dictionary of airports contains \(airports.count) items.")
-// 打印 "The dictionary of airports contains 2 items."（这个字典有两个数据项）
+// 打印“The dictionary of airports contains 2 items.”（这个字典有两个数据项）
 ```
 
 使用布尔属性 `isEmpty` 作为一个缩写形式去检查 `count` 属性是否为 `0`：
@@ -566,7 +566,7 @@ if airports.isEmpty {
 } else {
     print("The airports dictionary is not empty.")
 }
-// 打印 "The airports dictionary is not empty."
+// 打印“The airports dictionary is not empty.”
 ```
 
 我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个恰当类型的键作为下标索引，并且分配恰当类型的新值：
@@ -593,7 +593,7 @@ airports["LHR"] = "London Heathrow"
 if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
     print("The old value for DUB was \(oldValue).")
 }
-// 输出 "The old value for DUB was Dublin."
+// 输出“The old value for DUB was Dublin.”
 ```
 
 我们也可以使用下标语法来在字典中检索特定键对应的值。因为有可能请求的键没有对应的值存在，字典的下标访问会返回对应值的类型的可选值。如果这个字典包含请求键所对应的值，下标会返回一个包含这个存在值的可选值，否则将返回 `nil`：
@@ -604,14 +604,14 @@ if let airportName = airports["DUB"] {
 } else {
     print("That airport is not in the airports dictionary.")
 }
-// 打印 "The name of the airport is Dublin Airport."
+// 打印“The name of the airport is Dublin Airport.”
 ```
 
 我们还可以使用下标语法来通过给某个键的对应值赋值为 `nil` 来从字典里移除一个键值对：
 
 ```swift
 airports["APL"] = "Apple Internation"
-// "Apple Internation" 不是真的 APL 机场，删除它
+// “Apple Internation”不是真的 APL 机场，删除它
 airports["APL"] = nil
 // APL 现在被移除了
 ```
@@ -619,12 +619,12 @@ airports["APL"] = nil
 此外，`removeValue(forKey:)` 方法也可以用来在字典中移除键值对。这个方法在键值对存在的情况下会移除该键值对并且返回被移除的值或者在没有值的情况下返回 `nil`：
 
 ```swift
-if let removedValue = airports. removeValue(forKey: "DUB") {
+if let removedValue = airports.removeValue(forKey: "DUB") {
     print("The removed airport's name is \(removedValue).")
 } else {
     print("The airports dictionary does not contain a value for DUB.")
 }
-// prints "The removed airport's name is Dublin Airport."
+// 打印“The removed airport's name is Dublin Airport.”
 ```
 
 <a name="iterating_over_a_dictionary"></a>

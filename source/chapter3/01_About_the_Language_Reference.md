@@ -1,23 +1,8 @@
 # 关于语言参考（About the Language Reference）
------------------
-
-> 1.0
-> 翻译：[dabing1022](https://github.com/dabing1022)
-> 校对：[numbbbbb](https://github.com/numbbbbb)
-
-> 2.0
-> 翻译+校对：[KYawn](https://github.com/KYawn)
-
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
-
-本页内容包括：
-
-- [如何阅读语法](#how_to_read_the_grammar)
 
 本书的这一节描述了 Swift 编程语言的形式语法。这里描述的语法是为了帮助您了解该语言的更多细节，而不是让您直接实现一个解析器或编译器。
 
-Swift 语言相对较小，这是由于 Swift 代码中在各种地方出现的常见的类型、函数以及运算符都已经在 Swift 标准库中定义了。虽然这些类型、函数和运算符并不是 Swift 语言自身的一部分，但是它们被广泛应用于本书的讨论和代码范例中。
+Swift 语言相对较小，这是由于 Swift 代码中常用的类型、函数以及运算符都已经在 Swift 标准库中定义了。虽然这些类型、函数和运算符并不是 Swift 语言自身的一部分，但是它们被广泛应用于本书的讨论和代码范例中。
 
 <a name="how_to_read_the_grammar"></a>
 ## 如何阅读语法

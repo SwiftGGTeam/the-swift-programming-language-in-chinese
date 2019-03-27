@@ -84,7 +84,7 @@ Swift 中所有数值类型都支持了基本的四则*算术运算符*：
 
 我们来谈谈取余是怎么回事，计算 `9 % 4`，你先计算出 `4` 的多少倍会刚好可以容入 `9` 中：
 
-![Art/remainderInteger_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderInteger_2x.png "Art/remainderInteger_2x.png")
+![Art/remainderInteger_2x.png](https://docs.swift.org/swift-book/_images/remainderInteger_2x.png "Art/remainderInteger_2x.png")
 
 你可以在 `9` 中放入两个 `4`，那余数是 1（用橙色标出）。
 
@@ -176,7 +176,7 @@ a += 2
 
 > 注意
 > 
-> Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.html)。
+> Swift 也提供恒等（`===`）和不恒等（`!==`）这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在[类与结构](./09_Classes_and_Structures.html)章节的 **Identity Operators** 部分。
 
 每个比较运算都返回了一个标识表达式是否成立的布尔值：
 
@@ -198,7 +198,7 @@ if name == "world" {
 } else {
 	print("I'm sorry \(name), but I don't recognize you")
 }
-// 输出 "hello, world", 因为 `name` 就是等于 "world"
+// 输出“hello, world", 因为 `name` 就是等于 "world”
 ```
 
 关于 `if` 语句，请看[控制流](./05_Control_Flow.html)。
@@ -410,7 +410,7 @@ let allowedEntry = false
 if !allowedEntry {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 `if !allowedEntry` 语句可以读作「如果非 allowedEntry」，接下一行代码只有在「非 allowedEntry」为 `true`，即 `allowEntry` 为 `false` 时被执行。
@@ -433,7 +433,7 @@ if enteredDoorCode && passedRetinaScan {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "ACCESS DENIED"
+// 输出“ACCESS DENIED”
 ```
 
 ### 逻辑或运算符
@@ -452,7 +452,7 @@ if hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 ### 逻辑运算符组合计算
@@ -465,7 +465,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这个例子使用了含多个 `&&` 和 `||` 的复合逻辑。但无论怎样，`&&` 和 `||` 始终只能操作两个值。所以这实际是三个简单逻辑连续操作的结果。我们来解读一下：
@@ -488,7 +488,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } else {
 	print("ACCESS DENIED")
 }
-// 输出 "Welcome!"
+// 输出“Welcome!”
 ```
 
 这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。可读性比简洁性更重要，请在可以让你代码变清晰的地方加个括号吧！

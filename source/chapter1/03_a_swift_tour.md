@@ -1,6 +1,6 @@
 # Swift 初见
 
-通常来说，编程语言教程中的第一个程序应该在屏幕上打印 “Hello, world”。在 Swift 中，可以用一行代码实现：
+通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
 ```swift
 print("Hello, world!")
@@ -14,7 +14,7 @@ print("Hello, world!")
 > 
 > 最好的体验是把这一章作为 Playground 文件在 Xcode 中打开。 Playgrounds 允许你可以编辑代码并立刻看到输出结果。
 > 
-> [Download Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
+> [Download Playground](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.playground.zip)
 
 <a name="simple_values"></a>
 ## 简单值

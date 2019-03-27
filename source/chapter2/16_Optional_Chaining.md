@@ -54,7 +54,7 @@ if let roomCount = john.residence?.numberOfRooms {
 } else {
     print("Unable to retrieve the number of rooms.")
 }
-// 打印 “Unable to retrieve the number of rooms.”
+// 打印“Unable to retrieve the number of rooms.”
 ```
 
 在 `residence` 后面添加问号之后，Swift 就会在 `residence` 不为 `nil` 的情况下访问 `numberOfRooms`。
@@ -77,7 +77,7 @@ if let roomCount = john.residence?.numberOfRooms {
 } else {
 	print("Unable to retrieve the number of rooms.")
 }
-// 打印 “John's residence has 1 room(s).”
+// 打印“John's residence has 1 room(s).”
 ```
 
 <a name="defining_model_classes_for_optional_chaining"></a>
@@ -170,7 +170,7 @@ if let roomCount = john.residence?.numberOfRooms {
 } else {
     print("Unable to retrieve the number of rooms.")
 }
-// 打印 “Unable to retrieve the number of rooms.”
+// 打印“Unable to retrieve the number of rooms.”
 ```
 
 因为 `john.residence` 为 `nil`，所以这个可选链式调用依旧会像先前一样失败。
@@ -186,7 +186,7 @@ john.residence?.address = someAddress
 
 在这个例子中，通过 `john.residence` 来设定 `address` 属性也会失败，因为 `john.residence` 当前为 `nil`。
 
-上面代码中的赋值过程是可选链式调用的一部分，这意味着可选链式调用失败时，等号右侧的代码不会被执行。对于上面的代码来说，很难验证这一点，因为像这样赋值一个常量没有任何副作用。下面的代码完成了同样的事情，但是它使用一个函数来创建 `Address` 实例，然后将该实例返回用于赋值。该函数会在返回前打印 “Function was called”，这使你能验证等号右侧的代码是否被执行。
+上面代码中的赋值过程是可选链式调用的一部分，这意味着可选链式调用失败时，等号右侧的代码不会被执行。对于上面的代码来说，很难验证这一点，因为像这样赋值一个常量没有任何副作用。下面的代码完成了同样的事情，但是它使用一个函数来创建 `Address` 实例，然后将该实例返回用于赋值。该函数会在返回前打印“Function was called”，这使你能验证等号右侧的代码是否被执行。
 
 ```swift
 func createAddress() -> Address {
@@ -226,7 +226,7 @@ if john.residence?.printNumberOfRooms() != nil {
 } else {
     print("It was not possible to print the number of rooms.")
 }
-// 打印 “It was not possible to print the number of rooms.”
+// 打印“It was not possible to print the number of rooms.”
 ```
 
 同样的，可以据此判断通过可选链式调用为属性赋值是否成功。在上面的[通过可选链式调用访问属性](#accessing_properties_through_optional_chaining)的例子中，我们尝试给 `john.residence` 中的 `address` 属性赋值，即使 `residence` 为 `nil`。通过可选链式调用给属性赋值会返回 `Void?`，通过判断返回值是否为 `nil` 就可以知道赋值是否成功：
@@ -237,7 +237,7 @@ if (john.residence?.address = someAddress) != nil {
 } else {
 	print("It was not possible to set the address.")
 }
-// 打印 “It was not possible to set the address.”
+// 打印“It was not possible to set the address.”
 ```
 
 <a name="accessing_subscripts_through_optional_chaining"></a>
@@ -257,7 +257,7 @@ if let firstRoomName = john.residence?[0].name {
 } else {
     print("Unable to retrieve the first room name.")
 }
-// 打印 “Unable to retrieve the first room name.”
+// 打印“Unable to retrieve the first room name.”
 ```
 
 在这个例子中，问号直接放在 `john.residence` 的后面，并且在方括号的前面，因为 `john.residence` 是可选值。
@@ -283,7 +283,7 @@ if let firstRoomName = john.residence?[0].name {
 } else {
 	print("Unable to retrieve the first room name.")
 }
-// 打印 “The first room name is Living Room.”
+// 打印“The first room name is Living Room.”
 ```
 
 <a name="accessing_subscripts_of_optional_type"></a>
@@ -324,7 +324,7 @@ if let johnsStreet = john.residence?.address?.street {
 } else {
     print("Unable to retrieve the address.")
 }
-// 打印 “Unable to retrieve the address.”
+// 打印“Unable to retrieve the address.”
 ```
 
 `john.residence` 现在包含一个有效的 `Residence` 实例。然而，`john.residence.address` 的值当前为 `nil`。因此，调用 `john.residence?.address?.street` 会失败。
@@ -344,7 +344,7 @@ if let johnsStreet = john.residence?.address?.street {
 } else {
     print("Unable to retrieve the address.")
 }
-// 打印 “John's street name is Laurel Street.”
+// 打印“John's street name is Laurel Street.”
 ```
 
 在上面的例子中，因为 `john.residence` 包含一个有效的 `Address` 实例，所以对 `john.residence` 的 `address` 属性赋值将会成功。
@@ -360,14 +360,13 @@ if let johnsStreet = john.residence?.address?.street {
 if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
     print("John's building identifier is \(buildingIdentifier).")
 }
-// 打印 “John's building identifier is The Larches.”
+// 打印“John's building identifier is The Larches.”
 ```
 
 如果要在该方法的返回值上进行可选链式调用，在方法的圆括号后面加上问号即可：
 
 ```swift
 if let beginsWithThe =
-
 	john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
 		if beginsWithThe {
 			print("John's building identifier begins with \"The\".")
@@ -375,7 +374,7 @@ if let beginsWithThe =
 			print("John's building identifier does not begin with \"The\".")
 		}
 }
-// 打印 “John's building identifier begins with "The".”
+// 打印“John's building identifier begins with "The".”
 ```
 
 > 注意
