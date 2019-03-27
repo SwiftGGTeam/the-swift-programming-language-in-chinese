@@ -6,8 +6,7 @@
 
 可以为类中继承来的属性添加属性观察器，这样一来，当属性值改变时，类就会被通知到。可以为任何属性添加属性观察器，无论它原本被定义为存储型属性还是计算型属性。
 
-<a name="defining_a_base_class"></a>
-## 定义一个基类
+## 定义一个基类 {#defining_a_base_class}
 
 不继承于其它类的类，称之为*基类*。
 
@@ -46,8 +45,7 @@ print("Vehicle: \(someVehicle.description)")
 
 `Vehicle` 类定义了一个具有通用特性的车辆类，但实际上对于它本身来说没什么用处。为了让它变得更加有用，还需要进一步完善它，从而能够描述一个具体类型的车辆。
 
-<a name="subclassing"></a>
-## 子类生成
+## 子类生成 {#subclassing}
 
 *子类生成*指的是在一个已有类的基础上创建一个新的类。子类继承超类的特性，并且可以进一步完善。你还可以为子类添加新的特性。
 
@@ -107,8 +105,7 @@ print("Tandem: \(tandem.description)")
 // 打印：“Tandem: traveling at 22.0 miles per hour”
 ```
 
-<a name="overriding"></a>
-## 重写
+## 重写 {#overriding}
 
 子类可以为继承来的实例方法，类方法，实例属性，类属性，或下标提供自己定制的实现。我们把这种行为叫*重写*。
 
@@ -185,8 +182,7 @@ print("Car: \(car.description)")
 // 打印“Car: traveling at 25.0 miles per hour in gear 3”
 ```
 
-<a name="overriding_property_observers"></a>
-#### 重写属性观察器
+#### 重写属性观察器 {#overriding_property_observers}
 
 你可以通过重写属性为一个继承来的属性添加属性观察器。这样一来，无论被继承属性原本是如何实现的，当其属性值发生改变时，你就会被通知到。关于属性观察器的更多内容，请看[属性观察器](../chapter2/10_Properties.html#property_observers)。
 
@@ -216,8 +212,7 @@ print("AutomaticCar: \(automatic.description)")
 // 打印“AutomaticCar: traveling at 35.0 miles per hour in gear 4”
 ```
 
-<a name="preventing_overrides"></a>
-## 防止重写
+## 防止重写 {#preventing_overrides}
 
 你可以通过把方法，属性或下标标记为 *`final`* 来防止它们被重写，只需要在声明关键字前加上 `final` 修饰符即可（例如：`final var`、`final func`、`final class func` 以及 `final subscript`）。
 

@@ -10,8 +10,7 @@
 > 
 > Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的 `NSError`。更多详情参见 [用 Swift 解决 Cocoa 错误](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift)。
 
-<a name="representing_and_throwing_errors"></a>
-## 表示与抛出错误
+## 表示与抛出错误 {#representing_and_throwing_errors}
 
 在 Swift 中，错误用遵循 `Error` 协议的类型的值来表示。这个空协议表明该类型可以用于错误处理。
 
@@ -31,8 +30,7 @@ enum VendingMachineError: Error {
 throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 ```
 
-<a name="handling_errors"></a>
-## 处理错误
+## 处理错误 {#handling_errors}
 
 某个错误被抛出时，附近的某部分代码必须负责处理这个错误，例如纠正这个问题、尝试另外一种方式、或是向用户报告错误。
 
@@ -44,8 +42,7 @@ Swift 中有 `4` 种处理错误的方式。你可以把函数抛出的错误传
 > 
 > Swift 中的错误处理和其他语言中用 `try`，`catch` 和 `throw` 进行异常处理很像。和其他语言中（包括 Objective-C ）的异常处理不同的是，Swift 中的错误处理并不涉及解除调用栈，这是一个计算代价高昂的过程。就此而言，`throw` 语句的性能特性是可以和 `return` 语句相媲美的。
 
-<a name="propagating_errors_using_throwing_functions"></a>
-### 用 throwing 函数传递错误
+### 用 throwing 函数传递错误 {#propagating_errors_using_throwing_functions}
 
 为了表示一个函数、方法或构造器可以抛出错误，在函数声明的参数之后加上 `throws` 关键字。一个标有 `throws` 关键字的函数被称作 *throwing 函数*。如果这个函数指明了返回值类型，`throws` 关键词需要写在返回箭头（`->`）的前面。
 
@@ -238,8 +235,7 @@ func fetchData() -> Data? {
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
 
-<a name="specifying_cleanup_actions"></a>
-## 指定清理操作
+## 指定清理操作 {#specifying_cleanup_actions}
 
 你可以使用 `defer` 语句在即将离开当前代码块时执行一系列语句。该语句让你能执行一些必要的清理工作，不管是以何种方式离开当前代码块的——无论是由于抛出错误而离开，或是由于诸如 `return`、`break` 的语句。例如，你可以用 `defer` 语句来确保文件描述符得以关闭，以及手动分配的内存得以释放。
 

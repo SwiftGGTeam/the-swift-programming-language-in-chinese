@@ -4,8 +4,7 @@
 
 除了遵循协议的类型必须实现的要求外，还可以对协议进行扩展，通过扩展来实现一部分要求或者实现一些附加功能，这样遵循协议的类型就能够使用这些功能。
 
-<a name="protocol_syntax"></a>
-## 协议语法
+## 协议语法 {#protocol_syntax}
 
 协议的定义方式与类、结构体和枚举的定义非常相似：
 
@@ -31,8 +30,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 }
 ```
 
-<a name="property_requirements"></a>
-## 属性要求
+## 属性要求 {#property_requirements}
 
 协议可以要求遵循协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储属性还是计算属性，它只指定属性的名称和类型。此外，协议还指定属性是*可读*的还是*可读可写的*。
 
@@ -99,9 +97,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 `Starship` 类只能把 `fullName` 作为只读的计算属性来实现。每一个 `Starship` 类的实例都有一个名为 `name` 的非可选属性和一个名为 `prefix` 的可选属性。 当 `prefix` 存在时，计算属性 `fullName` 会将 `prefix` 插入到 `name` 之前，从而得到一个带有 `prefix` 的 `fullName`。
 
-<a name="method_requirements"></a>
-
-## 方法要求
+## 方法要求 {#method_requirements}
 
 协议可以要求遵循协议的类型实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是，不支持为协议中的方法提供默认参数。
 
@@ -145,10 +141,9 @@ print("And another one: \(generator.random())")
 // 打印 “And another one: 0.729023776863283”
 ```
 
-<a name="mutating_method_requirements"></a>
-## 异变方法要求
+## 异变方法要求 {#mutating_method_requirements}
 
-有时需要在方法中改变（或*异变*）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 [在实例方法中修改值类型](./11_Methods.html#modifying_value_types_from_within_instance_methods) 章节中有详细描述。
+有时需要在方法中改变（或*异变*）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 [在实例方法中修改值类型](./11_Methods.md#modifying_value_types_from_within_instance_methods) 章节中有详细描述。
 
 如果你在协议中定义了一个实例方法，该方法会改变遵循该协议的类型的实例，那么在定义协议时需要在方法前加 `mutating` 关键字。这使得结构体和枚举能够遵循此协议并满足此方法要求。
 
@@ -187,8 +182,7 @@ lightSwitch.toggle()
 // lightSwitch 现在的值为 .on
 ```
 
-<a name="initializer_requirements"></a>
-## 构造器要求
+## 构造器要求 {#initializer_requirements}
 
 协议可以要求遵循协议的类型实现指定的构造器。你可以像编写普通构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：
 
@@ -212,11 +206,11 @@ class SomeClass: SomeProtocol {
 
 使用 `required` 修饰符可以确保所有子类也必须提供此构造器实现，从而也能符合协议。
 
-关于 `required` 构造器的更多内容，请参考 [必要构造器](./14_Initialization.html#required_initializers)。
+关于 `required` 构造器的更多内容，请参考 [必要构造器](./14_Initialization.md#required_initializers)。
 
 > 注意
 > 
-> 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见 [防止重写](./13_Inheritance.html#preventing_overrides)。
+> 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见 [防止重写](./13_Inheritance.md#preventing_overrides)。
 
 如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，那么该构造器的实现需要同时标注 `required` 和 `override` 修饰符：
 
@@ -242,12 +236,11 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ### 可失败构造器要求
 
-协议还可以为遵循协议的类型定义可失败构造器要求，详见 [可失败构造器](./14_Initialization.html#failable_initializers)。
+协议还可以为遵循协议的类型定义可失败构造器要求，详见 [可失败构造器](./14_Initialization.md#failable_initializers)。
 
 遵循协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
 
-<a name="protocols_as_types"></a>
-## 协议作为类型
+## 协议作为类型 {#protocols_as_types}
 
 尽管协议本身并未实现任何功能，但是协议可以被当做一个功能完备的类型来使用。
 
@@ -299,8 +292,7 @@ for _ in 1...5 {
 // Random dice roll is 4
 ```
 
-<a name="delegation"></a>
-## 委托
+## 委托 {#delegation}
 
 *委托*是一种设计模式，它允许类或结构体将一些需要它们负责的功能委托给其他类型的实例。委托模式的实现很简单：定义协议来封装那些需要被委托的功能，这样就能确保遵循协议的类型能提供这些功能。委托模式可以用来响应特定的动作，或者接收外部数据源提供的数据，而无需关心外部数据源的类型。
 
@@ -320,9 +312,9 @@ protocol DiceGameDelegate {
 
 `DiceGame` 协议可以被任意涉及骰子的游戏遵循。
 
-`DiceGameDelegate` 协议可以被任意类型遵循，用来追踪 `DiceGame` 的游戏过程。为了防止强引用导致的循环引用问题，可以把协议声明为弱引用，更多相关的知识请看 [类实例之间的循环强引用](./23_Automatic_Reference_Counting.html#strong_reference_cycles_between_class_instances)，当协议标记为类专属可以使 `SnakesAndLadders` 类在声明协议时强制要使用弱引用。若要声明类专属的协议就必须继承于 `AnyObject` ，更多请看 [类专属的协议](#class_only_protocol)。
+`DiceGameDelegate` 协议可以被任意类型遵循，用来追踪 `DiceGame` 的游戏过程。为了防止强引用导致的循环引用问题，可以把协议声明为弱引用，更多相关的知识请看 [类实例之间的循环强引用](./23_Automatic_Reference_Counting.md#strong_reference_cycles_between_class_instances)，当协议标记为类专属可以使 `SnakesAndLadders` 类在声明协议时强制要使用弱引用。若要声明类专属的协议就必须继承于 `AnyObject` ，更多请看 [类专属的协议](#class_only_protocol)。
 
-如下所示，`SnakesAndLadders` 是 [控制流](./05_Control_Flow.html) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
+如下所示，`SnakesAndLadders` 是 [控制流](./05_Control_Flow.md) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
 
 ```swift
 class SnakesAndLadders: DiceGame {
@@ -357,7 +349,7 @@ class SnakesAndLadders: DiceGame {
 }
 ```
 
-关于这个*蛇梯棋*游戏的详细描述请参阅 [中断（Break）](./05_Control_Flow.html#break)。
+关于这个*蛇梯棋*游戏的详细描述请参阅 [中断（Break）](./05_Control_Flow.md#break)。
 
 这个版本的游戏封装到了 `SnakesAndLadders` 类中，该类遵循了 `DiceGame` 协议，并且提供了相应的可读的 `dice` 属性和 `play()` 方法。（ `dice` 属性在构造之后就不再改变，且协议只要求 `dice` 为可读的，因此将 `dice` 声明为常量属性。）
 
@@ -413,10 +405,9 @@ game.play()
 // The game lasted for 4 turns
 ```
 
-<a name="adding_protocol_conformance_with_an_extension"></a>
-## 在扩展里添加协议遵循
+## 在扩展里添加协议遵循 {#adding_protocol_conformance_with_an_extension}
 
-即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在 [扩展](./20_Extensions.html) 章节中查看。
+即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在 [扩展](./20_Extensions.md) 章节中查看。
 
 > 注意
 > 
@@ -462,10 +453,9 @@ print(game.textualDescription)
 // 打印 “A game of Snakes and Ladders with 25 squares”
 ```
 
-<a name="Conditionally_Conforming_to_a_Protocol"></a>
-## 有条件地遵循协议
+## 有条件地遵循协议 {#Conditionally_Conforming_to_a_Protocol}
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见 [泛型 Where 分句](./22_Generics.html##where_clauses)。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见 [泛型 Where 分句](./22_Generics.md##where_clauses)。
 
 下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时就遵循 `TextRepresentable` 协议。
 
@@ -481,8 +471,7 @@ print(myDice.textualDescription)
 // 打印 "[A 6-sided dice, A 12-sided dice]"
 ```
 
-<a name="declaring_protocol_adoption_with_an_extension"></a>
-## 在扩展里声明采纳协议
+## 在扩展里声明采纳协议 {#declaring_protocol_adoption_with_an_extension}
 
 当一个类型已经符合了某个协议中的所有要求，却还没有声明采纳该协议时，可以通过空的扩展来让它采纳该协议：
 
@@ -509,10 +498,9 @@ print(somethingTextRepresentable.textualDescription)
 > 
 > 即使满足了协议的所有要求，类型也不会自动遵循协议，必须显式地遵循协议。
 
-<a name="collections_of_protocol_types"></a>
-## 协议类型的集合
+## 协议类型的集合 {#collections_of_protocol_types}
 
-协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.html##protocols_as_types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
+协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.md##protocols_as_types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
 
 ```swift
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
@@ -531,8 +519,7 @@ for thing in things {
 
 注意 `thing` 常量是 `TextRepresentable` 类型而不是 `Dice`，`DiceGame`，`Hamster` 等类型，即使实例在幕后确实是这些类型中的一种。由于 `thing` 是 `TextRepresentable` 类型，任何 `TextRepresentable` 的实例都有一个 `textualDescription` 属性，所以在每次循环中可以安全地访问 `thing.textualDescription`。
 
-<a name="protocol_inheritance"></a>
-## 协议的继承
+## 协议的继承 {#protocol_inheritance}
 
 协议能够*继承*一个或多个其他协议，可以在继承的协议的基础上增加新的要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔：
 
@@ -587,9 +574,7 @@ print(game.prettyTextualDescription)
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
 
-<a name="class_only_protocol"></a>
-
-## 类专属的协议
+## 类专属的协议 {#class_only_protocol}
 
 你通过添加 `AnyObject` 关键字到协议的继承列表，就可以限制协议只能被类类型采纳（以及非结构体或者非枚举的类型）。
 
@@ -603,10 +588,9 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 
 > 注意
 > 
-> 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Classes_and_Structures.html#structures_and_enumerations_are_value_types) 和 [类是引用类型](./09_Classes_and_Structures.html#classes_are_reference_types)。
+> 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures_and_enumerations_are_value_types) 和 [类是引用类型](./09_Classes_and_Structures.md#classes_are_reference_types)。
 
-<a name="protocol_composition"></a>
-## 协议合成
+## 协议合成 {#protocol_composition}
 
 要求一个类型同时遵循多个协议是很有用的。你可以使用*协议组合*来复合多个协议到一个要求里。协议组合行为就和你定义的临时局部协议一样拥有构成中所有协议的需求。协议组合不定义任何新的协议类型。
 
@@ -670,10 +654,9 @@ beginConcert(in: seattle)
 
 将 birthdayPerson 传入 `beginConcert(in:)` 函数是不合法的，因为 Person 不是 Location 的子类。同理，如果你新建一个类继承于 Location，但是没有遵循 Named 协议，而用这个类的实例去调用 `beginConcert(in:)` 函数也是非法的。
 
-<a name="checking_for_protocol_conformance"></a>
-## 检查协议一致性
+## 检查协议一致性 {#checking_for_protocol_conformance}
 
-你可以使用[类型转换](./18_Type_Casting.html)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换协议的语法与检查和转换类型是完全一样的：
+你可以使用[类型转换](./18_Type_Casting.md)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换协议的语法与检查和转换类型是完全一样的：
 
 * `is` 用来检查实例是否符合某个协议，若符合则返回 `true`，否则返回 `false`；
 * `as?` 返回一个可选值，当实例符合某个协议时，返回类型为协议类型的可选值，否则返回 `nil`；
@@ -744,14 +727,13 @@ for object in objects {
 
 `objects` 数组中的元素的类型并不会因为强转而丢失类型信息，它们仍然是 `Circle`，`Country`，`Animal` 类型。然而，当它们被赋值给 `objectWithArea` 常量时，只被视为 `HasArea` 类型，因此只有 `area` 属性能够被访问。
 
-<a name="optional_protocol_requirements"></a>
-## 可选的协议要求
+## 可选的协议要求 {#optional_protocol_requirements}
 
 协议可以定义*可选要求*，遵循协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。可选要求用在你需要和 Objective-C 打交道的代码中。协议和可选要求都必须带上 `@objc` 属性。标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类遵循，其他类以及结构体和枚举均不能遵循这种协议。
 
 使用可选要求时（例如，可选的方法或者属性），它们的类型会自动变成可选的。比如，一个类型为 `(Int) -> String` 的方法会变成 `((Int) -> String)?`。需要注意的是整个函数类型是可选的，而不是函数的返回值。
 
-协议中的可选要求可通过可选链式调用来使用，因为遵循协议的类型可能没有实现这些可选要求。类似 `someOptionalMethod?(someArgument)` 这样，你可以在可选方法名称后加上 `?` 来调用可选方法。详细内容可在[可选链式调用](./16_Optional_Chaining.html)章节中查看。
+协议中的可选要求可通过可选链式调用来使用，因为遵循协议的类型可能没有实现这些可选要求。类似 `someOptionalMethod?(someArgument)` 这样，你可以在可选方法名称后加上 `?` 来调用可选方法。详细内容可在[可选链式调用](./16_Optional_Chaining.md)章节中查看。
 
 下面的例子定义了一个名为 `Counter` 的用于整数计数的类，它使用外部的数据源来提供每次的增量。数据源由 `CounterDataSource` 协议定义，它包含两个可选要求：
 
@@ -855,8 +837,7 @@ for _ in 1...5 {
 // 0
 ```
 
-<a name="protocol_extensions"></a>
-## 协议扩展
+## 协议扩展 {#protocol_extensions}
 
 协议可以通过扩展来为遵循协议的类型提供属性、方法以及下标的实现。通过这种方式，你可以基于协议本身来实现这些功能，而无需在每个遵循协议的类型中都重复同样的实现，也无需使用全局函数。
 
@@ -880,8 +861,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 // 打印 “And here's a random Boolean: true”
 ```
 
-<a name="providing_default_implementations"></a>
-### 提供默认实现
+### 提供默认实现 {#providing_default_implementations}
 
 可以通过协议扩展来为协议要求的属性、方法以及下标提供默认的实现。如果遵循协议的类型为这些要求提供了自己的实现，那么这些自定义实现将会替代扩展中的默认实现被使用。
 
@@ -899,10 +879,9 @@ extension PrettyTextRepresentable  {
 }
 ```
 
-<a name="adding_constraints_to_protocol_extensions"></a>
-### 为协议扩展添加限制条件
+### 为协议扩展添加限制条件 {#adding_constraints_to_protocol_extensions}
 
-在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型 Where 子句](./22_Generics.html#where_clauses)中所描述的。
+在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型 Where 子句](./22_Generics.md#where_clauses)中所描述的。
 
 例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵 `Equatable` 协议， 作为标准库的一部分， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
 

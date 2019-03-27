@@ -10,13 +10,11 @@
 
 有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰某个特定的声明的。这些_特性的参数_写在圆括号内，它们的格式由它们所属的特性来定义。
 
-<a name="declaration_attributes"></a>
-## 声明特性
+## 声明特性 {#declaration_attributes}
 
 声明特性只能应用于声明。
 
-<a name="available"></a>
-### `available`
+### `available` {#available}
 
 将 `available` 特性用于声明时，表示该声明的生命周期是相对于特定的平台和操作系统版本。
 
@@ -112,13 +110,11 @@ struct MyStruct {
 }
 ```
 
-<a name="discardableresult"></a>
-### `discardableResult`
+### `discardableResult` {#discardableresult}
 
 该特性用于的函数或方法声明，以抑制编译器中函数或方法的返回值被调而没有使用其结果的警告。
 
-<a name="dynamiccallable"></a>
-### `dynamicCallable`
+### `dynamicCallable` {#dynamiccallable}
 
 该特性用于类、结构体、枚举或协议，以将该类型的实例视为可调用的函数。该类型必须实现 `dynamicallyCall(withArguments:)`、`dynamicallyCall(withKeywordArguments:)` 方法之一，或两者同时实现。
 
@@ -155,6 +151,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 @dynamicCallable
 struct Repeater {
     func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+> 
         return pairs
             .map { label, count in
                 repeatElement(label, count: count).joined(separator: " ")
@@ -182,8 +179,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 repeatLabels(a: "four") // Error
 ```
 
-<a name="dynamicmemberlookup"></a>
-### `dynamicMemberLookup`
+### `dynamicMemberLookup` {#dynamicmemberlookup}
 
 该特性用于类、结构体、枚举或协议，让其能在运行时查找成员。该类型必须实现 `subscript(dynamicMemberLookup:)` 下标。
 
@@ -195,6 +191,7 @@ struct DynamicStruct {
     let dictionary = ["someDynamicMember": 325,
                       "someOtherMember": 787]
     subscript(dynamicMember member: String) -> Int {
+> 
         return dictionary[member] ?? 1054
     }
 }
@@ -211,13 +208,11 @@ print(dynamic == equivalent)
 // 打印“true”
 ```
 
-<a name="gkinspectable"></a>
-### `GKInspectable`
+### `GKInspectable` {#gkinspectable}
 
 应用此属性，暴露一个自定义 GameplayKit 组件属性给 SpriteKit 编辑器 UI。
 
-<a name="inlinable"></a>
-### `inlinable`
+### `inlinable` {#inlinable}
 
 该特性用于函数、方法、计算属性、下标、便利构造器或析构器的声明，以将该声明的实现公开为模块公开接口的一部分。编译器允许在调用处把 `inlinable` 标记的符号替换为符号实现的副本。
 
@@ -225,8 +220,7 @@ print(dynamic == equivalent)
 
 该特性不能用于嵌套在函数内的声明，也不能用于 `fileprivate` 或 `private` 访问级别的声明。在内联函数定义的函数和闭包是隐式非内联的，即使他们不能标记该特性。
 
-<a name="nonobjc"></a>
-### `nonobjc`
+### `nonobjc` {#nonobjc}
 
 该特性用于方法、属性、下标、或构造器的声明，这些声明本可以在 Objective-C 代码中使用，而使用 `nonobjc` 特性则告诉编译器这个声明不能在 Objective-C 代码中使用。
 
@@ -236,8 +230,7 @@ print(dynamic == equivalent)
 
 标有 `nonobjc` 特性的方法不能重写标有 `objc` 特性的方法。然而，标有 `objc` 特性的方法可以重写标有 `nonobjc` 特性的方法。同样，标有 `nonobjc` 特性的方法不能满足标有 `@objc` 特性的协议中的方法要求。
 
-<a name="nsapplicationmain"></a>
-### `NSApplicationMain`
+### `NSApplicationMain` {#nsapplicationmain}
 
 在类上使用该特性表示该类是应用程序委托类，使用该特性与调用 `NSApplicationMain(_:_:)` 函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
@@ -248,20 +241,17 @@ import AppKit
 NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
 
-<a name="nscopying"></a>
-### `NSCopying`
+### `NSCopying` {#nscopying}
 
 该特性用于修饰一个类的存储型变量属性。该特性将使属性的设值方法使用传入值的副本进行赋值，这个值由传入值的 `copyWithZone(_:)` 方法返回。该属性的类型必需符合 `NSCopying` 协议。
 
 `NSCopying` 特性的行为与 Objective-C 中的 `copy` 特性相似。
 
-<a name="nsmanaged"></a>
-### `NSManaged`
+### `NSManaged` {#nsmanaged}
 
 该特性用于修饰 `NSManagedObject` 子类中的实例方法或存储型变量属性，表明它们的实现由 `Core Data` 在运行时基于相关实体描述动态提供。对于标记了 `NSManaged` 特性的属性，`Core Data` 也会在运行时为其提供存储。应用这个特性也意味着 `objc` 特性。
 
-<a name="objc"></a>
-### `objc`
+### `objc` {#objc}
 
 该特性用于修饰任何可以在 Objective-C 中表示的声明。比如，非嵌套类、协议、非泛型枚举（仅限原始值为整型的枚举）、类和协议中的属性和方法（包括存取方法）、构造器、析构器以及下标运算符。`objc` 特性告诉编译器这个声明可以在 Objective-C 代码中使用。
 
@@ -277,7 +267,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 如果你将 `objc` 特性应用于枚举，每一个枚举用例都会以枚举名称和用例名称组合的方式暴露在 Objective-C 代码中。例如，在 `Planet` 枚举中有一个名为 `Venus` 的用例，该用例暴露在 Objective-C 代码中时叫做 `PlanetVenus`。
 
-`objc` 特性有一个可选的参数，由标识符构成。当你想把 `objc` 所修饰的实体以一个不同的名字暴露给 Objective-C 时，你就可以使用这个特性参数。你可以使用这个参数来命名类、枚举类型、枚举用例、协议、方法、存取方法以及构造器。如果你要指定类、协议或枚举在 Objective-C 下的名称，在名称上包含三个字母的前缀，如 [Objective-C 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中的 [约定](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)。下面的例子把 `ExampleClass` 中的 `enabled` 属性的取值方法暴露给 Objective-C，名字是 `isEnabled`，而不是它原来的属性名。
+`objc` 特性有一个可选的参数，由标识符构成。当你想把 `objc` 所修饰的实体以一个不同的名字暴露给 Objective-C 时，你就可以使用这个特性参数。你可以使用这个参数来命名类、枚举类型、枚举用例、协议、方法、存取方法以及构造器。如果你要指定类、协议或枚举在 Objective-C 下的名称，在名称上包含三个字母的前缀，如 [Objective-C 编程](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中的 [约定](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)。下面的例子把 `ExampleClass` 中的 `enabled` 属性的取值方法暴露给 Objective-C，名字是 `isEnabled`，而不是它原来的属性名。
 
 ```swift
 class ExampleClass: NSObject {
@@ -289,32 +279,27 @@ class ExampleClass: NSObject {
 }
 ```
 
-<a name="objcmembers"></a>
-### `objcMembers`
+### `objcMembers` {#objcmembers}
 
 该特性用于类声明，以将 `objc` 特性应用于该类、扩展、子类以及子类的扩展的所有 Objective-C 兼容成员。
 
 大多数代码应该使用 `objc` 特性，以暴露所需的声明。如果需要暴露多个声明，可以将其分组到添加 `objc` 特性的扩展中。`objcMembers` 特性为大量使用 Objective-C 运行时的内省工具的库提供了便利。添加不必要的 `objc` 特性会增加二进制体积并影响性能。
 
-<a name="requires_stored_property_inits"></a>
-### `requires_stored_property_inits`
+### `requires_stored_property_inits` {#requires_stored_property_inits}
 
 该特性用于类声明，以要求类中所有存储属性提供默认值作为其定义的一部分。对于从中继承的任何类都推断出 `NSManagedObject` 特性。
 
-<a name="testable"></a>
-### `testable`
+### `testable` {#testable}
 
 在导入允许测试的编译模块时，该特性用于修饰 `import` 声明，这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用 `internal` 或者 `public` 访问级别修饰符标记的类和类成员，就像它们是 `open` 访问修饰符声明的。
 
-<a name="uiapplicationmain"></a>
-### `UIApplicationMain`
+### `UIApplicationMain` {#uiapplicationmain}
 
 在类上使用该特性表示该类是应用程序委托类，使用该特性与调用 `UIApplicationMain` 函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
 如果你不想使用这个特性，可以提供一个 `main.swift` 文件，并在代码顶层调用 `UIApplicationMain(_:_:_:_:)` 函数。比如，如果你的应用程序使用一个继承于 UIApplication 的自定义子类作为主要类，你可以调用 `UIApplicationMain(_:_:_:_:)` 函数而不是使用该特性。
 
-<a name="usablefrominline"></a>
-### `usableFromInline`
+### `usableFromInline` {#usablefrominline}
 
 该特性用于函数、方法、计算属性、下标、构造器或析构器的声明，以在同一模块中允许该符号用于内联代码的声明。声明必须具有 `internal` 访问级别修饰符。
 
@@ -322,16 +307,13 @@ class ExampleClass: NSObject {
 
 标记为 `inlinable` 特性的声明，在内联代码中可以隐式使用。虽然 `inlinable` 或 `usableFromInline` 可以用于 `internal` 声明，但这两者不能同时使用。
 
-<a name="warn_unqualified_access"></a>
-### `warn_unqualified_access`
+### `warn_unqualified_access` {#warn_unqualified_access}
 
 该特性应用于顶级函数、实例方法、类方法或静态方法，以在没有前置限定符（例如模块名称、类型名称、实例变量或常量）的情况下使用该函数或方法时触发警告。使用该特性可以帮助减少在同一作用于访问同名函数之间的歧义。
 
 例如，Swift 标准库包含 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 顶级函数和用于序列比较元素的 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。序列方法声明使用了  `warn_unqualified_access`，以减少在 `Sequence` 扩展中使用它们的歧义。
 
-<a name="declaration_attributes_used_by_interface_builder"></a>
-
-### Interface Builder 使用的声明特性
+### Interface Builder 使用的声明特性 {#declaration_attributes_used_by_interface_builder}
 
 `Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBOutlet`，`IBDesignable`，以及 `IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
 
@@ -339,18 +321,15 @@ class ExampleClass: NSObject {
 
 应用 `IBAction`、`IBOutlet`、`IBDesignable` 或者 `IBInspectable`  特性都意味着同时应用 `objc` 特性。
 
-<a name="type_attributes"></a>
-## 类型特性
+## 类型特性 {#type_attributes}
 
 类型特性只能用于修饰类型。
 
-<a name="autoclosure"></a>
-### `autoclosure`
+### `autoclosure` {#autoclosure}
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 autoclosure 特性的例子，请参阅 [自动闭包](https://docs.swift.org/swift-book/LanguageGuide/Closures.html#ID543) 和 [函数类型](https://docs.swift.org/swift-book/ReferenceManual/Types.html#ID449)。
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 autoclosure 特性的例子，请参阅 [自动闭包](../chapter2/07_Closures.md#autoclosures) 和 [函数类型](./03_Types.md#function_type)。
 
-<a name="convention"></a>
-### `convention`
+### `convention` {#convention}
 
 该特性用于修饰函数类型，它指出了函数调用的约定。
 
@@ -364,36 +343,51 @@ convention 特性总是与下面的参数之一一起出现。
 
 使用 C 函数调用约定的函数也可用作使用 Objective-C 块调用约定的函数，同时使用 Objective-C 块调用约定的函数也可用作使用 Swift 函数调用约定的函数。然而，只有非泛型的全局函数、局部函数以及未捕获任何局部变量的闭包，才可以被用作使用 C 函数调用约定的函数。
 
-<a name="escaping"></a>
-### `escaping`
+### `escaping` {#escaping}
 
-在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](https://docs.swift.org/swift-book/LanguageGuide/Closures.html#ID546)。
+在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../chapter2/07_Closures.md#escaping_closures)。
 
-<a name="switch_case_attributes"></a>
-## Switch Case 特性
+## Switch Case 特性 {#switch_case_attributes}
 
 你只能在 switch cases 中使用 switch case 特性。
 
 ### `unknown`
 
-次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [Switching over Future Enumeration Cases](https://docs.swift.org/swift-book/ReferenceManual/Statements.html#ID602)。
+次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [对未来枚举的 `case` 进行 `switch`](./05_Statements.md#future-case)。
 
 > 特性语法
+> 
 >
-> <a name="attribute"></a>
+> ######  attribute {#attribute}
+> 
 > *特性*→ [特性名](#attribute_name) [特性参数子句](#atribute_argument_clause)<sub>可选</sub>
-> <a name="attribute_name"></a>
-> *特性名* → [标识符](02_Lexical_Structure.html#identifier)
-> <a name="atribute_argument_clause"></a>
+> 
+> ######  attribute_name {#attribute_name}
+> 
+> *特性名* → [标识符](./02_Lexical_Structure.md#identifier)
+> 
+> ######  atribute_argument_clause {#atribute_argument_clause}
+> 
 > *特性参数子句* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
-> <a name="attributes"></a>
+> 
+> ######  attributes {#attributes}
+> 
 > *特性列表* → [特性](#attribute) [特性列表](#attributes)<sub>可选</sub>
+> 
 >
-> <a name="balanced_tokens"></a>
+> ######  balanced_tokens {#balanced_tokens}
+> 
 > *均衡令牌列表* → [均衡令牌](#balanced_token) [均衡令牌列表](#balanced_tokens)<sub>可选</sub>
-> <a name="balanced_token"></a>
+> 
+> ######  balanced_token {#balanced_token}
+> 
 > *均衡令牌* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> 
 > *均衡令牌* → **\[** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **\]**
+> 
 > *均衡令牌* → **{** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **}**
+> 
 > *均衡令牌* → 任意标识符，关键字，字面量或运算符
+> 
 > *均衡令牌* → 任意标点除了 **(**，**)**，**[**，**]**，**{**，或 **}**
+> 
