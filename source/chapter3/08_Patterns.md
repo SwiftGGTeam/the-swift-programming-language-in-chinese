@@ -28,8 +28,7 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > *模式* → [*表达式模式*](#expression-pattern)
 > 
 
-<a name="wildcard_pattern"></a>
-## 通配符模式（Wildcard Pattern）
+## 通配符模式（Wildcard Pattern） {#wildcard_pattern}
 
 *通配符模式*由一个下划线（`_`）构成，用于匹配并忽略任何值。当你想忽略被匹配的值时可以使用该模式。例如，下面这段代码在闭区间 `1...3` 中迭代，每次迭代都忽略该区间的当前值：
 
