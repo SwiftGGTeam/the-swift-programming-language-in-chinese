@@ -80,7 +80,7 @@ import 导入类型 模块.符号名
 import 模块.子模块
 ```
 
-######  {#grammer_of_an_import_declaration}
+###### grammer_of_an_import_declaration {#grammer_of_an_import_declaration}
 > 导入声明语法
 > 
 > ######  import-declaration {#import-declaration}
@@ -132,7 +132,7 @@ print("The second number is \(secondNumber).")
 
 如果还想获得更多关于常量的信息或者想在使用中获得帮助，请参阅 [常量和变量](../chapter2/01_The_Basics.md#constants_and_variables) 和 [存储属性](../chapter2/10_Properties.md#stored_properties)。
 
-######  {#grammer_of_a_constant_declaration}
+###### grammer_of_a_constant_declaration {#grammer_of_a_constant_declaration}
 > 常量声明语法
 > 
 > ######  constant-declaration {#constant-declaration}
@@ -242,10 +242,10 @@ var 变量名称: 类型 = 表达式 {
 > 在一个类声明中，使用关键字 `static` 与同时使用 `class` 和 `final` 去标记一个声明的效果相同。
 > 
 
-######  {#grammer_of_a_variable_declaration}
+###### grammer_of_a_variable_declaration {#grammer_of_a_variable_declaration}
 > 变量声明语法
 > 
-######  {#variable-declaration}
+###### variable-declaration {#variable-declaration}
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*模式构造器列表*](#pattern-initializer-list)
 > 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*代码块*](#code-block)
@@ -259,7 +259,7 @@ var 变量名称: 类型 = 表达式 {
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*构造器*](#initializer)<sub>可选</sub> [*willSet-didSet 代码块*](#willSet-didSet-block)
 > 
 
-######  {#variable-declaration-head}
+###### variable-declaration-head {#variable-declaration-head}
 > *变量声明头* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub> **var**
 > 
 > ######  variable-name {#variable-name}
@@ -267,7 +267,7 @@ var 变量名称: 类型 = 表达式 {
 > *变量名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-######  {#getter-setter-block}
+###### getter-setter-block {#getter-setter-block}
 > *getter-setter 代码块* → [*代码块*](#code-block)
 > 
 > *getter-setter 代码块* → **{** [*getter 子句*](#getter-clause) [*setter 子句*](#setter-clause)<sub>可选</sub> **}**
@@ -287,7 +287,7 @@ var 变量名称: 类型 = 表达式 {
 > *setter 名称* → **(** [*标识符*](./02_Lexical_Structure.md#identifier) **)**
 > 
 
-######  {#getter-setter-keyword-block}
+###### getter-setter-keyword-block {#getter-setter-keyword-block}
 > *getter-setter 关键字代码块* → **{** [*getter 关键字子句*](#getter-keyword-clause) [*setter 关键字子句*](#setter-keyword-clause)<sub>可选</sub> **}**
 > 
 > *getter-setter 关键字代码块* → **{** [*setter 关键字子句*](#setter-keyword-clause) [*getter 关键字子句*](#getter-keyword-clause) **}**
@@ -301,7 +301,7 @@ var 变量名称: 类型 = 表达式 {
 > *setter 关键字子句* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **set**
 > 
 
-######  {#willSet-didSet-block}
+###### willSet-didSet-block {#willSet-didSet-block}
 > *willSet-didSet 代码块* → **{** [*willSet 子句*](#willSet-clause) [*didSet 子句*](#didSet-clause)<sub>可选</sub> **}**
 > 
 > *willSet-didSet 代码块* → **{** [*didSet 子句*](#didSet-clause) [*willSet 子句*](#willSet-clause)<sub>可选</sub> **}**
@@ -370,7 +370,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 另请参阅 [协议关联类型声明](#protocol_associated_type_declaration)。
 
-######  {#grammer_of_a_type_alias_declaration}
+###### grammer_of_a_type_alias_declaration {#grammer_of_a_type_alias_declaration}
 > 类型别名声明语法
 > 
 >
@@ -570,14 +570,14 @@ Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它�
 
 你可以重写一个不归方法，但是新的方法必须保持原有的返回类型和没有返回的行为。
 
-######  {#grammer_of_a_function_declaration}
+###### grammer_of_a_function_declaration {#grammer_of_a_function_declaration}
 > 函数声明语法
 > 
-######  {#function-declaration}
+###### function-declaration {#function-declaration}
 > *函数声明* → [*函数头*](#function-head) [*函数名*](#function-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.md#generic-parameter-clause)<sub>可选</sub> [*函数签名*](#function-signature) [*泛型 where 子句*](08_Generic_Parameters_and_Arguments.md#generic-where-clause) [*函数体*](#function-body)<sub>可选</sub>
 > 
 
-######  {#function-head}
+###### function-head {#function-head}
 > *函数头* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub>    **func**
 > 
 > ######  function-name {#function-name}
@@ -731,7 +731,7 @@ enum GamePlayMode: String {
 
 可以使用 `switch` 语句来检验枚举用例的值，正如 [使用 switch 语句匹配枚举值](../chapter2/08_Enumerations.md#matching_enumeration_values_with_a_switch_statement) 所述。枚举类型是模式匹配的，依靠 `switch` 语句 `case` 块中的枚举用例模式，正如 [枚举用例模式](./08_Patterns.md#enumeration_case_pattern) 所述。
 
-######  {#grammer_of_an_enumeration_declaration}
+###### grammer_of_an_enumeration_declaration {#grammer_of_an_enumeration_declaration}
 > 枚举声明语法
 > 
 >
@@ -837,7 +837,7 @@ struct 结构体名称: 采纳的协议 {
 
 可以使用扩展声明来扩展结构体类型的行为，请参阅 [扩展声明](#extension_declaration)。
 
-######  {#grammer_of_a_structure_declaration}
+###### grammer_of_a_structure_declaration {#grammer_of_a_structure_declaration}
 > 结构体声明语法
 > 
 >
@@ -896,7 +896,7 @@ class 类名: 超类, 采纳的协议 {
 
 可以使用扩展声明来扩展类的行为，请参阅 [扩展声明](#extension_declaration)。
 
-######  {#grammer_of_a_class_declaration}
+###### grammer_of_a_class_declaration {#grammer_of_a_class_declaration}
 > 类声明语法
 > 
 >
@@ -963,7 +963,7 @@ protocol SomeProtocol: AnyObject {
 
 可以使用协议来声明作为代理的类或者结构体应该实现的方法，正如 [委托（代理）模式](../chapter2/21_Protocols.md#delegation) 中所述。
 
-######  {#grammer_of_a_protocol_declaration}
+###### grammer_of_a_protocol_declaration {#grammer_of_a_protocol_declaration}
 > 协议声明语法
 > 
 >
@@ -1017,7 +1017,7 @@ var 属性名: 类型 { get set }
 
 另请参阅 [变量声明](#variable_declaration)。
 
-######  {#grammer_of_an_import_declaration}
+###### grammer_of_an_import_declaration {#grammer_of_an_import_declaration}
 > 协议属性声明语法
 > 
 > ######  protocol-property-declaration {#protocol-property-declaration}
@@ -1032,7 +1032,7 @@ var 属性名: 类型 { get set }
 
 另请参阅 [函数声明](#function_declaration)。
 
-######  {#grammer_of_a_protocol_declaration}
+###### grammer_of_a_protocol_declaration {#grammer_of_a_protocol_declaration}
 > 协议方法声明语法
 > 
 > ######  protocol-method-declaration {#protocol-method-declaration}
@@ -1050,7 +1050,7 @@ var 属性名: 类型 { get set }
 
 另请参阅 [构造器声明](#initializer_declaration)。
 
-######  {#grammer_of_a_protocol_initializer_declaration}
+###### grammer_of_a_protocol_initializer_declaration {#grammer_of_a_protocol_initializer_declaration}
 > 协议构造器声明语法
 > 
 > ######  protocol-initializer-declaration {#protocol-initializer-declaration}
@@ -1072,7 +1072,7 @@ subscript (参数列表) -> 返回类型 { get set }
 
 另请参阅 [下标声明](#subscript_declaration)。
 
-######  {#grammer_of_a_protocol_subscript_declaration}
+###### grammer_of_a_protocol_subscript_declaration {#grammer_of_a_protocol_subscript_declaration}
 > 协议下标声明语法
 > 
 > ######  protocol-subscript-declaration {#protocol-subscript-declaration}
@@ -1103,7 +1103,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 另请参阅 [类型别名声明](#type_alias_declaration)。
 
-######  {#grammer_of_a_protocol_associated_type_declaration}
+###### grammer_of_a_protocol_associated_type_declaration {#grammer_of_a_protocol_associated_type_declaration}
 > 协议关联类型声明语法
 > 
 > ######  protocol-associated-type-declaration {#protocol-associated-type-declaration}
@@ -1194,7 +1194,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 更多关于可失败构造器的信息和例子，请参阅 [可失败构造器](../chapter2/14_Initialization.md#failable_initializers)。
 
-######  {#grammer_of_an_initializer_declaration}
+###### grammer_of_an_initializer_declaration {#grammer_of_an_initializer_declaration}
 > 构造器声明语法
 > 
 > ######  initializer-declaration {#initializer-declaration}
@@ -1233,7 +1233,7 @@ deinit {
 
 关于如何在类声明中使用析构器的例子，请参阅 [析构过程](../chapter2/15_Deinitialization.md)。
 
-######  {#grammer_of_a_deinitializer_declaration}
+###### grammer_of_a_deinitializer_declaration {#grammer_of_a_deinitializer_declaration}
 > 析构器声明语法
 > 
 > ######  deinitializer-declaration {#deinitializer-declaration}
@@ -1416,7 +1416,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 // 报错: redundant conformance of 'Array<Element>' to protocol 'Loggable'
 ```
 
-######  {#grammer_of_an_extension_declaration}
+###### grammer_of_an_extension_declaration {#grammer_of_an_extension_declaration}
 > 扩展声明语法
 > 
 >
@@ -1464,7 +1464,7 @@ subscript (参数列表) -> 返回类型 {
 
 更多关于下标的信息和例子，请参阅 [下标](../chapter2/12_Subscripts.md)。
 
-######  {#grammer_of_a_subscript_declaration}
+###### grammer_of_a_subscript_declaration {#grammer_of_a_subscript_declaration}
 > 下标声明语法
 > 
 >
@@ -1524,13 +1524,13 @@ postfix operator 运算符名称 {}
 
 声明了一个新的运算符以后，需要实现一个跟这个运算符同名的函数来实现这个运算符。如果是实现一个前缀或者后缀运算符，也必须使用相符的 `prefix` 或者 `postfix` 声明修饰符标记函数声明。如果是实现中缀运算符，则不需要使用 `infix` 声明修饰符标记函数声明。关于如何实现一个新的运算符的例子，请参阅 [自定义运算符](../chapter2/26_Advanced_Operators.md#custom_operators)。
 
-######  {#grammer_of_an_operator_declaration}
+###### grammer_of_an_operator_declaration {#grammer_of_an_operator_declaration}
 > 运算符声明语法
 > 
-######  {#operator-declaration}
+###### operator-declaration {#operator-declaration}
 > *运算符声明* → [*前缀运算符声明*](#prefix-operator-declaration) | [*后缀运算符声明*](#postfix-operator-declaration) | [*中缀运算符声明*](#infix-operator-declaration)
 > 
-######  {#prefix-operator-declaration}
+###### prefix-operator-declaration {#prefix-operator-declaration}
 > *前缀运算符声明* → **prefix** **运算符** [*运算符*](./02_Lexical_Structure.md#operator) **{** **}**
 > 
 > ######  postfix-operator-declaration {#postfix-operator-declaration}
@@ -1541,7 +1541,7 @@ postfix operator 运算符名称 {}
 > 
 > *中缀运算符声明* → **infix** **运算符** [*运算符*](./02_Lexical_Structure.md#operator) **{** [*中缀运算符属性*](#infix-operator-attributes)<sub>可选</sub> **}**
 > 
-######  {#infix-operator-group}
+###### infix-operator-group {#infix-operator-group}
 > *中缀运算符组* → [*优先级组名称*](#precedence-group-name)
 > 
 
@@ -1571,16 +1571,16 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 
 优先级组的赋值性表示在包含可选链操作时的运算符优先级。当设为 true 时，与优先级组对应的运算符在可选链操作中使用和标准库中赋值运算符同样的分组规则，当设为 false 或者不设置，该优先级组的运算符与不赋值的运算符遵循同样的可选链规则。
 
-######  {#grammer_of_a_precedence_group_declaration}
+###### grammer_of_a_precedence_group_declaration {#grammer_of_a_precedence_group_declaration}
 > 优先级组声明语法
 > 
-######  {#precedence-group-declaration}
+###### precedence-group-declaration {#precedence-group-declaration}
 > *优先级组声明* → **precedence**[*优先级组名称*](#precedence-group-name){[*多优先级组属性*](#precedence-group-attributes)<sub>可选</sub> }
 > 
-######  {#precedence-group-attributes}
+###### precedence-group-attributes {#precedence-group-attributes}
 > *优先级组属性* → [*优先级组属性*](#precedence-group-attribute)[*多优先级组属性*](#precedence-group-attributes)<sub>可选</sub> **{** **}**
 > 
-######  {#precedence-group-attribute}
+###### precedence-group-attribute {#precedence-group-attribute}
 > *优先级组属性* → [*优先级组关系*](#precedence-group-relation)
 > 
 > *优先级组属性* → [*优先级组赋值性*](#precedence-group-assignment)
@@ -1597,17 +1597,17 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 > 
 > *优先级组赋值* → **assignment:**[*布尔字面值*](./02_Lexical_Structure.md#boolean-literal)
 > 
-######  {#precedence-group-associativity}
+###### precedence-group-associativity {#precedence-group-associativity}
 > *优先级组结合性* → **associativity:left**
 > 
 > *优先级组结合性* → **associativity:right**
 > 
 > *优先级组结合性* → **associativity:none**
 > 
-######  {#precedence-group-names}
+###### precedence-group-names {#precedence-group-names}
 > *多优先级组名称* → [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name) | [*优先级组名称*](#precedence-group-name)
 > 
-######  {#precedence-group-name}
+###### precedence-group-name {#precedence-group-name}
 > *优先级组名称* →[*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
@@ -1671,10 +1671,10 @@ Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`
 
 以上访问级别修饰符都可以选择带上一个参数，该参数由一对圆括号和其中的 `set` 关键字组成（例如，`private(set)`）。使用这种形式的访问级别修饰符来限制某个属性或下标的 setter 的访问级别低于其本身的访问级别，正如 [Getter 和 Setter](../chapter2/25_Access_Control.md#getters_and_setters) 中所讨论的。
 
-######  {#grammer_of_a_declaration_modifier}
+###### grammer_of_a_declaration_modifier {#grammer_of_a_declaration_modifier}
 > 声明修饰符的语法
 > 
-######  {#declaration-modifier}
+###### declaration-modifier {#declaration-modifier}
 > *声明修饰符* → **class** | **convenience**| **dynamic** | **final** | **infix** | **lazy** | **mutating** | **nonmutating** | **optional** | **override** | **postfix** | **prefix** | **required** | **static** | **unowned** | **unowned ( safe )** | **unowned ( unsafe )** | **weak**
 > 
 > 声明修饰符 → [*访问级别修饰符*](#access-level-modifier)
@@ -1683,7 +1683,7 @@ Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`
 > 
 > *声明修饰符列表* → [*声明修饰符*](#declaration-modifier) [*声明修饰符列表*](#declaration-modifiers)<sub>可选</sub>
 > 
-######  {#access-level-modifier}
+###### access-level-modifier {#access-level-modifier}
 > 访问级别修饰符 → **internal** | **internal ( set )**
 > 
 > 访问级别修饰符 → **private** | **private ( set )**

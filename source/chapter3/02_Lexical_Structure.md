@@ -13,7 +13,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 空白语法
 > 
 
-######  {#whitespace}
+###### whitespace {#whitespace}
 > *空白* → [*空白项*](#whitespace-item) [*空白*](#whitespace)<sub>可选</sub>
 > 
 > *空白项* → [*断行符*](#line-break)
@@ -25,7 +25,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *空白项* → U+0000，U+0009，U+000B，U+000C 或者 U+0020
 > 
 
-######  {#line-break}
+###### line-break {#line-break}
 > *断行符* → U+000A
 > 
 > *断行符* → U+000D
@@ -33,7 +33,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *断行符* → U+000D 接着是 U+000A
 > 
 
-######  {#comment}
+###### comment {#comment}
 > *注释* → // [*注释内容 断行*](#comment-text line-break)
 > 
 > *多行注释* → `/*` [*多行注释内容*](#multiline-commnet-text) `*/`
@@ -64,7 +64,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 标识符语法
 > 
 
-######  {#identifier}
+###### identifier {#identifier}
 > *标识符* → [*头部标识符*](#identifier-head) [*标识符字符组*](#identifier-characters)<sub>可选</sub>
 > 
 > *标识符* → \`[*头部标识符*](#identifier-head) [*标识符字符组*](#identifier-characters)<sub>可选</sub>\`
@@ -72,11 +72,11 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *标识符* → [*隐式参数名*](#implicit-parameter-name)
 > 
 
-######  {#identifier-list}
+###### identifier-list {#identifier-list}
 > *标识符列表* → [*标识符*](#identifier) | [*标识符*](#identifier) **,** [*标识符列表*](#identifier-list)
 > 
 
-######  {#identifier-head}
+###### identifier-head {#identifier-head}
 > *头部标识符* → 大写或小写字母 A - Z
 > 
 > *头部标识符* → _
@@ -110,7 +110,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *头部标识符* → U+D0000–U+DFFFD 或者 U+E0000–U+EFFFD
 > 
 
-######  {#identifier-character}
+###### identifier-character {#identifier-character}
 > *标识符字符* → 数值 0 - 9
 > 
 > *标识符字符* → U+0300–U+036F，U+1DC0–U+1DFF，U+20D0–U+20FF，或者 U+FE20–U+FE2F
@@ -122,7 +122,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *标识符字符组* → [*标识符字符*](#identifier-character) [*标识符字符组*](#identifier-characters)<sub>可选</sub>
 > 
 
-######  {#implicit-parameter-name}
+###### implicit-parameter-name {#implicit-parameter-name}
 > *隐式参数名* → **$** [*十进制数字列表*](#decimal-digits)
 > 
 
@@ -161,7 +161,7 @@ true		    // 布尔值字面量
 > *字面量* → [*数值字面量*](#numeric-literal) | [*字符串字面量*](#string-literal) | [*布尔值字面量*](#boolean-literal) | [*nil 字面量*](#nil-literal)
 > 
 
-######  {#numeric-literal}
+###### numeric-literal {#numeric-literal}
 > *数值字面量* → **-**<sub>可选</sub> [*整数字面量*](#integer-literal) | **-**<sub>可选</sub> [*浮点数字面量*](#floating-point-literal)
 > 
 > ######  boolean-literal {#boolean-literal}
@@ -187,7 +187,7 @@ true		    // 布尔值字面量
 
 > 整数字面量语法
 > 
-######  {#integer-literal}
+###### integer-literal {#integer-literal}
 > *整数字面量* → [*二进制字面量*](#binary-literal)
 > 
 > *整数字面量* → [*八进制字面量*](#octal-literal)
@@ -197,7 +197,7 @@ true		    // 布尔值字面量
 > *整数字面量* → [*十六进制字面量*](#hexadecimal-literal)
 > 
 
-######  {#binary-literal}
+###### binary-literal {#binary-literal}
 > *二进制字面量* → **0b** [*二进制数字*](#binary-digit) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
 > 
 > ######  binary-digit {#binary-digit}
@@ -213,7 +213,7 @@ true		    // 布尔值字面量
 > *二进制字面量字符组* → [*二进制字面量字符*](#binary-literal-character) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
 > 
 
-######  {#octal-literal}
+###### octal-literal {#octal-literal}
 > *八进制字面量* → **0o** [*八进字数字*](#octal-digit) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
 > 
 > ######  octal-digit {#octal-digit}
@@ -229,7 +229,7 @@ true		    // 布尔值字面量
 > *八进制字符组* → [*八进制字符*](#octal-literal-character) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
 > 
 
-######  {#decimal-literal}
+###### decimal-literal {#decimal-literal}
 > *十进制字面量* → [*十进制数字*](#decimal-digit) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
 > 
 > ######  decimal-digit {#decimal-digit}
@@ -249,7 +249,7 @@ true		    // 布尔值字面量
 > *十进制字符组* → [*十进制字符*](#decimal-literal-character) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
 > 
 
-######  {#hexadecimal-literal}
+###### hexadecimal-literal {#hexadecimal-literal}
 > *十六进制字面量* → **0x** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
 > 
 > ######  hexadecimal-digit {#hexadecimal-digit}
@@ -283,13 +283,13 @@ true		    // 布尔值字面量
 
 > 浮点数字面量语法
 > 
-######  {#floating-point-literal}
+###### floating-point-literal {#floating-point-literal}
 > *浮点数字面量* → [*十进制字面量*](#decimal-literal) [*十进制分数*](#decimal-fraction)<sub>可选</sub> [*十进制指数*](#decimal-exponent)<sub>可选</sub>
 > 
 > *浮点数字面量* → [*十六进制字面量*](#hexadecimal-literal) [*十六进制分数*](#hexadecimal-fraction)<sub>可选</sub> [*十六进制指数*](#hexadecimal-exponent)
 > 
 
-######  {#decimal-fraction}
+###### decimal-fraction {#decimal-fraction}
 > *十进制分数* → **.** [*十进制字面量*](#decimal-literal)
 > 
 > ######  decimal-exponent {#decimal-exponent}
@@ -297,7 +297,7 @@ true		    // 布尔值字面量
 > *十进制指数* → [*十进制指数 e*](#floating-point-e) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
 > 
 
-######  {#hexadecimal-fraction}
+###### hexadecimal-fraction {#hexadecimal-fraction}
 > *十六进制分数* → **.** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
 > 
 > ######  hexadecimal-exponent {#hexadecimal-exponent}
@@ -305,7 +305,7 @@ true		    // 布尔值字面量
 > *十六进制指数* → [*十六进制指数 p*](#floating-point-p) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
 > 
 
-######  {#floating-point-e}
+###### floating-point-e {#floating-point-e}
 > *十进制指数 e* → **e** | **E**
 > 
 > ######  floating-point-p {#floating-point-p}
@@ -378,11 +378,11 @@ let textB = "Hello world"
 
 > 字符串字面量语法
 > 
-######  {#string-literal}
+###### string-literal {#string-literal}
 > *字符串字面量* → [*静态字符串字面量*](#static-string-literal) | [*插值字符串字面量*](#interpolated-string-literal)
 > 
 
-######  {#static-string-literal}
+###### static-string-literal {#static-string-literal}
 > *静态字符串字面量* → **"**[*引用文本*](#quoted-text)<sub>可选</sub>**"**
 > 
 > ######  quoted-text {#quoted-text}
@@ -396,7 +396,7 @@ let textB = "Hello world"
 > *引用文本项* → 除了 **"**、**\\**、U+000A、U+000D 以外的所有 Unicode 字符
 > 
 
-######  {#interpolated-string-literal}
+###### interpolated-string-literal {#interpolated-string-literal}
 > *插值字符串字面量* → **"**[*插值文本*](#interpolated-text)<sub>可选</sub>**"**
 > 
 > ######  interpolated-text {#interpolated-text}
@@ -408,7 +408,7 @@ let textB = "Hello world"
 > *插值文本项* → **\\****(**[*表达式*](./04_Expressions.md)**)** | [*引用文本项*](#quoted-text-item)
 > 
 
-######  {#escaped-character}
+###### escaped-character {#escaped-character}
 > *转义字符* → **\\****0** | **\\****\\** | **\t** | **\n** | **\r** | **\\"** | **\\'**
 > 
 > *转义字符* → **\u {** [*unicode 标量数字*](#unicode-scalar-digits) **}**
@@ -450,13 +450,13 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 > 运算符语法
 > 
-######  {#operator}
+###### operator {#operator}
 > *运算符* → [*头部运算符*](#operator-head) [*运算符字符组*](#operator-characters)<sub>可选</sub>
 > 
 > *运算符* → [*头部点运算符*](#dot-operator-head) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>
 > 
 
-######  {#operator-head}
+###### operator-head {#operator-head}
 > *头部运算符* → **/** | **=** | **-** | **+** | **!** | __*__ | **%** | **<** | **>** | **&** | **|** | **^** | **~** | **?**
 > 
 > *头部运算符* → U+00A1–U+00A7
@@ -488,7 +488,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > *头部运算符* → U+3008–U+3030
 > 
 
-######  {#operator-character}
+###### operator-character {#operator-character}
 > *运算符字符* → [*头部运算符*](#operator-head)
 > 
 > *运算符字符* → U+0300–U+036F
@@ -508,7 +508,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > *运算符字符组* → [*运算符字符*](#operator-character) [*运算符字符组*](#operator-characters)<sub>可选</sub>
 > 
 
-######  {#dot-operator-head}
+###### dot-operator-head {#dot-operator-head}
 > *头部点运算符* → **..**
 > 
 > ######  dot-operator-character {#dot-operator-character}
@@ -520,7 +520,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > *点运算符字符组* → [*点运算符字符*](#dot-operator-character) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>
 > 
 
-######  {#binary-operator}
+###### binary-operator {#binary-operator}
 > *二元运算符* → [*运算符*](#operator)
 > 
 > ######  prefix-operator {#prefix-operator}
