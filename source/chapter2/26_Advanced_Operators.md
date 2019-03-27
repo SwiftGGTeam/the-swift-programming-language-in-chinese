@@ -264,7 +264,7 @@ signedOverflow = signedOverflow &- 1
 2 + 15
 ```
 
-因此计算结果为 `17`。
+因此计算结果为 `17`。  
 
 有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见[操作符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。
 
@@ -337,7 +337,9 @@ let alsoPositive = -negative
 
 ### 复合赋值运算符 {#compound_assignment_operators}
 
-*复合赋值运算符*将赋值运算符（`=`）与其它运算符进行结合。例如，将加法与赋值结合成加法赋值运算符（`+=`）。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。
+*复合赋值运算符*将赋值运算符（`=`）与其它运算符进行结合。例如，将加法与赋值结合成加法赋值运算符（`+=`）。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。  
+
+在下面的例子中，对 `Vector2D` 实例实现了一个加法赋值运算符函数：  
 
 在下面的例子中，对 `Vector2D` 实例实现了一个加法赋值运算符函数：
 
