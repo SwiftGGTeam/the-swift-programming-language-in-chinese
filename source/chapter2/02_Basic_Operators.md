@@ -402,7 +402,7 @@ if !allowedEntry {
 
 在示例代码中，小心地选择布尔常量或变量有助于代码的可读性，并且避免使用双重逻辑非运算，或混乱的逻辑语句。
 
-### 逻辑与运算符
+### 逻辑与运算符 #{logical_and_operator}
 
 *逻辑与运算符*（`a && b`）表达了只有 `a` 和 `b` 的值都为 `true` 时，整个表达式的值才会是 `true`。
 
@@ -421,7 +421,7 @@ if enteredDoorCode && passedRetinaScan {
 // 输出“ACCESS DENIED”
 ```
 
-### 逻辑或运算符
+### 逻辑或运算符 #{logical_or_operator}
 
 逻辑或运算符（`a || b`）是一个由两个连续的 `|` 组成的中置运算符。它表示了两个逻辑表达式的其中一个为 `true`，整个表达式就为 `true`。
 
@@ -440,7 +440,7 @@ if hasDoorKey || knowsOverridePassword {
 // 输出“Welcome!”
 ```
 
-### 逻辑运算符组合计算
+### 逻辑运算符组合计算 {#combining_logical_operators}
 
 我们可以组合多个逻辑运算符来表达一个复合逻辑：
 
@@ -463,7 +463,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 > 
 > Swift 逻辑操作符 `&&` 和 `||` 是左结合的，这意味着拥有多元逻辑操作符的复合表达式优先计算最左边的子表达式。
 
-### 使用括号来明确优先级
+### 使用括号来明确优先级 {#explicit_parentheses}
 
 为了一个复杂表达式更容易读懂，在合适的地方使用括号来明确优先级是很有效的，虽然它并非必要的。在上个关于门的权限的例子中，我们给第一个部分加个括号，使它看起来逻辑更明确：
 

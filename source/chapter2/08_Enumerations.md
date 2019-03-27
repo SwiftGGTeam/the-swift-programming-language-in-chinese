@@ -99,7 +99,7 @@ default:
 // 打印“Mostly harmless”
 ```
 
-## 枚举成员的遍历 {#iterating over enumeration cases}
+## 枚举成员的遍历 {#iterating_over_enumeration_cases}
 
 在一些情况下，你会需要得到一个包含枚举所有成员的集合。可以通过如下代码实现：
 
