@@ -465,5 +465,3 @@ let plusMinusVector = firstVector +- secondVector
 > 
 > 当定义前缀与后缀运算符的时候，我们并没有指定优先级。然而，如果对同一个值同时使用前缀与后缀运算符，则后缀运算符会先参与运算。
 
-
-
