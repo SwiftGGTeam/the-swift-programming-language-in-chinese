@@ -202,3 +202,4 @@ let optionalNumber: Int? = 3
 things.append(optionalNumber)        // 警告
 things.append(optionalNumber as Any) // 没有警告
 ```
+
