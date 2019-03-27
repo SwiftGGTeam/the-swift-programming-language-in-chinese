@@ -20,19 +20,19 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 
 关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/25_Advanced_Operators.md)。
 
-关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.md#//apple_ref/doc/uid/TP40016054)。
 
-除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
+除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
 
 > 前缀表达式语法
 > 
 <a name="prefix-expression"></a>
-> *前缀表达式* → [*前缀运算符*](02_Lexical_Structure.md#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)
+> *前缀表达式* → [*前缀运算符*](./02_Lexical_Structure.md#prefix-operator)<sub>可选</sub> [*后缀表达式*](#postfix-expression)
 > 
 > *前缀表达式* → [*输入输出表达式*](#in-out-expression)
 > 
 <a name="in-out-expression"></a>
-> *输入输出表达式* → **&** [*标识符*](02_Lexical_Structure.md#identifier)
+> *输入输出表达式* → **&** [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 <a name="try_operator"></a>
@@ -67,7 +67,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 `try` 表达式不能出现在二进制运算符的的右侧，除非二进制运算符是赋值运算符或者 `try` 表达式是被圆括号括起来的。
 
-关于 `try`、`try?` 和 `try!` 的更多信息，以及该如何使用的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.html)。
+关于 `try`、`try?` 和 `try!` 的更多信息，以及该如何使用的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.md)。
 > Try 表达式语法
 > 
 <a name="try-operator"></a>
@@ -82,9 +82,9 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > `左侧参数` `二元运算符` `右侧参数`
 > 
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/26_Advanced_Operators.html)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
 
-关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.html#//apple_ref/doc/uid/TP40016054)。
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.md#//apple_ref/doc/uid/TP40016054)。
 
 > 注意
 > 
@@ -94,7 +94,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 <a name="binary-expression"></a>
 > 二元表达式语法
 > 
-> *二元表达式* → [*二元运算符*](02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)
+> *二元表达式* → [*二元运算符*](./02_Lexical_Structure.md#binary-operator) [*前缀表达式*](#prefix-expression)
 > 
 > *二元表达式* → [*赋值运算符*](#assignment-operator) [*try 运算符*](#try-operator)<sub>可选</sub> [*前缀表达式*](#prefix-expression)
 > 
@@ -180,7 +180,7 @@ f(x as Any)
 // 打印“Function for Any”
 ```
 
-桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Using Swift with Cocoa and Objective-C (Swift4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中的 [Working with Cocoa Data Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)。
+桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Using Swift with Cocoa and Objective-C (Swift4.1)*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.md#//apple_ref/doc/uid/TP40014216) 中的 [Working with Cocoa Data Types](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.md#//apple_ref/doc/uid/TP40014216-CH6)。
 
 `as?` 运算符有条件地执行类型转换，返回目标类型的可选值。在运行时，如果转换成功，返回的可选值将包含转换后的值，否则返回 `nil`。如果在编译时就能确定转换一定会成功或是失败，则会导致编译报错。
 
@@ -191,13 +191,13 @@ f(x as Any)
 <a name="type-casting-operator"></a>
 > 类型转换运算符语法
 > 
-> *类型转换运算符* → **is** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **is** [*类型*](./03_Types.md#type)
 > 
-> *类型转换运算符* → **as** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **as** [*类型*](./03_Types.md#type)
 > 
-> *类型转换运算符* → **as** **?** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **as** **?** [*类型*](./03_Types.md#type)
 > 
-> *类型转换运算符* → **as** **!** [*类型*](03_Types.md#type)
+> *类型转换运算符* → **as** **!** [*类型*](./03_Types.md#type)
 > 
 
 <a name="primary_expressions"></a>
@@ -208,7 +208,7 @@ f(x as Any)
 > 基本表达式语法
 > 
 <a name="primary-expression"></a>
-> *基本表达式* → [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
+> *基本表达式* → [*标识符*](./02_Lexical_Structure.md#identifier) [*泛型实参子句*](./08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
 > 
 > *基本表达式* → [*字面量表达式*](#literal-expression)
 > 
@@ -287,7 +287,7 @@ Xcode 使用 playground 字面量对程序编辑器中的颜色、文件或者�
 >
 > <a name="literal-expression"></a>
 > 
-> *字面量表达式* → [*字面量*](02_Lexical_Structure.md#literal)
+> *字面量表达式* → [*字面量*](./02_Lexical_Structure.md#literal)
 > 
 > *字面量表达式* → [*数组字面量*](#array-literal) | [*字典字面量*](#dictionary-literal) | [*练习场字面量*](#playground-literal)
 > 
@@ -375,7 +375,7 @@ struct Point {
 > 
 >
 <a name="self-method-expression"></a>
-> *self 方法表达式* → **self** **.** [*标识符*](02_Lexical_Structure.md#identifier)
+> *self 方法表达式* → **self** **.** [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 <a name="self-subscript-expression"></a>
 > *self 下标表达式* → **self** **[** [*函数调用参数表*](#function-call-argument-list­) **]**
@@ -406,7 +406,7 @@ struct Point {
 > *父类表达式* → [*父类方法表达式*](#superclass-method-expression) | [*父类下标表达式*](#superclass-subscript-expression) | [*父类构造器表达式*](#superclass-initializer-expression)
 > 
 <a name="superclass-method-expression"></a>
-> *父类方法表达式* → **super** **.** [*标识符*](02_Lexical_Structure.md#identifier)
+> *父类方法表达式* → **super** **.** [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 <a name="superclass-subscript-expression"></a>
 > *父类下标表达式* → **super** [[*函数调用参数表*](#function-call-argument-list­) **]**
@@ -427,7 +427,7 @@ struct Point {
 }
 ```
 
-闭包的参数声明形式跟函数一样，请参阅 [函数声明](05_Declarations.html#function_declaration)。
+闭包的参数声明形式跟函数一样，请参阅 [函数声明](./05_Declarations.md#function_declaration)。
 
 闭包还有几种特殊的形式，能让闭包使用起来更加简洁：
 
@@ -519,7 +519,7 @@ myFunction { [unowned self] in print(self.title) } // 无主引用捕获
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.html#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/23_Automatic_Reference_Counting.html#resolving_strong_reference_cycles_for_closures)。
+关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.md#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/23_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_for_closures)。
 
 > 闭包表达式语法
 > 
@@ -532,13 +532,13 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 > <a name="closure-signature"></a>
 > 
 >
-> 闭包签名* → [*参数子句*](#parameter-clause) [*函数结果*](05_Declarations.html#function-result)<sub>可选</sub> **in**
+> 闭包签名* → [*参数子句*](./#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [*标识符列表*](#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*标识符列表*](./#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [*捕获列表*](#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](./#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](./05_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [*捕获列表*](#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](./#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](./05_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
 > *闭包签名* → [*捕获列表*](#capture-list) **in**
 > 
@@ -579,7 +579,7 @@ x = .AnotherValue
 > 隐式成员表达式语法
 > 
 <a name="implicit-member-expression"></a>
-> *隐式成员表达式* → **.** [*标识符*](02_Lexical_Structure.md#identifier)
+> *隐式成员表达式* → **.** [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 <a name="parenthesized_expression"></a>
@@ -769,14 +769,14 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 // 打印 "64"
 ```
 
-关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)
+关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](./https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.md#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](./https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.md#//apple_ref/doc/uid/10000177i)
 
 > key-path 表达式语法
 > 
 >
 > <a name="key-path-expression"></a>
 > 
-> *key-path 表达式* → **\\**  [类型](03_Types.md#type)<sub>可选</sub>  **.**  [多个 key-path 组件](#key-path-components)
+> *key-path 表达式* → **\\**  [类型](./03_Types.md#type)<sub>可选</sub>  **.**  [多个 key-path 组件](#key-path-components)
 > 
 > <a name="key-path-components"></a>
 > 
@@ -784,7 +784,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 > 
 > <a name="key-path-component"></a>
 > 
-> *key-path 组件* →  [标识符](02_Lexical_Structure.html#identifier) [多个 key-path 后缀](#key-path-postfixes)<sub>可选<sub> | [多个 key-path 后缀](#key-path-postfixes)
+> *key-path 组件* →  [标识符](./02_Lexical_Structure.md#identifier) [多个 key-path 后缀](#key-path-postfixes)<sub>可选<sub> | [多个 key-path 后缀](#key-path-postfixes)
 > 
 > <a name="key-path-postfixes"></a>
 > 
@@ -897,7 +897,7 @@ print(keyPath == c.getSomeKeyPath())
 
 由于 key-path 字符串表达式在编译期才创建，编译期可以检查属性是否存在，以及属性是否暴露给 Objective-C 运行时。
 
-关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)
+关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](./https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.md#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](./https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.md#//apple_ref/doc/uid/10000177i)
 
 > 注意
 > 
@@ -918,7 +918,7 @@ print(keyPath == c.getSomeKeyPath())
 
 *后缀表达式*就是在某个表达式的后面运用后缀运算符或其他后缀语法。从语法构成上来看，基本表达式也是后缀表达式。
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.html) 和 [高级运算符](../chapter2/26_Advanced_Operators.html)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [运算符定义](https://developer.apple.com/documentation/swift/operator_declarations)。
 
@@ -927,7 +927,7 @@ print(keyPath == c.getSomeKeyPath())
 <a name="postfix-expression"></a>
 > *后缀表达式* → [*基本表达式*](#primary-expression)
 > 
-> *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)
+> *后缀表达式* → [*后缀表达式*](./#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)
 > 
 > *后缀表达式* → [*函数调用表达式*](#function-call-expression)
 > 
@@ -996,9 +996,9 @@ myData.someMethod {$0 == 13}
 > 
 > <a name="function-call-argument"></a>
 > 
-> *函数调用参数* → [表达式](#expression) | [标识符](02_Lexical_Structure.html#identifier) **:** [*表达式*](#expression)
+> *函数调用参数* → [表达式](./#expression) | [标识符](02_Lexical_Structure.md#identifier) **:** [*表达式*](#expression)
 > 
-> *函数调用参数* → [运算符](02_Lexical_Structure.html#operator) | [标识符](02_Lexical_Structure.html#identifier) **:** [*运算符*](02_Lexical_Structure.html#operator)
+> *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02_Lexical_Structure.md#identifier) **:** [*运算符*](./02_Lexical_Structure.md#operator)
 > 
 >
 > <a name="trailing-closure"></a>
@@ -1082,7 +1082,7 @@ t.0 = t.1
 
 对于模块的成员来说，只能直接访问顶级声明中的成员。
 
-使用 `dynamicMemberLookup` 属性声明的类型包含可以在运行时查找的成员，具体请参阅 [属性](07_Attributes.html)
+使用 `dynamicMemberLookup` 属性声明的类型包含可以在运行时查找的成员，具体请参阅 [属性](./07_Attributes.md)
 
 为了区分只有参数名有所不同的方法或构造器，在圆括号中写出参数名，参数名后紧跟一个冒号，对于没有参数名的参数，使用下划线代替参数名。而对于重载方法，则需使用类型标注进行区分。例如：
 
@@ -1117,17 +1117,17 @@ let x = [10, 3, 20, 15, 4]
 > 显式成员表达式语法
 > 
 <a name="explicit-member-expression"></a>
-> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*]    (02_Lexical_Structure.html#decimal-digit)
+> *显式成员表达式* → [*后缀表达式*](./#postfix-expression) **.** [*十进制数字*]    (02_Lexical_Structure.md#decimal-digit)
 > 
-> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.html#identifier) [*泛型实参子句*](08_Generic_Parameters_and_Arguments.html#generic-argument-clause)<sub>可选</sub><br/>
+> *显式成员表达式* → [*后缀表达式*](./#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](./08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
 > 
-> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*]    (02_Lexical_Structure.html#identifier) **(** [*参数名称*](#argument-names) **)**
+> *显式成员表达式* → [*后缀表达式*](./#postfix-expression) **.** [*标识符*]    (02_Lexical_Structure.md#identifier) **(** [*参数名称*](#argument-names) **)**
 > 
 <a name="argument-names"></a>
 > *参数名称* → [*参数名*](#argument-name) [*参数名称*](#argument-names)<sub>可选</sub><br/>
 > 
 <a name="argument-name"></a>
-> *参数名* → [*标识符*](02_Lexical_Structure.html#identifier) **:**
+> *参数名* → [*标识符*](./02_Lexical_Structure.md#identifier) **:**
 > 
 
 <a name="postfix_self_expression"></a>
@@ -1161,7 +1161,7 @@ let x = [10, 3, 20, 15, 4]
 
 要获取下标表达式的值，可将索引表达式作为下标表达式的参数来调用下标 getter。下标 setter 的调用方式与之一样。
 
-关于下标的声明，请参阅 [协议下标声明](05_Declarations.html#protocol_subscript_declaration)。
+关于下标的声明，请参阅 [协议下标声明](./05_Declarations.md#protocol_subscript_declaration)。
 
 > 下标表达式语法
 > 

@@ -11,13 +11,13 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > 模式语法
 > 
 <a name="pattern"></a>
-> *模式* → [*通配符模式*](#wildcard_pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>
+> *模式* → [*通配符模式*](./#wildcard_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*标识符模式*](#identifier_pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>
+> *模式* → [*标识符模式*](./#identifier_pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
 > 
 > *模式* → [*值绑定模式*](#value-binding-pattern)
 > 
-> *模式* → [*元组模式*](#tuple-pattern) [*类型标注*](03_Types.html#type-annotation)<sub>可选</sub>
+> *模式* → [*元组模式*](./#tuple-pattern) [*类型标注*](03_Types.md#type-annotation)<sub>可选</sub>
 > 
 > *模式* → [*枚举用例模式*](#enum-case-pattern)
 > 
@@ -61,7 +61,7 @@ let someValue = 42
 > 标识符模式语法
 > 
 <a name="identifier-pattern"></a>
-> *标识符模式* → [*标识符*](02_Lexical_Structure.html#identifier)
+> *标识符模式* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 <a name="value-binding_pattern"></a>
@@ -131,12 +131,12 @@ let (a): Int = 2 // a: Int = 2
 
 *枚举用例模式*匹配现有的某个枚举类型的某个用例。枚举用例模式出现在 `switch` 语句中的 `case` 标签中，以及 `if`、`while`、`guard` 和 `for-in` 语句的 `case` 条件中。
 
-如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../chapter2/08_Enumerations.html#associated_values)。
+如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../chapter2/08_Enumerations.md#associated_values)。
 
 > 枚举用例模式语法
 > 
 <a name="enum-case-pattern"></a>
-> *枚举用例模式* → [*类型标识*](03_Types.html#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](05_Declarations.html#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
+> *枚举用例模式* → [*类型标识*](./03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](./05_Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
 > 
 
 <a name="optional_pattern"></a>
@@ -175,7 +175,7 @@ for case let number? in arrayOfOptinalInts {
 > 可选模式语法
 > 
 <a name="optional-pattern"></a>
-> *可选模式* → [*标识符模式*](03_Types.html#type-identifier) **?**
+> *可选模式* → [*标识符模式*](./03_Types.md#type-identifier) **?**
 > 
 
 <a name="type-casting_patterns"></a>
@@ -192,7 +192,7 @@ for case let number? in arrayOfOptinalInts {
 
 `as` 模式仅当一个值的类型在运行时和 `as` 模式右边的指定类型一致，或者是其子类的情况下，才会匹配这个值。如果匹配成功，被匹配的值的类型被转换成 `as` 模式右边指定的类型。
 
-关于使用 `switch` 语句配合 `is` 模式和 `as` 模式来匹配值的例子，请参阅 [Any 和 AnyObject 的类型转换](../chapter2/18_Type_Casting.html#type_casting_for_any_and_anyobject)。
+关于使用 `switch` 语句配合 `is` 模式和 `as` 模式来匹配值的例子，请参阅 [Any 和 AnyObject 的类型转换](../chapter2/18_Type_Casting.md#type_casting_for_any_and_anyobject)。
 
 > 类型转换模式语法
 > 
@@ -200,10 +200,10 @@ for case let number? in arrayOfOptinalInts {
 > *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)
 > 
 <a name="is-pattern"></a>
-> *is 模式* → **is** [*类型*](03_Types.html#type)
+> *is 模式* → **is** [*类型*](./03_Types.md#type)
 > 
 <a name="as-pattern"></a>
-> *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.html#type)
+> *as 模式* → [*模式*](./#pattern) **as** [*类型*](03_Types.md#type)
 > 
 
 <a name="expression_pattern"></a>
@@ -247,5 +247,5 @@ default:
 > 表达式模式语法
 > 
 <a name="expression-pattern"></a>
-> *表达式模式* → [*表达式*](04_Expressions.html#expression)
+> *表达式模式* → [*表达式*](./04_Expressions.md#expression)
 > 

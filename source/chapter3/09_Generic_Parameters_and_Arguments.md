@@ -2,7 +2,7 @@
 
 本节涉及泛型类型、泛型函数以及泛型构造器的参数，包括形参和实参。声明泛型类型、函数或构造器时，须指定相应的类型参数。类型参数相当于一个占位符，当实例化泛型类型、调用泛型函数或泛型构造器时，就用具体的类型实参替代之。
 
-关于 Swift 语言的泛型概述，请参阅 [泛型](../chapter2/22_Generics.html)。
+关于 Swift 语言的泛型概述，请参阅 [泛型](../chapter2/22_Generics.md)。
 
 <a name="generic_parameter"></a>
 ## 泛型形参子句
@@ -56,7 +56,7 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 
 泛型函数或构造器可以重载，但在泛型形参子句中的类型形参必须有不同的约束或要求，抑或二者皆不同。当调用重载的泛型函数或构造器时，编译器会根据这些约束来决定调用哪个重载函数或构造器。
 
-更多关于泛型 where 从句的信息和关于泛型函数声明的例子，可以看一看 [泛型 where 子句](https://github.com/numbbbbb/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/22_Generics.html#where_clauses)
+更多关于泛型 where 从句的信息和关于泛型函数声明的例子，可以看一看 [泛型 where 子句](./https://github.com/numbbbbb/the-swift-programming-language-in-chinese/blob/gh-pages/source/chapter2/22_Generics.md#where_clauses)
 
 > 泛型形参子句语法
 > 
@@ -67,11 +67,11 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 > *泛型形参列表* → [*泛形形参*](#generic-parameter) | [*泛形形参*](#generic-parameter) **,** [*泛型形参列表*](#generic-parameter-list)
 > 
 <a name="generic-parameter"></a>
-> *泛形形参* → [*类型名称*](03_Types.html#type-name)
+> *泛形形参* → [*类型名称*](./03_Types.md#type-name)
 > 
-> *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*类型标识符*](03_Types.html#type-identifier)
+> *泛形形参* → [*类型名称*](./03_Types.md#type-name)    **:** [*类型标识符*](./03_Types.md#type-identifier)
 > 
-> *泛形形参* → [*类型名称*](03_Types.html#type-name)    **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
+> *泛形形参* → [*类型名称*](./03_Types.md#type-name)    **:** [*协议合成类型*](./03_Types.md#protocol-composition-type)
 > 
 > <a name="requirement-clause"></a>
 > 
@@ -85,12 +85,12 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 > 
 > <a name="conformance-requirement"></a>
 > 
-> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*类型标识符*](03_Types.html#type-identifier)
+> *一致性约束* → [*类型标识符*](./03_Types.md#type-identifier) **:** [*类型标识符*](./03_Types.md#type-identifier)
 > 
-> *一致性约束* → [*类型标识符*](03_Types.html#type-identifier) **:** [*协议合成类型*](03_Types.html#protocol-composition-type)
+> *一致性约束* → [*类型标识符*](./03_Types.md#type-identifier) **:** [*协议合成类型*](./03_Types.md#protocol-composition-type)
 > 
 <a name="same-type-requirement"></a>
-> *同类型约束* → [*类型标识符*](03_Types.html#type-identifier) **==** [*类型*](03_Types.html#type)
+> *同类型约束* → [*类型标识符*](./03_Types.md#type-identifier) **==** [*类型*](./03_Types.md#type)
 > 
 
 <a name="generic_argument"></a>
@@ -129,5 +129,5 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 > *泛型实参列表* → [*泛型实参*](#generic-argument) | [*泛型实参*](#generic-argument) **,** [*泛型实参列表*](#generic-argument-list)
 > 
 <a name="generic-argument"></a>
-> *泛型实参* → [*类型*](03_Types.html#type)
+> *泛型实参* → [*类型*](./03_Types.md#type)
 > 

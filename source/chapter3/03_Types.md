@@ -17,7 +17,7 @@
 
 Swift 语言存在两种类型：命名型类型和复合型类型。命名型类型是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类 `MyClass` 的实例拥有类型 `MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
-那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/21_Extensions.html) 和 [扩展声明](05_Declarations.html#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
+那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/21_Extensions.md) 和 [扩展声明](./05_Declarations.md#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
 
 复合型类型是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型 `(Int, (Int, Int))` 包含两个元素：第一个是命名型类型 `Int`，第二个是另一个复合型类型 `(Int, Int)`。
 
@@ -70,7 +70,7 @@ func someFunction(a: Int) { /* ... */ }
 > 类型注解语法
 > 
 <a name="type-annotation"></a>
-> *类型注解* → **:** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
+> *类型注解* → **:** [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 > 
 
 <a name="type_identifier"></a>
@@ -96,10 +96,10 @@ var someValue: ExampleModule.MyType
 > 类型标识符语法
 > 
 <a name="type-identifier"></a>
-> *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
+> *类型标识符* → [*类型名称*](./#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](./#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
 > 
 <a name="type-name"></a>
-> *类型名称* → [*标识符*](02_Lexical_Structure.html#identifier)
+> *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 <a name="tuple_type"></a>
@@ -107,7 +107,7 @@ var someValue: ExampleModule.MyType
 
 元组类型是使用括号括起来的零个或多个类型，类型间用逗号隔开。
 
-你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../chapter2/06_Functions.html#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
+你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../chapter2/06_Functions.md#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
 
 当一个元组类型的元素有名字的时候，这个名字就是类型的一部分。
 
@@ -132,7 +132,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > *元组类型元素* → [*元素名*](#element-name) [*类型注解*](#type-annotation) | [*类型*](#type)
 > 
 <a name="element-name"></a>
-> *元素名* → [*标识符*](02_Lexical_Structure.html#identifier)
+> *元素名* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 <a name="function_type"></a>
@@ -145,12 +145,12 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 
 参数类型是由逗号间隔的类型列表。由于参数类型和返回值类型可以是元组类型，所以函数类型支持多参数与多返回值的函数与方法。
 
-你可以对函数参数 `() -> T`（其中 T 是任何类型）使用 `autoclosure` 特性。这会自动将参数表达式转化为闭包，表达式的结果即闭包返回值。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为参数的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.html#autoclosures) 。
+你可以对函数参数 `() -> T`（其中 T 是任何类型）使用 `autoclosure` 特性。这会自动将参数表达式转化为闭包，表达式的结果即闭包返回值。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为参数的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.md#autoclosures) 。
 > 
 
-函数类型可以拥有一个可变长参数作为参数类型中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变长参数的例子，请参阅 [可变参数](../chapter2/06_Functions.html#variadic_parameters)。
+函数类型可以拥有一个可变长参数作为参数类型中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变长参数的例子，请参阅 [可变参数](../chapter2/06_Functions.md#variadic_parameters)。
 
-为了指定一个 `in-out` 参数，可以在参数类型前加 `inout` 前缀。但是你不可以对可变长参数或返回值类型使用 `inout`。关于这种参数的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
+为了指定一个 `in-out` 参数，可以在参数类型前加 `inout` 前缀。但是你不可以对可变长参数或返回值类型使用 `inout`。关于这种参数的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
 
 如果一个函数类型只有一个形式参数而且形式参数的类型是元组类型，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组  `(Int, Int)`  作为形式参数的函数的类型。与此相反，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 形式参数并且不返回任何值的函数的类型。相似地，因为 `Void` 是空元组类型 `()` 的别名， 函数类型 `(Void)-> Void` 与一个空元组的变量的函数类型 `(()) -> ()` 是一样的。但这些类型和无变量的函数类型 `() -> ()` 是不一样的。
 > 
@@ -188,7 +188,7 @@ var operation: (Int, Int) -> Int                // 正确
 如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `Int -> Int -> Int` 可以理解为 `Int -> (Int -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数类型。
 > 
 
-函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](05_Declarations.html#throwing_functions_and_methods) 和 [重抛函数与方法](05_Declarations.html#rethrowing_functions_and_methods)。
+函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./05_Declarations.md#throwing_functions_and_methods) 和 [重抛函数与方法](./05_Declarations.md#rethrowing_functions_and_methods)。
 
 <a name="Restrictions for Nonescaping Closures"></a>
 ### 对非逃逸闭包的限制
@@ -214,15 +214,15 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 
 上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为第一个和第二个参数是非逃逸函数，它们不能够被当作变量被传递到另一个非闭包函数参数。与此相反, 标记“正确”的两个函数不回产生编译错误。这些函数调用不会违反限制， 因为 `外部（external）` 不是 `takesTwoFunctions(first:second:)` 里的一个参数。
 
-如果你需要避免这个限制， 标记其中之一的参数为逃逸， 或者使用 `withoutActuallyEscaping(_:do:)` 函数临时地转换非逃逸函数的其中一个参数为逃逸函数。关于避免内存访问冲突，可以参阅[内存安全](../chapter2/24_Memory_Safety.html)。
+如果你需要避免这个限制， 标记其中之一的参数为逃逸， 或者使用 `withoutActuallyEscaping(_:do:)` 函数临时地转换非逃逸函数的其中一个参数为逃逸函数。关于避免内存访问冲突，可以参阅[内存安全](../chapter2/24_Memory_Safety.md)。
 
 
 > 函数类型语法
 > 
 <a name="function-type"></a>
-> *函数类型* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
+> *函数类型* → [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
 > 
-> *函数类型* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
+> *函数类型* → [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
 > 
 <a name="function-type-argument-clause"></a>
 > *函数类型子句* → (­)­
@@ -233,10 +233,10 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)， [*函数类型参数列表*](#function-type-argument-list)
 > 
 <a name="function-type-argument"></a>
-> *函数类型参数* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
+> *函数类型参数* → [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
 > 
 <a name="argument-label"></a>
-> *参数标签* → [*标识符*](02_Lexical_Structure.html#identifier)
+> *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 <a name="array_type"></a>
@@ -265,7 +265,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 访问一个多维数组的元素时，最左边的下标指向最外层数组的相应位置元素。接下来往右的下标指向第一层嵌入的相应位置元素，依次类推。这就意味着，在上面的例子中，`array3D[0]` 是 `[[1, 2], [3, 4]]`，`array3D[0][1]` 是 `[3, 4]`，`array3D[0][1][1]` 则是 `4`。
 
-关于 Swift 标准库中 `Array` 类型的详细讨论，请参阅 [数组](../chapter2/04_Collection_Types.html#arrays)。
+关于 Swift 标准库中 `Array` 类型的详细讨论，请参阅 [数组](../chapter2/04_Collection_Types.md#arrays)。
 
 > 数组类型语法
 > 
@@ -295,7 +295,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 字典中键的类型必须符合 Swift 标准库中的 `Hashable` 协议。
 
-关于 Swift 标准库中 `Dictionary` 类型的详细讨论，请参阅 [字典](../chapter2/04_Collection_Types.html#dictionaries)。
+关于 Swift 标准库中 `Dictionary` 类型的详细讨论，请参阅 [字典](../chapter2/04_Collection_Types.md#dictionaries)。
 
 > 字典类型语法
 > 
@@ -328,7 +328,7 @@ optionalInteger! // 42
 
 你也可以使用可选链式调用和可选绑定来选择性地在可选表达式上执行操作。如果值为 `nil`，不会执行任何操作，因此也就没有运行错误产生。
 
-更多细节以及更多如何使用可选类型的例子，请参阅 [可选类型](../chapter2/01_The_Basics.html#optionals)。
+更多细节以及更多如何使用可选类型的例子，请参阅 [可选类型](../chapter2/01_The_Basics.md#optionals)。
 
 > 可选类型语法
 > 
@@ -364,7 +364,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 可以使用可选链式调用来在隐式解析可选表达式上选择性地执行操作。如果值为 `nil`，就不会执行任何操作，因此也不会产生运行错误。
 
-关于隐式解析可选类型的更多细节，请参阅 [隐式解析可选类型](../chapter2/01_The_Basics.html#implicityly_unwrapped_optionals)。
+关于隐式解析可选类型的更多细节，请参阅 [隐式解析可选类型](../chapter2/01_The_Basics.md#implicityly_unwrapped_optionals)。
 
 > 隐式解析可选类型语法
 > 
@@ -454,11 +454,11 @@ let anotherInstance = metatype.init(string: "some string")
 
 类型继承子句被用来指定一个命名型类型继承自哪个类、采纳哪些协议。类型继承子句也用来指定一个类类型专属协议。类型继承子句开始于冒号 `:`，其后是所需要的类、类型标识符列表或两者都有。
 
-类可以继承单个超类，采纳任意数量的协议。当定义一个类时，超类的名字必须出现在类型标识符列表首位，然后跟上该类需要采纳的任意数量的协议。如果一个类不是从其它类继承而来，那么列表可以以协议开头。关于类继承更多的讨论和例子，请参阅 [继承](../chapter2/13_Inheritance.html)。
+类可以继承单个超类，采纳任意数量的协议。当定义一个类时，超类的名字必须出现在类型标识符列表首位，然后跟上该类需要采纳的任意数量的协议。如果一个类不是从其它类继承而来，那么列表可以以协议开头。关于类继承更多的讨论和例子，请参阅 [继承](../chapter2/13_Inheritance.md)。
 
-其它命名型类型可能只继承或采纳一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其它协议时，其它协议中定义的要求会被整合在一起，然后从当前协议继承的任意类型必须符合所有这些条件。正如在 [协议声明](05_Declarations.html#protocol_declaration) 中所讨论的那样，可以把 `class` 关键字放到协议类型的类型继承子句的首位，这样就可以声明一个类类型专属协议。
+其它命名型类型可能只继承或采纳一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其它协议时，其它协议中定义的要求会被整合在一起，然后从当前协议继承的任意类型必须符合所有这些条件。正如在 [协议声明](./05_Declarations.md#protocol_declaration) 中所讨论的那样，可以把 `class` 关键字放到协议类型的类型继承子句的首位，这样就可以声明一个类类型专属协议。
 
-枚举定义中的类型继承子句可以是一系列协议，或是枚举的原始值类型的命名型类型。在枚举定义中使用类型继承子句来指定原始值类型的例子，请参阅 [原始值](../chapter2/08_Enumerations.html#raw_values)。
+枚举定义中的类型继承子句可以是一系列协议，或是枚举的原始值类型的命名型类型。在枚举定义中使用类型继承子句来指定原始值类型的例子，请参阅 [原始值](../chapter2/08_Enumerations.md#raw_values)。
 
 > 类型继承子句语法
 > 
