@@ -15,11 +15,11 @@
 - [类型继承子句](#type_inheritance_clause)
 - [类型推断](#type_inference)
 
-Swift 语言存在两种类型：命名型类型和复合型类型。命名型类型是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类 `MyClass` 的实例拥有类型 `MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
+Swift 语言存在两种类型：命名型类型和复合型类型。*命名型类型*是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义类 `MyClass` 的实例拥有类型 `MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
-那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/21_Extensions.html) 和 [扩展声明](05_Declarations.html#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
+那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/20_Extensions.html) 和 [扩展声明](06_Declarations.html#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
 
-复合型类型是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型 `(Int, (Int, Int))` 包含两个元素：第一个是命名型类型 `Int`，第二个是另一个复合型类型 `(Int, Int)`。
+*复合型类型*是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型 `(Int, (Int, Int))` 包含两个元素：第一个是命名型类型 `Int`，第二个是另一个复合型类型 `(Int, Int)`。
 
 你可以在命名型类型和复合型类型使用小括号。但是在类型旁加小括号没有任何作用。举个例子，`(Int)` 等同于 `Int`。
 
@@ -44,7 +44,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。命名型�
 <a name="type_annotation"></a>
 ## 类型注解
 
-类型注解显式地指定一个变量或表达式的值。类型注解始于冒号 `:` 终于类型，比如下面两个例子：
+*类型注解*显式地指定一个变量或表达式的类型。类型注解始于冒号 `:` 终于类型，比如下面两个例子：
 
 ```swift
 let someTuple: (Double, Double) = (3.14159, 2.71828)
@@ -58,7 +58,7 @@ func someFunction(a: Int) { /* ... */ }
 > 类型注解语法
 > 
 <a name="type-annotation"></a>
-> *类型注解* → **:** [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
+> *类型注解* → **:** [*特性列表*](07_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 
 <a name="type_identifier"></a>
 ## 类型标识符
@@ -83,7 +83,7 @@ var someValue: ExampleModule.MyType
 > 类型标识符语法
 > 
 <a name="type-identifier"></a>
-> *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
+> *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](09_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](09_Generic_Parameters_and_Arguments.html#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
 <a name="type-name"></a>
 > *类型名称* → [*标识符*](02_Lexical_Structure.html#identifier)
 
@@ -108,7 +108,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > 元组类型语法
 > 
 <a name="tuple-type"></a>
-> *元组类型* → **(** [*元组类型元素列表*](#tuple-type-element-list) <sub>可选</sub> **)**
+> *元组类型* → **(** **)** | **(** [*元组类型元素*](#tuple-type-element) **,** [*元组类型元素列表*](#tuple-type-element-list) **)**
 <a name="tuple-type-element-list"></a>
 > *元组类型元素列表* → [*元组类型元素*](#tuple-type-element) | [*元组类型元素*](#tuple-type-element) **,** [*元组类型元素列表*](#tuple-type-element-list)
 <a name="tuple-type-element"></a>
@@ -121,17 +121,17 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 
 函数类型表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
 
-> `参数类型` -> `返回值类型`
+> （`参数类型`）->（`返回值类型`）
 
-参数类型是由逗号间隔的类型列表。由于参数类型和返回值类型可以是元组类型，所以函数类型支持多参数与多返回值的函数与方法。
+*参数类型*是由逗号间隔的类型列表。由于*返回值类型*可以是元组类型，所以函数类型支持多返回值的函数与方法。
 
-你可以对函数参数 `() -> T`（其中 T 是任何类型）使用 `autoclosure` 特性。这会自动将参数表达式转化为闭包，表达式的结果即闭包返回值。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为参数的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.html#autoclosures) 。
+你可以对参数类型为 `() -> T`（其中 T 是任何类型）的函数使用 `autoclosure` 特性。这会自动将参数表达式转化为闭包，表达式的结果即闭包返回值。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为参数的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.html#autoclosures)。
 
-函数类型可以拥有一个可变长参数作为参数类型中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变长参数的例子，请参阅 [可变参数](../chapter2/06_Functions.html#variadic_parameters)。
+函数类型可以拥有一个可变长参数作为*参数类型*中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变长参数的例子，请参阅 [可变参数](../chapter2/06_Functions.html#variadic_parameters)。
 
 为了指定一个 `in-out` 参数，可以在参数类型前加 `inout` 前缀。但是你不可以对可变长参数或返回值类型使用 `inout`。关于这种参数的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.html#in_out_parameters)。
 
-如果一个函数类型只有一个形式参数而且形式参数的类型是元组类型，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组  `(Int, Int)`  作为形式参数的函数的类型。与此相反，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 形式参数并且不返回任何值的函数的类型。相似地，因为 `Void` 是空元组类型 `()` 的别名， 函数类型 `(Void)-> Void` 与一个空元组的变量的函数类型 `(()) -> ()` 是一样的。但这些类型和无变量的函数类型 `() -> ()` 是不一样的。
+如果一个函数类型只有一个形式参数而且形式参数的类型是元组类型，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组 `(Int, Int)` 作为形式参数并且不返回任何值的函数类型。与此相对，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 作为形式参数并且不返回任何值的函数类型。相似地，因为 `Void` 是空元组类型 `()` 的别名，函数类型 `(Void)-> Void` 与 `(()) -> ()` 是一样的 - 一个将空元组作为唯一参数的函数。但这些类型和无变量的函数类型 `() -> ()` 是不一样的。
 
 函数和方法中的变量名并不是函数类型的一部分。例如：
 
@@ -159,13 +159,15 @@ var operation: (_ lhs: Int, _ rhs: Int) -> Int  // 正确
 var operation: (Int, Int) -> Int                // 正确
 ```
 
-如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `Int -> Int -> Int` 可以理解为 `Int -> (Int -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数类型。
+如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `(Int) -> (Int) -> Int` 可以理解为 `(Int) -> ((Int) -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数。
 
-函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](05_Declarations.html#throwing_functions_and_methods) 和 [重抛函数与方法](05_Declarations.html#rethrowing_functions_and_methods)。
+函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](06_Declarations.html#throwing_functions_and_methods) 和 [重抛函数与方法](06_Declarations.html#rethrowing_functions_and_methods)。
 
 <a name="Restrictions for Nonescaping Closures"></a>
 ### 对非逃逸闭包的限制
-非逃逸闭包函数不能作为参数传递到另一个非逃逸闭包函数的参数。这样的限制可以让 Swift 在编译时就完成更多的内存访问冲突检查， 而不是在运行时。举个例子：
+当非逃逸闭包函数是参数时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
+
+当非逃逸闭包函数是参数时，不能作为参数传递到另一个非逃逸闭包函数中。这样的限制可以让 Swift 在编译时就完成更多的内存访问冲突检查，而不是在运行时。举个例子：
 
 ```swift
 let external: (Any) -> Void = { _ in () }
@@ -181,25 +183,25 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 }
 ```
 
-在上面代码里，`takesTwoFunctions(first:second:)` 的两个参数都是函数。 它们都没有标记为 `@escaping`, 因此它们都是非逃逸的。
+在上面代码里，`takesTwoFunctions(first:second:)` 的两个参数都是函数。它们都没有标记为 `@escaping`, 因此它们都是非逃逸的。
 
-上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为第一个和第二个参数是非逃逸函数，它们不能够被当作变量被传递到另一个非闭包函数参数。与此相反, 标记“正确”的两个函数不回产生编译错误。这些函数调用不会违反限制， 因为 `外部（external）` 不是 `takesTwoFunctions(first:second:)` 里的一个参数。
+上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为参数 `first` 和 `second` 是非逃逸函数，它们不能够作为参数被传递到另一个非闭包函数。相对的, 标记“正确”的两个函数不会产生编译错误。这些函数调用不会违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的参数之一。
 
-如果你需要避免这个限制， 标记其中之一的参数为逃逸， 或者使用 `withoutActuallyEscaping(_:do:)` 函数临时地转换非逃逸函数的其中一个参数为逃逸函数。关于避免内存访问冲突，可以参阅[内存安全](../chapter2/24_Memory_Safety.html)。
+如果你需要避免这个限制，标记其中之一的参数为逃逸，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时地转换非逃逸函数的其中一个参数为逃逸函数。关于避免内存访问冲突，可以参阅[内存安全](../chapter2/24_Memory_Safety.html)。
 
 
 > 函数类型语法
 > 
 <a name="function-type"></a>
-> *函数类型* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
-> *函数类型* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
+> *函数类型* → [*特性列表*](07_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
+> *函数类型* → [*特性列表*](07_Attributes.html#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
 <a name="function-type-argument-clause"></a>
-> *函数类型子句* → (­)­
-> *函数类型子句* → ([*函数类型参数列表*](#function-type-argument-list)*...*­<sub>可选</sub>)­
+> *函数类型子句* → **(**­ **)**­
+> *函数类型子句* → **(** [*函数类型参数列表*](#function-type-argument-list)*...*­<sub>可选</sub> **)**­
 <a name="function-type-argument-list"></a>
-> *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)， [*函数类型参数列表*](#function-type-argument-list)
+> *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)**，** [*函数类型参数列表*](#function-type-argument-list)
 <a name="function-type-argument"></a>
-> *函数类型参数* → [*特性列表*](06_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
+> *函数类型参数* → [*特性列表*](07_Attributes.html#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
 <a name="argument-label"></a>
 > *参数标签* → [*标识符*](02_Lexical_Structure.html#identifier)
 
