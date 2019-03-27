@@ -18,7 +18,7 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 
 关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
 
-关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Operators Declarations*](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Operators Declarations*](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
 
@@ -78,7 +78,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
 
-关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.md#//apple_ref/doc/uid/TP40016054)。
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 > 注意
 > 
@@ -168,7 +168,7 @@ f(x as Any)
 // 打印“Function for Any”
 ```
 
-桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Working with Foundation Types*](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/working_with_foundation_types)。
+桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Working with Foundation Types*](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types)。
 
 `as?` 运算符有条件地执行类型转换，返回目标类型的可选值。在运行时，如果转换成功，返回的可选值将包含转换后的值，否则返回 `nil`。如果在编译时就能确定转换一定会成功或是失败，则会导致编译报错。
 
@@ -735,7 +735,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 // 打印 "64"
 ```
 
-关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](./https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.md#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](./https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.md#//apple_ref/doc/uid/10000177i)
+关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 和 [Key-Value 观察编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)
 
 > key-path 表达式语法
 > 
