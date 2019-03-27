@@ -279,7 +279,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 如果你将 `objc` 特性应用于枚举，每一个枚举用例都会以枚举名称和用例名称组合的方式暴露在 Objective-C 代码中。例如，在 `Planet` 枚举中有一个名为 `Venus` 的用例，该用例暴露在 Objective-C 代码中时叫做 `PlanetVenus`。
 
-`objc` 特性有一个可选的参数，由标识符构成。当你想把 `objc` 所修饰的实体以一个不同的名字暴露给 Objective-C 时，你就可以使用这个特性参数。你可以使用这个参数来命名类、枚举类型、枚举用例、协议、方法、存取方法以及构造器。如果你要指定类、协议或枚举在 Objective-C 下的名称，在名称上包含三个字母的前缀，如 [Objective-C 编程](./https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.md#//apple_ref/doc/uid/TP40011210) 中的 [约定](./https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.md#//apple_ref/doc/uid/TP40011210-CH10-SW1)。下面的例子把 `ExampleClass` 中的 `enabled` 属性的取值方法暴露给 Objective-C，名字是 `isEnabled`，而不是它原来的属性名。
+`objc` 特性有一个可选的参数，由标识符构成。当你想把 `objc` 所修饰的实体以一个不同的名字暴露给 Objective-C 时，你就可以使用这个特性参数。你可以使用这个参数来命名类、枚举类型、枚举用例、协议、方法、存取方法以及构造器。如果你要指定类、协议或枚举在 Objective-C 下的名称，在名称上包含三个字母的前缀，如 [Objective-C 编程](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中的 [约定](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)。下面的例子把 `ExampleClass` 中的 `enabled` 属性的取值方法暴露给 Objective-C，名字是 `isEnabled`，而不是它原来的属性名。
 
 ```swift
 class ExampleClass: NSObject {
@@ -349,7 +349,7 @@ class ExampleClass: NSObject {
 <a name="autoclosure"></a>
 ### `autoclosure`
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 autoclosure 特性的例子，请参阅 [自动闭包](./https://docs.swift.org/swift-book/LanguageGuide/Closures.md#ID543) 和 [函数类型](./https://docs.swift.org/swift-book/ReferenceManual/Types.md#ID449)。
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 autoclosure 特性的例子，请参阅 [自动闭包](../chapter2/07_Closures.md#autoclosures) 和 [函数类型](./03_Types.md#function_type)。
 
 <a name="convention"></a>
 ### `convention`
@@ -369,7 +369,7 @@ convention 特性总是与下面的参数之一一起出现。
 <a name="escaping"></a>
 ### `escaping`
 
-在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](./https://docs.swift.org/swift-book/LanguageGuide/Closures.md#ID546)。
+在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../chapter2/07_Closures.md#escaping_closures)。
 
 <a name="switch_case_attributes"></a>
 ## Switch Case 特性
@@ -378,7 +378,7 @@ convention 特性总是与下面的参数之一一起出现。
 
 ### `unknown`
 
-次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [Switching over Future Enumeration Cases](./https://docs.swift.org/swift-book/ReferenceManual/Statements.md#ID602)。
+次特性用于 switch case，表示在编译时该地方不会匹配枚举的任何情况。有关如何使用 `unknown` 特性的示例，可参阅 [对未来枚举的 `case` 进行 `switch`](./05_Statements.md#future-case)。
 
 > 特性语法
 > 

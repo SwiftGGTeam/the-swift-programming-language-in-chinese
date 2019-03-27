@@ -18,9 +18,9 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 
 前缀表达式由可选的前缀运算符和表达式组成。前缀运算符只接收一个参数，表达式则紧随其后。
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/25_Advanced_Operators.md)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
 
-关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_StandardLibrary_Operators/index.md#//apple_ref/doc/uid/TP40016054)。
+关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Operators Declarations*](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。
 
 除了标准库运算符，你也可以对某个变量使用 `&` 运算符，从而将其传递给函数的输入输出参数。更多信息，请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
 
@@ -67,7 +67,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 
 `try` 表达式不能出现在二进制运算符的的右侧，除非二进制运算符是赋值运算符或者 `try` 表达式是被圆括号括起来的。
 
-关于 `try`、`try?` 和 `try!` 的更多信息，以及该如何使用的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.md)。
+关于 `try`、`try?` 和 `try!` 的更多信息，以及该如何使用的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.md)。
 > Try 表达式语法
 > 
 <a name="try-operator"></a>
@@ -180,13 +180,13 @@ f(x as Any)
 // 打印“Function for Any”
 ```
 
-桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Using Swift with Cocoa and Objective-C (Swift4.1)*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.md#//apple_ref/doc/uid/TP40014216) 中的 [Working with Cocoa Data Types](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.md#//apple_ref/doc/uid/TP40014216-CH6)。
+桥接可将 Swift 标准库中的类型（例如 `String`）作为一个与之相关的 Foundation 类型（例如 `NSString`）来使用，而不需要新建一个实例。关于桥接的更多信息，请参阅 [*Working with Foundation Types*](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/working_with_foundation_types)。
 
 `as?` 运算符有条件地执行类型转换，返回目标类型的可选值。在运行时，如果转换成功，返回的可选值将包含转换后的值，否则返回 `nil`。如果在编译时就能确定转换一定会成功或是失败，则会导致编译报错。
 
 `as!` 运算符执行强制类型转换，返回目标类型的非可选值。如果转换失败，则会导致运行时错误。表达式 `x as! T` 效果等同于 `(x as? T)!`。
 
-关于类型转换的更多内容和例子，请参阅 [类型转换](../chapter2/19_Type_Casting.md)。
+关于类型转换的更多内容和例子，请参阅 [类型转换](../chapter2/18_Type_Casting.md)。
 
 <a name="type-casting-operator"></a>
 > 类型转换运算符语法
@@ -208,7 +208,7 @@ f(x as Any)
 > 基本表达式语法
 > 
 <a name="primary-expression"></a>
-> *基本表达式* → [*标识符*](./02_Lexical_Structure.md#identifier) [*泛型实参子句*](./08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
+> *基本表达式* → [*标识符*](./02_Lexical_Structure.md#identifier) [*泛型实参子句*](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
 > 
 > *基本表达式* → [*字面量表达式*](#literal-expression)
 > 
@@ -427,7 +427,7 @@ struct Point {
 }
 ```
 
-闭包的参数声明形式跟函数一样，请参阅 [函数声明](./05_Declarations.md#function_declaration)。
+闭包的参数声明形式跟函数一样，请参阅 [函数声明](./06_Declarations.md#function_declaration)。
 
 闭包还有几种特殊的形式，能让闭包使用起来更加简洁：
 
@@ -532,13 +532,13 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 > <a name="closure-signature"></a>
 > 
 >
-> 闭包签名* → [*参数子句*](./#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> 闭包签名* → [*参数子句*](#parameter-clause) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [*标识符列表*](./#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*标识符列表*](#identifier-list) [*函数结果*](05_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [*捕获列表*](./#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](./05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](#capture-list) [*参数子句*](05_Declarations.md#parameter-clause) [*函数结果*](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [*捕获列表*](./#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](./05_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [*捕获列表*](#capture-list) [*标识符列表*](02_Lexical_Structure.md#identifier-list) [*函数结果*](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
 > *闭包签名* → [*捕获列表*](#capture-list) **in**
 > 
@@ -927,7 +927,7 @@ print(keyPath == c.getSomeKeyPath())
 <a name="postfix-expression"></a>
 > *后缀表达式* → [*基本表达式*](#primary-expression)
 > 
-> *后缀表达式* → [*后缀表达式*](./#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)
+> *后缀表达式* → [*后缀表达式*](#postfix-expression) [*后缀运算符*](02_Lexical_Structure.md#postfix-operator)
 > 
 > *后缀表达式* → [*函数调用表达式*](#function-call-expression)
 > 
@@ -996,7 +996,7 @@ myData.someMethod {$0 == 13}
 > 
 > <a name="function-call-argument"></a>
 > 
-> *函数调用参数* → [表达式](./#expression) | [标识符](02_Lexical_Structure.md#identifier) **:** [*表达式*](#expression)
+> *函数调用参数* → [表达式](#expression) | [标识符](02_Lexical_Structure.md#identifier) **:** [*表达式*](#expression)
 > 
 > *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02_Lexical_Structure.md#identifier) **:** [*运算符*](./02_Lexical_Structure.md#operator)
 > 
@@ -1117,11 +1117,11 @@ let x = [10, 3, 20, 15, 4]
 > 显式成员表达式语法
 > 
 <a name="explicit-member-expression"></a>
-> *显式成员表达式* → [*后缀表达式*](./#postfix-expression) **.** [*十进制数字*]    (02_Lexical_Structure.md#decimal-digit)
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*十进制数字*]    (02_Lexical_Structure.md#decimal-digit)
 > 
-> *显式成员表达式* → [*后缀表达式*](./#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](./08_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*](02_Lexical_Structure.md#identifier) [*泛型实参子句*](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
 > 
-> *显式成员表达式* → [*后缀表达式*](./#postfix-expression) **.** [*标识符*]    (02_Lexical_Structure.md#identifier) **(** [*参数名称*](#argument-names) **)**
+> *显式成员表达式* → [*后缀表达式*](#postfix-expression) **.** [*标识符*]    (02_Lexical_Structure.md#identifier) **(** [*参数名称*](#argument-names) **)**
 > 
 <a name="argument-names"></a>
 > *参数名称* → [*参数名*](#argument-name) [*参数名称*](#argument-names)<sub>可选</sub><br/>
@@ -1161,7 +1161,7 @@ let x = [10, 3, 20, 15, 4]
 
 要获取下标表达式的值，可将索引表达式作为下标表达式的参数来调用下标 getter。下标 setter 的调用方式与之一样。
 
-关于下标的声明，请参阅 [协议下标声明](./05_Declarations.md#protocol_subscript_declaration)。
+关于下标的声明，请参阅 [协议下标声明](./06_Declarations.md#protocol_subscript_declaration)。
 
 > 下标表达式语法
 > 

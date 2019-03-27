@@ -52,7 +52,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *多行注释内容项* → 任何 Unicode 标量值， 除了 `/*` 或者 `*/`
 > 
 
-注释可以包含额外的格式和标记，正如 [*Markup Formatting Reference*](./https://developer.apple.com/library/prerelease/ios/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.md#//apple_ref/doc/uid/TP40016497) 所述。
+注释可以包含额外的格式和标记，正如 [*Markup Formatting Reference*](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) 所述。
 
 <a id="identifiers"></a>
 ## 标识符
@@ -374,7 +374,7 @@ true		    // 布尔值字面量
 let x = 3; "1 2 \(x)"
 ```
 
-字符串字面量的默认推导类型为 `String`。更多有关 `String` 类型的信息请参考 [字符串和字符](../chapter2/03_Strings_and_Characters.md) 以及 [*字符串结构参考*](./https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_String_Structure/index.md#//apple_ref/doc/uid/TP40015181)。
+字符串字面量的默认推导类型为 `String`。更多有关 `String` 类型的信息请参考 [字符串和字符](../chapter2/03_Strings_and_Characters.md) 以及 [*字符串结构参考*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_String_Structure/index.md#//apple_ref/doc/uid/TP40015181)。
 
 用 `＋` 操作符连接的字符型字面量是在编译时进行连接的。比如下面的 `textA` 和 `textB` 是完全一样的，`textA` 没有任何运行时的连接操作。
 
@@ -428,7 +428,7 @@ let textB = "Hello world"
 <a id="operators"></a>
 ## 运算符
 
-Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基础运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/25_Advanced_Operators.md) 中进行了阐述。这一小节将描述哪些字符能用于自定义运算符。
+Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基础运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md) 中进行了阐述。这一小节将描述哪些字符能用于自定义运算符。
 
 自定义运算符可以由以下其中之一的 ASCII 字符 `/`、`=`、`-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 以及 `~`，或者后面语法中规定的任一个 Unicode 字符（其中包含了*数学运算符*、*零散符号（Miscellaneous Symbols）* 以及印刷符号（Dingbats）之类的 Unicode 块）开始。在第一个字符之后，允许使用组合型 Unicode 字符。
 
@@ -454,7 +454,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 在某些特定的设计中 ，以 `<` 或 `>` 开头的运算符会被分离成两个或多个符号，剩余部分可能会以同样的方式被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中， 闭合字符 `>` 不会被视为单独的符号，因而不会被错误解析为 `>>` 运算符。
 
-要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/25_Advanced_Operators.md#custom_operators) 和 [运算符声明](./05_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/25_Advanced_Operators.md#operator_functions)。
+要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/26_Advanced_Operators.md#custom_operators) 和 [运算符声明](./06_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/26_Advanced_Operators.md#operator_functions)。
 
 > 运算符语法
 > 

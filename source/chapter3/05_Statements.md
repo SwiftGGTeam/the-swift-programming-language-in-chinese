@@ -12,7 +12,7 @@
 <a name="statement"></a>
 > *语句* → [*表达式*](./04_Expressions.md#expression) **;**<sub>可选</sub>
 > 
-> *语句* → [*声明*](./05_Declarations.md#declaration) **;**<sub>可选</sub>
+> *语句* → [*声明*](./06_Declarations.md#declaration) **;**<sub>可选</sub>
 > 
 > *语句* → [*循环语句*](#loop-statement) **;**<sub>可选</sub>
 > 
@@ -69,7 +69,7 @@ for item in collection {
 > 
 >
 <a name="for-in-statement"></a>
-> *for-in 语句* → **for** **case**<sub>可选</sub> [*模式*](./07_Patterns.md#pattern) **in** [*表达式*](./04_Expressions.md#expression) [*where 子句*](./#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
+> *for-in 语句* → **for** **case**<sub>可选</sub> [*模式*](./08_Patterns.md#pattern) **in** [*表达式*](./04_Expressions.md#expression) [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
 > 
 
 <a name="while_statements"></a>
@@ -98,7 +98,7 @@ while condition {
 > 
 >
 <a name="while-statement"></a>
-> *while 语句* → **while** [*条件子句*](./#condition-clause) [*代码块*](05_Declarations.md#code-block)
+> *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block)
 > 
 
 <a name="condition-clause"></a>
@@ -109,10 +109,10 @@ while condition {
 > 
 >
 <a name="case-condition"></a>
-> *case 条件* → **case** [*模式*](./07_Patterns.md#pattern) [*构造器*](./05_Declarations.md#initializer)
+> *case 条件* → **case** [*模式*](./08_Patterns.md#pattern) [*构造器*](./06_Declarations.md#initializer)
 > 
 <a name="optional-binding-condition"></a>
-> *可选绑定条件* →  **let** [*模式*](./07_Patterns.md#pattern) [*构造器*](./05_Declarations.md#initializer) | **var**  [*模式*](./07_Patterns.md#pattern) [*构造器*](./05_Declarations.md#initializer)
+> *可选绑定条件* →  **let** [*模式*](./08_Patterns.md#pattern) [*构造器*](./06_Declarations.md#initializer) | **var**  [*模式*](./08_Patterns.md#pattern) [*构造器*](./06_Declarations.md#initializer)
 > 
 
 <a name="repeat-while_statements"></a>
@@ -141,7 +141,7 @@ repeat {
 > 
 >
 <a name="repeat-while-statement"></a>
-> *repeat-while 语句* → **repeat** [*代码块*](./05_Declarations.md#code-block) **while** [*表达式*](./04_Expressions.md#expression)
+> *repeat-while 语句* → **repeat** [*代码块*](./06_Declarations.md#code-block) **while** [*表达式*](./04_Expressions.md#expression)
 > 
 
 <a name="branch_statements"></a>
@@ -205,10 +205,10 @@ if condition 1 {
 > 
 >
 <a name="if-statement"></a>
-> *if 语句* → **if** [*条件子句*](./#condition-clause) [*代码块*](05_Declarations.md#code-block) [*else 子句*](#else-clause)<sub>可选</sub>
+> *if 语句* → **if** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block) [*else 子句*](#else-clause)<sub>可选</sub>
 > 
 <a name="else-clause"></a>
-> *else 子句* → **else** [*代码块*](./05_Declarations.md#code-block) | **else** [*if 语句*](#if-statement)
+> *else 子句* → **else** [*代码块*](./06_Declarations.md#code-block) | **else** [*if 语句*](#if-statement)
 > 
 
 <a name="guard_statements"></a>
@@ -235,13 +235,13 @@ guard condition else {
  *  `continue`
  *  `throw`
 
-关于控制转移语句，请参阅 [控制转移语句](./#control_transfer_statements)。关于 `Never` 返回类型的函数，请参阅 [永不返回的函数](05_Declarations.md#rethrowing_functions_and_methods)。
+关于控制转移语句，请参阅 [控制转移语句](#control_transfer_statements)。关于 `Never` 返回类型的函数，请参阅 [永不返回的函数](05_Declarations.md#rethrowing_functions_and_methods)。
 
 > guard 语句语法
 > 
 >
 <a name="guard-statement"></a>
-> *guard 语句* → **guard** [*条件子句*](./#condition-clause) **else** [*代码块*]      (05_Declarations.md#code-block)
+> *guard 语句* → **guard** [*条件子句*](#condition-clause) **else** [*代码块*]      (05_Declarations.md#code-block)
 > 
 
 <a name="switch_statements"></a>
@@ -285,6 +285,7 @@ case let (x, y) where x == y:
 
 在 Swift 中，`switch` 语句中控制表达式的每一个可能的值都必须至少有一个 `case` 与之对应。在某些无法面面俱到的情况下（例如，表达式的类型是 `Int`），你可以使用 `default` 分支满足该要求。
 
+<a name="future-case"></a>
 #### 对未来枚举的 `case` 进行 `switch`
 
 非冻结枚举（`nonfronzen enumeration`）是一种特殊的枚举类型，它可能在未来会增加新的枚举 `case`，即使这时候你已经编译并且发布了你的应用，所以在 switch 非冻结枚举前需要深思熟虑。当一个库的作者们把一个枚举标记为非冻结的，这意味着他们保留了增加新的枚举 `case` 的权利，并且任何和这个枚举交互的代码都要在不需要重新编译的条件下能够处理那些未来可能新加入的 `case` 。只有那些标准库，比如用 Swift 实现的苹果的一些框架，C 以及 Objective-C 代码才能够声明非冻结枚举。你在 Swift 中声明的枚举不能是非冻结的。
@@ -329,7 +330,7 @@ case .suppressed:
 > *case 标签* → [*属性*](#switch-case-attributes-label)<sub>可选</sub> **case** [*case 项列表*](#case-item-list) **:**
 > 
 <a name="case-item-list"></a>
-> *case 项列表* → [*模式*](./07_Patterns.md#pattern) [*where 子句*](./#where-clause)<sub>可选</sub> | [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> **,** [*case 项列表*](#case-item-list)
+> *case 项列表* → [*模式*](./08_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> | [*模式*](07_Patterns.md#pattern) [*where 子句*](#where-clause)<sub>可选</sub> **,** [*case 项列表*](#case-item-list)
 > 
 <a name="default-label"></a>
 > *default 标签* → [*属性*](#switch-case-attributes-label)<sub>可选</sub> **default** **:**
@@ -491,7 +492,7 @@ case .suppressed:
 > 注意
 > 
 >
-> 正如 [可失败构造器](./05_Declarations.md#failable_initializers) 中所描述的，`return nil` 在可失败构造器中用于表明构造失败。
+> 正如 [可失败构造器](./06_Declarations.md#failable_initializers) 中所描述的，`return nil` 在可失败构造器中用于表明构造失败。
 > 
 
 而只写 `return` 时，仅仅是从该函数或方法中返回，而不返回任何值（也就是说，函数或方法的返回类型为 `Void` 或者说 `()`）。
@@ -517,7 +518,7 @@ case .suppressed:
 
 表达式的结果必须符合 `ErrorType` 协议。
 
-关于如何使用 `throw` 语句的例子，请参阅 [错误处理](../chapter2/18_Error_Handling.md) 一章的 [用 throwing 函数传递错误](../chapter2/18_Error_Handling.md#propagating_errors_using_throwing_functions)。
+关于如何使用 `throw` 语句的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.md) 一章的 [用 throwing 函数传递错误](../chapter2/17_Error_Handling.md#propagating_errors_using_throwing_functions)。
 
 > throw 语句语法
 > 
@@ -561,7 +562,7 @@ f()
 > 
 >
 <a name="defer-statement"></a>
-> *延迟语句* → **defer** [*代码块*](./05_Declarations.md#code-block)
+> *延迟语句* → **defer** [*代码块*](./06_Declarations.md#code-block)
 > 
 
 <a name="do_statements"></a>
@@ -586,7 +587,7 @@ do {
 
 如同 `switch` 语句，编译器会判断 `catch` 子句是否有遗漏。如果 `catch` 子句没有遗漏，则认为错误已被处理。否则，错误会自动传递到外围作用域，被某个 `catch` 子句处理掉或者被用 `throws` 关键字声明的抛出函数继续向外抛出。
 
-为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部常量。有关在 `catch` 子句中使用模式的更多信息，请参阅 [模式](./07_Patterns.md)。
+为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部常量。有关在 `catch` 子句中使用模式的更多信息，请参阅 [模式](./08_Patterns.md)。
 
 关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.md#handling_errors)。
 
@@ -594,13 +595,13 @@ do {
 > 
 >
 <a name="do-statement"></a>
-> *do 语句* → **do** [*代码块*](./05_Declarations.md#code-block) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>
+> *do 语句* → **do** [*代码块*](./06_Declarations.md#code-block) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>
 > 
 <a name="catch-clauses"></a>
 > *多条 catch 子句* → [*catch 子句*](#catch-clause) [*多条 catch 子句*](#catch-clauses)<sub>可选</sub>
 > 
 <a name="catch-clause"></a>
-> *catch 子句* → **catch** [*模式*](./07_Patterns.md#pattern)<sub>可选</sub> [*where 子句*](./#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
+> *catch 子句* → **catch** [*模式*](./08_Patterns.md#pattern)<sub>可选</sub> [*where 子句*](#where-clause)<sub>可选</sub> [*代码块*](05_Declarations.md#code-block)
 > 
 
 <a name="compiler_control_statements"></a>

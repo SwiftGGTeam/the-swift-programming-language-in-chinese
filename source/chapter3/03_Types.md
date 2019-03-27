@@ -17,7 +17,7 @@
 
 Swift 语言存在两种类型：命名型类型和复合型类型。命名型类型是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类 `MyClass` 的实例拥有类型 `MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
-那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/21_Extensions.md) 和 [扩展声明](./05_Declarations.md#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
+那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../chapter2/20_Extensions.md) 和 [扩展声明](./06_Declarations.md#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
 
 复合型类型是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型 `(Int, (Int, Int))` 包含两个元素：第一个是命名型类型 `Int`，第二个是另一个复合型类型 `(Int, Int)`。
 
@@ -70,7 +70,7 @@ func someFunction(a: Int) { /* ... */ }
 > 类型注解语法
 > 
 <a name="type-annotation"></a>
-> *类型注解* → **:** [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
+> *类型注解* → **:** [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 > 
 
 <a name="type_identifier"></a>
@@ -96,7 +96,7 @@ var someValue: ExampleModule.MyType
 > 类型标识符语法
 > 
 <a name="type-identifier"></a>
-> *类型标识符* → [*类型名称*](./#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](./#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
+> *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](08_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
 > 
 <a name="type-name"></a>
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
@@ -188,7 +188,7 @@ var operation: (Int, Int) -> Int                // 正确
 如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `Int -> Int -> Int` 可以理解为 `Int -> (Int -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数类型。
 > 
 
-函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./05_Declarations.md#throwing_functions_and_methods) 和 [重抛函数与方法](./05_Declarations.md#rethrowing_functions_and_methods)。
+函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing_functions_and_methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing_functions_and_methods)。
 
 <a name="Restrictions for Nonescaping Closures"></a>
 ### 对非逃逸闭包的限制
@@ -220,9 +220,9 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > 函数类型语法
 > 
 <a name="function-type"></a>
-> *函数类型* → [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
+> *函数类型* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
 > 
-> *函数类型* → [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
+> *函数类型* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
 > 
 <a name="function-type-argument-clause"></a>
 > *函数类型子句* → (­)­
@@ -233,7 +233,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)， [*函数类型参数列表*](#function-type-argument-list)
 > 
 <a name="function-type-argument"></a>
-> *函数类型参数* → [*特性列表*](./06_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
+> *函数类型参数* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
 > 
 <a name="argument-label"></a>
 > *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
@@ -456,7 +456,7 @@ let anotherInstance = metatype.init(string: "some string")
 
 类可以继承单个超类，采纳任意数量的协议。当定义一个类时，超类的名字必须出现在类型标识符列表首位，然后跟上该类需要采纳的任意数量的协议。如果一个类不是从其它类继承而来，那么列表可以以协议开头。关于类继承更多的讨论和例子，请参阅 [继承](../chapter2/13_Inheritance.md)。
 
-其它命名型类型可能只继承或采纳一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其它协议时，其它协议中定义的要求会被整合在一起，然后从当前协议继承的任意类型必须符合所有这些条件。正如在 [协议声明](./05_Declarations.md#protocol_declaration) 中所讨论的那样，可以把 `class` 关键字放到协议类型的类型继承子句的首位，这样就可以声明一个类类型专属协议。
+其它命名型类型可能只继承或采纳一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其它协议时，其它协议中定义的要求会被整合在一起，然后从当前协议继承的任意类型必须符合所有这些条件。正如在 [协议声明](./06_Declarations.md#protocol_declaration) 中所讨论的那样，可以把 `class` 关键字放到协议类型的类型继承子句的首位，这样就可以声明一个类类型专属协议。
 
 枚举定义中的类型继承子句可以是一系列协议，或是枚举的原始值类型的命名型类型。在枚举定义中使用类型继承子句来指定原始值类型的例子，请参阅 [原始值](../chapter2/08_Enumerations.md#raw_values)。
 
