@@ -4,7 +4,6 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 通常情况下，通过考虑输入文本当中可能的最长子串，并且在随后将介绍的语法约束之下，根据随后将介绍的语法约束生成的，根据 Swift 源文件当中的字符来生成相应的“符号”。这种方法称为*“最长匹配（longest match）”*，或者*“最大适合（maximal munch）”*。
 
-<a id="whitespace_and_comments"></a>
 ## 空白与注释 {#whitespace}
 
 空白（whitespace）有两个用途：分隔源文件中的符号以及帮助区分运算符属于前缀还是后缀（参见 [运算符](#operators)），在其他情况下空白则会被忽略。以下的字符会被当作空白：空格（U+0020）、换行符（U+000A）、回车符（U+000D）、水平制表符（U+0009）、垂直制表符（U+000B）、换页符（U+000C）以及空字符（U+0000）。
@@ -14,7 +13,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 空白语法
 > *空白* → [*空白项*](#whitespace-item) [*空白*](#whitespace)<sub>可选</sub>
 > 
-> *空白项*{#whitespace-item} → [*断行符*](#line-break)
+> *空白项* <span id='whitespace-item'></span> → [*断行符*](#line-break)
 > 
 > *空白项* → [*注释*](#comment)
 > 
@@ -22,21 +21,21 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 
 > *空白项* → U+0000，U+0009，U+000B，U+000C 或者 U+0020
 > 
-> *断行符* {#line-break} → U+000A
+> *断行符* <span id='line-break'></span> → U+000A
 > 
 > *断行符* → U+000D
 > 
 > *断行符* → U+000D 接着是 U+000A
 > 
-> *注释* {#comment} → // [*注释内容*](#comment-text)  [断行符*](#line-break)
+> *注释* <span id='comment'></span> → // [*注释内容*](#comment-text)  [断行符*](#line-break)
 > 
-> *多行注释* {#multiline-comment} → `/*` [*多行注释内容*](#multiline-commnet-text) `*/`
+> *多行注释* <span id='multiline-comment'></span> → `/*` [*多行注释内容*](#multiline-commnet-text) `*/`
 > 
-> *注释内容* {#comment-text} → [*注释内容项*](#comment-text-item) [*注释内容*](#comment-text)<sub>可选</sub>
+> *注释内容* <span id='comment-text'></span> → [*注释内容项*](#comment-text-item) [*注释内容*](#comment-text)<sub>可选</sub>
 > 
-> *注释内容项* {#comment-text-item} → 任何 Unicode 标量值， 除了 U+000A 或者 U+000D
+> *注释内容项* <span id='comment-text-item'></span> → 任何 Unicode 标量值， 除了 U+000A 或者 U+000D
 > 
-> *多行注释内容* {#multiline-commnet-text} → [*多行注释内容项*](#multiline-comment-text-item) [*多行注释内容*](#multiline-comment-text)<sub>可选</sub>
+> *多行注释内容* <span id='multiline-commnet-text'></span> → [*多行注释内容项*](#multiline-comment-text-item) [*多行注释内容*](#multiline-comment-text)<sub>可选</sub>
 > 
 > *多行注释内容项* → [*多行注释*](#multiline-comment).
 > 
@@ -62,7 +61,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 
 > *标识符列表* → [*标识符*](#identifier) | [*标识符*](#identifier) **,** [*标识符列表*](#identifier)
 > 
-> *头部标识符* {#identifier-head} → 大写或小写字母 A - Z
+> *头部标识符* <span id='identifier-head'></span> → 大写或小写字母 A - Z
 > 
 > *头部标识符* → _
 > 
@@ -96,15 +95,15 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 
 > *标识符字符* → 数值 0 - 9
 > 
-> *标识符字符* {#identifier-character} → U+0300–U+036F，U+1DC0–U+1DFF，U+20D0–U+20FF，或者 U+FE20–U+FE2F
+> *标识符字符* <span id='identifier-character'></span> → U+0300–U+036F，U+1DC0–U+1DFF，U+20D0–U+20FF，或者 U+FE20–U+FE2F
 > 
 > *标识符字符* → [*头部标识符*](#identifier-head)
 > 
-> *标识符字符组* {#identifier-characters} → [*标识符字符*](#identifier-character) [*标识符字符组*](#identifier-characters)<sub>可选</sub>
+> *标识符字符组* <span id='identifier-characters'></span> → [*标识符字符*](#identifier-character) [*标识符字符组*](#identifier-characters)<sub>可选</sub>
 > 
-> *隐式参数名* {#implicit-parameter-name} → **$** [*十进制数字列表*](#decimal-digit)
+> *隐式参数名* <span id='implicit-parameter-name'></span> → **$** [*十进制数字列表*](#decimal-digit)
 
-{#identifier}
+<span id='identifier'></span>
 
 ## 关键字和标点符号
 
@@ -119,7 +118,6 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 以下符号被当作保留符号，不能用于自定义运算符： `(`、`)`、`{`、`}`、`[`、`]`、`.`、`,`、`:`、`;`、`=`、`@`、`#`、`&`（作为前缀运算符）、`->`、`` ` ``、`?`、`!`（作为后缀运算符）。
 
-<a id="literals"></a>
 ## 字面量
 
 *字面量（literal）* 用来表示源码中某种特定类型的值，比如一个数字或字符串。
@@ -162,7 +160,7 @@ true		    // 布尔值字面量
 
 > 整数字面量语法
 > 
-> *整数字面量* → [*二进制字面量*](#binary-literal)
+> *整数字面量* <span id='integer-literal'></span> → [*二进制字面量*](#binary-literal)
 > 
 > *整数字面量* → [*八进制字面量*](#octal-literal)
 > 
@@ -170,39 +168,39 @@ true		    // 布尔值字面量
 > 
 > *整数字面量* → [*十六进制字面量*](#hexadecimal-literal)
 > 
-> *二进制字面量* {#binary-literal} → **0b** [*二进制数字*](#binary-digit) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
+> *二进制字面量* <span id='binary-literal'></span> → **0b** [*二进制数字*](#binary-digit) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
 > 
-> *二进制数字* {#binary-digit} → 数值 0 到 1
+> *二进制数字* <span id='binary-digit'></span> → 数值 0 到 1
 > 
 > *二进制字面量字符* → [*二进制数字*](#binary-digit) | _
 >
-> *二进制字面量字符组* {#binary-literal-characters} → [*二进制字面量字符*](#binary-literal-character) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
+> *二进制字面量字符组* <span id='binary-literal-characters'></span> → [*二进制字面量字符*](#binary-literal-character) [*二进制字面量字符组*](#binary-literal-characters)<sub>可选</sub>
 > 
-> *八进制字面量* {#octal-literal} → **0o** [*八进字数字*](#octal-digit) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
+> *八进制字面量* <span id='octal-literal'></span> → **0o** [*八进字数字*](#octal-digit) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
 >
-> *八进字数字* {#octal-digit} → 数值 0 到 7
+> *八进字数字* <span id='octal-digit'></span> → 数值 0 到 7
 >
 > *八进制字符* → [*八进字数字*](#octal-digit) | _
 >
-> *八进制字符组* {#octal-literal-characters} → [*八进制字符*](#octal-literal-character) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
+> *八进制字符组* <span id='octal-literal-characters'></span> → [*八进制字符*](#octal-literal-character) [*八进制字符组*](#octal-literal-characters)<sub>可选</sub>
 > 
-> *十进制字面量* {#decimal-literal} → [*十进制数字*](#decimal-digit) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
+> *十进制字面量* <span id='decimal-literal'></span> → [*十进制数字*](#decimal-digit) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
 >
-> *十进制数字* {#decimal-digit} → 数值 0 到 9
+> *十进制数字* <span id='decimal-digit'></span> → 数值 0 到 9
 >
-> *十进制数字组* {#decimal-literal-characters} → [*十进制数字*](#decimal-digit) [*十进制数字组*](#decimal-literal-characters)<sub>可选</sub>
+> *十进制数字组* <span id='decimal-literal-characters'></span> → [*十进制数字*](#decimal-digit) [*十进制数字组*](#decimal-literal-characters)<sub>可选</sub>
 >
 > *十进制字符* → [*十进制数字*](#decimal-digit) | _
 >
 > *十进制字符组* → [*十进制字符*](#decimal-literal-characters) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
 > 
-> *十六进制字面量* {#hexadecimal-literal} → **0x** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
+> *十六进制字面量* <span id='hexadecimal-literal'></span> → **0x** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
 >
-> *十六进制数字* {#hexadecimal-digit} → 数值 0 到 9, 字母 a 到 f, 或 A 到 F
+> *十六进制数字* <span id='hexadecimal-digit'></span> → 数值 0 到 9, 字母 a 到 f, 或 A 到 F
 >
 > *十六进制字符* → [*十六进制数字*](#hexadecimal-digit) | _
 >
-> *十六进制字面量字符组* {#hexadecimal-literal-characters} → [*十六进制字符*](#hexadecimal-literal-characters) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
+> *十六进制字面量字符组* <span id='hexadecimal-literal-characters'></span> → [*十六进制字符*](#hexadecimal-literal-characters) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
 
 ### 浮点数字面量{#floating-point-literal}
 
@@ -222,23 +220,23 @@ true		    // 布尔值字面量
 
 > 浮点数字面量语法
 > 
-> *浮点数字面量* → [*十进制字面量*](#decimal-literal) [*十进制分数*](#decimal-fraction)<sub>可选</sub> [*十进制指数*](#decimal-exponent)<sub>可选</sub>
+> *浮点数字面量* <span id='floating-point-literal'></span> → [*十进制字面量*](#decimal-literal) [*十进制分数*](#decimal-fraction)<sub>可选</sub> [*十进制指数*](#decimal-exponent)<sub>可选</sub>
 > 
 > *浮点数字面量* → [*十六进制字面量*](#hexadecimal-literal) [*十六进制分数*](#hexadecimal-fraction)<sub>可选</sub> [*十六进制指数*](#hexadecimal-exponent)
 > 
-> *十进制分数* {#decimal-fraction} → **.** [*十进制字面量*](#decimal-literal)
+> *十进制分数* <span id='decimal-fraction'></span> → **.** [*十进制字面量*](#decimal-literal)
 >
-> *十进制指数* {#decimal-exponent} → [*十进制指数 e*](#floating-point-e) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
+> *十进制指数* <span id='decimal-exponent'></span> → [*十进制指数 e*](#floating-point-e) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
 > 
-> *十六进制分数* {#hexadecimal-fraction} → **.** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
+> *十六进制分数* <span id='hexadecimal-fraction'></span> → **.** [*十六进制数字*](#hexadecimal-digit) [*十六进制字面量字符组*](#hexadecimal-literal-characters)<sub>可选</sub>
 >
-> *十六进制指数* {#hexadecimal-exponent} → [*十六进制指数 p*](#floating-point-p) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
+> *十六进制指数* <span id='hexadecimal-exponent'></span> → [*十六进制指数 p*](#floating-point-p) [*正负号*](#sign)<sub>可选</sub> [*十进制字面量*](#decimal-literal)
 > 
-> *十进制指数 {#floating-point-e} e* → **e** | **E**
+> *十进制指数 <span id='floating-point-e'></span> e* → **e** | **E**
 >
-> *十六进制指数 {#floating-point-p} p* → **p** | **P**
+> *十六进制指数 <span id='floating-point-p'></span> p* → **p** | **P**
 >
-> *正负号* {#sign} → **+** | **-**
+> *正负号* <span id='sign'></span> → **+** | **-**
 
 ### 字符串字面量 {#string-literal}
 
@@ -333,55 +331,55 @@ let textB = "Hello world"
 > 
 > *字符串字面量* → [*静态字符串字面量*](#static-string-literal) | [*插值字符串字面量*](#interpolated-string-literal)
 > 
-> *字符串分隔开定界符* → [*字符串扩展分隔符*](#extended-string-literal-delimiter) **"**
+> *字符串开分隔定界符* → [*字符串扩展分隔符*](#extended-string-literal-delimiter) **"**
 > 
-> *字符串分隔关定界符* → **"** [*字符串扩展分隔符*](#extended-string-literal-delimiter)<sub>可选</sub>
+> *字符串闭分隔定界符* → **"** [*字符串扩展分隔符*](#extended-string-literal-delimiter)<sub>可选</sub>
 > 
-> *静态字符串字面量* {#static-string-literal} → [*字符串分隔开定界符*](#extended-string-literal-delimiter) [*引用文本*](#quoted-text)<sub>可选</sub> [*字符串分隔关定界符*](#extended-string-literal-delimiter)
+> *静态字符串字面量* <span id='static-string-literal'></span> → [*字符串开分隔定界符*](#extended-string-literal-delimiter) [*引用文本*](#quoted-text)<sub>可选</sub> [*字符串闭分隔定界符*](#extended-string-literal-delimiter)
 > 
-> *静态字符串字面量* → [*多行字符串分隔开定界符*](#extended-string-literal-delimiter) [*多行引用文本*](#multiline-quoted-text)<sub>可选</sub> [*多行字符串分隔关定界符*](#extended-string-literal-delimiter)
+> *静态字符串字面量* → [*多行字符串开分隔定界符*](#extended-string-literal-delimiter) [*多行引用文本*](#multiline-quoted-text)<sub>可选</sub> [*多行字符串闭分隔定界符*](#extended-string-literal-delimiter)
 >
-> *多行字符串分隔开定界符* → [*字符串扩展分隔符*](#extended-string-literal-delimiter) **"""**
+> *多行字符串开分隔定界符* → [*字符串扩展分隔符*](#extended-string-literal-delimiter) **"""**
 > 
-> *多行字符串分隔关定界符* → **"""** [*字符串扩展分隔符*](#extended-string-literal-delimiter)
+> *多行字符串闭分隔定界符* → **"""** [*字符串扩展分隔符*](#extended-string-literal-delimiter)
 > 
-> *字符串扩展分隔符* {#extended-string-literal-delimiter} → **#** [*字符串扩展分隔符*](#extended-string-literal-delimiter)<sub>可选</sub>
+> *字符串扩展分隔符* <span id='extended-string-literal-delimiter'></span> → **#** [*字符串扩展分隔符*](#extended-string-literal-delimiter)<sub>可选</sub>
 >
-> *引用文本* {#quoted-text} → [*引用文本项*](#quoted-text-item) [*引用文本*](#quoted-text)<sub>可选</sub>
+> *引用文本* <span id='quoted-text'></span> → [*引用文本项*](#quoted-text-item) [*引用文本*](#quoted-text)<sub>可选</sub>
 >
-> *引用文本项* {#quoted-text-item} → [*转义字符*](#escaped-character)
+> *引用文本项* <span id='quoted-text-item'></span> → [*转义字符*](#escaped-character)
 > 
 > *引用文本项* → 除了 **"**、**\\**、U+000A、U+000D 以外的所有 Unicode 字符
 > 
-> *多行引用文本* {#multiline-quoted-text} → [*多行引用文本项*](#multiline-quoted-text-item) [*多行引用文本*](#multiline-quoted-text)<sub>可选</sub>
+> *多行引用文本* <span id='multiline-quoted-text'></span> → [*多行引用文本项*](#multiline-quoted-text-item) [*多行引用文本*](#multiline-quoted-text)<sub>可选</sub>
 > 
-> *多行引用文本项* {#multiline-quoted-text-item} [*转义字符*](#escaped-character)<sub>可选</sub>
+> *多行引用文本项* <span id='multiline-quoted-text-item'></span> [*转义字符*](#escaped-character)<sub>可选</sub>
 > 
-> *多行引用文本* {#multiline-quoted-text} → 除了 **\** 以外的任何Unicode标量值
+> *多行引用文本* <span id='multiline-quoted-text'></span> → 除了 **\** 以外的任何Unicode标量值
 > 
 > *多行引用文本* → [*转义换行*](#escaped-newline)
 > 
-> *插值字符串字面量* {#interpolated-string-literal} → [*字符串分割开定界符*](#extended-string-literal-delimiter) [*插值文本*](#interpolated-text)<sub>可选</sub> [*字符串分割闭定界符*](#extended-string-literal-delimiter)
+> *插值字符串字面量* <span id='interpolated-string-literal'></span> → [*字符串开分隔定界符*](#extended-string-literal-delimiter) [*插值文本*](#interpolated-text)<sub>可选</sub> [*字符串闭分隔定界符*](#extended-string-literal-delimiter)
 > 
-> *插值字符串字面量* → [*多行字符串分割开定界符*](#extended-string-literal-delimiter) [*插值文本*](#interpolated-text)<sub>可选</sub> [*多行字符串分割闭定界符*](#extended-string-literal-delimiter)
+> *插值字符串字面量* → [*多行字符串开分隔定界符*](#extended-string-literal-delimiter) [*插值文本*](#interpolated-text)<sub>可选</sub> [*多行字符串闭分隔定界符*](#extended-string-literal-delimiter)
 >
-> *插值文本* {#interpolated-text} → [*插值文本项*](#interpolated-text-item) [*插值文本*](#interpolated-text)<sub>可选</sub>
+> *插值文本* <span id='interpolated-text'></span> → [*插值文本项*](#interpolated-text-item) [*插值文本*](#interpolated-text)<sub>可选</sub>
 >
-> *插值文本项* {#interpolated-text-item} → **\\****(**[*表达式*](./04_Expressions.html)**)** | [*引用文本项*](#quoted-text-item)
+> *插值文本项* <span id='interpolated-text-item'></span> → **\\****(**[*表达式*](./04_Expressions.html)**)** | [*引用文本项*](#quoted-text-item)
 > 
 > *多行插值文本* → [*多行插值文本项*](#multiline-quoted-text-item) [*多行插值文本*](#multiline-quoted-text)<sub>可选</sub>
 > 
 > *多行插值文本项* → **\\(** [表达式](./04_Expressions.html) **)** | [多行引用文本项](#multiline-quoted-text-item)
 > 
-> *转义序列* {#escape-sequence} → **\\** [字符串扩展分隔符](#extended-string-literal-delimiter)
+> *转义序列* <span id='escape-sequence'></span> → **\\** [字符串扩展分隔符](#extended-string-literal-delimiter)
 > 
-> *转义字符* {#escaped-character} → [*转义序列*](#escape-sequence) **0** | [*转义序列*](#escape-sequence) **\\** | [*转义序列*](#escape-sequence) **t** | [*转义序列*](#escape-sequence) **n** | [*转义序列*](#escape-sequence) **r** | [*转义序列*](#escape-sequence) **\"** | [*转义序列*](#escape-sequence) **'**
+> *转义字符* <span id='escaped-character'></span> → [*转义序列*](#escape-sequence) **0** | [*转义序列*](#escape-sequence) **\\** | [*转义序列*](#escape-sequence) **t** | [*转义序列*](#escape-sequence) **n** | [*转义序列*](#escape-sequence) **r** | [*转义序列*](#escape-sequence) **\"** | [*转义序列*](#escape-sequence) **'**
 > 
 > *转义字符* → [*转义序列*](#escape-sequence) **u {** [*unicode 标量数字*](#unicode-scalar-digits) **}**
 >
-> *unicode 标量数字* {#unicode-scalar-digits} → 一到八位的十六进制数字
+> *unicode 标量数字* <span id='unicode-scalar-digits'></span> → 一到八位的十六进制数字
 > 
-> *转义换行符* {#escaped-newline} → [*转义序列*](#escape-sequence) [*空白*](#whitespace)<sub>可选</sub> [*断行符*](#line-break)
+> *转义换行符* <span id='escaped-newline'></span> → [*转义序列*](#escape-sequence) [*空白*](#whitespace)<sub>可选</sub> [*断行符*](#line-break)
 
 
 ## 运算符 {#operator}
@@ -415,10 +413,10 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 > 运算符语法
 > 
-<a id="operator"></a>
 > *运算符* → [*头部运算符*](#operator-head) [*运算符字符组*](#operator-characters)<sub>可选</sub>
+> 
 > *运算符* → [*头部点运算符*](#dot-operator-head) [*点运算符字符组*](#dot-operator-characters)
-
+>
 > *头部运算符* {#operator-head} → **/** | **=** | **-** | **+** | **!** | __*__ | **%** | **<** | **>** | **&** | **|** | **^** | **~** | **?**
 > 
 > *头部运算符* → U+00A1–U+00A7
@@ -449,7 +447,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > 
 > *头部运算符* → U+3008–U+3030
 > 
-> *运算符字符* {#operator-character} → [*头部运算符*](#operator-head)
+> *运算符字符* <span id='operator-character'></span> → [*头部运算符*](#operator-head)
 > 
 > *运算符字符* → U+0300–U+036F
 > 
@@ -463,13 +461,13 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 > 
 > *运算符字符* → U+E0100–U+E01EF
 >
-> *运算符字符组* {#operator-characters}→ [*运算符字符*](#operator-character) [*运算符字符组*](#operator-characters)<sub>可选</sub>
+> *运算符字符组* <span id='operator-characters'></span>→ [*运算符字符*](#operator-character) [*运算符字符组*](#operator-characters)<sub>可选</sub>
 > 
-> *头部点运算符* {#dot-operator-head} → **..**
+> *头部点运算符* <span id='dot-operator-head'></span> → **..**
 > 
-> *点运算符字符* {#dot-operator-character} → **.** | [*运算符字符*](#operator-character)
+> *点运算符字符* <span id='dot-operator-character'></span> → **.** | [*运算符字符*](#operator-character)
 > 
-> *点运算符字符组* {#dot-operator-characters} → [*点运算符字符*](#dot-operator-character) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>
+> *点运算符字符组* <span id='dot-operator-characters'></span> → [*点运算符字符*](#dot-operator-character) [*点运算符字符组*](#dot-operator-characters)<sub>可选</sub>
 >
 > *二元运算符* → [*运算符*](#operator)
 >
