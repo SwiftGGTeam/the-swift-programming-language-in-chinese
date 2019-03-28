@@ -1332,7 +1332,7 @@ Optional Protocol Requirements
    and see if the value you get back (which will be an optional)
    has a value or is nil.
 
-You can define :newTerm:`optional requirements` for protocols,
+You can define :newTerm:`optional requirements` for protocols.
 These requirements don't have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``optional`` modifier
 as part of the protocol's definition.
