@@ -500,7 +500,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 在某些特定的设计中 ，以 `<` 或 `>` 开头的运算符会被分离成两个或多个符号，剩余部分可能会以同样的方式被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中， 闭合字符 `>` 不会被视为单独的符号，因而不会被错误解析为 `>>` 运算符。
 
-要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/25_Advanced_Operators.md#custom_operators) 和 [运算符声明](05_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/26_Advanced_Operators.md#operator_functions)。
+要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/26_Advanced_Operators.md#custom_operators) 和 [运算符声明](06_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/26_Advanced_Operators.md#operator_functions)。
 
 > 运算符语法
 > 
