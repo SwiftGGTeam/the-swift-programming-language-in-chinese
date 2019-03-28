@@ -381,7 +381,7 @@ print(# # #"Line 1\# # #nLine 2"# # #) // Error
 
 使用扩展分隔符创建的多行字符串字面量与普通多行字符串字面量具有相同的缩进要求。
 
-字符串字面量的默认推导类型为 `String`。更多有关 `String` 类型的信息请参考 [字符串和字符](../chapter2/03_Strings_and_Characters.md) 以及 [*字符串结构参考*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Reference/Swift_String_Structure/index.html#//apple_ref/doc/uid/TP40015181)。
+字符串字面量的默认推导类型为 `String`。更多有关 `String` 类型的信息请参考 [字符串和字符](../chapter2/03_Strings_and_Characters.md) 以及 [*字符串结构参考*](https://developer.apple.com/documentation/swift/string)。
 
 用 `＋` 操作符连接的字符型字面量是在编译时进行连接的。比如下面的 `textA` 和 `textB` 是完全一样的，`textA` 没有任何运行时的连接操作。
 
