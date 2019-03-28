@@ -27,7 +27,7 @@ Swift 官方文档中文翻译工作由[numbbbbb](https://github.com/numbbbbb)�
 - [rain2540](https://github.com/rain2540)
 - [Rsenjoyer](https://github.com/Rsenjoyer)
 - [WAMaker](https://github.com/WAMaker)
-- [wuqiuhao](https://github.com/wuqiuhao)
+- [Hale](https://github.com/wuqiuhao)
 - [YiYiZheng](https://github.com/YiYiZheng)
 - [ZhangChi](https://github.com/zhangchi25806)
 

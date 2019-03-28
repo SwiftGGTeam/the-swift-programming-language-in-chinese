@@ -6,8 +6,7 @@
 
 可以为类中继承来的属性添加属性观察器，这样一来，当属性值改变时，类就会被通知到。可以为任何属性添加属性观察器，无论它原本被定义为存储型属性还是计算型属性。
 
-<a name="defining_a_base_class"></a>
-## 定义一个基类
+## 定义一个基类 {#defining_a_base_class}
 
 不继承于其它类的类，称之为*基类*。
 
@@ -46,8 +45,7 @@ print("Vehicle: \(someVehicle.description)")
 
 `Vehicle` 类定义了一个具有通用特性的车辆类，但实际上对于它本身来说没什么用处。为了让它变得更加有用，还需要进一步完善它，从而能够描述一个具体类型的车辆。
 
-<a name="subclassing"></a>
-## 子类生成
+## 子类生成 {#subclassing}
 
 *子类生成*指的是在一个已有类的基础上创建一个新的类。子类继承超类的特性，并且可以进一步完善。你还可以为子类添加新的特性。
 
@@ -107,8 +105,7 @@ print("Tandem: \(tandem.description)")
 // 打印：“Tandem: traveling at 22.0 miles per hour”
 ```
 
-<a name="overriding"></a>
-## 重写
+## 重写 {#overriding}
 
 子类可以为继承来的实例方法，类方法，实例属性，类属性，或下标提供自己定制的实现。我们把这种行为叫*重写*。
 
@@ -116,7 +113,7 @@ print("Tandem: \(tandem.description)")
 
 `override` 关键字会提醒 Swift 编译器去检查该类的超类（或其中一个父类）是否有匹配重写版本的声明。这个检查可以确保你的重写定义是正确的。
 
-### 访问超类的方法，属性及下标
+### 访问超类的方法，属性及下标 {#accessing_superclass_methods_properties_and_subscripts}
 
 当你在子类中重写超类的方法，属性或下标时，有时在你的重写版本中使用已经存在的超类实现会大有裨益。比如，你可以完善已有实现的行为，或在一个继承来的变量中存储一个修改过的值。
 
@@ -126,7 +123,7 @@ print("Tandem: \(tandem.description)")
 * 在属性 `someProperty` 的 getter 或 setter 的重写实现中，可以通过 `super.someProperty` 来访问超类版本的 `someProperty` 属性。
 * 在下标的重写实现中，可以通过 `super[someIndex]` 来访问超类版本中的相同下标。
 
-### 重写方法
+### 重写方法 {#overriding_methods}
 
 在子类中，你可以重写继承来的实例方法或类方法，提供一个定制或替代的方法实现。
 
@@ -148,11 +145,11 @@ train.makeNoise()
 // 打印“Choo Choo”
 ```
 
-### 重写属性
+### 重写属性 {#overriding_properties}
 
 你可以重写继承来的实例属性或类型属性，提供自己定制的 getter 和 setter，或添加属性观察器，使重写的属性可以观察到底层的属性值什么时候发生改变。
 
-#### 重写属性的 Getters 和 Setters
+#### 重写属性的 Getters 和 Setters {#overriding_property_etters_and_setters}
 
 你可以提供定制的 getter（或 setter）来重写任何一个继承来的属性，无论这个属性是存储型还是计算型属性。子类并不知道继承来的属性是存储型的还是计算型的，它只知道继承来的属性会有一个名字和类型。你在重写一个属性时，必须将它的名字和类型都写出来。这样才能使编译器去检查你重写的属性是与超类中同名同类型的属性相匹配的。
 
@@ -185,8 +182,7 @@ print("Car: \(car.description)")
 // 打印“Car: traveling at 25.0 miles per hour in gear 3”
 ```
 
-<a name="overriding_property_observers"></a>
-#### 重写属性观察器
+#### 重写属性观察器 {#overriding_property_observers}
 
 你可以通过重写属性为一个继承来的属性添加属性观察器。这样一来，无论被继承属性原本是如何实现的，当其属性值发生改变时，你就会被通知到。关于属性观察器的更多内容，请看[属性观察器](../chapter2/10_Properties.html#property_observers)。
 
@@ -216,8 +212,7 @@ print("AutomaticCar: \(automatic.description)")
 // 打印“AutomaticCar: traveling at 35.0 miles per hour in gear 4”
 ```
 
-<a name="preventing_overrides"></a>
-## 防止重写
+## 防止重写 {#preventing_overrides}
 
 你可以通过把方法，属性或下标标记为 *`final`* 来防止它们被重写，只需要在声明关键字前加上 `final` 修饰符即可（例如：`final var`、`final func`、`final class func` 以及 `final subscript`）。
 

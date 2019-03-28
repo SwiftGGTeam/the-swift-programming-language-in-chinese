@@ -4,10 +4,9 @@
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符分别提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类型是否遵循了某个协议，就像在[检验协议遵循](./21_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
+你也可以用它来检查一个类型是否遵循了某个协议，就像在[检验协议遵循](./21_Protocols.md#checking_for_protocol_conformance)部分讲述的一样。
 
-<a name="defining_a_class_hierarchy_for_type_casting"></a>
-## 为类型转换定义类层次
+## 为类型转换定义类层次 {#defining_a_class_hierarchy_for_type_casting}
 
 你可以将类型转换用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。下面的三个代码段定义了一个类层次和一个包含了这些类实例的数组，作为类型转换的例子。
 
@@ -57,8 +56,7 @@ let library = [
 
 在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
 
-<a name="checking_type"></a>
-## 检查类型
+## 检查类型 {#checking_type}
 
 用*类型检查操作符*（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
 
@@ -86,8 +84,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 若当前 `MediaItem` 是一个 `Movie` 类型的实例，`item is Movie` 返回
 `true`，否则返回 `false`。同样的，`item is Song` 检查 `item` 是否为 `Song` 类型的实例。在循环结束后，`movieCount` 和 `songCount` 的值就是被找到的属于各自类型的实例的数量。
 
-<a name="downcasting"></a>
-## 向下转型
+## 向下转型 {#downcasting}
 
 某类型的一个常量或变量可能在幕后实际上属于一个子类。当确定是这种情况时，你可以尝试用*类型转换操作符*（`as?` 或 `as!`）向下转到它的子类型。
 
@@ -132,8 +129,7 @@ for item in library {
 > 
 > 转换没有真的改变实例或它的值。根本的实例保持不变；只是简单地把它作为它被转换成的类型来使用。
 
-<a name="type_casting_for_any_and_anyobject"></a>
-## `Any` 和 `AnyObject` 的类型转换
+## `Any` 和 `AnyObject` 的类型转换 {#type_casting_for_any_and_anyobject}
 
 Swift 为不确定类型提供了两种特殊的类型别名：
 
@@ -206,3 +202,4 @@ let optionalNumber: Int? = 3
 things.append(optionalNumber)        // 警告
 things.append(optionalNumber as Any) // 没有警告
 ```
+

@@ -8,15 +8,13 @@
 
 我们不用被预定义的运算符所限制。在 Swift 中可以自由地定义中缀、前缀、后缀和赋值运算符，它们具有自定义的优先级与关联值。这些运算符在代码中可以像预定义的运算符一样使用，你甚至可以扩展已有的类型以支持自定义运算符。
 
-<a name="bitwise_operators"></a>
-## 位运算符
+## 位运算符 {#bitwise_operators}
 
 *位运算符*可以操作数据结构中每个独立的比特位。它们通常被用在底层开发中，比如图形编程和创建设备驱动。位运算符在处理外部资源的原始数据时也十分有用，比如对自定义通信协议传输的数据进行编码和解码。
 
 Swift 支持 C 语言中的全部位运算符，接下来会一一介绍。
 
-<a name="bitwise_not_operator"></a>
-### Bitwise NOT Operator（按位取反运算符）
+### Bitwise NOT Operator（按位取反运算符） {#bitwise_not_operator}
 
 *按位取反运算符（`~`）*对一个数值的全部比特位进行取反：
 
@@ -24,7 +22,7 @@ Swift 支持 C 语言中的全部位运算符，接下来会一一介绍。
 
 按位取反运算符是一个前缀运算符，直接放在运算数之前，并且它们之间不能添加任何空格：
 
-```swift
+```Swift
 let initialBits: UInt8 = 0b00001111
 let invertedBits = ~initialBits // 等于 0b11110000
 ```
@@ -33,8 +31,7 @@ let invertedBits = ~initialBits // 等于 0b11110000
 
 接着使用按位取反运算符创建了一个名为 `invertedBits` 的常量，这个常量的值与全部位取反后的 `initialBits` 相等。即所有的 `0` 都变成了 `1`，同时所有的 `1` 都变成 `0`。`invertedBits` 的二进制值为 `11110000`，等价于无符号十进制数的 `240`。
 
-<a name="bitwise_and_operator"></a>
-### Bitwise AND Operator（按位与运算符）
+### Bitwise AND Operator（按位与运算符） {#bitwise_and_operator}
 
 *按位与运算符（`&`）* 对两个数的比特位进行合并。它返回一个新的数，只有当两个数的对应位*都*为 `1` 的时候，新数的对应位才为 `1`：
 
@@ -42,29 +39,27 @@ let invertedBits = ~initialBits // 等于 0b11110000
 
 在下面的示例当中，`firstSixBits` 和 `lastSixBits` 中间 4 个位的值都为 `1`。使用按位与运算符之后，得到二进制数值 `00111100`，等价于无符号十进制数的 `60`：
 
-```swift
+```Swift
 let firstSixBits: UInt8 = 0b11111100
 let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits // 等于 00111100
 ```
 
-<a name="bitwise_or_operator"></a>
-### Bitwise OR Operator（按位或运算符）
+### Bitwise OR Operator（按位或运算符） {#bitwise_or_operator}
 
-*按位或运算符（`|`）* 可以对两个数的比特位进行比较。它返回一个新的数，只要两个数的对应位中有*任意一个*为 `1` 时，新数的对应位就为 `1`：
+*按位或运算符（`|`）*可以对两个数的比特位进行比较。它返回一个新的数，只要两个数的对应位中有*任意一个*为 `1` 时，新数的对应位就为 `1`：
 
 ![Art/bitwiseOR_2x.png](https://docs.swift.org/swift-book/_images/bitwiseOR_2x.png)
 
 在下面的示例中，`someBits` 和 `moreBits` 存在不同的位被设置为 `1`。使用按位或运算符之后，得到二进制数值 `11111110`，等价于无符号十进制数的 `254`：
 
-```swift
+```Swift
 let someBits: UInt8 = 0b10110010
 let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits // 等于 11111110
 ```
 
-<a name="bitwise_xor_operator"></a>
-### Bitwise XOR Operator（按位异或运算符）
+### Bitwise XOR Operator（按位异或运算符） {#bitwise_xor_operator}
 
 *按位异或运算符*，或称“排外的或运算符”（`^`），可以对两个数的比特位进行比较。它返回一个新的数，当两个数的对应位不相同时，新数的对应位就为 `1`，并且对应位相同时则为 `0`：
 
@@ -72,21 +67,19 @@ let combinedbits = someBits | moreBits // 等于 11111110
 
 在下面的示例当中，`firstBits` 和 `otherBits` 都有一个自己为 `1`，而对方为 `0` 的位。按位异或运算符将新数的这两个位都设置为 `1`。在其余的位上 `firstBits` 和 `otherBits` 是相同的，所以设置为 `0`：
 
-```swift
+```Swift
 let firstBits: UInt8 = 0b00010100
 let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits // 等于 00010001
 ```
 
-<a name="bitwise_left_and_right_shift_operators"></a>
-### Bitwise Left and Right Shift Operators（按位左移、右移运算符）
+### Bitwise Left and Right Shift Operators（按位左移、右移运算符） {#bitwise_left_and_right_shift_operators}
 
 *按位左移运算符（`<<`）* 和 *按位右移运算符（`>>`）*可以对一个数的所有位进行指定位数的左移和右移，但是需要遵守下面定义的规则。
 
 对一个数进行按位左移或按位右移，相当于对这个数进行乘以 2 或除以 2 的运算。将一个整数左移一位，等价于将这个数乘以 2，同样地，将一个整数右移一位，等价于将这个数除以 2。
 
-<a name="shifting_behavior_for_unsigned_integers"></a>
-#### 无符号整数的移位运算
+#### 无符号整数的移位运算 {#shifting_behavior_for_unsigned_integers}
 
 对无符号整数进行移位的规则如下：
 
@@ -102,7 +95,7 @@ let outputBits = firstBits ^ otherBits // 等于 00010001
 
 下面的代码演示了 Swift 中的移位运算：
 
-```swift
+```Swift
 let shiftBits: UInt8 = 4 // 即二进制的 00000100
 shiftBits << 1           // 00001000
 shiftBits << 2           // 00010000
@@ -113,7 +106,7 @@ shiftBits >> 2           // 00000001
 
 可以使用移位运算对其他的数据类型进行编码和解码：
 
-```swift
+```Swift
 let pink: UInt32 = 0xCC6699
 let redComponent = (pink & 0xFF0000) >> 16  // redComponent 是 0xCC，即 204
 let greenComponent = (pink & 0x00FF00) >> 8 // greenComponent 是 0x66， 即 102
@@ -130,8 +123,7 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 最后，蓝色部分通过对 `0xCC6699` 和 `0x0000FF` 进行按位与运算得到 `0x000099`。这里不需要再向右移位，而 `0x000099` 也就是 `0x99` ，也就是十进制数值的 `153`。
 
-<a name="shifting_behavior_for_signed_integers"></a>
-#### 有符号整数的移位运算
+#### 有符号整数的移位运算 {#shifting_behavior_for_signed_integers}
 
 对比无符号整数，有符号整数的移位运算相对复杂得多，这种复杂性源于有符号整数的二进制表现形式。（为了简单起见，以下的示例都是基于 8 比特的有符号整数，但是其中的原理对任何位数的有符号整数都是通用的。）
 
@@ -167,14 +159,13 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 由于正数和负数的特殊存储方式，在对它们进行右移的时候，会使它们越来越接近 `0`。在移位的过程中保持符号位不变，意味着负整数在接近 `0` 的过程中会一直保持为负。
 
-<a name="overflow_operators"></a>
-## 溢出运算符
+## 溢出运算符 {#overflow_operators}
 
 当向一个整数类型的常量或者变量赋予超过它容量的值时，Swift 默认会报错，而不是允许生成一个无效的数。这个行为为我们在运算过大或者过小的数时提供了额外的安全性。
 
 例如，`Int16` 型整数能容纳的有符号整数范围是 `-32768` 到 `32767`。当为一个 `Int16` 类型的变量或常量赋予的值超过这个范围时，系统就会报错：
 
-```swift
+```Swift
 var potentialOverflow = Int16.max
 // potentialOverflow 的值是 32767，这是 Int16 能容纳的最大整数
 potentialOverflow += 1
@@ -189,14 +180,13 @@ potentialOverflow += 1
 * 溢出减法 `&-`
 * 溢出乘法 `&*`
 
-<a name="value_overflow"></a>
-### 数值溢出
+### 数值溢出 {#value_overflow}
 
 数值有可能出现上溢或者下溢。
 
 这个示例演示了当我们对一个无符号整数使用溢出加法（`&+`）进行上溢运算时会发生什么：
 
-```swift
+```Swift
 var unsignedOverflow = UInt8.max
 // unsignedOverflow 等于 UInt8 所能容纳的最大整数 255
 unsignedOverflow = unsignedOverflow &+ 1
@@ -209,7 +199,7 @@ unsignedOverflow = unsignedOverflow &+ 1
 
 当允许对一个无符号整数进行下溢运算时也会产生类似的情况。这里有一个使用溢出减法运算符（`&-`）的例子：
 
-```swift
+```Swift
 var unsignedOverflow = UInt8.min
 // unsignedOverflow 等于 UInt8 所能容纳的最小整数 0
 unsignedOverflow = unsignedOverflow &- 1
@@ -222,7 +212,7 @@ unsignedOverflow = unsignedOverflow &- 1
 
 溢出也会发生在有符号整型上。针对有符号整型的所有溢出加法或者减法运算都是按位运算的方式执行的，符号位也需要参与计算，正如[按位左移、右移运算符](#bitwise_left_and_right_shift_operators)所描述的。
 
-```swift
+```Swift
 var signedOverflow = Int8.min
 // signedOverflow 等于 Int8 所能容纳的最小整数 -128
 signedOverflow = signedOverflow &- 1
@@ -235,8 +225,7 @@ signedOverflow = signedOverflow &- 1
 
 对于无符号与有符号整型数值来说，当出现上溢时，它们会从数值所能容纳的最大数变成最小数。同样地，当发生下溢时，它们会从所能容纳的最小数变成最大数。
 
-<a name="precedence_and_associativity"></a>
-## 优先级和结合性
+## 优先级和结合性 {#precedence_and_associativity}
 
 运算符的*优先级*使得一些运算符优先于其他运算符；它们会先被执行。
 
@@ -244,7 +233,7 @@ signedOverflow = signedOverflow &- 1
 
 当考虑一个复合表达式的计算顺序时，运算符的优先级和结合性是非常重要的。举例来说，运算符优先级解释了为什么下面这个表达式的运算结果会是 `17`。
 
-```swift
+```Swift
 2 + 3 % 4 * 5
 // 结果是 17
 ```
@@ -259,32 +248,31 @@ signedOverflow = signedOverflow &- 1
 
 而乘法运算与取余运算的优先级*相同*。这时为了得到正确的运算顺序，还需要考虑结合性。乘法运算与取余运算都是左结合的。可以将这考虑成，从它们的左边开始为这两部分表达式都隐式地加上括号：
 
-```swift
+```Swift
 2 + ((3 % 4) * 5)
 ```
 
 `(3 % 4)` 等于 `3`，所以表达式相当于：
 
-```swift
+```Swift
 2 + (3 * 5)
 ```
 
 `3 * 5` 等于 `15`，所以表达式相当于：
 
-```swift
+```Swift
 2 + 15
 ```
 
 因此计算结果为 `17`。
 
-有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见[操作符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。
+有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见[操作符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 > 注意
 > 
 > 相对 C 语言和 Objective-C 来说，Swift 的运算符优先级和结合性规则更加简洁和可预测。但是，这也意味着它们相较于 C 语言及其衍生语言并不是完全一致。在对现有的代码进行移植的时候，要注意确保运算符的行为仍然符合你的预期。
 
-<a name="operator_functions"></a>
-## 运算符函数
+## 运算符函数 {#operator_functions}
 
 类和结构体可以为现有的运算符提供自定义的实现。这通常被称为运算符*重载*。
 
@@ -292,7 +280,7 @@ signedOverflow = signedOverflow &- 1
 
 例子中定义了一个名为 `Vector2D` 的结构体用来表示二维坐标向量 `(x, y)`，紧接着定义了一个可以将两个 `Vector2D` 结构体实例进行相加的*运算符函数*：
 
-```swift
+```Swift
 struct Vector2D {
     var x = 0.0, y = 0.0
 }
@@ -310,7 +298,7 @@ extension Vector2D {
 
 这个类方法可以在任意两个 `Vector2D` 实例中间作为中缀运算符来使用：
 
-```swift
+```Swift
 let vector = Vector2D(x: 3.0, y: 1.0)
 let anotherVector = Vector2D(x: 2.0, y: 4.0)
 let combinedVector = vector + anotherVector
@@ -321,14 +309,13 @@ let combinedVector = vector + anotherVector
 
 ![Art/vectorAddition_2x.png](https://docs.swift.org/swift-book/_images/vectorAddition_2x.png)
 
-<a name="prefix_and_postfix_operators"></a>
-### 前缀和后缀运算符
+### 前缀和后缀运算符 {#prefix_and_postfix_operators}
 
 上个例子演示了一个二元中缀运算符的自定义实现。类与结构体也能提供标准*一元运算符*的实现。一元运算符只运算一个值。当运算符出现在值之前时，它就是*前缀*的（例如 `-a`），而当它出现在值之后时，它就是*后缀*的（例如 `b!`）。
 
 要实现前缀或者后缀运算符，需要在声明运算符函数的时候在 `func` 关键字之前指定 `prefix` 或者 `postfix` 修饰符：
 
-```swift
+```Swift
 extension Vector2D {
     static prefix func - (vector: Vector2D) -> Vector2D {
         return Vector2D(x: -vector.x, y: -vector.y)
@@ -340,7 +327,7 @@ extension Vector2D {
 
 对于简单数值，一元负号运算符可以对它们的正负性进行改变。对于 `Vector2D` 来说，该运算将其 `x` 和 `y` 属性的正负性都进行了改变：
 
-```swift
+```Swift
 let positive = Vector2D(x: 3.0, y: 4.0)
 let negative = -positive
 // negative 是一个值为 (-3.0, -4.0) 的 Vector2D 实例
@@ -348,14 +335,13 @@ let alsoPositive = -negative
 // alsoPositive 是一个值为 (3.0, 4.0) 的 Vector2D 实例
 ```
 
-<a name="compound_assignment_operators"></a>
-### 复合赋值运算符
+### 复合赋值运算符 {#compound_assignment_operators}
 
 *复合赋值运算符*将赋值运算符（`=`）与其它运算符进行结合。例如，将加法与赋值结合成加法赋值运算符（`+=`）。在实现的时候，需要把运算符的左参数设置成 `inout` 类型，因为这个参数的值会在运算符函数内直接被修改。
 
 在下面的例子中，对 `Vector2D` 实例实现了一个加法赋值运算符函数：
 
-```swift
+```Swift
 extension Vector2D {
     static func += (left: inout Vector2D, right: Vector2D) {
         left = left + right
@@ -365,7 +351,7 @@ extension Vector2D {
 
 因为加法运算在之前已经定义过了，所以在这里无需重新定义。在这里可以直接利用现有的加法运算符函数，用它来对左值和右值进行相加，并再次赋值给左值：
 
-```swift
+```Swift
 var original = Vector2D(x: 1.0, y: 2.0)
 let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
 original += vectorToAdd
@@ -376,14 +362,13 @@ original += vectorToAdd
 > 
 > 不能对默认的赋值运算符（`=`）进行重载。只有复合赋值运算符可以被重载。同样地，也无法对三元条件运算符 （`a ? b : c`） 进行重载。
 
-<a name="equivalence_operators"></a>
-### 等价运算符
+### 等价运算符 {#equivalence_operators}
 
 通常情况下，自定义的类和结构体没有对*等价运算符*进行默认实现，等价运算符通常被称为*相等*运算符（`==`）与*不等*运算符（`!=`）。
 
 为了使用等价运算符对自定义的类型进行判等运算，需要为“相等”运算符提供自定义实现，实现的方法与其它中缀运算符一样, 并且增加对标准库 `Equatable` 协议的遵循：
 
-```swift
+```Swift
 extension Vector2D: Equatable {
     static func == (left: Vector2D, right: Vector2D) -> Bool {
         return (left.x == right.x) && (left.y == right.y)
@@ -395,7 +380,7 @@ extension Vector2D: Equatable {
 
 现在我们可以使用这两个运算符来判断两个 `Vector2D` 实例是否相等：
 
-```swift
+```Swift
 let twoThree = Vector2D(x: 2.0, y: 3.0)
 let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
 if twoThree == anotherTwoThree {
@@ -404,7 +389,7 @@ if twoThree == anotherTwoThree {
 // 打印“These two vectors are equivalent.”
 ```
 
-Swift 为以下数种自定义类型提供等价运算符的默认实现：
+多数简单情况下，您可以使用 Swift 为您提供的等价运算符默认实现。Swift 为以下数种自定义类型提供等价运算符的默认实现：
 
 - 只拥有存储属性，并且它们全都遵循 `Equatable` 协议的结构体
 - 只拥有关联类型，并且它们全都遵循 `Equatable` 协议的枚举
@@ -414,7 +399,7 @@ Swift 为以下数种自定义类型提供等价运算符的默认实现：
 
 下面为三维位置向量 `(x, y, z)` 定义的 `Vector3D` 结构体，与 `Vector2D` 类似。由于 `x`，`y` 和 `z` 属性都是 `Equatable` 类型，`Vector3D` 获得了默认的等价运算符实现。
 
-```swift
+```Swift
 struct Vector3D: Equatable {
     var x = 0.0, y = 0.0, z = 0.0
 }
@@ -427,20 +412,19 @@ if twoThreeFour == anotherTwoThreeFour {
 // 打印“These two vectors are also equivalent.”
 ```
 
-<a name="custom_operators"></a>
-## 自定义运算符
+## 自定义运算符 {#custom_operators}
 
 除了实现标准运算符，在 Swift 中还可以声明和实现*自定义运算符*。可以用来自定义运算符的字符列表请参考[运算符](../chapter3/02_Lexical_Structure.html#operators)。
 
 新的运算符要使用 `operator` 关键字在全局作用域内进行定义，同时还要指定 `prefix`、`infix` 或者 `postfix` 修饰符：
 
-```swift
+```Swift
 prefix operator +++
 ```
 
 上面的代码定义了一个新的名为 `+++` 的前缀运算符。对于这个运算符，在 Swift 中并没有已知的意义，因此在针对 `Vector2D` 实例的特定上下文中，给予了它自定义的意义。对这个示例来讲，`+++` 被实现为“前缀双自增”运算符。它使用了前面定义的复合加法运算符来让矩阵与自身进行相加，从而让 `Vector2D` 实例的 `x` 属性和 `y` 属性值翻倍。你可以像下面这样通过对 `Vector2D` 添加一个 `+++` 类方法，来实现 `+++` 运算符：
 
-```swift
+```Swift
 extension Vector2D {
     static prefix func +++ (vector: inout Vector2D) -> Vector2D {
         vector += vector
@@ -454,8 +438,7 @@ let afterDoubling = +++toBeDoubled
 // afterDoubling 现在的值也为 (2.0, 8.0)
 ```
 
-<a name="precedence_and_associativity_for_custom_infix_operators"></a>
-### 自定义中缀运算符的优先级
+### 自定义中缀运算符的优先级 {#precedence_and_associativity_for_custom_infix_operators}
 
 每个自定义中缀运算符都属于某个优先级组。优先级组指定了这个运算符相对于其他中缀运算符的优先级和结合性。[优先级和结合性](#precedence_and_associativity)中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
 
@@ -463,7 +446,7 @@ let afterDoubling = +++toBeDoubled
 
 以下例子定义了一个新的自定义中缀运算符 `+-`，此运算符属于 `AdditionPrecedence` 优先组：
 
-```swift
+```Swift
 infix operator +-: AdditionPrecedence
 extension Vector2D {
     static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
@@ -476,8 +459,9 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/swift_standard_library/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID380)。
+这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考[运算符声明](./06_Declarations.md#operator_declaration)。
 
 > 注意
 > 
 > 当定义前缀与后缀运算符的时候，我们并没有指定优先级。然而，如果对同一个值同时使用前缀与后缀运算符，则后缀运算符会先参与运算。
+

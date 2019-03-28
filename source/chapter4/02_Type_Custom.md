@@ -15,8 +15,7 @@
 
 小伙伴们，Swift 中的 Bool 类型有着非常重要的语法功能，并支撑起了整个 Swift 体系中的逻辑判断体系，经过老码的研究和学习， Bool 类型本身其实是对基础 Boolean 类型封装，小伙伴们可能咬着手指头问老码，怎么一会 Bool 类型，一会 Boolean 类型，其区别在于，前者是基于枚举的组合类型，而后者则是基本类型，只有两种 true 和 false。
 
-<a name="prefix_expressions"></a>
-####自定义原型
+####自定义原型 {#prefix_expressions}
 
 接下老码根据 Bool 的思想来创建一个 OCBool 类型，来让小伙伴们了解一下 Swift 中到底是怎么玩儿的。
 来我们先看一下 OCBool 的定义。
@@ -35,8 +34,7 @@ case ocFalse
 - 代码中第2行和第3行，可以合并到一行写，如苹果官方 Blog 所写的一样
 - 代码中命名需要注意：OCBool 是类型名，所以首字母必须大写，而 case 中的 ocTrue 和 ocFalse 是小类型则需要首字母小写。
 
-<a name="imp-default"></a>
-####实现默认值
+####实现默认值 {#imp-default}
 
 行，我们给了一个漂亮的定义，不过按照传统语言的经验，Bool 值默认情况下是假， 所以我们的 OCBool 也应该如此，我们使用类型扩展技术增加这个默认特性：
 
@@ -61,8 +59,7 @@ var result:OCBool = OCBool()
 var result1:OCBool = .ocTrue
 ```
 
-<a name="init-by-bool"></a>
-####支持基本布尔型初始化
+####支持基本布尔型初始化 {#init-by-bool}
 
 正如上述代码所述，我们只能通过类型或者枚举项目赋值，这是组合类型的用法，但是编码的日子里，我们总是希望和 true，false 直接打交道，也就是说，我们希望这么做，
 代码示例如下：
@@ -113,8 +110,7 @@ protocol BooleanLiteralConvertible {
 
 - 这个定义中有个类方法 convertFromBooleanLiteral，它的参数为 BooleanLiteralType 类型，也就是我传入的 Bool 类型， 且返回值为实现这个协议的类型本身，在我们的 OCBool 类型中，其返回值就是 OCBool 本身。经过这个定义，我们可以直接对 OCBool 类型直接进行布尔字面量初始化了。
 
-<a name="condition-by-bool"></a>
-####支持 Bool 类型判断
+####支持 Bool 类型判断 {#condition-by-bool}
 
 小伙伴们不安分， 肯定想着我怎么用它实现逻辑判断，所以如果你这么写，
 
@@ -188,9 +184,7 @@ Program ended with exit code: 0
 - 如果小伙伴们现在用的是 Beta 版的 Xcode，注意苹果官方 Blog 中，在代码第17行如果在 Xcode Beta4下是错误的，这里的协议是，LogicValue 而不是 BooleanVue，所以记得看错误提示才是好习惯。
 - 注意代码第34行，完美支持 if 判断，且输出结果为“老码请你吃火锅”，老码也是说说而已，请不要当真。
 
-<a name="support-all-type"></a>
-
-####支持兼容各们各派的类型
+####支持兼容各们各派的类型 {#support-all-type}
 
 小伙伴们，江湖风险，门派众多，老码有自己的 OCBool 类型，可能嵩山少林有自己的 SSBool 类型，甚至连郭美美都可能有自己的 MMBool 类型，所以 OCBool 必须能够识别这些类型，这些各门各派的类型，只要支持 LogicValue 协议，就应该可以被识别，看老码怎么做，
 
@@ -232,8 +226,7 @@ Program ended with exit code: 0
 
 - 代码中第2行：“_”下横杠的用法，这是一个功能强大的小强，在此的目的是屏蔽外部参数名，所以小伙伴们可以直接：var ocResult:OCBool = OCBool(mmResult)而不是：var ocResult:OCBool = OCBool(v: mmResult)，小伙伴们惊呆了！这个 init 函数中本来就没有外部参数名啊，还记得老码在书里说过没，Swift 的初始化函数会默认使用内部参数名，作为外部参数名。
 
-<a name="make-up-type"></a>
-####完善 OCBool 的布尔基因体系：
+####完善 OCBool 的布尔基因体系： {#make-up-type}
 
 小伙伴们，bool 类型的价值就是在于各种判断，诸如==，!=, &，|,^,!，以及各种组合逻辑运算，我们 OCBool 也要具备这些功能，否则就会基因缺陷，且看老码如何实现：
 
