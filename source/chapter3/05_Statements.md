@@ -92,7 +92,7 @@ while condition {
 > 
 >
 ###### while-statement {#while-statement}
-> *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block)
+> *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](./05_Declarations.md#code-block)
 > 
 
 ###### condition-clause {#condition-clause}
