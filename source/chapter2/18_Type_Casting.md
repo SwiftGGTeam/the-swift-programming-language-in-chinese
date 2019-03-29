@@ -1,35 +1,12 @@
-# 类型转换（Type Casting）
------------------
+# 类型转换
 
-> 1.0
-> 翻译：[xiehurricane](https://github.com/xiehurricane)
-> 校对：[happyming](https://github.com/happyming)
+*类型转换*可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
 
-> 2.0
-> 翻译+校对：[yangsiy](https://github.com/yangsiy)
+类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符分别提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-> 2.1
-> 校对：[shanks](http://codebuild.me)，2015-11-01
-> 
-> 2.2
-> 翻译+校对：[SketchK](https://github.com/SketchK) 2016-05-16
+你也可以用它来检查一个类型是否遵循了某个协议，就像在[检验协议遵循](./21_Protocols.md#checking_for_protocol_conformance)部分讲述的一样。
 
-本页包含内容：
-
-- [定义一个类层次作为例子](#defining_a_class_hierarchy_for_type_casting)
-- [检查类型](#checking_type)
-- [向下转型（Downcasting）](#downcasting)
-- [`Any` 和 `AnyObject` 的类型转换](#type_casting_for_any_and_anyobject)
-
-
-_类型转换_ 可以判断实例的类型，也可以将实例看做是其父类或者子类的实例。
-
-类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符提供了一种简单达意的方式去检查值的类型或者转换它的类型。
-
-你也可以用它来检查一个类型是否实现了某个协议，就像在[检验协议的一致性](./22_Protocols.html#checking_for_protocol_conformance)部分讲述的一样。
-
-<a name="defining_a_class_hierarchy_for_type_casting"></a>
-## 定义一个类层次作为例子
+## 为类型转换定义类层次 {#defining_a_class_hierarchy_for_type_casting}
 
 你可以将类型转换用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。下面的三个代码段定义了一个类层次和一个包含了这些类实例的数组，作为类型转换的例子。
 
@@ -79,10 +56,9 @@ let library = [
 
 在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
 
-<a name="checking_type"></a>
-## 检查类型（Checking Type）
+## 检查类型 {#checking_type}
 
-用类型检查操作符（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
+用*类型检查操作符*（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
 
 下面的例子定义了两个变量，`movieCount` 和 `songCount`，用来计算数组 `library` 中 `Movie` 和 `Song` 类型的实例数量：
 
@@ -99,23 +75,22 @@ for item in library {
 }
 
 print("Media library contains \(movieCount) movies and \(songCount) songs")
-// 打印 “Media library contains 2 movies and 3 songs”
+// 打印“Media library contains 2 movies and 3 songs”
 ```
 
 示例迭代了数组 `library` 中的所有项。每一次，`for-in` 循环设置
-`item` 为数组中的下一个 `MediaItem`。
+`item` 常量为数组中的下一个 `MediaItem` 实例。
 
 若当前 `MediaItem` 是一个 `Movie` 类型的实例，`item is Movie` 返回
 `true`，否则返回 `false`。同样的，`item is Song` 检查 `item` 是否为 `Song` 类型的实例。在循环结束后，`movieCount` 和 `songCount` 的值就是被找到的属于各自类型的实例的数量。
 
-<a name="downcasting"></a>
-## 向下转型（Downcasting）
+## 向下转型 {#downcasting}
 
-某类型的一个常量或变量可能在幕后实际上属于一个子类。当确定是这种情况时，你可以尝试向下转到它的子类型，用类型转换操作符（`as?` 或 `as!`）。
+某类型的一个常量或变量可能在幕后实际上属于一个子类。当确定是这种情况时，你可以尝试用*类型转换操作符*（`as?` 或 `as!`）向下转到它的子类型。
 
-因为向下转型可能会失败，类型转型操作符带有两种不同形式。条件形式（conditional form）`as?` 返回一个你试图向下转成的类型的可选值（optional value）。强制形式 `as!` 把试图向下转型和强制解包（force-unwraps）转换结果结合为一个操作。
+因为向下转型可能会失败，类型转型操作符带有两种不同形式。条件形式 `as?` 返回一个你试图向下转成的类型的可选值。强制形式 `as!` 把试图向下转型和强制解包转换结果结合为一个操作。
 
-当你不确定向下转型可以成功时，用类型转换的条件形式（`as?`）。条件形式的类型转换总是返回一个可选值（optional value），并且若下转是不可能的，可选值将是 `nil`。这使你能够检查向下转型是否成功。
+当你不确定向下转型可以成功时，用类型转换的条件形式（`as?`）。条件形式的类型转换总是返回一个可选值，并且若下转是不可能的，可选值将是 `nil`。这使你能够检查向下转型是否成功。
 
 只有你可以确定向下转型一定会成功时，才使用强制形式（`as!`）。当你试图向下转型为一个不正确的类型时，强制形式的类型转换会触发一个运行时错误。
 
@@ -126,17 +101,17 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 ```swift
 for item in library {
     if let movie = item as? Movie {
-        print("Movie: '\(movie.name)', dir. \(movie.director)")
+        print("Movie: \(movie.name), dir. \(movie.director)")
     } else if let song = item as? Song {
-        print("Song: '\(song.name)', by \(song.artist)")
+        print("Song: \(song.name), by \(song.artist)")
     }
 }
 
-// Movie: 'Casablanca', dir. Michael Curtiz
-// Song: 'Blue Suede Shoes', by Elvis Presley
-// Movie: 'Citizen Kane', dir. Orson Welles
-// Song: 'The One And Only', by Chesney Hawkes
-// Song: 'Never Gonna Give You Up', by Rick Astley
+// Movie: Casablanca, dir. Michael Curtiz
+// Song: Blue Suede Shoes, by Elvis Presley
+// Movie: Citizen Kane, dir. Orson Welles
+// Song: The One And Only, by Chesney Hawkes
+// Song: Never Gonna Give You Up, by Rick Astley
 ```
 
 示例首先试图将 `item` 下转为 `Movie`。因为 `item` 是一个 `MediaItem`
@@ -150,63 +125,18 @@ for item in library {
 
 若向下转型成功，然后 `movie` 的属性将用于打印一个 `Movie` 实例的描述，包括它的导演的名字 `director`。相似的原理被用来检测 `Song` 实例，当 `Song` 被找到时则打印它的描述（包含 `artist` 的名字）。
 
-> 注意  
+> 注意
+> 
 > 转换没有真的改变实例或它的值。根本的实例保持不变；只是简单地把它作为它被转换成的类型来使用。
 
-<a name="type_casting_for_any_and_anyobject"></a>
-## `Any` 和 `AnyObject` 的类型转换
+## `Any` 和 `AnyObject` 的类型转换 {#type_casting_for_any_and_anyobject}
 
 Swift 为不确定类型提供了两种特殊的类型别名：
 
-* `AnyObject` 可以表示任何类类型的实例。
 * `Any` 可以表示任何类型，包括函数类型。
+* `AnyObject` 可以表示任何类类型的实例。
 
-> 注意  
-> 只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。在你的代码里使用你期望的明确类型总是更好的。
-
-<a name="anyobject"></a>
-### `AnyObject` 类型
-
-当我们使用 Cocoa APIs 时，我们会接收到一个 `[AnyObject]` 类型的数组，或者说“一个任意类型对象的数组”。Objective-C现在支持明确的数组类型，但早期版本的Objective-C并没有这个功能。不管怎样，你都可以确信API提供的信息能够正确的表明数组中的元素类型。
-
-
-在这些情况下，你可以使用强制形式的类型转换（`as!`）来下转数组中的每一项到比 `AnyObject` 更明确的类型，不需要可选解包（optional unwrapping）。
-
-下面的示例定义了一个 `[AnyObject]` 类型的数组并填入三个 `Movie` 类型的实例：
-
-```swift
-let someObjects: [AnyObject] = [
-    Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
-    Movie(name: "Moon", director: "Duncan Jones"),
-    Movie(name: "Alien", director: "Ridley Scott")
-]
-```
-
-因为知道这个数组只包含 `Movie` 实例，你可以直接用（`as!`）下转并解包到非可选的 `Movie` 类型：
-
-```swift
-for object in someObjects {
-    let movie = object as! Movie
-    print("Movie: '\(movie.name)', dir. \(movie.director)")
-}
-// Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
-// Movie: 'Moon', dir. Duncan Jones
-// Movie: 'Alien', dir. Ridley Scott
-```
-
-为了变为一个更简短的形式，下转 `someObjects` 数组为 `[Movie]` 类型而不是下转数组中的每一项：
-
-```swift
-for movie in someObjects as! [Movie] {
-    print("Movie: '\(movie.name)', dir. \(movie.director)")
-}
-// Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
-// Movie: 'Moon', dir. Duncan Jones
-// Movie: 'Alien', dir. Ridley Scott
-```
-
-<a name="any"></a>
-### `Any` 类型
+只有当你确实需要它们的行为和功能时才使用 `Any` 和 `AnyObject`。最好还是在代码中指明需要使用的类型。
 
 这里有个示例，使用 `Any` 类型来和混合的不同类型一起工作，包括函数类型和非类类型。它创建了一个可以存储 `Any` 类型的数组 `things`：
 
@@ -223,7 +153,7 @@ things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 things.append({ (name: String) -> String in "Hello, \(name)" })
 ```
 
-`things` 数组包含两个 `Int` 值，两个 `Double` 值，一个 `String` 值，一个元组 `(Double, Double)`，一个`Movie`实例“Ghostbusters”，以及一个接受 `String` 值并返回另一个 `String` 值的闭包表达式。
+`things` 数组包含两个 `Int` 值，两个 `Double` 值，一个 `String` 值，一个元组 `(Double, Double)`，一个 `Movie` 实例“Ghostbusters”，以及一个接受 `String` 值并返回另一个 `String` 值的闭包表达式。
 
 你可以在 `switch` 表达式的 `case` 中使用 `is` 和 `as` 操作符来找出只知道是 `Any` 或 `AnyObject` 类型的常量或变量的具体类型。下面的示例迭代 `things` 数组中的每一项，并用 `switch` 语句查找每一项的类型。有几个 `switch` 语句的 `case` 绑定它们匹配到的值到一个指定类型的常量，从而可以打印这些值：
 
@@ -245,8 +175,8 @@ for thing in things {
     case let (x, y) as (Double, Double):
         print("an (x, y) point at \(x), \(y)")
     case let movie as Movie:
-        print("a movie called '\(movie.name)', dir. \(movie.director)")
-    case let stringConverter as String -> String:
+        print("a movie called \(movie.name), dir. \(movie.director)")
+    case let stringConverter as (String) -> String:
         print(stringConverter("Michael"))
     default:
         print("something else")
@@ -259,6 +189,17 @@ for thing in things {
 // a positive double value of 3.14159
 // a string value of "hello"
 // an (x, y) point at 3.0, 5.0
-// a movie called 'Ghostbusters', dir. Ivan Reitman
+// a movie called Ghostbusters, dir. Ivan Reitman
 // Hello, Michael
 ```
+
+> 注意
+> 
+> `Any` 类型可以表示所有类型的值，包括可选类型。Swift 会在你用 `Any` 类型来表示一个可选值的时候，给你一个警告。如果你确实想使用 `Any` 类型来承载可选值，你可以使用 `as` 操作符显式转换为 `Any`，如下所示：
+
+```swift
+let optionalNumber: Int? = 3
+things.append(optionalNumber)        // 警告
+things.append(optionalNumber as Any) // 没有警告
+```
+

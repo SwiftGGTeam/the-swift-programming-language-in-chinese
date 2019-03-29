@@ -161,7 +161,7 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 
 > 注意：  
 不同的 Unicode 字符以及相同 Unicode 字符的不同表示方式可能需要不同數量的內存空間來存儲。所以 Swift 中的字符在一個字符串中並不一定佔用相同的內存空間。因此字符串的長度不得不通過迭代字符串中每一個字符的長度來進行計算。如果您正在處理一個長字符串，需要注意`countElements`函數必須遍歷字符串中的字符以精準計算字符串的長度。
-> 另外需要注意的是通過`countElements`返回的字符數量並不總是與包含相同字符的`NSString`的`length`屬性相同。`NSString`的`length`屬性是基於利用 UTF-16 表示的十六位代碼單元數字，而不是基於 Unicode 字符。為了解決這個問題，`NSString`的`length`屬性在被 Swift 的`String`訪問時會成為`utf16count`。  
+> 另外需要注意的是通過`countElements`返回的字符數量並不總是與包含相同字符的`NSString`的`length`屬性相同。`NSString`的`length`屬性是基於利用 UTF-16 表示的十六位代碼單元數字，而不是基於 Unicode 字符。
 
 <a name="concatenating_strings_and_characters"></a>
 ## 連接字符串和字符 (Concatenating Strings and Characters)
