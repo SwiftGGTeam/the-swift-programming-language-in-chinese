@@ -1,4 +1,5 @@
-# 语句（Statements） {#statement_statements}
+# 语句（Statements）{#statement_statements}
+
 在 Swift 中，有三种类型的语句：简单语句、编译器控制语句和控制流语句。简单语句是最常见的，用于构造表达式或者声明。编译器控制语句允许程序改变编译器的行为，包含编译配置语句和行控制语句。
 
 控制流语句则用于控制程序执行的流程，Swift 中有多种类型的控制流语句：循环语句、分支语句和控制转移语句。循环语句用于重复执行代码块；分支语句用于执行满足特定条件的代码块；控制转移语句则用于改变代码的执行顺序。另外，Swift 提供了 `do` 语句，用于构建局部作用域，还用于错误的捕获和处理；还提供了 `defer` 语句，用于退出当前作用域之前执行清理操作。
@@ -47,7 +48,8 @@
 > 
 
 ### For-In 语句 {#for-in_statements}
-`for-in` 语句会为集合（或实现了 `SequenceType` 协议的任意类型）中的每一项执行一次代码块。
+
+`for-in` 语句会为集合（或实现了 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议的任意类型）中的每一项执行一次代码块。
 
 `for-in` 语句的形式如下：
 
@@ -57,7 +59,7 @@ for item in collection {
 }
 ```
 
-`for-in` 语句在循环开始前会调用集合表达式（`collection expression`）的 `makeIterator()` 方法来获取一个实现了 `IteratorProtocol` 协议的迭代器类型。接下来循环开始，反复调用该迭代器的 `next()` 方法。如果其返回值不是 `nil`，它将会被赋给 `item`，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
+`for-in` 语句在循环开始前会调用集合表达式（`collection expression`）的 `makeIterator()` 方法来获取一个实现了 [IteratorProtocol](https://developer.apple.com/documentation/swift/iteratorprotocol) 协议的迭代器类型。接下来循环开始，反复调用该迭代器的 `next()` 方法。如果其返回值不是 `nil`，它将会被赋给 `item`，然后执行循环体语句，执行完毕后回到循环开始处，继续重复这一过程；否则，既不会赋值也不会执行循环体语句，`for-in` 语句至此执行完毕。
 
 > for-in 语句语法
 > 
@@ -90,7 +92,7 @@ while condition {
 > 
 >
 ###### while-statement {#while-statement}
-> *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](05_Declarations.md#code-block)
+> *while 语句* → **while** [*条件子句*](#condition-clause) [*代码块*](./05_Declarations.md#code-block)
 > 
 
 ###### condition-clause {#condition-clause}
@@ -270,7 +272,7 @@ case let (x, y) where x == y:
 #### 对未来枚举的 `case` 进行 `switch` {#future-case}
 非冻结枚举（`nonfronzen enumeration`）是一种特殊的枚举类型，它可能在未来会增加新的枚举 `case`，即使这时候你已经编译并且发布了你的应用，所以在 switch 非冻结枚举前需要深思熟虑。当一个库的作者们把一个枚举标记为非冻结的，这意味着他们保留了增加新的枚举 `case` 的权利，并且任何和这个枚举交互的代码都要在不需要重新编译的条件下能够处理那些未来可能新加入的 `case` 。只有那些标准库，比如用 Swift 实现的苹果的一些框架，C 以及 Objective-C 代码才能够声明非冻结枚举。你在 Swift 中声明的枚举不能是非冻结的。
 
-当你对未来枚举进行 switch 时，你总是需要有一个 `default case`，即使每种枚举类型都已经有对应的 `case` 了。你可以在 default 前标注 `@unknown` ，意思是这个 `case` 应该只匹配未来加入的枚举 `case` 。如果你的 `default case` 中匹配了任何在编译时就能确定的枚举 `case` ，Swift 会抛出一个警告。这可以很好地提醒你库的作者已经新增了一种 `case` ，并且你还没有去处理。
+当你对未来枚举进行 switch 时，你总是需要有一个 `default case`，即使每种枚举类型都已经有对应的 `case` 了。你可以在 default 前标注 `@unknown`，意思是这个 `case` 应该只匹配未来加入的枚举 `case`。如果你的 `default case` 中匹配了任何在编译时就能确定的枚举 `case`，Swift 会抛出一个警告。这可以很好地提醒你库的作者已经新增了一种 `case`，并且你还没有去处理。
 
 以下就是一个例子，我们对标准库的 [Mirror.AncestorRepresentation](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation) 枚举进行 switch 操作。每当有新的 `case` 加入，我们会得到一个警告，提示我们要去处理它。
 
@@ -451,7 +453,7 @@ case .suppressed:
 使用 `return` 语句时，可以只写 `return` 这个关键词，也可以在 `return` 后面跟上表达式，像下面这样：
 
 > return
-> 
+>
 > return `expression`
 > 
 
@@ -469,8 +471,9 @@ case .suppressed:
 > 
 >
 ###### return-statement {#return-statement}
-> *return 语句* → **return** [*表达式*](./04_Expressions.md#expression)<sub>可选</sub>
-> 
+> *return 语句* → **return** [*表达式*](./04_Expressions.html#expression)<sub>可选</sub>
+
+### Throw 语句 {#throw_statements}
 
 ### Throw 语句 {#throw_statements}
 `throw` 语句出现在抛出函数或者抛出方法体内，或者类型被 `throws` 关键字标记的闭包表达式体内。
@@ -616,9 +619,9 @@ print("Compiled in Swift 4.2 mode or later")
 #if compiler(>=5) && swift(<5)
 print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
 #endif
-// Prints "Compiled with the Swift 5 compiler or later"
-// Prints "Compiled in Swift 4.2 mode or later"
-// Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
+// 打印 "Compiled with the Swift 5 compiler or later"
+// 打印 "Compiled in Swift 4.2 mode or later"
+// 打印 "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 ```
 
 `canImport()` 后面跟的变量是模块的名字，这里这个模块可能并不是每个平台上都存在的。使用它来检测是否可以导入这个模块，如果模块存在就返回 `true` 否则返回 `false` 。
