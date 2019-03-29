@@ -45,6 +45,7 @@ and describes the type inference behavior of Swift.
     type --> optional-type
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
+    type --> opaque-result-type
     type --> metatype-type
     type --> ``Any``
     type --> ``Self``
@@ -719,6 +720,35 @@ is equivalent to ``P & Q & R``.
 
     protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
     protocol-composition-continuation --> type-identifier | protocol-composition-type
+
+
+.. _Types_OpaqueResultType:
+
+Opaque Result Type
+------------------
+
+An opaque result type defines a type that conforms to a protocol or protocol composition,
+without specifying the underlying concrete type.
+
+Opaque result types may be declared only as the return type of a function or subscript,
+or the type of a property. 
+An opaque result type must be the entire result -- 
+it can't be declared inside a tuple or a generic type,
+such as the element type of an array or the wrapped type of an optional.
+
+Opaque result types have the following form:
+
+.. syntax-outline::
+
+    some <#type#>
+
+The *type* that follows ``some`` is a class, protocol, ``Any``, or a protocol composition.
+
+.. syntax-grammar::
+
+    Grammar of an opaque result type
+
+    opaque-result-type --> ``some`` type
 
 .. _Types_MetatypeType:
 
