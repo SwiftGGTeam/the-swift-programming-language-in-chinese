@@ -96,6 +96,7 @@
 > *标识符字符集* → [标识符字符](./02_Lexical_Structure.md#identifier_character) [标识符字符集](./02_Lexical_Structure.md#identifier_characters)<sub>可选</sub> 
 >
 > *隐式参数名* → **$** [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
 
 <!-- -->
 
@@ -204,16 +205,16 @@
 >
 > *引用文本项* → [转义字符](./02_Lexical_Structure.md#escaped-character)
 >
-> *引用文本项* → 除了 **"**、**\\**、U+000A、U+000D 以外的所有 Unicode 字符
+> *引用文本项* → 除了 **"**、**\\\**、U+000A、U+000D 以外的所有 Unicode 字符    
 >
 > *多行引用文本* → [多行引用文本项](./02_Lexical_Structure.md#multiline-quoted-text-item) [多行引用文本](./02_Lexical_Structure.md#multiline-quoted-text)<sub>可选</sub>
 >
 > *多行引用文本项* [转义字符](./02_Lexical_Structure.md#escaped-character)<sub>可选</sub>
 >
-> *多行引用文本* → 除了 **\** 以外的任何Unicode标量值
+> *多行引用文本* → 除了 **\\** 以外的任何 Unicode 标量值
 >
 > *多行引用文本* → [转义换行](./02_Lexical_Structure.md#escaped-newline)
->
+
 > *插值字符串字面量* → [字符串开分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter) [插值文本](./02_Lexical_Structure.md#interpolated-text)<sub>可选</sub> [字符串闭分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
 >
 > *插值字符串字面量* → [多行字符串开分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter) [插值文本](./02_Lexical_Structure.md#interpolated-text)<sub>可选</sub> [多行字符串闭分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
