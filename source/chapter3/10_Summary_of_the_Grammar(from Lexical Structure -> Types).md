@@ -24,7 +24,7 @@
 >
 > *注释*  → **//** [单行内容注释](./02_Lexical_Structure.md#comment-text line-break)
 >
-> *注释*  → **//*** [多行内容注释](./02_Lexical_Structure.md#comment-text line-break) **/*/**
+> *注释*  → **/*** [多行内容注释](./02_Lexical_Structure.md#comment-text line-break) ***/**
 >
 >
 >
