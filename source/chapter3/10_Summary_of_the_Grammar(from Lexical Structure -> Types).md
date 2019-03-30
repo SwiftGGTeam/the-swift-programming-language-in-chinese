@@ -24,7 +24,7 @@
 >
 > *注释*  → **//** [单行内容注释](./02_Lexical_Structure.md#comment-text line-break)
 >
-> *注释*  → **/*** [多行内容注释](./02_Lexical_Structure.md#comment-text line-break) ***/**
+> *注释*  → **//*** [多行内容注释](./02_Lexical_Structure.md#comment-text line-break) **/*/**
 >
 >
 >
@@ -366,7 +366,7 @@
 >
 > *函数类型* → [类型](./03_Types.md#)  **rethrows** **->** [类型](./03_Types.md#)
 > 
-> *函数类型子句* → **(**­  **)**­
+> *函数类型子句* → **(** **)**
 > 
 > *函数类型子句* → **(** [函数类型参数列表](./03_Types.md#function-type-argument-list) *...*­<sub>可选</sub> **)**
 > 
