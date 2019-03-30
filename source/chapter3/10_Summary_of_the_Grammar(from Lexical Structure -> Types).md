@@ -22,7 +22,7 @@
 >
 > *换行符*  → U+000D 后面是 U+000A
 >
-> *注释*  → **//** [单行内容注释](./02_Lexical_Structure.md#comment-text line-break)
+> *注释*  → **//** [单行内容注释](./02_Lexical_Structure.md#comment-text) [换行符](./02_Lexical_Structure.md#line-break)
 >
 > *注释*  → **/\*** [多行内容注释](./02_Lexical_Structure.md#multiline-comment-text) **\*/**
 >
@@ -235,7 +235,7 @@
 >
 > *unicode 标量数字* → 一到八位的十六进制数字
 >
-> *转义换行符* → [转义序列](./02_Lexical_Structure.md#escape-sequence) [空白](./02_Lexical_Structure.md#whitespace)<sub>可选</sub> [断行符](./02_Lexical_Structure.md#line-break)
+> *转义换行符* → [转义序列](./02_Lexical_Structure.md#escape-sequence) [空白](./02_Lexical_Structure.md#whitespace)<sub>可选</sub> [换行符](./02_Lexical_Structure.md#line-break)
 
 
 <!-- -->
