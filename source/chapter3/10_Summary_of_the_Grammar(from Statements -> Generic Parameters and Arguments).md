@@ -1,3 +1,329 @@
+## 语句 {#statements}
+
+> 语句语法
+>
+> *语句* → [表达式](./04_Expressions.md#expression) **;**<sub>可选</sub>
+>
+> *语句* → [声明](./06_Declarations.md#declaration) **;**<sub>可选</sub>
+>
+> *语句* → [循环语句](./05_Statements.md#loop_statement) **;**<sub>可选</sub>
+>
+> *语句* → [分支语句](./05_Statements.md#branch_statement) **;**<sub>可选</sub>
+>
+> *语句* → [标签语句](./05_Statements.md#labeled_statement) **;**<sub>可选</sub>
+>
+> *语句* → [控制转移语句](./05_Statements.md#control_transfer_statement) **;**<sub>可选</sub>
+>
+> *语句* → [延迟语句](./05_Statements.md#defer_statement) **;**<sub>可选</sub>
+>
+> *语句* → [执行语句](./05_Statements.md#do_statement) **;**<sub>可选</sub>
+>
+> *语句* → [编译控制语句](./05_Statements.md#compiler_control_statement)
+>
+> *语句集* → [语句](./05_Statements.md#statement) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+
+<!-- -->
+
+> 循环语句语法
+>
+> *循环语句* → [for-in 语句](./05_Statements.md#for_in_statement)
+>
+> *循环语句* → [while 语句](./05_Statements.md#wheetatype 类型 ile_statement)
+>
+> *循环语句* → [repeat-while 语句](./05_Statements.md#do_while_statement)
+>
+
+<!-- -->
+
+> For-In 循环语法
+>
+> *for-in 语句* → **for case**<sub>可选</sub> [模式](./08_Patterns.md#pattern) **in** [表达式](./04_Expressions.md#expression) [where 子句](./05_Statements.md#where_clause)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)
+>
+
+<!-- -->
+
+> While 循环语法
+>
+> *while 语句* → **while** [条件集](./05_Statements.md#condition_list) [代码块](./06_Declarations.md#code_block)
+>
+> *条件集* → [条件](./05_Statements.md#condition) | [条件](./05_Statements.md#condition) **,** [条件集](./05_Statements.md#condition_list)
+> *条件* → [表达式](./04_Expressions.md#expression) | [可用性条件](./05_Statements.md#availability_condition) | [case 条件](./05_Statements.md#case_condition) | [可选绑定条件](./05_Statements.md#optional_binding_condition)
+>
+> *case 条件* → **case** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
+>
+> *可选绑定条件* → **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer) | **var** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
+>
+
+<!-- -->
+> Repeat-While 语句语法
+>
+*repeat-while-statement* → **repeat** [代码块](./06_Declarations.md#code_block) **while** [表达式](./04_Expressions.md#expression)
+
+<!-- -->
+
+> 分支语句语法
+>
+> *分支语句* → [if 语句](./05_Statements.md#if_statement)
+>
+> *分支语句* → [guard 语句](./05_Statements.md#guard_statement)
+>
+> *分支语句* → [switch 语句](./05_Statements.md#switch_statement)
+>
+
+<!-- -->
+
+> If 语句语法
+>
+> *if 语句* → **if** [条件集](./05_Statements.md#condition_list) [代码块](./06_Declarations.md#code_block) [else 子句](./05_Statements.md#else_clause)<sub>可选</sub>
+>
+> *else 子句* → **else** [代码块](./06_Declarations.md#code_block) | **else** [if 语句](./05_Statements.md#if_statement)
+>
+
+<!-- -->
+> Guard 语句语法
+>
+> *guard 语句* → **guard** [条件集](./05_Statements.md#condition_list) **else** [代码块](./06_Declarations.md#code_block)
+>
+
+
+<!-- -->
+
+> Switch 语句语法
+>
+> *switch 语句* → **switch** [表达式](./04_Expressions.md#expression) **{** [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub> **}**
+>
+> *switch-case集* → [switch-case](./05_Statements.md#switch_case) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+> *switch-case* → [case 标签](./05_Statements.md#case_label) [语句集](./05_Statements.md#statements)
+>
+> *switch-case* → [default 标签](./05_Statements.md#default_label) [语句集](./05_Statements.md#statements)
+>
+> *switch-case* → [条件 switch-case](./05_Statements.md#conditional_switch_case)
+>
+> *case 标签* → [属性集](./07_Attributes.md#attributes)<sub>可选</sub> **case** [case 项集](./05_Statements.md#case_item_list) **:**
+>
+> *case 项集* → [模式](./08_Patterns.md#pattern) [where 子句](./05_Statements.md#where_clause)<sub>可选</sub> | [模式](./08_Patterns.md#pattern) [where 子句](./05_Statements.md#guard_clause)<sub>可选</sub> **,** [case 项集](./05_Statements.md#case_item_list)
+>
+> *default 标签* → [属性集](./07_Attributes.md#attributes)<sub>可选</sub> **default** **:**
+>
+> *where 子句* → **where** [where 表达式](./05_Statements.md#where_expression)
+>
+> *where 表达式* → [表达式](./04_Expressions.md#expression)
+>
+> *条件 switch-case* → [switch if 指令子句](./05_Statements.md#switch_if_directive_clause) [switch elseif 指令子句集](./05_Statements.md#switch_elseif_directive_clauses)<sub>可选</sub> [switch else 指令子句](./05_Statements.md#switch_else_directive_clause)<sub>可选</sub> [endif 指令](./05_Statements.md#endif_directive)
+>
+> *switch if 指令子句* → [if 指令](./05_Statements.md#if_directive) [编译条件](./05_Statements.md#compilation_condition) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+> *switch elseif 指令子句集* → [elseif 指令子句](./05_Statements.md#else_if_directive_clause) [switch elseif 指令子句集](./05_Statements.md#switch_elseif_directive_clauses)<sub>可选</sub>
+>
+> *switch elseif 指令子句* → [elseif 指令](./05_Statements.md#elseif_directive) [编译条件](./05_Statements.md#compilation_condition) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+> *switch else 指令子句* → [else 指令](./05_Statements.md#else_directive) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+
+<!-- -->
+
+> 标签语句语法
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [循环语句](./05_Statements.md#loop_statement)
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [if 语句](./05_Statements.md#if_statement)
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [switch 语句](./05_Statements.md#switch_statement)
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [do 语句](./05_Statements.md#do_statement)
+>
+> *语句标签* → [标签名称](./05_Statements.md#label_name) **:**
+>
+> *标签名称* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+
+<!-- -->
+
+> 控制转移语句语法
+>
+> *控制转移语句* → [break 语句](./05_Statements.md#break_statement)
+>
+> *控制转移语句* → [continue 语句](./05_Statements.md#continue_statement)
+>
+> *控制转移语句* → [fallthrough 语句](./05_Statements.md#fallthrough_statement)
+>
+> *控制转移语句* → [return 语句](./05_Statements.md#return_statement)
+>
+> *控制转移语句* → [throw 语句](./05_Statements.md#throw_statement)
+>
+
+<!-- -->
+
+> Break 语句语法
+>
+> *break 语句* → **break** [标签名称](./05_Statements.md#label_name)<sub>可选</sub>
+>
+
+<!-- -->
+
+> Continue 语句语法
+>
+> *continue 语句* → **continue** [标签名称](./05_Statements.md#label_name)<sub>可选</sub>
+>
+
+<!-- -->
+
+> Fallthrough 语句语法
+>
+> *fallthrough 语句* → **fallthrough**
+>
+
+<!-- -->
+
+> Return 语句语法
+>
+> *return 语句* → **return** [表达式](./04_Expressions.md#expression)<sub>可选</sub>
+>
+
+<!-- -->
+
+> Throw 语句语法
+>
+> *throw 语句* → **throw** [表达式](./04_Expressions.md#expression)
+>
+
+<!-- -->
+
+> Defer 语句语法
+>
+> *defer 语句* → **defer** [代码块](./06_Declarations.md#code_block)
+>
+
+<!-- -->
+> Do 语句语法
+>
+> *do 语句* → **do** [代码块](./06_Declarations.md#code_block) [catch 子句集](./05_Statements.md#catch_clauses)<sub>可选</sub>
+>
+> *catch 子句集* → [catch 子句](./05_Statements.md#catch_clause) [catch 子句集](05_Statements.md#catch_clauses)<sub>可选</sub>
+>
+> *catch 子句* → **catch** [模式](./08_Patterns.md#pattern)<sub>可选</sub>  [where 子句](./05_Statements.md#where_clause)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)<sub>可选</sub>
+>
+
+<!-- -->
+> 编译控制语句
+>
+> *编译控制语句* → [条件编译块](./05_Statements.md#conditional_complation_block)
+>
+> *编译控制语句* → [行控制语句](./05_Statements.md#line_control_statement)
+>
+> *编译控制语句* → [诊断语句](./05_Statements.md#diagnostic_statement)
+>
+
+<!-- -->
+> 条件编译块语法
+>
+> *条件编译块* → [if 指令子句](./05_Statements.md#if_directive_clause) [elseif 指令子句集](./05_Statements.md#elseif_directive_clauses)<sub>可选</sub> [else 指令子句](./05_Statements.md#else_directive_clause)<sub>可选</sub> [endif 指令](./05_Statements.md#endif_directive)
+>
+> *if 指令子句* → [if 指令](./05_Statements.md#if_directive) [编译条件](./05_Statements.md#compilation_condition) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+> *elseif 指令子句集* → [elseif 指令子句](./05_Statements.md#else_if_directive_clause) [elseif 指令子句集](./05_Statements.md#elseif_directive_clauses)<sub>可选</sub>
+>
+> *elseif 指令子句* → [elseif 指令](./05_Statements.md#elseif_directive) [编译条件](./05_Statements.md#compilation_condition) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+> *else 指令子句* → [else 指令](./05_Statements.md#else_directive) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+> *if 指令* → **#if**
+>
+> *elseif 指令* → **#elseif**
+>
+> *else 指令* → **#else**
+>
+> *endif 指令* → **#endif**
+>
+> *编译条件* → [平台条件](./05_Statements.md#platform_condition)
+>
+> *编译条件* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *编译条件* → [布尔字面量](./02_Lexical_Structure.md#boolean_literal)
+>
+> *编译条件* → **(** [编译条件](./05_Statements.md#compilation_condition) **)**
+>
+> *编译条件* → **!** [编译条件](./05_Statements.md#compilation_condition)
+>
+> *编译条件* → [编译条件](./05_Statements.md#compilation_condition) **&&** [编译条件](./05_Statements.md#compilation_condition)
+>
+> *编译条件* → [编译条件](./05_Statements.md#compilation_condition) **||** [编译条件](./05_Statements.md#compilation_condition)
+>
+> *平台条件* → **os** **(** [操作系统](./05_Statements.md#operating_system) **)**
+>
+> *平台条件* → **arch** **(** [架构](./05_Statements.md#architecture) **)**
+>
+> *平台条件* → **swift** **(** **>=** [swift 版本](./05_Statements.md#swift_version) **)** | **swift** **(** **<** [swift 版本](./05_Statements.md#swift_version) **)**
+>
+> *平台条件* → **compiler** **(** **>=** [swift 版本](./05_Statements.md#swift_version) **)** | **compiler** **(** **<** [swift 版本](./05_Statements.md#swift_version) **)**
+>
+> *平台条件* → **canImport** **(** [模块名](./05_Statements.md#module_name) **)**
+>
+> *平台条件* → **targetEnvironment** **(** [环境](./05_Statements.md#environment) **)**
+>
+> *操作系统* → **macOS** | **iOS** | **watchOS** | **tvOS**
+>
+> *架构* → **i386** | **x86_64** | **arm** | **arm64**
+>
+> *swift 版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits) [swift 版本后缀](./05_Statements.md#swift_version_continuation)<sub>可选</sub>
+>
+> *swift 版本后缀* → **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits) [swift 版本集](./05_Statements.md#swift_version_continuation)<sub>可选</sub>
+>
+> *模块名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *环境* → **simulator**
+>
+
+<!-- -->
+> 行控制语句语法
+>
+> *行控制语句* → **#sourceLocation** **(** **file:** [文件名](./05_Statements.md#file_name) **,** **line:**  [行号](./05_Statements.md#line_number) **)**
+>
+> *行控制语句* → **#sourceLocation** **(** **)**
+>
+> *行号* → 一个大于 0 的十进制数字
+>
+> *文件名* → [静态字符串字面量](./02_Lexical_Structure.md#static_string_literal)
+>
+
+<!-- -->
+> 编译期诊断语句语法
+>
+> *诊断语句* → **#error** **(** [诊断信息](./05_Statements.md#diagnostic_message) **)**
+>
+> *诊断语句* → **#warning** **(** [诊断信息](./05_Statements.md#diagnostic_message) **)**
+>
+> *诊断信息* → [静态字符串字面量](./02_Lexical_Structure.md#static_string_literal)
+>
+
+<!-- -->
+> 可用性条件语法
+>
+> *可用性条件* → **#available** **(** [可用性参数集](./05_Statements.md#availability_arguments) **)**
+>
+> *可用性参数集* → [可用性参数](./05_Statements.md#availability_argument) | [可用性参数](./05_Statements.md#availability_argument) , [可用性参数集）](./05_Statements.md#availability_arguments)
+>
+> *可用性参数* → [平台名](./05_Statements.md#platform_name) [平台版本](./05_Statements.md#platform_version)
+>
+> *可用性参数* → **\***
+>
+> *平台名* → **iOS** | **iOSApplicationExtension**
+>
+> *平台名* → **macOS** | **macOSApplicationExtension**
+>
+> *平台名* → **watchOS**
+>
+> *平台名* → **tvOS**
+>
+> *平台版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
+> *平台版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits) **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
+> *平台版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits) **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits) **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
+
 ## 声明 {#declarations}
 
 > 声明语法
