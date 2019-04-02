@@ -14,7 +14,6 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 
 > *空白* → [*空白项*](#whitespace-item) [*空白*](#whitespace)<sub>可选</sub>
 > 
-> 
 #### whitespace-item {#whitespace-item}
 > 
 > *空白项* → [*断行符*](#line-break)
