@@ -17,7 +17,7 @@ Swift 中的扩展可以：
 > 
 > 扩展可以给一个类型添加新的功能，但是不能重写已经存在的功能。
 
-## 扩展的语法 {#extension_syntax}
+## 扩展的语法 {#extension-syntax}
 
 使用 `extension` 关键字声明扩展：
 
@@ -43,7 +43,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 > 
 > 对一个现有的类型，如果你定义了一个扩展来添加新的功能，那么这个类型的所有实例都可以使用这个新功能，包括那些在扩展定义之前就存在的实例。
 
-## 计算型属性 {#computed_properties}
+## 计算型属性 {#computed-properties}
 
 扩展可以给现有类型添加计算型实例属性和计算型类属性。这个例子给 Swift 内建的 `Double` 类型添加了五个计算型实例属性，从而提供与距离单位相关工作的基本支持：
 
@@ -165,7 +165,7 @@ extension Int {
 // Hello!
 ```
 
-### 可变实例方法 {#mutating_instance_methods}
+### 可变实例方法 {#mutating-instance-methods}
 
 通过扩展添加的实例方法同样也可以修改（或 *mutating（改变）*）实例本身。结构体和枚举的方法，若是可以修改 `self` 或者它自己的属性，则必须将这个实例方法标记为 `mutating`，就像是改变了方法的原始实现。
 
@@ -218,7 +218,7 @@ extension Int {
 0746381295[9]
 ```
 
-## 嵌套类型 {#nested_yypes}
+## 嵌套类型 {#nested-yypes}
 
 扩展可以给现有的类，结构体，还有枚举添加新的嵌套类型：
 

@@ -15,7 +15,7 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 > *表达式列表* → [*表达式*](#expression) | [*表达式*](#expression) **,** [*表达式列表*](#expression-list)
 > 
 
-## 前缀表达式 {#prefix_expressions}
+## 前缀表达式 {#prefix-expressions}
 前缀表达式由可选的前缀运算符和表达式组成。前缀运算符只接收一个参数，表达式则紧随其后。
 
 关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
@@ -37,7 +37,7 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 > *输入输出表达式* → **&** [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-### Try 运算符 {#try_operator}
+### Try 运算符 {#try-operator}
 try 表达式由 `try` 运算符加上紧随其后的可抛出错误的表达式组成，形式如下：
 
 > try `可抛出错误的表达式`
@@ -75,7 +75,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > *try 运算符* → **try** | **try?** | **try!**
 > 
 
-## 二元表达式 {#binary_expressions}
+## 二元表达式 {#binary-expressions}
 *二元表达式*由中缀运算符和左右参数表达式组成。形式如下：
 
 > `左侧参数` `二元运算符` `右侧参数`
@@ -107,7 +107,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > *二元表达式列表* → [*二元表达式*](#binary-expression) [*二元表达式列表*](#binary-expressions)<sub>可选</sub>
 > 
 
-### 赋值表达式 {#assignment_operator}
+### 赋值表达式 {#assignment-operator}
 赋值表达式会为某个给定的表达式赋值，形式如下；
 
 > `表达式` = `值`
@@ -129,7 +129,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > *赋值运算符* → **=**
 > 
 
-### 三元条件运算符 {#ternary_conditional_operator}
+### 三元条件运算符 {#ternary-conditional-operator}
 *三元条件运算符*会根据条件来对两个给定表达式中的一个进行求值，形式如下：
 
 > `条件` ? `表达式（条件为真则使用）` : `表达式（条件为假则使用）`
@@ -146,7 +146,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > *三元条件运算符* → **?** [*表达式*](#expression) **:**
 > 
 
-### 类型转换运算符 {#type-casting_operators}
+### 类型转换运算符 {#type-casting-operators}
 有 4 种类型转换运算符：`is`、`as`、`as? ` 和 `as!`。它们有如下的形式：
 
 > `表达式` is `类型`
@@ -198,7 +198,7 @@ f(x as Any)
 > *类型转换运算符* → **as** **!** [*类型*](./03_Types.md#type)
 > 
 
-## 基本表达式 {#primary_expressions}
+## 基本表达式 {#primary-expressions}
 *基本表达式*是最基本的表达式。它们可以单独使用，也可以跟前缀表达式、二元表达式、后缀表达式组合使用。
 
 > 基本表达式语法
@@ -226,7 +226,7 @@ f(x as Any)
 > *基本表达式* → [*key-path字符串表达式*](#key-patch-string-expression)
 > 
 
-### 字面量表达式 {#literal_expression}
+### 字面量表达式 {#literal-expression}
 *字面量表达式*可由普通字面量（例如字符串或者数字），字典或者数组字面量，或者下面列表中的特殊字面量组成：
 
 字面量 | 类型 | 值
@@ -330,7 +330,7 @@ Xcode 使用 playground 字面量对程序编辑器中的颜色、文件或者�
 > *playground 字面量* → **#fileLiteral ( resourceName : [*表达式*](#expression) )**
 > 
 > 
-####  playground 字面量* → **#imageLiteral ( resourceName : [*表达式*](#expression) )**self_expression {#self_expression}
+####  playground 字面量* → **#imageLiteral ( resourceName : [*表达式*](#expression) )**self_expression {#self-expression}
 > 
 
 ### Self 表达式
@@ -392,7 +392,7 @@ struct Point {
 > *self 构造器表达式* → **self** **.** **init**
 > 
 
-### 父类表达式 {#superclass_expression}
+### 父类表达式 {#superclass-expression}
 *父类*表达式可以使我们在某个类中访问它的父类，它有如下形式：
 
 > super.`成员名称`
@@ -425,7 +425,7 @@ struct Point {
 > *父类构造器表达式* → **super** **.** **init**
 > 
 
-### 闭包表达式 {#closure_expression}
+### 闭包表达式 {#closure-expression}
 *闭包表达式*会创建一个闭包，在其他语言中也叫 *lambda* 或*匿名*函数。跟函数一样，闭包包含了待执行的代码，不同的是闭包还会捕获所在环境中的常量和变量。它的形式如下：
 
 ```swift
@@ -572,7 +572,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 > *捕获说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**
 > 
 
-### 隐式成员表达式 {#implicit_member_expression}
+### 隐式成员表达式 {#implicit-member-expression}
 若类型可被推断出来，可以使用*隐式成员表达式*来访问某个类型的成员（例如某个枚举成员或某个类型方法），形式如下：
 
 > .`成员名称`
@@ -592,7 +592,7 @@ x = .AnotherValue
 > *隐式成员表达式* → **.** [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-### 圆括号表达式 {#parenthesized_expression}
+### 圆括号表达式 {#parenthesized-expression}
 *圆括号表达式*是由圆括号包围的表达式。你可以用圆括号说明成组的表达式的先后操作。成组的圆括号不会改变表达式的类型 - 例如 `(1)` 的类型就是简单的 `Int`。
 
 > 圆括号表达式语法
@@ -602,7 +602,7 @@ x = .AnotherValue
 > *圆括号表达式* → **( [*表达式*](#expression) )**
 > 
 
-### 元组表达式 {#Tuple_Expression}
+### 元组表达式 {#Tuple-Expression}
 *元组表达式*由圆括号和其中多个逗号分隔的子表达式组成。每个子表达式前面可以有一个标识符，用冒号隔开。元组表达式形式如下：
 
 > (`标识符 1` : `表达式 1`, `标识符 2` : `表达式 2`, `...`)
@@ -632,7 +632,7 @@ x = .AnotherValue
 > *元组元素* → [*表达式*](#expression) | [*标识符*](identifier) **:** [*表达式*](#expression)
 > 
 
-### 通配符表达式 {#wildcard_expression}
+### 通配符表达式 {#wildcard-expression}
 *通配符表达式*可以在赋值过程中显式忽略某个值。例如下面的代码中，`10` 被赋值给 `x`，而 `20` 则被忽略：
 
 ```swift
@@ -648,7 +648,7 @@ x = .AnotherValue
 > 
 
 
-### Key-path 表达式 {#key-path_expression}
+### Key-path 表达式 {#key-path-expression}
 Key-path 表达式引用一个类型的属性或下标。在动态语言中使场景可以使用 Key-path 表达式，例如观察键值对。格式为：
 
 > **\类型名.路径**
@@ -806,7 +806,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 
 
 
-### 选择器表达式 {#selector_expression}
+### 选择器表达式 {#selector-expression}
 *选择器表达式*可以让你通过选择器来引用在 Objective-C 中方法（method）和属性（property）的 setter 和 getter 方法。
 
 > \#selector(方法名)
@@ -863,7 +863,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 > *选择器表达式* → __#selector__ **(** [*setter:表达式*](#expression) **)**
 > 
 
-## Key-path 字符串表达式 {#key-path_string_expressions}
+## Key-path 字符串表达式 {#key-path-string-expressions}
 key-path 字符串表达式可以访问一个引用 Objective-C 属性的字符串，通常在 key-value 编程和 key-value 观察 APIs 中使用。其格式如下：
 
 > `#keyPath` ( `属性名` )
@@ -919,7 +919,7 @@ print(keyPath == c.getSomeKeyPath())
 > *key-path 字符串表达式* → **#keyPath (** [表达式](#expression)  **)**
 > 
 
-## 后缀表达式 {#postfix_expressions}
+## 后缀表达式 {#postfix-expressions}
 *后缀表达式*就是在某个表达式的后面运用后缀运算符或其他后缀语法。从语法构成上来看，基本表达式也是后缀表达式。
 
 关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
@@ -951,7 +951,7 @@ print(keyPath == c.getSomeKeyPath())
 > *后缀表达式* → [*可选链表达式*](#optional-chaining-expression)
 > 
 
-### 函数调用表达式 {#function_call_expression}
+### 函数调用表达式 {#function-call-expression}
 *函数调用表达式*由函数名和参数列表组成，形式如下：
 
 > `函数名`(`参数 1`, `参数 2`)
@@ -1014,7 +1014,7 @@ myData.someMethod {$0 == 13}
 > *尾随闭包* → [*闭包表达式*](#closure-expression)
 > 
 
-### 构造器表达式 {#initializer_expression}
+### 构造器表达式 {#initializer-expression}
 *构造器表达式*用于访问某个类型的构造器，形式如下：
 
 > `表达式`.init(`构造器参数`)
@@ -1061,7 +1061,7 @@ let s3 = someValue.dynamicType.init(data: 7) // 有效
 > *构造器表达式* → [*后缀表达式*](#postfix-expression) **.** **init** **(** [*参数名称*](#argument-names) **)**
 > 
 
-### 显式成员表达式 {#explicit_member_expression}
+### 显式成员表达式 {#explicit-member-expression}
 *显式成员表达式*允许我们访问命名类型、元组或者模块的成员，其形式如下：
 
 > `表达式`.`成员名`
@@ -1138,7 +1138,7 @@ let x = [10, 3, 20, 15, 4]
 > *参数名* → [*标识符*](./02_Lexical_Structure.md#identifier) **:**
 > 
 
-### 后缀 self 表达式 {#postfix_self_expression}
+### 后缀 self 表达式 {#postfix-self-expression}
 后缀 `self` 表达式由某个表达式或类型名紧跟 `.self` 组成，其形式如下：
 
 > `表达式`.self
@@ -1158,7 +1158,7 @@ let x = [10, 3, 20, 15, 4]
 > 
 
 
-### 下标表达式 {#subscript_expression}
+### 下标表达式 {#subscript-expression}
 可通过*下标表达式*访问相应的下标，形式如下：
 
 > `表达式`[`索引表达式`]
@@ -1175,7 +1175,7 @@ let x = [10, 3, 20, 15, 4]
 > *下标表达式* → [*后缀表达式*](#postfix-expression) **[** [*表达式列表*](#expression-list) **]**
 > 
 
-### 强制取值表达式 {#forced-Value_expression}
+### 强制取值表达式 {#forced-Value-expression}
 当你确定可选值不是 `nil` 时，可以使用*强制取值表达式*来强制解包，形式如下：
 
 > `表达式`!
@@ -1202,7 +1202,7 @@ someDictionary["a"]![0] = 100
 > *强制取值表达式* → [*后缀表达式*](#postfix-expression) **!**
 > 
 
-### 可选链表达式 {#optional-chaining_expression}
+### 可选链表达式 {#optional-chaining-expression}
 *可选链表达式*提供了一种使用可选值的便捷方法，形式如下：
 
 > `表达式`?

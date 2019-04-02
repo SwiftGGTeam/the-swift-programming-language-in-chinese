@@ -54,7 +54,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 > *类型* → [*(类型)*](#type)
 > 
 
-## 类型注解 {#type_annotation}
+## 类型注解 {#type-annotation}
 *类型注解*显式地指定一个变量或表达式的类型。类型注解始于冒号 `:` 终于类型，比如下面两个例子：
 
 ```swift
@@ -73,7 +73,7 @@ func someFunction(a: Int) { /* ... */ }
 > *类型注解* → **:** [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 > 
 
-## 类型标识符 {#type_identifier}
+## 类型标识符 {#type-identifier}
 类型标识符引用命名型类型，还可引用命名型或复合型类型的别名。
 
 大多数情况下，类型标识符引用的是与之同名的命名型类型。例如类型标识符 `Int` 引用命名型类型 `Int`，同样，类型标识符 `Dictionary<String, Int>` 引用命名型类型 `Dictionary<String, Int>`。
@@ -102,7 +102,7 @@ var someValue: ExampleModule.MyType
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 元组类型 {#tuple_type}
+## 元组类型 {#tuple-type}
 元组类型是使用括号括起来的零个或多个类型，类型间用逗号隔开。
 
 你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../chapter2/06_Functions.md#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
@@ -137,7 +137,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > *元素名* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 函数类型 {#function_type}
+## 函数类型 {#function-type}
 函数类型表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
 
 > （`参数类型`）->（`返回值类型`）
@@ -234,7 +234,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 数组类型 {#array_type}
+## 数组类型 {#array-type}
 Swift 语言为标准库中定义的 `Array<Element>` 类型提供了如下语法糖：
 
 > [`类型`]
@@ -266,7 +266,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 > *数组类型* → **[** [*类型*](#type) **]**
 > 
 
-## 字典类型 {#dictionary_type}
+## 字典类型 {#dictionary-type}
 Swift 语言为标准库中定义的 `Dictionary<Key, Value>` 类型提供了如下语法糖：
 
 > [`键类型` : `值类型`]
@@ -294,7 +294,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 > *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]**
 > 
 
-## 可选类型 {#optional_type}
+## 可选类型 {#optional-type}
 Swift 定义后缀 `?` 来作为标准库中定义的命名型类型 `Optional<Wrapped>` 的语法糖。换句话说，下面两个声明是等价的：
 
 ```swift
@@ -326,7 +326,7 @@ optionalInteger! // 42
 > *可选类型* → [*类型*](#type) **?**
 > 
 
-## 隐式解析可选类型 {#implicitly_unwrapped_optional_type}
+## 隐式解析可选类型 {#implicitly-unwrapped-optional-type}
 当可以被访问时，Swift 语言定义后缀 `!` 作为标准库中命名类型 `Optional<Wrapped>` 的语法糖，来实现自动解包的功能。如果尝试对一个值为 `nil` 的可选类型进行隐式解包，将会产生运行时错误。因为隐式解包，下面两个声明等价：
 
 ```swift
@@ -361,7 +361,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 > *隐式解析可选类型* → [*类型*](#type) **!**
 > 
 
-## 协议合成类型 {#protocol_composition_type}
+## 协议合成类型 {#protocol-composition-type}
 协议合成类型定义了一种遵循协议列表中每个指定协议的类型，或者一个现有类型的子类并遵循协议列表中每个指定协议。协议合成类型只能用在类型注解、泛型参数子句和泛型 `where` 子句中指定类型。
 
 协议合成类型的形式如下：
@@ -395,7 +395,7 @@ typealias PQR = PQ & Q & R
 > *协议合成延续* → [*协议标识符*](#protocol-identifier) | [*协议合成类型*](#protocol-composition-type)
 > 
 
-## 元类型 {#metatype_type}
+## 元类型 {#metatype-type}
 元类型是指任意类型的类型，包括类类型、结构体类型、枚举类型和协议类型。
 
 类、结构体或枚举类型的元类型是相应的类型名紧跟 `.Type`。协议类型的元类型——并不是运行时遵循该协议的具体类型——是该协议名字紧跟 `.Protocol`。比如，类 `SomeClass` 的元类型就是 `SomeClass.Type`，协议 `SomeProtocol` 的元类型就是 `SomeProtocal.Protocol`。
@@ -445,7 +445,7 @@ let anotherInstance = metatype.init(string: "some string")
 > *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol**
 > 
 
-## 类型继承子句 {#type_inheritance_clause}
+## 类型继承子句 {#type-inheritance-clause}
 类型继承子句被用来指定一个命名型类型继承自哪个类、采纳哪些协议。类型继承子句开始于冒号 `:`，其后是类型标识符列表。
 
 类可以继承自单个超类，并遵循任意数量的协议。当定义一个类时，超类的名字必须出现在类型标识符列表首位，然后跟上该类需要遵循的任意数量的协议。如果一个类不是从其它类继承而来，那么列表可以以协议开头。关于类继承更多的讨论和例子，请参阅 [继承](../chapter2/13_Inheritance.md)。
@@ -457,7 +457,7 @@ let anotherInstance = metatype.init(string: "some string")
 > 类型继承子句语法
 > 
 
-#### type_inheritance_clause {#type_inheritance_clause}
+#### type_inheritance_clause {#type-inheritance-clause}
 > *类型继承子句* → **:** [*类型继承列表*](#type-inheritance-list)
 > 
 
@@ -468,7 +468,7 @@ let anotherInstance = metatype.init(string: "some string")
 #### class-requirement {#class-requirement}
 
 
-## 类型推断 {#type_inference}
+## 类型推断 {#type-inference}
 Swift 广泛使用类型推断，从而允许你省略代码中很多变量和表达式的类型或部分类型。比如，对于 `var x: Int = 0`，你可以完全省略类型而简写成 `var x = 0`，编译器会正确推断出 `x` 的类型 `Int`。类似的，当完整的类型可以从上下文推断出来时，你也可以省略类型的一部分。比如，如果你写了 `let dict: Dictionary = ["A" : 1]`，编译器能推断出 `dict` 的类型是 `Dictionary<String, Int>`。
 
 在上面的两个例子中，类型信息从表达式树的叶子节点传向根节点。也就是说，`var x: Int = 0` 中 `x` 的类型首先根据 `0` 的类型进行推断，然后将该类型信息传递到根节点（变量 `x`）。

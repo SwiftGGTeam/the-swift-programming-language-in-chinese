@@ -10,7 +10,7 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类
 > 
 > Swift 的 `Arrays`、`Sets` 和 `Dictionaries` 类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./23_Generics.md)章节。
 
-## 集合的可变性 {#mutability_of_collections}
+## 集合的可变性 {#mutability-of-collections}
 
 如果创建一个 `Arrays`、`Sets` 或 `Dictionaries` 并且把它分配成一个变量，这个集合将会是*可变的*。这意味着你可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果我们把 `Arrays`、`Sets` 或 `Dictionaries` 分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
@@ -26,11 +26,11 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries` 中存储的数据值类
 > 
 > Swift 的 `Array` 类型被桥接到 `Foundation` 中的 `NSArray` 类。更多关于在 `Foundation` 和 `Cocoa` 中使用 `Array` 的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
-### 数组的简单语法 {#array_type_shorthand_syntax}
+### 数组的简单语法 {#array-type-shorthand-syntax}
 
 写 Swift 数组应该遵循像 `Array<Element>` 这样的形式，其中 `Element` 是这个数组中唯一允许存在的数据类型。我们也可以使用像 `[Element]` 这样的简单语法。尽管两种形式在功能上是一样的，但是推荐较短的那种，而且在本文中都会使用这种形式来使用数组。
 
-### 创建一个空数组 {#creating_an_empty_array}
+### 创建一个空数组 {#creating-an-empty-array}
 
 我们可以使用构造语法来创建一个由特定数据类型构成的空数组：
 
@@ -51,7 +51,7 @@ someInts = []
 // someInts 现在是空数组，但是仍然是 [Int] 类型的。
 ```
 
-### 创建一个带有默认值的数组 {#creating_an_array_with_a_default_value}
+### 创建一个带有默认值的数组 {#creating-an-array-with-a-default-value}
 
 Swift 中的 `Array` 类型还提供一个可以创建特定大小并且所有数据都被默认的构造方法。我们可以把准备加入新数组的数据项数量（`count`）和适当类型的初始值（`repeating`）传入数组构造函数：
 
@@ -60,7 +60,7 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
 // threeDoubles 是一种 [Double] 数组，等价于 [0.0, 0.0, 0.0]
 ```
 
-### 通过两个数组相加创建一个数组 {#creating_an_array_by_adding_two_arrays_together}
+### 通过两个数组相加创建一个数组 {#creating-an-array-by-adding-two-arrays-together}
 
 我们可以使用加法操作符（`+`）来组合两种已存在的相同类型数组。新数组的数据类型会被从两个数组的数据类型中推断出来：
 
@@ -72,7 +72,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 // sixDoubles 被推断为 [Double]，等价于 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 ```
 
-### 用数组字面量构造数组 {#creating_an_array_with_an_array_literals}
+### 用数组字面量构造数组 {#creating-an-array-with-an-array-literals}
 
 我们可以使用*数组字面量*来进行数组构造，这是一种用一个或者多个数值构造数组的简单方法。数组字面量是一系列由逗号分割并由方括号包含的数值：
 
@@ -101,7 +101,7 @@ var shoppingList = ["Eggs", "Milk"]
 
 因为所有数组字面量中的值都是相同的类型，Swift 可以推断出 `[String]` 是 `shoppingList` 中变量的正确类型。
 
-### 访问和修改数组 {#accessing_and_modifying_an_array}
+### 访问和修改数组 {#accessing-and-modifying-an-array}
 
 我们可以通过数组的方法和属性来访问和修改数组，或者使用下标语法。
 
@@ -207,7 +207,7 @@ let apples = shoppingList.removeLast()
 // apples 常量的值现在等于“Apples”字符串
 ```
 
-### 数组的遍历 {#iterating_over_an_array}
+### 数组的遍历 {#iterating-over-an-array}
 
 我们可以使用 `for-in` 循环来遍历所有数组中的数据项：
 
@@ -246,7 +246,7 @@ for (index, value) in shoppingList.enumerated() {
 > 
 > 关于使用 `Foundation` 和 `Cocoa` 中 `Set` 的知识，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
-### 集合类型的哈希值 {#hash_values_for_set_types}
+### 集合类型的哈希值 {#hash-values-for-set-types}
 
 一个类型为了存储在集合中，该类型必须是*可哈希化*的——也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
 
@@ -264,11 +264,11 @@ Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）�
 
 关于遵循协议的更多信息，请看[协议](./22_Protocols.md)。
 
-### 集合类型语法 {#set_type_syntax}
+### 集合类型语法 {#set-type-syntax}
 
 Swift 中的 `Set` 类型被写为 `Set<Element>`，这里的 `Element` 表示 `Set` 中允许存储的类型，和数组不同的是，集合没有等价的简化形式。
 
-### 创建和构造一个空的集合 {#creating_and_initalizing_an_empty_set}
+### 创建和构造一个空的集合 {#creating-and-initalizing-an-empty-set}
 
 你可以通过构造器语法创建一个特定类型的空集合：
 
@@ -291,7 +291,7 @@ letters = []
 // letters 现在是一个空的 Set，但是它依然是 Set<Character> 类型
 ```
 
-### 用数组字面量创建集合 {#creating_a_set_with_an_array_literal}
+### 用数组字面量创建集合 {#creating-a-set-with-an-array-literal}
 
 你可以使用数组字面量来构造集合，并且可以使用简化形式写一个或者多个值作为集合元素。
 
@@ -316,7 +316,7 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 
 由于数组字面量中的所有元素类型相同，Swift 可以推断出 `Set<String>` 作为 `favoriteGenres` 变量的正确类型。
 
-### 访问和修改一个集合 {#accesing_and_modifying_a_set}
+### 访问和修改一个集合 {#accesing-and-modifying-a-set}
 
 你可以通过 `Set` 的属性和方法来访问和修改一个 `Set`。
 
@@ -367,7 +367,7 @@ if favoriteGenres.contains("Funk") {
 // 打印“It's too funky in here.”
 ```
 
-### 遍历一个集合 {#iterating_over_a_set}
+### 遍历一个集合 {#iterating-over-a-set}
 
 你可以在一个 `for-in` 循环中遍历一个 `Set` 中的所有值。
 
@@ -393,11 +393,11 @@ for genre in favoriteGenres.sorted() {
 // Jazz
 ```
 
-## 集合操作 {#performing_set_operations}
+## 集合操作 {#performing-set-operations}
 
 你可以高效地完成 `Set` 的一些基本操作，比如把两个集合组合到一起，判断两个集合共有元素，或者判断两个集合是否全包含，部分包含或者不相交。
 
-### 基本集合操作 {#fundamental_set_operations}
+### 基本集合操作 {#fundamental-set-operations}
 
 下面的插图描述了两个集合 `a` 和 `b`，以及通过阴影部分的区域显示集合各种操作的结果。
 
@@ -423,7 +423,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 // [1, 2, 9]
 ```
 
-### 集合成员关系和相等 {#set_membership_and_equality}
+### 集合成员关系和相等 {#set-membership-and-equality}
 
 下面的插图描述了三个集合 `a`、`b` 和 `c`,以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的父集合，因为 `a` 包含了 `b` 中所有的元素，相反的，集合 `b` 是集合 `a` 的子集合，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 彼此不关联，因为它们之间没有共同的元素。
 
@@ -458,7 +458,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
 > 
 > 更多关于在 `Foundation` 和 `Cocoa` 中使用 `Dictionary` 类型的信息，参见 [*Using Swift with Cocoa and Obejective-C(Swift 4.1)*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216) 中[使用 Cocoa 数据类型](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6)部分。
 
-### 字典类型简化语法 {#dictionary_type_shorthand_syntax}
+### 字典类型简化语法 {#dictionary-type-shorthand-syntax}
 
 Swift 的字典使用 `Dictionary<Key, Value>` 定义，其中 `Key` 是字典中键的数据类型，`Value` 是字典中对应于这些键所存储值的数据类型。
 
@@ -468,7 +468,7 @@ Swift 的字典使用 `Dictionary<Key, Value>` 定义，其中 `Key` 是字典�
 
 我们也可以用 `[Key: Value]` 这样简化的形式去创建一个字典类型。虽然这两种形式功能上相同，但是后者是首选，并且这本指导书涉及到字典类型时通篇采用后者。
 
-### 创建一个空字典 {#creating_an_empty_dictionary}
+### 创建一个空字典 {#creating-an-empty-dictionary}
 
 我们可以像数组一样使用构造语法创建一个拥有确定类型的空字典：
 
@@ -488,7 +488,7 @@ namesOfIntegers = [:]
 // namesOfIntegers 又成为了一个 [Int: String] 类型的空字典
 ```
 
-### 用字典字面量创建字典 {#creating_a_dictionary_with_a_dictionary_literal}
+### 用字典字面量创建字典 {#creating-a-dictionary-with-a-dictionary-literal}
 
 我们可以使用*字典字面量*来构造字典，这和我们刚才介绍过的数组字面量拥有相似语法。字典字面量是一种将一个或多个键值对写作 `Dictionary` 集合的快捷途径。
 
@@ -523,7 +523,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 因为这个语句中所有的键和值都各自拥有相同的数据类型，Swift 可以推断出 `Dictionary<String, String>` 是 `airports` 字典的正确类型。
 
-### 访问和修改字典 {#accessing_and_modifying_a_dictionary}
+### 访问和修改字典 {#accessing-and-modifying-a-dictionary}
 
 我们可以通过字典的方法和属性来访问和修改字典，或者通过使用下标语法。
 
@@ -603,7 +603,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 // 打印“The removed airport's name is Dublin Airport.”
 ```
 
-### 字典遍历 {#iterating_over_a_dictionary}
+### 字典遍历 {#iterating-over-a-dictionary}
 
 我们可以使用 `for-in` 循环来遍历某个字典中的键值对。每一个字典中的数据项都以 `(key, value)` 元组形式返回，并且我们可以使用临时常量或者变量来分解这些元组：
 

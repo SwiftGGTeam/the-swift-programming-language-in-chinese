@@ -10,7 +10,7 @@
 
 有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰某个特定的声明的。这些_特性的参数_写在圆括号内，它们的格式由它们所属的特性来定义。
 
-## 声明特性 {#declaration_attributes}
+## 声明特性 {#declaration-attributes}
 
 声明特性只能应用于声明。
 
@@ -285,7 +285,7 @@ class ExampleClass: NSObject {
 
 大多数代码应该使用 `objc` 特性，以暴露所需的声明。如果需要暴露多个声明，可以将其分组到添加 `objc` 特性的扩展中。`objcMembers` 特性为大量使用 Objective-C 运行时的内省工具的库提供了便利。添加不必要的 `objc` 特性会增加二进制体积并影响性能。
 
-### `requires_stored_property_inits` {#requires_stored_property_inits}
+### `requires_stored_property_inits` {#requires-stored-property-inits}
 
 该特性用于类声明，以要求类中所有存储属性提供默认值作为其定义的一部分。对于从中继承的任何类都推断出 `NSManagedObject` 特性。
 
@@ -307,13 +307,13 @@ class ExampleClass: NSObject {
 
 标记为 `inlinable` 特性的声明，在内联代码中可以隐式使用。虽然 `inlinable` 或 `usableFromInline` 可以用于 `internal` 声明，但这两者不能同时使用。
 
-### `warn_unqualified_access` {#warn_unqualified_access}
+### `warn_unqualified_access` {#warn-unqualified-access}
 
 该特性应用于顶级函数、实例方法、类方法或静态方法，以在没有前置限定符（例如模块名称、类型名称、实例变量或常量）的情况下使用该函数或方法时触发警告。使用该特性可以帮助减少在同一作用于访问同名函数之间的歧义。
 
 例如，Swift 标准库包含 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 顶级函数和用于序列比较元素的 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。序列方法声明使用了  `warn_unqualified_access`，以减少在 `Sequence` 扩展中使用它们的歧义。
 
-### Interface Builder 使用的声明特性 {#declaration_attributes_used_by_interface_builder}
+### Interface Builder 使用的声明特性 {#declaration-attributes-used-by-interface-builder}
 
 `Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBOutlet`，`IBDesignable`，以及 `IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
 
@@ -321,7 +321,7 @@ class ExampleClass: NSObject {
 
 应用 `IBAction`、`IBOutlet`、`IBDesignable` 或者 `IBInspectable`  特性都意味着同时应用 `objc` 特性。
 
-## 类型特性 {#type_attributes}
+## 类型特性 {#type-attributes}
 
 类型特性只能用于修饰类型。
 
@@ -347,7 +347,7 @@ convention 特性总是与下面的参数之一一起出现。
 
 在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行，这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 声明特性的函数类型中访问属性和方法时不需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../chapter2/07_Closures.md#escaping_closures)。
 
-## Switch Case 特性 {#switch_case_attributes}
+## Switch Case 特性 {#switch-case-attributes}
 
 你只能在 switch cases 中使用 switch case 特性。
 
@@ -364,12 +364,12 @@ convention 特性总是与下面的参数之一一起出现。
 > *特性*→ [特性名](#attribute_name) [特性参数子句](#atribute_argument_clause)<sub>可选</sub>
 > 
 > 
-####  attribute_name {#attribute_name}
+####  attribute_name {#attribute-name}
 > 
 > *特性名* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
 > 
-####  atribute_argument_clause {#atribute_argument_clause}
+####  atribute_argument_clause {#atribute-argument-clause}
 > 
 > *特性参数子句* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
 > 
@@ -380,12 +380,12 @@ convention 特性总是与下面的参数之一一起出现。
 > 
 >
 > 
-####  balanced_tokens {#balanced_tokens}
+####  balanced_tokens {#balanced-tokens}
 > 
 > *均衡令牌列表* → [均衡令牌](#balanced_token) [均衡令牌列表](#balanced_tokens)<sub>可选</sub>
 > 
 > 
-####  balanced_token {#balanced_token}
+####  balanced_token {#balanced-token}
 > 
 > *均衡令牌* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
 > 

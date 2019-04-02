@@ -15,7 +15,7 @@
 
 小伙伴们，Swift 中的 Bool 类型有着非常重要的语法功能，并支撑起了整个 Swift 体系中的逻辑判断体系，经过老码的研究和学习， Bool 类型本身其实是对基础 Boolean 类型封装，小伙伴们可能咬着手指头问老码，怎么一会 Bool 类型，一会 Boolean 类型，其区别在于，前者是基于枚举的组合类型，而后者则是基本类型，只有两种 true 和 false。
 
-####自定义原型 {#prefix_expressions}
+####自定义原型 {#prefix-expressions}
 
 接下老码根据 Bool 的思想来创建一个 OCBool 类型，来让小伙伴们了解一下 Swift 中到底是怎么玩儿的。
 来我们先看一下 OCBool 的定义。

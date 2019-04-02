@@ -4,7 +4,7 @@
 
 Swift 也保证同时访问同一块内存时不会冲突，通过约束代码里对于存储地址的写操作，去获取那一块内存的访问独占权。因为 Swift 自动管理内存，所以大部分时候你完全不需要考虑内存访问的事情。然而，理解潜在的冲突也是很重要的，可以避免你写出访问冲突的代码。而如果你的代码确实存在冲突，那在编译时或者运行时就会得到错误。
 
-## 理解内存访问冲突 {#understanding_conflicting_access_to_memory}
+## 理解内存访问冲突 {#understanding-conflicting-access-to-memory}
 
 内存的访问，会发生在你给变量赋值，或者传递参数给函数时。例如，下面的代码就包含了读和写的访问：
 
@@ -32,7 +32,7 @@ print("We're number \(one)!")
 >
 > 如果你曾经在单线程代码里有访问冲突，Swift 可以保证你在编译或者运行时会得到错误。对于多线程的代码，可以使用 [Thread Sanitizer](https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer) 去帮助检测多线程的冲突。
 
-### 内存访问性质 {#characteristics_of_memory_access}
+### 内存访问性质 {#characteristics-of-memory-access}
 
 内存访问冲突时，要考虑内存访问上下文中的这三个性质：访问是读还是写，访问的时长，以及被访问的存储地址。特别是，冲突会发生在当你有两个访问符合下列的情况：
 
@@ -59,7 +59,7 @@ print(myNumber)
 
 重叠的访问主要出现在使用 in-out 参数的函数和方法或者结构体的 mutating 方法里。Swift 代码里典型的长期访问会在后面进行讨论。
 
-## In-Out 参数的访问冲突 {#conflicting_access_to_in-out_parameters}
+## In-Out 参数的访问冲突 {#conflicting-access-to-in-out-parameters}
 
 一个函数会对它所有的 in-out 参数进行长期写访问。in-out 参数的写访问会在所有非 in-out 参数处理完之后开始，直到函数执行完毕为止。如果有多个 in-out 参数，则写访问开始的顺序与参数的顺序一致。
 
@@ -115,7 +115,7 @@ balance(&playerOneScore, &playerOneScore)
 > 
 > 因为操作符也是函数，它们也会对 in-out 参数进行长期访问。例如，假设 `balance(_:_:)` 是一个名为 `<^>` 的操作符函数，那么 `playerOneScore <^> playerOneScore` 也会造成像 `balance(&playerOneScore, &playerOneScore)` 一样的冲突。
 
-## 方法里 self 的访问冲突 {#conflicting_access_to_self_in_methods}
+## 方法里 self 的访问冲突 {#conflicting-access-to-self-in-methods}
 
 一个结构体的 mutating 方法会在调用期间对 `self` 进行写访问。例如，想象一下这么一个游戏，每一个玩家都有血量，受攻击时血量会下降，并且有敌人的数量，使用特殊技能时会减少敌人数量。
 
@@ -161,7 +161,7 @@ mutating 方法在调用期间需要对 `self` 发起写访问，而同时 in-ou
 
 ![](https://docs.swift.org/swift-book/_images/memory_share_health_oscar_2x.png)
 
-## 属性的访问冲突 {#conflicting_access_to_properties}
+## 属性的访问冲突 {#conflicting-access-to-properties}
 
 如结构体，元组和枚举的类型都是由多个独立的值组成的，例如结构体的属性或元组的元素。因为它们都是值类型，修改值的任何一部分都是对于整个值的修改，意味着其中一个属性的读或写访问都需要访问整一个值。例如，元组元素的写访问重叠会产生冲突：
 

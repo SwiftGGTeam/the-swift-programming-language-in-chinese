@@ -6,7 +6,7 @@ Swift 还提供了 `for-in` 循环，用来更简单地遍历数组（Array）�
 
 Swift 的 `switch` 语句比许多类 C 语言要更加强大。case 还可以匹配很多不同的模式，包括范围匹配，元组（tuple）和特定类型匹配。`switch` 语句的 case 中匹配的值可以声明为临时常量或变量，在 case 作用域内使用，也可以配合 `where` 来描述更复杂的匹配条件。
 
-## For-In 循环 {#for_in_loops}
+## For-In 循环 {#for-in-loops}
 
 你可以使用 `for-in` 循环来遍历一个集合中的所有元素，例如数组中的元素、范围内的数字或者字符串中的字符。
 
@@ -97,7 +97,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 }
 ```
 
-## While 循环 {#while_loops}
+## While 循环 {#while-loops}
 
 `while` 循环会一直运行一段语句直到条件变成 `false`。这类循环适合使用在第一次迭代前，迭代次数未知的情况下。Swift 提供两种 `while` 循环形式：
 
@@ -174,7 +174,7 @@ print("Game over!")
 
 `while` 循环比较适合本例中的这种情况，因为在 `while` 循环开始时，我们并不知道游戏要跑多久，只有在达成指定条件时循环才会结束。
 
-### Repeat-While {#repeat_while}
+### Repeat-While {#repeat-while}
 
 `while` 循环的另外一种形式是 `repeat-while`，它和 `while` 的区别是在判断循环条件之前，先执行一次循环的代码块。然后重复循环直到条件为 `false`。
 
@@ -222,7 +222,7 @@ print("Game over!")
 
 循环条件（`while square < finalSquare`）和 `while` 方式相同，但是只会在循环结束后进行计算。在这个游戏中，`repeat-while` 表现得比 `while` 循环更好。`repeat-while` 方式会在条件判断 `square` 没有超出后直接运行 `square += board[square]`，这种方式可以比起前面 `while` 循环的版本，可以省去数组越界的检查。
 
-## 条件语句 {#conditional_statement}
+## 条件语句 {#conditional-statement}
 
 根据特定的条件执行特定的代码通常是十分有用的。当错误发生时，你可能想运行额外的代码；或者，当值太大或太小时，向用户显示一条消息。要实现这些功能，你就需要使用*条件语句*。
 
@@ -326,7 +326,7 @@ default:
 
 在这个例子中，第一个 case 分支用于匹配第一个英文字母 `a`，第二个 case 分支用于匹配最后一个字母 `z`。因为 `switch` 语句必须有一个 case 分支用于覆盖所有可能的字符，而不仅仅是所有的英文字母，所以 switch 语句使用 `default` 分支来匹配除了 `a` 和 `z` 外的所有值，这个分支保证了 swith 语句的完备性。
 
-#### 不存在隐式的贯穿 {#no_implicit_fallthrough}
+#### 不存在隐式的贯穿 {#no-implicit-fallthrough}
 
 与 C 和 Objective-C 中的 `switch` 语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止 `switch` 语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用 `break` 语句。这使得 `switch` 语句更安全、更易用，也避免了漏写 `break` 语句导致多个语言被执行的错误。
 
@@ -369,7 +369,7 @@ default:
 > 
 > 如果想要显式贯穿 case 分支，请使用 `fallthrough` 语句，详情请参考[贯穿](#fallthrough)。
 
-#### 区间匹配 {#interval_matching}
+#### 区间匹配 {#interval-matching}
 
 case 分支的模式也可以是一个值的区间。下面的例子展示了如何使用区间匹配来输出任意数字对应的自然语言格式：
 
@@ -426,7 +426,7 @@ default:
 
 不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点 (0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点 (0, 0)会首先匹配 `case (0, 0)`，因此剩下的能够匹配的分支都会被忽视掉。
 
-#### 值绑定（Value Bindings） {#value_bindings}
+#### 值绑定（Value Bindings） {#value-bindings}
 
 case 分支允许将匹配的值声明为临时常量或变量，并且在 case 分支体内使用 —— 这种行为被称为*值绑定*（value binding），因为匹配的值在 case 分支体内，与临时的常量或变量绑定。
 
@@ -482,7 +482,7 @@ case let (x, y):
 
 就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch` 语句就已经完备了，因此不需要再书写默认分支。
 
-#### 复合型 Cases {#compound_cases}
+#### 复合型 Cases {#compound-cases}
 
 当多个条件可以使用同一种方法来处理时，可以将这几种可能放在同一个 `case` 后面，并且用逗号隔开。当 case 后面的任意一种模式匹配的时候，这条分支就会被匹配。并且，如果匹配列表过长，还可以分行书写：
 
@@ -517,7 +517,7 @@ default:
 
 上面的 case 有两个模式：`(let distance, 0)` 匹配了在 x 轴上的值，`(0, let distance)` 匹配了在 y 轴上的值。两个模式都绑定了 `distance`，并且 `distance` 在两种模式下，都是整型——这意味着分支体内的代码，只要 case 匹配，都可以获取到 `distance` 值。
 
-## 控制转移语句 {#control_transfer_statements}
+## 控制转移语句 {#control-transfer-statements}
 
 控制转移语句改变你代码的执行顺序，通过它可以实现代码的跳转。Swift 有五种控制转移语句：
 
@@ -556,11 +556,11 @@ print(puzzleOutput)
 
 `break` 语句会立刻结束整个控制流的执行。`break` 可以在 `switch` 或循环语句中使用，用来提前结束 `switch` 或循环语句。
 
-#### 循环语句中的 break {#break_in_a_loop_statement}
+#### 循环语句中的 break {#break-in-a-loop-statement}
 
 当在一个循环体中使用 `break` 时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号（`}`）后的第一行代码。不会再有本次循环的代码被执行，也不会再有下次的循环产生。
 
-#### Switch 语句中的 break {#break_in_a_switch_statement}
+#### Switch 语句中的 break {#break-in-a-switch-statement}
 
 当在一个 `switch` 代码块中使用 `break` 时，会立即中断该 `switch` 代码块的执行，并且跳转到表示 `switch` 代码块结束的大括号（`}`）后的第一行代码。
 
@@ -631,7 +631,7 @@ print(description)
 > 
 > `fallthrough` 关键字不会检查它下一个将会落入执行的 case 中的匹配条件。`fallthrough` 简单地使代码继续连接到下一个 case 中的代码，这和 C 语言标准中的 `switch` 语句特性是一样的。
 
-### 带标签的语句 {#labeled_statements}
+### 带标签的语句 {#labeled-statements}
 
 在 Swift 中，你可以在循环体和条件语句中嵌套循环体和条件语句来创造复杂的控制流结构。并且，循环体和条件语句都可以使用 `break` 语句来提前结束整个代码块。因此，显式地指明 `break` 语句想要终止的是哪个循环体或者条件语句，会很有用。类似地，如果你有许多嵌套的循环体，显式指明 `continue` 语句想要影响哪一个循环体也会非常有用。
 
@@ -702,7 +702,7 @@ print("Game over!")
 > 
 > 同时请注意，当调用 `continue gameLoop` 去跳转到下一次循环迭代时，这里使用 `gameLoop` 标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以 `continue` 语句会影响到哪个循环体是没有歧义的。然而，`continue` 语句使用 `gameLoop` 标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的 `break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
 
-## 提前退出 {#early_exit}
+## 提前退出 {#early-exit}
 
 像 `if` 语句一样，`guard` 的执行取决于一个表达式的布尔值。我们可以使用 `guard` 语句来要求条件必须为真时，以执行 `guard` 语句后的代码。不同于 `if` 语句，一个 `guard` 语句总是有一个 `else` 从句，如果条件不为真则执行 `else` 从句中的代码。
 
@@ -736,7 +736,7 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 
 相比于可以实现同样功能的 `if` 语句，按需使用 `guard` 语句会提升我们代码的可读性。它可以使你的代码连贯的被执行而不需要将它包在 `else` 块中，它可以使你在紧邻条件判断的地方，处理违规的情况。
 
-## 检测 API 可用性 {#checking_api_availability}
+## 检测 API 可用性 {#checking-api-availability}
 
 Swift 内置支持检查 API 可用性，这可以确保我们不会在当前部署机器上，不小心地使用了不可用的 API。
 

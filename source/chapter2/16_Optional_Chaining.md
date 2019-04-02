@@ -6,7 +6,7 @@
 > 
 > Swift 的可选链式调用和 Objective-C 中向 `nil` 发送消息有些相像，但是 Swift 的可选链式调用可以应用于任意类型，并且能检查调用是否成功。
 
-## 使用可选链式调用代替强制展开 {#optional_chaining_as_an_alternative_to_forced_unwrapping}
+## 使用可选链式调用代替强制展开 {#optional-chaining-as-an-alternative-to-forced-unwrapping}
 
 通过在想调用的属性、方法，或下标的可选值后面放一个问号（`?`），可以定义一个可选链。这一点很像在可选值后面放一个叹号（`!`）来强制展开它的值。它们的主要区别在于当可选值为空时可选链式调用只会调用失败，然而强制展开将会触发运行时错误。
 
@@ -79,7 +79,7 @@ if let roomCount = john.residence?.numberOfRooms {
 // 打印“John's residence has 1 room(s).”
 ```
 
-## 为可选链式调用定义模型类 {#defining_model_classes_for_optional_chaining}
+## 为可选链式调用定义模型类 {#defining-model-classes-for-optional-chaining}
 
 通过使用可选链式调用可以调用多层属性、方法和下标。这样可以在复杂的模型中向下访问各种子属性，并且判断能否访问子属性的属性、方法和下标。
 
@@ -154,7 +154,7 @@ class Address {
 
 `Address` 类提供了 `buildingIdentifier()` 方法，返回值为 `String?`。 如果 `buildingName` 有值则返回 `buildingName`。或者，如果 `buildingNumber` 和 `street` 均有值，则返回两者拼接得到的字符串。否则，返回 `nil`。
 
-## 通过可选链式调用访问属性 {#accessing_properties_through_optional_chaining}
+## 通过可选链式调用访问属性 {#accessing-properties-through-optional-chaining}
 
 正如[使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping)中所述，可以通过可选链式调用在一个可选值上访问它的属性，并判断访问是否成功。
 
@@ -200,7 +200,7 @@ john.residence?.address = createAddress()
 
 没有任何打印消息，可以看出 `createAddress()` 函数并未被执行。
 
-## 通过可选链式调用来调用方法 {#calling_methods_through_optional_chaining}
+## 通过可选链式调用来调用方法 {#calling-methods-through-optional-chaining}
 
 可以通过可选链式调用来调用方法，并判断是否调用成功，即使这个方法没有返回值。
 
@@ -236,7 +236,7 @@ if (john.residence?.address = someAddress) != nil {
 // 打印“It was not possible to set the address.”
 ```
 
-## 通过可选链式调用访问下标 {#accessing_subscripts_through_optional_chaining}
+## 通过可选链式调用访问下标 {#accessing-subscripts-through-optional-chaining}
 
 通过可选链式调用，我们可以在一个可选值上访问下标，并且判断下标调用是否成功。
 
@@ -281,7 +281,7 @@ if let firstRoomName = john.residence?[0].name {
 // 打印“The first room name is Living Room.”
 ```
 
-### 访问可选类型的下标 {#accessing_subscripts_of_optional_type}
+### 访问可选类型的下标 {#accessing-subscripts-of-optional-type}
 
 如果下标返回可选类型值，比如 Swift 中 `Dictionary` 类型的键的下标，可以在下标的结尾括号后面放一个问号来在其可选返回值上进行可选链式调用：
 
@@ -295,7 +295,7 @@ testScores["Brian"]?[0] = 72
 
 上面的例子中定义了一个 `testScores` 数组，包含了两个键值对，分别把 `String` 类型的键映射到一个 `Int` 值的数组。这个例子用可选链式调用把 `"Dave"` 数组中第一个元素设为 `91`，把 `"Bev"` 数组的第一个元素 `+1`，然后尝试把 `"Brian"` 数组中的第一个元素设为 `72`。前两个调用成功，因为 `testScores` 字典中包含 `"Dave"` 和 `"Bev"` 这两个键。但是 `testScores` 字典中没有 `"Brian"` 这个键，所以第三个调用失败。
 
-## 连接多层可选链式调用 {#linking_multiple_levels_of_chaining}
+## 连接多层可选链式调用 {#linking-multiple-levels-of-chaining}
 
 可以通过连接多个可选链式调用在更深的模型层级中访问属性、方法以及下标。然而，多层可选链式调用不会增加返回值的可选层级。
 
@@ -342,7 +342,7 @@ if let johnsStreet = john.residence?.address?.street {
 
 在上面的例子中，因为 `john.residence` 包含一个有效的 `Address` 实例，所以对 `john.residence` 的 `address` 属性赋值将会成功。
 
-## 在方法的可选返回值上进行可选链式调用 {#chaining_on_methods_with_optional_return_values}
+## 在方法的可选返回值上进行可选链式调用 {#chaining-on-methods-with-optional-return-values}
 
 上面的例子展示了如何在一个可选值上通过可选链式调用来获取它的属性值。我们还可以在一个可选值上通过可选链式调用来调用方法，并且可以根据需要继续在方法的可选返回值上进行可选链式调用。
 

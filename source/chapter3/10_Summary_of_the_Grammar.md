@@ -1,6 +1,6 @@
 # 语法总结（Summary of the Grammar）
 
-## 词法结构 {#lexical_structure}
+## 词法结构 {#lexical-structure}
 
 > 空白字符语法
 >
@@ -1633,7 +1633,7 @@
 > *表达式模式* → [表达式](./04_Expressions.md#expression)
 >
 
-## 泛型参数 {#generic_parameters_and_arguments}
+## 泛型参数 {#generic-parameters-and-arguments}
 
 > 泛型形参子句语法
 >

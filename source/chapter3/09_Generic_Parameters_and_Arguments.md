@@ -4,7 +4,7 @@
 
 关于 Swift 语言的泛型概述，请参阅 [泛型](../chapter2/22_Generics.md)。
 
-## 泛型形参子句 {#generic_parameter}
+## 泛型形参子句 {#generic-parameter}
 *泛型形参子句*指定泛型类型或函数的类型形参，以及这些参数相关的约束和要求。泛型形参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型形参列表`>
@@ -36,7 +36,7 @@ simpleMax(17, 42) // T 被推断为 Int 类型
 simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 ```
 
-### Where 子句 {#where_clauses}
+### Where 子句 {#where-clauses}
 要想对类型形参及其关联类型指定额外要求，可以在函数体或者类型的大括号之前添加 `where` 子句。`where` 子句由关键字 `where` 及其后的用逗号分隔的一个或多个要求组成。
 
 > `where` : `类型要求`
@@ -97,7 +97,7 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 > *同类型约束* → [*类型标识符*](./03_Types.md#type-identifier) **==** [*类型*](./03_Types.md#type)
 > 
 
-## 泛型实参子句 {#generic_argument}
+## 泛型实参子句 {#generic-argument}
 *泛型实参子句*指定泛型类型的类型实参。泛型实参子句用尖括号（`<>`）包住，形式如下：
 
 > <`泛型实参列表`>

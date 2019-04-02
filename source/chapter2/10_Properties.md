@@ -6,7 +6,7 @@
 
 另外，还可以定义属性观察器来监控属性值的变化，以此来触发自定义的操作。属性观察器可以添加到类本身定义的存储属性上，也可以添加到从父类继承的属性上。
 
-## 存储属性 {#stored_properties}
+## 存储属性 {#stored-properties}
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
@@ -27,7 +27,7 @@ rangeOfThreeItems.firstValue = 6
 
 `FixedLengthRange` 的实例包含一个名为 `firstValue` 的变量存储属性和一个名为 `length` 的常量存储属性。在上面的例子中，`length` 在创建实例的时候被初始化，且之后无法修改它的值，因为它是一个常量存储属性。
 
-### 常量结构体实例的存储属性 {#stored_properties_of_constant_structure_instances}
+### 常量结构体实例的存储属性 {#stored-properties-of-constant-structure-instances}
 
 如果创建了一个结构体实例并将其赋值给一个常量，则无法修改该实例的任何属性，即使被声明为可变属性也不行:
 
@@ -44,7 +44,7 @@ rangeOfFourItems.firstValue = 6
 
 属于*引用类型*的类则不一样。把一个引用类型的实例赋给一个常量后，依然可以修改该实例的可变属性。
 
-### 延时加载存储属性 {#lazy_stored_properties}
+### 延时加载存储属性 {#lazy-stored-properties}
 
 *延时加载存储属性*是指当第一次被调用的时候才会计算其初始值的属性。在属性声明前使用 `lazy` 来标示一个延时加载存储属性。
 
@@ -96,13 +96,13 @@ print(manager.importer.fileName)
 > 
 > 如果一个被标记为 `lazy` 的属性在没有初始化时就同时被多个线程访问，则无法保证该属性只会被初始化一次。
 
-### 存储属性和实例变量 {#stored_properties_and_instance_variables}
+### 存储属性和实例变量 {#stored-properties-and-instance-variables}
 
 如果您有过 Objective-C 经验，应该知道 Objective-C 为类实例存储值和引用提供两种方法。除了属性之外，还可以使用实例变量作为一个备份存储将变量值赋值给属性。
 
 Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的备份存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。属性的全部信息——包括命名、类型和内存管理特征——作为类型定义的一部分，都定义在一个地方。
 
-## 计算属性 {#computed_properties}
+## 计算属性 {#computed-properties}
 
 除存储属性外，类、结构体和枚举可以定义*计算属性*。计算属性不直接存储值，而是提供一个 getter 和一个可选的 setter，来间接获取和设置其他属性或变量的值。
 
@@ -152,7 +152,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 <img src="https://docs.swift.org/swift-book/_images/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
-### 简化 Setter 声明 {#shorthand_setter_declaration}
+### 简化 Setter 声明 {#shorthand-setter-declaration}
 
 如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称 `newValue`。下面是使用了简化 setter 声明的 `Rect` 结构体代码：
 
@@ -174,7 +174,7 @@ struct AlternativeRect {
 }
 ```
 
-### 只读计算属性 {#readonly_computed_properties}
+### 只读计算属性 {#readonly-computed-properties}
 
 只有 getter 没有 setter 的计算属性叫*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
@@ -198,7 +198,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 这个例子定义了一个名为 `Cuboid` 的结构体，表示三维空间的立方体，包含 `width`、`height` 和 `depth` 属性。结构体还有一个名为 `volume` 的只读计算属性用来返回立方体的体积。为 `volume` 提供 setter 毫无意义，因为无法确定如何修改 `width`、`height` 和 `depth` 三者的值来匹配新的 `volume`。然而，`Cuboid` 提供一个只读计算属性来让外部用户直接获取体积是很有用的。
 
-## 属性观察器 {#property_observers}
+## 属性观察器 {#property-observers}
 
 属性观察器监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，即使新值和当前值相同的时候也不例外。
 
@@ -258,7 +258,7 @@ stepCounter.totalSteps = 896
 > 
 > 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考[输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
 
-## 全局变量和局部变量 {#global_and_local_variables}
+## 全局变量和局部变量 {#global-and-local-variables}
 
 计算属性和观察属性所描述的功能也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
 
@@ -272,7 +272,7 @@ stepCounter.totalSteps = 896
 > 
 > 局部范围的常量和变量从不延迟计算。
 
-## 类型属性 {#type_properties}
+## 类型属性 {#type-properties}
 
 实例属性属于一个特定类型的实例，每创建一个实例，实例都拥有属于自己的一套属性值，实例之间的属性相互独立。
 
@@ -288,7 +288,7 @@ stepCounter.totalSteps = 896
 > 
 > 存储型类型属性是延迟初始化的，它们只有在第一次被访问的时候才会被初始化。即使它们被多个线程同时访问，系统也保证只会对其进行一次初始化，并且不需要对其使用 `lazy` 修饰符。
 
-### 类型属性语法 {#type_property_syntax}
+### 类型属性语法 {#type-property-syntax}
 
 在 C 或 Objective-C 中，与某个类型关联的静态常量和静态变量，是作为 *global*（全局）静态变量定义的。但是在 Swift 中，类型属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
 
@@ -322,7 +322,7 @@ class SomeClass {
 > 
 > 例子中的计算型类型属性是只读的，但也可以定义可读可写的计算型类型属性，跟计算型实例属性的语法相同。
 
-### 获取和设置类型属性的值 {#querying_and_setting_type_properties}
+### 获取和设置类型属性的值 {#querying-and-setting-type-properties}
 
 跟实例属性一样，类型属性也是通过点运算符来访问。但是，类型属性是通过*类型*本身来访问，而不是通过实例。比如：
 

@@ -29,7 +29,7 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > *模式* → [*表达式模式*](#expression-pattern)
 > 
 
-## 通配符模式（Wildcard Pattern） {#wildcard_pattern}
+## 通配符模式（Wildcard Pattern） {#wildcard-pattern}
 
 *通配符模式*由一个下划线（`_`）构成，用于匹配并忽略任何值。当你想忽略被匹配的值时可以使用该模式。例如，下面这段代码在闭区间 `1...3` 中迭代，每次迭代都忽略该区间的当前值：
 
@@ -46,7 +46,7 @@ for _ in 1...3 {
 > *通配符模式* → **_**
 > 
 
-## 标识符模式（Identifier Pattern） {#identifier_pattern}
+## 标识符模式（Identifier Pattern） {#identifier-pattern}
 *标识符模式*匹配任何值，并将匹配的值和一个变量或常量绑定起来。例如，在下面的常量声明中，`someValue` 是一个标识符模式，匹配了 `Int` 类型的 `42`：
 
 ```swift
@@ -64,7 +64,7 @@ let someValue = 42
 > *标识符模式* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 值绑定模式（Value-Binding Pattern） {#value-binding_pattern}
+## 值绑定模式（Value-Binding Pattern） {#value-binding-pattern}
 *值绑定模式*把匹配到的值绑定给一个变量或常量。把匹配到的值绑定给常量时，用关键字 `let`，绑定给变量时，用关键字 `var`。
 
 在值绑定模式中的标识符模式会把新命名的变量或常量与匹配到的值做绑定。例如，你可以拆开一个元组，然后把每个元素绑定到相应的标识符模式中。
@@ -88,7 +88,7 @@ case let (x, y):
 > *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)
 > 
 
-## 元组模式 {#tuple_pattern}
+## 元组模式 {#tuple-pattern}
 *元组模式*是由逗号分隔的，具有零个或多个模式的列表，并由一对圆括号括起来。元组模式匹配相应元组类型的值。
 
 你可以使用类型标注去限制一个元组模式能匹配哪种元组类型。例如，在常量声明 `let (x, y): (Int, Int) = (1, 2)` 中的元组模式 `(x, y): (Int, Int)` 只匹配两个元素都是 `Int` 类型的元组。
@@ -126,7 +126,7 @@ let (a): Int = 2 // a: Int = 2
 > *元组模式元素* → [*模式*](#pattern)
 > 
 
-## 枚举用例模式（Enumeration Case Pattern） {#enumeration_case_pattern}
+## 枚举用例模式（Enumeration Case Pattern） {#enumeration-case-pattern}
 *枚举用例模式*匹配现有的某个枚举类型的某个用例。枚举用例模式出现在 `switch` 语句中的 `case` 标签中，以及 `if`、`while`、`guard` 和 `for-in` 语句的 `case` 条件中。
 
 如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../chapter2/08_Enumerations.md#associated_values)。
@@ -138,7 +138,7 @@ let (a): Int = 2 // a: Int = 2
 > *枚举用例模式* → [*类型标识*](./03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](./06_Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
 > 
 
-## 可选模式（Optional Pattern） {#optional_pattern}
+## 可选模式（Optional Pattern） {#optional-pattern}
 *可选模式*匹配包装在一个 `Optional(Wrapped)` 或者 `ExplicitlyUnwrappedOptional(Wrapped)` 枚举中的 `Some(Wrapped)` 用例中的值。可选模式由一个标识符模式和紧随其后的一个问号组成，可以像枚举用例模式一样使用。
 
 由于可选模式是 `Optional` 和 `ImplicitlyUnwrappedOptional` 枚举用例模式的语法糖，下面两种写法是等效的：
@@ -176,7 +176,7 @@ for case let number? in arrayOfOptinalInts {
 > *可选模式* → [*标识符模式*](./03_Types.md#type-identifier) **?**
 > 
 
-## 类型转换模式（Type-Casting Patterns） {#type-casting_patterns}
+## 类型转换模式（Type-Casting Patterns） {#type-casting-patterns}
 有两种类型转换模式，`is` 模式和 `as` 模式。`is` 模式只出现在 `switch` 语句中的 `case` 标签中。`is` 模式和 `as` 模式形式如下：
 
 > is `类型`
@@ -205,7 +205,7 @@ for case let number? in arrayOfOptinalInts {
 > *as 模式* → [*模式*](#pattern) **as** [*类型*](03_Types.md#type)
 > 
 
-## 表达式模式（Expression Pattern） {#expression_pattern}
+## 表达式模式（Expression Pattern） {#expression-pattern}
 *表达式模式*代表表达式的值。表达式模式只出现在 `switch` 语句中的 `case` 标签中。
 
 表达式模式代表的表达式会使用 Swift 标准库中的 `~=` 运算符与输入表达式的值进行比较。如果 `~=` 运算符返回 `true`，则匹配成功。默认情况下，`~=` 运算符使用 `==` 运算符来比较两个相同类型的值。它也可以将一个整型数值与一个 `Range` 实例中的一段整数区间做匹配，正如下面这个例子所示：

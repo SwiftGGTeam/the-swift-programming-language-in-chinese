@@ -6,7 +6,7 @@
 
 类的实例也可以通过实现*析构器*来执行它释放之前自定义的清理工作。想了解更多关于析构器的内容，请参考[析构过程](./15_Deinitialization.md)。
 
-## 存储属性的初始赋值 {#setting_initial_values_for_stored_properties}
+## 存储属性的初始赋值 {#setting-initial-values-for-stored-properties}
 
 类和结构体在创建实例时，必须为所有存储型属性设置合适的初始值。存储型属性的值不能处于一个未知的状态。
 
@@ -42,7 +42,7 @@ print("The default temperature is \(f.temperature)° Fahrenheit")
 
 这个结构体定义了一个不带形参的构造器 `init`，并在里面将存储型属性 `temperature` 的值初始化为 `32.0`（华氏温度下水的冰点）。
 
-### 默认属性值 {#default_property_values}
+### 默认属性值 {#default-property-values}
 
 如前所述，你可以在构造器中为存储型属性设置初始值。同样，你也可以在属性声明时为其设置默认值。
 
@@ -58,11 +58,11 @@ struct Fahrenheit {
 }
 ```
 
-## 自定义构造过程 {#customizing_initialization}
+## 自定义构造过程 {#customizing-initialization}
 
 你可以通过输入形参和可选属性类型来自定义构造过程，也可以在构造过程中分配常量属性。这些都将在后面章节中提到。
 
-### 形参的构造过程 {#initialization_parameters}
+### 形参的构造过程 {#initialization-parameters}
 
 自定义构造过程时，可以在定义中提供*构造形参*，指定其值的类型和名字。构造形参的功能和语法跟函数和方法的形参相同。
 
@@ -87,7 +87,7 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 
 第一个构造器拥有一个构造形参，其实参标签为 `fromFahrenheit`，形参命名为 `fahrenheit`；第二个构造器也拥有一个构造形参，其实参标签为 `fromKelvin`，形参命名为 `kelvin`。这两个构造器都将单一的实参转换成摄氏温度值，并保存在属性 `temperatureInCelsius` 中。
 
-### 形参命名和实参标签 {#parameter_names_and_argument_labels}
+### 形参命名和实参标签 {#parameter-names-and-argument-labels}
 
 跟函数和方法形参相同，构造形参可以同时使用在构造器里使用的形参命名和一个外部调用构造器时使用的实参标签。
 
@@ -127,7 +127,7 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 // 报编译期错误-需要实参标签
 ```
 
-### 不带实参标签的构造器形参 {#initializer_parameters_without_external_names}
+### 不带实参标签的构造器形参 {#initializer-parameters-without-external-names}
 
 如果你不希望构造器的某个形参使用实参标签，可以使用下划线（`_`）来代替显式的实参标签来重写默认行为。
 
@@ -153,7 +153,7 @@ let bodyTemperature = Celsius(37.0)
 
 构造器调用 `Celsius(37.0)` 意图明确，不需要实参标签。因此适合使用 `init(_ celsius: Double)` 这样的构造器，从而可以通过提供未命名的 `Double` 值来调用构造器。
 
-### 可选属性类型 {#optional_property_types}
+### 可选属性类型 {#optional-property-types}
 
 如果你自定义的类型有一个逻辑上允许值为空的存储型属性——无论是因为它无法在初始化时赋值，还是因为它在之后某个时机可以赋值为空——都需要将它声明为 `可选类型`。可选类型的属性将自动初始化为 `nil`，表示这个属性是特意在构造过程设置为空。
 
@@ -179,7 +179,7 @@ cheeseQuestion.response = "Yes, I do like cheese."
 
 调查问题的答案在询问前是无法确定的，因此我们将属性 `response` 声明为 `String?` 类型，或者说是 “可选类型 	`String`“。当 `SurveyQuestion` 的实例初始化时，它将自动赋值为 `nil`，表明“暂时还没有字符“。
 
-### 构造过程中常量属性的赋值 {#assigning_constant_properties_during_initialization}
+### 构造过程中常量属性的赋值 {#assigning-constant-properties-during-initialization}
 
 你可以在构造过程中的任意时间点给常量属性赋值，只要在构造过程结束时它设置成确定的值。一旦常量属性被赋值，它将永远不可更改。
 
@@ -206,7 +206,7 @@ beetsQuestion.ask()
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
-## 默认构造器 {#default_initializers}
+## 默认构造器 {#default-initializers}
 
 如果结构体或类为所有属性提供了默认值，又没有提供任何自定义的构造器，那么 Swift 会给这些结构体或类提供一个*默认构造器*。这个默认构造器将简单地创建一个所有属性值都设置为它们默认值的实例。
 
@@ -223,7 +223,7 @@ var item = ShoppingListItem()
 
 由于 `ShoppingListItem` 类中的所有属性都有默认值，且它是没有父类的基类，它将自动获得一个将为所有属性设置默认值的并创建实例的默认构造器（由于 `name` 属性是可选 `String` 类型，它将接收一个默认 `nil` 的默认值，尽管代码中没有写出这个值）。上面例子中使用默认构造器创造了一个 `ShoppingListItem` 类的实例（使用 `ShoppingListItem()` 形式的构造器语法），并将其赋值给变量 `item`。
 
-### 结构体的逐一成员构造器 {#memberwise_initializers_for_structure_types}
+### 结构体的逐一成员构造器 {#memberwise-initializers-for-structure-types}
 
 结构体如果没有定义任何自定义构造器，它们将自动获得一个*逐一成员构造器（memberwise initializer）*。不像默认构造器，即使存储型属性没有默认值，结构体也能会获得逐一成员构造器。
 
@@ -240,7 +240,7 @@ struct Size {
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
-## 值类型的构造器代理 {#initializer_delegation_for_value_types}
+## 值类型的构造器代理 {#initializer-delegation-for-value-types}
 
 构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为*构造器代理*，它能避免多个构造器间的代码重复。
 
@@ -316,13 +316,13 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 > 
 > 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考[扩展](./21_Extensions.md)。
 
-## 类的继承和构造过程 {#class_inheritance_and_initialization}
+## 类的继承和构造过程 {#class-inheritance-and-initialization}
 
 类里面的所有存储型属性——包括所有继承自父类的属性——都*必须*在构造过程中设置初始值。
 
 Swift 为类类型提供了两种构造器来确保实例中所有存储型属性都能获得初始值，它们被称为指定构造器和便利构造器。
 
-### 指定构造器和便利构造器 {#designated_initializers_and_convenience_initializers}
+### 指定构造器和便利构造器 {#designated-initializers-and-convenience-initializers}
 
 *指定构造器*是类中最主要的构造器。一个指定构造器将初始化类中提供的所有属性，并调用合适的父类构造器让构造过程沿着父类链继续往上进行。
 
@@ -334,7 +334,7 @@ Swift 为类类型提供了两种构造器来确保实例中所有存储型属�
 
 你应当只在必要的时候为类提供便利构造器，比方说某种情况下通过使用便利构造器来快捷调用某个指定构造器，能够节省更多开发时间并让类的构造过程更清晰明了。
 
-### 指定构造器和便利构造器的语法 {#syntax_for_designated_and_convenience_initializers}
+### 指定构造器和便利构造器的语法 {#syntax-for-designated-and-convenience-initializers}
 
 类的指定构造器的写法跟值类型简单构造器一样：
 
@@ -352,7 +352,7 @@ convenience init(parameters) {
 }
 ```
 
-### 类类型的构造器代理 {#initializer_delegation_for_class_types}
+### 类类型的构造器代理 {#initializer-delegation-for-class-types}
 
 为了简化指定构造器和便利构造器之间的调用关系，Swift 构造器之间的代理调用遵循以下三条规则：
 
@@ -389,7 +389,7 @@ convenience init(parameters) {
 
 ![复杂构造器代理图](https://docs.swift.org/swift-book/_images/initializerDelegation02_2x.png)
 
-### 两段式构造过程 {#two_phase_initialization}
+### 两段式构造过程 {#two-phase-initialization}
 
 Swift 中类的构造过程包含两个阶段。第一个阶段，类中的每个存储型属性赋一个初始值。当每个存储型属性的初始值被赋值后，第二阶段开始，它给每个类一次机会，在新实例准备使用之前进一步自定义它们的存储型属性。
 
@@ -459,7 +459,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 最终，一旦子类的指定构造器完成调用，最开始被调用的便利构造器可以执行更多的自定义操作。
 
-### 构造器的继承和重写 {#initializer_inheritance_and_overriding}
+### 构造器的继承和重写 {#initializer-inheritance-and-overriding}
 
 跟 Objective-C 中的子类不同，Swift 中的子类默认情况下不会继承父类的构造器。Swift 的这种机制可以防止一个父类的简单构造器被一个更精细的子类继承，而在用来创建子类时的新实例时没有完全或错误被初始化。
 
@@ -550,7 +550,7 @@ print("Hoverboard: \(hoverboard.description)")
 >
 > 子类可以在构造过程修改继承来的变量属性，但是不能修改继承来的常量属性。
 
-### 构造器的自动继承 {#automatic_initializer_inheritance}
+### 构造器的自动继承 {#automatic-initializer-inheritance}
 
 如上所述，子类在默认情况下不会继承父类的构造器。但是如果满足特定条件，父类构造器是可以被自动继承的。事实上，这意味着对于许多常见场景你不必重写父类的构造器，并且可以在安全的情况下以最小的代价继承父类的构造器。
 
@@ -570,7 +570,7 @@ print("Hoverboard: \(hoverboard.description)")
 > 
 > 子类可以将父类的指定构造器实现为便利构造器来满足规则 2。
 
-### 指定构造器和便利构造器实践 {#designated_and_convenience_initializers_in_action}
+### 指定构造器和便利构造器实践 {#designated-and-convenience-initializers-in-action}
 
 接下来的例子将在实践中展示指定构造器、便利构造器以及构造器的自动继承。这个例子定义了包含三个类 `Food`、`RecipeIngredient` 以及 `ShoppingListItem` 的层级结构，并将演示它们的构造器是如何相互作用的。
 
@@ -691,7 +691,7 @@ for item in breakfastList {
 
 如上所述，例子中通过字面量方式创建了一个数组 `breakfastList`，它包含了三个 `ShoppingListItem` 实例，因此数组的类型也能被自动推导为 `[ShoppingListItem]`。在数组创建完之后，数组中第一个 `ShoppingListItem` 实例的名字从 `[Unnamed]` 更改为 `Orange juice`，并标记状态为已购买。打印数组中每个元素的描述显示了它们都已按照预期被赋值。
 
-## 可失败构造器 {#failable_initializers}
+## 可失败构造器 {#failable-initializers}
 
 有时，定义一个构造器可失败的类，结构体或者枚举是很有用的。这里所指的“失败” 指的是，如给构造器传入无效的形参，或缺少某种所需的外部资源，又或是不满足某种必要的条件等。
 
@@ -769,7 +769,7 @@ if anonymousCreature == nil {
 > 
 > 检查空字符串的值（如 `""`，而不是 `"Giraffe"` ）和检查值为 `nil` 的可选类型的字符串是两个完全不同的概念。上例中的空字符串（`""`）其实是一个有效的，非可选类型的字符串。这里我们之所以让 `Animal` 的可失败构造器构造失败，只是因为对于 `Animal` 这个类的 `species` 属性来说，它更适合有一个具体的值，而不是空字符串。
 
-### 枚举类型的可失败构造器 {#failable_nitializers_for_enumerations}
+### 枚举类型的可失败构造器 {#failable-nitializers-for-enumerations}
 
 你可以通过一个带一个或多个形参的可失败构造器来获取枚举类型中特定的枚举成员。如果提供的形参无法匹配任何枚举成员，则构造失败。
 
@@ -809,7 +809,7 @@ if unknownUnit == nil {
 // 打印“This is not a defined temperature unit, so initialization failed.”
 ```
 
-### 带原始值的枚举类型的可失败构造器 {#failable_initializers_for_enumerations_with_raw_values}
+### 带原始值的枚举类型的可失败构造器 {#failable-initializers-for-enumerations-with-raw-values}
 
 带原始值的枚举类型会自带一个可失败构造器 `init?(rawValue:)`，该可失败构造器有一个合适的原始值类型的 `rawValue` 形参，选择找到的相匹配的枚举成员，找不到则构造失败。
 
@@ -833,7 +833,7 @@ if unknownUnit == nil {
 // 打印“This is not a defined temperature unit, so initialization failed.”
 ```
 
-### 构造失败的传递 {#propagation_of_initialization_failure}
+### 构造失败的传递 {#propagation-of-initialization-failure}
 
 类、结构体、枚举的可失败构造器可以横向代理到它们自己其他的可失败构造器。类似的，子类的可失败构造器也能向上代理到父类的可失败构造器。
 
@@ -897,7 +897,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 // 打印“Unable to initialize one unnamed product”
 ```
 
-### 重写一个可失败构造器 {#overriding_a_failable_initializer}
+### 重写一个可失败构造器 {#overriding-a-failable-initializer}
 
 如同其它的构造器，你可以在子类中重写父类的可失败构造器。或者你也可以用子类的非可失败构造器重写一个父类的可失败构造器。这使你可以定义一个不会构造失败的子类，即使父类的构造器允许构造失败。
 
@@ -955,13 +955,13 @@ class UntitledDocument: Document {
 
 在这个例子中，如果在调用父类的可失败构造器 `init?(name:)` 时传入的是空字符串，那么强制解包操作会引发运行时错误。不过，因为这里是通过字符串常量来调用它，构造器不会失败，所以并不会发生运行时错误。
 
-### init! 可失败构造器 {#the_init!_failable_initializer}
+### init! 可失败构造器 {#the-init!-failable-initializer}
 
 通常来说我们通过在 `init` 关键字后添加问号的方式（`init?`）来定义一个可失败构造器，但你也可以通过在 `init` 后面添加感叹号的方式来定义一个可失败构造器（`init!`），该可失败构造器将会构建一个对应类型的隐式解包可选类型的对象。
 
 你可以在 `init?` 中代理到 `init!`，反之亦然。你也可以用 `init?` 重写 `init!`，反之亦然。你还可以用 `init` 代理到 `init!`，不过，一旦 `init!` 构造失败，则会触发一个断言。
 
-## 必要构造器 {#required_initializers}
+## 必要构造器 {#required-initializers}
 
 在类的构造器前添加 `required` 修饰符表明所有该类的子类都必须实现该构造器：
 
@@ -987,7 +987,7 @@ class SomeSubclass: SomeClass {
 > 
 > 如果子类继承的构造器能满足必要构造器的要求，则无须在子类中显式提供必要构造器的实现。
 
-## 通过闭包或函数设置属性的默认值 {#setting_a_default_property_value_with_a_closure_or_function}
+## 通过闭包或函数设置属性的默认值 {#setting-a-default-property-value-with-a-closure-or-function}
 
 如果某个存储型属性的默认值需要一些自定义或设置，你可以使用闭包或全局函数为其提供定制的默认值。每当某个属性所在类型的新实例被构造时，对应的闭包或函数会被调用，而它们的返回值会当做默认值赋值给这个属性。
 

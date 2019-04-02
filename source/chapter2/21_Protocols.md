@@ -4,7 +4,7 @@
 
 除了遵循协议的类型必须实现的要求外，还可以对协议进行扩展，通过扩展来实现一部分要求或者实现一些附加功能，这样遵循协议的类型就能够使用这些功能。
 
-## 协议语法 {#protocol_syntax}
+## 协议语法 {#protocol-syntax}
 
 协议的定义方式与类、结构体和枚举的定义非常相似：
 
@@ -30,7 +30,7 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 }
 ```
 
-## 属性要求 {#property_requirements}
+## 属性要求 {#property-requirements}
 
 协议可以要求遵循协议的类型提供特定名称和类型的实例属性或类型属性。协议不指定属性是存储属性还是计算属性，它只指定属性的名称和类型。此外，协议还指定属性是*可读*的还是*可读可写的*。
 
@@ -97,7 +97,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 `Starship` 类只能把 `fullName` 作为只读的计算属性来实现。每一个 `Starship` 类的实例都有一个名为 `name` 的非可选属性和一个名为 `prefix` 的可选属性。 当 `prefix` 存在时，计算属性 `fullName` 会将 `prefix` 插入到 `name` 之前，从而得到一个带有 `prefix` 的 `fullName`。
 
-## 方法要求 {#method_requirements}
+## 方法要求 {#method-requirements}
 
 协议可以要求遵循协议的类型实现某些指定的实例方法或类方法。这些方法作为协议的一部分，像普通方法一样放在协议的定义中，但是不需要大括号和方法体。可以在协议中定义具有可变参数的方法，和普通方法的定义方式相同。但是，不支持为协议中的方法提供默认参数。
 
@@ -141,7 +141,7 @@ print("And another one: \(generator.random())")
 // 打印 “And another one: 0.729023776863283”
 ```
 
-## 异变方法要求 {#mutating_method_requirements}
+## 异变方法要求 {#mutating-method-requirements}
 
 有时需要在方法中改变（或*异变*）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 [在实例方法中修改值类型](./11_Methods.md#modifying_value_types_from_within_instance_methods) 章节中有详细描述。
 
@@ -182,7 +182,7 @@ lightSwitch.toggle()
 // lightSwitch 现在的值为 .on
 ```
 
-## 构造器要求 {#initializer_requirements}
+## 构造器要求 {#initializer-requirements}
 
 协议可以要求遵循协议的类型实现指定的构造器。你可以像编写普通构造器那样，在协议的定义里写下构造器的声明，但不需要写花括号和构造器的实体：
 
@@ -192,7 +192,7 @@ protocol SomeProtocol {
 }
 ```
 
-### 协议构造器要求的类实现 {#class_implementations_of_protocol_initializer_requirements}
+### 协议构造器要求的类实现 {#class-implementations-of-protocol-initializer-requirements}
 
 你可以在遵循协议的类中实现构造器，无论是作为指定构造器，还是作为便利构造器。无论哪种情况，你都必须为构造器实现标上 `required` 修饰符：
 
@@ -234,13 +234,13 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 }
 ```
 
-### 可失败构造器要求 {#failable_initializer_requirements}
+### 可失败构造器要求 {#failable-initializer-requirements}
 
 协议还可以为遵循协议的类型定义可失败构造器要求，详见 [可失败构造器](./14_Initialization.md#failable_initializers)。
 
 遵循协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
 
-## 协议作为类型 {#protocols_as_types}
+## 协议作为类型 {#protocols-as-types}
 
 尽管协议本身并未实现任何功能，但是协议可以被当做一个功能完备的类型来使用。
 
@@ -405,7 +405,7 @@ game.play()
 // The game lasted for 4 turns
 ```
 
-## 在扩展里添加协议遵循 {#adding_protocol_conformance_with_an_extension}
+## 在扩展里添加协议遵循 {#adding-protocol-conformance-with-an-extension}
 
 即便无法修改源代码，依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中的相应要求。详情请在 [扩展](./20_Extensions.md) 章节中查看。
 
@@ -453,7 +453,7 @@ print(game.textualDescription)
 // 打印 “A game of Snakes and Ladders with 25 squares”
 ```
 
-## 有条件地遵循协议 {#Conditionally_Conforming_to_a_Protocol}
+## 有条件地遵循协议 {#Conditionally-Conforming-to-a-Protocol}
 
 泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见 [泛型 Where 分句](./22_Generics.md##where_clauses)。
 
@@ -471,7 +471,7 @@ print(myDice.textualDescription)
 // 打印 "[A 6-sided dice, A 12-sided dice]"
 ```
 
-## 在扩展里声明采纳协议 {#declaring_protocol_adoption_with_an_extension}
+## 在扩展里声明采纳协议 {#declaring-protocol-adoption-with-an-extension}
 
 当一个类型已经符合了某个协议中的所有要求，却还没有声明采纳该协议时，可以通过空的扩展来让它采纳该协议：
 
@@ -498,7 +498,7 @@ print(somethingTextRepresentable.textualDescription)
 > 
 > 即使满足了协议的所有要求，类型也不会自动遵循协议，必须显式地遵循协议。
 
-## 协议类型的集合 {#collections_of_protocol_types}
+## 协议类型的集合 {#collections-of-protocol-types}
 
 协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.md##protocols_as_types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
 
@@ -519,7 +519,7 @@ for thing in things {
 
 注意 `thing` 常量是 `TextRepresentable` 类型而不是 `Dice`，`DiceGame`，`Hamster` 等类型，即使实例在幕后确实是这些类型中的一种。由于 `thing` 是 `TextRepresentable` 类型，任何 `TextRepresentable` 的实例都有一个 `textualDescription` 属性，所以在每次循环中可以安全地访问 `thing.textualDescription`。
 
-## 协议的继承 {#protocol_inheritance}
+## 协议的继承 {#protocol-inheritance}
 
 协议能够*继承*一个或多个其他协议，可以在继承的协议的基础上增加新的要求。协议的继承语法与类的继承相似，多个被继承的协议间用逗号分隔：
 
@@ -574,7 +574,7 @@ print(game.prettyTextualDescription)
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
 
-## 类专属的协议 {#class_only_protocol}
+## 类专属的协议 {#class-only-protocol}
 
 你通过添加 `AnyObject` 关键字到协议的继承列表，就可以限制协议只能被类类型采纳（以及非结构体或者非枚举的类型）。
 
@@ -590,7 +590,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 > 
 > 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures_and_enumerations_are_value_types) 和 [类是引用类型](./09_Classes_and_Structures.md#classes_are_reference_types)。
 
-## 协议合成 {#protocol_composition}
+## 协议合成 {#protocol-composition}
 
 要求一个类型同时遵循多个协议是很有用的。你可以使用*协议组合*来复合多个协议到一个要求里。协议组合行为就和你定义的临时局部协议一样拥有构成中所有协议的需求。协议组合不定义任何新的协议类型。
 
@@ -654,7 +654,7 @@ beginConcert(in: seattle)
 
 将 birthdayPerson 传入 `beginConcert(in:)` 函数是不合法的，因为 Person 不是 Location 的子类。同理，如果你新建一个类继承于 Location，但是没有遵循 Named 协议，而用这个类的实例去调用 `beginConcert(in:)` 函数也是非法的。
 
-## 检查协议一致性 {#checking_for_protocol_conformance}
+## 检查协议一致性 {#checking-for-protocol-conformance}
 
 你可以使用[类型转换](./18_Type_Casting.md)中描述的 `is` 和 `as` 操作符来检查协议一致性，即是否符合某协议，并且可以转换到指定的协议类型。检查和转换协议的语法与检查和转换类型是完全一样的：
 
@@ -727,7 +727,7 @@ for object in objects {
 
 `objects` 数组中的元素的类型并不会因为强转而丢失类型信息，它们仍然是 `Circle`，`Country`，`Animal` 类型。然而，当它们被赋值给 `objectWithArea` 常量时，只被视为 `HasArea` 类型，因此只有 `area` 属性能够被访问。
 
-## 可选的协议要求 {#optional_protocol_requirements}
+## 可选的协议要求 {#optional-protocol-requirements}
 
 协议可以定义*可选要求*，遵循协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。可选要求用在你需要和 Objective-C 打交道的代码中。协议和可选要求都必须带上 `@objc` 属性。标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类遵循，其他类以及结构体和枚举均不能遵循这种协议。
 
@@ -837,7 +837,7 @@ for _ in 1...5 {
 // 0
 ```
 
-## 协议扩展 {#protocol_extensions}
+## 协议扩展 {#protocol-extensions}
 
 协议可以通过扩展来为遵循协议的类型提供属性、方法以及下标的实现。通过这种方式，你可以基于协议本身来实现这些功能，而无需在每个遵循协议的类型中都重复同样的实现，也无需使用全局函数。
 
@@ -861,7 +861,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 // 打印 “And here's a random Boolean: true”
 ```
 
-### 提供默认实现 {#providing_default_implementations}
+### 提供默认实现 {#providing-default-implementations}
 
 可以通过协议扩展来为协议要求的属性、方法以及下标提供默认的实现。如果遵循协议的类型为这些要求提供了自己的实现，那么这些自定义实现将会替代扩展中的默认实现被使用。
 
@@ -879,7 +879,7 @@ extension PrettyTextRepresentable  {
 }
 ```
 
-### 为协议扩展添加限制条件 {#adding_constraints_to_protocol_extensions}
+### 为协议扩展添加限制条件 {#adding-constraints-to-protocol-extensions}
 
 在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如[泛型 Where 子句](./22_Generics.md#where_clauses)中所描述的。
 

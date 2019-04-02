@@ -6,7 +6,7 @@
 
 你也可以用它来检查一个类型是否遵循了某个协议，就像在[检验协议遵循](./21_Protocols.md#checking_for_protocol_conformance)部分讲述的一样。
 
-## 为类型转换定义类层次 {#defining_a_class_hierarchy_for_type_casting}
+## 为类型转换定义类层次 {#defining-a-class-hierarchy-for-type-casting}
 
 你可以将类型转换用在类和子类的层次结构上，检查特定类实例的类型并且转换这个类实例的类型成为这个层次结构中的其他类型。下面的三个代码段定义了一个类层次和一个包含了这些类实例的数组，作为类型转换的例子。
 
@@ -56,7 +56,7 @@ let library = [
 
 在幕后 `library` 里存储的媒体项依然是 `Movie` 和 `Song` 类型的。但是，若你迭代它，依次取出的实例会是 `MediaItem` 类型的，而不是 `Movie` 和 `Song` 类型。为了让它们作为原本的类型工作，你需要检查它们的类型或者向下转换它们到其它类型，就像下面描述的一样。
 
-## 检查类型 {#checking_type}
+## 检查类型 {#checking-type}
 
 用*类型检查操作符*（`is`）来检查一个实例是否属于特定子类型。若实例属于那个子类型，类型检查操作符返回 `true`，否则返回 `false`。
 
@@ -129,7 +129,7 @@ for item in library {
 > 
 > 转换没有真的改变实例或它的值。根本的实例保持不变；只是简单地把它作为它被转换成的类型来使用。
 
-## `Any` 和 `AnyObject` 的类型转换 {#type_casting_for_any_and_anyobject}
+## `Any` 和 `AnyObject` 的类型转换 {#type-casting-for-any-and-anyobject}
 
 Swift 为不确定类型提供了两种特殊的类型别名：
 
