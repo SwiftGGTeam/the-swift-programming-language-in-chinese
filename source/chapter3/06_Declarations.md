@@ -773,7 +773,7 @@ enum GamePlayMode: String {
 > *枚举用例名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 >
-> #####  raw-value-style-enum {#raw-value-style-enum}
+> ####  raw-value-style-enum {#raw-value-style-enum}
 > 
 >
 > *原始值风格枚举* → **enum** [*枚举名称*](#enum-name) [*泛型形参子句*](08_Generic_Parameters_and_Arguments.md#generic-parameter-clause)<sub>可选</sub> [*类型继承子句*](./03_Types.md#type-inheritance-clause)  [*泛型 where 子句*](./09_Generic_Parameters_and_Arguments.md#generic-where-clause) **{** [*多个原始值风格枚举成员*](#raw-value-style-enum-members) **}**
