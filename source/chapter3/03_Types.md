@@ -27,7 +27,8 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 
 > 类型语法
 > 
-###### type {#type}
+
+#### type {#type}
 > *类型* → [*数组类型*](#array-type)
 > 
 > *类型* → [*字典类型*](#dictionary-type)
@@ -67,7 +68,8 @@ func someFunction(a: Int) { /* ... */ }
 
 > 类型注解语法
 > 
-###### type-annotation {#type-annotation}
+
+#### type-annotation {#type-annotation}
 > *类型注解* → **:** [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 > 
 
@@ -91,10 +93,12 @@ var someValue: ExampleModule.MyType
 
 > 类型标识符语法
 > 
-###### type-identifier {#type-identifier}
+
+#### type-identifier {#type-identifier}
 > *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
 > 
-###### type-name {#type-name}
+
+#### type-name {#type-name}
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
@@ -116,16 +120,20 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 
 > 元组类型语法
 > 
-###### tuple-type {#tuple-type}
+
+#### tuple-type {#tuple-type}
 > *元组类型* → **(** **)** | **(** [*元组类型元素*](#tuple-type-element) **,** [*元组类型元素列表*](#tuple-type-element-list) **)**
 > 
-###### tuple-type-element-list {#tuple-type-element-list}
+
+#### tuple-type-element-list {#tuple-type-element-list}
 > *元组类型元素列表* → [*元组类型元素*](#tuple-type-element) | [*元组类型元素*](#tuple-type-element) **,** [*元组类型元素列表*](#tuple-type-element-list)
 > 
-###### tuple-type-element {#tuple-type-element}
+
+#### tuple-type-element {#tuple-type-element}
 > *元组类型元素* → [*元素名*](#element-name) [*类型注解*](#type-annotation) | [*类型*](#type)
 > 
-###### element-name {#element-name}
+
+#### element-name {#element-name}
 > *元素名* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
@@ -202,22 +210,27 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 
 > 函数类型语法
 > 
-###### function-type {#function-type}
+
+#### function-type {#function-type}
 > *函数类型* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
 > 
 > *函数类型* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
 > 
-###### function-type-argument-clause {#function-type-argument-clause}
+
+#### function-type-argument-clause {#function-type-argument-clause}
 > *函数类型子句* → **(**­  **)**­  
 > *函数类型子句* → **(** [*函数类型参数列表*](#function-type-argument-list) *...*­ <sub>可选</sub> **)**  
 > 
-###### function-type-argument-list {#function-type-argument-list}
+
+#### function-type-argument-list {#function-type-argument-list}
 > *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)， [*函数类型参数列表*](#function-type-argument-list)
 > 
-###### function-type-argument {#function-type-argument}
+
+#### function-type-argument {#function-type-argument}
 > *函数类型参数* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
 > 
-###### argument-label {#argument-label}
+
+#### argument-label {#argument-label}
 > *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
@@ -248,7 +261,8 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 > 数组类型语法
 > 
-###### array-type {#array-type}
+
+#### array-type {#array-type}
 > *数组类型* → **[** [*类型*](#type) **]**
 > 
 
@@ -275,7 +289,8 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 > 字典类型语法
 > 
-###### dictionary-type {#dictionary-type}
+
+#### dictionary-type {#dictionary-type}
 > *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]**
 > 
 
@@ -306,7 +321,8 @@ optionalInteger! // 42
 
 > 可选类型语法
 > 
-###### optional-type {#optional-type}
+
+#### optional-type {#optional-type}
 > *可选类型* → [*类型*](#type) **?**
 > 
 
@@ -340,7 +356,8 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 > 隐式解析可选类型语法
 > 
-###### implicitly-unwrapped-optional-type {#implicitly-unwrapped-optional-type}
+
+#### implicitly-unwrapped-optional-type {#implicitly-unwrapped-optional-type}
 > *隐式解析可选类型* → [*类型*](#type) **!**
 > 
 
@@ -369,10 +386,12 @@ typealias PQR = PQ & Q & R
 
 > 协议合成类型语法
 > 
-###### protocol-composition-type {#protocol-composition-type}
+
+#### protocol-composition-type {#protocol-composition-type}
 > *协议合成类型* → [*协议标识符*](#protocol-identifier) & [*协议合成延续*](#protocol-composition-continuation)
 > 
-###### protocol-composition-continuation {#protocol-composition-continuation}
+
+#### protocol-composition-continuation {#protocol-composition-continuation}
 > *协议合成延续* → [*协议标识符*](#protocol-identifier) | [*协议合成类型*](#protocol-composition-type)
 > 
 
@@ -421,7 +440,8 @@ let anotherInstance = metatype.init(string: "some string")
 
 > 元类型语法
 > 
-###### metatype-type {#metatype-type}
+
+#### metatype-type {#metatype-type}
 > *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol**
 > 
 
@@ -436,13 +456,16 @@ let anotherInstance = metatype.init(string: "some string")
 
 > 类型继承子句语法
 > 
-###### type_inheritance_clause {#type_inheritance_clause}
+
+#### type_inheritance_clause {#type_inheritance_clause}
 > *类型继承子句* → **:** [*类型继承列表*](#type-inheritance-list)
 > 
-###### type-inheritance-list {#type-inheritance-list}
+
+#### type-inheritance-list {#type-inheritance-list}
 > *类型继承列表* → [*类型标识符*](#type-identifier) | [*类型标识符*](#type-identifier) **,** [*类型继承列表*](#type-inheritance-list)
 > 
-###### class-requirement {#class-requirement}
+
+#### class-requirement {#class-requirement}
 
 
 ## 类型推断 {#type_inference}
