@@ -4,6 +4,21 @@ Swift 官方文档中文翻译工作由[numbbbbb](https://github.com/numbbbbb)�
 
 ## Swift 5.x 主要贡献者
 
+- [Adolf-L](https://github.com/Adolf-L)
+- [BigNerdCoding](https://github.com/bignerdcoding)
+- [bqlin](https://github.com/bqlin)
+- [Byelaney](https://github.com/Byelaney)
+- [CMB](https://github.com/chenmingbiao)
+- [DarrenChen123](https://github.com/DarrenChen123)
+- [dzyding](https://github.com/dzyding)
+- [Hale](https://github.com/wuqiuhao)
+- [jojotov](https://github.com/jojotov)
+- [Khala-wan](https://github.com/Khala-wan)
+- [Nemocdz](https://github.com/Nemocdz)
+- [numbbbbb](https://github.com/numbbbbb)
+- [WAMaker](https://github.com/WAMaker)
+- [Yousanflics](https://github.com/Yousanflics)
+
 ## Swift 4.x 主要贡献者
 
 - [Adolf-L](https://github.com/Adolf-L)
@@ -16,6 +31,7 @@ Swift 官方文档中文翻译工作由[numbbbbb](https://github.com/numbbbbb)�
 - [dzyding](https://github.com/dzyding)
 - [EyreFree](https://www.eyrefree.org/)
 - [Forelas](https://github.com/ForelaxX)
+- [Hale](https://github.com/wuqiuhao)
 - [kemchenj](https://kemchenj.github.io)
 - [jojotov](https://github.com/jojotov)
 - [Meler](https://github.com/pmtao)
@@ -27,7 +43,6 @@ Swift 官方文档中文翻译工作由[numbbbbb](https://github.com/numbbbbb)�
 - [rain2540](https://github.com/rain2540)
 - [Rsenjoyer](https://github.com/Rsenjoyer)
 - [WAMaker](https://github.com/WAMaker)
-- [Hale](https://github.com/wuqiuhao)
 - [YiYiZheng](https://github.com/YiYiZheng)
 - [ZhangChi](https://github.com/zhangchi25806)
 
