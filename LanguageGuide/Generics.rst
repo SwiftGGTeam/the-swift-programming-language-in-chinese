@@ -850,7 +850,7 @@ The constraint on ``Item`` is a generic ``where`` clause,
 which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
 
 Here's an extension of the ``Stack`` type
-from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above
+from :ref:`Generics_GenericTypes` above
 that adds conformance to the ``SuffixableContainer`` protocol:
 
 .. testcode:: associatedTypes

@@ -1332,7 +1332,7 @@ Optional Protocol Requirements
    and see if the value you get back (which will be an optional)
    has a value or is nil.
 
-You can define :newTerm:`optional requirements` for protocols,
+You can define :newTerm:`optional requirements` for protocols.
 These requirements don't have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``optional`` modifier
 as part of the protocol's definition.
@@ -1430,7 +1430,7 @@ This is why ``increment(forCount:)`` is also written with a question mark after 
 Because the call to ``increment(forCount:)`` can fail for either of these two reasons,
 the call returns an *optional* ``Int`` value.
 This is true even though ``increment(forCount:)`` is defined as returning
-a nonoptional ``Int`` value in the definition of ``CounterDataSource``.
+a non-optional ``Int`` value in the definition of ``CounterDataSource``.
 Even though there are two optional chaining operations,
 one after another,
 the result is still wrapped in a single optional.
@@ -1452,7 +1452,7 @@ then the ``increment()`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,
 so its value is an optional ``Int`` value,
-even though ``fixedIncrement`` is defined as a nonoptional ``Int`` property
+even though ``fixedIncrement`` is defined as a non-optional ``Int`` property
 as part of the ``CounterDataSource`` protocol definition.
 
 Here's a simple ``CounterDataSource`` implementation where the data source

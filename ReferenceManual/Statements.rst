@@ -21,16 +21,6 @@ and a ``defer`` statement for running cleanup actions just before the current sc
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.
 
-.. langref-grammar
-
-    stmt ::= stmt-semicolon
-    stmt ::= stmt-if
-    stmt ::= stmt-while
-    stmt ::= stmt-for-c-style
-    stmt ::= stmt-for-each
-    stmt ::= stmt-switch
-    stmt ::= stmt-control-transfer
-
 .. syntax-grammar::
 
     Grammar of a statement
@@ -112,10 +102,6 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
 
-.. langref-grammar
-
-    stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
-
 .. syntax-grammar::
 
     Grammar of a for-in statement
@@ -155,10 +141,6 @@ The value of the *condition*
 must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
-
-.. langref-grammar
-
-    stmt-while ::= 'while' expr-basic brace-item-list
 
 .. syntax-grammar::
 
@@ -206,10 +188,6 @@ The value of the *condition*
 must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
-
-.. langref-grammar
-
-    stmt-repeat-while ::= 'repeat' brace-item-list 'while' expr
 
 .. syntax-grammar::
 
@@ -294,12 +272,6 @@ The value of any condition in an ``if`` statement
 must be of type ``Bool`` or a type bridged to ``Bool``.
 The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
-
-.. langref-grammar
-
-    stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
-    stmt-if-else ::= 'else' brace-item-list
-    stmt-if-else ::= 'else' stmt-if
 
 .. syntax-grammar::
 
@@ -386,7 +358,7 @@ As a result, you must include at least one statement
 following the colon (``:``) of each case label. Use a single ``break`` statement
 if you don't intend to execute any code in the body of a matched case.
 
-The values of expressions your code can branch on are very flexible. For instance,
+The values of expressions your code can branch on are very flexible. For example,
 in addition to the values of scalar types, such as integers and characters,
 your code can branch on the values of any type, including floating-point numbers, strings,
 tuples, instances of custom classes, and optionals.
@@ -402,7 +374,7 @@ before a pattern in a case is considered matched to the *control expression*.
 If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
-For instance, a *control expression* matches the case in the example below
+For example, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
@@ -463,8 +435,63 @@ In Swift,
 every possible value of the control expression’s type
 must match the value of at least one pattern of a case.
 When this simply isn’t feasible
-(for instance, when the control expression’s type is ``Int``),
+(for example, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
+
+.. _Statements_SwitchingOverFutureEnumerationCases:
+
+Switching Over Future Enumeration Cases
++++++++++++++++++++++++++++++++++++++++
+
+A :newTerm:`nonfrozen enumeration` is a special kind of enumeration
+that may gain new enumeration cases in the future---
+even after you compile and ship an app.  
+Switching over a nonfrozen enumeration requires extra consideration.
+When a library's authors mark an enumeration as nonfrozen,
+they reserve the right to add new enumeration cases,
+and any code that interacts with that enumeration
+*must* be able to handle those future cases without being recompiled.
+Only the standard library,
+Swift overlays for Apple frameworks,
+and C and Objective-C code can declare nonfrozen enumerations.
+Enumerations you declare in Swift can't be nonfrozen. 
+
+When switching over a nonfrozen enumeration value,
+you always need to include a default case,
+even if every case of the enumeration already has a corresponding switch case.
+You can apply the ``@unknown`` attribute to the default case,
+which indicates that the default case should match only enumeration cases
+that are added in the future.
+Swift produces a warning
+if the default case matches
+any enumeration case that is known at compiler time.
+This future warning informs you that the library author
+added a new case to the enumeration
+that doesn't have a corresponding switch case.
+
+The following example switches over all three existing cases of
+the standard library's `Mirror.AncestorRepresentation <//apple_ref/swift/fake/Mirror.AncestorRepresentation>`_
+enumeration.
+If you add additional cases in the future,
+the compiler generates a warning to indicate
+that you need to update the switch statement
+to take the new cases into account.
+
+.. testcode:: unknown-case
+
+   -> let representation: Mirror.AncestorRepresentation = .generated
+   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
+   -> switch representation {
+      case .customized:
+          print("Use the nearest ancestor’s implementation.")
+      case .generated:
+          print("Generate a default mirror for all ancestor classes.")
+      case .suppressed:
+          print("Suppress the representation of all ancestor classes.")
+      @unknown default:
+          print("Use a representation that was unknown when this code was compiled.")
+      }
+   <- Generate a default mirror for all ancestor classes.
 
 
 .. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
@@ -482,30 +509,32 @@ in the case from which you want execution to continue.
 For more information about the ``fallthrough`` statement,
 see :ref:`Statements_FallthroughStatement` below.
 
-.. langref-grammar
-
-    stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
-    stmt-switch-case ::= (case-label | default-label) brace-item+
-    stmt-switch-case ::= (case-label | default-label) ';'
-
-    case-label ::= 'case' pattern ('where' expr)? (',' pattern ('where' expr)?)* ':'
-    default-label ::= 'default' ':'
-
-
 .. syntax-grammar::
 
     Grammar of a switch statement
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-label statements | default-label statements
+    switch-case --> case-label statements
+    switch-case --> default-label statements
+    switch-case --> conditional-switch-case
 
-    case-label --> ``case`` case-item-list ``:``
+    case-label --> attributes-OPT ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
-    default-label --> ``default`` ``:``
+    default-label --> attributes-OPT ``default`` ``:``
 
     where-clause --> ``where`` where-expression
     where-expression --> expression
+
+    conditional-switch-case --> switch-if-directive-clause switch-elseif-directive-clauses-OPT switch-else-directive-clause-OPT endif-directive
+    switch-if-directive-clause --> if-directive compilation-condition switch-cases-OPT
+    switch-elseif-directive-clauses --> elseif-directive-clause switch-elseif-directive-clauses-OPT
+    switch-elseif-directive-clause --> elseif-directive compilation-condition switch-cases-OPT
+    switch-else-directive-clause --> else-directive switch-cases-OPT
+
+.. The grammar above uses attributes-OPT to match what's used
+   in all other places where attributes are allowed,
+   although as of Swift 4.2 only a single attribute (@unknown) is allowed.
 
 
 .. _Statements_LabeledStatement:
@@ -565,14 +594,6 @@ by unconditionally transferring program control from one piece of code to anothe
 Swift has five control transfer statements: a ``break`` statement, a ``continue`` statement,
 a ``fallthrough`` statement, a ``return`` statement, and a ``throw`` statement.
 
-.. langref-grammar
-
-    stmt-control-transfer ::= stmt-break
-    stmt-control-transfer ::= stmt-continue
-    stmt-control-transfer ::= stmt-fallthrough
-    stmt-control-transfer ::= stmt-return
-    stmt-control-transfer ::= stmt-throw
-
 .. syntax-grammar::
 
     Grammar of a control transfer statement
@@ -616,10 +637,6 @@ For examples of how to use a ``break`` statement,
 see :ref:`ControlFlow_Break` and :ref:`ControlFlow_LabeledStatements`
 in :doc:`../LanguageGuide/ControlFlow`.
 
-.. langref-grammar
-
-    stmt-break ::= 'break' (Note: the langref grammar contained a typo)
-
 .. syntax-grammar::
 
     Grammar of a break statement
@@ -662,11 +679,6 @@ For examples of how to use a ``continue`` statement,
 see :ref:`ControlFlow_Continue` and :ref:`ControlFlow_LabeledStatements`
 in :doc:`../LanguageGuide/ControlFlow`.
 
-.. langref-grammar
-
-    stmt-continue ::= 'continue' (Note: the langref grammar contained a typo)
-
-
 .. syntax-grammar::
 
     Grammar of a continue statement
@@ -696,10 +708,6 @@ whose pattern contains value binding patterns.
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
 see :ref:`ControlFlow_ControlTransferStatements`
 in :doc:`../LanguageGuide/ControlFlow`.
-
-.. langref-grammar
-
-    stmt-fallthrough ::= 'fallthrough'
 
 .. syntax-grammar::
 
@@ -744,11 +752,6 @@ When a ``return`` statement is not followed by an expression,
 it can be used only to return from a function or method that does not return a value
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 
-.. langref-grammar
-
-    stmt-return ::= 'return' expr
-    stmt-return ::= 'return'
-
 .. syntax-grammar::
 
     Grammar of a return statement
@@ -782,10 +785,6 @@ the ``Error`` protocol.
 For an example of how to use a ``throw`` statement,
 see :ref:`ErrorHandling_Throw`
 in :doc:`../LanguageGuide/ErrorHandling`.
-
-.. langref-grammar
-
-    stmt-throw ::= 'throw' expr
 
 .. syntax-grammar::
 
@@ -826,14 +825,14 @@ can refer to resources that will be cleaned up by other ``defer`` statements.
 .. testcode::
 
    -> func f() {
-          defer { print("First") }
-          defer { print("Second") }
-          defer { print("Third") }
+          defer { print("First defer") }
+          defer { print("Second defer") }
+          print("End of function")
       }
-   -> f()
-   <- Third
-   <- Second
-   <- First
+      f()
+   <- End of function
+   <- Second defer
+   <- First defer
 
 The statements in the ``defer`` statement can't
 transfer program control outside of the ``defer`` statement.
@@ -954,21 +953,45 @@ Platform condition        Valid arguments
 ========================  ===================================================
 ``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
-``swift()``               ``>=`` followed by a version number
+``swift()``               ``>=`` or ``<`` followed by a version number
+``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
 ``targetEnvironment()``   ``simulator``
 ========================  ===================================================
-
-.. This table is duplicated in USWCAOC in Interoperability/InteractingWithCAPIs.rst
 
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
 
-The version number for the ``swift()`` platform condition
+The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
 with a dot (``.``) separating each part of the version number.
-There must not be whitespace between ``>=`` and the version number.
+There must not be whitespace between the comparison operator and the version number.
+The version for ``compiler()`` is the compiler version,
+regardless of the Swift version setting passed to the compiler.
+The version for ``swift()`` is the language version currently being compiled.
+For example, if you compile your code using the Swift 5 compiler in Swift 4.2 mode,
+the compiler version is 5 and the language version is 4.2.
+With those settings,
+the following code prints all three messages:
+
+.. testcode::
+
+   -> #if compiler(>=5)
+      print("Compiled with the Swift 5 compiler or later")
+      #endif
+      #if swift(>=4.2)
+      print("Compiled in Swift 4.2 mode or later")
+      #endif
+      #if compiler(>=5) && swift(<5)
+      print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
+      #endif
+   <- Compiled with the Swift 5 compiler or later
+   -> // Prints "Compiled in Swift 4.2 mode or later"
+   <- Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5
+
+.. That testcode is cheating by explicitly printing the second line of output,
+   since it's not actually running in Swift 4.2 mode.
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
@@ -1011,6 +1034,20 @@ otherwise, it returns ``false``.
           print(5)
       #endif
    << 5
+
+.. assertion:: pound-if-compiler-version
+
+   -> #if compiler(>=4.2)
+          print(1)
+      #endif
+   << 1
+   -> #if compiler(>=4.2) && true
+          print(2)
+      #endif
+   << 2
+   -> #if compiler(>=4.2) && false
+          print(3)
+      #endif
 
 You can combine compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
@@ -1074,7 +1111,8 @@ have the following form:
 
     platform-condition --> ``os`` ``(`` operating-system ``)``
     platform-condition --> ``arch`` ``(`` architecture ``)``
-    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)``
+    platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)`` | ``swift`` ``(`` ``<`` swift-version ``)``
+    platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)`` | ``compiler`` ``(`` ``<`` swift-version ``)``
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     

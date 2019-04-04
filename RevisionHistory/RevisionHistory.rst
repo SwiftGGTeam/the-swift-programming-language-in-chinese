@@ -1,7 +1,26 @@
 Document Revision History
 =========================
 
-**2018-06-04**
+**2019-01-24**
+
+* Updated for Swift 5.
+
+* Added the :ref:`Attributes_dynamicCallable` section
+  with information about dynamically calling instances as functions
+  using the ``dynamicCallable`` attribute.
+
+* Added the :ref:`Attributes_unknown` and :ref:`Statements_SwitchingOverFutureEnumerationCases` sections
+  with information about handling future enumeration cases
+  in switch statements using
+  the ``unknown`` switch case attribute.
+
+* Added information about the identity key path (``\.self``)
+  to the :ref:`Expression_TypedKeyPathExpression` section.
+
+* Added information about using the less than (``<``) operator
+  in platform conditions to the :ref:`Statements_BuildConfigurationStatement` section.
+
+**2018-09-17**
 
 * Updated for Swift 4.2.
 
@@ -18,6 +37,16 @@ Document Revision History
 * Added information about members that are looked up by name at runtime
   to the :ref:`Attributes_DeclarationAttributes` section
   under the ``dynamicMemberLookup`` attribute.
+
+* Added information about the ``requires_stored_property_inits`` and ``warn_unqualified_access`` attributes
+  to the :ref:`Attributes_DeclarationAttributes` section.
+
+* Added information about how to conditionally compile code
+  depending on the Swift compiler version being used
+  to the :ref:`Statements_BuildConfigurationStatement` section.
+
+* Added information about ``#dsohandle``
+  to the :ref:`Expressions_LiteralExpression` section.
 
 **2018-03-29**
 

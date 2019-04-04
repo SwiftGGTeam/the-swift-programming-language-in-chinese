@@ -38,7 +38,7 @@ If part of your code requires a ``String``,
 type safety prevents you from passing it an ``Int`` by mistake.
 Likewise, type safety prevents you from
 accidentally passing an optional ``String``
-to a piece of code that requires a nonoptional ``String``.
+to a piece of code that requires a non-optional ``String``.
 Type safety helps you catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
@@ -171,7 +171,7 @@ including Unicode characters:
    << // 🐶🐮 : String = "dogcow"
 
 Constant and variable names can't contain
-whitespace characters, mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values,
 or line- and box-drawing characters.
 Nor can they begin with a number,
 although numbers may be included elsewhere within the name.
@@ -996,7 +996,7 @@ by assigning it the special value ``nil``:
 
 .. note::
 
-   You can't use ``nil`` with nonoptional constants and variables.
+   You can't use ``nil`` with non-optional constants and variables.
    If a constant or variable in your code needs to work with
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
@@ -1180,7 +1180,7 @@ The primary use of implicitly unwrapped optionals in Swift is during class initi
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
-but can also be used like a nonoptional value,
+but can also be used like a non-optional value,
 without the need to unwrap the optional value each time it's accessed.
 The following example shows the difference in behavior between
 an optional string and an implicitly unwrapped optional string

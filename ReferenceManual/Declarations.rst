@@ -14,23 +14,6 @@ implement their members, most protocol members are declarations only. For conven
 and because the distinction isn't that important in Swift,
 the term *declaration* covers both declarations and definitions.
 
-.. langref-grammar
-
-    decl ::= decl-class
-    decl ::= decl-constructor
-    decl ::= decl-deinitializer
-    decl ::= decl-extension
-    decl ::= decl-func
-    decl ::= decl-import
-    decl ::= decl-enum
-    decl ::= decl-enum-element
-    decl ::= decl-protocol
-    decl ::= decl-struct
-    decl ::= decl-typealias
-    decl ::= decl-var
-    decl ::= decl-let
-    decl ::= decl-subscript
-
 .. syntax-grammar::
 
     Grammar of a declaration
@@ -69,11 +52,6 @@ as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
 
-.. langref-grammar
-
-    top-level ::= brace-item*
-
-
 .. syntax-grammar::
 
     Grammar of a top-level declaration
@@ -103,14 +81,6 @@ of their appearance in source code.
 .. TR: What exactly are the scope rules for Swift?
 
 .. TODO: Discuss scope.  I assume a code block creates a new scope?
-
-
-.. langref-grammar
-
-    brace-item-list ::= '{' brace-item* '}'
-    brace-item      ::= decl
-    brace-item      ::= expr
-    brace-item      ::= stmt
 
 .. syntax-grammar::
 
@@ -147,18 +117,6 @@ is made available in the current scope.
     import <#module#>.<#submodule#>
 
 .. TODO: Need to add more to this section.
-
-.. langref-grammar
-
-    decl-import ::=  attribute-list 'import' import-kind? import-path
-    import-kind ::= 'typealias'
-    import-kind ::= 'struct'
-    import-kind ::= 'class'
-    import-kind ::= 'enum'
-    import-kind ::= 'protocol'
-    import-kind ::= 'var'
-    import-kind ::= 'func'
-    import-path ::= any-identifier ('.' any-identifier)*
 
 .. syntax-grammar::
 
@@ -237,11 +195,6 @@ For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
 
 .. TODO: Need to discuss class and static constant properties.
-
-.. langref-grammar
-
-    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
-    initializer ::= '=' expr
 
 .. syntax-grammar::
 
@@ -442,39 +395,6 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Need to discuss static variable properties in more detail.
 
-.. langref-grammar
-    decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
-
-    decl-var       ::= decl-var-head pattern initializer?  (',' pattern initializer?)*
-
-    // 'get' is implicit in this syntax.
-    decl-var       ::= decl-var-head identifier ':' type-annotation brace-item-list
-
-    decl-var       ::= decl-var-head identifier ':' type-annotation '{' get-set '}'
-
-    decl-var       ::= decl-var-head identifier ':' type-annotation initializer? '{' willset-didset '}'
-
-    // For use in protocols.
-    decl-var       ::= decl-var-head identifier ':' type-annotation '{' get-set-kw '}'
-
-    get-set        ::= get set?
-    get-set        ::= set get
-
-    get            ::= attribute-list 'get' brace-item-list
-    set            ::= attribute-list 'set' set-name? brace-item-list
-    set-name       ::= '(' identifier ')'
-
-    willset-didset ::= willset didset?
-    willset-didset ::= didset willset?
-
-    willset        ::= attribute-list 'willSet' set-name? brace-item-list
-    didset         ::= attribute-list 'didSet' set-name? brace-item-list
-
-    get-kw         ::= attribute-list 'get'
-    set-kw         ::= attribute-list 'set'
-    get-set-kw     ::= get-kw set-kw?
-    get-set-kw     ::= set-kw get-kw
-
 .. syntax-grammar::
 
     Grammar of a variable declaration
@@ -555,6 +475,16 @@ For example:
 Because the type alias and the existing type can be used interchangeably,
 the type alias can't introduce additional generic constraints.
 
+A type alias can forward an existing type's generic parameters
+by omitting all generic parameters from the declaration.
+For example,
+the ``Diccionario`` type alias declared here
+has the same generic parameters and constraints as ``Dictionary``.
+
+.. testcode:: typealias-using-shorthand
+
+   -> typealias Diccionario = Dictionary
+
 .. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
      typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 
@@ -586,11 +516,6 @@ the ``sum`` function would have to refer to the associated type
 as ``T.Iterator.Element`` instead of ``T.Element``.
 
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
-
-.. langref-grammar
-
-    decl-typealias ::= typealias-head '=' type
-    typealias-head ::= 'typealias' identifier inheritance?
 
 .. syntax-grammar::
 
@@ -835,7 +760,7 @@ A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
 A function can have at most one variadic parameter.
 A variadic parameter is treated as an array that contains elements of the base type name.
-For instance, the variadic parameter ``Int...`` is treated as ``[Int]``.
+For example, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,
 see :ref:`Functions_VariadicParameters`.
 
@@ -1313,13 +1238,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     UPDATE: You can only have one raw-value type specified.
     I changed the grammar to be more restrictive in light of this.
 
-.. langref-grammar
-
-    decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
-    enum-body ::= '{' decl* '}'
-    decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
-    enum-case ::= identifier type-tuple? ('->' type)?
-
 .. NOTE: Per Doug and Ted, "('->' type)?" is not part of the grammar.
     We removed it from our grammar, below.
 
@@ -1426,11 +1344,6 @@ see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
-.. langref-grammar
-
-    decl-struct ::= attribute-list 'struct' identifier generic-params? inheritance? '{' decl-struct-body '}'
-    decl-struct-body ::= decl*
-
 .. syntax-grammar::
 
    Grammar of a structure declaration
@@ -1522,11 +1435,6 @@ see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
-
-.. langref-grammar
-
-    decl-class ::= attribute-list 'class' identifier generic-params? inheritance? '{' decl-class-body '}'
-    decl-class-body ::= decl*
 
 .. syntax-grammar::
 
@@ -1637,14 +1545,6 @@ they specify.
 
 You can use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegation`.
-
-.. langref-grammar
-
-    decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
-    protocol-member ::= decl-func
-    protocol-member ::= decl-var
-    protocol-member ::= subscript-head
-    protocol-member ::= typealias-head
 
 .. syntax-grammar::
 
@@ -2070,12 +1970,6 @@ by a nonfailable designated initializer only.
 For more information and to see examples of failable initializers,
 see :ref:`Initialization_FailableInitializers`.
 
-.. langref-grammar
-
-    decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
-    constructor-signature ::= pattern-tuple
-    constructor-signature ::= identifier-or-any selector-tuple
-
 .. syntax-grammar::
 
     Grammar of an initializer declaration
@@ -2117,12 +2011,6 @@ Deinitializers are not called directly.
 
 For an example of how to use a deinitializer in a class declaration,
 see :doc:`../LanguageGuide/Deinitialization`.
-
-
-.. langref-grammar
-
-    decl-de ::= attribute-list 'deinit' brace-item-list
-    NOTE: langref contains a typo here---should be 'decl-deinitializer'
 
 .. syntax-grammar::
 
@@ -2479,10 +2367,6 @@ resulting in an error:
    >> [1, 2, 3].foo()
    << // r0 : Int = 0
 
-.. langref-grammar
-
-    decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
-
 .. syntax-grammar::
 
     Grammar of an extension declaration
@@ -2537,7 +2421,7 @@ That said, if you provide a setter clause, you must also provide a getter clause
 The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
 If you do not provide a setter name, the default parameter name to the setter is ``value``.
-The type of the *setter name* must be the same as the *return type*.
+The type of the parameter to the setter is the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
@@ -2554,17 +2438,6 @@ as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
 For more information about subscripting and to see examples of subscript declarations,
 see :doc:`../LanguageGuide/Subscripts`.
-
-.. langref-grammar
-    decl-subscript ::= subscript-head '{' get-set '}'
-
-    // 'get' is implicit in this syntax.
-    decl-subscript ::= subscript-head brace-item-list
-
-    // For use in protocols.
-    decl-subscript ::= subscript-head '{' get-set-kw '}'
-
-    subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
 
 .. syntax-grammar::
 
@@ -2834,7 +2707,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2852,7 +2725,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2915,7 +2788,7 @@ and private members declared in one extension
 can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
+which consists of the ``set`` keyword enclosed in parentheses (for example, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,

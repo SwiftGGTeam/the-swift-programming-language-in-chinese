@@ -138,13 +138,12 @@ For example:
    >> let apples = 3
    >> let oranges = 5
    -> let quotation = """
-          Even though there's whitespace to the left,
-          the actual lines aren't indented.
-              Except for this line.
-          Double quotes (") can appear without being escaped.
+      I said "I have \(apples) apples."
+      And then I said "I have \(apples + oranges) pieces of fruit."
+      """
 
-          I still have \(apples + oranges) pieces of fruit.
-          """
+.. Can't show an example of indentation in the triple-quoted string above.
+   <rdar://problem/49129068> Swift code formatting damages indentation
 
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
@@ -177,8 +176,8 @@ A comma is allowed after the last element.
 
 .. testcode:: guided-tour
 
-    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    << // shoppingList : [String] = ["catfish", "water", "tulips", "blue paint"]
+    -> var shoppingList = ["catfish", "water", "tulips"]
+    << // shoppingList : [String] = ["catfish", "water", "tulips"]
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
@@ -187,6 +186,14 @@ A comma is allowed after the last element.
         ]
     << // occupations : [String : String] = ["Malcolm": "Captain", "Kaylee": "Mechanic"]
     -> occupations["Jayne"] = "Public Relations"
+
+Arrays automatically grow as you add elements.
+
+.. testcode:: guided-tour
+
+    -> shoppingList.append("blue paint")
+    -> print(shoppingList)
+    << ["catfish", "bottle of water", "tulips", "blue paint"]
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -897,6 +904,7 @@ enumerations can have methods associated with them.
            case ace = 1
            case two, three, four, five, six, seven, eight, nine, ten
            case jack, queen, king
+    ---
            func simpleDescription() -> String {
                switch self {
                    case .ace:
@@ -954,6 +962,7 @@ you don't have to provide one.
 
     -> enum Suit {
            case spades, hearts, diamonds, clubs
+    ---
            func simpleDescription() -> String {
                switch self {
                    case .spades:
@@ -1092,7 +1101,7 @@ but classes are passed by reference.
 
 .. admonition:: Experiment
 
-   Add a method to ``Card`` that creates
+   Write a function that returns an array containing
    a full deck of cards,
    with one card of each combination of rank and suit.
 
@@ -1145,7 +1154,10 @@ Classes, enumerations, and structs can all adopt protocols.
 
 .. admonition:: Experiment
 
-   Write an enumeration that conforms to this protocol.
+   Add another requirement to ``ExampleProtocol``.
+   What changes do you need to make
+   to ``SimpleClass`` and ``SimpleStructure``
+   so that they still conform to the protocol?
 
 Notice the use of the ``mutating`` keyword
 in the declaration of ``SimpleStructure``
@@ -1398,7 +1410,8 @@ or to require a class to have a particular superclass.
 .. testcode:: guided-tour
 
    -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
-          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+          where T.Element: Equatable, T.Element == U.Element
+      {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

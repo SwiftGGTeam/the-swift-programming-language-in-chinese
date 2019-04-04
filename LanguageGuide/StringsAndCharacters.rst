@@ -177,9 +177,8 @@ String literals can include the following special characters:
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quotation mark) and ``\'`` (single quotation mark)
 
-* An arbitrary Unicode scalar, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
+* An arbitrary Unicode scalar value, written as :literal:`\\u{`:emphasis:`n`:literal:`}`,
   where *n* is a 1--8 digit hexadecimal number
-  with a value equal to a valid Unicode code point
   (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
 
 .. assertion:: stringLiteralUnicodeScalar
@@ -234,6 +233,41 @@ For example:
    >> print(threeDoubleQuotationMarks)
    << Escaping the first quotation mark """
    << Escaping all three quotation marks """
+
+.. _StringsAndCharacters_ExtendedDelimiters:
+
+Extended String Delimiters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can place a string literal within :newTerm:`extended delimiters`
+to include special characters in a string
+without invoking their effect.
+You place your string within quotation marks (``"``)
+and surround that with number signs (``#``).
+For example, printing the string literal ``#"Line 1\nLine 2"#``
+prints the line feed escape sequence (``\n``)
+rather than printing the string across two lines.
+
+If you need the special effects of a character in a string literal,
+match the number of number signs within the string
+following the escape character (``\``).
+For example, if your string is ``#"Line 1\nLine 2"#``
+and you want to break the line,
+you can use ``#"Line 1\#nLine 2"#`` instead.
+Similarly, ``###"Line1\###nLine2"###`` also breaks the line.
+
+String literals created using extended delimiters can also be multiline string literals.
+You can use extended delimiters to include the text ``"""`` in a multiline string,
+overriding the default behavior that ends the literal. For example:
+
+.. testcode:: extended-string-delimiters
+   :compile: true
+
+   -> let threeMoreDoubleQuotationMarks = #"""
+      Here are three more double quotes: """
+      """#
+   >> print(threeMoreDoubleQuotationMarks)
+   << Here are three more double quotes: """
 
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
@@ -490,13 +524,31 @@ and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
 when it's included inside the string literal.
 
+You can use extended string delimiters to create strings containing
+characters that would otherwise be treated as a string interpolation.
+For example: 
+
+.. testcode:: stringInterpolation
+
+   -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
+   <- Write an interpolated string in Swift using \(multiplier).
+
+To use string interpolation
+inside a string that uses extended delimiters,
+match the number of number signs before the backslash
+to the number of number signs at the beginning and end of the string.
+For example:
+
+.. testcode:: stringInterpolation
+
+   -> print(#"6 times 7 is \#(6 * 7)."#)
+   <- 6 times 7 is 42.
+
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
    can't contain an unescaped backslash (``\``), a carriage return, or a line feed.
    However, they can contain other string literals.
-
-.. TODO: add a bit here about making things Printable.
 
 .. _StringsAndCharacters_Unicode:
 
@@ -513,25 +565,18 @@ as described in this section.
 
 .. _StringsAndCharacters_StringsAreUnicodeScalars:
 
-Unicode Scalars
-~~~~~~~~~~~~~~~
+Unicode Scalar Values
+~~~~~~~~~~~~~~~~~~~~~
 
 Behind the scenes,
-Swift's native ``String`` type is built from :newTerm:`Unicode scalar` values.
-A Unicode scalar is a unique 21-bit number for a character or modifier,
+Swift's native ``String`` type is built from :newTerm:`Unicode scalar values`.
+A Unicode scalar value is a unique 21-bit number for a character or modifier,
 such as ``U+0061`` for ``LATIN SMALL LETTER A`` (``"a"``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
-.. note::
-
-   A Unicode scalar is any Unicode :newTerm:`code point` in the range
-   ``U+0000`` to ``U+D7FF`` inclusive or ``U+E000`` to ``U+10FFFF`` inclusive.
-   Unicode scalars don't include the Unicode :newTerm:`surrogate pair` code points,
-   which are the code points in the range ``U+D800`` to ``U+DFFF`` inclusive.
-
-Note that not all 21-bit Unicode scalars are assigned to a character ---
-some scalars are reserved for future assignment.
-Scalars that have been assigned to a character typically also have a name,
+Note that not all 21-bit Unicode scalar values are assigned to a character ---
+some scalars are reserved for future assignment or for use in UTF-16 encoding.
+Scalar values that have been assigned to a character typically also have a name,
 such as ``LATIN SMALL LETTER A`` and ``FRONT-FACING BABY CHICK`` in the examples above.
 
 .. _StringsAndCharacters_ExtendedGraphemeClusters:

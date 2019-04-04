@@ -22,7 +22,7 @@ discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_Extension
 A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
 There are two compound types: function types and tuple types.
 A compound type may contain named types and other compound types.
-For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
+For example, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
@@ -32,17 +32,6 @@ For example, ``(Int)`` is equivalent to ``Int``.
 
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
-
-.. langref-grammar
-
-    type ::= type-function
-    type ::= type-array
-    type-simple ::= type-identifier
-    type-simple ::= type-tuple
-    type-simple ::= type-composition
-    type-simple ::= type-metatype
-    type-simple ::= type-optional
-    type-annotation ::= attribute-list type
 
 .. syntax-grammar::
 
@@ -130,11 +119,6 @@ that is declared in the ``ExampleModule`` module.
     !! var someValue: ExampleModule.MyType
     !!                ^~~~~~~~~~~~~
 
-.. langref-grammar
-
-    type-identifier ::= type-identifier-component ('.' type-identifier-component)*
-    type-identifier-component ::= identifier generic-args?
-
 .. syntax-grammar::
 
     Grammar of a type identifier
@@ -174,13 +158,6 @@ that name is part of the type.
 
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
-
-.. langref-grammar
-
-    type-tuple ::= '(' type-tuple-body? ')'
-    type-tuple-body ::= type-tuple-element (',' type-tuple-element)* '...'?
-    type-tuple-element ::= identifier ':' type-annotation
-    type-tuple-element ::= type-annotation
 
 .. syntax-grammar::
 
@@ -408,10 +385,6 @@ by using the ``withoutActuallyEscaping(_:do:)`` function.
 For information about avoiding conflicting access to memory,
 see :doc:`../LanguageGuide/MemorySafety`.
 
-.. langref-grammar
-
-    type-function ::= type-tuple '->' type-annotation
-
 .. syntax-grammar::
 
     Grammar of a function type
@@ -493,13 +466,6 @@ the example above, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
 
 For a detailed discussion of the Swift standard library ``Array`` type,
 see :ref:`CollectionTypes_Arrays`.
-
-.. langref-grammar
-
-    type-array ::= type-simple
-    type-array ::= type-array '[' ']'
-    type-array ::= type-array '[' expr ']'
-
 
 .. syntax-grammar::
 
@@ -619,13 +585,6 @@ no operation is performed and therefore no runtime error is produced.
 For more information and to see examples that show how to use optional types,
 see :ref:`TheBasics_Optionals`.
 
-.. langref-grammar
-
-    type-optional ::= type-simple '?'-postfix
-
-.. NOTE: The -postfix disambiguates between two terminals
-    which have the same text but which have different whitespace.
-
 .. syntax-grammar::
 
     Grammar of an optional type
@@ -674,7 +633,7 @@ have the same ``Optional<Wrapped>`` type as optional values,
 you can use implicitly unwrapped optionals
 in all the same places in your code
 that you can use optionals.
-For instance, you can assign values of implicitly unwrapped
+For example, you can assign values of implicitly unwrapped
 optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
@@ -754,11 +713,6 @@ is equivalent to ``P & Q & R``.
     -> typealias PQ = P & Q
     -> typealias PQR = PQ & Q & R
 
-.. langref-grammar
-
-    type-composition ::= 'protocol' '<' type-composition-list? '>'
-    type-composition-list ::= type-identifier (',' type-identifier)*
-
 .. syntax-grammar::
 
     Grammar of a protocol composition type
@@ -835,11 +789,6 @@ or the entire class marked with the ``final`` keyword.
     << // metatype : AnotherSubClass.Type = REPL.AnotherSubClass
     -> let anotherInstance = metatype.init(string: "some string")
     << // anotherInstance : AnotherSubClass = REPL.AnotherSubClass
-
-
-.. langref-grammar
-
-    type-metatype ::= type-simple '.' 'metatype'
 
 .. syntax-grammar::
 
@@ -922,10 +871,6 @@ a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
 to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
-.. langref-grammar
-
-    inheritance ::= ':' type-identifier (',' type-identifier)*
-
 .. syntax-grammar::
 
     Grammar of a type inheritance clause
@@ -945,7 +890,7 @@ instead of writing ``var x: Int = 0``, you can write ``var x = 0``,
 omitting the type completely ---
 the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
-For instance, if you write ``let dict: Dictionary = ["A": 1]``,
+For example, if you write ``let dict: Dictionary = ["A": 1]``,
 the compiler infers that ``dict`` has the type ``Dictionary<String, Int>``.
 
 In both of the examples above,
