@@ -13,14 +13,7 @@
 
 # 当前阶段
 
-Swift 5.0 翻译中，请到 [Issues](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues) 中认领章节（把 Issue 的 Assignee 设置成你自己就表示认领，不要认领已经有人认领的章节）。
-
-在翻译时可以通过 Calibre 软件对 [document 目录下](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/document) 不同版本的文档进行 diff，检查待更新部分。
-
-diff 操作如下：
-
-将最新文档加入到 Calibre 中，点击 **Edit Book**，然后在编辑界面选择 **File** -> **Compare to other book** 检查各模块的更新内容，详见[链接](https://manual.calibre-ebook.com/diff.html)。
-
+- 更新到 Swift 5.0, 2019-04-05
 - 更新到 Swift 4.2，2019-01-29
 - 更新到 Swift 4.1，2018-04-12，感谢[@Mylittleswift](https://github.com/Mylittleswift)
 - 更新到 Swift 3.0，2016-09-23
@@ -42,6 +35,14 @@ diff 操作如下：
 
 - 翻译排版格式要求参考 SwiftGG [排版指南](https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md)
 - Pull Request 发起方式参考 SwiftGG [Pull Request 说明](https://github.com/SwiftGGTeam/translation/blob/master/%E7%BF%BB%E8%AF%91%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0%E5%8F%8APR%E8%AF%B4%E6%98%8E.md#%E5%A6%82%E4%BD%95%E5%8F%91%E8%B5%B7-pull-request)
+
+原版文档差异比较：
+
+在翻译时可以通过 Calibre 软件对 [document 目录下](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/document) 不同版本的文档进行 diff，检查待更新部分。
+
+diff 操作如下：
+
+将最新文档加入到 Calibre 中，点击 **Edit Book**，然后在编辑界面选择 **File** -> **Compare to other book** 检查各模块的更新内容，详见[链接](https://manual.calibre-ebook.com/diff.html)。
 
 其他说明：
 
