@@ -8,8 +8,6 @@
 
 > 语句语法
 > 
-
-#### statement {#statement}
 > *语句* → [*表达式*](./04_Expressions.md#expression) **;**<sub>可选</sub>
 > 
 > *语句* → [*声明*](./06_Declarations.md#declaration) **;**<sub>可选</sub>
@@ -28,8 +26,6 @@
 > 
 > *语句* → [*编译器控制语句*](#compiler-control-statement)
 > 
-
-#### statements {#statements}
 > *多条语句* → [*语句*](#statement) [*多条语句*](#statements)<sub>可选</sub>
 > 
 
@@ -832,7 +828,7 @@ statements to compile if both compilation conditions are false
 > *文件名* → [*静态字符串字面量*](./02_Lexical_Structure.md#static-string-literal)
 > 
 
-### 编译时诊断语句
+### 编译时诊断语句 {#compile-time-diagnostic-statement}
 
 编译时诊断语句允许编译器在编译的时候可以发出错误或者警告。语句形式如下：
 
@@ -852,8 +848,6 @@ statements to compile if both compilation conditions are false
 > 
 > *诊断语句* → **#warning** **(** [*diagnostic-message*](#grammar_diagnostic-message) **)**
 > 
-
-#### grammar_diagnostic-message {#grammar-diagnostic-message}
 > *诊断语句* → [*静态字符串字面量*](./02_Lexical_Structure.md#static-string-literal)
 > 
 
