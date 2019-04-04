@@ -1089,7 +1089,7 @@ including any generic parameters,
 such as ``String``, ``[Int]``, or ``Set<Int>``.
 
 The *path* consists of
-property names, subscripts, optional chaining expressions, 
+property names, subscripts, optional-chaining expressions,
 and forced unwrapping expressions.
 Each of these key-path components
 can be repeated as many times as needed,
@@ -1147,6 +1147,18 @@ instead of ``\SomeClass.someProperty``:
           // ...
       }
    <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
+
+The *path* can refer to ``self`` to create the identity key path (``\.self``).
+The identity key path refers to a whole instance,
+so you can use it to access and change all of the data stored in a variable
+in a single step.
+For example:
+
+.. testcode:: keypath-expression-self-keypath
+
+   -> var compoundValue = (a: 1, b: 2)
+      // Equivalent to compoundValue = (a: 10, b: 20)
+      compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
 The *path* can contain multiple property names, 
 separated by periods,
@@ -1281,7 +1293,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
    key-path-component --> identifier key-path-postfixes-OPT | key-path-postfixes
 
    key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
-   key-path-postfix --> ``?`` | ``!`` | ``[`` function-call-argument-list ``]``
+   key-path-postfix --> ``?`` | ``!`` | ``self`` | ``[`` function-call-argument-list ``]``
 
 
 .. _Expression_SelectorExpression:
@@ -1795,7 +1807,7 @@ you can pass it to a function or method that accepts a type-level argument.
 
 .. syntax-grammar::
 
-    Grammar of a self expression
+    Grammar of a postfix self expression
 
     postfix-self-expression --> postfix-expression ``.`` ``self``
 
@@ -1871,7 +1883,7 @@ It has the following form:
 
 If the value of the *expression* is not ``nil``,
 the optional value is unwrapped
-and returned with the corresponding nonoptional type.
+and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
 
 The unwrapped value of a forced-value expression can be modified,

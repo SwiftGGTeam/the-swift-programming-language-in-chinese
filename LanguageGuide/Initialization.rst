@@ -1525,7 +1525,7 @@ the initializer triggers an initialization failure:
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
-   In the example above, an empty string (``""``) is a valid, nonoptional ``String``.
+   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,

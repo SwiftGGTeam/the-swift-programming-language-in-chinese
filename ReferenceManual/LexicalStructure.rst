@@ -626,6 +626,66 @@ For example, all of the following string literals have the same value:
    << // x : Int = 3
    <$ : String = "1 2 3"
 
+A string delimited by extended delimiters is a sequence of characters
+surrounded by quotation marks and a balanced set of one or more number signs (``#``).
+A string delimited by extended delimiters has the following forms:
+
+.. syntax-outline::
+
+    #"<#characters#>"#
+    
+    #"""
+    <#characters#>
+    """#
+
+Special characters in a string delimited by extended delimiters
+appear in the resulting string as normal characters
+rather than as special characters.
+You can use extended delimiters to create strings with characters
+that would ordinarily have a special effect
+such as generating a string interpolation,
+starting an escape sequence,
+or terminating the string.
+
+The following example shows a string literal
+and a string delimited by extended delimiters
+that create equivalent string values:
+
+.. testcode:: extended-string-delimiters
+
+    -> let string = #"\(x) \ " \u{2603}"#
+       let escaped = "\\(x) \\ \" \\u{2603}"
+    -> print(string)
+    <- \(x) \ " \u{2603}
+    -> print(string == escaped)
+    <- true
+
+If you use more than one number sign to form
+a string delimited by extended delimiters,
+don't place whitespace in between the number signs:
+
+.. testcode:: extended-string-delimiters
+
+    -> print(###"Line 1\###nLine 2"###) // OK
+    << Line 1
+    << Line 2
+    -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !! print(###"Line 1\###nLine 2"###) // OK
+    !! ^
+    !! <REPL Input>:1:18: error: invalid escape sequence in literal
+    !! print(###"Line 1\###nLine 2"###) // OK
+    !! ^
+    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+    !! <REPL Input>:1:20: error: invalid escape sequence in literal
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+
+Multiline string literals that you create using extended delimiters
+have the same indentation requirements as regular multiline string literals. 
+
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
@@ -650,8 +710,15 @@ no runtime concatenation is performed.
 
     string-literal --> static-string-literal | interpolated-string-literal
 
-    static-string-literal --> ``"`` quoted-text-OPT ``"``
-    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
+    string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"``
+    string-literal-closing-delimiter --> ``"`` extended-string-literal-delimiter-OPT
+
+    static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
+    static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
+    
+    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
+    extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
@@ -662,8 +729,8 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
     multiline-quoted-text-item --> escaped-newline
 
-    interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
-    interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
+    interpolated-string-literal --> string-literal-opening-delimiter interpolated-text-OPT string-literal-closing-delimiter
+    interpolated-string-literal --> multiline-string-literal-opening-delimiter interpolated-text-OPT multiline-string-literal-closing-delimiter
 
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
@@ -671,14 +738,15 @@ no runtime concatenation is performed.
     multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
     multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
-    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
+    escape-sequence --> ``\`` extended-string-literal-delimiter
+    escaped-character --> escape-sequence ``0`` | escape-sequence ``\`` | escape-sequence ``t`` | escape-sequence ``n`` | escape-sequence ``r`` | escape-sequence ``"`` | escape-sequence ``'``
+    escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
-    escaped-newline --> ``\`` whitespace-OPT line-break
+    escaped-newline -->  escape-sequence whitespace-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
-   the quoted-texts rule which allows repetition; no need to allow
+   the quoted-text rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
 
 .. Now that single quotes are gone, we don't have a character literal.
@@ -850,8 +918,10 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+00A1--U+00A7
     operator-head --> U+00A9 or U+00AB
     operator-head --> U+00AC or U+00AE
-    operator-head --> U+00B0--U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
-    operator-head --> U+2016--U+2017 or U+2020--U+2027
+    operator-head --> U+00B0--U+00B1
+    operator-head --> U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
+    operator-head --> U+2016--U+2017
+    operator-head --> U+2020--U+2027
     operator-head --> U+2030--U+203E
     operator-head --> U+2041--U+2053
     operator-head --> U+2055--U+205E
@@ -860,7 +930,8 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3020 or U+3030
+    operator-head --> U+3008--U+3020 
+    operator-head --> U+3030
 
     operator-character --> operator-head
     operator-character --> U+0300--U+036F

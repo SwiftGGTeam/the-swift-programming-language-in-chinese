@@ -760,7 +760,7 @@ A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
 A function can have at most one variadic parameter.
 A variadic parameter is treated as an array that contains elements of the base type name.
-For instance, the variadic parameter ``Int...`` is treated as ``[Int]``.
+For example, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,
 see :ref:`Functions_VariadicParameters`.
 
@@ -2421,7 +2421,7 @@ That said, if you provide a setter clause, you must also provide a getter clause
 The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
 If you do not provide a setter name, the default parameter name to the setter is ``value``.
-The type of the *setter name* must be the same as the *return type*.
+The type of the parameter to the setter is the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
@@ -2707,7 +2707,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2725,7 +2725,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2788,7 +2788,7 @@ and private members declared in one extension
 can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
+which consists of the ``set`` keyword enclosed in parentheses (for example, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
