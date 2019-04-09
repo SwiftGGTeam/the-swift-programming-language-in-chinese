@@ -13,7 +13,7 @@
 
 # 当前阶段
 
-- 更新到 Swift 5.0, 2019-04-05
+- 更新到 Swift 5.0，2019-04-05
 - 更新到 Swift 4.2，2019-01-29
 - 更新到 Swift 4.1，2018-04-12，感谢[@Mylittleswift](https://github.com/Mylittleswift)
 - 更新到 Swift 3.0，2016-09-23
