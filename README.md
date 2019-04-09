@@ -9,13 +9,13 @@
 
 # 在线阅读
 
-使用 GitBook 制作，可以直接[在线阅读](https://swiftgg.gitbook.io/swift/)。
+使用 GitBook 制作，可以直接 [在线阅读](https://swiftgg.gitbook.io/swift/)。
 
 # 当前阶段
 
 - 更新到 Swift 5.0，2019-04-05
 - 更新到 Swift 4.2，2019-01-29
-- 更新到 Swift 4.1，2018-04-12，感谢[@Mylittleswift](https://github.com/Mylittleswift)
+- 更新到 Swift 4.1，2018-04-12，感谢 [@Mylittleswift](https://github.com/Mylittleswift)
 - 更新到 Swift 3.0，2016-09-23
 
 # 贡献力量
@@ -42,7 +42,7 @@
 
 diff 操作如下：
 
-将最新文档加入到 Calibre 中，点击 **Edit Book**，然后在编辑界面选择 **File** -> **Compare to other book** 检查各模块的更新内容，详见[链接](https://manual.calibre-ebook.com/diff.html)。
+将最新文档加入到 Calibre 中，点击 **Edit Book**，然后在编辑界面选择 **File** -> **Compare to other book** 检查各模块的更新内容，详见 [链接](https://manual.calibre-ebook.com/diff.html)。
 
 其他说明：
 
