@@ -762,7 +762,7 @@ if age > 10 {
 precondition(index > 0, "Index must be greater than zero.")
 ```
 
-你可以调用　`precondition(_:_:file:line:)` 方法来表明出现了一个错误，例如，switch 进入了 default 分支，但是所有的有效值应该被任意一个其他分支（非 default 分支）处理。
+你可以调用　`preconditionFailure(_:file:line:)` 方法来表明出现了一个错误，例如，switch 进入了 default 分支，但是所有的有效值应该被任意一个其他分支（非 default 分支）处理。
 
 > 注意
 > 
