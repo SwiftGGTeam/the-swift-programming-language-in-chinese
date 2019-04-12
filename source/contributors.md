@@ -1,6 +1,6 @@
 # 文档翻译 & 校对工作记录
 
-Swift 官方文档中文翻译工作由[numbbbbb](https://github.com/numbbbbb)发起并主导，该工作已经得到了苹果官方的认可。下面是各个版本官方文档翻译和校对工作的主要贡献者，排名不分先后。
+Swift 官方文档中文翻译由 [numbbbbb](https://github.com/numbbbbb) 发起并主导，本项目已经得到了苹果官方的 [认可](https://swift.org/documentation/)（Translations 部分）。下面是各个版本官方文档翻译和校对工作的主要贡献者，排名不分先后。
 
 ## Swift 5.x 主要贡献者
 
