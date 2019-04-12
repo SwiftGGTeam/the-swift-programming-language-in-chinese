@@ -434,7 +434,7 @@ welcome.removeSubrange(range)
 
 ```swift
 let greeting = "Hello, world!"
-let index = greeting.index(of: ",") ?? greeting.endIndex
+let index = greeting.firstIndex(of: ",") ?? greeting.endIndex
 let beginning = greeting[..<index]
 // beginning 的值为 "Hello"
 
