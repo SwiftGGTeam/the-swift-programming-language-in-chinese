@@ -1192,7 +1192,7 @@ each unassigned case is implicitly assigned a string with the same text as the n
        }
 
 In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
-the raw value of ``GamePlayMode.individual`` is ``"individual"``,.
+the raw value of ``GamePlayMode.individual`` is ``"individual"``,
 and the raw value of ``GamePlayMode.competitive`` is ``"competitive"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
