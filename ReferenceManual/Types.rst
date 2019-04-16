@@ -727,13 +727,13 @@ is equivalent to ``P & Q & R``.
 Opaque Result Type
 ------------------
 
-An opaque result type defines a type that conforms to a protocol or protocol composition,
+An opaque result type defines a type
+that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
-Opaque result types may be declared only as the return type of a function or subscript,
-or the type of a property. 
-An opaque result type must be the entire result -- 
-it can't be declared inside a tuple or a generic type,
+Opaque result types appear as the return type of a function or subscript,
+or the type of a property.
+Opaque result types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
 
 Opaque result types have the following form:
@@ -742,7 +742,16 @@ Opaque result types have the following form:
 
     some <#type#>
 
-The *type* that follows ``some`` is a class, protocol, ``Any``, or a protocol composition.
+The *type* that follows ``some`` is a class type,
+a protocol type,
+a protocol composition type,
+or ``Any``.
+
+A function whose return type is opaque
+must use only a single underlying type for the value it returns.
+For generic functions, generic subscripts, and properties of generic types,
+there must be a one-to-one correspondence between the generic parameters
+and the underlying type of the returned value.
 
 .. syntax-grammar::
 
