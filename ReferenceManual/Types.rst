@@ -747,6 +747,10 @@ a protocol type,
 a protocol composition type,
 or ``Any``.
 
+Protocol declarations can't include opaque result types.
+Classes that include nonfinal methods
+can't use an opaque result type as the return type of a final method.
+
 A function whose return type is opaque
 must use only a single underlying type for the value it returns.
 For generic functions, generic subscripts, and properties of generic types,
