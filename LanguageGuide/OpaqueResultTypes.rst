@@ -1,6 +1,28 @@
 Opaque Result Types
 ===================
 
+.. NARRATIVE
+
+   Wrapper types like LazySequence and StretchedShape are an implementation detail.
+   You'd prefer not to expose them to clients of the API.
+   You could type erase with an AnySequence or AnyShape,
+   but then you lose type information.
+   For example, there's no way to represent
+   "an array of triangles that have been stretched"
+   in the type system when you use type erasure.
+   On the other hand, opaque result types let you keep (but hide!) type information.
+   My array above would be an Array<__opaqueResult(of: stretch)>
+   and I could add another item to the array
+   while maintaining the invariant that it's homogeneous.
+
+   Opaque result types also preserve/infer associated types.
+   In the case of a LazyMappedRotatedWhateverSequence,
+   if you used type erasure, the associated Element type for AnySequence
+   can't be inferred (confirm?)
+
+   SE proposal mentioned performance advantages --
+   using existentials implies more runtime overhead for the dynamic dispatch.
+
 ::
 
    protocol Container {
