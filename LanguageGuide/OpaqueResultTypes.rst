@@ -11,7 +11,7 @@ Opaque Result Types
    "an array of triangles that have been stretched"
    in the type system when you use type erasure.
    On the other hand, opaque result types let you keep (but hide!) type information.
-   My array above would be an Array<__opaqueResult(of: stretch)>
+   My array above would be an Array<@_opaqueReturnTypeOf(stretch)>
    and I could add another item to the array
    while maintaining the invariant that it's homogeneous.
 
