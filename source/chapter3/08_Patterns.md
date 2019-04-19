@@ -60,8 +60,7 @@ let someValue = 42
 > 标识符模式语法
 > 
 
-#### identifier-pattern {#identifier-pattern}
-> *标识符模式* → [*标识符*](./02_Lexical_Structure.md#identifier)
+> *标识符模式{#identifier-pattern}* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
 ## 值绑定模式（Value-Binding Pattern） {#value-binding-pattern}
