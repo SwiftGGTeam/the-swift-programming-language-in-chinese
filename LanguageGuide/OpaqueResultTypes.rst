@@ -1,6 +1,19 @@
 Opaque Result Types
 ===================
 
+An *opaque result type* lets you write a function or method
+that abstracts away some of the type information about its return value.
+This is especially useful at boundaries between groups of code,
+like a library and code that calls into the library.
+You can think of an opaque result type like being the reverse of a generic type:
+Generic types let the code that calls a function
+pick the type for that function's parameters and return value
+in a way that's abstracted away from the function implementation,
+and opaque result types let the function implementation
+pick the type for the value it returns
+in a way that's abstracted away from the code that calls the function.
+
+
 .. NARRATIVE
 
    Wrapper types like LazySequence and StretchedShape are an implementation detail.
@@ -23,6 +36,38 @@ Opaque Result Types
    SE proposal mentioned performance advantages --
    using existentials implies more runtime overhead for the dynamic dispatch.
 
+
+
+.. OUTLINE
+
+   - generics let the caller pick a type that's opaque to the function
+   - opaque result types let the function pick a type that's opaque to the caller
+   - comparison with other ways to opaque-ify a return type..
+   - why not use a protocol as a type? (we don't use the term "existential" in TSPL)
+     * that loses type information
+     * associated types can't be filled in
+     * performance hit due to dynamic dispatch (through the witness table)
+   - why not use simple type erasure like AnyCollection?
+     * loses type information (obviously)
+     * the return type is consistent, but you can't prove it
+       ... meaning you can't build up an array of results
+       ... or add results together
+     * perf is better -- assuming the wrapper is inlinable, it's a zero cost abstraction
+       (TR: confirm)
+   - this opacity is useful at API boundaries
+     * in your own code, you can hide your choice of underlying type
+       from code outside a specific area
+       and prevent other code from relying on it
+       which maintains flexilibity to change that type in the future
+     * in a library, you can hide the underlying type from clients,
+       again maintaining flexability
+       and abstracting away implementation details that aren't part of the API contract
+
+   Is it worth describing the difference between value- and type-level abstraction
+   like Joe Groff did in his forum post?
+
+
+   
 ::
 
    protocol Container {
