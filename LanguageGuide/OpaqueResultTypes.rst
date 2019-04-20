@@ -3,15 +3,140 @@ Opaque Result Types
 
 An *opaque result type* lets you write a function or method
 that abstracts away some of the type information about its return value.
-This is especially useful at boundaries between groups of code,
+This is useful at boundaries between groups of code,
 like a library and code that calls into the library.
-You can think of an opaque result type like being the reverse of a generic type:
+You can think of an opaque result type like being the reverse of a generic type.
 Generic types let the code that calls a function
 pick the type for that function's parameters and return value
 in a way that's abstracted away from the function implementation,
 and opaque result types let the function implementation
 pick the type for the value it returns
 in a way that's abstracted away from the code that calls the function.
+
+.. XXX Make the transition below not terrible
+
+To understand the problem that opaque result types solve,
+let's consider limitations of some other things
+that could be used to solve the same problems.
+
+.. _OpaqueTypes_LimitsOfGenerics:
+
+Limitations of Generic Types
+----------------------------
+
+For example,
+suppose you're writing a library that draws ASCII art shapes.
+The basic characteristic of an ASCII art shape
+is a ``draw()`` function that returns the string representation of that shape,
+which you can use as the requirement for the ``Shape`` protocol:
+
+.. testcode:: opaque-result, opaque-result-generic
+
+    -> protocol Shape {
+           func draw() -> String
+       }
+    ---
+    -> struct Triangle: Shape {
+          var size: Int
+          func draw() -> String {
+              var result = ""
+              for length in 1...size {
+                  result += String(repeating: "*", count: length)
+                  result += "\n"
+              }
+              return result
+          }
+      }
+    -> let smallTriangle = Triangle(size: 3)
+    << // smallTriangle : Triangle = REPL.Triangle(size: 3)
+    -> print(smallTriangle.draw())
+    </ *
+    </ **
+    </ ***
+    <<-
+
+You could use generics to implement operations like flipping a shape vertically,
+as shown in the code below.
+However, this approach has a drawback:
+it exposes the full chain of transformations as the resulting shape's type.
+
+..  // XXX This would need to pad with spaces, so it doesn't actually work
+    -> struct MirroredShape<T: Shape>: Shape {
+           var shape: T
+           func draw() -> String {
+               var result = ""
+               for line in shape.draw().split(separator: "\n") {
+                   result += line.reversed()
+                   result += "\n"
+               }
+               return result
+           }
+       }
+    -> let mirroredTriangle = MirroredShape(shape: smallTriangle)
+    << // mirroredTriangle : MirroredShape<Triangle> = REPL.MirroredShape<REPL.Triangle>(shape: REPL.Triangle(size: 3))
+    -> print(mirroredTriangle.draw())
+    </ *
+    </ **
+    </ ***
+    <<-
+
+.. testcode:: opaque-result-generic
+
+    -> struct FlippedShape<T: Shape>: Shape {
+           var shape: T
+           func draw() -> String {
+               let lines = shape.draw().split(separator: "\n")
+               return lines.reversed().joined(separator: "\n")
+           }
+       }
+    -> let flippedTriangle = FlippedShape(shape: smallTriangle)
+    << // flippedTriangle : FlippedShape<Triangle> = REPL.FlippedShape<REPL.Triangle>(shape: REPL.Triangle(size: 3))
+    -> print(flippedTriangle.draw())
+    </ ***
+    </ **
+    </ *
+
+Using this approach to define a ``JoinedShape<T: Shape, U: Shape>`` structure
+would lead to types like ``JoinedShape<FlippedShape<Triangle>, Triangle>``
+from joining a flipped triangle with a triangle.
+It's easy to image how this nested generic types
+can quickly become cumbersome to read and write.
+
+..
+    *
+    **
+    ***
+    ***
+    **
+    *
+
+Encoding this detailed information about how a shape was created
+into the type system also exposes details
+that might not be part of the API contract you want to commit to.
+You could have made the same shape by joining
+a two-by-two triangle with a two-by-two square and a flipped two-by-two triangle,
+or by directly drawing the trapezoid.
+Wrapper types like ``JoinedShape`` and ``FlippedShape``
+shouldn't be visible to users of this library.
+
+.. _OpaqueTypes_LimitsOfExistentials:
+
+Limits of Protocol Types
+------------------------
+
+.. _OpaqueTypes_LimitsOfErasure:
+
+Limits of Type Erasure
+----------------------
+
+
+
+
+
+
+
+
+
 
 
 .. NARRATIVE
@@ -35,8 +160,6 @@ in a way that's abstracted away from the code that calls the function.
 
    SE proposal mentioned performance advantages --
    using existentials implies more runtime overhead for the dynamic dispatch.
-
-
 
 .. OUTLINE
 
@@ -65,10 +188,8 @@ in a way that's abstracted away from the code that calls the function.
 
    Is it worth describing the difference between value- and type-level abstraction
    like Joe Groff did in his forum post?
-
-
    
-::
+.. CODE BITS
 
    protocol Container {
       associatedtype Item
@@ -81,7 +202,7 @@ in a way that's abstracted away from the code that calls the function.
       subscript(range: Range) -> Container { get } 
    }
 
-::
+.. CODE BITS
 
    protocol ASCIIArt {
       func draw() -> String
@@ -113,7 +234,7 @@ in a way that's abstracted away from the code that calls the function.
    func repeat(art: ASCIIArt) -> ASCIIArt { }
 
 
-:: 
+.. CODE BITS
 
    protocol ASCIIArt {
        func draw() -> String
