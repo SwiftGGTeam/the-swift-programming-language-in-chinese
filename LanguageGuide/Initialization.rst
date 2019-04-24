@@ -503,7 +503,7 @@ For example:
    -> let zeroByTwo = Size(height: 2.0)
    << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 2.0)
    -> print(zeroByTwo.width, zeroByTwo.height)
-   <- 2.0 0.0
+   <- 0.0 2.0
    ---
    -> let zeroByZero = Size()
    << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 0.0)
