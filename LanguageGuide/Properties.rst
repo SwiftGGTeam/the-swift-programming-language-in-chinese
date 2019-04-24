@@ -370,6 +370,8 @@ which takes advantage of this shorthand notation:
 
 .. iBooks Store screenshot ends here.
 
+.. XXX Add an example of a getter that uses implicit return syntax here.
+
 .. _Properties_ReadOnlyComputedProperties:
 
 Read-Only Computed Properties

@@ -354,6 +354,27 @@ returns an actual tuple value or ``nil``:
       }
    <- min is -6 and max is 109
 
+.. _Functions_ImplicitReturns:
+
+Functions With an Implicit Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions that contain only a single return value
+can be written in a shorter way:
+
+::
+
+   func returnSomething() -> String {
+       return "something!"
+   }
+
+   func returnSomething() -> String {
+       "something!"
+   }
+
+.. XXX Property syntax comes after functions in the guide,
+   so that isn't discussed here.
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
