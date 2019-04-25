@@ -919,9 +919,9 @@ For more information, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 .. note::
 
-   Tuples are useful for temporary groups of related values.
+   Tuples are useful for simple groups of related values.
    They're not suited to the creation of complex data structures.
-   If your data structure is likely to persist beyond a temporary scope,
+   If your data structure is likely to be more complex,
    model it as a class or structure, rather than as a tuple.
    For more information, see :doc:`ClassesAndStructures`.
 
