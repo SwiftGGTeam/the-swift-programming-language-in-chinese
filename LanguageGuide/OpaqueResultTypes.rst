@@ -112,14 +112,70 @@ Limits of Type Erasure
 ----------------------
 
 
+.. _OpaqueTypes_Returning:
+
+Returning an Opaque Type
+------------------------
+
+.. XXX We usually avoid single-letter function names in the guide.
+
+You can think of an opaque result type like being the reverse of a generic type.
+Generic types let the code that calls a function
+pick the type for that function's parameters and return value
+in a way that's abstracted away from the function implementation.
+For example, the functions in the code below
+return a type that depends on their caller:
+
+::
+    func f<T>(arg: T) { ... }
+    func g<T>(arg: T) -> T { ... }
+    func h<T>() -> T { ... }
+
+The caller gets to pick any type it wants,
+and the code inside the function is written in a general way
+so it can handle whatever type the caller picks.
+
+In contrast,
+an opaque result types let the function implementation
+pick the type for the value it returns
+in a way that's abstracted away from the code that calls the function.
+
+::
+
+    // Function with opaque return value
+    func ff() -> some Shape { ... }
+
+The function ``ff()`` guarantees that it will return a value
+of some type that conforms to the ``Shape`` protocol,
+so anything the caller can do with a shape,
+they can do with the value returned by ``ff()``.
+However, ``ff()`` doesn't specify any actual type.
+The code inside the function gets to pick any type it wants,
+like the caller does for the three generic functions above.
+The caller's code is written in a general way,
+like the implementation of those three functions,
+so that the caller can handle whatever type ``ff()`` returns.
+
+
+.. XXX revisit Shape example above using opaque return types
+
+.. XXX talk about the "rules" for ORTs
+   - function always returns the same type
+   - generic functions have 1:1 mapping between T and ORT
+   - type inference for associated types works
 
 
 
 
 
+.. _OpaqueTypes_DeleteMe:
 
+XXX Delete Me
+-------------
 
-
+.. This heading is here to make code folding easier.
+   That way the commented-out bits below have a place to belong
+   when viewing this chapter in outline form.
 
 .. NARRATIVE
 
@@ -303,32 +359,4 @@ Limits of Type Erasure
    func stretch(drawing: ASCIIArt) -> opaque ASCIIArt { }
 
    }
-
-.. _OpaqueTypes_Returning:
-
-Returning an Opaque Type
-------------------------
-
-You can think of an opaque result type like being the reverse of a generic type.
-Generic types let the code that calls a function
-pick the type for that function's parameters and return value
-in a way that's abstracted away from the function implementation,
-and opaque result types let the function implementation
-pick the type for the value it returns
-in a way that's abstracted away from the code that calls the function.
-
-::
-
-    // Function with a generic argument
-    func f<T>(arg: T) { ... }
-
-    // Function with generic argument and generic return value
-    func g<T>(arg: T) -> T { ... }
-
-    // Function with generic return value
-    // (This is uncommon, and often confusing.)
-    func h<T>() -> T { ... }
-
-    // Function with opaque return value
-    func ff() -> some T { ... }
 
