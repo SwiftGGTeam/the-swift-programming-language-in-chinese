@@ -21,7 +21,8 @@ The basic characteristic of an ASCII art shape
 is a ``draw()`` function that returns the string representation of that shape,
 which you can use as the requirement for the ``Shape`` protocol:
 
-.. testcode:: opaque-result, opaque-result-generic
+.. testcode:: opaque-result
+    :compile: true
 
     -> protocol Shape {
            func draw() -> String
@@ -39,7 +40,6 @@ which you can use as the requirement for the ``Shape`` protocol:
           }
        }
     -> let smallTriangle = Triangle(size: 3)
-    << // smallTriangle : Triangle = REPL.Triangle(size: 3)
     -> print(smallTriangle.draw())
     </ *
     </ **
@@ -51,7 +51,8 @@ as shown in the code below.
 However, this approach has a drawback:
 it exposes the full chain of transformations as the resulting shape's type.
 
-.. testcode:: opaque-result-generic
+.. testcode:: opaque-result
+    :compile: true
 
     -> struct FlippedShape<T: Shape>: Shape {
            var shape: T
@@ -61,7 +62,6 @@ it exposes the full chain of transformations as the resulting shape's type.
            }
        }
     -> let flippedTriangle = FlippedShape(shape: smallTriangle)
-    << // flippedTriangle : FlippedShape<Triangle> = REPL.FlippedShape<REPL.Triangle>(shape: REPL.Triangle(size: 3))
     -> print(flippedTriangle.draw())
     </ ***
     </ **
@@ -74,23 +74,24 @@ from joining a flipped triangle with a triangle.
 It's easy to image how this nested generic types
 can quickly become cumbersome to read and write.
 
-.. testcode:: opaque-result-generic
+.. testcode:: opaque-result
+   :compile: true
 
-    -> struct JoinedShape<T: Shape, U: Shape>: Shape {
-          var top: T
-          var bottom: U
-          func draw() -> String {
-              return top.draw() + bottom.draw()
-          }
-       }
-    -> let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
-    -> print(joinedTriangles.draw())
-    </ *
-    </ **
-    </ ***
-    </ ***
-    </ **
-    </ *
+   -> struct JoinedShape<T: Shape, U: Shape>: Shape {
+         var top: T
+         var bottom: U
+         func draw() -> String {
+             return top.draw() + bottom.draw()
+         }
+      }
+   -> let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
+   -> print(joinedTriangles.draw())
+   </ *
+   </ **
+   </ ***
+   </ ***
+   </ **
+   </ *
 
 Encoding this detailed information about how a shape was created
 into the type system also exposes details
