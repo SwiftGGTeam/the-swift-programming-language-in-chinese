@@ -16,6 +16,8 @@ only the name of a protocol that the value conforms to.
 Limitations of Generic Types
 ----------------------------
 
+.. XXX Frame this more explicitly as the problem we're trying to solve
+
 Suppose you're writing a library that draws ASCII art shapes.
 The basic characteristic of an ASCII art shape
 is a ``draw()`` function that returns the string representation of that shape,
@@ -101,17 +103,30 @@ a two-by-two triangle with a two-by-two square and a flipped two-by-two triangle
 or by directly drawing the trapezoid.
 Wrapper types like ``JoinedShape`` and ``FlippedShape``
 shouldn't be visible to users of this library.
+Those underlying types don't matter to the library's users ---
+only the fact that joining and flipping a shape returns another ``Shape`` value.
 
 .. _OpaqueTypes_LimitsOfExistentials:
 
 Limits of Protocol Types
 ------------------------
 
+.. OUTLINE
+
+   - Can't infer associated types
+   - P can only be used as a generic constraint
+   - Efficiency penalty of dispatch through the witness table
+
+   Doesn't reflect the fact that the returned type is always the same,
+   meaning you can't build up an array of shapes
+   or compare the result of two shape operations for equality.
+
 .. _OpaqueTypes_LimitsOfErasure:
 
 Limits of Type Erasure
 ----------------------
 
+.. XXX Is this discussion actually needed?
 
 .. _OpaqueTypes_Returning:
 
@@ -157,17 +172,50 @@ The caller's code is written in a general way,
 like the implementation of those three functions,
 so that the caller can handle whatever type ``ff()`` returns.
 
+.. XXX Transition goes here
 
-.. XXX revisit Shape example above using opaque return types
+Here's a version of the code to flip and join shapes from earlier
+that uses opaque return types:
+
+.. testcode:: opaque-result
+
+    -> func flip(_ shape: Shape) -> any Shape {
+           return FlippedShape(shape: shape)
+       }
+    -> func join(_ top: Shape, _ bottom: Shape) -> any Shape {
+           return JoinedShape(top: top, bottom: bottom)
+       }
+    ---
+    -> let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
+    >> print(type(of: opaqueJoinedTriangles))
+    << any Shape
+    -> print(opaqueJoinedTriangles.draw())
+   </ *
+   </ **
+   </ ***
+   </ ***
+   </ **
+   </ *
+
+The type of ``opaqueJoinedTriangles`` is
+some type that conforms to the ``Shape`` protocol.
+Both ``opaqueJoinedTriangles`` in this example
+and ``joinedTriangles`` in the generics example in :ref:`OpaqueTypes_LimitsOfGenerics` above
+have the same value.
+the details of the nested generic types
+were exposed in the type of ``joinedTriangles``,
+but the underlying generic type of ``opaqueJoinedTriangles`` is only visible
+inside the implementation of the shape-joining code.
+If this code were part of a drawing library,
+the code outside the library wouldn't need to understand the generic implementation,
+and the code inside the library would maintain the flexibility
+to change that implementation in the future
+without breaking its clients.
 
 .. XXX talk about the "rules" for ORTs
    - function always returns the same type
    - generic functions have 1:1 mapping between T and ORT
    - type inference for associated types works
-
-
-
-
 
 .. _OpaqueTypes_DeleteMe:
 
