@@ -516,10 +516,13 @@ Protocols as Types
 ------------------
 
 Protocols don't actually implement any functionality themselves.
-Nonetheless, any protocol you create will become a fully-fledged type for use in your code.
+Nonetheless,
+you can use protocols as a fully-fledged types in your code.
+Using a protocol as a type is sometimes called an :newTerm:`existential type`,
+which comes from the phrase
+"there exists a type *T* such that *T* conforms to the protocol".
 
-Because it's a type,
-you can use a protocol in many places where other types are allowed, including:
+You can use a protocol in many places where other types are allowed, including:
 
 * As a parameter type or return type in a function, method, or initializer
 * As the type of a constant, variable, or property
@@ -532,8 +535,6 @@ you can use a protocol in many places where other types are allowed, including:
    (such as ``FullyNamed`` and ``RandomNumberGenerator``)
    to match the names of other types in Swift
    (such as ``Int``, ``String``, and ``Double``).
-
-.. TODO: what else should be on this list? And should it actually be complete?
 
 Here's an example of a protocol used as a type:
 
@@ -565,6 +566,14 @@ Therefore, you can set it to an instance of
 *any* type that adopts the ``RandomNumberGenerator`` protocol.
 Nothing else is required of the instance you assign to this property,
 except that the instance must adopt the ``RandomNumberGenerator`` protocol.
+Because its type is ``RandomNumberGenerator``,
+code inside the ``Dice`` class can only interact with ``generator``
+in ways that apply to all generators that conform to this protocol.
+That means it can't use any methods or properties
+that are defined by the underlying type of the generator.
+However, you can downcast from a protocol type to an underlying type
+in the same way you can downcast from a superclass to a subclass,
+as discussed in :ref:`TypeCasting_Downcasting`.
 
 ``Dice`` also has an initializer, to set up its initial state.
 This initializer has a parameter called ``generator``,
@@ -579,10 +588,6 @@ a new random number between ``0.0`` and ``1.0``,
 and uses this random number to create a dice roll value within the correct range.
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
 it's guaranteed to have a ``random()`` method to call.
-
-.. TODO: mention that you can only do RandomNumberGenerator-like things
-   with this property, because the property is only known to be a
-   RandomNumberGenerator.
 
 Here's how the ``Dice`` class can be used to create a six-sided dice
 with a ``LinearCongruentialGenerator`` instance as its random number generator:
