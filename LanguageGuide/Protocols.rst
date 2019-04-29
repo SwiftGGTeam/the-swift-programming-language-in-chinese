@@ -111,7 +111,7 @@ Here's an example of a protocol with a single instance property requirement:
          var fullName: String { get }
       }
 
-The ``FullyNamed`` protocol requires a conforming type to provide a fully-qualified name.
+The ``FullyNamed`` protocol requires a conforming type to provide a fully qualified name.
 The protocol doesn't specify anything else about the nature of the conforming type ---
 it only specifies that the type must be able to provide a full name for itself.
 The protocol states that any ``FullyNamed`` type must have
@@ -517,7 +517,7 @@ Protocols as Types
 
 Protocols don't actually implement any functionality themselves.
 Nonetheless,
-you can use protocols as a fully-fledged types in your code.
+you can use protocols as a fully fledged types in your code.
 Using a protocol as a type is sometimes called an :newTerm:`existential type`,
 which comes from the phrase
 "there exists a type *T* such that *T* conforms to the protocol".

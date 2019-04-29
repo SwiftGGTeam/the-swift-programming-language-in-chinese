@@ -489,6 +489,27 @@ which you can use to initialize a new ``Size`` instance:
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
    << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
 
+When you call a memberwise initializer,
+you can omit values for any properties
+that have default values.
+In the example above,
+the ``Size`` structure has a default value
+for both its ``height`` and ``width`` properties,
+so you can omit either one or both.
+For example:
+
+.. testcode:: initialization
+
+   -> let zeroByTwo = Size(height: 2.0)
+   << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 2.0)
+   -> print(zeroByTwo.width, zeroByTwo.height)
+   <- 0.0 2.0
+   ---
+   -> let zeroByZero = Size()
+   << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 0.0)
+   -> print(zeroByZero.width, zeroByZero.height)
+   <- 0.0 0.0
+
 .. _Initialization_InitializerDelegationForValueTypes:
 
 Initializer Delegation for Value Types
@@ -738,7 +759,7 @@ from the superclass, to satisfy rule 1 from above.
 
    These rules don't affect how users of your classes *create* instances of each class.
    Any initializer in the diagram above can be used to create
-   a fully-initialized instance of the class they belong to.
+   a fully initialized instance of the class they belong to.
    The rules only affect how you write the implementation of the class's initializers.
 
 The figure below shows a more complex class hierarchy for four classes.
