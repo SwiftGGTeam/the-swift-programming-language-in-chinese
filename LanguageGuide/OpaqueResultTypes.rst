@@ -33,12 +33,11 @@ which you can use as the requirement for the ``Shape`` protocol:
     -> struct Triangle: Shape {
           var size: Int
           func draw() -> String {
-              var result = ""
+              var result = [String]()
               for length in 1...size {
-                  result += String(repeating: "*", count: length)
-                  result += "\n"
+                  result.append(String(repeating: "*", count: length))
               }
-              return result
+              return result.joined(separator: "\n")
           }
        }
     -> let smallTriangle = Triangle(size: 3)
@@ -46,7 +45,6 @@ which you can use as the requirement for the ``Shape`` protocol:
     </ *
     </ **
     </ ***
-    <<-
 
 You could use generics to implement operations like flipping a shape vertically,
 as shown in the code below.
@@ -83,7 +81,7 @@ can quickly become cumbersome to read and write.
          var top: T
          var bottom: U
          func draw() -> String {
-             return top.draw() + bottom.draw()
+             return top.draw() + "\n" + bottom.draw()
          }
       }
    -> let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
@@ -190,12 +188,12 @@ that uses opaque return types:
     >> print(type(of: opaqueJoinedTriangles))
     << any Shape
     -> print(opaqueJoinedTriangles.draw())
-   </ *
-   </ **
-   </ ***
-   </ ***
-   </ **
-   </ *
+    </ *
+    </ **
+    </ ***
+    </ ***
+    </ **
+    </ *
 
 The type of ``opaqueJoinedTriangles`` is
 some type that conforms to the ``Shape`` protocol.
