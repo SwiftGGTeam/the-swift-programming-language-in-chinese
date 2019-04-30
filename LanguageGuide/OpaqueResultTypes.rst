@@ -103,11 +103,17 @@ Wrapper types like ``JoinedShape`` and ``FlippedShape``
 shouldn't be visible to users of this library.
 Those underlying types don't matter to the library's users ---
 only the fact that joining and flipping a shape returns another ``Shape`` value.
+However,
+you can't use a generic return type to create that kind of abstraction.
+The code that calls the function gets to determine
+what concrete types are used to fill in
+the function's generic parameter types and generic return type,
+not the code inside the function's implementation.
 
 .. _OpaqueTypes_LimitsOfExistentials:
 
-Limits of Protocol Types
-------------------------
+Limitations of Protocol Types
+-----------------------------
 
 .. OUTLINE
 
@@ -121,8 +127,8 @@ Limits of Protocol Types
 
 .. _OpaqueTypes_LimitsOfErasure:
 
-Limits of Type Erasure
-----------------------
+Limitations of Type Erasure
+---------------------------
 
 .. XXX Is this discussion actually needed?
 
@@ -130,8 +136,6 @@ Limits of Type Erasure
 
 Returning an Opaque Type
 ------------------------
-
-.. XXX We usually avoid single-letter function names in the guide.
 
 You can think of an opaque result type like being the reverse of a generic type.
 Generic types let the code that calls a function
@@ -141,39 +145,31 @@ For example, the functions in the code below
 return a type that depends on their caller:
 
 ::
-    func f<T>(arg: T) { ... }
-    func g<T>(arg: T) -> T { ... }
-    func h<T>() -> T { ... }
 
-The caller gets to pick any type it wants,
-and the code inside the function is written in a general way
+    func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
+
+.. From https://developer.apple.com/documentation/swift/1538951-max
+
+The code that calls ``max(_:_:)`` chooses the values for ``x`` and ``y``,
+and the type of those values determines the concrete type of ``T``.
+The calling code can use any type you want,
+provided the type conforms to the ``Comparable`` protocol.
+The code inside the function is written in a general way
 so it can handle whatever type the caller picks.
+The implementation of ``max(_:_:)`` uses only functionality
+that all ``Comparable`` types share.
 
-In contrast,
-an opaque result types let the function implementation
+An opaque result type lets the function implementation
 pick the type for the value it returns
 in a way that's abstracted away from the code that calls the function.
-
-::
-
-    // Function with opaque return value
-    func ff() -> some Shape { ... }
-
-The function ``ff()`` guarantees that it will return a value
-of some type that conforms to the ``Shape`` protocol,
-so anything the caller can do with a shape,
-they can do with the value returned by ``ff()``.
-However, ``ff()`` doesn't specify any actual type.
-The code inside the function gets to pick any type it wants,
-like the caller does for the three generic functions above.
-The caller's code is written in a general way,
-like the implementation of those three functions,
-so that the caller can handle whatever type ``ff()`` returns.
-
-.. XXX Transition goes here
-
-Here's a version of the code to flip and join shapes from earlier
-that uses opaque return types:
+The functions below return a value
+of some type that conforms to the ``Shape`` protocol.
+The code inside the function can return any type you want,
+as long an that type conforms to ``Shape``,
+like the calling code does for a generic function.
+The code that calls the function needs to be written in a general way,
+like the implementation of a generic function,
+so that it can work with any ``Shape`` value.
 
 .. testcode:: opaque-result
 
@@ -200,7 +196,7 @@ some type that conforms to the ``Shape`` protocol.
 Both ``opaqueJoinedTriangles`` in this example
 and ``joinedTriangles`` in the generics example in :ref:`OpaqueTypes_LimitsOfGenerics` above
 have the same value.
-the details of the nested generic types
+The details of the nested generic types
 were exposed in the type of ``joinedTriangles``,
 but the underlying generic type of ``opaqueJoinedTriangles`` is only visible
 inside the implementation of the shape-joining code.
@@ -223,6 +219,29 @@ XXX Delete Me
 .. This heading is here to make code folding easier.
    That way the commented-out bits below have a place to belong
    when viewing this chapter in outline form.
+
+
+COMPARING OPAQUE RETURN TYPES AND GENERIC PARAMETERS
+
+With a generic, like ``max(_:_:)``,
+the code that calls the function chooses a type ``T``
+and the code inside the function
+interacts with the values of that type
+by calling APIs that are defined by the protocols
+that it's known to adopt (in this case, ``Comparable``).
+In contrast,
+with an opaque return type,
+those roles are reversed.
+The code inside the function chooses a type
+and the code that called the function
+interacts with the function's return type
+by calling APIs defined by the protocols it adopts.
+
+
+
+
+
+
 
 .. NARRATIVE
 
