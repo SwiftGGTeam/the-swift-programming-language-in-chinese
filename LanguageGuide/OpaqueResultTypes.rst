@@ -159,6 +159,7 @@ so it can handle whatever type the caller picks.
 The implementation of ``max(_:_:)`` uses only functionality
 that all ``Comparable`` types share.
 
+Those roles are reversed for a function whose return type is opaque.
 An opaque result type lets the function implementation
 pick the type for the value it returns
 in a way that's abstracted away from the code that calls the function.
@@ -221,21 +222,6 @@ XXX Delete Me
    when viewing this chapter in outline form.
 
 
-COMPARING OPAQUE RETURN TYPES AND GENERIC PARAMETERS
-
-With a generic, like ``max(_:_:)``,
-the code that calls the function chooses a type ``T``
-and the code inside the function
-interacts with the values of that type
-by calling APIs that are defined by the protocols
-that it's known to adopt (in this case, ``Comparable``).
-In contrast,
-with an opaque return type,
-those roles are reversed.
-The code inside the function chooses a type
-and the code that called the function
-interacts with the function's return type
-by calling APIs defined by the protocols it adopts.
 
 
 
