@@ -45,7 +45,7 @@ and describes the type inference behavior of Swift.
     type --> optional-type
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
-    type --> opaque-result-type
+    type --> opaque-type
     type --> metatype-type
     type --> ``Any``
     type --> ``Self``
@@ -722,21 +722,21 @@ is equivalent to ``P & Q & R``.
     protocol-composition-continuation --> type-identifier | protocol-composition-type
 
 
-.. _Types_OpaqueResultType:
+.. _Types_OpaqueType:
 
-Opaque Result Type
-------------------
+Opaque Type
+-----------
 
-An opaque result type defines a type
+An opaque type defines a type
 that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
-Opaque result types appear as the return type of a function or subscript,
+Opaque types appear as the return type of a function or subscript,
 or the type of a property.
-Opaque result types can't appear as part of a tuple type or a generic type,
+Opaque types can't appear as part of a tuple type or a generic type,
 such as the element type of an array or the wrapped type of an optional.
 
-Opaque result types have the following form:
+Opaque types have the following form:
 
 .. syntax-outline::
 
@@ -747,9 +747,9 @@ a protocol type,
 a protocol composition type,
 or ``Any``.
 
-Protocol declarations can't include opaque result types.
+Protocol declarations can't include opaque types.
 Classes that include nonfinal methods
-can't use an opaque result type as the return type of a final method.
+can't use an opaque type as the return type of a final method.
 
 A function whose return type is opaque
 must use only a single underlying type for the value it returns.
@@ -759,9 +759,9 @@ and the underlying type of the returned value.
 
 .. syntax-grammar::
 
-    Grammar of an opaque result type
+    Grammar of an opaque type
 
-    opaque-result-type --> ``some`` type
+    opaque-type --> ``some`` type
 
 .. _Types_MetatypeType:
 

@@ -1,7 +1,7 @@
-Opaque Result Types
-===================
+Opaque Types
+============
 
-An *opaque result type* lets you write a function or method
+An *opaque type* lets you write a function or method
 that abstracts away some of the type information about its return value.
 This is useful at boundaries between groups of code,
 like a library and code that calls into the library.
@@ -137,7 +137,7 @@ Limitations of Type Erasure
 Returning an Opaque Type
 ------------------------
 
-You can think of an opaque result type like being the reverse of a generic type.
+You can think of an opaque type like being the reverse of a generic type.
 Generic types let the code that calls a function
 pick the type for that function's parameters and return value
 in a way that's abstracted away from the function implementation.
@@ -160,7 +160,7 @@ The implementation of ``max(_:_:)`` uses only functionality
 that all ``Comparable`` types share.
 
 Those roles are reversed for a function whose return type is opaque.
-An opaque result type lets the function implementation
+An opaque type lets the function implementation
 pick the type for the value it returns
 in a way that's abstracted away from the code that calls the function.
 The functions below return a value
@@ -238,12 +238,12 @@ XXX Delete Me
    For example, there's no way to represent
    "an array of triangles that have been stretched"
    in the type system when you use type erasure.
-   On the other hand, opaque result types let you keep (but hide!) type information.
+   On the other hand, opaque types let you keep (but hide!) type information.
    My array above would be an Array<@_opaqueReturnTypeOf(stretch)>
    and I could add another item to the array
    while maintaining the invariant that it's homogeneous.
 
-   Opaque result types also preserve/infer associated types.
+   Opaque types also preserve/infer associated types.
    In the case of a LazyMappedRotatedWhateverSequence,
    if you used type erasure, the associated Element type for AnySequence
    can't be inferred (confirm?)
@@ -254,7 +254,7 @@ XXX Delete Me
 .. OUTLINE
 
    - generics let the caller pick a type that's opaque to the function
-   - opaque result types let the function pick a type that's opaque to the caller
+   - opaque types let the function pick a type that's opaque to the caller
    - comparison with other ways to opaque-ify a return type..
    - why not use a protocol as a type? (we don't use the term "existential" in TSPL)
      * that loses type information
