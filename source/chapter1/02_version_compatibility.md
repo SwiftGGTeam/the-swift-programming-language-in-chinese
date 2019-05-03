@@ -1,6 +1,6 @@
 # 版本兼容性
  
-本书描述的是在 Xcode 10.2 中的默认 Swift 版本 Swift 5。你可以使用 Xcode10.2 来构建 Swift 5、Swift 4.2 或 Swift 写的项目
+本书描述的是在 Xcode 10.2 中的默认 Swift 版本 Swift 5。你可以使用 Xcode10.2 来构建 Swift 5、Swift 4.2 或 Swift 4 写的项目
 
 当您使用 Xcode 10.2 构建 Swift 4 和 Swift 4.2 代码时，除了下面的功能仅支持 Swift 5，其他大多数功能都依然可用。
 
