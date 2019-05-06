@@ -366,28 +366,30 @@ both functions below have the same behavior:
 
 .. testcode:: implicit-func-return
 
-    -> func returnSomething() -> String {
-          return "something!"
-       }
-    ---
-    -> func alsoReturnSomething() -> String {
-          "something!"
-       }
+   -> func greeting(for person: String) -> String {
+         return "Hello, " + person + "!"
+      }
+   -> print(greeting(for: "Dave"))
+   <- Hello, Dave!
+   ---
+   -> func anotherGreeting(for person: String) -> String {
+         "Hello, " + person + "!"
+      }
+   -> print(anotherGreeting(for: "Dave"))
+   <- Hello, Dave!
 
-.. XXX A less contrived example would be better.
-  To match the examples that come earlier in the chapter,
-  maybe some numerical computation?
-
-The ``returnSomething()`` function explicitly returns the string ``"something!"``
+The ``greeting(for:)`` function explicitly returns a greeting message
 by using the ``return`` keyword.
-The ``alsoReturnSomething()`` function omits the ``return``,
-which is allowed because the entire definition of ``alsoReturnSomething()``
-is just the function's return value.
+The ``anotherGreeting(for:)`` function also returns a greeting message,
+but it omits the ``return``,
+which is allowed because the entire definition of that function
+is just the return value.
 Any function that you write as just one ``return`` line
 can omit the ``return``.
 
 As you'll see in :ref:`Properties_ShorthandSetterDeclaration`,
 property getters can also use implicit returns.
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
