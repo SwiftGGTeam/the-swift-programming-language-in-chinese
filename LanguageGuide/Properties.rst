@@ -347,8 +347,8 @@ Shorthand Setter Declaration
 
 If a computed property's setter does not define a name for the new value to be set,
 a default name of ``newValue`` is used.
-Here's an alternative version of the ``Rect`` structure,
-which takes advantage of this shorthand notation:
+Here's an alternative version of the ``Rect`` structure
+that takes advantage of this shorthand notation:
 
 .. testcode:: computedProperties
 
@@ -370,7 +370,44 @@ which takes advantage of this shorthand notation:
 
 .. iBooks Store screenshot ends here.
 
-.. XXX Add an example of a getter that uses implicit return syntax here.
+.. _Properties_ImplicitReturn:
+
+Shorthand Getter Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a computer property's getter is made up of just a single ``return`` line,
+you can omit the ``return`` keyword.
+Here's an another version of the ``Rect`` structure
+that takes advantage of this shorthand notation
+and the shorthand notation for setters:
+
+.. testcode:: computedProperties
+
+   -> struct CompactRect {
+         var origin = Point()
+         var size = Size()
+         var center: Point {
+            get {
+               Point(x: origin.x + (size.width / 2), y: origin.y + (size.height / 2))
+            }
+            set {
+               origin.x = newValue.x - (size.width / 2)
+               origin.y = newValue.y - (size.height / 2)
+            }
+         }
+      }
+
+This getter also shows a good example of when you should or shouldn't omit ``return``.
+Removing ``centerX`` and ``centerY`` lets the entire getter
+be written as a single ``return`` line,
+but also makes that line somewhat dense.
+If the code to get the value of ``center`` were any more complex,
+it would be better to break that code into multiple lines
+and use an explicit ``return`` instead.
+
+Omitting the ``return`` from a getter
+follows the same rules as omitting ``return`` from a function,
+as described in :ref:`Functions_ImplicitReturns`.
 
 .. _Properties_ReadOnlyComputedProperties:
 

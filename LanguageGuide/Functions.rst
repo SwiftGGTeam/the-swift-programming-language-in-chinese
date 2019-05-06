@@ -388,7 +388,7 @@ Any function that you write as just one ``return`` line
 can omit the ``return``.
 
 As you'll see in :ref:`Properties_ShorthandSetterDeclaration`,
-property getters can also use implicit returns.
+property getters can also use an implicit return.
 
 .. _Functions_FunctionParameterNames:
 
