@@ -359,22 +359,35 @@ returns an actual tuple value or ``nil``:
 Functions With an Implicit Return
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions that contain only a single return value
-can be written in a shorter way:
+Very simple functions with just one line of code
+can be written in a shorter way by omitting ``return``.
+For example,
+both functions below have the same behavior:
 
-::
+.. testcode:: implicit-func-return
 
-   func returnSomething() -> String {
-       return "something!"
-   }
+    -> func returnSomething() -> String {
+          return "something!"
+       }
+    ---
+    -> func alsoReturnSomething() -> String {
+          "something!"
+       }
 
-   func returnSomething() -> String {
-       "something!"
-   }
+.. XXX A less contrived example would be better.
+  To match the examples that come earlier in the chapter,
+  maybe some numerical computation?
 
-.. XXX Property syntax comes after functions in the guide,
-   so that isn't discussed here.
+The ``returnSomething()`` function explicitly returns the string ``"something!"``
+by using the ``return`` keyword.
+The ``alsoReturnSomething()`` function omits the ``return``,
+which is allowed because the entire definition of ``alsoReturnSomething()``
+is just the function's return value.
+Any function that you write as just one ``return`` line
+can omit the ``return``.
 
+As you'll see in :ref:`Properties_ShorthandSetterDeclaration`,
+property getters can also use implicit returns.
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
