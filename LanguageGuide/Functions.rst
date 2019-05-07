@@ -389,7 +389,7 @@ is just the return value.
 Any function that you write as just one ``return`` line
 can omit the ``return``.
 
-As you'll see in :ref:`Properties_ShorthandSetterDeclaration`,
+As you'll see in :ref:`Properties_ImplicitReturn`,
 property getters can also use an implicit return.
 
 .. _Functions_FunctionParameterNames:
