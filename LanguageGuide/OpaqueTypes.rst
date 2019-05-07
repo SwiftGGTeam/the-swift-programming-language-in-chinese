@@ -174,16 +174,14 @@ so that it can work with any ``Shape`` value.
 
 .. testcode:: opaque-result
 
-    -> func flip(_ shape: Shape) -> any Shape {
+    -> func flip<T: Shape>(_ shape: T) -> some Shape {
            return FlippedShape(shape: shape)
        }
-    -> func join(_ top: Shape, _ bottom: Shape) -> any Shape {
-           return JoinedShape(top: top, bottom: bottom)
+    -> func join<T: Shape, U: Shape>(_ top: T, _ bottom: U) -> some Shape {
+           JoinedShape(top: top, bottom: bottom)
        }
     ---
     -> let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
-    >> print(type(of: opaqueJoinedTriangles))
-    << any Shape
     -> print(opaqueJoinedTriangles.draw())
     </ *
     </ **
@@ -191,6 +189,11 @@ so that it can work with any ``Shape`` value.
     </ ***
     </ **
     </ *
+
+.. XXX Joining a triangle and a flipped triangle is currently crashing the compiler.
+   Probably because it's using "some Shape" as the value for U
+   and either I've done something malformed
+   or that's just too much for the compiler to handle.
 
 The type of ``opaqueJoinedTriangles`` is
 some type that conforms to the ``Shape`` protocol.
