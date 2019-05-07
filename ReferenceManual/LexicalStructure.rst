@@ -654,7 +654,9 @@ that create equivalent string values:
 .. testcode:: extended-string-delimiters
 
     -> let string = #"\(x) \ " \u{2603}"#
-       let escaped = "\\(x) \\ \" \\u{2603}"
+    -> let escaped = "\\(x) \\ \" \\u{2603}"
+    << // string : String = "\\(x) \\ \" \\u{2603}"
+    << // escaped : String = "\\(x) \\ \" \\u{2603}"
     -> print(string)
     <- \(x) \ " \u{2603}
     -> print(string == escaped)
@@ -671,15 +673,9 @@ don't place whitespace in between the number signs:
     << Line 2
     -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! <REPL Input>:1:7: error: expected expression in list of expressions
-    !! print(###"Line 1\###nLine 2"###) // OK
-    !! ^
-    !! <REPL Input>:1:18: error: invalid escape sequence in literal
-    !! print(###"Line 1\###nLine 2"###) // OK
-    !! ^
-    !! <REPL Input>:1:7: error: expected expression in list of expressions
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
-    !! <REPL Input>:1:20: error: invalid escape sequence in literal
+    !! <REPL Input>:1:21: error: invalid escape sequence in literal
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
@@ -836,10 +832,13 @@ postfix operators can't begin with either a question mark or an exclamation mark
    >> print(1?+)
    !! <REPL Input>:1:18: error: expected operator name in operator declaration
    !! postfix operator ?+
-   !!                  ^
+   !! ^
+   !! <REPL Input>:1:14: error: operator implementation without matching operator declaration
+   !! postfix func ?+ (x: Int) -> Int {
+   !! ^
    !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
    !! print(1?+)
-   !!         ^
+   !! ^
 
 .. note::
 
