@@ -564,7 +564,8 @@ the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
 
-A function that consists of only a single expression
+A function declaration whose *statements*
+consists of only a single expression
 is understood to return the value of that expression.
 
 Functions can return multiple values using a tuple type
