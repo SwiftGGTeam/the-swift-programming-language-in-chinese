@@ -359,7 +359,9 @@ returns an actual tuple value or ``nil``:
 Functions With an Implicit Return
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Very simple functions with just one line of code
+Very simple functions
+whose body contains only the ``return`` keyword
+followed by the function's return value
 can be written in a shorter way by omitting ``return``.
 For example,
 both functions below have the same behavior:
