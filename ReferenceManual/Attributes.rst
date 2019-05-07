@@ -641,6 +641,35 @@ can increase your binary size and adversely affect performance.
    because of the larger symbol table slowing dyld down.
 
 
+.. _Attributes_propertyDelegate:
+
+propertyDelegate
+~~~~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property delegate type.
+The type must have a ``value`` instance property,
+which provides the underlying storage for a property
+and manages access to the property's value.
+
+.. XXX This creates a corresponding @Foo attribute
+   which means "use the Foo type as a delegate".
+   You can pass arguments to @Foo, which are passed to Foo.init(...)
+
+.. XXX describe the $foo syntax and xref that reference
+   Probably better
+
+The name of a property delegate type
+can't start with an underscore or lower case letter,
+to prevent the corresponding attribute from colliding
+with an attribute defined by the compiler.
+
+.. XXX Example
+   Stick to something very simple.
+   Most of the SE proposal's examples are a bit too long.
+   Maybe write a property delegate that logs reads & writes?
+
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits

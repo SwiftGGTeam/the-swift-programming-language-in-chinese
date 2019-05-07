@@ -97,6 +97,11 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
+.. XXX synthesized storage property
+   The underlying storage for foo is $foo
+
+.. TR: What's the difference between $foo and $foo.value?
+
 .. syntax-grammar::
 
     Grammar of an identifier
@@ -104,6 +109,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> identifier-head identifier-characters-OPT
     identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
+    identifier --> synthesized-property-storage
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -129,6 +135,8 @@ These names are valid identifiers within the scope of the closure.
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
+
+    synthesized-property-storage --> ``$`` identifier
 
 
 .. _LexicalStructure_Keywords:
