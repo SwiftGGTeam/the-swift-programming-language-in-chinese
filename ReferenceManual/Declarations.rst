@@ -379,7 +379,7 @@ Type Variable Properties
 
 To declare a type variable property,
 mark the declaration with the ``static`` declaration modifier.
-Classes may mark type computed properties  with the ``class`` declaration modifier instead
+Classes may mark type computed properties with the ``class`` declaration modifier instead
 to allow subclasses to override the superclass’s implementation.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
@@ -2442,6 +2442,22 @@ as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 For more information about subscripting and to see examples of subscript declarations,
 see :doc:`../LanguageGuide/Subscripts`.
 
+Type Subscript Declarations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To declare a subscript that's exposed by the type,
+rather than by instances of the type,
+mark the subscript declaration with the ``static`` declaration modifier. 
+Classes may mark type computed properties with the ``class`` declaration modifier instead
+to allow subclasses to override the superclass’s implementation.
+In a class declaration,
+the ``static`` keyword has the same effect as marking the declaration
+with both the ``class`` and ``final`` declaration modifiers.
+
+.. XXX TR: Confirm "class" bit above.
+   The SE proposal notes that you can include it,
+   but doesn't comment on what it actually means.
+
 .. syntax-grammar::
 
     Grammar of a subscript declaration
@@ -2650,6 +2666,8 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
+.. XXX Why is "class" omitted here?
+
 ``dynamic``
     Apply this modifier to any member of a class that can be represented by Objective-C.
     When you mark a member declaration with the ``dynamic`` modifier,
@@ -2699,6 +2717,8 @@ that introduces the declaration.
     of a class to indicate that every subclass must implement that initializer.
     The subclass's implementation of that initializer
     must also be marked with the ``required`` modifier.
+
+.. XXX Why is "static" omitted here?
 
 ``unowned``
     Apply this modifier to a stored variable, constant, or stored property
