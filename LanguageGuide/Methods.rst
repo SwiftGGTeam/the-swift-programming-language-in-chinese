@@ -276,7 +276,7 @@ You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
 You indicate type methods by writing
 the ``static`` keyword before the method's ``func`` keyword.
-Classes may also use the ``class`` keyword
+Classes can use the ``class`` keyword instead,
 to allow subclasses to override the superclass’s implementation of that method.
 
 .. note::
