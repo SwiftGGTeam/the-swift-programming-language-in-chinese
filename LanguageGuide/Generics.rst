@@ -1105,7 +1105,7 @@ you'll get a compile-time error.
    << // notEquatableValue : NotEquatable = REPL.NotEquatable()
    -> notEquatableStack.push(notEquatableValue)
    -> notEquatableStack.isTop(notEquatableValue)  // Error
-   !! <REPL Input>:1:19: error: type 'NotEquatable' does not conform to protocol 'Equatable'
+   !! <REPL Input>:1:25: error: argument type 'NotEquatable' does not conform to expected type 'Equatable'
    !! notEquatableStack.isTop(notEquatableValue)  // Error
    !! ^
 

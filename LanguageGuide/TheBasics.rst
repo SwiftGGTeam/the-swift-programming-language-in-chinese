@@ -209,9 +209,9 @@ Attempting to do so is reported as an error when your code is compiled:
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
    // This is a compile-time error: languageName cannot be changed.
-   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
+   !! <REPL Input>:1:1: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
-   !! ~~~~~~~~~~~~ ^
+   !! ^~~~~~~~~~~~
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let languageName = "Swift"
    !! ^~~
@@ -1301,7 +1301,7 @@ to respond to different error conditions:
    >>     case missingIngredients([String])
    >> }
    >> func washDishes() { print("Wash dishes") }
-   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
+   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList)") }
    -> func makeASandwich() throws {
           // ...
       }
