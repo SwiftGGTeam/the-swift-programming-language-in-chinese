@@ -2740,8 +2740,6 @@ that introduces the declaration.
     and don't have the ``final`` modifier
     can be overridden by subclasses.
 
-    .. XXX Is this allowed in protocols?
-
 ``dynamic``
     Apply this modifier to any member of a class that can be represented by Objective-C.
     When you mark a member declaration with the ``dynamic`` modifier,
