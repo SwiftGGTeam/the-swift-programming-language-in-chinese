@@ -2454,9 +2454,16 @@ In a class declaration,
 the ``static`` keyword has the same effect as marking the declaration
 with both the ``class`` and ``final`` declaration modifiers.
 
-.. XXX TR: Confirm "class" bit above.
-   The SE proposal notes that you can include it,
-   but doesn't comment on what it actually means.
+.. assertion:: cant-override-static-subscript-in-subclass
+
+   -> class Super { static subscript(i: Int) -> Int { return 10 } }
+   -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+   !! <REPL Input>:1:36: error: cannot override static subscript
+   !! class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+   !!                                    ^
+   !! <REPL Input>:1:22: note: overridden declaration is here
+   !! class Super { static subscript(i: Int) -> Int { return 10 } }
+   !!                      ^
 
 .. syntax-grammar::
 
