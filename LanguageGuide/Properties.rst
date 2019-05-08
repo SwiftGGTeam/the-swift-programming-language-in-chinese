@@ -375,8 +375,8 @@ that takes advantage of this shorthand notation:
 Shorthand Getter Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a computer property's getter is made up of just a single ``return`` line,
-you can omit the ``return`` keyword.
+If the entire body of the getter is a single expression,
+the getter implicitly returns that expression.
 Here's an another version of the ``Rect`` structure
 that takes advantage of this shorthand notation
 and the shorthand notation for setters:

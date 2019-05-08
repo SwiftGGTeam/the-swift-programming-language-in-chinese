@@ -359,35 +359,31 @@ returns an actual tuple value or ``nil``:
 Functions With an Implicit Return
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Very simple functions
-whose body contains only the ``return`` keyword
-followed by the function's return value
-can be written in a shorter way by omitting ``return``.
+If the entire body of the function is a single expression,
+the function implicitly returns that expression.
 For example,
 both functions below have the same behavior:
 
 .. testcode:: implicit-func-return
 
    -> func greeting(for person: String) -> String {
-         return "Hello, " + person + "!"
+         "Hello, " + person + "!"
       }
    -> print(greeting(for: "Dave"))
    <- Hello, Dave!
    ---
    -> func anotherGreeting(for person: String) -> String {
-         "Hello, " + person + "!"
+         return "Hello, " + person + "!"
       }
    -> print(anotherGreeting(for: "Dave"))
    <- Hello, Dave!
 
-The ``greeting(for:)`` function explicitly returns a greeting message
-by using the ``return`` keyword.
-The ``anotherGreeting(for:)`` function also returns a greeting message,
-but it omits the ``return``,
-which is allowed because the entire definition of that function
-is just the return value.
-Any function that you write as just one ``return`` line
-can omit the ``return``.
+The entire definition of the ``greeting(for:)`` function
+is the greeting message that it returns,
+which means it can use this shorter form.
+The ``anotherGreeting(for:)`` function returns the same greeting message,
+using the ``return`` keyword like a longer function.
+Any function that you write as just one ``return`` line can omit the ``return``.
 
 As you'll see in :ref:`Properties_ImplicitReturn`,
 property getters can also use an implicit return.
