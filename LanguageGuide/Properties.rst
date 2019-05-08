@@ -388,7 +388,8 @@ and the shorthand notation for setters:
          var size = Size()
          var center: Point {
             get {
-               Point(x: origin.x + (size.width / 2), y: origin.y + (size.height / 2))
+               Point(x: origin.x + (size.width / 2),
+                     y: origin.y + (size.height / 2))
             }
             set {
                origin.x = newValue.x - (size.width / 2)
@@ -396,14 +397,6 @@ and the shorthand notation for setters:
             }
          }
       }
-
-This getter also shows a good example of when you should or shouldn't omit ``return``.
-Removing ``centerX`` and ``centerY`` lets the entire getter
-be written as a single ``return`` line,
-but also makes that line somewhat dense.
-If the code to get the value of ``center`` were any more complex,
-it would be better to break that code into multiple lines
-and use an explicit ``return`` instead.
 
 Omitting the ``return`` from a getter
 follows the same rules as omitting ``return`` from a function,
