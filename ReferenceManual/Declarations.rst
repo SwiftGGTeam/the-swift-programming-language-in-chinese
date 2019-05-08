@@ -188,13 +188,8 @@ To declare a constant type property,
 mark the declaration with the ``static`` declaration modifier. Type properties
 are discussed in :ref:`Properties_TypeProperties`.
 
-.. TODO: Discuss class constant properties after they're implemented
-    (probably not until after 1.0)
-
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
-
-.. TODO: Need to discuss class and static constant properties.
 
 .. syntax-grammar::
 
@@ -387,13 +382,6 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
 
    In a class declaration, the ``static`` keyword has the same effect as
    marking the declaration with both the ``class`` and ``final`` declaration modifiers.
-
-.. TODO: Discuss type properties after they're implemented
-    (probably not until after 1.0)
-    Update: we now have class computed properties. We'll get class stored properites
-    sometime after WWDC.
-
-.. TODO: Need to discuss static variable properties in more detail.
 
 .. syntax-grammar::
 
