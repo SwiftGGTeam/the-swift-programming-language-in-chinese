@@ -142,6 +142,15 @@ see :ref:`CollectionTypes_AccessingAndModifyingADictionary`.
    not every key will have a value, and to give a way to delete a value for a key
    by assigning a ``nil`` value for that key.
 
+.. XXX Add an example of a type subscript, probably here.
+
+   enum Planet: Int {
+      case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+         static subscript(n: Int) -> Planet? {
+            return Planet(rawValue: n)
+         }
+   }
+
 .. _Subscripts_SubscriptOptions:
 
 Subscript Options
