@@ -805,7 +805,38 @@ or the entire class marked with the ``final`` keyword.
 Self Type
 ---------
 
+The ``Self`` type isn't a specific type,
+but rather lets you conveniently name the type of the current declaration
+without repeating or knowing that type's name.
 
+In a structure, class, or enumeration declaration,
+the ``Self`` type refers to the type introduced by the declaration.
+Inside the declaration for a member of a type,
+the ``Self`` type refers to that type.
+For example,
+a method whose return type is ``Self``
+returns an instance of the class, structure, or enumeration
+that contains the method.
+
+Inside a nested type declaration,
+the ``Self`` type refers to the type
+introduced by the innermost type declaration.
+
+In the declaration for a nonfinal class member,
+the ``Self`` the can refer to a different type
+than the ``type(of: self)`` function refers to.
+``Self`` refers to the static type and is determined at compile time,
+but ``type(of:)`` refers to the dynamic type at runtime.
+When the member is called on an instance of a subclass,
+the dynamic type is that subclass
+but the static type is still the class.
+For more information,
+see `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
+in the Swift standard library.
+
+In a protocol declaration,
+``Self`` refers to the eventual type that conforms to the protocol,
+as discussed in :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. syntax-grammar::
 
