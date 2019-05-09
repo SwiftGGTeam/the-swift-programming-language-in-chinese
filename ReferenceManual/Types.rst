@@ -46,8 +46,8 @@ and describes the type inference behavior of Swift.
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
     type --> metatype-type
+    type --> self-type
     type --> ``Any``
-    type --> ``Self``
     type --> ``(`` type ``)``
 
 
@@ -798,6 +798,20 @@ or the entire class marked with the ``final`` keyword.
     Grammar of a metatype type
 
     metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
+
+
+.. _Types_SelfType:
+
+Self Type
+---------
+
+
+
+.. syntax-grammar::
+
+   Grammar of a Self type
+
+   self-type --> ``Self``
 
 .. _Types_TypeInheritanceClause:
 
