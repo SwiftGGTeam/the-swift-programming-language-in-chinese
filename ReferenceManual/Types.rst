@@ -37,9 +37,9 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
+    type --> function-type
     type --> array-type
     type --> dictionary-type
-    type --> function-type
     type --> type-identifier
     type --> tuple-type
     type --> optional-type
