@@ -2518,7 +2518,7 @@ Type Subscript Declarations
 To declare a subscript that's exposed by the type,
 rather than by instances of the type,
 mark the subscript declaration with the ``static`` declaration modifier.
-Classes may mark type computed properties with the ``class`` declaration modifier instead
+Classes can mark type computed properties with the ``class`` declaration modifier instead
 to allow subclasses to override the superclass’s implementation.
 In a class declaration,
 the ``static`` keyword has the same effect as marking the declaration
