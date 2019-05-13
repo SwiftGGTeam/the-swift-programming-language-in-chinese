@@ -841,6 +841,11 @@ but not in any other context.
    !!                 ^~~~
    !!                 C
 
+.. TODO: Using Self as the return type from a subscript or property doesn't
+   currently work.  The compiler allows it, but you get the wrong type back,
+   and the compiler doesn't enforce that the subscript/property must be
+   read-only.  See https://bugs.swift.org/browse/SR-10326
+
 Inside a nested type declaration,
 the ``Self`` type refers to the type
 introduced by the innermost type declaration.
