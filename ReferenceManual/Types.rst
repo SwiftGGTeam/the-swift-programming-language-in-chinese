@@ -823,7 +823,7 @@ the ``Self`` type refers to the type
 introduced by the innermost type declaration.
 
 In the declaration for a nonfinal class member,
-the ``Self`` the can refer to a different type
+the ``Self`` type can refer to a different type
 than the ``type(of: self)`` function refers to.
 ``Self`` refers to the static type and is determined at compile time,
 but ``type(of:)`` refers to the dynamic type at runtime.
