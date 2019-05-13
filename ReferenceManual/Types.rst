@@ -809,6 +809,9 @@ The ``Self`` type isn't a specific type,
 but rather lets you conveniently name the type of the current declaration
 without repeating or knowing that type's name.
 
+In a protocol declaration or a protocol member declaration,
+``Self`` refers to the eventual type that conforms to the protocol.
+
 In a structure, class, or enumeration declaration,
 the ``Self`` type refers to the type introduced by the declaration.
 Inside the declaration for a member of a type,
@@ -833,10 +836,6 @@ but the static type is still the class.
 For more information,
 see `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
 in the Swift standard library.
-
-In a protocol declaration,
-``Self`` refers to the eventual type that conforms to the protocol,
-as discussed in :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. syntax-grammar::
 

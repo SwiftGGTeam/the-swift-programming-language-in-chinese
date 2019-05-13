@@ -1776,6 +1776,10 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     that are related to the type of ``Self``, such as a type of data stored in a
     collection or the node and edge types of a graph." Is this still true?
 
+    --> If we expand the discussion here,
+    --> add a link from Types_SelfType
+    --> to give more details about Self in protocols.
+
     NOTES from Doug:
     At one point, Self was an associated type, but that's the wrong modeling of
     the problem.  Self is the stand-in type for the thing that conforms to the
