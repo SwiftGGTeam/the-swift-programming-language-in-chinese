@@ -810,7 +810,7 @@ but rather lets you conveniently name the type of the current declaration
 without repeating or knowing that type's name.
 
 In a protocol declaration or a protocol member declaration,
-``Self`` refers to the eventual type that conforms to the protocol.
+the ``Self`` type refers to the eventual type that conforms to the protocol.
 
 In a structure, class, or enumeration declaration,
 the ``Self`` type refers to the type introduced by the declaration.
