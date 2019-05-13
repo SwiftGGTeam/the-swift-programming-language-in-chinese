@@ -820,22 +820,34 @@ For example,
 a method whose return type is ``Self``
 returns an instance of the class, structure, or enumeration
 that contains the method.
+In the members of a class declaration,
+``Self`` can appear as the return type of a method
+and in the body of a method,
+but not in any other context.
+
+.. assertion:: self-in-class-cant-be-a-parameter-type
+
+   -> class C { func f(c: Self) { } }
+   !! <REPL Input>:1:21: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !! class C { func f(c: Self) { } }
+   !!                     ^~~~
+   !!                     C
+
+.. assertion:: self-in-class-cant-be-a-computed-property-type
+
+   -> class C { var s: Self { return self } }
+   !! <REPL Input>:1:18: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !! class C { var s: Self { return self } }
+   !!                 ^~~~
+   !!                 C
 
 Inside a nested type declaration,
 the ``Self`` type refers to the type
 introduced by the innermost type declaration.
 
-In the declaration for a nonfinal class member,
-the ``Self`` type can refer to a different type
-than the ``type(of: self)`` function refers to.
-``Self`` refers to the static type and is determined at compile time,
-but ``type(of:)`` refers to the dynamic type at runtime.
-When the member is called on an instance of a subclass,
-the dynamic type is that subclass
-but the static type is still the class.
-For more information,
-see `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
-in the Swift standard library.
+The ``Self`` type refers to the same type
+as the `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
+function in the Swift standard library.
 
 .. syntax-grammar::
 
