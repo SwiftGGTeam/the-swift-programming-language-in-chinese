@@ -816,14 +816,13 @@ In a structure, class, or enumeration declaration,
 the ``Self`` type refers to the type introduced by the declaration.
 Inside the declaration for a member of a type,
 the ``Self`` type refers to that type.
-For example,
-a method whose return type is ``Self``
-returns an instance of the class, structure, or enumeration
-that contains the method.
 In the members of a class declaration,
 ``Self`` can appear as the return type of a method
 and in the body of a method,
 but not in any other context.
+For example,
+the code below shows a class instance method ``f``
+whose return type is ``Self``.
 
 .. assertion:: self-in-class-cant-be-a-parameter-type
 
@@ -840,6 +839,31 @@ but not in any other context.
    !! class C { var s: Self { return self } }
    !!                 ^~~~
    !!                 C
+
+.. testcode:: self-gives-dynamic-type
+
+   -> class C {
+          func f() -> Self { return self }
+      }
+   -> let x = C()
+   << // x : C = REPL.C
+   -> print(type(of: x.f()))
+   <- C
+   ---
+   -> class C2: C { }
+   -> let y = C2()
+   << // y : C2 = REPL.C2
+   -> print(type(of: y.f()))
+   <- C2
+   ---
+   -> let z: C = C2()
+   << // z : C = REPL.C2
+   -> print(type(of: z.f()))
+   <- C2
+
+The last part of the example above shows that
+``Self`` refers to the runtime type ``C2`` of the value of ``z``,
+not the compile-time type ``C`` of the variable itself.
 
 .. TODO: Using Self as the return type from a subscript or property doesn't
    currently work.  The compiler allows it, but you get the wrong type back,
