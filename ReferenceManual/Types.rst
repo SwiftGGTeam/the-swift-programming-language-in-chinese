@@ -842,24 +842,24 @@ whose return type is ``Self``.
 
 .. testcode:: self-gives-dynamic-type
 
-   -> class C {
+   -> class Superclass {
           func f() -> Self { return self }
       }
-   -> let x = C()
-   << // x : C = REPL.C
+   -> let x = Superclass()
+   << // x : Superclass = REPL.Superclass
    -> print(type(of: x.f()))
-   <- C
+   <- Superclass
    ---
-   -> class C2: C { }
-   -> let y = C2()
-   << // y : C2 = REPL.C2
+   -> class Subclass: Superclass { }
+   -> let y = Subclass()
+   << // y : Subclass = REPL.Subclass
    -> print(type(of: y.f()))
-   <- C2
+   <- Subclass
    ---
-   -> let z: C = C2()
-   << // z : C = REPL.C2
+   -> let z: Superclass = Subclass()
+   << // z : Superclass = REPL.Subclass
    -> print(type(of: z.f()))
-   <- C2
+   <- Subclass
 
 The last part of the example above shows that
 ``Self`` refers to the runtime type ``C2`` of the value of ``z``,
