@@ -5,11 +5,9 @@ An *opaque type* lets you write a function or method
 that abstracts away some of the type information about its return value.
 This is useful at boundaries between groups of code,
 like a library and code that calls into the library.
-Instead of returning a value of some specific type,
-functions that return an opaque type
-don't share the specific type of their return value
-with the code that calls the function ---
-only the name of a protocol that the value conforms to.
+Functions that return an opaque type
+specify a protocol that the return value conforms to
+instead of providing a specific, named return type.
 
 .. _OpaqueTypes_LimitsOfGenerics:
 
@@ -48,8 +46,8 @@ which you can use as the requirement for the ``Shape`` protocol:
 
 You could use generics to implement operations like flipping a shape vertically,
 as shown in the code below.
-However, this approach has a drawback:
-it exposes the full chain of transformations as the resulting shape's type.
+However, there's an important limitation to this approach:
+It exposes the full chain of transformations as the resulting shape's type.
 
 .. testcode:: opaque-result
     :compile: true
@@ -95,7 +93,8 @@ can quickly become cumbersome to read and write.
 
 Encoding this detailed information about how a shape was created
 into the type system also exposes details
-that might not be part of the API contract you want to commit to.
+that aren't meant to be part of the ASCII art framework's public interface,
+but leak out because of the nested generic types.
 You could have made the same shape by joining
 a two-by-two triangle with a two-by-two square and a flipped two-by-two triangle,
 or by directly drawing the trapezoid.
@@ -141,14 +140,16 @@ You can think of an opaque type like being the reverse of a generic type.
 Generic types let the code that calls a function
 pick the type for that function's parameters and return value
 in a way that's abstracted away from the function implementation.
-For example, the functions in the code below
-return a type that depends on their caller:
+For example, the function in the code below
+returns a type that depends on its caller:
 
 ::
 
     func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
 
 .. From https://developer.apple.com/documentation/swift/1538951-max
+   Not test code because it won't actually compile
+   and there's nothing to meaningfully test.
 
 The code that calls ``max(_:_:)`` chooses the values for ``x`` and ``y``,
 and the type of those values determines the concrete type of ``T``.
