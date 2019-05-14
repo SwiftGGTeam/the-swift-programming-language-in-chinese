@@ -821,7 +821,7 @@ In the members of a class declaration,
 and in the body of a method,
 but not in any other context.
 For example,
-the code below shows a class instance method ``f``
+the code below shows an instance method ``f``
 whose return type is ``Self``.
 
 .. assertion:: self-in-class-cant-be-a-parameter-type
