@@ -877,6 +877,8 @@ introduced by the innermost type declaration.
 The ``Self`` type refers to the same type
 as the `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
 function in the Swift standard library.
+Writing ``Self.someStaticMember`` to access a member of the current type
+is the same as writing ``type(of: self).someStaticMember``.
 
 .. syntax-grammar::
 
