@@ -109,21 +109,6 @@ what concrete types are used to fill in
 the function's generic parameter types and generic return type,
 not the code inside the function's implementation.
 
-.. _OpaqueTypes_LimitsOfExistentials:
-
-Limitations of Protocol Types
------------------------------
-
-.. OUTLINE
-
-   - Can't infer associated types
-   - P can only be used as a generic constraint
-   - Efficiency penalty of dispatch through the witness table
-
-   Doesn't reflect the fact that the returned type is always the same,
-   meaning you can't build up an array of shapes
-   or compare the result of two shape operations for equality.
-
 .. _OpaqueTypes_LimitsOfErasure:
 
 Limitations of Type Erasure
@@ -191,6 +176,9 @@ so that it can work with any ``Shape`` value.
     </ **
     </ *
 
+.. XXX This would be a much easier example to follow if it didn't have
+   both genereric arguments and an opaque return type at the same time.
+
 .. XXX Joining a triangle and a flipped triangle is currently crashing the compiler.
    Probably because it's using "some Shape" as the value for U
    and either I've done something malformed
@@ -215,6 +203,54 @@ without breaking its clients.
    - function always returns the same type
    - generic functions have 1:1 mapping between T and ORT
    - type inference for associated types works
+
+.. _OpaqueTypes_LimitsOfExistentials:
+
+Differences Between Opaque Types and Protocol Types
+---------------------------------------------------
+
+An opaque return type looks very similar
+to using a protocol type as the return type,
+but the behavior has a few important differences.
+For example,
+here's a version of ``flip(_:)`` that returns a protocol type
+instead of using an opaque return type:
+
+::
+
+   func protoFlip<T: Shape>(_ shape: T) -> Shape {
+      // Flipping a horizontal line is a no-op.
+      guard case shape is Line {
+         return shape
+      }
+
+      return FlippedShape(shape: shape)
+   }
+
+This version of ``protoFlip(_:)`` returns either
+an instance of ``Line`` or an instance of ``FlippedShape``,
+hiding the exact type from its called.
+The previous version that has an opaque return type
+is guaranteed my the compiler to always return the same type,
+even though that type is hidden as ``some Shape``.
+
+The lack of type information from ``protoFlip(_:)`` means that
+you can't guarantee that two flipped shapes
+returned by this function are comparable.
+In fact, you can't even compare the same shape to itself
+after flipping it twice, separately:
+
+::
+
+   let protoFlippedTriangle = protoFlip(smallTriangle)
+   let sameThing = protoFlip(smallTriangle)
+   protoFlippedTriangle == sameThing  // ERROR
+
+.. OUTLINE
+
+   - Can't infer associated types
+   - P can only be used as a generic constraint
+   - Efficiency penalty of dispatch through the witness table
 
 .. _OpaqueTypes_DeleteMe:
 
