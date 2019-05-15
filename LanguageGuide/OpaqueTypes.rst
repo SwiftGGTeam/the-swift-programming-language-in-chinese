@@ -199,9 +199,47 @@ and the code inside the library would maintain the flexibility
 to change that implementation in the future
 without breaking its clients.
 
+If function that returns an opaque type
+returns from multiple places,
+all of the possible return values must have the same type.
+For a nongeneric function,
+that means that the opaque return type has a single underlying type.
+For a generic function,
+there's a one-to-one mapping between the generic types
+and the underlying type for the opaque return type.
+For example,
+here's an *invalid* version of the shape-flipping function
+that includes a special case for horizontal lines:
+
+.. testcode:: opaque-result
+
+    -> struct HorizontalLine: Shape {
+           func draw() -> String {
+               return "===="
+           }
+       }
+    ---
+    -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
+           guard case shape is HorizontalLine {
+               return shape  // Error: underlying types don't match
+           }
+           return FlippedShape(shape: shape)
+       }
+
+.. XXX Is there a better way to express the "what type is T" test?
+   Maybe if T.self == HorizontalLine.self works?
+
+The ``invalidFlip(_:)`` function is generic,
+so it has to return values of a single underlying type,
+for some given value of ``T``.
+It might appear that that requirement is satisfied ---
+the underlying type is ``HorizontalLine`` when ``T`` is ``HorizontalLine``
+and ``FlippedShape`` for any other type.
+However,
+because the runtime type check of ``shape`` isn't encoded in the type system,
+the compiler can't prove that the requirement is always satisfied.
+
 .. XXX talk about the "rules" for ORTs
-   - function always returns the same type
-   - generic functions have 1:1 mapping between T and ORT
    - type inference for associated types works
 
 .. _OpaqueTypes_LimitsOfExistentials:
@@ -216,16 +254,15 @@ For example,
 here's a version of ``flip(_:)`` that returns a protocol type
 instead of using an opaque return type:
 
-::
+.. testcode:: opaque-result
 
-   func protoFlip<T: Shape>(_ shape: T) -> Shape {
-      // Flipping a horizontal line is a no-op.
-      guard case shape is Line {
-         return shape
-      }
+    -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
+          guard case shape is HorizontalLine {
+             return shape
+          }
 
-      return FlippedShape(shape: shape)
-   }
+          return FlippedShape(shape: shape)
+       }
 
 This version of ``protoFlip(_:)`` returns either
 an instance of ``Line`` or an instance of ``FlippedShape``,
@@ -233,6 +270,11 @@ hiding the exact type from its called.
 The previous version that has an opaque return type
 is guaranteed my the compiler to always return the same type,
 even though that type is hidden as ``some Shape``.
+
+.. XXX Fix up the para above
+   Now we show an opanque return type that no-ops hline too
+   That wasn't the point anyhow,
+   the point is that existentials don't preserve the underlying type's identity
 
 The lack of type information from ``protoFlip(_:)`` means that
 you can't guarantee that two flipped shapes
