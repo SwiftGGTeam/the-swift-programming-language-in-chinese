@@ -1,16 +1,18 @@
 Version Compatibility
 =====================
 
-This book describes Swift 5,
-the default version of Swift that's included in Xcode 10.2.
-You can use Xcode 10.2 to build targets
-that are written in either Swift 5, Swift 4.2, or Swift 4.
+This book describes Swift 5.1,
+the default version of Swift that's included in Xcode 11.
+You can use Xcode 11 to build targets
+that are written in either Swift 5.1, Swift 5, or Swift 4.2.
+
+.. XXX Does it also support Swift 4?
 
 .. assertion:: swift-version
 
-   >> #if swift(>=5.0.1)
+   >> #if swift(>=5.1.1)
    >>     print("Too new")
-   >> #elseif swift(>=5.0.0)
+   >> #elseif swift(>=5.1.0)
    >>     print("Just right")
    >> #else
    >>     print("Too old")
@@ -29,10 +31,10 @@ that are written in either Swift 5, Swift 4.2, or Swift 4.
        print("An older compiler")
    #endif
 
-When you use Xcode 10.2 to build Swift 4 and Swift 4.2 code,
+When you use Xcode 11 to build Swift 4.2 code,
 most Swift 5 functionality is available.
 That said,
-the following changes are available only to Swift 5 code:
+the following changes are available only to code that uses Swift 5 or later:
 
 - The ``try?`` expression doesn't introduce an extra level of optionality
   to expressions that already return optionals.
