@@ -282,11 +282,11 @@ The example below shows how you define and call a type subscript.
 
    -> enum Planet: Int {
          case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
-         static subscript(n: Int) -> Planet? {
-            return Planet(rawValue: n)
+         static subscript(n: Int) -> Planet {
+            return Planet(rawValue: n)!
          }
       }
-   -> let mars = Planet[4]!
+   -> let mars = Planet[4]
    << // mars : Planet = REPL.Planet.mars
    -> print(mars)
    << mars
