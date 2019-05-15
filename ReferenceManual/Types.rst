@@ -354,16 +354,16 @@ For example:
        }
     !! <REPL Input>:2:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first { first {} }       // Error
-    !! ^     ~~~~~~~~~~~~
+    !! ^
     !! <REPL Input>:3:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second { second {}  }    // Error
-    !! ^      ~~~~~~~~~~~~~~
+    !! ^
     !! <REPL Input>:5:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first { second {} }      // Error
-    !! ^     ~~~~~~~~~~~~~
+    !! ^
     !! <REPL Input>:6:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second { first {} }      // Error
-    !! ^      ~~~~~~~~~~~~
+    !! ^
 
 In the code above,
 both of the parameters to ``takesTwoFunctions(first:second:)`` are functions.
@@ -544,13 +544,16 @@ In other words, the following two declarations are equivalent:
     var optionalInteger: Optional<Int>
 
 .. assertion:: optional-literal
+    :compile: true
 
     >> var optionalInteger1: Int?
-    << // optionalInteger1 : Int? = nil
     >> var optionalInteger2: Optional<Int>
-    << // optionalInteger2 : Optional<Int> = nil
-    >> optionalInteger1 == optionalInteger2
-    <$ : Bool = true
+
+.. Assertion above is compiled because the deprecated integrated REPL requires
+   optional values to be initialized when they're created.
+   We can't test the code listing,
+   because of the redeclaration of optionalInteger,
+   so we at least test that the syntax shown in it compiles.
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.

@@ -726,16 +726,27 @@ see :ref:`Functions_InOutParameters`.
            }
            return inner
        }
-    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
-    !!            return inner
-    !!            ^
+    !! <REPL Input>:5:14: error: escaping closure captures 'inout' parameter 'a'
+    !! return inner
+    !! ^
+    !! <REPL Input>:1:12: note: parameter 'a' is declared 'inout'
+    !! func outer(a: inout Int) -> () -> Void {
+    !! ^
+    !! <REPL Input>:3:11: note: captured here
+    !! a += 1
+    !! ^
     -> func closure(a: inout Int) -> () -> Void {
            return { a += 1 }
        }
-    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
-    !!              return { a += 1 }
-    !!                       ^
-
+    !! <REPL Input>:2:14: error: escaping closure captures 'inout' parameter 'a'
+    !! return { a += 1 }
+    !! ^
+    !! <REPL Input>:1:14: note: parameter 'a' is declared 'inout'
+    !! func closure(a: inout Int) -> () -> Void {
+    !! ^
+    !! <REPL Input>:2:16: note: captured here
+    !! return { a += 1 }
+    !! ^
 
 .. _Declarations_SpecialKindsOfParameters:
 
