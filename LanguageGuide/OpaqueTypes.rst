@@ -241,6 +241,9 @@ the compiler can't prove that the requirement is always satisfied.
 
 .. XXX talk about the "rules" for ORTs
    - type inference for associated types works
+   - ORTs don't have names,
+     but you can use associated type inference if you really need a name
+   - keeps your API surface area smaller by not exposing implementation details
 
 .. _OpaqueTypes_LimitsOfExistentials:
 
@@ -282,13 +285,30 @@ returned by this function are comparable.
 In fact, you can't even compare the same shape to itself
 after flipping it twice, separately:
 
-::
+.. testcode:: opaque-result
 
-   let protoFlippedTriangle = protoFlip(smallTriangle)
-   let sameThing = protoFlip(smallTriangle)
-   protoFlippedTriangle == sameThing  // ERROR
+   -> let protoFlippedTriangle = protoFlip(smallTriangle)
+   -> let sameThing = protoFlip(smallTriangle)
+   -> protoFlippedTriangle == sameThing  // Error
 
-.. OUTLINE
+When a function returns a protocol type,
+information about the underlying type isn't preserved.
+The design of protocol types is that it can hold any value
+of any type that conforms to the protocol.
+Keeping track of the underlying type
+would prevent you from storing values of different types.
+For example,
+if you create a variable whose type is ``Collection``,
+it can store an array or a dictionary or a set,
+or any custom collection type that you define.
+This is in contrast to a function that returns ``some Colloction``,
+has to to return a value of the same collection type
+every time the function is called.
+In brief,
+protocol types give you more flexibility about what data they can store,
+and opaque types let you make stronger guarantees about the data.
+
+.. XXX OUTLINE
 
    - Can't infer associated types
    - P can only be used as a generic constraint
