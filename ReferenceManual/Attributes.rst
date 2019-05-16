@@ -652,6 +652,28 @@ The type must have a ``value`` instance property,
 which provides the underlying storage for a property
 and manages access to the property's value.
 
+You use a property delegate type
+by writing its as an attribute before the property
+that you want to apply it to.
+For example:
+
+::
+
+   // Create a custom property delegate that takes no actions.
+   @propertyDelegate struct SomePropertyDelegate<T> {
+      private var storage: T
+      var value {
+         get { return storage }
+         set { storage = newValue }
+      }
+      init(initialValue: T) { self.storage = initialValue }
+   }
+
+   // Apply the custom property delegate.
+   struct SomeData {
+      @SomePropertyDelegate var x = 20
+   }
+
 .. XXX This creates a corresponding @Foo attribute
    which means "use the Foo type as a delegate".
    You can pass arguments to @Foo, which are passed to Foo.init(...)
