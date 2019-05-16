@@ -99,13 +99,11 @@ These names are valid identifiers within the scope of the closure.
 
 Properties whose storage is managed by a property delegate,
 as described in :ref:`_Attributes_propertyDelegate`,
-expose their underlying storage using an identifier
+expose their the property delegate using an identifier
 whose name is ``$`` followed by the property name.
 For example, for a property named ``someProperty``
-the compiler synthesizes a ``$someProperty`` property
-that accesses the underlying storage.
-
-.. TR: What's the difference between $foo and $foo.value?
+the compiler synthesizes a ``$someProperty`` property.
+Writing ``$someProperty.value`` is the same as writing ``someProperty``.
 
 .. syntax-grammar::
 
