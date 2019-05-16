@@ -354,6 +354,40 @@ returns an actual tuple value or ``nil``:
       }
    <- min is -6 and max is 109
 
+.. _Functions_ImplicitReturns:
+
+Functions With an Implicit Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the entire body of the function is a single expression,
+the function implicitly returns that expression.
+For example,
+both functions below have the same behavior:
+
+.. testcode:: implicit-func-return
+
+   -> func greeting(for person: String) -> String {
+         "Hello, " + person + "!"
+      }
+   -> print(greeting(for: "Dave"))
+   <- Hello, Dave!
+   ---
+   -> func anotherGreeting(for person: String) -> String {
+         return "Hello, " + person + "!"
+      }
+   -> print(anotherGreeting(for: "Dave"))
+   <- Hello, Dave!
+
+The entire definition of the ``greeting(for:)`` function
+is the greeting message that it returns,
+which means it can use this shorter form.
+The ``anotherGreeting(for:)`` function returns the same greeting message,
+using the ``return`` keyword like a longer function.
+Any function that you write as just one ``return`` line can omit the ``return``.
+
+As you'll see in :ref:`Properties_ImplicitReturn`,
+property getters can also use an implicit return.
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
