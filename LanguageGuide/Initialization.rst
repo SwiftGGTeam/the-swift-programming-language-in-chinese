@@ -506,7 +506,7 @@ For example:
    <- 0.0 2.0
    ---
    -> let zeroByZero = Size()
-   << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 0.0)
+   << // zeroByZero : Size = REPL.Size(width: 0.0, height: 0.0)
    -> print(zeroByZero.width, zeroByZero.height)
    <- 0.0 0.0
 
@@ -1152,9 +1152,9 @@ supplied by the ``Vehicle`` initializer.
             constantProperty = 0
          }
       }
-   !!  <REPL Input>:5:26: error: cannot assign to property: 'constantProperty' is a 'let' constant
+   !!  <REPL Input>:5:9: error: cannot assign to property: 'constantProperty' is a 'let' constant
    !! constantProperty = 0
-   !! ~~~~~~~~~~~~~~~~ ^
+   !! ^~~~~~~~~~~~~~~~
    !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
    !! let constantProperty: Int
    !! ^~~

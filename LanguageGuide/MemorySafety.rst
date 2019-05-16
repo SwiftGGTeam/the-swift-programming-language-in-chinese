@@ -19,7 +19,7 @@ so you can avoid writing code that has conflicting access to memory.
 If your code does contain conflicts,
 you'll get a compile-time or runtime error.
 
-.. XXX maybe re-introduce this text...
+.. TODO: maybe re-introduce this text...
 
    Memory safety refers to...
    The term *safety* usually refers to :newTerm:`memory safety`...
@@ -113,7 +113,7 @@ you have to determine what it was intended to do.
    use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
    to help detect conflicting access across threads.
 
-.. XXX The xref above doesn't seem to give enough information.
+.. TODO: The xref above doesn't seem to give enough information.
    What should I be looking for when I get to the linked page?
 
 .. _Memory_Characteristics:

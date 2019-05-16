@@ -235,7 +235,7 @@ propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)``
           "Bob": "Licorice",
           "Eve": "Pretzels",
       ]
-   << // favoriteSnacks : [String : String] = ["Alice": "Chips", "Bob": "Licorice", "Eve": "Pretzels"]
+   << // favoriteSnacks : [String : String] = ["Eve": "Pretzels", "Bob": "Licorice", "Alice": "Chips"]
    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
           let snackName = favoriteSnacks[person] ?? "Candy Bar"
           try vendingMachine.vend(itemNamed: snackName)

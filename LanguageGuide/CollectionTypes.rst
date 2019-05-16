@@ -532,7 +532,7 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 .. testcode:: sets
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
+   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -559,7 +559,7 @@ The initialization of ``favoriteGenres`` could have been written in a shorter fo
 .. testcode:: setsInferred
 
    -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
+   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
 
 Because all values in the array literal are of the same type,
 Swift can infer that ``Set<String>`` is
@@ -578,7 +578,7 @@ check its read-only ``count`` property:
 .. testcode:: setUsage
 
    >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
+   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
    -> print("I have \(favoriteGenres.count) favorite music genres.")
    <- I have 3 favorite music genres.
 
@@ -694,11 +694,11 @@ with the results of various set operations represented by the shaded regions.
 .. testcode:: setOperations
 
    -> let oddDigits: Set = [1, 3, 5, 7, 9]
-   << // oddDigits : Set<Int> = Set([5, 1, 9, 7, 3])
+   << // oddDigits : Set<Int> = Set([1, 9, 3, 5, 7])
    -> let evenDigits: Set = [0, 2, 4, 6, 8]
-   << // evenDigits : Set<Int> = Set([4, 2, 6, 0, 8])
+   << // evenDigits : Set<Int> = Set([6, 0, 2, 4, 8])
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-   << // singleDigitPrimeNumbers : Set<Int> = Set([2, 5, 7, 3])
+   << // singleDigitPrimeNumbers : Set<Int> = Set([2, 3, 5, 7])
    ---
    -> oddDigits.union(evenDigits).sorted()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -742,7 +742,7 @@ because they share no elements in common.
    -> let houseAnimals: Set = ["🐶", "🐱"]
    << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
    -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-   << // farmAnimals : Set<String> = Set(["🐮", "🐔", "🐑", "🐶", "🐱"])
+   << // farmAnimals : Set<String> = Set(["🐑", "🐮", "🐔", "🐶", "🐱"])
    -> let cityAnimals: Set = ["🐦", "🐭"]
    << // cityAnimals : Set<String> = Set(["🐭", "🐦"])
    ---
@@ -1030,8 +1030,8 @@ as part of the iteration:
    -> for (airportCode, airportName) in airports {
          print("\(airportCode): \(airportName)")
       }
-   </ YYZ: Toronto Pearson
    </ LHR: London Heathrow
+   </ YYZ: Toronto Pearson
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -1043,14 +1043,14 @@ by accessing its ``keys`` and ``values`` properties:
    -> for airportCode in airports.keys {
          print("Airport code: \(airportCode)")
       }
-   </ Airport code: YYZ
    </ Airport code: LHR
+   </ Airport code: YYZ
    ---
    -> for airportName in airports.values {
          print("Airport name: \(airportName)")
       }
-   </ Airport name: Toronto Pearson
    </ Airport name: London Heathrow
+   </ Airport name: Toronto Pearson
 
 If you need to use a dictionary's keys or values
 with an API that takes an ``Array`` instance, initialize a new array
@@ -1059,14 +1059,14 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [String] = ["YYZ", "LHR"]
+   << // airportCodes : [String] = ["LHR", "YYZ"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
-   </ airportCodes is ["YYZ", "LHR"]
+   </ airportCodes is ["LHR", "YYZ"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [String] = ["Toronto Pearson", "London Heathrow"]
+   << // airportNames : [String] = ["London Heathrow", "Toronto Pearson"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
-   </ airportNames is ["Toronto Pearson", "London Heathrow"]
+   </ airportNames is ["London Heathrow", "Toronto Pearson"]
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
