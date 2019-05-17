@@ -260,17 +260,18 @@ as if it's a function that takes any number of arguments.
           }
       }
    ---
-      let dial = TelephoneExchange()
+   -> let dial = TelephoneExchange()
    ---
-      // Use a dynamic method call.
-      dial(4, 1, 1)
-      // Prints "Get Swift help on forums.swift.org".
+   -> // Use a dynamic method call.
+   -> dial(4, 1, 1)
+   <- Get Swift help on forums.swift.org
    ---
-      dial(8, 6, 7, 5, 3, 0, 9)
-      // Prints "Unrecognized number".
+   -> dial(8, 6, 7, 5, 3, 0, 9)
+   <- Unrecognized number
    ---
-      // Call the underlying method directly.
-      dial.dynamicallyCall(withArguments: [4, 1, 1])
+   -> // Call the underlying method directly.
+   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
+   << Get Swift help on forums.swift.org
 
 The declaration of the ``dynamicallyCall(withArguments:)`` method
 must have a single parameter that conforms to the
@@ -282,6 +283,7 @@ You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
 
 .. testcode:: dynamicCallable
+   :compile: true
 
    -> @dynamicCallable
       struct Repeater {
@@ -294,8 +296,8 @@ if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
           }
       }
    ---
-      let repeatLabels = Repeater()
-      print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
+   -> let repeatLabels = Repeater()
+   -> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
    </ a
    </ b b
    </ c c c
@@ -327,10 +329,22 @@ The call in the following example doesn't compile because
 there isn't an implementation of ``dynamicallyCall(withArguments:)``
 that takes ``KeyValuePairs<String, String>``.
 
-.. testcode:: dynamicCallable
+.. testcode:: dynamicCallable-err
+   :compile: true
 
+   >> @dynamicCallable
+   >> struct Repeater {
+   >>     func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+   >>         return pairs
+   >>             .map { label, count in
+   >>                 repeatElement(label, count: count).joined(separator: " ")
+   >>             }
+   >>             .joined(separator: "\n")
+   >>     }
+   >> }
+   >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !! /tmp/swifttest.swift:27:13: error: cannot call value of non-function type 'Repeater'
+   !! /tmp/swifttest.swift:12:13: error: cannot call value of non-function type 'Repeater'
    !! repeatLabels(a: "four") // Error
    !! ~~~~~~~~~~~~^
 
