@@ -647,49 +647,87 @@ propertyDelegate
 ~~~~~~~~~~~~~~~~
 
 Apply this attribute to a class, structure, or enumeration declaration
-to use that type as a property delegate type.
-The type must have a ``value`` instance property,
-which provides the underlying storage for a property
-and manages access to the property's value.
-
-You use a property delegate type
-by writing its as an attribute before the property
-that you want to apply it to.
-For example:
-
-::
-
-   // Create a custom property delegate that takes no actions.
-   @propertyDelegate struct SomePropertyDelegate<T> {
-      private var storage: T
-      var value {
-         get { return storage }
-         set { storage = newValue }
-      }
-      init(initialValue: T) { self.storage = initialValue }
-   }
-
-   // Apply the custom property delegate.
-   struct SomeData {
-      @SomePropertyDelegate var x = 20
-   }
-
-.. XXX This creates a corresponding @Foo attribute
-   which means "use the Foo type as a delegate".
-   You can pass arguments to @Foo, which are passed to Foo.init(...)
-
-.. XXX describe the $foo syntax and xref that reference
-   Probably better
-
+to use that type as a property delegate.
+The type must have a ``value`` instance property
+that's implemented as a getter and a setter.
 The name of a property delegate type
-can't start with an underscore or lower case letter,
-to prevent the corresponding attribute from colliding
-with an attribute defined by the compiler.
+can't start with an underscore or lower case letter.
 
-.. XXX Example
-   Stick to something very simple.
-   Most of the SE proposal's examples are a bit too long.
-   Maybe write a property delegate that logs reads & writes?
+.. The name restriction prevents the corresponding attribute
+   from colliding with an attribute defined by the compiler.
+
+.. XXX TR: Is it valid (but pointless) to apply @propertyDelegate
+   to a struct that has 'value' as a stored property?
+
+The getter and setter expose the managed value;
+the type that ``propertyDelegate`` is applied to
+is responsible for defining and managing the underlying storage for that value.
+For example, the code below implements a property delegate
+that counts the number of times its value is read and written.
+
+.. testcode:: propertyDelegate
+
+   -> @propertyDelegate
+      struct CountedAccess<T> {
+         private var storage: T
+         public var readCount = 0
+         public var writeCount = 0
+         var value: T {
+            get {
+               readCount += 1
+               return storage
+            }
+            set {
+               writeCount += 1
+               storage = newValue
+            }
+         }
+      }
+
+.. XXX Need an init in the struct above
+
+.. XXX TR: What are the requirements/restrictions
+   as far an initializers?
+
+When you apply the ``propertyDelegate`` attribute to a type,
+you create a new, custom attribute with the same name as the type.
+Apply that new attribute to a property
+to manage the property using the property delegate.
+For example,
+the code below
+applies the ``CountedAccess`` attribute
+to the ``someProperty`` property of the ``SomeStruct`` structure.
+
+.. testcode:: propertyDelegate
+
+   -> struct SomeStruct {
+          @CountedAccess var someProperty: Int
+      }
+
+To access the managed value using the property delegate's setter and getter,
+write the property's name.
+To access the property delegate itself,
+rather than the value it manages,
+write a dollar sign (``$``) in front of the property's name.
+In the code listing below,
+``$someProperty`` refers to the instance of ``CountedAccess``,
+and ``someProperty`` refers to the managed ``Int`` value.
+
+.. testcode:: propertyDelegate
+
+   -> let s = SomeStruct(someProperty: 408)
+   -> s.someProperty = 996
+   -> s.someProperty = 1010
+   -> print(s.someProperty)
+   <- 1010
+   ---
+   -> print("Read count \($s.readCount), write count \($s.writeCount)")
+   <- Read count 1, write count 3
+
+.. REFERENCE
+   The integers above come from the main Apple phone number (408) 996-1010.
+
+..  XXX You can pass arguments to @Foo, which are passed to Foo.init(...)
 
 
 .. _Attributes_requires_stored_property_inits:
