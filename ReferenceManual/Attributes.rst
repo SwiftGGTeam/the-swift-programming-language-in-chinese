@@ -641,33 +641,33 @@ can increase your binary size and adversely affect performance.
    because of the larger symbol table slowing dyld down.
 
 
-.. _Attributes_propertyDelegate:
+.. _Attributes_propertyWrapper:
 
-propertyDelegate
-~~~~~~~~~~~~~~~~
+propertyWrapper
+~~~~~~~~~~~~~~~
 
 Apply this attribute to a class, structure, or enumeration declaration
-to use that type as a property delegate.
+to use that type as a property wrapper.
 The type must have a ``value`` instance property
 that's implemented as a getter and a setter.
-The name of a property delegate type
+The name of a property wrapper type
 can't start with an underscore or lower case letter.
 
 .. The name restriction prevents the corresponding attribute
    from colliding with an attribute defined by the compiler.
 
-.. XXX TR: Is it valid (but pointless) to apply @propertyDelegate
+.. XXX TR: Is it valid (but pointless) to apply @propertyWrapper
    to a struct that has 'value' as a stored property?
 
-The getter and setter expose the managed value;
-the type that ``propertyDelegate`` is applied to
+The getter and setter expose the wrapped value;
+the type that ``propertyWrapper`` is applied to
 is responsible for defining and managing the underlying storage for that value.
-For example, the code below implements a property delegate
+For example, the code below implements a property wrapper
 that counts the number of times its value is read and written.
 
-.. testcode:: propertyDelegate
+.. testcode:: propertyWrapper
 
-   -> @propertyDelegate
+   -> @propertyWrapper
       struct CountedAccess<T> {
          private var storage: T
          public var readCount = 0
@@ -689,31 +689,31 @@ that counts the number of times its value is read and written.
 .. XXX TR: What are the requirements/restrictions
    as far an initializers?
 
-When you apply the ``propertyDelegate`` attribute to a type,
+When you apply the ``propertyWrapper`` attribute to a type,
 you create a new, custom attribute with the same name as the type.
 Apply that new attribute to a property
-to manage the property using the property delegate.
+to wrap the property using the property wrapper.
 For example,
 the code below
 applies the ``CountedAccess`` attribute
 to the ``someProperty`` property of the ``SomeStruct`` structure.
 
-.. testcode:: propertyDelegate
+.. testcode:: propertyWrapper
 
    -> struct SomeStruct {
           @CountedAccess var someProperty: Int
       }
 
-To access the managed value using the property delegate's setter and getter,
+To access the wrapped value using the property wrapper's setter and getter,
 write the property's name.
-To access the property delegate itself,
-rather than the value it manages,
+To access the property wrapper itself,
+rather than the value it wraps,
 write a dollar sign (``$``) in front of the property's name.
 In the code listing below,
 ``$someProperty`` refers to the instance of ``CountedAccess``,
-and ``someProperty`` refers to the managed ``Int`` value.
+and ``someProperty`` refers to the wrapped ``Int`` value.
 
-.. testcode:: propertyDelegate
+.. testcode:: propertyWrapper
 
    -> let s = SomeStruct(someProperty: 408)
    -> s.someProperty = 996
