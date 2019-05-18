@@ -756,9 +756,10 @@ can't use an opaque type as the return type of a final method.
 
 A function whose return type is opaque
 must use only a single underlying type for the value it returns.
-For generic functions, generic subscripts, and properties of generic types,
-there must be a one-to-one correspondence between the generic parameters
-and the underlying type of the returned value.
+The return type can include types
+that are part of the function's generic types parameters.
+For example, a function ``someFunction<T>()``
+could return a value of type ``T`` or ``Dictionary<String, T>``.
 
 .. syntax-grammar::
 

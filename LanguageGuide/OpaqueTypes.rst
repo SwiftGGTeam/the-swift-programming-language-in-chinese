@@ -6,8 +6,8 @@ that abstracts away some of the type information about its return value.
 This is useful at boundaries between groups of code,
 like a library and code that calls into the library.
 Functions that return an opaque type
-specify a protocol that the return value conforms to
-instead of providing a specific, named return type.
+specify a protocol that their return value conforms to,
+instead of providing a specific named return type.
 
 .. _OpaqueTypes_LimitsOfGenerics:
 
@@ -234,11 +234,9 @@ without breaking its clients.
 If function that returns an opaque type
 returns from multiple places,
 all of the possible return values must have the same type.
-For a nongeneric function,
-that means that the opaque return type has a single underlying type.
 For a generic function,
-there's a one-to-one mapping between the generic types
-and the underlying type for the opaque return type.
+that return type can use the function's generic type parameters,
+but it must still be a single type.
 For example,
 here's an *invalid* version of the shape-flipping function
 that includes a special case for squares:
@@ -254,20 +252,27 @@ that includes a special case for squares:
     >> }
     -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
            if shape is Square {
-               return shape  // Error: underlying types don't match
+               return shape // Error: return types don't match
            }
-           return FlippedShape(shape: shape)
+           return FlippedShape(shape: shape) // Error: return types don't match
        }
 
-The ``invalidFlip(_:)`` function is generic,
-so it has to return values of a single underlying type,
-for some given value of ``T``.
-It might appear that that requirement is satisfied ---
-the underlying type is ``Square`` when ``T`` is ``Square``
-and ``FlippedShape`` for any other type.
-However,
-because the runtime type check of ``shape`` isn't encoded in the type system,
-the compiler can't prove that the requirement is always satisfied.
+If you call this function with a ``Square``, it returns a ``Square``;
+otherwise, it returns a ``FlippedShape``.
+This violates the requirement to return values of only one type.
+In contrast,
+here's an example of a function whose opaque return type
+incorporates its generic type parameter:
+
+.. testcode:: opaque-result-err
+
+   -> func repeat<T: Shape>(shape: T, count: Int) -> some Collection<T> {
+          return Array<T>(repeating: shape, count: count)
+      }
+
+In this case,
+although the return type varies depending on what ``T`` is,
+the values always have an underlying type of ``[T]``.
 
 .. XXX talk about the "rules" for ORTs
    - type inference for associated types works
