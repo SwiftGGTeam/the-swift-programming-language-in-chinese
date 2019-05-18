@@ -149,6 +149,45 @@ Those roles are reversed for a function whose return type is opaque.
 An opaque type lets the function implementation
 pick the type for the value it returns
 in a way that's abstracted away from the code that calls the function.
+For example, the function below returns a trapezoid
+without exposing the underlying type of that shape.
+
+.. testcode:: opaque-result
+   :compile: true
+
+    -> struct Square: Shape {
+           var size: Int
+           func draw() -> String {
+               let line = String(repeating: "*", count: size)
+               let result = Array<String>(repeating: line, count: size)
+               return result.joined(separator: "\n")
+           }
+       }
+    ---
+    -> func makeTrapezoid() -> some Shape {
+           let top = Triangle(size: 2)
+           let middle = Square(size: 2)
+           let bottom = FlippedShape(top)
+           let trapezoid = JoinedShape(top, JoinedShape(middle, bottom))
+           return trapezoid
+       }
+    -> let trapezoid = makeTrapezoid()
+    -> print(trapezoid.draw())
+    </ *
+    </ **
+    </ **
+    </ **
+    </ **
+    </ *
+
+The ``makeTrapezoid()`` function above
+returns a value that conforms to the ``Shape`` protocol
+without making the specific type part of its API.
+This implementation happens to use two triangles and a square,
+but the function could be rewritten to draw a trapezoid directly
+without changing its return type.
+
+You can also combine opaque return types with generics.
 The functions below return a value
 of some type that conforms to the ``Shape`` protocol.
 The code inside the function can return any type you want,
@@ -177,15 +216,6 @@ so that it can work with any ``Shape`` value.
     </ **
     </ *
 
-.. XXX This would be a much easier example to follow if it didn't have
-   both genereric arguments and an opaque return type at the same time.
-
-.. XXX Joining a triangle and a flipped triangle is currently crashing the compiler.
-   Probably because it's using "some Shape" as the value for U
-   and either I've done something malformed
-   or that's just too much for the compiler to handle.
-   Emailed Doug to ask whether this is a known issue or I'm just "holding it wrong".
-
 The type of ``opaqueJoinedTriangles`` is
 some type that conforms to the ``Shape`` protocol.
 Both ``opaqueJoinedTriangles`` in this example
@@ -211,7 +241,7 @@ there's a one-to-one mapping between the generic types
 and the underlying type for the opaque return type.
 For example,
 here's an *invalid* version of the shape-flipping function
-that includes a special case for horizontal lines:
+that includes a special case for squares:
 
 .. testcode:: opaque-result-err
     :compile: true
@@ -219,14 +249,11 @@ that includes a special case for horizontal lines:
     >> protocol Shape {
     >>     func draw() -> String
     >> }
-    -> struct HorizontalLine: Shape {
-           func draw() -> String {
-               return "===="
-           }
-       }
-    ---
+    >> struct Square: Shape {
+    >>     func draw() -> String { return "#" }  // stub implementation
+    >> }
     -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
-           if shape is HorizontalLine {
+           if shape is Square {
                return shape  // Error: underlying types don't match
            }
            return FlippedShape(shape: shape)
@@ -236,7 +263,7 @@ The ``invalidFlip(_:)`` function is generic,
 so it has to return values of a single underlying type,
 for some given value of ``T``.
 It might appear that that requirement is satisfied ---
-the underlying type is ``HorizontalLine`` when ``T`` is ``HorizontalLine``
+the underlying type is ``Square`` when ``T`` is ``Square``
 and ``FlippedShape`` for any other type.
 However,
 because the runtime type check of ``shape`` isn't encoded in the type system,
@@ -263,13 +290,8 @@ instead of using an opaque return type:
 .. testcode:: opaque-result
     :compile: true
 
-    >> struct HorizontalLine: Shape {
-    >>     func draw() -> String {
-    >>         return "===="
-    >>     }
-    >> }
     -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
-          if shape is HorizontalLine {
+          if shape is Square {
              return shape
           }
 
@@ -277,7 +299,7 @@ instead of using an opaque return type:
        }
 
 This version of ``protoFlip(_:)`` returns either
-an instance of ``Line`` or an instance of ``FlippedShape``,
+an instance of ``Square`` or an instance of ``FlippedShape``,
 hiding the exact type from its called.
 The previous version that has an opaque return type
 is guaranteed my the compiler to always return the same type,
