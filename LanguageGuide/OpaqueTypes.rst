@@ -73,23 +73,23 @@ It's easy to image how this nested generic types
 can quickly become cumbersome to read and write.
 
 .. testcode:: opaque-result
-   :compile: true
+    :compile: true
 
-   -> struct JoinedShape<T: Shape, U: Shape>: Shape {
-         var top: T
-         var bottom: U
-         func draw() -> String {
-             return top.draw() + "\n" + bottom.draw()
-         }
-      }
-   -> let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
-   -> print(joinedTriangles.draw())
-   </ *
-   </ **
-   </ ***
-   </ ***
-   </ **
-   </ *
+    -> struct JoinedShape<T: Shape, U: Shape>: Shape {
+          var top: T
+          var bottom: U
+          func draw() -> String {
+              return top.draw() + "\n" + bottom.draw()
+          }
+       }
+    -> let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
+    -> print(joinedTriangles.draw())
+    </ *
+    </ **
+    </ ***
+    </ ***
+    </ **
+    </ *
 
 Encoding this detailed information about how a shape was created
 into the type system also exposes details
@@ -159,6 +159,7 @@ like the implementation of a generic function,
 so that it can work with any ``Shape`` value.
 
 .. testcode:: opaque-result
+    :compile: true
 
     -> func flip<T: Shape>(_ shape: T) -> some Shape {
            return FlippedShape(shape: shape)
@@ -183,6 +184,7 @@ so that it can work with any ``Shape`` value.
    Probably because it's using "some Shape" as the value for U
    and either I've done something malformed
    or that's just too much for the compiler to handle.
+   Emailed Doug to ask whether this is a known issue or I'm just "holding it wrong".
 
 The type of ``opaqueJoinedTriangles`` is
 some type that conforms to the ``Shape`` protocol.
@@ -211,8 +213,12 @@ For example,
 here's an *invalid* version of the shape-flipping function
 that includes a special case for horizontal lines:
 
-.. testcode:: opaque-result
+.. testcode:: opaque-result-err
+    :compile: true
 
+    >> protocol Shape {
+    >>     func draw() -> String
+    >> }
     -> struct HorizontalLine: Shape {
            func draw() -> String {
                return "===="
@@ -220,14 +226,11 @@ that includes a special case for horizontal lines:
        }
     ---
     -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
-           guard case shape is HorizontalLine {
+           if shape is HorizontalLine {
                return shape  // Error: underlying types don't match
            }
            return FlippedShape(shape: shape)
        }
-
-.. XXX Is there a better way to express the "what type is T" test?
-   Maybe if T.self == HorizontalLine.self works?
 
 The ``invalidFlip(_:)`` function is generic,
 so it has to return values of a single underlying type,
@@ -258,9 +261,15 @@ here's a version of ``flip(_:)`` that returns a protocol type
 instead of using an opaque return type:
 
 .. testcode:: opaque-result
+    :compile: true
 
+    >> struct HorizontalLine: Shape {
+    >>     func draw() -> String {
+    >>         return "===="
+    >>     }
+    >> }
     -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
-          guard case shape is HorizontalLine {
+          if shape is HorizontalLine {
              return shape
           }
 
@@ -286,6 +295,7 @@ In fact, you can't even compare the same shape to itself
 after flipping it twice, separately:
 
 .. testcode:: opaque-result
+    :compile: true
 
    -> let protoFlippedTriangle = protoFlip(smallTriangle)
    -> let sameThing = protoFlip(smallTriangle)
