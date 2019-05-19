@@ -2810,8 +2810,8 @@ that introduces the declaration.
     has the same effect as writing the ``class`` and ``final`` modifiers
     on that member declaration.
     However, constant type properties of a class are an exception:
-    Because neither ``class`` or ``final`` are allowed on those declarations,
-    ``static`` has its normal, nonclass meaning there.
+    ``static`` has its normal, nonclass meaning there
+    because you can't write ``class`` or ``final`` on those declarations.
 
 ``unowned``
     Apply this modifier to a stored variable, constant, or stored property
