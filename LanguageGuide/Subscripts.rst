@@ -38,11 +38,11 @@ in the same way as for computed properties:
    >> class Test1 {
    -> subscript(index: Int) -> Int {
          get {
-            // return an appropriate subscript value here
+            // Return an appropriate subscript value here.
    >>       return 1
          }
          set(newValue) {
-            // perform a suitable setting action here
+            // Perform a suitable setting action here.
          }
       }
    >> }
@@ -61,7 +61,7 @@ by removing the ``get`` keyword and its braces:
 
    >> class Test2 {
    -> subscript(index: Int) -> Int {
-         // return an appropriate subscript value here
+         // Return an appropriate subscript value here.
    >>    return 1
       }
    >> }
@@ -261,7 +261,7 @@ that is outside of the matrix bounds:
 
    -> let someValue = matrix[2, 2]
    xx assert
-   // this triggers an assert, because [2, 2] is outside of the matrix bounds
+   // This triggers an assert, because [2, 2] is outside of the matrix bounds.
 
 .. _Subscripts_TypeSubscripts:
 
