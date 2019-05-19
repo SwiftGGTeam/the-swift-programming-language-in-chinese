@@ -9,6 +9,22 @@ Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
 See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
 
+# Period vs colon before a code listing
+
+Write a colon after a sentence that ends with a phrase like
+“as follows” or “as shown below”,
+where the code listing is basically acting like a part of the sentence,
+and the prose is explicitly referring to it.
+Use a colon after a sentence fragment like “For example:”.
+Write a period after sentences that make a statement about the code
+but don’t include words that refer to the code.
+Use a period for sentences that begin with a phrase like
+“In the following code”.
+
+> **Note:**
+> This usage isn’t entirely consistent in the existing text.
+> We should have a discussion about this with Editorial.
+
 # Semantic Line Breaks
 
 The RST files in this repository use semantic line breaks,
