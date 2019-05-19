@@ -271,7 +271,7 @@ Type Methods
 ------------
 
 Instance methods, as described above,
-are methods that are called on an instance of a particular type.
+are methods that you call on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
 You indicate type methods by writing

@@ -269,7 +269,7 @@ Type Subscripts
 ---------------
 
 Instance subscripts, as described above,
-are subscripts that are called on an instance of a particular type.
+are subscripts that you call on an instance of a particular type.
 You can also define subscripts that are called on the type itself.
 This kind of subscript is called a :newterm:`type subscript`.
 You indicate a type subscript
