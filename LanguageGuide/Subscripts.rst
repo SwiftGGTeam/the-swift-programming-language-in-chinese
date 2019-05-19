@@ -276,7 +276,7 @@ You indicate a type subscript
 by writing the ``static`` keyword before the ``subscript`` keyword.
 Classes can use the ``class`` keyword instead,
 to allow subclasses to override the superclass’s implementation of that subscript.
-The example below shows how you define and call a type subscript.
+The example below shows how you define and call a type subscript:
 
 .. testcode:: static-subscript
 
