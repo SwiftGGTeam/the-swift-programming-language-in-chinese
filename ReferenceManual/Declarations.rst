@@ -187,7 +187,7 @@ as described in :ref:`Types_TypeInference`.
 To declare a constant type property,
 mark the declaration with the ``static`` declaration modifier.
 A constant type property of a class is always implicitly final;
-you can't mark it with with the ``class`` or ``final`` declaration modifier
+you can't mark it with the ``class`` or ``final`` declaration modifier
 to allow or disallow overriding by subclasses.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
