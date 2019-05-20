@@ -95,8 +95,7 @@ Encoding this detailed information about how a shape was created
 into the type system also exposes details
 that aren't meant to be part of the ASCII art framework's public interface,
 but leak out because of the nested generic types.
-You could have made the same shape by joining
-a two-by-two triangle with a two-by-two square and a flipped two-by-two triangle,
+You could have made the same shape by joining two triangles and a square,
 or by directly drawing the trapezoid.
 Wrapper types like ``JoinedShape`` and ``FlippedShape``
 shouldn't be visible to users of this library.
@@ -108,13 +107,6 @@ The code that calls the function gets to determine
 what concrete types are used to fill in
 the function's generic parameter types and generic return type,
 not the code inside the function's implementation.
-
-.. _OpaqueTypes_LimitsOfErasure:
-
-Limitations of Type Erasure
----------------------------
-
-.. XXX Is this discussion actually needed?
 
 .. _OpaqueTypes_Returning:
 
@@ -168,8 +160,10 @@ without exposing the underlying type of that shape.
            let top = Triangle(size: 2)
            let middle = Square(size: 2)
            let bottom = FlippedShape(shape: top)
-           let trapezoid = JoinedShape(top: top,
-                   bottom: JoinedShape(top: middle, bottom: bottom))
+           let trapezoid = JoinedShape(
+               top: top,
+               bottom: JoinedShape(top: middle, bottom: bottom)
+           )
            return trapezoid
        }
     -> let trapezoid = makeTrapezoid()
@@ -180,8 +174,6 @@ without exposing the underlying type of that shape.
     </ **
     </ **
     </ *
-
-.. XXX Check style for wrapped function call above
 
 The ``makeTrapezoid()`` function above
 returns a value that conforms to the ``Shape`` protocol
@@ -287,12 +279,6 @@ the return value always has the same underlying, namely ``[T]``,
 so it follows the requirement that functions with opaque return types
 must return values of only a single type.
 
-.. XXX talk about the "rules" for ORTs
-   - type inference for associated types works
-   - ORTs don't have names,
-     but you can use associated type inference if you really need a name
-   - keeps your API surface area smaller by not exposing implementation details
-
 .. _OpaqueTypes_LimitsOfExistentials:
 
 Differences Between Opaque Types and Protocol Types
@@ -352,17 +338,75 @@ if you create a variable whose type is ``Collection``,
 it can store an array or a dictionary or a set,
 or any custom collection type that you define.
 This is in contrast to a function that returns ``some Colloction``,
-has to to return a value of the same collection type
+which has to to return a value of the same collection type
 every time the function is called.
 In brief,
 protocol types give you more flexibility about what data they can store,
 and opaque types let you make stronger guarantees about the data.
 
+Because opaque types preserve the identity of the underlying type,
+Swift can infer associated types,
+which lets you use an opaque return value
+in places where a protocol type can't be used as a return value.
+For example,
+here's a version of the ``Container`` protocol from :doc:`./Generics`:
+
+.. testcode:: opaque-result, opaque-result-existential-error
+    :compile: true
+
+    -> protocol Container {
+           associatedtype Item
+           var count: Int { get }
+           subscript(i: Int) -> Item { get }
+       }
+    -> extension Array: Container { }
+
+You can't use ``Container`` as the return type of a function
+because it has associated types.
+You also can't use it as constraint a generic return type
+because there isn't enough information outside the function body
+to infer the generic type.
+
+.. testcode:: opaque-result-existential-error
+    :compile: true
+
+    // Error: Protocol with associated types can't be used as a return type.
+    func makeProtocolContainer<T>(item: T) -> Container {
+        return [item]
+    }
+
+    // Error: Not enough information to infer C.
+    func makeProtocolContainer<T, C: Container>(item: T) -> C {
+        return [item]
+    }
+
+In contrast, you can use ``some Container`` as a return type.
+
+.. testcode:: opaque-result
+    :compile: true
+
+    -> func makeOpaqueContainer<T>(item: T) -> some Container {
+           return [item]
+       }
+    -> let opaqueContainer = makeOpaqueContainer(item: 12)
+    -> let twelve = opaqueContainer[0]
+    -> print(type(of: twelve))
+    <- Int
+
+The type of ``twelve`` is inferred to be ``Int``,
+which illustrates the fact that type inference works with opaque types.
+In the implementation of ``makeOpaqueContainer(item:)``,
+the underlying type of the opaque container is ``[T]``.
+In this case, ``T`` is ``Int``,
+so the return value is an array of integers
+and the ``Item`` associated type is inferred to be ``Int``.
+The subscript on ``Container`` returns ``Item``,
+which means that the type of ``twelve`` is also inferred to be ``Int``.
+
 .. XXX OUTLINE
 
-   - Can't infer associated types
-   - P can only be used as a generic constraint
    - Efficiency penalty of dispatch through the witness table
+   - "Protocols don't conform to themselves"
 
 .. _OpaqueTypes_DeleteMe:
 
