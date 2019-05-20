@@ -153,7 +153,7 @@ For example, the function below returns a trapezoid
 without exposing the underlying type of that shape.
 
 .. testcode:: opaque-result
-   :compile: true
+    :compile: true
 
     -> struct Square: Shape {
            var size: Int
@@ -167,8 +167,9 @@ without exposing the underlying type of that shape.
     -> func makeTrapezoid() -> some Shape {
            let top = Triangle(size: 2)
            let middle = Square(size: 2)
-           let bottom = FlippedShape(top)
-           let trapezoid = JoinedShape(top, JoinedShape(middle, bottom))
+           let bottom = FlippedShape(shape: top)
+           let trapezoid = JoinedShape(top: top,
+                   bottom: JoinedShape(top: middle, bottom: bottom))
            return trapezoid
        }
     -> let trapezoid = makeTrapezoid()
@@ -179,6 +180,8 @@ without exposing the underlying type of that shape.
     </ **
     </ **
     </ *
+
+.. XXX Check style for wrapped function call above
 
 The ``makeTrapezoid()`` function above
 returns a value that conforms to the ``Shape`` protocol
@@ -250,6 +253,9 @@ that includes a special case for squares:
     >> struct Square: Shape {
     >>     func draw() -> String { return "#" }  // stub implementation
     >> }
+    >> struct FlippedShape: Shape {
+    >>     func draw() -> String { return "^^^" }  // stub implementation
+    >> }
     -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
            if shape is Square {
                return shape // Error: return types don't match
@@ -265,10 +271,13 @@ here's an example of a function whose opaque return type
 incorporates its generic type parameter:
 
 .. testcode:: opaque-result-err
+   :compile: true
 
-   -> func repeat<T: Shape>(shape: T, count: Int) -> some Collection<T> {
+   -> func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection<T> {
           return Array<T>(repeating: shape, count: count)
       }
+
+.. XXX Collection isn't generic -- this example doesn't work.
 
 In this case,
 although the return type varies depending on what ``T`` is,
@@ -321,12 +330,12 @@ returned by this function are comparable.
 In fact, you can't even compare the same shape to itself
 after flipping it twice, separately:
 
-.. testcode:: opaque-result
+.. testcode:: opaque-result-err
     :compile: true
 
-   -> let protoFlippedTriangle = protoFlip(smallTriangle)
-   -> let sameThing = protoFlip(smallTriangle)
-   -> protoFlippedTriangle == sameThing  // Error
+    -> let protoFlippedTriangle = protoFlip(smallTriangle)
+    -> let sameThing = protoFlip(smallTriangle)
+    -> protoFlippedTriangle == sameThing  // Error
 
 When a function returns a protocol type,
 information about the underlying type isn't preserved.
