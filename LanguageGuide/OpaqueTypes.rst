@@ -267,21 +267,25 @@ If you call this function with a ``Square``, it returns a ``Square``;
 otherwise, it returns a ``FlippedShape``.
 This violates the requirement to return values of only one type.
 In contrast,
-here's an example of a function whose opaque return type
-incorporates its generic type parameter:
+here's an example of a function that incorporates its generic type parameter
+into the underlying type of the value it returns:
 
-.. testcode:: opaque-result-err
+.. testcode:: opaque-result
    :compile: true
 
-   -> func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection<T> {
+   -> func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
           return Array<T>(repeating: shape, count: count)
       }
 
-.. XXX Collection isn't generic -- this example doesn't work.
-
 In this case,
-although the return type varies depending on what ``T`` is,
-the values always have an underlying type of ``[T]``.
+the underlying type of the return value
+varies depending on what ``T`` is:
+Whatever shape is passed it,
+``repeat(shape:count:)`` creates and returns an array of that shape.
+Nevertheless,
+the return value always has the same underlying, namely ``[T]``,
+so it follows the requirement that functions with opaque return types
+must return values of only a single type.
 
 .. XXX talk about the "rules" for ORTs
    - type inference for associated types works
