@@ -738,10 +738,9 @@ and ``someProperty`` refers to the wrapped ``Int`` value.
 .. REFERENCE
    The integers above come from the main Apple phone number (408) 996-1010.
 
-To pass arguments to the property wrapper's initializer
-other than an initial value,
-write the arguments after the attribute name
-using the same syntax as an ordinary call to that initializer.
+To pass arguments to the property wrapper's initializer,
+write the arguments after the attribute name,
+using the same syntax as a call to that initializer.
 
 .. testcode:: propertyWrapper
     :compile:
