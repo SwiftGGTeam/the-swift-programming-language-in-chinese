@@ -7,21 +7,20 @@ This is useful at boundaries between groups of code,
 like a library and code that calls into the library.
 Functions that return an opaque type
 specify a protocol that their return value conforms to,
-instead of providing a specific named return type.
+instead of providing a specific named return type,
+and the type itself can be private within the library.
 
 .. _OpaqueTypes_LimitsOfGenerics:
 
 Limitations of Generic Types
 ----------------------------
 
-.. XXX Frame this more explicitly as the problem we're trying to solve
-
 Suppose you're writing a library that draws ASCII art shapes.
 The basic characteristic of an ASCII art shape
 is a ``draw()`` function that returns the string representation of that shape,
 which you can use as the requirement for the ``Shape`` protocol:
 
-.. testcode:: opaque-result
+.. testcode:: opaque-result, opaque-result-existential-error
     :compile: true
 
     -> protocol Shape {
@@ -47,9 +46,9 @@ which you can use as the requirement for the ``Shape`` protocol:
 You could use generics to implement operations like flipping a shape vertically,
 as shown in the code below.
 However, there's an important limitation to this approach:
-It exposes the full chain of transformations as the resulting shape's type.
+The flipped result exposes exactly what generics were used to create it.
 
-.. testcode:: opaque-result
+.. testcode:: opaque-result, opaque-result-existential-error
     :compile: true
 
     -> struct FlippedShape<T: Shape>: Shape {
@@ -66,11 +65,9 @@ It exposes the full chain of transformations as the resulting shape's type.
     </ *
 
 Using this approach to define a ``JoinedShape<T: Shape, U: Shape>`` structure
-that joins two shapes together vertically,
+that joins two shapes together vertically like the code below shows,
 leads to types like ``JoinedShape<FlippedShape<Triangle>, Triangle>``
-from joining a flipped triangle with a triangle.
-It's easy to image how this nested generic types
-can quickly become cumbersome to read and write.
+from joining a flipped triangle with another triangle.
 
 .. testcode:: opaque-result
     :compile: true
@@ -91,22 +88,24 @@ can quickly become cumbersome to read and write.
     </ **
     </ *
 
-Encoding this detailed information about how a shape was created
-into the type system also exposes details
+Exposing this detailed information about how a shape was created
+in the shape's type also exposes
 that aren't meant to be part of the ASCII art framework's public interface,
 but leak out because of the nested generic types.
-You could have made the same shape by joining two triangles and a square,
-or by directly drawing the trapezoid.
+You could have built up the same shape in a variety of ways,
+and other code that uses the shape shouldn't have to care
+about the list of transformations that were involved.
 Wrapper types like ``JoinedShape`` and ``FlippedShape``
-shouldn't be visible to users of this library.
+shouldn't be visible to users of this ASCII art library.
 Those underlying types don't matter to the library's users ---
 only the fact that joining and flipping a shape returns another ``Shape`` value.
 However,
-you can't use a generic return type to create that kind of abstraction.
-The code that calls the function gets to determine
-what concrete types are used to fill in
-the function's generic parameter types and generic return type,
-not the code inside the function's implementation.
+generic type parameters and generic return types
+can't create that kind of abstraction.
+The code that calls the function,
+not the code inside the function's body,
+determines what concrete types are used to fill in
+the function's generic parameter types and generic return type.
 
 .. _OpaqueTypes_Returning:
 
@@ -176,21 +175,33 @@ without exposing the underlying type of that shape.
     </ *
 
 The ``makeTrapezoid()`` function above
-returns a value that conforms to the ``Shape`` protocol
-without making the specific type part of its API.
+declares its return type as ``some Shape``,
+which means that the function
+returns a value of some given type that conforms to the ``Shape`` protocol,
+but without specifying any particular concrete type.
+Writing ``makeTrapezoid()`` this way lets it express
+the fundamental aspect of its public interface ---
+the value it returns is a shape ---
+without making the specific types that the shape made up from
+part of its public interface.
 This implementation happens to use two triangles and a square,
-but the function could be rewritten to draw a trapezoid directly
+but the function could be rewritten to draw a trapezoid
+in a variety of other ways
 without changing its return type.
 
-You can also combine opaque return types with generics.
-The functions below return a value
-of some type that conforms to the ``Shape`` protocol.
-The code inside the function can return any type you want,
-as long an that type conforms to ``Shape``,
+This highlights the way that opaque return types
+are like the reverse of a generic type.
+The code inside ``makeTrapezoid()`` can return any type it needs to,
+as long an that type conforms to the ``Shape`` protocol,
 like the calling code does for a generic function.
 The code that calls the function needs to be written in a general way,
 like the implementation of a generic function,
-so that it can work with any ``Shape`` value.
+so that it can work with any ``Shape`` value
+that's returned by ``makeTrapezoid()``.
+
+You can also combine opaque return types with generics.
+The functions below both return a value
+of some type that conforms to the ``Shape`` protocol.
 
 .. testcode:: opaque-result
     :compile: true
@@ -211,22 +222,19 @@ so that it can work with any ``Shape`` value.
     </ **
     </ *
 
-The type of ``opaqueJoinedTriangles`` is
-some type that conforms to the ``Shape`` protocol.
-Both ``opaqueJoinedTriangles`` in this example
-and ``joinedTriangles`` in the generics example in :ref:`OpaqueTypes_LimitsOfGenerics` above
-have the same value.
-The details of the nested generic types
-were exposed in the type of ``joinedTriangles``,
-but the underlying generic type of ``opaqueJoinedTriangles`` is only visible
-inside the implementation of the shape-joining code.
-If this code were part of a drawing library,
-the code outside the library wouldn't need to understand the generic implementation,
-and the code inside the library would maintain the flexibility
-to change that implementation in the future
-without breaking its clients.
+The value of ``opaqueJoinedTriangles`` in this example
+is the same as ``joinedTriangles`` in the generics example
+in :ref:`OpaqueTypes_LimitsOfGenerics` above.
+However, unlike that value,
+``flip(_:)`` and ``join(_:_:)`` wrap the underlying types
+that generic shape operations
+in an opaque return type,
+which prevents those types from being visible.
+Both functions are generic because the types they rely on are generic,
+and the type parameters to the function
+pass along the type information needed by ``FlippedShape`` and ``JoinedShape``.
 
-If function that returns an opaque type
+If a function that returns an opaque type
 returns from multiple places,
 all of the possible return values must have the same type.
 For a generic function,
@@ -245,8 +253,9 @@ that includes a special case for squares:
     >> struct Square: Shape {
     >>     func draw() -> String { return "#" }  // stub implementation
     >> }
-    >> struct FlippedShape: Shape {
-    >>     func draw() -> String { return "^^^" }  // stub implementation
+    >> struct FlippedShape<T: Shape>: Shape {
+    >>     var shape: T
+    >>     func draw() -> String { return "#" } // stub implementation
     >> }
     -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
            if shape is Square {
@@ -254,12 +263,27 @@ that includes a special case for squares:
            }
            return FlippedShape(shape: shape) // Error: return types don't match
        }
+    !! /tmp/swifttest.swift:11:6: error: function declares an opaque return type, but the return statements in its body do not have matching underlying types
+    !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
+    !! ^
+    !! /tmp/swifttest.swift:13:16: note: return statement has underlying type 'T'
+    !! return shape // Error: return types don't match
+    !! ^
+    !! /tmp/swifttest.swift:15:12: note: return statement has underlying type 'FlippedShape<T>'
+    !! return FlippedShape(shape: shape) // Error: return types don't match
+    !! ^
 
 If you call this function with a ``Square``, it returns a ``Square``;
 otherwise, it returns a ``FlippedShape``.
-This violates the requirement to return values of only one type.
-In contrast,
-here's an example of a function that incorporates its generic type parameter
+This violates the requirement to return values of only one type
+and makes ``invalidFlip(_:)`` invalid code.
+One way to fix ``invalidFlip(_:)`` is to move the special case for squares
+into the implementation of ``FlippedShape``,
+which lets this function always return a ``FlippedShape`` value.
+
+The requirement to always return a single type
+doesn't prevent you from using generics in an opaque return type.
+Here's an example of a function that incorporates its type parameter
 into the underlying type of the value it returns:
 
 .. testcode:: opaque-result
@@ -275,7 +299,7 @@ varies depending on what ``T`` is:
 Whatever shape is passed it,
 ``repeat(shape:count:)`` creates and returns an array of that shape.
 Nevertheless,
-the return value always has the same underlying, namely ``[T]``,
+the return value always has the same underlying type of ``[T]``,
 so it follows the requirement that functions with opaque return types
 must return values of only a single type.
 
@@ -284,67 +308,62 @@ must return values of only a single type.
 Differences Between Opaque Types and Protocol Types
 ---------------------------------------------------
 
-An opaque return type looks very similar
-to using a protocol type as the return type,
-but the behavior has a few important differences.
+Returning an opaque type looks very similar
+to using a protocol type as the return type of a function,
+but these two kinds of return type differ in
+whether they preserve type identity.
+An opaque types refer to some specific type,
+even though you can't tell which type;
+a protocol type can refer to any type that conform to the protocol.
+Generally speaking,
+protocol types give you more flexibility
+about the underlying types of the values they store,
+and opaque types let you make stronger guarantees
+about those underlying types.
+
 For example,
 here's a version of ``flip(_:)`` that returns a protocol type
 instead of using an opaque return type:
 
-.. testcode:: opaque-result
+.. testcode:: opaque-result, opaque-result-existential-error
     :compile: true
 
     -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
-          if shape is Square {
-             return shape
-          }
-
           return FlippedShape(shape: shape)
        }
 
-This version of ``protoFlip(_:)`` returns either
-an instance of ``Square`` or an instance of ``FlippedShape``,
-hiding the exact type from its called.
-The previous version that has an opaque return type
-is guaranteed my the compiler to always return the same type,
-even though that type is hidden as ``some Shape``.
-
-.. XXX Fix up the para above
-   Now we show an opanque return type that no-ops hline too
-   That wasn't the point anyhow,
-   the point is that existentials don't preserve the underlying type's identity
-
+This version of ``protoFlip(_:)``
+behaves the same as ``flip(_:)``,
+and it always returns a value of the same type.
+Unlike ``flip(_:)``,
+the value that ``protoFlip(_:)`` returns isn't required
+to always have the same type,
+it just has to conform to the ``Shape`` protocol.
 The lack of type information from ``protoFlip(_:)`` means that
-you can't guarantee that two flipped shapes
-returned by this function are comparable.
-In fact, you can't even compare the same shape to itself
-after flipping it twice, separately:
+many operations that depend on type information
+aren't available on the returned value.
+You can't guarantee that two flipped shapes
+returned by this function are comparable,
+because they might have completely different types.
+In fact, you can't even compare the same shape to itself:
 
-.. testcode:: opaque-result-err
+.. testcode:: opaque-result-existential-error
     :compile: true
 
     -> let protoFlippedTriangle = protoFlip(smallTriangle)
     -> let sameThing = protoFlip(smallTriangle)
     -> protoFlippedTriangle == sameThing  // Error
 
-When a function returns a protocol type,
-information about the underlying type isn't preserved.
-The design of protocol types is that it can hold any value
-of any type that conforms to the protocol.
-Keeping track of the underlying type
-would prevent you from storing values of different types.
-For example,
-if you create a variable whose type is ``Collection``,
-it can store an array or a dictionary or a set,
-or any custom collection type that you define.
-This is in contrast to a function that returns ``some Colloction``,
-which has to to return a value of the same collection type
-every time the function is called.
-In brief,
-protocol types give you more flexibility about what data they can store,
-and opaque types let you make stronger guarantees about the data.
+The same type is inferred for both ``protoFlippedTriangle`` and ``sameThing``
+--- they're both ``Shape`` values.
+But there's no guarantee that their underlying types are the same,
+and the information about those underlying types has been lost.
 
-Because opaque types preserve the identity of the underlying type,
+.. XXX This doesn't fail properly -- Shape isn't Equatable
+   Putting them in an array wouldn't fail either
+   because you'd just make an array of [Shape]
+
+Because opaque types do preserve the identity of the underlying type,
 Swift can infer associated types,
 which lets you use an opaque return value
 in places where a protocol type can't be used as a return value.
@@ -362,10 +381,10 @@ here's a version of the ``Container`` protocol from :doc:`./Generics`:
     -> extension Array: Container { }
 
 You can't use ``Container`` as the return type of a function
-because it has associated types.
+because that protocol has an associated type.
 You also can't use it as constraint a generic return type
 because there isn't enough information outside the function body
-to infer the generic type.
+to infer what the generic type needs to be.
 
 .. testcode:: opaque-result-existential-error
     :compile: true
@@ -380,7 +399,7 @@ to infer the generic type.
         return [item]
     }
 
-In contrast, you can use ``some Container`` as a return type.
+In contrast, you can use the opaque type``some Container`` as a return type:
 
 .. testcode:: opaque-result
     :compile: true
@@ -407,6 +426,7 @@ which means that the type of ``twelve`` is also inferred to be ``Int``.
 
    - Efficiency penalty of dispatch through the witness table
    - "Protocols don't conform to themselves"
+
 
 .. _OpaqueTypes_DeleteMe:
 
@@ -467,3 +487,27 @@ XXX Delete Me
    Is it worth describing the difference between value- and type-level abstraction
    like Joe Groff did in his forum post?
 
+
+
+
+
+
+.. XXX
+
+    -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
+          if shape is Square {
+             return shape
+          }
+
+          return FlippedShape(shape: shape)
+       }
+
+This version of ``protoFlip(_:)`` returns either
+an instance of ``Square`` or an instance of ``FlippedShape``,
+depending on whether a ``Square`` was passed in.
+
+You can combine the flexibility of returning a value of protocol type
+with the API-boundary enforcement of opaque types
+by using type erasure
+like the Swift standard library uses in the
+`AnySequence <//apple_ref/fake/AnySequence`_ type.
