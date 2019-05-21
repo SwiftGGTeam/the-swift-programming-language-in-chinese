@@ -666,25 +666,27 @@ For example, the code below implements a property wrapper
 that counts the number of times its value is read and written.
 
 .. testcode:: propertyWrapper
+    :compile: true
 
-   -> @propertyWrapper
-      struct CountedAccess<T> {
-         private var storage: T
-         public var readCount = 0
-         public var writeCount = 0
-         var value: T {
-            get {
-               readCount += 1
-               return storage
-            }
-            set {
-               writeCount += 1
-               storage = newValue
-            }
-         }
-      }
-
-.. XXX Need an init in the struct above
+    -> @propertyWrapper
+       struct CountedAccess<T> {
+           private var storage: T
+           public var readCount = 0
+           public var writeCount = 0
+           var value: T {
+               mutating get {
+                   readCount += 1
+                   return storage
+               }
+               set {
+                   writeCount += 1
+                   storage = newValue
+               }
+           }
+           init(initialValue: T) {
+               storage = initialValue
+           }
+       }
 
 .. XXX TR: What are the requirements/restrictions
    as far an initializers?
@@ -699,10 +701,14 @@ applies the ``CountedAccess`` attribute
 to the ``someProperty`` property of the ``SomeStruct`` structure.
 
 .. testcode:: propertyWrapper
+    :compile: true
 
-   -> struct SomeStruct {
-          @CountedAccess var someProperty: Int
-      }
+    -> struct SomeStruct {
+           @CountedAccess var someProperty: Int
+           init(someProperty: Int) {
+               self.$someProperty = CountedAccess(initialValue: someProperty)
+           }
+       }
 
 To access the wrapped value using the property wrapper's setter and getter,
 write the property's name.
@@ -714,20 +720,26 @@ In the code listing below,
 and ``someProperty`` refers to the wrapped ``Int`` value.
 
 .. testcode:: propertyWrapper
+    :compile: true
 
-   -> let s = SomeStruct(someProperty: 408)
-   -> s.someProperty = 996
-   -> s.someProperty = 1010
-   -> print(s.someProperty)
-   <- 1010
-   ---
-   -> print("Read count \($s.readCount), write count \($s.writeCount)")
-   <- Read count 1, write count 3
+    -> var s = SomeStruct(someProperty: 408)
+    -> s.someProperty = 996
+    -> s.someProperty = 1010
+    -> print(s.someProperty)
+    <- 1010
+    ---
+    -> print("Read count \(s.$someProperty.readCount)")
+    -> print("Write count \(s.$someProperty.writeCount)")
+    <- Read count 1
+    <- Write count 2
 
 .. REFERENCE
    The integers above come from the main Apple phone number (408) 996-1010.
 
 ..  XXX You can pass arguments to @Foo, which are passed to Foo.init(...)
+    struct SomeStruct {
+        @CountedAccess(initialValue: "Hello") var anotherProperty: String
+    }
 
 
 .. _Attributes_requires_stored_property_inits:
