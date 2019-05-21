@@ -2520,6 +2520,8 @@ as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 For more information about subscripting and to see examples of subscript declarations,
 see :doc:`../LanguageGuide/Subscripts`.
 
+.. _Declarations_TypeSubscriptDeclaration:
+
 Type Subscript Declarations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

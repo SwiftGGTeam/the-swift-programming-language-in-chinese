@@ -299,6 +299,7 @@
     "declarations-subscriptdeclaration": "ID379",
     "declarations-throwingfunctionsandmethods": "ID530",
     "declarations-typealiasdeclaration": "ID361",
+    "declarations-typesubscriptdeclaration": "ID611",
     "declarations-typevariableproperties": "ID483",
     "declarations-variabledeclaration": "ID356",
     "deinitialization-deinitializersinaction": "ID144",
@@ -371,6 +372,7 @@
     "functions-functiontypes": "ID174",
     "functions-functiontypesasparametertypes": "ID176",
     "functions-functiontypesasreturntypes": "ID177",
+    "functions-implicitreturns": "ID607",
     "functions-inoutparameters": "ID173",
     "functions-nestedfunctions": "ID178",
     "functions-omittingparameternames": "ID526",
@@ -488,6 +490,7 @@
     "patterns-wildcardpattern": "ID420",
     "properties-computedproperties": "ID259",
     "properties-globalandlocalvariables": "ID263",
+    "properties-implicitreturn": "ID608",
     "properties-lazystoredproperties": "ID257",
     "properties-propertyobservers": "ID262",
     "properties-queryingandsettingtypeproperties": "ID266",
@@ -581,6 +584,7 @@
     "subscripts-subscriptoptions": "ID308",
     "subscripts-subscriptsyntax": "ID306",
     "subscripts-subscriptusage": "ID307",
+    "subscripts-typesubscripts": "ID609",
     "thebasics-assertions": "ID335",
     "thebasics-booleans": "ID328",
     "thebasics-comments": "ID315",
@@ -625,6 +629,7 @@
     "types-metatypetype": "ID455",
     "types-optionaltype": "ID452",
     "types-protocolcompositiontype": "ID454",
+    "types-selftype": "ID610",
     "types-tupletype": "ID448",
     "types-typeannotation": "ID446",
     "types-typeidentifier": "ID447",
@@ -658,5 +663,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 607
+  "next_id": 612
 }
