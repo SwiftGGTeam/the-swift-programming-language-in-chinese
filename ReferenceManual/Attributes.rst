@@ -650,6 +650,8 @@ Apply this attribute to a class, structure, or enumeration declaration
 to use that type as a property wrapper.
 The type must have a ``value`` instance property
 that's implemented as a getter and a setter.
+If the type defines an ``init(initialValue:)`` initializer,
+properties that it wraps can use assignment to set their initial value.
 The name of a property wrapper type
 can't start with an underscore or lower case letter.
 
@@ -663,12 +665,13 @@ The getter and setter expose the wrapped value;
 the type that ``propertyWrapper`` is applied to
 is responsible for defining and managing the underlying storage for that value.
 For example, the code below implements a property wrapper
-that counts the number of times its value is read and written.
+that counts the number of times its wrapped value
+is read and written after initialization.
 
 .. testcode:: propertyWrapper
     :compile: true
 
-    -> @propertyWrapper
+    -> @propertyDelegate
        struct CountedAccess<T> {
            private var storage: T
            public var readCount = 0
@@ -688,26 +691,25 @@ that counts the number of times its value is read and written.
            }
        }
 
-.. XXX TR: What are the requirements/restrictions
-   as far an initializers?
+.. XXX Change @propertyDelegate back to @propertyWrapper
 
 When you apply the ``propertyWrapper`` attribute to a type,
 you create a new, custom attribute with the same name as the type.
 Apply that new attribute to a property
 to wrap the property using the property wrapper.
 For example,
-the code below
-applies the ``CountedAccess`` attribute
+the code below applies the ``CountedAccess`` attribute
 to the ``someProperty`` property of the ``SomeStruct`` structure.
+Because the ``CountedAccess`` structure
+implements an ``init(initialValue:)`` initializer,
+``someProperty`` can be initialized in ``SomeStruct`` using assignment
+and a memberwise initializer is synthesized for ``SomeStruct``.
 
 .. testcode:: propertyWrapper
     :compile: true
 
     -> struct SomeStruct {
-           @CountedAccess var someProperty: Int
-           init(someProperty: Int) {
-               self.$someProperty = CountedAccess(initialValue: someProperty)
-           }
+           @CountedAccess var someProperty: Int = 100
        }
 
 To access the wrapped value using the property wrapper's setter and getter,
@@ -736,10 +738,18 @@ and ``someProperty`` refers to the wrapped ``Int`` value.
 .. REFERENCE
    The integers above come from the main Apple phone number (408) 996-1010.
 
-..  XXX You can pass arguments to @Foo, which are passed to Foo.init(...)
-    struct SomeStruct {
-        @CountedAccess(initialValue: "Hello") var anotherProperty: String
-    }
+To pass arguments to the property wrapper's initializer
+other than an initial value,
+write the arguments after the attribute name
+using the same syntax as an ordinary call to that initializer.
+
+.. testcode:: propertyWrapper
+    :compile:
+
+    -> struct AnotherStruct {
+           @CountedAccess(initialValue: "Hello")
+           var anotherProperty: String
+       }
 
 
 .. _Attributes_requires_stored_property_inits:
