@@ -359,9 +359,20 @@ The same type is inferred for both ``protoFlippedTriangle`` and ``sameThing``
 But there's no guarantee that their underlying types are the same,
 and the information about those underlying types has been lost.
 
-.. XXX This doesn't fail properly -- Shape isn't Equatable
-   Putting them in an array wouldn't fail either
-   because you'd just make an array of [Shape]
+.. note::
+
+    If you try to compile the code in the listing above,
+    you'll notice that the error message isn't about a type mismatch
+    for the two arguments to the ``==`` operator,
+    but rather about the fact that the ``==`` operator
+    can't be applied to two values of ``Shape`` protocol type.
+    In fact, the ``Shape`` protocol can't require an ``==`` operator
+    because that operator needs exactly the same type information
+    that was lost by using ``Shape`` as a type.
+    Making ``Shape`` a subprotocol of ``Equatable``
+    would prevent you from using ``Shape`` as a type.
+
+.. XXX not convinced that the above lampshade is sufficiently helpful
 
 Because opaque types do preserve the identity of the underlying type,
 Swift can infer associated types,
