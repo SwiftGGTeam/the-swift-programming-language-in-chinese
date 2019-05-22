@@ -587,7 +587,7 @@ The ``objc`` attribute is also implicitly added in the following cases:
   and the superclass's declaration has the ``objc`` attribute.
 * The declaration satisfies a requirement
   from a protocol that has the ``objc`` attribute.
-* The declaration has the ``IBAction``, ``IBOutlet``,
+* The declaration has the ``IBAction``, ``IBSegueAction``, ``IBOutlet``,
   ``IBDesignable``, ``IBInspectable``,
   ``NSManaged``, or ``GKInspectable`` attribute.
 
@@ -790,18 +790,21 @@ Declaration Attributes Used by Interface Builder
 Interface Builder attributes are declaration attributes
 used by Interface Builder to synchronize with Xcode.
 Swift provides the following Interface Builder attributes:
-``IBAction``, ``IBOutlet``, ``IBDesignable``, and ``IBInspectable``.
+``IBAction``, ``IBSegueAction``, ``IBOutlet``,
+``IBDesignable``, and ``IBInspectable``.
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
 .. TODO: Need to link to the relevant discussion of these attributes in Objc.
 
 You apply the ``IBOutlet`` and ``IBInspectable`` attributes
-to property declarations of a class. You apply the ``IBAction`` attribute
-to method declarations of a class and the ``IBDesignable`` attribute
-to class declarations.
+to property declarations of a class.
+You apply the ``IBAction`` and ``IBSegueAction`` attribute
+to method declarations of a class
+and the ``IBDesignable`` attribute to class declarations.
 
-Applying the ``IBAction``, ``IBOutlet``, ``IBDesignable``, or ``IBInspectable`` attribute
+Applying the ``IBAction``, ``IBSegueAction``, ``IBOutlet``,
+``IBDesignable``, or ``IBInspectable`` attribute
 also implies the ``objc`` attribute.
 
 
