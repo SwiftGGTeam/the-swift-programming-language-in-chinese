@@ -361,8 +361,13 @@ In an explicit member expression,
 if there isn't a corresponding declaration for the named member,
 the expression is understood as a call to
 the type's ``subscript(dynamicMemberLookup:)`` subscript,
-passing a string literal that contains the member's name as the argument.
-The subscript's parameter type can be any type
+passing information about the member as the argument.
+The subscript's parameter type can be either a key path or a string;
+if you implement both subscripts,
+the subscript that takes key path argument is used.
+
+Key paths are any subclass of ``AnyKeyPath``;
+strings are any type
 that conforms to the ``ExpressibleByStringLiteral`` protocol,
 and its return type can be any type.
 In most cases, the subscript's parameter is a ``String`` value.
@@ -390,6 +395,8 @@ For example:
    -> let equivalent = s[dynamicMember: "someDynamicMember"]
    -> print(dynamic == equivalent)
    <- true
+
+.. XXX Add code listing that shows a keypath
 
 
 .. _Attributes_GKInspectable:
