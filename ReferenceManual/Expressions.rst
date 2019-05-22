@@ -1276,7 +1276,45 @@ that combine these components.
    <- 7
    -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
    <- 64
-                                
+
+You can provide a key path expression
+in contexts where a function is allowed.
+Specifically, if a function of type ``(SomeType) -> Value`` is needed,
+you can use a key path expression
+whose root type is ``SomeType``
+and whose path produces a value of type ``Value``.
+Any side effects of the key path expression
+are evaluated at the point where the expression appears,
+not when it is called.
+For example,
+if you make a function call inside a subscript in the key path expression,
+the function call occurs once as part of evaluating the expression,
+not every time the key path is used.
+
+.. testcode:: keypath-expression
+
+   -> struct Task {
+          var description: String
+          var completed: Bool
+      }
+   -> var toDoList = [
+          Task(description: "Practice ping-pong.", completed: false),
+          Task(description: "Buy a pirate costume.", completed: true),
+          Task(description: "Visit Boston in the Fall.", completed: false),
+      ]
+   -> let descriptions = toDoList.filter(\.completed).map(\.description)
+   ---
+   -> func makeIndex() -> Int {
+          print("Made an index")
+          return 0
+      }
+   -> let keyPath = \[Task][makeIndex()]
+   <- Made an index
+
+.. REFERENCE
+   The to-do list above draws from the lyrics of the song
+   "The Pirates Who Don't Do Anything".
+
 For more information about using key paths
 in code that interacts with Objective-C APIs,
 see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
