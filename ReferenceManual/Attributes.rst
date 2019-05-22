@@ -362,12 +362,14 @@ if there isn't a corresponding declaration for the named member,
 the expression is understood as a call to
 the type's ``subscript(dynamicMemberLookup:)`` subscript,
 passing information about the member as the argument.
-The subscript's parameter type can be either a key path or a string;
+The subscript can accept a parameter that's either a key path or a string;
 if you implement both subscripts,
 the subscript that takes key path argument is used.
 
-Key paths are any subclass of ``AnyKeyPath``;
-strings are any type
+.. TR: Confirm which one wins
+
+Key paths are passed as a subclass of ``AnyKeyPath``;
+strings are passed as a type
 that conforms to the ``ExpressibleByStringLiteral`` protocol,
 and its return type can be any type.
 In most cases, the subscript's parameter is a ``String`` value.
