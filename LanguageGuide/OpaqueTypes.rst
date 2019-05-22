@@ -312,8 +312,8 @@ Returning an opaque type looks very similar
 to using a protocol type as the return type of a function,
 but these two kinds of return type differ in
 whether they preserve type identity.
-An opaque types refer to some specific type,
-even though you can't tell which type;
+An opaque type refers to one specific type,
+although the caller of the function isn't able to see which type;
 a protocol type can refer to any type that conform to the protocol.
 Generally speaking,
 protocol types give you more flexibility
@@ -339,13 +339,33 @@ Unlike ``flip(_:)``,
 the value that ``protoFlip(_:)`` returns isn't required
 to always have the same type,
 it just has to conform to the ``Shape`` protocol.
-The lack of type information from ``protoFlip(_:)`` means that
+Put another way,
+``protoFlip(_:)`` makes a much looser API contract with its caller
+than ``flip(_:)`` makes.
+It reserves the flexibility to return multiple types:
+
+.. testcode:: opaque-result-existential-error
+
+    -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
+          if shape is Square {
+             return shape
+          }
+
+          return FlippedShape(shape: shape)
+       }
+
+The revised version above returns
+either an instance of ``Square`` or an instance of ``FlippedShape``,
+depending on what shape is passed in.
+Two flipped shapes returned by this function
+might have completely different types.
+Other valid versions of this function could return values of different types
+when flipping multiple instances of the same shape .
+The less specific return type information from ``protoFlip(_:)`` means that
 many operations that depend on type information
 aren't available on the returned value.
-You can't guarantee that two flipped shapes
-returned by this function are comparable,
-because they might have completely different types.
-In fact, you can't even compare the same shape to itself:
+One example is that it's not possible to write an ``==`` operator
+comparing results returned by this function.
 
 .. testcode:: opaque-result-existential-error
     :compile: true
@@ -354,27 +374,22 @@ In fact, you can't even compare the same shape to itself:
     -> let sameThing = protoFlip(smallTriangle)
     -> protoFlippedTriangle == sameThing  // Error
 
-The same type is inferred for both ``protoFlippedTriangle`` and ``sameThing``
---- they're both ``Shape`` values.
-But there's no guarantee that their underlying types are the same,
-and the information about those underlying types has been lost.
+The error on the last line of the example occurs for several reasons.
+The immediate issue is that the ``Shape`` doesn't include an ``==`` operator
+as part of its protocol requirements.
+If you try adding one, the next issue you'll encounter
+is that the ``==`` operator needs to know what type
+its left-hand and right-hard arguments are.
+This sort of operator usually takes arguments of type ``Self``,
+matching whatever concrete type adopts the protocol,
+but adding a ``Self`` requirement to the protocol
+doesn't allow for the type erasure that happens
+when you use the protocol as a type.
+All of these limitations are the cost
+of the flexibility to return any type that conforms to the protocol.
 
-.. note::
-
-    If you try to compile the code in the listing above,
-    you'll notice that the error message isn't about a type mismatch
-    for the two arguments to the ``==`` operator,
-    but rather about the fact that the ``==`` operator
-    can't be applied to two values of ``Shape`` protocol type.
-    In fact, the ``Shape`` protocol can't require an ``==`` operator
-    because that operator needs exactly the same type information
-    that was lost by using ``Shape`` as a type.
-    Making ``Shape`` a subprotocol of ``Equatable``
-    would prevent you from using ``Shape`` as a type.
-
-.. XXX not convinced that the above lampshade is sufficiently helpful
-
-Because opaque types do preserve the identity of the underlying type,
+In contrast,
+opaque types preserve the identity of the underlying type.
 Swift can infer associated types,
 which lets you use an opaque return value
 in places where a protocol type can't be used as a return value.
@@ -410,7 +425,9 @@ to infer what the generic type needs to be.
         return [item]
     }
 
-In contrast, you can use the opaque type``some Container`` as a return type:
+Using the opaque type ``some Container`` as a return type
+expresses the desired API contract --- the function returns a container,
+but declines to specify exactly what that container's type is:
 
 .. testcode:: opaque-result
     :compile: true
@@ -432,12 +449,6 @@ so the return value is an array of integers
 and the ``Item`` associated type is inferred to be ``Int``.
 The subscript on ``Container`` returns ``Item``,
 which means that the type of ``twelve`` is also inferred to be ``Int``.
-
-.. XXX OUTLINE
-
-   - Efficiency penalty of dispatch through the witness table
-   - "Protocols don't conform to themselves"
-
 
 .. _OpaqueTypes_DeleteMe:
 
@@ -503,22 +514,34 @@ XXX Delete Me
 
 
 
-.. XXX
+.. TODO: Expansion for the future
 
-    -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
-          if shape is Square {
-             return shape
-          }
+    You can combine the flexibility of returning a value of protocol type
+    with the API-boundary enforcement of opaque types
+    by using type erasure
+    like the Swift standard library uses in the
+    `AnySequence <//apple_ref/fake/AnySequence`_ type.
 
-          return FlippedShape(shape: shape)
-       }
+    protocol P { func f() -> Int }
 
-This version of ``protoFlip(_:)`` returns either
-an instance of ``Square`` or an instance of ``FlippedShape``,
-depending on whether a ``Square`` was passed in.
+    struct AnyP: P {
+        var p: P
+        func f() -> Int { return p.f() }
+    }
 
-You can combine the flexibility of returning a value of protocol type
-with the API-boundary enforcement of opaque types
-by using type erasure
-like the Swift standard library uses in the
-`AnySequence <//apple_ref/fake/AnySequence`_ type.
+    struct P1 {
+        func f() -> Int { return 100 }
+    }
+    struct P2 {
+        func f() -> Int { return 200 }
+    }
+
+    func opaque(x: Int) -> some P {
+        let result: P
+        if x > 100 {
+            result = P1()
+        }  else {
+            result = P2()
+        }
+        return AnyP(p: result)
+    }
