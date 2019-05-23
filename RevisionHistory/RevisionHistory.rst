@@ -1,6 +1,54 @@
 Document Revision History
 =========================
 
+**2019-06-03**
+
+* Updated for Swift 5.1.
+
+* Added information about functions
+  that specify a protocol that their return value conforms to,
+  instead of providing a specific named return type,
+  to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
+
+* Added the :ref:`Functions_ImplicitReturns`
+  and :ref:`Properties_ImplicitReturn` sections
+  with information about functions that omit ``return``.
+
+* Added information about using subscripts on types
+  to the :ref:`Subscripts_TypeSubscripts` section.
+
+* Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
+  now that the memberwise structure initializer supports
+  omitting parameters for properties that have a default value.
+
+* Added information about dynamic members
+  that are looked up by key path at run time
+  to the :ref:`Attributes_dynamicCallable` section
+  of the :doc:`../ReferenceManual/Attributes` chapter.
+
+* Updated the :ref:`Types_SelfType` section,
+  now that ``Self`` can be used to refer to the type
+  introduced by the current class, structure, or enumeration declaration.
+
+.. XXX Do we need to update TSPL for this entry from the CHANGELOG?
+
+   AJM: I think this needs to be added to Reference > Patterns > Optional Patterns
+
+   Enum cases can now be matched against an optional enum without
+   requiring a '?' at the end of the pattern.
+
+   ```swift
+   enum Foo { case zero, one }
+
+   let foo: Foo? = .zero
+
+   switch foo {
+     case .zero: break
+     case .one: break
+     case .none: break
+   }
+   ```
+
 **2019-03-25**
 
 * Updated for Swift 5.0.
