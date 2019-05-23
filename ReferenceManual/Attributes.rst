@@ -366,8 +366,6 @@ The subscript can accept a parameter that's either a key path or a string;
 if you implement both subscripts,
 the subscript that takes key path argument is used.
 
-.. TR: Confirm which one wins
-
 Key paths are passed as a subclass of ``AnyKeyPath``;
 strings are passed as a type
 that conforms to the ``ExpressibleByStringLiteral`` protocol,
