@@ -366,13 +366,15 @@ The subscript can accept a parameter that's either a key path or a member name;
 if you implement both subscripts,
 the subscript that takes key path argument is used.
 
-Key paths are passed as a subclass of ``AnyKeyPath``;
-member names are passed as a type
-that conforms to the ``ExpressibleByStringLiteral`` protocol,
-and its return type can be any type.
-In most cases, the member name is passed as a ``String`` value.
-
-.. XXX TR: Confirm key path type above.
+An implementation of ``subscript(dynamicMemberLookup:)``
+can accept key paths using an argument of type
+`KeyPath <//apple_ref/swift/fake/KeyPath>`_,
+`WritableKeyPath <//apple_ref/swift/fake/WritableKeyPath>`_,
+or `ReferenceWritableKeyPath <//apple_ref/swift/fake/ReferenceWritableKeyPath>`_.
+It can accept member names using an argument of a type that conforms to the
+`ExpressibleByStringLiteral <//apple_ref/swift/fake/ExpressibleByStringLiteral>`_ protocol ---
+in most cases, ``String``.
+The subscript's return type can be any type.
 
 Dynamic member lookup using a member name
 can be used to create a wrapper type around data
