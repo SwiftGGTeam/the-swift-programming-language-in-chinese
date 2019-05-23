@@ -362,15 +362,22 @@ if there isn't a corresponding declaration for the named member,
 the expression is understood as a call to
 the type's ``subscript(dynamicMemberLookup:)`` subscript,
 passing information about the member as the argument.
-The subscript can accept a parameter that's either a key path or a string;
+The subscript can accept a parameter that's either a key path or a member name;
 if you implement both subscripts,
 the subscript that takes key path argument is used.
 
 Key paths are passed as a subclass of ``AnyKeyPath``;
-strings are passed as a type
+member names are passed as a type
 that conforms to the ``ExpressibleByStringLiteral`` protocol,
 and its return type can be any type.
-In most cases, the subscript's parameter is a ``String`` value.
+In most cases, the member name is passed as a ``String`` value.
+
+.. XXX TR: Confirm key path type above.
+
+Dynamic member lookup using a member name
+can be used to create a wrapper type around data
+that can't be type checked at compile time,
+such as when bridging data from other languages into Swift.
 For example:
 
 .. testcode:: dynamicMemberLookup
@@ -396,29 +403,28 @@ For example:
    -> print(dynamic == equivalent)
    <- true
 
-.. XXX Add code listing that shows a keypath
+Dynamic member lookup using a key path
+can be used to implement a wrapper type
+in a way that supports compile-time type checking.
+For example:
 
-   Example for release notes
+.. testcode:: dynamicMemberLookup
+    :compile: true
 
-   struct Point {
-     var x, y: Int
-   }
-
-   @dynamicMemberLookup
-   struct Box<T> {
-     var v: T
-
-     init(_ v: T) {
-       self.v = v
-     }
-
-     subscript<U>(dynamicMember member: KeyPath<T, U>) -> U {
-       get { return v[keyPath: member] }
-     }
-   }
-
-   var box = Box(Point(x: 0, y: 0))
-   _ = box.x
+    -> struct Point { var x, y: Int }
+    ---
+    -> @dynamicMemberLookup
+       struct Wrapper<Value> {
+           var value: Value
+           subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T {
+               get { return value[keyPath: member] }
+           }
+       }
+    ---
+    -> let point = Point(x: 381, y: 431)
+    -> let wrapper = Wrapper(value: point)
+    -> print(wrapper.x)
+    << 431
 
 
 .. _Attributes_GKInspectable:
