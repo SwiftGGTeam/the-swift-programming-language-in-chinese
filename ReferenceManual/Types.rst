@@ -751,8 +751,7 @@ a protocol composition type,
 or ``Any``.
 
 Protocol declarations can't include opaque types.
-Classes that include nonfinal methods
-can't use an opaque type as the return type of a final method.
+Classes can't use an opaque type as the return type of a nonfinal method.
 
 A function whose return type is opaque
 must use only a single underlying type for the value it returns.
