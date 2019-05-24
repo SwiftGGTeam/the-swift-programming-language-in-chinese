@@ -30,9 +30,10 @@ that are written in either Swift 5.1, Swift 4.2, or Swift 4.
    #endif
 
 When you use Xcode 11 to build Swift 4 and Swift 4.2 code,
-most Swift 5 functionality is available.
+most Swift 5.1 functionality is available.
 That said,
-the following changes are available only to code that uses Swift 5 or later:
+functions that return an opaque type require the Swift 5.1 runtime.
+The following changes are available only to code that uses Swift 5.1 or later:
 
 - The ``try?`` expression doesn't introduce an extra level of optionality
   to expressions that already return optionals.
@@ -46,5 +47,5 @@ a target that's written in Swift 4.2 or Swift 4,
 and vice versa.
 This means, if you have a large project
 that's divided into multiple frameworks,
-you can migrate your code from Swift 4 to Swift 5
+you can migrate your code from Swift 4 to Swift 5.1
 one framework at a time.
