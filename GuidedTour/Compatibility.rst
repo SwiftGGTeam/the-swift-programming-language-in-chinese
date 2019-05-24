@@ -29,7 +29,7 @@ that are written in either Swift 5.1, Swift 4.2, or Swift 4.
        print("An older compiler")
    #endif
 
-When you use Xcode 11 to build Swift 4.2 code,
+When you use Xcode 11 to build Swift 4 and Swift 4.2 code,
 most Swift 5 functionality is available.
 That said,
 the following changes are available only to code that uses Swift 5 or later:
