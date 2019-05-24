@@ -754,6 +754,10 @@ only if it's an instance of a type
 that conforms to the listed protocol or protocol composition,
 or inherits from the listed class.
 
+.. The wording above intentionally follows generic constraints
+   because the meaninging here and there is the same,
+   and the compiler uses the same machinery for both under the hood.
+
 Protocol declarations can't include opaque types.
 Classes can't use an opaque type as the return type of a nonfinal method.
 

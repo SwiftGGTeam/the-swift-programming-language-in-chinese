@@ -1,19 +1,22 @@
 Opaque Types
 ============
 
+.. XXX a tool for implementation hiding
+   More likely to want to hide generic adaptor things
+
 An *opaque type* lets you write a function or method
 that abstracts away some of the type information about its return value.
-This is useful at boundaries between groups of code,
-like a library and code that calls into the library.
+This is useful at boundaries between
+a library and code that calls into the library.
 Functions that return an opaque type
-specify a protocol that their return value conforms to,
+specify the capabilities of their return type in terms of protocols
 instead of providing a specific named return type,
 and the type itself can be private within the library.
 
 .. _OpaqueTypes_LimitsOfGenerics:
 
-Limitations of Generic Types
-----------------------------
+The Problem That Opaque Types Solve
+-----------------------------------
 
 Suppose you're writing a library that draws ASCII art shapes.
 The basic characteristic of an ASCII art shape
@@ -89,9 +92,9 @@ from joining a flipped triangle with another triangle.
     </ *
 
 Exposing this detailed information about how a shape was created
-in the shape's type also exposes
+in the shape's type also exposes type
 that aren't meant to be part of the ASCII art framework's public interface,
-but leak out because of the nested generic types.
+but leak out because of the need to spell out the full return type.
 You could have built up the same shape in a variety of ways,
 and other code that uses the shape shouldn't have to care
 about the list of transformations that were involved.
@@ -99,13 +102,9 @@ Wrapper types like ``JoinedShape`` and ``FlippedShape``
 shouldn't be visible to users of this ASCII art library.
 Those underlying types don't matter to the library's users ---
 only the fact that joining and flipping a shape returns another ``Shape`` value.
-However,
-generic type parameters and generic return types
-can't create that kind of abstraction.
-The code that calls the function,
-not the code inside the function's body,
-determines what concrete types are used to fill in
-the function's generic parameter types and generic return type.
+You want to implement transformations on a shape
+in a way that contains the implementation details
+inside the shape library.
 
 .. _OpaqueTypes_Returning:
 
@@ -279,7 +278,32 @@ This violates the requirement to return values of only one type
 and makes ``invalidFlip(_:)`` invalid code.
 One way to fix ``invalidFlip(_:)`` is to move the special case for squares
 into the implementation of ``FlippedShape``,
-which lets this function always return a ``FlippedShape`` value.
+which lets this function always return a ``FlippedShape`` value,
+as shown below:
+
+.. testcode:: opaque-result-special-flip
+    :compile: true
+
+    >> protocol Shape { func draw() -> String }
+    >> struct Square: Shape {
+    >>     func draw() -> String { return "#" }  // stub implementation
+    >> }
+    -> struct FlippedShape<T: Shape>: Shape {
+           var shape: T
+           func draw() -> String {
+               if shape is Square {
+                  return shape.draw()
+               }
+               let lines = shape.draw().split(separator: "\n")
+               return lines.reversed().joined(separator: "\n")
+           }
+       }
+
+.. Another way to fix it is with type erasure.
+   Define a wrapper called AnyShape,
+   and wrap whatever shape you created inside invalidFlip(_:)
+   before returning it.
+   That example is long enough that it breaks the flow here.
 
 The requirement to always return a single type
 doesn't prevent you from using generics in an opaque return type.
@@ -387,6 +411,14 @@ doesn't allow for the type erasure that happens
 when you use the protocol as a type.
 All of these limitations are the cost
 of the flexibility to return any type that conforms to the protocol.
+
+Another problem with this approach is that the shape transformations don't nest.
+The result of flipping a triangle is a value of type ``Shape``,
+and the ``protoFlip(_:)`` function takes an argument
+of some type that conforms to the ``Shape`` protocol,
+but a value of a protocol type doesn't conform to that protocol.
+This means code like ``protoFlip(protoFlip(smallTriange))``
+that applies multiple transformations doesn't compile.
 
 In contrast,
 opaque types preserve the identity of the underlying type.
