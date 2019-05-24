@@ -743,12 +743,16 @@ Opaque types have the following form:
 
 .. syntax-outline::
 
-    some <#type#>
+    some <#constraint#>
 
-The *type* that follows ``some`` is a class type,
+The *constraint* is a class type,
 a protocol type,
 a protocol composition type,
 or ``Any``.
+A value can be used as an instance of the opaque type
+only if it's an instance of a type
+that conforms to the listed protocol or protocol composition,
+or inherits from the listed class.
 
 Protocol declarations can't include opaque types.
 Classes can't use an opaque type as the return type of a nonfinal method.
