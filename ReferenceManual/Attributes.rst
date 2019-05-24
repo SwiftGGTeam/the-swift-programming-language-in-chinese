@@ -416,7 +416,7 @@ For example:
     -> struct Point { var x, y: Int }
     ---
     -> @dynamicMemberLookup
-       struct Wrapper<Value> {
+       struct PassthroughWrapper<Value> {
            var value: Value
            subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T {
                get { return value[keyPath: member] }
@@ -424,7 +424,7 @@ For example:
        }
     ---
     -> let point = Point(x: 381, y: 431)
-    -> let wrapper = Wrapper(value: point)
+    -> let wrapper = PassthroughWrapper(value: point)
     -> print(wrapper.x)
     << 431
 
