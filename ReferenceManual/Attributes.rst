@@ -376,7 +376,7 @@ It can accept member names using an argument of a type that conforms to the
 in most cases, ``String``.
 The subscript's return type can be any type.
 
-Dynamic member lookup using a member name
+Dynamic member lookup by member name
 can be used to create a wrapper type around data
 that can't be type checked at compile time,
 such as when bridging data from other languages into Swift.
@@ -405,7 +405,7 @@ For example:
    -> print(dynamic == equivalent)
    <- true
 
-Dynamic member lookup using a key path
+Dynamic member lookup by key path
 can be used to implement a wrapper type
 in a way that supports compile-time type checking.
 For example:
