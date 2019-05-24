@@ -4,9 +4,7 @@ Version Compatibility
 This book describes Swift 5.1,
 the default version of Swift that's included in Xcode 11.
 You can use Xcode 11 to build targets
-that are written in either Swift 5.1, Swift 5, or Swift 4.2.
-
-.. XXX Does it also support Swift 4?
+that are written in either Swift 5.1, Swift 4.2, or Swift 4.
 
 .. assertion:: swift-version
 
