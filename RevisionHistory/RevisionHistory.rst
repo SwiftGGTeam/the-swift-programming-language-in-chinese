@@ -30,7 +30,7 @@ Document Revision History
   now that ``Self`` can be used to refer to the type
   introduced by the current class, structure, or enumeration declaration.
 
-.. XXX Do we need to update TSPL for this entry from the CHANGELOG?
+.. Do we need to update TSPL for this entry from the CHANGELOG?
 
    AJM: I think this needs to be added to Reference > Patterns > Optional Patterns
 
