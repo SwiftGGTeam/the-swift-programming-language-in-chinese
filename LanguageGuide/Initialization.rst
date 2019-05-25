@@ -452,10 +452,10 @@ Memberwise Initializers for Structure Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Structure types automatically receive a :newTerm:`memberwise initializer`
-if they do not define any of their own custom initializers.
+if they don't define any of their own custom initializers.
 Unlike a default initializer,
 the structure receives a memberwise initializer
-even if it has stored properties that do not have default values.
+even if it has stored properties that don't have default values.
 
 .. assertion:: memberwiseInitializersDontRequireDefaultStoredPropertyValues
 
@@ -494,9 +494,10 @@ you can omit values for any properties
 that have default values.
 In the example above,
 the ``Size`` structure has a default value
-for both its ``height`` and ``width`` properties,
-so you can omit either one or both.
-For example:
+for both its ``height`` and ``width`` properties.
+You can omit either property or both properties,
+and the initializer uses the default value for anything you omit ---
+for example:
 
 .. testcode:: initialization
 

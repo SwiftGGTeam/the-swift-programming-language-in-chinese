@@ -18,7 +18,7 @@ Document Revision History
   to the :ref:`Subscripts_TypeSubscripts` section.
 
 * Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
-  now that the memberwise structure initializer supports
+  now that memberwise initializers support
   omitting parameters for properties that have a default value.
 
 * Added information about dynamic members
