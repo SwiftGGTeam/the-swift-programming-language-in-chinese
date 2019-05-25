@@ -753,6 +753,9 @@ A value can be used as an instance of the opaque type
 only if it's an instance of a type
 that conforms to the listed protocol or protocol composition,
 or inherits from the listed class.
+Code that interacts with an opaque value
+can use the value only in ways
+that are part of the interface defined by the *constraint*.
 
 .. The wording above intentionally follows generic constraints
    because the meaninging here and there is the same,
