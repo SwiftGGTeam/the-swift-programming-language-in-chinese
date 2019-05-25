@@ -862,8 +862,8 @@ whose return type is ``Self``.
    <- Subclass
 
 The last part of the example above shows that
-``Self`` refers to the runtime type ``C2`` of the value of ``z``,
-not the compile-time type ``C`` of the variable itself.
+``Self`` refers to the runtime type ``Subclass`` of the value of ``z``,
+not the compile-time type ``Superclass`` of the variable itself.
 
 .. TODO: Using Self as the return type from a subscript or property doesn't
    currently work.  The compiler allows it, but you get the wrong type back,
