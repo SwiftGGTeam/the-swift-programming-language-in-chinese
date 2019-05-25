@@ -23,8 +23,7 @@ Document Revision History
 
 * Added information about dynamic members
   that are looked up by key path at run time
-  to the :ref:`Attributes_dynamicCallable` section
-  of the :doc:`../ReferenceManual/Attributes` chapter.
+  to the :ref:`Attributes_dynamicMemberLookup` section.
 
 * Updated the :ref:`Types_SelfType` section,
   now that ``Self`` can be used to refer to the type
