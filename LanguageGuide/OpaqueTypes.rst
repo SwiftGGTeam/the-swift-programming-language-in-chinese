@@ -1,17 +1,13 @@
 Opaque Types
 ============
 
-.. XXX a tool for implementation hiding
-   More likely to want to hide generic adaptor things
-
-An *opaque type* lets you write a function or method
-that abstracts away some of the type information about its return value.
+A function or method that returns an opaque type
+abstracts away some of the type information about its return value.
 This is useful at boundaries between
 a library and code that calls into the library.
-Functions that return an opaque type
-specify the capabilities of their return type in terms of protocols
+You specify the capabilities of their return type in terms of protocols
 instead of providing a specific named return type,
-and the type itself can be private within the library.
+and the underlying type can be private within the library.
 
 .. _OpaqueTypes_LimitsOfGenerics:
 
