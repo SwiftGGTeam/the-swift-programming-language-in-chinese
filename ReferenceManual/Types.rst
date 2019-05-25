@@ -806,7 +806,7 @@ Self Type
 ---------
 
 The ``Self`` type isn't a specific type,
-but rather lets you conveniently name the type of the current declaration
+but rather lets you conveniently refer to the current type
 without repeating or knowing that type's name.
 
 In a protocol declaration or a protocol member declaration,
