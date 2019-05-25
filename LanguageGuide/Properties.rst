@@ -345,7 +345,7 @@ and moves the square to its new position.
 Shorthand Setter Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a computed property's setter does not define a name for the new value to be set,
+If a computed property's setter doesn't define a name for the new value to be set,
 a default name of ``newValue`` is used.
 Here's an alternative version of the ``Rect`` structure
 that takes advantage of this shorthand notation:
@@ -375,7 +375,7 @@ that takes advantage of this shorthand notation:
 Shorthand Getter Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the entire body of the getter is a single expression,
+If the entire body of a getter is a single expression,
 the getter implicitly returns that expression.
 Here's an another version of the ``Rect`` structure
 that takes advantage of this shorthand notation
