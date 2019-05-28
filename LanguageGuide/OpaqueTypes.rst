@@ -97,7 +97,8 @@ about the list of transformations that were involved.
 Wrapper types like ``JoinedShape`` and ``FlippedShape``
 shouldn't be visible to users of this ASCII art library.
 Those underlying types don't matter to the library's users ---
-only the fact that joining and flipping a shape returns another ``Shape`` value.
+the library's public interface is just
+the fact that joining and flipping a shape returns another ``Shape`` value.
 You want to implement transformations on a shape
 in a way that contains the implementation details
 inside the shape library.
