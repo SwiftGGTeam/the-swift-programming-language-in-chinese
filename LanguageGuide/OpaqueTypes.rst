@@ -2,19 +2,25 @@ Opaque Types
 ============
 
 A function or method that returns an opaque type
-abstracts away some of the type information about its return value.
-This is useful at boundaries between
-a library and code that calls into the library.
-You specify the capabilities of their return type in terms of protocols
-instead of providing a specific named return type,
-and the underlying type can be private within the library.
+hides its return value's type information.
+Instead of providing a concrete type as the function's return type,
+the return value is described in terms of the protocols it supports.
+Hiding type information this way
+is useful at boundaries between
+a module and code that calls into the module.
+The underlying type of the return value can remain private within the module.
+Unlike returning a value whose type is a protocol type,
+type identity is preserved by opaque types ---
+the type information is available to the compiler,
+but not to clients of the module.
 
 .. _OpaqueTypes_LimitsOfGenerics:
 
 The Problem That Opaque Types Solve
 -----------------------------------
 
-Suppose you're writing a library that draws ASCII art shapes.
+For example,
+suppose you're writing a module that draws ASCII art shapes.
 The basic characteristic of an ASCII art shape
 is a ``draw()`` function that returns the string representation of that shape,
 which you can use as the requirement for the ``Shape`` protocol:
@@ -45,7 +51,8 @@ which you can use as the requirement for the ``Shape`` protocol:
 You could use generics to implement operations like flipping a shape vertically,
 as shown in the code below.
 However, there's an important limitation to this approach:
-The flipped result exposes exactly what generics were used to create it.
+The flipped result exposes the exact generic types
+that were used to create it.
 
 .. testcode:: opaque-result, opaque-result-existential-error
     :compile: true
@@ -64,7 +71,7 @@ The flipped result exposes exactly what generics were used to create it.
     </ *
 
 Using this approach to define a ``JoinedShape<T: Shape, U: Shape>`` structure
-that joins two shapes together vertically like the code below shows,
+that joins two shapes together vertically, like the code below shows,
 leads to types like ``JoinedShape<FlippedShape<Triangle>, Triangle>``
 from joining a flipped triangle with another triangle.
 
@@ -87,21 +94,21 @@ from joining a flipped triangle with another triangle.
     </ **
     </ *
 
-Exposing this detailed information about how a shape was created
-in the shape's type also exposes type
-that aren't meant to be part of the ASCII art framework's public interface,
-but leak out because of the need to spell out the full return type.
-You could have built up the same shape in a variety of ways,
-and other code that uses the shape shouldn't have to care
+Exposing detailed information about how a shape was created
+allows types that aren't meant to be
+part of the ASCII art module's public interface
+to leak out because of the need to state the full return type.
+The code inside the module
+could build up the same shape in a variety of ways,
+and other code outside the module
+that uses the shape shouldn't have to care
 about the list of transformations that were involved.
 Wrapper types like ``JoinedShape`` and ``FlippedShape``
-shouldn't be visible to users of this ASCII art library.
-Those underlying types don't matter to the library's users ---
-the library's public interface is just
-the fact that joining and flipping a shape returns another ``Shape`` value.
-You want to implement transformations on a shape
-in a way that contains the implementation details
-inside the shape library.
+don't matter to the module's users,
+and they shouldn't be visible to users of this ASCII art module.
+The module's public interface
+is made up of operations like joining and flipping a shape,
+and those operations return another ``Shape`` value.
 
 .. _OpaqueTypes_Returning:
 
@@ -112,7 +119,7 @@ You can think of an opaque type like being the reverse of a generic type.
 Generic types let the code that calls a function
 pick the type for that function's parameters and return value
 in a way that's abstracted away from the function implementation.
-For example, the function in the code below
+For example, the function in the following code
 returns a type that depends on its caller:
 
 ::
@@ -125,8 +132,8 @@ returns a type that depends on its caller:
 
 The code that calls ``max(_:_:)`` chooses the values for ``x`` and ``y``,
 and the type of those values determines the concrete type of ``T``.
-The calling code can use any type you want,
-provided the type conforms to the ``Comparable`` protocol.
+The calling code can use any type
+that conforms to the ``Comparable`` protocol.
 The code inside the function is written in a general way
 so it can handle whatever type the caller picks.
 The implementation of ``max(_:_:)`` uses only functionality
@@ -136,7 +143,7 @@ Those roles are reversed for a function whose return type is opaque.
 An opaque type lets the function implementation
 pick the type for the value it returns
 in a way that's abstracted away from the code that calls the function.
-For example, the function below returns a trapezoid
+For example, the function in the following example returns a trapezoid
 without exposing the underlying type of that shape.
 
 .. testcode:: opaque-result
@@ -170,25 +177,25 @@ without exposing the underlying type of that shape.
     </ **
     </ *
 
-The ``makeTrapezoid()`` function above
-declares its return type as ``some Shape``,
-which means that the function
+The ``makeTrapezoid()`` function in this example
+declares its return type as ``some Shape``;
+as a result, the function
 returns a value of some given type that conforms to the ``Shape`` protocol,
-but without specifying any particular concrete type.
+without specifying any particular concrete type.
 Writing ``makeTrapezoid()`` this way lets it express
 the fundamental aspect of its public interface ---
 the value it returns is a shape ---
-without making the specific types that the shape made up from
-part of its public interface.
-This implementation happens to use two triangles and a square,
+without making the specific types that the shape is made from
+a part of its public interface.
+This implementation uses two triangles and a square,
 but the function could be rewritten to draw a trapezoid
 in a variety of other ways
 without changing its return type.
 
-This highlights the way that opaque return types
+This example highlights the way that opaque return types
 are like the reverse of a generic type.
 The code inside ``makeTrapezoid()`` can return any type it needs to,
-as long an that type conforms to the ``Shape`` protocol,
+as long as that type conforms to the ``Shape`` protocol,
 like the calling code does for a generic function.
 The code that calls the function needs to be written in a general way,
 like the implementation of a generic function,
@@ -196,7 +203,7 @@ so that it can work with any ``Shape`` value
 that's returned by ``makeTrapezoid()``.
 
 You can also combine opaque return types with generics.
-The functions below both return a value
+The functions in the following code both return a value
 of some type that conforms to the ``Shape`` protocol.
 
 .. testcode:: opaque-result
@@ -220,10 +227,10 @@ of some type that conforms to the ``Shape`` protocol.
 
 The value of ``opaqueJoinedTriangles`` in this example
 is the same as ``joinedTriangles`` in the generics example
-in :ref:`OpaqueTypes_LimitsOfGenerics` above.
-However, unlike that value,
+in the :ref:`OpaqueTypes_LimitsOfGenerics` section earlier in this chapter.
+However, unlike the value in that example,
 ``flip(_:)`` and ``join(_:_:)`` wrap the underlying types
-that generic shape operations
+that the generic shape operations return
 in an opaque return type,
 which prevents those types from being visible.
 Both functions are generic because the types they rely on are generic,
@@ -275,8 +282,7 @@ This violates the requirement to return values of only one type
 and makes ``invalidFlip(_:)`` invalid code.
 One way to fix ``invalidFlip(_:)`` is to move the special case for squares
 into the implementation of ``FlippedShape``,
-which lets this function always return a ``FlippedShape`` value,
-as shown below:
+which lets this function always return a ``FlippedShape`` value:
 
 .. testcode:: opaque-result-special-flip
     :compile: true
@@ -335,7 +341,7 @@ but these two kinds of return type differ in
 whether they preserve type identity.
 An opaque type refers to one specific type,
 although the caller of the function isn't able to see which type;
-a protocol type can refer to any type that conform to the protocol.
+a protocol type can refer to any type that conforms to the protocol.
 Generally speaking,
 protocol types give you more flexibility
 about the underlying types of the values they store,
@@ -354,7 +360,7 @@ instead of using an opaque return type:
        }
 
 This version of ``protoFlip(_:)``
-behaves the same as ``flip(_:)``,
+has the same body as ``flip(_:)``,
 and it always returns a value of the same type.
 Unlike ``flip(_:)``,
 the value that ``protoFlip(_:)`` returns isn't required
@@ -375,17 +381,17 @@ It reserves the flexibility to return multiple types:
           return FlippedShape(shape: shape)
        }
 
-The revised version above returns
+The revised version of the code returns
 either an instance of ``Square`` or an instance of ``FlippedShape``,
 depending on what shape is passed in.
 Two flipped shapes returned by this function
 might have completely different types.
 Other valid versions of this function could return values of different types
-when flipping multiple instances of the same shape .
+when flipping multiple instances of the same shape.
 The less specific return type information from ``protoFlip(_:)`` means that
 many operations that depend on type information
 aren't available on the returned value.
-One example is that it's not possible to write an ``==`` operator
+For example, it's not possible to write an ``==`` operator
 comparing results returned by this function.
 
 .. testcode:: opaque-result-existential-error
@@ -399,8 +405,8 @@ The error on the last line of the example occurs for several reasons.
 The immediate issue is that the ``Shape`` doesn't include an ``==`` operator
 as part of its protocol requirements.
 If you try adding one, the next issue you'll encounter
-is that the ``==`` operator needs to know what type
-its left-hand and right-hard arguments are.
+is that the ``==`` operator needs to know
+the types of its left-hand and right-hard arguments.
 This sort of operator usually takes arguments of type ``Self``,
 matching whatever concrete type adopts the protocol,
 but adding a ``Self`` requirement to the protocol
