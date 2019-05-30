@@ -45,6 +45,7 @@ and describes the type inference behavior of Swift.
     type --> optional-type
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
+    type --> opaque-type
     type --> metatype-type
     type --> self-type
     type --> ``Any``
@@ -87,7 +88,7 @@ Type annotations can contain an optional list of type attributes before the type
 Type Identifier
 ---------------
 
-A type identifier refers to either a named type
+A :newTerm:`type identifier` refers to either a named type
 or a type alias of a named or compound type.
 
 Most of the time, a type identifier directly refers to a named type
@@ -132,7 +133,7 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-A tuple type is a comma-separated list of types, enclosed in parentheses.
+A :newTerm:`tuple type` is a comma-separated list of types, enclosed in parentheses.
 
 You can use a tuple type as the return type of a function
 to enable the function to return a single tuple containing multiple values.
@@ -174,7 +175,7 @@ except for ``Void`` which is a type alias for the empty tuple type, ``()``.
 Function Type
 -------------
 
-A function type represents the type of a function, method, or closure
+A :newTerm:`function type` represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow (``->``):
 
 .. syntax-outline::
@@ -663,7 +664,7 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 Protocol Composition Type
 -------------------------
 
-A protocol composition type defines a type that conforms to each protocol
+A :newTerm:`protocol composition type` defines a type that conforms to each protocol
 in a list of specified protocols,
 or a type that is a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
@@ -723,12 +724,65 @@ is equivalent to ``P & Q & R``.
     protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
     protocol-composition-continuation --> type-identifier | protocol-composition-type
 
+
+.. _Types_OpaqueType:
+
+Opaque Type
+-----------
+
+An :newterm:`opaque type` defines a type
+that conforms to a protocol or protocol composition,
+without specifying the underlying concrete type.
+
+Opaque types appear as the return type of a function or subscript,
+or the type of a property.
+Opaque types can't appear as part of a tuple type or a generic type,
+such as the element type of an array or the wrapped type of an optional.
+
+Opaque types have the following form:
+
+.. syntax-outline::
+
+    some <#constraint#>
+
+The *constraint* is a class type,
+protocol type,
+protocol composition type,
+or ``Any``.
+A value can be used as an instance of the opaque type
+only if it's an instance of a type
+that conforms to the listed protocol or protocol composition,
+or inherits from the listed class.
+Code that interacts with an opaque value
+can use the value only in ways
+that are part of the interface defined by the *constraint*.
+
+.. The wording above intentionally follows generic constraints
+   because the meaninging here and there is the same,
+   and the compiler uses the same machinery for both under the hood.
+
+Protocol declarations can't include opaque types.
+Classes can't use an opaque type as the return type of a nonfinal method.
+
+A function that uses an opaque type as its return type
+must return values that share a single underlying type.
+The return type can include types
+that are part of the function's generic type parameters.
+For example, a function ``someFunction<T>()``
+could return a value of type ``T`` or ``Dictionary<String, T>``.
+
+.. syntax-grammar::
+
+    Grammar of an opaque type
+
+    opaque-type --> ``some`` type
+
 .. _Types_MetatypeType:
 
 Metatype Type
 -------------
 
-A metatype type refers to the type of any type,
+A :newTerm:`metatype type` refers to the type of any type,
 including class types, structure types, enumeration types, and protocol types.
 
 The metatype of a class, structure, or enumeration type is
@@ -891,7 +945,7 @@ is the same as writing ``type(of: self).someStaticMember``.
 Type Inheritance Clause
 -----------------------
 
-A type inheritance clause is used to specify which class a named type inherits from
+A :newTerm:`type inheritance clause` is used to specify which class a named type inherits from
 and which protocols a named type conforms to.
 A type inheritance clause begins with a colon (``:``),
 followed by a list of type identifiers.
@@ -929,7 +983,7 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 Type Inference
 --------------
 
-Swift uses type inference extensively,
+Swift uses :newTerm:`type inference` extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
 instead of writing ``var x: Int = 0``, you can write ``var x = 0``,
