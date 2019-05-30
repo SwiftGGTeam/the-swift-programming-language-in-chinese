@@ -88,7 +88,7 @@ Type annotations can contain an optional list of type attributes before the type
 Type Identifier
 ---------------
 
-A type identifier refers to either a named type
+A :newTerm:`type identifier` refers to either a named type
 or a type alias of a named or compound type.
 
 Most of the time, a type identifier directly refers to a named type
@@ -133,7 +133,7 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-A tuple type is a comma-separated list of types, enclosed in parentheses.
+A :newTerm:`tuple type` is a comma-separated list of types, enclosed in parentheses.
 
 You can use a tuple type as the return type of a function
 to enable the function to return a single tuple containing multiple values.
@@ -175,7 +175,7 @@ except for ``Void`` which is a type alias for the empty tuple type, ``()``.
 Function Type
 -------------
 
-A function type represents the type of a function, method, or closure
+A :newTerm:`function type` represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow (``->``):
 
 .. syntax-outline::
@@ -664,7 +664,7 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 Protocol Composition Type
 -------------------------
 
-A protocol composition type defines a type that conforms to each protocol
+A :newTerm:`protocol composition type` defines a type that conforms to each protocol
 in a list of specified protocols,
 or a type that is a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
@@ -730,7 +730,7 @@ is equivalent to ``P & Q & R``.
 Opaque Type
 -----------
 
-An opaque type defines a type
+An :newterm:`opaque type` defines a type
 that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
@@ -746,8 +746,8 @@ Opaque types have the following form:
     some <#constraint#>
 
 The *constraint* is a class type,
-a protocol type,
-a protocol composition type,
+protocol type,
+protocol composition type,
 or ``Any``.
 A value can be used as an instance of the opaque type
 only if it's an instance of a type
@@ -767,7 +767,7 @@ Classes can't use an opaque type as the return type of a nonfinal method.
 A function whose return type is opaque
 must use only a single underlying type for the value it returns.
 The return type can include types
-that are part of the function's generic types parameters.
+that are part of the function's generic type parameters.
 For example, a function ``someFunction<T>()``
 could return a value of type ``T`` or ``Dictionary<String, T>``.
 
@@ -782,7 +782,7 @@ could return a value of type ``T`` or ``Dictionary<String, T>``.
 Metatype Type
 -------------
 
-A metatype type refers to the type of any type,
+A :newTerm:`metatype type` refers to the type of any type,
 including class types, structure types, enumeration types, and protocol types.
 
 The metatype of a class, structure, or enumeration type is
@@ -858,7 +858,7 @@ or the entire class marked with the ``final`` keyword.
 Type Inheritance Clause
 -----------------------
 
-A type inheritance clause is used to specify which class a named type inherits from
+A :newTerm:`type inheritance clause` is used to specify which class a named type inherits from
 and which protocols a named type conforms to.
 A type inheritance clause begins with a colon (``:``),
 followed by a list of type identifiers.
@@ -896,7 +896,7 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 Type Inference
 --------------
 
-Swift uses type inference extensively,
+Swift uses :newTerm:`type inference` extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
 instead of writing ``var x: Int = 0``, you can write ``var x = 0``,
