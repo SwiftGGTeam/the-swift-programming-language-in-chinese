@@ -61,6 +61,7 @@
     "LanguageGuide/MemorySafety": "ID567",
     "LanguageGuide/Methods": "ID234",
     "LanguageGuide/NestedTypes": "ID242",
+    "LanguageGuide/OpaqueTypes": "ID612",
     "LanguageGuide/OptionalChaining": "ID245",
     "LanguageGuide/Properties": "ID254",
     "LanguageGuide/Protocols": "ID267",
@@ -475,6 +476,9 @@
     "nestedtypes-nestedtypesinaction": "ID243",
     "nestedtypes-referringtonestedtypes": "ID244",
     "objects-and-classes": "ID464",
+    "opaquetypes-limitsofexistentials": "ID615",
+    "opaquetypes-limitsofgenerics": "ID613",
+    "opaquetypes-returning": "ID614",
     "optionalchaining-accessingsubscriptsofoptionaltype": "ID251",
     "optionalchaining-callingmethodsthroughoptionalchaining": "ID249",
     "optionalchaining-callingpropertiesthroughoptionalchaining": "ID248",
@@ -630,6 +634,7 @@
     "types-functiontype": "ID449",
     "types-implicitlyunwrappedoptionaltype": "ID453",
     "types-metatypetype": "ID455",
+    "types-opaquetype": "ID616",
     "types-optionaltype": "ID452",
     "types-protocolcompositiontype": "ID454",
     "types-selftype": "ID610",
@@ -666,5 +671,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 612
+  "next_id": 617
 }
