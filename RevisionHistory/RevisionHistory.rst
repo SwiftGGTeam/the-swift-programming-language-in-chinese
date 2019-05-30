@@ -3,12 +3,12 @@ Document Revision History
 
 **2019-06-03**
 
-.. Added information about functions
-   that specify a protocol that their return value conforms to,
-   instead of providing a specific named return type,
-   to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
-
 * Updated for Swift 5.1.
+
+* Added information about functions
+  that specify a protocol that their return value conforms to,
+  instead of providing a specific named return type,
+  to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
 
 * Added the :ref:`Functions_ImplicitReturns`
   and :ref:`Properties_ImplicitReturn` sections
