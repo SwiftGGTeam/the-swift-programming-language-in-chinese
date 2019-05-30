@@ -70,9 +70,9 @@ that were used to create it.
     </ **
     </ *
 
-Using this approach to define a ``JoinedShape<T: Shape, U: Shape>`` structure
+This approach to defining a ``JoinedShape<T: Shape, U: Shape>`` structure
 that joins two shapes together vertically, like the code below shows,
-leads to types like ``JoinedShape<FlippedShape<Triangle>, Triangle>``
+results in types like ``JoinedShape<FlippedShape<Triangle>, Triangle>``
 from joining a flipped triangle with another triangle.
 
 .. testcode:: opaque-result
@@ -101,8 +101,8 @@ to leak out because of the need to state the full return type.
 The code inside the module
 could build up the same shape in a variety of ways,
 and other code outside the module
-that uses the shape shouldn't have to care
-about the list of transformations that were involved.
+that uses the shape shouldn't have to account for
+the implementation details about the list of transformations.
 Wrapper types like ``JoinedShape`` and ``FlippedShape``
 don't matter to the module's users,
 and they shouldn't be visible to users of this ASCII art module.
@@ -135,7 +135,7 @@ and the type of those values determines the concrete type of ``T``.
 The calling code can use any type
 that conforms to the ``Comparable`` protocol.
 The code inside the function is written in a general way
-so it can handle whatever type the caller picks.
+so it can handle whatever type the caller provides.
 The implementation of ``max(_:_:)`` uses only functionality
 that all ``Comparable`` types share.
 
@@ -322,7 +322,7 @@ into the underlying type of the value it returns:
 
 In this case,
 the underlying type of the return value
-varies depending on what ``T`` is:
+varies depending on ``T``:
 Whatever shape is passed it,
 ``repeat(shape:count:)`` creates and returns an array of that shape.
 Nevertheless,
@@ -369,7 +369,7 @@ it just has to conform to the ``Shape`` protocol.
 Put another way,
 ``protoFlip(_:)`` makes a much looser API contract with its caller
 than ``flip(_:)`` makes.
-It reserves the flexibility to return multiple types:
+It reserves the flexibility to return values of multiple types:
 
 .. testcode:: opaque-result-existential-error
 
@@ -382,7 +382,7 @@ It reserves the flexibility to return multiple types:
        }
 
 The revised version of the code returns
-either an instance of ``Square`` or an instance of ``FlippedShape``,
+an instance of ``Square`` or an instance of ``FlippedShape``,
 depending on what shape is passed in.
 Two flipped shapes returned by this function
 might have completely different types.
@@ -412,16 +412,24 @@ matching whatever concrete type adopts the protocol,
 but adding a ``Self`` requirement to the protocol
 doesn't allow for the type erasure that happens
 when you use the protocol as a type.
-All of these limitations are the cost
-of the flexibility to return any type that conforms to the protocol.
+
+Using a protocol type as the return type for a function
+gives you the flexibility to return any type that conforms to the protocol.
+However, the cost of that flexibility
+is that some operations aren't possible on the returned values.
+The example above shows how the ``==`` operator isn't available ---
+it depends on specific type information
+that isn't preserved by using a protocol type.
 
 Another problem with this approach is that the shape transformations don't nest.
 The result of flipping a triangle is a value of type ``Shape``,
 and the ``protoFlip(_:)`` function takes an argument
-of some type that conforms to the ``Shape`` protocol,
-but a value of a protocol type doesn't conform to that protocol.
+of some type that conforms to the ``Shape`` protocol.
+However, a value of a protocol type doesn't conform to that protocol;
+the value returned by ``protoFlip(_:)`` doesn't conform to ``Shape``.
 This means code like ``protoFlip(protoFlip(smallTriange))``
-that applies multiple transformations doesn't compile.
+that applies multiple transformations is invalid
+because the flipped shape isn't a valid argument to ``protoFlip(_:)``.
 
 In contrast,
 opaque types preserve the identity of the underlying type.

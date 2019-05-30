@@ -764,8 +764,8 @@ that are part of the interface defined by the *constraint*.
 Protocol declarations can't include opaque types.
 Classes can't use an opaque type as the return type of a nonfinal method.
 
-A function whose return type is opaque
-must use only a single underlying type for the value it returns.
+A function that uses an opaque type as its return type
+must return values that share a single underlying type.
 The return type can include types
 that are part of the function's generic type parameters.
 For example, a function ``someFunction<T>()``
