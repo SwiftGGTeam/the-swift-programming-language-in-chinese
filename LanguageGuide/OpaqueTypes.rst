@@ -25,7 +25,7 @@ The basic characteristic of an ASCII art shape
 is a ``draw()`` function that returns the string representation of that shape,
 which you can use as the requirement for the ``Shape`` protocol:
 
-.. testcode:: opaque-result, opaque-result-existential-error
+.. testcode:: opaque-result
     :compile: true
 
     -> protocol Shape {
@@ -54,7 +54,7 @@ However, there's an important limitation to this approach:
 The flipped result exposes the exact generic types
 that were used to create it.
 
-.. testcode:: opaque-result, opaque-result-existential-error
+.. testcode:: opaque-result
     :compile: true
 
     -> struct FlippedShape<T: Shape>: Shape {
@@ -250,6 +250,7 @@ that includes a special case for squares:
 .. testcode:: opaque-result-err
     :compile: true
 
+
     >> protocol Shape {
     >>     func draw() -> String
     >> }
@@ -352,9 +353,24 @@ For example,
 here's a version of ``flip(_:)`` that returns a value of protocol type
 instead of using an opaque return type:
 
-.. testcode:: opaque-result, opaque-result-existential-error
+.. testcode:: opaque-result-existential-error
     :compile: true
 
+    >> protocol Shape {
+    >>     func draw() -> String
+    >> }
+    >> struct Triangle: Shape {
+    >>     var size: Int
+    >>     func draw() -> String { return "#" }  // stub implementation
+    >> }
+    >> struct Square: Shape {
+    >>     var size: Int
+    >>     func draw() -> String { return "#" }  // stub implementation
+    >> }
+    >> struct FlippedShape<T: Shape>: Shape {
+    >>     var shape: T
+    >>     func draw() -> String { return "#" } // stub implementation
+    >> }
     -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
           return FlippedShape(shape: shape)
        }
@@ -372,6 +388,7 @@ than ``flip(_:)`` makes.
 It reserves the flexibility to return values of multiple types:
 
 .. testcode:: opaque-result-existential-error
+    :compile: true
 
     -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
           if shape is Square {
@@ -380,6 +397,13 @@ It reserves the flexibility to return values of multiple types:
 
           return FlippedShape(shape: shape)
        }
+    !$ error: invalid redeclaration of 'protoFlip'
+    !! func protoFlip<T: Shape>(_ shape: T) -> Shape {
+    !!      ^
+    !$ note: 'protoFlip' previously declared here
+    !! func protoFlip<T: Shape>(_ shape: T) -> Shape {
+    !!      ^
+
 
 The revised version of the code returns
 an instance of ``Square`` or an instance of ``FlippedShape``,
@@ -397,9 +421,17 @@ comparing results returned by this function.
 .. testcode:: opaque-result-existential-error
     :compile: true
 
+    >> let smallTriangle = Triangle(size: 3)
     -> let protoFlippedTriangle = protoFlip(smallTriangle)
     -> let sameThing = protoFlip(smallTriangle)
     -> protoFlippedTriangle == sameThing  // Error
+    !$ error: binary operator '==' cannot be applied to two 'Shape' operands
+    !! protoFlippedTriangle == sameThing  // Error
+    !! ~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
+    !~ /tmp/swifttest.swift:29:22: note: overloads for '==' exist with these partially matching parameter lists:
+    !! protoFlippedTriangle == sameThing  // Error
+    !!                      ^
+
 
 The error on the last line of the example occurs for several reasons.
 The immediate issue is that the ``Shape`` doesn't include an ``==`` operator
@@ -459,14 +491,21 @@ to infer what the generic type needs to be.
     :compile: true
 
     // Error: Protocol with associated types can't be used as a return type.
-    func makeProtocolContainer<T>(item: T) -> Container {
-        return [item]
-    }
-
+    -> func makeProtocolContainer<T>(item: T) -> Container {
+           return [item]
+       }
+    ---
     // Error: Not enough information to infer C.
-    func makeProtocolContainer<T, C: Container>(item: T) -> C {
-        return [item]
-    }
+    -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
+           return [item]
+       }
+    !! /tmp/swifttest.swift:36:43: error: protocol 'Container' can only be used as a generic constraint because it has Self or associated type requirements
+    !! func makeProtocolContainer<T>(item: T) -> Container {
+    !!                                           ^
+    !! /tmp/swifttest.swift:40:12: error: cannot convert return expression of type '[T]' to return type 'C'
+    !! return [item]
+    !! ^~~~~~
+    !! as! C
 
 Using the opaque type ``some Container`` as a return type
 expresses the desired API contract --- the function returns a container,
