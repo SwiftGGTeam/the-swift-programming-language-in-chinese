@@ -850,7 +850,7 @@ The constraint on ``Item`` is a generic ``where`` clause,
 which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
 
 Here's an extension of the ``Stack`` type
-from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above
+from :ref:`Generics_GenericTypes` above
 that adds conformance to the ``SuffixableContainer`` protocol:
 
 .. testcode:: associatedTypes
@@ -1105,7 +1105,7 @@ you'll get a compile-time error.
    << // notEquatableValue : NotEquatable = REPL.NotEquatable()
    -> notEquatableStack.push(notEquatableValue)
    -> notEquatableStack.isTop(notEquatableValue)  // Error
-   !! <REPL Input>:1:19: error: type 'NotEquatable' does not conform to protocol 'Equatable'
+   !! <REPL Input>:1:25: error: argument type 'NotEquatable' does not conform to expected type 'Equatable'
    !! notEquatableStack.isTop(notEquatableValue)  // Error
    !! ^
 

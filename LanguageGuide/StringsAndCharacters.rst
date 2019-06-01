@@ -234,6 +234,41 @@ For example:
    << Escaping the first quotation mark """
    << Escaping all three quotation marks """
 
+.. _StringsAndCharacters_ExtendedDelimiters:
+
+Extended String Delimiters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can place a string literal within :newTerm:`extended delimiters`
+to include special characters in a string
+without invoking their effect.
+You place your string within quotation marks (``"``)
+and surround that with number signs (``#``).
+For example, printing the string literal ``#"Line 1\nLine 2"#``
+prints the line feed escape sequence (``\n``)
+rather than printing the string across two lines.
+
+If you need the special effects of a character in a string literal,
+match the number of number signs within the string
+following the escape character (``\``).
+For example, if your string is ``#"Line 1\nLine 2"#``
+and you want to break the line,
+you can use ``#"Line 1\#nLine 2"#`` instead.
+Similarly, ``###"Line1\###nLine2"###`` also breaks the line.
+
+String literals created using extended delimiters can also be multiline string literals.
+You can use extended delimiters to include the text ``"""`` in a multiline string,
+overriding the default behavior that ends the literal. For example:
+
+.. testcode:: extended-string-delimiters
+   :compile: true
+
+   -> let threeMoreDoubleQuotationMarks = #"""
+      Here are three more double quotes: """
+      """#
+   >> print(threeMoreDoubleQuotationMarks)
+   << Here are three more double quotes: """
+
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
 Initializing an Empty String
@@ -489,13 +524,31 @@ and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
 when it's included inside the string literal.
 
+You can use extended string delimiters to create strings containing
+characters that would otherwise be treated as a string interpolation.
+For example: 
+
+.. testcode:: stringInterpolation
+
+   -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
+   <- Write an interpolated string in Swift using \(multiplier).
+
+To use string interpolation
+inside a string that uses extended delimiters,
+match the number of number signs before the backslash
+to the number of number signs at the beginning and end of the string.
+For example:
+
+.. testcode:: stringInterpolation
+
+   -> print(#"6 times 7 is \#(6 * 7)."#)
+   <- 6 times 7 is 42.
+
 .. note::
 
    The expressions you write inside parentheses within an interpolated string
    can't contain an unescaped backslash (``\``), a carriage return, or a line feed.
    However, they can contain other string literals.
-
-.. TODO: add a bit here about making things Printable.
 
 .. _StringsAndCharacters_Unicode:
 

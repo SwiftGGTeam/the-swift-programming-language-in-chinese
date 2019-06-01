@@ -260,17 +260,18 @@ as if it's a function that takes any number of arguments.
           }
       }
    ---
-      let dial = TelephoneExchange()
+   -> let dial = TelephoneExchange()
    ---
-      // Use a dynamic method call.
-      dial(4, 1, 1)
-      // Prints "Get Swift help on forums.swift.org".
+   -> // Use a dynamic method call.
+   -> dial(4, 1, 1)
+   <- Get Swift help on forums.swift.org
    ---
-      dial(8, 6, 7, 5, 3, 0, 9)
-      // Prints "Unrecognized number".
+   -> dial(8, 6, 7, 5, 3, 0, 9)
+   <- Unrecognized number
    ---
-      // Call the underlying method directly.
-      dial.dynamicallyCall(withArguments: [4, 1, 1])
+   -> // Call the underlying method directly.
+   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
+   << Get Swift help on forums.swift.org
 
 The declaration of the ``dynamicallyCall(withArguments:)`` method
 must have a single parameter that conforms to the
@@ -282,6 +283,7 @@ You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
 
 .. testcode:: dynamicCallable
+   :compile: true
 
    -> @dynamicCallable
       struct Repeater {
@@ -294,8 +296,8 @@ if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
           }
       }
    ---
-      let repeatLabels = Repeater()
-      print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
+   -> let repeatLabels = Repeater()
+   -> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
    </ a
    </ b b
    </ c c c
@@ -316,9 +318,9 @@ so that callers can include duplicate parameter labels---
 ``a`` and ``b`` appear multiple times in the call to ``repeat``.
 
 If you implement both ``dynamicallyCall`` methods,
-Swift calls ``dynamicallyCall(withKeywordArguments:)``
+``dynamicallyCall(withKeywordArguments:)`` is called
 when the method call includes keyword arguments.
-Otherwise, Swift calls the ``dynamicallyCall(withArguments:)`` method.
+In all other cases, ``dynamicallyCall(withArguments:)`` is called.
 
 You can only call a dynamically callable instance
 with arguments and a return value that match the types you specify
@@ -327,10 +329,22 @@ The call in the following example doesn't compile because
 there isn't an implementation of ``dynamicallyCall(withArguments:)``
 that takes ``KeyValuePairs<String, String>``.
 
-.. testcode:: dynamicCallable
+.. testcode:: dynamicCallable-err
+   :compile: true
 
+   >> @dynamicCallable
+   >> struct Repeater {
+   >>     func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
+   >>         return pairs
+   >>             .map { label, count in
+   >>                 repeatElement(label, count: count).joined(separator: " ")
+   >>             }
+   >>             .joined(separator: "\n")
+   >>     }
+   >> }
+   >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !! /tmp/swifttest.swift:27:13: error: cannot call value of non-function type 'Repeater'
+   !! /tmp/swifttest.swift:12:13: error: cannot call value of non-function type 'Repeater'
    !! repeatLabels(a: "four") // Error
    !! ~~~~~~~~~~~~^
 
@@ -347,11 +361,25 @@ In an explicit member expression,
 if there isn't a corresponding declaration for the named member,
 the expression is understood as a call to
 the type's ``subscript(dynamicMemberLookup:)`` subscript,
-passing a string literal that contains the member's name as the argument.
-The subscript's parameter type can be any type
-that conforms to the ``ExpressibleByStringLiteral`` protocol,
-and its return type can be any type.
-In most cases, the subscript's parameter is a ``String`` value.
+passing information about the member as the argument.
+The subscript can accept a parameter that's either a key path or a member name;
+if you implement both subscripts,
+the subscript that takes key path argument is used.
+
+An implementation of ``subscript(dynamicMemberLookup:)``
+can accept key paths using an argument of type
+`KeyPath <//apple_ref/swift/fake/KeyPath>`_,
+`WritableKeyPath <//apple_ref/swift/fake/WritableKeyPath>`_,
+or `ReferenceWritableKeyPath <//apple_ref/swift/fake/ReferenceWritableKeyPath>`_.
+It can accept member names using an argument of a type that conforms to the
+`ExpressibleByStringLiteral <//apple_ref/swift/fake/ExpressibleByStringLiteral>`_ protocol ---
+in most cases, ``String``.
+The subscript's return type can be any type.
+
+Dynamic member lookup by member name
+can be used to create a wrapper type around data
+that can't be type checked at compile time,
+such as when bridging data from other languages into Swift.
 For example:
 
 .. testcode:: dynamicMemberLookup
@@ -376,6 +404,29 @@ For example:
    -> let equivalent = s[dynamicMember: "someDynamicMember"]
    -> print(dynamic == equivalent)
    <- true
+
+Dynamic member lookup by key path
+can be used to implement a wrapper type
+in a way that supports compile-time type checking.
+For example:
+
+.. testcode:: dynamicMemberLookup
+    :compile: true
+
+    -> struct Point { var x, y: Int }
+    ---
+    -> @dynamicMemberLookup
+       struct PassthroughWrapper<Value> {
+           var value: Value
+           subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T {
+               get { return value[keyPath: member] }
+           }
+       }
+    ---
+    -> let point = Point(x: 381, y: 431)
+    -> let wrapper = PassthroughWrapper(value: point)
+    -> print(wrapper.x)
+    << 431
 
 
 .. _Attributes_GKInspectable:
@@ -573,7 +624,7 @@ The ``objc`` attribute is also implicitly added in the following cases:
   and the superclass's declaration has the ``objc`` attribute.
 * The declaration satisfies a requirement
   from a protocol that has the ``objc`` attribute.
-* The declaration has the ``IBAction``, ``IBOutlet``,
+* The declaration has the ``IBAction``, ``IBSegueAction``, ``IBOutlet``,
   ``IBDesignable``, ``IBInspectable``,
   ``NSManaged``, or ``GKInspectable`` attribute.
 
@@ -776,18 +827,21 @@ Declaration Attributes Used by Interface Builder
 Interface Builder attributes are declaration attributes
 used by Interface Builder to synchronize with Xcode.
 Swift provides the following Interface Builder attributes:
-``IBAction``, ``IBOutlet``, ``IBDesignable``, and ``IBInspectable``.
+``IBAction``, ``IBSegueAction``, ``IBOutlet``,
+``IBDesignable``, and ``IBInspectable``.
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
 .. TODO: Need to link to the relevant discussion of these attributes in Objc.
 
 You apply the ``IBOutlet`` and ``IBInspectable`` attributes
-to property declarations of a class. You apply the ``IBAction`` attribute
-to method declarations of a class and the ``IBDesignable`` attribute
-to class declarations.
+to property declarations of a class.
+You apply the ``IBAction`` and ``IBSegueAction`` attribute
+to method declarations of a class
+and the ``IBDesignable`` attribute to class declarations.
 
-Applying the ``IBAction``, ``IBOutlet``, ``IBDesignable``, or ``IBInspectable`` attribute
+Applying the ``IBAction``, ``IBSegueAction``, ``IBOutlet``,
+``IBDesignable``, or ``IBInspectable`` attribute
 also implies the ``objc`` attribute.
 
 

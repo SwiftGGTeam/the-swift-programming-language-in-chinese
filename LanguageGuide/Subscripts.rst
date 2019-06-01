@@ -38,11 +38,11 @@ in the same way as for computed properties:
    >> class Test1 {
    -> subscript(index: Int) -> Int {
          get {
-            // return an appropriate subscript value here
+            // Return an appropriate subscript value here.
    >>       return 1
          }
          set(newValue) {
-            // perform a suitable setting action here
+            // Perform a suitable setting action here.
          }
       }
    >> }
@@ -61,7 +61,7 @@ by removing the ``get`` keyword and its braces:
 
    >> class Test2 {
    -> subscript(index: Int) -> Int {
-         // return an appropriate subscript value here
+         // Return an appropriate subscript value here.
    >>    return 1
       }
    >> }
@@ -118,7 +118,7 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
+   << // numberOfLegs : [String : Int] = ["cat": 4, "ant": 6, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -150,8 +150,9 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
-Subscripts can use variadic parameters,
-but they can't use in-out parameters or provide default parameter values.
+Subscripts can use variadic parameters
+and provide default parameter values,
+but they can't use in-out parameters.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -260,4 +261,32 @@ that is outside of the matrix bounds:
 
    -> let someValue = matrix[2, 2]
    xx assert
-   // this triggers an assert, because [2, 2] is outside of the matrix bounds
+   // This triggers an assert, because [2, 2] is outside of the matrix bounds.
+
+.. _Subscripts_TypeSubscripts:
+
+Type Subscripts
+---------------
+
+Instance subscripts, as described above,
+are subscripts that you call on an instance of a particular type.
+You can also define subscripts that are called on the type itself.
+This kind of subscript is called a :newterm:`type subscript`.
+You indicate a type subscript
+by writing the ``static`` keyword before the ``subscript`` keyword.
+Classes can use the ``class`` keyword instead,
+to allow subclasses to override the superclass’s implementation of that subscript.
+The example below shows how you define and call a type subscript:
+
+.. testcode:: static-subscript
+
+   -> enum Planet: Int {
+         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+         static subscript(n: Int) -> Planet {
+            return Planet(rawValue: n)!
+         }
+      }
+   -> let mars = Planet[4]
+   << // mars : Planet = REPL.Planet.mars
+   -> print(mars)
+   << mars

@@ -103,9 +103,9 @@ even if they were declared as variable properties:
    << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !!  <REPL Input>:1:29: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
+   !!  <REPL Input>:1:18: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
    !! rangeOfFourItems.firstValue = 6
-   !! ~~~~~~~~~~~~~~~~            ^
+   !! ~~~~~~~~~~~~~~~~ ^
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
    !! ^~~
@@ -347,8 +347,8 @@ Shorthand Setter Declaration
 
 If a computed property's setter does not define a name for the new value to be set,
 a default name of ``newValue`` is used.
-Here's an alternative version of the ``Rect`` structure,
-which takes advantage of this shorthand notation:
+Here's an alternative version of the ``Rect`` structure
+that takes advantage of this shorthand notation:
 
 .. testcode:: computedProperties
 
@@ -369,6 +369,38 @@ which takes advantage of this shorthand notation:
       }
 
 .. iBooks Store screenshot ends here.
+
+.. _Properties_ImplicitReturn:
+
+Shorthand Getter Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the entire body of the getter is a single expression,
+the getter implicitly returns that expression.
+Here's an another version of the ``Rect`` structure
+that takes advantage of this shorthand notation
+and the shorthand notation for setters:
+
+.. testcode:: computedProperties
+
+   -> struct CompactRect {
+         var origin = Point()
+         var size = Size()
+         var center: Point {
+            get {
+               Point(x: origin.x + (size.width / 2),
+                     y: origin.y + (size.height / 2))
+            }
+            set {
+               origin.x = newValue.x - (size.width / 2)
+               origin.y = newValue.y - (size.height / 2)
+            }
+         }
+      }
+
+Omitting the ``return`` from a getter
+follows the same rules as omitting ``return`` from a function,
+as described in :ref:`Functions_ImplicitReturns`.
 
 .. _Properties_ReadOnlyComputedProperties:
 
@@ -795,7 +827,7 @@ The example below shows the syntax for stored and computed type properties:
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
-   !! <REPL Input>:1:34: error: cannot override static var
+   !! <REPL Input>:1:34: error: cannot override static property
    !! class B: A { override static var cp: String { return "B" } }
    !!                                  ^
    !! <REPL Input>:1:22: note: overridden declaration is here

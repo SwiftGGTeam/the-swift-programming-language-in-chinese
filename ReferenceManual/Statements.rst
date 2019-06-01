@@ -450,7 +450,7 @@ Switching over a nonfrozen enumeration requires extra consideration.
 When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
-*must* be able to handle those future cases without recompiling.
+*must* be able to handle those future cases without being recompiled.
 Only the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
@@ -473,8 +473,9 @@ The following example switches over all three existing cases of
 the standard library's `Mirror.AncestorRepresentation <//apple_ref/swift/fake/Mirror.AncestorRepresentation>`_
 enumeration.
 If you add additional cases in the future,
-it generates a warning to indicate that you need to update the switch statement
-to take the new case or cases into account.
+the compiler generates a warning to indicate
+that you need to update the switch statement
+to take the new cases into account.
 
 .. testcode:: unknown-case
 
@@ -488,7 +489,7 @@ to take the new case or cases into account.
       case .suppressed:
           print("Suppress the representation of all ancestor classes.")
       @unknown default:
-          print("Use a representation that was unknown when compiling this code.")
+          print("Use a representation that was unknown when this code was compiled.")
       }
    <- Generate a default mirror for all ancestor classes.
 
@@ -986,10 +987,10 @@ the following code prints all three messages:
       print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
       #endif
    <- Compiled with the Swift 5 compiler or later
-   -> // Prints "Compiled in Swift 4.2 mode or later"
-   <- Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5
+   <- Compiled in Swift 4.2 mode or later
+   // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 
-.. That testcode is cheating by explicitly printing the second line of output,
+.. That testcode is cheating by explicitly printing the third line of output,
    since it's not actually running in Swift 4.2 mode.
 
 The argument for the ``canImport()`` platform condition

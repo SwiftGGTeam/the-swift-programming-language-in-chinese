@@ -37,17 +37,17 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
+    type --> function-type
     type --> array-type
     type --> dictionary-type
-    type --> function-type
     type --> type-identifier
     type --> tuple-type
     type --> optional-type
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
     type --> metatype-type
+    type --> self-type
     type --> ``Any``
-    type --> ``Self``
     type --> ``(`` type ``)``
 
 
@@ -353,16 +353,16 @@ For example:
        }
     !! <REPL Input>:2:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first { first {} }       // Error
-    !! ^     ~~~~~~~~~~~~
+    !! ^
     !! <REPL Input>:3:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second { second {}  }    // Error
-    !! ^      ~~~~~~~~~~~~~~
+    !! ^
     !! <REPL Input>:5:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first { second {} }      // Error
-    !! ^     ~~~~~~~~~~~~~
+    !! ^
     !! <REPL Input>:6:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second { first {} }      // Error
-    !! ^      ~~~~~~~~~~~~
+    !! ^
 
 In the code above,
 both of the parameters to ``takesTwoFunctions(first:second:)`` are functions.
@@ -543,13 +543,16 @@ In other words, the following two declarations are equivalent:
     var optionalInteger: Optional<Int>
 
 .. assertion:: optional-literal
+    :compile: true
 
     >> var optionalInteger1: Int?
-    << // optionalInteger1 : Int? = nil
     >> var optionalInteger2: Optional<Int>
-    << // optionalInteger2 : Optional<Int> = nil
-    >> optionalInteger1 == optionalInteger2
-    <$ : Bool = true
+
+.. Assertion above is compiled because the deprecated integrated REPL requires
+   optional values to be initialized when they're created.
+   We can't test the code listing,
+   because of the redeclaration of optionalInteger,
+   so we at least test that the syntax shown in it compiles.
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -795,6 +798,93 @@ or the entire class marked with the ``final`` keyword.
     Grammar of a metatype type
 
     metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
+
+
+.. _Types_SelfType:
+
+Self Type
+---------
+
+The ``Self`` type isn't a specific type,
+but rather lets you conveniently name the type of the current declaration
+without repeating or knowing that type's name.
+
+In a protocol declaration or a protocol member declaration,
+the ``Self`` type refers to the eventual type that conforms to the protocol.
+
+In a structure, class, or enumeration declaration,
+the ``Self`` type refers to the type introduced by the declaration.
+Inside the declaration for a member of a type,
+the ``Self`` type refers to that type.
+In the members of a class declaration,
+``Self`` can appear as the return type of a method
+and in the body of a method,
+but not in any other context.
+For example,
+the code below shows an instance method ``f``
+whose return type is ``Self``.
+
+.. assertion:: self-in-class-cant-be-a-parameter-type
+
+   -> class C { func f(c: Self) { } }
+   !! <REPL Input>:1:21: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !! class C { func f(c: Self) { } }
+   !!                     ^~~~
+   !!                     C
+
+.. assertion:: self-in-class-cant-be-a-computed-property-type
+
+   -> class C { var s: Self { return self } }
+   !! <REPL Input>:1:18: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !! class C { var s: Self { return self } }
+   !!                 ^~~~
+   !!                 C
+
+.. testcode:: self-gives-dynamic-type
+
+   -> class Superclass {
+          func f() -> Self { return self }
+      }
+   -> let x = Superclass()
+   << // x : Superclass = REPL.Superclass
+   -> print(type(of: x.f()))
+   <- Superclass
+   ---
+   -> class Subclass: Superclass { }
+   -> let y = Subclass()
+   << // y : Subclass = REPL.Subclass
+   -> print(type(of: y.f()))
+   <- Subclass
+   ---
+   -> let z: Superclass = Subclass()
+   << // z : Superclass = REPL.Subclass
+   -> print(type(of: z.f()))
+   <- Subclass
+
+The last part of the example above shows that
+``Self`` refers to the runtime type ``C2`` of the value of ``z``,
+not the compile-time type ``C`` of the variable itself.
+
+.. TODO: Using Self as the return type from a subscript or property doesn't
+   currently work.  The compiler allows it, but you get the wrong type back,
+   and the compiler doesn't enforce that the subscript/property must be
+   read-only.  See https://bugs.swift.org/browse/SR-10326
+
+Inside a nested type declaration,
+the ``Self`` type refers to the type
+introduced by the innermost type declaration.
+
+The ``Self`` type refers to the same type
+as the `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
+function in the Swift standard library.
+Writing ``Self.someStaticMember`` to access a member of the current type
+is the same as writing ``type(of: self).someStaticMember``.
+
+.. syntax-grammar::
+
+   Grammar of a Self type
+
+   self-type --> ``Self``
 
 .. _Types_TypeInheritanceClause:
 

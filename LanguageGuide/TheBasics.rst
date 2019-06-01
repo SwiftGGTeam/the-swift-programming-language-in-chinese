@@ -209,9 +209,9 @@ Attempting to do so is reported as an error when your code is compiled:
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
    // This is a compile-time error: languageName cannot be changed.
-   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
+   !! <REPL Input>:1:1: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
-   !! ~~~~~~~~~~~~ ^
+   !! ^~~~~~~~~~~~
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let languageName = "Swift"
    !! ^~~
@@ -919,9 +919,9 @@ For more information, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 .. note::
 
-   Tuples are useful for temporary groups of related values.
+   Tuples are useful for simple groups of related values.
    They're not suited to the creation of complex data structures.
-   If your data structure is likely to persist beyond a temporary scope,
+   If your data structure is likely to be more complex,
    model it as a class or structure, rather than as a tuple.
    For more information, see :doc:`ClassesAndStructures`.
 
@@ -1301,7 +1301,7 @@ to respond to different error conditions:
    >>     case missingIngredients([String])
    >> }
    >> func washDishes() { print("Wash dishes") }
-   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
+   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList)") }
    -> func makeASandwich() throws {
           // ...
       }

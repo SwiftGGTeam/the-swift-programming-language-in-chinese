@@ -138,13 +138,12 @@ For example:
    >> let apples = 3
    >> let oranges = 5
    -> let quotation = """
-          Even though there's whitespace to the left,
-          the actual lines aren't indented.
-              Except for this line.
-          Double quotes (") can appear without being escaped.
+      I said "I have \(apples) apples."
+      And then I said "I have \(apples + oranges) pieces of fruit."
+      """
 
-          I still have \(apples + oranges) pieces of fruit.
-          """
+.. Can't show an example of indentation in the triple-quoted string above.
+   <rdar://problem/49129068> Swift code formatting damages indentation
 
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
@@ -185,7 +184,7 @@ A comma is allowed after the last element.
            "Malcolm": "Captain",
            "Kaylee": "Mechanic",
         ]
-    << // occupations : [String : String] = ["Malcolm": "Captain", "Kaylee": "Mechanic"]
+    << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
     -> occupations["Jayne"] = "Public Relations"
 
 Arrays automatically grow as you add elements.
@@ -385,7 +384,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : [Int]] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13], "Square": [1, 4, 9, 16, 25]]
+   << // interestingNumbers : [String : [Int]] = ["Square": [1, 4, 9, 16, 25], "Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
