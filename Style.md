@@ -9,7 +9,7 @@ Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
 See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
 
-# Period vs colon before a code listing
+## punctuation before a code listing
 
 Write a colon after a sentence that ends with a phrase like
 “as follows” or “as shown below”,
