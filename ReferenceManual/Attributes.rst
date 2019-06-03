@@ -426,7 +426,7 @@ For example:
     -> let point = Point(x: 381, y: 431)
     -> let wrapper = PassthroughWrapper(value: point)
     -> print(wrapper.x)
-    << 431
+    << 381
 
 
 .. _Attributes_GKInspectable:

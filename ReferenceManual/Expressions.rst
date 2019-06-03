@@ -1146,8 +1146,9 @@ For example:
 .. testcode:: keypath-expression-self-keypath
 
    -> var compoundValue = (a: 1, b: 2)
-      // Equivalent to compoundValue = (a: 10, b: 20)
-      compoundValue[keyPath: \.self] = (a: 10, b: 20)
+   << // compoundValue : (a: Int, b: Int) = (a: 1, b: 2)
+   // Equivalent to compoundValue = (a: 10, b: 20)
+   -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
 The *path* can contain multiple property names, 
 separated by periods,
