@@ -76,7 +76,7 @@ is available in the following places:
 # Formal Grammar
 
 **Write an ASCII arrow.**
-The arrow (`-->`) can be read as "can consist of."
+The arrow (`-->`) can be read as “can consist of.”
 
 To make the arrow in RST, use two hyphens (`-`) followed by a right-hand angle bracket (`>`).
 The production path is responsible for making it render as a nice Unicode arrow.
@@ -103,7 +103,7 @@ In this case, nothing seems lost from a readability or pedagogical perspective.
 
     for-init --> variable-declaration | expression
 
-**Use a pipe '|' to specify an alternative.**
+**Use a pipe (`|`) to indicate alternation.**
 When there are too many alternatives
 to fit on a single line, use a new line for each alternative.
 Don't mix pipes and newlines.
@@ -126,7 +126,7 @@ The following tends not to loog good:
 
     control-transfer-statement --> break-statement | continue-statement | fallthrough-statement | return-statement
 
-**Append -OPT to indicate optionality.**
+**Append `-OPT` to indicate optionality.**
 Within a syntax-grammar block,
 this is translated to a subscript “opt” automatically.
 
@@ -146,7 +146,7 @@ For example:
     switch-case --> conditional-switch-case
 
 A plural name consists of only a repeated list of the singular version.
-If you need separators like commas, call it a "list".
+If you need separators like commas, call it a “list”.
 
     case-label --> attributes-OPT ``case`` case-item-list ``:``
     case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
