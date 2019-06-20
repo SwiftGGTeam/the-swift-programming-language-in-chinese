@@ -57,7 +57,7 @@ try 表达式由 `try` 运算符加上紧随其后的可抛出错误的表达式
 
 如果可抛出错误的表达式抛出了错误，将会引发运行时错误。
 
-在二进制运算符左侧的表达式被标记上 `try`、`try?` 或者 `try!` 时，这个运算符对整个二进制表达式都产生作用。也就是说，你可以使用括号来明确运算符的作用范围。
+在二元运算符左侧的表达式被标记上 `try`、`try?` 或者 `try!` 时，这个运算符对整个二元表达式都产生作用。也就是说，你可以使用括号来明确运算符的作用范围。
 
 ```swift
 sum = try someThrowingFunction() + anotherThrowingFunction()   // try 对两个函数调用都产生作用
@@ -65,7 +65,7 @@ sum = try (someThrowingFunction() + anotherThrowingFunction()) // try 对两个�
 sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try 只对第一个函数调用产生作用
 ```
 
-`try` 表达式不能出现在二进制运算符的的右侧，除非二进制运算符是赋值运算符或者 `try` 表达式是被圆括号括起来的。
+`try` 表达式不能出现在二元运算符的的右侧，除非二元运算符是赋值运算符或者 `try` 表达式是被圆括号括起来的。
 
 关于 `try`、`try?` 和 `try!` 的更多信息，以及该如何使用的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.md)。
 > Try 表达式语法
