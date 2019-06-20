@@ -303,6 +303,7 @@ so they must be escaped with backticks in that context.
   ``Protocol``,
   ``required``,
   ``right``,
+  ``some``,
   ``set``,
   ``Type``,
   ``unowned``,
@@ -313,6 +314,7 @@ so they must be escaped with backticks in that context.
 
 .. NOTE: The list of context-sensitive keywords above
    is derived from the file "swift/include/swift/AST/Attr.def"
+   where they're marked CONTEXTUAL_SIMPLE_DECL_ATTR.
 
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
