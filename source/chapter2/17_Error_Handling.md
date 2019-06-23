@@ -10,8 +10,7 @@
 > 
 > Swift 中的错误处理涉及到错误处理模式，这会用到 Cocoa 和 Objective-C 中的 `NSError`。更多详情参见 [用 Swift 解决 Cocoa 错误](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift)。
 
-<a name="representing_and_throwing_errors"></a>
-## 表示与抛出错误
+## 表示与抛出错误 {#representing-and-throwing-errors}
 
 在 Swift 中，错误用遵循 `Error` 协议的类型的值来表示。这个空协议表明该类型可以用于错误处理。
 
@@ -31,8 +30,7 @@ enum VendingMachineError: Error {
 throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 ```
 
-<a name="handling_errors"></a>
-## 处理错误
+## 处理错误 {#handling-errors}
 
 某个错误被抛出时，附近的某部分代码必须负责处理这个错误，例如纠正这个问题、尝试另外一种方式、或是向用户报告错误。
 
@@ -44,8 +42,7 @@ Swift 中有 `4` 种处理错误的方式。你可以把函数抛出的错误传
 > 
 > Swift 中的错误处理和其他语言中用 `try`，`catch` 和 `throw` 进行异常处理很像。和其他语言中（包括 Objective-C ）的异常处理不同的是，Swift 中的错误处理并不涉及解除调用栈，这是一个计算代价高昂的过程。就此而言，`throw` 语句的性能特性是可以和 `return` 语句相媲美的。
 
-<a name="propagating_errors_using_throwing_functions"></a>
-### 用 throwing 函数传递错误
+### 用 throwing 函数传递错误 {#propagating-errors-using-throwing-functions}
 
 为了表示一个函数、方法或构造器可以抛出错误，在函数声明的参数之后加上 `throws` 关键字。一个标有 `throws` 关键字的函数被称作 *throwing 函数*。如果这个函数指明了返回值类型，`throws` 关键词需要写在返回箭头（`->`）的前面。
 
@@ -131,7 +128,7 @@ struct PurchasedSnack {
 }
 ```
 
-### 用 Do-Catch 处理错误
+### 用 Do-Catch 处理错误 {#handling-errors-using-do-Catch}
 
 你可以使用一个 `do-catch` 语句运行一段闭包代码来处理错误。如果在 `do` 子句中的代码抛出了一个错误，这个错误会与 `catch` 子句做匹配，从而决定哪条子句能处理它。
 
@@ -169,7 +166,7 @@ do {
 } catch {
     print("Unexpected error: \(error).")
 }
-// 打印 “Insufficient funds. Please insert an additional 2 coins.”
+// 打印“Insufficient funds. Please insert an additional 2 coins.”
 ```
 
 上面的例子中，`buyFavoriteSnack(person:vendingMachine:)` 函数在一个 `try` 表达式中被调用，是因为它能抛出错误。如果错误被抛出，相应的执行会马上转移到 `catch` 子句中，并判断这个错误是否要被继续传递下去。如果错误没有被匹配，它会被最后一个 `catch` 语句捕获，并赋值给一个 `error` 常量。如果没有错误被抛出，`do` 子句中余下的语句就会被执行。
@@ -192,14 +189,14 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-// 打印 "Invalid selection, out of stock, or not enough money."
+// 打印“Invalid selection, out of stock, or not enough money.”
 ```
 
 如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误，`nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
 
-### 将错误转换成可选值
+### 将错误转换成可选值 {#converting_errors_to_optional_values}
 
-可以使用 `try?` 通过将错误转换成一个可选值来处理错误。如果在评估 `try?` 表达式时一个错误被抛出，那么表达式的值就是 `nil`。例如，在下面的代码中，`x` 和 `y` 有着相同的数值和等价的含义：
+可以使用 `try?` 通过将错误转换成一个可选值来处理错误。如果是在计算 `try?` 表达式时抛出错误，该表达式的结果就为 `nil`。例如，在下面的代码中，`x` 和 `y` 有着相同的数值和等价的含义：
 
 ```swift
 func someThrowingFunction() throws -> Int {
@@ -228,7 +225,7 @@ func fetchData() -> Data? {
 }
 ```
 
-### 禁用错误传递
+### 禁用错误传递 {#disabling_error_propagation}
 
 有时你知道某个 `throwing` 函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写 `try!` 来禁用错误传递，这会把调用包装在一个不会有错误抛出的运行时断言中。如果真的抛出了错误，你会得到一个运行时错误。
 
@@ -238,8 +235,7 @@ func fetchData() -> Data? {
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
 
-<a name="specifying_cleanup_actions"></a>
-## 指定清理操作
+## 指定清理操作 {#specifying-cleanup-actions}
 
 你可以使用 `defer` 语句在即将离开当前代码块时执行一系列语句。该语句让你能执行一些必要的清理工作，不管是以何种方式离开当前代码块的——无论是由于抛出错误而离开，或是由于诸如 `return`、`break` 的语句。例如，你可以用 `defer` 语句来确保文件描述符得以关闭，以及手动分配的内存得以释放。
 

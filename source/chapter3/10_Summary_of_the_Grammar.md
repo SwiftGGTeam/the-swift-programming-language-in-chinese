@@ -1,963 +1,1669 @@
 # 语法总结（Summary of the Grammar）
------
 
-> 1.0
-> 翻译：[stanzhai](https://github.com/stanzhai)
-> 校对：[xielingwang](https://github.com/xielingwang)
+## 词法结构 {#lexical-structure}
 
-> 2.0
-> 翻译+校对：[miaosiqi](https://github.com/miaosiqi)
+> 空白字符语法
+>
+> *空白字符*  → [空白字符项](./02_Lexical_Structure.md#whitespace-item) [空白字符](./02_Lexical_Structure.md#whitespace)<sub>可选</sub>
+>
+> *空白字符项*  → [换行符](./02_Lexical_Structure.md#line-break)
+>
+> *空白字符项*   → [注释](./02_Lexical_Structure.md#comment)
+>
+> *空白字符项*  → [多行注释](./02_Lexical_Structure.md#multiline-comment)
+>
+> *空白字符项*  → U+0000，U+0009，U+000B，U+000C 或 U+0020
+>
+>
+>
+> 换行符*  → U+000A
+>
+> *换行符*  → U+000D
+>
+> *换行符*  → U+000D 后面是 U+000A
+>
+> *注释*  → **//** [单行内容注释](./02_Lexical_Structure.md#comment-text) [换行符](./02_Lexical_Structure.md#line-break)
+>
+> *注释*  → **/\*** [多行内容注释](./02_Lexical_Structure.md#multiline-comment-text) **\*/**
+>
+>
+>
+> *注释内容*  → [注释内容项](./02_Lexical_Structure.md#comment-text-item) [注释内容](./02_Lexical_Structure.md#comment-text)<sub>可选</sub>  
+>
+> *注释内容项*  → 除 U+000A 或 U+000D 外的任何 Unicode 标量值
+>
+>
+>
+> *多行注释内容*  → [多行注释内容项](./02_Lexical_Structure.md#multiline-comment-text-item) [多行注释内容](./02_Lexical_Structure.md#multiline-comment-text)<sub>可选</sub>  
+>
+> *多行注释内容项*  → [多行内容](./02_Lexical_Structure.md#multiline-comment)
+>
+> *多行注释内容项*  → [注释内容项](./02_Lexical_Structure.md#comment-text-item)
+>
+> *多行注释内容项*  → 除 **/\*** 或 **\*/** 外的任何 Unicode 标量值
+>
 
-> 4.1
-> 翻译+校对：[mylittleswift](https://github.com/mylittleswift)
+<!-- -->
 
-本页包含内容：
+> 标识符语法
+>
+> *标识符* → [标识符头（Head）](./02_Lexical_Structure.md#identifier_head) [标识符字符集](./02_Lexical_Structure.md#identifier_characters)<sub>可选</sub> 
+>
+> *标识符* → [标识符头（Head）](./02_Lexical_Structure.md#identifier_head) [标识符字符集](./02_Lexical_Structure.md#identifier_characters)<sub>可选</sub> 
+>
+> *标识符* → [隐式参数名](./02_Lexical_Structure.md#implicit_parameter_name)
+>
+> *标识符集* → [标识符](./02_Lexical_Structure.md#identifier) | [标识符](./02_Lexical_Structure.md#identifier) **,** [标识符集](./02_Lexical_Structure.md#identifier_list)
+>
+> *标识符头（Head）* → 大写或者小写字母 A 到 Z
+>
+> *标识符头（Head）* → _
+>
+> *标识符头（Head）* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA
+>
+> *标识符头（Head）* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF
+>
+> *标识符头（Head）* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF
+>
+> *标识符头（Head）* → U+1E00–U+1FFF
+>
+> *标识符头（Head）* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F
+>
+> *标识符头（Head）* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793
+>
+> *标识符头（Head）* → U+2C00–U+2DFF or U+2E80–U+2FFF
+>
+> *标识符头（Head）* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF
+>
+> *标识符头（Head）* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44
+>
+> *标识符头（Head）* → U+FE47–U+FFFD
+>
+> *标识符头（Head）* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD
+>
+> *标识符头（Head）* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD
+>
+> *标识符头（Head）* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD
+>
+> *标识符头（Head）* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
+>
+> *标识符字符* → 数值 0 到 9
+>
+> *标识符字符* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F
+>
+> *标识符字符* → [标识符头（Head）](./02_Lexical_Structure.md#identifier_head)
+>
+> *标识符字符集* → [标识符字符](./02_Lexical_Structure.md#identifier_character) [标识符字符集](./02_Lexical_Structure.md#identifier_characters)<sub>可选</sub> 
+>
+> *隐式参数名* → **$** [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
 
-* [语句（Statements）](#statements)
-* [泛型参数（Generic Parameters and Arguments）](#generic_parameters_and_arguments)
-* [声明（Declarations）](#declarations)
-* [模式（Patterns）](#patterns)
-* [属性（Attributes）](#attributes)
-* [表达式（Expressions）](#expressions)
-* [词法结构（Lexical Structure）](#lexical_structure)
-* [类型（Types）](#types)
+<!-- -->
 
-<a name="statements"></a>
-## 语句
+> 字面量语法
+>
+> *字面量* → [数值型字面量](./02_Lexical_Structure.md#numeric-literal) | [字符串字面量](./02_Lexical_Structure.md#string-literal) | [布尔字面量](./02_Lexical_Structure.md#boolean-literal) | [空字面量](./02_Lexical_Structure.md#nil-literal)
+>
+> *数值型字面量* → **-**<sub>可选</sub>[整形字面量](./02_Lexical_Structure.md#integer_literal) | **-**<sub>可选</sub>[浮点型字面量](./02_Lexical_Structure.md#floating-point-literal)
+>
+> *布尔字面量* → **true** | **false**
+>
+> *空字面量* → **nil**
+>
+
+<!-- -->
+
+> 整型字面量语法
+>
+> *整型字面量* → [二进制字面量](./02_Lexical_Structure.md#binary_literal)
+>
+> *整型字面量* → [八进制字面量](./02_Lexical_Structure.md#octal_literal)
+>
+> *整型字面量* → [十进制字面量](./02_Lexical_Structure.md#decimal_literal)
+>
+> *整型字面量* → [十六进制字面量](./02_Lexical_Structure.md#hexadecimal_literal)
+>
+> *二进制字面量* → **0b** [二进制数字](./02_Lexical_Structure.md#binary_digit) [二进制字面量字符集](./02_Lexical_Structure.md#binary_literal_characters)<sub>可选</sub> 
+>
+> *二进制数字* → 数值 0 到 1
+>
+> *二进制字面量字符* → [二进制数字](./02_Lexical_Structure.md#binary_digit) | **_**
+>
+> *二进制字面量字符集* → [二进制字面量字符](./02_Lexical_Structure.md#binary_literal_character) [二进制字面量字符集](./02_Lexical_Structure.md#binary_literal_characters)<sub>可选</sub> 
+>
+> *八进制字面量* → **0o** [八进制数字](./02_Lexical_Structure.md#octal_digit) [八进制字符集](./02_Lexical_Structure.md#octal_literal_characters)<sub>可选</sub> 
+>
+> *八进字数字* → 数值 0 到 7
+>
+> *八进制字符* → [八进制数字](./02_Lexical_Structure.md#octal_digit) | **_**
+>
+> *八进制字符集* → [八进制字符](./02_Lexical_Structure.md#octal_literal_character) [八进制字符集](./02_Lexical_Structure.md#octal_literal_characters)<sub>可选</sub> 
+>
+> *十进制字面量* → [十进制数字](./02_Lexical_Structure.md#decimal_digit) [十进制字符集](./02_Lexical_Structure.md#decimal_literal_characters)<sub>可选</sub> 
+>
+> *十进制数字* → 数值 0 到 9
+>
+> *十进制数字集* → [十进制数字](./02_Lexical_Structure.md#decimal_digit) [十进制数字集](./02_Lexical_Structure.md#decimal_digits)<sub>可选</sub> 
+>
+> *十进制字面量字符* → [十进制数字](./02_Lexical_Structure.md#decimal_digit) | **_**
+>
+> *十进制字面量字符集* → [十进制字面量字符](./02_Lexical_Structure.md#decimal_literal_character) [十进制字面量字符集](./02_Lexical_Structure.md#decimal_literal_characters)<sub>可选</sub> 
+>
+> *十六进制字面量* → **0x** [十六进制数字](./02_Lexical_Structure.md#hexadecimal_digit) [十六进制字面量字符集](./02_Lexical_Structure.md#hexadecimal_literal_characters)<sub>可选</sub> 
+>
+> *十六进制数字* → 数值 0 到 9，a 到 f，或者 A 到 F
+>
+> *十六进制字符* → [十六进制数字](./02_Lexical_Structure.md#hexadecimal_digit) | **_**
+>
+> *十六进制字面量字符集* → [十六进制字符](./02_Lexical_Structure.md#hexadecimal_literal_character) [十六进制字面量字符集](./02_Lexical_Structure.md#hexadecimal_literal_characters)<sub>可选</sub> 
+>
+
+<!-- -->
+
+> 浮点型字面量语法
+>
+> *浮点数字面量* → [十进制字面量](./02_Lexical_Structure.md#decimal_literal) [十进制分数](./02_Lexical_Structure.md#decimal_fraction)<sub>可选</sub>[十进制指数](./02_Lexical_Structure.md#decimal_exponent)<sub>可选</sub> 
+>
+> *浮点数字面量* → [十六进制字面量](./02_Lexical_Structure.md#hexadecimal_literal) [十六进制分数](./02_Lexical_Structure.md#hexadecimal_fraction)<sub>可选</sub>[十六进制指数](./02_Lexical_Structure.md#hexadecimal_exponent)
+>
+> *十进制分数* → **.** [十进制字面量](./02_Lexical_Structure.md#decimal_literal)
+>
+> *十进制指数* → [浮点数 e](./02_Lexical_Structure.md#floating_point_e) [正负号](./02_Lexical_Structure.md#sign)<sub>可选</sub>[十进制字面量](./02_Lexical_Structure.md#decimal_literal)
+>
+> *十六进制分数* → **.** [十六进制数](./02_Lexical_Structure.md#hexadecimal_literal)
+>
+> *十六进制指数* → [浮点数 p](./02_Lexical_Structure.md#floating_point_p) [正负号](./02_Lexical_Structure.md#sign)<sub>可选</sub>[十六进制字面量](./02_Lexical_Structure.md#hexadecimal_literal)
+>
+> *浮点数 e* → **e** | **E**
+>
+> *浮点数 p* → **p** | **P**
+>
+> *正负号* → **+** | **-**
+>
+
+<!-- -->
+
+> 字符串型字面量语法
+
+> *字符串字面量* → [静态字符串字面量](./02_Lexical_Structure.md#static-string-literal) | [插值字符串字面量](./02_Lexical_Structure.md#interpolated-string-literal)
+>
+> *字符串开分隔定界符* → [字符串扩展分隔符](./02_Lexical_Structure.md#extended-string-literal-delimiter) **"**
+>
+> *字符串闭分隔定界符* → **"** [字符串扩展分隔符](./02_Lexical_Structure.md#extended-string-literal-delimiter)<sub>可选</sub>
+>
+> *静态字符串字面量* → [字符串开分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter) [引用文本](./02_Lexical_Structure.md#quoted-text)<sub>可选</sub> [字符串闭分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
+>
+> *静态字符串字面量* → [多行字符串开分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter) [多行引用文本](./02_Lexical_Structure.md#multiline-quoted-text)<sub>可选</sub> [多行字符串闭分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
+>
+> *多行字符串开分隔定界符* → [字符串扩展分隔符](./02_Lexical_Structure.md#extended-string-literal-delimiter) **"""**
+>
+> *多行字符串闭分隔定界符* → **"""** [字符串扩展分隔符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
+>
+> *字符串扩展分隔符* → **#** [字符串扩展分隔符](./02_Lexical_Structure.md#extended-string-literal-delimiter)<sub>可选</sub>
+>
+> *引用文本* → [引用文本项](./02_Lexical_Structure.md#quoted-text-item) [引用文本](#quoted-text)<sub>可选</sub>
+>
+> *引用文本项* → [转义字符](./02_Lexical_Structure.md#escaped-character)
+>
+> *引用文本项* → 除了 **"**、**\\\**、U+000A、U+000D 以外的所有 Unicode 字符    
+>
+> *多行引用文本* → [多行引用文本项](./02_Lexical_Structure.md#multiline-quoted-text-item) [多行引用文本](./02_Lexical_Structure.md#multiline-quoted-text)<sub>可选</sub>
+>
+> *多行引用文本项* [转义字符](./02_Lexical_Structure.md#escaped-character)<sub>可选</sub>
+>
+> *多行引用文本* → 除了 **\\** 以外的任何 Unicode 标量值
+>
+> *多行引用文本* → [转义换行](./02_Lexical_Structure.md#escaped-newline)
+
+> *插值字符串字面量* → [字符串开分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter) [插值文本](./02_Lexical_Structure.md#interpolated-text)<sub>可选</sub> [字符串闭分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
+>
+> *插值字符串字面量* → [多行字符串开分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter) [插值文本](./02_Lexical_Structure.md#interpolated-text)<sub>可选</sub> [多行字符串闭分隔定界符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
+>
+> *插值文本* → [插值文本项](./02_Lexical_Structure.md#interpolated-text-item) [插值文本](./02_Lexical_Structure.md#interpolated-text)<sub>可选</sub>
+>
+> *插值文本项* → **\\**(**[表达式](./04_Expressions.md)**) | [引用文本项](./02_Lexical_Structure.md#quoted-text-item)
+>
+> *多行插值文本* → [多行插值文本项](./02_Lexical_Structure.md#multiline-quoted-text-item) [多行插值文本](./02_Lexical_Structure.md#multiline-quoted-text)<sub>可选</sub>
+>
+> *多行插值文本项* → **\\(** [表达式](./04_Expressions.md) **)** | [多行引用文本项](./02_Lexical_Structure.md#multiline-quoted-text-item)
+>
+> *转义序列* → **\\** [字符串扩展分隔符](./02_Lexical_Structure.md#extended-string-literal-delimiter)
+>
+> *转义字符* → [转义序列](./02_Lexical_Structure.md#escape-sequence) **0** | [转义序列](./02_Lexical_Structure.md#escape-sequence) **\\** | [转义序列](./02_Lexical_Structure.md#escape-sequence) **t** | [转义序列](#escape-sequence) **n** | [转义序列](./02_Lexical_Structure.md#escape-sequence) **r** | [转义序列](./02_Lexical_Structure.md#escape-sequence) **\"** | [转义序列](./02_Lexical_Structure.md#escape-sequence) **'**
+>
+> *转义字符* → [转义序列](./02_Lexical_Structure.md#escape-sequence) **u {** [unicode 标量数字](./02_Lexical_Structure.md#unicode-scalar-digits) **}**
+>
+> *unicode 标量数字* → 一到八位的十六进制数字
+>
+> *转义换行符* → [转义序列](./02_Lexical_Structure.md#escape-sequence) [空白](./02_Lexical_Structure.md#whitespace)<sub>可选</sub> [换行符](./02_Lexical_Structure.md#line-break)
+
+
+<!-- -->
+
+> 运算符语法语法
+>
+> *运算符* → [运算符头](./02_Lexical_Structure.md#operator_character) [运算符字符集](./02_Lexical_Structure.md#operator)<sub>可选</sub> 
+>
+> *运算符* → [点运算符头](./02_Lexical_Structure.md#dot-operator-head) [点运算符字符集](./02_Lexical_Structure.md#dot-operator-characters)<sub>可选</sub> 
+>
+> *运算符字符* → **/** | **=** | **-** | **+** | **!** | **&#42;** | **%** | **<** | **>** | **&** | **|** | **^** | **~** | **?**
+>
+> *运算符头* → U+00A1–U+00A7
+>
+> *运算符头* → U+00A9 or U+00AB
+>
+> *运算符头* →  U+00AC or U+00AE
+>
+> *运算符头* → U+00B0–U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
+>
+> *运算符头* → U+2016–U+2017 or U+2020–U+2027
+>
+> *运算符头* → U+2030–U+203E
+>
+> *运算符头* → U+2041–U+2053
+>
+> *运算符头* → U+2055–U+205E
+>
+> *运算符头* → U+2190–U+23FF
+>
+> *运算符头* → U+2500–U+2775
+>
+> *运算符头* → U+2794–U+2BFF
+>
+> *运算符头* → U+2E00–U+2E7F
+>
+> *运算符头* → U+3001–U+3003
+>
+> *运算符头* → U+3008–U+3030
+>
+> *运算符字符* → [运算符头](./02_Lexical_Structure.md#operator-head)
+>
+> *运算符字符* → U+0300–U+036F
+>
+> *运算符字符* → U+1DC0–U+1DFF
+>
+> *运算符字符* → U+20D0–U+20FF
+>
+> *运算符字符* → U+FE00–U+FE0F
+>
+> *运算符字符* → U+FE20–U+FE2F
+>
+> *运算符字符* → U+E0100–U+E01EF
+>
+> *运算符字符集* → [运算符字符](./02_Lexical_Structure.md#operator-character) [运算符字符集](./02_Lexical_Structure.md#operator-characters)<sub>可选</sub> 
+>
+> *点运算符头* → **..**
+>
+> *点运算符字符* → **.** | [运算符字符](./02_Lexical_Structure.md#operator-character)
+>
+> *点运算符字符集* → [点运算符字符](./02_Lexical_Structure.md#dot-operator-character) [点运算符字符集](./02_Lexical_Structure.md#dot-operator-characters)<sub>可选</sub> 
+>
+> *二元运算符* → [运算符](./02_Lexical_Structure.md#operator)
+>
+> *前置运算符* → [运算符](./02_Lexical_Structure.md#operator)
+>
+> *后置运算符* → [运算符](./02_Lexical_Structure.md#operator)
+>
+
+## 类型 {#types}
+
+> 类型语法
+>
+> *类型* → [数组类型](./03_Types.md#array_type)
+>
+> *类型* → [字典类型](./03_Types.md#dictionary-type)
+>
+> *类型* → [函数类型](./03_Types.md#function_type)
+>
+> *类型* → [类型标识符](./03_Types.md#type_identifier)
+>
+> *类型* → [元组类型](./03_Types.md./03_Types.md#tuple_type)
+>
+> *类型* → [可选类型](./03_Types.md#optional_type)
+>
+> *类型* → [隐式解析可选类型](./03_Types.md#implicitly_unwrapped_optional_type)
+>
+> *类型* → [协议合成类型](./03_Types.md#protocol_composition_type)
+>
+> *类型* → **Any**
+>
+> *类型* → **Self**
+>
+> *类型* → **（** [type](./03_Types.md#metatype_type) **）**
+
+<!-- -->
+
+> 类型注解语法
+>
+> *类型注解* → **:** [属性（Attributes）集](./07_Attributes.md#attributes)<sub>可选</sub>[类型](./03_Types.md#type)
+
+<!-- -->
+
+> 类型标识语法
+>
+> *类型标识* → [类型名称](./03_Types.md#type_name) [泛型参数从句](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub>| [类型名称](./03_Types.md#type_name) [泛型参数从句](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub>**.** [类型标识符](./03_Types.md#type_identifier)
+>
+> *类型名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+
+<!-- -->
+
+> 元组类型语法
+>
+> *元组类型* → **(** **)** | **(** [元组类型元素](./03_Types.md#tuple-type-element) **,** [元组类型元素列表](./03_Types.md#tuple-type-element-list) **)**
+>
+> *元组类型元素列表* → [元组类型元素](./03_Types.md#tuple-type-element) | [元组类型元素](./03_Types.md#tuple-type-element) **,** [元组类型元素列表](./03_Types.md#tuple-type-element-list)
+>
+> *元组类型元素* → [元素名](./03_Types.md#element-name) [类型注解](./03_Types.md#type-annotation) | [类型](./03_Types.md#type)
+>
+> *元素名* → [标识符](./02_Lexical_Structure.md#identifier)
+
+<!-- -->
+
+> 函数类型语法
+>
+> *函数类型* → [类型](./03_Types.md#type)  **throws**<sub>可选</sub>**->** [类型](./03_Types.md#type)
+>
+> *函数类型* → [类型](./03_Types.md#)  **rethrows** **->** [类型](./03_Types.md#)
+> 
+> *函数类型子句* → **(** **)**
+> 
+> *函数类型子句* → **(** [函数类型参数列表](./03_Types.md#function-type-argument-list) *...*­<sub>可选</sub> **)**
+> 
+> *函数类型参数列表* → [函数类型参数](./03_Types.md#function-type-argument) | [函数类型参数](function-type-argument)， [函数类型参数列表](./03_Types.md#function-type-argument-list)
+> 
+> *函数类型参数* → [特性列表](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [类型](#type) | [参数标签](#argument-label) [类型注解](#type-annotation)
+> 
+> *参数标签* → [标识符](./02_Lexical_Structure.md#identifier)
+
+<!-- -->
+
+> 数组类型语法
+>
+> *数组类型* → **[** [*类型*](./03_Types.md#array_type) **]**
+
+<!-- -->
+> 字典类型语法
+>
+> *字典类型* → **[** [类型 **:** 类型](./03_Types.md#type) **]**
+
+<!-- -->
+
+> 可选类型语法
+>
+> *可选类型* → [类型](./03_Types.md#type) **?**
+>
+
+<!-- -->
+
+> 隐式解析可选类型（Implicitly Unwrapped Optional Type）语法
+>
+> *隐式解析可选类型* → [类型](./03_Types.md#type) **!**
+>
+
+<!-- -->
+
+> 协议合成类型语法
+>
+> *协议合成类型* → [类型标识符](./03_Types.md#type_identifier) | [协议合成延续](./03_Types.md#protocol-composition-continuation)
+>
+> *协议持续延续* → [类型标识符](./03_Types.md#type_identifier) | [协议合成类型](./03_Types.md#protocol-composition-type)
+
+<!-- -->
+
+> 元（Metatype）类型语法
+>
+> *元类型* → [类型](./03_Types.md#type) **.** **Type** | [类型](./03_Types.md#type) **.** **Protocol**
+
+<!-- -->
+
+> 类型继承从句语法
+>
+> *类型继承从句* → **:** [类型继承集](./03_Types.md#type_inheritance_list)
+>
+> *类型继承集* → [类型标识符](./03_Types.md#type_identifier) | [类型标识符](./03_Types.md#type_identifier) **,** [类型继承集](./03_Types.md#type_inheritance_list)
+>
+> *类条件* → **class**
+
+## 表达式 {#expressions}
+
+> 表达式语法
+>
+> *表达式* → [try 运算符](./04_Expressions.md#try-operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression) [二元表达式列表](./04_Expressions.md#binary-expressions)
+>
+> *表达式列表* → [表达式](./04_Expressions.md#expression)|[表达式](./04_Expressions.md#expression), [表达式列表](./04_Expressions.md#expression-list)
+>
+
+<!-- -->
+
+> 前缀表达式语法
+>
+> *前缀表达式* → [前缀操作符]()<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
+>
+> *前缀表达式* → [输入输出表达式](./04_Expressions.md#in-out-expression)
+>
+> *输入输出表达式* → **&** [标识符](./02_Lexical_Structure.md#identifier)
+>
+
+<!-- -->
+
+>try 表达式语法
+>
+> *try 操作符* → **try** | **try ? ** | ** try ! **
+>
+
+<!-- -->
+
+> 二元表达式语法
+>
+> *二元表达式* → [二元运算符](./02_Lexical_Structure.md#binary-operator) [前缀表达式](./04_Expressions.md#prefix-expression)
+>
+> *二元表达式* → [赋值操作符](./06_Declarations.md#class_declaration) [try 运算符](./04_Expressions.md#try_operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
+>
+> *二元表达式* → [条件运算符](./04_Expressions.md#conditional-operator) [try 运算符](./04_Expressions.md#try_operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
+>
+> *二元表达式* → [类型转换运算符](./04_Expressions.md#type-casting-operator)
+>
+> *二元表达式* → [二元表达式](./04_Expressions.md#binary-expression) [二元表达式列表](./04_Expressions.md#binary-expressions)<sub>可选</sub>
+>
+
+<!-- -->
+
+> 赋值操作符语法
+>
+> *赋值运算符* → [=]
+>
+
+<!-- -->
+
+> 条件运算符
+>
+> *条件运算符* → [?] [表达式](./04_Expressions.md#expression):
+
+> 类型转换运算符语法
+>
+> *类型转换运算符* → [is] [类型](./03_Types.md#type)
+>
+> *类型转换运算符* → [as] [类型](./03_Types.md#type)
+>
+> *类型转换运算符* → [as ?] [类型](./03_Types.md#type)
+>
+> *类型转换运算符* → [as !] [类型](./03_Types.md#type)
+>
+
+
+<!-- -->
+
+> 基础表达式语法
+>
+> *基础表达式* → [标识符](./02_Lexical_Structure.md#identifier) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
+>
+> *基础表达式* → [字面量表达式](./04_Expressions.md#literal-expression)
+>
+> *基础表达式* → [self 表达式](./04_Expressions.md#self-expression)
+>
+> *基础级表达式* → [父类表达式](./04_Expressions.md#superclass-expression)
+>
+> *基础表达式* → [闭包表达式](./04_Expressions.md#closure-expression)
+>
+> *基础表达式* → [圆括号表达式](./04_Expressions.md#parenthesized-expression)
+>
+> *基础表达式* → [元组表达式](./04_Expressions.md#Tuple_Expression)
+>
+> *基础表达式* → [隐式成员表达式](./04_Expressions.md#implicit-member-expression)
+>
+> *基础表达式* → [通配符表达式](./04_Expressions.md#wildcard-expression)
+>
+> *基础表达式* → [key-path表达式](./04_Expressions.md#key-path_expression)
+>
+> *基础表达式* → [选择器表达式](./04_Expressions.md#selector-expression)
+>
+> *基础表达式* → [key-path字符串表达式](./04_Expressions.md#key-patch-string-expression)
+>
+
+<!-- -->
+
+> 字面量表达式语法
+>
+> *字面量表达式* → [字面量](./04_Expressions.md#literal-expression)
+>
+> *字面量表达式* → [数组字面量](./04_Expressions.md#array-literal) | [字典字面量](./04_Expressions.md#dictionary-literal) | [练习场字面量](./04_Expressions.md#playground-literal)
+>
+> *字面量表达式* → **#file** | **#line** | **#column** | **#function** | **dsohandle**
+>
+>
+> *数组字面量* → **[** [数组字面量项列表](./04_Expressions.md#array-literal-items)<sub>可选</sub> **]**
+> *数组字面量项列表* → [数组字面量项](./04_Expressions.md#array-literal-item)<sub>可选</sub> | [数组字面量项](./04_Expressions.md#array-literal-item),[数组字面量项列表](./04_Expressions.md#array-literal-items)
+> *数组字面量项* → [表达式](./04_Expressions.md#expression)
+>
+>
+> *字典字面量* → [[字典字面量项列表](./04_Expressions.md#dictionary-literal-items) **]** | **[** **:** **]**
+> 
+> 
+> *字典字面量项列表* → [字典字面量项](./04_Expressions.md#dictionary-literal-item) ,**<sub>可选</sub> | [字典字面量项](./04_Expressions.md#dictionary-literal-item) ,[字典字面量项列表](./04_Expressions.md#dictionary-literal-items)
+>
+> *字典字面量项* → [表达式](./04_Expressions.md#expression) **:** [表达式](./04_Expressions.md#expression)
+>
+> 
+> *palyground 字面量* → **#colorLiteral ( red :  [表达式](./04_Expressions.md#expression) , green :[表达式](./04_Expressions.md#expression),  blue :[表达式](./04_Expressions.md#expression) , alpha : [表达式](./04_Expressions.md#expression) )**
+>
+> *playground 字面量* → **#fileLiteral ( resourceName : [表达式](#expression) )**
+>
+> *playground 字面量* → **#imageLiteral ( resourceName : [表达式](#expression) )
+<!-- -->
+
+> self 表达式语法
+> 
+> *self 表达式* → **self**  | [self 方法表达式](./04_Expressions.md#self-method-expression) ｜ [self 下标表达式](./04_Expressions.md#self-subscript-expression) | [self 构造器表达式](./04_Expressions.md#self-initializer-expression)
+>
+>
+> *self 方法表达式* → **self** **.** [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *self 下标表达式* → **self** **[** [函数调用参数表](./04_Expressions.md#function-call-argument-list­) **]**
+>
+> *self 构造器表达式* → **self** **.** **init**
+
+<!-- -->
+
+> 父类表达式语法
+>
+> *父类表达式* → [父类方法表达式](./04_Expressions.md#superclass-method-expression) | [父类下标表达式](./04_Expressions.md#superclass-subscript-expression) | [父类构造器表达式](./04_Expressions.md#superclass-initializer-expression)
+>
+> *父类方法表达式* → **super** **.** [标识符](./02_Lexical_Structure.md#identifier)
+> 
+> *父类下标表达式* → **super** [[函数调用参数表](./04_Expressions.md#function-call-argument-list­) **]**
+>
+> *父类构造器表达式* → **super** **.** **init**
+> 
+
+
+<!-- -->
+
+> 闭包表达式语法
+>
+> *闭包表达式* → **{** [闭包签名](./04_Expressions.md#closure-signature)<sub>可选</sub> [语句](./04_Expressions.md#statements) **}**
+>
+>
+> 闭包签名* → [参数子句](./04_Expressions.md#parameter-clause) [函数结果](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> 
+> *闭包签名* → [标识符列表](./04_Expressions.md#identifier-list) [函数结果](05_Declarations.md#function-result)<sub>可选</sub> **in**
+> 
+>
+> *闭包参数子句* **(** **)** | **(** [闭包参数列表](./04_Expressions.md#closure-parameter-list) | [标识符列表](./04_Expressions.md#identifier-list) **)**
+>
+> *闭包参数列表* [闭包参数](./04_Expressions.md#implicit-member-expression) | [闭包参数](./04_Expressions.md#implicit-member-expression), [闭包参数列表](./04_Expressions.md#implicit-member-expression)
+>
+> *闭包参数* [闭包参数名](./04_Expressions.md#implicit-member-expression) [类型声明](./03_Types.md#type-annotation) <sub>可选</sub>
+>
+> *闭包参数* [闭包参数名](./04_Expressions.md#implicit-member-expression) [类型声明](./03_Types.md#type-annotation) **...**
+>
+> *闭包参数名* [标识符](./02_Lexical_Structure.md#identifier)
+> 
+>
+> *捕获列表* → [捕获列表](./04_Expressions.md#capture-list) **[** [捕获列表项列表](./04_Expressions.md#capture-list-items) **]**
+>
+> *捕获列表项列表* → [捕获列表项](./04_Expressions.md#capture-list-item) | [捕获列表项](./04_Expressions.md#capture-list-item) **,** [捕获列表项列表](./04_Expressions.md#capture-list-items)
+>
+> *捕获列表项* → [捕获说明符](./04_Expressions.md#capture-specifier)<sub>可选</sub> [*表达式*](./04_Expressions.md#expression)
+>
+> *捕获说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**
+> 
+
+
+<!-- -->
+
+> 隐式成员表达式语法
+>
+> *隐式成员表达式* → **.** [标识符](./02_Lexical_Structure.md#identifier)
+>
+
+<!-- -->
+
+> 圆括号表达式语法
+>
+> *圆括号表达式* → **( [表达式](./04_Expressions.md#expression) )**
+> 
+
+<!-- -->
+
+> 元组表达式语法
+>
+> *元组表达式* → **( )** | **(**[元组元素](./04_Expressions.md#tuple-element)， [元组元素列表](./04_Expressions.md#tuple-element-list) **)**
+> 
+> *元组元素列表* → [元组元素](./04_Expressions.md#tuple-element) | [元组元素](./04_Expressions.md#tuple-element) **,** [元组元素列表](./04_Expressions.md#tuple-element-list)
+> *元组元素* → [表达式](./04_Expressions.md#expression) | [标识符](./04_Expressions.md#identifier) **:** [表达式](./04_Expressions.md##expression)
+> 
+
+<!-- -->
+
+> 通配符表达式语法
+>
+> *通配符表达式* → **_**
+>
+
+
+<!-- -->
+
+> key-path表达式语法
+>
+> *key-path 表达式* → **\**  [类型](./03_Types.md#type)<sub>可选</sub>  **.**  [多个 key-path 组件]
+> *多个 key-path 组件* → [key-path 组件](./04_Expressions.md#key-path-component) | [key-path 组件](./04_Expressions.md#key-path-component) **.** [多个 key-path 组件](./04_Expressions.md#key-path-components)
+> *key-path 组件* →  [标识符](./02_Lexical_Structure.md#identifier) [多个 key-path 后缀](./04_Expressions.md#key-path-postfixes)<sub>可选<sub> | [多个 key-path 后缀](./04_Expressions.md#key-path-postfixes)
+> *多个 key-path 后缀* →  [key-path 后缀](./04_Expressions.md#key-path-postfix) [多个 key-path 后缀](./04_Expressions.md#key-path-postfixes)<sub>可选<sub> key-path-postfixes {./04_Expressions.md#key-path-postfixes}
+> 
+> *key-path 后缀* → **?** | **!** | **self** | **\[** [函数调用参数表](./04_Expressions.md#function-call-argument-list) **\]** 
+> 
+
+
+<!-- -->
+
+> 选择器表达式语法
+>
+> *选择器表达式* → **#selector** **(** [*表达式*](./04_Expressions.md#expression) **)**
+> 
+> *选择器表达式* → **#selector** **(** [*getter:表达式*](./04_Expressions.md#expression) **)**
+> 
+> *选择器表达式* → **#selector** **(** [*setter:表达式*](./04_Expressions.md#expression) **)**
+> 
+
+<!-- -->
+
+> key-path 字符串表达式语法
+> *key-path 字符串表达式* → **#keyPath (** [表达式](./04_Expressions.md#expression)  **)**
+> 
+
+<!-- -->
+
+> 后缀表达式表达式语法
+>
+> *后缀表达式* → [基本表达式](./04_Expressions.md#primary-expression)
+> 
+> *后缀表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) [后缀运算符](02_Lexical_Structure.md#postfix-operator)
+> 
+> *后缀表达式* → [函数调用表达式](./04_Expressions.md#function-call-expression)
+> 
+> *后缀表达式* → [构造器表达式](./04_Expressions.md#initializer-expression)
+> 
+> *后缀表达式* → [显式成员表达式](./04_Expressions.md#explicit-member-expression)
+> 
+> *后缀表达式* → [后缀 self 表达式](./04_Expressions.md#postfix-self-expression)
+>  
+> *后缀表达式* → [下标表达式](./04_Expressions.md#subscript-expression)
+> 
+> *后缀表达式* → [强制取值表达式](./04_Expressions.md#forced-value-expression)
+> 
+> *后缀表达式* → [可选链表达式](./04_Expressions.md#optional-chaining-expression)
+> 
+
+<!-- -->
+
+> 函数调用表达式语法
+>
+> *函数调用表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) [函数调用参数子句](./04_Expressions.md#function-call-argument-clause)
+> 
+> *函数调用表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) [函数调用参数子句](./04_Expressions.md#function-call-argument-clause)<sub>可选</sub> [尾随闭包](./04_Expressions.md#trailing-closure)
+>
+> *函数调用参数子句* → **(**  **)**  | **(** [函数调用参数表](./04_Expressions.md#function-call-argument-list) **)**
+>
+> *函数调用参数表* → [函数调用参数](./04_Expressions.md#function-call-argument) | [函数调用参数](./04_Expressions.md#function-call-argument) **,** [函数调用参数表](./04_Expressions.md#function-call-argument-list)
+>
+> *函数调用参数* → [表达式](./04_Expressions.md#expression) | [标识符](02_Lexical_Structure.md#identifier) **:** [表达式](./04_Expressions.md#expression)
+> 
+> *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02_Lexical_Structure.md#identifier) **:** [运算符](./02_Lexical_Structure.md#operator)
+>
+> *尾随闭包* → [闭包表达式](./04_Expressions.md#closure-expression)
+>
+
+<!-- -->
+
+> 初始化表达式语法
+>
+> *构造器表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** **init**
+> 
+> *构造器表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** **init** **(** [参数名称](./04_Expressions.md#argument-names) **)**
+> 
+
+<!-- -->
+
+> 显式成员表达式语法
+>
+> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [十进制数字]    (02_Lexical_Structure.md#decimal-digit)
+> 
+> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [标识符](02_Lexical_Structure.md#identifier) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
+> 
+> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [标识符]    (02_Lexical_Structure.md#identifier) **(** [参数名称](./04_Expressions.md#argument-names) **)**
+> 
+> *参数名称* → [参数名](./04_Expressions.md#argument-name) [参数名称](./04_Expressions.md#argument-names)<sub>可选</sub><br/>
+> 
+> *参数名* → [标识符](./02_Lexical_Structure.md#identifier) **:**
+>
+
+<!-- -->
+
+> 后缀 self 表达式语法
+>
+> *后缀 self 表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** **self**
+> 
+
+<!-- -->
+
+> 下标表达式语法
+>
+> *下标表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **[** [表达式列表](./04_Expressions.md#expression-list) **]**
+> 
+
+<!-- -->
+
+> 强制取值表达式语法
+> *强制取值表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **!**
+> 
+
+
+<!-- -->
+
+> 可选链式表达式语法
+> *可选链表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **?**
+> 
+
+## 语句 {#statements}
 
 > 语句语法
-> 
-> *语句* → [*表达式*](../chapter3/04_Expressions.html#expression) **;** _可选_
-> *语句* → [*声明*](../chapter3/05_Declarations.html#declaration) **;** _可选_
-> *语句* → [*循环语句*](../chapter3/10_Statements.html#loop_statement) **;** _可选_
-> *语句* → [*分支语句*](../chapter3/10_Statements.html#branch_statement) **;** _可选_
-> *语句* → [*标记语句（Labeled Statement）*](../chapter3/10_Statements.html#labeled_statement)
-> *语句* → [*控制转移语句*](../chapter3/10_Statements.html#control_transfer_statement) **;** _可选_
-> *语句* → [*延迟语句*](TODO) **;** _可选_
-
-> *语句* → [*执行语句*](TODO) **;** _可选_
-
-> *多条语句（Statements）* → [*语句*](../chapter3/10_Statements.html#statement) [*多条语句（Statements）*](../chapter3/10_Statements.html#statements) _可选_
+>
+> *语句* → [表达式](./04_Expressions.md#expression) **;**<sub>可选</sub>
+>
+> *语句* → [声明](./06_Declarations.md#declaration) **;**<sub>可选</sub>
+>
+> *语句* → [循环语句](./05_Statements.md#loop_statement) **;**<sub>可选</sub>
+>
+> *语句* → [分支语句](./05_Statements.md#branch_statement) **;**<sub>可选</sub>
+>
+> *语句* → [标签语句](./05_Statements.md#labeled_statement) **;**<sub>可选</sub>
+>
+> *语句* → [控制转移语句](./05_Statements.md#control_transfer_statement) **;**<sub>可选</sub>
+>
+> *语句* → [延迟语句](./05_Statements.md#defer_statement) **;**<sub>可选</sub>
+>
+> *语句* → [执行语句](./05_Statements.md#do_statement) **;**<sub>可选</sub>
+>
+> *语句* → [编译控制语句](./05_Statements.md#compiler_control_statement)
+>
+> *语句集* → [语句](./05_Statements.md#statement) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
 
 <!-- -->
 
 > 循环语句语法
-> 
-> *循环语句* → [*for 语句*](../chapter3/10_Statements.html#for_statement)
-> *循环语句* → [*for-in 语句*](../chapter3/10_Statements.html#for_in_statement)
-> *循环语句* → [*while 语句*](../chapter3/10_Statements.html#wheetatype 类型 ile_statement)
-> *循环语句* → [*repeat-while 语句*](../chapter3/10_Statements.html#do_while_statement)
-
-<!-- -->
-
-> For 循环语法
-> 
-> *for 语句* → **for** [*for 初始条件*](../chapter3/10_Statements.html#for_init) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *for 语句* → **for** **(** [*for 初始条件*](../chapter3/10_Statements.html#for_init) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **;** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_ **)** [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *for 初始条件* → [*变量声明*](../chapter3/05_Declarations.html#variable_declaration) | [*表达式集*](../chapter3/04_Expressions.html#expression_list)
+>
+> *循环语句* → [for-in 语句](./05_Statements.md#for_in_statement)
+>
+> *循环语句* → [while 语句](./05_Statements.md#wheetatype 类型 ile_statement)
+>
+> *循环语句* → [repeat-while 语句](./05_Statements.md#do_while_statement)
+>
 
 <!-- -->
 
 > For-In 循环语法
-> 
-> *for-in 语句* → **for case** _可选_ [*模式*](../chapter3/07_Patterns.html#pattern) **in** [*表达式*](../chapter3/04_Expressions.html#expression) [*代码块*](../chapter3/05_Declarations.html#code_block) [*where 从句*](TODO) _可选_
+>
+> *for-in 语句* → **for case**<sub>可选</sub> [模式](./08_Patterns.md#pattern) **in** [表达式](./04_Expressions.md#expression) [where 子句](./05_Statements.md#where_clause)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)
+>
 
 <!-- -->
 
 > While 循环语法
-> 
-> *while 语句* → **while** [*条件从句*](../chapter3/10_Statements.html#while_condition) [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *条件从句* → [*表达式*](TODO)
-> *条件从句* → [*表达式*](TODO) *,* [*表达式集*]()
-> *条件从句* → [*表达式集*](TODO)
-> *条件从句* → [*可用条件（availability-condition*）](TODO) *|* [*表达式集*]()
-> *条件集* → [*条件*](TODO) *|* [*条件*](TODO) *,* [*条件集*]()
-> *条件* → [*可用条件（availability-condition）*](TODO) *|* [*个例条件（case-condition）*](TODO) *|* [*可选绑定条件（optional-binding-condition）*](TODO)
-> *个例条件（case-condition）* → **case** [*模式*](TODO) [*构造器*](TODO) [*where 从句*](TODO)_可选_
-> *可选绑定条件（optional-binding-condition）* → [*可选绑定头（optional-binding-head）*](TODO) [*可选绑定连续集（optional-binding-continuation-list）*](TODO) _可选_ [*where 从句*](TODO) _可选_
-> *可选绑定头（optional-binding-head）* → **let** [*模式 构造器*](TODO) *|* **var**  [*模式 构造器*](TODO)
-> *可选绑定连续集（optional-binding-contiuation-list）* → [*可选绑定连续（optional-binding-contiuation）*](TODO) *|* [*可选绑定连续（optional-binding-contiuation）*](TODO) *，* [*可选绑定连续集（optional-binding-contiuation-list）*](TODO)
-> *可选绑定连续（optional-binding-continuation）* → [*模式 构造器*](TODO) *|* [*可选绑定头（optional-binding-head）*](TODO)
+>
+> *while 语句* → **while** [条件集](./05_Statements.md#condition_list) [代码块](./06_Declarations.md#code_block)
+>
+> *条件集* → [条件](./05_Statements.md#condition) | [条件](./05_Statements.md#condition) **,** [条件集](./05_Statements.md#condition_list)
+> *条件* → [表达式](./04_Expressions.md#expression) | [可用性条件](./05_Statements.md#availability_condition) | [case 条件](./05_Statements.md#case_condition) | [可选绑定条件](./05_Statements.md#optional_binding_condition)
+>
+> *case 条件* → **case** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
+>
+> *可选绑定条件* → **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer) | **var** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
+>
 
 <!-- -->
 > Repeat-While 语句语法
-> 
-*repeat-while-statement* → **repeat** [*代码块*](TODO) **while** [*表达式*](TODO)
+>
+*repeat-while-statement* → **repeat** [代码块](./06_Declarations.md#code_block) **while** [表达式](./04_Expressions.md#expression)
 
 <!-- -->
 
 > 分支语句语法
-> 
-> *分支语句* → [*if 语句*](../chapter3/10_Statements.html#if_statement)
-> *分支语句* → [*guard 语句*](TODO)
-> *分支语句* → [*switch 语句*](../chapter3/10_Statements.html#switch_statement)
+>
+> *分支语句* → [if 语句](./05_Statements.md#if_statement)
+>
+> *分支语句* → [guard 语句](./05_Statements.md#guard_statement)
+>
+> *分支语句* → [switch 语句](./05_Statements.md#switch_statement)
+>
 
 <!-- -->
 
 > If 语句语法
-> 
-> *if 语句* → **if** [*条件从句*](TODO) [*代码块*](TODO) [*else 从句（Clause）*](TODO) _可选_
-> *else 从句（Clause）* → **else** [*代码块*](../chapter3/05_Declarations.html#code_block) | **else** [*if 语句*](../chapter3/10_Statements.html#if_statement)
+>
+> *if 语句* → **if** [条件集](./05_Statements.md#condition_list) [代码块](./06_Declarations.md#code_block) [else 子句](./05_Statements.md#else_clause)<sub>可选</sub>
+>
+> *else 子句* → **else** [代码块](./06_Declarations.md#code_block) | **else** [if 语句](./05_Statements.md#if_statement)
+>
 
 <!-- -->
 > Guard 语句语法
-> 
-> *guard 语句* → **guard** [*条件从句*](TODO) **else** [*代码块*](TODO)
+>
+> *guard 语句* → **guard** [条件集](./05_Statements.md#condition_list) **else** [代码块](./06_Declarations.md#code_block)
+>
 
 
 <!-- -->
 
 > Switch 语句语法
-> 
-> *switch 语句* → **switch** [*表达式*](../chapter3/04_Expressions.html#expression) **{** [*SwitchCase*](../chapter3/10_Statements.html#switch_cases) _可选_ **}**
-> *SwitchCase 集* → [*SwitchCase*](../chapter3/10_Statements.html#switch_case) [*SwitchCase 集*](../chapter3/10_Statements.html#switch_cases) _可选_
-> *SwitchCase* → [*case 标签*](../chapter3/10_Statements.html#case_label) [*多条语句（Statements）*](../chapter3/10_Statements.html#statements) | [*default 标签*](../chapter3/10_Statements.html#default_label) [*多条语句（Statements）*](../chapter3/10_Statements.html#statements)
-> *SwitchCase* → [*case 标签*](../chapter3/10_Statements.html#case_label) **;** | [*default 标签*](../chapter3/10_Statements.html#default_label) **;**
-> *case 标签* → **case** [*case 项集*](../chapter3/10_Statements.html#case_item_list) **:**
-> *case 项集* → [*模式*](../chapter3/07_Patterns.html#pattern) [*where-clause*](../chapter3/10_Statements.html#guard_clause) _可选_ | [*模式*](../chapter3/07_Patterns.html#pattern) [*where-clause*](../chapter3/10_Statements.html#guard_clause) _可选_ **,** [*case 项集*](../chapter3/10_Statements.html#case_item_list)
-> *default 标签* → **default** **:**
-> *where 从句* → **where** [*where 表达式*](TODO)
-> *where 表达式* → [*表达式*](TODO)
+>
+> *switch 语句* → **switch** [表达式](./04_Expressions.md#expression) **{** [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub> **}**
+>
+> *switch-case集* → [switch-case](./05_Statements.md#switch_case) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+> *switch-case* → [case 标签](./05_Statements.md#case_label) [语句集](./05_Statements.md#statements)
+>
+> *switch-case* → [default 标签](./05_Statements.md#default_label) [语句集](./05_Statements.md#statements)
+>
+> *switch-case* → [条件 switch-case](./05_Statements.md#conditional_switch_case)
+>
+> *case 标签* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **case** [case 项集](./05_Statements.md#case_item_list) **:**
+>
+> *case 项集* → [模式](./08_Patterns.md#pattern) [where 子句](./05_Statements.md#where_clause)<sub>可选</sub> | [模式](./08_Patterns.md#pattern) [where 子句](./05_Statements.md#guard_clause)<sub>可选</sub> **,** [case 项集](./05_Statements.md#case_item_list)
+>
+> *default 标签* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **default** **:**
+>
+> *where 子句* → **where** [where 表达式](./05_Statements.md#where_expression)
+>
+> *where 表达式* → [表达式](./04_Expressions.md#expression)
+>
+> *条件 switch-case* → [switch if 指令子句](./05_Statements.md#switch_if_directive_clause) [switch elseif 指令子句集](./05_Statements.md#switch_elseif_directive_clauses)<sub>可选</sub> [switch else 指令子句](./05_Statements.md#switch_else_directive_clause)<sub>可选</sub> [endif 指令](./05_Statements.md#endif_directive)
+>
+> *switch if 指令子句* → [if 指令](./05_Statements.md#if_directive) [编译条件](./05_Statements.md#compilation_condition) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+> *switch elseif 指令子句集* → [elseif 指令子句](./05_Statements.md#else_if_directive_clause) [switch elseif 指令子句集](./05_Statements.md#switch_elseif_directive_clauses)<sub>可选</sub>
+>
+> *switch elseif 指令子句* → [elseif 指令](./05_Statements.md#elseif_directive) [编译条件](./05_Statements.md#compilation_condition) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
+> *switch else 指令子句* → [else 指令](./05_Statements.md#else_directive) [switch-case集](./05_Statements.md#switch_cases)<sub>可选</sub>
+>
 
 <!-- -->
 
-> 标记语句语法
-> 
-> *标记语句（Labeled Statement）* → [*语句标签*](../chapter3/10_Statements.html#statement_label) [*循环语句*](../chapter3/10_Statements.html#loop_statement) | [*语句标签*](../chapter3/10_Statements.html#statement_label) [*if 语句*](../chapter3/10_Statements.html#switch_statement) | [*语句标签*](TODY) [*switch 语句*](TODY)
-> *语句标签* → [*标签名称*](../chapter3/10_Statements.html#label_name) **:**
-> *标签名称* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
+> 标签语句语法
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [循环语句](./05_Statements.md#loop_statement)
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [if 语句](./05_Statements.md#if_statement)
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [switch 语句](./05_Statements.md#switch_statement)
+>
+> *标签语句* → [语句标签](./05_Statements.md#statement_label) [do 语句](./05_Statements.md#do_statement)
+>
+> *语句标签* → [标签名称](./05_Statements.md#label_name) **:**
+>
+> *标签名称* → [标识符](./02_Lexical_Structure.md#identifier)
+>
 
 <!-- -->
 
-> 控制传递语句（Control Transfer Statement）语法
-> 
-> *控制传递语句* → [*break 语句*](../chapter3/10_Statements.html#break_statement)
-> *控制传递语句* → [*continue 语句*](../chapter3/10_Statements.html#continue_statement)
-> *控制传递语句* → [*fallthrough 语句*](../chapter3/10_Statements.html#fallthrough_statement)
-> *控制传递语句* → [*return 语句*](../chapter3/10_Statements.html#return_statement)
-> *控制传递语句* → [*throw 语句*](TODO)
+> 控制转移语句语法
+>
+> *控制转移语句* → [break 语句](./05_Statements.md#break_statement)
+>
+> *控制转移语句* → [continue 语句](./05_Statements.md#continue_statement)
+>
+> *控制转移语句* → [fallthrough 语句](./05_Statements.md#fallthrough_statement)
+>
+> *控制转移语句* → [return 语句](./05_Statements.md#return_statement)
+>
+> *控制转移语句* → [throw 语句](./05_Statements.md#throw_statement)
+>
 
 <!-- -->
 
 > Break 语句语法
-> 
-> *break 语句* → **break** [*标签名称*](../chapter3/10_Statements.html#label_name) _可选_
+>
+> *break 语句* → **break** [标签名称](./05_Statements.md#label_name)<sub>可选</sub>
+>
 
 <!-- -->
 
 > Continue 语句语法
-> 
-> *continue 语句* → **continue** [*标签名称*](../chapter3/10_Statements.html#label_name) _可选_
+>
+> *continue 语句* → **continue** [标签名称](./05_Statements.md#label_name)<sub>可选</sub>
+>
 
 <!-- -->
 
 > Fallthrough 语句语法
-> 
+>
 > *fallthrough 语句* → **fallthrough**
+>
 
 <!-- -->
 
 > Return 语句语法
-> 
-> *return 语句* → **return** [*表达式*](../chapter3/04_Expressions.html#expression) _可选_
-
-<!-- -->
-> 可用条件（Availability Condition）语法
-> 
-> *可用条件（availability-condition）* → **#available** **(** [*多可用参数*(availability-arguments)](TODO) **)**
-> *多可用参数（availability- arguments）* → [*可用参数（availability-argument）*](TODO)|[*可用参数（availability-argument）*](TODO) , [多可用参数（availability-arguments）](TODO)
-> *可用参数（availability- argument）* → [*平台名（platform-name）*](TODO) [*平台版本（platform-version）*](TODO)
-> *可用参数（availability- argument）* → *
-> 
-> *平台名* → **iOS** | **iOSApplicationExtension**
-> *平台名* → **OSX** | **macOSApplicationExtension**
-> *平台名* → **watchOS**
-> *平台名* → **tvOS**
-> *平台版本* → [*十进制数（decimal-digits）*](TODO)
-> *平台版本* → [*十进制数（decimal-digits）*](TODO) . [*十进制数（decimal-digits）*](TODO)
-> *平台版本* → [*十进制数（decimal-digits）*](TODO) **.** [*十进制数（decimal-digits）*](TODO) **.** [*十进制数（decimal-digits)*](TODO))
-
-<!-- -->
-> 抛出语句（Throw Statement）语法
-> 
-> *抛出语句（throw-statement）* → **throw** [*表达式（expression）*](TODO)
-
-<!-- -->
-> 延迟语句（defer-statement）语法
-> 
-> *延迟语句（defer-statement）* → **defer** [*代码块*](TODO)
-
-<!-- -->
-> 执行语句（do-statement）语法
-> 
-> *执行语句（do-statement）* → **do** [*代码块*](TODO) [*catch-clauses*](TODO) _可选_
-> *catch-clauses* → [*catch-clause*](TODO) [*catch-clauses*](TODO) _可选_
-> *catch-clauses* → **catch** [*模式（pattern）*](TODO) _可选_  [*where-clause*](TODO) _可选_ [*代码块（code-block）*](TODO) _可选_
-
-<a name="generic_parameters_and_arguments"></a>
-## 泛型参数
-
-> 泛型形参从句（Generic Parameter Clause）语法
 >
-> *泛型参数从句* → **<** [*泛型参数集*](GenericParametersAndArguments.html#generic_parameter_list) [*约束从句*](GenericParametersAndArguments.html#requirement_clause) _可选_ **>**
-> *泛型参数集* → [*泛形参数*](GenericParametersAndArguments.html#generic_parameter) | [*泛形参数*](GenericParametersAndArguments.html#generic_parameter) **,** [*泛型参数集*](GenericParametersAndArguments.html#generic_parameter_list)
-> *泛形参数* → [*类型名称*](../chapter3/03_Types.html#type_name)
-> *泛形参数* → [*类型名称*](../chapter3/03_Types.html#type_name) **:** [*类型标识*](../chapter3/03_Types.html#type_identifier)
-> *泛形参数* → [*类型名称*](../chapter3/03_Types.html#type_name) **:** [*协议合成类型*](../chapter3/03_Types.html#protocol_composition_type)
-> *约束从句* → **where** [*约束集*](GenericParametersAndArguments.html#requirement_list)
-> *约束集* → [*约束*](GenericParametersAndArguments.html#requirement) | [*约束*](GenericParametersAndArguments.html#requirement) **,** [*约束集*](GenericParametersAndArguments.html#requirement_list)
-> *约束* → [*一致性约束*](GenericParametersAndArguments.html#conformance_requirement) | [*同类型约束*](GenericParametersAndArguments.html#same_type_requirement)
-> *一致性约束* → [*类型标识*](../chapter3/03_Types.html#type_identifier) **:** [*类型标识*](../chapter3/03_Types.html#type_identifier)
-> *一致性约束* → [*类型标识*](../chapter3/03_Types.html#type_identifier) **:** [*协议合成类型*](../chapter3/03_Types.html#protocol_composition_type)
-> *同类型约束* → [*类型标识*](../chapter3/03_Types.html#type_identifier) **==** [*类型*](../chapter3/03_Types.html#type_identifier)
+> *return 语句* → **return** [表达式](./04_Expressions.md#expression)<sub>可选</sub>
+>
 
 <!-- -->
 
-> 泛型实参从句语法
-> 
-> *(泛型参数从句 Generic Argument Clause)* → **<** [*泛型参数集*](GenericParametersAndArguments.html#generic_argument_list) **>**
-> *泛型参数集* → [*泛型参数*](GenericParametersAndArguments.html#generic_argument) | [*泛型参数*](GenericParametersAndArguments.html#generic_argument) **,** [*泛型参数集*](GenericParametersAndArguments.html#generic_argument_list)
-> *泛型参数* → [*类型*](../chapter3/03_Types.html#type)
+> Throw 语句语法
+>
+> *throw 语句* → **throw** [表达式](./04_Expressions.md#expression)
+>
 
-<a name="declarations"></a>
-## 声明（Declarations）
+<!-- -->
+
+> Defer 语句语法
+>
+> *defer 语句* → **defer** [代码块](./06_Declarations.md#code_block)
+>
+
+<!-- -->
+> Do 语句语法
+>
+> *do 语句* → **do** [代码块](./06_Declarations.md#code_block) [catch 子句集](./05_Statements.md#catch_clauses)<sub>可选</sub>
+>
+> *catch 子句集* → [catch 子句](./05_Statements.md#catch_clause) [catch 子句集](05_Statements.md#catch_clauses)<sub>可选</sub>
+>
+> *catch 子句* → **catch** [模式](./08_Patterns.md#pattern)<sub>可选</sub>  [where 子句](./05_Statements.md#where_clause)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)<sub>可选</sub>
+>
+
+<!-- -->
+> 编译控制语句
+>
+> *编译控制语句* → [条件编译块](./05_Statements.md#conditional_complation_block)
+>
+> *编译控制语句* → [行控制语句](./05_Statements.md#line_control_statement)
+>
+> *编译控制语句* → [诊断语句](./05_Statements.md#diagnostic_statement)
+>
+
+<!-- -->
+> 条件编译块语法
+>
+> *条件编译块* → [if 指令子句](./05_Statements.md#if_directive_clause) [elseif 指令子句集](./05_Statements.md#elseif_directive_clauses)<sub>可选</sub> [else 指令子句](./05_Statements.md#else_directive_clause)<sub>可选</sub> [endif 指令](./05_Statements.md#endif_directive)
+>
+> *if 指令子句* → [if 指令](./05_Statements.md#if_directive) [编译条件](./05_Statements.md#compilation_condition) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+> *elseif 指令子句集* → [elseif 指令子句](./05_Statements.md#else_if_directive_clause) [elseif 指令子句集](./05_Statements.md#elseif_directive_clauses)<sub>可选</sub>
+>
+> *elseif 指令子句* → [elseif 指令](./05_Statements.md#elseif_directive) [编译条件](./05_Statements.md#compilation_condition) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+> *else 指令子句* → [else 指令](./05_Statements.md#else_directive) [语句集](./05_Statements.md#statements)<sub>可选</sub>
+>
+> *if 指令* → **#if**
+>
+> *elseif 指令* → **#elseif**
+>
+> *else 指令* → **#else**
+>
+> *endif 指令* → **#endif**
+>
+> *编译条件* → [平台条件](./05_Statements.md#platform_condition)
+>
+> *编译条件* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *编译条件* → [布尔字面量](./02_Lexical_Structure.md#boolean_literal)
+>
+> *编译条件* → **(** [编译条件](./05_Statements.md#compilation_condition) **)**
+>
+> *编译条件* → **!** [编译条件](./05_Statements.md#compilation_condition)
+>
+> *编译条件* → [编译条件](./05_Statements.md#compilation_condition) **&&** [编译条件](./05_Statements.md#compilation_condition)
+>
+> *编译条件* → [编译条件](./05_Statements.md#compilation_condition) **||** [编译条件](./05_Statements.md#compilation_condition)
+>
+> *平台条件* → **os** **(** [操作系统](./05_Statements.md#operating_system) **)**
+>
+> *平台条件* → **arch** **(** [架构](./05_Statements.md#architecture) **)**
+>
+> *平台条件* → **swift** **(** **>=** [swift 版本](./05_Statements.md#swift_version) **)** | **swift** **(** **<** [swift 版本](./05_Statements.md#swift_version) **)**
+>
+> *平台条件* → **compiler** **(** **>=** [swift 版本](./05_Statements.md#swift_version) **)** | **compiler** **(** **<** [swift 版本](./05_Statements.md#swift_version) **)**
+>
+> *平台条件* → **canImport** **(** [模块名](./05_Statements.md#module_name) **)**
+>
+> *平台条件* → **targetEnvironment** **(** [环境](./05_Statements.md#environment) **)**
+>
+> *操作系统* → **macOS** | **iOS** | **watchOS** | **tvOS**
+>
+> *架构* → **i386** | **x86_64** | **arm** | **arm64**
+>
+> *swift 版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits) [swift 版本后缀](./05_Statements.md#swift_version_continuation)<sub>可选</sub>
+>
+> *swift 版本后缀* → **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits) [swift 版本集](./05_Statements.md#swift_version_continuation)<sub>可选</sub>
+>
+> *模块名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *环境* → **simulator**
+>
+
+<!-- -->
+> 行控制语句语法
+>
+> *行控制语句* → **#sourceLocation** **(** **file:** [文件名](./05_Statements.md#file_name) **,** **line:**  [行号](./05_Statements.md#line_number) **)**
+>
+> *行控制语句* → **#sourceLocation** **(** **)**
+>
+> *行号* → 一个大于 0 的十进制数字
+>
+> *文件名* → [静态字符串字面量](./02_Lexical_Structure.md#static_string_literal)
+>
+
+<!-- -->
+> 编译期诊断语句语法
+>
+> *诊断语句* → **#error** **(** [诊断信息](./05_Statements.md#diagnostic_message) **)**
+>
+> *诊断语句* → **#warning** **(** [诊断信息](./05_Statements.md#diagnostic_message) **)**
+>
+> *诊断信息* → [静态字符串字面量](./02_Lexical_Structure.md#static_string_literal)
+>
+
+<!-- -->
+> 可用性条件语法
+>
+> *可用性条件* → **#available** **(** [可用性参数集](./05_Statements.md#availability_arguments) **)**
+>
+> *可用性参数集* → [可用性参数](./05_Statements.md#availability_argument) | [可用性参数](./05_Statements.md#availability_argument) , [可用性参数集）](./05_Statements.md#availability_arguments)
+>
+> *可用性参数* → [平台名](./05_Statements.md#platform_name) [平台版本](./05_Statements.md#platform_version)
+>
+> *可用性参数* → **\***
+>
+> *平台名* → **iOS** | **iOSApplicationExtension**
+>
+> *平台名* → **macOS** | **macOSApplicationExtension**
+>
+> *平台名* → **watchOS**
+>
+> *平台名* → **tvOS**
+>
+> *平台版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
+> *平台版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits) **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
+> *平台版本* → [十进制数字集](./02_Lexical_Structure.md#decimal_digits) **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits) **.** [十进制数字集](./02_Lexical_Structure.md#decimal_digits)
+>
+
+## 声明 {#declarations}
 
 > 声明语法
-> 
-> *声明* → [*导入声明*](../chapter3/05_Declarations.html#import_declaration)
-> *声明* → [*常量声明*](../chapter3/05_Declarations.html#constant_declaration)
-> *声明* → [*变量声明*](../chapter3/05_Declarations.html#variable_declaration)
-> *声明* → [*类型别名声明*](../chapter3/05_Declarations.html#typealias_declaration)
-> *声明* → [*函数声明*](../chapter3/05_Declarations.html#function_declaration)
-> *声明* → [*枚举声明*](../chapter3/05_Declarations.html#enum_declaration)
-> *声明* → [*结构体声明*](../chapter3/05_Declarations.html#struct_declaration)
-> *声明* → [*类声明*](../chapter3/05_Declarations.html#class_declaration)
-> *声明* → [*协议声明*](../chapter3/05_Declarations.html#protocol_declaration)
-> *声明* → [*构造器声明*](../chapter3/05_Declarations.html#initializer_declaration)
-> *声明* → [*析构器声明*](../chapter3/05_Declarations.html#deinitializer_declaration)
-> *声明* → [*扩展声明*](../chapter3/05_Declarations.html#extension_declaration)
-> *声明* → [*下标声明*](../chapter3/05_Declarations.html#subscript_declaration)
-> *声明* → [*运算符声明*](../chapter3/05_Declarations.html#operator_declaration)
-> *声明（Declarations）集* → [*声明*](../chapter3/05_Declarations.html#declaration) [*声明（Declarations）集*](../chapter3/05_Declarations.html#declarations) _可选_
+>
+> *声明* → [导入声明](./06_Declarations.md#import_declaration)
+>
+> *声明* → [常量声明](./06_Declarations.md#constant_declaration)
+>
+> *声明* → [变量声明](./06_Declarations.md#variable_declaration)
+>
+> *声明* → [类型别名声明](./06_Declarations.md#typealias_declaration)
+>
+> *声明* → [函数声明](./06_Declarations.md#function_declaration)
+>
+> *声明* → [枚举声明](./06_Declarations.md#enum_declaration)
+>
+> *声明* → [结构体声明](./06_Declarations.md#struct_declaration)
+>
+> *声明* → [类声明](./06_Declarations.md#class_declaration)
+>
+> *声明* → [协议声明](./06_Declarations.md#protocol_declaration)
+>
+> *声明* → [构造器声明](./06_Declarations.md#initializer_declaration)
+>
+> *声明* → [析构器声明](./06_Declarations.md#deinitializer_declaration)
+>
+> *声明* → [扩展声明](./06_Declarations.md#extension_declaration)
+>
+> *声明* → [下标声明](./06_Declarations.md#subscript_declaration)
+>
+> *声明* → [运算符声明](./06_Declarations.md#operator_declaration)
+>
+> *声明* → [优先级组声明](./06_Declarations.md#precedence_group_declaration)
+>
+> *声明集* → [声明](./06_Declarations.md#declaration) [声明集](./06_Declarations.md#declarations)<sub>可选</sub>
+>
 
 
 <!-- -->
 
-> 顶级（Top Level）声明语法
-> 
-> *顶级声明* → [*多条语句（Statements）*](../chapter3/10_Statements.html#statements) _可选_
+> 顶级声明语法
+>
+> *顶级声明* → [多条语句](./05_Statements.md#statements)<sub>可选</sub>
+>
 
 <!-- -->
 
 > 代码块语法
-> 
-> *代码块* → **{** [*多条语句（Statements）*](../chapter3/10_Statements.html#statements) _可选_ **}**
+>
+> *代码块* → **{** [多条语句](./05_Statements.md#statements)<sub>可选</sub> **}**
+>
 
 <!-- -->
 
-> 导入（Import）声明语法
-> 
-> *导入声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **import** [*导入类型*](../chapter3/05_Declarations.html#import_kind) _可选_ [*导入路径*](../chapter3/05_Declarations.html#import_path)
-> *导入类型* → **typealias** | **struct** | **class** | **enum** | **protocol** | **var** | **func**
-> *导入路径* → [*导入路径标识符*](../chapter3/05_Declarations.html#import_path_identifier) | [*导入路径标识符*](../chapter3/05_Declarations.html#import_path_identifier) **.** [*导入路径*](../chapter3/05_Declarations.html#import_path)
-> *导入路径标识符* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) | [*运算符*](../chapter3/02_Lexical_Structure.html#operator)
+> 导入声明语法
+>
+> *导入声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **import** [导入类型](./06_Declarations.md#import_kind)<sub>可选</sub> [导入路径](./06_Declarations.md#import_path)
+>
+> *导入类型* → **typealias** | **struct** | **class** | **enum** | **protocol** | **let** | **var** | **func**
+>
+> *导入路径* → [导入路径标识符](./06_Declarations.md#import_path_identifier) | [导入路径标识符](./06_Declarations.md#import_path_identifier) **.** [导入路径](./06_Declarations.md#import_path)
+>
+> *导入路径标识符* → [标识符](./02_Lexical_Structure.md#identifier) | [运算符](./02_Lexical_Structure.md#operator)
+>
 
 <!-- -->
 
 > 常数声明语法
-> 
-> *常量声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改符（Modifiers）集*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **let** [*模式构造器集*](../chapter3/05_Declarations.html#pattern_initializer_list)
-> *模式构造器集* → [*模式构造器*](../chapter3/05_Declarations.html#pattern_initializer) | [*模式构造器*](../chapter3/05_Declarations.html#pattern_initializer)    **,** [*模式构造器集*](../chapter3/05_Declarations.html#pattern_initializer_list)
-> *模式构造器* → [*模式*](../ chapter3/07_Patterns.html#pattern) [*构造器*](../chapter3/05_Declarations.html#initializer) _可选_
-> *构造器* → **=** [*表达式*](../chapter3/04_Expressions.html#expression)
+>
+> *常量声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明修饰符集](./06_Declarations.md#declaration_specifiers)<sub>可选</sub> **let** [模式构造器集](./06_Declarations.md#pattern_initializer_list)
+>
+> *模式构造器集* → [模式构造器](./06_Declarations.md#pattern_initializer) | [模式构造器](./06_Declarations.md#pattern_initializer)    **,** [模式构造器集](./06_Declarations.md#pattern_initializer_list)
+>
+> *模式构造器* → [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)<sub>可选</sub>
+>
+> *构造器* → **=** [表达式](./04_Expressions.md#expression)
+>
 
 <!-- -->
 
 > 变量声明语法
-> 
-> *变量声明* → [*变量声明头（Head）*](../chapter3/05_Declarations.html#variable_declaration_head) [*模式构造器集*](../chapter3/05_Declarations.html#pattern_initializer_list)
-> *变量声明* → [*变量声明头（Head）*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型注解*](../chapter3/03_Types.html#type_annotation) [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *变量声明* → [*变量声明头（Head）*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型注解*](../chapter3/03_Types.html#type_annotation) [*getter-setter 块*](../chapter3/05_Declarations.html#getter_setter_block)
-> *变量声明* → [*变量声明头（Head）*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型注解*](../chapter3/03_Types.html#type_annotation) [*getter-setter 关键字（Keyword）块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)
-> *变量声明* → [*变量声明头（Head）*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型注解*](../chapter3/03_Types.html#type_annotation) [*构造器*](../chapter3/05_Declarations.html#initializer) _可选_ [*willSet-didSet 代码块*](../chapter3/05_Declarations.html#willSet_didSet_block)
-> *变量声明头（Head）* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改符（Modifers）集*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **var**
-> *变量名称* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *getter-setter 块* → **{** [*getter 从句*](../chapter3/05_Declarations.html#getter_clause) [*setter 从句*](../chapter3/05_Declarations.html#setter_clause) _可选_ **}**
-> *getter-setter 块* → **{** [*setter 从句*](../chapter3/05_Declarations.html#setter_clause) [*getter 从句*](../chapter3/05_Declarations.html#getter_clause) **}**
-> *getter 从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **get**  [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *setter 从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **set** [*setter 名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *setter 名称* → **(** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) **)**
-> *getter-setter 关键字（Keyword）块* → **{** [*getter 关键字（Keyword）从句*](../chapter3/05_Declarations.html#getter_keyword_clause) [*setter 关键字（Keyword）从句*](../chapter3/05_Declarations.html#setter_keyword_clause) _可选_ **}**
-> *getter-setter 关键字（Keyword）块* → **{** [*setter 关键字（Keyword）从句*](../chapter3/05_Declarations.html#setter_keyword_clause) [*getter 关键字（Keyword）从句*](../chapter3/05_Declarations.html#getter_keyword_clause) **}**
-> *getter 关键字（Keyword）从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **get**
-> *setter 关键字（Keyword）从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **set**
-> *willSet-didSet 代码块* → **{** [*willSet 从句*](../chapter3/05_Declarations.html#willSet_clause) [*didSet 从句*](../chapter3/05_Declarations.html#didSet_clause) _可选_ **}**
-> *willSet-didSet 代码块* → **{** [*didSet 从句*](../chapter3/05_Declarations.html#didSet_clause) [*willSet 从句*](../chapter3/05_Declarations.html#willSet_clause) **}**
-> *willSet 从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **willSet** [*setter 名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *didSet 从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_
- **didSet** [*setter 名称*](../chapter3/05_Declarations.html#setter_name) _可选_ [*代码块*](../chapter3/05_Declarations.html#code_block)
+>
+> *变量声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [模式构造器集](./06_Declarations.md#pattern_initializer_list)
+>
+> *变量声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [变量名](./06_Declarations.md#variable_name) [类型注解](./03_Types.md#type_annotation) [代码块](./06_Declarations.md#code_block)
+>
+> *变量声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [变量名](./06_Declarations.md#variable_name) [类型注解](./03_Types.md#type_annotation) [getter-setter 块](./06_Declarations.md#getter_setter_block)
+>
+> *变量声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [变量名](./06_Declarations.md#variable_name) [类型注解](./03_Types.md#type_annotation) [getter-setter 关键字块](./06_Declarations.md#getter_setter_keyword_block)
+>
+> *变量声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [变量名](./06_Declarations.md#variable_name) [构造器](./06_Declarations.md#initializer)<sub>可选</sub> [willSet-didSet 代码块](./06_Declarations.md#willSet_didSet_block)
+>
+> *变量声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [变量名](./06_Declarations.md#variable_name) [类型注解](./03_Types.md#type_annotation) [构造器](./06_Declarations.md#initializer)<sub>可选</sub> [willSet-didSet 代码块](./06_Declarations.md#willSet_didSet_block)
+>
+> *变量声明头* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明修饰符集](./06_Declarations.md#declaration_specifiers)<sub>可选</sub> **var**
+>
+> *变量名称* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *getter-setter 块* → [代码块](./06_Declarations.md#code_block)
+>
+> *getter-setter 块* → **{** [getter 子句](./06_Declarations.md#getter_keyword_clause) [setter 子句](./06_Declarations.md#setter_keyword_clause)<sub>可选</sub> **}**
+>
+> *getter-setter 块* → **{** [setter 子句](./06_Declarations.md#setter_keyword_clause) [getter 子句](./06_Declarations.md#getter_keyword_clause) **}**
+>
+> *getter 子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [可变性修饰符](./06_Declarations.md#mutation-modifier)<sub>可选</sub>  **get**  [代码块](./06_Declarations.md#code_block)
+>
+> *setter 子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [可变性修饰符](./06_Declarations.md#mutation-modifier)<sub>可选</sub> **set** [setter 名称](./06_Declarations.md#setter_name)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)
+>
+> *setter 名称* → **(** [标识符](./02_Lexical_Structure.md#identifier) **)**
+>
+> *getter-setter 关键字（Keyword）块* → **{** [getter 关键字子句](./06_Declarations.md#getter_keyword_clause) [setter 关键字子句](./06_Declarations.md#setter_keyword_clause)<sub>可选</sub> **}**
+>
+> *getter-setter 关键字（Keyword）块* → **{** [setter 关键字子句](./06_Declarations.md#setter_keyword_clause) [getter 关键字子句](./06_Declarations.md#getter_keyword_clause) **}**
+>
+> *getter 关键字（Keyword）子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [可变性修饰符](./06_Declarations.md#mutation-modifier)<sub>可选</sub> **get**
+>
+> *setter 关键字（Keyword）子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [可变性修饰符](./06_Declarations.md#mutation-modifier)<sub>可选</sub> **set**
+>
+> *willSet-didSet 代码块* → **{** [willSet 子句](./06_Declarations.md#willSet_clause) [didSet 子句](./06_Declarations.md#didSet_clause)<sub>可选</sub> **}**
+>
+> *willSet-didSet 代码块* → **{** [didSet 子句](./06_Declarations.md#didSet_clause) [willSet 子句](./06_Declarations.md#willSet_clause)<sub>可选</sub> **}**
+>
+> *willSet 子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **willSet** [setter 名称](./06_Declarations.md#setter_name)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)
+>
+> *didSet 子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub>
+>
+ **didSet** [setter 名称](./06_Declarations.md#setter_name)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)
 
 <!-- -->
 
 > 类型别名声明语法
-> 
-> *类型别名声明* → [*类型别名头（Head）*](../chapter3/05_Declarations.html#typealias_head) [*类型别名赋值*](../chapter3/05_Declarations.html#typealias_assignment)
-> *类型别名头（Head）* → [*属性*](TODO) _可选_ [*访问级别修改符（access-level-modifier）*](TODO) **typealias** [*类型别名名称*](../chapter3/05_Declarations.html#typealias_name)
-> *类型别名名称* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *类型别名赋值* → **=** [*类型*](../chapter3/03_Types.html#type)
+>
+> *类型别名声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier) **typealias** [类型别名名称](./06_Declarations.md#typealias_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [类型别名赋值](./06_Declarations.md#typealias_assignment)
+>
+> *类型别名名称* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *类型别名赋值* → **=** [类型](./03_Types.md#type)
+>
 
 <!-- -->
 
 > 函数声明语法
-> 
-> *函数声明* → [*函数头*](../chapter3/05_Declarations.html#function_head) [*函数名*](../chapter3/05_Declarations.html#function_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名（Signature）*](../chapter3/05_Declarations.html#function_signature) [*函数体*](../chapter3/05_Declarations.html#function_body)
-> *函数头* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明描述符（Specifiers）集*](../chapter3/05_Declarations.html#declaration_specifiers) _可选_ **func**
-> *函数名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) | [*运算符*](../chapter3/02_Lexical_Structure.html#operator)
-> *函数签名（Signature）* → [*parameter-clauses*](../chapter3/05_Declarations.html#parameter_clauses) **throws** _可选_ [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_
+>
+> *函数声明* → [函数头](./06_Declarations.md#function_head) [函数名](./06_Declarations.md#function_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [函数签名](./06_Declarations.md#function_signature) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [函数体](./06_Declarations.md#function_body)<sub>可选</sub>
+>
+> *函数头* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明描述符集](./06_Declarations.md#declaration_specifiers)<sub>可选</sub> **func**
+>
+> *函数名* → [标识符](./02_Lexical_Structure.md#identifier) | [运算符](./02_Lexical_Structure.md#operator)
+>
+> *函数签名* → [参数子句](./06_Declarations.md#parameter_clause) **throws**<sub>可选</sub> [函数结果](./06_Declarations.md#function_result)<sub>可选</sub>
+>
 
-> *函数签名（Signature）* → [*parameter-clauses*](../chapter3/05_Declarations.html#parameter_clauses) **rethrows** [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_
-> *函数结果* → **->** [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)
-> *函数体* → [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *参数从句* → [*参数从句*](../chapter3/05_Declarations.html#parameter_clause)  [*parameter-clauses*](../chapter3/05_Declarations.html#parameter_clauses) _可选_
-> *参数从句* → **(** **)** | **(** [*参数集*](../chapter3/05_Declarations.html#parameter_list) **...** _可选_ **)**
-> *参数集* → [*参数*](../chapter3/05_Declarations.html#parameter) | [*参数*](../chapter3/05_Declarations.html#parameter) **,** [*参数集*](../chapter3/05_Declarations.html#parameter_list)
-> *参数* → **inout** _可选_ **let** _可选_ [*外部参数名*](../chapter3/05_Declarations.html#parameter_name) _可选_ [*本地参数名*](../chapter3/05_Declarations.html#local_parameter_name) _可选_ [*类型注解*](../chapter3/03_Types.html#type_annotation) [*默认参数从句*](../chapter3/05_Declarations.html#default_argument_clause) _可选_
-> *参数* → **inout** _可选_ **var** [*外部参数名*](../chapter3/05_Declarations.html#parameter_name) [*本地参数名*](../chapter3/05_Declarations.html#local_parameter_name) _可选_ [*类型注解*](../chapter3/03_Types.html#type_annotation) [*默认参数从句*](../chapter3/05_Declarations.html#default_argument_clause) _可选_
-> *参数* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)
-> *外部参数名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) | **_**
-> *本地参数名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) | **_**
-> *默认参数从句* → **=** [*表达式*](../chapter3/04_Expressions.html#expression)
+> *函数签名* → [参数子句](./06_Declarations.md#parameter_clause) **rethrows** [函数结果](./06_Declarations.md#function_result)<sub>可选</sub>
+>
+> *函数结果* → **->** [特性](./07_Attributes.md#attributes)<sub>可选</sub> [类型](./03_Types.md#type)
+>
+> *函数体* → [代码块](./06_Declarations.md#code_block)
+>
+> *参数子句* → **(** **)** | **(** [参数集](./06_Declarations.md#parameter_list) **)**
+>
+> *参数集* → [参数](./06_Declarations.md#parameter) | [参数](./06_Declarations.md#parameter) **,** [参数集](./06_Declarations.md#parameter_list)
+>
+> *参数* → [外部参数名](./06_Declarations.md#parameter_name)<sub>可选</sub> [本地参数名](./06_Declarations.md#local_parameter_name) [类型注解](./03_Types.md#type_annotation) [默认参数子句](./06_Declarations.md#default_argument_clause)<sub>可选</sub>
+>
+> *参数* → [外部参数名](./06_Declarations.md#parameter_name)<sub>可选</sub> [本地参数名](./06_Declarations.md#local_parameter_name) [类型注解](./03_Types.md#type_annotation)
+>
+> *参数* → [外部参数名](./06_Declarations.md#parameter_name)<sub>可选</sub> [本地参数名](./06_Declarations.md#local_parameter_name) [类型注解](./03_Types.md#type_annotation) **...**
+>
+> *外部参数名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *本地参数名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *默认参数子句* → **=** [表达式](./04_Expressions.md#expression)
+>
 
 <!-- -->
 
 > 枚举声明语法
-> 
-> *枚举声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修改器（access-level-modifier）*](TODO) _可选_ [*联合式枚举*](../chapter3/05_Declarations.html#union_style_enum)
-> *枚举声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修改器（access-level-modifier）*](TODO) _可选_ [*原始值式枚举（raw-value-style-enum）*](TODO)
-> *联合式枚举* → **enum** [*枚举名*](../chapter3/05_Declarations.html#enum_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承从句（type-inheritance-clause）*](TODO) _可选_ **{** [*联合样式枚举成员*](../chapter3/05_Declarations.html#union_style_enum_members) _可选_ **}**
-> *联合样式枚举成员* → [*union-style-enum-member*](../chapter3/05_Declarations.html#union_style_enum_member) [*联合样式枚举成员*](../chapter3/05_Declarations.html#union_style_enum_members) _可选_
-> *联合样式枚举成员* → [*声明*](../chapter3/05_Declarations.html#declaration) | [*联合式（Union Style）的枚举 case 从句*](../chapter3/05_Declarations.html#union_style_enum_case_clause)
-> *联合式（Union Style）的枚举 case 从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **case** [*联合式（Union Style）的枚举 case 集*](../chapter3/05_Declarations.html#union_style_enum_case_list)
-> *联合式（Union Style）的枚举 case 集* → [*联合式（Union Style）的 case*](../chapter3/05_Declarations.html#union_style_enum_case) | [*联合式（Union Style）的 case*](../chapter3/05_Declarations.html#union_style_enum_case) **,** [*联合式（Union Style）的枚举 case 集*](../chapter3/05_Declarations.html#union_style_enum_case_list)
-> *联合式（Union Style）的枚举 case* → [*枚举的 case 名*](../chapter3/05_Declarations.html#enum_case_name) [*元组类型*](../chapter3/03_Types.html#tuple_type) _可选_
-> *枚举名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *枚举的 case 名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *原始值式枚举* → **enum** [*枚举名*](../chapter3/05_Declarations.html#enum_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ **:** [*类型标识*](../chapter3/03_Types.html#type_identifier) **{** [*原始值式枚举成员集*](../chapter3/05_Declarations.html#raw_value_style_enum_members) _可选_ **}**
-> *原始值式枚举成员集* → [*原始值式枚举成员*](../chapter3/05_Declarations.html#raw_value_style_enum_member) [*原始值式枚举成员集*](../chapter3/05_Declarations.html#raw_value_style_enum_members) _可选_
-> *原始值式枚举成员* → [*声明*](../chapter3/05_Declarations.html#declaration) | [*原始值式枚举 case 从句*](../chapter3/05_Declarations.html#raw_value_style_enum_case_clause)
-> *原始值式枚举 case 从句* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **case** [*原始值式枚举 case 集*](../chapter3/05_Declarations.html#raw_value_style_enum_case_list)
-> *原始值式枚举 case 集* → [*原始值式枚举 case*](../chapter3/05_Declarations.html#raw_value_style_enum_case) | [*原始值式枚举 case*](../chapter3/05_Declarations.html#raw_value_style_enum_case) **,** [*原始值式枚举 case 集*](../chapter3/05_Declarations.html#raw_value_style_enum_case_list)
-> *原始值式枚举 case* → [*枚举的 case 名*](../chapter3/05_Declarations.html#enum_case_name) [*原始值赋值*](../chapter3/05_Declarations.html#raw_value_assignment) _可选_
-> *原始值赋值* → **=** [*字面量*](../chapter3/02_Lexical_Structure.html#literal)
-> *原始值字面量（raw-value-literal）* → [*数值字面量*](TODO) | [*字符串字面量*](TODO) | [*布尔字面量*](TODO)
+>
+> *枚举声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> [联合式枚举](./06_Declarations.md#union_style_enum)
+>
+> *枚举声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> [原始值式枚举](./06_Declarations.md#raw-value-style-enum)
+>
+> *联合式枚举* → **indirect**<sub>可选</sub> **enum** [枚举名](./06_Declarations.md#enum_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [类型继承子句](./03_Types.md#type-inheritance-clause)<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> **{** [联合式枚举成员](./06_Declarations.md#union_style_enum_members)<sub>可选</sub> **}**
+>
+> *联合式枚举成员集* → [联合式枚举成员](./06_Declarations.md#union_style_enum_member) [联合样式枚举成员集](./06_Declarations.md#union_style_enum_members)<sub>可选</sub>
+>
+> *联合样式枚举成员* → [声明](./06_Declarations.md#declaration) | [联合式枚举 case 子句](./06_Declarations.md#union_style_enum_case_clause) | [编译控制语句](./05_Statements.md#compiler-control-statement)
+>
+> *联合式枚举 case 子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **indirect**<sub>可选</sub> **case** [联合式枚举 case 集](./06_Declarations.md#union_style_enum_case_list)
+>
+> *联合式枚举 case 集* → [联合式枚举 case](./06_Declarations.md#union_style_enum_case) | [联合式枚举 case](./06_Declarations.md#union_style_enum_case) **,** [联合式枚举 case 集](./06_Declarations.md#union_style_enum_case_list)
+>
+> *联合式枚举 case* → [枚举的 case 名](./06_Declarations.md#enum_case_name) [元组类型](./03_Types.md#tuple_type)<sub>可选</sub>
+>
+> *枚举名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *枚举的 case 名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *原始值式枚举* → **enum** [枚举名](./06_Declarations.md#enum_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [类型继承子句](./03_Types.md#type-inheritance-clause) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> **{** [原始值式枚举成员集](./06_Declarations.md#raw_value_style_enum_members) **}**
+>
+> *原始值式枚举成员集* → [原始值式枚举成员](./06_Declarations.md#raw_value_style_enum_member) [原始值式枚举成员集](./06_Declarations.md#raw_value_style_enum_members)<sub>可选</sub>
+>
+> *原始值式枚举成员* → [声明](./06_Declarations.md#declaration) | [原始值式枚举 case 子句](./06_Declarations.md#raw_value_style_enum_case_clause) | [编译控制语句](./05_Statements.md#compiler-control-statement)
+>
+> *原始值式枚举 case 子句* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **case** [原始值式枚举 case 集](./06_Declarations.md#raw_value_style_enum_case_list)
+>
+> *原始值式枚举 case 集* → [原始值式枚举 case](./06_Declarations.md#raw_value_style_enum_case) | [原始值式枚举 case](./06_Declarations.md#raw_value_style_enum_case) **,** [原始值式枚举 case 集](./06_Declarations.md#raw_value_style_enum_case_list)
+>
+> *原始值式枚举 case* → [枚举的 case 名](./06_Declarations.md#enum_case_name) [原始值赋值](./06_Declarations.md#raw_value_assignment)<sub>可选</sub>
+>
+> *原始值赋值* → **=** [原始值字面量](./02_Lexical_Structure.md#literal)
+>
+> *原始值字面量（raw-value-literal）* → [数值字面量](./02_Lexical_Structure.md#literal) | [静态字符串字面量](./02_Lexical_Structure.md#literal) | [布尔字面量](./02_Lexical_Structure.md#literal)
+>
 
 <!-- -->
 
 > 结构体声明语法
-> 
-> *结构体声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修改器（access-level-modifier）*](TODO) _可选_ **struct** [*结构体名称*](../chapter3/05_Declarations.html#struct_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承从句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*结构体主体*](../chapter3/05_Declarations.html#struct_body)
-> *结构体名称* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *结构体主体* → **{** [*声明（Declarations）集*](../chapter3/05_Declarations.html#declarations) _可选_ **}**
+>
+> *结构体声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> **struct** [结构体名称](./06_Declarations.md#struct_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [类型继承子句](./03_Types.md#type_inheritance_clause)<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [结构体主体](./06_Declarations.md#struct_body)
+>
+> *结构体名称* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *结构体主体* → **{** [结构体成员集](./06_Declarations.md#declarations)<sub>可选</sub> **}**
+>
+> *结构体成员集* → [结构体成员](./06_Declarations.md#declarations) [结构体成员集](./06_Declarations.md#declarations)<sub>可选</sub>
+>
+> *结构体成员* → [声明集](./06_Declarations.md#declarations) | [编译控制语句](./05_Statements.md#compiler-control-statement)
+>
 
 <!-- -->
 
 > 类声明语法
-> 
-> *类声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*访问级别修改器（access-level-modifier）*](TODO) **class** [*类名*](../chapter3/05_Declarations.html#class_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*类型继承从句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*类主体*](../chapter3/05_Declarations.html#class_body)
-> *类名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *类主体* → **{** [*声明（Declarations）集*](../chapter3/05_Declarations.html#declarations) _可选_ **}**
+>
+> *类声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> **final**<sub>可选</sub> **class** [类名](./06_Declarations.md#class_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [类型继承子句](./03_Types.md#type_inheritance_clause) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [类主体](./06_Declarations.md#class_body)
+>
+> *类声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **final** [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> **class** [类名](./06_Declarations.md#class_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [类型继承子句](./03_Types.md#type_inheritance_clause) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [类主体](./06_Declarations.md#class_body)
+>
+> *类名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *类主体* → **{** [类成员集](./06_Declarations.md#declarations)<sub>可选</sub> **}**
+>
+> *类成员集* → [类成员](./06_Declarations.md#declarations) [类成员集](./06_Declarations.md#declarations)<sub>可选</sub>
+>
+> *类成员* → [声明集](./06_Declarations.md#declarations) | [编译控制语句](./05_Statements.md#compiler-control-statement)
+>
 
 <!-- -->
 
-> 协议（Protocol）声明语法
-> 
-> *协议声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_[*访问级别修改器（access-level-modifier）*](TODO)  **protocol** [*协议名*](../chapter3/05_Declarations.html#protocol_name) [*类型继承从句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*协议主体*](../chapter3/05_Declarations.html#protocol_body)
-> *协议名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *协议主体* → **{** [*协议成员声明（Declarations）集*](../chapter3/05_Declarations.html#protocol_member_declarations) _可选_ **}**
-> *协议成员声明* → [*协议属性声明*](../chapter3/05_Declarations.html#protocol_property_declaration)
-> *协议成员声明* → [*协议方法声明*](../chapter3/05_Declarations.html#protocol_method_declaration)
-> *协议成员声明* → [*协议构造器声明*](../chapter3/05_Declarations.html#protocol_initializer_declaration)
-> *协议成员声明* → [*协议下标声明*](../chapter3/05_Declarations.html#protocol_subscript_declaration)
-> *协议成员声明* → [*协议关联类型声明*](../chapter3/05_Declarations.html#protocol_associated_type_declaration)
-> *协议成员声明（Declarations）集* → [*协议成员声明*](../chapter3/05_Declarations.html#protocol_member_declaration) [*协议成员声明（Declarations）集*](../chapter3/05_Declarations.html#protocol_member_declarations) _可选_
+> 协议声明语法
+>
+> *协议声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub>  **protocol** [协议名](./06_Declarations.md#protocol_name) [类型继承子句](./03_Types.md#type_inheritance_clause)<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [协议主体](./06_Declarations.md#protocol_body)
+>
+> *协议名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *协议主体* → **{** [协议成员集](./06_Declarations.md#protocol_member_declarations)<sub>可选</sub> **}**
+>
+> *协议成员集* → [协议成员](./06_Declarations.md#declarations) [协议成员集](./06_Declarations.md#declarations)<sub>可选</sub>
+>
+> *协议成员* → [协议成员声明](./06_Declarations.md#declarations) | [编译控制语句](./05_Statements.md#compiler-control-statement)
+>
+> *协议成员声明* → [协议属性声明](./06_Declarations.md#protocol_property_declaration)
+>
+> *协议成员声明* → [协议方法声明](./06_Declarations.md#protocol_method_declaration)
+>
+> *协议成员声明* → [协议构造器声明](./06_Declarations.md#protocol_initializer_declaration)
+>
+> *协议成员声明* → [协议下标声明](./06_Declarations.md#protocol_subscript_declaration)
+>
+> *协议成员声明* → [协议关联类型声明](./06_Declarations.md#protocol_associated_type_declaration)
+>
+> *协议成员声明* → [类型别名声明](./06_Declarations.md#typealias_declaration)
+>
 
 <!-- -->
 
 > 协议属性声明语法
-> 
-> *协议属性声明* → [*变量声明头（Head）*](../chapter3/05_Declarations.html#variable_declaration_head) [*变量名*](../chapter3/05_Declarations.html#variable_name) [*类型注解*](../chapter3/03_Types.html#type_annotation) [*getter-setter 关键字（Keyword）块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)
+>
+> *协议属性声明* → [变量声明头](./06_Declarations.md#variable_declaration_head) [变量名](./06_Declarations.md#variable_name) [类型注解](./03_Types.md#type_annotation) [getter-setter 关键字块](./06_Declarations.md#getter_setter_keyword_block)
+>
 
 <!-- -->
 
 > 协议方法声明语法
-> 
-> *协议方法声明* → [*函数头*](../chapter3/05_Declarations.html#function_head) [*函数名*](../chapter3/05_Declarations.html#function_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*函数签名（Signature）*](../chapter3/05_Declarations.html#function_signature)
+>
+> *协议方法声明* → [函数头](./06_Declarations.md#function_head) [函数名](./06_Declarations.md#function_name) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [函数签名](./06_Declarations.md#function_signature) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub>
+>
 
 <!-- -->
 
 > 协议构造器声明语法
-> 
-> *协议构造器声明* → [*构造器头（Head）*](../chapter3/05_Declarations.html#initializer_head) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数从句*](../chapter3/05_Declarations.html#parameter_clause)
+>
+> *协议构造器声明* → [构造器头](./06_Declarations.md#initializer_head) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [参数子句](./06_Declarations.md#parameter_clause) **throws**<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub>
+>
+> *协议构造器声明* → [构造器头](./06_Declarations.md#initializer_head) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [参数子句](./06_Declarations.md#parameter_clause) **rethrows** [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub>
+>
 
 <!-- -->
 
 > 协议下标声明语法
-> 
-> *协议下标声明* → [*下标头（Head）*](../chapter3/05_Declarations.html#subscript_head) [*下标结果（Result）*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter 关键字（Keyword）块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)
+>
+> *协议下标声明* → [下标头](./06_Declarations.md#subscript_head) [下标结果](./06_Declarations.md#subscript_result) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [getter-setter 关键字块](./06_Declarations.md#getter_setter_keyword_block)
+>
 
 <!-- -->
 
 > 协议关联类型声明语法
-> 
-> *协议关联类型声明* → [*类型别名头（Head）*](../chapter3/05_Declarations.html#typealias_head) [*类型继承从句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*类型别名赋值*](../chapter3/05_Declarations.html#typealias_assignment) _可选_
+>
+> *协议关联类型声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> **associatedtype** [类型别名](./06_Declarations.md#typealias_name) [类型继承子句](./03_Types.md#type_inheritance_clause)<sub>可选</sub> [类型别名赋值](./06_Declarations.md#typealias_assignment)<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub>
+>
 
 <!-- -->
 
 > 构造器声明语法
-> 
-> *构造器声明* → [*构造器头（Head）*](../chapter3/05_Declarations.html#initializer_head) [*泛型参数从句*](GenericParametersAndArguments.html#generic_parameter_clause) _可选_ [*参数从句*](../chapter3/05_Declarations.html#parameter_clause) [*构造器主体*](../chapter3/05_Declarations.html#initializer_body)
-> *构造器头（Head）* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改器集（declaration-modifiers）*](TODO) _可选_  **init**
-> *构造器头（Head）* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改器集（declaration-modifiers）*](TODO) _可选_  **init ?**
-> *构造器头（Head）* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改器集（declaration-modifiers）*](TODO) _可选_  **init !**
-> *构造器主体* → [*代码块*](../chapter3/05_Declarations.html#code_block)
+>
+> *构造器声明* → [构造器头](./06_Declarations.md#initializer_head) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [参数子句](./06_Declarations.md#parameter_clause) **throws**<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [构造器主体](./06_Declarations.md#initializer_body)
+>
+> *构造器声明* → [构造器头](./06_Declarations.md#initializer_head) [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [参数子句](./06_Declarations.md#parameter_clause) **rethrows** [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [构造器主体](./06_Declarations.md#initializer_body)
+>
+> *构造器头（Head）* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明修饰符集](./06_Declarations.md#declaration_modifiers)<sub>可选</sub>  **init**
+>
+> *构造器头（Head）* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明修饰符集](./06_Declarations.md#declaration_modifiers)<sub>可选</sub>  **init ?**
+>
+> *构造器头（Head）* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明修饰符集](./06_Declarations.md#declaration_modifiers)<sub>可选</sub>  **init !**
+>
+> *构造器主体* → [代码块](./06_Declarations.md#code_block)
+>
 
 <!-- -->
 
 > 析构器声明语法
-> 
-> *析构器声明* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **deinit** [*代码块*](../chapter3/05_Declarations.html#code_block)
+>
+> *析构器声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> **deinit** [代码块](./06_Declarations.md#code_block)
+>
 
 <!-- -->
 
-> 扩展（Extension）声明语法
-> 
-> *扩展声明* → [*访问级别修改器*](TODO) _可选_ **extension** [*类型标识*](../chapter3/03_Types.html#type_identifier) [*类型继承从句*](../chapter3/03_Types.html#type_inheritance_clause) _可选_ [*extension-body*](../chapter3/05_Declarations.html#extension_body)
-> *extension-body* → **{** [*声明（Declarations）集*](../chapter3/05_Declarations.html#declarations) _可选_ **}**
+> 扩展声明语法
+>
+> *扩展声明* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [访问级别修饰符](./07_Attributes.md#access-level-modifier)<sub>可选</sub> **extension** [类型标识](./03_Types.md#type_identifier) [类型继承子句](./03_Types.md#type_inheritance_clause)<sub>可选</sub> [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [扩展主体](./06_Declarations.md#extension_body)
+>
+> *扩展主体* → **{** [扩展成员集](./06_Declarations.md#declarations)<sub>可选</sub> **}**
+>
+> *扩展成员集* → [扩展成员](./06_Declarations.md#declarations) [扩展成员集](./06_Declarations.md#declarations)<sub>可选</sub>
+>
+> *扩展成员* → [声明集](./06_Declarations.md#declarations) | [编译控制语句](./05_Statements.md#compiler-control-statement)
+>
 
 <!-- -->
 
 > 下标声明语法
-> 
-> *下标声明* → [*下标头（Head）*](../chapter3/05_Declarations.html#subscript_head) [*下标结果（Result）*](../chapter3/05_Declarations.html#subscript_result) [*代码块*](../chapter3/05_Declarations.html#code_block)
-> *下标声明* → [*下标头（Head）*](../chapter3/05_Declarations.html#subscript_head) [*下标结果（Result）*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter 块*](../chapter3/05_Declarations.html#getter_setter_block)
-> *下标声明* → [*下标头（Head）*](../chapter3/05_Declarations.html#subscript_head) [*下标结果（Result）*](../chapter3/05_Declarations.html#subscript_result) [*getter-setter 关键字（Keyword）块*](../chapter3/05_Declarations.html#getter_setter_keyword_block)
-> *下标头（Head）* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*声明修改器（declaration-modifiers）*](TODO) _可选_ **subscript** [*参数从句*](../chapter3/05_Declarations.html#parameter_clause)
-> *下标结果（Result）* → **->** [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)
+>
+> *下标声明* → [下标头](./06_Declarations.md#subscript_head) [下标结果](./06_Declarations.md#subscript_result) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [代码块](./06_Declarations.md#code_block)
+>
+> *下标声明* → [下标头](./06_Declarations.md#subscript_head) [下标结果](./06_Declarations.md#subscript_result) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [getter-setter 块](./06_Declarations.md#getter_setter_block)
+>
+> *下标声明* → [下标头](./06_Declarations.md#subscript_head) [下标结果](./06_Declarations.md#subscript_result) [泛型 where 子句](./09_Generic_Parameters_and_Arguments.md#generic_where_clause)<sub>可选</sub> [getter-setter 关键字块](./06_Declarations.md#getter_setter_keyword_block)
+>
+> *下标头（Head）* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [声明修饰符集](./06_Declarations.md#declaration_modifiers)<sub>可选</sub> **subscript** [泛型参数子句](./09_Generic_Parameters_and_Arguments.md#generic_parameter_clause)<sub>可选</sub> [参数子句](./06_Declarations.md#parameter_clause)
+>
+> *下标结果（Result）* → **->** [特性](./07_Attributes.md#attributes)<sub>可选</sub> [类型](./03_Types.md#type)
+>
 
 <!-- -->
 
 > 运算符声明语法
-> 
-> *运算符声明* → [*前置运算符声明*](../chapter3/05_Declarations.html#prefix_operator_declaration) | [*后置运算符声明*](../chapter3/05_Declarations.html#postfix_operator_declaration) | [*中置运算符声明*](../chapter3/05_Declarations.html#infix_operator_declaration)
-> *前置运算符声明* → **prefix** **运算符**  [*运算符*](../chapter3/02_Lexical_Structure.html#operator) **{** **}**
-> *后置运算符声明* → **postfix** **运算符**  [*运算符*](../chapter3/02_Lexical_Structure.html#operator) **{** **}**
-> *中置运算符声明* → **infix** **运算符**  [*运算符*](../chapter3/02_Lexical_Structure.html#operator) **{** [*中置运算符属性集*](../chapter3/05_Declarations.html#infix_operator_attributes) _可选_ **}**
-> *中置运算符属性集* → [*优先级从句*](../chapter3/05_Declarations.html#precedence_clause) _可选_ [*结和性从句*](../chapter3/05_Declarations.html#associativity_clause) _可选_
-> *优先级从句* → **precedence** [*优先级水平*](../chapter3/05_Declarations.html#precedence_level)
-> *优先级水平* → 数值 0 到 255，首末项包括在内
-> *结和性从句* → **associativity** [*结和性*](../chapter3/05_Declarations.html#associativity)
-> *结和性* → **left** | **right** | **none**
+>
+> *运算符声明* → [前置运算符声明](./06_Declarations.md#prefix_operator_declaration) | [后置运算符声明](./06_Declarations.md#postfix_operator_declaration) | [中置运算符声明](./06_Declarations.md#infix_operator_declaration)
+>
+> *前置运算符声明* → **prefix** **operator**  [运算符](./02_Lexical_Structure.md#operator)
+>
+> *后置运算符声明* → **postfix** **operator**  [运算符](./02_Lexical_Structure.md#operator)
+>
+> *中置运算符声明* → **infix** **operator**  [运算符](./02_Lexical_Structure.md#operator) [中置运算符特性](./06_Declarations.md#infix_operator_attributes)<sub>可选</sub>
+>
+> *中置运算符特性* → [优先级组名](./06_Declarations.md#precedence_group_name)
+>
+
+> 优先级组声明语法
+>
+> *优先级组声明* → **precedencegroup** [优先级组名](./06_Declarations.md#precedence_group_name) **{** [优先级组特性](./06_Declarations.md#precedence_group_attributes)<sub>可选</sub> **}**
+>
+> *优先级组特性* → [优先级组属性](./06_Declarations.md#declarations) [优先级组特性](./06_Declarations.md#declarations)<sub>可选</sub>
+>
+> *优先级组属性* → [优先级组关系](./06_Declarations.md#declarations)
+>
+> *优先级组属性* → [优先级组赋值](./06_Declarations.md#declarations)
+>
+> *优先级组属性* → [优先级组结合](./06_Declarations.md#declarations)
+>
+> *优先级组关系* → **higherThan :** [优先级组名集](./06_Declarations.md#declarations)
+>
+> *优先级组关系* → **lowerThan :** [优先级组名集](./06_Declarations.md#declarations)
+>
+> *优先级组赋值* → **assignment :** [布尔字面量](./02_Lexical_Structure.md#string_literal)
+>
+> *优先级组结合* → **associativity : left**
+>
+> *优先级组结合* → **associativity : right**
+>
+> *优先级组结合* → **associativity : none**
+>
+> *优先级组名集* → [优先级组名](./06_Declarations.md#declarations) | [优先级组名](./06_Declarations.md#declarations) **,** [优先级组名集](./06_Declarations.md#declarations)
+>
+> *优先级组名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
 
 <!-- -->
-> 声明修改器语法
-> 
-> *声明修改器* → **类** | **便捷（convenience）** | **动态（dynamic）** | **final** | **中置（infix）** | **lazy** | **可变（mutating）** | **不可变（nonmutating）** | **可选（optional）** | **改写（override）** | **后置** | **前置** | **required** | **static** | **unowned** | **unowned(safe)** | **unowned(unsafe)** | **弱（weak）**
-> *声明修改器* → [*访问级别声明器（access-level-modifier）*](TODO)
-> *声明修改集* → [*声明修改器*](TODO) [*声明修改器集*](TODO) _可选_
-> *访问级别修改器* → **内部的** | **内部的（set）**
-> *访问级别修改器* → **私有的** | **私有的（set）**
-> *访问级别修改器* → **公共的**
-| **公共的（set）**
-> *访问级别修改器集* →[*访问级别修改器*](TODO) [*访问级别修改器集*](TODO) _可选_
+> 声明修饰符语法
+>
+> *声明修饰符* → **class** | **convenience** | **dynamic** | **final** | **infix** | **lazy** | **optional** | **override** | **postfix** | **prefix** | **required** | **static** | **unowned** | **unowned(safe)** | **unowned(unsafe)** | **weak**
+>
+> *声明修饰符* → [访问级别修饰符](./07_Attributes.md#access-level-modifier)
+>
+> *声明修饰符* → [可变性修饰符](./07_Attributes.md#mutation-modifier)
+>
+> *声明修饰符集* → [声明修饰符](./06_Declarations.md#declaration_modifier) [声明修饰符集](./06_Declarations.md#declaration_modifiers)<sub>可选</sub>
+>
+> *访问级别修饰符* → **private** | **private(set)**
+>
+> *访问级别修饰符* → **fileprivate** | **fileprivate(set)**
+>
+> *访问级别修饰符* → **internal** | **internal(set)**
+>
+> *访问级别修饰符* → **public** | **public(set)**
+>
+> *访问级别修饰符* → **open** | **open(set)**
+>
+> *可变性修饰符* → **mutating** | **nonmutating**
+>  
 
-<a name="patterns"></a>
-## 模式
+## 属性 {#attributes}
 
-> 模式（Patterns）语法
-> 
-> *模式* → [*通配符模式*](../chapter3/07_Patterns.html#wildcard_pattern) [*类型注解*](../chapter3/03_Types.html#type_annotation) _可选_
-> *模式* → [*标识符模式*](../chapter3/07_Patterns.html#identifier_pattern) [*类型注解*](../chapter3/03_Types.html#type_annotati Value Bindingon ) _可选_
-> *模式* → [*值绑定模式*](../chapter3/07_Patterns.html#value_binding_pattern)
-> *模式* → [*元组模式*](../chapter3/07_Patterns.html#tuple_pattern) [*类型注解*](../chapter3/03_Types.html#type_annotation) _可选_
-> 
-> *模式* → [*枚举个例模式*](../chapter3/07_Patterns.html#enum_case_pattern)
-> *模式* → [*可选模式*](TODO)
-> *模式* → [*类型转换模式*](../chapter3/07_Patterns.html#type_casting_pattern)
-> *模式* → [*表达式模式*](../chapter3/07_Patterns.html#expression_pattern)
+> 属性语法
+>
+> *属性* → **@** [属性名](./07_Attributes.md#attribute_name) [属性参数子句](./07_Attributes.md#attribute_argument_clause)<sub>可选</sub>
+>
+> *属性名* → [标识符](./02_Lexical_Structure.md#identifier)
+>
+> *属性参数子句* → **{** [平衡令牌集](./07_Attributes.md#balanced_tokens)<sub>可选</sub>  **}**
+>
+> *属性（Attributes）集* → [属性](./07_Attributes.md#attribute) [特性](./07_Attributes.md#attributes)<sub>可选</sub>
+>
+> *平衡令牌集* → [平衡令牌](./07_Attributes.md#balanced_token) [平衡令牌集](./07_Attributes.md#balanced_tokens)<sub>可选</sub>
+>
+> *平衡令牌* → **(** [平衡令牌集](./07_Attributes.md#balanced_tokens)<sub>可选</sub> **)**
+>
+> *平衡令牌* → **[** [平衡令牌集](./07_Attributes.md#balanced_tokens)<sub>可选</sub> **]**
+>
+> *平衡令牌* → **{** [平衡令牌集](./07_Attributes.md#balanced_tokens)<sub>可选</sub> **}**
+>
+> *平衡令牌* → 任意标识符、关键字、字面量或运算符
+>
+> *平衡令牌* → 除 **(** 、**)**、**[**、**]**、**{**、**}** 外的任意标点符号
+>
+>
+
+## 模式 {#patterns}
+
+> 模式语法
+>
+> *模式* → [通配符模式](./08_Patterns.md#wildcard_pattern) [类型注解](./03_Types.md#type_annotation)<sub>可选</sub>
+>
+> *模式* → [标识符模式](./08_Patterns.md#identifier_pattern) [类型注解](./03_Types.md#type_annotati Value Bindingon )<sub>可选</sub>
+>
+> *模式* → [值绑定模式](./08_Patterns.md#value_binding_pattern)
+>
+> *模式* → [元组模式](./08_Patterns.md#tuple_pattern) [类型注解](./03_Types.md#type_annotation)<sub>可选</sub>
+>
+> *模式* → [枚举 case 模式](./08_Patterns.md#enum_case_pattern)
+>
+> *模式* → [可选模式](./08_Patterns.md#optional_pattern)
+>
+> *模式* → [类型转换模式](./08_Patterns.md#type_casting_pattern)
+>
+> *模式* → [表达式模式](./08_Patterns.md#expression_pattern)
+>
 
 <!-- -->
 
 > 通配符模式语法
-> 
+>
 > *通配符模式* → **_**
+>
 
 <!-- -->
 
 > 标识符模式语法
-> 
-> *标识符模式* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
+>
+> *标识符模式* → [标识符](./02_Lexical_Structure.md#identifier)
+>
 
 <!-- -->
 
-> 值绑定（Value Binding）模式语法
-> 
-> *值绑定模式* → **var** [*模式*](../chapter3/07_Patterns.html#pattern) | **let** [*模式*](../chapter3/07_Patterns.html#pattern)
+> 值绑定模式语法
+>
+> *值绑定模式* → **var** [模式](./08_Patterns.md#pattern) | **let** [模式](./08_Patterns.md#pattern)
+>
 
 <!-- -->
 
 > 元组模式语法
-> 
-> *元组模式* → **(** [*元组模式元素集*](../chapter3/07_Patterns.html#tuple_pattern_element_list) _可选_ **)**
-> *元组模式元素集* → [*元组模式元素*](../chapter3/07_Patterns.html#tuple_pattern_element) | [*元组模式元素*](../chapter3/07_Patterns.html#tuple_pattern_element) **,** [*元组模式元素集*](../chapter3/07_Patterns.html#tuple_pattern_element_list)
-> *元组模式元素* → [*模式*](../chapter3/07_Patterns.html#pattern)
+>
+> *元组模式* → **(** [元组模式元素集](./08_Patterns.md#tuple_pattern_element_list)<sub>可选</sub> **)**
+>
+> *元组模式元素集* → [元组模式元素](./08_Patterns.md#tuple_pattern_element) | [元组模式元素](./08_Patterns.md#tuple_pattern_element) **,** [元组模式元素集](./08_Patterns.md#tuple_pattern_element_list)
+>
+> *元组模式元素* → [模式](./08_Patterns.md#pattern) | [标识符](./02_Lexical_Structure.md#identifier) **:** [模式](./08_Patterns.md#pattern)
+>
 
 <!-- -->
 
-> 枚举用例模式语法
-> 
-> *enum-case-pattern* → [*类型标识*](../chapter3/03_Types.html#type_identifier) _可选_ **.** [*枚举的 case 名*](../chapter3/05_Declarations.html#enum_case_name) [*元组模式*](../chapter3/07_Patterns.html#tuple_pattern) _可选_
+> 枚举 case 模式语法
+>
+> *enum-case-pattern* → [类型标识](./03_Types.md#type_identifier)<sub>可选</sub> **.** [枚举 case 名](./06_Declarations.md#enum_case_name) [元组模式](./08_Patterns.md#tuple_pattern)<sub>可选</sub>
+>
 
 <!-- -->
 > 可选模式语法
-> 
-> *可选模式* → [*识别符模式*](TODO) **?**
+>
+> *可选模式* → [标识符模式](./02_Lexical_Structure.md#identifier) **?**
+>
 
 <!-- -->
 
 > 类型转换模式语法
-> 
-> *类型转换模式（type-casting-pattern）* → [*is 模式*](../chapter3/07_Patterns.html#is_pattern) | [*as 模式*](../chapter3/07_Patterns.html#as_pattern)
-> *is 模式* → **is** [*类型*](../chapter3/03_Types.html#type)
-> *as 模式* → [*模式*](../chapter3/07_Patterns.html#pattern) **as** [*类型*](../chapter3/03_Types.html#type)
+>
+> *类型转换模式* → [is 模式](./08_Patterns.md#is_pattern) | [as 模式](./08_Patterns.md#as_pattern)
+>
+> *is 模式* → **is** [类型](./03_Types.md#type)
+>
+> *as 模式* → [模式](./08_Patterns.md#pattern) **as** [类型](./03_Types.md#type)
+>
 
 <!-- -->
 
 > 表达式模式语法
-> 
-> *表达式模式* → [*表达式*](../chapter3/04_Expressions.html#expression)
-
-<a name="attributes"></a>
-## 属性
-
-> 属性语法
-> 
-> *属性* → **@** [*属性名*](../chapter3/06_Attributes.html#attribute_name) [*属性参数从句*](../chapter3/06_Attributes.html#attribute_argument_clause) _可选_
-> *属性名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *属性参数从句* → **(** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_  **)**
-> *属性（Attributes）集* → [*属性*](../chapter3/06_Attributes.html#attribute) [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_
-> *平衡令牌集* → [*平衡令牌*](../chapter3/06_Attributes.html#balanced_token) [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_
-> *平衡令牌* → **(** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_ **)**
-> *平衡令牌* → **[** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_ **]**
-> *平衡令牌* → **{** [*平衡令牌集*](../chapter3/06_Attributes.html#balanced_tokens) _可选_ **}**
-> *平衡令牌* → **任意标识符、关键字、字面量或运算符**
-> *平衡令牌* → **任意标点除了(、)、[、]、{ 或 }**
-
-<a name="expressions"></a>
-## 表达式
-
-> 表达式语法
-> 
-> *表达式* → [*try-operator*](TODO) _可选_ [*前置表达式*](../chapter3/04_Expressions.html#prefix_expression) [*二元表达式集*](../chapter3/04_Expressions.html#binary_expressions) _可选_
-> *表达式集* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*表达式*](../chapter3/04_Expressions.html#expression) **,** [*表达式集*](../chapter3/04_Expressions.html#expression_list)
-
-<!-- -->
-
-> 前置表达式语法
-> 
-> *前置表达式* → [*前置运算符*](../chapter3/02_Lexical_Structure.html#prefix_operator) _可选_ [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression)
-> *前置表达式* → [*写入写出（in-out）表达式*](../chapter3/04_Expressions.html#in_out_expression)
-> *写入写出（in-out）表达式* → **&** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-
-<!-- -->
-> try 表达式语法
-> 
-> *try-operator* → **try** | **try !**
-
-<!-- -->
-
-> 二元表达式语法
-> 
-> *二元表达式* → [*二元运算符*](../chapter3/02_Lexical_Structure.html#binary_operator) [*前置表达式*](../chapter3/04_Expressions.html#prefix_expression)
-> *二元表达式* → [*赋值运算符*](../chapter3/04_Expressions.html#assignment_operator) [*try 运算符*](TODO) _可选_ [*前置表达式*](../chapter3/04_Expressions.html#prefix_expression)
-> *二元表达式* → [*条件运算符*](../chapter3/04_Expressions.html#conditional_operator) [*try 运算符*](TODO) _可选_ [*前置表达式*](../chapter3/04_Expressions.html#prefix_expression)
-> *二元表达式* → [*类型转换运算符*](../chapter3/04_Expressions.html#type_casting_operator)
-> *二元表达式集* → [*二元表达式*](../chapter3/04_Expressions.html#binary_expression) [*二元表达式集*](../chapter3/04_Expressions.html#binary_expressions) _可选_
-
-<!-- -->
-
-> 赋值运算符语法
-> 
-> *赋值运算符* → **=**
-
-<!-- -->
-
-> 三元条件运算符语法
-> 
-> *三元条件运算符* → **?** [*表达式*](../chapter3/04_Expressions.html#expression) **:**
-
-<!-- -->
-
-> 类型转换运算符语法
-> 
-> *类型转换运算符* → **is** [*类型*](../chapter3/03_Types.html#type)
-> *类型转换运算符* → **as** [*类型*](../chapter3/03_Types.html#type)
-> *类型转换运算符* → **as ?** [*类型*](../chapter3/03_Types.html#type)
-> *类型转换运算符* → **as !** [*类型*](../chapter3/03_Types.html#type)
-
-<!-- -->
-
-> 主表达式语法
-> 
-> *主表达式* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) [*泛型参数从句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_
-> *主表达式* → [*字面量表达式*](../chapter3/04_Expressions.html#literal_expression)
-> *主表达式* → [*self 表达式*](../chapter3/04_Expressions.html#self_expression)
-> *主表达式* → [*超类表达式*](../chapter3/04_Expressions.html#superclass_expression)
-> *主表达式* → [*闭包表达式*](../chapter3/04_Expressions.html#closure_expression)
-> *主表达式* → [*圆括号表达式*](../chapter3/04_Expressions.html#parenthesized_expression)
-> *主表达式* → [*隐式成员表达式*](../chapter3/04_Expressions.html#implicit_member_expression)
-> *主表达式* → [*通配符表达式*](../chapter3/04_Expressions.html#wildcard_expression)
-
-<!-- -->
-
-> 字面量表达式语法
-> 
-> *字面量表达式* → [*字面量*](../chapter3/02_Lexical_Structure.html#literal)
-> *字面量表达式* → [*数组字面量*](../chapter3/04_Expressions.html#array_literal) | [*字典字面量*](../chapter3/04_Expressions.html#dictionary_literal)
-> *字面量表达式* → **&#95;&#95;FILE&#95;&#95;** | **&#95;&#95;LINE&#95;&#95;** | **&#95;&#95;COLUMN&#95;&#95;** | **&#95;&#95;FUNCTION&#95;&#95;**
-> *数组字面量* → **[** [*数组字面量项集*](../chapter3/04_Expressions.html#array_literal_items) _可选_ **]**
-> *数组字面量项集* → [*数组字面量项*](../chapter3/04_Expressions.html#array_literal_item) **,** _可选_ | [*数组字面量项*](../chapter3/04_Expressions.html#array_literal_item) **,** [*数组字面量项集*](../chapter3/04_Expressions.html#array_literal_items)
-> *数组字面量项* → [*表达式*](../chapter3/04_Expressions.html#expression)
-> *字典字面量* → **[** [*字典字面量项集*](../chapter3/04_Expressions.html#dictionary_literal_items) **]** | **[** **:** **]**
-> *字典字面量项集* → [*字典字面量项*](../chapter3/04_Expressions.html#dictionary_literal_item)   **,** _可选_ | [*字典字面量项*](../chapter3/04_Expressions.html#dictionary_literal_item)    **,** [*字典字面量项集*](../chapter3/04_Expressions.html#dictionary_literal_items)
-> *字典字面量项* → [*表达式*](../chapter3/04_Expressions.html#expression) **:** [*表达式*](../chapter3/04_Expressions.html#expression)
-
-<!-- -->
-
-> Self 表达式语法
-> 
-> *self 表达式* → **self**
-> *self 表达式* → **self** **.** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *self 表达式* → **self** **[** [*表达式*](../chapter3/04_Expressions.html#expression) **]**
-> *self 表达式* → **self** **.** **init**
-
-<!-- -->
-
-> 超类表达式语法
-> 
-> *超类表达式* → [*超类方法表达式*](../chapter3/04_Expressions.html#superclass_method_expression) | [*超类下标表达式*](../chapter3/04_Expressions.html#超类下标表达式) | [*超类构造器表达式*](../chapter3/04_Expressions.html#superclass_initializer_expression)
-> *超类方法表达式* → **super** **.** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-> *超类下标表达式* → **super** **[** [*表达式*](../chapter3/04_Expressions.html#expression) **]**
-> *超类构造器表达式* → **super** **.** **init**
-
-<!-- -->
-
-> 闭包表达式语法
-> 
-> *闭包表达式* → **{** [*闭包签名（Signational）*](../chapter3/04_Expressions.html#closure_signature) _可选_ [*多条语句（Statements）*](../chapter3/10_Statements.html#statements) **}**
-> *闭包签名（Signational）* → [*参数从句*](../chapter3/05_Declarations.html#parameter_clause) [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_ **in**
-> *闭包签名（Signational）* → [*标识符集*](../chapter3/02_Lexical_Structure.html#identifier_list) [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_ **in**
-> *闭包签名（Signational）* → [*捕获（Capature）集*](../chapter3/04_Expressions.html#capture_list) [*参数从句*](../chapter3/05_Declarations.html#parameter_clause) [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_ **in**
-> *闭包签名（Signational）* → [*捕获（Capature）集*](../chapter3/04_Expressions.html#capture_list) [*标识符集*](../chapter3/02_Lexical_Structure.html#identifier_list) [*函数结果*](../chapter3/05_Declarations.html#function_result) _可选_ **in**
-> *闭包签名（Signational）* → [*捕获（Capature）集*](../chapter3/04_Expressions.html#capture_list) **in**
-> *捕获（Capature）集* → **[** [*捕获（Capature）说明符*](../chapter3/04_Expressions.html#capture_specifier) [*表达式*](../chapter3/04_Expressions.html#expression) **]**
-> *捕获（Capature）说明符* → **weak** | **unowned** | **unowned(safe)** | **unowned(unsafe)**
-
-<!-- -->
-
-> 隐式成员表达式语法
-> 
-> *隐式成员表达式* → **.** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-
-<!-- -->
-
-> 圆括号表达式（Parenthesized Expression）语法
-> 
-> *圆括号表达式* → **(** [*表达式元素集*](../chapter3/04_Expressions.html#expression_element_list) _可选_ **)**
-> *表达式元素集* → [*表达式元素*](../chapter3/04_Expressions.html#expression_element) | [*表达式元素*](../chapter3/04_Expressions.html#expression_element) **,** [*表达式元素集*](../chapter3/04_Expressions.html#expression_element_list)
-> *表达式元素* → [*表达式*](../chapter3/04_Expressions.html#expression) | [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) **:** [*表达式*](../chapter3/04_Expressions.html#expression)
-
-<!-- -->
-
-> 通配符表达式语法
-> 
-> *通配符表达式* → **_**
-
-<!-- -->
-
-> 后置表达式语法
-> 
-> *后置表达式* → [*主表达式*](../chapter3/04_Expressions.html#primary_expression)
-> *后置表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) [*后置运算符*](../chapter3/02_Lexical_Structure.html#postfix_operator)
-> *后置表达式* → [*函数调用表达式*](../chapter3/04_Expressions.html#function_call_expression)
-> *后置表达式* → [*构造器表达式*](../chapter3/04_Expressions.html#initializer_expression)
-> *后置表达式* → [*显示成员表达式*](../chapter3/04_Expressions.html#explicit_member_expression)
-> *后置表达式* → [*后置 self 表达式*](../chapter3/04_Expressions.html#postfix_self_expression)
-> *后置表达式* → [*动态类型表达式*](../chapter3/04_Expressions.html#dynamic_type_expression)
-> *后置表达式* → [*下标表达式*](../chapter3/04_Expressions.html#subscript_expression)
-> *后置表达式* → [*强制取值（Forced Value）表达式*](../chapter3/04_Expressions.html#forced_value_expression)
-> *后置表达式* → [*可选链（Optional Chaining）表达式*](../chapter3/04_Expressions.html#optional_chaining_expression)
-
-<!-- -->
-
-> 函数调用表达式语法
-> 
-> *函数调用表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) [*圆括号表达式*](../chapter3/04_Expressions.html#parenthesized_expression)
-> *函数调用表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) [*圆括号表达式*](../chapter3/04_Expressions.html#parenthesized_expression)     _可选_ [*后置闭包（Trailing Closure）*](../chapter3/04_Expressions.html#trailing_closure)
-> *后置闭包（Trailing Closure）* → [*闭包表达式*](../chapter3/04_Expressions.html#closure_expression)
-
-<!-- -->
-
-> 构造器表达式语法
-> 
-> *构造器表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **init**
-
-<!-- -->
-
-> 显式成员表达式语法
-> 
-> *显示成员表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** [*十进制数字*](../chapter3/02_Lexical_Structure.html#decimal_digit)
-> *显示成员表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) [*泛型参数从句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_
-
-<!-- -->
-
-> 后置 Self 表达式语法
-> 
-> *后置 self 表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **self**
-
-<!-- -->
-
-> 动态类型表达式语法
-> 
-> *动态类型表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **.** **dynamicType**
-
-<!-- -->
-
-> 附属脚本表达式语法
-> 
-> *附属脚本表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **[** [*表达式集*](../chapter3/04_Expressions.html#expression_list) **]**
-
-<!-- -->
-
-> 强制取值（Forced Value）语法
-> 
-> *强制取值（Forced Value）表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **!**
-
-<!-- -->
-
-> 可选链表达式语法
-> 
-> *可选链表达式* → [*后置表达式*](../chapter3/04_Expressions.html#postfix_expression) **?**
-
-<a name="lexical_structure"></a>
-## 词法结构
-
-> 标识符语法
-> 
-> *标识符* → [*标识符头（Head）*](../chapter3/02_Lexical_Structure.html#identifier_head) [*标识符字符集*](../chapter3/02_Lexical_Structure.html#identifier_characters) _可选_
-> *标识符* → [*标识符头（Head）*](../chapter3/02_Lexical_Structure.html#identifier_head) [*标识符字符集*](../chapter3/02_Lexical_Structure.html#identifier_characters) _可选_
-> *标识符* → [*隐式参数名*](../chapter3/02_Lexical_Structure.html#implicit_parameter_name)
-> *标识符集* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) | [*标识符*](../chapter3/02_Lexical_Structure.html#identifier) **,** [*标识符集*](../chapter3/02_Lexical_Structure.html#identifier_list)
-> *标识符头（Head）* → Upper- or lowercase letter A through Z
-> *标识符头（Head）* → _
-> *标识符头（Head）* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA
-> *标识符头（Head）* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF
-> *标识符头（Head）* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF
-> *标识符头（Head）* → U+1E00–U+1FFF
-> *标识符头（Head）* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F
-> *标识符头（Head）* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793
-> *标识符头（Head）* → U+2C00–U+2DFF or U+2E80–U+2FFF
-> *标识符头（Head）* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF
-> *标识符头（Head）* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44
-> *标识符头（Head）* → U+FE47–U+FFFD
-> *标识符头（Head）* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD
-> *标识符头（Head）* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD
-> *标识符头（Head）* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD
-> *标识符头（Head）* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
-> *标识符字符* → 数值 0 到 9
-> *标识符字符* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F
-> *标识符字符* → [*标识符头（Head）*](../chapter3/02_Lexical_Structure.html#identifier_head)
-> *标识符字符集* → [*标识符字符*](../chapter3/02_Lexical_Structure.html#identifier_character) [*标识符字符集*](../chapter3/02_Lexical_Structure.html#identifier_characters) _可选_
-> *隐式参数名* → **$** [*十进制数字集*](../chapter3/02_Lexical_Structure.html#decimal_digits)
-
-<!-- -->
-
-> 字面量语法
-> 
-> *字面量* → [*数值型字面量*](../chapter3/02_Lexical_Structure.html#integer_literal) | [*字符串字面量*](../chapter3/02_Lexical_Structure.html#floating_point_literal) | [*布尔字面量*](../chapter3/02_Lexical_Structure.html#string_literal) | [*空字面量*](TODO)
-> *数值型字面量* → **-** _可选_ [*整形字面量*](TODO) | **-** _可选_ [*浮点型字面量*](TODO)
-> *布尔字面量* → **true** | **false**
-> *空字面量* → **nil**
-
-<!-- -->
-
-> 整型字面量语法
-> 
-> *整型字面量* → [*二进制字面量*](../chapter3/02_Lexical_Structure.html#binary_literal)
-> *整型字面量* → [*八进制字面量*](../chapter3/02_Lexical_Structure.html#octal_literal)
-> *整型字面量* → [*十进制字面量*](../chapter3/02_Lexical_Structure.html#decimal_literal)
-> *整型字面量* → [*十六进制字面量*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal)
-> *二进制字面量* → **0b** [*二进制数字*](../chapter3/02_Lexical_Structure.html#binary_digit) [*二进制字面量字符集*](../chapter3/02_Lexical_Structure.html#binary_literal_characters) _可选_
-> *二进制数字* → 数值 0 到 1
-> *二进制字面量字符* → [*二进制数字*](../chapter3/02_Lexical_Structure.html#binary_digit) | **_**
-> *二进制字面量字符集* → [*二进制字面量字符*](../chapter3/02_Lexical_Structure.html#binary_literal_character) [*二进制字面量字符集*](../chapter3/02_Lexical_Structure.html#binary_literal_characters) _可选_
-> *八进制字面量* → **0o** [*八进制数字*](../chapter3/02_Lexical_Structure.html#octal_digit) [*八进制字符集*](../chapter3/02_Lexical_Structure.html#octal_literal_characters) _可选_
-> *八进字数字* → 数值 0 到 7
-> *八进制字符* → [*八进制数字*](../chapter3/02_Lexical_Structure.html#octal_digit) | **_**
-> *八进制字符集* → [*八进制字符*](../chapter3/02_Lexical_Structure.html#octal_literal_character) [*八进制字符集*](../chapter3/02_Lexical_Structure.html#octal_literal_characters) _可选_
-> *十进制字面量* → [*十进制数字*](../chapter3/02_Lexical_Structure.html#decimal_digit) [*十进制字符集*](../chapter3/02_Lexical_Structure.html#decimal_literal_characters) _可选_
-> *十进制数字* → 数值 0 到 9
-> *十进制数字集* → [*十进制数字*](../chapter3/02_Lexical_Structure.html#decimal_digit) [*十进制数字集*](../chapter3/02_Lexical_Structure.html#decimal_digits) _可选_
-> *十进制字面量字符* → [*十进制数字*](../chapter3/02_Lexical_Structure.html#decimal_digit) | **_**
-> *十进制字面量字符集* → [*十进制字面量字符*](../chapter3/02_Lexical_Structure.html#decimal_literal_character) [*十进制字面量字符集*](../chapter3/02_Lexical_Structure.html#decimal_literal_characters) _可选_
-> *十六进制字面量* → **0x** [*十六进制数字*](../chapter3/02_Lexical_Structure.html#hexadecimal_digit) [*十六进制字面量字符集*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal_characters) _可选_
-> *十六进制数字* → 数值 0 到 9, a through f, or A through F
-> *十六进制字符* → [*十六进制数字*](../chapter3/02_Lexical_Structure.html#hexadecimal_digit) | **_**
-> *十六进制字面量字符集* → [*十六进制字符*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal_character) [*十六进制字面量字符集*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal_characters) _可选_
-
-<!-- -->
-
-> 浮点型字面量语法
-> 
-> *浮点数字面量* → [*十进制字面量*](../chapter3/02_Lexical_Structure.html#decimal_literal) [*十进制分数*](../chapter3/02_Lexical_Structure.html#decimal_fraction) _可选_ [*十进制指数*](../chapter3/02_Lexical_Structure.html#decimal_exponent) _可选_
-> *浮点数字面量* → [*十六进制字面量*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal) [*十六进制分数*](../chapter3/02_Lexical_Structure.html#hexadecimal_fraction) _可选_ [*十六进制指数*](../chapter3/02_Lexical_Structure.html#hexadecimal_exponent)
-> *十进制分数* → **.** [*十进制字面量*](../chapter3/02_Lexical_Structure.html#decimal_literal)
-> *十进制指数* → [*浮点数 e*](../chapter3/02_Lexical_Structure.html#floating_point_e) [*正负号*](../chapter3/02_Lexical_Structure.html#sign) _可选_ [*十进制字面量*](../chapter3/02_Lexical_Structure.html#decimal_literal)
-> *十六进制分数* → **.** [*十六进制数*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal)
- [*十六进制字面量字符集*](TODO)_可选_
-> *十六进制指数* → [*浮点数 p*](../chapter3/02_Lexical_Structure.html#floating_point_p) [*正负号*](../chapter3/02_Lexical_Structure.html#sign) _可选_ [*十六进制字面量*](../chapter3/02_Lexical_Structure.html#hexadecimal_literal)
-> *浮点数 e* → **e** | **E**
-> *浮点数 p* → **p** | **P**
-> *正负号* → **+** | **-**
-
-<!-- -->
-
-> 字符串型字面量语法
-> 
-> *字符串字面量* → **"** [*引用文本*](../chapter3/02_Lexical_Structure.html#quoted_text) **"**
-> *引用文本* → [*引用文本条目*](../chapter3/02_Lexical_Structure.html#quoted_text_item) [*引用文本*](../chapter3/02_Lexical_Structure.html#quoted_text) _可选_
-> *引用文本条目* → [*转义字符*](../chapter3/02_Lexical_Structure.html#escaped_character)
-> *引用文本条目* → **(** [*表达式*](../chapter3/04_Expressions.html#expression) **)**
-> *引用文本条目* → 除了"­, \­, U+000A, or U+000D 的所有 Unicode 的字符
-> *转义字符* → **/0** | **\\** | **\t** | **\n** | **\r** | **\"** | **\'**
-> *转义字符* → **\u** **{** [*十六进制标量数字集*](TODO) **}**
-> *unicode 标量数字集* → Between one and eight hexadecimal digits
-
-<!-- -->
-
-> 运算符语法语法
-> 
-> *运算符* → [*运算符头*](../chapter3/02_Lexical_Structure.html#operator_character) [*运算符字符集*](../chapter3/02_Lexical_Structure.html#operator) _可选_
-> *运算符* → [*点运算符头*](TODO) [*点运算符字符集*](TODO) _可选_
-> *运算符字符* → **/** | **=** | **-** | **+** | **!** | **&#42;** | **%** | **<** | **>** | **&** | **|** | **^** | **~** | **?**
-> *运算符头* → U+00A1–U+00A7
-> *运算符头* → U+00A9 or U+00AB
-> *运算符头* →  U+00AC or U+00AE
-> *运算符头* → U+00B0–U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
-> *运算符头* → U+2016–U+2017 or U+2020–U+2027
-> *运算符头* → U+2030–U+203E
-> *运算符头* → U+2041–U+2053
-> *运算符头* → U+2055–U+205E
-> *运算符头* → U+2190–U+23FF
-> *运算符头* → U+2500–U+2775
-> *运算符头* → U+2794–U+2BFF
-> *运算符头* → U+2E00–U+2E7F
-> *运算符头* → U+3001–U+3003
-> *运算符头* → U+3008–U+3030
-> *运算符字符* → [*运算符头*](TODO)
-> *运算符字符* → U+0300–U+036F
-> *运算符字符* → U+1DC0–U+1DFF
-> *运算符字符* → U+20D0–U+20FF
-> *运算符字符* → U+FE00–U+FE0F
-> *运算符字符* → U+FE20–U+FE2F
-> *运算符字符* → U+E0100–U+E01EF
-> *运算符字符集* → [*运算符字符*](TODO) [*运算符字符集*](TODO)_可选_
-> *点运算符头* → **..**
-> *点运算符字符* → **.** | [*运算符字符*](TODO)
-> *点运算符字符集* → [*点运算符字符*](TODO) [*点运算符字符集*](TODO) _可选_
-> *二元运算符* → [*运算符*](../chapter3/02_Lexical_Structure.html#operator)
-> *前置运算符* → [*运算符*](../chapter3/02_Lexical_Structure.html#operator)
-> *后置运算符* → [*运算符*](../chapter3/02_Lexical_Structure.html#operator)
-
-<a name="types"></a>
-## 类型
-
-> 类型语法
-> 
-> *类型* → [*数组类型*](../chapter3/03_Types.html#array_type) | [*字典类型*](TODO) | [*函数类型*](../chapter3/03_Types.html#function_type) | [*类型标识符*](../chapter3/03_Types.html#type_identifier) | [*元组类型*](../chapter3/03_Types.html#tuple_type) | [*可选类型*](../chapter3/03_Types.html#optional_type) | [*隐式解析可选类型*](../chapter3/03_Types.html#implicitly_unwrapped_optional_type) | [*协议合成类型*](../chapter3/03_Types.html#protocol_composition_type) | [*元型类型*](../chapter3/03_Types.html#metatype_type)
-
-<!-- -->
-
-> 类型注解语法
-> 
-> *类型注解* → **:** [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ [*类型*](../chapter3/03_Types.html#type)
-
-<!-- -->
-
-> 类型标识语法
-> 
-> *类型标识* → [*类型名称*](../chapter3/03_Types.html#type_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_ | [*类型名称*](../chapter3/03_Types.html#type_name) [*泛型参数从句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_ **.** [*类型标识符*](../chapter3/03_Types.html#type_identifier)
-> *类型名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-
-<!-- -->
-
-> 元组类型语法
-> 
-> *元组类型* → **(** [*元组类型主体*](../chapter3/03_Types.html#tuple_type_body) _可选_ **)**
-> *元组类型主体* → [*元组类型的元素集*](../chapter3/03_Types.html#tuple_type_element_list) **...** _可选_
-> *元组类型的元素集* → [*元组类型的元素*](../chapter3/03_Types.html#tuple_type_element) | [*元组类型的元素*](../chapter3/03_Types.html#tuple_type_element) **,** [*元组类型的元素集*](../chapter3/03_Types.html#tuple_type_element_list)
-> *元组类型的元素* → [*属性（Attributes）集*](../chapter3/06_Attributes.html#attributes) _可选_ **inout** _可选_ [*类型*](../chapter3/03_Types.html#type) | **inout** _可选_ [*元素名*](../chapter3/03_Types.html#element_name) [*类型注解*](../chapter3/03_Types.html#type_annotation)
-> *元素名* → [*标识符*](../chapter3/02_Lexical_Structure.html#identifier)
-
-<!-- -->
-
-> 函数类型语法
-> 
-> *函数类型* → [*类型*](../chapter3/03_Types.html#type)  **throws** _可选_ **->** [*类型*](../chapter3/03_Types.html#type)
-> *函数类型* → [*类型*](TODO)  **rethrows** **->** [*类型*](TODO)
-
-<!-- -->
-
-> 数组类型语法
-> 
-> *数组类型* → **[** [*类型*](../chapter3/03_Types.html#array_type) **]**
-
-<!-- -->
-> 字典类型语法
-> 
-> *字典类型* → **[** [*类型 **:** 类型*](TODO) **]**
-
-<!-- -->
-
-> 可选类型语法
-> 
-> *可选类型* → [*类型*](../chapter3/03_Types.html#type) **?**
-
-<!-- -->
-
-> 隐式解析可选类型（Implicitly Unwrapped Optional Type）语法
-> 
-> *隐式解析可选类型* → [*类型*](../chapter3/03_Types.html#type) **!**
-
-<!-- -->
-
-> 协议合成类型语法
-> 
-> *协议合成类型* → **protocol** **<** [*协议标识符集*](../chapter3/03_Types.html#protocol_identifier_list) _可选_ **>**
-> *协议标识符集* → [*协议标识符*](../chapter3/03_Types.html#protocol_identifier) | [*协议标识符*](../chapter3/03_Types.html#protocol_identifier) **,** [*协议标识符集*](../chapter3/03_Types.html#protocol_identifier_list)
-> *协议标识符* → [*类型标识符*](../chapter3/03_Types.html#type_identifier)
-
-<!-- -->
-
-> 元（Metatype）类型语法
-> 
-> *元类型* → [*类型*](../chapter3/03_Types.html#type) **.** **Type** | [*类型*](../chapter3/03_Types.html#type) **.** **Protocol**
-
-<!-- -->
-
-> 类型继承从句语法
-> 
-> *类型继承从句* → **:** [*类条件（class-requirement）)*](TODO) **,** [*类型继承集*](../chapter3/03_Types.html#type_inheritance_list)
-> *类型继承从句* → **:** [*类条件（class-requirement）)*](TODO)
-> *类型继承从句* → **:** [*类型继承集*](TODO)
-> *类型继承集* → [*类型标识符*](../chapter3/03_Types.html#type_identifier) | [*类型标识符*](../chapter3/03_Types.html#type_identifier) **,** [*类型继承集*](../chapter3/03_Types.html#type_inheritance_list)
-> *类条件* → **class**
+>
+> *表达式模式* → [表达式](./04_Expressions.md#expression)
+>
+
+## 泛型参数 {#generic-parameters-and-arguments}
+
+> 泛型形参子句语法
+>
+>
+> *泛型参数子句* → **<** [泛型参数集](./09_Generic_Parameters_and_Arguments.md#generic_parameter_list) **>**
+>
+> *泛型参数集* → [泛型参数](./09_Generic_Parameters_and_Arguments.md#generic_parameter) | [泛形参数](./09_Generic_Parameters_and_Arguments.md#generic_parameter) **,** [泛型参数集](./09_Generic_Parameters_and_Arguments.md#generic_parameter_list)
+>
+> *泛形参数* → [类型名称](./03_Types.md#type_name)
+>
+> *泛形参数* → [类型名称](./03_Types.md#type_name) **:** [类型标识](./03_Types.md#type_identifier)
+>
+> *泛形参数* → [类型名称](./03_Types.md#type_name) **:** [协议合成类型](./03_Types.md#protocol_composition_type)
+>
+> *泛型 where 子句* → **where** [约束集](./09_Generic_Parameters_and_Arguments.md#requirement_list)
+>
+> *约束集* → [约束](./09_Generic_Parameters_and_Arguments.md#requirement) | [约束](./09_Generic_Parameters_and_Arguments.md#requirement) **,** [约束集](./09_Generic_Parameters_and_Arguments.md#requirement_list)
+>
+> *约束* → [一致性约束](./09_Generic_Parameters_and_Arguments.md#conformance_requirement) | [同类型约束](./09_Generic_Parameters_and_Arguments.md#same_type_requirement)
+>
+> *一致性约束* → [类型标识](./03_Types.md#type_identifier) **:** [类型标识](./03_Types.md#type_identifier)
+>
+> *一致性约束* → [类型标识](./03_Types.md#type_identifier) **:** [协议合成类型](./03_Types.md#protocol_composition_type)
+>
+> *同类型约束* → [类型标识](./03_Types.md#type_identifier) **==** [类型](./03_Types.md#type_identifier)
+>
+> 泛型实参子句语法
+>
+> *泛型实参子句* → **<** [泛型实参集](./09_Generic_Parameters_and_Arguments.md#generic-argument-list) **>**
+>
+> *泛型实参集* → [泛型实参](./09_Generic_Parameters_and_Arguments.md#generic_argument) | [泛形实参](./09_Generic_Parameters_and_Arguments.md#generic_argument) **,** [泛型实参集](./09_Generic_Parameters_and_Arguments.md#generic-argument-list)
+>
+> *泛形实参* → [类型](./03_Types.md#type)

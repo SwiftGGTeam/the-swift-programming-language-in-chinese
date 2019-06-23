@@ -10,8 +10,7 @@ Swift 不仅提供了多种不同的访问级别，还为某些典型场景提�
 > 
 > 为了简单起见，对于代码中可以设置访问级别的特性（属性、基本类型、函数等），在下面的章节中我们会称之为“实体”。
 
-<a name="modules_and_source_files"></a>
-## 模块和源文件
+## 模块和源文件 {#modules-and-source-files}
 
 Swift 中的访问控制模型基于模块和源文件这两个概念。
 
@@ -21,8 +20,7 @@ Swift 中的访问控制模型基于模块和源文件这两个概念。
 
 *源文件*就是 Swift 中的源代码文件，它通常属于一个模块，即一个应用程序或者框架。尽管我们一般会将不同的类型分别定义在不同的源文件中，但是同一个源文件也可以包含多个类型、函数之类的定义。
 
-<a name="access_levels"></a>
-## 访问级别
+## 访问级别 {#access-levels}
 
 Swift 为代码中的实体提供了五种不同的*访问级别*。这些访问级别不仅与源文件中定义的实体相关，同时也与源文件所属的模块相关。
 
@@ -42,10 +40,9 @@ Open 只能作用于类和类的成员，它和 Public 的区别如下：
 
 把一个类标记为 `open`，明确的表示你已经充分考虑过外部模块使用此类作为父类的影响，并且设计好了你的类的代码了。
 
-<a name="guiding_principle_of_access_levels"></a>
-### 访问级别基本原则
+### 访问级别基本原则 {#guiding-principle-of-access-levels}
 
-Swift 中的访问级别遵循一个基本原则：*不可以在某个实体中定义访问级别更低（更严格）的实体*。
+Swift 中的访问级别遵循一个基本原则：*实体不能定义在具有更低访问级别（更严格）的实体中*。
 
 例如：
 
@@ -54,34 +51,29 @@ Swift 中的访问级别遵循一个基本原则：*不可以在某个实体中�
 
 关于此原则在各种情况下的具体表现，将在下文有所体现。
 
-<a name="default_access_levels"></a>
-### 默认访问级别
+### 默认访问级别 {#default-access-levels}
 
 如果你没有为代码中的实体显式指定访问级别，那么它们默认为 `internal` 级别（有一些例外情况，稍后会进行说明）。因此，在大多数情况下，我们不需要显式指定实体的访问级别。
 
-<a name="access_levels_for_single-target_apps"></a>
-### 单 target 应用程序的访问级别
+### 单 target 应用程序的访问级别 {#access-levels-for-single-target-apps}
 
 当你编写一个单目标应用程序时，应用的所有功能都是为该应用服务，而不需要提供给其他应用或者模块使用，所以我们不需要明确设置访问级别，使用默认的访问级别 Internal 即可。但是，你也可以使用 `fileprivate` 访问或 `private` 访问级别，用于隐藏一些功能的实现细节。
 
-<a name="access_levels_for_frameworks"></a>
-### 框架的访问级别
+### 框架的访问级别 {#access-levels-for-frameworks}
 
 当你开发框架时，就需要把一些对外的接口定义为 Open 或 Public，以便使用者导入该框架后可以正常使用其功能。这些被你定义为对外的接口，就是这个框架的 API。
 
 > 注意
 > 
-> 框架依然会使用默认的 `internal` ，也可以指定为 `fileprivate` 访问或者 `private` 访问级别。当你想把某个实体作为框架的 API 的时候，需显式为其指定开放访问或公开访问级别。
+> 框架的内部实现仍然可以使用默认的访问级别 `internal`，当你需要对框架内部其它部分隐藏细节时可以使用 `private` 或 `fileprivate`。对于框架的对外 API 部分，你就需要将它们设置为 `open` 或 `public` 了。
 
-<a name="access_levels_for_unit_test_targets"></a>
-### 单元测试 target 的访问级别
+### 单元测试 target 的访问级别 {#access-levels-for-unit-test-targets}
 
 当你的应用程序包含单元测试 target 时，为了测试，测试模块需要访问应用程序模块中的代码。默认情况下只有 `open` 或 `public` 级别的实体才可以被其他模块访问。然而，如果在导入应用程序模块的语句前使用 `@testable` 特性，然后在允许测试的编译设置（`Build Options -> Enable Testability`）下编译这个应用程序模块，单元测试目标就可以访问应用程序模块中所有内部级别的实体。
 
-<a name="access_control_syntax"></a>
-## 访问控制语法
+## 访问控制语法 {#access-control-syntax}
 
-通过修饰符 `open`，`public`，`internal`，`fileprivate`，`private` 来声明实体的访问级别：
+通过修饰符 `open`、`public`、`internal`、`fileprivate`、`private` 来声明实体的访问级别：
 
 ```swift
 public class SomePublicClass {}
@@ -102,12 +94,11 @@ class SomeInternalClass {}   // 隐式 internal
 var someInternalConstant = 0 // 隐式 internal
 ```
 
-<a name="custom_types"></a>
-## 自定义类型
+## 自定义类型 {#custom-types}
 
 如果想为一个自定义类型指定访问级别，在定义类型时进行指定即可。新类型只能在它的访问级别限制范围内使用。例如，你定义了一个 `fileprivate` 级别的类，那这个类就只能在定义它的源文件中使用，可以作为属性类型、函数参数类型或者返回类型，等等。
 
-一个类型的访问级别也会影响到类型*成员*（属性、方法、构造器、下标）的默认访问级别。如果你将类型指定为 `private` 或者 `fileprivate` 级别，那么该类型的所有成员的默认访问级别也会变成 `private` 或者 `fileprivate` 级别。如果你将类型指定为公开或者 `internal` （或者不明确指定访问级别，而使用默认的 `internal` ），那么该类型的所有成员的默认访问级别将是内部访问。
+一个类型的访问级别也会影响到类型*成员*（属性、方法、构造器、下标）的默认访问级别。如果你将类型指定为 `private` 或者 `fileprivate` 级别，那么该类型的所有成员的默认访问级别也会变成 `private` 或者 `fileprivate` 级别。如果你将类型指定为 `internal` 或 `public`（或者不明确指定访问级别，而使用默认的 `internal` ），那么该类型的所有成员的默认访问级别将是 `internal`。
 
 > 重点
 > 
@@ -135,10 +126,8 @@ fileprivate class SomeFilePrivateClass {        // 显式 fileprivate 类
 private class SomePrivateClass {                // 显式 private 类
     func somePrivateMethod() {}                  // 隐式 private 类成员
 }
-
-```swift
-<a name="tuple_types"></a>
-### 元组类型
+```
+### 元组类型 {#tuple-types}
 
 元组的访问级别将由元组中访问级别最严格的类型来决定。例如，如果你构建了一个包含两种不同类型的元组，其中一个类型为 `internal`，另一个类型为 `private`，那么这个元组的访问级别为 `private`。
 
@@ -146,8 +135,7 @@ private class SomePrivateClass {                // 显式 private 类
 > 
 > 元组不同于类、结构体、枚举、函数那样有单独的定义。元组的访问级别是在它被使用时自动推断出的，而无法明确指定。
 
-<a name="function_types"></a>
-### 函数类型
+### 函数类型 {#function-types}
 
 函数的访问级别根据访问级别最严格的参数类型或返回类型的访问级别来决定。但是，如果这种访问级别不符合函数定义所在环境的默认访问级别，那么就需要明确地指定该函数的访问级别。
 
@@ -155,7 +143,7 @@ private class SomePrivateClass {                // 显式 private 类
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   	// 此处是函数实现部分
+    // 此处是函数实现部分
 }
 ```
 
@@ -165,14 +153,13 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   	// 此处是函数实现部分
+    // 此处是函数实现部分
 }
 ```
 
 将该函数指定为 `public` 或 `internal`，或者使用默认的访问级别 `internal` 都是错误的，因为如果把该函数当做 `public` 或 `internal` 级别来使用的话，可能会无法访问 `private` 级别的返回值。
 
-<a name="enumeration_types"></a>
-### 枚举类型
+### 枚举类型 {#enumeration-types}
 
 枚举成员的访问级别和该枚举类型相同，你不能为枚举成员单独指定不同的访问级别。
 
@@ -180,25 +167,22 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 ```swift
 public enum CompassPoint {
-   	case North
-   	case South
-   	case East
-   	case West
+    case north
+    case south
+    case east
+    case west
 }
 ```
 
-<a name="raw_values_and_associated_values"></a>
-#### 原始值和关联值
+#### 原始值和关联值 {#raw-values-and-associated-values}
 
 枚举定义中的任何原始值或关联值的类型的访问级别至少不能低于枚举类型的访问级别。例如，你不能在一个 `internal` 的枚举中定义 `private` 的原始值类型。
 
-<a name="nested_types"></a>
-### 嵌套类型
+### 嵌套类型 {#nested-types}
 
 如果在 `private` 的类型中定义嵌套类型，那么该嵌套类型就自动拥有 `private` 访问级别。如果在 `public` 或者 `internal` 级别的类型中定义嵌套类型，那么该嵌套类型自动拥有 `internal` 访问级别。如果想让嵌套类型拥有 `public` 访问级别，那么需要明确指定该嵌套类型的访问级别。
 
-<a name="subclassing"></a>
-## 子类
+## 子类 {#subclassing}
 
 子类的访问级别不得高于父类的访问级别。例如，父类的访问级别是 `internal`，子类的访问级别就不能是 `public`。
 
@@ -208,11 +192,11 @@ public enum CompassPoint {
 
 ```swift
 public class A {
-   	private func someMethod() {}
+    fileprivate func someMethod() {}
 }
 
 internal class B: A {
-   	override internal func someMethod() {}
+    override internal func someMethod() {}
 }
 ```
 
@@ -220,7 +204,7 @@ internal class B: A {
 
 ```swift
 public class A {
-    private func someMethod() {}
+    fileprivate func someMethod() {}
 }
 
 internal class B: A {
@@ -232,8 +216,7 @@ internal class B: A {
 
 因为父类 `A` 和子类 `B` 定义在同一个源文件中，所以在子类 `B` 可以在重写的 `someMethod()` 方法中调用 `super.someMethod()`。
 
-<a name="constants_variables_properties_subscripts"></a>
-## 常量、变量、属性、下标
+## 常量、变量、属性、下标 {#constants-variables-properties-subscripts}
 
 常量、变量、属性不能拥有比它们的类型更高的访问级别。例如，你不能定义一个 `public` 级别的属性，但是它的类型却是 `private` 级别的。同样，下标也不能拥有比索引类型或返回类型更高的访问级别。
 
@@ -243,8 +226,7 @@ internal class B: A {
 private var privateInstance = SomePrivateClass()
 ```
 
-<a name="getters_and_setters"></a>
-### Getter 和 Setter
+### Getter 和 Setter {#getters-and-setters}
 
 常量、变量、属性、下标的 `Getters` 和 `Setters` 的访问级别和它们所属类型的访问级别相同。
 
@@ -279,7 +261,7 @@ stringToEdit.value = "This string will be tracked."
 stringToEdit.value += " This edit will increment numberOfEdits."
 stringToEdit.value += " So will this one."
 print("The number of edits is \(stringToEdit.numberOfEdits)")
-// 打印 “The number of edits is 3”
+// 打印“The number of edits is 3”
 ```
 
 虽然你可以在其他的源文件中实例化该结构体并且获取到 `numberOfEdits` 属性的值，但是你不能对其进行赋值。这一限制保护了该记录功能的实现细节，同时还提供了方便的访问方式。
@@ -298,29 +280,25 @@ public struct TrackedString {
 }
 ```
 
-<a name="initializers"></a>
-## 构造器
+## 构造器 {#initializers}
 
-自定义构造器的访问级别可以低于或等于其所属类型的访问级别。唯一的例外是[必要构造器](./14_Initialization.html#required_initializers)，它的访问级别必须和所属类型的访问级别相同。
+自定义构造器的访问级别可以低于或等于其所属类型的访问级别。唯一的例外是[必要构造器](./14_Initialization.md#required_initializers)，它的访问级别必须和所属类型的访问级别相同。
 
 如同函数或方法的参数，构造器参数的访问级别也不能低于构造器本身的访问级别。
 
-<a name="default_initializers"></a>
-### 默认构造器
+### 默认构造器 {#default-initializers}
 
-如[默认构造器](./14_Initialization.html#default_initializers)所述，Swift 会为结构体和类提供一个默认的无参数的构造器，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
+如[默认构造器](./14_Initialization.md#default_initializers)所述，Swift 会为结构体和类提供一个默认的无参数的构造器，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
 
 默认构造器的访问级别与所属类型的访问级别相同，除非类型的访问级别是 `public`。如果一个类型被指定为 `public` 级别，那么默认构造器的访问级别将为 `internal`。如果你希望一个 `public` 级别的类型也能在其他模块中使用这种无参数的默认构造器，你只能自己提供一个 `public` 访问级别的无参数构造器。
 
-<a name="default_memberwise_initializers_for_structure_types"></a>
-### 结构体默认的成员逐一构造器
+### 结构体默认的成员逐一构造器 {#default-memberwise-initializers-for-structure-types}
 
 如果结构体中任意存储型属性的访问级别为 `private`，那么该结构体默认的成员逐一构造器的访问级别就是 `private`。否则，这种构造器的访问级别依然是 `internal`。
 
 如同前面提到的默认构造器，如果你希望一个 `public` 级别的结构体也能在其他模块中使用其默认的成员逐一构造器，你依然只能自己提供一个 `public` 访问级别的成员逐一构造器。
 
-<a name="protocols"></a>
-## 协议
+## 协议 {#protocols}
 
 如果想为一个协议类型明确地指定访问级别，在定义协议时指定即可。这将限制该协议只能在适当的访问级别范围内被遵循。
 
@@ -330,13 +308,11 @@ public struct TrackedString {
 > 
 > 如果你定义了一个 `public` 访问级别的协议，那么该协议的所有实现也会是 `public` 访问级别。这一点不同于其他类型，例如，当类型是 `public` 访问级别时，其成员的访问级别却只是 `internal`。
 
-<a name="protocol_inheritance"></a>
-### 协议继承
+### 协议继承 {#protocol-inheritance}
 
 如果定义了一个继承自其他协议的新协议，那么新协议拥有的访问级别最高也只能和被继承协议的访问级别相同。例如，你不能将继承自 `internal` 协议的新协议定义为 `public` 协议。
 
-<a name="protocol_conformance"></a>
-### 协议遵循
+### 协议遵循 {#protocol-conformance}
 
 一个类型可以遵循比它级别更低的协议。例如，你可以定义一个 `public` 级别类型，它能在别的模块中使用，但是如果它遵循一个 `internal` 协议，这个遵循的部分就只能在这个 `internal` 协议所在的模块中使用。
 
@@ -348,8 +324,7 @@ public struct TrackedString {
 > 
 > Swift 和 Objective-C 一样，协议遵循是全局的，也就是说，在同一程序中，一个类型不可能用两种不同的方式实现同一个协议。
 
-<a name="extensions"></a>
-## Extension
+## Extension {#extensions}
 
 Extension 可以在访问级别允许的情况下对类、结构体、枚举进行扩展。Extension 的成员具有和原始类型成员一致的访问级别。例如，你使用 extension 扩展了一个 `public` 或者 `internal` 类型，extension 中的成员就默认使用 `internal` 访问级别，和原始类型中的成员一致。如果你使用 extension 扩展了一个 `private` 类型，则 extension 的成员默认使用 `private` 访问级别。
 
@@ -357,8 +332,7 @@ Extension 可以在访问级别允许的情况下对类、结构体、枚举进�
 
 如果你使用 extension 来遵循协议的话，就不能显式地声明 extension 的访问级别。extension 每个 protocol 要求的实现都默认使用 protocol 的访问级别。
 
-<a name="Private Members in Extensions"></a>
-### Extension 的私有成员
+### Extension 的私有成员 {#Private Members in Extensions}
 
 扩展同一文件内的类，结构体或者枚举，extension 里的代码会表现得跟声明在原类型里的一模一样。也就是说你可以这样：
 
@@ -370,7 +344,7 @@ Extension 可以在访问级别允许的情况下对类、结构体、枚举进�
 
 ```swift
 protocol SomeProtocol {
-    func doSomething() {}
+    func doSomething()
 }
 ```
 
@@ -388,13 +362,11 @@ extension SomeStruct: SomeProtocol {
 }
 ```
 
-<a name="generics"></a>
-## 泛型
+## 泛型 {#generics}
 
 泛型类型或泛型函数的访问级别取决于泛型类型或泛型函数本身的访问级别，还需结合类型参数的类型约束的访问级别，根据这些访问级别中的最低访问级别来确定。
 
-<a name="type_aliases"></a>
-## 类型别名
+## 类型别名 {#type-aliases}
 
 你定义的任何类型别名都会被当作不同的类型，以便于进行访问控制。类型别名的访问级别不可高于其表示的类型的访问级别。例如，`private` 级别的类型别名可以作为 `private`、`file-private`、`internal`、`public` 或者 `open` 类型的别名，但是 `public` 级别的类型别名只能作为 `public` 类型的别名，不能作为 `internal`、`file-private` 或 `private` 类型的别名。
 
