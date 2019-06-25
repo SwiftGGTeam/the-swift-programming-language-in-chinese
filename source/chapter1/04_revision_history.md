@@ -240,7 +240,7 @@
 * 加入新的章节[没有外部名的构造器参数](../chapter2/14_Initialization.md#initializer-parameters-without-external-names)。
 * 加入新的章节[Required 构造器](../chapter2/14_Initialization.md#required-initializers)。
 * 加入新的章节[可选元组返回类型](../chapter2/06_Functions.md#optional-tuple-return-types)。
-* 更新了[类型标注](../chapter2/01_TheBasics.md#type-annotations)章节：多个相关变量可以用"类型标注”在同一行中声明为同一类型。
+* 更新了[类型注解](../chapter2/01_TheBasics.md#type-annotations)章节：多个相关变量可以用"类型注解”在同一行中声明为同一类型。
 * `@optional`, `@lazy`, `@final`,  `@required` 等关键字被更新为 `optional`, `lazy`, `final`, `required` 参见[声明修饰符](../chapter3/06_Declarations.md#declaration-modifiers)。
 * 更新整本书中关于 `..<` 的引用，从半闭区间改为了[半开区间](../chapter2/BasicOperators.md#half-open-range-operator)。
 * 更新了小节[读取和修改字典](../chapter2/CollectionTypes.md#accessing-and-modifying-a-dictionary)：  `Dictionary` 现在增加了一个 Boolean 型的属性：`isEmpty`。

@@ -41,11 +41,11 @@ var x = 0.0, y = 0.0, z = 0.0
 > 
 > 如果你的代码中有不需要改变的值，请使用 `let` 关键字将它声明为常量。只将需要改变的值声明为变量。
 
-### 类型标注 {#type-annotations}
+### 类型注解 {#type-annotations}
 
-当你声明常量或者变量的时候可以加上*类型标注（type annotation）*，说明常量或者变量中要存储的值的类型。如果要添加类型标注，需要在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。
+当你声明常量或者变量的时候可以加上*类型注解（type annotation）*，说明常量或者变量中要存储的值的类型。如果要添加类型注解，需要在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。
 
-这个例子给 `welcomeMessage` 变量添加了类型标注，表示这个变量可以存储 `String` 类型的值：
+这个例子给 `welcomeMessage` 变量添加了类型注解，表示这个变量可以存储 `String` 类型的值：
 
 ```swift
 var welcomeMessage: String
@@ -63,7 +63,7 @@ var welcomeMessage: String
 welcomeMessage = "Hello"
 ```
 
-你可以在一行中定义多个同样类型的变量，用逗号分割，并在最后一个变量名之后添加类型标注：
+你可以在一行中定义多个同样类型的变量，用逗号分割，并在最后一个变量名之后添加类型注解：
 
 ```swift
 var red, green, blue: Double
@@ -71,7 +71,7 @@ var red, green, blue: Double
 
 > 注意
 > 
-> 一般来说你很少需要写类型标注。如果你在声明常量或者变量的时候赋了一个初始值，Swift 可以推断出这个常量或者变量的类型，请参考[类型安全和类型推断](#type-safety-and-type-inference)。在上面的例子中，没有给 `welcomeMessage` 赋初始值，所以变量 `welcomeMessage` 的类型是通过一个类型标注指定的，而不是通过初始值推断的。
+> 一般来说你很少需要写类型注解。如果你在声明常量或者变量的时候赋了一个初始值，Swift 可以推断出这个常量或者变量的类型，请参考[类型安全和类型推断](#type-safety-and-type-inference)。在上面的例子中，没有给 `welcomeMessage` 赋初始值，所以变量 `welcomeMessage` 的类型是通过一个类型注解指定的，而不是通过初始值推断的。
 
 ### 常量和变量的命名 {#naming}
 

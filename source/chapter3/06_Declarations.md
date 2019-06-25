@@ -135,7 +135,7 @@ print("The second number is \(secondNumber).")
 // 打印“The second number is 42.”
 ```
 
-当常量名称的类型（`:` 类型）可以被推断出时，类型标注在常量声明中是可选的，正如 [类型推断](./03_Types.md#type_inference) 中所描述的。
+当常量名称的类型（`:` 类型）可以被推断出时，类型注解在常量声明中是可选的，正如 [类型推断](./03_Types.md#type_inference) 中所描述的。
 
 声明一个常量类型属性要使用 `static` 声明修饰符。类型属性在 [类型属性](../chapter2/10_Properties.md#type_properties)中有介绍。
 
@@ -187,7 +187,7 @@ var 变量名称: 类型 = 表达式
 
 可以在全局范围，函数内部，或者在类和结构体的声明中使用这种形式来声明一个变量。当变量以这种形式在全局范围或者函数内部被声明时，它代表一个存储型变量。当它在类或者结构体中被声明时，它代表一个*存储型变量属性（stored variable property）*。
 
-用于初始化的表达式不可以在协议的声明中出现，在其他情况下，该表达式是可选的。如果没有初始化表达式，那么变量声明必须包含类型标注（`:` *type*）。
+用于初始化的表达式不可以在协议的声明中出现，在其他情况下，该表达式是可选的。如果没有初始化表达式，那么变量声明必须包含类型注解（`:` *type*）。
 
 如同常量声明，如果变量名称是元组形式，元组中每一项的名称都会和初始化表达式中对应的值进行绑定。
 
@@ -236,7 +236,7 @@ var 变量名称: 类型 = 表达式 {
 可以为任何存储型属性添加观察器。也可以通过重写父类属性的方式为任何继承的属性（无论是存储型还是计算型的）添加观察器
 ，正如 [重写属性观察器](../chapter2/13_Inheritance.md#overriding_property_observers) 中所描述的。
 
-用于初始化的表达式在类或者结构的声明中是可选的，但是在其他声明中则是必须的。如果可以从初始化表达式中推断出类型信息，那么可以不提供类型标注。
+用于初始化的表达式在类或者结构的声明中是可选的，但是在其他声明中则是必须的。如果可以从初始化表达式中推断出类型信息，那么可以不提供类型注解。
 
 当变量或属性的值被改变时，`willSet` 和 `didSet` 观察器提供了一种观察方法。观察器会在变量的值被改变时调用，但不会在初始化时被调用。
 
@@ -264,15 +264,15 @@ var 变量名称: 类型 = 表达式 {
 #### variable-declaration {#variable-declaration}
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*模式构造器列表*](#pattern-initializer-list)
 > 
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*代码块*](#code-block)
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型注解*](03_Types.md#type-annotation) [*代码块*](#code-block)
 > 
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter 代码块*](#getter-setter-block)
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型注解*](03_Types.md#type-annotation) [*getter-setter 代码块*](#getter-setter-block)
 > 
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型注解*](03_Types.md#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
 > 
 > *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*构造器*](#initializer) [*willSet-didSet 代码块*](#willSet-didSet-block)
 > 
-> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*构造器*](#initializer)<sub>可选</sub> [*willSet-didSet 代码块*](#willSet-didSet-block)
+> *变量声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型注解*](03_Types.md#type-annotation) [*构造器*](#initializer)<sub>可选</sub> [*willSet-didSet 代码块*](#willSet-didSet-block)
 > 
 
 
@@ -653,11 +653,11 @@ Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它�
 > 
 ####  parameter {#parameter}
 > 
-> *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型标注*](03_Types.md#type-annotation) [*默认参数子句*](#default-argument-clause)<sub>可选</sub>
+> *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型注解*](03_Types.md#type-annotation) [*默认参数子句*](#default-argument-clause)<sub>可选</sub>
 > 
-> *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型标注*](03_Types.md#type-annotation)
+> *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型注解*](03_Types.md#type-annotation)
 > 
-> *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型标注*](03_Types.md#type-annotation) **...**
+> *参数* → [*外部参数名*](#external-parameter-name)<sub>可选</sub> [*内部参数名*](#local-parameter-name) [*类型注解*](03_Types.md#type-annotation) **...**
 > 
 > 
 ####  external-parameter-name {#external-parameter-name}
@@ -1103,7 +1103,7 @@ var 属性名: 类型 { get set }
 > 
 ####  protocol-property-declaration {#protocol-property-declaration}
 > 
-> *协议属性声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型标注*](03_Types.md#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
+> *协议属性声明* → [*变量声明头*](#variable-declaration-head) [*变量名称*](#variable-name) [*类型注解*](03_Types.md#type-annotation) [*getter-setter 关键字代码块*](#getter-setter-keyword-block)
 > 
 
 ### 协议方法声明 {#protocol-method-declaration}
@@ -1548,7 +1548,7 @@ subscript (参数列表) -> 返回类型 {
 
 下标声明只能出现在类、结构体、枚举、扩展和协议的声明中。
 
-参数列表指定一个或多个用于在相关类型的下标表达式中访问元素的索引（例如，表达式 `object[i]` 中的 `i`）。索引可以是任意类型，但是必须包含类型标注。返回类型指定了被访问的元素的类型。
+参数列表指定一个或多个用于在相关类型的下标表达式中访问元素的索引（例如，表达式 `object[i]` 中的 `i`）。索引可以是任意类型，但是必须包含类型注解。返回类型指定了被访问的元素的类型。
 
 和计算型属性一样，下标声明支持对元素的读写操作。getter 用于读取值，setter 用于写入值。setter 子句是可选的，当仅需要一个 getter 子句时，可以将二者都忽略，直接返回请求的值即可。但是，如果提供了 setter 子句，就必须提供 getter 子句。
 
