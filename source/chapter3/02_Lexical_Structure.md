@@ -162,9 +162,9 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 true		    // 布尔值字面量
 ```
 
-字面量本身并不包含类型信息。事实上，一个字面量会被解析为拥有无限的精度，然后 Swift 的类型推导会尝试去推导出这个字面量的类型。比如，在 `let x: Int8 = 42` 这个声明中，Swift 使用了显式类型标注（`: Int8`）来推导出 `42` 这个整数字面量的类型是 `Int8`。如果没有可用的类型信息， Swift 则会从标准库中定义的字面量类型中推导出一个默认的类型。整数字面量的默认类型是 `Int`，浮点数字面量的默认类型是 `Double`，字符串字面量的默认类型是 `String`，布尔值字面量的默认类型是 `Bool`。比如，在 `let str = "Hello, world"` 这个声明中，字符串 `"Hello, world"` 的默认推导类型就是 `String`。
+字面量本身并不包含类型信息。事实上，一个字面量会被解析为拥有无限的精度，然后 Swift 的类型推导会尝试去推导出这个字面量的类型。比如，在 `let x: Int8 = 42` 这个声明中，Swift 使用了显式类型注解（`: Int8`）来推导出 `42` 这个整数字面量的类型是 `Int8`。如果没有可用的类型信息， Swift 则会从标准库中定义的字面量类型中推导出一个默认的类型。整数字面量的默认类型是 `Int`，浮点数字面量的默认类型是 `Double`，字符串字面量的默认类型是 `String`，布尔值字面量的默认类型是 `Bool`。比如，在 `let str = "Hello, world"` 这个声明中，字符串 `"Hello, world"` 的默认推导类型就是 `String`。
 
-当为一个字面量值指定了类型标注的时候，这个标注的类型必须能通过这个字面量值实例化。也就是说，这个类型必须符合这些 Swift 标准库协议中的一个：整数字面量的 `IntegerLiteralConvertible` 协议、浮点数字面量的 `FloatingPointLiteralConvertible` 协议、字符串字面量的 `StringLiteralConvertible` 协议以及布尔值字面量的 `BooleanLiteralConvertible` 协议。比如，`Int8` 符合 `IntegerLiteralConvertible` 协议，因此它能在 `let x: Int8 = 42` 这个声明中作为整数字面量 `42` 的类型标注。
+当为一个字面量值指定了类型注解的时候，这个标注的类型必须能通过这个字面量值实例化。也就是说，这个类型必须符合这些 Swift 标准库协议中的一个：整数字面量的 `IntegerLiteralConvertible` 协议、浮点数字面量的 `FloatingPointLiteralConvertible` 协议、字符串字面量的 `StringLiteralConvertible` 协议以及布尔值字面量的 `BooleanLiteralConvertible` 协议。比如，`Int8` 符合 `IntegerLiteralConvertible` 协议，因此它能在 `let x: Int8 = 42` 这个声明中作为整数字面量 `42` 的类型注解。
 
 > 字面量语法
 > 
