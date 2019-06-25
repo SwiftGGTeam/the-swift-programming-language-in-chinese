@@ -127,7 +127,7 @@ diff 操作如下：
 | alias | 别名 |
 | assertion | 断言 |
 | conditional compilation | 条件编译 |
-| opaque type | 不透明类型|
+| opaque type | 不透明类型 |
 
 # 贡献者
 
