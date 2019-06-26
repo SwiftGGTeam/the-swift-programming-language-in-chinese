@@ -183,7 +183,11 @@ repeatLabels(a: "four") // Error
 
 该特性用于类、结构体、枚举或协议，让其能在运行时查找成员。该类型必须实现 `subscript(dynamicMemberLookup:)` 下标。
 
-在显式成员表达式中，如果没有成名指定成员，则该表达式被理解为对该类型的 `subscript(dynamicMemberLookup:)` 下标的调用，传递包含成员名称字符串的参数。下标的参数只需遵循 `ExpressibleByStringLiteral` 协议，返回值类型可以为任意类型。在大多数情况下，下标的参数是一个 `String` 值。例如：
+在显式成员表达式中，如果没有成名指定成员，则该表达式被理解为对该类型的 `subscript(dynamicMemberLookup:)` 下标的调用，传递包含成员名称字符串的参数。下标接收参数既可以是键路径，也可以是成员名称字符串；如果你同时实现这两种方式的下标调用，那么以键路径参数方式为准。
+
+ `subscript(dynamicMemberLookup:)`  实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。而遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议，下标调用接收参数为成员名称字符串 ——  在大多数情况下，下标的参数是一个 `String` 值。下标返回值类型可以为任意类型。
+
+根据成员名称来动态地查找成员，可以帮助我们创建一个包裹数据的包装类型，但该类型无法在编译时进行类型检查，例如其他语言的数据桥接到 Swift 语言时。例如：
 
 ```swift
 @dynamicMemberLookup
@@ -206,6 +210,24 @@ print(dynamic)
 let equivalent = s[dynamicMember: "someDynamicMember"]
 print(dynamic == equivalent)
 // 打印“true”
+```
+
+根据键路径来动态地查找成员，可用于创建一个包裹数据的包装类型，该类型在编译时期进行类型检查。例如：
+
+```swift
+struct Point { var x, y: Int }
+
+@dynamicMemberLookup
+struct PassthroughWrapper<Value> {
+    var value: Value
+    subscript<T>(dynamicMember member: KeyPath<Value, T>) -> T {
+        get { return value[keyPath: member] }
+    }
+}
+
+let point = Point(x: 381, y: 431)
+let wrapper = PassthroughWrapper(value: point)
+print(wrapper.x)
 ```
 
 ### `GKInspectable` {#gkinspectable}
@@ -263,7 +285,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 - 父类有 `objc` 特性，且重写为子类的声明。
 - 遵循带有 `objc` 特性协议的声明。
-- 带有 `IBAction`、`IBOutlet`、`IBDesignable`、`IBInspectable`、`NSManaged` 或 `GKInspectable` 特性的声明。
+- 带有 `IBAction`、 `IBSegueAction` 、 `IBOutlet` 、 `IBDesignable` 、 `IBInspectable` 、 `NSManaged` 或 `GKInspectable` 特性的声明。
 
 如果你将 `objc` 特性应用于枚举，每一个枚举用例都会以枚举名称和用例名称组合的方式暴露在 Objective-C 代码中。例如，在 `Planet` 枚举中有一个名为 `Venus` 的用例，该用例暴露在 Objective-C 代码中时叫做 `PlanetVenus`。
 
@@ -315,11 +337,11 @@ class ExampleClass: NSObject {
 
 ### Interface Builder 使用的声明特性 {#declaration-attributes-used-by-interface-builder}
 
-`Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBOutlet`，`IBDesignable`，以及 `IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
+`Interface Builder` 特性是 `Interface Builder` 用来与 Xcode 同步的声明特性。`Swift` 提供了以下的 `Interface Builder` 特性：`IBAction`，`IBSegueAction`，`IBOutlet`，`IBDesignable`，以及 `IBInspectable` 。这些特性与 Objective-C 中对应的特性在概念上是相同的。
 
 `IBOutlet` 和 `IBInspectable` 用于修饰一个类的属性声明，`IBAction` 特性用于修饰一个类的方法声明，`IBDesignable` 用于修饰类的声明。
 
-应用 `IBAction`、`IBOutlet`、`IBDesignable` 或者 `IBInspectable`  特性都意味着同时应用 `objc` 特性。
+应用 `IBAction`、`IBSegueAction`、`IBOutlet`、`IBDesignable` 或者 `IBInspectable`  特性都意味着同时应用 `objc` 特性。
 
 ## 类型特性 {#type-attributes}
 
