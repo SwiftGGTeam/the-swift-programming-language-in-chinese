@@ -40,7 +40,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 > 
 > *类型* → **（** [类型](#type) **）**
 
-## 类型注解 {#type-annotation}
+## 类型注解
 *类型注解*显式地指定一个变量或表达式的类型。类型注解始于冒号 `:` 终于类型，比如下面两个例子：
 
 ```swift
@@ -58,7 +58,7 @@ func someFunction(a: Int) { /* ... */ }
 #### type-annotation {#type-annotation}
 > *类型注解* → **:** [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 
-## 类型标识符 {#type-identifier}
+## 类型标识符
 *类型标识符*引用命名型类型，还可引用命名型或复合型类型的别名。
 
 大多数情况下，类型标识符引用的是与之同名的命名型类型。例如类型标识符 `Int` 引用命名型类型 `Int`，同样，类型标识符 `Dictionary<String, Int>` 引用命名型类型 `Dictionary<String, Int>`。
@@ -86,7 +86,7 @@ var someValue: ExampleModule.MyType
 #### type-name {#type-name}
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 
-## 元组类型 {#tuple-type}
+## 元组类型
 *元组类型*是使用括号括起来的零个或多个类型，类型间用逗号隔开。
 
 你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../chapter2/06_Functions.md#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
@@ -121,7 +121,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > *元素名* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 函数类型 {#function-type}
+## 函数类型
 *函数类型*表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
 
 > （`参数类型`）->（`返回值类型`）
@@ -218,7 +218,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 数组类型 {#array-type}
+## 数组类型
 Swift 语言为标准库中定义的 `Array<Element>` 类型提供了如下语法糖：
 
 > [`类型`]
@@ -250,7 +250,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 > *数组类型* → **[** [*类型*](#type) **]**
 > 
 
-## 字典类型 {#dictionary-type}
+## 字典类型
 Swift 语言为标准库中定义的 `Dictionary<Key, Value>` 类型提供了如下语法糖：
 
 > [`键类型` : `值类型`]
@@ -278,7 +278,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 > *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]**
 > 
 
-## 可选类型 {#optional-type}
+## 可选类型
 Swift 定义后缀 `?` 来作为标准库中定义的命名型类型 `Optional<Wrapped>` 的语法糖。换句话说，下面两个声明是等价的：
 
 ```swift
@@ -345,7 +345,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 > *隐式解析可选类型* → [*类型*](#type) **!**
 > 
 
-## 协议合成类型 {#protocol-composition-type}
+## 协议合成类型
 *协议合成类型*定义了一种遵循协议列表中每个指定协议的类型，或者一个现有类型的子类并遵循协议列表中每个指定协议。协议合成类型只能用在类型注解、泛型参数子句和泛型 `where` 子句中指定类型。
 
 协议合成类型的形式如下：
@@ -381,7 +381,7 @@ typealias PQR = PQ & Q & R
 
 *不透明类型*定义了遵循某个协议或者合成协议的类型，但不需要指明底层的具体类型。
 
-不透明类型可以作为函数或下标的返回值，或属性的类型使用。
+不透明类型可以作为函数或下标的返回值，亦或是属性的类型使用。
 
 不透明类型不能作为元组类型的一部分或范型类型使用，比如数组元素类型或者可选值的包装类型。
 
@@ -389,11 +389,11 @@ typealias PQR = PQ & Q & R
 
 > some `constraint`
 
-*constraint* 可以是类类型，协议类型，协议组合类型或者 `Any`。值只有当它遵循上述协议或者组合协议，或者从上述的类继承的时候，才能作为这个不透明类型的实例使用。和不透明值交互的代码只能用该值定义在 *constraint* 上的接口。
+*constraint* 可以是类类型，协议类型，协议组合类型或者 `Any`。值只有当它遵循该协议或者组合协议，或者从该类继承的时候，才能作为这个不透明类型的实例使用。和不透明值交互的代码只能使用该值定义在 *constraint* 上的接口。
 
 协议声明里不能包括不透明类型。类不能使用不透明类型作为非 final 方法的返回值。
 
-使用不透明类型作为返回值的函数必须返回同样的的单一底层类型。返回的类型可以包含函数范型类型参数的一部分。举个例子，函数 `someFunction<T>()` 可以返回类型 `T` 或者 `Dictionary<String,T>` 的值。
+使用不透明类型作为返回值的函数必须返回单一公用底层类型。返回的类型可以包含函数范型类型参数的一部分。举个例子，函数 `someFunction<T>()` 可以返回类型 `T` 或者 `Dictionary<String,T>` 的值。
 
 > 不透明类型语法
 
@@ -401,7 +401,7 @@ typealias PQR = PQ & Q & R
 
 > *不透明类型* → **some** [type](#type)
 
-## 元类型 {#metatype-type}
+## 元类型
 
 *元类型*是指任意类型的类型，包括类类型、结构体类型、枚举类型和协议类型。
 
@@ -457,7 +457,7 @@ let anotherInstance = metatype.init(string: "some string")
 
 在协议声明或者协议成员声明时，`Self` 类型引用的是最终遵循该协议的类型。
 
-在结构体，类或者枚举值声明时，`Self` 类型引用的是声明的类型。在类型成员声明时，`Self` 类型引用的是该类型。在类成员声明时，`Self` 可以在方法的返回值和方法体中使用，但不能在其他上下文中使用。举个例子，下面的代码演示了返回值是 `Self` 的实例方法 `f` 。
+在结构体，类或者枚举值声明时，`Self` 类型引用的是声明的类型。在某个类型成员声明时，`Self` 类型引用的是该类型。在类成员声明时，`Self` 可以在方法的返回值和方法体中使用，但不能在其他上下文中使用。举个例子，下面的代码演示了返回值是 `Self` 的实例方法 `f` 。
 
 ```swift
 class Superclass {
@@ -477,19 +477,19 @@ print(type(of: z.f()))
 // 打印 "Subclass"
 ```
 
-上面例子中的最后一部分表明 `Self` 引用的是值 `z` 的运行时类型 `Subclass` ，而不是变量本身的编译时类型 `Superclass` 。
+上面例子的最后一部分表明 `Self` 引用的是值 `z` 的运行时类型 `Subclass` ，而不是变量本身的编译时类型 `Superclass` 。
 
-在嵌套类型声明时，`Self` 类型引用的是最内层的声明的类型。
+在嵌套类型声明时，`Self` 类型引用的是最内层声明的类型。
 
-`Self` 类型引用的类型和 Swift 标准库中 `type(of:)` 函数的结果一样。使用 `Self.someStaticMember` 访问当前类型中的成员和使用 `type(of: self).someStaticMember` 是一样的。
+`Self` 类型引用的类型和 Swift 标准库中 [type(of:)](https://developer.apple.com/documentation/swift/2885064-type) 函数的结果一样。使用 `Self.someStaticMember` 访问当前类型中的成员和使用 `type(of: self).someStaticMember` 是一样的。
 
 > 自身类型语法
 
-#### self-type{#type}
+#### self-type{#self-type}
 
 > *自身类型* → **Self**
 
-## 类型继承子句 {#type-inheritance-clause}
+## 类型继承子句
 
 *类型继承子句*被用来指定一个命名型类型继承自哪个类、采纳哪些协议。类型继承子句开始于冒号 `:`，其后是类型标识符列表。
 
@@ -513,7 +513,7 @@ print(type(of: z.f()))
 #### class-requirement {#class-requirement}
 
 
-## 类型推断 {#type-inference}
+## 类型推断
 Swift 广泛使用*类型推断*，从而允许你省略代码中很多变量和表达式的类型或部分类型。比如，对于 `var x: Int = 0`，你可以完全省略类型而简写成 `var x = 0`，编译器会正确推断出 `x` 的类型 `Int`。类似的，当完整的类型可以从上下文推断出来时，你也可以省略类型的一部分。比如，如果你写了 `let dict: Dictionary = ["A" : 1]`，编译器能推断出 `dict` 的类型是 `Dictionary<String, Int>`。
 
 在上面的两个例子中，类型信息从表达式树的叶子节点传向根节点。也就是说，`var x: Int = 0` 中 `x` 的类型首先根据 `0` 的类型进行推断，然后将该类型信息传递到根节点（变量 `x`）。
