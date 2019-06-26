@@ -510,8 +510,6 @@ print(type(of: z.f()))
 > *类型继承列表* → [*类型标识符*](#type-identifier) | [*类型标识符*](#type-identifier) **,** [*类型继承列表*](#type-inheritance-list)
 > 
 
-#### class-requirement {#class-requirement}
-
 
 ## 类型推断
 Swift 广泛使用*类型推断*，从而允许你省略代码中很多变量和表达式的类型或部分类型。比如，对于 `var x: Int = 0`，你可以完全省略类型而简写成 `var x = 0`，编译器会正确推断出 `x` 的类型 `Int`。类似的，当完整的类型可以从上下文推断出来时，你也可以省略类型的一部分。比如，如果你写了 `let dict: Dictionary = ["A" : 1]`，编译器能推断出 `dict` 的类型是 `Dictionary<String, Int>`。
