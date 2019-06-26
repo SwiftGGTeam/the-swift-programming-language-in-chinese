@@ -30,9 +30,9 @@ let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 for (animalName, legCount) in numberOfLegs {
     print("\(animalName)s have \(legCount) legs")
 }
+// cats have 4 legs
 // ants have 6 legs
 // spiders have 8 legs
-// cats have 4 legs
 ```
 
 字典的内容理论上是无序的，遍历元素时的顺序是无法确定的。将元素插入字典的顺序并不会决定它们被遍历的顺序。关于数组和字典的细节，参见[集合类型](./04_Collection_Types.md)。
