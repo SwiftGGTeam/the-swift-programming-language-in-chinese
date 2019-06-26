@@ -21,7 +21,6 @@
 
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
-> 
     if x < y {
         return y
     }
@@ -117,7 +116,6 @@ struct Dictionary<Key: Hashable, Value>: CollectionType, DictionaryLiteralConver
 
 ```swift
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-> 
 ```
 
 如 [泛型形参子句](#generic_parameter) 所述，不能用泛型实参子句来指定泛型函数或构造器的类型实参。

@@ -430,7 +430,6 @@ struct Point {
 
 ```swift
 { (parameters) -> return type in
-> 
     statements
 }
 ```
@@ -448,7 +447,6 @@ struct Point {
 ```swift
 myFunction {
     (x: Int, y: Int) -> Int in
-> 
     return x + y
 }
 
@@ -729,7 +727,6 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 var index = 2
 let path = \[String].[index]
 let fn: ([String]) -> String = { strings in strings[index] }
-> 
 
 print(greetings[keyPath: path])
 // 打印 "bonjour"
@@ -840,7 +837,6 @@ extension SomeClass {
     func doSomething(_ x: String) { }
 }
 let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
-> 
 ```
 
 由于选择器是在编译时创建的，因此编译器可以检查方法或者属性是否存在，以及是否在运行时暴露给了 Objective-C 。
@@ -1036,7 +1032,6 @@ class SomeSubClass: SomeSuperClass {
 ```swift
 // 类型注解是必须的，因为 String 类型有多种构造器
 let initializer: Int -> String = String.init
-> 
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", combine: +)
 print(oneTwoThree)
 // 打印“123”
@@ -1106,7 +1101,6 @@ let b = instance.someMethod(_:y:)        // 无歧义
 let d = instance.overloadedMethod        // 有歧义
 let d = instance.overloadedMethod(_:y:)  // 有歧义
 let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // 无歧义
-> 
 ```
 
 如果点号（`.`）出现在行首，它会被视为显式成员表达式的一部分，而不是隐式成员表达式的一部分。例如如下代码所展示的被分为多行的链式方法调用：
@@ -1115,7 +1109,6 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(_:y:)  // 无歧义
 let x = [10, 3, 20, 15, 4]
     .sort()
     .filter { $0 > 5 }
-> 
     .map { $0 * 100 }
 ```
 
@@ -1232,7 +1225,6 @@ if let unwrappedC = c {
 
 ```swift
 func someFunctionWithSideEffects() -> Int {
-> 
     // 译者注：为了能看出此函数是否被执行，加上了一句打印
     print("someFunctionWithSideEffects")
     return 42

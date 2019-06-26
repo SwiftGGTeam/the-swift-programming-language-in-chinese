@@ -5,8 +5,6 @@
 
 [英文原版在线版](https://docs.swift.org/swift-book/)
 
-[英文原版ePub版](https://docs.swift.org/swift-book/TheSwiftProgrammingLanguageSwift5.epub)
-
 # 在线阅读
 
 使用 GitBook 制作，可以直接 [在线阅读](https://swiftgg.gitbook.io/swift/)。
