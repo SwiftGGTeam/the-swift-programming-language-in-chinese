@@ -228,7 +228,6 @@ default:
 ```swift
 // 重载 ~= 运算符对字符串和整数进行比较
 func ~=(pattern: String, value: Int) -> Bool {
-> 
     return pattern == "\(value)"
 }
 

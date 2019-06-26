@@ -351,20 +351,16 @@ typealias 类型别名 = 现存类型
 
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
-> 
 
 // 下列两个字典拥有同样的类型
 var dictionary1: StringDictionary<Int> = [:]
-> 
 var dictionary2: Dictionary<String, Int> = [:]
-> 
 ```
 
 当一个类型别名带着泛型参数一起被声明时，这些参数的约束必须与现有参数的约束完全匹配。例如:
 
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
-> 
 ```
 
 因为类型别名可以和现有类型相互交换使用，类型别名不可以引入额外的类型约束。
@@ -384,7 +380,6 @@ protocol Sequence {
 }
 
 func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
-> 
     // ...
 }
 ```
@@ -452,7 +447,6 @@ func 函数名称(参数列表) {
 
 ```swift
 func f(x: Int, y: Int) -> Int { return x + y }
-> 
 f(x: 1, y: 2) // 参数 x 和 y 都有标签
 ```
 
@@ -491,7 +485,6 @@ repeatGreeting("Hello, world!", count: 2) //  count 有标签, greeting 没有
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
-> 
     return { [a] in return a + 1 }
 }
 ```
@@ -531,7 +524,7 @@ _ : 参数类型
 
 ```swift
 func f(x: Int = 42) -> Int { return x }
-> 
+
 f()     // 有效，使用默认值
 f(7)    // 有效，提供了值
 f(x: 7) // 无效，该参数没有外部名称
@@ -549,7 +542,6 @@ f(x: 7) // 无效，该参数没有外部名称
 
 ```swift
 func 函数名称(参数列表) throws -> 返回类型 {
-> 
 	语句
 }
 ```
@@ -567,7 +559,6 @@ func 函数名称(参数列表) throws -> 返回类型 {
 
 ```swift
 func someFunction(callback: () throws -> Void) rethrows {
-> 
     try callback()
 }
 ```
@@ -579,7 +570,6 @@ func alwaysThrows() throws {
     throw SomeError.error
 }
 func someFunction(callback: () throws -> Void) rethrows {
-> 
     do {
         try callback()
         try alwaysThrows()  // 非法, alwaysThrows() 不是一个抛出函数类型的参数
@@ -707,7 +697,6 @@ enum Number {
 }
 
 // f 的类型为 (Int) -> Number
-> 
 let f = Number.integer
 
 // 利用 f 把一个整数数组转成 Number 数组
@@ -723,7 +712,6 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 ```swift
 enum Tree<T> {
-> 
 	case empty
 	indirect case node(value: T, left: Tree, right:Tree)
 }
@@ -1148,7 +1136,6 @@ var 属性名: 类型 { get set }
 
 ```swift
 subscript (参数列表) -> 返回类型 { get set }
-> 
 ```
 
 下标声明只为符合类型声明了 getter 和 setter 要求。如果下标声明包含 `get` 和 `set` 关键字，符合类型也必须实现 getter 和 setter 子句。如果下标声明只包含 `get` 关键字，符合类型必须实现 getter 子句，可以选择是否实现 setter 子句。
@@ -1441,18 +1428,15 @@ doSomething(with: oneAndTwo)
 ```swift
 protocol Serializable {
     func serialize() -> Any
-> 
 }
 
 extension Array: Serializable where Element == Int {
     func serialize() -> Any {
-> 
         // implementation
     }
 }
 extension Array: Serializable where Element == String {
     func serialize() -> Any {
-> 
         // implementation
     }
 }
@@ -1468,7 +1452,6 @@ extension String: SerializableInArray { }
 
 extension Array: Serializable where Element: SerializableInArray {
     func serialize() -> Any {
-> 
         // 具体实现
     }
 }
@@ -1536,7 +1519,6 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 ```swift
 subscript (参数列表) -> 返回类型 {
-> 
 	get {
 		语句
 	}

@@ -151,7 +151,6 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 @dynamicCallable
 struct Repeater {
     func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
-> 
         return pairs
             .map { label, count in
                 repeatElement(label, count: count).joined(separator: " ")
@@ -195,7 +194,6 @@ struct DynamicStruct {
     let dictionary = ["someDynamicMember": 325,
                       "someOtherMember": 787]
     subscript(dynamicMember member: String) -> Int {
-> 
         return dictionary[member] ?? 1054
     }
 }
