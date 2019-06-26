@@ -128,6 +128,8 @@ diff 操作如下：
 | assertion | 断言 |
 | conditional compilation | 条件编译 |
 | opaque type | 不透明类型 |
+| function | 函数 |
+| runtime | 运行时 |
 
 # 贡献者
 
