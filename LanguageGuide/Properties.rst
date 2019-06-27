@@ -735,6 +735,65 @@ and they are written in the same way as computed properties.
 
 .. TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
 
+.. _Properties_WrappedProperties:
+
+Wrapped Properties
+------------------
+
+.. XXX outline
+
+   a **property wrapper** is a struct that manages a property
+   and lets you reduce boilerplate in your code
+   It exposes a getter and setter for a ``wrappedValue`` property.
+
+   @propertyWrapper
+   SimpleWrapper {
+       var myNumber: Int
+       var wrappedValue {
+           get {
+               print("Reading")
+               return myNumber
+           }
+           set {
+               print("Writing")
+               myNumber = newValue
+           }
+       }
+   }
+
+   ^-- omit the init(initialValue:) for this first example to make it simpler
+   but TODO make sure the example below acutally works with it organized
+   this way
+
+   you apply a wrapper to a propery
+   by writing the wrapper type's name as an attribute
+
+   -> struct SomeStructure {
+          @SimpleWrapper var someProperty
+      }
+   -> var s = SomeStructure()
+   -> s.someProperty = 21
+   <- Writing
+   -> print(s.someProperty)
+   -> Reading
+   -> 21
+
+   the compiler expands the property wrapper into a getter and setter
+   $foo refers to the wrapper itself
+
+   // this
+   @SimpleWrapper var someProperty
+
+   // expands to
+   var $someProperty = SomeWrapper()
+   var someProperty {
+       get { return $someProperty.wrappedValue }
+       set { $someProperty.wrappedValue = newValue }
+   }
+
+
+   property wrappers are used a lot by SwiftUI ... xref
+
 .. _Properties_TypeProperties:
 
 Type Properties
