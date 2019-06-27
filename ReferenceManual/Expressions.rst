@@ -462,11 +462,6 @@ inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-.. For functions with no parameter labels,
-   #function leaves off the parens and _:
-   and just uses the base name.
-   https://bugs.swift.org/browse/SR-5533
-
 When used as the default value of a function or method parameter,
 the special literal's value is determined
 when the default value expression is evaluated at the call site.
@@ -486,19 +481,13 @@ when the default value expression is evaluated at the call site.
     << myFunction()
     >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
-    << noNamedArgs
+    << noNamedArgs(_:_:)
     >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
     >> oneNamedArg(1, withJay: 2)
     << oneNamedArg(_:withJay:)
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
     >> namedArgs(i: 1, withJay: 2)
     << namedArgs(i:withJay:)
-
-.. Additional hidden tests above illustrate
-   the somewhat irregular rules used by #function
-   to write out the name of a function.
-   In particular, the rule used for functions with no named arguments
-   doesn't match the display in Xcode or our documentation.
 
 An :newTerm:`array literal` is
 an ordered collection of values.
@@ -1157,8 +1146,9 @@ For example:
 .. testcode:: keypath-expression-self-keypath
 
    -> var compoundValue = (a: 1, b: 2)
-      // Equivalent to compoundValue = (a: 10, b: 20)
-      compoundValue[keyPath: \.self] = (a: 10, b: 20)
+   << // compoundValue : (a: Int, b: Int) = (a: 1, b: 2)
+   // Equivalent to compoundValue = (a: 10, b: 20)
+   -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
 The *path* can contain multiple property names, 
 separated by periods,

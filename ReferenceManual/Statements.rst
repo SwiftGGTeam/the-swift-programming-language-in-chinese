@@ -987,10 +987,10 @@ the following code prints all three messages:
       print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
       #endif
    <- Compiled with the Swift 5 compiler or later
-   -> // Prints "Compiled in Swift 4.2 mode or later"
-   <- Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5
+   <- Compiled in Swift 4.2 mode or later
+   // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 
-.. That testcode is cheating by explicitly printing the second line of output,
+.. That testcode is cheating by explicitly printing the third line of output,
    since it's not actually running in Swift 4.2 mode.
 
 The argument for the ``canImport()`` platform condition

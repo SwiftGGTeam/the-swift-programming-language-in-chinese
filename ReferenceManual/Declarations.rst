@@ -185,16 +185,26 @@ when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
 To declare a constant type property,
-mark the declaration with the ``static`` declaration modifier. Type properties
-are discussed in :ref:`Properties_TypeProperties`.
+mark the declaration with the ``static`` declaration modifier.
+A constant type property of a class is always implicitly final;
+you can't mark it with the ``class`` or ``final`` declaration modifier
+to allow or disallow overriding by subclasses.
+Type properties are discussed in :ref:`Properties_TypeProperties`.
 
-.. TODO: Discuss class constant properties after they're implemented
-    (probably not until after 1.0)
+.. assertion:: class-constants-cant-have-class-or-final
+
+   -> class Super { class let x = 10 }
+   !! <REPL Input>:1:25: error: class stored properties not supported in classes; did you mean 'static'?
+   !! class Super { class let x = 10 }
+   !!               ~~~~~     ^
+   -> class S { static final let x = 10 }
+   !! <REPL Input>:1:18: error: static declarations are already final
+   !! class S { static final let x = 10 }
+   !!                  ^~~~~~
+   !!-
 
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
-
-.. TODO: Need to discuss class and static constant properties.
 
 .. syntax-grammar::
 
@@ -379,21 +389,9 @@ Type Variable Properties
 
 To declare a type variable property,
 mark the declaration with the ``static`` declaration modifier.
-Classes may mark type computed properties  with the ``class`` declaration modifier instead
+Classes can mark type computed properties with the ``class`` declaration modifier instead
 to allow subclasses to override the superclass’s implementation.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
-
-.. note::
-
-   In a class declaration, the ``static`` keyword has the same effect as
-   marking the declaration with both the ``class`` and ``final`` declaration modifiers.
-
-.. TODO: Discuss type properties after they're implemented
-    (probably not until after 1.0)
-    Update: we now have class computed properties. We'll get class stored properites
-    sometime after WWDC.
-
-.. TODO: Need to discuss static variable properties in more detail.
 
 .. syntax-grammar::
 
@@ -563,6 +561,10 @@ If you write ``inout`` in front of a parameter's type,
 the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
+
+A function declaration whose *statements*
+include only a single expression
+is understood to return the value of that expression.
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
@@ -830,7 +832,30 @@ must be marked with the ``static`` declaration modifier for enumerations and str
 or with either the ``static`` or ``class`` declaration modifier for classes.
 A class type method marked with the ``class`` declaration modifier
 can be overridden by a subclass implementation;
-a class type method marked with ``static`` can't be overridden.
+a class type method marked with ``class final`` or ``static`` can't be overridden.
+
+.. assertion:: overriding-class-methods
+
+   -> class S { class final func f() -> Int { return 12 } }
+   -> class SS: S { override class func f() -> Int { return 120 } }
+   !! <REPL Input>:1:35: error: class method overrides a 'final' class method
+   !! class SS: S { override class func f() -> Int { return 120 } }
+   !!                                  ^
+   !! <REPL Input>:1:28: note: overridden declaration is here
+   !! class S { class final func f() -> Int { return 12 } }
+   !!                           ^
+   -> class S2 { static func f() -> Int { return 12 } }
+   -> class SS2: S2 { override static func f() -> Int { return 120 } }
+   !! <REPL Input>:1:38: error: cannot override static method
+   !! class SS2: S2 { override static func f() -> Int { return 120 } }
+   !! ^
+   !! <REPL Input>:1:24: note: overridden declaration is here
+   !! class S2 { static func f() -> Int { return 12 } }
+   !! ^
+   -> class S3 { class func f() -> Int { return 12 } }
+   -> class SS3: S3 { override class func f() -> Int { return 120 } }
+   -> print(SS3.f())
+   <- 120
 
 .. _Declarations_ThrowingFunctionsAndMethods:
 
@@ -1607,18 +1632,42 @@ only the ``get`` keyword, it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
 see :ref:`Protocols_PropertyRequirements`.
 
-.. TODO:
-    Because we're not going to have 'class' properties for 1.0,
-    you can't declare static or type properties in a protocol declaration.
-    Add the following text back in after we get the ability to do 'class' properties:
+To declare a type property requirement in a protocol declaration,
+mark the property declaration with the ``static`` keyword.
+Structures and enumerations that conform to the protocol
+declare the property with the ``static`` keyword,
+and classes that conform to the protocol
+declare the property with either the ``static`` or ``class`` keyword.
+Extensions that add protocol conformance to a structure, enumeration, or class
+use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type property requirement
+use the ``static`` keyword.
 
-    To declare a type property requirement in a protocol declaration,
-    mark the property declaration with the ``class`` keyword. Classes that implement
-    this property also declare the property with the ``class`` keyword. Structures
-    that implement it must declare the property with the ``static`` keyword instead.
-    If you're implementing the property in an extension,
-    use the ``class`` keyword if you're extending a class and the ``static`` keyword
-    if you're extending a structure.
+.. assertion:: protocols-with-type-property-requirements
+
+   -> protocol P { static var x: Int { get } }
+   -> protocol P2 { class var x: Int { get } }
+   !! <REPL Input>:1:21: error: class properties are only allowed within classes; use 'static' to declare a requirement fulfilled by either a static or class property
+   !! protocol P2 { class var x: Int { get } }
+   !!              ~~~~~ ^
+   !!              static
+   -> struct S: P { static var x = 10 }
+   -> class C1: P { static var x = 20 }
+   -> class C2: P { class var x = 30 }
+   !! <REPL Input>:1:25: error: class stored properties not supported in classes; did you mean 'static'?
+   !! class C2: P { class var x = 30 }
+   !!               ~~~~~     ^
+
+.. assertion:: protocol-type-property-default-implementation
+
+   -> protocol P { static var x: Int { get } }
+   -> extension P { static var x: Int { return 100 } }
+   -> struct S1: P { }
+   -> print(S1.x)
+   <- 100
+   -> struct S2: P { static var x = 10 }
+   -> print(S2.x)
+   <- 10
 
 See also :ref:`Declarations_VariableDeclaration`.
 
@@ -1643,12 +1692,15 @@ For examples of conforming types that implement the method requirements of a pro
 see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the ``static`` declaration modifier. Classes that implement
-this method declare the method with the ``class`` modifier. Structures
-that implement it must declare the method with the ``static`` declaration modifier instead.
-If you're implementing the method in an extension,
-use the ``class`` modifier if you're extending a class and the ``static`` modifier
-if you're extending a structure.
+mark the method declaration with the ``static`` declaration modifier.
+Structures and enumerations that conform to the protocol
+declare the method with the ``static`` keyword,
+and classes that conform to the protocol
+declare the method with either the ``static`` or ``class`` keyword.
+Extensions that add protocol conformance to a structure, enumeration, or class
+use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type method requirement
+use the ``static`` keyword.
 
 See also :ref:`Declarations_FunctionDeclaration`.
 
@@ -1710,6 +1762,17 @@ a conforming type must implement both a getter and a setter clause.
 If the subscript declaration includes only the ``get`` keyword,
 a conforming type must implement *at least* a getter clause
 and optionally can implement a setter clause.
+
+To declare a static subscript requirement in a protocol declaration,
+mark the subscript declaration with the ``static`` declaration modifier.
+Structures and enumerations that conform to the protocol
+declare the subscript with the ``static`` keyword,
+and classes that conform to the protocol
+declare the subscript with either the ``static`` or ``class`` keyword.
+Extensions that add protocol conformance to a structure, enumeration, or class
+use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a static subscript requirement
+use the ``static`` keyword.
 
 See also :ref:`Declarations_SubscriptDeclaration`.
 
@@ -1775,6 +1838,10 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     In addition to ``Self``, a protocol's operations often need to refer to types
     that are related to the type of ``Self``, such as a type of data stored in a
     collection or the node and edge types of a graph." Is this still true?
+
+    --> If we expand the discussion here,
+    --> add a link from Types_SelfType
+    --> to give more details about Self in protocols.
 
     NOTES from Doug:
     At one point, Self was an associated type, but that's the wrong modeling of
@@ -2453,6 +2520,31 @@ as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 For more information about subscripting and to see examples of subscript declarations,
 see :doc:`../LanguageGuide/Subscripts`.
 
+.. _Declarations_TypeSubscriptDeclaration:
+
+Type Subscript Declarations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To declare a subscript that's exposed by the type,
+rather than by instances of the type,
+mark the subscript declaration with the ``static`` declaration modifier.
+Classes can mark type computed properties with the ``class`` declaration modifier instead
+to allow subclasses to override the superclass’s implementation.
+In a class declaration,
+the ``static`` keyword has the same effect as marking the declaration
+with both the ``class`` and ``final`` declaration modifiers.
+
+.. assertion:: cant-override-static-subscript-in-subclass
+
+   -> class Super { static subscript(i: Int) -> Int { return 10 } }
+   -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+   !! <REPL Input>:1:36: error: cannot override static subscript
+   !! class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+   !!                                    ^
+   !! <REPL Input>:1:22: note: overridden declaration is here
+   !! class Super { static subscript(i: Int) -> Int { return 10 } }
+   !!                      ^
+
 .. syntax-grammar::
 
     Grammar of a subscript declaration
@@ -2661,6 +2753,14 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
+``class``
+    Apply this modifier to a member of a class
+    to indicate that the member is a member of the class itself,
+    rather than a member of instances of the class.
+    Members of a superclass that have this modifier
+    and don't have the ``final`` modifier
+    can be overridden by subclasses.
+
 ``dynamic``
     Apply this modifier to any member of a class that can be represented by Objective-C.
     When you mark a member declaration with the ``dynamic`` modifier,
@@ -2710,6 +2810,18 @@ that introduces the declaration.
     of a class to indicate that every subclass must implement that initializer.
     The subclass's implementation of that initializer
     must also be marked with the ``required`` modifier.
+
+``static``
+    Apply this modifier to a member of a structure, class, enumeration, or protocol
+    to indicate that the member is a member of the type,
+    rather than a member of instances of that type.
+    In the scope of a class declaration,
+    writing the ``static`` modifier on a member declaration
+    has the same effect as writing the ``class`` and ``final`` modifiers
+    on that member declaration.
+    However, constant type properties of a class are an exception:
+    ``static`` has its normal, nonclass meaning there
+    because you can't write ``class`` or ``final`` on those declarations.
 
 ``unowned``
     Apply this modifier to a stored variable, constant, or stored property
