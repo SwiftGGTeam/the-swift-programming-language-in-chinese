@@ -4,7 +4,7 @@
 
 你要通过定义*构造器*来实现构造过程，它就像用来创建特定类型新实例的特殊方法。与 Objective-C 中的构造器不同，Swift 的构造器没有返回值。它们的主要任务是保证某种类型的新实例在第一次使用前完成正确的初始化。
 
-类的实例也可以通过实现*析构器*来执行它释放之前自定义的清理工作。想了解更多关于析构器的内容，请参考[析构过程](./15_Deinitialization.md)。
+类的实例也可以通过实现*析构器*来执行它释放之前自定义的清理工作。想了解更多关于析构器的内容，请参 考 [析构过程](./15_Deinitialization.md)。
 
 ## 存储属性的初始赋值 {#setting-initial-values-for-stored-properties}
 
@@ -131,7 +131,7 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 
 如果你不希望构造器的某个形参使用实参标签，可以使用下划线（`_`）来代替显式的实参标签来重写默认行为。
 
-下面是之前[形参的构造过程](#initialization_parameters)中 `Celsius` 例子的扩展，多了一个用已经的摄氏表示的 `Double` 类型值来创建新的 `Celsius` 实例的额外构造器：
+下面是之前 [形参的构造过程](#initialization_parameters) 中 `Celsius` 例子的扩展，多了一个用已经的摄氏表示的 `Double` 类型值来创建新的 `Celsius` 实例的额外构造器：
 
 ```swift
 struct Celsius {
@@ -244,7 +244,7 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 
 构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为*构造器代理*，它能避免多个构造器间的代码重复。
 
-构造器代理的实现规则和形式在值类型和类类型中有所不同。值类型（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给自己的其它构造器。类则不同，它可以继承自其它类（请参考[继承](./13_Inheritance.md)）。这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。这些责任将在后续章节[类的继承和构造过程](#class_inheritance_and_initialization)中介绍。
+构造器代理的实现规则和形式在值类型和类类型中有所不同。值类型（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给自己的其它构造器。类则不同，它可以继承自其它类（请参考 [继承](./13_Inheritance.md)）。这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。这些责任将在后续章节 [类的继承和构造过程](#class_inheritance_and_initialization) 中介绍。
 
 对于值类型，你可以使用 `self.init` 在自定义的构造器中引用相同类型中的其它构造器。并且你只能在构造器内部调用 `self.init`。
 
@@ -252,7 +252,7 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 
 > 注意
 > 
-> 假如你希望默认构造器、逐一成员构造器以及你自己的自定义构造器都能用来创建实例，可以将自定义的构造器写到扩展（`extension`）中，而不是写在值类型的原始定义中。想查看更多内容，请查看[扩展](./20_Extensions.md)章节。
+> 假如你希望默认构造器、逐一成员构造器以及你自己的自定义构造器都能用来创建实例，可以将自定义的构造器写到扩展（`extension`）中，而不是写在值类型的原始定义中。想查看更多内容，请查看 [扩展](./20_Extensions.md) 章节。
 
 下面例子定义一个自定义结构体 `Rect`，用来代表几何矩形。这个例子需要两个辅助的结构体 `Size` 和 `Point`，它们各自为其所有的属性提供了默认初始值 `0.0`。
 
@@ -314,7 +314,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 
 > 注意
 > 
-> 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考[扩展](./21_Extensions.md)。
+> 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考 [扩展](./21_Extensions.md)。
 
 ## 类的继承和构造过程 {#class-inheritance-and-initialization}
 
@@ -328,7 +328,7 @@ Swift 为类类型提供了两种构造器来确保实例中所有存储型属�
 
 类倾向于拥有极少的指定构造器，普遍的是一个类只拥有一个指定构造器。指定构造器像一个个“漏斗”放在构造过程发生的地方，让构造过程沿着父类链继续往上进行。
 
-每一个类都必须至少拥有一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。具体内容请参考后续章节[构造器的自动继承](#automatic_initializer_inheritance)。
+每一个类都必须至少拥有一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。具体内容请参考后续章节 [构造器的自动继承](#automatic_initializer_inheritance)。
 
 *便利构造器*是类中比较次要的、辅助型的构造器。你可以定义便利构造器来调用同一个类中的指定构造器，并为部分形参提供默认值。你也可以定义便利构造器来创建一个特殊用途或特定输入值的实例。
 
@@ -465,11 +465,11 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 > 注意
 > 
-> 父类的构造器仅会在安全和适当的某些情况下被继承。具体内容请参考后续章节[构造器的自动继承](#automatic_initializer_inheritance)。
+> 父类的构造器仅会在安全和适当的某些情况下被继承。具体内容请参考后续章节 [构造器的自动继承](#automatic_initializer_inheritance)。
 
 假如你希望自定义的子类中能提供一个或多个跟父类相同的构造器，你可以在子类中提供这些构造器的自定义实现。
 
-当你在编写一个和父类中指定构造器相匹配的子类构造器时，你实际上是在重写父类的这个指定构造器。因此，你必须在定义子类构造器时带上 `override` 修饰符。即使你重写的是系统自动提供的默认构造器，也需要带上 `override` 修饰符，具体内容请参考[默认构造器](#default_initializers)。
+当你在编写一个和父类中指定构造器相匹配的子类构造器时，你实际上是在重写父类的这个指定构造器。因此，你必须在定义子类构造器时带上 `override` 修饰符。即使你重写的是系统自动提供的默认构造器，也需要带上 `override` 修饰符，具体内容请参考 [默认构造器](#default_initializers)。
 
 正如重写属性，方法或者是下标，`override` 修饰符会让编译器去检查父类中是否有相匹配的指定构造器，并验证构造器参数是否被按预想中被指定。
 
@@ -477,7 +477,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 > 
 > 当你重写一个父类的指定构造器时，你总是需要写 `override` 修饰符，即使是为了实现子类的便利构造器。
 
-相反，如果你编写了一个和父类便利构造器相匹配的子类构造器，由于子类不能直接调用父类的便利构造器（每个规则都在上文[类的构造器代理规则](#initializer_delegation_for_class_types)有所描述），因此，严格意义上来讲，你的子类并未对一个父类构造器提供重写。最后的结果就是，你在子类中“重写”一个父类便利构造器时，不需要加 `override` 修饰符。
+相反，如果你编写了一个和父类便利构造器相匹配的子类构造器，由于子类不能直接调用父类的便利构造器（每个规则都在上文 [类的构造器代理规则](#initializer_delegation_for_class_types) 有所描述），因此，严格意义上来讲，你的子类并未对一个父类构造器提供重写。最后的结果就是，你在子类中“重写”一个父类便利构造器时，不需要加 `override` 修饰符。
 
 在下面的例子中定义了一个叫 `Vehicle` 的基类。基类中声明了一个存储型属性 `numberOfWheels`，它是默认值为 `Int` 类型的 `0`。`numberOfWheels` 属性用在一个描述车辆特征 `String` 类型为 `descrpiption` 的计算型属性中：
 
@@ -490,7 +490,7 @@ class Vehicle {
 }
 ```
 
-`Vehicle` 类只为存储型属性提供默认值，也没有提供自定义构造器。因此，它会自动获得一个默认构造器，具体内容请参考[默认构造器](#default_initializers)。默认构造器（如果有的话）总是类中的指定构造器，可以用于创建 `numberOfWheels` 为 `0` 的 `Vehicle` 实例：
+`Vehicle` 类只为存储型属性提供默认值，也没有提供自定义构造器。因此，它会自动获得一个默认构造器，具体内容请参考 [默认构造器](#default_initializers)。默认构造器（如果有的话）总是类中的指定构造器，可以用于创建 `numberOfWheels` 为 `0` 的 `Vehicle` 实例：
 
 ```swift
 let vehicle = Vehicle()
@@ -628,11 +628,11 @@ class RecipeIngredient: Food {
 
 ![RecipeIngredient 构造器](https://docs.swift.org/swift-book/_images/initializersExample02_2x.png)
 
-`RecipeIngredient` 类拥有一个指定构造器 `init(name: String, quantity: Int)`，它可以用来填充 `RecipeIngredient` 实例的所有属性值。这个构造器一开始先将传入的 `quantity` 实参赋值给 `quantity` 属性，这个属性也是唯一在 `RecipeIngredient` 中新引入的属性。随后，构造器向上代理到父类 `Food` 的 `init(name: String)`。这个过程满足[两段式构造过程](#two_phase_initialization)中的安全检查 1。
+`RecipeIngredient` 类拥有一个指定构造器 `init(name: String, quantity: Int)`，它可以用来填充 `RecipeIngredient` 实例的所有属性值。这个构造器一开始先将传入的 `quantity` 实参赋值给 `quantity` 属性，这个属性也是唯一在 `RecipeIngredient` 中新引入的属性。随后，构造器向上代理到父类 `Food` 的 `init(name: String)`。这个过程满足 [两段式构造过程](#two_phase_initialization) 中的安全检查 1。
 
 `RecipeIngredient` 也定义了一个便利构造器 `init(name: String)`，它只通过 `name` 来创建 `RecipeIngredient` 的实例。这个便利构造器假设任意 `RecipeIngredient` 实例的 `quantity` 为 `1`，所以不需要显式的质量即可创建出实例。这个便利构造器的定义可以更加方便和快捷地创建实例，并且避免了创建多个 `quantity` 为 `1` 的 `RecipeIngredient` 实例时的代码重复。这个便利构造器只是简单地横向代理到类中的指定构造器，并为 `quantity` 参数传递 `1`。
 
-`RecipeIngredient` 的便利构造器 `init(name: String)` 使用了跟 `Food` 中指定构造器 `init(name: String)` 相同的形参。由于这个便利构造器重写了父类的指定构造器 `init(name: String)`，因此必须在前面使用 `override` 修饰符（参见[构造器的继承和重写](#initializer_inheritance_and_overriding)）。
+`RecipeIngredient` 的便利构造器 `init(name: String)` 使用了跟 `Food` 中指定构造器 `init(name: String)` 相同的形参。由于这个便利构造器重写了父类的指定构造器 `init(name: String)`，因此必须在前面使用 `override` 修饰符（参见 [构造器的继承和重写](#initializer_inheritance_and_overriding)）。
 
 尽管 `RecipeIngredient` 将父类的指定构造器重写为了便利构造器，但是它依然提供了父类的所有指定构造器的实现。因此，`RecipeIngredient` 会自动继承父类的所有便利构造器。
 

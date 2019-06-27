@@ -6,7 +6,7 @@
 
 ## 实例方法（Instance Methods） {#instance-methods}
 
-*实例方法*是属于某个特定类、结构体或者枚举类型实例的方法。实例方法提供访问和修改实例属性的方法或提供与实例目的相关的功能，并以此来支撑实例的功能。实例方法的语法与函数完全一致，详情参见[函数](./06_Functions.md)。
+*实例方法*是属于某个特定类、结构体或者枚举类型实例的方法。实例方法提供访问和修改实例属性的方法或提供与实例目的相关的功能，并以此来支撑实例的功能。实例方法的语法与函数完全一致，详情参见 [函数](./06_Functions.md)。
 
 实例方法要写在它所属的类型的前后大括号之间。实例方法能够隐式访问它所属类型的所有的其他实例方法和属性。实例方法只能被它所属的类的某个特定实例调用。实例方法不能脱离于现存的实例而被调用。
 
@@ -47,7 +47,7 @@ counter.reset()
 // 计数值现在是0
 ```
 
-函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见[指定外部参数名](./06_Functions.md#specifying_external_parameter_names)。方法参数也一样，因为方法就是函数，只是这个函数与某个类型相关联了。
+函数参数可以同时有一个局部名称（在函数体内部使用）和一个外部名称（在调用函数时使用），详情参见 [指定外部参数名](./06_Functions.md#specifying_external_parameter_names)。方法参数也一样，因为方法就是函数，只是这个函数与某个类型相关联了。
 
 ### self 属性 {#the-self-property}
 
@@ -107,7 +107,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 上面的 `Point` 结构体定义了一个可变方法 `moveBy（x：y :)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
 
-注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见[常量结构体的存储属性](./10_Properties.md#stored_properties_of_constant_structure_instances)：
+注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见 [常量结构体的存储属性](./10_Properties.md#stored_properties_of_constant_structure_instances)：
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -213,7 +213,7 @@ struct LevelTracker {
 
 除了类型属性和类型方法，`LevelTracker` 还监测每个玩家的进度。它用实例属性 `currentLevel` 来监测每个玩家当前的等级。
 
-为了便于管理 `currentLevel` 属性，`LevelTracker` 定义了实例方法 `advance(to:)`。这个方法会在更新 `currentLevel` 之前检查所请求的新等级是否已经解锁。`advance(to:)` 方法返回布尔值以指示是否能够设置 `currentLevel`。因为允许在调用 `advance(to:)` 时候忽略返回值，不会产生编译警告，所以函数被标注为 `@discardableResult` 属性，更多关于属性信息，请参考[特性](../chapter3/07_Attributes.html)章节。
+为了便于管理 `currentLevel` 属性，`LevelTracker` 定义了实例方法 `advance(to:)`。这个方法会在更新 `currentLevel` 之前检查所请求的新等级是否已经解锁。`advance(to:)` 方法返回布尔值以指示是否能够设置 `currentLevel`。因为允许在调用 `advance(to:)` 时候忽略返回值，不会产生编译警告，所以函数被标注为 `@discardableResult` 属性，更多关于属性信息，请参考 [特性](../chapter3/07_Attributes.html) 章节。
 
 下面，`Player` 类使用 `LevelTracker` 来监测和更新每个玩家的发展进度：
 

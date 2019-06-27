@@ -35,7 +35,7 @@ for (animalName, legCount) in numberOfLegs {
 // spiders have 8 legs
 ```
 
-字典的内容理论上是无序的，遍历元素时的顺序是无法确定的。将元素插入字典的顺序并不会决定它们被遍历的顺序。关于数组和字典的细节，参见[集合类型](./04_Collection_Types.md)。
+字典的内容理论上是无序的，遍历元素时的顺序是无法确定的。将元素插入字典的顺序并不会决定它们被遍历的顺序。关于数组和字典的细节，参见 [集合类型](./04_Collection_Types.md)。
 
 `for-in` 循环还可以使用数字范围。下面的例子用来输出乘法表的一部分内容：
 
@@ -69,7 +69,7 @@ print("\(base) to the power of \(power) is \(answer)")
 
 这个例子计算 base 这个数的 power 次幂（本例中，是 `3` 的 `10` 次幂），从 `1`（`3` 的 `0` 次幂）开始做 `3` 的乘法， 进行 `10` 次，使用 `1` 到 `10` 的闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 `_` （替代循环中的变量）能够忽略当前值，并且不提供循环遍历时对值的访问。
 
-在某些情况下，你可能不想使用包括两个端点的闭区间。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅[区间运算符](./02_Basic_Operators.md#range_operators)。
+在某些情况下，你可能不想使用包括两个端点的闭区间。想象一下，你在一个手表上绘制分钟的刻度线。总共 `60` 个刻度，从 `0` 分开始。使用半开区间运算符（`..<`）来表示一个左闭右开的区间。有关区间的更多信息，请参阅 [区间运算符](./02_Basic_Operators.md#range_operators)。
 
 ```swift
 let minutes = 60
@@ -332,7 +332,7 @@ default:
 
 > 注意
 > 
-> 虽然在 Swift 中 `break` 不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用 `break` 跳出，详情请参见[Switch 语句中的 break](#break_in_a_switch_statement)。
+> 虽然在 Swift 中 `break` 不是必须的，但你依然可以在 case 分支中的代码执行完毕前使用 `break` 跳出，详情请参见 [Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
 
@@ -363,11 +363,11 @@ default:
 // 输出“The letter A”
 ```
 
-为了可读性，符合匹配可以写成多行形式，详情请参考[复合匹配](#compound_cases)
+为了可读性，符合匹配可以写成多行形式，详情请参考 [复合匹配](#compound_cases)
 
 > 注意
 > 
-> 如果想要显式贯穿 case 分支，请使用 `fallthrough` 语句，详情请参考[贯穿](#fallthrough)。
+> 如果想要显式贯穿 case 分支，请使用 `fallthrough` 语句，详情请参考 [贯穿](#fallthrough)。
 
 #### 区间匹配 {#interval-matching}
 
@@ -527,7 +527,7 @@ default:
 - `return`
 - `throw`
 
-我们将会在下面讨论 `continue`、`break` 和 `fallthrough` 语句。`return` 语句将会在[函数](./06_Functions.md)章节讨论，`throw` 语句会在[错误抛出](./18_Error_Handling.md#throwing_errors)章节讨论。
+我们将会在下面讨论 `continue`、`break` 和 `fallthrough` 语句。`return` 语句将会在 [函数](./06_Functions.md) 章节讨论，`throw` 语句会在 [错误抛出](./18_Error_Handling.md#throwing_errors) 章节讨论。
 
 ### Continue {#continue}
 
@@ -754,7 +754,7 @@ if #available(iOS 10, macOS 10.12, *) {
 
 以上可用性条件指定，`if` 语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if 语句的代码块将会运行。
 
-在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS` 和 `tvOS`——请访问[声明属性](../chapter3/06_Attributes.html)来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS` 和 `tvOS`——请访问 [声明属性](../chapter3/06_Attributes.html) 来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 
 ```swift
 if #available(平台名称 版本号, ..., *) {
