@@ -699,15 +699,12 @@ propertyWrapper
 
 Apply this attribute to a class, structure, or enumeration declaration
 to use that type as a property wrapper.
-The type must have a ``value`` instance property
+The type must have a ``wrappedValue`` instance property
 that's implemented as a getter and a setter.
 If the type defines an ``init(initialValue:)`` initializer,
 properties that it wraps can use assignment to set their initial value.
-The name of a property wrapper type
-can't start with an underscore or lower case letter.
 
-.. The name restriction prevents the corresponding attribute
-   from colliding with an attribute defined by the compiler.
+.. XXX add discussion of init()
 
 .. XXX TR: Is it valid (but pointless) to apply @propertyWrapper
    to a struct that has 'value' as a stored property?
@@ -722,12 +719,12 @@ is read and written after initialization.
 .. testcode:: propertyWrapper
     :compile: true
 
-    -> @propertyDelegate
+    -> @propertyWrapper
        struct CountedAccess<T> {
            private var storage: T
            public var readCount = 0
            public var writeCount = 0
-           var value: T {
+           var wrappedValue: T {
                mutating get {
                    readCount += 1
                    return storage
@@ -741,8 +738,6 @@ is read and written after initialization.
                storage = initialValue
            }
        }
-
-.. XXX Change @propertyDelegate back to @propertyWrapper
 
 When you apply the ``propertyWrapper`` attribute to a type,
 you create a new, custom attribute with the same name as the type.
