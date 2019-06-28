@@ -97,17 +97,17 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
-Properties that have a property delegate,
-which are described in the :ref:`Attributes_propertyDelegate` section
+Properties that have a property wrapper,
+which are described in the :ref:`Attributes_propertyWrapper` section
 of the :doc:`../ReferenceManual/Attributes` chapter,
-expose their the property delegate using an identifier
+expose their the property wrapper using an identifier
 whose name is a dollar sign (``$``) followed by the property name.
 For example, for a property named ``someProperty``
 the compiler synthesizes a ``$someProperty`` property.
-Writing ``$someProperty.value`` is the same as writing ``someProperty``.
+Writing ``$someProperty.wrappedValue`` is the same as writing ``someProperty``.
 
 .. Using the section and chapter in the xref
-   because even though "propertyDelegate" is the title of the section
+   because, even though "propertyWrapper" is the title of the section,
    it's not in title case and doesn't necessarily look like a title.
 
 .. syntax-grammar::
@@ -144,7 +144,7 @@ Writing ``$someProperty.value`` is the same as writing ``someProperty``.
 
     implicit-parameter-name --> ``$`` decimal-digits
 
-    synthesized-property-storage --> ``$`` identifier
+    property-wrapper-name --> ``$`` identifier
 
 
 .. _LexicalStructure_Keywords:
