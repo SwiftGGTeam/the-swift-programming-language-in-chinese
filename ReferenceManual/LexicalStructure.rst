@@ -100,13 +100,13 @@ These names are valid identifiers within the scope of the closure.
 The compiler synthesizes identifiers that begin with a dollar sign (`$`)
 for properties that have a property wrapper projection.
 Code you write can interact with these identifiers,
-but can't declare any identifiers with that prefix.
+but you can't declare identifiers with that prefix.
 For more information, see the :ref:`Attributes_propertyWrapper` section
 of the :doc:`../ReferenceManual/Attributes` chapter.
 
-.. Using the section and chapter in the xref
-   because, even though "propertyWrapper" is the title of the section,
-   it's not in title case and doesn't necessarily look like a title.
+.. The cross reference above includes both the section and chapter because,
+   even though "propertyWrapper" is the title of the section,
+   the section name isn't title case so it doesn't necessarily look like a title.
 
 .. syntax-grammar::
 
