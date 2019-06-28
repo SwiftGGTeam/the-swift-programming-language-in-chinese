@@ -97,14 +97,12 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
-Properties that have a property wrapper,
-which are described in the :ref:`Attributes_propertyWrapper` section
-of the :doc:`../ReferenceManual/Attributes` chapter,
-expose their the property wrapper using an identifier
-whose name is a dollar sign (``$``) followed by the property name.
-For example, for a property named ``someProperty``
-the compiler synthesizes a ``$someProperty`` property.
-Writing ``$someProperty.wrappedValue`` is the same as writing ``someProperty``.
+The compiler synthesizes identifiers that begin with a dollar sign (`$`)
+for properties that have a property wrapper projection.
+Code you write can interact with these identifiers,
+but can't declare any identifiers with that prefix.
+For more information, see the :ref:`Attributes_propertyWrapper` section
+of the :doc:`../ReferenceManual/Attributes` chapter.
 
 .. Using the section and chapter in the xref
    because, even though "propertyWrapper" is the title of the section,
@@ -117,7 +115,7 @@ Writing ``$someProperty.wrappedValue`` is the same as writing ``someProperty``.
     identifier --> identifier-head identifier-characters-OPT
     identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
-    identifier --> synthesized-property-storage
+    identifier --> property-wrapper-projection
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -143,8 +141,7 @@ Writing ``$someProperty.wrappedValue`` is the same as writing ``someProperty``.
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
-
-    property-wrapper-name --> ``$`` identifier
+    property-wrapper-projection --> ``$`` identifier-characters
 
 
 .. _LexicalStructure_Keywords:
