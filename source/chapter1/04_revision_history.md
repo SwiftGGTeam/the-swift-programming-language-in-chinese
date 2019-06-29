@@ -7,7 +7,7 @@
 * 添加 [动态调用](../chapter3/07_Attributes.md#dynamiccallable) 章节，其中包含关于使用 `dynamicCallable` 属性动态调用实例作为函数的信息。
 * 添加 [unknown](../chapter3/07_Attributes.md#unknown) 和 [未来枚举匹配](../chapter3/05_Statements.md#future-case2) 章节，其中包含了使用 `unknown` 来处理未来枚举可能发生改变的情形。
 * 在 [Key-Path 表达式](../chapter3/04_Expressions.md#key-path-expression) 章节添加了关于标示 key path (\\.self) 的信息。
-* 在 [可选编译块](../chapter3/05_Statements.md#Conditional-Compilation-Block) 章节添加了关于小于比较符 `<` 的信息s。
+* 在 [可选编译块](../chapter3/05_Statements.md#Conditional-Compilation-Block) 章节添加了关于小于比较符 `<` 的信息。
 
 ### 2018-09-17
 
