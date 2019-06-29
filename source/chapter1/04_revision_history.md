@@ -35,9 +35,9 @@
 ### 2017-09-19
 
 * 更新至 Swift 4.0。
-* 在 [内存安全](../chapter2/24_MemorySafety.md) 章节添加了内存互斥访问相关的信息。
+* 在 [内存安全](../chapter2/24_MemorySafety.md) 章节添加了关于内存互斥访问的信息。
 * 添加 [带有泛型 Where 子句联类型](../chapter2/22_Generics.md#associated-types-with-a-generic-where-clause) 章节，现在可以使用泛型 `where` 子句约束关联类型。
-* 在 [字符串和字符](../chapter2/03_Strings_And_Characters.md) 篇章中 [字面量](../chapter2/03_Strings_And_Characters.md#string-literals) 章节以及 [词法结构](../chapter3/02_Lexical_Structure.md) 篇章的 [字符串字面量](../chapter3/02_Lexical_Structure.md#string-literal) 章节中添加了多行字符串字面量相关内容。
+* 在 [字符串和字符](../chapter2/03_Strings_And_Characters.md) 篇章中 [字面量](../chapter2/03_Strings_And_Characters.md#string-literals) 章节以及 [词法结构](../chapter3/02_Lexical_Structure.md) 篇章的 [字符串字面量](../chapter3/02_Lexical_Structure.md#string-literal) 章节中添加了关于多行字符串字面量的信息。
 * 更新 [声明属性](../chapter3/07_Attributes.md#Ideclaration-attributes) 中 `objc` 属性的讨论，现在该属性会在更少的位置被推断出来。
 * 添加 [范型下标](../chapter2/22_Generics.md#generic-subscripts) 章节，现在下标也支持范型特性了。
 * 更新 [协议](../chapter2/21_Protocols.md) 篇章中 [协议组合](../chapter2/21_Protocols.md#protocol-composition) 章节和 [类型](../chapter3/03_Types.md) 篇章中 [协议组合类型](../chapter3/03_Types.md#protocol-composition) 章节的讨论，现在协议组合类型支持进行父类约束了。
@@ -49,8 +49,8 @@
 * 更新至 Swift 3.1。
 * 添加 [范型 Where 子句扩展](../chapter2/22_Generics.md#extensions-with-a-generic-where-clause) 章节，包含需要的扩展信息。
 * 在 [For-In 循环](../chapter2/05_Control_Flow.md#for-in-loops) 章节中添加了区间迭代的例子。
-* 在 [到可失败构造器](http://typora-app/chapter2/14_Initialization.md#failable-initializers) 章节中添加了 可失败数值转换的例子。
-* 在 [声明特性](../chapter3/07_Attributes.md#Ideclaration-attributes) 章节中添加了使用 Swift 语言版本的 `available` 特性的信息 。
+* 在 [到可失败构造器](http://typora-app/chapter2/14_Initialization.md#failable-initializers) 章节中添加了可失败数值转换的例子。
+* 在 [声明特性](../chapter3/07_Attributes.md#Ideclaration-attributes) 章节中添加了关于使用 Swift 语言版本的 `available` 特性的信息 。
 * 更新 [函数类型](../chapter3/03_Types.md#function_type) 章节中的讨论，注意在写函数类型时不允许使用参数标签。
 * 更新 [条件编译块](../chapter3/05_Statements.md#Conditional-Compilation-Block) 章节中的 Swift 语言版本号的讨论，现在可以使用可选的补丁版本号。
 * 更新 [函数类型](../chapter3/03_Types.md#function_type) 章节的讨论，现在 Swift 区分了采用多参数的函数和采用元组类型的单个参数的函数。
