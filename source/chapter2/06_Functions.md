@@ -202,6 +202,27 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 // 打印“min is -6 and max is 109”
 ```
 
+### 隐式返回的函数
+如果一个函数的整个函数体是一个单行表达式，这个函数可以隐式地返回这个表达式。举个例子，以下的函数有着同样的作用：
+
+```
+func greeting(for person: String) -> String {
+    "Hello, " + person + "!"
+}
+print(greeting(for: "Dave"))
+// 打印 "Hello, Dave!"
+
+func anotherGreeting(for person: String) -> String {
+    return "Hello, " + person + "!"
+}
+print(anotherGreeting(for: "Dave"))
+// 打印 "Hello, Dave!"
+```
+
+greeting(for:) 函数的整个定义是它返回的一条打招呼的信息，这就意味着这个函数可以使用这个更短的隐式返回形式。anothergreeting(for:) 函数使用了 return 关键词返回同样的信息，这看上去像一个更长的函数。任何一个可以被写成一行 return 语句的函数都可以忽略 return。
+
+正如你将会在 [简略的 Getter 声明](https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID608) 里看到的， 一个属性的 getter 也可以使用隐式返回的形式。
+
 ## 函数参数标签和参数名称 {#Function-Argument-Labels-and-Parameter-Names}
 
 每个函数参数都有一个*参数标签（argument label）*以及一个*参数名称（parameter name）*。参数标签在调用函数的时候使用；调用的时候需要将函数的参数标签写在对应的参数前面。参数名称在函数的实现中使用。默认情况下，函数参数使用参数名称来作为它们的参数标签。
