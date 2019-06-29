@@ -735,48 +735,66 @@ and they are written in the same way as computed properties.
 
 .. TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
 
-.. _Properties_WrappedProperties:
+.. _Properties_PropertyWrapper:
 
-Wrapped Properties
-------------------
+Property Wrappers
+-----------------
 
-.. XXX outline
+A property wrapper lets you separate out code
+that manages how a property's value is stored,
+and re-use that management code for multiple properties.
+The wrapper is an structure or enumeration
+that defines a getter and setter for a ``wrappedValue`` property.
 
-   a **property wrapper** is a struct that manages a property
-   and lets you reduce boilerplate in your code
-   It exposes a getter and setter for a ``wrappedValue`` property.
+.. testcode:: simple-property-wrapper
+    :compile: true
 
-   @propertyWrapper
-   SimpleWrapper {
-       var myNumber: Int
-       var wrappedValue {
-           get {
-               print("Reading")
-               return myNumber
+    -> @propertyWrapper
+    -> struct SimpleWrapper {
+           var myNumber: Int
+           var wrappedValue: Int {
+               get {
+                   print("Reading")
+                   return myNumber
+               }
+               set {
+                   print("Writing")
+                   myNumber = newValue
+               }
            }
-           set {
-               print("Writing")
-               myNumber = newValue
+           init(initialValue: Int) {
+               myNumber = initialValue
            }
        }
-   }
 
-   ^-- omit the init(initialValue:) for this first example to make it simpler
-   but TODO make sure the example below acutally works with it organized
-   this way
+.. XXX Would be better to omit init(initialValue:) to keep things simple
+   but that makes the examples below more complicated
 
-   you apply a wrapper to a propery
-   by writing the wrapper type's name as an attribute
+The ``SimpleWrapper`` structure manages the value that it wraps
+by printing the word "Reading" or "Writing" when the property is accessed.
+Its wrapped value is always an integer ---
+to make a wrapper that can be used for any property type,
+you use a generic type.
+For information about generic types, see :doc:`Generics`.
 
-   -> struct SomeStructure {
-          @SimpleWrapper var someProperty
-      }
-   -> var s = SomeStructure()
-   -> s.someProperty = 21
-   <- Writing
-   -> print(s.someProperty)
-   -> Reading
-   -> 21
+You apply a wrapper to a property
+by writing the wrapper's name in front of the property
+as an attribute.
+
+.. testcode:: simple-property-wrapper
+    :compile: true
+
+    -> struct SomeStructure {
+           @SimpleWrapper var someProperty = 12
+       }
+    -> var s = SomeStructure()
+    -> s.someProperty = 21
+    <- Writing
+    -> print(s.someProperty)
+    <- Reading
+    <- 21
+
+.. XXX outline
 
    the compiler expands the property wrapper into a getter and setter
    $foo refers to the wrapper itself
