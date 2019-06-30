@@ -481,7 +481,7 @@ print("The status message is \(http200Status.description)")
 
 > 注意
 > 
-> 当遇到一些相关值的简单分组时，元组是很有用的。元组不适合用来创建复杂的数据结构。如果你的数据结构可能是错综复杂的，请把你的数据结构用类或者结构体去建模，而不是使用元组。欲获得更多信息，请参考 [结构体和类](https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html)。
+> 当遇到一些相关值的简单分组时，元组是很有用的。元组不适合用来创建复杂的数据结构。如果你的数据结构可能是错综复杂的，请把你的数据结构用类或者结构体去建模，而不是使用元组。欲获得更多信息，请参考 [结构体和类](./09_Classes_and_Structures.md)。
 
 ## 可选类型 {#optionals}
 
