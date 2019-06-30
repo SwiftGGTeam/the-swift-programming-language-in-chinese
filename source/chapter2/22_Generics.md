@@ -1,6 +1,6 @@
 # 泛型
 
-*泛型代码*让你能根据自定义的需求，编写出适用于任意类型的、灵活可复用的函数及类型。你可避免编写重复的代码，用一种清晰抽象的方式来表达代码的意图。
+*泛型代码*让你能根据自定义的需求，编写出适用于任意类型的、灵活可复用的函数及类型。你可避免编写重复的代码，而是用一种清晰抽象的方式来表达代码的意图。
 
 泛型是 Swift 最强大的特性之一，很多 Swift 标准库是基于泛型代码构建的。实际上，即使你没有意识到，你也一直在*语言指南*中使用泛型。例如，Swift 的 `Array` 和 `Dictionary` 都是泛型集合。你可以创建一个 `Int` 类型数组，也可创建一个 `String` 类型数组，甚至可以是任意其他 Swift 类型的数组。同样，你也可以创建一个存储任意指定类型的字典，并对该类型没有限制。
 
@@ -226,6 +226,8 @@ if let topItem = stackOfStrings.topItem {
 // 打印“The top item on the stack is tres.”
 ```
 
+泛型类型的扩展，还可以包括类型扩展需要额外满足的条件，从而对类型添加新功能，这一部分将在[具有泛型 Where 子句的扩展](#extensions-with-a-generic-where-clause)中进行讨论。
+
 ## 类型约束 {#type-constraints}
 
 `swapTwoValues(_:_:)` 函数和 `Stack` 适用于任意类型。不过，如果能对泛型函数或泛型类型中添加特定的*类型约束*，这将在某些情况下非常有用。类型约束指定类型参数必须继承自指定类、遵循特定的协议或协议组合。
@@ -408,7 +410,7 @@ struct Stack<Element>: Container {
 
 ### 扩展现有类型来指定关联类型 {#extending-an-existing-type-to-specify-an-associated-type}
 
-[在扩展添加协议一致性](./21_Protocols.md#adding_protocol_conformance_with_an_extension) 中描述了如何利用扩展让一个已存在的类型符合一个协议，这包括使用了关联类型协议。
+[在扩展添加协议一致性](./21_Protocols.md#adding_protocol_conformance_with_an_extension) 中描述了如何利用扩展让一个已存在的类型遵循一个协议，这包括使用了关联类型协议。
 
 Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都符合 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循`Container` 协议，就可以扩展 Array，使其遵从 Container 协议。你可以通过一个空扩展来实现这点，正如通过扩展采纳协议中的描述：
 
@@ -444,9 +446,9 @@ protocol SuffixableContainer: Container {
 }
 ```
 
-在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `where` 分句，它在下面带有泛型 `Where` 分句的扩展中有讨论。
+在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `where` 分句，它在下面[具有泛型 Where 子句的扩展](#extensions-with-a-generic-where-clause)中有讨论。
 
-这是上面 [强引用循环闭包](./23_Automatic_Reference_Counting.md#strong_reference_cycles_for_closures) 中 `Stack` 类型的扩展，它遵循了 SuffixableContainer 协议：
+这是上面 [泛型类型](#generic-types) 中 `Stack` 类型的扩展，它遵循了 SuffixableContainer 协议：
 
 ```swift
 extension Stack: SuffixableContainer {
