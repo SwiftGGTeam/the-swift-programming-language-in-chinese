@@ -240,6 +240,18 @@ struct Size {
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
+当你调用一个逐一成员构造器（memberwise initializer）时，你可以忽略任何一个有默认值的属性。在以上提到的例子中，这个 Size 结构体的 height 和 width 属性各有一个默认值。你可以忽略两者或两者之一，并且这个结构体的构造器会使用任何你忽略的属性的默认值来完成构造。举个例子：
+```
+let zeroByTwo = Size(height: 2.0)
+print(zeroByTwo.width, zeroByTwo.height)
+// 打印 "0.0 2.0"
+
+let zeroByZero = Size()
+print(zeroByZero.width, zeroByZero.height)
+// 打印 "0.0 0.0"
+```
+
+
 ## 值类型的构造器代理 {#initializer-delegation-for-value-types}
 
 构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为*构造器代理*，它能避免多个构造器间的代码重复。
