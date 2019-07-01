@@ -242,7 +242,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ## 协议作为类型 {#protocols-as-types}
 
-尽管协议本身并未实现任何功能，但是协议可以被当做一个功能完备的类型来使用。
+尽管协议本身并未实现任何功能，但是协议可以被当做一个功能完备的类型来使用。协议作为类型使用，有时被称作「存在类型」，这个名词来自「存在着一个类型 T，该类型遵循协议 T」。
 
 协议可以像其他普通类型一样使用，使用场景如下：
 
@@ -272,7 +272,7 @@ class Dice {
 
 例子中定义了一个 `Dice` 类，用来代表桌游中拥有 N 个面的骰子。`Dice` 的实例含有 `sides` 和 `generator` 两个属性，前者是整型，用来表示骰子有几个面，后者为骰子提供一个随机数生成器，从而生成随机点数。
 
-`generator` 属性的类型为 `RandomNumberGenerator`，因此任何遵循了 `RandomNumberGenerator` 协议的类型的实例都可以赋值给 `generator`，除此之外并无其他要求。
+`generator` 属性的类型为 `RandomNumberGenerator`，因此任何遵循了 `RandomNumberGenerator` 协议的类型的实例都可以赋值给 `generator`，除此之外并无其他要求。并且由于其类型是 `RandomNumberGenerator`，在 `Dice` 类中与 `generator` 交互的代码，必须适用于所有 `generator` 实例都遵循的方法。这句话的意思是不能使用由 `generator` 底层类型提供的任何方法或属性。但是你可以通过向下转型，从协议类型转换成底层实现类型，如同之前在 [向下转型](./18_Type_Casting#downcasting) 中讨论的那样，从父类向下转型为子类。
 
 `Dice` 类还有一个构造器，用来设置初始状态。构造器有一个名为 `generator`，类型为 `RandomNumberGenerator` 的形参。在调用构造方法创建 `Dice` 的实例时，可以传入任何遵循 `RandomNumberGenerator` 协议的实例给 `generator`。
 
