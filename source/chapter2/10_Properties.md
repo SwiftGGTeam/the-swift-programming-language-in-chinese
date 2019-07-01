@@ -174,6 +174,28 @@ struct AlternativeRect {
 }
 ```
 
+### 简化 Getter 声明 {#shorthand-getter-declaration}
+如果整个 getter 是单一表达式，getter 会隐式地返回这个表达式结果。下面是另一个使用了简化 getter 及 setter 声明优势的 `Rect` 结构体代码：
+
+```swift
+struct CompactRect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            Point(x: origin.x + (size.width / 2),
+                  y: origin.y + (size.height / 2))
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
+}
+```
+
+在 getter 中忽略 `return` 与在函数中忽略 `return` 的规则相同，请参考 [隐式返回的函数](./06_Functions.md/#functions-with-an-implicit-return)
+
 ### 只读计算属性 {#readonly-computed-properties}
 
 只有 getter 没有 setter 的计算属性叫*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
