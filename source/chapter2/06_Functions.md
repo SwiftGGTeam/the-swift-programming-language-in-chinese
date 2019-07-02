@@ -202,6 +202,7 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 // 打印“min is -6 and max is 109”
 ```
 
+
 ### 隐式返回的函数 {#functions-with-an-implicit-return}
 如果一个函数的整个函数体是一个单行表达式，这个函数可以隐式地返回这个表达式。举个例子，以下的函数有着同样的作用：
 
@@ -219,9 +220,11 @@ print(anotherGreeting(for: "Dave"))
 // 打印 "Hello, Dave!"
 ```
 
-greeting(for:) 函数的整个定义是它返回的一条打招呼的信息，这就意味着这个函数可以使用这个更短的隐式返回形式。anothergreeting(for:) 函数使用了 return 关键词返回同样的信息，这看上去像一个更长的函数。任何一个可以被写成一行 return 语句的函数都可以忽略 return。
 
-正如你将会在 [简略的 Getter 声明](https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID608) 里看到的， 一个属性的 getter 也可以使用隐式返回的形式。
+`greeting(for:)` 函数的完整定义是打招呼内容的返回，这就意味着它能使用隐式返回这样更简短的形式。`anothergreeting(for:)` 函数返回同样的内容，却因为 `return` 关键字显得函数更长。任何一个可以被写成一行 `return` 语句的函数都可以忽略 `return`。
+
+正如你将会在 [简略的 Getter 声明](./10_Properties.md) 里看到的， 一个属性的 getter 也可以使用隐式返回的形式。
+
 
 ## 函数参数标签和参数名称 {#Function-Argument-Labels-and-Parameter-Names}
 
