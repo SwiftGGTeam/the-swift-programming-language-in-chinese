@@ -175,7 +175,7 @@ struct AlternativeRect {
 ```
 
 ### 简化 Getter 声明 {#shorthand-getter-declaration}
-如果整个 getter 是单一表达式，getter 会隐式地返回这个表达式结果。下面是另一个版本的 Rect 结构体，用到了简化 getter 和 setter 声明的优势：
+如果整个 getter 是单一表达式，getter 会隐式地返回这个表达式结果。下面是另一个版本的 `Rect` 结构体，用到了简化的 getter 和 setter 声明：
 
 ```swift
 struct CompactRect {
