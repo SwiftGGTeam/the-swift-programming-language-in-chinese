@@ -4,7 +4,7 @@ Swift 语言提供 `Arrays`、`Sets` 和 `Dictionaries` 三种基本的*集合�
 
 ![](https://docs.swift.org/swift-book/_images/CollectionTypes_intro_2x.png)
 
-Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries`，它们的值和关键字类型必须明确。这意味着你不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
+Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries`，它们的值和关键字类型必须明确。这意味着不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
 
 > 注意
 > 
@@ -12,11 +12,11 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries`，它们的值和关键�
 
 ## 集合的可变性 {#mutability-of-collections}
 
-如果创建一个 `Arrays`、`Sets` 或 `Dictionaries` 并且把它分配成一个变量，这个集合将会是*可变的*。这意味着你可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果你把 `Arrays`、`Sets` 或 `Dictionaries` 分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
+如果创建一个 `Arrays`、`Sets` 或 `Dictionaries` 并且把它分配成一个变量，这个集合将会是*可变的*。这意味着可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果把 `Arrays`、`Sets` 或 `Dictionaries` 分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
 > 注意
 > 
-> 在不需要改变集合的时候创建不可变集合是很好的实践。如此，将会便于理解自己所写的代码，以及 Swift 编译器可以优化你创建的集合。
+> 在不需要改变集合的时候创建不可变集合是很好的实践。这样做便于你理解自己的代码，也能让 Swift 编译器优化集合的性能。
 
 ## 数组（Arrays） {#arrays}
 
@@ -30,7 +30,7 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries`，它们的值和关键�
 
 ### 数组的简单语法 {#array-type-shorthand-syntax}
 
-Swift 中数组的完整写法为 `Array<Element>`，其中 `Element` 是这个数组中唯一允许存在的数据类型。你也可以使用像 `[Element]` 这样的简单语法。尽管两种形式在功能上是一样的，但是推荐较短的那种，而且在本文中都会使用这种形式来使用数组。
+Swift 中数组的完整写法为 `Array<Element>`，其中 `Element` 是这个数组中唯一允许存在的数据类型。也可以使用像 `[Element]` 这样的简单语法。尽管两种形式在功能上是一样的，但是推荐较短的那种，而且在本文中都会使用这种形式来使用数组。
 
 ### 创建一个空数组 {#creating-an-empty-array}
 
@@ -55,7 +55,7 @@ someInts = []
 
 ### 创建一个带有默认值的数组 {#creating-an-array-with-a-default-value}
 
-Swift 中的 `Array` 类型还提供一个可以创建特定大小并且所有数据都被默认的构造方法。你可以把准备加入新数组的数据项数量（`count`）和适当类型的初始值（`repeating`）传入数组构造函数：
+Swift 中的 `Array` 类型还提供一个可以创建特定大小并且所有数据都被默认的构造方法。可以把准备加入新数组的数据项数量（`count`）和适当类型的初始值（`repeating`）传入数组构造函数：
 
 ```swift
 var threeDoubles = Array(repeating: 0.0, count: 3)
@@ -141,7 +141,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 // shoppingList 现在有七项了
 ```
 
-可以直接使用*下标语法*来获取数组中的数据项，把你所需要数据项的索引值直接放在数组名称之后的方括号中：
+可以直接使用*下标语法*来获取数组中的数据项，把所需要数据项的索引值直接放在数组名称之后的方括号中：
 
 ```swift
 var firstItem = shoppingList[0]
@@ -178,7 +178,7 @@ shoppingList.insert("Maple Syrup", at: 0)
 
 这次 `insert(_:at:)` 方法调用把值为 `"Maple Syrup"` 的新数据项插入列表的最开始位置，并且使用 `0` 作为索引值。
 
-类似的你可以使用 `remove(at:)` 方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（不需要的时候就可以无视它）：
+类似的可以使用 `remove(at:)` 方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（不需要的时候就可以无视它）：
 
 ```swift
 let mapleSyrup = shoppingList.remove(at: 0)
@@ -189,7 +189,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 > 注意
 > 
-> 如果你试图通过越界索引来执行访问或者修改数据的操作，会引发一个运行时错误。你可以使用索引值和数组的 `count` 属性进行比较来在使用该索引之前检验其是否有效。除了当 `count` 等于 0 时（说明这是个空数组），最大索引值一直是 `count - 1`，因为数组都是零起索引。
+> 如果你试图通过越界索引来执行访问或者修改数据的操作，会引发一个运行时错误。此时可以使用索引值和数组的 `count` 属性进行比较来在使用该索引之前检验其是否有效。除了当 `count` 等于 0 时（说明这是个空数组），最大索引值一直是 `count - 1`，因为数组都是零起索引。
 
 数据项被移除后数组中的空出项会被自动填补，所以现在索引值为 `0` 的数据项的值再次等于 `"Six eggs"`：
 
@@ -222,7 +222,7 @@ for item in shoppingList {
 // Bananas
 ```
 
-如果你同时需要每个数据项的值和索引值，可以使用 `enumerated()` 方法来进行数组遍历。`enumerated()` 返回一个由索引值和数据值组成的元组数组。索引值从零开始，并且每次增加一；如果枚举一整个数组，索引值将会和数据值一一匹配。你可以把这个元组分解成临时常量或者变量来进行遍历：
+如果同时需要每个数据项的值和索引值，可以使用 `enumerated()` 方法来进行数组遍历。`enumerated()` 返回一个由索引值和数据值组成的元组数组。索引值从零开始，并且每次增加一；如果枚举一整个数组，索引值将会和数据值一一匹配。你可以把这个元组分解成临时常量或者变量来进行遍历：
 
 ```swift
 for (index, value) in shoppingList.enumerated() {
@@ -254,7 +254,7 @@ Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）�
 
 > 注意
 > 
-> 你可以使用你自定义的类型作为集合值的类型或者是字典键的类型，但需要使你的自定义类型遵循 Swift 标准库中的 `Hashable` 协议。遵循 `Hashable` 协议的类型需要提供一个类型为 `Int` 的可读属性 `hashValue`。由类型的 `hashValue` 属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
+> 你可以使用自定义的类型作为集合值的类型或者是字典键的类型，但需要使自定义类型遵循 Swift 标准库中的 `Hashable` 协议。遵循 `Hashable` 协议的类型需要提供一个类型为 `Int` 的可读属性 `hashValue`。由类型的 `hashValue` 属性返回的值不需要在同一程序的不同执行周期或者不同程序之间保持相同。
 > 
 > 因为 `Hashable` 协议遵循 `Equatable` 协议，所以遵循该协议的类型也必须提供一个“是否相等”运算符（`==`）的实现。这个 `Equatable` 协议要求任何遵循 `==` 实现的实例间都是一种相等的关系。也就是说，对于 `a,b,c` 三个值来说，`==` 的实现必须满足下面三种情况：
 
@@ -308,7 +308,7 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 > 
 > `favoriteGenres` 被声明为一个变量（拥有 `var` 标示符）而不是一个常量（拥有 `let` 标示符）,因为它里面的元素将会在之后的例子中被增加或者移除。
 
-一个 `Set` 类型不能从数组字面量中被直接推断出来，因此 `Set` 类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个 `Set` 并且该数组字面量中的所有元素类型相同，那么你无须写出 `Set` 的具体类型。`favoriteGenres` 的构造形式可以采用简化的方式代替：
+一个 `Set` 类型不能从数组字面量中被直接推断出来，因此 `Set` 类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个 `Set` 并且与该数组字面量中的所有元素类型相同，那么无须写出 `Set` 的具体类型。`favoriteGenres` 的构造形式可以采用简化的方式代替：
 
 ```swift
 var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
@@ -527,7 +527,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 你可以通过字典的方法和属性来访问和修改字典，或者通过使用下标语法。
 
-和数组一样，你可以通过字典的只读属性 `count` 来获取字典的数据项数量：
+和数组一样，可以通过字典的只读属性 `count` 来获取字典的数据项数量：
 
 ```swift
 print("The dictionary of airports contains \(airports.count) items.")
@@ -552,7 +552,7 @@ airports["LHR"] = "London"
 // airports 字典现在有三个数据项
 ```
 
-你也可以使用下标语法来改变特定键对应的值：
+也可以使用下标语法来改变特定键对应的值：
 
 ```swift
 airports["LHR"] = "London Heathrow"
@@ -581,7 +581,7 @@ if let airportName = airports["DUB"] {
 // 打印“The name of the airport is Dublin Airport.”
 ```
 
-你还可以使用下标语法通过将某个键的对应值赋值为 `nil` 来从字典里移除一个键值对：
+还可以使用下标语法通过将某个键的对应值赋值为 `nil` 来从字典里移除一个键值对：
 
 ```swift
 airports["APL"] = "Apple Internation"
