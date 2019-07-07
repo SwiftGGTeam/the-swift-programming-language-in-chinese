@@ -1,18 +1,18 @@
 # 集合类型
 
-Swift 语言提供 `Arrays`、`Sets` 和 `Dictionaries` 三种基本的*集合类型*用来存储集合数据。数组（Arrays）是有序数据的集。集合（Sets）是无序无重复数据的集。字典（Dictionaries）是无序的键值对的集。
+Swift 语言提供数组（Array）、集合（Set）和字典（Dictionary）三种基本的*集合类型*用来存储集合数据。数组是有序数据的集。集合是无序无重复数据的集。字典是无序的键值对的集。
 
 ![](https://docs.swift.org/swift-book/_images/CollectionTypes_intro_2x.png)
 
-Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries`，它们的值和关键字类型必须明确。这意味着不能把错误的数据类型插入其中。同时这也说明你完全可以对取回值的类型非常放心。
+Swift 中的数组、集合和字典必须明确其中保存的键和值类型，这样就可以避免插入一个错误数据类型的值。同理，对于获取到的值你也可以放心，其数据类型是确定的。
 
 > 注意
 > 
-> Swift 的 `Arrays`、`Sets` 和 `Dictionaries` 类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./22_Generics.md) 章节。
+> Swift 的数组、集合和字典类型被实现为*泛型集合*。更多关于泛型类型和集合，参见 [泛型](./22_Generics.md) 章节。
 
 ## 集合的可变性 {#mutability-of-collections}
 
-如果创建一个 `Arrays`、`Sets` 或 `Dictionaries` 并且把它分配成一个变量，这个集合将会是*可变的*。这意味着可以在创建之后添加更多或移除已存在的数据项，或者改变集合中的数据项。如果把 `Arrays`、`Sets` 或 `Dictionaries` 分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
+如果创建一个数组、集合或字典并且把它分配成一个变量，这个集合将会是*可变的*。这意味着可以在创建之后添加、修改或者删除数据项。如果把数组、集合或字典分配成常量，那么它就是*不可变的*，它的大小和内容都不能被改变。
 
 > 注意
 > 
@@ -24,9 +24,9 @@ Swift 语言中的 `Arrays`、`Sets` 和 `Dictionaries`，它们的值和关键�
 
 > 注意
 > 
-> Swift 的 `Array` 类型被桥接到 `Foundation` 中的 `NSArray` 类。  
+> Swift 的 `Array` 类型被桥接到 Foundation 中的 `NSArray` 类。  
 > 
-> 更多关于在 `Foundation` 和 `Cocoa` 中使用 `Array` 的信息，参见 [Bridging Between Array and NSArray](https://developer.apple.com/documentation/swift/array#2846730)。
+> 更多关于在 Foundation 和 Cocoa 中使用 `Array` 的信息，参见 [Bridging Between Array and NSArray](https://developer.apple.com/documentation/swift/array#2846730)。
 
 ### 数组的简单语法 {#array-type-shorthand-syntax}
 
@@ -239,16 +239,16 @@ for (index, value) in shoppingList.enumerated() {
 
 ## 集合（Sets） {#sets}
 
-*集合（Set）*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
+*集合*用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。
 
 > 注意
-> Swift 的 `Set` 类型被桥接到 `Foundation` 中的 `NSSet` 类。
+> Swift 的 `Set` 类型被桥接到 Foundation 中的 `NSSet` 类。
 > 
-> 关于使用 `Foundation` 和 `Cocoa` 中 `Set` 的知识，参见 [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530)
+> 关于使用 Foundation 和 Cocoa 中 `Set` 的知识，参见 [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530)
 
 ### 集合类型的哈希值 {#hash-values-for-set-types}
 
-一个类型为了存储在集合中，该类型必须是*可哈希化*的——也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a==b`,因此必须 `a.hashValue == b.hashValue`。
+一个类型为了存储在集合中，该类型必须是*可哈希化*的——也就是说，该类型必须提供一个方法来计算它的*哈希值*。一个哈希值是 `Int` 类型的，相等的对象哈希值必须相同，比如 `a == b`,因此必须 `a.hashValue == b.hashValue`。
 
 Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希化的，可以作为集合值的类型或者字典键的类型。没有关联值的枚举成员值（在 [枚举](./08_Enumerations.md) 有讲述）默认也是可哈希化的。
 
@@ -261,12 +261,12 @@ Swift 的所有基本类型（比如 `String`、`Int`、`Double` 和 `Bool`）�
 > * `a == a`(自反性)
 > * `a == b` 意味着 `b == a`(对称性)
 > * `a == b && b == c` 意味着 `a == c`(传递性)
-
-关于遵循协议的更多信息，请看 [协议](./21_Protocols.md)。
+>
+> 关于遵循协议的更多信息，请看 [协议](./21_Protocols.md)。
 
 ### 集合类型语法 {#set-type-syntax}
 
-Swift 中的 `Set` 类型被写为 `Set<Element>`，这里的 `Element` 表示 `Set` 中允许存储的类型。和数组不同的是，集合没有等价的简化形式。
+Swift 中的集合类型被写为 `Set<Element>`，这里的 `Element` 表示集合中允许存储的类型。和数组不同的是，集合没有等价的简化形式。
 
 ### 创建和构造一个空的集合 {#creating-and-initalizing-an-empty-set}
 
@@ -282,7 +282,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 > 
 > 通过构造器，这里 `letters` 变量的类型被推断为 `Set<Character>`。
 
-此外，如果上下文提供了类型信息，比如作为函数的参数或者已知类型的变量或常量，你可以通过一个空的数组字面量创建一个空的 `Set`：
+此外，如果上下文提供了类型信息，比如作为函数的参数或者已知类型的变量或常量，你可以通过一个空的数组字面量创建一个空的集合：
 
 ```swift
 letters.insert("a")
@@ -308,7 +308,7 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 > 
 > `favoriteGenres` 被声明为一个变量（拥有 `var` 标示符）而不是一个常量（拥有 `let` 标示符）,因为它里面的元素将会在之后的例子中被增加或者移除。
 
-一个 `Set` 类型不能从数组字面量中被直接推断出来，因此 `Set` 类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个 `Set` 并且与该数组字面量中的所有元素类型相同，那么无须写出 `Set` 的具体类型。`favoriteGenres` 的构造形式可以采用简化的方式代替：
+一个集合类型不能从数组字面量中被直接推断出来，因此 `Set` 类型必须显式声明。然而，由于 Swift 的类型推断功能，如果你想使用一个数组字面量构造一个集合并且与该数组字面量中的所有元素类型相同，那么无须写出集合的具体类型。`favoriteGenres` 的构造形式可以采用简化的方式代替：
 
 ```swift
 var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
@@ -318,9 +318,9 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 
 ### 访问和修改一个集合 {#accesing-and-modifying-a-set}
 
-你可以通过 `Set` 的属性和方法来对其进行访问和修改。
+你可以通过集合的属性和方法来对其进行访问和修改。
 
-为了获取一个 `Set` 中元素的数量，可以使用其只读属性 `count`：
+为了获取一个集合中元素的数量，可以使用其只读属性 `count`：
 
 ```swift
 print("I have \(favoriteGenres.count) favorite music genres.")
@@ -338,14 +338,14 @@ if favoriteGenres.isEmpty {
 // 打印“I have particular music preferences.”
 ```
 
-你可以通过调用 `Set` 的 `insert(_:)` 方法来添加一个新元素：
+你可以通过调用集合的 `insert(_:)` 方法来添加一个新元素：
 
 ```swift
 favoriteGenres.insert("Jazz")
 // favoriteGenres 现在包含4个元素
 ```
 
-你可以通过调用 `Set` 的 `remove(_:)` 方法去删除一个元素，如果它是该 `Set` 的一个元素则删除它并且返回它的值，若该 `Set` 不包含它，则返回 `nil`。另外，`Set` 可以通过 `removeAll()` 方法删除所有元素。
+你可以通过调用集合的 `remove(_:)` 方法去删除一个元素，如果它是该集合的一个元素则删除它并且返回它的值，若该集合不包含它，则返回 `nil`。另外，集合可以通过 `removeAll()` 方法删除所有元素。
 
 ```swift
 if let removedGenre = favoriteGenres.remove("Rock") {
@@ -356,7 +356,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 // 打印“Rock? I'm over it.”
 ```
 
-使用 `contains(_:)` 方法去检查 `Set` 中是否包含一个特定的值：
+使用 `contains(_:)` 方法去检查集合中是否包含一个特定的值：
 
 ```swift
 if favoriteGenres.contains("Funk") {
@@ -369,7 +369,7 @@ if favoriteGenres.contains("Funk") {
 
 ### 遍历一个集合 {#iterating-over-a-set}
 
-你可以在一个 `for-in` 循环中遍历一个 `Set` 中的所有值。
+你可以在一个 `for-in` 循环中遍历一个集合中的所有值。
 
 ```swift
 for genre in favoriteGenres {
@@ -382,7 +382,7 @@ for genre in favoriteGenres {
 
 更多关于 `for-in` 循环的信息，参见 [For 循环](./05_Control_Flow.md#for_loops)。
 
-Swift 的 `Set` 类型没有确定的顺序，为了按照特定顺序来遍历一个 `Set` 中的值可以使用 `sorted()` 方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符 `<` 对元素进行比较的结果来确定。
+Swift 的 `Set` 类型没有确定的顺序，为了按照特定顺序来遍历一个集合中的值可以使用 `sorted()` 方法，它将返回一个有序数组，这个数组的元素排列顺序由操作符 `<` 对元素进行比较的结果来确定。
 
 ```swift
 for genre in favoriteGenres.sorted() {
@@ -395,7 +395,7 @@ for genre in favoriteGenres.sorted() {
 
 ## 集合操作 {#performing-set-operations}
 
-你可以高效地完成 `Set` 的一些基本操作，比如把两个集合组合到一起，判断两个集合共有元素，或者判断两个集合是否全包含，部分包含或者不相交。
+你可以高效地完成集合的一些基本操作，比如把两个集合组合到一起，判断两个集合共有元素，或者判断两个集合是否全包含，部分包含或者不相交。
 
 ### 基本集合操作 {#fundamental-set-operations}
 
@@ -454,9 +454,9 @@ farmAnimals.isDisjoint(with: cityAnimals)
 
 > 注意
 > 
-> Swift 的 `Dictionary` 类型被桥接到 `Foundation` 的 `NSDictionary` 类。
+> Swift 的 `Dictionary` 类型被桥接到 Foundation 的 `NSDictionary` 类。
 > 
-> 更多关于在 `Foundation` 和 `Cocoa` 中使用 `Dictionary` 类型的信息，参见 [Bridging Between Dictionary and NSDictionary](https://developer.apple.com/documentation/swift/dictionary#2846239)。
+> 更多关于在 Foundation 和 Cocoa 中使用 `Dictionary` 类型的信息，参见 [Bridging Between Dictionary and NSDictionary](https://developer.apple.com/documentation/swift/dictionary#2846239)。
 
 ### 字典类型简化语法 {#dictionary-type-shorthand-syntax}
 
@@ -492,7 +492,7 @@ namesOfIntegers = [:]
 
 你可以使用*字典字面量*来构造字典，这和刚才介绍过的数组字面量拥有相似语法。字典字面量是一种将一个或多个键值对写作 `Dictionary` 集合的快捷途径。
 
-*一个键值对*是一个 `key` 和一个 `value` 的结合体。在字典字面量中，每一个键值对的键和值都由冒号分割。这些键值对构成一个列表，其中这些键值对由逗号分割、并整体被包裹在一对方括号中：
+*一个键值对*是一个键和一个值的结合体。在字典字面量中，每一个键值对的键和值都由冒号分割。这些键值对构成一个列表，其中这些键值对由逗号分割、并整体被包裹在一对方括号中：
 
 ```swift
 [key 1: value 1, key 2: value 2, key 3: value 3]
@@ -527,7 +527,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 你可以通过字典的方法和属性来访问和修改字典，或者通过使用下标语法。
 
-和数组一样，可以通过字典的只读属性 `count` 来获取字典的数据项数量：
+和数组一样，可以通过 `Dictionary` 的只读属性 `count` 来获取字典的数据项数量：
 
 ```swift
 print("The dictionary of airports contains \(airports.count) items.")
