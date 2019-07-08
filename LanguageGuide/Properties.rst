@@ -803,10 +803,10 @@ as an attribute.
    @SimpleWrapper var someProperty
 
    // expands to
-   var $someProperty = SomeWrapper()
+   private var _someProperty = SomeWrapper()
    var someProperty {
-       get { return $someProperty.wrappedValue }
-       set { $someProperty.wrappedValue = newValue }
+       get { return _someProperty.wrappedValue }
+       set { _someProperty.wrappedValue = newValue }
    }
 
 
