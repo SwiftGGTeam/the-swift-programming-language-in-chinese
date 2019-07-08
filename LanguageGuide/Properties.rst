@@ -742,7 +742,7 @@ Property Wrappers
 
 A property wrapper lets you separate out code
 that manages how a property's value is stored,
-and re-use that management code for multiple properties.
+and reuse that management code for multiple properties.
 The wrapper is an structure or enumeration
 that defines a getter and setter for a ``wrappedValue`` property.
 
@@ -772,10 +772,11 @@ that defines a getter and setter for a ``wrappedValue`` property.
 
 The ``SimpleWrapper`` structure manages the value that it wraps
 by printing the word "Reading" or "Writing" when the property is accessed.
-Its wrapped value is always an integer ---
-to make a wrapper that can be used for any property type,
-you use a generic type.
-For information about generic types, see :doc:`Generics`.
+To keep this example simpler, the wrapped value is always an integer.
+To make a version of ``SimpleWrapper``
+that could be used a wrapped value of any type,
+you need a generic type ---
+for more information, see :doc:`Generics`.
 
 You apply a wrapper to a property
 by writing the wrapper's name in front of the property
