@@ -760,6 +760,11 @@ and a memberwise initializer is synthesized for ``SomeStruct``.
 
 To access the wrapped value using the property wrapper's setter and getter,
 write the property's name.
+    .. XXX to access the projection
+    .. XXX $foo is either the wrapper itself or projectedValue
+    .. XXX if a type defines its projection,
+       it must re-expose the wrapper if it wants that to remain accessible
+       (for example, "return self")
 To access the property wrapper itself,
 rather than the value it wraps,
 write a dollar sign (``$``) in front of the property's name.
