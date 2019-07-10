@@ -72,7 +72,7 @@ numberOfLegs["bird"] = 2
 
 ## 下标选项 {#subscript-options}
 
-下标可以接受任意数量的入参，并且这些入参可以是任意类型。下标的返回值也可以是任意类型。下标可以使用变量参数和可变参数，但不能使用输入输出参数，也不能给参数设置默认值。
+下标可以接受任意数量的入参，并且这些入参可以是任意类型。下标的返回值也可以是任意类型。下标可以使用可变参数，并且可以提供默认参数数值，但是不能使用输入输出参数。
 
 一个类或结构体可以根据自身需要提供多个下标实现，使用下标时将通过入参的数量和类型进行区分，自动匹配合适的下标，这就是*下标的重载*。
 
@@ -140,3 +140,17 @@ func indexIsValid(row: Int, column: Int) -> Bool {
 let someValue = matrix[2, 2]
 // 断言将会触发，因为 [2, 2] 已经超过了 matrix 的范围
 ```
+
+## 类型下标{#type-subscripts}
+正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型本身上调用的下标。这种下标的类型被称作类型下标。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类可以使用 `class` 关键字来允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标：
+```
+enum Planet: Int {
+    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+    static subscript(n: Int) -> Planet {
+        return Planet(rawValue: n)!
+    }
+}
+let mars = Planet[4]
+print(mars)
+```
+
