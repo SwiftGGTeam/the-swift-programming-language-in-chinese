@@ -956,12 +956,17 @@ Platform condition        Valid arguments
 ``swift()``               ``>=`` or ``<`` followed by a version number
 ``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
-``targetEnvironment()``   ``simulator``
+``targetEnvironment()``   ``simulator``, ``macCatalyst``
 ========================  ===================================================
 
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
+
+.. The target environment "UKitForMac"
+   is understood by the compiler as a synonym for "macCatalyst",
+   but that spelling is marked "Must be removed" outside of a few places,
+   so it's omitted from the table above.
 
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
