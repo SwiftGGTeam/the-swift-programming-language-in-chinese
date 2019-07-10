@@ -16,7 +16,10 @@ Swift 官方文档中文翻译由 [numbbbbb](https://github.com/numbbbbb) 发起
 - [Khala-wan](https://github.com/Khala-wan)
 - [Nemocdz](https://github.com/Nemocdz)
 - [numbbbbb](https://github.com/numbbbbb)
+- [pmst](https://github.com/colourful987)
+- [RickeyBoy](https://github.com/RickeyBoy)
 - [WAMaker](https://github.com/WAMaker)
+- [YiYiZheng](https://github.com/YiYiZheng)
 - [Yousanflics](https://github.com/Yousanflics)
 
 ## Swift 4.x 主要贡献者
@@ -33,6 +36,7 @@ Swift 官方文档中文翻译由 [numbbbbb](https://github.com/numbbbbb) 发起
 - [Forelas](https://github.com/ForelaxX)
 - [Hale](https://github.com/wuqiuhao)
 - [kemchenj](https://kemchenj.github.io)
+- [Joeytat](https://github.com/joeytat)
 - [jojotov](https://github.com/jojotov)
 - [Meler](https://github.com/pmtao)
 - [mobilefellow](https://github.com/mobilefellow)
@@ -42,6 +46,7 @@ Swift 官方文档中文翻译由 [numbbbbb](https://github.com/numbbbbb) 发起
 - [numbbbbb](https://github.com/numbbbbb)
 - [rain2540](https://github.com/rain2540)
 - [Rsenjoyer](https://github.com/Rsenjoyer)
+- [SunsetWan](https://github.com/SunsetWan)
 - [WAMaker](https://github.com/WAMaker)
 - [YiYiZheng](https://github.com/YiYiZheng)
 - [ZhangChi](https://github.com/zhangchi25806)
