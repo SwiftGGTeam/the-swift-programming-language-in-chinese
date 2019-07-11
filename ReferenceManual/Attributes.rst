@@ -699,22 +699,122 @@ propertyWrapper
 
 Apply this attribute to a class, structure, or enumeration declaration
 to use that type as a property wrapper.
-The type must have a ``wrappedValue`` instance property
-that's implemented as a getter and a setter.
-If the type defines an ``init(initialValue:)`` initializer,
-properties that it wraps can use assignment to set their initial value.
+When you apply this attribute to a type,
+you create a new, custom attribute with the same name as the type.
+Apply that new attribute to a property
+to wrap access to the property through an instance of the wrapper type.
 
-.. XXX add discussion of init()
+The wrapper must define a ``wrappedValue`` instance property.
+The *wrapped value* of the property
+is the value that the getter and setter for this property expose.
+The wrapper is responsible for defining and managing the underlying storage for that value.
+The compiler synthesizes storage for the instance of the wrapper type
+by prefixing the name of the wrapped property with an underscore (``_``) ---
+for example, the wrapper for ``someProperty`` is stored as ``_someProperty``.
+The synthesized storage for the wrapper has an access control level of ``private``.
 
-.. XXX TR: Is it valid (but pointless) to apply @propertyWrapper
-   to a struct that has 'value' as a stored property?
+.. XXX A useful/common pattern is for the wrapper type
+   to have a 'private var value' property
+   that it uses to store the underlying value.
 
-The getter and setter expose the wrapped value;
-the type that ``propertyWrapper`` is applied to
-is responsible for defining and managing the underlying storage for that value.
-For example, the code below implements a property wrapper
-that counts the number of times its wrapped value
-is read and written after initialization.
+If the wrapper defines an ``init()`` initializer,
+the wrapped property can be defined without setting an initial value,
+implicitly using ``init()`` to set it.
+If the wrapper defines an ``init(wrappedValue:)`` initializer,
+the wrapped property can use assignment to set its initial value.
+When you apply the attribute for a property wrapper to a property,
+the attribute's arguments are passed as arguments to the wrapper's initializer.
+These initialization approaches can be combined ---
+for example, you can provide the wrapped value using assignment
+and pass the remaining arguments for a custom initializer
+as arguments to the attribute.
+
+::
+
+    @propertyWrapper
+    struct SomeWrapper {
+        var wrappedValue: Int
+        var someValue: Double
+        init() {
+            self.wrappedValue = 100
+            self.someValue = 12.3
+        }
+        init(wrappedValue: Int) {
+            self.wrappedValue = wrappedValue
+            self.someValue = 45.6
+        }
+        init(wrappedValue: Int, custom: Double) {
+            self.wrappedValue = wrappedValue
+            self.someValue = custom
+        }
+    }
+
+    // Uses init()
+    @SomeWrapper var a
+
+    // Uses init(wrappedValue: 10)
+    @SomeWrapper var b = 10
+
+    // Uses init(wrappedValue: 20)
+    @SomeWrapper var d
+    d = 20
+
+    // Uses init(wrappedValue: 30, custom: 98.7)
+    @SomeWrapper(custom: 98.7)
+    var d = 30
+
+The *projected value* for a wrapped property is a second value
+that gives a property wrapper the ability to expose additional functionality ---
+for example, to reset a value whose initialization is deferred
+or to flush changes to a database.
+By default, the projected value is the instance of the wrapper type;
+to project a custom value,
+define a ``projectedValue`` instance property on the wrapper type.
+The compiler synthesizes an identifier for the projected value
+by prefixing the name of the wrapped property with a dollar sign (``$``) --
+for example, the projected value for ``someProperty`` is ``$someProperty``.
+The projected value has the same access control level
+as the original wrapped property.
+
+   ::
+
+
+
+
+
+
+
+
+
+
+.. XXX leftover bits...
+
+
+To expose both a projected value and the wrapper itself,
+define a computed property on the projected value
+that returns the wrapper.
+
+::
+
+    @propertyWrapper
+    struct SomeWrapper {
+        var wrappedValue: Int
+        var projectedValue: SomeProjection {
+            return SomeProjection(self)
+        }
+    }
+
+    struct SomeProjection {
+        var wrapper: SomeWrapper
+    }
+
+    @SomeWrapper var x = 123
+    x           // Int
+    $x          // SomeProjection
+    $x.wrapper  // SomeWrapper
+
+A wrapped property can include ``willSet`` and ``didSet`` blocks
+but not ``get`` or ``set``.
 
 .. testcode:: propertyWrapper
     :compile: true
@@ -739,10 +839,6 @@ is read and written after initialization.
            }
        }
 
-When you apply the ``propertyWrapper`` attribute to a type,
-you create a new, custom attribute with the same name as the type.
-Apply that new attribute to a property
-to wrap the property using the property wrapper.
 For example,
 the code below applies the ``CountedAccess`` attribute
 to the ``someProperty`` property of the ``SomeStruct`` structure.
@@ -758,16 +854,6 @@ and a memberwise initializer is synthesized for ``SomeStruct``.
            @CountedAccess var someProperty: Int = 100
        }
 
-To access the wrapped value using the property wrapper's setter and getter,
-write the property's name.
-    .. XXX to access the projection
-    .. XXX $foo is either the wrapper itself or projectedValue
-    .. XXX if a type defines its projection,
-       it must re-expose the wrapper if it wants that to remain accessible
-       (for example, "return self")
-To access the property wrapper itself,
-rather than the value it wraps,
-write a dollar sign (``$``) in front of the property's name.
 In the code listing below,
 ``$someProperty`` refers to the instance of ``CountedAccess``,
 and ``someProperty`` refers to the wrapped ``Int`` value.
@@ -788,18 +874,6 @@ and ``someProperty`` refers to the wrapped ``Int`` value.
 
 .. REFERENCE
    The integers above come from the main Apple phone number (408) 996-1010.
-
-To pass arguments to the property wrapper's initializer,
-write the arguments after the attribute name,
-using the same syntax as a call to that initializer.
-
-.. testcode:: propertyWrapper
-    :compile:
-
-    -> struct AnotherStruct {
-           @CountedAccess(initialValue: "Hello")
-           var anotherProperty: String
-       }
 
 
 .. _Attributes_requires_stored_property_inits:

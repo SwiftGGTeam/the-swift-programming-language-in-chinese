@@ -809,6 +809,10 @@ as an attribute.
        get { return _someProperty.wrappedValue }
        set { _someProperty.wrappedValue = newValue }
    }
+   var $someProperty {
+       get { return _someProperty.projectedValue }
+       set { _someProperty.projectedValue = newValue }
+   }
 
 
    property wrappers are used a lot by SwiftUI ... xref
