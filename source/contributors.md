@@ -148,4 +148,3 @@ Swift 官方文档中文翻译由 [numbbbbb](https://github.com/numbbbbb) 发起
 - [zqp](https://github.com/zqp)
 - [成都老码团队翻译组-Arya](http://weibo.com/littlekok/)
 - [成都老码团队翻译组-Oberyn](http://weibo.com/u/5241713117)
-
