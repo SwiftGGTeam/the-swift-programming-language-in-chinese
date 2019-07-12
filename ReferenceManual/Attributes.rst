@@ -767,8 +767,7 @@ The *projected value* for a wrapped property is a second value
 that gives a property wrapper the ability to expose additional functionality ---
 for example, to reset a value whose initialization is deferred
 or to flush changes to a database.
-By default, the projected value is the instance of the wrapper type;
-to project a custom value,
+To project a value from a property wrapper,
 define a ``projectedValue`` instance property on the wrapper type.
 The compiler synthesizes an identifier for the projected value
 by prefixing the name of the wrapped property with a dollar sign (``$``) --
