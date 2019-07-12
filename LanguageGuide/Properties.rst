@@ -754,16 +754,13 @@ that defines a getter and setter for a ``wrappedValue`` property.
     -> @propertyWrapper
     -> struct EvenNumber {
            private var number = 0
-           var adjusted = false
            var wrappedValue: Int {
                get { return number }
                set {
                    if newValue % 2 == 0 {
                        number = newValue
-                       adjusted = false
                    } else {
                        number = newValue + 1
-                       adjusted = true
                    }
                }
            }
@@ -816,42 +813,73 @@ produces code that's equivalent to the following:
            }
        } 
 
+.. XXX Show the various ways to do initialization
+   init()
+   init(wrappedValue:)
+   init(whatever:you:want:)
+
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
-By default, the projected value is the instance of the wrapper type,
-but a property wrapper can define any other value.
 The projected value lets a property wrapper expose additional functionality ---
 for example, a property wrapper that manages access to a database
 could expose a ``flushDatabaseConnection()`` method on its projected value.
-
 The name of the projected value is the same as the wrapped value,
 except it begins with a dollar sign (``$``).
 Because Swift code can't define properties that start with ``$``
 the projected value never collides with properties you define.
-Here's how you can use the projected value to check
-whether a number stored in ``s.someNumber`` was adjusted by the property wrapper:
 
-.. testcode:: even-number-wrapper
+In the ``EvenNumber`` example,
+trying to set the property to an odd number
+caused it to be adjusted before being stored.
+The code below adds an ``projectedValue`` property to the ``EvenNumber`` structure
+to expose whether the current value was adjusted when being stored.
+
+.. testcode:: even-number-wrapper-projection
     :compile: true
 
+    -> @propertyWrapper
+    -> struct EvenNumber {
+           private var number = 0
+           var projectedValue = false  // Value was adjusted
+           var wrappedValue: Int {
+               get { return number }
+               set {
+                   if newValue % 2 == 0 {
+                       number = newValue
+                       projectedValue = false
+                   } else {
+                       number = newValue + 1
+                       projectedValue = true
+                   }
+               }
+           }
+        }
+    >> struct SomeStructure {
+    >>     @EvenNumber var someNumber: Int
+    >> }
+    >> var s = SomeStructure()
+    ---
     -> s.someNumber = 40
-    -> print(s.$someNumber.adjusted)
+    -> print(s.$someNumber)
     <- false
     ---
     -> s.someNumber = 55
-    -> print(s.$someNumber.adjusted)
+    -> print(s.$someNumber)
     <- true
 
-Writing ``s.$someNumber`` accesses the instance of ``EvenNumber``
-that wraps the ``someNumber`` property in ``SomeStructure``.
+Writing ``s.$someNumber`` accesses the wrapper's projected value.
 After storing an even number like 40,
-the value of ``adjusted`` is ``false``,
+the value of ``s.$someNumber`` is ``false``,
 but after storing an odd number like 55,
-the value is true.
+the projected value is true.
 
-.. XXX TR: Has this changed since the proposal?
-   I need to add an explicit projectedValue property to EvenNumber
-   to make s.$someNumber work.
+A property wrapper can return any value as its projected value.
+In this example, there's only one piece of information
+that the property wrapper exposes,
+so the "number was adjusted" state is exposed directly as the projected value.
+A wrapper that needs to expose more information
+would return an instance of some other data structure,
+or return ``self`` to expose the instance of the wrapper as the projected value.
 
 .. _Properties_TypeProperties:
 
