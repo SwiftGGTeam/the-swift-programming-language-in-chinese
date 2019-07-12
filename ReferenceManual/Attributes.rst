@@ -776,7 +776,6 @@ for example, the projected value for ``someProperty`` is ``$someProperty``.
 The projected value has the same access control level
 as the original wrapped property.
 
-   ::
 
 
 
@@ -789,6 +788,9 @@ as the original wrapped property.
 
 .. XXX leftover bits...
 
+TR: Can you apply a property wrapper to a top-level variable?
+Testing this in a REPL and in swiftc yields strange errors,
+so it doesn't look like it's supported.
 
 To expose both a projected value and the wrapper itself,
 define a computed property on the projected value

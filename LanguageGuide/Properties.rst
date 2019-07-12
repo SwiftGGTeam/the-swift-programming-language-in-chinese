@@ -746,54 +746,58 @@ and reuse that management code for multiple properties.
 The wrapper is an structure or enumeration
 that defines a getter and setter for a ``wrappedValue`` property.
 
-.. testcode:: simple-property-wrapper
+.. XXX introduce code listing
+
+.. testcode:: even-number-wrapper
     :compile: true
 
     -> @propertyWrapper
-    -> struct SimpleWrapper {
-           var myNumber: Int
+    -> struct EvenNumber {
+           private var number = 0
+           var adjusted = false
            var wrappedValue: Int {
-               get {
-                   print("Reading")
-                   return myNumber
-               }
+               get { return number }
                set {
-                   print("Writing")
-                   myNumber = newValue
+                   if newValue % 2 == 0 {
+                       number = newValue
+                       adjusted = false
+                   } else {
+                       number = newValue + 1
+                       adjusted = true
+                   }
                }
-           }
-           init(initialValue: Int) {
-               myNumber = initialValue
            }
        }
 
-.. XXX Would be better to omit init(initialValue:) to keep things simple
-   but that makes the examples below more complicated
-
-The ``SimpleWrapper`` structure manages the value that it wraps
-by printing the word "Reading" or "Writing" when the property is accessed.
-To keep this example simpler, the wrapped value is always an integer.
-To make a version of ``SimpleWrapper``
-that could be used a wrapped value of any type,
-you need a generic type ---
-for more information, see :doc:`Generics`.
+The ``EvenNumber`` structure manages the value that it wraps
+by ensuring that the number is always even.
+The initial value is always zero.
+If you ask it to store an odd number,
+it sets its ``adjusted`` flag to ``true``
+and stores one plus that number.
 
 You apply a wrapper to a property
 by writing the wrapper's name in front of the property
 as an attribute.
 
-.. testcode:: simple-property-wrapper
+.. testcode:: even-number-wrapper
     :compile: true
 
     -> struct SomeStructure {
-           @SimpleWrapper var someProperty = 12
+           @EvenNumber var someNumber: Int
        }
+    ---
     -> var s = SomeStructure()
-    -> s.someProperty = 21
-    <- Writing
-    -> print(s.someProperty)
-    <- Reading
-    <- 21
+    -> print(s.someNumber)
+    <- 0
+    ---
+    -> s.someNumber = 10
+    -> print(s.someNumber)
+    <- 10
+    ---
+    -> s.someNumber = 11
+    -> print(s.someNumber)
+    <- 12
 
 .. XXX outline
 
