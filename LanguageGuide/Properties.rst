@@ -748,7 +748,7 @@ that defines a getter and setter for a ``wrappedValue`` property.
 
 .. XXX introduce code listing
 
-.. testcode:: even-number-wrapper
+.. testcode:: even-number-wrapper, property-wrapper-expansion
     :compile: true
 
     -> @propertyWrapper
@@ -799,27 +799,59 @@ as an attribute.
     -> print(s.someNumber)
     <- 12
 
-.. XXX outline
+When you apply a property wrapper,
+the compiler synthesizes code that provides storage for the wrapper
+and to access the property through the wrapper.
+The definition of ``SomeStructure`` in the previous code listing
+produces code that's equivalent to the following:
 
-   the compiler expands the property wrapper into a getter and setter
-   $foo refers to the wrapper itself
+.. testcode:: property-wrapper-expansion
+    :compile: true
 
-   // this
-   @SimpleWrapper var someProperty
+    -> struct SomeStructure {
+           private var _someNumber = EvenNumber()
+           var someNumber: Int {
+               get { return _someNumber.wrappedValue }
+               set { _someNumber.wrappedValue = newValue }
+           }
+       } 
 
-   // expands to
-   private var _someProperty = SomeWrapper()
-   var someProperty {
-       get { return _someProperty.wrappedValue }
-       set { _someProperty.wrappedValue = newValue }
-   }
-   var $someProperty {
-       get { return _someProperty.projectedValue }
-       set { _someProperty.projectedValue = newValue }
-   }
+In addition to the wrapped value,
+a property wrapper can define a *projected value*.
+By default, the projected value is the instance of the wrapper type,
+but a property wrapper can define any other value.
+The projected value lets a property wrapper expose additional functionality ---
+for example, a property wrapper that manages access to a database
+could expose a ``flushDatabaseConnection()`` method on its projected value.
 
+The name of the projected value is the same as the wrapped value,
+except it begins with a dollar sign (``$``).
+Because Swift code can't define properties that start with ``$``
+the projected value never collides with properties you define.
+Here's how you can use the projected value to check
+whether a number stored in ``s.someNumber`` was adjusted by the property wrapper:
 
-   property wrappers are used a lot by SwiftUI ... xref
+.. testcode:: even-number-wrapper
+    :compile: true
+
+    -> s.someNumber = 40
+    -> print(s.$someNumber.adjusted)
+    <- false
+    ---
+    -> s.someNumber = 55
+    -> print(s.$someNumber.adjusted)
+    <- true
+
+Writing ``s.$someNumber`` accesses the instance of ``EvenNumber``
+that wraps the ``someNumber`` property in ``SomeStructure``.
+After storing an even number like 40,
+the value of ``adjusted`` is ``false``,
+but after storing an odd number like 55,
+the value is true.
+
+.. XXX TR: Has this changed since the proposal?
+   I need to add an explicit projectedValue property to EvenNumber
+   to make s.$someNumber work.
 
 .. _Properties_TypeProperties:
 
