@@ -182,7 +182,7 @@
 * 更新 [字符串字面量中特殊字符](../chapter2/03_Strings_And_Characters.md#special-characters-in-string-literals) 章节，对 Unicode 标量更精确定义。
 
 
-### 2015-4-8
+### 2015-04-08
 
 * 更新至 Swift 1.2。
 * Swift 现在自身提供了一个 `Set` 集合类型，更多内容，请看 [Sets](../chapter2/CollectionTypes.md#sets) 。
