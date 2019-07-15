@@ -289,8 +289,7 @@ the function type ``(Int) -> (Int) -> Int`` is understood as ``(Int) -> ((Int) -
 that is, a function that takes an ``Int`` and returns
 another function that takes and returns an ``Int``.
 
-Function types that can throw an error must be marked with the ``throws`` keyword,
-and function types that can rethrow an error must be marked with the ``rethrows`` keyword.
+Function types that can throw or rethrow an error must be marked with the ``throws`` keyword.
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
@@ -391,7 +390,6 @@ see :doc:`../LanguageGuide/MemorySafety`.
     Grammar of a function type
 
     function-type --> attributes-OPT function-type-argument-clause ``throws``-OPT ``->`` type
-    function-type --> attributes-OPT function-type-argument-clause ``rethrows`` ``->`` type
 
     function-type-argument-clause --> ``(`` ``)``
     function-type-argument-clause --> ``(`` function-type-argument-list ``...``-OPT ``)``
