@@ -743,10 +743,19 @@ Property Wrappers
 A property wrapper lets you separate out code
 that manages how a property's value is stored,
 and reuse that management code for multiple properties.
-The wrapper is an structure or enumeration
-that defines a getter and setter for a ``wrappedValue`` property.
+You write the management logic once to define the wrapper,
+and then you apply the wrapper to as many properties as needed.
 
-.. XXX introduce code listing
+To define a property wrapper,
+you make a structure, enumeration, or class
+that defines a ``wrappedValue`` property.
+In the code below,
+the ``EvenNumber`` structure ensures that
+the value that it wraps always contains even number.
+If you ask it to store an odd number,
+it stores one plus that number instead.
+
+.. XXX TR: Is there any warning to give against using classes as wrappers?
 
 .. testcode:: even-number-wrapper, property-wrapper-expansion
     :compile: true
@@ -766,16 +775,46 @@ that defines a getter and setter for a ``wrappedValue`` property.
            }
        }
 
-The ``EvenNumber`` structure manages the value that it wraps
-by ensuring that the number is always even.
-The initial value is always zero.
-If you ask it to store an odd number,
-it sets its ``adjusted`` flag to ``true``
-and stores one plus that number.
+The getter and setter for ``wrappedValue``
+contain the rules that ensure only even numbers can be stored.
+The setter determines what values can be stored,
+and the getter simply returns the stored value.
+In this example,
+the number is stored in the wrapper's private ``number`` property,
+but you could write a version of ``EvenNumber``
+that implements ``wrappedValue`` as a stored property
+and uses ``didSet`` to ensure the number is always even.
+
+.. assertion:: stored-property-wrappedValue
+    :compile: true
+
+    >> @propertyWrapper
+    >> struct EvenNumber {
+    >>     var wrappedValue: Int = 0 {
+    >>         didSet {
+    >>             if wrappedValue % 2 != 0 {
+    >>                 wrappedValue += 1
+    >>             }
+    >>         }
+    >>     }
+    >> }
+    >> struct SomeStructure {
+    >>     @EvenNumber var someNumber: Int
+    >> }
+    >> var s = SomeStructure()
+    >> print(s.someNumber)
+    << 0
+    >> s.someNumber = 10
+    >> print(s.someNumber)
+    << 10
+    >> s.someNumber = 11
+    >> print(s.someNumber)
+    << 12
 
 You apply a wrapper to a property
 by writing the wrapper's name in front of the property
 as an attribute.
+Here's a simple structure whose only property uses the ``EvenNumber`` property wrapper:
 
 .. testcode:: even-number-wrapper
     :compile: true
@@ -795,6 +834,14 @@ as an attribute.
     -> s.someNumber = 11
     -> print(s.someNumber)
     <- 12
+
+The ``someNumber`` property gets its initial value
+from the definition of ``EvenNumber``,
+which sets ``EvenNumber.number`` to zero.
+Storing the number 10 into ``someNumber`` succeeds
+because it's an even number.
+Trying to store 11 takes the other branch in the wrapper's setter
+and cases 12 to be stored instead.
 
 When you apply a property wrapper,
 the compiler synthesizes code that provides storage for the wrapper
@@ -817,6 +864,37 @@ produces code that's equivalent to the following:
    init()
    init(wrappedValue:)
    init(whatever:you:want:)
+
+    @propertyWrapper
+    struct DivisibleBy {
+        private let modulus: Int
+        private var number: Int
+        var wrappedValue {
+            get { return number }
+            set {
+                number = newValue
+                let remainder = newValue % modulus == 0
+                if remainder == 0 { return }
+                number += remainder
+                assert(number % modulus == 0)
+            }
+        }
+        init() {
+            modulus = 2
+            number = 0
+        }
+        init(wrappedValue: Int) {
+            modulus = 2
+            number = wrappedValue
+        }
+    }
+
+
+
+   Try swapping out the "is always even" wrapper for an "is always less than" wrapper.
+   We don't talk about the modulo operator until Advanced Operators,
+   and a clamping operator would let you build less contrived examples
+   like a SmallRectangle whose side is clamped <10.
 
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
