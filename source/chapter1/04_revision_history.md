@@ -34,7 +34,7 @@
 * 更新至 Swift 4.1。
 * 在 [等价运算符](../chapter2/26_Advanced_Operators.md#equivalence-operators) 章节新增了有关等价运算符的合成实现的内容。
 * 在 [声明](../chapter3/06_Declarations.md) 篇章中 [申明拓展](../chapter3/06_Declarations.md#extension-declaration) 章节和 [协议](../chapter2/21_Protocols.md) 篇章中 [有条件地遵循协议](../chapter2/21_Protocols.md#Conditionally-Conforming-to-a-Protocol) 章节新增了有关协议有条件遵循的内容。
-* 在 [关联类型约束中使用协议](../chapter2/22_Generics.md#using-a-protocol-in-its-associated-type's-constraints) 章节中新增了有关递归协议约束的内容。
+* 在 [关联类型约束中使用协议](../chapter2/22_Generics.md#using-a-protocol-in-its-associated-types-constraints) 章节中新增了有关递归协议约束的内容。
 * 在 [条件编译块](../chapter3/05_Statements.md#Conditional-Compilation-Block) 章节中新增了有关 `canImport()` 和 `targetEnvironment()` 平台条件的内容。
 
 ### 2017-12-04
