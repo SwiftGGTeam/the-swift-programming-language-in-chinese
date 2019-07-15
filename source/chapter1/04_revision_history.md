@@ -71,7 +71,7 @@
 * 更新至 Swift 3.0.1。
 * 更新 [自动引用计数](../chapter2/23_Automatic_Reference_Counting.md) 章节中有关 weak 和 unowned 引用的讨论。
 * 在 [声明标识符](../chapter3/06_Declarations.md#declaration-modifiers) 章节中新增了有关新的标识符 `unowned`，`unowend(safe)` 和 `unowned(unsafe)` 的内容。
-* 在 [Any 和 AnyObject 的类型转换](../chapter2/18_Type_Casting.md#type-casting-for-any-and-anyobject) 章节中新增了一条提示，有关使用类型 `Any` 作为可选值。               
+* 在 [Any 和 AnyObject 的类型转换](../chapter2/18_Type_Casting.md#type-casting-for-any-and-anyobject) 章节中新增了一处说明，有关使用类型 `Any` 作为可选值。               
 * 更新 [表达式](../chapter3/04_Expressions.md) 章节，把括号表达式和元组表达式的描述分开。
 
 ### 2016-09-13
@@ -120,8 +120,8 @@
 * 在 [关键字和标点符号](../chapter3/02_Lexical_Structure.md#keywords-and-punctuation) 章节中新增了使用关键字作为外部参数名的内容。
 * 更新 [声明特性](../chapter3/07_Attributes.md#Ideclaration-attributes) 章节中有关 `@objc` 特性的讨论，并指出枚举和枚举用例。
 * 更新 [操作符](../chapter3/02_Lexical_Structure.md#operator) 章节中对于自定义运算符的包含了 `.` 的讨论。
-* 在 [重新抛出错误的函数和方法](../chapter3/06_Declarations.md#rethrowing-functions-and-methods) 章节中新增了一条提示，重新抛出错误函数不能直接抛出错误。
-* 在 [属性观察器](../chapter2/10_Properties.md#property-observers) 章节中新增了一条提示，当作为 in-out 参数传递属性时，属性观察器的调用行为。
+* 在 [重新抛出错误的函数和方法](../chapter3/06_Declarations.md#rethrowing-functions-and-methods) 章节中新增了一处说明，重新抛出错误函数不能直接抛出错误。
+* 在 [属性观察器](../chapter2/10_Properties.md#property-observers) 章节中新增了一处说明，当作为 in-out 参数传递属性时，属性观察器的调用行为。
 * 在 [Swift 初见](./03_a_swift_tour.md) 篇章中新增了错误处理的章节。
 * 更新 [弱引用](../chapter2/23_Automatic_Reference_Counting.md#weak-references) 章节中的图片用以更清楚的展示重新分配过程。
 * 删除 C 语言风格的 `for` 循环，`++` 前缀和后缀运算符，以及 `--` 前缀和后缀运算符。
@@ -161,22 +161,22 @@
 * 在 [可选绑定](../chapter2/01_TheBasics.md#optional-binding) 章节中新增了有关使用 `where` 子句进行多可选绑定的相关内容。
 * 在 [字符串字面量](../chapter3/02_Lexical_Structure.md#string-literal) 章节中新增了有关在编译时使用 `+` 运算符拼接字符串字面量的相关内容。
 * 在 [元类型](../chapter3/03_Types.md#metatype-type-h) 章节中新增了有关元类型值的比较和使用它们通过构造器表达式构造实例相关内容。
-* 在 [断言调试](../chapter2/01_TheBasics.md#debugging-with-assertions) 章节中新增了一条提示，有关用户定义断言何时会失效。
+* 在 [断言调试](../chapter2/01_TheBasics.md#debugging-with-assertions) 章节中新增了一处说明，有关用户定义断言何时会失效。
 * 更新 [声明特性](../chapter3/07_Attributes.md#Ideclaration-attributes) 章节中对 `@NSManaged` 特性的讨论，现在这个特性可以被应用到一个确定实例方法。
 * 更新 [可变参数](../chapter2/06_Functions.md#variadic-parameters) 章节，现在可变参数可以声明在函数参数列表的任意位置中。
 * 在 [重写可失败构造器](../chapter2/14_Initialization.md#overriding-a-failable-initializer) 章节中新增了有关非可失败构造器相当于一个可失败构造器通过父类构造器的结果进行强制拆包的相关内容。
 * 在 [任意类型用例的枚举](../chapter3/06_Declarations.md#enumerations-with-cases-of-any-type) 章节中新增了有关枚举用例作为函数的内容。
 * 在 [构造器表达式](../chapter3/04_Expressions.md#initializer-expression) 章节中新增了有关显式引用一个构造器相关内容。
 * 在 [编译控制语句](../chapter3/05_Statements.md#compiler-control-statements) 章节中新增了有关编译内容以及行控制语句相关内容。
-* 在 [元类型](../chapter3/03_Types.md#metatype-type-h) 章节新增了一条提示，有关如何从元类型值中构造类实例相关内容。
-* 在 [弱引用](../chapter2/23_Automatic_Reference_Counting.md#weak-references) 章节新增了一条提示，有关弱引用作为缓存所存在的不足。
+* 在 [元类型](../chapter3/03_Types.md#metatype-type-h) 章节新增了一处说明，有关如何从元类型值中构造类实例相关内容。
+* 在 [弱引用](../chapter2/23_Automatic_Reference_Counting.md#weak-references) 章节新增了一处说明，有关弱引用作为缓存所存在的不足。
 * 更新 [类型特性](../chapter2/10_Properties.md#type-properties) 章节，提到了存储型特性其实是懒加载。
 * 更新 [捕获类型](../chapter2/07_Closures.md#capturing_values) 章节，阐明了变量和常量在闭包中如何被捕获。
 * 更新 [声明特性](../chapter3/07_Attributes.md#Ideclaration-attributes) 章节，用以描述何时在类中使用 `@objc` 关键字。
-* 在 [错误处理](../chapter2/17_Error_Handling.md#handling-errors) 章节中新增了一条提示，有关执行 `throw` 语句的性能。在 [Do 语句](../chapter3/05_Statements.md#do-statement) 章节的 do 语句部分也新增了类似内容。
+* 在 [错误处理](../chapter2/17_Error_Handling.md#handling-errors) 章节中新增了一处说明，有关执行 `throw` 语句的性能。在 [Do 语句](../chapter3/05_Statements.md#do-statement) 章节的 do 语句部分也新增了类似内容。
 * 更新 [类型特性](../chapter2/10_Properties.md#type-properties) 章节中有关类、结构体和枚举的存储型和计算型特性相关的内容。
 * 更新 [Break 语句](../chapter3/05_Statements.md#break_statement) 章节中有关带标签的 break 语句相关内容。
-* 在 [属性观察器](../chapter2/10_Properties.md#property-observers) 章节更新了一处提示，用来明确 `willSet` 和 `didSet` 观察器的行为。
+* 在 [属性观察器](../chapter2/10_Properties.md#property-observers) 章节更新了一处说明，用来明确 `willSet` 和 `didSet` 观察器的行为。
 * 在 [访问级别](../chapter2/25_Access_Control.md#access-levels) 章节新增了有关 `private` 作用域的相关内容说明。
 * 在 [弱引用](../chapter2/23_Automatic_Reference_Counting.md#weak-references) 章节新增了有关弱应用在垃圾回收系统和 ARC 之间的区别的说明。
 * 更新 [字符串字面量中特殊字符](../chapter2/03_Strings_And_Characters.md#special-characters-in-string-literals) 章节，对 Unicode 标量更精确定义。
@@ -230,13 +230,13 @@
 * 现在，你可以通过下标赋值或者 [可选调用链](../chapter2/16_Optional_Chaining.md) 中的可变方法和操作符来给属性设值。相应地更新了有关 [通过可选链接访问属性](../chapter2/16_Optional_Chaining.md#accessing-properties-through-optional-chaining) 的内容，并扩展了 [通过可选链接调用方法](../chapter2/16_Optional_Chaining.md#calling-methods-through-optional-chaining) 时检查方法调用成功的示例，以显示如何检查属性设置是否成功。
 * 在可选链中新增了 [访问可选类型的下标脚注](../chapter2/16_Optional_Chaining.md#accessing-subscripts-through-optional-chaining) 章节。
 * 更新 [访问和修改数组](../chapter2/CollectionTypes.md#accessing-and-modifying-a-dictionary) 章节以标示，从该版本起，不能再通过 `+=` 运算符给一个数组新增一个新的项。对应的替代方案是，使 `append` 方法，或者通过 `+=` 运算符来新增一个只有一个项的数组。
-* 新增一条提示，在 [范围运算符](../chapter2/BasicOperators.md#range-operators) 中，比如， `a..b` 和 `a..<b` ，起始值 `a` 不能大于结束值 `b`。
+* 新增一处说明，在 [范围运算符](../chapter2/BasicOperators.md#range-operators) 中，比如， `a..b` 和 `a..<b` ，起始值 `a` 不能大于结束值 `b`。
 * 重写 [继承](../chapter2/13_Inheritance.md) 篇章：删除了本章中有关构造器重写的介绍性报道；转而将更多的注意力放到新增的部分——子类的新功能，以及如何通过重写（overrides）修改已有的功能。另外， [重写属性的 Getters 和 Setters](../chapter2/13_Inheritance.md#overriding-property-etters-and-setters) 中的例子已经被替换为展示如何重写一个 `description` 属性。 (而有关如何在子类的构造器中修改继承属性的默认值的例子，已经被移到 [构造过程](../chapter2/14_Initialization.md) 篇章。) 
 * 更新 [构造器的继承与重写](../chapter2/14_Initialization.md#initializer-inheritance-and-overriding) 章节以标示： 重写一个特定的构造器必须使用 `override` 修饰符。
 * 更新 [Required 构造器](../chapter2/14_Initialization.md#required-initializers) 章节以标示：`required` 修饰符现在需要出现在所有子类的 required 构造器的声明中，而 required 构造器的实现，现在可以仅从父类自动继承。
 * 中置（Infix）的 [运算符函数](../chapter2/26_Advanced_Operators.md#operator-functions) 不再需要 `@infix` 属性。
 * [前置和后置运算符](../chapter2/26_Advanced_Operators.md#prefix-and-postfix-operators) 的 `@prefix` 和 `@postfix` 属性，已变更为 `prefix` 和 `postfix` 声明修饰符。
-* 新增一条提示，在 Prefix 和 postfix 运算符被作用于同一个操作数时 [前置和后置运算符](../chapter2/26_Advanced_Operators.md#prefix-and-postfix-operators) 的执行顺序。
+* 新增一处说明，在 Prefix 和 postfix 运算符被作用于同一个操作数时 [前置和后置运算符](../chapter2/26_Advanced_Operators.md#prefix-and-postfix-operators) 的执行顺序。
 * [组合赋值运算符](../chapter2/26_Advanced_Operators.md#compound-assignment-operators) 的运算符函数不再使用 `@assignment` 属性来定义函数。
 * 在定义 [自定义操作符](../chapter2/26_Advanced_Operators.md#custom-operators) 时，`修饰符（Modifiers）的出现顺序发生变化`。比如现在，你该编写 `prefix operator`， 而不是 `operator prefix`。
 * 在 [声明修饰符](../chapter3/06_Declarations.md#declaration-modifiers) 章节新增了有关 `dynamic` 声明修饰符的内容。
