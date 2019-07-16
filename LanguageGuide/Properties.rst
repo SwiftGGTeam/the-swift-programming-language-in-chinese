@@ -750,10 +750,9 @@ To define a property wrapper,
 you make a structure, enumeration, or class
 that defines a ``wrappedValue`` property.
 In the code below,
-the ``EvenNumber`` structure ensures that
-the value that it wraps always contains even number.
-If you ask it to store an odd number,
-it stores one plus that number instead.
+the ``SmallNumber`` structure ensures that
+the value that it wraps always contains a number less than twelve.
+If you ask it to store a larger number, it stores twelve instead.
 
 .. XXX TR: Is there any warning to give against using classes as wrappers?
 
@@ -761,22 +760,22 @@ it stores one plus that number instead.
     :compile: true
 
     -> @propertyWrapper
-    -> struct EvenNumber {
+    -> struct SmallNumber {
            private var number = 0
            var wrappedValue: Int {
                get { return number }
                set {
-                   if newValue % 2 == 0 {
-                       number = newValue
+                   if newValue > 12 {
+                       number = 12
                    } else {
-                       number = newValue + 1
+                       number = newValue
                    }
                }
            }
        }
 
 The getter and setter for ``wrappedValue``
-contain the rules that ensure only even numbers can be stored.
+contain the rules that ensure only small numbers can be stored.
 The setter determines what values can be stored,
 and the getter simply returns the stored value.
 In this example,
@@ -785,21 +784,25 @@ but you could write a version of ``EvenNumber``
 that implements ``wrappedValue`` as a stored property
 and uses ``didSet`` to ensure the number is always even.
 
+.. XXX TR: Is there a possible race condition here,
+   between the "bad" value being stored
+   and the didSet observer correting it?
+
 .. assertion:: stored-property-wrappedValue
     :compile: true
 
     >> @propertyWrapper
-    >> struct EvenNumber {
+    >> struct SmallNumber {
     >>     var wrappedValue: Int = 0 {
     >>         didSet {
-    >>             if wrappedValue % 2 != 0 {
-    >>                 wrappedValue += 1
+    >>             if wrappedValue > 12 {
+    >>                 wrappedValue = 12
     >>             }
     >>         }
     >>     }
     >> }
     >> struct SomeStructure {
-    >>     @EvenNumber var someNumber: Int
+    >>     @SmallNumber var someNumber: Int
     >> }
     >> var s = SomeStructure()
     >> print(s.someNumber)
@@ -807,32 +810,35 @@ and uses ``didSet`` to ensure the number is always even.
     >> s.someNumber = 10
     >> print(s.someNumber)
     << 10
-    >> s.someNumber = 11
+    >> s.someNumber = 21
     >> print(s.someNumber)
     << 12
 
 You apply a wrapper to a property
 by writing the wrapper's name in front of the property
 as an attribute.
-Here's a simple structure whose only property uses the ``EvenNumber`` property wrapper:
+Here's a structure that stores a small rectangle,
+using the same arbitrary definition of "small"
+that's implemented by the ``SmallNumber`` property wrapper:
 
 .. testcode:: even-number-wrapper
     :compile: true
 
-    -> struct SomeStructure {
-           @EvenNumber var someNumber: Int
+    -> struct SmallRectangle {
+           @SmallNumber var height: Int
+           @SmallNumber var width: Int
        }
     ---
-    -> var s = SomeStructure()
-    -> print(s.someNumber)
+    -> var rectangle = SmallRectangle()
+    -> print(rectangle.height)
     <- 0
     ---
-    -> s.someNumber = 10
-    -> print(s.someNumber)
+    -> rectangle.height = 10
+    -> print(rectangle.height)
     <- 10
     ---
-    -> s.someNumber = 11
-    -> print(s.someNumber)
+    -> rectangle.height = 21
+    -> print(rectangle.height)
     <- 12
 
 The ``someNumber`` property gets its initial value
@@ -846,17 +852,22 @@ and cases 12 to be stored instead.
 When you apply a property wrapper,
 the compiler synthesizes code that provides storage for the wrapper
 and to access the property through the wrapper.
-The definition of ``SomeStructure`` in the previous code listing
+The definition of ``SmallRectangle`` in the previous code listing
 produces code that's equivalent to the following:
 
 .. testcode:: property-wrapper-expansion
     :compile: true
 
-    -> struct SomeStructure {
-           private var _someNumber = EvenNumber()
-           var someNumber: Int {
-               get { return _someNumber.wrappedValue }
-               set { _someNumber.wrappedValue = newValue }
+    -> struct SmallRectangle {
+           private var _height = SmallNumber()
+           private var _width = SmallNumber()
+           var height: Int {
+               get { return _height.wrappedValue }
+               set { _height.wrappedValue = newValue }
+           }
+           var width: Int {
+               get { return _width.wrappedValue }
+               set { _width.wrappedValue = newValue }
            }
        } 
 
@@ -891,11 +902,6 @@ produces code that's equivalent to the following:
 
 
 
-   Try swapping out the "is always even" wrapper for an "is always less than" wrapper.
-   We don't talk about the modulo operator until Advanced Operators,
-   and a clamping operator would let you build less contrived examples
-   like a SmallRectangle whose side is clamped <10.
-
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
 The projected value lets a property wrapper expose additional functionality ---
@@ -906,38 +912,38 @@ except it begins with a dollar sign (``$``).
 Because Swift code can't define properties that start with ``$``
 the projected value never collides with properties you define.
 
-In the ``EvenNumber`` example,
-trying to set the property to an odd number
-caused it to be adjusted before being stored.
-The code below adds an ``projectedValue`` property to the ``EvenNumber`` structure
+In the ``SmallNumber`` example,
+trying to set the property to a number that's too large
+caused the property's value to be adjusted before being stored.
+The code below adds an ``projectedValue`` property to the ``SmallNumber`` structure
 to expose whether the current value was adjusted when being stored.
 
 .. testcode:: even-number-wrapper-projection
     :compile: true
 
     -> @propertyWrapper
-    -> struct EvenNumber {
+    -> struct SmallNumber {
            private var number = 0
            var projectedValue = false  // Value was adjusted
            var wrappedValue: Int {
                get { return number }
                set {
-                   if newValue % 2 == 0 {
+                   if newValue > 12 {
+                       number = 12
+                       projectedValue = true
+                   } else {
                        number = newValue
                        projectedValue = false
-                   } else {
-                       number = newValue + 1
-                       projectedValue = true
                    }
                }
            }
-        }
+       }
     >> struct SomeStructure {
-    >>     @EvenNumber var someNumber: Int
+    >>     @SmallNumber var someNumber: Int
     >> }
     >> var s = SomeStructure()
     ---
-    -> s.someNumber = 40
+    -> s.someNumber = 4
     -> print(s.$someNumber)
     <- false
     ---
@@ -946,10 +952,10 @@ to expose whether the current value was adjusted when being stored.
     <- true
 
 Writing ``s.$someNumber`` accesses the wrapper's projected value.
-After storing an even number like 40,
+After storing small number like four,
 the value of ``s.$someNumber`` is ``false``,
-but after storing an odd number like 55,
-the projected value is true.
+but after storing a large number like 55,
+the projected value is ``true``.
 
 A property wrapper can return any value as its projected value.
 In this example, there's only one piece of information
