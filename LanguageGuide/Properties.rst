@@ -870,12 +870,13 @@ set the initial value for the wrapped property
 by giving the wrapper's storage an initial value.
 The property wrapper didn't define any initializers.
 If you add some initializers to the property wrapper,
-you can also use assignment or pass arguments to the custom attribute.
+you can also use assignment to set the initial value
+and you can pass arguments to the custom attribute.
 Here's an expanded version of ``SmallNumber``
 that defines three initializers and
-lets you specify the maximum value:
+lets you specify the wrapped and maximum value:
 
-.. testcode:: property-wrapper-init
+.. testcode:: property-wrapper-init, property-wrapper-mixed-init
     :compile: true
 
     -> @propertyWrapper
@@ -893,8 +894,8 @@ lets you specify the maximum value:
                number = 0
            }
            init(wrappedValue: Int) {
-               maximum = wrappedValue
-               number = 0
+               maximum = 12
+               number = min(wrappedValue, maximum)
            }
            init(wrappedValue: Int, maximum: Int) {
                self.maximum = maximum
@@ -905,9 +906,10 @@ lets you specify the maximum value:
 .. The initializers above could be written to use
    init(wrappedValue:maximum:) as the designated initializer,
    with the other two calling it instead of doing initialization.
-   However, in this case, the set-up is so small
+   However, in this case, the initialization logic is small enough
+   that the risk of bugs isn't significant,
    and the reader hasn't seen init syntax/rules in detail yet
-   so it's clearer to just make each init stand on its own.
+   so it's clearer to make each init stand on its own.
 
 The first initializer, ``init()``,
 is called when wrapping a property that doesn't specify its initial value.
@@ -921,9 +923,13 @@ is called when wrapping a property that doesn't specify its initial value.
        }
     -> var zeroRectangle = ZeroRectangle()
     -> print(zeroRectangle.height, zeroRectangle.width)
-    <- 0, 0
+    <- 0 0
 
-.. XXX explanation of what you saw
+The behavior when you use this version of ``SmallNumber``
+is the same as when you use the version of ``SmallRectangle``
+that declares ``wrappedValue`` by writing ``private var number = 0``.
+There's no wrapped value specified for ``height`` or ``width``,
+so they use the default value of zero that the property wrapper specifies.
 
 The second initializer, ``init(wrappedValue:)``,
 is called when you specify an initial value for the property
@@ -938,31 +944,57 @@ that's being wrapped.
        }
     -> var unitRectangle = UnitRectangle()
     -> print(unitRectangle.height, unitRectangle.width)
-    <- 1, 1
+    <- 1 1
 
-.. XXX explanation of what you saw
+.. XXX The code above segfaults, but should be valid.
+   <rdar://problem/53213858> Segfault from @propertyWrapper and init(wrappedValue:)
+
+When you write ``= 1`` on a property with a wrapper,
+that's translated into a call to the initializer,
+passing ``1`` as the ``wrappedValue`` argument.
 
 The third initializer, ``init(wrappedValue:maximum:)``,
-is called when you specify both an initial value and a custom maximum value.
-To pass the additional arguments to the initializer,
-you write them as arguments after the custom attribute.
+is called when you specify both a custom maximum value and an initial value.
+You write both of these arguments to the initializer
+as arguments in parentheses after the custom attribute.
 
 .. testcode:: property-wrapper-init
     :compile: true
 
     -> struct NarrowRectangle {
-           @SmallNumber(maximum: 5) var height: Int = 2
+           @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
            @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
        }
     -> var narrowRectangle = NarrowRectangle()
     -> print(narrowRectangle.height, narrowRectangle.width)
-    <- 2, 3
+    <- 2 3
     -> narrowRectangle.height = 100
     -> narrowRectangle.width = 100
     -> print(narrowRectangle.height, narrowRectangle.width)
-    <- 5, 4
+    <- 5 4
 
-.. XXX explanation of what you saw
+By passing addition arguments to the property wrapper,
+you can set up additional state in the wrapper.
+In this example, instead of using the default maximum value of twelve,
+a narrow rectangle sets maximum values of
+five and four for its height and width.
+
+.. note::
+
+   The two ways of initializing the wrapped value can't be mixed.
+   You can either use assignment to specify an initial wrapped value,
+   or your can write arguments after the attribute in parentheses,
+   but not both.
+
+.. assertion:: property-wrapper-mixed-init
+    :compile:
+
+    >> struct MixedRectangle {
+    >>     @SmallNumber(maximum: 5) var height: Int = 2
+    >> }
+
+.. XXX The code above segfaults instead of producing a compiler error.
+   <rdar://problem/53224721> Segfault when mixing property wrapper init(wrappedValue:) with custom arguments
 
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
@@ -986,7 +1018,7 @@ to expose whether the current value was adjusted when being stored.
     -> @propertyWrapper
     -> struct SmallNumber {
            private var number = 0
-           var projectedValue = false  // Value was adjusted
+           var projectedValue = false
            var wrappedValue: Int {
                get { return number }
                set {
@@ -1016,7 +1048,7 @@ to expose whether the current value was adjusted when being stored.
 Writing ``s.$someNumber`` accesses the wrapper's projected value.
 After storing small number like four,
 the value of ``s.$someNumber`` is ``false``,
-but after storing a large number like 55,
+but after trying to store a number like 55 that's too large,
 the projected value is ``true``.
 
 A property wrapper can return any value as its projected value.
@@ -1024,8 +1056,9 @@ In this example, there's only one piece of information
 that the property wrapper exposes,
 so the "number was adjusted" state is exposed directly as the projected value.
 A wrapper that needs to expose more information
-would return an instance of some other data structure,
-or return ``self`` to expose the instance of the wrapper as the projected value.
+can return an instance of some other data type,
+or it can return ``self``
+to expose the instance of the wrapper as the projected value.
 
 .. _Properties_TypeProperties:
 

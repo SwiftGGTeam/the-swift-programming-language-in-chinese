@@ -756,12 +756,15 @@ as arguments to the attribute.
     @SomeWrapper var b = 10
 
     // Uses init(wrappedValue: 20)
+    // XXX call this out separately -- DI still works
     @SomeWrapper var d
     d = 20
 
     // Uses init(wrappedValue: 30, custom: 98.7)
-    @SomeWrapper(custom: 98.7)
-    var d = 30
+    @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+
+    // XXX invalid
+    @SomeWrapper(custom: 98.7) var d = 30
 
 The *projected value* for a wrapped property is a second value
 that gives a property wrapper the ability to expose additional functionality ---
