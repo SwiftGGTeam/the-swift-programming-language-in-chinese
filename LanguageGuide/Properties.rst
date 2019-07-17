@@ -764,13 +764,7 @@ If you ask it to store a larger number, it stores twelve instead.
            private var number = 0
            var wrappedValue: Int {
                get { return number }
-               set {
-                   if newValue > 12 {
-                       number = 12
-                   } else {
-                       number = newValue
-                   }
-               }
+               set { number = min(newValue, 12) }
            }
        }
 
@@ -871,36 +865,104 @@ produces code that's equivalent to the following:
            }
        } 
 
-.. XXX Show the various ways to do initialization
-   init()
-   init(wrappedValue:)
-   init(whatever:you:want:)
+The code in the examples above
+set the initial value for the wrapped property
+by giving the wrapper's storage an initial value.
+The property wrapper didn't define any initializers.
+If you add some initializers to the property wrapper,
+you can also use assignment or pass arguments to the custom attribute.
+Here's an expanded version of ``SmallNumber``
+that defines three initializers and
+lets you specify the maximum value:
 
-    @propertyWrapper
-    struct DivisibleBy {
-        private let modulus: Int
-        private var number: Int
-        var wrappedValue {
-            get { return number }
-            set {
-                number = newValue
-                let remainder = newValue % modulus == 0
-                if remainder == 0 { return }
-                number += remainder
-                assert(number % modulus == 0)
-            }
-        }
-        init() {
-            modulus = 2
-            number = 0
-        }
-        init(wrappedValue: Int) {
-            modulus = 2
-            number = wrappedValue
-        }
-    }
+.. testcode:: property-wrapper-init
+    :compile: true
 
+    -> @propertyWrapper
+    -> struct SmallNumber {
+           private var maximum: Int
+           private var number: Int
+    ---
+           var wrappedValue: Int {
+               get { return number }
+               set { number = min(newValue, maximum) }
+           }
+    ---
+           init() {
+               maximum = 12
+               number = 0
+           }
+           init(wrappedValue: Int) {
+               maximum = wrappedValue
+               number = 0
+           }
+           init(wrappedValue: Int, maximum: Int) {
+               self.maximum = maximum
+               number = min(wrappedValue, maximum)
+           }
+       }
 
+.. The initializers above could be written to use
+   init(wrappedValue:maximum:) as the designated initializer,
+   with the other two calling it instead of doing initialization.
+   However, in this case, the set-up is so small
+   and the reader hasn't seen init syntax/rules in detail yet
+   so it's clearer to just make each init stand on its own.
+
+The first initializer, ``init()``,
+is called when wrapping a property that doesn't specify its initial value.
+
+.. testcode:: property-wrapper-init
+    :compile: true
+
+    -> struct ZeroRectangle {
+           @SmallNumber var height: Int
+           @SmallNumber var width: Int
+       }
+    -> var zeroRectangle = ZeroRectangle()
+    -> print(zeroRectangle.height, zeroRectangle.width)
+    <- 0, 0
+
+.. XXX explanation of what you saw
+
+The second initializer, ``init(wrappedValue:)``,
+is called when you specify an initial value for the property
+that's being wrapped.
+
+.. testcode:: property-wrapper-init
+    :compile: true
+
+    -> struct UnitRectangle {
+           @SmallNumber var height: Int = 1
+           @SmallNumber var width: Int = 1
+       }
+    -> var unitRectangle = UnitRectangle()
+    -> print(unitRectangle.height, unitRectangle.width)
+    <- 1, 1
+
+.. XXX explanation of what you saw
+
+The third initializer, ``init(wrappedValue:maximum:)``,
+is called when you specify both an initial value and a custom maximum value.
+To pass the additional arguments to the initializer,
+you write them as arguments after the custom attribute.
+
+.. testcode:: property-wrapper-init
+    :compile: true
+
+    -> struct NarrowRectangle {
+           @SmallNumber(maximum: 5) var height: Int = 2
+           @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+       }
+    -> var narrowRectangle = NarrowRectangle()
+    -> print(narrowRectangle.height, narrowRectangle.width)
+    <- 2, 3
+    -> narrowRectangle.height = 100
+    -> narrowRectangle.width = 100
+    -> print(narrowRectangle.height, narrowRectangle.width)
+    <- 5, 4
+
+.. XXX explanation of what you saw
 
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
