@@ -701,8 +701,21 @@ Apply this attribute to a class, structure, or enumeration declaration
 to use that type as a property wrapper.
 When you apply this attribute to a type,
 you create a new, custom attribute with the same name as the type.
-Apply that new attribute to a property
+Apply that new attribute to a property of a class, structure, or enumeration
 to wrap access to the property through an instance of the wrapper type.
+Local and global variables can't use property wrappers.
+
+.. assertion:: property-wrappers-cant-go-on-variables
+    :compile: true
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper let d: Int = 20
+    >>     print(d)
+    >> }
+    !! /tmp/swifttest.swift:3:5: error: property wrappers are not yet supported on local properties
+    !! @UselessWrapper let d: Int = 20
+    !! ^
 
 The wrapper must define a ``wrappedValue`` instance property.
 The *wrapped value* of the property
@@ -718,8 +731,7 @@ The synthesized storage for the wrapper has an access control level of ``private
 
 A property that has a property wrapper
 can include ``willSet`` and ``didSet`` blocks,
-but can't have ``get`` or ``set`` blocks ---
-those would conflict with the synthesized getter and setter.
+but can't override the compiler-synthesized ``get`` or ``set`` blocks.
 
 .. XXX TR: Can you apply a property wrapper to a top-level variable?
    Testing this in a REPL and in swiftc yields strange errors,
@@ -730,10 +742,11 @@ the wrapped property can be defined without providing an initial wrapped value,
 implicitly using ``init()`` to set it.
 If the wrapper defines an ``init(wrappedValue:)`` initializer,
 the wrapped property can use assignment to set its initial value.
-When you apply the attribute for a property wrapper to a property,
-the attribute's arguments are passed as arguments to the wrapper's initializer.
+If the wrapper defines other initializers,
+you pass the needed arguments to the initializer
+by providing them as arguments to the attribute when you apply it to a property.
 For example, ``SomeWrapper`` in the code below
-supports all three forms of initialization.
+defines initializers in all three of these categories.
 
 .. testcode:: propertyWrapper
     :compile: true
@@ -755,7 +768,11 @@ supports all three forms of initialization.
                self.someValue = custom
            }
        }
-    ---
+
+The ``@SomeWrapper`` attribute can be applied in the following ways:
+
+.. testcode:: propertyWrapper
+
     -> struct SomeStruct {
            // Uses init()
            @SomeWrapper var a: Int
@@ -771,6 +788,18 @@ supports all three forms of initialization.
    are on the line before instead of at the end of the line
    because the last example gets too long to fit on one line.
 
+.. XXX TR: How would you actually trigger this behavior?
+
+   Initialization of a wrapped property using ``init(wrappedValue:)``
+   can be split across multiple statements.
+
+   The SE proposal calls it out,
+   but it seems like it only appears for local variables,
+   which currently can't have a property wrapper.
+
+   @SomeWrapper var d
+   d = 20
+
 The *projected value* for a wrapped property is a second value
 that gives a property wrapper the ability to expose additional functionality ---
 for example, to reset a value whose initialization is deferred
@@ -779,7 +808,7 @@ A property wrapper defines the functionality and meaning of its projected value.
 To project a value from a property wrapper,
 define a ``projectedValue`` instance property on the wrapper type.
 The compiler synthesizes an identifier for the projected value
-by prefixing the name of the wrapped property with a dollar sign (``$``) --
+by prefixing the name of the wrapped property with a dollar sign (``$``) ---
 for example, the projected value for ``someProperty`` is ``$someProperty``.
 The projected value has the same access control level
 as the original wrapped property.
@@ -802,35 +831,6 @@ as the original wrapped property.
     -> x           // Int value
     -> $x          // SomeProjection value
     -> $x.wrapper  // WrapperWithProjection value
-
-
-
-
-
-
-
-
-
-
-
-.. XXX leftover bits...
-
-To expose both a projected value and the wrapper itself,
-define a computed property on the projected value
-that returns the wrapper.
-
-
-::
-
-    // Error: can't mix initialization approaches
-    @SomeWrapper(custom: 98.7) var d = 30
-
-::
-
-    // Uses init(wrappedValue:)
-    // XXX call this out separately -- DI still works
-    @SomeWrapper var d
-    d = 20
 
 .. _Attributes_requires_stored_property_inits:
 

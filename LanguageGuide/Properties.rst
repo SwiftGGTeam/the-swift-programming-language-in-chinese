@@ -740,11 +740,14 @@ and they are written in the same way as computed properties.
 Property Wrappers
 -----------------
 
-A property wrapper lets you separate out code
-that manages how a property's value is stored,
-and reuse that management code for multiple properties.
-You write the management logic once to define the wrapper,
-and then you apply the wrapper to as many properties as needed.
+A property wrapper lets you separate code that declares a stored property
+from code that manages how that property's value is stored ---
+for example,
+enforcing a maximum value or providing thread-safety checks
+or storing the underlying data in a database.
+This separation of concerns lets you
+write the management code once when you define the wrapper,
+and then reuse that management code by applying it to multiple properties.
 
 To define a property wrapper,
 you make a structure, enumeration, or class
@@ -756,7 +759,7 @@ If you ask it to store a larger number, it stores twelve instead.
 
 .. XXX TR: Is there any warning to give against using classes as wrappers?
 
-.. testcode:: even-number-wrapper, property-wrapper-expansion
+.. testcode:: small-number-wrapper, property-wrapper-expansion
     :compile: true
 
     -> @propertyWrapper
@@ -769,8 +772,9 @@ If you ask it to store a larger number, it stores twelve instead.
        }
 
 The getter and setter for ``wrappedValue``
-contain the rules that ensure only small numbers can be stored.
-The setter determines what values can be stored,
+contain the rules or behavior for managing the value ---
+in this case, they ensure only small numbers can be stored.
+The setter ensures that new values are always less than twelve,
 and the getter simply returns the stored value.
 In this example,
 the number is stored in the wrapper's private ``number`` property,
@@ -812,10 +816,10 @@ You apply a wrapper to a property
 by writing the wrapper's name in front of the property
 as an attribute.
 Here's a structure that stores a small rectangle,
-using the same arbitrary definition of "small"
+using the same (rather arbitrary) definition of "small"
 that's implemented by the ``SmallNumber`` property wrapper:
 
-.. testcode:: even-number-wrapper
+.. testcode:: small-number-wrapper
     :compile: true
 
     -> struct SmallRectangle {
@@ -831,21 +835,21 @@ that's implemented by the ``SmallNumber`` property wrapper:
     -> print(rectangle.height)
     <- 10
     ---
-    -> rectangle.height = 21
+    -> rectangle.height = 24
     -> print(rectangle.height)
     <- 12
 
-The ``someNumber`` property gets its initial value
-from the definition of ``EvenNumber``,
-which sets ``EvenNumber.number`` to zero.
-Storing the number 10 into ``someNumber`` succeeds
-because it's an even number.
-Trying to store 11 takes the other branch in the wrapper's setter
-and cases 12 to be stored instead.
+The ``height`` and ``width`` properties get their initial values
+from the definition of ``SmallNumber``,
+which sets ``SmallNumber.number`` to zero.
+Storing the number 10 into ``rectangle.height`` succeeds
+because it's a small number.
+Trying to store 24 produces a value of 12 instead
+because it's too large for the property setter's rule.
 
 When you apply a property wrapper,
 the compiler synthesizes code that provides storage for the wrapper
-and to access the property through the wrapper.
+and access to the property through the wrapper.
 The definition of ``SmallRectangle`` in the previous code listing
 produces code that's equivalent to the following:
 
@@ -867,11 +871,8 @@ produces code that's equivalent to the following:
 
 The code in the examples above
 set the initial value for the wrapped property
-by giving the wrapper's storage an initial value.
+by giving ``number`` an initial value in the definition of ``SmallNumber``.
 The property wrapper didn't define any initializers.
-If you add some initializers to the property wrapper,
-you can also use assignment to set the initial value
-and you can pass arguments to the custom attribute.
 Here's an expanded version of ``SmallNumber``
 that defines three initializers and
 lets you specify the wrapped and maximum value:
@@ -950,7 +951,7 @@ that's being wrapped.
    <rdar://problem/53213858> Segfault from @propertyWrapper and init(wrappedValue:)
 
 When you write ``= 1`` on a property with a wrapper,
-that's translated into a call to the initializer,
+that's translated into a call to the ``init(wrappedValue:)`` initializer,
 passing ``1`` as the ``wrappedValue`` argument.
 
 The third initializer, ``init(wrappedValue:maximum:)``,
@@ -981,7 +982,7 @@ five and four for its height and width.
 
 .. note::
 
-   The two ways of initializing the wrapped value can't be mixed.
+   The ways of initializing the wrapper and wrapped value can't be combined.
    You can either use assignment to specify an initial wrapped value,
    or your can write arguments after the attribute in parentheses,
    but not both.
@@ -1000,7 +1001,7 @@ In addition to the wrapped value,
 a property wrapper can define a *projected value*.
 The projected value lets a property wrapper expose additional functionality ---
 for example, a property wrapper that manages access to a database
-could expose a ``flushDatabaseConnection()`` method on its projected value.
+can expose a ``flushDatabaseConnection()`` method on its projected value.
 The name of the projected value is the same as the wrapped value,
 except it begins with a dollar sign (``$``).
 Because Swift code can't define properties that start with ``$``
@@ -1010,9 +1011,9 @@ In the ``SmallNumber`` example,
 trying to set the property to a number that's too large
 caused the property's value to be adjusted before being stored.
 The code below adds an ``projectedValue`` property to the ``SmallNumber`` structure
-to expose whether the current value was adjusted when being stored.
+to expose whether the current value was adjusted before being stored.
 
-.. testcode:: even-number-wrapper-projection
+.. testcode:: small-number-wrapper-projection
     :compile: true
 
     -> @propertyWrapper
@@ -1051,7 +1052,7 @@ the value of ``s.$someNumber`` is ``false``,
 but after trying to store a number like 55 that's too large,
 the projected value is ``true``.
 
-A property wrapper can return any value as its projected value.
+A property wrapper can return a value of any type as its projected value.
 In this example, there's only one piece of information
 that the property wrapper exposes,
 so the "number was adjusted" state is exposed directly as the projected value.
