@@ -832,67 +832,6 @@ that returns the wrapper.
     @SomeWrapper var d
     d = 20
 
-
-.. testcode:: propertyWrapper
-    :compile: true
-
-    -> @propertyWrapper
-       struct CountedAccess<T> {
-           private var storage: T
-           public var readCount = 0
-           public var writeCount = 0
-           var wrappedValue: T {
-               mutating get {
-                   readCount += 1
-                   return storage
-               }
-               set {
-                   writeCount += 1
-                   storage = newValue
-               }
-           }
-           init(initialValue: T) {
-               storage = initialValue
-           }
-       }
-
-For example,
-the code below applies the ``CountedAccess`` attribute
-to the ``someProperty`` property of the ``SomeStruct`` structure.
-Because the ``CountedAccess`` structure
-implements an ``init(initialValue:)`` initializer,
-``someProperty`` can be initialized in ``SomeStruct`` using assignment
-and a memberwise initializer is synthesized for ``SomeStruct``.
-
-.. testcode:: propertyWrapper
-    :compile: true
-
-    -> struct SomeStruct {
-           @CountedAccess var someProperty: Int = 100
-       }
-
-In the code listing below,
-``$someProperty`` refers to the instance of ``CountedAccess``,
-and ``someProperty`` refers to the wrapped ``Int`` value.
-
-.. testcode:: propertyWrapper
-    :compile: true
-
-    -> var s = SomeStruct(someProperty: 408)
-    -> s.someProperty = 996
-    -> s.someProperty = 1010
-    -> print(s.someProperty)
-    <- 1010
-    ---
-    -> print("Read count \(s.$someProperty.readCount)")
-    -> print("Write count \(s.$someProperty.writeCount)")
-    <- Read count 1
-    <- Write count 2
-
-.. REFERENCE
-   The integers above come from the main Apple phone number (408) 996-1010.
-
-
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
