@@ -154,7 +154,7 @@ Subscripts can use variadic parameters
 and provide default parameter values,
 but they can't use in-out parameters.
 
-.. assertion:: subscripts-cant-have-default-arguments
+.. assertion:: subscripts-can-have-default-arguments
     :compile: true
 
     >> struct Subscriptable {
@@ -164,21 +164,7 @@ but they can't use in-out parameters.
     >> }
     >> let s = Subscriptable()
     >> print(s[x: 0])
-    !! /tmp/swifttest.swift:2:30: error: default arguments are not allowed in subscripts
-    !! subscript(x: Int, y: Int = 0) -> Int {
-    !! ^~~
-    !!-
-    !! /tmp/swifttest.swift:7:13: error: missing argument for parameter #2 in call
-    !! print(s[x: 0])
-    !! ^
-    !! , <#Int#>
-    !! /tmp/swifttest.swift:2:5: note: 'subscript(_:_:)' declared here
-    !! subscript(x: Int, y: Int = 0) -> Int {
-    !! ^
-
-.. The test above will fail in the next version of Swift after 5.1
-   that tracks changes from 'master'.
-   When that happens, merge 53265074_subscript_default.
+    << 100
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
