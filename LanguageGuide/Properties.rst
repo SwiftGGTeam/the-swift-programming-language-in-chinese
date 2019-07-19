@@ -761,8 +761,6 @@ the ``SmallNumber`` structure ensures that
 the value that it wraps always contains a number less than twelve.
 If you ask it to store a larger number, it stores twelve instead.
 
-.. XXX TR: Is there any warning to give against using classes as wrappers?
-
 .. testcode:: small-number-wrapper, property-wrapper-expansion
     :compile: true
 
@@ -780,15 +778,19 @@ contain the rules or behavior for managing the value ---
 in this case, they ensure only small numbers can be stored.
 The setter ensures that new values are always less than twelve,
 and the getter simply returns the stored value.
-In this example,
-the number is stored in the wrapper's private ``number`` property,
-but you could write a version of ``EvenNumber``
-that implements ``wrappedValue`` as a stored property
-and uses ``didSet`` to ensure the number is always even.
 
-.. XXX TR: Is there a possible race condition here,
-   between the "bad" value being stored
-   and the didSet observer correting it?
+.. In this example,
+   the number is stored in the wrapper's private ``number`` property,
+   but you could write a version of ``EvenNumber``
+   that implements ``wrappedValue`` as a stored property
+   and uses ``didSet`` to ensure the number is always even.
+
+   However, the general framing we use in the docs
+   is that didSet is mostly for reacting to the new value,
+   not changing it,
+   so I'm not highlighting that fact here.
+   The order of operations for willSet, set, and didSet is well defined,
+   but might be something you have to pay attention to.
 
 .. assertion:: stored-property-wrappedValue
     :compile: true

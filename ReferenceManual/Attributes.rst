@@ -788,17 +788,15 @@ The ``@SomeWrapper`` attribute can be applied in the following ways:
    are on the line before instead of at the end of the line
    because the last example gets too long to fit on one line.
 
-.. XXX TR: How would you actually trigger this behavior?
-
-   Initialization of a wrapped property using ``init(wrappedValue:)``
+.. Initialization of a wrapped property using ``init(wrappedValue:)``
    can be split across multiple statements.
-
-   The SE proposal calls it out,
-   but it seems like it only appears for local variables,
+   However, you can only see that behavior using local variables
    which currently can't have a property wrapper.
+   It would look like this:
 
    @SomeWrapper var d
-   d = 20
+   d = 20  // Uses init(wrappedValue:)
+   d = 30  // Uses the property setter
 
 The *projected value* for a wrapped property is a second value
 that gives a property wrapper the ability to expose additional functionality ---
