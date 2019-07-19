@@ -740,12 +740,16 @@ and they are written in the same way as computed properties.
 Property Wrappers
 -----------------
 
-A property wrapper lets you separate code that declares a stored property
-from code that manages how that property's value is stored ---
-for example,
-enforcing a maximum value or providing thread-safety checks
-or storing the underlying data in a database.
-This separation of concerns lets you
+A property wrapper adds a layer of separation
+between the code that stores the value of a property
+and the interface that the property presents
+to code that interacts with it.
+For example,
+if you have properties that
+provide thread-safety checks
+or store the underlying data in a database,
+normally you'd have to write that code on every property.
+Using a property wrapper lets you
 write the management code once when you define the wrapper,
 and then reuse that management code by applying it to multiple properties.
 
