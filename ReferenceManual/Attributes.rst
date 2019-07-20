@@ -429,6 +429,29 @@ For example:
     << 381
 
 
+.. _Attributes_frozen:
+
+frozen
+~~~~~~
+
+Apply this attribute to a structure or enumeration declaration
+
+
+.. OUTLINE
+
+   - only has an efect when the compiler has "library evolution" mode enabled
+   - at the command line, pass --enable-library-evoution
+   - how do you turn that on from Xcode?
+
+   The Default in regular mode is that enums are understood as "frozen"
+   for use within the same module.  In library evolution mode,
+   they default to non-frozen.
+
+   Not part of @frozen, but in library evolution mode,
+   inlinable initializers must delegate to non-inlinable initializers.
+   (Why?)
+
+
 .. _Attributes_GKInspectable:
 
 GKInspectable
