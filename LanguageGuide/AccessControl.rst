@@ -192,7 +192,7 @@ Access Control Syntax
 
 Define the access level for an entity by placing
 one of the ``open``, ``public``, ``internal``, ``fileprivate``, or ``private`` modifiers
-before the entity's introducer:
+at the beginning of the entity's declaration.
 
 .. testcode:: accessControlSyntax
 
@@ -339,7 +339,8 @@ the access level for that compound tuple type will be private.
 
    Tuple types don't have a standalone definition in the way that
    classes, structures, enumerations, and functions do.
-   A tuple type's access level is deduced automatically when the tuple type is used,
+   A tuple type's access level is determined automatically
+   from the types that make up the tuple type,
    and can't be specified explicitly.
 
 .. _AccessControl_FunctionTypes:
@@ -434,17 +435,18 @@ Raw Values and Associated Values
 
 The types used for any raw values or associated values in an enumeration definition
 must have an access level at least as high as the enumeration's access level.
-You can't use a private type as the raw-value type of
-an enumeration with an internal access level, for example.
+For example,
+you can't use a private type as the raw-value type of
+an enumeration with an internal access level.
 
 .. _AccessControl_NestedTypes:
 
 Nested Types
 ~~~~~~~~~~~~
 
-Nested types defined within a private type have an automatic access level of private.
-Nested types defined within a file-private type have an automatic access level of file private.
-Nested types defined within a public type or an internal type
+The access level of a nested type is the same as its containing type,
+unless the containing type is public.
+Nested types defined within a public type
 have an automatic access level of internal.
 If you want a nested type within a public type to be publicly available,
 you must explicitly declare the nested type as public.
@@ -571,6 +573,9 @@ for example, you can't write a public subclass of an internal superclass.
 In addition, you can override any class member
 (method, property, initializer, or subscript)
 that is visible in a certain access context.
+
+.. XXX The above comments are wrong --- you can only override stuff
+   that was marked 'open' in the superclass declaration.
 
 An override can make an inherited class member more accessible than its superclass version.
 In the example below, class ``A`` is a public class with a file-private method called ``someMethod()``.
@@ -1046,7 +1051,8 @@ Protocol Inheritance
 
 If you define a new protocol that inherits from an existing protocol,
 the new protocol can have at most the same access level as the protocol it inherits from.
-You can't write a public protocol that inherits from an internal protocol, for example.
+For example,
+you can't write a public protocol that inherits from an internal protocol.
 
 .. _AccessControl_ProtocolConformance:
 
@@ -1060,14 +1066,14 @@ within the internal protocol's defining module.
 
 The context in which a type conforms to a particular protocol
 is the minimum of the type's access level and the protocol's access level.
-If a type is public, but a protocol it conforms to is internal,
+For example, if a type is public, but a protocol it conforms to is internal,
 the type's conformance to that protocol is also internal.
 
 When you write or extend a type to conform to a protocol,
 you must ensure that the type's implementation of each protocol requirement
 has at least the same access level as the type's conformance to that protocol.
 For example, if a public type conforms to an internal protocol,
-the type's implementation of each protocol requirement must be at least “internal”.
+the type's implementation of each protocol requirement must be at least internal.
 
 .. note::
 
@@ -1092,7 +1098,7 @@ If you extend a private type, any new type members you add
 have a default access level of private.
 
 Alternatively, you can mark an extension with an explicit access-level modifier
-(for example, ``private extension``)
+(for example, ``private``)
 to set a new default access level for all members defined within the extension.
 This new default can still be overridden within the extension
 for individual type members.
