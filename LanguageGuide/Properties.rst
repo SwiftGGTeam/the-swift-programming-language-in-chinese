@@ -680,61 +680,6 @@ and the default name of ``oldValue`` is used instead.
    of that structure instance are set. This is cool, but nonobvious.
    Provide an example of it here.
 
-.. _Properties_GlobalAndLocalVariables:
-
-Global and Local Variables
---------------------------
-
-The capabilities described above for computing and observing properties
-are also available to :newTerm:`global variables` and :newTerm:`local variables`.
-Global variables are variables that are defined outside of any
-function, method, closure, or type context.
-Local variables are variables that are defined within
-a function, method, or closure context.
-
-The global and local variables you have encountered in previous chapters
-have all been :newTerm:`stored variables`.
-Stored variables, like stored properties,
-provide storage for a value of a certain type and allow that value to be set and retrieved.
-
-However, you can also define :newTerm:`computed variables`
-and define observers for stored variables,
-in either a global or local scope.
-Computed variables calculate their value, rather than storing it,
-and they are written in the same way as computed properties.
-
-.. assertion:: computedVariables
-   :compile: true
-
-   -> var a: Int { get { return 42 } set { print("set a to \(newValue)") } }
-   -> a = 37
-   <- set a to 37
-   -> print(a)
-   <- 42
-
-.. assertion:: observersForStoredVariables
-   :compile: true
-
-   -> var a: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } }
-   -> a = 42
-   <- willSet
-   <- didSet
-
-.. note::
-
-   Global constants and variables are always computed lazily,
-   in a similar manner to :ref:`Properties_LazyStoredProperties`.
-   Unlike lazy stored properties,
-   global constants and variables do not need to be marked with the ``lazy`` modifier.
-
-   Local constants and variables are never computed lazily.
-
-.. TODO: clarify what we mean by "global variables" here.
-   According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
-   is a local variable in top-level code, not a global variable.
-
-.. TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
-
 .. _Properties_PropertyWrapper:
 
 Property Wrappers
@@ -1066,6 +1011,61 @@ A wrapper that needs to expose more information
 can return an instance of some other data type,
 or it can return ``self``
 to expose the instance of the wrapper as the projected value.
+
+.. _Properties_GlobalAndLocalVariables:
+
+Global and Local Variables
+--------------------------
+
+The capabilities described above for computing and observing properties
+are also available to :newTerm:`global variables` and :newTerm:`local variables`.
+Global variables are variables that are defined outside of any
+function, method, closure, or type context.
+Local variables are variables that are defined within
+a function, method, or closure context.
+
+The global and local variables you have encountered in previous chapters
+have all been :newTerm:`stored variables`.
+Stored variables, like stored properties,
+provide storage for a value of a certain type and allow that value to be set and retrieved.
+
+However, you can also define :newTerm:`computed variables`
+and define observers for stored variables,
+in either a global or local scope.
+Computed variables calculate their value, rather than storing it,
+and they are written in the same way as computed properties.
+
+.. assertion:: computedVariables
+   :compile: true
+
+   -> var a: Int { get { return 42 } set { print("set a to \(newValue)") } }
+   -> a = 37
+   <- set a to 37
+   -> print(a)
+   <- 42
+
+.. assertion:: observersForStoredVariables
+   :compile: true
+
+   -> var a: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } }
+   -> a = 42
+   <- willSet
+   <- didSet
+
+.. note::
+
+   Global constants and variables are always computed lazily,
+   in a similar manner to :ref:`Properties_LazyStoredProperties`.
+   Unlike lazy stored properties,
+   global constants and variables do not need to be marked with the ``lazy`` modifier.
+
+   Local constants and variables are never computed lazily.
+
+.. TODO: clarify what we mean by "global variables" here.
+   According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
+   is a local variable in top-level code, not a global variable.
+
+.. TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
 
 .. _Properties_TypeProperties:
 
