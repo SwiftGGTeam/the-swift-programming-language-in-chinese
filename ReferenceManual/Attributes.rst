@@ -449,7 +449,7 @@ In library evolution mode,
 code that interacts with members of nonfrozen structures and enumerations
 is compiled in a way that allows it to continue working without recompiling
 even if a future version of the library
-adds, removes, or reorders some that type's members.
+adds, removes, or reorders some of that type's members.
 The compiler does this by looking up some information at runtime
 and by adding a layer of indirection.
 Marking a structure or enumeration as frozen
