@@ -435,6 +435,17 @@ frozen
 ~~~~~~
 
 Apply this attribute to a structure or enumeration declaration
+to indicate that future versions of the declaration
+can't change the type's members.
+If a future version of the library changes the declaration
+by adding, removing, or reordering
+enumeration cases
+or structure instance properties,
+that new version of the library will break ABI compatiblity
+with previous versions of the library.
+
+This attribute has no effect unless the compiler is in library evolution mode.
+
 
 
 .. OUTLINE
