@@ -435,32 +435,68 @@ frozen
 ~~~~~~
 
 Apply this attribute to a structure or enumeration declaration
-to indicate that future versions of the declaration
+when compiling in library evolution mode
+to indicate that future versions of the library that contains this declaration
 can't change the type's members.
 If a future version of the library changes the declaration
 by adding, removing, or reordering
 enumeration cases
 or structure instance properties,
-that new version of the library will break ABI compatiblity
+that new version the library will break ABI compatibility
 with previous versions of the library.
 
-This attribute has no effect unless the compiler is in library evolution mode.
+In library evolution mode,
+code that interacts with members of nonfrozen structures and enumerations
+is compiled in a way that allows it to continue working without recompiling
+even if a future version of the library
+adds, removes, or reorders some that type's members.
+The compiler does this by looking up some information at runtime
+and by adding a layer of indirection.
+Marking a structure or enumeration as frozen
+gives up flexibility to gain performance:
+Future versions of the library can't make certain changes,
+but the compiler can make additional optimizations
+in code that interacts with the type's members.
 
+This attribute can be applied to a public structure or enumeration declaration
+or a declaration marked ``@usableFromInline``.
+The types of the structure's properties and the enumeration's associated values
+must be are public or ``@usableFromInline``.
+None of the properties of a frozen structure can have property observers,
+and expressions that provide the initial value for properties
+must use only types that are public or ``@usableFromInline``.
 
+.. XXX TR: Confirm comment about enum payload types.
+   It's not mentioned in the SE proposal,
+   but it falls out of the same set of rules.
 
-.. OUTLINE
+.. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
+    :compile: true
 
-   - only has an efect when the compiler has "library evolution" mode enabled
-   - at the command line, pass --enable-library-evoution
-   - how do you turn that on from Xcode?
+    >> public protocol P { }
+    >> private struct PrivateStruct: P { }
+    >>         public struct S1 { var fine: P = PrivateStruct() }
+    >> @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !! /tmp/swifttest.swift:4:42: error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !!                                          ^
+    !! /tmp/swifttest.swift:2:16: note: struct 'PrivateStruct' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !!                ^
 
-   The Default in regular mode is that enums are understood as "frozen"
-   for use within the same module.  In library evolution mode,
-   they default to non-frozen.
+To enable library evolution mode on the command line,
+pass ``-enable-library-evolution`` to the Swift compiler.
+To enable it in Xcode,
+set the "Build Libraries for Distribution" build setting
+(``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes.
 
-   Not part of @frozen, but in library evolution mode,
-   inlinable initializers must delegate to non-inlinable initializers.
-   (Why?)
+When the compiler isn't in library evolution mode,
+structures and enumerations are implicitly marked as frozen,
+and this attribute is ignored.
+
+.. XXX This is the first time we're talking about a specific compiler flag/option.
+
+.. XXX TR: Confirm the name of this build setting in Xcode
 
 
 .. _Attributes_GKInspectable:
