@@ -436,35 +436,42 @@ frozen
 
 Apply this attribute to a structure or enumeration declaration
 when compiling in library evolution mode
-to indicate that future versions of the library that contains this declaration
-can't change the type's members.
+to indicate that future versions of the library
+can't make certain kinds of changes to the type.
 If a future version of the library changes the declaration
 by adding, removing, or reordering
 enumeration cases
-or structure instance properties,
+or stored instance properties of a structure,
 that new version the library will break ABI compatibility
 with previous versions of the library.
+
+.. XXX [Contributor 6004] says that re-ordering enums is allowed,
+   but the SE proposal includes it in the list of things you can't do.
+   Asked him to confirm.
 
 In library evolution mode,
 code that interacts with members of nonfrozen structures and enumerations
 is compiled in a way that allows it to continue working without recompiling
 even if a future version of the library
 adds, removes, or reorders some of that type's members.
-The compiler does this by looking up some information at runtime
-and by adding a layer of indirection.
+The compiler makes this possible using techniques like
+looking up information at runtime
+and adding a layer of indirection.
 Marking a structure or enumeration as frozen
 gives up flexibility to gain performance:
 Future versions of the library can't make certain changes,
 but the compiler can make additional optimizations
 in code that interacts with the type's members.
 
-This attribute can be applied to a public structure or enumeration declaration
-or a declaration marked ``@usableFromInline``.
-The types of the structure's properties and the enumeration's associated values
-must be are public or ``@usableFromInline``.
+This attribute can be applied to a structure or enumeration declaration
+that's public or marked with the ``usableFromInline`` attribute.
+The types of the stored properties of a structure
+and the associated values of enumeration cases
+must be public or marked with the ``usableFromInline`` attribute.
 None of the properties of a frozen structure can have property observers,
-and expressions that provide the initial value for properties
-must use only types that are public or ``@usableFromInline``.
+and expressions that provide the initial value for stored instance properties
+must follow the same restrictions as inlinable functions,
+as discussed in :ref:`Attributes_inlinable`.
 
 .. XXX TR: Confirm comment about enum payload types.
    It's not mentioned in the SE proposal,
@@ -485,18 +492,23 @@ must use only types that are public or ``@usableFromInline``.
     !!                ^
 
 To enable library evolution mode on the command line,
-pass ``-enable-library-evolution`` to the Swift compiler.
+pass the ``-enable-library-evolution`` option to the Swift compiler.
 To enable it in Xcode,
 set the "Build Libraries for Distribution" build setting
 (``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes.
 
-When the compiler isn't in library evolution mode,
-structures and enumerations are implicitly marked as frozen,
-and this attribute is ignored.
-
 .. XXX This is the first time we're talking about a specific compiler flag/option.
 
 .. XXX TR: Confirm the name of this build setting in Xcode
+
+When the compiler isn't in library evolution mode,
+all structures and enumerations are implicitly understood to be frozen.
+
+Switching over a frozen enumeration doesn't require a ``default`` case,
+as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
+Switching over a frozen enumeration
+that was defined without using library evolution mode
+can't include an ``@unknown default`` case.
 
 
 .. _Attributes_GKInspectable:
