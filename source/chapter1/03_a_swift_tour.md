@@ -788,15 +788,16 @@ possibleInteger = .some(100)
 
 ```swift
 func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
-    where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
-        for lhsItem in lhs {
-            for rhsItem in rhs {
-                if lhsItem == rhsItem {
-                    return true
-                }
+    where T.Element: Equatable, T.Element == U.Element
+{
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
             }
         }
-        return false
+    }
+    return false
 }
 anyCommonElements([1, 2, 3], [3])
 ```
