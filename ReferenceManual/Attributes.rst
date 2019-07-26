@@ -473,12 +473,9 @@ and expressions that provide the initial value for stored instance properties
 must follow the same restrictions as inlinable functions,
 as discussed in :ref:`Attributes_inlinable`.
 
-.. XXX TR: Confirm comment about enum payload types.
-   It's not mentioned in the SE proposal,
-   but it falls out of the same set of rules.
-
 .. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
     :compile: true
+    :evolution: true
 
     >> public protocol P { }
     >> private struct PrivateStruct: P { }
@@ -502,13 +499,85 @@ set the "Build Libraries for Distribution" build setting
 .. XXX TR: Confirm the name of this build setting in Xcode
 
 When the compiler isn't in library evolution mode,
-all structures and enumerations are implicitly understood to be frozen.
+all structures and enumerations are implicitly understood to be frozen,
+and this attribute can't be used.
+
+.. assertion:: cant-use-frozen-without-evolution
+    :compile: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !! @frozen public enum E { case x, y }
+    !! ^~~~~~~~
+    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !! @frozen public struct S { var a: Int = 10 }
+    !! ^~~~~~~~
+
+.. XXX Struct test above is totally ok using @frozen without evolution mode
+   but it should be flagging it as an error.
+
+.. assertion:: frozen-is-fine-with-evolution
+    :compile: true
+    :evolution: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
 
 Switching over a frozen enumeration doesn't require a ``default`` case,
 as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
 Switching over a frozen enumeration
-that was defined without using library evolution mode
 can't include an ``@unknown default`` case.
+
+.. XXX [Contributor 6004] said that @unknown default on a frozen enum isn't allowed
+   but I'm not able to trigger that error/warning.
+   The assertions below just complain that the "default" case will never be taken,
+   although it's true they only come up when switching over the frozen enum.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum
+    :evolution: true
+
+    >> public enum E { case x, y }
+    >> @frozen public enum F { case x, y }
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test1
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let e = NoUnknownDefaultOverFrozenEnum.E.x
+    >>     switch e {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // Note that there's no warning -- this is fine because E isn't frozen.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test2
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let f = NoUnknownDefaultOverFrozenEnum.F.x
+    >>     switch f {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // v--- Main warning ---v
+    !! /tmp/sourcefile_0.swift:7:18: warning: case is already handled by previous patterns; consider removing it
+    !! @unknown default: print(0)
+    !! ~~~~~~~~~^~~~~~~~~~~~~~~~~
+    !! /tmp/sourcefile_0.swift:7:9: warning: default will never be executed
+    !! @unknown default: print(0)
+    !! ^
+    // v--- Junk/ancillary warning ---v
+    !! /tmp/sourcefile_0.swift:4:12: warning: switch condition evaluates to a constant
+    !! switch f {
+    !! ^
+    !! /tmp/sourcefile_0.swift:6:24: note: will never be executed
+    !! case .y: print(8)
+    !! ^
 
 
 .. _Attributes_GKInspectable:
