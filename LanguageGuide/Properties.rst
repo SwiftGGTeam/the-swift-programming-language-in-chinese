@@ -703,8 +703,8 @@ you make a structure, enumeration, or class
 that defines a ``wrappedValue`` property.
 In the code below,
 the ``SmallNumber`` structure ensures that
-the value that it wraps always contains a number less than twelve.
-If you ask it to store a larger number, it stores twelve instead.
+the value it wraps always contains a number less than 12.
+If you ask it to store a larger number, it stores 12 instead.
 
 .. testcode:: small-number-wrapper, property-wrapper-expansion
     :compile: true
@@ -721,7 +721,7 @@ If you ask it to store a larger number, it stores twelve instead.
 The getter and setter for ``wrappedValue``
 contain the rules or behavior for managing the value ---
 in this case, they ensure only small numbers can be stored.
-The setter ensures that new values are always less than twelve,
+The setter ensures that new values are always less than 12,
 and the getter simply returns the stored value.
 
 .. In this example,
@@ -764,7 +764,7 @@ and the getter simply returns the stored value.
     << 12
 
 You apply a wrapper to a property
-by writing the wrapper's name in front of the property
+by writing the wrapper's name before the property
 as an attribute.
 Here's a structure that stores a small rectangle,
 using the same (rather arbitrary) definition of "small"
@@ -795,7 +795,7 @@ from the definition of ``SmallNumber``,
 which sets ``SmallNumber.number`` to zero.
 Storing the number 10 into ``rectangle.height`` succeeds
 because it's a small number.
-Trying to store 24 produces a value of 12 instead
+Trying to store 24 produces a value of 12 instead,
 because it's too large for the property setter's rule.
 
 When you apply a property wrapper,
@@ -927,7 +927,7 @@ as arguments in parentheses after the custom attribute.
 
 By passing addition arguments to the property wrapper,
 you can set up additional state in the wrapper.
-In this example, instead of using the default maximum value of twelve,
+In this example, instead of using the default maximum value of 12,
 a narrow rectangle sets maximum values of
 five and four for its height and width.
 
