@@ -99,7 +99,7 @@ These names are valid identifiers within the scope of the closure.
 
 The compiler synthesizes identifiers that begin with a dollar sign (`$`)
 for properties that have a property wrapper projection.
-Code you write can interact with these identifiers,
+Your code can interact with these identifiers,
 but you can't declare identifiers with that prefix.
 For more information, see the :ref:`Attributes_propertyWrapper` section
 of the :doc:`../ReferenceManual/Attributes` chapter.
