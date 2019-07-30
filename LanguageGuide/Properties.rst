@@ -998,7 +998,7 @@ to expose whether the current value was adjusted before being stored.
     <- true
 
 Writing ``s.$someNumber`` accesses the wrapper's projected value.
-After storing small number like four,
+After storing a small number like four,
 the value of ``s.$someNumber`` is ``false``,
 but after trying to store a number like 55 that's too large,
 the projected value is ``true``.
