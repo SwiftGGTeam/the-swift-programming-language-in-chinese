@@ -733,10 +733,6 @@ A property that has a property wrapper
 can include ``willSet`` and ``didSet`` blocks,
 but can't override the compiler-synthesized ``get`` or ``set`` blocks.
 
-.. XXX TR: Can you apply a property wrapper to a top-level variable?
-   Testing this in a REPL and in swiftc yields strange errors,
-   so it doesn't look like it's supported.
-
 If the wrapper defines an ``init()`` initializer,
 the wrapped property can be defined without providing an initial wrapped value,
 implicitly using ``init()`` to set it.
@@ -818,17 +814,29 @@ as the original wrapped property.
     -> struct WrapperWithProjection {
         var wrappedValue: Int
         var projectedValue: SomeProjection {
-            return SomeProjection(self)
+            return SomeProjection(wrapper: self)
         }
     }
     -> struct SomeProjection {
         var wrapper: WrapperWithProjection
     }
     ---
-    -> @WrapperWithProjection var x = 123
-    -> x           // Int value
-    -> $x          // SomeProjection value
-    -> $x.wrapper  // WrapperWithProjection value
+    -> struct SomeStruct {
+           @WrapperWithProjection var x = 123
+       }
+    -> let s = SomeStruct()
+    -> s.x           // Int value
+    -> s.$x          // SomeProjection value
+    -> s.$x.wrapper  // WrapperWithProjection value
+    !! /tmp/swifttest.swift:40:3: warning: expression of type 'Int' is unused
+    !! s.x           // Int value
+    !! ~~^
+    !! /tmp/swifttest.swift:41:3: warning: expression of type 'SomeProjection' is unused
+    !! s.$x          // SomeProjection value
+    !! ~~^~
+    !! /tmp/swifttest.swift:42:6: warning: expression of type 'WrapperWithProjection' is unused
+    !! s.$x.wrapper  // WrapperWithProjection value
+    !! ~~~~~^~~~~~~
 
 .. _Attributes_requires_stored_property_inits:
 

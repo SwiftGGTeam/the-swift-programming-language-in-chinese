@@ -898,9 +898,6 @@ that's being wrapped.
     -> print(unitRectangle.height, unitRectangle.width)
     <- 1 1
 
-.. XXX The code above segfaults, but should be valid.
-   <rdar://problem/53213858> Segfault from @propertyWrapper and init(wrappedValue:)
-
 When you write ``= 1`` on a property with a wrapper,
 that's translated into a call to the ``init(wrappedValue:)`` initializer,
 passing ``1`` as the ``wrappedValue`` argument.
@@ -944,9 +941,6 @@ five and four for its height and width.
     >> struct MixedRectangle {
     >>     @SmallNumber(maximum: 5) var height: Int = 2
     >> }
-
-.. XXX The code above segfaults instead of producing a compiler error.
-   <rdar://problem/53224721> Segfault when mixing property wrapper init(wrappedValue:) with custom arguments
 
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
