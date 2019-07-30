@@ -722,7 +722,7 @@ The getter and setter for ``wrappedValue``
 contain the rules or behavior for managing the value ---
 in this case, they ensure only small numbers can be stored.
 The setter ensures that new values are always less than 12,
-and the getter simply returns the stored value.
+and the getter returns the stored value.
 
 .. In this example,
    the number is stored in the wrapper's private ``number`` property,
@@ -932,7 +932,7 @@ five and four for its height and width.
 
    The ways of initializing the wrapper and wrapped value can't be combined.
    You can either use assignment to specify an initial wrapped value,
-   or your can write arguments after the attribute in parentheses,
+   or you can write arguments after the attribute in parentheses,
    but not both.
 
 .. assertion:: property-wrapper-mixed-init
@@ -953,8 +953,8 @@ Because Swift code can't define properties that start with ``$``
 the projected value never collides with properties you define.
 
 In the ``SmallNumber`` example,
-trying to set the property to a number that's too large
-caused the property's value to be adjusted before being stored.
+if you try to set the property to a number that's too large,
+the property wrapper adjusts the number before storing it.
 The code below adds an ``projectedValue`` property to the ``SmallNumber`` structure
 to expose whether the current value was adjusted before being stored.
 
@@ -993,18 +993,20 @@ to expose whether the current value was adjusted before being stored.
 
 Writing ``s.$someNumber`` accesses the wrapper's projected value.
 After storing a small number like four,
-the value of ``s.$someNumber`` is ``false``,
-but after trying to store a number like 55 that's too large,
-the projected value is ``true``.
+the value of ``s.$someNumber`` is ``false``.
+However,
+the projected value is ``true``
+after trying to store a number that's too large, like 55.
 
 A property wrapper can return a value of any type as its projected value.
-In this example, there's only one piece of information
-that the property wrapper exposes,
-so the "number was adjusted" state is exposed directly as the projected value.
+In this example,
+the property wrapper exposes only one piece of information ---
+whether or not the number was adjusted ---
+so it exposes that Boolean value as its projected value.
 A wrapper that needs to expose more information
 can return an instance of some other data type,
 or it can return ``self``
-to expose the instance of the wrapper as the projected value.
+to expose the instance of the wrapper as its projected value.
 
 .. _Properties_GlobalAndLocalVariables:
 
