@@ -884,8 +884,7 @@ There's no wrapped value specified for ``height`` or ``width``,
 so they use the default value of zero that the property wrapper specifies.
 
 The second initializer, ``init(wrappedValue:)``,
-is called when you specify an initial value for the property
-that's being wrapped.
+is called when you specify an initial value for the property.
 
 .. testcode:: property-wrapper-init
     :compile: true
