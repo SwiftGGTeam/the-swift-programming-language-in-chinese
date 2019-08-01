@@ -700,7 +700,7 @@ propertyWrapper
 Apply this attribute to a class, structure, or enumeration declaration
 to use that type as a property wrapper.
 When you apply this attribute to a type,
-you create a new, custom attribute with the same name as the type.
+you create a custom attribute with the same name as the type.
 Apply that new attribute to a property of a class, structure, or enumeration
 to wrap access to the property through an instance of the wrapper type.
 Local and global variables can't use property wrappers.
@@ -731,7 +731,7 @@ The synthesized storage for the wrapper has an access control level of ``private
 
 A property that has a property wrapper
 can include ``willSet`` and ``didSet`` blocks,
-but can't override the compiler-synthesized ``get`` or ``set`` blocks.
+but it can't override the compiler-synthesized ``get`` or ``set`` blocks.
 
 If the wrapper defines an ``init()`` initializer,
 the wrapped property can be defined without providing an initial wrapped value,
