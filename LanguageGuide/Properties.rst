@@ -949,7 +949,7 @@ for example, a property wrapper that manages access to a database
 can expose a ``flushDatabaseConnection()`` method on its projected value.
 The name of the projected value is the same as the wrapped value,
 except it begins with a dollar sign (``$``).
-Because Swift code can't define properties that start with ``$``
+Because your code can't define properties that start with ``$``
 the projected value never collides with properties you define.
 
 In the ``SmallNumber`` example,
