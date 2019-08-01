@@ -929,7 +929,8 @@ five and four for its height and width.
 
 .. note::
 
-   The ways of initializing the wrapper and wrapped value can't be combined.
+   You can't combine these two approaches
+   of initializing the wrapper and wrapped value.
    You can either use assignment to specify an initial wrapped value,
    or you can write arguments after the attribute in parentheses,
    but not both.
