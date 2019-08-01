@@ -686,23 +686,22 @@ Property Wrappers
 -----------------
 
 A property wrapper adds a layer of separation
-between the code that stores the value of a property
-and the interface that the property presents
-to code that interacts with it.
+between code that manages how a property is stored
+and the code that defines a property.
 For example,
 if you have properties that
 provide thread-safety checks
-or store the underlying data in a database,
-normally you'd have to write that code on every property.
-Using a property wrapper lets you
-write the management code once when you define the wrapper,
+or store their underlying data in a database,
+you have to write that code on every property.
+When you use a property wrapper,
+you write the management code once when you define the wrapper,
 and then reuse that management code by applying it to multiple properties.
 
 To define a property wrapper,
 you make a structure, enumeration, or class
 that defines a ``wrappedValue`` property.
 In the code below,
-the ``SmallNumber`` structure ensures that
+the ``LessThanTwelve`` structure ensures that
 the value it wraps always contains a number less than 12.
 If you ask it to store a larger number, it stores 12 instead.
 
@@ -710,7 +709,7 @@ If you ask it to store a larger number, it stores 12 instead.
     :compile: true
 
     -> @propertyWrapper
-    -> struct SmallNumber {
+    -> struct LessThanTwelve {
            private var number = 0
            var wrappedValue: Int {
                get { return number }
@@ -718,10 +717,7 @@ If you ask it to store a larger number, it stores 12 instead.
            }
        }
 
-The getter and setter for ``wrappedValue``
-contain the rules or behavior for managing the value ---
-in this case, they ensure only small numbers can be stored.
-The setter ensures that new values are always less than 12,
+The setter ensures that new values are less than 12,
 and the getter returns the stored value.
 
 .. In this example,
@@ -741,7 +737,7 @@ and the getter returns the stored value.
     :compile: true
 
     >> @propertyWrapper
-    >> struct SmallNumber {
+    >> struct LessThanTwelve {
     >>     var wrappedValue: Int = 0 {
     >>         didSet {
     >>             if wrappedValue > 12 {
@@ -751,7 +747,7 @@ and the getter returns the stored value.
     >>     }
     >> }
     >> struct SomeStructure {
-    >>     @SmallNumber var someNumber: Int
+    >>     @LessThanTwelve var someNumber: Int
     >> }
     >> var s = SomeStructure()
     >> print(s.someNumber)
@@ -768,14 +764,14 @@ by writing the wrapper's name before the property
 as an attribute.
 Here's a structure that stores a small rectangle,
 using the same (rather arbitrary) definition of "small"
-that's implemented by the ``SmallNumber`` property wrapper:
+that's implemented by the ``LessThanTwelve`` property wrapper:
 
 .. testcode:: small-number-wrapper
     :compile: true
 
     -> struct SmallRectangle {
-           @SmallNumber var height: Int
-           @SmallNumber var width: Int
+           @LessThanTwelve var height: Int
+           @LessThanTwelve var width: Int
        }
     ---
     -> var rectangle = SmallRectangle()
@@ -791,8 +787,8 @@ that's implemented by the ``SmallNumber`` property wrapper:
     <- 12
 
 The ``height`` and ``width`` properties get their initial values
-from the definition of ``SmallNumber``,
-which sets ``SmallNumber.number`` to zero.
+from the definition of ``LessThanTwelve``,
+which sets ``LessThanTwelve.number`` to zero.
 Storing the number 10 into ``rectangle.height`` succeeds
 because it's a small number.
 Trying to store 24 produces a value of 12 instead,
@@ -808,8 +804,8 @@ produces code that's equivalent to the following:
     :compile: true
 
     -> struct SmallRectangle {
-           private var _height = SmallNumber()
-           private var _width = SmallNumber()
+           private var _height = LessThanTwelve()
+           private var _width = LessThanTwelve()
            var height: Int {
                get { return _height.wrappedValue }
                set { _height.wrappedValue = newValue }
@@ -822,9 +818,9 @@ produces code that's equivalent to the following:
 
 The code in the examples above
 set the initial value for the wrapped property
-by giving ``number`` an initial value in the definition of ``SmallNumber``.
+by giving ``number`` an initial value in the definition of ``LessThanTwelve``.
 The property wrapper didn't define any initializers.
-Here's an expanded version of ``SmallNumber``
+Here's an expanded version of ``LessThanTwelve`` called ``SmallNumber``
 that defines three initializers and
 lets you specify the wrapped and maximum value:
 
@@ -877,11 +873,13 @@ is called when wrapping a property that doesn't specify its initial value.
     -> print(zeroRectangle.height, zeroRectangle.width)
     <- 0 0
 
-The behavior when you use this version of ``SmallNumber``
-is the same as when you use the version of ``SmallRectangle``
-that declares ``wrappedValue`` by writing ``private var number = 0``.
-There's no wrapped value specified for ``height`` or ``width``,
-so they use the default value of zero that the property wrapper specifies.
+The behavior of ``SmallNumber`` in ``ZeroRectangle``
+is the same as the earlier code listing that used ``LessThanTwelve`` in ``SmallRectangle``.
+The definition of ``height`` and ``width`` don't specify an initial value,
+so they use the value specified by the property wrapper ---
+in this case, zero.
+
+.. XXX: Contrast here calling init() written in code to there calling a synthesized init()
 
 The second initializer, ``init(wrappedValue:)``,
 is called when you specify an initial value for the property.
