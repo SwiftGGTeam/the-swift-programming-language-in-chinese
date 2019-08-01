@@ -566,16 +566,20 @@ you must explicitly declare the nested type as public.
 Subclassing
 -----------
 
-You can subclass any class that can be accessed in the current access context.
+You can subclass any class
+that was defined in the same module
+and that can be accessed in the current access context.
+You can also subclass any open class from a different module.
 A subclass can't have a higher access level than its superclass ---
 for example, you can't write a public subclass of an internal superclass.
 
-In addition, you can override any class member
+In addition,
+for classes that were defined in the same module,
+you can override any class member
 (method, property, initializer, or subscript)
 that is visible in a certain access context.
-
-.. XXX The above comments are wrong --- you can only override stuff
-   that was marked 'open' in the superclass declaration.
+For classes that were defined in another module,
+you can override any open class member.
 
 An override can make an inherited class member more accessible than its superclass version.
 In the example below, class ``A`` is a public class with a file-private method called ``someMethod()``.
