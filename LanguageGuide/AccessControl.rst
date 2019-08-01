@@ -86,20 +86,9 @@ Open access is the highest (least restrictive) access level
 and private access is the lowest (most restrictive) access level.
 
 Open access applies only to classes and class members,
-and it differs from public access as follows:
-
-* Classes with public access, or any more restrictive access level,
-  can be subclassed only within the module where they're defined.
-
-* Class members with public access, or any more restrictive access level,
-  can be overridden by subclasses only within the module where they're defined.
-
-* Open classes can be subclassed within the module where they're defined,
-  and within any module that imports the module where they're defined.
-
-* Open class members can be overridden by subclasses within the module where they're defined,
-  and within any module that imports the module where they're defined.
-
+and it differs from public access
+by allowing code outside the module to subclass and override
+as discussed below in :ref:`AccessControl_Subclassing`.
 Marking a class as open explicitly indicates
 that you've considered the impact of code from other modules
 using that class as a superclass,
@@ -567,9 +556,10 @@ Subclassing
 -----------
 
 You can subclass any class
-that was defined in the same module
-and that can be accessed in the current access context.
-You can also subclass any open class from a different module.
+that can be accessed in the current access context
+and that's defined in the same module as the subclass.
+You can also subclass any open class
+that's defined in a different module.
 A subclass can't have a higher access level than its superclass ---
 for example, you can't write a public subclass of an internal superclass.
 
@@ -577,7 +567,7 @@ In addition,
 for classes that were defined in the same module,
 you can override any class member
 (method, property, initializer, or subscript)
-that is visible in a certain access context.
+that's visible in a certain access context.
 For classes that were defined in another module,
 you can override any open class member.
 
