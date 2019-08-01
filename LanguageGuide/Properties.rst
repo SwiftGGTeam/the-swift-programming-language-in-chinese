@@ -821,8 +821,7 @@ set the initial value for the wrapped property
 by giving ``number`` an initial value in the definition of ``LessThanTwelve``.
 The property wrapper didn't define any initializers.
 Here's an expanded version of ``LessThanTwelve`` called ``SmallNumber``
-that defines three initializers and
-lets you specify the wrapped and maximum value:
+that defines initializers that set the wrapped and maximum value:
 
 .. testcode:: property-wrapper-init, property-wrapper-mixed-init
     :compile: true
