@@ -898,6 +898,9 @@ When you write ``= 1`` on a property with a wrapper,
 that's translated into a call to the ``init(wrappedValue:)`` initializer,
 passing ``1`` as the ``wrappedValue`` argument.
 
+.. XXX It's equivalent to
+   @SmallNumber var height = SmallNumber(wrappedValue: 1)
+
 The third initializer, ``init(wrappedValue:maximum:)``,
 is called when you specify both a custom maximum value and an initial value.
 You write both of these arguments to the initializer
@@ -918,11 +921,23 @@ as arguments in parentheses after the custom attribute.
     -> print(narrowRectangle.height, narrowRectangle.width)
     <- 5 4
 
-By passing addition arguments to the property wrapper,
+By including arguments to the property wrapper,
 you can set up additional state in the wrapper.
-In this example, instead of using the default maximum value of 12,
-a narrow rectangle sets maximum values of
-five and four for its height and width.
+In the previous example,
+``ZeroRectangle`` didn't specify a maximum value for its height or width,
+so it used the default value of 12 from the definition of ``SmallNumber``.
+In this example,
+the declaration of ``height`` and ``width``
+include a ``maximum`` argument after ``@SmallNumber``,
+which lets ``NarrowRectangle`` overrides the default value.
+
+    ``NarrowRectangle`` sets maximum values of
+    five and four for its height and width
+    by including a ``maximum`` argument in after ``@SmallNumber``,
+    which overrides the default value.
+
+.. XXX It's equivalent to
+   @SmallNumber var height = SmallNumber(wrappedValue: 2, maximum: 5)
 
 .. note::
 
