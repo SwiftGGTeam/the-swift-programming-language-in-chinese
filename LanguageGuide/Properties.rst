@@ -886,13 +886,10 @@ that defines initializers that set the wrapped and maximum value:
    and the reader hasn't seen init syntax/rules in detail yet
    so it's clearer to make each init stand on its own.
 
-.. XXX init() acts like what was there before ---
-   it sets up ``maximum`` and ``number`` with default values
-   and it doesn't let the caller pick anything.
-   Explain why it's here.
-
 The definition of ``SmallNumber`` includes three initializers,
-``init()``, ``init(wrappedValue:)``, and ``init(wrappedValue:maximum:)``.
+``init()``, ``init(wrappedValue:)``, and ``init(wrappedValue:maximum:)``,
+which are used to set the wrapped value and the maximum value
+in the examples below.
 For information about initialization and initializer syntax,
 see :doc:`Initializers`.
 
@@ -910,8 +907,6 @@ For example:
     -> var zeroRectangle = ZeroRectangle()
     -> print(zeroRectangle.height, zeroRectangle.width)
     <- 0 0
-
-.. XXX It's equivalent to using SmallNumber()
 
 .. assertion:: property-wrapper-init
     :compile: true
@@ -932,14 +927,15 @@ For example:
     -> print(zeroRectangle_equiv.height, zeroRectangle_equiv.width)
     <- 0 0
 
-The behavior of ``SmallNumber`` in ``ZeroRectangle``
-is the same as the earlier code listing that used ``LessThanTwelve`` in ``SmallRectangle``.
-The definition of ``height`` and ``width`` don't specify an initial value,
-so they use the value specified by the property wrapper ---
-in this case, zero.
-
-.. XXX It's just an explicit way to walk through the behavior.
-   It's not actually anything new.
+The instances of ``SmallNumber`` that wrap ``height`` and ``width``
+are created by calling ``SmallNumber.init()``.
+The code inside that initializer
+sets the initial wrapped value and the initial maximum value.
+The property wrapper is still providing all of the initial values,
+like the earlier example that used ``LessThanTwelve`` in ``SmallRectangle``.
+Unlike that example,
+``SmallNumber`` also supports writing those initial values
+as part of declaring the property.
 
 When you specify an initial value for the property,
 Swift uses the ``init(wrappedValue:)`` initializer to set up the wrapper.
@@ -955,12 +951,6 @@ For example:
     -> var unitRectangle = UnitRectangle()
     -> print(unitRectangle.height, unitRectangle.width)
     <- 1 1
-
-When you write ``= 1`` on a property with a wrapper,
-that's translated into a call to the ``init(wrappedValue:)`` initializer,
-passing ``1`` as the ``wrappedValue`` argument.
-
-.. XXX It's equivalent to using SmallNumber(wrappedValue: 1)
 
 .. assertion:: property-wrapper-init
     :compile: true
@@ -981,10 +971,15 @@ passing ``1`` as the ``wrappedValue`` argument.
     -> print(unitRectangle_equiv.height, unitRectangle_equiv.width)
     <- 1 1
 
+When you write ``= 1`` on a property with a wrapper,
+that's translated into a call to the ``init(wrappedValue:)`` initializer.
+The instances of ``SmallNumber`` that wrap ``height`` and ``width``
+are created by calling ``SmallNumber.init(wrappedValue: 1)``.
+
 When you write arguments in parentheses after the custom attribute,
 Swift uses the initializer that accepts those arguments to set up the wrapper.
 For example, if you provide an initial value and a maximum value,
-Swift ``init(wrappedValue:maximum:)`` initializer:
+Swift uses the ``init(wrappedValue:maximum:)`` initializer:
 
 .. testcode:: property-wrapper-init
     :compile: true
@@ -1000,8 +995,6 @@ Swift ``init(wrappedValue:maximum:)`` initializer:
     -> narrowRectangle.width = 100
     -> print(narrowRectangle.height, narrowRectangle.width)
     <- 5 4
-
-.. XXX It's equivalent to using SmallNumber(wrappedValue: 2, maximum: 5)
 
 .. assertion:: property-wrapper-init
     :compile: true
@@ -1026,24 +1019,17 @@ Swift ``init(wrappedValue:maximum:)`` initializer:
     -> print(narrowRectangle_equiv.height, narrowRectangle_equiv.width)
     <- 5 4
 
+The instance of ``SmallNumber`` that wraps ``height``
+is created by calling ``SmallNumber.init(wrappedValue: 2, maximum: 5)``,
+and the instance that wraps ``width``
+is created by calling ``SmallNumber.init(wrappedValue: 3, maximum: 4)``.
+
 By including arguments to the property wrapper,
-you can set up additional state in the wrapper.
-In the previous example,
-``ZeroRectangle`` didn't specify a maximum value for its height or width,
-so it used the default value of 12 from the definition of ``SmallNumber``.
-In this example,
-the declaration of ``height`` and ``width``
-include a ``maximum`` argument after ``@SmallNumber``,
-which lets ``NarrowRectangle`` overrides the default value.
-
-    ``NarrowRectangle`` sets maximum values of
-    five and four for its height and width
-    by including a ``maximum`` argument in after ``@SmallNumber``,
-    which overrides the default value.
-
-.. XXX This is the most general way to use a property wrapper.
-   You can provide whatever arguments you need to the attribute,
-   and they're passed to the initializer.
+you can set up initial state in the wrapper
+or pass other options to the wrapper when it's created.
+This syntax is the most general way to use a property wrapper.
+You can provide whatever arguments you need to the attribute,
+and they're passed to the initializer.
 
 .. note::
 
