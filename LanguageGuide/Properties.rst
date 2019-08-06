@@ -930,7 +930,8 @@ For example:
 The instances of ``SmallNumber`` that wrap ``height`` and ``width``
 are created by calling ``SmallNumber.init()``.
 The code inside that initializer
-sets the initial wrapped value and the initial maximum value.
+sets the initial wrapped value and the initial maximum value,
+using the default values of zero and 12.
 The property wrapper is still providing all of the initial values,
 like the earlier example that used ``LessThanTwelve`` in ``SmallRectangle``.
 Unlike that example,
@@ -975,6 +976,8 @@ When you write ``= 1`` on a property with a wrapper,
 that's translated into a call to the ``init(wrappedValue:)`` initializer.
 The instances of ``SmallNumber`` that wrap ``height`` and ``width``
 are created by calling ``SmallNumber.init(wrappedValue: 1)``.
+The initializer uses the wrapped value that's specified here,
+and it uses the default maximum value of 12.
 
 When you write arguments in parentheses after the custom attribute,
 Swift uses the initializer that accepts those arguments to set up the wrapper.
@@ -1031,31 +1034,31 @@ This syntax is the most general way to use a property wrapper.
 You can provide whatever arguments you need to the attribute,
 and they're passed to the initializer.
 
-.. note::
+When you include property wrapper arguments,
+you can also specify an initial value using assignment.
+Swift treats the assignment like a ``wrappedValue`` argument
+and uses the initializer that accepts the arguments you include.
+For example:
 
-   You can't combine these two approaches
-   of initializing the wrapper and wrapped value.
-   You can either use assignment to specify an initial wrapped value,
-   or you can write arguments after the attribute in parentheses,
-   but not both.
-
-.. assertion:: property-wrapper-mixed-init
+.. testcode:: property-wrapper-mixed-init
     :compile:
 
-    >> struct MixedRectangle {
-    >>     @SmallNumber(maximum: 5) var height: Int = 2
-    >> }
-    >> var m = MixedRectangle()
-    >> print(m.height)
-    << 2
-    >> m.height = 10
-    >> print(m.height)
-    << 5
-    !! This wasn't expected to work -- not part of the SE proposal.
+    -> struct MixedRectangle {
+           @SmallNumber var height: Int = 1
+           @SmallNumber(maximum: 9) var width: Int = 2
+       }
+    -> var mixedRectangle = MixedRectangle()
+    -> print(mixedRectangle.height)
+    <- 1
+    -> mixedRectangle.height = 20
+    -> print(mixedRectangle.height)
+    <- 12
 
-.. XXX The mix-and-match syntax actually works now
-   Emailed Joe Groff and Doug Gregor to confirm the change
-   message://%3cB0204DEB-E9EB-4DD2-B38A-55811DCBF132@apple.com%3e
+The instance of ``SmallNumber`` that wraps ``height``
+is created by calling ``SmallNumber.init(wrappedValue: 1)``,
+which uses the default maximum value of 12.
+The instance that wraps ``width``
+is created by calling ``SmallNumber.init(wrappedValue: 2, maximum: 9)``.
 
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
