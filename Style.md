@@ -1,13 +1,29 @@
 # Editorial Style Guide
 
 ## memberwise initializer
+
 Not hyphenated as “member-wise”.
 
 ## non-optional
+
 Hyphenated to avoid the misreading as nono-ptional.
 Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
 See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
+
+## passive voice
+
+In general,
+the writing guidance to avoid passive voice
+when you could write the sentence in active still applies.
+However,
+because of the subject matter in TSPL,
+it’s often the case that a sentence has no meaningful subject/actor
+because the action is being performed by some vague compiler-Swift-parser entity.
+In that case, passive voice is sometimes the clearest form
+for a sentence whose focus is the action rather than the actor.
+
+TODO: Add a couple examples and counterexamples.
 
 ## punctuation before a code listing
 
@@ -74,6 +90,8 @@ is available in the following places:
     maintained by Mattt Zmuda
 
 # Formal Grammar
+
+These guidelines apply to the “Grammar of X” blocks in the reference.
 
 **Write an ASCII arrow.**
 The arrow (`-->`) can be read as “can consist of.”
