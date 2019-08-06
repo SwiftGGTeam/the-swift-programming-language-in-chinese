@@ -807,7 +807,7 @@ for example, the projected value for ``someProperty`` is ``$someProperty``.
 The projected value has the same access control level
 as the original wrapped property.
 
-.. testcode:: propertyWrapper
+.. testcode:: propertyWrapper-projection
     :compile: true
 
     -> @propertyWrapper
@@ -828,13 +828,13 @@ as the original wrapped property.
     -> s.x           // Int value
     -> s.$x          // SomeProjection value
     -> s.$x.wrapper  // WrapperWithProjection value
-    !! /tmp/swifttest.swift:40:3: warning: expression of type 'Int' is unused
+    !! /tmp/swifttest.swift:15:3: warning: expression of type 'Int' is unused
     !! s.x           // Int value
     !! ~~^
-    !! /tmp/swifttest.swift:41:3: warning: expression of type 'SomeProjection' is unused
+    !! /tmp/swifttest.swift:16:3: warning: expression of type 'SomeProjection' is unused
     !! s.$x          // SomeProjection value
     !! ~~^~
-    !! /tmp/swifttest.swift:42:6: warning: expression of type 'WrapperWithProjection' is unused
+    !! /tmp/swifttest.swift:17:6: warning: expression of type 'WrapperWithProjection' is unused
     !! s.$x.wrapper  // WrapperWithProjection value
     !! ~~~~~^~~~~~~
 
