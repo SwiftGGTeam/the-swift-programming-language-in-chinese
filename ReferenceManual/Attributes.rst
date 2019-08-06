@@ -736,11 +736,14 @@ but it can't override the compiler-synthesized ``get`` or ``set`` blocks.
 If the wrapper defines an ``init()`` initializer,
 the wrapped property can be defined without providing an initial wrapped value,
 implicitly using ``init()`` to set it.
-If the wrapper defines an ``init(wrappedValue:)`` initializer,
-the wrapped property can use assignment to set its initial value.
+If the wrapper defines an initializer with a parameter labeled ``wrappedValue``,
+the wrapped property can use assignment to set its initial wrapped value ---
+the expression on the right-hand side of the assignment
+is understood as the argument to be passed to the ``wrappedValue`` parameter.
 If the wrapper defines other initializers,
 you pass the needed arguments to the initializer
 by providing them as arguments to the attribute when you apply it to a property.
+You can use assignment and attribute arguments in the same property declaration.
 For example, ``SomeWrapper`` in the code below
 defines initializers in all three of these categories.
 
@@ -759,7 +762,7 @@ defines initializers in all three of these categories.
                self.wrappedValue = wrappedValue
                self.someValue = 45.6
            }
-           init(value: Int, custom: Double) {
+           init(wrappedValue value: Int, custom: Double) {
                self.wrappedValue = value
                self.someValue = custom
            }
@@ -776,8 +779,9 @@ The ``@SomeWrapper`` attribute can be applied in the following ways:
            // Uses init(wrappedValue:)
            @SomeWrapper var b = 10
     ---
-           // Uses init(value:custom:)
-           @SomeWrapper(value: 30, custom: 98.7) var d
+           // Both use init(wrappedValue:custom:)
+           @SomeWrapper(custom: 98.7) var c = 30
+           @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
        }
 
 .. Comments in the SomeStruct part of the example above
@@ -790,9 +794,9 @@ The ``@SomeWrapper`` attribute can be applied in the following ways:
    which currently can't have a property wrapper.
    It would look like this:
 
-   @SomeWrapper var d
-   d = 20  // Uses init(wrappedValue:)
-   d = 30  // Uses the property setter
+   @SomeWrapper var e
+   e = 20  // Uses init(wrappedValue:)
+   e = 30  // Uses the property setter
 
 The *projected value* for a wrapped property is a second value
 that gives a property wrapper the ability to expose additional functionality ---
