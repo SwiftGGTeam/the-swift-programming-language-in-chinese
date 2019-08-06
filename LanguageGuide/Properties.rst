@@ -1045,6 +1045,17 @@ and they're passed to the initializer.
     >> struct MixedRectangle {
     >>     @SmallNumber(maximum: 5) var height: Int = 2
     >> }
+    >> var m = MixedRectangle()
+    >> print(m.height)
+    << 2
+    >> m.height = 10
+    >> print(m.height)
+    << 5
+    !! This wasn't expected to work -- not part of the SE proposal.
+
+.. XXX The mix-and-match syntax actually works now
+   Emailed Joe Groff and Doug Gregor to confirm the change
+   message://%3cB0204DEB-E9EB-4DD2-B38A-55811DCBF132@apple.com%3e
 
 In addition to the wrapped value,
 a property wrapper can define a *projected value*.
