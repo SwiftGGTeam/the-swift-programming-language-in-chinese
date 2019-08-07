@@ -506,12 +506,13 @@ and this attribute can't be used.
     !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
     !! @frozen public enum E { case x, y }
     !! ^~~~~~~~
-    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
-    !! @frozen public struct S { var a: Int = 10 }
-    !! ^~~~~~~~
+    ---
+    // After the bug below is fixed, the following warning should appear:
+    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    // !! @frozen public struct S { var a: Int = 10 }
+    // !! ^~~~~~~~
 
-.. XXX Struct test above is totally ok using @frozen without evolution mode
-   but it should be flagging it as an error.
+.. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
 
 .. assertion:: frozen-is-fine-with-evolution
     :compile: true
