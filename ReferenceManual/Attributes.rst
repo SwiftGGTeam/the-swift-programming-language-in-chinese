@@ -836,6 +836,7 @@ as the original wrapped property.
     >> _ =
     -> s.$x.wrapper  // WrapperWithProjection value
 
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
