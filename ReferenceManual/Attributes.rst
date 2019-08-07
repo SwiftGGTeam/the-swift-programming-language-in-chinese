@@ -445,10 +445,6 @@ or stored instance properties of a structure,
 that new version the library will break ABI compatibility
 with previous versions of the library.
 
-.. XXX [Contributor 6004] says that re-ordering enums is allowed,
-   but the SE proposal includes it in the list of things you can't do.
-   Asked him to confirm.
-
 In library evolution mode,
 code that interacts with members of nonfrozen structures and enumerations
 is compiled in a way that allows it to continue working without recompiling
