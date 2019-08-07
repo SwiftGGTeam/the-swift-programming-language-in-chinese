@@ -492,8 +492,6 @@ set the "Build Libraries for Distribution" build setting
 
 .. XXX This is the first time we're talking about a specific compiler flag/option.
 
-.. XXX TR: Confirm the name of this build setting in Xcode
-
 When the compiler isn't in library evolution mode,
 all structures and enumerations are implicitly understood to be frozen,
 and this attribute can't be used.
