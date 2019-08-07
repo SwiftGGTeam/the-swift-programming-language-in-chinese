@@ -829,11 +829,11 @@ as the original wrapped property.
            @WrapperWithProjection var x = 123
        }
     -> let s = SomeStruct()
-    >> _ = 
+    >> _ =
     -> s.x           // Int value
-    >> _ = 
+    >> _ =
     -> s.$x          // SomeProjection value
-    >> _ = 
+    >> _ =
     -> s.$x.wrapper  // WrapperWithProjection value
 
 .. _Attributes_requires_stored_property_inits:
