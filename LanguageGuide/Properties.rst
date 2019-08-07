@@ -1061,8 +1061,8 @@ The instance that wraps ``width``
 is created by calling ``SmallNumber.init(wrappedValue: 2, maximum: 9)``.
 
 In addition to the wrapped value,
-a property wrapper can define a *projected value*.
-The projected value lets a property wrapper expose additional functionality ---
+you can define a *projected value* for a property wrapper.
+A property wrapper can expose additional functionality as a projected value ---
 for example, a property wrapper that manages access to a database
 can expose a ``flushDatabaseConnection()`` method on its projected value.
 The name of the projected value is the same as the wrapped value,
