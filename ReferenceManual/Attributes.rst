@@ -521,13 +521,9 @@ and this attribute can't be used.
 
 Switching over a frozen enumeration doesn't require a ``default`` case,
 as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
-Switching over a frozen enumeration
-can't include an ``@unknown default`` case.
-
-.. XXX [Contributor 6004] said that @unknown default on a frozen enum isn't allowed
-   but I'm not able to trigger that error/warning.
-   The assertions below just complain that the "default" case will never be taken,
-   although it's true they only come up when switching over the frozen enum.
+Including a ``default`` or ``@unknown default`` case
+when switching over a frozen enumeration
+produces a warning because that code is never executed.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum
     :evolution: true
@@ -559,14 +555,14 @@ can't include an ``@unknown default`` case.
     >>         @unknown default: print(0)
     >>     }
     >> }
-    // v--- Main warning ---v
+    // --- Main warning ---
     !! /tmp/sourcefile_0.swift:7:18: warning: case is already handled by previous patterns; consider removing it
     !! @unknown default: print(0)
     !! ~~~~~~~~~^~~~~~~~~~~~~~~~~
     !! /tmp/sourcefile_0.swift:7:9: warning: default will never be executed
     !! @unknown default: print(0)
     !! ^
-    // v--- Junk/ancillary warning ---v
+    // --- Junk/ancillary warnings ---
     !! /tmp/sourcefile_0.swift:4:12: warning: switch condition evaluates to a constant
     !! switch f {
     !! ^
