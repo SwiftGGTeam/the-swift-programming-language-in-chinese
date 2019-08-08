@@ -6,12 +6,21 @@ Document Revision History
 
 **2019-06-03**
 
+.. XXX Replace the date above with the actual FCS ship date.
+
 * Updated for Swift 5.1.
 
 * Added information about functions
   that specify a protocol that their return value conforms to,
   instead of providing a specific named return type,
   to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
+
+* Added information about property wrappers
+  to the :ref:`Properties_PropertyWrapper` section.
+
+* Added information enumerations and structures
+  that are frozen for library evolution
+  to the :ref:`Attributes_frozen` section.
 
 * Added the :ref:`Functions_ImplicitReturns`
   and :ref:`Properties_ImplicitReturn` sections
@@ -27,6 +36,9 @@ Document Revision History
 * Added information about dynamic members
   that are looked up by key path at run time
   to the :ref:`Attributes_dynamicMemberLookup` section.
+
+* Added ``macCatalyst`` to the list of target environments
+  in :ref:`Statements_BuildConfigurationStatement`.
 
 * Updated the :ref:`Types_SelfType` section,
   now that ``Self`` can be used to refer to the type
