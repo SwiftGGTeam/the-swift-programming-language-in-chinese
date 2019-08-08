@@ -1011,6 +1011,11 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
+Each identifier in a tuple expression must be unique
+within the scope of the tuple expression.
+In a nested tuple expression,
+identifiers at the same level of nesting must be unique.
+
 A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
