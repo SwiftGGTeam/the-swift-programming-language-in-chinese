@@ -686,7 +686,7 @@ before the ``var`` or ``subscript`` introducer.
 The example below defines a structure called ``TrackedString``,
 which keeps track of the number of times a string property is modified:
 
-.. testcode:: reducedSetterScope
+.. testcode:: reducedSetterScope, reducedSetterScope_error
 
    -> struct TrackedString {
          private(set) var numberOfEdits = 0
@@ -718,18 +718,21 @@ This enables ``TrackedString`` to modify the ``numberOfEdits`` property internal
 but to present the property as a read-only property
 when it's used outside the structure's definition.
 
-.. assertion:: reducedSetterScope
+.. assertion:: reducedSetterScope_error
+   :compile: true
 
    -> extension TrackedString {
           mutating func f() { numberOfEdits += 1 }
       }
    // check that we can't set its value with from the same file
    -> var s = TrackedString()
-   << // s : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
    -> let resultA: Void = { s.numberOfEdits += 1 }()
-   !! <REPL Input>:1:39: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !! /tmp/swifttest.swift:13:39: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
    !! let resultA: Void = { s.numberOfEdits += 1 }()
    !!                       ~~~~~~~~~~~~~~~ ^
+
+.. The assertion above must be compiled because of a REPL bug
+   <rdar://problem/54089342> REPL fails to enforce private(set) on struct property
 
 If you create a ``TrackedString`` instance and modify its string value a few times,
 you can see the ``numberOfEdits`` property value update to match the number of modifications:
