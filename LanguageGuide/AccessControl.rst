@@ -252,6 +252,7 @@ the default access level of the type's members will be internal.
    and avoids presenting the internal workings of a type as public API by mistake.
 
 .. testcode:: accessControl, accessControlWrong
+   :compile: true
 
    -> public class SomePublicClass {                  // explicitly public class
          public var somePublicProperty = 0            // explicitly public class member
@@ -359,12 +360,13 @@ but this isn't the case.
 In fact, ``someFunction()`` won't compile as written below:
 
 .. testcode:: accessControlWrong
+   :compile: true
 
    -> func someFunction() -> (SomeInternalClass, SomePrivateClass) {
          // function implementation goes here
    >>    return (SomeInternalClass(), SomePrivateClass())
       }
-   !! <REPL Input>:1:6: error: function must be declared private or fileprivate because its result uses a private type
+   !! /tmp/swifttest.swift:19:6: error: function must be declared private or fileprivate because its result uses a private type
    !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
    !! ^
 
@@ -380,6 +382,7 @@ you must mark the function's overall access level with the ``private`` modifier
 for the function declaration to be valid:
 
 .. testcode:: accessControl
+   :compile: true
 
    -> private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
          // function implementation goes here
@@ -580,6 +583,7 @@ with an access level of “internal”, which is *higher* than
 the original implementation of ``someMethod()``:
 
 .. testcode:: subclassingNoCall
+   :compile: true
 
    -> public class A {
          fileprivate func someMethod() {}
@@ -597,6 +601,7 @@ an allowed access level context
 or within the same module as the superclass for an internal member call):
 
 .. testcode:: subclassingWithCall
+   :compile: true
 
    -> public class A {
          fileprivate func someMethod() {}
@@ -625,9 +630,9 @@ If a constant, variable, property, or subscript makes use of a private type,
 the constant, variable, property, or subscript must also be marked as ``private``:
 
 .. testcode:: accessControl
+   :compile: true
 
    -> private var privateInstance = SomePrivateClass()
-   <~ // privateInstance : SomePrivateClass =
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
 
