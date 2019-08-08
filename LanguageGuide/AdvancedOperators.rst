@@ -896,18 +896,29 @@ see :ref:`Declarations_OperatorDeclaration`.
    the postfix operator is applied first.
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
+   :compile: true
 
    -> prefix operator +++
    -> postfix operator ---
-   -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
-   -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
-   -> +++1---
-   << // r0 : Int = 0
+   -> extension Int {
+          static prefix func +++ (x: Int) -> Int {
+              return x * 2
+          }
+      }
+   -> extension Int {
+          static postfix func --- (x: Int) -> Int {
+              return x - 1
+          }
+      }
+   -> let x = +++1---
+   -> let y = +++(1---)
+   -> let z = (+++1)---
+   -> print(x, y, z)
+   <- 0 0 1
+   // Note that x==y
 
-.. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
-   This is being tracked as rdar://16061044.
-   If this Radar is fixed, the operator declaration above should be split over multiple lines
-   for consistency with the rest of the code.
+.. Use compiled code to work around a REPL limitation
+   <rdar://problem/16061044> Custom operator declarations cannot be written over multiple lines in the REPL
 
 .. The following needs more work...
 
