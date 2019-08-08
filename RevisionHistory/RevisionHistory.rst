@@ -1,6 +1,9 @@
 Document Revision History
 =========================
 
+.. Expanded discussion in _Patterns_EnumerationCasePattern
+   now that enum pattern matches Optional<SomeEnum>.
+
 **2019-06-03**
 
 * Updated for Swift 5.1.
@@ -28,25 +31,6 @@ Document Revision History
 * Updated the :ref:`Types_SelfType` section,
   now that ``Self`` can be used to refer to the type
   introduced by the current class, structure, or enumeration declaration.
-
-.. Do we need to update TSPL for this entry from the CHANGELOG?
-
-   AJM: I think this needs to be added to Reference > Patterns > Optional Patterns
-
-   Enum cases can now be matched against an optional enum without
-   requiring a '?' at the end of the pattern.
-
-   ```swift
-   enum Foo { case zero, one }
-
-   let foo: Foo? = .zero
-
-   switch foo {
-     case .zero: break
-     case .one: break
-     case .none: break
-   }
-   ```
 
 **2019-03-25**
 

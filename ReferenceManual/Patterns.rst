@@ -174,6 +174,8 @@ an expression pattern:
     !! for (x, 0) in points {
     !! ^
 
+:.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
@@ -225,6 +227,29 @@ the corresponding enumeration case pattern must specify a tuple pattern that con
 one element for each associated value. For an example that uses a ``switch`` statement
 to match enumeration cases containing associated values,
 see :ref:`Enumerations_AssociatedValues`.
+
+An enumeration case pattern also matches
+values of that case wrapped in an optional.
+This simplified syntax lets you omit an optional pattern.
+Note that,
+because ``Optional`` is implemented as an enumeration,
+``.none`` and ``.some`` can appear
+in the same switch as the cases of the enumeration type.
+
+.. testcode:: enum-pattern-matching-optional
+   :compile: true
+
+   -> enum SomeEnum { case left, right }
+   -> let x: SomeEnum? = .left
+   -> switch x {
+      case .left:
+          print("Turn left")
+      case .right:
+          print("Turn right")
+      case nil:
+          print("Keep going straight")
+      }
+   <- Turn left
 
 .. syntax-grammar::
 
