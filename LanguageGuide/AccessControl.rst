@@ -635,15 +635,16 @@ the constant, variable, property, or subscript must also be marked as ``private`
    -> private var privateInstance = SomePrivateClass()
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
+   :compile: true
 
    -> class Scope {  // Need to be in a scope to meaningfully use private (vs fileprivate)
    -> private class SomePrivateClass {}
    -> let privateConstant = SomePrivateClass()
-   !! <REPL Input>:3:7: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
+   !! /tmp/swifttest.swift:3:5: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
    !! let privateConstant = SomePrivateClass()
    !! ^
    -> var privateVariable = SomePrivateClass()
-   !! <REPL Input>:4:7: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
+   !! /tmp/swifttest.swift:4:5: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
    !! var privateVariable = SomePrivateClass()
    !! ^
    -> class C {
@@ -653,13 +654,13 @@ the constant, variable, property, or subscript must also be marked as ``private`
          }
       }
    -> }  // End surrounding scope
-   !! <REPL Input>:6:10: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
+   !! /tmp/swifttest.swift:6:8: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
    !! var privateProperty = SomePrivateClass()
    !! ^
-   !! <REPL Input>:7:6: error: subscript must be declared private because its element type uses a private type
+   !! /tmp/swifttest.swift:7:4: error: subscript must be declared private because its element type uses a private type
    !! subscript(index: Int) -> SomePrivateClass {
    !! ^                        ~~~~~~~~~~~~~~~~
-   !! <REPL Input>:2:17: note: type declared here
+   !! /tmp/swifttest.swift:2:15: note: type declared here
    !! private class SomePrivateClass {}
    !! ^
 
