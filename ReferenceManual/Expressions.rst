@@ -1099,18 +1099,16 @@ For example:
    it's a special case in the compiler.
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> struct SomeStructure {
           var someValue: Int
       }
    ---
    -> let s = SomeStructure(someValue: 12)
-   << // s : SomeStructure = REPL.SomeStructure(someValue: 12)
    -> let pathToProperty = \SomeStructure.someValue
-   << // pathToProperty : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
    ---
    -> let value = s[keyPath: pathToProperty]
-   << // value : Int = 12
    /> value is \(value)
    </ value is 12
 
@@ -1135,7 +1133,7 @@ instead of ``\SomeClass.someProperty``:
    -> c.observe(\.someProperty) { object, change in
           // ...
       }
-   <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
+   <~ // r0 : NSKeyValueObservation = 
 
 The *path* can refer to ``self`` to create the identity key path (``\.self``).
 The identity key path refers to a whole instance,
@@ -1159,6 +1157,7 @@ to access the ``someValue`` property
 of the ``OuterStructure`` type's ``outer`` property:
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> struct OuterStructure {
           var outer: SomeStructure
@@ -1168,12 +1167,9 @@ of the ``OuterStructure`` type's ``outer`` property:
       }
    ---
    -> let nested = OuterStructure(someValue: 24)
-   << // nested : OuterStructure = REPL.OuterStructure(outer: REPL.SomeStructure(someValue: 24))
    -> let nestedKeyPath = \OuterStructure.outer.someValue
-   << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
    ---
    -> let nestedValue = nested[keyPath: nestedKeyPath]
-   << // nestedValue : Int = 24
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
@@ -1183,11 +1179,10 @@ This example uses a subscript in a key path
 to access the second element of an array:
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> let greetings = ["hello", "hola", "bonjour", "안녕"]
-   << // greetings : [String] = ["hello", "hola", "bonjour", "안녕"]
    -> let myGreeting = greetings[keyPath: \[String].[1]]
-   << // myGreeting : String = "hola"
    /> myGreeting is '\(myGreeting)'
    </ myGreeting is 'hola'
 
@@ -1206,13 +1201,11 @@ the key-path expression still references the third element,
 while the closure uses the new index.
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> var index = 2
-   << // index : Int = 2
    -> let path = \[String].[index]
-   << // path : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
    -> let fn: ([String]) -> String = { strings in strings[index] }
-   <~ // fn :
    ---
    -> print(greetings[keyPath: path])
    <- bonjour
@@ -1233,15 +1226,14 @@ This code uses optional chaining in a key path
 to access a property of an optional string:
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> let firstGreeting: String? = greetings.first
-   << // firstGreeting : String? = Optional("hello")
    -> print(firstGreeting?.count as Any)
    <- Optional(5)
    ---
    // Do the same thing using a key path.
    -> let count = greetings[keyPath: \[String].first?.count]
-   << // count : Int? = Optional(5)
    -> print(count as Any)
    <- Optional(5)
 
@@ -1253,11 +1245,11 @@ by using key-path expressions
 that combine these components.
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
                                 "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "prime": [2, 3, 5, 7, 11, 13, 17], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
    <- Optional([2, 3, 5, 7, 11, 13, 17])
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
