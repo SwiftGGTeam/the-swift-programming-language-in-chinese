@@ -4,9 +4,7 @@ Document Revision History
 .. Expanded discussion in :ref:`Patterns_EnumerationCasePattern`,
    now that an enumeration case pattern can match an optional value.
 
-**2019-06-03**
-
-.. XXX Replace the date above with the actual FCS ship date.
+**2019-09-10**
 
 * Updated for Swift 5.1.
 
