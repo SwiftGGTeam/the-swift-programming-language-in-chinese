@@ -451,7 +451,7 @@ When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
-Code that's compiled in library-evolution mode,
+Code that's compiled in library evolution mode,
 code in the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
