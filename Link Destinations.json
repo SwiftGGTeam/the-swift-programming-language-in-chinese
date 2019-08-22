@@ -22,6 +22,7 @@
     "//apple_ref/swift/fake/Mirror.AncestorRepresentation": "https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation",
     "//apple_ref/swift/fake/ReferenceWritableKeyPath": "https://developer.apple.com/documentation/swift/referencewritablekeypath",
     "//apple_ref/swift/fake/WritableKeyPath": "https://developer.apple.com/documentation/swift/writablekeypath",
+    "//apple_ref/fake/XcodeHelp/BuildSettings": "https://help.apple.com/xcode/mac/current/#/dev04b3a04ba",
     "//apple_ref/swift/func/c:@F@UIApplicationMain": "https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain",
     "//apple_ref/swift/func/s:Fs12preconditionFTKT_SbKT_SS4fileVs12StaticString4lineSu_T_/": "https://developer.apple.com/documentation/swift/1540960-precondition",
     "//apple_ref/swift/func/s:Fs16assertionFailureFTKT_SS4fileVs12StaticString4lineSu_T_/": "https://developer.apple.com/documentation/swift/1539616-assertionfailure",

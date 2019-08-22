@@ -515,7 +515,8 @@ To enable library evolution mode on the command line,
 pass the ``-enable-library-evolution`` option to the Swift compiler.
 To enable it in Xcode,
 set the "Build Libraries for Distribution" build setting
-(``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes.
+(``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes,
+as described in `Xcode Help <//apple_ref/fake/XcodeHelp/BuildSettings>`_.
 
 .. XXX This is the first time we're talking about a specific compiler flag/option.
 
