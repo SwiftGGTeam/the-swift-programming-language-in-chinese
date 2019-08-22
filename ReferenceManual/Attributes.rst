@@ -435,15 +435,43 @@ frozen
 ~~~~~~
 
 Apply this attribute to a structure or enumeration declaration
-when compiling in library evolution mode
-to indicate that future versions of the library
-can't make certain kinds of changes to the type.
-If a future version of the library changes the declaration
+to restrict the kinds of changes you can make to the type.
+This attribute is allowed only when compiling in library evolution mode.
+Future versions of the library can't change the declaration
 by adding, removing, or reordering
-enumeration cases
-or stored instance properties of a structure,
-that new version the library will break ABI compatibility
-with previous versions of the library.
+an enumeration's cases
+or a structure's stored instance properties.
+These changes are allowed on nonfrozen types,
+but they break ABI compatibility for frozen types.
+
+.. note::
+
+    When the compiler isn't in library evolution mode,
+    all structures and enumerations are implicitly frozen,
+    and you can't use this attribute.
+
+.. assertion:: cant-use-frozen-without-evolution
+    :compile: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !! @frozen public enum E { case x, y }
+    !! ^~~~~~~~
+    ---
+    // After the bug below is fixed, the following warning should appear:
+    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    // !! @frozen public struct S { var a: Int = 10 }
+    // !! ^~~~~~~~
+
+.. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
+
+.. assertion:: frozen-is-fine-with-evolution
+    :compile: true
+    :evolution: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
 
 In library evolution mode,
 code that interacts with members of nonfrozen structures and enumerations
@@ -454,17 +482,16 @@ The compiler makes this possible using techniques like
 looking up information at runtime
 and adding a layer of indirection.
 Marking a structure or enumeration as frozen
-gives up flexibility to gain performance:
-Future versions of the library can't make certain changes,
+gives up this flexibility to gain performance:
+Future versions of the library can make only limited changes to the type,
 but the compiler can make additional optimizations
 in code that interacts with the type's members.
 
-This attribute can be applied to a structure or enumeration declaration
-that's public or marked with the ``usableFromInline`` attribute.
-The types of the stored properties of a structure
-and the associated values of enumeration cases
+Frozen types,
+the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases
 must be public or marked with the ``usableFromInline`` attribute.
-None of the properties of a frozen structure can have property observers,
+The properties of a frozen structure can't have property observers,
 and expressions that provide the initial value for stored instance properties
 must follow the same restrictions as inlinable functions,
 as discussed in :ref:`Attributes_inlinable`.
@@ -492,34 +519,7 @@ set the "Build Libraries for Distribution" build setting
 
 .. XXX This is the first time we're talking about a specific compiler flag/option.
 
-When the compiler isn't in library evolution mode,
-all structures and enumerations are implicitly understood to be frozen,
-and this attribute can't be used.
-
-.. assertion:: cant-use-frozen-without-evolution
-    :compile: true
-
-    >> @frozen public enum E { case x, y }
-    >> @frozen public struct S { var a: Int = 10 }
-    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
-    !! @frozen public enum E { case x, y }
-    !! ^~~~~~~~
-    ---
-    // After the bug below is fixed, the following warning should appear:
-    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
-    // !! @frozen public struct S { var a: Int = 10 }
-    // !! ^~~~~~~~
-
-.. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
-
-.. assertion:: frozen-is-fine-with-evolution
-    :compile: true
-    :evolution: true
-
-    >> @frozen public enum E { case x, y }
-    >> @frozen public struct S { var a: Int = 10 }
-
-Switching over a frozen enumeration doesn't require a ``default`` case,
+A switch statement over a frozen enumeration doesn't require a ``default`` case,
 as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
 Including a ``default`` or ``@unknown default`` case
 when switching over a frozen enumeration
