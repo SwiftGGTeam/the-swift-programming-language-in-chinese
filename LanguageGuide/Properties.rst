@@ -934,7 +934,7 @@ are created by calling ``SmallNumber.init()``.
 The code inside that initializer
 sets the initial wrapped value and the initial maximum value,
 using the default values of zero and 12.
-The property wrapper is still providing all of the initial values,
+The property wrapper still provides all of the initial values,
 like the earlier example that used ``LessThanTwelve`` in ``SmallRectangle``.
 Unlike that example,
 ``SmallNumber`` also supports writing those initial values
