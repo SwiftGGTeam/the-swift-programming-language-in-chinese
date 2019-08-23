@@ -911,7 +911,8 @@ if they are provided:
    >> class SomeClass {
    >> var delegate: AnyObject?
       lazy var someClosure = {
-            [unowned self, weak delegate = self.delegate] (index: Int, stringToProcess: String) -> String in
+            [unowned self, weak delegate = self.delegate]
+            (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
