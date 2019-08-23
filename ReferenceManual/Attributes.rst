@@ -739,7 +739,7 @@ implicitly using ``init()`` to set it.
 If the wrapper defines an initializer with a parameter labeled ``wrappedValue``,
 you can use assignment to set the initial wrapped value ---
 the expression on the right-hand side of the assignment
-is understood as the argument to be passed to the ``wrappedValue`` parameter.
+is understood as the argument passed to the ``wrappedValue`` parameter.
 If the wrapper defines other initializers,
 you pass the needed arguments to the initializer
 by providing them as arguments to the attribute when you apply it to a property.
