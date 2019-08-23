@@ -910,17 +910,12 @@ if they are provided:
 
    >> class SomeClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: (Int, String) -> String = {
+      lazy var someClosure = {
             [unowned self, weak delegate = self.delegate] (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
    >> }
-
-.. FIXME: change this example to remove the type annotation
-   and infer the type from the closure's parameter list and return type
-   once the following issue is fixed:
-   <rdar://problem/16973787> Cannot infer function type from a lazy closure that uses self
 
 If a closure does not specify a parameter list or return type
 because they can be inferred from context,
@@ -931,7 +926,7 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: () -> String = {
+      lazy var someClosure = {
             [unowned self, weak delegate = self.delegate] in
          // closure body goes here
    >>    return "foo"
