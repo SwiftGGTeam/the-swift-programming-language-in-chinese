@@ -810,11 +810,13 @@ the compiler synthesizes code that provides storage for the wrapper
 and code that provides access to the property through the wrapper.
 (The property wrapper is responsible for storing the wrapped value,
 so there's no synthesized code for that.)
-You could write code by hand that uses the behavior of a property wrapper,
+You could write code that uses the behavior of a property wrapper,
 without taking advantage of the special attribute syntax.
 For example,
-here's a hand-written version of ``SmallRectangle``
-from the previous code listing:
+here's a version of ``SmallRectangle``
+from the previous code listing
+that wraps its properties in the ``LessThanTwelve`` structure explicitly,
+instead of writing ``@LessThanTwelve`` as an attribute:
 
 .. testcode:: property-wrapper-expansion
     :compile: true
