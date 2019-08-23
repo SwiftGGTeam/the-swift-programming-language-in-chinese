@@ -537,10 +537,9 @@ starting from their left:
 
 This calculation yields the final answer of ``17``.
 
-For a complete list of Swift operator precedences and associativity rules,
-see :doc:`../ReferenceManual/Expressions`.
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+including a complete list of the operator precedence groups and associativity settings,
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. note::
 
@@ -705,47 +704,49 @@ and uses it to set the left value to be the left value plus the right value:
 
 .. note::
 
-   It is not possible to overload the default
+   It isn't possible to overload the default
    assignment operator (``=``).
    Only the compound assignment operators can be overloaded.
    Similarly, the ternary conditional operator
-   (``a ? b : c``) cannot be overloaded.
+   (``a ? b : c``) can't be overloaded.
 
 .. _AdvancedOperators_EquivalenceOperators:
 
 Equivalence Operators
 ~~~~~~~~~~~~~~~~~~~~~
 
-Custom classes and structures do not receive a default implementation of
+By default, custom classes and structures don't have an implementation of
 the :newTerm:`equivalence operators`,
-known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
-It is not possible for Swift to guess what would qualify as “equal” for your own custom types,
-because the meaning of “equal” depends on the roles that those types play in your code.
+known as the *equal to* operator (``==``) and *not equal to* operator (``!=``).
+You usually implement the ``==`` operator,
+and use the standard library's default implementation of the ``!=`` operator
+that negates the result of the ``==`` operator.
+There are two ways to implement the ``==`` operator:
+You can implement it yourself,
+or for many types, you can ask Swift to synthesize
+an implementation for you.
+In both cases,
+you add conformance to the standard library's ``Equatable`` protocol.
 
-To use the equivalence operators to check for equivalence of your own custom type,
-provide an implementation of the operators in the same way as for other infix operators:
+You provide an implementation of the ``==`` operator
+in the same way as you implement other infix operators:
 
 .. testcode:: customOperators
 
-   -> extension Vector2D {
+   -> extension Vector2D: Equatable {
           static func == (left: Vector2D, right: Vector2D) -> Bool {
              return (left.x == right.x) && (left.y == right.y)
           }
-          static func != (left: Vector2D, right: Vector2D) -> Bool {
-             return !(left == right)
-          }
       }
 
-The above example implements an “equal to” operator (``==``)
-to check if two ``Vector2D`` instances have equivalent values.
+The example above implements an ``==`` operator
+to check whether two ``Vector2D`` instances have equivalent values.
 In the context of ``Vector2D``,
 it makes sense to consider “equal” as meaning
 “both instances have the same ``x`` values and ``y`` values”,
 and so this is the logic used by the operator implementation.
-The example also implements the “not equal to” operator (``!=``),
-which simply returns the inverse of the result of the “equal to” operator.
 
-You can now use these operators to check whether two ``Vector2D`` instances are equivalent:
+You can now use this operator to check whether two ``Vector2D`` instances are equivalent:
 
 .. testcode:: customOperators
 
@@ -757,6 +758,42 @@ You can now use these operators to check whether two ``Vector2D`` instances are 
          print("These two vectors are equivalent.")
       }
    <- These two vectors are equivalent.
+
+In many simple cases, you can ask Swift
+to provide synthesized implementations of the equivalence operators for you.
+Swift provides synthesized implementations
+for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the ``Equatable`` protocol
+* Enumerations that have only associated types that conform to the ``Equatable`` protocol
+* Enumerations that have no associated types
+
+To receive a synthesized implementation of ``==``,
+declare ``Equatable`` conformance
+in the file that contains the original declaration,
+without implementing an ``==`` operator yourself.
+
+The example below defines a ``Vector3D`` structure
+for a three-dimensional position vector ``(x, y, z)``,
+similar to the ``Vector2D`` structure.
+Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
+``Vector3D`` receives synthesized implementations
+of the equivalence operators.
+
+.. testcode:: equatable_synthesis
+
+   -> struct Vector3D: Equatable {
+         var x = 0.0, y = 0.0, z = 0.0
+      }
+   ---
+   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   << // twoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
+   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   << // anotherTwoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
+   -> if twoThreeFour == anotherTwoThreeFour {
+          print("These two vectors are also equivalent.")
+      }
+   <- These two vectors are also equivalent.
 
 .. _AdvancedOperators_CustomOperators:
 
@@ -845,9 +882,9 @@ and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
 it has been given the same precedence group
 as additive infix operators such as ``+`` and ``-``.
-For a complete list of the operator precedence groups and associativity settings,
-for the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For information about the operators provided by the Swift standard library,
+including a complete list of the operator precedence groups and associativity settings,
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 For more information about precedence groups and to see the syntax for
 defining your own operators and precedence groups,
 see :ref:`Declarations_OperatorDeclaration`.
@@ -859,18 +896,29 @@ see :ref:`Declarations_OperatorDeclaration`.
    the postfix operator is applied first.
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
+   :compile: true
 
    -> prefix operator +++
    -> postfix operator ---
-   -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
-   -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
-   -> +++1---
-   << // r0 : Int = 0
+   -> extension Int {
+          static prefix func +++ (x: Int) -> Int {
+              return x * 2
+          }
+      }
+   -> extension Int {
+          static postfix func --- (x: Int) -> Int {
+              return x - 1
+          }
+      }
+   -> let x = +++1---
+   -> let y = +++(1---)
+   -> let z = (+++1)---
+   -> print(x, y, z)
+   <- 0 0 1
+   // Note that x==y
 
-.. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
-   This is being tracked as rdar://16061044.
-   If this Radar is fixed, the operator declaration above should be split over multiple lines
-   for consistency with the rest of the code.
+.. Use compiled code to work around a REPL limitation
+   <rdar://problem/16061044> Custom operator declarations cannot be written over multiple lines in the REPL
 
 .. The following needs more work...
 

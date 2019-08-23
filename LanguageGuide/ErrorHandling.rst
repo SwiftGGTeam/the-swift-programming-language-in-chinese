@@ -28,8 +28,7 @@ and to communicate to the user any errors it can't resolve.
    Error handling in Swift interoperates with error handling patterns
    that use the ``NSError`` class in Cocoa and Objective-C.
    For more information about this class,
-   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Handling Cocoa Errors in Swift <https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift>`_.
 
 .. _ErrorHandling_Represent:
 
@@ -236,7 +235,7 @@ propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)``
           "Bob": "Licorice",
           "Eve": "Pretzels",
       ]
-   << // favoriteSnacks : [String : String] = ["Bob": "Licorice", "Alice": "Chips", "Eve": "Pretzels"]
+   << // favoriteSnacks : [String : String] = ["Eve": "Pretzels", "Bob": "Licorice", "Alice": "Chips"]
    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
           let snackName = favoriteSnacks[person] ?? "Candy Bar"
           try vendingMachine.vend(itemNamed: snackName)
@@ -307,6 +306,8 @@ Here is the general form of a ``do``-``catch`` statement:
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
        <#statements#>
+   } catch {
+       <#statements#>
    }
 
 You write a pattern after ``catch`` to indicate what errors
@@ -317,21 +318,12 @@ and binds the error to a local constant named ``error``.
 For more information about pattern matching,
 see :doc:`../ReferenceManual/Patterns`.
 
-The ``catch`` clauses don't have to handle every possible error
-that the code in its ``do`` clause can throw.
-If none of the ``catch`` clauses handle the error,
-the error propagates to the surrounding scope.
-However, the error must be handled by *some* surrounding scope ---
-either by an enclosing ``do``-``catch`` clause
-that handles the error
-or by being inside a throwing function.
-For example, the following code handles all three cases
-of the ``VendingMachineError`` enumeration,
-but all other errors have to be handled by its surrounding scope:
-
 .. TODO: Call out the reasoning why we don't let you
    consider a catch clause exhaustive by just matching
    the errors in an given enum without a general catch/default.
+
+For example, the following code matches against all three cases
+of the ``VendingMachineError`` enumeration.
 
 .. testcode:: errorHandling
 
@@ -340,12 +332,15 @@ but all other errors have to be handled by its surrounding scope:
    -> vendingMachine.coinsDeposited = 8
    -> do {
           try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
+          print("Success! Yum.")
       } catch VendingMachineError.invalidSelection {
           print("Invalid Selection.")
       } catch VendingMachineError.outOfStock {
           print("Out of Stock.")
       } catch VendingMachineError.insufficientFunds(let coinsNeeded) {
           print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
+      } catch {
+          print("Unexpected error: \(error).")
       }
    <- Insufficient funds. Please insert an additional 2 coins.
 
@@ -355,8 +350,56 @@ because it can throw an error.
 If an error is thrown,
 execution immediately transfers to the ``catch`` clauses,
 which decide whether to allow propagation to continue.
+If no pattern is matched, the error gets caught by the final ``catch``
+clause and is bound to a local ``error`` constant.
 If no error is thrown,
 the remaining statements in the ``do`` statement are executed.
+
+The ``catch`` clauses don't have to handle every possible error
+that the code in the ``do`` clause can throw.
+If none of the ``catch`` clauses handle the error,
+the error propagates to the surrounding scope.
+However, the propagated error
+must be handled by *some* surrounding scope.
+In a nonthrowing function,
+an enclosing ``do``-``catch`` clause
+must handle the error.
+In a throwing function,
+either an enclosing ``do``-``catch`` clause
+or the caller
+must handle the error.
+If the error propagates to the top-level scope
+without being handled,
+you'll get a runtime error.
+
+For example, the above example can be written so any
+error that isn't a ``VendingMachineError`` is instead
+caught by the calling function:
+
+.. testcode:: errorHandling
+
+    -> func nourish(with item: String) throws {
+           do {
+               try vendingMachine.vend(itemNamed: item)
+           } catch is VendingMachineError {
+               print("Invalid selection, out of stock, or not enough money.")
+           }
+       }
+    ---
+    -> do {
+           try nourish(with: "Beet-Flavored Chips")
+       } catch {
+           print("Unexpected non-vending-machine-related error: \(error)")
+       }
+    <- Invalid selection, out of stock, or not enough money.
+
+In the ``nourish(with:)`` function,
+if ``vend(itemNamed:)`` throws an error that's
+one of the cases of the ``VendingMachineError`` enumeration,
+``nourish(with:)`` handles the error by printing a message.
+Otherwise,
+``nourish(with:)`` propagates the error to its call site.
+The error is then caught by the general ``catch`` clause.
 
 .. _ErrorHandling_Optional:
 
@@ -464,9 +507,12 @@ The deferred statements may not contain any code
 that would transfer control out of the statements,
 such as a ``break`` or a ``return`` statement,
 or by throwing an error.
-Deferred actions are executed in reverse order of how they are specified ---
-that is, the code in the first ``defer`` statement executes
-after code in the second, and so on.
+Deferred actions are executed in the reverse of
+the order that they're written in your source code.
+That is, the code in the first ``defer`` statement executes last,
+the code in the second ``defer`` statement executes second to last,
+and so on.
+The last ``defer`` statement in source code order executes first.
 
 .. testcode:: defer
 

@@ -230,7 +230,7 @@ The ``Point`` example shown above could have been written in the following way i
    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveBy(x:y:)`` method creates a brand new structure
+This version of the mutating ``moveBy(x:y:)`` method creates a new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
@@ -271,12 +271,12 @@ Type Methods
 ------------
 
 Instance methods, as described above,
-are methods that are called on an instance of a particular type.
+are methods that you call on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
 You indicate type methods by writing
 the ``static`` keyword before the method's ``func`` keyword.
-Classes may also use the ``class`` keyword
+Classes can use the ``class`` keyword instead,
 to allow subclasses to override the superclass’s implementation of that method.
 
 .. note::

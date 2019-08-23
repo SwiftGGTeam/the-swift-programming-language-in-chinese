@@ -2,7 +2,7 @@ Types
 =====
 
 In Swift, there are two kinds of types: named types and compound types.
-A :newTerm:`named type` is a type that can be given a particular name when it is defined.
+A :newTerm:`named type` is a type that can be given a particular name when it's defined.
 Named types include classes, structures, enumerations, and protocols.
 For example,
 instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
@@ -14,7 +14,7 @@ Data types that are normally considered basic or primitive in other languages---
 such as types that represent numbers, characters, and strings---
 are actually named types,
 defined and implemented in the Swift standard library using structures.
-Because they are named types,
+Because they're named types,
 you can extend their behavior to suit the needs of your program,
 using an extension declaration,
 discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_ExtensionDeclaration`.
@@ -22,7 +22,7 @@ discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_Extension
 A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
 There are two compound types: function types and tuple types.
 A compound type may contain named types and other compound types.
-For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
+For example, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
@@ -33,32 +33,22 @@ For example, ``(Int)`` is equivalent to ``Int``.
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
-.. langref-grammar
-
-    type ::= type-function
-    type ::= type-array
-    type-simple ::= type-identifier
-    type-simple ::= type-tuple
-    type-simple ::= type-composition
-    type-simple ::= type-metatype
-    type-simple ::= type-optional
-    type-annotation ::= attribute-list type
-
 .. syntax-grammar::
 
     Grammar of a type
 
+    type --> function-type
     type --> array-type
     type --> dictionary-type
-    type --> function-type
     type --> type-identifier
     type --> tuple-type
     type --> optional-type
     type --> implicitly-unwrapped-optional-type
     type --> protocol-composition-type
+    type --> opaque-type
     type --> metatype-type
+    type --> self-type
     type --> ``Any``
-    type --> ``Self``
     type --> ``(`` type ``)``
 
 
@@ -74,7 +64,7 @@ as the following examples show:
 .. testcode:: type-annotation
 
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
-    << // someTuple : (Double, Double) = (3.1415899999999999, 2.71828)
+    << // someTuple : (Double, Double) = (3.14159, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
@@ -98,7 +88,7 @@ Type annotations can contain an optional list of type attributes before the type
 Type Identifier
 ---------------
 
-A type identifier refers to either a named type
+A :newTerm:`type identifier` refers to either a named type
 or a type alias of a named or compound type.
 
 Most of the time, a type identifier directly refers to a named type
@@ -107,7 +97,7 @@ For example, ``Int`` is a type identifier that directly refers to the named type
 and the type identifier ``Dictionary<String, Int>`` directly refers
 to the named type ``Dictionary<String, Int>``.
 
-There are two cases in which a type identifier does not refer to a type with the same name.
+There are two cases in which a type identifier doesn't refer to a type with the same name.
 In the first case, a type identifier refers to a type alias of a named or compound type.
 For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
@@ -130,11 +120,6 @@ that is declared in the ``ExampleModule`` module.
     !! var someValue: ExampleModule.MyType
     !!                ^~~~~~~~~~~~~
 
-.. langref-grammar
-
-    type-identifier ::= type-identifier-component ('.' type-identifier-component)*
-    type-identifier-component ::= identifier generic-args?
-
 .. syntax-grammar::
 
     Grammar of a type identifier
@@ -148,7 +133,7 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-A tuple type is a comma-separated list of types, enclosed in parentheses.
+A :newTerm:`tuple type` is a comma-separated list of types, enclosed in parentheses.
 
 You can use a tuple type as the return type of a function
 to enable the function to return a single tuple containing multiple values.
@@ -175,13 +160,6 @@ that name is part of the type.
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
 
-.. langref-grammar
-
-    type-tuple ::= '(' type-tuple-body? ')'
-    type-tuple-body ::= type-tuple-element (',' type-tuple-element)* '...'?
-    type-tuple-element ::= identifier ':' type-annotation
-    type-tuple-element ::= type-annotation
-
 .. syntax-grammar::
 
     Grammar of a tuple type
@@ -197,7 +175,7 @@ except for ``Void`` which is a type alias for the empty tuple type, ``()``.
 Function Type
 -------------
 
-A function type represents the type of a function, method, or closure
+A :newTerm:`function type` represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow (``->``):
 
 .. syntax-outline::
@@ -244,6 +222,12 @@ In contrast, without parentheses,
 ``(Int, Int) -> Void`` is the type
 of a function that takes two ``Int`` parameters
 and doesn't return any value.
+Likewise, because ``Void`` is a type alias for ``()``,
+the function type ``(Void) -> Void``
+is the same as ``(()) -> ()`` ---
+a function that takes a single argument that is an empty tuple.
+These types are not the same as ``() -> ()`` ---
+a function that takes no arguments.
 
 Argument names in functions and methods
 are not part of the corresponding function type.
@@ -305,8 +289,7 @@ the function type ``(Int) -> (Int) -> Int`` is understood as ``(Int) -> ((Int) -
 that is, a function that takes an ``Int`` and returns
 another function that takes and returns an ``Int``.
 
-Function types that can throw an error must be marked with the ``throws`` keyword,
-and function types that can rethrow an error must be marked with the ``rethrows`` keyword.
+Function types that can throw or rethrow an error must be marked with the ``throws`` keyword.
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
@@ -331,16 +314,82 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
    >> b(3)(5)
    << // r1 : Int = 8
 
-.. langref-grammar
+.. _Types_FunctionParameterConflicts:
 
-    type-function ::= type-tuple '->' type-annotation
+Restrictions for Nonescaping Closures
++++++++++++++++++++++++++++++++++++++
+
+A parameter that's a nonescaping function
+can't be stored in a property, variable, or constant of type ``Any``,
+because that might allow the value to escape.
+
+.. assertion:: cant-store-nonescaping-as-Any
+
+    -> func f(g: ()->Void) { let x: Any = g }
+    !! <REPL Input>:1:36: error: converting non-escaping value to 'Any' may allow it to escape
+    !! func f(g: ()->Void) { let x: Any = g }
+    !!                                    ^
+
+A parameter that's a nonescaping function
+can't be passed as an argument to another nonescaping function parameter.
+This restriction helps Swift perform
+more of its checks for conflicting access to memory
+at compile time instead of at runtime.
+For example:
+
+.. testcode:: memory-nonescaping-functions
+
+    -> let external: (() -> Void) -> Void = { _ in () }
+    << // external : (() -> Void) -> Void = (Function)
+    -> func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
+           first { first {} }       // Error
+           second { second {}  }    // Error
+
+           first { second {} }      // Error
+           second { first {} }      // Error
+
+           first { external {} }    // OK
+           external { first {} }    // OK
+       }
+    !! <REPL Input>:2:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first { first {} }       // Error
+    !! ^
+    !! <REPL Input>:3:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second { second {}  }    // Error
+    !! ^
+    !! <REPL Input>:5:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! first { second {} }      // Error
+    !! ^
+    !! <REPL Input>:6:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !! second { first {} }      // Error
+    !! ^
+
+In the code above,
+both of the parameters to ``takesTwoFunctions(first:second:)`` are functions.
+Neither parameter is marked ``@escaping``,
+so they're both nonescaping as a result.
+
+The four function calls marked "Error" in the example above
+cause compiler errors.
+Because the ``first`` and ``second`` parameters
+are nonescaping functions,
+they can't be passed as arguments to another nonescaping function parameter.
+In contrast,
+the two function calls marked "OK" don't cause a compiler error.
+These function calls don't violate the restriction
+because ``external`` isn't one of the parameters of ``takesTwoFunctions(first:second:)``.
+
+If you need to avoid this restriction, mark one of the parameters as escaping,
+or temporarily convert one of the nonescaping function parameters to an escaping function
+by using the ``withoutActuallyEscaping(_:do:)`` function.
+For information about avoiding conflicting access to memory,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. syntax-grammar::
 
     Grammar of a function type
 
     function-type --> attributes-OPT function-type-argument-clause ``throws``-OPT ``->`` type
-    function-type --> attributes-OPT function-type-argument-clause ``rethrows`` ``->`` type
 
     function-type-argument-clause --> ``(`` ``)``
     function-type-argument-clause --> ``(`` function-type-argument-list ``...``-OPT ``)``
@@ -417,13 +466,6 @@ the example above, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
 For a detailed discussion of the Swift standard library ``Array`` type,
 see :ref:`CollectionTypes_Arrays`.
 
-.. langref-grammar
-
-    type-array ::= type-simple
-    type-array ::= type-array '[' ']'
-    type-array ::= type-array '[' expr ']'
-
-
 .. syntax-grammar::
 
     Grammar of an array type
@@ -453,9 +495,9 @@ In other words, the following two declarations are equivalent:
 .. assertion:: dictionary-literal
 
     >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
-    << // someDictionary1 : [String : Int] = ["Alex": 31, "Paul": 39]
+    << // someDictionary1 : [String : Int] = ["Paul": 39, "Alex": 31]
     >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    << // someDictionary2 : Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
+    << // someDictionary2 : Dictionary<String, Int> = ["Paul": 39, "Alex": 31]
     >> someDictionary1 == someDictionary2
     <$ : Bool = true
 
@@ -500,13 +542,16 @@ In other words, the following two declarations are equivalent:
     var optionalInteger: Optional<Int>
 
 .. assertion:: optional-literal
+    :compile: true
 
     >> var optionalInteger1: Int?
-    << // optionalInteger1 : Int? = nil
     >> var optionalInteger2: Optional<Int>
-    << // optionalInteger2 : Optional<Int> = nil
-    >> optionalInteger1 == optionalInteger2
-    <$ : Bool = true
+
+.. Assertion above is compiled because the deprecated integrated REPL requires
+   optional values to be initialized when they're created.
+   We can't test the code listing,
+   because of the redeclaration of optionalInteger,
+   so we at least test that the syntax shown in it compiles.
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -541,13 +586,6 @@ no operation is performed and therefore no runtime error is produced.
 
 For more information and to see examples that show how to use optional types,
 see :ref:`TheBasics_Optionals`.
-
-.. langref-grammar
-
-    type-optional ::= type-simple '?'-postfix
-
-.. NOTE: The -postfix disambiguates between two terminals
-    which have the same text but which have different whitespace.
 
 .. syntax-grammar::
 
@@ -597,7 +635,7 @@ have the same ``Optional<Wrapped>`` type as optional values,
 you can use implicitly unwrapped optionals
 in all the same places in your code
 that you can use optionals.
-For instance, you can assign values of implicitly unwrapped
+For example, you can assign values of implicitly unwrapped
 optionals to variables, constants, and properties of optionals, and vice versa.
 
 As with optionals, if you don't provide an initial value when you declare an
@@ -624,7 +662,7 @@ see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 Protocol Composition Type
 -------------------------
 
-A protocol composition type describes a type that conforms to each protocol
+A :newTerm:`protocol composition type` defines a type that conforms to each protocol
 in a list of specified protocols,
 or a type that is a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
@@ -643,25 +681,23 @@ Protocol composition types have the following form:
     <#Protocol 1#> & <#Protocol 2#>
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
-of multiple protocols without having to explicitly define a new, named protocol
+of multiple protocols without explicitly defining a new, named protocol
 that inherits from each protocol you want the type to conform to.
 For example,
-specifying a protocol composition type ``ProtocolA & ProtocolB & ProtocolC`` is
-effectively the same as defining a new protocol ``ProtocolD``
-that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
-but without having to introduce a new name.
-Likewise,
-specifying a protocol composition type ``SuperClass & ProtocolA``
-is effectively the same as declaring a new class ``SubClass``
-that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``,
-but without having to introduce a new name.
+you can use the protocol composition type ``ProtocolA & ProtocolB & ProtocolC``
+instead of declaring a new protocol
+that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``.
+Likewise, you can use ``SuperClass & ProtocolA``
+instead of declaring a new protocol
+that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 
-Each item in a protocol composition list is either
-the name of a class,
-the name of a protocol,
-or a type alias whose underlying type is a protocol composition type,
-a protocol or a class.
-The list can contain at most one class.
+Each item in a protocol composition list is one of the following;
+the list can contain at most one class:
+
+* The name of a class
+* The name of a protocol
+* A type alias whose underlying type
+  is a protocol composition type, a protocol, or a class.
 
 When a protocol composition type contains type aliases,
 it's possible for the same protocol to appear
@@ -679,11 +715,6 @@ is equivalent to ``P & Q & R``.
     -> typealias PQ = P & Q
     -> typealias PQR = PQ & Q & R
 
-.. langref-grammar
-
-    type-composition ::= 'protocol' '<' type-composition-list? '>'
-    type-composition-list ::= type-identifier (',' type-identifier)*
-
 .. syntax-grammar::
 
     Grammar of a protocol composition type
@@ -691,12 +722,65 @@ is equivalent to ``P & Q & R``.
     protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
     protocol-composition-continuation --> type-identifier | protocol-composition-type
 
+
+.. _Types_OpaqueType:
+
+Opaque Type
+-----------
+
+An :newterm:`opaque type` defines a type
+that conforms to a protocol or protocol composition,
+without specifying the underlying concrete type.
+
+Opaque types appear as the return type of a function or subscript,
+or the type of a property.
+Opaque types can't appear as part of a tuple type or a generic type,
+such as the element type of an array or the wrapped type of an optional.
+
+Opaque types have the following form:
+
+.. syntax-outline::
+
+    some <#constraint#>
+
+The *constraint* is a class type,
+protocol type,
+protocol composition type,
+or ``Any``.
+A value can be used as an instance of the opaque type
+only if it's an instance of a type
+that conforms to the listed protocol or protocol composition,
+or inherits from the listed class.
+Code that interacts with an opaque value
+can use the value only in ways
+that are part of the interface defined by the *constraint*.
+
+.. The wording above intentionally follows generic constraints
+   because the meaninging here and there is the same,
+   and the compiler uses the same machinery for both under the hood.
+
+Protocol declarations can't include opaque types.
+Classes can't use an opaque type as the return type of a nonfinal method.
+
+A function that uses an opaque type as its return type
+must return values that share a single underlying type.
+The return type can include types
+that are part of the function's generic type parameters.
+For example, a function ``someFunction<T>()``
+could return a value of type ``T`` or ``Dictionary<String, T>``.
+
+.. syntax-grammar::
+
+    Grammar of an opaque type
+
+    opaque-type --> ``some`` type
+
 .. _Types_MetatypeType:
 
 Metatype Type
 -------------
 
-A metatype type refers to the type of any type,
+A :newTerm:`metatype type` refers to the type of any type,
 including class types, structure types, enumeration types, and protocol types.
 
 The metatype of a class, structure, or enumeration type is
@@ -761,23 +845,105 @@ or the entire class marked with the ``final`` keyword.
     -> let anotherInstance = metatype.init(string: "some string")
     << // anotherInstance : AnotherSubClass = REPL.AnotherSubClass
 
-
-.. langref-grammar
-
-    type-metatype ::= type-simple '.' 'metatype'
-
 .. syntax-grammar::
 
     Grammar of a metatype type
 
     metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
 
+
+.. _Types_SelfType:
+
+Self Type
+---------
+
+The ``Self`` type isn't a specific type,
+but rather lets you conveniently refer to the current type
+without repeating or knowing that type's name.
+
+In a protocol declaration or a protocol member declaration,
+the ``Self`` type refers to the eventual type that conforms to the protocol.
+
+In a structure, class, or enumeration declaration,
+the ``Self`` type refers to the type introduced by the declaration.
+Inside the declaration for a member of a type,
+the ``Self`` type refers to that type.
+In the members of a class declaration,
+``Self`` can appear as the return type of a method
+and in the body of a method,
+but not in any other context.
+For example,
+the code below shows an instance method ``f``
+whose return type is ``Self``.
+
+.. assertion:: self-in-class-cant-be-a-parameter-type
+
+   -> class C { func f(c: Self) { } }
+   !! <REPL Input>:1:21: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !! class C { func f(c: Self) { } }
+   !!                     ^~~~
+   !!                     C
+
+.. assertion:: self-in-class-cant-be-a-computed-property-type
+
+   -> class C { var s: Self { return self } }
+   !! <REPL Input>:1:18: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !! class C { var s: Self { return self } }
+   !!                 ^~~~
+   !!                 C
+
+.. testcode:: self-gives-dynamic-type
+
+   -> class Superclass {
+          func f() -> Self { return self }
+      }
+   -> let x = Superclass()
+   << // x : Superclass = REPL.Superclass
+   -> print(type(of: x.f()))
+   <- Superclass
+   ---
+   -> class Subclass: Superclass { }
+   -> let y = Subclass()
+   << // y : Subclass = REPL.Subclass
+   -> print(type(of: y.f()))
+   <- Subclass
+   ---
+   -> let z: Superclass = Subclass()
+   << // z : Superclass = REPL.Subclass
+   -> print(type(of: z.f()))
+   <- Subclass
+
+The last part of the example above shows that
+``Self`` refers to the runtime type ``Subclass`` of the value of ``z``,
+not the compile-time type ``Superclass`` of the variable itself.
+
+.. TODO: Using Self as the return type from a subscript or property doesn't
+   currently work.  The compiler allows it, but you get the wrong type back,
+   and the compiler doesn't enforce that the subscript/property must be
+   read-only.  See https://bugs.swift.org/browse/SR-10326
+
+Inside a nested type declaration,
+the ``Self`` type refers to the type
+introduced by the innermost type declaration.
+
+The ``Self`` type refers to the same type
+as the `type(of:) <//apple_ref/swift/func/s:Fs4typeu0_rFT2ofx_q_/>`_
+function in the Swift standard library.
+Writing ``Self.someStaticMember`` to access a member of the current type
+is the same as writing ``type(of: self).someStaticMember``.
+
+.. syntax-grammar::
+
+   Grammar of a Self type
+
+   self-type --> ``Self``
+
 .. _Types_TypeInheritanceClause:
 
 Type Inheritance Clause
 -----------------------
 
-A type inheritance clause is used to specify which class a named type inherits from
+A :newTerm:`type inheritance clause` is used to specify which class a named type inherits from
 and which protocols a named type conforms to.
 A type inheritance clause begins with a colon (``:``),
 followed by a list of type identifiers.
@@ -786,7 +952,7 @@ Class types can inherit from a single superclass and conform to any number of pr
 When defining a class,
 the name of the superclass must appear first in the list of type identifiers,
 followed by any number of protocols the class must conform to.
-If the class does not inherit from another class,
+If the class doesn't inherit from another class,
 the list can begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
 see :doc:`../LanguageGuide/Inheritance`.
@@ -803,10 +969,6 @@ a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
 to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
-.. langref-grammar
-
-    inheritance ::= ':' type-identifier (',' type-identifier)*
-
 .. syntax-grammar::
 
     Grammar of a type inheritance clause
@@ -819,14 +981,14 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 Type Inference
 --------------
 
-Swift uses type inference extensively,
+Swift uses :newTerm:`type inference` extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
 instead of writing ``var x: Int = 0``, you can write ``var x = 0``,
 omitting the type completely ---
 the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
-For instance, if you write ``let dict: Dictionary = ["A": 1]``,
+For example, if you write ``let dict: Dictionary = ["A": 1]``,
 the compiler infers that ``dict`` has the type ``Dictionary<String, Int>``.
 
 In both of the examples above,
@@ -845,7 +1007,7 @@ causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` ins
     -> let e = 2.71828 // The type of e is inferred to be Double.
     << // e : Double = 2.71828
     -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-    << // eFloat : Float = 2.71828008
+    << // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

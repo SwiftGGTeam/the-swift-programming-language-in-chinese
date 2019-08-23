@@ -13,7 +13,7 @@ In Swift, this can be done in a single line:
 .. testcode:: guided-tour
 
    -> print("Hello, world!")
-   << Hello, world!
+   <- Hello, world!
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you ---
@@ -125,10 +125,10 @@ For example:
    include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
-Use three double quotes (``"""``) for strings
+Use three double quotation marks (``"""``) for strings
 that take up multiple lines.
 Indentation at the start of each quoted line is removed,
-as long as it matches the indentation of the closing quote.
+as long as it matches the indentation of the closing quotation marks.
 For example:
 
 .. testcode:: guided-tour-compiled
@@ -138,13 +138,12 @@ For example:
    >> let apples = 3
    >> let oranges = 5
    -> let quotation = """
-          Even though there's whitespace to the left,
-          the actual lines aren't indented.
-              Except for this line.
-          Double quotes (") can appear without being escaped.
+      I said "I have \(apples) apples."
+      And then I said "I have \(apples + oranges) pieces of fruit."
+      """
 
-          I still have \(apples + oranges) pieces of fruit.
-          """
+.. Can't show an example of indentation in the triple-quoted string above.
+   <rdar://problem/49129068> Swift code formatting damages indentation
 
 Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
@@ -177,8 +176,8 @@ A comma is allowed after the last element.
 
 .. testcode:: guided-tour
 
-    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-    << // shoppingList : [String] = ["catfish", "water", "tulips", "blue paint"]
+    -> var shoppingList = ["catfish", "water", "tulips"]
+    << // shoppingList : [String] = ["catfish", "water", "tulips"]
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
@@ -187,6 +186,14 @@ A comma is allowed after the last element.
         ]
     << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
     -> occupations["Jayne"] = "Public Relations"
+
+Arrays automatically grow as you add elements.
+
+.. testcode:: guided-tour
+
+    -> shoppingList.append("blue paint")
+    -> print(shoppingList)
+    << ["catfish", "bottle of water", "tulips", "blue paint"]
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -234,7 +241,7 @@ Braces around the body are required.
            }
        }
     -> print(teamScore)
-    << 11
+    <- 11
 
 .. REFERENCE
    Jelly babies are a candy/sweet that was closely associated
@@ -272,7 +279,7 @@ to mark the value as optional.
    -> var optionalString: String? = "Hello"
    << // optionalString : String? = Optional("Hello")
    -> print(optionalString == nil)
-   << false
+   <- false
    ---
    -> var optionalName: String? = "John Appleseed"
    << // optionalName : String? = Optional("John Appleseed")
@@ -337,7 +344,7 @@ and tests for equality.
           default:
               print("Everything tastes good in soup.")
       }
-   << Is it a spicy red pepper?
+   <- Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -377,7 +384,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : Array<Int>] = ["Fibonacci": [1, 1, 2, 3, 5, 8], "Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13]]
+   << // interestingNumbers : [String : [Int]] = ["Square": [1, 4, 9, 16, 25], "Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -389,7 +396,7 @@ in an arbitrary order.
           }
       }
    -> print(largest)
-   << 25
+   <- 25
 
 .. admonition:: Experiment
 
@@ -414,7 +421,7 @@ ensuring that the loop is run at least once.
           n *= 2
       }
    -> print(n)
-   << 128
+   <- 128
    ---
    -> var m = 2
    << // m : Int = 2
@@ -422,7 +429,7 @@ ensuring that the loop is run at least once.
           m *= 2
       } while m < 100
    -> print(m)
-   << 128
+   <- 128
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -437,7 +444,7 @@ by using ``..<`` to make a range of indexes.
           total += i
       }
    -> print(total)
-   << 6
+   <- 6
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
@@ -516,9 +523,9 @@ either by name or by number.
     -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
     << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
-    << 120
+    <- 120
     -> print(statistics.2)
-    << 120
+    <- 120
 
 Functions can be nested.
 Nested functions have access to variables
@@ -611,7 +618,7 @@ of their only statement.
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> print(mappedNumbers)
     <$ : [Int] = [60, 57, 21, 36]
-    << [60, 57, 21, 36]
+    <- [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -625,7 +632,7 @@ you can omit the parentheses entirely.
     -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
     <$ : [Int] = [20, 19, 12, 7]
-    << [20, 19, 12, 7]
+    <- [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
 
@@ -793,10 +800,10 @@ properties can have a getter and a setter.
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
     << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
     -> print(triangle.perimeter)
-    << 9.3
+    <- 9.3
     -> triangle.perimeter = 9.9
     -> print(triangle.sideLength)
-    << 3.3
+    <- 3.3000000000000003
 
 In the setter for ``perimeter``,
 the new value has the implicit name ``newValue``.
@@ -847,12 +854,12 @@ is always the same as the side length of its square.
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
    -> print(triangleAndSquare.square.sideLength)
-   << 10.0
+   <- 10.0
    -> print(triangleAndSquare.triangle.sideLength)
-   << 10.0
+   <- 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
    -> print(triangleAndSquare.triangle.sideLength)
-   << 50.0
+   <- 50.0
 
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
@@ -897,6 +904,7 @@ enumerations can have methods associated with them.
            case ace = 1
            case two, three, four, five, six, seven, eight, nine, ten
            case jack, queen, king
+    ---
            func simpleDescription() -> String {
                switch self {
                    case .ace:
@@ -954,6 +962,7 @@ you don't have to provide one.
 
     -> enum Suit {
            case spades, hearts, diamonds, clubs
+    ---
            func simpleDescription() -> String {
                switch self {
                    case .spades:
@@ -1058,7 +1067,7 @@ or it responds with a description of what went wrong.
            case let .failure(message):
                print("Failure...  \(message)")
        }
-    << Sunrise is at 6:00 am and sunset is at 8:09 pm.
+    <- Sunrise is at 6:00 am and sunset is at 8:09 pm.
 
 .. admonition:: Experiment
 
@@ -1092,7 +1101,7 @@ but classes are passed by reference.
 
 .. admonition:: Experiment
 
-   Add a method to ``Card`` that creates
+   Write a function that returns an array containing
    a full deck of cards,
    with one card of each combination of rank and suit.
 
@@ -1145,7 +1154,10 @@ Classes, enumerations, and structs can all adopt protocols.
 
 .. admonition:: Experiment
 
-   Write an enumeration that conforms to this protocol.
+   Add another requirement to ``ExampleProtocol``.
+   What changes do you need to make
+   to ``SimpleClass`` and ``SimpleStructure``
+   so that they still conform to the protocol?
 
 Notice the use of the ``mutating`` keyword
 in the declaration of ``SimpleStructure``
@@ -1171,7 +1183,7 @@ or even to a type that you imported from a library or framework.
            }
         }
     -> print(7.simpleDescription)
-    << The number 7
+    <- The number 7
 
 .. admonition:: Experiment
 
@@ -1190,7 +1202,7 @@ methods outside the protocol definition are not available.
     -> let protocolValue: ExampleProtocol = a
     << // protocolValue : ExampleProtocol = REPL.SimpleClass
     -> print(protocolValue.simpleDescription)
-    << A very simple class.  Now 100% adjusted.
+    <- A very simple class.  Now 100% adjusted.
     // print(protocolValue.anotherProperty)  // Uncomment to see the error
 
 Even though the variable ``protocolValue``
@@ -1261,7 +1273,7 @@ unless you give it a different name.
        } catch {
            print(error)
        }
-    << Job sent
+    <- Job sent
 
 .. admonition:: Experiment
 
@@ -1278,7 +1290,7 @@ unless you give it a different name.
        } catch {
            print(error)
        }
-    << noToner
+    <- noToner
 
 You can provide multiple ``catch`` blocks
 that handle specific errors.
@@ -1300,7 +1312,7 @@ after ``case`` in a switch.
        } catch {
            print(error)
        }
-    << Job sent
+    <- Job sent
 
 .. admonition:: Experiment
 
@@ -1349,7 +1361,7 @@ even though they need to be executed at different times.
     -> fridgeContains("banana")
     <$ : Bool = false
     -> print(fridgeIsOpen)
-    << false
+    <- false
 
 Generics
 --------
@@ -1398,7 +1410,8 @@ or to require a class to have a particular superclass.
 .. testcode:: guided-tour
 
    -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
-          where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+          where T.Element: Equatable, T.Element == U.Element
+      {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {

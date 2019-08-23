@@ -21,7 +21,7 @@ you will retrieve from a collection.
 .. note::
 
    Swift's array, set, and dictionary types are implemented as :newTerm:`generic collections`.
-   For more on generic types and collections, see :doc:`Generics`.
+   For more about generic types and collections, see :doc:`Generics`.
 
 .. TODO: should I mention the Collection protocol, to which both of these conform?
 
@@ -37,7 +37,7 @@ Mutability of Collections
 
 If you create an array, a set, or a dictionary, and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
-This means that you can change (or :newTerm:`mutate`) the collection after it is created
+This means that you can change (or :newTerm:`mutate`) the collection after it's created
 by adding, removing, or changing items in the collection.
 If you assign an array, a set, or a dictionary to a constant,
 that collection is :newTerm:`immutable`,
@@ -64,8 +64,7 @@ The same value can appear in an array multiple times at different positions.
    Swift's ``Array`` type is bridged to Foundation's ``NSArray`` class.
 
    For more information about using ``Array`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Array and NSArray <https://developer.apple.com/documentation/swift/array#2846730>`_.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -126,7 +125,7 @@ and the number of times that value is repeated in the new array (called ``count`
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = Array(repeating: 0.0, count: 3)
-   << // threeDoubles : Array<Double> = [0.0, 0.0, 0.0]
+   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
    /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
    </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
@@ -142,7 +141,7 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
-   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
+   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---
@@ -432,8 +431,7 @@ or when you need to ensure that an item only appears once.
    Swift's ``Set`` type is bridged to Foundation's ``NSSet`` class.
 
    For more information about using ``Set`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Set and NSSet <https://developer.apple.com/documentation/swift/set#2845530>`_.
 
 .. TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 
@@ -534,7 +532,7 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 .. testcode:: sets
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
+   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -553,14 +551,15 @@ Here, the ``favoriteGenres`` set is initialized with three ``String`` values
 A set type cannot be inferred from an array literal alone,
 so the type ``Set`` must be explicitly declared.
 However, because of Swift's type inference,
-you don't have to write the type of the set
-if you're initializing it with an array literal containing values of the same type.
+you don't have to write the type of the set's elements
+if you're initializing it with an array literal
+that contains values of just one type.
 The initialization of ``favoriteGenres`` could have been written in a shorter form instead:
 
 .. testcode:: setsInferred
 
    -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
+   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
 
 Because all values in the array literal are of the same type,
 Swift can infer that ``Set<String>`` is
@@ -579,7 +578,7 @@ check its read-only ``count`` property:
 .. testcode:: setUsage
 
    >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Hip hop", "Rock", "Classical"])
+   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
    -> print("I have \(favoriteGenres.count) favorite music genres.")
    <- I have 3 favorite music genres.
 
@@ -643,9 +642,9 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
    -> for genre in favoriteGenres {
          print("\(genre)")
       }
+   </ Classical
    </ [Tool J]
    </ Hip hop
-   </ Classical
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -695,11 +694,11 @@ with the results of various set operations represented by the shaded regions.
 .. testcode:: setOperations
 
    -> let oddDigits: Set = [1, 3, 5, 7, 9]
-   << // oddDigits : Set<Int> = Set([5, 7, 3, 1, 9])
+   << // oddDigits : Set<Int> = Set([1, 9, 3, 5, 7])
    -> let evenDigits: Set = [0, 2, 4, 6, 8]
-   << // evenDigits : Set<Int> = Set([6, 2, 0, 4, 8])
+   << // evenDigits : Set<Int> = Set([6, 0, 2, 4, 8])
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-   << // singleDigitPrimeNumbers : Set<Int> = Set([5, 7, 2, 3])
+   << // singleDigitPrimeNumbers : Set<Int> = Set([2, 3, 5, 7])
    ---
    -> oddDigits.union(evenDigits).sorted()
    << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -743,9 +742,9 @@ because they share no elements in common.
    -> let houseAnimals: Set = ["🐶", "🐱"]
    << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
    -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-   << // farmAnimals : Set<String> = Set(["🐮", "🐔", "🐑", "🐶", "🐱"])
+   << // farmAnimals : Set<String> = Set(["🐑", "🐮", "🐔", "🐶", "🐱"])
    -> let cityAnimals: Set = ["🐦", "🐭"]
-   << // cityAnimals : Set<String> = Set(["🐦", "🐭"])
+   << // cityAnimals : Set<String> = Set(["🐭", "🐦"])
    ---
    -> houseAnimals.isSubset(of: farmAnimals)
    << // r4 : Bool = true
@@ -778,8 +777,7 @@ the definition for a particular word.
    Swift's ``Dictionary`` type is bridged to Foundation's ``NSDictionary`` class.
 
    For more information about using ``Dictionary`` with Foundation and Cocoa,
-   see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Bridging Between Dictionary and NSDictionary <https://developer.apple.com/documentation/swift/dictionary#2846239>`_.
 
 .. _CollectionTypes_DictionaryTypeShorthandSyntax:
 
@@ -1032,8 +1030,8 @@ as part of the iteration:
    -> for (airportCode, airportName) in airports {
          print("\(airportCode): \(airportName)")
       }
-   </ YYZ: Toronto Pearson
    </ LHR: London Heathrow
+   </ YYZ: Toronto Pearson
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
@@ -1045,14 +1043,14 @@ by accessing its ``keys`` and ``values`` properties:
    -> for airportCode in airports.keys {
          print("Airport code: \(airportCode)")
       }
-   </ Airport code: YYZ
    </ Airport code: LHR
+   </ Airport code: YYZ
    ---
    -> for airportName in airports.values {
          print("Airport name: \(airportName)")
       }
-   </ Airport name: Toronto Pearson
    </ Airport name: London Heathrow
+   </ Airport name: Toronto Pearson
 
 If you need to use a dictionary's keys or values
 with an API that takes an ``Array`` instance, initialize a new array
@@ -1061,14 +1059,14 @@ with the ``keys`` or ``values`` property:
 .. testcode:: dictionariesInferred
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [String] = ["YYZ", "LHR"]
+   << // airportCodes : [String] = ["LHR", "YYZ"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
-   </ airportCodes is ["YYZ", "LHR"]
+   </ airportCodes is ["LHR", "YYZ"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [String] = ["Toronto Pearson", "London Heathrow"]
+   << // airportNames : [String] = ["London Heathrow", "Toronto Pearson"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
-   </ airportNames is ["Toronto Pearson", "London Heathrow"]
+   </ airportNames is ["London Heathrow", "Toronto Pearson"]
 
 Swift's ``Dictionary`` type does not have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,

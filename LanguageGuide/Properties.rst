@@ -10,7 +10,7 @@ Stored properties are provided only by classes and structures.
 .. assertion:: enumerationsCantProvideStoredProperties
 
    -> enum E { case a, b; var x = 0 }
-   !! <REPL Input>:1:25: error: enums may not contain stored properties
+   !! <REPL Input>:1:25: error: enums must not contain stored properties
    !! enum E { case a, b; var x = 0 }
    !! ^
 
@@ -67,7 +67,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed once it is created:
+whose range length cannot be changed after it is created:
 
 .. testcode:: storedProperties
 
@@ -103,9 +103,9 @@ even if they were declared as variable properties:
    << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !!  <REPL Input>:1:29: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
+   !!  <REPL Input>:1:18: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
    !! rangeOfFourItems.firstValue = 6
-   !! ~~~~~~~~~~~~~~~~            ^
+   !! ~~~~~~~~~~~~~~~~ ^
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
    !! ^~~
@@ -175,7 +175,7 @@ neither of which is shown in full:
    -> class DataImporter {
          /*
          DataImporter is a class to import data from an external file.
-         The class is assumed to take a non-trivial amount of time to initialize.
+         The class is assumed to take a nontrivial amount of time to initialize.
          */
          var filename = "data.txt"
          // the DataImporter class would provide data importing functionality here
@@ -207,7 +207,7 @@ this array of ``String`` data.
 Part of the functionality of the ``DataManager`` class
 is the ability to import data from a file.
 This functionality is provided by the ``DataImporter`` class,
-which is assumed to take a non-trivial amount of time to initialize.
+which is assumed to take a nontrivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
@@ -316,7 +316,7 @@ and so you don't need to store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
-The preceding example creates a new ``Rect`` variable called ``square``.
+The example above creates a new ``Rect`` variable called ``square``.
 The ``square`` variable is initialized with an origin point of ``(0, 0)``,
 and a width and height of ``10``.
 This square is represented by the blue square in the diagram below.
@@ -345,10 +345,10 @@ and moves the square to its new position.
 Shorthand Setter Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a computed property's setter does not define a name for the new value to be set,
+If a computed property's setter doesn't define a name for the new value to be set,
 a default name of ``newValue`` is used.
-Here's an alternative version of the ``Rect`` structure,
-which takes advantage of this shorthand notation:
+Here's an alternative version of the ``Rect`` structure
+that takes advantage of this shorthand notation:
 
 .. testcode:: computedProperties
 
@@ -369,6 +369,38 @@ which takes advantage of this shorthand notation:
       }
 
 .. iBooks Store screenshot ends here.
+
+.. _Properties_ImplicitReturn:
+
+Shorthand Getter Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the entire body of a getter is a single expression,
+the getter implicitly returns that expression.
+Here's an another version of the ``Rect`` structure
+that takes advantage of this shorthand notation
+and the shorthand notation for setters:
+
+.. testcode:: computedProperties
+
+   -> struct CompactRect {
+         var origin = Point()
+         var size = Size()
+         var center: Point {
+            get {
+               Point(x: origin.x + (size.width / 2),
+                     y: origin.y + (size.height / 2))
+            }
+            set {
+               origin.x = newValue.x - (size.width / 2)
+               origin.y = newValue.y - (size.height / 2)
+            }
+         }
+      }
+
+Omitting the ``return`` from a getter
+follows the same rules as omitting ``return`` from a function,
+as described in :ref:`Functions_ImplicitReturns`.
 
 .. _Properties_ReadOnlyComputedProperties:
 
@@ -396,10 +428,12 @@ and can be accessed through dot syntax, but cannot be set to a different value.
       }
    !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be computed properties
    !! let x: Int { return 42 }
-   !! ^
+   !! ~~~        ^
+   !! var
    !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be computed properties
    !! let y: Int { get { return 42 } set {} }
-   !! ^
+   !! ~~~        ^
+   !! var
 
 You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
@@ -474,7 +508,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
             didSet { print("C didSet x from \(oldValue)") }
          }
       }
-   !! <REPL Input>:2:6: error: lazy properties may not have observers
+   !! <REPL Input>:2:6: error: lazy properties must not have observers
    !! lazy var x: Int = 0 {
    !! ^~~~~
    !!-
@@ -642,8 +676,8 @@ and the default name of ``oldValue`` is used instead.
    << didSet
 
 .. TODO: If you add a property observer to a stored property of structure type,
-   that property observer is fired whenever any of the sub-properties
-   of that structure instance are set. This is cool, but non-obvious.
+   that property observer is fired whenever any of the subproperties
+   of that structure instance are set. This is cool, but nonobvious.
    Provide an example of it here.
 
 .. _Properties_GlobalAndLocalVariables:
@@ -793,7 +827,7 @@ The example below shows the syntax for stored and computed type properties:
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
-   !! <REPL Input>:1:34: error: cannot override static var
+   !! <REPL Input>:1:34: error: cannot override static property
    !! class B: A { override static var cp: String { return "B" } }
    !!                                  ^
    !! <REPL Input>:1:22: note: overridden declaration is here

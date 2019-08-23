@@ -247,7 +247,8 @@ If you do not want to use an argument label for an initializer parameter,
 write an underscore (``_``) instead of an explicit argument label for that parameter
 to override the default behavior.
 
-Here's an expanded version of the ``Celsius`` example from earlier,
+Here's an expanded version of the ``Celsius`` example
+from :ref:`Initialization_InitializationParameters` above,
 with an additional initializer to create a new ``Celsius`` instance
 from a ``Double`` value that is already in the Celsius scale:
 
@@ -451,10 +452,10 @@ Memberwise Initializers for Structure Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Structure types automatically receive a :newTerm:`memberwise initializer`
-if they do not define any of their own custom initializers.
+if they don't define any of their own custom initializers.
 Unlike a default initializer,
 the structure receives a memberwise initializer
-even if it has stored properties that do not have default values.
+even if it has stored properties that don't have default values.
 
 .. assertion:: memberwiseInitializersDontRequireDefaultStoredPropertyValues
 
@@ -487,6 +488,28 @@ which you can use to initialize a new ``Size`` instance:
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
    << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
+
+When you call a memberwise initializer,
+you can omit values for any properties
+that have default values.
+In the example above,
+the ``Size`` structure has a default value
+for both its ``height`` and ``width`` properties.
+You can omit either property or both properties,
+and the initializer uses the default value for anything you omit ---
+for example:
+
+.. testcode:: initialization
+
+   -> let zeroByTwo = Size(height: 2.0)
+   << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 2.0)
+   -> print(zeroByTwo.width, zeroByTwo.height)
+   <- 0.0 2.0
+   ---
+   -> let zeroByZero = Size()
+   << // zeroByZero : Size = REPL.Size(width: 0.0, height: 0.0)
+   -> print(zeroByZero.width, zeroByZero.height)
+   <- 0.0 0.0
 
 .. _Initialization_InitializerDelegationForValueTypes:
 
@@ -737,7 +760,7 @@ from the superclass, to satisfy rule 1 from above.
 
    These rules don't affect how users of your classes *create* instances of each class.
    Any initializer in the diagram above can be used to create
-   a fully-initialized instance of the class they belong to.
+   a fully initialized instance of the class they belong to.
    The rules only affect how you write the implementation of the class's initializers.
 
 The figure below shows a more complex class hierarchy for four classes.
@@ -859,7 +882,7 @@ There are no further superclasses to initialize,
 and so no further delegation is needed.
 
 As soon as all properties of the superclass have an initial value,
-its memory is considered fully initialized, and Phase 1 is complete.
+its memory is considered fully initialized, and phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
@@ -1065,6 +1088,41 @@ to see how its ``numberOfWheels`` property has been updated:
    -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
 
+If a subclass initializer performs no customization
+in phase 2 of the initialization process,
+and the superclass has a zero-argument designated initializer,
+you can omit a call to ``super.init()``
+after assigning values to all of the subclass's stored properties.
+
+This example defines another subclass of ``Vehicle``, called ``Hoverboard``.
+In its initializer, the ``Hoverboard`` class sets only its ``color`` property.
+Instead of making an explicit call to ``super.init()``,
+this initializer relies on an implicit call to its superclass's initializer
+to complete the process.
+
+.. testcode:: initializerInheritance
+
+   -> class Hoverboard: Vehicle { 
+          var color: String 
+          init(color: String) { 
+              self.color = color
+              // super.init() implicitly called here
+          } 
+          override var description: String { 
+              return "\(super.description) in a beautiful \(color)"
+          } 
+      }
+
+An instance of ``Hoverboard`` uses the default number of wheels
+supplied by the ``Vehicle`` initializer.
+
+.. testcode:: initializerInheritance
+
+   -> let hoverboard = Hoverboard(color: "silver")
+   << // hoverboard : Hoverboard = REPL.Hoverboard
+   -> print("Hoverboard: \(hoverboard.description)")
+   </ Hoverboard: 0 wheel(s) in a beautiful silver
+
 .. note::
 
    Subclasses can modify inherited variable properties during initialization,
@@ -1095,9 +1153,9 @@ to see how its ``numberOfWheels`` property has been updated:
             constantProperty = 0
          }
       }
-   !!  <REPL Input>:5:26: error: cannot assign to property: 'constantProperty' is a 'let' constant
+   !!  <REPL Input>:5:9: error: cannot assign to property: 'constantProperty' is a 'let' constant
    !! constantProperty = 0
-   !! ~~~~~~~~~~~~~~~~ ^
+   !! ^~~~~~~~~~~~~~~~
    !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
    !! let constantProperty: Int
    !! ^~~
@@ -1489,7 +1547,7 @@ the initializer triggers an initialization failure:
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
-   In the example above, an empty string (``""``) is a valid, nonoptional ``String``.
+   In the example above, an empty string (``""``) is a valid, non-optional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,

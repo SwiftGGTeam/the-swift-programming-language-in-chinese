@@ -1,29 +1,21 @@
 Version Compatibility
 =====================
 
-This book describes Swift 4.0,
-which is the default version of Swift included in Xcode 9.
-You can use Xcode 9 to build targets
-that are written in either Swift 4 or Swift 3.
+This book describes Swift 5.1,
+the default version of Swift that's included in Xcode 11.
+You can use Xcode 11 to build targets
+that are written in either Swift 5.1, Swift 4.2, or Swift 4.
 
 .. assertion:: swift-version
 
-   >> #if swift(>=4.0.1)
+   >> #if swift(>=5.1.1)
    >>     print("Too new")
-   >> #elseif swift(>=4.0)
+   >> #elseif swift(>=5.1.0)
    >>     print("Just right")
    >> #else
    >>     print("Too old")
    >> #endif
    << Just right
-
-.. note::
-
-    When the Swift 4 compiler is working with Swift 3 code,
-    it identifies its language version as 3.2 ---
-    this means you can use conditional compilation blocks
-    like ``#if swift(>=3.2)`` to write code
-    that is compatible with multiple versions of the Swift compiler.
 
 .. The incantation to determine which Swift you're on:
 
@@ -37,21 +29,23 @@ that are written in either Swift 4 or Swift 3.
        print("An older compiler")
    #endif
 
-When you use Xcode 9 to build Swift 3 code,
-most of the new Swift 4 functionality is available.
+When you use Xcode 11 to build Swift 4 and Swift 4.2 code,
+most Swift 5.1 functionality is available.
 That said,
-the following features are available only to Swift 4 code:
+the following changes are available only to code that uses Swift 5.1 or later:
 
-- Substring operations return an instance of the ``Substring`` type,
-  instead of ``String``.
-- The ``@objc`` attribute is implicitly added in fewer places.
-- Extensions to a type in the same file
-  can access that type's private members.
+- Functions that return an opaque type require the Swift 5.1 runtime.
+- The ``try?`` expression doesn't introduce an extra level of optionality
+  to expressions that already return optionals.
+- Large integer literal initialization expressions are inferred
+  to be of the correct integer type.
+  For example, ``UInt64(0xffff_ffff_ffff_ffff)`` evaluates to the correct value
+  rather than overflowing.
 
-A target written in Swift 4 can depend on
-a target that's written using Swift 3,
+A target written in Swift 5.1 can depend on
+a target that's written in Swift 4.2 or Swift 4,
 and vice versa.
 This means, if you have a large project
-that is divided into multiple frameworks,
-you can migrate your code from Swift 3 to Swift 4
+that's divided into multiple frameworks,
+you can migrate your code from Swift 4 to Swift 5.1
 one framework at a time.

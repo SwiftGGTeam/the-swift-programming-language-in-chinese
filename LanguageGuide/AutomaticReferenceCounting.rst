@@ -17,11 +17,9 @@ Using ARC in Swift is very similar to the approach described in
 `Transitioning to ARC Release Notes <//apple_ref/doc/uid/TP40011226>`_
 for using ARC with Objective-C.
 
-.. note::
-
-   Reference counting only applies to instances of classes.
-   Structures and enumerations are value types, not reference types,
-   and are not stored and passed by reference.
+Reference counting applies only to instances of classes.
+Structures and enumerations are value types, not reference types,
+and are not stored and passed by reference.
 
 .. _AutomaticReferenceCounting_HowARCWorks:
 
@@ -456,7 +454,7 @@ before a property or variable declaration.
 An unowned reference is expected to always have a value.
 As a result,
 ARC never sets an unowned reference's value to ``nil``,
-which means that unowned references are defined using nonoptional types.
+which means that unowned references are defined using non-optional types.
 
 ..  Everything that unowned can do, weak can do slower and more awkwardly
    (but still correctly).
@@ -484,7 +482,7 @@ In this data model, a customer may or may not have a credit card,
 but a credit card will *always* be associated with a customer.
 A ``CreditCard`` instance never outlives the ``Customer`` that it refers to.
 To represent this, the ``Customer`` class has an optional ``card`` property,
-but the ``CreditCard`` class has an unowned (and nonoptional) ``customer`` property.
+but the ``CreditCard`` class has an unowned (and non-optional) ``customer`` property.
 
 Furthermore, a new ``CreditCard`` instance can *only* be created
 by passing a ``number`` value and a ``customer`` instance
@@ -584,7 +582,7 @@ after the ``john`` variable is set to ``nil``.
     you need to disable runtime safety checks ---
     for example, for performance reasons.
     As with all unsafe operations,
-    you take on the responsiblity for checking that code for safety.
+    you take on the responsibility for checking that code for safety.
 
     You indicate an unsafe unowned reference by writing ``unowned(unsafe)``.
     If you try to access an unsafe unowned reference
@@ -697,7 +695,7 @@ without needing to use an exclamation mark to unwrap its optional value:
 
 In the example above, the use of an implicitly unwrapped optional
 means that all of the two-phase class initializer requirements are satisfied.
-The ``capitalCity`` property can be used and accessed like a nonoptional value
+The ``capitalCity`` property can be used and accessed like a non-optional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 
@@ -964,7 +962,8 @@ This enables you to check for their existence within the closure's body.
    rather than a weak reference.
 
 An unowned reference is the appropriate capture method to use to resolve
-the strong reference cycle in the ``HTMLElement`` example from earlier.
+the strong reference cycle in the ``HTMLElement`` example
+from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above.
 Here's how you write the ``HTMLElement`` class to avoid the cycle:
 
 .. testcode:: unownedReferencesForClosures
@@ -1026,3 +1025,4 @@ as can be seen from the printing of its deinitializer message in the example bel
 
 For more information about capture lists,
 see :ref:`Expressions_CaptureLists`.
+

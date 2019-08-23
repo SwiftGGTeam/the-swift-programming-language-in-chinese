@@ -45,24 +45,24 @@ For more details, see :ref:`Protocols_Extensions`.
             print("called overridden foo")
          }
       }
+   !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
+   !! override var x: Int {
+   !!              ^
+   !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
+   !! var x = 0
+   !!     ^
+   !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
+   !! override func foo() {
+   !!               ^
+   !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
+   !! func foo() {}
+   !!      ^
    !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
    !! override var x: Int {
    !! ~~~~~~~~     ^
-   !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
-   !! override var x: Int {
-   !! ^
-   !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
-   !! var x = 0
-   !! ^
    !! /tmp/swifttest.swift:11:18: error: method does not override any method from its superclass
    !! override func foo() {
    !! ~~~~~~~~      ^
-   !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
-   !! override func foo() {
-   !! ^
-   !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
-   !! func foo() {}
-   !! ^
 
 Extension Syntax
 ----------------
@@ -122,11 +122,11 @@ to provide basic support for working with distance units:
          var ft: Double { return self / 3.28084 }
       }
    -> let oneInch = 25.4.mm
-   << // oneInch : Double = 0.025399999999999999
+   << // oneInch : Double = 0.0254
    -> print("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
-   << // threeFeet : Double = 0.91439997073920098
+   << // threeFeet : Double = 0.914399970739201
    -> print("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 
@@ -171,7 +171,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    -> class C {}
    -> extension C { var x = 0 }
-   !! /tmp/swifttest.swift:2:19: error: extensions may not contain stored properties
+   !! /tmp/swifttest.swift:2:19: error: extensions must not contain stored properties
    !! extension C { var x = 0 }
    !!                   ^
 
@@ -193,17 +193,19 @@ but they cannot add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers
 must always be provided by the original class implementation.
 
-.. note::
+If you use an extension to add an initializer to a value type that provides
+default values for all of its stored properties
+and does not define any custom initializers,
+you can call the default initializer and memberwise initializer for that value type
+from within your extension's initializer.
+This wouldn't be the case if you had written the initializer
+as part of the value type's original implementation,
+as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
 
-   If you use an extension to add an initializer to a value type that provides
-   default values for all of its stored properties
-   and does not define any custom initializers,
-   you can call the default initializer and memberwise initializer for that value type
-   from within your extension's initializer.
-
-   This would not be the case if you had written the initializer
-   as part of the value type's original implementation,
-   as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
+If you use an extension to add an initializer to a structure
+that was declared in another module,
+the new initializer can't access ``self`` until it calls
+an initializer from the defining module.
 
 The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
 The example also defines two supporting structures called ``Size`` and ``Point``,

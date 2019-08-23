@@ -136,7 +136,7 @@ Variadic parameters can be used if you name the variadic parameter.
 Tuples can also be used as parameter types and return types.
 
 The example below shows a closure expression version of the ``backward(_:_:)`` function
-from earlier:
+from above:
 
 .. testcode:: closureSyntax
 
@@ -349,7 +349,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : [Int : String] = [8: "Eight", 2: "Two", 4: "Four", 9: "Nine", 5: "Five", 6: "Six", 7: "Seven", 0: "Zero", 1: "One", 3: "Three"]
+   << // digitNames : [Int : String] = [4: "Four", 0: "Zero", 2: "Two", 3: "Three", 6: "Six", 5: "Five", 8: "Eight", 1: "One", 9: "Nine", 7: "Seven"]
    -> let numbers = [16, 58, 510]
    << // numbers : [Int] = [16, 58, 510]
 
@@ -587,7 +587,7 @@ it is the choice of closure that ``incrementByTen`` *refers to* that is constant
 and not the contents of the closure itself.
 
 This also means that if you assign a closure to two different constants or variables,
-both of those constants or variables will refer to the same closure:
+both of those constants or variables refer to the same closure.
 
 .. testcode:: closures
 
@@ -597,6 +597,16 @@ both of those constants or variables will refer to the same closure:
    << // r5 : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
+   ---
+   -> incrementByTen()
+   << // r6 : Int = 60
+   /> returns a value of \(r6)
+   </ returns a value of 60
+
+The example above shows that calling ``alsoIncrementByTen``
+is the same as calling ``incrementByTen``.
+Because both of them refer to the same closure,
+they both increment and return the same running total.
 
 
 .. _Closures_Noescape:

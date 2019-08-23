@@ -13,10 +13,10 @@ Swift also provides powerful versions of the three primary collection types,
 as described in :doc:`CollectionTypes`.
 
 Like C, Swift uses variables to store and refer to values by an identifying name.
-Swift also makes extensive use of variables whose values cannot be changed.
+Swift also makes extensive use of variables whose values can't be changed.
 These are known as constants, and are much more powerful than constants in C.
 Constants are used throughout Swift to make code safer and clearer in intent
-when you work with values that do not need to change.
+when you work with values that don't need to change.
 
 In addition to familiar types,
 Swift introduces advanced types not found in Objective-C, such as tuples.
@@ -30,15 +30,15 @@ or “there *isn't* a value at all”.
 Using optionals is similar to using ``nil`` with pointers in Objective-C,
 but they work for any type, not just classes.
 Not only are optionals safer and more expressive than ``nil`` pointers in Objective-C,
-they are at the heart of many of Swift's most powerful features.
+they're at the heart of many of Swift's most powerful features.
 
 Swift is a *type-safe* language,
 which means the language helps you to be clear about the types of values your code can work with.
-If part of your code expects a ``String``,
+If part of your code requires a ``String``,
 type safety prevents you from passing it an ``Int`` by mistake.
 Likewise, type safety prevents you from
 accidentally passing an optional ``String``
-to a piece of code that expects a nonoptional ``String``.
+to a piece of code that requires a non-optional ``String``.
 Type safety helps you catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
@@ -50,7 +50,7 @@ Constants and variables associate a name
 (such as ``maximumNumberOfLoginAttempts`` or ``welcomeMessage``)
 with a value of a particular type
 (such as the number ``10`` or the string ``"Hello"``).
-The value of a :newTerm:`constant` cannot be changed once it is set,
+The value of a :newTerm:`constant` can't be changed once it's set,
 whereas a :newTerm:`variable` can be set to a different value in the future.
 
 .. _TheBasics_DeclaringConstantsAndVariables:
@@ -58,7 +58,7 @@ whereas a :newTerm:`variable` can be set to a different value in the future.
 Declaring Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Constants and variables must be declared before they are used.
+Constants and variables must be declared before they're used.
 You declare constants with the ``let`` keyword
 and variables with the ``var`` keyword.
 Here's an example of how constants and variables can be used
@@ -96,7 +96,7 @@ separated by commas:
 
 .. note::
 
-   If a stored value in your code is not going to change,
+   If a stored value in your code won't change,
    always declare it as a constant with the ``let`` keyword.
    Use variables only for storing values that need to be able to change.
 
@@ -118,7 +118,7 @@ to indicate that the variable can store ``String`` values:
 
    -> var welcomeMessage: String
 
-The colon in the declaration means *“…of type…,”*
+The colon in the declaration means “…of type…,”
 so the code above can be read as:
 
 “Declare a variable called ``welcomeMessage`` that is of type ``String``.”
@@ -145,8 +145,8 @@ separated by commas, with a single type annotation after the final variable name
 
 .. note::
 
-   It is rare that you need to write type annotations in practice.
-   If you provide an initial value for a constant or variable at the point that it is defined,
+   It's rare that you need to write type annotations in practice.
+   If you provide an initial value for a constant or variable at the point that it's defined,
    Swift can almost always infer the type to be used for that constant or variable,
    as described in :ref:`TheBasics_TypeSafetyAndTypeInference`.
    In the ``welcomeMessage`` example above, no initial value is provided,
@@ -164,20 +164,20 @@ including Unicode characters:
 .. testcode:: constantsAndVariables
 
    -> let π = 3.14159
-   << // π : Double = 3.1415899999999999
+   << // π : Double = 3.14159
    -> let 你好 = "你好世界"
    << // 你好 : String = "你好世界"
    -> let 🐶🐮 = "dogcow"
    << // 🐶🐮 : String = "dogcow"
 
-Constant and variable names cannot contain
-whitespace characters, mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+Constant and variable names can't contain
+whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values,
 or line- and box-drawing characters.
 Nor can they begin with a number,
 although numbers may be included elsewhere within the name.
 
 Once you've declared a constant or variable of a certain type,
-you can't redeclare it again with the same name,
+you can't declare it again with the same name,
 or change it to store values of a different type.
 Nor can you change a constant into a variable
 or a variable into a constant.
@@ -200,7 +200,7 @@ In this example, the value of ``friendlyWelcome`` is changed from
    /> friendlyWelcome is now \"\(friendlyWelcome)\"
    </ friendlyWelcome is now "Bonjour!"
 
-Unlike a variable, the value of a constant cannot be changed once it is set.
+Unlike a variable, the value of a constant can't be changed after it's set.
 Attempting to do so is reported as an error when your code is compiled:
 
 .. testcode:: constantsAndVariables
@@ -209,9 +209,9 @@ Attempting to do so is reported as an error when your code is compiled:
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
    // This is a compile-time error: languageName cannot be changed.
-   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
+   !! <REPL Input>:1:1: error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
-   !! ~~~~~~~~~~~~ ^
+   !! ^~~~~~~~~~~~
    !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
    !! let languageName = "Swift"
    !! ^~~
@@ -324,7 +324,7 @@ Semicolons
 ----------
 
 Unlike many other languages,
-Swift does not require you to write a semicolon (``;``) after each statement in your code,
+Swift doesn't require you to write a semicolon (``;``) after each statement in your code,
 although you can do so if you wish.
 However, semicolons *are* required
 if you want to write multiple separate statements on a single line:
@@ -403,8 +403,8 @@ which has the same size as the current platform's native word size:
 
    Use ``UInt`` only when you specifically need
    an unsigned integer type with the same size as the platform's native word size.
-   If this is not the case, ``Int`` is preferred,
-   even when the values to be stored are known to be non-negative.
+   If this isn't the case, ``Int`` is preferred,
+   even when the values to be stored are known to be nonnegative.
    A consistent use of ``Int`` for integer values aids code interoperability,
    avoids the need to convert between different number types,
    and matches integer type inference, as described in :ref:`TheBasics_TypeSafetyAndTypeInference`.
@@ -445,7 +445,7 @@ Type Safety and Type Inference
 Swift is a :newTerm:`type-safe` language.
 A type safe language encourages you to be clear about
 the types of values your code can work with.
-If part of your code expects a ``String``, you can't pass it an ``Int`` by mistake.
+If part of your code requires a ``String``, you can't pass it an ``Int`` by mistake.
 
 Because Swift is type safe,
 it performs :newTerm:`type checks` when compiling your code
@@ -490,7 +490,7 @@ Swift infers that you want to create a ``Double``:
 .. testcode:: typeInference
 
    -> let pi = 3.14159
-   << // pi : Double = 3.1415899999999999
+   << // pi : Double = 3.14159
    // pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -502,7 +502,7 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
    -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Double = 3.1415899999999999
+   << // anotherPi : Double = 3.14159
    // anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
@@ -598,15 +598,15 @@ Numeric Type Conversion
 -----------------------
 
 Use the ``Int`` type for all general-purpose integer constants and variables in your code,
-even if they are known to be non-negative.
+even if they're known to be nonnegative.
 Using the default integer type in everyday situations means that
 integer constants and variables are immediately interoperable in your code
 and will match the inferred type for integer literal values.
 
-Use other integer types only when they are specifically needed for the task at hand,
-because of explicitly-sized data from an external source,
+Use other integer types only when they're specifically needed for the task at hand,
+because of explicitly sized data from an external source,
 or for performance, memory usage, or other necessary optimization.
-Using explicitly-sized types in these situations
+Using explicitly sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 
@@ -619,7 +619,7 @@ The range of numbers that can be stored in an integer constant or variable
 is different for each numeric type.
 An ``Int8`` constant or variable can store numbers between ``-128`` and ``127``,
 whereas a ``UInt8`` constant or variable can store numbers between ``0`` and ``255``.
-A number that will not fit into a constant or variable of a sized integer type
+A number that won't fit into a constant or variable of a sized integer type
 is reported as an error when your code is compiled:
 
 .. testcode:: constantsAndVariablesOverflowError
@@ -646,8 +646,8 @@ you initialize a new number of the desired type with the existing value.
 In the example below,
 the constant ``twoThousand`` is of type ``UInt16``,
 whereas the constant ``one`` is of type ``UInt8``.
-They cannot be added together directly,
-because they are not of the same type.
+They can't be added together directly,
+because they're not of the same type.
 Instead, this example calls ``UInt16(one)`` to create
 a new ``UInt16`` initialized with the value of ``one``,
 and uses this value in place of the original:
@@ -664,7 +664,7 @@ and uses this value in place of the original:
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
 The output constant (``twoThousandAndOne``) is inferred to be of type ``UInt16``,
-because it is the sum of two ``UInt16`` values.
+because it's the sum of two ``UInt16`` values.
 
 ``SomeType(ofInitialValue)`` is the default way to call the initializer of a Swift type
 and pass in an initial value.
@@ -688,9 +688,9 @@ Conversions between integer and floating-point numeric types must be made explic
    -> let three = 3
    << // three : Int = 3
    -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double = 0.14158999999999999
+   << // pointOneFourOneFiveNine : Double = 0.14159
    -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Double = 3.1415899999999999
+   << // pi : Double = 3.14159
    /> pi equals \(pi), and is inferred to be of type Double
    </ pi equals 3.14159, and is inferred to be of type Double
 
@@ -716,8 +716,8 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
    The rules for combining numeric constants and variables are different from
    the rules for numeric literals.
    The literal value ``3`` can be added directly to the literal value ``0.14159``,
-   because number literals do not have an explicit type in and of themselves.
-   Their type is inferred only at the point that they are evaluated by the compiler.
+   because number literals don't have an explicit type in and of themselves.
+   Their type is inferred only at the point that they're evaluated by the compiler.
 
 .. NOTE: this section on explicit conversions could be included in the Operators section.
    I think it's more appropriate here, however,
@@ -750,7 +750,7 @@ you can use the alias anywhere you might use the original name:
    </ maxAmplitudeFound is now 0
 
 Here, ``AudioSample`` is defined as an alias for ``UInt16``.
-Because it is an alias,
+Because it's an alias,
 the call to ``AudioSample.min`` actually calls ``UInt16.min``,
 which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
 
@@ -834,7 +834,7 @@ Tuples
 
 :newTerm:`Tuples` group multiple values into a single compound value.
 The values within a tuple can be of any type
-and do not have to be of the same type as each other.
+and don't have to be of the same type as each other.
 
 In this example, ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -919,9 +919,9 @@ For more information, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 .. note::
 
-   Tuples are useful for temporary groups of related values.
-   They are not suited to the creation of complex data structures.
-   If your data structure is likely to persist beyond a temporary scope,
+   Tuples are useful for simple groups of related values.
+   They're not suited to the creation of complex data structures.
+   If your data structure is likely to be more complex,
    model it as a class or structure, rather than as a tuple.
    For more information, see :doc:`ClassesAndStructures`.
 
@@ -946,7 +946,7 @@ or there *isn't* a value at all.
    For these types,
    Objective-C methods typically return a special value (such as ``NSNotFound``)
    to indicate the absence of a value.
-   This approach assumes that the method's caller knows there is a special value to test against
+   This approach assumes that the method's caller knows there's a special value to test against
    and remembers to check for it.
    Swift's optionals let you indicate the absence of a value for *any type at all*,
    without the need for special constants.
@@ -956,7 +956,7 @@ Swift's ``Int`` type has an initializer
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
-but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
+but the string ``"hello, world"`` doesn't have an obvious numeric value to convert to.
 
 The example below uses the initializer to try to convert a ``String`` into an ``Int``:
 
@@ -996,7 +996,7 @@ by assigning it the special value ``nil``:
 
 .. note::
 
-   ``nil`` cannot be used with nonoptional constants and variables.
+   You can't use ``nil`` with non-optional constants and variables.
    If a constant or variable in your code needs to work with
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
@@ -1012,9 +1012,9 @@ the variable is automatically set to ``nil`` for you:
 
 .. note::
 
-   Swift's ``nil`` is not the same as ``nil`` in Objective-C.
+   Swift's ``nil`` isn't the same as ``nil`` in Objective-C.
    In Objective-C, ``nil`` is a pointer to a nonexistent object.
-   In Swift, ``nil`` is not a pointer --- it is the absence of a value of a certain type.
+   In Swift, ``nil`` isn't a pointer --- it's the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
 .. _TheBasics_IfStatementsAndForcedUnwrapping:
@@ -1027,7 +1027,7 @@ by comparing the optional against ``nil``.
 You perform this comparison with the “equal to” operator (``==``)
 or the “not equal to” operator (``!=``).
 
-If an optional has a value, it is considered to be “not equal to” ``nil``:
+If an optional has a value, it's considered to be “not equal to” ``nil``:
 
 .. testcode:: optionals
 
@@ -1050,7 +1050,7 @@ This is known as :newTerm:`forced unwrapping` of the optional's value:
       }
    <- convertedNumber has an integer value of 123.
 
-For more on the ``if`` statement, see :doc:`ControlFlow`.
+For more about the ``if`` statement, see :doc:`ControlFlow`.
 
 .. note::
 
@@ -1087,11 +1087,11 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = Int(possibleNumber) {
-         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
+         print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("\"\(possibleNumber)\" could not be converted to an integer")
+         print("The string \"\(possibleNumber)\" could not be converted to an integer")
       }
-   <- "123" has an integer value of 123
+   <- The string "123" has an integer value of 123
 
 This code can be read as:
 
@@ -1102,7 +1102,7 @@ If the conversion is successful,
 the ``actualNumber`` constant becomes available for use within
 the first branch of the ``if`` statement.
 It has already been initialized with the value contained *within* the optional,
-and so there is no need to use the ``!`` suffix to access its value.
+and so there's no need to use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
 You can use both constants and variables with optional binding.
@@ -1163,10 +1163,10 @@ Optionals can be checked with an ``if`` statement to see if a value exists,
 and can be conditionally unwrapped with optional binding
 to access the optional's value if it does exist.
 
-Sometimes it is clear from a program's structure that an optional will *always* have a value,
+Sometimes it's clear from a program's structure that an optional will *always* have a value,
 after that value is first set.
-In these cases, it is useful to remove the need
-to check and unwrap the optional's value every time it is accessed,
+In these cases, it's useful to remove the need
+to check and unwrap the optional's value every time it's accessed,
 because it can be safely assumed to have a value all of the time.
 
 These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`.
@@ -1180,8 +1180,8 @@ The primary use of implicitly unwrapped optionals in Swift is during class initi
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
-but can also be used like a nonoptional value,
-without the need to unwrap the optional value each time it is accessed.
+but can also be used like a non-optional value,
+without the need to unwrap the optional value each time it's accessed.
 The following example shows the difference in behavior between
 an optional string and an implicitly unwrapped optional string
 when accessing their wrapped value as an explicit ``String``:
@@ -1194,12 +1194,12 @@ when accessing their wrapped value as an explicit ``String``:
    << // forcedString : String = "An optional string."
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = Optional("An implicitly unwrapped optional string.")
+   << // assumedString : String? = Optional("An implicitly unwrapped optional string.")
    -> let implicitString: String = assumedString // no need for an exclamation mark
    << // implicitString : String = "An implicitly unwrapped optional string."
 
 You can think of an implicitly unwrapped optional as
-giving permission for the optional to be unwrapped automatically whenever it is used.
+giving permission for the optional to be unwrapped automatically whenever it's used.
 Rather than placing an exclamation mark after the optional's name each time you use it,
 you place an exclamation mark after the optional's type when you declare it.
 
@@ -1208,7 +1208,7 @@ you place an exclamation mark after the optional's type when you declare it.
    If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
    you'll trigger a runtime error.
    The result is exactly the same as if you place an exclamation mark
-   after a normal optional that does not contain a value.
+   after a normal optional that doesn't contain a value.
 
 You can still treat an implicitly unwrapped optional like a normal optional,
 to check if it contains a value:
@@ -1216,7 +1216,7 @@ to check if it contains a value:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> if assumedString != nil {
-         print(assumedString)
+         print(assumedString!)
       }
    <- An implicitly unwrapped optional string.
 
@@ -1232,7 +1232,7 @@ to check and unwrap its value in a single statement:
 
 .. note::
 
-   Do not use an implicitly unwrapped optional when there is a possibility of
+   Don't use an implicitly unwrapped optional when there's a possibility of
    a variable becoming ``nil`` at a later point.
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.
@@ -1274,7 +1274,7 @@ When you call a function that can throw an error,
 you prepend the ``try`` keyword to the expression.
 
 Swift automatically propagates errors out of their current scope
-until they are handled by a ``catch`` clause.
+until they're handled by a ``catch`` clause.
 
 .. testcode:: errorHandling
 
@@ -1301,7 +1301,7 @@ to respond to different error conditions:
    >>     case missingIngredients([String])
    >> }
    >> func washDishes() { print("Wash dishes") }
-   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
+   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList)") }
    -> func makeASandwich() throws {
           // ...
       }
@@ -1352,40 +1352,42 @@ the current state of the program is invalid;
 code execution ends, and your app is terminated.
 
 You use assertions and preconditions
-to express the assumptions and expectations
-that you make while coding,
+to express the assumptions you make
+and the expectations you have
+while coding,
 so you can include them as part of your code.
 Assertions help you find mistakes and incorrect assumptions during development,
 and preconditions help you detect issues in production.
+
 In addition to verifying your expectations at runtime,
 assertions and preconditions also become a useful form of documentation
 within the code.
 Unlike the error conditions discussed in :ref:`TheBasics_ErrorHandling` above,
-assertions and preconditions are not used
+assertions and preconditions aren't used
 for recoverable or expected errors.
 Because a failed assertion or precondition
 indicates an invalid program state,
-there is no way to catch a failed assertion.
+there's no way to catch a failed assertion.
 
 Using assertions and preconditions
-is not a substitute for designing your code in such a way
+isn't a substitute for designing your code in such a way
 that invalid conditions are unlikely to arise.
 However,
 using them to enforce valid data and state
 causes your app to terminate more predictably
 if an invalid state occurs,
-and helps makes the problem easier to debug.
+and helps make the problem easier to debug.
 Stopping execution as soon as an invalid state is detected
 also helps limit the damage caused by that invalid state.
 
-The difference between assertions and preconditions is in when they are checked:
+The difference between assertions and preconditions is in when they're checked:
 Assertions are checked only in debug builds,
 but preconditions are checked in both debug and production builds.
 In production builds,
 the condition inside an assertion isn't evaluated.
 This means you can use as many assertions as you want
 during your development process,
-without impacting the performance in production.
+without impacting performance in production.
 
 .. _TheBasics_DebuggingWithAssertions:
 
@@ -1414,7 +1416,7 @@ For example:
    // This assertion fails because -3 is not >= 0.
 
 In this example, code execution continues if ``age >= 0`` evaluates to ``true``,
-that is, if the value of ``age`` is positive.
+that is, if the value of ``age`` is nonnegative.
 If the value of ``age`` is negative, as in the code above,
 then ``age >= 0`` evaluates to ``false``,
 and the assertion fails, terminating the application.
@@ -1444,7 +1446,7 @@ For example:
 
    -> if age > 10 {
           print("You can ride the roller-coaster or the ferris wheel.")
-      } else if age > 0 {
+      } else if age >= 0 {
           print("You can ride the ferris wheel.")
       } else {
           assertionFailure("A person's age can't be less than zero.")
@@ -1484,7 +1486,7 @@ by one of the switch's other cases.
 .. note::
 
     If you compile in unchecked mode (``-Ounchecked``),
-    preconditions are not checked.
+    preconditions aren't checked.
     The compiler assumes that preconditions are always true,
     and it optimizes your code accordingly.
     However, the ``fatalError(_:file:line:)`` function always halts execution,

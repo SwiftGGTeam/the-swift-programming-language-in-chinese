@@ -230,7 +230,7 @@ such as ``T`` in the ``swapTwoValues(_:_:)`` function above.
 
    Always give type parameters upper camel case names
    (such as ``T`` and ``MyTypeParameter``)
-   to indicate that they are a placeholder for a *type*, not a value.
+   to indicate that they're a placeholder for a *type*, not a value.
 
 .. _Generics_GenericTypes:
 
@@ -341,7 +341,7 @@ In this case, ``Element`` is used as a placeholder in three places:
 * To specify that the value returned by the ``pop()`` method
   will be a value of type ``Element``
 
-Because it is a generic type,
+Because it's a generic type,
 ``Stack`` can be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
 
@@ -386,7 +386,7 @@ Extending a Generic Type
 ------------------------
 
 When you extend a generic type,
-you do not provide a type parameter list as part of the extension's definition.
+you don't provide a type parameter list as part of the extension's definition.
 Instead, the type parameter list from the *original* type definition
 is available within the body of the extension,
 and the original type parameter names are used to refer to
@@ -434,7 +434,7 @@ Type Constraints
 ----------------
 
 The ``swapTwoValues(_:_:)`` function and the ``Stack`` type can work with any type.
-However, it is sometimes useful to enforce
+However, it's sometimes useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
 Type constraints specify that a type parameter must
@@ -504,8 +504,8 @@ Here's a nongeneric function called ``findIndex(ofString:in:)``,
 which is given a ``String`` value to find
 and an array of ``String`` values within which to find it.
 The ``findIndex(ofString:in:)`` function returns an optional ``Int`` value,
-which will be the index of the first matching string in the array if it is found,
-or ``nil`` if the string cannot be found:
+which will be the index of the first matching string in the array if it's found,
+or ``nil`` if the string can't be found:
 
 .. testcode:: typeConstraints
 
@@ -582,7 +582,7 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    as described in <link>.
 
 Any type that is ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
-because it is guaranteed to support the equal to operator.
+because it's guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
@@ -624,7 +624,7 @@ Associated Types
 ----------------
 
 When defining a protocol,
-it is sometimes useful to declare one or more associated types
+it's sometimes useful to declare one or more associated types
 as part of the protocol's definition.
 An :newterm:`associated type` gives a placeholder name
 to a type that is used as part of the protocol.
@@ -659,7 +659,7 @@ that any container must provide:
   that takes an ``Int`` index value.
 
 This protocol doesn't specify how the items in the container should be stored
-or what type they are allowed to be.
+or what type they're allowed to be.
 The protocol only specifies the three bits of functionality
 that any type must provide in order to be considered a ``Container``.
 A conforming type can provide additional functionality,
@@ -691,7 +691,8 @@ the type of the items in a ``Container``,
 and to define a type for use with the ``append(_:)`` method and subscript,
 to ensure that the expected behavior of any ``Container`` is enforced.
 
-Here's a version of the nongeneric ``IntStack`` type from earlier,
+Here's a version of the nongeneric ``IntStack`` type
+from :ref:`Generics_GenericTypes` above,
 adapted to conform to the ``Container`` protocol:
 
 .. testcode:: associatedTypes
@@ -735,7 +736,7 @@ Swift can infer the appropriate ``Item`` to use,
 simply by looking at the type of the ``append(_:)`` method's ``item`` parameter
 and the return type of the subscript.
 Indeed, if you delete the ``typealias Item = Int`` line from the code above,
-everything still works, because it is clear what type should be used for ``Item``.
+everything still works, because it's clear what type should be used for ``Item``.
 
 You can also make the generic ``Stack`` type conform to the ``Container`` protocol:
 
@@ -796,12 +797,11 @@ After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_ConstrainAssociatedType:
 
-Using Type Annotations to Constrain an Associated Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding Constraints to an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can add a type annotation to an associated type in a protocol,
-to require that conforming types satisfy the constraints
-described by the type annotation.
+You can add type constraints to an associated type in a protocol
+to require that conforming types satisfy those constraints.
 For example,
 the following code defines a version of ``Container``
 that requires the items in the container to be equatable.
@@ -815,8 +815,100 @@ that requires the items in the container to be equatable.
          subscript(i: Int) -> Item { get }
       }
 
-In order to conform to this version of ``Container``,
+To conform to this version of ``Container``,
 the container's ``Item`` type has to conform to the ``Equatable`` protocol.
+
+.. _Generics_RecursiveProtocol:
+
+Using a Protocol in Its Associated Type's Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A protocol can appear as part of its own requirements.
+For example,
+here's a protocol that refines the ``Container`` protocol,
+adding the requirement of a ``suffix(_:)`` method.
+The ``suffix(_:)`` method
+returns a given number of elements from the end of the container,
+storing them in an instance of the ``Suffix`` type.
+
+.. testcode:: associatedTypes
+
+    -> protocol SuffixableContainer: Container {
+           associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
+           func suffix(_ size: Int) -> Suffix
+       }
+
+In this protocol,
+``Suffix`` is an associated type,
+like the ``Item`` type in the ``Container`` example above.
+``Suffix`` has two constraints:
+It must conform to the ``SuffixableContainer`` protocol
+(the protocol currently being defined),
+and its ``Item`` type must be the same
+as the container's ``Item`` type.
+The constraint on ``Item`` is a generic ``where`` clause,
+which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
+
+Here's an extension of the ``Stack`` type
+from :ref:`Generics_GenericTypes` above
+that adds conformance to the ``SuffixableContainer`` protocol:
+
+.. testcode:: associatedTypes
+
+    -> extension Stack: SuffixableContainer {
+           func suffix(_ size: Int) -> Stack {
+               var result = Stack()
+               for index in (count-size)..<count {
+                   result.append(self[index])
+               }
+               return result
+           }
+           // Inferred that Suffix is Stack.
+       }
+    -> var stackOfInts = Stack<Int>()
+    << // stackOfInts : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    -> stackOfInts.append(10)
+    -> stackOfInts.append(20)
+    -> stackOfInts.append(30)
+    >> stackOfInts.suffix(0)
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    -> let suffix = stackOfInts.suffix(2)
+    // suffix contains 20 and 30
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
+
+In the example above,
+the ``Suffix`` associated type for ``Stack`` is also ``Stack``,
+so the suffix operation on ``Stack`` returns another ``Stack``.
+Alternatively,
+a type that conforms to ``SuffixableContainer``
+can have a ``Suffix`` type that's different from itself ---
+meaning the suffix operation can return a different type.
+For example,
+here's an extension to the nongeneric ``IntStack`` type
+that adds ``SuffixableContainer`` conformance,
+using ``Stack<Int>`` as its suffix type instead of ``IntStack``:
+
+.. testcode:: associatedTypes
+
+    -> extension IntStack: SuffixableContainer {
+           func suffix(_ size: Int) -> Stack<Int> {
+               var result = Stack<Int>()
+               for index in (count-size)..<count {
+                   result.append(self[index])
+               }
+               return result
+           }
+           // Inferred that Suffix is Stack<Int>.
+       }
+    >> var intStack = IntStack()
+    << // intStack : IntStack = REPL.IntStack(items: [])
+    >> intStack.append(10)
+    >> intStack.append(20)
+    >> intStack.append(30)
+    >> intStack.suffix(0)
+    >> intStack.suffix(2)
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
 
 .. _Generics_WhereClauses:
 
@@ -842,9 +934,9 @@ The example below defines a generic function called ``allItemsMatch``,
 which checks to see if two ``Container`` instances contain
 the same items in the same order.
 The function returns a Boolean value of ``true`` if all items match
-and a value of ``false`` if they do not.
+and a value of ``false`` if they don't.
 
-The two containers to be checked do not have to be
+The two containers to be checked don't have to be
 the same type of container (although they can be),
 but they do have to hold the same type of items.
 This requirement is expressed through a combination of type constraints
@@ -861,7 +953,7 @@ and a generic ``where`` clause:
             return false
          }
    ---
-         // Check each pair of items to see if they are equivalent.
+         // Check each pair of items to see if they're equivalent.
          for i in 0..<someContainer.count {
             if someContainer[i] != anotherContainer[i] {
                return false
@@ -897,25 +989,25 @@ These requirements mean:
 * ``anotherContainer`` is a container of type ``C2``.
 * ``someContainer`` and ``anotherContainer`` contain the same type of items.
 * The items in ``someContainer`` can be checked with the not equal operator (``!=``)
-  to see if they are different from each other.
+  to see if they're different from each other.
 
 The third and fourth requirements combine to mean that
 the items in ``anotherContainer`` can *also* be checked with the ``!=`` operator,
-because they are exactly the same type as the items in ``someContainer``.
+because they're exactly the same type as the items in ``someContainer``.
 
 These requirements enable the ``allItemsMatch(_:_:)`` function to compare the two containers,
-even if they are of a different container type.
+even if they're of a different container type.
 
 The ``allItemsMatch(_:_:)`` function starts by checking that
 both containers contain the same number of items.
-If they contain a different number of items, there is no way that they can match,
+If they contain a different number of items, there's no way that they can match,
 and the function returns ``false``.
 
 After making this check, the function iterates over all of the items in ``someContainer``
 with a ``for``-``in`` loop and the half-open range operator (``..<``).
 For each item, the function checks whether the item from ``someContainer`` isn't equal to
 the corresponding item in ``anotherContainer``.
-If the two items aren't equal, then the two containers do not match,
+If the two items aren't equal, then the two containers don't match,
 and the function returns ``false``.
 
 If the loop finishes without finding a mismatch,
@@ -1013,7 +1105,7 @@ you'll get a compile-time error.
    << // notEquatableValue : NotEquatable = REPL.NotEquatable()
    -> notEquatableStack.push(notEquatableValue)
    -> notEquatableStack.isTop(notEquatableValue)  // Error
-   !! <REPL Input>:1:19: error: type 'NotEquatable' does not conform to protocol 'Equatable'
+   !! <REPL Input>:1:25: error: argument type 'NotEquatable' does not conform to expected type 'Equatable'
    !! notEquatableStack.isTop(notEquatableValue)  // Error
    !! ^
 
@@ -1093,7 +1185,7 @@ Associated Types with a Generic Where Clause
 --------------------------------------------
 
 You can include a generic ``where`` clause on an associated type.
-For example, suppose you wanted to make a version of ``Container``
+For example, suppose you want to make a version of ``Container``
 that includes an iterator,
 like what the ``Sequence`` protocol uses in the standard library.
 Here's how you write that:
@@ -1114,7 +1206,7 @@ Here's how you write that:
    although we don't call that out here.
 
 The generic ``where`` clause on ``Iterator`` requires that
-the iterator traverses over elements
+the iterator must traverse over elements
 of the same item type as the container's items,
 regardless of the iterator's type.
 The ``makeIterator()`` function provides access to a container's iterator.
@@ -1152,7 +1244,7 @@ you add a constraint to an inherited associated type
 by including the generic ``where`` clause in the protocol declaration.
 For example, the following code
 declares a ``ComparableContainer`` protocol
-which requires ``Item`` to conform to ``Comparable``:
+that requires ``Item`` to conform to ``Comparable``:
 
 .. testcode:: associatedTypes
 
@@ -1253,7 +1345,7 @@ and returns an array containing the items at each given index.
 This generic subscript is constrained as follows:
 
 * The generic parameter ``Indices`` in angle brackets
-  has to be some type that conforms to the ``Sequence`` protocol
+  has to be a type that conforms to the ``Sequence`` protocol
   from the standard library.
 
 * The subscript takes a single parameter, ``indices``,

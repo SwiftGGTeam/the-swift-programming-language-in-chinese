@@ -399,7 +399,7 @@ can also be marked as final within the extension's definition.
             print("In overridden someFunction")
          }
       }
-   !! <REPL Input>:2:19: error: var overrides a 'final' var
+   !! <REPL Input>:2:19: error: property overrides a 'final' property
    !! override var someVar: Int {
    !! ^
    !! <REPL Input>:2:16: note: overridden declaration is here
@@ -433,7 +433,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
             print("In overridden someFunction")
          }
       }
-   !! <REPL Input>:2:19: error: var overrides a 'final' var
+   !! <REPL Input>:2:19: error: property overrides a 'final' property
    !!      override var someVar: Int {
    !!                   ^
    !! <REPL Input>:2:10: note: overridden declaration is here

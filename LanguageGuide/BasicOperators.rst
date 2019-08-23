@@ -10,7 +10,7 @@ as in ``if enteredDoorCode && passedRetinaScan``.
 
 Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
-The assignment operator (``=``) does not return a value,
+The assignment operator (``=``) doesn't return a value,
 to prevent it from being mistakenly used when
 the equal to operator (``==``) is intended.
 Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` and so forth)
@@ -21,7 +21,7 @@ You can opt in to value overflow behavior
 by using Swift's overflow operators,
 as described in :ref:`AdvancedOperators_OverflowOperators`.
 
-Swift also provides range operators that are not found in C,
+Swift also provides range operators that aren't found in C,
 such as ``a..<b`` and ``a...b``,
 as a shortcut for expressing a range of values.
 
@@ -138,7 +138,7 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
    << // r3 : Double = 4.0
 
 Unlike the arithmetic operators in C and Objective-C,
-the Swift arithmetic operators do not allow values to overflow by default.
+the Swift arithmetic operators don't allow values to overflow by default.
 You can opt in to value overflow behavior by using Swift's overflow operators
 (such as ``a &+ b``). See :ref:`AdvancedOperators_OverflowOperators`.
 
@@ -163,8 +163,8 @@ and returns the value that is left over
 
    The remainder operator (``%``) is also known as
    a :newTerm:`modulo operator` in other languages.
-   However, its behavior in Swift for negative numbers means that it is,
-   strictly speaking, a remainder rather than a modulo operation.
+   However, its behavior in Swift for negative numbers means that,
+   strictly speaking, it's a remainder rather than a modulo operation.
 
 .. assertion:: percentOperatorIsRemainderNotModulo
 
@@ -283,12 +283,11 @@ that performs both tasks at the same time.
 
 .. note::
 
-   The compound assignment operators do not return a value.
-   For example, you cannot write ``let b = a += 2``.
+   The compound assignment operators don't return a value.
+   For example, you can't write ``let b = a += 2``.
 
-For a complete list of the compound assignment operators
-provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+For information about the operators provided by the Swift standard library,
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. _BasicOperators_ComparisonOperators:
 
@@ -308,7 +307,7 @@ Swift supports all standard C :newTerm:`comparison operators`:
 
    Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
    which you use to test whether two object references both refer to the same object instance.
-   For more information, see :doc:`ClassesAndStructures`.
+   For more information, see :ref:`ClassesAndStructures_IdentityOperators`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -342,26 +341,10 @@ such as the ``if`` statement:
    << hello, world
    // Prints "hello, world", because name is indeed equal to "world".
 
-For more on the ``if`` statement, see :doc:`ControlFlow`.
+For more about the ``if`` statement, see :doc:`ControlFlow`.
 
-You can also compare
-tuples that have the same number of values,
-as long as each of the values in the tuple can be compared.
-For example, both ``Int`` and ``String`` can be compared,
-which means tuples of the type ``(Int, String)`` can be compared.
-In contrast, ``Bool`` can't be compared,
-which means tuples that contain a Boolean value can't be compared.
-
-.. assertion:: boolean-is-not-comparable
-
-   -> true < false
-   !! <REPL Input>:1:6: error: binary operator '<' cannot be applied to two 'Bool' operands
-   !! true < false
-   !! ~~~~ ^ ~~~~~
-   !~ <REPL Input>:1:6: note: overloads for '<' exist with these partially matching parameter lists:
-   !! true < false
-   !!      ^
-
+You can compare
+two tuples if they have the same type and the same number of values.
 Tuples are compared from left to right,
 one value at a time,
 until the comparison finds two values
@@ -378,9 +361,9 @@ For example:
    -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
-   << // r0 : Bool = true
-   << // r1 : Bool = true
-   << // r2 : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
+   <$ : Bool = true
 
 In the example above,
 you can see the left-to-right comparison behavior on the first line.
@@ -393,6 +376,28 @@ However,
 when the tuples' first elements are the same,
 their second elements *are* compared ---
 this is what happens on the second and third line.
+
+Tuples can be compared with a given operator only if the operator
+can be applied to each value in the respective tuples. For example,
+as demonstrated in the code below, you can compare
+two tuples of type ``(String, Int)`` because
+both ``String`` and ``Int`` values can be compared
+using the ``<`` operator.  In contrast,
+two tuples of type ``(String, Bool)`` can't be compared
+with the ``<`` operator because the ``<`` operator can't be applied to
+``Bool`` values.
+
+.. testcode:: tuple-comparison-operators
+
+   -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
+   -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   <$ : Bool = true
+   !! <REPL Input>:1:17: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !! ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~
+   !~ <REPL Input>:1:17: note: overloads for '<' exist with these partially matching parameter lists:
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !!                 ^
 
 .. note::
 
@@ -412,7 +417,7 @@ Ternary Conditional Operator
 
 The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
-It is a shortcut for evaluating one of two expressions
+It's a shortcut for evaluating one of two expressions
 based on whether ``question`` is true or false.
 If ``question`` is true, it evaluates ``answer1`` and returns its value;
 otherwise, it evaluates ``answer2`` and returns its value.
@@ -448,7 +453,7 @@ if the row has a header, and 20 points taller if the row doesn't have a header:
    /> rowHeight is equal to \(rowHeight)
    </ rowHeight is equal to 90
 
-The preceding example is shorthand for the code below:
+The example above is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorPart2
    :compile: true
@@ -565,13 +570,12 @@ The value of ``a`` must not be greater than ``b``.
 .. assertion:: closedRangeStartCanBeLessThanEnd
 
    -> let range = 1...2
-   << // range : CountableClosedRange<Int> = CountableClosedRange(1...2)
-
+   << // range : ClosedRange<Int> = ClosedRange(1...2)
 
 .. assertion:: closedRangeStartCanBeTheSameAsEnd
 
    -> let range = 1...1
-   << // range : CountableClosedRange<Int> = CountableClosedRange(1...1)
+   << // range : ClosedRange<Int> = ClosedRange(1...1)
 
 .. assertion:: closedRangeStartCannotBeGreaterThanEnd
 
@@ -593,7 +597,7 @@ such as with a ``for``-``in`` loop:
    </ 4 times 5 is 20
    </ 5 times 5 is 25
 
-For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
+For more about ``for``-``in`` loops, see :doc:`ControlFlow`.
 
 .. _BasicOperators_HalfClosedRangeOperator:
 
@@ -602,8 +606,8 @@ Half-Open Range Operator
 
 The :newTerm:`half-open range operator` (``a..<b``)
 defines a range that runs from ``a`` to ``b``,
-but does not include ``b``.
-It is said to be :newTerm:`half-open`
+but doesn't include ``b``.
+It's said to be :newTerm:`half-open`
 because it contains its first value, but not its final value.
 As with the closed range operator,
 the value of ``a`` must not be greater than ``b``.
@@ -613,12 +617,12 @@ then the resulting range will be empty.
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
 
    -> let range = 1..<2
-   << // range : CountableRange<Int> = CountableRange(1..<2)
+   << // range : Range<Int> = Range(1..<2)
 
 .. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
 
    -> let range = 1..<1
-   << // range : CountableRange<Int> = CountableRange(1..<1)
+   << // range : Range<Int> = Range(1..<1)
 
 .. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
 
@@ -627,7 +631,7 @@ then the resulting range will be empty.
 
 Half-open ranges are particularly useful when you work with
 zero-based lists such as arrays,
-where it is useful to count up to (but not including) the length of the list:
+where it's useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
 
@@ -646,8 +650,8 @@ where it is useful to count up to (but not including) the length of the list:
 Note that the array contains four items,
 but ``0..<count`` only counts as far as ``3``
 (the index of the last item in the array),
-because it is a half-open range.
-For more on arrays, see :ref:`CollectionTypes_Arrays`.
+because it's a half-open range.
+For more about arrays, see :ref:`CollectionTypes_Arrays`.
 
 .. _BasicOperators_OneSidedRanges:
 
@@ -655,10 +659,10 @@ One-Sided Ranges
 ~~~~~~~~~~~~~~~~
 
 The closed range operator
-has an alternate form for ranges that continue
+has an alternative form for ranges that continue
 as far as possible in one direction ---
 for example,
-a range that includes all the elements of an array,
+a range that includes all the elements of an array
 from index 2 to the end of the array.
 In these cases, you can omit the value
 from one side of the range operator.
@@ -701,9 +705,9 @@ not just in subscripts.
 You can't iterate over a one-sided range
 that omits a first value,
 because it isn't clear where iteration should begin.
-You can iterate over a one-sided range that omits its final value;
+You *can* iterate over a one-sided range that omits its final value;
 however, because the range continues indefinitely,
-make sure to add an explicit end condition for the loop.
+make sure you add an explicit end condition for the loop.
 You can also check whether a one-sided range contains a particular value,
 as shown in the code below.
 
@@ -808,7 +812,7 @@ Like the Logical AND operator above,
 the Logical OR operator uses short-circuit evaluation to consider its expressions.
 If the left side of a Logical OR expression is ``true``,
 the right side is not evaluated,
-because it cannot change the outcome of the overall expression.
+because it can't change the outcome of the overall expression.
 
 In the example below,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
@@ -872,10 +876,10 @@ so the overall compound expression still evaluates to ``true``.
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-It is sometimes useful to include parentheses when they are not strictly needed,
+It's sometimes useful to include parentheses when they're not strictly needed,
 to make the intention of a complex expression easier to read.
 In the door access example above,
-it is useful to add parentheses around the first part of the compound expression
+it's useful to add parentheses around the first part of the compound expression
 to make its intent explicit:
 
 .. testcode:: logicalOperators

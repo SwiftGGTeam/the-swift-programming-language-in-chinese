@@ -29,7 +29,7 @@ whereas forced unwrapping triggers a runtime error when the optional is ``nil``.
 
 To reflect the fact that optional chaining can be called on a ``nil`` value,
 the result of an optional chaining call is always an optional value,
-even if the property, method, or subscript you are querying returns a nonoptional value.
+even if the property, method, or subscript you are querying returns a non-optional value.
 You can use this optional return value to check whether
 the optional chaining call was successful
 (the returned optional contains a value),
@@ -111,10 +111,10 @@ When ``residence`` is ``nil``, as in the example above,
 this optional ``Int`` will also be ``nil``,
 to reflect the fact that it was not possible to access ``numberOfRooms``.
 The optional ``Int`` is accessed through optional binding
-to unwrap the integer and assign the nonoptional value
+to unwrap the integer and assign the non-optional value
 to the ``roomCount`` variable.
 
-Note that this is true even though ``numberOfRooms`` is a nonoptional ``Int``.
+Note that this is true even though ``numberOfRooms`` is a non-optional ``Int``.
 The fact that it is queried through an optional chain
 means that the call to ``numberOfRooms``
 will always return an ``Int?`` instead of an ``Int``.

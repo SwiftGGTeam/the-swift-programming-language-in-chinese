@@ -354,6 +354,40 @@ returns an actual tuple value or ``nil``:
       }
    <- min is -6 and max is 109
 
+.. _Functions_ImplicitReturns:
+
+Functions With an Implicit Return
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the entire body of the function is a single expression,
+the function implicitly returns that expression.
+For example,
+both functions below have the same behavior:
+
+.. testcode:: implicit-func-return
+
+   -> func greeting(for person: String) -> String {
+         "Hello, " + person + "!"
+      }
+   -> print(greeting(for: "Dave"))
+   <- Hello, Dave!
+   ---
+   -> func anotherGreeting(for person: String) -> String {
+         return "Hello, " + person + "!"
+      }
+   -> print(anotherGreeting(for: "Dave"))
+   <- Hello, Dave!
+
+The entire definition of the ``greeting(for:)`` function
+is the greeting message that it returns,
+which means it can use this shorter form.
+The ``anotherGreeting(for:)`` function returns the same greeting message,
+using the ``return`` keyword like a longer function.
+Any function that you write as just one ``return`` line can omit the ``return``.
+
+As you'll see in :ref:`Properties_ImplicitReturn`,
+property getters can also use an implicit return.
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
@@ -583,7 +617,7 @@ even though they were originally defined outside of the function.
    In-out parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.
 
-.. TODO: you can pass a sub-property of something as an inout reference.
+.. TODO: you can pass a subproperty of something as an inout reference.
    Would be great to show an example of this as a way to avoid temporary variables.
 
 .. _Functions_FunctionTypes:
@@ -666,7 +700,7 @@ You can now call the assigned function with the name ``mathFunction``:
    <- Result: 5
 
 A different function with the same matching type can be assigned to the same variable,
-in the same way as for non-function types:
+in the same way as for nonfunction types:
 
 .. testcode:: functionTypes
 
@@ -768,7 +802,7 @@ that will step in one direction or the other:
    << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the stepBackward() function
 
-The preceding example determines whether a positive or negative step is needed
+The example above determines whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,

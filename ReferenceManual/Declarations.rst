@@ -2,9 +2,10 @@ Declarations
 ============
 
 A :newTerm:`declaration` introduces a new name or construct into your program.
-For example, you use declarations to introduce functions and methods, variables and constants,
-and to define new, named enumeration, structure, class,
-and protocol types. You can also use a declaration to extend the behavior
+For example, you use declarations to introduce functions and methods,
+to introduce variables and constants,
+and to define enumeration, structure, class, and protocol types.
+You can also use a declaration to extend the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
 
 In Swift, most declarations are also definitions in the sense that they are implemented
@@ -12,23 +13,6 @@ or initialized at the same time they are declared. That said, because protocols 
 implement their members, most protocol members are declarations only. For convenience
 and because the distinction isn't that important in Swift,
 the term *declaration* covers both declarations and definitions.
-
-.. langref-grammar
-
-    decl ::= decl-class
-    decl ::= decl-constructor
-    decl ::= decl-deinitializer
-    decl ::= decl-extension
-    decl ::= decl-func
-    decl ::= decl-import
-    decl ::= decl-enum
-    decl ::= decl-enum-element
-    decl ::= decl-protocol
-    decl ::= decl-struct
-    decl ::= decl-typealias
-    decl ::= decl-var
-    decl ::= decl-let
-    decl ::= decl-subscript
 
 .. syntax-grammar::
 
@@ -68,11 +52,6 @@ as described in :ref:`Declarations_AccessControlLevels`.
 
 .. TODO: Revisit and rewrite this section after WWDC
 
-.. langref-grammar
-
-    top-level ::= brace-item*
-
-
 .. syntax-grammar::
 
     Grammar of a top-level declaration
@@ -102,14 +81,6 @@ of their appearance in source code.
 .. TR: What exactly are the scope rules for Swift?
 
 .. TODO: Discuss scope.  I assume a code block creates a new scope?
-
-
-.. langref-grammar
-
-    brace-item-list ::= '{' brace-item* '}'
-    brace-item      ::= decl
-    brace-item      ::= expr
-    brace-item      ::= stmt
 
 .. syntax-grammar::
 
@@ -147,25 +118,13 @@ is made available in the current scope.
 
 .. TODO: Need to add more to this section.
 
-.. langref-grammar
-
-    decl-import ::=  attribute-list 'import' import-kind? import-path
-    import-kind ::= 'typealias'
-    import-kind ::= 'struct'
-    import-kind ::= 'class'
-    import-kind ::= 'enum'
-    import-kind ::= 'protocol'
-    import-kind ::= 'var'
-    import-kind ::= 'func'
-    import-path ::= any-identifier ('.' any-identifier)*
-
 .. syntax-grammar::
 
     Grammar of an import declaration
 
     import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
-    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
+    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``let`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
     import-path-identifier --> identifier | operator
 
@@ -226,21 +185,26 @@ when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
 To declare a constant type property,
-mark the declaration with the ``static`` declaration modifier. Type properties
-are discussed in :ref:`Properties_TypeProperties`.
+mark the declaration with the ``static`` declaration modifier.
+A constant type property of a class is always implicitly final;
+you can't mark it with the ``class`` or ``final`` declaration modifier
+to allow or disallow overriding by subclasses.
+Type properties are discussed in :ref:`Properties_TypeProperties`.
 
-.. TODO: Discuss class constant properties after they're implemented
-    (probably not until after 1.0)
+.. assertion:: class-constants-cant-have-class-or-final
+
+   -> class Super { class let x = 10 }
+   !! <REPL Input>:1:25: error: class stored properties not supported in classes; did you mean 'static'?
+   !! class Super { class let x = 10 }
+   !!               ~~~~~     ^
+   -> class S { static final let x = 10 }
+   !! <REPL Input>:1:18: error: static declarations are already final
+   !! class S { static final let x = 10 }
+   !!                  ^~~~~~
+   !!-
 
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
-
-.. TODO: Need to discuss class and static constant properties.
-
-.. langref-grammar
-
-    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
-    initializer ::= '=' expr
 
 .. syntax-grammar::
 
@@ -425,54 +389,9 @@ Type Variable Properties
 
 To declare a type variable property,
 mark the declaration with the ``static`` declaration modifier.
-Classes may mark type computed properties  with the ``class`` declaration modifier instead
+Classes can mark type computed properties with the ``class`` declaration modifier instead
 to allow subclasses to override the superclass’s implementation.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
-
-.. note::
-
-   In a class declaration, the ``static`` keyword has the same effect as
-   marking the declaration with both the ``class`` and ``final`` declaration modifiers.
-
-.. TODO: Discuss type properties after they're implemented
-    (probably not until after 1.0)
-    Update: we now have class computed properties. We'll get class stored properites
-    sometime after WWDC.
-
-.. TODO: Need to discuss static variable properties in more detail.
-
-.. langref-grammar
-    decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
-
-    decl-var       ::= decl-var-head pattern initializer?  (',' pattern initializer?)*
-
-    // 'get' is implicit in this syntax.
-    decl-var       ::= decl-var-head identifier ':' type-annotation brace-item-list
-
-    decl-var       ::= decl-var-head identifier ':' type-annotation '{' get-set '}'
-
-    decl-var       ::= decl-var-head identifier ':' type-annotation initializer? '{' willset-didset '}'
-
-    // For use in protocols.
-    decl-var       ::= decl-var-head identifier ':' type-annotation '{' get-set-kw '}'
-
-    get-set        ::= get set?
-    get-set        ::= set get
-
-    get            ::= attribute-list 'get' brace-item-list
-    set            ::= attribute-list 'set' set-name? brace-item-list
-    set-name       ::= '(' identifier ')'
-
-    willset-didset ::= willset didset?
-    willset-didset ::= didset willset?
-
-    willset        ::= attribute-list 'willSet' set-name? brace-item-list
-    didset         ::= attribute-list 'didSet' set-name? brace-item-list
-
-    get-kw         ::= attribute-list 'get'
-    set-kw         ::= attribute-list 'set'
-    get-set-kw     ::= get-kw set-kw?
-    get-set-kw     ::= set-kw get-kw
 
 .. syntax-grammar::
 
@@ -540,7 +459,7 @@ For example:
    // The following dictionaries have the same type.
    -> var dictionary1: StringDictionary<Int> = [:]
    -> var dictionary2: Dictionary<String, Int> = [:]
-   << // dictionary1 : Dictionary<String, Int> = [:]
+   << // dictionary1 : StringDictionary<Int> = [:]
    << // dictionary2 : Dictionary<String, Int> = [:]
 
 When a type alias is declared with generic parameters, the constraints on those
@@ -553,6 +472,16 @@ For example:
 
 Because the type alias and the existing type can be used interchangeably,
 the type alias can't introduce additional generic constraints.
+
+A type alias can forward an existing type's generic parameters
+by omitting all generic parameters from the declaration.
+For example,
+the ``Diccionario`` type alias declared here
+has the same generic parameters and constraints as ``Dictionary``.
+
+.. testcode:: typealias-using-shorthand
+
+   -> typealias Diccionario = Dictionary
 
 .. Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
      typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
@@ -585,11 +514,6 @@ the ``sum`` function would have to refer to the associated type
 as ``T.Iterator.Element`` instead of ``T.Element``.
 
 See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
-
-.. langref-grammar
-
-    decl-typealias ::= typealias-head '=' type
-    typealias-head ::= 'typealias' identifier inheritance?
 
 .. syntax-grammar::
 
@@ -638,6 +562,10 @@ the parameter can be modified inside the scope of the function.
 In-out parameters are discussed in detail
 in :ref:`Declarations_InOutParameters`, below.
 
+A function declaration whose *statements*
+include only a single expression
+is understood to return the value of that expression.
+
 Functions can return multiple values using a tuple type
 as the return type of the function.
 
@@ -645,6 +573,13 @@ as the return type of the function.
 
 A function definition can appear inside another function declaration.
 This kind of function is known as a :newTerm:`nested function`.
+
+A nested function is nonescaping if it captures
+a value that is guaranteed to never escape---
+such as an in-out parameter---
+or passed as a nonescaping function argument.
+Otherwise, the nested function is an escaping function.
+
 For a discussion of nested functions,
 see :ref:`Functions_NestedFunctions`.
 
@@ -735,42 +670,21 @@ Write your code using the model given by copy-in copy-out,
 without depending on the call-by-reference optimization,
 so that it behaves correctly with or without the optimization.
 
-Do not access the value that was passed as an in-out argument,
-even if the original argument is available in the current scope.
-When the function returns,
-your changes to the original are overwritten
-with the value of the copy.
-Do not depend on the implementation of the call-by-reference optimization
-to try to keep the changes from being overwritten.
+Within a function, don't access a value that was passed as an in-out argument,
+even if the original value is available in the current scope.
+Accessing the original is a simultaneous access of the value,
+which violates Swift's memory exclusivity guarantee.
+For the same reason,
+you can't pass the same value to multiple in-out parameters.
+
+For more information about memory safety and memory exclusivity,
+see :doc:`../LanguageGuide/MemorySafety`.
 
 .. When the call-by-reference optimization is in play,
    it would happen to do what you want.
    But you still shouldn't do that --
    as noted above, you're not allowed to depend on
    behavioral differences that happen because of call by reference.
-
-You can't pass the same argument to multiple in-out parameters
-because the order in which the copies are written back
-is not well defined,
-which means the final value of the original
-would also not be well defined.
-For example:
-
-.. testcode:: cant-pass-inout-aliasing
-
-   -> var x = 10
-   << // x : Int = 10
-   -> func f(a: inout Int, b: inout Int) {
-          a += 1
-          b += 10
-      }
-   -> f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !! <REPL Input>:1:13: error: inout arguments are not allowed to alias each other
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!             ^~
-   !! <REPL Input>:1:6: note: previous aliasing argument
-   !! f(a: &x, b: &x) // Invalid, in-out arguments alias each other
-   !!      ^~
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
@@ -814,16 +728,27 @@ see :ref:`Functions_InOutParameters`.
            }
            return inner
        }
-    !! <REPL Input>:5:7: error: nested function cannot capture inout parameter and escape
-    !!            return inner
-    !!            ^
+    !! <REPL Input>:5:14: error: escaping closure captures 'inout' parameter 'a'
+    !! return inner
+    !! ^
+    !! <REPL Input>:1:12: note: parameter 'a' is declared 'inout'
+    !! func outer(a: inout Int) -> () -> Void {
+    !! ^
+    !! <REPL Input>:3:11: note: captured here
+    !! a += 1
+    !! ^
     -> func closure(a: inout Int) -> () -> Void {
            return { a += 1 }
        }
-    !! <REPL Input>:2:16: error: escaping closures can only capture inout parameters explicitly by value
-    !!              return { a += 1 }
-    !!                       ^
-
+    !! <REPL Input>:2:14: error: escaping closure captures 'inout' parameter 'a'
+    !! return { a += 1 }
+    !! ^
+    !! <REPL Input>:1:14: note: parameter 'a' is declared 'inout'
+    !! func closure(a: inout Int) -> () -> Void {
+    !! ^
+    !! <REPL Input>:2:16: note: captured here
+    !! return { a += 1 }
+    !! ^
 
 .. _Declarations_SpecialKindsOfParameters:
 
@@ -848,7 +773,7 @@ A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
 A function can have at most one variadic parameter.
 A variadic parameter is treated as an array that contains elements of the base type name.
-For instance, the variadic parameter ``Int...`` is treated as ``[Int]``.
+For example, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,
 see :ref:`Functions_VariadicParameters`.
 
@@ -903,8 +828,34 @@ that doesn't override a superclass method.
 
 Methods associated with a type
 rather than an instance of a type
-must be marked with the ``static`` declaration modifier for enumerations and structures
-or the ``class`` declaration modifier for classes.
+must be marked with the ``static`` declaration modifier for enumerations and structures,
+or with either the ``static`` or ``class`` declaration modifier for classes.
+A class type method marked with the ``class`` declaration modifier
+can be overridden by a subclass implementation;
+a class type method marked with ``class final`` or ``static`` can't be overridden.
+
+.. assertion:: overriding-class-methods
+
+   -> class S { class final func f() -> Int { return 12 } }
+   -> class SS: S { override class func f() -> Int { return 120 } }
+   !! <REPL Input>:1:35: error: class method overrides a 'final' class method
+   !! class SS: S { override class func f() -> Int { return 120 } }
+   !!                                  ^
+   !! <REPL Input>:1:28: note: overridden declaration is here
+   !! class S { class final func f() -> Int { return 12 } }
+   !!                           ^
+   -> class S2 { static func f() -> Int { return 12 } }
+   -> class SS2: S2 { override static func f() -> Int { return 120 } }
+   !! <REPL Input>:1:38: error: cannot override static method
+   !! class SS2: S2 { override static func f() -> Int { return 120 } }
+   !! ^
+   !! <REPL Input>:1:24: note: overridden declaration is here
+   !! class S2 { static func f() -> Int { return 12 } }
+   !! ^
+   -> class S3 { class func f() -> Int { return 12 } }
+   -> class SS3: S3 { override class func f() -> Int { return 120 } }
+   -> print(SS3.f())
+   <- 120
 
 .. _Declarations_ThrowingFunctionsAndMethods:
 
@@ -1160,6 +1111,7 @@ the compiler must insert a layer of indirection.
 
 To enable indirection for a particular enumeration case,
 mark it with the ``indirect`` declaration modifier.
+An indirect case must have an associated value.
 
 .. TODO The word "enable" is kind of a weasle word.
    Better to have a more concrete discussion of exactly when
@@ -1179,13 +1131,12 @@ mark it with the ``indirect`` declaration modifier.
    << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
    << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
 
-To enable indirection for all the cases of an enumeration,
+To enable indirection for all the cases of an enumeration
+that have an associated value,
 mark the entire enumeration with the ``indirect`` modifier ---
 this is convenient when the enumeration contains many cases
 that would each need to be marked with the ``indirect`` modifier.
 
-An enumeration case that's marked with the ``indirect`` modifier
-must have an associated value.
 An enumeration that is marked with the ``indirect`` modifier
 can contain a mixture of cases that have associated values and cases those that don't.
 That said,
@@ -1277,7 +1228,7 @@ each unassigned case is implicitly assigned a string with the same text as the n
        }
 
 In the above example, the raw value of ``GamePlayMode.cooperative`` is ``"cooperative"``,
-the raw value of ``GamePlayMode.individual`` is ``"individual"``,.
+the raw value of ``GamePlayMode.individual`` is ``"individual"``,
 and the raw value of ``GamePlayMode.competitive`` is ``"competitive"``.
 
 Enumerations that have cases of a raw-value type implicitly conform to the
@@ -1322,13 +1273,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     You can have: <#raw-value type, protocol conformance#>.
     UPDATE: You can only have one raw-value type specified.
     I changed the grammar to be more restrictive in light of this.
-
-.. langref-grammar
-
-    decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
-    enum-body ::= '{' decl* '}'
-    decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
-    enum-case ::= identifier type-tuple? ('->' type)?
 
 .. NOTE: Per Doug and Ted, "('->' type)?" is not part of the grammar.
     We removed it from our grammar, below.
@@ -1436,11 +1380,6 @@ see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
-.. langref-grammar
-
-    decl-struct ::= attribute-list 'struct' identifier generic-params? inheritance? '{' decl-struct-body '}'
-    decl-struct-body ::= decl*
-
 .. syntax-grammar::
 
    Grammar of a structure declaration
@@ -1532,11 +1471,6 @@ see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
-
-.. langref-grammar
-
-    decl-class ::= attribute-list 'class' identifier generic-params? inheritance? '{' decl-class-body '}'
-    decl-class-body ::= decl*
 
 .. syntax-grammar::
 
@@ -1648,14 +1582,6 @@ they specify.
 You can use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegation`.
 
-.. langref-grammar
-
-    decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
-    protocol-member ::= decl-func
-    protocol-member ::= decl-var
-    protocol-member ::= subscript-head
-    protocol-member ::= typealias-head
-
 .. syntax-grammar::
 
     Grammar of a protocol declaration
@@ -1706,18 +1632,42 @@ only the ``get`` keyword, it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
 see :ref:`Protocols_PropertyRequirements`.
 
-.. TODO:
-    Because we're not going to have 'class' properties for 1.0,
-    you can't declare static or type properties in a protocol declaration.
-    Add the following text back in after we get the ability to do 'class' properties:
+To declare a type property requirement in a protocol declaration,
+mark the property declaration with the ``static`` keyword.
+Structures and enumerations that conform to the protocol
+declare the property with the ``static`` keyword,
+and classes that conform to the protocol
+declare the property with either the ``static`` or ``class`` keyword.
+Extensions that add protocol conformance to a structure, enumeration, or class
+use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type property requirement
+use the ``static`` keyword.
 
-    To declare a type property requirement in a protocol declaration,
-    mark the property declaration with the ``class`` keyword. Classes that implement
-    this property also declare the property with the ``class`` keyword. Structures
-    that implement it must declare the property with the ``static`` keyword instead.
-    If you're implementing the property in an extension,
-    use the ``class`` keyword if you're extending a class and the ``static`` keyword
-    if you're extending a structure.
+.. assertion:: protocols-with-type-property-requirements
+
+   -> protocol P { static var x: Int { get } }
+   -> protocol P2 { class var x: Int { get } }
+   !! <REPL Input>:1:21: error: class properties are only allowed within classes; use 'static' to declare a requirement fulfilled by either a static or class property
+   !! protocol P2 { class var x: Int { get } }
+   !!              ~~~~~ ^
+   !!              static
+   -> struct S: P { static var x = 10 }
+   -> class C1: P { static var x = 20 }
+   -> class C2: P { class var x = 30 }
+   !! <REPL Input>:1:25: error: class stored properties not supported in classes; did you mean 'static'?
+   !! class C2: P { class var x = 30 }
+   !!               ~~~~~     ^
+
+.. assertion:: protocol-type-property-default-implementation
+
+   -> protocol P { static var x: Int { get } }
+   -> extension P { static var x: Int { return 100 } }
+   -> struct S1: P { }
+   -> print(S1.x)
+   <- 100
+   -> struct S2: P { static var x = 10 }
+   -> print(S2.x)
+   <- 10
 
 See also :ref:`Declarations_VariableDeclaration`.
 
@@ -1742,12 +1692,15 @@ For examples of conforming types that implement the method requirements of a pro
 see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the ``static`` declaration modifier. Classes that implement
-this method declare the method with the ``class`` modifier. Structures
-that implement it must declare the method with the ``static`` declaration modifier instead.
-If you're implementing the method in an extension,
-use the ``class`` modifier if you're extending a class and the ``static`` modifier
-if you're extending a structure.
+mark the method declaration with the ``static`` declaration modifier.
+Structures and enumerations that conform to the protocol
+declare the method with the ``static`` keyword,
+and classes that conform to the protocol
+declare the method with either the ``static`` or ``class`` keyword.
+Extensions that add protocol conformance to a structure, enumeration, or class
+use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a type method requirement
+use the ``static`` keyword.
 
 See also :ref:`Declarations_FunctionDeclaration`.
 
@@ -1791,7 +1744,6 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
-
 Protocol Subscript Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1810,6 +1762,17 @@ a conforming type must implement both a getter and a setter clause.
 If the subscript declaration includes only the ``get`` keyword,
 a conforming type must implement *at least* a getter clause
 and optionally can implement a setter clause.
+
+To declare a static subscript requirement in a protocol declaration,
+mark the subscript declaration with the ``static`` declaration modifier.
+Structures and enumerations that conform to the protocol
+declare the subscript with the ``static`` keyword,
+and classes that conform to the protocol
+declare the subscript with either the ``static`` or ``class`` keyword.
+Extensions that add protocol conformance to a structure, enumeration, or class
+use the same keyword as the type they extend uses.
+Extensions that provide a default implementation for a static subscript requirement
+use the ``static`` keyword.
 
 See also :ref:`Declarations_SubscriptDeclaration`.
 
@@ -1858,7 +1821,7 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     !! ^
     ---
     // This syntax is preferred.
-    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable {}
+    -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 .. TODO: Finish writing this section after WWDC.
 
@@ -1875,6 +1838,10 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
     In addition to ``Self``, a protocol's operations often need to refer to types
     that are related to the type of ``Self``, such as a type of data stored in a
     collection or the node and edge types of a graph." Is this still true?
+
+    --> If we expand the discussion here,
+    --> add a link from Types_SelfType
+    --> to give more details about Self in protocols.
 
     NOTES from Doug:
     At one point, Self was an associated type, but that's the wrong modeling of
@@ -2081,12 +2048,6 @@ by a nonfailable designated initializer only.
 For more information and to see examples of failable initializers,
 see :ref:`Initialization_FailableInitializers`.
 
-.. langref-grammar
-
-    decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
-    constructor-signature ::= pattern-tuple
-    constructor-signature ::= identifier-or-any selector-tuple
-
 .. syntax-grammar::
 
     Grammar of an initializer declaration
@@ -2129,33 +2090,24 @@ Deinitializers are not called directly.
 For an example of how to use a deinitializer in a class declaration,
 see :doc:`../LanguageGuide/Deinitialization`.
 
-
-.. langref-grammar
-
-    decl-de ::= attribute-list 'deinit' brace-item-list
-    NOTE: langref contains a typo here---should be 'decl-deinitializer'
-
 .. syntax-grammar::
 
     Grammar of a deinitializer declaration
 
     deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 
-.. _Declarations_ExtensionDeclaration:
 
+.. _Declarations_ExtensionDeclaration:
 
 Extension Declaration
 ---------------------
 
 An :newTerm:`extension declaration` allows you to extend
 the behavior of existing types.
-Extension declarations are declared using the ``extension`` keyword and have the following forms:
+Extension declarations are declared using the ``extension`` keyword
+and have the following form:
 
 .. syntax-outline::
-
-    extension <#type name#>: <#adopted protocols#> {
-       <#declarations#>
-    }
 
     extension <#type name#> where <#requirements#> {
        <#declarations#>
@@ -2167,6 +2119,7 @@ instance methods, type methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain deinitializer or protocol declarations,
 stored properties, property observers, or other extension declarations.
+Declarations in a protocol extension can't be marked ``final``.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
@@ -2174,36 +2127,302 @@ If the *type name* is a class, structure, or enumeration type,
 the extension extends that type.
 If the *type name* is a protocol type,
 the extension extends all types that conform to that protocol.
-Declarations in a protocol extension's body
-can't be marked ``final``.
 
-Extension declarations can add protocol conformance to an existing
-class, structure, and enumeration type in the *adopted protocols*.
-Extension declarations can't add class inheritance to an existing class,
-and therefore you can specify only a list of protocols after the *type name* and colon.
-
-Extension declarations that extend a generic type can include *requirements*.
-If an instance of the extended type satisfies the *requirements*,
+Extension declarations that extend a generic type
+or a protocol with associated types
+can include *requirements*.
+If an instance of the extended type
+or of a type that conforms to the extended protocol
+satisfies the *requirements*,
 the instance gains the behavior specified in the declaration.
-
-Properties, methods, and initializers of an existing type
-can't be overridden in an extension of that type.
 
 Extension declarations can contain initializer declarations. That said,
 if the type you're extending is defined in another module,
 an initializer declaration must delegate to an initializer already defined in that module
 to ensure members of that type are properly initialized.
 
-.. TODO: TR: Verify that this is indeed the correct about initializers.
-    For example, the Language Guide says:
-    "If you provide a new initializer via an extension,
-    you are still responsible for making sure that each instance is fully initialized
-    once the initializer has completed, as described in
-    :ref:`ClassesAndStructures_DefiniteInitialization`.
-    Depending on the type you are extending, you may need to
-    delegate to another initializer or call a superclass initializer
-    at the end of your own initializer,
-    to ensure that all instance properties are fully initialized."
+Properties, methods, and initializers of an existing type
+can't be overridden in an extension of that type.
+
+Extension declarations can add protocol conformance to an existing
+class, structure, or enumeration type by specifying *adopted protocols*:
+
+.. syntax-outline::
+
+    extension <#type name#>: <#adopted protocols#> where <#requirements#> {
+       <#declarations#>
+    }
+
+Extension declarations can't add class inheritance to an existing class,
+and therefore you can specify only a list of protocols after the *type name* and colon.
+
+.. _Declarations_ConditionalConformance:
+
+Conditional Conformance
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can extend a generic type
+to conditionally conform to a protocol,
+so that instances of the type conform to the protocol
+only when certain requirements are met.
+You add conditional conformance to a protocol
+by including *requirements* in an extension declaration.
+
+.. _Declarations_OverrideConformance:
+
+Overridden Requirements Aren't Used in Some Generic Contexts
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+In some generic contexts,
+types that get behavior from conditional conformance to a protocol
+don't always use the specialized implementations
+of that protocol's requirements.
+To illustrate this behavior,
+the following example defines two protocols
+and a generic type that conditionally conforms to both protocols.
+
+.. This test needs to be compiled so that it will recognize Pair's
+   CustomStringConvertible conformance -- the deprecated REPL doesn't
+   seem to use the description property at all.
+
+.. testcode:: conditional-conformance
+   :compile: true
+
+   -> protocol Loggable {
+          func log()
+      }
+      extension Loggable {
+          func log() {
+              print(self)
+          }
+      }
+   ---
+      protocol TitledLoggable: Loggable {
+          static var logTitle: String { get }
+      }
+      extension TitledLoggable {
+          func log() {
+              print("\(Self.logTitle): \(self)")
+          }
+      }
+   ---
+      struct Pair<T>: CustomStringConvertible {
+          let first: T
+          let second: T
+          var description: String {
+              return "(\(first), \(second))"
+          }
+      }
+   ---
+      extension Pair: Loggable where T: Loggable { }
+      extension Pair: TitledLoggable where T: TitledLoggable {
+          static var logTitle: String {
+              return "Pair of '\(T.logTitle)'"
+          }
+      }
+   ---
+      extension String: TitledLoggable {
+         static var logTitle: String {
+            return "String"
+         }
+      }
+
+The ``Pair`` structure conforms to ``Loggable`` and ``TitledLoggable``
+whenever its generic type conforms to ``Loggable`` or ``TitledLoggable``, respectively.
+In the example below,
+``oneAndTwo`` is an instance of ``Pair<String>``,
+which conforms to ``TitledLoggable``
+because ``String`` conforms to ``TitledLoggable``.
+When the ``log()`` method is called on ``oneAndTwo`` directly,
+the specialized version containing the title string is used.
+
+.. testcode:: conditional-conformance
+
+   -> let oneAndTwo = Pair(first: "one", second: "two")
+   -> oneAndTwo.log()
+   <- Pair of 'String': (one, two)
+
+However, when ``oneAndTwo`` is used in a generic context
+or as an instance of the ``Loggable`` protocol,
+the specialized version isn't used.
+Swift picks which implementation of ``log()`` to call
+by consulting only the minimum requirements that ``Pair`` needs to conform to ``Loggable``.
+For this reason,
+the default implementation provided by the ``Loggable`` protocol is used instead.
+
+.. testcode:: conditional-conformance
+
+   -> func doSomething<T: Loggable>(with x: T) {
+         x.log()
+      }
+      doSomething(with: oneAndTwo)
+   <- (one, two)
+
+When ``log()`` is called on the instance that's passed to ``doSomething(_:)``,
+the customized title is omitted from the logged string.
+
+.. _Declarations_NoRedundantConformance:
+
+Protocol Conformance Must Not Be Redundant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A concrete type can conform to a particular protocol only once.
+Swift marks redundant protocol conformances as an error.
+You're likely to encounter this kind of error
+in two kinds of situations.
+The first situation is when
+you explicitly conform to the same protocol multiple times,
+but with different requirements.
+The second situation is when
+you implicitly inherit from the same protocol multiple times.
+These situations are discussed in the sections below.
+
+.. _Declarations_ResolvingExplicitRedundancy:
+
+Resolving Explicit Redundancy
++++++++++++++++++++++++++++++
+
+Multiple extensions on a concrete type
+can't add conformance to the same protocol,
+even if the extensions' requirements are mutually exclusive.
+This restriction is demonstrated in the example below.
+Two extension declarations attempt to add conditional conformance
+to the ``Serializable`` protocol,
+one for for arrays with ``Int`` elements,
+and one for arrays with ``String`` elements.
+
+.. testcode:: multiple-conformances
+
+   -> protocol Serializable {
+         func serialize() -> Any
+      }
+   ---
+      extension Array: Serializable where Element == Int {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+      extension Array: Serializable where Element == String {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+   // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+   !!  <REPL Input>:1:18: error: conflicting conformance of 'Array<Element>' to protocol 'Serializable'; there cannot be more than one conformance, even with different conditional bounds
+   !! extension Array: Serializable where Element == String {
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+   !! extension Array: Serializable where Element == Int {
+   !! ^
+
+If you need to add conditional conformance based on multiple concrete types,
+create a new protocol that each type can conform to
+and use that protocol as the requirement when declaring conditional conformance.
+
+.. testcode:: multiple-conformances-success
+
+   >> protocol Serializable { }
+   -> protocol SerializableInArray { }
+      extension Int: SerializableInArray { }
+      extension String: SerializableInArray { }
+   ---
+   -> extension Array: Serializable where Element: SerializableInArray {
+          func serialize() -> Any {
+              // implementation
+   >>         return 0
+   ->     }
+      }
+
+.. _Declarations_ExplicitConformanceInheritance:
+
+Resolving Implicit Redundancy
++++++++++++++++++++++++++++++
+
+When a concrete type conditionally conforms to a protocol,
+that type implicitly conforms to any parent protocols
+with the same requirements.
+
+If you need a type to conditionally conform to two protocols
+that inherit from a single parent,
+explicitly declare conformance to the parent protocol.
+This avoids implicitly conforming to the parent protocol twice
+with different requirements.
+
+The following example explicitly declares
+the conditional conformance of ``Array`` to ``Loggable``
+to avoid a conflict when declaring its conditional conformance
+to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
+
+.. testcode:: conditional-conformance
+
+   -> protocol MarkedLoggable: Loggable {
+         func markAndLog()
+      }
+   ---
+      extension MarkedLoggable {
+         func markAndLog() {
+            print("----------")
+            log()
+         }
+      }
+   ---
+      extension Array: Loggable where Element: Loggable { }
+      extension Array: TitledLoggable where Element: TitledLoggable {
+         static var logTitle: String {
+            return "Array of '\(Element.logTitle)'"
+         }
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+
+Without the extension
+to explicitly declare conditional conformance to ``Loggable``,
+the other ``Array`` extensions would implicitly create these declarations,
+resulting in an error:
+
+.. testcode:: conditional-conformance-implicit-overlap
+
+   >> protocol Loggable { }
+   >> protocol MarkedLoggable : Loggable { }
+   >> protocol TitledLoggable : Loggable { }
+   -> extension Array: Loggable where Element: TitledLoggable { }
+      extension Array: Loggable where Element: MarkedLoggable { }
+   // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+   !! <REPL Input>:1:18: error: conflicting conformance of 'Array<Element>' to protocol 'Loggable'; there cannot be more than one conformance, even with different conditional bounds
+   !! extension Array: Loggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
+   !! extension Array: Loggable where Element: TitledLoggable { }
+   !! ^
+
+.. assertion:: types-cant-have-multiple-implict-conformances
+
+   >> protocol Loggable { }
+      protocol TitledLoggable: Loggable { }
+      protocol MarkedLoggable: Loggable { }
+      extension Array: TitledLoggable where Element: TitledLoggable {
+          // ...
+      }
+      extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !!  <REPL Input>:1:1: error: conditional conformance of type 'Array<Element>' to protocol 'TitledLoggable' does not imply conformance to inherited protocol 'Loggable'
+   !! extension Array: TitledLoggable where Element: TitledLoggable {
+   !! ^
+   !! <REPL Input>:1:1: note: did you mean to explicitly state the conformance like 'extension Array: Loggable where ...'?
+   !! extension Array: TitledLoggable where Element: TitledLoggable {
+   !! ^
+   !! <REPL Input>:1:1: error: type 'Element' does not conform to protocol 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: requirement specified as 'Element' : 'TitledLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
+   !! <REPL Input>:1:1: note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
 
 .. assertion:: extension-can-have-where-clause
 
@@ -2217,30 +2436,25 @@ to ensure members of that type are properly initialized.
    >> x.f(x: y)
    << // r0 : Int = 7
 
-.. assertion:: extensions-can't-have-where-clause-and-inheritance-together
+.. assertion:: extensions-can-have-where-clause-and-inheritance-together
 
-   >> protocol P { func foo() }
+   >> protocol P { func foo() -> Int }
    >> extension Array: P where Element: Equatable {
-   >>    func foo() {}
+   >>    func foo() -> Int { return 0 }
    >> }
-   !! <REPL Input>:1:1: error: extension of type 'Array' with constraints cannot have an inheritance clause
-   !!    extension Array: P where Element: Equatable {
-   !!    ^                ~
-
-.. langref-grammar
-
-    decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
+   >> [1, 2, 3].foo()
+   << // r0 : Int = 0
 
 .. syntax-grammar::
 
     Grammar of an extension declaration
 
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT extension-body
-    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier generic-where-clause extension-body
+    extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT generic-where-clause-OPT extension-body
     extension-body --> ``{`` extension-members-OPT ``}``
 
     extension-members --> extension-member extension-members-OPT
     extension-member --> declaration | compiler-control-statement
+
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -2285,17 +2499,20 @@ That said, if you provide a setter clause, you must also provide a getter clause
 The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
 If you do not provide a setter name, the default parameter name to the setter is ``value``.
-The type of the *setter name* must be the same as the *return type*.
+The type of the parameter to the setter is the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
 
+Subscript parameters follow the same rules as function parameters,
+with two exceptions.
 By default, the parameters used in subscripting don't have argument labels,
 unlike functions, methods, and initializers.
 However, you can provide explicit argument labels
 using the same syntax that functions, methods, and initializers use.
+In addition, subscripts can't have in-out parameters.
 
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
@@ -2303,16 +2520,30 @@ as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 For more information about subscripting and to see examples of subscript declarations,
 see :doc:`../LanguageGuide/Subscripts`.
 
-.. langref-grammar
-    decl-subscript ::= subscript-head '{' get-set '}'
+.. _Declarations_TypeSubscriptDeclaration:
 
-    // 'get' is implicit in this syntax.
-    decl-subscript ::= subscript-head brace-item-list
+Type Subscript Declarations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // For use in protocols.
-    decl-subscript ::= subscript-head '{' get-set-kw '}'
+To declare a subscript that's exposed by the type,
+rather than by instances of the type,
+mark the subscript declaration with the ``static`` declaration modifier.
+Classes can mark type computed properties with the ``class`` declaration modifier instead
+to allow subclasses to override the superclass’s implementation.
+In a class declaration,
+the ``static`` keyword has the same effect as marking the declaration
+with both the ``class`` and ``final`` declaration modifiers.
 
-    subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
+.. assertion:: cant-override-static-subscript-in-subclass
+
+   -> class Super { static subscript(i: Int) -> Int { return 10 } }
+   -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+   !! <REPL Input>:1:36: error: cannot override static subscript
+   !! class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+   !!                                    ^
+   !! <REPL Input>:1:22: note: overridden declaration is here
+   !! class Super { static subscript(i: Int) -> Int { return 10 } }
+   !!                      ^
 
 .. syntax-grammar::
 
@@ -2456,9 +2687,9 @@ For example, the addition (``+``) and subtraction (``-``) operators
 belong to the ``AdditionPrecedence`` group,
 and the multiplication (``*``) and division (``/``) operators
 belong to the ``MultiplicationPrecedence`` group.
-For a complete list of operators and precedence groups
+For a complete list of precedence groups
 provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 The *associativity* of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
@@ -2522,6 +2753,14 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
+``class``
+    Apply this modifier to a member of a class
+    to indicate that the member is a member of the class itself,
+    rather than a member of instances of the class.
+    Members of a superclass that have this modifier
+    and don't have the ``final`` modifier
+    can be overridden by subclasses.
+
 ``dynamic``
     Apply this modifier to any member of a class that can be represented by Objective-C.
     When you mark a member declaration with the ``dynamic`` modifier,
@@ -2560,17 +2799,29 @@ that introduces the declaration.
     for example, when you're not sure whether a conforming type implements them---
     see :ref:`Protocols_OptionalProtocolRequirements`.
 
-.. TODO: Currently, you can't check for an optional initializer,
-    so we're leaving those out of the documentation, even though you can mark
-    an initializer with the @optional attribute. It's still being decided by the
-    compiler team. Update this section if they decide to make everything work
-    properly for optional initializer requirements.
+    .. TODO: Currently, you can't check for an optional initializer,
+        so we're leaving those out of the documentation, even though you can mark
+        an initializer with the @optional attribute. It's still being decided by the
+        compiler team. Update this section if they decide to make everything work
+        properly for optional initializer requirements.
 
 ``required``
     Apply this modifier to a designated or convenience initializer
     of a class to indicate that every subclass must implement that initializer.
     The subclass's implementation of that initializer
     must also be marked with the ``required`` modifier.
+
+``static``
+    Apply this modifier to a member of a structure, class, enumeration, or protocol
+    to indicate that the member is a member of the type,
+    rather than a member of instances of that type.
+    In the scope of a class declaration,
+    writing the ``static`` modifier on a member declaration
+    has the same effect as writing the ``class`` and ``final`` modifiers
+    on that member declaration.
+    However, constant type properties of a class are an exception:
+    ``static`` has its normal, nonclass meaning there
+    because you can't write ``class`` or ``final`` on those declarations.
 
 ``unowned``
     Apply this modifier to a stored variable, constant, or stored property
@@ -2582,7 +2833,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2600,7 +2851,7 @@ that introduces the declaration.
     Like a weak reference,
     the type of the property or value must be a class type;
     unlike a weak reference,
-    the type is nonoptional.
+    the type is non-optional.
     For an example and more information about the ``unowned`` modifier,
     see :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 
@@ -2663,7 +2914,7 @@ and private members declared in one extension
 can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the ``set`` keyword enclosed in parentheses (for instance, ``private(set)``).
+which consists of the ``set`` keyword enclosed in parentheses (for example, ``private(set)``).
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,

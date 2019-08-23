@@ -250,7 +250,7 @@ the behavior and capabilities they provide.
 It is always better to be specific about the types you expect to work with in your code.
 
 Here's an example of using ``Any`` to work with a mix of different types,
-including function types and non-class types.
+including function types and nonclass types.
 The example creates an array called ``things``, which can store values of type ``Any``:
 
 .. testcode:: typeCasting
@@ -332,7 +332,7 @@ a constant of the specified type to enable its value to be printed:
        -> let optionalNumber: Int? = 3
        << // optionalNumber : Int? = Optional(3)
        -> things.append(optionalNumber)        // Warning
-       !! <REPL Input>:1:15: warning: expression implicitly coerced from 'Int?' to Any
+       !! <REPL Input>:1:15: warning: expression implicitly coerced from 'Int?' to 'Any'
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
        !! <REPL Input>:1:15: note: provide a default value to avoid this warning
@@ -343,7 +343,7 @@ a constant of the specified type to enable its value to be printed:
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
        !!                              !
-       !! <REPL Input>:1:15: note: explicitly cast to Any with 'as Any' to silence this warning
+       !! <REPL Input>:1:15: note: explicitly cast to 'Any' with 'as Any' to silence this warning
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
        !!                              as Any

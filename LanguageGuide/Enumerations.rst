@@ -7,8 +7,8 @@ and enables you to work with those values in a type-safe way within your code.
 If you are familiar with C,
 you will know that C enumerations assign related names to a set of integer values.
 Enumerations in Swift are much more flexible,
-and do not have to provide a value for each case of the enumeration.
-If a value (known as a “raw” value) *is* provided for each enumeration case,
+and don't have to provide a value for each case of the enumeration.
+If a value (known as a *raw* value) is provided for each enumeration case,
 the value can be a string, a character,
 or a value of any integer or floating-point type.
 
@@ -28,7 +28,7 @@ Enumerations can also define initializers to provide an initial case value;
 can be extended to expand their functionality beyond their original implementation;
 and can conform to protocols to provide standard functionality.
 
-For more on these capabilities, see
+For more about these capabilities, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
@@ -67,14 +67,14 @@ You use the ``case`` keyword to introduce new enumeration cases.
 
 .. note::
 
-   Unlike C and Objective-C,
-   Swift enumeration cases are not assigned a default integer value when they are created.
+   Swift enumeration cases don't have an integer value set by default,
+   unlike languages like C and Objective-C.
    In the ``CompassPoint`` example above,
    ``north``, ``south``, ``east`` and ``west``
-   do not implicitly equal
+   don't implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
-   Instead, the different enumeration cases are fully-fledged values in their own right,
-   with an explicitly-defined type of ``CompassPoint``.
+   Instead, the different enumeration cases are values in their own right,
+   with an explicitly defined type of ``CompassPoint``.
 
 Multiple cases can appear on a single line, separated by commas:
 
@@ -84,10 +84,10 @@ Multiple cases can appear on a single line, separated by commas:
          case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
       }
 
-Each enumeration definition defines a brand new type.
+Each enumeration definition defines a new type.
 Like other types in Swift, their names
 (such as ``CompassPoint`` and ``Planet``)
-should start with a capital letter.
+start with a capital letter.
 Give enumeration types singular rather than plural names,
 so that they read as self-evident:
 
@@ -97,7 +97,7 @@ so that they read as self-evident:
    << // directionToHead : CompassPoint = REPL.CompassPoint.west
 
 The type of ``directionToHead`` is inferred
-when it is initialized with one of the possible values of ``CompassPoint``.
+when it's initialized with one of the possible values of ``CompassPoint``.
 Once ``directionToHead`` is declared as a ``CompassPoint``,
 you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
@@ -107,7 +107,7 @@ you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 The type of ``directionToHead`` is already known,
 and so you can drop the type when setting its value.
-This makes for highly readable code when working with explicitly-typed enumeration values.
+This makes for highly readable code when working with explicitly typed enumeration values.
 
 .. _Enumerations_MatchingEnumerationValuesWithASwitchStatement:
 
@@ -144,12 +144,12 @@ print ``"Watch out for penguins"``.”
 As described in :doc:`ControlFlow`,
 a ``switch`` statement must be exhaustive when considering an enumeration's cases.
 If the ``case`` for ``.west`` is omitted,
-this code does not compile,
-because it does not consider the complete list of ``CompassPoint`` cases.
-Requiring exhaustiveness ensures that enumeration cases are not accidentally omitted.
+this code doesn't compile,
+because it doesn't consider the complete list of ``CompassPoint`` cases.
+Requiring exhaustiveness ensures that enumeration cases aren't accidentally omitted.
 
-When it is not appropriate to provide a ``case`` for every enumeration case,
-you can provide a ``default`` case to cover any cases that are not addressed explicitly:
+When it isn't appropriate to provide a ``case`` for every enumeration case,
+you can provide a ``default`` case to cover any cases that aren't addressed explicitly:
 
 .. testcode:: enums
 
@@ -163,6 +163,55 @@ you can provide a ``default`` case to cover any cases that are not addressed exp
       }
    <- Mostly harmless
 
+.. _Enumerations_AllCases:
+
+Iterating over Enumeration Cases
+--------------------------------
+
+For some enumerations,
+it's useful to have a collection of all of that enumeration's cases.
+You enable this by
+writing ``: CaseIterable`` after the enumeration's name.
+Swift exposes a collection of all the cases
+as an ``allCases`` property of the enumeration type.
+Here's an example:
+
+.. testcode:: enums
+
+    -> enum Beverage: CaseIterable {
+           case coffee, tea, juice
+       }
+    -> let numberOfChoices = Beverage.allCases.count
+    << // numberOfChoices : Int = 3
+    -> print("\(numberOfChoices) beverages available")
+    <- 3 beverages available
+
+In the example above,
+you write ``Beverage.allCases`` to access a collection
+that contains all of the cases of the ``Beverage`` enumeration.
+You can use ``allCases`` like any other collection ---
+the collection's elements are instances of the enumeration type,
+so in this case they're ``Beverage`` values.
+The example above counts how many cases there are,
+and the example below uses a ``for`` loop to iterate over all the cases.
+
+.. testcode:: enums
+
+    -> for beverage in Beverage.allCases {
+           print(beverage)
+       }
+    << coffee
+    << tea
+    << juice
+    // coffee
+    // tea
+    // juice
+
+The syntax used in the examples above
+marks the enumeration as conforming to the
+`CaseIterable <//apple_ref/swift/fake/CaseIterable>`_ protocol.
+For information about protocols, see :doc:`Protocols`.
+
 .. _Enumerations_AssociatedValues:
 
 Associated Values
@@ -172,10 +221,10 @@ The examples in the previous section show how the cases of an enumeration are
 a defined (and typed) value in their own right.
 You can set a constant or variable to ``Planet.earth``,
 and check for this value later.
-However, it is sometimes useful to be able to store
-:newTerm:`associated values` of other types alongside these case values.
-This enables you to store additional custom information along with the case value,
-and permits this information to vary each time you use that case in your code.
+However, it's sometimes useful to be able to store
+values of other types alongside these case values.
+This additional information is called an :newTerm:`associated value`,
+and it varies each time you use that case as a value in your code.
 
 You can define Swift enumerations to store associated values of any given type,
 and the value types can be different for each case of the enumeration if needed.
@@ -187,9 +236,9 @@ For example, suppose an inventory tracking system needs to
 track products by two different types of barcode.
 Some products are labeled with 1D barcodes in UPC format,
 which uses the numbers ``0`` to ``9``.
-Each barcode has a “number system” digit,
-followed by five “manufacturer code” digits and five “product code” digits.
-These are followed by a “check” digit to verify that the code has been scanned correctly:
+Each barcode has a number system digit,
+followed by five manufacturer code digits and five product code digits.
+These are followed by a check digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC_2x.png
    :align: center
@@ -201,7 +250,7 @@ and can encode a string up to 2,953 characters long:
 .. image:: ../images/barcode_QR_2x.png
    :align: center
 
-It would be convenient for an inventory tracking system to be able to store UPC barcodes
+It's convenient for an inventory tracking system to store UPC barcodes
 as a tuple of four integers,
 and QR code barcodes as a string of any length.
 
@@ -221,12 +270,12 @@ which can take either a value of ``upc``
 with an associated value of type (``Int``, ``Int``, ``Int``, ``Int``),
 or a value of ``qrCode`` with an associated value of type ``String``.”
 
-This definition does not provide any actual ``Int`` or ``String`` values ---
+This definition doesn't provide any actual ``Int`` or ``String`` values ---
 it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
 when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
 
-New barcodes can then be created using either type:
+You can then create new barcodes using either type:
 
 .. testcode:: enums
 
@@ -237,7 +286,7 @@ This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.upc``
 with an associated tuple value of ``(8, 85909, 51226, 3)``.
 
-The same product can be assigned a different type of barcode:
+You can assign the same product a different type of barcode:
 
 .. testcode:: enums
 
@@ -248,10 +297,13 @@ the original ``Barcode.upc`` and its integer values are replaced by
 the new ``Barcode.qrCode`` and its string value.
 Constants and variables of type ``Barcode`` can store either a ``.upc`` or a ``.qrCode``
 (together with their associated values),
-but they can only store one of them at any given time.
+but they can store only one of them at any given time.
 
-The different barcode types can be checked using a switch statement, as before.
-This time, however, the associated values can be extracted as part of the switch statement.
+You can check the different barcode types using a switch statement,
+similar to the example in
+:ref:`Enumerations_MatchingEnumerationValuesWithASwitchStatement`.
+This time, however,
+the associated values are extracted as part of the switch statement.
 You extract each associated value as a constant (with the ``let`` prefix)
 or a variable (with the ``var`` prefix)
 for use within the ``switch`` case's body:
@@ -330,9 +382,9 @@ Implicitly Assigned Raw Values
 
 When you're working with enumerations that store integer or string raw values,
 you don't have to explicitly assign a raw value for each case.
-When you don't, Swift will automatically assign the values for you.
+When you don't, Swift automatically assigns the values for you.
 
-For instance, when integers are used for raw values,
+For example, when integers are used for raw values,
 the implicit value for each case is one more than the previous case.
 If the first case doesn't have a value set, its value is ``0``.
 
@@ -431,7 +483,7 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
 This example uses optional binding to try to access a planet with a raw value of ``11``.
 The statement ``if let somePlanet = Planet(rawValue: 11)`` creates an optional ``Planet``,
 and sets ``somePlanet`` to the value of that optional ``Planet`` if it can be retrieved.
-In this case, it is not possible to retrieve a planet with a position of ``11``,
+In this case, it isn't possible to retrieve a planet with a position of ``11``,
 and so the ``else`` branch is executed instead.
 
 .. TODO: Switch around the order of this chapter so that all of the non-union stuff
@@ -459,8 +511,8 @@ For example, here is an enumeration that stores simple arithmetic expressions:
            indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
        }
 
-You can also write ``indirect`` before the beginning of the enumeration,
-to enable indirection for all of the enumeration's cases that need it:
+You can also write ``indirect`` before the beginning of the enumeration
+to enable indirection for all of the enumeration's cases that have an associated value:
 
 .. testcode:: recursive-enum
 

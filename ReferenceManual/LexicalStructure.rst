@@ -34,7 +34,7 @@ and null (U+0000).
 
 .. Whitespace characters are listed roughly from
    most salient/common to least,
-   not in order of Unicode codepoints.
+   not in order of Unicode scalar value.
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with ``//``
@@ -43,25 +43,33 @@ Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting multiline comments is allowed,
 but the comment markers must be balanced.
 
-.. langref-grammar
-
-    whitespace ::= ' '
-    whitespace ::= '\n'
-    whitespace ::= '\r'
-    whitespace ::= '\t'
-    whitespace ::= '\0'
-
-    comment    ::= //.*[\n\r]
-    comment    ::= /* .... */
-
-.. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
-
-.. No formal grammar.
-   No other syntactic category refers to this one,
-   and the prose is sufficient to define it completely.
-
 Comments can contain additional formatting and markup,
 as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
+
+.. syntax-grammar::
+
+   Grammar of whitespace
+
+   whitespace --> whitespace-item whitespace-OPT
+   whitespace-item --> line-break
+   whitespace-item --> comment
+   whitespace-item --> multiline-comment
+   whitespace-item --> U+0000, U+0009, U+000B, U+000C, or U+0020
+
+   line-break --> U+000A
+   line-break --> U+000D
+   line-break --> U+000D followed by U+000A
+
+   comment --> ``//`` comment-text line-break
+   multiline-comment --> ``/*`` multiline-comment-text ``*/``
+
+   comment-text --> comment-text-item comment-text-OPT
+   comment-text-item --> Any Unicode scalar value except U+000A or U+000D
+
+   multiline-comment-text --> multiline-comment-text-item multiline-comment-text-OPT
+   multiline-comment-text-item --> multiline-comment
+   multiline-comment-text-item --> comment-text-item
+   multiline-comment-text-item --> Any Unicode scalar value except ``/*`` or ``*/``
 
 .. _LexicalStructure_Identifiers:
 
@@ -82,42 +90,12 @@ To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
 For example, ``class`` is not a valid identifier,
 but :literal:`\`class\`` is valid.
-The backticks are not considered part of the identifier;
+The backticks aren't considered part of the identifier;
 :literal:`\`x\`` and ``x`` have the same meaning.
 
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
-
-.. langref-grammar
-
-    identifier ::= id-start id-continue*
-    id-start ::= [A-Za-z_]
-
-    // BMP alphanum non-combining
-    id-start ::= [\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-00BA]
-    id-start ::= [\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]
-    id-start ::= [\u0100-\u02FF\u0370-\u167F\u1681-\u180D\u180F-\u1DBF]
-    id-start ::= [\u1E00-\u1FFF]
-    id-start ::= [\u200B-\u200D\u202A-\u202E\u203F-\u2040\u2054\u2060-\u206F]
-    id-start ::= [\u2070-\u20CF\u2100-\u218F\u2460-\u24FF\u2776-\u2793]
-    id-start ::= [\u2C00-\u2DFF\u2E80-\u2FFF]
-    id-start ::= [\u3004-\u3007\u3021-\u302F\u3031-\u303F\u3040-\uD7FF]
-    id-start ::= [\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE1F\uFE30-FE44]
-    id-start ::= [\uFE47-\uFFFD]
-
-    // non-BMP non-PUA
-    id-start ::= [\u10000-\u1FFFD\u20000-\u2FFFD\u30000-\u3FFFD\u40000-\u4FFFD]
-    id-start ::= [\u50000-\u5FFFD\u60000-\u6FFFD\u70000-\u7FFFD\u80000-\u8FFFD]
-    id-start ::= [\u90000-\u9FFFD\uA0000-\uAFFFD\uB0000-\uBFFFD\uC0000-\uCFFFD]
-    id-start ::= [\uD0000-\uDFFFD\uE0000-\uEFFFD]
-
-    id-continue ::= [0-9]
-    // combining
-    id-continue ::= [\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]
-    id-continue ::= id-start
-
-    dollarident ::= '$' id-continue+
 
 .. syntax-grammar::
 
@@ -167,7 +145,7 @@ in a function declaration or function call
 without being escaped with backticks.
 When a member has the same name as a keyword,
 references to that member don't need to be escaped with backticks,
-except when there is ambiguity between referring to the member
+except when there's ambiguity between referring to the member
 and using the keyword ---
 for example, ``self``, ``Type``, and ``Protocol``
 have special meaning in an explicit member expression,
@@ -183,10 +161,10 @@ so they must be escaped with backticks in that context.
 
    -> func f(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: parameters may not have the 'var' specifier
+   !! <REPL Input>:1:8: error: 'var' as a parameter attribute is not allowed
    !! func f(var x: Int) {}
    !!        ^~~
-   !! var x = x
+   !!-
 
 .. assertion:: let-requires-backticks
 
@@ -209,46 +187,6 @@ so they must be escaped with backticks in that context.
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
 
-.. langref-grammar
-
-    keyword ::= 'class'
-    keyword ::= 'do'
-    keyword ::= 'extension'
-    keyword ::= 'import'
-    keyword ::= 'init'
-    keyword ::= 'def'
-    keyword ::= 'metatype'
-    keyword ::= 'enum'
-    keyword ::= 'protocol'
-    keyword ::= 'type'
-    keyword ::= 'struct'
-    keyword ::= 'subscript'
-    keyword ::= 'typealias'
-    keyword ::= 'var'
-    keyword ::= 'where'
-    keyword ::= 'break'
-    keyword ::= 'case'
-    keyword ::= 'continue'
-    keyword ::= 'default'
-    keyword ::= 'repeat'
-    keyword ::= 'else'
-    keyword ::= 'if'
-    keyword ::= 'in'
-    keyword ::= 'for'
-    keyword ::= 'return'
-    keyword ::= 'switch'
-    keyword ::= 'then'
-    keyword ::= 'while'
-    keyword ::= 'as'
-    keyword ::= 'is'
-    keyword ::= 'new'
-    keyword ::= 'super'
-    keyword ::= 'self'
-    keyword ::= 'Self'
-    keyword ::= '#column'
-    keyword ::= '#file'
-    keyword ::= '#line'
-
 * Keywords used in declarations:
   ``associatedtype``,
   ``class``,
@@ -267,6 +205,7 @@ so they must be escaped with backticks in that context.
   ``private``,
   ``protocol``,
   ``public``,
+  ``rethrows``,
   ``static``,
   ``struct``,
   ``subscript``,
@@ -299,7 +238,6 @@ so they must be escaped with backticks in that context.
   ``false``,
   ``is``,
   ``nil``,
-  ``rethrows``,
   ``super``,
   ``self``,
   ``Self``,
@@ -318,27 +256,16 @@ so they must be escaped with backticks in that context.
   ``#else``,
   ``#elseif``,
   ``#endif``,
+  ``#error``,
   ``#file``,
   ``#fileLiteral``,
   ``#function``,
   ``#if``,
   ``#imageLiteral``,
   ``#line``,
-  ``#selector``.
-  and ``#sourceLocation``.
-
-.. langref-grammar
-
-    get
-    infix
-    operator
-    postfix
-    prefix
-    set
-    type
-
-.. NOTE: This list of context-sensitive keywords
-   is derived from the file "swift/include/swift/AST/Attr.def"
+  ``#selector``,
+  ``#sourceLocation``,
+  and ``#warning``.
 
 * Keywords reserved in particular contexts:
   ``associativity``,
@@ -370,6 +297,9 @@ so they must be escaped with backticks in that context.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
 
+.. NOTE: The list of context-sensitive keywords above
+   is derived from the file "swift/include/swift/AST/Attr.def"
+
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
 ``(``, ``)``, ``{``, ``}``, ``[``, ``]``,
@@ -394,7 +324,7 @@ The following are examples of literals:
     -> "Hello, world!"  // String literal
     -> true             // Boolean literal
     <$ : Int = 42
-    <$ : Double = 3.1415899999999999
+    <$ : Double = 3.14159
     <$ : String = "Hello, world!"
     <$ : Bool = true
 
@@ -464,9 +394,9 @@ Negative integers literals are expressed by prepending a minus sign (``-``)
 to an integer literal, as in ``-42``.
 
 Underscores (``_``) are allowed between digits for readability,
-but they are ignored and therefore don't affect the value of the literal.
+but they're ignored and therefore don't affect the value of the literal.
 Integer literals can begin with leading zeros (``0``),
-but they are likewise ignored and don't affect the base or value of the literal.
+but they're likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
 the default inferred type of an integer literal is the Swift standard library type ``Int``.
@@ -480,17 +410,9 @@ as described in :ref:`TheBasics_Integers`.
    Also, are adjacent underscores meant to be allowed, like 5__000?
    (REPL supports them as of swift-1.21 but it seems odd.)
 
-.. langref-grammar
-
-    integer_literal ::= [0-9][0-9_]*
-    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= 0o[0-7][0-7_]*
-    integer_literal ::= 0b[01][01_]*
-
-.. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
+.. NOTE: Updated the syntax-grammar to reflect [Contributor 7746]'s comment in
     <rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
     This feels very strange from a grammatical point of view.
-    Updated the syntax-grammar below as well.
     Update: This is a parser hack, not a lexer hack. Therefore,
     it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
     (Doug confirmed this, 4/2/2014.)
@@ -565,23 +487,15 @@ Negative floating-point literals are expressed by prepending a minus sign (``-``
 to a floating-point literal, as in ``-42.5``.
 
 Underscores (``_``) are allowed between digits for readability,
-but are ignored and therefore don't affect the value of the literal.
+but they're ignored and therefore don't affect the value of the literal.
 Floating-point literals can begin with leading zeros (``0``),
-but are likewise ignored and don't affect the base or value of the literal.
+but they're likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
 the default inferred type of a floating-point literal is the Swift standard library type ``Double``,
 which represents a 64-bit floating-point number.
 The Swift standard library also defines a ``Float`` type,
 which represents a 32-bit floating-point number.
-
-.. langref-grammar
-
-    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
-    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-    floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-    floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
-                           (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
 
 .. syntax-grammar::
 
@@ -606,21 +520,21 @@ which represents a 32-bit floating-point number.
 String Literals
 ~~~~~~~~~~~~~~~
 
-A string literal is a sequence of characters surrounded by quotes.
-A single-line string literal is surrounded by double quotes,
-with the following form:
+A string literal is a sequence of characters surrounded by quotation marks.
+A single-line string literal is surrounded by double quotation marks
+and has the following form:
 
 .. syntax-outline::
 
     "<#characters#>"
 
 String literals can't contain
-an unescaped double quote (``"``),
+an unescaped double quotation mark (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-A multiline string literal is surrounded by three double quotes,
-with the following form:
+A multiline string literal is surrounded by three double quotation marks
+and has the following form:
 
 .. syntax-outline::
 
@@ -630,13 +544,13 @@ with the following form:
 
 Unlike a single-line string literal,
 a multiline string literal can contain
-unescaped double quotes (``"``), carriage returns, and line feeds.
-It can't contain three unescaped double quotes next to each other.
+unescaped double quotation marks (``"``), carriage returns, and line feeds.
+It can't contain three unescaped double quotation marks next to each other.
 
-The carriage return or line feed after the ``"""``
+The line break after the ``"""``
 that begins the multiline string literal
 is not part of the string.
-The carriage return or line feed before the ``"""``
+The line break before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
 that begins or ends with a line feed,
@@ -650,33 +564,39 @@ determines the indentation:
 Every nonblank line in the literal must begin
 with exactly the same indentation
 that appears before the closing ``"""``;
-there is no conversion between tabs and spaces.
+there's no conversion between tabs and spaces.
 You can include additional spaces and tabs after that indentation;
 those spaces and tabs appear in the string.
 
-Line endings in a multiline string literal are
+Line breaks in a multiline string literal are
 normalized to use the line feed character.
 Even if your source file has a mix of carriage returns and line feeds,
-all of the line endings in the string will be the same.
+all of the line breaks in the string will be the same.
+
+In a multiline string literal,
+writing a backslash (``\``) at the end of a line
+omits that line break from the string.
+Any whitespace between the backslash and the line break
+is also omitted.
+You can use this syntax
+to hard wrap a multiline string literal in your source code,
+without changing the value of the resulting string.
 
 Special characters
 can be included in string literals
 of both the single-line and multiline forms
 using the following escape sequences:
 
-* Null Character (``\0``)
+* Null character (``\0``)
 * Backslash (``\\``)
-* Horizontal Tab (``\t``)
-* Line Feed (``\n``)
-* Carriage Return (``\r``)
-* Double Quote (``\"``)
-* Single Quote (``\'``)
-* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`), where *n* is between one and eight hexadecimal digits
-
-.. TR: Are \v and \f allowed for vertical tab and formfeed?
-   We allow them as whitespace as of now --
-   should that mean we want escape sequences for them too?
-   See also feedback 300722.
+* Horizontal tab (``\t``)
+* Line feed (``\n``)
+* Carriage return (``\r``)
+* Double quotation mark (``\"``)
+* Single quotation mark (``\'``)
+* Unicode scalar (:literal:`\\u{`:emphasis:`n`:literal:`}`),
+  where *n* is a hexadecimal number
+  that has one to eight digits
 
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
@@ -687,10 +607,10 @@ using the following escape sequences:
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
 The interpolated expression can contain a string literal,
-but can't contain an unescaped backslash (``\``),
+but can't contain an unescaped backslash,
 a carriage return, or a line feed.
 
-For example, all the following string literals have the same value:
+For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
 
@@ -706,10 +626,66 @@ For example, all the following string literals have the same value:
    << // x : Int = 3
    <$ : String = "1 2 3"
 
+A string delimited by extended delimiters is a sequence of characters
+surrounded by quotation marks and a balanced set of one or more number signs (``#``).
+A string delimited by extended delimiters has the following forms:
+
+.. syntax-outline::
+
+    #"<#characters#>"#
+    
+    #"""
+    <#characters#>
+    """#
+
+Special characters in a string delimited by extended delimiters
+appear in the resulting string as normal characters
+rather than as special characters.
+You can use extended delimiters to create strings with characters
+that would ordinarily have a special effect
+such as generating a string interpolation,
+starting an escape sequence,
+or terminating the string.
+
+The following example shows a string literal
+and a string delimited by extended delimiters
+that create equivalent string values:
+
+.. testcode:: extended-string-delimiters
+
+    -> let string = #"\(x) \ " \u{2603}"#
+    -> let escaped = "\\(x) \\ \" \\u{2603}"
+    << // string : String = "\\(x) \\ \" \\u{2603}"
+    << // escaped : String = "\\(x) \\ \" \\u{2603}"
+    -> print(string)
+    <- \(x) \ " \u{2603}
+    -> print(string == escaped)
+    <- true
+
+If you use more than one number sign to form
+a string delimited by extended delimiters,
+don't place whitespace in between the number signs:
+
+.. testcode:: extended-string-delimiters
+
+    -> print(###"Line 1\###nLine 2"###) // OK
+    << Line 1
+    << Line 2
+    -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+    !! <REPL Input>:1:21: error: invalid escape sequence in literal
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+
+Multiline string literals that you create using extended delimiters
+have the same indentation requirements as regular multiline string literals. 
+
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
-and `String Structure Reference <//apple_ref/doc/uid/TP40015181>`_.
+and `String <//apple_ref/swift/struct/s:SS>`_.
 
 String literals that are concatenated by the ``+`` operator
 are concatenated at compile time.
@@ -724,28 +700,21 @@ no runtime concatenation is performed.
   << // textA : String = "Hello world"
   << // textB : String = "Hello world"
 
-.. langref-grammar
-
-    character_literal ::= '[^'\\\n\r]|character_escape'
-    character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
-    character_escape  ::= [\]x hex hex
-    character_escape  ::= [\]u hex hex hex hex
-    character_escape  ::= [\]U hex hex hex hex hex hex hex hex
-
-    string_literal   ::= ["]([^"\\\n\r]|character_escape|escape_expr)*["]
-    escape_expr      ::= [\]escape_expr_body
-    escape_expr_body ::= [(]escape_expr_body[)]
-    escape_expr_body ::= [^\n\r"()]
-
-
 .. syntax-grammar::
 
     Grammar of a string literal
 
     string-literal --> static-string-literal | interpolated-string-literal
 
-    static-string-literal --> ``"`` quoted-text-OPT ``"``
-    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
+    string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"``
+    string-literal-closing-delimiter --> ``"`` extended-string-literal-delimiter-OPT
+
+    static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
+    static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
+    
+    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
+    extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
@@ -754,9 +723,10 @@ no runtime concatenation is performed.
     multiline-quoted-text --> multiline-quoted-text-item multiline-quoted-text-OPT
     multiline-quoted-text-item --> escaped-character
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
+    multiline-quoted-text-item --> escaped-newline
 
-    interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
-    interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
+    interpolated-string-literal --> string-literal-opening-delimiter interpolated-text-OPT string-literal-closing-delimiter
+    interpolated-string-literal --> multiline-string-literal-opening-delimiter interpolated-text-OPT multiline-string-literal-closing-delimiter
 
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
@@ -764,12 +734,15 @@ no runtime concatenation is performed.
     multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
     multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
-    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
+    escape-sequence --> ``\`` extended-string-literal-delimiter
+    escaped-character --> escape-sequence ``0`` | escape-sequence ``\`` | escape-sequence ``t`` | escape-sequence ``n`` | escape-sequence ``r`` | escape-sequence ``"`` | escape-sequence ``'``
+    escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
+    escaped-newline -->  escape-sequence whitespace-OPT line-break
+
 .. Quoted text resolves to a sequence of escaped characters by way of
-   the quoted-texts rule which allows repetition; no need to allow
+   the quoted-text rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
 
 .. Now that single quotes are gone, we don't have a character literal.
@@ -830,7 +803,7 @@ the ``+`` operator followed by the ``.+`` operator.
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
 Additionally, although operators can contain an exclamation mark (``!``),
-postfix operators cannot begin with either a question mark or an exclamation mark.
+postfix operators can't begin with either a question mark or an exclamation mark.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
 
@@ -859,10 +832,13 @@ postfix operators cannot begin with either a question mark or an exclamation mar
    >> print(1?+)
    !! <REPL Input>:1:18: error: expected operator name in operator declaration
    !! postfix operator ?+
-   !!                  ^
+   !! ^
+   !! <REPL Input>:1:14: error: operator implementation without matching operator declaration
+   !! postfix func ?+ (x: Int) -> Int {
+   !! ^
    !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
    !! print(1?+)
-   !!         ^
+   !! ^
 
 .. note::
 
@@ -877,16 +853,16 @@ whether an operator is used as a prefix operator, a postfix operator,
 or a binary operator. This behavior is summarized in the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
-  it is treated as a binary operator.
+  it's treated as a binary operator.
   As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as a binary operator.
 * If an operator has whitespace on the left side only,
-  it is treated as a prefix unary operator.
+  it's treated as a prefix unary operator.
   As an example, the ``+++`` operator in ``a +++b`` is treated as a prefix unary operator.
 * If an operator has whitespace on the right side only,
-  it is treated as a postfix unary operator.
+  it's treated as a postfix unary operator.
   As an example, the ``+++`` operator in ``a+++ b`` is treated as a postfix unary operator.
 * If an operator has no whitespace on the left but is followed immediately by a dot (``.``),
-  it is treated as a postfix unary operator.
+  it's treated as a postfix unary operator.
   As an example, the  ``+++`` operator in ``a+++.b`` is treated as a postfix unary operator
   (``a+++ .b`` rather than ``a +++ .b``).
 
@@ -896,9 +872,9 @@ the characters ``)``, ``]``, and ``}`` after an operator,
 and the characters ``,``, ``;``, and ``:``
 are also considered whitespace.
 
-There is one caveat to the rules above.
+There's one caveat to the rules above.
 If the ``!`` or ``?`` predefined operator has no whitespace on the left,
-it is treated as a postfix operator,
+it's treated as a postfix operator,
 regardless of whether it has whitespace on the right.
 To use the ``?`` as the optional-chaining operator,
 it must not have whitespace on the left.
@@ -907,7 +883,7 @@ it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
-and may be split again. As a result, there is no need to use whitespace
+and may be split again. As a result, there's no need to use whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
 In this example, the closing ``>`` characters are not treated as a single token
@@ -926,41 +902,6 @@ see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDecl
 To learn how to overload existing operators,
 see :ref:`AdvancedOperators_OperatorFunctions`.
 
-.. langref-grammar
-
-    operator ::= [/=-+*%<>!&|^~]+
-    operator ::= \.+
-
-      Note: excludes '=', see [1]
-            excludes '->', see [2]
-            excludes unary '&', see [3]
-            excludes '//', '/*', and '*/', see [4]
-
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-
-    any-identifier ::= identifier | operator
-
-.. langref-grammar
-
-    punctuation ::= '('
-    punctuation ::= ')'
-    punctuation ::= '{'
-    punctuation ::= '}'
-    punctuation ::= '['
-    punctuation ::= ']'
-    punctuation ::= '.'
-    punctuation ::= ','
-    punctuation ::= ';'
-    punctuation ::= ':'
-    punctuation ::= '='
-    punctuation ::= '->'
-    punctuation ::= '&' // unary prefix operator
-
 .. NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
    monad -- the ? is actually a monadic bind operator.  It is like a burrito.
    The current list of reserved punctuation is in Tokens.def.
@@ -976,8 +917,10 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+00A1--U+00A7
     operator-head --> U+00A9 or U+00AB
     operator-head --> U+00AC or U+00AE
-    operator-head --> U+00B0--U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
-    operator-head --> U+2016--U+2017 or U+2020--U+2027
+    operator-head --> U+00B0--U+00B1
+    operator-head --> U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
+    operator-head --> U+2016--U+2017
+    operator-head --> U+2020--U+2027
     operator-head --> U+2030--U+203E
     operator-head --> U+2041--U+2053
     operator-head --> U+2055--U+205E
@@ -986,7 +929,8 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3030
+    operator-head --> U+3008--U+3020 
+    operator-head --> U+3030
 
     operator-character --> operator-head
     operator-character --> U+0300--U+036F

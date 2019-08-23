@@ -17,16 +17,6 @@ using postfixes such as function calls and member access.
 Each kind of expression is described in detail
 in the sections below.
 
-.. langref-grammar
-
-    expr          ::= expr-basic
-    expr          ::= expr-trailing-closure expr-cast?
-
-    expr-basic    ::= expr-sequence expr-cast?
-
-    expr-sequence ::= expr-unary expr-binary*
-
-
 .. syntax-grammar::
 
     Grammar of an expression
@@ -49,7 +39,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 In addition to the standard library operators,
 you use ``&`` immediately before the name of a variable that's being passed
@@ -58,10 +48,6 @@ For more information and to see an example,
 see :ref:`Functions_InOutParameters`.
 
 .. TODO: Need to a brief write up on the in-out-expression.
-
-.. langref-grammar
-
-    expr-unary   ::= operator-prefix* expr-postfix
 
 .. syntax-grammar::
 
@@ -126,6 +112,18 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+    !! <REPL Input>:1:38: note: did you mean to use 'try'?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try
+    !! <REPL Input>:1:38: note: did you mean to handle error as optional value?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try?
+    !! <REPL Input>:1:38: note: did you mean to disable error propagation?
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !!                                      ^
+    !!                                      try!
 
 A ``try`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator
@@ -170,7 +168,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -200,13 +198,6 @@ see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>
     is initially understood as a flat list of five items,
     ``2``, ``+``, ``3``, ``*``, and ``5``.
     This process transforms it into the tree (2 + (3 * 5)).
-
-.. langref-grammar
-
-    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
-    op-binary-or-ternary ::= operator-binary
-    op-binary-or-ternary ::= '='
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
 
 .. syntax-grammar::
 
@@ -245,16 +236,12 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.4499999999999993, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
     </ a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
-
-.. langref-grammar
-
-    op-binary-or-ternary ::= '='
 
 .. syntax-grammar::
 
@@ -286,15 +273,11 @@ The unused expression is not evaluated.
 For an example that uses the ternary conditional operator,
 see :ref:`BasicOperators_TernaryConditionalOperator`.
 
-.. langref-grammar
-
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
-
 .. syntax-grammar::
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` try-operator-OPT expression ``:``
+    conditional-operator --> ``?`` expression ``:``
 
 
 .. _Expressions_Type-CastingOperators:
@@ -380,8 +363,7 @@ a Swift standard library type such as ``String``
 as its corresponding Foundation type such as ``NSString``
 without needing to create a new instance.
 For more information on bridging,
-see `Working with Cocoa Data Types <//apple_ref/doc/uid/TP40014216-CH6>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Working with Foundation Types <https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types>`_.
 
 The ``as?`` operator
 performs a conditional cast of the *expression*
@@ -403,11 +385,6 @@ For more information about type casting
 and to see examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
 
-.. langref-grammar
-
-    expr-cast ::= 'is' type
-    expr-cast ::= 'as' type
-
 .. syntax-grammar::
 
     Grammar of a type-casting operator
@@ -428,16 +405,6 @@ are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
 to make prefix expressions, binary expressions, and postfix expressions.
-
-.. langref-grammar
-
-    expr-primary  ::= expr-literal
-    expr-primary  ::= expr-identifier
-    expr-primary  ::= expr-super
-    expr-primary  ::= expr-closure
-    expr-primary  ::= expr-anon-closure-arg
-    expr-primary  ::= expr-paren
-    expr-primary  ::= expr-delayed-identifier
 
 .. syntax-grammar::
 
@@ -477,14 +444,15 @@ an array or dictionary literal,
 a playground literal,
 or one of the following special literals:
 
-=============    ===========  ===============================================
-Literal          Type         Value
-=============    ===========  ===============================================
-``#file``        ``String``   The name of the file in which it appears.
-``#line``        ``Int``      The line number on which it appears.
-``#column``      ``Int``      The column number in which it begins.
-``#function``    ``String``   The name of the declaration in which it appears.
-=============    ===========  ===============================================
+==============  ====================  ==========================================
+Literal         Type                  Value
+==============  ====================  ==========================================
+``#file``       ``String``            The name of the file in which it appears.
+``#line``       ``Int``               The line number on which it appears.
+``#column``     ``Int``               The column number in which it begins.
+``#function``   ``String``            The name of the declaration in which it appears.
+``#dsohandle``  ``UnsafeRawPointer``  The DSO (dynamic shared object) handle in use where it appears.
+==============  ====================  ==========================================
 
 Inside a function,
 the value of ``#function`` is the name of that function,
@@ -513,19 +481,13 @@ when the default value expression is evaluated at the call site.
     << myFunction()
     >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
-    << noNamedArgs
+    << noNamedArgs(_:_:)
     >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
     >> oneNamedArg(1, withJay: 2)
     << oneNamedArg(_:withJay:)
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
     >> namedArgs(i: 1, withJay: 2)
     << namedArgs(i:withJay:)
-
-.. Additional hidden tests above illustrate
-   the somewhat irregular rules used by #function
-   to write out the name of a function.
-   In particular, the rule used for functions with no named arguments
-   doesn't match the display in Xcode or our documentation.
 
 An :newTerm:`array literal` is
 an ordered collection of values.
@@ -585,18 +547,8 @@ Playground literals in plain text outside of Xcode
 are represented using a special literal syntax.
 
 For information on using playground literals in Xcode,
-see `Xcode Help <https://help.apple.com/xcode/>`_ > Use playgrounds > Add a literal.
-
-
-.. langref-grammar
-
-    expr-literal ::= integer_literal
-    expr-literal ::= floating_literal
-    expr-literal ::= character_literal
-    expr-literal ::= string_literal
-    expr-literal ::= '#file'
-    expr-literal ::= '#line'
-    expr-literal ::= '#column'
+see `Add a color, file, or image literal <https://help.apple.com/xcode/mac/current/#/dev4c60242fc>`_
+in Xcode Help.
 
 .. syntax-grammar::
 
@@ -604,7 +556,7 @@ see `Xcode Help <https://help.apple.com/xcode/>`_ > Use playgrounds > Add a lite
 
     literal-expression --> literal
     literal-expression --> array-literal | dictionary-literal | playground-literal
-    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function``
+    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
     array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
@@ -711,15 +663,6 @@ Subclasses can use a superclass expression
 in their implementation of members, subscripting, and initializers
 to make use of the implementation in their superclass.
 
-.. langref-grammar
-
-    expr-super ::= expr-super-method
-    expr-super ::= expr-super-subscript
-    expr-super ::= expr-super-constructor
-    expr-super-method ::= 'super' '.' expr-identifier
-    expr-super-subscript ::= 'super' '[' expr ']'
-    expr-super-constructor ::= 'super' '.' 'init'
-
 .. syntax-grammar::
 
     Grammar of a superclass expression
@@ -795,6 +738,21 @@ The following closure expressions are equivalent:
 
 For information about passing a closure as an argument to a function,
 see :ref:`Expressions_FunctionCallExpression`.
+
+Closure expressions can be used
+without being stored in a variable or constant,
+such as when you immediately use a closure as part of a function call.
+The closure expressions passed to ``myFunction`` in code above are
+examples of this kind of immediate use.
+As a result,
+whether a closure expression is escaping or nonescaping depends
+on the surrounding context of the expression.
+A closure expression is nonescaping
+if it is called immediately
+or passed as a nonescaping function argument.
+Otherwise, the closure expression is escaping.
+
+For more information about escaping closures, see :ref:`Closures_Noescape`.
 
 .. _Expressions_CaptureLists:
 
@@ -930,11 +888,13 @@ to the expression's value.
     >> class C {
     >> let title = "Title"
     >> func method() {
-    -> myFunction { print(self.title) }                    // strong capture
+    -> myFunction { print(self.title) }                    // implicit strong capture
+    -> myFunction { [self] in print(self.title) }          // explicit strong capture
     -> myFunction { [weak self] in print(self!.title) }    // weak capture
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
     >> } }
     >> C().method()
+    << Title
     << Title
     << Title
     << Title
@@ -962,13 +922,6 @@ For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
 For more information and examples of capture lists,
 see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
-
-.. langref-grammar
-
-    expr-closure ::= '{' closure-signature? brace-item* '}'
-    closure-signature ::= pattern-tuple func-signature-result? 'in'
-    closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
-    expr-anon-closure-arg ::= dollarident
 
 .. syntax-grammar::
 
@@ -1014,10 +967,6 @@ For example:
     -> var x = MyEnumeration.someValue
     << // x : MyEnumeration = REPL.MyEnumeration.someValue
     -> x = .anotherValue
-
-.. langref-grammar
-
-    expr-delayed-identifier ::= '.' identifier
 
 .. syntax-grammar::
 
@@ -1066,12 +1015,14 @@ A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
 
-.. langref-grammar
+.. note::
 
-    expr-paren      ::= '(' ')'
-    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
-    expr-paren-element ::= (identifier ':')? expr
-
+   Both an empty tuple expression and an empty tuple type
+   are written ``()`` in Swift.
+   Because ``Void`` is a type alias for ``()``,
+   you can use it to write an empty tuple type.
+   However, like all type aliases, ``Void`` is always a type ---
+   you can't use it to write an empty tuple expression.
 
 .. syntax-grammar::
 
@@ -1080,6 +1031,7 @@ A single expression inside parentheses is a parenthesized expression.
     tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
     tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
     tuple-element --> expression | identifier ``:`` expression
+
 
 .. _Expressions_WildcardExpression:
 
@@ -1110,51 +1062,63 @@ For example, in the following assignment
 Key-Path Expression
 ~~~~~~~~~~~~~~~~~~~
 
-A key-path expression lets you
-refer to a property
-for use in key-value coding and key-value observing APIs.
-It has the following form:
+A :newTerm:`key-path expression`
+refers to a property or subscript of a type.
+You use key-path expressions
+in dynamic programming tasks,
+such as key-value observing.
+They have the following form:
 
 .. syntax-outline::
 
-   \<#type name#>.<#property names#>
+   \<#type name#>.<#path#>
 
-The *property names* must be a reference to a property.
-At compile time, the key-path expression
-is replaced by a `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ value.
-Key paths can be used to access properties
-by passing them to the ``subscript(keyPath:)`` subscript.
-(This subscript is available on all Swift types.)
+The *type name* is the name of a concrete type,
+including any generic parameters,
+such as ``String``, ``[Int]``, or ``Set<Int>``.
+
+The *path* consists of
+property names, subscripts, optional-chaining expressions,
+and forced unwrapping expressions.
+Each of these key-path components
+can be repeated as many times as needed,
+in any order.
+
+At compile time, a key-path expression
+is replaced by an instance
+of the `KeyPath <//apple_ref/swift/cl/s:s7KeyPathC>`_ class.
+
+To access a value using a key path,
+pass the key path to the ``subscript(keyPath:)`` subscript,
+which is available on all types.
 For example:
 
 .. The subscript name subscript(keyPath:) above is a little odd,
-   but it matches what should be displayed on the web
-   when this API actually lands.
+   but it matches what would be displayed on the web.
+   There isn't actually an extension on Any that implements this subscript;
+   it's a special case in the compiler.
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> struct SomeStructure {
-         var someProperty: Int
+          var someValue: Int
       }
    ---
-   -> let s = SomeStructure(someProperty: 12)
-   << // s : SomeStructure = REPL.SomeStructure(someProperty: 12)
-   -> let keyPath = \SomeStructure.someProperty
-   << // keyPath : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
+   -> let s = SomeStructure(someValue: 12)
+   -> let pathToProperty = \SomeStructure.someValue
    ---
-   -> let value = s[keyPath: keyPath]
-   << // value : Int = 12
+   -> let value = s[keyPath: pathToProperty]
    /> value is \(value)
    </ value is 12
 
 The *type name* can be omitted
 in contexts where type inference
 can determine the implied type.
-For example,
-the following code uses ``\.someProperty``:
+The following code uses ``\.someProperty``
+instead of ``\SomeClass.someProperty``:
 
-
-.. testcode:: keypath-expression-TEMP
+.. testcode:: keypath-expression-implicit-type-name
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1167,66 +1131,137 @@ the following code uses ``\.someProperty``:
    -> let c = SomeClass(someProperty: 10)
    <~ // c : SomeClass = <REPL.SomeClass:
    -> c.observe(\.someProperty) { object, change in
-         // ...
+          // ...
       }
-   <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
+   <~ // r0 : NSKeyValueObservation = 
 
-.. Omitting the type doesn't work properly in some places in beta 1
-   <rdar://problem/32237567> This keypath code doesn't ever complete executing
+The *path* can refer to ``self`` to create the identity key path (``\.self``).
+The identity key path refers to a whole instance,
+so you can use it to access and change all of the data stored in a variable
+in a single step.
+For example:
 
-   To get \.foo to compile, you have to pass an explicit type,
-   so the subscript works, which defeats the whole point:
+.. testcode:: keypath-expression-self-keypath
 
-   // OK
-   let key: WritableKeyPath<SomeStructure, Int> = \.someProperty
-   let implied = s[keyPath: key]
+   -> var compoundValue = (a: 1, b: 2)
+   << // compoundValue : (a: Int, b: Int) = (a: 1, b: 2)
+   // Equivalent to compoundValue = (a: 10, b: 20)
+   -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
-   // OK
-   s[keyPath: \.someProperty as WritableKeyPath<SomeStructure, Int>]
-
-   // NOPE
-   s[keyPath: \.someProperty] as Int
-
-    .. testcode:: keypath-expression
-
-       -> let implied = s[keyPath: \.someProperty]
-       << // implied : Int = 12
-       /> implied is \(implied)
-       </ implied is 12
-
-.. FIXME This is similar to an implicit member expression --
-   likely worth calling out,
-   assuming I can confirm that it's the same kind of type-inference context
-   that lets both of them be used.
-
-The *property names* can contain multiple property names, separated by periods,
-which lets you access a property of the given property's value.
-For example,
-the following code uses ``\OuterStructure.outerProperty.someProperty``:
+The *path* can contain multiple property names, 
+separated by periods,
+to refer to a property of a property's value.
+This code uses the key path expression
+``\OuterStructure.outer.someValue``
+to access the ``someValue`` property
+of the ``OuterStructure`` type's ``outer`` property:
 
 .. testcode:: keypath-expression
+   :compile: true
 
    -> struct OuterStructure {
-         var outerProperty: SomeStructure
-         init(someProperty: Int) {
-             self.outerProperty = SomeStructure(someProperty: someProperty)
-         }
+          var outer: SomeStructure
+          init(someValue: Int) {
+              self.outer = SomeStructure(someValue: someValue)
+          }
       }
    ---
-   -> let nested = OuterStructure(someProperty: 24)
-   << // nested : OuterStructure = REPL.OuterStructure(outerProperty: REPL.SomeStructure(someProperty: 24))
-   -> let nestedKeyPath = \OuterStructure.outerProperty.someProperty
-   << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
+   -> let nested = OuterStructure(someValue: 24)
+   -> let nestedKeyPath = \OuterStructure.outer.someValue
    ---
    -> let nestedValue = nested[keyPath: nestedKeyPath]
-   << // nestedValue : Int = 24
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
+The *path* can include subscripts using brackets,
+as long as the subscript's parameter type conforms to the ``Hashable`` protocol.
+This example uses a subscript in a key path
+to access the second element of an array:
+
+.. testcode:: keypath-expression
+   :compile: true
+
+   -> let greetings = ["hello", "hola", "bonjour", "안녕"]
+   -> let myGreeting = greetings[keyPath: \[String].[1]]
+   /> myGreeting is '\(myGreeting)'
+   </ myGreeting is 'hola'
+
+.. TODO: Update examples here and below to remove type names once
+   inference bugs are fixed. The compiler currently gives an error
+   that the usage is ambiguous.
+   <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
+
+The value used in a subscript can be a named value or a literal.
+Values are captured in key paths using value semantics.
+The following code uses the variable ``index``
+in both a key-path expression and in a closure to access
+the third element of the ``greetings`` array.
+When ``index`` is modified,
+the key-path expression still references the third element,
+while the closure uses the new index.
+
+.. testcode:: keypath-expression
+   :compile: true
+
+   -> var index = 2
+   -> let path = \[String].[index]
+   -> let fn: ([String]) -> String = { strings in strings[index] }
+   ---
+   -> print(greetings[keyPath: path])
+   <- bonjour
+   -> print(fn(greetings))
+   <- bonjour
+   ---
+   // Setting 'index' to a new value doesn't affect 'path'
+   -> index += 1
+   -> print(greetings[keyPath: path])
+   <- bonjour
+   ---
+   // Because 'fn' closes over 'index', it uses the new value
+   -> print(fn(greetings))
+   <- 안녕
+   
+The *path* can use optional chaining and forced unwrapping.
+This code uses optional chaining in a key path
+to access a property of an optional string:
+
+.. testcode:: keypath-expression
+   :compile: true
+
+   -> let firstGreeting: String? = greetings.first
+   -> print(firstGreeting?.count as Any)
+   <- Optional(5)
+   ---
+   // Do the same thing using a key path.
+   -> let count = greetings[keyPath: \[String].first?.count]
+   -> print(count as Any)
+   <- Optional(5)
+
+You can mix and match components of key paths to access values
+that are deeply nested within a type.
+The following code accesses different values and properties
+of a dictionary of arrays 
+by using key-path expressions 
+that combine these components.
+
+.. testcode:: keypath-expression
+   :compile: true
+
+   -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
+                                "triangular": [1, 3, 6, 10, 15, 21, 28],
+                                "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
+   <- Optional([2, 3, 5, 7, 11, 13, 17])
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
+   <- 2
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
+   <- 7
+   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
+   <- 64
+                                
 For more information about using key paths
-in Swift code that interacts with Objective-C APIs,
-see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+in code that interacts with Objective-C APIs,
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
@@ -1237,20 +1272,10 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
    key-path-expression --> ``\`` type-OPT ``.`` key-path-components
    key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier
-
-.. FUTURE syntax-grammar
-
-   As of 2017-04-19 Joe Groff says he expects to only implement property names
-   for WWDC.  More stuff will land later.
-
-   key-path-expression --> ``\`` type-OPT ``.`` key-path-components
-
-   key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-   key-path-component --> identifier keypath-postfixes-OPT | keypath-postfixes
+   key-path-component --> identifier key-path-postfixes-OPT | key-path-postfixes
 
    key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
-   key-path-postfix --> ``?`` | ``!`` | ``[`` function-call-argument-list ``]``
+   key-path-postfix --> ``?`` | ``!`` | ``self`` | ``[`` function-call-argument-list ``]``
 
 
 .. _Expression_SelectorExpression:
@@ -1321,8 +1346,7 @@ and that they're exposed to the Objective-C runtime.
 
 For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
-see `Objective-C Selectors <//apple_ref/doc/uid/TP40014216-CH4-ID59>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 
 .. syntax-grammar::
 
@@ -1398,8 +1422,7 @@ and that the property is exposed to the Objective-C runtime.
 
 For more information about using key paths
 in Swift code that interacts with Objective-C APIs,
-see `Keys and Key Paths <//apple_ref/doc/uid/TP40014216-CH4-ID205>`_
-in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
 For information about key-value coding and key-value observing,
 see `Key-Value Coding Programming Guide <//apple_ref/doc/uid/10000107i>`_
 and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
@@ -1430,20 +1453,7 @@ For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 For information about the operators provided by the Swift standard library,
-see `Swift Standard Library Operators Reference <//apple_ref/doc/uid/TP40016054>`_.
-
-.. langref-grammar
-
-    expr-postfix  ::= expr-primary
-    expr-postfix  ::= expr-postfix operator-postfix
-    expr-postfix  ::= expr-new
-    expr-postfix  ::= expr-init
-    expr-postfix  ::= expr-dot
-    expr-postfix  ::= expr-metatype
-    expr-postfix  ::= expr-subscript
-    expr-postfix  ::= expr-call
-    expr-postfix  ::= expr-optional
-    expr-force-value  ::= expr-force-value (typo in the langref; lhs should be expr-postfix)
+see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
 .. syntax-grammar::
 
@@ -1524,11 +1534,6 @@ the parentheses can be omitted.
     << // r0 : Bool = false
     -> myData.someMethod {$0 == 13}
     << // r1 : Bool = false
-
-.. langref-grammar
-
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
 
 .. syntax-grammar::
 
@@ -1616,10 +1621,6 @@ In all other cases, you must use an initializer expression.
     !!                              ^
     !!                              .init
 
-.. langref-grammar
-
-    expr-init ::= expr-postfix '.' 'init'
-
 .. syntax-grammar::
 
     Grammar of an initializer expression
@@ -1670,7 +1671,9 @@ For example:
 The members of a module access
 the top-level declarations of that module.
 
-.. TR: Confirm?
+Types declared with the ``dynamicMemberLookup`` attribute
+include members that are looked up at runtime,
+as described in :doc:`Attributes`.
 
 To distinguish between methods or initializers
 whose names differ only by the names of their arguments,
@@ -1744,11 +1747,6 @@ split over several lines:
    >> print(x)
    << [1000, 1500, 2000]
 
-.. langref-grammar
-
-    expr-dot ::= expr-postfix '.' dollarident
-    expr-dot ::= expr-postfix '.' expr-identifier
-
 .. syntax-grammar::
 
     Grammar of an explicit member expression
@@ -1791,7 +1789,7 @@ you can pass it to a function or method that accepts a type-level argument.
 
 .. syntax-grammar::
 
-    Grammar of a self expression
+    Grammar of a postfix self expression
 
     postfix-self-expression --> postfix-expression ``.`` ``self``
 
@@ -1831,10 +1829,6 @@ the subscript setter is called in the same way.
 For information about subscript declarations,
 see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
-.. langref-grammar
-
-    expr-subscript ::= expr-postfix '[' expr ']'
-
 .. syntax-grammar::
 
     Grammar of a subscript expression
@@ -1871,7 +1865,7 @@ It has the following form:
 
 If the value of the *expression* is not ``nil``,
 the optional value is unwrapped
-and returned with the corresponding nonoptional type.
+and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
 
 The unwrapped value of a forced-value expression can be modified,
@@ -1888,14 +1882,10 @@ For example:
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now ["b": [10, 20], "a": [100, 2, 3]]
-
-.. langref-grammar
-
-    expr-force-value ::= expr-postfix '!'
+   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
 
 .. syntax-grammar::
 
@@ -1980,24 +1970,20 @@ For example:
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : Array<Int>] = ["b": [10, 20], "a": [1, 2, 3]]
+   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
-   </ someDictionary is still ["b": [10, 20], "a": [1, 2, 3]]
+   </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
    <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
-   </ someDictionary is now ["b": [10, 20], "a": [42, 2, 3]]
-
-.. langref-grammar
-
-    expr-optional ::= expr-postfix '?'-postfix
+   </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
 
 .. syntax-grammar::
 
