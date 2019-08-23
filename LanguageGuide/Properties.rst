@@ -888,10 +888,10 @@ that defines initializers that set the wrapped and maximum value:
    and the reader hasn't seen init syntax/rules in detail yet
    so it's clearer to make each init stand on its own.
 
-The definition of ``SmallNumber`` includes three initializers,
-``init()``, ``init(wrappedValue:)``, and ``init(wrappedValue:maximum:)``,
-which are used to set the wrapped value and the maximum value
-in the examples below.
+The definition of ``SmallNumber`` includes three initializers ---
+``init()``, ``init(wrappedValue:)``, and ``init(wrappedValue:maximum:)`` ---
+which the examples below use
+to set the wrapped value and the maximum value.
 For information about initialization and initializer syntax,
 see :doc:`Initializers`.
 
@@ -1030,7 +1030,7 @@ and the instance that wraps ``width``
 is created by calling ``SmallNumber.init(wrappedValue: 3, maximum: 4)``.
 
 By including arguments to the property wrapper,
-you can set up initial state in the wrapper
+you can set up the initial state in the wrapper
 or pass other options to the wrapper when it's created.
 This syntax is the most general way to use a property wrapper.
 You can provide whatever arguments you need to the attribute,
@@ -1121,7 +1121,7 @@ after trying to store a number that's too large, like 55.
 A property wrapper can return a value of any type as its projected value.
 In this example,
 the property wrapper exposes only one piece of information ---
-whether or not the number was adjusted ---
+whether the number was adjusted ---
 so it exposes that Boolean value as its projected value.
 A wrapper that needs to expose more information
 can return an instance of some other data type,
