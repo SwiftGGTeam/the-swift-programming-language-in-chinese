@@ -1070,12 +1070,12 @@ can expose a ``flushDatabaseConnection()`` method on its projected value.
 The name of the projected value is the same as the wrapped value,
 except it begins with a dollar sign (``$``).
 Because your code can't define properties that start with ``$``
-the projected value never collides with properties you define.
+the projected value never interferes with properties you define.
 
 In the ``SmallNumber`` example,
 if you try to set the property to a number that's too large,
 the property wrapper adjusts the number before storing it.
-The code below adds an ``projectedValue`` property to the ``SmallNumber`` structure
+The code below adds a ``projectedValue`` property to the ``SmallNumber`` structure
 to expose whether the current value was adjusted before being stored.
 
 .. testcode:: small-number-wrapper-projection

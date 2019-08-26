@@ -799,7 +799,7 @@ The ``@SomeWrapper`` attribute can be applied in the following ways:
    e = 30  // Uses the property setter
 
 The *projected value* for a wrapped property is a second value
-that gives a property wrapper the ability to expose additional functionality ---
+that a property wrapper can use to expose additional functionality ---
 for example, to reset a value whose initialization is deferred
 or to flush changes to a database.
 A property wrapper defines the functionality and meaning of its projected value.
