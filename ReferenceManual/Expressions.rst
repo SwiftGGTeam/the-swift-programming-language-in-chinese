@@ -1011,6 +1011,26 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
+Each identifier in a tuple expression must be unique
+within the scope of the tuple expression.
+In a nested tuple expression,
+identifiers at the same level of nesting must be unique.
+For example,
+``(a: 10, a: 20)`` is invalid
+because the label ``a`` appears twice at the same level.
+However, ``(a: 10, b: (a: 1, x: 2))`` is valid ---
+although ``a`` appears twice,
+it appears once in the outer tuple and once in the inner tuple.
+
+.. assertion:: tuple-labels-must-be-unique
+    :compile: true
+
+    >> let bad = (a: 10, a: 20)
+    >> let good = (a: 10, b: (a: 1, x: 2))
+    !!  /tmp/swifttest.swift:1:11: error: cannot create a tuple with a duplicate element label
+    !! let bad = (a: 10, a: 20)
+    !! ^
+
 A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
