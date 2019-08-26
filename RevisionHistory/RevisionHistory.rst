@@ -1,9 +1,6 @@
 Document Revision History
 =========================
 
-.. Expanded discussion in :ref:`Patterns_EnumerationCasePattern`,
-   now that an enumeration case pattern can match an optional value.
-
 **2019-09-10**
 
 * Updated for Swift 5.1.
@@ -26,6 +23,9 @@ Document Revision History
 
 * Added information about using subscripts on types
   to the :ref:`Subscripts_TypeSubscripts` section.
+
+* Updated the :ref:`Patterns_EnumerationCasePattern` section,
+  now that an enumeration case pattern can match an optional value.
 
 * Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
   now that memberwise initializers support
