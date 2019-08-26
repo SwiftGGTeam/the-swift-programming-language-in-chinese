@@ -87,7 +87,7 @@ and private access is the lowest (most restrictive) access level.
 
 Open access applies only to classes and class members,
 and it differs from public access
-by allowing code outside the module to subclass and override
+by allowing code outside the module to subclass and override,
 as discussed below in :ref:`AccessControl_Subclassing`.
 Marking a class as open explicitly indicates
 that you've considered the impact of code from other modules

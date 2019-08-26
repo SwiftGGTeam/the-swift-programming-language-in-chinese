@@ -649,7 +649,7 @@ Marking the protocol as class-only
 lets the ``SnakesAndLadders`` class later in this chapter
 declare that its delegate must use a weak reference.
 A class-only protocol
-is marked by its inheritance from ``AnyObject``
+is marked by its inheritance from ``AnyObject``,
 as discussed in :ref:`Protocols_ClassOnlyProtocols`.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
