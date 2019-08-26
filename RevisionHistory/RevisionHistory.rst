@@ -1,8 +1,8 @@
 Document Revision History
 =========================
 
-.. Expanded discussion in _Patterns_EnumerationCasePattern
-   now that enum pattern matches Optional<SomeEnum>.
+.. Expanded discussion in :ref:`Patterns_EnumerationCasePattern`,
+   now that an enumeration case pattern can match an optional value.
 
 **2019-06-03**
 
