@@ -174,7 +174,7 @@ an expression pattern:
     !! for (x, 0) in points {
     !! ^
 
-:.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
