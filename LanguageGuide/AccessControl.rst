@@ -564,11 +564,11 @@ A subclass can't have a higher access level than its superclass ---
 for example, you can't write a public subclass of an internal superclass.
 
 In addition,
-for classes that were defined in the same module,
+for classes that are defined in the same module,
 you can override any class member
 (method, property, initializer, or subscript)
 that's visible in a certain access context.
-For classes that were defined in another module,
+For classes that are defined in another module,
 you can override any open class member.
 
 An override can make an inherited class member more accessible than its superclass version.
