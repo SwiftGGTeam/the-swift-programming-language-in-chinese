@@ -733,19 +733,17 @@ A property that has a property wrapper
 can include ``willSet`` and ``didSet`` blocks,
 but it can't override the compiler-synthesized ``get`` or ``set`` blocks.
 
-If the wrapper defines an ``init()`` initializer,
-you can define a wrapped property without providing its initial wrapped value,
-implicitly using ``init()`` to set it.
-If the wrapper defines an initializer with a parameter labeled ``wrappedValue``,
-you can use assignment to set the initial wrapped value ---
-the expression on the right-hand side of the assignment
-is understood as the argument passed to the ``wrappedValue`` parameter.
-If the wrapper defines other initializers,
-you pass the needed arguments to the initializer
-by providing them as arguments to the attribute when you apply it to a property.
-You can use assignment and attribute arguments in the same property declaration.
-For example, ``SomeWrapper`` in the code below
-defines initializers that illustrate the behaviors listed above.
+Swift provides two forms of syntactic sugar
+for initialization of a property wrapper.
+You can use assignment syntax in the definition of a wrapped value
+to pass the expression on the right-hand side of the assignment
+as the argument to the ``wrappedValue`` parameter
+of the property wrapper's initializer.
+You can also provide arguments to the attribute
+when you apply it to a property,
+and those arguments are passed to the property wrapper's initializer.
+For example, in the code below,
+``SomeStruct`` calls each of the initializers that ``SomeWrapper`` defines.
 
 .. testcode:: propertyWrapper
     :compile: true
@@ -767,11 +765,7 @@ defines initializers that illustrate the behaviors listed above.
                self.someValue = custom
            }
        }
-
-The ``@SomeWrapper`` attribute can be applied in the following ways:
-
-.. testcode:: propertyWrapper
-
+   ---
     -> struct SomeStruct {
            // Uses init()
            @SomeWrapper var a: Int
