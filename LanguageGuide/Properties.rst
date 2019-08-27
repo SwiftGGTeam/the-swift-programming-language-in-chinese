@@ -701,15 +701,15 @@ To define a property wrapper,
 you make a structure, enumeration, or class
 that defines a ``wrappedValue`` property.
 In the code below,
-the ``LessThanTwelve`` structure ensures that
-the value it wraps always contains a number less than 12.
+the ``TwelveOrLess`` structure ensures that
+the value it wraps always contains a number less than or equal to 12.
 If you ask it to store a larger number, it stores 12 instead.
 
 .. testcode:: small-number-wrapper, property-wrapper-expansion
     :compile: true
 
     -> @propertyWrapper
-    -> struct LessThanTwelve {
+    -> struct TwelveOrLess {
            private var number = 0
            var wrappedValue: Int {
                get { return number }
@@ -725,7 +725,7 @@ and the getter returns the stored value.
     The declaration for ``number`` in the example above
     marks the variable as ``private``,
     which ensures ``number`` is used only
-    in the implementation of ``LessThanTwelve``.
+    in the implementation of ``TwelveOrLess``.
     Code that's written anywhere else
     accesses the value using the getter and setter for ``wrappedValue``,
     and can't use ``number`` directly.
@@ -748,7 +748,7 @@ and the getter returns the stored value.
     :compile: true
 
     >> @propertyWrapper
-    >> struct LessThanTwelve {
+    >> struct TwelveOrLess {
     >>     var wrappedValue: Int = 0 {
     >>         didSet {
     >>             if wrappedValue > 12 {
@@ -758,7 +758,7 @@ and the getter returns the stored value.
     >>     }
     >> }
     >> struct SomeStructure {
-    >>     @LessThanTwelve var someNumber: Int
+    >>     @TwelveOrLess var someNumber: Int
     >> }
     >> var s = SomeStructure()
     >> print(s.someNumber)
@@ -775,14 +775,14 @@ by writing the wrapper's name before the property
 as an attribute.
 Here's a structure that stores a small rectangle,
 using the same (rather arbitrary) definition of "small"
-that's implemented by the ``LessThanTwelve`` property wrapper:
+that's implemented by the ``TwelveOrLess`` property wrapper:
 
 .. testcode:: small-number-wrapper
     :compile: true
 
     -> struct SmallRectangle {
-           @LessThanTwelve var height: Int
-           @LessThanTwelve var width: Int
+           @TwelveOrLess var height: Int
+           @TwelveOrLess var width: Int
        }
     ---
     -> var rectangle = SmallRectangle()
@@ -798,8 +798,8 @@ that's implemented by the ``LessThanTwelve`` property wrapper:
     <- 12
 
 The ``height`` and ``width`` properties get their initial values
-from the definition of ``LessThanTwelve``,
-which sets ``LessThanTwelve.number`` to zero.
+from the definition of ``TwelveOrLess``,
+which sets ``TwelveOrLess.number`` to zero.
 Storing the number 10 into ``rectangle.height`` succeeds
 because it's a small number.
 Trying to store 24 actually stores a value of 12 instead,
@@ -815,15 +815,15 @@ without taking advantage of the special attribute syntax.
 For example,
 here's a version of ``SmallRectangle``
 from the previous code listing
-that wraps its properties in the ``LessThanTwelve`` structure explicitly,
-instead of writing ``@LessThanTwelve`` as an attribute:
+that wraps its properties in the ``TwelveOrLess`` structure explicitly,
+instead of writing ``@TwelveOrLess`` as an attribute:
 
 .. testcode:: property-wrapper-expansion
     :compile: true
 
     -> struct SmallRectangle {
-           private var _height = LessThanTwelve()
-           private var _width = LessThanTwelve()
+           private var _height = TwelveOrLess()
+           private var _width = TwelveOrLess()
            var height: Int {
                get { return _height.wrappedValue }
                set { _height.wrappedValue = newValue }
@@ -835,22 +835,22 @@ instead of writing ``@LessThanTwelve`` as an attribute:
        } 
 
 The ``_height`` and ``_width`` properties
-store an instance of the property wrapper, ``LessThanTwelve``.
+store an instance of the property wrapper, ``TwelveOrLess``.
 The getter and setter for ``height`` and ``width``
 wrap access to the ``wrappedValue`` property.
 
 The code in the examples above
 sets the initial value for the wrapped property
-by giving ``number`` an initial value in the definition of ``LessThanTwelve``.
+by giving ``number`` an initial value in the definition of ``TwelveOrLess``.
 Code that uses this property wrapper,
 can't specify a different initial value for a property
-that's wrapped by ``LessThanTwelve`` ---
+that's wrapped by ``TwelveOrLess`` ---
 for example,
 the definition of ``SmallRectangle``
 can't give ``height`` or ``width`` initial values.
 To support setting an initial value or other customization,
 the property wrapper needs to add an initializer.
-Here's an expanded version of ``LessThanTwelve`` called ``SmallNumber``
+Here's an expanded version of ``TwelveOrLess`` called ``SmallNumber``
 that defines initializers that set the wrapped and maximum value:
 
 .. testcode:: property-wrapper-init, property-wrapper-mixed-init
@@ -935,7 +935,7 @@ The code inside that initializer
 sets the initial wrapped value and the initial maximum value,
 using the default values of zero and 12.
 The property wrapper still provides all of the initial values,
-like the earlier example that used ``LessThanTwelve`` in ``SmallRectangle``.
+like the earlier example that used ``TwelveOrLess`` in ``SmallRectangle``.
 Unlike that example,
 ``SmallNumber`` also supports writing those initial values
 as part of declaring the property.
