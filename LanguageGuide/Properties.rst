@@ -839,6 +839,11 @@ store an instance of the property wrapper, ``TwelveOrLess``.
 The getter and setter for ``height`` and ``width``
 wrap access to the ``wrappedValue`` property.
 
+.. _Properties_PropertyWrapperInit:
+
+Setting Initial Values for Wrapped Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The code in the examples above
 sets the initial value for the wrapped property
 by giving ``number`` an initial value in the definition of ``TwelveOrLess``.
@@ -1061,6 +1066,11 @@ is created by calling ``SmallNumber.init(wrappedValue: 1)``,
 which uses the default maximum value of 12.
 The instance that wraps ``width``
 is created by calling ``SmallNumber.init(wrappedValue: 2, maximum: 9)``.
+
+.. _Properties_ProjectedValues:
+
+Projected Values
+~~~~~~~~~~~~~~~~
 
 In addition to the wrapped value,
 a property wrapper can expose additional functionality
