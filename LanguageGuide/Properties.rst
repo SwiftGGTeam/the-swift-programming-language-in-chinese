@@ -898,7 +898,7 @@ The definition of ``SmallNumber`` includes three initializers ---
 which the examples below use
 to set the wrapped value and the maximum value.
 For information about initialization and initializer syntax,
-see :doc:`Initializers`.
+see :doc:`Initialization`.
 
 When you apply a wrapper to a property and you don't specify an initial value,
 Swift uses the ``init()`` initializer to set up the wrapper.
