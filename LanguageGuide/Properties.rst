@@ -1069,8 +1069,8 @@ is created by calling ``SmallNumber(wrappedValue: 2, maximum: 9)``.
 
 .. _Properties_ProjectedValues:
 
-Projected Values
-~~~~~~~~~~~~~~~~
+Projecting a Value From a Property Wrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the wrapped value,
 a property wrapper can expose additional functionality
