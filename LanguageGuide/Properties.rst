@@ -935,7 +935,7 @@ For example:
     <- 0 0
 
 The instances of ``SmallNumber`` that wrap ``height`` and ``width``
-are created by calling ``SmallNumber.init()``.
+are created by calling ``SmallNumber()``.
 The code inside that initializer
 sets the initial wrapped value and the initial maximum value,
 using the default values of zero and 12.
@@ -982,7 +982,7 @@ For example:
 When you write ``= 1`` on a property with a wrapper,
 that's translated into a call to the ``init(wrappedValue:)`` initializer.
 The instances of ``SmallNumber`` that wrap ``height`` and ``width``
-are created by calling ``SmallNumber.init(wrappedValue: 1)``.
+are created by calling ``SmallNumber(wrappedValue: 1)``.
 The initializer uses the wrapped value that's specified here,
 and it uses the default maximum value of 12.
 
@@ -1030,9 +1030,9 @@ Swift uses the ``init(wrappedValue:maximum:)`` initializer:
     <- 5 4
 
 The instance of ``SmallNumber`` that wraps ``height``
-is created by calling ``SmallNumber.init(wrappedValue: 2, maximum: 5)``,
+is created by calling ``SmallNumber(wrappedValue: 2, maximum: 5)``,
 and the instance that wraps ``width``
-is created by calling ``SmallNumber.init(wrappedValue: 3, maximum: 4)``.
+is created by calling ``SmallNumber(wrappedValue: 3, maximum: 4)``.
 
 By including arguments to the property wrapper,
 you can set up the initial state in the wrapper
@@ -1062,10 +1062,10 @@ For example:
     <- 12
 
 The instance of ``SmallNumber`` that wraps ``height``
-is created by calling ``SmallNumber.init(wrappedValue: 1)``,
+is created by calling ``SmallNumber(wrappedValue: 1)``,
 which uses the default maximum value of 12.
 The instance that wraps ``width``
-is created by calling ``SmallNumber.init(wrappedValue: 2, maximum: 9)``.
+is created by calling ``SmallNumber(wrappedValue: 2, maximum: 9)``.
 
 .. _Properties_ProjectedValues:
 
