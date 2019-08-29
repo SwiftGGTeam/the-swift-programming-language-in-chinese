@@ -765,7 +765,7 @@ For example, in the code below,
                self.someValue = custom
            }
        }
-   ---
+    ---
     -> struct SomeStruct {
            // Uses init()
            @SomeWrapper var a: Int
