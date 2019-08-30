@@ -48,6 +48,9 @@ and also to properties that a subclass inherits from its superclass.
    <- C didSet x from 0
    <- D didSet x from 0
 
+You can also use a property wrapper
+to reuse code in the getter and setter of multiple properties.
+
 .. _Properties_StoredProperties:
 
 Stored Properties
