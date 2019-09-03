@@ -518,7 +518,11 @@ set the "Build Libraries for Distribution" build setting
 (``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes,
 as described in `Xcode Help <//apple_ref/fake/XcodeHelp/BuildSettings>`_.
 
-.. XXX This is the first time we're talking about a specific compiler flag/option.
+.. This is the first time we're talking about a specific compiler flag/option.
+   In the long term, the discussion of library evololution mode
+   will need to move to a new chapter in the guide
+   that also talks about things like @available and ABI.
+   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
 
 A switch statement over a frozen enumeration doesn't require a ``default`` case,
 as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
