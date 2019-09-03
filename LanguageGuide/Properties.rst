@@ -1117,17 +1117,17 @@ to expose whether the current value was adjusted before being stored.
                }
            }
        }
-    >> struct SomeStructure {
-    >>     @SmallNumber var someNumber: Int
-    >> }
-    >> var s = SomeStructure()
+    -> struct SomeStructure {
+           @SmallNumber var someNumber: Int
+       }
+    -> var someStructure = SomeStructure()
     ---
-    -> s.someNumber = 4
-    -> print(s.$someNumber)
+    -> someStructure.someNumber = 4
+    -> print(someStructure.$someNumber)
     <- false
     ---
-    -> s.someNumber = 55
-    -> print(s.$someNumber)
+    -> someStructure.someNumber = 55
+    -> print(someStructure.$someNumber)
     <- true
 
 Writing ``s.$someNumber`` accesses the wrapper's projected value.
