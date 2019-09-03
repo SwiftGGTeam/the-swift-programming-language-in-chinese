@@ -451,10 +451,12 @@ When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
-Only the standard library,
+Code that's compiled in library evolution mode,
+code in the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
-Enumerations you declare in Swift can't be nonfrozen. 
+For information about frozen and nonfrozen enumerations,
+see :ref:`Attributes_frozen`.
 
 When switching over a nonfrozen enumeration value,
 you always need to include a default case,

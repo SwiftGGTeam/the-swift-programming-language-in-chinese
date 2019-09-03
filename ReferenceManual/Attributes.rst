@@ -429,6 +429,149 @@ For example:
     << 381
 
 
+.. _Attributes_frozen:
+
+frozen
+~~~~~~
+
+Apply this attribute to a structure or enumeration declaration
+to restrict the kinds of changes you can make to the type.
+This attribute is allowed only when compiling in library evolution mode.
+Future versions of the library can't change the declaration
+by adding, removing, or reordering
+an enumeration's cases
+or a structure's stored instance properties.
+These changes are allowed on nonfrozen types,
+but they break ABI compatibility for frozen types.
+
+.. note::
+
+    When the compiler isn't in library evolution mode,
+    all structures and enumerations are implicitly frozen,
+    and you can't use this attribute.
+
+.. assertion:: cant-use-frozen-without-evolution
+    :compile: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !! @frozen public enum E { case x, y }
+    !! ^~~~~~~~
+    ---
+    // After the bug below is fixed, the following warning should appear:
+    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    // !! @frozen public struct S { var a: Int = 10 }
+    // !! ^~~~~~~~
+
+.. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
+
+.. assertion:: frozen-is-fine-with-evolution
+    :compile: true
+    :evolution: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+
+In library evolution mode,
+code that interacts with members of nonfrozen structures and enumerations
+is compiled in a way that allows it to continue working without recompiling
+even if a future version of the library
+adds, removes, or reorders some of that type's members.
+The compiler makes this possible using techniques like
+looking up information at runtime
+and adding a layer of indirection.
+Marking a structure or enumeration as frozen
+gives up this flexibility to gain performance:
+Future versions of the library can make only limited changes to the type,
+but the compiler can make additional optimizations
+in code that interacts with the type's members.
+
+Frozen types,
+the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases
+must be public or marked with the ``usableFromInline`` attribute.
+The properties of a frozen structure can't have property observers,
+and expressions that provide the initial value for stored instance properties
+must follow the same restrictions as inlinable functions,
+as discussed in :ref:`Attributes_inlinable`.
+
+.. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
+    :compile: true
+    :evolution: true
+
+    >> public protocol P { }
+    >> private struct PrivateStruct: P { }
+    >>         public struct S1 { var fine: P = PrivateStruct() }
+    >> @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !! /tmp/swifttest.swift:4:42: error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !!                                          ^
+    !! /tmp/swifttest.swift:2:16: note: struct 'PrivateStruct' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !!                ^
+
+To enable library evolution mode on the command line,
+pass the ``-enable-library-evolution`` option to the Swift compiler.
+To enable it in Xcode,
+set the "Build Libraries for Distribution" build setting
+(``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes,
+as described in `Xcode Help <//apple_ref/fake/XcodeHelp/BuildSettings>`_.
+
+.. XXX This is the first time we're talking about a specific compiler flag/option.
+
+A switch statement over a frozen enumeration doesn't require a ``default`` case,
+as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
+Including a ``default`` or ``@unknown default`` case
+when switching over a frozen enumeration
+produces a warning because that code is never executed.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum
+    :evolution: true
+
+    >> public enum E { case x, y }
+    >> @frozen public enum F { case x, y }
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test1
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let e = NoUnknownDefaultOverFrozenEnum.E.x
+    >>     switch e {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // Note that there's no warning -- this is fine because E isn't frozen.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test2
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let f = NoUnknownDefaultOverFrozenEnum.F.x
+    >>     switch f {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // --- Main warning ---
+    !! /tmp/sourcefile_0.swift:7:18: warning: case is already handled by previous patterns; consider removing it
+    !! @unknown default: print(0)
+    !! ~~~~~~~~~^~~~~~~~~~~~~~~~~
+    !! /tmp/sourcefile_0.swift:7:9: warning: default will never be executed
+    !! @unknown default: print(0)
+    !! ^
+    // --- Junk/ancillary warnings ---
+    !! /tmp/sourcefile_0.swift:4:12: warning: switch condition evaluates to a constant
+    !! switch f {
+    !! ^
+    !! /tmp/sourcefile_0.swift:6:24: note: will never be executed
+    !! case .y: print(8)
+    !! ^
+
+
 .. _Attributes_GKInspectable:
 
 GKInspectable
@@ -909,6 +1052,11 @@ initializer, or deinitializer declaration
 to allow that symbol to be used in inlinable code
 that's defined in the same module as the declaration.
 The declaration must have the ``internal`` access level modifier.
+A structure or class marked ``usableFromInline``
+can use only types that are public or ``usableFromInline`` for its properties.
+An enumeration marked ``usableFromInline``
+can use only types that are public or ``usableFromInline``
+for the raw values and associated values of its cases.
 
 Like the ``public`` access level modifier,
 this attribute
