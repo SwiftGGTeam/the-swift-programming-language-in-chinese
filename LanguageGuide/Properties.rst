@@ -914,6 +914,7 @@ For example:
            @SmallNumber var height: Int
            @SmallNumber var width: Int
        }
+    ---
     -> var zeroRectangle = ZeroRectangle()
     -> print(zeroRectangle.height, zeroRectangle.width)
     <- 0 0
@@ -959,6 +960,7 @@ For example:
            @SmallNumber var height: Int = 1
            @SmallNumber var width: Int = 1
        }
+    ---
     -> var unitRectangle = UnitRectangle()
     -> print(unitRectangle.height, unitRectangle.width)
     <- 1 1
@@ -1001,9 +1003,11 @@ Swift uses the ``init(wrappedValue:maximum:)`` initializer:
            @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
            @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
        }
+    ---
     -> var narrowRectangle = NarrowRectangle()
     -> print(narrowRectangle.height, narrowRectangle.width)
     <- 2 3
+    ---
     -> narrowRectangle.height = 100
     -> narrowRectangle.width = 100
     -> print(narrowRectangle.height, narrowRectangle.width)
@@ -1057,9 +1061,11 @@ For example:
            @SmallNumber var height: Int = 1
            @SmallNumber(maximum: 9) var width: Int = 2
        }
+    ---
     -> var mixedRectangle = MixedRectangle()
     -> print(mixedRectangle.height)
     <- 1
+    ---
     -> mixedRectangle.height = 20
     -> print(mixedRectangle.height)
     <- 12
