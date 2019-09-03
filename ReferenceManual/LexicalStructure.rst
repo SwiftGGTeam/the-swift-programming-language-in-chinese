@@ -97,6 +97,17 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
+The compiler synthesizes identifiers that begin with a dollar sign (`$`)
+for properties that have a property wrapper projection.
+Your code can interact with these identifiers,
+but you can't declare identifiers with that prefix.
+For more information, see the :ref:`Attributes_propertyWrapper` section
+of the :doc:`../ReferenceManual/Attributes` chapter.
+
+.. The cross reference above includes both the section and chapter because,
+   even though "propertyWrapper" is the title of the section,
+   the section name isn't title case so it doesn't necessarily look like a title.
+
 .. syntax-grammar::
 
     Grammar of an identifier
@@ -104,6 +115,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> identifier-head identifier-characters-OPT
     identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
+    identifier --> property-wrapper-projection
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -129,6 +141,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
+    property-wrapper-projection --> ``$`` identifier-characters
 
 
 .. _LexicalStructure_Keywords:

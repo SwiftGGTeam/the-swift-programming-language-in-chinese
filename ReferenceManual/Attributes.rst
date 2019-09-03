@@ -692,6 +692,145 @@ can increase your binary size and adversely affect performance.
    because of the larger symbol table slowing dyld down.
 
 
+.. _Attributes_propertyWrapper:
+
+propertyWrapper
+~~~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper.
+When you apply this attribute to a type,
+you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or enumeration
+to wrap access to the property through an instance of the wrapper type.
+Local and global variables can't use property wrappers.
+
+.. assertion:: property-wrappers-cant-go-on-variables
+    :compile: true
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper let d: Int = 20
+    >>     print(d)
+    >> }
+    !! /tmp/swifttest.swift:3:5: error: property wrappers are not yet supported on local properties
+    !! @UselessWrapper let d: Int = 20
+    !! ^
+
+The wrapper must define a ``wrappedValue`` instance property.
+The *wrapped value* of the property
+is the value that the getter and setter for this property expose.
+In most cases, ``wrappedValue`` is a computed value,
+but it can be a stored value instead.
+The wrapper is responsible for defining and managing
+any underlying storage needed by its wrapped value.
+The compiler synthesizes storage for the instance of the wrapper type
+by prefixing the name of the wrapped property with an underscore (``_``) ---
+for example, the wrapper for ``someProperty`` is stored as ``_someProperty``.
+The synthesized storage for the wrapper has an access control level of ``private``.
+
+A property that has a property wrapper
+can include ``willSet`` and ``didSet`` blocks,
+but it can't override the compiler-synthesized ``get`` or ``set`` blocks.
+
+Swift provides two forms of syntactic sugar
+for initialization of a property wrapper.
+You can use assignment syntax in the definition of a wrapped value
+to pass the expression on the right-hand side of the assignment
+as the argument to the ``wrappedValue`` parameter
+of the property wrapper's initializer.
+You can also provide arguments to the attribute
+when you apply it to a property,
+and those arguments are passed to the property wrapper's initializer.
+For example, in the code below,
+``SomeStruct`` calls each of the initializers that ``SomeWrapper`` defines.
+
+.. testcode:: propertyWrapper
+    :compile: true
+
+    -> @propertyWrapper
+    -> struct SomeWrapper {
+           var wrappedValue: Int
+           var someValue: Double
+           init() {
+               self.wrappedValue = 100
+               self.someValue = 12.3
+           }
+           init(wrappedValue: Int) {
+               self.wrappedValue = wrappedValue
+               self.someValue = 45.6
+           }
+           init(wrappedValue value: Int, custom: Double) {
+               self.wrappedValue = value
+               self.someValue = custom
+           }
+       }
+    ---
+    -> struct SomeStruct {
+           // Uses init()
+           @SomeWrapper var a: Int
+    ---
+           // Uses init(wrappedValue:)
+           @SomeWrapper var b = 10
+    ---
+           // Both use init(wrappedValue:custom:)
+           @SomeWrapper(custom: 98.7) var c = 30
+           @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+       }
+
+.. Comments in the SomeStruct part of the example above
+   are on the line before instead of at the end of the line
+   because the last example gets too long to fit on one line.
+
+.. Initialization of a wrapped property using ``init(wrappedValue:)``
+   can be split across multiple statements.
+   However, you can only see that behavior using local variables
+   which currently can't have a property wrapper.
+   It would look like this:
+
+   @SomeWrapper var e
+   e = 20  // Uses init(wrappedValue:)
+   e = 30  // Uses the property setter
+
+The *projected value* for a wrapped property is a second value
+that a property wrapper can use to expose additional functionality.
+The author of a property wrapper type
+is responsible for determining the meaning of its projected value
+and defining the interface that the projected value exposes.
+To project a value from a property wrapper,
+define a ``projectedValue`` instance property on the wrapper type.
+The compiler synthesizes an identifier for the projected value
+by prefixing the name of the wrapped property with a dollar sign (``$``) ---
+for example, the projected value for ``someProperty`` is ``$someProperty``.
+The projected value has the same access control level
+as the original wrapped property.
+
+.. testcode:: propertyWrapper-projection
+    :compile: true
+
+    -> @propertyWrapper
+    -> struct WrapperWithProjection {
+        var wrappedValue: Int
+        var projectedValue: SomeProjection {
+            return SomeProjection(wrapper: self)
+        }
+    }
+    -> struct SomeProjection {
+        var wrapper: WrapperWithProjection
+    }
+    ---
+    -> struct SomeStruct {
+           @WrapperWithProjection var x = 123
+       }
+    -> let s = SomeStruct()
+    >> _ =
+    -> s.x           // Int value
+    >> _ =
+    -> s.$x          // SomeProjection value
+    >> _ =
+    -> s.$x.wrapper  // WrapperWithProjection value
+
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
