@@ -1089,7 +1089,8 @@ In the ``SmallNumber`` example above,
 if you try to set the property to a number that's too large,
 the property wrapper adjusts the number before storing it.
 The code below adds a ``projectedValue`` property to the ``SmallNumber`` structure
-to keep track of whether the current value was adjusted before being stored.
+to keep track of whether the property wrapper
+adjusted the new value for the property before storing that new value.
 
 .. testcode:: small-number-wrapper-projection
     :compile: true
@@ -1168,8 +1169,6 @@ of the wrapper around ``height`` and ``width`` as ``$height`` and ``$width``:
                        height = 100
                        width = 100
                }
-    ---
-               // Was the height or width adjusted?
                return $height || $width
            }
        }
@@ -1192,10 +1191,11 @@ the switch case for ``.large`` sets the rectangle's height and width to 100.
 The wrapper prevents the value of those properties
 from being larger than 12,
 and it sets the projected value to ``true``,
-to record the fact that their values were adjusted.
+to record the fact that it adjusted their values.
 At the end of ``resize(to:)``,
-the method returns ``true`` if either ``height`` or ``width`` was adjusted
-by checking ``$height || $width``.
+the return statement checks ``$height`` and ``$width``
+to determine whether
+the property wrapper adjusted either ``height`` or ``width``.
 
 .. _Properties_GlobalAndLocalVariables:
 
