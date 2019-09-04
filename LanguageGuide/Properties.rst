@@ -835,7 +835,7 @@ instead of writing ``@TwelveOrLess`` as an attribute:
                get { return _width.wrappedValue }
                set { _width.wrappedValue = newValue }
            }
-       } 
+       }
 
 The ``_height`` and ``_width`` properties
 store an instance of the property wrapper, ``TwelveOrLess``.
@@ -1091,11 +1091,12 @@ except it begins with a dollar sign (``$``).
 Because your code can't define properties that start with ``$``
 the projected value never interferes with properties you define.
 
-In the ``SmallNumber`` example,
+In the ``SmallNumber`` example above,
 if you try to set the property to a number that's too large,
 the property wrapper adjusts the number before storing it.
 The code below adds a ``projectedValue`` property to the ``SmallNumber`` structure
-to expose whether the current value was adjusted before being stored.
+to keep track of whether the property wrapper
+adjusted the new value for the property before storing that new value.
 
 .. testcode:: small-number-wrapper-projection
     :compile: true
@@ -1146,6 +1147,61 @@ A wrapper that needs to expose more information
 can return an instance of some other data type,
 or it can return ``self``
 to expose the instance of the wrapper as its projected value.
+
+When you access a projected value from code that's part of the type,
+like a property getter or an instance method,
+you can omit ``self.`` before the property name,
+just like accessing other properties.
+The code in the following example refers to the projected value
+of the wrapper around ``height`` and ``width`` as ``$height`` and ``$width``:
+
+.. testcode:: small-number-wrapper-projection
+    :compile: true
+
+    -> enum Size {
+           case small, large
+       }
+    ---
+    -> struct SizedRectangle {
+           @SmallNumber var height: Int
+           @SmallNumber var width: Int
+    ---
+           mutating func resize(to size: Size) -> Bool {
+               switch size {
+                   case .small:
+                       height = 10
+                       width = 20
+                   case .large:
+                       height = 100
+                       width = 100
+               }
+               return $height || $width
+           }
+       }
+    >> var r = SizedRectangle()
+    >> print(r.height, r.width)
+    << 0 0
+    >> var adj = r.resize(to: .large)
+    >> print(adj, r.height, r.width)
+    << true 12 12
+
+Because property wrapper syntax is just syntactic sugar
+for a property with a getter and a setter,
+accessing ``height`` and ``width``
+behaves the same as accessing any other property.
+For example,
+the code in ``resize(to:)`` accesses ``height`` and ``width``
+using their property wrapper.
+If you call ``resize(to: .large)``,
+the switch case for ``.large`` sets the rectangle's height and width to 100.
+The wrapper prevents the value of those properties
+from being larger than 12,
+and it sets the projected value to ``true``,
+to record the fact that it adjusted their values.
+At the end of ``resize(to:)``,
+the return statement checks ``$height`` and ``$width``
+to determine whether
+the property wrapper adjusted either ``height`` or ``width``.
 
 .. _Properties_GlobalAndLocalVariables:
 
