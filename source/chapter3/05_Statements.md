@@ -506,7 +506,6 @@ case .suppressed:
 
 ### Throw 语句 {#throw-statements}
 
-### Throw 语句 {#throw-statements}
 `throw` 语句出现在抛出函数或者抛出方法体内，或者类型被 `throws` 关键字标记的闭包表达式体内。
 
 `throw` 语句使程序在当前作用域结束执行，并向外围作用域传播错误。抛出的错误会一直传递，直到被 `do` 语句的 `catch` 子句处理掉。
@@ -621,6 +620,7 @@ do {
 > 
 
 ### 条件编译代码块 {#Conditional-Compilation-Block}
+
 条件编译代码块可以根据一个或多个配置来有条件地编译代码。
 
 每一个条件编译代码块都以 `#if` 开始，`#endif` 结束。如下：
@@ -852,6 +852,7 @@ statements to compile if both compilation conditions are false
 > 
 
 ## 可用性条件 {#availability-condition}
+
 可用性条件可作为 `if`，`while`，`guard` 语句的条件，可以在运行时基于特定的平台参数来查询 API 的可用性。
 
 可用性条件的形式如下：
