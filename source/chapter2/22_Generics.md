@@ -435,7 +435,7 @@ protocol Container {
 
 要遵守 `Container` 协议，`Item` 类型也必须遵守 `Equatable` 协议。
 
-### 在关联类型约束里使用协议 {#using-a-protocol-in-its-associated-type’s-constraints}
+### 在关联类型约束里使用协议 {#using-a-protocol-in-its-associated-types-constraints}
 
 协议可以作为它自身的要求出现。例如，有一个协议细化了 `Container` 协议，添加了一个` suffix(_:)` 方法。`suffix(_:)` 方法返回容器中从后往前给定数量的元素，并把它们存储在一个 `Suffix` 类型的实例里。
 

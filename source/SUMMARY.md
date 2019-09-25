@@ -28,6 +28,7 @@
    * [扩展](chapter2/20_Extensions.md)
    * [协议](chapter2/21_Protocols.md)
    * [泛型](chapter2/22_Generics.md)
+   * [不透明类型](chapter2/27_Opaque_Types.md)
    * [自动引用计数](chapter2/23_Automatic_Reference_Counting.md)
    * [内存安全](chapter2/24_Memory_Safety.md)
    * [访问控制](chapter2/25_Access_Control.md)

@@ -40,7 +40,7 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 > 
 > *类型* → **（** [类型](#type) **）**
 
-## 类型注解
+## 类型注解 {#type-annotation-h}
 *类型注解*显式地指定一个变量或表达式的类型。类型注解始于冒号 `:` 终于类型，比如下面两个例子：
 
 ```swift
@@ -58,7 +58,7 @@ func someFunction(a: Int) { /* ... */ }
 #### type-annotation {#type-annotation}
 > *类型注解* → **:** [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 
-## 类型标识符
+## 类型标识符 {#type-identifier-h}
 *类型标识符*引用命名型类型，还可引用命名型或复合型类型的别名。
 
 大多数情况下，类型标识符引用的是与之同名的命名型类型。例如类型标识符 `Int` 引用命名型类型 `Int`，同样，类型标识符 `Dictionary<String, Int>` 引用命名型类型 `Dictionary<String, Int>`。
@@ -86,7 +86,7 @@ var someValue: ExampleModule.MyType
 #### type-name {#type-name}
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
 
-## 元组类型
+## 元组类型 {#tuple-type-h}
 *元组类型*是使用括号括起来的零个或多个类型，类型间用逗号隔开。
 
 你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../chapter2/06_Functions.md#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
@@ -121,7 +121,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > *元素名* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 函数类型
+## 函数类型 {#function-type-h}
 *函数类型*表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
 
 > （`参数类型`）->（`返回值类型`）
@@ -218,7 +218,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
 > 
 
-## 数组类型
+## 数组类型 {#array-type-h}
 Swift 语言为标准库中定义的 `Array<Element>` 类型提供了如下语法糖：
 
 > [`类型`]
@@ -250,7 +250,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 > *数组类型* → **[** [*类型*](#type) **]**
 > 
 
-## 字典类型
+## 字典类型 {#dictionary-type-h}
 Swift 语言为标准库中定义的 `Dictionary<Key, Value>` 类型提供了如下语法糖：
 
 > [`键类型` : `值类型`]
@@ -278,7 +278,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 > *字典类型* → **[** [*类型*](#type) **:** [*类型*](#type) **]**
 > 
 
-## 可选类型
+## 可选类型 {#optional-type-h}
 Swift 定义后缀 `?` 来作为标准库中定义的命名型类型 `Optional<Wrapped>` 的语法糖。换句话说，下面两个声明是等价的：
 
 ```swift
@@ -310,7 +310,7 @@ optionalInteger! // 42
 > *可选类型* → [*类型*](#type) **?**
 > 
 
-## 隐式解析可选类型 {#implicitly-unwrapped-optional-type}
+## 隐式解析可选类型 {#implicitly-unwrapped-optional-type-h}
 当可以被访问时，Swift 语言定义后缀 `!` 作为标准库中命名类型 `Optional<Wrapped>` 的语法糖，来实现自动解包的功能。如果尝试对一个值为 `nil` 的可选类型进行隐式解包，将会产生运行时错误。因为隐式解包，下面两个声明等价：
 
 ```swift
@@ -345,7 +345,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 > *隐式解析可选类型* → [*类型*](#type) **!**
 > 
 
-## 协议合成类型
+## 协议合成类型 {#protocol-composition-type-h}
 *协议合成类型*定义了一种遵循协议列表中每个指定协议的类型，或者一个现有类型的子类并遵循协议列表中每个指定协议。协议合成类型只能用在类型注解、泛型参数子句和泛型 `where` 子句中指定类型。
 
 协议合成类型的形式如下：
@@ -377,7 +377,7 @@ typealias PQR = PQ & Q & R
 #### protocol-composition-continuation {#protocol-composition-continuation}
 > *协议合成延续* → [*协议标识符*](#protocol-identifier) | [*协议合成类型*](#protocol-composition-type)
 
-## 不透明类型
+## 不透明类型 {#opaque-type-h}
 
 *不透明类型*定义了遵循某个协议或者合成协议的类型，但不需要指明底层的具体类型。
 
@@ -401,7 +401,7 @@ typealias PQR = PQ & Q & R
 
 > *不透明类型* → **some** [type](#type)
 
-## 元类型
+## 元类型 {#metatype-type-h}
 
 *元类型*是指任意类型的类型，包括类类型、结构体类型、枚举类型和协议类型。
 
@@ -451,7 +451,7 @@ let anotherInstance = metatype.init(string: "some string")
 #### metatype-type {#metatype-type}
 > *元类型* → [*类型*](#type) **.** **Type** | [*类型*](#type) **.** **Protocol**
 
-## 自身类型
+## 自身类型 {#self-type-h}
 
 `Self` 类型不是具体的类型，而是让你更方便的引用当前类型，不需要重复或者知道该类的名字。
 
@@ -489,7 +489,7 @@ print(type(of: z.f()))
 
 > *自身类型* → **Self**
 
-## 类型继承子句
+## 类型继承子句 {#type-inheritance-clause-h}
 
 *类型继承子句*被用来指定一个命名型类型继承自哪个类、采纳哪些协议。类型继承子句开始于冒号 `:`，其后是类型标识符列表。
 

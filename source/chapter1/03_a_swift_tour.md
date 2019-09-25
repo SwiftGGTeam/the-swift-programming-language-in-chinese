@@ -65,7 +65,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 > 
 > 使用 `\()` 来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
-使用一对三个单引号（`"""`）来包含多行字符串内容，字符串中的内容（包括引号、空格、换行符等）都会保留下来。举个例子：
+使用三个双引号（`"""`）来包含多行字符串内容，字符串中的内容（包括引号、空格、换行符等）都会保留下来。举个例子：
 
 ```swift
 let quotation = """
@@ -788,15 +788,16 @@ possibleInteger = .some(100)
 
 ```swift
 func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
-    where T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
-        for lhsItem in lhs {
-            for rhsItem in rhs {
-                if lhsItem == rhsItem {
-                    return true
-                }
+    where T.Element: Equatable, T.Element == U.Element
+{
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
             }
         }
-        return false
+    }
+    return false
 }
 anyCommonElements([1, 2, 3], [3])
 ```
