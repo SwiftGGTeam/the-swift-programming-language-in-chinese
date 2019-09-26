@@ -817,17 +817,17 @@ For more information, see
 
 .. note::
 
-   The symbol name in the compiled binary
-   is also controlled by the argument to the ``objc`` attribute.
+   The argument to the ``objc`` attribute
+   can also change the symbol name in the compiled binary.
    If you specify a name by passing an argument,
    that name is used as the Objective-C name
    and as the symbol name.
    If you omit the argument,
    the Objective-C name matches the Swift name,
-   but the symbol name follows the ordinary Swift compiler convention
+   and the symbol name follows the normal Swift compiler convention
    of name mangling.
    You can use the ``nm`` command line tool
-   to verify the name of a symbol in a binary.
+   to verify the name of a symbol in a compiled binary.
 
 .. _Attributes_objcMembers:
 
