@@ -812,6 +812,22 @@ rather than just as the name of the property itself.
          }
       }
 
+For more information, see
+`Importing Swift into Objective-C <https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c>`_.
+
+.. note::
+
+   The symbol name in the compiled binary
+   is also controlled by the argument to the ``objc`` attribute.
+   If you specify a name by passing an argument,
+   that name is used as the Objective-C name
+   and as the symbol name.
+   If you omit the argument,
+   the Objective-C name matches the Swift name,
+   but the symbol name follows the ordinary Swift compiler convention
+   of name mangling.
+   You can use the ``nm`` command line tool
+   to verify the name of a symbol in a binary.
 
 .. _Attributes_objcMembers:
 
