@@ -520,7 +520,7 @@ let textB = "Hello world"
 
 ## 运算符 {#operator}
 
-Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基础运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md) 中进行了阐述。这一小节将描述哪些字符能用于自定义运算符。
+Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基础运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/27_Advanced_Operators.md) 中进行了阐述。这一小节将描述哪些字符能用于自定义运算符。
 
 自定义运算符可以由以下其中之一的 ASCII 字符 `/`、`=`、`-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 以及 `~`，或者后面语法中规定的任一个 Unicode 字符（其中包含了*数学运算符*、*零散符号（Miscellaneous Symbols）* 以及印刷符号（Dingbats）之类的 Unicode 块）开始。在第一个字符之后，允许使用组合型 Unicode 字符。
 
@@ -545,7 +545,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 在某些特定的设计中 ，以 `<` 或 `>` 开头的运算符会被分离成两个或多个符号，剩余部分可能会以同样的方式被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中， 闭合字符 `>` 不会被视为单独的符号，因而不会被错误解析为 `>>` 运算符。
 
-要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/26_Advanced_Operators.md#custom_operators) 和 [运算符声明](./06_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/26_Advanced_Operators.md#operator_functions)。
+要学习如何自定义运算符，请参考 [自定义运算符](../chapter2/27_Advanced_Operators.md#custom_operators) 和 [运算符声明](./06_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../chapter2/27_Advanced_Operators.md#operator_functions)。
 
 > 运算符语法
 > 

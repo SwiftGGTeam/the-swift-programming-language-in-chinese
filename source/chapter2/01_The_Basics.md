@@ -619,7 +619,7 @@ if let firstNumber = Int("4") {
 
 这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
-当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考 [无主引用以及隐式解析可选属性](./23_Automatic_Reference_Counting.md#unowned_references_and_implicitly_unwrapped_optional_properties)。
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考 [无主引用以及隐式解析可选属性](./24_Automatic_Reference_Counting.md#unowned_references_and_implicitly_unwrapped_optional_properties)。
 
 一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型 `String` 和隐式解析可选类型 `String` 之间的区别：
 

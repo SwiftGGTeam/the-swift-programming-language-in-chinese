@@ -1611,7 +1611,7 @@ postfix operator 运算符名称 {}
 
 和前缀运算符一样，后缀运算符的声明中不指定优先级，而且后缀运算符是非结合的。
 
-声明了一个新的运算符以后，需要实现一个跟这个运算符同名的函数来实现这个运算符。如果是实现一个前缀或者后缀运算符，也必须使用相符的 `prefix` 或者 `postfix` 声明修饰符标记函数声明。如果是实现中缀运算符，则不需要使用 `infix` 声明修饰符标记函数声明。关于如何实现一个新的运算符的例子，请参阅 [自定义运算符](../chapter2/26_Advanced_Operators.md#custom_operators)。
+声明了一个新的运算符以后，需要实现一个跟这个运算符同名的函数来实现这个运算符。如果是实现一个前缀或者后缀运算符，也必须使用相符的 `prefix` 或者 `postfix` 声明修饰符标记函数声明。如果是实现中缀运算符，则不需要使用 `infix` 声明修饰符标记函数声明。关于如何实现一个新的运算符的例子，请参阅 [自定义运算符](../chapter2/27_Advanced_Operators.md#custom_operators)。
 
 
 #### grammer_of_an_operator_declaration {#grammer-of-an-operator-declaration}
@@ -1752,7 +1752,7 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 
 `unowned`
 
-该修饰符用于修饰存储型变量、常量或者存储型变量属性，表示该变量或属性持有其存储对象的无主引用。如果在此存储对象释放后尝试访问该对象，会引发运行时错误。如同弱引用一样，该引用类型的变量或属性必须是类类型。与弱引用不同的是，这种类型的变量或属性是非可选的。关于 `unowned` 更多的信息和例子，请参阅 [无主引用](../chapter2/23_Automatic_Reference_Counting.md#unowned_references)
+该修饰符用于修饰存储型变量、常量或者存储型变量属性，表示该变量或属性持有其存储对象的无主引用。如果在此存储对象释放后尝试访问该对象，会引发运行时错误。如同弱引用一样，该引用类型的变量或属性必须是类类型。与弱引用不同的是，这种类型的变量或属性是非可选的。关于 `unowned` 更多的信息和例子，请参阅 [无主引用](../chapter2/24_Automatic_Reference_Counting.md#unowned_references)
 
 `unowned(safe)`
 
@@ -1760,14 +1760,14 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 
 `unowned(unsafe)`
 
-该修饰符用于修饰存储型变量、常量或者存储型变量属性，表示该变量或属性持有其存储对象的无主引用。如果在此存储对象释放后尝试访问该对象，会直接访问该对象释放前存储的内存地址，因此这是非内存安全的操作。如同弱引用一样，该引用类型的变量或属性必须是类类型。与弱引用不同的是，这种类型的变量或属性是非可选的。关于 `unowned` 更多的信息和例子，请参阅 [无主引用](../chapter2/23_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_between_class_instances)。
+该修饰符用于修饰存储型变量、常量或者存储型变量属性，表示该变量或属性持有其存储对象的无主引用。如果在此存储对象释放后尝试访问该对象，会直接访问该对象释放前存储的内存地址，因此这是非内存安全的操作。如同弱引用一样，该引用类型的变量或属性必须是类类型。与弱引用不同的是，这种类型的变量或属性是非可选的。关于 `unowned` 更多的信息和例子，请参阅 [无主引用](../chapter2/24_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_between_class_instances)。
 
 `weak`
 
-该修饰符用于修饰变量或存储型变量属性，表示该变量或属性持有其存储的对象的弱引用。这种变量或属性的类型必须是可选的类类型。使用 `weak` 修饰符可避免强引用循环。关于 `weak` 修饰符的更多信息和例子，请参阅 [弱引用](../chapter2/23_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_between_class_instances)。
+该修饰符用于修饰变量或存储型变量属性，表示该变量或属性持有其存储的对象的弱引用。这种变量或属性的类型必须是可选的类类型。使用 `weak` 修饰符可避免强引用循环。关于 `weak` 修饰符的更多信息和例子，请参阅 [弱引用](../chapter2/24_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_between_class_instances)。
 
 ### 访问控制级别 {#access-control-levels}
-Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`。可以使用以下任意一种访问级别修饰符来指定声明的访问级别。访问控制在 [访问控制](../chapter2/25_Access_Control.md) 中有详细讨论。
+Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`。可以使用以下任意一种访问级别修饰符来指定声明的访问级别。访问控制在 [访问控制](../chapter2/26_Access_Control.md) 中有详细讨论。
 
 `public`
 
@@ -1781,7 +1781,7 @@ Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`
 
 该修饰符表示声明只能被所在源文件的代码访问。
 
-以上访问级别修饰符都可以选择带上一个参数，该参数由一对圆括号和其中的 `set` 关键字组成（例如，`private(set)`）。使用这种形式的访问级别修饰符来限制某个属性或下标的 setter 的访问级别低于其本身的访问级别，正如 [Getter 和 Setter](../chapter2/25_Access_Control.md#getters_and_setters) 中所讨论的。
+以上访问级别修饰符都可以选择带上一个参数，该参数由一对圆括号和其中的 `set` 关键字组成（例如，`private(set)`）。使用这种形式的访问级别修饰符来限制某个属性或下标的 setter 的访问级别低于其本身的访问级别，正如 [Getter 和 Setter](../chapter2/26_Access_Control.md#getters_and_setters) 中所讨论的。
 
 
 #### grammer_of_a_declaration_modifier {#grammer-of-a-declaration-modifier}

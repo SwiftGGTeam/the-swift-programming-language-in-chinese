@@ -18,7 +18,7 @@ Swift 中存在四种表达式：前缀表达式，二元表达式，基本表�
 ## 前缀表达式 {#prefix-expressions}
 前缀表达式由可选的前缀运算符和表达式组成。前缀运算符只接收一个参数，表达式则紧随其后。
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/27_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Operators Declarations*](https://developer.apple.com/documentation/swift/operator_declarations)。
 
@@ -81,7 +81,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction() // 错误：try �
 > `左侧参数` `二元运算符` `右侧参数`
 > 
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/27_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [*Swift Standard Library Operators Reference*](https://developer.apple.com/documentation/swift/operator_declarations)。
 
@@ -522,7 +522,7 @@ myFunction { [unowned self] in print(self.title) } // 无主引用捕获
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.md#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/23_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_for_closures)。
+关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../chapter2/07_Closures.md#closure_expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../chapter2/24_Automatic_Reference_Counting.md#resolving_strong_reference_cycles_for_closures)。
 
 > 闭包表达式语法
 > 
@@ -918,7 +918,7 @@ print(keyPath == c.getSomeKeyPath())
 ## 后缀表达式 {#postfix-expressions}
 *后缀表达式*就是在某个表达式的后面运用后缀运算符或其他后缀语法。从语法构成上来看，基本表达式也是后缀表达式。
 
-关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/26_Advanced_Operators.md)。
+关于这些运算符的更多信息，请参阅 [基本运算符](../chapter2/02_Basic_Operators.md) 和 [高级运算符](../chapter2/27_Advanced_Operators.md)。
 
 关于 Swift 标准库提供的运算符的更多信息，请参阅 [运算符定义](https://developer.apple.com/documentation/swift/operator_declarations)。
 
