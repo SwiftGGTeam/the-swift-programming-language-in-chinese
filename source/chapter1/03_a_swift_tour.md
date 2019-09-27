@@ -14,7 +14,7 @@ print("Hello, world!")
 > 
 > 最好的体验是把这一章作为 Playground 文件在 Xcode 中打开。 Playgrounds 允许你可以编辑代码并立刻看到输出结果。
 > 
-> [Download Playground](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.playground.zip)
+> [下载 Playground](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.playground.zip)
 
 ## 简单值 {#simple-values}
 
@@ -85,6 +85,13 @@ var occupations = [
     "Kaylee": "Mechanic",
 ]
 occupations["Jayne"] = "Public Relations"
+```
+
+数组随着添加元素而自动增长。
+
+```swift
+shoppingList.append("blue paint")
+print(shoppingList)
 ```
 
 使用初始化语法来创建一个空数组或者空字典。
