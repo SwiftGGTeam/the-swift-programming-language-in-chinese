@@ -57,6 +57,7 @@ diff 操作如下：
 
 | 术语 | 备选翻译 |
 | --- | --- |
+| property wrapper | 属性包装器（[翻译相关讨论](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues/982#issuecomment-536244784)） |
 | argument | 实参 |
 | parameter | 形参 |
 | associated type | 关联类型 |
