@@ -477,13 +477,14 @@ paragraph = nil
 
 ### 定义捕获列表 {#defining-a-capture-list}
 
-捕获列表中的每一项都由一对元素组成，一个元素是 `weak` 或 `unowned` 关键字，另一个元素是类实例的引用（例如 `self`）或初始化过的变量（如 `delegate = self.delegate!`）。这些项在方括号中用逗号分开。
+捕获列表中的每一项都由一对元素组成，一个元素是 `weak` 或 `unowned` 关键字，另一个元素是类实例的引用（例如 `self`）或初始化过的变量（如 `delegate = self.delegate`）。这些项在方括号中用逗号分开。
 
 如果闭包有参数列表和返回类型，把捕获列表放在它们前面：
 
 ```swift
-lazy var someClosure: (Int, String) -> String = {
-    [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
+lazy var someClosure = {
+    [unowned self, weak delegate = self.delegate]
+    (index: Int, stringToProcess: String) -> String in
     // 这里是闭包的函数体
 }
 ```
@@ -491,8 +492,8 @@ lazy var someClosure: (Int, String) -> String = {
 如果闭包没有指明参数列表或者返回类型，它们会通过上下文推断，那么可以把捕获列表和关键字 `in` 放在闭包最开始的地方：
 
 ```swift
-lazy var someClosure: () -> String = {
-    [unowned self, weak delegate = self.delegate!] in
+lazy var someClosure = {
+    [unowned self, weak delegate = self.delegate] in
     // 这里是闭包的函数体
 }
 ```
