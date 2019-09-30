@@ -65,7 +65,7 @@ _信息内容_由一个字符串构成。
 
 _新名字_由一个字符串构成。
 
-你可以将带有 `renamed` 和 `unavailable` 参数的 `available` 特性应用于类型别名声明，如下所示，以指示在框架或库的发行版之间更改了声明的名称。此组合导致编译时错误，声明已重命名。
+你可以将带有 `renamed` 和 `unavailable` 参数的 `available` 特性应用于类型别名声明，如下所示，来表明框架和库发行版本之间的声明名称已经被更改。这个组合会导致声明已重命名的编译时错误。
 
 ```swift
 // 首发版本
@@ -186,7 +186,7 @@ repeatLabels(a: "four") // Error
 
 在显式成员表达式中，如果指定成员没有相应的声明，则该表达式被理解为对该类型的 `subscript(dynamicMemberLookup:)` 下标调用，将有关该成员的信息作为参数传递。下标接收参数既可以是键路径，也可以是成员名称字符串；如果你同时实现这两种方式的下标调用，那么以键路径参数方式为准。
 
- `subscript(dynamicMemberLookup:)` 实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。它可以使用符合 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的类型作为参数来接受成员名 -- 通常情况下是 `String`。下标返回值类型可以为任意类型。
+ `subscript(dynamicMemberLookup:)` 实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。它可以使用遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的类型作为参数来接受成员名 -- 通常情况下是 `String`。下标返回值类型可以为任意类型。
 
 按成员名进行的动态成员查找可用于围绕编译时无法进行类型检查的数据创建包装类型，例如在将其他语言的数据桥接到 `Swift` 时。例如：
 
@@ -237,7 +237,7 @@ print(wrapper.x)
 > 注意  
 > 当编译器不处于迭代库的模式，所有的结构体和枚举都是隐性冻结，并且你不能使用该特性。
 
-在迭代库的模式中，与未冻结结构体和枚举的成员进行交互的代码在被编译时，允许它在不重新编译的情况下继续工作，即使在新版本的库中添加、删除或重新排序该类型的成员。编译器使用诸如在运行时查找信息和添加间接层等技术使这成为可能。将一个枚举或者结构体标记为冻结将以放弃这种灵活性为代价来获取性能上的提升：未来版本的库只能对类型进行有限的更改，但编译器可以对与类型成员交互的代码进行额外的优化。
+在迭代库的模式中，与未冻结结构体和枚举的成员进行交互的代码在被编译时，允许它在不重新编译的情况下继续工作，即使在新版本的库中添加、删除或重新排序该类型的成员。编译器用类似运行时查找信息和添加间接层的技术使之可能。将一个枚举或者结构体标记为冻结将以放弃这种灵活性为代价来获取性能上的提升：未来版本的库只能对类型进行有限的更改，但编译器可以对与类型成员交互的代码进行额外的优化。
 
 使用冻结类型，结构体存储属性的类型以及枚举 case 的关联值必须是 `public` 或使用 `usablefrominline` 特性标记。冻结结构体的属性不能有属性观察器，为存储实例属性提供初始值的表达式必须遵循与 `inlinable` 函数相同的限制，如 [`inlinable`](#inlinable) 中所述。
 
@@ -259,7 +259,7 @@ print(wrapper.x)
 
 ### `nonobjc` {#nonobjc}
 
-针对方法、属性、下标、或构造器的声明使用该特性将压制隐式的 `objc` 特性。它们本来可以在 Objective-C 代码中使用，而使用 `nonobjc` 特性则告诉编译器这个声明不能在 Objective-C 代码中使用。
+针对方法、属性、下标、或构造器的声明使用该特性将覆盖隐式的 `objc` 特性。`nonobjc` 特性告诉编译器该声明不能在 Objective-C 代码中使用，即便它能在 Objective-C 中表示。
 
 该特性用在扩展中，与在没有明确标记为 `objc` 特性的扩展中给每个成员添加该特性具有相同效果。
 
@@ -326,7 +326,7 @@ class ExampleClass: NSObject {
 
 在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问。局部和全局变量不能使用属性包装器。
 
-包装器必须定义一个 `wrappedValue` 实例属性。该属性_包装的值_是该属性存取方法暴露的值。大多数时候，`wrappedValue` 是一个计算属性，但它可以是一个存储属性。包装器负责定义和管理其包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线（`_`）来为包装器的实例提供同步存储。例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的同步存储具有 `private` 的访问控制级别。
+包装器必须定义一个 `wrappedValue` 实例属性。该属性_wrapped value_是该属性存取方法暴露的值。大多数时候，`wrappedValue` 是一个计算属性，但它可以是一个存储属性。包装器负责定义和管理其包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线（`_`）来为包装器的实例提供同步存储。例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的同步存储具有 `private` 的访问控制级别。
 
 拥有属性包装器的属性可以包含 `willSet` 和 `didSet` 闭包，但是不能重写编译器合成的 `get` 和 `set` 闭包。
 
@@ -364,7 +364,7 @@ struct SomeStruct {
 }
 ```
 
-属性包装器中_映射的值_是它可以用来暴露额外功能的第二个值。属性包装器的作者负责确认其投影值的含义并定义公开投影值的接口。若要通过属性包装器来映射值，请在包装器的类型上定义 `projectedValue` 实例属性。编译器通过在包装属性的名称前面加上美元符号（`$`）来合成映射值的标识符。例如，`someProperty` 的映射值是 `$someProperty`。映射值具有与原始包装属性相同的访问控制级别。
+属性包装器中_projected value_是它可以用来暴露额外功能的第二个值。属性包装器的作者负责确认其映射值的含义并定义公开映射值的接口。若要通过属性包装器来映射值，请在包装器的类型上定义 `projectedValue` 实例属性。编译器通过在包装属性的名称前面加上美元符号（`$`）来合成映射值的标识符。例如，`someProperty` 的映射值是 `$someProperty`。映射值具有与原始包装属性相同的访问控制级别。
 
 ```swift
 @propertyWrapper
@@ -393,7 +393,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### `testable` {#testable}
 
-将此特性应用于 `import` 声明以导入该模块，并更改其访问控制以简化对该模块代码的测试。这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用 `internal` 或者 `public` 访问级别修饰符标记的类和类成员，就像它们是 `open` 访问修饰符声明的。被导入的模块在编译时必须被允许测试。
+将此特性应用于 `import` 声明以导入该模块，并更改其访问控制以简化对该模块代码的测试。这样就能访问被导入模块中的任何标有 `internal` 访问级别修饰符的实体，犹如它们被标记了 `public` 访问级别修饰符。测试也可以访问使用 `internal` 或者 `public` 访问级别修饰符标记的类和类成员，就像它们是 `open` 访问修饰符声明的。被导入的模块必须以允许测试的方式编译。
 
 ### `UIApplicationMain` {#uiapplicationmain}
 
@@ -411,7 +411,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### `warn_unqualified_access` {#warn-unqualified-access}
 
-该特性应用于顶级函数、实例方法、类方法或静态方法，以在没有前置限定符（例如模块名称、类型名称、实例变量或常量）的情况下使用该函数或方法时触发警告。使用该特性可以帮助减少在同一作用域访问同名函数之间的歧义。
+该特性应用于顶级函数、实例方法、类方法或静态方法，以在没有前置限定符（例如模块名称、类型名称、实例变量或常量）的情况下使用该函数或方法时触发警告。使用该特性可以减少在同一作用域里访问的同名函数之间的歧义。
 
 例如，Swift 标准库包含 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 顶级函数和用于序列比较元素的 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。序列方法声明使用了 `warn_unqualified_access`，以减少在 `Sequence` 扩展中使用它们的歧义。
 
@@ -455,7 +455,7 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 
 ### `unknown` {#unknown}
 
-该特性用于 switch case，表示匹配相对于编译时已知的 case 之外任何其他的情况。有关如何使用 `unknown` 特性的示例，可参阅 [对未来枚举的 `case` 进行 `switch`](./05_Statements.md#future-case)。
+该特性用于 switch case，用于没有匹配上代码编译时已知 case 的情况。有关如何使用 `unknown` 特性的示例，可参阅 [对未来枚举的 `case` 进行 `switch`](./05_Statements.md#future-case)。
 
 > 特性语法
 > 
