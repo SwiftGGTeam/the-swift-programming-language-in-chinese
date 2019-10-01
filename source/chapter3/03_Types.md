@@ -41,14 +41,14 @@ Swift 语言存在两种类型：命名型类型和复合型类型。*命名型�
 > *类型* → **（** [类型](#type) **）**
 
 ## 类型注解 {#type-annotation-h}
-*类型注解*显式地指定一个变量或表达式的类型。类型注解始于冒号 `:` 终于类型，比如下面两个例子：
+*类型注解*显式地指定一个变量或表达式的类型。类型注解从冒号 （`:`）开始， 以类型结尾，比如下面两个例子：
 
 ```swift
 let someTuple: (Double, Double) = (3.14159, 2.71828)
 func someFunction(a: Int) { /* ... */ }
 ```
 
-在第一个例子中，表达式 `someTuple` 的类型被指定为 `(Double, Double)`。在第二个例子中，函数 `someFunction` 的参数 `a` 的类型被指定为 `Int`。
+在第一个例子中，表达式 `someTuple` 的类型被指定为 `(Double, Double)`。在第二个例子中，函数 `someFunction` 的形参 `a` 的类型被指定为 `Int`。
 
 类型注解可以在类型之前包含一个类型特性的可选列表。
 
@@ -59,7 +59,7 @@ func someFunction(a: Int) { /* ... */ }
 > *类型注解* → **:** [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type)
 
 ## 类型标识符 {#type-identifier-h}
-*类型标识符*引用命名型类型，还可引用命名型或复合型类型的别名。
+*类型标识符*可以引用命名型类型，还可引用命名型或复合型类型的别名。
 
 大多数情况下，类型标识符引用的是与之同名的命名型类型。例如类型标识符 `Int` 引用命名型类型 `Int`，同样，类型标识符 `Dictionary<String, Int>` 引用命名型类型 `Dictionary<String, Int>`。
 
@@ -80,8 +80,7 @@ var someValue: ExampleModule.MyType
 > 
 
 #### type-identifier {#type-identifier}
-> *类型标识符* → [*类型名称*](#type-name) [*泛型参数子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型参数子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
-> 
+> *类型标识符* → [*类型名称*](#type-name) [*泛型实参子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型实参子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
 
 #### type-name {#type-name}
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
@@ -122,21 +121,21 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 > 
 
 ## 函数类型 {#function-type-h}
-*函数类型*表示一个函数、方法或闭包的类型，它由参数类型和返回值类型组成，中间用箭头（`->`）隔开：
+*函数类型*表示一个函数、方法或闭包的类型，它由形参类型和返回值类型组成，中间用箭头（`->`）隔开：
 
-> （`参数类型`）->（`返回值类型`）
+> （`形参类型`）->（`返回值类型`）
 
-*参数类型*是由逗号间隔的类型列表。由于*返回值类型*可以是元组类型，所以函数类型支持多返回值的函数与方法。
+*形参类型*是由逗号间隔的类型列表。由于*返回值类型*可以是元组类型，所以函数类型支持多返回值的函数与方法。
 
-你可以对参数类型为 `() -> T`（其中 T 是任何类型）的函数使用 `autoclosure` 特性。这会自动将参数表达式转化为闭包，表达式的结果即闭包返回值。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为参数的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.md#autoclosures)。
+你可以对形参类型为 `() -> T`（其中 T 是任何类型）的函数使用 `autoclosure` 特性，这会在调用侧隐式创建一个闭包。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为形参的函数类型的例子详见 [自动闭包](../chapter2/07_Closures.md#autoclosures)。
 
-函数类型可以拥有一个可变长参数作为*参数类型*中的最后一个参数。从语法角度上讲，可变长参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变长参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变长参数的例子，请参阅 [可变参数](../chapter2/06_Functions.md#variadic_parameters)。
+函数类型可以拥有一个可变参数在*形参类型*中。从语法角度上讲，可变参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变参数的例子，请参阅 [可变参数](../chapter2/06_Functions.md#variadic-parameters)。
 
-为了指定一个 `in-out` 参数，可以在参数类型前加 `inout` 前缀。但是你不可以对可变长参数或返回值类型使用 `inout`。关于这种参数的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
+为了指定一个 `in-out` 参数，可以在形参类型前加 `inout` 前缀。但是你不可以对可变参数或返回值类型使用 `inout`。关于这种形参的详细讲解请参阅 [输入输出参数](../chapter2/06_Functions.md#in_out_parameters)。
 
-如果一个函数类型只有一个形式参数而且形式参数的类型是元组类型，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组 `(Int, Int)` 作为形式参数并且不返回任何值的函数类型。与此相对，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 作为形式参数并且不返回任何值的函数类型。相似地，因为 `Void` 是空元组类型 `()` 的别名，函数类型 `(Void)-> Void` 与 `(()) -> ()` 是一样的 - 一个将空元组作为唯一参数的函数。但这些类型和无变量的函数类型 `() -> ()` 是不一样的。
+如果函数类型只有一个类型是元组类型的一个形参，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组 `(Int, Int)` 作为形参并且不返回任何值的函数类型。与此相对，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 作为形参并且不返回任何值的函数类型。相似地，因为 `Void` 是空元组类型 `()` 的别名，函数类型 `(Void)-> Void` 与 `(()) -> ()` 是一样的 - 一个将空元组作为唯一实参的函数。但这些类型和 `() -> ()` 是不一样的 - 一个无实参的函数。
 
-函数和方法中的变量名并不是函数类型的一部分。例如：
+函数和方法中的实参名并不是函数类型的一部分。例如：
 
 ```swift
 func someFunction(left: Int, right: Int) {}
@@ -155,7 +154,7 @@ func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
 f = functionWithDifferentNumberOfArguments // 错误
 ```
 
-由于变量标签不是函数类型的一部分，你可以在写函数类型的时候省略它们。
+由于实参标签不是函数类型的一部分，你可以在写函数类型的时候省略它们。
 
 ```swift
 var operation: (lhs: Int, rhs: Int) -> Int      // 错误
@@ -163,14 +162,14 @@ var operation: (_ lhs: Int, _ rhs: Int) -> Int  // 正确
 var operation: (Int, Int) -> Int                // 正确
 ```
 
-如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `(Int) -> (Int) -> Int` 可以理解为 `(Int) -> ((Int) -> Int)`，也就是说，该函数类型的参数为 `Int` 类型，其返回类型是一个参数类型为 `Int`，返回类型为 `Int` 的函数。
+如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `(Int) -> (Int) -> Int` 可以理解为 `(Int) -> ((Int) -> Int)`，也就是说，该函数传入 `Int`，并返回另一个传入并返回 `Int` 的函数。
 
-函数类型若要抛出错误就必须使用 `throws` 关键字来标记，若要重抛错误则必须使用 `rethrows` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数函数的一个子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing_functions_and_methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing_functions_and_methods)。
+函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing_functions_and_methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing_functions_and_methods)。
 
 ### 对非逃逸闭包的限制 {#Restrictions for Nonescaping Closures}
-当非逃逸闭包函数是参数时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
+当非逃逸闭包函数是形参时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
 
-当非逃逸闭包函数是参数时，不能作为参数传递到另一个非逃逸闭包函数中。这样的限制可以让 Swift 在编译时就完成更多的内存访问冲突检查，而不是在运行时。举个例子：
+当非逃逸闭包函数是形参时，不能作为实参传递到另一个非逃逸闭包函数中。这样的限制可以让 Swift 在编译时就完成更好的内存访问冲突检查，而不是在运行时。举个例子：
 
 ```swift
 let external: (Any) -> Void = { _ in () }
@@ -186,37 +185,31 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 }
 ```
 
-在上面代码里，`takesTwoFunctions(first:second:)` 的两个参数都是函数。它们都没有标记为 `@escaping`, 因此它们都是非逃逸的。
+在上面代码里，`takesTwoFunctions(first:second:)` 的两个形参都是函数。它们都没有标记为 `@escaping`, 因此它们都是非逃逸的。
 
-上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为参数 `first` 和 `second` 是非逃逸函数，它们不能够作为参数被传递到另一个非闭包函数。相对的, 标记“正确”的两个函数不会产生编译错误。这些函数调用不会违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的参数之一。
+上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为形参 `first` 和 `second` 是非逃逸函数，它们不能够作为实参被传递到另一个非闭包函数。相对的, 标记“正确”的两个函数不会产生编译错误。这些函数调用不会违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的形参之一。
 
-如果你需要避免这个限制，标记其中之一的参数为逃逸，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时地转换非逃逸函数的其中一个参数为逃逸函数。关于避免内存访问冲突，可以参阅 [内存安全](../chapter2/24_Memory_Safety.md)。
+如果你需要避免这个限制，标记其中一个形参为逃逸，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时转换其中一个非逃逸函数形参为逃逸函数。关于避免内存访问冲突，可以参阅 [内存安全](../chapter2/24_Memory_Safety.md)。
 
 > 函数类型语法
 > 
 
 #### function-type {#function-type}
 > *函数类型* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **throws**<sub>可选</sub> **->** [*类型*](#type)
-> 
-> *函数类型* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> [*函数类型子句*](#function-type-argument-clause) **rethrows­** **->** [*类型*](#type)
-> 
 
 #### function-type-argument-clause {#function-type-argument-clause}
 > *函数类型子句* → **(**­  **)**­  
-> *函数类型子句* → **(** [*函数类型参数列表*](#function-type-argument-list) *...*­ <sub>可选</sub> **)**  
-> 
+> *函数类型子句* → **(** [*函数类型实参列表*](#function-type-argument-list) *...*­ <sub>可选</sub> **)**  
 
 #### function-type-argument-list {#function-type-argument-list}
-> *函数类型参数列表* → [*函数类型参数*](function-type-argument) | [*函数类型参数*](function-type-argument)， [*函数类型参数列表*](#function-type-argument-list)
-> 
+> *函数类型实参列表* → [*函数类型实参*](function-type-argument) | [*函数类型实参*](function-type-argument)， [*函数类型实参列表*](#function-type-argument-list)
 
 #### function-type-argument {#function-type-argument}
-> *函数类型参数* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*参数标签*](#argument-label) [*类型注解*](#type-annotation)
-> 
+
+> *函数类型实参* → [*特性列表*](./07_Attributes.md#attributes)<sub>可选</sub> **输入输出参数**<sub>可选</sub> [*类型*](#type) | [*实参标签*](#argument-label) [*类型注解*](#type-annotation)
 
 #### argument-label {#argument-label}
-> *参数标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
-> 
+> *形参标签* → [*标识符*](./02_Lexical_Structure.md#identifier)
 
 ## 数组类型 {#array-type-h}
 Swift 语言为标准库中定义的 `Array<Element>` 类型提供了如下语法糖：
@@ -299,7 +292,7 @@ optionalInteger! // 42
 
 使用 `!` 运算符解包值为 `nil` 的可选值会导致运行错误。
 
-你也可以使用可选链式调用和可选绑定来选择性地在可选表达式上执行操作。如果值为 `nil`，不会执行任何操作，因此也就没有运行错误产生。
+你也可以使用可选链式调用和可选绑定来选择性在可选表达式上执行操作。如果值为 `nil`，不会执行任何操作，因此也就没有运行错误产生。
 
 更多细节以及更多如何使用可选类型的例子，请参阅 [可选类型](../chapter2/01_The_Basics.md#optionals)。
 
@@ -346,7 +339,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 > 
 
 ## 协议合成类型 {#protocol-composition-type-h}
-*协议合成类型*定义了一种遵循协议列表中每个指定协议的类型，或者一个现有类型的子类并遵循协议列表中每个指定协议。协议合成类型只能用在类型注解、泛型参数子句和泛型 `where` 子句中指定类型。
+*协议合成类型*定义了一种遵循协议列表中每个指定协议的类型，或者一个现有类型的子类并遵循协议列表中每个指定协议。协议合成类型只能用在类型注解、泛型形参子句和泛型 `where` 子句中指定类型。
 
 协议合成类型的形式如下：
 
@@ -393,7 +386,7 @@ typealias PQR = PQ & Q & R
 
 协议声明里不能包括不透明类型。类不能使用不透明类型作为非 final 方法的返回值。
 
-使用不透明类型作为返回值的函数必须返回单一公用底层类型。返回的类型可以包含函数范型类型参数的一部分。举个例子，函数 `someFunction<T>()` 可以返回类型 `T` 或者 `Dictionary<String,T>` 的值。
+使用不透明类型作为返回值的函数必须返回单一公用底层类型。返回的类型可以包含函数范型类型形参的一部分。举个例子，函数 `someFunction<T>()` 可以返回类型 `T` 或者 `Dictionary<String,T>` 的值。
 
 > 不透明类型语法
 
