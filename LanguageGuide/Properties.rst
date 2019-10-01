@@ -1131,9 +1131,9 @@ adjusted the new value for the property before storing that new value.
     -> print(someStructure.$someNumber)
     <- true
 
-Writing ``s.$someNumber`` accesses the wrapper's projected value.
+Writing ``someStructure.$someNumber`` accesses the wrapper's projected value.
 After storing a small number like four,
-the value of ``s.$someNumber`` is ``false``.
+the value of ``someStructure.$someNumber`` is ``false``.
 However,
 the projected value is ``true``
 after trying to store a number that's too large, like 55.
