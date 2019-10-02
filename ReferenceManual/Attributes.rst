@@ -818,16 +818,17 @@ For more information, see
 .. note::
 
    The argument to the ``objc`` attribute
-   can also change the symbol name in the compiled binary.
+   can also change the runtime name for that declaration,
+   which is used by Objective-C runtime functions like
+   `NSClassFromString <//apple_ref/swift/fake/NSClassFromString>`_
+   and when specifying class names in an app's Info.plist file.
    If you specify a name by passing an argument,
-   that name is used as the Objective-C name
-   and as the symbol name.
+   that name is used as the name in Objective-C code
+   and as the runtime name.
    If you omit the argument,
-   the Objective-C name matches the Swift name,
-   and the symbol name follows the normal Swift compiler convention
+   the name used in Objective-C matches the name in Swift code,
+   and the runtime name follows the normal Swift compiler convention
    of name mangling.
-   You can use the ``nm`` command line tool
-   to verify the name of a symbol in a compiled binary.
 
 .. _Attributes_objcMembers:
 
