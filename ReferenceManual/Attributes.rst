@@ -818,15 +818,16 @@ For more information, see
 .. note::
 
    The argument to the ``objc`` attribute
-   can also change the runtime name for that declaration,
-   which is used by Objective-C runtime functions like
-   `NSClassFromString <//apple_ref/swift/fake/NSClassFromString>`_
+   can also change the runtime name for that declaration.
+   You use the runtime name when calling functions
+   that interact with the Objective-C runtime,
+   like `NSClassFromString <//apple_ref/swift/fake/NSClassFromString>`_,
    and when specifying class names in an app's Info.plist file.
    If you specify a name by passing an argument,
    that name is used as the name in Objective-C code
    and as the runtime name.
    If you omit the argument,
-   the name used in Objective-C matches the name in Swift code,
+   the name used in Objective-C code matches the name in Swift code,
    and the runtime name follows the normal Swift compiler convention
    of name mangling.
 
