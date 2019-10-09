@@ -6,6 +6,8 @@
 
 另外，还可以定义属性观察器来监控属性值的变化，以此来触发自定义的操作。属性观察器可以添加到类本身定义的存储属性上，也可以添加到从父类继承的属性上。
 
+你也可以利用属性包装器来复用多个属性的 getter 和 setter 中的代码。
+
 ## 存储属性 {#stored-properties}
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
@@ -279,6 +281,27 @@ stepCounter.totalSteps = 896
 > 注意
 > 
 > 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
+
+## 属性包装器 {#property-wrappers}
+属性包装器在管理一个属性是如何存储的代码和定义一个属性的代码之间添加了一层分隔层。举例来说，如果你有一些提供线程安全性检查或者在数据库中存储它们基本数据的属性，你必须对每个属性都添加这段代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后通过把它应用到多个属性上的方式来复用那段管理代码。
+
+为了定义一个属性包装器，你需要创建一个定义 `wrappedValue` 属性的结构体、枚举或者类。在下面的代码中，`TwelveOrLess` 结构体确保它包装的值始终包含小于等于12的数字。如果你要求它存储一个更大的数字，它则会存储 12 这个数字。
+
+```
+@propertyWrapper
+struct TwelveOrLess {
+    private var number = 0
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, 12) }
+    }
+}
+```
+
+这个 setter 确保新值小于 12，且这个 getter 返回被存储的值。
+> 注意
+> 
+> 在上面例子中对 `number` 的声明把这个变量标记为 `private`，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，且不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./25_Access_Control.md)
 
 ## 全局变量和局部变量 {#global-and-local-variables}
 
