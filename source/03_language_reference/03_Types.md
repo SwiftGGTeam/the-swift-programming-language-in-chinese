@@ -189,7 +189,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 
 上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为形参 `first` 和 `second` 是非逃逸函数，它们不能够作为实参被传递到另一个非闭包函数。相对的, 标记“正确”的两个函数不会产生编译错误。这些函数调用不会违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的形参之一。
 
-如果你需要避免这个限制，标记其中一个形参为逃逸，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时转换其中一个非逃逸函数形参为逃逸函数。关于避免内存访问冲突，可以参阅 [内存安全](../chapter2/24_Memory_Safety.md)。
+如果你需要避免这个限制，标记其中一个形参为逃逸，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时转换其中一个非逃逸函数形参为逃逸函数。关于避免内存访问冲突，可以参阅 [内存安全](../chapter2/25_Memory_Safety.md)。
 
 > 函数类型语法
 > 
