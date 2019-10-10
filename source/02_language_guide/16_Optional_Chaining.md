@@ -156,7 +156,7 @@ class Address {
 
 ## 通过可选链式调用访问属性 {#accessing-properties-through-optional-chaining}
 
-正如 [使用可选链式调用代替强制展开](#optional_chaining_as_an_alternative_to_forced_unwrapping) 中所述，可以通过可选链式调用在一个可选值上访问它的属性，并判断访问是否成功。
+正如 [使用可选链式调用代替强制展开](#optional-chaining-as-an-alternative-to-forced-unwrapping) 中所述，可以通过可选链式调用在一个可选值上访问它的属性，并判断访问是否成功。
 
 使用前面定义过的类，创建一个 `Person` 实例，然后像之前一样，尝试访问 `numberOfRooms` 属性：
 
@@ -212,7 +212,7 @@ func printNumberOfRooms() {
 }
 ```
 
-这个方法没有返回值。然而，没有返回值的方法具有隐式的返回类型 `Void`，如 [无返回值函数](./06_Functions.md#functions_without_return_values) 中所述。这意味着没有返回值的方法也会返回 `()`，或者说空的元组。
+这个方法没有返回值。然而，没有返回值的方法具有隐式的返回类型 `Void`，如 [无返回值函数](./06_Functions.md#functions-without-return-values) 中所述。这意味着没有返回值的方法也会返回 `()`，或者说空的元组。
 
 如果在可选值上通过可选链式调用来调用这个方法，该方法的返回类型会是 `Void?`，而不是 `Void`，因为通过可选链式调用得到的返回值都是可选的。这样我们就可以使用 `if` 语句来判断能否成功调用 `printNumberOfRooms()` 方法，即使方法本身没有定义返回值。通过判断返回值是否为 `nil` 可以判断调用是否成功：
 
@@ -225,7 +225,7 @@ if john.residence?.printNumberOfRooms() != nil {
 // 打印“It was not possible to print the number of rooms.”
 ```
 
-同样的，可以据此判断通过可选链式调用为属性赋值是否成功。在上面的 [通过可选链式调用访问属性](#accessing_properties_through_optional_chaining) 的例子中，我们尝试给 `john.residence` 中的 `address` 属性赋值，即使 `residence` 为 `nil`。通过可选链式调用给属性赋值会返回 `Void?`，通过判断返回值是否为 `nil` 就可以知道赋值是否成功：
+同样的，可以据此判断通过可选链式调用为属性赋值是否成功。在上面的 [通过可选链式调用访问属性](#accessing-properties-through-optional-chaining) 的例子中，我们尝试给 `john.residence` 中的 `address` 属性赋值，即使 `residence` 为 `nil`。通过可选链式调用给属性赋值会返回 `Void?`，通过判断返回值是否为 `nil` 就可以知道赋值是否成功：
 
 ```swift
 if (john.residence?.address = someAddress) != nil {

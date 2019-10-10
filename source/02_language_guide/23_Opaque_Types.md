@@ -133,7 +133,7 @@ print(opaqueJoinedTriangles.draw())
 // *
 ```
 
-这个例子中 `opaqueJoinedTriangles` 的值和前文 [不透明类型解决的问题](#the-problem-that-opaque-types-solve) 中关于泛型的那个例子中的 `joinedTriangles` 完全一样。不过和前文不一样的是，`flip(_:)` 和 `join(_:_:)` 将对泛型参数的操作后的返回结果包装成了不透明类型，这样保证了在结果中泛型参数类型不可见。两个函数都是泛型函数，因为他们都依赖于泛型参数，而泛型参数又将 `FlippedShape` 和 `JoinedShape` 所需要的类型信息传递给它们。
+这个例子中 `opaqueJoinedTriangles` 的值和前文 [不透明类型解决的问题](#the-problem-that-opaque-types-solve) 中关于泛型的那个例子中的 `joinedTriangles` 完全一样。不过和前文不一样的是，`flip(-:)` 和 `join(-:-:)` 将对泛型参数的操作后的返回结果包装成了不透明类型，这样保证了在结果中泛型参数类型不可见。两个函数都是泛型函数，因为他们都依赖于泛型参数，而泛型参数又将 `FlippedShape` 和 `JoinedShape` 所需要的类型信息传递给它们。
 
 如果函数中有多个地方返回了不透明类型，那么所有可能的返回值都必须是同一类型。即使对于泛型函数，不透明返回类型可以使用泛型参数，但仍需保证返回类型唯一。比如，下面就是一个*非法*示例 —— 包含针对 `Square` 类型进行特殊处理的翻转函数。
 

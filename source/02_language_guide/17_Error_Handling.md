@@ -194,7 +194,7 @@ do {
 
 如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误，`nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
 
-### 将错误转换成可选值 {#converting_errors_to_optional_values}
+### 将错误转换成可选值 {#converting-errors-to-optional-values}
 
 可以使用 `try?` 通过将错误转换成一个可选值来处理错误。如果是在计算 `try?` 表达式时抛出错误，该表达式的结果就为 `nil`。例如，在下面的代码中，`x` 和 `y` 有着相同的数值和等价的含义：
 
@@ -225,7 +225,7 @@ func fetchData() -> Data? {
 }
 ```
 
-### 禁用错误传递 {#disabling_error_propagation}
+### 禁用错误传递 {#disabling-error-propagation}
 
 有时你知道某个 `throwing` 函数实际上在运行时是不会抛出错误的，在这种情况下，你可以在表达式前面写 `try!` 来禁用错误传递，这会把调用包装在一个不会有错误抛出的运行时断言中。如果真的抛出了错误，你会得到一个运行时错误。
 

@@ -16,7 +16,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 }
 ```
 
-这个函数使用输入输出参数（`inout`）来交换 `a` 和 `b` 的值，具体请参考 [输入输出参数](./06_Functions.md#in_out_parameters)。
+这个函数使用输入输出参数（`inout`）来交换 `a` 和 `b` 的值，具体请参考 [输入输出参数](./06_Functions.md#in-out-parameters)。
 
 `swapTwoInts(_:_:)` 函数将 `b` 的原始值换成了 `a`，将 `a` 的原始值换成了 `b`，你可以调用这个函数来交换两个 `Int` 类型变量：
 
@@ -226,7 +226,7 @@ if let topItem = stackOfStrings.topItem {
 // 打印“The top item on the stack is tres.”
 ```
 
-泛型类型的扩展，还可以包括类型扩展需要额外满足的条件，从而对类型添加新功能，这一部分将在[具有泛型 Where 子句的扩展](#extensions-with-a-generic-where-clause)中进行讨论。
+泛型类型的扩展，还可以包括类型扩展需要额外满足的条件，从而对类型添加新功能，这一部分将在 [具有泛型 Where 子句的扩展](#extensions-with-a-generic-where-clause) 中进行讨论。
 
 ## 类型约束 {#type-constraints}
 
@@ -410,7 +410,7 @@ struct Stack<Element>: Container {
 
 ### 扩展现有类型来指定关联类型 {#extending-an-existing-type-to-specify-an-associated-type}
 
-[在扩展添加协议一致性](./21_Protocols.md#adding_protocol_conformance_with_an_extension) 中描述了如何利用扩展让一个已存在的类型遵循一个协议，这包括使用了关联类型协议。
+[在扩展添加协议一致性](./21_Protocols.md#adding-protocol-conformance-with-an-extension) 中描述了如何利用扩展让一个已存在的类型遵循一个协议，这包括使用了关联类型协议。
 
 Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都符合 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循`Container` 协议，就可以扩展 Array，使其遵从 Container 协议。你可以通过一个空扩展来实现这点，正如通过扩展采纳协议中的描述：
 
@@ -446,7 +446,7 @@ protocol SuffixableContainer: Container {
 }
 ```
 
-在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `where` 分句，它在下面[具有泛型 Where 子句的扩展](#extensions-with-a-generic-where-clause)中有讨论。
+在这个协议里，`Suffix` 是一个关联类型，就像上边例子中 `Container` 的 `Item` 类型一样。`Suffix` 拥有两个约束：它必须遵循 `SuffixableContainer` 协议（就是当前定义的协议），以及它的 `Item` 类型必须是和容器里的 `Item` 类型相同。`Item` 的约束是一个 `where` 分句，它在下面 [具有泛型 Where 子句的扩展](#extensions-with-a-generic-where-clause) 中有讨论。
 
 这是上面 [泛型类型](#generic-types) 中 `Stack` 类型的扩展，它遵循了 SuffixableContainer 协议：
 
@@ -486,7 +486,7 @@ extension IntStack: SuffixableContainer {
 
 ## 泛型 Where 语句 {#where-clauses}
 
-[类型约束](#type_constraints) 让你能够为泛型函数、下标、类型的类型参数定义一些强制要求。
+[类型约束](#type-constraints) 让你能够为泛型函数、下标、类型的类型参数定义一些强制要求。
 
 对关联类型添加约束通常是非常有用的。你可以通过定义一个泛型 `where` 子句来实现。通过泛型 `where` 子句让关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 `where` 子句。
 

@@ -200,7 +200,7 @@ case let .qrCode(productCode):
 
 ## 原始值 {#raw-values}
 
-在 [关联值](#associated_values) 小节的条形码例子中，演示了如何声明存储不同类型关联值的枚举成员。作为关联值的替代选择，枚举成员可以被默认值（称为*原始值*）预填充，这些原始值的类型必须相同。
+在 [关联值](#associated-values) 小节的条形码例子中，演示了如何声明存储不同类型关联值的枚举成员。作为关联值的替代选择，枚举成员可以被默认值（称为*原始值*）预填充，这些原始值的类型必须相同。
 
 这是一个使用 ASCII 码作为原始值的枚举：
 
@@ -273,7 +273,7 @@ let possiblePlanet = Planet(rawValue: 7)
 
 > 注意
 > 
-> 原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见 [可失败构造器](../03_language_reference/05_Declarations.html#failable_initializers)
+> 原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见 [可失败构造器](../03_language_reference/05_Declarations.html#failable-initializers)。
 
 如果你试图寻找一个位置为 `11` 的行星，通过原始值构造器返回的可选 `Planet` 值将是 `nil`：
 

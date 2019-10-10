@@ -116,7 +116,7 @@ print(friendlyWelcome)
 // 输出“Bonjour!”
 ```
 
-`print(_:separator:terminator:)` 是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)` 将会输出内容到“console”面板上。`separator` 和 `terminator` 参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给 `terminator` 参数--例如，`print(someValue, terminator:"")` 。关于参数默认值的更多信息，请参考 [默认参数值](./06_Functions.md#default_parameter_values)。
+`print(_:separator:terminator:)` 是一个用来输出一个或多个值到适当输出区的全局函数。如果你用 Xcode，`print(_:separator:terminator:)` 将会输出内容到“console”面板上。`separator` 和 `terminator` 参数具有默认值，因此你调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给 `terminator` 参数--例如，`print(someValue, terminator:"")` 。关于参数默认值的更多信息，请参考 [默认参数值](./06_Functions.md#default-parameter-values)。
 
 Swift 用*字符串插值（string interpolation）*的方式把常量名或者变量名当做占位符加入到长字符串中，Swift 会用当前常量或变量的值替换这些占位符。将常量或变量名放入圆括号中，并在开括号前使用反斜杠将其转义：
 
@@ -127,7 +127,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 
 > 注意
 > 
-> 字符串插值所有可用的选项，请参考 [字符串插值](./03_Strings_and_Characters.md#string_interpolation)。
+> 字符串插值所有可用的选项，请参考 [字符串插值](./03_Strings_and_Characters.md#string-interpolation)。
 
 ## 注释 {#comments}
 
@@ -200,7 +200,7 @@ Swift 也提供了一个特殊的无符号类型 `UInt`，长度与当前平台�
 
 > 注意
 > 
-> 尽量不要使用 `UInt`，除非你真的需要存储一个和当前平台原生字长相同的无符号整数。除了这种情况，最好使用 `Int`，即使你要存储的值已知是非负的。统一使用 `Int` 可以提高代码的可复用性，避免不同类型数字之间的转换，并且匹配数字的类型推断，请参考 [类型安全和类型推断](#type_safety_and_type_inference)。
+> 尽量不要使用 `UInt`，除非你真的需要存储一个和当前平台原生字长相同的无符号整数。除了这种情况，最好使用 `Int`，即使你要存储的值已知是非负的。统一使用 `Int` 可以提高代码的可复用性，避免不同类型数字之间的转换，并且匹配数字的类型推断，请参考 [类型安全和类型推断](#type-safety-and-type-inference)。
 
 ## 浮点数 {#floating-point-numbers}
 
@@ -477,7 +477,7 @@ print("The status message is \(http200Status.description)")
 // 输出“The status message is OK”
 ```
 
-作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个 `(Int, String)` 元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考 [函数参数与返回值](./06_Functions.md#Function_Parameters_and_Return_Values)。
+作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个 `(Int, String)` 元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考 [函数参数与返回值](./06_Functions.md#Function-Parameters-and-Return-Values)。
 
 > 注意
 > 
@@ -609,7 +609,7 @@ if let firstNumber = Int("4") {
 
 > 注意
 > 
-> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中（`body`）中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考 [提前退出](./05_Control_Flow.md#early_exit)。
+> 在 `if` 条件语句中使用常量和变量来创建一个可选绑定，仅在 `if` 语句的句中（`body`）中才能获取到值。相反，在 `guard` 语句中使用常量和变量来创建一个可选绑定，仅在 `guard` 语句外且在语句后才能获取到值，请参考 [提前退出](./05_Control_Flow.md#early-exit)。
 
 ### 隐式解析可选类型 {#implicityly-unwrapped-optionals}
 
@@ -619,7 +619,7 @@ if let firstNumber = Int("4") {
 
 这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
 
-当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考 [无主引用以及隐式解析可选属性](./24_Automatic_Reference_Counting.md#unowned_references_and_implicitly_unwrapped_optional_properties)。
+当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考 [无主引用以及隐式解析可选属性](./24_Automatic_Reference_Counting.md#unowned-references-and-implicitly-unwrapped-optional-properties)。
 
 一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选类型 `String` 和隐式解析可选类型 `String` 之间的区别：
 

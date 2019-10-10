@@ -10,7 +10,7 @@
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
-可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default_initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14_Initialization.md#assigning_constant_properties_during_initialization) 一节。
+可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default-initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14-Initialization.md#assigning-constant-properties-during-initialization) 一节。
 
 下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的区间，且这个范围值在被创建后不能被修改。
 
@@ -239,7 +239,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 在父类初始化方法调用之后，在子类构造器中给父类的属性赋值时，会调用父类属性的 `willSet` 和 `didSet` 观察器。而在父类初始化方法调用之前，给子类的属性赋值时不会调用子类属性的观察器。
 > 
-> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer_delegation_for_value_types) 和 [类的构造器代理](./14_Initialization.md#initializer_delegation_for_class_types)。
+> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 和 [类的构造器代理](./14-Initialization.md#initializer-delegation-for-class-types)。
 
 下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
@@ -278,7 +278,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out_parameters)
+> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out-parameters)。
 
 ## 全局变量和局部变量 {#global-and-local-variables}
 
@@ -290,7 +290,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 全局的常量或变量都是延迟计算的，跟 [延时加载存储属性](#lazy_stored_properties) 相似，不同的地方在于，全局的常量或变量不需要标记 `lazy` 修饰符。
+> 全局的常量或变量都是延迟计算的，跟 [延时加载存储属性](#lazy-stored-properties) 相似，不同的地方在于，全局的常量或变量不需要标记 `lazy` 修饰符。
 > 
 > 局部范围的常量和变量从不延迟计算。
 

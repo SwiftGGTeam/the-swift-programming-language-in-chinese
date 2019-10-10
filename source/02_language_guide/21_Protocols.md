@@ -143,7 +143,7 @@ print("And another one: \(generator.random())")
 
 ## 异变方法要求 {#mutating-method-requirements}
 
-有时需要在方法中改变（或*异变*）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 [在实例方法中修改值类型](./11_Methods.md#modifying_value_types_from_within_instance_methods) 章节中有详细描述。
+有时需要在方法中改变（或*异变*）方法所属的实例。例如，在值类型（即结构体和枚举）的实例方法中，将 `mutating` 关键字作为方法的前缀，写在 `func` 关键字之前，表示可以在该方法中修改它所属的实例以及实例的任意属性的值。这一过程在 [在实例方法中修改值类型](./11_Methods.md#modifying-value-types-from-within-instance-methods) 章节中有详细描述。
 
 如果你在协议中定义了一个实例方法，该方法会改变遵循该协议的类型的实例，那么在定义协议时需要在方法前加 `mutating` 关键字。这使得结构体和枚举能够遵循此协议并满足此方法要求。
 
@@ -206,11 +206,11 @@ class SomeClass: SomeProtocol {
 
 使用 `required` 修饰符可以确保所有子类也必须提供此构造器实现，从而也能遵循协议。
 
-关于 `required` 构造器的更多内容，请参考 [必要构造器](./14_Initialization.md#required_initializers)。
+关于 `required` 构造器的更多内容，请参考 [必要构造器](./14_Initialization.md#required-initializers)。
 
 > 注意
 > 
-> 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见 [防止重写](./13_Inheritance.md#preventing_overrides)。
+> 如果类已经被标记为 `final`，那么不需要在协议构造器的实现中使用 `required` 修饰符，因为 `final` 类不能有子类。关于 `final` 修饰符的更多内容，请参见 [防止重写](./13_Inheritance.md#preventing-overrides)。
 
 如果一个子类重写了父类的指定构造器，并且该构造器满足了某个协议的要求，那么该构造器的实现需要同时标注 `required` 和 `override` 修饰符：
 
@@ -236,7 +236,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 ### 可失败构造器要求 {#failable-initializer-requirements}
 
-协议还可以为遵循协议的类型定义可失败构造器要求，详见 [可失败构造器](./14_Initialization.md#failable_initializers)。
+协议还可以为遵循协议的类型定义可失败构造器要求，详见 [可失败构造器](./14_Initialization.md#failable-initializers)。
 
 遵循协议的类型可以通过可失败构造器（`init?`）或非可失败构造器（`init`）来满足协议中定义的可失败构造器要求。协议中定义的非可失败构造器要求可以通过非可失败构造器（`init`）或隐式解包可失败构造器（`init!`）来满足。
 
@@ -312,7 +312,7 @@ protocol DiceGameDelegate {
 
 `DiceGame` 协议可以被任意涉及骰子的游戏遵循。
 
-`DiceGameDelegate` 协议可以被任意类型遵循，用来追踪 `DiceGame` 的游戏过程。为了防止强引用导致的循环引用问题，可以把协议声明为弱引用，更多相关的知识请看 [类实例之间的循环强引用](./24_Automatic_Reference_Counting.md#strong_reference_cycles_between_class_instances)，当协议标记为类专属可以使 `SnakesAndLadders` 类在声明协议时强制要使用弱引用。若要声明类专属的协议就必须继承于 `AnyObject` ，更多请看 [类专属的协议](#class_only_protocol)。
+`DiceGameDelegate` 协议可以被任意类型遵循，用来追踪 `DiceGame` 的游戏过程。为了防止强引用导致的循环引用问题，可以把协议声明为弱引用，更多相关的知识请看 [类实例之间的循环强引用](./24_Automatic_Reference_Counting.md#strong-reference-cycles-between-class-instances)，当协议标记为类专属可以使 `SnakesAndLadders` 类在声明协议时强制要使用弱引用。若要声明类专属的协议就必须继承于 `AnyObject` ，更多请看 [类专属的协议](#class-only-protocol)。
 
 如下所示，`SnakesAndLadders` 是 [控制流](./05_Control_Flow.md) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
 
@@ -455,7 +455,7 @@ print(game.textualDescription)
 
 ## 有条件地遵循协议 {#Conditionally-Conforming-to-a-Protocol}
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见 [泛型 Where 分句](./22_Generics.md##where_clauses)。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，见 [泛型 Where 分句](./22_Generics.md##where-clauses)。
 
 下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时就遵循 `TextRepresentable` 协议。
 
@@ -500,7 +500,7 @@ print(somethingTextRepresentable.textualDescription)
 
 ## 协议类型的集合 {#collections-of-protocol-types}
 
-协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.md##protocols_as_types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
+协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.md##protocols-as-types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
 
 ```swift
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
@@ -588,7 +588,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 
 > 注意
 > 
-> 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures_and_enumerations_are_value_types) 和 [类是引用类型](./09_Classes_and_Structures.md#classes_are_reference_types)。
+> 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures-and-enumerations-are-value-types) 和 [类是引用类型](./09-Classes-and-Structures.md#classes-are-reference-types)。
 
 ## 协议合成 {#protocol-composition}
 
@@ -883,7 +883,7 @@ extension PrettyTextRepresentable  {
 
 ### 为协议扩展添加限制条件 {#adding-constraints-to-protocol-extensions}
 
-在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如 [泛型 Where 子句](./22_Generics.md#where_clauses) 中所描述的。
+在扩展协议的时候，可以指定一些限制条件，只有遵循协议的类型满足这些限制条件时，才能获得协议扩展提供的默认实现。这些限制条件写在协议名之后，使用 `where` 子句来描述，正如 [泛型 Where 子句](./22_Generics.md#where-clauses) 中所描述的。
 
 例如，你可以扩展 `Collection` 协议，适用于集合中的元素遵循了 `Equatable` 协议的情况。通过限制集合元素遵循 `Equatable` 协议， 作为标准库的一部分， 你可以使用 `==` 和 `!=` 操作符来检查两个元素的等价性和非等价性。
 

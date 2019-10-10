@@ -210,7 +210,7 @@ unsignedOverflow = unsignedOverflow &- 1
 
 ![Art/overflowUnsignedSubtraction_2x.png](https://docs.swift.org/swift-book/_images/overflowUnsignedSubtraction_2x.png)
 
-溢出也会发生在有符号整型上。针对有符号整型的所有溢出加法或者减法运算都是按位运算的方式执行的，符号位也需要参与计算，正如 [按位左移、右移运算符](#bitwise_left_and_right_shift_operators) 所描述的。
+溢出也会发生在有符号整型上。针对有符号整型的所有溢出加法或者减法运算都是按位运算的方式执行的，符号位也需要参与计算，正如 [按位左移、右移运算符](#bitwise-left-and-right-shift-operators) 所描述的。
 
 ```Swift
 var signedOverflow = Int8.min
@@ -440,7 +440,7 @@ let afterDoubling = +++toBeDoubled
 
 ### 自定义中缀运算符的优先级 {#precedence-and-associativity-for-custom-infix-operators}
 
-每个自定义中缀运算符都属于某个优先级组。优先级组指定了这个运算符相对于其他中缀运算符的优先级和结合性。[优先级和结合性](#precedence_and_associativity) 中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
+每个自定义中缀运算符都属于某个优先级组。优先级组指定了这个运算符相对于其他中缀运算符的优先级和结合性。[优先级和结合性](#precedence-and-associativity) 中详细阐述了这两个特性是如何对中缀运算符的运算产生影响的。
 
 而没有明确放入某个优先级组的自定义中缀运算符将会被放到一个默认的优先级组内，其优先级高于三元运算符。
 
@@ -459,7 +459,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考 [运算符声明](./06_Declarations.md#operator_declaration)。
+这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考 [运算符声明](./06_Declarations.md#operator-declaration)。
 
 > 注意
 > 

@@ -64,7 +64,7 @@ numberOfLegs["bird"] = 2
 
 上例定义一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型被推断为 `[String: Int]`。字典创建完成后，该例子通过下标将 `String` 类型的键 `bird` 和 `Int` 类型的值 `2` 添加到字典中。
 
-更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.md#accessing_and_modifying_a_dictionary)。
+更多关于 `Dictionary` 下标的信息请参考 [读取和修改字典](./04_Collection_Types.md#accessing-and-modifying-a-dictionary)。
 
 > 注意
 > 
@@ -103,7 +103,7 @@ struct Matrix {
 }
 ```
 
-`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考 [创建一个带有默认值的数组](./04_Collection_Types.md#creating_an_array_with_a_default_value)。
+`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考 [创建一个带有默认值的数组](./04_Collection_Types.md#creating-an-array-with-a-default-value)。
 
 你可以通过传入合适的 `row` 和 `column` 数值来构造一个新的 `Matrix` 实例：
 

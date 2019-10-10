@@ -2,7 +2,7 @@
 
 Swift 语言存在两种类型：命名型类型和复合型类型。*命名型类型*是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义类 `MyClass` 的实例拥有类型 `MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
-那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../02_language_guide/20_Extensions.md) 和 [扩展声明](./06_Declarations.md#extension_declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
+那些通常被其它语言认为是基本或原始的数据型类型，比如表示数字、字符和字符串的类型，实际上就是命名型类型，这些类型在 Swift 标准库中是使用结构体来定义和实现的。因为它们是命名型类型，因此你可以按照 [扩展](../02_language_guide/20_Extensions.md) 和 [扩展声明](./06_Declarations.md#extension-declaration) 中讨论的那样，声明一个扩展来增加它们的行为以满足你程序的需求。
 
 *复合型类型*是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型 `(Int, (Int, Int))` 包含两个元素：第一个是命名型类型 `Int`，第二个是另一个复合型类型 `(Int, Int)`。
 
@@ -80,7 +80,7 @@ var someValue: ExampleModule.MyType
 > 
 
 #### type-identifier {#type-identifier}
-> *类型标识符* → [*类型名称*](#type-name) [*泛型实参子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型实参子句*](./09_Generic_Parameters_and_Arguments.md#generic_argument_clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
+> *类型标识符* → [*类型名称*](#type-name) [*泛型实参子句*](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub> | [*类型名称*](#type-name) [*泛型实参子句*](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub> **.** [*类型标识符*](#type-identifier)
 
 #### type-name {#type-name}
 > *类型名称* → [*标识符*](./02_Lexical_Structure.md#identifier)
@@ -88,7 +88,7 @@ var someValue: ExampleModule.MyType
 ## 元组类型 {#tuple-type-h}
 *元组类型*是使用括号括起来的零个或多个类型，类型间用逗号隔开。
 
-你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../02_language_guide/06_Functions.md#functions_with_multiple_return_values) 章节里有一个展示上述特性的例子。
+你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符紧跟一个冒号 `(:)` 组成。[函数和多返回值](../02_language_guide/06_Functions.md#functions-with-multiple-return-values) 章节里有一个展示上述特性的例子。
 
 当一个元组类型的元素有名字的时候，这个名字就是类型的一部分。
 
@@ -131,7 +131,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 
 函数类型可以拥有一个可变参数在*形参类型*中。从语法角度上讲，可变参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
 
-为了指定一个 `in-out` 参数，可以在形参类型前加 `inout` 前缀。但是你不可以对可变参数或返回值类型使用 `inout`。关于这种形参的详细讲解请参阅 [输入输出参数](../02_language_guide/06_Functions.md#in_out_parameters)。
+为了指定一个 `in-out` 参数，可以在形参类型前加 `inout` 前缀。但是你不可以对可变参数或返回值类型使用 `inout`。关于这种形参的详细讲解请参阅 [输入输出参数](../02_language_guide/06_Functions.md#in-out-parameters)。
 
 如果函数类型只有一个类型是元组类型的一个形参，那么元组类型在写函数类型的时候必须用圆括号括起来。比如说，`((Int, Int)) -> Void` 是接收一个元组 `(Int, Int)` 作为形参并且不返回任何值的函数类型。与此相对，不加括号的 `(Int, Int) -> Void` 是一个接收两个 `Int` 作为形参并且不返回任何值的函数类型。相似地，因为 `Void` 是空元组类型 `()` 的别名，函数类型 `(Void)-> Void` 与 `(()) -> ()` 是一样的 - 一个将空元组作为唯一实参的函数。但这些类型和 `() -> ()` 是不一样的 - 一个无实参的函数。
 
@@ -164,7 +164,7 @@ var operation: (Int, Int) -> Int                // 正确
 
 如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `(Int) -> (Int) -> Int` 可以理解为 `(Int) -> ((Int) -> Int)`，也就是说，该函数传入 `Int`，并返回另一个传入并返回 `Int` 的函数。
 
-函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing_functions_and_methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing_functions_and_methods)。
+函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing-functions-and-methods) 和 [重抛函数与方法](./06-Declarations.md#rethrowing-functions-and-methods)。
 
 ### 对非逃逸闭包的限制 {#Restrictions for Nonescaping Closures}
 当非逃逸闭包函数是形参时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
@@ -329,7 +329,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 可以使用可选链式调用对隐式解析可选表达式选择性地执行操作。如果值为 `nil`，就不会执行任何操作，因此也不会产生运行错误。
 
-关于隐式解析可选类型的更多细节，请参阅 [隐式解析可选类型](../02_language_guide/01_The_Basics.md#implicityly_unwrapped_optionals)。
+关于隐式解析可选类型的更多细节，请参阅 [隐式解析可选类型](../02_language_guide/01_The_Basics.md#implicityly-unwrapped-optionals)。
 
 > 隐式解析可选类型语法
 > 
@@ -490,12 +490,12 @@ print(type(of: z.f()))
 
 其它命名型类型只能继承自或采纳一系列协议。协议类型可以继承自任意数量的其他协议。当一个协议类型继承自其它协议时，其它协议中定义的要求会被整合在一起，然后从当前协议继承的任意类型必须符合所有这些条件。
 
-枚举定义中的类型继承子句可以是一系列协议，或者是指定单一的命名类型，此时枚举为其用例分配原始值。在枚举定义中使用类型继承子句来指定原始值类型的例子，请参阅 [原始值](../02_language_guide/08_Enumerations.md#raw_values)。
+枚举定义中的类型继承子句可以是一系列协议，或者是指定单一的命名类型，此时枚举为其用例分配原始值。在枚举定义中使用类型继承子句来指定原始值类型的例子，请参阅 [原始值](../02_language_guide/08_Enumerations.md#raw-values)。
 
 > 类型继承子句语法
 > 
 
-#### type_inheritance_clause {#type-inheritance-clause}
+#### type-inheritance-clause {#type-inheritance-clause}
 > *类型继承子句* → **:** [*类型继承列表*](#type-inheritance-list)
 > 
 

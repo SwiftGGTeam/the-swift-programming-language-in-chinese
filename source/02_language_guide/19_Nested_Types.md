@@ -63,7 +63,7 @@ struct BlackjackCard {
 
 `BlackjackCard` 结构体拥有两个属性——`rank` 与 `suit`。它也同样定义了一个计算型属性 `description`，`description` 属性用 `rank` 和 `suit` 中的内容来构建对扑克牌名字和数值的描述。该属性使用可选绑定来检查可选类型 `second` 是否有值，若有值，则在原有的描述中增加对 `second` 的描述。
 
-因为 `BlackjackCard` 是一个没有自定义构造器的结构体，在 [结构体的逐一成员构造器](./14_Initialization.md#memberwise_initializers_for_structure_types) 中可知，结构体有默认的成员构造器，所以你可以用默认的构造器去初始化新常量 `theAceOfSpades`：
+因为 `BlackjackCard` 是一个没有自定义构造器的结构体，在 [结构体的逐一成员构造器](./14_Initialization.md#memberwise-initializers-for-structure-types) 中可知，结构体有默认的成员构造器，所以你可以用默认的构造器去初始化新常量 `theAceOfSpades`：
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)

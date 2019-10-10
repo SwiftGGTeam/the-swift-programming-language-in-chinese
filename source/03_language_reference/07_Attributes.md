@@ -304,7 +304,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 如果你将 `objc` 特性应用于枚举，每一个枚举 case 都会以枚举名称和 case 名称组合的方式暴露在 Objective-C 代码中。实例名称的首字母大写。例如，在 Swift 枚举类型 `Planet` 中有一个名为 `Venus` 的 case，该 case 暴露在 Objective-C 代码中时叫做 `PlanetVenus`。
 
-`objc` 特性可以接受一个可选的特性参数，由标识符构成。当你想把 `objc` 所修饰的实体以一个不同的名字暴露给 Objective-C 时，你就可以使用这个特性参数。你可以使用这个参数来命名类、枚举类型、枚举 case、协议、方法、存取方法以及构造器。如果你要指定类、协议或枚举在 Objective-C 下的名称，请在名称上包含三个字母的前缀，就像 [Objective-C 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中的 [约定](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)描述的一样。下面的例子把 `ExampleClass` 中的 `enabled` 属性的取值方法暴露给 Objective-C，名字是 `isEnabled`，而不是它原来的属性名。
+`objc` 特性可以接受一个可选的特性参数，由标识符构成。当你想把 `objc` 所修饰的实体以一个不同的名字暴露给 Objective-C 时，你就可以使用这个特性参数。你可以使用这个参数来命名类、枚举类型、枚举 case、协议、方法、存取方法以及构造器。如果你要指定类、协议或枚举在 Objective-C 下的名称，请在名称上包含三个字母的前缀，就像 [Objective-C 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple-ref/doc/uid/TP40011210) 中的 [约定](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple-ref/doc/uid/TP40011210-CH10-SW1)描述的一样。下面的例子把 `ExampleClass` 中的 `enabled` 属性的取值方法暴露给 Objective-C，名字是 `isEnabled`，而不是它原来的属性名。
 
 ```swift
 class ExampleClass: NSObject {
@@ -387,7 +387,7 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
-### `requires_stored_property_inits` {#requires-stored-property-inits}
+### `requires-stored-property-inits` {#requires-stored-property-inits}
 
 该特性用于类声明，以要求类中所有存储属性提供默认值作为其定义的一部分。对于从中继承的任何类都推断出 `NSManagedObject` 特性。
 
@@ -409,7 +409,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 标记为 `inlinable` 特性的声明，在内联代码中可以隐式使用。虽然 `inlinable` 或 `usableFromInline` 可以用于 `internal` 声明，但这两者不能同时使用。
 
-### `warn_unqualified_access` {#warn-unqualified-access}
+### `warn-unqualified-access` {#warn-unqualified-access}
 
 该特性应用于顶级函数、实例方法、类方法或静态方法，以在没有前置限定符（例如模块名称、类型名称、实例变量或常量）的情况下使用该函数或方法时触发警告。使用该特性可以减少在同一作用域里访问的同名函数之间的歧义。
 
@@ -429,7 +429,7 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 
 ### `autoclosure` {#autoclosure}
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 `autoclosure` 特性的例子，请参阅 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 和 [函数类型](./03_Types.md#function_type)。
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 `autoclosure` 特性的例子，请参阅 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 和 [函数类型](./03-Types.md#function-type)。
 
 ### `convention` {#convention}
 
@@ -447,7 +447,7 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 
 ### `escaping` {#escaping}
 
-在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行。这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 特性声明的函数类型中访问属性和方法时需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../02_language_guide/07_Closures.md#escaping_closures)。
+在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行。这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 特性声明的函数类型中访问属性和方法时需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures)。
 
 ## Switch Case 特性 {#switch-case-attributes}
 
@@ -463,17 +463,17 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 > 
 ####  attribute {#attribute}
 > 
-> *特性* → @ [特性名](#attribute_name) [特性参数子句](#atribute_argument_clause)<sub>可选</sub>
+> *特性* → @ [特性名](#attribute-name) [特性参数子句](#atribute-argument-clause)<sub>可选</sub>
 > 
 > 
-####  attribute_name {#attribute-name}
+####  attribute-name {#attribute-name}
 > 
 > *特性名* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
 > 
-####  atribute_argument_clause {#atribute-argument-clause}
+####  atribute-argument-clause {#atribute-argument-clause}
 > 
-> *特性参数子句* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> *特性参数子句* → **(** [均衡令牌列表](#balanced-tokens)<sub>可选</sub> **)**
 > 
 > 
 ####  attributes {#attributes}
@@ -482,18 +482,18 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 > 
 >
 > 
-####  balanced_tokens {#balanced-tokens}
+####  balanced-tokens {#balanced-tokens}
 > 
-> *均衡令牌列表* → [均衡令牌](#balanced_token) [均衡令牌列表](#balanced_tokens)<sub>可选</sub>
+> *均衡令牌列表* → [均衡令牌](#balanced-token) [均衡令牌列表](#balanced-tokens)<sub>可选</sub>
 > 
 > 
-####  balanced_token {#balanced-token}
+####  balanced-token {#balanced-token}
 > 
-> *均衡令牌* → **(** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **)**
+> *均衡令牌* → **(** [均衡令牌列表](#balanced-tokens)<sub>可选</sub> **)**
 > 
-> *均衡令牌* → **\[** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **\]**
+> *均衡令牌* → **\[** [均衡令牌列表](#balanced-tokens)<sub>可选</sub> **\]**
 > 
-> *均衡令牌* → **{** [均衡令牌列表](#balanced_tokens)<sub>可选</sub> **}**
+> *均衡令牌* → **{** [均衡令牌列表](#balanced-tokens)<sub>可选</sub> **}**
 > 
 > *均衡令牌* → 任意标识符，关键字，字面量或运算符
 > 

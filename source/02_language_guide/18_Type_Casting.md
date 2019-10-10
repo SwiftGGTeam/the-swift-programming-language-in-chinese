@@ -4,7 +4,7 @@
 
 类型转换在 Swift 中使用 `is` 和 `as` 操作符实现。这两个操作符分别提供了一种简单达意的方式去检查值的类型或者转换它的类型。
 
-你也可以用它来检查一个类型是否遵循了某个协议，就像在 [检验协议遵循](./21_Protocols.md#checking_for_protocol_conformance) 部分讲述的一样。
+你也可以用它来检查一个类型是否遵循了某个协议，就像在 [检验协议遵循](./21_Protocols.md#checking-for-protocol-conformance) 部分讲述的一样。
 
 ## 为类型转换定义类层次 {#defining-a-class-hierarchy-for-type-casting}
 

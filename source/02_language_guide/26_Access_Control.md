@@ -80,7 +80,7 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅 [默认访问级别](#default_access_levels) 这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 的访问级别是 `internal`：
+除非专门指定，否则实体默认的访问级别为 `internal`，可以查阅 [默认访问级别](#default-access-levels) 这一节。这意味着在不使用修饰符显式声明访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 的访问级别是 `internal`：
 
 ```swift
 class SomeInternalClass {}   // 隐式 internal
@@ -142,7 +142,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 }
 ```
 
-我们可以看到，这个函数的返回类型是一个元组，该元组中包含两个自定义的类（可查阅 [自定义类型](#custom_types)）。其中一个类的访问级别是 `internal`，另一个的访问级别是 `private`，所以根据元组访问级别的原则，该元组的访问级别是 `private`（元组的访问级别与元组中访问级别最低的类型一致）。
+我们可以看到，这个函数的返回类型是一个元组，该元组中包含两个自定义的类（可查阅 [自定义类型](#custom-types)）。其中一个类的访问级别是 `internal`，另一个的访问级别是 `private`，所以根据元组访问级别的原则，该元组的访问级别是 `private`（元组的访问级别与元组中访问级别最低的类型一致）。
 
 因为该函数返回类型的访问级别是 `private`，所以你必须使用 `private` 修饰符来明确指定该函数的访问级别：
 
@@ -277,13 +277,13 @@ public struct TrackedString {
 
 ## 构造器 {#initializers}
 
-自定义构造器的访问级别可以低于或等于其所属类型的访问级别。唯一的例外是 [必要构造器](./14_Initialization.md#required_initializers)，它的访问级别必须和所属类型的访问级别相同。
+自定义构造器的访问级别可以低于或等于其所属类型的访问级别。唯一的例外是 [必要构造器](./14_Initialization.md#required-initializers)，它的访问级别必须和所属类型的访问级别相同。
 
 如同函数或方法的参数，构造器参数的访问级别也不能低于构造器本身的访问级别。
 
 ### 默认构造器 {#default-initializers}
 
-如 [默认构造器](./14_Initialization.md#default_initializers) 所述，Swift 会为结构体和类提供一个默认的无参数的构造器，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
+如 [默认构造器](./14_Initialization.md#default-initializers) 所述，Swift 会为结构体和类提供一个默认的无参数的构造器，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
 
 默认构造器的访问级别与所属类型的访问级别相同，除非类型的访问级别是 `public`。如果一个类型被指定为 `public` 级别，那么默认构造器的访问级别将为 `internal`。如果你希望一个 `public` 级别的类型也能在其他模块中使用这种无参数的默认构造器，你只能自己提供一个 `public` 访问级别的无参数构造器。
 

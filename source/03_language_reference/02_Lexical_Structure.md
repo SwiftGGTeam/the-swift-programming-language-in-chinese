@@ -212,7 +212,7 @@ true		    // 布尔值字面量
 > 
 > *二进制数字* → 数值 0 到 1
 > 
-> *二进制字面量字符* → [*二进制数字*](#binary-digit) | _
+> *二进制字面量字符* → [*二进制数字*](#binary-digit) | -
 >
 > 
 #### binary-literal-characters {#binary-literal-characters}
@@ -229,7 +229,7 @@ true		    // 布尔值字面量
 >
 > *八进字数字* → 数值 0 到 7
 >
-> *八进制字符* → [*八进字数字*](#octal-digit) | _
+> *八进制字符* → [*八进字数字*](#octal-digit) | -
 >
 > 
 #### octal-literal-characters {#octal-literal-characters}
@@ -251,7 +251,7 @@ true		    // 布尔值字面量
 >
 > *十进制数字组* → [*十进制数字*](#decimal-digit) [*十进制数字组*](#decimal-literal-characters)<sub>可选</sub>
 >
-> *十进制字符* → [*十进制数字*](#decimal-digit) | _
+> *十进制字符* → [*十进制数字*](#decimal-digit) | -
 >
 > *十进制字符组* → [*十进制字符*](#decimal-literal-characters) [*十进制字符组*](#decimal-literal-characters)<sub>可选</sub>
 > 
@@ -265,7 +265,7 @@ true		    // 布尔值字面量
 >
 > *十六进制数字* → 数值 0 到 9, 字母 a 到 f, 或 A 到 F
 >
-> *十六进制字符* → [*十六进制数字*](#hexadecimal-digit) | _
+> *十六进制字符* → [*十六进制数字*](#hexadecimal-digit) | -
 >
 > 
 #### hexadecimal-literal-characters {#hexadecimal-literal-characters}
@@ -545,7 +545,7 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 
 在某些特定的设计中 ，以 `<` 或 `>` 开头的运算符会被分离成两个或多个符号，剩余部分可能会以同样的方式被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中， 闭合字符 `>` 不会被视为单独的符号，因而不会被错误解析为 `>>` 运算符。
 
-要学习如何自定义运算符，请参考 [自定义运算符](../02_language_guide/27_Advanced_Operators.md#custom_operators) 和 [运算符声明](./06_Declarations.md#operator_declaration)。要学习如何重载运算符，请参考 [运算符函数](../02_language_guide/27_Advanced_Operators.md#operator_functions)。
+要学习如何自定义运算符，请参考 [自定义运算符](../02_language_guide/27_Advanced_Operators.md#custom-operators) 和 [运算符声明](./06-Declarations.md#operator-declaration)。要学习如何重载运算符，请参考 [运算符函数](../02-language-guide/27-Advanced-Operators.md#operator-functions)。
 
 > 运算符语法
 > 

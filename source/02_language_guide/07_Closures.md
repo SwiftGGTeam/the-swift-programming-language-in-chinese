@@ -6,7 +6,7 @@
 
 > 注意
 > 
-> 如果你不熟悉捕获（capturing）这个概念也不用担心，在 [值捕获](#capturing_values) 章节有它更详细的介绍。
+> 如果你不熟悉捕获（capturing）这个概念也不用担心，在 [值捕获](#capturing-values) 章节有它更详细的介绍。
 
 在 [函数](./06_Functions.md) 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采用如下三种形式之一：
 
@@ -23,7 +23,7 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 
 ## 闭包表达式 {#closure-expressions}
 
-[嵌套函数](./06_Functions.md#Nested_Functions) 作为复杂函数的一部分时，它自包含代码块式的定义和命名形式在使用上带来了方便。当然，编写未完整声明和没有函数名的类函数结构代码是很有用的，尤其是在编码中涉及到函数作为参数的那些方法时。
+[嵌套函数](./06_Functions.md#Nested-Functions) 作为复杂函数的一部分时，它自包含代码块式的定义和命名形式在使用上带来了方便。当然，编写未完整声明和没有函数名的类函数结构代码是很有用的，尤其是在编码中涉及到函数作为参数的那些方法时。
 
 *闭包表达式*是一种构建内联闭包的方式，它的语法简洁。在保证不丢失它语法清晰明了的同时，闭包表达式提供了几种优化的语法简写形式。下面通过对  `sorted(by:)` 这一个案例的多次迭代改进来展示这个过程，每次迭代都使用了更加简明的方式描述了相同功能。。
 
@@ -129,7 +129,7 @@ reversedNames = names.sorted(by: { $0 > $1 } )
 reversedNames = names.sorted(by: >)
 ```
 
-更多关于运算符方法的内容请查看 [运算符方法](./27_Advanced_Operators.md#operator_methods)。
+更多关于运算符方法的内容请查看 [运算符方法](./27_Advanced_Operators.md#operator-methods)。
 
 ## 尾随闭包 {#trailing-closures}
 
@@ -151,7 +151,7 @@ someFunctionThatTakesAClosure() {
 }
 ```
 
-在 [闭包表达式语法](#closure_expression_syntax) 上章节中的字符串排序闭包可以作为尾随包的形式改写在  `sorted(by:)` 方法圆括号的外面：
+在 [闭包表达式语法](#closure-expression-syntax) 上章节中的字符串排序闭包可以作为尾随包的形式改写在  `sorted(by:)` 方法圆括号的外面：
 
 ```swift
 reversedNames = names.sorted() { $0 > $1 }
@@ -233,7 +233,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
 }
 ```
 
-`makeIncrementer` 返回类型为 `() -> Int`。这意味着其返回的是一个*函数*，而非一个简单类型的值。该函数在每次调用时不接受参数，只返回一个 `Int` 类型的值。关于函数返回其他函数的内容，请查看 [函数类型作为返回类型](./06_Functions.md#function_types_as_return_types)。
+`makeIncrementer` 返回类型为 `() -> Int`。这意味着其返回的是一个*函数*，而非一个简单类型的值。该函数在每次调用时不接受参数，只返回一个 `Int` 类型的值。关于函数返回其他函数的内容，请查看 [函数类型作为返回类型](./06_Functions.md#function-types-as-return-types)。
 
 `makeIncrementer(forIncrement:)` 函数定义了一个初始值为 `0` 的整型变量 `runningTotal`，用来存储当前总计数值。该值为 `incrementer` 的返回值。
 
@@ -290,7 +290,7 @@ incrementByTen()
 
 > 注意
 > 
-> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考 [闭包引起的循环强引用](./24_Automatic_Reference_Counting.md#strong_reference_cycles_for_closures)。
+> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考 [闭包引起的循环强引用](./24_Automatic_Reference_Counting.md#strong-reference-cycles-for-closures)。
 
 ## 闭包是引用类型 {#closures-are-reference-types}
 
@@ -397,7 +397,7 @@ serve(customer: customersInLine.remove(at: 0))
 > 
 > 过度使用 `autoclosures` 会让你的代码变得难以理解。上下文和函数名应该能够清晰地表明求值是被延迟执行的。
 
-如果你想让一个自动闭包可以“逃逸”，则应该同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性的讲解见上面的 [逃逸闭包](#escaping_closures)。
+如果你想让一个自动闭包可以“逃逸”，则应该同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性的讲解见上面的 [逃逸闭包](#escaping-closures)。
 
 ```swift
 // customersInLine i= ["Barry", "Daniella"]
