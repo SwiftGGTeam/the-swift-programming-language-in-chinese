@@ -303,6 +303,51 @@ struct TwelveOrLess {
 > 
 > 在上面例子中对 `number` 的声明把这个变量标记为 `private`，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，且不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./25_Access_Control.md)
 
+通过在属性之前写上包装器的名称的方式，你可以把一个包装器应用到一个属性上去，这个包装器的名称作为这个属性的特性。这里有一个存储一个很小的矩形的结构体。这个结构体使用了同样的（相当随意的）由 `TwelveOrLess` 属性包装器实现的“小”的定义。
+
+```
+struct SmallRectangle {
+    @TwelveOrLess var height: Int
+    @TwelveOrLess var width: Int
+}
+
+var rectangle = SmallRectangle()
+print(rectangle.height)
+// 打印 "0"
+
+rectangle.height = 10
+print(rectangle.height)
+// 打印 "10"
+
+rectangle.height = 24
+print(rectangle.height)
+// 打印 "12"
+```
+
+`height` 和 `width` 属性从 `TwelveOrLess` 的定义中获取它们的初始值。该定义把 `TwelveOrLess.number` 设置为 0。把数字 10 存进 `rectangle.height` 中的操作能成功，是因为数字 10 很小。尝试存储 24 的操作实际上存储的值为 12，这是因为对于这个属性的 setter 的规则来说，24 太大了。
+
+当你把一个包装器应用到一个属性上时，编译器将合成为包装器提供存储空间的代码和提供通过包装程序访问属性的代码。（属性包装器负责存储被包装的值，所以没有为此合成的代码。）不利用这个特性语法的情况下，你可以写出使用属性包装器行为的代码。举例来说，这是先前代码清单中的 `SmallRectangle` 的一个版本。这个版本将其属性明确地包装在 `TwelveOrLess` 结构体中，而不是把 `@TwelveOrLess` 作为特性写下来：
+
+```
+struct SmallRectangle {
+    private var _height = TwelveOrLess()
+    private var _width = TwelveOrLess()
+    var height: Int {
+        get { return _height.wrappedValue }
+        set { _height.wrappedValue = newValue }
+    }
+    var width: Int {
+        get { return _width.wrappedValue }
+        set { _width.wrappedValue = newValue }
+    }
+}
+```
+
+`_height` 和 `_width` 属性存着这个属性包装器的一个实例，即 `TwelveOrLess`。`height` 和 `width` 的 getter 和 setter 把对 `wrappedValue` 属性的访问包装起来。
+
+### 设置被包装属性的初始值 {#setting-initial-values-for-wrapped-properties}
+上面例子中的代码通过在 `TwelveOrLess` 的定义中赋予 `number` 一个初始值来设置被包装属性的初始值。使用这个属性包装器的代码没法为被 `TwelveOrLess` 包装的属性指定其他初始值。举例来说，`SmallRectangle` 的定义没法给 `height` 或者 `width` 一个初始值。为了支持设定一个初始值或者其他自定义效果，属性包装器需要添加一个
+
 ## 全局变量和局部变量 {#global-and-local-variables}
 
 计算属性和观察属性所描述的功能也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
