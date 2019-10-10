@@ -278,7 +278,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
+> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out_parameters)
 
 ## 全局变量和局部变量 {#global-and-local-variables}
 

@@ -429,7 +429,7 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 
 ### `autoclosure` {#autoclosure}
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 `autoclosure` 特性的例子，请参阅 [自动闭包](../chapter2/07_Closures.md#autoclosures) 和 [函数类型](./03_Types.md#function_type)。
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 `autoclosure` 特性的例子，请参阅 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 和 [函数类型](./03_Types.md#function_type)。
 
 ### `convention` {#convention}
 
@@ -447,7 +447,7 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 
 ### `escaping` {#escaping}
 
-在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行。这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 特性声明的函数类型中访问属性和方法时需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../chapter2/07_Closures.md#escaping_closures)。
+在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行。这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 特性声明的函数类型中访问属性和方法时需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../02_language_guide/07_Closures.md#escaping_closures)。
 
 ## Switch Case 特性 {#switch-case-attributes}
 

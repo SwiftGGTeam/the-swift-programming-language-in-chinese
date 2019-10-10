@@ -86,7 +86,7 @@ while condition {
 
 由于会在执行循环体中的语句前判断条件的值，因此循环体中的语句可能会被执行若干次，也可能一次也不会被执行。
 
-条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../02_language_guide/01_The_Basics.md#optional_binding)。
 
 > while 语句语法
 > 
@@ -132,7 +132,7 @@ repeat {
 
 由于条件的值是在循环体中的语句执行后才进行判断，因此循环体中的语句至少会被执行一次。
 
-条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../02_language_guide/01_The_Basics.md#optional_binding)。
 
 > repeat-while 语句语法
 > 
@@ -194,7 +194,7 @@ if condition 1 {
 }
 ```
 
-`if` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+`if` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件语句也可以使用可选绑定，请参阅 [可选绑定](../02_language_guide/01_The_Basics.md#optional_binding)。
 
 > if 语句语法
 > 
@@ -219,7 +219,7 @@ guard condition else {
 }
 ```
 
-`guard` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../chapter2/01_The_Basics.md#optional_binding)。
+`guard` 语句中条件的结果必须是 Bool 类型或者 Bool 的桥接类型。另外，条件也可以是一条可选绑定，请参阅 [可选绑定](../02_language_guide/01_The_Basics.md#optional_binding)。
 
 在 `guard` 语句中进行可选绑定的任何常量或者变量，其可用范围从声明开始直到作用域结束。
 
@@ -261,7 +261,7 @@ default:
 
 `switch` 语句会先计算*控制表达式*的值，然后与每一个 `case` 的模式进行匹配。如果匹配成功，程序将会执行对应的 `case` 中的语句。另外，每一个 `case` 的作用域都不能为空，也就是说在每一个 `case` 的冒号（`:`）后面必须至少有一条语句。如果你不想在匹配到的 `case` 中执行代码，只需在该 `case` 中写一条 `break` 语句即可。
 
-可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章中的 [Switch](../chapter2/05_Control_Flow.md#switch)。
+可以用作控制表达式的值是十分灵活的。除了标量类型外，如 `Int`、`Character`，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类型的实例和可选类型。控制表达式的值还可以用来匹配枚举类型中的成员值或是检查该值是否包含在指定的 `Range` 中。关于如何在 `switch` 语句中使用这些类型，请参阅 [控制流](../02_language_guide/05_Control_Flow.md) 一章中的 [Switch](../02_language_guide/05_Control_Flow.md#switch)。
 
 每个 `case` 的模式后面可以有一个 `where` 子句。`where` 子句由 `where` 关键字紧跟一个提供额外条件的表达式组成。因此，当且仅当控制表达式匹配一个 `case` 的模式且 `where` 子句的表达式为真时，`case` 中的语句才会被执行。在下面的例子中，控制表达式只会匹配包含两个相等元素的元组，例如 `(1, 1)`：
 
@@ -369,7 +369,7 @@ case .suppressed:
 
 标签的作用域在该标签所标记的语句内。可以嵌套使用带标签的语句，但标签名必须唯一。
 
-关于使用带标签的语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章中的 [带标签的语句](../chapter2/05_Control_Flow.md#labeled_statements)。
+关于使用带标签的语句的例子，请参阅 [控制流](../02_language_guide/05_Control_Flow.md) 一章中的 [带标签的语句](../02_language_guide/05_Control_Flow.md#labeled_statements)。
 
 > 带标签的语句语法
 > 
@@ -426,7 +426,7 @@ case .suppressed:
 
 无论哪种情况，控制权都会被转移给被终止的控制流语句后面的第一行语句。
 
-关于使用 `break` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章的 [Break](../chapter2/05_Control_Flow.md#break) 和 [带标签的语句](../chapter2/05_Control_Flow.md#labeled_statements)。
+关于使用 `break` 语句的例子，请参阅 [控制流](../02_language_guide/05_Control_Flow.md) 一章的 [Break](../02_language_guide/05_Control_Flow.md#break) 和 [带标签的语句](../02_language_guide/05_Control_Flow.md#labeled_statements)。
 
 > break 语句语法
 > 
@@ -452,7 +452,7 @@ case .suppressed:
 
 在 `for` 语句中，`continue` 语句执行后，增量表达式还是会被计算，这是因为每次循环体执行完毕后，增量表达式都会被计算。
 
-关于使用 `continue` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章的 [Continue](../chapter2/05_Control_Flow.md#continue) 和 [带标签的语句](../chapter2/05_Control_Flow.md#labeled_statements)。
+关于使用 `continue` 语句的例子，请参阅 [控制流](../02_language_guide/05_Control_Flow.md) 一章的 [Continue](../02_language_guide/05_Control_Flow.md#continue) 和 [带标签的语句](../02_language_guide/05_Control_Flow.md#labeled_statements)。
 
 > continue 语句语法
 > 
@@ -467,7 +467,7 @@ case .suppressed:
 
 `fallthrough` 语句可出现在 `switch` 语句中的任意 `case` 中，但不能出现在最后一个 `case` 中。同时，`fallthrough` 语句也不能把控制权转移到使用了值绑定的 `case`。
 
-关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅 [控制流](../chapter2/05_Control_Flow.md) 一章的 [控制转移语句](../chapter2/05_Control_Flow.md#control_transfer_statements)。
+关于在 `switch` 语句中使用 `fallthrough` 语句的例子，请参阅 [控制流](../02_language_guide/05_Control_Flow.md) 一章的 [控制转移语句](../02_language_guide/05_Control_Flow.md#control_transfer_statements)。
 
 > fallthrough 语句语法
 > 
@@ -517,7 +517,7 @@ case .suppressed:
 
 表达式的结果必须符合 `ErrorType` 协议。
 
-关于如何使用 `throw` 语句的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.md) 一章的 [用 throwing 函数传递错误](../chapter2/17_Error_Handling.md#propagating_errors_using_throwing_functions)。
+关于如何使用 `throw` 语句的例子，请参阅 [错误处理](../02_language_guide/17_Error_Handling.md) 一章的 [用 throwing 函数传递错误](../02_language_guide/17_Error_Handling.md#propagating_errors_using_throwing_functions)。
 
 > throw 语句语法
 > 
@@ -586,7 +586,7 @@ do {
 
 为了确保错误已经被处理，可以让 `catch` 子句使用匹配所有错误的模式，如通配符模式（`_`）。如果一个 `catch` 子句不指定一种具体模式，`catch` 子句会匹配任何错误，并绑定到名为 `error` 的局部常量。有关在 `catch` 子句中使用模式的更多信息，请参阅 [模式](./08_Patterns.md)。
 
-关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅 [错误处理](../chapter2/17_Error_Handling.md#handling_errors)。
+关于如何在 `do` 语句中使用一系列 `catch` 子句的例子，请参阅 [错误处理](../02_language_guide/17_Error_Handling.md#handling_errors)。
 
 > do 语句语法
 > 
