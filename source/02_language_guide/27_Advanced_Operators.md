@@ -414,7 +414,7 @@ if twoThreeFour == anotherTwoThreeFour {
 
 ## 自定义运算符 {#custom-operators}
 
-除了实现标准运算符，在 Swift 中还可以声明和实现*自定义运算符*。可以用来自定义运算符的字符列表请参考 [运算符](../chapter3/02_Lexical_Structure.html#operators)。
+除了实现标准运算符，在 Swift 中还可以声明和实现*自定义运算符*。可以用来自定义运算符的字符列表请参考 [运算符](../03_language_reference/02_Lexical_Structure.html#operators)。
 
 新的运算符要使用 `operator` 关键字在全局作用域内进行定义，同时还要指定 `prefix`、`infix` 或者 `postfix` 修饰符：
 

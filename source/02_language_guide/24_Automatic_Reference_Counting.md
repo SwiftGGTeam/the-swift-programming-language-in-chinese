@@ -558,4 +558,4 @@ paragraph = nil
 // 打印“p is being deinitialized”
 ```
 
-你可以查看 [捕获列表](../chapter3/04_Expressions.html) 章节，获取更多关于捕获列表的信息。
+你可以查看 [捕获列表](../03_language_reference/04_Expressions.html) 章节，获取更多关于捕获列表的信息。

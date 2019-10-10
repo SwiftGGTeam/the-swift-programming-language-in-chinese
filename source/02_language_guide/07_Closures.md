@@ -129,7 +129,7 @@ reversedNames = names.sorted(by: { $0 > $1 } )
 reversedNames = names.sorted(by: >)
 ```
 
-更多关于运算符方法的内容请查看 [运算符方法](./26_Advanced_Operators.md#operator_methods)。
+更多关于运算符方法的内容请查看 [运算符方法](./27_Advanced_Operators.md#operator_methods)。
 
 ## 尾随闭包 {#trailing-closures}
 
@@ -290,7 +290,7 @@ incrementByTen()
 
 > 注意
 > 
-> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考 [闭包引起的循环强引用](./23_Automatic_Reference_Counting.md#strong_reference_cycles_for_closures)。
+> 如果你将闭包赋值给一个类实例的属性，并且该闭包通过访问该实例或其成员而捕获了该实例，你将在闭包和该实例间创建一个循环强引用。Swift 使用捕获列表来打破这种循环强引用。更多信息，请参考 [闭包引起的循环强引用](./24_Automatic_Reference_Counting.md#strong_reference_cycles_for_closures)。
 
 ## 闭包是引用类型 {#closures-are-reference-types}
 

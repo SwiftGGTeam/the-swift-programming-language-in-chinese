@@ -312,7 +312,7 @@ protocol DiceGameDelegate {
 
 `DiceGame` 协议可以被任意涉及骰子的游戏遵循。
 
-`DiceGameDelegate` 协议可以被任意类型遵循，用来追踪 `DiceGame` 的游戏过程。为了防止强引用导致的循环引用问题，可以把协议声明为弱引用，更多相关的知识请看 [类实例之间的循环强引用](./23_Automatic_Reference_Counting.md#strong_reference_cycles_between_class_instances)，当协议标记为类专属可以使 `SnakesAndLadders` 类在声明协议时强制要使用弱引用。若要声明类专属的协议就必须继承于 `AnyObject` ，更多请看 [类专属的协议](#class_only_protocol)。
+`DiceGameDelegate` 协议可以被任意类型遵循，用来追踪 `DiceGame` 的游戏过程。为了防止强引用导致的循环引用问题，可以把协议声明为弱引用，更多相关的知识请看 [类实例之间的循环强引用](./24_Automatic_Reference_Counting.md#strong_reference_cycles_between_class_instances)，当协议标记为类专属可以使 `SnakesAndLadders` 类在声明协议时强制要使用弱引用。若要声明类专属的协议就必须继承于 `AnyObject` ，更多请看 [类专属的协议](#class_only_protocol)。
 
 如下所示，`SnakesAndLadders` 是 [控制流](./05_Control_Flow.md) 章节引入的蛇梯棋游戏的新版本。新版本使用 `Dice` 实例作为骰子，并且实现了 `DiceGame` 和 `DiceGameDelegate` 协议，后者用来记录游戏的过程：
 
