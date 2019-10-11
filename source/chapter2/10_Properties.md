@@ -346,11 +346,88 @@ struct SmallRectangle {
 `_height` 和 `_width` 属性存着这个属性包装器的一个实例，即 `TwelveOrLess`。`height` 和 `width` 的 getter 和 setter 把对 `wrappedValue` 属性的访问包装起来。
 
 ### 设置被包装属性的初始值 {#setting-initial-values-for-wrapped-properties}
-上面例子中的代码通过在 `TwelveOrLess` 的定义中赋予 `number` 一个初始值来设置被包装属性的初始值。使用这个属性包装器的代码没法为被 `TwelveOrLess` 包装的属性指定其他初始值。举例来说，`SmallRectangle` 的定义没法给 `height` 或者 `width` 一个初始值。为了支持设定一个初始值或者其他自定义效果，属性包装器需要添加一个
+上面例子中的代码通过在 `TwelveOrLess` 的定义中赋予 `number` 一个初始值来设置被包装属性的初始值。使用这个属性包装器的代码没法为被 `TwelveOrLess` 包装的属性指定其他初始值。举例来说，`SmallRectangle` 的定义没法给 `height` 或者 `width` 一个初始值。为了支持设定一个初始值或者其他自定义操作，属性包装器需要添加一个构造器。这是 `TwelveOrLess` 的扩展版本，称为 `SmallNumber`。`SmallNumber` 定义了能设置被包装的值和最大值的构造器：
+
+
+```
+@propertyWrapper
+struct SmallNumber {
+    private var maximum: Int
+    private var number: Int
+
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, maximum) }
+    }
+
+    init() {
+        maximum = 12
+        number = 0
+    }
+    init(wrappedValue: Int) {
+        maximum = 12
+        number = min(wrappedValue, maximum)
+    }
+    init(wrappedValue: Int, maximum: Int) {
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+    }
+}
+```
+
+`SmallNumber` 的定义包括三个构造器——init()、init(wrappedValue:) 和 init(wrappedValue:maximum:)——下面的示例使用这三个构造器来设置被包装值和最大值。有关构造过程和构造器语法的更多信息，请参考 [构造过程](./14_Initialization.md)。
+
+当你把包装器应用于属性且你没有设定初始值时，Swift 使用 `init()` 构造器来设置包装器。举个例子：
+
+```
+struct ZeroRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+}
+
+var zeroRectangle = ZeroRectangle()
+print(zeroRectangle.height, zeroRectangle.width)
+// 打印 "0 0"
+```
+
+调用 `SmallNumber()` 来创建包装 `height` 和 `width` 的 `SmallNumber` 的实例。构造器内部的代码使用默认值 0 和 12 设置初始的被包装值和初始的最大值。像之前使用在 `SmallRectangle` 中使用 `TwelveOrLess` 的例子，这个属性包装器仍然提供所有的初始值。与这个例子不同的是，`SmallNumber` 也支持把编写这些初始值作为声明属性的一部分。
+
+当你为属性指定初始值时，Swift 使用 `init(wrappedValue:)` 构造器来设置包装器。举个例子：
+
+```
+struct UnitRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber var width: Int = 1
+}
+
+var unitRectangle = UnitRectangle()
+print(unitRectangle.height, unitRectangle.width)
+// 打印 "1 1"
+```
+
+当你对一个被包装的属性写下 `= 1` 时，这被转换为调用 `init(wrappedValue:)` 构造器。调用 `SmallNumber(wrappedValue: 1)`来创建包装 `height` 和 `width` 的 `SmallNumber` 的实例。构造器使用此处指定的被包装值，且使用的默认最大值为 12。
+
+当你在自定义特性后面把实参写在括号里时，Swift 使用接受这些实参的构造器来设置包装器。举例来说，如果你提供初始值和最大值，Swift 使用 `init(wrappedValue:maximum:)` 构造器:
+
+```
+struct NarrowRectangle {
+    @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+}
+
+var narrowRectangle = NarrowRectangle()
+print(narrowRectangle.height, narrowRectangle.width)
+// 打印 "2 3"
+
+narrowRectangle.height = 100
+narrowRectangle.width = 100
+print(narrowRectangle.height, narrowRectangle.width)
+// 打印 "5 4"
+```
+
 
 ## 全局变量和局部变量 {#global-and-local-variables}
-
-计算属性和观察属性所描述的功能也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
+计算属性和观察属性所描述的功能也可以用于全局变量和局部变量。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
 
 前面章节提到的全局或局部变量都属于*存储型变量*，跟存储属性类似，它为特定类型的值提供存储空间，并允许读取和写入。
 
