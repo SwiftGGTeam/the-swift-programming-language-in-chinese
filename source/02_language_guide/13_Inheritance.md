@@ -184,7 +184,7 @@ print("Car: \(car.description)")
 
 #### 重写属性观察器 {#overriding-property-observers}
 
-你可以通过重写属性为一个继承来的属性添加属性观察器。这样一来，无论被继承属性原本是如何实现的，当其属性值发生改变时，你就会被通知到。关于属性观察器的更多内容，请看 [属性观察器](../02_language_guide/10_Properties.html#property-observers)。
+你可以通过重写属性为一个继承来的属性添加属性观察器。这样一来，无论被继承属性原本是如何实现的，当其属性值发生改变时，你就会被通知到。关于属性观察器的更多内容，请看 [属性观察器](../02_language_guide/10_Properties.md#property-observers)。
 
 > 注意
 > 
