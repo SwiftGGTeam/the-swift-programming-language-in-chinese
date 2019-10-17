@@ -909,7 +909,7 @@ must have at least one throwing function parameter.
 
 A rethrowing function or method can contain a ``throw`` statement
 only inside a ``catch`` clause.
-This lets you call the throwing function inside a ``do``-``catch`` block
+This lets you call the throwing function inside a ``do``-``catch`` statement
 and handle errors in the ``catch`` clause by throwing a different error.
 In addition,
 the ``catch`` clause must handle
