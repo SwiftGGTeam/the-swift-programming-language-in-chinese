@@ -425,6 +425,100 @@ print(narrowRectangle.height, narrowRectangle.width)
 // 打印 "5 4"
 ```
 
+调用 `SmallNumber(wrappedValue: 2, maximum: 5)` 来创建包装 `height` 的 `SmallNumber` 的一个实例。调用 `SmallNumber(wrappedValue: 3, maximum: 4)` 来创建包装 `width` 的 `SmallNumber` 的一个实例。
+
+通过将实参包含到属性包装器中，你可以设置包装器的初始状态，或者在创建包装器时传递其他的选项。这种语法是使用属性包装器最通用的方法。你可以为这个属性提供任何所需的实参，且它们将被传递给构造器。
+
+当包含属性包装器实参时，你也可以使用赋值来指定初始值。Swift 将赋值视为wrappedValue 参数，且使用接受被包含的实参的构造器。举个例子：
+
+```
+struct MixedRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber(maximum: 9) var width: Int = 2
+}
+
+var mixedRectangle = MixedRectangle()
+print(mixedRectangle.height)
+// 打印 "1"
+
+mixedRectangle.height = 20
+print(mixedRectangle.height)
+// 打印 "12"
+```
+
+调用 `SmallNumber(wrappedValue: 1)` 来创建包装 `height` 的 `SmallNumber` 的一个实例，这个实例使用默认最大值 12。调用 `SmallNumber(wrappedValue: 2, maximum: 9)` 来创建包装 `width` 的 `SmallNumber` 的一个实例。
+
+### 待定 {#projecting-a-value-from-a-property-wrapper}
+除了被包装的值，属性包装器可以通过定义 projected value 来暴露出其他功能。举个例子，管理对数据库的访问的属性包装器可以在它的 projectedValue 上暴露出 `flushDatabaseConnection()` 方法。除了以货币符号（$）开头，projectedValue 的名称和被包装的值是一样的。因为你的代码不能够定义以 $ 开头的属性，所以 projectedValue 从不与你定义的属性有冲突。
+
+在之前 `SmallNumber` 的例子中，如果你尝试把这个属性设置为一个很大很大的数值，属性包装器会在存储这个数值之前调整这个数值。以下的代码把 projectedValue 添加到 `SmallNumber` 结构体中来追踪在存储新值之前属性包装器是否为这个属性调整了新值。
+
+
+```
+@propertyWrapper
+struct SmallNumber {
+    private var number = 0
+    var projectedValue = false
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue > 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+}
+struct SomeStructure {
+    @SmallNumber var someNumber: Int
+}
+var someStructure = SomeStructure()
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+// 打印 "false"
+
+someStructure.someNumber = 55
+print(someStructure.$someNumber)
+// 打印 "true"
+```
+
+写下 `s.$someNumber` 即可访问包装器的 wrappedValue。在存储一个比较小的数值，如 4 ，`s.$someNumber` 的值为 `false`。但是，在尝试存储一个较大的数值，如 55 ，projectedValue 的值变为 `true`。
+
+属性包装器可以返回任何类型的值作为它的 projectedValue。在这个例子里，属性包装器暴露出一条信息：那个数值是否被调整过，所以它暴露出布尔型值来作为它的 projectedValue。需要暴露出更多信息的包装器可以返回其他数据类型的实例，或者可以返回自身来暴露出包装器的实例，并把其作为它的 projectedValue。
+
+当从类型的一部分代码中访问 projectedValue，例如属性 getter 或者实例方法，你可以在属性名称之前省略 `self.`，就像访问其他属性一样。以下示例中的代码将包装器的 `height` 和 `width` 的 projectedValue 称为 `$height` 和 `$width`：
+
+```
+enum Size {
+    case small, large
+}
+
+struct SizedRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+
+    mutating func resize(to size: Size) -> Bool {
+        switch size {
+        case .small:
+            height = 10
+            width = 20
+        case .large:
+            height = 100
+            width = 100
+        }
+        return $height || $width
+    }
+}
+```
+
+因为属性包装器语法只是具有 getter 和 setter 的属性的语法糖，所以访问 `height` 和 `width` 的行为与访问任何其他属性的行为相同。举个例子，`resize(to:)` 中的代码使用它们的属性包装器来访问 `height` 和 `width`。如果调用 `resize(to: .large)`，`.large` 的 switch case 分支语句把矩形的高度和宽度设置为 100。属性包装器防止这些属性的值大于 12，且把 projectedValue 设置成为 `true` 来记下它调整过这些值的事实。在 `resize(to:)` 的最后，返回语句检查 `$height` 和 `$width` 来确认是否属性包装器调整过 `height` 或 `width`。
+
+
+
 
 ## 全局变量和局部变量 {#global-and-local-variables}
 计算属性和观察属性所描述的功能也可以用于全局变量和局部变量。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
