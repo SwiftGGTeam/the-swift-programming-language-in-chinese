@@ -61,7 +61,7 @@ let someValue = 42
 > 
 
 #### identifier-pattern {#identifier-pattern}
-> *标识符模式* → [*标识符*](./02_Lexical_Structure.md#identifier)
+> *标识符模式* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
 
 ## 值绑定模式（Value-Binding Pattern） {#value-binding-pattern}
@@ -85,7 +85,7 @@ case let (x, y):
 > 
 
 #### value-binding-pattern {#value-binding-pattern}
-> *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)
+> *值绑定模式* → **var** [模式](#pattern) | **let** [模式](#pattern)
 > 
 
 ## 元组模式 {#tuple-pattern}
@@ -115,15 +115,15 @@ let (a): Int = 2 // a: Int = 2
 > 
 
 #### tuple-pattern {#tuple-pattern}
-> *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**
+> *元组模式* → **(** [元组模式元素列表](#tuple-pattern-element-list)<sub>可选</sub> **)**
 > 
 
 #### tuple-pattern-element-list {#tuple-pattern-element-list}
-> *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element)  **,** [*元组模式元素列表*](#tuple-pattern-element-list)
+> *元组模式元素列表* → [元组模式元素](#tuple-pattern-element) | [元组模式元素](#tuple-pattern-element)  **,** [元组模式元素列表](#tuple-pattern-element-list)
 > 
 
 #### tuple-pattern-element {#tuple-pattern-element}
-> *元组模式元素* → [*模式*](#pattern)
+> *元组模式元素* → [模式](#pattern)
 > 
 
 ## 枚举用例模式（Enumeration Case Pattern） {#enumeration-case-pattern}
@@ -135,7 +135,7 @@ let (a): Int = 2 // a: Int = 2
 > 
 
 #### enum-case-pattern {#enum-case-pattern}
-> *枚举用例模式* → [*类型标识*](./03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](./06-Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
+> *枚举用例模式* → [类型标识](./03_Types.md#type-identifier)<sub>可选</sub> **.** [枚举用例名](./06-Declarations.md#enum-case-name) [元组模式](#tuple-pattern)<sub>可选</sub>
 > 
 
 ## 可选模式（Optional Pattern） {#optional-pattern}
@@ -173,7 +173,7 @@ for case let number? in arrayOfOptinalInts {
 > 
 
 #### optional-pattern {#optional-pattern}
-> *可选模式* → [*标识符模式*](./03_Types.md#type-identifier) **?**
+> *可选模式* → [标识符模式](./03_Types.md#type-identifier) **?**
 > 
 
 ## 类型转换模式（Type-Casting Patterns） {#type-casting-patterns}
@@ -194,15 +194,15 @@ for case let number? in arrayOfOptinalInts {
 > 
 
 #### type-casting-pattern {#type-casting-pattern}
-> *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)
+> *类型转换模式* → [is 模式](#is-pattern) | [as 模式](#as-pattern)
 > 
 
 #### is-pattern {#is-pattern}
-> *is 模式* → **is** [*类型*](./03_Types.md#type)
+> *is 模式* → **is** [类型](./03_Types.md#type)
 > 
 
 #### as-pattern {#as-pattern}
-> *as 模式* → [*模式*](#pattern) **as** [*类型*](03-Types.md#type)
+> *as 模式* → [模式](#pattern) **as** [类型](03-Types.md#type)
 > 
 
 ## 表达式模式（Expression Pattern） {#expression-pattern}
@@ -244,5 +244,5 @@ default:
 > 
 
 #### expression-pattern {#expression-pattern}
-> *表达式模式* → [*表达式*](./04_Expressions.md#expression)
+> *表达式模式* → [表达式](./04_Expressions.md#expression)
 > 
