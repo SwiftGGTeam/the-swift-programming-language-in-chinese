@@ -41,8 +41,7 @@ for _ in 1...3 {
 
 > 通配符模式语法
 > 
-
-#### wildcard-pattern {#wildcard-pattern}
+> #### wildcard-pattern {#wildcard-pattern}
 > *通配符模式* → **_**
 > 
 
@@ -59,8 +58,7 @@ let someValue = 42
 
 > 标识符模式语法
 > 
-
-#### identifier-pattern {#identifier-pattern}
+> #### identifier-pattern {#identifier-pattern}
 > *标识符模式* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
 
@@ -83,8 +81,7 @@ case let (x, y):
 
 > 值绑定模式语法
 > 
-
-#### value-binding-pattern {#value-binding-pattern}
+> #### value-binding-pattern {#value-binding-pattern}
 > *值绑定模式* → **var** [模式](#pattern) | **let** [模式](#pattern)
 > 
 
@@ -113,16 +110,14 @@ let (a): Int = 2 // a: Int = 2
 
 > 元组模式语法
 > 
-
-#### tuple-pattern {#tuple-pattern}
+> #### tuple-pattern {#tuple-pattern}
 > *元组模式* → **(** [元组模式元素列表](#tuple-pattern-element-list)<sub>可选</sub> **)**
 > 
 
 #### tuple-pattern-element-list {#tuple-pattern-element-list}
 > *元组模式元素列表* → [元组模式元素](#tuple-pattern-element) | [元组模式元素](#tuple-pattern-element)  **,** [元组模式元素列表](#tuple-pattern-element-list)
 > 
-
-#### tuple-pattern-element {#tuple-pattern-element}
+> #### tuple-pattern-element {#tuple-pattern-element}
 > *元组模式元素* → [模式](#pattern)
 > 
 
@@ -133,8 +128,7 @@ let (a): Int = 2 // a: Int = 2
 
 > 枚举用例模式语法
 > 
-
-#### enum-case-pattern {#enum-case-pattern}
+> #### enum-case-pattern {#enum-case-pattern}
 > *枚举用例模式* → [类型标识](./03_Types.md#type-identifier)<sub>可选</sub> **.** [枚举用例名](./06-Declarations.md#enum-case-name) [元组模式](#tuple-pattern)<sub>可选</sub>
 > 
 
@@ -171,8 +165,7 @@ for case let number? in arrayOfOptinalInts {
 
 > 可选模式语法
 > 
-
-#### optional-pattern {#optional-pattern}
+> #### optional-pattern {#optional-pattern}
 > *可选模式* → [标识符模式](./03_Types.md#type-identifier) **?**
 > 
 
@@ -192,16 +185,13 @@ for case let number? in arrayOfOptinalInts {
 
 > 类型转换模式语法
 > 
-
-#### type-casting-pattern {#type-casting-pattern}
+> #### type-casting-pattern {#type-casting-pattern}
 > *类型转换模式* → [is 模式](#is-pattern) | [as 模式](#as-pattern)
 > 
-
-#### is-pattern {#is-pattern}
+> #### is-pattern {#is-pattern}
 > *is 模式* → **is** [类型](./03_Types.md#type)
 > 
-
-#### as-pattern {#as-pattern}
+> #### as-pattern {#as-pattern}
 > *as 模式* → [模式](#pattern) **as** [类型](03-Types.md#type)
 > 
 
@@ -242,7 +232,6 @@ default:
 
 > 表达式模式语法
 > 
-
-#### expression-pattern {#expression-pattern}
+> #### expression-pattern {#expression-pattern}
 > *表达式模式* → [表达式](./04_Expressions.md#expression)
 > 
