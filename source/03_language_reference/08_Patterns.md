@@ -126,6 +126,22 @@ let (a): Int = 2 // a: Int = 2
 
 如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../02_language_guide/08_Enumerations.md#associated-values)。
 
+枚举用例模式同样会匹配那些被包装成可选值的用例。简化的语法能将可选模式过滤掉。注意，由于 `Optional` 是枚举实现的，`.none` 和 `.some` 都会作为枚举类型的用例出现在 switch 中。
+
+```swift
+enum SomeEnum { case left, right }
+let x: SomeEnum? = .left
+switch x {
+case .left:
+    print("Turn left")
+case .right:
+    print("Turn right")
+case nil:
+    print("Keep going straight")
+}
+// 打印 "Turn left"
+```
+
 > 枚举用例模式语法
 > 
 > #### enum-case-pattern {#enum-case-pattern}
