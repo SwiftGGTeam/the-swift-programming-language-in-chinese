@@ -12,21 +12,21 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > 
 
 #### pattern {#pattern}
-> *模式* → [*通配符模式*](#wildcard-pattern) [*类型注解*](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [通配符模式](#wildcard-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*标识符模式*](#identifier-pattern) [*类型注解*](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [标识符模式](#identifier-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*值绑定模式*](#value-binding-pattern)
+> *模式* → [值绑定模式](#value-binding-pattern)
 > 
-> *模式* → [*元组模式*](#tuple-pattern) [*类型注解*](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [元组模式](#tuple-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*枚举用例模式*](#enum-case-pattern)
+> *模式* → [枚举用例模式](#enum-case-pattern)
 > 
-> *模式* → [*可选模式*](#optional-pattern)
+> *模式* → [可选模式](#optional-pattern)
 > 
-> *模式* → [*类型转换模式*](#type-casting-pattern)
+> *模式* → [类型转换模式](#type-casting-pattern)
 > 
-> *模式* → [*表达式模式*](#expression-pattern)
+> *模式* → [表达式模式](#expression-pattern)
 > 
 
 ## 通配符模式（Wildcard Pattern） {#wildcard-pattern}
