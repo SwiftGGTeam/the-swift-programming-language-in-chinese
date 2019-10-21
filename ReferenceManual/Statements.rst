@@ -1128,7 +1128,7 @@ have the following form:
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
     module-name --> identifier
-    environment --> ``simulator``
+    environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
 
