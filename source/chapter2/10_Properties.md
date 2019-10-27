@@ -283,9 +283,9 @@ stepCounter.totalSteps = 896
 > 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
 
 ## 属性包装器 {#property-wrappers}
-属性包装器在管理一个属性是如何存储的代码和定义一个属性的代码之间添加了一层分隔层。举例来说，如果你有一些提供线程安全性检查或者在数据库中存储它们基本数据的属性，你必须对每个属性都添加这段代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后通过把它应用到多个属性上的方式来复用那段管理代码。
+属性包装器在一段管理属性是如何存储的代码和一段定义属性的代码之间添加了一个分隔层。举例来说，如果你有一些提供线程安全性检查的属性或者在数据库中存储它们基本数据的属性，你必须对每个属性都添加这段代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后通过把它应用到多个属性上的方式来复用那段管理代码。
 
-为了定义一个属性包装器，你需要创建一个定义 `wrappedValue` 属性的结构体、枚举或者类。在下面的代码中，`TwelveOrLess` 结构体确保它包装的值始终包含小于等于12的数字。如果你要求它存储一个更大的数字，它则会存储 12 这个数字。
+为了定义一个属性包装器，你需要创建一个定义 `wrappedValue` 属性的结构体、枚举或者类。在下面的代码中，`TwelveOrLess` 结构体确保它包装的值始终是小于等于 12 的数字。如果要求它存储一个更大的数字，它则会存储 12 这个数字。
 
 ```
 @propertyWrapper
@@ -298,12 +298,12 @@ struct TwelveOrLess {
 }
 ```
 
-这个 setter 确保新值小于 12，且这个 getter 返回被存储的值。
+这个 setter 确保新值小于 12，而且返回被存储的值。
 > 注意
 > 
 > 在上面例子中对 `number` 的声明把这个变量标记为 `private`，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，且不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./25_Access_Control.md)
 
-通过在属性之前写上包装器的名称的方式，你可以把一个包装器应用到一个属性上去，这个包装器的名称作为这个属性的特性。这里有一个存储一个很小的矩形的结构体。这个结构体使用了同样的（相当随意的）由 `TwelveOrLess` 属性包装器实现的“小”的定义。
+通过在属性之前写上包装器名称的方式，你可以把一个包装器应用到一个属性上去，这个包装器的名称作为这个属性的特性。这里有个存储一个很小的矩形的结构体。这个结构体使用了同样的（相当随意的）由 `TwelveOrLess` 属性包装器实现的“小”的定义。
 
 ```
 struct SmallRectangle {
@@ -326,7 +326,7 @@ print(rectangle.height)
 
 `height` 和 `width` 属性从 `TwelveOrLess` 的定义中获取它们的初始值。该定义把 `TwelveOrLess.number` 设置为 0。把数字 10 存进 `rectangle.height` 中的操作能成功，是因为数字 10 很小。尝试存储 24 的操作实际上存储的值为 12，这是因为对于这个属性的 setter 的规则来说，24 太大了。
 
-当你把一个包装器应用到一个属性上时，编译器将合成为包装器提供存储空间的代码和提供通过包装程序访问属性的代码。（属性包装器负责存储被包装的值，所以没有为此合成的代码。）不利用这个特性语法的情况下，你可以写出使用属性包装器行为的代码。举例来说，这是先前代码清单中的 `SmallRectangle` 的一个版本。这个版本将其属性明确地包装在 `TwelveOrLess` 结构体中，而不是把 `@TwelveOrLess` 作为特性写下来：
+当你把一个包装器应用到一个属性上时，编译器将合成为包装器提供存储空间的代码和提供通过包装程序访问属性的代码。（属性包装器负责存储被包装值，所以没有为此合成的代码。）不利用这个特性语法的情况下，你可以写出使用属性包装器行为的代码。举例来说，这是先前代码清单中的 `SmallRectangle` 的一个版本。这个版本将其属性明确地包装在 `TwelveOrLess` 结构体中，而不是把 `@TwelveOrLess` 作为特性写下来：
 
 ```
 struct SmallRectangle {
@@ -346,7 +346,7 @@ struct SmallRectangle {
 `_height` 和 `_width` 属性存着这个属性包装器的一个实例，即 `TwelveOrLess`。`height` 和 `width` 的 getter 和 setter 把对 `wrappedValue` 属性的访问包装起来。
 
 ### 设置被包装属性的初始值 {#setting-initial-values-for-wrapped-properties}
-上面例子中的代码通过在 `TwelveOrLess` 的定义中赋予 `number` 一个初始值来设置被包装属性的初始值。使用这个属性包装器的代码没法为被 `TwelveOrLess` 包装的属性指定其他初始值。举例来说，`SmallRectangle` 的定义没法给 `height` 或者 `width` 一个初始值。为了支持设定一个初始值或者其他自定义操作，属性包装器需要添加一个构造器。这是 `TwelveOrLess` 的扩展版本，称为 `SmallNumber`。`SmallNumber` 定义了能设置被包装的值和最大值的构造器：
+上面例子中的代码通过在 `TwelveOrLess` 的定义中赋予 `number` 一个初始值来设置被包装属性的初始值。使用这个属性包装器的代码没法为被 `TwelveOrLess` 包装的属性指定其他初始值。举例来说，`SmallRectangle` 的定义没法给 `height` 或者 `width` 一个初始值。为了支持设定一个初始值或者其他自定义操作，属性包装器需要添加一个构造器。这是 `TwelveOrLess` 的扩展版本，称为 `SmallNumber`。`SmallNumber` 定义了能设置被包装值和最大值的构造器：
 
 
 ```
@@ -375,9 +375,9 @@ struct SmallNumber {
 }
 ```
 
-`SmallNumber` 的定义包括三个构造器——init()、init(wrappedValue:) 和 init(wrappedValue:maximum:)——下面的示例使用这三个构造器来设置被包装值和最大值。有关构造过程和构造器语法的更多信息，请参考 [构造过程](./14_Initialization.md)。
+`SmallNumber` 的定义包括三个构造器——`init()`、`init(wrappedValue:)` 和 `init(wrappedValue:maximum:)`——下面的示例使用这三个构造器来设置被包装值和最大值。有关构造过程和构造器语法的更多信息，请参考 [构造过程](./14_Initialization.md)。
 
-当你把包装器应用于属性且你没有设定初始值时，Swift 使用 `init()` 构造器来设置包装器。举个例子：
+当你把包装器应用于属性且没有设定初始值时，Swift 使用 `init()` 构造器来设置包装器。举个例子：
 
 ```
 struct ZeroRectangle {
@@ -448,10 +448,10 @@ print(mixedRectangle.height)
 
 调用 `SmallNumber(wrappedValue: 1)` 来创建包装 `height` 的 `SmallNumber` 的一个实例，这个实例使用默认最大值 12。调用 `SmallNumber(wrappedValue: 2, maximum: 9)` 来创建包装 `width` 的 `SmallNumber` 的一个实例。
 
-### 待定 {#projecting-a-value-from-a-property-wrapper}
-除了被包装的值，属性包装器可以通过定义 projected value 来暴露出其他功能。举个例子，管理对数据库的访问的属性包装器可以在它的 projectedValue 上暴露出 `flushDatabaseConnection()` 方法。除了以货币符号（$）开头，projectedValue 的名称和被包装的值是一样的。因为你的代码不能够定义以 $ 开头的属性，所以 projectedValue 从不与你定义的属性有冲突。
+### 从属性包装器中呈现一个值 {#projecting-a-value-from-a-property-wrapper}
+除了被包装值，属性包装器可以通过定义被呈现值暴露出其他功能。举个例子，管理对数据库的访问的属性包装器可以在它的被呈现值上暴露出 `flushDatabaseConnection()` 方法。除了以货币符号（\$）开头，被呈现值的名称和被包装值是一样的。因为你的代码不能够定义以 $ 开头的属性，所以被呈现值 从不与你定义的属性有冲突。
 
-在之前 `SmallNumber` 的例子中，如果你尝试把这个属性设置为一个很大很大的数值，属性包装器会在存储这个数值之前调整这个数值。以下的代码把 projectedValue 添加到 `SmallNumber` 结构体中来追踪在存储新值之前属性包装器是否为这个属性调整了新值。
+在之前 `SmallNumber` 的例子中，如果你尝试把这个属性设置为一个很大的数值，属性包装器会在存储这个数值之前调整这个数值。以下的代码把被呈现值添加到 `SmallNumber` 结构体中来追踪在存储新值之前属性包装器是否为这个属性调整了新值。
 
 
 ```
@@ -486,11 +486,11 @@ print(someStructure.$someNumber)
 // 打印 "true"
 ```
 
-写下 `s.$someNumber` 即可访问包装器的 wrappedValue。在存储一个比较小的数值，如 4 ，`s.$someNumber` 的值为 `false`。但是，在尝试存储一个较大的数值，如 55 ，projectedValue 的值变为 `true`。
+写下 `s.$someNumber` 即可访问包装器的被呈现值。在存储一个比较小的数值，如 4 ，`s.$someNumber` 的值为 `false`。但是，在尝试存储一个较大的数值，如 55 ，被呈现值变为 `true`。
 
-属性包装器可以返回任何类型的值作为它的 projectedValue。在这个例子里，属性包装器暴露出一条信息：那个数值是否被调整过，所以它暴露出布尔型值来作为它的 projectedValue。需要暴露出更多信息的包装器可以返回其他数据类型的实例，或者可以返回自身来暴露出包装器的实例，并把其作为它的 projectedValue。
+属性包装器可以返回任何类型的值作为它的被呈现值。在这个例子里，属性包装器暴露出一条信息：那个数值是否被调整过，所以它暴露出布尔型值来作为它的被呈现值。需要暴露出更多信息的包装器可以返回其他数据类型的实例，或者可以返回自身来暴露出包装器的实例，并把其作为它的被呈现值。
 
-当从类型的一部分代码中访问 projectedValue，例如属性 getter 或者实例方法，你可以在属性名称之前省略 `self.`，就像访问其他属性一样。以下示例中的代码将包装器的 `height` 和 `width` 的 projectedValue 称为 `$height` 和 `$width`：
+当从类型的一部分代码中访问被呈现值，例如属性 getter 或实例方法，你可以在属性名称之前省略 `self.`，就像访问其他属性一样。以下示例中的代码将包装器的 `height` 和 `width` 的被呈现值称为 `$height` 和 `$width`：
 
 ```
 enum Size {
@@ -515,7 +515,7 @@ struct SizedRectangle {
 }
 ```
 
-因为属性包装器语法只是具有 getter 和 setter 的属性的语法糖，所以访问 `height` 和 `width` 的行为与访问任何其他属性的行为相同。举个例子，`resize(to:)` 中的代码使用它们的属性包装器来访问 `height` 和 `width`。如果调用 `resize(to: .large)`，`.large` 的 switch case 分支语句把矩形的高度和宽度设置为 100。属性包装器防止这些属性的值大于 12，且把 projectedValue 设置成为 `true` 来记下它调整过这些值的事实。在 `resize(to:)` 的最后，返回语句检查 `$height` 和 `$width` 来确认是否属性包装器调整过 `height` 或 `width`。
+因为属性包装器语法只是具有 getter 和 setter 的属性的语法糖，所以访问 `height` 和 `width` 的行为与访问任何其他属性的行为相同。举个例子，`resize(to:)` 中的代码使用它们的属性包装器来访问 `height` 和 `width`。如果调用 `resize(to: .large)`，`.large` 的 switch case 分支语句把矩形的高度和宽度设置为 100。属性包装器防止这些属性的值大于 12，且把被呈现值设置成为 `true` 来记下它调整过这些值的事实。在 `resize(to:)` 的最后，返回语句检查 `$height` 和 `$width` 来确认是否属性包装器调整过 `height` 或 `width`。
 
 
 
