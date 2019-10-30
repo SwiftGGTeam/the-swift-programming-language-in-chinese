@@ -87,6 +87,13 @@ var occupations = [
 occupations["Jayne"] = "Public Relations"
 ```
 
+数组在添加元素时会自动变大。
+
+```swift
+shoppingList.append("blue paint")
+print(shoppingList)
+```
+
 使用初始化语法来创建一个空数组或者空字典。
 
 ```swift
