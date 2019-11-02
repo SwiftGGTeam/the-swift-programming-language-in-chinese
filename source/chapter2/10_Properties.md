@@ -7,12 +7,11 @@
 另外，还可以定义属性观察器来监控属性值的变化，以此来触发自定义的操作。属性观察器可以添加到类本身定义的存储属性上，也可以添加到从父类继承的属性上。
 
 你也可以利用属性包装器来复用多个属性的 getter 和 setter 中的代码。
-
 ## 存储属性 {#stored-properties}
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
-可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default_initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14_Initialization.md#assigning_constant_properties_during_initialization) 一节。
+可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default-initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14-Initialization.md#assigning-constant-properties-during-initialization) 一节。
 
 下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的区间，且这个范围值在被创建后不能被修改。
 
@@ -241,7 +240,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 在父类初始化方法调用之后，在子类构造器中给父类的属性赋值时，会调用父类属性的 `willSet` 和 `didSet` 观察器。而在父类初始化方法调用之前，给子类的属性赋值时不会调用子类属性的观察器。
 > 
-> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer_delegation_for_value_types) 和 [类的构造器代理](./14_Initialization.md#initializer_delegation_for_class_types)。
+> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 和 [类的构造器代理](./14-Initialization.md#initializer-delegation-for-class-types)。
 
 下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
@@ -280,7 +279,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../chapter3/05_Declarations.html#in-out_parameters)
+> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out-parameters)。
 
 ## 属性包装器 {#property-wrappers}
 属性包装器在一段管理属性是如何存储的代码和一段定义属性的代码之间添加了一个分隔层。举例来说，如果你有一些提供线程安全性检查的属性或者在数据库中存储它们基本数据的属性，你必须对每个属性都添加这段代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后通过把它应用到多个属性上的方式来复用那段管理代码。
@@ -518,10 +517,9 @@ struct SizedRectangle {
 因为属性包装器语法只是具有 getter 和 setter 的属性的语法糖，所以访问 `height` 和 `width` 的行为与访问任何其他属性的行为相同。举个例子，`resize(to:)` 中的代码使用它们的属性包装器来访问 `height` 和 `width`。如果调用 `resize(to: .large)`，`.large` 的 switch case 分支语句把矩形的高度和宽度设置为 100。属性包装器防止这些属性的值大于 12，且把被呈现值设置成为 `true` 来记下它调整过这些值的事实。在 `resize(to:)` 的最后，返回语句检查 `$height` 和 `$width` 来确认是否属性包装器调整过 `height` 或 `width`。
 
 
-
-
 ## 全局变量和局部变量 {#global-and-local-variables}
-计算属性和观察属性所描述的功能也可以用于全局变量和局部变量。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
+
+计算属性和观察属性所描述的功能也可以用于*全局变量*和*局部变量*。全局变量是在函数、方法、闭包或任何类型之外定义的变量。局部变量是在函数、方法或闭包内部定义的变量。
 
 前面章节提到的全局或局部变量都属于*存储型变量*，跟存储属性类似，它为特定类型的值提供存储空间，并允许读取和写入。
 
@@ -529,7 +527,7 @@ struct SizedRectangle {
 
 > 注意
 > 
-> 全局的常量或变量都是延迟计算的，跟 [延时加载存储属性](#lazy_stored_properties) 相似，不同的地方在于，全局的常量或变量不需要标记 `lazy` 修饰符。
+> 全局的常量或变量都是延迟计算的，跟 [延时加载存储属性](#lazy-stored-properties) 相似，不同的地方在于，全局的常量或变量不需要标记 `lazy` 修饰符。
 > 
 > 局部范围的常量和变量从不延迟计算。
 
