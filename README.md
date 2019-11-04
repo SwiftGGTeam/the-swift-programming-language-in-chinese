@@ -17,6 +17,7 @@
 - 更新到 Swift 4.1，2018-04-12，感谢 [@Mylittleswift](https://github.com/Mylittleswift)
 - 更新到 Swift 3.0，2016-09-23
 
+
 # 贡献力量
 
 如果想做出贡献的话，你可以：
@@ -56,8 +57,10 @@ diff 操作如下：
 
 | 术语 | 备选翻译 |
 | --- | --- |
+| property wrapper | 属性包装器（[翻译相关讨论](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues/982#issuecomment-536244784)） |
 | argument | 实参 |
 | parameter | 形参 |
+| variadic parameters| 可变参数 |
 | associated type | 关联类型 |
 | range | 区间 |
 | type property | 类型属性 |
