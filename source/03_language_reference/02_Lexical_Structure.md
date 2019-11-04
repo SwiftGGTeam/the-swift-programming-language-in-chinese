@@ -74,7 +74,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 闭包中如果没有明确指定参数名称，参数将被隐式命名为 `$0`、`$1`、`$2` 等等。这些命名在闭包作用域范围内是合法的标识符。
 
-编译器给含有属性包装器映射的属性自动合成以美元符号（*$*）开头的标识符。你的代码可以与这些标识符进行交互，，但是不能使用该前缀声明标识符。更详细的介绍，请查看 [特性](./07_Attributes.md) 章节中的 [属性包装器](./07_Attributes.md#propertywrapper) 部分。
+编译器给含有属性包装器呈现值的属性自动合成以美元符号（*$*）开头的标识符。你的代码可以与这些标识符进行交互，，但是不能使用该前缀声明标识符。更详细的介绍，请查看 [特性](./07_Attributes.md) 章节中的 [属性包装器](./07_Attributes.md#propertywrapper) 部分。
 
 > 标识符语法
 > 
@@ -141,7 +141,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 >
 #### property-wrapper-projection {#property-wrapper-projection}
 >
-> *属性包装器映射* → **$** [标识符字符组](#identifier-characters)
+> *属性包装器呈现值* → **$** [标识符字符组](#identifier-characters)
 >
 
 ## 关键字和标点符号 {#keywords-and-punctuation}
