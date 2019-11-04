@@ -65,7 +65,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 > 
 > 使用 `\()` 来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
-使用三个双引号（`"""`）来包含多行字符串内容，字符串中的内容（包括引号、空格、换行符等）都会保留下来。举个例子：
+使用三个双引号（`"""`）来包含多行字符串内容。每行行首的缩进会被去除，直到和结尾引号的缩进相匹配。举个例子：
 
 ```swift
 let quotation = """
@@ -87,6 +87,13 @@ var occupations = [
 occupations["Jayne"] = "Public Relations"
 ```
 
+数组在添加元素时会自动变大。
+
+```swift
+shoppingList.append("blue paint")
+print(shoppingList)
+```
+
 使用初始化语法来创建一个空数组或者空字典。
 
 ```swift
@@ -94,7 +101,7 @@ let emptyArray = [String]()
 let emptyDictionary = [String: Float]()
 ```
 
-如果类型信息可以被推断出来，你可以用 `[]` 和 `[:]` 来创建空数组和空字典——就像你声明变量或者给函数传参数的时候一样。
+如果类型信息可以被推断出来，你可以用 `[]` 和 `[:]` 来创建空数组和空字典——比如，在给变量赋新值或者给函数传参数的时候。
 
 ```swift
 shoppingList = []
@@ -138,6 +145,7 @@ if let name = optionalName {
 > 把 `optionalName` 改成 `nil`，greeting 会是什么？添加一个 `else` 语句，当 `optionalName` 是 `nil` 时给 greeting 赋一个不同的值。
 
 如果变量的可选值是 `nil`，条件会判断为 `false`，大括号中的代码会被跳过。如果不是 `nil`，会将值解包并赋给 `let` 后面的常量，这样代码块中就可以使用这个值了。
+
 另一种处理可选值的方法是通过使用 `??` 操作符来提供一个默认值。如果可选值缺失的话，可以使用默认值来代替。
 
 ```swift
@@ -234,7 +242,7 @@ greet(person:"Bob", day: "Tuesday")
 
 > 练习
 > 
-> 删除 `day` 参数，添加一个参数来表示今天吃了什么午饭。
+> 删除 `day` 参数，在这个欢迎语中添加一个参数来表示今天的特价菜。
 
 默认情况下，函数使用它们的参数名称作为它们参数的标签，在参数名称前可以自定义参数标签，或者使用 `_` 表示不使用参数标签。
 
@@ -314,7 +322,7 @@ var numbers = [20, 19, 7, 12]
 hasAnyMatches(list: numbers, condition: lessThanTen)
 ```
 
-函数实际上是一种特殊的闭包:它是一段能之后被调取的代码。闭包中的代码能访问闭包作用域中的变量和函数，即使闭包是在一个不同的作用域被执行的 - 你已经在嵌套函数的例子中看过了。你可以使用 `{}` 来创建一个匿名闭包。使用 `in` 将参数和返回值类型的声明与闭包函数体进行分离。
+函数实际上是一种特殊的闭包:它是一段能之后被调取的代码。闭包中的代码能访问闭包作用域中的变量和函数，即使闭包是在一个不同的作用域被执行的——你已经在嵌套函数的例子中看过了。你可以使用 `{}` 来创建一个匿名闭包。使用 `in` 将参数和返回值类型的声明与闭包函数体进行分离。
 
 ```swift
 numbers.map({
@@ -335,7 +343,7 @@ let mappedNumbers = numbers.map({ number in 3 * number })
 print(mappedNumbers)
 ```
 
-你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。当一个闭包是传给函数的唯一参数，你可以完全忽略括号。
+你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在圆括号后面。当一个闭包是传给函数的唯一参数，你可以完全忽略圆括号。
 
 ```swift
 let sortedNumbers = numbers.sorted { $0 > $1 }
@@ -419,7 +427,7 @@ test.simpleDescription()
 > 
 > 创建 `NamedShape` 的另一个子类 `Circle`，构造器接收两个参数，一个是半径一个是名称，在子类 `Circle` 中实现 `area()` 和 `simpleDescription()` 方法。
 
-除了储存简单的属性之外，属性可以有 getter 和 setter 。
+除了简单的存储属性，还有使用 getter 和 setter 的计算属性。
 
 ```swift
 class EquilateralTriangle: NamedShape {
@@ -450,7 +458,7 @@ triangle.perimeter = 9.9
 print(triangle.sideLength)
 ```
 
-在 `perimeter` 的 setter 中，新值的名字是 `newValue`。你可以在 `set` 之后显式的设置一个名字。
+在 `perimeter` 的 setter 中，新值的名字是 `newValue`。你可以在 `set` 之后的圆括号中显式地设置一个名字。
 
 注意 `EquilateralTriangle` 类的构造器执行了三步：
 
@@ -484,7 +492,7 @@ triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
 print(triangleAndSquare.triangle.sideLength)
 ```
 
-处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加 `?`。如果 `?` 之前的值是 `nil`，`?` 后面的东西都会被忽略，并且整个表达式返回 `nil`。否则，`?` 之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。
+处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加 `?`。如果 `?` 之前的值是 `nil`，`?` 后面的东西都会被忽略，并且整个表达式返回 `nil`。否则，可选值会被解包，之后的所有代码都会按照解包后的值运行。在这两种情况下，整个表达式的值也是一个可选值。
 
 ```swift
 let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
@@ -525,7 +533,7 @@ let aceRawValue = ace.rawValue
 
 默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值，不过你可以通过显式赋值进行改变。在上面的例子中，`Ace` 被显式赋值为 1，并且剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用 `rawValue` 属性来访问一个枚举成员的原始值。
 
-使用 `init?(rawValue:)` 初始化构造器来创建一个带有原始值的枚举成员。如果存在与原始值相应的枚举成员就返回该枚举成员，否则就返回 `nil`。
+使用 `init?(rawValue:)` 初始化构造器来从原始值创建一个枚举实例。如果存在与原始值相应的枚举成员就返回该枚举成员，否则就返回 `nil`。
 
 ```swift
 if let convertedRank = Rank(rawValue: 3) {
@@ -559,9 +567,9 @@ let heartsDescription = hearts.simpleDescription()
 > 
 > 给 `Suit` 添加一个 `color()` 方法，对 `spades` 和 `clubs` 返回 “black” ，对 `hearts` 和 `diamonds` 返回 “red” 。
 
-注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，枚举成员 `Suit.hearts` 需要用全名来引用，因为常量没有显式指定类型。在 `switch` 里，枚举成员使用缩写 `.hearts` 来引用，因为 `self` 的值已经是一个 `suit` 类型，在已知变量类型的情况下可以使用缩写。
+注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，枚举成员 `Suit.hearts` 需要用全名来引用，因为常量没有显式指定类型。在 `switch` 里，枚举成员使用缩写 `.hearts` 来引用，因为 `self` 的值已经是一个 `suit` 类型。在任何已知变量类型的情况下都可以使用缩写。
 
-如果枚举成员的实例有原始值，那么这些值是在声明的时候就已经决定了，这意味着不同枚举实例的枚举成员总会有一个相同的原始值。当然我们也可以为枚举成员设定关联值，关联值是在创建实例时决定的。这意味着不同的枚举成员的关联值都可以不同。你可以把关联值想象成枚举成员的寄存属性。例如，考虑从服务器获取日出和日落的时间的情况。服务器会返回正常结果或者错误信息。
+如果枚举成员的实例有原始值，那么这些值是在声明的时候就已经决定了，这意味着不同枚举实例的枚举成员总会有一个相同的原始值。当然我们也可以为枚举成员设定关联值，关联值是在创建实例时决定的。这意味着同一枚举成员不同实例的关联值可以不相同。你可以把关联值想象成枚举成员实例的存储属性。例如，考虑从服务器获取日出和日落的时间的情况。服务器会返回正常结果或者错误信息。
 
 ```swift
 enum ServerResponse {
@@ -584,7 +592,7 @@ case let .failure(message):
 > 
 > 给 `ServerResponse` 和 switch 添加第三种情况。
 
-注意日升和日落时间是如何从 `ServerResponse` 中提取到并与 `switch` 的 `case` 相匹配的。
+注意 `ServerResponse` 的值在与 `switch` 的分支匹配时，日升和日落时间是如何从该值中提取出来的。
 
 使用 `struct` 来创建一个结构体。结构体和类有很多相同的地方，包括方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
 
@@ -602,7 +610,7 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 
 > 练习
 > 
-> 给 `Card` 添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
+> 写一个方法，创建一副完整的扑克牌，这些牌是所有 rank 和 suit 的组合。
 
 ## 协议和扩展 {#protocols-and-extensions}
 
@@ -642,7 +650,7 @@ let bDescription = b.simpleDescription
 
 > 练习
 > 
-> 写一个实现这个协议的枚举。
+> 给 `ExampleProtocol` 再增加一个要求。你需要怎么改 `SimpleClass` 和 `SimpleStructure` 才能保证它们仍旧遵循这个协议？
 
 注意声明 `SimpleStructure` 时候 `mutating` 关键字用来标记一个会修改结构体的方法。`SimpleClass` 的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
