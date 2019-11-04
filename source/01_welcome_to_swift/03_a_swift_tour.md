@@ -65,7 +65,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 > 
 > 使用 `\()` 来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
-使用三个双引号（`"""`）来包含多行字符串内容。每行行首的缩进会被删掉，一直删到块末三个双引号缩进到的那一列。举个例子：
+使用三个双引号（`"""`）来包含多行字符串内容。每行行首的缩进会被去除，直到和结尾引号的缩进相匹配。举个例子：
 
 ```swift
 let quotation = """
@@ -427,7 +427,7 @@ test.simpleDescription()
 > 
 > 创建 `NamedShape` 的另一个子类 `Circle`，构造器接收两个参数，一个是半径一个是名称，在子类 `Circle` 中实现 `area()` 和 `simpleDescription()` 方法。
 
-除了简单的储存值的属性，还有使用 getter 和 setter 的计算属性。
+除了简单的存储属性，还有使用 getter 和 setter 的计算属性。
 
 ```swift
 class EquilateralTriangle: NamedShape {
@@ -458,7 +458,7 @@ triangle.perimeter = 9.9
 print(triangle.sideLength)
 ```
 
-在 `perimeter` 的 setter 中，新值的名字是 `newValue`。你可以在 `set` 之后的圆括号中显式的设置一个名字。
+在 `perimeter` 的 setter 中，新值的名字是 `newValue`。你可以在 `set` 之后的圆括号中显式地设置一个名字。
 
 注意 `EquilateralTriangle` 类的构造器执行了三步：
 
@@ -569,7 +569,7 @@ let heartsDescription = hearts.simpleDescription()
 
 注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，枚举成员 `Suit.hearts` 需要用全名来引用，因为常量没有显式指定类型。在 `switch` 里，枚举成员使用缩写 `.hearts` 来引用，因为 `self` 的值已经是一个 `suit` 类型。在任何已知变量类型的情况下都可以使用缩写。
 
-如果枚举成员的实例有原始值，那么这些值是在声明的时候就已经决定了，这意味着不同枚举实例的枚举成员总会有一个相同的原始值。当然我们也可以为枚举成员设定关联值，关联值是在创建实例时决定的。这意味着同一枚举成员的不同实例的关联值是可以不相同的。你可以把关联值想象成枚举成员实例的存储属性。例如，考虑从服务器获取日出和日落的时间的情况。服务器会返回正常结果或者错误信息。
+如果枚举成员的实例有原始值，那么这些值是在声明的时候就已经决定了，这意味着不同枚举实例的枚举成员总会有一个相同的原始值。当然我们也可以为枚举成员设定关联值，关联值是在创建实例时决定的。这意味着同一枚举成员不同实例的关联值可以不相同。你可以把关联值想象成枚举成员实例的存储属性。例如，考虑从服务器获取日出和日落的时间的情况。服务器会返回正常结果或者错误信息。
 
 ```swift
 enum ServerResponse {
@@ -650,7 +650,7 @@ let bDescription = b.simpleDescription
 
 > 练习
 > 
-> 给 `ExampleProtocol` 增加一个要求。你需要怎么改 `SimpleClass` 和 `SimpleStructure` 才能保证它们仍旧遵循这个协议？
+> 给 `ExampleProtocol` 再增加一个要求。你需要怎么改 `SimpleClass` 和 `SimpleStructure` 才能保证它们仍旧遵循这个协议？
 
 注意声明 `SimpleStructure` 时候 `mutating` 关键字用来标记一个会修改结构体的方法。`SimpleClass` 的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
 
