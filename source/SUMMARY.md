@@ -4,7 +4,7 @@
    * [关于 Swift](01_welcome_to_swift/01_about_swift.md)
    * [版本兼容性](01_welcome_to_swift/02_version_compatibility.md)
    * [Swift 初见](01_welcome_to_swift/03_a_swift_tour.md)
-   * [Swift 版本历史记录](01_welcome_to_swift/04_revision_history.md)
+   * [Swift 版本历史记录](04_revision_history/04_revision_history.md)
 * Swift 教程
    * [基础部分](02_language_guide/01_The_Basics.md)
    * [基本运算符](02_language_guide/02_Basic_Operators.md)
