@@ -6,6 +6,7 @@
 
 另外，还可以定义属性观察器来监控属性值的变化，以此来触发自定义的操作。属性观察器可以添加到类本身定义的存储属性上，也可以添加到从父类继承的属性上。
 
+你也可以利用属性包装器来复用多个属性的 getter 和 setter 中的代码。
 ## 存储属性 {#stored-properties}
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
@@ -279,6 +280,241 @@ stepCounter.totalSteps = 896
 > 注意
 > 
 > 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out-parameters)。
+
+## 属性包装器 {#property-wrappers}
+属性包装器在管理属性如何存储和定义属性的代码之间添加了一个分隔层。举例来说，如果你的属性需要线程安全性检查或者需要在数据库中存储它们的基本数据，那么必须给每个属性添加同样的逻辑代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后应用到多个属性上来进行复用。
+
+定义一个属性包装器，你需要创建一个定义 `wrappedValue` 属性的结构体、枚举或者类。在下面的代码中，`TwelveOrLess` 结构体确保它包装的值始终是小于等于 12 的数字。如果要求它存储一个更大的数字，它则会存储 12 这个数字。
+
+```
+@propertyWrapper
+struct TwelveOrLess {
+    private var number = 0
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, 12) }
+    }
+}
+```
+
+这个 setter 确保新值小于 12，而且返回被存储的值。
+> 注意
+> 
+> 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./25_Access_Control.md)
+
+通过在属性之前写上包装器名称作为特性的方式，你可以把一个包装器应用到一个属性上去。这里有个存储小矩形的结构体。通过 `TwelveOrLess` 属性包装器实现类似（挺随意的）对“小”的定义。
+
+```
+struct SmallRectangle {
+    @TwelveOrLess var height: Int
+    @TwelveOrLess var width: Int
+}
+
+var rectangle = SmallRectangle()
+print(rectangle.height)
+// 打印 "0"
+
+rectangle.height = 10
+print(rectangle.height)
+// 打印 "10"
+
+rectangle.height = 24
+print(rectangle.height)
+// 打印 "12"
+```
+
+`height` 和 `width` 属性从 `TwelveOrLess` 的定义中获取它们的初始值。该定义把 `TwelveOrLess.number` 设置为 0。把数字 10 存进 `rectangle.height` 中的操作能成功，是因为数字 10 很小。尝试存储 24 的操作实际上存储的值为 12，这是因为对于这个属性的 setter 的规则来说，24 太大了。
+
+当你把一个包装器应用到一个属性上时，编译器将合成提供包装器存储空间和通过包装器访问属性的代码。（属性包装器只负责存储被包装值，所以没有合成这些代码。）不利用这个特性语法的情况下，你可以写出使用属性包装器行为的代码。举例来说，这是先前代码清单中的 `SmallRectangle` 的另一个版本。这个版本将其属性明确地包装在 `TwelveOrLess` 结构体中，而不是把 `@TwelveOrLess` 作为特性写下来：
+
+```
+struct SmallRectangle {
+    private var _height = TwelveOrLess()
+    private var _width = TwelveOrLess()
+    var height: Int {
+        get { return _height.wrappedValue }
+        set { _height.wrappedValue = newValue }
+    }
+    var width: Int {
+        get { return _width.wrappedValue }
+        set { _width.wrappedValue = newValue }
+    }
+}
+```
+
+`_height` 和 `_width` 属性存着这个属性包装器的一个实例，即 `TwelveOrLess`。`height` 和 `width` 的 getter 和 setter 把对 `wrappedValue` 属性的访问包装起来。
+
+### 设置被包装属性的初始值 {#setting-initial-values-for-wrapped-properties}
+上面例子中的代码通过在 `TwelveOrLess` 的定义中赋予 `number` 一个初始值来设置被包装属性的初始值。使用这个属性包装器的代码没法为被 `TwelveOrLess` 包装的属性指定其他初始值。举例来说，`SmallRectangle` 的定义没法给 `height` 或者 `width` 一个初始值。为了支持设定一个初始值或者其他自定义操作，属性包装器需要添加一个构造器。这是 `TwelveOrLess` 的扩展版本，称为 `SmallNumber`。`SmallNumber` 定义了能设置被包装值和最大值的构造器：
+
+
+```
+@propertyWrapper
+struct SmallNumber {
+    private var maximum: Int
+    private var number: Int
+
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, maximum) }
+    }
+
+    init() {
+        maximum = 12
+        number = 0
+    }
+    init(wrappedValue: Int) {
+        maximum = 12
+        number = min(wrappedValue, maximum)
+    }
+    init(wrappedValue: Int, maximum: Int) {
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+    }
+}
+```
+
+`SmallNumber` 的定义包括三个构造器——`init()`、`init(wrappedValue:)` 和 `init(wrappedValue:maximum:)`——下面的示例使用这三个构造器来设置被包装值和最大值。有关构造过程和构造器语法的更多信息，请参考 [构造过程](./14_Initialization.md)。
+
+当你把包装器应用于属性且没有设定初始值时，Swift 使用 `init()` 构造器来设置包装器。举个例子：
+
+```
+struct ZeroRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+}
+
+var zeroRectangle = ZeroRectangle()
+print(zeroRectangle.height, zeroRectangle.width)
+// 打印 "0 0"
+```
+
+调用 `SmallNumber()` 来创建包装 `height` 和 `width` 的 `SmallNumber` 的实例。构造器内部的代码使用默认值 0 和 12 设置初始的被包装值和初始的最大值。像之前使用在 `SmallRectangle` 中使用 `TwelveOrLess` 的例子，这个属性包装器仍然提供所有的初始值。与这个例子不同的是，`SmallNumber` 也支持把编写这些初始值作为声明属性的一部分。
+
+当你为属性指定初始值时，Swift 使用 `init(wrappedValue:)` 构造器来设置包装器。举个例子：
+
+```
+struct UnitRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber var width: Int = 1
+}
+
+var unitRectangle = UnitRectangle()
+print(unitRectangle.height, unitRectangle.width)
+// 打印 "1 1"
+```
+
+当你对一个被包装的属性写下 `= 1` 时，这被转换为调用 `init(wrappedValue:)` 构造器。调用 `SmallNumber(wrappedValue: 1)`来创建包装 `height` 和 `width` 的 `SmallNumber` 的实例。构造器使用此处指定的被包装值，且使用的默认最大值为 12。
+
+当你在自定义特性后面把实参写在括号里时，Swift 使用接受这些实参的构造器来设置包装器。举例来说，如果你提供初始值和最大值，Swift 使用 `init(wrappedValue:maximum:)` 构造器:
+
+```
+struct NarrowRectangle {
+    @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+}
+
+var narrowRectangle = NarrowRectangle()
+print(narrowRectangle.height, narrowRectangle.width)
+// 打印 "2 3"
+
+narrowRectangle.height = 100
+narrowRectangle.width = 100
+print(narrowRectangle.height, narrowRectangle.width)
+// 打印 "5 4"
+```
+
+调用 `SmallNumber(wrappedValue: 2, maximum: 5)` 来创建包装 `height` 的 `SmallNumber` 的一个实例。调用 `SmallNumber(wrappedValue: 3, maximum: 4)` 来创建包装 `width` 的 `SmallNumber` 的一个实例。
+
+通过将实参包含到属性包装器中，你可以设置包装器的初始状态，或者在创建包装器时传递其他的选项。这种语法是使用属性包装器最通用的方法。你可以为这个属性提供任何所需的实参，且它们将被传递给构造器。
+
+当包含属性包装器实参时，你也可以使用赋值来指定初始值。Swift 将赋值视为 `wrappedValue` 参数，且使用接受被包含的实参的构造器。举个例子：
+
+```
+struct MixedRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber(maximum: 9) var width: Int = 2
+}
+
+var mixedRectangle = MixedRectangle()
+print(mixedRectangle.height)
+// 打印 "1"
+
+mixedRectangle.height = 20
+print(mixedRectangle.height)
+// 打印 "12"
+```
+
+调用 `SmallNumber(wrappedValue: 1)` 来创建包装 `height` 的 `SmallNumber` 的一个实例，这个实例使用默认最大值 12。调用 `SmallNumber(wrappedValue: 2, maximum: 9)` 来创建包装 `width` 的 `SmallNumber` 的一个实例。
+
+### 从属性包装器中呈现一个值 {#projecting-a-value-from-a-property-wrapper}
+除了被包装值，属性包装器可以通过定义被呈现值暴露出其他功能。举个例子，管理对数据库的访问的属性包装器可以在它的被呈现值上暴露出 `flushDatabaseConnection()` 方法。除了以货币符号（\$）开头，被呈现值的名称和被包装值是一样的。因为你的代码不能够定义以 $ 开头的属性，所以被呈现值永远不会与你定义的属性有冲突。
+
+在之前 `SmallNumber` 的例子中，如果你尝试把这个属性设置为一个很大的数值，属性包装器会在存储这个数值之前调整这个数值。以下的代码把被呈现值添加到 `SmallNumber` 结构体中来追踪在存储新值之前属性包装器是否为这个属性调整了新值。
+
+
+```
+@propertyWrapper
+struct SmallNumber {
+    private var number = 0
+    var projectedValue = false
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue > 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+}
+struct SomeStructure {
+    @SmallNumber var someNumber: Int
+}
+var someStructure = SomeStructure()
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+// 打印 "false"
+
+someStructure.someNumber = 55
+print(someStructure.$someNumber)
+// 打印 "true"
+```
+
+写下 `s.$someNumber` 即可访问包装器的被呈现值。在存储一个比较小的数值时，如 4 ，`s.$someNumber` 的值为 `false`。但是，在尝试存储一个较大的数值时，如 55 ，被呈现值变为 `true`。
+
+属性包装器可以返回任何类型的值作为它的被呈现值。在这个例子里，属性包装器要暴露的信息是：那个数值是否被调整过，所以它暴露出布尔型值来作为它的被呈现值。需要暴露出更多信息的包装器可以返回其他数据类型的实例，或者可以返回自身来暴露出包装器的实例，并把其作为它的被呈现值。
+
+当从类型的一部分代码中访问被呈现值，例如属性 getter 或实例方法，你可以在属性名称之前省略 `self.`，就像访问其他属性一样。以下示例中的代码用 `$height` 和 `$width` 引用包装器 `height` 和 `width` 的被呈现值：
+
+```
+enum Size {
+    case small, large
+}
+
+struct SizedRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+
+    mutating func resize(to size: Size) -> Bool {
+        switch size {
+        case .small:
+            height = 10
+            width = 20
+        case .large:
+            height = 100
+            width = 100
+        }
+        return $height || $width
+    }
+}
+```
+
+因为属性包装器语法只是具有 getter 和 setter 的属性的语法糖，所以访问 `height` 和 `width` 的行为与访问任何其他属性的行为相同。举个例子，`resize(to:)` 中的代码使用它们的属性包装器来访问 `height` 和 `width`。如果调用 `resize(to: .large)`，`.large` 的 switch case 分支语句把矩形的高度和宽度设置为 100。属性包装器防止这些属性的值大于 12，且把被呈现值设置成为 `true` 来记下它调整过这些值的事实。在 `resize(to:)` 的最后，返回语句检查 `$height` 和 `$width` 来确认是否属性包装器调整过 `height` 或 `width`。
 
 ## 全局变量和局部变量 {#global-and-local-variables}
 

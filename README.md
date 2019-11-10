@@ -58,6 +58,8 @@ diff 操作如下：
 | 术语 | 备选翻译 |
 | --- | --- |
 | property wrapper | 属性包装器（[翻译相关讨论](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues/982#issuecomment-536244784)） |
+| projected value | 被呈现值 |
+| wrapped value | 被包装值 |
 | argument | 实参 |
 | parameter | 形参 |
 | variadic parameters| 可变参数 |
