@@ -22,6 +22,8 @@
 >
 > *换行符*  → U+000D 后面是 U+000A
 >
+>
+>
 > *注释*  → **//** [单行内容注释](./02_Lexical_Structure.md#comment-text) [换行符](./02-Lexical-Structure.md#line-break)
 >
 > *注释*  → **/\*** [多行内容注释](./02_Lexical_Structure.md#multiline-comment-text) **\*/**
@@ -52,6 +54,8 @@
 > *标识符* → [标识符头（Head）](./02_Lexical_Structure.md#identifier-head) [标识符字符集](./02-Lexical-Structure.md#identifier-characters)<sub>可选</sub> 
 >
 > *标识符* → [隐式参数名](./02_Lexical_Structure.md#implicit-parameter-name)
+>
+> *标识符* → [属性包装器呈现值](./02_Lexical_Structure.md#property-wrapper-projection)
 >
 > *标识符集* → [标识符](./02_Lexical_Structure.md#identifier) | [标识符](./02-Lexical-Structure.md#identifier) **,** [标识符集](./02-Lexical-Structure.md#identifier-list)
 >
@@ -96,6 +100,8 @@
 > *标识符字符集* → [标识符字符](./02_Lexical_Structure.md#identifier-character) [标识符字符集](./02-Lexical-Structure.md#identifier-characters)<sub>可选</sub> 
 >
 > *隐式参数名* → **$** [十进制数字集](./02_Lexical_Structure.md#decimal-digits)
+>
+> *属性包装器呈现值* → **$**  [标识符字符集](./02-Lexical-Structure.md#identifier-characters)
 >
 
 <!-- -->
@@ -1660,6 +1666,9 @@
 >
 > *同类型约束* → [类型标识](./03_Types.md#type-identifier) **==** [类型](./03-Types.md#type-identifier)
 >
+
+<!-- -->
+
 > 泛型实参子句语法
 >
 > *泛型实参子句* → **<** [泛型实参集](./09_Generic_Parameters_and_Arguments.md#generic-argument-list) **>**

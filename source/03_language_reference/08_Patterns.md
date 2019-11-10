@@ -12,21 +12,21 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > 
 
 #### pattern {#pattern}
-> *模式* → [*通配符模式*](#wildcard-pattern) [*类型注解*](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [通配符模式](#wildcard-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*标识符模式*](#identifier-pattern) [*类型注解*](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [标识符模式](#identifier-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*值绑定模式*](#value-binding-pattern)
+> *模式* → [值绑定模式](#value-binding-pattern)
 > 
-> *模式* → [*元组模式*](#tuple-pattern) [*类型注解*](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [元组模式](#tuple-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [*枚举用例模式*](#enum-case-pattern)
+> *模式* → [枚举用例模式](#enum-case-pattern)
 > 
-> *模式* → [*可选模式*](#optional-pattern)
+> *模式* → [可选模式](#optional-pattern)
 > 
-> *模式* → [*类型转换模式*](#type-casting-pattern)
+> *模式* → [类型转换模式](#type-casting-pattern)
 > 
-> *模式* → [*表达式模式*](#expression-pattern)
+> *模式* → [表达式模式](#expression-pattern)
 > 
 
 ## 通配符模式（Wildcard Pattern） {#wildcard-pattern}
@@ -41,8 +41,7 @@ for _ in 1...3 {
 
 > 通配符模式语法
 > 
-
-#### wildcard-pattern {#wildcard-pattern}
+> #### wildcard-pattern {#wildcard-pattern}
 > *通配符模式* → **_**
 > 
 
@@ -59,9 +58,8 @@ let someValue = 42
 
 > 标识符模式语法
 > 
-
-#### identifier-pattern {#identifier-pattern}
-> *标识符模式* → [*标识符*](./02_Lexical_Structure.md#identifier)
+> #### identifier-pattern {#identifier-pattern}
+> *标识符模式* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
 
 ## 值绑定模式（Value-Binding Pattern） {#value-binding-pattern}
@@ -83,9 +81,8 @@ case let (x, y):
 
 > 值绑定模式语法
 > 
-
-#### value-binding-pattern {#value-binding-pattern}
-> *值绑定模式* → **var** [*模式*](#pattern) | **let** [*模式*](#pattern)
+> #### value-binding-pattern {#value-binding-pattern}
+> *值绑定模式* → **var** [模式](#pattern) | **let** [模式](#pattern)
 > 
 
 ## 元组模式 {#tuple-pattern}
@@ -113,17 +110,15 @@ let (a): Int = 2 // a: Int = 2
 
 > 元组模式语法
 > 
-
-#### tuple-pattern {#tuple-pattern}
-> *元组模式* → **(** [*元组模式元素列表*](#tuple-pattern-element-list)<sub>可选</sub> **)**
+> #### tuple-pattern {#tuple-pattern}
+> *元组模式* → **(** [元组模式元素列表](#tuple-pattern-element-list)<sub>可选</sub> **)**
 > 
 
 #### tuple-pattern-element-list {#tuple-pattern-element-list}
-> *元组模式元素列表* → [*元组模式元素*](#tuple-pattern-element) | [*元组模式元素*](#tuple-pattern-element)  **,** [*元组模式元素列表*](#tuple-pattern-element-list)
+> *元组模式元素列表* → [元组模式元素](#tuple-pattern-element) | [元组模式元素](#tuple-pattern-element)  **,** [元组模式元素列表](#tuple-pattern-element-list)
 > 
-
-#### tuple-pattern-element {#tuple-pattern-element}
-> *元组模式元素* → [*模式*](#pattern)
+> #### tuple-pattern-element {#tuple-pattern-element}
+> *元组模式元素* → [模式](#pattern)
 > 
 
 ## 枚举用例模式（Enumeration Case Pattern） {#enumeration-case-pattern}
@@ -131,11 +126,26 @@ let (a): Int = 2 // a: Int = 2
 
 如果你准备匹配的枚举用例有任何关联的值，则相应的枚举用例模式必须指定一个包含每个关联值元素的元组模式。关于使用 `switch` 语句来匹配包含关联值的枚举用例的例子，请参阅 [关联值](../02_language_guide/08_Enumerations.md#associated-values)。
 
+枚举用例模式同样会匹配那些被包装成可选值的用例。简化的语法能将可选模式过滤掉。注意，由于 `Optional` 是枚举实现的，`.none` 和 `.some` 都会作为枚举类型的用例出现在 switch 中。
+
+```swift
+enum SomeEnum { case left, right }
+let x: SomeEnum? = .left
+switch x {
+case .left:
+    print("Turn left")
+case .right:
+    print("Turn right")
+case nil:
+    print("Keep going straight")
+}
+// 打印 "Turn left"
+```
+
 > 枚举用例模式语法
 > 
-
-#### enum-case-pattern {#enum-case-pattern}
-> *枚举用例模式* → [*类型标识*](./03_Types.md#type-identifier)<sub>可选</sub> **.** [*枚举用例名*](./06-Declarations.md#enum-case-name) [*元组模式*](#tuple-pattern)<sub>可选</sub>
+> #### enum-case-pattern {#enum-case-pattern}
+> *枚举用例模式* → [类型标识](./03_Types.md#type-identifier)<sub>可选</sub> **.** [枚举用例名](./06-Declarations.md#enum-case-name) [元组模式](#tuple-pattern)<sub>可选</sub>
 > 
 
 ## 可选模式（Optional Pattern） {#optional-pattern}
@@ -171,9 +181,8 @@ for case let number? in arrayOfOptinalInts {
 
 > 可选模式语法
 > 
-
-#### optional-pattern {#optional-pattern}
-> *可选模式* → [*标识符模式*](./03_Types.md#type-identifier) **?**
+> #### optional-pattern {#optional-pattern}
+> *可选模式* → [标识符模式](./03_Types.md#type-identifier) **?**
 > 
 
 ## 类型转换模式（Type-Casting Patterns） {#type-casting-patterns}
@@ -192,17 +201,14 @@ for case let number? in arrayOfOptinalInts {
 
 > 类型转换模式语法
 > 
-
-#### type-casting-pattern {#type-casting-pattern}
-> *类型转换模式* → [*is 模式*](#is-pattern) | [*as 模式*](#as-pattern)
+> #### type-casting-pattern {#type-casting-pattern}
+> *类型转换模式* → [is 模式](#is-pattern) | [as 模式](#as-pattern)
 > 
-
-#### is-pattern {#is-pattern}
-> *is 模式* → **is** [*类型*](./03_Types.md#type)
+> #### is-pattern {#is-pattern}
+> *is 模式* → **is** [类型](./03_Types.md#type)
 > 
-
-#### as-pattern {#as-pattern}
-> *as 模式* → [*模式*](#pattern) **as** [*类型*](03-Types.md#type)
+> #### as-pattern {#as-pattern}
+> *as 模式* → [模式](#pattern) **as** [类型](03-Types.md#type)
 > 
 
 ## 表达式模式（Expression Pattern） {#expression-pattern}
@@ -242,7 +248,6 @@ default:
 
 > 表达式模式语法
 > 
-
-#### expression-pattern {#expression-pattern}
-> *表达式模式* → [*表达式*](./04_Expressions.md#expression)
+> #### expression-pattern {#expression-pattern}
+> *表达式模式* → [表达式](./04_Expressions.md#expression)
 > 

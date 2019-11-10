@@ -1,13 +1,17 @@
 # Swift 文档修订历史
 
-### 2019-06-03
+### 2019-09-10
 
 * 更新至 Swift 5.1。
-* 在 [不透明类型](../02_language_guide/23_Opaque_Types.md) 篇章中新增了有关函数返回值遵循指定协议，而不需要提供指定返回类型的内容。
-* 新增 [隐式返回的函数](../02_language_guide/06_Functions.md#functions-with-an-implicit-return) 和 [简化 Getter 声明](../02-language-guide/10-Properties.md#shorthand-getter-declaration) 章节，其中包含函数省略 `return` 的内容。
-* 在 [类型下标](../02_language_guide/12_Subscripts.md#type-subscripts) 章节中新增有关在类型中使用下标的内容。
+* 在 [不透明类型](../02_language_guide/27_Opaque_Types.md) 篇章中新增了有关函数返回值遵循指定协议，而不需要提供指定返回类型的内容。
+* 在 [属性包装器](../02_language_guide/10_Properties.md#property-wrappers) 章节中新增了有关属性包装器的内容。
+* 在 [冻结](../03_language_reference/07_Attributes.md#frozen) 章节中新增了有关因库演变而需要的枚举和结构体冻结。
+* 新增 [隐式返回的函数](../02_language_guide/06_Functions.md#functions-with-an-implicit-return) 和 [简化 Getter 声明](../02_language_guide/10_Properties.md#shorthand-getter-declaration) 章节，其中包含函数省略 `return` 的内容。
+* 在 [类型下标](../02_language_guide/12_Subscripts.md#type-subscripts) 章节中新增了有关在类型中使用下标的内容。
+* 更新 [枚举 Case 模式匹配](../03_language_reference/08_Patterns.md#enumeration-case-pattern) 章节，现在枚举 case 模式匹配支持匹配可选值。
 * 更新 [结构体的逐一成员构造器](../02_language_guide/14_Initialization.md#memberwise-initializers-for-structure-types) 章节，现在逐一成员构造器支持在属性有默认值时省略形参。
 * 在 [动态查找成员](../03_language_reference/07_Attributes.md#dynamicmemberlookup) 章节中新增了有关在运行时用 key path 查找动态成员的内容。
+* 在 [条件编译代码块](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 中的目标环境里添加了 `macCatalyst`。
 * 更新 [自身类型](../03_language_reference/03_Types.md#self-type-h) 章节，现在 `Self` 可以指向当前类，结构体或者枚举声明时的类型。
 
 ### 2019-03-25

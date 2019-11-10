@@ -273,7 +273,7 @@ let possiblePlanet = Planet(rawValue: 7)
 
 > 注意
 > 
-> 原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见 [可失败构造器](../03_language_reference/05_Declarations.html#failable-initializers)。
+> 原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参见 [可失败构造器](../03_language_reference/06_Declarations.md#failable-initializers)。
 
 如果你试图寻找一个位置为 `11` 的行星，通过原始值构造器返回的可选 `Planet` 值将是 `nil`：
 
