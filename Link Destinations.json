@@ -11,6 +11,7 @@
     "//apple_ref/doc/uid/TP40014216-CH6": "https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6",
     "//apple_ref/doc/uid/TP40014216-CH7-ID10": "https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10",
     "//apple_ref/doc/uid/TP40016497": "https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html",
+    "//apple_ref/fake/XcodeHelp/BuildSettings": "https://help.apple.com/xcode/mac/current/#/dev04b3a04ba",
     "//apple_ref/swift/cl/s:s7KeyPathC": "https://developer.apple.com/documentation/swift/keypath",
     "//apple_ref/swift/fake/CaseIterable": "https://developer.apple.com/documentation/swift/caseiterable",
     "//apple_ref/swift/fake/ExpressibleByArrayLiteral": "https://developer.apple.com/documentation/swift/expressiblebyarrayliteral",
@@ -136,6 +137,7 @@
     "attributes-dynamiccallable": "ID603",
     "attributes-dynamicmemberlookup": "ID585",
     "attributes-escaping": "ID601",
+    "attributes-frozen": "ID620",
     "attributes-gkinspectable": "ID586",
     "attributes-inlinable": "ID587",
     "attributes-nonobjc": "ID588",
@@ -144,6 +146,7 @@
     "attributes-nsmanaged": "ID591",
     "attributes-objc": "ID592",
     "attributes-objcmembers": "ID593",
+    "attributes-propertywrapper": "ID621",
     "attributes-requires-stored-property-inits": "ID594",
     "attributes-switchcaseattributes": "ID604",
     "attributes-testable": "ID595",
@@ -499,7 +502,10 @@
     "properties-globalandlocalvariables": "ID263",
     "properties-implicitreturn": "ID608",
     "properties-lazystoredproperties": "ID257",
+    "properties-projectedvalues": "ID619",
     "properties-propertyobservers": "ID262",
+    "properties-propertywrapper": "ID617",
+    "properties-propertywrapperinit": "ID618",
     "properties-queryingandsettingtypeproperties": "ID266",
     "properties-readonlycomputedproperties": "ID261",
     "properties-shorthandsetterdeclaration": "ID260",
@@ -671,5 +677,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 617
+  "next_id": 622
 }

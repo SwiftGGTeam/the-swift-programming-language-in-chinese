@@ -362,10 +362,10 @@ the error propagates to the surrounding scope.
 However, the propagated error
 must be handled by *some* surrounding scope.
 In a nonthrowing function,
-an enclosing ``do``-``catch`` clause
+an enclosing ``do``-``catch`` statement
 must handle the error.
 In a throwing function,
-either an enclosing ``do``-``catch`` clause
+either an enclosing ``do``-``catch`` statement
 or the caller
 must handle the error.
 If the error propagates to the top-level scope

@@ -429,6 +429,153 @@ For example:
     << 381
 
 
+.. _Attributes_frozen:
+
+frozen
+~~~~~~
+
+Apply this attribute to a structure or enumeration declaration
+to restrict the kinds of changes you can make to the type.
+This attribute is allowed only when compiling in library evolution mode.
+Future versions of the library can't change the declaration
+by adding, removing, or reordering
+an enumeration's cases
+or a structure's stored instance properties.
+These changes are allowed on nonfrozen types,
+but they break ABI compatibility for frozen types.
+
+.. note::
+
+    When the compiler isn't in library evolution mode,
+    all structures and enumerations are implicitly frozen,
+    and you can't use this attribute.
+
+.. assertion:: cant-use-frozen-without-evolution
+    :compile: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !! @frozen public enum E { case x, y }
+    !! ^~~~~~~~
+    ---
+    // After the bug below is fixed, the following warning should appear:
+    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    // !! @frozen public struct S { var a: Int = 10 }
+    // !! ^~~~~~~~
+
+.. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
+
+.. assertion:: frozen-is-fine-with-evolution
+    :compile: true
+    :evolution: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+
+In library evolution mode,
+code that interacts with members of nonfrozen structures and enumerations
+is compiled in a way that allows it to continue working without recompiling
+even if a future version of the library
+adds, removes, or reorders some of that type's members.
+The compiler makes this possible using techniques like
+looking up information at runtime
+and adding a layer of indirection.
+Marking a structure or enumeration as frozen
+gives up this flexibility to gain performance:
+Future versions of the library can make only limited changes to the type,
+but the compiler can make additional optimizations
+in code that interacts with the type's members.
+
+Frozen types,
+the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases
+must be public or marked with the ``usableFromInline`` attribute.
+The properties of a frozen structure can't have property observers,
+and expressions that provide the initial value for stored instance properties
+must follow the same restrictions as inlinable functions,
+as discussed in :ref:`Attributes_inlinable`.
+
+.. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
+    :compile: true
+    :evolution: true
+
+    >> public protocol P { }
+    >> private struct PrivateStruct: P { }
+    >>         public struct S1 { var fine: P = PrivateStruct() }
+    >> @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !! /tmp/swifttest.swift:4:42: error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !!                                          ^
+    !! /tmp/swifttest.swift:2:16: note: struct 'PrivateStruct' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !!                ^
+
+To enable library evolution mode on the command line,
+pass the ``-enable-library-evolution`` option to the Swift compiler.
+To enable it in Xcode,
+set the "Build Libraries for Distribution" build setting
+(``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes,
+as described in `Xcode Help <//apple_ref/fake/XcodeHelp/BuildSettings>`_.
+
+.. This is the first time we're talking about a specific compiler flag/option.
+   In the long term, the discussion of library evololution mode
+   will need to move to a new chapter in the guide
+   that also talks about things like @available and ABI.
+   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
+
+A switch statement over a frozen enumeration doesn't require a ``default`` case,
+as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
+Including a ``default`` or ``@unknown default`` case
+when switching over a frozen enumeration
+produces a warning because that code is never executed.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum
+    :evolution: true
+
+    >> public enum E { case x, y }
+    >> @frozen public enum F { case x, y }
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test1
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let e = NoUnknownDefaultOverFrozenEnum.E.x
+    >>     switch e {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // Note that there's no warning -- this is fine because E isn't frozen.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test2
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let f = NoUnknownDefaultOverFrozenEnum.F.x
+    >>     switch f {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // --- Main warning ---
+    !! /tmp/sourcefile_0.swift:7:18: warning: case is already handled by previous patterns; consider removing it
+    !! @unknown default: print(0)
+    !! ~~~~~~~~~^~~~~~~~~~~~~~~~~
+    !! /tmp/sourcefile_0.swift:7:9: warning: default will never be executed
+    !! @unknown default: print(0)
+    !! ^
+    // --- Junk/ancillary warnings ---
+    !! /tmp/sourcefile_0.swift:4:12: warning: switch condition evaluates to a constant
+    !! switch f {
+    !! ^
+    !! /tmp/sourcefile_0.swift:6:24: note: will never be executed
+    !! case .y: print(8)
+    !! ^
+
+
 .. _Attributes_GKInspectable:
 
 GKInspectable
@@ -692,6 +839,145 @@ can increase your binary size and adversely affect performance.
    because of the larger symbol table slowing dyld down.
 
 
+.. _Attributes_propertyWrapper:
+
+propertyWrapper
+~~~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper.
+When you apply this attribute to a type,
+you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or enumeration
+to wrap access to the property through an instance of the wrapper type.
+Local and global variables can't use property wrappers.
+
+.. assertion:: property-wrappers-cant-go-on-variables
+    :compile: true
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper let d: Int = 20
+    >>     print(d)
+    >> }
+    !! /tmp/swifttest.swift:3:5: error: property wrappers are not yet supported on local properties
+    !! @UselessWrapper let d: Int = 20
+    !! ^
+
+The wrapper must define a ``wrappedValue`` instance property.
+The *wrapped value* of the property
+is the value that the getter and setter for this property expose.
+In most cases, ``wrappedValue`` is a computed value,
+but it can be a stored value instead.
+The wrapper is responsible for defining and managing
+any underlying storage needed by its wrapped value.
+The compiler synthesizes storage for the instance of the wrapper type
+by prefixing the name of the wrapped property with an underscore (``_``) ---
+for example, the wrapper for ``someProperty`` is stored as ``_someProperty``.
+The synthesized storage for the wrapper has an access control level of ``private``.
+
+A property that has a property wrapper
+can include ``willSet`` and ``didSet`` blocks,
+but it can't override the compiler-synthesized ``get`` or ``set`` blocks.
+
+Swift provides two forms of syntactic sugar
+for initialization of a property wrapper.
+You can use assignment syntax in the definition of a wrapped value
+to pass the expression on the right-hand side of the assignment
+as the argument to the ``wrappedValue`` parameter
+of the property wrapper's initializer.
+You can also provide arguments to the attribute
+when you apply it to a property,
+and those arguments are passed to the property wrapper's initializer.
+For example, in the code below,
+``SomeStruct`` calls each of the initializers that ``SomeWrapper`` defines.
+
+.. testcode:: propertyWrapper
+    :compile: true
+
+    -> @propertyWrapper
+    -> struct SomeWrapper {
+           var wrappedValue: Int
+           var someValue: Double
+           init() {
+               self.wrappedValue = 100
+               self.someValue = 12.3
+           }
+           init(wrappedValue: Int) {
+               self.wrappedValue = wrappedValue
+               self.someValue = 45.6
+           }
+           init(wrappedValue value: Int, custom: Double) {
+               self.wrappedValue = value
+               self.someValue = custom
+           }
+       }
+    ---
+    -> struct SomeStruct {
+           // Uses init()
+           @SomeWrapper var a: Int
+    ---
+           // Uses init(wrappedValue:)
+           @SomeWrapper var b = 10
+    ---
+           // Both use init(wrappedValue:custom:)
+           @SomeWrapper(custom: 98.7) var c = 30
+           @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+       }
+
+.. Comments in the SomeStruct part of the example above
+   are on the line before instead of at the end of the line
+   because the last example gets too long to fit on one line.
+
+.. Initialization of a wrapped property using ``init(wrappedValue:)``
+   can be split across multiple statements.
+   However, you can only see that behavior using local variables
+   which currently can't have a property wrapper.
+   It would look like this:
+
+   @SomeWrapper var e
+   e = 20  // Uses init(wrappedValue:)
+   e = 30  // Uses the property setter
+
+The *projected value* for a wrapped property is a second value
+that a property wrapper can use to expose additional functionality.
+The author of a property wrapper type
+is responsible for determining the meaning of its projected value
+and defining the interface that the projected value exposes.
+To project a value from a property wrapper,
+define a ``projectedValue`` instance property on the wrapper type.
+The compiler synthesizes an identifier for the projected value
+by prefixing the name of the wrapped property with a dollar sign (``$``) ---
+for example, the projected value for ``someProperty`` is ``$someProperty``.
+The projected value has the same access control level
+as the original wrapped property.
+
+.. testcode:: propertyWrapper-projection
+    :compile: true
+
+    -> @propertyWrapper
+    -> struct WrapperWithProjection {
+        var wrappedValue: Int
+        var projectedValue: SomeProjection {
+            return SomeProjection(wrapper: self)
+        }
+    }
+    -> struct SomeProjection {
+        var wrapper: WrapperWithProjection
+    }
+    ---
+    -> struct SomeStruct {
+           @WrapperWithProjection var x = 123
+       }
+    -> let s = SomeStruct()
+    >> _ =
+    -> s.x           // Int value
+    >> _ =
+    -> s.$x          // SomeProjection value
+    >> _ =
+    -> s.$x.wrapper  // WrapperWithProjection value
+
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
@@ -770,6 +1056,11 @@ initializer, or deinitializer declaration
 to allow that symbol to be used in inlinable code
 that's defined in the same module as the declaration.
 The declaration must have the ``internal`` access level modifier.
+A structure or class marked ``usableFromInline``
+can use only types that are public or ``usableFromInline`` for its properties.
+An enumeration marked ``usableFromInline``
+can use only types that are public or ``usableFromInline``
+for the raw values and associated values of its cases.
 
 Like the ``public`` access level modifier,
 this attribute

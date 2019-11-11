@@ -1,10 +1,7 @@
 Document Revision History
 =========================
 
-.. Expanded discussion in :ref:`Patterns_EnumerationCasePattern`,
-   now that an enumeration case pattern can match an optional value.
-
-**2019-06-03**
+**2019-09-10**
 
 * Updated for Swift 5.1.
 
@@ -13,12 +10,22 @@ Document Revision History
   instead of providing a specific named return type,
   to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
 
+* Added information about property wrappers
+  to the :ref:`Properties_PropertyWrapper` section.
+
+* Added information enumerations and structures
+  that are frozen for library evolution
+  to the :ref:`Attributes_frozen` section.
+
 * Added the :ref:`Functions_ImplicitReturns`
   and :ref:`Properties_ImplicitReturn` sections
   with information about functions that omit ``return``.
 
 * Added information about using subscripts on types
   to the :ref:`Subscripts_TypeSubscripts` section.
+
+* Updated the :ref:`Patterns_EnumerationCasePattern` section,
+  now that an enumeration case pattern can match an optional value.
 
 * Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
   now that memberwise initializers support
@@ -27,6 +34,9 @@ Document Revision History
 * Added information about dynamic members
   that are looked up by key path at run time
   to the :ref:`Attributes_dynamicMemberLookup` section.
+
+* Added ``macCatalyst`` to the list of target environments
+  in :ref:`Statements_BuildConfigurationStatement`.
 
 * Updated the :ref:`Types_SelfType` section,
   now that ``Self`` can be used to refer to the type
