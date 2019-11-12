@@ -30,9 +30,9 @@ such as items in an array, ranges of numbers, or characters in a string.
 This example uses a ``for``-``in`` loop to iterate over the items in an array:
 
 .. testcode:: forLoops
+   :compile: true
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
          print("Hello, \(name)!")
       }
@@ -50,9 +50,9 @@ In the code example below, the dictionary's keys are decomposed into a constant 
 and the dictionary's values are decomposed into a constant called ``legCount``.
 
 .. testcode:: forLoops
+   :compile: true
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["cat": 4, "ant": 6, "spider": 8]
    -> for (animalName, legCount) in numberOfLegs {
          print("\(animalName)s have \(legCount) legs")
       }
@@ -75,6 +75,7 @@ You can also use ``for``-``in`` loops with numeric ranges.
 This example prints the first few entries in a five-times table:
 
 .. testcode:: forLoops
+   :compile: true
 
    -> for index in 1...5 {
          print("\(index) times 5 is \(index * 5)")
@@ -107,13 +108,11 @@ If you don't need each value from a sequence,
 you can ignore the values by using an underscore in place of a variable name.
 
 .. testcode:: forLoops
+   :compile: true
 
    -> let base = 3
-   << // base : Int = 3
    -> let power = 10
-   << // power : Int = 10
    -> var answer = 1
-   << // answer : Int = 1
    -> for _ in 1...power {
          answer *= base
       }
@@ -144,11 +143,10 @@ lower bound but not the upper bound.
 For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 
 .. testcode:: forLoops
+   :compile: true
 
    -> let minutes = 60
-   << // minutes : Int = 60
    >> var result = [Int]()
-   << // result : [Int] = []
    -> for tickMark in 0..<minutes {
          // render the tick mark each minute (60 times)
    >>    result.append(tickMark)
@@ -161,9 +159,9 @@ They could prefer one mark every ``5`` minutes instead.
 Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 
 .. testcode:: forLoops
+   :compile: true
 
    -> let minuteInterval = 5
-   << // minuteInterval : Int = 5
    >> result = [Int]()
    -> for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
          // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
@@ -177,9 +175,7 @@ Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
 .. testcode:: forLoops
 
    -> let hours = 12
-   << // hours : Int = 12
    -> let hourInterval = 3
-   << // hourInterval : Int = 3
    -> for tickMark in stride(from: 3, through: hours, by: hourInterval) {
          // render the tick mark every 3 hours (3, 6, 9, 12)
    >>    print(tickMark)
@@ -256,17 +252,18 @@ Because the players start off the board, on "square zero",
 the board is initialized with 26 zero ``Int`` values, not 25.
 
 .. testcode:: snakesAndLadders1
+   :compile: true
 
    -> let finalSquare = 25
-   << // finalSquare : Int = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
-   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
 whereas squares with a snake head have a negative number to move you back down the board.
 
 .. testcode:: snakesAndLadders1
+   :compile: true
 
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -284,13 +281,11 @@ and numbers lower than ``10`` are padded with zeros.
 (Neither stylistic technique is strictly necessary,
 but they lead to neater code.)
 
-
 .. testcode:: snakesAndLadders1
+   :compile: true
 
    -> var square = 0
-   << // square : Int = 0
    -> var diceRoll = 0
-   << // diceRoll : Int = 0
    -> while square < finalSquare {
          // roll the dice
          diceRoll += 1
@@ -402,17 +397,15 @@ The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in exactly the same way as with a ``while`` loop.
 
 .. testcode:: snakesAndLadders2
+   :compile: true
 
    -> let finalSquare = 25
-   << // finalSquare : Int = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
-   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
-   << // square : Int = 0
    -> var diceRoll = 0
-   << // diceRoll : Int = 0
 
 In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
@@ -424,6 +417,7 @@ At the start of the game, the player is on “square zero”.
 ``board[0]`` always equals ``0`` and has no effect.
 
 .. testcode:: snakesAndLadders2
+   :compile: true
 
    -> repeat {
          // move up or down for a snake or ladder
@@ -513,9 +507,9 @@ the ``if`` statement has a single ``if`` condition.
 It executes a set of statements only if that condition is ``true``.
 
 .. testcode:: ifElse
+   :compile: true
 
    -> var temperatureInFahrenheit = 30
-   << // temperatureInFahrenheit : Int = 30
    -> if temperatureInFahrenheit <= 32 {
          print("It's very cold. Consider wearing a scarf.")
       }
@@ -534,6 +528,7 @@ for situations when the ``if`` condition is ``false``.
 These statements are indicated by the ``else`` keyword.
 
 .. testcode:: ifElse
+   :compile: true
 
    -> temperatureInFahrenheit = 40
    -> if temperatureInFahrenheit <= 32 {
@@ -552,6 +547,7 @@ You can chain multiple ``if`` statements together
 to consider additional clauses.
 
 .. testcode:: ifElse
+   :compile: true
 
    -> temperatureInFahrenheit = 90
    -> if temperatureInFahrenheit <= 32 {
@@ -571,6 +567,7 @@ The final ``else`` clause is optional, however,
 and can be excluded if the set of conditions does not need to be complete.
 
 .. testcode:: ifElse
+   :compile: true
 
    -> temperatureInFahrenheit = 72
    -> if temperatureInFahrenheit <= 32 {
@@ -632,9 +629,9 @@ This example uses a ``switch`` statement to consider
 a single lowercase character called ``someCharacter``:
 
 .. testcode:: switch
+   :compile: true
 
    -> let someCharacter: Character = "z"
-   << // someCharacter : Character = "z"
    -> switch someCharacter {
          case "a":
             print("The first letter of the alphabet")
@@ -679,9 +676,9 @@ The body of each case *must* contain at least one executable statement.
 It is not valid to write the following code, because the first case is empty:
 
 .. testcode:: noFallthrough
+   :compile: true
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
          case "a": // Invalid, the case has an empty body
          case "A":
@@ -689,7 +686,7 @@ It is not valid to write the following code, because the first case is empty:
          default:
             print("Not the letter A")
       }
-   !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
+   !$ error: 'case' label in a 'switch' should have at least one executable statement
    !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
@@ -708,9 +705,9 @@ combine the two values into a compound case,
 separating the values with commas.
 
 .. testcode:: compoundCaseInsteadOfFallthrough
+   :compile: true
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
          case "a", "A":
             print("The letter A")
@@ -787,9 +784,9 @@ expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows the example.
 
 .. testcode:: tuples
+   :compile: true
 
    -> let somePoint = (1, 1)
-   << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
             print("\(somePoint) is at the origin")
@@ -836,9 +833,9 @@ expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows:
 
 .. testcode:: valueBindings
+   :compile: true
 
    -> let anotherPoint = (2, 0)
-   << // anotherPoint : (Int, Int) = (2, 0)
    -> switch anotherPoint {
          case (let x, 0):
             print("on the x-axis with an x value of \(x)")
@@ -887,9 +884,9 @@ A ``switch`` case can use a ``where`` clause to check for additional conditions.
 The example below categorizes an (x, y) point on the following graph:
 
 .. testcode:: where
+   :compile: true
 
    -> let yetAnotherPoint = (1, -1)
-   << // yetAnotherPoint : (Int, Int) = (1, -1)
    -> switch yetAnotherPoint {
          case let (x, y) where x == y:
             print("(\(x), \(y)) is on the line x == y")
@@ -931,9 +928,9 @@ The patterns can be written over multiple lines if the list is long.
 For example:
 
 .. testcode:: compound-switch-case
+   :compile: true
 
    -> let someCharacter: Character = "e"
-   << // someCharacter : Character = "e"
    -> switch someCharacter {
           case "a", "e", "i", "o", "u":
               print("\(someCharacter) is a vowel")
@@ -962,9 +959,9 @@ can always access a value for the bindings
 and that the value always has the same type.
 
 .. testcode:: compound-switch-case
+    :compile: true
 
     -> let stillAnotherPoint = (9, 0)
-    << // stillAnotherPoint : (Int, Int) = (9, 0)
     -> switch stillAnotherPoint {
            case (let distance, 0), (0, let distance):
                print("On an axis, \(distance) from the origin")
@@ -1015,13 +1012,11 @@ The following example removes all vowels and spaces from a lowercase string
 to create a cryptic puzzle phrase:
 
 .. testcode:: continue
+   :compile: true
 
    -> let puzzleInput = "great minds think alike"
-   << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
-   << // puzzleOutput : String = ""
    -> let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
-   << // charactersToRemove : [Character] = ["a", "e", "i", "o", "u", " "]
    -> for character in puzzleInput {
          if charactersToRemove.contains(character) {
             continue
@@ -1088,11 +1083,10 @@ and determines whether it represents a number symbol in one of four languages.
 For brevity, multiple values are covered in a single ``switch`` case.
 
 .. testcode:: breakInASwitchStatement
+   :compile: true
 
    -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
-   << // numberSymbol : Character = "三"
    -> var possibleIntegerValue: Int?
-   << // possibleIntegerValue : Int? = nil
    -> switch numberSymbol {
          case "1", "١", "一", "๑":
             possibleIntegerValue = 1
@@ -1154,11 +1148,10 @@ you can opt in to this behavior on a case-by-case basis with the ``fallthrough``
 The example below uses ``fallthrough`` to create a textual description of a number.
 
 .. testcode:: fallthrough
+   :compile: true
 
    -> let integerToDescribe = 5
-   << // integerToDescribe : Int = 5
    -> var description = "The number \(integerToDescribe) is"
-   << // description : String = "The number 5 is"
    -> switch integerToDescribe {
          case 2, 3, 5, 7, 11, 13, 17, 19:
             description += " a prime number, and also"
@@ -1252,17 +1245,15 @@ The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in the same way as before:
 
 .. testcode:: labels
+   :compile: true
 
    -> let finalSquare = 25
-   << // finalSquare : Int = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
-   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
-   << // square : Int = 0
    -> var diceRoll = 0
-   << // diceRoll : Int = 0
 
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
@@ -1273,6 +1264,7 @@ The ``while`` loop's condition is ``while square != finalSquare``,
 to reflect that you must land exactly on square 25.
 
 .. testcode:: labels
+   :compile: true
 
    -> gameLoop: while square != finalSquare {
          diceRoll += 1
@@ -1389,19 +1381,20 @@ a ``guard`` statement always has an ``else`` clause ---
 the code inside the ``else`` clause is executed if the condition is not true.
 
 .. testcode:: guard
+    :compile: true
 
     -> func greet(person: [String: String]) {
            guard let name = person["name"] else {
                return
            }
-
+    ---
            print("Hello \(name)!")
-
+    ---
            guard let location = person["location"] else {
                print("I hope the weather is nice near you.")
                return
            }
-
+    ---
            print("I hope the weather is nice in \(location).")
        }
     ---
@@ -1458,6 +1451,7 @@ The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
+   :compile: true
 
    -> if #available(iOS 10, macOS 10.12, *) {
           // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
