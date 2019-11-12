@@ -87,9 +87,9 @@ You can create an empty array of a certain type
 using initializer syntax:
 
 .. testcode:: arraysEmpty
+   :compile: true
 
    -> var someInts = [Int]()
-   << // someInts : [Int] = []
    -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
@@ -103,6 +103,7 @@ which is written as ``[]``
 (an empty pair of square brackets):
 
 .. testcode:: arraysEmpty
+   :compile: true
 
    -> someInts.append(3)
    /> someInts now contains \(someInts.count) value of type Int
@@ -125,7 +126,6 @@ and the number of times that value is repeated in the new array (called ``count`
 .. testcode:: arraysEmpty
 
    -> var threeDoubles = Array(repeating: 0.0, count: 3)
-   << // threeDoubles : [Double] = [0.0, 0.0, 0.0]
    /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
    </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 
@@ -141,12 +141,10 @@ The new array's type is inferred from the type of the two arrays you add togethe
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
-   << // anotherThreeDoubles : [Double] = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
    ---
    -> var sixDoubles = threeDoubles + anotherThreeDoubles
-   << // sixDoubles : [Double] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
    /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
    </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
@@ -177,9 +175,9 @@ surrounded by a pair of square brackets:
 The example below creates an array called ``shoppingList`` to store ``String`` values:
 
 .. testcode:: arrays
+   :compile: true
 
    -> var shoppingList: [String] = ["Eggs", "Milk"]
-   << // shoppingList : [String] = ["Eggs", "Milk"]
    // shoppingList has been initialized with two initial items
 
 The ``shoppingList`` variable is declared as
@@ -207,9 +205,9 @@ if you're initializing it with an array literal containing values of the same ty
 The initialization of ``shoppingList`` could have been written in a shorter form instead:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> var shoppingList = ["Eggs", "Milk"]
-   << // shoppingList : [String] = ["Eggs", "Milk"]
 
 Because all values in the array literal are of the same type,
 Swift can infer that ``[String]`` is
@@ -227,6 +225,7 @@ or by using subscript syntax.
 To find out the number of items in an array, check its read-only ``count`` property:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> print("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
@@ -235,6 +234,7 @@ Use the Boolean ``isEmpty`` property
 as a shortcut for checking whether the ``count`` property is equal to ``0``:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> if shoppingList.isEmpty {
          print("The shopping list is empty.")
@@ -246,6 +246,7 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 You can add a new item to the end of an array by calling the array's ``append(_:)`` method:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> shoppingList.append("Flour")
    /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
@@ -255,6 +256,7 @@ Alternatively, append an array of one or more compatible items
 with the addition assignment operator (``+=``):
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> shoppingList += ["Baking Powder"]
    /> shoppingList now contains \(shoppingList.count) items
@@ -268,9 +270,9 @@ passing the index of the value you want to retrieve within square brackets
 immediately after the name of the array:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> var firstItem = shoppingList[0]
-   << // firstItem : String = "Eggs"
    /> firstItem is equal to \"\(firstItem)\"
    </ firstItem is equal to "Eggs"
 
@@ -282,6 +284,7 @@ immediately after the name of the array:
 You can use subscript syntax to change an existing value at a given index:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> shoppingList[0] = "Six eggs"
    /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
@@ -303,6 +306,7 @@ The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butt
 with ``"Bananas"`` and ``"Apples"``:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> shoppingList[4...6] = ["Bananas", "Apples"]
    /> shoppingList now contains \(shoppingList.count) items
@@ -312,6 +316,7 @@ To insert an item into the array at a specified index,
 call the array's ``insert(_:at:)`` method:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> shoppingList.insert("Maple Syrup", at: 0)
    /> shoppingList now contains \(shoppingList.count) items
@@ -328,9 +333,9 @@ This method removes the item at the specified index and returns the removed item
 (although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> let mapleSyrup = shoppingList.remove(at: 0)
-   << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
    </ shoppingList now contains 6 items, and no Maple Syrup
@@ -364,9 +369,9 @@ to avoid the need to query the array's ``count`` property.
 Like the ``remove(at:)`` method, ``removeLast()`` returns the removed item:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> let apples = shoppingList.removeLast()
-   << // apples : String = "Apples"
    // the last item in the array has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no apples
    </ shoppingList now contains 5 items, and no apples
@@ -381,6 +386,7 @@ Iterating Over an Array
 You can iterate over the entire set of values in an array with the ``for``-``in`` loop:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> for item in shoppingList {
          print(item)
@@ -403,6 +409,7 @@ You can decompose the tuple into temporary constants or variables
 as part of the iteration:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> for (index, value) in shoppingList.enumerated() {
          print("Item \(index + 1): \(value)")
@@ -494,9 +501,9 @@ You can create an empty set of a certain type
 using initializer syntax:
 
 .. testcode:: setsEmpty
+   :compile: true
 
    -> var letters = Set<Character>()
-   << // letters : Set<Character> = Set([])
    -> print("letters is of type Set<Character> with \(letters.count) items.")
    <- letters is of type Set<Character> with 0 items.
 
@@ -510,9 +517,9 @@ such as a function argument or an already typed variable or constant,
 you can create an empty set with an empty array literal:
 
 .. testcode:: setsEmpty
+   :compile: true
 
    -> letters.insert("a")
-   << // r0 : (inserted: Bool, memberAfterInsert: Character) = (inserted: true, memberAfterInsert: "a")
    /> letters now contains \(letters.count) value of type Character
    </ letters now contains 1 value of type Character
    -> letters = []
@@ -530,9 +537,9 @@ as a shorthand way to write one or more values as a set collection.
 The example below creates a set called ``favoriteGenres`` to store ``String`` values:
 
 .. testcode:: sets
+   :compile: true
 
    -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
    // favoriteGenres has been initialized with three initial items
 
 The ``favoriteGenres`` variable is declared as
@@ -557,9 +564,9 @@ that contains values of just one type.
 The initialization of ``favoriteGenres`` could have been written in a shorter form instead:
 
 .. testcode:: setsInferred
+   :compile: true
 
    -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
 
 Because all values in the array literal are of the same type,
 Swift can infer that ``Set<String>`` is
@@ -576,9 +583,9 @@ To find out the number of items in a set,
 check its read-only ``count`` property:
 
 .. testcode:: setUsage
+   :compile: true
 
    >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
-   << // favoriteGenres : Set<String> = Set(["Rock", "Hip hop", "Classical"])
    -> print("I have \(favoriteGenres.count) favorite music genres.")
    <- I have 3 favorite music genres.
 
@@ -586,6 +593,7 @@ Use the Boolean ``isEmpty`` property
 as a shortcut for checking whether the ``count`` property is equal to ``0``:
 
 .. testcode:: setUsage
+   :compile: true
 
    -> if favoriteGenres.isEmpty {
          print("As far as music goes, I'm not picky.")
@@ -597,9 +605,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
 You can add a new item into a set by calling the set's ``insert(_:)`` method:
 
 .. testcode:: setUsage
+   :compile: true
 
    -> favoriteGenres.insert("[Tool J]")
-   << // r0 : (inserted: Bool, memberAfterInsert: String) = (inserted: true, memberAfterInsert: "[Tool J]")
    /> favoriteGenres now contains \(favoriteGenres.count) items
    </ favoriteGenres now contains 4 items
 
@@ -610,6 +618,7 @@ or returns ``nil`` if the set did not contain it.
 Alternatively, all items in a set can be removed with its ``removeAll()`` method.
 
 .. testcode:: setUsage
+   :compile: true
 
    -> if let removedGenre = favoriteGenres.remove("Rock") {
          print("\(removedGenre)? I'm over it.")
@@ -621,6 +630,7 @@ Alternatively, all items in a set can be removed with its ``removeAll()`` method
 To check whether a set contains a particular item, use the ``contains(_:)`` method.
 
 .. testcode:: setUsage
+   :compile: true
 
    -> if favoriteGenres.contains("Funk") {
           print("I get up on the good foot.")
@@ -638,6 +648,7 @@ Iterating Over a Set
 You can iterate over the values in a set with a ``for``-``in`` loop.
 
 .. testcode:: setUsage
+   :compile: true
 
    -> for genre in favoriteGenres {
          print("\(genre)")
@@ -655,6 +666,7 @@ which returns the set's elements as an array
 sorted using the ``<`` operator.
 
 .. testcode:: setUsage
+   :compile: true
 
    -> for genre in favoriteGenres.sorted() {
          print("\(genre)")
@@ -692,26 +704,30 @@ with the results of various set operations represented by the shaded regions.
 * Use the ``subtracting(_:)`` method to create a new set with values not in the specified set.
 
 .. testcode:: setOperations
+   :compile: true
 
    -> let oddDigits: Set = [1, 3, 5, 7, 9]
-   << // oddDigits : Set<Int> = Set([1, 9, 3, 5, 7])
    -> let evenDigits: Set = [0, 2, 4, 6, 8]
-   << // evenDigits : Set<Int> = Set([6, 0, 2, 4, 8])
    -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-   << // singleDigitPrimeNumbers : Set<Int> = Set([2, 3, 5, 7])
    ---
+   >> let a =
    -> oddDigits.union(evenDigits).sorted()
-   << // r0 : [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+   >> assert(a == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+   >> let b =
    -> oddDigits.intersection(evenDigits).sorted()
-   << // r1 : [Int] = []
+   >> assert(b == [])
    // []
+   >> let c =
    -> oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
-   << // r2 : [Int] = [1, 9]
+   >> assert(c == [1, 9])
    // [1, 9]
+   >> let d =
    -> oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
-   << // r3 : [Int] = [1, 2, 9]
+   >> assert(d == [1, 2, 9])
    // [1, 2, 9]
+
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 
 .. _CollectionTypes_SetMembershipAndEquality:
@@ -738,24 +754,26 @@ because they share no elements in common.
 * Use the ``isDisjoint(with:)`` method to determine whether two sets have no values in common.
 
 .. testcode:: setOperations
+   :compile: true
 
    -> let houseAnimals: Set = ["🐶", "🐱"]
-   << // houseAnimals : Set<String> = Set(["🐶", "🐱"])
    -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
-   << // farmAnimals : Set<String> = Set(["🐑", "🐮", "🐔", "🐶", "🐱"])
    -> let cityAnimals: Set = ["🐦", "🐭"]
-   << // cityAnimals : Set<String> = Set(["🐭", "🐦"])
    ---
+   >> let aa =
    -> houseAnimals.isSubset(of: farmAnimals)
-   << // r4 : Bool = true
+   >> assert(aa == true)
    // true
+   >> let bb =
    -> farmAnimals.isSuperset(of: houseAnimals)
-   << // r5 : Bool = true
+   >> assert(bb == true)
    // true
+   >> let cc =
    -> farmAnimals.isDisjoint(with: cityAnimals)
-   << // r6 : Bool = true
+   >> assert(cc == true)
    // true
 
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 .. _CollectionTypes_Dictionaries:
 
@@ -789,6 +807,7 @@ where ``Key`` is the type of value that can be used as a dictionary key,
 and ``Value`` is the type of value that the dictionary stores for those keys.
 
 .. note::
+
    A dictionary ``Key`` type must conform to the ``Hashable`` protocol,
    like a set's value type.
 
@@ -807,9 +826,9 @@ As with arrays,
 you can create an empty ``Dictionary`` of a certain type by using initializer syntax:
 
 .. testcode:: dictionariesEmpty
+   :compile: true
 
    -> var namesOfIntegers = [Int: String]()
-   << // namesOfIntegers : [Int : String] = [:]
    // namesOfIntegers is an empty [Int: String] dictionary
 
 This example creates an empty dictionary of type ``[Int: String]``
@@ -822,6 +841,7 @@ which is written as ``[:]``
 (a colon inside a pair of square brackets):
 
 .. testcode:: dictionariesEmpty
+   :compile: true
 
    -> namesOfIntegers[16] = "sixteen"
    /> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
@@ -855,13 +875,15 @@ In this dictionary, the keys are three-letter International Air Transport Associ
 and the values are airport names:
 
 .. testcode:: dictionaries
+   :compile: true
 
    -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 The ``airports`` dictionary is declared as having a type of ``[String: String]``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
 and whose values are also of type ``String``”.
+
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
 
 .. note::
 
@@ -886,9 +908,9 @@ if you're initializing it with a dictionary literal whose keys and values have c
 The initialization of ``airports`` could have been written in a shorter form instead:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-   << // airports : [String : String] = ["DUB": "Dublin", "YYZ": "Toronto Pearson"]
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
@@ -908,6 +930,7 @@ As with an array, you find out the number of items in a ``Dictionary``
 by checking its read-only ``count`` property:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> print("The airports dictionary contains \(airports.count) items.")
    <- The airports dictionary contains 2 items.
@@ -916,6 +939,7 @@ Use the Boolean ``isEmpty`` property
 as a shortcut for checking whether the ``count`` property is equal to ``0``:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> if airports.isEmpty {
          print("The airports dictionary is empty.")
@@ -929,6 +953,7 @@ Use a new key of the appropriate type as the subscript index,
 and assign a new value of the appropriate type:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> airports["LHR"] = "London"
    /> the airports dictionary now contains \(airports.count) items
@@ -937,6 +962,7 @@ and assign a new value of the appropriate type:
 You can also use subscript syntax to change the value associated with a particular key:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> airports["LHR"] = "London Heathrow"
    /> the value for \"LHR\" has been changed to \"\(airports["LHR"]!)\"
@@ -961,6 +987,7 @@ This optional value contains the old value for that key if one existed before th
 or ``nil`` if no value existed:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
          print("The old value for DUB was \(oldValue).")
@@ -975,6 +1002,7 @@ the subscript returns an optional value containing the existing value for that k
 Otherwise, the subscript returns ``nil``:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> if let airportName = airports["DUB"] {
          print("The name of the airport is \(airportName).")
@@ -987,6 +1015,7 @@ You can use subscript syntax to remove a key-value pair from a dictionary
 by assigning a value of ``nil`` for that key:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> airports["APL"] = "Apple International"
    // "Apple International" is not the real airport for APL, so delete it
@@ -1007,6 +1036,7 @@ and returns the removed value,
 or returns ``nil`` if no value existed:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> if let removedValue = airports.removeValue(forKey: "DUB") {
          print("The removed airport's name is \(removedValue).")
@@ -1026,6 +1056,7 @@ and you can decompose the tuple's members into temporary constants or variables
 as part of the iteration:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> for (airportCode, airportName) in airports {
          print("\(airportCode): \(airportName)")
@@ -1039,6 +1070,7 @@ You can also retrieve an iterable collection of a dictionary's keys or values
 by accessing its ``keys`` and ``values`` properties:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> for airportCode in airports.keys {
          print("Airport code: \(airportCode)")
@@ -1057,14 +1089,13 @@ with an API that takes an ``Array`` instance, initialize a new array
 with the ``keys`` or ``values`` property:
 
 .. testcode:: dictionariesInferred
+   :compile: true
 
    -> let airportCodes = [String](airports.keys)
-   << // airportCodes : [String] = ["LHR", "YYZ"]
    /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
    </ airportCodes is ["LHR", "YYZ"]
    ---
    -> let airportNames = [String](airports.values)
-   << // airportNames : [String] = ["London Heathrow", "Toronto Pearson"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["London Heathrow", "Toronto Pearson"]
 
