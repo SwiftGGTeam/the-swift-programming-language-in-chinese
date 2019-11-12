@@ -357,13 +357,16 @@ then the tuples themselves are equal.
 For example:
 
 .. testcode:: tuple-comparison-operators
+   :compile: true
 
+   >> let a =
    -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
+   >> let b =
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
+   >> let c =
    -> (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
-   <$ : Bool = true
-   <$ : Bool = true
-   <$ : Bool = true
+   >> print(a, b, c)
+   << true true true
 
 In the example above,
 you can see the left-to-right comparison behavior on the first line.
@@ -387,17 +390,26 @@ two tuples of type ``(String, Bool)`` can't be compared
 with the ``<`` operator because the ``<`` operator can't be applied to
 ``Bool`` values.
 
-.. testcode:: tuple-comparison-operators
+.. testcode:: tuple-comparison-operators-err
+   :compile: true
 
+   >> _ =
    -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
+   >> _ =
    -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
-   <$ : Bool = true
-   !! <REPL Input>:1:17: error: binary operator '<' cannot be applied to two '(String, Bool)' operands
-   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
-   !! ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~
-   !~ <REPL Input>:1:17: note: overloads for '<' exist with these partially matching parameter lists:
+   !$ error: type '(String, Bool)' cannot conform to 'Comparable'; only struct/enum/class types can conform to protocols
    !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    !!                 ^
+   !$ note: required by protocol 'Comparable' where 'Self' = '(String, Bool)'
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !!                 ^
+
+.. assertion:: tuple-comparison-operators-ok
+   :compile: true
+
+   >> let x = ("blue", -1) < ("purple", 1)        // OK, evaluates to true
+   >> print(x)
+   << true
 
 .. note::
 
@@ -425,31 +437,36 @@ otherwise, it evaluates ``answer2`` and returns its value.
 The ternary conditional operator is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorOutline
+   :compile: true
 
    >> let question = true
-   << // question : Bool = true
    >> let answer1 = true
-   << // answer1 : Bool = true
    >> let answer2 = true
-   << // answer2 : Bool = true
    -> if question {
          answer1
       } else {
          answer2
       }
+   !! /tmp/swifttest.swift:5:4: warning: expression of type 'Bool' is unused
+   !! answer1
+   !! ^~~~~~~
+   !! /tmp/swifttest.swift:7:4: warning: expression of type 'Bool' is unused
+   !! answer2
+   !! ^~~~~~~
+
+.. XXX This example has too much hand waving.
+   Swift doesn't have 'if' expressions.
 
 Here's an example, which calculates the height for a table row.
 The row height should be 50 points taller than the content height
 if the row has a header, and 20 points taller if the row doesn't have a header:
 
 .. testcode:: ternaryConditionalOperatorPart1
+   :compile: true
 
    -> let contentHeight = 40
-   << // contentHeight : Int = 40
    -> let hasHeader = true
-   << // hasHeader : Bool = true
    -> let rowHeight = contentHeight + (hasHeader ? 50 : 20)
-   << // rowHeight : Int = 90
    /> rowHeight is equal to \(rowHeight)
    </ rowHeight is equal to 90
 
@@ -493,13 +510,14 @@ The expression ``b`` must match the type that is stored inside ``a``.
 The nil-coalescing operator is shorthand for the code below:
 
 .. testcode:: nilCoalescingOperatorOutline
+   :compile: true
 
    >> var a: Int?
-   << // a : Int? = nil
    >> let b = 42
-   << // b : Int = 42
+   >> let c =
    -> a != nil ? a! : b
-   << // r0 : Int = 42
+   >> print(c)
+   << 42
 
 The code above uses the ternary conditional operator and forced unwrapping (``a!``)
 to access the value wrapped inside ``a`` when ``a`` is not ``nil``,
@@ -517,14 +535,12 @@ The example below uses the nil-coalescing operator to choose between
 a default color name and an optional user-defined color name:
 
 .. testcode:: nilCoalescingOperator
+   :compile: true
 
    -> let defaultColorName = "red"
-   << // defaultColorName : String = "red"
    -> var userDefinedColorName: String?   // defaults to nil
-   << // userDefinedColorName : String? = nil
    ---
    -> var colorNameToUse = userDefinedColorName ?? defaultColorName
-   << // colorNameToUse : String = "red"
    /> userDefinedColorName is nil, so colorNameToUse is set to the default of \"\(colorNameToUse)\"
    </ userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
 
@@ -543,6 +559,7 @@ and perform the nil-coalescing operator check again,
 the value wrapped inside ``userDefinedColorName`` is used instead of the default:
 
 .. testcode:: nilCoalescingOperator
+   :compile: true
 
    -> userDefinedColorName = "green"
    -> colorNameToUse = userDefinedColorName ?? defaultColorName
@@ -568,16 +585,19 @@ and includes the values ``a`` and ``b``.
 The value of ``a`` must not be greater than ``b``.
 
 .. assertion:: closedRangeStartCanBeLessThanEnd
+   :compile: true
 
    -> let range = 1...2
-   << // range : ClosedRange<Int> = ClosedRange(1...2)
+   >> print(type(of: range))
+   << ClosedRange<Int>
 
 .. assertion:: closedRangeStartCanBeTheSameAsEnd
+   :compile: true
 
    -> let range = 1...1
-   << // range : ClosedRange<Int> = ClosedRange(1...1)
 
 .. assertion:: closedRangeStartCannotBeGreaterThanEnd
+   :compile: true
 
    -> let range = 1...0
    xx assertion
@@ -587,6 +607,7 @@ in which you want all of the values to be used,
 such as with a ``for``-``in`` loop:
 
 .. testcode:: rangeOperators
+   :compile: true
 
    -> for index in 1...5 {
          print("\(index) times 5 is \(index * 5)")
@@ -615,16 +636,19 @@ If the value of ``a`` is equal to ``b``,
 then the resulting range will be empty.
 
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
+   :compile: true
 
    -> let range = 1..<2
-   << // range : Range<Int> = Range(1..<2)
+   >> print(type(of: range))
+   << Range<Int>
 
 .. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
+   :compile: true
 
    -> let range = 1..<1
-   << // range : Range<Int> = Range(1..<1)
 
 .. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
+   :compile: true
 
    -> let range = 1..<0
    xx assertion
@@ -634,11 +658,11 @@ zero-based lists such as arrays,
 where it's useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
+   :compile: true
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> let count = names.count
-   << // count : Int = 4
+   >> assert(count == 4)
    -> for i in 0..<count {
          print("Person \(i + 1) is called \(names[i])")
       }
@@ -671,6 +695,7 @@ because the operator has a value on only one side.
 For example:
 
 .. testcode:: rangeOperators
+   :compile: true
 
    -> for name in names[2...] {
           print(name)
@@ -693,6 +718,7 @@ the final value isn't part of the range.
 For example:
 
 .. testcode:: rangeOperators
+   :compile: true
 
    -> for name in names[..<2] {
           print(name)
@@ -712,15 +738,19 @@ You can also check whether a one-sided range contains a particular value,
 as shown in the code below.
 
 .. testcode:: rangeOperators
+   :compile: true
 
    -> let range = ...5
-   << // range : PartialRangeThrough<Int> = Swift.PartialRangeThrough<Swift.Int>(upperBound: 5)
+   >> print(type(of: range))
+   << PartialRangeThrough<Int>
+   >> let a =
    -> range.contains(7)   // false
+   >> let b =
    -> range.contains(4)   // true
+   >> let c =
    -> range.contains(-1)  // true
-   << // r0 : Bool = false
-   << // r1 : Bool = true
-   << // r2 : Bool = true
+   >> print(a, b, c)
+   << false true true
 
 .. _BasicOperators_LogicalOperators:
 
@@ -748,10 +778,12 @@ and appears immediately before the value it operates on,
 without any white space.
 It can be read as “not ``a``”, as seen in the following example:
 
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
+
 .. testcode:: logicalOperators
+   :compile: true
 
    -> let allowedEntry = false
-   << // allowedEntry : Bool = false
    -> if !allowedEntry {
          print("ACCESS DENIED")
       }
@@ -785,11 +817,10 @@ This example considers two ``Bool`` values
 and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
+   :compile: true
 
    -> let enteredDoorCode = true
-   << // enteredDoorCode : Bool = true
    -> let passedRetinaScan = false
-   << // passedRetinaScan : Bool = false
    -> if enteredDoorCode && passedRetinaScan {
          print("Welcome!")
       } else {
@@ -822,11 +853,10 @@ the overall expression also evaluates to ``true``,
 and access is allowed:
 
 .. testcode:: logicalOperators
+   :compile: true
 
    -> let hasDoorKey = false
-   << // hasDoorKey : Bool = false
    -> let knowsOverridePassword = true
-   << // knowsOverridePassword : Bool = true
    -> if hasDoorKey || knowsOverridePassword {
          print("Welcome!")
       } else {
@@ -842,6 +872,7 @@ Combining Logical Operators
 You can combine multiple logical operators to create longer compound expressions:
 
 .. testcode:: logicalOperators
+   :compile: true
 
    -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
          print("Welcome!")
@@ -883,6 +914,7 @@ it's useful to add parentheses around the first part of the compound expression
 to make its intent explicit:
 
 .. testcode:: logicalOperators
+   :compile: true
 
    -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
          print("Welcome!")
