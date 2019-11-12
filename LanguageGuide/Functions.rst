@@ -50,6 +50,7 @@ and a return type of ``String``,
 which will contain a greeting for that person:
 
 .. testcode:: definingAndCalling
+   :compile: true
 
    -> func greet(person: String) -> String {
          let greeting = "Hello, " + person + "!"
@@ -69,6 +70,7 @@ The definition makes it easy for the function to be called unambiguously
 from elsewhere in your code:
 
 .. testcode:: definingAndCalling
+   :compile: true
 
    -> print(greet(person: "Anna"))
    <- Hello, Anna!
@@ -107,6 +109,7 @@ To make the body of this function shorter,
 you can combine the message creation and the return statement into one line:
 
 .. testcode:: definingAndCalling
+   :compile: true
 
    -> func greetAgain(person: String) -> String {
          return "Hello again, " + person + "!"
@@ -133,6 +136,7 @@ Here's a function with no input parameters,
 which always returns the same ``String`` message whenever it is called:
 
 .. testcode:: functionsWithoutParameters
+   :compile: true
 
    -> func sayHelloWorld() -> String {
          return "hello, world"
@@ -158,6 +162,7 @@ and whether they have already been greeted as input,
 and returns an appropriate greeting for that person:
 
 .. testcode:: definingAndCalling
+   :compile: true
 
    -> func greet(person: String, alreadyGreeted: Bool) -> String {
           if alreadyGreeted {
@@ -189,6 +194,7 @@ Here's a version of the ``greet(person:)`` function,
 which prints its own ``String`` value rather than returning it:
 
 .. testcode:: functionsWithoutReturnValues
+   :compile: true
 
    -> func greet(person: String) {
          print("Hello, \(person)!")
@@ -211,6 +217,7 @@ or a return type.
 The return value of a function can be ignored when it is called:
 
 .. testcode:: functionsWithoutReturnValues
+   :compile: true
 
    -> func printAndCount(string: String) -> Int {
          print(string)
@@ -219,13 +226,16 @@ The return value of a function can be ignored when it is called:
    -> func printWithoutCounting(string: String) {
          let _ = printAndCount(string: string)
       }
+   >> let a =
    -> printAndCount(string: "hello, world")
    << hello, world
+   >> assert(a == 12)
    // prints "hello, world" and returns a value of 12
-   << // r0 : Int = 12
    -> printWithoutCounting(string: "hello, world")
    << hello, world
    // prints "hello, world" but does not return a value
+
+.. XXX Refactor bare expression and discarded return value above.
 
 The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
@@ -244,6 +254,9 @@ but the returned value is not used.
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
+.. XXX Unless the function is marked @discardableResult,
+   ignoring its return value triggers a compile-time warning.
+
 .. _Functions_FunctionsWithMultipleReturnValues:
 
 Functions with Multiple Return Values
@@ -256,6 +269,7 @@ The example below defines a function called ``minMax(array:)``,
 which finds the smallest and largest numbers in an array of ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
+   :compile: true
 
    -> func minMax(array: [Int]) -> (min: Int, max: Int) {
          var currentMin = array[0]
@@ -287,9 +301,9 @@ Because the tuple's member values are named as part of the function's return typ
 they can be accessed with dot syntax to retrieve the minimum and maximum found values:
 
 .. testcode:: tupleTypesAsReturnTypes
+   :compile: true
 
    -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
-   << // bounds : (min: Int, max: Int) = (min: -6, max: 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
@@ -329,6 +343,7 @@ write the ``minMax(array:)`` function with an optional tuple return type
 and return a value of ``nil`` when the array is empty:
 
 .. testcode:: tupleTypesAsReturnTypes2
+   :compile: true
 
    -> func minMax(array: [Int]) -> (min: Int, max: Int)? {
          if array.isEmpty { return nil }
@@ -348,6 +363,7 @@ You can use optional binding to check whether this version of the ``minMax(array
 returns an actual tuple value or ``nil``:
 
 .. testcode:: tupleTypesAsReturnTypes2
+   :compile: true
 
    -> if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
          print("min is \(bounds.min) and max is \(bounds.max)")
@@ -365,6 +381,7 @@ For example,
 both functions below have the same behavior:
 
 .. testcode:: implicit-func-return
+   :compile: true
 
    -> func greeting(for person: String) -> String {
          "Hello, " + person + "!"
@@ -402,6 +419,7 @@ By default, parameters
 use their parameter name as their argument label.
 
 .. testcode:: functionParameterNames
+   :compile: true
 
    -> func someFunction(firstParameterName: Int, secondParameterName: Int) {
          // In the function body, firstParameterName and secondParameterName
@@ -415,6 +433,7 @@ to have the same argument label,
 unique argument labels help make your code more readable.
 
 .. assertion:: non-unique-external-name
+   :compile: true
 
    -> func foo(external a: Int, external b: Int) {}
    -> foo(external: 7, external: 12)
@@ -428,6 +447,7 @@ You write an argument label before the parameter name,
 separated by a space:
 
 .. testcode:: externalParameterNames
+   :compile: true
 
    -> func someFunction(argumentLabel parameterName: Int) {
          // In the function body, parameterName refers to the argument value
@@ -439,6 +459,7 @@ that takes a person's name and hometown
 and returns a greeting:
 
 .. testcode:: externalParameterNames
+   :compile: true
 
    -> func greet(person: String, from hometown: String) -> String {
           return "Hello \(person)!  Glad you could visit from \(hometown)."
@@ -459,6 +480,7 @@ If you don't want an argument label for a parameter,
 write an underscore (``_``) instead of an explicit argument label for that parameter.
 
 .. testcode:: omittedExternalParameterNames
+   :compile: true
 
    -> func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
          // In the function body, firstParameterName and secondParameterName
@@ -479,6 +501,7 @@ by assigning a value to the parameter after that parameter's type.
 If a default value is defined, you can omit that parameter when calling the function.
 
 .. testcode:: omittedExternalParameterNames
+   :compile: true
 
    -> func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
          // If you omit the second argument when calling this function, then
@@ -517,6 +540,7 @@ The example below calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length:
 
 .. testcode:: variadicParameters
+   :compile: true
 
    -> func arithmeticMean(_ numbers: Double...) -> Double {
          var total: Double = 0
@@ -525,14 +549,16 @@ The example below calculates the :newTerm:`arithmetic mean`
          }
          return total / Double(numbers.count)
       }
+   >> let r0 =
    -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r0 : Double = 3.0
    /> returns \(r0), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
+   >> let r1 =
    -> arithmeticMean(3, 8.25, 18.75)
-   << // r1 : Double = 10.0
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
+
+.. XXX Rewrite the above to use assignment instead of bare expressions
 
 .. note::
 
@@ -576,6 +602,7 @@ Here's an example of a function called ``swapTwoInts(_:_:)``,
 which has two in-out integer parameters called ``a`` and ``b``:
 
 .. testcode:: inoutParameters
+   :compile: true
 
    -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
          let temporaryA = a
@@ -595,11 +622,10 @@ Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an amper
 when they are passed to the ``swapTwoInts(_:_:)`` function:
 
 .. testcode:: inoutParameters
+   :compile: true
 
    -> var someInt = 3
-   << // someInt : Int = 3
    -> var anotherInt = 107
-   << // anotherInt : Int = 107
    -> swapTwoInts(&someInt, &anotherInt)
    -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
@@ -631,17 +657,18 @@ made up of the parameter types and the return type of the function.
 For example:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func addTwoInts(_ a: Int, _ b: Int) -> Int {
          return a + b
       }
-   >> addTwoInts
-   << // r0 : (Int, Int) -> Int = (Function)
+   >> print(type(of: addTwoInts))
+   << (Int, Int) -> Int
    -> func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
          return a * b
       }
-   >> multiplyTwoInts
-   << // r1 : (Int, Int) -> Int = (Function)
+   >> print(type(of: multiplyTwoInts))
+   << (Int, Int) -> Int
 
 This example defines two simple mathematical functions
 called ``addTwoInts`` and ``multiplyTwoInts``.
@@ -658,12 +685,13 @@ and that returns a value of type ``Int``.”
 Here's another example, for a function with no parameters or return value:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func printHelloWorld() {
          print("hello, world")
       }
-   >> printHelloWorld
-   << // r2 : () -> () = (Function)
+   >> print(type(of: printHelloWorld))
+   << () -> ()
 
 The type of this function is ``() -> Void``,
 or “a function that has no parameters, and returns ``Void``.”
@@ -678,9 +706,9 @@ For example, you can define a constant or variable to be of a function type
 and assign an appropriate function to that variable:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> var mathFunction: (Int, Int) -> Int = addTwoInts
-   << // mathFunction : (Int, Int) -> Int = (Function)
 
 This can be read as:
 
@@ -695,6 +723,7 @@ and so this assignment is allowed by Swift's type-checker.
 You can now call the assigned function with the name ``mathFunction``:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> print("Result: \(mathFunction(2, 3))")
    <- Result: 5
@@ -703,6 +732,7 @@ A different function with the same matching type can be assigned to the same var
 in the same way as for nonfunction types:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> mathFunction = multiplyTwoInts
    -> print("Result: \(mathFunction(2, 3))")
@@ -713,9 +743,11 @@ you can leave it to Swift to infer the function type
 when you assign a function to a constant or variable:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> let anotherMathFunction = addTwoInts
-   << // anotherMathFunction : (Int, Int) -> Int = (Function)
+   >> print(type(of: anotherMathFunction))
+   << (Int, Int) -> Int
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 .. TODO: talk about defining typealiases for function types somewhere?
@@ -733,6 +765,7 @@ for the function's caller to provide when the function is called.
 Here's an example to print the results of the math functions from above:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
          print("Result: \(mathFunction(a, b))")
@@ -772,6 +805,7 @@ and the ``stepBackward(_:)`` function returns a value one less than its input va
 Both functions have a type of ``(Int) -> Int``:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func stepForward(_ input: Int) -> Int {
          return input + 1
@@ -786,6 +820,7 @@ The ``chooseStepFunction(backward:)`` function returns the ``stepForward(_:)`` f
 or the ``stepBackward(_:)`` function based on a Boolean parameter called ``backward``:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
          return backward ? stepBackward : stepForward
@@ -795,11 +830,12 @@ You can now use ``chooseStepFunction(backward:)`` to obtain a function
 that will step in one direction or the other:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> var currentValue = 3
-   << // currentValue : Int = 3
    -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+   >> print(type(of: moveNearerToZero))
+   << (Int) -> Int
    // moveNearerToZero now refers to the stepBackward() function
 
 The example above determines whether a positive or negative step is needed
@@ -813,6 +849,7 @@ Now that ``moveNearerToZero`` refers to the correct function,
 it can be used to count to zero:
 
 .. testcode:: functionTypes
+   :compile: true
 
    -> print("Counting to zero:")
    </ Counting to zero:
@@ -845,6 +882,7 @@ You can rewrite the ``chooseStepFunction(backward:)`` example above
 to use and return nested functions:
 
 .. testcode:: nestedFunctions
+   :compile: true
 
    -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
          func stepForward(input: Int) -> Int { return input + 1 }
@@ -852,9 +890,9 @@ to use and return nested functions:
          return backward ? stepBackward : stepForward
       }
    -> var currentValue = -4
-   << // currentValue : Int = -4
    -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+   >> print(type(of: moveNearerToZero))
+   << (Int) -> Int
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {
          print("\(currentValue)... ")
