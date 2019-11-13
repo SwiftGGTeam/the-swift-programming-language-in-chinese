@@ -1,4 +1,4 @@
-# Editorial Style Guide
+# Terms
 
 ## memberwise initializer
 
@@ -15,7 +15,8 @@ See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/448
 
 In general,
 the writing guidance to avoid passive voice
-when you could write the sentence in active still applies.
+when you could write the sentence in active still applies
+because the active voice tends to be more readable.
 However,
 because of the subject matter in TSPL,
 it’s often the case that a sentence has no meaningful subject/actor
@@ -40,6 +41,35 @@ Use a period for sentences that begin with a phrase like
 > **Note:**
 > This usage isn’t entirely consistent in the existing text.
 > We should have a discussion about this with Editorial.
+
+# Tone
+
+In general, and especially in the guide,
+the writing approach should carry a sense of joy.
+That means we
+
+◊ examples: aim for realistic or story-driven code,
+  avoid "let foo = 10" purely syntactic constructions
+  no single letter names, even in the reference
+
+◊ references: ignorable if you don’t know there’s a joke,
+  google-able if you see it’s there but don’t get it
+
+Code listings in the guide typically follow a three part formula.
+The paragraph before the code listing
+frames the problem that we’re trying to solve
+and explains what the code will do at a very high level.
+The paragraph (or sometimes multiple paragraphs) after the code
+walk through what the code listing did in more detail.
+The intention here is essentially to provide progressive disclosure:
+Advanced readers can skip the paragraph after the code listing,
+and might even be able to skip some of the text before it,
+but the full no-assumptions-made explanation of the code
+is still available to readers who need it.
+
+For a discussion of the balance between the tour, the guide, and the reference,
+see the README file at the top level of this repository.
+see the top level README.
 
 # Semantic Line Breaks
 
