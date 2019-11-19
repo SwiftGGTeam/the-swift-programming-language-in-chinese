@@ -59,11 +59,10 @@ The :newTerm:`assignment operator` (``a = b``)
 initializes or updates the value of ``a`` with the value of ``b``:
 
 .. testcode:: assignmentOperator
+   :compile: true
 
    -> let b = 10
-   << // b : Int = 10
    -> var a = 5
-   << // a : Int = 5
    -> a = b
    /> a is now equal to \(a)
    </ a is now equal to 10
@@ -72,16 +71,16 @@ If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple constants or variables at once:
 
 .. testcode:: assignmentOperator
+   :compile: true
 
    -> let (x, y) = (1, 2)
-   << // (x, y) : (Int, Int) = (1, 2)
    /> x is equal to \(x), and y is equal to \(y)
    </ x is equal to 1, and y is equal to 2
 
 .. assertion:: tuple-unwrapping-with-var
+   :compile: true
 
    >> var (x, y) = (1, 2)
-   << // (x, y) : (Int, Int) = (1, 2)
 
 .. This still allows assignment to variables,
    even though var patterns have been removed,
@@ -95,14 +94,15 @@ the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
 .. testcode:: assignmentOperatorInvalid
+   :compile: true
 
    -> if x = y {
          // This is not valid, because x = y does not return a value.
       }
-   !! <REPL Input>:1:4: error: use of unresolved identifier 'x'
+   !$ error: use of unresolved identifier 'x'
    !! if x = y {
    !!    ^
-   !! <REPL Input>:1:8: error: use of unresolved identifier 'y'
+   !$ error: use of unresolved identifier 'y'
    !! if x = y {
    !!        ^
 
@@ -127,15 +127,20 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
 * Division (``/``)
 
 .. testcode:: arithmeticOperators
+   :compile: true
 
+   >> let r0 =
    -> 1 + 2       // equals 3
-   << // r0 : Int = 3
+   >> assert(r0 == 3)
+   >> let r1 =
    -> 5 - 3       // equals 2
-   << // r1 : Int = 2
+   >> assert(r1 == 2)
+   >> let r2 =
    -> 2 * 3       // equals 6
-   << // r2 : Int = 6
+   >> assert(r2 == 6)
+   >> let r3 =
    -> 10.0 / 2.5  // equals 4.0
-   << // r3 : Double = 4.0
+   >> assert(r3 == 4.0)
 
 Unlike the arithmetic operators in C and Objective-C,
 the Swift arithmetic operators don't allow values to overflow by default.
@@ -146,8 +151,9 @@ The addition operator is also supported for ``String`` concatenation:
 
 .. testcode:: arithmeticOperators
 
+   >> let r4 =
    -> "hello, " + "world"  // equals "hello, world"
-   << // r4 : String = "hello, world"
+   >> assert(r4 == "hello, world")
 
 .. _BasicOperators_RemainderOperator:
 
@@ -167,6 +173,7 @@ and returns the value that is left over
    strictly speaking, it's a remainder rather than a modulo operation.
 
 .. assertion:: percentOperatorIsRemainderNotModulo
+   :compile: true
 
    -> for i in -5...0 {
          print(i % 4)
@@ -189,9 +196,11 @@ You can fit two ``4``\ s inside ``9``, and the remainder is ``1`` (shown in oran
 In Swift, this would be written as:
 
 .. testcode:: arithmeticOperators
+   :compile: true
 
+   >> let r5 =
    -> 9 % 4    // equals 1
-   << // r5 : Int = 1
+   >> assert(r5 == 1)
 
 To determine the answer for ``a % b``,
 the ``%`` operator calculates the following equation
@@ -209,9 +218,11 @@ Inserting ``9`` and ``4`` into this equation yields:
 The same method is applied when calculating the remainder for a negative value of ``a``:
 
 .. testcode:: arithmeticOperators
+   :compile: true
 
+   >> let r6 =
    -> -9 % 4   // equals -1
-   << // r6 : Int = -1
+   >> assert(r6 == -1)
 
 Inserting ``-9`` and ``4`` into the equation yields:
 
@@ -231,13 +242,11 @@ The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
 
 .. testcode:: arithmeticOperators
+   :compile: true
 
    -> let three = 3
-   << // three : Int = 3
    -> let minusThree = -three       // minusThree equals -3
-   << // minusThree : Int = -3
    -> let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
-   << // plusThree : Int = 3
 
 The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any white space.
@@ -251,11 +260,11 @@ The :newTerm:`unary plus operator` (``+``) simply returns
 the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
+   :compile: true
 
    -> let minusSix = -6
-   << // minusSix : Int = -6
    -> let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
-   << // alsoMinusSix : Int = -6
+   >> assert(alsoMinusSix == minusSix)
 
 Although the unary plus operator doesn't actually do anything,
 you can use it to provide symmetry in your code for positive numbers
@@ -270,9 +279,9 @@ Like C, Swift provides :newTerm:`compound assignment operators` that combine ass
 One example is the :newTerm:`addition assignment operator` (``+=``):
 
 .. testcode:: compoundAssignment
+   :compile: true
 
    -> var a = 1
-   << // a : Int = 1
    -> a += 2
    /> a is now equal to \(a)
    </ a is now equal to 3
@@ -312,27 +321,34 @@ Swift supports all standard C :newTerm:`comparison operators`:
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
 .. testcode:: comparisonOperators
+   :compile: true
 
+   >> assert(
    -> 1 == 1   // true because 1 is equal to 1
-   << // r0 : Bool = true
+   >> )
+   >> assert(
    -> 2 != 1   // true because 2 is not equal to 1
-   << // r1 : Bool = true
+   >> )
+   >> assert(
    -> 2 > 1    // true because 2 is greater than 1
-   << // r2 : Bool = true
+   >> )
+   >> assert(
    -> 1 < 2    // true because 1 is less than 2
-   << // r3 : Bool = true
+   >> )
+   >> assert(
    -> 1 >= 1   // true because 1 is greater than or equal to 1
-   << // r4 : Bool = true
+   >> )
+   >> assert( !(
    -> 2 <= 1   // false because 2 is not less than or equal to 1
-   << // r5 : Bool = false
+   >> ) )
 
 Comparison operators are often used in conditional statements,
 such as the ``if`` statement:
 
 .. testcode:: comparisonOperators
+   :compile: true
 
    -> let name = "world"
-   << // name : String = "world"
    -> if name == "world" {
          print("hello, world")
       } else {
