@@ -34,6 +34,7 @@ This behavior is communicated by a getter and setter
 in the same way as for computed properties:
 
 .. testcode:: subscriptSyntax
+   :compile: true
 
    >> class Test1 {
    -> subscript(index: Int) -> Int {
@@ -58,6 +59,7 @@ you can simplify the declaration of a read-only subscript
 by removing the ``get`` keyword and its braces:
 
 .. testcode:: subscriptSyntax
+   :compile: true
 
    >> class Test2 {
    -> subscript(index: Int) -> Int {
@@ -70,6 +72,7 @@ Here's an example of a read-only subscript implementation,
 which defines a ``TimesTable`` structure to represent an *n*-times-table of integers:
 
 .. testcode:: timesTable
+   :compile: true
 
    -> struct TimesTable {
          let multiplier: Int
@@ -78,7 +81,6 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
    -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -116,9 +118,9 @@ by providing a key of the dictionary's key type within subscript brackets,
 and assigning a value of the dictionary's value type to the subscript:
 
 .. testcode:: dictionarySubscript
+   :compile: true
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["cat": 4, "ant": 6, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -163,15 +165,15 @@ but they can't use in-out parameters or provide default parameter values.
     >> }
     >> let s = Subscriptable()
     >> print(s[x: 0])
-    !! /tmp/swifttest.swift:2:30: error: default arguments are not allowed in subscripts
+    !$ error: default arguments are not allowed in subscripts
     !! subscript(x: Int, y: Int = 0) -> Int {
     !! ^~~
     !!-
-    !! /tmp/swifttest.swift:7:13: error: missing argument for parameter #2 in call
+    !$ error: missing argument for parameter #2 in call
     !! print(s[x: 0])
     !! ^
     !! , <#Int#>
-    !! /tmp/swifttest.swift:2:5: note: 'subscript(_:_:)' declared here
+    !$ note: 'subscript(_:_:)' declared here
     !! subscript(x: Int, y: Int = 0) -> Int {
     !! ^
 
@@ -193,6 +195,7 @@ which represents a two-dimensional matrix of ``Double`` values.
 The ``Matrix`` structure's subscript takes two integer parameters:
 
 .. testcode:: matrixSubscript, matrixSubscriptAssert
+   :compile: true
 
    -> struct Matrix {
          let rows: Int, columns: Int
@@ -229,9 +232,10 @@ You can construct a new ``Matrix`` instance by passing
 an appropriate row and column count to its initializer:
 
 .. testcode:: matrixSubscript, matrixSubscriptAssert
+   :compile: true
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
+   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
 
 The example above creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
@@ -245,6 +249,7 @@ Values in the matrix can be set by passing row and column values into the subscr
 separated by a comma:
 
 .. testcode:: matrixSubscript, matrixSubscriptAssert
+   :compile: true
 
    -> matrix[0, 1] = 1.5
    >> print(matrix[0, 1])
@@ -270,11 +275,10 @@ which checks whether the requested ``row`` and ``column``
 are inside the bounds of the matrix:
 
 .. testcode:: matrixSubscript
+   :compile: true
 
    >> var rows = 2
-   << // rows : Int = 2
    >> var columns = 2
-   << // columns : Int = 2
    -> func indexIsValid(row: Int, column: Int) -> Bool {
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
@@ -283,6 +287,7 @@ An assertion is triggered if you try to access a subscript
 that is outside of the matrix bounds:
 
 .. testcode:: matrixSubscriptAssert
+   :compile: true
 
    -> let someValue = matrix[2, 2]
    xx assert
@@ -304,6 +309,7 @@ to allow subclasses to override the superclass’s implementation of that subscr
 The example below shows how you define and call a type subscript:
 
 .. testcode:: static-subscript
+   :compile: true
 
    -> enum Planet: Int {
          case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
@@ -312,6 +318,6 @@ The example below shows how you define and call a type subscript:
          }
       }
    -> let mars = Planet[4]
-   << // mars : Planet = REPL.Planet.mars
+   >> assert(mars == Planet.mars)
    -> print(mars)
    << mars
