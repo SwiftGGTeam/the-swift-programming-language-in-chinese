@@ -8,9 +8,10 @@ Computed properties are provided by classes, structures, and enumerations.
 Stored properties are provided only by classes and structures.
 
 .. assertion:: enumerationsCantProvideStoredProperties
+   :compile: true
 
    -> enum E { case a, b; var x = 0 }
-   !! <REPL Input>:1:25: error: enums must not contain stored properties
+   !$ error: enums must not contain stored properties
    !! enum E { case a, b; var x = 0 }
    !! ^
 
@@ -24,6 +25,7 @@ Property observers can be added to stored properties you define yourself,
 and also to properties that a subclass inherits from its superclass.
 
 .. assertion:: propertyObserverIntroClaims
+   :compile: true
 
    -> class C {
          var x: Int = 0 {
@@ -38,11 +40,9 @@ and also to properties that a subclass inherits from its superclass.
          }
       }
    -> var c = C(); c.x = 42
-   << // c : C = REPL.C
    <- C willSet x to 42
    <- C didSet x from 0
    -> var d = D(); d.x = 42
-   << // d : D = REPL.D
    <- D willSet x to 42
    <- C willSet x to 42
    <- C didSet x from 0
@@ -72,14 +72,14 @@ The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
 whose range length cannot be changed after it is created:
 
-.. testcode:: storedProperties
+.. testcode:: storedProperties, storedProperties-err
+   :compile: true
 
    -> struct FixedLengthRange {
          var firstValue: Int
          let length: Int
       }
    -> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-   << // rangeOfThreeItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 3)
    // the range represents integer values 0, 1, and 2
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
@@ -100,16 +100,16 @@ and assign that instance to a constant,
 you cannot modify the instance's properties,
 even if they were declared as variable properties:
 
-.. testcode:: storedProperties
+.. testcode:: storedProperties-err
+   :compile: true
 
    -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-   << // rangeOfFourItems : FixedLengthRange = REPL.FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !!  <REPL Input>:1:18: error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
+   !$ error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
    !! rangeOfFourItems.firstValue = 6
    !! ~~~~~~~~~~~~~~~~ ^
-   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
    !! ^~~
    !! var
@@ -151,9 +151,10 @@ the ``lazy`` modifier before its declaration.
    and therefore cannot be declared as lazy.
 
 .. assertion:: lazyPropertiesMustAlwaysBeVariables
+   :compile: true
 
    -> class C { lazy let x = 0 }
-   !! <REPL Input>:1:11: error: 'lazy' cannot be used on a let
+   !$ error: 'lazy' cannot be used on a let
    !! class C { lazy let x = 0 }
    !! ^~~~~
    !!-
@@ -174,6 +175,7 @@ This example defines two classes called ``DataImporter`` and ``DataManager``,
 neither of which is shown in full:
 
 .. testcode:: lazyProperties
+   :compile: true
 
    -> class DataImporter {
          /*
@@ -194,7 +196,6 @@ neither of which is shown in full:
       }
    ---
    -> let manager = DataManager()
-   << // manager : DataManager = REPL.DataManager
    -> manager.data.append("Some data")
    -> manager.data.append("Some more data")
    // the DataImporter instance for the importer property has not yet been created
@@ -227,6 +228,7 @@ is only created when the ``importer`` property is first accessed,
 such as when its ``filename`` property is queried:
 
 .. testcode:: lazyProperties
+   :compile: true
 
    -> print(manager.importer.filename)
    </ the DataImporter instance for the importer property has now been created
@@ -276,6 +278,7 @@ Instead, they provide a getter and an optional setter
 to retrieve and set other properties and values indirectly.
 
 .. testcode:: computedProperties
+   :compile: true
 
    -> struct Point {
          var x = 0.0, y = 0.0
@@ -300,9 +303,9 @@ to retrieve and set other properties and values indirectly.
       }
    -> var square = Rect(origin: Point(x: 0.0, y: 0.0),
          size: Size(width: 10.0, height: 10.0))
-   << // square : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 10.0, height: 10.0))
    -> let initialSquareCenter = square.center
-   << // initialSquareCenter : Point = REPL.Point(x: 5.0, y: 5.0)
+   >> assert(initialSquareCenter.x == 5.0)
+   >> assert(initialSquareCenter.y == 5.0)
    -> square.center = Point(x: 15.0, y: 15.0)
    -> print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
    <- square.origin is now at (10.0, 10.0)
@@ -354,6 +357,7 @@ Here's an alternative version of the ``Rect`` structure
 that takes advantage of this shorthand notation:
 
 .. testcode:: computedProperties
+   :compile: true
 
    -> struct AlternativeRect {
          var origin = Point()
@@ -385,6 +389,7 @@ that takes advantage of this shorthand notation
 and the shorthand notation for setters:
 
 .. testcode:: computedProperties
+   :compile: true
 
    -> struct CompactRect {
          var origin = Point()
@@ -442,6 +447,7 @@ You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
 
 .. testcode:: computedProperties
+   :compile: true
 
    -> struct Cuboid {
          var width = 0.0, height = 0.0, depth = 0.0
@@ -450,7 +456,6 @@ by removing the ``get`` keyword and its braces:
          }
       }
    -> let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-   << // fourByFiveByTwo : Cuboid = REPL.Cuboid(width: 4.0, height: 5.0, depth: 2.0)
    -> print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
    <- the volume of fourByFiveByTwo is 40.0
 
@@ -483,10 +488,10 @@ Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
 .. assertion:: observersAreCalledEvenIfNewValueIsTheSameAsOldValue
+   :compile: true
 
    -> class C { var x: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } } }
    -> let c = C()
-   << // c : C = REPL.C
    -> c.x = 24
    <- willSet
    <- didSet
@@ -504,6 +509,7 @@ in the computed property's setter.
 Property overriding is described in :ref:`Inheritance_Overriding`.
 
 .. assertion:: lazyPropertiesCannotHaveObservers
+   :compile: true
 
    -> class C {
          lazy var x: Int = 0 {
@@ -511,7 +517,7 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
             didSet { print("C didSet x from \(oldValue)") }
          }
       }
-   !! <REPL Input>:2:6: error: lazy properties must not have observers
+   !$ error: lazy properties must not have observers
    !! lazy var x: Int = 0 {
    !! ^~~~~
    !!-
@@ -559,10 +565,10 @@ If you assign a value to a property within its own ``didSet`` observer,
 the new value that you assign replaces the one that was just set.
 
 .. assertion:: assigningANewValueInADidSetReplacesTheNewValue
+   :compile: true
 
    -> class C { var x: Int = 0 { didSet { x = -273 } } }
    -> let c = C()
-   << // c : C = REPL.C
    -> c.x = 24
    -> print(c.x)
    <- -273
@@ -580,13 +586,13 @@ the new value that you assign replaces the one that was just set.
    and :ref:`Initialization_InitializerChaining`.
 
 .. assertion:: observersDuringInitialization
+   :compile: true
 
    -> class C {
          var x: Int { willSet { print("willSet x") } didSet { print("didSet x") } }
          init(x: Int) { self.x = x }
       }
    -> let c = C(x: 42)
-   << // c : C = REPL.C
    -> c.x = 24
    <- willSet x
    <- didSet x
@@ -603,7 +609,6 @@ the new value that you assign replaces the one that was just set.
    <- calling super
    <- willSet x
    <- didSet x
-   << // c2 : C2 = REPL.C2
 
 Here's an example of ``willSet`` and ``didSet`` in action.
 The example below defines a new class called ``StepCounter``,
@@ -612,6 +617,7 @@ This class might be used with input data from a pedometer or other step counter
 to keep track of a person's exercise during their daily routine.
 
 .. testcode:: storedProperties
+   :compile: true
 
    -> class StepCounter {
          var totalSteps: Int = 0 {
@@ -626,7 +632,6 @@ to keep track of a person's exercise during their daily routine.
          }
       }
    -> let stepCounter = StepCounter()
-   << // stepCounter : StepCounter = REPL.StepCounter
    -> stepCounter.totalSteps = 200
    </ About to set totalSteps to 200
    </ Added 200 steps
@@ -666,12 +671,12 @@ and the default name of ``oldValue`` is used instead.
    see :ref:`Declarations_InOutParameters`.
 
 .. assertion:: observersCalledAfterInout
+   :compile: true
 
    -> var a: Int = 0 {
           willSet { print("willSet") }
           didSet { print("didSet") }
       }
-   << // a : Int = 0
    -> func f(b: inout Int) { print("in f") }
    -> f(b: &a)
    << in f
@@ -1314,6 +1319,7 @@ to allow subclasses to override the superclass’s implementation.
 The example below shows the syntax for stored and computed type properties:
 
 .. testcode:: typePropertySyntax
+   :compile: true
 
    -> struct SomeStructure {
          static var storedTypeProperty = "Some value."
@@ -1338,22 +1344,22 @@ The example below shows the syntax for stored and computed type properties:
       }
 
 .. assertion:: classComputedTypePropertiesAreOverrideable
+   :compile: true
 
    -> class A { class var cp: String { return "A" } }
    -> class B: A { override class var cp: String { return "B" } }
-   -> A.cp
-   << // r0 : String = "A"
-   -> B.cp
-   << // r1 : String = "B"
+   -> assert(A.cp == "A")
+   -> assert(B.cp == "B")
 
 .. assertion:: staticComputedTypePropertiesAreFinal
+   :compile: true
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
-   !! <REPL Input>:1:34: error: cannot override static property
+   !$ error: cannot override static property
    !! class B: A { override static var cp: String { return "B" } }
    !!                                  ^
-   !! <REPL Input>:1:22: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! class A { static var cp: String { return "A" } }
    !!                      ^
 
@@ -1373,6 +1379,7 @@ However, type properties are queried and set on the *type*, not on an instance o
 For example:
 
 .. testcode:: typePropertySyntax
+   :compile: true
 
    -> print(SomeStructure.storedTypeProperty)
    <- Some value.
