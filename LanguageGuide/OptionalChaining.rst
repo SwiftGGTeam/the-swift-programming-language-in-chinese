@@ -341,6 +341,7 @@ prints the current value of ``numberOfRooms``.
 Here's how the method looks:
 
 .. testcode:: optionalChainingCallouts
+   :compile: true
 
    -> func printNumberOfRooms() {
    >>    let numberOfRooms = 3
