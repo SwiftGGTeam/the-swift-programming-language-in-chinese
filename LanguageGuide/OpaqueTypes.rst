@@ -250,7 +250,6 @@ that includes a special case for squares:
 .. testcode:: opaque-result-err
     :compile: true
 
-
     >> protocol Shape {
     >>     func draw() -> String
     >> }
@@ -267,13 +266,13 @@ that includes a special case for squares:
            }
            return FlippedShape(shape: shape) // Error: return types don't match
        }
-    !! /tmp/swifttest.swift:11:6: error: function declares an opaque return type, but the return statements in its body do not have matching underlying types
+    !$ error: function declares an opaque return type, but the return statements in its body do not have matching underlying types
     !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     !! ^
-    !! /tmp/swifttest.swift:13:16: note: return statement has underlying type 'T'
+    !$ note: return statement has underlying type 'T'
     !! return shape // Error: return types don't match
     !! ^
-    !! /tmp/swifttest.swift:15:12: note: return statement has underlying type 'FlippedShape<T>'
+    !$ note: return statement has underlying type 'FlippedShape<T>'
     !! return FlippedShape(shape: shape) // Error: return types don't match
     !! ^
 
@@ -499,10 +498,10 @@ to infer what the generic type needs to be.
     -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
            return [item]
        }
-    !! /tmp/swifttest.swift:36:43: error: protocol 'Container' can only be used as a generic constraint because it has Self or associated type requirements
+    !$ error: protocol 'Container' can only be used as a generic constraint because it has Self or associated type requirements
     !! func makeProtocolContainer<T>(item: T) -> Container {
     !!                                           ^
-    !! /tmp/swifttest.swift:40:12: error: cannot convert return expression of type '[T]' to return type 'C'
+    !$ error: cannot convert return expression of type '[T]' to return type 'C'
     !! return [item]
     !! ^~~~~~
     !! as! C
