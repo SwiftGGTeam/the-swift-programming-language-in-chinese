@@ -165,34 +165,38 @@ have special meaning in an explicit member expression,
 so they must be escaped with backticks in that context.
 
 .. assertion:: keywords-without-backticks
+   :compile: true
 
    -> func f(x: Int, in y: Int) {
          print(x+y)
       }
 
 .. assertion:: var-requires-backticks
+   :compile: true
 
    -> func g(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: warning: 'var' in this position is interpreted as an argument label
+   !$ warning: 'var' in this position is interpreted as an argument label
    !! func f(var x: Int) {}
    !!        ^~~
    !!        `var`
 
 .. assertion:: let-requires-backticks
+   :compile: true
 
    -> func g(`let` x: Int) {}
    -> func f(let x: Int) {}
-   !! <REPL Input>:1:8: warning: 'let' in this position is interpreted as an argument label
+   !$ warning: 'let' in this position is interpreted as an argument label
    !! func f(let x: Int) {}
    !!        ^~~
    !!        `let`
 
 .. assertion:: inout-requires-backticks
+   :compile: true
 
    -> func g(`inout` x: Int) {}
    -> func f(inout x: Int) {}
-   !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !$ error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
    !!        ^~~~~
    !!                 inout
@@ -331,15 +335,23 @@ such as a number or string.
 The following are examples of literals:
 
 .. testcode:: basic-literals
+    :compile: true
 
+    >> let r0 =
     -> 42               // Integer literal
+    >> let r1 =
     -> 3.14159          // Floating-point literal
+    >> let r2 =
     -> "Hello, world!"  // String literal
+    >> let r3 =
     -> true             // Boolean literal
-    <$ : Int = 42
-    <$ : Double = 3.14159
-    <$ : String = "Hello, world!"
-    <$ : Bool = true
+    >> for x in [r0, r1, r2, r3] as [Any] { print(type(of: x)) }
+    << Int
+    << Double
+    << String
+    << Bool
+
+.. XXX Refactor the above if possible to avoid using bare expressions.
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -626,18 +638,26 @@ a carriage return, or a line feed.
 For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
+   :compile: true
 
+   >> let r0 =
    -> "1 2 3"
-   <$ : String = "1 2 3"
+   >> let r1 =
    -> "1 2 \("3")"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r1)
+   >> let r2 =
    -> "1 2 \(3)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r2)
+   >> let r3 =
    -> "1 2 \(1 + 2)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r3)
    -> let x = 3; "1 2 \(x)"
-   << // x : Int = 3
-   <$ : String = "1 2 3"
+   >> assert(r0 == "1 2 \(x)")
+   !$ warning: string literal is unused
+   !! let x = 3; "1 2 \(x)"
+   !!            ^~~~~~~~~~
+
+.. XXX Refactor the above if possible to avoid using bare expressions.
 
 A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number signs (``#``).
@@ -665,11 +685,10 @@ and a string delimited by extended delimiters
 that create equivalent string values:
 
 .. testcode:: extended-string-delimiters
+    :compile: true
 
     -> let string = #"\(x) \ " \u{2603}"#
     -> let escaped = "\\(x) \\ \" \\u{2603}"
-    << // string : String = "\\(x) \\ \" \\u{2603}"
-    << // escaped : String = "\\(x) \\ \" \\u{2603}"
     -> print(string)
     <- \(x) \ " \u{2603}
     -> print(string == escaped)
@@ -679,16 +698,22 @@ If you use more than one number sign to form
 a string delimited by extended delimiters,
 don't place whitespace in between the number signs:
 
-.. testcode:: extended-string-delimiters
+.. assertion:: extended-string-delimiters
+    :compile: true
 
     -> print(###"Line 1\###nLine 2"###) // OK
     << Line 1
     << Line 2
+
+.. testcode:: extended-string-delimiters-err
+    :compile: true
+
+    -> print(###"Line 1\###nLine 2"###) // OK
     -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
-    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !$ error: expected expression in list of expressions
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
-    !! <REPL Input>:1:21: error: invalid escape sequence in literal
+    !$ error: invalid escape sequence in literal
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
@@ -707,11 +732,10 @@ in the example below are identical ---
 no runtime concatenation is performed.
 
 .. testcode:: concatenated-strings
+   :compile: true
 
-  -> let textA = "Hello " + "world"
-  -> let textB = "Hello world"
-  << // textA : String = "Hello world"
-  << // textB : String = "Hello world"
+   -> let textA = "Hello " + "world"
+   -> let textB = "Hello world"
 
 .. syntax-grammar::
 
@@ -798,16 +822,17 @@ For example, ``+.+`` is treated as
 the ``+`` operator followed by the ``.+`` operator.
 
 .. assertion:: dot-operator-must-start-with-dot
+   :compile: true
 
    >> infix operator +.+ ;
-   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !$ error: consecutive statements on a line must be separated by ';'
    !! infix operator +.+ ;
    !!                 ^
    !!                 ;
-   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !$ error: operator with postfix spacing cannot start a subexpression
    !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: expected expression
+   !$ error: expected expression
    !! infix operator +.+ ;
    !!                    ^
    >> infix operator .+
@@ -819,7 +844,7 @@ Additionally, although operators can contain an exclamation mark (``!``),
 postfix operators can't begin with either a question mark or an exclamation mark.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
-
+   :compile: true
 
    >> struct Num { var value: Int }
       postfix operator +
@@ -827,13 +852,13 @@ postfix operators can't begin with either a question mark or an exclamation mark
       postfix func + (x: Num) -> Int { return x.value + 1 }
       postfix func +* (x: Num) -> Int { return x.value * 100 }
    >> let n = Num(value: 5)
-   << // n : Num = REPL.Num(value: 5)
    >> print(n+)
    << 6
    >> print(n+*)
    << 500
 
 .. assertion:: postfix-operator-cant-start-with-question-mark
+   :compile: true
 
    >> postfix operator ?+
    >> postfix func ?+ (x: Int) -> Int {
@@ -843,15 +868,12 @@ postfix operators can't begin with either a question mark or an exclamation mark
           return x + 1
       }
    >> print(1?+)
-   !! <REPL Input>:1:18: error: expected operator name in operator declaration
+   !$ error: expected operator name in operator declaration
    !! postfix operator ?+
-   !! ^
-   !! <REPL Input>:1:14: error: operator implementation without matching operator declaration
-   !! postfix func ?+ (x: Int) -> Int {
-   !! ^
-   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
+   !!                  ^
+   !$ error: '+' is not a postfix unary operator
    !! print(1?+)
-   !! ^
+   !!         ^
 
 .. note::
 
