@@ -164,9 +164,9 @@ the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 
 .. testcode:: constant-decl
+    :compile: true
 
     -> let (firstNumber, secondNumber) = (10, 42)
-    << // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
@@ -174,6 +174,7 @@ and ``secondNumber`` is a named constant for the value ``42``.
 Both constants can now be used independently:
 
 .. testcode:: constant-decl
+    :compile: true
 
     -> print("The first number is \(firstNumber).")
     <- The first number is 10.
@@ -192,13 +193,14 @@ to allow or disallow overriding by subclasses.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. assertion:: class-constants-cant-have-class-or-final
+   :compile: true
 
    -> class Super { class let x = 10 }
-   !! <REPL Input>:1:25: error: class stored properties not supported in classes; did you mean 'static'?
+   !$ error: class stored properties not supported in classes; did you mean 'static'?
    !! class Super { class let x = 10 }
    !!               ~~~~~     ^
    -> class S { static final let x = 10 }
-   !! <REPL Input>:1:18: error: static declarations are already final
+   !$ error: static declarations are already final
    !! class S { static final let x = 10 }
    !!                  ^~~~~~
    !!-
@@ -453,20 +455,20 @@ of the existing type.
 For example:
 
 .. testcode:: typealias-with-generic
+   :compile: true
 
    -> typealias StringDictionary<Value> = Dictionary<String, Value>
    ---
    // The following dictionaries have the same type.
    -> var dictionary1: StringDictionary<Int> = [:]
    -> var dictionary2: Dictionary<String, Int> = [:]
-   << // dictionary1 : StringDictionary<Int> = [:]
-   << // dictionary2 : Dictionary<String, Int> = [:]
 
 When a type alias is declared with generic parameters, the constraints on those
 parameters must match exactly the constraints on the existing type's generic parameters.
 For example:
 
 .. testcode:: typealias-with-generic-constraint
+   :compile: true
 
    -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 
@@ -480,6 +482,7 @@ the ``Diccionario`` type alias declared here
 has the same generic parameters and constraints as ``Dictionary``.
 
 .. testcode:: typealias-using-shorthand
+   :compile: true
 
    -> typealias Diccionario = Dictionary
 
@@ -498,6 +501,7 @@ to a type that is used frequently.
 For example:
 
 .. testcode:: typealias-in-prototol
+    :compile: true
 
     -> protocol Sequence {
            associatedtype Iterator: IteratorProtocol
@@ -607,10 +611,14 @@ parameter names are also used as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
+   :compile: true
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
+   >> let r0 =
    -> f(x: 1, y: 2) // both x and y are labeled
-   << // r0 : Int = 3
+   >> assert(r0 == 3)
+
+.. XXX Refactor discarded return value above.
 
 You can override the default behavior for argument labels
 with one of the following forms:
@@ -631,6 +639,7 @@ suppresses the argument label.
 The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
+   :compile: true
 
    -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
    -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
@@ -693,6 +702,7 @@ without mutating it or to observe changes made by other code,
 use a capture list to explicitly capture the parameter immutably.
 
 .. testcode:: explicit-capture-for-inout
+    :compile: true
 
     -> func someFunction(a: inout Int) -> () -> Int {
            return { [a] in return a + 1 }
@@ -704,6 +714,7 @@ such as in multithreaded code that ensures
 all mutation has finished before the function returns.
 
 .. testcode:: cant-pass-inout-aliasing
+    :compile: true
 
     >> import Dispatch
     >> func someMutatingOperation(_ a: inout Int) {}
@@ -721,6 +732,7 @@ For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
 
 .. assertion:: escaping-cant-capture-inout
+    :compile: true
 
     -> func outer(a: inout Int) -> () -> Void {
            func inner() {
@@ -728,25 +740,25 @@ see :ref:`Functions_InOutParameters`.
            }
            return inner
        }
-    !! <REPL Input>:5:14: error: escaping closure captures 'inout' parameter 'a'
+    !$ error: escaping closure captures 'inout' parameter 'a'
     !! return inner
     !! ^
-    !! <REPL Input>:1:12: note: parameter 'a' is declared 'inout'
+    !$ note: parameter 'a' is declared 'inout'
     !! func outer(a: inout Int) -> () -> Void {
     !! ^
-    !! <REPL Input>:3:11: note: captured here
+    !$ note: captured here
     !! a += 1
     !! ^
     -> func closure(a: inout Int) -> () -> Void {
            return { a += 1 }
        }
-    !! <REPL Input>:2:14: error: escaping closure captures 'inout' parameter 'a'
+    !$ error: escaping closure captures 'inout' parameter 'a'
     !! return { a += 1 }
     !! ^
-    !! <REPL Input>:1:14: note: parameter 'a' is declared 'inout'
+    !$ note: parameter 'a' is declared 'inout'
     !! func closure(a: inout Int) -> () -> Void {
     !! ^
-    !! <REPL Input>:2:16: note: captured here
+    !$ note: captured here
     !! return { a += 1 }
     !! ^
 
@@ -784,19 +796,24 @@ If the parameter is omitted when calling the function,
 the default value is used instead.
 
 .. testcode:: default-args-and-labels
+   :compile: true
 
    -> func f(x: Int = 42) -> Int { return x }
+   >> let _ =
    -> f()       // Valid, uses default value
+   >> let _ =
    -> f(x: 7)   // Valid, uses the value provided
+   >> let _ =
    -> f(7)      // Invalid, missing argument label
-   <$ : Int = 42
-   <$ : Int = 7
-   !! <REPL Input>:1:3: error: missing argument label 'x:' in call
+   !$ error: missing argument label 'x:' in call
    !! f(7)      // Invalid, missing argument label
    !!   ^
    !!   x:
 
+.. XXX Refactor discarded return value above.
+
 .. assertion:: default-args-evaluated-at-call-site
+    :compile: true
 
     -> func shout() -> Int {
           print("evaluated")
@@ -834,24 +851,29 @@ A class type method marked with the ``class`` declaration modifier
 can be overridden by a subclass implementation;
 a class type method marked with ``class final`` or ``static`` can't be overridden.
 
-.. assertion:: overriding-class-methods
+.. assertion:: overriding-class-methods-err
+   :compile: true
 
    -> class S { class final func f() -> Int { return 12 } }
    -> class SS: S { override class func f() -> Int { return 120 } }
-   !! <REPL Input>:1:35: error: class method overrides a 'final' class method
+   !$ error: class method overrides a 'final' class method
    !! class SS: S { override class func f() -> Int { return 120 } }
    !!                                  ^
-   !! <REPL Input>:1:28: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! class S { class final func f() -> Int { return 12 } }
    !!                           ^
    -> class S2 { static func f() -> Int { return 12 } }
    -> class SS2: S2 { override static func f() -> Int { return 120 } }
-   !! <REPL Input>:1:38: error: cannot override static method
+   !$ error: cannot override static method
    !! class SS2: S2 { override static func f() -> Int { return 120 } }
    !! ^
-   !! <REPL Input>:1:24: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! class S2 { static func f() -> Int { return 12 } }
    !! ^
+
+.. assertion:: overriding-class-methods
+   :compile: true
+
    -> class S3 { class func f() -> Int { return 12 } }
    -> class SS3: S3 { override class func f() -> Int { return 120 } }
    -> print(SS3.f())
@@ -902,6 +924,7 @@ Rethrowing functions and methods
 must have at least one throwing function parameter.
 
 .. testcode:: rethrows
+   :compile: true
 
    -> func someFunction(callback: () throws -> Void) rethrows {
           try callback()
@@ -920,6 +943,7 @@ because the ``catch`` clause would handle
 the error thrown by ``alwaysThrows()``.
 
 .. testcode:: double-negative-rethrows
+   :compile: true
 
    >> enum SomeError: Error { case error }
    >> enum AnotherError: Error { case error }
@@ -934,11 +958,12 @@ the error thrown by ``alwaysThrows()``.
             throw AnotherError.error
          }
       }
-   !! <REPL Input>:6:9: error: a function declared 'rethrows' may only throw if its parameter does
+   !$ error: a function declared 'rethrows' may only throw if its parameter does
    !!               throw AnotherError.error
    !!               ^
 
 .. assertion:: throwing-in-rethrowing-function
+   :compile: true
 
    -> enum SomeError: Error { case c, d }
    -> func f1(callback: () throws -> Void) rethrows {
@@ -951,7 +976,7 @@ the error thrown by ``alwaysThrows()``.
    -> func f2(callback: () throws -> Void) rethrows {
           throw SomeError.d  // Error
       }
-   !! <REPL Input>:2:7: error: a function declared 'rethrows' may only throw if its parameter does
+   !$ error: a function declared 'rethrows' may only throw if its parameter does
    !! throw SomeError.d  // Error
    !! ^
 
@@ -1080,18 +1105,22 @@ And just like functions,
 you can get a reference to an enumeration case and apply it later in your code.
 
 .. testcode:: enum-case-as-function
+    :compile: true
 
     -> enum Number {
           case integer(Int)
           case real(Double)
        }
     -> let f = Number.integer
-    << // f : (Int) -> Number = (Function)
     -> // f is a function of type (Int) -> Number
     ---
     -> // Apply f to create an array of Number instances with integer values
     -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
-    << // evenInts : [Number] = [REPL.Number.integer(0), REPL.Number.integer(2), REPL.Number.integer(4), REPL.Number.integer(6)]
+
+.. No expectation for evenInts because there isn't a good way to spell one.
+   Using print() puts a module prefix like tmpabc in front of Number
+   so the expectation would need to be a regex (which we don't have),
+   and assert() would require Number to conform to Equatable.
 
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
@@ -1119,6 +1148,7 @@ An indirect case must have an associated value.
    For example, does "indirect enum { X(Int) } mark X as indirect?
 
 .. testcode:: indirect-enum
+   :compile: true
 
    -> enum Tree<T> {
          case empty
@@ -1127,9 +1157,6 @@ An indirect case must have an associated value.
    >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
    >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
    >> let t = Tree.node(value: 50, left: l1, right: l2)
-   << // l1 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
-   << // l2 : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty)
-   << // t : Tree<Int> = REPL.Tree<Swift.Int>.node(value: 50, left: REPL.Tree<Swift.Int>.node(value: 10, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty), right: REPL.Tree<Swift.Int>.node(value: 100, left: REPL.Tree<Swift.Int>.empty, right: REPL.Tree<Swift.Int>.empty))
 
 To enable indirection for all the cases of an enumeration
 that have an associated value,
@@ -1207,6 +1234,7 @@ Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that is automatically incremented from the raw value of the previous case.
 
 .. testcode:: raw-value-enum
+    :compile: true
 
     -> enum ExampleEnum: Int {
           case a, b, c = 5, d
@@ -1222,6 +1250,7 @@ and you don't assign values to the cases explicitly,
 each unassigned case is implicitly assigned a string with the same text as the name of that case.
 
 .. testcode:: raw-value-enum-implicit-string-values
+    :compile: true
 
     -> enum GamePlayMode: String {
           case cooperative, individual, competitive
@@ -1263,8 +1292,6 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
    let e = E.c(100)
    if case E.c(let i) = e { print(i) }
    // prints 100
-
-
 
 .. NOTE: Note that you can require protocol adoption,
     by using a protocol type as the raw-value type,
@@ -1437,6 +1464,7 @@ Overridden properties, methods, subscripts,
 and designated initializers must be marked with the ``override`` declaration modifier.
 
 .. assertion:: designatedInitializersRequireOverride
+    :compile: true
 
     -> class C { init() {} }
     -> class D: C { override init() { super.init() } }
@@ -1556,6 +1584,7 @@ list after the colon.
 For example, the following protocol can be adopted only by class types:
 
 .. testcode:: protocol-declaration
+    :compile: true
 
     -> protocol SomeProtocol: AnyObject {
            /* Protocol members go here */
@@ -1644,21 +1673,23 @@ Extensions that provide a default implementation for a type property requirement
 use the ``static`` keyword.
 
 .. assertion:: protocols-with-type-property-requirements
+   :compile: true
 
    -> protocol P { static var x: Int { get } }
    -> protocol P2 { class var x: Int { get } }
-   !! <REPL Input>:1:21: error: class properties are only allowed within classes; use 'static' to declare a requirement fulfilled by either a static or class property
+   !$ error: class properties are only allowed within classes; use 'static' to declare a requirement fulfilled by either a static or class property
    !! protocol P2 { class var x: Int { get } }
    !!              ~~~~~ ^
    !!              static
    -> struct S: P { static var x = 10 }
    -> class C1: P { static var x = 20 }
    -> class C2: P { class var x = 30 }
-   !! <REPL Input>:1:25: error: class stored properties not supported in classes; did you mean 'static'?
+   !$ error: class stored properties not supported in classes; did you mean 'static'?
    !! class C2: P { class var x = 30 }
    !!               ~~~~~     ^
 
 .. assertion:: protocol-type-property-default-implementation
+   :compile: true
 
    -> protocol P { static var x: Int { get } }
    -> extension P { static var x: Int { return 100 } }
@@ -1803,6 +1834,7 @@ without redeclaring the associated types.
 For example, the declarations of ``SubProtocol`` below are equivalent:
 
 .. testcode:: protocol-associatedtype
+    :compile: true
 
     -> protocol SomeProtocol {
            associatedtype SomeType
@@ -1812,11 +1844,11 @@ For example, the declarations of ``SubProtocol`` below are equivalent:
            // This syntax produces a warning.
            associatedtype SomeType: Equatable
        }
-    !! <REPL Input>:3:22: warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
+    !$ warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
     !! associatedtype SomeType: Equatable
     !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
     !!-
-    !! <REPL Input>:2:22: note: 'SomeType' declared here
+    !$ note: 'SomeType' declared here
     !! associatedtype SomeType
     !! ^
     ---
@@ -1997,6 +2029,7 @@ append an exclamation mark instead (``init!``). The example below shows an ``ini
 failable initializer that produces an optional instance of a structure.
 
 .. testcode:: failable
+    :compile: true
 
     -> struct SomeStruct {
            let property: String
@@ -2014,6 +2047,7 @@ You call an ``init?`` failable initializer in the same way that you call a nonfa
 except that you must deal with the optionality of the result.
 
 .. testcode:: failable
+    :compile: true
 
     -> if let actualInstance = SomeStruct(input: "Hello") {
            // do something with the instance of 'SomeStruct'
@@ -2237,6 +2271,7 @@ When the ``log()`` method is called on ``oneAndTwo`` directly,
 the specialized version containing the title string is used.
 
 .. testcode:: conditional-conformance
+   :compile: true
 
    -> let oneAndTwo = Pair(first: "one", second: "two")
    -> oneAndTwo.log()
@@ -2251,6 +2286,7 @@ For this reason,
 the default implementation provided by the ``Loggable`` protocol is used instead.
 
 .. testcode:: conditional-conformance
+   :compile: true
 
    -> func doSomething<T: Loggable>(with x: T) {
          x.log()
@@ -2292,6 +2328,7 @@ one for for arrays with ``Int`` elements,
 and one for arrays with ``String`` elements.
 
 .. testcode:: multiple-conformances
+   :compile: true
 
    -> protocol Serializable {
          func serialize() -> Any
@@ -2310,10 +2347,10 @@ and one for arrays with ``String`` elements.
    ->     }
       }
    // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
-   !!  <REPL Input>:1:18: error: conflicting conformance of 'Array<Element>' to protocol 'Serializable'; there cannot be more than one conformance, even with different conditional bounds
+   !$ error: conflicting conformance of 'Array<Element>' to protocol 'Serializable'; there cannot be more than one conformance, even with different conditional bounds
    !! extension Array: Serializable where Element == String {
    !! ^
-   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+   !$ note: 'Array<Element>' declares conformance to protocol 'Serializable' here
    !! extension Array: Serializable where Element == Int {
    !! ^
 
@@ -2322,6 +2359,7 @@ create a new protocol that each type can conform to
 and use that protocol as the requirement when declaring conditional conformance.
 
 .. testcode:: multiple-conformances-success
+   :compile: true
 
    >> protocol Serializable { }
    -> protocol SerializableInArray { }
@@ -2356,6 +2394,7 @@ to avoid a conflict when declaring its conditional conformance
 to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
 
 .. testcode:: conditional-conformance
+   :compile: true
 
    -> protocol MarkedLoggable: Loggable {
          func markAndLog()
@@ -2382,6 +2421,7 @@ the other ``Array`` extensions would implicitly create these declarations,
 resulting in an error:
 
 .. testcode:: conditional-conformance-implicit-overlap
+   :compile: true
 
    >> protocol Loggable { }
    >> protocol MarkedLoggable : Loggable { }
@@ -2389,14 +2429,15 @@ resulting in an error:
    -> extension Array: Loggable where Element: TitledLoggable { }
       extension Array: Loggable where Element: MarkedLoggable { }
    // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
-   !! <REPL Input>:1:18: error: conflicting conformance of 'Array<Element>' to protocol 'Loggable'; there cannot be more than one conformance, even with different conditional bounds
+   !$ error: conflicting conformance of 'Array<Element>' to protocol 'Loggable'; there cannot be more than one conformance, even with different conditional bounds
    !! extension Array: Loggable where Element: MarkedLoggable { }
    !! ^
-   !! <REPL Input>:1:1: note: 'Array<Element>' declares conformance to protocol 'Loggable' here
+   !$ note: 'Array<Element>' declares conformance to protocol 'Loggable' here
    !! extension Array: Loggable where Element: TitledLoggable { }
    !! ^
 
 .. assertion:: types-cant-have-multiple-implict-conformances
+   :compile: true
 
    >> protocol Loggable { }
       protocol TitledLoggable: Loggable { }
@@ -2405,45 +2446,45 @@ resulting in an error:
           // ...
       }
       extension Array: MarkedLoggable where Element: MarkedLoggable { }
-   !!  <REPL Input>:1:1: error: conditional conformance of type 'Array<Element>' to protocol 'TitledLoggable' does not imply conformance to inherited protocol 'Loggable'
+   !$ error: conditional conformance of type 'Array<Element>' to protocol 'TitledLoggable' does not imply conformance to inherited protocol 'Loggable'
    !! extension Array: TitledLoggable where Element: TitledLoggable {
    !! ^
-   !! <REPL Input>:1:1: note: did you mean to explicitly state the conformance like 'extension Array: Loggable where ...'?
+   !$ note: did you mean to explicitly state the conformance like 'extension Array: Loggable where ...'?
    !! extension Array: TitledLoggable where Element: TitledLoggable {
    !! ^
-   !! <REPL Input>:1:1: error: type 'Element' does not conform to protocol 'TitledLoggable'
+   !$ error: type 'Element' does not conform to protocol 'TitledLoggable'
    !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
-   !! <REPL Input>:1:1: error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
+   !$ error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
    !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
-   !! <REPL Input>:1:1: note: requirement specified as 'Element' : 'TitledLoggable'
+   !$ note: requirement specified as 'Element' : 'TitledLoggable'
    !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
-   !! <REPL Input>:1:1: note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
+   !$ note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
    !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
 
 .. assertion:: extension-can-have-where-clause
+   :compile: true
 
    >> extension Array where Element: Equatable {
           func f(x: Array) -> Int { return 7 }
       }
    >> let x = [1, 2, 3]
-   << // x : [Int] = [1, 2, 3]
    >> let y = [10, 20, 30]
-   << // y : [Int] = [10, 20, 30]
-   >> x.f(x: y)
-   << // r0 : Int = 7
+   >> let r0 = x.f(x: y)
+   >> assert(r0 == 7)
 
 .. assertion:: extensions-can-have-where-clause-and-inheritance-together
+   :compile: true
 
    >> protocol P { func foo() -> Int }
    >> extension Array: P where Element: Equatable {
    >>    func foo() -> Int { return 0 }
    >> }
-   >> [1, 2, 3].foo()
-   << // r0 : Int = 0
+   >> let r0 = [1, 2, 3].foo()
+   >> assert(r0 == 0)
 
 .. syntax-grammar::
 
@@ -2535,13 +2576,14 @@ the ``static`` keyword has the same effect as marking the declaration
 with both the ``class`` and ``final`` declaration modifiers.
 
 .. assertion:: cant-override-static-subscript-in-subclass
+   :compile: true
 
    -> class Super { static subscript(i: Int) -> Int { return 10 } }
    -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
-   !! <REPL Input>:1:36: error: cannot override static subscript
+   !$ error: cannot override static subscript
    !! class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
    !!                                    ^
-   !! <REPL Input>:1:22: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! class Super { static subscript(i: Int) -> Int { return 10 } }
    !!                      ^
 
