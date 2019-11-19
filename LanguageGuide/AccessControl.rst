@@ -184,6 +184,7 @@ one of the ``open``, ``public``, ``internal``, ``fileprivate``, or ``private`` m
 at the beginning of the entity's declaration.
 
 .. testcode:: accessControlSyntax
+   :compile: true
 
    -> public class SomePublicClass {}
    -> internal class SomeInternalClass {}
@@ -191,9 +192,7 @@ at the beginning of the entity's declaration.
    -> private class SomePrivateClass {}
    ---
    -> public var somePublicVariable = 0
-   << // somePublicVariable : Int = 0
    -> internal let someInternalConstant = 0
-   << // someInternalConstant : Int = 0
    -> fileprivate func someFilePrivateFunction() {}
    -> private func somePrivateFunction() {}
 
@@ -204,10 +203,10 @@ without an explicit access-level modifier,
 and will still have an access level of internal:
 
 .. testcode:: accessControlDefaulted
+   :compile: true
 
    -> class SomeInternalClass {}              // implicitly internal
    -> let someInternalConstant = 0            // implicitly internal
-   << // someInternalConstant : Int = 0
 
 .. _AccessControl_CustomTypes:
 
@@ -400,6 +399,7 @@ The enumeration cases ``north``, ``south``, ``east``, and ``west``
 therefore also have an access level of public:
 
 .. testcode:: enumerationCases
+   :compile: true
 
    -> public enum CompassPoint {
          case north
@@ -692,6 +692,7 @@ The example below defines a structure called ``TrackedString``,
 which keeps track of the number of times a string property is modified:
 
 .. testcode:: reducedSetterScope, reducedSetterScope_error
+   :compile: true
 
    -> struct TrackedString {
          private(set) var numberOfEdits = 0
@@ -743,9 +744,9 @@ If you create a ``TrackedString`` instance and modify its string value a few tim
 you can see the ``numberOfEdits`` property value update to match the number of modifications:
 
 .. testcode:: reducedSetterScope
+   :compile: true
 
    -> var stringToEdit = TrackedString()
-   << // stringToEdit : TrackedString = REPL.TrackedString(numberOfEdits: 0, value: "")
    -> stringToEdit.value = "This string will be tracked."
    -> stringToEdit.value += " This edit will increment numberOfEdits."
    -> stringToEdit.value += " So will this one."
@@ -770,6 +771,7 @@ and its property setter private,
 by combining the ``public`` and ``private(set)`` access-level modifiers:
 
 .. testcode:: reducedSetterScopePublic
+   :compile: true
 
    -> public struct TrackedString {
          public private(set) var numberOfEdits = 0
@@ -890,6 +892,7 @@ This ensures that all of the protocol's requirements will be visible
 on any type that adopts the protocol.
 
 .. assertion:: protocolRequirementsCannotBeDifferentThanTheProtocol
+   :compile: true
 
    -> public protocol PublicProtocol {
          public var publicProperty: Int { get }
@@ -897,32 +900,32 @@ on any type that adopts the protocol.
          fileprivate var filePrivateProperty: Int { get }
          private var privateProperty: Int { get }
       }
-   !! <REPL Input>:2:6: error: 'public' modifier cannot be used in protocols
+   !$ error: 'public' modifier cannot be used in protocols
    !! public var publicProperty: Int { get }
    !! ^~~~~~~
    !!-
-   !! <REPL Input>:2:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !$ note: protocol requirements implicitly have the same access as the protocol itself
    !! public var publicProperty: Int { get }
    !! ^
-   !! <REPL Input>:3:6: error: 'internal' modifier cannot be used in protocols
+   !$ error: 'internal' modifier cannot be used in protocols
    !! internal var internalProperty: Int { get }
    !! ^~~~~~~~~
    !!-
-   !! <REPL Input>:3:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !$ note: protocol requirements implicitly have the same access as the protocol itself
    !! internal var internalProperty: Int { get }
    !! ^
-   !! <REPL Input>:4:6: error: 'fileprivate' modifier cannot be used in protocols
+   !$ error: 'fileprivate' modifier cannot be used in protocols
    !! fileprivate var filePrivateProperty: Int { get }
    !! ^~~~~~~~~~~~
    !!-
-   !! <REPL Input>:4:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !$ note: protocol requirements implicitly have the same access as the protocol itself
    !! fileprivate var filePrivateProperty: Int { get }
    !! ^
-   !! <REPL Input>:5:6: error: 'private' modifier cannot be used in protocols
+   !$ error: 'private' modifier cannot be used in protocols
    !! private var privateProperty: Int { get }
    !! ^~~~~~~~
    !!-
-   !! <REPL Input>:5:6: note: protocol requirements implicitly have the same access as the protocol itself
+   !$ note: protocol requirements implicitly have the same access as the protocol itself
    !! private var privateProperty: Int { get }
    !! ^
 
@@ -1191,6 +1194,7 @@ whether or not your types have private entities.
 For example, given the following simple protocol:
 
 .. testcode:: extensions_privatemembers
+   :compile: true
 
    -> protocol SomeProtocol {
           func doSomething()
@@ -1199,6 +1203,7 @@ For example, given the following simple protocol:
 You can use an extension to add protocol conformance, like this:
 
 .. testcode:: extensions_privatemembers
+   :compile: true
 
    -> struct SomeStruct {
           private var privateVariable = 12
@@ -1211,7 +1216,6 @@ You can use an extension to add protocol conformance, like this:
       }
    >> let s = SomeStruct()
    >> s.doSomething()
-   << // s : SomeStruct = REPL.SomeStruct(privateVariable: 12)
    << 12
 
 .. _AccessControl_Generics:
@@ -1255,21 +1259,21 @@ but a public type alias can't alias an internal, file-private, or private type.
    -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
    -> private typealias PrivateAliasOfPrivateType = PrivateStruct
    ---
-   !! /tmp/sourcefile_0.swift:7:18: error: type alias cannot be declared public because its underlying type uses an internal type
+   !$ error: type alias cannot be declared public because its underlying type uses an internal type
    !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
    !! ^                           ~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:2:17: note: type declared here
+   !$ note: type declared here
    !! internal struct InternalStruct {}
    !! ^
-   !! /tmp/sourcefile_0.swift:10:18: error: type alias cannot be declared public because its underlying type uses a private type
+   !$ error: type alias cannot be declared public because its underlying type uses a private type
    !! public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
    !! ^                          ~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
+   !$ note: type declared here
    !! private struct PrivateStruct {}
    !! ^
-   !! /tmp/sourcefile_0.swift:11:20: error: type alias cannot be declared internal because its underlying type uses a private type
+   !$ error: type alias cannot be declared internal because its underlying type uses a private type
    !! internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
    !! ^                            ~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:16: note: type declared here
+   !$ note: type declared here
    !! private struct PrivateStruct {}
    !! ^
