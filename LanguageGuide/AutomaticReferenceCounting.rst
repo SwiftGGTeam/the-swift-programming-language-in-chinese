@@ -65,6 +65,7 @@ This example starts with a simple class called ``Person``,
 which defines a stored constant property called ``name``:
 
 .. testcode:: howARCWorks
+   :compile: true
 
    -> class Person {
          let name: String
@@ -90,18 +91,17 @@ they are automatically initialized with a value of ``nil``,
 and do not currently reference a ``Person`` instance.
 
 .. testcode:: howARCWorks
+   :compile: true
 
    -> var reference1: Person?
-   << // reference1 : Person? = nil
    -> var reference2: Person?
-   << // reference2 : Person? = nil
    -> var reference3: Person?
-   << // reference3 : Person? = nil
 
 You can now create a new ``Person`` instance
 and assign it to one of these three variables:
 
 .. testcode:: howARCWorks
+   :compile: true
 
    -> reference1 = Person(name: "John Appleseed")
    <- John Appleseed is being initialized
@@ -119,6 +119,7 @@ If you assign the same ``Person`` instance to two more variables,
 two more strong references to that instance are established:
 
 .. testcode:: howARCWorks
+   :compile: true
 
    -> reference2 = reference1
    -> reference3 = reference1
@@ -131,6 +132,7 @@ a single strong reference remains,
 and the ``Person`` instance is not deallocated:
 
 .. testcode:: howARCWorks
+   :compile: true
 
    -> reference1 = nil
    -> reference2 = nil
@@ -140,6 +142,7 @@ the third and final strong reference is broken,
 at which point it's clear that you are no longer using the ``Person`` instance:
 
 .. testcode:: howARCWorks
+   :compile: true
 
    -> reference3 = nil
    <- John Appleseed is being deinitialized
@@ -235,6 +238,7 @@ the instances stored inside the ``john`` and ``unit4A`` optional variables,
 so that the properties of those instances can be set:
 
 .. testcode:: referenceCycles
+   :compile: true
 
    -> john!.apartment = unit4A
    -> unit4A!.tenant = john
@@ -331,23 +335,20 @@ a reference to an invalid instance that no longer exists.
     when ARC sets a weak reference to ``nil``.
 
 .. assertion:: weak-reference-doesnt-trigger-didset
+    :compile: true
 
     -> class C {
            weak var w: C? { didSet { print("did set") } }
        }
     -> var c1 = C()
-    << // c1 : C = REPL.C
     -> do {
-    -> let c2 = C()  // Inside a do{} block, so no REPL result.
-    -> print(c1.w as Any)
-    << nil
-    -> c1.w = c2
+    ->     let c2 = C()
+    ->     assert(c1.w == nil)
+    ->     c1.w = c2
     << did set
-    -> print(c1.w as Any)
-    << Optional(REPL.C)
+    ->     assert(c1.w != nil)
     -> } // ARC deallocates c2; didSet doesn't fire.
-    -> print(c1.w as Any)
-    << nil
+    -> assert(c1.w == nil)
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
@@ -737,6 +738,7 @@ This example defines a class called ``HTMLElement``,
 which provides a simple model for an individual element within an HTML document:
 
 .. testcode:: strongReferenceCyclesForClosures
+   :compile: true
 
    -> class HTMLElement {
    ---
@@ -795,11 +797,10 @@ that defaults to some text if the ``text`` property is ``nil``,
 in order to prevent the representation from returning an empty HTML tag:
 
 .. testcode:: strongReferenceCyclesForClosures
+   :compile: true
 
    -> let heading = HTMLElement(name: "h1")
-   << // heading : HTMLElement = REPL.HTMLElement
    -> let defaultText = "some default text"
-   << // defaultText : String = "some default text"
    -> heading.asHTML = {
          return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
       }
@@ -825,9 +826,9 @@ which prints a message to show when an ``HTMLElement`` instance is deallocated.
 Here's how you use the ``HTMLElement`` class to create and print a new instance:
 
 .. testcode:: strongReferenceCyclesForClosures
+   :compile: true
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
@@ -865,6 +866,7 @@ neither the ``HTMLElement`` instance nor its closure are deallocated,
 because of the strong reference cycle:
 
 .. testcode:: strongReferenceCyclesForClosures
+   :compile: true
 
    -> paragraph = nil
 
@@ -907,6 +909,7 @@ Place the capture list before a closure's parameter list and return type
 if they are provided:
 
 .. testcode:: strongReferenceCyclesForClosures
+   :compile: true
 
    >> class SomeClass {
    >> var delegate: AnyObject?
@@ -924,6 +927,7 @@ place the capture list at the very start of the closure,
 followed by the ``in`` keyword:
 
 .. testcode:: strongReferenceCyclesForClosures
+   :compile: true
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
@@ -963,6 +967,7 @@ from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above.
 Here's how you write the ``HTMLElement`` class to avoid the cycle:
 
 .. testcode:: unownedReferencesForClosures
+   :compile: true
 
    -> class HTMLElement {
    ---
@@ -997,9 +1002,9 @@ which means “capture self as an unowned reference rather than a strong referen
 You can create and print an ``HTMLElement`` instance as before:
 
 .. testcode:: unownedReferencesForClosures
+   :compile: true
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
@@ -1015,6 +1020,7 @@ the ``HTMLElement`` instance is deallocated,
 as can be seen from the printing of its deinitializer message in the example below:
 
 .. testcode:: unownedReferencesForClosures
+   :compile: true
 
    -> paragraph = nil
    <- p is being deinitialized
