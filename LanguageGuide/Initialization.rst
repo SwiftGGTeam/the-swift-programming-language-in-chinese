@@ -49,6 +49,7 @@ In its simplest form, an initializer is like an instance method with no paramete
 written using the ``init`` keyword:
 
 .. testcode:: initializerSyntax
+   :compile: true
 
    >> class Test {
    -> init() {
@@ -62,6 +63,7 @@ The ``Fahrenheit`` structure has one stored property,
 ``temperature``, which is of type ``Double``:
 
 .. testcode:: fahrenheitInit
+   :compile: true
 
    -> struct Fahrenheit {
          var temperature: Double
@@ -70,7 +72,6 @@ The ``Fahrenheit`` structure has one stored property,
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = REPL.Fahrenheit(temperature: 32.0)
    -> print("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
@@ -107,6 +108,7 @@ by providing a default value for its ``temperature`` property
 at the point that the property is declared:
 
 .. testcode:: fahrenheitDefault
+   :compile: true
 
    -> struct Fahrenheit {
          var temperature = 32.0
@@ -140,6 +142,7 @@ which initialize a new instance of the structure
 with a value from a different temperature scale:
 
 .. testcode:: initialization
+   :compile: true
 
    -> struct Celsius {
          var temperatureInCelsius: Double
@@ -151,11 +154,9 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-   << // freezingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -198,7 +199,8 @@ for its red, green, and blue components.
 ``Color`` also provides a second initializer with a single ``white`` parameter,
 which is used to provide the same value for all three color components.
 
-.. testcode:: externalParameterNames
+.. testcode:: externalParameterNames, externalParameterNames-err
+   :compile: true
 
    -> struct Color {
          let red, green, blue: Double
@@ -218,22 +220,25 @@ Both initializers can be used to create a new ``Color`` instance,
 by providing named values for each initializer parameter:
 
 .. testcode:: externalParameterNames
+   :compile: true
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = REPL.Color(red: 1.0, green: 0.0, blue: 1.0)
    -> let halfGray = Color(white: 0.5)
-   << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
+   >> assert(halfGray.red == 0.5)
+   >> assert(halfGray.green == 0.5)
+   >> assert(halfGray.blue == 0.5)
 
 Note that it is not possible to call these initializers
 without using argument labels.
 Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
-.. testcode:: externalParameterNames
+.. testcode:: externalParameterNames-err
+   :compile: true
 
    -> let veryGreen = Color(0.0, 1.0, 0.0)
    // this reports a compile-time error - argument labels are required
-   !! <REPL Input>:1:22: error: missing argument labels 'red:green:blue:' in call
+   !$ error: missing argument labels 'red:green:blue:' in call
    !! let veryGreen = Color(0.0, 1.0, 0.0)
    !! ^
    !! red: green:  blue:
@@ -253,6 +258,7 @@ with an additional initializer to create a new ``Celsius`` instance
 from a ``Double`` value that is already in the Celsius scale:
 
 .. testcode:: initializersWithoutExternalParameterNames
+   :compile: true
 
    -> struct Celsius {
          var temperatureInCelsius: Double
@@ -267,7 +273,6 @@ from a ``Double`` value that is already in the Celsius scale:
          }
       }
    -> let bodyTemperature = Celsius(37.0)
-   << // bodyTemperature : Celsius = REPL.Celsius(temperatureInCelsius: 37.0)
    /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
    </ bodyTemperature.temperatureInCelsius is 37.0
 
@@ -293,6 +298,7 @@ The following example defines a class called ``SurveyQuestion``,
 with an optional ``String`` property called ``response``:
 
 .. testcode:: surveyQuestionVariable
+   :compile: true
 
    -> class SurveyQuestion {
          var text: String
@@ -305,7 +311,6 @@ with an optional ``String`` property called ``response``:
          }
       }
    -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
-   << // cheeseQuestion : SurveyQuestion = REPL.SurveyQuestion
    -> cheeseQuestion.ask()
    <- Do you like cheese?
    -> cheeseQuestion.response = "Yes, I do like cheese."
@@ -328,6 +333,7 @@ Once a constant property is assigned a value,
 it can't be further modified.
 
 .. assertion:: constantPropertyAssignment
+   :compile: true
 
    >> struct S {
          let c: Int
@@ -336,15 +342,16 @@ it can't be further modified.
             self.c = 2
          }
       }
-   !! <REPL Input>:5:16: error: immutable value 'self.c' may only be initialized once
+   !$ error: immutable value 'self.c' may only be initialized once
    !! self.c = 2
    !! ^
-   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let c: Int
    !! ^~~
    !! var
 
 .. assertion:: constantPropertyAssignmentWithInitialValue
+   :compile: true
 
    >> struct S {
          let c: Int = 0
@@ -352,13 +359,13 @@ it can't be further modified.
             self.c = 1
          }
       }
-   !! <REPL Input>:4:16: error: immutable value 'self.c' may only be initialized once
+   !$ error: immutable value 'self.c' may only be initialized once
    !! self.c = 1
    !! ^
-   !! <REPL Input>:2:10: note: initial value already provided in 'let' declaration
+   !$ note: initial value already provided in 'let' declaration
    !! let c: Int = 0
    !! ^
-   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let c: Int = 0
    !! ^~~
    !! var
@@ -377,6 +384,7 @@ Even though the ``text`` property is now a constant,
 it can still be set within the class's initializer:
 
 .. testcode:: surveyQuestionConstant
+   :compile: true
 
    -> class SurveyQuestion {
          let text: String
@@ -389,7 +397,6 @@ it can still be set within the class's initializer:
          }
       }
    -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
-   << // beetsQuestion : SurveyQuestion = REPL.SurveyQuestion
    -> beetsQuestion.ask()
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
@@ -407,24 +414,22 @@ The default initializer simply creates a new instance
 with all of its properties set to their default values.
 
 .. assertion:: defaultInitializersForStructAndClass
+   :compile: true
 
    -> struct S { var s: String = "s" }
-   -> S().s
-   <$ : String = "s"
+   -> assert(S().s == "s")
    -> class A { var a: String = "a" }
-   -> A().a
-   <$ : String = "a"
+   -> assert(A().a == "a")
    -> class B: A { var b: String = "b" }
-   -> B().a
-   <$ : String = "a"
-   -> B().b
-   <$ : String = "b"
+   -> assert(B().a == "a")
+   -> assert(B().b ==  "b")
 
 This example defines a class called ``ShoppingListItem``,
 which encapsulates the name, quantity, and purchase state
 of an item in a shopping list:
 
 .. testcode:: initialization
+   :compile: true
 
    -> class ShoppingListItem {
          var name: String?
@@ -432,7 +437,6 @@ of an item in a shopping list:
          var purchased = false
       }
    -> var item = ShoppingListItem()
-   << // item : ShoppingListItem = REPL.ShoppingListItem
 
 Because all properties of the ``ShoppingListItem`` class have default values,
 and because it is a base class with no superclass,
@@ -458,14 +462,13 @@ the structure receives a memberwise initializer
 even if it has stored properties that don't have default values.
 
 .. assertion:: memberwiseInitializersDontRequireDefaultStoredPropertyValues
+   :compile: true
 
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
-   << // s : S = REPL.S(int: 42, string: "hello")
    ---
    -> struct SS { var int = 10; var string: String }
    -> let ss = SS(int: 42, string: "hello")
-   << // ss : SS = REPL.SS(int: 42, string: "hello")
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -482,12 +485,12 @@ memberwise initializer,
 which you can use to initialize a new ``Size`` instance:
 
 .. testcode:: initialization
+   :compile: true
 
    -> struct Size {
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
 
 When you call a memberwise initializer,
 you can omit values for any properties
@@ -500,14 +503,13 @@ and the initializer uses the default value for anything you omit ---
 for example:
 
 .. testcode:: initialization
+   :compile: true
 
    -> let zeroByTwo = Size(height: 2.0)
-   << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 2.0)
    -> print(zeroByTwo.width, zeroByTwo.height)
    <- 0.0 2.0
    ---
    -> let zeroByZero = Size()
-   << // zeroByZero : Size = REPL.Size(width: 0.0, height: 0.0)
    -> print(zeroByZero.width, zeroByZero.height)
    <- 0.0 0.0
 
@@ -558,6 +560,7 @@ The example requires two supporting structures called ``Size`` and ``Point``,
 both of which provide default values of ``0.0`` for all of their properties:
 
 .. testcode:: valueDelegation
+   :compile: true
 
    -> struct Size {
          var width = 0.0, height = 0.0
@@ -574,6 +577,7 @@ These initialization options are represented by
 three custom initializers that are part of the ``Rect`` structure's definition:
 
 .. testcode:: valueDelegation
+   :compile: true
 
    -> struct Rect {
          var origin = Point()
@@ -602,9 +606,9 @@ and ``Size(width: 0.0, height: 0.0)``
 from their property definitions:
 
 .. testcode:: valueDelegation
+   :compile: true
 
    -> let basicRect = Rect()
-   << // basicRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
@@ -615,10 +619,10 @@ This initializer simply assigns the ``origin`` and ``size`` argument values to
 the appropriate stored properties:
 
 .. testcode:: valueDelegation
+   :compile: true
 
    -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // originRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
@@ -629,10 +633,10 @@ It then calls (or :newTerm:`delegates`) to the ``init(origin:size:)`` initialize
 which stores the new origin and size values in the appropriate properties:
 
 .. testcode:: valueDelegation
+   :compile: true
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -940,6 +944,7 @@ and validates that the parameters for your overriding initializer have been spec
    even if your subclass's implementation of the initializer is a convenience initializer.
 
 .. assertion:: youHaveToWriteOverrideWhenOverridingADesignatedInitializer
+   :compile: true
 
    -> class C {
          init() {}
@@ -952,15 +957,16 @@ and validates that the parameters for your overriding initializer have been spec
          // this is not correct
          init() {}
       }
-   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !$ error: overriding declaration requires an 'override' keyword
    !! init() {}
    !! ^
    !! override
-   !! <REPL Input>:2:6: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! init() {}
    !! ^
 
 .. assertion:: youHaveToWriteOverrideEvenWhenOverridingADefaultInitializer
+   :compile: true
 
    -> class C {
          var i = 0
@@ -973,11 +979,11 @@ and validates that the parameters for your overriding initializer have been spec
          // this is not correct
          init() {}
       }
-   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !$ error: overriding declaration requires an 'override' keyword
    !! init() {}
    !! ^
    !! override
-   !! <REPL Input>:1:7: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! class C {
    !! ^
 
@@ -989,6 +995,7 @@ As a result, you do not write the ``override`` modifier when providing
 a matching implementation of a superclass convenience initializer.
 
 .. assertion:: youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer
+   :compile: true
 
    -> class C {
          var i: Int
@@ -1019,10 +1026,10 @@ a matching implementation of a superclass convenience initializer.
             self.init(someInt: 42)
          }
       }
-   !! <REPL Input>:7:27: error: initializer does not override a designated initializer from its superclass
+   !$ error: initializer does not override a designated initializer from its superclass
    !! override convenience init() {
    !! ~~~~~~~~             ^
-   !! <REPL Input>:6:18: note: attempt to override convenience initializer here
+   !$ note: attempt to override convenience initializer here
    !! convenience init() {
    !! ^
 
@@ -1033,6 +1040,7 @@ The ``numberOfWheels`` property is used by a computed property called ``descript
 to create a ``String`` description of the vehicle's characteristics:
 
 .. testcode:: initializerInheritance
+   :compile: true
 
    -> class Vehicle {
          var numberOfWheels = 0
@@ -1049,15 +1057,16 @@ The default initializer (when available) is always a designated initializer for 
 and can be used to create a new ``Vehicle`` instance with a ``numberOfWheels`` of ``0``:
 
 .. testcode:: initializerInheritance
+   :compile: true
 
    -> let vehicle = Vehicle()
-   << // vehicle : Vehicle = REPL.Vehicle
    -> print("Vehicle: \(vehicle.description)")
    </ Vehicle: 0 wheel(s)
 
 The next example defines a subclass of ``Vehicle`` called ``Bicycle``:
 
 .. testcode:: initializerInheritance
+   :compile: true
 
    -> class Bicycle: Vehicle {
          override init() {
@@ -1082,9 +1091,9 @@ you can call its inherited ``description`` computed property
 to see how its ``numberOfWheels`` property has been updated:
 
 .. testcode:: initializerInheritance
+   :compile: true
 
    -> let bicycle = Bicycle()
-   << // bicycle : Bicycle = REPL.Bicycle
    -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
 
@@ -1101,6 +1110,7 @@ this initializer relies on an implicit call to its superclass's initializer
 to complete the process.
 
 .. testcode:: initializerInheritance
+   :compile: true
 
    -> class Hoverboard: Vehicle { 
           var color: String 
@@ -1117,9 +1127,9 @@ An instance of ``Hoverboard`` uses the default number of wheels
 supplied by the ``Vehicle`` initializer.
 
 .. testcode:: initializerInheritance
+   :compile: true
 
    -> let hoverboard = Hoverboard(color: "silver")
-   << // hoverboard : Hoverboard = REPL.Hoverboard
    -> print("Hoverboard: \(hoverboard.description)")
    </ Hoverboard: 0 wheel(s) in a beautiful silver
 
@@ -1129,6 +1139,7 @@ supplied by the ``Vehicle`` initializer.
    but can not modify inherited constant properties.
 
 .. assertion:: youCantModifyInheritedConstantPropertiesFromASuperclass
+   :compile: true
 
    -> class C {
          let constantProperty: Int
@@ -1153,10 +1164,10 @@ supplied by the ``Vehicle`` initializer.
             constantProperty = 0
          }
       }
-   !!  <REPL Input>:5:9: error: cannot assign to property: 'constantProperty' is a 'let' constant
+   !$ error: cannot assign to property: 'constantProperty' is a 'let' constant
    !! constantProperty = 0
    !! ^~~~~~~~~~~~~~~~
-   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let constantProperty: Int
    !! ^~~
    !! var
@@ -1218,6 +1229,7 @@ The ``Food`` class introduces a single ``String`` property called ``name``
 and provides two initializers for creating ``Food`` instances:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> class Food {
          var name: String
@@ -1240,9 +1252,9 @@ that takes a single argument called ``name``.
 This initializer can be used to create a new ``Food`` instance with a specific name:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> let namedMeat = Food(name: "Bacon")
-   << // namedMeat : Food = REPL.Food
    /> namedMeat's name is \"\(namedMeat.name)\"
    </ namedMeat's name is "Bacon"
 
@@ -1260,9 +1272,9 @@ by delegating across to the ``Food`` class's ``init(name: String)`` with
 a ``name`` value of ``[Unnamed]``:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> let mysteryMeat = Food()
-   << // mysteryMeat : Food = REPL.Food
    /> mysteryMeat's name is \"\(mysteryMeat.name)\"
    </ mysteryMeat's name is "[Unnamed]"
 
@@ -1273,6 +1285,7 @@ It introduces an ``Int`` property called ``quantity``
 and defines two initializers for creating ``RecipeIngredient`` instances:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> class RecipeIngredient: Food {
          var quantity: Int
@@ -1335,13 +1348,11 @@ rather than the ``Food`` version.
 All three of these initializers can be used to create new ``RecipeIngredient`` instances:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> let oneMysteryItem = RecipeIngredient()
-   << // oneMysteryItem : RecipeIngredient = REPL.RecipeIngredient
    -> let oneBacon = RecipeIngredient(name: "Bacon")
-   << // oneBacon : RecipeIngredient = REPL.RecipeIngredient
    -> let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
-   << // sixEggs : RecipeIngredient = REPL.RecipeIngredient
 
 The third and final class in the hierarchy is
 a subclass of ``RecipeIngredient`` called ``ShoppingListItem``.
@@ -1355,6 +1366,7 @@ with a default value of ``false``.
 which provides a textual description of a ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
@@ -1385,13 +1397,13 @@ You can use all three of the inherited initializers
 to create a new ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
+   :compile: true
 
    -> var breakfastList = [
          ShoppingListItem(),
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : [ShoppingListItem] = [REPL.ShoppingListItem, REPL.ShoppingListItem, REPL.ShoppingListItem]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
@@ -1445,16 +1457,17 @@ by placing a question mark after the ``init`` keyword (``init?``).
    with the same parameter types and names.
 
 .. assertion:: failableAndNonFailableInitializersCannotMatch
+   :compile: true
 
    -> struct S {
          let s: String
          init(s: String) { self.s = s }
          init?(s: String) { self.s = s }
       }
-   !! <REPL Input>:4:6: error: invalid redeclaration of 'init(s:)'
+   !$ error: invalid redeclaration of 'init(s:)'
    !!            init?(s: String) { self.s = s }
    !!            ^
-   !! <REPL Input>:3:6: note: 'init(s:)' previously declared here
+   !$ note: 'init(s:)' previously declared here
    !!            init(s: String) { self.s = s }
    !!            ^
 
@@ -1477,11 +1490,10 @@ If the type conversion cannot maintain the value,
 the initializer fails.
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> let wholeNumber: Double = 12345.0
-   << // wholeNumber : Double = 12345.0
    -> let pi = 3.14159
-   <~ // pi : Double = 3.1415
    ---
    -> if let valueMaintained = Int(exactly: wholeNumber) {
           print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
@@ -1489,7 +1501,6 @@ the initializer fails.
    <- 12345.0 conversion to Int maintains value of 12345
    ---
    -> let valueChanged = Int(exactly: pi)
-   << // valueChanged : Int? = nil
    // valueChanged is of type Int?, not Int
    ---
    -> if valueChanged == nil {
@@ -1506,6 +1517,7 @@ If an empty string is found, an initialization failure is triggered.
 Otherwise, the ``species`` property's value is set, and initialization succeeds:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> struct Animal {
          let species: String
@@ -1519,9 +1531,9 @@ You can use this failable initializer to try to initialize a new ``Animal`` inst
 and to check if initialization succeeded:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> let someCreature = Animal(species: "Giraffe")
-   << // someCreature : Animal? = Optional(REPL.Animal(species: "Giraffe"))
    // someCreature is of type Animal?, not Animal
    ---
    -> if let giraffe = someCreature {
@@ -1533,9 +1545,9 @@ If you pass an empty string value to the failable initializer's ``species`` para
 the initializer triggers an initialization failure:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> let anonymousCreature = Animal(species: "")
-   << // anonymousCreature : Animal? = nil
    // anonymousCreature is of type Animal?, not Animal
    ---
    -> if anonymousCreature == nil {
@@ -1569,6 +1581,7 @@ A failable initializer is used to find an appropriate enumeration case
 for a ``Character`` value representing a temperature symbol:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> enum TemperatureUnit {
          case kelvin, celsius, fahrenheit
@@ -1592,16 +1605,15 @@ and to cause initialization to fail if the parameter does not match one of these
 states:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
-   << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
          print("This is not a defined temperature unit, so initialization failed.")
       }
@@ -1623,20 +1635,19 @@ to use raw values of type ``Character``
 and to take advantage of the ``init?(rawValue:)`` initializer:
 
 .. testcode:: failableInitializersForEnumerations
+   :compile: true
 
    -> enum TemperatureUnit: Character {
          case kelvin = "K", celsius = "C", fahrenheit = "F"
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
-   << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
          print("This is not a defined temperature unit, so initialization failed.")
       }
@@ -1656,6 +1667,7 @@ the entire initialization process fails immediately,
 and no further initialization code is executed.
 
 .. assertion:: delegatingAcrossInAStructurePropagatesInitializationFailureImmediately
+   :compile: true
 
    -> struct S {
          init?(string1: String) {
@@ -1665,9 +1677,10 @@ and no further initialization code is executed.
          init?(string2: String) { return nil }
       }
    -> let s = S(string1: "bing")
-   << // s : S? = nil
+   -> assert(s == nil)
 
 .. assertion:: delegatingAcrossInAClassPropagatesInitializationFailureImmediately
+   :compile: true
 
    -> class C {
          convenience init?(string1: String) {
@@ -1677,9 +1690,10 @@ and no further initialization code is executed.
          init?(string2: String) { return nil }
       }
    -> let c = C(string1: "bing")
-   << // c : C? = nil
+   -> assert(c == nil)
 
 .. assertion:: delegatingUpInAClassPropagatesInitializationFailureImmediately
+   :compile: true
 
    -> class C {
          init?(string1: String) { return nil }
@@ -1691,7 +1705,7 @@ and no further initialization code is executed.
          }
       }
    -> let d = D(string2: "bing")
-   << // d : D? = nil
+   -> assert(d == nil)
 
 .. note::
 
@@ -1705,6 +1719,7 @@ The ``CartItem`` class models an item in an online shopping cart.
 and ensures that this property always has a value of at least ``1``:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> class Product {
          let name: String
@@ -1714,7 +1729,6 @@ and ensures that this property always has a value of at least ``1``:
          }
       }
    >> let p = Product(name: "")
-   << // p : Product? = nil
    ---
    -> class CartItem: Product {
          let quantity: Int
@@ -1739,6 +1753,7 @@ If you create a ``CartItem`` instance with a nonempty name and a quantity of ``1
 initialization succeeds:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> if let twoSocks = CartItem(name: "sock", quantity: 2) {
          print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
@@ -1749,6 +1764,7 @@ If you try to create a ``CartItem`` instance with a ``quantity`` value of ``0``,
 the ``CartItem`` initializer causes initialization to fail:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
          print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
@@ -1761,6 +1777,7 @@ Similarly, if you try to create a ``CartItem`` instance with an empty ``name`` v
 the superclass ``Product`` initializer causes initialization to fail:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> if let oneUnnamed = CartItem(name: "", quantity: 1) {
          print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
@@ -1791,6 +1808,7 @@ is to force-unwrap the result of the failable superclass initializer.
    but not the other way around.
 
 .. assertion:: youCannotOverrideANonFailableInitializerWithAFailableInitializer
+   :compile: true
 
    -> class C {
          init() {}
@@ -1798,10 +1816,10 @@ is to force-unwrap the result of the failable superclass initializer.
    -> class D: C {
          override init?() {}
       }
-   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a non-failable initializer
+   !$ error: failable initializer 'init()' cannot override a non-failable initializer
    !!            override init?() {}
    !!                     ^
-   !! <REPL Input>:2:6: note: non-failable initializer 'init()' overridden here
+   !$ note: non-failable initializer 'init()' overridden here
    !!            init() {}
    !!            ^
 
@@ -1811,6 +1829,7 @@ a ``name`` property that is either a nonempty string value or ``nil``,
 but cannot be an empty string:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> class Document {
          var name: String?
@@ -1832,6 +1851,7 @@ if the instance is initialized without a name,
 or if an empty string is passed to the ``init(name:)`` initializer:
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> class AutomaticallyNamedDocument: Document {
          override init() {
@@ -1863,6 +1883,7 @@ and it uses the failable ``init(name:)`` initializer
 from its superclass during initialization.
 
 .. testcode:: failableInitializers
+   :compile: true
 
    -> class UntitledDocument: Document {
          override init() {
@@ -1898,6 +1919,7 @@ although doing so will trigger an assertion
 if the ``init!`` initializer causes initialization to fail.
 
 .. assertion:: structuresCanDelegateAcrossFromOptionalToIUO
+   :compile: true
 
    -> struct S {
          init?(optional: Int) { self.init(iuo: optional) }
@@ -1905,6 +1927,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: structuresCanDelegateAcrossFromIUOToOptional
+   :compile: true
 
    -> struct S {
          init!(iuo: Int) { self.init(optional: iuo) }
@@ -1912,6 +1935,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanDelegateAcrossFromOptionalToIUO
+   :compile: true
 
    -> class C {
          convenience init?(optional: Int) { self.init(iuo: optional) }
@@ -1919,6 +1943,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanDelegateAcrossFromIUOToOptional
+   :compile: true
 
    -> class C {
          convenience init!(iuo: Int) { self.init(optional: iuo) }
@@ -1926,6 +1951,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanDelegateUpFromOptionalToIUO
+   :compile: true
 
    -> class C {
          init!(iuo: Int) {}
@@ -1935,6 +1961,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanDelegateUpFromIUOToOptional
+   :compile: true
 
    -> class C {
          init?(optional: Int) {}
@@ -1944,6 +1971,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanOverrideOptionalWithIUO
+   :compile: true
 
    -> class C {
          init?(i: Int) {}
@@ -1953,6 +1981,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanOverrideIUOWithOptional
+   :compile: true
 
    -> class C {
          init!(i: Int) {}
@@ -1962,6 +1991,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: structuresCanDelegateAcrossFromNonFailingToIUO
+   :compile: true
 
    -> struct S {
          init(nonFailing: Int) { self.init(iuo: nonFailing) }
@@ -1969,6 +1999,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanDelegateAcrossFromNonFailingToIUO
+   :compile: true
 
    -> class C {
          convenience init(nonFailing: Int) { self.init(iuo: nonFailing) }
@@ -1976,6 +2007,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: classesCanDelegateUpFromNonFailingToIUO
+   :compile: true
 
    -> class C {
          init!(iuo: Int) {}
@@ -1985,6 +2017,7 @@ if the ``init!`` initializer causes initialization to fail.
       }
 
 .. assertion:: structuresAssertWhenDelegatingAcrossFromNonFailingToNilIUO
+   :compile: true
 
    -> struct S {
          init(nonFailing: Int) { self.init(iuo: nonFailing) }
@@ -1994,6 +2027,7 @@ if the ``init!`` initializer causes initialization to fail.
    xx assertion
 
 .. assertion:: classesAssertWhenDelegatingAcrossFromNonFailingToNilIUO
+   :compile: true
 
    -> class C {
          convenience init(nonFailing: Int) { self.init(iuo: nonFailing) }
@@ -2003,6 +2037,7 @@ if the ``init!`` initializer causes initialization to fail.
    xx assertion
 
 .. assertion:: classesAssertWhenDelegatingUpFromNonFailingToNilIUO
+   :compile: true
 
    -> class C {
          init!(iuo: Int) { return nil }
@@ -2022,6 +2057,7 @@ Write the ``required`` modifier before the definition of a class initializer
 to indicate that every subclass of the class must implement that initializer:
 
 .. testcode:: requiredInitializers
+   :compile: true
 
    -> class SomeClass {
          required init() {
@@ -2030,6 +2066,7 @@ to indicate that every subclass of the class must implement that initializer:
       }
 
 .. assertion:: requiredDesignatedInitializersMustBeImplementedBySubclasses
+   :compile: true
 
    -> class C {
          required init(i: Int) {}
@@ -2037,14 +2074,15 @@ to indicate that every subclass of the class must implement that initializer:
    -> class D: C {
          init() {}
       }
-   !! <REPL Input>:3:1: error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
+   !$ error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
    !! }
    !! ^
-   !! <REPL Input>:2:15: note: 'required' initializer is declared in superclass here
+   !$ note: 'required' initializer is declared in superclass here
    !!    required init(i: Int) {}
    !!             ^
 
 .. assertion:: requiredConvenienceInitializersMustBeImplementedBySubclasses
+   :compile: true
 
    -> class C {
          init() {}
@@ -2055,10 +2093,10 @@ to indicate that every subclass of the class must implement that initializer:
    -> class D: C {
          init(s: String) {}
       }
-   !! <REPL Input>:3:1: error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
+   !$ error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
    !! }
    !! ^
-   !! <REPL Input>:3:27: note: 'required' initializer is declared in superclass here
+   !$ note: 'required' initializer is declared in superclass here
    !!    required convenience init(i: Int) {
    !!                         ^
 
@@ -2068,6 +2106,7 @@ to indicate that the initializer requirement applies to further subclasses in th
 You do not write the ``override`` modifier when overriding a required designated initializer:
 
 .. testcode:: requiredInitializers
+   :compile: true
 
    -> class SomeSubclass: SomeClass {
          required init() {
@@ -2076,6 +2115,7 @@ You do not write the ``override`` modifier when overriding a required designated
       }
 
 .. assertion:: youCannotWriteOverrideWhenOverridingARequiredDesignatedInitializer
+   :compile: true
 
    -> class C {
          required init() {}
@@ -2083,11 +2123,11 @@ You do not write the ``override`` modifier when overriding a required designated
    -> class D: C {
          override required init() {}
       }
-   !! <REPL Input>:2:24: warning: 'override' is implied when overriding a required initializer
+   !$ warning: 'override' is implied when overriding a required initializer
    !!    override required init() {}
    !! ~~~~~~~~~         ^
    !!-
-   !! <REPL Input>:2:15: note: overridden required initializer is here
+   !$ note: overridden required initializer is here
    !!    required init() {}
    !!             ^
 
@@ -2097,6 +2137,7 @@ You do not write the ``override`` modifier when overriding a required designated
    if you can satisfy the requirement with an inherited initializer.
 
 .. assertion:: youCanSatisfyARequiredDesignatedInitializerWithAnInheritedInitializer
+   :compile: true
 
    -> class C {
          var x = 0
@@ -2107,6 +2148,7 @@ You do not write the ``override`` modifier when overriding a required designated
       }
 
 .. assertion:: youCanSatisfyARequiredConvenienceInitializerWithAnInheritedInitializer
+   :compile: true
 
    -> class C {
          var x = 0
@@ -2148,6 +2190,7 @@ Here's a skeleton outline of how a closure can be used
 to provide a default property value:
 
 .. testcode:: defaultPropertyWithClosure
+   :compile: true
 
    >> class SomeType {}
    -> class SomeClass {
@@ -2200,6 +2243,7 @@ and the last item in the array represents the bottom right square on the board.
 The ``boardColors`` array is initialized with a closure to set up its color values:
 
 .. testcode:: chessboard
+   :compile: true
 
    -> struct Chessboard {
          let boardColors: [Bool] = {
@@ -2230,9 +2274,10 @@ The returned array value is stored in ``boardColors``
 and can be queried with the ``squareIsBlackAt(row:column:)`` utility function:
 
 .. testcode:: chessboard
+   :compile: true
 
    -> let board = Chessboard()
-   << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
+   >> assert(board.boardColors == [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
    -> print(board.squareIsBlackAt(row: 0, column: 1))
    <- true
    -> print(board.squareIsBlackAt(row: 7, column: 7))
