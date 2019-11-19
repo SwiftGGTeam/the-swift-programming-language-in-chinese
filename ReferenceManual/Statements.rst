@@ -378,6 +378,7 @@ For example, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
+    :compile: true
 
     >> switch (1, 1) {
     -> case let (x, y) where x == y:
@@ -409,19 +410,24 @@ and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
 
 .. assertion:: switch-case-with-multiple-patterns
+   :compile: true
 
    >> let tuple = (1, 1)
-   << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x, 1): print(x)
    >>     default: print(2)
    >> }
    << 1
+
+.. assertion:: switch-case-with-multiple-patterns-err
+   :compile: true
+
+   >> let tuple = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x as Any, 1): print(1)
    >>     default: print(2)
    >> }
-   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any', expected type 'Int'
+   !$ error: pattern variable bound to type 'Any', expected type 'Int'
    !! case (let x, 5), (let x as Any, 1): print(1)
    !!                       ^
 
@@ -480,9 +486,9 @@ that you need to update the switch statement
 to take the new cases into account.
 
 .. testcode:: unknown-case
+   :compile: true
 
    -> let representation: Mirror.AncestorRepresentation = .generated
-   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
    -> switch representation {
       case .customized:
           print("Use the nearest ancestor’s implementation.")
@@ -560,9 +566,9 @@ of how to use statement labels,
 see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 
 .. assertion:: backtick-identifier-is-legal-label
+   :compile: true
 
    -> var i = 0
-   << // i : Int = 0
    -> `return`: while i < 100 {
           i += 1
           if i == 10 {
@@ -825,6 +831,7 @@ means that statements inside that last ``defer`` statement
 can refer to resources that will be cleaned up by other ``defer`` statements.
 
 .. testcode::
+   :compile: true
 
    -> func f() {
           defer { print("First defer") }
@@ -983,6 +990,7 @@ With those settings,
 the following code prints all three messages:
 
 .. testcode::
+   :compile: true
 
    -> #if compiler(>=5)
       print("Compiled with the Swift 5 compiler or later")
@@ -1018,6 +1026,7 @@ otherwise, it returns ``false``.
    when code is compiled for the 32–bit iOS simulator.
 
 .. assertion:: pound-if-swift-version
+   :compile: true
 
    -> #if swift(>=2.1)
           print(1)
@@ -1030,19 +1039,24 @@ otherwise, it returns ``false``.
    -> #if swift(>=2.1) && false
           print(3)
       #endif
-   -> #if swift(>= 2.1)
-          print(4)
-      #endif
-   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
-   !! #if swift(>= 2.1)
-   !!           ^ ~
-   !!-
    -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
           print(5)
       #endif
    << 5
 
+.. assertion:: pound-if-swift-version-err
+   :compile: true
+
+   -> #if swift(>= 2.1)
+          print(4)
+      #endif
+   !$ error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
+   !!-
+
 .. assertion:: pound-if-compiler-version
+   :compile: true
 
    -> #if compiler(>=4.2)
           print(1)
@@ -1230,16 +1244,19 @@ but they can use the multiline string literal syntax.
    !! """
    !! ^~~
 
+.. Using !! lines above instead of !$ lines,
+   to also confirm that the line number comes through correctly.
+
 .. assertion:: bad-diagnostic-statement-messages
    :compile: true
 
    >> #warning("Interpolated \(1+1) string")
-   !! /tmp/swifttest.swift:1:10: error: string interpolation is not allowed in #warning directives
+   !$ error: string interpolation is not allowed in #warning directives
    !! #warning("Interpolated \(1+1) string")
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ---
    >> #warning("Concatenated " + "strings")
-   !! /tmp/swifttest.swift:2:26: error: extra tokens following #warning directive
+   !$ error: extra tokens following #warning directive
    !! #warning("Concatenated " + "strings")
    !! ^
 
