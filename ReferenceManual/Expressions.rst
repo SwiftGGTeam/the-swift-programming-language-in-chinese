@@ -101,26 +101,26 @@ that operator applies to the whole binary expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
 
 .. testcode:: placement-of-try
+    :compile: true
 
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
-    << // sum : Int = 0
     -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
     -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
     -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
-    !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
+    !$ error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-    !! <REPL Input>:1:38: note: did you mean to use 'try'?
+    !$ note: did you mean to use 'try'?
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^
     !!                                      try
-    !! <REPL Input>:1:38: note: did you mean to handle error as optional value?
+    !$ note: did you mean to handle error as optional value?
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^
     !!                                      try?
-    !! <REPL Input>:1:38: note: did you mean to disable error propagation?
+    !$ note: did you mean to disable error propagation?
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^
     !!                                      try!
@@ -130,12 +130,12 @@ unless the binary operator is the assignment operator
 or the ``try`` expression is enclosed in parentheses.
 
 .. assertion:: try-on-right
+    :compile: true
 
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> var sum = 0
-    << // sum : Int = 0
     -> sum = 7 + try someThrowingFunction() // Error
-    !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
+    !$ error: 'try' cannot appear to the right of a non-assignment operator
     !! sum = 7 + try someThrowingFunction() // Error
     !!           ^
     -> sum = 7 + (try someThrowingFunction()) // OK
@@ -234,9 +234,9 @@ to the corresponding part of the *expression*.
 For example:
 
 .. testcode:: assignmentOperator
+    :compile: true
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
     </ a is "test", b is 12, c is 3, and 9.45 is ignored
@@ -306,32 +306,29 @@ It returns ``true`` if the *expression* can be cast to the specified *type*;
 otherwise, it returns ``false``.
 
 .. assertion:: triviallyTrueIsAndAs
+    :compile: true
 
-    -> "hello" is String
-    -> "hello" is Int
-    <$ : Bool = true
-    <$ : Bool = false
-    !! <REPL Input>:1:9: warning: 'is' test is always true
-    !! "hello" is String
-    !! ^
-    !! <REPL Input>:1:9: warning: cast from 'String' to unrelated type 'Int' always fails
-    !! "hello" is Int
-    !! ~~~~~~~ ^  ~~~
+    -> assert("hello" is String)
+    -> assert(!("hello" is Int))
+    !$ warning: 'is' test is always true
+    !! assert("hello" is String)
+    !!                ^
+    !$ warning: cast from 'String' to unrelated type 'Int' always fails
+    !! assert(!("hello" is Int))
+    !!          ~~~~~~~ ^  ~~~
 
 .. assertion:: is-operator-tautology
+   :compile: true
 
    -> class Base {}
    -> class Subclass: Base {}
    -> var s = Subclass()
-   << // s : Subclass = REPL.Subclass
    -> var b = Base()
-   << // b : Base = REPL.Base
    ---
-   -> s is Base
-   !! <REPL Input>:1:3: warning: 'is' test is always true
-   !! s is Base
-   !!   ^
-   << // r0 : Bool = true
+   -> assert(s is Base)
+   !$ warning: 'is' test is always true
+   !! assert(s is Base)
+   !!          ^
 
 The ``as`` operator performs a cast
 when it is known at compile time
@@ -342,16 +339,15 @@ without using an intermediate variable.
 The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
+   :compile: true
 
    -> func f(_ any: Any) { print("Function for Any") }
    -> func f(_ int: Int) { print("Function for Int") }
    -> let x = 10
-   << // x : Int = 10
    -> f(x)
    <- Function for Int
    ---
    -> let y: Any = x
-   << // y : Any = 10
    -> f(y)
    <- Function for Any
    ---
@@ -470,6 +466,7 @@ when the default value expression is evaluated at the call site.
    where the general rule is defined.
 
 .. testcode:: special-literal-evaluated-at-call-site
+    :compile: true
 
     -> func logFunctionName(string: String = #function) {
            print(string)
@@ -506,9 +503,9 @@ Empty array literals are written using an empty
 pair of square brackets and can be used to create an empty array of a specified type.
 
 .. testcode:: array-literal-brackets
+    :compile: true
 
     -> var emptyArray: [Double] = []
-    << // emptyArray : [Double] = []
 
 .. Note: The normal style for the above would be
        var emptyArray = [Double]()
@@ -536,9 +533,9 @@ You can use an empty dictionary literal to create an empty dictionary literal
 of specified key and value types.
 
 .. testcode:: dictionary-literal-brackets
+    :compile: true
 
     -> var emptyDictionary: [String: Double] = [:]
-    << // emptyDictionary : [String : Double] = [:]
 
 A :newTerm:`playground literal`
 is used by Xcode to create an interactive representation
@@ -601,6 +598,7 @@ such as a function parameter.
 For example:
 
 .. testcode:: self-expression
+    :compile: true
 
     -> class SomeClass {
            var greeting: String
@@ -614,6 +612,7 @@ you can assign a new instance of that value type to ``self``.
 For example:
 
 .. testcode:: self-expression
+    :compile: true
 
     -> struct Point {
           var x = 0.0, y = 0.0
@@ -622,7 +621,6 @@ For example:
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
     >> somePoint.moveBy(x: 2.0, y: 3.0)
     >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
@@ -722,6 +720,7 @@ that allow closures to be written more concisely:
 The following closure expressions are equivalent:
 
 .. testcode:: closure-expression-forms
+    :compile: true
 
     >> func myFunction(f: (Int, Int) -> Int) {}
     -> myFunction { (x: Int, y: Int) -> Int in
@@ -782,15 +781,13 @@ For example in the code below,
 which gives them different behavior.
 
 .. testcode:: capture-list-value-semantics
+    :compile: true
 
     -> var a = 0
-    << // a : Int = 0
     -> var b = 0
-    << // b : Int = 0
     -> let closure = { [a] in
         print(a, b)
     }
-    << // closure : () -> () = (Function)
     ---
     -> a = 10
     -> b = 10
@@ -829,18 +826,16 @@ but they both refer to the same object
 because of reference semantics.
 
 .. testcode:: capture-list-reference-semantics
+    :compile: true
 
     -> class SimpleClass {
            var value: Int = 0
        }
     -> var x = SimpleClass()
-    << // x : SimpleClass = REPL.SimpleClass
     -> var y = SimpleClass()
-    << // y : SimpleClass = REPL.SimpleClass
     -> let closure = { [x] in
            print(x.value, y.value)
        }
-    << // closure : () -> () = (Function)
     ---
     -> x.value = 10
     -> y.value = 10
@@ -848,34 +843,29 @@ because of reference semantics.
     <- 10 10
 
 .. assertion:: capture-list-with-commas
+    :compile: true
 
     -> var x = 100
-    << // x : Int = 100
     -> var y = 7
-    << // y : Int = 7
     -> var f: () -> Int = { [x, y] in x+y }
-    << // f : () -> Int = (Function)
-    >> f()
-    << // r0 : Int = 107
+    >> let r0 = f()
+    >> assert(r0 == 107)
 
 ..  It's not an error to capture things that aren't included in the capture list,
     although maybe it should be.  See also rdar://17024367.
 
 .. assertion:: capture-list-is-not-exhaustive
+    :compile: true
 
     -> var x = 100
        var y = 7
        var f: () -> Int = { [x] in x }
        var g: () -> Int = { [x] in x+y }
-    << // x : Int = 100
-    << // y : Int = 7
-    << // f : () -> Int = (Function)
-    << // g : () -> Int = (Function)
     ---
-    -> f()
-    << // r0 : Int = 100
-    -> g()
-    << // r1 : Int = 107
+    -> let r0 = f()
+    -> assert(r0 == 100)
+    -> let r1 = g()
+    -> assert(r1 == 107)
 
 If the type of the expression's value is a class,
 you can mark the expression in a capture list
@@ -883,6 +873,7 @@ with ``weak`` or ``unowned`` to capture a weak or unowned reference
 to the expression's value.
 
 .. testcode:: closure-expression-weak
+    :compile: true
 
     >> func myFunction(f: () -> Void) { f() }
     >> class C {
@@ -906,6 +897,7 @@ and the value is captured with the specified strength.
 For example:
 
 .. testcode:: closure-expression-capture
+    :compile: true
 
     >> func myFunction(f: () -> Void) { f() }
     >> class P { let title = "Title" }
@@ -962,10 +954,10 @@ It has the following form:
 For example:
 
 .. testcode:: implicitMemberEnum
+    :compile: true
 
     >> enum MyEnumeration { case someValue, anotherValue }
     -> var x = MyEnumeration.someValue
-    << // x : MyEnumeration = REPL.MyEnumeration.someValue
     -> x = .anotherValue
 
 .. syntax-grammar::
@@ -1027,7 +1019,7 @@ it appears once in the outer tuple and once in the inner tuple.
 
     >> let bad = (a: 10, a: 20)
     >> let good = (a: 10, b: (a: 1, x: 2))
-    !!  /tmp/swifttest.swift:1:11: error: cannot create a tuple with a duplicate element label
+    !$ error: cannot create a tuple with a duplicate element label
     !! let bad = (a: 10, a: 20)
     !! ^
 
@@ -1064,9 +1056,9 @@ For example, in the following assignment
 10 is assigned to ``x`` and 20 is ignored:
 
 .. testcode:: wildcardTuple
+    :compile: true
 
     >> var (x, _) = (10, 20)
-    << // (x, _) : (Int, Int) = (10, 20)
     -> (x, _) = (10, 20)
     -> // x is 10, and 20 is ignored
 
@@ -1139,6 +1131,7 @@ The following code uses ``\.someProperty``
 instead of ``\SomeClass.someProperty``:
 
 .. testcode:: keypath-expression-implicit-type-name
+   :compile: true
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1149,11 +1142,12 @@ instead of ``\SomeClass.someProperty``:
       }
    ---
    -> let c = SomeClass(someProperty: 10)
-   <~ // c : SomeClass = <REPL.SomeClass:
+   >> let r0 =
    -> c.observe(\.someProperty) { object, change in
           // ...
       }
-   <~ // r0 : NSKeyValueObservation = 
+
+.. XXX Refactor discarded return value above.
 
 The *path* can refer to ``self`` to create the identity key path (``\.self``).
 The identity key path refers to a whole instance,
@@ -1162,9 +1156,9 @@ in a single step.
 For example:
 
 .. testcode:: keypath-expression-self-keypath
+   :compile: true
 
    -> var compoundValue = (a: 1, b: 2)
-   << // compoundValue : (a: Int, b: Int) = (a: 1, b: 2)
    // Equivalent to compoundValue = (a: 10, b: 20)
    -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
@@ -1320,6 +1314,7 @@ The value of a selector expression is an instance of the ``Selector`` type.
 For example:
 
 .. testcode:: selector-expression
+   :compile: true
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1332,9 +1327,7 @@ For example:
           }
       }
    -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
-   << // selectorForMethod : Selector = doSomethingWithInt:
    -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
-   << // selectorForPropertyGetter : Selector = property
 
 When creating a selector for a property's getter,
 the *property name* can be a reference to a variable or constant property.
@@ -1347,13 +1340,13 @@ but have different type signatures.
 For example:
 
 .. testcode:: selector-expression
+   :compile: true
 
    -> extension SomeClass {
           @objc(doSomethingWithString:)
           func doSomething(_ x: String) { }
       }
    -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
-   << // anotherSelector : Selector = doSomethingWithString:
 
 Because a selector is created at compile time, not at runtime,
 the compiler can check that a method or property exists
@@ -1382,7 +1375,6 @@ see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/do
    optional binding.
 
 
-
 .. _Expression_KeyPathExpression:
 
 Key-Path String Expression
@@ -1403,6 +1395,7 @@ At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
 .. testcode:: keypath-string-expression
+   :compile: true
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1413,9 +1406,7 @@ For example:
       }
    ---
    -> let c = SomeClass(someProperty: 12)
-   <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
-   << // keyPath : String = "someProperty"
    ---
    -> if let value = c.value(forKey: keyPath) {
    ->     print(value)
@@ -1427,6 +1418,7 @@ you can refer to a property of that class
 by writing just the property name, without the class name.
 
 .. testcode:: keypath-string-expression
+   :compile: true
 
    -> extension SomeClass {
          func getSomeKeyPath() -> String {
@@ -1524,22 +1516,27 @@ added after the last parenthesized argument.
 The following function calls are equivalent:
 
 .. testcode:: trailing-closure
+    :compile: true
 
     >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
     >>    return f(x)
     >> }
     >> let x = 10
-    << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
+    >> let r0 =
     -> someFunction(x: x, f: {$0 == 13})
-    << // r0 : Bool = false
+    >> assert(r0 == false)
+    >> let r1 =
     -> someFunction(x: x) {$0 == 13}
-    << // r1 : Bool = false
+    >> assert(r1 == false)
+
+.. XXX Refactor the above to avoid using bare expressions.
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted.
 
 .. testcode:: no-paren-trailing-closure
+    :compile: true
 
     >> class Data {
     >>    let data = 10
@@ -1548,12 +1545,15 @@ the parentheses can be omitted.
     >>    }
     >> }
     >> let myData = Data()
-    << // myData : Data = REPL.Data
     // someMethod takes a closure as its only argument
+    >> let r0 =
     -> myData.someMethod() {$0 == 13}
-    << // r0 : Bool = false
+    >> assert(r0 == false)
+    >> let r1 =
     -> myData.someMethod {$0 == 13}
-    << // r1 : Bool = false
+    >> assert(r1 == false)
+
+.. XXX Refactor the above to avoid using bare expressions.
 
 .. syntax-grammar::
 
@@ -1595,6 +1595,7 @@ You also use an initializer expression
 to delegate to the initializer of a superclass.
 
 .. testcode:: init-call-superclass
+    :compile: true
 
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
@@ -1608,12 +1609,11 @@ Like a function, an initializer can be used as a value.
 For example:
 
 .. testcode:: init-as-value
+    :compile: true
 
     // Type annotation is required because String has multiple initializers.
     -> let initializer: (Int) -> String = String.init
-    << // initializer : (Int) -> String = (Function)
     -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
-    << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
     <- 123
 
@@ -1622,21 +1622,18 @@ you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
 .. testcode:: explicit-implicit-init
+    :compile: true
 
     >> struct SomeType {
     >>     let data: Int
     >> }
     -> let s1 = SomeType.init(data: 3)  // Valid
-    << // s1 : SomeType = REPL.SomeType(data: 3)
     -> let s2 = SomeType(data: 1)       // Also valid
-    << // s2 : SomeType = REPL.SomeType(data: 1)
     ---
     >> let someValue = s1
-    << // someValue : SomeType = REPL.SomeType(data: 3)
     -> let s3 = type(of: someValue).init(data: 7)  // Valid
-    << // s3 : SomeType = REPL.SomeType(data: 7)
     -> let s4 = type(of: someValue)(data: 5)       // Error
-    !! <REPL Input>:1:29: error: initializing from a metatype value must reference 'init' explicitly
+    !$ error: initializing from a metatype value must reference 'init' explicitly
     !! let s4 = type(of: someValue)(data: 5)       // Error
     !!                              ^
     !!                              .init
@@ -1667,14 +1664,13 @@ as part of the type's declaration or extension.
 For example:
 
 .. testcode:: explicitMemberExpression
+    :compile: true
 
     -> class SomeClass {
            var someProperty = 42
        }
     -> let c = SomeClass()
-    << // c : SomeClass = REPL.SomeClass
     -> let y = c.someProperty  // Member access
-    << // y : Int = 42
 
 The members of a tuple
 are implicitly named using integers in the order they appear,
@@ -1682,9 +1678,9 @@ starting from zero.
 For example:
 
 .. testcode:: explicit-member-expression
+    :compile: true
 
     -> var t = (10, 20, 30)
-    << // t : (Int, Int, Int) = (10, 20, 30)
     -> t.0 = t.1
     -> // Now t is (20, 20, 30)
 
@@ -1705,6 +1701,7 @@ use a type annotation.
 For example:
 
 .. testcode:: function-with-argument-names
+    :compile: true
 
     -> class SomeClass {
            func someMethod(x: Int, y: Int) {}
@@ -1714,42 +1711,39 @@ For example:
        }
     -> let instance = SomeClass()
     ---
-    << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod'
+    !$ error: ambiguous use of 'someMethod'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
-    !! <REPL Input>:2:12: note: found this candidate
+    !$ note: found this candidate
     !!              func someMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:3:12: note: found this candidate
+    !$ note: found this candidate
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
     -> let b = instance.someMethod(x:y:)        // Unambiguous
-    << // b : (Int, Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
+    !$ error: ambiguous use of 'overloadedMethod(x:y:)'
     !! let d = instance.overloadedMethod        // Ambiguous
     !!         ^
-    !! <REPL Input>:4:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:5:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
     -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
+    !$ error: ambiguous use of 'overloadedMethod(x:y:)'
     !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
     !!             ^
-    !! <REPL Input>:4:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:5:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
     -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
-    << // d : (Int, Bool) -> Void = (Function)
 
 If a period appears at the beginning of a line,
 it is understood as part of an explicit member expression,
@@ -1856,6 +1850,7 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
     subscript-expression --> postfix-expression ``[`` function-call-argument-list ``]``
 
 .. assertion:: subscripts-can-take-operators
+   :compile: true
 
    >> struct S {
           let x: Int
@@ -1865,9 +1860,7 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
           }
       }
    >> let s = S(x: 10, y: 20)
-   << // s : S = REPL.S(x: 10, y: 20)
-   >> s[+]
-   << // r0 : Int = 30
+   >> assert(s[+] == 30)
 
 
 .. _Expressions_Forced-ValueExpression:
@@ -1894,15 +1887,14 @@ or by assigning to one of the value's members.
 For example:
 
 .. testcode:: optional-as-lvalue
+   :compile: true
 
    -> var x: Int? = 0
-   << // x : Int? = Optional(0)
    -> x! += 1
    /> x is now \(x!)
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
@@ -1952,26 +1944,25 @@ The entire expression ``c?.property.performAction()``
 has a value of an optional type.
 
 .. testcode:: optional-chaining
+   :compile: true
 
    >> class OtherClass { func performAction() -> Bool {return true} }
    >> class SomeClass { var property: OtherClass = OtherClass() }
    -> var c: SomeClass?
-   << // c : SomeClass? = nil
    -> var result: Bool? = c?.property.performAction()
-   << // result : Bool? = nil
+   >> assert(result == nil)
 
 The following example shows the behavior
 of the example above
 without using optional chaining.
 
 .. testcode:: optional-chaining-alt
+   :compile: true
 
    >> class OtherClass { func performAction() -> Bool {return true} }
    >> class SomeClass { var property: OtherClass = OtherClass() }
    >> var c: SomeClass?
-   << // c : SomeClass? = nil
    -> var result: Bool?
-   << // result : Bool? = nil
    -> if let unwrappedC = c {
          result = unwrappedC.property.performAction()
       }
@@ -1985,21 +1976,19 @@ is not evaluated.
 For example:
 
 .. testcode:: optional-chaining-as-lvalue
+   :compile: true
 
    -> func someFunctionWithSideEffects() -> Int {
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-   <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
    </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
-   <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)
