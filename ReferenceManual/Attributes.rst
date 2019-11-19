@@ -169,10 +169,12 @@ If you use multiple ``available`` attributes,
 the effective availability is the combination of
 the platform and Swift availabilities.
 
-.. assertion:: multipleAvalableAttributes
+.. assertion:: multipleAvailableAttributes
+   :compile: true
 
-   // REPL needs all the attributes on the same line as the  declaration.
-   -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
+   -> @available(iOS 9, *)
+   -> @available(macOS 10.9, *)
+   -> func foo() { }
    -> foo()
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
@@ -344,9 +346,12 @@ that takes ``KeyValuePairs<String, String>``.
    >> }
    >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !! /tmp/swifttest.swift:12:13: error: cannot call value of non-function type 'Repeater'
+   !$ error: cannot call value of non-function type 'Repeater'
    !! repeatLabels(a: "four") // Error
    !! ~~~~~~~~~~~~^
+   !$ error: cannot invoke 'repeatLabels' with an argument list of type '(a: String)'
+   !! repeatLabels(a: "four") // Error
+   !! ^
 
 .. _Attributes_dynamicMemberLookup:
 
@@ -455,12 +460,12 @@ but they break ABI compatibility for frozen types.
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
-    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !$ warning: @frozen has no effect without -enable-library-evolution
     !! @frozen public enum E { case x, y }
     !! ^~~~~~~~
     ---
     // After the bug below is fixed, the following warning should appear:
-    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    // !$ warning: @frozen has no effect without -enable-library-evolution
     // !! @frozen public struct S { var a: Int = 10 }
     // !! ^~~~~~~~
 
@@ -504,10 +509,10 @@ as discussed in :ref:`Attributes_inlinable`.
     >> private struct PrivateStruct: P { }
     >>         public struct S1 { var fine: P = PrivateStruct() }
     >> @frozen public struct S2 { var nope: P = PrivateStruct() }
-    !! /tmp/swifttest.swift:4:42: error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !$ error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
     !! @frozen public struct S2 { var nope: P = PrivateStruct() }
     !!                                          ^
-    !! /tmp/swifttest.swift:2:16: note: struct 'PrivateStruct' is not '@usableFromInline' or public
+    !$ note: struct 'PrivateStruct' is not '@usableFromInline' or public
     !! private struct PrivateStruct: P { }
     !!                ^
 
@@ -617,18 +622,20 @@ are implicitly inlinable,
 even though they can't be marked with this attribute.
 
 .. assertion:: cant-inline-private
+   :compile: true
 
    >> @inlinable private func f() { }
-   !! <REPL Input>:1:1: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
    !! @inlinable private func f() { }
    !! ^~~~~~~~~~~
 
 .. assertion:: cant-inline-nested
+   :compile: true
 
    >> public func outer() {
-   >> @inlinable func f() { }
+   >>    @inlinable func f() { }
    >> }
-   !! <REPL Input>:2:3: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
    !! @inlinable func f() { }
    !! ^~~~~~~~~~~
    !!-
@@ -698,11 +705,14 @@ supply a ``main.swift`` file with code at the top level
 that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
 .. testcode:: nsapplicationmain
+   :compile: true
 
    -> import AppKit
+   >> let _ =
    -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
    !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
+.. XXX Refactor discarded return value above.
 
 .. _Attributes_NSCopying:
 
@@ -860,7 +870,7 @@ Local and global variables can't use property wrappers.
     >>     @UselessWrapper let d: Int = 20
     >>     print(d)
     >> }
-    !! /tmp/swifttest.swift:3:5: error: property wrappers are not yet supported on local properties
+    !$ error: property wrappers are not yet supported on local properties
     !! @UselessWrapper let d: Int = 20
     !! ^
 
@@ -990,6 +1000,7 @@ This attribute is inferred for any class
 that inherits from ``NSManagedObject``.
 
 .. assertion:: requires_stored_property_inits-requires-default-values
+   :compile: true
 
    >> @requires_stored_property_inits class DefaultValueProvided {
           var value: Int = -1
@@ -999,10 +1010,10 @@ that inherits from ``NSManagedObject``.
           var value: Int
           init() { self.value = 0 }
       }
-   !! <REPL Input>:2:7: error: stored property 'value' requires an initial value
+   !$ error: stored property 'value' requires an initial value
    !! var value: Int
    !! ^
-   !! <REPL Input>:1:39: note: class 'NoDefaultValue' requires all stored properties to have initial values
+   !$ note: class 'NoDefaultValue' requires all stored properties to have initial values
    !! @requires_stored_property_inits class NoDefaultValue {
    !! ^
 
@@ -1079,9 +1090,10 @@ can be applied to ``internal`` declarations,
 applying both attributes is an error.
 
 .. assertion:: usableFromInline-and-inlinable-is-redundant
+   :compile: true
 
    >> @usableFromInline @inlinable internal func f() { }
-   !! <REPL Input>:1:1: warning: '@inlinable' declaration is already '@usableFromInline'
+   !$ warning: '@inlinable' declaration is already '@usableFromInline'
    !! @usableFromInline @inlinable internal func f() { }
    !! ^~~~~~~~~~~~~~~~~~
 
