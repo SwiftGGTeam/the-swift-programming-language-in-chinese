@@ -37,10 +37,10 @@ For example,
 the following code contains both a read access and a write access:
 
 .. testcode:: memory-read-write
+    :compile: true
 
     // A write access to the memory where one is stored.
     -> var one = 1
-    << // one : Int = 1
     ---
     // A read access from the memory where one is stored.
     -> print("We're number \(one)!")
@@ -153,13 +153,13 @@ For example,
 all the read and write accesses in the code listing below are instantaneous:
 
 .. testcode:: memory-instantaneous
+    :compile: true
 
     -> func oneMore(than number: Int) -> Int {
            return number + 1
        }
     ---
     -> var myNumber = 1
-    << // myNumber : Int = 1
     -> myNumber = oneMore(than: myNumber)
     -> print(myNumber)
     <- 2
@@ -202,6 +202,7 @@ any access to the original creates a conflict.
 For example:
 
 .. testcode:: memory-increment
+    :compile: true
 
     -> var stepSize = 1
     ---
@@ -234,15 +235,14 @@ One way to solve this conflict
 is to make an explicit copy of ``stepSize``:
 
 .. testcode:: memory-increment-copy
+    :compile: true
 
     >> var stepSize = 1
-    << // stepSize : Int = 1
     >> func increment(_ number: inout Int) {
     >>     number += stepSize
     >> }
     // Make an explicit copy.
     -> var copyOfStepSize = stepSize
-    << // copyOfStepSize : Int = 1
     -> increment(&copyOfStepSize)
     ---
     // Update the original.
@@ -265,6 +265,7 @@ produces a conflict.
 For example:
 
 .. testcode:: memory-balance
+    :compile: true
 
     -> func balance(_ x: inout Int, _ y: inout Int) {
            let sum = x + y
@@ -273,21 +274,19 @@ For example:
        }
     -> var playerOneScore = 42
     -> var playerTwoScore = 30
-    << // playerOneScore : Int = 42
-    << // playerTwoScore : Int = 30
     -> balance(&playerOneScore, &playerTwoScore)  // OK
     -> balance(&playerOneScore, &playerOneScore)
     // Error: conflicting accesses to playerOneScore
-    !! <REPL Input>:1:26: error: inout arguments are not allowed to alias each other
+    !$ error: inout arguments are not allowed to alias each other
     !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~
-    !! <REPL Input>:1:9: note: previous aliasing argument
+    !$ note: previous aliasing argument
     !! balance(&playerOneScore, &playerOneScore)
     !!         ^~~~~~~~~~~~~~~
-    !! <REPL Input>:1:9: error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
+    !$ error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
     !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~
-    !! <REPL Input>:1:26: note: conflicting access is here
+    !$ note: conflicting access is here
     !! balance(&playerOneScore, &playerOneScore)
     !!         ^~~~~~~~~~~~~~~
 
@@ -334,6 +333,7 @@ has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
 
 .. testcode:: memory-player-share-with-self
+    :compile: true
 
     >> func balance(_ x: inout Int, _ y: inout Int) {
     >>     let sum = x + y
@@ -362,6 +362,7 @@ takes another ``Player`` instance as an in-out parameter,
 creating the possibility of overlapping accesses.
 
 .. testcode:: memory-player-share-with-self
+    :compile: true
 
     -> extension Player {
            mutating func shareHealth(with teammate: inout Player) {
@@ -371,8 +372,6 @@ creating the possibility of overlapping accesses.
     ---
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
-    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     -> oscar.shareHealth(with: &maria)  // OK
 
 In the example above,
@@ -397,19 +396,20 @@ if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
 there's a conflict:
 
 .. testcode:: memory-player-share-with-self
+    :compile: true
 
     -> oscar.shareHealth(with: &oscar)
     // Error: conflicting accesses to oscar
-    !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
+    !$ error: inout arguments are not allowed to alias each other
     !! oscar.shareHealth(with: &oscar)
     !!                         ^~~~~~
-    !! <REPL Input>:1:1: note: previous aliasing argument
+    !$ note: previous aliasing argument
     !! oscar.shareHealth(with: &oscar)
     !! ^~~~~
-    !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+    !$ error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
     !! oscar.shareHealth(with: &oscar)
     !!                          ^~~~~
-    !! <REPL Input>:1:25: note: conflicting access is here
+    !$ note: conflicting access is here
     !! oscar.shareHealth(with: &oscar)
     !! ^~~~~~
 
@@ -445,6 +445,7 @@ overlapping write accesses to the elements of a tuple
 produces a conflict:
 
 .. testcode:: memory-tuple
+    :compile: true
 
     >> func balance(_ x: inout Int, _ y: inout Int) {
     >>     let sum = x + y
@@ -452,7 +453,6 @@ produces a conflict:
     >>     y = sum - x
     >> }
     -> var playerInformation = (health: 10, energy: 20)
-    << // playerInformation : (Int, Int) = (10, 20)
     -> balance(&playerInformation.health, &playerInformation.energy)
     // Error: conflicting access to properties of playerInformation
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
@@ -479,6 +479,7 @@ to the properties of a structure
 that's stored in a global variable.
 
 .. testcode:: memory-share-health-global
+    :compile: true
 
     >> struct Player {
     >>     var name: String
@@ -506,6 +507,7 @@ the compiler can prove that overlapping access
 to stored properties of the structure is safe:
 
 .. testcode:: memory-share-health-local
+    :compile: true
 
     >> struct Player {
     >>     var name: String
