@@ -62,9 +62,9 @@ Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show:
 
 .. testcode:: type-annotation
+    :compile: true
 
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
-    << // someTuple : (Double, Double) = (3.14159, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
@@ -103,10 +103,10 @@ For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
 
 .. testcode:: type-identifier
+    :compile: true
 
     -> typealias Point = (Int, Int)
     -> let origin: Point = (0, 0)
-    << // origin : Point = (0, 0)
 
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
@@ -114,9 +114,10 @@ For example, the type identifier in the following code references the named type
 that is declared in the ``ExampleModule`` module.
 
 .. testcode:: type-identifier-dot
+    :compile: true
 
     -> var someValue: ExampleModule.MyType
-    !! <REPL Input>:1:16: error: use of undeclared type 'ExampleModule'
+    !$ error: use of undeclared type 'ExampleModule'
     !! var someValue: ExampleModule.MyType
     !!                ^~~~~~~~~~~~~
 
@@ -146,13 +147,13 @@ When an element of a tuple type has a name,
 that name is part of the type.
 
 .. testcode:: tuple-type-names
+   :compile: true
 
    -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
-   << // someTuple : (top: Int, bottom: Int) = (top: 10, bottom: 12)
    -> someTuple = (top: 4, bottom: 42) // OK: names match
    -> someTuple = (9, 99)              // OK: names are inferred
    -> someTuple = (left: 5, right: 5)  // Error: names don't match
-   !! <REPL Input>:1:13: error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
+   !$ error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
    !! someTuple = (left: 5, right: 5)  // Error: names don't match
    !!             ^~~~~~~~~~~~~~~~~~~
    !!                         as! (top: Int, bottom: Int)
@@ -233,54 +234,58 @@ Argument names in functions and methods
 are not part of the corresponding function type.
 For example:
 
-.. testcode::
+.. assertion:: argument-names
 
    -> func someFunction(left: Int, right: Int) {}
    -> func anotherFunction(left: Int, right: Int) {}
    -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
    ---
    -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
-   << // f : (Int, Int) -> () = (Function)
+   >> print(type(of: f))
+   << (Int, Int) -> ()
+   -> f = anotherFunction              // OK
+   -> f = functionWithDifferentLabels  // OK
+
+.. testcode:: argument-names-err
+   :compile: true
+
+   -> func someFunction(left: Int, right: Int) {}
+   -> func anotherFunction(left: Int, right: Int) {}
+   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
+   ---
+   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
    -> f = anotherFunction              // OK
    -> f = functionWithDifferentLabels  // OK
    ---
    -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
    -> f = functionWithDifferentArgumentTypes     // Error
-   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
+   !$ error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentArgumentTypes     // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ---
    -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
    -> f = functionWithDifferentNumberOfArguments // Error
-   !! <REPL Input>:1:5: error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
+   !$ error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentNumberOfArguments // Error
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because argument labels are not part of a function's type,
 you omit them when writing a function type.
 
-.. testcode::
+.. testcode:: omit-argument-names-in-function-type
+   :compile: true
 
    -> var operation: (lhs: Int, rhs: Int) -> Int     // Error
-   !! <REPL Input>:1:17: error: function types cannot have argument labels; use '_' before 'lhs'
+   !$ error: function types cannot have argument labels; use '_' before 'lhs'
    !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
    !!                    ^
    !!                    _
-   !! <REPL Input>:1:27: error: function types cannot have argument labels; use '_' before 'rhs'
+   !$ error: function types cannot have argument labels; use '_' before 'rhs'
    !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
    !!                              ^
    !!                              _
    -> var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
-   !! <REPL Input>:1:1: error: variables currently must have an initial value when entered at the top level of the REPL
-   !!    var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
-   !!    ^
    -> var operation: (Int, Int) -> Int               // OK
-   !! <REPL Input>:1:1: error: variables currently must have an initial value when entered at the top level of the REPL
-   !!    var operation: (Int, Int) -> Int               // OK
-   !!    ^
-
-.. The last two lines of the test above shouldn't really fail,
-   but this is a limitation of the REPL.
 
 If a function type includes more than a single arrow (``->``),
 the function types are grouped from right to left.
@@ -298,6 +303,7 @@ Throwing and rethrowing functions are described in
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
 .. assertion:: function-arrow-is-right-associative
+   :compile: true
 
    >> func f(i: Int) -> (Int) -> Int {
    >>     func g(j: Int) -> Int {
@@ -305,14 +311,14 @@ and :ref:`Declarations_RethrowingFunctionsAndMethods`.
    >>     }
    >>     return g
    >> }
+   ---
    >> let a: (Int) -> (Int) -> Int = f
-   << // a : (Int) -> (Int) -> Int = (Function)
-   >> a(3)(5)
-   << // r0 : Int = 8
+   >> let r0 = a(3)(5)
+   >> assert(r0 == 8)
+   ---
    >> let b: (Int) -> ((Int) -> Int) = f
-   << // b : (Int) -> ((Int) -> Int) = (Function)
-   >> b(3)(5)
-   << // r1 : Int = 8
+   >> let r1 = b(3)(5)
+   >> assert(r1 == 8)
 
 .. _Types_FunctionParameterConflicts:
 
@@ -324,9 +330,10 @@ can't be stored in a property, variable, or constant of type ``Any``,
 because that might allow the value to escape.
 
 .. assertion:: cant-store-nonescaping-as-Any
+    :compile: true
 
     -> func f(g: ()->Void) { let x: Any = g }
-    !! <REPL Input>:1:36: error: converting non-escaping value to 'Any' may allow it to escape
+    !$ error: converting non-escaping value to 'Any' may allow it to escape
     !! func f(g: ()->Void) { let x: Any = g }
     !!                                    ^
 
@@ -338,9 +345,9 @@ at compile time instead of at runtime.
 For example:
 
 .. testcode:: memory-nonescaping-functions
+    :compile: true
 
     -> let external: (() -> Void) -> Void = { _ in () }
-    << // external : (() -> Void) -> Void = (Function)
     -> func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
            first { first {} }       // Error
            second { second {}  }    // Error
@@ -351,16 +358,16 @@ For example:
            first { external {} }    // OK
            external { first {} }    // OK
        }
-    !! <REPL Input>:2:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !$ error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first { first {} }       // Error
     !! ^
-    !! <REPL Input>:3:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !$ error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second { second {}  }    // Error
     !! ^
-    !! <REPL Input>:5:7: error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !$ error: passing a closure which captures a non-escaping function parameter 'second' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! first { second {} }      // Error
     !! ^
-    !! <REPL Input>:6:7: error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
+    !$ error: passing a closure which captures a non-escaping function parameter 'first' to a call to a non-escaping function parameter can allow re-entrant modification of a variable
     !! second { first {} }      // Error
     !! ^
 
@@ -433,12 +440,11 @@ In other words, the following two declarations are equivalent:
     let someArray: [String] = ["Alex", "Brian", "Dave"]
 
 .. assertion:: array-literal
+    :compile: true
+
     >> let someArray1: Array<String> = ["Alex", "Brian", "Dave"]
-    << // someArray1 : Array<String> = ["Alex", "Brian", "Dave"]
     >> let someArray2: [String] = ["Alex", "Brian", "Dave"]
-    << // someArray2 : Array<String> = ["Alex", "Brian", "Dave"]
-    >> someArray1 == someArray2
-    <$ : Bool = true
+    >> assert(someArray1 == someArray2)
 
 In both cases, the constant ``someArray``
 is declared as an array of strings. The elements of an array can be accessed
@@ -452,9 +458,9 @@ For example, you can create
 a three-dimensional array of integers using three sets of square brackets:
 
 .. testcode:: array-3d
+    :compile: true
 
     -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-    << // array3D : [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 When accessing the elements in a multidimensional array,
 the left-most subscript index refers to the element at that index in the outermost
@@ -493,13 +499,11 @@ In other words, the following two declarations are equivalent:
     let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 .. assertion:: dictionary-literal
+    :compile: true
 
     >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
-    << // someDictionary1 : [String : Int] = ["Paul": 39, "Alex": 31]
     >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
-    << // someDictionary2 : Dictionary<String, Int> = ["Paul": 39, "Alex": 31]
-    >> someDictionary1 == someDictionary2
-    <$ : Bool = true
+    >> assert(someDictionary1 == someDictionary2)
 
 In both cases, the constant ``someDictionary``
 is declared as a dictionary with strings as keys and integers as values.
@@ -547,9 +551,7 @@ In other words, the following two declarations are equivalent:
     >> var optionalInteger1: Int?
     >> var optionalInteger2: Optional<Int>
 
-.. Assertion above is compiled because the deprecated integrated REPL requires
-   optional values to be initialized when they're created.
-   We can't test the code listing,
+.. We can't test the code listing above,
    because of the redeclaration of optionalInteger,
    so we at least test that the syntax shown in it compiles.
 
@@ -570,12 +572,15 @@ If an instance of an optional type contains a value,
 you can access that value using the postfix operator ``!``, as shown below:
 
 .. testcode:: optional-type
+    :compile: true
 
     >> var optionalInteger: Int?
-    << // optionalInteger : Int? = nil
     -> optionalInteger = 42
+    >> let r0 =
     -> optionalInteger! // 42
-    <$ : Int = 42
+    >> assert(r0 == 42)
+
+.. XXX Refactor the above if possible to avoid using bare expressions.
 
 Using the ``!`` operator to unwrap an optional
 that has a value of ``nil`` results in a runtime error.
@@ -708,6 +713,7 @@ the definition of ``PQR`` in the code below
 is equivalent to ``P & Q & R``.
 
 .. testcode:: protocol-composition-can-have-repeats
+    :compile: true
 
     >> protocol P {}
     >> protocol Q {}
@@ -801,6 +807,7 @@ to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
 .. testcode:: metatype-type
+    :compile: true
 
     -> class SomeBaseClass {
            class func printClassName() {
@@ -813,7 +820,6 @@ as the following example shows:
            }
        }
     -> let someInstance: SomeBaseClass = SomeSubClass()
-    << // someInstance : SomeBaseClass = REPL.SomeSubClass
     -> // The compile-time type of someInstance is SomeBaseClass,
     -> // and the runtime type of someInstance is SomeSubClass
     -> type(of: someInstance).printClassName()
@@ -830,6 +836,7 @@ the initializer that's called must be marked with the ``required`` keyword
 or the entire class marked with the ``final`` keyword.
 
 .. testcode:: metatype-type
+    :compile: true
 
     -> class AnotherSubClass: SomeBaseClass {
           let string: String
@@ -841,9 +848,7 @@ or the entire class marked with the ``final`` keyword.
           }
        }
     -> let metatype: AnotherSubClass.Type = AnotherSubClass.self
-    << // metatype : AnotherSubClass.Type = REPL.AnotherSubClass
     -> let anotherInstance = metatype.init(string: "some string")
-    << // anotherInstance : AnotherSubClass = REPL.AnotherSubClass
 
 .. syntax-grammar::
 
@@ -877,39 +882,39 @@ the code below shows an instance method ``f``
 whose return type is ``Self``.
 
 .. assertion:: self-in-class-cant-be-a-parameter-type
+   :compile: true
 
    -> class C { func f(c: Self) { } }
-   !! <REPL Input>:1:21: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !$ error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
    !! class C { func f(c: Self) { } }
    !!                     ^~~~
    !!                     C
 
 .. assertion:: self-in-class-cant-be-a-computed-property-type
+   :compile: true
 
    -> class C { var s: Self { return self } }
-   !! <REPL Input>:1:18: error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !$ error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
    !! class C { var s: Self { return self } }
    !!                 ^~~~
    !!                 C
 
 .. testcode:: self-gives-dynamic-type
+   :compile: true
 
    -> class Superclass {
           func f() -> Self { return self }
       }
    -> let x = Superclass()
-   << // x : Superclass = REPL.Superclass
    -> print(type(of: x.f()))
    <- Superclass
    ---
    -> class Subclass: Superclass { }
    -> let y = Subclass()
-   << // y : Subclass = REPL.Subclass
    -> print(type(of: y.f()))
    <- Subclass
    ---
    -> let z: Superclass = Subclass()
-   << // z : Superclass = REPL.Subclass
    -> print(type(of: z.f()))
    <- Subclass
 
@@ -1003,11 +1008,10 @@ the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` instead of ``Double``.
 
 .. testcode:: type-inference
+    :compile: true
 
     -> let e = 2.71828 // The type of e is inferred to be Double.
-    << // e : Double = 2.71828
     -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
-    << // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type
