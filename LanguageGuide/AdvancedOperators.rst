@@ -56,11 +56,12 @@ and appears immediately before the value it operates on,
 without any white space:
 
 .. testcode:: bitwiseOperators
+   :compile: true
 
    -> let initialBits: UInt8 = 0b00001111
-   << // initialBits : UInt8 = 15
+   >> assert(initialBits == 15)
    -> let invertedBits = ~initialBits  // equals 11110000
-   << // invertedBits : UInt8 = 240
+   >> assert(invertedBits == 240)
 
 ``UInt8`` integers have eight bits
 and can store any value between ``0`` and ``255``.
@@ -97,13 +98,12 @@ The bitwise AND operator combines them to make the number ``00111100``,
 which is equal to an unsigned decimal value of ``60``:
 
 .. testcode:: bitwiseOperators
+   :compile: true
 
    -> let firstSixBits: UInt8 = 0b11111100
-   << // firstSixBits : UInt8 = 252
    -> let lastSixBits: UInt8  = 0b00111111
-   << // lastSixBits : UInt8 = 63
    -> let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
-   << // middleFourBits : UInt8 = 60
+   >> assert(middleFourBits == 0b00111100)
 
 .. _AdvancedOperators_BitwiseOROperator:
 
@@ -125,13 +125,12 @@ The bitwise OR operator combines them to make the number ``11111110``,
 which equals an unsigned decimal of ``254``:
 
 .. testcode:: bitwiseOperators
+   :compile: true
 
    -> let someBits: UInt8 = 0b10110010
-   << // someBits : UInt8 = 178
    -> let moreBits: UInt8 = 0b01011110
-   << // moreBits : UInt8 = 94
    -> let combinedbits = someBits | moreBits  // equals 11111110
-   << // combinedbits : UInt8 = 254
+   >> assert(combinedbits == 0b11111110)
 
 .. _AdvancedOperators_BitwiseXOROperator:
 
@@ -155,13 +154,12 @@ All of the other bits in ``firstBits`` and ``otherBits`` match
 and are set to ``0`` in the output value:
 
 .. testcode:: bitwiseOperators
+   :compile: true
 
    -> let firstBits: UInt8 = 0b00010100
-   << // firstBits : UInt8 = 20
    -> let otherBits: UInt8 = 0b00000101
-   << // otherBits : UInt8 = 5
    -> let outputBits = firstBits ^ otherBits  // equals 00010001
-   << // outputBits : UInt8 = 17
+   >> assert(outputBits == 0b00010001)
 
 .. _AdvancedOperators_BitwiseLeftAndRightShiftOperators:
 
@@ -208,32 +206,39 @@ and orange zeros are inserted:
 Here's how bit shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
+   :compile: true
 
    -> let shiftBits: UInt8 = 4   // 00000100 in binary
-   << // shiftBits : UInt8 = 4
+   >> let r0 =
    -> shiftBits << 1             // 00001000
-   << // r0 : UInt8 = 8
+   >> assert(r0 == 8)
+   >> let r1 =
    -> shiftBits << 2             // 00010000
-   << // r1 : UInt8 = 16
+   >> assert(r1 == 16)
+   >> let r2 =
    -> shiftBits << 5             // 10000000
-   << // r2 : UInt8 = 128
+   >> assert(r2 == 128)
+   >> let r3 =
    -> shiftBits << 6             // 00000000
-   << // r3 : UInt8 = 0
+   >> assert(r3 == 0)
+   >> let r4 =
    -> shiftBits >> 2             // 00000001
-   << // r4 : UInt8 = 1
+   >> assert(r4 == 1)
+
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 You can use bit shifting to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
+   :compile: true
 
    -> let pink: UInt32 = 0xCC6699
-   << // pink : UInt32 = 13395609
    -> let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
-   << // redComponent : UInt32 = 204
    -> let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
-   << // greenComponent : UInt32 = 102
    -> let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
-   << // blueComponent : UInt32 = 153
+   >> assert(redComponent == 204)
+   >> assert(greenComponent == 102)
+   >> assert(blueComponent == 153)
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
@@ -358,9 +363,9 @@ Trying to set an ``Int16`` constant or variable to a number outside of this rang
 causes an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
+   :compile: true
 
    -> var potentialOverflow = Int16.max
-   << // potentialOverflow : Int16 = 32767
    /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
    </ potentialOverflow equals 32767, which is the maximum value an Int16 can hold
    -> potentialOverflow += 1
@@ -393,9 +398,9 @@ an unsigned integer is allowed to overflow in the positive direction,
 using the overflow addition operator (``&+``):
 
 .. testcode:: overflowOperatorsWillOverflowInPositiveDirection
+   :compile: true
 
    -> var unsignedOverflow = UInt8.max
-   << // unsignedOverflow : UInt8 = 255
    /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
    </ unsignedOverflow equals 255, which is the maximum value a UInt8 can hold
    -> unsignedOverflow = unsignedOverflow &+ 1
@@ -419,9 +424,9 @@ an unsigned integer is allowed to overflow in the negative direction.
 Here's an example using the overflow subtraction operator (``&-``):
 
 .. testcode:: overflowOperatorsWillOverflowInNegativeDirection
+   :compile: true
 
    -> var unsignedOverflow = UInt8.min
-   << // unsignedOverflow : UInt8 = 0
    /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
    </ unsignedOverflow equals 0, which is the minimum value a UInt8 can hold
    -> unsignedOverflow = unsignedOverflow &- 1
@@ -443,9 +448,9 @@ with the sign bit included as part of the numbers being added or subtracted,
 as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
 
 .. testcode:: overflowOperatorsWillOverflowSigned
+   :compile: true
 
    -> var signedOverflow = Int8.min
-   << // signedOverflow : Int8 = -128
    /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
    </ signedOverflow equals -128, which is the minimum value an Int8 can hold
    -> signedOverflow = signedOverflow &- 1
@@ -489,11 +494,15 @@ For example,
 operator precedence explains why the following expression equals ``17``.
 
 .. testcode:: evaluationOrder
+   :compile: true
 
+   >> let r0 =
    -> 2 + 3 % 4 * 5
-   << // r0 : Int = 17
+   >> assert(r0 == 17)
    /> this equals \(2 + 3 % 4 * 5)
    </ this equals 17
+
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 If you read strictly from left to right,
 you might expect the expression to be calculated as follows:
@@ -518,22 +527,31 @@ starting from their left:
 
 .. testcode:: evaluationOrder
 
+   >> let r1 =
    -> 2 + ((3 % 4) * 5)
-   << // r1 : Int = 17
+   >> assert(r1 == 17)
+
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 ``(3 % 4)`` is ``3``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
+   >> let r2 =
    -> 2 + (3 * 5)
-   << // r2 : Int = 17
+   >> assert(r2 == 17)
+
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 ``(3 * 5)`` is ``15``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
+   >> let r3 =
    -> 2 + 15
-   << // r3 : Int = 17
+   >> assert(r3 == 17)
+
+.. XXX Rewrite the above to use print() instead of bare expressions
 
 This calculation yields the final answer of ``17``.
 
@@ -569,6 +587,7 @@ followed by a definition of an :newTerm:`operator method`
 to add together instances of the ``Vector2D`` structure:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> struct Vector2D {
          var x = 0.0, y = 0.0
@@ -601,13 +620,11 @@ The type method
 can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> let vector = Vector2D(x: 3.0, y: 1.0)
-   << // vector : Vector2D = REPL.Vector2D(x: 3.0, y: 1.0)
    -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
-   << // anotherVector : Vector2D = REPL.Vector2D(x: 2.0, y: 4.0)
    -> let combinedVector = vector + anotherVector
-   << // combinedVector : Vector2D = REPL.Vector2D(x: 5.0, y: 5.0)
    /> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
    </ combinedVector is a Vector2D instance with values of (5.0, 5.0)
 
@@ -634,6 +651,7 @@ the ``prefix`` or ``postfix`` modifier
 before the ``func`` keyword when declaring the operator method:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> extension Vector2D {
           static prefix func - (vector: Vector2D) -> Vector2D {
@@ -652,15 +670,13 @@ The corresponding implementation for ``Vector2D`` instances
 performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> let positive = Vector2D(x: 3.0, y: 4.0)
-   << // positive : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let negative = -positive
-   << // negative : Vector2D = REPL.Vector2D(x: -3.0, y: -4.0)
    /> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
    </ negative is a Vector2D instance with values of (-3.0, -4.0)
    -> let alsoPositive = -negative
-   << // alsoPositive : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
    </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
@@ -679,6 +695,7 @@ The example below implements
 an addition assignment operator method for ``Vector2D`` instances:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> extension Vector2D {
           static func += (left: inout Vector2D, right: Vector2D) {
@@ -693,11 +710,10 @@ takes advantage of the existing addition operator method,
 and uses it to set the left value to be the left value plus the right value:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> var original = Vector2D(x: 1.0, y: 2.0)
-   << // original : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
    -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
-   << // vectorToAdd : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> original += vectorToAdd
    /> original now has values of (\(original.x), \(original.y))
    </ original now has values of (4.0, 6.0)
@@ -732,6 +748,7 @@ You provide an implementation of the ``==`` operator
 in the same way as you implement other infix operators:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> extension Vector2D: Equatable {
           static func == (left: Vector2D, right: Vector2D) -> Bool {
@@ -749,11 +766,10 @@ and so this is the logic used by the operator implementation.
 You can now use this operator to check whether two ``Vector2D`` instances are equivalent:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> let twoThree = Vector2D(x: 2.0, y: 3.0)
-   << // twoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
-   << // anotherTwoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> if twoThree == anotherTwoThree {
          print("These two vectors are equivalent.")
       }
@@ -781,15 +797,14 @@ Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
 of the equivalence operators.
 
 .. testcode:: equatable_synthesis
+   :compile: true
 
    -> struct Vector3D: Equatable {
          var x = 0.0, y = 0.0, z = 0.0
       }
    ---
    -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
-   << // twoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
    -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
-   << // anotherTwoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
    -> if twoThreeFour == anotherTwoThreeFour {
           print("These two vectors are also equivalent.")
       }
@@ -809,6 +824,7 @@ New operators are declared at a global level using the ``operator`` keyword,
 and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> prefix operator +++
 
@@ -823,6 +839,7 @@ To implement the ``+++`` operator,
 you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> extension Vector2D {
          static prefix func +++ (vector: inout Vector2D) -> Vector2D {
@@ -832,9 +849,7 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
       }
    ---
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
-   << // toBeDoubled : Vector2D = REPL.Vector2D(x: 1.0, y: 4.0)
    -> let afterDoubling = +++toBeDoubled
-   << // afterDoubling : Vector2D = REPL.Vector2D(x: 2.0, y: 8.0)
    /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
    </ toBeDoubled now has values of (2.0, 8.0)
    /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
@@ -861,6 +876,7 @@ The following example defines a new custom infix operator called ``+-``,
 which belongs to the precedence group ``AdditionPrecedence``:
 
 .. testcode:: customOperators
+   :compile: true
 
    -> infix operator +-: AdditionPrecedence
    -> extension Vector2D {
@@ -869,11 +885,8 @@ which belongs to the precedence group ``AdditionPrecedence``:
          }
       }
    -> let firstVector = Vector2D(x: 1.0, y: 2.0)
-   << // firstVector : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
    -> let secondVector = Vector2D(x: 3.0, y: 4.0)
-   << // secondVector : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let plusMinusVector = firstVector +- secondVector
-   << // plusMinusVector : Vector2D = REPL.Vector2D(x: 4.0, y: -2.0)
    /> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
    </ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 
