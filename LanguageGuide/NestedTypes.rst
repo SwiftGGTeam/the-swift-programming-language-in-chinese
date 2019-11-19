@@ -27,6 +27,7 @@ This feature is represented by a structure called ``Values``,
 which is nested within the ``Rank`` enumeration:
 
 .. testcode:: nestedTypes
+   :compile: true
 
    -> struct BlackjackCard {
    ---
@@ -103,9 +104,9 @@ as described in :ref:`Initialization_MemberwiseInitializersForStructureTypes`.
 You can use this initializer to initialize a new constant called ``theAceOfSpades``:
 
 .. testcode:: nestedTypes
+   :compile: true
 
    -> let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
-   << // theAceOfSpades : BlackjackCard = REPL.BlackjackCard(rank: REPL.BlackjackCard.Rank.ace, suit: REPL.BlackjackCard.Suit.spades)
    -> print("theAceOfSpades: \(theAceOfSpades.description)")
    <- theAceOfSpades: suit is ♠, value is 1 or 11
 
@@ -125,9 +126,9 @@ To use a nested type outside of its definition context,
 prefix its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
+   :compile: true
 
    -> let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
-   << // heartsSymbol : Character = "♡"
    /> heartsSymbol is \"\(heartsSymbol)\"
    </ heartsSymbol is "♡"
 
