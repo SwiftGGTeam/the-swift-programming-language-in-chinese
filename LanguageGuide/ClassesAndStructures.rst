@@ -215,9 +215,10 @@ Initializers are described in more detail in :doc:`Initialization`.
 
    -> class C { var x = 0, y = 0 }
    -> let c = C(x: 1, y: 1)
-   !! <REPL Input>:1:14: error: argument passed to call that takes no arguments
+   !$ error: argument passed to call that takes no arguments
    !! let c = C(x: 1, y: 1)
-   !!         ~~~~^~~~~~~~
+   !!         ^~~~~~~~~~~~
+   !!-
 
 .. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
@@ -437,12 +438,14 @@ or passed to a function.)
    -> let s2 = S()
    << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
-   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !$ error: cannot convert value of type 'S' to expected argument type 'AnyObject?'
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
+   !! as AnyObject
+   !$ error: cannot convert value of type 'S' to expected argument type 'AnyObject?'
+   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
+   !!       ^
+   !! as AnyObject
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
@@ -452,12 +455,14 @@ or passed to a function.)
    -> let e2 = E.b
    << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
-   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !$ error: cannot convert value of type 'E' to expected argument type 'AnyObject?'
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
+   !! as AnyObject
+   !$ error: cannot convert value of type 'E' to expected argument type 'AnyObject?'
+   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
+   !!       ^
+   !! as AnyObject
 
 It can sometimes be useful to find out whether two constants or variables refer to
 exactly the same instance of a class.
