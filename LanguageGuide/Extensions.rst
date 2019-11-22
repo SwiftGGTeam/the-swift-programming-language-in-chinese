@@ -45,24 +45,24 @@ For more details, see :ref:`Protocols_Extensions`.
             print("called overridden foo")
          }
       }
-   !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
-   !! override var x: Int {
-   !!              ^
-   !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
-   !! var x = 0
-   !!     ^
-   !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
-   !! override func foo() {
-   !!               ^
-   !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
-   !! func foo() {}
-   !!      ^
-   !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
+   !$ error: property does not override any property from its superclass
    !! override var x: Int {
    !! ~~~~~~~~     ^
-   !! /tmp/swifttest.swift:11:18: error: method does not override any method from its superclass
+   !$ error: invalid redeclaration of 'x'
+   !! override var x: Int {
+   !!              ^
+   !$ note: 'x' previously declared here
+   !! var x = 0
+   !!     ^
+   !$ error: method does not override any method from its superclass
    !! override func foo() {
    !! ~~~~~~~~      ^
+   !$ error: invalid redeclaration of 'foo()'
+   !! override func foo() {
+   !!               ^
+   !$ note: 'foo()' previously declared here
+   !! func foo() {}
+   !!      ^
 
 Extension Syntax
 ----------------
