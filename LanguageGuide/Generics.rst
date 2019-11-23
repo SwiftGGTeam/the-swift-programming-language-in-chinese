@@ -1105,8 +1105,11 @@ you'll get a compile-time error.
    << // notEquatableValue : NotEquatable = REPL.NotEquatable()
    -> notEquatableStack.push(notEquatableValue)
    -> notEquatableStack.isTop(notEquatableValue)  // Error
-   !! <REPL Input>:1:25: error: argument type 'NotEquatable' does not conform to expected type 'Equatable'
+   !$ error: referencing instance method 'isTop' on 'Stack' requires that 'NotEquatable' conform to 'Equatable'
    !! notEquatableStack.isTop(notEquatableValue)  // Error
+   !! ^
+   !$ note: where 'Element' = 'NotEquatable'
+   !! extension Stack where Element: Equatable {
    !! ^
 
 You can use a generic ``where`` clause with extensions to a protocol.
