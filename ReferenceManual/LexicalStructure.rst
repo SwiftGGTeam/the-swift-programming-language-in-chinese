@@ -172,25 +172,25 @@ so they must be escaped with backticks in that context.
 
 .. assertion:: var-requires-backticks
 
-   -> func f(`var` x: Int) {}
+   -> func g(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: 'var' as a parameter attribute is not allowed
+   !! <REPL Input>:1:8: warning: 'var' in this position is interpreted as an argument label
    !! func f(var x: Int) {}
    !!        ^~~
-   !!-
+   !!        `var`
 
 .. assertion:: let-requires-backticks
 
-   -> func f(`let` x: Int) {}
+   -> func g(`let` x: Int) {}
    -> func f(let x: Int) {}
-   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
+   !! <REPL Input>:1:8: warning: 'let' in this position is interpreted as an argument label
    !! func f(let x: Int) {}
    !!        ^~~
-   !!-
+   !!        `let`
 
 .. assertion:: inout-requires-backticks
 
-   -> func f(`inout` x: Int) {}
+   -> func g(`inout` x: Int) {}
    -> func f(inout x: Int) {}
    !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
