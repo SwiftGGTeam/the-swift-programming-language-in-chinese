@@ -255,7 +255,7 @@ but the returned value is not used.
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
-.. XXX Unless the function is marked @discardableResult,
+.. FIXME Unless the function is marked @discardableResult,
    ignoring its return value triggers a compile-time warning.
 
 .. _Functions_FunctionsWithMultipleReturnValues:

@@ -470,7 +470,7 @@ The ternary conditional operator is shorthand for the code below:
    !! answer2
    !! ^~~~~~~
 
-.. XXX This example has too much hand waving.
+.. FIXME This example has too much hand waving.
    Swift doesn't have 'if' expressions.
 
 Here's an example, which calculates the height for a table row.
