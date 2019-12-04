@@ -896,7 +896,7 @@ When you're ready to store the result for a longer time,
 you convert the substring to an instance of ``String``.
 For example:
 
-.. XXX After merging 23592978_struct_class,
+.. FIXME: After merging 23592978_struct_class,
    link to the COW note in "Structures"
    from the (aside) above about String.
 
