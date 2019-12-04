@@ -727,7 +727,8 @@ with the results of various set operations represented by the shaded regions.
    >> assert(d == [1, 2, 9])
    // [1, 2, 9]
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 
 .. _CollectionTypes_SetMembershipAndEquality:
@@ -773,7 +774,9 @@ because they share no elements in common.
    >> assert(cc == true)
    // true
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
 
 .. _CollectionTypes_Dictionaries:
 

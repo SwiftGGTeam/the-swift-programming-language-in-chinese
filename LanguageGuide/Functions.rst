@@ -235,7 +235,8 @@ The return value of a function can be ignored when it is called:
    << hello, world
    // prints "hello, world" but does not return a value
 
-.. XXX Refactor bare expression and discarded return value above.
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
@@ -558,7 +559,9 @@ The example below calculates the :newTerm:`arithmetic mean`
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
 
-.. XXX Rewrite the above to use assignment instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
 
 .. note::
 

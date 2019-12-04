@@ -225,7 +225,8 @@ Here's how bit shifting looks in Swift code:
    -> shiftBits >> 2             // 00000001
    >> assert(r4 == 1)
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 You can use bit shifting to encode and decode values within other data types:
 
@@ -502,7 +503,8 @@ operator precedence explains why the following expression equals ``17``.
    /> this equals \(2 + 3 % 4 * 5)
    </ this equals 17
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 If you read strictly from left to right,
 you might expect the expression to be calculated as follows:
@@ -531,7 +533,8 @@ starting from their left:
    -> 2 + ((3 % 4) * 5)
    >> assert(r1 == 17)
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 ``(3 % 4)`` is ``3``, so this is equivalent to:
 
@@ -541,7 +544,8 @@ starting from their left:
    -> 2 + (3 * 5)
    >> assert(r2 == 17)
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 ``(3 * 5)`` is ``15``, so this is equivalent to:
 
@@ -551,7 +555,8 @@ starting from their left:
    -> 2 + 15
    >> assert(r3 == 17)
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 This calculation yields the final answer of ``17``.
 

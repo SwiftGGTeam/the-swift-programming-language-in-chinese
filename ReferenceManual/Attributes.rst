@@ -712,7 +712,9 @@ that calls the ``NSApplicationMain(_:_:)`` function as follows:
    -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
    !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
 
-.. XXX Refactor discarded return value above.
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
+
 
 .. _Attributes_NSCopying:
 

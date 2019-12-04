@@ -351,7 +351,8 @@ The following are examples of literals:
     << String
     << Bool
 
-.. XXX Refactor the above if possible to avoid using bare expressions.
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -657,7 +658,8 @@ For example, all of the following string literals have the same value:
    !! let x = 3; "1 2 \(x)"
    !!            ^~~~~~~~~~
 
-.. XXX Refactor the above if possible to avoid using bare expressions.
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number signs (``#``).

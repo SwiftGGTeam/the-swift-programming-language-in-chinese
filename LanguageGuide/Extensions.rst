@@ -380,7 +380,8 @@ from the right of the number:
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 .. TODO: Replace the for loop above with an exponent,
    if/when integer exponents land in the stdlib.
@@ -402,7 +403,9 @@ as if the number had been padded with zeros to the left:
 
 .. TODO: provide an explanation of this example
 
-.. XXX Rewrite the above to use print() instead of bare expressions
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
 
 .. _Extensions_NestedTypes:
 

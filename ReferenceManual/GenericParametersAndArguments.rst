@@ -75,7 +75,8 @@ to the function or initializer.
     -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
     >> assert(r1 == 3.14159)
 
-.. XXX Rewrite the above to use print() instead of bare expressions.
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 
 .. _GenericParametersAndArguments_WhereClauses:

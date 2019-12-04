@@ -580,7 +580,8 @@ you can access that value using the postfix operator ``!``, as shown below:
     -> optionalInteger! // 42
     >> assert(r0 == 42)
 
-.. XXX Refactor the above if possible to avoid using bare expressions.
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 Using the ``!`` operator to unwrap an optional
 that has a value of ``nil`` results in a runtime error.

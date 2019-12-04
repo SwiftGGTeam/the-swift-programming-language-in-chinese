@@ -1147,7 +1147,8 @@ instead of ``\SomeClass.someProperty``:
           // ...
       }
 
-.. XXX Refactor discarded return value above.
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 The *path* can refer to ``self`` to create the identity key path (``\.self``).
 The identity key path refers to a whole instance,
@@ -1530,7 +1531,8 @@ The following function calls are equivalent:
     -> someFunction(x: x) {$0 == 13}
     >> assert(r1 == false)
 
-.. XXX Refactor the above to avoid using bare expressions.
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted.
@@ -1553,7 +1555,8 @@ the parentheses can be omitted.
     -> myData.someMethod {$0 == 13}
     >> assert(r1 == false)
 
-.. XXX Refactor the above to avoid using bare expressions.
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 .. syntax-grammar::
 

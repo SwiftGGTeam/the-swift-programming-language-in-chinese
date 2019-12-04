@@ -618,7 +618,8 @@ For example:
    -> f(x: 1, y: 2) // both x and y are labeled
    >> assert(r0 == 3)
 
-.. XXX Refactor discarded return value above.
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 You can override the default behavior for argument labels
 with one of the following forms:
@@ -810,7 +811,8 @@ the default value is used instead.
    !!   ^
    !!   x:
 
-.. XXX Refactor discarded return value above.
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 .. assertion:: default-args-evaluated-at-call-site
     :compile: true

@@ -541,7 +541,8 @@ Calling the function multiple times shows this behavior in action:
    /> returns a value of \(r2)
    </ returns a value of 30
 
-.. XXX Refactor the above to not discard the function's return value
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 If you create a second incrementer,
 it will have its own stored reference to a new, separate ``runningTotal`` variable:
