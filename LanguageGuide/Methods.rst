@@ -212,13 +212,10 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
    !! var
    // this will report an error
 
-.. TODO: talk about @!mutating as well.
+.. TODO: talk about nonmutating as well.
    Struct setters are implicitly 'mutating' by default and thus do not work on 'let's.
    However, JoeG says that this ought to work
    if the setter for the computed property is explicitly defined as @!mutating.
-
-.. XXX I'm pretty sure @!mutating doesn't exist any more.
-   Maybe it's an old spelling of nonmutating?
 
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 
