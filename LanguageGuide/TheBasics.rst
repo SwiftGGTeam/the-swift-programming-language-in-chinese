@@ -556,6 +556,8 @@ indicated by an uppercase or lowercase ``p``.
    !!                       ^
 
 .. assertion:: float-required-vs-optional-exponent
+   :compile: true
+
    -> let hexWith = 0x1.5p7
    -> let decimalWithout = 0.5
    -> let decimalWith = 0.5e7

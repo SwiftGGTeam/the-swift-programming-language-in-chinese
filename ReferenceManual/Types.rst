@@ -156,7 +156,6 @@ that name is part of the type.
    !$ error: cannot assign value of type '(left: Int, right: Int)' to type '(top: Int, bottom: Int)'
    !! someTuple = (left: 5, right: 5)  // Error: names don't match
    !!             ^~~~~~~~~~~~~~~~~~~
-   !!                         as! (top: Int, bottom: Int)
 
 All tuple types contain two or more types,
 except for ``Void`` which is a type alias for the empty tuple type, ``()``.
@@ -235,6 +234,7 @@ are not part of the corresponding function type.
 For example:
 
 .. assertion:: argument-names
+   :compile: true
 
    -> func someFunction(left: Int, right: Int) {}
    -> func anotherFunction(left: Int, right: Int) {}
@@ -284,6 +284,18 @@ you omit them when writing a function type.
    !!    var operation: (lhs: Int, rhs: Int) -> Int     // Error
    !!                              ^
    !!                              _
+   !$ error: invalid redeclaration of 'operation'
+   !! var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
+   !!     ^
+   !$ note: 'operation' previously declared here
+   !! var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !!     ^
+   !$ error: invalid redeclaration of 'operation'
+   !! var operation: (Int, Int) -> Int               // OK
+   !!     ^
+   !$ note: 'operation' previously declared here
+   !! var operation: (lhs: Int, rhs: Int) -> Int     // Error
+   !!     ^
    -> var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
    -> var operation: (Int, Int) -> Int               // OK
 
@@ -886,7 +898,7 @@ whose return type is ``Self``.
    :compile: true
 
    -> class C { func f(c: Self) { } }
-   !$ error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
+   !$ error: covariant 'Self' can only appear as the type of a property, subscript or method result; did you mean 'C'?
    !! class C { func f(c: Self) { } }
    !!                     ^~~~
    !!                     C
@@ -899,6 +911,8 @@ whose return type is ``Self``.
    !! class C { var s: Self { return self } }
    !!                 ^~~~
    !!                 C
+
+.. FIXME Test above is failing, likely due to SE-0080
 
 .. testcode:: self-gives-dynamic-type
    :compile: true

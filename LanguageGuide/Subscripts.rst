@@ -181,6 +181,11 @@ but they can't use in-out parameters or provide default parameter values.
    that tracks changes from 'master'.
    When that happens, merge 53265074_subscript_default.
 
+.. The failure before merging in that branch
+   is a complaint that 'x' is an extraneous argument,
+   due to a mistake in the test.
+   Namely, subscript arguments default to being UN-labeled.
+
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
 the types of the value or values that are contained within the subscript brackets

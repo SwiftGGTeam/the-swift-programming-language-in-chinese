@@ -173,6 +173,7 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
 
 .. testcode:: forLoops
+   :compile: true
 
    -> let hours = 12
    -> let hourInterval = 3

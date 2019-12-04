@@ -150,6 +150,7 @@ You can opt in to value overflow behavior by using Swift's overflow operators
 The addition operator is also supported for ``String`` concatenation:
 
 .. testcode:: arithmeticOperators
+   :compile: true
 
    >> let r4 =
    -> "hello, " + "world"  // equals "hello, world"

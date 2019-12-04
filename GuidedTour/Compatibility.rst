@@ -7,6 +7,7 @@ You can use Xcode 11.2 to build targets
 that are written in either Swift 5.1.1, Swift 4.2, or Swift 4.
 
 .. assertion:: swift-version
+   :compile: true
 
    >> #if swift(>=5.1.2)
    >>     print("Too new")

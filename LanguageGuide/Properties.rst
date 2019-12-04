@@ -1060,7 +1060,7 @@ and uses the initializer that accepts the arguments you include.
 For example:
 
 .. testcode:: property-wrapper-mixed-init
-    :compile:
+    :compile: true
 
     -> struct MixedRectangle {
            @SmallNumber var height: Int = 1
@@ -1135,6 +1135,11 @@ adjusted the new value for the property before storing that new value.
     -> someStructure.someNumber = 55
     -> print(someStructure.$someNumber)
     <- true
+
+.. FIXME It looks like a rule changed or is now being enforced
+   that causes the "private var number" line above
+   to make the systhesized initializer private,
+   which is a problem because the property wrapper is internal.
 
 Writing ``someStructure.$someNumber`` accesses the wrapper's projected value.
 After storing a small number like four,

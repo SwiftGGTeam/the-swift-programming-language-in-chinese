@@ -1042,6 +1042,7 @@ The characters are visually similar,
 but don't have the same linguistic meaning:
 
 .. testcode:: stringEquality
+   :compile: true
 
    -> let latinCapitalLetterA: Character = "\u{41}"
    >> assert(latinCapitalLetterA == "A")

@@ -528,6 +528,7 @@ Think of this as adding implicit parentheses around these parts of the expressio
 starting from their left:
 
 .. testcode:: evaluationOrder
+   :compile: true
 
    >> let r1 =
    -> 2 + ((3 % 4) * 5)
@@ -539,6 +540,7 @@ starting from their left:
 ``(3 % 4)`` is ``3``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
+   :compile: true
 
    >> let r2 =
    -> 2 + (3 * 5)
@@ -550,6 +552,7 @@ starting from their left:
 ``(3 * 5)`` is ``15``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
+   :compile: true
 
    >> let r3 =
    -> 2 + 15

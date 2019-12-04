@@ -205,7 +205,7 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
    -> fixedPoint.moveBy(x: 2.0, y: 3.0)
    !$ error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
    !! fixedPoint.moveBy(x: 2.0, y: 3.0)
-   !!  ^~~~~~~~~~
+   !! ~~~~~~~~~~ ^
    !$ note: change 'let' to 'var' to make it mutable
    !! let fixedPoint = Point(x: 3.0, y: 3.0)
    !! ^~~

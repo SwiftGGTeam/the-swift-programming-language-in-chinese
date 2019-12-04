@@ -124,6 +124,7 @@ a default value of the appropriate type (called ``repeating``):
 and the number of times that value is repeated in the new array (called ``count``):
 
 .. testcode:: arraysEmpty
+   :compile: true
 
    -> var threeDoubles = Array(repeating: 0.0, count: 3)
    /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
@@ -139,6 +140,7 @@ with the addition operator (``+``).
 The new array's type is inferred from the type of the two arrays you add together:
 
 .. testcode:: arraysEmpty
+   :compile: true
 
    -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
    /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
@@ -358,6 +360,7 @@ Any gaps in an array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
 
 .. testcode:: arraysInferred
+   :compile: true
 
    -> firstItem = shoppingList[0]
    /> firstItem is now equal to \"\(firstItem)\"

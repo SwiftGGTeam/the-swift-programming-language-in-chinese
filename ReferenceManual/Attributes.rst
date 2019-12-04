@@ -536,12 +536,14 @@ when switching over a frozen enumeration
 produces a warning because that code is never executed.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum
+    :compile: true
     :evolution: true
 
     >> public enum E { case x, y }
     >> @frozen public enum F { case x, y }
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test1
+    :compile: true
 
     >> import NoUnknownDefaultOverFrozenEnum
     >> func main() {
@@ -555,6 +557,7 @@ produces a warning because that code is never executed.
     // Note that there's no warning -- this is fine because E isn't frozen.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test2
+    :compile: true
 
     >> import NoUnknownDefaultOverFrozenEnum
     >> func main() {

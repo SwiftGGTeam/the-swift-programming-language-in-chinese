@@ -276,6 +276,7 @@ one with internal access and one with private access,
 the access level for that compound tuple type will be private.
 
 .. sourcefile:: tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private
+   :compile: true
 
    -> public struct PublicStruct {}
    -> internal struct InternalStruct {}
@@ -291,38 +292,41 @@ the access level for that compound tuple type will be private.
       }
 
 .. sourcefile:: tupleTypes_Module1_PublicAndInternal
+   :compile: true
 
    // tuples with (at least) internal members can be accessed within their own module
    -> let publicTuple = returnPublicTuple()
    -> let internalTuple = returnInternalTuple()
 
 .. sourcefile:: tupleTypes_Module1_Private
+   :compile: true
 
    // a tuple with one or more private members can't be accessed from outside of its source file
    -> let privateTuple = returnFilePrivateTuple()
-   !! /tmp/sourcefile_1.swift:1:20: error: use of unresolved identifier 'returnFilePrivateTuple'
+   !$ error: use of unresolved identifier 'returnFilePrivateTuple'
    !! let privateTuple = returnFilePrivateTuple()
    !!                    ^~~~~~~~~~~~~~~~~~~~~~
 
 .. sourcefile:: tupleTypes_Module2_Public
+   :compile: true
 
    // a public tuple with all-public members can be used in another module
    -> import tupleTypes_Module1
    -> let publicTuple = returnPublicTuple()
 
 .. sourcefile:: tupleTypes_Module2_InternalAndPrivate
+   :compile: true
 
    // tuples with internal or private members can't be used outside of their own module
    -> import tupleTypes_Module1
    -> let internalTuple = returnInternalTuple()
    -> let privateTuple = returnFilePrivateTuple()
-   !! /tmp/sourcefile_0.swift:2:21: error: use of unresolved identifier 'returnInternalTuple'
+   !$ error: use of unresolved identifier 'returnInternalTuple'
    !! let internalTuple = returnInternalTuple()
    !!                     ^~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:3:20: error: use of unresolved identifier 'returnFilePrivateTuple'
+   !$ error: use of unresolved identifier 'returnFilePrivateTuple'
    !! let privateTuple = returnFilePrivateTuple()
    !!                    ^~~~~~~~~~~~~~~~~~~~~~
-
 
 .. note::
 
@@ -409,6 +413,7 @@ therefore also have an access level of public:
       }
 
 .. sourcefile:: enumerationCases_Module1
+   :compile: true
 
    -> public enum CompassPoint {
          case north
@@ -418,6 +423,7 @@ therefore also have an access level of public:
       }
 
 .. sourcefile:: enumerationCases_Module2
+   :compile: true
 
    -> import enumerationCases_Module1
    -> let north = CompassPoint.north
@@ -444,6 +450,7 @@ If you want a nested type within a public type to be publicly available,
 you must explicitly declare the nested type as public.
 
 .. sourcefile:: nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private
+   :compile: true
 
    -> public struct PublicStruct {
          public enum PublicEnumInsidePublicStruct { case a, b }
@@ -466,6 +473,7 @@ you must explicitly declare the nested type as public.
       }
 
 .. sourcefile:: nestedTypes_Module1_PublicAndInternal
+   :compile: true
 
    // these are all expected to succeed within the same module
    -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
@@ -476,6 +484,7 @@ you must explicitly declare the nested type as public.
    -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
 
 .. sourcefile:: nestedTypes_Module1_Private
+   :compile: true
 
    // these are all expected to fail, because they are private to the other file
    -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
@@ -485,32 +494,34 @@ you must explicitly declare the nested type as public.
    -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    ---
-   !! /tmp/sourcefile_1.swift:1:46: error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
+   !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:4:17: note: 'PrivateEnumInsidePublicStruct' declared here
+   !$ note: 'PrivateEnumInsidePublicStruct' declared here
    !! private enum PrivateEnumInsidePublicStruct { case a, b }
    !! ^
-   !! /tmp/sourcefile_1.swift:2:50: error: 'PrivateEnumInsideInternalStruct' is inaccessible due to 'private' protection level
+   !$ error: 'PrivateEnumInsideInternalStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
    !!                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:9:17: note: 'PrivateEnumInsideInternalStruct' declared here
+   !$ note: 'PrivateEnumInsideInternalStruct' declared here
    !! private enum PrivateEnumInsideInternalStruct { case a, b }
    !! ^
-   !! /tmp/sourcefile_1.swift:3:34: error: use of unresolved identifier 'PrivateStruct'
+   !$ error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    !!                                  ^~~~~~~~~~~~~
-   !! /tmp/sourcefile_1.swift:4:36: error: use of unresolved identifier 'PrivateStruct'
+   !$ error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
 
 .. sourcefile:: nestedTypes_Module2_Public
+   :compile: true
 
    // this is the only expected to succeed within the second module
    -> import nestedTypes_Module1
    -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
 
 .. sourcefile:: nestedTypes_Module2_InternalAndPrivate
+   :compile: true
 
    // these are all expected to fail, because they are private or internal to the other module
    -> import nestedTypes_Module1
@@ -525,31 +536,31 @@ you must explicitly declare the nested type as public.
    -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    ---
-   !! /tmp/sourcefile_0.swift:2:47: error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
+   !$ error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
    !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
    !!                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! <unknown>:0: note: 'InternalEnumInsidePublicStruct' declared here
-   !! /tmp/sourcefile_0.swift:3:48: error: 'AutomaticEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
+   !$ note: 'InternalEnumInsidePublicStruct' declared here
+   !$ error: 'AutomaticEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
    !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
    !!                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! <unknown>:0: note: 'AutomaticEnumInsidePublicStruct' declared here
-   !! /tmp/sourcefile_0.swift:4:46: error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
+   !$ note: 'AutomaticEnumInsidePublicStruct' declared here
+   !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! <unknown>:0: note: 'PrivateEnumInsidePublicStruct' declared here
-   !! /tmp/sourcefile_0.swift:5:36: error: use of unresolved identifier 'InternalStruct'
+   !$ note: 'PrivateEnumInsidePublicStruct' declared here
+   !$ error: use of unresolved identifier 'InternalStruct'
    !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
    !!                                    ^~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:6:37: error: use of unresolved identifier 'InternalStruct'
+   !$ error: use of unresolved identifier 'InternalStruct'
    !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
    !!                                     ^~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:7:35: error: use of unresolved identifier 'InternalStruct'
+   !$ error: use of unresolved identifier 'InternalStruct'
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
    !!                                   ^~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:8:34: error: use of unresolved identifier 'PrivateStruct'
+   !$ error: use of unresolved identifier 'PrivateStruct'
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    !!                                  ^~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:9:36: error: use of unresolved identifier 'PrivateStruct'
+   !$ error: use of unresolved identifier 'PrivateStruct'
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
 
@@ -784,6 +795,7 @@ by combining the ``public`` and ``private(set)`` access-level modifiers:
       }
 
 .. sourcefile:: reducedSetterScopePublic_Module1_Allowed, reducedSetterScopePublic_Module1_NotAllowed
+   :compile: true
 
    -> public struct TrackedString {
          public private(set) var numberOfEdits = 0
@@ -796,21 +808,24 @@ by combining the ``public`` and ``private(set)`` access-level modifiers:
       }
 
 .. sourcefile:: reducedSetterScopePublic_Module1_Allowed
+   :compile: true
 
    // check that we can retrieve its value with the public getter from another file in the same module
    -> var stringToEdit_Module1B = TrackedString()
    -> let resultB = stringToEdit_Module1B.numberOfEdits
 
 .. sourcefile:: reducedSetterScopePublic_Module1_NotAllowed
+   :compile: true
 
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
    -> let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
-   !! /tmp/sourcefile_1.swift:2:59: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !$ error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
    !! let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
    !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
+   :compile: true
 
    // check that we can retrieve its value with the public getter from a different module
    -> import reducedSetterScopePublic_Module1_Allowed
@@ -818,7 +833,7 @@ by combining the ``public`` and ``private(set)`` access-level modifiers:
    -> let result2Read = stringToEdit_Module2.numberOfEdits
    // check that we can't change its value from another module
    -> let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
-   !! /tmp/sourcefile_0.swift:4:63: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+   !$ error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
    !! let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
    !!                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
@@ -939,6 +954,7 @@ on any type that adopts the protocol.
    an access level of internal for the type's members.
 
 .. sourcefile:: protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private
+   :compile: true
 
    -> public protocol PublicProtocol {
          var publicProperty: Int { get }
@@ -958,6 +974,7 @@ on any type that adopts the protocol.
       }
 
 .. sourcefile:: protocols_Module1_PublicAndInternal
+   :compile: true
 
    // these should all be allowed without problem
    -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
@@ -987,13 +1004,14 @@ on any type that adopts the protocol.
       }
 
 .. sourcefile:: protocols_Module1_Private
+   :compile: true
 
    // these will fail, because FilePrivateProtocol is not visible outside of its file
    -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
          var filePrivateProperty = 0
          func filePrivateMethod() {}
       }
-   !! /tmp/sourcefile_1.swift:1:58: error: use of undeclared type 'FilePrivateProtocol'
+   !$ error: use of undeclared type 'FilePrivateProtocol'
    !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
    !! ^~~~~~~~~~~~~~~~~~~
    ---
@@ -1002,11 +1020,12 @@ on any type that adopts the protocol.
          var privateProperty = 0
          func privateMethod() {}
       }
-   !! /tmp/sourcefile_1.swift:5:54: error: use of undeclared type 'PrivateProtocol'
+   !$ error: use of undeclared type 'PrivateProtocol'
    !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
    !! ^~~~~~~~~~~~~~~
 
 .. sourcefile:: protocols_Module2_Public
+   :compile: true
 
    // these should all be allowed without problem
    -> import protocols_Module1
@@ -1024,6 +1043,7 @@ on any type that adopts the protocol.
       }
 
 .. sourcefile:: protocols_Module2_InternalAndPrivate
+   :compile: true
 
    // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
    // are not visible to other modules
@@ -1040,13 +1060,13 @@ on any type that adopts the protocol.
          var privateProperty = 0
          func privateMethod() {}
       }
-   !! /tmp/sourcefile_0.swift:2:55: error: use of undeclared type 'InternalProtocol'
+   !$ error: use of undeclared type 'InternalProtocol'
    !! public class PublicClassConformingToInternalProtocol: InternalProtocol {
    !! ^~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:6:58: error: use of undeclared type 'FilePrivateProtocol'
+   !$ error: use of undeclared type 'FilePrivateProtocol'
    !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
    !! ^~~~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:10:54: error: use of undeclared type 'PrivateProtocol'
+   !$ error: use of undeclared type 'PrivateProtocol'
    !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
    !! ^~~~~~~~~~~~~~~
 
@@ -1115,6 +1135,7 @@ Instead, the protocol's own access level is used to provide
 the default access level for each protocol requirement implementation within the extension.
 
 .. sourcefile:: extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private
+   :compile: true
 
    -> public struct PublicStruct {
          public init() {}
@@ -1132,41 +1153,44 @@ the default access level for each protocol requirement implementation within the
    -> let sameFileC = publicStructInSameFile.filePrivateMethod()
 
 .. sourcefile:: extensions_Module1_PublicAndInternal
+   :compile: true
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileA = publicStructInDifferentFile.implicitlyInternalMethodFromStruct()
    -> let differentFileB = publicStructInDifferentFile.implicitlyInternalMethodFromExtension()
 
 .. sourcefile:: extensions_Module1_Private
+   :compile: true
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileC = publicStructInDifferentFile.filePrivateMethod()
-   !! /tmp/sourcefile_1.swift:2:50: error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
+   !$ error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
    !! let differentFileC = publicStructInDifferentFile.filePrivateMethod()
    !!                                                  ^~~~~~~~~~~~~~~~~
-   !! /tmp/sourcefile_0.swift:9:9: note: 'filePrivateMethod()' declared here
+   !$ note: 'filePrivateMethod()' declared here
    !! func filePrivateMethod() -> Int { return 0 }
    !! ^
 
 .. sourcefile:: extensions_Module2
+   :compile: true
 
    -> import extensions_Module1
    -> var publicStructInDifferentModule = PublicStruct()
    -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
-   !! /tmp/sourcefile_0.swift:3:54: error: 'implicitlyInternalMethodFromStruct' is inaccessible due to 'internal' protection level
+   !$ error: 'implicitlyInternalMethodFromStruct' is inaccessible due to 'internal' protection level
    !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
    !!                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! <unknown>:0: note: 'implicitlyInternalMethodFromStruct()' declared here
+   !$ note: 'implicitlyInternalMethodFromStruct()' declared here
    -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
-   !! /tmp/sourcefile_0.swift:4:54: error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
+   !$ error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
    !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    !!                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   !! <unknown>:0: note: 'implicitlyInternalMethodFromExtension()' declared here
+   !$ note: 'implicitlyInternalMethodFromExtension()' declared here
    -> let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
-   !! /tmp/sourcefile_0.swift:5:54: error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
+   !$ error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
    !! let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
    !!                                                      ^~~~~~~~~~~~~~~~~
-   !! <unknown>:0: note: 'filePrivateMethod()' declared here
+   !$ note: 'filePrivateMethod()' declared here
 
 .. _AccessControl_PrivateExtension:
 
@@ -1242,6 +1266,7 @@ but a public type alias can't alias an internal, file-private, or private type.
    This rule also applies to type aliases for associated types used to satisfy protocol conformances.
 
 .. sourcefile:: typeAliases
+   :compile: true
 
    -> public struct PublicStruct {}
    -> internal struct InternalStruct {}
