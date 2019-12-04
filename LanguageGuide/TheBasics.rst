@@ -1444,7 +1444,6 @@ for example, when it would just repeat the condition as prose.
    :compile: true
 
    -> let age = -3
-   << // age : Int = -3
    -> assert(age >= 0, "A person's age can't be less than zero, but value is \(age).")
    xx assert
 

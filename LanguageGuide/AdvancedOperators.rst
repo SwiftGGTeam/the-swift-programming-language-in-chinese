@@ -966,8 +966,9 @@ see :ref:`Declarations_OperatorDeclaration`.
               return (left.x == right.x) && (left.y == right.y) && (left.z == right.z)
           }
       }
+   >> let r0 =
    >> Vector3D(x: 1.1, y: 2.3, z: 12) == Vector3D(x: 1.1, y: 2.3, z: 12)
-   << // r0 : Bool = true
+   >> assert(r0)
 
 .. FIXME: This doesn't work
    <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
@@ -999,7 +1000,6 @@ see :ref:`Declarations_OperatorDeclaration`.
       }
    -> extension Vector2D: AnotherProtocol {}
    -> let unitVector = Vector2D(x: 1.0, y: 1.0)
-   << // unitVector : Vector2D = REPL.Vector2D(x: 1.0, y: 1.0)
    -> print(2.5 *** unitVector)
    <- Vector2D(x: 2.5, y: 2.5)
 
