@@ -62,7 +62,6 @@ Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show:
 
 .. testcode:: type-annotation
-    :compile: true
 
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
@@ -103,7 +102,6 @@ For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
 
 .. testcode:: type-identifier
-    :compile: true
 
     -> typealias Point = (Int, Int)
     -> let origin: Point = (0, 0)
@@ -114,7 +112,6 @@ For example, the type identifier in the following code references the named type
 that is declared in the ``ExampleModule`` module.
 
 .. testcode:: type-identifier-dot
-    :compile: true
 
     -> var someValue: ExampleModule.MyType
     !$ error: use of undeclared type 'ExampleModule'
@@ -147,7 +144,6 @@ When an element of a tuple type has a name,
 that name is part of the type.
 
 .. testcode:: tuple-type-names
-   :compile: true
 
    -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
    -> someTuple = (top: 4, bottom: 42) // OK: names match
@@ -234,7 +230,6 @@ are not part of the corresponding function type.
 For example:
 
 .. assertion:: argument-names
-   :compile: true
 
    -> func someFunction(left: Int, right: Int) {}
    -> func anotherFunction(left: Int, right: Int) {}
@@ -247,7 +242,6 @@ For example:
    -> f = functionWithDifferentLabels  // OK
 
 .. testcode:: argument-names-err
-   :compile: true
 
    -> func someFunction(left: Int, right: Int) {}
    -> func anotherFunction(left: Int, right: Int) {}
@@ -273,7 +267,6 @@ Because argument labels are not part of a function's type,
 you omit them when writing a function type.
 
 .. testcode:: omit-argument-names-in-function-type
-   :compile: true
 
    -> var operation: (lhs: Int, rhs: Int) -> Int     // Error
    !$ error: function types cannot have argument labels; use '_' before 'lhs'
@@ -315,7 +308,6 @@ Throwing and rethrowing functions are described in
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
 
 .. assertion:: function-arrow-is-right-associative
-   :compile: true
 
    >> func f(i: Int) -> (Int) -> Int {
    >>     func g(j: Int) -> Int {
@@ -342,7 +334,6 @@ can't be stored in a property, variable, or constant of type ``Any``,
 because that might allow the value to escape.
 
 .. assertion:: cant-store-nonescaping-as-Any
-    :compile: true
 
     -> func f(g: ()->Void) { let x: Any = g }
     !$ error: converting non-escaping value to 'Any' may allow it to escape
@@ -357,7 +348,6 @@ at compile time instead of at runtime.
 For example:
 
 .. testcode:: memory-nonescaping-functions
-    :compile: true
 
     -> let external: (() -> Void) -> Void = { _ in () }
     -> func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
@@ -452,7 +442,6 @@ In other words, the following two declarations are equivalent:
     let someArray: [String] = ["Alex", "Brian", "Dave"]
 
 .. assertion:: array-literal
-    :compile: true
 
     >> let someArray1: Array<String> = ["Alex", "Brian", "Dave"]
     >> let someArray2: [String] = ["Alex", "Brian", "Dave"]
@@ -470,7 +459,6 @@ For example, you can create
 a three-dimensional array of integers using three sets of square brackets:
 
 .. testcode:: array-3d
-    :compile: true
 
     -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
@@ -511,7 +499,6 @@ In other words, the following two declarations are equivalent:
     let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 .. assertion:: dictionary-literal
-    :compile: true
 
     >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
     >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
@@ -558,7 +545,6 @@ In other words, the following two declarations are equivalent:
     var optionalInteger: Optional<Int>
 
 .. assertion:: optional-literal
-    :compile: true
 
     >> var optionalInteger1: Int?
     >> var optionalInteger2: Optional<Int>
@@ -584,7 +570,6 @@ If an instance of an optional type contains a value,
 you can access that value using the postfix operator ``!``, as shown below:
 
 .. testcode:: optional-type
-    :compile: true
 
     >> var optionalInteger: Int?
     -> optionalInteger = 42
@@ -726,7 +711,6 @@ the definition of ``PQR`` in the code below
 is equivalent to ``P & Q & R``.
 
 .. testcode:: protocol-composition-can-have-repeats
-    :compile: true
 
     >> protocol P {}
     >> protocol Q {}
@@ -820,7 +804,6 @@ to access that instance's dynamic, runtime type as a value,
 as the following example shows:
 
 .. testcode:: metatype-type
-    :compile: true
 
     -> class SomeBaseClass {
            class func printClassName() {
@@ -849,7 +832,6 @@ the initializer that's called must be marked with the ``required`` keyword
 or the entire class marked with the ``final`` keyword.
 
 .. testcode:: metatype-type
-    :compile: true
 
     -> class AnotherSubClass: SomeBaseClass {
           let string: String
@@ -895,7 +877,6 @@ the code below shows an instance method ``f``
 whose return type is ``Self``.
 
 .. assertion:: self-in-class-cant-be-a-parameter-type
-   :compile: true
 
    -> class C { func f(c: Self) { } }
    !$ error: covariant 'Self' can only appear as the type of a property, subscript or method result; did you mean 'C'?
@@ -904,7 +885,6 @@ whose return type is ``Self``.
    !!                     C
 
 .. assertion:: self-in-class-cant-be-a-computed-property-type
-   :compile: true
 
    -> class C { var s: Self { return self } }
    !$ error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
@@ -915,7 +895,6 @@ whose return type is ``Self``.
 .. FIXME Test above is failing, likely due to SE-0080
 
 .. testcode:: self-gives-dynamic-type
-   :compile: true
 
    -> class Superclass {
           func f() -> Self { return self }
@@ -1023,7 +1002,6 @@ the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have an inferred type of ``Float`` instead of ``Double``.
 
 .. testcode:: type-inference
-    :compile: true
 
     -> let e = 2.71828 // The type of e is inferred to be Double.
     -> let eFloat: Float = 2.71828 // The type of eFloat is Float.

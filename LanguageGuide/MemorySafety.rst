@@ -37,7 +37,6 @@ For example,
 the following code contains both a read access and a write access:
 
 .. testcode:: memory-read-write
-    :compile: true
 
     // A write access to the memory where one is stored.
     -> var one = 1
@@ -153,7 +152,6 @@ For example,
 all the read and write accesses in the code listing below are instantaneous:
 
 .. testcode:: memory-instantaneous
-    :compile: true
 
     -> func oneMore(than number: Int) -> Int {
            return number + 1
@@ -202,7 +200,6 @@ any access to the original creates a conflict.
 For example:
 
 .. testcode:: memory-increment
-    :compile: true
 
     -> var stepSize = 1
     ---
@@ -235,7 +232,6 @@ One way to solve this conflict
 is to make an explicit copy of ``stepSize``:
 
 .. testcode:: memory-increment-copy
-    :compile: true
 
     >> var stepSize = 1
     >> func increment(_ number: inout Int) {
@@ -265,7 +261,6 @@ produces a conflict.
 For example:
 
 .. testcode:: memory-balance
-    :compile: true
 
     -> func balance(_ x: inout Int, _ y: inout Int) {
            let sum = x + y
@@ -333,7 +328,6 @@ has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
 
 .. testcode:: memory-player-share-with-self
-    :compile: true
 
     >> func balance(_ x: inout Int, _ y: inout Int) {
     >>     let sum = x + y
@@ -362,7 +356,6 @@ takes another ``Player`` instance as an in-out parameter,
 creating the possibility of overlapping accesses.
 
 .. testcode:: memory-player-share-with-self
-    :compile: true
 
     -> extension Player {
            mutating func shareHealth(with teammate: inout Player) {
@@ -396,7 +389,6 @@ if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
 there's a conflict:
 
 .. testcode:: memory-player-share-with-self
-    :compile: true
 
     -> oscar.shareHealth(with: &oscar)
     // Error: conflicting accesses to oscar
@@ -445,7 +437,6 @@ overlapping write accesses to the elements of a tuple
 produces a conflict:
 
 .. testcode:: memory-tuple
-    :compile: true
 
     >> func balance(_ x: inout Int, _ y: inout Int) {
     >>     let sum = x + y
@@ -479,7 +470,6 @@ to the properties of a structure
 that's stored in a global variable.
 
 .. testcode:: memory-share-health-global
-    :compile: true
 
     >> struct Player {
     >>     var name: String
@@ -507,7 +497,6 @@ the compiler can prove that overlapping access
 to stored properties of the structure is safe:
 
 .. testcode:: memory-share-health-local
-    :compile: true
 
     >> struct Player {
     >>     var name: String

@@ -30,7 +30,6 @@ such as items in an array, ranges of numbers, or characters in a string.
 This example uses a ``for``-``in`` loop to iterate over the items in an array:
 
 .. testcode:: forLoops
-   :compile: true
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
@@ -50,7 +49,6 @@ In the code example below, the dictionary's keys are decomposed into a constant 
 and the dictionary's values are decomposed into a constant called ``legCount``.
 
 .. testcode:: forLoops
-   :compile: true
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    -> for (animalName, legCount) in numberOfLegs {
@@ -75,7 +73,6 @@ You can also use ``for``-``in`` loops with numeric ranges.
 This example prints the first few entries in a five-times table:
 
 .. testcode:: forLoops
-   :compile: true
 
    -> for index in 1...5 {
          print("\(index) times 5 is \(index * 5)")
@@ -108,7 +105,6 @@ If you don't need each value from a sequence,
 you can ignore the values by using an underscore in place of a variable name.
 
 .. testcode:: forLoops
-   :compile: true
 
    -> let base = 3
    -> let power = 10
@@ -143,7 +139,6 @@ lower bound but not the upper bound.
 For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 
 .. testcode:: forLoops
-   :compile: true
 
    -> let minutes = 60
    >> var result = [Int]()
@@ -159,7 +154,6 @@ They could prefer one mark every ``5`` minutes instead.
 Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 
 .. testcode:: forLoops
-   :compile: true
 
    -> let minuteInterval = 5
    >> result = [Int]()
@@ -173,7 +167,6 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
 
 .. testcode:: forLoops
-   :compile: true
 
    -> let hours = 12
    -> let hourInterval = 3
@@ -253,7 +246,6 @@ Because the players start off the board, on "square zero",
 the board is initialized with 26 zero ``Int`` values, not 25.
 
 .. testcode:: snakesAndLadders1
-   :compile: true
 
    -> let finalSquare = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -264,7 +256,6 @@ Squares with a ladder base have a positive number to move you up the board,
 whereas squares with a snake head have a negative number to move you back down the board.
 
 .. testcode:: snakesAndLadders1
-   :compile: true
 
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -283,7 +274,6 @@ and numbers lower than ``10`` are padded with zeros.
 but they lead to neater code.)
 
 .. testcode:: snakesAndLadders1
-   :compile: true
 
    -> var square = 0
    -> var diceRoll = 0
@@ -398,7 +388,6 @@ The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in exactly the same way as with a ``while`` loop.
 
 .. testcode:: snakesAndLadders2
-   :compile: true
 
    -> let finalSquare = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -418,7 +407,6 @@ At the start of the game, the player is on “square zero”.
 ``board[0]`` always equals ``0`` and has no effect.
 
 .. testcode:: snakesAndLadders2
-   :compile: true
 
    -> repeat {
          // move up or down for a snake or ladder
@@ -508,7 +496,6 @@ the ``if`` statement has a single ``if`` condition.
 It executes a set of statements only if that condition is ``true``.
 
 .. testcode:: ifElse
-   :compile: true
 
    -> var temperatureInFahrenheit = 30
    -> if temperatureInFahrenheit <= 32 {
@@ -529,7 +516,6 @@ for situations when the ``if`` condition is ``false``.
 These statements are indicated by the ``else`` keyword.
 
 .. testcode:: ifElse
-   :compile: true
 
    -> temperatureInFahrenheit = 40
    -> if temperatureInFahrenheit <= 32 {
@@ -548,7 +534,6 @@ You can chain multiple ``if`` statements together
 to consider additional clauses.
 
 .. testcode:: ifElse
-   :compile: true
 
    -> temperatureInFahrenheit = 90
    -> if temperatureInFahrenheit <= 32 {
@@ -568,7 +553,6 @@ The final ``else`` clause is optional, however,
 and can be excluded if the set of conditions does not need to be complete.
 
 .. testcode:: ifElse
-   :compile: true
 
    -> temperatureInFahrenheit = 72
    -> if temperatureInFahrenheit <= 32 {
@@ -630,7 +614,6 @@ This example uses a ``switch`` statement to consider
 a single lowercase character called ``someCharacter``:
 
 .. testcode:: switch
-   :compile: true
 
    -> let someCharacter: Character = "z"
    -> switch someCharacter {
@@ -677,7 +660,6 @@ The body of each case *must* contain at least one executable statement.
 It is not valid to write the following code, because the first case is empty:
 
 .. testcode:: noFallthrough
-   :compile: true
 
    -> let anotherCharacter: Character = "a"
    -> switch anotherCharacter {
@@ -706,7 +688,6 @@ combine the two values into a compound case,
 separating the values with commas.
 
 .. testcode:: compoundCaseInsteadOfFallthrough
-   :compile: true
 
    -> let anotherCharacter: Character = "a"
    -> switch anotherCharacter {
@@ -741,7 +722,6 @@ to provide a natural-language count for numbers of any size:
    Saturn has 62 moons with confirmed orbits.
 
 .. testcode:: intervalMatching
-   :compile: true
 
    -> let approximateCount = 62
    -> let countedThings = "moons orbiting Saturn"
@@ -785,7 +765,6 @@ expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows the example.
 
 .. testcode:: tuples
-   :compile: true
 
    -> let somePoint = (1, 1)
    -> switch somePoint {
@@ -834,7 +813,6 @@ expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows:
 
 .. testcode:: valueBindings
-   :compile: true
 
    -> let anotherPoint = (2, 0)
    -> switch anotherPoint {
@@ -885,7 +863,6 @@ A ``switch`` case can use a ``where`` clause to check for additional conditions.
 The example below categorizes an (x, y) point on the following graph:
 
 .. testcode:: where
-   :compile: true
 
    -> let yetAnotherPoint = (1, -1)
    -> switch yetAnotherPoint {
@@ -929,7 +906,6 @@ The patterns can be written over multiple lines if the list is long.
 For example:
 
 .. testcode:: compound-switch-case
-   :compile: true
 
    -> let someCharacter: Character = "e"
    -> switch someCharacter {
@@ -960,7 +936,6 @@ can always access a value for the bindings
 and that the value always has the same type.
 
 .. testcode:: compound-switch-case
-    :compile: true
 
     -> let stillAnotherPoint = (9, 0)
     -> switch stillAnotherPoint {
@@ -1013,7 +988,6 @@ The following example removes all vowels and spaces from a lowercase string
 to create a cryptic puzzle phrase:
 
 .. testcode:: continue
-   :compile: true
 
    -> let puzzleInput = "great minds think alike"
    -> var puzzleOutput = ""
@@ -1084,7 +1058,6 @@ and determines whether it represents a number symbol in one of four languages.
 For brevity, multiple values are covered in a single ``switch`` case.
 
 .. testcode:: breakInASwitchStatement
-   :compile: true
 
    -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
    -> var possibleIntegerValue: Int?
@@ -1149,7 +1122,6 @@ you can opt in to this behavior on a case-by-case basis with the ``fallthrough``
 The example below uses ``fallthrough`` to create a textual description of a number.
 
 .. testcode:: fallthrough
-   :compile: true
 
    -> let integerToDescribe = 5
    -> var description = "The number \(integerToDescribe) is"
@@ -1246,7 +1218,6 @@ The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in the same way as before:
 
 .. testcode:: labels
-   :compile: true
 
    -> let finalSquare = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -1265,7 +1236,6 @@ The ``while`` loop's condition is ``while square != finalSquare``,
 to reflect that you must land exactly on square 25.
 
 .. testcode:: labels
-   :compile: true
 
    -> gameLoop: while square != finalSquare {
          diceRoll += 1
@@ -1382,7 +1352,6 @@ a ``guard`` statement always has an ``else`` clause ---
 the code inside the ``else`` clause is executed if the condition is not true.
 
 .. testcode:: guard
-    :compile: true
 
     -> func greet(person: [String: String]) {
            guard let name = person["name"] else {
@@ -1452,7 +1421,6 @@ The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 .. testcode:: availability
-   :compile: true
 
    -> if #available(iOS 10, macOS 10.12, *) {
           // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS

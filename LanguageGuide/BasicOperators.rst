@@ -59,7 +59,6 @@ The :newTerm:`assignment operator` (``a = b``)
 initializes or updates the value of ``a`` with the value of ``b``:
 
 .. testcode:: assignmentOperator
-   :compile: true
 
    -> let b = 10
    -> var a = 5
@@ -71,14 +70,12 @@ If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple constants or variables at once:
 
 .. testcode:: assignmentOperator
-   :compile: true
 
    -> let (x, y) = (1, 2)
    /> x is equal to \(x), and y is equal to \(y)
    </ x is equal to 1, and y is equal to 2
 
 .. assertion:: tuple-unwrapping-with-var
-   :compile: true
 
    >> var (x, y) = (1, 2)
 
@@ -94,7 +91,6 @@ the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
 .. testcode:: assignmentOperatorInvalid
-   :compile: true
 
    -> if x = y {
          // This is not valid, because x = y does not return a value.
@@ -127,7 +123,6 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
 * Division (``/``)
 
 .. testcode:: arithmeticOperators
-   :compile: true
 
    >> let r0 =
    -> 1 + 2       // equals 3
@@ -150,7 +145,6 @@ You can opt in to value overflow behavior by using Swift's overflow operators
 The addition operator is also supported for ``String`` concatenation:
 
 .. testcode:: arithmeticOperators
-   :compile: true
 
    >> let r4 =
    -> "hello, " + "world"  // equals "hello, world"
@@ -174,7 +168,6 @@ and returns the value that is left over
    strictly speaking, it's a remainder rather than a modulo operation.
 
 .. assertion:: percentOperatorIsRemainderNotModulo
-   :compile: true
 
    -> for i in -5...0 {
          print(i % 4)
@@ -197,7 +190,6 @@ You can fit two ``4``\ s inside ``9``, and the remainder is ``1`` (shown in oran
 In Swift, this would be written as:
 
 .. testcode:: arithmeticOperators
-   :compile: true
 
    >> let r5 =
    -> 9 % 4    // equals 1
@@ -219,7 +211,6 @@ Inserting ``9`` and ``4`` into this equation yields:
 The same method is applied when calculating the remainder for a negative value of ``a``:
 
 .. testcode:: arithmeticOperators
-   :compile: true
 
    >> let r6 =
    -> -9 % 4   // equals -1
@@ -243,7 +234,6 @@ The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
 
 .. testcode:: arithmeticOperators
-   :compile: true
 
    -> let three = 3
    -> let minusThree = -three       // minusThree equals -3
@@ -261,7 +251,6 @@ The :newTerm:`unary plus operator` (``+``) simply returns
 the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
-   :compile: true
 
    -> let minusSix = -6
    -> let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
@@ -280,7 +269,6 @@ Like C, Swift provides :newTerm:`compound assignment operators` that combine ass
 One example is the :newTerm:`addition assignment operator` (``+=``):
 
 .. testcode:: compoundAssignment
-   :compile: true
 
    -> var a = 1
    -> a += 2
@@ -322,7 +310,6 @@ Swift supports all standard C :newTerm:`comparison operators`:
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
 .. testcode:: comparisonOperators
-   :compile: true
 
    >> assert(
    -> 1 == 1   // true because 1 is equal to 1
@@ -347,7 +334,6 @@ Comparison operators are often used in conditional statements,
 such as the ``if`` statement:
 
 .. testcode:: comparisonOperators
-   :compile: true
 
    -> let name = "world"
    -> if name == "world" {
@@ -374,7 +360,6 @@ then the tuples themselves are equal.
 For example:
 
 .. testcode:: tuple-comparison-operators
-   :compile: true
 
    >> let a =
    -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
@@ -408,7 +393,6 @@ with the ``<`` operator because the ``<`` operator can't be applied to
 ``Bool`` values.
 
 .. testcode:: tuple-comparison-operators-err
-   :compile: true
 
    >> _ =
    -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
@@ -422,7 +406,6 @@ with the ``<`` operator because the ``<`` operator can't be applied to
    !!                 ^
 
 .. assertion:: tuple-comparison-operators-ok
-   :compile: true
 
    >> let x = ("blue", -1) < ("purple", 1)        // OK, evaluates to true
    >> print(x)
@@ -454,7 +437,6 @@ otherwise, it evaluates ``answer2`` and returns its value.
 The ternary conditional operator is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorOutline
-   :compile: true
 
    >> let question = true
    >> let answer1 = true
@@ -479,7 +461,6 @@ The row height should be 50 points taller than the content height
 if the row has a header, and 20 points taller if the row doesn't have a header:
 
 .. testcode:: ternaryConditionalOperatorPart1
-   :compile: true
 
    -> let contentHeight = 40
    -> let hasHeader = true
@@ -490,7 +471,6 @@ if the row has a header, and 20 points taller if the row doesn't have a header:
 The example above is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorPart2
-   :compile: true
 
    -> let contentHeight = 40
    -> let hasHeader = true
@@ -527,7 +507,6 @@ The expression ``b`` must match the type that is stored inside ``a``.
 The nil-coalescing operator is shorthand for the code below:
 
 .. testcode:: nilCoalescingOperatorOutline
-   :compile: true
 
    >> var a: Int?
    >> let b = 42
@@ -552,7 +531,6 @@ The example below uses the nil-coalescing operator to choose between
 a default color name and an optional user-defined color name:
 
 .. testcode:: nilCoalescingOperator
-   :compile: true
 
    -> let defaultColorName = "red"
    -> var userDefinedColorName: String?   // defaults to nil
@@ -576,7 +554,6 @@ and perform the nil-coalescing operator check again,
 the value wrapped inside ``userDefinedColorName`` is used instead of the default:
 
 .. testcode:: nilCoalescingOperator
-   :compile: true
 
    -> userDefinedColorName = "green"
    -> colorNameToUse = userDefinedColorName ?? defaultColorName
@@ -602,19 +579,16 @@ and includes the values ``a`` and ``b``.
 The value of ``a`` must not be greater than ``b``.
 
 .. assertion:: closedRangeStartCanBeLessThanEnd
-   :compile: true
 
    -> let range = 1...2
    >> print(type(of: range))
    << ClosedRange<Int>
 
 .. assertion:: closedRangeStartCanBeTheSameAsEnd
-   :compile: true
 
    -> let range = 1...1
 
 .. assertion:: closedRangeStartCannotBeGreaterThanEnd
-   :compile: true
 
    -> let range = 1...0
    xx assertion
@@ -624,7 +598,6 @@ in which you want all of the values to be used,
 such as with a ``for``-``in`` loop:
 
 .. testcode:: rangeOperators
-   :compile: true
 
    -> for index in 1...5 {
          print("\(index) times 5 is \(index * 5)")
@@ -653,19 +626,16 @@ If the value of ``a`` is equal to ``b``,
 then the resulting range will be empty.
 
 .. assertion:: halfOpenRangeStartCanBeLessThanEnd
-   :compile: true
 
    -> let range = 1..<2
    >> print(type(of: range))
    << Range<Int>
 
 .. assertion:: halfOpenRangeStartCanBeTheSameAsEnd
-   :compile: true
 
    -> let range = 1..<1
 
 .. assertion:: halfOpenRangeStartCannotBeGreaterThanEnd
-   :compile: true
 
    -> let range = 1..<0
    xx assertion
@@ -675,7 +645,6 @@ zero-based lists such as arrays,
 where it's useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
-   :compile: true
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
    -> let count = names.count
@@ -712,7 +681,6 @@ because the operator has a value on only one side.
 For example:
 
 .. testcode:: rangeOperators
-   :compile: true
 
    -> for name in names[2...] {
           print(name)
@@ -735,7 +703,6 @@ the final value isn't part of the range.
 For example:
 
 .. testcode:: rangeOperators
-   :compile: true
 
    -> for name in names[..<2] {
           print(name)
@@ -755,7 +722,6 @@ You can also check whether a one-sided range contains a particular value,
 as shown in the code below.
 
 .. testcode:: rangeOperators
-   :compile: true
 
    -> let range = ...5
    >> print(type(of: range))
@@ -798,7 +764,6 @@ It can be read as “not ``a``”, as seen in the following example:
 .. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
 
 .. testcode:: logicalOperators
-   :compile: true
 
    -> let allowedEntry = false
    -> if !allowedEntry {
@@ -834,7 +799,6 @@ This example considers two ``Bool`` values
 and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
-   :compile: true
 
    -> let enteredDoorCode = true
    -> let passedRetinaScan = false
@@ -870,7 +834,6 @@ the overall expression also evaluates to ``true``,
 and access is allowed:
 
 .. testcode:: logicalOperators
-   :compile: true
 
    -> let hasDoorKey = false
    -> let knowsOverridePassword = true
@@ -889,7 +852,6 @@ Combining Logical Operators
 You can combine multiple logical operators to create longer compound expressions:
 
 .. testcode:: logicalOperators
-   :compile: true
 
    -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
          print("Welcome!")
@@ -931,7 +893,6 @@ it's useful to add parentheses around the first part of the compound expression
 to make its intent explicit:
 
 .. testcode:: logicalOperators
-   :compile: true
 
    -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
          print("Welcome!")

@@ -27,7 +27,6 @@ The deinitializer does not take any parameters
 and is written without parentheses:
 
 .. testcode:: deinitializer
-   :compile: true
 
    >> class Test {
    -> deinit {
@@ -62,7 +61,6 @@ and so the ``Bank`` is implemented as a class with type properties and methods
 to store and manage its current state:
 
 .. testcode:: deinitializer
-   :compile: true
 
    -> class Bank {
          static var coinsInBank = 10_000
@@ -93,7 +91,6 @@ Each player has a certain number of coins stored in their purse at any time.
 This is represented by the player's ``coinsInPurse`` property:
 
 .. testcode:: deinitializer
-   :compile: true
 
    -> class Player {
          var coinsInPurse: Int
@@ -121,7 +118,6 @@ which is called just before a ``Player`` instance is deallocated.
 Here, the deinitializer simply returns all of the player's coins to the bank:
 
 .. testcode:: deinitializer
-   :compile: true
 
    -> var playerOne: Player? = Player(coins: 100)
    -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
@@ -139,7 +135,6 @@ when its ``coinsInPurse`` property is accessed to print its default number of co
 and whenever its ``win(coins:)`` method is called:
 
 .. testcode:: deinitializer
-   :compile: true
 
    -> playerOne!.win(coins: 2_000)
    -> print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
@@ -152,7 +147,6 @@ The player's purse now contains 2,100 coins,
 and the bank has only 7,900 coins left.
 
 .. testcode:: deinitializer
-   :compile: true
 
    -> playerOne = nil
    -> print("PlayerOne has left the game")

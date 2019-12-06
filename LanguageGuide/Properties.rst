@@ -8,7 +8,6 @@ Computed properties are provided by classes, structures, and enumerations.
 Stored properties are provided only by classes and structures.
 
 .. assertion:: enumerationsCantProvideStoredProperties
-   :compile: true
 
    -> enum E { case a, b; var x = 0 }
    !$ error: enums must not contain stored properties
@@ -25,7 +24,6 @@ Property observers can be added to stored properties you define yourself,
 and also to properties that a subclass inherits from its superclass.
 
 .. assertion:: propertyObserverIntroClaims
-   :compile: true
 
    -> class C {
          var x: Int = 0 {
@@ -73,7 +71,6 @@ which describes a range of integers
 whose range length cannot be changed after it is created:
 
 .. testcode:: storedProperties, storedProperties-err
-   :compile: true
 
    -> struct FixedLengthRange {
          var firstValue: Int
@@ -101,7 +98,6 @@ you cannot modify the instance's properties,
 even if they were declared as variable properties:
 
 .. testcode:: storedProperties-err
-   :compile: true
 
    -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
    // this range represents integer values 0, 1, 2, and 3
@@ -151,7 +147,6 @@ the ``lazy`` modifier before its declaration.
    and therefore cannot be declared as lazy.
 
 .. assertion:: lazyPropertiesMustAlwaysBeVariables
-   :compile: true
 
    -> class C { lazy let x = 0 }
    !$ error: 'lazy' cannot be used on a let
@@ -175,7 +170,6 @@ This example defines two classes called ``DataImporter`` and ``DataManager``,
 neither of which is shown in full:
 
 .. testcode:: lazyProperties
-   :compile: true
 
    -> class DataImporter {
          /*
@@ -228,7 +222,6 @@ is only created when the ``importer`` property is first accessed,
 such as when its ``filename`` property is queried:
 
 .. testcode:: lazyProperties
-   :compile: true
 
    -> print(manager.importer.filename)
    </ the DataImporter instance for the importer property has now been created
@@ -278,7 +271,6 @@ Instead, they provide a getter and an optional setter
 to retrieve and set other properties and values indirectly.
 
 .. testcode:: computedProperties
-   :compile: true
 
    -> struct Point {
          var x = 0.0, y = 0.0
@@ -357,7 +349,6 @@ Here's an alternative version of the ``Rect`` structure
 that takes advantage of this shorthand notation:
 
 .. testcode:: computedProperties
-   :compile: true
 
    -> struct AlternativeRect {
          var origin = Point()
@@ -389,7 +380,6 @@ that takes advantage of this shorthand notation
 and the shorthand notation for setters:
 
 .. testcode:: computedProperties
-   :compile: true
 
    -> struct CompactRect {
          var origin = Point()
@@ -428,7 +418,6 @@ and can be accessed through dot syntax, but cannot be set to a different value.
    as part of instance initialization.
 
 .. assertion:: readOnlyComputedPropertiesMustBeVariables
-   :compile: true
 
    -> class C {
          let x: Int { return 42 }
@@ -447,7 +436,6 @@ You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
 
 .. testcode:: computedProperties
-   :compile: true
 
    -> struct Cuboid {
          var width = 0.0, height = 0.0, depth = 0.0
@@ -488,7 +476,6 @@ Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
 .. assertion:: observersAreCalledEvenIfNewValueIsTheSameAsOldValue
-   :compile: true
 
    -> class C { var x: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } } }
    -> let c = C()
@@ -509,7 +496,6 @@ in the computed property's setter.
 Property overriding is described in :ref:`Inheritance_Overriding`.
 
 .. assertion:: lazyPropertiesCannotHaveObservers
-   :compile: true
 
    -> class C {
          lazy var x: Int = 0 {
@@ -523,7 +509,6 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
    !!-
 
 .. assertion:: storedAndComputedInheritedPropertiesCanBeObserved
-   :compile: true
 
    -> class C {
          var x = 0
@@ -565,7 +550,6 @@ If you assign a value to a property within its own ``didSet`` observer,
 the new value that you assign replaces the one that was just set.
 
 .. assertion:: assigningANewValueInADidSetReplacesTheNewValue
-   :compile: true
 
    -> class C { var x: Int = 0 { didSet { x = -273 } } }
    -> let c = C()
@@ -586,7 +570,6 @@ the new value that you assign replaces the one that was just set.
    and :ref:`Initialization_InitializerChaining`.
 
 .. assertion:: observersDuringInitialization
-   :compile: true
 
    -> class C {
          var x: Int { willSet { print("willSet x") } didSet { print("didSet x") } }
@@ -617,7 +600,6 @@ This class might be used with input data from a pedometer or other step counter
 to keep track of a person's exercise during their daily routine.
 
 .. testcode:: storedProperties
-   :compile: true
 
    -> class StepCounter {
          var totalSteps: Int = 0 {
@@ -671,7 +653,6 @@ and the default name of ``oldValue`` is used instead.
    see :ref:`Declarations_InOutParameters`.
 
 .. assertion:: observersCalledAfterInout
-   :compile: true
 
    -> var a: Int = 0 {
           willSet { print("willSet") }
@@ -714,7 +695,6 @@ the value it wraps always contains a number less than or equal to 12.
 If you ask it to store a larger number, it stores 12 instead.
 
 .. testcode:: small-number-wrapper, property-wrapper-expansion
-    :compile: true
 
     -> @propertyWrapper
     -> struct TwelveOrLess {
@@ -753,7 +733,6 @@ and the getter returns the stored value.
    but might be something you have to pay attention to.
 
 .. assertion:: stored-property-wrappedValue
-    :compile: true
 
     >> @propertyWrapper
     >> struct TwelveOrLess {
@@ -786,7 +765,6 @@ using the same (rather arbitrary) definition of "small"
 that's implemented by the ``TwelveOrLess`` property wrapper:
 
 .. testcode:: small-number-wrapper
-    :compile: true
 
     -> struct SmallRectangle {
            @TwelveOrLess var height: Int
@@ -827,7 +805,6 @@ that wraps its properties in the ``TwelveOrLess`` structure explicitly,
 instead of writing ``@TwelveOrLess`` as an attribute:
 
 .. testcode:: property-wrapper-expansion
-    :compile: true
 
     -> struct SmallRectangle {
            private var _height = TwelveOrLess()
@@ -867,7 +844,6 @@ Here's an expanded version of ``TwelveOrLess`` called ``SmallNumber``
 that defines initializers that set the wrapped and maximum value:
 
 .. testcode:: property-wrapper-init, property-wrapper-mixed-init
-    :compile: true
 
     -> @propertyWrapper
     -> struct SmallNumber {
@@ -913,7 +889,6 @@ Swift uses the ``init()`` initializer to set up the wrapper.
 For example:
 
 .. testcode:: property-wrapper-init
-    :compile: true
 
     -> struct ZeroRectangle {
            @SmallNumber var height: Int
@@ -925,7 +900,6 @@ For example:
     <- 0 0
 
 .. assertion:: property-wrapper-init
-    :compile: true
 
     -> struct ZeroRectangle_equiv {
            private var _height = SmallNumber()
@@ -959,7 +933,6 @@ Swift uses the ``init(wrappedValue:)`` initializer to set up the wrapper.
 For example:
 
 .. testcode:: property-wrapper-init
-    :compile: true
 
     -> struct UnitRectangle {
            @SmallNumber var height: Int = 1
@@ -971,7 +944,6 @@ For example:
     <- 1 1
 
 .. assertion:: property-wrapper-init
-    :compile: true
 
     -> struct UnitRectangle_equiv {
            private var _height = SmallNumber(wrappedValue: 1)
@@ -1002,7 +974,6 @@ For example, if you provide an initial value and a maximum value,
 Swift uses the ``init(wrappedValue:maximum:)`` initializer:
 
 .. testcode:: property-wrapper-init
-    :compile: true
 
     -> struct NarrowRectangle {
            @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
@@ -1019,7 +990,6 @@ Swift uses the ``init(wrappedValue:maximum:)`` initializer:
     <- 5 4
 
 .. assertion:: property-wrapper-init
-    :compile: true
 
     -> struct NarrowRectangle_equiv {
            private var _height = SmallNumber(wrappedValue: 2, maximum: 5)
@@ -1060,7 +1030,6 @@ and uses the initializer that accepts the arguments you include.
 For example:
 
 .. testcode:: property-wrapper-mixed-init
-    :compile: true
 
     -> struct MixedRectangle {
            @SmallNumber var height: Int = 1
@@ -1104,7 +1073,6 @@ to keep track of whether the property wrapper
 adjusted the new value for the property before storing that new value.
 
 .. testcode:: small-number-wrapper-projection
-    :compile: true
 
     -> @propertyWrapper
     -> struct SmallNumber {
@@ -1166,7 +1134,6 @@ The code in the following example refers to the projected value
 of the wrapper around ``height`` and ``width`` as ``$height`` and ``$width``:
 
 .. testcode:: small-number-wrapper-projection
-    :compile: true
 
     -> enum Size {
            case small, large
@@ -1237,7 +1204,6 @@ Computed variables calculate their value, rather than storing it,
 and they are written in the same way as computed properties.
 
 .. assertion:: computedVariables
-   :compile: true
 
    -> var a: Int { get { return 42 } set { print("set a to \(newValue)") } }
    -> a = 37
@@ -1246,7 +1212,6 @@ and they are written in the same way as computed properties.
    <- 42
 
 .. assertion:: observersForStoredVariables
-   :compile: true
 
    -> var a: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } }
    -> a = 42
@@ -1324,7 +1289,6 @@ to allow subclasses to override the superclass’s implementation.
 The example below shows the syntax for stored and computed type properties:
 
 .. testcode:: typePropertySyntax
-   :compile: true
 
    -> struct SomeStructure {
          static var storedTypeProperty = "Some value."
@@ -1349,7 +1313,6 @@ The example below shows the syntax for stored and computed type properties:
       }
 
 .. assertion:: classComputedTypePropertiesAreOverrideable
-   :compile: true
 
    -> class A { class var cp: String { return "A" } }
    -> class B: A { override class var cp: String { return "B" } }
@@ -1357,7 +1320,6 @@ The example below shows the syntax for stored and computed type properties:
    -> assert(B.cp == "B")
 
 .. assertion:: staticComputedTypePropertiesAreFinal
-   :compile: true
 
    -> class A { static var cp: String { return "A" } }
    -> class B: A { override static var cp: String { return "B" } }
@@ -1384,7 +1346,6 @@ However, type properties are queried and set on the *type*, not on an instance o
 For example:
 
 .. testcode:: typePropertySyntax
-   :compile: true
 
    -> print(SomeStructure.storedTypeProperty)
    <- Some value.
@@ -1414,7 +1375,6 @@ The audio channels described above are represented by
 instances of the ``AudioChannel`` structure:
 
 .. testcode:: staticProperties
-   :compile: true
 
    -> struct AudioChannel {
          static let thresholdLevel = 10
@@ -1472,7 +1432,6 @@ two new audio channels called ``leftChannel`` and ``rightChannel``,
 to represent the audio levels of a stereo sound system:
 
 .. testcode:: staticProperties
-   :compile: true
 
    -> var leftChannel = AudioChannel()
    -> var rightChannel = AudioChannel()
@@ -1482,7 +1441,6 @@ you can see that the ``maxInputLevelForAllChannels`` type property
 is updated to equal ``7``:
 
 .. testcode:: staticProperties
-   :compile: true
 
    -> leftChannel.currentLevel = 7
    -> print(leftChannel.currentLevel)
@@ -1496,7 +1454,6 @@ is capped to the maximum value of ``10``,
 and the ``maxInputLevelForAllChannels`` type property is updated to equal ``10``:
 
 .. testcode:: staticProperties
-   :compile: true
 
    -> rightChannel.currentLevel = 11
    -> print(rightChannel.currentLevel)

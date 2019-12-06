@@ -164,7 +164,6 @@ the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 
 .. testcode:: constant-decl
-    :compile: true
 
     -> let (firstNumber, secondNumber) = (10, 42)
 
@@ -174,7 +173,6 @@ and ``secondNumber`` is a named constant for the value ``42``.
 Both constants can now be used independently:
 
 .. testcode:: constant-decl
-    :compile: true
 
     -> print("The first number is \(firstNumber).")
     <- The first number is 10.
@@ -193,7 +191,6 @@ to allow or disallow overriding by subclasses.
 Type properties are discussed in :ref:`Properties_TypeProperties`.
 
 .. assertion:: class-constants-cant-have-class-or-final
-   :compile: true
 
    -> class Super { class let x = 10 }
    !$ error: class stored properties not supported in classes; did you mean 'static'?
@@ -455,7 +452,6 @@ of the existing type.
 For example:
 
 .. testcode:: typealias-with-generic
-   :compile: true
 
    -> typealias StringDictionary<Value> = Dictionary<String, Value>
    ---
@@ -468,7 +464,6 @@ parameters must match exactly the constraints on the existing type's generic par
 For example:
 
 .. testcode:: typealias-with-generic-constraint
-   :compile: true
 
    -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 
@@ -482,7 +477,6 @@ the ``Diccionario`` type alias declared here
 has the same generic parameters and constraints as ``Dictionary``.
 
 .. testcode:: typealias-using-shorthand
-   :compile: true
 
    -> typealias Diccionario = Dictionary
 
@@ -501,7 +495,6 @@ to a type that is used frequently.
 For example:
 
 .. testcode:: typealias-in-prototol
-    :compile: true
 
     -> protocol Sequence {
            associatedtype Iterator: IteratorProtocol
@@ -611,7 +604,6 @@ parameter names are also used as argument labels.
 For example:
 
 .. testcode:: default-parameter-names
-   :compile: true
 
    -> func f(x: Int, y: Int) -> Int { return x + y }
    >> let r0 =
@@ -640,7 +632,6 @@ suppresses the argument label.
 The corresponding argument must have no label in function or method calls.
 
 .. testcode:: overridden-parameter-names
-   :compile: true
 
    -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
    -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
@@ -703,7 +694,6 @@ without mutating it or to observe changes made by other code,
 use a capture list to explicitly capture the parameter immutably.
 
 .. testcode:: explicit-capture-for-inout
-    :compile: true
 
     -> func someFunction(a: inout Int) -> () -> Int {
            return { [a] in return a + 1 }
@@ -715,7 +705,6 @@ such as in multithreaded code that ensures
 all mutation has finished before the function returns.
 
 .. testcode:: cant-pass-inout-aliasing
-    :compile: true
 
     >> import Dispatch
     >> func someMutatingOperation(_ a: inout Int) {}
@@ -733,7 +722,6 @@ For more discussion and examples of in-out parameters,
 see :ref:`Functions_InOutParameters`.
 
 .. assertion:: escaping-cant-capture-inout
-    :compile: true
 
     -> func outer(a: inout Int) -> () -> Void {
            func inner() {
@@ -797,7 +785,6 @@ If the parameter is omitted when calling the function,
 the default value is used instead.
 
 .. testcode:: default-args-and-labels
-   :compile: true
 
    -> func f(x: Int = 42) -> Int { return x }
    >> let _ =
@@ -815,7 +802,6 @@ the default value is used instead.
    Tracking bug is <rdar://problem/35301593>
 
 .. assertion:: default-args-evaluated-at-call-site
-    :compile: true
 
     -> func shout() -> Int {
           print("evaluated")
@@ -854,7 +840,6 @@ can be overridden by a subclass implementation;
 a class type method marked with ``class final`` or ``static`` can't be overridden.
 
 .. assertion:: overriding-class-methods-err
-   :compile: true
 
    -> class S { class final func f() -> Int { return 12 } }
    -> class SS: S { override class func f() -> Int { return 120 } }
@@ -874,7 +859,6 @@ a class type method marked with ``class final`` or ``static`` can't be overridde
    !! ^
 
 .. assertion:: overriding-class-methods
-   :compile: true
 
    -> class S3 { class func f() -> Int { return 12 } }
    -> class SS3: S3 { override class func f() -> Int { return 120 } }
@@ -926,7 +910,6 @@ Rethrowing functions and methods
 must have at least one throwing function parameter.
 
 .. testcode:: rethrows
-   :compile: true
 
    -> func someFunction(callback: () throws -> Void) rethrows {
           try callback()
@@ -945,7 +928,6 @@ because the ``catch`` clause would handle
 the error thrown by ``alwaysThrows()``.
 
 .. testcode:: double-negative-rethrows
-   :compile: true
 
    >> enum SomeError: Error { case error }
    >> enum AnotherError: Error { case error }
@@ -965,7 +947,6 @@ the error thrown by ``alwaysThrows()``.
    !!               ^
 
 .. assertion:: throwing-in-rethrowing-function
-   :compile: true
 
    -> enum SomeError: Error { case c, d }
    -> func f1(callback: () throws -> Void) rethrows {
@@ -1107,7 +1088,6 @@ And just like functions,
 you can get a reference to an enumeration case and apply it later in your code.
 
 .. testcode:: enum-case-as-function
-    :compile: true
 
     -> enum Number {
           case integer(Int)
@@ -1150,7 +1130,6 @@ An indirect case must have an associated value.
    For example, does "indirect enum { X(Int) } mark X as indirect?
 
 .. testcode:: indirect-enum
-   :compile: true
 
    -> enum Tree<T> {
          case empty
@@ -1236,7 +1215,6 @@ Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that is automatically incremented from the raw value of the previous case.
 
 .. testcode:: raw-value-enum
-    :compile: true
 
     -> enum ExampleEnum: Int {
           case a, b, c = 5, d
@@ -1252,7 +1230,6 @@ and you don't assign values to the cases explicitly,
 each unassigned case is implicitly assigned a string with the same text as the name of that case.
 
 .. testcode:: raw-value-enum-implicit-string-values
-    :compile: true
 
     -> enum GamePlayMode: String {
           case cooperative, individual, competitive
@@ -1466,7 +1443,6 @@ Overridden properties, methods, subscripts,
 and designated initializers must be marked with the ``override`` declaration modifier.
 
 .. assertion:: designatedInitializersRequireOverride
-    :compile: true
 
     -> class C { init() {} }
     -> class D: C { override init() { super.init() } }
@@ -1586,7 +1562,6 @@ list after the colon.
 For example, the following protocol can be adopted only by class types:
 
 .. testcode:: protocol-declaration
-    :compile: true
 
     -> protocol SomeProtocol: AnyObject {
            /* Protocol members go here */
@@ -1675,7 +1650,6 @@ Extensions that provide a default implementation for a type property requirement
 use the ``static`` keyword.
 
 .. assertion:: protocols-with-type-property-requirements
-   :compile: true
 
    -> protocol P { static var x: Int { get } }
    -> protocol P2 { class var x: Int { get } }
@@ -1691,7 +1665,6 @@ use the ``static`` keyword.
    !!               ~~~~~     ^
 
 .. assertion:: protocol-type-property-default-implementation
-   :compile: true
 
    -> protocol P { static var x: Int { get } }
    -> extension P { static var x: Int { return 100 } }
@@ -1836,7 +1809,6 @@ without redeclaring the associated types.
 For example, the declarations of ``SubProtocol`` below are equivalent:
 
 .. testcode:: protocol-associatedtype
-    :compile: true
 
     -> protocol SomeProtocol {
            associatedtype SomeType
@@ -2031,7 +2003,6 @@ append an exclamation mark instead (``init!``). The example below shows an ``ini
 failable initializer that produces an optional instance of a structure.
 
 .. testcode:: failable
-    :compile: true
 
     -> struct SomeStruct {
            let property: String
@@ -2049,7 +2020,6 @@ You call an ``init?`` failable initializer in the same way that you call a nonfa
 except that you must deal with the optionality of the result.
 
 .. testcode:: failable
-    :compile: true
 
     -> if let actualInstance = SomeStruct(input: "Hello") {
            // do something with the instance of 'SomeStruct'
@@ -2222,7 +2192,6 @@ and a generic type that conditionally conforms to both protocols.
    seem to use the description property at all.
 
 .. testcode:: conditional-conformance
-   :compile: true
 
    -> protocol Loggable {
           func log()
@@ -2273,7 +2242,6 @@ When the ``log()`` method is called on ``oneAndTwo`` directly,
 the specialized version containing the title string is used.
 
 .. testcode:: conditional-conformance
-   :compile: true
 
    -> let oneAndTwo = Pair(first: "one", second: "two")
    -> oneAndTwo.log()
@@ -2288,7 +2256,6 @@ For this reason,
 the default implementation provided by the ``Loggable`` protocol is used instead.
 
 .. testcode:: conditional-conformance
-   :compile: true
 
    -> func doSomething<T: Loggable>(with x: T) {
          x.log()
@@ -2330,7 +2297,6 @@ one for for arrays with ``Int`` elements,
 and one for arrays with ``String`` elements.
 
 .. testcode:: multiple-conformances
-   :compile: true
 
    -> protocol Serializable {
          func serialize() -> Any
@@ -2361,7 +2327,6 @@ create a new protocol that each type can conform to
 and use that protocol as the requirement when declaring conditional conformance.
 
 .. testcode:: multiple-conformances-success
-   :compile: true
 
    >> protocol Serializable { }
    -> protocol SerializableInArray { }
@@ -2396,7 +2361,6 @@ to avoid a conflict when declaring its conditional conformance
 to both ``TitledLoggable`` and the new ``MarkedLoggable`` protocol.
 
 .. testcode:: conditional-conformance
-   :compile: true
 
    -> protocol MarkedLoggable: Loggable {
          func markAndLog()
@@ -2423,7 +2387,6 @@ the other ``Array`` extensions would implicitly create these declarations,
 resulting in an error:
 
 .. testcode:: conditional-conformance-implicit-overlap
-   :compile: true
 
    >> protocol Loggable { }
    >> protocol MarkedLoggable : Loggable { }
@@ -2439,7 +2402,6 @@ resulting in an error:
    !! ^
 
 .. assertion:: types-cant-have-multiple-implict-conformances
-   :compile: true
 
    >> protocol Loggable { }
       protocol TitledLoggable: Loggable { }
@@ -2468,7 +2430,6 @@ resulting in an error:
    !! ^
 
 .. assertion:: extension-can-have-where-clause
-   :compile: true
 
    >> extension Array where Element: Equatable {
           func f(x: Array) -> Int { return 7 }
@@ -2479,7 +2440,6 @@ resulting in an error:
    >> assert(r0 == 7)
 
 .. assertion:: extensions-can-have-where-clause-and-inheritance-together
-   :compile: true
 
    >> protocol P { func foo() -> Int }
    >> extension Array: P where Element: Equatable {
@@ -2578,7 +2538,6 @@ the ``static`` keyword has the same effect as marking the declaration
 with both the ``class`` and ``final`` declaration modifiers.
 
 .. assertion:: cant-override-static-subscript-in-subclass
-   :compile: true
 
    -> class Super { static subscript(i: Int) -> Int { return 10 } }
    -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }

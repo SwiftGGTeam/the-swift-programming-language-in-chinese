@@ -47,7 +47,6 @@ surrounded by double quotation marks (``"``).
 Use a string literal as an initial value for a constant or variable:
 
 .. testcode:: stringLiterals
-   :compile: true
 
    -> let someString = "Some string literal value"
 
@@ -68,7 +67,6 @@ surrounded by three double quotation marks:
    which has been public domain as of 1907.
 
 .. testcode:: multiline-string-literals
-   :compile: true
 
    -> let quotation = """
       The White Rabbit put on his spectacles.  "Where shall I begin,
@@ -89,7 +87,6 @@ which means that neither of the strings below
 start or end with a line break:
 
 .. testcode:: multiline-string-literals
-   :compile: true
 
    -> let singleLineString = "These are the same."
    -> let multilineString = """
@@ -107,7 +104,6 @@ but you don't want the line breaks to be part of the string's value,
 write a backslash (``\``) at the end of those lines:
 
 .. testcode:: multiline-string-literals
-   :compile: true
 
    -> let softWrappedQuotation = """
       The White Rabbit put on his spectacles.  "Where shall I begin, \
@@ -125,7 +121,6 @@ write a blank line as the first or last line.
 For example:
 
 .. testcode:: multiline-string-literals
-   :compile: true
 
    -> let lineBreaks = """
 
@@ -152,7 +147,6 @@ that whitespace *is* included.
    <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
 
 .. assertion:: multiline-string-literal-whitespace
-   :compile: true
 
    -> let linesWithIndentation = """
           This line doesn't begin with whitespace.
@@ -182,7 +176,6 @@ String literals can include the following special characters:
   (Unicode is discussed in :ref:`StringsAndCharacters_Unicode` below)
 
 .. assertion:: stringLiteralUnicodeScalar
-   :compile: true
 
    >> _ = "\u{0}"
    >> _ = "\u{00000000}"
@@ -202,7 +195,6 @@ The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
 demonstrate the Unicode scalar format:
 
 .. testcode:: specialCharacters
-   :compile: true
 
    -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
    >> print(wiseWords)
@@ -222,7 +214,6 @@ escape at least one of the quotation marks.
 For example:
 
 .. testcode:: multiline-string-literals
-   :compile: true
 
    -> let threeDoubleQuotationMarks = """
       Escaping the first quotation mark \"""
@@ -259,7 +250,6 @@ You can use extended delimiters to include the text ``"""`` in a multiline strin
 overriding the default behavior that ends the literal. For example:
 
 .. testcode:: extended-string-delimiters
-   :compile: true
 
    -> let threeMoreDoubleQuotationMarks = #"""
       Here are three more double quotes: """
@@ -278,7 +268,6 @@ either assign an empty string literal to a variable,
 or initialize a new ``String`` instance with initializer syntax:
 
 .. testcode:: emptyStrings
-   :compile: true
 
    -> var emptyString = ""               // empty string literal
    -> var anotherEmptyString = String()  // initializer syntax
@@ -289,7 +278,6 @@ Find out whether a ``String`` value is empty
 by checking its Boolean ``isEmpty`` property:
 
 .. testcode:: emptyStrings
-   :compile: true
 
    -> if emptyString.isEmpty {
          print("Nothing to see here")
@@ -308,7 +296,6 @@ by assigning it to a variable (in which case it can be modified),
 or to a constant (in which case it can't be modified):
 
 .. testcode:: stringMutability
-   :compile: true
 
    -> var variableString = "Horse"
    -> variableString += " and carriage"
@@ -326,7 +313,6 @@ or to a constant (in which case it can't be modified):
    // this reports a compile-time error - a constant string cannot be modified
 
 .. assertion:: stringMutability-ok
-   :compile: true
 
    -> var variableString = "Horse"
    -> variableString += " and carriage"
@@ -373,7 +359,6 @@ You can access the individual ``Character`` values for a ``String``
 by iterating over the string with a ``for``-``in`` loop:
 
 .. testcode:: characters
-   :compile: true
 
    -> for character in "Dog!🐶" {
          print(character)
@@ -390,7 +375,6 @@ Alternatively, you can create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
-   :compile: true
 
    -> let exclamationMark: Character = "!"
 
@@ -398,7 +382,6 @@ from a single-character string literal by providing a ``Character`` type annotat
 as an argument to its initializer:
 
 .. testcode:: characters
-   :compile: true
 
    -> let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
    -> let catString = String(catCharacters)
@@ -414,7 +397,6 @@ Concatenating Strings and Characters
 with the addition operator (``+``) to create a new ``String`` value:
 
 .. testcode:: concatenation
-   :compile: true
 
    -> let string1 = "hello"
    -> let string2 = " there"
@@ -426,7 +408,6 @@ You can also append a ``String`` value to an existing ``String`` variable
 with the addition assignment operator (``+=``):
 
 .. testcode:: concatenation
-   :compile: true
 
    -> var instruction = "look over"
    -> instruction += string2
@@ -437,7 +418,6 @@ You can append a ``Character`` value to a ``String`` variable
 with the ``String`` type's ``append()`` method:
 
 .. testcode:: concatenation
-   :compile: true
 
    -> let exclamationMark: Character = "!"
    -> welcome.append(exclamationMark)
@@ -456,7 +436,6 @@ including the last line.
 For example:
 
 .. testcode:: concatenate-multiline-string-literals
-   :compile: true
 
    -> let badStart = """
           one
@@ -508,7 +487,6 @@ Each item that you insert into the string literal is wrapped in
 a pair of parentheses, prefixed by a backslash (``\``):
 
 .. testcode:: stringInterpolation
-   :compile: true
 
    -> let multiplier = 3
    -> let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
@@ -531,7 +509,6 @@ characters that would otherwise be treated as a string interpolation.
 For example: 
 
 .. testcode:: stringInterpolation
-   :compile: true
 
    -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
    <- Write an interpolated string in Swift using \(multiplier).
@@ -543,7 +520,6 @@ to the number of number signs at the beginning and end of the string.
 For example:
 
 .. testcode:: stringInterpolation
-   :compile: true
 
    -> print(#"6 times 7 is \#(6 * 7)."#)
    <- 6 times 7 is 42.
@@ -609,7 +585,6 @@ In the first case, the cluster contains a single scalar;
 in the second case, it's a cluster of two scalars:
 
 .. testcode:: graphemeClusters1
-   :compile: true
 
    -> let eAcute: Character = "\u{E9}"                         // é
    >> assert(eAcute == "é")
@@ -626,7 +601,6 @@ can be represented as either a precomposed or decomposed sequence.
 Both of these representations qualify as a single ``Character`` value in Swift:
 
 .. testcode:: graphemeClusters2
-   :compile: true
 
    -> let precomposed: Character = "\u{D55C}"                  // 한
    >> assert(precomposed == "한")
@@ -640,7 +614,6 @@ scalars for enclosing marks (such as ``COMBINING ENCLOSING CIRCLE``, or ``U+20DD
 to enclose other Unicode scalars as part of a single ``Character`` value:
 
 .. testcode:: graphemeClusters3
-   :compile: true
 
    -> let enclosedEAcute: Character = "\u{E9}\u{20DD}"
    >> assert(enclosedEAcute == "é⃝")
@@ -653,7 +626,6 @@ such as this combination of ``REGIONAL INDICATOR SYMBOL LETTER U`` (``U+1F1FA``)
 and ``REGIONAL INDICATOR SYMBOL LETTER S`` (``U+1F1F8``):
 
 .. testcode:: graphemeClusters4
-   :compile: true
 
    -> let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
    >> assert(regionalIndicatorForUS == "🇺🇸")
@@ -669,7 +641,6 @@ To retrieve a count of the ``Character`` values in a string,
 use the ``count`` property of the string:
 
 .. testcode:: characterCount
-   :compile: true
 
    -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
    -> print("unusualMenagerie has \(unusualMenagerie.count) characters")
@@ -685,7 +656,6 @@ the resulting string will still have a character count of ``4``,
 with a fourth character of ``é``, not ``e``:
 
 .. testcode:: characterCount
-   :compile: true
 
    -> var word = "cafe"
    -> print("the number of characters in \(word) is \(word.count)")
@@ -759,7 +729,6 @@ You can use subscript syntax to access
 the ``Character`` at a particular ``String`` index.
 
 .. testcode:: stringIndex
-   :compile: true
 
    -> let greeting = "Guten Tag!"
    >> print(
@@ -797,7 +766,6 @@ will trigger a runtime error.
    trace, which makes it a poor candidate for being tested.
 
 .. assertion:: emptyStringIndices
-   :compile: true
 
    -> let emptyString = ""
    -> assert(
@@ -808,7 +776,6 @@ Use the ``indices`` property to access all of the
 indices of individual characters in a string.
 
 .. testcode:: stringIndex
-   :compile: true
 
    -> for index in greeting.indices {
          print("\(greeting[index]) ", terminator: "")
@@ -838,7 +805,6 @@ and to insert the contents of another string at a specified index,
 use the ``insert(contentsOf:at:)`` method.
 
 .. testcode:: stringInsertionAndRemoval
-   :compile: true
 
    -> var welcome = "hello"
    -> welcome.insert("!", at: welcome.endIndex)
@@ -855,7 +821,6 @@ and to remove a substring at a specified range,
 use the ``removeSubrange(_:)`` method:
 
 .. testcode:: stringInsertionAndRemoval
-   :compile: true
 
    -> welcome.remove(at: welcome.index(before: welcome.endIndex))
    /> welcome now equals \"\(welcome)\"
@@ -901,7 +866,6 @@ For example:
    from the (aside) above about String.
 
 .. testcode:: string-and-substring
-   :compile: true
 
    -> let greeting = "Hello, world!"
    -> let index = greeting.firstIndex(of: ",") ?? greeting.endIndex
@@ -975,7 +939,6 @@ and the “not equal to” operator (``!=``),
 as described in :ref:`BasicOperators_ComparisonOperators`:
 
 .. testcode:: stringEquality
-   :compile: true
 
    -> let quotation = "We're a lot alike, you and I."
    -> let sameQuotation = "We're a lot alike, you and I."
@@ -991,7 +954,6 @@ the same linguistic meaning and appearance,
 even if they're composed from different Unicode scalars behind the scenes.
 
 .. assertion:: characterComparisonUsesCanonicalEquivalence
-   :compile: true
 
    -> let eAcute: Character = "\u{E9}"
    -> let combinedEAcute: Character = "\u{65}\u{301}"
@@ -1003,7 +965,6 @@ even if they're composed from different Unicode scalars behind the scenes.
    <- equivalent, as expected
 
 .. assertion:: stringComparisonUsesCanonicalEquivalence
-   :compile: true
 
    -> let cafe1 = "caf\u{E9}"
    -> let cafe2 = "caf\u{65}\u{301}"
@@ -1021,7 +982,6 @@ Both of these extended grapheme clusters are valid ways to represent the charact
 and so they're considered to be canonically equivalent:
 
 .. testcode:: stringEquality
-   :compile: true
 
    // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
    -> let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
@@ -1042,7 +1002,6 @@ The characters are visually similar,
 but don't have the same linguistic meaning:
 
 .. testcode:: stringEquality
-   :compile: true
 
    -> let latinCapitalLetterA: Character = "\u{41}"
    >> assert(latinCapitalLetterA == "A")
@@ -1073,7 +1032,6 @@ call the string's ``hasPrefix(_:)`` and ``hasSuffix(_:)`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 
 .. assertion:: prefixComparisonUsesCharactersNotScalars
-   :compile: true
 
    -> let ecole = "\u{E9}cole"
    -> if ecole.hasPrefix("\u{E9}") {
@@ -1090,7 +1048,6 @@ both of which take a single argument of type ``String`` and return a Boolean val
    <- Has U+0065 U+0301 prefix, as expected.
 
 .. assertion:: suffixComparisonUsesCharactersNotScalars
-   :compile: true
 
    -> let cafe = "caf\u{E9}"
    -> if cafe.hasSuffix("\u{E9}") {
@@ -1110,7 +1067,6 @@ The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
 
 .. testcode:: prefixesAndSuffixes
-   :compile: true
 
    -> let romeoAndJuliet = [
          "Act 1 Scene 1: Verona, A public place",
@@ -1130,7 +1086,6 @@ You can use the ``hasPrefix(_:)`` method with the ``romeoAndJuliet`` array
 to count the number of scenes in Act 1 of the play:
 
 .. testcode:: prefixesAndSuffixes
-   :compile: true
 
    -> var act1SceneCount = 0
    -> for scene in romeoAndJuliet {
@@ -1145,7 +1100,6 @@ Similarly, use the ``hasSuffix(_:)`` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. testcode:: prefixesAndSuffixes
-   :compile: true
 
    -> var mansionCount = 0
    -> var cellCount = 0
@@ -1199,7 +1153,6 @@ which is made up of the characters ``D``, ``o``, ``g``,
 and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
 
 .. testcode:: unicodeRepresentations
-   :compile: true
 
    -> let dogString = "Dog‼🐶"
 
@@ -1218,7 +1171,6 @@ one for each byte in the string's UTF-8 representation:
    :align: center
 
 .. testcode:: unicodeRepresentations
-   :compile: true
 
    -> for codeUnit in dogString.utf8 {
          print("\(codeUnit) ", terminator: "")
@@ -1259,7 +1211,6 @@ one for each 16-bit code unit in the string's UTF-16 representation:
    :align: center
 
 .. testcode:: unicodeRepresentations
-   :compile: true
 
    -> for codeUnit in dogString.utf16 {
          print("\(codeUnit) ", terminator: "")
@@ -1304,7 +1255,6 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
    :align: center
 
 .. testcode:: unicodeRepresentations
-   :compile: true
 
    -> for scalar in dogString.unicodeScalars {
          print("\(scalar.value) ", terminator: "")
@@ -1333,7 +1283,6 @@ each ``UnicodeScalar`` value can also be used to construct a new ``String`` valu
 such as with string interpolation:
 
 .. testcode:: unicodeRepresentations
-   :compile: true
 
    -> for scalar in dogString.unicodeScalars {
          print("\(scalar) ")

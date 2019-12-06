@@ -73,7 +73,6 @@ and classes with the ``class`` keyword.
 Both place their entire definition within a pair of braces:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> struct SomeStructure {
          // structure definition goes here
@@ -97,7 +96,6 @@ Both place their entire definition within a pair of braces:
 Here's an example of a structure definition and a class definition:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> struct Resolution {
          var width = 0
@@ -144,7 +142,6 @@ To do that, you need to create an instance of the structure or class.
 The syntax for creating instances is very similar for both structures and classes:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> let someResolution = Resolution()
    -> let someVideoMode = VideoMode()
@@ -170,7 +167,6 @@ In dot syntax, you write the property name immediately after the instance name,
 separated by a period (``.``), without any spaces:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> print("The width of someResolution is \(someResolution.width)")
    <- The width of someResolution is 0
@@ -183,7 +179,6 @@ You can drill down into subproperties,
 such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> print("The width of someVideoMode is \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is 0
@@ -191,7 +186,6 @@ such as the ``width`` property in the ``resolution`` property of a ``VideoMode``
 You can also use dot syntax to assign a new value to a variable property:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> someVideoMode.resolution.width = 1280
    -> print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
@@ -208,7 +202,6 @@ Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> let vga = Resolution(width: 640, height: 480)
 
@@ -216,7 +209,6 @@ Unlike structures, class instances don't receive a default memberwise initialize
 Initializers are described in more detail in :doc:`Initialization`.
 
 .. assertion:: classesDontHaveADefaultMemberwiseInitializer
-   :compile: true
 
    -> class C { var x = 0, y = 0 }
    -> let c = C(x: 1, y: 1)
@@ -260,7 +252,6 @@ are always copied when they are passed around in your code.
 Consider this example, which uses the ``Resolution`` structure from the previous example:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> let hd = Resolution(width: 1920, height: 1080)
    -> var cinema = hd
@@ -283,7 +274,6 @@ the width of the slightly wider 2K standard used for digital cinema projection
 (2048 pixels wide and 1080 pixels high):
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> cinema.width = 2048
 
@@ -291,7 +281,6 @@ Checking the ``width`` property of ``cinema``
 shows that it has indeed changed to be ``2048``:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> print("cinema is now \(cinema.width) pixels wide")
    <- cinema is now 2048 pixels wide
@@ -300,7 +289,6 @@ However, the ``width`` property of the original ``hd`` instance
 still has the old value of ``1920``:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> print("hd is still \(hd.width) pixels wide")
    <- hd is still 1920 pixels wide
@@ -320,7 +308,6 @@ as shown in the figure below:
 The same behavior applies to enumerations:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> enum CompassPoint {
          case north, south, east, west
@@ -357,7 +344,6 @@ Rather than a copy, a reference to the same existing instance is used.
 Here's an example, using the ``VideoMode`` class defined above:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> let tenEighty = VideoMode()
    -> tenEighty.resolution = hd
@@ -376,7 +362,6 @@ Next, ``tenEighty`` is assigned to a new constant, called ``alsoTenEighty``,
 and the frame rate of ``alsoTenEighty`` is modified:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> let alsoTenEighty = tenEighty
    -> alsoTenEighty.frameRate = 30.0
@@ -394,7 +379,6 @@ shows that it correctly reports the new frame rate of ``30.0``
 from the underlying ``VideoMode`` instance:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
    <- The frameRate property of tenEighty is now 30.0
@@ -438,7 +422,6 @@ because they are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
 .. assertion:: structuresDontSupportTheIdentityOperators
-   :compile: true
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
@@ -454,7 +437,6 @@ or passed to a function.)
    !! as AnyObject
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
-   :compile: true
 
    -> enum E { case a, b }
    -> let e1 = E.a
@@ -479,7 +461,6 @@ To enable this, Swift provides two identity operators:
 Use these operators to check whether two constants or variables refer to the same single instance:
 
 .. testcode:: ClassesAndStructures
-   :compile: true
 
    -> if tenEighty === alsoTenEighty {
          print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
@@ -500,7 +481,6 @@ The process of defining your own implementations of the ``==`` and ``!=`` operat
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
 .. assertion:: classesDontGetEqualityByDefault
-   :compile: true
 
    -> class C { var x = 0, y = 0 }
    -> let c1 = C()
@@ -514,7 +494,6 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !!       ^
 
 .. assertion:: structuresDontGetEqualityByDefault
-   :compile: true
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()

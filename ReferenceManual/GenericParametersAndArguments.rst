@@ -50,7 +50,6 @@ indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
 .. testcode:: generic-params
-    :compile: true
 
     -> func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
           if x < y {
@@ -66,7 +65,6 @@ The type arguments are instead inferred from the type of the arguments passed
 to the function or initializer.
 
 .. testcode:: generic-params
-    :compile: true
 
     >> let r0 =
     -> simpleMax(17, 42) // T is inferred to be Int
@@ -194,7 +192,6 @@ constraints and requirements). For example, you can replace the type parameter
 to form an array whose elements are themselves arrays of integers.
 
 .. testcode:: array-of-arrays
-    :compile: true
 
     -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 

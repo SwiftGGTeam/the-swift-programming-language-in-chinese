@@ -27,7 +27,6 @@ Here's a standard, nongeneric function called ``swapTwoInts(_:_:)``,
 which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
-   :compile: true
 
    -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
          let temporaryA = a
@@ -43,7 +42,6 @@ and the original value of ``a`` into ``b``.
 You can call this function to swap the values in two ``Int`` variables:
 
 .. testcode:: whyGenerics
-   :compile: true
 
    -> var someInt = 3
    -> var anotherInt = 107
@@ -58,7 +56,6 @@ you have to write more functions,
 such as the ``swapTwoStrings(_:_:)`` and ``swapTwoDoubles(_:_:)`` functions shown below:
 
 .. testcode:: whyGenerics
-   :compile: true
 
    -> func swapTwoStrings(_ a: inout String, _ b: inout String) {
          let temporaryA = a
@@ -104,7 +101,6 @@ Here's a generic version of the ``swapTwoInts(_:_:)`` function from above,
 called ``swapTwoValues(_:_:)``:
 
 .. testcode:: genericFunctions
-   :compile: true
 
    -> func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
          let temporaryA = a
@@ -124,7 +120,6 @@ is slightly different from ``swapTwoInts(_:_:)``.
 Here's how the first lines compare:
 
 .. testcode:: genericFunctionsComparison
-   :compile: true
 
    -> func swapTwoInts(_ a: inout Int, _ b: inout Int)
    >> {
@@ -164,7 +159,6 @@ the type to use for ``T`` is inferred from the types of values passed to the fun
 In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respectively:
 
 .. testcode:: genericFunctions
-   :compile: true
 
    -> var someInt = 3
    -> var anotherInt = 107
@@ -278,7 +272,6 @@ Here's how to write a nongeneric version of a stack,
 in this case for a stack of ``Int`` values:
 
 .. testcode:: genericStack
-   :compile: true
 
    -> struct IntStack {
          var items = [Int]()
@@ -310,7 +303,6 @@ that can manage a stack of *any* type of value.
 Here's a generic version of the same code:
 
 .. testcode:: genericStack
-   :compile: true
 
    -> struct Stack<Element> {
          var items = [Element]()
@@ -352,7 +344,6 @@ For example, to create a new stack of strings,
 you write ``Stack<String>()``:
 
 .. testcode:: genericStack
-   :compile: true
 
    -> var stackOfStrings = Stack<String>()
    -> stackOfStrings.push("uno")
@@ -370,7 +361,6 @@ Here's how ``stackOfStrings`` looks after pushing these four values on to the st
 Popping a value from the stack removes and returns the top value, ``"cuatro"``:
 
 .. testcode:: genericStack
-   :compile: true
 
    -> let fromTheTop = stackOfStrings.pop()
    /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stackOfStrings.items.count) strings
@@ -398,7 +388,6 @@ a read-only computed property called ``topItem``,
 which returns the top item on the stack without popping it from the stack:
 
 .. testcode:: genericStack
-   :compile: true
 
    -> extension Stack {
          var topItem: Element? {
@@ -419,7 +408,6 @@ The ``topItem`` computed property can now be used with any ``Stack`` instance
 to access and query its top item without removing it.
 
 .. testcode:: genericStack
-   :compile: true
 
    -> if let topItem = stackOfStrings.topItem {
          print("The top item on the stack is \(topItem).")
@@ -485,7 +473,6 @@ The basic syntax for type constraints on a generic function is shown below
 (although the syntax is the same for generic types):
 
 .. testcode:: typeConstraints
-   :compile: true
 
    >> class SomeClass {}
    >> protocol SomeProtocol {}
@@ -512,7 +499,6 @@ which will be the index of the first matching string in the array if it's found,
 or ``nil`` if the string can't be found:
 
 .. testcode:: typeConstraints
-   :compile: true
 
    -> func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
          for (index, value) in array.enumerated() {
@@ -526,7 +512,6 @@ or ``nil`` if the string can't be found:
 The ``findIndex(ofString:in:)`` function can be used to find a string value in an array of strings:
 
 .. testcode:: typeConstraints
-   :compile: true
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
    -> if let foundIndex = findIndex(ofString: "llama", in: strings) {
@@ -547,7 +532,6 @@ Be warned, though --- this function doesn't compile,
 for reasons explained after the example:
 
 .. testcode:: typeConstraints-err
-   :compile: true
 
    -> func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
          for (index, value) in array.enumerated() {
@@ -593,7 +577,6 @@ To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
-   :compile: true
 
    -> func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
          for (index, value) in array.enumerated() {
@@ -611,7 +594,6 @@ The ``findIndex(of:in:)`` function now compiles successfully
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
-   :compile: true
 
    -> let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
    /> doubleIndex is an optional Int with no value, because 9.3 isn't in the array
@@ -647,7 +629,6 @@ Here's an example of a protocol called ``Container``,
 which declares an associated type called ``Item``:
 
 .. testcode:: associatedTypes, associatedTypes-err
-   :compile: true
 
    -> protocol Container {
          associatedtype Item
@@ -703,7 +684,6 @@ from :ref:`Generics_GenericTypes` above,
 adapted to conform to the ``Container`` protocol:
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> struct IntStack: Container {
          // original IntStack implementation
@@ -749,7 +729,6 @@ everything still works, because it's clear what type should be used for ``Item``
 You can also make the generic ``Stack`` type conform to the ``Container`` protocol:
 
 .. testcode:: associatedTypes, associatedTypes-err
-   :compile: true
 
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
@@ -796,7 +775,6 @@ You do this with an empty extension,
 as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> extension Array: Container {}
 
@@ -817,7 +795,6 @@ the following code defines a version of ``Container``
 that requires the items in the container to be equatable.
 
 .. testcode:: associatedTypes-equatable
-   :compile: true
 
    -> protocol Container {
          associatedtype Item: Equatable
@@ -843,7 +820,6 @@ returns a given number of elements from the end of the container,
 storing them in an instance of the ``Suffix`` type.
 
 .. testcode:: associatedTypes
-    :compile: true
 
     -> protocol SuffixableContainer: Container {
            associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
@@ -866,7 +842,6 @@ from :ref:`Generics_GenericTypes` above
 that adds conformance to the ``SuffixableContainer`` protocol:
 
 .. testcode:: associatedTypes
-    :compile: true
 
     -> extension Stack: SuffixableContainer {
            func suffix(_ size: Int) -> Stack {
@@ -900,7 +875,6 @@ that adds ``SuffixableContainer`` conformance,
 using ``Stack<Int>`` as its suffix type instead of ``IntStack``:
 
 .. testcode:: associatedTypes
-    :compile: true
 
     -> extension IntStack: SuffixableContainer {
            func suffix(_ size: Int) -> Stack<Int> {
@@ -952,7 +926,6 @@ This requirement is expressed through a combination of type constraints
 and a generic ``where`` clause:
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> func allItemsMatch<C1: Container, C2: Container>
             (_ someContainer: C1, _ anotherContainer: C2) -> Bool
@@ -1026,7 +999,6 @@ the two containers match, and the function returns ``true``.
 Here's how the ``allItemsMatch(_:_:)`` function looks in action:
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> var stackOfStrings = Stack<String>()
    -> stackOfStrings.push("uno")
@@ -1065,7 +1037,6 @@ extends the generic ``Stack`` structure from the previous examples
 to add an ``isTop(_:)`` method.
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> extension Stack where Element: Equatable {
           func isTop(_ item: Element) -> Bool {
@@ -1094,7 +1065,6 @@ only when the items in the stack are equatable.
 Here's how the ``isTop(_:)`` method looks in action:
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> if stackOfStrings.isTop("tres") {
          print("Top element is tres.")
@@ -1108,7 +1078,6 @@ on a stack whose elements aren't equatable,
 you'll get a compile-time error.
 
 .. testcode:: associatedTypes-err
-   :compile: true
 
    -> struct NotEquatable { }
    -> var notEquatableStack = Stack<NotEquatable>()
@@ -1124,7 +1093,6 @@ The example below extends the ``Container`` protocol from the previous examples
 to add a ``startsWith(_:)`` method.
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> extension Container where Item: Equatable {
          func startsWith(_ item: Item) -> Bool {
@@ -1146,7 +1114,6 @@ including the stacks and arrays used above,
 as long as the container's items are equatable.
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> if [9, 9, 9].startsWith(42) {
          print("Starts with 42.")
@@ -1162,7 +1129,6 @@ to be a specific type.
 For example:
 
 .. testcode:: associatedTypes
-   :compile: true
 
    -> extension Container where Item == Double {
           func average() -> Double {
@@ -1204,7 +1170,6 @@ like what the ``Sequence`` protocol uses in the standard library.
 Here's how you write that:
 
 .. testcode:: associatedTypes-iterator
-   :compile: true
 
    -> protocol Container {
          associatedtype Item
@@ -1261,7 +1226,6 @@ declares a ``ComparableContainer`` protocol
 that requires ``Item`` to conform to ``Comparable``:
 
 .. testcode:: associatedTypes
-    :compile: true
 
     -> protocol ComparableContainer: Container where Item: Comparable { }
 
@@ -1307,7 +1271,6 @@ For example:
    generics and 'where' clauses earlier in this chapter.
 
 .. testcode:: genericSubscript
-   :compile: true
 
    >> protocol Container {
    >>    associatedtype Item
@@ -1327,7 +1290,6 @@ For example:
       }
 
 .. assertion:: genericSubscript
-   :compile: true
 
    >> struct IntStack: Container {
          // original IntStack implementation

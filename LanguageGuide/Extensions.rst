@@ -29,7 +29,6 @@ For more details, see :ref:`Protocols_Extensions`.
    but they cannot override existing functionality.
 
 .. assertion:: extensionsCannotOverrideExistingBehavior
-   :compile: true
 
    -> class C {
          var x = 0
@@ -70,7 +69,6 @@ Extension Syntax
 Declare extensions with the ``extension`` keyword:
 
 .. testcode:: extensionSyntax
-   :compile: true
 
    >> struct SomeType {}
    -> extension SomeType {
@@ -83,7 +81,6 @@ you write the protocol names
 the same way as you write them for a class or structure:
 
 .. testcode:: extensionSyntax
-   :compile: true
 
    >> protocol SomeProtocol {}
    >> protocol AnotherProtocol {}
@@ -115,7 +112,6 @@ This example adds five computed instance properties to Swift's built-in ``Double
 to provide basic support for working with distance units:
 
 .. testcode:: extensionsComputedProperties
-   :compile: true
 
    -> extension Double {
          var km: Double { return self * 1_000.0 }
@@ -156,7 +152,6 @@ Their return value is of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
 .. testcode:: extensionsComputedProperties
-   :compile: true
 
    -> let aMarathon = 42.km + 195.m
    -> print("A marathon is \(aMarathon) meters long")
@@ -168,7 +163,6 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
    or add property observers to existing properties.
 
 .. assertion:: extensionsCannotAddStoredProperties
-   :compile: true
 
    -> class C {}
    -> extension C { var x = 0 }
@@ -213,7 +207,6 @@ The example also defines two supporting structures called ``Size`` and ``Point``
 both of which provide default values of ``0.0`` for all of their properties:
 
 .. testcode:: extensionsInitializers
-   :compile: true
 
    -> struct Size {
          var width = 0.0, height = 0.0
@@ -232,7 +225,6 @@ as described in :ref:`Initialization_DefaultInitializers`.
 These initializers can be used to create new ``Rect`` instances:
 
 .. testcode:: extensionsInitializers
-   :compile: true
 
    -> let defaultRect = Rect()
    -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
@@ -242,7 +234,6 @@ You can extend the ``Rect`` structure to provide an additional initializer
 that takes a specific center point and size:
 
 .. testcode:: extensionsInitializers
-   :compile: true
 
    -> extension Rect {
          init(center: Point, size: Size) {
@@ -259,7 +250,6 @@ The initializer then calls the structure's automatic memberwise initializer
 in the appropriate properties:
 
 .. testcode:: extensionsInitializers
-   :compile: true
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
@@ -281,7 +271,6 @@ Extensions can add new instance methods and type methods to existing types.
 The following example adds a new instance method called ``repetitions`` to the ``Int`` type:
 
 .. testcode:: extensionsInstanceMethods
-   :compile: true
 
    -> extension Int {
          func repetitions(task: () -> Void) {
@@ -299,7 +288,6 @@ you can call the ``repetitions(task:)`` method on any integer
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
-   :compile: true
 
    -> 3.repetitions {
          print("Hello!")
@@ -322,7 +310,6 @@ The example below adds a new mutating method called ``square`` to Swift's ``Int`
 which squares the original value:
 
 .. testcode:: extensionsInstanceMethods
-   :compile: true
 
    -> extension Int {
          mutating func square() {
@@ -350,7 +337,6 @@ from the right of the number:
 …and so on:
 
 .. testcode:: extensionsSubscripts
-   :compile: true
 
    -> extension Int {
          subscript(digitIndex: Int) -> Int {
@@ -392,7 +378,6 @@ the subscript implementation returns ``0``,
 as if the number had been padded with zeros to the left:
 
 .. testcode:: extensionsSubscripts
-   :compile: true
 
    >> let r4 =
    -> 746381295[9]
@@ -415,7 +400,6 @@ Nested Types
 Extensions can add new nested types to existing classes, structures, and enumerations:
 
 .. testcode:: extensionsNestedTypes
-   :compile: true
 
    -> extension Int {
          enum Kind {
@@ -446,7 +430,6 @@ which returns the appropriate ``Kind`` enumeration case for that integer.
 The nested enumeration can now be used with any ``Int`` value:
 
 .. testcode:: extensionsNestedTypes
-   :compile: true
 
    -> func printIntegerKinds(_ numbers: [Int]) {
          for number in numbers {

@@ -32,7 +32,6 @@ and an ``init name`` initializer.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
 .. testcode:: typeCasting, typeCasting-err
-   :compile: true
 
    -> class MediaItem {
          var name: String
@@ -49,7 +48,6 @@ The second subclass, ``Song``, adds an ``artist`` property and initializer
 on top of the base class:
 
 .. testcode:: typeCasting, typeCasting-err
-   :compile: true
 
    -> class Movie: MediaItem {
          var director: String
@@ -76,7 +74,6 @@ a common superclass of ``MediaItem``,
 and so it infers a type of ``[MediaItem]`` for the ``library`` array:
 
 .. testcode:: typeCasting
-   :compile: true
 
    -> let library = [
          Movie(name: "Casablanca", director: "Michael Curtiz"),
@@ -112,7 +109,6 @@ The example below defines two variables, ``movieCount`` and ``songCount``,
 which count the number of ``Movie`` and ``Song`` instances in the ``library`` array:
 
 .. testcode:: typeCasting
-   :compile: true
 
    -> var movieCount = 0
    -> var songCount = 0
@@ -181,7 +177,6 @@ and so it is appropriate to use the conditional form of the type cast operator (
 to check the downcast each time through the loop:
 
 .. testcode:: typeCasting
-   :compile: true
 
    -> for item in library {
          if let movie = item as? Movie {
@@ -258,7 +253,6 @@ including function types and nonclass types.
 The example creates an array called ``things``, which can store values of type ``Any``:
 
 .. testcode:: typeCasting, typeCasting-err
-   :compile: true
 
    -> var things = [Any]()
    ---
@@ -287,7 +281,6 @@ Several of the ``switch`` statement's cases bind their matched value to
 a constant of the specified type to enable its value to be printed:
 
 .. testcode:: typeCasting
-   :compile: true
 
    -> for thing in things {
          switch thing {
@@ -333,7 +326,6 @@ a constant of the specified type to enable its value to be printed:
     as shown below.
 
     .. testcode:: typeCasting-err
-       :compile: true
 
        -> let optionalNumber: Int? = 3
        -> things.append(optionalNumber)        // Warning

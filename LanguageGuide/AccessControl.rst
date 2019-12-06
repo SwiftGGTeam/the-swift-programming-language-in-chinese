@@ -184,7 +184,6 @@ one of the ``open``, ``public``, ``internal``, ``fileprivate``, or ``private`` m
 at the beginning of the entity's declaration.
 
 .. testcode:: accessControlSyntax
-   :compile: true
 
    -> public class SomePublicClass {}
    -> internal class SomeInternalClass {}
@@ -203,7 +202,6 @@ without an explicit access-level modifier,
 and will still have an access level of internal:
 
 .. testcode:: accessControlDefaulted
-   :compile: true
 
    -> class SomeInternalClass {}              // implicitly internal
    -> let someInternalConstant = 0            // implicitly internal
@@ -240,7 +238,6 @@ the default access level of the type's members will be internal.
    and avoids presenting the internal workings of a type as public API by mistake.
 
 .. testcode:: accessControl, accessControlWrong
-   :compile: true
 
    -> public class SomePublicClass {                  // explicitly public class
          public var somePublicProperty = 0            // explicitly public class member
@@ -276,7 +273,6 @@ one with internal access and one with private access,
 the access level for that compound tuple type will be private.
 
 .. sourcefile:: tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private
-   :compile: true
 
    -> public struct PublicStruct {}
    -> internal struct InternalStruct {}
@@ -292,14 +288,12 @@ the access level for that compound tuple type will be private.
       }
 
 .. sourcefile:: tupleTypes_Module1_PublicAndInternal
-   :compile: true
 
    // tuples with (at least) internal members can be accessed within their own module
    -> let publicTuple = returnPublicTuple()
    -> let internalTuple = returnInternalTuple()
 
 .. sourcefile:: tupleTypes_Module1_Private
-   :compile: true
 
    // a tuple with one or more private members can't be accessed from outside of its source file
    -> let privateTuple = returnFilePrivateTuple()
@@ -308,14 +302,12 @@ the access level for that compound tuple type will be private.
    !!                    ^~~~~~~~~~~~~~~~~~~~~~
 
 .. sourcefile:: tupleTypes_Module2_Public
-   :compile: true
 
    // a public tuple with all-public members can be used in another module
    -> import tupleTypes_Module1
    -> let publicTuple = returnPublicTuple()
 
 .. sourcefile:: tupleTypes_Module2_InternalAndPrivate
-   :compile: true
 
    // tuples with internal or private members can't be used outside of their own module
    -> import tupleTypes_Module1
@@ -353,7 +345,6 @@ but this isn't the case.
 In fact, ``someFunction()`` won't compile as written below:
 
 .. testcode:: accessControlWrong
-   :compile: true
 
    -> func someFunction() -> (SomeInternalClass, SomePrivateClass) {
          // function implementation goes here
@@ -375,7 +366,6 @@ you must mark the function's overall access level with the ``private`` modifier
 for the function declaration to be valid:
 
 .. testcode:: accessControl
-   :compile: true
 
    -> private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
          // function implementation goes here
@@ -403,7 +393,6 @@ The enumeration cases ``north``, ``south``, ``east``, and ``west``
 therefore also have an access level of public:
 
 .. testcode:: enumerationCases
-   :compile: true
 
    -> public enum CompassPoint {
          case north
@@ -413,7 +402,6 @@ therefore also have an access level of public:
       }
 
 .. sourcefile:: enumerationCases_Module1
-   :compile: true
 
    -> public enum CompassPoint {
          case north
@@ -423,7 +411,6 @@ therefore also have an access level of public:
       }
 
 .. sourcefile:: enumerationCases_Module2
-   :compile: true
 
    -> import enumerationCases_Module1
    -> let north = CompassPoint.north
@@ -450,7 +437,6 @@ If you want a nested type within a public type to be publicly available,
 you must explicitly declare the nested type as public.
 
 .. sourcefile:: nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private
-   :compile: true
 
    -> public struct PublicStruct {
          public enum PublicEnumInsidePublicStruct { case a, b }
@@ -473,7 +459,6 @@ you must explicitly declare the nested type as public.
       }
 
 .. sourcefile:: nestedTypes_Module1_PublicAndInternal
-   :compile: true
 
    // these are all expected to succeed within the same module
    -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
@@ -484,7 +469,6 @@ you must explicitly declare the nested type as public.
    -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
 
 .. sourcefile:: nestedTypes_Module1_Private
-   :compile: true
 
    // these are all expected to fail, because they are private to the other file
    -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
@@ -514,14 +498,12 @@ you must explicitly declare the nested type as public.
    !!                                    ^~~~~~~~~~~~~
 
 .. sourcefile:: nestedTypes_Module2_Public
-   :compile: true
 
    // this is the only expected to succeed within the second module
    -> import nestedTypes_Module1
    -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
 
 .. sourcefile:: nestedTypes_Module2_InternalAndPrivate
-   :compile: true
 
    // these are all expected to fail, because they are private or internal to the other module
    -> import nestedTypes_Module1
@@ -593,7 +575,6 @@ with an access level of “internal”, which is *higher* than
 the original implementation of ``someMethod()``:
 
 .. testcode:: subclassingNoCall
-   :compile: true
 
    -> public class A {
          fileprivate func someMethod() {}
@@ -611,7 +592,6 @@ an allowed access level context
 or within the same module as the superclass for an internal member call):
 
 .. testcode:: subclassingWithCall
-   :compile: true
 
    -> public class A {
          fileprivate func someMethod() {}
@@ -640,12 +620,10 @@ If a constant, variable, property, or subscript makes use of a private type,
 the constant, variable, property, or subscript must also be marked as ``private``:
 
 .. testcode:: accessControl
-   :compile: true
 
    -> private var privateInstance = SomePrivateClass()
 
 .. assertion:: useOfPrivateTypeRequiresPrivateModifier
-   :compile: true
 
    -> class Scope {  // Need to be in a scope to meaningfully use private (vs fileprivate)
    -> private class SomePrivateClass {}
@@ -703,7 +681,6 @@ The example below defines a structure called ``TrackedString``,
 which keeps track of the number of times a string property is modified:
 
 .. testcode:: reducedSetterScope, reducedSetterScope_error
-   :compile: true
 
    -> struct TrackedString {
          private(set) var numberOfEdits = 0
@@ -736,7 +713,6 @@ but to present the property as a read-only property
 when it's used outside the structure's definition.
 
 .. assertion:: reducedSetterScope_error
-   :compile: true
 
    -> extension TrackedString {
           mutating func f() { numberOfEdits += 1 }
@@ -755,7 +731,6 @@ If you create a ``TrackedString`` instance and modify its string value a few tim
 you can see the ``numberOfEdits`` property value update to match the number of modifications:
 
 .. testcode:: reducedSetterScope
-   :compile: true
 
    -> var stringToEdit = TrackedString()
    -> stringToEdit.value = "This string will be tracked."
@@ -782,7 +757,6 @@ and its property setter private,
 by combining the ``public`` and ``private(set)`` access-level modifiers:
 
 .. testcode:: reducedSetterScopePublic
-   :compile: true
 
    -> public struct TrackedString {
          public private(set) var numberOfEdits = 0
@@ -795,7 +769,6 @@ by combining the ``public`` and ``private(set)`` access-level modifiers:
       }
 
 .. sourcefile:: reducedSetterScopePublic_Module1_Allowed, reducedSetterScopePublic_Module1_NotAllowed
-   :compile: true
 
    -> public struct TrackedString {
          public private(set) var numberOfEdits = 0
@@ -808,14 +781,12 @@ by combining the ``public`` and ``private(set)`` access-level modifiers:
       }
 
 .. sourcefile:: reducedSetterScopePublic_Module1_Allowed
-   :compile: true
 
    // check that we can retrieve its value with the public getter from another file in the same module
    -> var stringToEdit_Module1B = TrackedString()
    -> let resultB = stringToEdit_Module1B.numberOfEdits
 
 .. sourcefile:: reducedSetterScopePublic_Module1_NotAllowed
-   :compile: true
 
    // check that we can't set its value from another file in the same module
    -> var stringToEdit_Module1C = TrackedString()
@@ -825,7 +796,6 @@ by combining the ``public`` and ``private(set)`` access-level modifiers:
    !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
 
 .. sourcefile:: reducedSetterScopePublic_Module2
-   :compile: true
 
    // check that we can retrieve its value with the public getter from a different module
    -> import reducedSetterScopePublic_Module1_Allowed
@@ -907,7 +877,6 @@ This ensures that all of the protocol's requirements will be visible
 on any type that adopts the protocol.
 
 .. assertion:: protocolRequirementsCannotBeDifferentThanTheProtocol
-   :compile: true
 
    -> public protocol PublicProtocol {
          public var publicProperty: Int { get }
@@ -954,7 +923,6 @@ on any type that adopts the protocol.
    an access level of internal for the type's members.
 
 .. sourcefile:: protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private
-   :compile: true
 
    -> public protocol PublicProtocol {
          var publicProperty: Int { get }
@@ -974,7 +942,6 @@ on any type that adopts the protocol.
       }
 
 .. sourcefile:: protocols_Module1_PublicAndInternal
-   :compile: true
 
    // these should all be allowed without problem
    -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
@@ -1004,7 +971,6 @@ on any type that adopts the protocol.
       }
 
 .. sourcefile:: protocols_Module1_Private
-   :compile: true
 
    // these will fail, because FilePrivateProtocol is not visible outside of its file
    -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
@@ -1025,7 +991,6 @@ on any type that adopts the protocol.
    !! ^~~~~~~~~~~~~~~
 
 .. sourcefile:: protocols_Module2_Public
-   :compile: true
 
    // these should all be allowed without problem
    -> import protocols_Module1
@@ -1043,7 +1008,6 @@ on any type that adopts the protocol.
       }
 
 .. sourcefile:: protocols_Module2_InternalAndPrivate
-   :compile: true
 
    // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
    // are not visible to other modules
@@ -1135,7 +1099,6 @@ Instead, the protocol's own access level is used to provide
 the default access level for each protocol requirement implementation within the extension.
 
 .. sourcefile:: extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private
-   :compile: true
 
    -> public struct PublicStruct {
          public init() {}
@@ -1153,14 +1116,12 @@ the default access level for each protocol requirement implementation within the
    -> let sameFileC = publicStructInSameFile.filePrivateMethod()
 
 .. sourcefile:: extensions_Module1_PublicAndInternal
-   :compile: true
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileA = publicStructInDifferentFile.implicitlyInternalMethodFromStruct()
    -> let differentFileB = publicStructInDifferentFile.implicitlyInternalMethodFromExtension()
 
 .. sourcefile:: extensions_Module1_Private
-   :compile: true
 
    -> var publicStructInDifferentFile = PublicStruct()
    -> let differentFileC = publicStructInDifferentFile.filePrivateMethod()
@@ -1172,7 +1133,6 @@ the default access level for each protocol requirement implementation within the
    !! ^
 
 .. sourcefile:: extensions_Module2
-   :compile: true
 
    -> import extensions_Module1
    -> var publicStructInDifferentModule = PublicStruct()
@@ -1218,7 +1178,6 @@ whether or not your types have private entities.
 For example, given the following simple protocol:
 
 .. testcode:: extensions_privatemembers
-   :compile: true
 
    -> protocol SomeProtocol {
           func doSomething()
@@ -1227,7 +1186,6 @@ For example, given the following simple protocol:
 You can use an extension to add protocol conformance, like this:
 
 .. testcode:: extensions_privatemembers
-   :compile: true
 
    -> struct SomeStruct {
           private var privateVariable = 12
@@ -1266,7 +1224,6 @@ but a public type alias can't alias an internal, file-private, or private type.
    This rule also applies to type aliases for associated types used to satisfy protocol conformances.
 
 .. sourcefile:: typeAliases
-   :compile: true
 
    -> public struct PublicStruct {}
    -> internal struct InternalStruct {}

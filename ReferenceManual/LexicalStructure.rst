@@ -165,14 +165,12 @@ have special meaning in an explicit member expression,
 so they must be escaped with backticks in that context.
 
 .. assertion:: keywords-without-backticks
-   :compile: true
 
    -> func f(x: Int, in y: Int) {
          print(x+y)
       }
 
 .. assertion:: var-requires-backticks
-   :compile: true
 
    -> func g(`var` x: Int) {}
    -> func f(var x: Int) {}
@@ -182,7 +180,6 @@ so they must be escaped with backticks in that context.
    !!        `var`
 
 .. assertion:: let-requires-backticks
-   :compile: true
 
    -> func g(`let` x: Int) {}
    -> func f(let x: Int) {}
@@ -192,7 +189,6 @@ so they must be escaped with backticks in that context.
    !!        `let`
 
 .. assertion:: inout-requires-backticks
-   :compile: true
 
    -> func g(`inout` x: Int) {}
    -> func f(inout x: Int) {}
@@ -335,7 +331,6 @@ such as a number or string.
 The following are examples of literals:
 
 .. testcode:: basic-literals
-    :compile: true
 
     >> let r0 =
     -> 42               // Integer literal
@@ -639,7 +634,6 @@ a carriage return, or a line feed.
 For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
-   :compile: true
 
    >> let r0 =
    -> "1 2 3"
@@ -687,7 +681,6 @@ and a string delimited by extended delimiters
 that create equivalent string values:
 
 .. testcode:: extended-string-delimiters
-    :compile: true
 
     -> let string = #"\(x) \ " \u{2603}"#
     -> let escaped = "\\(x) \\ \" \\u{2603}"
@@ -701,14 +694,12 @@ a string delimited by extended delimiters,
 don't place whitespace in between the number signs:
 
 .. assertion:: extended-string-delimiters
-    :compile: true
 
     -> print(###"Line 1\###nLine 2"###) // OK
     << Line 1
     << Line 2
 
 .. testcode:: extended-string-delimiters-err
-    :compile: true
 
     -> print(###"Line 1\###nLine 2"###) // OK
     -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
@@ -734,7 +725,6 @@ in the example below are identical ---
 no runtime concatenation is performed.
 
 .. testcode:: concatenated-strings
-   :compile: true
 
    -> let textA = "Hello " + "world"
    -> let textB = "Hello world"
@@ -824,7 +814,6 @@ For example, ``+.+`` is treated as
 the ``+`` operator followed by the ``.+`` operator.
 
 .. assertion:: dot-operator-must-start-with-dot
-   :compile: true
 
    >> infix operator +.+ ;
    !$ error: consecutive statements on a line must be separated by ';'
@@ -846,7 +835,6 @@ Additionally, although operators can contain an exclamation mark (``!``),
 postfix operators can't begin with either a question mark or an exclamation mark.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
-   :compile: true
 
    >> struct Num { var value: Int }
       postfix operator +
@@ -860,7 +848,6 @@ postfix operators can't begin with either a question mark or an exclamation mark
    << 500
 
 .. assertion:: postfix-operator-cant-start-with-question-mark
-   :compile: true
 
    >> postfix operator ?+
    >> postfix func ?+ (x: Int) -> Int {

@@ -36,7 +36,6 @@ Here's an example that defines a simple ``Counter`` class,
 which can be used to count the number of times an action occurs:
 
 .. testcode:: instanceMethods
-   :compile: true
 
    -> class Counter {
          var count = 0
@@ -63,7 +62,6 @@ to keep track of the current counter value.
 You call instance methods with the same dot syntax as properties:
 
 .. testcode:: instanceMethods
-   :compile: true
 
    -> let counter = Counter()
    /> the initial counter value is \(counter.count)
@@ -97,7 +95,6 @@ within its own instance methods.
 The ``increment()`` method in the example above could have been written like this:
 
 .. testcode:: instanceMethodsIncrement
-   :compile: true
 
    >> class Counter {
    >> var count: Int = 0
@@ -126,7 +123,6 @@ Here, ``self`` disambiguates between
 a method parameter called ``x`` and an instance property that is also called ``x``:
 
 .. testcode:: self
-   :compile: true
 
    -> struct Point {
          var x = 0.0, y = 0.0
@@ -166,7 +162,6 @@ You can opt in to this behavior by placing the ``mutating`` keyword
 before the ``func`` keyword for that method:
 
 .. testcode:: selfStructures
-   :compile: true
 
    -> struct Point {
          var x = 0.0, y = 0.0
@@ -192,7 +187,6 @@ because its properties cannot be changed, even if they are variable properties,
 as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
 .. testcode:: selfStructures-err
-   :compile: true
 
    >> struct Point {
    >>    var x = 0.0, y = 0.0
@@ -226,7 +220,6 @@ Mutating methods can assign an entirely new instance to the implicit ``self`` pr
 The ``Point`` example shown above could have been written in the following way instead:
 
 .. testcode:: selfStructuresAssign
-   :compile: true
 
    -> struct Point {
          var x = 0.0, y = 0.0
@@ -248,7 +241,6 @@ Mutating methods for enumerations can set the implicit ``self`` parameter to be
 a different case from the same enumeration:
 
 .. testcode:: selfEnumerations
-   :compile: true
 
    -> enum TriStateSwitch {
          case off, low, high
@@ -299,7 +291,6 @@ However, you call type methods on the type, not on an instance of that type.
 Here's how you call a type method on a class called ``SomeClass``:
 
 .. testcode:: typeMethods
-   :compile: true
 
    -> class SomeClass {
          class func someTypeMethod() {
@@ -335,7 +326,6 @@ to keep track of which levels of the game have been unlocked.
 It also tracks the current level for an individual player.
 
 .. testcode:: typeMethods
-   :compile: true
 
    -> struct LevelTracker {
          static var highestUnlockedLevel = 1
@@ -394,7 +384,6 @@ The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
 to track and update the progress of an individual player:
 
 .. testcode:: typeMethods
-   :compile: true
 
    -> class Player {
          var tracker = LevelTracker()
@@ -422,7 +411,6 @@ You can create an instance of the ``Player`` class for a new player,
 and see what happens when the player completes level one:
 
 .. testcode:: typeMethods
-   :compile: true
 
    -> var player = Player(name: "Argyrios")
    -> player.complete(level: 1)
@@ -434,7 +422,6 @@ that is not yet unlocked by any player in the game,
 the attempt to set the player's current level fails:
 
 .. testcode:: typeMethods
-   :compile: true
 
    -> player = Player(name: "Beto")
    -> if player.tracker.advance(to: 6) {

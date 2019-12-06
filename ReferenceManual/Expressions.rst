@@ -101,7 +101,6 @@ that operator applies to the whole binary expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
 
 .. testcode:: placement-of-try
-    :compile: true
 
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> func anotherThrowingFunction() throws -> Int { return 5 }
@@ -130,7 +129,6 @@ unless the binary operator is the assignment operator
 or the ``try`` expression is enclosed in parentheses.
 
 .. assertion:: try-on-right
-    :compile: true
 
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> var sum = 0
@@ -234,7 +232,6 @@ to the corresponding part of the *expression*.
 For example:
 
 .. testcode:: assignmentOperator
-    :compile: true
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
@@ -306,7 +303,6 @@ It returns ``true`` if the *expression* can be cast to the specified *type*;
 otherwise, it returns ``false``.
 
 .. assertion:: triviallyTrueIsAndAs
-    :compile: true
 
     -> assert("hello" is String)
     -> assert(!("hello" is Int))
@@ -318,7 +314,6 @@ otherwise, it returns ``false``.
     !!          ~~~~~~~ ^  ~~~
 
 .. assertion:: is-operator-tautology
-   :compile: true
 
    -> class Base {}
    -> class Subclass: Base {}
@@ -339,7 +334,6 @@ without using an intermediate variable.
 The following approaches are equivalent:
 
 .. testcode:: explicit-type-with-as-operator
-   :compile: true
 
    -> func f(_ any: Any) { print("Function for Any") }
    -> func f(_ int: Int) { print("Function for Int") }
@@ -466,7 +460,6 @@ when the default value expression is evaluated at the call site.
    where the general rule is defined.
 
 .. testcode:: special-literal-evaluated-at-call-site
-    :compile: true
 
     -> func logFunctionName(string: String = #function) {
            print(string)
@@ -503,7 +496,6 @@ Empty array literals are written using an empty
 pair of square brackets and can be used to create an empty array of a specified type.
 
 .. testcode:: array-literal-brackets
-    :compile: true
 
     -> var emptyArray: [Double] = []
 
@@ -533,7 +525,6 @@ You can use an empty dictionary literal to create an empty dictionary literal
 of specified key and value types.
 
 .. testcode:: dictionary-literal-brackets
-    :compile: true
 
     -> var emptyDictionary: [String: Double] = [:]
 
@@ -598,7 +589,6 @@ such as a function parameter.
 For example:
 
 .. testcode:: self-expression
-    :compile: true
 
     -> class SomeClass {
            var greeting: String
@@ -612,7 +602,6 @@ you can assign a new instance of that value type to ``self``.
 For example:
 
 .. testcode:: self-expression
-    :compile: true
 
     -> struct Point {
           var x = 0.0, y = 0.0
@@ -720,7 +709,6 @@ that allow closures to be written more concisely:
 The following closure expressions are equivalent:
 
 .. testcode:: closure-expression-forms
-    :compile: true
 
     >> func myFunction(f: (Int, Int) -> Int) {}
     -> myFunction { (x: Int, y: Int) -> Int in
@@ -781,7 +769,6 @@ For example in the code below,
 which gives them different behavior.
 
 .. testcode:: capture-list-value-semantics
-    :compile: true
 
     -> var a = 0
     -> var b = 0
@@ -826,7 +813,6 @@ but they both refer to the same object
 because of reference semantics.
 
 .. testcode:: capture-list-reference-semantics
-    :compile: true
 
     -> class SimpleClass {
            var value: Int = 0
@@ -843,7 +829,6 @@ because of reference semantics.
     <- 10 10
 
 .. assertion:: capture-list-with-commas
-    :compile: true
 
     -> var x = 100
     -> var y = 7
@@ -855,7 +840,6 @@ because of reference semantics.
     although maybe it should be.  See also rdar://17024367.
 
 .. assertion:: capture-list-is-not-exhaustive
-    :compile: true
 
     -> var x = 100
        var y = 7
@@ -873,7 +857,6 @@ with ``weak`` or ``unowned`` to capture a weak or unowned reference
 to the expression's value.
 
 .. testcode:: closure-expression-weak
-    :compile: true
 
     >> func myFunction(f: () -> Void) { f() }
     >> class C {
@@ -897,7 +880,6 @@ and the value is captured with the specified strength.
 For example:
 
 .. testcode:: closure-expression-capture
-    :compile: true
 
     >> func myFunction(f: () -> Void) { f() }
     >> class P { let title = "Title" }
@@ -954,7 +936,6 @@ It has the following form:
 For example:
 
 .. testcode:: implicitMemberEnum
-    :compile: true
 
     >> enum MyEnumeration { case someValue, anotherValue }
     -> var x = MyEnumeration.someValue
@@ -1015,7 +996,6 @@ although ``a`` appears twice,
 it appears once in the outer tuple and once in the inner tuple.
 
 .. assertion:: tuple-labels-must-be-unique
-    :compile: true
 
     >> let bad = (a: 10, a: 20)
     >> let good = (a: 10, b: (a: 1, x: 2))
@@ -1056,7 +1036,6 @@ For example, in the following assignment
 10 is assigned to ``x`` and 20 is ignored:
 
 .. testcode:: wildcardTuple
-    :compile: true
 
     >> var (x, _) = (10, 20)
     -> (x, _) = (10, 20)
@@ -1111,7 +1090,6 @@ For example:
    it's a special case in the compiler.
 
 .. testcode:: keypath-expression
-   :compile: true
 
    -> struct SomeStructure {
           var someValue: Int
@@ -1131,7 +1109,6 @@ The following code uses ``\.someProperty``
 instead of ``\SomeClass.someProperty``:
 
 .. testcode:: keypath-expression-implicit-type-name
-   :compile: true
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1157,7 +1134,6 @@ in a single step.
 For example:
 
 .. testcode:: keypath-expression-self-keypath
-   :compile: true
 
    -> var compoundValue = (a: 1, b: 2)
    // Equivalent to compoundValue = (a: 10, b: 20)
@@ -1172,7 +1148,6 @@ to access the ``someValue`` property
 of the ``OuterStructure`` type's ``outer`` property:
 
 .. testcode:: keypath-expression
-   :compile: true
 
    -> struct OuterStructure {
           var outer: SomeStructure
@@ -1194,7 +1169,6 @@ This example uses a subscript in a key path
 to access the second element of an array:
 
 .. testcode:: keypath-expression
-   :compile: true
 
    -> let greetings = ["hello", "hola", "bonjour", "안녕"]
    -> let myGreeting = greetings[keyPath: \[String].[1]]
@@ -1216,7 +1190,6 @@ the key-path expression still references the third element,
 while the closure uses the new index.
 
 .. testcode:: keypath-expression
-   :compile: true
 
    -> var index = 2
    -> let path = \[String].[index]
@@ -1241,7 +1214,6 @@ This code uses optional chaining in a key path
 to access a property of an optional string:
 
 .. testcode:: keypath-expression
-   :compile: true
 
    -> let firstGreeting: String? = greetings.first
    -> print(firstGreeting?.count as Any)
@@ -1260,7 +1232,6 @@ by using key-path expressions
 that combine these components.
 
 .. testcode:: keypath-expression
-   :compile: true
 
    -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
@@ -1315,7 +1286,6 @@ The value of a selector expression is an instance of the ``Selector`` type.
 For example:
 
 .. testcode:: selector-expression
-   :compile: true
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1341,7 +1311,6 @@ but have different type signatures.
 For example:
 
 .. testcode:: selector-expression
-   :compile: true
 
    -> extension SomeClass {
           @objc(doSomethingWithString:)
@@ -1396,7 +1365,6 @@ At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
 .. testcode:: keypath-string-expression
-   :compile: true
 
    >> import Foundation
    -> class SomeClass: NSObject {
@@ -1419,7 +1387,6 @@ you can refer to a property of that class
 by writing just the property name, without the class name.
 
 .. testcode:: keypath-string-expression
-   :compile: true
 
    -> extension SomeClass {
          func getSomeKeyPath() -> String {
@@ -1517,7 +1484,6 @@ added after the last parenthesized argument.
 The following function calls are equivalent:
 
 .. testcode:: trailing-closure
-    :compile: true
 
     >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
     >>    return f(x)
@@ -1538,7 +1504,6 @@ If the trailing closure is the function's only argument,
 the parentheses can be omitted.
 
 .. testcode:: no-paren-trailing-closure
-    :compile: true
 
     >> class Data {
     >>    let data = 10
@@ -1598,7 +1563,6 @@ You also use an initializer expression
 to delegate to the initializer of a superclass.
 
 .. testcode:: init-call-superclass
-    :compile: true
 
     >> class SomeSuperClass { }
     -> class SomeSubClass: SomeSuperClass {
@@ -1612,7 +1576,6 @@ Like a function, an initializer can be used as a value.
 For example:
 
 .. testcode:: init-as-value
-    :compile: true
 
     // Type annotation is required because String has multiple initializers.
     -> let initializer: (Int) -> String = String.init
@@ -1625,7 +1588,6 @@ you can access the type's initializer without using an initializer expression.
 In all other cases, you must use an initializer expression.
 
 .. testcode:: explicit-implicit-init
-    :compile: true
 
     >> struct SomeType {
     >>     let data: Int
@@ -1667,7 +1629,6 @@ as part of the type's declaration or extension.
 For example:
 
 .. testcode:: explicitMemberExpression
-    :compile: true
 
     -> class SomeClass {
            var someProperty = 42
@@ -1681,7 +1642,6 @@ starting from zero.
 For example:
 
 .. testcode:: explicit-member-expression
-    :compile: true
 
     -> var t = (10, 20, 30)
     -> t.0 = t.1
@@ -1704,7 +1664,6 @@ use a type annotation.
 For example:
 
 .. testcode:: function-with-argument-names
-    :compile: true
 
     -> class SomeClass {
            func someMethod(x: Int, y: Int) {}
@@ -1755,7 +1714,6 @@ For example, the following listing shows chained method calls
 split over several lines:
 
 .. testcode:: period-at-start-of-line
-   :compile: true
 
    -> let x = [10, 3, 20, 15, 4]
    ->     .sorted()
@@ -1853,7 +1811,6 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
     subscript-expression --> postfix-expression ``[`` function-call-argument-list ``]``
 
 .. assertion:: subscripts-can-take-operators
-   :compile: true
 
    >> struct S {
           let x: Int
@@ -1890,7 +1847,6 @@ or by assigning to one of the value's members.
 For example:
 
 .. testcode:: optional-as-lvalue
-   :compile: true
 
    -> var x: Int? = 0
    -> x! += 1
@@ -1947,7 +1903,6 @@ The entire expression ``c?.property.performAction()``
 has a value of an optional type.
 
 .. testcode:: optional-chaining
-   :compile: true
 
    >> class OtherClass { func performAction() -> Bool {return true} }
    >> class SomeClass { var property: OtherClass = OtherClass() }
@@ -1960,7 +1915,6 @@ of the example above
 without using optional chaining.
 
 .. testcode:: optional-chaining-alt
-   :compile: true
 
    >> class OtherClass { func performAction() -> Bool {return true} }
    >> class SomeClass { var property: OtherClass = OtherClass() }
@@ -1979,7 +1933,6 @@ is not evaluated.
 For example:
 
 .. testcode:: optional-chaining-as-lvalue
-   :compile: true
 
    -> func someFunctionWithSideEffects() -> Int {
          return 42  // No actual side effects.

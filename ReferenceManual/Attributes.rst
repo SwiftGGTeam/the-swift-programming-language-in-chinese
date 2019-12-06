@@ -139,7 +139,6 @@ including important milestones.
   that the declaration has been renamed.
 
   .. testcode:: renamed1
-     :compile: true
 
      -> // First release
      -> protocol MyProtocol {
@@ -147,7 +146,6 @@ including important milestones.
         }
 
   .. testcode:: renamed2
-     :compile: true
 
      -> // Subsequent release renames MyProtocol
      -> protocol MyRenamedProtocol {
@@ -170,7 +168,6 @@ the effective availability is the combination of
 the platform and Swift availabilities.
 
 .. assertion:: multipleAvailableAttributes
-   :compile: true
 
    -> @available(iOS 9, *)
    -> @available(macOS 10.9, *)
@@ -196,7 +193,6 @@ Although the two forms are functionally equivalent,
 the shorthand form is preferred whenever possible.
 
 .. testcode:: availableShorthand
-   :compile: true
 
    -> @available(iOS 10.0, macOS 10.12, *)
    -> class MyClass {
@@ -212,7 +208,6 @@ Instead, use separate ``available`` attributes to specify a Swift
 version availability and one or more platform availabilities.
 
 .. testcode:: availableMultipleAvailabilities
-   :compile: true
 
    -> @available(swift 3.0.2)
    -> @available(macOS 10.12, *)
@@ -249,7 +244,6 @@ You can call an instance of a dynamically callable type
 as if it's a function that takes any number of arguments.
 
 .. testcode:: dynamicCallable
-   :compile: true
 
    -> @dynamicCallable
    -> struct TelephoneExchange {
@@ -285,7 +279,6 @@ You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
 
 .. testcode:: dynamicCallable
-   :compile: true
 
    -> @dynamicCallable
       struct Repeater {
@@ -332,7 +325,6 @@ there isn't an implementation of ``dynamicallyCall(withArguments:)``
 that takes ``KeyValuePairs<String, String>``.
 
 .. testcode:: dynamicCallable-err
-   :compile: true
 
    >> @dynamicCallable
    >> struct Repeater {
@@ -388,7 +380,6 @@ such as when bridging data from other languages into Swift.
 For example:
 
 .. testcode:: dynamicMemberLookup
-   :compile: true
 
    -> @dynamicMemberLookup
    -> struct DynamicStruct {
@@ -416,7 +407,6 @@ in a way that supports compile-time type checking.
 For example:
 
 .. testcode:: dynamicMemberLookup
-    :compile: true
 
     -> struct Point { var x, y: Int }
     ---
@@ -456,7 +446,6 @@ but they break ABI compatibility for frozen types.
     and you can't use this attribute.
 
 .. assertion:: cant-use-frozen-without-evolution
-    :compile: true
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
@@ -472,7 +461,6 @@ but they break ABI compatibility for frozen types.
 .. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
 
 .. assertion:: frozen-is-fine-with-evolution
-    :compile: true
     :evolution: true
 
     >> @frozen public enum E { case x, y }
@@ -502,7 +490,6 @@ must follow the same restrictions as inlinable functions,
 as discussed in :ref:`Attributes_inlinable`.
 
 .. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
-    :compile: true
     :evolution: true
 
     >> public protocol P { }
@@ -536,14 +523,12 @@ when switching over a frozen enumeration
 produces a warning because that code is never executed.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum
-    :compile: true
     :evolution: true
 
     >> public enum E { case x, y }
     >> @frozen public enum F { case x, y }
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test1
-    :compile: true
 
     >> import NoUnknownDefaultOverFrozenEnum
     >> func main() {
@@ -557,7 +542,6 @@ produces a warning because that code is never executed.
     // Note that there's no warning -- this is fine because E isn't frozen.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test2
-    :compile: true
 
     >> import NoUnknownDefaultOverFrozenEnum
     >> func main() {
@@ -625,7 +609,6 @@ are implicitly inlinable,
 even though they can't be marked with this attribute.
 
 .. assertion:: cant-inline-private
-   :compile: true
 
    >> @inlinable private func f() { }
    !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
@@ -633,7 +616,6 @@ even though they can't be marked with this attribute.
    !! ^~~~~~~~~~~
 
 .. assertion:: cant-inline-nested
-   :compile: true
 
    >> public func outer() {
    >>    @inlinable func f() { }
@@ -708,7 +690,6 @@ supply a ``main.swift`` file with code at the top level
 that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
 .. testcode:: nsapplicationmain
-   :compile: true
 
    -> import AppKit
    >> let _ =
@@ -815,7 +796,6 @@ to Objective-C code as ``isEnabled``
 rather than just as the name of the property itself.
 
 .. testcode:: objc-attribute
-   :compile: true
 
    >> import Foundation
    -> class ExampleClass: NSObject {
@@ -868,7 +848,6 @@ to wrap access to the property through an instance of the wrapper type.
 Local and global variables can't use property wrappers.
 
 .. assertion:: property-wrappers-cant-go-on-variables
-    :compile: true
 
     >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
     >> func f() {
@@ -908,7 +887,6 @@ For example, in the code below,
 ``SomeStruct`` calls each of the initializers that ``SomeWrapper`` defines.
 
 .. testcode:: propertyWrapper
-    :compile: true
 
     -> @propertyWrapper
     -> struct SomeWrapper {
@@ -968,7 +946,6 @@ The projected value has the same access control level
 as the original wrapped property.
 
 .. testcode:: propertyWrapper-projection
-    :compile: true
 
     -> @propertyWrapper
     -> struct WrapperWithProjection {
@@ -1005,7 +982,6 @@ This attribute is inferred for any class
 that inherits from ``NSManagedObject``.
 
 .. assertion:: requires_stored_property_inits-requires-default-values
-   :compile: true
 
    >> @requires_stored_property_inits class DefaultValueProvided {
           var value: Int = -1
@@ -1095,7 +1071,6 @@ can be applied to ``internal`` declarations,
 applying both attributes is an error.
 
 .. assertion:: usableFromInline-and-inlinable-is-redundant
-   :compile: true
 
    >> @usableFromInline @inlinable internal func f() { }
    !$ warning: '@inlinable' declaration is already '@usableFromInline'

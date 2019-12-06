@@ -56,7 +56,6 @@ and appears immediately before the value it operates on,
 without any white space:
 
 .. testcode:: bitwiseOperators
-   :compile: true
 
    -> let initialBits: UInt8 = 0b00001111
    >> assert(initialBits == 15)
@@ -98,7 +97,6 @@ The bitwise AND operator combines them to make the number ``00111100``,
 which is equal to an unsigned decimal value of ``60``:
 
 .. testcode:: bitwiseOperators
-   :compile: true
 
    -> let firstSixBits: UInt8 = 0b11111100
    -> let lastSixBits: UInt8  = 0b00111111
@@ -125,7 +123,6 @@ The bitwise OR operator combines them to make the number ``11111110``,
 which equals an unsigned decimal of ``254``:
 
 .. testcode:: bitwiseOperators
-   :compile: true
 
    -> let someBits: UInt8 = 0b10110010
    -> let moreBits: UInt8 = 0b01011110
@@ -154,7 +151,6 @@ All of the other bits in ``firstBits`` and ``otherBits`` match
 and are set to ``0`` in the output value:
 
 .. testcode:: bitwiseOperators
-   :compile: true
 
    -> let firstBits: UInt8 = 0b00010100
    -> let otherBits: UInt8 = 0b00000101
@@ -206,7 +202,6 @@ and orange zeros are inserted:
 Here's how bit shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
-   :compile: true
 
    -> let shiftBits: UInt8 = 4   // 00000100 in binary
    >> let r0 =
@@ -231,7 +226,6 @@ Here's how bit shifting looks in Swift code:
 You can use bit shifting to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
-   :compile: true
 
    -> let pink: UInt32 = 0xCC6699
    -> let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
@@ -364,7 +358,6 @@ Trying to set an ``Int16`` constant or variable to a number outside of this rang
 causes an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
-   :compile: true
 
    -> var potentialOverflow = Int16.max
    /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
@@ -399,7 +392,6 @@ an unsigned integer is allowed to overflow in the positive direction,
 using the overflow addition operator (``&+``):
 
 .. testcode:: overflowOperatorsWillOverflowInPositiveDirection
-   :compile: true
 
    -> var unsignedOverflow = UInt8.max
    /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
@@ -425,7 +417,6 @@ an unsigned integer is allowed to overflow in the negative direction.
 Here's an example using the overflow subtraction operator (``&-``):
 
 .. testcode:: overflowOperatorsWillOverflowInNegativeDirection
-   :compile: true
 
    -> var unsignedOverflow = UInt8.min
    /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
@@ -449,7 +440,6 @@ with the sign bit included as part of the numbers being added or subtracted,
 as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
 
 .. testcode:: overflowOperatorsWillOverflowSigned
-   :compile: true
 
    -> var signedOverflow = Int8.min
    /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
@@ -495,7 +485,6 @@ For example,
 operator precedence explains why the following expression equals ``17``.
 
 .. testcode:: evaluationOrder
-   :compile: true
 
    >> let r0 =
    -> 2 + 3 % 4 * 5
@@ -528,7 +517,6 @@ Think of this as adding implicit parentheses around these parts of the expressio
 starting from their left:
 
 .. testcode:: evaluationOrder
-   :compile: true
 
    >> let r1 =
    -> 2 + ((3 % 4) * 5)
@@ -540,7 +528,6 @@ starting from their left:
 ``(3 % 4)`` is ``3``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
-   :compile: true
 
    >> let r2 =
    -> 2 + (3 * 5)
@@ -552,7 +539,6 @@ starting from their left:
 ``(3 * 5)`` is ``15``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
-   :compile: true
 
    >> let r3 =
    -> 2 + 15
@@ -595,7 +581,6 @@ followed by a definition of an :newTerm:`operator method`
 to add together instances of the ``Vector2D`` structure:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> struct Vector2D {
          var x = 0.0, y = 0.0
@@ -628,7 +613,6 @@ The type method
 can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> let vector = Vector2D(x: 3.0, y: 1.0)
    -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
@@ -659,7 +643,6 @@ the ``prefix`` or ``postfix`` modifier
 before the ``func`` keyword when declaring the operator method:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> extension Vector2D {
           static prefix func - (vector: Vector2D) -> Vector2D {
@@ -678,7 +661,6 @@ The corresponding implementation for ``Vector2D`` instances
 performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> let positive = Vector2D(x: 3.0, y: 4.0)
    -> let negative = -positive
@@ -703,7 +685,6 @@ The example below implements
 an addition assignment operator method for ``Vector2D`` instances:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> extension Vector2D {
           static func += (left: inout Vector2D, right: Vector2D) {
@@ -718,7 +699,6 @@ takes advantage of the existing addition operator method,
 and uses it to set the left value to be the left value plus the right value:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> var original = Vector2D(x: 1.0, y: 2.0)
    -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
@@ -756,7 +736,6 @@ You provide an implementation of the ``==`` operator
 in the same way as you implement other infix operators:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> extension Vector2D: Equatable {
           static func == (left: Vector2D, right: Vector2D) -> Bool {
@@ -774,7 +753,6 @@ and so this is the logic used by the operator implementation.
 You can now use this operator to check whether two ``Vector2D`` instances are equivalent:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> let twoThree = Vector2D(x: 2.0, y: 3.0)
    -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
@@ -805,7 +783,6 @@ Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
 of the equivalence operators.
 
 .. testcode:: equatable_synthesis
-   :compile: true
 
    -> struct Vector3D: Equatable {
          var x = 0.0, y = 0.0, z = 0.0
@@ -832,7 +809,6 @@ New operators are declared at a global level using the ``operator`` keyword,
 and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> prefix operator +++
 
@@ -847,7 +823,6 @@ To implement the ``+++`` operator,
 you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> extension Vector2D {
          static prefix func +++ (vector: inout Vector2D) -> Vector2D {
@@ -884,7 +859,6 @@ The following example defines a new custom infix operator called ``+-``,
 which belongs to the precedence group ``AdditionPrecedence``:
 
 .. testcode:: customOperators
-   :compile: true
 
    -> infix operator +-: AdditionPrecedence
    -> extension Vector2D {
@@ -917,7 +891,6 @@ see :ref:`Declarations_OperatorDeclaration`.
    the postfix operator is applied first.
 
 .. assertion:: postfixOperatorsAreAppliedBeforePrefixOperators
-   :compile: true
 
    -> prefix operator +++
    -> postfix operator ---

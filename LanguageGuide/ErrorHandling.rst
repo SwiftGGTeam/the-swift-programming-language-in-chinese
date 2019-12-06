@@ -48,7 +48,6 @@ For example, here's how you might represent the error conditions
 of operating a vending machine inside a game:
 
 .. testcode:: throw-enum-error
-   :compile: true
 
    -> enum VendingMachineError: Error {
           case invalidSelection
@@ -64,7 +63,6 @@ the following code throws an error to indicate
 that five additional coins are needed by the vending machine:
 
 .. testcode:: throw-enum-error
-   :compile: true
 
    -> throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
    xx fatal error
@@ -124,7 +122,6 @@ you write the ``throws`` keyword before the return arrow (``->``).
 .. TODO Add discussion of throwing initializers
 
 .. testcode:: throwingFunctionDeclaration
-   :compile: true
 
    -> func canThrowErrors() throws -> String
    >> { return "foo" }
@@ -133,7 +130,6 @@ you write the ``throws`` keyword before the return arrow (``->``).
    >> { return "foo" }
 
 .. assertion:: throwing-function-cant-overload-nonthrowing
-   :compile: true
 
    -> func f() -> Int { return 10 }
    -> func f() throws -> Int { return 10 } // Error
@@ -145,7 +141,6 @@ you write the ``throws`` keyword before the return arrow (``->``).
    !! ^
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
-   :compile: true
 
    -> func f(callback: () -> Int) {}
    -> func f(callback: () throws -> Int) {} // Allowed
@@ -172,7 +167,6 @@ is out of stock,
 or has a cost that exceeds the current deposited amount:
 
 .. testcode:: errorHandling
-   :compile: true
 
    >> enum VendingMachineError: Error {
    >>     case invalidSelection
@@ -232,7 +226,6 @@ and any errors that the ``vend(itemNamed:)`` method throws will
 propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)`` function is called.
 
 .. testcode:: errorHandling
-   :compile: true
 
    -> let favoriteSnacks = [
           "Alice": "Chips",
@@ -261,7 +254,6 @@ calls a throwing function as part of the initialization process,
 and it handles any errors that it encounters by propagating them to its caller.
 
 .. testcode:: errorHandling
-    :compile: true
 
     -> struct PurchasedSnack {
            let name: String
@@ -329,7 +321,6 @@ For example, the following code matches against all three cases
 of the ``VendingMachineError`` enumeration.
 
 .. testcode:: errorHandling
-   :compile: true
 
    -> var vendingMachine = VendingMachine()
    -> vendingMachine.coinsDeposited = 8
@@ -380,7 +371,6 @@ error that isn't a ``VendingMachineError`` is instead
 caught by the calling function:
 
 .. testcode:: errorHandling
-    :compile: true
 
     -> func nourish(with item: String) throws {
            do {
@@ -417,7 +407,6 @@ For example,
 in the following code ``x`` and ``y`` have the same value and behavior:
 
 .. testcode:: optional-try
-    :compile: true
 
     -> func someThrowingFunction() throws -> Int {
           // ...
@@ -451,7 +440,6 @@ uses several approaches to fetch data,
 or returns ``nil`` if all of the approaches fail.
 
 .. testcode:: optional-try-cached-data
-    :compile: true
 
     >> struct Data {}
     >> func fetchDataFromDisk() throws -> Data { return Data() }
@@ -482,7 +470,6 @@ no error will be thrown at runtime,
 so it is appropriate to disable error propagation.
 
 .. testcode:: forceTryStatement
-   :compile: true
 
    >> struct Image {}
    >> func loadImage(atPath path: String) throws -> Image {
@@ -520,7 +507,6 @@ and so on.
 The last ``defer`` statement in source code order executes first.
 
 .. testcode:: defer
-   :compile: true
 
    >> func exists(_ file: String) -> Bool { return true }
    >> struct File {

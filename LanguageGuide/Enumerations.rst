@@ -44,7 +44,6 @@ You introduce enumerations with the ``enum`` keyword
 and place their entire definition within a pair of braces:
 
 .. testcode:: enums
-   :compile: true
 
    -> enum SomeEnumeration {
          // enumeration definition goes here
@@ -53,7 +52,6 @@ and place their entire definition within a pair of braces:
 Here's an example for the four main points of a compass:
 
 .. testcode:: enums
-   :compile: true
 
    -> enum CompassPoint {
          case north
@@ -81,7 +79,6 @@ You use the ``case`` keyword to introduce new enumeration cases.
 Multiple cases can appear on a single line, separated by commas:
 
 .. testcode:: enums
-   :compile: true
 
    -> enum Planet {
          case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
@@ -95,7 +92,6 @@ Give enumeration types singular rather than plural names,
 so that they read as self-evident:
 
 .. testcode:: enums
-   :compile: true
 
    -> var directionToHead = CompassPoint.west
 
@@ -105,7 +101,6 @@ Once ``directionToHead`` is declared as a ``CompassPoint``,
 you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
-   :compile: true
 
    -> directionToHead = .east
 
@@ -121,7 +116,6 @@ Matching Enumeration Values with a Switch Statement
 You can match individual enumeration values with a ``switch`` statement:
 
 .. testcode:: enums
-   :compile: true
 
    -> directionToHead = .south
    -> switch directionToHead {
@@ -157,7 +151,6 @@ When it isn't appropriate to provide a ``case`` for every enumeration case,
 you can provide a ``default`` case to cover any cases that aren't addressed explicitly:
 
 .. testcode:: enums
-   :compile: true
 
    -> let somePlanet = Planet.earth
    -> switch somePlanet {
@@ -182,7 +175,6 @@ as an ``allCases`` property of the enumeration type.
 Here's an example:
 
 .. testcode:: enums
-    :compile: true
 
     -> enum Beverage: CaseIterable {
            case coffee, tea, juice
@@ -201,7 +193,6 @@ The example above counts how many cases there are,
 and the example below uses a ``for`` loop to iterate over all the cases.
 
 .. testcode:: enums
-    :compile: true
 
     -> for beverage in Beverage.allCases {
            print(beverage)
@@ -263,7 +254,6 @@ and QR code barcodes as a string of any length.
 In Swift, an enumeration to define product barcodes of either type might look like this:
 
 .. testcode:: enums
-   :compile: true
 
    -> enum Barcode {
          case upc(Int, Int, Int, Int)
@@ -285,7 +275,6 @@ when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
 You can then create new barcodes using either type:
 
 .. testcode:: enums
-   :compile: true
 
    -> var productBarcode = Barcode.upc(8, 85909, 51226, 3)
 
@@ -296,7 +285,6 @@ with an associated tuple value of ``(8, 85909, 51226, 3)``.
 You can assign the same product a different type of barcode:
 
 .. testcode:: enums
-   :compile: true
 
    -> productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
 
@@ -317,7 +305,6 @@ or a variable (with the ``var`` prefix)
 for use within the ``switch`` case's body:
 
 .. testcode:: enums
-   :compile: true
 
    -> switch productBarcode {
          case .upc(let numberSystem, let manufacturer, let product, let check):
@@ -332,7 +319,6 @@ are extracted as constants, or if all are extracted as variables,
 you can place a single ``var`` or ``let`` annotation before the case name, for brevity:
 
 .. testcode:: enums
-   :compile: true
 
    -> switch productBarcode {
          case let .upc(numberSystem, manufacturer, product, check):
@@ -358,7 +344,6 @@ which are all of the same type.
 Here's an example that stores raw ASCII values alongside named enumeration cases:
 
 .. testcode:: rawValues
-   :compile: true
 
    -> enum ASCIIControlCharacter: Character {
          case tab = "\t"
@@ -403,7 +388,6 @@ The enumeration below is a refinement of the earlier ``Planet`` enumeration,
 with integer raw values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
-   :compile: true
 
    -> enum Planet: Int {
          case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
@@ -420,7 +404,6 @@ The enumeration below is a refinement of the earlier ``CompassPoint`` enumeratio
 with string raw values to represent each direction's name:
 
 .. testcode:: rawValues
-   :compile: true
 
    -> enum CompassPoint: String {
          case north, south, east, west
@@ -432,7 +415,6 @@ In the example above,
 You access the raw value of an enumeration case with its ``rawValue`` property:
 
 .. testcode:: rawValues
-   :compile: true
 
    -> let earthsOrder = Planet.earth.rawValue
    /> earthsOrder is \(earthsOrder)
@@ -457,7 +439,6 @@ You can use this initializer to try to create a new instance of the enumeration.
 This example identifies Uranus from its raw value of ``7``:
 
 .. testcode:: rawValues
-   :compile: true
 
    -> let possiblePlanet = Planet(rawValue: 7)
    >> print(type(of: possiblePlanet))
@@ -480,7 +461,6 @@ If you try to find a planet with a position of ``11``,
 the optional ``Planet`` value returned by the raw value initializer will be ``nil``:
 
 .. testcode:: rawValues
-   :compile: true
 
    -> let positionToFind = 11
    -> if let somePlanet = Planet(rawValue: positionToFind) {
@@ -519,7 +499,6 @@ which tells the compiler to insert the necessary layer of indirection.
 For example, here is an enumeration that stores simple arithmetic expressions:
 
 .. testcode:: recursive-enum-intro
-    :compile: true
 
     -> enum ArithmeticExpression {
            case number(Int)
@@ -531,7 +510,6 @@ You can also write ``indirect`` before the beginning of the enumeration
 to enable indirection for all of the enumeration's cases that have an associated value:
 
 .. testcode:: recursive-enum
-    :compile: true
 
     -> indirect enum ArithmeticExpression {
            case number(Int)
@@ -556,7 +534,6 @@ The code below shows the ``ArithmeticExpression`` recursive enumeration
 being created for ``(5 + 4) * 2``:
 
 .. testcode:: recursive-enum
-    :compile: true
 
     -> let five = ArithmeticExpression.number(5)
     -> let four = ArithmeticExpression.number(4)
@@ -568,7 +545,6 @@ to work with data that has a recursive structure.
 For example, here's a function that evaluates an arithmetic expression:
 
 .. testcode:: recursive-enum
-    :compile: true
 
     -> func evaluate(_ expression: ArithmeticExpression) -> Int {
            switch expression {

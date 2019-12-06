@@ -30,7 +30,6 @@ Protocol Syntax
 You define protocols in a very similar way to classes, structures, and enumerations:
 
 .. testcode:: protocolSyntax
-   :compile: true
 
    -> protocol SomeProtocol {
          // protocol definition goes here
@@ -42,7 +41,6 @@ separated by a colon, as part of their definition.
 Multiple protocols can be listed, and are separated by commas:
 
 .. testcode:: protocolSyntax
-   :compile: true
 
    >> protocol FirstProtocol {}
    >> protocol AnotherProtocol {}
@@ -54,7 +52,6 @@ If a class has a superclass, list the superclass name
 before any protocols it adopts, followed by a comma:
 
 .. testcode:: protocolSyntax
-   :compile: true
 
    >> class SomeSuperclass {}
    -> class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
@@ -89,7 +86,6 @@ Gettable and settable properties are indicated by writing
 and gettable properties are indicated by writing ``{ get }``.
 
 .. testcode:: instanceProperties
-   :compile: true
 
    -> protocol SomeProtocol {
          var mustBeSettable: Int { get set }
@@ -102,7 +98,6 @@ This rule pertains even though type property requirements can be prefixed with
 the ``class`` or ``static`` keyword when implemented by a class:
 
 .. testcode:: instanceProperties
-   :compile: true
 
    -> protocol AnotherProtocol {
          static var someTypeProperty: Int { get set }
@@ -111,7 +106,6 @@ the ``class`` or ``static`` keyword when implemented by a class:
 Here's an example of a protocol with a single instance property requirement:
 
 .. testcode:: instanceProperties
-   :compile: true
 
    -> protocol FullyNamed {
          var fullName: String { get }
@@ -127,7 +121,6 @@ Here's an example of a simple structure that adopts and conforms to
 the ``FullyNamed`` protocol:
 
 .. testcode:: instanceProperties
-   :compile: true
 
    -> struct Person: FullyNamed {
          var fullName: String
@@ -150,7 +143,6 @@ and means that ``Person`` has correctly conformed to the protocol.
 Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 
 .. testcode:: instanceProperties
-   :compile: true
 
    -> class Starship: FullyNamed {
          var prefix: String?
@@ -195,7 +187,6 @@ This is true even though type method requirements are prefixed with
 the ``class`` or ``static`` keyword when implemented by a class:
 
 .. testcode:: typeMethods
-   :compile: true
 
    -> protocol SomeProtocol {
          static func someTypeMethod()
@@ -204,7 +195,6 @@ the ``class`` or ``static`` keyword when implemented by a class:
 The following example defines a protocol with a single instance method requirement:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol RandomNumberGenerator {
          func random() -> Double
@@ -228,7 +218,6 @@ This class implements a pseudorandom number generator algorithm known as
 a *linear congruential generator*:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class LinearCongruentialGenerator: RandomNumberGenerator {
          var lastRandom = 42.0
@@ -285,7 +274,6 @@ to indicate that the method is expected to mutate the state of a conforming inst
 when it's called:
 
 .. testcode:: mutatingRequirements
-   :compile: true
 
    -> protocol Togglable {
          mutating func toggle()
@@ -303,7 +291,6 @@ The enumeration's ``toggle`` implementation is marked as ``mutating``,
 to match the ``Togglable`` protocol's requirements:
 
 .. testcode:: mutatingRequirements
-   :compile: true
 
    -> enum OnOffSwitch: Togglable {
          case off, on
@@ -332,7 +319,6 @@ in exactly the same way as for normal initializers,
 but without curly braces or an initializer body:
 
 .. testcode:: initializers
-   :compile: true
 
    -> protocol SomeProtocol {
          init(someParameter: Int)
@@ -349,7 +335,6 @@ In both cases,
 you must mark the initializer implementation with the ``required`` modifier:
 
 .. testcode:: initializers
-   :compile: true
 
    -> class SomeClass: SomeProtocol {
          required init(someParameter: Int) {
@@ -358,7 +343,6 @@ you must mark the initializer implementation with the ``required`` modifier:
       }
 
 .. assertion:: protocolInitializerRequirementsCanBeImplementedAsDesignatedOrConvenience
-   :compile: true
 
    -> protocol P {
          init(x: Int)
@@ -382,7 +366,6 @@ For more information on required initializers,
 see :ref:`Initialization_RequiredInitializers`.
 
 .. assertion:: protocolInitializerRequirementsRequireTheRequiredModifierOnTheImplementingClass
-   :compile: true
 
    -> protocol P {
          init(s: String)
@@ -399,7 +382,6 @@ see :ref:`Initialization_RequiredInitializers`.
    !! required
 
 .. assertion:: protocolInitializerRequirementsRequireTheRequiredModifierOnSubclasses
-   :compile: true
 
    -> protocol P {
          init(s: String)
@@ -429,7 +411,6 @@ see :ref:`Initialization_RequiredInitializers`.
    For more about the ``final`` modifier, see :ref:`Inheritance_PreventingOverrides`.
 
 .. assertion:: finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements
-   :compile: true
 
    -> protocol P {
          init(s: String)
@@ -446,7 +427,6 @@ and also implements a matching initializer requirement from a protocol,
 mark the initializer implementation with both the ``required`` and ``override`` modifiers:
 
 .. testcode:: requiredOverrideInitializers
-   :compile: true
 
    -> protocol SomeProtocol {
          init()
@@ -479,56 +459,48 @@ A nonfailable initializer requirement can be satisfied by
 a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 .. assertion:: failableRequirementCanBeSatisfiedByFailableInitializer
-   :compile: true
 
    -> protocol P { init?(i: Int) }
    -> class C: P { required init?(i: Int) {} }
    -> struct S: P { init?(i: Int) {} }
 
 .. assertion:: failableRequirementCanBeSatisfiedByIUOInitializer
-   :compile: true
 
    -> protocol P { init?(i: Int) }
    -> class C: P { required init!(i: Int) {} }
    -> struct S: P { init!(i: Int) {} }
 
 .. assertion:: iuoRequirementCanBeSatisfiedByFailableInitializer
-   :compile: true
 
    -> protocol P { init!(i: Int) }
    -> class C: P { required init?(i: Int) {} }
    -> struct S: P { init?(i: Int) {} }
 
 .. assertion:: iuoRequirementCanBeSatisfiedByIUOInitializer
-   :compile: true
 
    -> protocol P { init!(i: Int) }
    -> class C: P { required init!(i: Int) {} }
    -> struct S: P { init!(i: Int) {} }
 
 .. assertion:: failableRequirementCanBeSatisfiedByNonFailableInitializer
-   :compile: true
 
    -> protocol P { init?(i: Int) }
    -> class C: P { required init(i: Int) {} }
    -> struct S: P { init(i: Int) {} }
 
 .. assertion:: iuoRequirementCanBeSatisfiedByNonFailableInitializer
-   :compile: true
 
    -> protocol P { init!(i: Int) }
    -> class C: P { required init(i: Int) {} }
    -> struct S: P { init(i: Int) {} }
 
 .. assertion:: nonFailableRequirementCanBeSatisfiedByNonFailableInitializer
-   :compile: true
 
    -> protocol P { init(i: Int) }
    -> class C: P { required init(i: Int) {} }
    -> struct S: P { init(i: Int) {} }
 
 .. assertion:: nonFailableRequirementCanBeSatisfiedByIUOInitializer
-   :compile: true
 
    -> protocol P { init(i: Int) }
    -> class C: P { required init!(i: Int) {} }
@@ -563,7 +535,6 @@ You can use a protocol in many places where other types are allowed, including:
 Here's an example of a protocol used as a type:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class Dice {
          let sides: Int
@@ -617,7 +588,6 @@ Here's how the ``Dice`` class can be used to create a six-sided dice
 with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
 .. testcode:: protocols
-   :compile: true
 
    -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
    -> for _ in 1...5 {
@@ -648,7 +618,6 @@ the underlying type of that source.
 The example below defines two protocols for use with dice-based board games:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol DiceGame {
          var dice: Dice { get }
@@ -682,7 +651,6 @@ to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class SnakesAndLadders: DiceGame {
          let finalSquare = 25
@@ -758,7 +726,6 @@ This next example shows a class called ``DiceGameTracker``,
 which adopts the ``DiceGameDelegate`` protocol:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
@@ -804,7 +771,6 @@ regardless of what kind of game is being played.
 Here's how ``DiceGameTracker`` looks in action:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let tracker = DiceGameTracker()
    -> let game = SnakesAndLadders()
@@ -839,7 +805,6 @@ any type that has a way to be represented as text.
 This might be a description of itself, or a text version of its current state:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol TextRepresentable {
          var textualDescription: String { get }
@@ -852,7 +817,6 @@ The ``Dice`` class from above can be extended to adopt and conform to ``TextRepr
    it's part of a running example and Dice is used in that section.
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension Dice: TextRepresentable {
          var textualDescription: String {
@@ -869,7 +833,6 @@ is provided within the extension's curly braces.
 Any ``Dice`` instance can now be treated as ``TextRepresentable``:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
    -> print(d12.textualDescription)
@@ -879,7 +842,6 @@ Similarly, the ``SnakesAndLadders`` game class can be extended to
 adopt and conform to the ``TextRepresentable`` protocol:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension SnakesAndLadders: TextRepresentable {
          var textualDescription: String {
@@ -908,7 +870,6 @@ makes ``Array`` instances conform to the ``TextRepresentable`` protocol
 whenever they store elements of a type that conforms to ``TextRepresentable``.
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension Array: TextRepresentable where Element: TextRepresentable {
          var textualDescription: String {
@@ -930,7 +891,6 @@ but has not yet stated that it adopts that protocol,
 you can make it adopt the protocol with an empty extension:
 
 .. testcode:: protocols
-   :compile: true
 
    -> struct Hamster {
          var name: String
@@ -943,7 +903,6 @@ you can make it adopt the protocol with an empty extension:
 Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the required type:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let simonTheHamster = Hamster(name: "Simon")
    -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
@@ -966,7 +925,6 @@ as mentioned in :ref:`Protocols_ProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
 
@@ -974,7 +932,6 @@ It's now possible to iterate over the items in the array,
 and print each item's textual description:
 
 .. testcode:: protocols
-   :compile: true
 
    -> for thing in things {
          print(thing.textualDescription)
@@ -1001,7 +958,6 @@ The syntax for protocol inheritance is similar to the syntax for class inheritan
 but with the option to list multiple inherited protocols, separated by commas:
 
 .. testcode:: protocols
-   :compile: true
 
    >> protocol SomeProtocol {}
    >> protocol AnotherProtocol {}
@@ -1013,7 +969,6 @@ Here's an example of a protocol that inherits
 the ``TextRepresentable`` protocol from above:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol PrettyTextRepresentable: TextRepresentable {
          var prettyTextualDescription: String { get }
@@ -1030,7 +985,6 @@ to provide a gettable property called ``prettyTextualDescription`` that returns 
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension SnakesAndLadders: PrettyTextRepresentable {
          var prettyTextualDescription: String {
@@ -1072,7 +1026,6 @@ The ``prettyTextualDescription`` property can now be used to print a pretty text
 of any ``SnakesAndLadders`` instance:
 
 .. testcode:: protocols
-   :compile: true
 
    -> print(game.prettyTextualDescription)
    </ A game of Snakes and Ladders with 25 squares:
@@ -1087,7 +1040,6 @@ You can limit protocol adoption to class types (and not structures or enumeratio
 by adding the ``AnyObject`` protocol to a protocol's inheritance list.
 
 .. testcode:: classOnlyProtocols
-   :compile: true
 
    >> protocol SomeInheritedProtocol {}
    -> protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
@@ -1108,7 +1060,6 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
 
 .. assertion:: classMustAppearFirstInTheInheritanceList
-   :compile: true
 
    -> protocol P1 {}
    -> protocol P2: class, P1 {}
@@ -1119,7 +1070,6 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    !! class,
 
 .. assertion:: anyobject-doesn't-have-to-be-first
-   :compile: true
 
    >> protocol SomeInheritedProtocol {}
    -> protocol SomeClassOnlyProtocol: SomeInheritedProtocol, AnyObject {
@@ -1152,7 +1102,6 @@ Here's an example that combines two protocols called ``Named`` and ``Aged``
 into a single protocol composition requirement on a function parameter:
 
 .. testcode:: protocolComposition
-   :compile: true
 
    -> protocol Named {
          var name: String { get }
@@ -1194,7 +1143,6 @@ the ``Named`` protocol from the previous example
 with a ``Location`` class:
 
 .. testcode:: protocolComposition
-   :compile: true
 
    -> class Location {
           var latitude: Double
@@ -1255,7 +1203,6 @@ This example defines a protocol called ``HasArea``,
 with a single property requirement of a gettable ``Double`` property called ``area``:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> protocol HasArea {
          var area: Double { get }
@@ -1265,7 +1212,6 @@ Here are two classes, ``Circle`` and ``Country``,
 both of which conform to the ``HasArea`` protocol:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> class Circle: HasArea {
          let pi = 3.1415927
@@ -1286,7 +1232,6 @@ Both classes correctly conform to the ``HasArea`` protocol.
 Here's a class called ``Animal``, which doesn't conform to the ``HasArea`` protocol:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> class Animal {
          var legs: Int
@@ -1298,7 +1243,6 @@ Nonetheless, they're all classes, and so instances of all three types
 can be used to initialize an array that stores values of type ``AnyObject``:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> let objects: [AnyObject] = [
          Circle(radius: 2.0),
@@ -1317,7 +1261,6 @@ and each object in the array can be checked to see if
 it conforms to the ``HasArea`` protocol:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> for object in objects {
          if let objectWithArea = object as? HasArea {
@@ -1402,7 +1345,6 @@ This data source is defined by the ``CounterDataSource`` protocol,
 which has two optional requirements:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    >> import Foundation
    -> @objc protocol CounterDataSource {
@@ -1428,7 +1370,6 @@ The ``Counter`` class, defined below,
 has an optional ``dataSource`` property of type ``CounterDataSource?``:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> class Counter {
          var count = 0
@@ -1498,7 +1439,6 @@ returns a constant value of ``3`` every time it's queried.
 It does this by implementing the optional ``fixedIncrement`` property requirement:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> class ThreeSource: NSObject, CounterDataSource {
          let fixedIncrement = 3
@@ -1507,7 +1447,6 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 You can use an instance of ``ThreeSource`` as the data source for a new ``Counter`` instance:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> var counter = Counter()
    -> counter.dataSource = ThreeSource()
@@ -1531,7 +1470,6 @@ which makes a ``Counter`` instance count up or down towards zero
 from its current ``count`` value:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> class TowardsZeroSource: NSObject, CounterDataSource {
          func increment(forCount count: Int) -> Int {
@@ -1556,7 +1494,6 @@ to count from ``-4`` to zero.
 Once the counter reaches zero, no more counting takes place:
 
 .. testcode:: protocolConformance
-   :compile: true
 
    -> counter.count = -4
    -> counter.dataSource = TowardsZeroSource()
@@ -1587,7 +1524,6 @@ which uses the result of the required ``random()`` method
 to return a random ``Bool`` value:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension RandomNumberGenerator {
          func randomBool() -> Bool {
@@ -1600,7 +1536,6 @@ all conforming types automatically gain this method implementation
 without any additional modification.
 
 .. testcode:: protocols
-   :compile: true
 
    >> do {
    -> let generator = LinearCongruentialGenerator()
@@ -1640,7 +1575,6 @@ can provide a default implementation of its required ``prettyTextualDescription`
 to simply return the result of accessing the ``textualDescription`` property:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension PrettyTextRepresentable  {
          var prettyTextualDescription: String {
@@ -1686,7 +1620,6 @@ a part of the standard library,
 you can use the ``==`` and ``!=`` operators to check for equality and inequality between two elements.
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension Collection where Element: Equatable {
           func allEqual() -> Bool {
@@ -1707,7 +1640,6 @@ one where all the elements are the same,
 and one where they aren't:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let equalNumbers = [100, 100, 100, 100, 100]
    -> let differentNumbers = [100, 100, 200, 100, 200]
@@ -1717,7 +1649,6 @@ and integers conform to ``Equatable``,
 ``equalNumbers`` and ``differentNumbers`` can use the ``allEqual()`` method:
 
 .. testcode:: protocols
-   :compile: true
 
    -> print(equalNumbers.allEqual())
    <- true

@@ -65,7 +65,6 @@ This example starts with a simple class called ``Person``,
 which defines a stored constant property called ``name``:
 
 .. testcode:: howARCWorks
-   :compile: true
 
    -> class Person {
          let name: String
@@ -91,7 +90,6 @@ they are automatically initialized with a value of ``nil``,
 and do not currently reference a ``Person`` instance.
 
 .. testcode:: howARCWorks
-   :compile: true
 
    -> var reference1: Person?
    -> var reference2: Person?
@@ -101,7 +99,6 @@ You can now create a new ``Person`` instance
 and assign it to one of these three variables:
 
 .. testcode:: howARCWorks
-   :compile: true
 
    -> reference1 = Person(name: "John Appleseed")
    <- John Appleseed is being initialized
@@ -119,7 +116,6 @@ If you assign the same ``Person`` instance to two more variables,
 two more strong references to that instance are established:
 
 .. testcode:: howARCWorks
-   :compile: true
 
    -> reference2 = reference1
    -> reference3 = reference1
@@ -132,7 +128,6 @@ a single strong reference remains,
 and the ``Person`` instance is not deallocated:
 
 .. testcode:: howARCWorks
-   :compile: true
 
    -> reference1 = nil
    -> reference2 = nil
@@ -142,7 +137,6 @@ the third and final strong reference is broken,
 at which point it's clear that you are no longer using the ``Person`` instance:
 
 .. testcode:: howARCWorks
-   :compile: true
 
    -> reference3 = nil
    <- John Appleseed is being deinitialized
@@ -175,7 +169,6 @@ This example defines two classes called ``Person`` and ``Apartment``,
 which model a block of apartments and its residents:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> class Person {
          let name: String
@@ -210,7 +203,6 @@ which will be set to a specific ``Apartment`` and ``Person`` instance below.
 Both of these variables have an initial value of ``nil``, by virtue of being optional:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> var john: Person?
    -> var unit4A: Apartment?
@@ -219,7 +211,6 @@ You can now create a specific ``Person`` instance and ``Apartment`` instance
 and assign these new instances to the ``john`` and ``unit4A`` variables:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john = Person(name: "John Appleseed")
    -> unit4A = Apartment(unit: "4A")
@@ -238,7 +229,6 @@ the instances stored inside the ``john`` and ``unit4A`` optional variables,
 so that the properties of those instances can be set:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john!.apartment = unit4A
    -> unit4A!.tenant = john
@@ -258,7 +248,6 @@ the reference counts do not drop to zero,
 and the instances are not deallocated by ARC:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john = nil
    -> unit4A = nil
@@ -335,7 +324,6 @@ a reference to an invalid instance that no longer exists.
     when ARC sets a weak reference to ``nil``.
 
 .. assertion:: weak-reference-doesnt-trigger-didset
-    :compile: true
 
     -> class C {
            weak var w: C? { didSet { print("did set") } }
@@ -356,7 +344,6 @@ This time around, the ``Apartment`` type's ``tenant`` property
 is declared as a weak reference:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> class Person {
          let name: String
@@ -376,7 +363,6 @@ The strong references from the two variables (``john`` and ``unit4A``)
 and the links between the two instances are created as before:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> var john: Person?
    -> var unit4A: Apartment?
@@ -399,7 +385,6 @@ the ``john`` variable by setting it to ``nil``,
 there are no more strong references to the ``Person`` instance:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> john = nil
    <- John Appleseed is being deinitialized
@@ -417,7 +402,6 @@ If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> unit4A = nil
    <- Apartment 4A is being deinitialized
@@ -496,7 +480,6 @@ you define its ``customer`` property as an unowned reference,
 to avoid a strong reference cycle:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> class Customer {
          let name: String
@@ -529,7 +512,6 @@ which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> var john: Customer?
 
@@ -538,7 +520,6 @@ and use it to initialize and assign a new ``CreditCard`` instance
 as that customer's ``card`` property:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> john = Customer(name: "John Appleseed")
    -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
@@ -565,7 +546,6 @@ there are no more strong references to the ``CreditCard`` instance,
 and it too is deallocated:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> john = nil
    <- John Appleseed is being deinitialized
@@ -635,7 +615,6 @@ To represent this, the ``Country`` class has a ``capitalCity`` property,
 and the ``City`` class has a ``country`` property:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
 
    -> class Country {
          let name: String
@@ -688,7 +667,6 @@ and the ``capitalCity`` property can be accessed directly,
 without needing to use an exclamation mark to unwrap its optional value:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
 
    -> var country = Country(name: "Canada", capitalName: "Ottawa")
    -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
@@ -738,7 +716,6 @@ This example defines a class called ``HTMLElement``,
 which provides a simple model for an individual element within an HTML document:
 
 .. testcode:: strongReferenceCyclesForClosures
-   :compile: true
 
    -> class HTMLElement {
    ---
@@ -797,7 +774,6 @@ that defaults to some text if the ``text`` property is ``nil``,
 in order to prevent the representation from returning an empty HTML tag:
 
 .. testcode:: strongReferenceCyclesForClosures
-   :compile: true
 
    -> let heading = HTMLElement(name: "h1")
    -> let defaultText = "some default text"
@@ -826,7 +802,6 @@ which prints a message to show when an ``HTMLElement`` instance is deallocated.
 Here's how you use the ``HTMLElement`` class to create and print a new instance:
 
 .. testcode:: strongReferenceCyclesForClosures
-   :compile: true
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
    -> print(paragraph!.asHTML())
@@ -866,7 +841,6 @@ neither the ``HTMLElement`` instance nor its closure are deallocated,
 because of the strong reference cycle:
 
 .. testcode:: strongReferenceCyclesForClosures
-   :compile: true
 
    -> paragraph = nil
 
@@ -909,7 +883,6 @@ Place the capture list before a closure's parameter list and return type
 if they are provided:
 
 .. testcode:: strongReferenceCyclesForClosures
-   :compile: true
 
    >> class SomeClass {
    >> var delegate: AnyObject?
@@ -927,7 +900,6 @@ place the capture list at the very start of the closure,
 followed by the ``in`` keyword:
 
 .. testcode:: strongReferenceCyclesForClosures
-   :compile: true
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
@@ -967,7 +939,6 @@ from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above.
 Here's how you write the ``HTMLElement`` class to avoid the cycle:
 
 .. testcode:: unownedReferencesForClosures
-   :compile: true
 
    -> class HTMLElement {
    ---
@@ -1002,7 +973,6 @@ which means “capture self as an unowned reference rather than a strong referen
 You can create and print an ``HTMLElement`` instance as before:
 
 .. testcode:: unownedReferencesForClosures
-   :compile: true
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
    -> print(paragraph!.asHTML())
@@ -1020,7 +990,6 @@ the ``HTMLElement`` instance is deallocated,
 as can be seen from the printing of its deinitializer message in the example below:
 
 .. testcode:: unownedReferencesForClosures
-   :compile: true
 
    -> paragraph = nil
    <- p is being deinitialized

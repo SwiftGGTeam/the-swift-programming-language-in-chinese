@@ -46,7 +46,6 @@ This method does not actually do anything for a base ``Vehicle`` instance,
 but will be customized by subclasses of ``Vehicle`` later on:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> class Vehicle {
          var currentSpeed = 0.0
@@ -62,7 +61,6 @@ You create a new instance of ``Vehicle`` with :newTerm:`initializer syntax`,
 which is written as a type name followed by empty parentheses:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> let someVehicle = Vehicle()
 
@@ -71,7 +69,6 @@ you can access its ``description`` property to print
 a human-readable description of the vehicle's current speed:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> print("Vehicle: \(someVehicle.description)")
    </ Vehicle: traveling at 0.0 miles per hour
@@ -95,7 +92,6 @@ write the subclass name before the superclass name,
 separated by a colon:
 
 .. testcode:: protocolSyntax
-   :compile: true
 
    >> class SomeSuperclass {}
    -> class SomeSubclass: SomeSuperclass {
@@ -106,7 +102,6 @@ The following example defines a subclass called ``Bicycle``,
 with a superclass of ``Vehicle``:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> class Bicycle: Vehicle {
          var hasBasket = false
@@ -125,7 +120,6 @@ You can set the ``hasBasket`` property to ``true`` for a particular ``Bicycle`` 
 after that instance is created:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> let bicycle = Bicycle()
    -> bicycle.hasBasket = true
@@ -134,7 +128,6 @@ You can also modify the inherited ``currentSpeed`` property of a ``Bicycle`` ins
 and query the instance's inherited ``description`` property:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> bicycle.currentSpeed = 15.0
    -> print("Bicycle: \(bicycle.description)")
@@ -145,7 +138,6 @@ The next example creates a subclass of ``Bicycle`` for a two-seater bicycle
 known as a “tandem”:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> class Tandem: Bicycle {
          var currentNumberOfPassengers = 0
@@ -161,7 +153,6 @@ you can work with any of its new and inherited properties,
 and query the read-only ``description`` property it inherits from ``Vehicle``:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> let tandem = Tandem()
    -> tandem.hasBasket = true
@@ -227,7 +218,6 @@ The following example defines a new subclass of ``Vehicle`` called ``Train``,
 which overrides the ``makeNoise()`` method that ``Train`` inherits from ``Vehicle``:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> class Train: Vehicle {
          override func makeNoise() {
@@ -239,7 +229,6 @@ If you create a new instance of ``Train`` and call its ``makeNoise()`` method,
 you can see that the ``Train`` subclass version of the method is called:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> let train = Train()
    -> train.makeNoise()
@@ -291,7 +280,6 @@ The ``Car`` class also overrides the ``description`` property it inherits from `
 to provide a custom description that includes the current gear:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> class Car: Vehicle {
          var gear = 1
@@ -311,7 +299,6 @@ you can see that its ``description`` property returns
 the tailored description defined within the ``Car`` class:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> let car = Car()
    -> car.currentSpeed = 25.0
@@ -349,7 +336,6 @@ The ``AutomaticCar`` class represents a car with an automatic gearbox,
 which automatically selects an appropriate gear to use based on the current speed:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> class AutomaticCar: Car {
          override var currentSpeed: Double {
@@ -368,7 +354,6 @@ rounded down to the nearest integer, plus ``1``.
 A speed of ``35.0`` produces a gear of ``4``:
 
 .. testcode:: inheritance
-   :compile: true
 
    -> let automatic = AutomaticCar()
    -> automatic.currentSpeed = 35.0
@@ -392,7 +377,6 @@ Methods, properties, or subscripts that you add to a class in an extension
 can also be marked as final within the extension's definition.
 
 .. assertion:: finalPreventsOverriding
-   :compile: true
 
    -> class C {
          final var someVar = 0
@@ -427,7 +411,6 @@ before the ``class`` keyword in its class definition (``final class``).
 Any attempt to subclass a final class is reported as a compile-time error.
 
 .. assertion:: finalClassPreventsOverriding
-   :compile: true
 
    -> final class C {
          var someVar = 0
