@@ -163,7 +163,7 @@ but they can't use in-out parameters.
     >>     }
     >> }
     >> let s = Subscriptable()
-    >> print(s[x: 0])
+    >> print(s[0])
     << 100
 
 A class or structure can provide as many subscript implementations as it needs,
