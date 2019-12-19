@@ -959,12 +959,13 @@ by assigning it the special value ``nil``:
    -> serverResponseCode = nil
    // serverResponseCode now contains no value
 
-.. note::
-
-   You can't use ``nil`` with non-optional constants and variables.
-   If a constant or variable in your code needs to work with
-   the absence of a value under certain conditions,
-   always declare it as an optional value of the appropriate type.
+You can't use ``nil`` with non-optional constants or variables.
+If a constant or variable in your code needs to work with
+the absence of a value under certain conditions,
+declare it as an optional value of the appropriate type.
+Likewise,
+if a constant or variable isn't declared as an optional value,
+it's guaranteed to never contain a ``nil`` value.
 
 If you define an optional variable without providing a default value,
 the variable is automatically set to ``nil`` for you:
@@ -981,10 +982,10 @@ the variable is automatically set to ``nil`` for you:
    In Swift, ``nil`` isn't a pointer --- it's the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
-.. _TheBasics_IfStatementsAndForcedUnwrapping:
+.. _TheBasics_OptionalBinding:
 
-If Statements and Forced Unwrapping
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unwrapping Optionals
+~~~~~~~~~~~~~~~~~~~~
 
 You can use an ``if`` statement to find out whether an optional contains a value
 by comparing the optional against ``nil``.
@@ -1000,9 +1001,9 @@ If an optional has a value, it's considered to be “not equal to” ``nil``:
       }
    <- convertedNumber contains some integer value.
 
-Once you're sure that the optional *does* contain a value,
-you can access its underlying value
-by adding an exclamation point (``!``) to the end of the optional's name.
+After you're sure that the optional contains a value,
+one way to access its underlying value
+is adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation point effectively says,
 “I know that this optional definitely has a value; please use it.”
 This is known as :newTerm:`forced unwrapping` of the optional's value:
@@ -1014,20 +1015,16 @@ This is known as :newTerm:`forced unwrapping` of the optional's value:
       }
    <- convertedNumber has an integer value of 123.
 
+Trying to use ``!`` to access a nonexistent optional value
+triggers a runtime error.
+Always make sure that an optional contains a non-``nil`` value
+before using ``!`` to force-unwrap its value.
 For more about the ``if`` statement, see :doc:`ControlFlow`.
 
-.. note::
-
-   Trying to use ``!`` to access a nonexistent optional value triggers
-   a runtime error.
-   Always make sure that an optional contains a non-``nil`` value
-   before using ``!`` to force-unwrap its value.
-
-.. _TheBasics_OptionalBinding:
-
-Optional Binding
-~~~~~~~~~~~~~~~~
-
+Instead of writing the optional's name twice,
+once to check if it has a value
+and again to force unwrap that value,
+a simpler way to access its value is to use optional binding.
 You use :newTerm:`optional binding` to find out whether an optional contains a value,
 and if so, to make that value available as a temporary constant or variable.
 Optional binding can be used with ``if`` and ``while`` statements
