@@ -338,9 +338,6 @@ that takes ``KeyValuePairs<String, String>``.
    >> }
    >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !$ error: cannot call value of non-function type 'Repeater'
-   !! repeatLabels(a: "four") // Error
-   !! ~~~~~~~~~~~~^
    !$ error: cannot invoke 'repeatLabels' with an argument list of type '(a: String)'
    !! repeatLabels(a: "four") // Error
    !! ^

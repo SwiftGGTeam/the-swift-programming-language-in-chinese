@@ -259,9 +259,9 @@ For example:
    ---
    -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
    -> f = functionWithDifferentNumberOfArguments // Error
-   !$ error: cannot assign value of type '(Int, Int, Int) -> ()' to type '(Int, Int) -> ()'
+   !$ error: expression type '()' is ambiguous without more context
    !! f = functionWithDifferentNumberOfArguments // Error
-   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because argument labels are not part of a function's type,
 you omit them when writing a function type.

@@ -544,9 +544,12 @@ for reasons explained after the example:
    !$ error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !~ /tmp/swifttest.swift:3:16: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if value == valueToFind {
-   !!          ^
+   !$ note: candidate requires that 'T' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+   !! extension BinaryInteger {
+   !! ^
+   !$ note: candidate requires that 'T' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+   !! extension StringProtocol {
+   !! ^
 
 This function doesn't compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.

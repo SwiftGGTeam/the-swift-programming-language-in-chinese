@@ -489,9 +489,12 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !$ error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
-   !~ /tmp/swifttest.swift:4:7: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !!       ^
+   !$ note: candidate requires that 'C' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+   !! extension BinaryInteger {
+   !!          ^
+   !$ note: candidate requires that 'C' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+   !! extension StringProtocol {
+   !! ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -502,9 +505,12 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !$ error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
-   !~ /tmp/swifttest.swift:4:7: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !!       ^
+   !$ note: candidate requires that 'S' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+   !! extension BinaryInteger {
+   !! ^
+   !$ note: candidate requires that 'S' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+   !! extension StringProtocol {
+   !! ^
 
 .. TODO: This needs clarifying with regards to function references.
 

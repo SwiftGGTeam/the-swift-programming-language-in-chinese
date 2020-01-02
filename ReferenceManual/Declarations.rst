@@ -729,7 +729,7 @@ see :ref:`Functions_InOutParameters`.
            }
            return inner
        }
-    !$ error: escaping closure captures 'inout' parameter 'a'
+    !$ error: escaping local function captures 'inout' parameter 'a'
     !! return inner
     !! ^
     !$ note: parameter 'a' is declared 'inout'
