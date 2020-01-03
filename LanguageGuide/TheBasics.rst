@@ -1022,10 +1022,9 @@ before using ``!`` to force-unwrap its value.
 For more about the ``if`` statement, see :doc:`ControlFlow`.
 
 Instead of writing the optional's name twice,
-once to check if it has a value
-and again to force unwrap that value,
-a simpler way to access its value is to use optional binding.
-You use :newTerm:`optional binding` to find out whether an optional contains a value,
+a simpler way to access the value of an optional
+is to use :newTerm:`optional binding`.
+You use optional binding to find out whether an optional contains a value,
 and if so, to make that value available as a temporary constant or variable.
 Optional binding can be used with ``if`` and ``while`` statements
 to check for a value inside an optional,
