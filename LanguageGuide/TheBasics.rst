@@ -1110,7 +1110,31 @@ In contrast, the constants and variables created with a ``guard`` statement
 are available in the lines of code that follow the ``guard`` statement,
 as described in :ref:`ControlFlow_Guard`.
 
+.. _TheBasics_OptionalFallback:
 
+Providing a Fallback Value
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of using ``if``-``let`` or ``guard``-``let``
+to skip a block of code when a value is ``nil``,
+another way to handle the missing value is to supply
+a default value using the “fallback” operator (``??``).
+If the optional on the left side of the ``??`` isn't ``nil``,
+that value is unwrapped and used.
+Otherwise, the value on the right side of ``??`` is used.
+For example,
+the code below greets someone by name if one is specified,
+and uses a generic greeting when the name is ``nil``.
+
+.. testcode:: optionalFallback
+
+   -> let name: String? = nil
+   -> let greeting = "Hello, " + (name ?? "friend") + "!"
+   -> print(greeting)
+   <- Hello, friend!
+
+.. XXX Following the pattern of the guide, the ?? operator needs a name.
+   Is "fallback operator" ok with tech reviewers?
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
