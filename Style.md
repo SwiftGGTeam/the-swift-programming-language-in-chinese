@@ -1,4 +1,8 @@
-# Terms
+# Terms and Rules
+
+## compiler, the
+
+See entry for *Swift*.
 
 ## memberwise initializer
 
@@ -11,6 +15,24 @@ Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
 See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
 
+## operator
+
+When introducing a named operator for the first time,
+give its name followed by its symbol.
+In subsequent use, use the symbol on its own.
+For example:
+
+> By default,
+> custom classes and structures don't have an implementation of
+> the *equal to* operator (``==``) or *not equal to* operator (``!=``).
+> You usually implement the ``==`` operator,
+> and use the standard library's default implementation of the ``!=`` operator
+> that negates the result of the ``==`` operator.
+> There are two ways to implement the ``==`` operator.
+
+If the operator doesn't have an established English name,
+make sure you get tech review on the name you invent for it.
+
 ## passive voice
 
 In general,
@@ -19,12 +41,18 @@ when you could write the sentence in active still applies
 because the active voice tends to be more readable.
 However,
 because of the subject matter in TSPL,
-it’s often the case that a sentence has no meaningful subject/actor
-because the action is being performed by some vague compiler-Swift-parser entity.
-In that case, passive voice is sometimes the clearest form
-for a sentence whose focus is the action rather than the actor.
+it’s sometimes the case that
+the active form of a sentence has no meaningful subject
+because the action is performed by some vague compiler-Swift-parser entity.
+In that case, passive voice is sometimes the clearest way to write
+a sentence whose focus is the action rather than the agent.
 
-TODO: Add a couple examples and counterexamples.
+For example the phrase “X is understood as Y”
+appears several times in the reference
+when describing the meaning of a piece of syntax.
+In this case, passive voice is clearer than active
+because there isn't a clear agent performing the understanding
+and the identity of that agent is irrelevant.
 
 ## punctuation before a code listing
 
@@ -41,6 +69,53 @@ Use a period for sentences that begin with a phrase like
 > **Note:**
 > This usage isn’t entirely consistent in the existing text.
 > We should have a discussion about this with Editorial.
+
+## runtime, run time
+
+Apple Style Guide uses “runtime” for both
+the point in time at which code is run (the run time)
+and the environment in which it is being run (the runtime).
+So far, because we don’t document the Swift runtime environment
+in the same way that the Obj-C runtime is documented,
+we haven’t needed to make this distinction.
+(We don’t document the Swift runtime, in part,
+because it doesn’t expose any API like the Obj-C runtime does.)
+In general, because the terms are used differently,
+the difference is obvious from context,
+with the exception of phrases like “a run-time error” and “a runtime error”,
+which refer respectively to
+an error that occurs while running the code
+and an error that comes from or is related to the Swift runtime environment.
+
+## syntax outline
+
+Use only when demonstrating the shape of a syntactic construction.
+When referring to the placeholders (aka blue bubbles)
+in body text that comes after the syntax outline,
+italicize their name.
+
+Syntax outlines are used very sparingly in the guide,
+but extensively in the reference.
+
+## Swift
+
+In the guide, we use Swift as a “friendly” subject
+when describing something that the compiler or the language is doing.
+For example:
+
+> Swift assumes that you are referring
+> to a property or method of the current instance.
+>
+> Note that Swift infers a type of `String` for the `someString` constant.
+>
+> Swift gives you a warning if you use an optional value
+> where a value of type `Any` is expected.
+
+In the reference,
+we refer to the compiler specifically
+when it‘s the actual agent performing the action.
+We don’t distinguish between the parts of the compiler
+like the parser or the lexer or the optimizer.
 
 # Tone
 
