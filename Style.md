@@ -46,14 +46,28 @@ Use a period for sentences that begin with a phrase like
 
 In general, and especially in the guide,
 the writing approach should carry a sense of joy.
-That means we
+Examples should be easy and pleasant to read,
+which means we prefer code that's realistic
+and many chapters weave a common narrative thread across multiple examples.
+Although that continuous narrative connection
+can make later changes more expensive,
+on the whole we think it's worth it because it makes the chapter
+flow better and hang together better as a cohesive whole.
 
-◊ examples: aim for realistic or story-driven code,
-  avoid "let foo = 10" purely syntactic constructions
-  no single letter names, even in the reference
+In the interest of readability and approachability,
+we don't write examples that have
+single-letter or meaningless identifiers,
+even in the reference and even when we‘re only describing syntax.
+Instead, when there’s no relevant semantic meaning,
+we use types like `SomeStructure` and variables like `someArray`.
 
-◊ references: ignorable if you don’t know there’s a joke,
-  google-able if you see it’s there but don’t get it
+Some of our examples include humorous references to things outside the book,
+such as the joke about Firefly crew members in the guided tour.
+Some of them are marked with a REFERENCE comment that explains the reference.
+All of them need to be easily ignored
+if you didn't catch the reference,
+and it should be easy to search for the reference online
+if you noticed that there was a reference but didn't get the joke.
 
 Code listings in the guide typically follow a three part formula.
 The paragraph before the code listing
