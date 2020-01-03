@@ -1104,13 +1104,13 @@ The following ``if`` statements are equivalent:
    to show that you should join logically related conditions
    using the && operator instead of a comma.
 
-.. note::
+Constants and variables created with optional binding in an ``if`` statement
+are available only within the body of the ``if`` statement.
+In contrast, the constants and variables created with a ``guard`` statement
+are available in the lines of code that follow the ``guard`` statement,
+as described in :ref:`ControlFlow_Guard`.
 
-   Constants and variables created with optional binding in an ``if`` statement
-   are available only within the body of the ``if`` statement.
-   In contrast, the constants and variables created with a ``guard`` statement
-   are available in the lines of code that follow the ``guard`` statement,
-   as described in :ref:`ControlFlow_Guard`.
+
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:
 
@@ -1140,6 +1140,11 @@ an optional's value is confirmed to exist immediately after the optional is firs
 and can definitely be assumed to exist at every point thereafter.
 The primary use of implicitly unwrapped optionals in Swift is during class initialization,
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
+
+Don't use an implicitly unwrapped optional when there's a possibility of
+a variable becoming ``nil`` at a later point.
+Always use a normal optional type if you need to check for a ``nil`` value
+during the lifetime of a variable.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a non-optional value,
@@ -1200,13 +1205,6 @@ to check and unwrap its value in a single statement:
          print(definiteString)
       }
    <- An implicitly unwrapped optional string.
-
-.. note::
-
-   Don't use an implicitly unwrapped optional when there's a possibility of
-   a variable becoming ``nil`` at a later point.
-   Always use a normal optional type if you need to check for a ``nil`` value
-   during the lifetime of a variable.
 
 .. _TheBasics_ErrorHandling:
 
