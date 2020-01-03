@@ -901,22 +901,6 @@ An optional represents two possibilities:
 Either there *is* a value, and you can unwrap the optional to access that value,
 or there *isn't* a value at all.
 
-.. note::
-
-   The concept of optionals doesn't exist in C or Objective-C.
-   The nearest thing in Objective-C is
-   the ability to return ``nil`` from a method that would otherwise return an object,
-   with ``nil`` meaning “the absence of a valid object.”
-   However, this only works for objects --- it doesn't work for
-   structures, basic C types, or enumeration values.
-   For these types,
-   Objective-C methods typically return a special value (such as ``NSNotFound``)
-   to indicate the absence of a value.
-   This approach assumes that the method's caller knows there's a special value to test against
-   and remembers to check for it.
-   Swift's optionals let you indicate the absence of a value for *any type at all*,
-   without the need for special constants.
-
 Here's an example of how optionals can be used to cope with the absence of a value.
 Swift's ``Int`` type has an initializer
 which tries to convert a ``String`` value into an ``Int`` value.
@@ -940,8 +924,32 @@ An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
 meaning that it might contain *some* ``Int`` value,
 or it might contain *no value at all*.
-(It can't contain anything else, such as a ``Bool`` value or a ``String`` value.
-It's either an ``Int``, or it's nothing at all.)
+It can't contain anything else, such as a ``Bool`` value or a ``String`` value;
+it's either an ``Int``, or it's nothing at all.
+
+Using optionals lets you explicitly mark what information can be missing,
+and makes sure that code accounts for ``nil`` when working with that information.
+The reverse is also true:
+if a value isn't an optional, it's guaranteed to never be ``nil``
+and isn't allowed to be missing.
+If you try to assign ``nill`` to a non-optional,
+you'll get a compile-time error.
+
+.. note::
+
+   The concept of optionals doesn't exist in C or Objective-C.
+   The nearest thing in Objective-C is
+   the ability to return ``nil`` from a method that would otherwise return an object,
+   with ``nil`` meaning “the absence of a valid object.”
+   However, this only works for objects --- it doesn't work for
+   structures, basic C types, or enumeration values.
+   For these types,
+   Objective-C methods typically return a special value (such as ``NSNotFound``)
+   to indicate the absence of a value.
+   This approach assumes that the method's caller knows there's a special value to test against
+   and remembers to check for it.
+   Swift's optionals let you indicate the absence of a value for *any type at all*,
+   without the need for special constants.
 
 .. _TheBasics_Nil:
 
