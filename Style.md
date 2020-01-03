@@ -153,7 +153,7 @@ Within a syntax-grammar block, they appear in italics automatically.
 Don't refer to them from the English prose above them.
 
 **Use full English words as the names for syntactic categories.**
-There are cases where this isn't feasible because of space considerations. 
+There are cases where this isn't feasible because of space considerations.
 For example, in the grammar for a C-style for statement,
 the category that defines the initialization part of the for statement
 had to be shortened to *for-init*
@@ -170,7 +170,7 @@ When there are too many alternatives
 to fit on a single line, use a new line for each alternative.
 Don't mix pipes and newlines.
 
-For example, to specify that a *case-block-item* can consist of a *declaration*, 
+For example, to specify that a *case-block-item* can consist of a *declaration,
 *expression*, or a *statement*, you can use a pipe instead of a new line,
 because all three alternatives fit nicely on one line:
 
