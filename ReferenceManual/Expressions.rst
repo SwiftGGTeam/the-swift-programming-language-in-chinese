@@ -1569,13 +1569,6 @@ the parentheses can be omitted.
 
     trailing-closure --> closure-expression
 
-.. Multiple trailing closures in LangRef is an error,
-   and so is the trailing typecast,
-   per [Contributor 6004] 2014-03-04 email.
-   Not documenting those in the prose or grammar
-   even though they happen to still work.
-
-
 .. _Expressions_InitializerExpression:
 
 Initializer Expression
