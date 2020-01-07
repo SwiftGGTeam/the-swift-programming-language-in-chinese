@@ -1517,6 +1517,12 @@ This kind of function call expression has the following form:
 
    <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
+A class, structure, or enumeration type can define a call-as-function method
+which allows instances of that type to be used in function call expressions.
+The name of a call-as-function method must be ``callAsFunction()``
+or another name that adds argument labels to that name.
+
+
 A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
