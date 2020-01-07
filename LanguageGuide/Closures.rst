@@ -648,10 +648,16 @@ If you didn't mark the parameter of this function with ``@escaping``,
 you would get a compile-time error.
 
 Marking a closure with ``@escaping``
-means you have to refer to ``self`` explicitly within the closure.
+means that, in some circumstances,
+you have to refer to ``self`` explicitly within the closure.
+If ``self`` is an instance of a structure or an enumeration,
+you can always refer to ``self`` implicitly.
+However, if it's an instance of a class,
+you either have to refer to ``self`` explicitly,
+or you have to explicitly capture ``self``.
 For example, in the code below,
-the closure passed to ``someFunctionWithEscapingClosure(_:)`` is an escaping closure,
-which means it needs to refer to ``self`` explicitly.
+the closure passed to ``someFunctionWithEscapingClosure(_:)``
+needs to refer to ``self`` explicitly.
 In contrast, the closure passed to ``someFunctionWithNonescapingClosure(_:)``
 is a nonescaping closure, which means it can refer to ``self`` implicitly.
 
@@ -679,6 +685,49 @@ is a nonescaping closure, which means it can refer to ``self`` implicitly.
     << // r0 : Void? = Optional(())
     -> print(instance.x)
     <- 100
+
+Here's a version of ``doSomething()`` that captures ``self``
+instead of referring to it explicitly:
+
+.. testcode:: noescape-closure-as-argument
+
+    -> class SomeOtherClass {
+           var x = 10
+           func doSomething() {
+               someFunctionWithEscapingClosure { [self] in x = 100 }
+               someFunctionWithNonescapingClosure { x = 200 }
+           }
+       }
+    >> completionHandlers = []
+    >> let instance2 = SomeOtherClass()
+    << // instance2 : SomeClass = REPL.SomeClass
+    >> instance2.doSomething()
+    >> print(instance2.x)
+    << 200
+    >> completionHandlers.first?()
+    << // r0 : Void? = Optional(())
+    >> print(instance2.x)
+    << 100
+
+.. assertion:: noescape-closure-as-argument
+
+    -> struct SomeStruct {
+           var x = 10
+           mutating func doSomething() {
+               someFunctionWithEscapingClosure { x = 100 }
+               someFunctionWithNonescapingClosure { x = 200 }
+           }
+       }
+    >> completionHandlers = []
+    >> let instance3 = SomeStruct()
+    << // instance3 : SomeClass = REPL.SomeClass
+    >> instance3.doSomething()
+    >> print(instance3.x)
+    << 200
+    >> completionHandlers.first?()
+    << // r0 : Void? = Optional(())
+    >> print(instance3.x)
+    << 100
 
 
 .. _Closures_Autoclosures:
