@@ -1517,11 +1517,29 @@ This kind of function call expression has the following form:
 
    <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
-A class, structure, or enumeration type can define a call-as-function method
-which allows instances of that type to be used in function call expressions.
-The name of a call-as-function method must be ``callAsFunction()``
-or another name that adds argument labels to that name.
+A class, structure, or enumeration type can define a call-as-function method,
+which allows instances of that type to appear in function call expressions
+as if they were functions.
+The name of a call-as-function method is ``callAsFunction()``
+or another name that adds argument labels to that name,
+like ``callAsFunction(_:_:)`` or ``callAsFunction(something:)``.
+The following function calls are equivalent:
 
+.. testcode:: call-as-function
+   :compile: true
+
+   -> struct CallableStruct {
+          var value: Int
+          func callAsFunction(_ argument: Int) {
+              print(argument + value)
+          }
+      }
+   -> let callable = CallableStruct(value: 100)
+   -> callable(4)
+   -> callable.callAsFunction(4)
+   // Both function calls print 104.
+   << 104
+   << 104
 
 A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
