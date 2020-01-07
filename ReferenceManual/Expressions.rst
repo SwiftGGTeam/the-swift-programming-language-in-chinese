@@ -1572,16 +1572,16 @@ The following function calls are equivalent:
 
    -> struct CallableStruct {
           var value: Int
-          func callAsFunction(_ argument: Int) {
-              print(argument + value)
+          func callAsFunction(_ number: Int, scale: Int) {
+              print(scale * (argument + value))
           }
       }
    -> let callable = CallableStruct(value: 100)
-   -> callable(4)
-   -> callable.callAsFunction(4)
-   // Both function calls print 104.
-   << 104
-   << 104
+   -> callable(4, scale: 2)
+   -> callable.callAsFunction(4, scale: 2)
+   // Both function calls print 208.
+   << 208
+   << 208
 
 If the class, structure, or enumeration type implements
 both a call-as-function method
