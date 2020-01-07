@@ -842,7 +842,6 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
 
 .. _AdvancedOperators_PrecedenceAndAssociativityForCustomOperators:
 
-
 Precedence for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
