@@ -97,6 +97,17 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
+The compiler synthesizes identifiers that begin with a dollar sign (`$`)
+for properties that have a property wrapper projection.
+Your code can interact with these identifiers,
+but you can't declare identifiers with that prefix.
+For more information, see the :ref:`Attributes_propertyWrapper` section
+of the :doc:`../ReferenceManual/Attributes` chapter.
+
+.. The cross reference above includes both the section and chapter because,
+   even though "propertyWrapper" is the title of the section,
+   the section name isn't title case so it doesn't necessarily look like a title.
+
 .. syntax-grammar::
 
     Grammar of an identifier
@@ -104,6 +115,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> identifier-head identifier-characters-OPT
     identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
+    identifier --> property-wrapper-projection
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -129,6 +141,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
+    property-wrapper-projection --> ``$`` identifier-characters
 
 
 .. _LexicalStructure_Keywords:
@@ -159,27 +172,27 @@ so they must be escaped with backticks in that context.
 
 .. assertion:: var-requires-backticks
 
-   -> func f(`var` x: Int) {}
+   -> func g(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: 'var' as a parameter attribute is not allowed
+   !$ warning: 'var' in this position is interpreted as an argument label
    !! func f(var x: Int) {}
    !!        ^~~
-   !!-
+   !!        `var`
 
 .. assertion:: let-requires-backticks
 
-   -> func f(`let` x: Int) {}
+   -> func g(`let` x: Int) {}
    -> func f(let x: Int) {}
-   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
+   !$ warning: 'let' in this position is interpreted as an argument label
    !! func f(let x: Int) {}
    !!        ^~~
-   !!-
+   !!        `let`
 
 .. assertion:: inout-requires-backticks
 
-   -> func f(`inout` x: Int) {}
+   -> func g(`inout` x: Int) {}
    -> func f(inout x: Int) {}
-   !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !$ error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
    !!        ^~~~~
    !!                 inout
@@ -205,6 +218,7 @@ so they must be escaped with backticks in that context.
   ``private``,
   ``protocol``,
   ``public``,
+  ``rethrows``,
   ``static``,
   ``struct``,
   ``subscript``,
@@ -237,7 +251,6 @@ so they must be escaped with backticks in that context.
   ``false``,
   ``is``,
   ``nil``,
-  ``rethrows``,
   ``super``,
   ``self``,
   ``Self``,
@@ -319,14 +332,22 @@ The following are examples of literals:
 
 .. testcode:: basic-literals
 
+    >> let r0 =
     -> 42               // Integer literal
+    >> let r1 =
     -> 3.14159          // Floating-point literal
+    >> let r2 =
     -> "Hello, world!"  // String literal
+    >> let r3 =
     -> true             // Boolean literal
-    <$ : Int = 42
-    <$ : Double = 3.14159
-    <$ : String = "Hello, world!"
-    <$ : Bool = true
+    >> for x in [r0, r1, r2, r3] as [Any] { print(type(of: x)) }
+    << Int
+    << Double
+    << String
+    << Bool
+
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -614,17 +635,25 @@ For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
 
+   >> let r0 =
    -> "1 2 3"
-   <$ : String = "1 2 3"
+   >> let r1 =
    -> "1 2 \("3")"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r1)
+   >> let r2 =
    -> "1 2 \(3)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r2)
+   >> let r3 =
    -> "1 2 \(1 + 2)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r3)
    -> let x = 3; "1 2 \(x)"
-   << // x : Int = 3
-   <$ : String = "1 2 3"
+   >> assert(r0 == "1 2 \(x)")
+   !$ warning: string literal is unused
+   !! let x = 3; "1 2 \(x)"
+   !!            ^~~~~~~~~~
+
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number signs (``#``).
@@ -655,8 +684,6 @@ that create equivalent string values:
 
     -> let string = #"\(x) \ " \u{2603}"#
     -> let escaped = "\\(x) \\ \" \\u{2603}"
-    << // string : String = "\\(x) \\ \" \\u{2603}"
-    << // escaped : String = "\\(x) \\ \" \\u{2603}"
     -> print(string)
     <- \(x) \ " \u{2603}
     -> print(string == escaped)
@@ -666,16 +693,20 @@ If you use more than one number sign to form
 a string delimited by extended delimiters,
 don't place whitespace in between the number signs:
 
-.. testcode:: extended-string-delimiters
+.. assertion:: extended-string-delimiters
 
     -> print(###"Line 1\###nLine 2"###) // OK
     << Line 1
     << Line 2
+
+.. testcode:: extended-string-delimiters-err
+
+    -> print(###"Line 1\###nLine 2"###) // OK
     -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
-    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !$ error: expected expression in list of expressions
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
-    !! <REPL Input>:1:21: error: invalid escape sequence in literal
+    !$ error: invalid escape sequence in literal
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
@@ -695,10 +726,8 @@ no runtime concatenation is performed.
 
 .. testcode:: concatenated-strings
 
-  -> let textA = "Hello " + "world"
-  -> let textB = "Hello world"
-  << // textA : String = "Hello world"
-  << // textB : String = "Hello world"
+   -> let textA = "Hello " + "world"
+   -> let textB = "Hello world"
 
 .. syntax-grammar::
 
@@ -787,14 +816,14 @@ the ``+`` operator followed by the ``.+`` operator.
 .. assertion:: dot-operator-must-start-with-dot
 
    >> infix operator +.+ ;
-   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !$ error: consecutive statements on a line must be separated by ';'
    !! infix operator +.+ ;
    !!                 ^
    !!                 ;
-   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !$ error: operator with postfix spacing cannot start a subexpression
    !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: expected expression
+   !$ error: expected expression
    !! infix operator +.+ ;
    !!                    ^
    >> infix operator .+
@@ -807,14 +836,12 @@ postfix operators can't begin with either a question mark or an exclamation mark
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
 
-
    >> struct Num { var value: Int }
       postfix operator +
       postfix operator +*
       postfix func + (x: Num) -> Int { return x.value + 1 }
       postfix func +* (x: Num) -> Int { return x.value * 100 }
    >> let n = Num(value: 5)
-   << // n : Num = REPL.Num(value: 5)
    >> print(n+)
    << 6
    >> print(n+*)
@@ -830,15 +857,12 @@ postfix operators can't begin with either a question mark or an exclamation mark
           return x + 1
       }
    >> print(1?+)
-   !! <REPL Input>:1:18: error: expected operator name in operator declaration
+   !$ error: expected operator name in operator declaration
    !! postfix operator ?+
-   !! ^
-   !! <REPL Input>:1:14: error: operator implementation without matching operator declaration
-   !! postfix func ?+ (x: Int) -> Int {
-   !! ^
-   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
+   !!                  ^
+   !$ error: '+' is not a postfix unary operator
    !! print(1?+)
-   !! ^
+   !!         ^
 
 .. note::
 

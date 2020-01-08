@@ -126,7 +126,6 @@ the ``FullyNamed`` protocol:
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
-   << // john : Person = REPL.Person(fullName: "John Appleseed")
    /> john.fullName is \"\(john.fullName)\"
    </ john.fullName is "John Appleseed"
 
@@ -157,7 +156,6 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
          }
       }
    -> var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-   << // ncc1701 : Starship = REPL.Starship
    /> ncc1701.fullName is \"\(ncc1701.fullName)\"
    </ ncc1701.fullName is "USS Enterprise"
 
@@ -197,7 +195,6 @@ the ``class`` or ``static`` keyword when implemented by a class:
 The following example defines a protocol with a single instance method requirement:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol RandomNumberGenerator {
          func random() -> Double
@@ -221,7 +218,6 @@ This class implements a pseudorandom number generator algorithm known as
 a *linear congruential generator*:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class LinearCongruentialGenerator: RandomNumberGenerator {
          var lastRandom = 42.0
@@ -229,7 +225,8 @@ a *linear congruential generator*:
          let a = 3877.0
          let c = 29573.0
          func random() -> Double {
-            lastRandom = ((lastRandom * a + c).truncatingRemainder(dividingBy:m))
+            lastRandom = ((lastRandom * a + c)
+                .truncatingRemainder(dividingBy:m))
             return lastRandom / m
          }
       }
@@ -307,7 +304,6 @@ to match the ``Togglable`` protocol's requirements:
          }
       }
    -> var lightSwitch = OnOffSwitch.off
-   << // lightSwitch : OnOffSwitch = REPL.OnOffSwitch.off
    -> lightSwitch.toggle()
    // lightSwitch is now equal to .on
 
@@ -380,7 +376,7 @@ see :ref:`Initialization_RequiredInitializers`.
    -> class C2: P {
          init(s: String) {}
       }
-   !! <REPL Input>:2:6: error: initializer requirement 'init(s:)' can only be satisfied by a 'required' initializer in non-final class 'C2'
+   !$ error: initializer requirement 'init(s:)' can only be satisfied by a 'required' initializer in non-final class 'C2'
    !! init(s: String) {}
    !! ^
    !! required
@@ -399,11 +395,11 @@ see :ref:`Initialization_RequiredInitializers`.
    -> class D2: C {
          init(s: String) { super.init(s: s) }
       }
-   !! <REPL Input>:2:6: error: 'required' modifier must be present on all overrides of a required initializer
+   !$ error: 'required' modifier must be present on all overrides of a required initializer
    !! init(s: String) { super.init(s: s) }
    !! ^
    !! required
-   !! <REPL Input>:2:15: note: overridden required initializer is here
+   !$ note: overridden required initializer is here
    !! required init(s: String) {}
    !! ^
 
@@ -539,7 +535,6 @@ You can use a protocol in many places where other types are allowed, including:
 Here's an example of a protocol used as a type:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class Dice {
          let sides: Int
@@ -593,7 +588,6 @@ Here's how the ``Dice`` class can be used to create a six-sided dice
 with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
 .. testcode:: protocols
-   :compile: true
 
    -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
    -> for _ in 1...5 {
@@ -624,7 +618,6 @@ the underlying type of that source.
 The example below defines two protocols for use with dice-based board games:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol DiceGame {
          var dice: Dice { get }
@@ -649,7 +642,7 @@ Marking the protocol as class-only
 lets the ``SnakesAndLadders`` class later in this chapter
 declare that its delegate must use a weak reference.
 A class-only protocol
-is marked by its inheritance from ``AnyObject``
+is marked by its inheritance from ``AnyObject``,
 as discussed in :ref:`Protocols_ClassOnlyProtocols`.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
@@ -658,7 +651,6 @@ to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class SnakesAndLadders: DiceGame {
          let finalSquare = 25
@@ -734,7 +726,6 @@ This next example shows a class called ``DiceGameTracker``,
 which adopts the ``DiceGameDelegate`` protocol:
 
 .. testcode:: protocols
-   :compile: true
 
    -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
@@ -780,7 +771,6 @@ regardless of what kind of game is being played.
 Here's how ``DiceGameTracker`` looks in action:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let tracker = DiceGameTracker()
    -> let game = SnakesAndLadders()
@@ -815,7 +805,6 @@ any type that has a way to be represented as text.
 This might be a description of itself, or a text version of its current state:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol TextRepresentable {
          var textualDescription: String { get }
@@ -828,7 +817,6 @@ The ``Dice`` class from above can be extended to adopt and conform to ``TextRepr
    it's part of a running example and Dice is used in that section.
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension Dice: TextRepresentable {
          var textualDescription: String {
@@ -845,7 +833,6 @@ is provided within the extension's curly braces.
 Any ``Dice`` instance can now be treated as ``TextRepresentable``:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
    -> print(d12.textualDescription)
@@ -855,7 +842,6 @@ Similarly, the ``SnakesAndLadders`` game class can be extended to
 adopt and conform to the ``TextRepresentable`` protocol:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension SnakesAndLadders: TextRepresentable {
          var textualDescription: String {
@@ -884,7 +870,6 @@ makes ``Array`` instances conform to the ``TextRepresentable`` protocol
 whenever they store elements of a type that conforms to ``TextRepresentable``.
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension Array: TextRepresentable where Element: TextRepresentable {
          var textualDescription: String {
@@ -906,7 +891,6 @@ but has not yet stated that it adopts that protocol,
 you can make it adopt the protocol with an empty extension:
 
 .. testcode:: protocols
-   :compile: true
 
    -> struct Hamster {
          var name: String
@@ -919,7 +903,6 @@ you can make it adopt the protocol with an empty extension:
 Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the required type:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let simonTheHamster = Hamster(name: "Simon")
    -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
@@ -942,7 +925,6 @@ as mentioned in :ref:`Protocols_ProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
-   :compile: true
 
    -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
 
@@ -950,7 +932,6 @@ It's now possible to iterate over the items in the array,
 and print each item's textual description:
 
 .. testcode:: protocols
-   :compile: true
 
    -> for thing in things {
          print(thing.textualDescription)
@@ -977,7 +958,6 @@ The syntax for protocol inheritance is similar to the syntax for class inheritan
 but with the option to list multiple inherited protocols, separated by commas:
 
 .. testcode:: protocols
-   :compile: true
 
    >> protocol SomeProtocol {}
    >> protocol AnotherProtocol {}
@@ -989,7 +969,6 @@ Here's an example of a protocol that inherits
 the ``TextRepresentable`` protocol from above:
 
 .. testcode:: protocols
-   :compile: true
 
    -> protocol PrettyTextRepresentable: TextRepresentable {
          var prettyTextualDescription: String { get }
@@ -1006,7 +985,6 @@ to provide a gettable property called ``prettyTextualDescription`` that returns 
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension SnakesAndLadders: PrettyTextRepresentable {
          var prettyTextualDescription: String {
@@ -1048,7 +1026,6 @@ The ``prettyTextualDescription`` property can now be used to print a pretty text
 of any ``SnakesAndLadders`` instance:
 
 .. testcode:: protocols
-   :compile: true
 
    -> print(game.prettyTextualDescription)
    </ A game of Snakes and Ladders with 25 squares:
@@ -1087,7 +1064,7 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    -> protocol P1 {}
    -> protocol P2: class, P1 {}
    -> protocol P3: P1, class {}
-   !! <REPL Input>:1:18: error: 'class' must come first in the requirement list
+   !$ error: 'class' must come first in the requirement list
    !! protocol P3: P1, class {}
    !! ~~^~~~~
    !! class,
@@ -1140,7 +1117,6 @@ into a single protocol composition requirement on a function parameter:
          print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
-   << // birthdayPerson : Person = REPL.Person(name: "Malcolm", age: 21)
    -> wishHappyBirthday(to: birthdayPerson)
    <- Happy birthday, Malcolm, you're 21!
 
@@ -1188,7 +1164,6 @@ with a ``Location`` class:
       }
    ---
    -> let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
-   << // seattle : City = REPL.City
    -> beginConcert(in: seattle)
    <- Hello, Seattle!
 
@@ -1274,7 +1249,6 @@ can be used to initialize an array that stores values of type ``AnyObject``:
          Country(area: 243_610),
          Animal(legs: 4)
       ]
-   << // objects : [AnyObject] = [REPL.Circle, REPL.Country, REPL.Animal]
 
 The ``objects`` array is initialized with an array literal containing
 a ``Circle`` instance with a radius of 2 units;
@@ -1475,7 +1449,6 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
 .. testcode:: protocolConformance
 
    -> var counter = Counter()
-   << // counter : Counter = REPL.Counter
    -> counter.dataSource = ThreeSource()
    -> for _ in 1...4 {
          counter.increment()
@@ -1551,7 +1524,6 @@ which uses the result of the required ``random()`` method
 to return a random ``Bool`` value:
 
 .. testcode:: protocols
-   :compile: true
 
    -> extension RandomNumberGenerator {
          func randomBool() -> Bool {
@@ -1564,7 +1536,6 @@ all conforming types automatically gain this method implementation
 without any additional modification.
 
 .. testcode:: protocols
-   :compile: true
 
    >> do {
    -> let generator = LinearCongruentialGenerator()

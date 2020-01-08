@@ -78,7 +78,6 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
    -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -118,7 +117,6 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["cat": 4, "ant": 6, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -155,7 +153,6 @@ and provide default parameter values,
 but they can't use in-out parameters.
 
 .. assertion:: subscripts-can-have-default-arguments
-    :compile: true
 
     >> struct Subscriptable {
     >>     subscript(x: Int, y: Int = 0) -> Int {
@@ -218,7 +215,7 @@ an appropriate row and column count to its initializer:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
+   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
 
 The example above creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
@@ -259,9 +256,7 @@ are inside the bounds of the matrix:
 .. testcode:: matrixSubscript
 
    >> var rows = 2
-   << // rows : Int = 2
    >> var columns = 2
-   << // columns : Int = 2
    -> func indexIsValid(row: Int, column: Int) -> Bool {
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
@@ -299,6 +294,6 @@ The example below shows how you define and call a type subscript:
          }
       }
    -> let mars = Planet[4]
-   << // mars : Planet = REPL.Planet.mars
+   >> assert(mars == Planet.mars)
    -> print(mars)
    << mars

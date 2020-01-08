@@ -1,7 +1,7 @@
 Document Revision History
 =========================
 
-**2019-06-03**
+**2019-09-10**
 
 * Updated for Swift 5.1.
 
@@ -10,12 +10,22 @@ Document Revision History
   instead of providing a specific named return type,
   to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
 
+* Added information about property wrappers
+  to the :ref:`Properties_PropertyWrapper` section.
+
+* Added information enumerations and structures
+  that are frozen for library evolution
+  to the :ref:`Attributes_frozen` section.
+
 * Added the :ref:`Functions_ImplicitReturns`
   and :ref:`Properties_ImplicitReturn` sections
   with information about functions that omit ``return``.
 
 * Added information about using subscripts on types
   to the :ref:`Subscripts_TypeSubscripts` section.
+
+* Updated the :ref:`Patterns_EnumerationCasePattern` section,
+  now that an enumeration case pattern can match an optional value.
 
 * Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
   now that memberwise initializers support
@@ -25,28 +35,12 @@ Document Revision History
   that are looked up by key path at run time
   to the :ref:`Attributes_dynamicMemberLookup` section.
 
+* Added ``macCatalyst`` to the list of target environments
+  in :ref:`Statements_BuildConfigurationStatement`.
+
 * Updated the :ref:`Types_SelfType` section,
   now that ``Self`` can be used to refer to the type
   introduced by the current class, structure, or enumeration declaration.
-
-.. Do we need to update TSPL for this entry from the CHANGELOG?
-
-   AJM: I think this needs to be added to Reference > Patterns > Optional Patterns
-
-   Enum cases can now be matched against an optional enum without
-   requiring a '?' at the end of the pattern.
-
-   ```swift
-   enum Foo { case zero, one }
-
-   let foo: Foo? = .zero
-
-   switch foo {
-     case .zero: break
-     case .one: break
-     case .none: break
-   }
-   ```
 
 **2019-03-25**
 

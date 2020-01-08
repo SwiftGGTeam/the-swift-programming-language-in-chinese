@@ -144,9 +144,7 @@ The syntax for creating instances is very similar for both structures and classe
 .. testcode:: ClassesAndStructures
 
    -> let someResolution = Resolution()
-   << // someResolution : Resolution = REPL.Resolution(width: 0, height: 0)
    -> let someVideoMode = VideoMode()
-   << // someVideoMode : VideoMode = REPL.VideoMode
 
 Structures and classes both use initializer syntax for new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
@@ -206,7 +204,6 @@ can be passed to the memberwise initializer by name:
 .. testcode:: ClassesAndStructures
 
    -> let vga = Resolution(width: 640, height: 480)
-   << // vga : Resolution = REPL.Resolution(width: 640, height: 480)
 
 Unlike structures, class instances don't receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
@@ -215,9 +212,10 @@ Initializers are described in more detail in :doc:`Initialization`.
 
    -> class C { var x = 0, y = 0 }
    -> let c = C(x: 1, y: 1)
-   !! <REPL Input>:1:14: error: argument passed to call that takes no arguments
+   !$ error: argument passed to call that takes no arguments
    !! let c = C(x: 1, y: 1)
-   !!         ~~~~^~~~~~~~
+   !!         ^~~~~~~~~~~~
+   !!-
 
 .. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
@@ -256,9 +254,7 @@ Consider this example, which uses the ``Resolution`` structure from the previous
 .. testcode:: ClassesAndStructures
 
    -> let hd = Resolution(width: 1920, height: 1080)
-   << // hd : Resolution = REPL.Resolution(width: 1920, height: 1080)
    -> var cinema = hd
-   << // cinema : Resolution = REPL.Resolution(width: 1920, height: 1080)
 
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
@@ -320,9 +316,7 @@ The same behavior applies to enumerations:
          }
       }
    -> var currentDirection = CompassPoint.west
-   << // currentDirection : CompassPoint = REPL.CompassPoint.west
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
    -> currentDirection.turnNorth()
    ---
    -> print("The current direction is \(currentDirection)")
@@ -352,7 +346,6 @@ Here's an example, using the ``VideoMode`` class defined above:
 .. testcode:: ClassesAndStructures
 
    -> let tenEighty = VideoMode()
-   << // tenEighty : VideoMode = REPL.VideoMode
    -> tenEighty.resolution = hd
    -> tenEighty.interlaced = true
    -> tenEighty.name = "1080i"
@@ -371,7 +364,6 @@ and the frame rate of ``alsoTenEighty`` is modified:
 .. testcode:: ClassesAndStructures
 
    -> let alsoTenEighty = tenEighty
-   << // alsoTenEighty : VideoMode = REPL.VideoMode
    -> alsoTenEighty.frameRate = 30.0
 
 Because classes are reference types,
@@ -433,31 +425,31 @@ or passed to a function.)
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
-   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !$ error: cannot convert value of type 'S' to expected argument type 'AnyObject?'
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
+   !! as AnyObject
+   !$ error: cannot convert value of type 'S' to expected argument type 'AnyObject?'
+   !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
+   !!       ^
+   !! as AnyObject
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
    -> enum E { case a, b }
    -> let e1 = E.a
-   << // e1 : E = REPL.E.a
    -> let e2 = E.b
-   << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
-   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !$ error: cannot convert value of type 'E' to expected argument type 'AnyObject?'
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
+   !! as AnyObject
+   !$ error: cannot convert value of type 'E' to expected argument type 'AnyObject?'
+   !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
+   !!       ^
+   !! as AnyObject
 
 It can sometimes be useful to find out whether two constants or variables refer to
 exactly the same instance of a class.
@@ -492,31 +484,33 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
    -> class C { var x = 0, y = 0 }
    -> let c1 = C()
-   << // c1 : C = REPL.C
    -> let c2 = C()
-   << // c2 : C = REPL.C
    -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'C' operands
+   !$ error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
-   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !!       ^
+   !$ note: candidate requires that 'C' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+   !! extension BinaryInteger {
+   !!          ^
+   !$ note: candidate requires that 'C' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+   !! extension StringProtocol {
+   !! ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'S' operands
+   !$ error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
-   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !!       ^
+   !$ note: candidate requires that 'S' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+   !! extension BinaryInteger {
+   !! ^
+   !$ note: candidate requires that 'S' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+   !! extension StringProtocol {
+   !! ^
 
 .. TODO: This needs clarifying with regards to function references.
 

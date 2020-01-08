@@ -139,7 +139,6 @@ including important milestones.
   that the declaration has been renamed.
 
   .. testcode:: renamed1
-     :compile: true
 
      -> // First release
      -> protocol MyProtocol {
@@ -147,7 +146,6 @@ including important milestones.
         }
 
   .. testcode:: renamed2
-     :compile: true
 
      -> // Subsequent release renames MyProtocol
      -> protocol MyRenamedProtocol {
@@ -169,10 +167,11 @@ If you use multiple ``available`` attributes,
 the effective availability is the combination of
 the platform and Swift availabilities.
 
-.. assertion:: multipleAvalableAttributes
+.. assertion:: multipleAvailableAttributes
 
-   // REPL needs all the attributes on the same line as the  declaration.
-   -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
+   -> @available(iOS 9, *)
+   -> @available(macOS 10.9, *)
+   -> func foo() { }
    -> foo()
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
@@ -194,7 +193,6 @@ Although the two forms are functionally equivalent,
 the shorthand form is preferred whenever possible.
 
 .. testcode:: availableShorthand
-   :compile: true
 
    -> @available(iOS 10.0, macOS 10.12, *)
    -> class MyClass {
@@ -210,7 +208,6 @@ Instead, use separate ``available`` attributes to specify a Swift
 version availability and one or more platform availabilities.
 
 .. testcode:: availableMultipleAvailabilities
-   :compile: true
 
    -> @available(swift 3.0.2)
    -> @available(macOS 10.12, *)
@@ -247,7 +244,6 @@ You can call an instance of a dynamically callable type
 as if it's a function that takes any number of arguments.
 
 .. testcode:: dynamicCallable
-   :compile: true
 
    -> @dynamicCallable
    -> struct TelephoneExchange {
@@ -283,7 +279,6 @@ You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
 
 .. testcode:: dynamicCallable
-   :compile: true
 
    -> @dynamicCallable
       struct Repeater {
@@ -330,7 +325,6 @@ there isn't an implementation of ``dynamicallyCall(withArguments:)``
 that takes ``KeyValuePairs<String, String>``.
 
 .. testcode:: dynamicCallable-err
-   :compile: true
 
    >> @dynamicCallable
    >> struct Repeater {
@@ -344,9 +338,9 @@ that takes ``KeyValuePairs<String, String>``.
    >> }
    >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !! /tmp/swifttest.swift:12:13: error: cannot call value of non-function type 'Repeater'
+   !$ error: cannot invoke 'repeatLabels' with an argument list of type '(a: String)'
    !! repeatLabels(a: "four") // Error
-   !! ~~~~~~~~~~~~^
+   !! ^
 
 .. _Attributes_dynamicMemberLookup:
 
@@ -383,7 +377,6 @@ such as when bridging data from other languages into Swift.
 For example:
 
 .. testcode:: dynamicMemberLookup
-   :compile: true
 
    -> @dynamicMemberLookup
    -> struct DynamicStruct {
@@ -411,7 +404,6 @@ in a way that supports compile-time type checking.
 For example:
 
 .. testcode:: dynamicMemberLookup
-    :compile: true
 
     -> struct Point { var x, y: Int }
     ---
@@ -427,6 +419,150 @@ For example:
     -> let wrapper = PassthroughWrapper(value: point)
     -> print(wrapper.x)
     << 381
+
+
+.. _Attributes_frozen:
+
+frozen
+~~~~~~
+
+Apply this attribute to a structure or enumeration declaration
+to restrict the kinds of changes you can make to the type.
+This attribute is allowed only when compiling in library evolution mode.
+Future versions of the library can't change the declaration
+by adding, removing, or reordering
+an enumeration's cases
+or a structure's stored instance properties.
+These changes are allowed on nonfrozen types,
+but they break ABI compatibility for frozen types.
+
+.. note::
+
+    When the compiler isn't in library evolution mode,
+    all structures and enumerations are implicitly frozen,
+    and you can't use this attribute.
+
+.. assertion:: cant-use-frozen-without-evolution
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+    !$ warning: @frozen has no effect without -enable-library-evolution
+    !! @frozen public enum E { case x, y }
+    !! ^~~~~~~~
+    ---
+    // After the bug below is fixed, the following warning should appear:
+    // !$ warning: @frozen has no effect without -enable-library-evolution
+    // !! @frozen public struct S { var a: Int = 10 }
+    // !! ^~~~~~~~
+
+.. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
+
+.. assertion:: frozen-is-fine-with-evolution
+    :evolution: true
+
+    >> @frozen public enum E { case x, y }
+    >> @frozen public struct S { var a: Int = 10 }
+
+In library evolution mode,
+code that interacts with members of nonfrozen structures and enumerations
+is compiled in a way that allows it to continue working without recompiling
+even if a future version of the library
+adds, removes, or reorders some of that type's members.
+The compiler makes this possible using techniques like
+looking up information at runtime
+and adding a layer of indirection.
+Marking a structure or enumeration as frozen
+gives up this flexibility to gain performance:
+Future versions of the library can make only limited changes to the type,
+but the compiler can make additional optimizations
+in code that interacts with the type's members.
+
+Frozen types,
+the types of the stored properties of frozen structures,
+and the associated values of frozen enumeration cases
+must be public or marked with the ``usableFromInline`` attribute.
+The properties of a frozen structure can't have property observers,
+and expressions that provide the initial value for stored instance properties
+must follow the same restrictions as inlinable functions,
+as discussed in :ref:`Attributes_inlinable`.
+
+.. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
+    :evolution: true
+
+    >> public protocol P { }
+    >> private struct PrivateStruct: P { }
+    >>         public struct S1 { var fine: P = PrivateStruct() }
+    >> @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !$ error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !!                                          ^
+    !$ note: struct 'PrivateStruct' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !!                ^
+
+To enable library evolution mode on the command line,
+pass the ``-enable-library-evolution`` option to the Swift compiler.
+To enable it in Xcode,
+set the "Build Libraries for Distribution" build setting
+(``BUILD_LIBRARY_FOR_DISTRIBUTION``) to Yes,
+as described in `Xcode Help <//apple_ref/fake/XcodeHelp/BuildSettings>`_.
+
+.. This is the first time we're talking about a specific compiler flag/option.
+   In the long term, the discussion of library evololution mode
+   will need to move to a new chapter in the guide
+   that also talks about things like @available and ABI.
+   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
+
+A switch statement over a frozen enumeration doesn't require a ``default`` case,
+as discussed in :ref:`Statements_SwitchingOverFutureEnumerationCases`.
+Including a ``default`` or ``@unknown default`` case
+when switching over a frozen enumeration
+produces a warning because that code is never executed.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum
+    :evolution: true
+
+    >> public enum E { case x, y }
+    >> @frozen public enum F { case x, y }
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test1
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let e = NoUnknownDefaultOverFrozenEnum.E.x
+    >>     switch e {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // Note that there's no warning -- this is fine because E isn't frozen.
+
+.. sourcefile:: NoUnknownDefaultOverFrozenEnum_Test2
+
+    >> import NoUnknownDefaultOverFrozenEnum
+    >> func main() {
+    >>     let f = NoUnknownDefaultOverFrozenEnum.F.x
+    >>     switch f {
+    >>         case .x: print(9)
+    >>         case .y: print(8)
+    >>         @unknown default: print(0)
+    >>     }
+    >> }
+    // --- Main warning ---
+    !! /tmp/sourcefile_0.swift:7:18: warning: case is already handled by previous patterns; consider removing it
+    !! @unknown default: print(0)
+    !! ~~~~~~~~~^~~~~~~~~~~~~~~~~
+    !! /tmp/sourcefile_0.swift:7:9: warning: default will never be executed
+    !! @unknown default: print(0)
+    !! ^
+    // --- Junk/ancillary warnings ---
+    !! /tmp/sourcefile_0.swift:4:12: warning: switch condition evaluates to a constant
+    !! switch f {
+    !! ^
+    !! /tmp/sourcefile_0.swift:6:24: note: will never be executed
+    !! case .y: print(8)
+    !! ^
 
 
 .. _Attributes_GKInspectable:
@@ -472,16 +608,16 @@ even though they can't be marked with this attribute.
 .. assertion:: cant-inline-private
 
    >> @inlinable private func f() { }
-   !! <REPL Input>:1:1: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
    !! @inlinable private func f() { }
    !! ^~~~~~~~~~~
 
 .. assertion:: cant-inline-nested
 
    >> public func outer() {
-   >> @inlinable func f() { }
+   >>    @inlinable func f() { }
    >> }
-   !! <REPL Input>:2:3: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
    !! @inlinable func f() { }
    !! ^~~~~~~~~~~
    !!-
@@ -553,8 +689,12 @@ that calls the ``NSApplicationMain(_:_:)`` function as follows:
 .. testcode:: nsapplicationmain
 
    -> import AppKit
+   >> let _ =
    -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
    !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 
 .. _Attributes_NSCopying:
@@ -653,7 +793,6 @@ to Objective-C code as ``isEnabled``
 rather than just as the name of the property itself.
 
 .. testcode:: objc-attribute
-   :compile: true
 
    >> import Foundation
    -> class ExampleClass: NSObject {
@@ -692,6 +831,142 @@ can increase your binary size and adversely affect performance.
    because of the larger symbol table slowing dyld down.
 
 
+.. _Attributes_propertyWrapper:
+
+propertyWrapper
+~~~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, or enumeration declaration
+to use that type as a property wrapper.
+When you apply this attribute to a type,
+you create a custom attribute with the same name as the type.
+Apply that new attribute to a property of a class, structure, or enumeration
+to wrap access to the property through an instance of the wrapper type.
+Local and global variables can't use property wrappers.
+
+.. assertion:: property-wrappers-cant-go-on-variables
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper let d: Int = 20
+    >>     print(d)
+    >> }
+    !$ error: property wrappers are not yet supported on local properties
+    !! @UselessWrapper let d: Int = 20
+    !! ^
+
+The wrapper must define a ``wrappedValue`` instance property.
+The *wrapped value* of the property
+is the value that the getter and setter for this property expose.
+In most cases, ``wrappedValue`` is a computed value,
+but it can be a stored value instead.
+The wrapper is responsible for defining and managing
+any underlying storage needed by its wrapped value.
+The compiler synthesizes storage for the instance of the wrapper type
+by prefixing the name of the wrapped property with an underscore (``_``) ---
+for example, the wrapper for ``someProperty`` is stored as ``_someProperty``.
+The synthesized storage for the wrapper has an access control level of ``private``.
+
+A property that has a property wrapper
+can include ``willSet`` and ``didSet`` blocks,
+but it can't override the compiler-synthesized ``get`` or ``set`` blocks.
+
+Swift provides two forms of syntactic sugar
+for initialization of a property wrapper.
+You can use assignment syntax in the definition of a wrapped value
+to pass the expression on the right-hand side of the assignment
+as the argument to the ``wrappedValue`` parameter
+of the property wrapper's initializer.
+You can also provide arguments to the attribute
+when you apply it to a property,
+and those arguments are passed to the property wrapper's initializer.
+For example, in the code below,
+``SomeStruct`` calls each of the initializers that ``SomeWrapper`` defines.
+
+.. testcode:: propertyWrapper
+
+    -> @propertyWrapper
+    -> struct SomeWrapper {
+           var wrappedValue: Int
+           var someValue: Double
+           init() {
+               self.wrappedValue = 100
+               self.someValue = 12.3
+           }
+           init(wrappedValue: Int) {
+               self.wrappedValue = wrappedValue
+               self.someValue = 45.6
+           }
+           init(wrappedValue value: Int, custom: Double) {
+               self.wrappedValue = value
+               self.someValue = custom
+           }
+       }
+    ---
+    -> struct SomeStruct {
+           // Uses init()
+           @SomeWrapper var a: Int
+    ---
+           // Uses init(wrappedValue:)
+           @SomeWrapper var b = 10
+    ---
+           // Both use init(wrappedValue:custom:)
+           @SomeWrapper(custom: 98.7) var c = 30
+           @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+       }
+
+.. Comments in the SomeStruct part of the example above
+   are on the line before instead of at the end of the line
+   because the last example gets too long to fit on one line.
+
+.. Initialization of a wrapped property using ``init(wrappedValue:)``
+   can be split across multiple statements.
+   However, you can only see that behavior using local variables
+   which currently can't have a property wrapper.
+   It would look like this:
+
+   @SomeWrapper var e
+   e = 20  // Uses init(wrappedValue:)
+   e = 30  // Uses the property setter
+
+The *projected value* for a wrapped property is a second value
+that a property wrapper can use to expose additional functionality.
+The author of a property wrapper type
+is responsible for determining the meaning of its projected value
+and defining the interface that the projected value exposes.
+To project a value from a property wrapper,
+define a ``projectedValue`` instance property on the wrapper type.
+The compiler synthesizes an identifier for the projected value
+by prefixing the name of the wrapped property with a dollar sign (``$``) ---
+for example, the projected value for ``someProperty`` is ``$someProperty``.
+The projected value has the same access control level
+as the original wrapped property.
+
+.. testcode:: propertyWrapper-projection
+
+    -> @propertyWrapper
+    -> struct WrapperWithProjection {
+        var wrappedValue: Int
+        var projectedValue: SomeProjection {
+            return SomeProjection(wrapper: self)
+        }
+    }
+    -> struct SomeProjection {
+        var wrapper: WrapperWithProjection
+    }
+    ---
+    -> struct SomeStruct {
+           @WrapperWithProjection var x = 123
+       }
+    -> let s = SomeStruct()
+    >> _ =
+    -> s.x           // Int value
+    >> _ =
+    -> s.$x          // SomeProjection value
+    >> _ =
+    -> s.$x.wrapper  // WrapperWithProjection value
+
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
@@ -713,10 +988,10 @@ that inherits from ``NSManagedObject``.
           var value: Int
           init() { self.value = 0 }
       }
-   !! <REPL Input>:2:7: error: stored property 'value' requires an initial value
+   !$ error: stored property 'value' requires an initial value
    !! var value: Int
    !! ^
-   !! <REPL Input>:1:39: note: class 'NoDefaultValue' requires all stored properties to have initial values
+   !$ note: class 'NoDefaultValue' requires all stored properties to have initial values
    !! @requires_stored_property_inits class NoDefaultValue {
    !! ^
 
@@ -770,6 +1045,11 @@ initializer, or deinitializer declaration
 to allow that symbol to be used in inlinable code
 that's defined in the same module as the declaration.
 The declaration must have the ``internal`` access level modifier.
+A structure or class marked ``usableFromInline``
+can use only types that are public or ``usableFromInline`` for its properties.
+An enumeration marked ``usableFromInline``
+can use only types that are public or ``usableFromInline``
+for the raw values and associated values of its cases.
 
 Like the ``public`` access level modifier,
 this attribute
@@ -790,7 +1070,7 @@ applying both attributes is an error.
 .. assertion:: usableFromInline-and-inlinable-is-redundant
 
    >> @usableFromInline @inlinable internal func f() { }
-   !! <REPL Input>:1:1: warning: '@inlinable' declaration is already '@usableFromInline'
+   !$ warning: '@inlinable' declaration is already '@usableFromInline'
    !! @usableFromInline @inlinable internal func f() { }
    !! ^~~~~~~~~~~~~~~~~~
 
