@@ -48,7 +48,6 @@ and enables you to check for success.
 First, two classes called ``Person`` and ``Residence`` are defined:
 
 .. testcode:: optionalChainingIntro, optionalChainingIntroAssert
-   :compile: true
 
    -> class Person {
          var residence: Residence?
@@ -68,7 +67,6 @@ by virtue of being optional.
 In the code below, ``john`` has a ``residence`` property value of ``nil``:
 
 .. testcode:: optionalChainingIntro, optionalChainingIntroAssert
-   :compile: true
 
    -> let john = Person()
 
@@ -78,7 +76,6 @@ you trigger a runtime error,
 because there is no ``residence`` value to unwrap:
 
 .. testcode:: optionalChainingIntroAssert
-   :compile: true
 
    -> let roomCount = john.residence!.numberOfRooms
    xx assert
@@ -93,7 +90,6 @@ Optional chaining provides an alternative way to access the value of ``numberOfR
 To use optional chaining, use a question mark in place of the exclamation mark:
 
 .. testcode:: optionalChainingIntro
-   :compile: true
 
    -> if let roomCount = john.residence?.numberOfRooms {
          print("John's residence has \(roomCount) room(s).")
@@ -123,7 +119,6 @@ You can assign a ``Residence`` instance to ``john.residence``,
 so that it no longer has a ``nil`` value:
 
 .. testcode:: optionalChainingIntro
-   :compile: true
 
    -> john.residence = Residence()
 
@@ -133,7 +128,6 @@ it will now return an ``Int?`` that contains
 the default ``numberOfRooms`` value of ``1``:
 
 .. testcode:: optionalChainingIntro
-   :compile: true
 
    -> if let roomCount = john.residence?.numberOfRooms {
          print("John's residence has \(roomCount) room(s).")
@@ -164,7 +158,6 @@ with associated properties, methods, and subscripts.
 The ``Person`` class is defined in the same way as before:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> class Person {
          var residence: Residence?
@@ -175,7 +168,6 @@ This time, the ``Residence`` class defines a variable property called ``rooms``,
 which is initialized with an empty array of type ``[Room]``:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> class Residence {
          var rooms = [Room]()
@@ -218,7 +210,6 @@ a simple class with one property called ``name``,
 and an initializer to set that property to a suitable room name:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> class Room {
          let name: String
@@ -232,7 +223,6 @@ are alternative ways to identify a particular building as part of an address.
 The third property, ``street``, is used to name the street for that address:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> class Address {
          var buildingName: String?
@@ -269,7 +259,6 @@ Use the classes defined above to create a new ``Person`` instance,
 and try to access its ``numberOfRooms`` property as before:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> let john = Person()
    -> if let roomCount = john.residence?.numberOfRooms {
@@ -285,7 +274,6 @@ this optional chaining call fails in the same way as before.
 You can also attempt to set a property's value through optional chaining:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> let someAddress = Address()
    -> someAddress.buildingNumber = "29"
@@ -309,7 +297,6 @@ which lets you see
 whether the right-hand side of the ``=`` operator was evaluated.
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> func createAddress() -> Address {
           print("Function was called.")
@@ -362,7 +349,6 @@ Compare the return value from the ``printNumberOfRooms`` call against ``nil``
 to see if the method call was successful:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> if john.residence?.printNumberOfRooms() != nil {
          print("It was possible to print the number of rooms.")
@@ -379,7 +365,6 @@ Any attempt to set a property through optional chaining returns a value of type 
 which enables you to compare against ``nil`` to see if the property was set successfully:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> if (john.residence?.address = someAddress) != nil {
          print("It was possible to set the address.")
@@ -411,7 +396,6 @@ Because ``john.residence`` is currently ``nil``,
 the subscript call fails:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> if let firstRoomName = john.residence?[0].name {
          print("The first room name is \(firstRoomName).")
@@ -428,7 +412,6 @@ on which optional chaining is being attempted.
 Similarly, you can try to set a new value through a subscript with optional chaining:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> john.residence?[0] = Room(name: "Bathroom")
 
@@ -440,7 +423,6 @@ you can use the ``Residence`` subscript to access
 the actual items in the ``rooms`` array through optional chaining:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> let johnsHouse = Residence()
    -> johnsHouse.rooms.append(Room(name: "Living Room"))
@@ -465,7 +447,6 @@ place a question mark *after* the subscript's closing bracket
 to chain on its optional return value:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
    -> testScores["Dave"]?[0] = 91
@@ -520,7 +501,6 @@ to chain through the ``residence`` and ``address`` properties,
 both of which are of optional type:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> if let johnsStreet = john.residence?.address?.street {
          print("John's street name is \(johnsStreet).")
@@ -545,7 +525,6 @@ and set an actual value for the address's ``street`` property,
 you can access the value of the ``street`` property through multilevel optional chaining:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> let johnsAddress = Address()
    -> johnsAddress.buildingName = "The Larches"
@@ -580,7 +559,6 @@ As described above, the ultimate return type of this method call after optional 
 is also ``String?``:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
          print("John's building identifier is \(buildingIdentifier).")
@@ -591,7 +569,6 @@ If you want to perform further optional chaining on this method's return value,
 place the optional chaining question mark *after* the method's parentheses:
 
 .. testcode:: optionalChaining
-   :compile: true
 
    -> if let beginsWithThe =
          john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {

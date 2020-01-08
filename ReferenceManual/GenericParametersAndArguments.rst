@@ -66,10 +66,15 @@ to the function or initializer.
 
 .. testcode:: generic-params
 
+    >> let r0 =
     -> simpleMax(17, 42) // T is inferred to be Int
-    << // r0 : Int = 42
+    >> assert(r0 == 42)
+    >> let r1 =
     -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
-    << // r1 : Double = 3.14159
+    >> assert(r1 == 3.14159)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 
 .. _GenericParametersAndArguments_WhereClauses:
@@ -189,7 +194,6 @@ to form an array whose elements are themselves arrays of integers.
 .. testcode:: array-of-arrays
 
     -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    << // arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments
