@@ -2516,8 +2516,7 @@ unlike functions, methods, and initializers.
 However, you can provide explicit argument labels
 using the same syntax that functions, methods, and initializers use.
 In addition, subscripts can't have in-out parameters.
-
-A parameter to a subscript can have a default value,
+A subscript parameter can have a default value,
 which is written using the syntax described in
 :ref:`Declarations_SpecialKindsOfParameters`.
 
