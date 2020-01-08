@@ -2517,6 +2517,10 @@ However, you can provide explicit argument labels
 using the same syntax that functions, methods, and initializers use.
 In addition, subscripts can't have in-out parameters.
 
+A parameter to a subscript can have a default value,
+which is written using the syntax described in
+:ref:`Declarations_SpecialKindsOfParameters`.
+
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
