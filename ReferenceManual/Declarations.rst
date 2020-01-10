@@ -857,6 +857,57 @@ a class type method marked with ``class final`` or ``static`` can't be overridde
    -> print(SS3.f())
    <- 120
 
+.. _Declarations_SpecialFuncNames:
+
+Methods with Special Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A class, structure, or enumeration type
+can also enable syntactic sugar for function call syntax
+by defining a ``dynamicallyCall(withArguments:)`` method
+or a ``dynamicallyCall(withKeywordArguments:)`` method,
+as described in :ref:`Attributes_dynamicCallable`,
+or by defining a call-as-function method as described below.
+
+.. XXX Contrast dynamic with static
+
+The name of a call-as-function method is ``callAsFunction()``,
+or another name that adds labelled or unlabeled arguments --
+for example, ``callAsFunction(_:_:)`` and ``callAsFunction(something:)``.
+A function call expression
+whose *function name* is an instance of a type
+that implements a call-as-function method
+is understood as a call to that method.
+The following function calls are equivalent:
+
+.. testcode:: call-as-function
+   :compile: true
+
+   -> struct CallableStruct {
+          var value: Int
+          func callAsFunction(_ number: Int, scale: Int) {
+              print(scale * (argument + value))
+          }
+      }
+   -> let callable = CallableStruct(value: 100)
+   -> callable(4, scale: 2)
+   -> callable.callAsFunction(4, scale: 2)
+   // Both function calls print 208.
+   << 208
+   << 208
+
+If the class, structure, or enumeration type implements
+both a call-as-function method
+and one of the methods used by the ``dynamicCallable`` attribute,
+the compiler gives preference to the call-as-function method.
+For information about the ``dynamicCallable`` attribute,
+see :ref:`Attributes_dynamicCallable`.
+
+.. XXX Editorial: Do we have a better name than "a call-as-function method"?
+   I'm avoiding naming it a ``callAsFunction`` method
+   because that isn't actually a name for anything in your program,
+   so it's a bit of an abuse of notation to write it in code voice.
+
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods
