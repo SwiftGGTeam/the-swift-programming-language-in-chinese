@@ -1112,7 +1112,7 @@ instead of ``\SomeClass.someProperty``:
 
    >> import Foundation
    -> class SomeClass: NSObject {
-          @objc var someProperty: Int
+          @objc dynamic var someProperty: Int
           init(someProperty: Int) {
               self.someProperty = someProperty
           }
