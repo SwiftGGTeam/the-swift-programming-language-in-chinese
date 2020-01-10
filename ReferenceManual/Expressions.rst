@@ -1290,8 +1290,9 @@ For example:
    >> import Foundation
    -> class SomeClass: NSObject {
           @objc let property: String
+   ---
           @objc(doSomethingWithInt:)
-          func doSomething(_ x: Int) {}
+          func doSomething(_ x: Int) { }
    ---
           init(property: String) {
               self.property = property
@@ -1310,8 +1311,17 @@ as well the ``as`` operator to disambiguate between methods that share a name
 but have different type signatures.
 For example:
 
-.. testcode:: selector-expression
+.. testcode:: selector-expression-with-as
 
+   >> import Foundation
+   >> class SomeClass: NSObject {
+   >>     @objc let property: String
+   >>     @objc(doSomethingWithInt:)
+   >>     func doSomething(_ x: Int) {}
+   >>     init(property: String) {
+   >>         self.property = property
+   >>     }
+   >> }
    -> extension SomeClass {
           @objc(doSomethingWithString:)
           func doSomething(_ x: String) { }
