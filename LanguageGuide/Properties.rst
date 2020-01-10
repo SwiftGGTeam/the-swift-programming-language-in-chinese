@@ -698,7 +698,8 @@ If you ask it to store a larger number, it stores 12 instead.
 
     -> @propertyWrapper
     -> struct TwelveOrLess {
-           private var number = 0
+           private var number: Int
+           init() { self.number = 0 }
            var wrappedValue: Int {
                get { return number }
                set { number = min(newValue, 12) }
@@ -1076,8 +1077,12 @@ adjusted the new value for the property before storing that new value.
 
     -> @propertyWrapper
     -> struct SmallNumber {
-           private var number = 0
-           var projectedValue = false
+           private var number: Int
+           var projectedValue: Bool
+           init() {
+               self.number = 0
+               self.projectedValue = false
+           }
            var wrappedValue: Int {
                get { return number }
                set {
