@@ -1224,6 +1224,9 @@ to access a property of an optional string:
    -> print(count as Any)
    <- Optional(5)
 
+.. The test above is failing, which appears to be a compiler bug.
+   <rdar://problem/58484319> Swift 5.2 regression in keypaths
+
 You can mix and match components of key paths to access values
 that are deeply nested within a type.
 The following code accesses different values and properties
