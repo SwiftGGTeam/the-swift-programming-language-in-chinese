@@ -1557,7 +1557,7 @@ the parentheses can be omitted.
 
 A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
-by defining a call-as-function method,
+by declaring one of several methods,
 as described in :ref:`Declarations_SpecialFuncNames`.
 
 .. syntax-grammar::

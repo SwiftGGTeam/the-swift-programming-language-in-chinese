@@ -862,22 +862,30 @@ a class type method marked with ``class final`` or ``static`` can't be overridde
 Methods with Special Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Several methods that have special names
+enable syntactic sugar for function call syntax.
+If a type defines one of these methods,
+instances of the type can be used in function call syntax.
+The function call is understood to be a call to
+one of the specially named methods on that instance.
+
 A class, structure, or enumeration type
-can also enable syntactic sugar for function call syntax
+can support function call syntax
 by defining a ``dynamicallyCall(withArguments:)`` method
 or a ``dynamicallyCall(withKeywordArguments:)`` method,
 as described in :ref:`Attributes_dynamicCallable`,
 or by defining a call-as-function method as described below.
-
-.. XXX Contrast dynamic with static
+If the type defines
+both a call-as-function method
+and one of the methods used by the ``dynamicCallable`` attribute,
+the compiler gives preference to the call-as-function method
+in circumstances where either method could be used.
 
 The name of a call-as-function method is ``callAsFunction()``,
 or another name that adds labelled or unlabeled arguments --
-for example, ``callAsFunction(_:_:)`` and ``callAsFunction(something:)``.
-A function call expression
-whose *function name* is an instance of a type
-that implements a call-as-function method
-is understood as a call to that method.
+for example, ``callAsFunction(_:_:)`` and ``callAsFunction(something:)``
+are also valid call-as-function method names.
+
 The following function calls are equivalent:
 
 .. testcode:: call-as-function
@@ -896,12 +904,16 @@ The following function calls are equivalent:
    << 208
    << 208
 
-If the class, structure, or enumeration type implements
-both a call-as-function method
-and one of the methods used by the ``dynamicCallable`` attribute,
-the compiler gives preference to the call-as-function method.
-For information about the ``dynamicCallable`` attribute,
-see :ref:`Attributes_dynamicCallable`.
+The call-as-function methods
+and the methods from the ``dynamicCallable`` attribute
+make different trade-offs between
+how much information you encode into the type system
+and how much dynamic behavior is possible at runtime.
+When you declare a call-as-function method,
+you specify the number of arguments and the type of each argument.
+The ``dynamicCallable`` attribute's methods specify only the type
+used to hold the array of arguments --
+in the most dynamic scenario.
 
 .. XXX Editorial: Do we have a better name than "a call-as-function method"?
    I'm avoiding naming it a ``callAsFunction`` method
