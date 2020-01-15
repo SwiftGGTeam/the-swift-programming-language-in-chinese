@@ -219,13 +219,17 @@ The return value of a function can be ignored when it is called:
    -> func printWithoutCounting(string: String) {
          let _ = printAndCount(string: string)
       }
+   >> let a =
    -> printAndCount(string: "hello, world")
    << hello, world
+   >> assert(a == 12)
    // prints "hello, world" and returns a value of 12
-   << // r0 : Int = 12
    -> printWithoutCounting(string: "hello, world")
    << hello, world
    // prints "hello, world" but does not return a value
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
@@ -243,6 +247,9 @@ but the returned value is not used.
    cannot allow control to fall out of the bottom of the function
    without returning a value,
    and attempting to do so will result in a compile-time error.
+
+.. FIXME Unless the function is marked @discardableResult,
+   ignoring its return value triggers a compile-time warning.
 
 .. _Functions_FunctionsWithMultipleReturnValues:
 
@@ -289,7 +296,6 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 .. testcode:: tupleTypesAsReturnTypes
 
    -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
-   << // bounds : (min: Int, max: Int) = (min: -6, max: 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
@@ -525,14 +531,18 @@ The example below calculates the :newTerm:`arithmetic mean`
          }
          return total / Double(numbers.count)
       }
+   >> let r0 =
    -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r0 : Double = 3.0
    /> returns \(r0), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
+   >> let r1 =
    -> arithmeticMean(3, 8.25, 18.75)
-   << // r1 : Double = 10.0
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
 
 .. note::
 
@@ -597,9 +607,7 @@ when they are passed to the ``swapTwoInts(_:_:)`` function:
 .. testcode:: inoutParameters
 
    -> var someInt = 3
-   << // someInt : Int = 3
    -> var anotherInt = 107
-   << // anotherInt : Int = 107
    -> swapTwoInts(&someInt, &anotherInt)
    -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
@@ -635,13 +643,13 @@ For example:
    -> func addTwoInts(_ a: Int, _ b: Int) -> Int {
          return a + b
       }
-   >> addTwoInts
-   << // r0 : (Int, Int) -> Int = (Function)
+   >> print(type(of: addTwoInts))
+   << (Int, Int) -> Int
    -> func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
          return a * b
       }
-   >> multiplyTwoInts
-   << // r1 : (Int, Int) -> Int = (Function)
+   >> print(type(of: multiplyTwoInts))
+   << (Int, Int) -> Int
 
 This example defines two simple mathematical functions
 called ``addTwoInts`` and ``multiplyTwoInts``.
@@ -662,8 +670,8 @@ Here's another example, for a function with no parameters or return value:
    -> func printHelloWorld() {
          print("hello, world")
       }
-   >> printHelloWorld
-   << // r2 : () -> () = (Function)
+   >> print(type(of: printHelloWorld))
+   << () -> ()
 
 The type of this function is ``() -> Void``,
 or “a function that has no parameters, and returns ``Void``.”
@@ -680,7 +688,6 @@ and assign an appropriate function to that variable:
 .. testcode:: functionTypes
 
    -> var mathFunction: (Int, Int) -> Int = addTwoInts
-   << // mathFunction : (Int, Int) -> Int = (Function)
 
 This can be read as:
 
@@ -715,7 +722,8 @@ when you assign a function to a constant or variable:
 .. testcode:: functionTypes
 
    -> let anotherMathFunction = addTwoInts
-   << // anotherMathFunction : (Int, Int) -> Int = (Function)
+   >> print(type(of: anotherMathFunction))
+   << (Int, Int) -> Int
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 .. TODO: talk about defining typealiases for function types somewhere?
@@ -797,9 +805,9 @@ that will step in one direction or the other:
 .. testcode:: functionTypes
 
    -> var currentValue = 3
-   << // currentValue : Int = 3
    -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+   >> print(type(of: moveNearerToZero))
+   << (Int) -> Int
    // moveNearerToZero now refers to the stepBackward() function
 
 The example above determines whether a positive or negative step is needed
@@ -852,9 +860,9 @@ to use and return nested functions:
          return backward ? stepBackward : stepForward
       }
    -> var currentValue = -4
-   << // currentValue : Int = -4
    -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+   >> print(type(of: moveNearerToZero))
+   << (Int) -> Int
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {
          print("\(currentValue)... ")

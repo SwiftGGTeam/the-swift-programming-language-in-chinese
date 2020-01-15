@@ -139,7 +139,6 @@ including important milestones.
   that the declaration has been renamed.
 
   .. testcode:: renamed1
-     :compile: true
 
      -> // First release
      -> protocol MyProtocol {
@@ -147,7 +146,6 @@ including important milestones.
         }
 
   .. testcode:: renamed2
-     :compile: true
 
      -> // Subsequent release renames MyProtocol
      -> protocol MyRenamedProtocol {
@@ -169,10 +167,11 @@ If you use multiple ``available`` attributes,
 the effective availability is the combination of
 the platform and Swift availabilities.
 
-.. assertion:: multipleAvalableAttributes
+.. assertion:: multipleAvailableAttributes
 
-   // REPL needs all the attributes on the same line as the  declaration.
-   -> @available(iOS 9, *) @available(macOS 10.9, *) func foo() { }
+   -> @available(iOS 9, *)
+   -> @available(macOS 10.9, *)
+   -> func foo() { }
    -> foo()
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
@@ -194,7 +193,6 @@ Although the two forms are functionally equivalent,
 the shorthand form is preferred whenever possible.
 
 .. testcode:: availableShorthand
-   :compile: true
 
    -> @available(iOS 10.0, macOS 10.12, *)
    -> class MyClass {
@@ -210,7 +208,6 @@ Instead, use separate ``available`` attributes to specify a Swift
 version availability and one or more platform availabilities.
 
 .. testcode:: availableMultipleAvailabilities
-   :compile: true
 
    -> @available(swift 3.0.2)
    -> @available(macOS 10.12, *)
@@ -247,7 +244,6 @@ You can call an instance of a dynamically callable type
 as if it's a function that takes any number of arguments.
 
 .. testcode:: dynamicCallable
-   :compile: true
 
    -> @dynamicCallable
    -> struct TelephoneExchange {
@@ -283,7 +279,6 @@ You can include labels in a dynamic method call
 if you implement the ``dynamicallyCall(withKeywordArguments:)`` method.
 
 .. testcode:: dynamicCallable
-   :compile: true
 
    -> @dynamicCallable
       struct Repeater {
@@ -330,7 +325,6 @@ there isn't an implementation of ``dynamicallyCall(withArguments:)``
 that takes ``KeyValuePairs<String, String>``.
 
 .. testcode:: dynamicCallable-err
-   :compile: true
 
    >> @dynamicCallable
    >> struct Repeater {
@@ -344,9 +338,9 @@ that takes ``KeyValuePairs<String, String>``.
    >> }
    >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !! /tmp/swifttest.swift:12:13: error: cannot call value of non-function type 'Repeater'
+   !$ error: cannot invoke 'repeatLabels' with an argument list of type '(a: String)'
    !! repeatLabels(a: "four") // Error
-   !! ~~~~~~~~~~~~^
+   !! ^
 
 .. _Attributes_dynamicMemberLookup:
 
@@ -383,7 +377,6 @@ such as when bridging data from other languages into Swift.
 For example:
 
 .. testcode:: dynamicMemberLookup
-   :compile: true
 
    -> @dynamicMemberLookup
    -> struct DynamicStruct {
@@ -411,7 +404,6 @@ in a way that supports compile-time type checking.
 For example:
 
 .. testcode:: dynamicMemberLookup
-    :compile: true
 
     -> struct Point { var x, y: Int }
     ---
@@ -451,23 +443,21 @@ but they break ABI compatibility for frozen types.
     and you can't use this attribute.
 
 .. assertion:: cant-use-frozen-without-evolution
-    :compile: true
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
-    !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    !$ warning: @frozen has no effect without -enable-library-evolution
     !! @frozen public enum E { case x, y }
     !! ^~~~~~~~
     ---
     // After the bug below is fixed, the following warning should appear:
-    // !! /tmp/swifttest.swift:1:1: warning: @frozen has no effect without -enable-library-evolution
+    // !$ warning: @frozen has no effect without -enable-library-evolution
     // !! @frozen public struct S { var a: Int = 10 }
     // !! ^~~~~~~~
 
 .. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
 
 .. assertion:: frozen-is-fine-with-evolution
-    :compile: true
     :evolution: true
 
     >> @frozen public enum E { case x, y }
@@ -497,17 +487,16 @@ must follow the same restrictions as inlinable functions,
 as discussed in :ref:`Attributes_inlinable`.
 
 .. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
-    :compile: true
     :evolution: true
 
     >> public protocol P { }
     >> private struct PrivateStruct: P { }
     >>         public struct S1 { var fine: P = PrivateStruct() }
     >> @frozen public struct S2 { var nope: P = PrivateStruct() }
-    !! /tmp/swifttest.swift:4:42: error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !$ error: struct 'PrivateStruct' is private and cannot be referenced from a property initializer in a '@frozen' type
     !! @frozen public struct S2 { var nope: P = PrivateStruct() }
     !!                                          ^
-    !! /tmp/swifttest.swift:2:16: note: struct 'PrivateStruct' is not '@usableFromInline' or public
+    !$ note: struct 'PrivateStruct' is not '@usableFromInline' or public
     !! private struct PrivateStruct: P { }
     !!                ^
 
@@ -619,16 +608,16 @@ even though they can't be marked with this attribute.
 .. assertion:: cant-inline-private
 
    >> @inlinable private func f() { }
-   !! <REPL Input>:1:1: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
    !! @inlinable private func f() { }
    !! ^~~~~~~~~~~
 
 .. assertion:: cant-inline-nested
 
    >> public func outer() {
-   >> @inlinable func f() { }
+   >>    @inlinable func f() { }
    >> }
-   !! <REPL Input>:2:3: error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
+   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
    !! @inlinable func f() { }
    !! ^~~~~~~~~~~
    !!-
@@ -700,8 +689,12 @@ that calls the ``NSApplicationMain(_:_:)`` function as follows:
 .. testcode:: nsapplicationmain
 
    -> import AppKit
+   >> let _ =
    -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
    !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 
 .. _Attributes_NSCopying:
@@ -800,7 +793,6 @@ to Objective-C code as ``isEnabled``
 rather than just as the name of the property itself.
 
 .. testcode:: objc-attribute
-   :compile: true
 
    >> import Foundation
    -> class ExampleClass: NSObject {
@@ -853,14 +845,13 @@ to wrap access to the property through an instance of the wrapper type.
 Local and global variables can't use property wrappers.
 
 .. assertion:: property-wrappers-cant-go-on-variables
-    :compile: true
 
     >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
     >> func f() {
     >>     @UselessWrapper let d: Int = 20
     >>     print(d)
     >> }
-    !! /tmp/swifttest.swift:3:5: error: property wrappers are not yet supported on local properties
+    !$ error: property wrappers are not yet supported on local properties
     !! @UselessWrapper let d: Int = 20
     !! ^
 
@@ -893,7 +884,6 @@ For example, in the code below,
 ``SomeStruct`` calls each of the initializers that ``SomeWrapper`` defines.
 
 .. testcode:: propertyWrapper
-    :compile: true
 
     -> @propertyWrapper
     -> struct SomeWrapper {
@@ -953,7 +943,6 @@ The projected value has the same access control level
 as the original wrapped property.
 
 .. testcode:: propertyWrapper-projection
-    :compile: true
 
     -> @propertyWrapper
     -> struct WrapperWithProjection {
@@ -999,10 +988,10 @@ that inherits from ``NSManagedObject``.
           var value: Int
           init() { self.value = 0 }
       }
-   !! <REPL Input>:2:7: error: stored property 'value' requires an initial value
+   !$ error: stored property 'value' requires an initial value
    !! var value: Int
    !! ^
-   !! <REPL Input>:1:39: note: class 'NoDefaultValue' requires all stored properties to have initial values
+   !$ note: class 'NoDefaultValue' requires all stored properties to have initial values
    !! @requires_stored_property_inits class NoDefaultValue {
    !! ^
 
@@ -1081,7 +1070,7 @@ applying both attributes is an error.
 .. assertion:: usableFromInline-and-inlinable-is-redundant
 
    >> @usableFromInline @inlinable internal func f() { }
-   !! <REPL Input>:1:1: warning: '@inlinable' declaration is already '@usableFromInline'
+   !$ warning: '@inlinable' declaration is already '@usableFromInline'
    !! @usableFromInline @inlinable internal func f() { }
    !! ^~~~~~~~~~~~~~~~~~
 

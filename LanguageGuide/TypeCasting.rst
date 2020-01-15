@@ -31,7 +31,7 @@ Specifically, it declares a ``name`` property of type ``String``,
 and an ``init name`` initializer.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
-.. testcode:: typeCasting
+.. testcode:: typeCasting, typeCasting-err
 
    -> class MediaItem {
          var name: String
@@ -47,7 +47,7 @@ with a corresponding initializer.
 The second subclass, ``Song``, adds an ``artist`` property and initializer
 on top of the base class:
 
-.. testcode:: typeCasting
+.. testcode:: typeCasting, typeCasting-err
 
    -> class Movie: MediaItem {
          var director: String
@@ -82,7 +82,8 @@ and so it infers a type of ``[MediaItem]`` for the ``library`` array:
          Song(name: "The One And Only", artist: "Chesney Hawkes"),
          Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
       ]
-   << // library : [MediaItem] = [REPL.Movie, REPL.Song, REPL.Movie, REPL.Song, REPL.Song]
+   >> print(type(of: library))
+   << Array<MediaItem>
    // the type of "library" is inferred to be [MediaItem]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
@@ -110,9 +111,7 @@ which count the number of ``Movie`` and ``Song`` instances in the ``library`` ar
 .. testcode:: typeCasting
 
    -> var movieCount = 0
-   << // movieCount : Int = 0
    -> var songCount = 0
-   << // songCount : Int = 0
    ---
    -> for item in library {
          if item is Movie {
@@ -253,10 +252,9 @@ Here's an example of using ``Any`` to work with a mix of different types,
 including function types and nonclass types.
 The example creates an array called ``things``, which can store values of type ``Any``:
 
-.. testcode:: typeCasting
+.. testcode:: typeCasting, typeCasting-err
 
    -> var things = [Any]()
-   << // things : [Any] = []
    ---
    -> things.append(0)
    -> things.append(0.0)
@@ -327,23 +325,22 @@ a constant of the specified type to enable its value to be printed:
     you can use the ``as`` operator to explicitly cast the optional to ``Any``,
     as shown below.
 
-    .. testcode:: typeCasting
+    .. testcode:: typeCasting-err
 
        -> let optionalNumber: Int? = 3
-       << // optionalNumber : Int? = Optional(3)
        -> things.append(optionalNumber)        // Warning
-       !! <REPL Input>:1:15: warning: expression implicitly coerced from 'Int?' to 'Any'
+       !$ warning: expression implicitly coerced from 'Int?' to 'Any'
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
-       !! <REPL Input>:1:15: note: provide a default value to avoid this warning
+       !$ note: provide a default value to avoid this warning
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
        !!                              ?? <#default value#>
-       !! <REPL Input>:1:15: note: force-unwrap the value to avoid this warning
+       !$ note: force-unwrap the value to avoid this warning
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
        !!                              !
-       !! <REPL Input>:1:15: note: explicitly cast to 'Any' with 'as Any' to silence this warning
+       !$ note: explicitly cast to 'Any' with 'as Any' to silence this warning
        !! things.append(optionalNumber)        // Warning
        !!               ^~~~~~~~~~~~~~
        !!                              as Any

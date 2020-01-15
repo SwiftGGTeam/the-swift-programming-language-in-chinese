@@ -78,7 +78,6 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
    -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -118,7 +117,6 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["cat": 4, "ant": 6, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -154,7 +152,6 @@ Subscripts can use variadic parameters,
 but they can't use in-out parameters or provide default parameter values.
 
 .. assertion:: subscripts-cant-have-default-arguments
-    :compile: true
 
     >> struct Subscriptable {
     >>     subscript(x: Int, y: Int = 0) -> Int {
@@ -163,21 +160,26 @@ but they can't use in-out parameters or provide default parameter values.
     >> }
     >> let s = Subscriptable()
     >> print(s[x: 0])
-    !! /tmp/swifttest.swift:2:30: error: default arguments are not allowed in subscripts
+    !$ error: default arguments are not allowed in subscripts
     !! subscript(x: Int, y: Int = 0) -> Int {
     !! ^~~
     !!-
-    !! /tmp/swifttest.swift:7:13: error: missing argument for parameter #2 in call
+    !$ error: missing argument for parameter #2 in call
     !! print(s[x: 0])
     !! ^
     !! , <#Int#>
-    !! /tmp/swifttest.swift:2:5: note: 'subscript(_:_:)' declared here
+    !$ note: 'subscript(_:_:)' declared here
     !! subscript(x: Int, y: Int = 0) -> Int {
     !! ^
 
 .. The test above will fail in the next version of Swift after 5.1
    that tracks changes from 'master'.
    When that happens, merge 53265074_subscript_default.
+
+.. The failure before merging in that branch
+   is a complaint that 'x' is an extraneous argument,
+   due to a mistake in the test.
+   Namely, subscript arguments default to being UN-labeled.
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -231,7 +233,7 @@ an appropriate row and column count to its initializer:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
+   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
 
 The example above creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
@@ -272,9 +274,7 @@ are inside the bounds of the matrix:
 .. testcode:: matrixSubscript
 
    >> var rows = 2
-   << // rows : Int = 2
    >> var columns = 2
-   << // columns : Int = 2
    -> func indexIsValid(row: Int, column: Int) -> Bool {
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
@@ -312,6 +312,6 @@ The example below shows how you define and call a type subscript:
          }
       }
    -> let mars = Planet[4]
-   << // mars : Planet = REPL.Planet.mars
+   >> assert(mars == Planet.mars)
    -> print(mars)
    << mars

@@ -32,7 +32,7 @@ Document Revision History
   omitting parameters for properties that have a default value.
 
 * Added information about dynamic members
-  that are looked up by key path at run time
+  that are looked up by key path at runtime
   to the :ref:`Attributes_dynamicMemberLookup` section.
 
 * Added ``macCatalyst`` to the list of target environments

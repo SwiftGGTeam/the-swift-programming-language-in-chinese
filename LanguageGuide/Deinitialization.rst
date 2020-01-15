@@ -120,7 +120,6 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
 .. testcode:: deinitializer
 
    -> var playerOne: Player? = Player(coins: 100)
-   << // playerOne : Player? = Optional(REPL.Player)
    -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins
    -> print("There are now \(Bank.coinsInBank) coins left in the bank")

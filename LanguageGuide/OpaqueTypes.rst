@@ -26,7 +26,6 @@ is a ``draw()`` function that returns the string representation of that shape,
 which you can use as the requirement for the ``Shape`` protocol:
 
 .. testcode:: opaque-result
-    :compile: true
 
     -> protocol Shape {
            func draw() -> String
@@ -55,7 +54,6 @@ The flipped result exposes the exact generic types
 that were used to create it.
 
 .. testcode:: opaque-result
-    :compile: true
 
     -> struct FlippedShape<T: Shape>: Shape {
            var shape: T
@@ -76,7 +74,6 @@ results in types like ``JoinedShape<FlippedShape<Triangle>, Triangle>``
 from joining a flipped triangle with another triangle.
 
 .. testcode:: opaque-result
-    :compile: true
 
     -> struct JoinedShape<T: Shape, U: Shape>: Shape {
           var top: T
@@ -147,7 +144,6 @@ For example, the function in the following example returns a trapezoid
 without exposing the underlying type of that shape.
 
 .. testcode:: opaque-result
-    :compile: true
 
     -> struct Square: Shape {
            var size: Int
@@ -207,7 +203,6 @@ The functions in the following code both return a value
 of some type that conforms to the ``Shape`` protocol.
 
 .. testcode:: opaque-result
-    :compile: true
 
     -> func flip<T: Shape>(_ shape: T) -> some Shape {
            return FlippedShape(shape: shape)
@@ -248,8 +243,6 @@ here's an *invalid* version of the shape-flipping function
 that includes a special case for squares:
 
 .. testcode:: opaque-result-err
-    :compile: true
-
 
     >> protocol Shape {
     >>     func draw() -> String
@@ -267,13 +260,13 @@ that includes a special case for squares:
            }
            return FlippedShape(shape: shape) // Error: return types don't match
        }
-    !! /tmp/swifttest.swift:11:6: error: function declares an opaque return type, but the return statements in its body do not have matching underlying types
+    !$ error: function declares an opaque return type, but the return statements in its body do not have matching underlying types
     !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     !! ^
-    !! /tmp/swifttest.swift:13:16: note: return statement has underlying type 'T'
+    !$ note: return statement has underlying type 'T'
     !! return shape // Error: return types don't match
     !! ^
-    !! /tmp/swifttest.swift:15:12: note: return statement has underlying type 'FlippedShape<T>'
+    !$ note: return statement has underlying type 'FlippedShape<T>'
     !! return FlippedShape(shape: shape) // Error: return types don't match
     !! ^
 
@@ -286,7 +279,6 @@ into the implementation of ``FlippedShape``,
 which lets this function always return a ``FlippedShape`` value:
 
 .. testcode:: opaque-result-special-flip
-    :compile: true
 
     >> protocol Shape { func draw() -> String }
     >> struct Square: Shape {
@@ -315,7 +307,6 @@ Here's an example of a function that incorporates its type parameter
 into the underlying type of the value it returns:
 
 .. testcode:: opaque-result
-   :compile: true
 
    -> func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
           return Array<T>(repeating: shape, count: count)
@@ -354,7 +345,6 @@ here's a version of ``flip(_:)`` that returns a value of protocol type
 instead of using an opaque return type:
 
 .. testcode:: opaque-result-existential-error
-    :compile: true
 
     >> protocol Shape {
     >>     func draw() -> String
@@ -388,7 +378,6 @@ than ``flip(_:)`` makes.
 It reserves the flexibility to return values of multiple types:
 
 .. testcode:: opaque-result-existential-error
-    :compile: true
 
     -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
           if shape is Square {
@@ -419,7 +408,6 @@ For example, it's not possible to write an ``==`` operator
 comparing results returned by this function.
 
 .. testcode:: opaque-result-existential-error
-    :compile: true
 
     >> let smallTriangle = Triangle(size: 3)
     -> let protoFlippedTriangle = protoFlip(smallTriangle)
@@ -428,10 +416,12 @@ comparing results returned by this function.
     !$ error: binary operator '==' cannot be applied to two 'Shape' operands
     !! protoFlippedTriangle == sameThing  // Error
     !! ~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
-    !~ /tmp/swifttest.swift:29:22: note: overloads for '==' exist with these partially matching parameter lists:
-    !! protoFlippedTriangle == sameThing  // Error
-    !!                      ^
-
+    !$ note: candidate requires that 'Shape' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+    !! extension BinaryInteger {
+    !! ^
+    !$ note: candidate requires that 'Shape' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+    !! extension StringProtocol {
+    !! ^
 
 The error on the last line of the example occurs for several reasons.
 The immediate issue is that the ``Shape`` doesn't include an ``==`` operator
@@ -472,7 +462,6 @@ For example,
 here's a version of the ``Container`` protocol from :doc:`./Generics`:
 
 .. testcode:: opaque-result, opaque-result-existential-error
-    :compile: true
 
     -> protocol Container {
            associatedtype Item
@@ -488,7 +477,6 @@ because there isn't enough information outside the function body
 to infer what the generic type needs to be.
 
 .. testcode:: opaque-result-existential-error
-    :compile: true
 
     // Error: Protocol with associated types can't be used as a return type.
     -> func makeProtocolContainer<T>(item: T) -> Container {
@@ -499,10 +487,10 @@ to infer what the generic type needs to be.
     -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
            return [item]
        }
-    !! /tmp/swifttest.swift:36:43: error: protocol 'Container' can only be used as a generic constraint because it has Self or associated type requirements
+    !$ error: protocol 'Container' can only be used as a generic constraint because it has Self or associated type requirements
     !! func makeProtocolContainer<T>(item: T) -> Container {
-    !!                                           ^
-    !! /tmp/swifttest.swift:40:12: error: cannot convert return expression of type '[T]' to return type 'C'
+    !! ^
+    !$ error: cannot convert return expression of type '[T]' to return type 'C'
     !! return [item]
     !! ^~~~~~
     !! as! C
@@ -512,7 +500,6 @@ expresses the desired API contract --- the function returns a container,
 but declines to specify the container's type:
 
 .. testcode:: opaque-result
-    :compile: true
 
     -> func makeOpaqueContainer<T>(item: T) -> some Container {
            return [item]

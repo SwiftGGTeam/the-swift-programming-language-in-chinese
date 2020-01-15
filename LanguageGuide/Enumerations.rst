@@ -94,7 +94,6 @@ so that they read as self-evident:
 .. testcode:: enums
 
    -> var directionToHead = CompassPoint.west
-   << // directionToHead : CompassPoint = REPL.CompassPoint.west
 
 The type of ``directionToHead`` is inferred
 when it's initialized with one of the possible values of ``CompassPoint``.
@@ -154,7 +153,6 @@ you can provide a ``default`` case to cover any cases that aren't addressed expl
 .. testcode:: enums
 
    -> let somePlanet = Planet.earth
-   << // somePlanet : Planet = REPL.Planet.earth
    -> switch somePlanet {
          case .earth:
             print("Mostly harmless")
@@ -182,7 +180,6 @@ Here's an example:
            case coffee, tea, juice
        }
     -> let numberOfChoices = Beverage.allCases.count
-    << // numberOfChoices : Int = 3
     -> print("\(numberOfChoices) beverages available")
     <- 3 beverages available
 
@@ -280,7 +277,6 @@ You can then create new barcodes using either type:
 .. testcode:: enums
 
    -> var productBarcode = Barcode.upc(8, 85909, 51226, 3)
-   << // productBarcode : Barcode = REPL.Barcode.upc(8, 85909, 51226, 3)
 
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.upc``
@@ -421,12 +417,10 @@ You access the raw value of an enumeration case with its ``rawValue`` property:
 .. testcode:: rawValues
 
    -> let earthsOrder = Planet.earth.rawValue
-   << // earthsOrder : Int = 3
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
    ---
    -> let sunsetDirection = CompassPoint.west.rawValue
-   << // sunsetDirection : String = "west"
    /> sunsetDirection is \"\(sunsetDirection)\"
    </ sunsetDirection is "west"
 
@@ -447,7 +441,9 @@ This example identifies Uranus from its raw value of ``7``:
 .. testcode:: rawValues
 
    -> let possiblePlanet = Planet(rawValue: 7)
-   << // possiblePlanet : Planet? = Optional(REPL.Planet.uranus)
+   >> print(type(of: possiblePlanet))
+   << Optional<Planet>
+   >> assert(possiblePlanet == .uranus)
    // possiblePlanet is of type Planet? and equals Planet.uranus
 
 Not all possible ``Int`` values will find a matching planet, however.
@@ -467,7 +463,6 @@ the optional ``Planet`` value returned by the raw value initializer will be ``ni
 .. testcode:: rawValues
 
    -> let positionToFind = 11
-   << // positionToFind : Int = 11
    -> if let somePlanet = Planet(rawValue: positionToFind) {
          switch somePlanet {
             case .earth:
@@ -544,10 +539,6 @@ being created for ``(5 + 4) * 2``:
     -> let four = ArithmeticExpression.number(4)
     -> let sum = ArithmeticExpression.addition(five, four)
     -> let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
-    << // five : ArithmeticExpression = REPL.ArithmeticExpression.number(5)
-    << // four : ArithmeticExpression = REPL.ArithmeticExpression.number(4)
-    << // sum : ArithmeticExpression = REPL.ArithmeticExpression.addition(REPL.ArithmeticExpression.number(5), REPL.ArithmeticExpression.number(4))
-    << // product : ArithmeticExpression = REPL.ArithmeticExpression.multiplication(REPL.ArithmeticExpression.addition(REPL.ArithmeticExpression.number(5), REPL.ArithmeticExpression.number(4)), REPL.ArithmeticExpression.number(2))
 
 A recursive function is a straightforward way
 to work with data that has a recursive structure.

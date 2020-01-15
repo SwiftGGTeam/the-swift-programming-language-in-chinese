@@ -80,7 +80,6 @@ that matches the value ``42`` of type ``Int``:
 .. testcode:: identifier-pattern
 
     -> let someValue = 42
-    << // someValue : Int = 42
 
 When the match succeeds, the value ``42`` is bound (assigned)
 to the constant name ``someValue``.
@@ -115,7 +114,6 @@ corresponding identifier pattern.
 .. testcode:: value-binding-pattern
 
     -> let point = (3, 2)
-    << // point : (Int, Int) = (3, 2)
     -> switch point {
           // Bind x and y to the elements of point.
           case let (x, y):
@@ -164,15 +162,14 @@ an expression pattern:
 .. testcode:: tuple-pattern
 
     -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     -> // This code isn't valid.
     -> for (x, 0) in points {
     >>    _ = x
           /* ... */
        }
-    !! <REPL Input>:1:9: error: expected pattern
+    !$ error: expected pattern
     !! for (x, 0) in points {
-    !! ^
+    !!         ^
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -185,21 +182,20 @@ equivalent:
    Swift version 1.1 (swift-600.0.54.20)
 
 .. testcode:: single-element-tuple-pattern
-   :compile: true
 
    -> let a = 2        // a: Int = 2
    -> let (a) = 2      // a: Int = 2
    -> let (a): Int = 2 // a: Int = 2
-   !! /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'a'
+   !$ error: invalid redeclaration of 'a'
    !! let (a) = 2      // a: Int = 2
    !! ^
-   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
+   !$ note: 'a' previously declared here
    !! let a = 2        // a: Int = 2
    !! ^
-   !! /tmp/swifttest.swift:3:6: error: invalid redeclaration of 'a'
+   !$ error: invalid redeclaration of 'a'
    !! let (a): Int = 2 // a: Int = 2
    !! ^
-   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
+   !$ note: 'a' previously declared here
    !! let a = 2        // a: Int = 2
    !! ^
 
@@ -237,7 +233,6 @@ because ``Optional`` is implemented as an enumeration,
 in the same switch as the cases of the enumeration type.
 
 .. testcode:: enum-pattern-matching-optional
-   :compile: true
 
    -> enum SomeEnum { case left, right }
    -> let x: SomeEnum? = .left
@@ -275,7 +270,6 @@ the following are equivalent:
 .. testcode:: optional-pattern
 
    -> let someOptional: Int? = 42
-   << // someOptional : Int? = Optional(42)
    -> // Match using an enumeration case pattern.
    -> if case .some(let x) = someOptional {
          print(x)
@@ -295,7 +289,6 @@ executing the body of the loop only for non-``nil`` elements.
 .. testcode:: optional-pattern-for-in
 
    -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
-   << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
    -> // Match only non-nil values.
    -> for case let number? in arrayOfOptionalInts {
          print("Found a \(number)")
@@ -349,7 +342,6 @@ see :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`.
     as-pattern --> pattern ``as`` type
 
 
-
 .. _Patterns_ExpressionPattern:
 
 Expression Pattern
@@ -372,7 +364,6 @@ as the following example shows.
 .. testcode:: expression-pattern
 
     -> let point = (1, 2)
-    << // point : (Int, Int) = (1, 2)
     -> switch point {
           case (0, 0):
              print("(0, 0) is at the origin.")

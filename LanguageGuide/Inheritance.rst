@@ -63,7 +63,6 @@ which is written as a type name followed by empty parentheses:
 .. testcode:: inheritance
 
    -> let someVehicle = Vehicle()
-   << // someVehicle : Vehicle = REPL.Vehicle
 
 Having created a new ``Vehicle`` instance,
 you can access its ``description`` property to print
@@ -123,7 +122,6 @@ after that instance is created:
 .. testcode:: inheritance
 
    -> let bicycle = Bicycle()
-   << // bicycle : Bicycle = REPL.Bicycle
    -> bicycle.hasBasket = true
 
 You can also modify the inherited ``currentSpeed`` property of a ``Bicycle`` instance,
@@ -157,7 +155,6 @@ and query the read-only ``description`` property it inherits from ``Vehicle``:
 .. testcode:: inheritance
 
    -> let tandem = Tandem()
-   << // tandem : Tandem = REPL.Tandem
    -> tandem.hasBasket = true
    -> tandem.currentNumberOfPassengers = 2
    -> tandem.currentSpeed = 22.0
@@ -234,7 +231,6 @@ you can see that the ``Train`` subclass version of the method is called:
 .. testcode:: inheritance
 
    -> let train = Train()
-   << // train : Train = REPL.Train
    -> train.makeNoise()
    <- Choo Choo
 
@@ -305,7 +301,6 @@ the tailored description defined within the ``Car`` class:
 .. testcode:: inheritance
 
    -> let car = Car()
-   << // car : Car = REPL.Car
    -> car.currentSpeed = 25.0
    -> car.gear = 3
    -> print("Car: \(car.description)")
@@ -361,7 +356,6 @@ A speed of ``35.0`` produces a gear of ``4``:
 .. testcode:: inheritance
 
    -> let automatic = AutomaticCar()
-   << // automatic : AutomaticCar = REPL.AutomaticCar
    -> automatic.currentSpeed = 35.0
    -> print("AutomaticCar: \(automatic.description)")
    </ AutomaticCar: traveling at 35.0 miles per hour in gear 4
@@ -399,16 +393,16 @@ can also be marked as final within the extension's definition.
             print("In overridden someFunction")
          }
       }
-   !! <REPL Input>:2:19: error: property overrides a 'final' property
+   !$ error: property overrides a 'final' property
    !! override var someVar: Int {
    !! ^
-   !! <REPL Input>:2:16: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! final var someVar = 0
    !! ^
-   !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
+   !$ error: instance method overrides a 'final' instance method
    !! override func someFunction() {
    !! ^
-   !! <REPL Input>:3:17: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! final func someFunction() {
    !! ^
 
@@ -433,19 +427,19 @@ Any attempt to subclass a final class is reported as a compile-time error.
             print("In overridden someFunction")
          }
       }
-   !! <REPL Input>:2:19: error: property overrides a 'final' property
+   !$ error: property overrides a 'final' property
    !!      override var someVar: Int {
    !!                   ^
-   !! <REPL Input>:2:10: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !!      var someVar = 0
    !!          ^
-   !! <REPL Input>:6:20: error: instance method overrides a 'final' instance method
+   !$ error: instance method overrides a 'final' instance method
    !!      override func someFunction() {
    !!                    ^
-   !! <REPL Input>:3:11: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !!      func someFunction() {
    !!           ^
-   !! <REPL Input>:1:7: error: inheritance from a final class 'C'
+   !$ error: inheritance from a final class 'C'
    !! class D : C {
    !!       ^
 
