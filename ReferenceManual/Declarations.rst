@@ -912,8 +912,7 @@ and how much dynamic behavior is possible at runtime.
 When you declare a call-as-function method,
 you specify the number of arguments and the type of each argument.
 The ``dynamicCallable`` attribute's methods specify only the type
-used to hold the array of arguments --
-in the most dynamic scenario.
+used to hold the array of arguments.
 
 .. XXX Editorial: Do we have a better name than "a call-as-function method"?
    I'm avoiding naming it a ``callAsFunction`` method
