@@ -685,17 +685,16 @@ instead of referring to it explicitly:
        }
     >> completionHandlers = []
     >> let instance2 = SomeOtherClass()
-    << // instance2 : SomeClass = REPL.SomeClass
     >> instance2.doSomething()
     >> print(instance2.x)
     << 200
     >> completionHandlers.first?()
-    << // r0 : Void? = Optional(())
     >> print(instance2.x)
     << 100
 
 .. assertion:: noescape-closure-as-argument
 
+    // capturing self is ok when it's a struct or enum
     -> struct SomeStruct {
            var x = 10
            mutating func doSomething() {
@@ -704,13 +703,11 @@ instead of referring to it explicitly:
            }
        }
     >> completionHandlers = []
-    >> let instance3 = SomeStruct()
-    << // instance3 : SomeClass = REPL.SomeClass
+    >> var instance3 = SomeStruct()
     >> instance3.doSomething()
     >> print(instance3.x)
     << 200
     >> completionHandlers.first?()
-    << // r0 : Void? = Optional(())
     >> print(instance3.x)
     << 100
 
