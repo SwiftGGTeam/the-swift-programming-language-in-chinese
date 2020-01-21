@@ -21,6 +21,7 @@
     "//apple_ref/swift/fake/KeyPath": "https://developer.apple.com/documentation/swift/keypath",
     "//apple_ref/swift/fake/KeyValuePairs": "https://developer.apple.com/documentation/swift/keyvaluepairs",
     "//apple_ref/swift/fake/Mirror.AncestorRepresentation": "https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation",
+    "//apple_ref/swift/fake/NSClassFromString": "https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring",
     "//apple_ref/swift/fake/ReferenceWritableKeyPath": "https://developer.apple.com/documentation/swift/referencewritablekeypath",
     "//apple_ref/swift/fake/WritableKeyPath": "https://developer.apple.com/documentation/swift/writablekeypath",
     "//apple_ref/swift/func/c:@F@UIApplicationMain": "https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain",
