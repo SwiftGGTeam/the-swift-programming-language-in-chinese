@@ -147,10 +147,15 @@ Subscript Options
 
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
-Subscripts can also return any type.
-Subscripts can use variadic parameters
-and provide default parameter values,
-but they can't use in-out parameters.
+Subscripts can also return a value of any type.
+
+Like functions,
+subscripts can take a varying number of parameters
+and provide default values for their parameters,
+as discussed in :ref:`Functions_VariadicParameters`
+and :ref:`Functions_DefaultParameterValues`.
+However, unlike functions,
+subscripts can't use in-out parameters.
 
 .. assertion:: subscripts-can-have-default-arguments
 
