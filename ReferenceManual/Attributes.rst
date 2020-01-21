@@ -440,20 +440,12 @@ but they break ABI compatibility for frozen types.
 
     When the compiler isn't in library evolution mode,
     all structures and enumerations are implicitly frozen,
-    and you can't use this attribute.
+    and this attribute is ignored.
 
-.. assertion:: cant-use-frozen-without-evolution
+.. assertion:: can-use-frozen-without-evolution
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
-    !$ warning: @frozen has no effect without -enable-library-evolution
-    !! @frozen public enum E { case x, y }
-    !! ^~~~~~~~
-    ---
-    // After the bug below is fixed, the following warning should appear:
-    // !$ warning: @frozen has no effect without -enable-library-evolution
-    // !! @frozen public struct S { var a: Int = 10 }
-    // !! ^~~~~~~~
 
 .. <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
 

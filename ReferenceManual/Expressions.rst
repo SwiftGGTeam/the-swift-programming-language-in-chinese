@@ -1112,7 +1112,7 @@ instead of ``\SomeClass.someProperty``:
 
    >> import Foundation
    -> class SomeClass: NSObject {
-          @objc var someProperty: Int
+          @objc dynamic var someProperty: Int
           init(someProperty: Int) {
               self.someProperty = someProperty
           }
@@ -1224,6 +1224,9 @@ to access a property of an optional string:
    -> print(count as Any)
    <- Optional(5)
 
+.. The test above is failing, which appears to be a compiler bug.
+   <rdar://problem/58484319> Swift 5.2 regression in keypaths
+
 You can mix and match components of key paths to access values
 that are deeply nested within a type.
 The following code accesses different values and properties
@@ -1290,8 +1293,9 @@ For example:
    >> import Foundation
    -> class SomeClass: NSObject {
           @objc let property: String
+   ---
           @objc(doSomethingWithInt:)
-          func doSomething(_ x: Int) {}
+          func doSomething(_ x: Int) { }
    ---
           init(property: String) {
               self.property = property
@@ -1310,8 +1314,17 @@ as well the ``as`` operator to disambiguate between methods that share a name
 but have different type signatures.
 For example:
 
-.. testcode:: selector-expression
+.. testcode:: selector-expression-with-as
 
+   >> import Foundation
+   >> class SomeClass: NSObject {
+   >>     @objc let property: String
+   >>     @objc(doSomethingWithInt:)
+   >>     func doSomething(_ x: Int) {}
+   >>     init(property: String) {
+   >>         self.property = property
+   >>     }
+   >> }
    -> extension SomeClass {
           @objc(doSomethingWithString:)
           func doSomething(_ x: String) { }

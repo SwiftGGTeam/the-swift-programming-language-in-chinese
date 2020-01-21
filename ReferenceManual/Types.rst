@@ -892,7 +892,7 @@ whose return type is ``Self``.
    !!                 ^~~~
    !!                 C
 
-.. FIXME Test above is failing, likely due to SE-0080
+.. Test above is failing, likely due to SE-0068 Expanding Swift Self to class members and value types
 
 .. testcode:: self-gives-dynamic-type
 
