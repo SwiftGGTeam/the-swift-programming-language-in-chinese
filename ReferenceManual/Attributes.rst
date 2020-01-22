@@ -338,7 +338,7 @@ that takes ``KeyValuePairs<String, String>``.
    >> }
    >> let repeatLabels = Repeater()
    -> repeatLabels(a: "four") // Error
-   !$ error: cannot invoke 'repeatLabels' with an argument list of type '(a: String)'
+   !$ error: cannot convert value of type 'String' to expected argument type 'Int'
    !! repeatLabels(a: "four") // Error
    !! ^
 
