@@ -894,7 +894,7 @@ The following function calls are equivalent:
    -> struct CallableStruct {
           var value: Int
           func callAsFunction(_ number: Int, scale: Int) {
-              print(scale * (argument + value))
+              print(scale * (number + value))
           }
       }
    -> let callable = CallableStruct(value: 100)
@@ -910,9 +910,32 @@ make different trade-offs between
 how much information you encode into the type system
 and how much dynamic behavior is possible at runtime.
 When you declare a call-as-function method,
-you specify the number of arguments and the type of each argument.
+you specify the number of arguments,
+and each argument's type and label.
 The ``dynamicCallable`` attribute's methods specify only the type
 used to hold the array of arguments.
+
+Defining a call-as-function method
+or a method from the ``dynamicCallable`` attribute
+doesn't let you use an instance of that type
+as if it were a function in any context other than a function call expression.
+For example:
+
+.. testcode:: call-as-function-err
+   :compile: true
+
+   >> struct CallableStruct {
+   >>     var value: Int
+   >>     func callAsFunction(_ number: Int, scale: Int) { }
+   >> }
+   >> let callable = CallableStruct(value: 100)
+   -> let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+   -> let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
+   >> _ = someFunction1 // suppress unused-constant warning
+   >> _ = someFunction2 // suppress unused-constant warning
+   !$ error: use of unresolved identifier 'callable(_:scale:)'
+   !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+   !! ^~~~~~~~~~~~~~~~~~
 
 .. XXX Editorial: Do we have a better name than "a call-as-function method"?
    I'm avoiding naming it a ``callAsFunction`` method
