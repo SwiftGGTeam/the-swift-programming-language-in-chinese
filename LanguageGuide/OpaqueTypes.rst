@@ -341,8 +341,9 @@ and opaque types let you make stronger guarantees
 about those underlying types.
 
 For example,
-here's a version of ``flip(_:)`` that returns a value of protocol type
-instead of using an opaque return type:
+here's a version of ``flip(_:)``
+that uses a protocol type as its return type
+instead of an opaque return type:
 
 .. testcode:: opaque-result-existential-error
 
@@ -472,7 +473,7 @@ here's a version of the ``Container`` protocol from :doc:`./Generics`:
 
 You can't use ``Container`` as the return type of a function
 because that protocol has an associated type.
-You also can't use it as constraint a generic return type
+You also can't use it as constraint in a generic return type
 because there isn't enough information outside the function body
 to infer what the generic type needs to be.
 
