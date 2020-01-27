@@ -430,7 +430,7 @@ welcome.removeSubrange(range)
 
 ## 子字符串 {#substrings}
 
-当你从字符串中获取一个子字符串 —— 例如，使用下标或者 `prefix(_:)` 之类的方法 —— 就可以得到一个 `SubString` 的实例，而非另外一个 `String`。Swift 里的 `SubString` 绝大部分函数都跟 `String` 一样，意味着你可以使用同样的方式去操作 `SubString` 和 `String`。然而，跟 `String` 不同的是，你只有在短时间内需要操作字符串时，才会使用 `SubString`。当你需要长时间保存结果时，就把 `SubString` 转化为 `String` 的实例：
+当你从字符串中获取一个子字符串 —— 例如，使用下标或者 `prefix(_:)` 之类的方法 —— 就可以得到一个 `Substring` 的实例，而非另外一个 `String`。Swift 里的 `Substring` 绝大部分函数都跟 `String` 一样，意味着你可以使用同样的方式去操作 `Substring` 和 `String`。然而，跟 `String` 不同的是，你只有在短时间内需要操作字符串时，才会使用 `Substring`。当你需要长时间保存结果时，就把 `Substring` 转化为 `String` 的实例：
 
 ```swift
 let greeting = "Hello, world!"
@@ -442,15 +442,15 @@ let beginning = greeting[..<index]
 let newString = String(beginning)
 ```
 
-就像 `String`，每一个 `SubString` 都会在内存里保存字符集。而 `String` 和 `SubString` 的区别在于性能优化上，`SubString` 可以重用原 `String` 的内存空间，或者另一个 `SubString` 的内存空间（`String` 也有同样的优化，但如果两个 `String` 共享内存的话，它们就会相等）。这一优化意味着你在修改 `String` 和 `SubString` 之前都不需要消耗性能去复制内存。就像前面说的那样，`SubString` 不适合长期存储 —— 因为它重用了原 `String` 的内存空间，原 `String` 的内存空间必须保留直到它的 `SubString` 不再被使用为止。
+就像 `String`，每一个 `Substring` 都会在内存里保存字符集。而 `String` 和 `Substring` 的区别在于性能优化上，`Substring` 可以重用原 `String` 的内存空间，或者另一个 `Substring` 的内存空间（`String` 也有同样的优化，但如果两个 `String` 共享内存的话，它们就会相等）。这一优化意味着你在修改 `String` 和 `Substring` 之前都不需要消耗性能去复制内存。就像前面说的那样，`Substring` 不适合长期存储 —— 因为它重用了原 `String` 的内存空间，原 `String` 的内存空间必须保留直到它的 `Substring` 不再被使用为止。
 
-上面的例子，`greeting` 是一个 `String`，意味着它在内存里有一片空间保存字符集。而由于 `beginning` 是 `greeting` 的 `SubString`，它重用了 `greeting` 的内存空间。相反，`newString` 是一个 `String` —— 它是使用 `SubString` 创建的，拥有一片自己的内存空间。下面的图展示了他们之间的关系：
+上面的例子，`greeting` 是一个 `String`，意味着它在内存里有一片空间保存字符集。而由于 `beginning` 是 `greeting` 的 `Substring`，它重用了 `greeting` 的内存空间。相反，`newString` 是一个 `String` —— 它是使用 `Substring` 创建的，拥有一片自己的内存空间。下面的图展示了他们之间的关系：
 
 ![](https://docs.swift.org/swift-book/_images/stringSubstring_2x.png)
 
 > 注意
 > 
-> `String` 和 `SubString` 都遵循 `StringProtocol<//apple_ref/swift/intf/s:s14StringProtocolP>` 协议，这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `SubString` 去调用函数。
+> `String` 和 `Substring` 都遵循 `StringProtocol<//apple_ref/swift/intf/s:s14StringProtocolP>` 协议，这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `Substring` 去调用函数。
 
 ## 比较字符串 {#comparing-strings}
 
