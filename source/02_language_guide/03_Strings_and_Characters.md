@@ -450,7 +450,7 @@ let newString = String(beginning)
 
 > 注意
 > 
-> `String` 和 `Substring` 都遵循 `StringProtocol<//apple_ref/swift/intf/s:s14StringProtocolP>` 协议，这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `Substring` 去调用函数。
+> `String` 和 `Substring` 都遵循 [`StringProtocol`](https://developer.apple.com/documentation/swift/stringprotocol) 协议，这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `Substring` 去调用函数。
 
 ## 比较字符串 {#comparing-strings}
 
