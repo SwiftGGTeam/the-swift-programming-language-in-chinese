@@ -1,6 +1,6 @@
 # 字符串和字符
 
-*字符串*是是一系列字符的集合，例如 `"hello, world"`，`"albatross"`。Swift 的字符串通过 `String` 类型来表示。而 `String` 内容的访问方式有多种，例如以 `Character` 值的集合。
+*字符串*是一系列字符的集合，例如 `"hello, world"`，`"albatross"`。Swift 的字符串通过 `String` 类型来表示。而 `String` 内容的访问方式有多种，例如以 `Character` 值的集合。
 
 Swift 的 `String` 和 `Character` 类型提供了一种快速且兼容 Unicode 的方式来处理代码中的文本内容。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。通过 `+` 符号就可以非常简单的实现两个字符串的拼接操作。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你可以在已有字符串中插入常量、变量、字面量和表达式从而形成更长的字符串，这一过程也被称为字符串插值。尤其是在为显示、存储和打印创建自定义字符串值时，字符串插值操作尤其有用。
 
@@ -384,7 +384,7 @@ greeting[index]
 
 ```swift
 greeting[greeting.endIndex] // error
-greeting.index(after: endIndex) // error
+greeting.index(after: greeting.endIndex) // error
 ```
 
 使用 `indices` 属性会创建一个包含全部索引的范围（`Range`），用来在一个字符串中访问单个字符。
