@@ -63,6 +63,8 @@ For more details, see :ref:`Protocols_Extensions`.
    !! func foo() {}
    !!      ^
 
+.. _Extensions_ExtensionSyntax:
+
 Extension Syntax
 ----------------
 

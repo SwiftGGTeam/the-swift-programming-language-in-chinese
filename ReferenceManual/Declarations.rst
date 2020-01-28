@@ -1251,6 +1251,8 @@ as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
 For more information and to see examples of cases with raw-value types,
 see :ref:`Enumerations_RawValues`.
 
+.. _Declarations_EnumerationCases:
+
 Accessing Enumeration Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

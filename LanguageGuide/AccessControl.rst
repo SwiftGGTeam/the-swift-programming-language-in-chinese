@@ -415,6 +415,8 @@ therefore also have an access level of public:
    -> import enumerationCases_Module1
    -> let north = CompassPoint.north
 
+.. _AccessControl_RawValuesAndAssociatedValues:
+
 Raw Values and Associated Values
 ++++++++++++++++++++++++++++++++
 
