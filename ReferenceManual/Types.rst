@@ -869,7 +869,7 @@ the ``Self`` type refers to the type introduced by the declaration.
 Inside the declaration for a member of a type,
 the ``Self`` type refers to that type.
 In the members of a class declaration,
-``Self`` can appear in only as follows:
+``Self`` can appear only as follows:
 
 - As the return type of a method
 - As the return type of a read-only subscript
