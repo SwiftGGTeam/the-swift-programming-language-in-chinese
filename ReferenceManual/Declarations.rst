@@ -942,6 +942,13 @@ For example:
    because that isn't actually a name for anything in your program,
    so it's a bit of an abuse of notation to write it in code voice.
 
+.. note::
+
+   The ``subscript(dynamicMemberLookup:)`` subscript
+   enables syntactic sugar for member lookup,
+   as described in :ref:`Attributes_dynamicMemberLookup`.
+
+
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods
