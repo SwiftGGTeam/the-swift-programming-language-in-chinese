@@ -874,7 +874,7 @@ can support function call syntax
 by defining a ``dynamicallyCall(withArguments:)`` method
 or a ``dynamicallyCall(withKeywordArguments:)`` method,
 as described in :ref:`Attributes_dynamicCallable`,
-or by defining a call-as-function method as described below.
+or by defining a call-as-function method, as described below.
 If the type defines
 both a call-as-function method
 and one of the methods used by the ``dynamicCallable`` attribute,
