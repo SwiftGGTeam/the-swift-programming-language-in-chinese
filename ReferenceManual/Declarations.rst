@@ -882,9 +882,15 @@ the compiler gives preference to the call-as-function method
 in circumstances where either method could be used.
 
 The name of a call-as-function method is ``callAsFunction()``,
-or another name that adds labeled or unlabeled arguments ---
+or another name that begins with ``callAsFunction(``
+and adds labeled or unlabeled arguments ---
 for example, ``callAsFunction(_:_:)`` and ``callAsFunction(something:)``
 are also valid call-as-function method names.
+
+.. Above, callAsFunction( is in code voice even though
+   it's not actually a symbol that exists in the reader's code.
+   Per discussion with Chuck, this is the closest typographic convention
+   to what we're trying to express here.
 
 The following function calls are equivalent:
 
@@ -936,11 +942,6 @@ For example:
    !$ error: use of unresolved identifier 'callable(_:scale:)'
    !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
    !! ^~~~~~~~~~~~~~~~~~
-
-.. XXX Editorial: Do we have a better name than "a call-as-function method"?
-   I'm avoiding naming it a ``callAsFunction`` method
-   because that isn't actually a name for anything in your program,
-   so it's a bit of an abuse of notation to write it in code voice.
 
 .. note::
 
