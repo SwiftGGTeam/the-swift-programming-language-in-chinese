@@ -869,9 +869,13 @@ the ``Self`` type refers to the type introduced by the declaration.
 Inside the declaration for a member of a type,
 the ``Self`` type refers to that type.
 In the members of a class declaration,
-``Self`` can appear as the return type of a method
-and in the body of a method,
-but not in any other context.
+``Self`` can appear only as follows:
+
+- As the return type of a method
+- As the return type of a read-only subscript
+- As the type of a read-only computed property
+- In the body of a method
+
 For example,
 the code below shows an instance method ``f``
 whose return type is ``Self``.
@@ -884,15 +888,17 @@ whose return type is ``Self``.
    !!                     ^~~~
    !!                     C
 
-.. assertion:: self-in-class-cant-be-a-computed-property-type
+.. assertion:: self-in-class-can-be-a-subscript-param
 
-   -> class C { var s: Self { return self } }
-   !$ error: 'Self' is only available in a protocol or as the result of a method in a class; did you mean 'C'?
-   !! class C { var s: Self { return self } }
-   !!                 ^~~~
-   !!                 C
+   >> class C { subscript(s: Int) -> Self { return self } }
+   >> let c = C()
+   >> _ = c[12]
 
-.. Test above is failing, likely due to SE-0068 Expanding Swift Self to class members and value types
+.. assertion:: self-in-class-can-be-a-computed-property-type
+
+   >> class C { var s: Self { return self } }
+   >> let c = C()
+   >> _ = c.s
 
 .. testcode:: self-gives-dynamic-type
 
