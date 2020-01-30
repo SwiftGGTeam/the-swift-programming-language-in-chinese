@@ -302,6 +302,7 @@
     "declarations-protocolsubscriptdeclaration": "ID373",
     "declarations-resolvingexplicitredundancy": "ID579",
     "declarations-rethrowingfunctionsandmethods": "ID531",
+    "declarations-specialfuncnames": "ID622",
     "declarations-specialkindsofmethods": "ID473",
     "declarations-specialkindsofparameters": "ID472",
     "declarations-staticvariableproperties": "ID360",
@@ -678,5 +679,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 622
+  "next_id": 623
 }
