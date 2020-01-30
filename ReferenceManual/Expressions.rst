@@ -1536,6 +1536,11 @@ the parentheses can be omitted.
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 
+A class, structure, or enumeration type
+can enable syntactic sugar for function call syntax
+by declaring one of several methods,
+as described in :ref:`Declarations_SpecialFuncNames`.
+
 .. syntax-grammar::
 
     Grammar of a function call expression
@@ -1549,13 +1554,6 @@ the parentheses can be omitted.
     function-call-argument --> operator | identifier ``:`` operator
 
     trailing-closure --> closure-expression
-
-.. Multiple trailing closures in LangRef is an error,
-   and so is the trailing typecast,
-   per [Contributor 6004] 2014-03-04 email.
-   Not documenting those in the prose or grammar
-   even though they happen to still work.
-
 
 .. _Expressions_InitializerExpression:
 
