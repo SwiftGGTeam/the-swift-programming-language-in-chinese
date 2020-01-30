@@ -882,7 +882,7 @@ the compiler gives preference to the call-as-function method
 in circumstances where either method could be used.
 
 The name of a call-as-function method is ``callAsFunction()``,
-or another name that adds labelled or unlabeled arguments ---
+or another name that adds labeled or unlabeled arguments ---
 for example, ``callAsFunction(_:_:)`` and ``callAsFunction(something:)``
 are also valid call-as-function method names.
 
