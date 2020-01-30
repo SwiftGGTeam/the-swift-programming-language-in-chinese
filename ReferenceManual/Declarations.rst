@@ -915,8 +915,8 @@ and each argument's type and label.
 The ``dynamicCallable`` attribute's methods specify only the type
 used to hold the array of arguments.
 
-Defining a call-as-function method
-or a method from the ``dynamicCallable`` attribute
+Defining a call-as-function method,
+or a method from the ``dynamicCallable`` attribute,
 doesn't let you use an instance of that type
 as if it were a function in any context other than a function call expression.
 For example:
