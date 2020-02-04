@@ -33,6 +33,9 @@ Don’t worry if you don’t understand something ---
 everything introduced in this tour
 is explained in detail in the rest of this book.
 
+
+.. _Tour_SimpleValues:
+
 Simple Values
 -------------
 
@@ -201,6 +204,9 @@ or pass an argument to a function.
 
    -> shoppingList = []
    -> occupations = [:]
+
+
+.. _Tour_ControlFlow:
 
 Control Flow
 ------------
@@ -420,6 +426,9 @@ by using ``..<`` to make a range of indexes.
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
 
+
+.. _Tour_FunctionsAndClosures:
+
 Functions and Closures
 ----------------------
 
@@ -619,6 +628,9 @@ you can omit the parentheses entirely.
 .. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
 .. Omitted custom operators as "advanced" topics.
+
+
+.. _Tour_Classes:
 
 Objects and Classes
 -------------------
@@ -862,6 +874,9 @@ the value of the whole expression is an optional value.
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
     -> let sideLength = optionalSquare?.sideLength
 
+
+.. _Tour_EnumsAndStructs:
+
 Enumerations and Structures
 ---------------------------
 
@@ -1082,6 +1097,9 @@ but classes are passed by reference.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
+
+.. _Tour_ProtocolsAndExtensions:
+
 Protocols and Extensions
 ------------------------
 
@@ -1187,6 +1205,9 @@ the compiler treats it as the given type of ``ExampleProtocol``.
 This means that you can't accidentally access
 methods or properties that the class implements
 in addition to its protocol conformance.
+
+
+.. _Tour_ErrorHandling:
 
 Error Handling
 --------------
@@ -1340,6 +1361,9 @@ even though they need to be executed at different times.
     << false
     -> print(fridgeIsOpen)
     <- false
+
+
+.. _Tour_Generics:
 
 Generics
 --------
