@@ -1,6 +1,20 @@
 Document Revision History
 =========================
 
+**2020-02-05**
+
+* Updated for Swift 5.2.
+
+* Added the :ref:`Declarations_SpecialFuncNames` section
+  with information about syntactic sugar the lets instances of
+  classes, structures, and enumerations be used with function call syntax.
+
+* Updated the :ref:`Subscripts_SubscriptOptions` section,
+  now that subscripts support parameters with default values.
+
+* Updated the :ref:`Types_SelfType` section,
+  now that the ``Self`` can be used in more contexts.
+
 **2019-09-10**
 
 * Updated for Swift 5.1.

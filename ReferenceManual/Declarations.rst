@@ -865,6 +865,97 @@ a class type method marked with ``class final`` or ``static`` can't be overridde
    -> print(SS3.f())
    <- 120
 
+.. _Declarations_SpecialFuncNames:
+
+Methods with Special Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Several methods that have special names
+enable syntactic sugar for function call syntax.
+If a type defines one of these methods,
+instances of the type can be used in function call syntax.
+The function call is understood to be a call to
+one of the specially named methods on that instance.
+
+A class, structure, or enumeration type
+can support function call syntax
+by defining a ``dynamicallyCall(withArguments:)`` method
+or a ``dynamicallyCall(withKeywordArguments:)`` method,
+as described in :ref:`Attributes_dynamicCallable`,
+or by defining a call-as-function method, as described below.
+If the type defines
+both a call-as-function method
+and one of the methods used by the ``dynamicCallable`` attribute,
+the compiler gives preference to the call-as-function method
+in circumstances where either method could be used.
+
+The name of a call-as-function method is ``callAsFunction()``,
+or another name that begins with ``callAsFunction(``
+and adds labeled or unlabeled arguments ---
+for example, ``callAsFunction(_:_:)`` and ``callAsFunction(something:)``
+are also valid call-as-function method names.
+
+.. Above, callAsFunction( is in code voice even though
+   it's not actually a symbol that exists in the reader's code.
+   Per discussion with Chuck, this is the closest typographic convention
+   to what we're trying to express here.
+
+The following function calls are equivalent:
+
+.. testcode:: call-as-function
+   :compile: true
+
+   -> struct CallableStruct {
+          var value: Int
+          func callAsFunction(_ number: Int, scale: Int) {
+              print(scale * (number + value))
+          }
+      }
+   -> let callable = CallableStruct(value: 100)
+   -> callable(4, scale: 2)
+   -> callable.callAsFunction(4, scale: 2)
+   // Both function calls print 208.
+   << 208
+   << 208
+
+The call-as-function methods
+and the methods from the ``dynamicCallable`` attribute
+make different trade-offs between
+how much information you encode into the type system
+and how much dynamic behavior is possible at runtime.
+When you declare a call-as-function method,
+you specify the number of arguments,
+and each argument's type and label.
+The ``dynamicCallable`` attribute's methods specify only the type
+used to hold the array of arguments.
+
+Defining a call-as-function method,
+or a method from the ``dynamicCallable`` attribute,
+doesn't let you use an instance of that type
+as if it were a function in any context other than a function call expression.
+For example:
+
+.. testcode:: call-as-function-err
+   :compile: true
+
+   >> struct CallableStruct {
+   >>     var value: Int
+   >>     func callAsFunction(_ number: Int, scale: Int) { }
+   >> }
+   >> let callable = CallableStruct(value: 100)
+   -> let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+   -> let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
+   >> _ = someFunction1 // suppress unused-constant warning
+   >> _ = someFunction2 // suppress unused-constant warning
+   !$ error: use of unresolved identifier 'callable(_:scale:)'
+   !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+   !! ^~~~~~~~~~~~~~~~~~
+
+The ``subscript(dynamicMemberLookup:)`` subscript
+enables syntactic sugar for member lookup,
+as described in :ref:`Attributes_dynamicMemberLookup`.
+
+
 .. _Declarations_ThrowingFunctionsAndMethods:
 
 Throwing Functions and Methods
@@ -1250,6 +1341,8 @@ by calling the enumeration's failable initializer,
 as in ``ExampleEnum(rawValue: 5)``, which returns an optional case.
 For more information and to see examples of cases with raw-value types,
 see :ref:`Enumerations_RawValues`.
+
+.. _Declarations_EnumerationCases:
 
 Accessing Enumeration Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
