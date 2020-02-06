@@ -286,7 +286,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 `userDefinedColorName` 变量被定义为一个可选的 `String` 类型，默认值为 `nil`。由于 `userDefinedColorName` 是一个可选类型，我们可以使用空合运算符去判断其值。在上一个例子中，通过空合运算符为一个名为 `colorNameToUse` 的变量赋予一个字符串类型初始值。
 由于 `userDefinedColorName` 值为空，因此表达式 `userDefinedColorName ?? defaultColorName` 返回 `defaultColorName` 的值，即 `red`。
 
-如果你分配一个非空值（`non-nil`）给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在 `userDefaultColorName` 中的值，而非默认值。
+如果你分配一个非空值（`non-nil`）给 `userDefinedColorName`，再次执行空合运算，运算结果为封包在 `userDefinedColorName` 中的值，而非默认值。
 
 ```swift
 userDefinedColorName = "green"
