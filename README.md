@@ -11,7 +11,7 @@
 
 # 当前阶段
 
-- 更新到 Swift 5.1，2019-07-10
+- 更新到 Swift 5.1，2019-11-11
 - 更新到 Swift 5.0，2019-04-05
 - 更新到 Swift 4.2，2019-01-29
 - 更新到 Swift 4.1，2018-04-12，感谢 [@Mylittleswift](https://github.com/Mylittleswift)
@@ -58,6 +58,8 @@ diff 操作如下：
 | 术语 | 备选翻译 |
 | --- | --- |
 | property wrapper | 属性包装器（[翻译相关讨论](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues/982#issuecomment-536244784)） |
+| projected value | 被呈现值 |
+| wrapped value | 被包装值 |
 | argument | 实参 |
 | parameter | 形参 |
 | variadic parameters| 可变参数 |

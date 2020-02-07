@@ -1,21 +1,25 @@
 # Swift 文档修订历史
 
-### 2019-06-03
+### 2019-09-10
 
 * 更新至 Swift 5.1。
-* 在 [不透明类型](../02_language_guide/23_Opaque_Types.md) 篇章中新增了有关函数返回值遵循指定协议，而不需要提供指定返回类型的内容。
+* 在 [不透明类型](../02_language_guide/27_Opaque_Types.md) 篇章中新增了有关函数返回值遵循指定协议，而不需要提供指定返回类型的内容。
+* 在 [属性包装器](../02_language_guide/10_Properties.md#property-wrappers) 章节中新增了有关属性包装器的内容。
+* 在 [冻结](../03_language_reference/07_Attributes.md#frozen) 章节中新增了有关因库演变而需要的枚举和结构体冻结。
 * 新增 [隐式返回的函数](../02_language_guide/06_Functions.md#functions-with-an-implicit-return) 和 [简化 Getter 声明](../02_language_guide/10_Properties.md#shorthand-getter-declaration) 章节，其中包含函数省略 `return` 的内容。
-* 在 [类型下标](../02_language_guide/12_Subscripts.md#type-subscripts) 章节中新增有关在类型中使用下标的内容。
+* 在 [类型下标](../02_language_guide/12_Subscripts.md#type-subscripts) 章节中新增了有关在类型中使用下标的内容。
+* 更新 [枚举 Case 模式匹配](../03_language_reference/08_Patterns.md#enumeration-case-pattern) 章节，现在枚举 case 模式匹配支持匹配可选值。
 * 更新 [结构体的逐一成员构造器](../02_language_guide/14_Initialization.md#memberwise-initializers-for-structure-types) 章节，现在逐一成员构造器支持在属性有默认值时省略形参。
 * 在 [动态查找成员](../03_language_reference/07_Attributes.md#dynamicmemberlookup) 章节中新增了有关在运行时用 key path 查找动态成员的内容。
+* 在 [条件编译代码块](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 中的目标环境里添加了 `macCatalyst`。
 * 更新 [自身类型](../03_language_reference/03_Types.md#self-type-h) 章节，现在 `Self` 可以指向当前类，结构体或者枚举声明时的类型。
 
 ### 2019-03-25
 
 * 更新至 Swift 5。
-* 新增 [拓展字符串分隔符](../02_language_guide/03_Strings_And_Characters.md#extended-string-delimiters) 章节。更新 [字符串字面量](../03_language_reference/03_Lexical_Structure.md#string-literal) 章节，拓展有关字符串分隔符的内容。
+* 新增 [拓展字符串分隔符](../02_language_guide/03_Strings_And_Characters.md#extended-string-delimiters) 章节。更新 [字符串字面量](../03-language-reference/03-Lexical-Structure.md#string-literal) 章节，拓展有关字符串分隔符的内容。
 * 新增 [动态调用](../03_language_reference/07_Attributes.md#dynamiccallable) 章节，其中包含使用 `dynamicCallable` 属性动态调用实例作为函数的内容。
-* 新增 [unknown](../03_language_reference/07_Attributes.md#unknown) 和 [未来枚举匹配](../03_language_reference/05_Statements.md#future-case2) 章节，其中包含了使用 `unknown` 来处理未来枚举可能发生改变的情形。
+* 新增 [unknown](../03_language_reference/07_Attributes.md#unknown) 和 [未来枚举匹配](../03-language-reference/05-Statements.md#future-case2) 章节，其中包含了使用 `unknown` 来处理未来枚举可能发生改变的情形。
 * 在 [Key-Path 表达式](../03_language_reference/04_Expressions.md#key-path-expression) 章节新增了有关标示 key path (\\.self) 的内容。
 * 在 [可选编译块](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 章节新增了有关小于比较符 `<` 的内容。
 
@@ -25,7 +29,7 @@
 * 在 [遍历枚举情形](../02_language_guide/08_Enumerations.md#iterating-over-enumeration-cases) 章节新增了有关访问所有枚举情形的内容。
 * 在 [编译诊断](../03_language_reference/05_Statements.md#compile-time-diagnostic-statement) 章节新增了有关 `#error` 和 `#warning` 的内容。
 * 在 [属性声明](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 章节中新增了有关 `inlinable` 和 `usableFromInline` 属性的内容。
-* 在 [属性声明](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 章节中新增了有关 `requires_stored_property_inits` 和 `warn_unqualified_access` 属性的内容。
+* 在 [属性声明](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 章节中新增了有关 `requires-stored-property-inits` 和 `warn-unqualified-access` 属性的内容。
 * 在 [可选编译块](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 章节新增了有关如何根据 Swift 编译器版本对代码进行对应编译处理的内容。
 * 在 [字面量语法](../03_language_reference/04_Expressions.md#literal-expression) 章节新增了有关 `#dsohandle` 的内容。
 
@@ -33,7 +37,7 @@
 
 * 更新至 Swift 4.1。
 * 在 [等价运算符](../02_language_guide/27_Advanced_Operators.md#equivalence-operators) 章节新增了有关等价运算符的合成实现的内容。
-* 在 [声明](../03_language_reference/06_Declarations.md) 篇章中 [申明拓展](../03_language_reference/06_Declarations.md#extension-declaration) 章节和 [协议](../02_language_guide/21_Protocols.md) 篇章中 [有条件地遵循协议](../02_language_guide/21_Protocols.md#Conditionally-Conforming-to-a-Protocol) 章节新增了有关协议有条件遵循的内容。
+* 在 [声明](../03_language_reference/06_Declarations.md) 篇章中 [申明拓展](../03_language_reference/06_Declarations.md#extension-declaration) 章节和 [协议](../02-language-guide/21-Protocols.md) 篇章中 [有条件地遵循协议](../02-language-guide/21-Protocols.md#Conditionally-Conforming-to-a-Protocol) 章节新增了有关协议有条件遵循的内容。
 * 在 [关联类型约束中使用协议](../02_language_guide/22_Generics.md#using-a-protocol-in-its-associated-types-constraints) 章节中新增了有关递归协议约束的内容。
 * 在 [条件编译块](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 章节中新增了有关 `canImport()` 和 `targetEnvironment()` 平台条件的内容。
 
@@ -47,10 +51,10 @@
 * 更新至 Swift 4.0。
 * 在 [内存安全](../02_language_guide/24_MemorySafety.md) 章节新增了有关内存互斥访问的内容。
 * 新增 [带有泛型 Where 子句联类型](../02_language_guide/22_Generics.md#associated-types-with-a-generic-where-clause) 章节，现在可以使用泛型 `where` 子句约束关联类型。
-* 在 [字符串和字符](../02_language_guide/03_Strings_And_Characters.md) 篇章中 [字面量](../02_language_guide/03_Strings_And_Characters.md#string-literals) 章节以及 [词法结构](../03_language_reference/02_Lexical_Structure.md) 篇章的 [字符串字面量](../03_language_reference/02_Lexical_Structure.md#string-literal) 章节中新增了有关多行字符串字面量的内容。
+* 在 [字符串和字符](../02_language_guide/03_Strings_And_Characters.md) 篇章中 [字面量](../02_language_guide/03_Strings_And_Characters.md#string-literals) 章节以及 [词法结构](../03-language-reference/02-Lexical-Structure.md) 篇章的 [字符串字面量](../03-language-reference/02-Lexical-Structure.md#string-literal) 章节中新增了有关多行字符串字面量的内容。
 * 更新 [声明属性](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 中 `objc` 属性的讨论，现在该属性会在更少的位置被推断出来。
 * 新增 [范型下标](../02_language_guide/22_Generics.md#generic-subscripts) 章节，现在下标也支持范型特性了。
-* 更新 [协议](../02_language_guide/21_Protocols.md) 篇章中 [协议组合](../02_language_guide/21_Protocols.md#protocol-composition) 章节和 [类型](../03_language_reference/03_Types.md) 篇章中 [协议组合类型](../03_language_reference/03_Types.md#protocol-composition-type-h) 章节的讨论，现在协议组合类型支持进行父类约束了。
+* 更新 [协议](../02_language_guide/21_Protocols.md) 篇章中 [协议组合](../02_language_guide/21_Protocols.md#protocol-composition) 章节和 [类型](../03-language-reference/03-Types.md) 篇章中 [协议组合类型](../03-language-reference/03-Types.md#protocol-composition-type-h) 章节的讨论，现在协议组合类型支持进行父类约束了。
 * 更新 [拓展声明](../03_language_reference/06_Declarations.md#extension-declaration) 中有关协议扩展的讨论，现在它们不支持 `final` 特性了。
 * 在 [断言和前置条件](../02_language_guide/01_TheBasics.md#assertions-and-preconditions) 章节中新增了部分前置条件和致命错误的内容。
 
@@ -81,20 +85,20 @@
 * 更新 [高级操作符](../02_language_guide/27_Advanced_Operators.md) 篇章中有关操作符的讨论，现在你可以作为类型函数来实现，替代之前的全局函数实现方式。
 * 在 [访问控制](../02_language_guide/26_Access_Control.md) 章节中新增有关对新的访问级别描述符 `open` 和 `fileprivate` 的内容。
 * 更新 [函数声明](../03_language_reference/06_Declarations.md#function-declaration) 章节中有关 `inout` 的讨论，注意它现在出现在参数类型的前面，而不是在参数名称的前面。
-* 更新 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures) 和 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 章节还有 [属性](../03_language_reference/07_Attributes.md) 篇章中有关 `@noescape` 和 `@autoclosure` 的讨论，现在他们是类型属性，而不是定义属性。
-* 在 [高级操作符](../02_language_guide/27_Advanced_Operators.md) 篇章中 [自定义中缀操作符的优先级](./02_language_guide/27_Advanced_Operators.md#precedence-and-associativity-for-custom-infix-operators) 章节和 [定义](../03_language_reference/06_Declarations.md) 篇章中 [优先级组声明](../03_language_reference/06_Declarations.md#precedence-group-declaration-modifiers) 章节中新增了有关操作符优先级组的内容。
+* 更新 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures) 和 [自动闭包](../02-language-guide/07-Closures.md#autoclosures) 章节还有 [属性](../03-language-reference/07-Attributes.md) 篇章中有关 `@noescape` 和 `@autoclosure` 的讨论，现在他们是类型属性，而不是定义属性。
+* 在 [高级操作符](../02_language_guide/27_Advanced_Operators.md) 篇章中 [自定义中缀操作符的优先级](./02_language_guide/27_Advanced_Operators.md#precedence-and-associativity-for-custom-infix-operators) 章节和 [定义](../03-language-reference/06-Declarations.md) 篇章中 [优先级组声明](../03-language-reference/06-Declarations.md#precedence-group-declaration-modifiers) 章节中新增了有关操作符优先级组的内容。
 * 更新一些讨论，使用 macOS 替换掉 OS X， Error 替换掉 ErrorProtocol。更新一些协议名称，比如使用 ExpressibleByStringLiteral 替换掉 StringLiteralConvertible。
-* 更新 [泛型](../02_language_guide/22_Generics.md) 篇章中 [泛型 Where 语句](../02_language_guide/22_Generics.md#extensions-with-a-generic-where-clause) 章节和 [泛型形参和实参](../03_language_reference/09_Generic_Parameters_And_Arguments.md) 篇章的讨论，现在泛型的 where 语句写在一个声明的最后。
+* 更新 [泛型](../02_language_guide/22_Generics.md) 篇章中 [泛型 Where 语句](../02_language_guide/22_Generics.md#extensions-with-a-generic-where-clause) 章节和 [泛型形参和实参](../03-language-reference/09-Generic-Parameters-And-Arguments.md) 篇章的讨论，现在泛型的 where 语句写在一个声明的最后。
 * 更新 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures) 章节中的讨论，现在闭包默认为非逃逸的。
-* 更新 [基础部分](../02_language_guide/01_TheBasics.md) 篇章中 [可选绑定](../02_language_guide/01_TheBasics.md#optional-binding) 章节和 [语句](../03_language_reference/05_Statements.md) 篇章中 [While 语句](../03_language_reference/05_Statements.md#while-statement) 章节中的讨论，现在 if，`while` 和 `guard` 语句使用逗号分隔条件列表，不需要使用 `where` 语句。
-* 在 [控制流](../02_language_guide/05_Control_Flow.md) 篇章中 [Switch](../02_language_guide/05_Control_Flow.md#switch) 章节和 [语句](../03_language_reference/05_Statements.md) 篇章中 [Switch 语句](../03_language_reference/05_Statements.md#switch-statement) 章节中新增了 switch cases 可以使用多模式的内容。
+* 更新 [基础部分](../02_language_guide/01_TheBasics.md) 篇章中 [可选绑定](../02_language_guide/01_TheBasics.md#optional-binding) 章节和 [语句](../03-language-reference/05-Statements.md) 篇章中 [While 语句](../03-language-reference/05-Statements.md#while-statement) 章节中的讨论，现在 if，`while` 和 `guard` 语句使用逗号分隔条件列表，不需要使用 `where` 语句。
+* 在 [控制流](../02_language_guide/05_Control_Flow.md) 篇章中 [Switch](../02_language_guide/05_Control_Flow.md#switch) 章节和 [语句](../03-language-reference/05-Statements.md) 篇章中 [Switch 语句](../03-language-reference/05-Statements.md#switch-statement) 章节中新增了 switch cases 可以使用多模式的内容。
 * 更新 [函数类型](../03_language_reference/03_Types.md#function-type-h) 章节有关现在函数参数标签不包含在函数类型中的讨论。
-* 更新 [协议](../02_language_guide/21_Protocols.md) 篇章中 [协议组合](../02_language_guide/21_Protocols.md#protocol-composition) 章节和 [类型](../03_language_reference/03_Types.md) 篇章中 [协议组合类型](../03_language_reference/03_Types.md#protocol-composition-type-h) 章节中有关使用新的 Protocol1 & Protocol2 语法的内容。
+* 更新 [协议](../02_language_guide/21_Protocols.md) 篇章中 [协议组合](../02_language_guide/21_Protocols.md#protocol-composition) 章节和 [类型](../03-language-reference/03-Types.md) 篇章中 [协议组合类型](../03-language-reference/03-Types.md#protocol-composition-type-h) 章节中有关使用新的 Protocol1 & Protocol2 语法的内容。
 * 更新动态类型表达式章节中使用新的 `type(of:)` 表达式的讨论。
 * 更新 [行控制表达式](../03_language_reference/05_Statements.md#line-control-statement) 章节中使用 `#sourceLocation(file:line:)` 表达式的讨论。
 * 更新 [永不返回函数](../03_language_reference/06_Declarations.md#functions-that-never-return) 章节中使用 新的 `Never` 类型的讨论。
 * 在 [字面量表达式](../03_language_reference/04_Expressions.md#literal-expression) 章节中新增了有关 `playground` 字面量的内容。
-* 更新 [In-Out 参数](../03_language_reference/06_Declarations.md#in-out_parameters) 章节，标明只有非逃逸闭包能捕获 `in-out` 参数。
+* 更新 [In-Out 参数](../03_language_reference/06_Declarations.md#in-out-parameters) 章节，标明只有非逃逸闭包能捕获 `in-out` 参数。
 * 更新 [默认参数值](../02_language_guide/06_Functions.md#default-parameter-values) 章节，现在默认参数不能在调用时候重新排序。
 * 更新 [属性](../03_language_reference/07_Attributes.md) 篇章中有关属性参数使用分号的说明。
 * 在 [重新抛出函数和方法](../03_language_reference/06_Declarations.md#rethrowing-functions-and-methods) 章节中新增了有关在 catch 代码块中抛出错误的重新抛出函数的内容。
@@ -114,7 +118,7 @@
 * 在 [编译配置语句](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 章节新增了中有关如何根据 Swift 版本进行条件编译。
 * 在 [显示成员表达式](../03_language_reference/04_Expressions.md#explicit-member-expression) 章节中新增了有关如何区分只有参数名不同的方法和构造器的内容。
 * 在 [选择器表达式](../03_language_reference/04_Expressions.md#selector-expression7) 章节中新增了了针对 Objective-C 选择器的 `#selector` 语法。
-* 更新 [关联类型](../02_language_guide/22_Generics.md#associated-types) 和 [协议关联类型声明](../03_language_reference/06_Declarations.md#protocol_associated_type_declaration) 章节中有关使用 `associatedtype` 关键词修饰关联类型的讨论。
+* 更新 [关联类型](../02_language_guide/22_Generics.md#associated-types) 和 [协议关联类型声明](../03-language-reference/06-Declarations.md#protocol-associated-type-declaration) 章节中有关使用 `associatedtype` 关键词修饰关联类型的讨论。
 * 更新 [可失败构造器](../02_language_guide/14_Initialization.md#failable-initializers) 章节中有关当构造器在实例完全初始化之前返回 `nil` 的相关内容。
 * 在 [比较运算符](../02_language_guide/BasicOperators.md#comparison-operators) 章节中新增了比较元组的内容。
 * 在 [关键字和标点符号](../03_language_reference/02_Lexical_Structure.md#keywords-and-punctuation) 章节中新增了使用关键字作为外部参数名的内容。
@@ -130,10 +134,10 @@
 ### 2015-10-20
 
 * 更新至 Swift 2.1。
-* 更新 [字符串插值](../02_language_guide/03_Strings_And_Characters.md#string-interpolation) 和 [字符串字面量](../03_language_reference/02_Lexical_Structure.md#string-literal) 章节，现在字符串插值可包含字符串字面量。
+* 更新 [字符串插值](../02_language_guide/03_Strings_And_Characters.md#string-interpolation) 和 [字符串字面量](../03-language-reference/02-Lexical-Structure.md#string-literal) 章节，现在字符串插值可包含字符串字面量。
 * 在 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures) 章节中新增了有关 `@noescape` 属性的相关内容。
-* 更新 [声明特性](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 和 [编译配置语句](../03_language_reference/05_Statements.md#Conditional-Compilation-Block) 章节中与 tvOS 相关的内容。
-* 在 [In-Out 参数](../03_language_reference/06_Declarations.md#in-out_parameters) 章节中新增了与 in-out 参数行为相关的内容。
+* 更新 [声明特性](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 和 [编译配置语句](../03-language-reference/05-Statements.md#Conditional-Compilation-Block) 章节中与 tvOS 相关的内容。
+* 在 [In-Out 参数](../03_language_reference/06_Declarations.md#in-out-parameters) 章节中新增了与 in-out 参数行为相关的内容。
 * 在 [捕获列表](../03_language_reference/04_Expressions.md#capture-lists) 章节新增了有关指定闭包捕获列表被捕获时捕获值的相关内容。
 * 更新 [可选链式调用访问属性](../02_language_guide/16_Optional_Chaining.md#accessing-properties-through-optional-chaining) 章节，阐明了如何通过可选链式调用进行赋值。
 * 改进 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 章节中对自闭包的讨论。
@@ -142,21 +146,21 @@
 ### 2015-09-16
 
 * 更新至 Swift 2.0。
-* 在 [错误处理](../02_language_guide/17_Error_Handling.md) 篇章中新增了有关错误处理的相关内容，包括 [Do 语句](../03_language_reference/05_Statements.md#do-statement)、 [Throw 语句](../03_language_reference/05_Statements.md#throw-statement)、 [Defer 语句](../03_language_reference/05_Statements.md##defer-statements) 以及 [try 运算符](../03_language_reference/04_Expressions.md#try-operator)。
+* 在 [错误处理](../02_language_guide/17_Error_Handling.md) 篇章中新增了有关错误处理的相关内容，包括 [Do 语句](../03_language_reference/05_Statements.md#do-statement)、 [Throw 语句](../03-language-reference/05-Statements.md#throw-statement)、 [Defer 语句](../03-language-reference/05-Statements.md##defer-statements) 以及 [try 运算符](../03-language-reference/04-Expressions.md#try-operator)。
 * 更新 [错误表示和抛出](../02_language_guide/17_Error_Handling.md#representing-and-throwing-errors) 章节，现在所有类型都可以遵循 `ErrorType` 协议了。
-* 在 [将错误装换成可选值](../02_language_guide/17_Error_Handling.md#converting_errors_to_optional_values) 篇章增加了 `try?` 关键字相关内容。
-* 在 [枚举](../02_language_guide/08_Enumerations.md) 篇章的 [递归枚举](../02_language_guide/08_Enumerations.md#recursive-enumerations) 章节以及以及 [声明](../03_language_reference/06_Declarations.md) 篇章的 [任意类型用例的枚举](../03_language_reference/06_Declarations.md#enumerations-with-cases-of-any-type) 章节中新增了递归枚举相关内容。
-* 在 [控制流](../02_language_guide/05_Control_Flow.md) 篇章的 [API 可用性检查](../02_language_guide/05_Control_Flow.md#checking-api-availability) 章节和 [语句](../03_language_reference/05_Statements.md) 篇章的 [可用性条件](../03_language_reference/05_Statements.md#availability-condition)  章节中新增了有关 API 可用性检查相关的内容。
-* 在 [控制流](../02_language_guide/05_Control_Flow.md) 篇章的 [尽早退出](../02_language_guide/05_Control_Flow.md#early-exit) 章节和 [语句](../03_language_reference/05_Statements.md) 篇章的 [Guard 语句](../03_language_reference/05_Statements.md#guard-statement) 章节新增了与 `guard` 语句相关的内容。
+* 在 [将错误装换成可选值](../02_language_guide/17_Error_Handling.md#converting-errors-to-optional-values) 篇章增加了 `try?` 关键字相关内容。
+* 在 [枚举](../02_language_guide/08_Enumerations.md) 篇章的 [递归枚举](../02_language_guide/08_Enumerations.md#recursive-enumerations) 章节以及以及 [声明](../03-language-reference/06-Declarations.md) 篇章的 [任意类型用例的枚举](../03-language-reference/06-Declarations.md#enumerations-with-cases-of-any-type) 章节中新增了递归枚举相关内容。
+* 在 [控制流](../02_language_guide/05_Control_Flow.md) 篇章的 [API 可用性检查](../02_language_guide/05_Control_Flow.md#checking-api-availability) 章节和 [语句](../03-language-reference/05-Statements.md) 篇章的 [可用性条件](../03-language-reference/05-Statements.md#availability-condition)  章节中新增了有关 API 可用性检查相关的内容。
+* 在 [控制流](../02_language_guide/05_Control_Flow.md) 篇章的 [尽早退出](../02_language_guide/05_Control_Flow.md#early-exit) 章节和 [语句](../03-language-reference/05-Statements.md) 篇章的 [Guard 语句](../03-language-reference/05-Statements.md#guard-statement) 章节新增了与 `guard` 语句相关的内容。
 * 在 [协议](../02_language_guide/21_Protocols.md) 篇章中 [协议扩展](../02_language_guide/21_Protocols.md#protocol-extensions) 章节中新增了有关协议扩展的内容。
 * 在 [访问控制](../02_language_guide/26_Access_Control.md) 篇章的 [单元测试 target 的访问级别](../02_language_guide/26_Access_Control.md#access-levels-for-unit-test-targets) 章节中新增了有关单元测试访问控制相关的内容。
 * 在 [模式](../03_language_reference/08_Patterns.md) 篇章的 [可选模式](../03_language_reference/08_Patterns.md#optional-pattern) 章节中新增了可选模式相关内容。
 * 更新 [Repeat-While](../02_language_guide/05_Control_Flow.md#repeat-while) 章节中有关 `repeat-while` 循环相关的内容。
 * 更新 [字符串和字符](../02_language_guide/03_Strings_And_Characters.md) 章节，现在 `String` 类型在 Swift 标准库中不再遵循 `CollectionType` 协议。
-* 在 [常量与变量打印](../02_language_guide/01_TheBasics.md#printing) 章节中新增了新 Swift 标准库中有关 `print(_:separator:terminator) ` 相关内容。
-* 在 [枚举](../02_language_guide/08_Enumerations.md) 篇章的 [原始值的隐式赋值](../02_language_guide/08_Enumerations.md#implicitly-assigned-raw-values) 章节和 [声明](../03_language_reference/06_Declarations.md) 篇章的 [包含原始值类型的枚举](../03_language_reference/06_Declarations.md#enumerations-with-cases-of-a-raw-value-type) 章节中新增了有关包含 `String` 原始值的枚举用例的行为相关内容。
+* 在 [常量与变量打印](../02_language_guide/01_TheBasics.md#printing) 章节中新增了新 Swift 标准库中有关 `print(-:separator:terminator) ` 相关内容。
+* 在 [枚举](../02_language_guide/08_Enumerations.md) 篇章的 [原始值的隐式赋值](../02_language_guide/08_Enumerations.md#implicitly-assigned-raw-values) 章节和 [声明](../03-language-reference/06-Declarations.md) 篇章的 [包含原始值类型的枚举](../03-language-reference/06-Declarations.md#enumerations-with-cases-of-a-raw-value-type) 章节中新增了有关包含 `String` 原始值的枚举用例的行为相关内容。
 * 在 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 章节中新增了有关 `@autoclosure` 特性的相关内容，包括它的 `@autoclosure(escaping)` 形式。
-* 更新 [声明特性](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 章节中有关 `@avaliable` 和 `warn_unused_result` 特性的相关内容。
+* 更新 [声明特性](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 章节中有关 `@avaliable` 和 `warn-unused-result` 特性的相关内容。
 * 更新 [类型特性](../03_language_reference/07_Attributes.md#type-attributes) 章节中有关 `@convention` 特性的相关内容。
 * 在 [可选绑定](../02_language_guide/01_TheBasics.md#optional-binding) 章节中新增了有关使用 `where` 子句进行多可选绑定的相关内容。
 * 在 [字符串字面量](../03_language_reference/02_Lexical_Structure.md#string-literal) 章节中新增了有关在编译时使用 `+` 运算符拼接字符串字面量的相关内容。
@@ -171,11 +175,11 @@
 * 在 [元类型](../03_language_reference/03_Types.md#metatype-type-h) 章节新增了一处说明，有关如何从元类型值中构造类实例相关内容。
 * 在 [弱引用](../02_language_guide/24_Automatic_Reference_Counting.md#weak-references) 章节新增了一处说明，有关弱引用作为缓存所存在的不足。
 * 更新 [类型特性](../02_language_guide/10_Properties.md#type-properties) 章节，提到了存储型特性其实是懒加载。
-* 更新 [捕获类型](../02_language_guide/07_Closures.md#capturing_values) 章节，阐明了变量和常量在闭包中如何被捕获。
+* 更新 [捕获类型](../02_language_guide/07_Closures.md#capturing-values) 章节，阐明了变量和常量在闭包中如何被捕获。
 * 更新 [声明特性](../03_language_reference/07_Attributes.md#Ideclaration-attributes) 章节，用以描述何时在类中使用 `@objc` 关键字。
-* 在 [错误处理](../02_language_guide/17_Error_Handling.md#handling-errors) 章节中新增了一处说明，有关执行 `throw` 语句的性能。在 [Do 语句](../03_language_reference/05_Statements.md#do-statement) 章节的 do 语句部分也新增了类似内容。
+* 在 [错误处理](../02_language_guide/17_Error_Handling.md#handling-errors) 章节中新增了一处说明，有关执行 `throw` 语句的性能。在 [Do 语句](../03-language-reference/05-Statements.md#do-statement) 章节的 do 语句部分也新增了类似内容。
 * 更新 [类型特性](../02_language_guide/10_Properties.md#type-properties) 章节中有关类、结构体和枚举的存储型和计算型特性相关的内容。
-* 更新 [Break 语句](../03_language_reference/05_Statements.md#break_statement) 章节中有关带标签的 break 语句相关内容。
+* 更新 [Break 语句](../03_language_reference/05_Statements.md#break-statement) 章节中有关带标签的 break 语句相关内容。
 * 在 [属性观察器](../02_language_guide/10_Properties.md#property-observers) 章节更新了一处说明，用来明确 `willSet` 和 `didSet` 观察器的行为。
 * 在 [访问级别](../02_language_guide/26_Access_Control.md#access-levels) 章节新增了有关 `private` 作用域的相关内容说明。
 * 在 [弱引用](../02_language_guide/24_Automatic_Reference_Counting.md#weak-references) 章节新增了有关弱应用在垃圾回收系统和 ARC 之间的区别的说明。
@@ -212,9 +216,9 @@
 * 新增 [失败构造器](../02_language_guide/14_Initialization.md#failable-initializers) 的完整指引。
 * 在协议中新增了 [失败构造器要求](../02_language_guide/21_Protocols.md#failable-initializer-requirements) 的描述。
 * 常量和变量的 `Any` 类型现可以包含函数实例。更新了有关 `Any` 相关的示例来展示如何在 `switch` 语句中如何检查并转换到一个函数类型。
-* 带有原始值的枚举类型增加了一个 `rawValue` 属性替代 `toRaw()` 方法，同时使用了一个以 `rawValue` 为参数的失败构造器来替代 `fromRaw()` 方法。更多的内容，请看 [原始值](../02_language_guide/08_Enumerations.md#raw-values) 和 [带原始值的枚举类型](../03_language_reference/06_Declarations.md#enumerations-with-cases-of-a-raw-value-type)。
+* 带有原始值的枚举类型增加了一个 `rawValue` 属性替代 `toRaw()` 方法，同时使用了一个以 `rawValue` 为参数的失败构造器来替代 `fromRaw()` 方法。更多的内容，请看 [原始值](../02_language_guide/08_Enumerations.md#raw-values) 和 [带原始值的枚举类型](../03-language-reference/06-Declarations.md#enumerations-with-cases-of-a-raw-value-type)。
 * 新增 [Failable Initializer](../03_language_reference/06_Declarations.md#failable-initializers)  的参考章节，它可以触发初始化失败。
-* 自定义运算符现在可以包含 `?` 字符，更新了 [运算符](../03_language_reference/02_Lexical_Structure.md#operator) 涉及改进后的规则的部分，并且在 [自定义运算符](../02_language_guide/27_Advanced_Operators.md#custom-operators) 章节中删除了重复的运算符有效字符集合。
+* 自定义运算符现在可以包含 `?` 字符，更新了 [运算符](../03_language_reference/02_Lexical_Structure.md#operator) 涉及改进后的规则的部分，并且在 [自定义运算符](../02-language-guide/27-Advanced-Operators.md#custom-operators) 章节中删除了重复的运算符有效字符集合。
 
 ### 2014-08-18
 
@@ -227,11 +231,11 @@
 *  [可选类型](../02_language_guide/01_TheBasics.md#optionals) 若有值时，不再隐式的转换为 `true`，同样，若无值时，也不再隐式的转换为 `false`，这是为了避免在判别 optional `Bool` 的值时产生困惑。 替代的方案是，用`==` 或 `!=` 运算符显式地去判断 Optinal 是否是 `nil`，以确认其是否包含值。
 * Swift 新增了一个 [Nil 合并运算符](../02_language_guide/BasicOperators.md#nil-coalescing-operator)  (`a ?? b`) , 该表达式中，如果 Optional `a` 的值存在，则取得它并返回，若 Optional `a` 为 `nil`，则返回默认值 `b`
 * 更新和扩展 [字符串的比较](../02_language_guide/03_Strings_And_Characters.md#comparing-strings) ，用以反映和展示'字符串和字符的比较'，以及'前缀（prefix）/后缀（postfix）比较'都开始基于扩展字符集（extended grapheme clusters）规范的等价比较。
-* 现在，你可以通过下标赋值或者 [可选调用链](../02_language_guide/16_Optional_Chaining.md) 中的可变方法和操作符来给属性设值。相应地更新了有关 [通过可选链接访问属性](../02_language_guide/16_Optional_Chaining.md#accessing-properties-through-optional-chaining) 的内容，并扩展了 [通过可选链接调用方法](../02_language_guide/16_Optional_Chaining.md#calling-methods-through-optional-chaining) 时检查方法调用成功的示例，以显示如何检查属性设置是否成功。
+* 现在，你可以通过下标赋值或者 [可选调用链](../02_language_guide/16_Optional_Chaining.md) 中的可变方法和操作符来给属性设值。相应地更新了有关 [通过可选链接访问属性](../02_language_guide/16_Optional_Chaining.md#accessing-properties-through-optional-chaining) 的内容，并扩展了 [通过可选链接调用方法](../02-language-guide/16-Optional-Chaining.md#calling-methods-through-optional-chaining) 时检查方法调用成功的示例，以显示如何检查属性设置是否成功。
 * 在可选链中新增了 [访问可选类型的下标脚注](../02_language_guide/16_Optional_Chaining.md#accessing-subscripts-through-optional-chaining) 章节。
 * 更新 [访问和修改数组](../02_language_guide/CollectionTypes.md#accessing-and-modifying-a-dictionary) 章节以标示，从该版本起，不能再通过 `+=` 运算符给一个数组新增一个新的项。对应的替代方案是，使 `append` 方法，或者通过 `+=` 运算符来新增一个只有一个项的数组。
 * 新增一处说明，在 [范围运算符](../02_language_guide/BasicOperators.md#range-operators) 中，比如， `a..b` 和 `a..<b` ，起始值 `a` 不能大于结束值 `b`。
-* 重写 [继承](../02_language_guide/13_Inheritance.md) 篇章：删除了本章中有关构造器重写的介绍性报道；转而将更多的注意力放到新增的部分——子类的新功能，以及如何通过重写（overrides）修改已有的功能。另外， [重写属性的 Getters 和 Setters](../02_language_guide/13_Inheritance.md#overriding-property-etters-and-setters) 中的例子已经被替换为展示如何重写一个 `description` 属性。 (而有关如何在子类的构造器中修改继承属性的默认值的例子，已经被移到 [构造过程](../02_language_guide/14_Initialization.md) 篇章。) 
+* 重写 [继承](../02_language_guide/13_Inheritance.md) 篇章：删除了本章中有关构造器重写的介绍性报道；转而将更多的注意力放到新增的部分——子类的新功能，以及如何通过重写（overrides）修改已有的功能。另外， [重写属性的 Getters 和 Setters](../02_language_guide/13_Inheritance.md#overriding-property-etters-and-setters) 中的例子已经被替换为展示如何重写一个 `description` 属性。 (而有关如何在子类的构造器中修改继承属性的默认值的例子，已经被移到 [构造过程](../02-language-guide/14-Initialization.md) 篇章。) 
 * 更新 [构造器的继承与重写](../02_language_guide/14_Initialization.md#initializer-inheritance-and-overriding) 章节以标示： 重写一个特定的构造器必须使用 `override` 修饰符。
 * 更新 [Required 构造器](../02_language_guide/14_Initialization.md#required-initializers) 章节以标示：`required` 修饰符现在需要出现在所有子类的 required 构造器的声明中，而 required 构造器的实现，现在可以仅从父类自动继承。
 * 中置（Infix）的 [运算符函数](../02_language_guide/27_Advanced_Operators.md#operator-functions) 不再需要 `@infix` 属性。
@@ -243,7 +247,7 @@
 * 新增有关 [字面量](../03_language_reference/02_Lexical_Structure.md#literal) 类型推导内容的内容。
 * 新增更多有关柯里化函数的内容。
 * 新增 [权限控制](../02_language_guide/26_Access_Control.md) 篇章。
-* 更新 [字符串和字符](../02_language_guide/03_Strings_And_Characters.md) 章节，在 Swift 中现在 `Character` 类型代表的是扩展字符集（extended grapheme cluster）中的一个 Unicode，为此，新增了 [Extended Grapheme Clusters](../02_language_guide/03_Strings_And_Characters.md#extended-grapheme-clusters) 章节。同时，[Unicode 标量](../02_language_guide/03_Strings_And_Characters.md#unicode-scalars-representation) 和 [字符串比较](../02_language_guide/03_Strings_And_Characters.md#comparing-strings) 章节新增了更多内容。
+* 更新 [字符串和字符](../02_language_guide/03_Strings_And_Characters.md) 章节，在 Swift 中现在 `Character` 类型代表的是扩展字符集（extended grapheme cluster）中的一个 Unicode，为此，新增了 [Extended Grapheme Clusters](../02_language_guide/03_Strings_And_Characters.md#extended-grapheme-clusters) 章节。同时，[Unicode 标量](../02-language-guide/03-Strings-And-Characters.md#unicode-scalars-representation) 和 [字符串比较](../02-language-guide/03-Strings-And-Characters.md#comparing-strings) 章节新增了更多内容。
 * 更新 [字符串字面量](../02_language_guide/03_Strings_And_Characters.md#string-literals) 章节，在一个字符串中，Unicode 标量（Unicode scalars）以 `\u{n}`的形式来表示，`n` 是一个最大可以有8位的16进制数。
 * `NSString` `length` 属性已被映射到 Swift 的内建 `String`类型。（注意，这两属性的类型是`utf16Count`，而非 `utf16count`）。
 * Swift 的内建 `String` 类型不再拥有 `uppercaseString` 和 `lowercaseString` 属性。在 [字符串和字符](../02_language_guide/03_Strings_And_Characters.md) 章节中删除了对应部分，并更新了各种对应的代码用例。
@@ -256,7 +260,7 @@
 * 更新 [读取和修改字典](../02_language_guide/CollectionTypes.md#accessing-and-modifying-a-dictionary) 章节， `Dictionary` 现在增加了一个 Boolean 型的属性：`isEmpty`。
 * 解释了哪些字符（集）可被用来定义 [自定义操作符](../02_language_guide/27_Advanced_Operators.md#custom-operators)。
 * `nil` 和布尔运算中的 `true` 和 `false` 现在被定义为 [字面量](../03_language_reference/02_Lexical_Structure.md#literal)。
-* Swift 中的数组 （`Array`） 类型从现在起具备了完整的值语义。具体内容被更新到 [集合的可变性](../02_language_guide/CollectionTypes.md#mutability-of-collections) 和 [数组](../02_language_guide/CollectionTypes.md#arrays) 两小节，以反映这个新的变化。 此外，还解释了如何给 Strings, Arrays 和 Dictionaries 进行赋值和拷贝。
+* Swift 中的数组 （`Array`） 类型从现在起具备了完整的值语义。具体内容被更新到 [集合的可变性](../02_language_guide/CollectionTypes.md#mutability-of-collections) 和 [数组](../02-language-guide/CollectionTypes.md#arrays) 两小节，以反映这个新的变化。 此外，还解释了如何给 Strings, Arrays 和 Dictionaries 进行赋值和拷贝。
 * [数组类型速记语法](../02_language_guide/CollectionTypes.md#array-type-shorthand-syntax) 从 `SomeType []` 更新为 ` [SomeType]`。
 * 新增 [字典类型的速记语法](../02_language_guide/CollectionTypes.md#dictionary-type-shorthand-syntax) 章节，现在书写格式为： ` [KeyType: ValueType]`。
 * 新增 [字典键类型的哈希值](../02_language_guide/CollectionTypes.md#hash-values-for-set-types) 章节。
@@ -264,4 +268,3 @@
 * 更新 [结构体逐一成员构造器](../02_language_guide/14_Initialization.md#memberwise-initializers-for-structure-types) 章节，即使结构体的成员 `没有默认值`，逐一成员构造器也可以自动获得。
 * [半开区间运算符](../02_language_guide/BasicOperators.md#half-open-range-operator) 中`..` 更新为 `..<`。
 * 新增 [泛型拓展](../02_language_guide/22_Generics.md#extending-a-generic-type) 的示例。
-
