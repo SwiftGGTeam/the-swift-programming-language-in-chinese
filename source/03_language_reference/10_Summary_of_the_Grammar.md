@@ -1046,7 +1046,7 @@
 >
 > *模块名* → [标识符](./02_Lexical_Structure.md#identifier)
 >
-> *环境* → **simulator**
+> *环境* → **模拟器** ｜ **macCatalyst**
 >
 
 <!-- -->
