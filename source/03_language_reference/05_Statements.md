@@ -782,8 +782,7 @@ statements to compile if both compilation conditions are false
 
 #### grammar-environment {#grammar-environment}
 
-> *环境* → **模拟器**
-> 
+> *环境* → **模拟器** | **macCatalyst**
 
 ### 行控制语句 {#line-control-statements}
 行控制语句可以为被编译的源代码指定行号和文件名，从而改变源代码的定位信息，以便进行分析和调试。
