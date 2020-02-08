@@ -289,7 +289,8 @@ stepCounter.totalSteps = 896
 ```swift
 @propertyWrapper
 struct TwelveOrLess {
-    private var number = 0
+    private var number: Int
+    init() { self.number = 0 }
     var wrappedValue: Int {
         get { return number }
         set { number = min(newValue, 12) }
@@ -456,8 +457,12 @@ print(mixedRectangle.height)
 ```swift
 @propertyWrapper
 struct SmallNumber {
-    private var number = 0
-    var projectedValue = false
+    private var number: Int
+    var projectedValue: Bool
+    init() {
+        self.number = 0
+        self.projectedValue = false
+    }
     var wrappedValue: Int {
         get { return number }
         set {
@@ -485,7 +490,7 @@ print(someStructure.$someNumber)
 // 打印 "true"
 ```
 
-写下 `s.$someNumber` 即可访问包装器的被呈现值。在存储一个比较小的数值时，如 4 ，`s.$someNumber` 的值为 `false`。但是，在尝试存储一个较大的数值时，如 55 ，被呈现值变为 `true`。
+写下 `someStructure.$someNumber` 即可访问包装器的被呈现值。在存储一个比较小的数值时，如 4 ，`someStructure.$someNumber` 的值为 `false`。但是，在尝试存储一个较大的数值时，如 55 ，被呈现值变为 `true`。
 
 属性包装器可以返回任何类型的值作为它的被呈现值。在这个例子里，属性包装器要暴露的信息是：那个数值是否被调整过，所以它暴露出布尔型值来作为它的被呈现值。需要暴露出更多信息的包装器可以返回其他数据类型的实例，或者可以返回自身来暴露出包装器的实例，并把其作为它的被呈现值。
 
