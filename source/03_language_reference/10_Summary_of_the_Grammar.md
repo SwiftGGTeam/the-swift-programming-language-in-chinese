@@ -1046,10 +1046,10 @@
 >
 > *模块名* → [标识符](./02_Lexical_Structure.md#identifier)
 >
-> *环境* → **simulator**
->
+> *环境* → **模拟器** ｜ **macCatalyst**
 
 <!-- -->
+
 > 行控制语句语法
 >
 > *行控制语句* → **#sourceLocation** **(** **file:** [文件名](./05-Statements.md#file-name) **,** **line:**  [行号](./05-Statements.md#line-number) **)**
