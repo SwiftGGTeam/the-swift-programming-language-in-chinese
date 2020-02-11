@@ -515,7 +515,7 @@ For example:
 
 To use string interpolation
 inside a string that uses extended delimiters,
-match the number of number signs before the backslash
+match the number of number signs after the backslash
 to the number of number signs at the beginning and end of the string.
 For example:
 
