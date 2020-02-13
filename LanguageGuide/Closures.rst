@@ -264,7 +264,7 @@ and Swift will infer that you want to use its string-specific implementation:
    -> reversedNames = names.sorted(by: >)
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
-For more about operator method, see :ref:`AdvancedOperators_OperatorFunctions`.
+For more about operator methods, see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. _Closures_TrailingClosures:
 
