@@ -537,6 +537,39 @@ f(x: 7) // 无效，该参数没有外部名称
 
 枚举或者结构体中的类型方法，要以 `static` 声明修饰符标记，而对于类中的类型方法，除了使用 `static`，还可使用 `class` 声明修饰符标记。类中使用 `class` 声明修饰的方法可以被子类实现重写；类中使用  `class final` 或  `static` 声明修饰的方法不可被重写。
 
+### 特殊名称方法 {#methods-with-special-names}
+一些含有特殊名称的方法允许使用函数调用语法糖。如果一个类型定义了某个此类型的方法，那这些类型的实例对象都可以使用函数调用语法。这些函数调用会被解析为某个具有特殊名称的实例方法调用。
+
+如同 [dynamicCallable](./07_Attributes.md#dynamicCallable) 中描述的一样，只要定义了 `dynamicallyCall(withArguments:)` 方法或者 `dynamicallyCall(withKeywordArguments:)` 方法，一个类、结构体或者枚举类型都支持函数调用语法。同时如下面的描述一样，定义了一个函数调用方法（call-as-function method）也可以达到上述效果。如果一个类型同时定义了一个函数调用方法和使用 `dynamicCallable` 属性的方法，那么在合适的情况下，编译器会优先使用函数调用方法。
+
+函数调用方法的名称是 `callAsFunction()`，或者任意一个以 `callAsFunction(` 开头并跟随着一些已标签化或未标签化的参数——例如 `callAsFunction(_:_:)` 和 `callAsFunction(something:)` 都是合法的函数调用方法名称。
+
+如下的函数调用是相同的：
+
+```swift
+struct CallableStruct {
+    var value: Int
+    func callAsFunction(_ number: Int, scale: Int) {
+        print(scale * (number + value))
+    }
+}
+let callable = CallableStruct(value: 100)
+callable(4, scale: 2)
+callable.callAsFunction(4, scale: 2)
+// 两次函数调用都会打印 208
+```
+
+函数调用方法和使用 `dynamicCallable` 属性定义的方法在编码到类型系统中的信息量和运行时的动态行为能力上会有些差别。当你定义了一个函数调用方法时，你需要指定参数的数量，以及每个参数的类型和标签。与此不同的是，`dynamicCallable` 属性定义的方法只需要指定用于承载参数的数组类型。
+
+函数调用方法或 `dynamicCallable` 属性定义的方法并不允许你在任何上下文中把实例对象作为函数类型来处理。示例代码如下：
+
+``` swift
+let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
+```
+
+如 [dynamicmemberlookup](./07_Attributes.md#dynamicmemberlookup) 描述的一样，`subscript(dynamicMemberLookup:)` 下标允许成员查找的语法糖。
+
 ### 抛出错误的函数和方法 {#throwing-functions-and-methods}
 可以抛出错误的函数或方法必须使用 `throws` 关键字标记。这类函数和方法被称为抛出函数和抛出方法。它们有着下面的形式:
 
@@ -563,7 +596,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 }
 ```
 
-重抛函数或者方法不能够从自身直接抛出任何错误，这意味着它不能够包含 `throw` 语句。它只能够传递作为参数的抛出函数所抛出的错误。例如，在 `do-catch` 代码块中调用抛出函数，并在 `catch` 子句中抛出其它错误都是不允许的。
+重抛函数或者方法不能够从自身直接抛出任何错误，这意味着它不能够包含 `throw` 语句。它只能够传递作为参数的抛出函数所抛出的错误。例如，在 `do-catch` 语句中调用抛出函数，并在 `catch` 子句中抛出其它错误都是不允许的。
 
 ```swift
 func alwaysThrows() throws {
@@ -1540,7 +1573,7 @@ subscript (参数列表) -> 返回类型 {
 
 可以重写下标，只要参数列表或返回类型不同即可。还可以重写继承自超类的下标，此时必须使用 `override` 声明修饰符声明被重写的下标。
 
-下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，下标中使用的参数不需要指定标签，这与函数，方法和构造器不同。但是你也可以同它们一样，显式地提供参数标签。此外，下标不能有 `In-out` 参数。
+下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，下标中使用的参数不需要指定标签，这与函数，方法和构造器不同。但是你也可以同它们一样，显式地提供参数标签。此外，下标不能有 `In-out` 参数。下标参数可以具有默认值，具体的语法请参考 [特殊参数](#special-kinds-of-parameters)。
 
 同样可以在协议声明中声明下标，正如 [协议下标声明](#protocol-subscript-declaration) 中所述。
 
