@@ -977,7 +977,7 @@ myData.someMethod() {$0 == 13}
 myData.someMethod {$0 == 13}
 ```
 
-如 [特殊名称的方法](./06_Declarations.md#methods-with-special-names) 所述，通过声明几种方法中的一种，类、结构体或枚举类型可以为函数调用语法启用语法糖。
+如 [特殊名称方法](./06_Declarations.md#methods-with-special-names) 所述，通过声明几种方法中的一种，类、结构体或枚举类型可以为函数调用语法启用语法糖。
 
 > 函数调用表达式语法
 > 
