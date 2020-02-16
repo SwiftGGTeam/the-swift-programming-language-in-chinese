@@ -318,7 +318,7 @@ class ExampleClass: NSObject {
 更多相关信息，请参考 [把 Swift 导入 Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
 
 > 注意
-> 具有 `objc` 特性的实参也会改变那个声明的运行时名称。在调用与 Objective-C 运行时交互的函数时，比如 [NSClassFromString](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，以及在应用程序的 info.plist 文件中指定类名时，你会用到运行时名称。如果你通过传递实参的方式来指定名称，这个名称会作为 Objective-C 代码中的名称和运行时名称。如果你不使用这个实参，在 Objective-C 代码中使用的名称会与 Swift 代码中的名称匹配，并且运行时名称会遵循标准 Swift 编译器名称管理的惯例
+> 具有 `objc` 特性的实参也会改变那个声明的运行时名称。在调用与 Objective-C 运行时交互的函数时，比如 [NSClassFromString](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，以及在应用程序的 info.plist 文件中指定类名时，你会用到运行时名称。如果你通过传递实参的方式来指定名称，这个名称会作为 Objective-C 代码中的名称和运行时名称。如果你不使用这个实参，在 Objective-C 代码中使用的名称会与 Swift 代码中的名称匹配，并且运行时名称会遵循标准 Swift 编译器名称管理的惯例。
 
 ### `objcMembers` {#objcmembers}
 
