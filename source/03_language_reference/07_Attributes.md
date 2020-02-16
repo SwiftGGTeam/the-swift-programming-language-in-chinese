@@ -235,7 +235,7 @@ print(wrapper.x)
 针对枚举或者结构体的声明使用该特性，可以限制你对该类型的修改。它只有在编译迭代库时被允许使用。未来版本的库不能通过添加、删除或重新排序枚举的 case 或结构的存储实例属性来更改声明。在未冻结的类型上，这些操作都是允许的，但是他们破坏了冻结类型的 ABI 兼容性。
 
 > 注意  
-> 当编译器不处于迭代库的模式，所有的结构体和枚举都是隐性冻结，并且你不能使用该特性。
+> 当编译器不处于迭代库的模式，所有的结构体和枚举都是隐性冻结，并且该特性会被忽视。
 
 在迭代库的模式中，与未冻结结构体和枚举的成员进行交互的代码在被编译时，允许它在不重新编译的情况下继续工作，即使在新版本的库中添加、删除或重新排序该类型的成员。编译器用类似运行时查找信息和添加间接层的技术使之可能。将一个枚举或者结构体标记为冻结将以放弃这种灵活性为代价来获取性能上的提升：未来版本的库只能对类型进行有限的更改，但编译器可以对与类型成员交互的代码进行额外的优化。
 
@@ -315,6 +315,10 @@ class ExampleClass: NSObject {
     }
 }
 ```
+更多相关信息，请参考 [把 Swift 导入 Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
+
+> 注意
+> 具有 `objc` 特性的实参也会改变那个声明的运行时名称。在调用与 Objective-C 运行时交互的函数时，比如 [NSClassFromString](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，以及在应用程序的 info.plist 文件中指定类名时，你会用到运行时名称。如果你通过传递实参的方式来指定名称，这个名称会作为 Objective-C 代码中的名称和运行时名称。如果你不使用这个实参，在 Objective-C 代码中使用的名称会与 Swift 代码中的名称匹配，并且运行时名称会遵循标准 Swift 编译器名称管理的惯例。
 
 ### `objcMembers` {#objcmembers}
 
