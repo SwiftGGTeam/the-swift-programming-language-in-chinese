@@ -1216,8 +1216,9 @@ so it's an ordinary optional.
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let optionalString = assumedString
-   << // optionalString : String? = Optional("An implicitly unwrapped optional string.")
    // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
+   >> print(type(of: optionalString))
+   << Optional<String>
 
 If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
 you'll trigger a runtime error.
