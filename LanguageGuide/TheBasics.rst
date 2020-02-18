@@ -1203,14 +1203,15 @@ when accessing their wrapped value as an explicit ``String``:
 You can think of an implicitly unwrapped optional as
 giving permission for the optional to be force-unwrapped if needed.
 When you use an implicitly unwrapped optional value,
-Swift first tries to use it as an ordinary optional value ---
-but if an optional can't be used, it force-unwraps the value.
+Swift first tries to use it as an ordinary optional value;
+if it can't be used as an optional, Swift force-unwraps the value.
 In the code above,
 the optional value ``assumedString`` is force-unwrapped
 before assigning its value to ``implicitString``
-because ``implicitString`` has an explicit type of ``String``.
-If you don't write an explicit type, ``assumedString``
-is treated like an ordinary optional:
+because ``implicitString`` has an explicit, non-optional type of ``String``.
+In code below,
+``optionalString`` doesn't have an explicit type
+so it's an ordinary optional.
 
 .. testcode:: implicitlyUnwrappedOptionals
 
