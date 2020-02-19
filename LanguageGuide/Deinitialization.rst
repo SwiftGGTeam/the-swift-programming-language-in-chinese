@@ -130,7 +130,7 @@ This ``Player`` instance is stored in an optional ``Player`` variable called ``p
 An optional variable is used here, because players can leave the game at any point.
 The optional lets you track whether there is currently a player in the game.
 
-Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
+Because ``playerOne`` is an optional, it is qualified with an exclamation point (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
 and whenever its ``win(coins:)`` method is called:
 

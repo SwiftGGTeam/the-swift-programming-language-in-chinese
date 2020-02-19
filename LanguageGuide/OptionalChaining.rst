@@ -22,7 +22,7 @@ Optional Chaining as an Alternative to Forced Unwrapping
 You specify optional chaining by placing a question mark (``?``)
 after the optional value on which you wish to call a property, method or subscript
 if the optional is non-``nil``.
-This is very similar to placing an exclamation mark (``!``)
+This is very similar to placing an exclamation point (``!``)
 after an optional value to force the unwrapping of its value.
 The main difference is that optional chaining fails gracefully when the optional is ``nil``,
 whereas forced unwrapping triggers a runtime error when the optional is ``nil``.
@@ -71,7 +71,7 @@ In the code below, ``john`` has a ``residence`` property value of ``nil``:
    -> let john = Person()
 
 If you try to access the ``numberOfRooms`` property of this person's ``residence``,
-by placing an exclamation mark after ``residence`` to force the unwrapping of its value,
+by placing an exclamation point after ``residence`` to force the unwrapping of its value,
 you trigger a runtime error,
 because there is no ``residence`` value to unwrap:
 
@@ -87,7 +87,7 @@ However, this code always triggers a runtime error when ``residence`` is ``nil``
 as illustrated above.
 
 Optional chaining provides an alternative way to access the value of ``numberOfRooms``.
-To use optional chaining, use a question mark in place of the exclamation mark:
+To use optional chaining, use a question mark in place of the exclamation point:
 
 .. testcode:: optionalChainingIntro
 

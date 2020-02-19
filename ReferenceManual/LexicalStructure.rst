@@ -831,8 +831,8 @@ the ``+`` operator followed by the ``.+`` operator.
 
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation mark (``!``),
-postfix operators can't begin with either a question mark or an exclamation mark.
+Additionally, although operators can contain an exclamation point (``!``),
+postfix operators can't begin with either a question mark or an exclamation point.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
 

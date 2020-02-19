@@ -1851,7 +1851,7 @@ that creates an optional instance of the appropriate type
 by placing a question mark after the ``init`` keyword (``init?``).
 Alternatively, you can define a failable initializer that creates
 an implicitly unwrapped optional instance of the appropriate type.
-Do this by placing an exclamation mark after the ``init`` keyword (``init!``)
+Do this by placing an exclamation point after the ``init`` keyword (``init!``)
 instead of a question mark.
 
 You can delegate from ``init?`` to ``init!`` and vice versa,

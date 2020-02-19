@@ -224,7 +224,7 @@ and the ``unit4A`` variable has a strong reference to the new ``Apartment`` inst
 
 You can now link the two instances together
 so that the person has an apartment, and the apartment has a tenant.
-Note that an exclamation mark (``!``) is used to unwrap and access
+Note that an exclamation point (``!``) is used to unwrap and access
 the instances stored inside the ``john`` and ``unit4A`` optional variables,
 so that the properties of those instances can be set:
 
@@ -646,7 +646,7 @@ as described in :ref:`Initialization_TwoPhaseInitialization`.
 To cope with this requirement,
 you declare the ``capitalCity`` property of ``Country`` as
 an implicitly unwrapped optional property,
-indicated by the exclamation mark at the end of its type annotation (``City!``).
+indicated by the exclamation point at the end of its type annotation (``City!``).
 This means that the ``capitalCity`` property has a default value of ``nil``,
 like any other optional,
 but can be accessed without the need to unwrap its value
@@ -664,7 +664,7 @@ its own ``capitalCity`` property.
 All of this means that you can create the ``Country`` and ``City`` instances
 in a single statement, without creating a strong reference cycle,
 and the ``capitalCity`` property can be accessed directly,
-without needing to use an exclamation mark to unwrap its optional value:
+without needing to use an exclamation point to unwrap its optional value:
 
 .. testcode:: implicitlyUnwrappedOptionals
 

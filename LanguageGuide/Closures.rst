@@ -383,12 +383,12 @@ The closure can be used to create a string representation of any integer greater
 .. note::
 
    The call to the ``digitNames`` dictionary's subscript
-   is followed by an exclamation mark (``!``),
+   is followed by an exclamation point (``!``),
    because dictionary subscripts return an optional value
    to indicate that the dictionary lookup can fail if the key does not exist.
    In the example above, it is guaranteed that ``number % 10``
    will always be a valid subscript key for the ``digitNames`` dictionary,
-   and so an exclamation mark is used to force-unwrap the ``String`` value
+   and so an exclamation point is used to force-unwrap the ``String`` value
    stored in the subscript's optional return value.
 
 The string retrieved from the ``digitNames`` dictionary

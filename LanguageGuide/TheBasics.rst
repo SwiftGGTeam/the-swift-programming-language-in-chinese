@@ -1001,8 +1001,8 @@ If an optional has a value, it's considered to be “not equal to” ``nil``:
 
 Once you're sure that the optional *does* contain a value,
 you can access its underlying value
-by adding an exclamation mark (``!``) to the end of the optional's name.
-The exclamation mark effectively says,
+by adding an exclamation point (``!``) to the end of the optional's name.
+The exclamation point effectively says,
 “I know that this optional definitely has a value; please use it.”
 This is known as :newTerm:`forced unwrapping` of the optional's value:
 
@@ -1133,7 +1133,7 @@ to check and unwrap the optional's value every time it's accessed,
 because it can be safely assumed to have a value all of the time.
 
 These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`.
-You write an implicitly unwrapped optional by placing an exclamation mark (``String!``)
+You write an implicitly unwrapped optional by placing an exclamation point (``String!``)
 rather than a question mark (``String?``) after the type that you want to make optional.
 
 Implicitly unwrapped optionals are useful when
@@ -1152,21 +1152,21 @@ when accessing their wrapped value as an explicit ``String``:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let possibleString: String? = "An optional string."
-   -> let forcedString: String = possibleString! // requires an exclamation mark
+   -> let forcedString: String = possibleString! // requires an exclamation point
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   -> let implicitString: String = assumedString // no need for an exclamation mark
+   -> let implicitString: String = assumedString // no need for an exclamation point
 
 You can think of an implicitly unwrapped optional as
 giving permission for the optional to be unwrapped automatically whenever it's used.
-Rather than placing an exclamation mark after the optional's name each time you use it,
-you place an exclamation mark after the optional's type when you declare it.
+Rather than placing an exclamation point after the optional's name each time you use it,
+you place an exclamation point after the optional's type when you declare it.
 
 .. note::
 
    If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
    you'll trigger a runtime error.
-   The result is exactly the same as if you place an exclamation mark
+   The result is exactly the same as if you place an exclamation point
    after a normal optional that doesn't contain a value.
 
 You can still treat an implicitly unwrapped optional like a normal optional,

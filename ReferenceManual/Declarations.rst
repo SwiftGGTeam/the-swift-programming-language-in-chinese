@@ -2092,7 +2092,7 @@ As a result, a failable initializer can return ``nil`` to indicate that initiali
 To declare a failable initializer that produces an optional instance,
 append a question mark to the ``init`` keyword in the initializer declaration (``init?``).
 To declare a failable initializer that produces an implicitly unwrapped optional instance,
-append an exclamation mark instead (``init!``). The example below shows an ``init?``
+append an exclamation point instead (``init!``). The example below shows an ``init?``
 failable initializer that produces an optional instance of a structure.
 
 .. testcode:: failable
