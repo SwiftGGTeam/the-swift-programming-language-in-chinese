@@ -64,7 +64,6 @@ You call instance methods with the same dot syntax as properties:
 .. testcode:: instanceMethods
 
    -> let counter = Counter()
-   << // counter : Counter = REPL.Counter
    /> the initial counter value is \(counter.count)
    </ the initial counter value is 0
    -> counter.increment()
@@ -132,7 +131,6 @@ a method parameter called ``x`` and an instance property that is also called ``x
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
-   << // somePoint : Point = REPL.Point(x: 4.0, y: 5.0)
    -> if somePoint.isToTheRightOf(x: 1.0) {
          print("This point is to the right of the line where x == 1.0")
       }
@@ -173,7 +171,6 @@ before the ``func`` keyword for that method:
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    -> somePoint.moveBy(x: 2.0, y: 3.0)
    -> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
@@ -189,21 +186,27 @@ Note that you cannot call a mutating method on a constant of structure type,
 because its properties cannot be changed, even if they are variable properties,
 as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
-.. testcode:: selfStructures
+.. testcode:: selfStructures-err
 
+   >> struct Point {
+   >>    var x = 0.0, y = 0.0
+   >>    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+   >>       x += deltaX
+   >>       y += deltaY
+   >>    }
+   >> }
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = REPL.Point(x: 3.0, y: 3.0)
    -> fixedPoint.moveBy(x: 2.0, y: 3.0)
-   !! <REPL Input>:1:1: error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
+   !$ error: cannot use mutating member on immutable value: 'fixedPoint' is a 'let' constant
    !! fixedPoint.moveBy(x: 2.0, y: 3.0)
-   !!  ^~~~~~~~~~
-   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! ~~~~~~~~~~ ^
+   !$ note: change 'let' to 'var' to make it mutable
    !! let fixedPoint = Point(x: 3.0, y: 3.0)
    !! ^~~
    !! var
    // this will report an error
 
-.. TODO: talk about @!mutating as well.
+.. TODO: talk about nonmutating as well.
    Struct setters are implicitly 'mutating' by default and thus do not work on 'let's.
    However, JoeG says that this ought to work
    if the setter for the computed property is explicitly defined as @!mutating.
@@ -225,12 +228,11 @@ The ``Point`` example shown above could have been written in the following way i
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
    >> somePoint.moveBy(x: 2.0, y: 3.0)
    >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveBy(x:y:)`` method creates a brand new structure
+This version of the mutating ``moveBy(x:y:)`` method creates a new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
@@ -254,7 +256,6 @@ a different case from the same enumeration:
          }
       }
    -> var ovenLight = TriStateSwitch.low
-   << // ovenLight : TriStateSwitch = REPL.TriStateSwitch.low
    -> ovenLight.next()
    // ovenLight is now equal to .high
    -> ovenLight.next()
@@ -271,12 +272,12 @@ Type Methods
 ------------
 
 Instance methods, as described above,
-are methods that are called on an instance of a particular type.
+are methods that you call on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
 You indicate type methods by writing
 the ``static`` keyword before the method's ``func`` keyword.
-Classes may also use the ``class`` keyword
+Classes can use the ``class`` keyword instead,
 to allow subclasses to override the superclass’s implementation of that method.
 
 .. note::
@@ -412,7 +413,6 @@ and see what happens when the player completes level one:
 .. testcode:: typeMethods
 
    -> var player = Player(name: "Argyrios")
-   << // player : Player = REPL.Player
    -> player.complete(level: 1)
    -> print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
    <- highest unlocked level is now 2

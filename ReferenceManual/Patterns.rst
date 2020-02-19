@@ -30,18 +30,6 @@ statement, a ``catch`` clause of a ``do`` statement,
 or in the case condition of an ``if``, ``while``,
 ``guard``, or ``for``-``in`` statement.
 
-.. langref-grammar
-
-    pattern-atom ::= pattern-var
-    pattern-atom ::= pattern-any
-    pattern-atom ::= pattern-tuple
-    pattern-atom ::= pattern-is
-    pattern-atom ::= pattern-enum-element
-    pattern-atom ::= expr
-    pattern      ::= pattern-atom
-    pattern      ::= pattern-typed
-    pattern-typed ::= pattern-atom ':' type-annotation
-
 .. syntax-grammar::
 
     Grammar of a pattern
@@ -72,10 +60,6 @@ ignoring the current value of the range on each iteration of the loop:
           // Do something three times.
        }
 
-.. langref-grammar
-
-    pattern-any ::= '_'
-
 .. syntax-grammar::
 
     Grammar of a wildcard pattern
@@ -96,7 +80,6 @@ that matches the value ``42`` of type ``Int``:
 .. testcode:: identifier-pattern
 
     -> let someValue = 42
-    << // someValue : Int = 42
 
 When the match succeeds, the value ``42`` is bound (assigned)
 to the constant name ``someValue``.
@@ -131,7 +114,6 @@ corresponding identifier pattern.
 .. testcode:: value-binding-pattern
 
     -> let point = (3, 2)
-    << // point : (Int, Int) = (3, 2)
     -> switch point {
           // Bind x and y to the elements of point.
           case let (x, y):
@@ -142,11 +124,6 @@ corresponding identifier pattern.
 In the example above, ``let`` distributes to each identifier pattern in the
 tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
 ``case let (x, y):`` and ``case (let x, let y):`` match the same values.
-
-.. langref-grammar
-
-    pattern-var ::= 'var' pattern
-    pattern-var ::= 'let' pattern
 
 .. syntax-grammar::
 
@@ -185,15 +162,16 @@ an expression pattern:
 .. testcode:: tuple-pattern
 
     -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    << // points : [(Int, Int)] = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
     -> // This code isn't valid.
     -> for (x, 0) in points {
     >>    _ = x
           /* ... */
        }
-    !! <REPL Input>:1:9: error: expected pattern
+    !$ error: expected pattern
     !! for (x, 0) in points {
-    !! ^
+    !!         ^
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
@@ -204,30 +182,22 @@ equivalent:
    Swift version 1.1 (swift-600.0.54.20)
 
 .. testcode:: single-element-tuple-pattern
-   :compile: true
 
    -> let a = 2        // a: Int = 2
    -> let (a) = 2      // a: Int = 2
    -> let (a): Int = 2 // a: Int = 2
-   !! /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'a'
+   !$ error: invalid redeclaration of 'a'
    !! let (a) = 2      // a: Int = 2
    !! ^
-   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
+   !$ note: 'a' previously declared here
    !! let a = 2        // a: Int = 2
    !! ^
-   !! /tmp/swifttest.swift:3:6: error: invalid redeclaration of 'a'
+   !$ error: invalid redeclaration of 'a'
    !! let (a): Int = 2 // a: Int = 2
    !! ^
-   !! /tmp/swifttest.swift:1:5: note: 'a' previously declared here
+   !$ note: 'a' previously declared here
    !! let a = 2        // a: Int = 2
    !! ^
-
-.. langref-grammar
-
-    pattern-tuple ::= '(' pattern-tuple-body? ')'
-    pattern-tuple-body ::= pattern-tuple-element (',' pattern-tuple-body)* '...'?
-    pattern-tuple-element ::= pattern
-    pattern-tuple-element ::= pattern '=' expr
 
 .. syntax-grammar::
 
@@ -254,9 +224,27 @@ one element for each associated value. For an example that uses a ``switch`` sta
 to match enumeration cases containing associated values,
 see :ref:`Enumerations_AssociatedValues`.
 
-.. langref-grammar
+An enumeration case pattern also matches
+values of that case wrapped in an optional.
+This simplified syntax lets you omit an optional pattern.
+Note that,
+because ``Optional`` is implemented as an enumeration,
+``.none`` and ``.some`` can appear
+in the same switch as the cases of the enumeration type.
 
-    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
+.. testcode:: enum-pattern-matching-optional
+
+   -> enum SomeEnum { case left, right }
+   -> let x: SomeEnum? = .left
+   -> switch x {
+      case .left:
+          print("Turn left")
+      case .right:
+          print("Turn right")
+      case nil:
+          print("Keep going straight")
+      }
+   <- Turn left
 
 .. syntax-grammar::
 
@@ -282,7 +270,6 @@ the following are equivalent:
 .. testcode:: optional-pattern
 
    -> let someOptional: Int? = 42
-   << // someOptional : Int? = Optional(42)
    -> // Match using an enumeration case pattern.
    -> if case .some(let x) = someOptional {
          print(x)
@@ -302,7 +289,6 @@ executing the body of the loop only for non-``nil`` elements.
 .. testcode:: optional-pattern-for-in
 
    -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
-   << // arrayOfOptionalInts : [Int?] = [nil, Optional(2), Optional(3), nil, Optional(5)]
    -> // Match only non-nil values.
    -> for case let number? in arrayOfOptionalInts {
          print("Found a \(number)")
@@ -347,11 +333,6 @@ For an example that uses a ``switch`` statement
 to match values with ``is`` and ``as`` patterns,
 see :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`.
 
-.. langref-grammar
-
-    pattern-is ::= 'is' type
-    pattern-as ::= pattern 'as' type
-
 .. syntax-grammar::
 
     Grammar of a type casting pattern
@@ -359,7 +340,6 @@ see :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`.
     type-casting-pattern --> is-pattern | as-pattern
     is-pattern --> ``is`` type
     as-pattern --> pattern ``as`` type
-
 
 
 .. _Patterns_ExpressionPattern:
@@ -384,7 +364,6 @@ as the following example shows.
 .. testcode:: expression-pattern
 
     -> let point = (1, 2)
-    << // point : (Int, Int) = (1, 2)
     -> switch point {
           case (0, 0):
              print("(0, 0) is at the origin.")

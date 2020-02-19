@@ -28,8 +28,7 @@ and to communicate to the user any errors it can't resolve.
    Error handling in Swift interoperates with error handling patterns
    that use the ``NSError`` class in Cocoa and Objective-C.
    For more information about this class,
-   see `Error Handling <//apple_ref/doc/uid/TP40014216-CH7-ID10>`_
-   in `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
+   see `Handling Cocoa Errors in Swift <https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift>`_.
 
 .. _ErrorHandling_Represent:
 
@@ -131,18 +130,15 @@ you write the ``throws`` keyword before the return arrow (``->``).
    >> { return "foo" }
 
 .. assertion:: throwing-function-cant-overload-nonthrowing
-   :compile: true
 
    -> func f() -> Int { return 10 }
    -> func f() throws -> Int { return 10 } // Error
-   !!  /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'f()'
+   !$ error: invalid redeclaration of 'f()'
    !! func f() throws -> Int { return 10 } // Error
    !! ^
-   !! /tmp/swifttest.swift:1:6: note: 'f()' previously declared here
+   !$ note: 'f()' previously declared here
    !! func f() -> Int { return 10 }
    !! ^
-
-.. Above test needs to be compiled or it's not predictable which version of f() gets read first.
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
 
@@ -236,13 +232,11 @@ propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)``
           "Bob": "Licorice",
           "Eve": "Pretzels",
       ]
-   << // favoriteSnacks : [String : String] = ["Alice": "Chips", "Eve": "Pretzels", "Bob": "Licorice"]
    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
           let snackName = favoriteSnacks[person] ?? "Candy Bar"
           try vendingMachine.vend(itemNamed: snackName)
       }
    >> var v = VendingMachine()
-   << // v : VendingMachine = REPL.VendingMachine
    >> v.coinsDeposited = 100
    >> try buyFavoriteSnack(person: "Alice", vendingMachine: v)
    << Dispensing Chips
@@ -329,7 +323,6 @@ of the ``VendingMachineError`` enumeration.
 .. testcode:: errorHandling
 
    -> var vendingMachine = VendingMachine()
-   << // vendingMachine : VendingMachine = REPL.VendingMachine
    -> vendingMachine.coinsDeposited = 8
    -> do {
           try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
@@ -363,10 +356,10 @@ the error propagates to the surrounding scope.
 However, the propagated error
 must be handled by *some* surrounding scope.
 In a nonthrowing function,
-an enclosing ``do``-``catch`` clause
+an enclosing ``do``-``catch`` statement
 must handle the error.
 In a throwing function,
-either an enclosing ``do``-``catch`` clause
+either an enclosing ``do``-``catch`` statement
 or the caller
 must handle the error.
 If the error propagates to the top-level scope
@@ -414,7 +407,6 @@ For example,
 in the following code ``x`` and ``y`` have the same value and behavior:
 
 .. testcode:: optional-try
-    :compile: true
 
     -> func someThrowingFunction() throws -> Int {
           // ...
@@ -484,7 +476,6 @@ so it is appropriate to disable error propagation.
    >>     return Image()
    >> }
    -> let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
-   << // photo : Image = REPL.Image()
 
 .. _ErrorHandling_Defer:
 

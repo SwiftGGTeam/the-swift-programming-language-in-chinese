@@ -38,7 +38,7 @@ If part of your code requires a ``String``,
 type safety prevents you from passing it an ``Int`` by mistake.
 Likewise, type safety prevents you from
 accidentally passing an optional ``String``
-to a piece of code that requires a nonoptional ``String``.
+to a piece of code that requires a non-optional ``String``.
 Type safety helps you catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
@@ -67,9 +67,7 @@ to track the number of login attempts a user has made:
 .. testcode:: constantsAndVariables
 
    -> let maximumNumberOfLoginAttempts = 10
-   << // maximumNumberOfLoginAttempts : Int = 10
    -> var currentLoginAttempt = 0
-   << // currentLoginAttempt : Int = 0
 
 This code can be read as:
 
@@ -90,9 +88,8 @@ separated by commas:
 .. testcode:: multipleDeclarations
 
    -> var x = 0.0, y = 0.0, z = 0.0
-   << // x : Double = 0.0
-   << // y : Double = 0.0
-   << // z : Double = 0.0
+   >> print(x, y, z)
+   << 0.0 0.0 0.0
 
 .. note::
 
@@ -114,7 +111,6 @@ This example provides a type annotation for a variable called ``welcomeMessage``
 to indicate that the variable can store ``String`` values:
 
 .. testcode:: typeAnnotations
-   :compile: true
 
    -> var welcomeMessage: String
 
@@ -129,7 +125,6 @@ Think of it as meaning “the type of thing” (or “the kind of thing”) that
 The ``welcomeMessage`` variable can now be set to any string value without error:
 
 .. testcode:: typeAnnotations
-   :compile: true
 
    -> welcomeMessage = "Hello"
    >> print(welcomeMessage)
@@ -139,7 +134,6 @@ You can define multiple related variables of the same type on a single line,
 separated by commas, with a single type annotation after the final variable name:
 
 .. testcode:: typeAnnotations
-   :compile: true
 
    -> var red, green, blue: Double
 
@@ -164,14 +158,11 @@ including Unicode characters:
 .. testcode:: constantsAndVariables
 
    -> let π = 3.14159
-   << // π : Double = 3.1415899999999999
    -> let 你好 = "你好世界"
-   << // 你好 : String = "你好世界"
    -> let 🐶🐮 = "dogcow"
-   << // 🐶🐮 : String = "dogcow"
 
 Constant and variable names can't contain
-whitespace characters, mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values,
 or line- and box-drawing characters.
 Nor can they begin with a number,
 although numbers may be included elsewhere within the name.
@@ -193,9 +184,8 @@ In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
 
 .. testcode:: constantsAndVariables
-
+    
    -> var friendlyWelcome = "Hello!"
-   << // friendlyWelcome : String = "Hello!"
    -> friendlyWelcome = "Bonjour!"
    /> friendlyWelcome is now \"\(friendlyWelcome)\"
    </ friendlyWelcome is now "Bonjour!"
@@ -203,16 +193,15 @@ In this example, the value of ``friendlyWelcome`` is changed from
 Unlike a variable, the value of a constant can't be changed after it's set.
 Attempting to do so is reported as an error when your code is compiled:
 
-.. testcode:: constantsAndVariables
+.. testcode:: constantsAndVariables_err
 
    -> let languageName = "Swift"
-   << // languageName : String = "Swift"
    -> languageName = "Swift++"
    // This is a compile-time error: languageName cannot be changed.
-   !! <REPL Input>:1:14: error: cannot assign to value: 'languageName' is a 'let' constant
+   !$ error: cannot assign to value: 'languageName' is a 'let' constant
    !! languageName = "Swift++"
-   !! ~~~~~~~~~~~~ ^
-   !! <REPL Input>:1:1: note: change 'let' to 'var' to make it mutable
+   !! ^~~~~~~~~~~~
+   !! /tmp/swifttest.swift:1:1: note: change 'let' to 'var' to make it mutable
    !! let languageName = "Swift"
    !! ^~~
    !! var
@@ -246,7 +235,6 @@ see :ref:`Functions_DefaultParameterValues`.
 .. assertion:: printingWithoutNewline
 
     >> let someValue = 10
-    << // someValue : Int = 10
     -> print(someValue, terminator: "")
     -> print(someValue)
     << 1010
@@ -285,7 +273,6 @@ Comments in Swift are very similar to comments in C.
 Single-line comments begin with two forward-slashes (``//``):
 
 .. testcode:: comments
-   :compile: true
 
    -> // This is a comment.
 
@@ -293,7 +280,6 @@ Multiline comments start with a forward-slash followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments
-   :compile: true
 
    -> /* This is also a comment
       but is written over multiple lines. */
@@ -307,7 +293,6 @@ and then starting a second multiline comment within the first block.
 The second block is then closed, followed by the first block:
 
 .. testcode:: comments
-   :compile: true
 
    -> /* This is the start of the first multiline comment.
          /* This is the second, nested multiline comment. */
@@ -332,7 +317,6 @@ if you want to write multiple separate statements on a single line:
 .. testcode:: semiColons
 
    -> let cat = "🐱"; print(cat)
-   << // cat : String = "🐱"
    <- 🐱
 
 .. _TheBasics_Integers:
@@ -362,9 +346,9 @@ with its ``min`` and ``max`` properties:
 .. testcode:: integerBounds
 
    -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-   << // minValue : UInt8 = 0
    -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-   << // maxValue : UInt8 = 255
+   >> print(minValue, maxValue)
+   << 0 255
 
 The values of these properties are of the appropriate-sized number type
 (such as ``UInt8`` in the example above)
@@ -481,8 +465,9 @@ because you have initialized it with a number that looks like an integer:
 .. testcode:: typeInference
 
    -> let meaningOfLife = 42
-   << // meaningOfLife : Int = 42
    // meaningOfLife is inferred to be of type Int
+   >> print(type(of: meaningOfLife))
+   << Int
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift infers that you want to create a ``Double``:
@@ -490,8 +475,9 @@ Swift infers that you want to create a ``Double``:
 .. testcode:: typeInference
 
    -> let pi = 3.14159
-   << // pi : Double = 3.1415899999999999
    // pi is inferred to be of type Double
+   >> print(type(of: pi))
+   << Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -502,8 +488,9 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
    -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Double = 3.1415899999999999
    // anotherPi is also inferred to be of type Double
+   >> print(type(of: anotherPi))
+   << Double
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -526,13 +513,11 @@ All of these integer literals have a decimal value of ``17``:
 .. testcode:: numberLiterals
 
    -> let decimalInteger = 17
-   << // decimalInteger : Int = 17
    -> let binaryInteger = 0b10001       // 17 in binary notation
-   << // binaryInteger : Int = 17
    -> let octalInteger = 0o21           // 17 in octal notation
-   << // octalInteger : Int = 17
    -> let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
-   << // hexadecimalInteger : Int = 17
+   >> print(binaryInteger, octalInteger, hexadecimalInteger)
+   << 17 17 17
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
@@ -542,18 +527,18 @@ indicated by an uppercase or lowercase ``e``;
 hexadecimal floats must have an exponent,
 indicated by an uppercase or lowercase ``p``.
 
-.. assertion:: float-required-vs-optional-exponent
+.. assertion:: float-required-vs-optional-exponent-err
 
    -> let hexWithout = 0x1.5
-   !! <REPL Input>:1:23: error: hexadecimal floating point literal must end with an exponent
+   !$ error: hexadecimal floating point literal must end with an exponent
    !! let hexWithout = 0x1.5
    !!                       ^
+
+.. assertion:: float-required-vs-optional-exponent
+
    -> let hexWith = 0x1.5p7
-   << // hexWith : Double = 168.0
    -> let decimalWithout = 0.5
-   << // decimalWithout : Double = 0.5
    -> let decimalWith = 0.5e7
-   << // decimalWith : Double = 5000000.0
 
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
@@ -572,11 +557,8 @@ All of these floating-point literals have a decimal value of ``12.1875``:
 .. testcode:: numberLiterals
 
    -> let decimalDouble = 12.1875
-   << // decimalDouble : Double = 12.1875
    -> let exponentDouble = 1.21875e1
-   << // exponentDouble : Double = 12.1875
    -> let hexadecimalDouble = 0xC.3p0
-   << // hexadecimalDouble : Double = 12.1875
 
 Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeros
@@ -586,11 +568,8 @@ Neither type of formatting affects the underlying value of the literal:
 .. testcode:: numberLiterals
 
    -> let paddedDouble = 000123.456
-   << // paddedDouble : Double = 123.456
    -> let oneMillion = 1_000_000
-   << // oneMillion : Int = 1000000
    -> let justOverOneMillion = 1_000_000.000_000_1
-   << // justOverOneMillion : Double = 1000000.0000001
 
 .. _TheBasics_NumericTypeConversion:
 
@@ -625,16 +604,16 @@ is reported as an error when your code is compiled:
 .. testcode:: constantsAndVariablesOverflowError
 
    -> let cannotBeNegative: UInt8 = -1
-   !!  <REPL Input>:1:31: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
-   !! let cannotBeNegative: UInt8 = -1
-   !!                        ^
    // UInt8 cannot store negative numbers, and so this will report an error
    -> let tooBig: Int8 = Int8.max + 1
-   !! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
-   !! let tooBig: Int8 = Int8.max + 1
-   !!                    ~~~~~~~~ ^ ~
    // Int8 cannot store a number larger than its maximum value,
    // and so this will also report an error
+   !! /tmp/swifttest.swift:2:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
+   !! let tooBig: Int8 = Int8.max + 1
+   !!                    ~~~~~~~~ ^ ~
+   !! /tmp/swifttest.swift:1:31: error: negative integer '-1' overflows when stored into unsigned type 'UInt8'
+   !! let cannotBeNegative: UInt8 = -1
+   !!                                ^
 
 Because each numeric type can store a different range of values,
 you must opt in to numeric type conversion on a case-by-case basis.
@@ -655,11 +634,10 @@ and uses this value in place of the original:
 .. testcode:: typeConversion
 
    -> let twoThousand: UInt16 = 2_000
-   << // twoThousand : UInt16 = 2000
    -> let one: UInt8 = 1
-   << // one : UInt8 = 1
    -> let twoThousandAndOne = twoThousand + UInt16(one)
-   << // twoThousandAndOne : UInt16 = 2001
+   >> print(twoThousandAndOne)
+   << 2001
 
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
@@ -686,11 +664,8 @@ Conversions between integer and floating-point numeric types must be made explic
 .. testcode:: typeConversion
 
    -> let three = 3
-   << // three : Int = 3
    -> let pointOneFourOneFiveNine = 0.14159
-   << // pointOneFourOneFiveNine : Double = 0.14158999999999999
    -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Double = 3.1415899999999999
    /> pi equals \(pi), and is inferred to be of type Double
    </ pi equals 3.14159, and is inferred to be of type Double
 
@@ -704,7 +679,6 @@ An integer type can be initialized with a ``Double`` or ``Float`` value:
 .. testcode:: typeConversion
 
    -> let integerPi = Int(pi)
-   << // integerPi : Int = 3
    /> integerPi equals \(integerPi), and is inferred to be of type Int
    </ integerPi equals 3, and is inferred to be of type Int
 
@@ -745,7 +719,6 @@ you can use the alias anywhere you might use the original name:
 .. testcode:: typeAliases
 
    -> var maxAmplitudeFound = AudioSample.min
-   << // maxAmplitudeFound : AudioSample = 0
    /> maxAmplitudeFound is now \(maxAmplitudeFound)
    </ maxAmplitudeFound is now 0
 
@@ -768,9 +741,7 @@ Swift provides two Boolean constant values,
 .. testcode:: booleans
 
    -> let orangesAreOrange = true
-   << // orangesAreOrange : Bool = true
    -> let turnipsAreDelicious = false
-   << // turnipsAreDelicious : Bool = false
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
@@ -801,11 +772,10 @@ The following example reports a compile-time error:
 .. testcode:: booleansNotBoolean
 
    -> let i = 1
-   << // i : Int = 1
    -> if i {
          // this example will not compile, and will report an error
       }
-   !! <REPL Input>:1:4: error: 'Int' is not convertible to 'Bool'
+   !$ error: cannot convert value of type 'Int' to expected condition type 'Bool'
    !! if i {
    !!   ^
 
@@ -814,7 +784,6 @@ However, the alternative example below is valid:
 .. testcode:: booleansIsBoolean
 
    -> let i = 1
-   << // i : Int = 1
    -> if i == 1 {
          // this example will compile successfully
       }
@@ -843,7 +812,6 @@ A status code of ``404 Not Found`` is returned if you request a webpage that doe
 .. testcode:: tuples
 
    -> let http404Error = (404, "Not Found")
-   << // http404Error : (Int, String) = (404, "Not Found")
    /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
    </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
@@ -864,7 +832,6 @@ which you then access as usual:
 .. testcode:: tuples
 
    -> let (statusCode, statusMessage) = http404Error
-   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
    -> print("The status code is \(statusCode)")
    <- The status code is 404
    -> print("The status message is \(statusMessage)")
@@ -877,7 +844,6 @@ when you decompose the tuple:
 .. testcode:: tuples
 
    -> let (justTheStatusCode, _) = http404Error
-   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
    -> print("The status code is \(justTheStatusCode)")
    <- The status code is 404
 
@@ -896,7 +862,6 @@ You can name the individual elements in a tuple when the tuple is defined:
 .. testcode:: tuples
 
    -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (statusCode: 200, description: "OK")
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:
@@ -919,9 +884,9 @@ For more information, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 .. note::
 
-   Tuples are useful for temporary groups of related values.
+   Tuples are useful for simple groups of related values.
    They're not suited to the creation of complex data structures.
-   If your data structure is likely to persist beyond a temporary scope,
+   If your data structure is likely to be more complex,
    model it as a class or structure, rather than as a tuple.
    For more information, see :doc:`ClassesAndStructures`.
 
@@ -963,10 +928,10 @@ The example below uses the initializer to try to convert a ``String`` into an ``
 .. testcode:: optionals
 
    -> let possibleNumber = "123"
-   << // possibleNumber : String = "123"
    -> let convertedNumber = Int(possibleNumber)
-   << // convertedNumber : Int? = Optional(123)
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
+   >> print(type(of: convertedNumber))
+   << Optional<Int>
 
 Because the initializer might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
@@ -988,7 +953,6 @@ by assigning it the special value ``nil``:
 .. testcode:: optionals
 
    -> var serverResponseCode: Int? = 404
-   << // serverResponseCode : Int? = Optional(404)
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
@@ -996,7 +960,7 @@ by assigning it the special value ``nil``:
 
 .. note::
 
-   You can't use ``nil`` with nonoptional constants and variables.
+   You can't use ``nil`` with non-optional constants and variables.
    If a constant or variable in your code needs to work with
    the absence of a value under certain conditions,
    always declare it as an optional value of the appropriate type.
@@ -1007,7 +971,6 @@ the variable is automatically set to ``nil`` for you:
 .. testcode:: optionals
 
    -> var surveyAnswer: String?
-   << // surveyAnswer : String? = nil
    // surveyAnswer is automatically set to nil
 
 .. note::
@@ -1038,8 +1001,8 @@ If an optional has a value, it's considered to be “not equal to” ``nil``:
 
 Once you're sure that the optional *does* contain a value,
 you can access its underlying value
-by adding an exclamation mark (``!``) to the end of the optional's name.
-The exclamation mark effectively says,
+by adding an exclamation point (``!``) to the end of the optional's name.
+The exclamation point effectively says,
 “I know that this optional definitely has a value; please use it.”
 This is known as :newTerm:`forced unwrapping` of the optional's value:
 
@@ -1087,11 +1050,11 @@ to use optional binding rather than forced unwrapping:
 .. testcode:: optionals
 
    -> if let actualNumber = Int(possibleNumber) {
-         print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
+         print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("\"\(possibleNumber)\" could not be converted to an integer")
+         print("The string \"\(possibleNumber)\" could not be converted to an integer")
       }
-   <- "123" has an integer value of 123
+   <- The string "123" has an integer value of 123
 
 This code can be read as:
 
@@ -1170,10 +1133,10 @@ to check and unwrap the optional's value every time it's accessed,
 because it can be safely assumed to have a value all of the time.
 
 These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`.
-You write an implicitly unwrapped optional by placing an exclamation mark (``String!``)
+You write an implicitly unwrapped optional by placing an exclamation point (``String!``)
 rather than a question mark (``String?``) after the type that you want to make optional.
-Rather than placing an exclamation mark after the optional's name when you use it,
-you place an exclamation mark after the optional's type when you declare it.
+Rather than placing an exclamation point after the optional's name when you use it,
+you place an exclamation point after the optional's type when you declare it.
 
 Implicitly unwrapped optionals are useful when
 an optional's value is confirmed to exist immediately after the optional is first defined
@@ -1182,7 +1145,7 @@ The primary use of implicitly unwrapped optionals in Swift is during class initi
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
-but can also be used like a nonoptional value,
+but can also be used like a non-optional value,
 without the need to unwrap the optional value each time it's accessed.
 The following example shows the difference in behavior between
 an optional string and an implicitly unwrapped optional string
@@ -1191,14 +1154,10 @@ when accessing their wrapped value as an explicit ``String``:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let possibleString: String? = "An optional string."
-   << // possibleString : String? = Optional("An optional string.")
-   -> let forcedString: String = possibleString! // requires an exclamation mark
-   << // forcedString : String = "An optional string."
+   -> let forcedString: String = possibleString! // requires an exclamation point
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String? = Optional("An implicitly unwrapped optional string.")
-   -> let implicitString: String = assumedString // no need for an exclamation mark
-   << // implicitString : String = "An implicitly unwrapped optional string."
+   -> let implicitString: String = assumedString // no need for an exclamation point
 
 You can think of an implicitly unwrapped optional as
 giving permission for the optional to be force-unwrapped if needed.
@@ -1222,7 +1181,7 @@ so it's an ordinary optional.
 
 If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
 you'll trigger a runtime error.
-The result is exactly the same as if you place an exclamation mark
+The result is exactly the same as if you place an exclamation point
 after a normal optional that doesn't contain a value.
 
 You can check whether an implicitly unwrapped optional is ``nil``
@@ -1275,7 +1234,6 @@ That function's caller can then :newTerm:`catch` the error and respond appropria
    >>    case someError
    >> }
    >> let condition = true
-   << // condition : Bool = true
    -> func canThrowAnError() throws {
          // this function may or may not throw an error
    >>    if condition {
@@ -1316,7 +1274,7 @@ to respond to different error conditions:
    >>     case missingIngredients([String])
    >> }
    >> func washDishes() { print("Wash dishes") }
-   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList:)") }
+   >> func buyGroceries(_ shoppingList: [String]) { print("Buy \(shoppingList)") }
    -> func makeASandwich() throws {
           // ...
       }
@@ -1391,7 +1349,7 @@ However,
 using them to enforce valid data and state
 causes your app to terminate more predictably
 if an invalid state occurs,
-and helps makes the problem easier to debug.
+and helps make the problem easier to debug.
 Stopping execution as soon as an invalid state is detected
 also helps limit the damage caused by that invalid state.
 
@@ -1422,10 +1380,9 @@ You pass this function an expression that evaluates to ``true`` or ``false``
 and a message to display if the result of the condition is ``false``.
 For example:
 
-.. testcode:: assertions
+.. testcode:: assertions-1
 
    -> let age = -3
-   << // age : Int = -3
    -> assert(age >= 0, "A person's age can't be less than zero.")
    xx assert
    // This assertion fails because -3 is not >= 0.
@@ -1439,15 +1396,15 @@ and the assertion fails, terminating the application.
 You can omit the assertion message ---
 for example, when it would just repeat the condition as prose.
 
-.. testcode:: assertions
+.. testcode:: assertions-2
 
+   >> let age = -3
    -> assert(age >= 0)
    xx assert
 
 .. assertion:: assertionsCanUseStringInterpolation
 
    -> let age = -3
-   << // age : Int = -3
    -> assert(age >= 0, "A person's age can't be less than zero, but value is \(age).")
    xx assert
 
@@ -1457,11 +1414,12 @@ you use the
 to indicate that an assertion has failed.
 For example:
 
-.. testcode:: assertions
+.. testcode:: assertions-3
 
+   >> let age = -3
    -> if age > 10 {
           print("You can ride the roller-coaster or the ferris wheel.")
-      } else if age > 0 {
+      } else if age >= 0 {
           print("You can ride the ferris wheel.")
       } else {
           assertionFailure("A person's age can't be less than zero.")

@@ -44,9 +44,7 @@ You can call this function to swap the values in two ``Int`` variables:
 .. testcode:: whyGenerics
 
    -> var someInt = 3
-   << // someInt : Int = 3
    -> var anotherInt = 107
-   << // anotherInt : Int = 107
    -> swapTwoInts(&someInt, &anotherInt)
    -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
@@ -163,17 +161,13 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 .. testcode:: genericFunctions
 
    -> var someInt = 3
-   << // someInt : Int = 3
    -> var anotherInt = 107
-   << // anotherInt : Int = 107
    -> swapTwoValues(&someInt, &anotherInt)
    /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
    </ someInt is now 107, and anotherInt is now 3
    ---
    -> var someString = "hello"
-   << // someString : String = "hello"
    -> var anotherString = "world"
-   << // anotherString : String = "world"
    -> swapTwoValues(&someString, &anotherString)
    /> someString is now \"\(someString)\", and anotherString is now \"\(anotherString)\"
    </ someString is now "world", and anotherString is now "hello"
@@ -289,7 +283,6 @@ in this case for a stack of ``Int`` values:
          }
       }
    >> var intStack = IntStack()
-   << // intStack : IntStack = REPL.IntStack(items: [])
    >> intStack.push(1)
    >> intStack.push(2)
    >> intStack.push(3)
@@ -353,7 +346,6 @@ you write ``Stack<String>()``:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -371,7 +363,6 @@ Popping a value from the stack removes and returns the top value, ``"cuatro"``:
 .. testcode:: genericStack
 
    -> let fromTheTop = stackOfStrings.pop()
-   << // fromTheTop : String = "cuatro"
    /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stackOfStrings.items.count) strings
    </ fromTheTop is equal to "cuatro", and the stack now contains 3 strings
 
@@ -523,7 +514,6 @@ The ``findIndex(ofString:in:)`` function can be used to find a string value in a
 .. testcode:: typeConstraints
 
    -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
-   << // strings : [String] = ["cat", "dog", "llama", "parakeet", "terrapin"]
    -> if let foundIndex = findIndex(ofString: "llama", in: strings) {
          print("The index of llama is \(foundIndex)")
       }
@@ -541,7 +531,7 @@ not an optional value from the array.
 Be warned, though --- this function doesn't compile,
 for reasons explained after the example:
 
-.. testcode:: typeConstraints
+.. testcode:: typeConstraints-err
 
    -> func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
          for (index, value) in array.enumerated() {
@@ -551,12 +541,15 @@ for reasons explained after the example:
          }
          return nil
       }
-   !! <REPL Input>:3:18: error: binary operator '==' cannot be applied to two 'T' operands
+   !$ error: binary operator '==' cannot be applied to two 'T' operands
    !!       if value == valueToFind {
    !!          ~~~~~ ^  ~~~~~~~~~~~
-   !~ <REPL Input>:3:18: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if value == valueToFind {
-   !!          ^
+   !$ note: candidate requires that 'T' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
+   !! extension BinaryInteger {
+   !! ^
+   !$ note: candidate requires that 'T' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
+   !! extension StringProtocol {
+   !! ^
 
 This function doesn't compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
@@ -606,11 +599,9 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 .. testcode:: typeConstraintsEquatable
 
    -> let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
-   << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 isn't in the array
    </ doubleIndex is an optional Int with no value, because 9.3 isn't in the array
    -> let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
-   << // stringIndex : Int? = Optional(2)
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
 
@@ -640,7 +631,7 @@ Associated Types in Action
 Here's an example of a protocol called ``Container``,
 which declares an associated type called ``Item``:
 
-.. testcode:: associatedTypes
+.. testcode:: associatedTypes, associatedTypes-err
 
    -> protocol Container {
          associatedtype Item
@@ -740,7 +731,7 @@ everything still works, because it's clear what type should be used for ``Item``
 
 You can also make the generic ``Stack`` type conform to the ``Container`` protocol:
 
-.. testcode:: associatedTypes
+.. testcode:: associatedTypes, associatedTypes-err
 
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
@@ -850,7 +841,7 @@ The constraint on ``Item`` is a generic ``where`` clause,
 which is discussed in :ref:`Generics_AssociatedTypesWithWhereClause` below.
 
 Here's an extension of the ``Stack`` type
-from :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures` above
+from :ref:`Generics_GenericTypes` above
 that adds conformance to the ``SuffixableContainer`` protocol:
 
 .. testcode:: associatedTypes
@@ -866,15 +857,13 @@ that adds conformance to the ``SuffixableContainer`` protocol:
            // Inferred that Suffix is Stack.
        }
     -> var stackOfInts = Stack<Int>()
-    << // stackOfInts : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
     -> stackOfInts.append(10)
     -> stackOfInts.append(20)
     -> stackOfInts.append(30)
-    >> stackOfInts.suffix(0)
-    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
+    >> assert(stackOfInts.suffix(0).items == [])
     -> let suffix = stackOfInts.suffix(2)
     // suffix contains 20 and 30
-    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
+    >> assert(suffix.items == [20, 30])
 
 In the example above,
 the ``Suffix`` associated type for ``Stack`` is also ``Stack``,
@@ -901,14 +890,11 @@ using ``Stack<Int>`` as its suffix type instead of ``IntStack``:
            // Inferred that Suffix is Stack<Int>.
        }
     >> var intStack = IntStack()
-    << // intStack : IntStack = REPL.IntStack(items: [])
     >> intStack.append(10)
     >> intStack.append(20)
     >> intStack.append(30)
-    >> intStack.suffix(0)
-    >> intStack.suffix(2)
-    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [])
-    <$ : Stack<Int> = REPL.Stack<Swift.Int>(items: [20, 30])
+    >> assert(intStack.suffix(0).items == [])
+    >> assert(intStack.suffix(2).items == [20, 30])
 
 .. _Generics_WhereClauses:
 
@@ -1018,13 +1004,11 @@ Here's how the ``allItemsMatch(_:_:)`` function looks in action:
 .. testcode:: associatedTypes
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = REPL.Stack<Swift.String>(items: [])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
    ---
    -> var arrayOfStrings = ["uno", "dos", "tres"]
-   << // arrayOfStrings : [String] = ["uno", "dos", "tres"]
    ---
    -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
          print("All items match.")
@@ -1096,18 +1080,16 @@ If you try to call the ``isTop(_:)`` method
 on a stack whose elements aren't equatable,
 you'll get a compile-time error.
 
-.. testcode:: associatedTypes
+.. testcode:: associatedTypes-err
 
    -> struct NotEquatable { }
    -> var notEquatableStack = Stack<NotEquatable>()
    -> let notEquatableValue = NotEquatable()
-   << // notEquatableStack : Stack<NotEquatable> = REPL.Stack<REPL.NotEquatable>(items: [])
-   << // notEquatableValue : NotEquatable = REPL.NotEquatable()
    -> notEquatableStack.push(notEquatableValue)
    -> notEquatableStack.isTop(notEquatableValue)  // Error
-   !! <REPL Input>:1:19: error: type 'NotEquatable' does not conform to protocol 'Equatable'
+   !$ error: value of type 'Stack<NotEquatable>' has no member 'isTop'
    !! notEquatableStack.isTop(notEquatableValue)  // Error
-   !! ^
+   !! ~~~~~~~~~~~~~~~~~ ^~~~~
 
 You can use a generic ``where`` clause with extensions to a protocol.
 The example below extends the ``Container`` protocol from the previous examples
@@ -1334,10 +1316,9 @@ For example:
          }
       }
    >> var s = IntStack()
-   << // s : IntStack = REPL.IntStack(items: [])
    >> s.push(10); s.push(20); s.push(30)
    >> let items = s[ [0, 2] ]
-   << // items : [IntStack.Item] = [10, 30]
+   >> assert(items == [10, 30])
 
 This extension to the ``Container`` protocol
 adds a subscript that takes a sequence of indices

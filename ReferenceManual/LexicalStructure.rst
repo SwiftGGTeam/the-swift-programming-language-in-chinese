@@ -34,7 +34,7 @@ and null (U+0000).
 
 .. Whitespace characters are listed roughly from
    most salient/common to least,
-   not in order of Unicode codepoints.
+   not in order of Unicode scalar value.
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with ``//``
@@ -43,18 +43,8 @@ Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting multiline comments is allowed,
 but the comment markers must be balanced.
 
-.. langref-grammar
-
-    whitespace ::= ' '
-    whitespace ::= '\n'
-    whitespace ::= '\r'
-    whitespace ::= '\t'
-    whitespace ::= '\0'
-
-    comment    ::= //.*[\n\r]
-    comment    ::= /* .... */
-
-.. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
+Comments can contain additional formatting and markup,
+as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
 
 .. syntax-grammar::
 
@@ -80,9 +70,6 @@ but the comment markers must be balanced.
    multiline-comment-text-item --> multiline-comment
    multiline-comment-text-item --> comment-text-item
    multiline-comment-text-item --> Any Unicode scalar value except ``/*`` or ``*/``
-
-Comments can contain additional formatting and markup,
-as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
 
 .. _LexicalStructure_Identifiers:
 
@@ -110,35 +97,16 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
-.. langref-grammar
+The compiler synthesizes identifiers that begin with a dollar sign (``$``)
+for properties that have a property wrapper projection.
+Your code can interact with these identifiers,
+but you can't declare identifiers with that prefix.
+For more information, see the :ref:`Attributes_propertyWrapper` section
+of the :doc:`../ReferenceManual/Attributes` chapter.
 
-    identifier ::= id-start id-continue*
-    id-start ::= [A-Za-z_]
-
-    // BMP alphanum non-combining
-    id-start ::= [\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-00BA]
-    id-start ::= [\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]
-    id-start ::= [\u0100-\u02FF\u0370-\u167F\u1681-\u180D\u180F-\u1DBF]
-    id-start ::= [\u1E00-\u1FFF]
-    id-start ::= [\u200B-\u200D\u202A-\u202E\u203F-\u2040\u2054\u2060-\u206F]
-    id-start ::= [\u2070-\u20CF\u2100-\u218F\u2460-\u24FF\u2776-\u2793]
-    id-start ::= [\u2C00-\u2DFF\u2E80-\u2FFF]
-    id-start ::= [\u3004-\u3007\u3021-\u302F\u3031-\u303F\u3040-\uD7FF]
-    id-start ::= [\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE1F\uFE30-FE44]
-    id-start ::= [\uFE47-\uFFFD]
-
-    // non-BMP non-PUA
-    id-start ::= [\u10000-\u1FFFD\u20000-\u2FFFD\u30000-\u3FFFD\u40000-\u4FFFD]
-    id-start ::= [\u50000-\u5FFFD\u60000-\u6FFFD\u70000-\u7FFFD\u80000-\u8FFFD]
-    id-start ::= [\u90000-\u9FFFD\uA0000-\uAFFFD\uB0000-\uBFFFD\uC0000-\uCFFFD]
-    id-start ::= [\uD0000-\uDFFFD\uE0000-\uEFFFD]
-
-    id-continue ::= [0-9]
-    // combining
-    id-continue ::= [\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]
-    id-continue ::= id-start
-
-    dollarident ::= '$' id-continue+
+.. The cross reference above includes both the section and chapter because,
+   even though "propertyWrapper" is the title of the section,
+   the section name isn't title case so it doesn't necessarily look like a title.
 
 .. syntax-grammar::
 
@@ -147,6 +115,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> identifier-head identifier-characters-OPT
     identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
+    identifier --> property-wrapper-projection
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -172,6 +141,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
+    property-wrapper-projection --> ``$`` identifier-characters
 
 
 .. _LexicalStructure_Keywords:
@@ -202,73 +172,33 @@ so they must be escaped with backticks in that context.
 
 .. assertion:: var-requires-backticks
 
-   -> func f(`var` x: Int) {}
+   -> func g(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: 'var' as a parameter attribute is not allowed
+   !$ warning: 'var' in this position is interpreted as an argument label
    !! func f(var x: Int) {}
    !!        ^~~
-   !!-
+   !!        `var`
 
 .. assertion:: let-requires-backticks
 
-   -> func f(`let` x: Int) {}
+   -> func g(`let` x: Int) {}
    -> func f(let x: Int) {}
-   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
+   !$ warning: 'let' in this position is interpreted as an argument label
    !! func f(let x: Int) {}
    !!        ^~~
-   !!-
+   !!        `let`
 
 .. assertion:: inout-requires-backticks
 
-   -> func f(`inout` x: Int) {}
+   -> func g(`inout` x: Int) {}
    -> func f(inout x: Int) {}
-   !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !$ error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
    !!        ^~~~~
    !!                 inout
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
-
-.. langref-grammar
-
-    keyword ::= 'class'
-    keyword ::= 'do'
-    keyword ::= 'extension'
-    keyword ::= 'import'
-    keyword ::= 'init'
-    keyword ::= 'def'
-    keyword ::= 'metatype'
-    keyword ::= 'enum'
-    keyword ::= 'protocol'
-    keyword ::= 'type'
-    keyword ::= 'struct'
-    keyword ::= 'subscript'
-    keyword ::= 'typealias'
-    keyword ::= 'var'
-    keyword ::= 'where'
-    keyword ::= 'break'
-    keyword ::= 'case'
-    keyword ::= 'continue'
-    keyword ::= 'default'
-    keyword ::= 'repeat'
-    keyword ::= 'else'
-    keyword ::= 'if'
-    keyword ::= 'in'
-    keyword ::= 'for'
-    keyword ::= 'return'
-    keyword ::= 'switch'
-    keyword ::= 'then'
-    keyword ::= 'while'
-    keyword ::= 'as'
-    keyword ::= 'is'
-    keyword ::= 'new'
-    keyword ::= 'super'
-    keyword ::= 'self'
-    keyword ::= 'Self'
-    keyword ::= '#column'
-    keyword ::= '#file'
-    keyword ::= '#line'
 
 * Keywords used in declarations:
   ``associatedtype``,
@@ -288,6 +218,7 @@ so they must be escaped with backticks in that context.
   ``private``,
   ``protocol``,
   ``public``,
+  ``rethrows``,
   ``static``,
   ``struct``,
   ``subscript``,
@@ -320,7 +251,6 @@ so they must be escaped with backticks in that context.
   ``false``,
   ``is``,
   ``nil``,
-  ``rethrows``,
   ``super``,
   ``self``,
   ``Self``,
@@ -339,6 +269,7 @@ so they must be escaped with backticks in that context.
   ``#else``,
   ``#elseif``,
   ``#endif``,
+  ``#error``,
   ``#file``,
   ``#fileLiteral``,
   ``#function``,
@@ -346,20 +277,8 @@ so they must be escaped with backticks in that context.
   ``#imageLiteral``,
   ``#line``,
   ``#selector``,
-  and ``#sourceLocation``.
-
-.. langref-grammar
-
-    get
-    infix
-    operator
-    postfix
-    prefix
-    set
-    type
-
-.. NOTE: This list of context-sensitive keywords
-   is derived from the file "swift/include/swift/AST/Attr.def"
+  ``#sourceLocation``,
+  and ``#warning``.
 
 * Keywords reserved in particular contexts:
   ``associativity``,
@@ -391,6 +310,9 @@ so they must be escaped with backticks in that context.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
 
+.. NOTE: The list of context-sensitive keywords above
+   is derived from the file "swift/include/swift/AST/Attr.def"
+
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
 ``(``, ``)``, ``{``, ``}``, ``[``, ``]``,
@@ -410,14 +332,22 @@ The following are examples of literals:
 
 .. testcode:: basic-literals
 
+    >> let r0 =
     -> 42               // Integer literal
+    >> let r1 =
     -> 3.14159          // Floating-point literal
+    >> let r2 =
     -> "Hello, world!"  // String literal
+    >> let r3 =
     -> true             // Boolean literal
-    <$ : Int = 42
-    <$ : Double = 3.1415899999999999
-    <$ : String = "Hello, world!"
-    <$ : Bool = true
+    >> for x in [r0, r1, r2, r3] as [Any] { print(type(of: x)) }
+    << Int
+    << Double
+    << String
+    << Bool
+
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -501,17 +431,9 @@ as described in :ref:`TheBasics_Integers`.
    Also, are adjacent underscores meant to be allowed, like 5__000?
    (REPL supports them as of swift-1.21 but it seems odd.)
 
-.. langref-grammar
-
-    integer_literal ::= [0-9][0-9_]*
-    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= 0o[0-7][0-7_]*
-    integer_literal ::= 0b[01][01_]*
-
-.. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
+.. NOTE: Updated the syntax-grammar to reflect [Contributor 7746]'s comment in
     <rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
     This feels very strange from a grammatical point of view.
-    Updated the syntax-grammar below as well.
     Update: This is a parser hack, not a lexer hack. Therefore,
     it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
     (Doug confirmed this, 4/2/2014.)
@@ -586,23 +508,15 @@ Negative floating-point literals are expressed by prepending a minus sign (``-``
 to a floating-point literal, as in ``-42.5``.
 
 Underscores (``_``) are allowed between digits for readability,
-but are ignored and therefore don't affect the value of the literal.
+but they're ignored and therefore don't affect the value of the literal.
 Floating-point literals can begin with leading zeros (``0``),
-but are likewise ignored and don't affect the base or value of the literal.
+but they're likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
 the default inferred type of a floating-point literal is the Swift standard library type ``Double``,
 which represents a 64-bit floating-point number.
 The Swift standard library also defines a ``Float`` type,
 which represents a 32-bit floating-point number.
-
-.. langref-grammar
-
-    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
-    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-    floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-    floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
-                           (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
 
 .. syntax-grammar::
 
@@ -721,22 +635,88 @@ For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
 
+   >> let r0 =
    -> "1 2 3"
-   <$ : String = "1 2 3"
+   >> let r1 =
    -> "1 2 \("3")"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r1)
+   >> let r2 =
    -> "1 2 \(3)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r2)
+   >> let r3 =
    -> "1 2 \(1 + 2)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r3)
    -> let x = 3; "1 2 \(x)"
-   << // x : Int = 3
-   <$ : String = "1 2 3"
+   >> assert(r0 == "1 2 \(x)")
+   !$ warning: string literal is unused
+   !! let x = 3; "1 2 \(x)"
+   !!            ^~~~~~~~~~
+
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
+A string delimited by extended delimiters is a sequence of characters
+surrounded by quotation marks and a balanced set of one or more number signs (``#``).
+A string delimited by extended delimiters has the following forms:
+
+.. syntax-outline::
+
+    #"<#characters#>"#
+    
+    #"""
+    <#characters#>
+    """#
+
+Special characters in a string delimited by extended delimiters
+appear in the resulting string as normal characters
+rather than as special characters.
+You can use extended delimiters to create strings with characters
+that would ordinarily have a special effect
+such as generating a string interpolation,
+starting an escape sequence,
+or terminating the string.
+
+The following example shows a string literal
+and a string delimited by extended delimiters
+that create equivalent string values:
+
+.. testcode:: extended-string-delimiters
+
+    -> let string = #"\(x) \ " \u{2603}"#
+    -> let escaped = "\\(x) \\ \" \\u{2603}"
+    -> print(string)
+    <- \(x) \ " \u{2603}
+    -> print(string == escaped)
+    <- true
+
+If you use more than one number sign to form
+a string delimited by extended delimiters,
+don't place whitespace in between the number signs:
+
+.. assertion:: extended-string-delimiters
+
+    -> print(###"Line 1\###nLine 2"###) // OK
+    << Line 1
+    << Line 2
+
+.. testcode:: extended-string-delimiters-err
+
+    -> print(###"Line 1\###nLine 2"###) // OK
+    -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !$ error: expected expression in list of expressions
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+    !$ error: invalid escape sequence in literal
+    !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
+    !! ^
+
+Multiline string literals that you create using extended delimiters
+have the same indentation requirements as regular multiline string literals. 
 
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
 see :doc:`../LanguageGuide/StringsAndCharacters`
-and `String Structure Reference <//apple_ref/swift/struct/s:SS>`_.
+and `String <//apple_ref/swift/struct/s:SS>`_.
 
 String literals that are concatenated by the ``+`` operator
 are concatenated at compile time.
@@ -746,24 +726,8 @@ no runtime concatenation is performed.
 
 .. testcode:: concatenated-strings
 
-  -> let textA = "Hello " + "world"
-  -> let textB = "Hello world"
-  << // textA : String = "Hello world"
-  << // textB : String = "Hello world"
-
-.. langref-grammar
-
-    character_literal ::= '[^'\\\n\r]|character_escape'
-    character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
-    character_escape  ::= [\]x hex hex
-    character_escape  ::= [\]u hex hex hex hex
-    character_escape  ::= [\]U hex hex hex hex hex hex hex hex
-
-    string_literal   ::= ["]([^"\\\n\r]|character_escape|escape_expr)*["]
-    escape_expr      ::= [\]escape_expr_body
-    escape_expr_body ::= [(]escape_expr_body[)]
-    escape_expr_body ::= [^\n\r"()]
-
+   -> let textA = "Hello " + "world"
+   -> let textB = "Hello world"
 
 .. syntax-grammar::
 
@@ -771,8 +735,15 @@ no runtime concatenation is performed.
 
     string-literal --> static-string-literal | interpolated-string-literal
 
-    static-string-literal --> ``"`` quoted-text-OPT ``"``
-    static-string-literal --> ``"""`` multiline-quoted-text-OPT ``"""``
+    string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"``
+    string-literal-closing-delimiter --> ``"`` extended-string-literal-delimiter-OPT
+
+    static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
+    static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
+    
+    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
+    extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
 
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
@@ -783,8 +754,8 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> Any Unicode scalar value except ``\``
     multiline-quoted-text-item --> escaped-newline
 
-    interpolated-string-literal --> ``"`` interpolated-text-OPT ``"``
-    interpolated-string-literal --> ``"""`` multiline-interpolated-text-OPT ``"""``
+    interpolated-string-literal --> string-literal-opening-delimiter interpolated-text-OPT string-literal-closing-delimiter
+    interpolated-string-literal --> multiline-string-literal-opening-delimiter interpolated-text-OPT multiline-string-literal-closing-delimiter
 
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
@@ -792,14 +763,15 @@ no runtime concatenation is performed.
     multiline-interpolated-text --> multiline-interpolated-text-item multiline-interpolated-text-OPT
     multiline-interpolated-text-item --> ``\(`` expression ``)`` | multiline-quoted-text-item
 
-    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    escaped-character --> ``\u`` ``{`` unicode-scalar-digits ``}``
+    escape-sequence --> ``\`` extended-string-literal-delimiter
+    escaped-character --> escape-sequence ``0`` | escape-sequence ``\`` | escape-sequence ``t`` | escape-sequence ``n`` | escape-sequence ``r`` | escape-sequence ``"`` | escape-sequence ``'``
+    escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
-    escaped-newline --> ``\`` whitespace-OPT line-break
+    escaped-newline -->  escape-sequence whitespace-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
-   the quoted-texts rule which allows repetition; no need to allow
+   the quoted-text rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
 
 .. Now that single quotes are gone, we don't have a character literal.
@@ -844,14 +816,14 @@ the ``+`` operator followed by the ``.+`` operator.
 .. assertion:: dot-operator-must-start-with-dot
 
    >> infix operator +.+ ;
-   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !$ error: consecutive statements on a line must be separated by ';'
    !! infix operator +.+ ;
    !!                 ^
    !!                 ;
-   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !$ error: operator with postfix spacing cannot start a subexpression
    !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: expected expression
+   !$ error: expected expression
    !! infix operator +.+ ;
    !!                    ^
    >> infix operator .+
@@ -859,11 +831,10 @@ the ``+`` operator followed by the ``.+`` operator.
 
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation mark (``!``),
-postfix operators can't begin with either a question mark or an exclamation mark.
+Additionally, although operators can contain an exclamation point (``!``),
+postfix operators can't begin with either a question mark or an exclamation point.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
-
 
    >> struct Num { var value: Int }
       postfix operator +
@@ -871,7 +842,6 @@ postfix operators can't begin with either a question mark or an exclamation mark
       postfix func + (x: Num) -> Int { return x.value + 1 }
       postfix func +* (x: Num) -> Int { return x.value * 100 }
    >> let n = Num(value: 5)
-   << // n : Num = REPL.Num(value: 5)
    >> print(n+)
    << 6
    >> print(n+*)
@@ -887,10 +857,10 @@ postfix operators can't begin with either a question mark or an exclamation mark
           return x + 1
       }
    >> print(1?+)
-   !! <REPL Input>:1:18: error: expected operator name in operator declaration
+   !$ error: expected operator name in operator declaration
    !! postfix operator ?+
    !!                  ^
-   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
+   !$ error: '+' is not a postfix unary operator
    !! print(1?+)
    !!         ^
 
@@ -956,41 +926,6 @@ see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDecl
 To learn how to overload existing operators,
 see :ref:`AdvancedOperators_OperatorFunctions`.
 
-.. langref-grammar
-
-    operator ::= [/=-+*%<>!&|^~]+
-    operator ::= \.+
-
-      Note: excludes '=', see [1]
-            excludes '->', see [2]
-            excludes unary '&', see [3]
-            excludes '//', '/*', and '*/', see [4]
-
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-
-    any-identifier ::= identifier | operator
-
-.. langref-grammar
-
-    punctuation ::= '('
-    punctuation ::= ')'
-    punctuation ::= '{'
-    punctuation ::= '}'
-    punctuation ::= '['
-    punctuation ::= ']'
-    punctuation ::= '.'
-    punctuation ::= ','
-    punctuation ::= ';'
-    punctuation ::= ':'
-    punctuation ::= '='
-    punctuation ::= '->'
-    punctuation ::= '&' // unary prefix operator
-
 .. NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
    monad -- the ? is actually a monadic bind operator.  It is like a burrito.
    The current list of reserved punctuation is in Tokens.def.
@@ -1006,8 +941,10 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+00A1--U+00A7
     operator-head --> U+00A9 or U+00AB
     operator-head --> U+00AC or U+00AE
-    operator-head --> U+00B0--U+00B1, U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
-    operator-head --> U+2016--U+2017 or U+2020--U+2027
+    operator-head --> U+00B0--U+00B1
+    operator-head --> U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7
+    operator-head --> U+2016--U+2017
+    operator-head --> U+2020--U+2027
     operator-head --> U+2030--U+203E
     operator-head --> U+2041--U+2053
     operator-head --> U+2055--U+205E
@@ -1016,7 +953,8 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3030
+    operator-head --> U+3008--U+3020 
+    operator-head --> U+3030
 
     operator-character --> operator-head
     operator-character --> U+0300--U+036F
