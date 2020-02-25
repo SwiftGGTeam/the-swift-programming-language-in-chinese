@@ -438,10 +438,28 @@ before a property or variable declaration.
 
 An unowned reference is expected to always have a value.
 As a result,
-ARC never sets an unowned reference's value to ``nil``,
-which means that unowned references are defined using non-optional types.
+ARC never sets an unowned reference's value to ``nil``
+like it does for weak references.
+However, an unowned reference can be defined using
+either a non-optional type or an optional type.
 
-..  Everything that unowned can do, weak can do slower and more awkwardly
+.. assertion:: unowned-can-be-optional
+
+   >> class C { var x = 100 }
+   >> class D {
+   >>     unowned var a: C
+   >>     unowned var b: C?
+   >>     init(value: C) {
+   >>         self.a = c
+   >>         self.b = nil
+   >>     }
+   >> }
+   >> let c = C()
+   >> let d = D(value: c)
+   >> print(d.a.x, d.b?.x as Any)
+   << 100 nil
+
+.. Everything that unowned can do, weak can do slower and more awkwardly
    (but still correctly).
    Unowned is interesting because it's faster and easier (no optionals) ---
    in the cases where it's actually correct for your data.
