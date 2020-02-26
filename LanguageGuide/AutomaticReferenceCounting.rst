@@ -436,28 +436,11 @@ has the same lifetime or a longer lifetime.
 You indicate an unowned reference by placing the ``unowned`` keyword
 before a property or variable declaration.
 
-An unowned reference is expected to always have a value.
+Unlike a weak reference,
+an unowned reference is expected to always have a value.
 As a result,
-ARC never sets an unowned reference's value to ``nil``
-like it does for weak references.
-However, an unowned reference can be defined using
-either a non-optional type or an optional type.
-
-.. assertion:: unowned-can-be-optional
-
-   >> class C { var x = 100 }
-   >> class D {
-   >>     unowned var a: C
-   >>     unowned var b: C?
-   >>     init(value: C) {
-   >>         self.a = c
-   >>         self.b = nil
-   >>     }
-   >> }
-   >> let c = C()
-   >> let d = D(value: c)
-   >> print(d.a.x, d.b?.x as Any)
-   << 100 nil
+marking a value as unowned doesn't make it optional,
+and ARC never sets an unowned reference's value to ``nil``.
 
 .. Everything that unowned can do, weak can do slower and more awkwardly
    (but still correctly).
@@ -592,6 +575,56 @@ after the ``john`` variable is set to ``nil``.
 
 .. <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
    Try expanding the example above so each customer has an array of credit cards.
+
+
+.. _AutomaticReferenceCounting_UnownedOptionalReferences:
+
+Unowned Optional References
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can mark an optional reference to a class as unowned.
+
+An unowned optional reference doesn't keep a strong hold
+on the instance of the class that it wraps,
+which allows the wrapped class to be deallocated at any time.
+The optional that wraps the class
+doesn't use reference counting,
+so you don't need to maintain a strong reference to the optional.
+
+.. testcode:: optional-unowned-references
+
+   -> class SomeClass
+
+.. note::
+
+    The underlying type of an optional value is ``Optional``,
+    which is an enumeration in the Swift standard library.
+    However, optionals are an exception to the rule that
+    value types can't be marked with ``unowned``.
+
+.. assertion:: unowned-can-be-optional
+
+   >> class C { var x = 100 }
+   >> class D {
+   >>     unowned var a: C
+   >>     unowned var b: C?
+   >>     init(value: C) {
+   >>         self.a = value
+   >>         self.b = value
+   >>     }
+   >> }
+   >> var c = C() as C?
+   >> let d = D(value: c! )
+   >> print(d.a.x, d.b?.x as Any)
+   << 100 Optional(100)
+   ---
+   >> c = nil
+   // Now that the C instance is deallocated, access to d.a is an error.
+   // We manually nil out d.b, which is safe because d.b is an Optional and the
+   // enum stays in memory regardles of ARC deallocating the C instance.
+   >> d.b = nil
+   >> print(d.b?.x as Any)
+   << nil
 
 
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
