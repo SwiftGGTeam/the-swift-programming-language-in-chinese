@@ -437,12 +437,29 @@ or one of the following special literals:
 ==============  ====================  ==========================================
 Literal         Type                  Value
 ==============  ====================  ==========================================
-``#file``       ``String``            The name of the file in which it appears.
+``#file``       ``String``            The name of the file and module in which it appears.
+``#filePath``   ``String``            The path to the file in which it appears.
 ``#line``       ``Int``               The line number on which it appears.
 ``#column``     ``Int``               The column number in which it begins.
 ``#function``   ``String``            The name of the declaration in which it appears.
 ``#dsohandle``  ``UnsafeRawPointer``  The DSO (dynamic shared object) handle in use where it appears.
 ==============  ====================  ==========================================
+
+The string value of a ``#file`` expression has the form *module*/*file*,
+where *module* is the name of the module that the expression appears in
+and *file* is the name of the file it appears in.
+The string value of a ``#filePath`` expression
+is the full file-system path to the file that the expression appears in.
+Both of these values can be changed by ``#sourceLocation``,
+as described in :ref:`Statements_LineControlStatement`.
+
+.. note::
+
+   To parse a ``#file`` expression,
+   read the module name as the text before the first slash (``/``)
+   and the file name as the text after the last slash.
+   In the future, the string may contain multiple slashes,
+   such as ``MyModule/some/disambiguation/MyFile.swift``.
 
 Inside a function,
 the value of ``#function`` is the name of that function,
@@ -544,7 +561,7 @@ in Xcode Help.
 
     literal-expression --> literal
     literal-expression --> array-literal | dictionary-literal | playground-literal
-    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
+    literal-expression --> ``#file`` | ``#filePath`` | ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
     array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
