@@ -627,10 +627,10 @@ courses don't own each other or their department,
 so the ``Course`` class's ``department`` and ``nextCourse`` properties
 use unowned references.
 
-Every course is part of some department,
-which means the ``department`` property isn't optional,
+Every course is part of some department
+so the ``department`` property is a non-optional,
 but not all courses have a recommended follow-on course
-so the ``nextCourse`` property is optional.
+so the ``nextCourse`` property is an optional.
 The intro and intermediate courses both have a suggested next course
 stored in their ``nextCourse`` property,
 which maintains an unowned optional reference to
