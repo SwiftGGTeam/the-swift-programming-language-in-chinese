@@ -583,61 +583,63 @@ Unowned Optional References
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can mark an optional reference to a class as unowned.
+Here's an example that keeps track of the classes
+offered by a particular department at a school:
+
+.. testcode:: unowned-optional-references
+
+    -> class Department {
+           var name: String
+           var courses: [Course]
+           init(name: String) {
+               self.name = name
+               self.courses = []
+           }
+       }
+    ---
+    -> class Course {
+           var name: String
+           unowned var department: Department
+           unowned var nextCourse: Course?
+           init(name: String, in department: Department) {
+               self.name = name
+               self.department = department
+               self.nextCourse = nil
+           }
+       }
+    ---
+    -> let department = Department(name: "Horticulture")
+    ---
+    -> let intro = Course(name: "Survey of Plants", in: department)
+    -> let intermediate = Course(name: "Growing Common Herbs and Vegetables",
+    ->                           in: department)
+    -> let advanced = Course(name: "Caring for Rare Plants", in: department)
+    ---
+    -> intro.nextCourse = intermediate
+    -> intermediate.nextCourse = advanced
+    -> department.courses = [intro, intermediate, advanced]
+
+In the ARC ownership model, a department owns each of its classes,
+so the ``Department`` class's ``courses`` property
+maintains strong references to them.
+However,
+courses don't own each other or their department,
+so the ``Course`` class's ``department`` and ``nextCourse`` properties
+use unowned references.
+
+Every course is part of some department,
+which means the ``department`` property isn't optional,
+but not all courses have a recommended follow-on course
+so the ``nextCourse`` property is optional.
+The intro and intermediate courses both have a suggested next course
+stored in their ``nextCourse`` property,
+which maintains an unowned optional reference to
+the course a student should take after after completing this one.
 
 An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
 which allows the wrapped class to be deallocated at any time.
-The optional that wraps the class
-doesn't use reference counting,
-so you don't need to maintain a strong reference to the optional.
-
-::
-
-    class Department {
-        var name: String
-        var courses: [Course]
-
-        init(name: String) {
-            self.name = name
-            self.courses = []
-        }
-    }
-
-    class Course {
-        var name: String
-        unowned var department: Department
-        unowned var nextCourse: Course?
-        init(name: String, in department: Department) {
-            self.name = name
-            self.department = department
-            self.nextCourse = nil
-        }
-    }
-
-    let department = Department(name: "Horticulture")
-
-    let intro = Course(name: "Survey of Plants", in: department)
-    let intermediate = Course(name: "Growing Common Herbs and Vegetables",
-                              in: department)
-    let advanced = Course(name: "Caring for Rare Plants", in: department)
-
-    intro.nextCourse = intermediate
-    intermediate.nextCourse = advanced
-    department.courses = [intro, intermediate, advanced]
-
-In the example above,
-``department`` maintains a strong reference to all three of the courses,
-and each course maintains an unowned reference back to the department.
-In the ARC ownership model, a department owns each of its classes;
-classes don't own each other or their department.
-
-The intro and intermediate courses both have a suggested next course
-stored in their ``nextCourse`` property,
-which maintains an unowned reference to
-the course a student should take after after completing this one.
-The ``nextCourse`` property is optional
-because not all courses have a recommended follow-on —
-for example, ``advanced`` has a ``nil`` value for this property.
+It behaves the same as an unowned reference, except it can also be ``nil``.
 
 .. note::
 
@@ -645,6 +647,10 @@ for example, ``advanced`` has a ``nil`` value for this property.
     which is an enumeration in the Swift standard library.
     However, optionals are an exception to the rule that
     value types can't be marked with ``unowned``.
+
+    The optional that wraps the class
+    doesn't use reference counting,
+    so you don't need to maintain a strong reference to the optional.
 
 .. assertion:: unowned-can-be-optional
 
