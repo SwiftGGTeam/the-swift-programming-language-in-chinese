@@ -591,48 +591,53 @@ The optional that wraps the class
 doesn't use reference counting,
 so you don't need to maintain a strong reference to the optional.
 
-.. EXAMPLE
-
-   Modeling an apartment building
-   from the perspective of its owner.
-   Only interested in current tenants,
-   so the Apartment keeps a strong reference
-   to its Tenant.
-
-
 ::
 
-    class Apartment {
-        let unit: String
-        var tenant: Tenant?
-        var paymentCard: CreditCard?
-
-        init(unit: String) {
-            self.unit = unit
-        }
-    }
-
-    class Tenant {
-        let name: String
-        unowned var apartment: Apartment
+    class Department {
+        var name: String
+        var courses: [Course]
 
         init(name: String) {
             self.name = name
-            self.apartment = Apartment
+            self.courses = []
         }
     }
 
-
-    class CreditCard {
-         let number: UInt64
-         unowned var apartment: Apartment
-
-         init(number: UInt64, customer: Customer) {
-            self.number = number
-            self.customer = customer
-         }
+    class Course {
+        var name: String
+        unowned var department: Department
+        unowned var nextCourse: Course?
+        init(name: String, in department: Department) {
+            self.name = name
+            self.department = department
+            self.nextCourse = nil
+        }
     }
 
+    let department = Department(name: "Horticulture")
+
+    let intro = Course(name: "Survey of Plants", in: department)
+    let intermediate = Course(name: "Growing Common Herbs and Vegetables",
+                              in: department)
+    let advanced = Course(name: "Caring for Rare Plants", in: department)
+
+    intro.nextCourse = intermediate
+    intermediate.nextCourse = advanced
+    department.courses = [intro, intermediate, advanced]
+
+In the example above,
+``department`` maintains a strong reference to all three of the courses,
+and each course maintains an unowned reference back to the department.
+In the ARC ownership model, a department owns each of its classes;
+classes don't own each other or their department.
+
+The intro and intermediate courses both have a suggested next course
+stored in their ``nextCourse`` property,
+which maintains an unowned reference to
+the course a student should take after after completing this one.
+The ``nextCourse`` property is optional
+because not all courses have a recommended follow-on —
+for example, ``advanced`` has a ``nil`` value for this property.
 
 .. note::
 
