@@ -591,9 +591,48 @@ The optional that wraps the class
 doesn't use reference counting,
 so you don't need to maintain a strong reference to the optional.
 
-.. testcode:: optional-unowned-references
+.. EXAMPLE
 
-   -> class SomeClass
+   Modeling an apartment building
+   from the perspective of its owner.
+   Only interested in current tenants,
+   so the Apartment keeps a strong reference
+   to its Tenant.
+
+
+::
+
+    class Apartment {
+        let unit: String
+        var tenant: Tenant?
+        var paymentCard: CreditCard?
+
+        init(unit: String) {
+            self.unit = unit
+        }
+    }
+
+    class Tenant {
+        let name: String
+        unowned var apartment: Apartment
+
+        init(name: String) {
+            self.name = name
+            self.apartment = Apartment
+        }
+    }
+
+
+    class CreditCard {
+         let number: UInt64
+         unowned var apartment: Apartment
+
+         init(number: UInt64, customer: Customer) {
+            self.number = number
+            self.customer = customer
+         }
+    }
+
 
 .. note::
 
