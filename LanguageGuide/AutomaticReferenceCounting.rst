@@ -456,6 +456,13 @@ and ARC never sets an unowned reference's value to ``nil``.
    after that instance has been deallocated,
    you'll get a runtime error.
 
+.. One way to satisfy that requirement is to
+   always access objects that have unmanaged properties through their owner
+   instead of keeping a reference to them directly,
+   because those direct references could outlive the owner.
+   However... this strategy really only works when the unowned reference
+   is a backpointer from an object up to its owner.
+
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
 These two classes each store an instance of the other class as a property.
@@ -640,6 +647,14 @@ An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
 which allows the wrapped class to be deallocated at any time.
 It behaves the same as an unowned reference, except it can also be ``nil``.
+
+Like non-optional unowned references,
+you're responsible for ensuring that ``nextCourse``
+always refers to a course that hasn't be deallocated.
+In this case, for example,
+when you delete a course from ``department.courses``
+you also need to remove any references to it
+that other courses might have.
 
 .. note::
 
