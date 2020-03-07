@@ -259,7 +259,7 @@ On the other hand, consider the grammar of a control transfer statement:
     control-transfer-statement --> return-statement
 
 There likely wouldn't be room on a single line to use a pipe to separate each alternative.
-The following tends not to loog good:
+The following tends not to look good:
 
     control-transfer-statement --> break-statement | continue-statement | fallthrough-statement | return-statement
 
