@@ -1,6 +1,61 @@
 Document Revision History
 =========================
 
+**2020-02-05**
+
+* Updated for Swift 5.2.
+
+* Added the :ref:`Declarations_SpecialFuncNames` section
+  with information about syntactic sugar the lets instances of
+  classes, structures, and enumerations be used with function call syntax.
+
+* Updated the :ref:`Subscripts_SubscriptOptions` section,
+  now that subscripts support parameters with default values.
+
+* Updated the :ref:`Types_SelfType` section,
+  now that the ``Self`` can be used in more contexts.
+
+**2019-09-10**
+
+* Updated for Swift 5.1.
+
+* Added information about functions
+  that specify a protocol that their return value conforms to,
+  instead of providing a specific named return type,
+  to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
+
+* Added information about property wrappers
+  to the :ref:`Properties_PropertyWrapper` section.
+
+* Added information enumerations and structures
+  that are frozen for library evolution
+  to the :ref:`Attributes_frozen` section.
+
+* Added the :ref:`Functions_ImplicitReturns`
+  and :ref:`Properties_ImplicitReturn` sections
+  with information about functions that omit ``return``.
+
+* Added information about using subscripts on types
+  to the :ref:`Subscripts_TypeSubscripts` section.
+
+* Updated the :ref:`Patterns_EnumerationCasePattern` section,
+  now that an enumeration case pattern can match an optional value.
+
+* Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
+  now that memberwise initializers support
+  omitting parameters for properties that have a default value.
+
+* Added information about dynamic members
+  that are looked up by key path at runtime
+  to the :ref:`Attributes_dynamicMemberLookup` section.
+
+* Added ``macCatalyst`` to the list of target environments
+  in :ref:`Statements_BuildConfigurationStatement`.
+
+* Updated the :ref:`Types_SelfType` section,
+  now that ``Self`` can be used to refer to the type
+  introduced by the current class, structure, or enumeration declaration.
+
 **2019-03-25**
 
 * Updated for Swift 5.0.

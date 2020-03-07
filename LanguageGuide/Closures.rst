@@ -76,7 +76,6 @@ Here's the initial array to be sorted:
 .. testcode:: closureSyntax
 
    -> let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-   << // names : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 The ``sorted(by:)`` method accepts a closure that takes two arguments
 of the same type as the array's contents,
@@ -98,8 +97,8 @@ and to pass it in as an argument to the ``sorted(by:)`` method:
          return s1 > s2
       }
    -> var reversedNames = names.sorted(by: backward)
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-   // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   /> reversedNames is equal to \(reversedNames)
+   </ reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
 the ``backward(_:_:)`` function will return ``true``,
@@ -143,8 +142,7 @@ from above:
    -> reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Note that the declaration of parameters and return type for this inline closure
 is identical to the declaration from the ``backward(_:_:)`` function.
@@ -164,8 +162,7 @@ it can even be written on a single line:
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 This illustrates that the overall call to the ``sorted(by:)`` method has remained the same.
 A pair of parentheses still wrap the entire argument for the method.
@@ -190,8 +187,7 @@ can also be omitted:
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 It is always possible to infer the parameter types and return type
 when passing a closure to a function or method as an inline closure expression.
@@ -218,8 +214,7 @@ as in this version of the previous example:
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Here, the function type of the ``sorted(by:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
@@ -246,8 +241,7 @@ because the closure expression is made up entirely of its body:
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted(by: { $0 > $1 } )
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` arguments.
 
@@ -268,10 +262,9 @@ and Swift will infer that you want to use its string-specific implementation:
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted(by: >)
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
-For more about operator method, see :ref:`AdvancedOperators_OperatorFunctions`.
+For more about operator methods, see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. _Closures_TrailingClosures:
 
@@ -311,8 +304,7 @@ can be written outside of the ``sorted(by:)`` method's parentheses as a trailing
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted() { $0 > $1 }
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 If a closure expression is provided as the function or method's only argument
 and you provide that expression as a trailing closure,
@@ -322,8 +314,7 @@ after the function or method's name when you call the function:
 .. testcode:: closureSyntax
 
    -> reversedNames = names.sorted { $0 > $1 }
-   >> reversedNames
-   << // reversedNames : [String] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
@@ -349,9 +340,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : [Int : String] = [4: "Four", 0: "Zero", 2: "Two", 3: "Three", 6: "Six", 5: "Five", 8: "Eight", 1: "One", 9: "Nine", 7: "Seven"]
    -> let numbers = [16, 58, 510]
-   << // numbers : [Int] = [16, 58, 510]
 
 The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.
@@ -371,7 +360,6 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
          } while number > 0
          return output
       }
-   << // strings : [String] = ["OneSix", "FiveEight", "FiveOneZero"]
    // strings is inferred to be of type [String]
    /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
@@ -395,12 +383,12 @@ The closure can be used to create a string representation of any integer greater
 .. note::
 
    The call to the ``digitNames`` dictionary's subscript
-   is followed by an exclamation mark (``!``),
+   is followed by an exclamation point (``!``),
    because dictionary subscripts return an optional value
    to indicate that the dictionary lookup can fail if the key does not exist.
    In the example above, it is guaranteed that ``number % 10``
    will always be a valid subscript key for the ``digitNames`` dictionary,
-   and so an exclamation mark is used to force-unwrap the ``String`` value
+   and so an exclamation point is used to force-unwrap the ``String`` value
    stored in the subscript's optional return value.
 
 The string retrieved from the ``digitNames`` dictionary
@@ -515,7 +503,6 @@ Here's an example of ``makeIncrementer`` in action:
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementer(forIncrement: 10)
-   << // incrementByTen : () -> Int = (Function)
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementer function that adds ``10`` to
@@ -524,18 +511,21 @@ Calling the function multiple times shows this behavior in action:
 
 .. testcode:: closures
 
+   >> let r0 =
    -> incrementByTen()
-   << // r0 : Int = 10
    /> returns a value of \(r0)
    </ returns a value of 10
+   >> let r1 =
    -> incrementByTen()
-   << // r1 : Int = 20
    /> returns a value of \(r1)
    </ returns a value of 20
+   >> let r2 =
    -> incrementByTen()
-   << // r2 : Int = 30
    /> returns a value of \(r2)
    </ returns a value of 30
+
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 If you create a second incrementer,
 it will have its own stored reference to a new, separate ``runningTotal`` variable:
@@ -543,9 +533,8 @@ it will have its own stored reference to a new, separate ``runningTotal`` variab
 .. testcode:: closures
 
    -> let incrementBySeven = makeIncrementer(forIncrement: 7)
-   << // incrementBySeven : () -> Int = (Function)
+   >> let r3 =
    -> incrementBySeven()
-   << // r3 : Int = 7
    /> returns a value of \(r3)
    </ returns a value of 7
 
@@ -555,8 +544,8 @@ and does not affect the variable captured by ``incrementBySeven``:
 
 .. testcode:: closures
 
+   >> let r4 =
    -> incrementByTen()
-   << // r4 : Int = 40
    /> returns a value of \(r4)
    </ returns a value of 40
 
@@ -592,14 +581,13 @@ both of those constants or variables refer to the same closure.
 .. testcode:: closures
 
    -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : () -> Int = (Function)
+   >> let r5 =
    -> alsoIncrementByTen()
-   << // r5 : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
    ---
+   >> let r6 =
    -> incrementByTen()
-   << // r6 : Int = 60
    /> returns a value of \(r6)
    </ returns a value of 60
 
@@ -634,7 +622,6 @@ For example:
 .. testcode:: noescape-closure-as-argument
 
     -> var completionHandlers: [() -> Void] = []
-    << // completionHandlers : [() -> Void] = []
     -> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
            completionHandlers.append(completionHandler)
        }
@@ -670,13 +657,11 @@ is a nonescaping closure, which means it can refer to ``self`` implicitly.
        }
     ---
     -> let instance = SomeClass()
-    << // instance : SomeClass = REPL.SomeClass
     -> instance.doSomething()
     -> print(instance.x)
     <- 200
     ---
     -> completionHandlers.first?()
-    << // r0 : Void? = Optional(())
     -> print(instance.x)
     <- 100
 
@@ -712,12 +697,10 @@ The code below shows how a closure delays evaluation.
 .. testcode:: autoclosures
 
     -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-    << // customersInLine : [String] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
     -> print(customersInLine.count)
     <- 5
     ---
     -> let customerProvider = { customersInLine.remove(at: 0) }
-    << // customerProvider : () -> String = (Function)
     -> print(customersInLine.count)
     <- 5
     ---
@@ -752,7 +735,6 @@ when you pass a closure as an argument to a function.
 .. testcode:: autoclosures-function
 
     >> var customersInLine = ["Alex", "Ewa", "Barry", "Daniella"]
-    << // customersInLine : [String] = ["Alex", "Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
     -> func serve(customer customerProvider: () -> String) {
@@ -776,7 +758,6 @@ with the ``@autoclosure`` attribute.
 .. testcode:: autoclosures-function-with-autoclosure
 
     >> var customersInLine = ["Ewa", "Barry", "Daniella"]
-    << // customersInLine : [String] = ["Ewa", "Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Ewa", "Barry", "Daniella"]
     -> func serve(customer customerProvider: @autoclosure () -> String) {
@@ -798,11 +779,9 @@ The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
 .. testcode:: autoclosures-function-with-escape
 
     >> var customersInLine = ["Barry", "Daniella"]
-    << // customersInLine : [String] = ["Barry", "Daniella"]
     /> customersInLine is \(customersInLine)
     </ customersInLine is ["Barry", "Daniella"]
     -> var customerProviders: [() -> String] = []
-    << // customerProviders : [() -> String] = []
     -> func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
            customerProviders.append(customerProvider)
        }

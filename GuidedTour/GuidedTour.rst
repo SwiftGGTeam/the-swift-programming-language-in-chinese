@@ -33,6 +33,9 @@ Don’t worry if you don’t understand something ---
 everything introduced in this tour
 is explained in detail in the rest of this book.
 
+
+.. _Tour_SimpleValues:
+
 Simple Values
 -------------
 
@@ -46,12 +49,8 @@ that you determine once but use in many places.
 .. testcode:: guided-tour
 
    -> var myVariable = 42
-   << // myVariable : Int = 42
    -> myVariable = 50
-   >> myVariable
-   << // myVariable : Int = 50
    -> let myConstant = 42
-   << // myConstant : Int = 42
 
 A constant or variable must have the same type
 as the value you want to assign to it.
@@ -70,11 +69,8 @@ separated by a colon.
 .. testcode:: guided-tour
 
    -> let implicitInteger = 70
-   << // implicitInteger : Int = 70
    -> let implicitDouble = 70.0
-   << // implicitDouble : Double = 70.0
    -> let explicitDouble: Double = 70
-   << // explicitDouble : Double = 70.0
 
 .. admonition:: Experiment
 
@@ -88,11 +84,10 @@ explicitly make an instance of the desired type.
 .. testcode:: guided-tour
 
    -> let label = "The width is "
-   << // label : String = "The width is "
    -> let width = 94
-   << // width : Int = 94
    -> let widthLabel = label + String(width)
-   << // widthLabel : String = "The width is 94"
+   >> print(widthLabel)
+   << The width is 94
 
 .. admonition:: Experiment
 
@@ -111,13 +106,13 @@ For example:
 .. testcode:: guided-tour
 
    -> let apples = 3
-   << // apples : Int = 3
    -> let oranges = 5
-   << // oranges : Int = 5
    -> let appleSummary = "I have \(apples) apples."
-   << // appleSummary : String = "I have 3 apples."
+   >> print(appleSummary)
+   << I have 3 apples.
    -> let fruitSummary = "I have \(apples + oranges) pieces of fruit."
-   << // fruitSummary : String = "I have 8 pieces of fruit."
+   >> print(fruitSummary)
+   << I have 8 pieces of fruit.
 
 .. admonition:: Experiment
 
@@ -131,12 +126,8 @@ Indentation at the start of each quoted line is removed,
 as long as it matches the indentation of the closing quotation marks.
 For example:
 
-.. testcode:: guided-tour-compiled
-   :compile: true
+.. testcode:: guided-tour
 
-
-   >> let apples = 3
-   >> let oranges = 5
    -> let quotation = """
       I said "I have \(apples) apples."
       And then I said "I have \(apples + oranges) pieces of fruit."
@@ -177,14 +168,12 @@ A comma is allowed after the last element.
 .. testcode:: guided-tour
 
     -> var shoppingList = ["catfish", "water", "tulips"]
-    << // shoppingList : [String] = ["catfish", "water", "tulips"]
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
            "Malcolm": "Captain",
            "Kaylee": "Mechanic",
         ]
-    << // occupations : [String : String] = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
     -> occupations["Jayne"] = "Public Relations"
 
 Arrays automatically grow as you add elements.
@@ -201,9 +190,7 @@ use the initializer syntax.
 .. testcode:: guided-tour
 
    -> let emptyArray = [String]()
-   << // emptyArray : [String] = []
    -> let emptyDictionary = [String: Float]()
-   << // emptyDictionary : [String : Float] = [:]
 
 If type information can be inferred,
 you can write an empty array as ``[]``
@@ -218,6 +205,9 @@ or pass an argument to a function.
    -> shoppingList = []
    -> occupations = [:]
 
+
+.. _Tour_ControlFlow:
+
 Control Flow
 ------------
 
@@ -230,9 +220,7 @@ Braces around the body are required.
 .. testcode:: guided-tour
 
     -> let individualScores = [75, 43, 103, 87, 12]
-    << // individualScores : [Int] = [75, 43, 103, 87, 12]
     -> var teamScore = 0
-    << // teamScore : Int = 0
     -> for score in individualScores {
            if score > 50 {
                teamScore += 3
@@ -249,7 +237,6 @@ Braces around the body are required.
 
 ..
    -> let haveJellyBabies = true
-   << // haveJellyBabies : Bool = true
    -> if haveJellyBabies {
       }
    << Would you like a jelly baby?
@@ -277,19 +264,16 @@ to mark the value as optional.
 .. testcode:: guided-tour
 
    -> var optionalString: String? = "Hello"
-   << // optionalString : String? = Optional("Hello")
    -> print(optionalString == nil)
    <- false
    ---
    -> var optionalName: String? = "John Appleseed"
-   << // optionalName : String? = Optional("John Appleseed")
    -> var greeting = "Hello!"
-   << // greeting : String = "Hello!"
    -> if let name = optionalName {
           greeting = "Hello, \(name)"
       }
-   >> greeting
-   << // greeting : String = "Hello, John Appleseed"
+   >> print(greeting)
+   << Hello, John Appleseed
 
 .. admonition:: Experiment
 
@@ -313,11 +297,10 @@ the default value is used instead.
 .. testcode:: guided-tour
 
     -> let nickName: String? = nil
-    << // nickName : String? = nil
     -> let fullName: String = "John Appleseed"
-    << // fullName : String = "John Appleseed"
     -> let informalGreeting = "Hi \(nickName ?? fullName)"
-    << // informalGreeting : String = "Hi John Appleseed"
+    >> print(informalGreeting)
+    << Hi John Appleseed
 
 Switches support any kind of data
 and a wide variety of comparison operations ---
@@ -333,7 +316,6 @@ and tests for equality.
 .. testcode:: guided-tour
 
    -> let vegetable = "red pepper"
-   << // vegetable : String = "red pepper"
    -> switch vegetable {
           case "celery":
               print("Add some raisins and make ants on a log.")
@@ -384,9 +366,7 @@ in an arbitrary order.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : [String : [Int]] = ["Square": [1, 4, 9, 16, 25], "Fibonacci": [1, 1, 2, 3, 5, 8], "Prime": [2, 3, 5, 7, 11, 13]]
    -> var largest = 0
-   << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
    >>     _ = kind
           for number in numbers {
@@ -416,7 +396,6 @@ ensuring that the loop is run at least once.
 .. testcode:: guided-tour
 
    -> var n = 2
-   << // n : Int = 2
    -> while n < 100 {
           n *= 2
       }
@@ -424,7 +403,6 @@ ensuring that the loop is run at least once.
    <- 128
    ---
    -> var m = 2
-   << // m : Int = 2
    -> repeat {
           m *= 2
       } while m < 100
@@ -439,7 +417,6 @@ by using ``..<`` to make a range of indexes.
 .. testcode:: guided-tour
 
    -> var total = 0
-   << // total : Int = 0
    -> for i in 0..<4 {
           total += i
       }
@@ -448,6 +425,9 @@ by using ``..<`` to make a range of indexes.
 
 Use ``..<`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
+
+
+.. _Tour_FunctionsAndClosures:
 
 Functions and Closures
 ----------------------
@@ -469,8 +449,10 @@ from the function's return type.
     -> func greet(person: String, day: String) -> String {
            return "Hello \(person), today is \(day)."
        }
+    >> let greetBob =
     -> greet(person: "Bob", day: "Tuesday")
-    <$ : String = "Hello Bob, today is Tuesday."
+    >> print(greetBob)
+    << Hello Bob, today is Tuesday.
 
 .. admonition:: Experiment
 
@@ -488,8 +470,10 @@ or write ``_`` to use no argument label.
     -> func greet(_ person: String, on day: String) -> String {
            return "Hello \(person), today is \(day)."
        }
+    >> let greetJohn =
     -> greet("John", on: "Wednesday")
-    <$ : String = "Hello John, today is Wednesday."
+    >> print(greetJohn)
+    << Hello John, today is Wednesday.
 
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
@@ -521,7 +505,8 @@ either by name or by number.
            return (min, max, sum)
        }
     -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
-    << // statistics : (min: Int, max: Int, sum: Int) = (min: 3, max: 100, sum: 120)
+    >> print(statistics)
+    << (min: 3, max: 100, sum: 120)
     -> print(statistics.sum)
     <- 120
     -> print(statistics.2)
@@ -544,8 +529,10 @@ that is long or complex.
            add()
            return y
        }
+    >> let fifteen =
     -> returnFifteen()
-    <$ : Int = 15
+    >> print(fifteen)
+    << 15
 
 Functions are a first-class type.
 This means that a function can return another function as its value.
@@ -559,9 +546,10 @@ This means that a function can return another function as its value.
            return addOne
        }
     -> var increment = makeIncrementer()
-    << // increment : (Int) -> Int = (Function)
+    >> let incrementResult =
     -> increment(7)
-    <$ : Int = 8
+    >> print(incrementResult)
+    << 8
 
 A function can take another function as one of its arguments.
 
@@ -579,9 +567,10 @@ A function can take another function as one of its arguments.
            return number < 10
        }
     -> var numbers = [20, 19, 7, 12]
-    << // numbers : [Int] = [20, 19, 7, 12]
+    >> let anyMatches =
     -> hasAnyMatches(list: numbers, condition: lessThanTen)
-    <$ : Bool = true
+    >> print(anyMatches)
+    << true
 
 Functions are actually a special case of closures:
 blocks of code that can be called later.
@@ -595,11 +584,13 @@ Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode:: guided-tour
 
+    >> let numbersMap =
     -> numbers.map({ (number: Int) -> Int in
            let result = 3 * number
            return result
        })
-    <$ : [Int] = [60, 57, 21, 36]
+    >> print(numbersMap)
+    << [60, 57, 21, 36]
 
 .. admonition:: Experiment
 
@@ -617,7 +608,6 @@ of their only statement.
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> print(mappedNumbers)
-    <$ : [Int] = [60, 57, 21, 36]
     <- [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
@@ -631,7 +621,6 @@ you can omit the parentheses entirely.
 
     -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
-    <$ : [Int] = [20, 19, 12, 7]
     <- [20, 19, 12, 7]
 
 .. Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
@@ -639,6 +628,9 @@ you can omit the parentheses entirely.
 .. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
 .. Omitted custom operators as "advanced" topics.
+
+
+.. _Tour_Classes:
 
 Objects and Classes
 -------------------
@@ -665,8 +657,8 @@ Likewise, method and function declarations are written the same way.
                return "A shape with \(numberOfSides) sides."
            }
        }
-    >> Shape().simpleDescription()
-    <$ : String = "A shape with 0 sides."
+    >> print(Shape().simpleDescription())
+    << A shape with 0 sides.
 
 .. admonition:: Experiment
 
@@ -681,10 +673,10 @@ the properties and methods of the instance.
 .. testcode:: guided-tour
 
     -> var shape = Shape()
-    << // shape : Shape = REPL.Shape
     -> shape.numberOfSides = 7
     -> var shapeDescription = shape.simpleDescription()
-    << // shapeDescription : String = "A shape with 7 sides."
+    >> print(shapeDescription)
+    << A shape with 7 sides.
 
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
@@ -704,10 +696,10 @@ Use ``init`` to create one.
               return "A shape with \(numberOfSides) sides."
            }
        }
-    >> NamedShape(name: "test name").name
-    <$ : String = "test name"
-    >> NamedShape(name: "test name").simpleDescription()
-    <$ : String = "A shape with 0 sides."
+    >> print(NamedShape(name: "test name").name)
+    << test name
+    >> print(NamedShape(name: "test name").simpleDescription())
+    << A shape with 0 sides.
 
 Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
@@ -754,11 +746,14 @@ that don't actually override any method in the superclass.
            }
        }
     -> let test = Square(sideLength: 5.2, name: "my test square")
-    << // test : Square = REPL.Square
+    >> let testArea =
     -> test.area()
-    <$ : Double = 27.040000000000003
+    >> print(testArea)
+    << 27.040000000000003
+    >> let testDesc = 
     -> test.simpleDescription()
-    <$ : String = "A square with sides of length 5.2."
+    >> print(testDesc)
+    << A square with sides of length 5.2.
 
 .. admonition:: Experiment
 
@@ -798,7 +793,6 @@ properties can have a getter and a setter.
            }
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-    << // triangle : EquilateralTriangle = REPL.EquilateralTriangle
     -> print(triangle.perimeter)
     <- 9.3
     -> triangle.perimeter = 9.9
@@ -852,7 +846,6 @@ is always the same as the side length of its square.
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-   << // triangleAndSquare : TriangleAndSquare = REPL.TriangleAndSquare
    -> print(triangleAndSquare.square.sideLength)
    <- 10.0
    -> print(triangleAndSquare.triangle.sideLength)
@@ -879,9 +872,10 @@ the value of the whole expression is an optional value.
 .. testcode:: guided-tour
 
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
-    << // optionalSquare : Square? = Optional(REPL.Square)
     -> let sideLength = optionalSquare?.sideLength
-    << // sideLength : Double? = Optional(2.5)
+
+
+.. _Tour_EnumsAndStructs:
 
 Enumerations and Structures
 ---------------------------
@@ -921,9 +915,9 @@ enumerations can have methods associated with them.
            }
        }
     -> let ace = Rank.ace
-    << // ace : Rank = REPL.Rank.ace
     -> let aceRawValue = ace.rawValue
-    <$ : Int = 1
+    >> print(aceRawValue)
+    << 1
 
 .. admonition:: Experiment
 
@@ -977,9 +971,9 @@ you don't have to provide one.
            }
        }
     -> let hearts = Suit.hearts
-    << // hearts : Suit = REPL.Suit.hearts
     -> let heartsDescription = hearts.simpleDescription()
-    << // heartsDescription : String = "hearts"
+    >> print(heartsDescription)
+    << hearts
 
 .. admonition:: Experiment
 
@@ -1057,9 +1051,7 @@ or it responds with a description of what went wrong.
        }
     ---
     -> let success = ServerResponse.result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = REPL.ServerResponse.result("6:00 am", "8:09 pm")
     -> let failure = ServerResponse.failure("Out of cheese.")
-    << // failure : ServerResponse = REPL.ServerResponse.failure("Out of cheese.")
     ---
     -> switch success {
            case let .result(sunrise, sunset):
@@ -1095,15 +1087,18 @@ but classes are passed by reference.
            }
        }
     -> let threeOfSpades = Card(rank: .three, suit: .spades)
-    << // threeOfSpades : Card = REPL.Card(rank: REPL.Rank.three, suit: REPL.Suit.spades)
     -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-    << // threeOfSpadesDescription : String = "The 3 of spades"
+    >> print(threeOfSpadesDescription)
+    << The 3 of spades
 
 .. admonition:: Experiment
 
    Write a function that returns an array containing
    a full deck of cards,
    with one card of each combination of rank and suit.
+
+
+.. _Tour_ProtocolsAndExtensions:
 
 Protocols and Extensions
 ------------------------
@@ -1135,10 +1130,10 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var a = SimpleClass()
-    << // a : SimpleClass = REPL.SimpleClass
     -> a.adjust()
     -> let aDescription = a.simpleDescription
-    << // aDescription : String = "A very simple class.  Now 100% adjusted."
+    >> print(aDescription)
+    << A very simple class.  Now 100% adjusted.
     ---
     -> struct SimpleStructure: ExampleProtocol {
             var simpleDescription: String = "A simple structure"
@@ -1147,10 +1142,10 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var b = SimpleStructure()
-    << // b : SimpleStructure = REPL.SimpleStructure(simpleDescription: "A simple structure")
     -> b.adjust()
     -> let bDescription = b.simpleDescription
-    << // bDescription : String = "A simple structure (adjusted)"
+    >> print(bDescription)
+    << A simple structure (adjusted)
 
 .. admonition:: Experiment
 
@@ -1200,7 +1195,6 @@ methods outside the protocol definition are not available.
 .. testcode:: guided-tour
 
     -> let protocolValue: ExampleProtocol = a
-    << // protocolValue : ExampleProtocol = REPL.SimpleClass
     -> print(protocolValue.simpleDescription)
     <- A very simple class.  Now 100% adjusted.
     // print(protocolValue.anotherProperty)  // Uncomment to see the error
@@ -1211,6 +1205,9 @@ the compiler treats it as the given type of ``ExampleProtocol``.
 This means that you can't accidentally access
 methods or properties that the class implements
 in addition to its protocol conformance.
+
+
+.. _Tour_ErrorHandling:
 
 Error Handling
 --------------
@@ -1331,9 +1328,11 @@ the value that the function returned.
 .. testcode:: guided-tour
 
     -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
-    << // printerSuccess : String? = Optional("Job sent")
+    >> print(printerSuccess as Any)
+    << Optional("Job sent")
     -> let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
-    << // printerFailure : String? = nil
+    >> print(printerFailure as Any)
+    << nil
 
 Use ``defer`` to write a block of code
 that is executed after all other code in the function,
@@ -1345,9 +1344,7 @@ even though they need to be executed at different times.
 .. testcode:: guided-tour
 
     -> var fridgeIsOpen = false
-    << // fridgeIsOpen : Bool = false
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
-    << // fridgeContent : [String] = ["milk", "eggs", "leftovers"]
     ---
     -> func fridgeContains(_ food: String) -> Bool {
            fridgeIsOpen = true
@@ -1358,10 +1355,15 @@ even though they need to be executed at different times.
            let result = fridgeContent.contains(food)
            return result
        }
+    >> let containsBanana =
     -> fridgeContains("banana")
-    <$ : Bool = false
+    >> print(containsBanana)
+    << false
     -> print(fridgeIsOpen)
     <- false
+
+
+.. _Tour_Generics:
 
 Generics
 --------
@@ -1383,8 +1385,10 @@ to make a generic function or type.
            }
            return result
        }
+    >> let fourKnocks =
     -> makeArray(repeating: "knock", numberOfTimes: 4)
-    <$ : [String] = ["knock", "knock", "knock", "knock"]
+    >> print(fourKnocks)
+    << ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
@@ -1397,7 +1401,6 @@ as well as classes, enumerations, and structures.
            case some(Wrapped)
        }
     -> var possibleInteger: OptionalValue<Int> = .none
-    << // possibleInteger : OptionalValue<Int> = REPL.OptionalValue<Swift.Int>.none
     -> possibleInteger = .some(100)
 
 Use ``where`` right before the body
@@ -1421,8 +1424,10 @@ or to require a class to have a particular superclass.
           }
          return false
       }
+   >> let hasAnyCommon =
    -> anyCommonElements([1, 2, 3], [3])
-   <$ : Bool = true
+   >> print(hasAnyCommon)
+   << true
 
 .. admonition:: Experiment
 

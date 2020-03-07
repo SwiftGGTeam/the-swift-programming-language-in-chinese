@@ -411,17 +411,20 @@ the program executes only the code within the first matching case in source orde
 .. assertion:: switch-case-with-multiple-patterns
 
    >> let tuple = (1, 1)
-   << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x, 1): print(x)
    >>     default: print(2)
    >> }
    << 1
+
+.. assertion:: switch-case-with-multiple-patterns-err
+
+   >> let tuple = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x as Any, 1): print(1)
    >>     default: print(2)
    >> }
-   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any', expected type 'Int'
+   !$ error: pattern variable bound to type 'Any', expected type 'Int'
    !! case (let x, 5), (let x as Any, 1): print(1)
    !!                       ^
 
@@ -451,10 +454,12 @@ When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
-Only the standard library,
+Code that's compiled in library evolution mode,
+code in the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
-Enumerations you declare in Swift can't be nonfrozen. 
+For information about frozen and nonfrozen enumerations,
+see :ref:`Attributes_frozen`.
 
 When switching over a nonfrozen enumeration value,
 you always need to include a default case,
@@ -480,7 +485,6 @@ to take the new cases into account.
 .. testcode:: unknown-case
 
    -> let representation: Mirror.AncestorRepresentation = .generated
-   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
    -> switch representation {
       case .customized:
           print("Use the nearest ancestor’s implementation.")
@@ -560,7 +564,6 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 .. assertion:: backtick-identifier-is-legal-label
 
    -> var i = 0
-   << // i : Int = 0
    -> `return`: while i < 100 {
           i += 1
           if i == 10 {
@@ -956,12 +959,17 @@ Platform condition        Valid arguments
 ``swift()``               ``>=`` or ``<`` followed by a version number
 ``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
-``targetEnvironment()``   ``simulator``
+``targetEnvironment()``   ``simulator``, ``macCatalyst``
 ========================  ===================================================
 
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
+
+.. The target environment "UKitForMac"
+   is understood by the compiler as a synonym for "macCatalyst",
+   but that spelling is marked "Must be removed" outside of a few places,
+   so it's omitted from the table above.
 
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
@@ -1023,17 +1031,20 @@ otherwise, it returns ``false``.
    -> #if swift(>=2.1) && false
           print(3)
       #endif
-   -> #if swift(>= 2.1)
-          print(4)
-      #endif
-   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
-   !! #if swift(>= 2.1)
-   !!           ^ ~
-   !!-
    -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
           print(5)
       #endif
    << 5
+
+.. assertion:: pound-if-swift-version-err
+
+   -> #if swift(>= 2.1)
+          print(4)
+      #endif
+   !$ error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
+   !!-
 
 .. assertion:: pound-if-compiler-version
 
@@ -1121,7 +1132,7 @@ have the following form:
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
     module-name --> identifier
-    environment --> ``simulator``
+    environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
 
@@ -1206,7 +1217,6 @@ but they can use the multiline string literal syntax.
    diagnostic-message --> static-string-literal
 
 .. assertion:: good-diagnostic-statement-messages
-   :compile: true
 
    >> #warning("Single-line static string")
    !! /tmp/swifttest.swift:1:10: warning: Single-line static string
@@ -1223,16 +1233,18 @@ but they can use the multiline string literal syntax.
    !! """
    !! ^~~
 
+.. Using !! lines above instead of !$ lines,
+   to also confirm that the line number comes through correctly.
+
 .. assertion:: bad-diagnostic-statement-messages
-   :compile: true
 
    >> #warning("Interpolated \(1+1) string")
-   !! /tmp/swifttest.swift:1:10: error: string interpolation is not allowed in #warning directives
+   !$ error: string interpolation is not allowed in #warning directives
    !! #warning("Interpolated \(1+1) string")
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ---
    >> #warning("Concatenated " + "strings")
-   !! /tmp/swifttest.swift:2:26: error: extra tokens following #warning directive
+   !$ error: extra tokens following #warning directive
    !! #warning("Concatenated " + "strings")
    !! ^
 

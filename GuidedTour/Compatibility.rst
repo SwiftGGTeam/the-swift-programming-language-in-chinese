@@ -1,16 +1,16 @@
 Version Compatibility
 =====================
 
-This book describes Swift 5,
-the default version of Swift that's included in Xcode 10.2.
-You can use Xcode 10.2 to build targets
-that are written in either Swift 5, Swift 4.2, or Swift 4.
+This book describes Swift 5.2,
+the default version of Swift that's included in Xcode 11.4.
+You can use Xcode 11.4 to build targets
+that are written in either Swift 5.2, Swift 4.2, or Swift 4.
 
 .. assertion:: swift-version
 
-   >> #if swift(>=5.0.1)
+   >> #if swift(>=5.2.1)
    >>     print("Too new")
-   >> #elseif swift(>=5.0.0)
+   >> #elseif swift(>=5.2)
    >>     print("Just right")
    >> #else
    >>     print("Too old")
@@ -29,11 +29,12 @@ that are written in either Swift 5, Swift 4.2, or Swift 4.
        print("An older compiler")
    #endif
 
-When you use Xcode 10.2 to build Swift 4 and Swift 4.2 code,
-most Swift 5 functionality is available.
+When you use Xcode 11.4 to build Swift 4 and Swift 4.2 code,
+most Swift 5.2 functionality is available.
 That said,
-the following changes are available only to Swift 5 code:
+the following changes are available only to code that uses Swift 5.2 or later:
 
+- Functions that return an opaque type require the Swift 5.1 runtime.
 - The ``try?`` expression doesn't introduce an extra level of optionality
   to expressions that already return optionals.
 - Large integer literal initialization expressions are inferred
@@ -41,10 +42,10 @@ the following changes are available only to Swift 5 code:
   For example, ``UInt64(0xffff_ffff_ffff_ffff)`` evaluates to the correct value
   rather than overflowing.
 
-A target written in Swift 5 can depend on
+A target written in Swift 5.2 can depend on
 a target that's written in Swift 4.2 or Swift 4,
 and vice versa.
 This means, if you have a large project
 that's divided into multiple frameworks,
-you can migrate your code from Swift 4 to Swift 5
+you can migrate your code from Swift 4 to Swift 5.2
 one framework at a time.

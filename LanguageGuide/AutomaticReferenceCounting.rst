@@ -92,11 +92,8 @@ and do not currently reference a ``Person`` instance.
 .. testcode:: howARCWorks
 
    -> var reference1: Person?
-   << // reference1 : Person? = nil
    -> var reference2: Person?
-   << // reference2 : Person? = nil
    -> var reference3: Person?
-   << // reference3 : Person? = nil
 
 You can now create a new ``Person`` instance
 and assign it to one of these three variables:
@@ -172,7 +169,6 @@ This example defines two classes called ``Person`` and ``Apartment``,
 which model a block of apartments and its residents:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> class Person {
          let name: String
@@ -207,7 +203,6 @@ which will be set to a specific ``Apartment`` and ``Person`` instance below.
 Both of these variables have an initial value of ``nil``, by virtue of being optional:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> var john: Person?
    -> var unit4A: Apartment?
@@ -216,7 +211,6 @@ You can now create a specific ``Person`` instance and ``Apartment`` instance
 and assign these new instances to the ``john`` and ``unit4A`` variables:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john = Person(name: "John Appleseed")
    -> unit4A = Apartment(unit: "4A")
@@ -230,7 +224,7 @@ and the ``unit4A`` variable has a strong reference to the new ``Apartment`` inst
 
 You can now link the two instances together
 so that the person has an apartment, and the apartment has a tenant.
-Note that an exclamation mark (``!``) is used to unwrap and access
+Note that an exclamation point (``!``) is used to unwrap and access
 the instances stored inside the ``john`` and ``unit4A`` optional variables,
 so that the properties of those instances can be set:
 
@@ -254,7 +248,6 @@ the reference counts do not drop to zero,
 and the instances are not deallocated by ARC:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john = nil
    -> unit4A = nil
@@ -336,18 +329,14 @@ a reference to an invalid instance that no longer exists.
            weak var w: C? { didSet { print("did set") } }
        }
     -> var c1 = C()
-    << // c1 : C = REPL.C
     -> do {
-    -> let c2 = C()  // Inside a do{} block, so no REPL result.
-    -> print(c1.w as Any)
-    << nil
-    -> c1.w = c2
+    ->     let c2 = C()
+    ->     assert(c1.w == nil)
+    ->     c1.w = c2
     << did set
-    -> print(c1.w as Any)
-    << Optional(REPL.C)
+    ->     assert(c1.w != nil)
     -> } // ARC deallocates c2; didSet doesn't fire.
-    -> print(c1.w as Any)
-    << nil
+    -> assert(c1.w == nil)
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
@@ -355,7 +344,6 @@ This time around, the ``Apartment`` type's ``tenant`` property
 is declared as a weak reference:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> class Person {
          let name: String
@@ -375,7 +363,6 @@ The strong references from the two variables (``john`` and ``unit4A``)
 and the links between the two instances are created as before:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> var john: Person?
    -> var unit4A: Apartment?
@@ -398,7 +385,6 @@ the ``john`` variable by setting it to ``nil``,
 there are no more strong references to the ``Person`` instance:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> john = nil
    <- John Appleseed is being deinitialized
@@ -416,7 +402,6 @@ If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> unit4A = nil
    <- Apartment 4A is being deinitialized
@@ -495,7 +480,6 @@ you define its ``customer`` property as an unowned reference,
 to avoid a strong reference cycle:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> class Customer {
          let name: String
@@ -528,7 +512,6 @@ which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> var john: Customer?
 
@@ -537,7 +520,6 @@ and use it to initialize and assign a new ``CreditCard`` instance
 as that customer's ``card`` property:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> john = Customer(name: "John Appleseed")
    -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
@@ -564,7 +546,6 @@ there are no more strong references to the ``CreditCard`` instance,
 and it too is deallocated:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> john = nil
    <- John Appleseed is being deinitialized
@@ -634,7 +615,6 @@ To represent this, the ``Country`` class has a ``capitalCity`` property,
 and the ``City`` class has a ``country`` property:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
 
    -> class Country {
          let name: String
@@ -666,7 +646,7 @@ as described in :ref:`Initialization_TwoPhaseInitialization`.
 To cope with this requirement,
 you declare the ``capitalCity`` property of ``Country`` as
 an implicitly unwrapped optional property,
-indicated by the exclamation mark at the end of its type annotation (``City!``).
+indicated by the exclamation point at the end of its type annotation (``City!``).
 This means that the ``capitalCity`` property has a default value of ``nil``,
 like any other optional,
 but can be accessed without the need to unwrap its value
@@ -684,10 +664,9 @@ its own ``capitalCity`` property.
 All of this means that you can create the ``Country`` and ``City`` instances
 in a single statement, without creating a strong reference cycle,
 and the ``capitalCity`` property can be accessed directly,
-without needing to use an exclamation mark to unwrap its optional value:
+without needing to use an exclamation point to unwrap its optional value:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
 
    -> var country = Country(name: "Canada", capitalName: "Ottawa")
    -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
@@ -797,9 +776,7 @@ in order to prevent the representation from returning an empty HTML tag:
 .. testcode:: strongReferenceCyclesForClosures
 
    -> let heading = HTMLElement(name: "h1")
-   << // heading : HTMLElement = REPL.HTMLElement
    -> let defaultText = "some default text"
-   << // defaultText : String = "some default text"
    -> heading.asHTML = {
          return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
       }
@@ -827,7 +804,6 @@ Here's how you use the ``HTMLElement`` class to create and print a new instance:
 .. testcode:: strongReferenceCyclesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
@@ -900,7 +876,7 @@ Defining a Capture List
 
 Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
 with a reference to a class instance (such as ``self``)
-or a variable initialized with some value (such as ``delegate = self.delegate!``).
+or a variable initialized with some value (such as ``delegate = self.delegate``).
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
@@ -910,8 +886,9 @@ if they are provided:
 
    >> class SomeClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: (Int, String) -> String = {
-            [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
+      lazy var someClosure = {
+            [unowned self, weak delegate = self.delegate]
+            (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
@@ -926,8 +903,8 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: () -> String = {
-            [unowned self, weak delegate = self.delegate!] in
+      lazy var someClosure = {
+            [unowned self, weak delegate = self.delegate] in
          // closure body goes here
    >>    return "foo"
       }
@@ -998,7 +975,6 @@ You can create and print an ``HTMLElement`` instance as before:
 .. testcode:: unownedReferencesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 

@@ -70,7 +70,6 @@ The ``Fahrenheit`` structure has one stored property,
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = REPL.Fahrenheit(temperature: 32.0)
    -> print("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
@@ -151,11 +150,9 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-   << // freezingPointOfWater : Celsius = REPL.Celsius(temperatureInCelsius: 0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -198,7 +195,7 @@ for its red, green, and blue components.
 ``Color`` also provides a second initializer with a single ``white`` parameter,
 which is used to provide the same value for all three color components.
 
-.. testcode:: externalParameterNames
+.. testcode:: externalParameterNames, externalParameterNames-err
 
    -> struct Color {
          let red, green, blue: Double
@@ -220,20 +217,21 @@ by providing named values for each initializer parameter:
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = REPL.Color(red: 1.0, green: 0.0, blue: 1.0)
    -> let halfGray = Color(white: 0.5)
-   << // halfGray : Color = REPL.Color(red: 0.5, green: 0.5, blue: 0.5)
+   >> assert(halfGray.red == 0.5)
+   >> assert(halfGray.green == 0.5)
+   >> assert(halfGray.blue == 0.5)
 
 Note that it is not possible to call these initializers
 without using argument labels.
 Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
 
-.. testcode:: externalParameterNames
+.. testcode:: externalParameterNames-err
 
    -> let veryGreen = Color(0.0, 1.0, 0.0)
    // this reports a compile-time error - argument labels are required
-   !! <REPL Input>:1:22: error: missing argument labels 'red:green:blue:' in call
+   !$ error: missing argument labels 'red:green:blue:' in call
    !! let veryGreen = Color(0.0, 1.0, 0.0)
    !! ^
    !! red: green:  blue:
@@ -267,7 +265,6 @@ from a ``Double`` value that is already in the Celsius scale:
          }
       }
    -> let bodyTemperature = Celsius(37.0)
-   << // bodyTemperature : Celsius = REPL.Celsius(temperatureInCelsius: 37.0)
    /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
    </ bodyTemperature.temperatureInCelsius is 37.0
 
@@ -305,7 +302,6 @@ with an optional ``String`` property called ``response``:
          }
       }
    -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
-   << // cheeseQuestion : SurveyQuestion = REPL.SurveyQuestion
    -> cheeseQuestion.ask()
    <- Do you like cheese?
    -> cheeseQuestion.response = "Yes, I do like cheese."
@@ -336,10 +332,10 @@ it can't be further modified.
             self.c = 2
          }
       }
-   !! <REPL Input>:5:16: error: immutable value 'self.c' may only be initialized once
+   !$ error: immutable value 'self.c' may only be initialized once
    !! self.c = 2
    !! ^
-   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let c: Int
    !! ^~~
    !! var
@@ -352,13 +348,13 @@ it can't be further modified.
             self.c = 1
          }
       }
-   !! <REPL Input>:4:16: error: immutable value 'self.c' may only be initialized once
+   !$ error: immutable value 'self.c' may only be initialized once
    !! self.c = 1
    !! ^
-   !! <REPL Input>:2:10: note: initial value already provided in 'let' declaration
+   !$ note: initial value already provided in 'let' declaration
    !! let c: Int = 0
    !! ^
-   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let c: Int = 0
    !! ^~~
    !! var
@@ -389,7 +385,6 @@ it can still be set within the class's initializer:
          }
       }
    -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
-   << // beetsQuestion : SurveyQuestion = REPL.SurveyQuestion
    -> beetsQuestion.ask()
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
@@ -409,16 +404,12 @@ with all of its properties set to their default values.
 .. assertion:: defaultInitializersForStructAndClass
 
    -> struct S { var s: String = "s" }
-   -> S().s
-   <$ : String = "s"
+   -> assert(S().s == "s")
    -> class A { var a: String = "a" }
-   -> A().a
-   <$ : String = "a"
+   -> assert(A().a == "a")
    -> class B: A { var b: String = "b" }
-   -> B().a
-   <$ : String = "a"
-   -> B().b
-   <$ : String = "b"
+   -> assert(B().a == "a")
+   -> assert(B().b ==  "b")
 
 This example defines a class called ``ShoppingListItem``,
 which encapsulates the name, quantity, and purchase state
@@ -432,7 +423,6 @@ of an item in a shopping list:
          var purchased = false
       }
    -> var item = ShoppingListItem()
-   << // item : ShoppingListItem = REPL.ShoppingListItem
 
 Because all properties of the ``ShoppingListItem`` class have default values,
 and because it is a base class with no superclass,
@@ -452,20 +442,18 @@ Memberwise Initializers for Structure Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Structure types automatically receive a :newTerm:`memberwise initializer`
-if they do not define any of their own custom initializers.
+if they don't define any of their own custom initializers.
 Unlike a default initializer,
 the structure receives a memberwise initializer
-even if it has stored properties that do not have default values.
+even if it has stored properties that don't have default values.
 
 .. assertion:: memberwiseInitializersDontRequireDefaultStoredPropertyValues
 
    -> struct S { var int: Int; var string: String }
    -> let s = S(int: 42, string: "hello")
-   << // s : S = REPL.S(int: 42, string: "hello")
    ---
    -> struct SS { var int = 10; var string: String }
    -> let ss = SS(int: 42, string: "hello")
-   << // ss : SS = REPL.SS(int: 42, string: "hello")
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -487,26 +475,24 @@ which you can use to initialize a new ``Size`` instance:
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = REPL.Size(width: 2.0, height: 2.0)
 
 When you call a memberwise initializer,
 you can omit values for any properties
 that have default values.
 In the example above,
 the ``Size`` structure has a default value
-for both its ``height`` and ``width`` properties,
-so you can omit either one or both.
-For example:
+for both its ``height`` and ``width`` properties.
+You can omit either property or both properties,
+and the initializer uses the default value for anything you omit ---
+for example:
 
 .. testcode:: initialization
 
    -> let zeroByTwo = Size(height: 2.0)
-   << // zeroByTwo : Size = REPL.Size(width: 0.0, height: 2.0)
    -> print(zeroByTwo.width, zeroByTwo.height)
    <- 0.0 2.0
    ---
    -> let zeroByZero = Size()
-   << // zeroByZero : Size = REPL.Size(width: 0.0, height: 0.0)
    -> print(zeroByZero.width, zeroByZero.height)
    <- 0.0 0.0
 
@@ -603,7 +589,6 @@ from their property definitions:
 .. testcode:: valueDelegation
 
    -> let basicRect = Rect()
-   << // basicRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
@@ -617,7 +602,6 @@ the appropriate stored properties:
 
    -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // originRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
@@ -631,7 +615,6 @@ which stores the new origin and size values in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -951,11 +934,11 @@ and validates that the parameters for your overriding initializer have been spec
          // this is not correct
          init() {}
       }
-   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !$ error: overriding declaration requires an 'override' keyword
    !! init() {}
    !! ^
    !! override
-   !! <REPL Input>:2:6: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! init() {}
    !! ^
 
@@ -972,11 +955,11 @@ and validates that the parameters for your overriding initializer have been spec
          // this is not correct
          init() {}
       }
-   !! <REPL Input>:3:6: error: overriding declaration requires an 'override' keyword
+   !$ error: overriding declaration requires an 'override' keyword
    !! init() {}
    !! ^
    !! override
-   !! <REPL Input>:1:7: note: overridden declaration is here
+   !$ note: overridden declaration is here
    !! class C {
    !! ^
 
@@ -1018,10 +1001,10 @@ a matching implementation of a superclass convenience initializer.
             self.init(someInt: 42)
          }
       }
-   !! <REPL Input>:7:27: error: initializer does not override a designated initializer from its superclass
+   !$ error: initializer does not override a designated initializer from its superclass
    !! override convenience init() {
    !! ~~~~~~~~             ^
-   !! <REPL Input>:6:18: note: attempt to override convenience initializer here
+   !$ note: attempt to override convenience initializer here
    !! convenience init() {
    !! ^
 
@@ -1050,7 +1033,6 @@ and can be used to create a new ``Vehicle`` instance with a ``numberOfWheels`` o
 .. testcode:: initializerInheritance
 
    -> let vehicle = Vehicle()
-   << // vehicle : Vehicle = REPL.Vehicle
    -> print("Vehicle: \(vehicle.description)")
    </ Vehicle: 0 wheel(s)
 
@@ -1083,7 +1065,6 @@ to see how its ``numberOfWheels`` property has been updated:
 .. testcode:: initializerInheritance
 
    -> let bicycle = Bicycle()
-   << // bicycle : Bicycle = REPL.Bicycle
    -> print("Bicycle: \(bicycle.description)")
    </ Bicycle: 2 wheel(s)
 
@@ -1118,7 +1099,6 @@ supplied by the ``Vehicle`` initializer.
 .. testcode:: initializerInheritance
 
    -> let hoverboard = Hoverboard(color: "silver")
-   << // hoverboard : Hoverboard = REPL.Hoverboard
    -> print("Hoverboard: \(hoverboard.description)")
    </ Hoverboard: 0 wheel(s) in a beautiful silver
 
@@ -1152,10 +1132,10 @@ supplied by the ``Vehicle`` initializer.
             constantProperty = 0
          }
       }
-   !!  <REPL Input>:5:9: error: cannot assign to property: 'constantProperty' is a 'let' constant
+   !$ error: cannot assign to property: 'constantProperty' is a 'let' constant
    !! constantProperty = 0
    !! ^~~~~~~~~~~~~~~~
-   !! <REPL Input>:2:6: note: change 'let' to 'var' to make it mutable
+   !$ note: change 'let' to 'var' to make it mutable
    !! let constantProperty: Int
    !! ^~~
    !! var
@@ -1241,7 +1221,6 @@ This initializer can be used to create a new ``Food`` instance with a specific n
 .. testcode:: designatedConvenience
 
    -> let namedMeat = Food(name: "Bacon")
-   << // namedMeat : Food = REPL.Food
    /> namedMeat's name is \"\(namedMeat.name)\"
    </ namedMeat's name is "Bacon"
 
@@ -1261,7 +1240,6 @@ a ``name`` value of ``[Unnamed]``:
 .. testcode:: designatedConvenience
 
    -> let mysteryMeat = Food()
-   << // mysteryMeat : Food = REPL.Food
    /> mysteryMeat's name is \"\(mysteryMeat.name)\"
    </ mysteryMeat's name is "[Unnamed]"
 
@@ -1336,11 +1314,8 @@ All three of these initializers can be used to create new ``RecipeIngredient`` i
 .. testcode:: designatedConvenience
 
    -> let oneMysteryItem = RecipeIngredient()
-   << // oneMysteryItem : RecipeIngredient = REPL.RecipeIngredient
    -> let oneBacon = RecipeIngredient(name: "Bacon")
-   << // oneBacon : RecipeIngredient = REPL.RecipeIngredient
    -> let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
-   << // sixEggs : RecipeIngredient = REPL.RecipeIngredient
 
 The third and final class in the hierarchy is
 a subclass of ``RecipeIngredient`` called ``ShoppingListItem``.
@@ -1390,7 +1365,6 @@ to create a new ``ShoppingListItem`` instance:
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : [ShoppingListItem] = [REPL.ShoppingListItem, REPL.ShoppingListItem, REPL.ShoppingListItem]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
@@ -1450,10 +1424,10 @@ by placing a question mark after the ``init`` keyword (``init?``).
          init(s: String) { self.s = s }
          init?(s: String) { self.s = s }
       }
-   !! <REPL Input>:4:6: error: invalid redeclaration of 'init(s:)'
+   !$ error: invalid redeclaration of 'init(s:)'
    !!            init?(s: String) { self.s = s }
    !!            ^
-   !! <REPL Input>:3:6: note: 'init(s:)' previously declared here
+   !$ note: 'init(s:)' previously declared here
    !!            init(s: String) { self.s = s }
    !!            ^
 
@@ -1478,9 +1452,7 @@ the initializer fails.
 .. testcode:: failableInitializers
 
    -> let wholeNumber: Double = 12345.0
-   << // wholeNumber : Double = 12345.0
    -> let pi = 3.14159
-   <~ // pi : Double = 3.1415
    ---
    -> if let valueMaintained = Int(exactly: wholeNumber) {
           print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
@@ -1488,7 +1460,6 @@ the initializer fails.
    <- 12345.0 conversion to Int maintains value of 12345
    ---
    -> let valueChanged = Int(exactly: pi)
-   << // valueChanged : Int? = nil
    // valueChanged is of type Int?, not Int
    ---
    -> if valueChanged == nil {
@@ -1520,7 +1491,6 @@ and to check if initialization succeeded:
 .. testcode:: failableInitializers
 
    -> let someCreature = Animal(species: "Giraffe")
-   << // someCreature : Animal? = Optional(REPL.Animal(species: "Giraffe"))
    // someCreature is of type Animal?, not Animal
    ---
    -> if let giraffe = someCreature {
@@ -1534,7 +1504,6 @@ the initializer triggers an initialization failure:
 .. testcode:: failableInitializers
 
    -> let anonymousCreature = Animal(species: "")
-   << // anonymousCreature : Animal? = nil
    // anonymousCreature is of type Animal?, not Animal
    ---
    -> if anonymousCreature == nil {
@@ -1593,14 +1562,12 @@ states:
 .. testcode:: failableInitializers
 
    -> let fahrenheitUnit = TemperatureUnit(symbol: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
-   << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
          print("This is not a defined temperature unit, so initialization failed.")
       }
@@ -1628,14 +1595,12 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
       }
    ---
    -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-   << // fahrenheitUnit : TemperatureUnit? = Optional(REPL.TemperatureUnit.fahrenheit)
    -> if fahrenheitUnit != nil {
          print("This is a defined temperature unit, so initialization succeeded.")
       }
    <- This is a defined temperature unit, so initialization succeeded.
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
-   << // unknownUnit : TemperatureUnit? = nil
    -> if unknownUnit == nil {
          print("This is not a defined temperature unit, so initialization failed.")
       }
@@ -1664,7 +1629,7 @@ and no further initialization code is executed.
          init?(string2: String) { return nil }
       }
    -> let s = S(string1: "bing")
-   << // s : S? = nil
+   -> assert(s == nil)
 
 .. assertion:: delegatingAcrossInAClassPropagatesInitializationFailureImmediately
 
@@ -1676,7 +1641,7 @@ and no further initialization code is executed.
          init?(string2: String) { return nil }
       }
    -> let c = C(string1: "bing")
-   << // c : C? = nil
+   -> assert(c == nil)
 
 .. assertion:: delegatingUpInAClassPropagatesInitializationFailureImmediately
 
@@ -1690,7 +1655,7 @@ and no further initialization code is executed.
          }
       }
    -> let d = D(string2: "bing")
-   << // d : D? = nil
+   -> assert(d == nil)
 
 .. note::
 
@@ -1713,7 +1678,6 @@ and ensures that this property always has a value of at least ``1``:
          }
       }
    >> let p = Product(name: "")
-   << // p : Product? = nil
    ---
    -> class CartItem: Product {
          let quantity: Int
@@ -1797,10 +1761,10 @@ is to force-unwrap the result of the failable superclass initializer.
    -> class D: C {
          override init?() {}
       }
-   !! <REPL Input>:2:15: error: failable initializer 'init()' cannot override a non-failable initializer
+   !$ error: failable initializer 'init()' cannot override a non-failable initializer
    !!            override init?() {}
    !!                     ^
-   !! <REPL Input>:2:6: note: non-failable initializer 'init()' overridden here
+   !$ note: non-failable initializer 'init()' overridden here
    !!            init() {}
    !!            ^
 
@@ -1887,7 +1851,7 @@ that creates an optional instance of the appropriate type
 by placing a question mark after the ``init`` keyword (``init?``).
 Alternatively, you can define a failable initializer that creates
 an implicitly unwrapped optional instance of the appropriate type.
-Do this by placing an exclamation mark after the ``init`` keyword (``init!``)
+Do this by placing an exclamation point after the ``init`` keyword (``init!``)
 instead of a question mark.
 
 You can delegate from ``init?`` to ``init!`` and vice versa,
@@ -2036,10 +2000,10 @@ to indicate that every subclass of the class must implement that initializer:
    -> class D: C {
          init() {}
       }
-   !! <REPL Input>:3:1: error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
+   !$ error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
    !! }
    !! ^
-   !! <REPL Input>:2:15: note: 'required' initializer is declared in superclass here
+   !$ note: 'required' initializer is declared in superclass here
    !!    required init(i: Int) {}
    !!             ^
 
@@ -2054,10 +2018,10 @@ to indicate that every subclass of the class must implement that initializer:
    -> class D: C {
          init(s: String) {}
       }
-   !! <REPL Input>:3:1: error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
+   !$ error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
    !! }
    !! ^
-   !! <REPL Input>:3:27: note: 'required' initializer is declared in superclass here
+   !$ note: 'required' initializer is declared in superclass here
    !!    required convenience init(i: Int) {
    !!                         ^
 
@@ -2082,11 +2046,11 @@ You do not write the ``override`` modifier when overriding a required designated
    -> class D: C {
          override required init() {}
       }
-   !! <REPL Input>:2:24: warning: 'override' is implied when overriding a required initializer
+   !$ warning: 'override' is implied when overriding a required initializer
    !!    override required init() {}
    !! ~~~~~~~~~         ^
    !!-
-   !! <REPL Input>:2:15: note: overridden required initializer is here
+   !$ note: overridden required initializer is here
    !!    required init() {}
    !!             ^
 
@@ -2231,7 +2195,7 @@ and can be queried with the ``squareIsBlackAt(row:column:)`` utility function:
 .. testcode:: chessboard
 
    -> let board = Chessboard()
-   << // board : Chessboard = REPL.Chessboard(boardColors: [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
+   >> assert(board.boardColors == [false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false])
    -> print(board.squareIsBlackAt(row: 0, column: 1))
    <- true
    -> print(board.squareIsBlackAt(row: 7, column: 7))
