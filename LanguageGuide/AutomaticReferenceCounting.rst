@@ -590,7 +590,14 @@ Unowned Optional References
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can mark an optional reference to a class as unowned.
-Here's an example that keeps track of the classes
+In terms of the ARC ownership model,
+an unowned optional reference and a weak reference
+can both be used in the same contexts.
+The difference is that when you use an unowned optional reference,
+you're responsible for making sure it always
+either refers to a valid object or is set to ``nil``.
+
+Here's an example that keeps track of the courses
 offered by a particular department at a school:
 
 .. testcode:: unowned-optional-references
@@ -614,39 +621,46 @@ offered by a particular department at a school:
                self.nextCourse = nil
            }
        }
-    ---
+
+``Department`` maintains a strong reference
+to each course that the department offers.
+In the ARC ownership model, a department owns its courses.
+``Course`` has two unowned references,
+one to the department and one to the course that students should take next;
+a course doesn't own either of these objects.
+Every course is part of some department
+so the ``department`` property isn't a optional.
+However,
+because some courses don't have a recommended follow-on course,
+the ``nextCourse`` property is an optional.
+
+Here's an example of using these classes:
+
+.. testcode:: unowned-optional-references
+
     -> let department = Department(name: "Horticulture")
     ---
     -> let intro = Course(name: "Survey of Plants", in: department)
-    -> let intermediate = Course(name: "Growing Common Herbs and Vegetables",
-    ->                           in: department)
-    -> let advanced = Course(name: "Caring for Rare Plants", in: department)
+    -> let intermediate = Course(name: "Growing Common Herbs", in: department)
+    -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
     ---
     -> intro.nextCourse = intermediate
     -> intermediate.nextCourse = advanced
     -> department.courses = [intro, intermediate, advanced]
 
-In the ARC ownership model, a department owns each of its classes,
-so the ``Department`` class's ``courses`` property
-maintains strong references to them.
-However,
-courses don't own each other or their department,
-so the ``Course`` class's ``department`` and ``nextCourse`` properties
-use unowned references.
-
-Every course is part of some department
-so the ``department`` property is a non-optional,
-but not all courses have a recommended follow-on course
-so the ``nextCourse`` property is an optional.
+The code above creates a department and its three courses.
 The intro and intermediate courses both have a suggested next course
 stored in their ``nextCourse`` property,
 which maintains an unowned optional reference to
 the course a student should take after after completing this one.
 
+[XXX FIGURE GOES HERE XXX]
+
 An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
 which allows the wrapped class to be deallocated at any time.
-It behaves the same as an unowned reference, except it can also be ``nil``.
+It behaves the same as an unowned reference does under ARC,
+except an unowned optional reference can be ``nil``.
 
 Like non-optional unowned references,
 you're responsible for ensuring that ``nextCourse``
