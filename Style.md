@@ -200,13 +200,13 @@ is available in the following places:
 
 * “UNIX for Beginners”, Brian W. Kernighan, 1974 — Alex Martini has a PDF copy
 * [Semantic Linefeeds](https://rhodesmill.org/brandon/2012/one-sentence-per-line/)
-    blog post about the advantages and history of this format
-    for authoring documentation.
+  blog post about the advantages and history of this format
+  for authoring documentation.
 * [Ventilated Prose](https://vanemden.wordpress.com/2009/01/01/ventilated-prose/)
-    discusses Buckminster Fuller’s proposed use of this format
-    to improve reading comprehension.
+  discusses Buckminster Fuller’s proposed use of this format
+  to improve reading comprehension.
 * [Semantic Line Breaks](https://sembr.org) describes a formalized spec,
-    maintained by Mattt Zmuda
+  maintained by Mattt Zmuda
 
 # Formal Grammar
 
