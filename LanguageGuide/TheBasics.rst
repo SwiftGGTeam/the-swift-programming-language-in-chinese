@@ -1135,6 +1135,8 @@ because it can be safely assumed to have a value all of the time.
 These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`.
 You write an implicitly unwrapped optional by placing an exclamation point (``String!``)
 rather than a question mark (``String?``) after the type that you want to make optional.
+Rather than placing an exclamation point after the optional's name when you use it,
+you place an exclamation point after the optional's type when you declare it.
 
 Implicitly unwrapped optionals are useful when
 an optional's value is confirmed to exist immediately after the optional is first defined
@@ -1158,19 +1160,32 @@ when accessing their wrapped value as an explicit ``String``:
    -> let implicitString: String = assumedString // no need for an exclamation point
 
 You can think of an implicitly unwrapped optional as
-giving permission for the optional to be unwrapped automatically whenever it's used.
-Rather than placing an exclamation point after the optional's name each time you use it,
-you place an exclamation point after the optional's type when you declare it.
+giving permission for the optional to be force-unwrapped if needed.
+When you use an implicitly unwrapped optional value,
+Swift first tries to use it as an ordinary optional value;
+if it can't be used as an optional, Swift force-unwraps the value.
+In the code above,
+the optional value ``assumedString`` is force-unwrapped
+before assigning its value to ``implicitString``
+because ``implicitString`` has an explicit, non-optional type of ``String``.
+In code below,
+``optionalString`` doesn't have an explicit type
+so it's an ordinary optional.
 
-.. note::
+.. testcode:: implicitlyUnwrappedOptionals
 
-   If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
-   you'll trigger a runtime error.
-   The result is exactly the same as if you place an exclamation point
-   after a normal optional that doesn't contain a value.
+   -> let optionalString = assumedString
+   // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
+   >> print(type(of: optionalString))
+   << Optional<String>
 
-You can still treat an implicitly unwrapped optional like a normal optional,
-to check if it contains a value:
+If an implicitly unwrapped optional is ``nil`` and you try to access its wrapped value,
+you'll trigger a runtime error.
+The result is exactly the same as if you place an exclamation point
+after a normal optional that doesn't contain a value.
+
+You can check whether an implicitly unwrapped optional is ``nil``
+the same way you check a normal optional:
 
 .. testcode:: implicitlyUnwrappedOptionals
 
