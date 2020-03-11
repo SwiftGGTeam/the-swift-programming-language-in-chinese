@@ -154,6 +154,8 @@ When a constant declaration occurs in the context of a function or method,
 it can be initialized later,
 as long as it is guaranteed to have a value set
 before the first time its value is read.
+If the compiler can prove that the constant's value is never read,
+the constant isn't required to have a value set at all.
 When a constant declaration occurs in the context of a class or structure
 declaration, it is considered a :newTerm:`constant property`.
 Constant declarations are not computed properties and therefore do not have getters
