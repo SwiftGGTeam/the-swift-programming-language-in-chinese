@@ -795,6 +795,33 @@ of the equivalence operators.
       }
    <- These two vectors are also equivalent.
 
+
+.. _AdvancedOperators_ComparisonOperators:
+
+Comparison Operators
+~~~~~~~~~~~~~~~~~~~~
+
+.. OUTLINE
+
+   By default, enums don't have an implementation of < <= > or >=
+
+   The compiler can synthesize it if all of the enum's raw/associated values
+   are already comparable.
+
+   Should we pull the synthesized == discussion above out
+   and combine it with this,
+   so there's one section about synthesized conformances?
+
+   We don't have discussion of synthesized Hashable anywhere
+
+To receive a synthesized implementation of ``<``,
+declare ``Comparable`` conformance
+in the file that contains the original enumeration declaration,
+without implementing a ``<`` operator yourself.
+The ``Comparable`` protocol's default implementation
+of ``<=``, ``>``, and ``>=`` provides the remaining comparison operators.
+
+
 .. _AdvancedOperators_CustomOperators:
 
 Custom Operators
