@@ -1247,7 +1247,59 @@ that combine these components.
    <- 7
    -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
    <- 64
-                                
+
+You can use a key path expression
+in contexts where you would normally provide a function or closure.
+Specifically,
+you can use a key path expression
+whose root type is ``SomeType``
+and whose path produces a value of type ``Value``,
+instead of a function or closure of type ``(SomeType) -> Value``.
+
+.. testcode:: keypath-expression
+
+   -> struct Task {
+          var description: String
+          var completed: Bool
+      }
+   -> var toDoList = [
+          Task(description: "Practice ping-pong.", completed: false),
+          Task(description: "Buy a pirate costume.", completed: true),
+          Task(description: "Visit Boston in the Fall.", completed: false),
+      ]
+   ---
+   // Both approaches below are equivalent.
+   -> let descriptions = toDoList.filter(\.completed).map(\.description)
+   -> let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
+   >> assert(descriptions == descriptions2)
+
+.. REFERENCE
+   The to-do list above draws from the lyrics of the song
+   "The Pirates Who Don't Do Anything".
+    
+
+Any side effects of a key path expression
+are evaluated only at the point where the expression is evaluated.
+For example,
+if you make a function call inside a subscript in a key path expression,
+the function is called only once as part of evaluating the expression,
+not every time the key path is used.
+
+.. testcode:: keypath-expression
+
+   -> func makeIndex() -> Int {
+          print("Made an index")
+          return 0
+      }
+   // The line below calls makeIndex().
+   -> let taskKeyPath = \[Task][makeIndex()]
+   <- Made an index
+   >> print(type(of: taskKeyPath))
+   << WritableKeyPath<Array<Task>, Task>
+   ---
+   // Using taskKeyPath doesn't call makeIndex() again.
+   -> let someTask = toDoList[keyPath: taskKeyPath]
+
 For more information about using key paths
 in code that interacts with Objective-C APIs,
 see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
