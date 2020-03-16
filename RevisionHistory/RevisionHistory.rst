@@ -1,6 +1,17 @@
 Document Revision History
 =========================
 
+**2020-03-25**
+
+* Added information about passing a key path instead of a closure
+  to the :ref:`Expression_TypedKeyPathExpression` section.
+
+* Updated the :ref:`TheBasics_ImplicitlyUnwrappedOptionals` section
+  to make it clearer that an implicitly unwrapped optional value
+  can be used as either an optional or non-optional value.
+
+.. XXX combine new lines above with beta lines below.
+
 **2020-02-05**
 
 * Updated for Swift 5.2.
