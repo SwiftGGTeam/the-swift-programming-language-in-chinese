@@ -775,9 +775,10 @@ The following example reports a compile-time error:
    -> if i {
          // this example will not compile, and will report an error
       }
-   !$ error: cannot convert value of type 'Int' to expected condition type 'Bool'
+   !$ error: type 'Int' cannot be used as a boolean; test for '!= 0' instead
    !! if i {
    !!   ^
+   !! ( != 0)
 
 However, the alternative example below is valid:
 

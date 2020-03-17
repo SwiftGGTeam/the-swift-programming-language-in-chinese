@@ -255,7 +255,7 @@ For example:
    -> f = functionWithDifferentArgumentTypes     // Error
    !$ error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
    !! f = functionWithDifferentArgumentTypes     // Error
-   !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   !! ^
    ---
    -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
    -> f = functionWithDifferentNumberOfArguments // Error
