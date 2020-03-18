@@ -914,6 +914,86 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
    Types don't automatically adopt a protocol just by satisfying its requirements.
    They must always explicitly declare their adoption of the protocol.
 
+
+.. _Protocols_SynthesizedImplementation:
+
+Adopting a Protocol Using a Synthesized Implementation
+------------------------------------------------------
+
+Swift can automatically provide the protocol conformance
+for ``Equatable``, ``Hashable``, and ``Comparable``
+in many simple cases.
+Using the compiler's synthesized implementation
+means you don't have to write repetitive boilerplate code
+to implement the protocol requirements yourself.
+
+
+.. XXX below is from Advanced Operators
+
+In many simple cases, you can ask Swift
+to provide synthesized implementations of the equivalence operators for you.
+Swift provides synthesized implementations
+for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the ``Equatable`` protocol
+* Enumerations that have only associated types that conform to the ``Equatable`` protocol
+* Enumerations that have no associated types
+
+.. XXX The above is also true for Hashable
+
+   Need to cross reference here from "Adopting Common Protocols"
+   https://developer.apple.com/documentation/swift/adopting_common_protocols
+
+   Discussion in the article calls out that
+   enums without associated values are Equatable & Hashable
+   even if you don't declare the protocol conformance.
+
+To receive a synthesized implementation of ``==``,
+declare ``Equatable`` conformance
+in the file that contains the original declaration,
+without implementing an ``==`` operator yourself.
+
+The example below defines a ``Vector3D`` structure
+for a three-dimensional position vector ``(x, y, z)``,
+similar to the ``Vector2D`` structure.
+Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
+``Vector3D`` receives synthesized implementations
+of the equivalence operators.
+
+.. testcode:: equatable_synthesis
+
+   -> struct Vector3D: Equatable {
+         var x = 0.0, y = 0.0, z = 0.0
+      }
+   ---
+   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   -> if twoThreeFour == anotherTwoThreeFour {
+          print("These two vectors are also equivalent.")
+      }
+   <- These two vectors are also equivalent.
+
+.. OUTLINE
+
+   By default, enums don't have an implementation of < <= > or >=
+
+   The compiler can synthesize it if all of the enum's raw/associated values
+   are already comparable.
+
+   Should we pull the synthesized == discussion above out
+   and combine it with this,
+   so there's one section about synthesized conformances?
+
+   We don't have discussion of synthesized Hashable anywhere
+
+To receive a synthesized implementation of ``<``,
+declare ``Comparable`` conformance
+in the file that contains the original enumeration declaration,
+without implementing a ``<`` operator yourself.
+The ``Comparable`` protocol's default implementation
+of ``<=``, ``>``, and ``>=`` provides the remaining comparison operators.
+
+
 .. _Protocols_CollectionsOfProtocolTypes:
 
 Collections of Protocol Types
