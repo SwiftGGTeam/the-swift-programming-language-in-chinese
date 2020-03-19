@@ -927,7 +927,9 @@ Using the compiler's synthesized implementation
 means you don't have to write repetitive boilerplate code
 to implement the protocol requirements yourself.
 
-.. XXX Can I link directly to a section of an article?
+.. Linking directly to a section of an article like the URLs below do
+   is expected to be stable --
+   as long as the section stays around, that topic ID will be there too.
 
    Conforming to the Equatable Protocol
    https://developer.apple.com/documentation/swift/equatable#2847780
