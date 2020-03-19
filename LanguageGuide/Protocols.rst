@@ -927,26 +927,31 @@ Using the compiler's synthesized implementation
 means you don't have to write repetitive boilerplate code
 to implement the protocol requirements yourself.
 
+.. XXX Can I link directly to a section of an article?
 
-.. XXX below is from Advanced Operators
+   Conforming to the Equatable Protocol
+   https://developer.apple.com/documentation/swift/equatable#2847780
 
-In many simple cases, you can ask Swift
-to provide synthesized implementations of the equivalence operators for you.
-Swift provides synthesized implementations
+   Conforming to the Hashable Protocol
+   https://developer.apple.com/documentation/swift/hashable#2849490
+
+   Conforming to the Comparable Protocol
+   https://developer.apple.com/documentation/swift/comparable#2845320
+
+   ^-- Need to add discussion of synthesized implementation
+   to the reference for Comparable, since that's new
+
+   Some of the information in the type references above
+   is also repeated in the "Conform Automatically to Equatable and Hashable" section
+   of the article "Adopting Common Protocols".
+   https://developer.apple.com/documentation/swift/adopting_common_protocols#2991123
+
+Swift provides a synthesized implementation of ``Equatable``
 for the following kinds of custom types:
 
 * Structures that have only stored properties that conform to the ``Equatable`` protocol
 * Enumerations that have only associated types that conform to the ``Equatable`` protocol
 * Enumerations that have no associated types
-
-.. XXX The above is also true for Hashable
-
-   Need to cross reference here from "Adopting Common Protocols"
-   https://developer.apple.com/documentation/swift/adopting_common_protocols
-
-   Discussion in the article calls out that
-   enums without associated values are Equatable & Hashable
-   even if you don't declare the protocol conformance.
 
 To receive a synthesized implementation of ``==``,
 declare ``Equatable`` conformance
@@ -972,6 +977,25 @@ of the equivalence operators.
           print("These two vectors are also equivalent.")
       }
    <- These two vectors are also equivalent.
+
+.. Need to cross reference here from "Adopting Common Protocols"
+   https://developer.apple.com/documentation/swift/adopting_common_protocols
+
+   Discussion in the article calls out that
+   enums without associated values are Equatable & Hashable
+   even if you don't declare the protocol conformance.
+
+Swift provides a synthesized implementation of ``Hashable``
+for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the ``Hashable`` protocol
+* Enumerations that have only associated types that conform to the ``Hashable`` protocol
+* Enumerations that have no associated types
+
+To receive a synthesized implementation of ``hash(into:)``,
+declare ``Equatable`` conformance
+in the file that contains the original declaration,
+without implementing an ``==`` operator yourself.
 
 .. OUTLINE
 

@@ -765,6 +765,9 @@ In many simple cases, you can ask Swift
 to provide synthesized implementations of the equivalence operators for you,
 as described in :ref:`Protocols_SynthesizedImplementation`.
 
+.. XXX Maybe just xref directly to the Conforming section in
+   https://developer.apple.com/documentation/swift/equatable
+
 
 .. _AdvancedOperators_CustomOperators:
 
