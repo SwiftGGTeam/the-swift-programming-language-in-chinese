@@ -654,10 +654,8 @@ stored in their ``nextCourse`` property,
 which maintains an unowned optional reference to
 the course a student should take after after completing this one.
 
-.. image:: ../images/unownedOptionalReference.png
+.. image:: ../images/unownedOptionalReference_2x.png
    :align: center
-
-[XXX REAL FIGURE GOES ABOVE XXX]
 
 An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
