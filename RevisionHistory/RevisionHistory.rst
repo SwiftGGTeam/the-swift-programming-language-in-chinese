@@ -1,9 +1,12 @@
 Document Revision History
 =========================
 
-**2020-02-05**
+**2020-03-24**
 
 * Updated for Swift 5.2.
+
+* Added information about passing a key path instead of a closure
+  to the :ref:`Expression_TypedKeyPathExpression` section.
 
 * Added the :ref:`Declarations_SpecialFuncNames` section
   with information about syntactic sugar the lets instances of
@@ -14,6 +17,10 @@ Document Revision History
 
 * Updated the :ref:`Types_SelfType` section,
   now that the ``Self`` can be used in more contexts.
+
+* Updated the :ref:`TheBasics_ImplicitlyUnwrappedOptionals` section
+  to make it clearer that an implicitly unwrapped optional value
+  can be used as either an optional or non-optional value.
 
 **2019-09-10**
 
