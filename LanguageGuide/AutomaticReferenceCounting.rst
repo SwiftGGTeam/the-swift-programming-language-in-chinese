@@ -595,7 +595,7 @@ an unowned optional reference and a weak reference
 can both be used in the same contexts.
 The difference is that when you use an unowned optional reference,
 you're responsible for making sure it always
-either refers to a valid object or is set to ``nil``.
+refers to a valid object or is set to ``nil``.
 
 Here's an example that keeps track of the courses
 offered by a particular department at a school:
@@ -626,10 +626,11 @@ offered by a particular department at a school:
 to each course that the department offers.
 In the ARC ownership model, a department owns its courses.
 ``Course`` has two unowned references,
-one to the department and one to the course that students should take next;
+one to the department
+and one to the next course a student should take;
 a course doesn't own either of these objects.
 Every course is part of some department
-so the ``department`` property isn't a optional.
+so the ``department`` property isn't an optional.
 However,
 because some courses don't have a recommended follow-on course,
 the ``nextCourse`` property is an optional.
@@ -661,11 +662,11 @@ An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
 which allows the wrapped class to be deallocated at any time.
 It behaves the same as an unowned reference does under ARC,
-except an unowned optional reference can be ``nil``.
+except that an unowned optional reference can be ``nil``.
 
 Like non-optional unowned references,
 you're responsible for ensuring that ``nextCourse``
-always refers to a course that hasn't be deallocated.
+always refers to a course that hasn't been deallocated.
 In this case, for example,
 when you delete a course from ``department.courses``
 you also need to remove any references to it
