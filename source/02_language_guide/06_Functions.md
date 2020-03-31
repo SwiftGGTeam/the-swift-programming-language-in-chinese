@@ -237,7 +237,7 @@ func someFunction(firstParameterName: Int, secondParameterName: Int) {
 someFunction(firstParameterName: 1, secondParameterName: 2)
 ```
 
-所有的参数都必须有一个独一无二的名字。虽然多个参数拥有同样的参数标签是可能的，但是一个唯一的函数标签能够使你的代码更具可读性。
+所有的参数都必须有一个独一无二的名字。虽然多个参数拥有同样的参数标签是可能的，但是一个唯一的参数标签能够使你的代码更具可读性。
 
 ### 指定参数标签 {#specifying-argument-labels}
 
