@@ -660,7 +660,7 @@ the course a student should take after after completing this one.
 
 An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
-which allows the wrapped class to be deallocated at any time.
+and so it doesn't prevent ARC from deallocating the instance.
 It behaves the same as an unowned reference does under ARC,
 except that an unowned optional reference can be ``nil``.
 
