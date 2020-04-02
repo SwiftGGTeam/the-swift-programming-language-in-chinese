@@ -634,14 +634,9 @@ and adds it to an array that's declared outside the function.
 If you didn't mark the parameter of this function with ``@escaping``,
 you would get a compile-time error.
 
-Marking a closure with ``@escaping``
-means that, in some circumstances,
-you have to refer to ``self`` explicitly within the closure.
-If ``self`` is an instance of a structure or an enumeration,
-you can always refer to ``self`` implicitly.
-However, if it's an instance of a class,
-you either have to refer to ``self`` explicitly,
-or you have to capture ``self``.
+Inside the body of an escaping closure,
+if ``self`` is an instance of a class,
+you need to refer to ``self`` explicitly or capture ``self``.
 For example, in the code below,
 the closure passed to ``someFunctionWithEscapingClosure(_:)``
 needs to refer to ``self`` explicitly.
@@ -692,44 +687,75 @@ instead of referring to it explicitly:
     >> print(instance2.x)
     << 100
 
-.. assertion:: noescape-closure-as-argument
+If ``self`` is an instance of a structure or an enumeration,
+you can always refer to ``self`` implicitly.
+However,
+an escaping closure can't capture a mutable reference to ``self``
+when ``self`` is an instance of a structure or an enumeration.
+Structures and enumerations don’t allow shared mutability,
+as discussed in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
-    // capturing self is ok when it's a struct or enum
+.. testcode:: struct-capture-mutable-self
+
+    >> var completionHandlers: [() -> Void] = []
+    >> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+    >>     completionHandlers.append(completionHandler)
+    >> }
+    >> func someFunctionWithNonescapingClosure(closure: () -> Void) {
+    >>     closure()
+    >> }
     -> struct SomeStruct {
            var x = 10
            mutating func doSomething() {
-               // It's an error to capture mutable 'self' and escape;
-               // see the assertion below.
-               //someFunctionWithEscapingClosure { x = 100 }
-               someFunctionWithNonescapingClosure { x = 200 }
+               someFunctionWithNonescapingClosure { x = 200 }  // Ok
+               someFunctionWithEscapingClosure { x = 100 }     // Error
            }
        }
+    !$ error: escaping closure captures mutating 'self' parameter
+    !! someFunctionWithEscapingClosure { x = 100 }     // Error
+    !! ^
+    !$ note: captured here
+    !! someFunctionWithEscapingClosure { x = 100 }     // Error
+    !! ^
+
+The call to the ``someFunctionWithEscapingClosure`` function
+in the example above is an error
+because it's inside a mutating method,
+so ``self`` is mutable.
+That violates the rule that escaping closures can't capture
+a mutable reference to ``self`` for structures.
+
+.. assertion:: noescape-closure-as-argument
+
+    // Test the non-error portion of struct-capture-mutable-self
+    >> struct SomeStruct {
+    >>     var x = 10
+    >>     mutating func doSomething() {
+    >>         someFunctionWithNonescapingClosure { x = 200 }
+    >>     }
+    >> }
+    ---
     >> completionHandlers = []
     >> var instance3 = SomeStruct()
     >> instance3.doSomething()
     >> print(instance3.x)
     << 200
 
-.. assertion:: implicit-self-struct
+.. assertion:: noescape-closure-as-argument
 
-    -> struct S1 {
-           var x = 10
-           mutating func doSomething() {
-               someFunctionWithEscapingClosure { x = 100 }  // ERROR
-           }
-       }
-    -> struct S2 {
-           var x = 10
-           func doSomething() {
-               someFunctionWithEscapingClosure { print(x) }  // OK
-           }
-       }
-    !$ error: escaping closure captures mutating 'self' parameter
-    !! someFunctionWithEscapingClosure { x = 100 }  // ERROR
-    !! ^
-    !$ note: captured here
-    !! someFunctionWithEscapingClosure { x = 100 }  // ERROR
-    !! ^
+    >> struct S {
+    >>     var x = 10
+    >>     func doSomething() {
+    >>         someFunctionWithEscapingClosure { print(x) }  // OK
+    >>     }
+    >> }
+    ---
+    >> completionHandlers = []
+    >> var s = S()
+    >> s.doSomething()
+    >> s.x = 99  // No effect on self.x already captured -- S is a value type
+    >> completionHandlers.first?()
+    << 10
 
 
 .. _Closures_Autoclosures:
