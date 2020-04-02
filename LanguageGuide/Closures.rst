@@ -619,7 +619,7 @@ but the closure isn't called until the operation is completed ---
 the closure needs to escape, to be called later.
 For example:
 
-.. testcode:: noescape-closure-as-argument
+.. testcode:: noescape-closure-as-argument, implicit-self-struct
 
     -> var completionHandlers: [() -> Void] = []
     -> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
@@ -641,7 +641,7 @@ If ``self`` is an instance of a structure or an enumeration,
 you can always refer to ``self`` implicitly.
 However, if it's an instance of a class,
 you either have to refer to ``self`` explicitly,
-or you have to explicitly capture ``self``.
+or you have to capture ``self``.
 For example, in the code below,
 the closure passed to ``someFunctionWithEscapingClosure(_:)``
 needs to refer to ``self`` explicitly.
@@ -698,7 +698,9 @@ instead of referring to it explicitly:
     -> struct SomeStruct {
            var x = 10
            mutating func doSomething() {
-               someFunctionWithEscapingClosure { x = 100 }
+               // It's an error to capture mutable 'self' and escape;
+               // see the assertion below.
+               //someFunctionWithEscapingClosure { x = 100 }
                someFunctionWithNonescapingClosure { x = 200 }
            }
        }
@@ -707,9 +709,27 @@ instead of referring to it explicitly:
     >> instance3.doSomething()
     >> print(instance3.x)
     << 200
-    >> completionHandlers.first?()
-    >> print(instance3.x)
-    << 100
+
+.. assertion:: implicit-self-struct
+
+    -> struct S1 {
+           var x = 10
+           mutating func doSomething() {
+               someFunctionWithEscapingClosure { x = 100 }  // ERROR
+           }
+       }
+    -> struct S2 {
+           var x = 10
+           func doSomething() {
+               someFunctionWithEscapingClosure { print(x) }  // OK
+           }
+       }
+    !$ error: escaping closure captures mutating 'self' parameter
+    !! someFunctionWithEscapingClosure { x = 100 }  // ERROR
+    !! ^
+    !$ note: captured here
+    !! someFunctionWithEscapingClosure { x = 100 }  // ERROR
+    !! ^
 
 
 .. _Closures_Autoclosures:
