@@ -610,7 +610,7 @@ you can write ``@escaping`` before the parameter's type
 to indicate that the closure is allowed to escape.
 
 One way that a closure can escape
-is by being stored in a variable that is defined outside the function.
+is by being stored in a variable that's defined outside the function.
 As an example,
 many functions that start an asynchronous operation
 take a closure argument as a completion handler.
@@ -631,12 +631,24 @@ and adds it to an array that's declared outside the function.
 If you didn't mark the parameter of this function with ``@escaping``,
 you would get a compile-time error.
 
-Inside the body of an escaping closure,
-if ``self`` is an instance of a class,
-you need to refer to ``self`` explicitly or capture ``self``.
+An escaping closure that refers to ``self``
+needs special consideration if ``self`` refers to an instance of a class.
+Capturing ``self`` in an escaping closure
+makes it easy to accidentally create a strong reference cycle.
+For information about reference cycles,
+see :doc:`AutomaticReferenceCounting`.
+
+Normally, a closure captures variables implicitly
+by using them in the body of the closure,
+but in this case you need to be explicit.
+If you want to capture ``self``,
+write ``self`` explicitly when you use it,
+or include ``self`` in the closure's capture list.
+Writing ``self`` explicitly lets you express your intent,
+and reminds you to confirm that there isn't a reference cycle.
 For example, in the code below,
 the closure passed to ``someFunctionWithEscapingClosure(_:)``
-needs to refer to ``self`` explicitly.
+refers to ``self`` explicitly.
 In contrast, the closure passed to ``someFunctionWithNonescapingClosure(_:)``
 is a nonescaping closure, which means it can refer to ``self`` implicitly.
 
@@ -664,7 +676,8 @@ is a nonescaping closure, which means it can refer to ``self`` implicitly.
     <- 100
 
 Here's a version of ``doSomething()`` that captures ``self``
-instead of referring to it explicitly:
+by including it in the closure's capture list,
+and then refers to ``self`` implicitly:
 
 .. testcode:: noescape-closure-as-argument
 
