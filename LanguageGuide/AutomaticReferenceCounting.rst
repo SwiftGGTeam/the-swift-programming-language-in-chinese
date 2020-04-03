@@ -436,12 +436,13 @@ has the same lifetime or a longer lifetime.
 You indicate an unowned reference by placing the ``unowned`` keyword
 before a property or variable declaration.
 
-An unowned reference is expected to always have a value.
+Unlike a weak reference,
+an unowned reference is expected to always have a value.
 As a result,
-ARC never sets an unowned reference's value to ``nil``,
-which means that unowned references are defined using non-optional types.
+marking a value as unowned doesn't make it optional,
+and ARC never sets an unowned reference's value to ``nil``.
 
-..  Everything that unowned can do, weak can do slower and more awkwardly
+.. Everything that unowned can do, weak can do slower and more awkwardly
    (but still correctly).
    Unowned is interesting because it's faster and easier (no optionals) ---
    in the cases where it's actually correct for your data.
@@ -454,6 +455,13 @@ which means that unowned references are defined using non-optional types.
    If you try to access the value of an unowned reference
    after that instance has been deallocated,
    you'll get a runtime error.
+
+.. One way to satisfy that requirement is to
+   always access objects that have unmanaged properties through their owner
+   instead of keeping a reference to them directly,
+   because those direct references could outlive the owner.
+   However... this strategy really only works when the unowned reference
+   is a backpointer from an object up to its owner.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
@@ -574,6 +582,130 @@ after the ``john`` variable is set to ``nil``.
 
 .. <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
    Try expanding the example above so each customer has an array of credit cards.
+
+
+.. _AutomaticReferenceCounting_UnownedOptionalReferences:
+
+Unowned Optional References
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can mark an optional reference to a class as unowned.
+In terms of the ARC ownership model,
+an unowned optional reference and a weak reference
+can both be used in the same contexts.
+The difference is that when you use an unowned optional reference,
+you're responsible for making sure it always
+refers to a valid object or is set to ``nil``.
+
+Here's an example that keeps track of the courses
+offered by a particular department at a school:
+
+.. testcode:: unowned-optional-references
+
+    -> class Department {
+           var name: String
+           var courses: [Course]
+           init(name: String) {
+               self.name = name
+               self.courses = []
+           }
+       }
+    ---
+    -> class Course {
+           var name: String
+           unowned var department: Department
+           unowned var nextCourse: Course?
+           init(name: String, in department: Department) {
+               self.name = name
+               self.department = department
+               self.nextCourse = nil
+           }
+       }
+
+``Department`` maintains a strong reference
+to each course that the department offers.
+In the ARC ownership model, a department owns its courses.
+``Course`` has two unowned references,
+one to the department
+and one to the next course a student should take;
+a course doesn't own either of these objects.
+Every course is part of some department
+so the ``department`` property isn't an optional.
+However,
+because some courses don't have a recommended follow-on course,
+the ``nextCourse`` property is an optional.
+
+Here's an example of using these classes:
+
+.. testcode:: unowned-optional-references
+
+    -> let department = Department(name: "Horticulture")
+    ---
+    -> let intro = Course(name: "Survey of Plants", in: department)
+    -> let intermediate = Course(name: "Growing Common Herbs", in: department)
+    -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
+    ---
+    -> intro.nextCourse = intermediate
+    -> intermediate.nextCourse = advanced
+    -> department.courses = [intro, intermediate, advanced]
+
+The code above creates a department and its three courses.
+The intro and intermediate courses both have a suggested next course
+stored in their ``nextCourse`` property,
+which maintains an unowned optional reference to
+the course a student should take after after completing this one.
+
+.. image:: ../images/unownedOptionalReference_2x.png
+   :align: center
+
+An unowned optional reference doesn't keep a strong hold
+on the instance of the class that it wraps,
+and so it doesn't prevent ARC from deallocating the instance.
+It behaves the same as an unowned reference does under ARC,
+except that an unowned optional reference can be ``nil``.
+
+Like non-optional unowned references,
+you're responsible for ensuring that ``nextCourse``
+always refers to a course that hasn't been deallocated.
+In this case, for example,
+when you delete a course from ``department.courses``
+you also need to remove any references to it
+that other courses might have.
+
+.. note::
+
+    The underlying type of an optional value is ``Optional``,
+    which is an enumeration in the Swift standard library.
+    However, optionals are an exception to the rule that
+    value types can't be marked with ``unowned``.
+
+    The optional that wraps the class
+    doesn't use reference counting,
+    so you don't need to maintain a strong reference to the optional.
+
+.. assertion:: unowned-can-be-optional
+
+   >> class C { var x = 100 }
+   >> class D {
+   >>     unowned var a: C
+   >>     unowned var b: C?
+   >>     init(value: C) {
+   >>         self.a = value
+   >>         self.b = value
+   >>     }
+   >> }
+   >> var c = C() as C?
+   >> let d = D(value: c! )
+   >> print(d.a.x, d.b?.x as Any)
+   << 100 Optional(100)
+   ---
+   >> c = nil
+   // Now that the C instance is deallocated, access to d.a is an error.
+   // We manually nil out d.b, which is safe because d.b is an Optional and the
+   // enum stays in memory regardles of ARC deallocating the C instance.
+   >> d.b = nil
+   >> print(d.b?.x as Any)
+   << nil
 
 
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
