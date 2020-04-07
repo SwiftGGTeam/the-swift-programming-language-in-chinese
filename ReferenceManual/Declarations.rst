@@ -380,7 +380,8 @@ If the body of the ``didSet`` observer refers to the old value,
 the getter is called to read the property's old value
 before the observer is called.
 Otherwise, the getter isn't called,
-and the compiler might use in-place mutation as an optimization.
+and the compiler might use in-place mutation as an optimization
+for stored properties.
 
 The ``didSet`` clause is optional when you provide a ``willSet`` clause.
 Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
