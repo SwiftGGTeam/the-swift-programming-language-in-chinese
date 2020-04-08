@@ -352,6 +352,10 @@ the property within a subclass, as described in :ref:`Inheritance_OverridingProp
 The initializer *expression* is optional in the context of a class or structure declaration,
 but required elsewhere. The *type* annotation is optional
 when the type can be inferred from the initializer *expression*.
+In a class or structure declaration,
+this expression is evaluated the first time you read the property's value.
+If you overwrite the property's initial value without reading it,
+this expression never gets evaluated.
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -377,17 +381,66 @@ the default parameter name to the ``willSet`` observer is ``newValue``
 and the default parameter name to the ``didSet`` observer is ``oldValue``.
 
 If the body of the ``didSet`` observer refers to the old value,
-the getter is called to read the property's old value
-before the observer is called.
-Otherwise, the getter isn't called,
-and the compiler might use in-place mutation as an optimization
-for stored properties.
+but the initial value *expression* hasn't been evaluated yet,
+that expression is evaluated before the observer is called
+to make the old value available.
+Otherwise, the new value is stored without computing the initial value.
 
 The ``didSet`` clause is optional when you provide a ``willSet`` clause.
 Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
 
 For more information and to see an example of how to use property observers,
 see :ref:`Properties_PropertyObservers`.
+
+.. assertion:: when-didSet-evaluates-the-init-expr
+
+   >> func loudConst(_ x: Int) -> Int {
+   >>     print(x)
+   >>     return x
+   >> }
+   >> struct S1 {
+   >>     var x: Int = loudConst(10) {
+   >>         didSet { print("S1 didSet") }
+   >>     }
+   >> }
+   >> struct S2 {
+   >>     var x: Int = loudConst(20) {
+   >>         didSet { print("S2 didSet \(oldValue) -> \(x)") }
+   >>     }
+   >> }
+   >> struct S3 {
+   >>     var x: Int = loudConst(30){
+   >>         didSet { print("S3 didSet"); _ = oldValue }
+   >>     }
+   >> }
+   ---
+   >> var s1 = S1()
+   >> s1.x = 100
+   // no 10 because the lazy getter isn't called
+   << S1 didSet
+   ---
+   >> var s2 = S2()
+   >> s2.x = 100
+   << 20
+   << S2 didSet 20 -> 100
+   ---
+   >> var s3 = S3()
+   >> s3.x = 100
+   << 30
+   << S3 didSet
+
+.. assertion:: cant-mix-get-set-and-didSet
+
+   >> struct S {
+   >>     var x: Int {
+   >>         get { print("S getter"); return 12 }
+   >>         set { return }
+   >>         didSet { print("S didSet") }
+   >>     }
+   >> }
+   !$ error: 'didSet' cannot be provided together with a getter
+   !! didSet { print("S didSet") }
+   !! ^
 
 
 .. _Declarations_TypeVariableProperties:
