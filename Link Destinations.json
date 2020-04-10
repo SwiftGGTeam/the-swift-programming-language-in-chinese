@@ -163,6 +163,7 @@
     "automaticreferencecounting-resolvingstrongreferencecyclesforclosures": "ID57",
     "automaticreferencecounting-strongreferencecyclesbetweenclassinstances": "ID51",
     "automaticreferencecounting-strongreferencecyclesforclosures": "ID56",
+    "automaticreferencecounting-unownedoptionalreferences": "ID625",
     "automaticreferencecounting-unownedreferencesandimplicitlyunwrappedoptionalproperties": "ID55",
     "automaticreferencecounting-unownedreferencesbetweenclassinstances": "ID54",
     "automaticreferencecounting-weakandunownedreferencesforclosures": "ID59",
@@ -681,5 +682,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 625
+  "next_id": 626
 }
