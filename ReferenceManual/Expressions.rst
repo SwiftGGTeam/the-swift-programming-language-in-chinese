@@ -41,20 +41,53 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 For information about the operators provided by the Swift standard library,
 see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
-In addition to the standard library operators,
-you use ``&`` immediately before the name of a variable that's being passed
-as an in-out argument to a function call expression.
-For more information and to see an example,
-see :ref:`Functions_InOutParameters`.
-
-.. TODO: Need to a brief write up on the in-out-expression.
-
 .. syntax-grammar::
 
     Grammar of a prefix expression
 
     prefix-expression --> prefix-operator-OPT postfix-expression
     prefix-expression --> in-out-expression
+
+
+.. _Expressions_InOutExpression:
+
+An :newTerm:`in-out expression` marks the name of a variable
+◊
+you use ``&`` immediately before the name of a variable that's being passed
+as an in-out argument to a function call expression.
+
+.. syntax-outline::
+
+   &<#expression#>
+
+In addition to the standard library operators,
+For more information and to see an example,
+see :ref:`Functions_InOutParameters`.
+
+In addition to marking in-out arguments,
+marking a variable with ``&`` is also used
+when passing a non-pointer argument in a context where a pointer is needed.
+Swift converts the value to a pointer that's valid
+for the duration of the function call.
+
+.. testcode:: inout-pointer-promotion
+
+    -> var someNumber = 12
+    -> func f(p: UnsafePointer<Int>) {
+           print(p.pointee)
+       }
+    -> f(&someNumber)
+    <- 12
+
+.. XXX: Hanging on to the pointer after the function
+   isn't going to trigger a compiler error
+   and it might even work sometimes,
+   but the behavior is undefined.
+
+.. syntax-grammar::
+
+    Grammar of an in-out expression
+
     in-out-expression --> ``&`` identifier
 
 
