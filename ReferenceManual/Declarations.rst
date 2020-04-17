@@ -692,7 +692,7 @@ see :doc:`../LanguageGuide/MemorySafety`.
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
 If you need to capture an in-out parameter
-without mutating it or to observe changes made by other code,
+without mutating it,
 use a capture list to explicitly capture the parameter immutably.
 
 .. testcode:: explicit-capture-for-inout
@@ -700,6 +700,13 @@ use a capture list to explicitly capture the parameter immutably.
     -> func someFunction(a: inout Int) -> () -> Int {
            return { [a] in return a + 1 }
        }
+    >> class C { var x = 100 }
+    >> let c = C()
+    >> let f = someFunction(a: &c.x)
+    >> c.x = 200
+    >> let r = f()
+    >> print(r, r == c.x)
+    << 101 false
 
 If you need to capture and mutate an in-out parameter,
 use an explicit local copy,
