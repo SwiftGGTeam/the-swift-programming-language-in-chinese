@@ -296,9 +296,9 @@ the default value is used instead.
 
 .. testcode:: guided-tour
 
-    -> let nickName: String? = nil
+    -> let nickname: String? = nil
     -> let fullName: String = "John Appleseed"
-    -> let informalGreeting = "Hi \(nickName ?? fullName)"
+    -> let informalGreeting = "Hi \(nickname ?? fullName)"
     >> print(informalGreeting)
     << Hi John Appleseed
 
