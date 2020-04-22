@@ -1332,9 +1332,9 @@ and to determine whether the move is allowed:
 
    It is not strictly necessary to use the ``gameLoop`` label
    when calling ``continue gameLoop`` to jump to the next iteration of the loop.
-   There is only one loop in the game,
+   there's only one loop in the game,
    and therefore no ambiguity as to which loop the ``continue`` statement will affect.
-   However, there is no harm in using the ``gameLoop`` label with the ``continue`` statement.
+   However, there's no harm in using the ``gameLoop`` label with the ``continue`` statement.
    Doing so is consistent with the label's use alongside the ``break`` statement
    and helps make the game's logic clearer to read and understand.
 

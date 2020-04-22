@@ -108,8 +108,8 @@ at the point that you call the ``Person`` class's initializer.
 This confirms that initialization has taken place.
 
 Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
-there is now a strong reference from ``reference1`` to the new ``Person`` instance.
-Because there is at least one strong reference,
+there's now a strong reference from ``reference1`` to the new ``Person`` instance.
+Because there's at least one strong reference,
 ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
 
 If you assign the same ``Person`` instance to two more variables,
@@ -728,7 +728,7 @@ and another property that cannot be ``nil``
 have the potential to cause a strong reference cycle.
 This scenario is best resolved with an unowned reference.
 
-However, there is a third scenario,
+However, there's a third scenario,
 in which *both* properties should always have a value,
 and neither property should ever be ``nil`` once initialization is complete.
 In this scenario, it's useful to combine an unowned property on one class

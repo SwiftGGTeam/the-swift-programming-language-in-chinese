@@ -232,7 +232,7 @@ such as when its ``filename`` property is queried:
    If a property marked with the ``lazy`` modifier
    is accessed by multiple threads simultaneously
    and the property has not yet been initialized,
-   there is no guarantee that the property will be initialized only once.
+   there's no guarantee that the property will be initialized only once.
 
 .. 6/19/14, 10:54 PM [Contributor 7746]:
    @lazy is not thread safe.  Global variables (and static struct/enum fields) *are*.

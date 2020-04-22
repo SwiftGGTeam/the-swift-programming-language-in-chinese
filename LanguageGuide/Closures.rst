@@ -220,7 +220,7 @@ Here, the function type of the ``sorted(by:)`` method's argument
 makes it clear that a ``Bool`` value must be returned by the closure.
 Because the closure's body contains a single expression (``s1 > s2``)
 that returns a ``Bool`` value,
-there is no ambiguity, and the ``return`` keyword can be omitted.
+there's no ambiguity, and the ``return`` keyword can be omitted.
 
 .. _Closures_ShorthandArgumentNames:
 

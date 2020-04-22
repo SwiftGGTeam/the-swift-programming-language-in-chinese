@@ -93,7 +93,7 @@ The ``BlackjackCard`` structure itself has two properties --- ``rank`` and ``sui
 It also defines a computed property called ``description``,
 which uses the values stored in ``rank`` and ``suit`` to build
 a description of the name and value of the card.
-The ``description`` property uses optional binding to check whether there is
+The ``description`` property uses optional binding to check whether there's
 a second value to display, and if so,
 inserts additional description detail for that second value.
 

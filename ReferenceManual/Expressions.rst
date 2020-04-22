@@ -583,7 +583,7 @@ instance of the type in which it occurs. In a type method,
 ``self`` refers to the current type in which it occurs.
 
 The ``self`` expression is used to specify scope when accessing members,
-providing disambiguation when there is
+providing disambiguation when there's
 another variable of the same name in scope,
 such as a function parameter.
 For example:
@@ -793,7 +793,7 @@ This means that a change to the value of ``a`` in the outer scope
 does not affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
 affect the value of ``a`` outside the closure.
-In contrast, there is only one variable named ``b`` ---
+In contrast, there's only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
 

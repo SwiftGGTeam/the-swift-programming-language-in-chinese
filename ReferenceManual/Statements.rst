@@ -1087,7 +1087,7 @@ have the following form:
 
     Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
-    However, there is an exception
+    However, there's an exception
     if the compilation condition includes a ``swift()`` platform condition:
     The statements are parsed
     only if the compiler's version of Swift matches
