@@ -446,10 +446,10 @@ Literal         Type                  Value
 ==============  ====================  ==========================================
 
 The string value of a ``#file`` expression has the form *module*/*file*,
-where *module* is the name of the module that the expression appears in
-and *file* is the name of the file it appears in.
+where *file* is the name of the file in which the expression appears
+and *module* is the name of the module that this file is part of.
 The string value of a ``#filePath`` expression
-is the full file-system path to the file that the expression appears in.
+is the full file-system path to the file in which the expression appears.
 Both of these values can be changed by ``#sourceLocation``,
 as described in :ref:`Statements_LineControlStatement`.
 
@@ -457,7 +457,7 @@ as described in :ref:`Statements_LineControlStatement`.
 
    To parse a ``#file`` expression,
    read the module name as the text before the first slash (``/``)
-   and the file name as the text after the last slash.
+   and the filename as the text after the last slash.
    In the future, the string may contain multiple slashes,
    such as ``MyModule/some/disambiguation/MyFile.swift``.
 
