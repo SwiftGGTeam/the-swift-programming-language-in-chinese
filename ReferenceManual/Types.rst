@@ -731,7 +731,7 @@ is equivalent to ``P & Q & R``.
 Opaque Type
 -----------
 
-An :newterm:`opaque type` defines a type
+An :newTerm:`opaque type` defines a type
 that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 

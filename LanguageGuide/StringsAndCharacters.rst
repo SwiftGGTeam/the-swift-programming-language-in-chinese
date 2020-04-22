@@ -702,7 +702,7 @@ or by using subscript syntax.
 String Indices
 ~~~~~~~~~~~~~~
 
-Each ``String`` value has an associated :newterm:`index type`,
+Each ``String`` value has an associated :newTerm:`index type`,
 ``String.Index``,
 which corresponds to the position of each ``Character`` in the string.
 

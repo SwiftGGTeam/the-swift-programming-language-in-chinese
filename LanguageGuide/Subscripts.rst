@@ -283,7 +283,7 @@ Type Subscripts
 Instance subscripts, as described above,
 are subscripts that you call on an instance of a particular type.
 You can also define subscripts that are called on the type itself.
-This kind of subscript is called a :newterm:`type subscript`.
+This kind of subscript is called a :newTerm:`type subscript`.
 You indicate a type subscript
 by writing the ``static`` keyword before the ``subscript`` keyword.
 Classes can use the ``class`` keyword instead,

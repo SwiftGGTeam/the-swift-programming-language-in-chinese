@@ -143,7 +143,7 @@ for example, a variable, constant, or property.
 The duration of a memory access
 is either instantaneous or long-term.
 
-An access is :newterm:`instantaneous`
+An access is :newTerm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
 By their nature, two instantaneous accesses can't happen at the same time.
@@ -164,7 +164,7 @@ all the read and write accesses in the code listing below are instantaneous:
 
 However,
 there are several ways to access memory,
-called :newterm:`long-term` accesses,
+called :newTerm:`long-term` accesses,
 that span the execution of other code.
 The difference between instantaneous access and long-term access
 is that it’s possible for other code to run
