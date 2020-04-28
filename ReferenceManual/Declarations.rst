@@ -1652,7 +1652,7 @@ see :ref:`Protocols_OptionalProtocolRequirements`.
     properly for optional initializer requirements.
 
 The cases of an enumeration can satisfy
-a protocol requirement for a type member.
+protocol requirements for type members.
 Specifically,
 an enumeration case that has no associated values
 satisfies a protocol requirement for
