@@ -427,14 +427,12 @@ or passed to a function.)
    -> let s1 = S()
    -> let s2 = S()
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !$ error: cannot convert value of type 'S' to expected argument type 'AnyObject?'
+   !$ error: argument type 'S' expected to be an instance of a class or class-constrained type
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
-   !! as AnyObject
-   !$ error: cannot convert value of type 'S' to expected argument type 'AnyObject?'
+   !$ error: argument type 'S' expected to be an instance of a class or class-constrained type
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
-   !! as AnyObject
 
 .. assertion:: enumerationsDontSupportTheIdentityOperators
 
@@ -442,14 +440,12 @@ or passed to a function.)
    -> let e1 = E.a
    -> let e2 = E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !$ error: cannot convert value of type 'E' to expected argument type 'AnyObject?'
+   !$ error: argument type 'E' expected to be an instance of a class or class-constrained type
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
-   !! as AnyObject
-   !$ error: cannot convert value of type 'E' to expected argument type 'AnyObject?'
+   !$ error: argument type 'E' expected to be an instance of a class or class-constrained type
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
-   !! as AnyObject
 
 It can sometimes be useful to find out whether two constants or variables refer to
 exactly the same instance of a class.
@@ -489,12 +485,6 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !$ error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
-   !$ note: candidate requires that 'C' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
-   !! extension BinaryInteger {
-   !!          ^
-   !$ note: candidate requires that 'C' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
-   !! extension StringProtocol {
-   !! ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
@@ -505,12 +495,6 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    !$ error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
-   !$ note: candidate requires that 'S' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
-   !! extension BinaryInteger {
-   !! ^
-   !$ note: candidate requires that 'S' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
-   !! extension StringProtocol {
-   !! ^
 
 .. TODO: This needs clarifying with regards to function references.
 

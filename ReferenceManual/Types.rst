@@ -259,7 +259,7 @@ For example:
    ---
    -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
    -> f = functionWithDifferentNumberOfArguments // Error
-   !$ error: expression type '()' is ambiguous without more context
+   !$ error: type of expression is ambiguous without more context
    !! f = functionWithDifferentNumberOfArguments // Error
    !! ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

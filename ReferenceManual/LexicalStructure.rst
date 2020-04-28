@@ -857,7 +857,7 @@ postfix operators can't begin with either a question mark or an exclamation poin
           return x + 1
       }
    >> print(1?+)
-   !$ error: expected operator name in operator declaration
+   !$ error: postfix operator names starting with '?' or '!' are disallowed to avoid collisions with built-in unwrapping operators
    !! postfix operator ?+
    !!                  ^
    !$ error: '+' is not a postfix unary operator

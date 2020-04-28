@@ -417,12 +417,6 @@ comparing results returned by this function.
     !$ error: binary operator '==' cannot be applied to two 'Shape' operands
     !! protoFlippedTriangle == sameThing  // Error
     !! ~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
-    !$ note: candidate requires that 'Shape' conform to 'BinaryInteger' (requirement specified as 'Self' == 'BinaryInteger')
-    !! extension BinaryInteger {
-    !! ^
-    !$ note: candidate requires that 'Shape' conform to 'StringProtocol' (requirement specified as 'Self' == 'StringProtocol')
-    !! extension StringProtocol {
-    !! ^
 
 The error on the last line of the example occurs for several reasons.
 The immediate issue is that the ``Shape`` doesn't include an ``==`` operator
