@@ -1163,26 +1163,29 @@ A line control statement has the following forms:
 
 .. syntax-outline::
 
-    #sourceLocation(file: <#filename#>, line: <#line number#>)
+    #sourceLocation(file: <#file path#>, line: <#line number#>)
     #sourceLocation()
 
-The first form of a line control statement changes the values of the ``#line`` and ``#file``
+The first form of a line control statement changes the values
+of the ``#line``, ``#file``, and ``#filePath``
 literal expressions, beginning with the line of code following the line control statement.
 The *line number* changes the value of ``#line``
 and is any integer literal greater than zero.
-The *filename* changes the value of ``#file`` and is a string literal.
+The *file path* changes the value of ``#file`` and ``#filePath``, and is a string literal.
+The specified string becomes the value of ``#filePath``,
+and the last path component of the string becomes the value of ``#file``.
 
 The second form of a line control statement, ``#sourceLocation()``,
-resets the source code location back to the default line numbering and filename.
+resets the source code location back to the default line numbering and file path.
 
 .. syntax-grammar::
 
     Grammar of a line control statement
 
-    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-name ``,`` ``line:`` line-number ``)``
+    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-path ``,`` ``line:`` line-number ``)``
     line-control-statement --> ``#sourceLocation`` ``(`` ``)``
     line-number --> A decimal integer greater than zero
-    file-name --> static-string-literal
+    file-path --> static-string-literal
 
 .. _Statements_ErrorWarning:
 

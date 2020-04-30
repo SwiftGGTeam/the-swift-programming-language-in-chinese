@@ -271,6 +271,7 @@ so they must be escaped with backticks in that context.
   ``#endif``,
   ``#error``,
   ``#file``,
+  ``#filePath``,
   ``#fileLiteral``,
   ``#function``,
   ``#if``,
