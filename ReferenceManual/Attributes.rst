@@ -633,6 +633,72 @@ even though they can't be marked with this attribute.
    yielding inconsistent results.
 
 
+.. _Attributes_main:
+
+main
+~~~~
+
+Apply this attribute to a structure, class, or enumeration declaration
+to indicate that it contains the top-level entry point for program flow.
+The type must provide a ``main`` type function.
+For example:
+
+.. testcode:: atMain
+   :library: true
+
+   -> @main
+   -> struct MyTopLevel {
+   ->     static func main() {
+   ->         // Top level code goes here
+   >>         print("Hello")
+   ->     }
+   -> }
+   << Hello
+
+Another way to describe the requirements of the ``main`` attribute
+is that the type you write this attribute on
+must satisfy the same requirements
+as types that conform the following protocol:
+
+.. testcode:: atMain_ProvidesMain
+
+   -> protocol ProvidesMain {
+          static func main() throws
+      }
+
+The ``main`` attribute can't appear on any declaration
+inside a file that contains top-level code,
+like the ``main.swift`` file.
+
+.. assertion:: no-at-main-in-top-level-code
+
+   // This is the same example as atMait, but without :library: true.
+   >> @main
+   >> struct MyTopLevel {
+   >>     static func main() {
+   >>         print("Hello")
+   >>     }
+   >> }
+   !$ error: 'main' attribute cannot be used in a module that contains top-level code
+   !! @main
+   !! ^
+   !$ note: top-level code defined in this source file
+   !! @main
+   !! ^
+
+.. sourcefile:: atMain_library
+
+   -> // In file "library.swift"
+   -> open class C {
+          public static func main() { print("Hello") }
+      }
+
+.. sourcefile:: atMain_client
+   :library: true
+
+   -> import atMain_library
+   -> @main class CC: C { }
+
 .. _Attributes_nonobjc:
 
 nonobjc
