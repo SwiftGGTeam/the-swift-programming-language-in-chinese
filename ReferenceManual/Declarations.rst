@@ -1654,10 +1654,10 @@ see :ref:`Protocols_OptionalProtocolRequirements`.
 The cases of an enumeration can satisfy
 protocol requirements for type members.
 Specifically,
-an enumeration case that has no associated values
+an enumeration case without any associated values
 satisfies a protocol requirement for
 a get-only type variable of type ``Self``,
-and an enumeration case that has associated values
+and an enumeration case with associated values
 satisfies a protocol requirement for a function that returns ``Self``
 whose parameters and their argument labels
 match the case's associated values.
