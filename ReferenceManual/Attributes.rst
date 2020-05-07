@@ -641,7 +641,7 @@ main
 Apply this attribute to a structure, class, or enumeration declaration
 to indicate that it contains the top-level entry point for program flow.
 The type must provide a ``main`` type function
-that takes no arguments and returns ``Void``.
+that doesn't take any arguments and returns ``Void``.
 For example:
 
 .. testcode:: atMain
