@@ -659,7 +659,7 @@ For example:
 Another way to describe the requirements of the ``main`` attribute
 is that the type you write this attribute on
 must satisfy the same requirements
-as types that conform the following protocol:
+as types that conform to the following protocol:
 
 .. testcode:: atMain_ProvidesMain
 
