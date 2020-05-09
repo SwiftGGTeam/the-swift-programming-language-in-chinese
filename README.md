@@ -7,7 +7,7 @@
 
 # 在线阅读
 
-使用 GitBook 制作，可以在 [GitBook](https://swiftgg.gitbook.io/swift/) 网站阅读，或者在 [语雀](https://www.yuque.com/swiftgg/docs) 阅读。
+使用 GitBook 制作，可以在 [GitBook](https://swiftgg.gitbook.io/swift/) 网站阅读。
 
 # 当前阶段
 
