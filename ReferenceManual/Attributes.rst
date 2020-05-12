@@ -667,9 +667,15 @@ as types that conform to the following protocol:
           static func main() throws
       }
 
-The ``main`` attribute can't appear on any declaration
-inside a file that contains top-level code,
-like the ``main.swift`` file.
+The Swift code you compile to make an executable
+can contain at most one of the following approaches
+to mark the top-level entry point,
+regardless of how the code is organized into files and modules:
+the ``main`` attribute,
+the ``NSApplicationMain`` attribute,
+the ``UIApplicationMain`` attribute,
+a ``main.swift`` file,
+and a file with top-level code.
 
 .. assertion:: no-at-main-in-top-level-code
 
@@ -699,6 +705,7 @@ like the ``main.swift`` file.
 
    -> import atMain_library
    -> @main class CC: C { }
+
 
 .. _Attributes_nonobjc:
 
@@ -754,6 +761,16 @@ that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
 .. Rewrite the above to avoid discarding the function's return value.
    Tracking bug is <rdar://problem/35301593>
+
+The Swift code you compile to make an executable
+can contain at most one of the following approaches
+to mark the top-level entry point,
+regardless of how the code is organized into files and modules:
+the ``main`` attribute,
+the ``NSApplicationMain`` attribute,
+the ``UIApplicationMain`` attribute,
+a ``main.swift`` file,
+and a file with top-level code.
 
 
 .. _Attributes_NSCopying:
@@ -1109,6 +1126,16 @@ if your app uses a custom subclass of ``UIApplication``
 as its principal class,
 call the ``UIApplicationMain(_:_:_:_:)`` function
 instead of using this attribute.
+
+The Swift code you compile to make an executable
+can contain at most one of the following approaches
+to mark the top-level entry point,
+regardless of how the code is organized into files and modules:
+the ``main`` attribute,
+the ``NSApplicationMain`` attribute,
+the ``UIApplicationMain`` attribute,
+a ``main.swift`` file,
+and a file with top-level code.
 
 
 .. _Attributes_usableFromInline:
