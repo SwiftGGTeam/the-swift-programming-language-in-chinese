@@ -239,7 +239,7 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
 
 所有的参数都必须有一个独一无二的名字。虽然多个参数拥有同样的参数标签是可能的，但是一个唯一的参数标签能够使你的代码更具可读性。
 
-### 指定参数标签 {#specifying-argument-labels}
+### 分离参数标签 {#specifying-argument-labels}
 
 你可以在参数名称前指定它的参数标签，中间以空格分隔：
 
@@ -249,7 +249,7 @@ func someFunction(argumentLabel parameterName: Int) {
 }
 ```
 
-这个版本的 `greet(person:)` 函数，接收一个人的名字和他的家乡，并且返回一句问候：
+前面的参数名称供外部调用，后面的参数名称供内部使用,这个版本的 `greet(person:)` 函数，接收一个人的名字和他的家乡，并且返回一句问候：
 
 ```swift
 func greet(person: String, from hometown: String) -> String {
@@ -259,7 +259,7 @@ print(greet(person: "Bill", from: "Cupertino"))
 // 打印“Hello Bill!  Glad you could visit from Cupertino.”
 ```
 
-参数标签的使用能够让一个函数在调用时更有表达力，更类似自然语言，并且仍保持了函数内部的可读性以及清晰的意图。
+分离参数标签的使用能够让一个函数在调用时更有表达力，更类似自然语言，并且仍保持了函数内部的可读性以及清晰的意图。
 
 ### 忽略参数标签 {#omitting-argument-labels}
 
