@@ -297,7 +297,7 @@ the access level for that compound tuple type will be private.
 
    // a tuple with one or more private members can't be accessed from outside of its source file
    -> let privateTuple = returnFilePrivateTuple()
-   !$ error: use of unresolved identifier 'returnFilePrivateTuple'
+   !$ error: cannot find 'returnFilePrivateTuple' in scope
    !! let privateTuple = returnFilePrivateTuple()
    !!                    ^~~~~~~~~~~~~~~~~~~~~~
 
@@ -313,10 +313,10 @@ the access level for that compound tuple type will be private.
    -> import tupleTypes_Module1
    -> let internalTuple = returnInternalTuple()
    -> let privateTuple = returnFilePrivateTuple()
-   !$ error: use of unresolved identifier 'returnInternalTuple'
+   !$ error: cannot find 'returnInternalTuple' in scope
    !! let internalTuple = returnInternalTuple()
    !!                     ^~~~~~~~~~~~~~~~~~~
-   !$ error: use of unresolved identifier 'returnFilePrivateTuple'
+   !$ error: cannot find 'returnFilePrivateTuple' in scope
    !! let privateTuple = returnFilePrivateTuple()
    !!                    ^~~~~~~~~~~~~~~~~~~~~~
 
@@ -492,10 +492,10 @@ you must explicitly declare the nested type as public.
    !$ note: 'PrivateEnumInsideInternalStruct' declared here
    !! private enum PrivateEnumInsideInternalStruct { case a, b }
    !! ^
-   !$ error: use of unresolved identifier 'PrivateStruct'
+   !$ error: cannot find 'PrivateStruct' in scope
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    !!                                  ^~~~~~~~~~~~~
-   !$ error: use of unresolved identifier 'PrivateStruct'
+   !$ error: cannot find 'PrivateStruct' in scope
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
 
@@ -532,19 +532,19 @@ you must explicitly declare the nested type as public.
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !$ note: 'PrivateEnumInsidePublicStruct' declared here
-   !$ error: use of unresolved identifier 'InternalStruct'
+   !$ error: cannot find 'InternalStruct' in scope
    !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
    !!                                    ^~~~~~~~~~~~~~
-   !$ error: use of unresolved identifier 'InternalStruct'
+   !$ error: cannot find 'InternalStruct' in scope
    !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
    !!                                     ^~~~~~~~~~~~~~
-   !$ error: use of unresolved identifier 'InternalStruct'
+   !$ error: cannot find 'InternalStruct' in scope
    !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
    !!                                   ^~~~~~~~~~~~~~
-   !$ error: use of unresolved identifier 'PrivateStruct'
+   !$ error: cannot find 'PrivateStruct' in scope
    !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
    !!                                  ^~~~~~~~~~~~~
-   !$ error: use of unresolved identifier 'PrivateStruct'
+   !$ error: cannot find 'PrivateStruct' in scope
    !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
    !!                                    ^~~~~~~~~~~~~
 
@@ -979,7 +979,7 @@ on any type that adopts the protocol.
          var filePrivateProperty = 0
          func filePrivateMethod() {}
       }
-   !$ error: use of undeclared type 'FilePrivateProtocol'
+   !$ error: cannot find type 'FilePrivateProtocol' in scope
    !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
    !! ^~~~~~~~~~~~~~~~~~~
    ---
@@ -988,7 +988,7 @@ on any type that adopts the protocol.
          var privateProperty = 0
          func privateMethod() {}
       }
-   !$ error: use of undeclared type 'PrivateProtocol'
+   !$ error: cannot find type 'PrivateProtocol' in scope
    !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
    !! ^~~~~~~~~~~~~~~
 
@@ -1026,13 +1026,13 @@ on any type that adopts the protocol.
          var privateProperty = 0
          func privateMethod() {}
       }
-   !$ error: use of undeclared type 'InternalProtocol'
+   !$ error: cannot find type 'InternalProtocol' in scope
    !! public class PublicClassConformingToInternalProtocol: InternalProtocol {
    !! ^~~~~~~~~~~~~~~~
-   !$ error: use of undeclared type 'FilePrivateProtocol'
+   !$ error: cannot find type 'FilePrivateProtocol' in scope
    !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
    !! ^~~~~~~~~~~~~~~~~~~
-   !$ error: use of undeclared type 'PrivateProtocol'
+   !$ error: cannot find type 'PrivateProtocol' in scope
    !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
    !! ^~~~~~~~~~~~~~~
 

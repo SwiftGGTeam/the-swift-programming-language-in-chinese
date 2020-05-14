@@ -95,10 +95,10 @@ The following statement is not valid:
    -> if x = y {
          // This is not valid, because x = y does not return a value.
       }
-   !$ error: use of unresolved identifier 'x'
+   !$ error: cannot find 'x' in scope
    !! if x = y {
    !!    ^
-   !$ error: use of unresolved identifier 'y'
+   !$ error: cannot find 'y' in scope
    !! if x = y {
    !!        ^
 

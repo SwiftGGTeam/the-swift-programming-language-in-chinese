@@ -949,7 +949,7 @@ For example:
    -> let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
    >> _ = someFunction1 // suppress unused-constant warning
    >> _ = someFunction2 // suppress unused-constant warning
-   !$ error: use of unresolved identifier 'callable(_:scale:)'
+   !$ error: cannot find 'callable(_:scale:)' in scope
    !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
    !! ^~~~~~~~~~~~~~~~~~
 

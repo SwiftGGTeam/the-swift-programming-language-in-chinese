@@ -114,7 +114,7 @@ that is declared in the ``ExampleModule`` module.
 .. testcode:: type-identifier-dot
 
     -> var someValue: ExampleModule.MyType
-    !$ error: use of undeclared type 'ExampleModule'
+    !$ error: cannot find type 'ExampleModule' in scope
     !! var someValue: ExampleModule.MyType
     !!                ^~~~~~~~~~~~~
 
