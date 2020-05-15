@@ -1651,6 +1651,29 @@ see :ref:`Protocols_OptionalProtocolRequirements`.
     compiler team. Update this section if they decide to make everything work
     properly for optional initializer requirements.
 
+The cases of an enumeration can satisfy
+protocol requirements for type members.
+Specifically,
+an enumeration case without any associated values
+satisfies a protocol requirement for
+a get-only type variable of type ``Self``,
+and an enumeration case with associated values
+satisfies a protocol requirement for a function that returns ``Self``
+whose parameters and their argument labels
+match the case's associated values.
+For example:
+
+.. testcode:: enum-case-satisfy-protocol-requirement
+
+    -> protocol SomeProtocol {
+           static var someValue: Self { get }
+           static func someFunction(x: Int) -> Self
+       }
+    -> enum MyEnum: SomeProtocol {
+           case someValue
+           case someFunction(x: Int)
+       }
+
 To restrict the adoption of a protocol to class types only,
 include the ``AnyObject`` protocol in the *inherited protocols*
 list after the colon.
