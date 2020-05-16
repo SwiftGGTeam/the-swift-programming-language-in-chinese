@@ -873,7 +873,18 @@ A ``do`` statement has the following form:
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
        <#statements#>
+   } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
+       <#statements#>
    }
+
+If any statement in the ``do`` code block throws an error,
+program control is transferred
+to the first ``catch`` clause whose pattern matches the error.
+If none of the clauses matches,
+the error propagates to the surrounding scope.
+If an error is unhandled at the top level, program execution stops.
+For a ``catch`` clause that specifies multiple patterns,
+if any of those patterns matches, that clause is used.
 
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
@@ -900,7 +911,9 @@ see :ref:`ErrorHandling_Catch`.
 
     do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
-    catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block
+    catch-clause --> ``catch`` catch-item-list code-block
+    catch-item-list --> pattern-OPT where-clause-OPT
+    catch-item-list --> pattern-OPT where-clause-OPT ``,`` catch-item-list
 
 
 .. _Statements_CompilerControlStatements:
