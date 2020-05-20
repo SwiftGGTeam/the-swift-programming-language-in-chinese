@@ -650,7 +650,7 @@ For example:
    -> @main
    -> struct MyTopLevel {
    ->     static func main() {
-   ->         // Top level code goes here
+   ->         // Top-level code goes here
    >>         print("Hello")
    ->     }
    -> }
