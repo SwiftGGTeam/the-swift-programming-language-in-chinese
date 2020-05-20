@@ -675,7 +675,7 @@ the ``main`` attribute,
 the ``NSApplicationMain`` attribute,
 the ``UIApplicationMain`` attribute,
 a ``main.swift`` file,
-and a file with top-level code.
+or a file with top-level code.
 
 .. assertion:: no-at-main-in-top-level-code
 
@@ -770,7 +770,7 @@ the ``main`` attribute,
 the ``NSApplicationMain`` attribute,
 the ``UIApplicationMain`` attribute,
 a ``main.swift`` file,
-and a file with top-level code.
+or a file with top-level code.
 
 
 .. _Attributes_NSCopying:
@@ -1135,7 +1135,7 @@ the ``main`` attribute,
 the ``NSApplicationMain`` attribute,
 the ``UIApplicationMain`` attribute,
 a ``main.swift`` file,
-and a file with top-level code.
+or a file with top-level code.
 
 
 .. _Attributes_usableFromInline:
