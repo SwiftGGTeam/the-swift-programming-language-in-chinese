@@ -50,7 +50,23 @@ You can override this default behavior
 by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
 
-.. TODO: Revisit and rewrite this section after WWDC
+There are two kinds of top-level code:
+top-level declarations and executable top-level code.
+Top-level declarations consist of only declarations,
+and are allowed in all Swift source files.
+Executable top-level code contains statements and expressions,
+not just declarations,
+and is allowed only as the top-level entry point for the program.
+
+The Swift code you compile to make an executable
+can contain at most one of the following approaches
+to mark the top-level entry point,
+regardless of how the code is organized into files and modules:
+the ``main`` attribute,
+the ``NSApplicationMain`` attribute,
+the ``UIApplicationMain`` attribute,
+a ``main.swift`` file,
+or a file that contains top-level executable code.
 
 .. syntax-grammar::
 

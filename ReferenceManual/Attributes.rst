@@ -668,14 +668,8 @@ as types that conform to the following protocol:
       }
 
 The Swift code you compile to make an executable
-can contain at most one of the following approaches
-to mark the top-level entry point,
-regardless of how the code is organized into files and modules:
-the ``main`` attribute,
-the ``NSApplicationMain`` attribute,
-the ``UIApplicationMain`` attribute,
-a ``main.swift`` file,
-or a file with top-level code.
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 .. assertion:: no-at-main-in-top-level-code
 
@@ -763,14 +757,8 @@ that calls the ``NSApplicationMain(_:_:)`` function as follows:
    Tracking bug is <rdar://problem/35301593>
 
 The Swift code you compile to make an executable
-can contain at most one of the following approaches
-to mark the top-level entry point,
-regardless of how the code is organized into files and modules:
-the ``main`` attribute,
-the ``NSApplicationMain`` attribute,
-the ``UIApplicationMain`` attribute,
-a ``main.swift`` file,
-or a file with top-level code.
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
 .. _Attributes_NSCopying:
@@ -1128,14 +1116,8 @@ call the ``UIApplicationMain(_:_:_:_:)`` function
 instead of using this attribute.
 
 The Swift code you compile to make an executable
-can contain at most one of the following approaches
-to mark the top-level entry point,
-regardless of how the code is organized into files and modules:
-the ``main`` attribute,
-the ``NSApplicationMain`` attribute,
-the ``UIApplicationMain`` attribute,
-a ``main.swift`` file,
-or a file with top-level code.
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
 .. _Attributes_usableFromInline:
