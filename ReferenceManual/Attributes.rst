@@ -635,6 +635,74 @@ even though they can't be marked with this attribute.
    yielding inconsistent results.
 
 
+.. _Attributes_main:
+
+main
+~~~~
+
+Apply this attribute to a structure, class, or enumeration declaration
+to indicate that it contains the top-level entry point for program flow.
+The type must provide a ``main`` type function
+that doesn't take any arguments and returns ``Void``.
+For example:
+
+.. testcode:: atMain
+   :library: true
+
+   -> @main
+   -> struct MyTopLevel {
+   ->     static func main() {
+   ->         // Top-level code goes here
+   >>         print("Hello")
+   ->     }
+   -> }
+   << Hello
+
+Another way to describe the requirements of the ``main`` attribute
+is that the type you write this attribute on
+must satisfy the same requirements
+as types that conform to the following protocol:
+
+.. testcode:: atMain_ProvidesMain
+
+   -> protocol ProvidesMain {
+          static func main() throws
+      }
+
+The Swift code you compile to make an executable
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
+
+.. assertion:: no-at-main-in-top-level-code
+
+   // This is the same example as atMait, but without :library: true.
+   >> @main
+   >> struct MyTopLevel {
+   >>     static func main() {
+   >>         print("Hello")
+   >>     }
+   >> }
+   !$ error: 'main' attribute cannot be used in a module that contains top-level code
+   !! @main
+   !! ^
+   !$ note: top-level code defined in this source file
+   !! @main
+   !! ^
+
+.. sourcefile:: atMain_library
+
+   -> // In file "library.swift"
+   -> open class C {
+          public static func main() { print("Hello") }
+      }
+
+.. sourcefile:: atMain_client
+   :library: true
+
+   -> import atMain_library
+   -> @main class CC: C { }
+
+
 .. _Attributes_nonobjc:
 
 nonobjc
@@ -689,6 +757,10 @@ that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
 .. Rewrite the above to avoid discarding the function's return value.
    Tracking bug is <rdar://problem/35301593>
+
+The Swift code you compile to make an executable
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
 .. _Attributes_NSCopying:
@@ -1044,6 +1116,10 @@ if your app uses a custom subclass of ``UIApplication``
 as its principal class,
 call the ``UIApplicationMain(_:_:_:_:)`` function
 instead of using this attribute.
+
+The Swift code you compile to make an executable
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
 .. _Attributes_usableFromInline:
