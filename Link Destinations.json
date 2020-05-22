@@ -141,6 +141,7 @@
     "attributes-frozen": "ID620",
     "attributes-gkinspectable": "ID586",
     "attributes-inlinable": "ID587",
+    "attributes-main": "ID626",
     "attributes-nonobjc": "ID588",
     "attributes-nsapplicationmain": "ID589",
     "attributes-nscopying": "ID590",
@@ -682,5 +683,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 626
+  "next_id": 627
 }
