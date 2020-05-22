@@ -449,11 +449,9 @@ which specifies that the key type must conform to the ``Hashable`` protocol,
 a special protocol defined in the Swift standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default.
-
-.. XXX add some text to the following effect once we have documentation for Hashable:
-   You can make your own custom types conform to the ``Hashable`` protocol
-   so that they too can be dictionary keys,
-   as described in <link>.
+For information about
+making your own custom types conform to the ``Hashable`` protocol,
+see `Conforming to the Hashable Protocol <https://developer.apple.com/documentation/swift/hashable#2849490>`_.
 
 You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.

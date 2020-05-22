@@ -999,19 +999,10 @@ declare ``Equatable`` conformance
 in the file that contains the original declaration,
 without implementing an ``==`` operator yourself.
 
-.. OUTLINE
-
-   By default, enums don't have an implementation of < <= > or >=
-
-   The compiler can synthesize it if all of the enum's raw/associated values
-   are already comparable.
-
-   Should we pull the synthesized == discussion above out
-   and combine it with this,
-   so there's one section about synthesized conformances?
-
-   We don't have discussion of synthesized Hashable anywhere
-
+Swift provides a synthesized implementation of ``Comparable``
+for enumerations that don't have a raw value.
+If the enumeration has associated types,
+they must all conform to the ``Comparable`` protocol.
 To receive a synthesized implementation of ``<``,
 declare ``Comparable`` conformance
 in the file that contains the original enumeration declaration,
@@ -1019,6 +1010,30 @@ without implementing a ``<`` operator yourself.
 The ``Comparable`` protocol's default implementation
 of ``<=``, ``>``, and ``>=`` provides the remaining comparison operators.
 
+The example below defines a ``SkillLevel`` enumeration
+with cases for beginners, intermediates, and experts.
+Experts are additionally ranked by the number of stars they have
+
+.. testcode:: comparable-enum-synthesis
+
+    -> enum SkillLevel: Comparable {
+           case beginner
+           case intermediate
+           case expert(stars: Int)
+       }
+    -> var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+                     SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+    -> for level in levels.sorted() {
+           print(level)
+       }
+    <- beginner
+    <- intermediate
+    <- expert(stars: 3)
+    <- expert(stars: 5)
+
+.. The example above iterates and prints instead of printing the whole array
+   because printing an array gives you the debug description of each element,
+   which looks like temp123908.SkillLevel.expert(5) -- not nice to read.
 
 .. _Protocols_CollectionsOfProtocolTypes:
 
