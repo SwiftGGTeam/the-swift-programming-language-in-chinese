@@ -352,10 +352,25 @@ the property within a subclass, as described in :ref:`Inheritance_OverridingProp
 The initializer *expression* is optional in the context of a class or structure declaration,
 but required elsewhere. The *type* annotation is optional
 when the type can be inferred from the initializer *expression*.
-In a class or structure declaration,
-this expression is evaluated the first time you read the property's value.
+This expression is evaluated the first time you read the property's value.
 If you overwrite the property's initial value without reading it,
-this expression never gets evaluated.
+this expression is evaluated before the first time you write to the property.
+
+.. assertion:: overwriting-property-without-writing
+
+   >> func loudConst(_ x: Int) -> Int {
+   >>     print("initial value:", x)
+   >>     return x
+   >> }
+   >> var x = loudConst(10)
+   >> x = 20
+   >> print("x:", x)
+   << initial value: 10
+   << x: 20
+   >> var y = loudConst(100)
+   >> print("y:", y)
+   << initial value: 100
+   << y: 100
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -380,54 +395,55 @@ If you do not provide setter names,
 the default parameter name to the ``willSet`` observer is ``newValue``
 and the default parameter name to the ``didSet`` observer is ``oldValue``.
 
-If the body of the ``didSet`` observer refers to the old value,
-but the initial value *expression* hasn't been evaluated yet,
-that expression is evaluated before the observer is called
-to make the old value available.
-Otherwise, the new value is stored without computing the initial value.
-
 The ``didSet`` clause is optional when you provide a ``willSet`` clause.
 Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
 
+If the body of the ``didSet`` observer refers to the old value,
+the getter is called before the observer,
+to make the old value available.
+Otherwise, the new value is stored without calling the superclass's getter.
+The example below shows a computed property that's defined by the superclass
+and overridden by its subclasses to add an observer.
+
+.. testcode:: didSet-calls-superclass-getter
+
+   -> class Superclass {
+          private var xValue = 12
+          var x: Int {
+              get { print("Getter was called"); return xValue }
+              set { print("Setter was called"); xValue = newValue }
+          }
+      }
+   ---
+   // This subclass doesn't refer to oldValue in its observer, so the
+   // superclass's getter is called only once to print the value.
+   -> class New: Superclass {
+          override var x: Int {
+              didSet { print("New value \(x)") }
+          }
+      }
+      let new = New()
+      new.x = 100
+   <- Setter was called
+   <- Getter was called
+   <- New value 100
+   ---
+   // This subclass refers to oldValue in its observer, so the superclass's
+   // getter is called once before the setter, and again to print the value.
+   -> class NewAndOld: Superclass {
+          override var x: Int {
+              didSet { print("Old value \(oldValue) - new value \(x)") }
+          }
+      }
+      let newAndOld = NewAndOld()
+      newAndOld.x = 200
+   <- Getter was called
+   <- Setter was called
+   <- Getter was called
+   <- Old value 12 - new value 200
+
 For more information and to see an example of how to use property observers,
 see :ref:`Properties_PropertyObservers`.
-
-.. assertion:: when-didSet-evaluates-the-init-expr
-
-   >> func loudConst(_ x: Int) -> Int {
-   >>     print(x)
-   >>     return x
-   >> }
-   >> struct S1 {
-   >>     var x: Int = loudConst(10) {
-   >>         didSet { print("S1 didSet") }
-   >>     }
-   >> }
-   >> struct S2 {
-   >>     var x: Int = loudConst(20) {
-   >>         didSet { print("S2 didSet \(oldValue) -> \(x)") }
-   >>     }
-   >> }
-   >> struct S3 {
-   >>     var x: Int = loudConst(30){
-   >>         didSet { print("S3 didSet"); _ = oldValue }
-   >>     }
-   >> }
-   ---
-   >> var s1 = S1()
-   >> s1.x = 100
-   // no 10 because the lazy getter isn't called
-   << S1 didSet
-   ---
-   >> var s2 = S2()
-   >> s2.x = 100
-   << 20
-   << S2 didSet 20 -> 100
-   ---
-   >> var s3 = S3()
-   >> s3.x = 100
-   << 30
-   << S3 didSet
 
 .. assertion:: cant-mix-get-set-and-didSet
 
