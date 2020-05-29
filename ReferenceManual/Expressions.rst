@@ -1615,14 +1615,16 @@ as described in :ref:`Declarations_SpecialFuncNames`.
     Grammar of a function call expression
 
     function-call-expression --> postfix-expression function-call-argument-clause
-    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closure
+    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closures
 
     function-call-argument-clause --> ``(`` ``)`` | ``(`` function-call-argument-list ``)``
     function-call-argument-list --> function-call-argument | function-call-argument ``,`` function-call-argument-list
     function-call-argument --> expression | identifier ``:`` expression
     function-call-argument --> operator | identifier ``:`` operator
 
-    trailing-closure --> closure-expression
+    trailing-closures --> closure-expression labeled-trailing-closures-OPT
+    labeled-trailing-closures --> labeled-trailing-closure labeled-trailing-closures-OPT
+    labeled-trailing-closure --> identifier ``:`` closure-expression
 
 .. _Expressions_InitializerExpression:
 
