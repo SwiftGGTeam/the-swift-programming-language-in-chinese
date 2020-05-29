@@ -1559,11 +1559,14 @@ This kind of function call expression has the following form:
 
    <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
-A function call expression can include a trailing closure
-in the form of a closure expression immediately after the closing parenthesis.
-The trailing closure is understood as an argument to the function,
+A function call expression can include trailing closures
+in the form of closure expressions immediately after the closing parenthesis.
+The trailing closures are understood as arguments to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent:
+The first closure expression is unlabeled;
+any additional closure expressions are preceded by their argument labels.
+The example below shows the equivalent version of function calls
+that do and don't use trailing closure syntax:
 
 .. testcode:: trailing-closure
 
@@ -1573,11 +1576,24 @@ The following function calls are equivalent:
     >> let x = 10
     // someFunction takes an integer and a closure as its arguments
     >> let r0 =
-    -> someFunction(x: x, f: {$0 == 13})
+    -> someFunction(x: x, f: { $0 == 13 })
     >> assert(r0 == false)
     >> let r1 =
-    -> someFunction(x: x) {$0 == 13}
+    -> someFunction(x: x) { $0 == 13 }
     >> assert(r1 == false)
+    ---
+    >> func anotherFunction(x: Int, f: (Int) -> Bool, g: () -> Void) -> Bool {
+    >>    g(); return f(x)
+    >> }
+    // anotherFunction takes an integer and two closures as its arguments
+    >> let r2 =
+    -> anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
+    << 99
+    >> assert(r2 == false)
+    >> let r3 =
+    -> anotherFunction(x: x) { $0 == 13 } g: { print(99) }
+    << 99
+    >> assert(r3 == false)
 
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
@@ -1596,10 +1612,10 @@ the parentheses can be omitted.
     >> let myData = Data()
     // someMethod takes a closure as its only argument
     >> let r0 =
-    -> myData.someMethod() {$0 == 13}
+    -> myData.someMethod() { $0 == 13 }
     >> assert(r0 == false)
     >> let r1 =
-    -> myData.someMethod {$0 == 13}
+    -> myData.someMethod { $0 == 13 }
     >> assert(r1 == false)
 
 .. Rewrite the above to avoid bare expressions.
