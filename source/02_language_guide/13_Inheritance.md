@@ -57,7 +57,7 @@ class SomeClass: SomeSuperclass {
 }
 ```
 
-下一个例子，定义了一个叫 `Bicycle` 的子类，继承自父类 `Vehicle`：
+下一个例子，定义了一个叫 `Bicycle` 的子类，继承自超类 `Vehicle`：
 
 ```swift
 class Bicycle: Vehicle {
@@ -111,7 +111,7 @@ print("Tandem: \(tandem.description)")
 
 如果要重写某个特性，你需要在重写定义的前面加上 `override` 关键字。这么做，就表明了你是想提供一个重写版本，而非错误地提供了一个相同的定义。意外的重写行为可能会导致不可预知的错误，任何缺少 `override` 关键字的重写都会在编译时被认定为错误。
 
-`override` 关键字会提醒 Swift 编译器去检查该类的超类（或其中一个父类）是否有匹配重写版本的声明。这个检查可以确保你的重写定义是正确的。
+`override` 关键字会提醒 Swift 编译器去检查该类的超类（或其中一个超类）是否有匹配重写版本的声明。这个检查可以确保你的重写定义是正确的。
 
 ### 访问超类的方法，属性及下标 {#accessing-superclass-methods-properties-and-subscripts}
 
