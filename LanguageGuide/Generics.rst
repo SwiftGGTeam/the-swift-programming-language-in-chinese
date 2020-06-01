@@ -1155,6 +1155,40 @@ Separate each requirement in the list with a comma.
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
 
+
+.. _Generics_ContextualWhereClause:
+
+Contextual Where Clauses
+------------------------
+
+.. OUTLINE:
+
+   - you can write a 'where' clause on a non-generic declaration
+     that appears inside of a declaration that could have its own 'where' clause
+   - the where clause is understood in the same way
+     as one "up a level" would be
+
+For example, the extension below adds an ``average()`` method
+to ``Container<Int>``
+
+
+.. testcode:: associatedTypes
+
+   -> extension Container {
+          func average() -> Double where Item == Int {
+              var sum = 0.0
+              for index in 0..<count {
+                  sum += Double(self[index])
+              }
+              return sum / Double(count)
+          }
+      }
+   -> print([1260, 1200, 98, 37].average())
+   <- 648.75
+
+
+
+
 .. _Generics_AssociatedTypesWithWhereClause:
 
 Associated Types with a Generic Where Clause

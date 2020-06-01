@@ -115,6 +115,23 @@ and that the elements of both sequences must be of the same type.
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
+.. XXX you can write a generic 'where' clause on a declaration
+   that's inside inside of an extension --
+   it's understood the same way as a 'where' clause on an extension
+   these are equivalent:
+
+   extension SomeType {
+       func doSomething() where Element: Equatable { ... }
+       func doSomething() where Element: Hashable { ... }
+   }
+
+   extension SomeType where Element: Equatable {
+       func doSomething() { ... }
+   }
+   extension SomeType where Element: Hashable {
+       func doSomething() { ... }
+   }
+
 You can overload a generic function or initializer by providing different
 constraints, requirements, or both on the type parameters.
 When you call an overloaded generic function or initializer,
