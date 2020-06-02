@@ -1161,16 +1161,13 @@ Separate each requirement in the list with a comma.
 Contextual Where Clauses
 ------------------------
 
-.. OUTLINE:
-
-   - you can write a 'where' clause on a non-generic declaration
-     that appears inside of a declaration that could have its own 'where' clause
-   - the where clause is understood in the same way
-     as one "up a level" would be
-
-For example, the extension below adds an ``average()`` method
-to ``Container<Int>``
-
+Inside an extension,
+you can add a generic ``where`` clause when you define a method.
+The requirements from the generic ``where`` clause on the method
+behave the same as a generic ``where`` clause on an extension.
+For example, the example below
+adds an ``average()`` method to ``Container`` when the items are integers,
+and it adds an ``endsWith(_:)`` method when the items are equatable.
 
 .. testcode:: associatedTypes
 
@@ -1182,12 +1179,48 @@ to ``Container<Int>``
               }
               return sum / Double(count)
           }
+          func endsWith(_ item: Item) -> Bool where Item: Equatable {
+              return count >= 1 && self[count-1] == item
+          }
       }
-   -> print([1260, 1200, 98, 37].average())
+   -> let numbers = [1260, 1200, 98, 37]
+   -> print(numbers.average())
    <- 648.75
+   -> print(numbers.endsWith(37))
+   <- true
 
+To write this code using extensions instead of contextual ``where`` clauses,
+you write two extensions,
+one for each generic ``where`` clauses.
+The example above and the example below do the same thing.
 
+.. testcode:: associatedTypes-err
 
+   -> extension Container where Item == Int {
+          func average() -> Double {
+              var sum = 0.0
+              for index in 0..<count {
+                  sum += Double(self[index])
+              }
+              return sum / Double(count)
+          }
+      }
+      extension Container where Item: Equatable {
+          func endsWith(_ item: Item) -> Bool {
+              return count >= 1 && self[count-1] == item
+          }
+      }
+
+In the version of this example that uses contextual ``where`` clauses,
+the implementation of ``average()`` and ``endsWith(_:)``
+are both in the same extension
+because each method's generic ``where`` clause
+states the requirements that need to be satisfied
+to make that method available.
+Moving those requirements to the extensions' generic ``where`` clauses
+makes the methods available in the same situations,
+but requires one extension per requirement.
+If you have several related methods
 
 .. _Generics_AssociatedTypesWithWhereClause:
 
