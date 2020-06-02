@@ -132,6 +132,40 @@ meet all the constraints and requirements placed on the type parameter.
        func doSomething() { ... }
    }
 
+If the extension already has a ``where`` clause,
+the requirements from both clauses are combined.
+In the example below, ``startsWithZero()`` is available
+only if ``Element`` conforms to both ``SomeProtocol`` and ``Numeric``.
+
+.. testcode:: contextual-where-clauses-combine
+
+   >> protocol SomeProtocol { }
+   >> extension Int: SomeProtocol { }
+   -> extension Collection where Element: SomeProtocol {
+          func startsWithZero() -> Bool where Element: Numeric {
+              return first == .zero
+          }
+      }
+   >> print( [1, 2, 3].startsWithZero() )
+   << false
+
+.. assertion:: contextual-where-clause-combine-err
+
+   >> protocol SomeProtocol { }
+   >> extension Bool: SomeProtocol { }
+   ---
+   >> extension Collection where Element: SomeProtocol {
+   >>     func returnTrue() -> Bool where Element == Bool {
+   >>         return true
+   >>     }
+   >>     func returnTrue() -> Bool where Element == Int {
+   >>         return true
+   >>     }
+   >> }
+   !$ error: same-type constraint type 'Int' does not conform to required protocol 'SomeProtocol'
+   !! func returnTrue() -> Bool where Element == Int {
+   !!                                            ^
+
 You can overload a generic function or initializer by providing different
 constraints, requirements, or both on the type parameters.
 When you call an overloaded generic function or initializer,
