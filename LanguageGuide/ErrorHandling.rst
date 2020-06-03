@@ -376,7 +376,7 @@ caught by the calling function:
            do {
                try vendingMachine.vend(itemNamed: item)
            } catch is VendingMachineError {
-               print("Invalid selection, out of stock, or not enough money.")
+               print("Couldn't buy that from the vending machine.")
            }
        }
     ---
@@ -385,7 +385,7 @@ caught by the calling function:
        } catch {
            print("Unexpected non-vending-machine-related error: \(error)")
        }
-    <- Invalid selection, out of stock, or not enough money.
+    <- Couldn't buy that from the vending machine.
 
 In the ``nourish(with:)`` function,
 if ``vend(itemNamed:)`` throws an error that's
@@ -394,6 +394,31 @@ one of the cases of the ``VendingMachineError`` enumeration,
 Otherwise,
 ``nourish(with:)`` propagates the error to its call site.
 The error is then caught by the general ``catch`` clause.
+
+Another way to catch several related errors
+is to list them after ``catch``, separated by commas.
+For example:
+
+.. testcode:: errorHandling
+
+    -> func eat(item: String) throws {
+           do {
+               try vendingMachine.vend(itemNamed: item)
+           } catch VendingMachineError.invalidSelection, VendingMachineError.insufficientFunds, VendingMachineError.outOfStock {
+               print("Invalid selection, out of stock, or not enough money.")
+           }
+       }
+    >> do {
+    >>     try eat(item: "Beet-Flavored Chips")
+    >> } catch {
+    >>     print("Unexpected error: \(error)")
+    >> }
+    << Invalid selection, out of stock, or not enough money.
+
+.. XXX the catch clause is getting indented oddly in HTML output if I hard wrap it
+
+The ``eat(item:)`` function lists the vending machine errors to catch,
+and its error text corresponds to the items in that list.
 
 .. _ErrorHandling_Optional:
 

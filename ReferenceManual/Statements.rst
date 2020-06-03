@@ -885,7 +885,8 @@ program control is transferred
 to the first ``catch`` clause whose pattern matches the error.
 If none of the clauses matches,
 the error propagates to the surrounding scope.
-If an error is unhandled at the top level, program execution stops.
+If an error is unhandled at the top level,
+program execution stops with a runtime error.
 
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
