@@ -394,6 +394,9 @@ all of the patterns must contain the same constant or variable bindings,
 and each bound variable or constant must have the same type
 in all of the case's patterns.
 
+.. The discussion above about multi-pattern cases
+   matches discussion uf multi-pattern catch under Do Stamement.
+
 A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
 A ``switch`` statement can include only one default case,
@@ -883,8 +886,6 @@ to the first ``catch`` clause whose pattern matches the error.
 If none of the clauses matches,
 the error propagates to the surrounding scope.
 If an error is unhandled at the top level, program execution stops.
-For a ``catch`` clause that specifies multiple patterns,
-if any of those patterns matches, that clause is used.
 
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
@@ -894,10 +895,20 @@ which means
 the error must be handled by an enclosing ``catch`` clause
 or the containing function must be declared with ``throws``.
 
+A ``catch`` clause that has multiple patterns
+matches the error if any of its patterns match the error.
+If a ``catch`` clause contains multiple patterns,
+all of the patterns must contain the same constant or variable bindings,
+and each bound variable or constant must have the same type
+in all of the ``catch`` clause's patterns.
+
+.. The discussion above of multi-pattern catch
+   matches the discussion of multi-pattern case under Switch Statement.
+
 To ensure that an error is handled,
 use a ``catch`` clause with a pattern that matches all errors,
 such as a wildcard pattern (``_``).
-If a ``catch`` clause does not specify a pattern,
+If a ``catch`` clause doesn't specify a pattern,
 the ``catch`` clause matches and binds any error to a local constant named ``error``.
 For more information about the patterns you can use in a ``catch`` clause,
 see :doc:`../ReferenceManual/Patterns`.
