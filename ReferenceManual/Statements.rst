@@ -911,9 +911,9 @@ see :ref:`ErrorHandling_Catch`.
 
     do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
-    catch-clause --> ``catch`` catch-item-list code-block
-    catch-item-list --> pattern-OPT where-clause-OPT
-    catch-item-list --> pattern-OPT where-clause-OPT ``,`` catch-item-list
+    catch-clause --> ``catch`` catch-pattern-list-OPT code-block
+    catch-pattern-list --> catch-pattern | catch-pattern ``,`` catch-pattern-list
+    catch-pattern --> pattern where-clause-OPT
 
 
 .. _Statements_CompilerControlStatements:
