@@ -115,24 +115,14 @@ and that the elements of both sequences must be of the same type.
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
-.. XXX you can write a generic 'where' clause on a declaration
-   that's inside inside of an extension --
-   it's understood the same way as a 'where' clause on an extension
-   these are equivalent:
-
-   extension SomeType {
-       func doSomething() where Element: Equatable { ... }
-       func doSomething() where Element: Hashable { ... }
-   }
-
-   extension SomeType where Element: Equatable {
-       func doSomething() { ... }
-   }
-   extension SomeType where Element: Hashable {
-       func doSomething() { ... }
-   }
-
-If the extension already has a ``where`` clause,
+A generic ``where`` clause that appears
+as part of a function or method declaration
+has the same meaning as a generic ``where`` clause
+that's part of the extension declaration that contains this function or method.
+However, the generic ``where`` clause applies
+only to the function or method declaration where it appears,
+not to any other declarations in the extension.
+If the extension also has a ``where`` clause,
 the requirements from both clauses are combined.
 In the example below, ``startsWithZero()`` is available
 only if ``Element`` conforms to both ``SomeProtocol`` and ``Numeric``.
