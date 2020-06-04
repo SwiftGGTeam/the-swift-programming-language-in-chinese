@@ -1161,13 +1161,17 @@ Separate each requirement in the list with a comma.
 Contextual Where Clauses
 ------------------------
 
-Inside an extension,
-you can add a generic ``where`` clause when you define a method.
-The requirements from the generic ``where`` clause on the method
-behave the same as a generic ``where`` clause on an extension.
-For example, the example below
-adds an ``average()`` method to ``Container`` when the items are integers,
-and it adds an ``endsWith(_:)`` method when the items are equatable.
+You can write a generic ``where`` clause
+as part of a declaration that don't have its own generic type constraints
+when you're already working in the context of generics types.
+For example,
+you can write a generic ``where`` clause
+on a subscript inside a generic type
+or on a method inside an extension to a generic type.
+The ``Container`` structure is generic,
+and the ``where`` clause that's written
+as part of the ``average()`` method below
+specifies the conditions under which that method is available.
 
 .. testcode:: associatedTypes
 
@@ -1189,10 +1193,17 @@ and it adds an ``endsWith(_:)`` method when the items are equatable.
    -> print(numbers.endsWith(37))
    <- true
 
-To write this code using extensions instead of contextual ``where`` clauses,
+This example
+adds an ``average()`` method to ``Container`` when the items are integers,
+and it adds an ``endsWith(_:)`` method when the items are equatable.
+Both functions include a generic ``where`` clause
+that adds type constraints to the generic ``Item`` type parameter
+from the original declaration of ``Container``.
+
+To write this code without using contextual ``where`` clauses,
 you write two extensions,
-one for each generic ``where`` clauses.
-The example above and the example below do the same thing.
+one for each generic ``where`` clause.
+The example above and the example below have the same behavior.
 
 .. testcode:: associatedTypes-err
 
@@ -1220,7 +1231,6 @@ to make that method available.
 Moving those requirements to the extensions' generic ``where`` clauses
 makes the methods available in the same situations,
 but requires one extension per requirement.
-If you have several related methods
 
 .. _Generics_AssociatedTypesWithWhereClause:
 
