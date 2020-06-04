@@ -280,7 +280,7 @@ When you use the trailing closure syntax,
 you don't write the argument label for the first closure
 as part of the function call.
 A function call can include multiple trailing closures,
-however, the examples below use a single trailing closure
+however, the first few examples below use a single trailing closure.
 
 .. testcode:: closureSyntax
 
