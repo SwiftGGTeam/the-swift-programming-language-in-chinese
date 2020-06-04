@@ -878,6 +878,8 @@ A ``do`` statement has the following form:
        <#statements#>
    } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
        <#statements#>
+   } catch {
+       <#statements#>
    }
 
 If any statement in the ``do`` code block throws an error,

@@ -301,6 +301,8 @@ Here is the general form of a ``do``-``catch`` statement:
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
        <#statements#>
+   } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
+       <#statements#>
    } catch {
        <#statements#>
    }
