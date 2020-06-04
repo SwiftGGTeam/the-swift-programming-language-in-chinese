@@ -1162,16 +1162,16 @@ Contextual Where Clauses
 ------------------------
 
 You can write a generic ``where`` clause
-as part of a declaration that don't have its own generic type constraints
-when you're already working in the context of generics types.
+as part of a declaration that doesn't have its own generic type constraints,
+when you're already working in the context of generic types.
 For example,
 you can write a generic ``where`` clause
-on a subscript inside a generic type
-or on a method inside an extension to a generic type.
+on a subscript of a generic type
+or on a method in an extension to a generic type.
 The ``Container`` structure is generic,
-and the ``where`` clause that's written
-as part of the ``average()`` method below
-specifies the conditions under which that method is available.
+and the ``where`` clauses in the example below
+specifies what type constraints have to be satisfied
+to make these new  methods available on a container.
 
 .. testcode:: associatedTypes
 
@@ -1200,8 +1200,8 @@ Both functions include a generic ``where`` clause
 that adds type constraints to the generic ``Item`` type parameter
 from the original declaration of ``Container``.
 
-To write this code without using contextual ``where`` clauses,
-you write two extensions,
+If you wanted to write this code without using contextual ``where`` clauses,
+you would write two extensions,
 one for each generic ``where`` clause.
 The example above and the example below have the same behavior.
 
