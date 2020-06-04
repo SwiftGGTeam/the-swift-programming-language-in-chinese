@@ -277,8 +277,10 @@ it can be useful to write it as a :newTerm:`trailing closure` instead.
 A trailing closure is written after the function call's parentheses,
 even though it is still an argument to the function.
 When you use the trailing closure syntax,
-you don't write the argument label for the closure
+you don't write the argument label for the first closure
 as part of the function call.
+A function call can include multiple trailing closures,
+however, the examples below use a single trailing closure
 
 .. testcode:: closureSyntax
 
@@ -410,6 +412,58 @@ neatly encapsulates the closure's functionality
 immediately after the function that closure supports,
 without needing to wrap the entire closure within
 the ``map(_:)`` method's outer parentheses.
+
+If a function takes multiple closures,
+you omit the argument label for the first trailing closure
+and you label the remaining trailing closures.
+For example,
+the function below loads a picture for a photo gallery:
+
+.. testcode:: multiple-trailing-closures
+
+   >> struct Server { }
+   >> struct Picture { }
+   >> func download(_ path: String, from server: Server) -> Picture? {
+   >>     return Picture()
+   >> }
+   -> func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: () -> Void) {
+          if let picture = download("photo.jpg", from: server) {
+              completion(picture)
+          } else {
+              onFailure()
+          }
+      }
+
+When you call this function to load a picture,
+you provide two closures.
+The first closure is a completion handler
+that displays a picture after a successful download.
+The second closure is an error handler
+that displays an error to the user.
+
+.. testcode:: multiple-trailing-closures
+
+   >> struct View {
+   >>    var currentPicture = Picture() { didSet { print("Changed picture") } }
+   >> }
+   >> var someView = View()
+   >> let someServer = Server()
+   -> loadPicture(from: someServer) { picture in
+          someView.currentPicture = picture
+      } onFailure: {
+          print("Couldn't download the next picture.")
+      }
+   << Changed picture
+
+In this example,
+the ``loadPicture(from:completion:onFailure:)`` method
+dispatches its network task into the background,
+and calls one of the two completion handlers when the network task finishes.
+Writing the function this way lets you cleanly separate the code
+that's responsible for handling a network failure
+from the code that updates the user interface after a successful download,
+instead of using just one closure that handles both circumstances.
+
 
 .. _Closures_CapturingValues:
 
