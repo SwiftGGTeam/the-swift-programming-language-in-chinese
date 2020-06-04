@@ -419,6 +419,10 @@ For example:
 
 The ``eat(item:)`` function lists the vending machine errors to catch,
 and its error text corresponds to the items in that list.
+If any of the three listed errors are thrown,
+this ``catch`` clause handles them by printing a message.
+Any other errors are propagated to the surrounding scope,
+including any vending-machine errors that might be added later.
 
 .. _ErrorHandling_Optional:
 
