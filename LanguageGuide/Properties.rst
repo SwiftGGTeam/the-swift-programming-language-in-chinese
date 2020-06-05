@@ -486,14 +486,18 @@ even if the new value is the same as the property's current value.
    <- willSet
    <- didSet
 
-You can add property observers to any stored properties you define.
-You can also add property observers to any inherited property,
-for either a stored or computed property,
-by overriding that property within a subclass.
-You don't need to define property observers for nonoverridden computed properties,
-because you can observe and respond to changes to their value
-in the computed property's setter.
-Property overriding is described in :ref:`Inheritance_Overriding`.
+You can add property observers in the following places:
+
+* Stored properties that you define
+* Stored properties that you inherit
+* Computed properties that you inherit
+
+For an inherited property,
+you add a property observer by overriding that property in a subclass.
+For a computed property that you define,
+use the property's setter to observe and respond to value changes,
+instead of trying to create an observer.
+Overriding properties is described in :ref:`Inheritance_Overriding`.
 
 .. assertion:: lazyPropertiesCanHaveObservers
 
