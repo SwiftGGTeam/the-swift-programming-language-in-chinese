@@ -1170,7 +1170,7 @@ on a subscript of a generic type
 or on a method in an extension to a generic type.
 The ``Container`` structure is generic,
 and the ``where`` clauses in the example below
-specifies what type constraints have to be satisfied
+specify what type constraints have to be satisfied
 to make these new  methods available on a container.
 
 .. testcode:: associatedTypes
@@ -1200,8 +1200,8 @@ Both functions include a generic ``where`` clause
 that adds type constraints to the generic ``Item`` type parameter
 from the original declaration of ``Container``.
 
-If you wanted to write this code without using contextual ``where`` clauses,
-you would write two extensions,
+If you want to write this code without using contextual ``where`` clauses,
+you write two extensions,
 one for each generic ``where`` clause.
 The example above and the example below have the same behavior.
 

@@ -120,8 +120,10 @@ as part of a declaration that includes type parameters,
 or as part of a declaration
 that's nested inside of a declaration that includes type parameters.
 The generic ``where`` clause for a nested declaration
-can still refer to the type parameters of the enclosing declaration,
-however its requirements apply only to the declaration where it's written.
+can still refer to the type parameters of the enclosing declaration;
+however,
+the requirements from that ``where`` clause
+apply only to the declaration where it's written.
 
 If the enclosing declaration also has a ``where`` clause,
 the requirements from both clauses are combined.
