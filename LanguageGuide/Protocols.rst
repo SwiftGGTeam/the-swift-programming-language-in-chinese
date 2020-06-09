@@ -995,9 +995,9 @@ for the following kinds of custom types:
 * Enumerations that have no associated types
 
 To receive a synthesized implementation of ``hash(into:)``,
-declare ``Equatable`` conformance
+declare ``Hashable`` conformance
 in the file that contains the original declaration,
-without implementing an ``==`` operator yourself.
+without implementing a ``hash(into:)`` method yourself.
 
 Swift provides a synthesized implementation of ``Comparable``
 for enumerations that don't have a raw value.
@@ -1012,7 +1012,7 @@ of ``<=``, ``>``, and ``>=`` provides the remaining comparison operators.
 
 The example below defines a ``SkillLevel`` enumeration
 with cases for beginners, intermediates, and experts.
-Experts are additionally ranked by the number of stars they have
+Experts are additionally ranked by the number of stars they have.
 
 .. testcode:: comparable-enum-synthesis
 
