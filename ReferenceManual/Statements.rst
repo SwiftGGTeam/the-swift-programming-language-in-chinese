@@ -395,7 +395,7 @@ and each bound variable or constant must have the same type
 in all of the case's patterns.
 
 .. The discussion above about multi-pattern cases
-   matches discussion uf multi-pattern catch under Do Stamement.
+   matches discussion of multi-pattern catch under Do Stamement.
 
 A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
