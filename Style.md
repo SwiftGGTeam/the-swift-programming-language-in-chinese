@@ -158,7 +158,6 @@ is still available to readers who need it.
 
 For a discussion of the balance between the tour, the guide, and the reference,
 see the README file at the top level of this repository.
-see the top level README.
 
 # Semantic Line Breaks
 
