@@ -956,9 +956,10 @@ for the following kinds of custom types:
 * Enumerations that have no associated types
 
 To receive a synthesized implementation of ``==``,
-declare ``Equatable`` conformance
+declare conformance to ``Equatable``
 in the file that contains the original declaration,
 without implementing an ``==`` operator yourself.
+The ``Equatable`` protocol provides a default implementation of ``!=``.
 
 The example below defines a ``Vector3D`` structure
 for a three-dimensional position vector ``(x, y, z)``,
@@ -995,7 +996,7 @@ for the following kinds of custom types:
 * Enumerations that have no associated types
 
 To receive a synthesized implementation of ``hash(into:)``,
-declare ``Hashable`` conformance
+declare conformance to ``Hashable``
 in the file that contains the original declaration,
 without implementing a ``hash(into:)`` method yourself.
 
@@ -1004,7 +1005,7 @@ for enumerations that don't have a raw value.
 If the enumeration has associated types,
 they must all conform to the ``Comparable`` protocol.
 To receive a synthesized implementation of ``<``,
-declare ``Comparable`` conformance
+declare conformance to ``Comparable``
 in the file that contains the original enumeration declaration,
 without implementing a ``<`` operator yourself.
 The ``Comparable`` protocol's default implementation
