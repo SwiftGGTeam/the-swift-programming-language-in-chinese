@@ -274,8 +274,8 @@ Trailing Closures
 If you need to pass a closure expression to a function as the function's final argument
 and the closure expression is long,
 it can be useful to write it as a :newTerm:`trailing closure` instead.
-A trailing closure is written after the function call's parentheses,
-even though it is still an argument to the function.
+You write a trailing closure after the function call's parentheses,
+even though the trailing closure is still an argument to the function.
 When you use the trailing closure syntax,
 you don't write the argument label for the first closure
 as part of the function call.
@@ -308,7 +308,7 @@ can be written outside of the ``sorted(by:)`` method's parentheses as a trailing
    -> reversedNames = names.sorted() { $0 > $1 }
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
-If a closure expression is provided as the function or method's only argument
+If a closure expression is provided as the function's or method's only argument
 and you provide that expression as a trailing closure,
 you don't need to write a pair of parentheses ``()``
 after the function or method's name when you call the function:
@@ -320,12 +320,13 @@ after the function or method's name when you call the function:
 
 Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
-As an example, Swift's ``Array`` type has a ``map(_:)`` method
+As an example, Swift's ``Array`` type has a ``map(_:)`` method,
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
-The nature of the mapping and the type of the returned value
-is left up to the closure to specify.
+You specify
+the nature of the mapping and the type of the returned value
+by writing code in the closure that you pass to ``map(_:)``.
 
 After applying the provided closure to each array element,
 the ``map(_:)`` method returns a new array containing all of the new mapped values,
