@@ -914,6 +914,128 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
    Types don't automatically adopt a protocol just by satisfying its requirements.
    They must always explicitly declare their adoption of the protocol.
 
+
+.. _Protocols_SynthesizedImplementation:
+
+Adopting a Protocol Using a Synthesized Implementation
+------------------------------------------------------
+
+Swift can automatically provide the protocol conformance
+for ``Equatable``, ``Hashable``, and ``Comparable``
+in many simple cases.
+Using the compiler's synthesized implementation
+means you don't have to write repetitive boilerplate code
+to implement the protocol requirements yourself.
+
+.. Linking directly to a section of an article like the URLs below do
+   is expected to be stable --
+   as long as the section stays around, that topic ID will be there too.
+
+   Conforming to the Equatable Protocol
+   https://developer.apple.com/documentation/swift/equatable#2847780
+
+   Conforming to the Hashable Protocol
+   https://developer.apple.com/documentation/swift/hashable#2849490
+
+   Conforming to the Comparable Protocol
+   https://developer.apple.com/documentation/swift/comparable#2845320
+
+   ^-- Need to add discussion of synthesized implementation
+   to the reference for Comparable, since that's new
+
+   Some of the information in the type references above
+   is also repeated in the "Conform Automatically to Equatable and Hashable" section
+   of the article "Adopting Common Protocols".
+   https://developer.apple.com/documentation/swift/adopting_common_protocols#2991123
+
+Swift provides a synthesized implementation of ``Equatable``
+for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the ``Equatable`` protocol
+* Enumerations that have only associated types that conform to the ``Equatable`` protocol
+* Enumerations that have no associated types
+
+To receive a synthesized implementation of ``==``,
+declare conformance to ``Equatable``
+in the file that contains the original declaration,
+without implementing an ``==`` operator yourself.
+The ``Equatable`` protocol provides a default implementation of ``!=``.
+
+The example below defines a ``Vector3D`` structure
+for a three-dimensional position vector ``(x, y, z)``,
+similar to the ``Vector2D`` structure.
+Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
+``Vector3D`` receives synthesized implementations
+of the equivalence operators.
+
+.. testcode:: equatable_synthesis
+
+   -> struct Vector3D: Equatable {
+         var x = 0.0, y = 0.0, z = 0.0
+      }
+   ---
+   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
+   -> if twoThreeFour == anotherTwoThreeFour {
+          print("These two vectors are also equivalent.")
+      }
+   <- These two vectors are also equivalent.
+
+.. Need to cross reference here from "Adopting Common Protocols"
+   https://developer.apple.com/documentation/swift/adopting_common_protocols
+
+   Discussion in the article calls out that
+   enums without associated values are Equatable & Hashable
+   even if you don't declare the protocol conformance.
+
+Swift provides a synthesized implementation of ``Hashable``
+for the following kinds of custom types:
+
+* Structures that have only stored properties that conform to the ``Hashable`` protocol
+* Enumerations that have only associated types that conform to the ``Hashable`` protocol
+* Enumerations that have no associated types
+
+To receive a synthesized implementation of ``hash(into:)``,
+declare conformance to ``Hashable``
+in the file that contains the original declaration,
+without implementing a ``hash(into:)`` method yourself.
+
+Swift provides a synthesized implementation of ``Comparable``
+for enumerations that don't have a raw value.
+If the enumeration has associated types,
+they must all conform to the ``Comparable`` protocol.
+To receive a synthesized implementation of ``<``,
+declare conformance to ``Comparable``
+in the file that contains the original enumeration declaration,
+without implementing a ``<`` operator yourself.
+The ``Comparable`` protocol's default implementation
+of ``<=``, ``>``, and ``>=`` provides the remaining comparison operators.
+
+The example below defines a ``SkillLevel`` enumeration
+with cases for beginners, intermediates, and experts.
+Experts are additionally ranked by the number of stars they have.
+
+.. testcode:: comparable-enum-synthesis
+
+    -> enum SkillLevel: Comparable {
+           case beginner
+           case intermediate
+           case expert(stars: Int)
+       }
+    -> var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+                     SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+    -> for level in levels.sorted() {
+           print(level)
+       }
+    <- beginner
+    <- intermediate
+    <- expert(stars: 3)
+    <- expert(stars: 5)
+
+.. The example above iterates and prints instead of printing the whole array
+   because printing an array gives you the debug description of each element,
+   which looks like temp123908.SkillLevel.expert(5) -- not nice to read.
+
 .. _Protocols_CollectionsOfProtocolTypes:
 
 Collections of Protocol Types

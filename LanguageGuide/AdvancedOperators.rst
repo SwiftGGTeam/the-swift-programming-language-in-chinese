@@ -762,38 +762,9 @@ You can now use this operator to check whether two ``Vector2D`` instances are eq
    <- These two vectors are equivalent.
 
 In many simple cases, you can ask Swift
-to provide synthesized implementations of the equivalence operators for you.
-Swift provides synthesized implementations
-for the following kinds of custom types:
+to provide synthesized implementations of the equivalence operators for you,
+as described in :ref:`Protocols_SynthesizedImplementation`.
 
-* Structures that have only stored properties that conform to the ``Equatable`` protocol
-* Enumerations that have only associated types that conform to the ``Equatable`` protocol
-* Enumerations that have no associated types
-
-To receive a synthesized implementation of ``==``,
-declare ``Equatable`` conformance
-in the file that contains the original declaration,
-without implementing an ``==`` operator yourself.
-
-The example below defines a ``Vector3D`` structure
-for a three-dimensional position vector ``(x, y, z)``,
-similar to the ``Vector2D`` structure.
-Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
-``Vector3D`` receives synthesized implementations
-of the equivalence operators.
-
-.. testcode:: equatable_synthesis
-
-   -> struct Vector3D: Equatable {
-         var x = 0.0, y = 0.0, z = 0.0
-      }
-   ---
-   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
-   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
-   -> if twoThreeFour == anotherTwoThreeFour {
-          print("These two vectors are also equivalent.")
-      }
-   <- These two vectors are also equivalent.
 
 .. _AdvancedOperators_CustomOperators:
 

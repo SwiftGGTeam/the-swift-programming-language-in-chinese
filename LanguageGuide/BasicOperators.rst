@@ -8,7 +8,7 @@ as in ``let i = 1 + 2``,
 and the logical AND operator (``&&``) combines two Boolean values,
 as in ``if enteredDoorCode && passedRetinaScan``.
 
-Swift supports most standard C operators
+Swift supports the operators you may already know from languages like C,
 and improves several capabilities to eliminate common coding errors.
 The assignment operator (``=``) doesn't return a value,
 to prevent it from being mistakenly used when
@@ -292,7 +292,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 Comparison Operators
 --------------------
 
-Swift supports all standard C :newTerm:`comparison operators`:
+Swift supports the following comparison operators:
 
 * Equal to (``a == b``)
 * Not equal to (``a != b``)
