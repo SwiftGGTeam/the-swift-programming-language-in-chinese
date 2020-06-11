@@ -21,7 +21,7 @@ are actually special cases of closures.
 Closures take one of three forms:
 
 * Global functions are closures that have a name
-  and do not capture any values.
+  and don't capture any values.
 * Nested functions are closures that have a name
   and can capture values from their enclosing function.
 * Closure expressions are unnamed closures written in a lightweight syntax
@@ -178,7 +178,7 @@ Swift can infer the types of its parameters
 and the type of the value it returns.
 The ``sorted(by:)`` method is being called on an array of strings,
 so its argument must be a function of type ``(String, String) -> Bool``.
-This means that the ``(String, String)`` and ``Bool`` types do not need to be written
+This means that the ``(String, String)`` and ``Bool`` types don't need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
 the return arrow (``->``) and the parentheses around the names of the parameters
@@ -310,7 +310,7 @@ can be written outside of the ``sorted(by:)`` method's parentheses as a trailing
 
 If a closure expression is provided as the function or method's only argument
 and you provide that expression as a trailing closure,
-you do not need to write a pair of parentheses ``()``
+you don't need to write a pair of parentheses ``()``
 after the function or method's name when you call the function:
 
 .. testcode:: closureSyntax
@@ -367,7 +367,7 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
 The ``map(_:)`` method calls the closure expression once for each item in the array.
-You do not need to specify the type of the closure's input parameter, ``number``,
+You don't need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
 In this example,
@@ -537,7 +537,7 @@ The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing a *reference* to ``runningTotal`` and ``amount``
 from the surrounding function and using them within its own function body.
-Capturing by reference ensures that ``runningTotal`` and ``amount`` do not disappear
+Capturing by reference ensures that ``runningTotal`` and ``amount`` don't disappear
 when the call to ``makeIncrementer`` ends,
 and also ensures that ``runningTotal`` is available
 the next time the ``incrementer`` function is called.
