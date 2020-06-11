@@ -1551,7 +1551,7 @@ Function call expressions have the following form:
 The *function name* can be any expression whose value is of a function type.
 
 If the function definition includes names for its parameters,
-the function call must include names before its argument values
+the function call must include names before its argument values,
 separated by a colon (``:``).
 This kind of function call expression has the following form:
 
@@ -1599,7 +1599,7 @@ that do and don't use trailing closure syntax:
    Tracking bug is <rdar://problem/35301593>
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted.
+you can omit the parentheses.
 
 .. testcode:: no-paren-trailing-closure
 
