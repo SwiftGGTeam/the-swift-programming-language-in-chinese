@@ -923,7 +923,7 @@ Adopting a Protocol Using a Synthesized Implementation
 Swift can automatically provide the protocol conformance
 for ``Equatable``, ``Hashable``, and ``Comparable``
 in many simple cases.
-Using the compiler's synthesized implementation
+Using this synthesized implementation
 means you don't have to write repetitive boilerplate code
 to implement the protocol requirements yourself.
 
