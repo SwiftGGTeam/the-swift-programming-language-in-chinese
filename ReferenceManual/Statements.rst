@@ -885,7 +885,7 @@ A ``do`` statement has the following form:
 If any statement in the ``do`` code block throws an error,
 program control is transferred
 to the first ``catch`` clause whose pattern matches the error.
-If none of the clauses matches,
+If none of the clauses match,
 the error propagates to the surrounding scope.
 If an error is unhandled at the top level,
 program execution stops with a runtime error.
