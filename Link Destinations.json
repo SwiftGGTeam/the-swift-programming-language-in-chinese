@@ -399,6 +399,7 @@
     "generics-associatedtypesinaction": "ID190",
     "generics-associatedtypeswithwhereclause": "ID557",
     "generics-constrainassociatedtype": "ID560",
+    "generics-contextualwhereclause": "ID628",
     "generics-extendingagenerictype": "ID185",
     "generics-extendinganexistingtypetospecifyanassociatedtype": "ID191",
     "generics-extensionwithwhereclause": "ID553",
@@ -538,6 +539,7 @@
     "protocols-protocolsastypes": "ID275",
     "protocols-protocolsyntax": "ID268",
     "protocols-providingdefaultimplementations": "ID529",
+    "protocols-synthesizedimplementation": "ID627",
     "statements-availabilitycondition": "ID522",
     "statements-branchstatements": "ID434",
     "statements-breakstatement": "ID441",
@@ -683,5 +685,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 627
+  "next_id": 629
 }
