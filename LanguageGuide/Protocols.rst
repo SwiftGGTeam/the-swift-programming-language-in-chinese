@@ -1036,6 +1036,34 @@ Experts are additionally ranked by the number of stars they have.
    because printing an array gives you the debug description of each element,
    which looks like temp123908.SkillLevel.expert(5) -- not nice to read.
 
+.. assertion:: no-synthesized-comparable-for-raw-value-enum
+
+   >> enum E: Int, Comparable {
+   >>     case ten = 10
+   >>     case twelve = 12
+   >> }
+   !$ error: type 'E' does not conform to protocol 'Comparable'
+   !! enum E: Int, Comparable {
+   !!      ^
+   !$ note: candidate would match if 'E' conformed to 'FloatingPoint'
+   !! public static func < (lhs: Self, rhs: Self) -> Bool
+   !! ^
+   !$ note: candidate would match if 'E' conformed to 'BinaryInteger'
+   !! public static func < <Other>(lhs: Self, rhs: Other) -> Bool where Other : BinaryInteger
+   !! ^
+   !$ note: candidate would match if 'E' conformed to '_Pointer'
+   !! public static func < (lhs: Self, rhs: Self) -> Bool
+   !! ^
+   !$ note: candidate would match if 'E' conformed to 'Strideable'
+   !! @inlinable public static func < (x: Self, y: Self) -> Bool
+   !! ^
+   !$ note: candidate would match if 'E' conformed to 'StringProtocol'
+   !! @inlinable public static func < <RHS>(lhs: Self, rhs: RHS) -> Bool where RHS : StringProtocol
+   !! ^
+   !$ note: protocol requires function '<' with type '(E, E) -> Bool'
+   !! static func < (lhs: Self, rhs: Self) -> Bool
+   !! ^
+
 .. _Protocols_CollectionsOfProtocolTypes:
 
 Collections of Protocol Types
