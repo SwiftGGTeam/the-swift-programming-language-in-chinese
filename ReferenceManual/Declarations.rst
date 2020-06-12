@@ -368,6 +368,25 @@ the property within a subclass, as described in :ref:`Inheritance_OverridingProp
 The initializer *expression* is optional in the context of a class or structure declaration,
 but required elsewhere. The *type* annotation is optional
 when the type can be inferred from the initializer *expression*.
+This expression is evaluated the first time you read the property's value.
+If you overwrite the property's initial value without reading it,
+this expression is evaluated before the first time you write to the property.
+
+.. assertion:: overwriting-property-without-writing
+
+   >> func loudConst(_ x: Int) -> Int {
+   >>     print("initial value:", x)
+   >>     return x
+   >> }
+   >> var x = loudConst(10)
+   >> x = 20
+   >> print("x:", x)
+   << initial value: 10
+   << x: 20
+   >> var y = loudConst(100)
+   >> print("y:", y)
+   << initial value: 100
+   << y: 100
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -395,8 +414,65 @@ and the default parameter name to the ``didSet`` observer is ``oldValue``.
 The ``didSet`` clause is optional when you provide a ``willSet`` clause.
 Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
 
+If the body of the ``didSet`` observer refers to the old value,
+the getter is called before the observer,
+to make the old value available.
+Otherwise, the new value is stored without calling the superclass's getter.
+The example below shows a computed property that's defined by the superclass
+and overridden by its subclasses to add an observer.
+
+.. testcode:: didSet-calls-superclass-getter
+
+   -> class Superclass {
+          private var xValue = 12
+          var x: Int {
+              get { print("Getter was called"); return xValue }
+              set { print("Setter was called"); xValue = newValue }
+          }
+      }
+   ---
+   // This subclass doesn't refer to oldValue in its observer, so the
+   // superclass's getter is called only once to print the value.
+   -> class New: Superclass {
+          override var x: Int {
+              didSet { print("New value \(x)") }
+          }
+      }
+      let new = New()
+      new.x = 100
+   <- Setter was called
+   <- Getter was called
+   <- New value 100
+   ---
+   // This subclass refers to oldValue in its observer, so the superclass's
+   // getter is called once before the setter, and again to print the value.
+   -> class NewAndOld: Superclass {
+          override var x: Int {
+              didSet { print("Old value \(oldValue) - new value \(x)") }
+          }
+      }
+      let newAndOld = NewAndOld()
+      newAndOld.x = 200
+   <- Getter was called
+   <- Setter was called
+   <- Getter was called
+   <- Old value 12 - new value 200
+
 For more information and to see an example of how to use property observers,
 see :ref:`Properties_PropertyObservers`.
+
+.. assertion:: cant-mix-get-set-and-didSet
+
+   >> struct S {
+   >>     var x: Int {
+   >>         get { print("S getter"); return 12 }
+   >>         set { return }
+   >>         didSet { print("S didSet") }
+   >>     }
+   >> }
+   !$ error: 'didSet' cannot be provided together with a getter
+   !! didSet { print("S didSet") }
+   !! ^
 
 
 .. _Declarations_TypeVariableProperties:
