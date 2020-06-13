@@ -702,7 +702,7 @@ and occurs only in a case block of a ``switch`` statement.
 A ``fallthrough`` statement causes program execution to continue
 from one case in a ``switch`` statement to the next case.
 Program execution continues to the next case
-even if the patterns of the case label do not match
+even if the patterns of the case label don't match
 the value of the ``switch`` statement's control expression.
 
 A ``fallthrough`` statement can appear anywhere inside a ``switch`` statement,

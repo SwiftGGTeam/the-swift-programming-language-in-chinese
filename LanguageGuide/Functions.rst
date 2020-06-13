@@ -299,7 +299,7 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
-Note that the tuple's members do not need to be named
+Note that the tuple's members don't need to be named
 at the point that the tuple is returned from the function,
 because their names are already specified as part of the function's return type.
 

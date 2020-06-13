@@ -318,7 +318,7 @@ indicated by an index of ``0``.
 
 Similarly, you remove an item from the array with the ``remove(at:)`` method.
 This method removes the item at the specified index and returns the removed item
-(although you can ignore the returned value if you do not need it):
+(although you can ignore the returned value if you don't need it):
 
 .. testcode:: arraysInferred
 
@@ -473,7 +473,7 @@ Set Type Syntax
 
 The type of a Swift set is written as ``Set<Element>``,
 where ``Element`` is the type that the set is allowed to store.
-Unlike arrays, sets do not have an equivalent shorthand form.
+Unlike arrays, sets don't have an equivalent shorthand form.
 
 
 .. _CollectionTypes_CreatingAndInitializingAnEmptySet:
@@ -759,7 +759,7 @@ keys of the same type and values of the same type
 in a collection with no defined ordering.
 Each value is associated with a unique :newTerm:`key`,
 which acts as an identifier for that value within the dictionary.
-Unlike items in an array, items in a dictionary do not have a specified order.
+Unlike items in an array, items in a dictionary don't have a specified order.
 You use a dictionary when you need to look up values based on their identifier,
 in much the same way that a real-world dictionary is used to look up
 the definition for a particular word.

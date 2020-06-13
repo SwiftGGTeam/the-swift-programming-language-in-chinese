@@ -4,7 +4,7 @@ Automatic Reference Counting
 Swift uses :newTerm:`Automatic Reference Counting` (ARC)
 to track and manage your app's memory usage.
 In most cases, this means that memory management “just works” in Swift,
-and you do not need to think about memory management yourself.
+and you don't need to think about memory management yourself.
 ARC automatically frees up the memory used by class instances
 when those instances are no longer needed.
 
@@ -34,7 +34,7 @@ together with the values of any stored properties associated with that instance.
 Additionally, when an instance is no longer needed,
 ARC frees up the memory used by that instance
 so that the memory can be used for other purposes instead.
-This ensures that class instances do not take up space in memory
+This ensures that class instances don't take up space in memory
 when they are no longer needed.
 
 However, if ARC were to deallocate an instance that was still in use,
@@ -87,7 +87,7 @@ which are used to set up multiple references to a new ``Person`` instance
 in subsequent code snippets.
 Because these variables are of an optional type (``Person?``, not ``Person``),
 they are automatically initialized with a value of ``nil``,
-and do not currently reference a ``Person`` instance.
+and don't currently reference a ``Person`` instance.
 
 .. testcode:: howARCWorks
 
@@ -244,7 +244,7 @@ The ``Person`` instance now has a strong reference to the ``Apartment`` instance
 and the ``Apartment`` instance has a strong reference to the ``Person`` instance.
 Therefore, when you break the strong references held by
 the ``john`` and ``unit4A`` variables,
-the reference counts do not drop to zero,
+the reference counts don't drop to zero,
 and the instances are not deallocated by ARC:
 
 .. testcode:: referenceCycles

@@ -207,7 +207,7 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
    // this will report an error
 
 .. TODO: talk about nonmutating as well.
-   Struct setters are implicitly 'mutating' by default and thus do not work on 'let's.
+   Struct setters are implicitly 'mutating' by default and thus don't work on 'let's.
    However, JoeG says that this ought to work
    if the setter for the computed property is explicitly defined as @!mutating.
 

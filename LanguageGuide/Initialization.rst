@@ -10,7 +10,7 @@ before the new instance is ready for use.
 You implement this initialization process by defining :newTerm:`initializers`,
 which are like special methods that can be called
 to create a new instance of a particular type.
-Unlike Objective-C initializers, Swift initializers do not return a value.
+Unlike Objective-C initializers, Swift initializers don't return a value.
 Their primary role is to ensure that new instances of a type
 are correctly initialized before they are used for the first time.
 
@@ -177,7 +177,7 @@ initialization parameters can have both a parameter name
 for use within the initializer's body
 and an argument label for use when calling the initializer.
 
-However, initializers do not have an identifying function name before their parentheses
+However, initializers don't have an identifying function name before their parentheses
 in the way that functions and methods do.
 Therefore, the names and types of an initializer's parameters
 play a particularly important role in identifying which initializer should be called.
@@ -241,7 +241,7 @@ and omitting them is a compile-time error:
 Initializer Parameters Without Argument Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not want to use an argument label for an initializer parameter,
+If you don't want to use an argument label for an initializer parameter,
 write an underscore (``_``) instead of an explicit argument label for that parameter
 to override the default behavior.
 
@@ -508,7 +508,7 @@ avoids duplicating code across multiple initializers.
 The rules for how initializer delegation works,
 and for what forms of delegation are allowed,
 are different for value types and class types.
-Value types (structures and enumerations) do not support inheritance,
+Value types (structures and enumerations) don't support inheritance,
 and so their initializer delegation process is relatively simple,
 because they can only delegate to another initializer that they provide themselves.
 Classes, however, can inherit from other classes,
@@ -670,7 +670,7 @@ with some of the designated initializer's parameters set to default values.
 You can also define a convenience initializer to create
 an instance of that class for a specific use case or input value type.
 
-You do not have to provide convenience initializers if your class does not require them.
+You don't have to provide convenience initializers if your class does not require them.
 Create convenience initializers whenever a shortcut to a common initialization pattern
 will save time or make initialization of the class clearer in intent.
 
@@ -889,7 +889,7 @@ Initializer Inheritance and Overriding
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unlike subclasses in Objective-C,
-Swift subclasses do not inherit their superclass initializers by default.
+Swift subclasses don't inherit their superclass initializers by default.
 Swift's approach prevents a situation in which a simple initializer from a superclass
 is inherited by a more specialized subclass
 and is used to create a new instance of the subclass
@@ -967,7 +967,7 @@ Conversely, if you write a subclass initializer that matches a superclass *conve
 that superclass convenience initializer can never be called directly by your subclass,
 as per the rules described above in :ref:`Initialization_InitializerChaining`.
 Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer.
-As a result, you do not write the ``override`` modifier when providing
+As a result, you don't write the ``override`` modifier when providing
 a matching implementation of a superclass convenience initializer.
 
 .. assertion:: youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer
@@ -1146,10 +1146,10 @@ Automatic Initializer Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As mentioned above,
-subclasses do not inherit their superclass initializers by default.
+subclasses don't inherit their superclass initializers by default.
 However, superclass initializers *are* automatically inherited if certain conditions are met.
 In practice, this means that
-you do not need to write initializer overrides in many common scenarios,
+you don't need to write initializer overrides in many common scenarios,
 and can inherit your superclass initializers with minimal effort whenever it is safe to do so.
 
 Assuming that you provide default values for any new properties you introduce in a subclass,
@@ -1213,7 +1213,7 @@ The figure below shows the initializer chain for the ``Food`` class:
 .. image:: ../images/initializersExample01_2x.png
    :align: center
 
-Classes do not have a default memberwise initializer,
+Classes don't have a default memberwise initializer,
 and so the ``Food`` class provides a designated initializer
 that takes a single argument called ``name``.
 This initializer can be used to create a new ``Food`` instance with a specific name:
@@ -1437,11 +1437,11 @@ to indicate a point at which initialization failure can be triggered.
 
 .. note::
 
-   Strictly speaking, initializers do not return a value.
+   Strictly speaking, initializers don't return a value.
    Rather, their role is to ensure that ``self`` is fully and correctly initialized
    by the time that initialization ends.
    Although you write ``return nil`` to trigger an initialization failure,
-   you do not use the ``return`` keyword to indicate initialization success.
+   you don't use the ``return`` keyword to indicate initialization success.
 
 For instance, failable initializers are implemented for numeric type conversions.
 To ensure conversion between numeric types maintains the value exactly,
@@ -1529,7 +1529,7 @@ Failable Initializers for Enumerations
 You can use a failable initializer to select an appropriate enumeration case
 based on one or more parameters.
 The initializer can then fail if the provided parameters
-do not match an appropriate enumeration case.
+don't match an appropriate enumeration case.
 
 The example below defines an enumeration called ``TemperatureUnit``,
 with three possible states (``kelvin``, ``celsius``, and ``fahrenheit``).
@@ -2028,7 +2028,7 @@ to indicate that every subclass of the class must implement that initializer:
 You must also write the ``required`` modifier before
 every subclass implementation of a required initializer,
 to indicate that the initializer requirement applies to further subclasses in the chain.
-You do not write the ``override`` modifier when overriding a required designated initializer:
+You don't write the ``override`` modifier when overriding a required designated initializer:
 
 .. testcode:: requiredInitializers
 
@@ -2056,7 +2056,7 @@ You do not write the ``override`` modifier when overriding a required designated
 
 .. note::
 
-   You do not have to provide an explicit implementation of a required initializer
+   You don't have to provide an explicit implementation of a required initializer
    if you can satisfy the requirement with an inherited initializer.
 
 .. assertion:: youCanSatisfyARequiredDesignatedInitializerWithAnInheritedInitializer

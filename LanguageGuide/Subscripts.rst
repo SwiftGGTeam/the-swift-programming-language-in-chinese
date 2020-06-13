@@ -51,7 +51,7 @@ The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify
 the setter's ``(newValue)`` parameter.
 A default parameter called ``newValue`` is provided to your setter
-if you do not provide one yourself.
+if you don't provide one yourself.
 
 As with read-only computed properties,
 you can simplify the declaration of a read-only subscript

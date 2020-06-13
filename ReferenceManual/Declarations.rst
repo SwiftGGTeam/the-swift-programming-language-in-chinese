@@ -174,7 +174,7 @@ If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
 When a constant declaration occurs in the context of a class or structure
 declaration, it is considered a :newTerm:`constant property`.
-Constant declarations are not computed properties and therefore do not have getters
+Constant declarations are not computed properties and therefore don't have getters
 or setters.
 
 If the *constant name* of a constant declaration is a tuple pattern,
@@ -325,7 +325,7 @@ But if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses is optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
-If you do not provide a setter name, the default parameter name to the setter is ``newValue``,
+If you don't provide a setter name, the default parameter name to the setter is ``newValue``,
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
 Unlike stored named values and stored variable properties,
@@ -407,7 +407,7 @@ the ``willSet`` observer.
 The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
 If you provide setter names,
 they are used as the parameter names to the ``willSet`` and ``didSet`` observers.
-If you do not provide setter names,
+If you don't provide setter names,
 the default parameter name to the ``willSet`` observer is ``newValue``
 and the default parameter name to the ``didSet`` observer is ``oldValue``.
 
@@ -536,7 +536,7 @@ Type alias declarations are declared using the ``typealias`` keyword and have th
 After a type alias is declared, the aliased *name* can be used
 instead of the *existing type* everywhere in your program.
 The *existing type* can be a named type or a compound type.
-Type aliases do not create new types;
+Type aliases don't create new types;
 they simply allow a name to refer to an existing type.
 
 A type alias declaration can use generic parameters
@@ -1228,7 +1228,7 @@ Enumeration types can adopt any number of protocols, but can’t inherit from cl
 structures, or other enumerations.
 
 Unlike classes and structures,
-enumeration types do not have an implicitly provided default initializer;
+enumeration types don't have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
 only after an initializer assigns one of the enumeration cases to ``self``.
@@ -1643,7 +1643,7 @@ Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are only
 inherited when the subclass meets the conditions described in
 :ref:`Initialization_AutomaticInitializerInheritance`.
-Swift classes do not inherit from a universal base class.
+Swift classes don't inherit from a universal base class.
 
 There are two ways to create an instance of a previously declared class:
 
@@ -1792,7 +1792,7 @@ Protocols are named types, and thus they can appear in all the same places
 in your code as other named types, as discussed in :ref:`Protocols_ProtocolsAsTypes`.
 However,
 you can't construct an instance of a protocol,
-because protocols do not actually provide the implementations for the requirements
+because protocols don't actually provide the implementations for the requirements
 they specify.
 
 You can use protocols to declare which methods a delegate of a class or structure
@@ -2711,7 +2711,7 @@ That said, if you provide a setter clause, you must also provide a getter clause
 
 The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
-If you do not provide a setter name, the default parameter name to the setter is ``value``.
+If you don't provide a setter name, the default parameter name to the setter is ``value``.
 The type of the parameter to the setter is the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,

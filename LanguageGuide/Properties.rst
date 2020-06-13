@@ -266,7 +266,7 @@ Computed Properties
 
 In addition to stored properties,
 classes, structures, and enumerations can define :newTerm:`computed properties`,
-which do not actually store a value.
+which don't actually store a value.
 Instead, they provide a getter and an optional setter
 to retrieve and set other properties and values indirectly.
 
@@ -1236,7 +1236,7 @@ and they are written in the same way as computed properties.
    Global constants and variables are always computed lazily,
    in a similar manner to :ref:`Properties_LazyStoredProperties`.
    Unlike lazy stored properties,
-   global constants and variables do not need to be marked with the ``lazy`` modifier.
+   global constants and variables don't need to be marked with the ``lazy`` modifier.
 
    Local constants and variables are never computed lazily.
 
@@ -1282,7 +1282,7 @@ in the same way as computed instance properties.
    Stored type properties are lazily initialized on their first access.
    They are guaranteed to be initialized only once,
    even when accessed by multiple threads simultaneously,
-   and they do not need to be marked with the ``lazy`` modifier.
+   and they don't need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 

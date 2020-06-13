@@ -641,7 +641,7 @@ No Implicit Fallthrough
 +++++++++++++++++++++++
 
 In contrast with ``switch`` statements in C and Objective-C,
-``switch`` statements in Swift do not
+``switch`` statements in Swift don't
 fall through the bottom of each case and into the next one by default.
 Instead, the entire ``switch`` statement finishes its execution
 as soon as the first matching ``switch`` case is completed,
@@ -1050,7 +1050,7 @@ the ``break`` statement inside the case ends the ``switch`` statement's executio
 .. note::
 
    A ``switch`` case that contains only a comment is reported as a compile-time error.
-   Comments are not statements and do not cause a ``switch`` case to be ignored.
+   Comments are not statements and don't cause a ``switch`` case to be ignored.
    Always use a ``break`` statement to ignore a ``switch`` case.
 
 The following example switches on a ``Character`` value

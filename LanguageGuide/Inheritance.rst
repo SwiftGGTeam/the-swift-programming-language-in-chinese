@@ -30,7 +30,7 @@ Any class that does not inherit from another class is known as a :newTerm:`base 
 
 .. note::
 
-   Swift classes do not inherit from a universal base class.
+   Swift classes don't inherit from a universal base class.
    Classes you define without specifying a superclass
    automatically become base classes for you to build upon.
 
@@ -447,7 +447,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
 
 .. TODO: provide more information about function signatures,
    and what does / does not make them unique.
-   For example, the parameter names do not have to match
+   For example, the parameter names don't have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)
 

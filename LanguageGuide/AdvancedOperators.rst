@@ -7,7 +7,7 @@ These include all of the bitwise and bit shifting operators you will be familiar
 from C and Objective-C.
 
 Unlike arithmetic operators in C,
-arithmetic operators in Swift do not overflow by default.
+arithmetic operators in Swift don't overflow by default.
 Overflow behavior is trapped and reported as an error.
 To opt in to overflow behavior,
 use Swift's second set of arithmetic operators that overflow by default,
@@ -856,7 +856,7 @@ see :ref:`Declarations_OperatorDeclaration`.
 
 .. note::
 
-   You do not specify a precedence when defining a prefix or postfix operator.
+   You don't specify a precedence when defining a prefix or postfix operator.
    However, if you apply both a prefix and a postfix operator to the same operand,
    the postfix operator is applied first.
 

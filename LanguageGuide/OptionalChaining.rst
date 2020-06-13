@@ -475,7 +475,7 @@ Linking Multiple Levels of Chaining
 You can link together multiple levels of optional chaining
 to drill down to properties, methods, and subscripts deeper within a model.
 However, multiple levels of optional chaining
-do not add more levels of optionality to the returned value.
+don't add more levels of optionality to the returned value.
 
 To put it another way:
 

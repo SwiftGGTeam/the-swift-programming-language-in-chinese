@@ -910,7 +910,7 @@ Document Revision History
 
 * Updated the information about :ref:`Initialization_MemberwiseInitializersForStructureTypes`
   to clarify that the memberwise structure initializer is made available
-  even if a structure's stored properties do not have default values.
+  even if a structure's stored properties don't have default values.
 
 * Updated to ``..<`` rather than ``..``
   for the :ref:`BasicOperators_HalfClosedRangeOperator`.
