@@ -606,7 +606,7 @@ Every ``switch`` statement must be :newTerm:`exhaustive`.
 That is, every possible value of the type being considered
 must be matched by one of the ``switch`` cases.
 If it's not appropriate to provide a case for every possible value,
-you can define a default case to cover any values that are not addressed explicitly.
+you can define a default case to cover any values that aren't addressed explicitly.
 This default case is indicated by the ``default`` keyword,
 and must always appear last.
 
@@ -1050,7 +1050,7 @@ the ``break`` statement inside the case ends the ``switch`` statement's executio
 .. note::
 
    A ``switch`` case that contains only a comment is reported as a compile-time error.
-   Comments are not statements and don't cause a ``switch`` case to be ignored.
+   Comments aren't statements and don't cause a ``switch`` case to be ignored.
    Always use a ``break`` statement to ignore a ``switch`` case.
 
 The following example switches on a ``Character`` value
@@ -1097,7 +1097,7 @@ if ``possibleIntegerValue`` was set to an actual value
 by one of the ``switch`` statement's first four cases.
 
 Because it's not practical to list every possible ``Character`` value in the example above,
-a ``default`` case handles any characters that are not matched.
+a ``default`` case handles any characters that aren't matched.
 This ``default`` case does not need to perform any action,
 and so it is written with a single ``break`` statement as its body.
 As soon as the ``default`` case is matched,

@@ -11,7 +11,7 @@ and elements in a ``Dictionary`` instance as ``someDictionary[key]``.
 You can define multiple subscripts for a single type,
 and the appropriate subscript overload to use is selected
 based on the type of index value you pass to the subscript.
-Subscripts are not limited to a single dimension,
+Subscripts aren't limited to a single dimension,
 and you can define subscripts with multiple input parameters
 to suit your custom type's needs.
 

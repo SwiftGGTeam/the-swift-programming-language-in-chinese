@@ -13,7 +13,7 @@ Swift handles all of the memory management of capturing for you.
 
 .. note::
 
-   Don't worry if you are not familiar with the concept of capturing.
+   Don't worry if you aren't familiar with the concept of capturing.
    It is explained in detail below in :ref:`Closures_CapturingValues`.
 
 Global and nested functions, as introduced in :doc:`Functions`,

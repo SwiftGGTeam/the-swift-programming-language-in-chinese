@@ -1190,7 +1190,7 @@ for example, to create a collection of objects
 that have different types
 but that all conform to a single protocol.
 When you work with values whose type is a protocol type,
-methods outside the protocol definition are not available.
+methods outside the protocol definition aren't available.
 
 .. testcode:: guided-tour
 

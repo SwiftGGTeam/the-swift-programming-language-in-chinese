@@ -174,7 +174,7 @@ If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
 When a constant declaration occurs in the context of a class or structure
 declaration, it is considered a :newTerm:`constant property`.
-Constant declarations are not computed properties and therefore don't have getters
+Constant declarations aren't computed properties and therefore don't have getters
 or setters.
 
 If the *constant name* of a constant declaration is a tuple pattern,
@@ -390,7 +390,7 @@ this expression is evaluated before the first time you write to the property.
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
-The observers are not called when the variable or property
+The observers aren't called when the variable or property
 is first initialized.
 Instead, they are called only when the value is set outside of an initialization context.
 
@@ -518,7 +518,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 
 .. NOTE: Type annotations are required for computed properties -- the
-   types of those properties are not computed/inferred.
+   types of those properties aren't computed/inferred.
 
 
 .. _Declarations_TypeAliasDeclaration:
@@ -2173,7 +2173,7 @@ A subclass’s implementation of that initializer
 must also be marked with the ``required`` declaration modifier.
 
 By default, initializers declared in a superclass
-are not inherited by subclasses.
+aren't inherited by subclasses.
 That said, if a subclass initializes all of its stored properties with default values
 and doesn't define any initializers of its own,
 it inherits all of the superclass's initializers.
@@ -2301,7 +2301,7 @@ which is implicitly called just before the subclass object is deallocated.
 The subclass object is not deallocated until all deinitializers in its inheritance chain
 have finished executing.
 
-Deinitializers are not called directly.
+Deinitializers aren't called directly.
 
 For an example of how to use a deinitializer in a class declaration,
 see :doc:`../LanguageGuide/Deinitialization`.

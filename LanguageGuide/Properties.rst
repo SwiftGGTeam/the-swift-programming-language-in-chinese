@@ -155,7 +155,7 @@ the ``lazy`` modifier before its declaration.
    !!-
 
 Lazy properties are useful when the initial value for a property
-is dependent on outside factors whose values are not known
+is dependent on outside factors whose values aren't known
 until after an instance's initialization is complete.
 Lazy properties are also useful when the initial value for a property requires
 complex or computationally expensive setup that should not be performed
@@ -458,7 +458,7 @@ Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed prope
 to enable external users to discover its current calculated volume.
 
 .. NOTE: getters and setters are also allowed for constants and variables
-   that are not associated with a particular class or struct.
+   that aren't associated with a particular class or struct.
    Where should this be mentioned?
 
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
@@ -570,7 +570,7 @@ the new value that you assign replaces the one that was just set.
    The ``willSet`` and ``didSet`` observers of superclass properties
    are called when a property is set in a subclass initializer,
    after the superclass initializer has been called.
-   They are not called while a class is setting its own properties,
+   They aren't called while a class is setting its own properties,
    before the superclass initializer has been called.
 
    For more information about initializer delegation,

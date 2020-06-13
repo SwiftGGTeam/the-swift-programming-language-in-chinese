@@ -805,7 +805,7 @@ but only one variable named ``b``.
 The ``a`` in the inner scope is initialized
 with the value of the ``a`` in the outer scope
 when the closure is created,
-but their values are not connected in any special way.
+but their values aren't connected in any special way.
 This means that a change to the value of ``a`` in the outer scope
 does not affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure

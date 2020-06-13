@@ -1012,7 +1012,7 @@ on any type that adopts the protocol.
 .. sourcefile:: protocols_Module2_InternalAndPrivate
 
    // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
-   // are not visible to other modules
+   // aren't visible to other modules
    -> import protocols_Module1
    -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
          var internalProperty = 0

@@ -911,7 +911,7 @@ may be split into two or more tokens. The remainder is treated the same way
 and may be split again. As a result, there's no need to use whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
-In this example, the closing ``>`` characters are not treated as a single token
+In this example, the closing ``>`` characters aren't treated as a single token
 that may then be misinterpreted as a bit shift ``>>`` operator.
 
 .. NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It

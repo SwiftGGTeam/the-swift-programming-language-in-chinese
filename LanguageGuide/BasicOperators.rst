@@ -362,7 +362,7 @@ For example:
 .. testcode:: tuple-comparison-operators
 
    >> let a =
-   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" aren't compared
    >> let b =
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    >> let c =

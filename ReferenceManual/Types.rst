@@ -222,11 +222,11 @@ Likewise, because ``Void`` is a type alias for ``()``,
 the function type ``(Void) -> Void``
 is the same as ``(()) -> ()`` ---
 a function that takes a single argument that is an empty tuple.
-These types are not the same as ``() -> ()`` ---
+These types aren't the same as ``() -> ()`` ---
 a function that takes no arguments.
 
 Argument names in functions and methods
-are not part of the corresponding function type.
+aren't part of the corresponding function type.
 For example:
 
 .. assertion:: argument-names
@@ -263,7 +263,7 @@ For example:
    !! f = functionWithDifferentNumberOfArguments // Error
    !! ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because argument labels are not part of a function's type,
+Because argument labels aren't part of a function's type,
 you omit them when writing a function type.
 
 .. testcode:: omit-argument-names-in-function-type

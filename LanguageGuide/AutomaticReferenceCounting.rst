@@ -19,7 +19,7 @@ for using ARC with Objective-C.
 
 Reference counting applies only to instances of classes.
 Structures and enumerations are value types, not reference types,
-and are not stored and passed by reference.
+and aren't stored and passed by reference.
 
 .. _AutomaticReferenceCounting_HowARCWorks:
 
@@ -245,7 +245,7 @@ and the ``Apartment`` instance has a strong reference to the ``Person`` instance
 Therefore, when you break the strong references held by
 the ``john`` and ``unit4A`` variables,
 the reference counts don't drop to zero,
-and the instances are not deallocated by ARC:
+and the instances aren't deallocated by ARC:
 
 .. testcode:: referenceCycles
 

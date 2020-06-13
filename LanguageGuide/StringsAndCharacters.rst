@@ -1006,13 +1006,13 @@ but don't have the same linguistic meaning:
    >> assert(cyrillicCapitalLetterA == "А")
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         print("These two characters are not equivalent.")
+         print("These two characters aren't equivalent.")
       }
-   <- These two characters are not equivalent.
+   <- These two characters aren't equivalent.
 
 .. note::
 
-   String and character comparisons in Swift are not locale-sensitive.
+   String and character comparisons in Swift aren't locale-sensitive.
 
 .. TODO: Add a cross reference to NSString.localizedCompare and
    NSString.localizedCaseInsensitiveCompare.  See also

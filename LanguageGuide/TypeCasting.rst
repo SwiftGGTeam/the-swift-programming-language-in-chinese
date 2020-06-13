@@ -152,7 +152,7 @@ The forced form, ``as!``, attempts the downcast and force-unwraps the result
 as a single compound action.
 
 Use the conditional form of the type cast operator (``as?``)
-when you are not sure if the downcast will succeed.
+when you aren't sure if the downcast will succeed.
 This form of the operator will always return an optional value,
 and the value will be ``nil`` if the downcast was not possible.
 This enables you to check for a successful downcast.

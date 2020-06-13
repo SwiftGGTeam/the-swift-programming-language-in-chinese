@@ -8,7 +8,7 @@ detail, rather than to allow you to directly implement a parser or compiler.
 The Swift language is relatively small, because many common types, functions, and operators
 that appear virtually everywhere in Swift code
 are actually defined in the Swift standard library. Although these types, functions,
-and operators are not part of the Swift language itself,
+and operators aren't part of the Swift language itself,
 they are used extensively in the discussions and code examples in this part of the book.
 
 

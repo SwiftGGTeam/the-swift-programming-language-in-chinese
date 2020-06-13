@@ -128,7 +128,7 @@ to a complex function with expressive parameter names and different parameter op
 Functions Without Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions are not required to define input parameters.
+Functions aren't required to define input parameters.
 Here's a function with no input parameters,
 which always returns the same ``String`` message whenever it is called:
 
@@ -184,7 +184,7 @@ but the ``greet(person:)`` function takes only one.
 Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions are not required to define a return type.
+Functions aren't required to define a return type.
 Here's a version of the ``greet(person:)`` function,
 which prints its own ``String`` value rather than returning it:
 
@@ -619,7 +619,7 @@ even though they were originally defined outside of the function.
 
 .. note::
 
-   In-out parameters are not the same as returning a value from a function.
+   In-out parameters aren't the same as returning a value from a function.
    The ``swapTwoInts`` example above does not define a return type or return a value,
    but it still modifies the values of ``someInt`` and ``anotherInt``.
    In-out parameters are an alternative way for a function to have an effect

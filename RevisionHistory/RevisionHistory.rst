@@ -196,7 +196,7 @@ Document Revision History
   about using the ``available`` attribute with a Swift language version.
 
 * Updated the discussion in the :ref:`Types_FunctionType` section
-  to note that argument labels are not allowed when writing a function type.
+  to note that argument labels aren't allowed when writing a function type.
 
 * Updated the discussion of Swift language version numbers
   in the :ref:`Statements_BuildConfigurationStatement` section,

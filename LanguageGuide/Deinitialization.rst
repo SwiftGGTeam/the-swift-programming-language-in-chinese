@@ -35,7 +35,7 @@ and is written without parentheses:
    >> }
 
 Deinitializers are called automatically, just before instance deallocation takes place.
-You are not allowed to call a deinitializer yourself.
+You aren't allowed to call a deinitializer yourself.
 Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of
 a subclass deinitializer implementation.
@@ -79,7 +79,7 @@ It also offers two methods --- ``distribute(coins:)`` and ``receive(coins:)`` --
 to handle the distribution and collection of coins.
 
 The ``distribute(coins:)`` method checks that there are enough coins in the bank before distributing them.
-If there are not enough coins,
+If there aren't enough coins,
 ``Bank`` returns a smaller number than the number that was requested
 (and returns zero if no coins are left in the bank).
 It returns an integer value to indicate the actual number of coins that were provided.

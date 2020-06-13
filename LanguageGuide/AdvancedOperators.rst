@@ -557,7 +557,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 
    Swift's operator precedences and associativity rules are simpler and more predictable
    than those found in C and Objective-C.
-   However, this means that they are not exactly the same as in C-based languages.
+   However, this means that they aren't exactly the same as in C-based languages.
    Be careful to ensure that operator interactions still behave in the way you intend
    when porting existing code to Swift.
 
