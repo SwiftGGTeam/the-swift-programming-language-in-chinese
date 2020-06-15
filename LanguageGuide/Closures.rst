@@ -457,7 +457,7 @@ that displays an error to the user.
    << Changed picture
 
 In this example,
-the ``loadPicture(from:completion:onFailure:)`` method
+the ``loadPicture(from:completion:onFailure:)`` function
 dispatches its network task into the background,
 and calls one of the two completion handlers when the network task finishes.
 Writing the function this way lets you cleanly separate the code
