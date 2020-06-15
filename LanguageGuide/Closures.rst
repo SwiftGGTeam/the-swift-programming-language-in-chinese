@@ -21,7 +21,7 @@ are actually special cases of closures.
 Closures take one of three forms:
 
 * Global functions are closures that have a name
-  and do not capture any values.
+  and don't capture any values.
 * Nested functions are closures that have a name
   and can capture values from their enclosing function.
 * Closure expressions are unnamed closures written in a lightweight syntax
@@ -178,7 +178,7 @@ Swift can infer the types of its parameters
 and the type of the value it returns.
 The ``sorted(by:)`` method is being called on an array of strings,
 so its argument must be a function of type ``(String, String) -> Bool``.
-This means that the ``(String, String)`` and ``Bool`` types do not need to be written
+This means that the ``(String, String)`` and ``Bool`` types don't need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
 the return arrow (``->``) and the parentheses around the names of the parameters
@@ -274,11 +274,13 @@ Trailing Closures
 If you need to pass a closure expression to a function as the function's final argument
 and the closure expression is long,
 it can be useful to write it as a :newTerm:`trailing closure` instead.
-A trailing closure is written after the function call's parentheses,
-even though it is still an argument to the function.
+You write a trailing closure after the function call's parentheses,
+even though the trailing closure is still an argument to the function.
 When you use the trailing closure syntax,
-you don't write the argument label for the closure
+you don't write the argument label for the first closure
 as part of the function call.
+A function call can include multiple trailing closures;
+however, the first few examples below use a single trailing closure.
 
 .. testcode:: closureSyntax
 
@@ -306,9 +308,9 @@ can be written outside of the ``sorted(by:)`` method's parentheses as a trailing
    -> reversedNames = names.sorted() { $0 > $1 }
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
-If a closure expression is provided as the function or method's only argument
+If a closure expression is provided as the function's or method's only argument
 and you provide that expression as a trailing closure,
-you do not need to write a pair of parentheses ``()``
+you don't need to write a pair of parentheses ``()``
 after the function or method's name when you call the function:
 
 .. testcode:: closureSyntax
@@ -318,12 +320,13 @@ after the function or method's name when you call the function:
 
 Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
-As an example, Swift's ``Array`` type has a ``map(_:)`` method
+As an example, Swift's ``Array`` type has a ``map(_:)`` method,
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
-The nature of the mapping and the type of the returned value
-is left up to the closure to specify.
+You specify
+the nature of the mapping and the type of the returned value
+by writing code in the closure that you pass to ``map(_:)``.
 
 After applying the provided closure to each array element,
 the ``map(_:)`` method returns a new array containing all of the new mapped values,
@@ -365,7 +368,7 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
 The ``map(_:)`` method calls the closure expression once for each item in the array.
-You do not need to specify the type of the closure's input parameter, ``number``,
+You don't need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
 In this example,
@@ -410,6 +413,58 @@ neatly encapsulates the closure's functionality
 immediately after the function that closure supports,
 without needing to wrap the entire closure within
 the ``map(_:)`` method's outer parentheses.
+
+If a function takes multiple closures,
+you omit the argument label for the first trailing closure
+and you label the remaining trailing closures.
+For example,
+the function below loads a picture for a photo gallery:
+
+.. testcode:: multiple-trailing-closures
+
+   >> struct Server { }
+   >> struct Picture { }
+   >> func download(_ path: String, from server: Server) -> Picture? {
+   >>     return Picture()
+   >> }
+   -> func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: () -> Void) {
+          if let picture = download("photo.jpg", from: server) {
+              completion(picture)
+          } else {
+              onFailure()
+          }
+      }
+
+When you call this function to load a picture,
+you provide two closures.
+The first closure is a completion handler
+that displays a picture after a successful download.
+The second closure is an error handler
+that displays an error to the user.
+
+.. testcode:: multiple-trailing-closures
+
+   >> struct View {
+   >>    var currentPicture = Picture() { didSet { print("Changed picture") } }
+   >> }
+   >> var someView = View()
+   >> let someServer = Server()
+   -> loadPicture(from: someServer) { picture in
+          someView.currentPicture = picture
+      } onFailure: {
+          print("Couldn't download the next picture.")
+      }
+   << Changed picture
+
+In this example,
+the ``loadPicture(from:completion:onFailure:)`` function
+dispatches its network task into the background,
+and calls one of the two completion handlers when the network task finishes.
+Writing the function this way lets you cleanly separate the code
+that's responsible for handling a network failure
+from the code that updates the user interface after a successful download,
+instead of using just one closure that handles both circumstances.
+
 
 .. _Closures_CapturingValues:
 
@@ -483,7 +538,7 @@ The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing a *reference* to ``runningTotal`` and ``amount``
 from the surrounding function and using them within its own function body.
-Capturing by reference ensures that ``runningTotal`` and ``amount`` do not disappear
+Capturing by reference ensures that ``runningTotal`` and ``amount`` don't disappear
 when the call to ``makeIncrementer`` ends,
 and also ensures that ``runningTotal`` is available
 the next time the ``incrementer`` function is called.
