@@ -5,9 +5,12 @@ Document Revision History
 
 * Updated for Swift 5.3.
 
+* Added information about multiple trailing closures
+  to the :ref:`Closures_TrailingClosures` section.
+
 * Added information about synthesized implementation
   of ``Comparable`` for enumerations
-  in the :ref:`Protocols_SynthesizedImplementation` section.
+  to the :ref:`Protocols_SynthesizedImplementation` section.
 
 * Added the :ref:`Generics_ContextualWhereClause` section
   now that you can write a generic ``where`` clause in more places.
@@ -16,7 +19,7 @@ Document Revision History
   with information about using unowned references with optional values.
 
 * Added information about the ``@main`` attribute
-  in the :ref:`Attributes_main` section.
+  to the :ref:`Attributes_main` section.
 
 * Added ``#filePath`` to the :ref:`Expressions_LiteralExpression` section,
   and updated the discussion of ``#file``.
