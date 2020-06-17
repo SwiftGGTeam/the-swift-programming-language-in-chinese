@@ -8,7 +8,7 @@ Document Revision History
 * Added information about multiple trailing closures
   to the :ref:`Closures_TrailingClosures` section.
 
-* Added information about synthesized implementation
+* Added information about synthesized implementations
   of ``Comparable`` for enumerations
   to the :ref:`Protocols_SynthesizedImplementation` section.
 
@@ -27,8 +27,8 @@ Document Revision History
 * Updated the :ref:`Closures_Noescape` section,
   now that closures can refer to ``self`` implicitly in more scenarios.
 
-* Updated the :ref:`ErrorHandling_DoCatch` section
-  and :ref:`Statements_DoStatement` section,
+* Updated the :ref:`ErrorHandling_DoCatch`
+  and :ref:`Statements_DoStatement` sections,
   now that a ``catch`` clause can match against multiple errors.
 
 * Updated the :ref:`Properties_PropertyObservers` section,
@@ -37,7 +37,7 @@ Document Revision History
 * Updated the :ref:`Declarations_ProtocolDeclaration` section,
   now that members of an enumeration can satisfy protocol requirements.
 
-* Updated the :ref:`Declarations_StoredVariableObserversAndPropertyObservers` section,
+* Updated the :ref:`Declarations_StoredVariableObserversAndPropertyObservers` section
   to describe when the getter is called before the observer.
 
 **2020-03-24**
