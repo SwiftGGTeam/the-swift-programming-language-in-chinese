@@ -2137,7 +2137,7 @@ and not the return value of the closure.
 .. note::
 
    If you use a closure to initialize a property,
-   remember that the rest of the instance has not yet been initialized
+   remember that the rest of the instance hasn't yet been initialized
    at the point that the closure is executed.
    This means that you can't access any other property values from within your closure,
    even if those properties have default values.

@@ -192,7 +192,7 @@ neither of which is shown in full:
    -> let manager = DataManager()
    -> manager.data.append("Some data")
    -> manager.data.append("Some more data")
-   // the DataImporter instance for the importer property has not yet been created
+   // the DataImporter instance for the importer property hasn't yet been created
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -231,7 +231,7 @@ such as when its ``filename`` property is queried:
 
    If a property marked with the ``lazy`` modifier
    is accessed by multiple threads simultaneously
-   and the property has not yet been initialized,
+   and the property hasn't yet been initialized,
    there's no guarantee that the property will be initialized only once.
 
 .. 6/19/14, 10:54 PM [Contributor 7746]:

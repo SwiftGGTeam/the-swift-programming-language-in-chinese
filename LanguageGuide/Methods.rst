@@ -427,9 +427,9 @@ the attempt to set the player's current level fails:
    -> if player.tracker.advance(to: 6) {
          print("player is now on level 6")
       } else {
-         print("level 6 has not yet been unlocked")
+         print("level 6 hasn't yet been unlocked")
       }
-   <- level 6 has not yet been unlocked
+   <- level 6 hasn't yet been unlocked
 
 .. TODO: Method Binding
    --------------------

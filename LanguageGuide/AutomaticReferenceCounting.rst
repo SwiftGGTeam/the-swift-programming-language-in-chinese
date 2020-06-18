@@ -450,7 +450,7 @@ and ARC never sets an unowned reference's value to ``nil``.
 .. important::
 
    Use an unowned reference only when you are sure that
-   the reference *always* refers to an instance that has not been deallocated.
+   the reference *always* refers to an instance that hasn't been deallocated.
 
    If you try to access the value of an unowned reference
    after that instance has been deallocated,

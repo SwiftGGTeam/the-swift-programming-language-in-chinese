@@ -887,7 +887,7 @@ Declaring Protocol Adoption with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a type already conforms to all of the requirements of a protocol,
-but has not yet stated that it adopts that protocol,
+but hasn't yet stated that it adopts that protocol,
 you can make it adopt the protocol with an empty extension:
 
 .. testcode:: protocols
