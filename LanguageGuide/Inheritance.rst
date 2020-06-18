@@ -174,7 +174,7 @@ This is known as :newTerm:`overriding`.
 To override a characteristic that would otherwise be inherited,
 you prefix your overriding definition with the ``override`` keyword.
 Doing so clarifies that you intend to provide an override
-and have not provided a matching definition by mistake.
+and haven't provided a matching definition by mistake.
 Overriding by accident can cause unexpected behavior,
 and any overrides without the ``override`` keyword are
 diagnosed as an error when your code is compiled.
