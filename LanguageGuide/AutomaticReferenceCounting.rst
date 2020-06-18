@@ -53,7 +53,7 @@ whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
 The reference is called a "strong" reference because
 it keeps a firm hold on that instance,
-and does not allow it to be deallocated for as long as that strong reference remains.
+and doesn't allow it to be deallocated for as long as that strong reference remains.
 
 .. _AutomaticReferenceCounting_ARCInAction:
 
@@ -132,7 +132,7 @@ and the ``Person`` instance is not deallocated:
    -> reference1 = nil
    -> reference2 = nil
 
-ARC does not deallocate the ``Person`` instance until
+ARC doesn't deallocate the ``Person`` instance until
 the third and final strong reference is broken,
 at which point it's clear that you are no longer using the ``Person`` instance:
 
@@ -297,14 +297,14 @@ has the same lifetime or a longer lifetime.
 Weak References
 ~~~~~~~~~~~~~~~
 
-A :newTerm:`weak reference` is a reference that does not keep a strong hold
+A :newTerm:`weak reference` is a reference that doesn't keep a strong hold
 on the instance it refers to,
-and so does not stop ARC from disposing of the referenced instance.
+and so doesn't stop ARC from disposing of the referenced instance.
 This behavior prevents the reference from becoming part of a strong reference cycle.
 You indicate a weak reference by placing the ``weak`` keyword
 before a property or variable declaration.
 
-Because a weak reference does not keep a strong hold on the instance it refers to,
+Because a weak reference doesn't keep a strong hold on the instance it refers to,
 it's possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
@@ -428,7 +428,7 @@ Unowned References
 ~~~~~~~~~~~~~~~~~~
 
 Like a weak reference,
-an :newTerm:`unowned reference` does not keep
+an :newTerm:`unowned reference` doesn't keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
 an unowned reference is used when the other instance
@@ -892,7 +892,7 @@ or “a function that takes no parameters, and returns a ``String`` value”.
 By default, the ``asHTML`` property is assigned a closure that returns
 a string representation of an HTML tag.
 This tag contains the optional ``text`` value if it exists,
-or no text content if ``text`` does not exist.
+or no text content if ``text`` doesn't exist.
 For a paragraph element, the closure would return ``"<p>some text</p>"`` or ``"<p />"``,
 depending on whether the ``text`` property equals ``"some text"`` or ``nil``.
 
@@ -1026,7 +1026,7 @@ if they are provided:
       }
    >> }
 
-If a closure does not specify a parameter list or return type
+If a closure doesn't specify a parameter list or return type
 because they can be inferred from context,
 place the capture list at the very start of the closure,
 followed by the ``in`` keyword:
@@ -1116,7 +1116,7 @@ Here's how the references look with the capture list in place:
    :align: center
 
 This time, the capture of ``self`` by the closure is an unowned reference,
-and does not keep a strong hold on the ``HTMLElement`` instance it has captured.
+and doesn't keep a strong hold on the ``HTMLElement`` instance it has captured.
 If you set the strong reference from the ``paragraph`` variable to ``nil``,
 the ``HTMLElement`` instance is deallocated,
 as can be seen from the printing of its deinitializer message in the example below:

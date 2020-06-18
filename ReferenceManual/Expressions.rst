@@ -79,7 +79,7 @@ It has the following form:
 
    try? <#expression#>
 
-If the *expression* does not throw an error,
+If the *expression* doesn't throw an error,
 the value of the optional-try expression
 is an optional containing the value of the *expression*.
 Otherwise, the value of the optional-try expression is ``nil``.
@@ -238,7 +238,7 @@ For example:
     /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
     </ a is "test", b is 12, c is 3, and 9.45 is ignored
 
-The assignment operator does not return any value.
+The assignment operator doesn't return any value.
 
 .. syntax-grammar::
 
@@ -807,7 +807,7 @@ with the value of the ``a`` in the outer scope
 when the closure is created,
 but their values aren't connected in any special way.
 This means that a change to the value of ``a`` in the outer scope
-does not affect the value of ``a`` in the inner scope,
+doesn't affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
 affect the value of ``a`` outside the closure.
 In contrast, there's only one variable named ``b`` ---

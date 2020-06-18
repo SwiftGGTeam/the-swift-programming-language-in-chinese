@@ -59,7 +59,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
    </ spiders have 8 legs
 
 The contents of a ``Dictionary`` are inherently unordered,
-and iterating over them does not guarantee the order
+and iterating over them doesn't guarantee the order
 in which they will be retrieved.
 In particular,
 the order you insert items into a ``Dictionary``
@@ -97,7 +97,7 @@ This process continues until the end of the range is reached.
 
 In the example above, ``index`` is a constant whose value is automatically set
 at the start of each iteration of the loop.
-As such, ``index`` does not have to be declared before it is used.
+As such, ``index`` doesn't have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
 
@@ -128,7 +128,7 @@ the code simply executes the loop the correct number of times.
 The underscore character (``_``)
 used in place of a loop variable
 causes the individual values to be ignored
-and does not provide access to the current value during each iteration of the loop.
+and doesn't provide access to the current value during each iteration of the loop.
 
 In some situations, you might not want to use closed ranges,
 which include both endpoints.
@@ -550,7 +550,7 @@ The final ``else`` clause remains,
 and it prints a response for any temperatures that are neither too warm nor too cold.
 
 The final ``else`` clause is optional, however,
-and can be excluded if the set of conditions does not need to be complete.
+and can be excluded if the set of conditions doesn't need to be complete.
 
 .. testcode:: ifElse
 
@@ -676,9 +676,9 @@ It is not valid to write the following code, because the first case is empty:
    // This will report a compile-time error.
 
 Unlike a ``switch`` statement in C,
-this ``switch`` statement does not match both ``"a"`` and ``"A"``.
+this ``switch`` statement doesn't match both ``"a"`` and ``"A"``.
 Rather, it reports a compile-time error that ``case "a":``
-does not contain any executable statements.
+doesn't contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
 and makes for safer code that is clearer in its intent.
 
@@ -846,7 +846,7 @@ After the temporary constants are declared,
 they can be used within the case's code block.
 Here, they are used to print the categorization of the point.
 
-This ``switch`` statement does not have a ``default`` case.
+This ``switch`` statement doesn't have a ``default`` case.
 The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
 Because ``anotherPoint`` is always a tuple of two values,
@@ -1040,7 +1040,7 @@ the ``switch`` statement's closing brace (``}``).
 
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
 Because Swift's ``switch`` statement is exhaustive
-and does not allow empty cases,
+and doesn't allow empty cases,
 it is sometimes necessary to deliberately match and ignore a case
 in order to make your intentions explicit.
 You do this by writing the ``break`` statement as the entire body of the case you want to ignore.
@@ -1098,7 +1098,7 @@ by one of the ``switch`` statement's first four cases.
 
 Because it's not practical to list every possible ``Character`` value in the example above,
 a ``default`` case handles any characters that aren't matched.
-This ``default`` case does not need to perform any action,
+This ``default`` case doesn't need to perform any action,
 and so it is written with a single ``break`` statement as its body.
 As soon as the ``default`` case is matched,
 the ``break`` statement ends the ``switch`` statement's execution,
@@ -1157,7 +1157,7 @@ the number ``5`` is correctly identified as a prime number.
 
 .. note::
 
-   The ``fallthrough`` keyword does not check the case conditions
+   The ``fallthrough`` keyword doesn't check the case conditions
    for the ``switch`` case that it causes execution to fall into.
    The ``fallthrough`` keyword simply causes code execution to move
    directly to the statements inside the next case (or ``default`` case) block,

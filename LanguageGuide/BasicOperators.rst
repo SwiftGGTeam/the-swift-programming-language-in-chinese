@@ -87,13 +87,13 @@ its elements can be decomposed into multiple constants or variables at once:
    rather than from the pattern.
 
 Unlike the assignment operator in C and Objective-C,
-the assignment operator in Swift does not itself return a value.
+the assignment operator in Swift doesn't itself return a value.
 The following statement is not valid:
 
 .. testcode:: assignmentOperatorInvalid
 
    -> if x = y {
-         // This is not valid, because x = y does not return a value.
+         // This is not valid, because x = y doesn't return a value.
       }
    !$ error: cannot find 'x' in scope
    !! if x = y {

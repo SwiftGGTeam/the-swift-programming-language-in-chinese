@@ -23,7 +23,7 @@ For example, if you create a custom class to open a file and write some data to 
 you might need to close the file before the class instance is deallocated.
 
 Class definitions can have at most one deinitializer per class.
-The deinitializer does not take any parameters
+The deinitializer doesn't take any parameters
 and is written without parentheses:
 
 .. testcode:: deinitializer
@@ -40,7 +40,7 @@ Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of
 a subclass deinitializer implementation.
 Superclass deinitializers are always called,
-even if a subclass does not provide its own deinitializer.
+even if a subclass doesn't provide its own deinitializer.
 
 Because an instance is not deallocated until after its deinitializer is called,
 a deinitializer can access all properties of the instance it is called on

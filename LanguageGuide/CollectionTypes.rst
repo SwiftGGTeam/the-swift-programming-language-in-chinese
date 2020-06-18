@@ -46,7 +46,7 @@ and its size and contents can't be changed.
 .. note::
 
    It is good practice to create immutable collections
-   in all cases where the collection does not need to change.
+   in all cases where the collection doesn't need to change.
    Doing so makes it easier for you to reason about your code
    and enables the Swift compiler to optimize the performance of
    the collections you create.
@@ -633,7 +633,7 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
-Swift's ``Set`` type does not have a defined ordering.
+Swift's ``Set`` type doesn't have a defined ordering.
 To iterate over the values of a set in a specific order,
 use the ``sorted()`` method,
 which returns the set's elements as an array
@@ -1003,7 +1003,7 @@ or returns ``nil`` if no value existed:
    -> if let removedValue = airports.removeValue(forKey: "DUB") {
          print("The removed airport's name is \(removedValue).")
       } else {
-         print("The airports dictionary does not contain a value for DUB.")
+         print("The airports dictionary doesn't contain a value for DUB.")
       }
    <- The removed airport's name is Dublin Airport.
 
@@ -1058,6 +1058,6 @@ with the ``keys`` or ``values`` property:
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["London Heathrow", "Toronto Pearson"]
 
-Swift's ``Dictionary`` type does not have a defined ordering.
+Swift's ``Dictionary`` type doesn't have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
 use the ``sorted()`` method on its ``keys`` or ``values`` property.

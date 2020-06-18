@@ -249,7 +249,7 @@ In addition to properties,
 you can use instance variables as a backing store for the values stored in a property.
 
 Swift unifies these concepts into a single property declaration.
-A Swift property does not have a corresponding instance variable,
+A Swift property doesn't have a corresponding instance variable,
 and the backing store for a property is not accessed directly.
 This approach avoids confusion about how the value is accessed in different contexts
 and simplifies the property's declaration into a single, definitive statement.
@@ -647,7 +647,7 @@ The ``didSet`` observer is called after the value of ``totalSteps`` is updated.
 It compares the new value of ``totalSteps`` against the old value.
 If the total number of steps has increased,
 a message is printed to indicate how many new steps have been taken.
-The ``didSet`` observer does not provide a custom parameter name for the old value,
+The ``didSet`` observer doesn't provide a custom parameter name for the old value,
 and the default name of ``oldValue`` is used instead.
 
 .. note::
@@ -1276,7 +1276,7 @@ in the same way as computed instance properties.
 
    Unlike stored instance properties,
    you must always give stored type properties a default value.
-   This is because the type itself does not have an initializer
+   This is because the type itself doesn't have an initializer
    that can assign a value to a stored type property at initialization time.
 
    Stored type properties are lazily initialized on their first access.
@@ -1438,7 +1438,7 @@ This observer performs two checks:
 
    In the first of these two checks,
    the ``didSet`` observer sets ``currentLevel`` to a different value.
-   This does not, however, cause the observer to be called again.
+   This doesn't, however, cause the observer to be called again.
 
 You can use the ``AudioChannel`` structure to create
 two new audio channels called ``leftChannel`` and ``rightChannel``,

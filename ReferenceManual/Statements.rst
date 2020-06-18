@@ -99,7 +99,7 @@ If the value returned is not ``nil``,
 it is assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
-Otherwise, the program does not perform assignment or execute the *statements*,
+Otherwise, the program doesn't perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
 
 .. syntax-grammar::
@@ -508,7 +508,7 @@ Execution Does Not Fall Through Cases Implicitly
 
 After the code within a matched case has finished executing,
 the program exits from the ``switch`` statement.
-Program execution does not continue or "fall through" to the next case or default case.
+Program execution doesn't continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
 which simply consists of the ``fallthrough`` keyword,
@@ -656,7 +656,7 @@ Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
 A ``continue`` statement ends program execution of the current iteration of a loop
-statement but does not stop execution of the loop statement.
+statement but doesn't stop execution of the loop statement.
 A ``continue`` statement can consist of only the ``continue`` keyword,
 or it can consist of the ``continue`` keyword followed by the name of a statement label,
 as shown below.
@@ -741,7 +741,7 @@ or it can consist of the ``return`` keyword followed by an expression, as shown 
 
 When a ``return`` statement is followed by an expression,
 the value of the expression is returned to the calling function or method.
-If the value of the expression does not match the value of the return type
+If the value of the expression doesn't match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
@@ -755,7 +755,7 @@ before it is returned to the calling function or method.
     in the (yet to be written) chapter on subtyping and type conversions.
 
 When a ``return`` statement is not followed by an expression,
-it can be used only to return from a function or method that does not return a value
+it can be used only to return from a function or method that doesn't return a value
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 
 .. syntax-grammar::
@@ -863,7 +863,7 @@ can be accessed only within that scope.
 
 A ``do`` statement in Swift is similar to
 curly braces (``{}``) in C used to delimit a code block,
-and does not incur a performance cost at runtime.
+and doesn't incur a performance cost at runtime.
 
 A ``do`` statement has the following form:
 
@@ -1041,7 +1041,7 @@ otherwise, it returns ``false``.
 
 .. note::
 
-   The ``arch(arm)`` platform condition does not return ``true`` for ARM 64 devices.
+   The ``arch(arm)`` platform condition doesn't return ``true`` for ARM 64 devices.
    The ``arch(i386)`` platform condition returns ``true``
    when code is compiled for the 32–bit iOS simulator.
 

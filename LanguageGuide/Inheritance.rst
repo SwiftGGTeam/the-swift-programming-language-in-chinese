@@ -26,7 +26,7 @@ regardless of whether it was originally defined as a stored or computed property
 Defining a Base Class
 ---------------------
 
-Any class that does not inherit from another class is known as a :newTerm:`base class`.
+Any class that doesn't inherit from another class is known as a :newTerm:`base class`.
 
 .. note::
 
@@ -42,7 +42,7 @@ a read-only computed ``String`` property called ``description``
 to create a description of the vehicle.
 
 The ``Vehicle`` base class also defines a method called ``makeNoise``.
-This method does not actually do anything for a base ``Vehicle`` instance,
+This method doesn't actually do anything for a base ``Vehicle`` instance,
 but will be customized by subclasses of ``Vehicle`` later on:
 
 .. testcode:: inheritance
@@ -446,7 +446,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
 .. TODO: I should probably provide an example here.
 
 .. TODO: provide more information about function signatures,
-   and what does / does not make them unique.
+   and what does / doesn't make them unique.
    For example, the parameter names don't have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)

@@ -192,7 +192,7 @@ must always be provided by the original class implementation.
 
 If you use an extension to add an initializer to a value type that provides
 default values for all of its stored properties
-and does not define any custom initializers,
+and doesn't define any custom initializers,
 you can call the default initializer and memberwise initializer for that value type
 from within your extension's initializer.
 This wouldn't be the case if you had written the initializer
@@ -283,7 +283,7 @@ The following example adds a new instance method called ``repetitions`` to the `
       }
 
 The ``repetitions(task:)`` method takes a single argument of type ``() -> Void``,
-which indicates a function that has no parameters and does not return a value.
+which indicates a function that has no parameters and doesn't return a value.
 
 After defining this extension,
 you can call the ``repetitions(task:)`` method on any integer
@@ -375,7 +375,7 @@ from the right of the number:
    if/when integer exponents land in the stdlib.
    Darwin's pow() function is only for floating point.
 
-If the ``Int`` value does not have enough digits for the requested index,
+If the ``Int`` value doesn't have enough digits for the requested index,
 the subscript implementation returns ``0``,
 as if the number had been padded with zeros to the left:
 

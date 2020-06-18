@@ -100,7 +100,7 @@ These keywords are described in the sections below.
    with the use of the ``try``, ``catch`` and ``throw`` keywords.
    Unlike exception handling in many languages ---
    including Objective-C ---
-   error handling in Swift does not involve unwinding the call stack,
+   error handling in Swift doesn't involve unwinding the call stack,
    a process that can be computationally expensive.
    As such, the performance characteristics
    of a ``throw`` statement

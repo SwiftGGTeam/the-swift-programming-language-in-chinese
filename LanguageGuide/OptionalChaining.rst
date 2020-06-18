@@ -321,7 +321,7 @@ Calling Methods Through Optional Chaining
 
 You can use optional chaining to call a method on an optional value,
 and to check whether that method call is successful.
-You can do this even if that method does not define a return value.
+You can do this even if that method doesn't define a return value.
 
 The ``printNumberOfRooms()`` method on the ``Residence`` class
 prints the current value of ``numberOfRooms``.
@@ -334,7 +334,7 @@ Here's how the method looks:
          print("The number of rooms is \(numberOfRooms)")
       }
 
-This method does not specify a return type.
+This method doesn't specify a return type.
 However, functions and methods with no return type have an implicit return type of ``Void``,
 as described in :ref:`Functions_FunctionsWithoutReturnValues`.
 This means that they return a value of ``()``, or an empty tuple.
@@ -344,7 +344,7 @@ the method's return type will be ``Void?``, not ``Void``,
 because return values are always of an optional type when called through optional chaining.
 This enables you to use an ``if`` statement
 to check whether it was possible to call the ``printNumberOfRooms()`` method,
-even though the method does not itself define a return value.
+even though the method doesn't itself define a return value.
 Compare the return value from the ``printNumberOfRooms`` call against ``nil``
 to see if the method call was successful:
 
@@ -465,7 +465,7 @@ and to try to set the first item in an array for a key of ``"Brian"``.
 The first two calls succeed, because the ``testScores`` dictionary
 contains keys for ``"Dave"`` and ``"Bev"``.
 The third call fails, because the ``testScores`` dictionary
-does not contain a key for ``"Brian"``.
+doesn't contain a key for ``"Brian"``.
 
 .. _OptionalChaining_LinkingMultipleLevelsOfChaining:
 
@@ -575,7 +575,7 @@ place the optional chaining question mark *after* the method's parentheses:
          if beginsWithThe {
             print("John's building identifier begins with \"The\".")
          } else {
-            print("John's building identifier does not begin with \"The\".")
+            print("John's building identifier doesn't begin with \"The\".")
          }
       }
    <- John's building identifier begins with "The".

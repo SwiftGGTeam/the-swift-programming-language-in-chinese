@@ -221,7 +221,7 @@ whenever a ``Song`` is found in the library.
 
 .. note::
 
-   Casting does not actually modify the instance or change its values.
+   Casting doesn't actually modify the instance or change its values.
    The underlying instance remains the same; it is simply treated and accessed
    as an instance of the type to which it has been cast.
 

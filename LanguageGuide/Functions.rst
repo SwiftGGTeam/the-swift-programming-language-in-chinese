@@ -141,7 +141,7 @@ which always returns the same ``String`` message whenever it is called:
    <- hello, world
 
 The function definition still needs parentheses after the function's name,
-even though it does not take any parameters.
+even though it doesn't take any parameters.
 The function name is also followed by
 an empty pair of parentheses when the function is called.
 
@@ -196,8 +196,8 @@ which prints its own ``String`` value rather than returning it:
    -> greet(person: "Dave")
    <- Hello, Dave!
 
-Because it does not need to return a value,
-the function's definition does not include the return arrow (``->``)
+Because it doesn't need to return a value,
+the function's definition doesn't include the return arrow (``->``)
 or a return type.
 
 .. note::
@@ -226,7 +226,7 @@ The return value of a function can be ignored when it is called:
    // prints "hello, world" and returns a value of 12
    -> printWithoutCounting(string: "hello, world")
    << hello, world
-   // prints "hello, world" but does not return a value
+   // prints "hello, world" but doesn't return a value
 
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
@@ -325,7 +325,7 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
    not just each individual value within the tuple.
 
 The ``minMax(array:)`` function above returns a tuple containing two ``Int`` values.
-However, the function does not perform any safety checks on the array it is passed.
+However, the function doesn't perform any safety checks on the array it is passed.
 If the ``array`` argument contains an empty array,
 the ``minMax(array:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
@@ -620,7 +620,7 @@ even though they were originally defined outside of the function.
 .. note::
 
    In-out parameters aren't the same as returning a value from a function.
-   The ``swapTwoInts`` example above does not define a return type or return a value,
+   The ``swapTwoInts`` example above doesn't define a return type or return a value,
    but it still modifies the values of ``someInt`` and ``anotherInt``.
    In-out parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.

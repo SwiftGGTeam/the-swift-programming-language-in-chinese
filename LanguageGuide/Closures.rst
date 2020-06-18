@@ -388,7 +388,7 @@ The closure can be used to create a string representation of any integer greater
    The call to the ``digitNames`` dictionary's subscript
    is followed by an exclamation point (``!``),
    because dictionary subscripts return an optional value
-   to indicate that the dictionary lookup can fail if the key does not exist.
+   to indicate that the dictionary lookup can fail if the key doesn't exist.
    In the example above, it is guaranteed that ``number % 10``
    will always be a valid subscript key for the ``digitNames`` dictionary,
    and so an exclamation point is used to force-unwrap the ``String`` value
@@ -595,7 +595,7 @@ it will have its own stored reference to a new, separate ``runningTotal`` variab
 
 Calling the original incrementer (``incrementByTen``) again
 continues to increment its own ``runningTotal`` variable,
-and does not affect the variable captured by ``incrementBySeven``:
+and doesn't affect the variable captured by ``incrementBySeven``:
 
 .. testcode:: closures
 

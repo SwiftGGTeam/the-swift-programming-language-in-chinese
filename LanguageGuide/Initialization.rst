@@ -368,7 +368,7 @@ it can't be further modified.
 
 You can revise the ``SurveyQuestion`` example from above to use
 a constant property rather than a variable property for the ``text`` property of the question,
-to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
+to indicate that the question doesn't change once an instance of ``SurveyQuestion`` is created.
 Even though the ``text`` property is now a constant,
 it can still be set within the class's initializer:
 
@@ -397,7 +397,7 @@ Default Initializers
 Swift provides a :newTerm:`default initializer`
 for any structure or class
 that provides default values for all of its properties
-and does not provide at least one initializer itself.
+and doesn't provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 
@@ -670,7 +670,7 @@ with some of the designated initializer's parameters set to default values.
 You can also define a convenience initializer to create
 an instance of that class for a specific use case or input value type.
 
-You don't have to provide convenience initializers if your class does not require them.
+You don't have to provide convenience initializers if your class doesn't require them.
 Create convenience initializers whenever a shortcut to a common initialization pattern
 will save time or make initialization of the class clearer in intent.
 
@@ -729,7 +729,7 @@ Here, the superclass has a single designated initializer and two convenience ini
 One convenience initializer calls another convenience initializer,
 which in turn calls the single designated initializer.
 This satisfies rules 2 and 3 from above.
-The superclass does not itself have a further superclass, and so rule 1 does not apply.
+The superclass doesn't itself have a further superclass, and so rule 1 doesn't apply.
 
 The subclass in this figure has two designated initializers and one convenience initializer.
 The convenience initializer must call one of the two designated initializers,
@@ -873,11 +873,11 @@ Here's how phase 2 looks for the same initialization call:
 
 The superclass's designated initializer now has an opportunity
 to customize the instance further
-(although it does not have to).
+(although it doesn't have to).
 
 Once the superclass's designated initializer is finished,
 the subclass's designated initializer can perform additional customization
-(although again, it does not have to).
+(although again, it doesn't have to).
 
 Finally, once the subclass's designated initializer is finished,
 the convenience initializer that was originally called
@@ -986,7 +986,7 @@ a matching implementation of a superclass convenience initializer.
          override init(someInt: Int) {
             super.init(someInt: someInt)
          }
-         // not technically an override, so does not need the override modifier
+         // not technically an override, so doesn't need the override modifier
          convenience init() {
             self.init(someInt: 42)
          }
@@ -1024,7 +1024,7 @@ to create a ``String`` description of the vehicle's characteristics:
       }
 
 The ``Vehicle`` class provides a default value for its only stored property,
-and does not provide any custom initializers itself.
+and doesn't provide any custom initializers itself.
 As a result, it automatically receives a default initializer,
 as described in :ref:`Initialization_DefaultInitializers`.
 The default initializer (when available) is always a designated initializer for a class,
@@ -1228,8 +1228,8 @@ The ``init(name: String)`` initializer from the ``Food`` class
 is provided as a *designated* initializer,
 because it ensures that all stored properties of
 a new ``Food`` instance are fully initialized.
-The ``Food`` class does not have a superclass,
-and so the ``init(name: String)`` initializer does not need to call ``super.init()``
+The ``Food`` class doesn't have a superclass,
+and so the ``init(name: String)`` initializer doesn't need to call ``super.init()``
 to complete its initialization.
 
 The ``Food`` class also provides a *convenience* initializer, ``init()``, with no arguments.
@@ -1341,12 +1341,12 @@ which provides a textual description of a ``ShoppingListItem`` instance:
 
 .. note::
 
-   ``ShoppingListItem`` does not define an initializer to provide
+   ``ShoppingListItem`` doesn't define an initializer to provide
    an initial value for ``purchased``,
    because items in a shopping list (as modeled here) always start out unpurchased.
 
 Because it provides a default value for all of the properties it introduces
-and does not define any initializers itself,
+and doesn't define any initializers itself,
 ``ShoppingListItem`` automatically inherits
 *all* of the designated and convenience initializers from its superclass.
 
@@ -1463,9 +1463,9 @@ the initializer fails.
    // valueChanged is of type Int?, not Int
    ---
    -> if valueChanged == nil {
-          print("\(pi) conversion to Int does not maintain value")
+          print("\(pi) conversion to Int doesn't maintain value")
       }
-   <- 3.14159 conversion to Int does not maintain value
+   <- 3.14159 conversion to Int doesn't maintain value
 
 The example below defines a structure called ``Animal``,
 with a constant ``String`` property called ``species``.
@@ -1556,7 +1556,7 @@ for a ``Character`` value representing a temperature symbol:
 
 You can use this failable initializer to choose
 an appropriate enumeration case for the three possible states
-and to cause initialization to fail if the parameter does not match one of these
+and to cause initialization to fail if the parameter doesn't match one of these
 states:
 
 .. testcode:: failableInitializers
@@ -1661,7 +1661,7 @@ and no further initialization code is executed.
 
    A failable initializer can also delegate to a nonfailable initializer.
    Use this approach if you need to add a potential failure state
-   to an existing initialization process that does not otherwise fail.
+   to an existing initialization process that doesn't otherwise fail.
 
 The example below defines a subclass of ``Product`` called ``CartItem``.
 The ``CartItem`` class models an item in an online shopping cart.
@@ -1815,7 +1815,7 @@ The ``AutomaticallyNamedDocument`` overrides its superclass's
 failable ``init?(name:)`` initializer with a nonfailable ``init(name:)`` initializer.
 Because ``AutomaticallyNamedDocument`` copes with the empty string case
 in a different way than its superclass,
-its initializer does not need to fail,
+its initializer doesn't need to fail,
 and so it provides a nonfailable version of the initializer instead.
 
 You can use forced unwrapping in an initializer
@@ -2082,7 +2082,7 @@ You don't write the ``override`` modifier when overriding a required designated 
          var y = 0
       }
 
-.. FIXME: This section still does not describe why required initializers are useful.
+.. FIXME: This section still doesn't describe why required initializers are useful.
    This is because the reason for their usefulness -
    construction through a metatype of some protocol type with an initializer requirement -
    used to be broken due to

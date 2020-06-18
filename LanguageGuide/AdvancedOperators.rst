@@ -784,7 +784,7 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
    -> prefix operator +++
 
 The example above defines a new prefix operator called ``+++``.
-This operator does not have an existing meaning in Swift,
+This operator doesn't have an existing meaning in Swift,
 and so it is given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` is treated as a new “prefix doubling” operator.
