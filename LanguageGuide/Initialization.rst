@@ -1105,7 +1105,7 @@ supplied by the ``Vehicle`` initializer.
 .. note::
 
    Subclasses can modify inherited variable properties during initialization,
-   but can not modify inherited constant properties.
+   but can't modify inherited constant properties.
 
 .. assertion:: youCantModifyInheritedConstantPropertiesFromASuperclass
 
