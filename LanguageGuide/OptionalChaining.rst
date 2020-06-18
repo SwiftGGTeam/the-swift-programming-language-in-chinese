@@ -33,7 +33,7 @@ even if the property, method, or subscript you are querying returns a non-option
 You can use this optional return value to check whether
 the optional chaining call was successful
 (the returned optional contains a value),
-or did not succeed due to a ``nil`` value in the chain
+or didn't succeed due to a ``nil`` value in the chain
 (the returned optional value is ``nil``).
 
 Specifically, the result of an optional chaining call

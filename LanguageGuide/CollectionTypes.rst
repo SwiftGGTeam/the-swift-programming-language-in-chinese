@@ -591,7 +591,7 @@ You can add a new item into a set by calling the set's ``insert(_:)`` method:
 You can remove an item from a set by calling the set's ``remove(_:)`` method,
 which removes the item if it's a member of the set,
 and returns the removed value,
-or returns ``nil`` if the set did not contain it.
+or returns ``nil`` if the set didn't contain it.
 Alternatively, all items in a set can be removed with its ``removeAll()`` method.
 
 .. testcode:: setUsage

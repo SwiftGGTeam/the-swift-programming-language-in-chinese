@@ -1326,7 +1326,7 @@ and to determine whether the move is allowed:
 
 .. note::
 
-   If the ``break`` statement above did not use the ``gameLoop`` label,
+   If the ``break`` statement above didn't use the ``gameLoop`` label,
    it would break out of the ``switch`` statement, not the ``while`` statement.
    Using the ``gameLoop`` label makes it clear which control statement should be terminated.
 

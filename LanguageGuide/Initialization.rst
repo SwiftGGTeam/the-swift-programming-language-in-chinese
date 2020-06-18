@@ -577,7 +577,7 @@ three custom initializers that are part of the ``Rect`` structure's definition:
 
 The first ``Rect`` initializer, ``init()``,
 is functionally the same as the default initializer that the structure would have received
-if it did not have its own custom initializers.
+if it didn't have its own custom initializers.
 This initializer has an empty body,
 represented by an empty pair of curly braces ``{}``.
 Calling this initializer returns a ``Rect`` instance whose
@@ -594,7 +594,7 @@ from their property definitions:
 
 The second ``Rect`` initializer, ``init(origin:size:)``,
 is functionally the same as the memberwise initializer that the structure would have received
-if it did not have its own custom initializers.
+if it didn't have its own custom initializers.
 This initializer simply assigns the ``origin`` and ``size`` argument values to
 the appropriate stored properties:
 
