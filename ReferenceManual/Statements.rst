@@ -708,7 +708,7 @@ the value of the ``switch`` statement's control expression.
 A ``fallthrough`` statement can appear anywhere inside a ``switch`` statement,
 not just as the last statement of a case block,
 but it can't be used in the final case block.
-It also cannot transfer control into a case block
+It also can't transfer control into a case block
 whose pattern contains value binding patterns.
 
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,

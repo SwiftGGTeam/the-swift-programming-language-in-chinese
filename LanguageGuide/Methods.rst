@@ -30,7 +30,7 @@ as described in :doc:`Functions`.
 You write an instance method within the opening and closing braces of the type it belongs to.
 An instance method has implicit access to all other instance methods and properties of that type.
 An instance method can be called only on a specific instance of the type it belongs to.
-It cannot be called in isolation without an existing instance.
+It can't be called in isolation without an existing instance.
 
 Here's an example that defines a simple ``Counter`` class,
 which can be used to count the number of times an action occurs:
@@ -145,7 +145,7 @@ Modifying Value Types from Within Instance Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Structures and enumerations are *value types*.
-By default, the properties of a value type cannot be modified from within its instance methods.
+By default, the properties of a value type can't be modified from within its instance methods.
 
 .. TODO: find out why.  once I actually know why, explain it.
 
@@ -182,8 +182,8 @@ this method actually modifies the point on which it is called.
 The ``mutating`` keyword is added to its definition
 to enable it to modify its properties.
 
-Note that you cannot call a mutating method on a constant of structure type,
-because its properties cannot be changed, even if they are variable properties,
+Note that you can't call a mutating method on a constant of structure type,
+because its properties can't be changed, even if they are variable properties,
 as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
 .. testcode:: selfStructures-err

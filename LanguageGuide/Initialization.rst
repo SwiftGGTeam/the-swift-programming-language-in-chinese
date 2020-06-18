@@ -26,7 +26,7 @@ Setting Initial Values for Stored Properties
 Classes and structures *must* set all of their stored properties
 to an appropriate initial value by the time
 an instance of that class or structure is created.
-Stored properties cannot be left in an indeterminate state.
+Stored properties can't be left in an indeterminate state.
 
 You can set an initial value for a stored property within an initializer,
 or by assigning a default property value as part of the property's definition.
@@ -279,7 +279,7 @@ Optional Property Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 If your custom type has a stored property that is logically allowed to have “no value” ---
-perhaps because its value cannot be set during initialization,
+perhaps because its value can't be set during initialization,
 or because it is allowed to have “no value” at some later point ---
 declare the property with an *optional* type.
 Properties of optional type are automatically initialized with a value of ``nil``,
@@ -306,7 +306,7 @@ with an optional ``String`` property called ``response``:
    <- Do you like cheese?
    -> cheeseQuestion.response = "Yes, I do like cheese."
 
-The response to a survey question cannot be known until it is asked,
+The response to a survey question can't be known until it is asked,
 and so the ``response`` property is declared with a type of ``String?``,
 or “optional ``String``”.
 It is automatically assigned a default value of ``nil``, meaning “no string yet”,
@@ -364,7 +364,7 @@ it can't be further modified.
    For class instances,
    a constant property can be modified during initialization
    only by the class that introduces it.
-   It cannot be modified by a subclass.
+   It can't be modified by a subclass.
 
 You can revise the ``SurveyQuestion`` example from above to use
 a constant property rather than a variable property for the ``text`` property of the question,
@@ -809,7 +809,7 @@ all of its own properties are initialized before it hands off up the chain.
   will be overwritten by its own class's designated initializer.
 
 **Safety check 4**
-  An initializer cannot call any instance methods,
+  An initializer can't call any instance methods,
   read the values of any instance properties,
   or refer to ``self`` as a value
   until after the first phase of initialization is complete.
@@ -851,7 +851,7 @@ Here's how phase 1 looks for an initialization call for a hypothetical subclass 
 
 In this example, initialization begins with a call to
 a convenience initializer on the subclass.
-This convenience initializer cannot yet modify any properties.
+This convenience initializer can't yet modify any properties.
 It delegates across to a designated initializer from the same class.
 
 The designated initializer makes sure that all of the subclass's properties have a value,
@@ -1127,7 +1127,7 @@ supplied by the ``Vehicle`` initializer.
       }
    -> class D2: C {
          override init() {
-            // this is wrong - a subclass cannot set its superclass's constant properties during init
+            // this is wrong - a subclass can't set its superclass's constant properties during init
             super.init()
             constantProperty = 0
          }
@@ -1414,7 +1414,7 @@ by placing a question mark after the ``init`` keyword (``init?``).
 
 .. note::
 
-   You cannot define a failable and a nonfailable initializer
+   You can't define a failable and a nonfailable initializer
    with the same parameter types and names.
 
 .. assertion:: failableAndNonFailableInitializersCannotMatch
@@ -1446,7 +1446,7 @@ to indicate a point at which initialization failure can be triggered.
 For instance, failable initializers are implemented for numeric type conversions.
 To ensure conversion between numeric types maintains the value exactly,
 use the ``init(exactly:)`` initializer.
-If the type conversion cannot maintain the value,
+If the type conversion can't maintain the value,
 the initializer fails.
 
 .. testcode:: failableInitializers
@@ -1741,7 +1741,7 @@ You can override a superclass failable initializer in a subclass,
 just like any other initializer.
 Alternatively, you can override a superclass failable initializer
 with a subclass *nonfailable* initializer.
-This enables you to define a subclass for which initialization cannot fail,
+This enables you to define a subclass for which initialization can't fail,
 even though initialization of the superclass is allowed to fail.
 
 Note that if you override a failable superclass initializer with a nonfailable subclass initializer,
@@ -1771,7 +1771,7 @@ is to force-unwrap the result of the failable superclass initializer.
 The example below defines a class called ``Document``.
 This class models a document that can be initialized with
 a ``name`` property that is either a nonempty string value or ``nil``,
-but cannot be an empty string:
+but can't be an empty string:
 
 .. testcode:: failableInitializers
 
@@ -2139,9 +2139,9 @@ and not the return value of the closure.
    If you use a closure to initialize a property,
    remember that the rest of the instance has not yet been initialized
    at the point that the closure is executed.
-   This means that you cannot access any other property values from within your closure,
+   This means that you can't access any other property values from within your closure,
    even if those properties have default values.
-   You also cannot use the implicit ``self`` property,
+   You also can't use the implicit ``self`` property,
    or call any of the instance's methods.
 
 The example below defines a structure called ``Chessboard``,

@@ -348,7 +348,7 @@ Overflow Operators
 ------------------
 
 If you try to insert a number into an integer constant or variable
-that cannot hold that value,
+that can't hold that value,
 by default Swift reports an error rather than allowing an invalid value to be created.
 This behavior gives extra safety when you work with numbers that are too large or too small.
 

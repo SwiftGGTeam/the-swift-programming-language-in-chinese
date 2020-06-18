@@ -264,7 +264,7 @@ the ``john`` and ``unit4A`` variables to ``nil``:
    :align: center
 
 The strong references between the ``Person`` instance
-and the ``Apartment`` instance remain and cannot be broken.
+and the ``Apartment`` instance remain and can't be broken.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances:
 
@@ -724,7 +724,7 @@ This scenario is best resolved with a weak reference.
 
 The ``Customer`` and ``CreditCard`` example
 shows a situation where one property that is allowed to be ``nil``
-and another property that cannot be ``nil``
+and another property that can't be ``nil``
 have the potential to cause a strong reference cycle.
 This scenario is best resolved with an unowned reference.
 
@@ -771,7 +771,7 @@ the initializer for ``City`` takes a ``Country`` instance,
 and stores this instance in its ``country`` property.
 
 The initializer for ``City`` is called from within the initializer for ``Country``.
-However, the initializer for ``Country`` cannot pass ``self`` to the ``City`` initializer
+However, the initializer for ``Country`` can't pass ``self`` to the ``City`` initializer
 until a new ``Country`` instance is fully initialized,
 as described in :ref:`Initialization_TwoPhaseInitialization`.
 

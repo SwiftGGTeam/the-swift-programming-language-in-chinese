@@ -26,7 +26,7 @@ For more details, see :ref:`Protocols_Extensions`.
 .. note::
 
    Extensions can add new functionality to a type,
-   but they cannot override existing functionality.
+   but they can't override existing functionality.
 
 .. assertion:: extensionsCannotOverrideExistingBehavior
 
@@ -161,7 +161,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. note::
 
-   Extensions can add new computed properties, but they cannot add stored properties,
+   Extensions can add new computed properties, but they can't add stored properties,
    or add property observers to existing properties.
 
 .. assertion:: extensionsCannotAddStoredProperties
@@ -186,7 +186,7 @@ or to provide additional initialization options
 that were not included as part of the type's original implementation.
 
 Extensions can add new convenience initializers to a class,
-but they cannot add new designated initializers or deinitializers to a class.
+but they can't add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers
 must always be provided by the original class implementation.
 

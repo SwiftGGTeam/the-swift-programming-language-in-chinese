@@ -13,7 +13,7 @@ Dictionaries are unordered collections of key-value associations.
 
 Arrays, sets, and dictionaries in Swift are always clear about
 the types of values and keys that they can store.
-This means that you cannot insert a value of the wrong type
+This means that you can't insert a value of the wrong type
 into a collection by mistake.
 It also means you can be confident about the type of values
 you will retrieve from a collection.
@@ -41,7 +41,7 @@ This means that you can change (or :newTerm:`mutate`) the collection after it's 
 by adding, removing, or changing items in the collection.
 If you assign an array, a set, or a dictionary to a constant,
 that collection is :newTerm:`immutable`,
-and its size and contents cannot be changed.
+and its size and contents can't be changed.
 
 .. note::
 
@@ -536,7 +536,7 @@ Here, the ``favoriteGenres`` set is initialized with three ``String`` values
    and not a constant (with the ``let`` introducer)
    because items are added and removed in the examples below.
 
-A set type cannot be inferred from an array literal alone,
+A set type can't be inferred from an array literal alone,
 so the type ``Set`` must be explicitly declared.
 However, because of Swift's type inference,
 you don't have to write the type of the set's elements

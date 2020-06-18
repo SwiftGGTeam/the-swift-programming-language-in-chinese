@@ -244,7 +244,7 @@ but the returned value is not used.
    Return values can be ignored,
    but a function that says it will return a value must always do so.
    A function with a defined return type
-   cannot allow control to fall out of the bottom of the function
+   can't allow control to fall out of the bottom of the function
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
@@ -571,16 +571,16 @@ and associated compiler optimizations,
 see :ref:`Declarations_InOutParameters`.
 
 You can only pass a variable as the argument for an in-out parameter.
-You cannot pass a constant or a literal value as the argument,
-because constants and literals cannot be modified.
+You can't pass a constant or a literal value as the argument,
+because constants and literals can't be modified.
 You place an ampersand (``&``) directly before a variable's name
 when you pass it as an argument to an in-out parameter,
 to indicate that it can be modified by the function.
 
 .. note::
 
-   In-out parameters cannot have default values,
-   and variadic parameters cannot be marked as ``inout``.
+   In-out parameters can't have default values,
+   and variadic parameters can't be marked as ``inout``.
 
 Here's an example of a function called ``swapTwoInts(_:_:)``,
 which has two in-out integer parameters called ``a`` and ``b``:

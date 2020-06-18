@@ -68,7 +68,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed after it is created:
+whose range length can't be changed after it is created:
 
 .. testcode:: storedProperties, storedProperties-err
 
@@ -85,7 +85,7 @@ Instances of ``FixedLengthRange`` have
 a variable stored property called ``firstValue``
 and a constant stored property called ``length``.
 In the example above, ``length`` is initialized when the new range is created
-and cannot be changed thereafter, because it is a constant property.
+and can't be changed thereafter, because it is a constant property.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
 
@@ -94,7 +94,7 @@ Stored Properties of Constant Structure Instances
 
 If you create an instance of a structure
 and assign that instance to a constant,
-you cannot modify the instance's properties,
+you can't modify the instance's properties,
 even if they were declared as variable properties:
 
 .. testcode:: storedProperties-err
@@ -144,7 +144,7 @@ the ``lazy`` modifier before its declaration.
    because its initial value might not be retrieved until
    after instance initialization completes.
    Constant properties must always have a value *before* initialization completes,
-   and therefore cannot be declared as lazy.
+   and therefore can't be declared as lazy.
 
 .. assertion:: lazyPropertiesMustAlwaysBeVariables
 
@@ -407,14 +407,14 @@ Read-Only Computed Properties
 
 A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
 A read-only computed property always returns a value,
-and can be accessed through dot syntax, but cannot be set to a different value.
+and can be accessed through dot syntax, but can't be set to a different value.
 
 .. note::
 
    You must declare computed properties --- including read-only computed properties ---
    as variable properties with the ``var`` keyword, because their value is not fixed.
    The ``let`` keyword is only used for constant properties,
-   to indicate that their values cannot be changed once they are set
+   to indicate that their values can't be changed once they are set
    as part of instance initialization.
 
 .. assertion:: readOnlyComputedPropertiesMustBeVariables

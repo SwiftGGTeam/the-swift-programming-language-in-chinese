@@ -159,7 +159,7 @@ Constant declarations are declared using the ``let`` keyword and have the follow
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
-after the value of a constant is set, it cannot be changed.
+after the value of a constant is set, it can't be changed.
 That said, if a constant is initialized with a class object,
 the object itself can change,
 but the binding between the constant name and the object it refers to can't.

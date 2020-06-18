@@ -261,7 +261,7 @@ a superclass property with the same name and type.
 
 You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property override.
-You cannot, however, present an inherited read-write property as a read-only property.
+You can't, however, present an inherited read-write property as a read-only property.
 
 .. note::
 
@@ -318,13 +318,13 @@ For more information on property observers, see :ref:`Properties_PropertyObserve
 
 .. note::
 
-   You cannot add property observers to
+   You can't add property observers to
    inherited constant stored properties or inherited read-only computed properties.
-   The value of these properties cannot be set,
+   The value of these properties can't be set,
    and so it is not appropriate to provide a ``willSet`` or ``didSet`` implementation
    as part of an override.
 
-   Note also that you cannot provide both
+   Note also that you can't provide both
    an overriding setter and an overriding property observer for the same property.
    If you want to observe changes to a property's value,
    and you are already providing a custom setter for that property,
