@@ -458,7 +458,7 @@ as described in :ref:`Statements_LineControlStatement`.
    To parse a ``#file`` expression,
    read the module name as the text before the first slash (``/``)
    and the filename as the text after the last slash.
-   In the future, the string may contain multiple slashes,
+   In the future, the string might contain multiple slashes,
    such as ``MyModule/some/disambiguation/MyFile.swift``.
 
 Inside a function,

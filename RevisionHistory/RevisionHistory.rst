@@ -1,6 +1,45 @@
 Document Revision History
 =========================
 
+**2020-06-22**
+
+* Updated for Swift 5.3.
+
+* Added information about multiple trailing closures
+  to the :ref:`Closures_TrailingClosures` section.
+
+* Added information about synthesized implementations
+  of ``Comparable`` for enumerations
+  to the :ref:`Protocols_SynthesizedImplementation` section.
+
+* Added the :ref:`Generics_ContextualWhereClause` section
+  now that you can write a generic ``where`` clause in more places.
+
+* Added the :ref:`AutomaticReferenceCounting_UnownedOptionalReferences` section
+  with information about using unowned references with optional values.
+
+* Added information about the ``@main`` attribute
+  to the :ref:`Attributes_main` section.
+
+* Added ``#filePath`` to the :ref:`Expressions_LiteralExpression` section,
+  and updated the discussion of ``#file``.
+
+* Updated the :ref:`Closures_Noescape` section,
+  now that closures can refer to ``self`` implicitly in more scenarios.
+
+* Updated the :ref:`ErrorHandling_DoCatch`
+  and :ref:`Statements_DoStatement` sections,
+  now that a ``catch`` clause can match against multiple errors.
+
+* Updated the :ref:`Properties_PropertyObservers` section,
+  now that lazy properties can have observers.
+
+* Updated the :ref:`Declarations_ProtocolDeclaration` section,
+  now that members of an enumeration can satisfy protocol requirements.
+
+* Updated the :ref:`Declarations_StoredVariableObserversAndPropertyObservers` section
+  to describe when the getter is called before the observer.
+
 **2020-03-24**
 
 * Updated for Swift 5.2.
