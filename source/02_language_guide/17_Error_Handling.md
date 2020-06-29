@@ -142,6 +142,8 @@ do {
     statements
 } catch pattern 2 where condition {
     statements
+} catch pattern 3, pattern 4 where condition {
+    statements
 } catch {
     statements
 }
@@ -180,7 +182,7 @@ func nourish(with item: String) throws {
     do {
         try vendingMachine.vend(itemNamed: item)
     } catch is VendingMachineError {
-        print("Invalid selection, out of stock, or not enough money.")
+        print("Couldn't buy that from the vending machine.")
     }
 }
 
@@ -189,10 +191,26 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-// 打印“Invalid selection, out of stock, or not enough money.”
+// 打印”Couldn't buy that from the vending machine.“
 ```
 
 如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误，`nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
+
+另一种捕获多个相关错误的方式是将它们放在 `catch` 后，通过逗号分隔。
+
+例如：
+
+```swift
+func eat(item: String) throws {
+    do {
+        try vendingMachine.vend(itemNamed: item)
+    } catch VendingMachineError.invalidSelection, VendingMachineError.insufficientFunds, VendingMachineError.outOfStock {
+        print("Invalid selection, out of stock, or not enough money.")
+    }
+}
+```
+
+`eat(item:)` 函数捕获了列出来的 `VendingMachine` 错误，且它的错误文本和列表的错误相关。如果列出来的三个错误中任意一个抛出，这个 `catch` 代码块就会打印信息。其他错误会传递到外面的作用域，包括以后可能添加的其他 `VendingMachine` 错误。
 
 ### 将错误转换成可选值 {#converting-errors-to-optional-values}
 
