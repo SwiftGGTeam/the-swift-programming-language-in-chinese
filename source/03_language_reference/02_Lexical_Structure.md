@@ -152,7 +152,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 * 用在语句中的关键字：`break`、`case`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`switch`、`where` 以及 `while`。
 * 用在表达式和类型中的关键字：`as`、`Any`、`catch`、`false`、`is`、`nil`、`super`、`self`、`Self`、`throw`、`throws`、`true` 以及 `try `。
 * 用在模式中的关键字：`_`。
-* 以井字号（`#`）开头的关键字：`#available`、`#colorLiteral`、`#column`、`#else`、`#elseif`、`#endif`、`#error`、`#file`、`#fileLiteral`、`#function`、`#if`、`#imageLiteral`、`#line`、`#selector`、`#sourceLocation`以及 `#warning`。
+* 以井字号（`#`）开头的关键字：`#available`、`#colorLiteral`、`#column`、`#else`、`#elseif`、`#endif`、`#error`、`#file`、`#filePath`、`#fileLiteral`、`#function`、`#if`、`#imageLiteral`、`#line`、`#selector`、`#sourceLocation`以及 `#warning`。
 * 特定上下文中被保留的关键字：`associativity`、`convenience`、`dynamic`、`didSet`、`final`、`get`、`infix`、`indirect`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`Type`、`unowned`、`weak` 以及 `willSet`。这些关键字在特定上下文之外可以被用做标识符。
 
 以下符号被保留为标点符号，不能用于自定义运算符：`(`、`)`、`{`、`}`、`[`、`]`、`.`、`,`、`:`、`;`、`=`、`@`、`#`、`&`（作为前缀运算符）、`->`、`` ` ``、`?`、以及 `!`（作为后缀运算符）。
