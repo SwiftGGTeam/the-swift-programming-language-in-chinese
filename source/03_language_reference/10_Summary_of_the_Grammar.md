@@ -524,8 +524,7 @@
 >
 > *基础表达式* → [选择器表达式](./04_Expressions.md#selector-expression)
 >
-> *基础表达式* → [key-path字符串表达式](./04_Expressions.md#key-patch-string-expression)
->
+> *基础表达式* → [key-path 字符串表达式](./04_Expressions.md#key-patch-string-expression)
 
 <!-- -->
 
@@ -535,28 +534,27 @@
 >
 > *字面量表达式* → [数组字面量](./04_Expressions.md#array-literal) | [字典字面量](./04-Expressions.md#dictionary-literal) | [练习场字面量](./04-Expressions.md#playground-literal)
 >
-> *字面量表达式* → **#file** | **#line** | **#column** | **#function** | **dsohandle**
+> *字面量表达式* → **#file** | **#filePath** | **#line** | **#column** | **#function** | **dsohandle**
 >
->
-> *数组字面量* → **[** [数组字面量项列表](./04_Expressions.md#array-literal-items)<sub>可选</sub> **]**
+>*数组字面量* → **[** [数组字面量项列表](./04_Expressions.md#array-literal-items)<sub>可选</sub> **]**
 > *数组字面量项列表* → [数组字面量项](./04_Expressions.md#array-literal-item)<sub>可选</sub> | [数组字面量项](./04-Expressions.md#array-literal-item),[数组字面量项列表](./04-Expressions.md#array-literal-items)
 > *数组字面量项* → [表达式](./04_Expressions.md#expression)
+> 
 >
->
-> *字典字面量* → [[字典字面量项列表](./04_Expressions.md#dictionary-literal-items) **]** | **[** **:** **]**
+>*字典字面量* → [[字典字面量项列表](./04_Expressions.md#dictionary-literal-items) **]** | **[** **:** **]**
 > 
 > 
 > *字典字面量项列表* → [字典字面量项](./04_Expressions.md#dictionary-literal-item) ,**<sub>可选</sub> | [字典字面量项](./04-Expressions.md#dictionary-literal-item) ,[字典字面量项列表](./04-Expressions.md#dictionary-literal-items)
->
-> *字典字面量项* → [表达式](./04_Expressions.md#expression) **:** [表达式](./04-Expressions.md#expression)
->
 > 
+>*字典字面量项* → [表达式](./04_Expressions.md#expression) **:** [表达式](./04-Expressions.md#expression)
+> 
+>
 > *palyground 字面量* → **#colorLiteral ( red :  [表达式](./04-Expressions.md#expression) , green :[表达式](./04-Expressions.md#expression),  blue :[表达式](./04-Expressions.md#expression) , alpha : [表达式](./04-Expressions.md#expression) )**
->
-> *playground 字面量* → **#fileLiteral ( resourceName : [表达式](#expression) )**
->
-> *playground 字面量* → **#imageLiteral ( resourceName : [表达式](#expression) )
-<!-- -->
+> 
+>*playground 字面量* → **#fileLiteral ( resourceName : [表达式](#expression) )**
+> 
+>*playground 字面量* → **#imageLiteral ( resourceName : [表达式](#expression) )
+> <!-- -->
 
 > self 表达式语法
 > 
@@ -706,7 +704,7 @@
 > 函数调用表达式语法
 >
 > *函数调用表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) [函数调用参数子句](./04-Expressions.md#function-call-argument-clause)
-> 
+>
 > *函数调用表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) [函数调用参数子句](./04-Expressions.md#function-call-argument-clause)<sub>可选</sub> [尾随闭包](./04-Expressions.md#trailing-closure)
 >
 > *函数调用参数子句* → **(**  **)**  | **(** [函数调用参数表](./04_Expressions.md#function-call-argument-list) **)**
@@ -714,11 +712,14 @@
 > *函数调用参数表* → [函数调用参数](./04_Expressions.md#function-call-argument) | [函数调用参数](./04-Expressions.md#function-call-argument) **,** [函数调用参数表](./04-Expressions.md#function-call-argument-list)
 >
 > *函数调用参数* → [表达式](./04_Expressions.md#expression) | [标识符](02-Lexical-Structure.md#identifier) **:** [表达式](./04-Expressions.md#expression)
-> 
+>
 > *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02-Lexical-Structure.md#identifier) **:** [运算符](./02-Lexical-Structure.md#operator)
 >
-> *尾随闭包* → [闭包表达式](./04_Expressions.md#closure-expression)
+> *尾随闭包* → [闭包表达式](./04_Expressions.md#closure-expression) [标签尾随闭包]()<sub>可选</sub> 
 >
+> *标签尾随闭包集*→ [标签尾随闭包](./04_Expressions.md#labeled-trailing-closure) [标签尾随闭包集](./04_Expressions.md#labeled-trailing-closures)
+> 
+> *标签尾随闭包*→ [标识符](./02-Lexical-Structure.md#identifier) **:** [闭包表达式](./04_Expressions.md#closure-expression)
 
 <!-- -->
 
@@ -970,14 +971,18 @@
 >
 
 <!-- -->
+
 > Do 语句语法
 >
 > *do 语句* → **do** [代码块](./06_Declarations.md#code-block) [catch 子句集](./05-Statements.md#catch-clauses)<sub>可选</sub>
 >
 > *catch 子句集* → [catch 子句](./05_Statements.md#catch-clause) [catch 子句集](05-Statements.md#catch-clauses)<sub>可选</sub>
 >
-> *catch 子句* → **catch** [模式](./08_Patterns.md#pattern)<sub>可选</sub>  [where 子句](./05-Statements.md#where-clause)<sub>可选</sub> [代码块](./06-Declarations.md#code-block)<sub>可选</sub>
->
+> *catch 子句* → **catch** [catch 模式列表]()<sub>可选</sub>  [代码块](./06-Declarations.md#code-block)<sub>可选</sub>
+> 
+> *catch 模式列表* → [catch 模式](./05_Statements.md#catch-pattern) | [catch 模式](./05_Statements.md#catch-pattern) ，[catch 模式列表](./05_Statements.md#catch-pattern-list)
+> 
+> *catch 模式* → [模式](./08_Patterns.md#pattern) [where 子句](./05-Statements.md#where-clause)<sub>可选</sub>
 
 <!-- -->
 > 编译控制语句
@@ -1047,7 +1052,6 @@
 > *模块名* → [标识符](./02_Lexical_Structure.md#identifier)
 >
 > *环境* → **模拟器** ｜ **macCatalyst**
->
 
 <!-- -->
 > 行控制语句语法
@@ -1173,7 +1177,6 @@
 > *模式构造器* → [模式](./08_Patterns.md#pattern) [构造器](./06-Declarations.md#initializer)<sub>可选</sub>
 >
 > *构造器* → **=** [表达式](./04_Expressions.md#expression)
->
 
 <!-- -->
 
