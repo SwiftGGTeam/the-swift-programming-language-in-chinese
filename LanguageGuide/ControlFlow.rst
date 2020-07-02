@@ -63,7 +63,7 @@ and iterating over them doesn't guarantee the order
 in which they will be retrieved.
 In particular,
 the order you insert items into a ``Dictionary``
-doesn't define the order they are iterated.
+doesn't define the order they're iterated.
 For more about arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
@@ -844,7 +844,7 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 After the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used to print the categorization of the point.
+Here, they're used to print the categorization of the point.
 
 This ``switch`` statement doesn't have a ``default`` case.
 The final case, ``case let (x, y)``,

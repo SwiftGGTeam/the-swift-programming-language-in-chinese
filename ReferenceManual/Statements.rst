@@ -823,7 +823,7 @@ to perform manual resource management such as closing file descriptors,
 and to perform actions that need to happen even if an error is thrown.
 
 If multiple ``defer`` statements appear in the same scope,
-the order they appear is the reverse of the order they are executed.
+the order they appear is the reverse of the order they're executed.
 Executing the last ``defer`` statement in a given scope first
 means that statements inside that last ``defer`` statement
 can refer to resources that will be cleaned up by other ``defer`` statements.

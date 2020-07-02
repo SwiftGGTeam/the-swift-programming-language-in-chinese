@@ -602,7 +602,7 @@ and then assigning ``temporaryA`` to ``b``.
 You can call the ``swapTwoInts(_:_:)`` function with two variables of type ``Int``
 to swap their values.
 Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
-when they are passed to the ``swapTwoInts(_:_:)`` function:
+when they're passed to the ``swapTwoInts(_:_:)`` function:
 
 .. testcode:: inoutParameters
 

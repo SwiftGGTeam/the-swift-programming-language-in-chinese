@@ -414,7 +414,7 @@ and can be accessed through dot syntax, but can't be set to a different value.
    You must declare computed properties --- including read-only computed properties ---
    as variable properties with the ``var`` keyword, because their value isn't fixed.
    The ``let`` keyword is only used for constant properties,
-   to indicate that their values can't be changed once they are set
+   to indicate that their values can't be changed once they're set
    as part of instance initialization.
 
 .. assertion:: readOnlyComputedPropertiesMustBeVariables
@@ -1214,7 +1214,7 @@ However, you can also define :newTerm:`computed variables`
 and define observers for stored variables,
 in either a global or local scope.
 Computed variables calculate their value, rather than storing it,
-and they are written in the same way as computed properties.
+and they're written in the same way as computed properties.
 
 .. assertion:: computedVariables
 
@@ -1280,7 +1280,7 @@ in the same way as computed instance properties.
    that can assign a value to a stored type property at initialization time.
 
    Stored type properties are lazily initialized on their first access.
-   They are guaranteed to be initialized only once,
+   They're guaranteed to be initialized only once,
    even when accessed by multiple threads simultaneously,
    and they don't need to be marked with the ``lazy`` modifier.
 

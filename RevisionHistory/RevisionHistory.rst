@@ -250,7 +250,7 @@ Document Revision History
 * Updated the discussion of the ``@noescape`` and ``@autoclosure`` attributes
   in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
   and the :doc:`../ReferenceManual/Attributes` chapter
-  now that they are type attributes, rather than declaration attributes.
+  now that they're type attributes, rather than declaration attributes.
 
 * Added information about operator precedence groups
   to the :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
@@ -344,7 +344,7 @@ Document Revision History
 
 * Updated the discussion of optional protocol requirements
   in the :ref:`Protocols_OptionalProtocolRequirements` section
-  to clarify that they are used only in code that interoperates with Objective-C.
+  to clarify that they're used only in code that interoperates with Objective-C.
 
 * Removed the discussion of explicitly using ``let`` in function parameters
   from the :ref:`Declarations_FunctionDeclaration` section.

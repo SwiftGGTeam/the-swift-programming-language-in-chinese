@@ -1824,5 +1824,5 @@ and integers conform to ``Equatable``,
    Show a protocol being used by an enumeration
    accessing protocol methods, properties etc.  through a constant or variable that's *just* of protocol type
    Protocols can't be nested, but nested types can implement protocols
-   Protocol requirements can be marked as @unavailable, but this currently only works if they are also marked as @objc.
+   Protocol requirements can be marked as @unavailable, but this currently only works if they're also marked as @objc.
    Checking for (and calling) optional implementations via optional binding and closures

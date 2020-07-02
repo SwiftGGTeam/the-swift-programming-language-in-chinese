@@ -131,7 +131,7 @@ to provide basic support for working with distance units:
 
 These computed properties express that a ``Double`` value
 should be considered as a certain unit of length.
-Although they are implemented as computed properties,
+Although they're implemented as computed properties,
 the names of these properties can be appended to
 a floating-point literal value with dot syntax,
 as a way to use that literal value to perform distance conversions.
@@ -149,7 +149,7 @@ and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28084``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
-and so they are expressed without the ``get`` keyword, for brevity.
+and so they're expressed without the ``get`` keyword, for brevity.
 Their return value is of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 

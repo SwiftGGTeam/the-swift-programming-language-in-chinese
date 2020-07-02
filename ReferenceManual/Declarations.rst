@@ -8,8 +8,8 @@ and to define enumeration, structure, class, and protocol types.
 You can also use a declaration to extend the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
 
-In Swift, most declarations are also definitions in the sense that they are implemented
-or initialized at the same time they are declared. That said, because protocols don't
+In Swift, most declarations are also definitions in the sense that they're implemented
+or initialized at the same time they're declared. That said, because protocols don't
 implement their members, most protocol members are declarations only. For convenience
 and because the distinction isn't that important in Swift,
 the term *declaration* covers both declarations and definitions.
@@ -392,7 +392,7 @@ The ``willSet`` and ``didSet`` observers provide a way to observe (and to respon
 when the value of a variable or property is being set.
 The observers aren't called when the variable or property
 is first initialized.
-Instead, they are called only when the value is set outside of an initialization context.
+Instead, they're called only when the value is set outside of an initialization context.
 
 A ``willSet`` observer is called just before the value of the variable or property
 is set. The new value is passed to the ``willSet`` observer as a constant,
@@ -406,7 +406,7 @@ the ``willSet`` observer.
 
 The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
 If you provide setter names,
-they are used as the parameter names to the ``willSet`` and ``didSet`` observers.
+they're used as the parameter names to the ``willSet`` and ``didSet`` observers.
 If you don't provide setter names,
 the default parameter name to the ``willSet`` observer is ``newValue``
 and the default parameter name to the ``didSet`` observer is ``oldValue``.
@@ -1167,7 +1167,7 @@ or begin a sequence of work that continues indefinitely.
 This means that
 code that would otherwise run immediately after the call is never executed.
 Throwing and rethrowing functions can transfer program control
-to an appropriate ``catch`` block, even when they are nonreturning.
+to an appropriate ``catch`` block, even when they're nonreturning.
 
 A nonreturning function or method can be called to conclude the ``else`` clause
 of a guard statement,
@@ -1395,7 +1395,7 @@ Each case must have a unique name and be assigned a unique raw value.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
-they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
+they're implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that's automatically incremented from the raw value of the previous case.
 
@@ -1500,7 +1500,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     I'm not sure I'm happy with the names I've chosen for two kinds of enums,
     so please let me know if you can think of better names (Tim and Dave are OK with them)!
     I chose union-style-enum, because this kind of enum behaves like a discriminated union,
-    not like an ordinary enum type. They are a kind of "sum" type in the language
+    not like an ordinary enum type. They're a kind of "sum" type in the language
     of ADTs (Algebraic Data Types). Functional languages, like F# for example,
     actually have both types (discriminated unions and enumeration types),
     because they behave differently. I'm not sure why we've blended them together,

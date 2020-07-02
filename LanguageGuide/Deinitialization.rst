@@ -11,7 +11,7 @@ Deinitializers are only available on class types.
 How Deinitialization Works
 --------------------------
 
-Swift automatically deallocates your instances when they are no longer needed,
+Swift automatically deallocates your instances when they're no longer needed,
 to free up resources.
 Swift handles the memory management of instances through
 :newTerm:`automatic reference counting` (:newTerm:`ARC`),
@@ -125,7 +125,7 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
    -> print("There are now \(Bank.coinsInBank) coins left in the bank")
    <- There are now 9900 coins left in the bank
 
-A new ``Player`` instance is created, with a request for 100 coins if they are available.
+A new ``Player`` instance is created, with a request for 100 coins if they're available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
 An optional variable is used here, because players can leave the game at any point.
 The optional lets you track whether there's currently a player in the game.

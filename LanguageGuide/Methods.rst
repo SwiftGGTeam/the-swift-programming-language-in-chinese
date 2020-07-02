@@ -183,7 +183,7 @@ The ``mutating`` keyword is added to its definition
 to enable it to modify its properties.
 
 Note that you can't call a mutating method on a constant of structure type,
-because its properties can't be changed, even if they are variable properties,
+because its properties can't be changed, even if they're variable properties,
 as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
 .. testcode:: selfStructures-err

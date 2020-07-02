@@ -880,7 +880,7 @@ a substring can reuse part of the memory
 that's used to store the original string,
 or part of the memory that's used to store another substring.
 (Strings have a similar optimization,
-but if two strings share memory, they are equal.)
+but if two strings share memory, they're equal.)
 This performance optimization means
 you don't have to pay the performance cost of copying memory
 until you modify either the string or substring.

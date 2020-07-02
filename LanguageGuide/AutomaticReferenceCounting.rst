@@ -35,14 +35,14 @@ Additionally, when an instance is no longer needed,
 ARC frees up the memory used by that instance
 so that the memory can be used for other purposes instead.
 This ensures that class instances don't take up space in memory
-when they are no longer needed.
+when they're no longer needed.
 
 However, if ARC were to deallocate an instance that was still in use,
 it would no longer be possible to access that instance's properties,
 or call that instance's methods.
 Indeed, if you tried to access the instance, your app would most likely crash.
 
-To make sure that instances don't disappear while they are still needed,
+To make sure that instances don't disappear while they're still needed,
 ARC tracks how many properties, constants, and variables
 are currently referring to each class instance.
 ARC will not deallocate an instance
@@ -86,7 +86,7 @@ The next code snippet defines three variables of type ``Person?``,
 which are used to set up multiple references to a new ``Person`` instance
 in subsequent code snippets.
 Because these variables are of an optional type (``Person?``, not ``Person``),
-they are automatically initialized with a value of ``nil``,
+they're automatically initialized with a value of ``nil``,
 and don't currently reference a ``Person`` instance.
 
 .. testcode:: howARCWorks
@@ -311,7 +311,7 @@ Therefore, ARC automatically sets a weak reference to ``nil``
 when the instance that it refers to is deallocated.
 And, because weak references need to allow
 their value to be changed to ``nil`` at runtime,
-they are always declared as variables, rather than constants, of an optional type.
+they're always declared as variables, rather than constants, of an optional type.
 
 You can check for the existence of a value in the weak reference,
 just like any other optional value,
@@ -1012,7 +1012,7 @@ or a variable initialized with some value (such as ``delegate = self.delegate``)
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
-if they are provided:
+if they're provided:
 
 .. testcode:: strongReferenceCyclesForClosures
 

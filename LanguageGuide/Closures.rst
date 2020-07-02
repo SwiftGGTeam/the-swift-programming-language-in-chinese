@@ -7,7 +7,7 @@ Closures in Swift are similar to blocks in C and Objective-C
 and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
-from the context in which they are defined.
+from the context in which they're defined.
 This is known as :newTerm:`closing over` those constants and variables.
 Swift handles all of the memory management of capturing for you.
 
@@ -551,7 +551,7 @@ the next time the ``incrementer`` function is called.
    and if the value isn't mutated after the closure is created.
 
    Swift also handles all memory management involved in disposing of
-   variables when they are no longer needed.
+   variables when they're no longer needed.
 
 Here's an example of ``makeIncrementer`` in action:
 

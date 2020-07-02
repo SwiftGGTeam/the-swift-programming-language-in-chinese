@@ -234,7 +234,7 @@ are value types, and are implemented as structures behind the scenes.
 All structures and enumerations are value types in Swift.
 This means that any structure and enumeration instances you create ---
 and any value types they have as properties ---
-are always copied when they are passed around in your code.
+are always copied when they're passed around in your code.
 
 .. note::
 
@@ -267,7 +267,7 @@ Because ``Resolution`` is a structure,
 a *copy* of the existing instance is made,
 and this new copy is assigned to ``cinema``.
 Even though ``hd`` and ``cinema`` now have the same width and height,
-they are two completely different instances behind the scenes.
+they're two completely different instances behind the scenes.
 
 Next, the ``width`` property of ``cinema`` is amended to be
 the width of the slightly wider 2K standard used for digital cinema projection
@@ -297,7 +297,7 @@ When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
 The end result was two completely separate instances
 that contained the same numeric values.
-However, because they are separate instances,
+However, because they're separate instances,
 setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``,
 as shown in the figure below:
@@ -337,8 +337,8 @@ Classes Are Reference Types
 ---------------------------
 
 Unlike value types, :newTerm:`reference types` are *not* copied
-when they are assigned to a variable or constant,
-or when they are passed to a function.
+when they're assigned to a variable or constant,
+or when they're passed to a function.
 Rather than a copy, a reference to the same existing instance is used.
 
 Here's an example, using the ``VideoMode`` class defined above:
@@ -368,7 +368,7 @@ and the frame rate of ``alsoTenEighty`` is modified:
 
 Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
-Effectively, they are just two different names for the same single instance,
+Effectively, they're just two different names for the same single instance,
 as shown in the figure below:
 
 .. image:: ../images/sharedStateClass_2x.png
@@ -418,7 +418,7 @@ Because classes are reference types,
 it's possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
 (The same isn't true for structures and enumerations,
-because they are always copied when they are assigned to a constant or variable,
+because they're always copied when they're assigned to a constant or variable,
 or passed to a function.)
 
 .. assertion:: structuresDontSupportTheIdentityOperators

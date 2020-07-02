@@ -482,7 +482,7 @@ either by name or by number.
 
 .. REFERENCE
    Min, max, and sum are convenient for this example
-   because they are all simple operations
+   because they're all simple operations
    that are performed on the same kind of data.
    This gives the function a reason to return a tuple.
 
@@ -1074,7 +1074,7 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code,
+structures are always copied when they're passed around in your code,
 but classes are passed by reference.
 
 .. testcode:: guided-tour

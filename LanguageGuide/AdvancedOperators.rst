@@ -34,7 +34,7 @@ Bitwise Operators
 
 :newTerm:`Bitwise operators` enable you to manipulate
 the individual raw data bits within a data structure.
-They are often used in low-level programming,
+They're often used in low-level programming,
 such as graphics programming and device driver creation.
 Bitwise operators can also be useful when you work with raw data from external sources,
 such as encoding and decoding data for communication over a custom protocol.
@@ -293,7 +293,7 @@ and the seven value bits are just the number ``4``,
 written in binary notation.
 
 Negative numbers, however, are stored differently.
-They are stored by subtracting their absolute value from ``2`` to the power of ``n``,
+They're stored by subtracting their absolute value from ``2`` to the power of ``n``,
 where ``n`` is the number of value bits.
 An eight-bit number has seven value bits,
 so this means ``2`` to the power of ``7``, or ``128``.
@@ -334,7 +334,7 @@ rather than with a zero.
 .. image:: ../images/bitshiftSigned_2x.png
    :align: center
 
-This action ensures that signed integers have the same sign after they are shifted to the right,
+This action ensures that signed integers have the same sign after they're shifted to the right,
 and is known as an :newTerm:`arithmetic shift`.
 
 Because of the special way that positive and negative numbers are stored,
@@ -507,7 +507,7 @@ Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the remainder operator (``%``) and the multiplication operator (``*``)
 have a higher precedence than the addition operator (``+``).
-As a result, they are both evaluated before the addition is considered.
+As a result, they're both evaluated before the addition is considered.
 
 However, remainder and multiplication have the *same* precedence as each other.
 To work out the exact evaluation order to use,
@@ -635,7 +635,7 @@ The example shown above demonstrates a custom implementation of a binary infix o
 Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.
-They are :newTerm:`prefix` if they precede their target (such as ``-a``)
+They're :newTerm:`prefix` if they precede their target (such as ``-a``)
 and :newTerm:`postfix` operators if they follow their target (such as ``b!``).
 
 You implement a prefix or postfix unary operator by writing

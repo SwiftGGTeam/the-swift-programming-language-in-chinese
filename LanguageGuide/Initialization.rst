@@ -12,7 +12,7 @@ which are like special methods that can be called
 to create a new instance of a particular type.
 Unlike Objective-C initializers, Swift initializers don't return a value.
 Their primary role is to ensure that new instances of a type
-are correctly initialized before they are used for the first time.
+are correctly initialized before they're used for the first time.
 
 Instances of class types can also implement a :newTerm:`deinitializer`,
 which performs any custom cleanup just before an instance of that class is deallocated.
@@ -224,7 +224,7 @@ by providing named values for each initializer parameter:
 
 Note that it isn't possible to call these initializers
 without using argument labels.
-Argument labels must always be used in an initializer if they are defined,
+Argument labels must always be used in an initializer if they're defined,
 and omitting them is a compile-time error:
 
 .. testcode:: externalParameterNames-err
@@ -769,7 +769,7 @@ before the new instance is considered ready for use.
 The use of a two-phase initialization process makes initialization safe,
 while still giving complete flexibility to each class in a class hierarchy.
 Two-phase initialization prevents property values
-from being accessed before they are initialized,
+from being accessed before they're initialized,
 and prevents property values from being set to a different value
 by another initializer unexpectedly.
 

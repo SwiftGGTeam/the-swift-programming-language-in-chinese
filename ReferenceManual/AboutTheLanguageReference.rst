@@ -9,7 +9,7 @@ The Swift language is relatively small, because many common types, functions, an
 that appear virtually everywhere in Swift code
 are actually defined in the Swift standard library. Although these types, functions,
 and operators aren't part of the Swift language itself,
-they are used extensively in the discussions and code examples in this part of the book.
+they're used extensively in the discussions and code examples in this part of the book.
 
 
 .. _Introduction_HowToReadTheGrammar:
@@ -27,7 +27,7 @@ follows a few conventions:
   and appear only on the right-hand side of a grammar production rule.
 * Alternative grammar productions are separated by vertical
   bars (|). When alternative productions are too long to read easily,
-  they are broken into multiple grammar production rules on new lines.
+  they're broken into multiple grammar production rules on new lines.
 * In a few cases, regular font text is used to describe the right-hand side
   of a grammar production rule.
 * Optional syntactic categories and literals are marked by a trailing

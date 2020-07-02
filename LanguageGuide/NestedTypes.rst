@@ -131,4 +131,4 @@ prefix its name with the name of the type it is nested within:
 
 For the example above,
 this enables the names of ``Suit``, ``Rank``, and ``Values`` to be kept deliberately short,
-because their names are naturally qualified by the context in which they are defined.
+because their names are naturally qualified by the context in which they're defined.

@@ -472,7 +472,7 @@ you must explicitly declare the nested type as public.
 
 .. sourcefile:: nestedTypes_Module1_Private
 
-   // these are all expected to fail, because they are private to the other file
+   // these are all expected to fail, because they're private to the other file
    -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    ---
    -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
@@ -507,7 +507,7 @@ you must explicitly declare the nested type as public.
 
 .. sourcefile:: nestedTypes_Module2_InternalAndPrivate
 
-   // these are all expected to fail, because they are private or internal to the other module
+   // these are all expected to fail, because they're private or internal to the other module
    -> import nestedTypes_Module1
    -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
    -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
