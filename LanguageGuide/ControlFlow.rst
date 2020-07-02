@@ -1076,7 +1076,7 @@ For brevity, multiple values are covered in a single ``switch`` case.
    -> if let integerValue = possibleIntegerValue {
          print("The integer value of \(numberSymbol) is \(integerValue).")
       } else {
-         print("An integer value could not be found for \(numberSymbol).")
+         print("An integer value couldn't be found for \(numberSymbol).")
       }
    <- The integer value of 三 is 3.
 

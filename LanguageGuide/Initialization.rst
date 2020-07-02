@@ -1507,9 +1507,9 @@ the initializer triggers an initialization failure:
    // anonymousCreature is of type Animal?, not Animal
    ---
    -> if anonymousCreature == nil {
-         print("The anonymous creature could not be initialized")
+         print("The anonymous creature couldn't be initialized")
       }
-   <- The anonymous creature could not be initialized
+   <- The anonymous creature couldn't be initialized
 
 .. note::
 

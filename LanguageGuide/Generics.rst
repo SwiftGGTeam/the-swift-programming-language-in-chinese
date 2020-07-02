@@ -440,7 +440,7 @@ the type of a dictionary's keys must be :newTerm:`hashable`.
 That is, it must provide a way to make itself uniquely representable.
 ``Dictionary`` needs its keys to be hashable so that it can
 check whether it already contains a value for a particular key.
-Without this requirement, ``Dictionary`` could not tell
+Without this requirement, ``Dictionary`` couldn't tell
 whether it should insert or replace a value for a particular key,
 nor would it be able to find a value for a given key that's already in the dictionary.
 
