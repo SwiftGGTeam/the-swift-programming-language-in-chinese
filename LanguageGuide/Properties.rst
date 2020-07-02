@@ -158,7 +158,7 @@ Lazy properties are useful when the initial value for a property
 is dependent on outside factors whose values aren't known
 until after an instance's initialization is complete.
 Lazy properties are also useful when the initial value for a property requires
-complex or computationally expensive setup that should not be performed
+complex or computationally expensive setup that shouldn't be performed
 unless or until it is needed.
 
 .. TODO: add a note that if you assign a value to a lazy property before first access,
