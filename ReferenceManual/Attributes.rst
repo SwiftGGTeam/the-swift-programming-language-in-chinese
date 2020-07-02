@@ -453,6 +453,7 @@ but they break ABI compatibility for frozen types.
 
 .. assertion:: frozen-is-fine-with-evolution
     :evolution: true
+    :compile: true
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
@@ -482,6 +483,7 @@ as discussed in :ref:`Attributes_inlinable`.
 
 .. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
     :evolution: true
+    :compile: true
 
     >> public protocol P { }
     >> private struct PrivateStruct: P { }
@@ -515,6 +517,7 @@ produces a warning because that code is never executed.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum
     :evolution: true
+    :compile: true
 
     >> public enum E { case x, y }
     >> @frozen public enum F { case x, y }
@@ -647,6 +650,7 @@ that doesn't take any arguments and returns ``Void``.
 For example:
 
 .. testcode:: atMain
+   :compile: true
    :library: true
 
    -> @main
@@ -675,7 +679,7 @@ as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 .. assertion:: no-at-main-in-top-level-code
 
-   // This is the same example as atMait, but without :library: true.
+   // This is the same example as atMain, but without :compile: true.
    >> @main
    >> struct MyTopLevel {
    >>     static func main() {
