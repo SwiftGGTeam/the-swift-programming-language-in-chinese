@@ -229,7 +229,7 @@ requirements specified in a generic ``where`` clause. In the example above,
 the ``Key`` type parameter is constrained to conform to the ``Hashable`` protocol
 and therefore ``String`` must also conform to the ``Hashable`` protocol.
 
-You can also replace a type parameter with a type argument that is itself
+You can also replace a type parameter with a type argument that's itself
 a specialized version of a generic type (provided it satisfies the appropriate
 constraints and requirements). For example, you can replace the type parameter
 ``Element`` in ``Array<Element>`` with a specialized version of an array, ``Array<Int>``,

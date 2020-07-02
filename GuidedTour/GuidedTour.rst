@@ -517,7 +517,7 @@ Nested functions have access to variables
 that were declared in the outer function.
 You can use nested functions
 to organize the code in a function
-that is long or complex.
+that's long or complex.
 
 .. testcode:: guided-tour
 
@@ -815,7 +815,7 @@ has three different steps:
    can also be done at this point.
 
 If you don't need to compute the property
-but still need to provide code that is run before and after setting a new value,
+but still need to provide code that's run before and after setting a new value,
 use ``willSet`` and ``didSet``.
 The code you provide is run any time the value changes outside of an initializer.
 For example, the class below ensures
@@ -1164,7 +1164,7 @@ because methods on a class can always modify the class.
 Use ``extension`` to add functionality to an existing type,
 such as new methods and computed properties.
 You can use an extension to add protocol conformance
-to a type that is declared elsewhere,
+to a type that's declared elsewhere,
 or even to a type that you imported from a library or framework.
 
 .. testcode:: guided-tour
@@ -1335,7 +1335,7 @@ the value that the function returned.
     << nil
 
 Use ``defer`` to write a block of code
-that is executed after all other code in the function,
+that's executed after all other code in the function,
 just before the function returns.
 The code is executed regardless of whether the function throws an error.
 You can use ``defer`` to write setup and cleanup code next to each other,

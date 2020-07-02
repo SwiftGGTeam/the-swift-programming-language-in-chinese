@@ -331,7 +331,7 @@ Each time through the ``while`` loop,
 and is then checked to see whether it has become too large.
 Whenever this return value equals ``7``,
 the dice roll has become too large and is reset to a value of ``1``.
-The result is a sequence of ``diceRoll`` values that is always
+The result is a sequence of ``diceRoll`` values that's always
 ``1``, ``2``, ``3``, ``4``, ``5``, ``6``, ``1``, ``2`` and so on.
 
 After rolling the dice, the player moves forward by ``diceRoll`` squares.
@@ -600,7 +600,7 @@ These options are described later in this chapter.
 
 Like the body of an ``if`` statement, each ``case`` is a separate branch of code execution.
 The ``switch`` statement determines which branch should be selected.
-This procedure is known as :newTerm:`switching` on the value that is being considered.
+This procedure is known as :newTerm:`switching` on the value that's being considered.
 
 Every ``switch`` statement must be :newTerm:`exhaustive`.
 That is, every possible value of the type being considered
@@ -680,7 +680,7 @@ this ``switch`` statement doesn't match both ``"a"`` and ``"A"``.
 Rather, it reports a compile-time error that ``case "a":``
 doesn't contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
-and makes for safer code that is clearer in its intent.
+and makes for safer code that's clearer in its intent.
 
 To make a ``switch`` with a single case that
 matches both ``"a"`` and ``"A"``,

@@ -4,7 +4,7 @@ Initialization
 :newTerm:`Initialization` is the process of preparing an instance of
 a class, structure, or enumeration for use.
 This process involves setting an initial value for each stored property on that instance
-and performing any other setup or initialization that is required
+and performing any other setup or initialization that's required
 before the new instance is ready for use.
 
 You implement this initialization process by defining :newTerm:`initializers`,
@@ -248,7 +248,7 @@ to override the default behavior.
 Here's an expanded version of the ``Celsius`` example
 from :ref:`Initialization_InitializationParameters` above,
 with an additional initializer to create a new ``Celsius`` instance
-from a ``Double`` value that is already in the Celsius scale:
+from a ``Double`` value that's already in the Celsius scale:
 
 .. testcode:: initializersWithoutExternalParameterNames
 
@@ -278,7 +278,7 @@ so that it can be called by providing an unnamed ``Double`` value.
 Optional Property Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If your custom type has a stored property that is logically allowed to have “no value” ---
+If your custom type has a stored property that's logically allowed to have “no value” ---
 perhaps because its value can't be set during initialization,
 or because it is allowed to have “no value” at some later point ---
 declare the property with an *optional* type.
@@ -1281,7 +1281,7 @@ from :ref:`Initialization_TwoPhaseInitialization` above.
 ``RecipeIngredient`` also defines a convenience initializer, ``init(name: String)``,
 which is used to create a ``RecipeIngredient`` instance by name alone.
 This convenience initializer assumes a quantity of ``1``
-for any ``RecipeIngredient`` instance that is created without an explicit quantity.
+for any ``RecipeIngredient`` instance that's created without an explicit quantity.
 The definition of this convenience initializer makes
 ``RecipeIngredient`` instances quicker and more convenient to create,
 and avoids code duplication when creating
@@ -1770,7 +1770,7 @@ is to force-unwrap the result of the failable superclass initializer.
 
 The example below defines a class called ``Document``.
 This class models a document that can be initialized with
-a ``name`` property that is either a nonempty string value or ``nil``,
+a ``name`` property that's either a nonempty string value or ``nil``,
 but can't be an empty string:
 
 .. testcode:: failableInitializers
@@ -2131,7 +2131,7 @@ and not the return value of the closure.
 .. TODO: feedback from Peter is that this is very close to the syntax for
    a computed property that doesn't define a separate getter.
    He's right, and it would be good to provide an additional example -
-   perhaps with a stored property that is assigned the result of a function -
+   perhaps with a stored property that's assigned the result of a function -
    to make the difference more explicit.
 
 .. note::

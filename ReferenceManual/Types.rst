@@ -109,7 +109,7 @@ the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
-that is declared in the ``ExampleModule`` module.
+that's declared in the ``ExampleModule`` module.
 
 .. testcode:: type-identifier-dot
 
@@ -221,7 +221,7 @@ and doesn't return any value.
 Likewise, because ``Void`` is a type alias for ``()``,
 the function type ``(Void) -> Void``
 is the same as ``(()) -> ()`` ---
-a function that takes a single argument that is an empty tuple.
+a function that takes a single argument that's an empty tuple.
 These types aren't the same as ``() -> ()`` ---
 a function that takes no arguments.
 
@@ -667,7 +667,7 @@ Protocol Composition Type
 
 A :newTerm:`protocol composition type` defines a type that conforms to each protocol
 in a list of specified protocols,
-or a type that is a subclass of a given class
+or a type that's a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
 Protocol composition types may be used only when specifying a type
 in type annotations,
@@ -692,7 +692,7 @@ instead of declaring a new protocol
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``.
 Likewise, you can use ``SuperClass & ProtocolA``
 instead of declaring a new protocol
-that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
+that's a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 
 Each item in a protocol composition list is one of the following;
 the list can contain at most one class:

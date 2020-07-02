@@ -157,7 +157,7 @@ Remainder Operator
 
 The :newTerm:`remainder operator` (``a % b``)
 works out how many multiples of ``b`` will fit inside ``a``
-and returns the value that is left over
+and returns the value that's left over
 (known as the :newTerm:`remainder`).
 
 .. note::
@@ -502,7 +502,7 @@ The :newTerm:`nil-coalescing operator` (``a ?? b``)
 unwraps an optional ``a`` if it contains a value,
 or returns a default value ``b`` if ``a`` is ``nil``.
 The expression ``a`` is always of an optional type.
-The expression ``b`` must match the type that is stored inside ``a``.
+The expression ``b`` must match the type that's stored inside ``a``.
 
 The nil-coalescing operator is shorthand for the code below:
 

@@ -36,7 +36,7 @@ Mutability of Collections
 -------------------------
 
 If you create an array, a set, or a dictionary, and assign it to a variable,
-the collection that is created will be :newTerm:`mutable`.
+the collection that's created will be :newTerm:`mutable`.
 This means that you can change (or :newTerm:`mutate`) the collection after it's created
 by adding, removing, or changing items in the collection.
 If you assign an array, a set, or a dictionary to a constant,
@@ -332,7 +332,7 @@ This method removes the item at the specified index and returns the removed item
 .. note::
 
    If you try to access or modify a value for an index
-   that is outside of an array's existing bounds,
+   that's outside of an array's existing bounds,
    you will trigger a runtime error.
    You can check that an index is valid before using it
    by comparing it to the array's ``count`` property.
@@ -433,7 +433,7 @@ Hash Values for Set Types
 
 A type must be :newTerm:`hashable` in order to be stored in a set ---
 that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
-A hash value is an ``Int`` value that is the same for all objects that compare equally,
+A hash value is an ``Int`` value that's the same for all objects that compare equally,
 such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
 
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)

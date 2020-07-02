@@ -207,7 +207,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
       }
 
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
-and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
+and creates an array that's large enough to store ``rows * columns`` values of type ``Double``.
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
@@ -267,7 +267,7 @@ are inside the bounds of the matrix:
       }
 
 An assertion is triggered if you try to access a subscript
-that is outside of the matrix bounds:
+that's outside of the matrix bounds:
 
 .. testcode:: matrixSubscriptAssert
 

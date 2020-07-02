@@ -454,7 +454,7 @@ and returns a greeting:
 
 The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
-while still providing a function body that is readable and clear in intent.
+while still providing a function body that's readable and clear in intent.
 
 .. _Functions_OmittingParameterNames:
 
@@ -563,7 +563,7 @@ define that parameter as an :newTerm:`in-out parameter` instead.
 
 You write an in-out parameter by placing the ``inout`` keyword
 right before a parameter's type.
-An in-out parameter has a value that is passed *in* to the function,
+An in-out parameter has a value that's passed *in* to the function,
 is modified by the function,
 and is passed back *out* of the function to replace the original value.
 For a detailed discussion of the behavior of in-out parameters

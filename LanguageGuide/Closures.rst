@@ -627,7 +627,7 @@ Whenever you assign a function or a closure to a constant or a variable,
 you are actually setting that constant or variable to be
 a *reference* to the function or closure.
 In the example above,
-it is the choice of closure that ``incrementByTen`` *refers to* that is constant,
+it is the choice of closure that ``incrementByTen`` *refers to* that's constant,
 and not the contents of the closure itself.
 
 This also means that if you assign a closure to two different constants or variables,
@@ -828,7 +828,7 @@ a mutable reference to ``self`` for structures.
 Autoclosures
 ------------
 
-An :newTerm:`autoclosure` is a closure that is automatically created 
+An :newTerm:`autoclosure` is a closure that's automatically created 
 to wrap an expression that's being passed as an argument to a function.
 It doesn't take any arguments,
 and when it's called, it returns the value
@@ -929,7 +929,7 @@ with the ``@autoclosure`` attribute.
    The context and function name should make it clear
    that evaluation is being deferred.
 
-If you want an autoclosure that is allowed to escape,
+If you want an autoclosure that's allowed to escape,
 use both the ``@autoclosure`` and ``@escaping`` attributes.
 The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
 

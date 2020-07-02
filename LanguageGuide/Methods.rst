@@ -120,7 +120,7 @@ You use the ``self`` property to
 distinguish between the parameter name and the property name.
 
 Here, ``self`` disambiguates between
-a method parameter called ``x`` and an instance property that is also called ``x``:
+a method parameter called ``x`` and an instance property that's also called ``x``:
 
 .. testcode:: self
 
@@ -418,7 +418,7 @@ and see what happens when the player completes level one:
    <- highest unlocked level is now 2
 
 If you create a second player, whom you try to move to a level
-that is not yet unlocked by any player in the game,
+that's not yet unlocked by any player in the game,
 the attempt to set the player's current level fails:
 
 .. testcode:: typeMethods

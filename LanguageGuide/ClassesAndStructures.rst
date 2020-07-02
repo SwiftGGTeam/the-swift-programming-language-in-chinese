@@ -399,7 +399,7 @@ However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameR
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves don't actually change.
 ``tenEighty`` and ``alsoTenEighty`` themselves don't “store” the ``VideoMode`` instance ---
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
-It's the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
+It's the ``frameRate`` property of the underlying ``VideoMode`` that's changed,
 not the values of the constant references to that ``VideoMode``.
 
 .. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,

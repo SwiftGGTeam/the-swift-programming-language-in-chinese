@@ -387,7 +387,7 @@ and to check whether that subscript call is successful.
    When you access a subscript on an optional value through optional chaining,
    you place the question mark *before* the subscript's brackets, not after.
    The optional chaining question mark always follows immediately after
-   the part of the expression that is optional.
+   the part of the expression that's optional.
 
 The example below tries to retrieve the name of
 the first room in the ``rooms`` array of the ``john.residence`` property

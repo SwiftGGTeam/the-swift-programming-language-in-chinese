@@ -117,7 +117,7 @@ to indicate that the variable can store ``String`` values:
 The colon in the declaration means “…of type…,”
 so the code above can be read as:
 
-“Declare a variable called ``welcomeMessage`` that is of type ``String``.”
+“Declare a variable called ``welcomeMessage`` that's of type ``String``.”
 
 The phrase “of type ``String``” means “can store any ``String`` value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
@@ -706,7 +706,7 @@ Type Aliases
 You define type aliases with the ``typealias`` keyword.
 
 Type aliases are useful when you want to refer to an existing type
-by a name that is contextually more appropriate,
+by a name that's contextually more appropriate,
 such as when working with data of a specific size from an external source:
 
 .. testcode:: typeAliases

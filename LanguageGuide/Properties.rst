@@ -55,7 +55,7 @@ Stored Properties
 -----------------
 
 In its simplest form, a stored property is a constant or variable
-that is stored as part of an instance of a particular class or structure.
+that's stored as part of an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword)
 or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
@@ -641,7 +641,7 @@ This is true even if the new value is the same as the current value.
 
 This example's ``willSet`` observer uses
 a custom parameter name of ``newTotalSteps`` for the upcoming new value.
-In this example, it simply prints out the value that is about to be set.
+In this example, it simply prints out the value that's about to be set.
 
 The ``didSet`` observer is called after the value of ``totalSteps`` is updated.
 It compares the new value of ``totalSteps`` against the old value.
@@ -1265,7 +1265,7 @@ Type properties are useful for defining values that are universal to
 *all* instances of a particular type,
 such as a constant property that all instances can use
 (like a static constant in C),
-or a variable property that stores a value that is global to all instances of that type
+or a variable property that stores a value that's global to all instances of that type
 (like a static variable in C).
 
 Stored type properties can be variables or constants.

@@ -1353,7 +1353,7 @@ It has the following form:
    #selector(setter: <#property name#>)
 
 The *method name* and *property name* must be a reference to a method or a property
-that is available in the Objective-C runtime.
+that's available in the Objective-C runtime.
 The value of a selector expression is an instance of the ``Selector`` type.
 For example:
 
@@ -1442,7 +1442,7 @@ It has the following form:
    #keyPath(<#property name#>)
 
 The *property name* must be a reference to a property
-that is available in the Objective-C runtime.
+that's available in the Objective-C runtime.
 At compile time, the key-path string expression is replaced by a string literal.
 For example:
 

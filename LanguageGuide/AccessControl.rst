@@ -32,7 +32,7 @@ Modules and Source Files
 Swift's access control model is based on the concept of modules and source files.
 
 A :newTerm:`module` is a single unit of code distribution ---
-a framework or application that is built and shipped as a single unit
+a framework or application that's built and shipped as a single unit
 and that can be imported by another module with Swift's ``import`` keyword.
 
 Each build target (such as an app bundle or framework) in Xcode
@@ -837,7 +837,7 @@ and doesn't provide at least one initializer itself.
 
 A default initializer has the same access level as the type it initializes,
 unless that type is defined as ``public``.
-For a type that is defined as ``public``,
+For a type that's defined as ``public``,
 the default initializer is considered internal.
 If you want a public type to be initializable with a no-argument initializer
 when used in another module,

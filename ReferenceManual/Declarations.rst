@@ -45,7 +45,7 @@ The top-level code in a Swift source file consists of zero or more statements,
 declarations, and expressions.
 By default, variables, constants, and other named declarations that are declared
 at the top-level of a source file are accessible to code
-in every source file that is part of the same module.
+in every source file that's part of the same module.
 You can override this default behavior
 by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
@@ -585,7 +585,7 @@ has the same generic parameters and constraints as ``Dictionary``.
 
 Inside a protocol declaration,
 a type alias can give a shorter and more convenient name
-to a type that is used frequently.
+to a type that's used frequently.
 For example:
 
 .. testcode:: typealias-in-prototol
@@ -666,7 +666,7 @@ A function definition can appear inside another function declaration.
 This kind of function is known as a :newTerm:`nested function`.
 
 A nested function is nonescaping if it captures
-a value that is guaranteed to never escape---
+a value that's guaranteed to never escape---
 such as an in-out parameter---
 or passed as a nonescaping function argument.
 Otherwise, the nested function is an escaping function.
@@ -1330,7 +1330,7 @@ mark the entire enumeration with the ``indirect`` modifier ---
 this is convenient when the enumeration contains many cases
 that would each need to be marked with the ``indirect`` modifier.
 
-An enumeration that is marked with the ``indirect`` modifier
+An enumeration that's marked with the ``indirect`` modifier
 can contain a mixture of cases that have associated values and cases those that don't.
 That said,
 it can't contain any cases that are also marked with the ``indirect`` modifier.
@@ -1397,7 +1397,7 @@ If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
-that is automatically incremented from the raw value of the previous case.
+that's automatically incremented from the raw value of the previous case.
 
 .. testcode:: raw-value-enum
 
@@ -1840,7 +1840,7 @@ directly in the protocol in which it is declared.
 The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
 If a property declaration includes both the ``get`` and ``set`` keywords,
 a conforming type can implement it with a stored variable property
-or a computed property that is both readable and writeable
+or a computed property that's both readable and writeable
 (that is, one that implements both a getter and a setter). However,
 that property declaration can't be implemented as a constant property
 or a read-only computed property. If a property declaration includes
@@ -2006,7 +2006,7 @@ Protocol Associated Type Declaration
 
 Protocols declare associated types using the ``associatedtype`` keyword.
 An associated type provides an alias for a type
-that is used as part of a protocol's declaration.
+that's used as part of a protocol's declaration.
 Associated types are similar to type parameters in generic parameter clauses,
 but they're associated with ``Self`` in the protocol in which they're declared.
 In that context, ``Self`` refers to the eventual type that conforms to the protocol.
@@ -2798,7 +2798,7 @@ The following form declares a new infix operator:
 
     infix operator <#operator name#>: <#precedence group#>
 
-An :newTerm:`infix operator` is a binary operator that is written between its two operands,
+An :newTerm:`infix operator` is a binary operator that's written between its two operands,
 such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 
 Infix operators can optionally specify a precedence group.
@@ -2813,7 +2813,7 @@ The following form declares a new prefix operator:
 
     prefix operator <#operator name#>
 
-A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
+A :newTerm:`prefix operator` is a unary operator that's written immediately before its operand,
 such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 
 Prefix operators declarations don't specify a precedence level.
@@ -2825,7 +2825,7 @@ The following form declares a new postfix operator:
 
     postfix operator <#operator name#>
 
-A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
+A :newTerm:`postfix operator` is a unary operator that's written immediately after its operand,
 such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
 
 As with prefix operators, postfix operator declarations don't specify a precedence level.

@@ -273,7 +273,7 @@ and a closure expression that takes a ``String`` value
 and returns another ``String`` value.
 
 To discover the specific type of a constant or variable
-that is known only to be of type ``Any`` or ``AnyObject``,
+that's known only to be of type ``Any`` or ``AnyObject``,
 you can use an ``is`` or ``as`` pattern in a ``switch`` statement's cases.
 The example below iterates over the items in the ``things`` array
 and queries the type of each item with a ``switch`` statement.

@@ -10,7 +10,7 @@ including as a collection of ``Character`` values.
 Swift's ``String`` and ``Character`` types provide
 a fast, Unicode-compliant way to work with text in your code.
 The syntax for string creation and manipulation is lightweight and readable,
-with a string literal syntax that is similar to C.
+with a string literal syntax that's similar to C.
 String concatenation is as simple as
 combining two strings with the ``+`` operator,
 and string mutability is managed by choosing between a constant or a variable,

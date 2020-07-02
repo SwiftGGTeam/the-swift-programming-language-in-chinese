@@ -185,11 +185,11 @@ which model a block of apartments and its residents:
       }
 
 Every ``Person`` instance has a ``name`` property of type ``String``
-and an optional ``apartment`` property that is initially ``nil``.
+and an optional ``apartment`` property that's initially ``nil``.
 The ``apartment`` property is optional, because a person may not always have an apartment.
 
 Similarly, every ``Apartment`` instance has a ``unit`` property of type ``String``
-and has an optional ``tenant`` property that is initially ``nil``.
+and has an optional ``tenant`` property that's initially ``nil``.
 The tenant property is optional because an apartment may not always have a tenant.
 
 Both of these classes also define a deinitializer,
@@ -723,7 +723,7 @@ have the potential to cause a strong reference cycle.
 This scenario is best resolved with a weak reference.
 
 The ``Customer`` and ``CreditCard`` example
-shows a situation where one property that is allowed to be ``nil``
+shows a situation where one property that's allowed to be ``nil``
 and another property that can't be ``nil``
 have the potential to cause a strong reference cycle.
 This scenario is best resolved with an unowned reference.
