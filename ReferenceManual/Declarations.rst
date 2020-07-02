@@ -997,7 +997,6 @@ are also valid call-as-function method names.
 The following function calls are equivalent:
 
 .. testcode:: call-as-function
-   :compile: true
 
    -> struct CallableStruct {
           var value: Int
@@ -1030,7 +1029,6 @@ as if it were a function in any context other than a function call expression.
 For example:
 
 .. testcode:: call-as-function-err
-   :compile: true
 
    >> struct CallableStruct {
    >>     var value: Int
