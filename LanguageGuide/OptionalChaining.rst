@@ -479,7 +479,7 @@ don't add more levels of optionality to the returned value.
 
 To put it another way:
 
-* If the type you are trying to retrieve is not optional,
+* If the type you are trying to retrieve isn't optional,
   it will become optional because of the optional chaining.
 * If the type you are trying to retrieve is *already* optional,
   it will not become *more* optional because of the chaining.

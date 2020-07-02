@@ -112,14 +112,14 @@ even if they were declared as variable properties:
    // this will report an error, even though firstValue is a variable property
 
 Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
-it is not possible to change its ``firstValue`` property,
+it isn't possible to change its ``firstValue`` property,
 even though ``firstValue`` is a variable property.
 
 This behavior is due to structures being *value types*.
 When an instance of a value type is marked as a constant,
 so are all of its properties.
 
-The same is not true for classes, which are *reference types*.
+The same isn't true for classes, which are *reference types*.
 If you assign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
@@ -133,7 +133,7 @@ Lazy Stored Properties
 .. QUESTION: is this section too complex for this point in the book?
    Should it go in the Default Property Values section of Initialization instead?
 
-A :newTerm:`lazy stored property` is a property whose initial value is not calculated
+A :newTerm:`lazy stored property` is a property whose initial value isn't calculated
 until the first time it is used.
 You indicate a lazy stored property by writing
 the ``lazy`` modifier before its declaration.
@@ -198,7 +198,7 @@ neither of which is shown in full:
 
 The ``DataManager`` class has a stored property called ``data``,
 which is initialized with a new, empty array of ``String`` values.
-Although the rest of its functionality is not shown,
+Although the rest of its functionality isn't shown,
 the purpose of this ``DataManager`` class is to manage and provide access to
 this array of ``String`` data.
 
@@ -235,7 +235,7 @@ such as when its ``filename`` property is queried:
    there's no guarantee that the property will be initialized only once.
 
 .. 6/19/14, 10:54 PM [Contributor 7746]:
-   @lazy is not thread safe.  Global variables (and static struct/enum fields) *are*.
+   @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
 
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
@@ -250,7 +250,7 @@ you can use instance variables as a backing store for the values stored in a pro
 
 Swift unifies these concepts into a single property declaration.
 A Swift property doesn't have a corresponding instance variable,
-and the backing store for a property is not accessed directly.
+and the backing store for a property isn't accessed directly.
 This approach avoids confusion about how the value is accessed in different contexts
 and simplifies the property's declaration into a single, definitive statement.
 All information about the property ---
@@ -412,7 +412,7 @@ and can be accessed through dot syntax, but can't be set to a different value.
 .. note::
 
    You must declare computed properties --- including read-only computed properties ---
-   as variable properties with the ``var`` keyword, because their value is not fixed.
+   as variable properties with the ``var`` keyword, because their value isn't fixed.
    The ``let`` keyword is only used for constant properties,
    to indicate that their values can't be changed once they are set
    as part of instance initialization.

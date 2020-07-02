@@ -110,7 +110,7 @@ This confirms that initialization has taken place.
 Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
 there's now a strong reference from ``reference1`` to the new ``Person`` instance.
 Because there's at least one strong reference,
-ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
+ARC makes sure that this ``Person`` is kept in memory and isn't deallocated.
 
 If you assign the same ``Person`` instance to two more variables,
 two more strong references to that instance are established:
@@ -125,7 +125,7 @@ There are now *three* strong references to this single ``Person`` instance.
 If you break two of these strong references (including the original reference)
 by assigning ``nil`` to two of the variables,
 a single strong reference remains,
-and the ``Person`` instance is not deallocated:
+and the ``Person`` instance isn't deallocated:
 
 .. testcode:: howARCWorks
 
@@ -976,8 +976,8 @@ because of the strong reference cycle:
 
    -> paragraph = nil
 
-Note that the message in the ``HTMLElement`` deinitializer is not printed,
-which shows that the ``HTMLElement`` instance is not deallocated.
+Note that the message in the ``HTMLElement`` deinitializer isn't printed,
+which shows that the ``HTMLElement`` instance isn't deallocated.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures:
 

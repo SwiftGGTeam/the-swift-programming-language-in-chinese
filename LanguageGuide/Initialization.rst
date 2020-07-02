@@ -222,7 +222,7 @@ by providing named values for each initializer parameter:
    >> assert(halfGray.green == 0.5)
    >> assert(halfGray.blue == 0.5)
 
-Note that it is not possible to call these initializers
+Note that it isn't possible to call these initializers
 without using argument labels.
 Argument labels must always be used in an initializer if they are defined,
 and omitting them is a compile-time error:
@@ -430,7 +430,7 @@ and because it is a base class with no superclass,
 that creates a new instance with all of its properties set to their default values.
 (The ``name`` property is an optional ``String`` property,
 and so it automatically receives a default value of ``nil``,
-even though this value is not written in the code.)
+even though this value isn't written in the code.)
 The example above uses the default initializer for the ``ShoppingListItem`` class
 to create a new instance of the class with initializer syntax,
 written as ``ShoppingListItem()``,
@@ -780,7 +780,7 @@ by another initializer unexpectedly.
    Objective-C assigns zero or null values (such as ``0`` or ``nil``) to every property.
    Swift's initialization flow is more flexible
    in that it lets you set custom initial values,
-   and can cope with types for which ``0`` or ``nil`` is not a valid default value.
+   and can cope with types for which ``0`` or ``nil`` isn't a valid default value.
 
 Swift's compiler performs four helpful safety-checks to make sure that
 two-phase initialization is completed without error:
@@ -814,7 +814,7 @@ all of its own properties are initialized before it hands off up the chain.
   or refer to ``self`` as a value
   until after the first phase of initialization is complete.
 
-The class instance is not fully valid until the first phase ends.
+The class instance isn't fully valid until the first phase ends.
 Properties can only be accessed, and methods can only be called,
 once the class instance is known to be valid at the end of the first phase.
 
@@ -824,7 +824,7 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 
 * A designated or convenience initializer is called on a class.
 * Memory for a new instance of that class is allocated.
-  The memory is not yet initialized.
+  The memory isn't yet initialized.
 * A designated initializer for that class confirms that
   all stored properties introduced by that class have a value.
   The memory for these stored properties is now initialized.
@@ -893,7 +893,7 @@ Swift subclasses don't inherit their superclass initializers by default.
 Swift's approach prevents a situation in which a simple initializer from a superclass
 is inherited by a more specialized subclass
 and is used to create a new instance of the subclass
-that is not fully or correctly initialized.
+that isn't fully or correctly initialized.
 
 .. note::
 
@@ -931,7 +931,7 @@ and validates that the parameters for your overriding initializer have been spec
          override init() {}
       }
    -> class D2: C {
-         // this is not correct
+         // this isn't correct
          init() {}
       }
    !$ error: overriding declaration requires an 'override' keyword
@@ -952,7 +952,7 @@ and validates that the parameters for your overriding initializer have been spec
          override init() {}
       }
    -> class D2: C {
-         // this is not correct
+         // this isn't correct
          init() {}
       }
    !$ error: overriding declaration requires an 'override' keyword
@@ -996,7 +996,7 @@ a matching implementation of a superclass convenience initializer.
          override init(someInt: Int) {
             super.init(someInt: someInt)
          }
-         // this is not correct - "override" is not required
+         // this isn't correct - "override" isn't required
          override convenience init() {
             self.init(someInt: 42)
          }
@@ -1514,7 +1514,7 @@ the initializer triggers an initialization failure:
 .. note::
 
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
-   is not the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
+   isn't the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
    In the example above, an empty string (``""``) is a valid, non-optional ``String``.
    However, it is not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
@@ -1569,9 +1569,9 @@ states:
    ---
    -> let unknownUnit = TemperatureUnit(symbol: "X")
    -> if unknownUnit == nil {
-         print("This is not a defined temperature unit, so initialization failed.")
+         print("This isn't a defined temperature unit, so initialization failed.")
       }
-   <- This is not a defined temperature unit, so initialization failed.
+   <- This isn't a defined temperature unit, so initialization failed.
 
 .. _Initialization_FailableInitializersForEnumerationsWithRawValues:
 
@@ -1602,9 +1602,9 @@ and to take advantage of the ``init?(rawValue:)`` initializer:
    ---
    -> let unknownUnit = TemperatureUnit(rawValue: "X")
    -> if unknownUnit == nil {
-         print("This is not a defined temperature unit, so initialization failed.")
+         print("This isn't a defined temperature unit, so initialization failed.")
       }
-   <- This is not a defined temperature unit, so initialization failed.
+   <- This isn't a defined temperature unit, so initialization failed.
 
 .. _Initialization_PropagationOfInitializationFailure:
 

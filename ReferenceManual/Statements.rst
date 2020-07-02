@@ -95,7 +95,7 @@ a type that conforms to the
 `IteratorProtocol <//apple_ref/swift/intf/s:Ps16IteratorProtocol>`_ protocol.
 The program begins executing a loop
 by calling the ``next()`` method on the iterator.
-If the value returned is not ``nil``,
+If the value returned isn't ``nil``,
 it is assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
@@ -631,7 +631,7 @@ When a ``break`` statement is followed by the name of a statement label,
 it ends program execution of the loop,
 ``if`` statement, or ``switch`` statement named by that label.
 
-When a ``break`` statement is not followed by the name of a statement label,
+When a ``break`` statement isn't followed by the name of a statement label,
 it ends program execution of the ``switch`` statement or the innermost enclosing loop
 statement in which it occurs.
 You can't use an unlabeled ``break`` statement to break out of an ``if`` statement.
@@ -670,7 +670,7 @@ When a ``continue`` statement is followed by the name of a statement label,
 it ends program execution of the current iteration
 of the loop statement named by that label.
 
-When a ``continue`` statement is not followed by the name of a statement label,
+When a ``continue`` statement isn't followed by the name of a statement label,
 it ends program execution of the current iteration
 of the innermost enclosing loop statement in which it occurs.
 
@@ -754,7 +754,7 @@ before it is returned to the calling function or method.
 .. TODO: Discuss how the conversion takes place and what is allowed to be converted
     in the (yet to be written) chapter on subtyping and type conversions.
 
-When a ``return`` statement is not followed by an expression,
+When a ``return`` statement isn't followed by an expression,
 it can be used only to return from a function or method that doesn't return a value
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 

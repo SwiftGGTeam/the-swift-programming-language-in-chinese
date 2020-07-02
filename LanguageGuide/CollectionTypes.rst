@@ -233,9 +233,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
    -> if shoppingList.isEmpty {
          print("The shopping list is empty.")
       } else {
-         print("The shopping list is not empty.")
+         print("The shopping list isn't empty.")
       }
-   <- The shopping list is not empty.
+   <- The shopping list isn't empty.
 
 You can add a new item to the end of an array by calling the array's ``append(_:)`` method:
 
@@ -414,7 +414,7 @@ Sets
 
 A :newTerm:`set` stores distinct values of the same type
 in a collection with no defined ordering.
-You can use a set instead of an array when the order of items is not important,
+You can use a set instead of an array when the order of items isn't important,
 or when you need to ensure that an item only appears once.
 
 .. note::
@@ -449,7 +449,7 @@ are also hashable by default.
    Types that conform to the ``Hashable`` protocol must provide
    a gettable ``Int`` property called ``hashValue``.
    The value returned by a type's ``hashValue`` property
-   is not required to be the same across different executions of the same program,
+   isn't required to be the same across different executions of the same program,
    or in different programs.
 
    Because the ``Hashable`` protocol conforms to ``Equatable``,
@@ -912,9 +912,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
    -> if airports.isEmpty {
          print("The airports dictionary is empty.")
       } else {
-         print("The airports dictionary is not empty.")
+         print("The airports dictionary isn't empty.")
       }
-   <- The airports dictionary is not empty.
+   <- The airports dictionary isn't empty.
 
 You can add a new item to a dictionary with subscript syntax.
 Use a new key of the appropriate type as the subscript index,
@@ -971,7 +971,7 @@ Otherwise, the subscript returns ``nil``:
    -> if let airportName = airports["DUB"] {
          print("The name of the airport is \(airportName).")
       } else {
-         print("That airport is not in the airports dictionary.")
+         print("That airport isn't in the airports dictionary.")
       }
    <- The name of the airport is Dublin Airport.
 
@@ -981,7 +981,7 @@ by assigning a value of ``nil`` for that key:
 .. testcode:: dictionariesInferred
 
    -> airports["APL"] = "Apple International"
-   // "Apple International" is not the real airport for APL, so delete it
+   // "Apple International" isn't the real airport for APL, so delete it
    -> airports["APL"] = nil
    // APL has now been removed from the dictionary
    >> if let deletedName = airports["APL"] {

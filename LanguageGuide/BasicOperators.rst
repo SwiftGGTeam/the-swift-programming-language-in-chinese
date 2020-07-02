@@ -88,12 +88,12 @@ its elements can be decomposed into multiple constants or variables at once:
 
 Unlike the assignment operator in C and Objective-C,
 the assignment operator in Swift doesn't itself return a value.
-The following statement is not valid:
+The following statement isn't valid:
 
 .. testcode:: assignmentOperatorInvalid
 
    -> if x = y {
-         // This is not valid, because x = y doesn't return a value.
+         // This isn't valid, because x = y doesn't return a value.
       }
    !$ error: cannot find 'x' in scope
    !! if x = y {
@@ -315,7 +315,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
    -> 1 == 1   // true because 1 is equal to 1
    >> )
    >> assert(
-   -> 2 != 1   // true because 2 is not equal to 1
+   -> 2 != 1   // true because 2 isn't equal to 1
    >> )
    >> assert(
    -> 2 > 1    // true because 2 is greater than 1
@@ -327,7 +327,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
    -> 1 >= 1   // true because 1 is greater than or equal to 1
    >> )
    >> assert( !(
-   -> 2 <= 1   // false because 2 is not less than or equal to 1
+   -> 2 <= 1   // false because 2 isn't less than or equal to 1
    >> ) )
 
 Comparison operators are often used in conditional statements,
@@ -516,7 +516,7 @@ The nil-coalescing operator is shorthand for the code below:
    << 42
 
 The code above uses the ternary conditional operator and forced unwrapping (``a!``)
-to access the value wrapped inside ``a`` when ``a`` is not ``nil``,
+to access the value wrapped inside ``a`` when ``a`` isn't ``nil``,
 and to return ``b`` otherwise.
 The nil-coalescing operator provides a more elegant way to encapsulate
 this conditional checking and unwrapping in a concise and readable form.
@@ -524,7 +524,7 @@ this conditional checking and unwrapping in a concise and readable form.
 .. note::
 
    If the value of ``a`` is non-``nil``,
-   the value of ``b`` is not evaluated.
+   the value of ``b`` isn't evaluated.
    This is known as :newTerm:`short-circuit evaluation`.
 
 The example below uses the nil-coalescing operator to choose between
@@ -557,8 +557,8 @@ the value wrapped inside ``userDefinedColorName`` is used instead of the default
 
    -> userDefinedColorName = "green"
    -> colorNameToUse = userDefinedColorName ?? defaultColorName
-   /> userDefinedColorName is not nil, so colorNameToUse is set to \"\(colorNameToUse)\"
-   </ userDefinedColorName is not nil, so colorNameToUse is set to "green"
+   /> userDefinedColorName isn't nil, so colorNameToUse is set to \"\(colorNameToUse)\"
+   </ userDefinedColorName isn't nil, so colorNameToUse is set to "green"
 
 .. _BasicOperators_RangeOperators:
 
@@ -823,7 +823,7 @@ for the overall expression to be ``true``.
 Like the Logical AND operator above,
 the Logical OR operator uses short-circuit evaluation to consider its expressions.
 If the left side of a Logical OR expression is ``true``,
-the right side is not evaluated,
+the right side isn't evaluated,
 because it can't change the outcome of the overall expression.
 
 In the example below,

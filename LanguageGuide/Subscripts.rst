@@ -94,7 +94,7 @@ which returns a value of ``18``, or ``3`` times ``6``.
 .. note::
 
    An *n*-times-table is based on a fixed mathematical rule.
-   It is not appropriate to set ``threeTimesTable[someIndex]`` to a new value,
+   It isn't appropriate to set ``threeTimesTable[someIndex]`` to a new value,
    and so the subscript for ``TimesTable`` is defined as a read-only subscript.
 
 .. _Subscripts_SubscriptUsage:

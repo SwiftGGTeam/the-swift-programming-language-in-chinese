@@ -74,7 +74,7 @@ a human-readable description of the vehicle's current speed:
    </ Vehicle: traveling at 0.0 miles per hour
 
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
-but is not much use in itself.
+but isn't much use in itself.
 To make it more useful,
 you need to refine it to describe more specific kinds of vehicles.
 
@@ -253,7 +253,7 @@ You can provide a custom getter (and setter, if appropriate)
 to override *any* inherited property,
 regardless of whether the inherited property is implemented as
 a stored or computed property at source.
-The stored or computed nature of an inherited property is not known by a subclass ---
+The stored or computed nature of an inherited property isn't known by a subclass ---
 it only knows that the inherited property has a certain name and type.
 You must always state both the name and the type of the property you are overriding,
 to enable the compiler to check that your override matches
@@ -321,7 +321,7 @@ For more information on property observers, see :ref:`Properties_PropertyObserve
    You can't add property observers to
    inherited constant stored properties or inherited read-only computed properties.
    The value of these properties can't be set,
-   and so it is not appropriate to provide a ``willSet`` or ``didSet`` implementation
+   and so it isn't appropriate to provide a ``willSet`` or ``didSet`` implementation
    as part of an override.
 
    Note also that you can't provide both

@@ -954,7 +954,7 @@ even if they're composed from different Unicode scalars behind the scenes.
    -> let eAcute: Character = "\u{E9}"
    -> let combinedEAcute: Character = "\u{65}\u{301}"
    -> if eAcute != combinedEAcute {
-         print("not equivalent, which is not expected")
+         print("not equivalent, which isn't expected")
       } else {
          print("equivalent, as expected")
       }
@@ -965,7 +965,7 @@ even if they're composed from different Unicode scalars behind the scenes.
    -> let cafe1 = "caf\u{E9}"
    -> let cafe2 = "caf\u{65}\u{301}"
    -> if cafe1 != cafe2 {
-         print("not equivalent, which is not expected")
+         print("not equivalent, which isn't expected")
       } else {
          print("equivalent, as expected")
       }

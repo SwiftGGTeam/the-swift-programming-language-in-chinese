@@ -974,7 +974,7 @@ on any type that adopts the protocol.
 
 .. sourcefile:: protocols_Module1_Private
 
-   // these will fail, because FilePrivateProtocol is not visible outside of its file
+   // these will fail, because FilePrivateProtocol isn't visible outside of its file
    -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
          var filePrivateProperty = 0
          func filePrivateMethod() {}
@@ -983,7 +983,7 @@ on any type that adopts the protocol.
    !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
    !! ^~~~~~~~~~~~~~~~~~~
    ---
-   // these will fail, because PrivateProtocol is not visible outside of its file
+   // these will fail, because PrivateProtocol isn't visible outside of its file
    -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
          var privateProperty = 0
          func privateMethod() {}

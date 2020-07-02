@@ -42,7 +42,7 @@ a subclass deinitializer implementation.
 Superclass deinitializers are always called,
 even if a subclass doesn't provide its own deinitializer.
 
-Because an instance is not deallocated until after its deinitializer is called,
+Because an instance isn't deallocated until after its deinitializer is called,
 a deinitializer can access all properties of the instance it is called on
 and can modify its behavior based on those properties
 (such as looking up the name of a file that needs to be closed).

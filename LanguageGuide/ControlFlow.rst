@@ -197,7 +197,7 @@ While Loops
 
 A ``while`` loop performs a set of statements until a condition becomes ``false``.
 These kinds of loops are best used when
-the number of iterations is not known before the first iteration begins.
+the number of iterations isn't known before the first iteration begins.
 Swift provides two kinds of ``while`` loops:
 
 * ``while`` evaluates its condition at the start of each pass through the loop.
@@ -345,7 +345,7 @@ to move the player up or down any ladders or snakes.
 
 .. note::
 
-   If this check is not performed,
+   If this check isn't performed,
    ``board[square]`` might try to access a value outside the bounds of the ``board`` array,
    which would trigger a runtime error.
 
@@ -355,7 +355,7 @@ If the player has moved on or beyond square number ``25``,
 the loop's condition evaluates to ``false`` and the game ends.
 
 A ``while`` loop is appropriate in this case,
-because the length of the game is not clear at the start of the ``while`` loop.
+because the length of the game isn't clear at the start of the ``while`` loop.
 Instead, the loop is executed until a particular condition is satisfied.
 
 .. _ControlFlow_DoWhile:
@@ -651,13 +651,13 @@ and avoids executing more than one ``switch`` case by mistake.
 
 .. note::
 
-   Although ``break`` is not required in Swift,
+   Although ``break`` isn't required in Swift,
    you can use a ``break`` statement to match and ignore a particular case
    or to break out of a matched case before that case has completed its execution.
    For details, see :ref:`ControlFlow_BreakInASwitchStatement`.
 
 The body of each case *must* contain at least one executable statement.
-It is not valid to write the following code, because the first case is empty:
+It isn't valid to write the following code, because the first case is empty:
 
 .. testcode:: noFallthrough
 
@@ -851,7 +851,7 @@ The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
 Because ``anotherPoint`` is always a tuple of two values,
 this case matches all possible remaining values,
-and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
+and a ``default`` case isn't needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_Where:
 
@@ -891,7 +891,7 @@ The ``switch`` case matches the current value of ``point``
 only if the ``where`` clause's condition evaluates to ``true`` for that value.
 
 As in the previous example, the final case matches all possible remaining values,
-and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
+and so a ``default`` case isn't needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_CompoundCases:
 
@@ -915,7 +915,7 @@ For example:
               "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
               print("\(someCharacter) is a consonant")
           default:
-              print("\(someCharacter) is not a vowel or a consonant")
+              print("\(someCharacter) isn't a vowel or a consonant")
       }
    <- e is a vowel
 
@@ -1146,7 +1146,7 @@ The ``default`` case adds some extra text to the end of the description,
 and the ``switch`` statement is complete.
 
 Unless the value of ``integerToDescribe`` is in the list of known prime numbers,
-it is not matched by the first ``switch`` case at all.
+it isn't matched by the first ``switch`` case at all.
 Because there are no other specific cases,
 ``integerToDescribe`` is matched by the ``default`` case.
 
@@ -1330,7 +1330,7 @@ and to determine whether the move is allowed:
    it would break out of the ``switch`` statement, not the ``while`` statement.
    Using the ``gameLoop`` label makes it clear which control statement should be terminated.
 
-   It is not strictly necessary to use the ``gameLoop`` label
+   It isn't strictly necessary to use the ``gameLoop`` label
    when calling ``continue gameLoop`` to jump to the next iteration of the loop.
    there's only one loop in the game,
    and therefore no ambiguity as to which loop the ``continue`` statement will affect.
@@ -1349,7 +1349,7 @@ You use a ``guard`` statement to require that a condition must be true
 in order for the code after the ``guard`` statement to be executed.
 Unlike an ``if`` statement,
 a ``guard`` statement always has an ``else`` clause ---
-the code inside the ``else`` clause is executed if the condition is not true.
+the code inside the ``else`` clause is executed if the condition isn't true.
 
 .. testcode:: guard
 
@@ -1382,7 +1382,7 @@ using an optional binding as part of the condition
 are available for the rest of the code block
 that the ``guard`` statement appears in.
 
-If that condition is not met,
+If that condition isn't met,
 the code inside the ``else`` branch is executed.
 That branch must transfer control to exit the code block
 in which the ``guard`` statement appears.

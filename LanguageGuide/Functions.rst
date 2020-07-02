@@ -237,7 +237,7 @@ The second function, ``printWithoutCounting(string:)``,
 calls the first function, but ignores its return value.
 When the second function is called,
 the message is still printed by the first function,
-but the returned value is not used.
+but the returned value isn't used.
 
 .. note::
 

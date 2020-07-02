@@ -329,7 +329,7 @@ If you don't provide a setter name, the default parameter name to the setter is 
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
 Unlike stored named values and stored variable properties,
-the value of a computed named value or a computed property is not stored in memory.
+the value of a computed named value or a computed property isn't stored in memory.
 
 For more information and to see examples of computed properties,
 see :ref:`Properties_ComputedProperties`.
@@ -1467,7 +1467,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     UPDATE: You can only have one raw-value type specified.
     I changed the grammar to be more restrictive in light of this.
 
-.. NOTE: Per Doug and Ted, "('->' type)?" is not part of the grammar.
+.. NOTE: Per Doug and Ted, "('->' type)?" isn't part of the grammar.
     We removed it from our grammar, below.
 
 .. syntax-grammar::
@@ -1946,7 +1946,7 @@ by implementing any kind of initializer.
 
 When a class implements an initializer to satisfy a protocol's initializer requirement,
 the initializer must be marked with the ``required`` declaration modifier
-if the class is not already marked with the ``final`` declaration modifier.
+if the class isn't already marked with the ``final`` declaration modifier.
 
 See also :ref:`Declarations_InitializerDeclaration`.
 
@@ -2298,7 +2298,7 @@ and each class can have at most one.
 
 A subclass inherits its superclass's deinitializer,
 which is implicitly called just before the subclass object is deallocated.
-The subclass object is not deallocated until all deinitializers in its inheritance chain
+The subclass object isn't deallocated until all deinitializers in its inheritance chain
 have finished executing.
 
 Deinitializers aren't called directly.
@@ -2923,7 +2923,7 @@ Nonassociative operators of the same precedence level
 can't appear adjacent to each to other.
 For example,
 the ``<`` operator has an associativity of ``none``,
-which means ``1 < 2 < 3`` is not a valid expression.
+which means ``1 < 2 < 3`` isn't a valid expression.
 
 The *assignment* of a precedence group specifies the precedence of an operator
 when used in an operation that includes optional chaining.

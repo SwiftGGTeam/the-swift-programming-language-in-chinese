@@ -265,7 +265,7 @@ the conditional operator evaluates the first expression
 and returns its value.
 Otherwise, it evaluates the second expression
 and returns its value.
-The unused expression is not evaluated.
+The unused expression isn't evaluated.
 
 For an example that uses the ternary conditional operator,
 see :ref:`BasicOperators_TernaryConditionalOperator`.
@@ -821,7 +821,7 @@ so changes from inside or outside the closure are visible in both places.
    (unlike some other languages)
    so that description's not likely to be very helpful for developers.
 
-This distinction is not visible
+This distinction isn't visible
 when the captured variable's type has reference semantics.
 For example,
 there are two things named ``x`` in the code below,
@@ -1927,14 +1927,14 @@ Forced-Value Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`forced-value expression` unwraps an optional value
-that you are certain is not ``nil``.
+that you are certain isn't ``nil``.
 It has the following form:
 
 .. syntax-outline::
 
    <#expression#>!
 
-If the value of the *expression* is not ``nil``,
+If the value of the *expression* isn't ``nil``,
 the optional value is unwrapped
 and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
@@ -1984,7 +1984,7 @@ and they cause the postfix expression to be evaluated in a special way.
 If the value of the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-If the value of the optional-chaining expression is not ``nil``,
+If the value of the optional-chaining expression isn't ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
@@ -1994,7 +1994,7 @@ If a postfix expression that contains an optional-chaining expression
 is nested inside other postfix expressions,
 only the outermost expression returns an optional type.
 In the example below,
-when ``c`` is not ``nil``,
+when ``c`` isn't ``nil``,
 its value is unwrapped and used to evaluate ``.property``,
 the value of which is used to evaluate ``.performAction()``.
 The entire expression ``c?.property.performAction()``
@@ -2027,7 +2027,7 @@ either by mutating the value itself,
 or by assigning to one of the value's members.
 If the value of the optional-chaining expression is ``nil``,
 the expression on the right-hand side of the assignment operator
-is not evaluated.
+isn't evaluated.
 For example:
 
 .. testcode:: optional-chaining-as-lvalue
@@ -2038,7 +2038,7 @@ For example:
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-   // someFunctionWithSideEffects is not evaluated
+   // someFunctionWithSideEffects isn't evaluated
    /> someDictionary is still \(someDictionary)
    </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---

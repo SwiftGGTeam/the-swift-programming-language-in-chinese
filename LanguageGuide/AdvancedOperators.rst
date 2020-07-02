@@ -821,7 +821,7 @@ See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-A custom infix operator that is not explicitly placed into a precedence group is 
+A custom infix operator that isn't explicitly placed into a precedence group is 
 given a default precedence group with a precedence immediately higher
 than the precedence of the ternary conditional operator.
 

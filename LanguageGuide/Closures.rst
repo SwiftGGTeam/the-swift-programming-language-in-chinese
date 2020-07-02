@@ -67,7 +67,7 @@ based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
 the ``sorted(by:)`` method returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
-The original array is not modified by the ``sorted(by:)`` method.
+The original array isn't modified by the ``sorted(by:)`` method.
 
 The closure expression examples below use the ``sorted(by:)`` method
 to sort an array of ``String`` values in reverse alphabetical order.
@@ -319,7 +319,7 @@ after the function or method's name when you call the function:
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Trailing closures are most useful when the closure is sufficiently long that
-it is not possible to write it inline on a single line.
+it isn't possible to write it inline on a single line.
 As an example, Swift's ``Array`` type has a ``map(_:)`` method,
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
@@ -547,8 +547,8 @@ the next time the ``incrementer`` function is called.
 
    As an optimization,
    Swift may instead capture and store a *copy* of a value
-   if that value is not mutated by a closure,
-   and if the value is not mutated after the closure is created.
+   if that value isn't mutated by a closure,
+   and if the value isn't mutated after the closure is created.
 
    Swift also handles all memory management involved in disposing of
    variables when they are no longer needed.
@@ -882,7 +882,7 @@ the array element isn't removed until the closure is actually called.
 If the closure is never called,
 the expression inside the closure is never evaluated,
 which means the array element is never removed.
-Note that the type of ``customerProvider`` is not ``String``
+Note that the type of ``customerProvider`` isn't ``String``
 but ``() -> String`` ---
 a function with no parameters that returns a string.
 

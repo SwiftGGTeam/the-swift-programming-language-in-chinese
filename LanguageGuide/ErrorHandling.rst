@@ -162,7 +162,7 @@ to the scope from which it's called.
 In the example below,
 the ``VendingMachine`` class has a ``vend(itemNamed:)`` method
 that throws an appropriate ``VendingMachineError``
-if the requested item is not available,
+if the requested item isn't available,
 is out of stock,
 or has a cost that exceeds the current deposited amount:
 

@@ -1386,7 +1386,7 @@ For example:
    -> let age = -3
    -> assert(age >= 0, "A person's age can't be less than zero.")
    xx assert
-   // This assertion fails because -3 is not >= 0.
+   // This assertion fails because -3 isn't >= 0.
 
 In this example, code execution continues if ``age >= 0`` evaluates to ``true``,
 that is, if the value of ``age`` is nonnegative.
@@ -1434,7 +1434,7 @@ Enforcing Preconditions
 ~~~~~~~~~~~~~~~~~~~~~~~
 Use a precondition whenever a condition has the potential to be false,
 but must *definitely* be true for your code to continue execution.
-For example, use a precondition to check that a subscript is not out of bounds,
+For example, use a precondition to check that a subscript isn't out of bounds,
 or to check that a function has been passed a valid value.
 
 You write a precondition by calling the
