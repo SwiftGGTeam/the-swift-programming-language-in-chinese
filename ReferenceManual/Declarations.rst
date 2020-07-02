@@ -1203,7 +1203,7 @@ but the new method must preserve its return type and nonreturning behavior.
 .. NOTE: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
-    There is also the low-level "asm name" FFI
+    There's also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
 

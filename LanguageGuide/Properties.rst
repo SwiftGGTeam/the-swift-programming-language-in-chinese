@@ -211,7 +211,7 @@ and read its contents into memory when the ``DataImporter`` instance is initiali
 
 It is possible for a ``DataManager`` instance to manage its data
 without ever importing data from a file,
-so there is no need to create a new ``DataImporter`` instance
+so there's no need to create a new ``DataImporter`` instance
 when the ``DataManager`` itself is created.
 Instead, it makes more sense to create the ``DataImporter`` instance
 if and when it is first used.

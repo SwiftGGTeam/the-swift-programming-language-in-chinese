@@ -891,7 +891,7 @@ see :ref:`Declarations_OperatorDeclaration`.
 
     You can include operators in the requirements of a protocol.
     A type conforms to the protocol
-    only if there is an implementation of the operator for that type.
+    only if there's an implementation of the operator for that type.
     You use ``Self`` to refer to the type that will conform to the protocol,
     just like you do in other protocol requirements.
     For example, the standard library defines the ``Equatable`` protocol
@@ -932,7 +932,7 @@ see :ref:`Declarations_OperatorDeclaration`.
     the code below defines the ``*`` operator
     to scale a vector by a given amount.
     The ``Vector2D`` structure conforms to this protocol
-    because there is an implementation of the operator
+    because there's an implementation of the operator
     that takes a ``Vector2D`` as its second argument,
     even though that implementation is a member of ``Double``.
 

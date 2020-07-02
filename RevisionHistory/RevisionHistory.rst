@@ -617,7 +617,7 @@ Document Revision History
 
 * ``@autoclosure`` is now an attribute of the parameter declaration,
   not its type.
-  There is also a new ``@noescape`` parameter declaration attribute.
+  There's also a new ``@noescape`` parameter declaration attribute.
   For more information, see :ref:`Attributes_DeclarationAttributes`.
 
 * Type methods and properties now use the ``static`` keyword

@@ -1423,7 +1423,7 @@ see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/do
 
 .. Note: The parser does allow an arbitrary expression inside #selector(), not
    just a member name.  For example, see changes in Swift commit ef60d7289d in
-   lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
+   lib/Sema/CSApply.cpp -- there's explicit code to look through parens and
    optional binding.
 
 

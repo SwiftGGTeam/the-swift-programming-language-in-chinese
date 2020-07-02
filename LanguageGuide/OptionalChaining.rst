@@ -73,7 +73,7 @@ In the code below, ``john`` has a ``residence`` property value of ``nil``:
 If you try to access the ``numberOfRooms`` property of this person's ``residence``,
 by placing an exclamation point after ``residence`` to force the unwrapping of its value,
 you trigger a runtime error,
-because there is no ``residence`` value to unwrap:
+because there's no ``residence`` value to unwrap:
 
 .. testcode:: optionalChainingIntroAssert
 
