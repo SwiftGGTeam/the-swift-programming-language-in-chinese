@@ -30,7 +30,7 @@ When you define a function,
 you can optionally define one or more named, typed values that the function takes as input,
 known as :newTerm:`parameters`.
 You can also optionally define
-a type of value that the function will pass back as output when it is done,
+a type of value that the function will pass back as output when it's done,
 known as its :newTerm:`return type`.
 
 Every function has a :newTerm:`function name`,
@@ -64,7 +64,7 @@ which is followed by the name of the type to return.
 
 The definition describes what the function does,
 what it expects to receive,
-and what it returns when it is done.
+and what it returns when it's done.
 The definition makes it easy for the function to be called unambiguously
 from elsewhere in your code:
 
@@ -99,7 +99,7 @@ In the line of code that says ``return greeting``,
 the function finishes its execution and returns the current value of ``greeting``.
 
 You can call the ``greet(person:)`` function multiple times with different input values.
-The example above shows what happens if it is called with an input value of ``"Anna"``,
+The example above shows what happens if it's called with an input value of ``"Anna"``,
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
@@ -130,7 +130,7 @@ Functions Without Parameters
 
 Functions aren't required to define input parameters.
 Here's a function with no input parameters,
-which always returns the same ``String`` message whenever it is called:
+which always returns the same ``String`` message whenever it's called:
 
 .. testcode:: functionsWithoutParameters
 
@@ -208,7 +208,7 @@ or a return type.
    This is simply an empty tuple,
    which is written as ``()``.
 
-The return value of a function can be ignored when it is called:
+The return value of a function can be ignored when it's called:
 
 .. testcode:: functionsWithoutReturnValues
 
@@ -285,7 +285,7 @@ The body of the ``minMax(array:)`` function starts by setting
 two working variables called ``currentMin`` and ``currentMax``
 to the value of the first integer in the array.
 The function then iterates over the remaining values in the array
-and checks each value to see if it is smaller or larger than
+and checks each value to see if it's smaller or larger than
 the values of ``currentMin`` and ``currentMax`` respectively.
 Finally, the overall minimum and maximum values are returned as
 a tuple of two ``Int`` values.
@@ -325,7 +325,7 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
    not just each individual value within the tuple.
 
 The ``minMax(array:)`` function above returns a tuple containing two ``Int`` values.
-However, the function doesn't perform any safety checks on the array it is passed.
+However, the function doesn't perform any safety checks on the array it's passed.
 If the ``array`` argument contains an empty array,
 the ``minMax(array:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
@@ -755,7 +755,7 @@ The second and third parameters are called ``a`` and ``b``, and are both of type
 These are used as the two input values for the provided math function.
 
 When ``printMathResult(_:_:_:)`` is called,
-it is passed the ``addTwoInts(_:_:)`` function, and the integer values ``3`` and ``5``.
+it's passed the ``addTwoInts(_:_:)`` function, and the integer values ``3`` and ``5``.
 It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
 
 The role of ``printMathResult(_:_:_:)`` is to print the result of

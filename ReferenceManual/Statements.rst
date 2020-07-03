@@ -96,11 +96,11 @@ a type that conforms to the
 The program begins executing a loop
 by calling the ``next()`` method on the iterator.
 If the value returned isn't ``nil``,
-it is assigned to the *item* pattern,
+it's assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
 Otherwise, the program doesn't perform assignment or execute the *statements*,
-and it is finished executing the ``for``-``in`` statement.
+and it's finished executing the ``for``-``in`` statement.
 
 .. syntax-grammar::
 
@@ -375,7 +375,7 @@ If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
 For example, a *control expression* matches the case in the example below
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
+only if it's a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
 
@@ -744,7 +744,7 @@ the value of the expression is returned to the calling function or method.
 If the value of the expression doesn't match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
-before it is returned to the calling function or method.
+before it's returned to the calling function or method.
 
 .. note::
 

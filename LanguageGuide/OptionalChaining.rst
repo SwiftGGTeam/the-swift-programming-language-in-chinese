@@ -111,7 +111,7 @@ to unwrap the integer and assign the non-optional value
 to the ``roomCount`` variable.
 
 Note that this is true even though ``numberOfRooms`` is a non-optional ``Int``.
-The fact that it is queried through an optional chain
+The fact that it's queried through an optional chain
 means that the call to ``numberOfRooms``
 will always return an ``Int?`` instead of an ``Int``.
 
@@ -145,7 +145,7 @@ You can use optional chaining with calls to properties, methods, and subscripts
 that are more than one level deep.
 This enables you to drill down into subproperties
 within complex models of interrelated types,
-and to check whether it is possible to access
+and to check whether it's possible to access
 properties, methods, and subscripts on those subproperties.
 
 The code snippets below define four model classes

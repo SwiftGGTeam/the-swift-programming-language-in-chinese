@@ -168,12 +168,12 @@ When a constant is declared at global scope,
 it must be initialized with a value.
 When a constant declaration occurs in the context of a function or method,
 it can be initialized later,
-as long as it is guaranteed to have a value set
+as long as it's guaranteed to have a value set
 before the first time its value is read.
 If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
 When a constant declaration occurs in the context of a class or structure
-declaration, it is considered a :newTerm:`constant property`.
+declaration, it's considered a :newTerm:`constant property`.
 Constant declarations aren't computed properties and therefore don't have getters
 or setters.
 
@@ -271,9 +271,9 @@ The following form declares a stored variable or stored variable property:
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
-scope of a function, it is referred to as a :newTerm:`stored variable`.
-When it is declared in the context of a class or structure declaration,
-it is referred to as a :newTerm:`stored variable property`.
+scope of a function, it's referred to as a :newTerm:`stored variable`.
+When it's declared in the context of a class or structure declaration,
+it's referred to as a :newTerm:`stored variable property`.
 
 The initializer *expression* can't be present in a protocol declaration,
 but in all other contexts, the initializer *expression* is optional.
@@ -310,10 +310,10 @@ The following form declares a computed variable or computed property:
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, enumeration, or extension declaration.
 When a variable declaration of this form is declared at global scope or the local
-scope of a function, it is referred to as a :newTerm:`computed variable`.
-When it is declared in the context of a class,
+scope of a function, it's referred to as a :newTerm:`computed variable`.
+When it's declared in the context of a class,
 structure, or extension declaration,
-it is referred to as a :newTerm:`computed property`.
+it's referred to as a :newTerm:`computed property`.
 
 The getter is used to read the value,
 and the setter is used to write the value.
@@ -324,7 +324,7 @@ as described in :ref:`Properties_ReadOnlyComputedProperties`.
 But if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses is optional.
-If you provide a setter name, it is used as the name of the parameter to the setter.
+If you provide a setter name, it's used as the name of the parameter to the setter.
 If you don't provide a setter name, the default parameter name to the setter is ``newValue``,
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
@@ -358,7 +358,7 @@ You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, the observers are referred to as :newTerm:`stored variable observers`.
-When it is declared in the context of a class or structure declaration,
+When it's declared in the context of a class or structure declaration,
 the observers are referred to as :newTerm:`property observers`.
 
 You can add property observers to any stored property. You can also add property
@@ -1835,7 +1835,7 @@ declaration:
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
 that conform to the protocol. As a result, you don't implement the getter or setter
-directly in the protocol in which it is declared.
+directly in the protocol in which it's declared.
 
 The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
 If a property declaration includes both the ``get`` and ``set`` keywords,
@@ -2710,11 +2710,11 @@ return the requested value directly.
 That said, if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses are optional.
-If you provide a setter name, it is used as the name of the parameter to the setter.
+If you provide a setter name, it's used as the name of the parameter to the setter.
 If you don't provide a setter name, the default parameter name to the setter is ``value``.
 The type of the parameter to the setter is the same as the *return type*.
 
-You can overload a subscript declaration in the type in which it is declared,
+You can overload a subscript declaration in the type in which it's declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
@@ -2891,7 +2891,7 @@ binds more tightly to its operands.
    using *lower group names* and *higher group names*
    must fit into a single relational hierarchy,
    but they *don't* have to form a linear hierarchy.
-   This means it is possible to have precedence groups
+   This means it's possible to have precedence groups
    with undefined relative precedence.
    Operators from those precedence groups
    can't be used next to each other without grouping parentheses.

@@ -68,7 +68,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length can't be changed after it is created:
+whose range length can't be changed after it's created:
 
 .. testcode:: storedProperties, storedProperties-err
 
@@ -85,7 +85,7 @@ Instances of ``FixedLengthRange`` have
 a variable stored property called ``firstValue``
 and a constant stored property called ``length``.
 In the example above, ``length`` is initialized when the new range is created
-and can't be changed thereafter, because it is a constant property.
+and can't be changed thereafter, because it's a constant property.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
 
@@ -134,7 +134,7 @@ Lazy Stored Properties
    Should it go in the Default Property Values section of Initialization instead?
 
 A :newTerm:`lazy stored property` is a property whose initial value isn't calculated
-until the first time it is used.
+until the first time it's used.
 You indicate a lazy stored property by writing
 the ``lazy`` modifier before its declaration.
 
@@ -159,7 +159,7 @@ is dependent on outside factors whose values aren't known
 until after an instance's initialization is complete.
 Lazy properties are also useful when the initial value for a property requires
 complex or computationally expensive setup that shouldn't be performed
-unless or until it is needed.
+unless or until it's needed.
 
 .. TODO: add a note that if you assign a value to a lazy property before first access,
    the initial value you give in your code will be ignored.
@@ -209,14 +209,14 @@ which is assumed to take a nontrivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
-It is possible for a ``DataManager`` instance to manage its data
+It's possible for a ``DataManager`` instance to manage its data
 without ever importing data from a file,
 so there's no need to create a new ``DataImporter`` instance
 when the ``DataManager`` itself is created.
 Instead, it makes more sense to create the ``DataImporter`` instance
-if and when it is first used.
+if and when it's first used.
 
-Because it is marked with the ``lazy`` modifier,
+Because it's marked with the ``lazy`` modifier,
 the ``DataImporter`` instance for the ``importer`` property
 is only created when the ``importer`` property is first accessed,
 such as when its ``filename`` property is queried:
@@ -454,7 +454,7 @@ which calculates and returns the current volume of the cuboid.
 It doesn't make sense for ``volume`` to be settable,
 because it would be ambiguous as to which values of ``width``, ``height``, and ``depth``
 should be used for a particular ``volume`` value.
-Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
+Nonetheless, it's useful for a ``Cuboid`` to provide a read-only computed property
 to enable external users to discover its current calculated volume.
 
 .. NOTE: getters and setters are also allowed for constants and variables
@@ -1423,7 +1423,7 @@ a stored instance property called ``currentLevel``,
 which represents the channel's current audio level on a scale of ``0`` to ``10``.
 
 The ``currentLevel`` property has a ``didSet`` property observer
-to check the value of ``currentLevel`` whenever it is set.
+to check the value of ``currentLevel`` whenever it's set.
 This observer performs two checks:
 
 * If the new value of ``currentLevel`` is greater than the allowed ``thresholdLevel``,

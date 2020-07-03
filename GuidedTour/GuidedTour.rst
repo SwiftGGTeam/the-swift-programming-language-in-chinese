@@ -576,7 +576,7 @@ Functions are actually a special case of closures:
 blocks of code that can be called later.
 The code in a closure has access to things like variables and functions
 that were available in the scope where the closure was created,
-even if the closure is in a different scope when it is executed ---
+even if the closure is in a different scope when it's executed ---
 you saw an example of this already with nested functions.
 You can write a closure without a name
 by surrounding code with braces (``{}``).
@@ -638,7 +638,7 @@ Objects and Classes
 Use ``class`` followed by the class's name to create a class.
 A property declaration in a class is written the same way
 as a constant or variable declaration,
-except that it is in the context of a class.
+except that it's in the context of a class.
 Likewise, method and function declarations are written the same way.
 
 .. REFERENCE

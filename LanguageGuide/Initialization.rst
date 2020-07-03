@@ -87,7 +87,7 @@ as shown above.
 Alternatively, specify a :newTerm:`default property value`
 as part of the property's declaration.
 You specify a default property value by assigning an initial value to the property
-when it is defined.
+when it's defined.
 
 .. note::
 
@@ -270,7 +270,7 @@ from a ``Double`` value that's already in the Celsius scale:
 
 The initializer call ``Celsius(37.0)`` is clear in its intent
 without the need for an argument label.
-It is therefore appropriate to write this initializer as ``init(_ celsius: Double)``
+It's therefore appropriate to write this initializer as ``init(_ celsius: Double)``
 so that it can be called by providing an unnamed ``Double`` value.
 
 .. _Initialization_OptionalPropertyTypes:
@@ -280,7 +280,7 @@ Optional Property Types
 
 If your custom type has a stored property that's logically allowed to have “no value” ---
 perhaps because its value can't be set during initialization,
-or because it is allowed to have “no value” at some later point ---
+or because it's allowed to have “no value” at some later point ---
 declare the property with an *optional* type.
 Properties of optional type are automatically initialized with a value of ``nil``,
 indicating that the property is deliberately intended to have “no value yet”
@@ -306,10 +306,10 @@ with an optional ``String`` property called ``response``:
    <- Do you like cheese?
    -> cheeseQuestion.response = "Yes, I do like cheese."
 
-The response to a survey question can't be known until it is asked,
+The response to a survey question can't be known until it's asked,
 and so the ``response`` property is declared with a type of ``String?``,
 or “optional ``String``”.
-It is automatically assigned a default value of ``nil``, meaning “no string yet”,
+It's automatically assigned a default value of ``nil``, meaning “no string yet”,
 when a new instance of ``SurveyQuestion`` is initialized.
 
 .. _Initialization_ModifyingConstantPropertiesDuringInitialization:
@@ -319,7 +319,7 @@ Assigning Constant Properties During Initialization
 
 You can assign a value to a constant property
 at any point during initialization,
-as long as it is set to a definite value by the time initialization finishes.
+as long as it's set to a definite value by the time initialization finishes.
 Once a constant property is assigned a value,
 it can't be further modified.
 
@@ -425,7 +425,7 @@ of an item in a shopping list:
    -> var item = ShoppingListItem()
 
 Because all properties of the ``ShoppingListItem`` class have default values,
-and because it is a base class with no superclass,
+and because it's a base class with no superclass,
 ``ShoppingListItem`` automatically gains a default initializer implementation
 that creates a new instance with all of its properties set to their default values.
 (The ``name`` property is an optional ``String`` property,
@@ -524,7 +524,7 @@ You can call ``self.init`` only from within an initializer.
 
 Note that if you define a custom initializer for a value type,
 you will no longer have access to the default initializer
-(or the memberwise initializer, if it is a structure) for that type.
+(or the memberwise initializer, if it's a structure) for that type.
 This constraint prevents a situation in which additional essential setup
 provided in a more complex initializer
 is accidentally circumvented by someone using one of the automatic initializers.
@@ -620,7 +620,7 @@ which stores the new origin and size values in the appropriate properties:
 
 The ``init(center:size:)`` initializer could have assigned
 the new values of ``origin`` and ``size`` to the appropriate properties itself.
-However, it is more convenient (and clearer in intent)
+However, it's more convenient (and clearer in intent)
 for the ``init(center:size:)`` initializer to take advantage of an existing initializer
 that already provides exactly that functionality.
 
@@ -654,7 +654,7 @@ and calls an appropriate superclass initializer
 to continue the initialization process up the superclass chain.
 
 Classes tend to have very few designated initializers,
-and it is quite common for a class to have only one.
+and it's quite common for a class to have only one.
 Designated initializers are “funnel” points through which initialization takes place,
 and through which the initialization process continues up the superclass chain.
 
@@ -898,7 +898,7 @@ that isn't fully or correctly initialized.
 .. note::
 
    Superclass initializers *are* inherited in certain circumstances,
-   but only when it is safe and appropriate to do so.
+   but only when it's safe and appropriate to do so.
    For more information, see :ref:`Initialization_AutomaticInitializerInheritance` below.
 
 If you want a custom subclass to present
@@ -1150,7 +1150,7 @@ subclasses don't inherit their superclass initializers by default.
 However, superclass initializers *are* automatically inherited if certain conditions are met.
 In practice, this means that
 you don't need to write initializer overrides in many common scenarios,
-and can inherit your superclass initializers with minimal effort whenever it is safe to do so.
+and can inherit your superclass initializers with minimal effort whenever it's safe to do so.
 
 Assuming that you provide default values for any new properties you introduce in a subclass,
 the following two rules apply:
@@ -1380,7 +1380,7 @@ The type of the array is inferred to be ``[ShoppingListItem]``.
 After the array is created,
 the name of the ``ShoppingListItem`` at the start of the array
 is changed from ``"[Unnamed]"`` to ``"Orange juice"``
-and it is marked as having been purchased.
+and it's marked as having been purchased.
 Printing the description of each item in the array
 shows that their default states have been set as expected.
 
@@ -1400,7 +1400,7 @@ shows that their default states have been set as expected.
 Failable Initializers
 ---------------------
 
-It is sometimes useful to define a class, structure, or enumeration
+It's sometimes useful to define a class, structure, or enumeration
 for which initialization can fail.
 This failure might be triggered by invalid initialization parameter values,
 the absence of a required external resource,
@@ -1516,7 +1516,7 @@ the initializer triggers an initialization failure:
    Checking for an empty string value (such as ``""`` rather than ``"Giraffe"``)
    isn't the same as checking for ``nil`` to indicate the absence of an *optional* ``String`` value.
    In the example above, an empty string (``""``) is a valid, non-optional ``String``.
-   However, it is not appropriate for an animal
+   However, it's not appropriate for an animal
    to have an empty string as the value of its ``species`` property.
    To model this restriction,
    the failable initializer triggers an initialization failure if an empty string is found.

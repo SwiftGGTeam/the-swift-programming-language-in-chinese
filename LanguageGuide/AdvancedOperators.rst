@@ -402,7 +402,7 @@ using the overflow addition operator (``&+``):
 
 The variable ``unsignedOverflow`` is initialized with the maximum value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
-It is then incremented by ``1`` using the overflow addition operator (``&+``).
+It's then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
@@ -478,7 +478,7 @@ either grouped from the left, or grouped from the right.
 Think of it as meaning “they associate with the expression to their left,”
 or “they associate with the expression to their right.”
 
-It is important to consider
+It's important to consider
 each operator's precedence and associativity
 when working out the order in which a compound expression will be calculated.
 For example,
@@ -785,7 +785,7 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
 
 The example above defines a new prefix operator called ``+++``.
 This operator doesn't have an existing meaning in Swift,
-and so it is given its own custom meaning below in the specific context of
+and so it's given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` is treated as a new “prefix doubling” operator.
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
@@ -844,7 +844,7 @@ which belongs to the precedence group ``AdditionPrecedence``:
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
-Because it is in essence an “additive” operator,
+Because it's in essence an “additive” operator,
 it has been given the same precedence group
 as additive infix operators such as ``+`` and ``-``.
 For information about the operators provided by the Swift standard library,

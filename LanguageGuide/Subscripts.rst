@@ -102,7 +102,7 @@ which returns a value of ``18``, or ``3`` times ``6``.
 Subscript Usage
 ---------------
 
-The exact meaning of “subscript” depends on the context in which it is used.
+The exact meaning of “subscript” depends on the context in which it's used.
 Subscripts are typically used as a shortcut for accessing
 the member elements in a collection, list, or sequence.
 You are free to implement subscripts in the most appropriate way for
@@ -174,9 +174,9 @@ the types of the value or values that are contained within the subscript bracket
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
 
-While it is most common for a subscript to take a single parameter,
+While it's most common for a subscript to take a single parameter,
 you can also define a subscript with multiple parameters
-if it is appropriate for your type.
+if it's appropriate for your type.
 The following example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
 The ``Matrix`` structure's subscript takes two integer parameters:

@@ -97,8 +97,8 @@ This process continues until the end of the range is reached.
 
 In the example above, ``index`` is a constant whose value is automatically set
 at the start of each iteration of the loop.
-As such, ``index`` doesn't have to be declared before it is used.
-It is implicitly declared simply by its inclusion in the loop declaration,
+As such, ``index`` doesn't have to be declared before it's used.
+It's implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
 
 If you don't need each value from a sequence,
@@ -472,7 +472,7 @@ seen in the ``while`` loop version of the game described earlier.
 Conditional Statements
 ----------------------
 
-It is often useful to execute different pieces of code based on certain conditions.
+It's often useful to execute different pieces of code based on certain conditions.
 You might want to run an extra piece of code when an error occurs,
 or to display a message when a value becomes too high or too low.
 To do this, you make parts of your code :newTerm:`conditional`.
@@ -527,7 +527,7 @@ These statements are indicated by the ``else`` keyword.
 
 One of these two branches is always executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
-it is no longer cold enough to advise wearing a scarf
+it's no longer cold enough to advise wearing a scarf
 and so the ``else`` branch is triggered instead.
 
 You can chain multiple ``if`` statements together
@@ -979,7 +979,7 @@ and the ``throw`` statement is described in :ref:`ErrorHandling_Throw`.
 Continue
 ~~~~~~~~
 
-The ``continue`` statement tells a loop to stop what it is doing
+The ``continue`` statement tells a loop to stop what it's doing
 and start again at the beginning of the next iteration through the loop.
 It says “I am done with the current loop iteration”
 without leaving the loop altogether.
@@ -1041,7 +1041,7 @@ the ``switch`` statement's closing brace (``}``).
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
 Because Swift's ``switch`` statement is exhaustive
 and doesn't allow empty cases,
-it is sometimes necessary to deliberately match and ignore a case
+it's sometimes necessary to deliberately match and ignore a case
 in order to make your intentions explicit.
 You do this by writing the ``break`` statement as the entire body of the case you want to ignore.
 When that case is matched by the ``switch`` statement,
@@ -1080,7 +1080,7 @@ For brevity, multiple values are covered in a single ``switch`` case.
       }
    <- The integer value of 三 is 3.
 
-This example checks ``numberSymbol`` to determine whether it is
+This example checks ``numberSymbol`` to determine whether it's
 a Latin, Arabic, Chinese, or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
@@ -1099,7 +1099,7 @@ by one of the ``switch`` statement's first four cases.
 Because it's not practical to list every possible ``Character`` value in the example above,
 a ``default`` case handles any characters that aren't matched.
 This ``default`` case doesn't need to perform any action,
-and so it is written with a single ``break`` statement as its body.
+and so it's written with a single ``break`` statement as its body.
 As soon as the ``default`` case is matched,
 the ``break`` statement ends the ``switch`` statement's execution,
 and code execution continues from the ``if let`` statement.
@@ -1173,7 +1173,7 @@ inside other loops and conditional statements
 to create complex control flow structures.
 However, loops and conditional statements can both use the ``break`` statement
 to end their execution prematurely.
-Therefore, it is sometimes useful to be explicit about
+Therefore, it's sometimes useful to be explicit about
 which loop or conditional statement you want a ``break`` statement to terminate.
 Similarly, if you have multiple nested loops,
 it can be useful to be explicit about which loop the ``continue`` statement
@@ -1230,7 +1230,7 @@ are initialized in the same way as before:
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
 The ``while`` loop has a statement label called ``gameLoop``
-to indicate that it is the main game loop for the Snakes and Ladders game.
+to indicate that it's the main game loop for the Snakes and Ladders game.
 
 The ``while`` loop's condition is ``while square != finalSquare``,
 to reflect that you must land exactly on square 25.

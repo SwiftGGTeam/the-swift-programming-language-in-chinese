@@ -190,7 +190,7 @@ Accessing Superclass Methods, Properties, and Subscripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you provide a method, property, or subscript override for a subclass,
-it is sometimes useful to use the existing superclass implementation
+it's sometimes useful to use the existing superclass implementation
 as part of your override.
 For example, you can refine the behavior of that existing implementation,
 or store a modified value in an existing inherited variable.

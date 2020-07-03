@@ -43,7 +43,7 @@ Superclass deinitializers are always called,
 even if a subclass doesn't provide its own deinitializer.
 
 Because an instance isn't deallocated until after its deinitializer is called,
-a deinitializer can access all properties of the instance it is called on
+a deinitializer can access all properties of the instance it's called on
 and can modify its behavior based on those properties
 (such as looking up the name of a file that needs to be closed).
 
@@ -130,7 +130,7 @@ This ``Player`` instance is stored in an optional ``Player`` variable called ``p
 An optional variable is used here, because players can leave the game at any point.
 The optional lets you track whether there's currently a player in the game.
 
-Because ``playerOne`` is an optional, it is qualified with an exclamation point (``!``)
+Because ``playerOne`` is an optional, it's qualified with an exclamation point (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
 and whenever its ``win(coins:)`` method is called:
 
@@ -160,6 +160,6 @@ meaning “no ``Player`` instance.”
 At the point that this happens,
 the ``playerOne`` variable's reference to the ``Player`` instance is broken.
 No other properties or variables are still referring to the ``Player`` instance,
-and so it is deallocated in order to free up its memory.
+and so it's deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.

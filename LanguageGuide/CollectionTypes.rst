@@ -45,7 +45,7 @@ and its size and contents can't be changed.
 
 .. note::
 
-   It is good practice to create immutable collections
+   It's good practice to create immutable collections
    in all cases where the collection doesn't need to change.
    Doing so makes it easier for you to reason about your code
    and enables the Swift compiler to optimize the performance of
@@ -180,7 +180,7 @@ The example below creates an array called ``shoppingList`` to store ``String`` v
 The ``shoppingList`` variable is declared as
 “an array of string values”, written as ``[String]``.
 Because this particular array has specified a value type of ``String``,
-it is allowed to store ``String`` values only.
+it's allowed to store ``String`` values only.
 Here, the ``shoppingList`` array is initialized with two ``String`` values
 (``"Eggs"`` and ``"Milk"``), written within an array literal.
 
@@ -526,7 +526,7 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 The ``favoriteGenres`` variable is declared as
 “a set of ``String`` values”, written as ``Set<String>``.
 Because this particular set has specified a value type of ``String``,
-it is *only* allowed to store ``String`` values.
+it's *only* allowed to store ``String`` values.
 Here, the ``favoriteGenres`` set is initialized with three ``String`` values
 (``"Rock"``, ``"Classical"``, and ``"Hip hop"``), written within an array literal.
 
@@ -960,7 +960,7 @@ or ``nil`` if no value existed:
    <- The old value for DUB was Dublin.
 
 You can also use subscript syntax to retrieve a value from the dictionary for a particular key.
-Because it is possible to request a key for which no value exists,
+Because it's possible to request a key for which no value exists,
 a dictionary's subscript returns an optional value of the dictionary's value type.
 If the dictionary contains a value for the requested key,
 the subscript returns an optional value containing the existing value for that key.

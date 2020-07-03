@@ -178,7 +178,7 @@ before the ``func`` keyword for that method:
 The ``Point`` structure above defines a mutating ``moveBy(x:y:)`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
-this method actually modifies the point on which it is called.
+this method actually modifies the point on which it's called.
 The ``mutating`` keyword is added to its definition
 to enable it to modify its properties.
 
@@ -315,7 +315,7 @@ by using the type property's name without a type name prefix.
 
 The example below defines a structure called ``LevelTracker``,
 which tracks a player's progress through the different levels or stages of a game.
-It is a single-player game,
+It's a single-player game,
 but can store information for multiple players on a single device.
 
 All of the game's levels (apart from level one) are locked when the game is first played.

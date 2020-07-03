@@ -326,7 +326,7 @@ otherwise, it returns ``false``.
    !!          ^
 
 The ``as`` operator performs a cast
-when it is known at compile time
+when it's known at compile time
 that the cast always succeeds,
 such as upcasting or bridging.
 Upcasting lets you use an expression as an instance of its type's supertype,
@@ -463,11 +463,11 @@ as described in :ref:`Statements_LineControlStatement`.
 
 Inside a function,
 the value of ``#function`` is the name of that function,
-inside a method it is the name of that method,
-inside a property getter or setter it is the name of that property,
+inside a method it's the name of that method,
+inside a property getter or setter it's the name of that property,
 inside special members like ``init`` or ``subscript``
-it is the name of that keyword,
-and at the top level of a file it is the name of the current module.
+it's the name of that keyword,
+and at the top level of a file it's the name of the current module.
 
 When used as the default value of a function or method parameter,
 the special literal's value is determined
@@ -752,7 +752,7 @@ As a result,
 whether a closure expression is escaping or nonescaping depends
 on the surrounding context of the expression.
 A closure expression is nonescaping
-if it is called immediately
+if it's called immediately
 or passed as a nonescaping function argument.
 Otherwise, the closure expression is escaping.
 
@@ -1491,7 +1491,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. note::
 
-    Although the *property name* is an expression, it is never evaluated.
+    Although the *property name* is an expression, it's never evaluated.
 
 
 .. syntax-grammar::
@@ -1806,7 +1806,7 @@ For example:
     -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 
 If a period appears at the beginning of a line,
-it is understood as part of an explicit member expression,
+it's understood as part of an explicit member expression,
 not as an implicit member expression.
 For example, the following listing shows chained method calls
 split over several lines:

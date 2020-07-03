@@ -29,7 +29,7 @@ This class provides basic functionality for any kind of item that appears
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
 and an ``init name`` initializer.
-(It is assumed that all media items, including all movies and songs, will have a name.)
+(It's assumed that all media items, including all movies and songs, will have a name.)
 
 .. testcode:: typeCasting, typeCasting-err
 
@@ -173,7 +173,7 @@ for use in the description.
 In this example, each item in the array might be a ``Movie``,
 or it might be a ``Song``.
 You don't know in advance which actual class to use for each item,
-and so it is appropriate to use the conditional form of the type cast operator (``as?``)
+and so it's appropriate to use the conditional form of the type cast operator (``as?``)
 to check the downcast each time through the loop:
 
 .. testcode:: typeCasting
@@ -222,7 +222,7 @@ whenever a ``Song`` is found in the library.
 .. note::
 
    Casting doesn't actually modify the instance or change its values.
-   The underlying instance remains the same; it is simply treated and accessed
+   The underlying instance remains the same; it's simply treated and accessed
    as an instance of the type to which it has been cast.
 
 .. TODO: This example should be followed by the same example written with switch,
@@ -246,7 +246,7 @@ Swift provides two special types for working with nonspecific types:
 
 Use ``Any`` and ``AnyObject`` only when you explicitly need
 the behavior and capabilities they provide.
-It is always better to be specific about the types you expect to work with in your code.
+It's always better to be specific about the types you expect to work with in your code.
 
 Here's an example of using ``Any`` to work with a mix of different types,
 including function types and nonclass types.

@@ -215,7 +215,7 @@ For example:
 
 In the code above,
 ``stepSize`` is a global variable,
-and it is normally accessible from within ``increment(_:)``.
+and it's normally accessible from within ``increment(_:)``.
 However,
 the read access to ``stepSize`` overlaps with
 the write access to ``number``.

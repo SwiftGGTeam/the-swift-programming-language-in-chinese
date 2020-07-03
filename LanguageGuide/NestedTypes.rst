@@ -121,7 +121,7 @@ Referring to Nested Types
 -------------------------
 
 To use a nested type outside of its definition context,
-prefix its name with the name of the type it is nested within:
+prefix its name with the name of the type it's nested within:
 
 .. testcode:: nestedTypes
 
