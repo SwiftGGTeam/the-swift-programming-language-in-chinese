@@ -644,7 +644,7 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。
 
 ## 包含上下文关系的 where 分句 {#contextual-where-clauses}
-当你使用泛型时，可以为没有独立类型约束的申明添加 `where` 分句。例如，你可以使用 `where` 分句为泛型添加下标，或为扩展方法添加泛型约束。`Container` 结构体是个泛型，下面的例子通过 `where` 分句让新的方法申明其调用所需要满足的类型约束。
+当你使用泛型时，可以为没有独立类型约束的声明添加 `where` 分句。例如，你可以使用 `where` 分句为泛型添加下标，或为扩展方法添加泛型约束。`Container` 结构体是个泛型，下面的例子通过 `where` 分句让新的方法声明其调用所需要满足的类型约束。
 
 ```swift
 extension Container {
@@ -687,7 +687,7 @@ extension Container where Item: Equatable {
 }
 ```
 
-在包含上下文关系的 `where` 分句的例子中，由于每个方法的 `where` 分句各自申明了需要满足的条件，因此 `average()` 和 `endsWith(_:)` 的实现能放在同一个扩展里。而将 `where` 分句放在扩展进行申明也能起到同样的效果，但每一个扩展只能有一个必备条件。
+在包含上下文关系的 `where` 分句的例子中，由于每个方法的 `where` 分句各自声明了需要满足的条件，因此 `average()` 和 `endsWith(_:)` 的实现能放在同一个扩展里。而将 `where` 分句放在扩展进行声明也能起到同样的效果，但每一个扩展只能有一个必备条件。
 
 ## 具有泛型 Where 子句的关联类型 {#associated-types-with-a-generic-where-clause}
 
