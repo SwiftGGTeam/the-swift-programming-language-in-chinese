@@ -234,7 +234,7 @@ if let topItem = stackOfStrings.topItem {
 
 例如，Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 [字典的描述](./04_Collection_Types.md#dictionaries) 中，字典键的类型必须是可哈希（hashable）的。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
 
-这个要求通过 `Dictionary` 键类型上的类型约束实现，它指明了键必须遵循 Swift 标准库中定义的 `Hashable` 协议。所有 Swift 的基本类型（例如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希的。
+这个要求通过 `Dictionary` 键类型上的类型约束实现，它指明了键必须遵循 Swift 标准库中定义的 `Hashable` 协议。所有 Swift 的基本类型（例如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希的。如何让自定义类型遵循 `Hashable` 协议，可以查看文档 [遵循 Hashable 协议](https://developer.apple.com/documentation/swift/hashable#2849490)。
 
 当自定义泛型类型时，你可以定义你自己的类型约束，这些约束将提供更为强大的泛型编程能力。像 `可哈希（hashable）` 这种抽象概念根据它们的概念特征来描述类型，而不是它们的具体类型。
 
@@ -642,6 +642,52 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 此示例将一个 `average()` 方法添加到 `Item` 类型为 `Double` 的容器中。此方法遍历容器中的元素将其累加，并除以容器的数量计算平均值。它将数量从 `Int` 转换为 `Double` 确保能够进行浮点除法。
 
 就像可以在其他地方写泛型 `where` 子句一样，你可以在一个泛型 `where` 子句中包含多个条件作为扩展的一部分。用逗号分隔列表中的每个条件。
+
+## 包含上下文关系的 where 分句 {#contextual-where-clauses}
+当你使用泛型时，可以为没有独立类型约束的声明添加 `where` 分句。例如，你可以使用 `where` 分句为泛型添加下标，或为扩展方法添加泛型约束。`Container` 结构体是个泛型，下面的例子通过 `where` 分句让新的方法声明其调用所需要满足的类型约束。
+
+```swift
+extension Container {
+    func average() -> Double where Item == Int {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+    func endsWith(_ item: Item) -> Bool where Item: Equatable {
+        return count >= 1 && self[count-1] == item
+    }
+}
+let numbers = [1260, 1200, 98, 37]
+print(numbers.average())
+// 输出 "648.75"
+print(numbers.endsWith(37))
+// 输出 "true"
+```
+
+例子中，当 `Item` 是整型时为 `Container` 添加 `average()` 方法，当 `Item` 遵循 `Equatable` 时添加 `endsWith(_:)` 方法。两个方法都通过 `where` 分句对 `Container` 中定义的泛型 `Item` 进行了约束。
+
+如果不使用包含上下文关系的 `where` 分句，需要写两个扩展，并为每个扩展分别加上 `where` 分句。下面的例子和上面的具有相同效果。
+
+```swift
+extension Container where Item == Int {
+    func average() -> Double {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+}
+extension Container where Item: Equatable {
+    func endsWith(_ item: Item) -> Bool {
+        return count >= 1 && self[count-1] == item
+    }
+}
+```
+
+在包含上下文关系的 `where` 分句的例子中，由于每个方法的 `where` 分句各自声明了需要满足的条件，因此 `average()` 和 `endsWith(_:)` 的实现能放在同一个扩展里。而将 `where` 分句放在扩展进行声明也能起到同样的效果，但每一个扩展只能有一个必备条件。
 
 ## 具有泛型 Where 子句的关联类型 {#associated-types-with-a-generic-where-clause}
 
