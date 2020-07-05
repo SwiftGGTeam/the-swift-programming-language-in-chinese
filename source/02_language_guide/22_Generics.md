@@ -234,7 +234,7 @@ if let topItem = stackOfStrings.topItem {
 
 例如，Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 [字典的描述](./04_Collection_Types.md#dictionaries) 中，字典键的类型必须是可哈希（hashable）的。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
 
-这个要求通过 `Dictionary` 键类型上的类型约束实现，它指明了键必须遵循 Swift 标准库中定义的 `Hashable` 协议。所有 Swift 的基本类型（例如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希的。
+这个要求通过 `Dictionary` 键类型上的类型约束实现，它指明了键必须遵循 Swift 标准库中定义的 `Hashable` 协议。所有 Swift 的基本类型（例如 `String`、`Int`、`Double` 和 `Bool`）默认都是可哈希的。如何让自定义类型遵循 `Hashable` 协议，可以查看文档 [遵循 Hashable 协议](https://developer.apple.com/documentation/swift/hashable#2849490)。
 
 当自定义泛型类型时，你可以定义你自己的类型约束，这些约束将提供更为强大的泛型编程能力。像 `可哈希（hashable）` 这种抽象概念根据它们的概念特征来描述类型，而不是它们的具体类型。
 
