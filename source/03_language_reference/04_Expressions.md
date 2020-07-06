@@ -782,7 +782,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 你可以在平时提供函数或者闭包的上下文里使用 key path 表达式。特别地，你可以用根类型是 `SomeType` 和路径产生 `Value` 类型值的 key path 表达式来替换类型是 `(SomeType) -> Value` 的函数或者闭包。
 
 ```swift
-truct Task {
+struct Task {
     var description: String
     var completed: Bool
 }
