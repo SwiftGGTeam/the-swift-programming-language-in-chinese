@@ -364,7 +364,7 @@ print(customersInLine.count)
 // 打印出“5”
 
 print("Now serving \(customerProvider())!")
-// Prints "Now serving Chris!"
+// 打印出“Now serving Chris!”
 print(customersInLine.count)
 // 打印出“4”
 ```
