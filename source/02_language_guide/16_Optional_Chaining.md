@@ -6,15 +6,15 @@
 > 
 > Swift 的可选链式调用和 Objective-C 中向 `nil` 发送消息有些相像，但是 Swift 的可选链式调用可以应用于任意类型，并且能检查调用是否成功。
 
-## 使用可选链式调用代替强制展开 {#optional-chaining-as-an-alternative-to-forced-unwrapping}
+## 使用可选链式调用代替强制解包 {#optional-chaining-as-an-alternative-to-forced-unwrapping}
 
-通过在想调用的属性、方法，或下标的可选值后面放一个问号（`?`），可以定义一个可选链。这一点很像在可选值后面放一个叹号（`!`）来强制展开它的值。它们的主要区别在于当可选值为空时可选链式调用只会调用失败，然而强制展开将会触发运行时错误。
+通过在想调用的属性、方法，或下标的可选值后面放一个问号（`?`），可以定义一个可选链。这一点很像在可选值后面放一个叹号（`!`）来强制解包它的值。它们的主要区别在于当可选值为空时可选链式调用只会调用失败，然而强制解包将会触发运行时错误。
 
 为了反映可选链式调用可以在空值（`nil`）上调用的事实，不论这个调用的属性、方法及下标返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来判断你的可选链式调用是否调用成功，如果调用有返回值则说明调用成功，返回 `nil` 则说明调用失败。
 
 这里需要特别指出，可选链式调用的返回结果与原本的返回结果具有相同的类型，但是被包装成了一个可选值。例如，使用可选链式调用访问属性，当可选链式调用成功时，如果属性原本的返回结果是 `Int` 类型，则会变为 `Int?` 类型。
 
-下面几段代码将解释可选链式调用和强制展开的不同。
+下面几段代码将解释可选链式调用和强制解包的不同。
 
 首先定义两个类 `Person` 和 `Residence`：
 
@@ -36,7 +36,7 @@ class Residence {
 let john = Person()
 ```
 
-如果使用叹号（`!`）强制展开获得这个 `john` 的 `residence` 属性中的 `numberOfRooms` 值，会触发运行时错误，因为这时 `residence` 没有可以展开的值：
+如果使用叹号（`!`）强制解包获得这个 `john` 的 `residence` 属性中的 `numberOfRooms` 值，会触发运行时错误，因为这时 `residence` 没有可以解包的值：
 
 ```swift
 let roomCount = john.residence!.numberOfRooms
@@ -58,7 +58,7 @@ if let roomCount = john.residence?.numberOfRooms {
 
 在 `residence` 后面添加问号之后，Swift 就会在 `residence` 不为 `nil` 的情况下访问 `numberOfRooms`。
 
-因为访问 `numberOfRooms` 有可能失败，可选链式调用会返回 `Int?` 类型，或称为“可选的 `Int`”。如上例所示，当 `residence` 为 `nil` 的时候，可选的 `Int` 将会为 `nil`，表明无法访问 `numberOfRooms`。访问成功时，可选的 `Int` 值会通过可选绑定展开，并赋值给非可选类型的 `roomCount` 常量。
+因为访问 `numberOfRooms` 有可能失败，可选链式调用会返回 `Int?` 类型，或称为“可选的 `Int`”。如上例所示，当 `residence` 为 `nil` 的时候，可选的 `Int` 将会为 `nil`，表明无法访问 `numberOfRooms`。访问成功时，可选的 `Int` 值会通过可选绑定解包，并赋值给非可选类型的 `roomCount` 常量。
 
 要注意的是，即使 `numberOfRooms` 是非可选的 `Int` 时，这一点也成立。只要使用可选链式调用就意味着 `numberOfRooms` 会返回一个 `Int?` 而不是 `Int`。
 
@@ -156,7 +156,7 @@ class Address {
 
 ## 通过可选链式调用访问属性 {#accessing-properties-through-optional-chaining}
 
-正如 [使用可选链式调用代替强制展开](#optional-chaining-as-an-alternative-to-forced-unwrapping) 中所述，可以通过可选链式调用在一个可选值上访问它的属性，并判断访问是否成功。
+正如 [使用可选链式调用代替强制解包](#optional-chaining-as-an-alternative-to-forced-unwrapping) 中所述，可以通过可选链式调用在一个可选值上访问它的属性，并判断访问是否成功。
 
 使用前面定义过的类，创建一个 `Person` 实例，然后像之前一样，尝试访问 `numberOfRooms` 属性：
 
