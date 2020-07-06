@@ -269,6 +269,20 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 
 `multiplier` 的值也作为字符串中后面表达式的一部分。该表达式计算 `Double(multiplier) * 2.5` 的值并将结果（`7.5`）插入到字符串中。在这个例子中，表达式写为 `\(Double(multiplier) * 2.5)` 并包含在字符串字面量中。
 
+你可以使用扩展字符串分隔符创建字符串，来包含不想作为字符串插值处理的字符。例如：
+
+```swift
+print(#"Write an interpolated string in Swift using \(multiplier)."#)
+// 打印 "Write an interpolated string in Swift using \(multiplier)."
+```
+
+如果要在使用扩展字符串分隔符的字符串中使用字符串插值，需要在反斜杠后面添加与开头和结尾数量相同扩展字符串分隔符。例如：
+
+```swift
+print(#"6 times 7 is \#(6 * 7)."#)
+// 打印 "6 times 7 is 42."
+```
+
 > 注意
 > 
 > 插值字符串中写在括号中的表达式不能包含非转义反斜杠（`\`），并且不能包含回车或换行符。不过，插值字符串可以包含其他字面量。
