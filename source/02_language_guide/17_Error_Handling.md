@@ -191,7 +191,7 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-// 打印”Couldn't buy that from the vending machine.“
+// 打印“Couldn't buy that from the vending machine.”
 ```
 
 如果 `vend(itemNamed:)` 抛出的是一个 `VendingMachineError` 类型的错误，`nourish(with:)` 会打印一条消息，否则 `nourish(with:)` 会将错误抛给它的调用方。这个错误之后会被通用的 `catch` 语句捕获。
