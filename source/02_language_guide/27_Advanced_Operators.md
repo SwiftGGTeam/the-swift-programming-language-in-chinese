@@ -389,32 +389,11 @@ if twoThree == anotherTwoThree {
 // 打印“These two vectors are equivalent.”
 ```
 
-多数简单情况下，您可以使用 Swift 为您提供的等价运算符默认实现。Swift 为以下数种自定义类型提供等价运算符的默认实现：
-
-- 只拥有存储属性，并且它们全都遵循 `Equatable` 协议的结构体
-- 只拥有关联类型，并且它们全都遵循 `Equatable` 协议的枚举
-- 没有关联类型的枚举
-
-在类型原始的声明中声明遵循 `Equatable` 来接收这些默认实现。
-
-下面为三维位置向量 `(x, y, z)` 定义的 `Vector3D` 结构体，与 `Vector2D` 类似。由于 `x`，`y` 和 `z` 属性都是 `Equatable` 类型，`Vector3D` 获得了默认的等价运算符实现。
-
-```Swift
-struct Vector3D: Equatable {
-    var x = 0.0, y = 0.0, z = 0.0
-}
-
-let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
-if twoThreeFour == anotherTwoThreeFour {
-    print("These two vectors are also equivalent.")
-}
-// 打印“These two vectors are also equivalent.”
-```
+多数简单情况下，你可以让 Swift 合成等价运算符的实现，详见 [使用合成实现来采纳协议](./21_Protocols.md#adopting-a-protocol-using-a-synthesized-implementation)。
 
 ## 自定义运算符 {#custom-operators}
 
-除了实现标准运算符，在 Swift 中还可以声明和实现*自定义运算符*。可以用来自定义运算符的字符列表请参考 [运算符](../03_language_reference/02_Lexical_Structure.html#operators)。
+除了实现标准运算符，在 Swift 中还可以声明和实现*自定义运算符*。可以用来自定义运算符的字符列表请参考 [运算符](../03_language_reference/02_Lexical_Structure.md#operators)。
 
 新的运算符要使用 `operator` 关键字在全局作用域内进行定义，同时还要指定 `prefix`、`infix` 或者 `postfix` 修饰符：
 
