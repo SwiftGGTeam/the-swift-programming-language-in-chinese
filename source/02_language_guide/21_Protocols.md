@@ -498,6 +498,62 @@ print(somethingTextRepresentable.textualDescription)
 > 
 > 即使满足了协议的所有要求，类型也不会自动遵循协议，必须显式地遵循协议。
 
+## 使用合成实现来采纳协议 {#adopting-a-protocol-using-a-synthesized-implementation}
+
+Swift 可以自动提供一些简单场景下遵循 `Equatable`、`Hashable` 和 `Comparable` 协议的实现。在使用这些合成实现之后，无需再编写重复的代码来实现这些协议所要求的方法。
+
+Swift 为以下几种自定义类型提供了 `Equatable` 协议的合成实现：
+
+- 遵循 `Equatable` 协议且只有存储属性的结构体。
+- 遵循 `Equatable` 协议且只有关联类型的枚举
+- 没有任何关联类型的枚举
+
+在包含类型原始声明的文件中声明对 `Equatable` 协议的遵循，可以得到 `==` 操作符的合成实现，且无需自己编写任何关于 `==` 的实现代码。`Equatable` 协议同时包含 `!=` 操作符的默认实现。
+
+下面的例子中定义了一个 `Vector3D` 结构体来表示一个类似 `Vector2D` 的三维向量 `(x, y, z)`。由于 `x`、`y` 和 `z` 都是满足 `Equatable` 的类型，`Vector3D` 可以得到连等判断的合成实现。
+
+```swift
+struct Vector3D: Equatable {
+    var x = 0.0, y = 0.0, z = 0.0
+}
+
+let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+if twoThreeFour == anotherTwoThreeFour {
+    print("These two vectors are also equivalent.")
+}
+// 打印 "These two vectors are also equivalent."
+```
+
+Swift 为以下几种自定义类型提供了 `Hashable` 协议的合成实现：
+
+- 遵循 `Hashable` 协议且只有存储属性的结构体。
+- 遵循 `Hashable` 协议且只有关联类型的枚举
+- 没有任何关联类型的枚举
+
+在包含类型原始声明的文件中声明对 `Hashable` 协议的遵循，可以得到 `hash(into:)` 的合成实现，且无需自己编写任何关于 `hash(into:)` 的实现代码。
+
+Swift 为没有原始值的枚举类型提供了 `Comparable` 协议的合成实现。如果枚举类型包含关联类型，那这些关联类型也必须同时遵循 `Comparable` 协议。在包含原始枚举类型声明的文件中声明其对 `Comparable` 协议的遵循，可以得到 `<` 操作符的合成实现，且无需自己编写任何关于 `<` 的实现代码。`Comparable` 协议同时包含 `<=`、`>` 和 `>=` 操作符的默认实现。
+
+下面的例子中定义了 `SkillLevel` 枚举类型，其中定义了初学者（beginner）、中级（intermediate）和专家（expert）三种等级，专家等级会由额外的星级（stars）来进行排名。
+
+```swift
+enum SkillLevel: Comparable {
+    case beginner
+    case intermediate
+    case expert(stars: Int)
+}
+var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+              SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+for level in levels.sorted() {
+    print(level)
+}
+// 打印 "beginner"
+// 打印 "intermediate"
+// 打印 "expert(stars: 3)"
+// 打印 "expert(stars: 5)"
+```
+
 ## 协议类型的集合 {#collections-of-protocol-types}
 
 协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.md##protocols-as-types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
