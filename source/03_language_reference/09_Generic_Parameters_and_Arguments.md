@@ -51,7 +51,7 @@ simpleMax(3.14159, 2.71828) // T 被推断为 Double 类型
 
 `where` 子句可以存在于包含类型参数的声明中，或作为声明的一部分，被嵌套另一个在含有类型参数的声明中。被嵌套的 `where` 子句依然可以指向包围它的声明中的类型参数，此时 `where` 子句需要满足的条件仅用于它被声明的地方。
 
-如果包围的声明也有一个 `where` 子句，两个子句的条件都需要满足。下面的例子中，`startsWithZero()` 只有在 `Element` 同时满足 `SomeProtocol` 和 `Numeric` 才有效。
+如果外层的声明也有一个 `where` 子句，两个子句的条件都需要满足。下面的例子中，`startsWithZero()` 只有在 `Element` 同时满足 `SomeProtocol` 和 `Numeric` 才有效。
 
 ```swift
 extension Collection where Element: SomeProtocol {
