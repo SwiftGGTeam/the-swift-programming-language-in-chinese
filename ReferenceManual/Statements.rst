@@ -1325,10 +1325,35 @@ logical operators such as ``&&`` and ``||``.
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``macOS`` | ``macOSApplicationExtension``
+    platform-name --> ``macCatalyst`` | ``macCatalystApplicationExtension``
     platform-name --> ``watchOS``
     platform-name --> ``tvOS``
     platform-version --> decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+.. If you need to add a new platform to this list,
+   you probably need to update the list under @available too.
+
+.. assertion:: pound-available-platform-names
+
+   >> if #available(iOS 1, iOSApplicationExtension 1,
+   >>             macOS 1, macOSApplicationExtension 1,
+   >>             macCatalyst 1, macCatalystApplicationExtension 1,
+   >>             watchOS 1, watchOsApplicationExtension 1,
+   >>             tvOS 1, * ) {
+   >>     print("a")
+   >> } else {
+   >>     print("b")
+   >> }
+   >> if #available(madeUpPlatform 1, * ) {
+   >>     print("c")
+   >> }
+   !$ warning: unrecognized platform name 'watchOsApplicationExtension'
+   !$ watchOS 1, watchOsApplicationExtension 1,
+   !$            ^
+   !$ warning: unrecognized platform name 'madeUpPlatform'
+   !$ if #available(madeUpPlatform 1, * ) {
+   !$               ^
+   << a
+   << c

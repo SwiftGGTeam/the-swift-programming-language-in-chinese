@@ -57,6 +57,9 @@ These arguments begin with one of the following platform or language names:
 * ``tvOSApplicationExtension``
 * ``swift``
 
+.. If you need to add a new platform to this list,
+   you probably need to update platform-name in the grammar too.
+
 .. For the list in source, see include/swift/AST/PlatformKinds.def
 
 You can also use an asterisk (``*``) to indicate the
