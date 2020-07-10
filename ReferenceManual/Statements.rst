@@ -1297,7 +1297,7 @@ An availability condition has the following form:
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
-.. x*  (Junk * to fix syntax highlighting from previous listing)
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
@@ -1338,10 +1338,10 @@ logical operators such as ``&&`` and ``||``.
 .. assertion:: pound-available-platform-names
 
    >> if #available(iOS 1, iOSApplicationExtension 1,
-   >>             macOS 1, macOSApplicationExtension 1,
-   >>             macCatalyst 1, macCatalystApplicationExtension 1,
-   >>             watchOS 1, watchOsApplicationExtension 1,
-   >>             tvOS 1, * ) {
+   >>               macOS 1, macOSApplicationExtension 1,
+   >>               macCatalyst 1, macCatalystApplicationExtension 1,
+   >>               watchOS 1, watchOsApplicationExtension 1,
+   >>               tvOS 1, *) {
    >>     print("a")
    >> } else {
    >>     print("b")
@@ -1353,7 +1353,9 @@ logical operators such as ``&&`` and ``||``.
    !$ watchOS 1, watchOsApplicationExtension 1,
    !$            ^
    !$ warning: unrecognized platform name 'madeUpPlatform'
-   !$ if #available(madeUpPlatform 1, * ) {
+   !$ if #available(madeUpPlatform 1, *) {
    !$               ^
    << a
    << c
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
