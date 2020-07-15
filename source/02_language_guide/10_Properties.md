@@ -11,7 +11,7 @@
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
-可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default-initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14-Initialization.md#assigning-constant-properties-during-initialization) 一节。
+可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default-initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14_Initialization.md#assigning-constant-properties-during-initialization) 一节。
 
 下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的区间，且这个范围值在被创建后不能被修改。
 
