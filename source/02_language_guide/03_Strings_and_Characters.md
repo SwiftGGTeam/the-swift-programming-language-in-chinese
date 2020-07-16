@@ -157,7 +157,7 @@ constantString += " and another Highlander"
 
 ## 字符串是值类型 {#strings-are-value-types}
 
-在 Swift 中 `String` 类型是*值类型*。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures-and-enumerations-are-value-types) 中进行了详细描述。
+在 Swift 中 `String` 类型是*值类型*。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在 [结构体和枚举是值类型](./09_Structures_And_Classes.md#structures-and-enumerations-are-value-types) 中进行了详细描述。
 
 Swift 默认拷贝字符串的行为保证了在函数/方法向你传递的字符串所属权属于你，无论该值来自于哪里。你可以确信传递的字符串不会被修改，除非你自己去修改它。
 

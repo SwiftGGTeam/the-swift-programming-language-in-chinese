@@ -438,7 +438,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考 [运算符声明](./06_Declarations.md#operator-declaration)。
+这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考 [运算符声明](../03_language_reference/06_Declarations.md#operator-declaration)。
 
 > 注意
 > 

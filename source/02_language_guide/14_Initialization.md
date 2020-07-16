@@ -328,7 +328,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 
 > 注意
 > 
-> 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考 [扩展](./21_Extensions.md)。
+> 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考 [扩展](./20_Extensions.md)。
 
 ## 类的继承和构造过程 {#class-inheritance-and-initialization}
 

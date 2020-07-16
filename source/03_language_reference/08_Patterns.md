@@ -12,13 +12,13 @@ Swift 中的模式分为两类：一种能成功匹配任何类型的值，另�
 > 
 
 #### pattern {#pattern}
-> *模式* → [通配符模式](#wildcard-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [通配符模式](#wildcard-pattern) [类型注解](./03_Types.md#type-annotation)<sub>可选</sub>
 > 
-> *模式* → [标识符模式](#identifier-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [标识符模式](#identifier-pattern) [类型注解](./03_Types.md#type-annotation)<sub>可选</sub>
 > 
 > *模式* → [值绑定模式](#value-binding-pattern)
 > 
-> *模式* → [元组模式](#tuple-pattern) [类型注解](03-Types.md#type-annotation)<sub>可选</sub>
+> *模式* → [元组模式](#tuple-pattern) [类型注解](./03_Types.md#type-annotation)<sub>可选</sub>
 > 
 > *模式* → [枚举用例模式](#enum-case-pattern)
 > 
@@ -145,7 +145,7 @@ case nil:
 > 枚举用例模式语法
 > 
 > #### enum-case-pattern {#enum-case-pattern}
-> *枚举用例模式* → [类型标识](./03_Types.md#type-identifier)<sub>可选</sub> **.** [枚举用例名](./06-Declarations.md#enum-case-name) [元组模式](#tuple-pattern)<sub>可选</sub>
+> *枚举用例模式* → [类型标识](./03_Types.md#type-identifier)<sub>可选</sub> **.** [枚举用例名](./06_Declarations.md#enum-case-name) [元组模式](#tuple-pattern)<sub>可选</sub>
 > 
 
 ## 可选模式（Optional Pattern） {#optional-pattern}
@@ -208,7 +208,7 @@ for case let number? in arrayOfOptinalInts {
 > *is 模式* → **is** [类型](./03_Types.md#type)
 > 
 > #### as-pattern {#as-pattern}
-> *as 模式* → [模式](#pattern) **as** [类型](03-Types.md#type)
+> *as 模式* → [模式](#pattern) **as** [类型](./03_Types.md#type)
 > 
 
 ## 表达式模式（Expression Pattern） {#expression-pattern}

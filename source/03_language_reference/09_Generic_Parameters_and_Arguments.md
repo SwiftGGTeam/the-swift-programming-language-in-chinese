@@ -79,9 +79,9 @@ extension Collection where Element: SomeProtocol {
 #### generic-parameter {#generic-parameter}
 > *泛形形参* → [类型名称](./03_Types.md#type-name)
 > 
-> *泛形形参* → [类型名称](./03_Types.md#type-name)    **:** [类型标识符](./03-Types.md#type-identifier)
+> *泛形形参* → [类型名称](./03_Types.md#type-name)    **:** [类型标识符](./03_Types.md#type-identifier)
 > 
-> *泛形形参* → [类型名称](./03_Types.md#type-name)    **:** [协议合成类型](./03-Types.md#protocol-composition-type)
+> *泛形形参* → [类型名称](./03_Types.md#type-name)    **:** [协议合成类型](./03_Types.md#protocol-composition-type)
 > 
 > 
 ####  requirement-clause {#requirement-clause}
@@ -99,13 +99,13 @@ extension Collection where Element: SomeProtocol {
 > 
 ####  conformance-requirement {#conformance-requirement}
 > 
-> *一致性约束* → [类型标识符](./03_Types.md#type-identifier) **:** [类型标识符](./03-Types.md#type-identifier)
+> *一致性约束* → [类型标识符](./03_Types.md#type-identifier) **:** [类型标识符](./03_Types.md#type-identifier)
 > 
-> *一致性约束* → [类型标识符](./03_Types.md#type-identifier) **:** [协议合成类型](./03-Types.md#protocol-composition-type)
+> *一致性约束* → [类型标识符](./03_Types.md#type-identifier) **:** [协议合成类型](./03_Types.md#protocol-composition-type)
 > 
 
 #### same-type-requirement {#same-type-requirement}
-> *同类型约束* → [类型标识符](./03_Types.md#type-identifier) **==** [类型](./03-Types.md#type)
+> *同类型约束* → [类型标识符](./03_Types.md#type-identifier) **==** [类型](./03_Types.md#type)
 > 
 
 ## 泛型实参子句 {#generic-argument}

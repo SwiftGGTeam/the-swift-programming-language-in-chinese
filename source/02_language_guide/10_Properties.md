@@ -245,7 +245,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 在父类初始化方法调用之后，在子类构造器中给父类的属性赋值时，会调用父类属性的 `willSet` 和 `didSet` 观察器。而在父类初始化方法调用之前，给子类的属性赋值时不会调用子类属性的观察器。
 > 
-> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 和 [类的构造器代理](./14-Initialization.md#initializer-delegation-for-class-types)。
+> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 和 [类的构造器代理](./14_Initialization.md#initializer-delegation-for-class-types)。
 
 下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
@@ -284,7 +284,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out-parameters)。
+> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/06_Declarations.md#in-out-parameters)。
 
 ## 属性包装器 {#property-wrappers}
 属性包装器在管理属性如何存储和定义属性的代码之间添加了一个分隔层。举例来说，如果你的属性需要线程安全性检查或者需要在数据库中存储它们的基本数据，那么必须给每个属性添加同样的逻辑代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后应用到多个属性上来进行复用。
@@ -306,7 +306,7 @@ struct TwelveOrLess {
 这个 setter 确保新值小于 12，而且返回被存储的值。
 > 注意
 > 
-> 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./25_Access_Control.md)
+> 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./26_Access_Control.md)
 
 通过在属性之前写上包装器名称作为特性的方式，你可以把一个包装器应用到一个属性上去。这里有个存储小矩形的结构体。通过 `TwelveOrLess` 属性包装器实现类似（挺随意的）对“小”的定义。
 

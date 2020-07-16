@@ -205,7 +205,7 @@ f(x as Any)
 > 
 
 #### primary-expression {#primary-expression}
-> *基本表达式* → [标识符](./02_Lexical_Structure.md#identifier) [泛型实参子句](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub>
+> *基本表达式* → [标识符](./02_Lexical_Structure.md#identifier) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub>
 > 
 > *基本表达式* → [字面量表达式](#literal-expression)
 > 
@@ -469,7 +469,7 @@ myFunction { $0 + $1 }
 
 使用闭包表达式时，可以不必将其存储在一个变量或常量中，例如作为函数调用的一部分来立即使用一个闭包。在上面的例子中，传入 `myFunction` 的闭包表达式就是这种立即使用类型的闭包。因此，一个闭包是否逃逸与其使用时的上下文相关。一个会被立即调用或者作为函数的非逃逸参数传递的闭包表达式是非逃逸的，否则，这个闭包表达式是逃逸的。
 
-关于逃逸闭包的内容，请参阅 [逃逸闭包](./02_language_guide/07_Closures.md#escaping-closures)。
+关于逃逸闭包的内容，请参阅 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures)。
 
 ## 捕获列表 {#capture-lists}
 默认情况下，闭包会捕获附近作用域中的常量和变量，并使用强引用指向它们。你可以通过一个*捕获列表*来显式指定它的捕获行为。
@@ -527,7 +527,7 @@ myFunction { [unowned self] in print(self.title) } // 无主引用捕获
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../02_language_guide/07_Closures.md#closure-expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../02-language-guide/24-Automatic-Reference-Counting.md#resolving-strong-reference-cycles-for-closures)。
+关于闭包表达式的更多信息和例子，请参阅 [闭包表达式](../02_language_guide/07_Closures.md#closure-expressions)。关于捕获列表的更多信息和例子，请参阅 [解决闭包引起的循环强引用](../02_language_guide/24_Automatic_Reference_Counting.md#resolving-strong-reference-cycles-for-closures)。
 
 > 闭包表达式语法
 > 
@@ -542,13 +542,13 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 ####  closure-signature {#closure-signature}
 > 
 >
-> 闭包签名* → [参数子句](#parameter-clause) [函数结果](05-Declarations.md#function-result)<sub>可选</sub> **in**
+> 闭包签名* → [参数子句](#parameter-clause) [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [标识符列表](#identifier-list) [函数结果](05-Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [标识符列表](#identifier-list) [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [捕获列表](#capture-list) [参数子句](05-Declarations.md#parameter-clause) [函数结果](./06-Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [捕获列表](#capture-list) [参数子句](./06_Declarations.md#parameter-clause) [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
-> *闭包签名* → [捕获列表](#capture-list) [标识符列表](02-Lexical-Structure.md#identifier-list) [函数结果](./06-Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [捕获列表](#capture-list) [标识符列表](./02_Lexical_Structure.md#identifier-list) [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
 > *闭包签名* → [捕获列表](#capture-list) **in**
 > 
@@ -634,7 +634,7 @@ x = .AnotherValue
 > 
 
 #### tuple-element {#tuple-element}
-> *元组元素* → [表达式](#expression) | [标识符](identifier) **:** [表达式](#expression)
+> *元组元素* → [表达式](#expression) | [标识符](#identifier) **:** [表达式](#expression)
 > 
 
 ### 通配符表达式 {#wildcard-expression}
@@ -939,7 +939,7 @@ print(keyPath == c.getSomeKeyPath())
 
 由于 key-path 字符串表达式在编译期才创建，编译期可以检查属性是否存在，以及属性是否暴露给 Objective-C 运行时。
 
-关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](./https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.md#//apple-ref/doc/uid/10000107i) 和 [Key-Value 观察编程](./https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.md#//apple-ref/doc/uid/10000177i)。
+关于更多如何使用 key path 与 Objective-C APIs 交互的信息，请参阅 [在 Swift 中使用 Objective-C 运行时特性](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。关于更多 key-value 编程和 key-value 观察的信息，请参阅 [Key-Value 编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.md#//apple-ref/doc/uid/10000107i) 和 [Key-Value 观察编程](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.md#//apple-ref/doc/uid/10000177i)。
 
 > 注意
 > 
@@ -968,7 +968,7 @@ print(keyPath == c.getSomeKeyPath())
 #### postfix-expression {#postfix-expression}
 > *后缀表达式* → [基本表达式](#primary-expression)
 > 
-> *后缀表达式* → [后缀表达式](#postfix-expression) [后缀运算符](02-Lexical-Structure.md#postfix-operator)
+> *后缀表达式* → [后缀表达式](#postfix-expression) [后缀运算符](./02_Lexical_Structure.md#postfix-operator)
 > 
 > *后缀表达式* → [函数调用表达式](#function-call-expression)
 > 
@@ -1041,9 +1041,9 @@ myData.someMethod {$0 == 13}
 > 
 > ####  function-call-argument {#function-call-argument}
 > 
-> *函数调用参数* → [表达式](#expression) | [标识符](02-Lexical-Structure.md#identifier) **:** [表达式](#expression)
+> *函数调用参数* → [表达式](#expression) | [标识符](./02_Lexical_Structure.md#identifier) **:** [表达式](#expression)
 > 
-> *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02-Lexical-Structure.md#identifier) **:** [运算符](./02-Lexical-Structure.md#operator)
+> *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02_Lexical_Structure.md#identifier) **:** [运算符](./02_Lexical_Structure.md#operator)
 > 
 > ####  trailing-closure {#trailing-closure}
 > 
@@ -1054,7 +1054,7 @@ myData.someMethod {$0 == 13}
 > *标签尾随闭包集*  → [标签尾随闭包](#labeled-trailing-closure) [标签尾随闭包集](#labeled-trailing-closures)<sub>可选</sub>
 > 
 > #### labeled-trailing-closure {#labeled-trailing-closure}
-> *标签尾随闭包* → [标识符](./02-Lexical-Structure.md#identifier) **:** [闭包表达式](#closure-expression) 
+> *标签尾随闭包* → [标识符](./02_Lexical_Structure.md#identifier) **:** [闭包表达式](#closure-expression) 
 
 
 ### 构造器表达式 {#initializer-expression}
@@ -1163,11 +1163,11 @@ let x = [10, 3, 20, 15, 4]
 > 
 
 #### explicit-member-expression {#explicit-member-expression}
-> *显式成员表达式* → [后缀表达式](#postfix-expression) **.** [十进制数字](02-Lexical-Structure.md#decimal-digit)
+> *显式成员表达式* → [后缀表达式](#postfix-expression) **.** [十进制数字](./02_Lexical_Structure.md#decimal-digit)
 > 
-> *显式成员表达式* → [后缀表达式](#postfix-expression) **.** [标识符](02-Lexical-Structure.md#identifier) [泛型实参子句](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
+> *显式成员表达式* → [后缀表达式](#postfix-expression) **.** [标识符](./02_Lexical_Structure.md#identifier) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
 > 
-> *显式成员表达式* → [后缀表达式](#postfix-expression) **.** [标识符](02-Lexical-Structure.md#identifier) **(** [参数名称](#argument-names) **)**
+> *显式成员表达式* → [后缀表达式](#postfix-expression) **.** [标识符](./02_Lexical_Structure.md#identifier) **(** [参数名称](#argument-names) **)**
 
 #### argument-names {#argument-names}
 > *参数名称* → [参数名](#argument-name) [参数名称](#argument-names)<sub>可选</sub><br/>

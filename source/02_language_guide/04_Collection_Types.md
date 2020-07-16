@@ -235,7 +235,7 @@ for (index, value) in shoppingList.enumerated() {
 // Item 5: Bananas
 ```
 
-更多关于 `for-in` 循环的介绍请参见 [For 循环](05_Control_Flow.html#for-loops)。
+更多关于 `for-in` 循环的介绍请参见 [For 循环](./05_Control_Flow.md#for-loops)。
 
 ## 集合（Sets） {#sets}
 
