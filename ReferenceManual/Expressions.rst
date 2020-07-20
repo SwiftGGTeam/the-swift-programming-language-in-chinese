@@ -462,6 +462,11 @@ The string value of a ``#filePath`` expression
 is the full file-system path to the file in which the expression appears.
 Both of these values can be changed by ``#sourceLocation``,
 as described in :ref:`Statements_LineControlStatement`.
+Because ``#fileID`` doesn't embed the full path to the source file,
+unlike ``#filePath``,
+it gives you better privacy and reduces the size of the compiled binary.
+Avoid using ``#filePath`` outside of tests, build scripts,
+or other code that doesn't become part of the shipping program.
 
 .. note::
 
