@@ -1346,7 +1346,7 @@ logical operators such as ``&&`` and ``||``.
    >> } else {
    >>     print("b")
    >> }
-   >> if #available(madeUpPlatform 1, * ) {
+   >> if #available(madeUpPlatform 1, *) {
    >>     print("c")
    >> }
    !$ warning: unrecognized platform name 'watchOsApplicationExtension'
