@@ -476,6 +476,13 @@ or other code that doesn't become part of the shipping program.
    In the future, the string might contain multiple slashes,
    such as ``MyModule/some/disambiguation/MyFile.swift``.
 
+.. assertion:: pound-file-flavors
+
+   >> print(#file == #filePath)
+   << true
+   >> print(#file == #fileID)
+   << false
+
 Inside a function,
 the value of ``#function`` is the name of that function,
 inside a method it is the name of that method,
