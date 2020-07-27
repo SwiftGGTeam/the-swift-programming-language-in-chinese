@@ -831,7 +831,7 @@ to a ``String``.
           print("The first item, '\(first)', is a string.")
       }
    <- The first item, 'one', is a string.
-   
+
 For more information about casting, see :doc:`../LanguageGuide/TypeCasting`.
 
 .. syntax-grammar::
