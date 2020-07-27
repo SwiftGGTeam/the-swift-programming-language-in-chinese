@@ -394,6 +394,9 @@ all of the patterns must contain the same constant or variable bindings,
 and each bound variable or constant must have the same type
 in all of the case's patterns.
 
+.. The discussion above about multi-pattern cases
+   matches discussion of multi-pattern catch under Do Stamement.
+
 A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
 A ``switch`` statement can include only one default case,
@@ -411,17 +414,20 @@ the program executes only the code within the first matching case in source orde
 .. assertion:: switch-case-with-multiple-patterns
 
    >> let tuple = (1, 1)
-   << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x, 1): print(x)
    >>     default: print(2)
    >> }
    << 1
+
+.. assertion:: switch-case-with-multiple-patterns-err
+
+   >> let tuple = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x as Any, 1): print(1)
    >>     default: print(2)
    >> }
-   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any', expected type 'Int'
+   !$ error: pattern variable bound to type 'Any', expected type 'Int'
    !! case (let x, 5), (let x as Any, 1): print(1)
    !!                       ^
 
@@ -451,10 +457,12 @@ When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
-Only the standard library,
+Code that's compiled in library evolution mode,
+code in the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
-Enumerations you declare in Swift can't be nonfrozen. 
+For information about frozen and nonfrozen enumerations,
+see :ref:`Attributes_frozen`.
 
 When switching over a nonfrozen enumeration value,
 you always need to include a default case,
@@ -480,7 +488,6 @@ to take the new cases into account.
 .. testcode:: unknown-case
 
    -> let representation: Mirror.AncestorRepresentation = .generated
-   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
    -> switch representation {
       case .customized:
           print("Use the nearest ancestor’s implementation.")
@@ -560,7 +567,6 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 .. assertion:: backtick-identifier-is-legal-label
 
    -> var i = 0
-   << // i : Int = 0
    -> `return`: while i < 100 {
           i += 1
           if i == 10 {
@@ -870,7 +876,19 @@ A ``do`` statement has the following form:
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
        <#statements#>
+   } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
+       <#statements#>
+   } catch {
+       <#statements#>
    }
+
+If any statement in the ``do`` code block throws an error,
+program control is transferred
+to the first ``catch`` clause whose pattern matches the error.
+If none of the clauses match,
+the error propagates to the surrounding scope.
+If an error is unhandled at the top level,
+program execution stops with a runtime error.
 
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
@@ -880,10 +898,20 @@ which means
 the error must be handled by an enclosing ``catch`` clause
 or the containing function must be declared with ``throws``.
 
+A ``catch`` clause that has multiple patterns
+matches the error if any of its patterns match the error.
+If a ``catch`` clause contains multiple patterns,
+all of the patterns must contain the same constant or variable bindings,
+and each bound variable or constant must have the same type
+in all of the ``catch`` clause's patterns.
+
+.. The discussion above of multi-pattern catch
+   matches the discussion of multi-pattern case under Switch Statement.
+
 To ensure that an error is handled,
 use a ``catch`` clause with a pattern that matches all errors,
 such as a wildcard pattern (``_``).
-If a ``catch`` clause does not specify a pattern,
+If a ``catch`` clause doesn't specify a pattern,
 the ``catch`` clause matches and binds any error to a local constant named ``error``.
 For more information about the patterns you can use in a ``catch`` clause,
 see :doc:`../ReferenceManual/Patterns`.
@@ -897,7 +925,9 @@ see :ref:`ErrorHandling_Catch`.
 
     do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
-    catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block
+    catch-clause --> ``catch`` catch-pattern-list-OPT code-block
+    catch-pattern-list --> catch-pattern | catch-pattern ``,`` catch-pattern-list
+    catch-pattern --> pattern where-clause-OPT
 
 
 .. _Statements_CompilerControlStatements:
@@ -956,12 +986,17 @@ Platform condition        Valid arguments
 ``swift()``               ``>=`` or ``<`` followed by a version number
 ``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
-``targetEnvironment()``   ``simulator``
+``targetEnvironment()``   ``simulator``, ``macCatalyst``
 ========================  ===================================================
 
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
+
+.. The target environment "UKitForMac"
+   is understood by the compiler as a synonym for "macCatalyst",
+   but that spelling is marked "Must be removed" outside of a few places,
+   so it's omitted from the table above.
 
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
@@ -987,10 +1022,10 @@ the following code prints all three messages:
       print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5")
       #endif
    <- Compiled with the Swift 5 compiler or later
-   -> // Prints "Compiled in Swift 4.2 mode or later"
-   <- Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5
+   <- Compiled in Swift 4.2 mode or later
+   // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 
-.. That testcode is cheating by explicitly printing the second line of output,
+.. That testcode is cheating by explicitly printing the third line of output,
    since it's not actually running in Swift 4.2 mode.
 
 The argument for the ``canImport()`` platform condition
@@ -1023,17 +1058,20 @@ otherwise, it returns ``false``.
    -> #if swift(>=2.1) && false
           print(3)
       #endif
-   -> #if swift(>= 2.1)
-          print(4)
-      #endif
-   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
-   !! #if swift(>= 2.1)
-   !!           ^ ~
-   !!-
    -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
           print(5)
       #endif
    << 5
+
+.. assertion:: pound-if-swift-version-err
+
+   -> #if swift(>= 2.1)
+          print(4)
+      #endif
+   !$ error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
+   !!-
 
 .. assertion:: pound-if-compiler-version
 
@@ -1076,7 +1114,7 @@ have the following form:
 
     Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
-    However, there is an exception
+    However, there's an exception
     if the compilation condition includes a ``swift()`` platform condition:
     The statements are parsed
     only if the compiler's version of Swift matches
@@ -1121,7 +1159,7 @@ have the following form:
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
     module-name --> identifier
-    environment --> ``simulator``
+    environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
 
@@ -1152,26 +1190,29 @@ A line control statement has the following forms:
 
 .. syntax-outline::
 
-    #sourceLocation(file: <#filename#>, line: <#line number#>)
+    #sourceLocation(file: <#file path#>, line: <#line number#>)
     #sourceLocation()
 
-The first form of a line control statement changes the values of the ``#line`` and ``#file``
+The first form of a line control statement changes the values
+of the ``#line``, ``#file``, and ``#filePath``
 literal expressions, beginning with the line of code following the line control statement.
 The *line number* changes the value of ``#line``
 and is any integer literal greater than zero.
-The *filename* changes the value of ``#file`` and is a string literal.
+The *file path* changes the value of ``#file`` and ``#filePath``, and is a string literal.
+The specified string becomes the value of ``#filePath``,
+and the last path component of the string becomes the value of ``#file``.
 
 The second form of a line control statement, ``#sourceLocation()``,
-resets the source code location back to the default line numbering and filename.
+resets the source code location back to the default line numbering and file path.
 
 .. syntax-grammar::
 
     Grammar of a line control statement
 
-    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-name ``,`` ``line:`` line-number ``)``
+    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-path ``,`` ``line:`` line-number ``)``
     line-control-statement --> ``#sourceLocation`` ``(`` ``)``
     line-number --> A decimal integer greater than zero
-    file-name --> static-string-literal
+    file-path --> static-string-literal
 
 .. _Statements_ErrorWarning:
 
@@ -1206,7 +1247,6 @@ but they can use the multiline string literal syntax.
    diagnostic-message --> static-string-literal
 
 .. assertion:: good-diagnostic-statement-messages
-   :compile: true
 
    >> #warning("Single-line static string")
    !! /tmp/swifttest.swift:1:10: warning: Single-line static string
@@ -1223,16 +1263,18 @@ but they can use the multiline string literal syntax.
    !! """
    !! ^~~
 
+.. Using !! lines above instead of !$ lines,
+   to also confirm that the line number comes through correctly.
+
 .. assertion:: bad-diagnostic-statement-messages
-   :compile: true
 
    >> #warning("Interpolated \(1+1) string")
-   !! /tmp/swifttest.swift:1:10: error: string interpolation is not allowed in #warning directives
+   !$ error: string interpolation is not allowed in #warning directives
    !! #warning("Interpolated \(1+1) string")
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ---
    >> #warning("Concatenated " + "strings")
-   !! /tmp/swifttest.swift:2:26: error: extra tokens following #warning directive
+   !$ error: extra tokens following #warning directive
    !! #warning("Concatenated " + "strings")
    !! ^
 
@@ -1255,7 +1297,7 @@ An availability condition has the following form:
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
-.. x*  (Junk * to fix syntax highlighting from previous listing)
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
@@ -1283,10 +1325,37 @@ logical operators such as ``&&`` and ``||``.
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``macOS`` | ``macOSApplicationExtension``
+    platform-name --> ``macCatalyst`` | ``macCatalystApplicationExtension``
     platform-name --> ``watchOS``
     platform-name --> ``tvOS``
     platform-version --> decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+.. If you need to add a new platform to this list,
+   you probably need to update the list under @available too.
+
+.. assertion:: pound-available-platform-names
+
+   >> if #available(iOS 1, iOSApplicationExtension 1,
+   >>               macOS 1, macOSApplicationExtension 1,
+   >>               macCatalyst 1, macCatalystApplicationExtension 1,
+   >>               watchOS 1, watchOsApplicationExtension 1,
+   >>               tvOS 1, *) {
+   >>     print("a")
+   >> } else {
+   >>     print("b")
+   >> }
+   >> if #available(madeUpPlatform 1, *) {
+   >>     print("c")
+   >> }
+   !$ warning: unrecognized platform name 'watchOsApplicationExtension'
+   !$ watchOS 1, watchOsApplicationExtension 1,
+   !$            ^
+   !$ warning: unrecognized platform name 'madeUpPlatform'
+   !$ if #available(madeUpPlatform 1, *) {
+   !$               ^
+   << a
+   << c
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.

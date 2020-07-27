@@ -66,10 +66,15 @@ to the function or initializer.
 
 .. testcode:: generic-params
 
+    >> let r0 =
     -> simpleMax(17, 42) // T is inferred to be Int
-    << // r0 : Int = 42
+    >> assert(r0 == 42)
+    >> let r1 =
     -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
-    << // r1 : Double = 3.14159
+    >> assert(r1 == 3.14159)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 
 .. _GenericParametersAndArguments_WhereClauses:
@@ -109,6 +114,50 @@ and that the elements of both sequences must be of the same type.
 
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
+
+A generic ``where`` clause can appear
+as part of a declaration that includes type parameters,
+or as part of a declaration
+that's nested inside of a declaration that includes type parameters.
+The generic ``where`` clause for a nested declaration
+can still refer to the type parameters of the enclosing declaration;
+however,
+the requirements from that ``where`` clause
+apply only to the declaration where it's written.
+
+If the enclosing declaration also has a ``where`` clause,
+the requirements from both clauses are combined.
+In the example below, ``startsWithZero()`` is available
+only if ``Element`` conforms to both ``SomeProtocol`` and ``Numeric``.
+
+.. testcode:: contextual-where-clauses-combine
+
+   >> protocol SomeProtocol { }
+   >> extension Int: SomeProtocol { }
+   -> extension Collection where Element: SomeProtocol {
+          func startsWithZero() -> Bool where Element: Numeric {
+              return first == .zero
+          }
+      }
+   >> print( [1, 2, 3].startsWithZero() )
+   << false
+
+.. assertion:: contextual-where-clause-combine-err
+
+   >> protocol SomeProtocol { }
+   >> extension Bool: SomeProtocol { }
+   ---
+   >> extension Collection where Element: SomeProtocol {
+   >>     func returnTrue() -> Bool where Element == Bool {
+   >>         return true
+   >>     }
+   >>     func returnTrue() -> Bool where Element == Int {
+   >>         return true
+   >>     }
+   >> }
+   !$ error: same-type constraint type 'Int' does not conform to required protocol 'SomeProtocol'
+   !! func returnTrue() -> Bool where Element == Int {
+   !!                                            ^
 
 You can overload a generic function or initializer by providing different
 constraints, requirements, or both on the type parameters.
@@ -189,7 +238,6 @@ to form an array whose elements are themselves arrays of integers.
 .. testcode:: array-of-arrays
 
     -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    << // arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments

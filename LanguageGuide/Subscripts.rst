@@ -38,11 +38,11 @@ in the same way as for computed properties:
    >> class Test1 {
    -> subscript(index: Int) -> Int {
          get {
-            // return an appropriate subscript value here
+            // Return an appropriate subscript value here.
    >>       return 1
          }
          set(newValue) {
-            // perform a suitable setting action here
+            // Perform a suitable setting action here.
          }
       }
    >> }
@@ -61,7 +61,7 @@ by removing the ``get`` keyword and its braces:
 
    >> class Test2 {
    -> subscript(index: Int) -> Int {
-         // return an appropriate subscript value here
+         // Return an appropriate subscript value here.
    >>    return 1
       }
    >> }
@@ -78,7 +78,6 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
    -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -118,7 +117,6 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -149,9 +147,26 @@ Subscript Options
 
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
-Subscripts can also return any type.
-Subscripts can use variadic parameters,
-but they can't use in-out parameters or provide default parameter values.
+Subscripts can also return a value of any type.
+
+Like functions,
+subscripts can take a varying number of parameters
+and provide default values for their parameters,
+as discussed in :ref:`Functions_VariadicParameters`
+and :ref:`Functions_DefaultParameterValues`.
+However, unlike functions,
+subscripts can't use in-out parameters.
+
+.. assertion:: subscripts-can-have-default-arguments
+
+    >> struct Subscriptable {
+    >>     subscript(x: Int, y: Int = 0) -> Int {
+    >>         return 100
+    >>     }
+    >> }
+    >> let s = Subscriptable()
+    >> print(s[0])
+    << 100
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -205,7 +220,7 @@ an appropriate row and column count to its initializer:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
+   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
 
 The example above creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
@@ -246,9 +261,7 @@ are inside the bounds of the matrix:
 .. testcode:: matrixSubscript
 
    >> var rows = 2
-   << // rows : Int = 2
    >> var columns = 2
-   << // columns : Int = 2
    -> func indexIsValid(row: Int, column: Int) -> Bool {
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
@@ -260,4 +273,32 @@ that is outside of the matrix bounds:
 
    -> let someValue = matrix[2, 2]
    xx assert
-   // this triggers an assert, because [2, 2] is outside of the matrix bounds
+   // This triggers an assert, because [2, 2] is outside of the matrix bounds.
+
+.. _Subscripts_TypeSubscripts:
+
+Type Subscripts
+---------------
+
+Instance subscripts, as described above,
+are subscripts that you call on an instance of a particular type.
+You can also define subscripts that are called on the type itself.
+This kind of subscript is called a :newTerm:`type subscript`.
+You indicate a type subscript
+by writing the ``static`` keyword before the ``subscript`` keyword.
+Classes can use the ``class`` keyword instead,
+to allow subclasses to override the superclass’s implementation of that subscript.
+The example below shows how you define and call a type subscript:
+
+.. testcode:: static-subscript
+
+   -> enum Planet: Int {
+         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+         static subscript(n: Int) -> Planet {
+            return Planet(rawValue: n)!
+         }
+      }
+   -> let mars = Planet[4]
+   >> assert(mars == Planet.mars)
+   -> print(mars)
+   << mars

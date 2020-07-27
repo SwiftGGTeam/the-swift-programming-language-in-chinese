@@ -26,6 +26,7 @@ Language Guide
    Extensions
    Protocols
    Generics
+   OpaqueTypes
    AutomaticReferenceCounting
    MemorySafety
    AccessControl

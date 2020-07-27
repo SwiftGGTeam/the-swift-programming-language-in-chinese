@@ -1,9 +1,114 @@
 Document Revision History
 =========================
 
-**2019-01-24**
+**2020-06-22**
 
-* Updated for Swift 5.
+* Updated for Swift 5.3.
+
+* Added information about multiple trailing closures
+  to the :ref:`Closures_TrailingClosures` section.
+
+* Added information about synthesized implementations
+  of ``Comparable`` for enumerations
+  to the :ref:`Protocols_SynthesizedImplementation` section.
+
+* Added the :ref:`Generics_ContextualWhereClause` section
+  now that you can write a generic ``where`` clause in more places.
+
+* Added the :ref:`AutomaticReferenceCounting_UnownedOptionalReferences` section
+  with information about using unowned references with optional values.
+
+* Added information about the ``@main`` attribute
+  to the :ref:`Attributes_main` section.
+
+* Added ``#filePath`` to the :ref:`Expressions_LiteralExpression` section,
+  and updated the discussion of ``#file``.
+
+* Updated the :ref:`Closures_Noescape` section,
+  now that closures can refer to ``self`` implicitly in more scenarios.
+
+* Updated the :ref:`ErrorHandling_DoCatch`
+  and :ref:`Statements_DoStatement` sections,
+  now that a ``catch`` clause can match against multiple errors.
+
+* Updated the :ref:`Properties_PropertyObservers` section,
+  now that lazy properties can have observers.
+
+* Updated the :ref:`Declarations_ProtocolDeclaration` section,
+  now that members of an enumeration can satisfy protocol requirements.
+
+* Updated the :ref:`Declarations_StoredVariableObserversAndPropertyObservers` section
+  to describe when the getter is called before the observer.
+
+**2020-03-24**
+
+* Updated for Swift 5.2.
+
+* Added information about passing a key path instead of a closure
+  to the :ref:`Expression_TypedKeyPathExpression` section.
+
+* Added the :ref:`Declarations_SpecialFuncNames` section
+  with information about syntactic sugar the lets instances of
+  classes, structures, and enumerations be used with function call syntax.
+
+* Updated the :ref:`Subscripts_SubscriptOptions` section,
+  now that subscripts support parameters with default values.
+
+* Updated the :ref:`Types_SelfType` section,
+  now that the ``Self`` can be used in more contexts.
+
+* Updated the :ref:`TheBasics_ImplicitlyUnwrappedOptionals` section
+  to make it clearer that an implicitly unwrapped optional value
+  can be used as either an optional or non-optional value.
+
+**2019-09-10**
+
+* Updated for Swift 5.1.
+
+* Added information about functions
+  that specify a protocol that their return value conforms to,
+  instead of providing a specific named return type,
+  to the :doc:`../LanguageGuide/OpaqueTypes` chapter.
+
+* Added information about property wrappers
+  to the :ref:`Properties_PropertyWrapper` section.
+
+* Added information enumerations and structures
+  that are frozen for library evolution
+  to the :ref:`Attributes_frozen` section.
+
+* Added the :ref:`Functions_ImplicitReturns`
+  and :ref:`Properties_ImplicitReturn` sections
+  with information about functions that omit ``return``.
+
+* Added information about using subscripts on types
+  to the :ref:`Subscripts_TypeSubscripts` section.
+
+* Updated the :ref:`Patterns_EnumerationCasePattern` section,
+  now that an enumeration case pattern can match an optional value.
+
+* Updated the :ref:`Initialization_MemberwiseInitializersForStructureTypes` section,
+  now that memberwise initializers support
+  omitting parameters for properties that have a default value.
+
+* Added information about dynamic members
+  that are looked up by key path at runtime
+  to the :ref:`Attributes_dynamicMemberLookup` section.
+
+* Added ``macCatalyst`` to the list of target environments
+  in :ref:`Statements_BuildConfigurationStatement`.
+
+* Updated the :ref:`Types_SelfType` section,
+  now that ``Self`` can be used to refer to the type
+  introduced by the current class, structure, or enumeration declaration.
+
+**2019-03-25**
+
+* Updated for Swift 5.0.
+
+* Added the :ref:`StringsAndCharacters_ExtendedDelimiters` section
+  and updated the :ref:`LexicalStructure_StringLiterals` section
+  with information about extended string delimiters.
 
 * Added the :ref:`Attributes_dynamicCallable` section
   with information about dynamically calling instances as functions

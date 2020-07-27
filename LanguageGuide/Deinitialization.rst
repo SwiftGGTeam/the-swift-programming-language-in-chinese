@@ -120,7 +120,6 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
 .. testcode:: deinitializer
 
    -> var playerOne: Player? = Player(coins: 100)
-   << // playerOne : Player? = Optional(REPL.Player)
    -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins
    -> print("There are now \(Bank.coinsInBank) coins left in the bank")
@@ -129,9 +128,9 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
 An optional variable is used here, because players can leave the game at any point.
-The optional lets you track whether there is currently a player in the game.
+The optional lets you track whether there's currently a player in the game.
 
-Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
+Because ``playerOne`` is an optional, it is qualified with an exclamation point (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
 and whenever its ``win(coins:)`` method is called:
 

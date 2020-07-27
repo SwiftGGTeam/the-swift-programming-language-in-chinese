@@ -105,22 +105,21 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
-    << // sum : Int = 0
     -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
     -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
     -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
-    !! <REPL Input>:1:38: error: call can throw but is not marked with 'try'
+    !$ error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-    !! <REPL Input>:1:38: note: did you mean to use 'try'?
+    !$ note: did you mean to use 'try'?
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^
     !!                                      try
-    !! <REPL Input>:1:38: note: did you mean to handle error as optional value?
+    !$ note: did you mean to handle error as optional value?
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^
     !!                                      try?
-    !! <REPL Input>:1:38: note: did you mean to disable error propagation?
+    !$ note: did you mean to disable error propagation?
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^
     !!                                      try!
@@ -133,9 +132,8 @@ or the ``try`` expression is enclosed in parentheses.
 
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> var sum = 0
-    << // sum : Int = 0
     -> sum = 7 + try someThrowingFunction() // Error
-    !! <REPL Input>:1:11: error: 'try' cannot appear to the right of a non-assignment operator
+    !$ error: 'try' cannot appear to the right of a non-assignment operator
     !! sum = 7 + try someThrowingFunction() // Error
     !!           ^
     -> sum = 7 + (try someThrowingFunction()) // OK
@@ -236,7 +234,6 @@ For example:
 .. testcode:: assignmentOperator
 
     >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
     -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
     /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
     </ a is "test", b is 12, c is 3, and 9.45 is ignored
@@ -307,31 +304,26 @@ otherwise, it returns ``false``.
 
 .. assertion:: triviallyTrueIsAndAs
 
-    -> "hello" is String
-    -> "hello" is Int
-    <$ : Bool = true
-    <$ : Bool = false
-    !! <REPL Input>:1:9: warning: 'is' test is always true
-    !! "hello" is String
-    !! ^
-    !! <REPL Input>:1:9: warning: cast from 'String' to unrelated type 'Int' always fails
-    !! "hello" is Int
-    !! ~~~~~~~ ^  ~~~
+    -> assert("hello" is String)
+    -> assert(!("hello" is Int))
+    !$ warning: 'is' test is always true
+    !! assert("hello" is String)
+    !!                ^
+    !$ warning: cast from 'String' to unrelated type 'Int' always fails
+    !! assert(!("hello" is Int))
+    !!          ~~~~~~~ ^  ~~~
 
 .. assertion:: is-operator-tautology
 
    -> class Base {}
    -> class Subclass: Base {}
    -> var s = Subclass()
-   << // s : Subclass = REPL.Subclass
    -> var b = Base()
-   << // b : Base = REPL.Base
    ---
-   -> s is Base
-   !! <REPL Input>:1:3: warning: 'is' test is always true
-   !! s is Base
-   !!   ^
-   << // r0 : Bool = true
+   -> assert(s is Base)
+   !$ warning: 'is' test is always true
+   !! assert(s is Base)
+   !!          ^
 
 The ``as`` operator performs a cast
 when it is known at compile time
@@ -346,12 +338,10 @@ The following approaches are equivalent:
    -> func f(_ any: Any) { print("Function for Any") }
    -> func f(_ int: Int) { print("Function for Int") }
    -> let x = 10
-   << // x : Int = 10
    -> f(x)
    <- Function for Int
    ---
    -> let y: Any = x
-   << // y : Any = 10
    -> f(y)
    <- Function for Any
    ---
@@ -447,12 +437,29 @@ or one of the following special literals:
 ==============  ====================  ==========================================
 Literal         Type                  Value
 ==============  ====================  ==========================================
-``#file``       ``String``            The name of the file in which it appears.
+``#file``       ``String``            The name of the file and module in which it appears.
+``#filePath``   ``String``            The path to the file in which it appears.
 ``#line``       ``Int``               The line number on which it appears.
 ``#column``     ``Int``               The column number in which it begins.
 ``#function``   ``String``            The name of the declaration in which it appears.
 ``#dsohandle``  ``UnsafeRawPointer``  The DSO (dynamic shared object) handle in use where it appears.
 ==============  ====================  ==========================================
+
+The string value of a ``#file`` expression has the form *module*/*file*,
+where *file* is the name of the file in which the expression appears
+and *module* is the name of the module that this file is part of.
+The string value of a ``#filePath`` expression
+is the full file-system path to the file in which the expression appears.
+Both of these values can be changed by ``#sourceLocation``,
+as described in :ref:`Statements_LineControlStatement`.
+
+.. note::
+
+   To parse a ``#file`` expression,
+   read the module name as the text before the first slash (``/``)
+   and the filename as the text after the last slash.
+   In the future, the string might contain multiple slashes,
+   such as ``MyModule/some/disambiguation/MyFile.swift``.
 
 Inside a function,
 the value of ``#function`` is the name of that function,
@@ -461,11 +468,6 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript``
 it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
-
-.. For functions with no parameter labels,
-   #function leaves off the parens and _:
-   and just uses the base name.
-   https://bugs.swift.org/browse/SR-5533
 
 When used as the default value of a function or method parameter,
 the special literal's value is determined
@@ -486,19 +488,13 @@ when the default value expression is evaluated at the call site.
     << myFunction()
     >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
     >> noNamedArgs(1, 2)
-    << noNamedArgs
+    << noNamedArgs(_:_:)
     >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
     >> oneNamedArg(1, withJay: 2)
     << oneNamedArg(_:withJay:)
     >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
     >> namedArgs(i: 1, withJay: 2)
     << namedArgs(i:withJay:)
-
-.. Additional hidden tests above illustrate
-   the somewhat irregular rules used by #function
-   to write out the name of a function.
-   In particular, the rule used for functions with no named arguments
-   doesn't match the display in Xcode or our documentation.
 
 An :newTerm:`array literal` is
 an ordered collection of values.
@@ -519,7 +515,6 @@ pair of square brackets and can be used to create an empty array of a specified 
 .. testcode:: array-literal-brackets
 
     -> var emptyArray: [Double] = []
-    << // emptyArray : [Double] = []
 
 .. Note: The normal style for the above would be
        var emptyArray = [Double]()
@@ -549,7 +544,6 @@ of specified key and value types.
 .. testcode:: dictionary-literal-brackets
 
     -> var emptyDictionary: [String: Double] = [:]
-    << // emptyDictionary : [String : Double] = [:]
 
 A :newTerm:`playground literal`
 is used by Xcode to create an interactive representation
@@ -567,7 +561,7 @@ in Xcode Help.
 
     literal-expression --> literal
     literal-expression --> array-literal | dictionary-literal | playground-literal
-    literal-expression --> ``#file`` | ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
+    literal-expression --> ``#file`` | ``#filePath`` | ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
     array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
@@ -606,7 +600,7 @@ instance of the type in which it occurs. In a type method,
 ``self`` refers to the current type in which it occurs.
 
 The ``self`` expression is used to specify scope when accessing members,
-providing disambiguation when there is
+providing disambiguation when there's
 another variable of the same name in scope,
 such as a function parameter.
 For example:
@@ -633,7 +627,6 @@ For example:
           }
        }
     >> var somePoint = Point(x: 1.0, y: 1.0)
-    << // somePoint : Point = REPL.Point(x: 1.0, y: 1.0)
     >> somePoint.moveBy(x: 2.0, y: 3.0)
     >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
     << The point is now at (3.0, 4.0)
@@ -795,13 +788,10 @@ which gives them different behavior.
 .. testcode:: capture-list-value-semantics
 
     -> var a = 0
-    << // a : Int = 0
     -> var b = 0
-    << // b : Int = 0
     -> let closure = { [a] in
         print(a, b)
     }
-    << // closure : () -> () = (Function)
     ---
     -> a = 10
     -> b = 10
@@ -820,7 +810,7 @@ This means that a change to the value of ``a`` in the outer scope
 does not affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
 affect the value of ``a`` outside the closure.
-In contrast, there is only one variable named ``b`` ---
+In contrast, there's only one variable named ``b`` ---
 the ``b`` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
 
@@ -845,13 +835,10 @@ because of reference semantics.
            var value: Int = 0
        }
     -> var x = SimpleClass()
-    << // x : SimpleClass = REPL.SimpleClass
     -> var y = SimpleClass()
-    << // y : SimpleClass = REPL.SimpleClass
     -> let closure = { [x] in
            print(x.value, y.value)
        }
-    << // closure : () -> () = (Function)
     ---
     -> x.value = 10
     -> y.value = 10
@@ -861,13 +848,10 @@ because of reference semantics.
 .. assertion:: capture-list-with-commas
 
     -> var x = 100
-    << // x : Int = 100
     -> var y = 7
-    << // y : Int = 7
     -> var f: () -> Int = { [x, y] in x+y }
-    << // f : () -> Int = (Function)
-    >> f()
-    << // r0 : Int = 107
+    >> let r0 = f()
+    >> assert(r0 == 107)
 
 ..  It's not an error to capture things that aren't included in the capture list,
     although maybe it should be.  See also rdar://17024367.
@@ -878,15 +862,11 @@ because of reference semantics.
        var y = 7
        var f: () -> Int = { [x] in x }
        var g: () -> Int = { [x] in x+y }
-    << // x : Int = 100
-    << // y : Int = 7
-    << // f : () -> Int = (Function)
-    << // g : () -> Int = (Function)
     ---
-    -> f()
-    << // r0 : Int = 100
-    -> g()
-    << // r1 : Int = 107
+    -> let r0 = f()
+    -> assert(r0 == 100)
+    -> let r1 = g()
+    -> assert(r1 == 107)
 
 If the type of the expression's value is a class,
 you can mark the expression in a capture list
@@ -976,7 +956,6 @@ For example:
 
     >> enum MyEnumeration { case someValue, anotherValue }
     -> var x = MyEnumeration.someValue
-    << // x : MyEnumeration = REPL.MyEnumeration.someValue
     -> x = .anotherValue
 
 .. syntax-grammar::
@@ -1022,6 +1001,25 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
+Each identifier in a tuple expression must be unique
+within the scope of the tuple expression.
+In a nested tuple expression,
+identifiers at the same level of nesting must be unique.
+For example,
+``(a: 10, a: 20)`` is invalid
+because the label ``a`` appears twice at the same level.
+However, ``(a: 10, b: (a: 1, x: 2))`` is valid ---
+although ``a`` appears twice,
+it appears once in the outer tuple and once in the inner tuple.
+
+.. assertion:: tuple-labels-must-be-unique
+
+    >> let bad = (a: 10, a: 20)
+    >> let good = (a: 10, b: (a: 1, x: 2))
+    !$ error: cannot create a tuple with a duplicate element label
+    !! let bad = (a: 10, a: 20)
+    !! ^
+
 A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
 A single expression inside parentheses is a parenthesized expression.
@@ -1057,7 +1055,6 @@ For example, in the following assignment
 .. testcode:: wildcardTuple
 
     >> var (x, _) = (10, 20)
-    << // (x, _) : (Int, Int) = (10, 20)
     -> (x, _) = (10, 20)
     -> // x is 10, and 20 is ignored
 
@@ -1116,12 +1113,9 @@ For example:
       }
    ---
    -> let s = SomeStructure(someValue: 12)
-   << // s : SomeStructure = REPL.SomeStructure(someValue: 12)
    -> let pathToProperty = \SomeStructure.someValue
-   << // pathToProperty : WritableKeyPath<SomeStructure, Int> = Swift.WritableKeyPath<REPL.SomeStructure, Swift.Int>
    ---
    -> let value = s[keyPath: pathToProperty]
-   << // value : Int = 12
    /> value is \(value)
    </ value is 12
 
@@ -1135,18 +1129,20 @@ instead of ``\SomeClass.someProperty``:
 
    >> import Foundation
    -> class SomeClass: NSObject {
-          @objc var someProperty: Int
+          @objc dynamic var someProperty: Int
           init(someProperty: Int) {
               self.someProperty = someProperty
           }
       }
    ---
    -> let c = SomeClass(someProperty: 10)
-   <~ // c : SomeClass = <REPL.SomeClass:
+   >> let r0 =
    -> c.observe(\.someProperty) { object, change in
           // ...
       }
-   <~ // r0 : NSKeyValueObservation = <Foundation.NSKeyValueObservation:
+
+.. Rewrite the above to avoid discarding the function's return value.
+   Tracking bug is <rdar://problem/35301593>
 
 The *path* can refer to ``self`` to create the identity key path (``\.self``).
 The identity key path refers to a whole instance,
@@ -1157,8 +1153,8 @@ For example:
 .. testcode:: keypath-expression-self-keypath
 
    -> var compoundValue = (a: 1, b: 2)
-      // Equivalent to compoundValue = (a: 10, b: 20)
-      compoundValue[keyPath: \.self] = (a: 10, b: 20)
+   // Equivalent to compoundValue = (a: 10, b: 20)
+   -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
 The *path* can contain multiple property names, 
 separated by periods,
@@ -1178,12 +1174,9 @@ of the ``OuterStructure`` type's ``outer`` property:
       }
    ---
    -> let nested = OuterStructure(someValue: 24)
-   << // nested : OuterStructure = REPL.OuterStructure(outer: REPL.SomeStructure(someValue: 24))
    -> let nestedKeyPath = \OuterStructure.outer.someValue
-   << // nestedKeyPath : WritableKeyPath<OuterStructure, Int> = Swift.WritableKeyPath<REPL.OuterStructure, Swift.Int>
    ---
    -> let nestedValue = nested[keyPath: nestedKeyPath]
-   << // nestedValue : Int = 24
    /> nestedValue is \(nestedValue)
    </ nestedValue is 24
 
@@ -1195,9 +1188,7 @@ to access the second element of an array:
 .. testcode:: keypath-expression
 
    -> let greetings = ["hello", "hola", "bonjour", "안녕"]
-   << // greetings : [String] = ["hello", "hola", "bonjour", "안녕"]
    -> let myGreeting = greetings[keyPath: \[String].[1]]
-   << // myGreeting : String = "hola"
    /> myGreeting is '\(myGreeting)'
    </ myGreeting is 'hola'
 
@@ -1218,11 +1209,8 @@ while the closure uses the new index.
 .. testcode:: keypath-expression
 
    -> var index = 2
-   << // index : Int = 2
    -> let path = \[String].[index]
-   << // path : WritableKeyPath<[String], String> = Swift.WritableKeyPath<Swift.Array<Swift.String>, Swift.String>
    -> let fn: ([String]) -> String = { strings in strings[index] }
-   <~ // fn :
    ---
    -> print(greetings[keyPath: path])
    <- bonjour
@@ -1245,15 +1233,16 @@ to access a property of an optional string:
 .. testcode:: keypath-expression
 
    -> let firstGreeting: String? = greetings.first
-   << // firstGreeting : String? = Optional("hello")
    -> print(firstGreeting?.count as Any)
    <- Optional(5)
    ---
    // Do the same thing using a key path.
    -> let count = greetings[keyPath: \[String].first?.count]
-   << // count : Int? = Optional(5)
    -> print(count as Any)
    <- Optional(5)
+
+.. The test above is failing, which appears to be a compiler bug.
+   <rdar://problem/58484319> Swift 5.2 regression in keypaths
 
 You can mix and match components of key paths to access values
 that are deeply nested within a type.
@@ -1267,7 +1256,6 @@ that combine these components.
    -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                                 "triangular": [1, 3, 6, 10, 15, 21, 28],
                                 "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
-   << // interestingNumbers : [String : [Int]] = ["triangular": [1, 3, 6, 10, 15, 21, 28], "prime": [2, 3, 5, 7, 11, 13, 17], "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
    <- Optional([2, 3, 5, 7, 11, 13, 17])
    -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
@@ -1276,7 +1264,59 @@ that combine these components.
    <- 7
    -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
    <- 64
-                                
+
+You can use a key path expression
+in contexts where you would normally provide a function or closure.
+Specifically,
+you can use a key path expression
+whose root type is ``SomeType``
+and whose path produces a value of type ``Value``,
+instead of a function or closure of type ``(SomeType) -> Value``.
+
+.. testcode:: keypath-expression
+
+   -> struct Task {
+          var description: String
+          var completed: Bool
+      }
+   -> var toDoList = [
+          Task(description: "Practice ping-pong.", completed: false),
+          Task(description: "Buy a pirate costume.", completed: true),
+          Task(description: "Visit Boston in the Fall.", completed: false),
+      ]
+   ---
+   // Both approaches below are equivalent.
+   -> let descriptions = toDoList.filter(\.completed).map(\.description)
+   -> let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
+   >> assert(descriptions == descriptions2)
+
+.. REFERENCE
+   The to-do list above draws from the lyrics of the song
+   "The Pirates Who Don't Do Anything".
+    
+
+Any side effects of a key path expression
+are evaluated only at the point where the expression is evaluated.
+For example,
+if you make a function call inside a subscript in a key path expression,
+the function is called only once as part of evaluating the expression,
+not every time the key path is used.
+
+.. testcode:: keypath-expression
+
+   -> func makeIndex() -> Int {
+          print("Made an index")
+          return 0
+      }
+   // The line below calls makeIndex().
+   -> let taskKeyPath = \[Task][makeIndex()]
+   <- Made an index
+   >> print(type(of: taskKeyPath))
+   << WritableKeyPath<Array<Task>, Task>
+   ---
+   // Using taskKeyPath doesn't call makeIndex() again.
+   -> let someTask = toDoList[keyPath: taskKeyPath]
+
 For more information about using key paths
 in code that interacts with Objective-C APIs,
 see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift>`_.
@@ -1322,17 +1362,16 @@ For example:
    >> import Foundation
    -> class SomeClass: NSObject {
           @objc let property: String
+   ---
           @objc(doSomethingWithInt:)
-          func doSomething(_ x: Int) {}
+          func doSomething(_ x: Int) { }
    ---
           init(property: String) {
               self.property = property
           }
       }
    -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
-   << // selectorForMethod : Selector = doSomethingWithInt:
    -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
-   << // selectorForPropertyGetter : Selector = property
 
 When creating a selector for a property's getter,
 the *property name* can be a reference to a variable or constant property.
@@ -1344,14 +1383,22 @@ as well the ``as`` operator to disambiguate between methods that share a name
 but have different type signatures.
 For example:
 
-.. testcode:: selector-expression
+.. testcode:: selector-expression-with-as
 
+   >> import Foundation
+   >> class SomeClass: NSObject {
+   >>     @objc let property: String
+   >>     @objc(doSomethingWithInt:)
+   >>     func doSomething(_ x: Int) {}
+   >>     init(property: String) {
+   >>         self.property = property
+   >>     }
+   >> }
    -> extension SomeClass {
           @objc(doSomethingWithString:)
           func doSomething(_ x: String) { }
       }
    -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
-   << // anotherSelector : Selector = doSomethingWithString:
 
 Because a selector is created at compile time, not at runtime,
 the compiler can check that a method or property exists
@@ -1378,7 +1425,6 @@ see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/do
    just a member name.  For example, see changes in Swift commit ef60d7289d in
    lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
    optional binding.
-
 
 
 .. _Expression_KeyPathExpression:
@@ -1411,9 +1457,7 @@ For example:
       }
    ---
    -> let c = SomeClass(someProperty: 12)
-   <~ // c : SomeClass = <REPL.SomeClass:
    -> let keyPath = #keyPath(SomeClass.someProperty)
-   << // keyPath : String = "someProperty"
    ---
    -> if let value = c.value(forKey: keyPath) {
    ->     print(value)
@@ -1507,7 +1551,7 @@ Function call expressions have the following form:
 The *function name* can be any expression whose value is of a function type.
 
 If the function definition includes names for its parameters,
-the function call must include names before its argument values
+the function call must include names before its argument values,
 separated by a colon (``:``).
 This kind of function call expression has the following form:
 
@@ -1515,11 +1559,14 @@ This kind of function call expression has the following form:
 
    <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
-A function call expression can include a trailing closure
-in the form of a closure expression immediately after the closing parenthesis.
-The trailing closure is understood as an argument to the function,
+A function call expression can include trailing closures
+in the form of closure expressions immediately after the closing parenthesis.
+The trailing closures are understood as arguments to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent:
+The first closure expression is unlabeled;
+any additional closure expressions are preceded by their argument labels.
+The example below shows the equivalent version of function calls
+that do and don't use trailing closure syntax:
 
 .. testcode:: trailing-closure
 
@@ -1527,15 +1574,32 @@ The following function calls are equivalent:
     >>    return f(x)
     >> }
     >> let x = 10
-    << // x : Int = 10
     // someFunction takes an integer and a closure as its arguments
-    -> someFunction(x: x, f: {$0 == 13})
-    << // r0 : Bool = false
-    -> someFunction(x: x) {$0 == 13}
-    << // r1 : Bool = false
+    >> let r0 =
+    -> someFunction(x: x, f: { $0 == 13 })
+    >> assert(r0 == false)
+    >> let r1 =
+    -> someFunction(x: x) { $0 == 13 }
+    >> assert(r1 == false)
+    ---
+    >> func anotherFunction(x: Int, f: (Int) -> Bool, g: () -> Void) -> Bool {
+    >>    g(); return f(x)
+    >> }
+    // anotherFunction takes an integer and two closures as its arguments
+    >> let r2 =
+    -> anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
+    << 99
+    >> assert(r2 == false)
+    >> let r3 =
+    -> anotherFunction(x: x) { $0 == 13 } g: { print(99) }
+    << 99
+    >> assert(r3 == false)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted.
+you can omit the parentheses.
 
 .. testcode:: no-paren-trailing-closure
 
@@ -1546,33 +1610,37 @@ the parentheses can be omitted.
     >>    }
     >> }
     >> let myData = Data()
-    << // myData : Data = REPL.Data
     // someMethod takes a closure as its only argument
-    -> myData.someMethod() {$0 == 13}
-    << // r0 : Bool = false
-    -> myData.someMethod {$0 == 13}
-    << // r1 : Bool = false
+    >> let r0 =
+    -> myData.someMethod() { $0 == 13 }
+    >> assert(r0 == false)
+    >> let r1 =
+    -> myData.someMethod { $0 == 13 }
+    >> assert(r1 == false)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
+A class, structure, or enumeration type
+can enable syntactic sugar for function call syntax
+by declaring one of several methods,
+as described in :ref:`Declarations_SpecialFuncNames`.
 
 .. syntax-grammar::
 
     Grammar of a function call expression
 
     function-call-expression --> postfix-expression function-call-argument-clause
-    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closure
+    function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closures
 
     function-call-argument-clause --> ``(`` ``)`` | ``(`` function-call-argument-list ``)``
     function-call-argument-list --> function-call-argument | function-call-argument ``,`` function-call-argument-list
     function-call-argument --> expression | identifier ``:`` expression
     function-call-argument --> operator | identifier ``:`` operator
 
-    trailing-closure --> closure-expression
-
-.. Multiple trailing closures in LangRef is an error,
-   and so is the trailing typecast,
-   per [Contributor 6004] 2014-03-04 email.
-   Not documenting those in the prose or grammar
-   even though they happen to still work.
-
+    trailing-closures --> closure-expression labeled-trailing-closures-OPT
+    labeled-trailing-closures --> labeled-trailing-closure labeled-trailing-closures-OPT
+    labeled-trailing-closure --> identifier ``:`` closure-expression
 
 .. _Expressions_InitializerExpression:
 
@@ -1609,9 +1677,7 @@ For example:
 
     // Type annotation is required because String has multiple initializers.
     -> let initializer: (Int) -> String = String.init
-    << // initializer : (Int) -> String = (Function)
     -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
-    << // oneTwoThree : String = "123"
     -> print(oneTwoThree)
     <- 123
 
@@ -1625,16 +1691,12 @@ In all other cases, you must use an initializer expression.
     >>     let data: Int
     >> }
     -> let s1 = SomeType.init(data: 3)  // Valid
-    << // s1 : SomeType = REPL.SomeType(data: 3)
     -> let s2 = SomeType(data: 1)       // Also valid
-    << // s2 : SomeType = REPL.SomeType(data: 1)
     ---
     >> let someValue = s1
-    << // someValue : SomeType = REPL.SomeType(data: 3)
     -> let s3 = type(of: someValue).init(data: 7)  // Valid
-    << // s3 : SomeType = REPL.SomeType(data: 7)
     -> let s4 = type(of: someValue)(data: 5)       // Error
-    !! <REPL Input>:1:29: error: initializing from a metatype value must reference 'init' explicitly
+    !$ error: initializing from a metatype value must reference 'init' explicitly
     !! let s4 = type(of: someValue)(data: 5)       // Error
     !!                              ^
     !!                              .init
@@ -1670,9 +1732,7 @@ For example:
            var someProperty = 42
        }
     -> let c = SomeClass()
-    << // c : SomeClass = REPL.SomeClass
     -> let y = c.someProperty  // Member access
-    << // y : Int = 42
 
 The members of a tuple
 are implicitly named using integers in the order they appear,
@@ -1682,7 +1742,6 @@ For example:
 .. testcode:: explicit-member-expression
 
     -> var t = (10, 20, 30)
-    << // t : (Int, Int, Int) = (10, 20, 30)
     -> t.0 = t.1
     -> // Now t is (20, 20, 30)
 
@@ -1712,42 +1771,39 @@ For example:
        }
     -> let instance = SomeClass()
     ---
-    << // instance : SomeClass = REPL.SomeClass
     -> let a = instance.someMethod              // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'someMethod'
+    !$ error: ambiguous use of 'someMethod'
     !! let a = instance.someMethod              // Ambiguous
     !!         ^
-    !! <REPL Input>:2:12: note: found this candidate
+    !$ note: found this candidate
     !!              func someMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:3:12: note: found this candidate
+    !$ note: found this candidate
     !!              func someMethod(x: Int, z: Int) {}
     !!                   ^
     -> let b = instance.someMethod(x:y:)        // Unambiguous
-    << // b : (Int, Int) -> () = (Function)
     ---
     -> let d = instance.overloadedMethod        // Ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
+    !$ error: ambiguous use of 'overloadedMethod(x:y:)'
     !! let d = instance.overloadedMethod        // Ambiguous
     !!         ^
-    !! <REPL Input>:4:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:5:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
     -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
-    !! <REPL Input>:1:9: error: ambiguous use of 'overloadedMethod(x:y:)'
+    !$ error: ambiguous use of 'overloadedMethod(x:y:)'
     !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
     !!             ^
-    !! <REPL Input>:4:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Int) {}
     !!                   ^
-    !! <REPL Input>:5:12: note: found this candidate
+    !$ note: found this candidate
     !!              func overloadedMethod(x: Int, y: Bool) {}
     !!                   ^
     -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
-    << // d : (Int, Bool) -> Void = (Function)
 
 If a period appears at the beginning of a line,
 it is understood as part of an explicit member expression,
@@ -1756,7 +1812,6 @@ For example, the following listing shows chained method calls
 split over several lines:
 
 .. testcode:: period-at-start-of-line
-   :compile: true
 
    -> let x = [10, 3, 20, 15, 4]
    ->     .sorted()
@@ -1863,9 +1918,7 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
           }
       }
    >> let s = S(x: 10, y: 20)
-   << // s : S = REPL.S(x: 10, y: 20)
-   >> s[+]
-   << // r0 : Int = 30
+   >> assert(s[+] == 30)
 
 
 .. _Expressions_Forced-ValueExpression:
@@ -1894,13 +1947,11 @@ For example:
 .. testcode:: optional-as-lvalue
 
    -> var x: Int? = 0
-   << // x : Int? = Optional(0)
    -> x! += 1
    /> x is now \(x!)
    </ x is now 1
    ---
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    -> someDictionary["a"]![0] = 100
    /> someDictionary is now \(someDictionary)
    </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
@@ -1954,9 +2005,8 @@ has a value of an optional type.
    >> class OtherClass { func performAction() -> Bool {return true} }
    >> class SomeClass { var property: OtherClass = OtherClass() }
    -> var c: SomeClass?
-   << // c : SomeClass? = nil
    -> var result: Bool? = c?.property.performAction()
-   << // result : Bool? = nil
+   >> assert(result == nil)
 
 The following example shows the behavior
 of the example above
@@ -1967,9 +2017,7 @@ without using optional chaining.
    >> class OtherClass { func performAction() -> Bool {return true} }
    >> class SomeClass { var property: OtherClass = OtherClass() }
    >> var c: SomeClass?
-   << // c : SomeClass? = nil
    -> var result: Bool?
-   << // result : Bool? = nil
    -> if let unwrappedC = c {
          result = unwrappedC.property.performAction()
       }
@@ -1988,16 +2036,13 @@ For example:
          return 42  // No actual side effects.
       }
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
-   << // someDictionary : [String : [Int]] = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-   <$ : ()? = nil
    // someFunctionWithSideEffects is not evaluated
    /> someDictionary is still \(someDictionary)
    </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
-   <$ : ()? = Optional(())
    /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
    </ someFunctionWithSideEffects is evaluated and returns 42
    /> someDictionary is now \(someDictionary)

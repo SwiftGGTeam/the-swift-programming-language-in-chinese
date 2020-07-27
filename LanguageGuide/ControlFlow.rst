@@ -32,7 +32,6 @@ This example uses a ``for``-``in`` loop to iterate over the items in an array:
 .. testcode:: forLoops
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : [String] = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
          print("Hello, \(name)!")
       }
@@ -52,12 +51,11 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["ant": 6, "cat": 4, "spider": 8]
    -> for (animalName, legCount) in numberOfLegs {
          print("\(animalName)s have \(legCount) legs")
       }
-   </ ants have 6 legs
    </ cats have 4 legs
+   </ ants have 6 legs
    </ spiders have 8 legs
 
 The contents of a ``Dictionary`` are inherently unordered,
@@ -109,11 +107,8 @@ you can ignore the values by using an underscore in place of a variable name.
 .. testcode:: forLoops
 
    -> let base = 3
-   << // base : Int = 3
    -> let power = 10
-   << // power : Int = 10
    -> var answer = 1
-   << // answer : Int = 1
    -> for _ in 1...power {
          answer *= base
       }
@@ -146,9 +141,7 @@ For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 .. testcode:: forLoops
 
    -> let minutes = 60
-   << // minutes : Int = 60
    >> var result = [Int]()
-   << // result : [Int] = []
    -> for tickMark in 0..<minutes {
          // render the tick mark each minute (60 times)
    >>    result.append(tickMark)
@@ -163,7 +156,6 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 .. testcode:: forLoops
 
    -> let minuteInterval = 5
-   << // minuteInterval : Int = 5
    >> result = [Int]()
    -> for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
          // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
@@ -177,9 +169,7 @@ Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
 .. testcode:: forLoops
 
    -> let hours = 12
-   << // hours : Int = 12
    -> let hourInterval = 3
-   << // hourInterval : Int = 3
    -> for tickMark in stride(from: 3, through: hours, by: hourInterval) {
          // render the tick mark every 3 hours (3, 6, 9, 12)
    >>    print(tickMark)
@@ -258,9 +248,8 @@ the board is initialized with 26 zero ``Int`` values, not 25.
 .. testcode:: snakesAndLadders1
 
    -> let finalSquare = 25
-   << // finalSquare : Int = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
-   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -284,13 +273,10 @@ and numbers lower than ``10`` are padded with zeros.
 (Neither stylistic technique is strictly necessary,
 but they lead to neater code.)
 
-
 .. testcode:: snakesAndLadders1
 
    -> var square = 0
-   << // square : Int = 0
    -> var diceRoll = 0
-   << // diceRoll : Int = 0
    -> while square < finalSquare {
          // roll the dice
          diceRoll += 1
@@ -404,15 +390,12 @@ are initialized in exactly the same way as with a ``while`` loop.
 .. testcode:: snakesAndLadders2
 
    -> let finalSquare = 25
-   << // finalSquare : Int = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
-   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
-   << // square : Int = 0
    -> var diceRoll = 0
-   << // diceRoll : Int = 0
 
 In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
@@ -515,7 +498,6 @@ It executes a set of statements only if that condition is ``true``.
 .. testcode:: ifElse
 
    -> var temperatureInFahrenheit = 30
-   << // temperatureInFahrenheit : Int = 30
    -> if temperatureInFahrenheit <= 32 {
          print("It's very cold. Consider wearing a scarf.")
       }
@@ -634,7 +616,6 @@ a single lowercase character called ``someCharacter``:
 .. testcode:: switch
 
    -> let someCharacter: Character = "z"
-   << // someCharacter : Character = "z"
    -> switch someCharacter {
          case "a":
             print("The first letter of the alphabet")
@@ -681,7 +662,6 @@ It is not valid to write the following code, because the first case is empty:
 .. testcode:: noFallthrough
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
          case "a": // Invalid, the case has an empty body
          case "A":
@@ -689,7 +669,7 @@ It is not valid to write the following code, because the first case is empty:
          default:
             print("Not the letter A")
       }
-   !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
+   !$ error: 'case' label in a 'switch' should have at least one executable statement
    !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
@@ -710,7 +690,6 @@ separating the values with commas.
 .. testcode:: compoundCaseInsteadOfFallthrough
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = "a"
    -> switch anotherCharacter {
          case "a", "A":
             print("The letter A")
@@ -743,7 +722,6 @@ to provide a natural-language count for numbers of any size:
    Saturn has 62 moons with confirmed orbits.
 
 .. testcode:: intervalMatching
-   :compile: true
 
    -> let approximateCount = 62
    -> let countedThings = "moons orbiting Saturn"
@@ -789,7 +767,6 @@ and categorizes it on the graph that follows the example.
 .. testcode:: tuples
 
    -> let somePoint = (1, 1)
-   << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
          case (0, 0):
             print("\(somePoint) is at the origin")
@@ -838,7 +815,6 @@ and categorizes it on the graph that follows:
 .. testcode:: valueBindings
 
    -> let anotherPoint = (2, 0)
-   << // anotherPoint : (Int, Int) = (2, 0)
    -> switch anotherPoint {
          case (let x, 0):
             print("on the x-axis with an x value of \(x)")
@@ -889,7 +865,6 @@ The example below categorizes an (x, y) point on the following graph:
 .. testcode:: where
 
    -> let yetAnotherPoint = (1, -1)
-   << // yetAnotherPoint : (Int, Int) = (1, -1)
    -> switch yetAnotherPoint {
          case let (x, y) where x == y:
             print("(\(x), \(y)) is on the line x == y")
@@ -933,7 +908,6 @@ For example:
 .. testcode:: compound-switch-case
 
    -> let someCharacter: Character = "e"
-   << // someCharacter : Character = "e"
    -> switch someCharacter {
           case "a", "e", "i", "o", "u":
               print("\(someCharacter) is a vowel")
@@ -964,7 +938,6 @@ and that the value always has the same type.
 .. testcode:: compound-switch-case
 
     -> let stillAnotherPoint = (9, 0)
-    << // stillAnotherPoint : (Int, Int) = (9, 0)
     -> switch stillAnotherPoint {
            case (let distance, 0), (0, let distance):
                print("On an axis, \(distance) from the origin")
@@ -1017,11 +990,8 @@ to create a cryptic puzzle phrase:
 .. testcode:: continue
 
    -> let puzzleInput = "great minds think alike"
-   << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
-   << // puzzleOutput : String = ""
    -> let charactersToRemove: [Character] = ["a", "e", "i", "o", "u", " "]
-   << // charactersToRemove : [Character] = ["a", "e", "i", "o", "u", " "]
    -> for character in puzzleInput {
          if charactersToRemove.contains(character) {
             continue
@@ -1090,9 +1060,7 @@ For brevity, multiple values are covered in a single ``switch`` case.
 .. testcode:: breakInASwitchStatement
 
    -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
-   << // numberSymbol : Character = "三"
    -> var possibleIntegerValue: Int?
-   << // possibleIntegerValue : Int? = nil
    -> switch numberSymbol {
          case "1", "١", "一", "๑":
             possibleIntegerValue = 1
@@ -1156,9 +1124,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 .. testcode:: fallthrough
 
    -> let integerToDescribe = 5
-   << // integerToDescribe : Int = 5
    -> var description = "The number \(integerToDescribe) is"
-   << // description : String = "The number 5 is"
    -> switch integerToDescribe {
          case 2, 3, 5, 7, 11, 13, 17, 19:
             description += " a prime number, and also"
@@ -1254,15 +1220,12 @@ are initialized in the same way as before:
 .. testcode:: labels
 
    -> let finalSquare = 25
-   << // finalSquare : Int = 25
    -> var board = [Int](repeating: 0, count: finalSquare + 1)
-   << // board : [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
-   << // square : Int = 0
    -> var diceRoll = 0
-   << // diceRoll : Int = 0
 
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
@@ -1369,9 +1332,9 @@ and to determine whether the move is allowed:
 
    It is not strictly necessary to use the ``gameLoop`` label
    when calling ``continue gameLoop`` to jump to the next iteration of the loop.
-   There is only one loop in the game,
+   there's only one loop in the game,
    and therefore no ambiguity as to which loop the ``continue`` statement will affect.
-   However, there is no harm in using the ``gameLoop`` label with the ``continue`` statement.
+   However, there's no harm in using the ``gameLoop`` label with the ``continue`` statement.
    Doing so is consistent with the label's use alongside the ``break`` statement
    and helps make the game's logic clearer to read and understand.
 
@@ -1394,14 +1357,14 @@ the code inside the ``else`` clause is executed if the condition is not true.
            guard let name = person["name"] else {
                return
            }
-
+    ---
            print("Hello \(name)!")
-
+    ---
            guard let location = person["location"] else {
                print("I hope the weather is nice near you.")
                return
            }
-
+    ---
            print("I hope the weather is nice in \(location).")
        }
     ---

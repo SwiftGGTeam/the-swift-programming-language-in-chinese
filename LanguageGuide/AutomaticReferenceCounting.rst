@@ -92,11 +92,8 @@ and do not currently reference a ``Person`` instance.
 .. testcode:: howARCWorks
 
    -> var reference1: Person?
-   << // reference1 : Person? = nil
    -> var reference2: Person?
-   << // reference2 : Person? = nil
    -> var reference3: Person?
-   << // reference3 : Person? = nil
 
 You can now create a new ``Person`` instance
 and assign it to one of these three variables:
@@ -111,8 +108,8 @@ at the point that you call the ``Person`` class's initializer.
 This confirms that initialization has taken place.
 
 Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
-there is now a strong reference from ``reference1`` to the new ``Person`` instance.
-Because there is at least one strong reference,
+there's now a strong reference from ``reference1`` to the new ``Person`` instance.
+Because there's at least one strong reference,
 ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
 
 If you assign the same ``Person`` instance to two more variables,
@@ -172,7 +169,6 @@ This example defines two classes called ``Person`` and ``Apartment``,
 which model a block of apartments and its residents:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> class Person {
          let name: String
@@ -207,7 +203,6 @@ which will be set to a specific ``Apartment`` and ``Person`` instance below.
 Both of these variables have an initial value of ``nil``, by virtue of being optional:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> var john: Person?
    -> var unit4A: Apartment?
@@ -216,7 +211,6 @@ You can now create a specific ``Person`` instance and ``Apartment`` instance
 and assign these new instances to the ``john`` and ``unit4A`` variables:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john = Person(name: "John Appleseed")
    -> unit4A = Apartment(unit: "4A")
@@ -230,7 +224,7 @@ and the ``unit4A`` variable has a strong reference to the new ``Apartment`` inst
 
 You can now link the two instances together
 so that the person has an apartment, and the apartment has a tenant.
-Note that an exclamation mark (``!``) is used to unwrap and access
+Note that an exclamation point (``!``) is used to unwrap and access
 the instances stored inside the ``john`` and ``unit4A`` optional variables,
 so that the properties of those instances can be set:
 
@@ -254,7 +248,6 @@ the reference counts do not drop to zero,
 and the instances are not deallocated by ARC:
 
 .. testcode:: referenceCycles
-   :compile: true
 
    -> john = nil
    -> unit4A = nil
@@ -336,18 +329,14 @@ a reference to an invalid instance that no longer exists.
            weak var w: C? { didSet { print("did set") } }
        }
     -> var c1 = C()
-    << // c1 : C = REPL.C
     -> do {
-    -> let c2 = C()  // Inside a do{} block, so no REPL result.
-    -> print(c1.w as Any)
-    << nil
-    -> c1.w = c2
+    ->     let c2 = C()
+    ->     assert(c1.w == nil)
+    ->     c1.w = c2
     << did set
-    -> print(c1.w as Any)
-    << Optional(REPL.C)
+    ->     assert(c1.w != nil)
     -> } // ARC deallocates c2; didSet doesn't fire.
-    -> print(c1.w as Any)
-    << nil
+    -> assert(c1.w == nil)
 
 The example below is identical to the ``Person`` and ``Apartment`` example from above,
 with one important difference.
@@ -355,7 +344,6 @@ This time around, the ``Apartment`` type's ``tenant`` property
 is declared as a weak reference:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> class Person {
          let name: String
@@ -375,7 +363,6 @@ The strong references from the two variables (``john`` and ``unit4A``)
 and the links between the two instances are created as before:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> var john: Person?
    -> var unit4A: Apartment?
@@ -398,7 +385,6 @@ the ``john`` variable by setting it to ``nil``,
 there are no more strong references to the ``Person`` instance:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> john = nil
    <- John Appleseed is being deinitialized
@@ -416,7 +402,6 @@ If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
 
 .. testcode:: weakReferences
-   :compile: true
 
    -> unit4A = nil
    <- Apartment 4A is being deinitialized
@@ -451,12 +436,13 @@ has the same lifetime or a longer lifetime.
 You indicate an unowned reference by placing the ``unowned`` keyword
 before a property or variable declaration.
 
-An unowned reference is expected to always have a value.
+Unlike a weak reference,
+an unowned reference is expected to always have a value.
 As a result,
-ARC never sets an unowned reference's value to ``nil``,
-which means that unowned references are defined using non-optional types.
+marking a value as unowned doesn't make it optional,
+and ARC never sets an unowned reference's value to ``nil``.
 
-..  Everything that unowned can do, weak can do slower and more awkwardly
+.. Everything that unowned can do, weak can do slower and more awkwardly
    (but still correctly).
    Unowned is interesting because it's faster and easier (no optionals) ---
    in the cases where it's actually correct for your data.
@@ -469,6 +455,13 @@ which means that unowned references are defined using non-optional types.
    If you try to access the value of an unowned reference
    after that instance has been deallocated,
    you'll get a runtime error.
+
+.. One way to satisfy that requirement is to
+   always access objects that have unmanaged properties through their owner
+   instead of keeping a reference to them directly,
+   because those direct references could outlive the owner.
+   However... this strategy really only works when the unowned reference
+   is a backpointer from an object up to its owner.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
@@ -495,7 +488,6 @@ you define its ``customer`` property as an unowned reference,
 to avoid a strong reference cycle:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> class Customer {
          let name: String
@@ -528,7 +520,6 @@ which will be used to store a reference to a specific customer.
 This variable has an initial value of nil, by virtue of being optional:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> var john: Customer?
 
@@ -537,7 +528,6 @@ and use it to initialize and assign a new ``CreditCard`` instance
 as that customer's ``card`` property:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> john = Customer(name: "John Appleseed")
    -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
@@ -564,7 +554,6 @@ there are no more strong references to the ``CreditCard`` instance,
 and it too is deallocated:
 
 .. testcode:: unownedReferences
-   :compile: true
 
    -> john = nil
    <- John Appleseed is being deinitialized
@@ -595,6 +584,130 @@ after the ``john`` variable is set to ``nil``.
    Try expanding the example above so each customer has an array of credit cards.
 
 
+.. _AutomaticReferenceCounting_UnownedOptionalReferences:
+
+Unowned Optional References
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can mark an optional reference to a class as unowned.
+In terms of the ARC ownership model,
+an unowned optional reference and a weak reference
+can both be used in the same contexts.
+The difference is that when you use an unowned optional reference,
+you're responsible for making sure it always
+refers to a valid object or is set to ``nil``.
+
+Here's an example that keeps track of the courses
+offered by a particular department at a school:
+
+.. testcode:: unowned-optional-references
+
+    -> class Department {
+           var name: String
+           var courses: [Course]
+           init(name: String) {
+               self.name = name
+               self.courses = []
+           }
+       }
+    ---
+    -> class Course {
+           var name: String
+           unowned var department: Department
+           unowned var nextCourse: Course?
+           init(name: String, in department: Department) {
+               self.name = name
+               self.department = department
+               self.nextCourse = nil
+           }
+       }
+
+``Department`` maintains a strong reference
+to each course that the department offers.
+In the ARC ownership model, a department owns its courses.
+``Course`` has two unowned references,
+one to the department
+and one to the next course a student should take;
+a course doesn't own either of these objects.
+Every course is part of some department
+so the ``department`` property isn't an optional.
+However,
+because some courses don't have a recommended follow-on course,
+the ``nextCourse`` property is an optional.
+
+Here's an example of using these classes:
+
+.. testcode:: unowned-optional-references
+
+    -> let department = Department(name: "Horticulture")
+    ---
+    -> let intro = Course(name: "Survey of Plants", in: department)
+    -> let intermediate = Course(name: "Growing Common Herbs", in: department)
+    -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
+    ---
+    -> intro.nextCourse = intermediate
+    -> intermediate.nextCourse = advanced
+    -> department.courses = [intro, intermediate, advanced]
+
+The code above creates a department and its three courses.
+The intro and intermediate courses both have a suggested next course
+stored in their ``nextCourse`` property,
+which maintains an unowned optional reference to
+the course a student should take after after completing this one.
+
+.. image:: ../images/unownedOptionalReference_2x.png
+   :align: center
+
+An unowned optional reference doesn't keep a strong hold
+on the instance of the class that it wraps,
+and so it doesn't prevent ARC from deallocating the instance.
+It behaves the same as an unowned reference does under ARC,
+except that an unowned optional reference can be ``nil``.
+
+Like non-optional unowned references,
+you're responsible for ensuring that ``nextCourse``
+always refers to a course that hasn't been deallocated.
+In this case, for example,
+when you delete a course from ``department.courses``
+you also need to remove any references to it
+that other courses might have.
+
+.. note::
+
+    The underlying type of an optional value is ``Optional``,
+    which is an enumeration in the Swift standard library.
+    However, optionals are an exception to the rule that
+    value types can't be marked with ``unowned``.
+
+    The optional that wraps the class
+    doesn't use reference counting,
+    so you don't need to maintain a strong reference to the optional.
+
+.. assertion:: unowned-can-be-optional
+
+   >> class C { var x = 100 }
+   >> class D {
+   >>     unowned var a: C
+   >>     unowned var b: C?
+   >>     init(value: C) {
+   >>         self.a = value
+   >>         self.b = value
+   >>     }
+   >> }
+   >> var c = C() as C?
+   >> let d = D(value: c! )
+   >> print(d.a.x, d.b?.x as Any)
+   << 100 Optional(100)
+   ---
+   >> c = nil
+   // Now that the C instance is deallocated, access to d.a is an error.
+   // We manually nil out d.b, which is safe because d.b is an Optional and the
+   // enum stays in memory regardles of ARC deallocating the C instance.
+   >> d.b = nil
+   >> print(d.b?.x as Any)
+   << nil
+
+
 .. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
 
 Unowned References and Implicitly Unwrapped Optional Properties
@@ -615,7 +728,7 @@ and another property that cannot be ``nil``
 have the potential to cause a strong reference cycle.
 This scenario is best resolved with an unowned reference.
 
-However, there is a third scenario,
+However, there's a third scenario,
 in which *both* properties should always have a value,
 and neither property should ever be ``nil`` once initialization is complete.
 In this scenario, it's useful to combine an unowned property on one class
@@ -634,7 +747,6 @@ To represent this, the ``Country`` class has a ``capitalCity`` property,
 and the ``City`` class has a ``country`` property:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
 
    -> class Country {
          let name: String
@@ -666,7 +778,7 @@ as described in :ref:`Initialization_TwoPhaseInitialization`.
 To cope with this requirement,
 you declare the ``capitalCity`` property of ``Country`` as
 an implicitly unwrapped optional property,
-indicated by the exclamation mark at the end of its type annotation (``City!``).
+indicated by the exclamation point at the end of its type annotation (``City!``).
 This means that the ``capitalCity`` property has a default value of ``nil``,
 like any other optional,
 but can be accessed without the need to unwrap its value
@@ -684,10 +796,9 @@ its own ``capitalCity`` property.
 All of this means that you can create the ``Country`` and ``City`` instances
 in a single statement, without creating a strong reference cycle,
 and the ``capitalCity`` property can be accessed directly,
-without needing to use an exclamation mark to unwrap its optional value:
+without needing to use an exclamation point to unwrap its optional value:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
 
    -> var country = Country(name: "Canada", capitalName: "Ottawa")
    -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
@@ -797,9 +908,7 @@ in order to prevent the representation from returning an empty HTML tag:
 .. testcode:: strongReferenceCyclesForClosures
 
    -> let heading = HTMLElement(name: "h1")
-   << // heading : HTMLElement = REPL.HTMLElement
    -> let defaultText = "some default text"
-   << // defaultText : String = "some default text"
    -> heading.asHTML = {
          return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
       }
@@ -827,7 +936,6 @@ Here's how you use the ``HTMLElement`` class to create and print a new instance:
 .. testcode:: strongReferenceCyclesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
@@ -900,7 +1008,7 @@ Defining a Capture List
 
 Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
 with a reference to a class instance (such as ``self``)
-or a variable initialized with some value (such as ``delegate = self.delegate!``).
+or a variable initialized with some value (such as ``delegate = self.delegate``).
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
@@ -910,8 +1018,9 @@ if they are provided:
 
    >> class SomeClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: (Int, String) -> String = {
-            [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
+      lazy var someClosure = {
+            [unowned self, weak delegate = self.delegate]
+            (index: Int, stringToProcess: String) -> String in
          // closure body goes here
    >>    return "foo"
       }
@@ -926,8 +1035,8 @@ followed by the ``in`` keyword:
 
    >> class AnotherClass {
    >> var delegate: AnyObject?
-      lazy var someClosure: () -> String = {
-            [unowned self, weak delegate = self.delegate!] in
+      lazy var someClosure = {
+            [unowned self, weak delegate = self.delegate] in
          // closure body goes here
    >>    return "foo"
       }
@@ -998,7 +1107,6 @@ You can create and print an ``HTMLElement`` instance as before:
 .. testcode:: unownedReferencesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = Optional(REPL.HTMLElement)
    -> print(paragraph!.asHTML())
    <- <p>hello, world</p>
 
