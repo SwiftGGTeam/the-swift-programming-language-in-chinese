@@ -851,7 +851,6 @@ or the entire class marked with the ``final`` keyword.
 
     metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
 
-<<<<<<< HEAD
 .. _Types_AnyType:
 
 Any Type
@@ -902,9 +901,6 @@ and `AnyObject <//apple_ref/swift/fake/AnyObject>`_.
     Grammar of an Any type
 
     any-type --> ``Any``
-
-||||||| 59960fc5
-=======
 
 .. _Types_SelfType:
 
@@ -997,7 +993,6 @@ is the same as writing ``type(of: self).someStaticMember``.
 
    self-type --> ``Self``
 
->>>>>>> develop
 .. _Types_TypeInheritanceClause:
 
 Type Inheritance Clause
