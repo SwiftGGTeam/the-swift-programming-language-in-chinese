@@ -12,6 +12,7 @@
     "//apple_ref/doc/uid/TP40014216-CH7-ID10": "https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-ID10",
     "//apple_ref/doc/uid/TP40016497": "https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html",
     "//apple_ref/swift/cl/s:s7KeyPathC": "https://developer.apple.com/documentation/swift/keypath",
+    "//apple_ref/swift/fake/AnyObject": "https://developer.apple.com/documentation/swift/anyobject",
     "//apple_ref/swift/fake/CaseIterable": "https://developer.apple.com/documentation/swift/caseiterable",
     "//apple_ref/swift/fake/ExpressibleByArrayLiteral": "https://developer.apple.com/documentation/swift/expressiblebyarrayliteral",
     "//apple_ref/swift/fake/ExpressibleByDictionaryLiteral": "https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral",

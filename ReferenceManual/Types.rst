@@ -834,6 +834,13 @@ to a ``String``.
 
 For more information about casting, see :doc:`../LanguageGuide/TypeCasting`.
 
+The ``AnyObject`` protocol that all classes implicitly conform to
+is defined by the Swift standard library,
+rather than being part of the language like the ``Any`` type.
+For information about ``AnyObject``, see
+:ref:`Protocols_ClassOnlyProtocols`
+and `AnyObject <//apple_ref/swift/fake/AnyObject>`_.
+
 .. syntax-grammar::
 
     Grammar of an Any type
