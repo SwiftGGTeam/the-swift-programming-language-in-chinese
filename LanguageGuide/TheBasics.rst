@@ -1029,6 +1029,13 @@ Always make sure that an optional contains a non-``nil`` value
 before using ``!`` to force-unwrap its value.
 For more about the ``if`` statement, see :doc:`ControlFlow`.
 
+.. FIXME: writing foo! means that you know foo won't be nil,
+   and you can convince another person,
+   but you can't encode that proof into the type system
+   in a way the compiler understands.
+   It's also used when a nil value indicates a catastrophic error,
+   like loading a resource from withit the app bundle.
+
 Instead of writing the optional's name twice,
 a simpler way to access the value of an optional
 is to use :newTerm:`optional binding`.
