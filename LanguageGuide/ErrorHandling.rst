@@ -167,6 +167,7 @@ is out of stock,
 or has a cost that exceeds the current deposited amount:
 
 .. testcode:: errorHandling
+   :compile: true
 
    >> enum VendingMachineError: Error {
    >>     case invalidSelection
@@ -226,6 +227,7 @@ and any errors that the ``vend(itemNamed:)`` method throws will
 propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)`` function is called.
 
 .. testcode:: errorHandling
+   :compile: true
 
    -> let favoriteSnacks = [
           "Alice": "Chips",
@@ -254,6 +256,7 @@ calls a throwing function as part of the initialization process,
 and it handles any errors that it encounters by propagating them to its caller.
 
 .. testcode:: errorHandling
+    :compile: true
 
     -> struct PurchasedSnack {
            let name: String
@@ -323,6 +326,7 @@ For example, the following code matches against all three cases
 of the ``VendingMachineError`` enumeration.
 
 .. testcode:: errorHandling
+   :compile: true
 
    -> var vendingMachine = VendingMachine()
    -> vendingMachine.coinsDeposited = 8
@@ -373,6 +377,7 @@ error that isn't a ``VendingMachineError`` is instead
 caught by the calling function:
 
 .. testcode:: errorHandling
+    :compile: true
 
     -> func nourish(with item: String) throws {
            do {
@@ -402,6 +407,7 @@ is to list them after ``catch``, separated by commas.
 For example:
 
 .. testcode:: errorHandling
+    :compile: true
 
     -> func eat(item: String) throws {
            do {

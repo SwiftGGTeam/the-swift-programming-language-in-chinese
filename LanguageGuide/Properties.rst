@@ -170,6 +170,7 @@ This example defines two classes called ``DataImporter`` and ``DataManager``,
 neither of which is shown in full:
 
 .. testcode:: lazyProperties
+   :compile: true
 
    -> class DataImporter {
          /*
@@ -222,6 +223,7 @@ is only created when the ``importer`` property is first accessed,
 such as when its ``filename`` property is queried:
 
 .. testcode:: lazyProperties
+   :compile: true
 
    -> print(manager.importer.filename)
    </ the DataImporter instance for the importer property has now been created

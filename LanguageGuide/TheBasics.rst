@@ -1269,6 +1269,7 @@ Here's an example of how error handling can be used
 to respond to different error conditions:
 
 .. testcode:: errorHandlingTwo
+   :compile: true
 
    >> enum SandwichError: Error {
    >>     case outOfCleanDishes
