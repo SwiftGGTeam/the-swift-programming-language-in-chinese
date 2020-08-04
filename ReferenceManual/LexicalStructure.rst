@@ -760,7 +760,7 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> escaped-newline
 
     interpolated-string-literal --> string-literal-opening-delimiter interpolated-text-OPT string-literal-closing-delimiter
-    interpolated-string-literal --> multiline-string-literal-opening-delimiter interpolated-text-OPT multiline-string-literal-closing-delimiter
+    interpolated-string-literal --> multiline-string-literal-opening-delimiter multiline-interpolated-text-OPT multiline-string-literal-closing-delimiter
 
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
