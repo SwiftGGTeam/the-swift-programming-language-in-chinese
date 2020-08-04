@@ -52,13 +52,17 @@ as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
 
    whitespace --> whitespace-item whitespace-OPT
    whitespace-item --> line-break
+   whitespace-item --> inline-space
    whitespace-item --> comment
    whitespace-item --> multiline-comment
-   whitespace-item --> U+0000, U+0009, U+000B, U+000C, or U+0020
+   whitespace-item --> U+0000, U+000B, or U+000C
 
    line-break --> U+000A
    line-break --> U+000D
    line-break --> U+000D followed by U+000A
+
+   inline-spaces --> inline-space inline-spaces-OPT
+   inline-space --> U+0009 or U+0020
 
    comment --> ``//`` comment-text line-break
    multiline-comment --> ``/*`` multiline-comment-text ``*/``
@@ -769,7 +773,7 @@ no runtime concatenation is performed.
     escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
-    escaped-newline -->  escape-sequence whitespace-OPT line-break
+    escaped-newline -->  escape-sequence inline-spaces-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-text rule which allows repetition; no need to allow
