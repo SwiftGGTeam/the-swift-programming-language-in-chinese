@@ -18,6 +18,7 @@
     "//apple_ref/swift/fake/ExpressibleByDictionaryLiteral": "https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral",
     "//apple_ref/swift/fake/ExpressibleByDictionaryLiteral.Key": "https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key",
     "//apple_ref/swift/fake/ExpressibleByStringLiteral": "https://developer.apple.com/documentation/swift/expressiblebystringliteral",
+    "//apple_ref/swift/fake/Hashable": "https://developer.apple.com/documentation/swift/hashable",
     "//apple_ref/swift/fake/KeyPath": "https://developer.apple.com/documentation/swift/keypath",
     "//apple_ref/swift/fake/KeyValuePairs": "https://developer.apple.com/documentation/swift/keyvaluepairs",
     "//apple_ref/swift/fake/Mirror.AncestorRepresentation": "https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation",
