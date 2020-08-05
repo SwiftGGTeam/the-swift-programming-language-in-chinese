@@ -856,7 +856,7 @@ or the entire class marked with the ``final`` keyword.
 Any Type
 --------
 
-The ``Any`` type is a type that can contain values from all other types.
+The ``Any`` type can contain values from all other types.
 ``Any`` can be used as the concrete type
 for an instance of any of the following types:
 
