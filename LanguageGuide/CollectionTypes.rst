@@ -448,8 +448,7 @@ are also hashable by default.
    You can use your own custom types as set value types or dictionary key types
    by making them conform to the ``Hashable`` protocol
    from the Swift standard library.
-   For information about implementing the ``hash(into:)`` method
-   that this protocol requires,
+   For information about implementing the required ``hash(into:)`` method,
    see `Hashable <//apple_ref/swift/fake/Hashable>`_.
    For information about conforming to protocols, see :doc:`Protocols`.
 
