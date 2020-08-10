@@ -139,7 +139,6 @@ which initialize a new instance of the structure
 with a value from a different temperature scale:
 
 .. testcode:: initialization
-   :compile: true
 
    -> struct Celsius {
          var temperatureInCelsius: Double
@@ -417,7 +416,6 @@ which encapsulates the name, quantity, and purchase state
 of an item in a shopping list:
 
 .. testcode:: initialization
-   :compile: true
 
    -> class ShoppingListItem {
          var name: String?
@@ -472,7 +470,6 @@ memberwise initializer,
 which you can use to initialize a new ``Size`` instance:
 
 .. testcode:: initialization
-   :compile: true
 
    -> struct Size {
          var width = 0.0, height = 0.0
@@ -490,7 +487,6 @@ and the initializer uses the default value for anything you omit ---
 for example:
 
 .. testcode:: initialization
-   :compile: true
 
    -> let zeroByTwo = Size(height: 2.0)
    -> print(zeroByTwo.width, zeroByTwo.height)

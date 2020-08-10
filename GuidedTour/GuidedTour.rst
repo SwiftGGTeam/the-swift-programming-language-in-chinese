@@ -11,7 +11,6 @@ In Swift, this can be done in a single line:
    It seems worth breaking with tradition to use proper casing.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> print("Hello, world!")
    <- Hello, world!
@@ -48,7 +47,6 @@ This means you can use constants to name a value
 that you determine once but use in many places.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> var myVariable = 42
    -> myVariable = 50
@@ -69,7 +67,6 @@ specify the type by writing it after the variable,
 separated by a colon.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let implicitInteger = 70
    -> let implicitDouble = 70.0
@@ -85,7 +82,6 @@ If you need to convert a value to a different type,
 explicitly make an instance of the desired type.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let label = "The width is "
    -> let width = 94
@@ -108,7 +104,6 @@ and write a backslash (``\``) before the parentheses.
 For example:
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let apples = 3
    -> let oranges = 5
@@ -132,7 +127,6 @@ as long as it matches the indentation of the closing quotation marks.
 For example:
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let quotation = """
       I said "I have \(apples) apples."
@@ -172,7 +166,6 @@ A comma is allowed after the last element.
    Mal: Public relations.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> var shoppingList = ["catfish", "water", "tulips"]
     -> shoppingList[1] = "bottle of water"
@@ -186,7 +179,6 @@ A comma is allowed after the last element.
 Arrays automatically grow as you add elements.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> shoppingList.append("blue paint")
     -> print(shoppingList)
@@ -196,7 +188,6 @@ To create an empty array or dictionary,
 use the initializer syntax.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let emptyArray = [String]()
    -> let emptyDictionary = [String: Float]()
@@ -210,7 +201,6 @@ or pass an argument to a function.
 .. iBooks Store screenshot begins here.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> shoppingList = []
    -> occupations = [:]
@@ -228,7 +218,6 @@ Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let individualScores = [75, 43, 103, 87, 12]
     -> var teamScore = 0
@@ -273,7 +262,6 @@ to mark the value as optional.
    that ships with the SDK in the simulator.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> var optionalString: String? = "Hello"
    -> print(optionalString == nil)
@@ -307,7 +295,6 @@ If the optional value is missing,
 the default value is used instead.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let nickname: String? = nil
     -> let fullName: String = "John Appleseed"
@@ -327,7 +314,6 @@ and tests for equality.
    and fit with the apples & oranges used in an earlier example.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let vegetable = "red pepper"
    -> switch vegetable {
@@ -374,7 +360,6 @@ in an arbitrary order.
    that we can use for some simple math.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> let interestingNumbers = [
           "Prime": [2, 3, 5, 7, 11, 13],
@@ -409,7 +394,6 @@ ensuring that the loop is run at least once.
    so I just went ahead and used this.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> var n = 2
    -> while n < 100 {
@@ -431,7 +415,6 @@ You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> var total = 0
    -> for i in 0..<4 {
@@ -462,7 +445,6 @@ from the function's return type.
    on the Tuesday after the WWDC keynote.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func greet(person: String, day: String) -> String {
            return "Hello \(person), today is \(day)."
@@ -484,7 +466,6 @@ Write a custom argument label before the parameter name,
 or write ``_`` to use no argument label.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func greet(_ person: String, on day: String) -> String {
            return "Hello \(person), today is \(day)."
@@ -506,7 +487,6 @@ either by name or by number.
    This gives the function a reason to return a tuple.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
            var min = scores[0]
@@ -540,7 +520,6 @@ to organize the code in a function
 that is long or complex.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func returnFifteen() -> Int {
            var y = 10
@@ -559,7 +538,6 @@ Functions are a first-class type.
 This means that a function can return another function as its value.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func makeIncrementer() -> ((Int) -> Int) {
            func addOne(number: Int) -> Int {
@@ -576,7 +554,6 @@ This means that a function can return another function as its value.
 A function can take another function as one of its arguments.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
            for item in list {
@@ -606,7 +583,6 @@ by surrounding code with braces (``{}``).
 Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode:: guided-tour
-    :compile: true
 
     >> let numbersMap =
     -> numbers.map({ (number: Int) -> Int in
@@ -629,7 +605,6 @@ Single statement closures implicitly return the value
 of their only statement.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let mappedNumbers = numbers.map({ number in 3 * number })
     -> print(mappedNumbers)
@@ -643,7 +618,6 @@ When a closure is the only argument to a function,
 you can omit the parentheses entirely.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let sortedNumbers = numbers.sorted { $0 > $1 }
     -> print(sortedNumbers)
@@ -676,7 +650,6 @@ Likewise, method and function declarations are written the same way.
    but that wouldn't let them inherit behavior.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> class Shape {
            var numberOfSides = 0
@@ -698,7 +671,6 @@ Use dot syntax to access
 the properties and methods of the instance.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> var shape = Shape()
     -> shape.numberOfSides = 7
@@ -711,7 +683,6 @@ an initializer to set up the class when an instance is created.
 Use ``init`` to create one.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> class NamedShape {
            var numberOfSides: Int = 0
@@ -756,7 +727,6 @@ The compiler also detects methods with ``override``
 that don't actually override any method in the superclass.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> class Square: NamedShape {
            var sideLength: Double
@@ -798,7 +768,7 @@ In addition to simple properties that are stored,
 properties can have a getter and a setter.
 
 .. testcode:: guided-tour
-    :compile: true
+
 
     -> class EquilateralTriangle: NamedShape {
            var sideLength: Double = 0.0
@@ -858,7 +828,6 @@ is always the same as the side length of its square.
    we're working in the context of geometric shapes.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> class TriangleAndSquare {
           var triangle: EquilateralTriangle {
@@ -901,7 +870,6 @@ In both cases,
 the value of the whole expression is an optional value.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
     -> let sideLength = optionalSquare?.sideLength
@@ -925,7 +893,6 @@ enumerations can have methods associated with them.
    but there are many other regional variations.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> enum Rank: Int {
            case ace = 1
@@ -972,7 +939,6 @@ It returns either the enumeration case matching the raw value
 or ``nil`` if there is no matching ``Rank``.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> if let convertedRank = Rank(rawValue: 3) {
            let threeDescription = convertedRank.simpleDescription()
@@ -987,7 +953,6 @@ in cases where there isn't a meaningful raw value,
 you don't have to provide one.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> enum Suit {
            case spades, hearts, diamonds, clubs
@@ -1079,7 +1044,6 @@ or it responds with a description of what went wrong.
    an "out of cheese error" interrupting the calculation.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> enum ServerResponse {
            case result(String, String)
@@ -1114,7 +1078,6 @@ structures are always copied when they are passed around in your code,
 but classes are passed by reference.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> struct Card {
            var rank: Rank
@@ -1143,7 +1106,6 @@ Protocols and Extensions
 Use ``protocol`` to declare a protocol.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> protocol ExampleProtocol {
             var simpleDescription: String { get }
@@ -1159,7 +1121,6 @@ Classes, enumerations, and structs can all adopt protocols.
    for some more interesting data structure.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> class SimpleClass: ExampleProtocol {
             var simpleDescription: String = "A very simple class."
@@ -1207,7 +1168,6 @@ to a type that is declared elsewhere,
 or even to a type that you imported from a library or framework.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> extension Int: ExampleProtocol {
            var simpleDescription: String {
@@ -1233,7 +1193,6 @@ When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let protocolValue: ExampleProtocol = a
     -> print(protocolValue.simpleDescription)
@@ -1273,7 +1232,6 @@ You represent errors using any type that adopts the ``Error`` protocol.
    machine, invented in 1885 by Tolbert Lanston, performed similar work.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> enum PrinterError: Error {
            case outOfPaper
@@ -1288,7 +1246,6 @@ the function returns immediately and the code that called the function
 handles the error.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func send(job: Int, toPrinter printerName: String) throws -> String {
            if printerName == "Never Has Toner" {
@@ -1306,7 +1263,6 @@ the error is automatically given the name ``error``
 unless you give it a different name.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> do {
            let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
@@ -1324,7 +1280,6 @@ unless you give it a different name.
 .. Assertion tests the change that the Experiment box instructs you to make.
 
 .. assertion:: guided-tour
-    :compile: true
 
     >> do {
            let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
@@ -1343,7 +1298,6 @@ after ``case`` in a switch.
    The "rest of the fire" quote comes from The IT Crowd, season 1 episode 2.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> do {
            let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
@@ -1372,7 +1326,6 @@ Otherwise, the result is an optional containing
 the value that the function returned.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
     >> print(printerSuccess as Any)
@@ -1389,7 +1342,6 @@ You can use ``defer`` to write setup and cleanup code next to each other,
 even though they need to be executed at different times.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> var fridgeIsOpen = false
     -> let fridgeContent = ["milk", "eggs", "leftovers"]
@@ -1425,7 +1377,6 @@ to make a generic function or type.
    of the season's plot.
 
 .. testcode:: guided-tour
-    :compile: true
 
     -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
            var result = [Item]()
@@ -1443,7 +1394,6 @@ You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
 .. testcode:: guided-tour
-    :compile: true
 
     // Reimplement the Swift standard library's optional type
     -> enum OptionalValue<Wrapped> {
@@ -1461,7 +1411,6 @@ to require two types to be the same,
 or to require a class to have a particular superclass.
 
 .. testcode:: guided-tour
-   :compile: true
 
    -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
           where T.Element: Equatable, T.Element == U.Element
