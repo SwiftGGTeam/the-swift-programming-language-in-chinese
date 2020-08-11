@@ -296,18 +296,23 @@ and only one level of alternation using `|` or line breaks is allowed.
 
 If you see BNF grammar for new language features that uses parentheses,
 you need to exercise some creativity and judgment when removing them.
-Here are some examples:
 
-This one required coming up with a new category, which then needed to be defined.
+For example,
+translating this part of a BNF rule required coming up with a new category,
+which then needed to be defined:
 
-    ('where' expr)? ==> guard-expression-OPT
+    ('where' expr)?
+
+It became:
+
+    guard-expression-OPT
     guard-expression --> ``where`` expression
 
-This one was a bit dense and required the application of several of the rules above.
+This BNF rule was a bit dense and required the application of several of the rules above:
 
     stmt-switch-case ::= (case-label+ | default-label) brace-item*
 
-was replaced with
+It became:
 
     switch-case --> case-labels brace-items-OPT | default-label brace-items-OPT
 
