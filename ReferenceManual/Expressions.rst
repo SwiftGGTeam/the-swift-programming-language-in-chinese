@@ -1621,6 +1621,45 @@ you can omit the parentheses.
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 
+If there are multiple parameters that can use trailing closure syntax,
+an unlabeled trailing closure is used
+for the leftmost parameter that matches.
+
+Prior to Swift 5.3, this matching was performed from right to left instead.
+For backward compatibility,
+if the left-to-right and right-to-left orderings produce different results,
+the old right-to-left ordering is used
+and the compiler generates a warning.
+Swift 6 will always use the left-to-right ordering.
+
+.. testcode:: trailing-closure-scanning-direction
+
+    -> typealias Callback = (Int) -> Int
+    -> func someFunction(firstClosure: Callback? = nil,
+                       secondClosure: Callback? = nil) {
+           let first = firstClosure?(10)
+           let second = secondClosure?(20)
+           print(first ?? "-", second ?? "-")
+       }
+    ---
+    -> someFunction()
+    << - -
+    -> someFunction { return $0 + 100 }  // Ambiguous
+    << - 120
+    !$ warning: backward matching of the unlabeled trailing closure is deprecated; label the argument with 'secondClosure' to suppress this warning
+    !! someFunction { return $0 + 100 }  // Ambiguous
+    !!              ^
+    !!              (secondClosure:     )
+    !$ note: 'someFunction(firstClosure:secondClosure:)' declared here
+    !! func someFunction(firstClosure: Callback? = nil,
+    !!      ^
+    -> someFunction { return $0 } secondClosure: { return $0 }
+    << 10 20
+In the example above,
+the function call marked "Ambiguous"
+prints "- 120" and produces a compiler warning on Swift 5.3,
+and will print "110 -" on Swift 6.
+
 A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
 by declaring one of several methods,
