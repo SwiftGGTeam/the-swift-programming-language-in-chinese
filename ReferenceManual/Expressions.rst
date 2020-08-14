@@ -1655,6 +1655,7 @@ Swift 6 will always use the left-to-right ordering.
     !!      ^
     -> someFunction { return $0 } secondClosure: { return $0 }
     << 10 20
+
 In the example above,
 the function call marked "Ambiguous"
 prints "- 120" and produces a compiler warning on Swift 5.3,
