@@ -895,7 +895,7 @@ All classes implicitly conform to ``AnyObject``.
 Unlike ``Any``,
 which is defined by the language,
 ``AnyObject`` is defined by the Swift standard library.
-For information, see
+For more information, see
 :ref:`Protocols_ClassOnlyProtocols`
 and `AnyObject <//apple_ref/swift/fake/AnyObject>`_.
 
