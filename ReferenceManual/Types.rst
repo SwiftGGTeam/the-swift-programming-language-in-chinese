@@ -890,10 +890,12 @@ to a ``String`` as follows:
 
 For more information about casting, see :doc:`../LanguageGuide/TypeCasting`.
 
-The ``AnyObject`` protocol that all classes implicitly conform to
-is defined by the Swift standard library,
-rather than being part of the language like the ``Any`` type.
-For information about ``AnyObject``, see
+The ``AnyObject`` protocol is similar to the ``Any`` type.
+All classes implicitly conform to ``AnyObject``.
+Unlike ``Any``,
+which is defined by the language,
+``AnyObject`` is defined by the Swift standard library.
+For information, see
 :ref:`Protocols_ClassOnlyProtocols`
 and `AnyObject <//apple_ref/swift/fake/AnyObject>`_.
 
