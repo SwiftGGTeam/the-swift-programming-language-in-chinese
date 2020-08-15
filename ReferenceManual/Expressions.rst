@@ -1630,7 +1630,7 @@ For backward compatibility,
 if the left-to-right and right-to-left orderings produce different results,
 the old right-to-left ordering is used
 and the compiler generates a warning.
-Swift 6 will always use the left-to-right ordering.
+A future version of Swift will always use the left-to-right ordering.
 
 .. testcode:: trailing-closure-scanning-direction
 
