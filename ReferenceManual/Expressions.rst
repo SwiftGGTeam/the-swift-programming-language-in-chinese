@@ -1624,10 +1624,10 @@ you can omit the parentheses.
 If there are multiple parameters that can use trailing closure syntax,
 an unlabeled trailing closure is used
 for the leftmost parameter that matches.
-
-Prior to Swift 5.3, this matching was performed from right to left instead.
-For backward compatibility,
-if the left-to-right and right-to-left orderings produce different results,
+To ease migration of code from versions of Swift prior to 5.3,
+which performed this matching from right to left instead,
+the compiler checks both the left-to-right and right-to-left orderings.
+If the different scan directions produce different results,
 the old right-to-left ordering is used
 and the compiler generates a warning.
 A future version of Swift will always use the left-to-right ordering.
