@@ -1563,6 +1563,42 @@ A function call expression can include trailing closures
 in the form of closure expressions immediately after the closing parenthesis.
 The trailing closures are understood as arguments to the function,
 added after the last parenthesized argument.
+A trailing closure can be used by the following kinds of parameter:
+
+- A parameter whose type is a function type,
+  like ``(Bool) -> Int``
+- An autoclosure parameter
+  whose wrapped expression's type is a function type,
+  like ``@autoclosure () -> ((Bool) -> Int)``
+- A variadic parameter
+  whose array element type is a function type,
+  like ``((Bool) -> Int)...``
+- A parameter whose type is wrapped in one or more layers of optional,
+  like ``Optional<(Bool) -> Int>``
+- A parameter whose type combines these allowed types,
+  like ``(Optional<(Bool) -> Int>)...``
+
+.. No final period after the list items above
+   because it would be hard to tell when it is or isn't part of the type.
+
+.. assertion:: when-can-you-use-trailing-closure
+
+   >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
+   >> f1(x: 10) { $0 ? 1 : 100 }
+   << 11
+   >> func f2(x: Int, y: @autoclosure ()->((Bool)->Int)) { print(x + y()(false)) }
+   >> f2(x: 20) { $0 ? 2 : 200 }
+   << 220
+   >> func f3(x: Int, y: ((Bool)->Int)...) { print(x + y[0](true)) }
+   >> f3(x: 30) { $0 ? 3 : 300}
+   << 33
+   >> func f4(x: Int, y: Optional<(Bool)->Int>) { print(x + y!(false)) }
+   >> f4(x: 40) { $0 ? 4 : 400 }
+   << 440
+   >> func f5(x: Int, y: (Optional<(Bool) -> Int>)...) { print(x + y[0]!(true)) }
+   >> f5(x: 50) { $0 ? 5 : 500 }
+   << 55
+
 The first closure expression is unlabeled;
 any additional closure expressions are preceded by their argument labels.
 The example below shows the equivalent version of function calls
