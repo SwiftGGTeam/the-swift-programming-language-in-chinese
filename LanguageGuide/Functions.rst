@@ -394,6 +394,19 @@ Any function that you write as just one ``return`` line can omit the ``return``.
 As you'll see in :ref:`Properties_ImplicitReturn`,
 property getters can also use an implicit return.
 
+.. note::
+
+   The code you write in the function body
+   needs to return some value.
+   For example, ``fatalError()`` doesn't return anything ---
+   the function's return type is ``Never`` ---
+   so it can't be as a function's implicitly returned value.
+
+.. Using print() in the example above
+   would be more familiar but technically incorrect.
+   The Void type has a single value, the empty tuple,
+   and print() does return that value.
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names

@@ -656,6 +656,12 @@ in :ref:`Declarations_InOutParameters`, below.
 A function declaration whose *statements*
 include only a single expression
 is understood to return the value of that expression.
+The expression's type must not be ``Void``
+or an enumeration with no defined cases like ``Never``.
+
+.. As of Swift 5.3,
+   the only way to make an uninhabited type is to create an empty enum,
+   so just say that directly instead of using & defining the compiler jargon.
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
