@@ -656,8 +656,10 @@ in :ref:`Declarations_InOutParameters`, below.
 A function declaration whose *statements*
 include only a single expression
 is understood to return the value of that expression.
-The expression's type must not be ``Void``
-or an enumeration with no defined cases like ``Never``.
+This implicit return syntax is considered
+only when the expression's type and the function's return type
+aren't ``Void``
+and aren't an enumeration like ``Never`` that doesn't have any cases.
 
 .. As of Swift 5.3,
    the only way to make an uninhabited type is to create an empty enum,
