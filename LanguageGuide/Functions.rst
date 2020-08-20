@@ -396,16 +396,11 @@ property getters can also use an implicit return.
 
 .. note::
 
-   The code you write in the function body
+   The code you write as an implicit return value
    needs to return some value.
-   For example, ``fatalError()`` doesn't return anything ---
-   the function's return type is ``Never`` ---
-   so it can't be as a function's implicitly returned value.
-
-.. Using print() in the example above
-   would be more familiar but technically incorrect.
-   The Void type has a single value, the empty tuple,
-   and print() does return that value.
+   For example,
+   you can't use ``fatalError("Oh no!")`` or ``print(13)``
+   as an implicit return value.
 
 .. _Functions_FunctionParameterNames:
 
