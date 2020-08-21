@@ -1563,7 +1563,6 @@ A function call expression can include trailing closures
 in the form of closure expressions immediately after the closing parenthesis.
 The trailing closures are understood as arguments to the function,
 added after the last parenthesized argument.
-
 The first closure expression is unlabeled;
 any additional closure expressions are preceded by their argument labels.
 The example below shows the equivalent version of function calls
