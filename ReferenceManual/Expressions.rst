@@ -51,38 +51,48 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 
 .. _Expressions_InOutExpression:
 
-An :newTerm:`in-out expression` marks the name of a variable
-◊
-you use ``&`` immediately before the name of a variable that's being passed
+In-Out Expression
+~~~~~~~~~~~~~~~~~
+
+An :newTerm:`in-out expression` marks a variable
+that's being passed
 as an in-out argument to a function call expression.
 
 .. syntax-outline::
 
    &<#expression#>
 
-In addition to the standard library operators,
-For more information and to see an example,
+For more information about in-out parameters and to see an example,
 see :ref:`Functions_InOutParameters`.
 
 In addition to marking in-out arguments,
 marking a variable with ``&`` is also used
 when passing a non-pointer argument in a context where a pointer is needed.
 Swift converts the value to a pointer that's valid
-for the duration of the function call.
+only for the duration of the function call.
+As with other unsafe APIs,
+you are responsible for ensuring that your code
+never persists the pointer after the function call ends,
+to avoid undefined behavior.
 
-.. testcode:: inout-pointer-promotion
+The following two function calls are equivalent:
 
-    -> var someNumber = 12
-    -> func f(p: UnsafePointer<Int>) {
-           print(p.pointee)
-       }
-    -> f(&someNumber)
-    <- 12
+.. testcode:: inout-unsafe-pointer
 
-.. XXX: Hanging on to the pointer after the function
-   isn't going to trigger a compiler error
-   and it might even work sometimes,
-   but the behavior is undefined.
+   -> func unsafeFunction(pointer: UnsafePointer<String>) {
+   ->     // ...
+   >>     print(pointer.pointee)
+   -> }
+   -> var myString = "Some string"
+   ---
+   -> unsafeFunction(pointer: &myString)
+   -> withUnsafePointer(to: myString) { unsafeFunction(pointer: $0) }
+   << Some string
+   << Some string
+
+Using ``&`` instead of ``withUnsafePointer(to:)``
+can help make calls to low-level C functions more readable,
+especially when the function takes several pointer arguments.
 
 .. syntax-grammar::
 
