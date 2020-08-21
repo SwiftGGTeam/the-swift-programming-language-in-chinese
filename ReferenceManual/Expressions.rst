@@ -1631,7 +1631,7 @@ When matching a trailing closure that has a label,
 a parameter whose argument label doesn't match the closure's label is skipped.
 When matching the first trailing closure
 or a parameter that doesn't have an argument label,
-a parameter needs to satisfy one of the following or it is skipped:
+a parameter is skipped unless it is one of the following:
 
 .. SE-0286 calls these types that structurally resemble a function type.
    We can introduce that term in the future
@@ -1657,6 +1657,9 @@ a parameter needs to satisfy one of the following or it is skipped:
 
 .. No final period after the list items above
    because it would be hard to tell when it is or isn't part of the type.
+
+In addition, in-out parameters are always skipped
+when matching trailing closures to parameters.
 
 .. assertion:: when-can-you-use-trailing-closure
 
