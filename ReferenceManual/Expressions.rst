@@ -1563,41 +1563,6 @@ A function call expression can include trailing closures
 in the form of closure expressions immediately after the closing parenthesis.
 The trailing closures are understood as arguments to the function,
 added after the last parenthesized argument.
-A trailing closure can be used by the following kinds of parameter:
-
-- A parameter whose type is a function type,
-  like ``(Bool) -> Int``
-- An autoclosure parameter
-  whose wrapped expression's type is a function type,
-  like ``@autoclosure () -> ((Bool) -> Int)``
-- A variadic parameter
-  whose array element type is a function type,
-  like ``((Bool) -> Int)...``
-- A parameter whose type is wrapped in one or more layers of optional,
-  like ``Optional<(Bool) -> Int>``
-- A parameter whose type combines these allowed types,
-  like ``(Optional<(Bool) -> Int>)...``
-
-.. No final period after the list items above
-   because it would be hard to tell when it is or isn't part of the type.
-
-.. assertion:: when-can-you-use-trailing-closure
-
-   >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
-   >> f1(x: 10) { $0 ? 1 : 100 }
-   << 11
-   >> func f2(x: Int, y: @autoclosure ()->((Bool)->Int)) { print(x + y()(false)) }
-   >> f2(x: 20) { $0 ? 2 : 200 }
-   << 220
-   >> func f3(x: Int, y: ((Bool)->Int)...) { print(x + y[0](true)) }
-   >> f3(x: 30) { $0 ? 3 : 300}
-   << 33
-   >> func f4(x: Int, y: Optional<(Bool)->Int>) { print(x + y!(false)) }
-   >> f4(x: 40) { $0 ? 4 : 400 }
-   << 440
-   >> func f5(x: Int, y: (Optional<(Bool) -> Int>)...) { print(x + y[0]!(true)) }
-   >> f5(x: 50) { $0 ? 5 : 500 }
-   << 55
 
 The first closure expression is unlabeled;
 any additional closure expressions are preceded by their argument labels.
@@ -1660,6 +1625,57 @@ you can omit the parentheses.
 If there are multiple parameters that can use trailing closure syntax,
 an unlabeled trailing closure is used
 for the leftmost parameter that matches.
+The labeled trailing closures that follow
+are also matched to function parameters from left to right.
+When matching a trailing closure that has a label,
+a parameter whose argument label doesn't match the closure's label is skipped.
+When matching the first trailing closure
+or a parameter that doesn't have an argument label,
+a parameter needs to satisfy one of the following or it is skipped:
+
+.. SE-0286 calls these types that structurally resemble a function type.
+   We can introduce that term in the future
+   if it's needed for other discussion.
+
+- A parameter whose type is a function type,
+  like ``(Bool) -> Int``
+- An autoclosure parameter
+  whose wrapped expression's type is a function type,
+  like ``@autoclosure () -> ((Bool) -> Int)``
+- A variadic parameter
+  whose array element type is a function type,
+  like ``((Bool) -> Int)...``
+- A parameter whose type is wrapped in one or more layers of optional,
+  like ``Optional<(Bool) -> Int>``
+- A parameter whose type combines these allowed types,
+  like ``(Optional<(Bool) -> Int>)...``
+
+  .. FIXME In the above "wrapped" cases,
+     the closure is lifted to the appropriate type
+     as part of the function call --
+     as shown by the function bodies in the hidden assertion below.
+
+.. No final period after the list items above
+   because it would be hard to tell when it is or isn't part of the type.
+
+.. assertion:: when-can-you-use-trailing-closure
+
+   >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
+   >> f1(x: 10) { $0 ? 1 : 100 }
+   << 11
+   >> func f2(x: Int, y: @autoclosure ()->((Bool)->Int)) { print(x + y()(false)) }
+   >> f2(x: 20) { $0 ? 2 : 200 }
+   << 220
+   >> func f3(x: Int, y: ((Bool)->Int)...) { print(x + y[0](true)) }
+   >> f3(x: 30) { $0 ? 3 : 300}
+   << 33
+   >> func f4(x: Int, y: Optional<(Bool)->Int>) { print(x + y!(false)) }
+   >> f4(x: 40) { $0 ? 4 : 400 }
+   << 440
+   >> func f5(x: Int, y: (Optional<(Bool) -> Int>)...) { print(x + y[0]!(true)) }
+   >> f5(x: 50) { $0 ? 5 : 500 }
+   << 55
+
 To ease migration of code from versions of Swift prior to 5.3,
 which performed this matching from right to left instead,
 the compiler checks both the left-to-right and right-to-left orderings.
