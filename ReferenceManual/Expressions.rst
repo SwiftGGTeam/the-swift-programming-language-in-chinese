@@ -1622,14 +1622,15 @@ you can omit the parentheses.
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 
-If there are multiple parameters that can use trailing closure syntax,
-an unlabeled trailing closure is used
-for the leftmost parameter that matches.
-The labeled trailing closures that follow
-are also matched to function parameters from left to right.
-When matching a trailing closure that has a label,
-a parameter whose argument label doesn't match the closure's label is skipped.
-When matching the first trailing closure
+To include the trailing closures in the arguments,
+the compiler examines the function's parameters from left to right,
+according to the following rules.
+The first parameter that isn't skipped is considered a match,
+the trailing closure is passed as the corresponding argument,
+and scanning continues with the next closure.
+For a trailing closure that has a label,
+a parameter whose argument label is different than the closure's label is skipped.
+For the first trailing closure
 or a parameter that doesn't have an argument label,
 a parameter is skipped unless it is one of the following:
 
@@ -1658,8 +1659,7 @@ a parameter is skipped unless it is one of the following:
 .. No final period after the list items above
    because it would be hard to tell when it is or isn't part of the type.
 
-In addition, in-out parameters are always skipped
-when matching trailing closures to parameters.
+In addition, in-out parameters are always skipped.
 
 .. assertion:: when-can-you-use-trailing-closure
 
