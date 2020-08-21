@@ -1682,7 +1682,7 @@ In addition, in-out parameters are always skipped.
 To ease migration of code from versions of Swift prior to 5.3,
 which performed this matching from right to left instead,
 the compiler checks both the left-to-right and right-to-left orderings.
-If the different scan directions produce different results,
+If the scan directions produce different results,
 the old right-to-left ordering is used
 and the compiler generates a warning.
 A future version of Swift will always use the left-to-right ordering.
@@ -1713,8 +1713,8 @@ A future version of Swift will always use the left-to-right ordering.
 
 In the example above,
 the function call marked "Ambiguous"
-prints "- 120" and produces a compiler warning on Swift 5.3,
-and will print "110 -" in the future.
+prints "- 120" and produces a compiler warning on Swift 5.3.
+A future version of Swift will print "110 -".
 
 A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
