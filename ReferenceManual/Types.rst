@@ -875,7 +875,7 @@ you need to cast the instance to a known type
 before you can access its properties or methods.
 Instances with a concrete type of ``Any``
 maintain their original dynamic type
-and can be cast to that type using one of the type-cast operators --
+and can be cast to that type using one of the type-cast operators ---
 ``as``, ``as?``, or ``as!``.
 For example,
 use ``as?`` to conditionally downcast the first object in a heterogeneous array
