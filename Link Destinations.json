@@ -644,6 +644,7 @@
     "typecasting-definingaclasshierarchyfortypecasting": "ID339",
     "typecasting-downcasting": "ID341",
     "typecasting-typecastingforanyandanyobject": "ID342",
+    "types-anytype": "ID629",
     "types-arraytype": "ID450",
     "types-dictionarytype": "ID451",
     "types-functionparameterconflicts": "ID572",
@@ -687,5 +688,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 629
+  "next_id": 630
 }
