@@ -1,6 +1,25 @@
 Document Revision History
 =========================
 
+**2020-09-15**
+
+.. MERGES
+   d8df4bc1 #74: Corrections to the formal grammar
+   fef5cc2d #71: SE-0285 Ease the transition to concise magic file strings
+
+* Added information about how trailing closures are matched to parameters
+  in the :ref: `Expressions_FunctionCallExpression` section.
+  XXX UNMERGED
+
+* Expanded information about `Any`
+  into the new :ref:`Types_AnyType` section.
+
+* Updated the :doc:`../LanguageGuide/MemorySafety` chapter
+  to mention atomic operations.
+  XXX UNMERGED
+
+.. XXX Combine the entries from beta 1 (below) into this section
+
 **2020-06-22**
 
 * Updated for Swift 5.3.
