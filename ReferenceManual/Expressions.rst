@@ -1622,46 +1622,55 @@ you can omit the parentheses.
    Tracking bug is <rdar://problem/35301593>
 
 To include the trailing closures in the arguments,
-the compiler examines the function's parameters from left to right,
-according to the following rules.
-The first parameter that isn't skipped is considered a match,
-the trailing closure is passed as the corresponding argument,
-and scanning continues with the next closure.
-For a trailing closure that has a label,
-a parameter whose argument label is different than the closure's label is skipped.
-For the first trailing closure
-or a parameter that doesn't have an argument label,
-a parameter is skipped unless it is one of the following:
+the compiler examines the function's parameters from left to right as follows:
 
-.. SE-0286 calls these types that structurally resemble a function type.
-   We can introduce that term in the future
-   if it's needed for other discussion.
+#. If the trailing closure has a label
+   and the parameter's argument has a different label,
+   that parameter is skipped.
 
-- A parameter whose type is a function type,
-  like ``(Bool) -> Int``
-- An autoclosure parameter
-  whose wrapped expression's type is a function type,
-  like ``@autoclosure () -> ((Bool) -> Int)``
-- A variadic parameter
-  whose array element type is a function type,
-  like ``((Bool) -> Int)...``
-- A parameter whose type is wrapped in one or more layers of optional,
-  like ``Optional<(Bool) -> Int>``
-- A parameter whose type combines these allowed types,
-  like ``(Optional<(Bool) -> Int>)...``
+#. If the trailing closure has a label
+   and the parameter's argument doesn't have a label,
+   that parameter is skipped.
 
-  .. FIXME In the above "wrapped" cases,
-     the closure is lifted to the appropriate type
-     as part of the function call --
-     as shown by the function bodies in the hidden assertion below.
+#. If the trailing closure doesn't have a label,
+   the parameter isn't an in-out parameter,
+   and the parameter doesn't structurally resemble a function type
+   that parameter is skipped.
+   A parameter :newTerm:`structurally resembles` a function type
+   if the parameter is one of the following:
 
-.. No final period after the list items above
-   because it would be hard to tell when it is or isn't part of the type.
+   - A parameter whose type is a function type,
+     like ``(Bool) -> Int``
+   - An autoclosure parameter
+     whose wrapped expression's type is a function type,
+     like ``@autoclosure () -> ((Bool) -> Int)``
+   - A variadic parameter
+     whose array element type is a function type,
+     like ``((Bool) -> Int)...``
+   - A parameter whose type is wrapped in one or more layers of optional,
+     like ``Optional<(Bool) -> Int>``
+   - A parameter whose type combines these allowed types,
+     like ``(Optional<(Bool) -> Int>)...``
 
-In addition, in-out parameters are always skipped.
+#. The first parameter that isn't skipped is considered a match,
+   and the trailing closure is passed as the corresponding argument.
+   Scanning continues at step 1
+   with the next trailing closure and the next parameter.
+
+#. At the end of the matching process,
+   it's an error if there are any unmatched trailing closures.
+
+When a trailing closure is matched to a parameter
+whose type structurally resembles a function type, but isn't a function,
+the closure is wrapped as needed.
+For example, if the parameter's type is an optional type,
+the closure is wrapped in ``Optional`` automatically.
 
 .. assertion:: when-can-you-use-trailing-closure
 
+   // These tests match the example types given above
+   // when describing what "structucally resembles" a function type.
+   ---
    >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
    >> f1(x: 10) { $0 ? 1 : 100 }
    << 11
@@ -1696,7 +1705,7 @@ A future version of Swift will always use the left-to-right ordering.
            print(first ?? "-", second ?? "-")
        }
     ---
-    -> someFunction()
+    -> someFunction()  // Prints "- -"
     << - -
     -> someFunction { return $0 + 100 }  // Ambiguous
     << - 120
@@ -1707,13 +1716,16 @@ A future version of Swift will always use the left-to-right ordering.
     !$ note: 'someFunction(firstClosure:secondClosure:)' declared here
     !! func someFunction(firstClosure: Callback? = nil,
     !!      ^
-    -> someFunction { return $0 } secondClosure: { return $0 }
+    -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
     << 10 20
 
 In the example above,
 the function call marked "Ambiguous"
 prints "- 120" and produces a compiler warning on Swift 5.3.
-A future version of Swift will print "110 -".
+A future version of Swift will print “110 -”.
+
+.. Smart quotes on the line above are needed
+   because the regex heuristics gets the close quote wrong.
 
 A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
