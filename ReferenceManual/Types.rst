@@ -868,7 +868,6 @@ for an instance of any of the following types:
 .. testcode:: any-type
 
     -> let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
-    << // mixed : [Any] = ["one", 2, true, (4, 5.3), (Function)]
 
 When you use ``Any`` as a concrete type for an instance,
 you need to cast the instance to a known type
