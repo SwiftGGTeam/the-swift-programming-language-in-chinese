@@ -16,7 +16,6 @@ Document Revision History
 
 * Updated the :doc:`../LanguageGuide/MemorySafety` chapter
   to mention atomic operations.
-  XXX UNMERGED
 
 .. XXX Combine the entries from beta 1 (below) into this section
 
