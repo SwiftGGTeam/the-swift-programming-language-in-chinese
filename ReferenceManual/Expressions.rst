@@ -79,16 +79,16 @@ The following two function calls are equivalent:
 
 .. testcode:: inout-unsafe-pointer
 
-   -> func unsafeFunction(pointer: UnsafePointer<String>) {
+   -> func unsafeFunction(pointer: UnsafePointer<Int>) {
    ->     // ...
    >>     print(pointer.pointee)
    -> }
-   -> var myString = "Some string"
+   -> var myNumber = 1234
    ---
-   -> unsafeFunction(pointer: &myString)
-   -> withUnsafePointer(to: myString) { unsafeFunction(pointer: $0) }
-   << Some string
-   << Some string
+   -> unsafeFunction(pointer: &myNumber)
+   -> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+   << 1234
+   << 1234
 
 Using ``&`` instead of ``withUnsafePointer(to:)``
 can help make calls to low-level C functions more readable,
