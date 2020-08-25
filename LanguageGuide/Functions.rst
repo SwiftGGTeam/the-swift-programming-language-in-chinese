@@ -394,6 +394,14 @@ Any function that you write as just one ``return`` line can omit the ``return``.
 As you'll see in :ref:`Properties_ImplicitReturn`,
 property getters can also use an implicit return.
 
+.. note::
+
+   The code you write as an implicit return value
+   needs to return some value.
+   For example,
+   you can't use ``fatalError("Oh no!")`` or ``print(13)``
+   as an implicit return value.
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
