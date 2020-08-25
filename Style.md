@@ -4,9 +4,20 @@
 
 See entry for *Swift*.
 
+## function
+
+In the reference,
+"function" includes both free functions and member functions,
+so we don't also mention methods separately.
+In the guide, we write "functions and methods".
+
 ## memberwise initializer
 
 Not hyphenated as “member-wise”.
+
+## method
+
+See entry for *function*.
 
 ## non-optional
 
