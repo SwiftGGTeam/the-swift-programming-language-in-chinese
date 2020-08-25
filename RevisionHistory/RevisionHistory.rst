@@ -3,28 +3,14 @@ Document Revision History
 
 **2020-09-15**
 
-.. MERGES
-   d8df4bc1 #74: Corrections to the formal grammar
-   fef5cc2d #71: SE-0285 Ease the transition to concise magic file strings
-
-* Added information about how trailing closures are matched to parameters
-  in the :ref: `Expressions_FunctionCallExpression` section.
-  XXX UNMERGED
-
-* Expanded information about `Any`
-  into the new :ref:`Types_AnyType` section.
-
-* Updated the :doc:`../LanguageGuide/MemorySafety` chapter
-  to mention atomic operations.
-
-.. XXX Combine the entries from beta 1 (below) into this section
-
-**2020-06-22**
-
 * Updated for Swift 5.3.
 
 * Added information about multiple trailing closures
   to the :ref:`Closures_TrailingClosures` section.
+
+* Added information about how trailing closures are matched to parameters
+  in the :ref: `Expressions_FunctionCallExpression` section.
+  XXX UNMERGED -- maybe should combine with the bullet above?
 
 * Added information about synthesized implementations
   of ``Comparable`` for enumerations
@@ -49,6 +35,9 @@ Document Revision History
   and :ref:`Statements_DoStatement` sections,
   now that a ``catch`` clause can match against multiple errors.
 
+* Added more information about `Any`
+  and moved it into the new :ref:`Types_AnyType` section.
+
 * Updated the :ref:`Properties_PropertyObservers` section,
   now that lazy properties can have observers.
 
@@ -57,6 +46,9 @@ Document Revision History
 
 * Updated the :ref:`Declarations_StoredVariableObserversAndPropertyObservers` section
   to describe when the getter is called before the observer.
+
+* Updated the :doc:`../LanguageGuide/MemorySafety` chapter
+  to mention atomic operations.
 
 **2020-03-24**
 
