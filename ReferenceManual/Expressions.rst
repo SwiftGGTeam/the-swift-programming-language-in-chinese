@@ -1624,41 +1624,46 @@ you can omit the parentheses.
 To include the trailing closures in the arguments,
 the compiler examines the function's parameters from left to right as follows:
 
-#. If the trailing closure has a label
-   and the parameter's argument has a different label,
-   that parameter is skipped.
+================    =========   ==============================================
+Trailing Closure    Parameter   Action
+================    =========   ==============================================
+Labeled             Labeled     If the labels are the same,
+                                the closure matches the parameter;
+                                otherwise, the parameter is skipped.
+----------------    ---------   ----------------------------------------------
+Labeled             Unlabeled   The parameter is skipped.
+----------------    ---------   ----------------------------------------------
+Unlabeled           Labeled     If the parameter structurally resembles
+                    or          a function type, as defined below,
+                    unlabeled   the closure matches the parameter;
+                                otherwise, the parameter is skipped.
+================    =========   ==============================================
 
-#. If the trailing closure has a label
-   and the parameter's argument doesn't have a label,
-   that parameter is skipped.
+The trailing closure is passed as the argument for the parameter that it matches.
+Parameters that were skipped during the scanning process
+don't have an argument passed to them ---
+for example, they can use a default parameter.
+After finding a match, scanning continues
+with the next trailing closure and the next parameter.
+At the end of the matching process,
+all trailing closures must have a match.
 
-#. If the trailing closure doesn't have a label,
-   the parameter isn't an in-out parameter,
-   and the parameter doesn't structurally resemble a function type
-   that parameter is skipped.
-   A parameter :newTerm:`structurally resembles` a function type
-   if the parameter is one of the following:
+A parameter :newTerm:`structurally resembles` a function type
+if the parameter isn't an in-out parameter,
+and the parameter is one of the following:
 
-   - A parameter whose type is a function type,
-     like ``(Bool) -> Int``
-   - An autoclosure parameter
-     whose wrapped expression's type is a function type,
-     like ``@autoclosure () -> ((Bool) -> Int)``
-   - A variadic parameter
-     whose array element type is a function type,
-     like ``((Bool) -> Int)...``
-   - A parameter whose type is wrapped in one or more layers of optional,
-     like ``Optional<(Bool) -> Int>``
-   - A parameter whose type combines these allowed types,
-     like ``(Optional<(Bool) -> Int>)...``
-
-#. The first parameter that isn't skipped is considered a match,
-   and the trailing closure is passed as the corresponding argument.
-   Scanning continues at step 1
-   with the next trailing closure and the next parameter.
-
-#. At the end of the matching process,
-   it's an error if there are any unmatched trailing closures.
+- A parameter whose type is a function type,
+  like ``(Bool) -> Int``
+- An autoclosure parameter
+  whose wrapped expression's type is a function type,
+  like ``@autoclosure () -> ((Bool) -> Int)``
+- A variadic parameter
+  whose array element type is a function type,
+  like ``((Bool) -> Int)...``
+- A parameter whose type is wrapped in one or more layers of optional,
+  like ``Optional<(Bool) -> Int>``
+- A parameter whose type combines these allowed types,
+  like ``(Optional<(Bool) -> Int>)...``
 
 When a trailing closure is matched to a parameter
 whose type structurally resembles a function type, but isn't a function,
