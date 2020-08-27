@@ -75,6 +75,11 @@ you are responsible for ensuring that your code
 never persists the pointer after the function call ends,
 to avoid undefined behavior.
 
+If the *expression* has a type of ``SomeType``,
+the pointer's type is ``UnsafeMutablePointer<SomeType>``.
+If it has a type of ``Array<SomeType>``,
+the pointer's type is ``UnsafeMutablePointer<SomeType>``.
+.. XXX does this assume/imply/require contigugous array element storage?
 The following two function calls are equivalent:
 
 .. testcode:: inout-unsafe-pointer
@@ -93,6 +98,10 @@ The following two function calls are equivalent:
 Using ``&`` instead of ``withUnsafePointer(to:)``
 can help make calls to low-level C functions more readable,
 especially when the function takes several pointer arguments.
+However, when calling functions from other Swift code,
+avoid using ``&`` instead of using the unsafe APIs explicitly.
+
+.. TODO Why?  The code is more readable, and probably safer.
 
 .. syntax-grammar::
 
