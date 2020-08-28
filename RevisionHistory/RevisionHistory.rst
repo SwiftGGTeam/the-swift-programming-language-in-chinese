@@ -6,12 +6,11 @@ Document Revision History
 * Updated for Swift 5.3.
 
 * Added information about multiple trailing closures
-  to the :ref:`Closures_TrailingClosures` section.
+  to the :ref:`Closures_TrailingClosures` section,
+  and added information about how trailing closures are matched to parameters
+  to the :ref:`Expressions_FunctionCallExpression` section.
 
-* Added information about how trailing closures are matched to parameters
-  in the :ref:`Expressions_FunctionCallExpression` section.
-
-  .. XXX UNMERGED -- maybe should combine with the bullet above?
+  .. XXX UNMERGED
 
 * Added information about synthesized implementations
   of ``Comparable`` for enumerations
