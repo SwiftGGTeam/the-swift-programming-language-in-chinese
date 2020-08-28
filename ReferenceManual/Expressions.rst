@@ -1692,8 +1692,8 @@ the closure is wrapped in ``Optional`` automatically.
    >> f5(x: 50) { $0 ? 5 : 500 }
    << 55
 
-To ease migration of code from versions of Swift prior to 5.3,
-which performed this matching from right to left instead,
+To ease migration of code from versions of Swift prior to 5.3 ---
+which performed this matching from right to left ---
 the compiler checks both the left-to-right and right-to-left orderings.
 If the scan directions produce different results,
 the old right-to-left ordering is used
