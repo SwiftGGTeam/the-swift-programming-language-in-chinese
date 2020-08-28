@@ -9,8 +9,9 @@ Document Revision History
   to the :ref:`Closures_TrailingClosures` section.
 
 * Added information about how trailing closures are matched to parameters
-  in the :ref: `Expressions_FunctionCallExpression` section.
-  XXX UNMERGED -- maybe should combine with the bullet above?
+  in the :ref:`Expressions_FunctionCallExpression` section.
+
+  .. XXX UNMERGED -- maybe should combine with the bullet above?
 
 * Added information about synthesized implementations
   of ``Comparable`` for enumerations
@@ -35,7 +36,7 @@ Document Revision History
   and :ref:`Statements_DoStatement` sections,
   now that a ``catch`` clause can match against multiple errors.
 
-* Added more information about `Any`
+* Added more information about ``Any``
   and moved it into the new :ref:`Types_AnyType` section.
 
 * Updated the :ref:`Properties_PropertyObservers` section,
