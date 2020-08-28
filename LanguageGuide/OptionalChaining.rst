@@ -108,7 +108,7 @@ this optional ``Int`` will also be ``nil``,
 to reflect the fact that it was not possible to access ``numberOfRooms``.
 The optional ``Int`` is accessed through optional binding
 to unwrap the integer and assign the non-optional value
-to the ``roomCount`` variable.
+to the ``roomCount`` constant.
 
 Note that this is true even though ``numberOfRooms`` is a non-optional ``Int``.
 The fact that it's queried through an optional chain

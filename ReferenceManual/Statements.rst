@@ -1194,13 +1194,16 @@ A line control statement has the following forms:
     #sourceLocation()
 
 The first form of a line control statement changes the values
-of the ``#line``, ``#file``, and ``#filePath``
+of the ``#line``, ``#file``, ``#fileID``, and ``#filePath``
 literal expressions, beginning with the line of code following the line control statement.
-The *line number* changes the value of ``#line``
+The *line number* changes the value of ``#line``,
 and is any integer literal greater than zero.
-The *file path* changes the value of ``#file`` and ``#filePath``, and is a string literal.
+The *file path* changes the value of ``#file``, ``#fileID``, and ``#filePath``,
+and is a string literal.
 The specified string becomes the value of ``#filePath``,
-and the last path component of the string becomes the value of ``#file``.
+and the last path component of the string is used by the value of ``#fileID``.
+For information about ``#file``, ``#fileID``, and ``#filePath``,
+see :ref:`Expressions_LiteralExpression`.
 
 The second form of a line control statement, ``#sourceLocation()``,
 resets the source code location back to the default line numbering and file path.
@@ -1297,7 +1300,7 @@ An availability condition has the following form:
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
-.. x*  (Junk * to fix syntax highlighting from previous listing)
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
@@ -1325,10 +1328,37 @@ logical operators such as ``&&`` and ``||``.
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``macOS`` | ``macOSApplicationExtension``
+    platform-name --> ``macCatalyst`` | ``macCatalystApplicationExtension``
     platform-name --> ``watchOS``
     platform-name --> ``tvOS``
     platform-version --> decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+.. If you need to add a new platform to this list,
+   you probably need to update the list under @available too.
+
+.. assertion:: pound-available-platform-names
+
+   >> if #available(iOS 1, iOSApplicationExtension 1,
+   >>               macOS 1, macOSApplicationExtension 1,
+   >>               macCatalyst 1, macCatalystApplicationExtension 1,
+   >>               watchOS 1, watchOsApplicationExtension 1,
+   >>               tvOS 1, *) {
+   >>     print("a")
+   >> } else {
+   >>     print("b")
+   >> }
+   >> if #available(madeUpPlatform 1, *) {
+   >>     print("c")
+   >> }
+   !$ warning: unrecognized platform name 'watchOsApplicationExtension'
+   !$ watchOS 1, watchOsApplicationExtension 1,
+   !$            ^
+   !$ warning: unrecognized platform name 'madeUpPlatform'
+   !$ if #available(madeUpPlatform 1, *) {
+   !$               ^
+   << a
+   << c
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.

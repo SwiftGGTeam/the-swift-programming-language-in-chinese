@@ -47,8 +47,8 @@ and describes the type inference behavior of Swift.
     type --> protocol-composition-type
     type --> opaque-type
     type --> metatype-type
+    type --> any-type
     type --> self-type
-    type --> ``Any``
     type --> ``(`` type ``)``
 
 
@@ -851,6 +851,59 @@ or the entire class marked with the ``final`` keyword.
 
     metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
 
+.. _Types_AnyType:
+
+Any Type
+--------
+
+The ``Any`` type can contain values from all other types.
+``Any`` can be used as the concrete type
+for an instance of any of the following types:
+
+- A class, structure, or enumeration
+- A metatype, such as ``Int.self``
+- A tuple with any types of components
+- A closure or function type
+
+.. testcode:: any-type
+
+    -> let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
+    << // mixed : [Any] = ["one", 2, true, (4, 5.3), (Function)]
+
+When you use ``Any`` as a concrete type for an instance,
+you need to cast the instance to a known type
+before you can access its properties or methods.
+Instances with a concrete type of ``Any``
+maintain their original dynamic type
+and can be cast to that type using one of the type-cast operators --
+``as``, ``as?``, or ``as!``.
+For example,
+use ``as?`` to conditionally downcast the first object in a heterogeneous array
+to a ``String`` as follows:
+
+.. testcode:: any-type
+
+   -> if let first = mixed.first as? String {
+          print("The first item, '\(first)', is a string.")
+      }
+   <- The first item, 'one', is a string.
+
+For more information about casting, see :doc:`../LanguageGuide/TypeCasting`.
+
+The ``AnyObject`` protocol is similar to the ``Any`` type.
+All classes implicitly conform to ``AnyObject``.
+Unlike ``Any``,
+which is defined by the language,
+``AnyObject`` is defined by the Swift standard library.
+For more information, see
+:ref:`Protocols_ClassOnlyProtocols`
+and `AnyObject <//apple_ref/swift/fake/AnyObject>`_.
+
+.. syntax-grammar::
+
+    Grammar of an Any type
+
+    any-type --> ``Any``
 
 .. _Types_SelfType:
 

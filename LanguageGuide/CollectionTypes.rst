@@ -434,7 +434,8 @@ Hash Values for Set Types
 A type must be :newTerm:`hashable` in order to be stored in a set ---
 that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
 A hash value is an ``Int`` value that's the same for all objects that compare equally,
-such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
+such that if ``a == b``,
+the hash value of ``a`` is equal to the hash value of ``b``.
 
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and can be used as set value types or dictionary key types.
@@ -445,25 +446,11 @@ are also hashable by default.
 .. note::
 
    You can use your own custom types as set value types or dictionary key types
-   by making them conform to the ``Hashable`` protocol from Swift's standard library.
-   Types that conform to the ``Hashable`` protocol must provide
-   a gettable ``Int`` property called ``hashValue``.
-   The value returned by a type's ``hashValue`` property
-   isn't required to be the same across different executions of the same program,
-   or in different programs.
-
-   Because the ``Hashable`` protocol conforms to ``Equatable``,
-   conforming types must also provide an implementation of the equals operator (``==``).
-   The ``Equatable`` protocol requires
-   any conforming implementation of ``==`` to be an equivalence relation.
-   That is, an implementation of ``==`` must satisfy the following three conditions,
-   for all values ``a``, ``b``, and ``c``:
-
-   * ``a == a`` (Reflexivity)
-   * ``a == b`` implies ``b == a`` (Symmetry)
-   * ``a == b && b == c`` implies ``a == c`` (Transitivity)
-
-   For more information about conforming to protocols, see :doc:`Protocols`.
+   by making them conform to the ``Hashable`` protocol
+   from the Swift standard library.
+   For information about implementing the required ``hash(into:)`` method,
+   see `Hashable <//apple_ref/swift/fake/Hashable>`_.
+   For information about conforming to protocols, see :doc:`Protocols`.
 
 
 .. _CollectionTypes_SetTypeShorthandSyntax:

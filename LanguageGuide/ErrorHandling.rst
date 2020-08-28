@@ -417,7 +417,7 @@ For example:
     >> }
     << Invalid selection, out of stock, or not enough money.
 
-.. XXX the catch clause is getting indented oddly in HTML output if I hard wrap it
+.. FIXME the catch clause is getting indented oddly in HTML output if I hard wrap it
 
 The ``eat(item:)`` function lists the vending machine errors to catch,
 and its error text corresponds to the items in that list.

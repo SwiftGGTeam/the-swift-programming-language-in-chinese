@@ -57,6 +57,9 @@ These arguments begin with one of the following platform or language names:
 * ``tvOSApplicationExtension``
 * ``swift``
 
+.. If you need to add a new platform to this list,
+   you probably need to update platform-name in the grammar too.
+
 .. For the list in source, see include/swift/AST/PlatformKinds.def
 
 You can also use an asterisk (``*``) to indicate the
@@ -453,6 +456,7 @@ but they break ABI compatibility for frozen types.
 
 .. assertion:: frozen-is-fine-with-evolution
     :evolution: true
+    :compile: true
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
@@ -482,6 +486,7 @@ as discussed in :ref:`Attributes_inlinable`.
 
 .. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
     :evolution: true
+    :compile: true
 
     >> public protocol P { }
     >> private struct PrivateStruct: P { }
@@ -515,6 +520,7 @@ produces a warning because that code is never executed.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum
     :evolution: true
+    :compile: true
 
     >> public enum E { case x, y }
     >> @frozen public enum F { case x, y }
@@ -647,6 +653,7 @@ that doesn't take any arguments and returns ``Void``.
 For example:
 
 .. testcode:: atMain
+   :compile: true
    :library: true
 
    -> @main
@@ -661,7 +668,7 @@ For example:
 Another way to describe the requirements of the ``main`` attribute
 is that the type you write this attribute on
 must satisfy the same requirements
-as types that conform to the following protocol:
+as types that conform to the following hypothetical protocol:
 
 .. testcode:: atMain_ProvidesMain
 
@@ -675,7 +682,7 @@ as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 .. assertion:: no-at-main-in-top-level-code
 
-   // This is the same example as atMait, but without :library: true.
+   // This is the same example as atMain, but without :compile: true.
    >> @main
    >> struct MyTopLevel {
    >>     static func main() {
