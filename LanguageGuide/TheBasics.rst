@@ -1066,7 +1066,7 @@ If the conversion is successful,
 the ``actualNumber`` constant becomes available for use within
 the first branch of the ``if`` statement.
 It has already been initialized with the value contained *within* the optional,
-and so there's no need to use the ``!`` suffix to access its value.
+and so you don't use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
 You can use both constants and variables with optional binding.

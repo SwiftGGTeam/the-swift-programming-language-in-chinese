@@ -209,9 +209,9 @@ which is assumed to take a nontrivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
-It's possible for a ``DataManager`` instance to manage its data
+Because it's possible for a ``DataManager`` instance to manage its data
 without ever importing data from a file,
-so there's no need to create a new ``DataImporter`` instance
+``DataManager`` doesn't create a new ``DataImporter`` instance
 when the ``DataManager`` itself is created.
 Instead, it makes more sense to create the ``DataImporter`` instance
 if and when it's first used.

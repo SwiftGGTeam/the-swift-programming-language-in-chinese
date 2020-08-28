@@ -262,9 +262,9 @@ giving a value of ``0x66``, which has a decimal value of ``102``.
 Finally, the blue component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0x0000FF``,
 which gives an output value of ``0x000099``.
-There's no need to shift this to the right,
-as ``0x000099`` already equals ``0x99``,
-which has a decimal value of ``153``.
+Because ``0x000099`` already equals ``0x99``,
+which has a decimal value of ``153``,
+this value is used without shifting it to the right,
 
 .. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 

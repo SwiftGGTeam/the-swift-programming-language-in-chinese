@@ -908,7 +908,8 @@ it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
-and may be split again. As a result, there's no need to use whitespace
+and may be split again.
+As a result, you don't need to add whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
 In this example, the closing ``>`` characters aren't treated as a single token
@@ -921,6 +922,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
 
    This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
    don't write that.
+
+   We call out the > > vs >> because
+   C++ typically needs whitespace to resolve the ambiguity.
 
 To learn how to define new, custom operators,
 see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
