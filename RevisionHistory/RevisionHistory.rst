@@ -84,7 +84,7 @@ Document Revision History
 * Added information about property wrappers
   to the :ref:`Properties_PropertyWrapper` section.
 
-* Added information enumerations and structures
+* Added information about enumerations and structures
   that are frozen for library evolution
   to the :ref:`Attributes_frozen` section.
 
