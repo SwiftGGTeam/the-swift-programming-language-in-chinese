@@ -10,8 +10,6 @@ Document Revision History
   and added information about how trailing closures are matched to parameters
   to the :ref:`Expressions_FunctionCallExpression` section.
 
-  .. XXX UNMERGED
-
 * Added information about synthesized implementations
   of ``Comparable`` for enumerations
   to the :ref:`Protocols_SynthesizedImplementation` section.
