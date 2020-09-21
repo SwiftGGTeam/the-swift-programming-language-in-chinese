@@ -1644,6 +1644,117 @@ you can omit the parentheses.
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 
+To include the trailing closures in the arguments,
+the compiler examines the function's parameters from left to right as follows:
+
+================    =========   ==============================================
+Trailing Closure    Parameter   Action
+================    =========   ==============================================
+Labeled             Labeled     If the labels are the same,
+                                the closure matches the parameter;
+                                otherwise, the parameter is skipped.
+----------------    ---------   ----------------------------------------------
+Labeled             Unlabeled   The parameter is skipped.
+----------------    ---------   ----------------------------------------------
+Unlabeled           Labeled     If the parameter structurally resembles
+                    or          a function type, as defined below,
+                    unlabeled   the closure matches the parameter;
+                                otherwise, the parameter is skipped.
+================    =========   ==============================================
+
+The trailing closure is passed as the argument for the parameter that it matches.
+Parameters that were skipped during the scanning process
+don't have an argument passed to them ---
+for example, they can use a default parameter.
+After finding a match, scanning continues
+with the next trailing closure and the next parameter.
+At the end of the matching process,
+all trailing closures must have a match.
+
+A parameter :newTerm:`structurally resembles` a function type
+if the parameter isn't an in-out parameter,
+and the parameter is one of the following:
+
+- A parameter whose type is a function type,
+  like ``(Bool) -> Int``
+- An autoclosure parameter
+  whose wrapped expression's type is a function type,
+  like ``@autoclosure () -> ((Bool) -> Int)``
+- A variadic parameter
+  whose array element type is a function type,
+  like ``((Bool) -> Int)...``
+- A parameter whose type is wrapped in one or more layers of optional,
+  like ``Optional<(Bool) -> Int>``
+- A parameter whose type combines these allowed types,
+  like ``(Optional<(Bool) -> Int>)...``
+
+When a trailing closure is matched to a parameter
+whose type structurally resembles a function type, but isn't a function,
+the closure is wrapped as needed.
+For example, if the parameter's type is an optional type,
+the closure is wrapped in ``Optional`` automatically.
+
+.. assertion:: when-can-you-use-trailing-closure
+
+   // These tests match the example types given above
+   // when describing what "structucally resembles" a function type.
+   ---
+   >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
+   >> f1(x: 10) { $0 ? 1 : 100 }
+   << 11
+   >> func f2(x: Int, y: @autoclosure ()->((Bool)->Int)) { print(x + y()(false)) }
+   >> f2(x: 20) { $0 ? 2 : 200 }
+   << 220
+   >> func f3(x: Int, y: ((Bool)->Int)...) { print(x + y[0](true)) }
+   >> f3(x: 30) { $0 ? 3 : 300}
+   << 33
+   >> func f4(x: Int, y: Optional<(Bool)->Int>) { print(x + y!(false)) }
+   >> f4(x: 40) { $0 ? 4 : 400 }
+   << 440
+   >> func f5(x: Int, y: (Optional<(Bool) -> Int>)...) { print(x + y[0]!(true)) }
+   >> f5(x: 50) { $0 ? 5 : 500 }
+   << 55
+
+To ease migration of code from versions of Swift prior to 5.3 ---
+which performed this matching from right to left ---
+the compiler checks both the left-to-right and right-to-left orderings.
+If the scan directions produce different results,
+the old right-to-left ordering is used
+and the compiler generates a warning.
+A future version of Swift will always use the left-to-right ordering.
+
+.. testcode:: trailing-closure-scanning-direction
+
+    -> typealias Callback = (Int) -> Int
+    -> func someFunction(firstClosure: Callback? = nil,
+                       secondClosure: Callback? = nil) {
+           let first = firstClosure?(10)
+           let second = secondClosure?(20)
+           print(first ?? "-", second ?? "-")
+       }
+    ---
+    -> someFunction()  // Prints "- -"
+    << - -
+    -> someFunction { return $0 + 100 }  // Ambiguous
+    << - 120
+    !$ warning: backward matching of the unlabeled trailing closure is deprecated; label the argument with 'secondClosure' to suppress this warning
+    !! someFunction { return $0 + 100 }  // Ambiguous
+    !!              ^
+    !!              (secondClosure:     )
+    !$ note: 'someFunction(firstClosure:secondClosure:)' declared here
+    !! func someFunction(firstClosure: Callback? = nil,
+    !!      ^
+    -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
+    << 10 20
+
+In the example above,
+the function call marked "Ambiguous"
+prints "- 120" and produces a compiler warning on Swift 5.3.
+A future version of Swift will print “110 -”.
+
+.. Smart quotes on the line above are needed
+   because the regex heuristics gets the close quote wrong.
+
 A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
 by declaring one of several methods,
