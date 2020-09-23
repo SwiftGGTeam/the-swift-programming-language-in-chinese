@@ -955,6 +955,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
     capture-list --> ``[`` capture-list-items ``]``
     capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
     capture-list-item --> capture-specifier-OPT identifier
+    capture-list-item --> capture-specifier-OPT identifier ``=`` expression
     capture-list-item --> capture-specifier-OPT self-expression
     capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
 
