@@ -144,3 +144,6 @@ diff 操作如下：
 
 # 协议
 和 [苹果官方文档](https://swift.org/documentation/) 协议一致：[Creative Commons Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/)。
+
+
+#hacktoberfest 2020
