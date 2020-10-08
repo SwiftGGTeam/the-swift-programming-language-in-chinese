@@ -1036,7 +1036,7 @@ If the module is present, the platform condition returns ``true``;
 otherwise, it returns ``false``.
 
 The ``targetEnvironment()`` platform condition
-returns ``true`` when code is compiled for a simulator;
+returns ``true`` when code is being compiled for the specified environment;
 otherwise, it returns ``false``.
 
 .. note::
