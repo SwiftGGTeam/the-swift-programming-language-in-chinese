@@ -23,7 +23,7 @@ for name in names {
 // Hello, Jack!
 ```
 
-你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键声明会为 `animalName` 常量，字典的值会声明为 `legCount` 常量：
+你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键会声明为 `animalName` 常量，字典的值会声明为 `legCount` 常量：
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
