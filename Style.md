@@ -58,7 +58,7 @@ because the action is performed by some vague compiler-Swift-parser entity.
 In that case, passive voice is sometimes the clearest way to write
 a sentence whose focus is the action rather than the agent.
 
-For example the phrase “X is understood as Y”
+For example, the phrase “X is understood as Y”
 appears several times in the reference
 when describing the meaning of a piece of syntax.
 In this case, passive voice is clearer than active
@@ -216,7 +216,7 @@ is available in the following places:
   discusses Buckminster Fuller’s proposed use of this format
   to improve reading comprehension.
 * [Semantic Line Breaks](https://sembr.org) describes a formalized spec,
-  maintained by Mattt Zmuda
+  maintained by Mattt Zmuda.
 
 # Formal Grammar
 
@@ -233,7 +233,7 @@ For example:
 
     forty-two --> ``42``
 
-**Write syntactic category names without any extra markup**
+**Write syntactic category names without any extra markup.**
 Within a syntax-grammar block, they appear in italics automatically.
 Don't refer to them from the English prose above them.
 
