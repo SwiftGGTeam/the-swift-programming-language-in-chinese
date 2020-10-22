@@ -1629,8 +1629,6 @@ if that type is the same as the argument's type:
 * ``Array<SomeType>`` can become ``UnsafePointer<SomeType>``
 * ``String`` can become ``UnsafePointer<CChar>``
 
-.. XXX TR: does the array case assume/imply/require contigugous array element storage?
-
 The following two function calls are equivalent:
 
 .. testcode:: inout-unsafe-pointer
@@ -1652,6 +1650,18 @@ As with other unsafe APIs,
 you are responsible for ensuring that your code
 never persists the pointer after the function call ends,
 to avoid undefined behavior.
+
+.. note::
+
+   When implicitly converting an array to an unsafe pointer,
+   Swift ensures that the array's storage is contiguous
+   by converting or copying the array as needed.
+   For example, you can use this syntax
+   with an array that was bridged to ``Array``
+   from an ``NSArray`` subclass that makes no API contract about its storage.
+   If you need to guarantee that the array's storage is already contiguous,
+   so the implicit conversion never needs to do this work,
+   use ``ContiguousArray`` instead of ``Array``.
 
 Using ``&`` instead of an explicit function like ``withUnsafePointer(to:)``
 can help make calls to low-level C functions more readable,
