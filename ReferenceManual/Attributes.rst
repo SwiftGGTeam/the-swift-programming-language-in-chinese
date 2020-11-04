@@ -1058,6 +1058,85 @@ as the original wrapped property.
     -> s.$x.wrapper  // WrapperWithProjection value
 
 
+.. _Attributes_resultBuilder:
+
+resultBuilder
+~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, enumeration
+to use that type as a result builder.
+
+.. XXX add framing; cross reference to the guide
+
+    From the SE proposal:
+
+    A result builder type can be used as an attribute in two different
+    syntactic positions. The first position is on a func, var, or subscript
+    declaration. For the var and subscript, the declaration must define a
+    getter, and the attribute is treated as if it were an attribute on that
+    getter. A result builder attribute used in this way causes the result
+    builder transform to be applied to the body of the function; it is not
+    considered part of the interface of the function and does not affect its
+    ABI.
+
+    A result builder type can also be used as an attribute on a parameter of
+    function type, including on parameters of protocol requirements. A result
+    builder attribute used in this way causes the result builder transform to
+    be applied to the body of any explicit closures that are passed as the
+    corresponding argument, unless the closure contains a return statement.
+    This is considered part of the interface of the function and can affect
+    source compatibility, although it does not affect its ABI.
+
+The declaration for a result builder includes type aliases
+that specify the type of input it takes (``Expression``),
+the type of a partial result (``Component``),
+and the type of result it produces (``FinalResult``).
+Both ``Expression`` and ``FinalResult`` default to being the same as ``Component``
+if you don't define them.
+
+``static func buildBlock(_ components: Component...) -> Component``
+  Combines multiple partial results into a single partial result.
+  A result builder must implement this method.
+
+``static func buildOptional(_ component: Component?) -> Component``
+  Builds a partial result from a partial result that can be ``nil``.
+  Implement this method to support ``if`` statements
+  that don’t include an ``else`` clause.
+
+``static func buildEither(first: Component) -> Component``
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and ``buildEither(second:)``
+  to support ``switch`` statements
+  and ``if`` statements that include an ``else`` clause.
+
+``static func buildEither(second: Component) -> Component``
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and ``buildEither(first:)``
+  to support ``switch`` statements
+  and ``if`` statements that include an ``else`` clause.
+
+``static func buildArray(_ components: [Component]) -> Component``
+  Builds a partial result from an array of partial results.
+  Implement this method to support ``for`` loops.
+
+``static func buildExpression(_ expression: Expression) -> Component``
+  Builds a partial result from an expression.
+  You can implement this method to perform initial transformation —
+  for example, transforming expressions into an internal type —
+  or to provide additional information for type inference at use sites.
+
+``static func buildFinalResult(_ component: Component) -> FinalResult``
+  Builds a final result from a partial result.
+  You can implement this method as part of a static function builder
+  that uses a different type for partial and final results,
+  or to perform other final transformation on a result before returning it.
+
+``static func buildLimitedAvailability(_ component: Component) -> Component``
+  Builds a partial result that propagates type information
+  outside a compiler-control statement
+  that performs an availability check.
+
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
