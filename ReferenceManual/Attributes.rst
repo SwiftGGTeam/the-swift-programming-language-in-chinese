@@ -1263,6 +1263,9 @@ one of the following arguments:
 * The ``c`` argument indicates a C function reference.
   The function value carries no context and uses the C calling convention.
 
+.. @convention(thin) is private, even though it doesn't have an underscore
+   https://forums.swift.org/t/12087/6
+
 With a few exceptions,
 a function of any calling convention can be used
 when a function any other calling convention is needed.
