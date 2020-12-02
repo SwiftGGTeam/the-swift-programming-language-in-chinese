@@ -884,6 +884,24 @@ see :ref:`Declarations_OperatorDeclaration`.
 .. Use compiled code to work around a REPL limitation
    <rdar://problem/16061044> Custom operator declarations cannot be written over multiple lines in the REPL
 
+.. _AdvancedOperators_ResultBuilders:
+
+Result Builders
+---------------
+
+.. OUTLINE
+
+   A result builder creates nested data structures
+   using a lightweight syntax that looks like a natural extension to the language.
+
+   From the SE proposal:
+   which allows certain functions (specially-annotated, often via context)
+   to implicitly build up a result value from a sequence of components.
+
+
+
+
+
 .. The following needs more work...
 
     Protocol Operator Requirements
