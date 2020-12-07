@@ -44,7 +44,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 }
 ```
 
-你可能注意到了，`swapTwoInts(_:_:‘)`、`swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数体是一样的，唯一的区别是它们接受的参数类型（`Int`、`String` 和 `Double`）。
+你可能注意到了，`swapTwoInts(_:_:)`、`swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数体是一样的，唯一的区别是它们接受的参数类型（`Int`、`String` 和 `Double`）。
 
 在实际应用中，通常需要一个更实用更灵活的函数来交换两个任意类型的值，幸运的是，泛型代码帮你解决了这种问题。（这些函数的泛型版本已经在下面定义好了。）
 
