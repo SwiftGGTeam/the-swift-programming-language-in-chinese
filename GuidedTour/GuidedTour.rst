@@ -367,8 +367,7 @@ in an arbitrary order.
           "Square": [1, 4, 9, 16, 25],
       ]
    -> var largest = 0
-   -> for (kind, numbers) in interestingNumbers {
-   >>     _ = kind
+   -> for (_, numbers) in interestingNumbers {
           for number in numbers {
               if number > largest {
                   largest = number
@@ -380,8 +379,8 @@ in an arbitrary order.
 
 .. admonition:: Experiment
 
-   Add another variable to keep track of which kind of number
-   was the largest, as well as what that largest number was.
+   Replace the ``_`` with a variable name,
+   and keep track of which kind of number was the largest.
 
 Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
