@@ -880,11 +880,11 @@ postfix operators can't begin with either a question mark or an exclamation poin
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
-or a binary operator. This behavior is summarized in the following rules:
+or an infix operator. This behavior is summarized in the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
-  it's treated as a binary operator.
-  As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as a binary operator.
+  it's treated as an infix operator.
+  As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as an infix operator.
 * If an operator has whitespace on the left side only,
   it's treated as a prefix unary operator.
   As an example, the ``+++`` operator in ``a +++b`` is treated as a prefix unary operator.
@@ -975,6 +975,6 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     dot-operator-character --> ``.`` | operator-character
     dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 
-    binary-operator --> operator
+    infix-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator

@@ -95,7 +95,7 @@ It has the following form:
 If the *expression* throws an error,
 a runtime error is produced.
 
-When the expression on the left-hand side of a binary operator
+When the expression on the left-hand side of an infix operator
 is marked with ``try``, ``try?``, or ``try!``,
 that operator applies to the whole binary expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
@@ -124,8 +124,8 @@ That said, you can use parentheses to be explicit about the scope of the operato
     !!                                      ^
     !!                                      try!
 
-A ``try`` expression can't appear on the right-hand side of a binary operator,
-unless the binary operator is the assignment operator
+A ``try`` expression can't appear on the right-hand side of an infix operator,
+unless the infix operator is the assignment operator
 or the ``try`` expression is enclosed in parentheses.
 
 .. assertion:: try-on-right
@@ -188,7 +188,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 .. note::
 
     At parse time,
-    an expression made up of binary operators is represented
+    an expression made up of infix binary operators is represented
     as a flat list.
     This list is transformed into a tree
     by applying operator precedence.
@@ -201,7 +201,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 
     Grammar of a binary expression
 
-    binary-expression --> binary-operator prefix-expression
+    binary-expression --> infix-operator prefix-expression
     binary-expression --> assignment-operator try-operator-OPT prefix-expression
     binary-expression --> conditional-operator try-operator-OPT prefix-expression
     binary-expression --> type-casting-operator

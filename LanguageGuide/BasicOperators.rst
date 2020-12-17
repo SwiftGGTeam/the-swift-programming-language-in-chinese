@@ -47,7 +47,7 @@ Operators are unary, binary, or ternary:
   the ternary conditional operator (``a ? b : c``).
 
 The values that operators affect are :newTerm:`operands`.
-In the expression ``1 + 2``, the ``+`` symbol is a binary operator
+In the expression ``1 + 2``, the ``+`` symbol is an infix operator
 and its two operands are the values ``1`` and ``2``.
 
 .. _BasicOperators_AssignmentOperator:

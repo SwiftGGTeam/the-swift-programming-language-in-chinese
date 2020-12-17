@@ -571,11 +571,7 @@ This is known as :newTerm:`overloading` the existing operators.
 
 The example below shows how to implement
 the arithmetic addition operator (``+``) for a custom structure.
-The arithmetic addition operator is a :newTerm:`binary operator`
-because it operates on two targets
-and is said to be :newTerm:`infix` because it appears in between those two targets.
-
-The example defines a ``Vector2D`` structure for
+It defines a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``,
 followed by a definition of an :newTerm:`operator method`
 to add together instances of the ``Vector2D`` structure:
@@ -597,7 +593,7 @@ with a method name that matches the operator to be overloaded (``+``).
 Because addition isn't part of the essential behavior for a vector,
 the type method is defined in an extension of ``Vector2D``
 rather than in the main structure declaration of ``Vector2D``.
-Because the arithmetic addition operator is a binary operator,
+Because the arithmetic addition operator is a binary infix operator,
 this operator method takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
 
