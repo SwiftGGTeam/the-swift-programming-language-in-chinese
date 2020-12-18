@@ -400,7 +400,7 @@ serve(customer: customersInLine.remove(at: 0))
 如果你想让一个自动闭包可以“逃逸”，则应该同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性的讲解见上面的 [逃逸闭包](#escaping-closures)。
 
 ```swift
-// customersInLine i= ["Barry", "Daniella"]
+// customersInLine is ["Barry", "Daniella"]
 var customerProviders: [() -> String] = []
 func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
     customerProviders.append(customerProvider)
