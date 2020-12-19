@@ -2,16 +2,16 @@ Expressions
 ===========
 
 In Swift, there are four kinds of expressions:
-prefix expressions, binary expressions, primary expressions, and postfix expressions.
+prefix expressions, infix expressions, primary expressions, and postfix expressions.
 Evaluating an expression returns a value,
 causes a side effect, or both.
 
-Prefix and binary expressions let you
+Prefix and infix expressions let you
 apply operators to smaller expressions.
 Primary expressions are conceptually the simplest kind of expression,
 and they provide a way to access values.
 Postfix expressions,
-like prefix and binary expressions,
+like prefix and infix expressions,
 let you build up more complex expressions
 using postfixes such as function calls and member access.
 Each kind of expression is described in detail
@@ -21,7 +21,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT prefix-expression infix-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -97,7 +97,7 @@ a runtime error is produced.
 
 When the expression on the left-hand side of an infix operator
 is marked with ``try``, ``try?``, or ``try!``,
-that operator applies to the whole binary expression.
+that operator applies to the whole infix expression.
 That said, you can use parentheses to be explicit about the scope of the operator's application.
 
 .. testcode:: placement-of-try
@@ -150,10 +150,10 @@ see :doc:`../LanguageGuide/ErrorHandling`.
 
 .. _Expressions_BinaryExpressions:
 
-Binary Expressions
-------------------
+Infix Expressions
+-----------------
 
-:newTerm:`Binary expressions` combine
+:newTerm:`Infix expressions` combine
 an infix operator with the expression that it takes
 as its left-hand and right-hand arguments.
 It has the following form:
@@ -190,13 +190,13 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 
 .. syntax-grammar::
 
-    Grammar of a binary expression
+    Grammar of an infix expression
 
-    binary-expression --> infix-operator prefix-expression
-    binary-expression --> assignment-operator try-operator-OPT prefix-expression
-    binary-expression --> conditional-operator try-operator-OPT prefix-expression
-    binary-expression --> type-casting-operator
-    binary-expressions --> binary-expression binary-expressions-OPT
+    infix-expression --> infix-operator prefix-expression
+    infix-expression --> assignment-operator try-operator-OPT prefix-expression
+    infix-expression --> conditional-operator try-operator-OPT prefix-expression
+    infix-expression --> type-casting-operator
+    infix-expressions --> infix-expression infix-expressions-OPT
 
 
 .. _Expressions_AssignmentOperator:
@@ -385,7 +385,7 @@ Primary Expressions
 are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
-to make prefix expressions, binary expressions, and postfix expressions.
+to make prefix expressions, infix expressions, and postfix expressions.
 
 .. syntax-grammar::
 
