@@ -176,15 +176,6 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
    operator precedence and we do a second phase of parsing that builds
    something that's a more traditional tree.
 
-.. You're going to care about this if you're adding new operators --
-   it's not a high priority.  We could probably loosely describe this
-   process by saying that the parser handles it as a flat list and then
-   applies the operator precedence to make a more typical parse tree.
-   At some point, we will probably have to document the syntax around
-   creating operators.  This may need to be discussed in the Language Guide
-   in respect to the spacing rules -- ``x + y * z`` is different from
-   ``x + y* z``.
-
 .. note::
 
     At parse time,
