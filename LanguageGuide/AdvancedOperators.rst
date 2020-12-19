@@ -593,7 +593,7 @@ with a method name that matches the operator to be overloaded (``+``).
 Because addition isn't part of the essential behavior for a vector,
 the type method is defined in an extension of ``Vector2D``
 rather than in the main structure declaration of ``Vector2D``.
-Because the arithmetic addition operator is a binary infix operator,
+Because the arithmetic addition operator is an infix operator,
 this operator method takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
 
@@ -627,7 +627,7 @@ to make the vector ``(5.0, 5.0)``, as illustrated below.
 Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The example shown above demonstrates a custom implementation of a binary infix operator.
+The example shown above demonstrates a custom implementation of an infix operator.
 Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.

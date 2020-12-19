@@ -154,7 +154,7 @@ Binary Expressions
 ------------------
 
 :newTerm:`Binary expressions` combine
-an infix binary operator with the expression that it takes
+an infix operator with the expression that it takes
 as its left-hand and right-hand arguments.
 It has the following form:
 
@@ -188,7 +188,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 .. note::
 
     At parse time,
-    an expression made up of infix binary operators is represented
+    an expression made up of infix operators is represented
     as a flat list.
     This list is transformed into a tree
     by applying operator precedence.
