@@ -597,7 +597,7 @@ with a method name that matches the operator to be overloaded (``+``).
 Because addition isn't part of the essential behavior for a vector,
 the type method is defined in an extension of ``Vector2D``
 rather than in the main structure declaration of ``Vector2D``.
-Because the arithmetic addition operator is an infix operator,
+Because the arithmetic addition operator is a binary operator,
 this operator method takes two input parameters of type ``Vector2D``
 and returns a single output value, also of type ``Vector2D``.
 
