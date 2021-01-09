@@ -1630,7 +1630,7 @@ infix operator 运算符名称: 优先级组
 下面的形式声明了一个新的前缀运算符：
 
 ```swift
-prefix operator 运算符名称 {}
+prefix operator 运算符名称
 ```
 
 出现在运算对象前边的前缀运算符是一元运算符，例如表达式 `!a` 中的前缀非运算符（`!`）。
@@ -1640,7 +1640,7 @@ prefix operator 运算符名称 {}
 下面的形式声明了一个新的后缀运算符：
 
 ```swift
-postfix operator 运算符名称 {}
+postfix operator 运算符名称
 ```
 
 紧跟在运算对象后边的后缀运算符是一元运算符，例如表达式 `a!` 中的后缀强制解包运算符（`!`）。
@@ -1669,7 +1669,7 @@ postfix operator 运算符名称 {}
 > 
 ####  infix-operator-declaration {#infix-operator-declaration}
 > 
-> *中缀运算符声明* → **infix** **运算符** [运算符](./02_Lexical_Structure.md#operator) **{** [中缀运算符属性](#infix-operator-attributes)<sub>可选</sub> **}**
+> *中缀运算符声明* → **infix** **运算符** [运算符](./02_Lexical_Structure.md#operator) **{** [中缀运算符组](#infix-operator-attributes)<sub>可选</sub> **}**
 > 
 
 #### infix-operator-group {#infix-operator-group}
