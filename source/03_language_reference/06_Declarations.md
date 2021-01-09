@@ -1669,8 +1669,7 @@ postfix operator 运算符名称
 > 
 ####  infix-operator-declaration {#infix-operator-declaration}
 > 
-> *中缀运算符声明* → **infix** **运算符** [运算符](./02_Lexical_Structure.md#operator) **{** [中缀运算符组](#infix-operator-attributes)<sub>可选</sub> **}**
-> 
+> *中缀运算符声明* → **infix** **运算符** [运算符](./02_Lexical_Structure.md#operator) **{** [中缀运算符组](#infix-operator-group)<sub>可选</sub> **}**
 
 #### infix-operator-group {#infix-operator-group}
 > *中缀运算符组* → [优先级组名称](#precedence-group-name)
