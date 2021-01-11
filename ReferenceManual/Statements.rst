@@ -1087,7 +1087,7 @@ otherwise, it returns ``false``.
           print(3)
       #endif
 
-You can combine compilation conditions using the logical operators
+You can combine and negate compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
 These operators have the same associativity and precedence as the
@@ -1115,9 +1115,9 @@ have the following form:
     Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
     However, there's an exception
-    if the compilation condition includes a ``swift()`` platform condition:
+    if the compilation condition includes a ``swift()`` or ``compiler()`` platform condition:
     The statements are parsed
-    only if the compiler's version of Swift matches
+    only if the language or compiler version matches
     what is specified in the platform condition.
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
