@@ -645,7 +645,7 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 
 ## 具有泛型 Where 子句的关联类型 {#associated-types-with-a-generic-where-clause}
 
-你可以在关联类型后面加上具有泛型 `where` 的字句。例如，建立一个包含迭代器（`Iterator`）的容器，就像是标准库中使用的 `Sequence` 协议那样。你应该这么写：
+你可以在关联类型后面加上具有泛型 `where` 的子句。例如，建立一个包含迭代器（`Iterator`）的容器，就像是标准库中使用的 `Sequence` 协议那样。你应该这么写：
 
 ```swift
 protocol Container {
