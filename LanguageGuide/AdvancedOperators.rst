@@ -7,7 +7,7 @@ These include all of the bitwise and bit shifting operators you will be familiar
 from C and Objective-C.
 
 Unlike arithmetic operators in C,
-arithmetic operators in Swift do not overflow by default.
+arithmetic operators in Swift don't overflow by default.
 Overflow behavior is trapped and reported as an error.
 To opt in to overflow behavior,
 use Swift's second set of arithmetic operators that overflow by default,
@@ -34,7 +34,7 @@ Bitwise Operators
 
 :newTerm:`Bitwise operators` enable you to manipulate
 the individual raw data bits within a data structure.
-They are often used in low-level programming,
+They're often used in low-level programming,
 such as graphics programming and device driver creation.
 Bitwise operators can also be useful when you work with raw data from external sources,
 such as encoding and decoding data for communication over a custom protocol.
@@ -262,9 +262,9 @@ giving a value of ``0x66``, which has a decimal value of ``102``.
 Finally, the blue component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0x0000FF``,
 which gives an output value of ``0x000099``.
-There's no need to shift this to the right,
-as ``0x000099`` already equals ``0x99``,
-which has a decimal value of ``153``.
+Because ``0x000099`` already equals ``0x99``,
+which has a decimal value of ``153``,
+this value is used without shifting it to the right,
 
 .. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 
@@ -293,7 +293,7 @@ and the seven value bits are just the number ``4``,
 written in binary notation.
 
 Negative numbers, however, are stored differently.
-They are stored by subtracting their absolute value from ``2`` to the power of ``n``,
+They're stored by subtracting their absolute value from ``2`` to the power of ``n``,
 where ``n`` is the number of value bits.
 An eight-bit number has seven value bits,
 so this means ``2`` to the power of ``7``, or ``128``.
@@ -334,7 +334,7 @@ rather than with a zero.
 .. image:: ../images/bitshiftSigned_2x.png
    :align: center
 
-This action ensures that signed integers have the same sign after they are shifted to the right,
+This action ensures that signed integers have the same sign after they're shifted to the right,
 and is known as an :newTerm:`arithmetic shift`.
 
 Because of the special way that positive and negative numbers are stored,
@@ -348,7 +348,7 @@ Overflow Operators
 ------------------
 
 If you try to insert a number into an integer constant or variable
-that cannot hold that value,
+that can't hold that value,
 by default Swift reports an error rather than allowing an invalid value to be created.
 This behavior gives extra safety when you work with numbers that are too large or too small.
 
@@ -402,7 +402,7 @@ using the overflow addition operator (``&+``):
 
 The variable ``unsignedOverflow`` is initialized with the maximum value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
-It is then incremented by ``1`` using the overflow addition operator (``&+``).
+It's then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
@@ -478,7 +478,7 @@ either grouped from the left, or grouped from the right.
 Think of it as meaning “they associate with the expression to their left,”
 or “they associate with the expression to their right.”
 
-It is important to consider
+It's important to consider
 each operator's precedence and associativity
 when working out the order in which a compound expression will be calculated.
 For example,
@@ -507,7 +507,7 @@ Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the remainder operator (``%``) and the multiplication operator (``*``)
 have a higher precedence than the addition operator (``+``).
-As a result, they are both evaluated before the addition is considered.
+As a result, they're both evaluated before the addition is considered.
 
 However, remainder and multiplication have the *same* precedence as each other.
 To work out the exact evaluation order to use,
@@ -557,7 +557,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 
    Swift's operator precedences and associativity rules are simpler and more predictable
    than those found in C and Objective-C.
-   However, this means that they are not exactly the same as in C-based languages.
+   However, this means that they aren't exactly the same as in C-based languages.
    Be careful to ensure that operator interactions still behave in the way you intend
    when porting existing code to Swift.
 
@@ -635,7 +635,7 @@ The example shown above demonstrates a custom implementation of a binary infix o
 Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.
-They are :newTerm:`prefix` if they precede their target (such as ``-a``)
+They're :newTerm:`prefix` if they precede their target (such as ``-a``)
 and :newTerm:`postfix` operators if they follow their target (such as ``b!``).
 
 You implement a prefix or postfix unary operator by writing
@@ -784,8 +784,8 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
    -> prefix operator +++
 
 The example above defines a new prefix operator called ``+++``.
-This operator does not have an existing meaning in Swift,
-and so it is given its own custom meaning below in the specific context of
+This operator doesn't have an existing meaning in Swift,
+and so it's given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` is treated as a new “prefix doubling” operator.
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
@@ -821,7 +821,7 @@ See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-A custom infix operator that is not explicitly placed into a precedence group is 
+A custom infix operator that isn't explicitly placed into a precedence group is 
 given a default precedence group with a precedence immediately higher
 than the precedence of the ternary conditional operator.
 
@@ -844,7 +844,7 @@ which belongs to the precedence group ``AdditionPrecedence``:
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
-Because it is in essence an “additive” operator,
+Because it's in essence an “additive” operator,
 it has been given the same precedence group
 as additive infix operators such as ``+`` and ``-``.
 For information about the operators provided by the Swift standard library,
@@ -856,7 +856,7 @@ see :ref:`Declarations_OperatorDeclaration`.
 
 .. note::
 
-   You do not specify a precedence when defining a prefix or postfix operator.
+   You don't specify a precedence when defining a prefix or postfix operator.
    However, if you apply both a prefix and a postfix operator to the same operand,
    the postfix operator is applied first.
 
@@ -891,7 +891,7 @@ see :ref:`Declarations_OperatorDeclaration`.
 
     You can include operators in the requirements of a protocol.
     A type conforms to the protocol
-    only if there is an implementation of the operator for that type.
+    only if there's an implementation of the operator for that type.
     You use ``Self`` to refer to the type that will conform to the protocol,
     just like you do in other protocol requirements.
     For example, the standard library defines the ``Equatable`` protocol
@@ -932,7 +932,7 @@ see :ref:`Declarations_OperatorDeclaration`.
     the code below defines the ``*`` operator
     to scale a vector by a given amount.
     The ``Vector2D`` structure conforms to this protocol
-    because there is an implementation of the operator
+    because there's an implementation of the operator
     that takes a ``Vector2D`` as its second argument,
     even though that implementation is a member of ``Double``.
 

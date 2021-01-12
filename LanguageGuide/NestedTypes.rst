@@ -71,7 +71,7 @@ together with a raw ``Character`` value to represent their symbol.
 
 The ``Rank`` enumeration describes the thirteen possible playing card ranks,
 together with a raw ``Int`` value to represent their face value.
-(This raw ``Int`` value is not used for the Jack, Queen, King, and Ace cards.)
+(This raw ``Int`` value isn't used for the Jack, Queen, King, and Ace cards.)
 
 As mentioned above, the ``Rank`` enumeration defines
 a further nested structure of its own, called ``Values``.
@@ -121,7 +121,7 @@ Referring to Nested Types
 -------------------------
 
 To use a nested type outside of its definition context,
-prefix its name with the name of the type it is nested within:
+prefix its name with the name of the type it's nested within:
 
 .. testcode:: nestedTypes
 
@@ -131,4 +131,4 @@ prefix its name with the name of the type it is nested within:
 
 For the example above,
 this enables the names of ``Suit``, ``Rank``, and ``Values`` to be kept deliberately short,
-because their names are naturally qualified by the context in which they are defined.
+because their names are naturally qualified by the context in which they're defined.

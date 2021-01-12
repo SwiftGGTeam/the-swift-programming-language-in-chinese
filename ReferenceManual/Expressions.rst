@@ -79,7 +79,7 @@ It has the following form:
 
    try? <#expression#>
 
-If the *expression* does not throw an error,
+If the *expression* doesn't throw an error,
 the value of the optional-try expression
 is an optional containing the value of the *expression*.
 Otherwise, the value of the optional-try expression is ``nil``.
@@ -238,7 +238,7 @@ For example:
     /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
     </ a is "test", b is 12, c is 3, and 9.45 is ignored
 
-The assignment operator does not return any value.
+The assignment operator doesn't return any value.
 
 .. syntax-grammar::
 
@@ -265,7 +265,7 @@ the conditional operator evaluates the first expression
 and returns its value.
 Otherwise, it evaluates the second expression
 and returns its value.
-The unused expression is not evaluated.
+The unused expression isn't evaluated.
 
 For an example that uses the ternary conditional operator,
 see :ref:`BasicOperators_TernaryConditionalOperator`.
@@ -326,7 +326,7 @@ otherwise, it returns ``false``.
    !!          ^
 
 The ``as`` operator performs a cast
-when it is known at compile time
+when it's known at compile time
 that the cast always succeeds,
 such as upcasting or bridging.
 Upcasting lets you use an expression as an instance of its type's supertype,
@@ -485,11 +485,11 @@ or other code that doesn't become part of the shipping program.
 
 Inside a function,
 the value of ``#function`` is the name of that function,
-inside a method it is the name of that method,
-inside a property getter or setter it is the name of that property,
+inside a method it's the name of that method,
+inside a property getter or setter it's the name of that property,
 inside special members like ``init`` or ``subscript``
-it is the name of that keyword,
-and at the top level of a file it is the name of the current module.
+it's the name of that keyword,
+and at the top level of a file it's the name of the current module.
 
 When used as the default value of a function or method parameter,
 the special literal's value is determined
@@ -775,7 +775,7 @@ As a result,
 whether a closure expression is escaping or nonescaping depends
 on the surrounding context of the expression.
 A closure expression is nonescaping
-if it is called immediately
+if it's called immediately
 or passed as a nonescaping function argument.
 Otherwise, the closure expression is escaping.
 
@@ -828,9 +828,9 @@ but only one variable named ``b``.
 The ``a`` in the inner scope is initialized
 with the value of the ``a`` in the outer scope
 when the closure is created,
-but their values are not connected in any special way.
+but their values aren't connected in any special way.
 This means that a change to the value of ``a`` in the outer scope
-does not affect the value of ``a`` in the inner scope,
+doesn't affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
 affect the value of ``a`` outside the closure.
 In contrast, there's only one variable named ``b`` ---
@@ -844,7 +844,7 @@ so changes from inside or outside the closure are visible in both places.
    (unlike some other languages)
    so that description's not likely to be very helpful for developers.
 
-This distinction is not visible
+This distinction isn't visible
 when the captured variable's type has reference semantics.
 For example,
 there are two things named ``x`` in the code below,
@@ -1376,7 +1376,7 @@ It has the following form:
    #selector(setter: <#property name#>)
 
 The *method name* and *property name* must be a reference to a method or a property
-that is available in the Objective-C runtime.
+that's available in the Objective-C runtime.
 The value of a selector expression is an instance of the ``Selector`` type.
 For example:
 
@@ -1446,7 +1446,7 @@ see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/do
 
 .. Note: The parser does allow an arbitrary expression inside #selector(), not
    just a member name.  For example, see changes in Swift commit ef60d7289d in
-   lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
+   lib/Sema/CSApply.cpp -- there's explicit code to look through parens and
    optional binding.
 
 
@@ -1465,7 +1465,7 @@ It has the following form:
    #keyPath(<#property name#>)
 
 The *property name* must be a reference to a property
-that is available in the Objective-C runtime.
+that's available in the Objective-C runtime.
 At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
@@ -1514,7 +1514,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. note::
 
-    Although the *property name* is an expression, it is never evaluated.
+    Although the *property name* is an expression, it's never evaluated.
 
 
 .. syntax-grammar::
@@ -1940,7 +1940,7 @@ For example:
     -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 
 If a period appears at the beginning of a line,
-it is understood as part of an explicit member expression,
+it's understood as part of an explicit member expression,
 not as an implicit member expression.
 For example, the following listing shows chained method calls
 split over several lines:
@@ -2061,14 +2061,14 @@ Forced-Value Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`forced-value expression` unwraps an optional value
-that you are certain is not ``nil``.
+that you are certain isn't ``nil``.
 It has the following form:
 
 .. syntax-outline::
 
    <#expression#>!
 
-If the value of the *expression* is not ``nil``,
+If the value of the *expression* isn't ``nil``,
 the optional value is unwrapped
 and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
@@ -2118,7 +2118,7 @@ and they cause the postfix expression to be evaluated in a special way.
 If the value of the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-If the value of the optional-chaining expression is not ``nil``,
+If the value of the optional-chaining expression isn't ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
@@ -2128,7 +2128,7 @@ If a postfix expression that contains an optional-chaining expression
 is nested inside other postfix expressions,
 only the outermost expression returns an optional type.
 In the example below,
-when ``c`` is not ``nil``,
+when ``c`` isn't ``nil``,
 its value is unwrapped and used to evaluate ``.property``,
 the value of which is used to evaluate ``.performAction()``.
 The entire expression ``c?.property.performAction()``
@@ -2161,7 +2161,7 @@ either by mutating the value itself,
 or by assigning to one of the value's members.
 If the value of the optional-chaining expression is ``nil``,
 the expression on the right-hand side of the assignment operator
-is not evaluated.
+isn't evaluated.
 For example:
 
 .. testcode:: optional-chaining-as-lvalue
@@ -2172,7 +2172,7 @@ For example:
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-   // someFunctionWithSideEffects is not evaluated
+   // someFunctionWithSideEffects isn't evaluated
    /> someDictionary is still \(someDictionary)
    </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---

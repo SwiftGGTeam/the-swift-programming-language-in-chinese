@@ -4,10 +4,10 @@ Extensions
 :newTerm:`Extensions` add new functionality to an existing
 class, structure, enumeration, or protocol type.
 This includes the ability to extend types
-for which you do not have access to the original source code
+for which you don't have access to the original source code
 (known as :newTerm:`retroactive modeling`).
 Extensions are similar to categories in Objective-C.
-(Unlike Objective-C categories, Swift extensions do not have names.)
+(Unlike Objective-C categories, Swift extensions don't have names.)
 
 Extensions in Swift can:
 
@@ -26,7 +26,7 @@ For more details, see :ref:`Protocols_Extensions`.
 .. note::
 
    Extensions can add new functionality to a type,
-   but they cannot override existing functionality.
+   but they can't override existing functionality.
 
 .. assertion:: extensionsCannotOverrideExistingBehavior
 
@@ -131,7 +131,7 @@ to provide basic support for working with distance units:
 
 These computed properties express that a ``Double`` value
 should be considered as a certain unit of length.
-Although they are implemented as computed properties,
+Although they're implemented as computed properties,
 the names of these properties can be appended to
 a floating-point literal value with dot syntax,
 as a way to use that literal value to perform distance conversions.
@@ -149,7 +149,7 @@ and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28084``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
-and so they are expressed without the ``get`` keyword, for brevity.
+and so they're expressed without the ``get`` keyword, for brevity.
 Their return value is of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
@@ -161,7 +161,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. note::
 
-   Extensions can add new computed properties, but they cannot add stored properties,
+   Extensions can add new computed properties, but they can't add stored properties,
    or add property observers to existing properties.
 
 .. assertion:: extensionsCannotAddStoredProperties
@@ -186,13 +186,13 @@ or to provide additional initialization options
 that were not included as part of the type's original implementation.
 
 Extensions can add new convenience initializers to a class,
-but they cannot add new designated initializers or deinitializers to a class.
+but they can't add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers
 must always be provided by the original class implementation.
 
 If you use an extension to add an initializer to a value type that provides
 default values for all of its stored properties
-and does not define any custom initializers,
+and doesn't define any custom initializers,
 you can call the default initializer and memberwise initializer for that value type
 from within your extension's initializer.
 This wouldn't be the case if you had written the initializer
@@ -283,7 +283,7 @@ The following example adds a new instance method called ``repetitions`` to the `
       }
 
 The ``repetitions(task:)`` method takes a single argument of type ``() -> Void``,
-which indicates a function that has no parameters and does not return a value.
+which indicates a function that has no parameters and doesn't return a value.
 
 After defining this extension,
 you can call the ``repetitions(task:)`` method on any integer
@@ -375,7 +375,7 @@ from the right of the number:
    if/when integer exponents land in the stdlib.
    Darwin's pow() function is only for floating point.
 
-If the ``Int`` value does not have enough digits for the requested index,
+If the ``Int`` value doesn't have enough digits for the requested index,
 the subscript implementation returns ``0``,
 as if the number had been padded with zeros to the left:
 

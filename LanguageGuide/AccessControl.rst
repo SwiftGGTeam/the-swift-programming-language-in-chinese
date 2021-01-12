@@ -32,7 +32,7 @@ Modules and Source Files
 Swift's access control model is based on the concept of modules and source files.
 
 A :newTerm:`module` is a single unit of code distribution ---
-a framework or application that is built and shipped as a single unit
+a framework or application that's built and shipped as a single unit
 and that can be imported by another module with Swift's ``import`` keyword.
 
 Each build target (such as an app bundle or framework) in Xcode
@@ -472,7 +472,7 @@ you must explicitly declare the nested type as public.
 
 .. sourcefile:: nestedTypes_Module1_Private
 
-   // these are all expected to fail, because they are private to the other file
+   // these are all expected to fail, because they're private to the other file
    -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    ---
    -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
@@ -507,7 +507,7 @@ you must explicitly declare the nested type as public.
 
 .. sourcefile:: nestedTypes_Module2_InternalAndPrivate
 
-   // these are all expected to fail, because they are private or internal to the other module
+   // these are all expected to fail, because they're private or internal to the other module
    -> import nestedTypes_Module1
    -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
    -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
@@ -837,7 +837,7 @@ and doesn't provide at least one initializer itself.
 
 A default initializer has the same access level as the type it initializes,
 unless that type is defined as ``public``.
-For a type that is defined as ``public``,
+For a type that's defined as ``public``,
 the default initializer is considered internal.
 If you want a public type to be initializable with a no-argument initializer
 when used in another module,
@@ -974,7 +974,7 @@ on any type that adopts the protocol.
 
 .. sourcefile:: protocols_Module1_Private
 
-   // these will fail, because FilePrivateProtocol is not visible outside of its file
+   // these will fail, because FilePrivateProtocol isn't visible outside of its file
    -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
          var filePrivateProperty = 0
          func filePrivateMethod() {}
@@ -983,7 +983,7 @@ on any type that adopts the protocol.
    !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
    !! ^~~~~~~~~~~~~~~~~~~
    ---
-   // these will fail, because PrivateProtocol is not visible outside of its file
+   // these will fail, because PrivateProtocol isn't visible outside of its file
    -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
          var privateProperty = 0
          func privateMethod() {}
@@ -1012,7 +1012,7 @@ on any type that adopts the protocol.
 .. sourcefile:: protocols_Module2_InternalAndPrivate
 
    // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
-   // are not visible to other modules
+   // aren't visible to other modules
    -> import protocols_Module1
    -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
          var internalProperty = 0

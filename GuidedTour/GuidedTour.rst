@@ -62,7 +62,7 @@ the compiler infers that ``myVariable`` is an integer
 because its initial value is an integer.
 
 If the initial value doesn't provide enough information
-(or if there is no initial value),
+(or if isn't an initial value),
 specify the type by writing it after the variable,
 separated by a colon.
 
@@ -340,7 +340,7 @@ to a constant.
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
 Execution doesn't continue to the next case,
-so there is no need to explicitly break out of the switch
+so you don't need to explicitly break out of the switch
 at the end of each case’s code.
 
 .. Omitting mention of "fallthrough" keyword.
@@ -481,7 +481,7 @@ either by name or by number.
 
 .. REFERENCE
    Min, max, and sum are convenient for this example
-   because they are all simple operations
+   because they're all simple operations
    that are performed on the same kind of data.
    This gives the function a reason to return a tuple.
 
@@ -516,7 +516,7 @@ Nested functions have access to variables
 that were declared in the outer function.
 You can use nested functions
 to organize the code in a function
-that is long or complex.
+that's long or complex.
 
 .. testcode:: guided-tour
 
@@ -575,7 +575,7 @@ Functions are actually a special case of closures:
 blocks of code that can be called later.
 The code in a closure has access to things like variables and functions
 that were available in the scope where the closure was created,
-even if the closure is in a different scope when it is executed ---
+even if the closure is in a different scope when it's executed ---
 you saw an example of this already with nested functions.
 You can write a closure without a name
 by surrounding code with braces (``{}``).
@@ -637,7 +637,7 @@ Objects and Classes
 Use ``class`` followed by the class's name to create a class.
 A property declaration in a class is written the same way
 as a constant or variable declaration,
-except that it is in the context of a class.
+except that it's in the context of a class.
 Likewise, method and function declarations are written the same way.
 
 .. REFERENCE
@@ -715,7 +715,7 @@ before the object is deallocated.
 Subclasses include their superclass name
 after their class name,
 separated by a colon.
-There is no requirement for classes to subclass any standard root class,
+There's no requirement for classes to subclass any standard root class,
 so you can include or omit a superclass as needed.
 
 Methods on a subclass that override the superclass's implementation
@@ -814,7 +814,7 @@ has three different steps:
    can also be done at this point.
 
 If you don't need to compute the property
-but still need to provide code that is run before and after setting a new value,
+but still need to provide code that's run before and after setting a new value,
 use ``willSet`` and ``didSet``.
 The code you provide is run any time the value changes outside of an initializer.
 For example, the class below ensures
@@ -935,7 +935,7 @@ Use the ``rawValue`` property to access the raw value of an enumeration case.
 Use the ``init?(rawValue:)`` initializer
 to make an instance of an enumeration from a raw value.
 It returns either the enumeration case matching the raw value
-or ``nil`` if there is no matching ``Rank``.
+or ``nil`` if there's no matching ``Rank``.
 
 .. testcode:: guided-tour
 
@@ -1073,7 +1073,7 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code,
+structures are always copied when they're passed around in your code,
 but classes are passed by reference.
 
 .. testcode:: guided-tour
@@ -1163,7 +1163,7 @@ because methods on a class can always modify the class.
 Use ``extension`` to add functionality to an existing type,
 such as new methods and computed properties.
 You can use an extension to add protocol conformance
-to a type that is declared elsewhere,
+to a type that's declared elsewhere,
 or even to a type that you imported from a library or framework.
 
 .. testcode:: guided-tour
@@ -1189,7 +1189,7 @@ for example, to create a collection of objects
 that have different types
 but that all conform to a single protocol.
 When you work with values whose type is a protocol type,
-methods outside the protocol definition are not available.
+methods outside the protocol definition aren't available.
 
 .. testcode:: guided-tour
 
@@ -1334,7 +1334,7 @@ the value that the function returned.
     << nil
 
 Use ``defer`` to write a block of code
-that is executed after all other code in the function,
+that's executed after all other code in the function,
 just before the function returns.
 The code is executed regardless of whether the function throws an error.
 You can use ``defer`` to write setup and cleanup code next to each other,

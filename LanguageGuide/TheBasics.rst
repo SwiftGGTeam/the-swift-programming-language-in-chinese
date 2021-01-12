@@ -117,7 +117,7 @@ to indicate that the variable can store ``String`` values:
 The colon in the declaration means “…of type…,”
 so the code above can be read as:
 
-“Declare a variable called ``welcomeMessage`` that is of type ``String``.”
+“Declare a variable called ``welcomeMessage`` that's of type ``String``.”
 
 The phrase “of type ``String``” means “can store any ``String`` value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
@@ -604,9 +604,9 @@ is reported as an error when your code is compiled:
 .. testcode:: constantsAndVariablesOverflowError
 
    -> let cannotBeNegative: UInt8 = -1
-   // UInt8 cannot store negative numbers, and so this will report an error
+   // UInt8 can't store negative numbers, and so this will report an error
    -> let tooBig: Int8 = Int8.max + 1
-   // Int8 cannot store a number larger than its maximum value,
+   // Int8 can't store a number larger than its maximum value,
    // and so this will also report an error
    !! /tmp/swifttest.swift:2:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
    !! let tooBig: Int8 = Int8.max + 1
@@ -706,7 +706,7 @@ Type Aliases
 You define type aliases with the ``typealias`` keyword.
 
 Type aliases are useful when you want to refer to an existing type
-by a name that is contextually more appropriate,
+by a name that's contextually more appropriate,
 such as when working with data of a specific size from an external source:
 
 .. testcode:: typeAliases
@@ -1053,7 +1053,7 @@ to use optional binding rather than forced unwrapping:
    -> if let actualNumber = Int(possibleNumber) {
          print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
       } else {
-         print("The string \"\(possibleNumber)\" could not be converted to an integer")
+         print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
       }
    <- The string "123" has an integer value of 123
 
@@ -1066,7 +1066,7 @@ If the conversion is successful,
 the ``actualNumber`` constant becomes available for use within
 the first branch of the ``if`` statement.
 It has already been initialized with the value contained *within* the optional,
-and so there's no need to use the ``!`` suffix to access its value.
+and so you don't use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
 You can use both constants and variables with optional binding.
@@ -1386,7 +1386,7 @@ For example:
    -> let age = -3
    -> assert(age >= 0, "A person's age can't be less than zero.")
    xx assert
-   // This assertion fails because -3 is not >= 0.
+   // This assertion fails because -3 isn't >= 0.
 
 In this example, code execution continues if ``age >= 0`` evaluates to ``true``,
 that is, if the value of ``age`` is nonnegative.
@@ -1434,7 +1434,7 @@ Enforcing Preconditions
 ~~~~~~~~~~~~~~~~~~~~~~~
 Use a precondition whenever a condition has the potential to be false,
 but must *definitely* be true for your code to continue execution.
-For example, use a precondition to check that a subscript is not out of bounds,
+For example, use a precondition to check that a subscript isn't out of bounds,
 or to check that a function has been passed a valid value.
 
 You write a precondition by calling the

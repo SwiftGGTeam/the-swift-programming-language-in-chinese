@@ -92,7 +92,7 @@ digits and combining Unicode characters are also allowed.
 
 To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
-For example, ``class`` is not a valid identifier,
+For example, ``class`` isn't a valid identifier,
 but :literal:`\`class\`` is valid.
 The backticks aren't considered part of the identifier;
 :literal:`\`x\`` and ``x`` have the same meaning.
@@ -576,7 +576,7 @@ It can't contain three unescaped double quotation marks next to each other.
 
 The line break after the ``"""``
 that begins the multiline string literal
-is not part of the string.
+isn't part of the string.
 The line break before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
@@ -585,7 +585,7 @@ write a blank line as its first or last line.
 
 A multiline string literal can be indented
 using any combination of spaces and tabs;
-this indentation is not included in the string.
+this indentation isn't included in the string.
 The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin
@@ -625,7 +625,7 @@ using the following escape sequences:
   where *n* is a hexadecimal number
   that has one to eight digits
 
-.. The behavior of \n and \r is not the same as C.
+.. The behavior of \n and \r isn't the same as C.
    We specify exactly what those escapes mean.
    The behavior on C is platform dependent --
    in text mode, \n maps to the platform's line separator
@@ -913,10 +913,11 @@ it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
-and may be split again. As a result, there's no need to use whitespace
+and may be split again.
+As a result, you don't need to add whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
-In this example, the closing ``>`` characters are not treated as a single token
+In this example, the closing ``>`` characters aren't treated as a single token
 that may then be misinterpreted as a bit shift ``>>`` operator.
 
 .. NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
@@ -926,6 +927,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
 
    This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
    don't write that.
+
+   We call out the > > vs >> because
+   C++ typically needs whitespace to resolve the ambiguity.
 
 To learn how to define new, custom operators,
 see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.

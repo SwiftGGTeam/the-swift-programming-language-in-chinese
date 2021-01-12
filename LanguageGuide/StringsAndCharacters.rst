@@ -10,7 +10,7 @@ including as a collection of ``Character`` values.
 Swift's ``String`` and ``Character`` types provide
 a fast, Unicode-compliant way to work with text in your code.
 The syntax for string creation and manipulation is lightweight and readable,
-with a string literal syntax that is similar to C.
+with a string literal syntax that's similar to C.
 String concatenation is as simple as
 combining two strings with the ``+`` operator,
 and string mutability is managed by choosing between a constant or a variable,
@@ -880,7 +880,7 @@ a substring can reuse part of the memory
 that's used to store the original string,
 or part of the memory that's used to store another substring.
 (Strings have a similar optimization,
-but if two strings share memory, they are equal.)
+but if two strings share memory, they're equal.)
 This performance optimization means
 you don't have to pay the performance cost of copying memory
 until you modify either the string or substring.
@@ -954,7 +954,7 @@ even if they're composed from different Unicode scalars behind the scenes.
    -> let eAcute: Character = "\u{E9}"
    -> let combinedEAcute: Character = "\u{65}\u{301}"
    -> if eAcute != combinedEAcute {
-         print("not equivalent, which is not expected")
+         print("not equivalent, which isn't expected")
       } else {
          print("equivalent, as expected")
       }
@@ -965,7 +965,7 @@ even if they're composed from different Unicode scalars behind the scenes.
    -> let cafe1 = "caf\u{E9}"
    -> let cafe2 = "caf\u{65}\u{301}"
    -> if cafe1 != cafe2 {
-         print("not equivalent, which is not expected")
+         print("not equivalent, which isn't expected")
       } else {
          print("equivalent, as expected")
       }
@@ -1006,13 +1006,13 @@ but don't have the same linguistic meaning:
    >> assert(cyrillicCapitalLetterA == "А")
    ---
    -> if latinCapitalLetterA != cyrillicCapitalLetterA {
-         print("These two characters are not equivalent.")
+         print("These two characters aren't equivalent.")
       }
-   <- These two characters are not equivalent.
+   <- These two characters aren't equivalent.
 
 .. note::
 
-   String and character comparisons in Swift are not locale-sensitive.
+   String and character comparisons in Swift aren't locale-sensitive.
 
 .. TODO: Add a cross reference to NSString.localizedCompare and
    NSString.localizedCaseInsensitiveCompare.  See also
