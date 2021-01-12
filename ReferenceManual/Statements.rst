@@ -981,7 +981,8 @@ conditions listed in the table below.
 ========================  ===================================================
 Platform condition        Valid arguments
 ========================  ===================================================
-``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``,
+                          ``Linux``, ``Windows``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``               ``>=`` or ``<`` followed by a version number
 ``compiler()``            ``>=`` or ``<`` followed by a version number
@@ -992,6 +993,13 @@ Platform condition        Valid arguments
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
+   Some of the OSes and architectures are listed there
+   because there's experimental work to port Swift to them.
+   We won't list them here until they're officially supported.
+   The compiler also accepts pretty much any string --
+   for example "#if os(toaster)" compiles just fine,
+   but Swift doesn't actually support running on a toaster oven --
+   so don't rely on that when checking possible os/arch values.
 
 .. The target environment "UKitForMac"
    is understood by the compiler as a synonym for "macCatalyst",
@@ -1152,7 +1160,7 @@ have the following form:
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
-    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
+    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``Windows``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
