@@ -109,7 +109,7 @@ you have to determine what it was intended to do.
    Swift guarantees that you'll get an error
    at either compile time or runtime.
    For multithreaded code,
-   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+   use `Thread Sanitizer <https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early>`_
    to help detect conflicting access across threads.
 
 .. TODO: The xref above doesn't seem to give enough information.
