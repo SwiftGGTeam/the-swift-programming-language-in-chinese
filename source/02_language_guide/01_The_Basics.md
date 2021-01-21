@@ -75,7 +75,7 @@ var red, green, blue: Double
 
 ### 常量和变量的命名 {#naming}
 
-常量和变量名可以包含任何字符，包括 Unicode 字符：
+常量和变量名可以包含几乎所有的字符，包括 Unicode 字符：
 
 ```swift
 let π = 3.14159
