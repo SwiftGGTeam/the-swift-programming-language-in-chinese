@@ -1065,34 +1065,20 @@ resultBuilder
 
 Apply this attribute to a class, structure, enumeration
 to use that type as a result builder.
+A :newTerm:`result builder` is a type
+that builds up a nested data structure step by step.
+You use result builders to implement a domain-specific language (DSL)
+for creating nested data structures in a natural, declarative way.
+For an example of how to use the ``resultBuilder`` attribute,
+see :ref:`AdvancedOperators_ResultBuilders`.
 
-.. XXX add framing; cross reference to the guide
-
-    From the SE proposal:
-
-    A result builder type can be used as an attribute in two different
-    syntactic positions. The first position is on a func, var, or subscript
-    declaration. For the var and subscript, the declaration must define a
-    getter, and the attribute is treated as if it were an attribute on that
-    getter. A result builder attribute used in this way causes the result
-    builder transform to be applied to the body of the function; it is not
-    considered part of the interface of the function and does not affect its
-    ABI.
-
-    A result builder type can also be used as an attribute on a parameter of
-    function type, including on parameters of protocol requirements. A result
-    builder attribute used in this way causes the result builder transform to
-    be applied to the body of any explicit closures that are passed as the
-    corresponding argument, unless the closure contains a return statement.
-    This is considered part of the interface of the function and can affect
-    source compatibility, although it does not affect its ABI.
-
+A result builder must implement at least one of the functions listed below.
 The declaration for a result builder includes type aliases
 that specify the type of input it takes (``Expression``),
 the type of a partial result (``Component``),
 and the type of result it produces (``FinalResult``).
 Both ``Expression`` and ``FinalResult`` default to being the same as ``Component``
-if you don't define them.
+if you don't define them explicitly.
 
 ``static func buildBlock(_ components: Component...) -> Component``
   Combines multiple partial results into a single partial result.
@@ -1135,6 +1121,28 @@ if you don't define them.
   Builds a partial result that propagates type information
   outside a compiler-control statement
   that performs an availability check.
+
+
+.. XXX Add info about applying a result-builder attribute
+
+    From the SE proposal:
+
+    A result builder type can be used as an attribute in two different
+    syntactic positions. The first position is on a func, var, or subscript
+    declaration. For the var and subscript, the declaration must define a
+    getter, and the attribute is treated as if it were an attribute on that
+    getter. A result builder attribute used in this way causes the result
+    builder transform to be applied to the body of the function; it is not
+    considered part of the interface of the function and does not affect its
+    ABI.
+
+    A result builder type can also be used as an attribute on a parameter of
+    function type, including on parameters of protocol requirements. A result
+    builder attribute used in this way causes the result builder transform to
+    be applied to the body of any explicit closures that are passed as the
+    corresponding argument, unless the closure contains a return statement.
+    This is considered part of the interface of the function and can affect
+    source compatibility, although it does not affect its ABI.
 
 
 .. _Attributes_requires_stored_property_inits:
