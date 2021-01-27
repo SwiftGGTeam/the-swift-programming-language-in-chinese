@@ -880,7 +880,7 @@ postfix operators can't begin with either a question mark or an exclamation poin
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
-or an infix operator. This behavior is summarized in the following rules:
+or an infix operator. This behavior has the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
   it's treated as an infix operator.

@@ -573,7 +573,7 @@ The example below shows how to implement
 the arithmetic addition operator (``+``) for a custom structure.
 The arithmetic addition operator is a binary operator
 because it operates on two targets
-and it's an infix operator because it appears in between those two targets.
+and it's an infix operator because it appears between those two targets.
 
 The example defines a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``,
