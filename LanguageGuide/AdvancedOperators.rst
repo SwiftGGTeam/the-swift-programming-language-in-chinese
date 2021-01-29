@@ -881,9 +881,6 @@ see :ref:`Declarations_OperatorDeclaration`.
    <- 0 0 1
    // Note that x==y
 
-.. Use compiled code to work around a REPL limitation
-   <rdar://problem/16061044> Custom operator declarations cannot be written over multiple lines in the REPL
-
 .. _AdvancedOperators_ResultBuilders:
 
 Result Builders
