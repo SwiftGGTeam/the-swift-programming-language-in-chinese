@@ -1045,6 +1045,9 @@ Experts are additionally ranked by the number of stars they have.
    !$ error: type 'E' does not conform to protocol 'Comparable'
    !! enum E: Int, Comparable {
    !!      ^
+   !$ note: enum declares raw type 'Int', preventing synthesized conformance of 'E' to 'Comparable'
+   !! enum E: Int, Comparable {
+   !!         ^
    !$ note: candidate would match if 'E' conformed to 'FloatingPoint'
    !! public static func < (lhs: Self, rhs: Self) -> Bool
    !! ^

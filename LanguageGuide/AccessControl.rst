@@ -524,14 +524,20 @@ you must explicitly declare the nested type as public.
    !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
    !!                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !$ note: 'InternalEnumInsidePublicStruct' declared here
+   !! internal enum InternalEnumInsidePublicStruct {
+   !!               ^
    !$ error: 'AutomaticEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
    !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
    !!                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !$ note: 'AutomaticEnumInsidePublicStruct' declared here
+   !! internal enum AutomaticEnumInsidePublicStruct {
+   !!               ^
    !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
    !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
    !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !$ note: 'PrivateEnumInsidePublicStruct' declared here
+   !! private enum PrivateEnumInsidePublicStruct {
+   !!              ^
    !$ error: cannot find 'InternalStruct' in scope
    !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
    !!                                    ^~~~~~~~~~~~~~
@@ -1143,16 +1149,22 @@ the default access level for each protocol requirement implementation within the
    !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
    !!                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !$ note: 'implicitlyInternalMethodFromStruct()' declared here
+   !! internal func implicitlyInternalMethodFromStruct() -> Int
+   !!               ^
    -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    !$ error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
    !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
    !!                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    !$ note: 'implicitlyInternalMethodFromExtension()' declared here
+   !! internal func implicitlyInternalMethodFromExtension() -> Int
+   !!               ^
    -> let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
    !$ error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
    !! let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
    !!                                                      ^~~~~~~~~~~~~~~~~
    !$ note: 'filePrivateMethod()' declared here
+   !! fileprivate func filePrivateMethod() -> Int
+   !!                  ^
 
 .. _AccessControl_PrivateExtension:
 

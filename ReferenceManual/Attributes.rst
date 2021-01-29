@@ -498,6 +498,12 @@ as discussed in :ref:`Attributes_inlinable`.
     !$ note: struct 'PrivateStruct' is not '@usableFromInline' or public
     !! private struct PrivateStruct: P { }
     !!                ^
+    !$ error: initializer 'init()' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !! ^
+    !$ note: initializer 'init()' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !! ^
 
 To enable library evolution mode on the command line,
 pass the ``-enable-library-evolution`` option to the Swift compiler.
@@ -940,7 +946,7 @@ Local and global variables can't use property wrappers.
     >>     @UselessWrapper let d: Int = 20
     >>     print(d)
     >> }
-    !$ error: property wrappers are not yet supported on local properties
+    !$ error: property wrapper can only be applied to a 'var'
     !! @UselessWrapper let d: Int = 20
     !! ^
 
