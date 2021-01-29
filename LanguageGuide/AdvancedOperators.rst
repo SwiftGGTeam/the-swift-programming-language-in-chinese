@@ -900,6 +900,74 @@ see :ref:`Declarations_OperatorDeclaration`.
 Result Builders
 ---------------
 
+.. XXX show the non-result-builder approach first,
+   to motivate how doing it that way is awkward
+
+A :newTerm:`result builder` is a type you define
+that adds syntax for creating nested data,
+like a list or tree,
+in a natural, declarative way.
+The code that uses the result builder
+can include ordinary Swift syntax, like ``if``  and ``for``,
+to handle conditional or repeated pieces of data.
+
+.. XXX When you should use a result builder, versus something else?
+
+To define a result builder,
+you write the ``@resultBuilder`` attribute on a type declaration.
+For example,
+the code below defines a result builder called ``DrawingBuilder``
+that is creates a domain specific language for simple ASCII-art drawings.
+
+.. testcode:: result-builder
+
+   -> protocol Drawing {
+          func draw() -> String
+      }
+   -> struct Line: Drawing {
+          var elements: [Drawing]
+          func draw() -> String {
+              return elements.map { $0.draw() }.joined(separator: "")
+          }
+      }
+   ---
+   -> @resultBuilder
+   -> struct DrawingBuilder {
+          typealias Component = Drawing
+          static func buildBlock(_ components: Component...) -> Component {
+              return Line(elements: components)
+          }
+          static func buildEither(first: Drawing) -> Component {
+              return first
+          }
+          static func buildEither(second: Drawing) -> Component {
+              return second
+          }
+      }
+
+The ``Drawing`` protocol defines what it means to be a drawing in this DSL:
+A drawing is a type that has a ``draw()`` method.
+The ``Line`` structure represents a single line of ASCII art,
+and it serves the top-level container for most drawings.
+To draw a ``Line``, it draws each of the drawings on that line,
+and then concatenates all of their strings into a single string.
+
+The ``DrawingBuilder`` structure defines three methods that support syntax:
+
+- The ``buildBlock(_:)`` method adds support for
+  writing a series of lines in a braced block.
+
+- The ``buildEither(first:)`` method adds support for ``if``.
+
+- The ``buildEither(second:)`` method adds support for ``else``.
+
+
+
+
+For a complete list of builder functions, see :ref:`Attributes_resultBuilder`.
+
+
+
 .. OUTLINE
 
    A result builder creates nested data structures
