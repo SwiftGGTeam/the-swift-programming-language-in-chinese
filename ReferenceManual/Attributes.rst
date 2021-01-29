@@ -755,15 +755,13 @@ If you don't use this attribute,
 supply a ``main.swift`` file with code at the top level
 that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
-.. testcode:: nsapplicationmain
+.. code-block:: swift
 
-   -> import AppKit
-   >> let _ =
-   -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-   !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+   import AppKit
+   NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
-.. Rewrite the above to avoid discarding the function's return value.
-   Tracking bug is <rdar://problem/35301593>
+.. Above code isn't tested because it hangs the REPL indefinitely,
+   which is correct behavior if you call a non-returning function like this.
 
 The Swift code you compile to make an executable
 can contain at most one top-level entry point,
