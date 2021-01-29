@@ -714,6 +714,20 @@ and uses it to set the left value to be the left value plus the right value:
    Similarly, the ternary conditional operator
    (``a ? b : c``) can't be overloaded.
 
+.. assertion:: cant-overload-assignment
+
+   >> struct Vector2D {
+   >>    var x = 0.0, y = 0.0
+   >> }
+   >> extension Vector2D {
+   >>     static func = (left: inout Vector2D, right: Vector2D) {
+   >>         left = right
+   >>     }
+   >> }
+   !$ error: expected identifier in function declaration
+   !! static func = (left: inout Vector2D, right: Vector2D) {
+   !!             ^
+
 .. _AdvancedOperators_EquivalenceOperators:
 
 Equivalence Operators
