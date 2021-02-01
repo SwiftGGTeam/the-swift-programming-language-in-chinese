@@ -1212,16 +1212,6 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`
    and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
 
-.. assertion:: classMustAppearFirstInTheInheritanceList
-
-   -> protocol P1 {}
-   -> protocol P2: class, P1 {}
-   -> protocol P3: P1, class {}
-   !$ error: 'class' must come first in the requirement list
-   !! protocol P3: P1, class {}
-   !! ~~^~~~~
-   !! class,
-
 .. assertion:: anyobject-doesn't-have-to-be-first
 
    >> protocol SomeInheritedProtocol {}
