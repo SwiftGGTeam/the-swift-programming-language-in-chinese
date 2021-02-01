@@ -398,7 +398,10 @@ with the ``<`` operator because the ``<`` operator can't be applied to
    -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
    >> _ =
    -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
-   !$ error: type '(String, Bool)' cannot conform to 'Comparable'; only struct/enum/class types can conform to protocols
+   !$ error: type '(String, Bool)' cannot conform to 'Comparable'
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !!                 ^
+   !$ note: only concrete types such as structs, enums and classes can conform to protocols
    !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    !!                 ^
    !$ note: required by referencing operator function '<' on 'Comparable' where 'Self' = '(String, Bool)'

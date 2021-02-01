@@ -47,6 +47,15 @@ For more details, see :ref:`Protocols_Extensions`.
    !$ error: property does not override any property from its superclass
    !! override var x: Int {
    !! ~~~~~~~~     ^
+   !$ error: ambiguous use of 'x'
+   !! print("new x is \(x)")
+   !!            ^
+   !$ note: found this candidate
+   !! var x = 0
+   !!     ^
+   !$ note: found this candidate
+   !! override var x: Int {
+   !!              ^
    !$ error: invalid redeclaration of 'x'
    !! override var x: Int {
    !!              ^

@@ -119,7 +119,7 @@ in a way that's abstracted away from the function implementation.
 For example, the function in the following code
 returns a type that depends on its caller:
 
-::
+.. code-block:: swift
 
     func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
 

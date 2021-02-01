@@ -1045,6 +1045,9 @@ Experts are additionally ranked by the number of stars they have.
    !$ error: type 'E' does not conform to protocol 'Comparable'
    !! enum E: Int, Comparable {
    !!      ^
+   !$ note: enum declares raw type 'Int', preventing synthesized conformance of 'E' to 'Comparable'
+   !! enum E: Int, Comparable {
+   !!         ^
    !$ note: candidate would match if 'E' conformed to 'FloatingPoint'
    !! public static func < (lhs: Self, rhs: Self) -> Bool
    !! ^
@@ -1208,16 +1211,6 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    For more about reference and value semantics,
    see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`
    and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
-
-.. assertion:: classMustAppearFirstInTheInheritanceList
-
-   -> protocol P1 {}
-   -> protocol P2: class, P1 {}
-   -> protocol P3: P1, class {}
-   !$ error: 'class' must come first in the requirement list
-   !! protocol P3: P1, class {}
-   !! ~~^~~~~
-   !! class,
 
 .. assertion:: anyobject-doesn't-have-to-be-first
 

@@ -498,6 +498,12 @@ as discussed in :ref:`Attributes_inlinable`.
     !$ note: struct 'PrivateStruct' is not '@usableFromInline' or public
     !! private struct PrivateStruct: P { }
     !!                ^
+    !$ error: initializer 'init()' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !! ^
+    !$ note: initializer 'init()' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !! ^
 
 To enable library evolution mode on the command line,
 pass the ``-enable-library-evolution`` option to the Swift compiler.
@@ -755,15 +761,13 @@ If you don't use this attribute,
 supply a ``main.swift`` file with code at the top level
 that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
-.. testcode:: nsapplicationmain
+.. code-block:: swift
 
-   -> import AppKit
-   >> let _ =
-   -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-   !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+   import AppKit
+   NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
-.. Rewrite the above to avoid discarding the function's return value.
-   Tracking bug is <rdar://problem/35301593>
+.. Above code isn't tested because it hangs the REPL indefinitely,
+   which is correct behavior if you call a non-returning function like this.
 
 The Swift code you compile to make an executable
 can contain at most one top-level entry point,
@@ -942,7 +946,7 @@ Local and global variables can't use property wrappers.
     >>     @UselessWrapper let d: Int = 20
     >>     print(d)
     >> }
-    !$ error: property wrappers are not yet supported on local properties
+    !$ error: property wrapper can only be applied to a 'var'
     !! @UselessWrapper let d: Int = 20
     !! ^
 
