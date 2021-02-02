@@ -1072,7 +1072,10 @@ for creating nested data structures in a natural, declarative way.
 For an example of how to use the ``resultBuilder`` attribute,
 see :ref:`AdvancedOperators_ResultBuilders`.
 
-A result builder must implement at least one of the functions listed below.
+A result builder implements static methods
+that each perform part of the result builder's transformation.
+The ``buildBlock(_:)`` method is required;
+the other methods are optional and enable additional functionality in the DSL.
 The declaration for a result builder includes type aliases
 that specify the type of input it takes (``Expression``),
 the type of a partial result (``Component``),
@@ -1080,8 +1083,12 @@ and the type of result it produces (``FinalResult``).
 Both ``Expression`` and ``FinalResult`` default to being the same as ``Component``
 if you don't define them explicitly.
 
+The result-building methods are as follows:
+
+.. start of term/defn list
+
 ``static func buildBlock(_ components: Component...) -> Component``
-  Combines multiple partial results into a single partial result.
+  Combines an array of partial results into a single partial result.
   A result builder must implement this method.
 
 ``static func buildOptional(_ component: Component?) -> Component``
@@ -1113,7 +1120,7 @@ if you don't define them explicitly.
 
 ``static func buildFinalResult(_ component: Component) -> FinalResult``
   Builds a final result from a partial result.
-  You can implement this method as part of a static function builder
+  You can implement this method as part of a result builder
   that uses a different type for partial and final results,
   or to perform other final transformation on a result before returning it.
 
@@ -1121,6 +1128,22 @@ if you don't define them explicitly.
   Builds a partial result that propagates type information
   outside a compiler-control statement
   that performs an availability check.
+
+.. end of term/defn list
+
+Creating result builder type creates a custom attribute with the same name.
+You can apply that attribute in the following places:
+
+- On a function declaration.
+  The result builder transforms the body of the function,
+  according to the transformation rules described below.
+
+- On a variable or subscript declaration that includes a getter.
+  The attribute is understood to be applied to that getter.
+
+- On a parameter in a function declaration.
+  The result builder transform the body of a closure
+  that's passed as the corresponding argument.
 
 
 .. XXX Add info about applying a result-builder attribute
