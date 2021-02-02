@@ -141,7 +141,7 @@ For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 .. testcode:: forLoops
 
    -> let minutes = 60
-   >> var result = [Int]()
+   >> var result: [Int] = []
    -> for tickMark in 0..<minutes {
          // render the tick mark each minute (60 times)
    >>    result.append(tickMark)
@@ -156,7 +156,7 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 .. testcode:: forLoops
 
    -> let minuteInterval = 5
-   >> result = [Int]()
+   >> result = []
    -> for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
          // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
    >>      result.append(tickMark)

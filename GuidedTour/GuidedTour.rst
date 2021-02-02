@@ -189,8 +189,8 @@ use the initializer syntax.
 
 .. testcode:: guided-tour
 
-   -> let emptyArray = [String]()
-   -> let emptyDictionary = [String: Float]()
+   -> let emptyArray: [String] = []
+   -> let emptyDictionary: [String: Float] = [:]
 
 If type information can be inferred,
 you can write an empty array as ``[]``
@@ -1378,7 +1378,7 @@ to make a generic function or type.
 .. testcode:: guided-tour
 
     -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
-           var result = [Item]()
+           var result: [Item] = []
            for _ in 0..<numberOfTimes {
                 result.append(item)
            }

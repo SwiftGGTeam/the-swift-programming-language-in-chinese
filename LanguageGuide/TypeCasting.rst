@@ -254,7 +254,7 @@ The example creates an array called ``things``, which can store values of type `
 
 .. testcode:: typeCasting, typeCasting-err
 
-   -> var things = [Any]()
+   -> var things: [Any] = []
    ---
    -> things.append(0)
    -> things.append(0.0)

@@ -274,7 +274,7 @@ in this case for a stack of ``Int`` values:
 .. testcode:: genericStack
 
    -> struct IntStack {
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
@@ -305,7 +305,7 @@ Here's a generic version of the same code:
 .. testcode:: genericStack
 
    -> struct Stack<Element> {
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
             items.append(item)
          }
@@ -682,7 +682,7 @@ adapted to conform to the ``Container`` protocol:
 
    -> struct IntStack: Container {
          // original IntStack implementation
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
@@ -727,7 +727,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
 
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
             items.append(item)
          }
@@ -1353,7 +1353,7 @@ For example:
    -> extension Container {
           subscript<Indices: Sequence>(indices: Indices) -> [Item]
                   where Indices.Iterator.Element == Int {
-              var result = [Item]()
+              var result: [Item] = []
               for index in indices {
                   result.append(self[index])
               }
@@ -1365,7 +1365,7 @@ For example:
 
    >> struct IntStack: Container {
          // original IntStack implementation
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
