@@ -230,7 +230,7 @@ unit4A = nil
 // 打印“Apartment 4A is being deinitialized”
 ```
 
-由于再也没有指向 `Person` 实例的强引用，该实例会被销毁：
+由于再也没有指向 `Apartment` 实例的强引用，该实例会被销毁：
 
 ![](https://docs.swift.org/swift-book/_images/weakReference03_2x.png)
 
