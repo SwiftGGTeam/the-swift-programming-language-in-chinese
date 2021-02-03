@@ -1085,16 +1085,43 @@ if you don't define them explicitly.
 
 The result-building methods are as follows:
 
+.. XXX Change the :: code listings below to proper testcode.
+
 .. start of term/defn list
 
 ``static func buildBlock(_ components: Component...) -> Component``
   Combines an array of partial results into a single partial result.
   A result builder must implement this method.
+  For example:
+
+  ::
+
+    SomeResultBuilder {
+        firstExpression
+        secondExpression
+    }
+
+    // Translates to:
+    SomeResultBuilder.buildBlock(firstExpression, secondExpression)
 
 ``static func buildOptional(_ component: Component?) -> Component``
   Builds a partial result from a partial result that can be ``nil``.
   Implement this method to support ``if`` statements
   that don’t include an ``else`` clause.
+  For example:
+
+  ::
+
+    if couponAvailable {
+        DailyCoupon()
+    }
+
+    // Translates to:
+    var x: Coupon? = nil
+    if couponAvailable {
+        x = DailyCoupon()
+    }
+    let result = SomeResultBuilder.buildOptional(x)
 
 ``static func buildEither(first: Component) -> Component``
   Builds a partial result whose value varies depending on some condition.
@@ -1107,10 +1134,56 @@ The result-building methods are as follows:
   Implement both this method and ``buildEither(first:)``
   to support ``switch`` statements
   and ``if`` statements that include an ``else`` clause.
+  For example:
+
+  ::
+
+    switch userState {
+    case .new:
+        SignupView()
+    case .signedIn:
+        UserAccountView()
+    default:
+        LogInView()
+    }
+
+    // Translates to:
+    var v: View? = nil
+    let result: PartialResult
+    if userState == .new {
+        result = SomeBuilder.buildEither(first: SignUpView())
+    } else if userState == .signedIn {
+        let r = SomeResultBuilder.buildEither(first: UserAccountView())
+        let result = SomeResultBuilder.buildEither(second: r)
+    } else {
+        let r = SomeResultBuilder.buildEither(second: LogInView())
+        let result = SomeResultBuilder.buildEither(second: r)
+    }
+
+  .. XXX describe the binary tree algorithm used
+     TR: The SE proposal seems to suggest
+     that support for if/else/case is possible even if you implement
+     only buildOptional(_:) with the compiler creating a bunch of vCase variables.
+     Is that correct?
 
 ``static func buildArray(_ components: [Component]) -> Component``
   Builds a partial result from an array of partial results.
   Implement this method to support ``for`` loops.
+  For example:
+
+  ::
+
+    for number in [10, 20, 30] {
+        100 + number
+    }
+
+    // Translates to:
+    let result: NumberBuilderComponent
+    var array: [NumberBuilderComponent] = []
+    for number in [10, 20, 30] {
+        array.append(100 + number)
+    }
+    result = SomeResultBuilder.buildArray(array)
 
 ``static func buildExpression(_ expression: Expression) -> Component``
   Builds a partial result from an expression.
@@ -1125,9 +1198,42 @@ The result-building methods are as follows:
   or to perform other final transformation on a result before returning it.
 
 ``static func buildLimitedAvailability(_ component: Component) -> Component``
-  Builds a partial result that propagates type information
+  Builds a partial result that propagates or erases type information
   outside a compiler-control statement
   that performs an availability check.
+  For example:
+
+  ::
+
+    if #available(macOS 11.0, *) {
+        SomethingNew()
+    } else {
+        SomethingElse()
+    }
+
+    SomeResultBuilder {
+        ...
+        static func buildLimitedAvailability(_ component: Component) -> ErasedType { ... }
+    }
+
+    // Translates to:
+    let result: ErasedType
+    if #available(macOS 11.0, *) {
+        let v0 = SomethingNew()
+        let v1 = SomeResultBuilder.buildBlock(v0)
+        let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
+        result = SomeResultBuilder.buildEither(first: v2)
+    } else {
+        let v0 = SomethingElse()
+        let v1 = SomeResultBuilder.buildBlock(v0)
+        let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
+        result = SomeResultBuilder.buildEither(first: v2)
+    }
+
+  In the example above,
+  the result builder always builds a value of type ``ErasedType``,
+  instead of build a value whose type is either
+  ``SomethingNew`` or ``SomethingElse`` depending on availability.
 
 .. end of term/defn list
 
