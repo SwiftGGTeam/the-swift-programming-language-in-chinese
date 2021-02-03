@@ -1085,43 +1085,16 @@ if you don't define them explicitly.
 
 The result-building methods are as follows:
 
-.. XXX Change the :: code listings below to proper testcode.
-
 .. start of term/defn list
 
 ``static func buildBlock(_ components: Component...) -> Component``
   Combines an array of partial results into a single partial result.
   A result builder must implement this method.
-  For example:
-
-  ::
-
-    SomeResultBuilder {
-        firstExpression
-        secondExpression
-    }
-
-    // Translates to:
-    SomeResultBuilder.buildBlock(firstExpression, secondExpression)
 
 ``static func buildOptional(_ component: Component?) -> Component``
   Builds a partial result from a partial result that can be ``nil``.
   Implement this method to support ``if`` statements
   that don’t include an ``else`` clause.
-  For example:
-
-  ::
-
-    if couponAvailable {
-        DailyCoupon()
-    }
-
-    // Translates to:
-    var x: Coupon? = nil
-    if couponAvailable {
-        x = DailyCoupon()
-    }
-    let result = SomeResultBuilder.buildOptional(x)
 
 ``static func buildEither(first: Component) -> Component``
   Builds a partial result whose value varies depending on some condition.
@@ -1136,7 +1109,60 @@ The result-building methods are as follows:
   and ``if`` statements that include an ``else`` clause.
   For example:
 
-  ::
+``static func buildArray(_ components: [Component]) -> Component``
+  Builds a partial result from an array of partial results.
+  Implement this method to support ``for`` loops.
+  For example:
+
+``static func buildExpression(_ expression: Expression) -> Component``
+  Builds a partial result from an expression.
+  You can implement this method to perform initial transformation —
+  for example, transforming expressions into an internal type —
+  or to provide additional information for type inference at use sites.
+
+``static func buildFinalResult(_ component: Component) -> FinalResult``
+  Builds a final result from a partial result.
+  You can implement this method as part of a result builder
+  that uses a different type for partial and final results,
+  or to perform other final transformation on a result before returning it.
+
+``static func buildLimitedAvailability(_ component: Component) -> Component``
+  Builds a partial result that propagates or erases type information
+  outside a compiler-control statement
+  that performs an availability check.
+  For example:
+
+.. end of term/defn list
+
+Result Transformations
+++++++++++++++++++++++
+
+.. XXX Change the :: code listings below to proper testcode.
+
+::
+
+    SomeResultBuilder {
+        firstExpression
+        secondExpression
+    }
+
+    // Translates to:
+    SomeResultBuilder.buildBlock(firstExpression, secondExpression)
+
+::
+
+    if couponAvailable {
+        DailyCoupon()
+    }
+
+    // Translates to:
+    var x: Coupon? = nil
+    if couponAvailable {
+        x = DailyCoupon()
+    }
+    let result = SomeResultBuilder.buildOptional(x)
+
+::
 
     switch userState {
     case .new:
@@ -1160,18 +1186,13 @@ The result-building methods are as follows:
         let result = SomeResultBuilder.buildEither(second: r)
     }
 
-  .. XXX describe the binary tree algorithm used
+.. XXX describe the binary tree algorithm used
      TR: The SE proposal seems to suggest
      that support for if/else/case is possible even if you implement
      only buildOptional(_:) with the compiler creating a bunch of vCase variables.
      Is that correct?
 
-``static func buildArray(_ components: [Component]) -> Component``
-  Builds a partial result from an array of partial results.
-  Implement this method to support ``for`` loops.
-  For example:
-
-  ::
+::
 
     for number in [10, 20, 30] {
         100 + number
@@ -1185,25 +1206,7 @@ The result-building methods are as follows:
     }
     result = SomeResultBuilder.buildArray(array)
 
-``static func buildExpression(_ expression: Expression) -> Component``
-  Builds a partial result from an expression.
-  You can implement this method to perform initial transformation —
-  for example, transforming expressions into an internal type —
-  or to provide additional information for type inference at use sites.
-
-``static func buildFinalResult(_ component: Component) -> FinalResult``
-  Builds a final result from a partial result.
-  You can implement this method as part of a result builder
-  that uses a different type for partial and final results,
-  or to perform other final transformation on a result before returning it.
-
-``static func buildLimitedAvailability(_ component: Component) -> Component``
-  Builds a partial result that propagates or erases type information
-  outside a compiler-control statement
-  that performs an availability check.
-  For example:
-
-  ::
+::
 
     if #available(macOS 11.0, *) {
         SomethingNew()
@@ -1235,7 +1238,10 @@ The result-building methods are as follows:
   instead of build a value whose type is either
   ``SomethingNew`` or ``SomethingElse`` depending on availability.
 
-.. end of term/defn list
+
+
+Custom Attributes
++++++++++++++++++
 
 Creating result builder type creates a custom attribute with the same name.
 You can apply that attribute in the following places:
