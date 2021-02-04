@@ -1116,35 +1116,100 @@ The result-building methods are as follows:
 
 ``static func buildExpression(_ expression: Expression) -> Component``
   Builds a partial result from an expression.
-  You can implement this method to perform initial transformation —
-  for example, transforming expressions into an internal type —
+  You can implement this method to perform preprocessing —
+  for example, converting expressions to an internal type —
   or to provide additional information for type inference at use sites.
 
 ``static func buildFinalResult(_ component: Component) -> FinalResult``
   Builds a final result from a partial result.
   You can implement this method as part of a result builder
   that uses a different type for partial and final results,
-  or to perform other final transformation on a result before returning it.
+  or to perform other postprocessing on a result before returning it.
 
 ``static func buildLimitedAvailability(_ component: Component) -> Component``
   Builds a partial result that propagates or erases type information
   outside a compiler-control statement
   that performs an availability check.
-  For example:
 
 .. end of term/defn list
+
+◊ TR: I think the discussion of optional/either isn't quite correct.
+When the builder methods are listed, they describe what's discussed here.
+But in the later discussion of transformations,
+it looks like the difference is whether you get a binary tree or a linear search
+based on which things you implement.
+Based on actually running the code,
+the former discussion is what I actually see.
+
+.. INCORRECT
+
+  If the result builder has
+  a ``buildEither(first:)`` and ``buildEither(second:)`` method,
+  branch statements like ``if`` and ``switch``
+  are transformed into a binary tree of calls to those two methods.
+  Otherwise, branch statements are transformed
+  into a series of calls to the ``buildOptional(_:)`` method.
+
 
 Result Transformations
 ++++++++++++++++++++++
 
-.. XXX intro -- list each transformation
+The result-building methods perform the transformations listed below.
+Except for ``buildExpression(_:)`` and ``buildFinalResult(_:)``,
+the transformations don't have a specific order.
+Rather, each transformation is applied, recursively,
+to each piece of input.
 
-For example, the code below defines a simple result builder,
+.. PASSIVE VOICE
+   The actor performing the transformations described below
+   is irrelevant to a developer understanding the processs.
+   It's a vague mix of the feature in the Swift language
+   and the code in the Swift compiler that implements the feature.
+   Omitting it lets the important part -- the content being transformed --
+   come to the front of the sentence and take the focus,
+   which makes this discussion easier to understand.
+
+- If the result builder has a ``buildExpression(_:)`` method,
+  each expression is transformed into a call to that method.
+
+- Assignment statements are evaluated like other expressions,
+  but are understood to evaluate to ``()``.
+
+- Branch statements whose condition is an availability check
+  are transformed into a call to the ``buildLimitedAvailability(_:)`` method.
+
+- Branch statements that have only one branch
+  are transformed into a call to the ``buildOptional(_:)`` method.
+
+- Branch statements that have multiple branches
+  are transformed into a binary tree of calls
+  to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
+  ◊ MORE DETAIL ◊
+
+- The statements inside a code block's braces
+  are transformed one at a time,
+  and then combined by the ``buildBlock(_:)`` method.
+
+- If the result builder has a ``buildFinalResult(_:)`` method,
+  it performs the last transformation on the transformed result.
+
+Whenever possible, transformations are coalesced.
+For example, the expression ``4 + 5 * 6`` is transformed
+into a single call to ``buildExpression(_:)`` rather than four calls.
+Likewise, nested branch statements are transformed into
+a single binary tree of calls to the ``buildEither`` methods.
+
+The transformation process doesn't change declarations in the code,
+which lets you use temporary constants and variables
+to build up expressions piece by piece.
+
+The code below defines a simple result builder,
 uses the result builder to make an array of numbers,
 and then calls the result builder methods manually
 to show what the transformed code would look like.
-Although the behavior is described in terms of name temporary variables,
-the transformation doesn't actually create any new declarations.
+Although the transformation behavior is described in terms of temporary variables,
+using a result builder doesn't actually create any new declarations
+that are visible from the rest of your code.
 
 .. testcode:: array-result-builder
 
@@ -1203,6 +1268,25 @@ the transformation doesn't actually create any new declarations.
    -> let result = ArrayBuilder.buildBlock(r1, r2, r3, r4, r5)
    -> print(result)
    <- [10, 20, 30, 4, 105, 106, 107]
+
+.. assertion:: result-builder-transform-complex-expression
+
+   >> @resultBuilder
+   >> struct ArrayBuilder {
+   >>     static func buildExpression(_ element: Int) -> [Int] {
+   >>         print("Building", element)
+   >>         return [element]
+   >>     }
+   >>     static func buildBlock(_ components: [Int]...) -> [Int] {
+   >>         return Array(components.joined())
+   >>     }
+   >> }
+   >> @ArrayBuilder var x: [Int] {
+   >>     10+12*3
+   >> }
+   << Building 46
+   >> print(x)
+   << [46]
 
 ::
 
