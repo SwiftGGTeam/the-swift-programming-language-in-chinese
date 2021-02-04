@@ -1137,7 +1137,72 @@ The result-building methods are as follows:
 Result Transformations
 ++++++++++++++++++++++
 
-.. XXX Change the :: code listings below to proper testcode.
+.. XXX intro -- list each transformation
+
+For example, the code below defines a simple result builder,
+uses the result builder to make an array of numbers,
+and then calls the result builder methods manually
+to show what the transformed code would look like.
+Although the behavior is described in terms of name temporary variables,
+the transformation doesn't actually create any new declarations.
+
+.. testcode:: array-result-builder
+
+   -> @resultBuilder
+   -> struct ArrayBuilder {
+          typealias Component = [Int]
+          typealias Expression = Int
+          static func buildExpression(_ element: Expression) -> Component {
+              return [element]
+          }
+          static func buildEither(first: Component) -> Component {
+              return first
+          }
+          static func buildEither(second: Component) -> Component {
+              return second
+          }
+          static func buildArray(_ components: [Component]) -> Component {
+              return Array(components.joined())
+          }
+          static func buildBlock(_ components: Component...) -> Component {
+              return Array(components.joined())
+          }
+      }
+   -> let y = 19
+   ---
+   // Using the result builder:
+   -> @ArrayBuilder var x: [Int] {
+          10
+          20
+          if y > 12 {
+              30
+          } else {
+              33
+          }
+          4
+          for i in 5...7 { 100 + i }
+      }
+   -> print(x)
+   <- [10, 20, 30, 4, 105, 106, 107]
+   ---
+   // Calling the builder methods manually:
+   -> let r1 = ArrayBuilder.buildExpression(10)
+   -> let r2 = ArrayBuilder.buildExpression(20)
+   -> let r3: [Int]
+   -> if y > 12 {
+          r3 = ArrayBuilder.buildExpression(30)
+      } else {
+          r3 = ArrayBuilder.buildExpression(33)
+      }
+   -> let r4 = ArrayBuilder.buildExpression(4)
+   -> var array: [[Int]] = []
+   -> for i in 5...7 {
+         array.append(ArrayBuilder.buildExpression(100 + i))
+      }
+   -> let r5 = ArrayBuilder.buildArray(array)
+   -> let result = ArrayBuilder.buildBlock(r1, r2, r3, r4, r5)
+   -> print(result)
+   <- [10, 20, 30, 4, 105, 106, 107]
 
 ::
 

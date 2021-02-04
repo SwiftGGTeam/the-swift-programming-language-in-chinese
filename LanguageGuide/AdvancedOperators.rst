@@ -937,10 +937,10 @@ that is creates a domain specific language for simple ASCII-art drawings.
           static func buildBlock(_ components: Component...) -> Component {
               return Line(elements: components)
           }
-          static func buildEither(first: Drawing) -> Component {
+          static func buildEither(first: Component) -> Component {
               return first
           }
-          static func buildEither(second: Drawing) -> Component {
+          static func buildEither(second: Component) -> Component {
               return second
           }
       }
