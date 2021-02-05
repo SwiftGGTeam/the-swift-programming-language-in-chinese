@@ -1087,6 +1087,10 @@ and the type of result it produces (``FinalResult``).
 Both ``Expression`` and ``FinalResult`` default to being the same as ``Component``
 if you don't define them explicitly.
 
+.. XXX no instance of the result builder is ever created;
+   all of its API is exposed via type members
+   (as a sort of pseudo-namespace)
+
 The result-building methods are as follows:
 
 .. start of term/defn list
@@ -1176,36 +1180,73 @@ to each piece of input.
 - If the result builder has a ``buildExpression(_:)`` method,
   each expression is transformed into a call to that method.
 
-- Assignment statements are evaluated like other expressions,
-  but are understood to evaluate to ``()``.
+- An assignment statement is transformed like other expressions,
+  but is understood to evaluate to ``()``.
+  You can define an overload of ``buildExpression(_:)``
+  that takes an argument of type ``()`` to handle assignments specifically.
 
-- Branch statements whose condition is an availability check
-  are transformed into a call to the ``buildLimitedAvailability(_:)`` method.
+- A branch statement that checks an availability condition
+  is transformed into a call to the ``buildLimitedAvailability(_:)`` method.
 
-- Branch statements that have only one branch
-  are transformed into a call to the ``buildOptional(_:)`` method.
+- A branch statement is transformed into calls to the
+  ``buildEither(first:)`` and ``buildEither(second:)`` methods.
+  The statements' conditions and cases are mapped onto
+  the leaf nodes of a binary tree,
+  and the statement is transformed into
+  nested calls to the ``buildEither`` methods
+  following the path to that leaf node from the root node.
 
-- Branch statements that have multiple branches
-  are transformed into a binary tree of calls
-  to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
-  ◊ MORE DETAIL ◊
+  For example, if you write a switch statement that has three cases,
+  the compiler uses a binary tree with three leaf nodes.
+  Because the path from the root node to the second case is
+  "first child" and then "second child",
+  that case is transformed into a nested call like
+  ``buildEither(first: buildEither(second: ... ) )``.
 
-- The statements inside a code block's braces
-  are transformed one at a time,
-  and then combined by the ``buildBlock(_:)`` method.
+- A branch statement that might or might not produce a value,
+  like an ``if`` without an ``else``,
+  is transformed into a call to ``buildOptional(_:)``.
+  If the ``if`` statement's condition is satisfied,
+  its code block is transformed and passed as the argument;
+  otherwise, ``buildOptional(_:)`` is called with ``nil`` as its argument.
+
+- A code block or ``do`` statement is transformed
+  by transforming the statements inside of it,
+  one at a time,
+  and then combining them by the ``buildBlock(_:)`` method.
+
+- A ``for`` loop is transformed
+  by creating a temporary variable,
+  transforming the body of the ``for`` loop,
+  and appending each ◊◊◊ to that array,
+  and then calling the ``buildArray(_:)`` method
+  with the temporary array as its argument.
 
 - If the result builder has a ``buildFinalResult(_:)`` method,
   it performs the last transformation on the transformed result.
 
-Whenever possible, transformations are coalesced.
-For example, the expression ``4 + 5 * 6`` is transformed
-into a single call to ``buildExpression(_:)`` rather than four calls.
-Likewise, nested branch statements are transformed into
-a single binary tree of calls to the ``buildEither`` methods.
+You can't use
+``break``, ``continue``, ``defer``, ``guard``, or ``return`` statements,
+``while`` loops,
+or ``do``-``catch`` statements,
+in the code that a result builder transforms.
 
 The transformation process doesn't change declarations in the code,
 which lets you use temporary constants and variables
 to build up expressions piece by piece.
+It also doesn't change
+``throw`` statements,
+compile-time diagnostic statements,
+or closures that contain a ``return`` statement.
+
+◊TR: Is the closure bit specific to single-expression closures,
+or does it have any other restrictions?
+
+Whenever possible, transformations are coalesced.
+For example, the expression ``4 + 5 * 6`` is transformed
+into ``buildExpression(4 + 5 * 6)`` rather multiple calls to that function.
+Likewise, nested branch statements are transformed into
+a single binary tree of calls to the ``buildEither`` methods.
 
 The code below defines a simple result builder,
 uses the result builder to make an array of numbers,
@@ -1224,6 +1265,10 @@ that are visible from the rest of your code.
           static func buildExpression(_ element: Expression) -> Component {
               return [element]
           }
+          static func buildOptional(_ component: Component?) -> Component {
+              guard let component = component else { return [] }
+              return component
+          }
           static func buildEither(first: Component) -> Component {
               return first
           }
@@ -1237,12 +1282,12 @@ that are visible from the rest of your code.
               return Array(components.joined())
           }
       }
-   -> let y = 19
    ---
    // Using the result builder:
+   -> let y = 19
    -> @ArrayBuilder var x: [Int] {
           10
-          20
+          if (y % 2) == 1 { 20 }
           if y > 12 {
               30
           } else {
@@ -1256,7 +1301,13 @@ that are visible from the rest of your code.
    ---
    // Calling the builder methods manually:
    -> let r1 = ArrayBuilder.buildExpression(10)
-   -> let r2 = ArrayBuilder.buildExpression(20)
+   -> let r2optional: [Int]?
+   -> if (y % 2) == 1 {
+          r2optional = ArrayBuilder.buildExpression(20)
+       } else {
+          r2optional = nil
+       }
+   -> let r2 = ArrayBuilder.buildOptional(r2optional)
    -> let r3: [Int]
    -> if y > 12 {
           r3 = ArrayBuilder.buildExpression(30)
@@ -1272,6 +1323,8 @@ that are visible from the rest of your code.
    -> let result = ArrayBuilder.buildBlock(r1, r2, r3, r4, r5)
    -> print(result)
    <- [10, 20, 30, 4, 105, 106, 107]
+
+.. XXX Rename x y and result above.
 
 .. assertion:: result-builder-transform-complex-expression
 
@@ -1338,12 +1391,6 @@ that are visible from the rest of your code.
         let r = SomeResultBuilder.buildEither(second: LogInView())
         let result = SomeResultBuilder.buildEither(second: r)
     }
-
-.. XXX describe the binary tree algorithm used
-     TR: The SE proposal seems to suggest
-     that support for if/else/case is possible even if you implement
-     only buildOptional(_:) with the compiler creating a bunch of vCase variables.
-     Is that correct?
 
 ::
 
