@@ -11,7 +11,7 @@ Deinitializers are only available on class types.
 How Deinitialization Works
 --------------------------
 
-Swift automatically deallocates your instances when they are no longer needed,
+Swift automatically deallocates your instances when they're no longer needed,
 to free up resources.
 Swift handles the memory management of instances through
 :newTerm:`automatic reference counting` (:newTerm:`ARC`),
@@ -23,7 +23,7 @@ For example, if you create a custom class to open a file and write some data to 
 you might need to close the file before the class instance is deallocated.
 
 Class definitions can have at most one deinitializer per class.
-The deinitializer does not take any parameters
+The deinitializer doesn't take any parameters
 and is written without parentheses:
 
 .. testcode:: deinitializer
@@ -35,15 +35,15 @@ and is written without parentheses:
    >> }
 
 Deinitializers are called automatically, just before instance deallocation takes place.
-You are not allowed to call a deinitializer yourself.
+You aren't allowed to call a deinitializer yourself.
 Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of
 a subclass deinitializer implementation.
 Superclass deinitializers are always called,
-even if a subclass does not provide its own deinitializer.
+even if a subclass doesn't provide its own deinitializer.
 
-Because an instance is not deallocated until after its deinitializer is called,
-a deinitializer can access all properties of the instance it is called on
+Because an instance isn't deallocated until after its deinitializer is called,
+a deinitializer can access all properties of the instance it's called on
 and can modify its behavior based on those properties
 (such as looking up the name of a file that needs to be closed).
 
@@ -79,7 +79,7 @@ It also offers two methods --- ``distribute(coins:)`` and ``receive(coins:)`` --
 to handle the distribution and collection of coins.
 
 The ``distribute(coins:)`` method checks that there are enough coins in the bank before distributing them.
-If there are not enough coins,
+If there aren't enough coins,
 ``Bank`` returns a smaller number than the number that was requested
 (and returns zero if no coins are left in the bank).
 It returns an integer value to indicate the actual number of coins that were provided.
@@ -125,12 +125,12 @@ Here, the deinitializer simply returns all of the player's coins to the bank:
    -> print("There are now \(Bank.coinsInBank) coins left in the bank")
    <- There are now 9900 coins left in the bank
 
-A new ``Player`` instance is created, with a request for 100 coins if they are available.
+A new ``Player`` instance is created, with a request for 100 coins if they're available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
 An optional variable is used here, because players can leave the game at any point.
 The optional lets you track whether there's currently a player in the game.
 
-Because ``playerOne`` is an optional, it is qualified with an exclamation point (``!``)
+Because ``playerOne`` is an optional, it's qualified with an exclamation point (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
 and whenever its ``win(coins:)`` method is called:
 
@@ -160,6 +160,6 @@ meaning “no ``Player`` instance.”
 At the point that this happens,
 the ``playerOne`` variable's reference to the ``Player`` instance is broken.
 No other properties or variables are still referring to the ``Player`` instance,
-and so it is deallocated in order to free up its memory.
+and so it's deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.

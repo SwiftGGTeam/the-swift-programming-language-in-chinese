@@ -4,7 +4,7 @@ Automatic Reference Counting
 Swift uses :newTerm:`Automatic Reference Counting` (ARC)
 to track and manage your app's memory usage.
 In most cases, this means that memory management “just works” in Swift,
-and you do not need to think about memory management yourself.
+and you don't need to think about memory management yourself.
 ARC automatically frees up the memory used by class instances
 when those instances are no longer needed.
 
@@ -19,7 +19,7 @@ for using ARC with Objective-C.
 
 Reference counting applies only to instances of classes.
 Structures and enumerations are value types, not reference types,
-and are not stored and passed by reference.
+and aren't stored and passed by reference.
 
 .. _AutomaticReferenceCounting_HowARCWorks:
 
@@ -34,15 +34,15 @@ together with the values of any stored properties associated with that instance.
 Additionally, when an instance is no longer needed,
 ARC frees up the memory used by that instance
 so that the memory can be used for other purposes instead.
-This ensures that class instances do not take up space in memory
-when they are no longer needed.
+This ensures that class instances don't take up space in memory
+when they're no longer needed.
 
 However, if ARC were to deallocate an instance that was still in use,
 it would no longer be possible to access that instance's properties,
 or call that instance's methods.
 Indeed, if you tried to access the instance, your app would most likely crash.
 
-To make sure that instances don't disappear while they are still needed,
+To make sure that instances don't disappear while they're still needed,
 ARC tracks how many properties, constants, and variables
 are currently referring to each class instance.
 ARC will not deallocate an instance
@@ -53,7 +53,7 @@ whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
 The reference is called a "strong" reference because
 it keeps a firm hold on that instance,
-and does not allow it to be deallocated for as long as that strong reference remains.
+and doesn't allow it to be deallocated for as long as that strong reference remains.
 
 .. _AutomaticReferenceCounting_ARCInAction:
 
@@ -86,8 +86,8 @@ The next code snippet defines three variables of type ``Person?``,
 which are used to set up multiple references to a new ``Person`` instance
 in subsequent code snippets.
 Because these variables are of an optional type (``Person?``, not ``Person``),
-they are automatically initialized with a value of ``nil``,
-and do not currently reference a ``Person`` instance.
+they're automatically initialized with a value of ``nil``,
+and don't currently reference a ``Person`` instance.
 
 .. testcode:: howARCWorks
 
@@ -110,7 +110,7 @@ This confirms that initialization has taken place.
 Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
 there's now a strong reference from ``reference1`` to the new ``Person`` instance.
 Because there's at least one strong reference,
-ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
+ARC makes sure that this ``Person`` is kept in memory and isn't deallocated.
 
 If you assign the same ``Person`` instance to two more variables,
 two more strong references to that instance are established:
@@ -125,14 +125,14 @@ There are now *three* strong references to this single ``Person`` instance.
 If you break two of these strong references (including the original reference)
 by assigning ``nil`` to two of the variables,
 a single strong reference remains,
-and the ``Person`` instance is not deallocated:
+and the ``Person`` instance isn't deallocated:
 
 .. testcode:: howARCWorks
 
    -> reference1 = nil
    -> reference2 = nil
 
-ARC does not deallocate the ``Person`` instance until
+ARC doesn't deallocate the ``Person`` instance until
 the third and final strong reference is broken,
 at which point it's clear that you are no longer using the ``Person`` instance:
 
@@ -185,11 +185,11 @@ which model a block of apartments and its residents:
       }
 
 Every ``Person`` instance has a ``name`` property of type ``String``
-and an optional ``apartment`` property that is initially ``nil``.
+and an optional ``apartment`` property that's initially ``nil``.
 The ``apartment`` property is optional, because a person may not always have an apartment.
 
 Similarly, every ``Apartment`` instance has a ``unit`` property of type ``String``
-and has an optional ``tenant`` property that is initially ``nil``.
+and has an optional ``tenant`` property that's initially ``nil``.
 The tenant property is optional because an apartment may not always have a tenant.
 
 Both of these classes also define a deinitializer,
@@ -244,8 +244,8 @@ The ``Person`` instance now has a strong reference to the ``Apartment`` instance
 and the ``Apartment`` instance has a strong reference to the ``Person`` instance.
 Therefore, when you break the strong references held by
 the ``john`` and ``unit4A`` variables,
-the reference counts do not drop to zero,
-and the instances are not deallocated by ARC:
+the reference counts don't drop to zero,
+and the instances aren't deallocated by ARC:
 
 .. testcode:: referenceCycles
 
@@ -264,7 +264,7 @@ the ``john`` and ``unit4A`` variables to ``nil``:
    :align: center
 
 The strong references between the ``Person`` instance
-and the ``Apartment`` instance remain and cannot be broken.
+and the ``Apartment`` instance remain and can't be broken.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances:
 
@@ -297,21 +297,21 @@ has the same lifetime or a longer lifetime.
 Weak References
 ~~~~~~~~~~~~~~~
 
-A :newTerm:`weak reference` is a reference that does not keep a strong hold
+A :newTerm:`weak reference` is a reference that doesn't keep a strong hold
 on the instance it refers to,
-and so does not stop ARC from disposing of the referenced instance.
+and so doesn't stop ARC from disposing of the referenced instance.
 This behavior prevents the reference from becoming part of a strong reference cycle.
 You indicate a weak reference by placing the ``weak`` keyword
 before a property or variable declaration.
 
-Because a weak reference does not keep a strong hold on the instance it refers to,
+Because a weak reference doesn't keep a strong hold on the instance it refers to,
 it's possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
 when the instance that it refers to is deallocated.
 And, because weak references need to allow
 their value to be changed to ``nil`` at runtime,
-they are always declared as variables, rather than constants, of an optional type.
+they're always declared as variables, rather than constants, of an optional type.
 
 You can check for the existence of a value in the weak reference,
 just like any other optional value,
@@ -428,7 +428,7 @@ Unowned References
 ~~~~~~~~~~~~~~~~~~
 
 Like a weak reference,
-an :newTerm:`unowned reference` does not keep
+an :newTerm:`unowned reference` doesn't keep
 a strong hold on the instance it refers to.
 Unlike a weak reference, however,
 an unowned reference is used when the other instance
@@ -450,7 +450,7 @@ and ARC never sets an unowned reference's value to ``nil``.
 .. important::
 
    Use an unowned reference only when you are sure that
-   the reference *always* refers to an instance that has not been deallocated.
+   the reference *always* refers to an instance that hasn't been deallocated.
 
    If you try to access the value of an unowned reference
    after that instance has been deallocated,
@@ -723,8 +723,8 @@ have the potential to cause a strong reference cycle.
 This scenario is best resolved with a weak reference.
 
 The ``Customer`` and ``CreditCard`` example
-shows a situation where one property that is allowed to be ``nil``
-and another property that cannot be ``nil``
+shows a situation where one property that's allowed to be ``nil``
+and another property that can't be ``nil``
 have the potential to cause a strong reference cycle.
 This scenario is best resolved with an unowned reference.
 
@@ -771,7 +771,7 @@ the initializer for ``City`` takes a ``Country`` instance,
 and stores this instance in its ``country`` property.
 
 The initializer for ``City`` is called from within the initializer for ``Country``.
-However, the initializer for ``Country`` cannot pass ``self`` to the ``City`` initializer
+However, the initializer for ``Country`` can't pass ``self`` to the ``City`` initializer
 until a new ``Country`` instance is fully initialized,
 as described in :ref:`Initialization_TwoPhaseInitialization`.
 
@@ -892,7 +892,7 @@ or “a function that takes no parameters, and returns a ``String`` value”.
 By default, the ``asHTML`` property is assigned a closure that returns
 a string representation of an HTML tag.
 This tag contains the optional ``text`` value if it exists,
-or no text content if ``text`` does not exist.
+or no text content if ``text`` doesn't exist.
 For a paragraph element, the closure would return ``"<p>some text</p>"`` or ``"<p />"``,
 depending on whether the ``text`` property equals ``"some text"`` or ``nil``.
 
@@ -976,8 +976,8 @@ because of the strong reference cycle:
 
    -> paragraph = nil
 
-Note that the message in the ``HTMLElement`` deinitializer is not printed,
-which shows that the ``HTMLElement`` instance is not deallocated.
+Note that the message in the ``HTMLElement`` deinitializer isn't printed,
+which shows that the ``HTMLElement`` instance isn't deallocated.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures:
 
@@ -1012,7 +1012,7 @@ or a variable initialized with some value (such as ``delegate = self.delegate``)
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
-if they are provided:
+if they're provided:
 
 .. testcode:: strongReferenceCyclesForClosures
 
@@ -1026,7 +1026,7 @@ if they are provided:
       }
    >> }
 
-If a closure does not specify a parameter list or return type
+If a closure doesn't specify a parameter list or return type
 because they can be inferred from context,
 place the capture list at the very start of the closure,
 followed by the ``in`` keyword:
@@ -1116,7 +1116,7 @@ Here's how the references look with the capture list in place:
    :align: center
 
 This time, the capture of ``self`` by the closure is an unowned reference,
-and does not keep a strong hold on the ``HTMLElement`` instance it has captured.
+and doesn't keep a strong hold on the ``HTMLElement`` instance it has captured.
 If you set the strong reference from the ``paragraph`` variable to ``nil``,
 the ``HTMLElement`` instance is deallocated,
 as can be seen from the printing of its deinitializer message in the example below:

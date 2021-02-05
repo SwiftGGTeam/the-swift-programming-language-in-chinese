@@ -95,12 +95,12 @@ a type that conforms to the
 `IteratorProtocol <//apple_ref/swift/intf/s:Ps16IteratorProtocol>`_ protocol.
 The program begins executing a loop
 by calling the ``next()`` method on the iterator.
-If the value returned is not ``nil``,
-it is assigned to the *item* pattern,
+If the value returned isn't ``nil``,
+it's assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
-Otherwise, the program does not perform assignment or execute the *statements*,
-and it is finished executing the ``for``-``in`` statement.
+Otherwise, the program doesn't perform assignment or execute the *statements*,
+and it's finished executing the ``for``-``in`` statement.
 
 .. syntax-grammar::
 
@@ -375,7 +375,7 @@ If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
 For example, a *control expression* matches the case in the example below
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
+only if it's a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
 
@@ -472,7 +472,7 @@ which indicates that the default case should match only enumeration cases
 that are added in the future.
 Swift produces a warning
 if the default case matches
-any enumeration case that is known at compiler time.
+any enumeration case that's known at compiler time.
 This future warning informs you that the library author
 added a new case to the enumeration
 that doesn't have a corresponding switch case.
@@ -508,7 +508,7 @@ Execution Does Not Fall Through Cases Implicitly
 
 After the code within a matched case has finished executing,
 the program exits from the ``switch`` statement.
-Program execution does not continue or "fall through" to the next case or default case.
+Program execution doesn't continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
 which simply consists of the ``fallthrough`` keyword,
@@ -631,7 +631,7 @@ When a ``break`` statement is followed by the name of a statement label,
 it ends program execution of the loop,
 ``if`` statement, or ``switch`` statement named by that label.
 
-When a ``break`` statement is not followed by the name of a statement label,
+When a ``break`` statement isn't followed by the name of a statement label,
 it ends program execution of the ``switch`` statement or the innermost enclosing loop
 statement in which it occurs.
 You can't use an unlabeled ``break`` statement to break out of an ``if`` statement.
@@ -656,7 +656,7 @@ Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
 A ``continue`` statement ends program execution of the current iteration of a loop
-statement but does not stop execution of the loop statement.
+statement but doesn't stop execution of the loop statement.
 A ``continue`` statement can consist of only the ``continue`` keyword,
 or it can consist of the ``continue`` keyword followed by the name of a statement label,
 as shown below.
@@ -670,7 +670,7 @@ When a ``continue`` statement is followed by the name of a statement label,
 it ends program execution of the current iteration
 of the loop statement named by that label.
 
-When a ``continue`` statement is not followed by the name of a statement label,
+When a ``continue`` statement isn't followed by the name of a statement label,
 it ends program execution of the current iteration
 of the innermost enclosing loop statement in which it occurs.
 
@@ -702,13 +702,13 @@ and occurs only in a case block of a ``switch`` statement.
 A ``fallthrough`` statement causes program execution to continue
 from one case in a ``switch`` statement to the next case.
 Program execution continues to the next case
-even if the patterns of the case label do not match
+even if the patterns of the case label don't match
 the value of the ``switch`` statement's control expression.
 
 A ``fallthrough`` statement can appear anywhere inside a ``switch`` statement,
 not just as the last statement of a case block,
 but it can't be used in the final case block.
-It also cannot transfer control into a case block
+It also can't transfer control into a case block
 whose pattern contains value binding patterns.
 
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
@@ -741,10 +741,10 @@ or it can consist of the ``return`` keyword followed by an expression, as shown 
 
 When a ``return`` statement is followed by an expression,
 the value of the expression is returned to the calling function or method.
-If the value of the expression does not match the value of the return type
+If the value of the expression doesn't match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
-before it is returned to the calling function or method.
+before it's returned to the calling function or method.
 
 .. note::
 
@@ -754,8 +754,8 @@ before it is returned to the calling function or method.
 .. TODO: Discuss how the conversion takes place and what is allowed to be converted
     in the (yet to be written) chapter on subtyping and type conversions.
 
-When a ``return`` statement is not followed by an expression,
-it can be used only to return from a function or method that does not return a value
+When a ``return`` statement isn't followed by an expression,
+it can be used only to return from a function or method that doesn't return a value
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 
 .. syntax-grammar::
@@ -823,7 +823,7 @@ to perform manual resource management such as closing file descriptors,
 and to perform actions that need to happen even if an error is thrown.
 
 If multiple ``defer`` statements appear in the same scope,
-the order they appear is the reverse of the order they are executed.
+the order they appear is the reverse of the order they're executed.
 Executing the last ``defer`` statement in a given scope first
 means that statements inside that last ``defer`` statement
 can refer to resources that will be cleaned up by other ``defer`` statements.
@@ -863,7 +863,7 @@ can be accessed only within that scope.
 
 A ``do`` statement in Swift is similar to
 curly braces (``{}``) in C used to delimit a code block,
-and does not incur a performance cost at runtime.
+and doesn't incur a performance cost at runtime.
 
 A ``do`` statement has the following form:
 
@@ -981,7 +981,8 @@ conditions listed in the table below.
 ========================  ===================================================
 Platform condition        Valid arguments
 ========================  ===================================================
-``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``,
+                          ``Linux``, ``Windows``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``               ``>=`` or ``<`` followed by a version number
 ``compiler()``            ``>=`` or ``<`` followed by a version number
@@ -992,6 +993,13 @@ Platform condition        Valid arguments
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
+   Some of the OSes and architectures are listed there
+   because there's experimental work to port Swift to them.
+   We won't list them here until they're officially supported.
+   The compiler also accepts pretty much any string --
+   for example "#if os(toaster)" compiles just fine,
+   but Swift doesn't actually support running on a toaster oven --
+   so don't rely on that when checking possible os/arch values.
 
 .. The target environment "UKitForMac"
    is understood by the compiler as a synonym for "macCatalyst",
@@ -1041,7 +1049,7 @@ otherwise, it returns ``false``.
 
 .. note::
 
-   The ``arch(arm)`` platform condition does not return ``true`` for ARM 64 devices.
+   The ``arch(arm)`` platform condition doesn't return ``true`` for ARM 64 devices.
    The ``arch(i386)`` platform condition returns ``true``
    when code is compiled for the 32–bit iOS simulator.
 
@@ -1087,7 +1095,7 @@ otherwise, it returns ``false``.
           print(3)
       #endif
 
-You can combine compilation conditions using the logical operators
+You can combine and negate compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
 These operators have the same associativity and precedence as the
@@ -1115,14 +1123,12 @@ have the following form:
     Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
     However, there's an exception
-    if the compilation condition includes a ``swift()`` platform condition:
+    if the compilation condition includes a ``swift()`` or ``compiler()`` platform condition:
     The statements are parsed
-    only if the compiler's version of Swift matches
+    only if the language or compiler version matches
     what is specified in the platform condition.
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
-
-.. The above note also appears in USWCAOC in Interoperability/InteractingWithCAPIs.rst
 
 .. syntax-grammar::
 
@@ -1154,7 +1160,7 @@ have the following form:
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
-    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
+    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``Windows``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT

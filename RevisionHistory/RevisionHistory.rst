@@ -243,7 +243,7 @@ Document Revision History
   about using the ``available`` attribute with a Swift language version.
 
 * Updated the discussion in the :ref:`Types_FunctionType` section
-  to note that argument labels are not allowed when writing a function type.
+  to note that argument labels aren't allowed when writing a function type.
 
 * Updated the discussion of Swift language version numbers
   in the :ref:`Statements_BuildConfigurationStatement` section,
@@ -297,7 +297,7 @@ Document Revision History
 * Updated the discussion of the ``@noescape`` and ``@autoclosure`` attributes
   in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
   and the :doc:`../ReferenceManual/Attributes` chapter
-  now that they are type attributes, rather than declaration attributes.
+  now that they're type attributes, rather than declaration attributes.
 
 * Added information about operator precedence groups
   to the :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
@@ -391,7 +391,7 @@ Document Revision History
 
 * Updated the discussion of optional protocol requirements
   in the :ref:`Protocols_OptionalProtocolRequirements` section
-  to clarify that they are used only in code that interoperates with Objective-C.
+  to clarify that they're used only in code that interoperates with Objective-C.
 
 * Removed the discussion of explicitly using ``let`` in function parameters
   from the :ref:`Declarations_FunctionDeclaration` section.
@@ -664,7 +664,7 @@ Document Revision History
 
 * ``@autoclosure`` is now an attribute of the parameter declaration,
   not its type.
-  There is also a new ``@noescape`` parameter declaration attribute.
+  There's also a new ``@noescape`` parameter declaration attribute.
   For more information, see :ref:`Attributes_DeclarationAttributes`.
 
 * Type methods and properties now use the ``static`` keyword
@@ -957,7 +957,7 @@ Document Revision History
 
 * Updated the information about :ref:`Initialization_MemberwiseInitializersForStructureTypes`
   to clarify that the memberwise structure initializer is made available
-  even if a structure's stored properties do not have default values.
+  even if a structure's stored properties don't have default values.
 
 * Updated to ``..<`` rather than ``..``
   for the :ref:`BasicOperators_HalfClosedRangeOperator`.

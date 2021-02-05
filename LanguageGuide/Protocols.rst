@@ -138,7 +138,7 @@ Each instance of ``Person`` has a single stored property called ``fullName``,
 which is of type ``String``.
 This matches the single requirement of the ``FullyNamed`` protocol,
 and means that ``Person`` has correctly conformed to the protocol.
-(Swift reports an error at compile-time if a protocol requirement is not fulfilled.)
+(Swift reports an error at compile-time if a protocol requirement isn't fulfilled.)
 
 Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 
@@ -249,7 +249,7 @@ and any properties of that instance.
 This process is described in :ref:`Methods_ModifyingValueTypesFromWithinInstanceMethods`.
 
 If you define a protocol instance method requirement
-that is intended to mutate instances of any type that adopts the protocol,
+that's intended to mutate instances of any type that adopts the protocol,
 mark the method with the ``mutating`` keyword
 as part of the protocol's definition.
 This enables structures and enumerations to adopt the protocol
@@ -282,7 +282,7 @@ when it's called:
 If you implement the ``Togglable`` protocol for a structure or enumeration,
 that structure or enumeration can conform to the protocol
 by providing an implementation of the ``toggle()`` method
-that is also marked as ``mutating``.
+that's also marked as ``mutating``.
 
 The example below defines an enumeration called ``OnOffSwitch``.
 This enumeration toggles between two states,
@@ -752,7 +752,7 @@ increments it each time a new turn begins,
 and prints out the total number of turns once the game has ended.
 
 The implementation of ``gameDidStart(_:)`` shown above uses the ``game`` parameter
-to print some introductory information about the game that is about to be played.
+to print some introductory information about the game that's about to be played.
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
 and so ``gameDidStart(_:)`` can access and use only methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
@@ -887,7 +887,7 @@ Declaring Protocol Adoption with an Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a type already conforms to all of the requirements of a protocol,
-but has not yet stated that it adopts that protocol,
+but hasn't yet stated that it adopts that protocol,
 you can make it adopt the protocol with an empty extension:
 
 .. testcode:: protocols
@@ -1045,6 +1045,9 @@ Experts are additionally ranked by the number of stars they have.
    !$ error: type 'E' does not conform to protocol 'Comparable'
    !! enum E: Int, Comparable {
    !!      ^
+   !$ note: enum declares raw type 'Int', preventing synthesized conformance of 'E' to 'Comparable'
+   !! enum E: Int, Comparable {
+   !!         ^
    !$ note: candidate would match if 'E' conformed to 'FloatingPoint'
    !! public static func < (lhs: Self, rhs: Self) -> Bool
    !! ^
@@ -1094,7 +1097,7 @@ Note that the ``thing`` constant is of type ``TextRepresentable``.
 It's not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
 even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it's of type ``TextRepresentable``,
-and anything that is ``TextRepresentable`` is known to have a ``textualDescription`` property,
+and anything that's ``TextRepresentable`` is known to have a ``textualDescription`` property,
 it's safe to access ``thing.textualDescription`` each time through the loop.
 
 .. _Protocols_ProtocolInheritance:
@@ -1156,7 +1159,7 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol
 and provides an implementation of the ``prettyTextualDescription`` property
 for the ``SnakesAndLadders`` type.
-Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
+Anything that's ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
 and so the implementation of ``prettyTextualDescription`` starts
 by accessing the ``textualDescription`` property
 from the ``TextRepresentable`` protocol to begin an output string.
@@ -1208,16 +1211,6 @@ that tries to adopt ``SomeClassOnlyProtocol``.
    For more about reference and value semantics,
    see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`
    and :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
-
-.. assertion:: classMustAppearFirstInTheInheritanceList
-
-   -> protocol P1 {}
-   -> protocol P2: class, P1 {}
-   -> protocol P3: P1, class {}
-   !$ error: 'class' must come first in the requirement list
-   !! protocol P3: P1, class {}
-   !! ~~^~~~~
-   !! class,
 
 .. assertion:: anyobject-doesn't-have-to-be-first
 
@@ -1822,7 +1815,7 @@ and integers conform to ``Equatable``,
    Standard-library protocols such as Sequence, Equatable etc.?
    Show how to make a custom type conform to Boolean or some other protocol
    Show a protocol being used by an enumeration
-   accessing protocol methods, properties etc.  through a constant or variable that is *just* of protocol type
+   accessing protocol methods, properties etc.  through a constant or variable that's *just* of protocol type
    Protocols can't be nested, but nested types can implement protocols
-   Protocol requirements can be marked as @unavailable, but this currently only works if they are also marked as @objc.
+   Protocol requirements can be marked as @unavailable, but this currently only works if they're also marked as @objc.
    Checking for (and calling) optional implementations via optional binding and closures

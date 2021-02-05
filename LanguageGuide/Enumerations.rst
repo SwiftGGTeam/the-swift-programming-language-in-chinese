@@ -270,7 +270,7 @@ or a value of ``qrCode`` with an associated value of type ``String``.”
 This definition doesn't provide any actual ``Int`` or ``String`` values ---
 it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
-when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
+when they're equal to ``Barcode.upc`` or ``Barcode.qrCode``.
 
 You can then create new barcodes using either type:
 

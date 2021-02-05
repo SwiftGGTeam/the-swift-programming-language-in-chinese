@@ -30,7 +30,7 @@ as described in :doc:`Functions`.
 You write an instance method within the opening and closing braces of the type it belongs to.
 An instance method has implicit access to all other instance methods and properties of that type.
 An instance method can be called only on a specific instance of the type it belongs to.
-It cannot be called in isolation without an existing instance.
+It can't be called in isolation without an existing instance.
 
 Here's an example that defines a simple ``Counter`` class,
 which can be used to count the number of times an action occurs:
@@ -120,7 +120,7 @@ You use the ``self`` property to
 distinguish between the parameter name and the property name.
 
 Here, ``self`` disambiguates between
-a method parameter called ``x`` and an instance property that is also called ``x``:
+a method parameter called ``x`` and an instance property that's also called ``x``:
 
 .. testcode:: self
 
@@ -145,7 +145,7 @@ Modifying Value Types from Within Instance Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Structures and enumerations are *value types*.
-By default, the properties of a value type cannot be modified from within its instance methods.
+By default, the properties of a value type can't be modified from within its instance methods.
 
 .. TODO: find out why.  once I actually know why, explain it.
 
@@ -178,12 +178,12 @@ before the ``func`` keyword for that method:
 The ``Point`` structure above defines a mutating ``moveBy(x:y:)`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
-this method actually modifies the point on which it is called.
+this method actually modifies the point on which it's called.
 The ``mutating`` keyword is added to its definition
 to enable it to modify its properties.
 
-Note that you cannot call a mutating method on a constant of structure type,
-because its properties cannot be changed, even if they are variable properties,
+Note that you can't call a mutating method on a constant of structure type,
+because its properties can't be changed, even if they're variable properties,
 as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
 .. testcode:: selfStructures-err
@@ -207,7 +207,7 @@ as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
    // this will report an error
 
 .. TODO: talk about nonmutating as well.
-   Struct setters are implicitly 'mutating' by default and thus do not work on 'let's.
+   Struct setters are implicitly 'mutating' by default and thus don't work on 'let's.
    However, JoeG says that this ought to work
    if the setter for the computed property is explicitly defined as @!mutating.
 
@@ -315,7 +315,7 @@ by using the type property's name without a type name prefix.
 
 The example below defines a structure called ``LevelTracker``,
 which tracks a player's progress through the different levels or stages of a game.
-It is a single-player game,
+It's a single-player game,
 but can store information for multiple players on a single device.
 
 All of the game's levels (apart from level one) are locked when the game is first played.
@@ -418,7 +418,7 @@ and see what happens when the player completes level one:
    <- highest unlocked level is now 2
 
 If you create a second player, whom you try to move to a level
-that is not yet unlocked by any player in the game,
+that's not yet unlocked by any player in the game,
 the attempt to set the player's current level fails:
 
 .. testcode:: typeMethods
@@ -427,9 +427,9 @@ the attempt to set the player's current level fails:
    -> if player.tracker.advance(to: 6) {
          print("player is now on level 6")
       } else {
-         print("level 6 has not yet been unlocked")
+         print("level 6 hasn't yet been unlocked")
       }
-   <- level 6 has not yet been unlocked
+   <- level 6 hasn't yet been unlocked
 
 .. TODO: Method Binding
    --------------------

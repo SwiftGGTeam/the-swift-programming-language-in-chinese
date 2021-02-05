@@ -100,7 +100,7 @@ These keywords are described in the sections below.
    with the use of the ``try``, ``catch`` and ``throw`` keywords.
    Unlike exception handling in many languages ---
    including Objective-C ---
-   error handling in Swift does not involve unwinding the call stack,
+   error handling in Swift doesn't involve unwinding the call stack,
    a process that can be computationally expensive.
    As such, the performance characteristics
    of a ``throw`` statement
@@ -162,7 +162,7 @@ to the scope from which it's called.
 In the example below,
 the ``VendingMachine`` class has a ``vend(itemNamed:)`` method
 that throws an appropriate ``VendingMachineError``
-if the requested item is not available,
+if the requested item isn't available,
 is out of stock,
 or has a cost that exceeds the current deposited amount:
 
@@ -287,7 +287,7 @@ Handling Errors Using Do-Catch
 You use a ``do``-``catch`` statement to handle errors
 by running a block of code.
 If an error is thrown by the code in the ``do`` clause,
-it is matched against the ``catch`` clauses
+it's matched against the ``catch`` clauses
 to determine which one of them can handle the error.
 
 Here is the general form of a ``do``-``catch`` statement:
@@ -498,7 +498,7 @@ which loads the image resource at a given path
 or throws an error if the image can't be loaded.
 In this case, because the image is shipped with the application,
 no error will be thrown at runtime,
-so it is appropriate to disable error propagation.
+so it's appropriate to disable error propagation.
 
 .. testcode:: forceTryStatement
 
