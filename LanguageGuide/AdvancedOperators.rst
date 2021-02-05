@@ -933,14 +933,13 @@ that is creates a domain specific language for simple ASCII-art drawings.
    ---
    -> @resultBuilder
    -> struct DrawingBuilder {
-          typealias Component = Drawing
-          static func buildBlock(_ components: Component...) -> Component {
+          static func buildBlock(_ components: Drawing...) -> Drawing {
               return Line(elements: components)
           }
-          static func buildEither(first: Component) -> Component {
+          static func buildEither(first: Drawing) -> Drawing {
               return first
           }
-          static func buildEither(second: Component) -> Component {
+          static func buildEither(second: Drawing) -> Drawing {
               return second
           }
       }
