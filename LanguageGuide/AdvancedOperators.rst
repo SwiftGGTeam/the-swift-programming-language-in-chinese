@@ -963,7 +963,63 @@ The ``DrawingBuilder`` structure defines three methods that support syntax:
 
 
 
-For a complete list of builder functions, see :ref:`Attributes_resultBuilder`.
+You can use the ``buildLimitedAvailability(_:)`` to erase type information
+that changes depending on which branch is taken.
+For example:
+
+.. testcode:: result-builder-limited-availability
+
+   >> class ErasedType { }
+   >> class SomethingNew: ErasedType { }
+   >> class SomethingElse: ErasedType { }
+   -> @resultBuilder
+   -> struct SomeResultBuilder {
+   >>     static func buildBlock(_ component: ErasedType...) -> ErasedType { return component.first! }
+   >>     static func buildEither(first: ErasedType) -> ErasedType { return first }
+   >>     static func buildEither(second: ErasedType) -> ErasedType { return second }
+   ->     // ...
+   ->     static func buildLimitedAvailability(_ component: ErasedType) -> ErasedType {
+               return component
+           }
+      }
+   ---
+   // Using result builder syntax:
+   -> @SomeResultBuilder var something: ErasedType {
+           if #available(macOS 11.0, *) {
+               SomethingNew()
+           } else {
+               SomethingElse()
+           }
+       }
+   >> print(type(of: something))
+   << SomethingNew
+   ---
+   -> // Transformed into static method calls:
+   -> let result: ErasedType
+   -> if #available(macOS 11.0, *) {
+          let v0 = SomethingNew()
+          let v1 = SomeResultBuilder.buildBlock(v0)
+          let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
+          result = SomeResultBuilder.buildEither(first: v2)
+      } else {
+          let v0 = SomethingElse()
+          let v1 = SomeResultBuilder.buildBlock(v0)
+          let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
+          result = SomeResultBuilder.buildEither(first: v2)
+      }
+   >> print(type(of: result))
+   << SomethingNew
+
+. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+In the example above,
+the result builder always builds a value of type ``ErasedType``,
+instead of build a value whose type is either
+``SomethingNew`` or ``SomethingElse`` depending on availability.
+
+For a complete list of how builder syntax
+is transformed into calls to the builder type's methods,
+see :ref:`Attributes_resultBuilder`.
 
 
 

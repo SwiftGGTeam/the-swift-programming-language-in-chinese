@@ -1406,37 +1406,6 @@ that are visible from the rest of your code.
     }
     result = SomeResultBuilder.buildArray(array)
 
-::
-
-    if #available(macOS 11.0, *) {
-        SomethingNew()
-    } else {
-        SomethingElse()
-    }
-
-    SomeResultBuilder {
-        ...
-        static func buildLimitedAvailability(_ component: Component) -> ErasedType { ... }
-    }
-
-    // Translates to:
-    let result: ErasedType
-    if #available(macOS 11.0, *) {
-        let v0 = SomethingNew()
-        let v1 = SomeResultBuilder.buildBlock(v0)
-        let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
-        result = SomeResultBuilder.buildEither(first: v2)
-    } else {
-        let v0 = SomethingElse()
-        let v1 = SomeResultBuilder.buildBlock(v0)
-        let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
-        result = SomeResultBuilder.buildEither(first: v2)
-    }
-
-  In the example above,
-  the result builder always builds a value of type ``ErasedType``,
-  instead of build a value whose type is either
-  ``SomethingNew`` or ``SomethingElse`` depending on availability.
 
 
 
