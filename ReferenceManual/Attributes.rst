@@ -1076,20 +1076,24 @@ for creating nested data structures in a natural, declarative way.
 For an example of how to use the ``resultBuilder`` attribute,
 see :ref:`AdvancedOperators_ResultBuilders`.
 
-A result builder implements static methods
-that each perform part of the result builder's transformation.
+A result builder implements the static methods
+from the ad-hoc protocol described below.
+Because all of the result builder's functionality is exposed through static methods,
+you don't ever initialize an instance of that type.
 The ``buildBlock(_:)`` method is required;
-the other methods are optional and enable additional functionality in the DSL.
-The declaration for a result builder includes type aliases
-that specify the type of input it takes (``Expression``),
+the other methods are optional, and enable additional functionality in the DSL.
+The declaration of a result builder type
+doesn't actually have to include any protocol conformance.
+
+The ad-hoc protocol for a result builder includes associated types
+that specify the type of input the result builder takes (``Expression``),
 the type of a partial result (``Component``),
-and the type of result it produces (``FinalResult``).
+and the type of result the result builder produces (``FinalResult``).
 Both ``Expression`` and ``FinalResult`` default to being the same as ``Component``
 if you don't define them explicitly.
-
-.. XXX no instance of the result builder is ever created;
-   all of its API is exposed via type members
-   (as a sort of pseudo-namespace)
+Just like you can when conforming to a protocol,
+you can specify these types explicitly by writing a type alias,
+or implicitly by the types that your result-building methods use.
 
 The result-building methods are as follows:
 
@@ -1115,12 +1119,10 @@ The result-building methods are as follows:
   Implement both this method and ``buildEither(first:)``
   to support ``switch`` statements
   and ``if`` statements that include an ``else`` clause.
-  For example:
 
 ``static func buildArray(_ components: [Component]) -> Component``
   Builds a partial result from an array of partial results.
   Implement this method to support ``for`` loops.
-  For example:
 
 ``static func buildExpression(_ expression: Expression) -> Component``
   Builds a partial result from an expression.
@@ -1138,6 +1140,8 @@ The result-building methods are as follows:
   Builds a partial result that propagates or erases type information
   outside a compiler-control statement
   that performs an availability check.
+  You can use this to erase type information
+  that varies between the conditional branches.
 
 .. end of term/defn list
 
@@ -1158,15 +1162,42 @@ the former discussion is what I actually see.
   Otherwise, branch statements are transformed
   into a series of calls to the ``buildOptional(_:)`` method.
 
+For example, the code below defines a simple result builder
+that builds up an array of integers.
 
-Result Transformations
-++++++++++++++++++++++
+.. testcode:: array-result-builder
 
-The result-building methods perform the transformations listed below.
-Except for ``buildExpression(_:)`` and ``buildFinalResult(_:)``,
-the transformations don't have a specific order.
-Rather, each transformation is applied, recursively,
-to each piece of input.
+   -> @resultBuilder
+   -> struct ArrayBuilder {
+          typealias Component = [Int]
+          typealias Expression = Int
+          static func buildExpression(_ element: Expression) -> Component {
+              return [element]
+          }
+          static func buildOptional(_ component: Component?) -> Component {
+   >>         print("Building optional...", component as Any)
+              guard let component = component else { return [] }
+              return component
+          }
+          static func buildEither(first component: Component) -> Component {
+   >>         print("Building first...", component)
+              return component
+          }
+          static func buildEither(second component: Component) -> Component {
+   >>         print("Building second...", component)
+              return component
+          }
+          static func buildArray(_ components: [Component]) -> Component {
+              return Array(components.joined())
+          }
+          static func buildBlock(_ components: Component...) -> Component {
+              return Array(components.joined())
+          }
+      }
+
+The following syntactic transformations are applied, recursively,
+to turn code that uses result-builder syntax
+into code that calls the static methods of the result builder type:
 
 .. PASSIVE VOICE
    The actor performing the transformations described below
@@ -1178,7 +1209,15 @@ to each piece of input.
    which makes this discussion easier to understand.
 
 - If the result builder has a ``buildExpression(_:)`` method,
-  each expression is transformed into a call to that method.
+  each expression becomes a call to that method.
+  This transformation is always first.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderNumber: [Int] { 10 }
+     -> var manualNumber = ArrayBuilder.buildExpression(10)
+     >> assert(builderNumber == manualNumber)
 
 - An assignment statement is transformed like other expressions,
   but is understood to evaluate to ``()``.
@@ -1186,44 +1225,132 @@ to each piece of input.
   that takes an argument of type ``()`` to handle assignments specifically.
 
 - A branch statement that checks an availability condition
-  is transformed into a call to the ``buildLimitedAvailability(_:)`` method.
+  becomes a call to the ``buildLimitedAvailability(_:)`` method.
+  This transformation happens before the transformation into a call to
+  ``buildEither(first:)``, ``buildEither(second:)``, or ``buildOptional(_:)``.
 
-- A branch statement is transformed into calls to the
+- A branch statement becomes a series of nested calls to the
   ``buildEither(first:)`` and ``buildEither(second:)`` methods.
   The statements' conditions and cases are mapped onto
   the leaf nodes of a binary tree,
-  and the statement is transformed into
-  nested calls to the ``buildEither`` methods
+  and the statement becomes
+  a nested call to the ``buildEither`` methods
   following the path to that leaf node from the root node.
 
   For example, if you write a switch statement that has three cases,
   the compiler uses a binary tree with three leaf nodes.
-  Because the path from the root node to the second case is
-  "first child" and then "second child",
-  that case is transformed into a nested call like
-  ``buildEither(first: buildEither(second: ... ) )``.
+  Likewise,
+  because the path from the root node to the second case is
+  "second child" and then "first child",
+  that case becomes a nested call like
+  ``buildEither(first: buildEither(second: ... ))``.
+  The following declarations are equivalent:
 
-- A branch statement that might or might not produce a value,
-  like an ``if`` without an ``else``,
-  is transformed into a call to ``buildOptional(_:)``.
+  .. testcode:: array-result-builder
+
+     -> let someNumber = 19
+     -> @ArrayBuilder var builderConditional: [Int] {
+            if someNumber < 12 {
+                31
+            } else if someNumber == 19 {
+                32
+            } else {
+                33
+            }
+        }
+     << Building second... [32]
+     << Building first... [32]
+     ---
+     -> var manualConditional: [Int]
+     -> if someNumber < 12 {
+            let partialResult = ArrayBuilder.buildExpression(31)
+            let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+            manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+        } else if someNumber == 19 {
+            let partialResult = ArrayBuilder.buildExpression(32)
+            let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+            manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+        } else {
+            let partialResult = ArrayBuilder.buildExpression(33)
+            manualConditional = ArrayBuilder.buildEither(second: partialResult)
+        }
+     >> assert(builderConditional == manualConditional)
+     << Building second... [32]
+     << Building first... [32]
+
+- A branch statement that might not produce a value,
+  like an ``if`` statement without an ``else`` clause,
+  becomes a call to ``buildOptional(_:)``.
   If the ``if`` statement's condition is satisfied,
   its code block is transformed and passed as the argument;
   otherwise, ``buildOptional(_:)`` is called with ``nil`` as its argument.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderOptional: [Int] {
+            if (someNumber % 2) == 1 { 20 }
+        }
+     << Building optional... Optional([20])
+     ---
+     -> var partialResult: [Int]? = nil
+     -> if (someNumber % 2) == 1 {
+            partialResult = ArrayBuilder.buildExpression(20)
+        }
+     -> var manualOptional = ArrayBuilder.buildOptional(partialResult)
+     << Building optional... Optional([20])
+     >> assert(builderOptional == manualOptional)
 
 - A code block or ``do`` statement is transformed
-  by transforming the statements inside of it,
-  one at a time,
-  and then combining them by the ``buildBlock(_:)`` method.
+  by transforming the statements inside the block one at a time,
+  and calling the ``buildBlock(_:)`` method to combine them.
+  For example, the following declarations are equivalent:
 
-- A ``for`` loop is transformed
-  by creating a temporary variable,
-  transforming the body of the ``for`` loop,
-  and appending each ◊◊◊ to that array,
-  and then calling the ``buildArray(_:)`` method
-  with the temporary array as its argument.
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderBlock: [Int] {
+            100
+            200
+            300
+        }
+     ---
+     -> var manualBlock = ArrayBuilder.buildBlock(
+            ArrayBuilder.buildExpression(100),
+            ArrayBuilder.buildExpression(200),
+            ArrayBuilder.buildExpression(300)
+        )
+     >> assert(builderBlock == manualBlock)
+
+- A ``for`` loop becomes a temporary variable, a ``for`` loop,
+  and call to the ``buildArray(_:)`` method.
+  The new ``for`` loop iterates over the sequence
+  and appends each partial result to that array.
+  The temporary array is passed as the argument in the ``buildArray(_:)`` call.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderArray: [Int] {
+            for i in 5...7 {
+                100 + i
+            }
+        }
+     ---
+     -> var temporary: [[Int]] = []
+     -> for i in 5...7 {
+            let partialResult = ArrayBuilder.buildExpression(100 + i)
+            temporary.append(partialResult)
+        }
+     -> let manualArray = ArrayBuilder.buildArray(temporary)
+     >> assert(builderArray == manualArray)
 
 - If the result builder has a ``buildFinalResult(_:)`` method,
-  it performs the last transformation on the transformed result.
+  the final result is transformed into into a call to that method.
+  This transformation is always last.
+
+Although the transformation behavior is described in terms of temporary variables,
+using a result builder doesn't actually create any new declarations
+that are visible from the rest of your code.
 
 You can't use
 ``break``, ``continue``, ``defer``, ``guard``, or ``return`` statements,
@@ -1248,84 +1375,6 @@ into ``buildExpression(4 + 5 * 6)`` rather multiple calls to that function.
 Likewise, nested branch statements are transformed into
 a single binary tree of calls to the ``buildEither`` methods.
 
-The code below defines a simple result builder,
-uses the result builder to make an array of numbers,
-and then calls the result builder methods manually
-to show what the transformed code would look like.
-Although the transformation behavior is described in terms of temporary variables,
-using a result builder doesn't actually create any new declarations
-that are visible from the rest of your code.
-
-.. testcode:: array-result-builder
-
-   -> @resultBuilder
-   -> struct ArrayBuilder {
-          typealias Component = [Int]
-          typealias Expression = Int
-          static func buildExpression(_ element: Expression) -> Component {
-              return [element]
-          }
-          static func buildOptional(_ component: Component?) -> Component {
-              guard let component = component else { return [] }
-              return component
-          }
-          static func buildEither(first: Component) -> Component {
-              return first
-          }
-          static func buildEither(second: Component) -> Component {
-              return second
-          }
-          static func buildArray(_ components: [Component]) -> Component {
-              return Array(components.joined())
-          }
-          static func buildBlock(_ components: Component...) -> Component {
-              return Array(components.joined())
-          }
-      }
-   ---
-   // Using the result builder:
-   -> let y = 19
-   -> @ArrayBuilder var x: [Int] {
-          10
-          if (y % 2) == 1 { 20 }
-          if y > 12 {
-              30
-          } else {
-              33
-          }
-          4
-          for i in 5...7 { 100 + i }
-      }
-   -> print(x)
-   <- [10, 20, 30, 4, 105, 106, 107]
-   ---
-   // Calling the builder methods manually:
-   -> let r1 = ArrayBuilder.buildExpression(10)
-   -> let r2optional: [Int]?
-   -> if (y % 2) == 1 {
-          r2optional = ArrayBuilder.buildExpression(20)
-       } else {
-          r2optional = nil
-       }
-   -> let r2 = ArrayBuilder.buildOptional(r2optional)
-   -> let r3: [Int]
-   -> if y > 12 {
-          r3 = ArrayBuilder.buildExpression(30)
-      } else {
-          r3 = ArrayBuilder.buildExpression(33)
-      }
-   -> let r4 = ArrayBuilder.buildExpression(4)
-   -> var array: [[Int]] = []
-   -> for i in 5...7 {
-         array.append(ArrayBuilder.buildExpression(100 + i))
-      }
-   -> let r5 = ArrayBuilder.buildArray(array)
-   -> let result = ArrayBuilder.buildBlock(r1, r2, r3, r4, r5)
-   -> print(result)
-   <- [10, 20, 30, 4, 105, 106, 107]
-
-.. XXX Rename x y and result above.
-
 .. assertion:: result-builder-transform-complex-expression
 
    >> @resultBuilder
@@ -1344,69 +1393,6 @@ that are visible from the rest of your code.
    << Building 46
    >> print(x)
    << [46]
-
-::
-
-    SomeResultBuilder {
-        firstExpression
-        secondExpression
-    }
-
-    // Translates to:
-    SomeResultBuilder.buildBlock(firstExpression, secondExpression)
-
-::
-
-    if couponAvailable {
-        DailyCoupon()
-    }
-
-    // Translates to:
-    var x: Coupon? = nil
-    if couponAvailable {
-        x = DailyCoupon()
-    }
-    let result = SomeResultBuilder.buildOptional(x)
-
-::
-
-    switch userState {
-    case .new:
-        SignupView()
-    case .signedIn:
-        UserAccountView()
-    default:
-        LogInView()
-    }
-
-    // Translates to:
-    var v: View? = nil
-    let result: PartialResult
-    if userState == .new {
-        result = SomeBuilder.buildEither(first: SignUpView())
-    } else if userState == .signedIn {
-        let r = SomeResultBuilder.buildEither(first: UserAccountView())
-        let result = SomeResultBuilder.buildEither(second: r)
-    } else {
-        let r = SomeResultBuilder.buildEither(second: LogInView())
-        let result = SomeResultBuilder.buildEither(second: r)
-    }
-
-::
-
-    for number in [10, 20, 30] {
-        100 + number
-    }
-
-    // Translates to:
-    let result: NumberBuilderComponent
-    var array: [NumberBuilderComponent] = []
-    for number in [10, 20, 30] {
-        array.append(100 + number)
-    }
-    result = SomeResultBuilder.buildArray(array)
-
-
 
 
 Custom Attributes
