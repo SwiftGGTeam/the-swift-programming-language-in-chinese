@@ -1072,6 +1072,8 @@ but showing the result of the transformation
 makes it easier to see how your code is transformed
 when you use the DSL syntax.
 
+.. XXX add a for loop example
+
 You can use the ``buildLimitedAvailability(_:)`` to erase type information
 that changes depending on which branch is taken.
 For example,
@@ -1114,7 +1116,8 @@ on older versions of macOS where ``NewStars`` isn't defined.
 
 .. XXX
    In the SE proposal, they're using a _ConditionalContent<TrueContent, FalseContent> view
-   which causes the type propagation through the generic system.
+   which causes the type propagation through the generic system
+   because both the branch taken and the branch not taken show up in the type system.
    Here, because the types to build a drawing aren't actually generic,
    it would work just fine without the buildLimitedAvailability(_:) method.
 
