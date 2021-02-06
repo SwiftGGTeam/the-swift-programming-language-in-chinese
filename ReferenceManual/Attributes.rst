@@ -1363,9 +1363,6 @@ It also doesn't change
 compile-time diagnostic statements,
 or closures that contain a ``return`` statement.
 
-◊TR: Is the closure bit specific to single-expression closures,
-or does it have any other restrictions?
-
 Whenever possible, transformations are coalesced.
 For example, the expression ``4 + 5 * 6`` is transformed
 into ``buildExpression(4 + 5 * 6)`` rather multiple calls to that function.

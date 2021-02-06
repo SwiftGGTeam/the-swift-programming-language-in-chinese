@@ -900,9 +900,6 @@ see :ref:`Declarations_OperatorDeclaration`.
 Result Builders
 ---------------
 
-.. XXX show the non-result-builder approach first,
-   to motivate how doing it that way is awkward
-
 A :newTerm:`result builder` is a type you define
 that adds syntax for creating nested data,
 like a list or tree,
@@ -913,11 +910,8 @@ to handle conditional or repeated pieces of data.
 
 .. XXX When you should use a result builder, versus something else?
 
-To define a result builder,
-you write the ``@resultBuilder`` attribute on a type declaration.
-For example,
-the code below defines a result builder called ``DrawingBuilder``
-that is creates a domain specific language for simple ASCII-art drawings.
+The code below defines a few types for drawing simple ASCII art
+and then makes a simple drawing by calling their initializers directly:
 
 .. testcode:: result-builder
 
@@ -930,7 +924,60 @@ that is creates a domain specific language for simple ASCII-art drawings.
               return elements.map { $0.draw() }.joined(separator: "")
           }
       }
+   -> struct Text: Drawing {
+          var content: String
+          init(_ content: String) { self.content = content }
+          func draw() -> String { return content }
+      }
+   -> struct Space: Drawing {
+          func draw() -> String { return " " }
+      }
+   -> struct Stars: Drawing {
+          var length: Int
+          func draw() -> String { return String(repeating: "*", count: length) }
+      }
+   -> struct AllCaps: Drawing {
+          var content: Drawing
+          func draw() -> String { return content.draw().uppercased() }
+      }
    ---
+   -> let name: String? = "John Appleseed"
+   -> let manualDrawing = Line(elements: [
+           Stars(length: 3),
+           Text("Hello"),
+           Space(),
+           AllCaps(content: Text((name ?? "World") + "!")),
+           Stars(length: 2),
+      ])
+   -> print(manualDrawing.draw())
+   <- ***Hello JOHN APPLESEED!**
+
+The ``Drawing`` protocol defines what it means to be a drawing:
+A drawing is a type that has a ``draw()`` method.
+The ``Line`` structure represents a single line of ASCII art,
+and it serves the top-level container for most drawings.
+To draw a ``Line``, it draws each of the drawings on that line,
+and then concatenates all of their strings into a single string.
+The ``Text`` structure wraps a string, to make it part of a drawing.
+The ``AllCaps`` structure wraps and modifies another drawing,
+converting any text in the drawing to upper case.
+
+The deeply nested parenthesis after ``AllCaps`` are hard to read.
+The fallback logic to use "World" when ``name`` is ``nil``
+has to be done inline using the ``??`` operator,
+which would make more complex conditionals harder to read.
+If you needed to include switches or ``for`` loops
+to build up part of the drawing, there's no way to do that.
+A result builder lets you rewrite code like this
+so that it looks more like normal Swift code.
+
+To define a result builder,
+you write the ``@resultBuilder`` attribute on a type declaration.
+For example, this code defines a result builder called ``DrawingBuilder``,
+which lets you use a declarative syntax to describe a drawing:
+
+.. testcode:: result-builder
+
    -> @resultBuilder
    -> struct DrawingBuilder {
           static func buildBlock(_ components: Drawing...) -> Drawing {
@@ -944,25 +991,91 @@ that is creates a domain specific language for simple ASCII-art drawings.
           }
       }
 
-The ``Drawing`` protocol defines what it means to be a drawing in this DSL:
-A drawing is a type that has a ``draw()`` method.
-The ``Line`` structure represents a single line of ASCII art,
-and it serves the top-level container for most drawings.
-To draw a ``Line``, it draws each of the drawings on that line,
-and then concatenates all of their strings into a single string.
+The ``DrawingBuilder`` structure defines three methods that support syntax.
+The ``buildBlock(_:)`` method adds support for
+writing a series of lines in a braced block.
+It combines the components in that braced block into a ``Line``.
+The ``buildEither(first:)`` and ``buildEither(second:)`` methods
+add support for ``if``-``else``.
 
-The ``DrawingBuilder`` structure defines three methods that support syntax:
+You can apply the ``@DrawingBuilding`` to a function's parameter,
+which uses the result builder to transform a closure passed to the function.
+For example:
 
-- The ``buildBlock(_:)`` method adds support for
-  writing a series of lines in a braced block.
+.. testcode:: result-builder
 
-- The ``buildEither(first:)`` method adds support for ``if``.
+   -> func drawing(@DrawingBuilder content: () -> Drawing) -> Drawing {
+          return content()
+      }
+   -> func caps(@DrawingBuilder content: () -> Drawing) -> Drawing {
+          return AllCaps(content: content())
+      }
+   ---
+   -> func makeGreeting(for name: String? = nil) -> Drawing {
+          let greeting = drawing {
+              Stars(length: 3)
+              Text("Hello")
+              Space()
+              caps {
+                  if let name = name {
+                      Text(name + "!")
+                  } else {
+                      Text("World!")
+                  }
+              }
+              Stars(length: 2)
+          }
+          return greeting
+      }
+   -> let genericGreeting = makeGreeting()
+   -> print(genericGreeting.draw())
+   <- ***Hello WORLD!**
+   ---
+   -> let personalGreeting = makeGreeting(for: "Lee")
+   -> print(personalGreeting.draw())
+   <- ***Hello LEE!**
 
-- The ``buildEither(second:)`` method adds support for ``else``.
+The ``makeGreeting(for:)`` function takes a ``name`` parameter
+and uses it to draw a personalized greeting.
+The ``drawing(_:)`` and ``caps(_:)`` functions
+both take a single closure as their argument,
+which is marked with the ``@DrawingBuilder`` attribute.
+When you call those functions,
+you use the drawing domain-specific language that ``DrawingBuilder`` defines.
+Swift transforms that declarative description of a drawing
+into a series of calls to the methods on ``DrawingBuilder``
+to build up the value that's passed as the function argument.
+For example, the call to ``caps(_:)``
+is transformed to behave like the following code:
 
+.. testcode:: result-builder
 
-◊◊◊
+   -> let capsDrawing = caps {
+          let partialDrawing: Drawing
+          if let name = name {
+              let text = Text(name + "!")
+              partialDrawing = DrawingBuilder.buildEither(first: text)
+          } else {
+              let text = Text("World!")
+              partialDrawing = DrawingBuilder.buildEither(second: text)
+          }
+          return partialDrawing
+   -> }
+   >> print(capsDrawing.draw())
+   << JOHN APPLESEED!
 
+In the transformed code above,
+the ``if``-``else`` block is transformed into
+calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
+You wouldn't actually write code like this,
+but showing the result of the transformation
+makes it easier to see how your code is transformed
+when you use the DSL syntax.
+
+.. XXX For better narrative flow, rewrite the example below
+   in terms of the drawing DSL used above.
+   Add a new drawing type that's only available on macOS 11
+   and then type-erase it to Drawing.
 
 You can use the ``buildLimitedAvailability(_:)`` to erase type information
 that changes depending on which branch is taken.
