@@ -1076,6 +1076,9 @@ for creating nested data structures in a natural, declarative way.
 For an example of how to use the ``resultBuilder`` attribute,
 see :ref:`AdvancedOperators_ResultBuilders`.
 
+Result-Building Methods
++++++++++++++++++++++++
+
 A result builder implements the static methods
 from the ad-hoc protocol described below.
 Because all of the result builder's functionality is exposed through static methods,
@@ -1153,15 +1156,6 @@ based on which things you implement.
 Based on actually running the code,
 the former discussion is what I actually see.
 
-.. INCORRECT
-
-  If the result builder has
-  a ``buildEither(first:)`` and ``buildEither(second:)`` method,
-  branch statements like ``if`` and ``switch``
-  are transformed into a binary tree of calls to those two methods.
-  Otherwise, branch statements are transformed
-  into a series of calls to the ``buildOptional(_:)`` method.
-
 For example, the code below defines a simple result builder
 that builds up an array of integers.
 
@@ -1194,6 +1188,9 @@ that builds up an array of integers.
               return Array(components.joined())
           }
       }
+
+Result Transformations
+++++++++++++++++++++++
 
 The following syntactic transformations are applied, recursively,
 to turn code that uses result-builder syntax
@@ -1394,45 +1391,26 @@ a single binary tree of calls to the ``buildEither`` methods.
    >> print(x)
    << [46]
 
-
 Custom Attributes
 +++++++++++++++++
 
 Creating result builder type creates a custom attribute with the same name.
 You can apply that attribute in the following places:
 
-- On a function declaration.
-  The result builder transforms the body of the function,
-  according to the transformation rules described below.
+- On a function declaration,
+  the result builder transforms the body of the function.
 
-- On a variable or subscript declaration that includes a getter.
-  The attribute is understood to be applied to that getter.
+- On a variable or subscript declaration that includes a getter,
+  the result builder transforms the body of the getter.
 
-- On a parameter in a function declaration.
-  The result builder transform the body of a closure
+- On a parameter in a function declaration,
+  the result builder transform the body of a closure
   that's passed as the corresponding argument.
 
-
-.. XXX Add info about applying a result-builder attribute
-
-    From the SE proposal:
-
-    A result builder type can be used as an attribute in two different
-    syntactic positions. The first position is on a func, var, or subscript
-    declaration. For the var and subscript, the declaration must define a
-    getter, and the attribute is treated as if it were an attribute on that
-    getter. A result builder attribute used in this way causes the result
-    builder transform to be applied to the body of the function; it is not
-    considered part of the interface of the function and does not affect its
-    ABI.
-
-    A result builder type can also be used as an attribute on a parameter of
-    function type, including on parameters of protocol requirements. A result
-    builder attribute used in this way causes the result builder transform to
-    be applied to the body of any explicit closures that are passed as the
-    corresponding argument, unless the closure contains a return statement.
-    This is considered part of the interface of the function and can affect
-    source compatibility, although it does not affect its ABI.
+Applying a result builder attribute doesn't impact ABI compatibility.
+Applying a result builder attribute to a parameter
+makes that attribute part of the function's interface,
+which can effect source compatibility.
 
 
 .. _Attributes_requires_stored_property_inits:
