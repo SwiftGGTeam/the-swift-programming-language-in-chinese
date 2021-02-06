@@ -1072,42 +1072,54 @@ but showing the result of the transformation
 makes it easier to see how your code is transformed
 when you use the DSL syntax.
 
-.. XXX For better narrative flow, rewrite the example below
-   in terms of the drawing DSL used above.
-   Add a new drawing type that's only available on macOS 11
-   and then type-erase it to Drawing.
-
 You can use the ``buildLimitedAvailability(_:)`` to erase type information
 that changes depending on which branch is taken.
-For example:
+For example,
+the code below adds support for ``#available`` when using the drawing DSL,
+and takes advantage of that syntax to use a new ``NewStars`` structure.
 
-.. testcode:: result-builder-limited-availability
+.. testcode:: result-builder
 
-   >> class ErasedType { }
-   >> class SomethingNew: ErasedType { }
-   >> class SomethingElse: ErasedType { }
-   -> @resultBuilder
-   -> struct SomeResultBuilder {
-   >>     static func buildBlock(_ component: ErasedType...) -> ErasedType { return component.first! }
-   >>     static func buildEither(first: ErasedType) -> ErasedType { return first }
-   >>     static func buildEither(second: ErasedType) -> ErasedType { return second }
-   ->     // ...
-   ->     static func buildLimitedAvailability(_ component: ErasedType) -> ErasedType {
-               return component
-           }
+   -> @available(macOS 11, *)
+   -> struct NewStars: Drawing {
+          var length: Int
+          func draw() -> String { return String(repeating: "⭐", count: length) }
       }
-   ---
-   // Using result builder syntax:
-   -> @SomeResultBuilder var something: ErasedType {
-           if #available(macOS 11.0, *) {
-               SomethingNew()
-           } else {
-               SomethingElse()
-           }
-       }
-   >> print(type(of: something))
-   << SomethingNew
-   ---
+   -> extension DrawingBuilder {
+          static func buildLimitedAvailability(_ drawing: Drawing) -> Drawing {
+              return drawing
+          }
+      }
+   -> let starryDrawing = drawing {
+         if #available(macOS 11, *) {
+             NewStars(length: 5)
+         } else {
+             Stars(length: 5)
+         }
+      }
+   >> print(starryDrawing.draw())
+   << ⭐⭐⭐⭐⭐
+
+. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+In the example above,
+the ``buildLimitedAvailability(_:)`` function
+erases the type from being either ``NewStars`` on macOS 11 and later
+or ``Stars`` on older versions.
+Without this type erasure,
+the ``NewStars`` type could propagate
+through a generic version of ``buildEither``,
+which would cause an error
+on older versions of macOS where ``NewStars`` isn't defined.
+
+.. XXX
+   In the SE proposal, they're using a _ConditionalContent<TrueContent, FalseContent> view
+   which causes the type propagation through the generic system.
+   Here, because the types to build a drawing aren't actually generic,
+   it would work just fine without the buildLimitedAvailability(_:) method.
+
+
+..
    -> // Transformed into static method calls:
    -> let result: ErasedType
    -> if #available(macOS 11.0, *) {
@@ -1124,28 +1136,9 @@ For example:
    >> print(type(of: result))
    << SomethingNew
 
-. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
-In the example above,
-the result builder always builds a value of type ``ErasedType``,
-instead of build a value whose type is either
-``SomethingNew`` or ``SomethingElse`` depending on availability.
-
 For a complete list of how builder syntax
 is transformed into calls to the builder type's methods,
 see :ref:`Attributes_resultBuilder`.
-
-
-
-.. OUTLINE
-
-   A result builder creates nested data structures
-   using a lightweight syntax that looks like a natural extension to the language.
-
-   From the SE proposal:
-   which allows certain functions (specially-annotated, often via context)
-   to implicitly build up a result value from a sequence of components.
-
 
 
 
