@@ -1074,70 +1074,132 @@ when you use the DSL syntax.
 
 .. XXX add a for loop example
 
-You can use the ``buildLimitedAvailability(_:)`` to erase type information
+You add the ``buildLimitedAvailability(_:)`` method to erase type information
 that changes depending on which branch is taken.
-For example,
-the code below adds support for ``#available`` when using the drawing DSL,
-and takes advantage of that syntax to use a new ``NewStars`` structure.
+The code below defines a version of ``Line`` and ``DrawingBuilder``
+that preserve type information by using generics and a new ``DrawEither`` type:
 
-.. testcode:: result-builder
+.. testcode:: result-builder-limited-availability-broken, result-builder-limited-availability-ok
 
-   -> @available(macOS 11, *)
-   -> struct NewStars: Drawing {
-          var length: Int
-          func draw() -> String { return String(repeating: "⭐", count: length) }
-      }
-   -> extension DrawingBuilder {
-          static func buildLimitedAvailability(_ drawing: Drawing) -> Drawing {
-              return drawing
+   >> protocol Drawing {
+   >>     func draw() -> String
+   >> }
+   >> struct Text: Drawing {
+   >>     var content: String
+   >>     init(_ content: String) { self.content = content }
+   >>     func draw() -> String { return content }
+   >> }
+   -> struct Line<D: Drawing>: Drawing {
+          var elements: [D]
+          func draw() -> String {
+              return elements.map { $0.draw() }.joined(separator: "")
           }
       }
-   -> let starryDrawing = drawing {
-         if #available(macOS 11, *) {
-             NewStars(length: 5)
-         } else {
-             Stars(length: 5)
-         }
+   -> struct DrawEither<First: Drawing, Second: Drawing>: Drawing {
+          var content: Drawing
+          func draw() -> String { return content.draw() }
       }
-   >> print(starryDrawing.draw())
-   << ⭐⭐⭐⭐⭐
+   ---
+   -> @resultBuilder
+      struct DrawingBuilder {
+          static func buildBlock<D: Drawing>(_ components: D...) -> Line<D> {
+              return Line(elements: components)
+          }
+          static func buildEither<First, Second>(first: First)
+                  -> DrawEither<First, Second> {
+              return DrawEither(content: first)
+          }
+          static func buildEither<First, Second>(second: Second)
+                  -> DrawEither<First, Second> {
+              return DrawEither(content: second)
+          }
+      }
+
+This version of ``DrawingBuilder`` handles ``if``-``else`` statements
+by passing along the type from both branches,
+which causes problems with availability checks.
+For example:
+
+.. testcode:: result-builder-limited-availability-broken
+
+   -> @available(macOS 99, *)
+   -> struct FutureText: Drawing {
+          var content: String
+          init(_ content: String) { self.content = content }
+          func draw() -> String { return content }
+      }
+   -> @DrawingBuilder var brokenDrawing: Drawing {
+          if #available(macOS 99, *) {
+              FutureText("Inside.future")
+          } else {
+              Text("Inside.present")
+          }
+      }
+   /> The type of brokenDrawing is \(type(of: brokenDrawing))
+   </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+   !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
+   !! if #available(macOS 99, *) {
+   !! ^
+   !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
+   !! struct DrawingBuilder {
+   !! ^
 
 . x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
+In the code above, the ``#available`` condition
+correctly switches between using ``Text`` or ``FutureText``,
+depending on the version of macOS.
+However, in both cases,
+``FutureText`` still appears as part of the type of ``brokenDrawing``
+because it's one of the types in the ``DrawEither`` generic type.
+This could cause your program to crash if ``FutureText`` isn't available.
+
+To solve this problem,
+implement a ``buildLimitedAvailability(_:)`` method 
+that erases type information.
+
+.. testcode:: result-builder-limited-availability-ok
+
+   >> @available(macOS 99, *)
+   >> struct FutureText: Drawing {
+   >>     var content: String
+   >>     init(_ content: String) { self.content = content }
+   >>     func draw() -> String { return content }
+   >> }
+   >> @DrawingBuilder var x: Drawing {
+   >>     if #available(macOS 99, *) {
+   >>         FutureText("Inside.future")
+   >>     } else {
+   >>         Text("Inside.present")
+   >>     }
+   >> }
+   -> struct AnyDrawing: Drawing {
+          var content: Drawing
+          func draw() -> String { return content.draw() }
+      }
+   -> extension DrawingBuilder {
+          static func buildLimitedAvailability(_ drawing: Drawing) -> AnyDrawing {
+              return AnyDrawing(content: drawing)
+          }
+      }
+   ---
+   -> @DrawingBuilder var typeErasedDrawing: Drawing {
+          if #available(macOS 99, *) {
+              FutureText("Inside.future")
+          } else {
+              Text("Inside.present")
+          }
+      }
+   /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
+   </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawing, Line<Text>>>
+
 In the example above,
 the ``buildLimitedAvailability(_:)`` function
-erases the type from being either ``NewStars`` on macOS 11 and later
-or ``Stars`` on older versions.
-Without this type erasure,
-the ``NewStars`` type could propagate
-through a generic version of ``buildEither``,
-which would cause an error
-on older versions of macOS where ``NewStars`` isn't defined.
-
-.. XXX
-   In the SE proposal, they're using a _ConditionalContent<TrueContent, FalseContent> view
-   which causes the type propagation through the generic system
-   because both the branch taken and the branch not taken show up in the type system.
-   Here, because the types to build a drawing aren't actually generic,
-   it would work just fine without the buildLimitedAvailability(_:) method.
-
-
-..
-   -> // Transformed into static method calls:
-   -> let result: ErasedType
-   -> if #available(macOS 11.0, *) {
-          let v0 = SomethingNew()
-          let v1 = SomeResultBuilder.buildBlock(v0)
-          let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
-          result = SomeResultBuilder.buildEither(first: v2)
-      } else {
-          let v0 = SomethingElse()
-          let v1 = SomeResultBuilder.buildBlock(v0)
-          let v2 = SomeResultBuilder.buildLimitedAvailability(v1)
-          result = SomeResultBuilder.buildEither(first: v2)
-      }
-   >> print(type(of: result))
-   << SomethingNew
+handles the ``if`` branch and erases the type of that partial result.
+This way, instead of being a ``Line<FutureText>`` value,
+the value created by ``if`` block is a ``AnyDrawing`` value.
+This type erasure prevents ``FutureType`` from appearing
+in the type of ``typeErasedDrawing``.
 
 For a complete list of how builder syntax
 is transformed into calls to the builder type's methods,
