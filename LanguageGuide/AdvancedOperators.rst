@@ -910,8 +910,7 @@ to handle conditional or repeated pieces of data.
 
 .. XXX When you should use a result builder, versus something else?
 
-The code below defines a few types for drawing simple ASCII art
-and then makes a simple drawing by calling their initializers directly:
+The code below defines a few types for drawing simple ASCII art:
 
 .. testcode:: result-builder
 
@@ -940,17 +939,6 @@ and then makes a simple drawing by calling their initializers directly:
           var content: Drawing
           func draw() -> String { return content.draw().uppercased() }
       }
-   ---
-   -> let name: String? = "John Appleseed"
-   -> let manualDrawing = Line(elements: [
-           Stars(length: 3),
-           Text("Hello"),
-           Space(),
-           AllCaps(content: Text((name ?? "World") + "!")),
-           Stars(length: 2),
-      ])
-   -> print(manualDrawing.draw())
-   <- ***Hello JOHN APPLESEED!**
 
 The ``Drawing`` protocol defines what it means to be a drawing:
 A drawing is a type that has a ``draw()`` method.
@@ -962,10 +950,27 @@ The ``Text`` structure wraps a string, to make it part of a drawing.
 The ``AllCaps`` structure wraps and modifies another drawing,
 converting any text in the drawing to upper case.
 
+It's possible to make a simple drawing with these types
+by calling their initializers directly:
+
+.. testcode:: result-builder
+
+   -> let name: String? = "John Appleseed"
+   -> let manualDrawing = Line(elements: [
+           Stars(length: 3),
+           Text("Hello"),
+           Space(),
+           AllCaps(content: Text((name ?? "World") + "!")),
+           Stars(length: 2),
+      ])
+   -> print(manualDrawing.draw())
+   <- ***Hello JOHN APPLESEED!**
+
+This code works, but it's a little awkward.
 The deeply nested parenthesis after ``AllCaps`` are hard to read.
 The fallback logic to use "World" when ``name`` is ``nil``
 has to be done inline using the ``??`` operator,
-which would make more complex conditionals harder to read.
+which would be difficult with anything more complex.
 If you needed to include switches or ``for`` loops
 to build up part of the drawing, there's no way to do that.
 A result builder lets you rewrite code like this
@@ -991,7 +996,8 @@ which lets you use a declarative syntax to describe a drawing:
           }
       }
 
-The ``DrawingBuilder`` structure defines three methods that support syntax.
+The ``DrawingBuilder`` structure defines three methods
+that implement parts of the result builder syntax.
 The ``buildBlock(_:)`` method adds support for
 writing a series of lines in a braced block.
 It combines the components in that braced block into a ``Line``.
@@ -1045,7 +1051,7 @@ you use the drawing domain-specific language that ``DrawingBuilder`` defines.
 Swift transforms that declarative description of a drawing
 into a series of calls to the methods on ``DrawingBuilder``
 to build up the value that's passed as the function argument.
-For example, the call to ``caps(_:)``
+For example, the call to ``caps(_:)`` in that example
 is transformed to behave like the following code:
 
 .. testcode:: result-builder
@@ -1064,11 +1070,11 @@ is transformed to behave like the following code:
    >> print(capsDrawing.draw())
    << JOHN APPLESEED!
 
-In the transformed code above,
-the ``if``-``else`` block is transformed into
+The ``if``-``else`` block is transformed into
 calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
-You wouldn't actually write code like this,
-but showing the result of the transformation
+You don't call these methods yourself ---
+Swift transforms the ``if``--``else`` block for you.
+However, showing the result of the transformation
 makes it easier to see how your code is transformed
 when you use the DSL syntax.
 
@@ -1151,7 +1157,7 @@ For example:
       }
    -> @DrawingBuilder var brokenDrawing: Drawing {
           if #available(macOS 99, *) {
-              FutureText("Inside.future")
+              FutureText("Inside.future")  // Problem
           } else {
               Text("Inside.present")
           }
@@ -1165,7 +1171,7 @@ For example:
    !! struct DrawingBuilder {
    !! ^
 
-. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 In the code above, the ``#available`` condition
 correctly switches between using ``Text`` or ``FutureText``,
@@ -1213,6 +1219,8 @@ that erases type information.
       }
    /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
    </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawing, Line<Text>>>
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 In the example above,
 the ``buildLimitedAvailability(_:)`` function
