@@ -1072,7 +1072,28 @@ but showing the result of the transformation
 makes it easier to see how your code is transformed
 when you use the DSL syntax.
 
-.. XXX add a for loop example
+To add support for writing ``for`` loops in the drawing DSL,
+add a ``buildArray(_:)`` method.
+
+.. testcode:: result-builder
+
+   -> extension DrawingBuilder {
+          static func buildArray(_ components: [Drawing]) -> Drawing {
+              return Line(elements: components)
+          }
+      }
+   -> let manyStars = drawing {
+          Text("Stars:")
+          for length in 1...3 {
+              Space()
+              Stars(length: length)
+          }
+   -> }
+   >> print(manyStars.draw())
+   << Stars: * ** ***
+
+In the code above, the ``for`` loop creates an array of drawings,
+and the ``buildArray(_:)`` method turns that array into a ``Line``.
 
 You add the ``buildLimitedAvailability(_:)`` method to erase type information
 that changes depending on which branch is taken.
