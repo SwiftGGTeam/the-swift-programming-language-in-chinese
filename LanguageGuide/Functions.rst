@@ -554,7 +554,8 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 .. note::
 
-   A function may have at most one variadic parameter.
+   Any parameters after a variadic parameter must be labeled,
+   including additional variadic parameters.
 
 .. _Functions_InOutParameters:
 
