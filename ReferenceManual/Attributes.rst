@@ -1351,7 +1351,7 @@ that are visible from the rest of your code.
 You can't use
 ``break``, ``continue``, ``defer``, ``guard``, or ``return`` statements,
 ``while`` loops,
-or ``do``-``catch`` statements,
+or ``do``-``catch`` statements
 in the code that a result builder transforms.
 
 The transformation process doesn't change declarations in the code,
