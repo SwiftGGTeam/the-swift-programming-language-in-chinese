@@ -1619,8 +1619,8 @@ Implicit Conversion to a Pointer Type
 
 In a function call expression,
 if the argument and parameter have a different type,
-an argument is implicitly converted to a corresponding pointer type,
-if that type is the same as the argument's type:
+the compiler tries to make their types match
+by applying one of the implicit conversions in the following list:
 
 * ``inout SomeType`` can become
   ``UnsafePointer<SomeType>`` or ``UnsafeMutablePointer<SomeType>``
@@ -1646,10 +1646,9 @@ The following two function calls are equivalent:
 
 Swift converts the value to a pointer that's valid
 only for the duration of the function call.
-As with other unsafe APIs,
-you are responsible for ensuring that your code
-never persists the pointer after the function call ends,
-to avoid undefined behavior.
+To avoid undefined behavior,
+ensure that your code
+never persists the pointer after the function call ends.
 
 .. note::
 
