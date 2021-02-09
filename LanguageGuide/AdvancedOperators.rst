@@ -914,37 +914,37 @@ The code below defines a few types for drawing simple ASCII art:
 
 .. testcode:: result-builder
 
-   -> protocol Drawing {
+   -> protocol Drawable {
           func draw() -> String
       }
-   -> struct Line: Drawing {
-          var elements: [Drawing]
+   -> struct Line: Drawable {
+          var elements: [Drawable]
           func draw() -> String {
               return elements.map { $0.draw() }.joined(separator: "")
           }
       }
-   -> struct Text: Drawing {
+   -> struct Text: Drawable {
           var content: String
           init(_ content: String) { self.content = content }
           func draw() -> String { return content }
       }
-   -> struct Space: Drawing {
+   -> struct Space: Drawable {
           func draw() -> String { return " " }
       }
-   -> struct Stars: Drawing {
+   -> struct Stars: Drawable {
           var length: Int
           func draw() -> String { return String(repeating: "*", count: length) }
       }
-   -> struct AllCaps: Drawing {
-          var content: Drawing
+   -> struct AllCaps: Drawable {
+          var content: Drawable
           func draw() -> String { return content.draw().uppercased() }
       }
 
-The ``Drawing`` protocol defines what it means to be a drawing:
-A drawing is a type that has a ``draw()`` method.
+The ``Drawable`` protocol defines what it means to be a drawable type,
+that the type must implement a ``draw()`` method.
 The ``Line`` structure represents a single line of ASCII art,
 and it serves the top-level container for most drawings.
-To draw a ``Line``, it draws each of the drawings on that line,
+To draw a ``Line``, it draws each thing on that line,
 and then concatenates all of their strings into a single string.
 The ``Text`` structure wraps a string, to make it part of a drawing.
 The ``AllCaps`` structure wraps and modifies another drawing,
@@ -985,13 +985,13 @@ which lets you use a declarative syntax to describe a drawing:
 
    -> @resultBuilder
    -> struct DrawingBuilder {
-          static func buildBlock(_ components: Drawing...) -> Drawing {
+          static func buildBlock(_ components: Drawable...) -> Drawable {
               return Line(elements: components)
           }
-          static func buildEither(first: Drawing) -> Drawing {
+          static func buildEither(first: Drawable) -> Drawable {
               return first
           }
-          static func buildEither(second: Drawing) -> Drawing {
+          static func buildEither(second: Drawable) -> Drawable {
               return second
           }
       }
@@ -1010,15 +1010,15 @@ For example:
 
 .. testcode:: result-builder
 
-   -> func drawing(@DrawingBuilder content: () -> Drawing) -> Drawing {
+   -> func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
           return content()
       }
-   -> func caps(@DrawingBuilder content: () -> Drawing) -> Drawing {
+   -> func caps(@DrawingBuilder content: () -> Drawable) -> Drawable {
           return AllCaps(content: content())
       }
    ---
-   -> func makeGreeting(for name: String? = nil) -> Drawing {
-          let greeting = drawing {
+   -> func makeGreeting(for name: String? = nil) -> Drawable {
+          let greeting = draw {
               Stars(length: 3)
               Text("Hello")
               Space()
@@ -1043,11 +1043,11 @@ For example:
 
 The ``makeGreeting(for:)`` function takes a ``name`` parameter
 and uses it to draw a personalized greeting.
-The ``drawing(_:)`` and ``caps(_:)`` functions
+The ``draw(_:)`` and ``caps(_:)`` functions
 both take a single closure as their argument,
 which is marked with the ``@DrawingBuilder`` attribute.
 When you call those functions,
-you use the drawing domain-specific language that ``DrawingBuilder`` defines.
+you use the domain-specific language that ``DrawingBuilder`` defines.
 Swift transforms that declarative description of a drawing
 into a series of calls to the methods on ``DrawingBuilder``
 to build up the value that's passed as the function argument.
@@ -1057,7 +1057,7 @@ is transformed to behave like the following code:
 .. testcode:: result-builder
 
    -> let capsDrawing = caps {
-          let partialDrawing: Drawing
+          let partialDrawing: Drawable
           if let name = name {
               let text = Text(name + "!")
               partialDrawing = DrawingBuilder.buildEither(first: text)
@@ -1084,11 +1084,11 @@ add a ``buildArray(_:)`` method.
 .. testcode:: result-builder
 
    -> extension DrawingBuilder {
-          static func buildArray(_ components: [Drawing]) -> Drawing {
+          static func buildArray(_ components: [Drawable]) -> Drawable {
               return Line(elements: components)
           }
       }
-   -> let manyStars = drawing {
+   -> let manyStars = draw {
           Text("Stars:")
           for length in 1...3 {
               Space()
@@ -1108,28 +1108,28 @@ that preserve type information by using generics and a new ``DrawEither`` type:
 
 .. testcode:: result-builder-limited-availability-broken, result-builder-limited-availability-ok
 
-   >> protocol Drawing {
+   >> protocol Drawable {
    >>     func draw() -> String
    >> }
-   >> struct Text: Drawing {
+   >> struct Text: Drawable {
    >>     var content: String
    >>     init(_ content: String) { self.content = content }
    >>     func draw() -> String { return content }
    >> }
-   -> struct Line<D: Drawing>: Drawing {
+   -> struct Line<D: Drawable>: Drawable {
           var elements: [D]
           func draw() -> String {
               return elements.map { $0.draw() }.joined(separator: "")
           }
       }
-   -> struct DrawEither<First: Drawing, Second: Drawing>: Drawing {
-          var content: Drawing
+   -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+          var content: Drawable
           func draw() -> String { return content.draw() }
       }
    ---
    -> @resultBuilder
       struct DrawingBuilder {
-          static func buildBlock<D: Drawing>(_ components: D...) -> Line<D> {
+          static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
               return Line(elements: components)
           }
           static func buildEither<First, Second>(first: First)
@@ -1150,12 +1150,12 @@ For example:
 .. testcode:: result-builder-limited-availability-broken
 
    -> @available(macOS 99, *)
-   -> struct FutureText: Drawing {
+   -> struct FutureText: Drawable {
           var content: String
           init(_ content: String) { self.content = content }
           func draw() -> String { return content }
       }
-   -> @DrawingBuilder var brokenDrawing: Drawing {
+   -> @DrawingBuilder var brokenDrawing: Drawable {
           if #available(macOS 99, *) {
               FutureText("Inside.future")  // Problem
           } else {
@@ -1188,29 +1188,29 @@ that erases type information.
 .. testcode:: result-builder-limited-availability-ok
 
    >> @available(macOS 99, *)
-   >> struct FutureText: Drawing {
+   >> struct FutureText: Drawable {
    >>     var content: String
    >>     init(_ content: String) { self.content = content }
    >>     func draw() -> String { return content }
    >> }
-   >> @DrawingBuilder var x: Drawing {
+   >> @DrawingBuilder var x: Drawable {
    >>     if #available(macOS 99, *) {
    >>         FutureText("Inside.future")
    >>     } else {
    >>         Text("Inside.present")
    >>     }
    >> }
-   -> struct AnyDrawing: Drawing {
-          var content: Drawing
+   -> struct AnyDrawable: Drawable {
+          var content: Drawable
           func draw() -> String { return content.draw() }
       }
    -> extension DrawingBuilder {
-          static func buildLimitedAvailability(_ drawing: Drawing) -> AnyDrawing {
-              return AnyDrawing(content: drawing)
+          static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+              return AnyDrawable(content: content)
           }
       }
    ---
-   -> @DrawingBuilder var typeErasedDrawing: Drawing {
+   -> @DrawingBuilder var typeErasedDrawing: Drawable {
           if #available(macOS 99, *) {
               FutureText("Inside.future")
           } else {
@@ -1218,7 +1218,7 @@ that erases type information.
           }
       }
    /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
-   </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawing, Line<Text>>>
+   </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
@@ -1226,7 +1226,7 @@ In the example above,
 the ``buildLimitedAvailability(_:)`` function
 handles the ``if`` branch and erases the type of that partial result.
 This way, instead of being a ``Line<FutureText>`` value,
-the value created by ``if`` block is a ``AnyDrawing`` value.
+the value created by ``if`` block is a ``AnyDrawable`` value.
 This type erasure prevents ``FutureType`` from appearing
 in the type of ``typeErasedDrawing``.
 
