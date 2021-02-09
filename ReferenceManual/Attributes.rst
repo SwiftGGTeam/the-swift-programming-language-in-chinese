@@ -1153,14 +1153,6 @@ The result-building methods are as follows:
 
 .. end of term/defn list
 
-◊ TR: I think the discussion of optional/either isn't quite correct.
-When the builder methods are listed, they describe what's discussed here.
-But in the later discussion of transformations,
-it looks like the difference is whether you get a binary tree or a linear search
-based on which things you implement.
-Based on actually running the code,
-the former discussion is what I actually see.
-
 For example, the code below defines a simple result builder
 that builds up an array of integers.
 
