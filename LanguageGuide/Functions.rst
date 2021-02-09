@@ -560,6 +560,25 @@ that come after the variadic parameter.
 
 A function can have multiple multiple variadic parameters.
 
+.. assertion:: variadic-parameters-and-labels
+
+   // Labeled, immediately after
+   >> func f(_ a: Int..., b: String) {}
+   ---
+   // Unlabeled, not immediately after
+   >> func g(_ a: Int..., b: String, _ c: Int) {}
+   ---
+   // Multiple
+   >> func h(_a: Int..., b: String, _ c: Int..., d: String) {}
+
+.. assertion:: variadic-parameters-and-labels-failure
+
+   // Unlabeled, immediately after
+   >> func f(_ a: Int..., _ b: String) {}
+   !$ error: a parameter following a variadic parameter requires a label
+   !! func f(_ a: Int..., _ b: String) {}
+   !! ^
+
 .. _Functions_InOutParameters:
 
 In-Out Parameters
