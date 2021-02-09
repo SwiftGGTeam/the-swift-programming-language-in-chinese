@@ -551,11 +551,14 @@ The example below calculates the :newTerm:`arithmetic mean`
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 
+The first parameter that comes after a variadic parameter
+must have an argument label.
+The argument label makes in unambiguous
+which arguments are passed to the variadic parameter
+and which arguments are passed to the parameters
+that come after the variadic parameter.
 
-.. note::
-
-   Any parameters after a variadic parameter must be labeled,
-   including additional variadic parameters.
+A function can have multiple multiple variadic parameters.
 
 .. _Functions_InOutParameters:
 

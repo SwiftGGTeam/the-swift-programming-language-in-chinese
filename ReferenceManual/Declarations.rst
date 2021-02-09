@@ -874,10 +874,8 @@ is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
-All parameters that come after the first variadic parameter
-must have an argument label;
-this makes it unambiguous which arguments
-are being passed to the variadic parameters.
+A parameter that immediately follows a variadic parameter
+must have an argument label.
 A function can have multiple variadic parameters.
 A variadic parameter is treated as an array that contains elements of the base type name.
 For example, the variadic parameter ``Int...`` is treated as ``[Int]``.
