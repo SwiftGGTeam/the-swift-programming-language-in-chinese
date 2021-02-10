@@ -1093,15 +1093,16 @@ the other methods are optional, and enable additional functionality in the DSL.
 The declaration of a result builder type
 doesn't actually have to include any protocol conformance.
 
-The ad-hoc protocol for a result builder includes associated types
-that specify the type of input the result builder takes (``Expression``),
-the type of a partial result (``Component``),
-and the type of result the result builder produces (``FinalResult``).
-Both ``Expression`` and ``FinalResult`` default to being the same as ``Component``
-if you don't define them explicitly.
-Just like you can when conforming to a protocol,
-you can specify these types explicitly by writing a type alias,
-or implicitly by the types that your result-building methods use.
+The description of the ad-hoc protocol for a result builder
+uses ``Expression`` for the type of input the result builder takes,
+``Component`` for the type of a partial result,
+and ``FinalResult`` for the type of result the result builder produces.
+These types are placeholders for the purpose of explanation,
+like associated types in a protocol declaration,
+not requirements of the ad-hoc protocol.
+If your result-building methods
+don't explicitly specify a type for ``Expression`` or ``FinalResult``,
+it defaults to being the same as ``Component``.
 
 The result-building methods are as follows:
 
