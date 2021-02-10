@@ -1070,7 +1070,7 @@ resultBuilder
 Apply this attribute to a class, structure, enumeration
 to use that type as a result builder.
 A :newTerm:`result builder` is a type
-that builds up a nested data structure step by step.
+that builds a nested data structure step by step.
 You use result builders to implement a domain-specific language (DSL)
 for creating nested data structures in a natural, declarative way.
 For an example of how to use the ``resultBuilder`` attribute,
@@ -1089,7 +1089,9 @@ from the ad-hoc protocol described below.
 Because all of the result builder's functionality is exposed through static methods,
 you don't ever initialize an instance of that type.
 The ``buildBlock(_:)`` method is required;
-the other methods are optional, and enable additional functionality in the DSL.
+the other methods ---
+which enable additional functionality in the DSL ---
+are optional.
 The declaration of a result builder type
 doesn't actually have to include any protocol conformance.
 
@@ -1155,7 +1157,7 @@ The result-building methods are as follows:
 .. end of term/defn list
 
 For example, the code below defines a simple result builder
-that builds up an array of integers.
+that builds an array of integers.
 
 .. testcode:: array-result-builder
 
@@ -1192,7 +1194,7 @@ that builds up an array of integers.
 Result Transformations
 ++++++++++++++++++++++
 
-The following syntactic transformations are applied, recursively,
+The following syntactic transformations are applied recursively
 to turn code that uses result-builder syntax
 into code that calls the static methods of the result builder type:
 
@@ -1393,7 +1395,7 @@ a single binary tree of calls to the ``buildEither`` methods.
 Custom Attributes
 +++++++++++++++++
 
-Creating result builder type creates a custom attribute with the same name.
+Creating a result builder type creates a custom attribute with the same name.
 You can apply that attribute in the following places:
 
 - On a function declaration,
@@ -1403,7 +1405,7 @@ You can apply that attribute in the following places:
   the result builder transforms the body of the getter.
 
 - On a parameter in a function declaration,
-  the result builder transform the body of a closure
+  the result builder transforms the body of a closure
   that's passed as the corresponding argument.
 
 Applying a result builder attribute doesn't impact ABI compatibility.

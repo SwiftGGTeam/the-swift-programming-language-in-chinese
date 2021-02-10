@@ -999,13 +999,14 @@ which lets you use a declarative syntax to describe a drawing:
 The ``DrawingBuilder`` structure defines three methods
 that implement parts of the result builder syntax.
 The ``buildBlock(_:)`` method adds support for
-writing a series of lines in a braced block.
-It combines the components in that braced block into a ``Line``.
+writing a series of lines in a block of code.
+It combines the components in that block into a ``Line``.
 The ``buildEither(first:)`` and ``buildEither(second:)`` methods
 add support for ``if``-``else``.
 
 You can apply the ``@DrawingBuilding`` to a function's parameter,
-which uses the result builder to transform a closure passed to the function.
+which turns a closure passed to the function
+into the value that the result builder creates from that closure.
 For example:
 
 .. testcode:: result-builder
@@ -1075,7 +1076,7 @@ calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
 You don't call these methods yourself ---
 Swift transforms the ``if``--``else`` block for you.
 However, showing the result of the transformation
-makes it easier to see how your code is transformed
+makes it easier to see how Swift transforms your code
 when you use the DSL syntax.
 
 To add support for writing ``for`` loops in the drawing DSL,
@@ -1183,7 +1184,7 @@ This could cause your program to crash if ``FutureText`` isn't available.
 
 To solve this problem,
 implement a ``buildLimitedAvailability(_:)`` method 
-that erases type information.
+to erase type information.
 
 .. testcode:: result-builder-limited-availability-ok
 
