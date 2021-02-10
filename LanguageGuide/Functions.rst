@@ -553,7 +553,7 @@ The example below calculates the :newTerm:`arithmetic mean`
 
 The first parameter that comes after a variadic parameter
 must have an argument label.
-The argument label makes in unambiguous
+The argument label makes it unambiguous
 which arguments are passed to the variadic parameter
 and which arguments are passed to the parameters
 that come after the variadic parameter.
