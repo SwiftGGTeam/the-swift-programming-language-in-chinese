@@ -940,17 +940,19 @@ The code below defines a few types for drawing simple ASCII art:
           func draw() -> String { return content.draw().uppercased() }
       }
 
-The ``Drawable`` protocol defines what it means to be a drawable type,
-that the type must implement a ``draw()`` method.
+The ``Drawable`` protocol defines the requirement
+for something that can be drawn, like a line or shape:
+The type must implement a ``draw()`` method.
 The ``Line`` structure represents a single line of ASCII art,
 and it serves the top-level container for most drawings.
-To draw a ``Line``, it draws each thing on that line,
-and then concatenates all of their strings into a single string.
-The ``Text`` structure wraps a string, to make it part of a drawing.
+To draw a ``Line``,
+the structure calls ``draw()`` on each of the line's components,
+and then concatenates the resulting strings into a single string.
+The ``Text`` structure wraps a string to make it part of a drawing.
 The ``AllCaps`` structure wraps and modifies another drawing,
-converting any text in the drawing to upper case.
+converting any text in the drawing to uppercase.
 
-It's possible to make a simple drawing with these types
+It's possible to make a drawing with these types
 by calling their initializers directly:
 
 .. testcode:: result-builder
@@ -974,7 +976,7 @@ which would be difficult with anything more complex.
 If you needed to include switches or ``for`` loops
 to build up part of the drawing, there's no way to do that.
 A result builder lets you rewrite code like this
-so that it looks more like normal Swift code.
+so that it looks like normal Swift code.
 
 To define a result builder,
 you write the ``@resultBuilder`` attribute on a type declaration.
