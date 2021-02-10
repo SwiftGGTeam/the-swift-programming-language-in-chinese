@@ -908,8 +908,6 @@ The code that uses the result builder
 can include ordinary Swift syntax, like ``if``  and ``for``,
 to handle conditional or repeated pieces of data.
 
-.. XXX When you should use a result builder, versus something else?
-
 The code below defines a few types for drawing simple ASCII art:
 
 .. testcode:: result-builder
