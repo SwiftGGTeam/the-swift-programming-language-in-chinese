@@ -1227,7 +1227,7 @@ into code that calls the static methods of the result builder type:
   becomes a call to the ``buildLimitedAvailability(_:)`` method.
   This transformation happens before the transformation into a call to
   ``buildEither(first:)``, ``buildEither(second:)``, or ``buildOptional(_:)``.
-  You use ``buildLimitedAvailability(_:)`` method to erase type information
+  You use the ``buildLimitedAvailability(_:)`` method to erase type information
   that changes depending on which branch is taken.
   For example,
   the ``buildEither(first:)`` and  ``buildEither(second:)`` methods below
