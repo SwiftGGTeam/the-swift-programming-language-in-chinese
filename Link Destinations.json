@@ -128,6 +128,7 @@
     "advancedoperators-precedenceandassociativity": "ID41",
     "advancedoperators-precedenceandassociativityforcustomoperators": "ID47",
     "advancedoperators-prefixandpostfixoperators": "ID43",
+    "advancedoperators-resultbuilders": "ID630",
     "advancedoperators-shiftingbehaviorforsignedintegers": "ID36",
     "advancedoperators-shiftingbehaviorforunsignedintegers": "ID35",
     "advancedoperators-valueoverflow": "ID38",
@@ -152,6 +153,10 @@
     "attributes-objcmembers": "ID593",
     "attributes-propertywrapper": "ID621",
     "attributes-requires-stored-property-inits": "ID594",
+    "attributes-resultbuilder": "ID633",
+    "attributes-resultbuilder-attribute": "ID636",
+    "attributes-resultbuilder-methods": "ID634",
+    "attributes-resultbuilder-transformation": "ID635",
     "attributes-switchcaseattributes": "ID604",
     "attributes-testable": "ID595",
     "attributes-typeattributes": "ID350",
@@ -349,8 +354,10 @@
     "expressions-forced-valueexpression": "ID404",
     "expressions-forcedtryexpression": "ID517",
     "expressions-functioncallexpression": "ID398",
+    "expressions-implicitconversion": "ID632",
     "expressions-implicitmemberexpression": "ID394",
     "expressions-initializerexpression": "ID399",
+    "expressions-inoutexpression": "ID631",
     "expressions-literalexpression": "ID390",
     "expressions-parenthesizedexpression": "ID395",
     "expressions-postfixexpressions": "ID397",
@@ -688,5 +695,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 630
+  "next_id": 637
 }
