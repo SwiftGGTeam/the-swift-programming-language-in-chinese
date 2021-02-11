@@ -1465,7 +1465,7 @@ into code that calls the static methods of the result builder type:
      >> assert(builderArray == manualArray)
 
 - If the result builder has a ``buildFinalResult(_:)`` method,
-  the final result is transformed into into a call to that method.
+  the final result becomes a call to that method.
   This transformation is always last.
 
 Although the transformation behavior is described in terms of temporary variables,
@@ -1487,9 +1487,9 @@ compile-time diagnostic statements,
 or closures that contain a ``return`` statement.
 
 Whenever possible, transformations are coalesced.
-For example, the expression ``4 + 5 * 6`` is transformed
-into ``buildExpression(4 + 5 * 6)`` rather multiple calls to that function.
-Likewise, nested branch statements are transformed into
+For example, the expression ``4 + 5 * 6`` becomes
+``buildExpression(4 + 5 * 6)`` rather multiple calls to that function.
+Likewise, nested branch statements become
 a single binary tree of calls to the ``buildEither`` methods.
 
 .. assertion:: result-builder-transform-complex-expression
