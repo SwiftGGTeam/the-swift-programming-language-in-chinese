@@ -1198,15 +1198,6 @@ The following syntactic transformations are applied recursively
 to turn code that uses result-builder syntax
 into code that calls the static methods of the result builder type:
 
-.. PASSIVE VOICE
-   The actor performing the transformations described below
-   is irrelevant to a developer understanding the processs.
-   It's a vague mix of the feature in the Swift language
-   and the code in the Swift compiler that implements the feature.
-   Omitting it lets the important part -- the content being transformed --
-   come to the front of the sentence and take the focus,
-   which makes this discussion easier to understand.
-
 - If the result builder has a ``buildExpression(_:)`` method,
   each expression becomes a call to that method.
   This transformation is always first.
@@ -1513,20 +1504,20 @@ a single binary tree of calls to the ``buildEither`` methods.
 
 .. _Attributes_resultBuilder_attribute:
 
-Custom Attributes
-+++++++++++++++++
+Custom Result-Builder Attributes
+++++++++++++++++++++++++++++++++
 
 Creating a result builder type creates a custom attribute with the same name.
 You can apply that attribute in the following places:
 
 - On a function declaration,
-  the result builder transforms the body of the function.
+  the result builder builds the body of the function.
 
 - On a variable or subscript declaration that includes a getter,
-  the result builder transforms the body of the getter.
+  the result builder builds the body of the getter.
 
 - On a parameter in a function declaration,
-  the result builder transforms the body of a closure
+  the result builder builds the body of a closure
   that's passed as the corresponding argument.
 
 Applying a result builder attribute doesn't impact ABI compatibility.
