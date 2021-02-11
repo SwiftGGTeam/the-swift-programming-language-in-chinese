@@ -5,8 +5,16 @@ Document Revision History
 
 * Updated for Swift 5.4.
 
-.. Merges
-    de9d2b15 add Windows to a table in the reference
+* Added the :ref:`AdvancedOperators_ResultBuilders`
+  and :ref:`Attributes_resultBuilder` sections
+  with information about result builders.
+
+* Added the :ref:`Expressions_InOutExpression` section,
+  including additional details about implicit conversions to a pointer type.
+
+* Updated the :ref:`Functions_VariadicParameters`
+  and :ref:`Declarations_FunctionDeclaration` sections,
+  now that a function can have multiple variadic parameters.
 
 **2020-09-16**
 
