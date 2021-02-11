@@ -1,6 +1,13 @@
 Document Revision History
 =========================
 
+**2021-02-17**
+
+* Updated for Swift 5.4.
+
+.. Merges
+    de9d2b15 add Windows to a table in the reference
+
 **2020-09-16**
 
 * Updated for Swift 5.3.
