@@ -955,7 +955,7 @@ by calling their initializers directly:
 
 .. testcode:: result-builder
 
-   -> let name: String? = "John Appleseed"
+   -> let name: String? = "Ravi Patel"
    -> let manualDrawing = Line(elements: [
            Stars(length: 3),
            Text("Hello"),
@@ -964,7 +964,7 @@ by calling their initializers directly:
            Stars(length: 2),
       ])
    -> print(manualDrawing.draw())
-   <- ***Hello JOHN APPLESEED!**
+   <- ***Hello RAVI PATEL!**
 
 This code works, but it's a little awkward.
 The deeply nested parenthesis after ``AllCaps`` are hard to read.
@@ -1038,9 +1038,9 @@ For example:
    -> print(genericGreeting.draw())
    <- ***Hello WORLD!**
    ---
-   -> let personalGreeting = makeGreeting(for: "Lee")
+   -> let personalGreeting = makeGreeting(for: "Ravi Patel")
    -> print(personalGreeting.draw())
-   <- ***Hello LEE!**
+   <- ***Hello Ravi Patel!**
 
 The ``makeGreeting(for:)`` function takes a ``name`` parameter
 and uses it to draw a personalized greeting.
