@@ -1300,9 +1300,11 @@ into code that calls the static methods of the result builder type:
      << Building optional... Optional([20])
      >> assert(builderOptional == manualOptional)
 
-- A code block or ``do`` statement is transformed
-  by transforming the statements inside the block one at a time,
-  and calling the ``buildBlock(_:)`` method to combine them.
+- A code block or ``do`` statement
+  becomes a call to the ``buildBlock(_:)`` method.
+  Each of the statements inside of the block is transformed,
+  one at a time,
+  and they become the arguments to the ``buildBlock(_:)`` method.
   For example, the following declarations are equivalent:
 
   .. testcode:: array-result-builder
