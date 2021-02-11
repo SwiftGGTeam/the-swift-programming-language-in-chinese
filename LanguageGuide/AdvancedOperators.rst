@@ -1040,7 +1040,7 @@ For example:
    ---
    -> let personalGreeting = makeGreeting(for: "Ravi Patel")
    -> print(personalGreeting.draw())
-   <- ***Hello Ravi Patel!**
+   <- ***Hello RAVI PATEL!**
 
 The ``makeGreeting(for:)`` function takes a ``name`` parameter
 and uses it to draw a personalized greeting.
@@ -1070,7 +1070,7 @@ into code like the following:
           return partialDrawing
    -> }
    >> print(capsDrawing.draw())
-   << JOHN APPLESEED!
+   << RAVI PATEL!
 
 Swift transforms the ``if``-``else`` block into
 calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
