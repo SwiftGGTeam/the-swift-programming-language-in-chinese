@@ -1228,138 +1228,134 @@ into code that calls the static methods of the result builder type:
   This transformation happens before the transformation into a call to
   ``buildEither(first:)``, ``buildEither(second:)``, or ``buildOptional(_:)``.
 
-.. XXX fix up indentation starting here
+  You add the ``buildLimitedAvailability(_:)`` method to erase type information
+  that changes depending on which branch is taken.
+  The code below defines a version of ``Line`` and ``DrawingBuilder``
+  that preserve type information by using generics and a new ``DrawEither`` type:
 
-You add the ``buildLimitedAvailability(_:)`` method to erase type information
-that changes depending on which branch is taken.
-The code below defines a version of ``Line`` and ``DrawingBuilder``
-that preserve type information by using generics and a new ``DrawEither`` type:
+  .. testcode:: result-builder-limited-availability-broken, result-builder-limited-availability-ok
 
-.. testcode:: result-builder-limited-availability-broken, result-builder-limited-availability-ok
+     >> protocol Drawable {
+     >>     func draw() -> String
+     >> }
+     >> struct Text: Drawable {
+     >>     var content: String
+     >>     init(_ content: String) { self.content = content }
+     >>     func draw() -> String { return content }
+     >> }
+     -> struct Line<D: Drawable>: Drawable {
+            var elements: [D]
+            func draw() -> String {
+                return elements.map { $0.draw() }.joined(separator: "")
+            }
+        }
+     -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+            var content: Drawable
+            func draw() -> String { return content.draw() }
+        }
+     ---
+     -> @resultBuilder
+        struct DrawingBuilder {
+            static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+                return Line(elements: components)
+            }
+            static func buildEither<First, Second>(first: First)
+                    -> DrawEither<First, Second> {
+                return DrawEither(content: first)
+            }
+            static func buildEither<First, Second>(second: Second)
+                    -> DrawEither<First, Second> {
+                return DrawEither(content: second)
+            }
+        }
 
-   >> protocol Drawable {
-   >>     func draw() -> String
-   >> }
-   >> struct Text: Drawable {
-   >>     var content: String
-   >>     init(_ content: String) { self.content = content }
-   >>     func draw() -> String { return content }
-   >> }
-   -> struct Line<D: Drawable>: Drawable {
-          var elements: [D]
-          func draw() -> String {
-              return elements.map { $0.draw() }.joined(separator: "")
-          }
-      }
-   -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
-          var content: Drawable
-          func draw() -> String { return content.draw() }
-      }
-   ---
-   -> @resultBuilder
-      struct DrawingBuilder {
-          static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
-              return Line(elements: components)
-          }
-          static func buildEither<First, Second>(first: First)
-                  -> DrawEither<First, Second> {
-              return DrawEither(content: first)
-          }
-          static func buildEither<First, Second>(second: Second)
-                  -> DrawEither<First, Second> {
-              return DrawEither(content: second)
-          }
-      }
+  This version of ``DrawingBuilder`` handles ``if``-``else`` statements
+  by passing along the type from both branches,
+  which causes problems with availability checks.
+  For example:
 
-This version of ``DrawingBuilder`` handles ``if``-``else`` statements
-by passing along the type from both branches,
-which causes problems with availability checks.
-For example:
+  .. testcode:: result-builder-limited-availability-broken
 
-.. testcode:: result-builder-limited-availability-broken
+     -> @available(macOS 99, *)
+     -> struct FutureText: Drawable {
+            var content: String
+            init(_ content: String) { self.content = content }
+            func draw() -> String { return content }
+        }
+     -> @DrawingBuilder var brokenDrawing: Drawable {
+            if #available(macOS 99, *) {
+                FutureText("Inside.future")  // Problem
+            } else {
+                Text("Inside.present")
+            }
+        }
+     /> The type of brokenDrawing is \(type(of: brokenDrawing))
+     </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+     !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
+     !! if #available(macOS 99, *) {
+     !! ^
+     !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
+     !! struct DrawingBuilder {
+     !! ^
 
-   -> @available(macOS 99, *)
-   -> struct FutureText: Drawable {
-          var content: String
-          init(_ content: String) { self.content = content }
-          func draw() -> String { return content }
-      }
-   -> @DrawingBuilder var brokenDrawing: Drawable {
-          if #available(macOS 99, *) {
-              FutureText("Inside.future")  // Problem
-          } else {
-              Text("Inside.present")
-          }
-      }
-   /> The type of brokenDrawing is \(type(of: brokenDrawing))
-   </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
-   !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
-   !! if #available(macOS 99, *) {
-   !! ^
-   !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
-   !! struct DrawingBuilder {
-   !! ^
+  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+  In the code above, the ``#available`` condition
+  correctly switches between using ``Text`` or ``FutureText``,
+  depending on the version of macOS.
+  However, in both cases,
+  ``FutureText`` still appears as part of the type of ``brokenDrawing``
+  because it's one of the types in the ``DrawEither`` generic type.
+  This could cause your program to crash if ``FutureText`` isn't available.
 
-In the code above, the ``#available`` condition
-correctly switches between using ``Text`` or ``FutureText``,
-depending on the version of macOS.
-However, in both cases,
-``FutureText`` still appears as part of the type of ``brokenDrawing``
-because it's one of the types in the ``DrawEither`` generic type.
-This could cause your program to crash if ``FutureText`` isn't available.
+  To solve this problem,
+  implement a ``buildLimitedAvailability(_:)`` method
+  to erase type information.
 
-To solve this problem,
-implement a ``buildLimitedAvailability(_:)`` method 
-to erase type information.
+  .. testcode:: result-builder-limited-availability-ok
 
-.. testcode:: result-builder-limited-availability-ok
+     >> @available(macOS 99, *)
+     >> struct FutureText: Drawable {
+     >>     var content: String
+     >>     init(_ content: String) { self.content = content }
+     >>     func draw() -> String { return content }
+     >> }
+     >> @DrawingBuilder var x: Drawable {
+     >>     if #available(macOS 99, *) {
+     >>         FutureText("Inside.future")
+     >>     } else {
+     >>         Text("Inside.present")
+     >>     }
+     >> }
+     -> struct AnyDrawable: Drawable {
+            var content: Drawable
+            func draw() -> String { return content.draw() }
+        }
+     -> extension DrawingBuilder {
+            static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+                return AnyDrawable(content: content)
+            }
+        }
+     ---
+     -> @DrawingBuilder var typeErasedDrawing: Drawable {
+            if #available(macOS 99, *) {
+                FutureText("Inside.future")
+            } else {
+                Text("Inside.present")
+            }
+        }
+     /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
+     </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
 
-   >> @available(macOS 99, *)
-   >> struct FutureText: Drawable {
-   >>     var content: String
-   >>     init(_ content: String) { self.content = content }
-   >>     func draw() -> String { return content }
-   >> }
-   >> @DrawingBuilder var x: Drawable {
-   >>     if #available(macOS 99, *) {
-   >>         FutureText("Inside.future")
-   >>     } else {
-   >>         Text("Inside.present")
-   >>     }
-   >> }
-   -> struct AnyDrawable: Drawable {
-          var content: Drawable
-          func draw() -> String { return content.draw() }
-      }
-   -> extension DrawingBuilder {
-          static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
-              return AnyDrawable(content: content)
-          }
-      }
-   ---
-   -> @DrawingBuilder var typeErasedDrawing: Drawable {
-          if #available(macOS 99, *) {
-              FutureText("Inside.future")
-          } else {
-              Text("Inside.present")
-          }
-      }
-   /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
-   </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
-In the example above,
-the ``buildLimitedAvailability(_:)`` function
-handles the ``if`` branch and erases the type of that partial result.
-This way, instead of being a ``Line<FutureText>`` value,
-the value created by ``if`` block is a ``AnyDrawable`` value.
-This type erasure prevents ``FutureType`` from appearing
-in the type of ``typeErasedDrawing``.
-
-.. XXX end of content to be re-indentend
+  In the example above,
+  the ``buildLimitedAvailability(_:)`` function
+  handles the ``if`` branch and erases the type of that partial result.
+  This way, instead of being a ``Line<FutureText>`` value,
+  the value created by ``if`` block is a ``AnyDrawable`` value.
+  This type erasure prevents ``FutureType`` from appearing
+  in the type of ``typeErasedDrawing``.
 
 - A branch statement becomes a series of nested calls to the
   ``buildEither(first:)`` and ``buildEither(second:)`` methods.
