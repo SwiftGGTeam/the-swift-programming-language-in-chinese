@@ -908,7 +908,8 @@ The code that uses the result builder
 can include ordinary Swift syntax, like ``if``  and ``for``,
 to handle conditional or repeated pieces of data.
 
-The code below defines a few types for drawing simple ASCII art:
+The code below defines a few types for drawing on a single line
+using stars and text.
 
 .. testcode:: result-builder
 
@@ -941,7 +942,7 @@ The code below defines a few types for drawing simple ASCII art:
 The ``Drawable`` protocol defines the requirement
 for something that can be drawn, like a line or shape:
 The type must implement a ``draw()`` method.
-The ``Line`` structure represents a single line of ASCII art,
+The ``Line`` structure represents a single-line drawing,
 and it serves the top-level container for most drawings.
 To draw a ``Line``,
 the structure calls ``draw()`` on each of the line's components,
@@ -951,7 +952,7 @@ The ``AllCaps`` structure wraps and modifies another drawing,
 converting any text in the drawing to uppercase.
 
 It's possible to make a drawing with these types
-by calling their initializers directly:
+by calling their initializers:
 
 .. testcode:: result-builder
 
