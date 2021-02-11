@@ -1076,9 +1076,6 @@ for creating nested data structures in a natural, declarative way.
 For an example of how to use the ``resultBuilder`` attribute,
 see :ref:`AdvancedOperators_ResultBuilders`.
 
-.. XXX This is the first time we're adding subheadings to an attribute.
-   Do we want to try to do this a different way?
-
 .. _Attributes_resultBuilder_methods:
 
 Result-Building Methods
