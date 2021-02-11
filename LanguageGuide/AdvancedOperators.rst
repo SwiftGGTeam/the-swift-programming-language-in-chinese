@@ -1052,8 +1052,9 @@ you use the domain-specific language that ``DrawingBuilder`` defines.
 Swift transforms that declarative description of a drawing
 into a series of calls to the methods on ``DrawingBuilder``
 to build up the value that's passed as the function argument.
-For example, the call to ``caps(_:)`` in that example
-is transformed to behave like the following code:
+For example,
+Swift transforms the call to ``caps(_:)`` in that example
+into code like the following:
 
 .. testcode:: result-builder
 
@@ -1071,11 +1072,10 @@ is transformed to behave like the following code:
    >> print(capsDrawing.draw())
    << JOHN APPLESEED!
 
-The ``if``-``else`` block is transformed into
+Swift transforms the ``if``-``else`` block into
 calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
-You don't call these methods yourself ---
-Swift transforms the ``if``--``else`` block for you.
-However, showing the result of the transformation
+Although you don't call these methods in your own code,
+showing the result of the transformation
 makes it easier to see how Swift transforms your code
 when you use the DSL syntax.
 
@@ -1231,8 +1231,8 @@ the value created by ``if`` block is a ``AnyDrawable`` value.
 This type erasure prevents ``FutureType`` from appearing
 in the type of ``typeErasedDrawing``.
 
-For a complete list of how builder syntax
-is transformed into calls to the builder type's methods,
+For a complete list of how Swift transforms builder syntax
+into calls to the builder type's methods,
 see :ref:`Attributes_resultBuilder`.
 
 
