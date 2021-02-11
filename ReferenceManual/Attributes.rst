@@ -1227,22 +1227,22 @@ into code that calls the static methods of the result builder type:
   becomes a call to the ``buildLimitedAvailability(_:)`` method.
   This transformation happens before the transformation into a call to
   ``buildEither(first:)``, ``buildEither(second:)``, or ``buildOptional(_:)``.
-
-  You add the ``buildLimitedAvailability(_:)`` method to erase type information
+  You use ``buildLimitedAvailability(_:)`` method to erase type information
   that changes depending on which branch is taken.
-  The code below defines a version of ``Line`` and ``DrawingBuilder``
-  that preserve type information by using generics and a new ``DrawEither`` type:
+  For example,
+  the ``buildEither(first:)`` and  ``buildEither(second:)`` methods below
+  use a generic type that captures type information about both branches.
 
   .. testcode:: result-builder-limited-availability-broken, result-builder-limited-availability-ok
 
-     >> protocol Drawable {
-     >>     func draw() -> String
-     >> }
-     >> struct Text: Drawable {
-     >>     var content: String
-     >>     init(_ content: String) { self.content = content }
-     >>     func draw() -> String { return content }
-     >> }
+     -> protocol Drawable {
+            func draw() -> String
+        }
+     -> struct Text: Drawable {
+            var content: String
+            init(_ content: String) { self.content = content }
+            func draw() -> String { return content }
+        }
      -> struct Line<D: Drawable>: Drawable {
             var elements: [D]
             func draw() -> String {
@@ -1269,10 +1269,7 @@ into code that calls the static methods of the result builder type:
             }
         }
 
-  This version of ``DrawingBuilder`` handles ``if``-``else`` statements
-  by passing along the type from both branches,
-  which causes problems with availability checks.
-  For example:
+  However, this approach causes a problem in code that has availability checks:
 
   .. testcode:: result-builder-limited-availability-broken
 
@@ -1300,17 +1297,18 @@ into code that calls the static methods of the result builder type:
 
   .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-  In the code above, the ``#available`` condition
-  correctly switches between using ``Text`` or ``FutureText``,
-  depending on the version of macOS.
-  However, in both cases,
-  ``FutureText`` still appears as part of the type of ``brokenDrawing``
+  In the code above,
+  ``FutureText`` appears as part of the type of ``brokenDrawing``
   because it's one of the types in the ``DrawEither`` generic type.
-  This could cause your program to crash if ``FutureText`` isn't available.
+  This could cause your program to crash if ``FutureText``
+  isn't available at runtime,
+  even in the case where that type is explicitly not being used.
 
   To solve this problem,
   implement a ``buildLimitedAvailability(_:)`` method
   to erase type information.
+  For example, the code below builds an ``AnyDrawable`` value
+  from its availability check.
 
   .. testcode:: result-builder-limited-availability-ok
 
@@ -1348,14 +1346,6 @@ into code that calls the static methods of the result builder type:
      </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
 
   .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
-  In the example above,
-  the ``buildLimitedAvailability(_:)`` function
-  handles the ``if`` branch and erases the type of that partial result.
-  This way, instead of being a ``Line<FutureText>`` value,
-  the value created by ``if`` block is a ``AnyDrawable`` value.
-  This type erasure prevents ``FutureType`` from appearing
-  in the type of ``typeErasedDrawing``.
 
 - A branch statement becomes a series of nested calls to the
   ``buildEither(first:)`` and ``buildEither(second:)`` methods.
