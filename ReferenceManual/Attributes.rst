@@ -1218,7 +1218,7 @@ into code that calls the static methods of the result builder type:
      -> var manualNumber = ArrayBuilder.buildExpression(10)
      >> assert(builderNumber == manualNumber)
 
-- An assignment statement is transformed like other expressions,
+- An assignment statement is transformed like an expression,
   but is understood to evaluate to ``()``.
   You can define an overload of ``buildExpression(_:)``
   that takes an argument of type ``()`` to handle assignments specifically.
