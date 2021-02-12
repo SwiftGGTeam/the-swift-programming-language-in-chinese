@@ -1644,8 +1644,8 @@ The following two function calls are equivalent:
    << 1234
    << 1234
 
-Swift converts the value to a pointer that's valid
-only for the duration of the function call.
+A pointer that's created by these implicit conversions
+is valid only for the duration of the function call.
 To avoid undefined behavior,
 ensure that your code
 never persists the pointer after the function call ends.
