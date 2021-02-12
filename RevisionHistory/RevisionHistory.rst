@@ -9,8 +9,9 @@ Document Revision History
   and :ref:`Attributes_resultBuilder` sections
   with information about result builders.
 
-* Added the :ref:`Expressions_InOutExpression` section,
-  including additional details about implicit conversions to a pointer type.
+* Added the :ref:`Expressions_ImplicitConversion` section
+  with information about how in-out parameters
+  can be implicitly converted to unsafe pointers in a function call.
 
 * Updated the :ref:`Functions_VariadicParameters`
   and :ref:`Declarations_FunctionDeclaration` sections,
