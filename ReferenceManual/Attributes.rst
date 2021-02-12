@@ -1081,9 +1081,9 @@ see :ref:`AdvancedOperators_ResultBuilders`.
 Result-Building Methods
 +++++++++++++++++++++++
 
-A result builder implements the static methods
-from the ad-hoc protocol described below.
-Because all of the result builder's functionality is exposed through static methods,
+A result builder implements static methods described below.
+Because all of the result builder's functionality
+is exposed through static methods,
 you don't ever initialize an instance of that type.
 The ``buildBlock(_:)`` method is required;
 the other methods ---
@@ -1092,16 +1092,16 @@ are optional.
 The declaration of a result builder type
 doesn't actually have to include any protocol conformance.
 
-The description of the ad-hoc protocol for a result builder
-uses ``Expression`` for the type of input the result builder takes,
-``Component`` for the type of a partial result,
-and ``FinalResult`` for the type of result the result builder produces.
-These types are placeholders for the purpose of explanation,
-like associated types in a protocol declaration,
-not requirements of the ad-hoc protocol.
+The description of the static methods uses three types as placeholders.
+The type ``Expression`` is a placeholder
+for the type of input the result builder takes,
+``Component`` is a placeholder for the type of a partial result,
+and ``FinalResult`` is a placeholder
+for the type of the result that the result builder produces.
+You replace these types with the actual types that your result builder uses.
 If your result-building methods
-don't explicitly specify a type for ``Expression`` or ``FinalResult``,
-it defaults to being the same as ``Component``.
+don't specify a type for ``Expression`` or ``FinalResult``,
+they default to being the same as ``Component``.
 
 The result-building methods are as follows:
 
@@ -1134,8 +1134,8 @@ The result-building methods are as follows:
 
 ``static func buildExpression(_ expression: Expression) -> Component``
   Builds a partial result from an expression.
-  You can implement this method to perform preprocessing —
-  for example, converting expressions to an internal type —
+  You can implement this method to perform preprocessing ---
+  for example, converting expressions to an internal type ---
   or to provide additional information for type inference at use sites.
 
 ``static func buildFinalResult(_ component: Component) -> FinalResult``
@@ -1155,6 +1155,8 @@ The result-building methods are as follows:
 
 For example, the code below defines a simple result builder
 that builds an array of integers.
+This code defines ``Compontent`` and ``Expression`` as type aliases,
+to make it easier to match the examples below to the list of methods above.
 
 .. testcode:: array-result-builder
 
@@ -1462,7 +1464,7 @@ that are visible from the rest of your code.
 
 You can't use
 ``break``, ``continue``, ``defer``, ``guard``, or ``return`` statements,
-``while`` loops,
+``while`` statements,
 or ``do``-``catch`` statements
 in the code that a result builder transforms.
 

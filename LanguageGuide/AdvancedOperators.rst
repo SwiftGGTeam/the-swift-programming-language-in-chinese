@@ -968,7 +968,7 @@ by calling their initializers:
    <- ***Hello RAVI PATEL!**
 
 This code works, but it's a little awkward.
-The deeply nested parenthesis after ``AllCaps`` are hard to read.
+The deeply nested parentheses after ``AllCaps`` are hard to read.
 The fallback logic to use "World" when ``name`` is ``nil``
 has to be done inline using the ``??`` operator,
 which would be difficult with anything more complex.
@@ -1049,7 +1049,7 @@ The ``draw(_:)`` and ``caps(_:)`` functions
 both take a single closure as their argument,
 which is marked with the ``@DrawingBuilder`` attribute.
 When you call those functions,
-you use the domain-specific language that ``DrawingBuilder`` defines.
+you use the special syntax that ``DrawingBuilder`` defines.
 Swift transforms that declarative description of a drawing
 into a series of calls to the methods on ``DrawingBuilder``
 to build up the value that's passed as the function argument.
@@ -1078,7 +1078,7 @@ calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
 Although you don't call these methods in your own code,
 showing the result of the transformation
 makes it easier to see how Swift transforms your code
-when you use the DSL syntax.
+when you use the ``DrawingBuilder`` syntax.
 
 To add support for writing ``for`` loops in the drawing DSL,
 add a ``buildArray(_:)`` method.
