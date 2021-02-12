@@ -41,20 +41,39 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 For information about the operators provided by the Swift standard library,
 see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
-In addition to the standard library operators,
-you use ``&`` immediately before the name of a variable that's being passed
-as an in-out argument to a function call expression.
-For more information and to see an example,
-see :ref:`Functions_InOutParameters`.
-
-.. TODO: Need to a brief write up on the in-out-expression.
-
 .. syntax-grammar::
 
     Grammar of a prefix expression
 
     prefix-expression --> prefix-operator-OPT postfix-expression
     prefix-expression --> in-out-expression
+
+
+.. _Expressions_InOutExpression:
+
+In-Out Expression
+~~~~~~~~~~~~~~~~~
+
+An :newTerm:`in-out expression` marks a variable
+that's being passed
+as an in-out argument to a function call expression.
+
+.. syntax-outline::
+
+   &<#expression#>
+
+For more information about in-out parameters and to see an example,
+see :ref:`Functions_InOutParameters`.
+
+In-out expressions are also used
+when providing a non-pointer argument
+in a context where a pointer is needed,
+as described in :ref:`Expressions_ImplicitConversion`.
+
+.. syntax-grammar::
+
+    Grammar of an in-out expression
+
     in-out-expression --> ``&`` identifier
 
 
@@ -1761,6 +1780,102 @@ A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
 by declaring one of several methods,
 as described in :ref:`Declarations_SpecialFuncNames`.
+
+.. _Expressions_ImplicitConversion:
+
+Implicit Conversion to a Pointer Type
++++++++++++++++++++++++++++++++++++++
+
+In a function call expression,
+if the argument and parameter have a different type,
+the compiler tries to make their types match
+by applying one of the implicit conversions in the following list:
+
+* ``inout SomeType`` can become
+  ``UnsafePointer<SomeType>`` or ``UnsafeMutablePointer<SomeType>``
+* ``inout Array<SomeType>`` can become
+  ``UnsafePointer<SomeType>`` or ``UnsafeMutablePointer<SomeType>``
+* ``Array<SomeType>`` can become ``UnsafePointer<SomeType>``
+* ``String`` can become ``UnsafePointer<CChar>``
+
+The following two function calls are equivalent:
+
+.. testcode:: inout-unsafe-pointer
+
+   -> func unsafeFunction(pointer: UnsafePointer<Int>) {
+   ->     // ...
+   >>     print(pointer.pointee)
+   -> }
+   -> var myNumber = 1234
+   ---
+   -> unsafeFunction(pointer: &myNumber)
+   -> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+   << 1234
+   << 1234
+
+A pointer that's created by these implicit conversions
+is valid only for the duration of the function call.
+To avoid undefined behavior,
+ensure that your code
+never persists the pointer after the function call ends.
+
+.. note::
+
+   When implicitly converting an array to an unsafe pointer,
+   Swift ensures that the array's storage is contiguous
+   by converting or copying the array as needed.
+   For example, you can use this syntax
+   with an array that was bridged to ``Array``
+   from an ``NSArray`` subclass that makes no API contract about its storage.
+   If you need to guarantee that the array's storage is already contiguous,
+   so the implicit conversion never needs to do this work,
+   use ``ContiguousArray`` instead of ``Array``.
+
+Using ``&`` instead of an explicit function like ``withUnsafePointer(to:)``
+can help make calls to low-level C functions more readable,
+especially when the function takes several pointer arguments.
+However, when calling functions from other Swift code,
+avoid using ``&`` instead of using the unsafe APIs explicitly.
+
+.. assertion:: implicit-conversion-to-pointer
+
+   >> import Foundation
+   >> func takesUnsafePointer(p: UnsafePointer<Int>) { }
+   >> func takesUnsafeMutablePointer(p: UnsafeMutablePointer<Int>) { }
+   >> func takesUnsafePointerCChar(p: UnsafePointer<CChar>) { }
+   >> func takesUnsafeMutablePointerCChar(p: UnsafeMutablePointer<CChar>) { }
+   >> var n = 12
+   >> var array = [1, 2, 3]
+   >> var nsarray: NSArray = [10, 20, 30]
+   >> var bridgedNSArray = nsarray as! Array<Int>
+   >> var string = "Hello"
+   ---
+   // bullet 1
+   >> takesUnsafePointer(p: &n)
+   >> takesUnsafeMutablePointer(p: &n)
+   ---
+   // bullet 2
+   >> takesUnsafePointer(p: &array)
+   >> takesUnsafeMutablePointer(p: &array)
+   >> takesUnsafePointer(p: &bridgedNSArray)
+   >> takesUnsafeMutablePointer(p: &bridgedNSArray)
+   ---
+   // bullet 3
+   >> takesUnsafePointer(p: array)
+   >> takesUnsafePointer(p: bridgedNSArray)
+   ---
+   // bullet 4
+   >> takesUnsafePointerCChar(p: string)
+   ---
+   // invailid conversions
+   >> takesUnsafeMutablePointer(p: array)
+   !$ error: cannot convert value of type '[Int]' to expected argument type 'UnsafeMutablePointer<Int>'
+   !! takesUnsafeMutablePointer(p: array)
+   !!                              ^
+   >> takesUnsafeMutablePointerCChar(p: string)
+   !$ error: cannot convert value of type 'String' to expected argument type 'UnsafeMutablePointer<CChar>' (aka 'UnsafeMutablePointer<Int8>')
+   !! takesUnsafeMutablePointerCChar(p: string)
+   !!                                   ^
 
 .. syntax-grammar::
 
