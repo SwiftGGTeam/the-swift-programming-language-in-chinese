@@ -1094,7 +1094,7 @@ doesn't actually have to include any protocol conformance.
 
 The description of the static methods uses three types as placeholders.
 The type ``Expression`` is a placeholder
-for the type of input the result builder takes,
+for the type of the result builder's input,
 ``Component`` is a placeholder for the type of a partial result,
 and ``FinalResult`` is a placeholder
 for the type of the result that the result builder produces.
