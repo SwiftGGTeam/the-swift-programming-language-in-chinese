@@ -558,7 +558,7 @@ which arguments are passed to the variadic parameter
 and which arguments are passed to the parameters
 that come after the variadic parameter.
 
-A function can have multiple multiple variadic parameters.
+A function can have multiple variadic parameters.
 
 .. assertion:: variadic-parameters-and-labels
 
