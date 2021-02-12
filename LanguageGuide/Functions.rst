@@ -551,10 +551,33 @@ The example below calculates the :newTerm:`arithmetic mean`
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 
+The first parameter that comes after a variadic parameter
+must have an argument label.
+The argument label makes it unambiguous
+which arguments are passed to the variadic parameter
+and which arguments are passed to the parameters
+that come after the variadic parameter.
 
-.. note::
+A function can have multiple variadic parameters.
 
-   A function may have at most one variadic parameter.
+.. assertion:: variadic-parameters-and-labels
+
+   // Labeled, immediately after
+   >> func f(_ a: Int..., b: String) {}
+   ---
+   // Unlabeled, not immediately after
+   >> func g(_ a: Int..., b: String, _ c: Int) {}
+   ---
+   // Multiple
+   >> func h(_a: Int..., b: String, _ c: Int..., d: String) {}
+
+.. assertion:: variadic-parameters-and-labels-failure
+
+   // Unlabeled, immediately after
+   >> func f(_ a: Int..., _ b: String) {}
+   !$ error: a parameter following a variadic parameter requires a label
+   !! func f(_ a: Int..., _ b: String) {}
+   !! ^
 
 .. _Functions_InOutParameters:
 
