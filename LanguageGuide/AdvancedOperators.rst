@@ -1080,7 +1080,7 @@ showing the result of the transformation
 makes it easier to see how Swift transforms your code
 when you use the ``DrawingBuilder`` syntax.
 
-To add support for writing ``for`` loops in the drawing DSL,
+To add support for writing ``for`` loops in the special drawing syntax,
 add a ``buildArray(_:)`` method.
 
 .. testcode:: result-builder
