@@ -653,7 +653,7 @@ The code above creates a department and its three courses.
 The intro and intermediate courses both have a suggested next course
 stored in their ``nextCourse`` property,
 which maintains an unowned optional reference to
-the course a student should take after after completing this one.
+the course a student should take after completing this one.
 
 .. image:: ../images/unownedOptionalReference_2x.png
    :align: center
