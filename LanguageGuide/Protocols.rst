@@ -138,7 +138,7 @@ Each instance of ``Person`` has a single stored property called ``fullName``,
 which is of type ``String``.
 This matches the single requirement of the ``FullyNamed`` protocol,
 and means that ``Person`` has correctly conformed to the protocol.
-(Swift reports an error at compile-time if a protocol requirement isn't fulfilled.)
+(Swift reports an error at compile time if a protocol requirement isn't fulfilled.)
 
 Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 

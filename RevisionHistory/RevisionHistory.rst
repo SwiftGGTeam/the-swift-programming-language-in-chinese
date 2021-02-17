@@ -1,6 +1,22 @@
 Document Revision History
 =========================
 
+**2021-02-17**
+
+* Updated for Swift 5.4.
+
+* Added the :ref:`AdvancedOperators_ResultBuilders`
+  and :ref:`Attributes_resultBuilder` sections
+  with information about result builders.
+
+* Added the :ref:`Expressions_ImplicitConversion` section
+  with information about how in-out parameters
+  can be implicitly converted to unsafe pointers in a function call.
+
+* Updated the :ref:`Functions_VariadicParameters`
+  and :ref:`Declarations_FunctionDeclaration` sections,
+  now that a function can have multiple variadic parameters.
+
 **2020-09-16**
 
 * Updated for Swift 5.3.
