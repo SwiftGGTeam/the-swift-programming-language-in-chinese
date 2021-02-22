@@ -714,6 +714,9 @@ If you ask it to store a larger number, it stores 12 instead.
            }
        }
 
+.. No init(wrappedValue:) in this example -- that's in a later example.
+   Always initializing the wrapped value is a simpler starting point.
+
 The setter ensures that new values are less than 12,
 and the getter returns the stored value.
 
@@ -766,12 +769,35 @@ and the getter returns the stored value.
     >> print(s.someNumber)
     << 12
 
-You apply a wrapper to a property
-by writing the wrapper's name before the property
+You apply a wrapper to a local variable
+by writing the wrapper's name before the variable
 as an attribute.
-Here's a structure that stores a small rectangle,
-using the same (rather arbitrary) definition of "small"
-that's implemented by the ``TwelveOrLess`` property wrapper:
+For example:
+
+.. testcode:: small-number-wrapper
+
+    >> func f() {
+    -> @TwelveOrLess var myNumber: Int
+    -> myNumber = 10
+    -> print(myNumber)
+    <- 10
+    ---
+    -> myNumber = 24
+    -> print(myNumber)
+    <- 12
+    >> }
+    >> f()
+
+The setter in ``TwelveOrLess`` treats 10 as a valid value
+so storing the number 10 in ``myNumber`` proceeds as written.
+However, 24 is larger than ``TwelveOrLess`` allows,
+so trying to store 24 end up setting ``myNumber``
+to 12 instead, the largest allowed value.
+
+You apply a wrapper to a property in the same way.
+Here's a structure that stores a rectangle
+that uses the ``TwelveOrLess`` property wrapper
+to ensure its dimensions are always 12 or less:
 
 .. testcode:: small-number-wrapper
 
@@ -795,10 +821,16 @@ that's implemented by the ``TwelveOrLess`` property wrapper:
 The ``height`` and ``width`` properties get their initial values
 from the definition of ``TwelveOrLess``,
 which sets ``TwelveOrLess.number`` to zero.
-Storing the number 10 into ``rectangle.height`` succeeds
-because it's a small number.
-Trying to store 24 actually stores a value of 12 instead,
-because 24 is too large for the property setter's rule.
+Like in the previous example,
+setting the value of ``rectangle.height`` to 10 is valid.
+The property wrapper doesn't let you set ``rectangle.height`` to 24,
+and sets it to 12 instead.
+
+.. note::
+
+  You can't use a property wrapper on a global variable,
+  a computed local variable,
+  or a computed property.
 
 When you apply a wrapper to a property,
 the compiler synthesizes code that provides storage for the wrapper
