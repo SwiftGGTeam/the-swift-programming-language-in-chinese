@@ -822,8 +822,8 @@ from the definition of ``TwelveOrLess``,
 which sets ``TwelveOrLess.number`` to zero.
 Like in the previous example,
 setting the value of ``rectangle.height`` to 10 is valid.
-The property wrapper doesn't let you set ``rectangle.height`` to 24,
-and sets it to 12 instead.
+Because the property wrapper doesn't allow values higher than 12,
+it sets ``rectangle.height`` to 12 instead of 24.
 
 .. note::
 

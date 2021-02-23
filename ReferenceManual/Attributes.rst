@@ -979,7 +979,7 @@ The *wrapped value* of the property
 is the value that the getter and setter for this property expose.
 In most cases, ``wrappedValue`` is a computed value,
 but it can be a stored value instead.
-The wrapper is responsible for defining and managing
+The wrapper defines and manages
 any underlying storage needed by its wrapped value.
 The compiler synthesizes storage for the instance of the wrapper type
 by prefixing the name of the wrapped property with an underscore (``_``) ---
