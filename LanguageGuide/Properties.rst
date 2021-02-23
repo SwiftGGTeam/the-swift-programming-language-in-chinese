@@ -706,8 +706,7 @@ If you ask it to store a larger number, it stores 12 instead.
 
     -> @propertyWrapper
     -> struct TwelveOrLess {
-           private var number: Int
-           init() { self.number = 0 }
+           private var number = 0
            var wrappedValue: Int {
                get { return number }
                set { number = min(newValue, 12) }
@@ -1117,12 +1116,8 @@ adjusted the new value for the property before storing that new value.
 
     -> @propertyWrapper
     -> struct SmallNumber {
-           private var number: Int
-           var projectedValue: Bool
-           init() {
-               self.number = 0
-               self.projectedValue = false
-           }
+           private var number = 0
+           var projectedValue = false
            var wrappedValue: Int {
                get { return number }
                set {
@@ -1148,11 +1143,6 @@ adjusted the new value for the property before storing that new value.
     -> someStructure.someNumber = 55
     -> print(someStructure.$someNumber)
     <- true
-
-.. FIXME It looks like a rule changed or is now being enforced
-   that causes the "private var number" line above
-   to make the systhesized initializer private,
-   which is a problem because the property wrapper is internal.
 
 Writing ``someStructure.$someNumber`` accesses the wrapper's projected value.
 After storing a small number like four,
