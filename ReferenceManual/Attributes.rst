@@ -1737,7 +1737,7 @@ With a few exceptions,
 a function of any calling convention can be used
 when a function any other calling convention is needed.
 A nongeneric global function,
-a local function that doesn't capture any local variables
+a local function that doesn't capture any local variables,
 or a closure that doesn't capture any local variables
 can be converted to the C calling convention.
 Other Swift functions can't be converted to the C calling convention.
