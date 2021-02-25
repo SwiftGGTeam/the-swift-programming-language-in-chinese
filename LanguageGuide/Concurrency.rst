@@ -16,6 +16,11 @@ Concurrency
    (This is parallel to using 'throws' and 'try' in code with error handling.
    There are a lot of parallels between them, which was intentional.)
 
+   'async' means this might take time to return
+   async on its own is a nicer way to write callbacks;
+   it doesn't give you concurrency on its own.
+   when you want concurrency, you create a task.
+
    comparison with callbacks/closures/completion handlers:
 
    a()
@@ -50,8 +55,26 @@ Concurrency
    and all of that code takes turns running
    TR: Is it running in parallel, or round-robin sharing the CPU/thread?
 
-   which comes next, actors or tasks?
-   Transition into what you need for parallelism
+   async-let implicitly makes a task
+   ... transition into Task APIs
+
+   ... actors
+
+
+
+   in order for concurrency to happen,
+   you have to be waiting for something to finish
+
+
+   how much should you have to understand threads to understand this?
+   Ideally you don't have to know anything about them.
+
+
+
+   How do you meld async-await-Task-Actor with an event driven model?
+   Can you feed your user events through an async sequence or Combine
+   and then use for-await-in to spin an event loop?
+   I think so -- but how do you get the events *into* the async sequence?
 
 
 .. Other stuff to cover
