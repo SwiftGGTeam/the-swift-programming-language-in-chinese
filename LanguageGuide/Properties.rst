@@ -771,21 +771,26 @@ and the getter returns the stored value.
 You apply a wrapper to a local variable
 by writing the wrapper's name before the variable
 as an attribute.
-For example:
+For example, in the code below
+``myNumber`` uses ``TwelveOrLess`` as a property wrapper.
 
 .. testcode:: small-number-wrapper
 
-    >> func f() {
-    -> @TwelveOrLess var myNumber: Int
-    -> myNumber = 10
-    -> print(myNumber)
-    <- 10
+    -> func someFunction() {
+           @TwelveOrLess var myNumber: Int
     ---
-    -> myNumber = 24
-    -> print(myNumber)
-    <- 12
-    >> }
-    >> f()
+           myNumber = 10
+           // now myNumber is 10
+    >>     print(myNumber)
+    ---
+           myNumber = 24
+           // now myNumber is 12
+    >>     print(myNumber)
+       }
+    ---
+    >> someFunction()
+    << 10
+    << 12
 
 The setter in ``TwelveOrLess`` treats 10 as a valid value
 so storing the number 10 in ``myNumber`` proceeds as written.
