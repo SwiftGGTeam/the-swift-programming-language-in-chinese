@@ -86,3 +86,15 @@ Concurrency
    withCheckedThrowingContinuation
 
    SE-0302 concurrent values
+
+.. CODE SKETCH
+
+   func downloadAsset(name: String) -> async Data { ... }
+   func downloadAsset(name: String) -> async throws Data { ... }
+
+   ... parse the Data object, maybe to turn it into the level of a game
+   ... and figure out which sprite assets you need to fetch
+
+   actor class AssetLoader {
+       static func download(_ name: String) -> Data { }
+   }
