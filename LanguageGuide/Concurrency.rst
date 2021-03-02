@@ -34,6 +34,12 @@ Concurrency
    show(image)
 
    The behavior is the same, but the 'await' version in much easier to read.
+   ◊ The sync/async versions are essentially the same, just the { } are implied
+
+   ◊ Which do I want to show first -- defining or calling an async function?
+   ◊ Are there any special considerations for defining an async function?
+   ◊ It doesn't take an explicit completion handler, but can it?
+   ◊ You just use 'return' to complete a async function, no need to call a completion handler
 
    You can call async functions only from another async context
    or with the stdlib call-async-and-wait function.
@@ -95,8 +101,13 @@ Concurrency
 
    child tasks
    cancellation and priority propogate down from parent to children
+   you can wait for each child
+        while let result = try await group.next() { }
+        for try await result in group { }
 
    ... actors
+
+   ◊ what promises are you making about concurrency/threading when you define an actor?
 
 
 
@@ -113,6 +124,10 @@ Concurrency
    Can you feed your user events through an async sequence or Combine
    and then use for-await-in to spin an event loop?
    I think so -- but how do you get the events *into* the async sequence?
+
+
+
+   ◊ example of calling an actor function
 
 
 .. Other stuff to cover
