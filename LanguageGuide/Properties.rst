@@ -768,37 +768,9 @@ and the getter returns the stored value.
     >> print(s.someNumber)
     << 12
 
-You apply a wrapper to a local variable
-by writing the wrapper's name before the variable
+You apply a wrapper to a property
+by writing the wrapper's name before the property
 as an attribute.
-For example, in the code below
-``myNumber`` uses ``TwelveOrLess`` as a property wrapper.
-
-.. testcode:: small-number-wrapper
-
-    -> func someFunction() {
-           @TwelveOrLess var myNumber: Int
-    ---
-           myNumber = 10
-           // now myNumber is 10
-    >>     print(myNumber)
-    ---
-           myNumber = 24
-           // now myNumber is 12
-    >>     print(myNumber)
-       }
-    ---
-    >> someFunction()
-    << 10
-    << 12
-
-The setter in ``TwelveOrLess`` treats 10 as a valid value
-so storing the number 10 in ``myNumber`` proceeds as written.
-However, 24 is larger than ``TwelveOrLess`` allows,
-so trying to store 24 end up setting ``myNumber``
-to 12 instead, the largest allowed value.
-
-You apply a wrapper to a property in the same way.
 Here's a structure that stores a rectangle
 that uses the ``TwelveOrLess`` property wrapper
 to ensure its dimensions are always 12 or less:
@@ -825,16 +797,11 @@ to ensure its dimensions are always 12 or less:
 The ``height`` and ``width`` properties get their initial values
 from the definition of ``TwelveOrLess``,
 which sets ``TwelveOrLess.number`` to zero.
-Like in the previous example,
-setting the value of ``rectangle.height`` to 10 is valid.
-Because the property wrapper doesn't allow values higher than 12,
-it sets ``rectangle.height`` to 12 instead of 24.
-
-.. note::
-
-  You can't use a property wrapper on a global variable,
-  a computed local variable,
-  or a computed property.
+The setter in ``TwelveOrLess`` treats 10 as a valid value
+so storing the number 10 in ``rectangle.height`` proceeds as written.
+However, 24 is larger than ``TwelveOrLess`` allows,
+so trying to store 24 end up setting ``rectangle.height``
+to 12 instead, the largest allowed value.
 
 When you apply a wrapper to a property,
 the compiler synthesizes code that provides storage for the wrapper
