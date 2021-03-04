@@ -1237,7 +1237,7 @@ and they're written in the same way as computed properties.
 You can apply a property wrapper to a local stored variable,
 but not to a global variable or a computed variable.
 For example,
-in the code below ``myNumber`` uses ``SmallNumber`` as a property wrapper.
+in the code below, ``myNumber`` uses ``SmallNumber`` as a property wrapper.
 
 .. testcode:: property-wrapper-init
 
