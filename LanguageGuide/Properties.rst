@@ -1234,6 +1234,38 @@ and they're written in the same way as computed properties.
 
    Local constants and variables are never computed lazily.
 
+You can apply a property wrapper to a local stored variable,
+but not to a global variable or a computed variable.
+For example,
+in the code below ``myNumber`` uses ``SmallNumber`` as a property wrapper.
+
+.. testcode:: property-wrapper-init
+
+    -> func someFunction() {
+           @SmallNumber var myNumber: Int = 0
+    ---
+           myNumber = 10
+           // now myNumber is 10
+    >>     print(myNumber)
+    ---
+           myNumber = 24
+           // now myNumber is 12
+    >>     print(myNumber)
+       }
+    ---
+    >> someFunction()
+    << 10
+    << 12
+
+Like when you apply ``SmallNumber`` to a property,
+setting the value of ``myNumber`` to 10 is valid.
+Because the property wrapper doesn't allow values higher than 12,
+it sets ``myNumber`` to 12 instead of 24.
+
+.. The discussion of local variables with property wrappers
+   has to come later, because we need to use init(wrappedValue:)
+   to work around <rdar://problem/74616133>.
+
 .. TODO: clarify what we mean by "global variables" here.
    According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
    is a local variable in top-level code, not a global variable.
