@@ -1,6 +1,96 @@
 Concurrency
 ===========
 
+◊ Intro ◊
+
+- why you would want async code
+- the difference between async and concurrency (aka parallelism)
+- common use cases
+    + network operations
+    + long running model-layer calculations
+    + parsing files
+    + don't block the UI!
+
+.. _Concurrency_AsyncFunc:
+
+Defining and Calling Asynchronous Functions
+-------------------------------------------
+
+◊ Outline ◊
+
+- you mark a function as asynchronous by putting ``async`` next to the arrow
+- sleep() does nothing, but takes the specified amount of time do do so,
+  which makes it a useful function for testing asynchronous code
+- QUESTION: What would you need to import to use ``sleep`` on Linux?
+
+::
+
+    import Darwin
+    func someAsynchronousFunction(_ time: UInt32) async -> UInt32 {
+        sleep(time)
+        return 10 + time
+    }
+
+◊ Outline ◊
+
+- only async code can call async functions, including
+    + top-level code
+    + code marked @main
+    + code in a do-this-thing-while-blocking call from the stdlib
+- you mark a call to an async function with ``await``
+- this is like ``try`` when calling a throwing function
+- it reminds you when reading the code that the program can stop here
+  and go do something else while waiting for the function to return
+- likewise, you know that when there's no ``await`` there's no suspension point
+
+::
+
+    let someNumber = await someAsynchronousFunction(3)
+    // waits 3 seconds, then returns 13
+
+.. _Concurrency_AsyncLet:
+
+Calling Asynchronous Functions Without Blocking
+-----------------------------------------------
+
+◊ Outline ◊
+
+- calls an async function, but then continues on rather than waiting
+- you can us async-let multiple times, and that work can run at the same time
+- when you need to use the return value, then you ``await``
+- common usage patterns
+    + fan out, then collect all
+    + sequence of parallel operations
+- behind the scenes, async-let is implicitly creating a Task
+
+::
+
+    async let x = someAsynchronousFunction(2)
+    async let y = someAsynchronousFunction(4)
+    let total = await x + y
+    print(total)
+
+.. _Concurrency_Tasks:
+
+Tasks and Task Groups
+---------------------
+
+A :newTerm:`task` is a unit of work
+that can be run asynchronously as part of your program.
+
+◊ Outline ◊
+
+- tasks aren't threads -- a task does run on a thread,
+  but that's not exposed as part of the model
+- task group models a hierarchy or collection of tasks
+    + QUESTION: What relationships can the tasks in group have to each other?
+
+
+
+
+◊ OUTLINE ◊
+-----------
+
 .. OUTLINE
 
    == Async await ==
@@ -28,6 +118,9 @@ Concurrency
            show(image)
        }
    }
+
+   TODO: Revise the discussion in the Closures chapter
+   where we currently talk about completion handlers.
 
    let gallery = await downloadGalleryIndex("Family Vacation")
    let image = await downloadImage(gallery.first)
