@@ -5,11 +5,22 @@ Concurrency
 
 - why you would want async code
 - the difference between async and concurrency (aka parallelism)
+    + The execution of :newTerm:`asynchronous code` can be suspended and resumed later
+    + :newTerm:`Concurrent code` means multiple pieces of code run at a time
+    + they're commonly used together -- but one doesn't imply the other
 - common use cases
     + network operations
     + long running model-layer calculations
     + parsing files
     + don't block the UI!
+
+.. note::
+
+   If you've written concurrent or asynchronous code before,
+   you might be used to working with threads.
+   The concurrency model in Swift
+   is built on top of the operating system's support for threads,
+   but you don't interact with threads directly.
 
 .. _Concurrency_AsyncFunc:
 
@@ -36,7 +47,7 @@ Defining and Calling Asynchronous Functions
 - only async code can call async functions, including
     + top-level code
     + code marked @main
-    + code in a do-this-thing-while-blocking call from the stdlib
+    + non-async code wrapped in ``runAsyncAndBlock``
 - you mark a call to an async function with ``await``
 - this is like ``try`` when calling a throwing function
 - it reminds you when reading the code that the program can stop here
@@ -80,13 +91,38 @@ that can be run asynchronously as part of your program.
 
 ◊ Outline ◊
 
-- tasks aren't threads -- a task does run on a thread,
-  but that's not exposed as part of the model
+- async-let lets you implicitly create tasks that have dependencies;
+  if you need to create tasks dynamically or with extra options
+  you use the ``Task`` APIs directly
+- other reasons to use the API include setting:
+    + cancellation
+    + timeouts
+    + priority
 - task group models a hierarchy or collection of tasks
     + QUESTION: What relationships can the tasks in group have to each other?
+- task have deadlines, not timeouts -- eg "now + 20 ms" --
+  a deadline is usually what you want anyhow when you think of a timeout
+
+::
+
+    let numbers = [10, 20, 30]
+
+TODO: Custom executor, default executor
+TODO: This probably needs to be a section with subsections
 
 
+.. _Concurrency_Actors:
 
+Actors
+------
+
+◊ Outline ◊
+
+- actors are like classes,
+  except their shared mutable state is safe to access
+  from multiple execution contexts (tasks/threads)
+
+TODO: This probably needs to be a section with subsections
 
 ◊ OUTLINE ◊
 -----------
@@ -94,22 +130,6 @@ that can be run asynchronously as part of your program.
 .. OUTLINE
 
    == Async await ==
-
-   :newTerm:`Asynchronous` code it starts now, but doesn't finish until later,
-   and the code after it goes ahead and runs.
-   :newTerm:`Concurrent` code means multiple parts of your program
-   are running at the same time.
-   You can have either one, or both.  They're separate characteristics.
-
-   You use 'async' to mark an asynchronous function
-   and you use 'await' to mark a call to an async function.
-   (This is parallel to using 'throws' and 'try' in code with error handling.
-   There are a lot of parallels between them, which was intentional.)
-
-   'async' means this might take time to return
-   async on its own is a nicer way to write callbacks;
-   it doesn't give you concurrency on its own.
-   when you want concurrency, you create a task.
 
    comparison with callbacks/closures/completion handlers:
 
@@ -133,12 +153,6 @@ that can be run asynchronously as part of your program.
    ◊ Are there any special considerations for defining an async function?
    ◊ It doesn't take an explicit completion handler, but can it?
    ◊ You just use 'return' to complete a async function, no need to call a completion handler
-
-   You can call async functions only from another async context
-   or with the stdlib call-async-and-wait function.
-   Top-level code is implicitly async.
-   You can have an async @main function if you write it that way.
-   (To tell the full story here, you need tasks & actors.)
 
    Calling an async function still runs only one piece of code at a time.
    First the code before async, then the async, and then when it's done,
@@ -165,9 +179,6 @@ that can be run asynchronously as part of your program.
    TaskGroup.add()
    TaskGroup.next()
 
-   Note: A task isn't a thread.
-   Tasks run on threads - but that's not exposed as part of the model.
-
    [FIGURE]
    Task states
 
@@ -181,9 +192,6 @@ that can be run asynchronously as part of your program.
    detached tasks --> task handles
 
    ... defer UnsafeCurrentTask and similar to the stdlib reference
-
-   task have deadlines, not timeouts
-   "now + 20 ms"
 
    tasks support cancellation --
    basically, you just ask "was this work cancelled?"
