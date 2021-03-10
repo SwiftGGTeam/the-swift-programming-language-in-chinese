@@ -21,7 +21,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT await-operator-OPT prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -141,6 +141,12 @@ or the ``try`` expression is enclosed in parentheses.
     !!           ^
     -> sum = 7 + (try someThrowingFunction()) // OK
 
+If an expression includes both the ``try`` and ``await`` operator,
+the ``try`` operator must appear first.
+
+.. The "try await" ordering is also part of the grammar for 'expression',
+   but it's important enough to be worth re-stating in prose.
+
 For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
 see :doc:`../LanguageGuide/ErrorHandling`.
 
@@ -150,6 +156,84 @@ see :doc:`../LanguageGuide/ErrorHandling`.
 
     try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
 
+
+.. _Expressions_AwaitExpression:
+
+Await Operator
+~~~~~~~~~~~~~~
+
+An :newTerm:`await expression` consists of the ``await`` operator
+followed by an expression that uses the result of an asynchronous operation.
+It has the following form:
+
+.. syntax-outline::
+
+   await <#expression#>
+
+The value of a ``await`` expression is the value of the *expression*.
+
+An ``await`` expression can appear only within an asynchronous context,
+such as the body of an ``async`` function.
+It can't appear in the body of a ``defer`` statement,
+or in an autoclosure of non-asynchronous function type.
+
+◊ revisit autoclosure bit above -- can I make that a natural consequence
+◊ of how I describe the rules around async and closures?
+
+◊ execution of the current task pauses until the asynchronous operation completes
+
+An expression marked with ``await`` is sometimes called a *suspension point*.
+
+When the expression on the left-hand side of a binary operator
+is marked with the ``await`` operator,
+that operator applies to the whole binary expression.
+That said, you can use parentheses
+to be explicit about the scope of the operator's application.
+
+.. testcode:: placement-of-await
+
+    >> func someAsyncFunction() async -> Int { return 10 }
+    >> func anotherAsyncFunction() async -> Int { return 5 }
+    >> runAsyncAndBlock {
+    >> var sum = 0
+    -> sum = await someAsyncFunction() + anotherAsyncFunction()   // await applies to both function calls
+    -> sum = await (someAsyncFunction() + anotherAsyncFunction()) // await applies to both function calls
+    -> sum = (await someAsyncFunction()) + anotherAsyncFunction() // Error: await applies only to the first function call
+    >> _ = sum  // Suppress irrelevant written-but-not-read warning
+    >> }
+    !$ error: call is 'async' but is not marked with 'await'
+    !! sum = (await someAsyncFunction()) + anotherAsyncFunction() // Error: await applies only to the first function call
+    !! ^~~~~~~~~~~~~~~~~~~~~~
+    !! await
+
+A ``await`` expression can't appear on the right-hand side of a binary operator,
+unless the binary operator is the assignment operator
+or the ``await`` expression is enclosed in parentheses.
+
+.. assertion:: await-on-right
+
+    >> func someAsyncFunction() async -> Int { return 10 }
+    >> runAsyncAndBlock {
+    >> var sum = 0
+    >> sum = 7 + await someAsyncFunction()    // Error
+    !$ error: 'await' cannot appear to the right of a non-assignment operator
+    !! sum = 7 + await someAsyncFunction()    // Error
+    !! ^
+    >> sum = 7 + (await someAsyncFunction())  // OK
+    >> _ = sum  // Suppress irrelevant written-but-not-read warning
+    >> }
+
+If an expression includes both the ``await`` and ``try`` operator,
+the ``try`` operator must appear first.
+
+.. The "try await" ordering is also part of the grammar for 'expression',
+   but it's important enough to be worth re-stating in prose.
+
+.. syntax-grammar::
+
+    Grammar of an await expression
+
+    await-operator --> ``await``
 
 .. _Expressions_BinaryExpressions:
 

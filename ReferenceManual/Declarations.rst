@@ -1159,6 +1159,33 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+.. _Declarations_AsyncFunctions:
+
+Asynchronous Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions and methods that run asynchronously must be marked with the ``async`` keyword.
+These functions ad methods are known as :newTerm:`asynchronous functions`
+and :newTerm:`asynchronous methods`.
+They have the following form:
+
+.. syntax-outline::
+
+    func <#function name#>(<#parameters#>) async -> <#return type#> {
+       <#statements#>
+    }
+
+Calls to an asynchronous function or method
+must be wrapped in an ``async`` expression ---
+that is, they must be in the scope of an ``async`` operator.
+
+The ``async`` keyword is part of the function's type,
+and synchronous functions are subtypes of asynchronous functions.
+As a result, you can use a synchronous function
+in the same places as an asynchronous one.
+
+.. XXX overriding between sync and async
+
 
 .. _Declarations_FunctionsThatNeverReturn:
 
