@@ -71,6 +71,8 @@ It has the following form:
 
    try <#expression#>
 
+The value of a ``try`` expression is the value of the *expression*.
+
 An :newTerm:`optional-try expression` consists of the ``try?`` operator
 followed by an expression that can throw an error.
 It has the following form:
@@ -92,6 +94,7 @@ It has the following form:
 
    try! <#expression#>
 
+The value of a forced-try expression is the value of the *expression*.
 If the *expression* throws an error,
 a runtime error is produced.
 
