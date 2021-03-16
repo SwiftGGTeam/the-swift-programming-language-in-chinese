@@ -347,25 +347,25 @@ that takes ``KeyValuePairs<String, String>``.
    !! repeatLabels(a: "four") // Error
    !! ^
 
-.. _Attributes_dynamicMemberLookup:
+.. _Attributes_dynamicMember:
 
 dynamicMemberLookup
 ~~~~~~~~~~~~~~~~~~~
 
 Apply this attribute to a class, structure, enumeration, or protocol
 to enable members to be looked up by name at runtime.
-The type must implement a ``subscript(dynamicMemberLookup:)`` subscript.
+The type must implement a ``subscript(dynamicMember:)`` subscript.
 
 In an explicit member expression,
 if there isn't a corresponding declaration for the named member,
 the expression is understood as a call to
-the type's ``subscript(dynamicMemberLookup:)`` subscript,
+the type's ``subscript(dynamicMember:)`` subscript,
 passing information about the member as the argument.
 The subscript can accept a parameter that's either a key path or a member name;
 if you implement both subscripts,
 the subscript that takes key path argument is used.
 
-An implementation of ``subscript(dynamicMemberLookup:)``
+An implementation of ``subscript(dynamicMember:)``
 can accept key paths using an argument of type
 `KeyPath <//apple_ref/swift/fake/KeyPath>`_,
 `WritableKeyPath <//apple_ref/swift/fake/WritableKeyPath>`_,

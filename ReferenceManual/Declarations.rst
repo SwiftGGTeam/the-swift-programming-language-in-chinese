@@ -1060,7 +1060,7 @@ For example:
    !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
    !! ^~~~~~~~~~~~~~~~~~
 
-The ``subscript(dynamicMemberLookup:)`` subscript
+The ``subscript(dynamicMember:)`` subscript
 enables syntactic sugar for member lookup,
 as described in :ref:`Attributes_dynamicMemberLookup`.
 
