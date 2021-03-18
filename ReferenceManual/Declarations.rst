@@ -26,6 +26,7 @@ the term *declaration* covers both declarations and definitions.
     declaration --> enum-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
+    declaration --> actor-declaration
     declaration --> protocol-declaration
     declaration --> initializer-declaration
     declaration --> deinitializer-declaration
@@ -1709,6 +1710,44 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     class-members --> class-member class-members-OPT
     class-member --> declaration | compiler-control-statement
+
+.. _Declarations_ActorDeclaration:
+
+Actor Declaration
+-----------------
+
+.. XXX Outline
+
+   The following facts come from the SE-0306 actors proposal,
+   but don't really fit into the narrative in the guide.
+
+   Which declarations in the body are actor-isolated vs non-isolated
+
+   Partial applications of isolated functions are only permitted
+   when the expression is a direct argument
+   whose corresponding parameter is non-escaping and non-Sendable.
+
+   A key path cannot involve a reference to an actor-isolated declaration.
+   (This might need to go under keypath reference, not here.)
+
+   Actor-isolated stored properties can be passed
+   into synchronous functions via inout parameters,
+   but it is ill-formed to pass them to asynchronous functions via inout parameters.
+
+   TR: Can actors be subclassed?
+
+.. syntax-grammar::
+
+    Grammar of an actor declaration
+
+    actor-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
+    actor-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
+    actor-name --> identifier
+    actor-body --> ``{`` actor-members-OPT ``}``
+
+    actor-members --> actor-member actor-members-OPT
+    actor-member --> declaration | compiler-control-statement
+
 
 .. _Declarations_ProtocolDeclaration:
 
