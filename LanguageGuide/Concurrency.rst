@@ -3,16 +3,23 @@ Concurrency
 
 ◊ Intro ◊
 
-- why you would want async code
-- the difference between async and concurrency (aka parallelism)
-    + The execution of :newTerm:`asynchronous code` can be suspended and resumed later
-    + :newTerm:`Concurrent code` means multiple pieces of code run at a time
-    + they're commonly used together -- but one doesn't imply the other
-- common use cases
+- why you would want async code?  common use cases include:
     + network operations
     + long running model-layer calculations
     + parsing files
     + don't block the UI!
+- the difference between async and concurrency (aka parallelism)
+    + The execution of :newTerm:`asynchronous code` can be suspended and resumed later
+    + :newTerm:`Concurrent code` means multiple pieces of code run at a time
+    + they're commonly used together -- but one doesn't imply the other
+    + eg, a 4 core CPU can run four synchronous jobs at the same time
+      and a one core CPU can round-robin between several asynchronous jobs
+      without any concurrency
+    + in order for concurrency to happen,
+      you have to be waiting for something to finish
+      and be able to work on something else in the mean time
+- Swift has built-in support for asynchronous code,
+  and for running async code concurrently
 
 .. note::
 
@@ -91,6 +98,8 @@ that can be run asynchronously as part of your program.
 
 ◊ Outline ◊
 
+- All async code runs as part of some task
+- A task itself doesn't have any concurrency; it does one thing at a time
 - async-let lets you implicitly create tasks that have dependencies;
   if you need to create tasks dynamically or with extra options
   you use the ``Task`` APIs directly
@@ -108,7 +117,117 @@ that can be run asynchronously as part of your program.
     let numbers = [10, 20, 30]
 
 TODO: Custom executor, default executor
-TODO: This probably needs to be a section with subsections
+
+::
+    [PLACEHOLDER ART]
+
+    Task state diagram
+
+       |
+       v
+    Suspended <-+
+       |        |
+       v        |
+    Running ----+
+       |
+       v
+    Completed
+
+::
+    [PLACEHOLDER ART]
+
+    Task state diagram, including "substates"
+
+       |
+       v
+    Suspended <-----+
+    (Waiting) <---+ |
+       |          | |
+       v          | |
+    Suspended     | |
+    (Schedulable) / |
+       |            |
+       v            |
+    Running --------+
+       |
+       v
+    Completed
+
+TR: Is "canceled" a different state from "completed"?
+Or is cancellation just a kind of completion?
+
+TODO: Add discussion of "the current task"
+like ``Task.current()`` and ``Task.unsafeCurrent``?
+
+
+.. _Concurrency_ChildTasks:
+
+Adding Child Tasks to a Task Group
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Creating a group with ``Task.withGroup``
+- awaiting ``withGroup`` means waiting for all child tasks to complete
+- Adding a child with ``Task.Group.add``
+- awaiting ``add`` means waiting for that child task to be added
+- TR: Or is the await waiting for the child task to *finish*?
+- ?? maybe cover ``Task.Group.next``
+- ``Task.runDetached`` is like ``withGroup``,
+  except it doesn't wait for the task or its children to finish
+
+
+.. _Concurrency_TaskPriority:
+
+Setting Task Priority
+~~~~~~~~~~~~~~~~~~~~~
+
+◊ Outline ◊
+
+- priority values defined by ``Task.Priority`` enum
+- TR: Why do we have both ``Task.priority`` and ``Task.currentPriority``?
+  What's the difference in the use case between them?
+- The exact result of setting a task's priority depends on the executor
+- TR: What's the built in stdlib executor do?
+- Child tasks inherit the priority of their parents
+- If a high-priority task is waiting for a low-priority one,
+  the low-priority one gets scheduled at high priority
+- In addition, or instead of, setting a low priority,
+  you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
+  This is a sort of cooperative multitasking for long-running work.
+
+
+.. _Concurrency_TaskHandle:
+
+Getting the Result of a Task
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+◊ Outline ◊
+
+- when you start a task, a :newTerm:`task handle`
+  lets you keep a reference to it
+- ``Task.Handle``
+- To get the result of the task, ``await someTaskHandle.get()``
+
+
+
+.. _Concurrency_TaskCancellation:
+
+Task Cancellation
+~~~~~~~~~~~~~~~~~
+
+◊ Outline ◊
+
+- The cancelation model is "cooperative" -- each task checks whether it was canceled
+- conventionally, you call ``Task.checkCancellation()``
+  which throws ``CancellationError`` if the task has been canceled
+- You can check manually via ``Task.isCancelled``,
+  which lets you do clean-up before throwing an error
+- task handle
+- ``Task.Handle.cancel()``
+- cancellation propagates (FIXME: How?  Show an example.)
+- Use ``Task.withCancellationHandler`` to specify a closure to run
+  if the task is canceled
+  along with a closure that defines the task's work
+- TR: Does ``withCancellationHandler`` throw like ``checkCancellation`` does?
 
 
 .. _Concurrency_Actors:
@@ -250,16 +369,6 @@ TODO: Fill this in from SE-0302
    you can wait for each child
         while let result = try await group.next() { }
         for try await result in group { }
-
-   ... actors
-
-   ◊ what promises are you making about concurrency/threading when you define an actor?
-
-
-
-   in order for concurrency to happen,
-   you have to be waiting for something to finish
-
 
    how much should you have to understand threads to understand this?
    Ideally you don't have to know anything about them.
