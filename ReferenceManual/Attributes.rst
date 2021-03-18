@@ -347,7 +347,7 @@ that takes ``KeyValuePairs<String, String>``.
    !! repeatLabels(a: "four") // Error
    !! ^
 
-.. _Attributes_dynamicMember:
+.. _Attributes_dynamicMemberLookup:
 
 dynamicMemberLookup
 ~~~~~~~~~~~~~~~~~~~
