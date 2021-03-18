@@ -118,11 +118,56 @@ Actors
 
 ◊ Outline ◊
 
-- actors are like classes,
-  except their shared mutable state is safe to access
+- actors are reference types like classes
+- unlike classes, it's safe to use the same actor
   from multiple execution contexts (tasks/threads)
+- like classes, actors can inherit from other actors
+- actors can also inherit from ``NSObject``,
+  which lets you mark them ``@objc`` and do interop stuff with them
+- every actor implicitly conforms to the ``Actor`` protocol,
+  which has no requirements
+- you can use the ``Actor`` protocol to write code that's generic across actors
 
-TODO: This probably needs to be a section with subsections
+.. _Concurrency_ActorIsolation:
+
+Actor Isolation
+~~~~~~~~~~~~~~~
+
+◊ Outline ◊
+
+- actors protect their mutable state using :newTerm:`actor isolation`
+  to prevent data races
+  (one actor reading data that's in an inconsistent state
+  while another actor is updating/writing to that data)
+- within an actor's implementation,
+  you can read and write to properties of ``self`` synchronously,
+  likewise for calling methods of ``self`` or ``super``
+- method calls from outside the actor are always async,
+  as is reading the value of an actor's property
+- you can't write to a property directly from outside the actor
+
+TODO: Either define "data race" or use a different term;
+the chapter on exclusive ownership talks about "conflicting access",
+which is related, but different.
+
+- The same actor method can be called multiple times, overlapping itself.
+  This is sometimes referred to as *reentrant code*.
+  The behavior is defined and safe... but might have unexpected results.
+  However, the actor model doesn't require or guarantee
+  that these overlapping calls behave correctly (that they're *idempotent*).
+  Encapsulate state changes in a synchronous function
+  or write them so they don't contain an ``await`` in the middle.
+- If a closure is ``@Sendable`` or ``@escaping``
+  then it behaves like code outside of the actor
+  because it could execute concurrently with other code that's part of the actor
+
+
+.. _Concurrency_Sendable:
+
+Sharing Data Across Actors
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO: Fill this in from SE-0302
 
 ◊ OUTLINE ◊
 -----------
