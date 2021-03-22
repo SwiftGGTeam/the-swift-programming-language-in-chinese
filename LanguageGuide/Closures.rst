@@ -249,7 +249,8 @@ Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` argum
 Because ``$1`` is the shorthand argument with highest number,
 the closure is understood to take two arguments.
 Because the ``sorted(by:)`` function here expects a closure
-whose arguments are both strings.
+whose arguments are both strings,
+the shorthand arguments ``$0`` and ``$1`` are both of type ``String``.
 
 .. assertion:: closure-syntax-arity-inference
 
