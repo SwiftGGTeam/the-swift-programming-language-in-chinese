@@ -56,13 +56,14 @@ Defining and Calling Asynchronous Functions
   to understand the language features
 - QUESTION: What would you need to import to use ``sleep`` on Linux?
 
-::
+.. testcode:: defining-async-function
+    :compile: true
 
-    import Darwin
-    func someAsynchronousFunction(_ time: UInt32) async -> UInt32 {
-        sleep(time)
-        return 10 + time
-    }
+    -> import Darwin
+    -> func someAsynchronousFunction(_ time: UInt32) async -> UInt32 {
+           sleep(time)
+           return 10 + time
+       }
 
 ◊ Outline ◊
 
@@ -76,10 +77,14 @@ Defining and Calling Asynchronous Functions
   and go do something else while waiting for the function to return
 - likewise, you know that when there's no ``await`` there's no suspension point
 
-::
+.. testcode:: defining-async-function
+    :compile: true
 
-    let someNumber = await someAsynchronousFunction(3)
-    // waits 3 seconds, then returns 13
+    >> runAsyncAndBlock {
+    -> let someNumber = await someAsynchronousFunction(3)
+    -> // waits 3 seconds, then returns 13
+    >> _ = someNumber  // silence unused-variable warning
+    >> }
 
 .. _Concurrency_AsyncLet:
 
@@ -96,12 +101,15 @@ Calling Asynchronous Functions Without Blocking
     + sequence of parallel operations
 - behind the scenes, async-let is implicitly creating a Task
 
-::
+.. testcode:: defining-async-function
+    :compile: true
 
-    async let x = someAsynchronousFunction(2)
-    async let y = someAsynchronousFunction(4)
-    let total = await x + y
-    print(total)
+    >> runAsyncAndBlock {
+    -> async let x = someAsynchronousFunction(2)
+    -> async let y = someAsynchronousFunction(4)
+    -> let total = await x + y
+    -> print(total)
+    >> }
 
 .. _Concurrency_Tasks:
 
