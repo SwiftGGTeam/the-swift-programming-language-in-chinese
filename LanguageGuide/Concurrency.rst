@@ -33,6 +33,7 @@ Concurrency
     + buggy or inefficient async code isn't necessarily any better than
       buggy or inefficient synchronous code,
       it might even be slower or harder to debug
+
 .. note::
 
    If you've written concurrent or asynchronous code before,
@@ -133,6 +134,7 @@ that can be run asynchronously as part of your program.
 TODO: Custom executor, default executor
 
 ::
+
     [PLACEHOLDER ART]
 
     Task state diagram
@@ -148,6 +150,7 @@ TODO: Custom executor, default executor
     Completed
 
 ::
+
     [PLACEHOLDER ART]
 
     Task state diagram, including "substates"
