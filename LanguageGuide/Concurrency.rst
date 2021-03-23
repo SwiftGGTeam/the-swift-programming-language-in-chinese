@@ -20,7 +20,19 @@ Concurrency
       and be able to work on something else in the mean time
 - Swift has built-in support for asynchronous code,
   and for running async code concurrently
-
+- when not to use async code (async isn't magic)
+    + because Swift has language level support for concurrency,
+      the language can help you make & keep certain promises
+    + for example, actors let you safely share mutable state
+    + however, even with that help, writing and debugging async code
+      is more complex than doing the same thing synchronously
+      because there are more "moving parts" to consider
+    + if the problem is that your code is slow,
+      profile it first to understand *why* it's slow,
+      just like you'd do for any other performance bug
+    + buggy or inefficient async code isn't necessarily any better than
+      buggy or inefficient synchronous code,
+      it might even be slower or harder to debug
 .. note::
 
    If you've written concurrent or asynchronous code before,
@@ -36,9 +48,11 @@ Defining and Calling Asynchronous Functions
 
 ◊ Outline ◊
 
-- you mark a function as asynchronous by putting ``async`` next to the arrow
-- sleep() does nothing, but takes the specified amount of time do do so,
-  which makes it a useful function for testing asynchronous code
+- you mark a function as asynchronous by putting ``async`` next to the arrow,
+  like how you write ``throwing`` for a function that can throw an error
+- ``sleep()`` does nothing, but takes the specified amount of time do do so,
+  which makes it a useful function for writing simple asynchronous code
+  to understand the language features
 - QUESTION: What would you need to import to use ``sleep`` on Linux?
 
 ::
@@ -247,6 +261,92 @@ Actors
   which has no requirements
 - you can use the ``Actor`` protocol to write code that's generic across actors
 
+◊ Narrative code example ◊
+
+- You're reading temperature data from a remote sensor
+- It prints out a human-readable label on startup,
+  followed by measurement/units lines
+- Some code elsewhere is already doing the over-the-network or over-USB bits
+
+◊ define an actor and a helper function
+◊ TODO: Rename this -- it's not really a "logger"... more of a history?
+
+::
+
+    actor TemperatureLogger {
+        let label: String
+        let units: String
+        var measurements: [Int]
+        var max: Int
+
+        init(lines: [String]) {
+            assert(lines.count >= 2)
+
+            self.label = lines[0]
+            let (firstMeasurement, firstLabel) = parse(line: lines[1])
+            self.units = firstLabel
+            self.measurements = [firstMeasurement]
+            self.max = firstMeasurement
+
+            for line in lines[2...] {
+                update(with: line)
+            }
+        }
+    }
+
+    private func parse(line: String) -> (measurement: Int, units: String) {
+        let parts = line.split(separator: " ", maxSplits: 1)
+        let measurement = Int(parts[0])!
+        let units = String(parts[1])
+        return (measurement: measurement, units: units)
+    }
+
+◊ give it some client-facing API
+
+::
+
+    extension TemperatureLogger {
+        func update(with line: String) {
+            let (measurement, units) = parse(line: line)
+            assert(units == self.units)
+            measurements.append(measurement)
+            if measurement > max {
+                max = measurement
+            }
+        }
+
+        func getMax() -> Int { return max }
+
+        func reset() {
+            measurements = [measurements.last!]
+            max = measurements.last!
+        }
+    }
+
+◊ TR: Is there a better "getter" pattern than ``getMax()``?
+
+In the example above,
+the ``update(with:)``, ``getMax()``, and ``reset()`` function
+can access the properties of the actor.
+However, if you try to access those properties from outside the actor,
+like you would with an instance of a class,
+you'll get an error.
+For example:
+
+::
+
+    var logger = TemperatureLogger(lines: [
+        "Outdoor air temperature",
+        "25 C",
+        "24 C",
+    ])
+    logger.measurements.add(100)  // Error
+
+Accessing ``logger.measurements`` fails because
+the properties of an actor are part of that actor's local state.
+The language guarantee that only code inside an actor
+can access the actor's local state is called *actor isolation*.
+
 .. _Concurrency_ActorIsolation:
 
 Actor Isolation
@@ -265,7 +365,7 @@ Actor Isolation
   as is reading the value of an actor's property
 - you can't write to a property directly from outside the actor
 
-TODO: Either define "data race" or use a different term;
+◊ TODO: Either define "data race" or use a different term;
 the chapter on exclusive ownership talks about "conflicting access",
 which is related, but different.
 
@@ -279,6 +379,23 @@ which is related, but different.
 - If a closure is ``@Sendable`` or ``@escaping``
   then it behaves like code outside of the actor
   because it could execute concurrently with other code that's part of the actor
+
+
+◊ exercise the log actor, using its client API to mutate state
+
+::
+
+    runAsyncAndBlock {
+        let logger = TemperatureLogger(lines: [
+            "Outdoor air temperature",
+            "25 C",
+            "24 C",
+        ])
+        print(await logger.getMax())
+
+        await logger.update(with: "27 C")
+        print(await logger.getMax())
+    }
 
 
 .. _Concurrency_Sendable:
