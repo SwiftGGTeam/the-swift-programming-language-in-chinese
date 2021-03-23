@@ -21,6 +21,7 @@ Language Guide
    Deinitialization
    OptionalChaining
    ErrorHandling
+   Concurrency
    TypeCasting
    NestedTypes
    Extensions
