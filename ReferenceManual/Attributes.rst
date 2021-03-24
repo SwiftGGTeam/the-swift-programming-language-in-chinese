@@ -936,10 +936,22 @@ to use that type as a property wrapper.
 When you apply this attribute to a type,
 you create a custom attribute with the same name as the type.
 Apply that new attribute to a property of a class, structure, or enumeration
-to wrap access to the property through an instance of the wrapper type.
-Local and global variables can't use property wrappers.
+to wrap access to the property through an instance of the wrapper type;
+apply the attribute to a local stored variable declaration
+to wrap access to the variable the same way.
+Computed variables, global variables, and constants can't use property wrappers.
 
-.. assertion:: property-wrappers-cant-go-on-variables
+.. assertion:: property-wrappers-can-go-on-stored-variable
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper var d: Int = 20
+    >>     print(d)
+    >> }
+    >> f()
+    << 20
+
+.. assertion:: property-wrappers-cant-go-on-constants
 
     >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
     >> func f() {
@@ -950,12 +962,24 @@ Local and global variables can't use property wrappers.
     !! @UselessWrapper let d: Int = 20
     !! ^
 
+.. assertion:: property-wrappers-cant-go-on-computed-variable
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper var d: Int { return 20 }
+    >>     print(d)
+    >> }
+    >> f()
+    !$ error: property wrapper cannot be applied to a computed property
+    !! @UselessWrapper var d: Int { return 20 }
+    !! ^
+
 The wrapper must define a ``wrappedValue`` instance property.
 The *wrapped value* of the property
 is the value that the getter and setter for this property expose.
 In most cases, ``wrappedValue`` is a computed value,
 but it can be a stored value instead.
-The wrapper is responsible for defining and managing
+The wrapper defines and manages
 any underlying storage needed by its wrapped value.
 The compiler synthesizes storage for the instance of the wrapper type
 by prefixing the name of the wrapped property with an underscore (``_``) ---

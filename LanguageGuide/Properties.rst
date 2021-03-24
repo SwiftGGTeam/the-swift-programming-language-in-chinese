@@ -706,13 +706,15 @@ If you ask it to store a larger number, it stores 12 instead.
 
     -> @propertyWrapper
     -> struct TwelveOrLess {
-           private var number: Int
-           init() { self.number = 0 }
+           private var number = 0
            var wrappedValue: Int {
                get { return number }
                set { number = min(newValue, 12) }
            }
        }
+
+.. No init(wrappedValue:) in this example -- that's in a later example.
+   Always initializing the wrapped value is a simpler starting point.
 
 The setter ensures that new values are less than 12,
 and the getter returns the stored value.
@@ -769,9 +771,9 @@ and the getter returns the stored value.
 You apply a wrapper to a property
 by writing the wrapper's name before the property
 as an attribute.
-Here's a structure that stores a small rectangle,
-using the same (rather arbitrary) definition of "small"
-that's implemented by the ``TwelveOrLess`` property wrapper:
+Here's a structure that stores a rectangle
+that uses the ``TwelveOrLess`` property wrapper
+to ensure its dimensions are always 12 or less:
 
 .. testcode:: small-number-wrapper
 
@@ -795,10 +797,11 @@ that's implemented by the ``TwelveOrLess`` property wrapper:
 The ``height`` and ``width`` properties get their initial values
 from the definition of ``TwelveOrLess``,
 which sets ``TwelveOrLess.number`` to zero.
-Storing the number 10 into ``rectangle.height`` succeeds
-because it's a small number.
-Trying to store 24 actually stores a value of 12 instead,
-because 24 is too large for the property setter's rule.
+The setter in ``TwelveOrLess`` treats 10 as a valid value
+so storing the number 10 in ``rectangle.height`` proceeds as written.
+However, 24 is larger than ``TwelveOrLess`` allows,
+so trying to store 24 end up setting ``rectangle.height``
+to 12 instead, the largest allowed value.
 
 When you apply a wrapper to a property,
 the compiler synthesizes code that provides storage for the wrapper
@@ -1085,12 +1088,8 @@ adjusted the new value for the property before storing that new value.
 
     -> @propertyWrapper
     -> struct SmallNumber {
-           private var number: Int
-           var projectedValue: Bool
-           init() {
-               self.number = 0
-               self.projectedValue = false
-           }
+           private var number = 0
+           var projectedValue = false
            var wrappedValue: Int {
                get { return number }
                set {
@@ -1116,11 +1115,6 @@ adjusted the new value for the property before storing that new value.
     -> someStructure.someNumber = 55
     -> print(someStructure.$someNumber)
     <- true
-
-.. FIXME It looks like a rule changed or is now being enforced
-   that causes the "private var number" line above
-   to make the systhesized initializer private,
-   which is a problem because the property wrapper is internal.
 
 Writing ``someStructure.$someNumber`` accesses the wrapper's projected value.
 After storing a small number like four,
@@ -1239,6 +1233,38 @@ and they're written in the same way as computed properties.
    global constants and variables don't need to be marked with the ``lazy`` modifier.
 
    Local constants and variables are never computed lazily.
+
+You can apply a property wrapper to a local stored variable,
+but not to a global variable or a computed variable.
+For example,
+in the code below, ``myNumber`` uses ``SmallNumber`` as a property wrapper.
+
+.. testcode:: property-wrapper-init
+
+    -> func someFunction() {
+           @SmallNumber var myNumber: Int = 0
+    ---
+           myNumber = 10
+           // now myNumber is 10
+    >>     print(myNumber)
+    ---
+           myNumber = 24
+           // now myNumber is 12
+    >>     print(myNumber)
+       }
+    ---
+    >> someFunction()
+    << 10
+    << 12
+
+Like when you apply ``SmallNumber`` to a property,
+setting the value of ``myNumber`` to 10 is valid.
+Because the property wrapper doesn't allow values higher than 12,
+it sets ``myNumber`` to 12 instead of 24.
+
+.. The discussion of local variables with property wrappers
+   has to come later, because we need to use init(wrappedValue:)
+   to work around <rdar://problem/74616133>.
 
 .. TODO: clarify what we mean by "global variables" here.
    According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
