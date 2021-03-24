@@ -65,6 +65,11 @@ Defining and Calling Asynchronous Functions
            return 10 + time
        }
 
+.. FIXME Actually sleeping like this is super annoying when running swifttest
+   because most of the time spent waiting for the test te pass/fail
+   is actually just spent waiting for sleep() to return.
+   Pick a different example or fake out the sleep() call.
+
 ◊ Outline ◊
 
 - only async code can call async functions, including
@@ -110,6 +115,7 @@ Calling Asynchronous Functions Without Blocking
     -> let total = await x + y
     -> print(total)
     >> }
+    << 26
 
 .. _Concurrency_Tasks:
 
@@ -134,6 +140,8 @@ that can be run asynchronously as part of your program.
     + QUESTION: What relationships can the tasks in group have to each other?
 - task have deadlines, not timeouts -- eg "now + 20 ms" --
   a deadline is usually what you want anyhow when you think of a timeout
+- this chapter introduces the core ways you use tasks;
+  for the full list what you can do, see the Task API reference [link to stdlib]
 
 ::
 
@@ -241,7 +249,7 @@ Task Cancellation
 
 ◊ Outline ◊
 
-- The cancelation model is "cooperative" -- each task checks whether it was canceled
+- The cancellation model is "cooperative" -- each task checks whether it was canceled
 - conventionally, you call ``Task.checkCancellation()``
   which throws ``CancellationError`` if the task has been canceled
 - You can check manually via ``Task.isCancelled``,
