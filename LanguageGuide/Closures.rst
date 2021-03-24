@@ -232,9 +232,11 @@ which can be used to refer to the values of the closure's arguments
 by the names ``$0``, ``$1``, ``$2``, and so on.
 
 If you use these shorthand argument names within your closure expression,
-you can omit the closure's argument list from its definition,
-and the number and type of the shorthand argument names
-will be inferred from the expected function type.
+you can omit the closure's argument list from its definition.
+The type of the shorthand argument names
+is inferred from the expected function type,
+and the highest numbered shorthand argument you use
+determines the number of arguments that the closure takes.
 The ``in`` keyword can also be omitted,
 because the closure expression is made up entirely of its body:
 
@@ -244,6 +246,21 @@ because the closure expression is made up entirely of its body:
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` arguments.
+Because ``$1`` is the shorthand argument with highest number,
+the closure is understood to take two arguments.
+Because the ``sorted(by:)`` function here expects a closure
+whose arguments are both strings,
+the shorthand arguments ``$0`` and ``$1`` are both of type ``String``.
+
+.. assertion:: closure-syntax-arity-inference
+
+   >> let a: [String: String] = [:]
+   >> var b: [String: String] = [:]
+   >> b.merge(a, uniquingKeysWith: { $1 })
+   >> b.merge(a, uniquingKeysWith: { $0 })
+   !$ error: contextual closure type '(String, String) throws -> String' expects 2 arguments, but 1 was used in closure body
+   !! b.merge(a, uniquingKeysWith: { $0 })
+   !! ^
 
 .. _Closures_OperatorFunctions:
 
