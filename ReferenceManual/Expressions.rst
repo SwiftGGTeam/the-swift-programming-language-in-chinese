@@ -177,7 +177,7 @@ such as the body of an ``async`` function.
 It can't appear in the body of a ``defer`` statement,
 or in an autoclosure of non-asynchronous function type.
 
-◊ revisit autoclosure bit above -- can I make that a natural consequence
+◊ revisit autoclosure bit above --- can I make that a natural consequence
 ◊ of how I describe the rules around async and closures?
 
 ◊ execution of the current task pauses until the asynchronous operation completes
