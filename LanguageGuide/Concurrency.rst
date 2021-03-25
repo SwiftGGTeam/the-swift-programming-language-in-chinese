@@ -508,6 +508,20 @@ Actor Isolation
 - method calls from outside the actor are always async,
   as is reading the value of an actor's property
 
+- the values you pass to a method call from outside of an actor
+  have to be sendable (conform to the ``Sendable`` marker protocol)
+
+  + structs and enums implicitly conform to ``Sendable``
+    if they're non-public, non-frozen,
+    and all of their properties are also ``Sendable``
+
+  + all actors are implicitly sendable
+
+  + everything else needs to be marked ``Sendable`` explicitly
+
+  + the only valid superclass for a sendable class is ``NSObject``
+    (allowed for Obj-C interop)
+
 - you can't write to a property directly from outside the actor
 
 ◊ TODO: Either define "data race" or use a different term;
