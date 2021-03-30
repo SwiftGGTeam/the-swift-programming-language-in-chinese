@@ -1252,7 +1252,6 @@ in the code below, ``myNumber`` uses ``SmallNumber`` as a property wrapper.
            // now myNumber is 12
     >>     print(myNumber)
        }
-    ---
     >> someFunction()
     << 10
     << 12
