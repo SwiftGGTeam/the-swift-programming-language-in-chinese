@@ -1006,7 +1006,38 @@ For example:
 
     Grammar of a implicit member expression
 
-    implicit-member-expression --> ``.`` identifier
+    implicit-member-expression --> ``.`` identifier postfix-expression-OPT
+
+.. The grammar above allows the additional pieces tested below,
+   which work even though they're omitted from the SE-0287 list.
+   The grammar also overproduces, allowing any primary expression
+   because of the definition of postfix-expression.
+
+.. assertion:: implicit-member-grammar
+
+    // self expression
+    >> enum E { case left, right }
+    >> let e: E = .left
+    >> let e2: E = .left.self
+    >> assert(e == e2)
+    ---
+    // postfix operator
+    >> postfix operator ~
+    >> extension E {
+    >>     static postfix func ~ (e: E) -> E {
+    >>         if e == .left { return .right }
+    >>         else { return .left }
+    >>     }
+    >> }
+    >> let e3: E = .left~
+    >> assert(e3 == .right)
+    ---
+    // initializer expression
+    >> class S {
+    >>     var num: Int
+    >>     init(bestNumber: Int) { self.num = bestNumber }
+    >> }
+    >> let s: S = .init(bestNumber: 42)
 
 
 .. _Expressions_ParenthesizedExpression:
