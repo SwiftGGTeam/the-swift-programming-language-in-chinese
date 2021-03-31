@@ -274,7 +274,7 @@ When there are too many alternatives
 to fit on a single line, use a new line for each alternative.
 Don't mix pipes and newlines.
 
-For example, to specify that a *case-block-item* can consist of a *declaration,
+For example, to specify that a *case-block-item* can consist of a *declaration*,
 *expression*, or a *statement*, you can use a pipe instead of a new line,
 because all three alternatives fit nicely on one line:
 
@@ -297,7 +297,7 @@ Within a syntax-grammar block,
 this is translated to a subscript “opt” automatically.
 
 **Use plural names for repetition.**
-In BNF, this is represented with a plus (`+`) or (`*`).
+In BNF, this is represented with a plus (`+`) or star (`*`).
 The syntax of our formal grammar doesn't include repetition operators,
 so we use two syntactic categories to allow repetition.
 For example:
