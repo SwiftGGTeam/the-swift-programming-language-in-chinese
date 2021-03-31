@@ -1,6 +1,43 @@
 Concurrency
 ===========
 
+Swift has built-in support for both asynchronous and concurrent code.
+:newTerm:`Asynchronous code` can be suspended and resumed later,
+although only one piece of the program is executing at a time.
+Suspending and resuming code in your program
+lets it continue to make progress
+on short-term operations like updating its UI
+while it continues to work on long-running operations
+like fetching data over the network or parsing files.
+:newTerm:`Concurrent code` means multiple pieces of code run at a time ---
+for example, a computer with a four-core processor
+can run four pieces of code at the same time,
+with each core carrying out one of the four tasks.
+A program that uses concurrent and asynchronous code
+carries out multiple operations at a time,
+it suspends operations that are waiting for an external system,
+and does so in a memory-safe way.
+
+The additional scheduling flexibility from concurrent or asynchronous code
+also comes with a cost of increased complexity.
+The language features that Swift gives you
+let you express your intent in a way that Swift can verify when compiling,
+for example ◊FIXME◊
+However, adding concurrency to slow or buggy code
+isn't a guarantee that it will become fast or correct;
+it might even make it harder to debug.
+
+The rest of this chapter uses the term *concurrency*
+to refer to this common combination of asynchronous and concurrent code.
+
+.. note::
+
+   If you've written concurrent or asynchronous code before,
+   you might be used to working with threads.
+   The concurrency model in Swift
+   is built on top of the operating system's support for threads,
+   but you don't interact with threads directly.
+
 ◊ Outline ◊
 
 - why you would want async code?  common use cases include:
@@ -47,14 +84,6 @@ Concurrency
   + buggy or inefficient async code isn't necessarily any better than
     buggy or inefficient synchronous code,
     it might even be slower or harder to debug
-
-.. note::
-
-   If you've written concurrent or asynchronous code before,
-   you might be used to working with threads.
-   The concurrency model in Swift
-   is built on top of the operating system's support for threads,
-   but you don't interact with threads directly.
 
 .. _Concurrency_AsyncFunc:
 

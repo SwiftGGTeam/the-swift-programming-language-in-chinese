@@ -1186,6 +1186,7 @@ As a result, you can use a synchronous function
 in the same places as an asynchronous one.
 
 .. XXX overriding between sync and async
+   and how they tie in to protocol decls/conformance
 
 
 .. _Declarations_FunctionsThatNeverReturn:
