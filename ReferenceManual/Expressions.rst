@@ -1002,6 +1002,40 @@ For example:
     -> var x = MyEnumeration.someValue
     -> x = .anotherValue
 
+Implicit member expressions can be followed by
+a postfix operator or other postfix syntax listed in
+:ref:`Expressions_PostfixExpressions`.
+This is called a :newTerm:`chained implicit member expression`.
+In a chained implicit member expression,
+the type of the entire expression needs to be the same as
+the type implied by its context.
+Although it's common for all of the chained postfix expressions
+to have the same type,
+the only requirement is that the whole chained implicit member expression
+has the same type as the implied type.
+For example:
+
+.. testcode:: implicit-member-chain
+
+   -> struct SomeStruct {
+          static var shared = SomeStruct()
+          var a = AnotherStruct()
+      }
+   -> struct AnotherStruct {
+          static var s = SomeStruct()
+          func f() -> SomeStruct { return AnotherStruct.s }
+      }
+   -> let s: SomeStruct = .shared.a.f()
+
+.. XXX Discuss the special case around optionals
+   From the SE prposal:
+   if T is an optional type R? for some type R,
+   we maintain the existing rule that
+   lookup of member1 in an implicit base
+   will proceed in both R? and R
+   (which allows the milkyChance example above to compile).
+
+
 .. syntax-grammar::
 
     Grammar of a implicit member expression
