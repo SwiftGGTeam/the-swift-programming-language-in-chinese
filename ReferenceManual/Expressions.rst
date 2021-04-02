@@ -1039,7 +1039,8 @@ For example:
 
     Grammar of a implicit member expression
 
-    implicit-member-expression --> ``.`` identifier postfix-expression-OPT
+    implicit-member-expression --> ``.`` identifier
+    implicit-member-expression --> ``.`` identifier ``.`` postfix-expression
 
 .. The grammar above allows the additional pieces tested below,
    which work even though they're omitted from the SE-0287 list.
