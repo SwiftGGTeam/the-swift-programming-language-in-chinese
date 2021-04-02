@@ -1002,6 +1002,14 @@ For example:
     -> var x = MyEnumeration.someValue
     -> x = .anotherValue
 
+If the inferred type is an optional type,
+you can also use a member of the non-optional type
+in an implicit member expression.
+
+.. testcode:: implicitMemberEnum
+
+    -> var someOptional: MyEnumeration? = .someValue
+
 Implicit member expressions can be followed by
 a postfix operator or other postfix syntax listed in
 :ref:`Expressions_PostfixExpressions`.
@@ -1026,15 +1034,6 @@ For example:
           func f() -> SomeStruct { return AnotherStruct.s }
       }
    -> let s: SomeStruct = .shared.a.f()
-
-.. XXX Discuss the special case around optionals
-   From the SE prposal:
-   if T is an optional type R? for some type R,
-   we maintain the existing rule that
-   lookup of member1 in an implicit base
-   will proceed in both R? and R
-   (which allows the milkyChance example above to compile).
-
 
 .. syntax-grammar::
 
