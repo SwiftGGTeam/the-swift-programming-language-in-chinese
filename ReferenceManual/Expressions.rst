@@ -1015,7 +1015,7 @@ a postfix operator or other postfix syntax listed in
 :ref:`Expressions_PostfixExpressions`.
 This is called a :newTerm:`chained implicit member expression`.
 In a chained implicit member expression,
-the type of the entire expression needs to be the same as
+the type of the entire expression needs to be convertible to
 the type implied by its context.
 Although it's common for all of the chained postfix expressions
 to have the same type,
@@ -1059,8 +1059,10 @@ For example:
     >> postfix operator ~
     >> extension E {
     >>     static postfix func ~ (e: E) -> E {
-    >>         if e == .left { return .right }
-    >>         else { return .left }
+    >>         switch e {
+    >>         case .left: return .right
+    >>         case .right: return .left
+    >>         }
     >>     }
     >> }
     >> let e3: E = .left~
