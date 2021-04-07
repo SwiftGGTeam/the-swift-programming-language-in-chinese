@@ -1014,13 +1014,10 @@ Implicit member expressions can be followed by
 a postfix operator or other postfix syntax listed in
 :ref:`Expressions_PostfixExpressions`.
 This is called a :newTerm:`chained implicit member expression`.
-In a chained implicit member expression,
-the type of the entire expression needs to be convertible to
-the type implied by its context.
 Although it's common for all of the chained postfix expressions
 to have the same type,
 the only requirement is that the whole chained implicit member expression
-has the same type as the implied type.
+needs to be convertible to the type implied by its context.
 For example:
 
 .. testcode:: implicit-member-chain
