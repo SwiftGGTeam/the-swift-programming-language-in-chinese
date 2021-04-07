@@ -1002,7 +1002,7 @@ For example:
     -> var x = MyEnumeration.someValue
     -> x = .anotherValue
 
-If the inferred type is an optional type,
+If the inferred type is an optional,
 you can also use a member of the non-optional type
 in an implicit member expression.
 
