@@ -1018,19 +1018,33 @@ Although it's common for all of the chained postfix expressions
 to have the same type,
 the only requirement is that the whole chained implicit member expression
 needs to be convertible to the type implied by its context.
+Specifically,
+if the implied type is an optional
+you can use a value of the non-optional type,
+and if the implied type is a class type
+you can use a value of one of its subclasses.
 For example:
 
 .. testcode:: implicit-member-chain
 
-   -> struct SomeStruct {
-          static var shared = SomeStruct()
-          var a = AnotherStruct()
+   -> class SomeClass {
+          static var shared = SomeClass()
+          static var sharedSubclass = SomeSubclass()
+          var a = AnotherClass()
       }
-   -> struct AnotherStruct {
-          static var s = SomeStruct()
-          func f() -> SomeStruct { return AnotherStruct.s }
+   -> class SomeSubclass: SomeClass { }
+   -> class AnotherClass {
+          static var s = SomeClass()
+          func f() -> SomeClass { return AnotherClass.s }
       }
-   -> let s: SomeStruct = .shared.a.f()
+   -> let x: SomeClass = .shared.a.f()
+   -> let y: SomeClass? = .shared
+   -> let z: SomeClass = .sharedSubclass
+
+In the code above,
+the type of ``x`` matches the type implied by its context exactly,
+the type of ``y`` is convertible from ``SomeClass`` to ``SomeClass?``,
+and the type of ``z`` is convertible from ``SomeSubclass`` to ``SomeClass``.
 
 .. syntax-grammar::
 
