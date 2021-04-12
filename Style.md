@@ -1,5 +1,10 @@
 # Terms and Rules
 
+## at a time; at the same time
+
+Prefer "simultaneously" when discussing Swift concurrency.
+For example, "multiple pieces of your code can run simultaneously".
+
 ## compiler, the
 
 See entry for *Swift*.
@@ -65,6 +70,12 @@ In this case, passive voice is clearer than active
 because there isn't a clear agent performing the understanding
 and the identity of that agent is irrelevant.
 
+## potential suspension point
+
+This is the preferred wording when describing the semantics of `await`.
+If context has already made that clear and repeating “potential” becomes wordy,
+you can shorten it to just “suspension point”.
+
 ## punctuation before a code listing
 
 Write a colon after a sentence that ends with a phrase like
@@ -97,6 +108,17 @@ with the exception of phrases like “a run-time error” and “a runtime error
 which refer respectively to
 an error that occurs while running the code
 and an error that comes from or is related to the Swift runtime environment.
+
+## shared mutable state
+
+Avoid when describing actors.
+By design, actors specifically *avoid* having shared mutable state —
+their mutable state is private,
+and accessible only through the actor's (async) methods.
+
+## suspension point
+
+See entry for *potential suspension point*.
 
 ## syntax outline
 
