@@ -128,36 +128,45 @@ and then adding it to the list of levels
 .. testcode:: defining-async-function
     :compile: true
 
+    >> struct Data {}  // Instead of actually importing Foundation
     // Reads a shared gallery from the server and returns a list
     // of the names of pictures in that gallery.
-    func listPhotos(inGallery name: String) async -> [String] {
-        // ...
-        return ["IMG001", "IMG99"]
-    }
+    -> func listPhotos(inGallery name: String) async -> [String] {
+           // ...
+    >>     return ["IMG001", "IMG99", "IMG0404"]
+       }
     // Downloads and returns the given picture.
-    func downloadPhoto(named name: String) async -> Data {
-        // ...
-        return Data()
-    }
-    // Displays the given pictures on the user's screen.
-    func show(_ images: Data) {
-        // ...
-    }
-
-    let photoNames = await listPhotos(inGallery: "Summer Vacation")
-    let photo = downloadPhoto(named: photoNames[0])
-    show(photos)
+    -> func downloadPhoto(named name: String) async -> Data {
+           // ...
+    >>     return Data()
+       }
+    // Displays the given picture on the user's screen.
+    -> func show(_ image: Data) {
+           // ...
+       }
+    ---
+    >> runAsyncAndBlock {
+    -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    -> let photo = await downloadPhoto(named: photoNames[0])
+    -> show(photo)
+    >> }
 
 The callback-based version of the code above would like the following:
 
 .. testcode:: defining-async-function
     :compile: true
 
-    listPhotos(inGallery: "Summer Vacation") { photoNames in
-        downloadPhoto(named: photoNames[0]) { photo in
-            show(photos)
-        }
-    }
+    >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
+    >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
+    >> }
+    >> func downloadPhoto(named name: String, completionHandler: (Data) -> Void) {
+    >>     completionHandler(Data())
+    >> }
+    -> listPhotos(inGallery: "Summer Vacation") { photoNames in
+           downloadPhoto(named: photoNames[0]) { photo in
+               show(photo)
+           }
+       }
 
 The behavior is the same,
 but the ``await`` version in much easier to read and reason about.
@@ -201,6 +210,9 @@ is to use ``async``-``let`` as shown below:
 .. testcode:: defining-async-function
     :compile: true
 
+    -> func show(_ images: [Data]) {
+           // ...
+       }
     >> runAsyncAndBlock {
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
     ---
@@ -210,6 +222,7 @@ is to use ``async``-``let`` as shown below:
     ---
     -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
     -> show(photos)
+    >> }
 
 In the example above,
 writing ``await`` before the call to ``listPhotos(inGallery:)``
