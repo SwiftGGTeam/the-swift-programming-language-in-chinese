@@ -1171,8 +1171,6 @@ have the following form:
 
    !!true doesn't work but !(!true) does -- this matches normal expressions
    #if can be nested, as expected
-   let's not explicitly document the broken precedence between && and ||
-       <rdar://problem/21692106> #if evaluates boolean operators without precedence
 
    Also, the body of a conditional compilation block contains *zero* or more statements.
    Thus, this is allowed:
