@@ -90,40 +90,48 @@ to refer to this common combination of asynchronous and concurrent code.
 Defining and Calling Asynchronous Functions
 -------------------------------------------
 
-◊ Outline ◊
+.. XXX Since free functions seem to be less common in app code,
+   maybe we should call these "async methods" throughout the guide
+   and just mention that you can also use async on free functions?
 
-- you mark a function as asynchronous by putting ``async`` next to the arrow,
-  like how you write ``throwing`` for a function that can throw an error
+To indicate that a function or method is asynchronous,
+you write the ``async`` keyword in its declaration after its parameters.
+If the function or method returns a value,
+you write ``async`` before the return arrow (``->``).
+For an asynchronous throwing functions,
+you write ``async`` before ``throws``.
 
-- ``sleep()`` does nothing, but takes the specified amount of time do do so,
-  which makes it a useful function for writing simple asynchronous code
-  to understand the language features
+.. assertion:: async-comes-before-throws
 
-- QUESTION: What would you need to import to use ``sleep`` on Linux?
+    -> func someAsyncFunction() async -> Int {
+          // ...
+    >>    return 12
+       }
+    ---
+    -> func someAsyncThrowingFunction() async throws -> Int {
+          // ...
+    >>    return 12
+       }
+    >> func wrong() throws async -> Int { return 12 }
+    !$ error: 'async' must precede 'throws'
+    !! func wrong() throws async -> Int { return 12 }
+    !! ^~~~~~
+    !! async
 
-- only async code can call async functions, including
+When calling an asynchronous method,
+execution is can be suspended until that method returns.
+To mark the possible suspension point,
+you write ``await`` in front of the function call.
+This is like how you write ``try`` when calling a throwing function,
+to mark the possible change to the program's flow if there's an error.
+Inside an asynchronous method,
+the flow of execution is suspended *only* when you call another asynchronous method ---
+execution is never suspended implicitly or preemptively ---
+which means every possible suspension point is marked with ``await``.
 
-  + top-level code
-
-  + code marked ``@main``
-
-  + non-async code wrapped in ``runAsyncAndBlock``
-
-  + TR: I see ``runAsyncAndBlock`` marked deprecated now;
-    what do we want people to use instead?
-
-- you mark a call to an async function with ``await``
-
-- this is like ``try`` when calling a throwing function
-
-- it reminds you when reading the code that the program can stop here
-  and go do something else while waiting for the function to return
-
-- likewise, you know that when there's no ``await`` there's no suspension point
-
-◊ code narrative: downloading a level's definition from the server,
-parsing it in the background because that can be slow,
-and then adding it to the list of levels
+For example,
+here's how a photo gallery could download a picture
+and update its UI to show the picture when it's ready:
 
 .. testcode:: defining-async-function
     :compile: true
@@ -151,6 +159,20 @@ and then adding it to the list of levels
     -> show(photo)
     >> }
 
+Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` methods
+both need to make network requests,
+they could take a relatively long time to complete.
+Making them both asynchronous by writing ``async`` before the return arrow
+lets the rest of the app's code keep running
+while this code waits for the picture to be ready.
+Looking at the last three lines,
+first the app waits for a list of photo names,
+then it waits for the image data for the first photo,
+and finally it displays the photo.
+
+
+
+
 The callback-based version of the code above would like the following:
 
 .. testcode:: defining-async-function
@@ -173,6 +195,42 @@ but the ``await`` version in much easier to read and reason about.
 
 ◊TODO: Revise the discussion in the Closures chapter
 where we currently talk about completion handlers.
+
+
+
+◊ Outline ◊
+
+- you mark a function as asynchronous by putting ``async`` next to the arrow,
+  like how you write ``throwing`` for a function that can throw an error
+
+- ``Task.sleep()`` does nothing, but takes the specified amount of time do do so,
+  which makes it a useful function for writing simple asynchronous code
+  to understand the language features
+  (not to be confused with Darwin's ``sleep``)
+
+- only async code can call async functions, including
+
+  + top-level code
+
+  + code marked ``@main``
+
+  + non-async code wrapped in ``runAsyncAndBlock``
+
+  + TR: I see ``runAsyncAndBlock`` marked deprecated now;
+    what do we want people to use instead?
+
+- you mark a call to an async function with ``await``
+
+- this is like ``try`` when calling a throwing function
+
+- it reminds you when reading the code that the program can stop here
+  and go do something else while waiting for the function to return
+
+- likewise, you know that when there's no ``await`` there's no suspension point
+
+◊ code narrative: downloading a level's definition from the server,
+parsing it in the background because that can be slow,
+and then adding it to the list of levels
 
 ◊TODO: Maybe talk about AsyncSequence here?
 
