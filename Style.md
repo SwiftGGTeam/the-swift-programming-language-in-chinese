@@ -116,6 +116,11 @@ By design, actors specifically *avoid* having shared mutable state —
 their mutable state is private,
 and accessible only through the actor's (async) methods.
 
+## spawn, start
+
+Use “spawn” to refer to creating a new task,
+to match the API symbol name.
+
 ## suspension point
 
 See entry for *potential suspension point*.

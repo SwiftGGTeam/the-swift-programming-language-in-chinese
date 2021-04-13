@@ -11,7 +11,7 @@ while it continues to work on long-running operations
 like fetching data over the network or parsing files.
 :newTerm:`Concurrent code` means multiple pieces of code run at a time ---
 for example, a computer with a four-core processor
-can run four pieces of code at the same time,
+can run four pieces of code simultaneously,
 with each core carrying out one of the four tasks.
 A program that uses concurrent and asynchronous code
 carries out multiple operations at a time,
@@ -55,7 +55,7 @@ to refer to this common combination of asynchronous and concurrent code.
 
   + they're commonly used together --- but one doesn't imply the other
 
-  + eg, a 4 core CPU can run four synchronous jobs at the same time
+  + eg, a 4 core CPU can run four synchronous jobs simultaneously
     and a one core CPU can round-robin between several asynchronous jobs
     without any concurrency
 
@@ -251,11 +251,11 @@ Calling Asynchronous Functions Without Waiting
 ◊ Outline ◊
 
 - calls an async function, but then continues on rather than waiting
-- you can us async-let multiple times, and that work can run at the same time
+- you can us async-let multiple times, and that work can run simultaneously
 - when you need to use the return value, then you ``await``
 - show a couple async-let use cases... a depends on b depends on c, but also
   a depends on b & c & d together
-- behind the scenes, async-let is implicitly creating a Task
+- behind the scenes, async-let is implicitly creating a child Task
 
 Calling an asynchronous function with ``await``
 runs only one piece of code at a time.
@@ -285,10 +285,10 @@ is to use ``async``-``let`` as shown below:
 In the example above,
 writing ``await`` before the call to ``listPhotos(inGallery:)``
 makes the function suspend there, as before.
-However, the next three lines can run at the same time ---
+However, the next three lines can run simultaneously ---
 loading the first, second, and third photo by calling ``downloadPhoto(named:)``
 like this with ``async``-``let`` marks this as nonblocking asynchronous code.
-All three function calls could happen at the same time
+All three function calls could happen simultaneously
 if there are enough system resources available.
 It's not until the next ``await``,
 when the results of those asynchronous interactions with the server are needed
@@ -310,25 +310,30 @@ that can be run asynchronously as part of your program.
 
 - async-let lets you implicitly create tasks that have dependencies;
   if you need to create tasks dynamically or with extra options
-  
   you use the ``Task`` APIs directly
+  
 - other reasons to use the API include setting:
 
-    + cancellation
+    + cancellation (``Task.isCancelled``)
     + timeouts
-    + priority
+    + priority (``Task.currentPriority``)
 
 - task group models a hierarchy or collection of tasks
 
-    + QUESTION: What relationships can the tasks in group have to each other?
-      Is there anything other than parent/child?
+- the only relationship between tasks is parent/child;
+  "siblings" don't have any connection
 
 - task have deadlines, not timeouts --- like "now + 20 ms" ---
   a deadline is usually what you want anyhow when you think of a timeout
 
 - this chapter introduces the core ways you use tasks;
   for the full list what you can do,
+  including the unsafe escape hatches
+  and ``Task.current()`` for advanced use cases,
   see the Task API reference [link to stdlib]
+
+- task cancellation isn't part of the state diagram below;
+  it's an independent property that can happen in any state
 
 ::
 
@@ -373,32 +378,26 @@ TODO: Custom executor, default executor
        v
     Completed
 
-TR: Is "canceled" a different state from "completed"?
-Or is cancellation just a kind of completion?
-
-TODO: Add discussion of "the current task"
-like ``Task.current()`` and ``Task.unsafeCurrent``?
-
-
 .. _Concurrency_ChildTasks:
 
 Adding Child Tasks to a Task Group
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Creating a group with ``Task.withGroup``
+- Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
 
 - awaiting ``withGroup`` means waiting for all child tasks to complete
 
-- Adding a child with ``Task.Group.add``
+- a child task can't outlive its parent,
+  like how ``async``-``let`` can't outlive the (implicit) parent
+  which is the function scope
 
-- awaiting ``add`` means waiting for that child task to be added
+- Adding a child with ``Task.Group.spawn``
 
-- TR: Or is the await waiting for the child task to *finish*?
+- awaiting ``add`` means waiting for that child task to be added,
+  not waiting for that child task to finish
 
 - ?? maybe cover ``Task.Group.next``
-
-- ``Task.runDetached`` is like ``withGroup``,
-  except it doesn't wait for the task or its children to finish
+  probably nicer to use the ``for await result in someGroup`` syntax
 
 ◊ quote from the SE proposal --- I want to include this fact here too
 
@@ -419,8 +418,9 @@ Setting Task Priority
 
 - priority values defined by ``Task.Priority`` enum
 
-- TR: Why do we have both ``Task.priority`` and ``Task.currentPriority``?
-  What's the difference in the use case between them?
+- instance property ``Task.priority``
+  and type property ``Task.currentPriority``
+  (the latter is easier to use in most cases)
 
 - The exact result of setting a task's priority depends on the executor
 
@@ -430,6 +430,7 @@ Setting Task Priority
 
 - If a high-priority task is waiting for a low-priority one,
   the low-priority one gets scheduled at high priority
+  (this is known as :newTerm:`priority escalation`)
 
 - In addition, or instead of, setting a low priority,
   you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
@@ -438,17 +439,19 @@ Setting Task Priority
 
 .. _Concurrency_TaskHandle:
 
-Getting the Result of a Task
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Detached Tasks
+~~~~~~~~~~~~~~
 
 ◊ Outline ◊
 
-- when you start a task, a :newTerm:`task handle`
-  lets you keep a reference to it
+- ``Task.runDetached`` makes a new task with no parent,
+  which means that child task can run indefinitely
+
+- you use a :newTerm:`task handle` to interact with it
 
 - ``Task.Handle``
 
-- To get the result of the task, ``await someTaskHandle.get()``
+- To get the result of the detached task, ``await someTaskHandle.get()``
 
 
 .. _Concurrency_TaskCancellation:
@@ -475,8 +478,7 @@ Task Cancellation
 - Use ``Task.withCancellationHandler`` to specify a closure to run
   if the task is canceled
   along with a closure that defines the task's work
-
-- TR: Does ``withCancellationHandler`` throw like ``checkCancellation`` does?
+  (it doesn't throw like ``checkCancellation`` does)
 
 
 .. _Concurrency_Actors:
@@ -511,11 +513,10 @@ Actors
 - Some code elsewhere is already doing the over-the-network or over-USB bits
 
 ◊ define an actor and a helper function
-◊ TODO: Rename this --- it's not really a "logger"... more of a history?
 
 ::
 
-    actor TemperatureLogger {
+    actor TemperatureSensor {
         let label: String
         let units: String
         var measurements: [Int]
@@ -547,7 +548,7 @@ Actors
 
 ::
 
-    extension TemperatureLogger {
+    extension TemperatureSensor {
         func update(with line: String) {
             let (measurement, units) = parse(line: line)
             assert(units == self.units)
@@ -572,12 +573,12 @@ the ``update(with:)``, ``getMax()``, and ``reset()`` function
 can access the properties of the actor.
 However, if you try to access those properties from outside the actor,
 like you would with an instance of a class,
-you'll get an error.
+you'll get a compile-time error.
 For example:
 
 ::
 
-    var logger = TemperatureLogger(lines: [
+    var logger = TemperatureSensor(lines: [
         "Outdoor air temperature",
         "25 C",
         "24 C",
@@ -627,6 +628,9 @@ Actor Isolation
 ◊ TODO: Either define "data race" or use a different term;
 the chapter on exclusive ownership talks about "conflicting access",
 which is related, but different.
+Konrad defines "data race" as concurrent access to shared state,
+noting that our current design doesn't prevent all race conditions
+because suspension points allow for interleaving.
 
 - The same actor method can be called multiple times, overlapping itself.
   This is sometimes referred to as *reentrant code*.
@@ -646,7 +650,7 @@ which is related, but different.
 ::
 
     runAsyncAndBlock {
-        let logger = TemperatureLogger(lines: [
+        let logger = TemperatureSensor(lines: [
             "Outdoor air temperature",
             "25 C",
             "24 C",
@@ -660,8 +664,8 @@ which is related, but different.
 
 .. _Concurrency_Sendable:
 
-Sharing Data Across Actors
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sending Data Between Actors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 TODO: Fill this in from SE-0302
 
