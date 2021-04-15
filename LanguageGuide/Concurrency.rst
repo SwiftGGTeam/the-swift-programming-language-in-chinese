@@ -232,15 +232,72 @@ where we currently talk about completion handlers.
 parsing it in the background because that can be slow,
 and then adding it to the list of levels
 
-◊TODO: Maybe talk about AsyncSequence here?
 
-- async for loops --- loop over a bunch of values
-- that are being generated asynchronously.
-- handle them one at a time, instead of waiting for the whole thing:
+.. _Concurrency_AsyncSequence:
 
-::
+Asynchronous Sequences
+----------------------
 
-   for try await photoName in listPhotos(inGallery...) { }
+◊ Outline ◊
+
+- the async function in the previous section
+  returned its whole result asynchronously
+
+- another way a function can be async is to return a collection/sequence
+  one item at a time, as that element becomes available
+
+- to do this, return ``AsyncSequence``
+  which mostly acts like a vanilla ``Sequence`` but async-ified
+
+- to make an async sequence,
+  define a type that includes a nested ``AsyncIterator`` type
+
+- in the iterator, define a ``next()`` method
+  that returns one element and updates the iterator's state
+
+- ◊TR: It doesn't look like there's an easy way to make an async sequence.
+  You have to make your own container/iterator type
+
+- TODO: check for overlap with ``AsyncSequence`` reference
+
+.. testcode:: defining-async-function
+
+    -> struct Photos: AsyncSequence {
+           let names: [String]
+           func makeAsyncIterator() -> AsyncIterator {
+               return AsyncIterator(names)
+           }
+           typealias Element = Data
+           struct AsyncIterator: AsyncIteratorProtocol {
+    >>         // Not using the syntactic sugar for [String]
+    >>         // because [String].Index doesn't work.
+               private let names: Array<String>
+               private var index: Array<String>.Index
+               init(_ names: [String]) {
+                   self.names = names
+                   self.index = 0
+               }
+               mutating func next() async -> Data? {
+                   guard index < names.endIndex else { return nil }
+                   index += 1
+                   return await downloadPhoto(named: names[index])
+               }
+           }
+       }
+
+- use ``for``-``await`` to handle the elements one at a time,
+  instead of waiting for the whole thing:
+
+.. testcode:: defining-async-function
+    >> runAsyncAndBlock {
+    !$ warning: 'runAsyncAndBlock' is deprecated
+    !! runAsyncAndBlock {
+    !! ^
+    -> let names = await listPhotos(inGallery: "Winter Vacation")
+    -> for await photo in Photos(names: names) {
+           show(photo)
+       }
+    >> }
    
 
 .. _Concurrency_AsyncLet:
