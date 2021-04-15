@@ -134,7 +134,6 @@ here's how a photo gallery could download a picture
 and update its UI to show the picture when it's ready:
 
 .. testcode:: defining-async-function
-    :compile: true
 
     >> struct Data {}  // Instead of actually importing Foundation
     // Reads a shared gallery from the server and returns a list
@@ -154,6 +153,9 @@ and update its UI to show the picture when it's ready:
        }
     ---
     >> runAsyncAndBlock {
+    !$ warning: 'runAsyncAndBlock' is deprecated
+    !! runAsyncAndBlock {
+    !! ^
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
     -> let photo = await downloadPhoto(named: photoNames[0])
     -> show(photo)
@@ -176,7 +178,6 @@ and finally it displays the photo.
 The callback-based version of the code above would like the following:
 
 .. testcode:: defining-async-function
-    :compile: true
 
     >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
     >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
@@ -323,12 +324,14 @@ One way to call an asynchronous function without waiting
 is to use ``async``-``let`` as shown below:
 
 .. testcode:: defining-async-function
-    :compile: true
 
     -> func show(_ images: [Data]) {
            // ...
        }
     >> runAsyncAndBlock {
+    !$ warning: 'runAsyncAndBlock' is deprecated
+    !! runAsyncAndBlock {
+    !! ^
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
     ---
     -> async let firstPhoto = downloadPhoto(named: photoNames[0])
