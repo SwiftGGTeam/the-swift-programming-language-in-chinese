@@ -1,7 +1,7 @@
 Concurrency
 ===========
 
-Swift has built-in support for both asynchronous and concurrent code.
+Swift has built-in support for both asynchronous and parallel code.
 :newTerm:`Asynchronous code` can be suspended and resumed later,
 although only one piece of the program is executing at a time.
 Suspending and resuming code in your program
@@ -22,7 +22,7 @@ The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
 The language features that Swift gives you
 let you express your intent in a way that Swift can verify when compiling,
-for example ◊FIXME◊
+for example actors let you safely share mutable state.
 However, adding concurrency to slow or buggy code
 isn't a guarantee that it will become fast or correct;
 it might even make it harder to debug.
@@ -32,58 +32,12 @@ to refer to this common combination of asynchronous and parallel code.
 
 .. note::
 
-   If you've written concurrent or asynchronous code before,
+   If you've written parallel or asynchronous code before,
    you might be used to working with threads.
    The concurrency model in Swift
    is built on top of the operating system's support for threads,
    but you don't interact with threads directly.
 
-◊ Outline ◊
-
-- why you would want async code?  common use cases include:
-
-  + network operations
-  + long running model-layer calculations
-  + parsing files
-  + don't block the UI!
-
-- the difference between async and concurrency
-
-  + The execution of :newTerm:`asynchronous code` can be suspended and resumed later
-
-  + :newTerm:`Concurrent code` means multiple pieces of code run at a time
-
-  + they're commonly used together --- but one doesn't imply the other
-
-  + eg, a 4 core CPU can run four synchronous jobs simultaneously
-    and a one core CPU can round-robin between several asynchronous jobs
-    without any concurrency
-
-  + in order for concurrency to happen,
-    you have to be waiting for something to finish
-    and be able to work on something else in the mean time
-
-- Swift has built-in support for asynchronous code,
-  and for running async code concurrently
-
-- when not to use async code (async isn't magic)
-
-  + because Swift has language level support for concurrency,
-    the language can help you make & keep certain promises
-
-  + for example, actors let you safely share mutable state
-
-  + however, even with that help, writing and debugging async code
-    is more complex than doing the same thing synchronously
-    because there are more "moving parts" to consider
-
-  + if the problem is that your code is slow,
-    profile it first to understand *why* it's slow,
-    just like you'd do for any other performance bug
-
-  + buggy or inefficient async code isn't necessarily any better than
-    buggy or inefficient synchronous code,
-    it might even be slower or harder to debug
 
 .. _Concurrency_AsyncFunc:
 
@@ -95,7 +49,8 @@ Defining and Calling Asynchronous Functions
    and just mention that you can also use async on free functions?
 
 To indicate that a function or method is asynchronous,
-you write the ``async`` keyword in its declaration after its parameters.
+you write the ``async`` keyword in its declaration after its parameters,
+similar to how you use ``throws`` to mark a throwing function.
 If the function or method returns a value,
 you write ``async`` before the return arrow (``->``).
 For an asynchronous throwing functions,
@@ -126,7 +81,7 @@ This is like how you write ``try`` when calling a throwing function,
 to mark the possible change to the program's flow if there's an error.
 Inside an asynchronous method,
 the flow of execution is suspended *only* when you call another asynchronous method ---
-execution is never suspended implicitly or preemptively ---
+suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with ``await``.
 
 For example,
@@ -172,10 +127,31 @@ first the app waits for a list of photo names,
 then it waits for the image data for the first photo,
 and finally it displays the photo.
 
+.. XXX make Task.sleep() below a live link
 
+.. note::
 
+   The ``Task.sleep()`` method is useful when writing simple code
+   to learn how concurrency works.
+   This method does nothing,
+   but waits the given number of seconds before it returns.
+   Here's a version of the ``listPhotos(inGallery:)`` function
+   that uses ``sleep()`` to simulate waiting for a network operation:
 
-The callback-based version of the code above would like the following:
+   .. testcode:: sleep-in-toy-code
+
+       >> struct Data {}  // Instead of actually importing Foundation
+       >> @available(macOS 9999, *)  // XXX stdlib has placeholder availability
+       -> func listPhotos(inGallery name: String) async -> [String] {
+              await Task.sleep(2)
+              return ["IMG001", "IMG99", "IMG0404"]
+       }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+.. XXX segue goes here
+
+A callback-based version of the code above would like the following:
 
 .. testcode:: defining-async-function
 
@@ -200,14 +176,6 @@ where we currently talk about completion handlers.
 
 
 ◊ Outline ◊
-
-- you mark a function as asynchronous by putting ``async`` next to the arrow,
-  like how you write ``throwing`` for a function that can throw an error
-
-- ``Task.sleep()`` does nothing, but takes the specified amount of time do do so,
-  which makes it a useful function for writing simple asynchronous code
-  to understand the language features
-  (not to be confused with Darwin's ``sleep``)
 
 - only async code can call async functions, including
 
