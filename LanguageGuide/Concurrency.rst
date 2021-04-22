@@ -127,6 +127,40 @@ first the app waits for a list of photo names,
 then it waits for the image data for the first photo,
 and finally it displays the photo.
 
+In contrast, consider how you would have to write this code
+using functions that take a closure as completion handler
+to run after each operation completes:
+
+.. testcode:: defining-async-function
+
+    >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
+    >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
+    >> }
+    >> func downloadPhoto(named name: String, completionHandler: (Data) -> Void) {
+    >>     completionHandler(Data())
+    >> }
+    -> listPhotos(inGallery: "Summer Vacation") { photoNames in
+           downloadPhoto(named: photoNames[0]) { photo in
+               show(photo)
+           }
+       }
+
+In this simple case,
+the closures are a little harder to read,
+but it might be manageable.
+It's not hard to see how the callback-based version
+could quickly grow in complexity and become very difficult to understand.
+
+.. XXX add detail above about how the *compiler* can reason about
+   the async/await version better too
+   and give you better guarantees and clearer errors
+
+The behavior is the same,
+but the ``await`` version in much easier to read and reason about.
+
+◊TODO: Revise the discussion in the Closures chapter
+where we currently talk about completion handlers.
+
 .. XXX make Task.sleep() below a live link
 
 .. note::
@@ -149,57 +183,18 @@ and finally it displays the photo.
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-.. XXX segue goes here
+Because calling an asynchronous function
+adds a potential suspension point to your code,
+only certain places in your program can include such calls:
 
-A callback-based version of the code above would like the following:
+- Code in another asynchronous function or method.
 
-.. testcode:: defining-async-function
+- Code in the ``main()`` method of
+  a structure, class, or enumeration that's marked with ``@main``.
 
-    >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
-    >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
-    >> }
-    >> func downloadPhoto(named name: String, completionHandler: (Data) -> Void) {
-    >>     completionHandler(Data())
-    >> }
-    -> listPhotos(inGallery: "Summer Vacation") { photoNames in
-           downloadPhoto(named: photoNames[0]) { photo in
-               show(photo)
-           }
-       }
+- Code at the top level that makes up an implicit main function.
 
-The behavior is the same,
-but the ``await`` version in much easier to read and reason about.
-
-◊TODO: Revise the discussion in the Closures chapter
-where we currently talk about completion handlers.
-
-
-
-◊ Outline ◊
-
-- only async code can call async functions, including
-
-  + top-level code
-
-  + code marked ``@main``
-
-  + non-async code wrapped in ``runAsyncAndBlock``
-
-  + TR: I see ``runAsyncAndBlock`` marked deprecated now;
-    what do we want people to use instead?
-
-- you mark a call to an async function with ``await``
-
-- this is like ``try`` when calling a throwing function
-
-- it reminds you when reading the code that the program can stop here
-  and go do something else while waiting for the function to return
-
-- likewise, you know that when there's no ``await`` there's no suspension point
-
-◊ code narrative: downloading a level's definition from the server,
-parsing it in the background because that can be slow,
-and then adding it to the list of levels
+.. XXX add the replacement for runAsyncAndBlock to the list above
 
 
 .. _Concurrency_AsyncSequence:
@@ -472,7 +467,7 @@ Detached Tasks
 
 ◊ Outline ◊
 
-- ``Task.runDetached`` makes a new task with no parent,
+- ``detach`` makes a new task with no parent,
   which means that child task can run indefinitely
 
 - you use a :newTerm:`task handle` to interact with it
@@ -480,6 +475,11 @@ Detached Tasks
 - ``Task.Handle``
 
 - To get the result of the detached task, ``await someTaskHandle.get()``
+
+
+◊ When to make a method do its work in a detached task
+versus making the method itself async?
+(Pull from 2021-04-21 notes from Ben's talk.)
 
 
 .. _Concurrency_TaskCancellation:
