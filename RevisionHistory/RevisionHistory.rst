@@ -1,7 +1,7 @@
 Document Revision History
 =========================
 
-**2021-02-17**
+**2021-04-26**
 
 * Updated for Swift 5.4.
 
@@ -16,6 +16,9 @@ Document Revision History
 * Updated the :ref:`Functions_VariadicParameters`
   and :ref:`Declarations_FunctionDeclaration` sections,
   now that a function can have multiple variadic parameters.
+
+* Updated the :ref:`Expressions_ImplicitMemberExpression` section,
+  now that implicit member expressions can be chained together.
 
 **2020-09-16**
 

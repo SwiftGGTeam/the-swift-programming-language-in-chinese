@@ -1002,11 +1002,89 @@ For example:
     -> var x = MyEnumeration.someValue
     -> x = .anotherValue
 
+If the inferred type is an optional,
+you can also use a member of the non-optional type
+in an implicit member expression.
+
+.. testcode:: implicitMemberEnum
+
+    -> var someOptional: MyEnumeration? = .someValue
+
+Implicit member expressions can be followed by
+a postfix operator or other postfix syntax listed in
+:ref:`Expressions_PostfixExpressions`.
+This is called a :newTerm:`chained implicit member expression`.
+Although it's common for all of the chained postfix expressions
+to have the same type,
+the only requirement is that the whole chained implicit member expression
+needs to be convertible to the type implied by its context.
+Specifically,
+if the implied type is an optional
+you can use a value of the non-optional type,
+and if the implied type is a class type
+you can use a value of one of its subclasses.
+For example:
+
+.. testcode:: implicit-member-chain
+
+   -> class SomeClass {
+          static var shared = SomeClass()
+          static var sharedSubclass = SomeSubclass()
+          var a = AnotherClass()
+      }
+   -> class SomeSubclass: SomeClass { }
+   -> class AnotherClass {
+          static var s = SomeClass()
+          func f() -> SomeClass { return AnotherClass.s }
+      }
+   -> let x: SomeClass = .shared.a.f()
+   -> let y: SomeClass? = .shared
+   -> let z: SomeClass = .sharedSubclass
+
+In the code above,
+the type of ``x`` matches the type implied by its context exactly,
+the type of ``y`` is convertible from ``SomeClass`` to ``SomeClass?``,
+and the type of ``z`` is convertible from ``SomeSubclass`` to ``SomeClass``.
+
 .. syntax-grammar::
 
     Grammar of a implicit member expression
 
     implicit-member-expression --> ``.`` identifier
+    implicit-member-expression --> ``.`` identifier ``.`` postfix-expression
+
+.. The grammar above allows the additional pieces tested below,
+   which work even though they're omitted from the SE-0287 list.
+   The grammar also overproduces, allowing any primary expression
+   because of the definition of postfix-expression.
+
+.. assertion:: implicit-member-grammar
+
+    // self expression
+    >> enum E { case left, right }
+    >> let e: E = .left
+    >> let e2: E = .left.self
+    >> assert(e == e2)
+    ---
+    // postfix operator
+    >> postfix operator ~
+    >> extension E {
+    >>     static postfix func ~ (e: E) -> E {
+    >>         switch e {
+    >>         case .left: return .right
+    >>         case .right: return .left
+    >>         }
+    >>     }
+    >> }
+    >> let e3: E = .left~
+    >> assert(e3 == .right)
+    ---
+    // initializer expression
+    >> class S {
+    >>     var num: Int
+    >>     init(bestNumber: Int) { self.num = bestNumber }
+    >> }
+    >> let s: S = .init(bestNumber: 42)
 
 
 .. _Expressions_ParenthesizedExpression:
