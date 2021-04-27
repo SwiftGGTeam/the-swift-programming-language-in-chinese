@@ -34,9 +34,8 @@ to refer to this common combination of asynchronous and parallel code.
 
    If you've written parallel or asynchronous code before,
    you might be used to working with threads.
-   The concurrency model in Swift
-   is built on top of the operating system's support for threads,
-   but you don't interact with threads directly.
+   The concurrency model in Swift is built on top of threads,
+   but you don't interact with them directly.
 
 
 .. _Concurrency_AsyncFunc:
@@ -74,7 +73,7 @@ you write ``async`` before ``throws``.
     !! async
 
 When calling an asynchronous method,
-execution is can be suspended until that method returns.
+execution suspends until that method returns.
 To mark the possible suspension point,
 you write ``await`` in front of the function call.
 This is like how you write ``try`` when calling a throwing function,
@@ -127,7 +126,56 @@ first the app waits for a list of photo names,
 then it waits for the image data for the first photo,
 and finally it displays the photo.
 
-In contrast, consider how you would have to write this code
+To understand the concurrent nature of the example above,
+here's one possible order of execution:
+
+#. The code starts running from the first line
+   and runs up to the first ``await``.
+   It calls the ``listPhotos(inGallery:)`` function
+   and then suspends execution while it waits for that function to return.
+
+#. While this code's execution is suspended,
+   some other concurrent code in the same program runs.
+   For example, maybe a long-running background task
+   continues updating a list of new photo galleries.
+   That code also runs until the next suspension point, marked by ``await``,
+   or until it completes.
+
+#. After ``listPhotos(inGallery:)`` returns,
+   this code continues execution starting at that point.
+   It assigns the value that was returned to ``photoNames``.
+   The next line has another ``await``,
+   so after calling the ``downloadPhoto(named:)`` function,
+   it pauses execution again.
+
+#. Once again, other concurrent code has a chance to run.
+
+#. After ``downloadPhoto(named:)`` returns,
+   its return value is assigned to ``photo``
+   and then passed as the argument when calling ``show(_:)``.
+
+The possible suspension points in your code marked with ``await``
+indicate that the current piece of code might pause execution
+while waiting for the asynchronous function or method to return.
+This is also called :newTerm:`yielding the thread`
+because, behind the scenes,
+Swift suspends the execution of your code on the current thread
+and runs some other code on that thread instead.
+Because code with ``await`` needs to be able to suspend execution,
+only certain places in your program can call asynchronous functions or methods:
+
+- Code in an asynchronous function or method.
+
+- Code in the ``main()`` method of
+  a structure, class, or enumeration that's marked with ``@main``.
+
+- Code at the top level that makes up an implicit main function.
+
+.. XXX forward reference for fire-and-forget APIs
+   that let you start async work from a non-async context
+
+In contrast to using ``async`` and ``await``,
+consider how you would write the example above
 using functions that take a closure as completion handler
 to run after each operation completes:
 
@@ -182,17 +230,6 @@ where we currently talk about completion handlers.
        }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
-Because calling an asynchronous function
-adds a potential suspension point to your code,
-only certain places in your program can include such calls:
-
-- Code in another asynchronous function or method.
-
-- Code in the ``main()`` method of
-  a structure, class, or enumeration that's marked with ``@main``.
-
-- Code at the top level that makes up an implicit main function.
 
 .. XXX add the replacement for runAsyncAndBlock to the list above
 
