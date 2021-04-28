@@ -1166,7 +1166,7 @@ Asynchronous Functions and Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions and methods that run asynchronously must be marked with the ``async`` keyword.
-These functions ad methods are known as :newTerm:`asynchronous functions`
+These functions and methods are known as :newTerm:`asynchronous functions`
 and :newTerm:`asynchronous methods`.
 They have the following form:
 

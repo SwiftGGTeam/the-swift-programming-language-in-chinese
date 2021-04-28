@@ -37,6 +37,10 @@ to refer to this common combination of asynchronous and parallel code.
    The concurrency model in Swift is built on top of threads,
    but you don't interact with them directly.
 
+.. XXX From Chuck:
+   Should we have a more explicit comparison between Swift concurrency and threads?
+   Things like "if you used threads to do X, do Y in Swift instead"?
+
 
 .. _Concurrency_AsyncFunc:
 
@@ -234,6 +238,12 @@ where we currently talk about completion handlers.
 .. XXX add the replacement for runAsyncAndBlock to the list above
 
 
+
+.. XXX either add an example or maybe a short section
+   about throwing and async together
+   to give a place where I can note the order of the keywords
+   in the declaration and in the calls
+
 .. _Concurrency_AsyncSequence:
 
 Asynchronous Sequences
@@ -313,7 +323,7 @@ Calling Asynchronous Functions Without Waiting
 - when you need to use the return value, then you ``await``
 - show a couple async-let use cases... a depends on b depends on c, but also
   a depends on b & c & d together
-- behind the scenes, async-let is implicitly creating a child Task
+- behind the scenes, async-let implicitly creates a child Task
 
 Calling an asynchronous function with ``await``
 runs only one piece of code at a time.
@@ -383,8 +393,9 @@ that can be run asynchronously as part of your program.
 - the only relationship between tasks is parent/child;
   "siblings" don't have any connection
 
-- task have deadlines, not timeouts --- like "now + 20 ms" ---
-  a deadline is usually what you want anyhow when you think of a timeout
+.. not for WWDC, but keep for future:
+   task have deadlines, not timeouts --- like "now + 20 ms" ---
+   a deadline is usually what you want anyhow when you think of a timeout
 
 - this chapter introduces the core ways you use tasks;
   for the full list what you can do,
@@ -538,7 +549,22 @@ Task Cancellation
 
 - ``Task.Handle.cancel()``
 
-- cancellation propagates (FIXME: How?  Show an example.)
+- cancellation propagates (Konrad's example below)
+
+::
+
+    let handle = spawnDetached { 
+    await withTaskGroup(of: Bool.self) { group in 
+        var done = false
+        while done { 
+        await group.spawn { Task.isCancelled } // is this child task cancelled?
+        done = try await group.next() ?? false
+        }
+    print("done!") // <1>
+    }
+
+    handle.cancel()
+    // done!           <1>
 
 - Use ``Task.withCancellationHandler`` to specify a closure to run
   if the task is canceled
@@ -577,6 +603,9 @@ Actors
 
 - Some code elsewhere is already doing the over-the-network or over-USB bits
 
+.. In the future, when we get distributed actors,
+   this might be a good example to expand when explaining them.
+
 ◊ define an actor and a helper function
 
 ::
@@ -609,6 +638,7 @@ Actors
         return (measurement: measurement, units: units)
     }
 
+◊ is there a better example that doesn't need type conversions & force unwrap?
 ◊ give it some client-facing API
 
 ::
@@ -634,7 +664,7 @@ Actors
 ◊ TR: Is there a better "getter" pattern than ``getMax()``?
 
 In the example above,
-the ``update(with:)``, ``getMax()``, and ``reset()`` function
+the ``update(with:)``, ``getMax()``, and ``reset()`` functions
 can access the properties of the actor.
 However, if you try to access those properties from outside the actor,
 like you would with an instance of a class,

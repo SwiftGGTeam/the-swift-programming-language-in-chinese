@@ -170,19 +170,24 @@ It has the following form:
 
    await <#expression#>
 
-The value of a ``await`` expression is the value of the *expression*.
+The value of an ``await`` expression is the value of the *expression*.
 
 An ``await`` expression can appear only within an asynchronous context,
 such as the body of an ``async`` function.
 It can't appear in the body of a ``defer`` statement,
-or in an autoclosure of non-asynchronous function type.
+or in an autoclosure of synchronous function type.
 
 ◊ revisit autoclosure bit above --- can I make that a natural consequence
 ◊ of how I describe the rules around async and closures?
 
 ◊ execution of the current task pauses until the asynchronous operation completes
 
-An expression marked with ``await`` is sometimes called a *suspension point*.
+An expression marked with ``await`` is called a *potential suspension point*.
+Execution of an asynchronous function can be suspended
+at each expression that's marked with ``await``.
+.. XXX this might be a good place to call out the fact that
+   you need to preserve/restore invariants at suspension points
+   that you may have broken while updating state in between
 
 When the expression on the left-hand side of a binary operator
 is marked with the ``await`` operator,
@@ -206,7 +211,7 @@ to be explicit about the scope of the operator's application.
     !! ^~~~~~~~~~~~~~~~~~~~~~
     !! await
 
-A ``await`` expression can't appear on the right-hand side of a binary operator,
+An ``await`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator
 or the ``await`` expression is enclosed in parentheses.
 
