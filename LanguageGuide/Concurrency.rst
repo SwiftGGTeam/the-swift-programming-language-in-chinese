@@ -309,7 +309,7 @@ Asynchronous Sequences
            show(photo)
        }
     >> }
-   
+
 
 .. _Concurrency_AsyncLet:
 
@@ -381,7 +381,7 @@ that can be run asynchronously as part of your program.
 - async-let lets you implicitly create tasks that have dependencies;
   if you need to create tasks dynamically or with extra options
   you use the ``Task`` APIs directly
-  
+
 - other reasons to use the API include setting:
 
     + cancellation (``Task.isCancelled``)
@@ -554,10 +554,10 @@ Task Cancellation
 
 ::
 
-    let handle = spawnDetached { 
-    await withTaskGroup(of: Bool.self) { group in 
+    let handle = spawnDetached {
+    await withTaskGroup(of: Bool.self) { group in
         var done = false
-        while done { 
+        while done {
         await group.spawn { Task.isCancelled } // is this child task cancelled?
         done = try await group.next() ?? false
         }
