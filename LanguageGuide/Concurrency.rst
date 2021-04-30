@@ -544,6 +544,7 @@ Task Cancellation
 
 - You can check manually via ``Task.isCancelled``,
   which lets you do clean-up before throwing an error
+  for example to release resources or to close network connections
 
 - task handle
 
