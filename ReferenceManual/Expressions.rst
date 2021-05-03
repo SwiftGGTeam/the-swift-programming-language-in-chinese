@@ -185,6 +185,7 @@ or in an autoclosure of synchronous function type.
 An expression marked with ``await`` is called a *potential suspension point*.
 Execution of an asynchronous function can be suspended
 at each expression that's marked with ``await``.
+
 .. XXX this might be a good place to call out the fact that
    you need to preserve/restore invariants at suspension points
    that you may have broken while updating state in between
