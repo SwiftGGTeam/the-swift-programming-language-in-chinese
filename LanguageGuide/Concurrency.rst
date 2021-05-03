@@ -1,7 +1,8 @@
 Concurrency
 ===========
 
-Swift has built-in support for both asynchronous and parallel code.
+Swift has built-in support for writing asynchronous and parallel code
+in a structured way.
 :newTerm:`Asynchronous code` can be suspended and resumed later,
 although only one piece of the program is executing at a time.
 Suspending and resuming code in your program
@@ -21,11 +22,15 @@ and does so in a memory-safe way.
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
 The language features that Swift gives you
-let you express your intent in a way that Swift can verify when compiling,
-for example actors let you safely share mutable state.
+let you express your intent in a way that Swift can verify when compiling ---
+for example, you can use actors to safely share mutable state.
 However, adding concurrency to slow or buggy code
 isn't a guarantee that it will become fast or correct;
 it might even make it harder to debug.
+Swift's language-level support for safe concurrency, however,
+
+.. XXX above -- if you don't actually *need* concurrency,
+   just write simple synchronous code
 
 The rest of this chapter uses the term *concurrency*
 to refer to this common combination of asynchronous and parallel code.
@@ -36,6 +41,10 @@ to refer to this common combination of asynchronous and parallel code.
    you might be used to working with threads.
    The concurrency model in Swift is built on top of threads,
    but you don't interact with them directly.
+   An asynchronous function in Swift
+   can give up the thread it was running on,
+   which lets another asynchronous function run on that thread
+   while the first function is blocked.
 
 .. XXX From Chuck:
    Should we have a more explicit comparison between Swift concurrency and threads?
@@ -51,25 +60,48 @@ Defining and Calling Asynchronous Functions
    maybe we should call these "async methods" throughout the guide
    and just mention that you can also use async on free functions?
 
+An :newTerm:`asynchronous function` or :newTerm:`asynchronous method`
+is a special kind of function or method
+that can be suspended while it's partway through execution.
+This is in contrast to ordinary, synchronous functions and methods,
+which either run to completion, throw an error, or never return.
+An asynchronous function or method still does one of those three things,
+but it can also pause in the middle when it's waiting for something.
+Inside the body of an asynchronous function or method,
+you mark each of these places where execution can be suspended.
+
+.. XXX Editorial: Stet passive "be suspended" above.
+   Repeating "pause" from the previous sentence is unhelpful.
+   Using "can suspend" is incorrect
+   because the function doesn't perform the suspension.
+   The entity that does carry out the suspension isn't relevant
+   to the developer in the context of this discussion.
+   The actor/agent is somewhere between Swift the language,
+   the executor (a concept we're not explaining until next year
+   when custom executors become a thing)
+   and possibly the operating system.
+
 To indicate that a function or method is asynchronous,
 you write the ``async`` keyword in its declaration after its parameters,
 similar to how you use ``throws`` to mark a throwing function.
 If the function or method returns a value,
 you write ``async`` before the return arrow (``->``).
-For an asynchronous throwing functions,
+For example:
+
+.. testcode:: async-function-shape
+
+   -> func someAsynchronousFunction() async -> Int {
+   ->     let result = // ...
+   >>     12
+   ->     return result
+   -> }
+
+For a function or method that's both asynchronous and throwing,
 you write ``async`` before ``throws``.
 
 .. assertion:: async-comes-before-throws
 
-    -> func someAsyncFunction() async -> Int {
-          // ...
-    >>    return 12
-       }
-    ---
-    -> func someAsyncThrowingFunction() async throws -> Int {
-          // ...
-    >>    return 12
-       }
+    >> func right() async throws -> Int { return 12 }
     >> func wrong() throws async -> Int { return 12 }
     !$ error: 'async' must precede 'throws'
     !! func wrong() throws async -> Int { return 12 }
@@ -78,8 +110,8 @@ you write ``async`` before ``throws``.
 
 When calling an asynchronous method,
 execution suspends until that method returns.
-To mark the possible suspension point,
-you write ``await`` in front of the function call.
+You write ``await`` in front of the call
+to mark the possible suspension point.
 This is like how you write ``try`` when calling a throwing function,
 to mark the possible change to the program's flow if there's an error.
 Inside an asynchronous method,
@@ -94,6 +126,7 @@ and update its UI to show the picture when it's ready:
 .. testcode:: defining-async-function
 
     >> struct Data {}  // Instead of actually importing Foundation
+    >> struct Caption {}
     // Reads a shared gallery from the server and returns a list
     // of the names of pictures in that gallery.
     -> func listPhotos(inGallery name: String) async -> [String] {
@@ -106,18 +139,20 @@ and update its UI to show the picture when it's ready:
     >>     return Data()
        }
     // Displays the given picture on the user's screen.
+    -> func formatCaption(for photoName: String) -> Caption {
+           // ...
+    >>     return Caption()
+       }
     -> func show(_ image: Data) {
            // ...
        }
     ---
-    >> runAsyncAndBlock {
-    !$ warning: 'runAsyncAndBlock' is deprecated
-    !! runAsyncAndBlock {
-    !! ^
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
-    -> let photo = await downloadPhoto(named: photoNames[0])
-    -> show(photo)
-    >> }
+    -> if let first = photoNames.first {
+    ->     let caption = formatCaption(for: first)
+    ->     let photo = await downloadPhoto(named: first)
+    ->     show(photo, caption)
+    -> }
 
 Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` methods
 both need to make network requests,
@@ -148,15 +183,19 @@ here's one possible order of execution:
 #. After ``listPhotos(inGallery:)`` returns,
    this code continues execution starting at that point.
    It assigns the value that was returned to ``photoNames``.
-   The next line has another ``await``,
-   so after calling the ``downloadPhoto(named:)`` function,
-   it pauses execution again.
 
-#. Once again, other concurrent code has a chance to run.
+#. The next two lines are regular, synchronous code ---
+   an optional binding and a normal function call.
+   Nothing is marked ``await``,
+   so there aren't any possible suspension points.
+
+#. The next ``await`` marks the call to the ``downloadPhoto(named:)`` function.
+   This code pauses execution again until that function returns.
+   Once again, other concurrent code has an opportunity to run.
 
 #. After ``downloadPhoto(named:)`` returns,
    its return value is assigned to ``photo``
-   and then passed as the argument when calling ``show(_:)``.
+   and then passed as an argument when calling ``show(_:)``.
 
 The possible suspension points in your code marked with ``await``
 indicate that the current piece of code might pause execution
@@ -175,8 +214,11 @@ only certain places in your program can call asynchronous functions or methods:
 
 - Code at the top level that makes up an implicit main function.
 
-.. XXX forward reference for fire-and-forget APIs
-   that let you start async work from a non-async context
+- Code in a detached child task,
+  as shown in :ref:`Concurrency_TaskHandle` below.
+
+.. XXX If we get a replacement for runAsyncAndBlock()
+   add that to the list above too
 
 In contrast to using ``async`` and ``await``,
 consider how you would write the example above
@@ -192,15 +234,17 @@ to run after each operation completes:
     >>     completionHandler(Data())
     >> }
     -> listPhotos(inGallery: "Summer Vacation") { photoNames in
-           downloadPhoto(named: photoNames[0]) { photo in
-               show(photo)
+           if let first = photoNames.first {
+               downloadPhoto(named: first) { photo in
+                   let caption = formatCaption(for: first)
+                   show(photo, caption)
+               }
            }
        }
 
-In this simple case,
-the closures are a little harder to read,
-but it might be manageable.
+Even in this simple case, the closures are harder to read.
 It's not hard to see how the callback-based version
+XXX in real code...
 could quickly grow in complexity and become very difficult to understand.
 
 .. XXX add detail above about how the *compiler* can reason about
@@ -300,15 +344,10 @@ Asynchronous Sequences
   instead of waiting for the whole thing:
 
 .. testcode:: defining-async-function
-    >> runAsyncAndBlock {
-    !$ warning: 'runAsyncAndBlock' is deprecated
-    !! runAsyncAndBlock {
-    !! ^
     -> let names = await listPhotos(inGallery: "Winter Vacation")
     -> for await photo in Photos(names: names) {
            show(photo)
        }
-    >> }
 
 
 .. _Concurrency_AsyncLet:
@@ -338,10 +377,6 @@ is to use ``async``-``let`` as shown below:
     -> func show(_ images: [Data]) {
            // ...
        }
-    >> runAsyncAndBlock {
-    !$ warning: 'runAsyncAndBlock' is deprecated
-    !! runAsyncAndBlock {
-    !! ^
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
     ---
     -> async let firstPhoto = downloadPhoto(named: photoNames[0])
@@ -350,7 +385,6 @@ is to use ``async``-``let`` as shown below:
     ---
     -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
     -> show(photos)
-    >> }
 
 In the example above,
 writing ``await`` before the call to ``listPhotos(inGallery:)``
@@ -745,17 +779,15 @@ because suspension points allow for interleaving.
 
 ::
 
-    runAsyncAndBlock {
-        let logger = TemperatureSensor(lines: [
-            "Outdoor air temperature",
-            "25 C",
-            "24 C",
-        ])
-        print(await logger.getMax())
+    let logger = TemperatureSensor(lines: [
+        "Outdoor air temperature",
+        "25 C",
+        "24 C",
+    ])
+    print(await logger.getMax())
 
-        await logger.update(with: "27 C")
-        print(await logger.getMax())
-    }
+    await logger.update(with: "27 C")
+    print(await logger.getMax())
 
 
 .. _Concurrency_Sendable:
