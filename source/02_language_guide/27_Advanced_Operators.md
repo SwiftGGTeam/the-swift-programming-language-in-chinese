@@ -219,7 +219,7 @@ signedOverflow = signedOverflow &- 1
 // 此时 signedOverflow 等于 127
 ```
 
-`Int8` 型整数能容纳的最小值是 `-128`，以二进制表示即 `10000000`。当使用溢出减法运算符对其进行减 `1` 运算时，符号位被翻转，得到二进制数值 `01111111`，也就是十进制数值的 `127`，这个值也是 `Int8` 型整所能容纳的最大值。
+`Int8` 型整数能容纳的最小值是 `-128`，以二进制表示即 `10000000`。当使用溢出减法运算符对其进行减 `1` 运算时，符号位被翻转，得到二进制数值 `01111111`，也就是十进制数值的 `127`，这个值也是 `Int8` 型整数所能容纳的最大值。
 
 ![Art/overflowSignedSubtraction_2x.png](https://docs.swift.org/swift-book/_images/overflowSignedSubtraction_2x.png)
 
@@ -266,7 +266,7 @@ signedOverflow = signedOverflow &- 1
 
 因此计算结果为 `17`。
 
-有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见 [操作符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
+有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结合性设置的完整列表，请参见 [操作符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 > 注意
 > 
