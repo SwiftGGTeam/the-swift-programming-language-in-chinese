@@ -1005,7 +1005,7 @@ It combines the components in that block into a ``Line``.
 The ``buildEither(first:)`` and ``buildEither(second:)`` methods
 add support for ``if``-``else``.
 
-You can apply the ``@DrawingBuilding`` to a function's parameter,
+You can apply the ``@DrawingBuilder`` attribute to a function's parameter,
 which turns a closure passed to the function
 into the value that the result builder creates from that closure.
 For example:
