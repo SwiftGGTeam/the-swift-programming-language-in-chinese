@@ -154,6 +154,9 @@ and update its UI to show the picture when it's ready:
     ->     show(photo, caption)
     -> }
 
+.. XXX Is it really helpful to show the placeholder function definitions?
+   They take up more space in the example than the actual important content.
+
 Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` methods
 both need to make network requests,
 they could take a relatively long time to complete.
@@ -640,6 +643,25 @@ Actors
 
 .. In the future, when we get distributed actors,
    this might be a good example to expand when explaining them.
+
+◊ TODO: Incorporate @MainActor into the outline:
+
+- the main actor is kinda-sorta like the main thread
+
+- use it when you have shared mutable state,
+  but that state isn't neatly wrapped up in a single type
+
+- you can put it on a function,
+  which makes calls to the function always run on the main actor
+
+- you can put it on a type,
+  which makes calls to all of the type's methods run on the main actor
+
+- some property wrappers like ``@EnvironmentObject`` from SwiftUI
+  imply ``@MainActor`` on a type.
+  Check for a ``wrappedValue`` that's marked ``@MainActor``.
+  If you mark the property of a type with one of these implicit-main-actor properties,
+  that has the same effect as marking the type with ``@MainActor``
 
 ◊ define an actor and a helper function
 
