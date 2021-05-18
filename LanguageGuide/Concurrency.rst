@@ -143,7 +143,7 @@ and update its UI to show the picture when it's ready:
            // ...
     >>     return Caption()
        }
-    -> func show(_ image: Data) {
+    -> func show(_ image: Data, _ caption: Caption) {
            // ...
        }
     ---
