@@ -223,6 +223,9 @@ only certain places in your program can call asynchronous functions or methods:
 .. XXX If we get a replacement for runAsyncAndBlock()
    add that to the list above too
 
+.. SE-0296 specificalls out that top-level code is *not* an async context,
+   contrary to what you might expect.
+
 In contrast to using ``async`` and ``await``,
 consider how you would write the example above
 using functions that take a closure as completion handler

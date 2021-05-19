@@ -49,3 +49,7 @@ This means, if you have a large project
 that's divided into multiple frameworks,
 you can migrate your code from Swift 4 to Swift 5.4
 one framework at a time.
+
+.. XXX from the release notes rdar://70738378
+
+   Swift Concurrency requires a deployment target of macOS 12, iOS 15, tvOS 15, and watchOS 8.0 or newer
