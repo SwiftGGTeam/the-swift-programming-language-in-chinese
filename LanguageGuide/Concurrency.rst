@@ -86,15 +86,16 @@ you write the ``async`` keyword in its declaration after its parameters,
 similar to how you use ``throws`` to mark a throwing function.
 If the function or method returns a value,
 you write ``async`` before the return arrow (``->``).
-For example:
+For example,
+here's how you might fetch the names of a collection of photos from a server:
 
 .. testcode:: async-function-shape
 
-   -> func someAsynchronousFunction() async -> Int {
-   ->     let result = // ...
-   >>     12
-   ->     return result
-   -> }
+    -> func listPhotos(inGallery name: String) async -> [String] {
+           let result = // ... some asynchronous networking code ...
+    >>     ["IMG001", "IMG99", "IMG0404"]
+           return result
+       }
 
 For a function or method that's both asynchronous and throwing,
 you write ``async`` before ``throws``.
@@ -120,42 +121,19 @@ suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with ``await``.
 
 For example,
-here's how a photo gallery could download a picture
-and update its UI to show the picture when it's ready:
+the code below fetches the names of all the pictures in a gallery
+and then show the first picture:
 
 .. testcode:: defining-async-function
 
     >> struct Data {}  // Instead of actually importing Foundation
-    >> struct Caption {}
-    // Reads a shared gallery from the server and returns a list
-    // of the names of pictures in that gallery.
-    -> func listPhotos(inGallery name: String) async -> [String] {
-           // ...
-    >>     return ["IMG001", "IMG99", "IMG0404"]
-       }
-    // Downloads and returns the given picture.
-    -> func downloadPhoto(named name: String) async -> Data {
-           // ...
-    >>     return Data()
-       }
-    // Displays the given picture on the user's screen.
-    -> func formatCaption(for photoName: String) -> Caption {
-           // ...
-    >>     return Caption()
-       }
-    -> func show(_ image: Data, _ caption: Caption) {
-           // ...
-       }
-    ---
+    >> func downloadPhoto(named name: String) async -> Data { return Data() }
+    >> func show(_ image: Data, _ caption: Caption) { }
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
-    -> if let first = photoNames.first {
-    ->     let caption = formatCaption(for: first)
-    ->     let photo = await downloadPhoto(named: first)
-    ->     show(photo, caption)
-    -> }
-
-.. XXX Is it really helpful to show the placeholder function definitions?
-   They take up more space in the example than the actual important content.
+    -> let sortedNames = sort(photoNames)
+    -> let name = sortedNames[1]
+    -> let photo = await downloadPhoto(named: name)
+    -> show(photo)
 
 Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` methods
 both need to make network requests,
@@ -163,10 +141,6 @@ they could take a relatively long time to complete.
 Making them both asynchronous by writing ``async`` before the return arrow
 lets the rest of the app's code keep running
 while this code waits for the picture to be ready.
-Looking at the last three lines,
-first the app waits for a list of photo names,
-then it waits for the image data for the first photo,
-and finally it displays the photo.
 
 To understand the concurrent nature of the example above,
 here's one possible order of execution:
@@ -187,10 +161,10 @@ here's one possible order of execution:
    this code continues execution starting at that point.
    It assigns the value that was returned to ``photoNames``.
 
-#. The next two lines are regular, synchronous code ---
-   an optional binding and a normal function call.
-   Nothing is marked ``await``,
-   so there aren't any possible suspension points.
+#. The lines that define ``sortedNames`` and ``name``
+   are regular, synchronous code.
+   Because nothing is marked ``await`` on these lines,
+   there aren't any possible suspension points.
 
 #. The next ``await`` marks the call to the ``downloadPhoto(named:)`` function.
    This code pauses execution again until that function returns.
@@ -212,19 +186,16 @@ only certain places in your program can call asynchronous functions or methods:
 
 - Code in an asynchronous function or method.
 
-- Code in the ``main()`` method of
+- Code in the static ``main()`` method of
   a structure, class, or enumeration that's marked with ``@main``.
-
-- Code at the top level that makes up an implicit main function.
 
 - Code in a detached child task,
   as shown in :ref:`Concurrency_TaskHandle` below.
 
-.. XXX If we get a replacement for runAsyncAndBlock()
-   add that to the list above too
-
 .. SE-0296 specificalls out that top-level code is *not* an async context,
    contrary to what you might expect.
+   If that get changed, put this bullet back into the list above:
+   Code at the top level that makes up an implicit main function.
 
 In contrast to using ``async`` and ``await``,
 consider how you would write the example above
@@ -233,6 +204,8 @@ to run after each operation completes:
 
 .. testcode:: defining-async-function
 
+    XXX REWRITE XXX
+
     >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
     >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
     >> }
@@ -240,28 +213,24 @@ to run after each operation completes:
     >>     completionHandler(Data())
     >> }
     -> listPhotos(inGallery: "Summer Vacation") { photoNames in
-           if let first = photoNames.first {
-               downloadPhoto(named: first) { photo in
-                   let caption = formatCaption(for: first)
-                   show(photo, caption)
-               }
+           let sortedNames = sort(photoNames)
+           let name = sortedNames[1]
+           downloadPhoto(named: first) { photo in
+               show(photo, caption)
            }
        }
 
-Even in this simple case, the closures are harder to read.
-It's not hard to see how the callback-based version
-XXX in real code...
-could quickly grow in complexity and become very difficult to understand.
+Even in this simple case, the closures are harder to read
+because the code has to be written as a series of completion handlers.
+In contrast, the version above that uses ``await``
+reads as a linear, sequential series of steps.
 
 .. XXX add detail above about how the *compiler* can reason about
    the async/await version better too
    and give you better guarantees and clearer errors
 
-The behavior is the same,
-but the ``await`` version in much easier to read and reason about.
-
-◊TODO: Revise the discussion in the Closures chapter
-where we currently talk about completion handlers.
+.. XXX Revise the discussion in the Closures chapter
+   where we currently talk about completion handlers.
 
 .. XXX make Task.sleep() below a live link
 
@@ -270,7 +239,7 @@ where we currently talk about completion handlers.
    The ``Task.sleep()`` method is useful when writing simple code
    to learn how concurrency works.
    This method does nothing,
-   but waits the given number of seconds before it returns.
+   but waits at least the given number of seconds before it returns.
    Here's a version of the ``listPhotos(inGallery:)`` function
    that uses ``sleep()`` to simulate waiting for a network operation:
 
@@ -284,10 +253,6 @@ where we currently talk about completion handlers.
        }
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
-.. XXX add the replacement for runAsyncAndBlock to the list above
-
-
 
 .. XXX either add an example or maybe a short section
    about throwing and async together
