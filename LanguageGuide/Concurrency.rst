@@ -264,6 +264,19 @@ reads as a linear, sequential series of steps.
 Asynchronous Sequences
 ----------------------
 
+The ``listPhotos(inGallery:)`` function in the previous section
+is asynchronous but returns the whole array at once.
+You can use types that 
+◊ ``AsyncSequence``
+returned its whole result asynchronously
+Another way that you can 
+
+.. XXX link for AsyncSequence should be
+   https://developer.apple.com/documentation/swift/asyncsequence
+
+.. XXX what about ``Series`` which was supposed to be a currency type?
+
+
 ◊ Outline ◊
 
 - the async function in the previous section
@@ -345,11 +358,7 @@ is to use ``async``-``let`` as shown below:
 
 .. testcode:: defining-async-function
 
-    -> func show(_ images: [Data]) {
-           // ...
-       }
-    -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
-    ---
+    >> func show(_ images: [Data]) { }
     -> async let firstPhoto = downloadPhoto(named: photoNames[0])
     -> async let secondPhoto = downloadPhoto(named: photoNames[1])
     -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
@@ -368,6 +377,9 @@ if there are enough system resources available.
 It's not until the next ``await``,
 when the results of those asynchronous interactions with the server are needed
 that this function will suspend.
+
+.. XXX expand this explanation a bit,
+   then use it to transition into tasks
 
 .. _Concurrency_Tasks:
 
