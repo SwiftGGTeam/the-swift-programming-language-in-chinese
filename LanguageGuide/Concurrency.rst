@@ -275,6 +275,7 @@ Here's what iterating over an asynchronous sequence looks like:
 
 .. testcode:: defining-async-function
 
+    // XXX this is a different version of listPhotos()
     -> let names = await listPhotos(inGallery: "Winter Vacation")
     -> for await photo in Photos(names: names) {
            show(photo)
@@ -298,6 +299,26 @@ when it's waiting for the next element to be available.
 .. XXX what happened to ``Series`` which was supposed to be a currency type?
    Is that coming from Combine instead of the stdlib maybe?
 
+   Also... need a real API that produces a async sequence.
+   I'd prefer not to go through the whole process of making one here,
+   since the protocol reference has enough detail to show you how to do that.
+   There's nothing in the stdlib except for the AsyncFooSequence types.
+   Maybe one of the other conforming types from an Apple framework --
+   how about FileHandle.AsyncBytes (myFilehandle.bytes.lines) from Foundation?
+
+   https://[Internal Staging Server]/documentation/swift/asyncsequence
+   https://[Internal Staging Server]/documentation/foundation/filehandle
+
+::
+
+    import Foundation
+
+    let handle = FileHandle(forReadingFrom: "http://example.com/galleries")
+    for await galleryURL in handle.bytes.lines {
+        ... do something with the gallery ...
+    }
+
+
 
 .. _Concurrency_AsyncLet:
 
@@ -309,7 +330,22 @@ runs only one piece of code at a time.
 While the asynchronous code is running,
 the caller waits for that code to finish
 before moving on to run the next line of code.
-One way to call an asynchronous function
+
+.. XXX intro
+
+.. testcode:: defining-async-function
+
+    >> func show(_ images: [Data]) { }
+    -> let firstPhoto = await downloadPhoto(named: photoNames[0])
+    -> let secondPhoto = await downloadPhoto(named: photoNames[1])
+    -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
+    ---
+    -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
+    -> show(photos)
+
+
+
+Another way to call an asynchronous function
 so it runs at the same time as other nearby code
 is to use ``async``-``let`` as shown below:
 
@@ -338,31 +374,12 @@ that this function will suspend.
 Let's contrast the example above
 with a version that uses ``await`` instead of ``async``-``let``:
 
-.. testcode:: defining-async-function
-
-    >> func show(_ images: [Data]) { }
-    -> let firstPhoto = await downloadPhoto(named: photoNames[0])
-    -> let secondPhoto = await downloadPhoto(named: photoNames[1])
-    -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
-    ---
-    -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
-    -> show(photos)
-
-.. XXX FIXME XXX
-   Reflow the above example to START with the vanilla await
-   and then replace it with async-let
-   for a better problem/solution narrative flow
-
-   Also... need a real API that produces a async sequence.
-   I'd prefer not to go through the whole process of making one here,
-   since the protocol reference has enough detail to show you how to do that
-
-
 ◊ async let x = y       the *local* flow works on y and keeps going; suspensions point
 ◊ let x = await y       the *local* flow waits for y to be ready; no suspension point
 ◊ in both cases, the concurrency model lets code from elsewhere run
 ◊ the latter case lets you create parallelism
 ◊ behind the scenes, async-let implicitly creates a child Task
+
 
 .. XXX expand this explanation a bit,
    then use it to transition into tasks
