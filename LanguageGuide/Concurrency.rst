@@ -364,9 +364,9 @@ that can be run asynchronously as part of your program.
 
 - other reasons to use the API include setting:
 
-    + cancellation (``Task.isCancelled``)
-    + timeouts
-    + priority (``Task.currentPriority``)
+  + cancellation (``Task.isCancelled``)
+  + timeouts
+  + priority (``Task.currentPriority``)
 
 - task group models a hierarchy or collection of tasks
 
