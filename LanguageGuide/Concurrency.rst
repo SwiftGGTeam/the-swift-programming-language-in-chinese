@@ -265,73 +265,36 @@ Asynchronous Sequences
 ----------------------
 
 The ``listPhotos(inGallery:)`` function in the previous section
-is asynchronous but returns the whole array at once.
-You can use types that 
-◊ ``AsyncSequence``
-returned its whole result asynchronously
-Another way that you can 
-
-.. XXX link for AsyncSequence should be
-   https://developer.apple.com/documentation/swift/asyncsequence
-
-.. XXX what about ``Series`` which was supposed to be a currency type?
-
-
-◊ Outline ◊
-
-- the async function in the previous section
-  returned its whole result asynchronously
-
-- another way a function can be async is to return a collection/sequence
-  one item at a time, as that element becomes available
-
-- to do this, return ``AsyncSequence``
-  which mostly acts like a vanilla ``Sequence`` but async-ified
-
-- to make an async sequence,
-  define a type that includes a nested ``AsyncIterator`` type
-
-- in the iterator, define a ``next()`` method
-  that returns one element and updates the iterator's state
-
-- ◊TR: It doesn't look like there's an easy way to make an async sequence.
-  You have to make your own container/iterator type
-
-- TODO: check for overlap with ``AsyncSequence`` reference
-
-.. testcode:: defining-async-function
-
-    -> struct Photos: AsyncSequence {
-           let names: [String]
-           func makeAsyncIterator() -> AsyncIterator {
-               return AsyncIterator(names)
-           }
-           typealias Element = Data
-           struct AsyncIterator: AsyncIteratorProtocol {
-    >>         // Not using the syntactic sugar for [String]
-    >>         // because [String].Index doesn't work.
-               private let names: Array<String>
-               private var index: Array<String>.Index
-               init(_ names: [String]) {
-                   self.names = names
-                   self.index = 0
-               }
-               mutating func next() async -> Data? {
-                   guard index < names.endIndex else { return nil }
-                   index += 1
-                   return await downloadPhoto(named: names[index])
-               }
-           }
-       }
-
-- use ``for``-``await`` to handle the elements one at a time,
-  instead of waiting for the whole thing:
+asynchronously returns the whole array at once,
+after all of the array's elements are ready.
+Another approach to this kind of asynchronous code
+is to wait for one element of the collection at a time
+using an :newTerm:`asynchronous sequence`.
+Here's what iterating over an asynchronous sequence looks like:
 
 .. testcode:: defining-async-function
     -> let names = await listPhotos(inGallery: "Winter Vacation")
     -> for await photo in Photos(names: names) {
            show(photo)
        }
+
+Instead of using a ordinary ``for`` loop,
+the example above writes ``for`` followed by ``await``.
+Like when you call an asynchronous function or method,
+writing ``await`` indicates a possible suspension point
+where this code can pause while it's waiting,
+allowing other code to run.
+A ``for``-``await`` loop can suspend at the beginning of each iteration,
+when it's waiting for the next element to be available.
+
+.. XXX like you can use your own types in a for loop
+   by letting them conform to Sequence,
+   you can do the same with a for-await look
+   by confirming to AsyncSequence
+   <https://developer.apple.com/documentation/swift/asyncsequence>
+
+.. XXX what happened to ``Series`` which was supposed to be a currency type?
+   Is that coming from Combine instead of the stdlib maybe?
 
 
 .. _Concurrency_AsyncLet:
