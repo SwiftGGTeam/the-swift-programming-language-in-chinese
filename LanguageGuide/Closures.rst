@@ -693,7 +693,7 @@ For example:
 
 .. testcode:: noescape-closure-as-argument, implicit-self-struct
 
-    -> var completionHandlers = [() -> Void]()
+    -> var completionHandlers: [() -> Void] = []
     -> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
            completionHandlers.append(completionHandler)
        }
@@ -969,9 +969,6 @@ The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
        }
     <- Now serving Barry!
     <- Now serving Daniella!
-
-.. Explicit type annotations instead of [Foo]() constructor syntax to work around
-   <rdar://problem/25150801> Array constructor syntax - can't parse arrays of function type
 
 In the code above,
 instead of calling the closure passed to it

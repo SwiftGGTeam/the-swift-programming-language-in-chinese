@@ -170,7 +170,7 @@ which is initialized with an empty array of type ``[Room]``:
 .. testcode:: optionalChaining
 
    -> class Residence {
-         var rooms = [Room]()
+         var rooms: [Room] = []
          var numberOfRooms: Int {
             return rooms.count
          }

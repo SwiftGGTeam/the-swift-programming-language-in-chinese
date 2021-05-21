@@ -88,7 +88,7 @@ using initializer syntax:
 
 .. testcode:: arraysEmpty
 
-   -> var someInts = [Int]()
+   -> var someInts: [Int] = []
    -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
@@ -788,7 +788,7 @@ you can create an empty ``Dictionary`` of a certain type by using initializer sy
 
 .. testcode:: dictionariesEmpty
 
-   -> var namesOfIntegers = [Int: String]()
+   -> var namesOfIntegers: [Int: String] = [:]
    // namesOfIntegers is an empty [Int: String] dictionary
 
 This example creates an empty dictionary of type ``[Int: String]``

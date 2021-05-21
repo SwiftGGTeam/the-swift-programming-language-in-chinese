@@ -185,7 +185,7 @@ neither of which is shown in full:
    ---
    -> class DataManager {
          lazy var importer = DataImporter()
-         var data = [String]()
+         var data: [String] = []
          // the DataManager class would provide data management functionality here
       }
    ---

@@ -557,10 +557,6 @@ pair of square brackets and can be used to create an empty array of a specified 
 
     -> var emptyArray: [Double] = []
 
-.. Note: The normal style for the above would be
-       var emptyArray = [Double]()
-   but we're explicitly demonstrating the [] literal syntax here.
-
 A :newTerm:`dictionary literal` is
 an unordered collection of key-value pairs.
 It has the following form:
