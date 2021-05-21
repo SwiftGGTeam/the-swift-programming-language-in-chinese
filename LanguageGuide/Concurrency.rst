@@ -28,6 +28,7 @@ However, adding concurrency to slow or buggy code
 isn't a guarantee that it will become fast or correct;
 it might even make it harder to debug.
 Swift's language-level support for safe concurrency, however,
+◊◊◊
 
 .. XXX above -- if you don't actually *need* concurrency,
    just write simple synchronous code
@@ -273,6 +274,7 @@ using an :newTerm:`asynchronous sequence`.
 Here's what iterating over an asynchronous sequence looks like:
 
 .. testcode:: defining-async-function
+
     -> let names = await listPhotos(inGallery: "Winter Vacation")
     -> for await photo in Photos(names: names) {
            show(photo)
@@ -299,24 +301,16 @@ when it's waiting for the next element to be available.
 
 .. _Concurrency_AsyncLet:
 
-Calling Asynchronous Functions Without Waiting
-----------------------------------------------
-
-◊ Outline ◊
-
-- calls an async function, but then continues on rather than waiting
-- you can us async-let multiple times, and that work can run simultaneously
-- when you need to use the return value, then you ``await``
-- show a couple async-let use cases... a depends on b depends on c, but also
-  a depends on b & c & d together
-- behind the scenes, async-let implicitly creates a child Task
+Calling Asynchronous Functions Simultaneously
+---------------------------------------------
 
 Calling an asynchronous function with ``await``
 runs only one piece of code at a time.
 While the asynchronous code is running,
 the caller waits for that code to finish
 before moving on to run the next line of code.
-One way to call an asynchronous function without waiting
+One way to call an asynchronous function
+so it runs at the same time as other nearby code
 is to use ``async``-``let`` as shown below:
 
 .. testcode:: defining-async-function
@@ -340,6 +334,35 @@ if there are enough system resources available.
 It's not until the next ``await``,
 when the results of those asynchronous interactions with the server are needed
 that this function will suspend.
+
+Let's contrast the example above
+with a version that uses ``await`` instead of ``async``-``let``:
+
+.. testcode:: defining-async-function
+
+    >> func show(_ images: [Data]) { }
+    -> let firstPhoto = await downloadPhoto(named: photoNames[0])
+    -> let secondPhoto = await downloadPhoto(named: photoNames[1])
+    -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
+    ---
+    -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
+    -> show(photos)
+
+.. XXX FIXME XXX
+   Reflow the above example to START with the vanilla await
+   and then replace it with async-let
+   for a better problem/solution narrative flow
+
+   Also... need a real API that produces a async sequence.
+   I'd prefer not to go through the whole process of making one here,
+   since the protocol reference has enough detail to show you how to do that
+
+
+◊ async let x = y       the *local* flow works on y and keeps going; suspensions point
+◊ let x = await y       the *local* flow waits for y to be ready; no suspension point
+◊ in both cases, the concurrency model lets code from elsewhere run
+◊ the latter case lets you create parallelism
+◊ behind the scenes, async-let implicitly creates a child Task
 
 .. XXX expand this explanation a bit,
    then use it to transition into tasks
