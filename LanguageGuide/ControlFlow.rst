@@ -179,13 +179,11 @@ Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
    << 9
    << 12
 
-.. TODO: include the note below once we have some documentation for Sequence:
-   The examples above use a ``for``-``in`` loop to iterate
-   ranges, arrays, dictionaries, and strings.
-   However, you can use this syntax to iterate *any* collection,
-   including your own classes and collection types,
-   as long as they conform to the ``Sequence`` protocol.
-   <link to Sequence definition>
+The examples above use a ``for``-``in`` loop to iterate
+ranges, arrays, dictionaries, and strings.
+However, you can use this syntax to iterate *any* collection,
+including your own classes and collection types,
+as long as those types conform to the `Sequence <//apple_ref/swift/fake/sequence>`_ protocol.
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
