@@ -82,6 +82,11 @@ you mark each of these places where execution can be suspended.
    when custom executors become a thing)
    and possibly the operating system.
 
+.. XXX we might need a more explicit discussion
+   of what a (possible) suspension point is
+   and how it interacts with the flow of your program,
+   in particular how you can break invarients only between suspension points
+
 To indicate that a function or method is asynchronous,
 you write the ``async`` keyword in its declaration after its parameters,
 similar to how you use ``throws`` to mark a throwing function.
@@ -318,20 +323,20 @@ when it's waiting for the next element to be available.
         ... do something with the gallery ...
     }
 
-
-
 .. _Concurrency_AsyncLet:
 
-Calling Asynchronous Functions Simultaneously
----------------------------------------------
+Calling Asynchronous Functions in Parallel
+------------------------------------------
 
 Calling an asynchronous function with ``await``
 runs only one piece of code at a time.
 While the asynchronous code is running,
 the caller waits for that code to finish
 before moving on to run the next line of code.
-
-.. XXX intro
+For example,
+to fetch the first three photos from a gallery,
+you could await three calls the ``downloadPhoto(named:)`` functions
+as follows:
 
 .. testcode:: defining-async-function
 
@@ -343,15 +348,21 @@ before moving on to run the next line of code.
     -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
     -> show(photos)
 
+This approach has an important drawback:
+although the download is asynchronous
+and lets other work happen while it progresses,
+only one call to ``downloadPhoto(named:)`` runs at a time.
+Each photo downloads completely before the next one starts downloading.
+However, there's no need for these operations to wait ---
+each photo can download independently, or even at the same time.
 
-
-Another way to call an asynchronous function
-so it runs at the same time as other nearby code
-is to use ``async``-``let`` as shown below:
+To call an asynchronous function
+and let it run it parallel with code around it,
+write ``async`` in front of ``let`` when you define a constant,
+and then write ``await`` before the first time you use the constant.
 
 .. testcode:: defining-async-function
 
-    >> func show(_ images: [Data]) { }
     -> async let firstPhoto = downloadPhoto(named: photoNames[0])
     -> async let secondPhoto = downloadPhoto(named: photoNames[1])
     -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
@@ -359,30 +370,38 @@ is to use ``async``-``let`` as shown below:
     -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
     -> show(photos)
 
-In the example above,
-writing ``await`` before the call to ``listPhotos(inGallery:)``
-makes the function suspend there, as before.
-However, the next three lines can run simultaneously ---
-loading the first, second, and third photo by calling ``downloadPhoto(named:)``
-like this with ``async``-``let`` marks this as nonblocking asynchronous code.
-All three function calls could happen simultaneously
-if there are enough system resources available.
-It's not until the next ``await``,
-when the results of those asynchronous interactions with the server are needed
-that this function will suspend.
+In this example,
+all three calls to ``downloadPhoto(named:)`` start
+without waiting for the previous one to complete.
+If there are enough system resources available, they can run at the same time.
+None of these function calls are marked with ``await``
+because the code doesn't suspend to wait for the function's result.
+Instead, execution continues
+until the line where ``photos`` is defined ---
+at that point, the program needs the results from these asynchronous calls,
+so you write ``await`` to pause execution until all three photos are ready.
 
-Let's contrast the example above
-with a version that uses ``await`` instead of ``async``-``let``:
+Here's how you can think about the differences between these two approaches:
 
-◊ async let x = y       the *local* flow works on y and keeps going; suspensions point
-◊ let x = await y       the *local* flow waits for y to be ready; no suspension point
-◊ in both cases, the concurrency model lets code from elsewhere run
-◊ the latter case lets you create parallelism
-◊ behind the scenes, async-let implicitly creates a child Task
+- Call asynchronous functions with ``await``
+  when the code on the following lines depends on that function.
+  This creates work that can be carried out sequentially.
 
+- Call asynchronous function with ``async``-``let``
+  when you don't need the result until later on
+  This creates work that can be carried out in parallel.
 
-.. XXX expand this explanation a bit,
-   then use it to transition into tasks
+- Both ``await`` and ``async``-``let``
+  allow other code to run while they're waiting.
+
+- In both cases, you mark the possible suspension point with ``await``
+  to indicate that execution will pause, if needed,
+  until an asynchronous function has returned
+
+You can also use both of these approaches in the same code.
+Under the hood,
+the ``async``-``let`` syntax is implicitly creating a child task,
+as described in the next section.
 
 .. _Concurrency_Tasks:
 
@@ -405,7 +424,6 @@ that can be run asynchronously as part of your program.
 - other reasons to use the API include setting:
 
   + cancellation (``Task.isCancelled``)
-  + timeouts
   + priority (``Task.currentPriority``)
 
 - task group models a hierarchy or collection of tasks
