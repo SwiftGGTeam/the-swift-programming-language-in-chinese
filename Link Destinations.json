@@ -25,6 +25,7 @@
     "//apple_ref/swift/fake/Mirror.AncestorRepresentation": "https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation",
     "//apple_ref/swift/fake/NSClassFromString": "https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring",
     "//apple_ref/swift/fake/ReferenceWritableKeyPath": "https://developer.apple.com/documentation/swift/referencewritablekeypath",
+    "//apple_ref/swift/fake/TaskGroup": "https://developer.apple.com/documentation/swift/taskgroup",
     "//apple_ref/swift/fake/Sequence": "https://developer.apple.com/documentation/swift/sequence",
     "//apple_ref/swift/fake/WritableKeyPath": "https://developer.apple.com/documentation/swift/writablekeypath",
     "//apple_ref/swift/func/c:@F@UIApplicationMain": "https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain",

@@ -199,11 +199,11 @@ only certain places in your program can call asynchronous functions or methods:
 - Code in a detached child task,
   as shown in :ref:`Concurrency_TaskHandle` below.
 
-.. SE-0296 specifically out that top-level code is *not* an async context,
+.. SE-0296 specifically calls out that top-level code is *not* an async context,
    contrary to what you might expect.
    If that get changed, add this bullet to the list above:
 
-   - Code at the top level that makes up an implicit main function.
+   - Code at the top level that forms an implicit main function.
 
 In contrast to using ``async`` and ``await``,
 consider how you would write the example above
@@ -421,49 +421,62 @@ Tasks and Task Groups
 
 A :newTerm:`task` is a unit of work
 that can be run asynchronously as part of your program.
+All asynchronous code runs as part of some task.
 The ``async``-``let`` syntax described in the previous section
 implicitly creates a child task.
-You create an instance of ``Task`` explicitly
-when you need more control over the task,
-when you need to create a tasks dynamically,
-or when you need to set extra options on the task.
+You can also explicitly create a task group
+and add child tasks to that group,
+which gives you more control over priority and cancellation,
+and lets you create a dynamic number of tasks.
 
-◊ Outline ◊
+Tasks are arranged in a hierarchy.
+Each task in a task group has the same parent task,
+and each task can have child tasks.
+Because of the explicit relationship between tasks and task groups,
+this approach is called :newTerm:`structured concurrency`.
+Although you take on some of the responsibility for correctness,
+the explicit parent-child relationships between tasks
+lets Swift handle some behaviors like propagating cancellation for you,
+and lets Swift detect some errors at compile time.
 
-- All async code runs as part of some task
-
-- A task itself doesn't have any concurrency; it does one thing at a time
-
-- other reasons to use the API include setting:
-
-  + cancellation (``Task.isCancelled``)
-  + priority (``Task.currentPriority``)
-
-- task group models a hierarchy or collection of tasks
-
-- the only relationship between tasks is parent/child;
-  "siblings" don't have any connection
-
-.. not for WWDC, but keep for future:
-   task have deadlines, not timeouts --- like "now + 20 ms" ---
-   a deadline is usually what you want anyhow when you think of a timeout
-
-- this chapter introduces the core ways you use tasks;
-  for the full list what you can do,
-  including the unsafe escape hatches
-  and ``Task.current()`` for advanced use cases,
-  see the Task API reference [link to stdlib]
-
-- task cancellation isn't part of the state diagram below;
-  it's an independent property that can happen in any state
+.. XXX TR: What's an example of a programming error we'd catch?
 
 ::
 
-    let numbers = [10, 20, 30]
+    // example goes here
 
-TODO: Custom executor, default executor
+    withTaskGroup(
+        of childTaskResultType: ChildTaskResult.Type,
+        returning returnType: GroupResult.Type = GroupResult.self,
+        body: (inout TaskGroup<ChildTaskResult>) async -> GroupResult
+    )
 
-::
+
+For more information about task groups,
+see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
+
+
+.. OUTLINE
+
+    - A task itself doesn't have any concurrency; it does one thing at a time
+
+    - other reasons to use the API include setting:
+
+    + cancellation (``Task.isCancelled``)
+    + priority (``Task.currentPriority``)
+
+    .. not for WWDC, but keep for future:
+    task have deadlines, not timeouts --- like "now + 20 ms" ---
+    a deadline is usually what you want anyhow when you think of a timeout
+
+    - this chapter introduces the core ways you use tasks;
+    for the full list what you can do,
+    including the unsafe escape hatches
+    and ``Task.current()`` for advanced use cases,
+    see the Task API reference [link to stdlib]
+
+    - task cancellation isn't part of the state diagram below;
+    it's an independent property that can happen in any state
 
     [PLACEHOLDER ART]
 
@@ -478,8 +491,6 @@ TODO: Custom executor, default executor
        |
        v
     Completed
-
-::
 
     [PLACEHOLDER ART]
 
@@ -500,63 +511,65 @@ TODO: Custom executor, default executor
        v
     Completed
 
-.. _Concurrency_ChildTasks:
+    .. _Concurrency_ChildTasks:
 
-Adding Child Tasks to a Task Group
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Adding Child Tasks to a Task Group
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
+    - Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
 
-- awaiting ``withGroup`` means waiting for all child tasks to complete
+    - awaiting ``withGroup`` means waiting for all child tasks to complete
 
-- a child task can't outlive its parent,
-  like how ``async``-``let`` can't outlive the (implicit) parent
-  which is the function scope
+    - a child task can't outlive its parent,
+    like how ``async``-``let`` can't outlive the (implicit) parent
+    which is the function scope
 
-- Adding a child with ``Task.Group.spawn``
+    - Adding a child with ``Task.Group.spawn``
 
-- awaiting ``add`` means waiting for that child task to be added,
-  not waiting for that child task to finish
+    - awaiting ``add`` means waiting for that child task to be added,
+    not waiting for that child task to finish
 
-- ?? maybe cover ``Task.Group.next``
-  probably nicer to use the ``for await result in someGroup`` syntax
+    - ?? maybe cover ``Task.Group.next``
+    probably nicer to use the ``for await result in someGroup`` syntax
 
-◊ quote from the SE proposal --- I want to include this fact here too
+    ◊ quote from the SE proposal --- I want to include this fact here too
 
-> There's no way for reference to the child task to
-> escape the scope in which the child task is created.
-> This ensures that the structure of structured concurrency is maintained.
-> It makes it easier to reason about
-> the concurrent tasks that are executing within a given scope,
-> and also enables various optimizations.
+    > There's no way for reference to the child task to
+    > escape the scope in which the child task is created.
+    > This ensures that the structure of structured concurrency is maintained.
+    > It makes it easier to reason about
+    > the concurrent tasks that are executing within a given scope,
+    > and also enables various optimizations.
 
 
-.. _Concurrency_TaskPriority:
+.. OUTLINE
 
-Setting Task Priority
-~~~~~~~~~~~~~~~~~~~~~
+    .. _Concurrency_TaskPriority:
 
-◊ Outline ◊
+    Setting Task Priority
+    ~~~~~~~~~~~~~~~~~~~~~
 
-- priority values defined by ``Task.Priority`` enum
+    ◊ Outline ◊
 
-- instance property ``Task.priority``
-  and type property ``Task.currentPriority``
-  (the latter is easier to use in most cases)
+    - priority values defined by ``Task.Priority`` enum
 
-- The exact result of setting a task's priority depends on the executor
+    - instance property ``Task.priority``
+    and type property ``Task.currentPriority``
+    (the latter is easier to use in most cases)
 
-- TR: What's the built-in stdlib executor do?
+    - The exact result of setting a task's priority depends on the executor
 
-- Child tasks inherit the priority of their parents
+    - TR: What's the built-in stdlib executor do?
 
-- If a high-priority task is waiting for a low-priority one,
-  the low-priority one gets scheduled at high priority
-  (this is known as :newTerm:`priority escalation`)
+    - Child tasks inherit the priority of their parents
 
-- In addition, or instead of, setting a low priority,
-  you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
-  This is a sort of cooperative multitasking for long-running work.
+    - If a high-priority task is waiting for a low-priority one,
+    the low-priority one gets scheduled at high priority
+    (this is known as :newTerm:`priority escalation`)
+
+    - In addition, or instead of, setting a low priority,
+    you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
+    This is a sort of cooperative multitasking for long-running work.
 
 
 .. _Concurrency_TaskHandle:
@@ -564,24 +577,37 @@ Setting Task Priority
 Detached Tasks
 ~~~~~~~~~~~~~~
 
-◊ Outline ◊
+Unlike tasks that are part of a task group,
+a detached task doesn't have a parent task.
+This gives you complete flexibility to manage it,
+but also makes your code completely responsible for correctness.
+To create a detached task that runs on the current actor,
+call the ``async()`` function ---
+or to create a detached task that's not part of the current actor,
+call ``asychDetached()``.
+Both of these functions return a task handle
+that lets you interact with the task ---
+for example, to wait for its result or to cancel it.
 
-- ``async()`` makes a child task with no parent
-  that inherits a bunch of stuff from the current actor
+::
 
-- ``asychDetached()`` makes a new task with no parent,
-  which means that child task can run indefinitely
+    XXX untested code
 
-- you use a :newTerm:`task handle` to interact with it
+    let handle = await {
+        // ... some operation ...
+    }
+    let result = await handle.get()
+    print(result)
 
-- ``Task.Handle``
+For more information about managing detached tasks,
+see ``Task.Handle``.
 
-- To get the result of the detached task, ``await someTaskHandle.get()``
+.. XXX Make async asyncDetached and Task.Handle above into live links
 
-
-◊ When to make a method do its work in a detached task
-versus making the method itself async?
-(Pull from 2021-04-21 notes from Ben's talk.)
+..
+    ◊ When to make a method do its work in a detached task
+    versus making the method itself async?
+    (Pull from 2021-04-21 notes from Ben's talk.)
 
 
 .. _Concurrency_TaskCancellation:
@@ -589,20 +615,35 @@ versus making the method itself async?
 Task Cancellation
 ~~~~~~~~~~~~~~~~~
 
+Swift concurrency uses a cooperative cancellation model.
+Each task checks whether it has been cancelled
+at the appropriate points in its execution,
+and responds to cancellation in whatever way is appropriate.
+Depending on the work you're doing,
+that usually means doing one of the following:
+
+- Throwing an error like ``CancellationError``
+- Returning ``nil`` or an empty collection
+- Returning the work that has already been finished
+
+To check for cancellation,
+either call ``Task.checkCancellation()``
+which throws ``CancellationError`` if the task has been canceled,
+or check the value of ``Task.isCancelled``
+and handle the cancellation in your own code.
+For example,
+a task that's downloading photos from a gallery
+might need to delete partial downloads and close network connections.
+
+To propagate cancellation manually,
+call ``Task.Handle.cancel()``.
+
+
 ◊ Outline ◊
 
-- The cancellation model is "cooperative" --- each task checks whether it was canceled
-
-- conventionally, you call ``Task.checkCancellation()``
-  which throws ``CancellationError`` if the task has been canceled
-
-- You can check manually via ``Task.isCancelled``,
-  which lets you do clean-up before throwing an error
-  for example to release resources or to close network connections
 
 - task handle
 
-- ``Task.Handle.cancel()``
 
 - cancellation propagates (Konrad's example below)
 
@@ -622,9 +663,9 @@ Task Cancellation
     // done!           <1>
 
 - Use ``Task.withCancellationHandler`` to specify a closure to run
-  if the task is canceled
-  along with a closure that defines the task's work
-  (it doesn't throw like ``checkCancellation`` does)
+if the task is canceled
+along with a closure that defines the task's work
+(it doesn't throw like ``checkCancellation`` does)
 
 
 .. _Concurrency_Actors:
@@ -750,102 +791,92 @@ the properties of an actor are part of that actor's isolated local state.
 The language guarantee that only code inside an actor
 can access the actor's local state is known as *actor isolation*.
 
+.. OUTLINE
+
+   Add this post-WWDC when we have a more solid story to tell aroud Sendable
+
+    .. _Concurrency_ActorIsolation:
+
+    Actor Isolation
+    ~~~~~~~~~~~~~~~
+
+    ◊ Outline ◊
+
+    - actors protect their mutable state using :newTerm:`actor isolation`
+    to prevent data races
+    (one actor reading data that's in an inconsistent state
+    while another actor is updating/writing to that data)
+
+    - within an actor's implementation,
+    you can read and write to properties of ``self`` synchronously,
+    likewise for calling methods of ``self`` or ``super``
+
+    - method calls from outside the actor are always async,
+    as is reading the value of an actor's property
+
+    - the values you pass to a method call from outside of an actor
+    have to be sendable (conform to the ``Sendable`` marker protocol)
+
+    + structs and enums implicitly conform to ``Sendable``
+        if they're non-public, non-frozen,
+        and all of their properties are also ``Sendable``
+
+    + all actors are implicitly sendable
+
+    + everything else needs to be marked ``Sendable`` explicitly
+
+    + the only valid superclass for a sendable class is ``NSObject``
+        (allowed for Obj-C interop)
+
+    - you can't write to a property directly from outside the actor
+
+    ◊ TODO: Either define "data race" or use a different term;
+    the chapter on exclusive ownership talks about "conflicting access",
+    which is related, but different.
+    Konrad defines "data race" as concurrent access to shared state,
+    noting that our current design doesn't prevent all race conditions
+    because suspension points allow for interleaving.
+
+    - The same actor method can be called multiple times, overlapping itself.
+    This is sometimes referred to as *reentrant code*.
+    The behavior is defined and safe... but might have unexpected results.
+    However, the actor model doesn't require or guarantee
+    that these overlapping calls behave correctly (that they're *idempotent*).
+    Encapsulate state changes in a synchronous function
+    or write them so they don't contain an ``await`` in the middle.
+
+    - If a closure is ``@Sendable`` or ``@escaping``
+    then it behaves like code outside of the actor
+    because it could execute concurrently with other code that's part of the actor
 
 
-.. _Concurrency_ActorIsolation:
+    ◊ exercise the log actor, using its client API to mutate state
 
-Actor Isolation
-~~~~~~~~~~~~~~~
+    ::
 
-◊ Outline ◊
+        let logger = TemperatureSensor(lines: [
+            "Outdoor air temperature",
+            "25 C",
+            "24 C",
+        ])
+        print(await logger.getMax())
 
-- actors protect their mutable state using :newTerm:`actor isolation`
-  to prevent data races
-  (one actor reading data that's in an inconsistent state
-  while another actor is updating/writing to that data)
+        await logger.update(with: "27 C")
+        print(await logger.getMax())
 
-- within an actor's implementation,
-  you can read and write to properties of ``self`` synchronously,
-  likewise for calling methods of ``self`` or ``super``
+    .. _Concurrency_Sendable:
 
-- method calls from outside the actor are always async,
-  as is reading the value of an actor's property
+    Sending Data Between Actors
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- the values you pass to a method call from outside of an actor
-  have to be sendable (conform to the ``Sendable`` marker protocol)
+    TODO: Fill this in from SE-0302
 
-  + structs and enums implicitly conform to ``Sendable``
-    if they're non-public, non-frozen,
-    and all of their properties are also ``Sendable``
+.. _Concurrency_MainActor:
 
-  + all actors are implicitly sendable
+The Main Actor
+~~~~~~~~~~~~~~
 
-  + everything else needs to be marked ``Sendable`` explicitly
-
-  + the only valid superclass for a sendable class is ``NSObject``
-    (allowed for Obj-C interop)
-
-- you can't write to a property directly from outside the actor
-
-◊ TODO: Either define "data race" or use a different term;
-the chapter on exclusive ownership talks about "conflicting access",
-which is related, but different.
-Konrad defines "data race" as concurrent access to shared state,
-noting that our current design doesn't prevent all race conditions
-because suspension points allow for interleaving.
-
-- The same actor method can be called multiple times, overlapping itself.
-  This is sometimes referred to as *reentrant code*.
-  The behavior is defined and safe... but might have unexpected results.
-  However, the actor model doesn't require or guarantee
-  that these overlapping calls behave correctly (that they're *idempotent*).
-  Encapsulate state changes in a synchronous function
-  or write them so they don't contain an ``await`` in the middle.
-
-- If a closure is ``@Sendable`` or ``@escaping``
-  then it behaves like code outside of the actor
-  because it could execute concurrently with other code that's part of the actor
-
-
-◊ exercise the log actor, using its client API to mutate state
-
-::
-
-    let logger = TemperatureSensor(lines: [
-        "Outdoor air temperature",
-        "25 C",
-        "24 C",
-    ])
-    print(await logger.getMax())
-
-    await logger.update(with: "27 C")
-    print(await logger.getMax())
-
-
-.. _Concurrency_Sendable:
-
-Sending Data Between Actors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-TODO: Fill this in from SE-0302
-
-.. OUTLINE BITS
-
-    - like classes, actors can inherit from other actors
-
-    - actors can also inherit from ``NSObject``,
-    which lets you mark them ``@objc`` and do interop stuff with them
-
-    - every actor implicitly conforms to the ``Actor`` protocol,
-    which has no requirements
-
-    - you can use the ``Actor`` protocol to write code that's generic across actors
-
-    - In the future, when we get distributed actors,
-      the TemperatureSensor example
-      might be a good example to expand when explaining them.
-
-    ◊ TODO: Incorporate @MainActor into the outline:
+.. OUTLINE
 
     - the main actor is kinda-sorta like the main thread
 
@@ -864,6 +895,27 @@ TODO: Fill this in from SE-0302
     If you mark the property of a type with one of these implicit-main-actor properties,
     that has the same effect as marking the type with ``@MainActor``
     you can wait for each child of a task
+
+
+
+
+
+.. LEFTOVER OUTLINE BITS
+
+    - like classes, actors can inherit from other actors
+
+    - actors can also inherit from ``NSObject``,
+    which lets you mark them ``@objc`` and do interop stuff with them
+
+    - every actor implicitly conforms to the ``Actor`` protocol,
+    which has no requirements
+
+    - you can use the ``Actor`` protocol to write code that's generic across actors
+
+    - In the future, when we get distributed actors,
+      the TemperatureSensor example
+      might be a good example to expand when explaining them.
+
 
     ::
 
