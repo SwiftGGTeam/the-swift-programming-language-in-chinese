@@ -60,6 +60,7 @@ Defining and Calling Asynchronous Functions
 .. XXX Since free functions seem to be less common in app code,
    maybe we should call these "async methods" throughout the guide
    and just mention that you can also use async on free functions?
+   However, the error handling chapter just talks about throwing functions.
 
 An :newTerm:`asynchronous function` or :newTerm:`asynchronous method`
 is a special kind of function or method
@@ -85,7 +86,7 @@ you mark each of these places where execution can be suspended.
 .. XXX we might need a more explicit discussion
    of what a (possible) suspension point is
    and how it interacts with the flow of your program,
-   in particular how you can break invarients only between suspension points
+   in particular how you can break invariants only between suspension points
 
 To indicate that a function or method is asynchronous,
 you write the ``async`` keyword in its declaration after its parameters,
@@ -198,10 +199,11 @@ only certain places in your program can call asynchronous functions or methods:
 - Code in a detached child task,
   as shown in :ref:`Concurrency_TaskHandle` below.
 
-.. SE-0296 specificalls out that top-level code is *not* an async context,
+.. SE-0296 specifically out that top-level code is *not* an async context,
    contrary to what you might expect.
-   If that get changed, put this bullet back into the list above:
-   Code at the top level that makes up an implicit main function.
+   If that get changed, add this bullet to the list above:
+
+   - Code at the top level that makes up an implicit main function.
 
 In contrast to using ``async`` and ``await``,
 consider how you would write the example above
@@ -209,8 +211,6 @@ using functions that take a closure as completion handler
 to run after each operation completes:
 
 .. testcode:: defining-async-function
-
-    XXX REWRITE XXX
 
     >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
     >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
@@ -231,6 +231,19 @@ because the code has to be written as a series of completion handlers.
 In contrast, the version above that uses ``await``
 reads as a linear, sequential series of steps.
 
+
+.. XXX
+
+   breaking invariants between suspensions points
+   ideally, do this in a sync function -- makes it easier to see
+   you can explicitly insert a suspension point too
+
+    ``Task.yield()``
+    https://[Internal Staging Server]/documentation/swift/task/3814840-yield
+
+
+
+
 .. XXX add detail above about how the *compiler* can reason about
    the async/await version better too
    and give you better guarantees and clearer errors
@@ -239,6 +252,7 @@ reads as a linear, sequential series of steps.
    where we currently talk about completion handlers.
 
 .. XXX make Task.sleep() below a live link
+   https://[Internal Staging Server]/documentation/swift/task/3814836-sleep
 
 .. note::
 
@@ -320,7 +334,7 @@ when it's waiting for the next element to be available.
 
     let handle = FileHandle(forReadingFrom: "http://example.com/galleries")
     for await galleryURL in handle.bytes.lines {
-        ... do something with the gallery ...
+        // ... do something with the gallery ...
     }
 
 .. _Concurrency_AsyncLet:
@@ -384,24 +398,21 @@ so you write ``await`` to pause execution until all three photos are ready.
 Here's how you can think about the differences between these two approaches:
 
 - Call asynchronous functions with ``await``
-  when the code on the following lines depends on that function.
-  This creates work that can be carried out sequentially.
+  when the code on the following lines depends on that function's result.
+  This creates work that is carried out sequentially.
 
 - Call asynchronous function with ``async``-``let``
-  when you don't need the result until later on
+  when you don't need the result until later in your code.
   This creates work that can be carried out in parallel.
 
 - Both ``await`` and ``async``-``let``
-  allow other code to run while they're waiting.
+  allow other code to run while they're suspended.
 
 - In both cases, you mark the possible suspension point with ``await``
   to indicate that execution will pause, if needed,
   until an asynchronous function has returned
 
-You can also use both of these approaches in the same code.
-Under the hood,
-the ``async``-``let`` syntax is implicitly creating a child task,
-as described in the next section.
+You can also mix both of these approaches in the same code.
 
 .. _Concurrency_Tasks:
 
@@ -410,16 +421,18 @@ Tasks and Task Groups
 
 A :newTerm:`task` is a unit of work
 that can be run asynchronously as part of your program.
+The ``async``-``let`` syntax described in the previous section
+implicitly creates a child task.
+You create an instance of ``Task`` explicitly
+when you need more control over the task,
+when you need to create a tasks dynamically,
+or when you need to set extra options on the task.
 
 ◊ Outline ◊
 
 - All async code runs as part of some task
 
 - A task itself doesn't have any concurrency; it does one thing at a time
-
-- async-let lets you implicitly create tasks that have dependencies;
-  if you need to create tasks dynamically or with extra options
-  you use the ``Task`` APIs directly
 
 - other reasons to use the API include setting:
 
@@ -553,7 +566,10 @@ Detached Tasks
 
 ◊ Outline ◊
 
-- ``detach`` makes a new task with no parent,
+- ``async()`` makes a child task with no parent
+  that inherits a bunch of stuff from the current actor
+
+- ``asychDetached()`` makes a new task with no parent,
   which means that child task can run indefinitely
 
 - you use a :newTerm:`task handle` to interact with it
@@ -616,132 +632,125 @@ Task Cancellation
 Actors
 ------
 
-◊ Outline ◊
-
-- actors are reference types like classes
-
-- unlike classes, it's safe to use the same actor
-  from multiple execution contexts (tasks/threads)
-
-- like classes, actors can inherit from other actors
-
-- actors can also inherit from ``NSObject``,
-  which lets you mark them ``@objc`` and do interop stuff with them
-
-- every actor implicitly conforms to the ``Actor`` protocol,
-  which has no requirements
-
-- you can use the ``Actor`` protocol to write code that's generic across actors
-
-◊ Narrative code example ◊
-
-- You're reading temperature data from a remote sensor
-
-- It prints out a human-readable label on startup,
-  followed by measurement/units lines
-
-- Some code elsewhere is already doing the over-the-network or over-USB bits
-
-.. In the future, when we get distributed actors,
-   this might be a good example to expand when explaining them.
-
-◊ TODO: Incorporate @MainActor into the outline:
-
-- the main actor is kinda-sorta like the main thread
-
-- use it when you have shared mutable state,
-  but that state isn't neatly wrapped up in a single type
-
-- you can put it on a function,
-  which makes calls to the function always run on the main actor
-
-- you can put it on a type,
-  which makes calls to all of the type's methods run on the main actor
-
-- some property wrappers like ``@EnvironmentObject`` from SwiftUI
-  imply ``@MainActor`` on a type.
-  Check for a ``wrappedValue`` that's marked ``@MainActor``.
-  If you mark the property of a type with one of these implicit-main-actor properties,
-  that has the same effect as marking the type with ``@MainActor``
-
-◊ define an actor and a helper function
+Like classes, actors are reference types,
+so the comparison of value types and reference types
+in :ref:`ClassesAndStructures_ClassesAreReferenceTypes`
+applies to actors as well as classes.
+Unlike classes, actors serialize access to their mutable state,
+which makes it safe for code in multiple tasks
+to interact with the same instance of an actor.
+For example, here's an actor that records temperatures:
 
 ::
 
-    actor TemperatureSensor {
+    actor TemperatureLogger {
         let label: String
         let units: String
         var measurements: [Int]
-        var max: Int
+        private var max: Int
 
-        init(lines: [String]) {
-            assert(lines.count >= 2)
-
-            self.label = lines[0]
-            let (firstMeasurement, firstLabel) = parse(line: lines[1])
-            self.units = firstLabel
-            self.measurements = [firstMeasurement]
-            self.max = firstMeasurement
-
-            for line in lines[2...] {
-                update(with: line)
-            }
+        init(label: String, units: String, measurement: Int) {
+            self.label = label
+            self.units = units
+            self.measurements = [measurement]
+            self.max = measurement
         }
     }
 
-    private func parse(line: String) -> (measurement: Int, units: String) {
-        let parts = line.split(separator: " ", maxSplits: 1)
-        let measurement = Int(parts[0])!
-        let units = String(parts[1])
-        return (measurement: measurement, units: units)
-    }
+.. XXX suggest deleting 'units' from this example
+   it was useful in a previous iteration that had a parser,
+   but now it's just one more moving part
 
-◊ is there a better example that doesn't need type conversions & force unwrap?
-◊ give it some client-facing API
+You introduce an actor with the ``actor`` keyword,
+followed by its definition in a pair of braces.
+The ``TemperatureLogger`` actor has three properties
+that other code outside the actor can access,
+``label``, ``units``, and ``measurements`` property,
+and it has a ``max`` property that's only accessible within the actor.
+
+You create an instance of a actor
+using the same initializer syntax as structures and classes.
+When you access a property or method of an actor,
+you use ``await`` to mark the potential suspension point ---
+for example:
 
 ::
 
-    extension TemperatureSensor {
-        func update(with line: String) {
-            let (measurement, units) = parse(line: line)
+    let logger = TemperatureLogger(label: "Outdoors", units: "C", measurement: 25)
+    print(await logger.units)
+    // Prints "C"
+
+In this example,
+accessing ``logger.units`` is a possible suspension point.
+Because the actor serializes access to its mutable state,
+if there's already code from another task interacting with the logger instance,
+this code might suspend while waiting to access that property.
+
+In contrast,
+code that's part of the actor doesn't write ``await``
+when accessing the actor's properties.
+For example,
+here's a method that updates a ``Logger`` with a new temperature:
+
+::
+
+    extension TemperatureLogger {
+        func update(with measurement: Int, units: String) {
             assert(units == self.units)
             measurements.append(measurement)
             if measurement > max {
                 max = measurement
             }
         }
-
-        func getMax() -> Int { return max }
-
-        func reset() {
-            measurements = [measurements.last!]
-            max = measurements.last!
-        }
     }
 
-◊ TR: Is there a better "getter" pattern than ``getMax()``?
+The ``update(with:units:)`` method is already running on the actor,
+so it doesn't mark its access to properties like ``max`` with ``await``.
+This method also shows one of the reasons
+why actors serialize access to their internal state:
+some updates to an actor's state temporarily break invariants.
+The ``TemperatureLogger`` actor keeps track of
+a list of temperatures and a maximum temperature,
+and it updates the maximum temperature when you record a new measurement.
+In the middle of an update,
+after appending the new measurement but before updating ``max``,
+the temperature logger is in a temporary inconsistent state.
+Preventing multiple tasks interacting with the same instance simultaneously
+prevents problems like the following:
 
-In the example above,
-the ``update(with:)``, ``getMax()``, and ``reset()`` functions
-can access the properties of the actor.
-However, if you try to access those properties from outside the actor,
+#. Your code calls the ``update(with:units:)`` method.
+   It updates the ``measurements`` array first.
+
+#. Before your can update ``max``,
+   code elsewhere reads the maximum value and the array of temperatures.
+
+#. Finally, your code finishes its update by changing ``max``.
+
+In this hypothetical case,
+the code running elsewhere would read incorrect information
+because its access to the actor was interleaved
+in the middle of the call to ``update(with:units:)``
+while the data was temporarily invalid.
+This doesn't occur with Swift actors
+because they only allow one operation on their state at a time
+and that code can only be interrupted 
+in places where ``await`` marks a suspension point.
+
+If you try to access those properties from outside the actor,
 like you would with an instance of a class,
 you'll get a compile-time error.
 For example:
 
 ::
 
-    var logger = TemperatureSensor(lines: [
-        "Outdoor air temperature",
-        "25 C",
-        "24 C",
-    ])
-    logger.measurements.add(100)  // Error
+    print(logger.max)  // Error
 
-Accessing ``logger.measurements`` fails because
-the properties of an actor are part of that actor's local state.
+Accessing ``logger.max`` without writing ``await`` fails because
+the properties of an actor are part of that actor's isolated local state.
 The language guarantee that only code inside an actor
-can access the actor's local state is called *actor isolation*.
+can access the actor's local state is known as *actor isolation*.
+
+
 
 .. _Concurrency_ActorIsolation:
 
@@ -820,23 +829,54 @@ Sending Data Between Actors
 
 TODO: Fill this in from SE-0302
 
-◊ Outline leftovers ◊
----------------------
+.. OUTLINE BITS
 
-you can wait for each child of a task
+    - like classes, actors can inherit from other actors
 
-::
+    - actors can also inherit from ``NSObject``,
+    which lets you mark them ``@objc`` and do interop stuff with them
 
-    while let result = try await group.next() { }
-    for try await result in group { }
+    - every actor implicitly conforms to the ``Actor`` protocol,
+    which has no requirements
 
-how much should you have to understand threads to understand this?
-Ideally you don't have to know anything about them.
+    - you can use the ``Actor`` protocol to write code that's generic across actors
 
-How do you meld async-await-Task-Actor with an event driven model?
-Can you feed your user events through an async sequence or Combine
-and then use for-await-in to spin an event loop?
-I think so --- but how do you get the events *into* the async sequence?
+    - In the future, when we get distributed actors,
+      the TemperatureSensor example
+      might be a good example to expand when explaining them.
 
-Probably don't cover unsafe continuations (SE-0300) in TSPL,
-but maybe link to them?
+    ◊ TODO: Incorporate @MainActor into the outline:
+
+    - the main actor is kinda-sorta like the main thread
+
+    - use it when you have shared mutable state,
+    but that state isn't neatly wrapped up in a single type
+
+    - you can put it on a function,
+    which makes calls to the function always run on the main actor
+
+    - you can put it on a type,
+    which makes calls to all of the type's methods run on the main actor
+
+    - some property wrappers like ``@EnvironmentObject`` from SwiftUI
+    imply ``@MainActor`` on a type.
+    Check for a ``wrappedValue`` that's marked ``@MainActor``.
+    If you mark the property of a type with one of these implicit-main-actor properties,
+    that has the same effect as marking the type with ``@MainActor``
+    you can wait for each child of a task
+
+    ::
+
+        while let result = try await group.next() { }
+        for try await result in group { }
+
+    how much should you have to understand threads to understand this?
+    Ideally you don't have to know anything about them.
+
+    How do you meld async-await-Task-Actor with an event driven model?
+    Can you feed your user events through an async sequence or Combine
+    and then use for-await-in to spin an event loop?
+    I think so --- but how do you get the events *into* the async sequence?
+
+    Probably don't cover unsafe continuations (SE-0300) in TSPL,
+    but maybe link to them?
