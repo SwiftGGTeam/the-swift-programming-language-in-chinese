@@ -1362,6 +1362,68 @@ even though they need to be executed at different times.
     <- false
 
 
+.. _Tour_Concurrency:
+
+Concurrency
+-----------
+
+You use ``async`` to mark an asynchronous function.
+You mark an asynchronous operation,
+like a call to an asynchronous function,
+by writing ``await``
+if you want to wait for it to complete.
+
+.. testcode:: guided-tour
+
+   -> var currentlyBaking = ""
+   -> func bake(_ food: String) async {
+          currentlyBaking = food
+          // ... wait ...
+          currentlyBaking = ""
+      }
+   -> func makeCookies() async -> String {
+          let cookies = await bake("cookies")
+          return cookies
+      }
+
+You can use ``async``-``let`` to start an asynchronous operation
+without waiting for it to complete,
+which lets the operations run at the same time.
+Because you still need to wait for the operation to finish
+before you can use the value it returns,
+you write ``await`` the first place that you use that constant.
+
+.. testcode:: guided-tour
+
+   -> async let cookies = makeCookies()
+   -> async let bread = bake("bread")
+   ---
+   -> let bakedGoods = await [cookies, bread]
+
+Actors are similar to classes,
+except they ensure that different asynchronous functions
+can all interact with an instance of the same actor at the same time.
+
+.. testcode:: guided-tour
+
+   -> actor Oven {
+          var contents: [String] = []
+          func bake(_ food: String) {
+              let index = contents.endIndex
+              contents.append(food)
+              // ... wait ...
+              contents.remove(at: index)
+          }
+      }
+
+.. XXX bake(_:) can't be interrupted between saving the index and appending to the array
+   make sure that's actually true, and not part of the "reentrency" proposal
+
+.. XXX interacting with the oven's properties and methods is marked await
+
+.. XXX async { }
+
+
 .. _Tour_Generics:
 
 Generics
