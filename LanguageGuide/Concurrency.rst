@@ -284,8 +284,8 @@ Here's what iterating over an asynchronous sequence looks like:
     import Foundation
 
     let handle = FileHandle(forReadingFrom: "http://example.com/galleries")
-    for await galleryURL in handle.bytes.lines {
-        dowloadPhotos(from: galleryURL)
+    for await galleryName in handle.bytes.lines {
+        dowloadPhotos(from: galleryName)
     }
 
 Instead of using a ordinary ``for`` loop,
