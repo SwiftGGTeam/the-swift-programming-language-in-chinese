@@ -62,6 +62,11 @@ will be structures and enumerations.
 For a more detailed comparison,
 see `Choosing Between Structures and Classes <https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes>`_.
 
+.. note::
+
+   Classes and actors share many of the same characteristics and behaviors.
+   For information about actors, see :doc:`./Concurrency`.
+
 .. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax

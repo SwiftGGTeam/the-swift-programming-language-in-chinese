@@ -27,18 +27,15 @@ for example, you can use actors to safely share mutable state.
 However, adding concurrency to slow or buggy code
 isn't a guarantee that it will become fast or correct;
 it might even make it harder to debug.
-Swift's language-level support for safe concurrency, however,
-◊◊◊
-
-.. XXX above -- if you don't actually *need* concurrency,
-   just write simple synchronous code
+Using language-level support for concurrency in code that needs it
+lets Swift help you catch problems at compile time.
 
 The rest of this chapter uses the term *concurrency*
 to refer to this common combination of asynchronous and parallel code.
 
 .. note::
 
-   If you've written parallel or asynchronous code before,
+   If you've written concurrent code before,
    you might be used to working with threads.
    The concurrency model in Swift is built on top of threads,
    but you don't interact with them directly.
@@ -46,11 +43,6 @@ to refer to this common combination of asynchronous and parallel code.
    can give up the thread it was running on,
    which lets another asynchronous function run on that thread
    while the first function is blocked.
-
-.. XXX From Chuck:
-   Should we have a more explicit comparison between Swift concurrency and threads?
-   Things like "if you used threads to do X, do Y in Swift instead"?
-
 
 .. _Concurrency_AsyncFunc:
 
@@ -82,11 +74,6 @@ you mark each of these places where execution can be suspended.
    the executor (a concept we're not explaining until next year
    when custom executors become a thing)
    and possibly the operating system.
-
-.. XXX we might need a more explicit discussion
-   of what a (possible) suspension point is
-   and how it interacts with the flow of your program,
-   in particular how you can break invariants only between suspension points
 
 To indicate that a function or method is asynchronous,
 you write the ``async`` keyword in its declaration after its parameters,
@@ -228,21 +215,24 @@ to run after each operation completes:
 
 Even in this simple case, the closures are harder to read
 because the code has to be written as a series of completion handlers.
-In contrast, the version above that uses ``await``
-reads as a linear, sequential series of steps.
+In contrast, the version that uses ``await``
+reads as a linear, sequential series of steps,
+even though execution might be suspended at various points along the way.
 
+.. XXX we might need a more explicit discussion
+   of what a (possible) suspension point is
+   and how it interacts with the flow of your program,
+   in particular how you can break invariants only between suspension points
+   There is a bit in the reference,
+   but it's important enough to walk through step by step.
 
-.. XXX
+   ideally, do this in a sync function,
+   which makes it easier to see your intention
+   that the operation must not contain any suspension points
 
-   breaking invariants between suspensions points
-   ideally, do this in a sync function -- makes it easier to see
-   you can explicitly insert a suspension point too
-
-    ``Task.yield()``
-    https://[Internal Staging Server]/documentation/swift/task/3814840-yield
-
-
-
+   you can also explicitly insert a suspension point
+   by calling ``Task.yield()``
+   https://developer.apple.com/documentation/swift/task/3814840-yield
 
 .. XXX add detail above about how the *compiler* can reason about
    the async/await version better too
@@ -252,7 +242,7 @@ reads as a linear, sequential series of steps.
    where we currently talk about completion handlers.
 
 .. XXX make Task.sleep() below a live link
-   https://[Internal Staging Server]/documentation/swift/task/3814836-sleep
+    https://developer.apple.com/documentation/swift/task/3814836-sleep
 
 .. note::
 
@@ -266,13 +256,10 @@ reads as a linear, sequential series of steps.
    .. testcode:: sleep-in-toy-code
 
        >> struct Data {}  // Instead of actually importing Foundation
-       >> @available(macOS 9999, *)  // XXX stdlib has placeholder availability
        -> func listPhotos(inGallery name: String) async -> [String] {
               await Task.sleep(2)
               return ["IMG001", "IMG99", "IMG0404"]
        }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. XXX either add an example or maybe a short section
    about throwing and async together
@@ -292,28 +279,29 @@ is to wait for one element of the collection at a time
 using an :newTerm:`asynchronous sequence`.
 Here's what iterating over an asynchronous sequence looks like:
 
-.. testcode:: defining-async-function
+::
 
-    // XXX this is a different version of listPhotos()
-    -> let names = await listPhotos(inGallery: "Winter Vacation")
-    -> for await photo in Photos(names: names) {
-           show(photo)
-       }
+    import Foundation
+
+    let handle = FileHandle(forReadingFrom: "http://example.com/galleries")
+    for await galleryURL in handle.bytes.lines {
+        dowloadPhotos(from: galleryURL)
+    }
 
 Instead of using a ordinary ``for`` loop,
 the example above writes ``for`` followed by ``await``.
 Like when you call an asynchronous function or method,
-writing ``await`` indicates a possible suspension point
-where this code can pause while it's waiting,
-allowing other code to run.
-A ``for``-``await`` loop can suspend at the beginning of each iteration,
+writing ``await`` indicates a possible suspension point.
+A ``for``-``await`` loop potentially suspends execution
+at the beginning of each iteration,
 when it's waiting for the next element to be available.
 
-.. XXX like you can use your own types in a for loop
-   by letting them conform to Sequence,
-   you can do the same with a for-await look
-   by confirming to AsyncSequence
-   <https://developer.apple.com/documentation/swift/asyncsequence>
+In the same way that you can use your own types in a ``for`` loop
+by adding conformance to the ``Sequence`` protocol,
+you can use your own types in a ``for``-``await`` loop
+by adding conformance to the ``AsyncSequence`` protocol.
+
+.. XXX link to https://developer.apple.com/documentation/swift/asyncsequence
 
 .. XXX what happened to ``Series`` which was supposed to be a currency type?
    Is that coming from Combine instead of the stdlib maybe?
@@ -325,17 +313,18 @@ when it's waiting for the next element to be available.
    Maybe one of the other conforming types from an Apple framework --
    how about FileHandle.AsyncBytes (myFilehandle.bytes.lines) from Foundation?
 
-   https://[Internal Staging Server]/documentation/swift/asyncsequence
-   https://[Internal Staging Server]/documentation/foundation/filehandle
+   https://developer.apple.com/documentation/swift/asyncsequence
+   https://developer.apple.com/documentation/foundation/filehandle
 
-::
+   if we get a stdlib-provided async sequence type at some point,
+   rewrite the above to fit the same narrative flow
+   using something like the following
 
-    import Foundation
+   let names = await listPhotos(inGallery: "Winter Vacation")
+   for await photo in Photos(names: names) {
+       show(photo)
+   }
 
-    let handle = FileHandle(forReadingFrom: "http://example.com/galleries")
-    for await galleryURL in handle.bytes.lines {
-        // ... do something with the gallery ...
-    }
 
 .. _Concurrency_AsyncLet:
 
@@ -604,10 +593,10 @@ see ``Task.Handle``.
 
 .. XXX Make async asyncDetached and Task.Handle above into live links
 
-..
-    ◊ When to make a method do its work in a detached task
-    versus making the method itself async?
-    (Pull from 2021-04-21 notes from Ben's talk.)
+.. XXX Add some conceptual guidance abeut
+   when to make a method do its work in a detached task
+   versus making the method itself async?
+   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 
 
 .. _Concurrency_TaskCancellation:
@@ -663,9 +652,9 @@ call ``Task.Handle.cancel()``.
     // done!           <1>
 
 - Use ``Task.withCancellationHandler`` to specify a closure to run
-if the task is canceled
-along with a closure that defines the task's work
-(it doesn't throw like ``checkCancellation`` does)
+  if the task is canceled
+  along with a closure that defines the task's work
+  (it doesn't throw like ``checkCancellation`` does)
 
 
 .. _Concurrency_Actors:
@@ -686,21 +675,15 @@ For example, here's an actor that records temperatures:
 
     actor TemperatureLogger {
         let label: String
-        let units: String
         var measurements: [Int]
         private var max: Int
 
         init(label: String, units: String, measurement: Int) {
             self.label = label
-            self.units = units
             self.measurements = [measurement]
             self.max = measurement
         }
     }
-
-.. XXX suggest deleting 'units' from this example
-   it was useful in a previous iteration that had a parser,
-   but now it's just one more moving part
 
 You introduce an actor with the ``actor`` keyword,
 followed by its definition in a pair of braces.
@@ -717,9 +700,9 @@ for example:
 
 ::
 
-    let logger = TemperatureLogger(label: "Outdoors", units: "C", measurement: 25)
-    print(await logger.units)
-    // Prints "C"
+    let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
+    print(await logger.max)
+    // Prints "25"
 
 In this example,
 accessing ``logger.units`` is a possible suspension point.
@@ -737,7 +720,6 @@ here's a method that updates a ``Logger`` with a new temperature:
 
     extension TemperatureLogger {
         func update(with measurement: Int, units: String) {
-            assert(units == self.units)
             measurements.append(measurement)
             if measurement > max {
                 max = measurement
@@ -745,7 +727,7 @@ here's a method that updates a ``Logger`` with a new temperature:
         }
     }
 
-The ``update(with:units:)`` method is already running on the actor,
+The ``update(with:)`` method is already running on the actor,
 so it doesn't mark its access to properties like ``max`` with ``await``.
 This method also shows one of the reasons
 why actors serialize access to their internal state:
@@ -759,7 +741,7 @@ the temperature logger is in a temporary inconsistent state.
 Preventing multiple tasks interacting with the same instance simultaneously
 prevents problems like the following:
 
-#. Your code calls the ``update(with:units:)`` method.
+#. Your code calls the ``update(with:)`` method.
    It updates the ``measurements`` array first.
 
 #. Before your can update ``max``,
@@ -770,7 +752,7 @@ prevents problems like the following:
 In this hypothetical case,
 the code running elsewhere would read incorrect information
 because its access to the actor was interleaved
-in the middle of the call to ``update(with:units:)``
+in the middle of the call to ``update(with:)``
 while the data was temporarily invalid.
 This doesn't occur with Swift actors
 because they only allow one operation on their state at a time
@@ -790,6 +772,12 @@ Accessing ``logger.max`` without writing ``await`` fails because
 the properties of an actor are part of that actor's isolated local state.
 The language guarantee that only code inside an actor
 can access the actor's local state is known as *actor isolation*.
+
+
+.. OUTLINE -- design patterns for actors
+
+   - do your mutation in a sync function
+
 
 .. OUTLINE
 
@@ -871,12 +859,12 @@ can access the actor's local state is known as *actor isolation*.
 
     TODO: Fill this in from SE-0302
 
-.. _Concurrency_MainActor:
-
-The Main Actor
-~~~~~~~~~~~~~~
-
 .. OUTLINE
+    .. _Concurrency_MainActor:
+
+    The Main Actor
+    ~~~~~~~~~~~~~~
+
 
     - the main actor is kinda-sorta like the main thread
 
