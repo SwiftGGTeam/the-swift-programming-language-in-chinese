@@ -628,33 +628,31 @@ To propagate cancellation manually,
 call ``Task.Handle.cancel()``.
 
 
-◊ Outline ◊
+.. OUTLINE
 
+    - task handle
 
-- task handle
+    - cancellation propagates (Konrad's example below)
 
+    ::
 
-- cancellation propagates (Konrad's example below)
-
-::
-
-    let handle = spawnDetached {
-    await withTaskGroup(of: Bool.self) { group in
-        var done = false
-        while done {
-        await group.spawn { Task.isCancelled } // is this child task cancelled?
-        done = try await group.next() ?? false
+        let handle = spawnDetached {
+        await withTaskGroup(of: Bool.self) { group in
+            var done = false
+            while done {
+            await group.spawn { Task.isCancelled } // is this child task cancelled?
+            done = try await group.next() ?? false
+            }
+        print("done!") // <1>
         }
-    print("done!") // <1>
-    }
 
-    handle.cancel()
-    // done!           <1>
+        handle.cancel()
+        // done!           <1>
 
-- Use ``Task.withCancellationHandler`` to specify a closure to run
-  if the task is canceled
-  along with a closure that defines the task's work
-  (it doesn't throw like ``checkCancellation`` does)
+    - Use ``Task.withCancellationHandler`` to specify a closure to run
+    if the task is canceled
+    along with a closure that defines the task's work
+    (it doesn't throw like ``checkCancellation`` does)
 
 
 .. _Concurrency_Actors:
