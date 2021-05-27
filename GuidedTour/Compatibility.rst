@@ -52,4 +52,4 @@ one framework at a time.
 
 .. XXX from the release notes rdar://70738378
 
-   Swift Concurrency requires a deployment target of macOS 12, iOS 15, tvOS 15, and watchOS 8.0 or newer
+   Swift Concurrency requires a deployment target of iOS 15, iPadOS 15, macOS 12, tvOS 15, and watchOS 8.0 or later
