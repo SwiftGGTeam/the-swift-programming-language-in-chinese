@@ -1256,7 +1256,7 @@ zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
 including computed properties,
 instance methods, type methods, initializers, type aliases,
-and even other enumeration, structure, and class declarations.
+and even other enumeration, structure, class, and actor declarations.
 Enumeration declarations can't contain deinitializer or protocol declarations.
 
 Enumeration types can adopt any number of protocols, but can’t inherit from classes,
@@ -1573,7 +1573,7 @@ Structure declarations are declared using the ``struct`` keyword and have the fo
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 type properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, and enumeration declarations.
+type aliases, and even other structure, class, actor, and enumeration declarations.
 Structure declarations can't contain deinitializer or protocol declarations.
 For a discussion and several examples of structures
 that include various kinds of declarations,
@@ -1638,7 +1638,7 @@ The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 instance methods, type methods, initializers,
 a single deinitializer, subscripts, type aliases,
-and even other class, structure, and enumeration declarations.
+and even other class, structure, actor, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
 that include various kinds of declarations,
@@ -1695,7 +1695,7 @@ as described in :ref:`ClassesAndStructures_AccessingProperties`.
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+see :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -1717,32 +1717,98 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 Actor Declaration
 -----------------
 
-.. XXX Outline
+An :newTerm:`actor declaration` introduces a named actor type into your program.
+Actor declarations are declared using the ``actor`` keyword and have the following form:
 
-   The following facts come from the SE-0306 actors proposal,
-   but don't really fit into the narrative in the guide.
+.. syntax-outline::
 
-   Which declarations in the body are actor-isolated vs non-isolated
+   actor <#actor name#>: <#adopted protocols#> {
+       <#declarations#>
+   }
+
+The body of an actor contains zero or more *declarations*.
+These *declarations* can include both stored and computed properties,
+instance methods, type methods, initializers,
+a single deinitializer, subscripts, type aliases,
+and even other class, structure, and enumeration declarations.
+For a discussion and several examples of actors
+that include various kinds of declarations,
+see :ref:`Concurrency_Actors`.
+
+Actor types can adopt any number of protocols,
+but can't inherit from classes, enumerations, structures, or other actors.
+However, an actor that is marked with the ``@objc`` attribute
+implicitly conforms to the `NSObjectProtocol`` protocol
+and is exposed to the Objective-C runtime as a subtype of ``NSObject``.
+
+There are three ways to create an instance of a previously declared actor:
+
+* Call one of the initializers declared within the actor,
+  as described in :ref:`Initialization_Initializers`.
+* If no initializers are declared,
+  call the actor's memberwise initializer,
+  as described in :ref:`Initialization_MemberwiseInitializersForStructureTypes`.
+* If no initializers are declared,
+  and all properties of the actor declaration were given initial values,
+  call the actor's default initializer,
+  as described in :ref:`Initialization_DefaultInitializers`.
+
+.. XXX TR: Confirm that actors get memberwise inits like structs do.
+
+.. XXX TR: SE-0306 says the following, which seems incorrect:
+
+   Synchronous isolated methods
+   are available only to other code within the actor.
+
+   You can call an actor method from outside the actor
+   by writing "await" when calling it.
+
+By default, members of an actor are isolated to that actor.
+Code, such as the body of a method or the getter for a property
+is executed on that actor.
+Code within the actor can interact with them synchronously
+because that code is already running on the same actor,
+but code outside the actor must mark them with ``await``
+to indicate that this code is asynchronously running code on another actor.
+Key paths can't refer to isolated members of an actor.
+Actor-isolated stored properties can be passed as in-out parameters
+to synchronous functions,
+but not to asynchronous functions.
+
+Actors can also have nonisolated members,
+whose declarations are marked with the ``nonisolated`` keyword.
+A nonisolated member executes like code outside of the actor:
+it can't interact with any of the actor's isolated state,
+and callers don't mark it with ``await`` when using it.
+
+Members of an actor can be marked with the ``@objc`` attribute
+only if they are nonisolated or asynchronous.
+
+The process of initializing a actor's declared properties
+is described in :doc:`../LanguageGuide/Initialization`.
+
+Properties of a actor instance can be accessed using dot (``.``) syntax,
+as described in :ref:`ClassesAndStructures_AccessingProperties`.
+
+Actors are reference types; instances of an actor are referred to, rather than copied,
+when assigned to variables or constants, or when passed as arguments to a function call.
+For information about reference types,
+see :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
+
+You can extend the behavior of a structure type with an extension declaration,
+as discussed in :ref:`Declarations_ExtensionDeclaration`.
+
+.. XXX Additional bits from the SE-0306 actors proposal:
 
    Partial applications of isolated functions are only permitted
    when the expression is a direct argument
    whose corresponding parameter is non-escaping and non-Sendable.
 
-   A key path cannot involve a reference to an actor-isolated declaration.
-   (This might need to go under keypath reference, not here.)
-
-   Actor-isolated stored properties can be passed
-   into synchronous functions via inout parameters,
-   but it is ill-formed to pass them to asynchronous functions via inout parameters.
-
-   TR: Can actors be subclassed?
-
 .. syntax-grammar::
 
     Grammar of an actor declaration
 
-    actor-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
-    actor-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
+    actor-declaration --> attributes-OPT access-level-modifier-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
     actor-name --> identifier
     actor-body --> ``{`` actor-members-OPT ``}``
 
@@ -3215,6 +3281,7 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
     declaration-modifier --> access-level-modifier
     declaration-modifier --> mutation-modifier
+    declaration-modifier --> actor-isolation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
@@ -3224,3 +3291,5 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     access-level-modifier --> ``open`` | ``open`` ``(`` ``set`` ``)``
 
     mutation-modifier --> ``mutating`` | ``nonmutating``
+
+    actor-isolation-modifier --> ``nonisolated``
