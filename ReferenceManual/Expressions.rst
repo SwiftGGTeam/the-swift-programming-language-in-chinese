@@ -172,23 +172,20 @@ It has the following form:
 
 The value of an ``await`` expression is the value of the *expression*.
 
-An ``await`` expression can appear only within an asynchronous context,
-such as the body of an ``async`` function.
-It can't appear in the body of a ``defer`` statement,
-or in an autoclosure of synchronous function type.
-
-◊ revisit autoclosure bit above --- can I make that a natural consequence
-◊ of how I describe the rules around async and closures?
-
-◊ execution of the current task pauses until the asynchronous operation completes
-
-An expression marked with ``await`` is called a *potential suspension point*.
+An expression marked with ``await`` is called a :newTerm`potential suspension point`.
 Execution of an asynchronous function can be suspended
 at each expression that's marked with ``await``.
+In addition,
+execution is never suspended except at expressions marked with ``await``.
+This means code between potential suspension points
+can safely update state that requires temporarily breaking invariants,
+provided that it completes the update
+before the next potential suspension point.
 
-.. XXX this might be a good place to call out the fact that
-   you need to preserve/restore invariants at suspension points
-   that you may have broken while updating state in between
+An ``await`` expression can appear only within an asynchronous context,
+such as the trailing closure passed to the ``async(priority:operation:)`` function.
+It can't appear in the body of a ``defer`` statement,
+or in an autoclosure of synchronous function type.
 
 When the expression on the left-hand side of a binary operator
 is marked with the ``await`` operator,
