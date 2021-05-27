@@ -1378,7 +1378,7 @@ if you want to wait for it to complete.
    -> var currentlyBaking = ""
    -> func bake(_ food: String) async {
           currentlyBaking = food
-          // ... wait ...
+          // ... wait for food to bake ...
           currentlyBaking = ""
       }
    -> func makeCookies() async -> String {
@@ -1411,17 +1411,23 @@ can all interact with an instance of the same actor at the same time.
           func bake(_ food: String) {
               let index = contents.endIndex
               contents.append(food)
-              // ... wait ...
+              // ... wait for food to bake ...
               contents.remove(at: index)
           }
       }
 
-.. XXX bake(_:) can't be interrupted between saving the index and appending to the array
-   make sure that's actually true, and not part of the "reentrency" proposal
+When you call a method on an actor or access one of its properties,
+you mark that code with ``await``
+to indicate that it might have to wait for other code
+that's already running on the actor to finish.
 
-.. XXX interacting with the oven's properties and methods is marked await
+.. testcode:: guided-tour
 
-.. XXX async { }
+   -> var oven = Oven()
+   -> let biscuits = await oven.bake("biscuits")
+   -> for item in await oven.contents {
+          print(item)
+      }
 
 
 .. _Tour_Generics:
