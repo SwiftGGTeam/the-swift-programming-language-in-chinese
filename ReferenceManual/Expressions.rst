@@ -108,9 +108,14 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
-    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
-    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    // try applies to both function calls
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()
+    ---
+    // try applies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction())
+    ---
+    // Error: try applies only to the first function call
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !$ error: call can throw but is not marked with 'try'
     !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
@@ -199,9 +204,14 @@ to be explicit about the scope of the operator's application.
     >> func anotherAsyncFunction() async -> Int { return 5 }
     >> runAsyncAndBlock {
     >> var sum = 0
-    -> sum = await someAsyncFunction() + anotherAsyncFunction()   // await applies to both function calls
-    -> sum = await (someAsyncFunction() + anotherAsyncFunction()) // await applies to both function calls
-    -> sum = (await someAsyncFunction()) + anotherAsyncFunction() // Error: await applies only to the first function call
+    // await applies to both function calls
+    -> sum = await someAsyncFunction() + anotherAsyncFunction()
+    ---
+    // await applies to both function calls
+    -> sum = await (someAsyncFunction() + anotherAsyncFunction())
+    ---
+    // Error: await applies only to the first function call
+    -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
     >> _ = sum  // Suppress irrelevant written-but-not-read warning
     >> }
     !$ error: call is 'async' but is not marked with 'await'
