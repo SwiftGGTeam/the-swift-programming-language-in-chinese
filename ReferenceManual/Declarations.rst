@@ -1184,9 +1184,10 @@ The ``async`` keyword is part of the function's type,
 and synchronous functions are subtypes of asynchronous functions.
 As a result, you can use a synchronous function
 in the same places as an asynchronous one.
-
-.. XXX overriding between sync and async
-   and how they tie in to protocol decls/conformance
+For example,
+you can override an asynchronous method with a synchronous method,
+and a synchronous method can satisfy a protocol requirement
+that requires an asynchronous method.
 
 
 .. _Declarations_FunctionsThatNeverReturn:
