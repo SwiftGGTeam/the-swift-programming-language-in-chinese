@@ -521,7 +521,7 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
     - ?? maybe cover ``Task.Group.next``
     probably nicer to use the ``for await result in someGroup`` syntax
 
-    ◊ quote from the SE proposal --- I want to include this fact here too
+    quote from the SE proposal --- I want to include this fact here too
 
     > There's no way for reference to the child task to
     > escape the scope in which the child task is created.
@@ -537,8 +537,6 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
 
     Setting Task Priority
     ~~~~~~~~~~~~~~~~~~~~~
-
-    ◊ Outline ◊
 
     - priority values defined by ``Task.Priority`` enum
 
@@ -786,8 +784,6 @@ can access the actor's local state is known as *actor isolation*.
     Actor Isolation
     ~~~~~~~~~~~~~~~
 
-    ◊ Outline ◊
-
     - actors protect their mutable state using :newTerm:`actor isolation`
     to prevent data races
     (one actor reading data that's in an inconsistent state
@@ -816,7 +812,7 @@ can access the actor's local state is known as *actor isolation*.
 
     - you can't write to a property directly from outside the actor
 
-    ◊ TODO: Either define "data race" or use a different term;
+    TODO: Either define "data race" or use a different term;
     the chapter on exclusive ownership talks about "conflicting access",
     which is related, but different.
     Konrad defines "data race" as concurrent access to shared state,
@@ -836,7 +832,7 @@ can access the actor's local state is known as *actor isolation*.
     because it could execute concurrently with other code that's part of the actor
 
 
-    ◊ exercise the log actor, using its client API to mutate state
+    exercise the log actor, using its client API to mutate state
 
     ::
 
