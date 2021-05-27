@@ -172,7 +172,7 @@ It has the following form:
 
 The value of an ``await`` expression is the value of the *expression*.
 
-An expression marked with ``await`` is called a :newTerm`potential suspension point`.
+An expression marked with ``await`` is called a :newTerm:`potential suspension point`.
 Execution of an asynchronous function can be suspended
 at each expression that's marked with ``await``.
 In addition,
