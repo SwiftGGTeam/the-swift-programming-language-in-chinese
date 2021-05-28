@@ -122,9 +122,9 @@ and then show the first picture:
 
     >> struct Data {}  // Instead of actually importing Foundation
     >> func downloadPhoto(named name: String) async -> Data { return Data() }
-    >> func show(_ image: Data, _ caption: Caption) { }
+    >> func show(_ image: Data) { }
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
-    -> let sortedNames = sort(photoNames)
+    -> let sortedNames = photoNames.sorted()
     -> let name = sortedNames[1]
     -> let photo = await downloadPhoto(named: name)
     -> show(photo)
@@ -206,10 +206,10 @@ to run after each operation completes:
     >>     completionHandler(Data())
     >> }
     -> listPhotos(inGallery: "Summer Vacation") { photoNames in
-           let sortedNames = sort(photoNames)
+           let sortedNames = photoNames.sorted()
            let name = sortedNames[1]
-           downloadPhoto(named: first) { photo in
-               show(photo, caption)
+           downloadPhoto(named: name) { photo in
+               show(photo)
            }
        }
 
@@ -366,8 +366,9 @@ and let it run it parallel with code around it,
 write ``async`` in front of ``let`` when you define a constant,
 and then write ``await`` before the first time you use the constant.
 
-.. testcode:: defining-async-function
+.. testcode:: calling-with-async-let
 
+    >> func show(_ images: [Data]) { }
     -> async let firstPhoto = downloadPhoto(named: photoNames[0])
     -> async let secondPhoto = downloadPhoto(named: photoNames[1])
     -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
