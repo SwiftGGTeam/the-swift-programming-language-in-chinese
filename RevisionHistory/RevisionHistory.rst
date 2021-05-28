@@ -5,6 +5,12 @@ Document Revision History
 
 * Updated for Swift 5.5.
 
+* Added information about asynchronous functions, tasks, and actors
+  to the :doc:`../LanguageGuide/Concurrency` chapter,
+  and to the :ref:`Declarations_ActorDeclaration`,
+  :ref:`Declarations_AsyncFunctions`,
+  and :ref:`Expressions_AwaitExpression` sections.
+
 **2021-04-26**
 
 * Updated for Swift 5.4.
