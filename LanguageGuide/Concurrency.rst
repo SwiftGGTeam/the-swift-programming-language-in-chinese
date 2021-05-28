@@ -283,22 +283,24 @@ Here's what iterating over an asynchronous sequence looks like:
 
     import Foundation
 
-    let handle = FileHandle(forReadingFrom: "http://example.com/galleries")
-    for await galleryName in handle.bytes.lines {
-        dowloadPhotos(from: galleryName)
+    let handle = FileHandle.standardInput
+    for try await line in handle.bytes.lines {
+        print(line)
     }
 
-Instead of using a ordinary ``for`` loop,
-the example above writes ``for`` followed by ``await``.
+Instead of using a ordinary ``for``-``in`` loop,
+the example above writes ``for`` with ``await`` after it.
 Like when you call an asynchronous function or method,
 writing ``await`` indicates a possible suspension point.
-A ``for``-``await`` loop potentially suspends execution
+A ``for``-``await``-``in`` loop potentially suspends execution
 at the beginning of each iteration,
 when it's waiting for the next element to be available.
 
-In the same way that you can use your own types in a ``for`` loop
+.. XXX TR: Where does the 'try' above come from?
+
+In the same way that you can use your own types in a ``for``-``in`` loop
 by adding conformance to the ``Sequence`` protocol,
-you can use your own types in a ``for``-``await`` loop
+you can use your own types in a ``for``-``await``-``in`` loop
 by adding conformance to the ``AsyncSequence`` protocol.
 
 .. XXX link to https://developer.apple.com/documentation/swift/asyncsequence
