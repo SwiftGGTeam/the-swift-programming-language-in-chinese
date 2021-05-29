@@ -435,14 +435,14 @@ and lets Swift detect some errors at compile time.
 
 ::
 
-    // example goes here
+    await withTaskGroup(of: Data.self) { taskGroup in
+        let photoNames = await listPhotos(inGallery: "Summer Vacation")
+        for name in photoNames {
+            await taskGroup.add { await downloadPhoto(named: name) }
+        }
+    }
 
-    withTaskGroup(
-        of childTaskResultType: ChildTaskResult.Type,
-        returning returnType: GroupResult.Type = GroupResult.self,
-        body: (inout TaskGroup<ChildTaskResult>) async -> GroupResult
-    )
-
+.. XXX walk through the example
 
 For more information about task groups,
 see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
