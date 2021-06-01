@@ -255,7 +255,7 @@ Binary Expressions
 
 :newTerm:`Binary expressions` combine
 an infix binary operator with the expression that it takes
-as its left-hand and right-hand arguments.
+as its left- and right-hand arguments.
 It has the following form:
 
 .. syntax-outline::
