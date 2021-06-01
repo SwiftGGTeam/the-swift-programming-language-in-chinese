@@ -1739,7 +1739,7 @@ see :ref:`Concurrency_Actors`.
 Actor types can adopt any number of protocols,
 but can't inherit from classes, enumerations, structures, or other actors.
 However, an actor that is marked with the ``@objc`` attribute
-implicitly conforms to the `NSObjectProtocol`` protocol
+implicitly conforms to the ``NSObjectProtocol`` protocol
 and is exposed to the Objective-C runtime as a subtype of ``NSObject``.
 
 There are three ways to create an instance of a previously declared actor:
@@ -1765,7 +1765,7 @@ There are three ways to create an instance of a previously declared actor:
    by writing "await" when calling it.
 
 By default, members of an actor are isolated to that actor.
-Code, such as the body of a method or the getter for a property
+Code, such as the body of a method or the getter for a property,
 is executed on that actor.
 Code within the actor can interact with them synchronously
 because that code is already running on the same actor,

@@ -181,7 +181,7 @@ An expression marked with ``await`` is called a :newTerm:`potential suspension p
 Execution of an asynchronous function can be suspended
 at each expression that's marked with ``await``.
 In addition,
-execution is never suspended except at expressions marked with ``await``.
+execution of concurrent code is never suspended at any other point.
 This means code between potential suspension points
 can safely update state that requires temporarily breaking invariants,
 provided that it completes the update
