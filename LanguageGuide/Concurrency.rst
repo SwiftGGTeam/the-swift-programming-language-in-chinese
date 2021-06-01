@@ -249,7 +249,7 @@ even though execution might be suspended at various points along the way.
    The ``Task.sleep()`` method is useful when writing simple code
    to learn how concurrency works.
    This method does nothing,
-   but waits at least the given number of seconds before it returns.
+   but waits at least the given number of nanoseconds before it returns.
    Here's a version of the ``listPhotos(inGallery:)`` function
    that uses ``sleep()`` to simulate waiting for a network operation:
 
@@ -257,7 +257,7 @@ even though execution might be suspended at various points along the way.
 
        >> struct Data {}  // Instead of actually importing Foundation
        -> func listPhotos(inGallery name: String) async -> [String] {
-              await Task.sleep(2)
+              await Task.sleep(2 * 1_000_000_000)  // two seconds
               return ["IMG001", "IMG99", "IMG0404"]
        }
 
