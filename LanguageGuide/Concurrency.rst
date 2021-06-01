@@ -586,7 +586,6 @@ for example, to wait for its result or to cancel it.
 ::
 
     let newPhoto = // ... some photo data ...
-    Data()
     let handle = async {
         return await add(newPhoto, toGalleryNamed: "Spring Adventures")
     }
