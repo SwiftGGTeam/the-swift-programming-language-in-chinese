@@ -581,10 +581,10 @@ for example, to wait for its result or to cancel it.
 
 ::
 
-    XXX untested code
-
-    let handle = await {
-        // ... some operation ...
+    let newPhoto = // ... some photo data ...
+    Data()
+    let handle = async {
+        return await add(newPhoto, toGalleryNamed: "Spring Adventures")
     }
     let result = await handle.get()
     print(result)
@@ -675,9 +675,9 @@ For example, here's an actor that records temperatures:
     actor TemperatureLogger {
         let label: String
         var measurements: [Int]
-        private var max: Int
+        private(set) var max: Int
 
-        init(label: String, units: String, measurement: Int) {
+        init(label: String, measurement: Int) {
             self.label = label
             self.measurements = [measurement]
             self.max = measurement
