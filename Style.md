@@ -122,8 +122,9 @@ and accessible only through the actor's (async) methods.
 
 ## spawn, start
 
-Use “spawn” to refer to creating a new task,
+Use “add” instead to refer to creating a new task,
 to match the API symbol name.
+(These names were used in an earlier version the SE proposal.)
 
 ## suspension point
 
