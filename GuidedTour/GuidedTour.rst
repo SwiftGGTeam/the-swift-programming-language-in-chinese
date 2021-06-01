@@ -1391,7 +1391,7 @@ without waiting for it to complete,
 which lets the operations run at the same time.
 Because you still need to wait for the operation to finish
 before you can use the value it returns,
-you write ``await`` the first place that you use that constant.
+you write ``await`` when you use that constant.
 
 .. testcode:: guided-tour
 

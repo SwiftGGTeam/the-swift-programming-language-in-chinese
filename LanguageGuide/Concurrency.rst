@@ -17,7 +17,7 @@ with each core carrying out one of the four tasks.
 A program that uses parallel and asynchronous code
 carries out multiple operations at a time,
 it suspends operations that are waiting for an external system,
-and does so in a memory-safe way.
+and makes it easier to write this code in a memory-safe way.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
@@ -40,7 +40,7 @@ to refer to this common combination of asynchronous and parallel code.
    The concurrency model in Swift is built on top of threads,
    but you don't interact with them directly.
    An asynchronous function in Swift
-   can give up the thread it was running on,
+   can give up the thread that it's running on,
    which lets another asynchronous function run on that thread
    while the first function is blocked.
 
@@ -178,7 +178,7 @@ and runs some other code on that thread instead.
 Because code with ``await`` needs to be able to suspend execution,
 only certain places in your program can call asynchronous functions or methods:
 
-- Code in an asynchronous function or method.
+- Code in the body of an asynchronous function, method, or property.
 
 - Code in the static ``main()`` method of
   a structure, class, or enumeration that's marked with ``@main``.
@@ -415,8 +415,8 @@ A :newTerm:`task` is a unit of work
 that can be run asynchronously as part of your program.
 All asynchronous code runs as part of some task.
 The ``async``-``let`` syntax described in the previous section
-implicitly creates a child task.
-You can also explicitly create a task group
+creates a child task for you.
+You can also create a task group
 and add child tasks to that group,
 which gives you more control over priority and cancellation,
 and lets you create a dynamic number of tasks.
@@ -564,17 +564,21 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
 
 .. _Concurrency_TaskHandle:
 
-Detached Tasks
-~~~~~~~~~~~~~~
+Unstructured Concurrency
+~~~~~~~~~~~~~~~~~~~~~~~~
 
+In addition to the structured approaches to concurrency,
+described in the previous sections,
+Swift also supports unstructured concurrency.
 Unlike tasks that are part of a task group,
-a detached task doesn't have a parent task.
+an :newTerm:`unstructured task` doesn't have a parent task.
 This gives you complete flexibility to manage it,
 but also makes your code completely responsible for correctness.
-To create a detached task that runs on the current actor,
-call the ``async()`` function ---
-or to create a detached task that's not part of the current actor,
-call ``asychDetached()``.
+To create an unstructured task that runs on the current actor,
+call the ``async(priority:operation:)`` function.
+To create an unstructured task that's not part of the current actor,
+known more specifically as a :newTerm:`detached task`,
+call ``asyncDetached(priority:operation:)``.
 Both of these functions return a task handle
 that lets you interact with the task ---
 for example, to wait for its result or to cancel it.
@@ -593,6 +597,9 @@ For more information about managing detached tasks,
 see ``Task.Handle``.
 
 .. XXX Make async asyncDetached and Task.Handle above into live links
+   https://developer.apple.com/documentation/swift/3816404-async
+   https://developer.apple.com/documentation/swift/3816406-asyncdetached
+   https://developer.apple.com/documentation/swift/task/handle
 
 .. XXX Add some conceptual guidance abeut
    when to make a method do its work in a detached task
@@ -665,7 +672,8 @@ Like classes, actors are reference types,
 so the comparison of value types and reference types
 in :ref:`ClassesAndStructures_ClassesAreReferenceTypes`
 applies to actors as well as classes.
-Unlike classes, actors serialize access to their mutable state,
+Unlike classes,
+actors allow only one task to access their mutable state at a time,
 which makes it safe for code in multiple tasks
 to interact with the same instance of an actor.
 For example, here's an actor that records temperatures:
@@ -686,10 +694,10 @@ For example, here's an actor that records temperatures:
 
 You introduce an actor with the ``actor`` keyword,
 followed by its definition in a pair of braces.
-The ``TemperatureLogger`` actor has three properties
+The ``TemperatureLogger`` actor has properties
 that other code outside the actor can access,
-``label``, ``units``, and ``measurements`` property,
-and it has a ``max`` property that's only accessible within the actor.
+and restricts the ``max`` property so only code inside the actor
+can update the maximum value.
 
 You create an instance of a actor
 using the same initializer syntax as structures and classes.
@@ -704,7 +712,7 @@ for example:
     // Prints "25"
 
 In this example,
-accessing ``logger.units`` is a possible suspension point.
+accessing ``logger.max`` is a possible suspension point.
 Because the actor serializes access to its mutable state,
 if there's already code from another task interacting with the logger instance,
 this code might suspend while waiting to access that property.
