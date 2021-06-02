@@ -26,7 +26,7 @@ in a way enables some compile-time checking ---
 for example, you can use actors to safely access mutable state.
 However, adding concurrency to slow or buggy code
 isn't a guarantee that it will become fast or correct.
-In fact, adding concurrency  might even make your code harder to debug.
+In fact, adding concurrency might even make your code harder to debug.
 However, using Swift's language-level support for concurrency
 in code that needs to be concurrent
 means Swift can help you catch problems at compile time.
