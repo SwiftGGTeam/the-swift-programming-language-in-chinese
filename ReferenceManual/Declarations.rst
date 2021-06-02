@@ -1751,14 +1751,6 @@ There are three ways to create an instance of a previously declared actor:
   call the actor's default initializer,
   as described in :ref:`Initialization_DefaultInitializers`.
 
-.. XXX TR: SE-0306 says the following, which seems incorrect:
-
-   Synchronous isolated methods
-   are available only to other code within the actor.
-
-   You can call an actor method from outside the actor
-   by writing "await" when calling it.
-
 By default, members of an actor are isolated to that actor.
 Code, such as the body of a method or the getter for a property,
 is executed on that actor.
