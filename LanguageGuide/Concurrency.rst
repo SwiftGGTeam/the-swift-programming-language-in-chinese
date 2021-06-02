@@ -25,10 +25,11 @@ Swift lets you express you intent
 in a way enables some compile-time checking ---
 for example, you can use actors to safely access mutable state.
 However, adding concurrency to slow or buggy code
-isn't a guarantee that it will become fast or correct;
-it might even make it harder to debug.
-Using language-level support for concurrency in code that needs it
-lets Swift help you catch problems at compile time.
+isn't a guarantee that it will become fast or correct.
+In fact, adding concurrency  might even make your code harder to debug.
+However, using Swift's language-level support for concurrency
+in code that needs to be concurrent
+means Swift can help you catch problems at compile time.
 
 The rest of this chapter uses the term *concurrency*
 to refer to this common combination of asynchronous and parallel code.
@@ -142,7 +143,7 @@ here's one possible order of execution:
 #. The code starts running from the first line
    and runs up to the first ``await``.
    It calls the ``listPhotos(inGallery:)`` function
-   and then suspends execution while it waits for that function to return.
+   and suspends execution while it waits for that function to return.
 
 #. While this code's execution is suspended,
    some other concurrent code in the same program runs.
@@ -714,9 +715,9 @@ for example:
 
 In this example,
 accessing ``logger.max`` is a possible suspension point.
-Because the actor serializes access to its mutable state,
-if there's already code from another task interacting with the logger instance,
-this code might suspend while waiting to access that property.
+Because the actor allows only one task at a time to access to its mutable state,
+if code from another task is already interacting with the logger,
+this code suspends while it waits to access the property.
 
 In contrast,
 code that's part of the actor doesn't write ``await``
@@ -738,7 +739,7 @@ here's a method that updates a ``Logger`` with a new temperature:
 The ``update(with:)`` method is already running on the actor,
 so it doesn't mark its access to properties like ``max`` with ``await``.
 This method also shows one of the reasons
-why actors serialize access to their internal state:
+why actors allow only one task at a time interact with their mutable state:
 some updates to an actor's state temporarily break invariants.
 The ``TemperatureLogger`` actor keeps track of
 a list of temperatures and a maximum temperature,
@@ -747,7 +748,7 @@ In the middle of an update,
 after appending the new measurement but before updating ``max``,
 the temperature logger is in a temporary inconsistent state.
 Preventing multiple tasks from interacting with the same instance simultaneously
-prevents problems like the following:
+prevents problems like the following sequence of events:
 
 #. Your code calls the ``update(with:)`` method.
    It updates the ``measurements`` array first.
@@ -755,7 +756,7 @@ prevents problems like the following:
 #. Before your code can update ``max``,
    code elsewhere reads the maximum value and the array of temperatures.
 
-#. Finally, your code finishes its update by changing ``max``.
+#. Your code finishes its update by changing ``max``.
 
 In this case,
 the code running elsewhere would read incorrect information
@@ -763,9 +764,9 @@ because its access to the actor was interleaved
 in the middle of the call to ``update(with:)``
 while the data was temporarily invalid.
 This doesn't occur with Swift actors
-because they only allow one operation on their state at a time
-and that code can only be interrupted 
-in places where ``await`` marks a suspension point.
+because they only allow one operation on their state at a time,
+and because that code can be interrupted
+only in places where ``await`` marks a suspension point.
 
 If you try to access those properties from outside the actor,
 like you would with an instance of a class,

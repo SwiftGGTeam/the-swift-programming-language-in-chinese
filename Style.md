@@ -1,10 +1,5 @@
 # Terms and Rules
 
-## at a time; at the same time
-
-Prefer "simultaneously" when discussing Swift concurrency.
-For example, "multiple pieces of your code can run simultaneously".
-
 ## compiler, the
 
 See entry for *Swift*.
