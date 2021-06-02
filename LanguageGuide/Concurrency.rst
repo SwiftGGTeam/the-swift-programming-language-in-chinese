@@ -45,6 +45,36 @@ to refer to this common combination of asynchronous and parallel code.
    which lets another asynchronous function run on that thread
    while the first function is blocked.
 
+Although it's possible to write concurrent code
+without using Swift's language support,
+that code tends to be harder to read.
+For example, the following code downloads a list of photo names,
+downloads the first photo in that list,
+and shows that photo to the user:
+
+.. testcode:: async-via-nested-completion-handlers
+
+    >> struct Data {}  // Instead of actually importing Foundation
+    >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
+    >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
+    >> }
+    >> func downloadPhoto(named name: String, completionHandler: (Data) -> Void) {
+    >>     completionHandler(Data())
+    >> }
+    -> listPhotos(inGallery: "Summer Vacation") { photoNames in
+           let sortedNames = photoNames.sorted()
+           let name = sortedNames[1]
+           downloadPhoto(named: name) { photo in
+               show(photo)
+           }
+       }
+
+Even in this simple case,
+because the code has to be written as a series of completion handlers,
+you end up writing nested closures.
+In this style,
+more complex code with deep nesting can quickly become unwieldy.
+
 .. _Concurrency_AsyncFunc:
 
 Defining and Calling Asynchronous Functions
@@ -176,33 +206,6 @@ only certain places in your program can call asynchronous functions or methods:
    If that get changed, add this bullet to the list above:
 
    - Code at the top level that forms an implicit main function.
-
-In contrast to using ``async`` and ``await``,
-consider how you would write the example above
-using functions that take a closure as completion handler
-to run after each operation completes:
-
-.. testcode:: defining-async-function
-
-    >> func listPhotos(inGallery name: String, completionHandler: ([String]) -> Void ) {
-    >>   completionHandler(["IMG001", "IMG99", "IMG0404"])
-    >> }
-    >> func downloadPhoto(named name: String, completionHandler: (Data) -> Void) {
-    >>     completionHandler(Data())
-    >> }
-    -> listPhotos(inGallery: "Summer Vacation") { photoNames in
-           let sortedNames = photoNames.sorted()
-           let name = sortedNames[1]
-           downloadPhoto(named: name) { photo in
-               show(photo)
-           }
-       }
-
-Even in this simple case, the closures are harder to read
-because the code has to be written as a series of completion handlers.
-In contrast, the version that uses ``await``
-reads as a linear, sequential series of steps,
-even though execution might be suspended at various points along the way.
 
 .. TODO we might need a more explicit discussion
    of what a (possible) suspension point is
