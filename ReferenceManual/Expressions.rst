@@ -202,7 +202,6 @@ to be explicit about the scope of the operator's application.
 
     >> func someAsyncFunction() async -> Int { return 10 }
     >> func anotherAsyncFunction() async -> Int { return 5 }
-    >> runAsyncAndBlock {
     >> var sum = 0
     // await applies to both function calls
     -> sum = await someAsyncFunction() + anotherAsyncFunction()
@@ -213,7 +212,6 @@ to be explicit about the scope of the operator's application.
     // Error: await applies only to the first function call
     -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
     >> _ = sum  // Suppress irrelevant written-but-not-read warning
-    >> }
     !$ error: call is 'async' but is not marked with 'await'
     !! sum = (await someAsyncFunction()) + anotherAsyncFunction() // Error: await applies only to the first function call
     !! ^~~~~~~~~~~~~~~~~~~~~~
@@ -226,7 +224,6 @@ or the ``await`` expression is enclosed in parentheses.
 .. assertion:: await-on-right
 
     >> func someAsyncFunction() async -> Int { return 10 }
-    >> runAsyncAndBlock {
     >> var sum = 0
     >> sum = 7 + await someAsyncFunction()    // Error
     !$ error: 'await' cannot appear to the right of a non-assignment operator
@@ -234,7 +231,6 @@ or the ``await`` expression is enclosed in parentheses.
     !! ^
     >> sum = 7 + (await someAsyncFunction())  // OK
     >> _ = sum  // Suppress irrelevant written-but-not-read warning
-    >> }
 
 If an expression includes both the ``await`` and ``try`` operator,
 the ``try`` operator must appear first.
