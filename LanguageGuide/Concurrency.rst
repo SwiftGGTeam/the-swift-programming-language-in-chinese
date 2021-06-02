@@ -282,7 +282,7 @@ A ``for``-``await``-``in`` loop potentially suspends execution
 at the beginning of each iteration,
 when it's waiting for the next element to be available.
 
-.. XXX TR: Where does the 'try' above come from?
+.. FIXME TR: Where does the 'try' above come from?
 
 In the same way that you can use your own types in a ``for``-``in`` loop
 by adding conformance to the `Sequence <//apple_ref/swift/fake/Sequence>`_ protocol,
@@ -416,8 +416,6 @@ Although you take on some of the responsibility for correctness,
 the explicit parent-child relationships between tasks
 lets Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
-
-.. XXX TR: What's an example of a programming error we'd catch?
 
 ::
 
