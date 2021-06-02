@@ -1794,7 +1794,7 @@ see :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
-.. XXX Additional bits from the SE-0306 actors proposal:
+.. TODO Additional bits from the SE-0306 actors proposal:
 
    Partial applications of isolated functions are only permitted
    when the expression is a direct argument

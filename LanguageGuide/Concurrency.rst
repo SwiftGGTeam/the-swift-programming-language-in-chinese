@@ -50,11 +50,6 @@ to refer to this common combination of asynchronous and parallel code.
 Defining and Calling Asynchronous Functions
 -------------------------------------------
 
-.. XXX Since free functions seem to be less common in app code,
-   maybe we should call these "async methods" throughout the guide
-   and just mention that you can also use async on free functions?
-   However, the error handling chapter just talks about throwing functions.
-
 An :newTerm:`asynchronous function` or :newTerm:`asynchronous method`
 is a special kind of function or method
 that can be suspended while it's partway through execution.
@@ -64,17 +59,6 @@ An asynchronous function or method still does one of those three things,
 but it can also pause in the middle when it's waiting for something.
 Inside the body of an asynchronous function or method,
 you mark each of these places where execution can be suspended.
-
-.. XXX Editorial: Stet passive "be suspended" above.
-   Repeating "pause" from the previous sentence is unhelpful.
-   Using "can suspend" is incorrect
-   because the function doesn't perform the suspension.
-   The entity that does carry out the suspension isn't relevant
-   to the developer in the context of this discussion.
-   The actor/agent is somewhere between Swift the language,
-   the executor (a concept we're not explaining until next year
-   when custom executors become a thing)
-   and possibly the operating system.
 
 To indicate that a function or method is asynchronous,
 you write the ``async`` keyword in its declaration after its parameters,
@@ -220,7 +204,7 @@ In contrast, the version that uses ``await``
 reads as a linear, sequential series of steps,
 even though execution might be suspended at various points along the way.
 
-.. XXX we might need a more explicit discussion
+.. TODO we might need a more explicit discussion
    of what a (possible) suspension point is
    and how it interacts with the flow of your program,
    in particular how you can break invariants only between suspension points
@@ -235,11 +219,11 @@ even though execution might be suspended at various points along the way.
    by calling ``Task.yield()``
    https://developer.apple.com/documentation/swift/task/3814840-yield
 
-.. XXX add detail above about how the *compiler* can reason about
+.. TODO add detail above about how the *compiler* can reason about
    the async/await version better too
    and give you better guarantees and clearer errors
 
-.. XXX Revise the discussion in the Closures chapter
+.. TODO Revise the discussion in the Closures chapter
    where we currently talk about completion handlers.
 
 .. XXX make Task.sleep() below a live link
@@ -262,7 +246,7 @@ even though execution might be suspended at various points along the way.
               return ["IMG001", "IMG99", "IMG0404"]
        }
 
-.. XXX either add an example or maybe a short section
+.. TODO either add an example or maybe a short section
    about throwing and async together
    to give a place where I can note the order of the keywords
    in the declaration and in the calls
@@ -306,7 +290,7 @@ by adding conformance to the ``AsyncSequence`` protocol.
 
 .. XXX link to https://developer.apple.com/documentation/swift/asyncsequence
 
-.. XXX what happened to ``Series`` which was supposed to be a currency type?
+.. TODO what happened to ``Series`` which was supposed to be a currency type?
    Is that coming from Combine instead of the stdlib maybe?
 
    Also... need a real API that produces a async sequence.
@@ -444,7 +428,7 @@ and lets Swift detect some errors at compile time.
         }
     }
 
-.. XXX walk through the example
+.. TODO walk through the example
 
 For more information about task groups,
 see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
@@ -603,7 +587,7 @@ see ``Task.Handle``.
    https://developer.apple.com/documentation/swift/3816406-asyncdetached
    https://developer.apple.com/documentation/swift/task/handle
 
-.. XXX Add some conceptual guidance abeut
+.. TODO Add some conceptual guidance abeut
    when to make a method do its work in a detached task
    versus making the method itself async?
    (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
