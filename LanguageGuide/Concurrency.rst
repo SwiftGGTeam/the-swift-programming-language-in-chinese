@@ -229,12 +229,10 @@ only certain places in your program can call asynchronous functions or methods:
 .. TODO Revise the discussion in the Closures chapter
    where we currently talk about completion handlers.
 
-.. XXX make Task.sleep() below a live link
-    https://developer.apple.com/documentation/swift/task/3814836-sleep
-
 .. note::
 
-   The ``Task.sleep()`` method is useful when writing simple code
+   The `Task.sleep(_:) <//apple_ref/swift/fake/Task.sleep(_:)>`_ method
+   is useful when writing simple code
    to learn how concurrency works.
    This method does nothing,
    but waits at least the given number of nanoseconds before it returns.
@@ -287,11 +285,10 @@ when it's waiting for the next element to be available.
 .. XXX TR: Where does the 'try' above come from?
 
 In the same way that you can use your own types in a ``for``-``in`` loop
-by adding conformance to the ``Sequence`` protocol,
+by adding conformance to the `Sequence <//apple_ref/swift/fake/Sequence>`_ protocol,
 you can use your own types in a ``for``-``await``-``in`` loop
-by adding conformance to the ``AsyncSequence`` protocol.
-
-.. XXX link to https://developer.apple.com/documentation/swift/asyncsequence
+by adding conformance to the
+`AsyncSequence <//apple_ref/swift/fake/AsyncSequence>`_ protocol.
 
 .. TODO what happened to ``Series`` which was supposed to be a currency type?
    Is that coming from Combine instead of the stdlib maybe?
@@ -565,10 +562,10 @@ You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
-call the ``async(priority:operation:)`` function.
+call the `async(priority:operation:) <//apple_ref/swift/fake/async>`_ function.
 To create an unstructured task that's not part of the current actor,
 known more specifically as a :newTerm:`detached task`,
-call ``asyncDetached(priority:operation:)``.
+call `asyncDetached(priority:operation:) <//apple_ref/swift/fake/asyncDetached>`_.
 Both of these functions return a task handle
 that lets you interact with the task ---
 for example, to wait for its result or to cancel it.
@@ -583,12 +580,7 @@ for example, to wait for its result or to cancel it.
     print(result)
 
 For more information about managing detached tasks,
-see ``Task.Handle``.
-
-.. XXX Make async asyncDetached and Task.Handle above into live links
-   https://developer.apple.com/documentation/swift/3816404-async
-   https://developer.apple.com/documentation/swift/3816406-asyncdetached
-   https://developer.apple.com/documentation/swift/task/handle
+see `Task.Handle <//apple_ref/swift/fake/Task.Handle>`_.
 
 .. TODO Add some conceptual guidance abeut
    when to make a method do its work in a detached task

@@ -183,7 +183,7 @@ The examples above use a ``for``-``in`` loop to iterate
 ranges, arrays, dictionaries, and strings.
 However, you can use this syntax to iterate *any* collection,
 including your own classes and collection types,
-as long as those types conform to the `Sequence <//apple_ref/swift/fake/sequence>`_ protocol.
+as long as those types conform to the `Sequence <//apple_ref/swift/fake/Sequence>`_ protocol.
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
