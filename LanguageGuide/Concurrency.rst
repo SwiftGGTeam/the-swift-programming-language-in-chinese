@@ -21,7 +21,7 @@ and makes it easier to write this code in a memory-safe way.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
-Swift lets you express you intent
+Swift lets you express your intent
 in a way enables some compile-time checking ---
 for example, you can use actors to safely access mutable state.
 However, adding concurrency to slow or buggy code
