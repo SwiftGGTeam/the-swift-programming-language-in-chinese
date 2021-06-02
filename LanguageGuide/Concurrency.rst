@@ -4,26 +4,26 @@ Concurrency
 Swift has built-in support for writing asynchronous and parallel code
 in a structured way.
 :newTerm:`Asynchronous code` can be suspended and resumed later,
-although only one piece of the program is executing at a time.
+although only one piece of the program executes at a time.
 Suspending and resuming code in your program
 lets it continue to make progress
 on short-term operations like updating its UI
-while it continues to work on long-running operations
+while continuing to work on long-running operations
 like fetching data over the network or parsing files.
-:newTerm:`Parallel code` means multiple pieces of code run at a time ---
+:newTerm:`Parallel code` means multiple pieces of code run simultaneously ---
 for example, a computer with a four-core processor
-can run four pieces of code simultaneously,
-with each core carrying out one of the four tasks.
+can run four pieces of code at the same time,
+with each core carrying out one of the tasks.
 A program that uses parallel and asynchronous code
-carries out multiple operations at a time,
+carries out multiple operations at a time;
 it suspends operations that are waiting for an external system,
 and makes it easier to write this code in a memory-safe way.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
-The language features that Swift gives you
-let you express your intent in a way that Swift can verify when compiling ---
-for example, you can use actors to safely share mutable state.
+Swift lets you express you intent
+in a way enables some compile-time checking ---
+for example, you can use actors to safely access mutable state.
 However, adding concurrency to slow or buggy code
 isn't a guarantee that it will become fast or correct;
 it might even make it harder to debug.
@@ -81,7 +81,7 @@ similar to how you use ``throws`` to mark a throwing function.
 If the function or method returns a value,
 you write ``async`` before the return arrow (``->``).
 For example,
-here's how you might fetch the names of a collection of photos from a server:
+here's how you might fetch the names of photos in a gallery:
 
 .. testcode:: async-function-shape
 
@@ -107,7 +107,7 @@ When calling an asynchronous method,
 execution suspends until that method returns.
 You write ``await`` in front of the call
 to mark the possible suspension point.
-This is like how you write ``try`` when calling a throwing function,
+This is like writing ``try`` when calling a throwing function,
 to mark the possible change to the program's flow if there's an error.
 Inside an asynchronous method,
 the flow of execution is suspended *only* when you call another asynchronous method ---
@@ -116,7 +116,7 @@ which means every possible suspension point is marked with ``await``.
 
 For example,
 the code below fetches the names of all the pictures in a gallery
-and then show the first picture:
+and then shows the first picture:
 
 .. testcode:: defining-async-function
 
@@ -161,8 +161,8 @@ here's one possible order of execution:
    there aren't any possible suspension points.
 
 #. The next ``await`` marks the call to the ``downloadPhoto(named:)`` function.
-   This code pauses execution again until that function returns.
-   Once again, other concurrent code has an opportunity to run.
+   This code pauses execution again until that function returns,
+   giving other concurrent code an opportunity to run.
 
 #. After ``downloadPhoto(named:)`` returns,
    its return value is assigned to ``photo``
@@ -274,7 +274,7 @@ Asynchronous Sequences
 The ``listPhotos(inGallery:)`` function in the previous section
 asynchronously returns the whole array at once,
 after all of the array's elements are ready.
-Another approach to this kind of asynchronous code
+Another approach
 is to wait for one element of the collection at a time
 using an :newTerm:`asynchronous sequence`.
 Here's what iterating over an asynchronous sequence looks like:
@@ -385,7 +385,8 @@ because the code doesn't suspend to wait for the function's result.
 Instead, execution continues
 until the line where ``photos`` is defined ---
 at that point, the program needs the results from these asynchronous calls,
-so you write ``await`` to pause execution until all three photos are ready.
+so you write ``await`` to pause execution
+until all three photos finish downloading.
 
 Here's how you can think about the differences between these two approaches:
 
@@ -402,7 +403,7 @@ Here's how you can think about the differences between these two approaches:
 
 - In both cases, you mark the possible suspension point with ``await``
   to indicate that execution will pause, if needed,
-  until an asynchronous function has returned
+  until an asynchronous function has returned.
 
 You can also mix both of these approaches in the same code.
 
@@ -572,8 +573,9 @@ described in the previous sections,
 Swift also supports unstructured concurrency.
 Unlike tasks that are part of a task group,
 an :newTerm:`unstructured task` doesn't have a parent task.
-This gives you complete flexibility to manage it,
-but also makes your code completely responsible for correctness.
+You have complete flexibility to manage unstructured tasks
+in whatever way your program needs,
+but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
 call the ``async(priority:operation:)`` function.
 To create an unstructured task that's not part of the current actor,
@@ -612,15 +614,15 @@ Task Cancellation
 ~~~~~~~~~~~~~~~~~
 
 Swift concurrency uses a cooperative cancellation model.
-Each task checks whether it has been cancelled
+Each task checks whether it has been canceled
 at the appropriate points in its execution,
 and responds to cancellation in whatever way is appropriate.
 Depending on the work you're doing,
-that usually means doing one of the following:
+that usually means one of the following:
 
 - Throwing an error like ``CancellationError``
 - Returning ``nil`` or an empty collection
-- Returning the work that has already been finished
+- Returning the partially completed work
 
 To check for cancellation,
 either call ``Task.checkCancellation()``
@@ -744,18 +746,18 @@ and it updates the maximum temperature when you record a new measurement.
 In the middle of an update,
 after appending the new measurement but before updating ``max``,
 the temperature logger is in a temporary inconsistent state.
-Preventing multiple tasks interacting with the same instance simultaneously
+Preventing multiple tasks from interacting with the same instance simultaneously
 prevents problems like the following:
 
 #. Your code calls the ``update(with:)`` method.
    It updates the ``measurements`` array first.
 
-#. Before your can update ``max``,
+#. Before your code can update ``max``,
    code elsewhere reads the maximum value and the array of temperatures.
 
 #. Finally, your code finishes its update by changing ``max``.
 
-In this hypothetical case,
+In this case,
 the code running elsewhere would read incorrect information
 because its access to the actor was interleaved
 in the middle of the call to ``update(with:)``
@@ -767,8 +769,8 @@ in places where ``await`` marks a suspension point.
 
 If you try to access those properties from outside the actor,
 like you would with an instance of a class,
-you'll get a compile-time error.
-For example:
+you'll get a compile-time error;
+for example:
 
 ::
 
@@ -777,7 +779,7 @@ For example:
 Accessing ``logger.max`` without writing ``await`` fails because
 the properties of an actor are part of that actor's isolated local state.
 The language guarantee that only code inside an actor
-can access the actor's local state is known as *actor isolation*.
+can access the actor's local state is known as :newTerm:`actor isolation*`
 
 
 .. OUTLINE -- design patterns for actors
