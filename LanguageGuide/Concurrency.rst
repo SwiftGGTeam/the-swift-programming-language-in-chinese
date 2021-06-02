@@ -258,7 +258,7 @@ even though execution might be suspended at various points along the way.
 
        >> struct Data {}  // Instead of actually importing Foundation
        -> func listPhotos(inGallery name: String) async -> [String] {
-              await Task.sleep(2 * 1_000_000_000)  // two seconds
+              await Task.sleep(2 * 1_000_000_000)  // Two seconds
               return ["IMG001", "IMG99", "IMG0404"]
        }
 
