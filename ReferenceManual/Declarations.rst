@@ -1747,14 +1747,9 @@ There are three ways to create an instance of a previously declared actor:
 * Call one of the initializers declared within the actor,
   as described in :ref:`Initialization_Initializers`.
 * If no initializers are declared,
-  call the actor's memberwise initializer,
-  as described in :ref:`Initialization_MemberwiseInitializersForStructureTypes`.
-* If no initializers are declared,
   and all properties of the actor declaration were given initial values,
   call the actor's default initializer,
   as described in :ref:`Initialization_DefaultInitializers`.
-
-.. XXX TR: Confirm that actors get memberwise inits like structs do.
 
 .. XXX TR: SE-0306 says the following, which seems incorrect:
 
