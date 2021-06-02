@@ -59,6 +59,7 @@
     "LanguageGuide/ClassesAndStructures": "ID82",
     "LanguageGuide/Closures": "ID94",
     "LanguageGuide/CollectionTypes": "ID105",
+    "LanguageGuide/Concurrency": "ID638",
     "LanguageGuide/ControlFlow": "ID120",
     "LanguageGuide/Deinitialization": "ID142",
     "LanguageGuide/Enumerations": "ID145",
@@ -260,6 +261,13 @@
     "collectiontypes-sets": "ID484",
     "collectiontypes-settypeshorthandsyntax": "ID485",
     "collectiontypes-setwitharrayliterals": "ID487",
+    "concurrency-actors": "ID645",
+    "concurrency-asyncfunc": "ID639",
+    "concurrency-asynclet": "ID641",
+    "concurrency-asyncsequence": "ID640",
+    "concurrency-taskcancellation": "ID644",
+    "concurrency-taskhandle": "ID643",
+    "concurrency-tasks": "ID642",
     "controlflow-available": "ID523",
     "controlflow-break": "ID137",
     "controlflow-breakinaloop": "ID138",
@@ -285,6 +293,8 @@
     "controlflow-while": "ID125",
     "controlflow-whileloops": "ID124",
     "declarations-accesscontrollevels": "ID382",
+    "declarations-actordeclaration": "ID648",
+    "declarations-asyncfunctions": "ID647",
     "declarations-classdeclaration": "ID368",
     "declarations-computedvariablesandcomputedproperties": "ID358",
     "declarations-conditionalconformance": "ID576",
@@ -353,6 +363,7 @@
     "expression-selectorexpression": "ID547",
     "expression-typedkeypathexpression": "ID563",
     "expressions-assignmentoperator": "ID386",
+    "expressions-awaitexpression": "ID646",
     "expressions-binaryexpressions": "ID385",
     "expressions-capturelists": "ID544",
     "expressions-closureexpression": "ID393",
@@ -645,6 +656,7 @@
     "thebasics-uint": "ID320",
     "thebasics-whentouseassertions": "ID337",
     "tour-classes": "ID464",
+    "tour-concurrency": "ID637",
     "tour-controlflow": "ID462",
     "tour-enumsandstructs": "ID465",
     "tour-errorhandling": "ID623",
@@ -702,5 +714,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 637
+  "next_id": 649
 }
