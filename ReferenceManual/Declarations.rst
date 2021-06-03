@@ -1751,7 +1751,7 @@ However, an actor that is marked with the ``@objc`` attribute
 implicitly conforms to the ``NSObjectProtocol`` protocol
 and is exposed to the Objective-C runtime as a subtype of ``NSObject``.
 
-There are three ways to create an instance of a previously declared actor:
+There are two ways to create an instance of a previously declared actor:
 
 * Call one of the initializers declared within the actor,
   as described in :ref:`Initialization_Initializers`.
