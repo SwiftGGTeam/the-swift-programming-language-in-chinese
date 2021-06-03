@@ -144,7 +144,7 @@ and then shows the first picture:
     -> let photo = await downloadPhoto(named: name)
     -> show(photo)
 
-Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` methods
+Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` functions
 both need to make network requests,
 they could take a relatively long time to complete.
 Making them both asynchronous by writing ``async`` before the return arrow
@@ -274,7 +274,7 @@ Here's what iterating over an asynchronous sequence looks like:
         print(line)
     }
 
-Instead of using a ordinary ``for``-``in`` loop,
+Instead of using an ordinary ``for``-``in`` loop,
 the example above writes ``for`` with ``await`` after it.
 Like when you call an asynchronous function or method,
 writing ``await`` indicates a possible suspension point.
@@ -325,7 +325,7 @@ the caller waits for that code to finish
 before moving on to run the next line of code.
 For example,
 to fetch the first three photos from a gallery,
-you could await three calls the ``downloadPhoto(named:)`` functions
+you could await three calls to the ``downloadPhoto(named:)`` function
 as follows:
 
 .. testcode:: defining-async-function
@@ -347,7 +347,7 @@ However, there's no need for these operations to wait ---
 each photo can download independently, or even at the same time.
 
 To call an asynchronous function
-and let it run it parallel with code around it,
+and let it run in parallel with code around it,
 write ``async`` in front of ``let`` when you define a constant,
 and then write ``await`` before the first time you use the constant.
 
@@ -379,7 +379,7 @@ Here's how you can think about the differences between these two approaches:
   when the code on the following lines depends on that function's result.
   This creates work that is carried out sequentially.
 
-- Call asynchronous function with ``async``-``let``
+- Call asynchronous functions with ``async``-``let``
   when you don't need the result until later in your code.
   This creates work that can be carried out in parallel.
 
@@ -551,7 +551,7 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
 Unstructured Concurrency
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to the structured approaches to concurrency,
+In addition to the structured approaches to concurrency
 described in the previous sections,
 Swift also supports unstructured concurrency.
 Unlike tasks that are part of a task group,
@@ -575,7 +575,6 @@ for example, to wait for its result or to cancel it.
         return await add(newPhoto, toGalleryNamed: "Spring Adventures")
     }
     let result = await handle.get()
-    print(result)
 
 For more information about managing detached tasks,
 see `Task.Handle <//apple_ref/swift/fake/Task.Handle>`_.
@@ -603,7 +602,7 @@ that usually means one of the following:
 - Returning the partially completed work
 
 To check for cancellation,
-either call ``Task.checkCancellation()``
+either call ``Task.checkCancellation()``,
 which throws ``CancellationError`` if the task has been canceled,
 or check the value of ``Task.isCancelled``
 and handle the cancellation in your own code.
@@ -692,7 +691,7 @@ for example:
 
 In this example,
 accessing ``logger.max`` is a possible suspension point.
-Because the actor allows only one task at a time to access to its mutable state,
+Because the actor allows only one task at a time to access its mutable state,
 if code from another task is already interacting with the logger,
 this code suspends while it waits to access the property.
 
@@ -700,12 +699,12 @@ In contrast,
 code that's part of the actor doesn't write ``await``
 when accessing the actor's properties.
 For example,
-here's a method that updates a ``Logger`` with a new temperature:
+here's a method that updates a ``TemperatureLogger`` with a new temperature:
 
 ::
 
     extension TemperatureLogger {
-        func update(with measurement: Int, units: String) {
+        func update(with measurement: Int) {
             measurements.append(measurement)
             if measurement > max {
                 max = measurement
@@ -716,8 +715,8 @@ here's a method that updates a ``Logger`` with a new temperature:
 The ``update(with:)`` method is already running on the actor,
 so it doesn't mark its access to properties like ``max`` with ``await``.
 This method also shows one of the reasons
-why actors allow only one task at a time interact with their mutable state:
-some updates to an actor's state temporarily break invariants.
+why actors allow only one task at a time to interact with their mutable state:
+Some updates to an actor's state temporarily break invariants.
 The ``TemperatureLogger`` actor keeps track of
 a list of temperatures and a maximum temperature,
 and it updates the maximum temperature when you record a new measurement.
@@ -756,9 +755,9 @@ for example:
 
 Accessing ``logger.max`` without writing ``await`` fails because
 the properties of an actor are part of that actor's isolated local state.
-The language guarantee that only code inside an actor
-can access the actor's local state is known as :newTerm:`actor isolation*`
-
+Swift guarantees that
+only code inside an actor can access the actor's local state.
+This guarantee is known as :newTerm:`actor isolation`.
 
 .. OUTLINE -- design patterns for actors
 

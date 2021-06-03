@@ -1177,8 +1177,8 @@ They have the following form:
     }
 
 Calls to an asynchronous function or method
-must be wrapped in an ``async`` expression ---
-that is, they must be in the scope of an ``async`` operator.
+must be wrapped in an ``await`` expression ---
+that is, they must be in the scope of an ``await`` operator.
 
 The ``async`` keyword is part of the function's type,
 and synchronous functions are subtypes of asynchronous functions.
@@ -1766,7 +1766,7 @@ but not to asynchronous functions.
 Actors can also have nonisolated members,
 whose declarations are marked with the ``nonisolated`` keyword.
 A nonisolated member executes like code outside of the actor:
-it can't interact with any of the actor's isolated state,
+It can't interact with any of the actor's isolated state,
 and callers don't mark it with ``await`` when using it.
 
 Members of an actor can be marked with the ``@objc`` attribute
