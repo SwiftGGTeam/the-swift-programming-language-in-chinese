@@ -1231,8 +1231,8 @@ but the new method must preserve its return type and nonreturning behavior.
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clause ``throws``-OPT function-result-OPT
-    function-signature --> parameter-clause ``rethrows`` function-result-OPT
+    function-signature --> parameter-clause ``async``-OPT ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clause ``async``-OPT ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
