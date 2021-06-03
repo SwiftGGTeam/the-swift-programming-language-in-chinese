@@ -1781,7 +1781,7 @@ and callers don't mark it with ``await`` when using it.
 Members of an actor can be marked with the ``@objc`` attribute
 only if they are nonisolated or asynchronous.
 
-The process of initializing a actor's declared properties
+The process of initializing an actor's declared properties
 is described in :doc:`../LanguageGuide/Initialization`.
 
 Properties of a actor instance can be accessed using dot (``.``) syntax,

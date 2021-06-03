@@ -677,7 +677,7 @@ that other code outside the actor can access,
 and restricts the ``max`` property so only code inside the actor
 can update the maximum value.
 
-You create an instance of a actor
+You create an instance of an actor
 using the same initializer syntax as structures and classes.
 When you access a property or method of an actor,
 you use ``await`` to mark the potential suspension point ---
