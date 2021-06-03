@@ -739,10 +739,12 @@ the code running elsewhere would read incorrect information
 because its access to the actor was interleaved
 in the middle of the call to ``update(with:)``
 while the data was temporarily invalid.
-This doesn't occur with Swift actors
+You can prevent this problem when using Swift actors
 because they only allow one operation on their state at a time,
 and because that code can be interrupted
 only in places where ``await`` marks a suspension point.
+Because ``update(with:)`` doesn't contain any suspension points,
+no other code can access the data in the middle of an update.
 
 If you try to access those properties from outside the actor,
 like you would with an instance of a class,
