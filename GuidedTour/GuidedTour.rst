@@ -1373,7 +1373,7 @@ like a call to an asynchronous function,
 by writing ``await``
 if you want to wait for it to complete.
 
-.. testcode:: guided-tour
+.. testcode:: guided-tour-async
 
    -> var currentlyBaking = ""
    -> func bake(_ food: String) async {
@@ -1393,7 +1393,7 @@ Because you still need to wait for the operation to finish
 before you can use the value it returns,
 you write ``await`` when you use that constant.
 
-.. testcode:: guided-tour
+.. testcode:: guided-tour-async
 
    -> async let cookies = makeCookies()
    -> async let bread = bake("bread")
@@ -1404,7 +1404,7 @@ Actors are similar to classes,
 except they ensure that different asynchronous functions
 can all interact with an instance of the same actor at the same time.
 
-.. testcode:: guided-tour
+.. testcode:: guided-tour-async
 
    -> actor Oven {
           var contents: [String] = []
@@ -1421,7 +1421,7 @@ you mark that code with ``await``
 to indicate that it might have to wait for other code
 that's already running on the actor to finish.
 
-.. testcode:: guided-tour
+.. testcode:: guided-tour-async
 
    -> var oven = Oven()
    -> let biscuits = await oven.bake("biscuits")
