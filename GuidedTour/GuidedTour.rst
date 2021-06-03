@@ -1375,11 +1375,8 @@ if you want to wait for it to complete.
 
 .. testcode:: guided-tour-async
 
-   -> var currentlyBaking = ""
    -> func bake(_ food: String) async -> String {
-          currentlyBaking = food
           // ... wait for food to bake ...
-          currentlyBaking = ""
           return food
       }
    -> func makeCookies() async -> String {
@@ -1425,7 +1422,7 @@ that's already running on the actor to finish.
 
 .. testcode:: guided-tour-async
 
-   -> var oven = Oven()
+   -> let oven = Oven()
    -> let biscuits = await oven.bake("biscuits")
    -> for item in await oven.contents {
           print(item)
