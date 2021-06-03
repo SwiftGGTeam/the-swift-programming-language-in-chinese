@@ -1376,10 +1376,11 @@ if you want to wait for it to complete.
 .. testcode:: guided-tour-async
 
    -> var currentlyBaking = ""
-   -> func bake(_ food: String) async {
+   -> func bake(_ food: String) async -> String {
           currentlyBaking = food
           // ... wait for food to bake ...
           currentlyBaking = ""
+          return food
       }
    -> func makeCookies() async -> String {
           let cookies = await bake("cookies")
@@ -1408,11 +1409,12 @@ can all interact with an instance of the same actor at the same time.
 
    -> actor Oven {
           var contents: [String] = []
-          func bake(_ food: String) {
+          func bake(_ food: String) -> String {
               let index = contents.endIndex
               contents.append(food)
               // ... wait for food to bake ...
               contents.remove(at: index)
+              return food
           }
       }
 
