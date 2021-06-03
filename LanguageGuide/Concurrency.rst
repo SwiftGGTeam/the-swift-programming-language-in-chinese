@@ -339,7 +339,7 @@ as follows:
     -> show(photos)
 
 This approach has an important drawback:
-although the download is asynchronous
+Although the download is asynchronous
 and lets other work happen while it progresses,
 only one call to ``downloadPhoto(named:)`` runs at a time.
 Each photo downloads completely before the next one starts downloading.
