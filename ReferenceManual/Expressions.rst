@@ -21,7 +21,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT await-operator-OPT prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -90,6 +90,8 @@ It has the following form:
 
    try <#expression#>
 
+The value of a ``try`` expression is the value of the *expression*.
+
 An :newTerm:`optional-try expression` consists of the ``try?`` operator
 followed by an expression that can throw an error.
 It has the following form:
@@ -111,6 +113,7 @@ It has the following form:
 
    try! <#expression#>
 
+The value of a forced-try expression is the value of the *expression*.
 If the *expression* throws an error,
 a runtime error is produced.
 
@@ -124,22 +127,27 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
-    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
-    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    // try applies to both function calls
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()
+    ---
+    // try applies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction())
+    ---
+    // Error: try applies only to the first function call
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !$ error: call can throw but is not marked with 'try'
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
     !$ note: did you mean to use 'try'?
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^
     !!                                      try
     !$ note: did you mean to handle error as optional value?
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^
     !!                                      try?
     !$ note: did you mean to disable error propagation?
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^
     !!                                      try!
 
@@ -157,6 +165,12 @@ or the ``try`` expression is enclosed in parentheses.
     !!           ^
     -> sum = 7 + (try someThrowingFunction()) // OK
 
+If an expression includes both the ``try`` and ``await`` operator,
+the ``try`` operator must appear first.
+
+.. The "try await" ordering is also part of the grammar for 'expression',
+   but it's important enough to be worth re-stating in prose.
+
 For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
 see :doc:`../LanguageGuide/ErrorHandling`.
 
@@ -167,6 +181,88 @@ see :doc:`../LanguageGuide/ErrorHandling`.
     try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
 
 
+.. _Expressions_AwaitExpression:
+
+Await Operator
+~~~~~~~~~~~~~~
+
+An :newTerm:`await expression` consists of the ``await`` operator
+followed by an expression that uses the result of an asynchronous operation.
+It has the following form:
+
+.. syntax-outline::
+
+   await <#expression#>
+
+The value of an ``await`` expression is the value of the *expression*.
+
+An expression marked with ``await`` is called a :newTerm:`potential suspension point`.
+Execution of an asynchronous function can be suspended
+at each expression that's marked with ``await``.
+In addition,
+execution of concurrent code is never suspended at any other point.
+This means code between potential suspension points
+can safely update state that requires temporarily breaking invariants,
+provided that it completes the update
+before the next potential suspension point.
+
+An ``await`` expression can appear only within an asynchronous context,
+such as the trailing closure passed to the ``async(priority:operation:)`` function.
+It can't appear in the body of a ``defer`` statement,
+or in an autoclosure of synchronous function type.
+
+When the expression on the left-hand side of a binary operator
+is marked with the ``await`` operator,
+that operator applies to the whole binary expression.
+That said, you can use parentheses
+to be explicit about the scope of the operator's application.
+
+.. testcode:: placement-of-await
+
+    >> func someAsyncFunction() async -> Int { return 10 }
+    >> func anotherAsyncFunction() async -> Int { return 5 }
+    >> var sum = 0
+    // await applies to both function calls
+    -> sum = await someAsyncFunction() + anotherAsyncFunction()
+    ---
+    // await applies to both function calls
+    -> sum = await (someAsyncFunction() + anotherAsyncFunction())
+    ---
+    // Error: await applies only to the first function call
+    -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
+    >> _ = sum  // Suppress irrelevant written-but-not-read warning
+    !$ error: call is 'async' but is not marked with 'await'
+    !! sum = (await someAsyncFunction()) + anotherAsyncFunction() // Error: await applies only to the first function call
+    !! ^~~~~~~~~~~~~~~~~~~~~~
+    !! await
+
+An ``await`` expression can't appear on the right-hand side of a binary operator,
+unless the binary operator is the assignment operator
+or the ``await`` expression is enclosed in parentheses.
+
+.. assertion:: await-on-right
+
+    >> func someAsyncFunction() async -> Int { return 10 }
+    >> var sum = 0
+    >> sum = 7 + await someAsyncFunction()    // Error
+    !$ error: 'await' cannot appear to the right of a non-assignment operator
+    !! sum = 7 + await someAsyncFunction()    // Error
+    !! ^
+    >> sum = 7 + (await someAsyncFunction())  // OK
+    >> _ = sum  // Suppress irrelevant written-but-not-read warning
+
+If an expression includes both the ``await`` and ``try`` operator,
+the ``try`` operator must appear first.
+
+.. The "try await" ordering is also part of the grammar for 'expression',
+   but it's important enough to be worth re-stating in prose.
+
+.. syntax-grammar::
+
+    Grammar of an await expression
+
+    await-operator --> ``await``
+
 .. _Expressions_BinaryExpressions:
 
 Binary Expressions
@@ -174,7 +270,7 @@ Binary Expressions
 
 :newTerm:`Binary expressions` combine
 an infix binary operator with the expression that it takes
-as its left-hand and right-hand arguments.
+as its left- and right-hand arguments.
 It has the following form:
 
 .. syntax-outline::
