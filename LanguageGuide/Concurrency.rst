@@ -349,7 +349,7 @@ each photo can download independently, or even at the same time.
 To call an asynchronous function
 and let it run in parallel with code around it,
 write ``async`` in front of ``let`` when you define a constant,
-and then write ``await`` before the first time you use the constant.
+and then write ``await`` each time you use the constant.
 
 .. testcode:: calling-with-async-let
 
