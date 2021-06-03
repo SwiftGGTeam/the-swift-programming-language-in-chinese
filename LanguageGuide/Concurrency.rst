@@ -602,16 +602,16 @@ that usually means one of the following:
 - Returning the partially completed work
 
 To check for cancellation,
-either call ``Task.checkCancellation()``,
+either call `Task.checkCancellation() <//apple_ref/swift/fake/Task.checkCancellation>`_,
 which throws ``CancellationError`` if the task has been canceled,
-or check the value of ``Task.isCancelled``
+or check the value of `Task.isCancelled <//apple_ref/swift/fake/Task.isCancelled>`_
 and handle the cancellation in your own code.
 For example,
 a task that's downloading photos from a gallery
 might need to delete partial downloads and close network connections.
 
 To propagate cancellation manually,
-call ``Task.Handle.cancel()``.
+call `Task.Handle.cancel() <//apple_ref/swift/fake/Task.Handle.cancel>`_.
 
 
 .. OUTLINE
