@@ -1087,7 +1087,8 @@ Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` 
 
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
-As a result, you can use a nonthrowing function in the same places as a throwing one.
+As a result, you can use a nonthrowing function
+in a context where as a throwing one is expected.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -1192,7 +1193,7 @@ that is, they must be in the scope of an ``await`` operator.
 The ``async`` keyword is part of the function's type,
 and synchronous functions are subtypes of asynchronous functions.
 As a result, you can use a synchronous function
-in the same places as an asynchronous one.
+in a context where an asynchronous function is expected.
 For example,
 you can override an asynchronous method with a synchronous method,
 and a synchronous method can satisfy a protocol requirement
