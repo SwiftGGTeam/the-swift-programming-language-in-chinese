@@ -45,6 +45,10 @@ Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
 See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
 
+## non-asynchronous
+
+Use “synchronous” instead of this double negation.
+
 ## operator
 
 When introducing a named operator for the first time,
@@ -84,6 +88,12 @@ In this case, passive voice is clearer than active
 because there isn’t a clear agent performing the understanding
 and the identity of that agent is irrelevant.
 
+## potential suspension point
+
+This is the preferred wording when describing the semantics of `await`.
+If context has already made that clear and repeating “potential” becomes wordy,
+you can shorten it to just “suspension point”.
+
 ## punctuation before a code listing
 
 Write a colon after a sentence that ends with a phrase like
@@ -116,6 +126,23 @@ with the exception of phrases like “a run-time error” and “a runtime error
 which refer respectively to
 an error that occurs while running the code
 and an error that comes from or is related to the Swift runtime environment.
+
+## shared mutable state
+
+Avoid when describing actors.
+By design, actors specifically *avoid* having shared mutable state —
+their mutable state is private,
+and accessible only through the actor's (async) methods.
+
+## spawn, start
+
+Use “add” instead to refer to creating a new task,
+to match the API symbol name.
+(These names were used in an earlier version the SE proposal.)
+
+## suspension point
+
+See entry for *potential suspension point*.
 
 ## syntax outline
 

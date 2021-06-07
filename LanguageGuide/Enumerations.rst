@@ -190,7 +190,7 @@ You can use ``allCases`` like any other collection ---
 the collection's elements are instances of the enumeration type,
 so in this case they're ``Beverage`` values.
 The example above counts how many cases there are,
-and the example below uses a ``for`` loop to iterate over all the cases.
+and the example below uses a ``for``-``in`` loop to iterate over all the cases.
 
 .. testcode:: enums
 
