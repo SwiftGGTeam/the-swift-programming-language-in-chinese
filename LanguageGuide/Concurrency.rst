@@ -63,7 +63,7 @@ and shows that photo to the user:
     >> }
     -> listPhotos(inGallery: "Summer Vacation") { photoNames in
            let sortedNames = photoNames.sorted()
-           let name = sortedNames[1]
+           let name = sortedNames[0]
            downloadPhoto(named: name) { photo in
                show(photo)
            }
@@ -140,7 +140,7 @@ and then shows the first picture:
     >> func show(_ image: Data) { }
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
     -> let sortedNames = photoNames.sorted()
-    -> let name = sortedNames[1]
+    -> let name = sortedNames[0]
     -> let photo = await downloadPhoto(named: name)
     -> show(photo)
 
