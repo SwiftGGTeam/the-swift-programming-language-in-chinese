@@ -231,6 +231,11 @@ A :newTerm:`value type` is a type whose value is *copied*
 when it's assigned to a variable or constant,
 or when it's passed to a function.
 
+.. Alternate definition:
+   A type has value semantics when
+   mutation of one variable of that type
+   can never be observed through a different variable of the same type.
+
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays and dictionaries ---
