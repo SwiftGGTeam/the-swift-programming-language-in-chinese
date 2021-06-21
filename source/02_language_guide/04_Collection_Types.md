@@ -37,7 +37,7 @@ Swift 中数组的完整写法为 `Array<Element>`，其中 `Element` 是这个�
 你可以使用构造语法来创建一个由特定数据类型构成的空数组：
 
 ```swift
-var someInts = [Int]()
+var someInts: [Int] = []
 print("someInts is of type [Int] with \(someInts.count) items.")
 // 打印“someInts is of type [Int] with 0 items.”
 ```
@@ -473,7 +473,7 @@ Swift 的字典使用 `Dictionary<Key, Value>` 定义，其中 `Key` 是一种�
 你可以像数组一样使用构造语法创建一个拥有确定类型的空字典：
 
 ```swift
-var namesOfIntegers = [Int: String]()
+var namesOfIntegers: [Int: String] = [:]
 // namesOfIntegers 是一个空的 [Int: String] 字典
 ```
 
