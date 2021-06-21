@@ -97,8 +97,8 @@ print(shoppingList)
 使用初始化语法来创建一个空数组或者空字典。
 
 ```swift
-let emptyArray = [String]()
-let emptyDictionary = [String: Float]()
+let emptyArray: [String] = []
+let emptyDictionary: [String: Float] = [:]
 ```
 
 如果类型信息可以被推断出来，你可以用 `[]` 和 `[:]` 来创建空数组和空字典——比如，在给变量赋新值或者给函数传参数的时候。
@@ -187,7 +187,7 @@ let interestingNumbers = [
     "Square": [1, 4, 9, 16, 25],
 ]
 var largest = 0
-for (kind, numbers) in interestingNumbers {
+for (_, numbers) in interestingNumbers {
     for number in numbers {
         if number > largest {
             largest = number
@@ -195,11 +195,12 @@ for (kind, numbers) in interestingNumbers {
     }
 }
 print(largest)
+// 输出 "25"
 ```
 
 > 练习
 > 
-> 添加另一个变量来记录最大数字的种类（kind），同时仍然记录这个最大数字的值。
+> 将 _ 替换成变量名，以确定哪种类型的值是最大的。
 
 使用 `while` 来重复运行一段代码直到条件改变。循环条件也可以在结尾，保证能至少循环一次。
 
@@ -771,7 +772,7 @@ print(fridgeIsOpen)
 
 ```swift
 func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
-    var result = [Item]()
+    var result: [Item] = []
     for _ in 0..<numberOfTimes {
         result.append(item)
     }
