@@ -97,7 +97,7 @@ class Person {
 
 ```swift
 class Residence {
-    var rooms = [Room]()
+    var rooms: [Room] = []
     var numberOfRooms: Int {
         return rooms.count
     }
