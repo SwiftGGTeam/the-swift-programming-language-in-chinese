@@ -23,6 +23,7 @@
    * [析构过程](02_language_guide/15_Deinitialization.md)
    * [可选链](02_language_guide/16_Optional_Chaining.md)
    * [错误处理](02_language_guide/17_Error_Handling.md)
+   * [并发](02_language_guide/28_Concurrency.md)
    * [类型转换](02_language_guide/18_Type_Casting.md)
    * [嵌套类型](02_language_guide/19_Nested_Types.md)
    * [扩展](02_language_guide/20_Extensions.md)
