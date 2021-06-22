@@ -32,10 +32,6 @@ Swift 中结构体和类有很多共同点。两者都可以：
 
 类支持的附加功能是以增加复杂性为代价的。作为一般准则，优先使用结构体，因为它们更容易理解，仅在适当或必要时才使用类。实际上，这意味着你的大多数自定义数据类型都会是结构体和枚举。更多详细的比较参见 [在结构和类之间进行选择](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes)。
 
-> 注意
-> 
-> 类和 actors 共享很多特性。更多信息请参见 [并发](./18_Concurrency.md)。
-
 ### 类型定义的语法 {#definition-syntax}
 
 结构体和类有着相似的定义方式。你通过 `struct` 关键字引入结构体，通过 `class` 关键字引入类，并将它们的具体定义放在一对大括号中：
