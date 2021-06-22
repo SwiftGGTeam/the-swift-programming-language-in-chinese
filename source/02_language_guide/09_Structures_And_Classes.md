@@ -34,7 +34,7 @@ Swift 中结构体和类有很多共同点。两者都可以：
 
 > 注意
 > 
-> 类和 actors 共享很多特性。更多信息请参见 [并发](./18_Concurrency.md)。
+> 类和 actors 共享很多特性。更多信息请参见 [并发](./28_Concurrency.md)。
 
 ### 类型定义的语法 {#definition-syntax}
 
