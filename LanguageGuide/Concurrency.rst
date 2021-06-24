@@ -318,6 +318,15 @@ by adding conformance to the
 Calling Asynchronous Functions in Parallel
 ------------------------------------------
 
+.. FIXME
+   As pointed out on the Swift forums
+   <https://forums.swift.org/t/swift-concurrency-feedback-wanted/49336/53>
+   whether this work is actually carried out in parallel
+   depends on what's happening at run time.
+   However,
+   the synax introduced in this section contrasts to the previous section
+   in that async-let makes it *possible* for that work to be parallel.
+
 Calling an asynchronous function with ``await``
 runs only one piece of code at a time.
 While the asynchronous code is running,
