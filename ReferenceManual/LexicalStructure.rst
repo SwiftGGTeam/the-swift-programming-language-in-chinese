@@ -90,6 +90,17 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
+Identifiers that begin with a single underscore
+are understood to be non-public, even if they're marked ``public``.
+This convention lets you mark parts of an API
+that clients shouldn't interact with or depend on,
+even though some limitation requires it to be public.
+For example, the ``docc`` generated documentation omits symbols
+that start with an underscore, regardless of their access control level.
+In addition,
+identifiers that begin with two underscores
+are reserved for the Swift compiler and standard library.
+
 To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
 For example, ``class`` isn't a valid identifier,
