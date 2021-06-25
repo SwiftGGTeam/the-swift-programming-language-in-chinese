@@ -92,7 +92,7 @@ digits and combining Unicode characters are also allowed.
 
 Identifiers that begin with a single underscore
 are understood to be non-public, even if they're marked ``public``.
-This convention lets you mark parts of an API
+This convention lets you mark part of an API
 that clients shouldn't interact with or depend on,
 even though some limitation requires it to be public.
 For example, the ``docc`` generated documentation omits symbols
