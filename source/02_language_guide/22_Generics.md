@@ -135,7 +135,7 @@ swapTwoValues(&someString, &anotherString)
 
 ```swift
 struct IntStack {
-    var items = [Int]()
+    var items: [Int] = []
     mutating func push(_ item: Int) {
         items.append(item)
     }
@@ -153,7 +153,7 @@ struct IntStack {
 
 ```swift
 struct Stack<Element> {
-    var items = [Element]()
+    var items: [Element] = []
     mutating func push(_ item: Element) {
         items.append(item)
     }
@@ -354,7 +354,7 @@ protocol Container {
 ```swift
 struct IntStack: Container {
     // IntStack 的原始实现部分
-    var items = [Int]()
+    var items: [Int] = []
     mutating func push(_ item: Int) {
         items.append(item)
     }
@@ -386,7 +386,7 @@ struct IntStack: Container {
 ```swift
 struct Stack<Element>: Container {
     // Stack<Element> 的原始实现部分
-    var items = [Element]()
+    var items: [Element] = []
     mutating func push(_ item: Element) {
         items.append(item)
     }
@@ -721,7 +721,7 @@ protocol ComparableContainer: Container where Item: Comparable { }
 extension Container {
     subscript<Indices: Sequence>(indices: Indices) -> [Item]
         where Indices.Iterator.Element == Int {
-            var result = [Item]()
+            var result: [Item] = []
             for index in indices {
                 result.append(self[index])
             }
