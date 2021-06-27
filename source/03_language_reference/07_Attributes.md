@@ -391,6 +391,65 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
+### `resultBuilder` {#resultBuilder}
+
+将该特性应用于类、结构体或者枚举，可以让其成为一个结果构造器。结果构造器能按顺序构造一组嵌套的数据结构。利用它，可以以一种自然的、声明式的方式为嵌套数据结构实现一套领域专门语言（DSL）。想了解如何使用 `resultBuild`，请参阅 [结果构造器](../02_language_guide/27_Advanced_Operators.md#result-builders)。
+
+#### 结果构造方法 {#result-building-methods}
+
+结果构造器实现了下面的静态方法。由于所有结果构造器的功能已经通过这些静态方法得以展示，你不需要初始化对应类型的实例。必须实现 `buildBlock(_:)` 方法，而那些能让领域专门语言（DSL）拥有额外能力的方法则是可选的。事实上，结果构造器类型的声明不需要遵循任何协议。
+
+静态方法的描述使用三个占位类型。`Expression` 为构造器的输入类型，`Component` 为中间结果类型，`FinalResult` 是构造器最终生成结果的类型。将它们替换成构造器的真正类型。如果构造方法没有为 `Expression` 或 `FinalResult` 指定类型，默认会使用 `Component` 类型。
+
+结果构造方法如下：
+
+- `static func buildBlock(_ components: Component...) -> Component`
+    将可变数量的中间结果合并成一个中间结果。必须实现这个方法。
+- `static func buildOptional(_ component: Component?) -> Component`
+    将一个可能为空的中间结果构造成另一个中间结果。用于支持支持表达式 `if` 不存在 `else` 闭包的场景。
+- `static func buildEither(first: Component) -> Component`
+    构造一个由某些条件约束的中间结果。同时实现它与 `buildEither(second:)` 来支持 `switch` 与包含 `else` 闭包 的 `if` 表达式。 
+- `static func buildEither(second: Component) -> Component`
+    构造一个由某些条件约束的中间结果。同时实现它与 `buildEither(first:)` 来支持 `switch` 与包含 `else` 闭包 的 `if` 表达式。 
+- `static func buildArray(_ components: [Component]) -> Component`
+    将一个中间结果数组构造成一个中间结果。用于支持 `for` 循环。
+- `static func buildExpression(_ expression: Expression) -> Component`
+    为输入构建一个中间结果。你可以利用它来执行预处理，比如，可以将入参转换为内部类型，或为适用房提供额外的类型推断信息。
+- `static func buildFinalResult(_ component: Component) -> FinalResult`
+    为中间结果构造一个最终结果。你可以返回一个与中间结果不一样的类型最为最终结果，也可以在最终结果返回前对值进行处理。
+- `static func buildLimitedAvailability(_ component: Component) -> Component`
+    构建一个中间结果，用于在编译器控制表达式以外传递或擦除类型信息，以进行有效性检查。你可以用它在条件分支中实现类型信息的擦除。
+
+以下代码定义了一个简易的结果构造器，用于构造整型数组。类型别名明确了 `Compontent` 与 `Expression` 的类型，以一种简单的方式将下面的例子与上面的方法匹配起来。
+
+```swift
+@resultBuilder
+struct ArrayBuilder {
+    typealias Component = [Int]
+    typealias Expression = Int
+    static func buildExpression(_ element: Expression) -> Component {
+        return [element]
+    }
+    static func buildOptional(_ component: Component?) -> Component {
+        guard let component = component else { return [] }
+        return component
+    }
+    static func buildEither(first component: Component) -> Component {
+        return component
+    }
+    static func buildEither(second component: Component) -> Component {
+        return component
+    }
+    static func buildArray(_ components: [Component]) -> Component {
+        return Array(components.joined())
+    }
+    static func buildBlock(_ components: Component...) -> Component {
+        return Array(components.joined())
+    }
+}
+```
+
+
 ### `requires-stored-property-inits` {#requires-stored-property-inits}
 
 该特性用于类声明，以要求类中所有存储属性提供默认值作为其定义的一部分。对于从中继承的任何类都推断出 `NSManagedObject` 特性。
