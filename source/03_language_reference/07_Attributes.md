@@ -182,11 +182,11 @@ repeatLabels(a: "four") // Error
 
 ### `dynamicMemberLookup` {#dynamicmemberlookup}
 
-该特性用于类、结构体、枚举或协议，让其能在运行时查找成员。该类型必须实现 `subscript(dynamicMemberLookup:)` 下标。
+该特性用于类、结构体、枚举或协议，让其能在运行时查找成员。该类型必须实现 `subscript(dynamicMember:)` 下标。
 
-在显式成员表达式中，如果指定成员没有相应的声明，则该表达式被理解为对该类型的 `subscript(dynamicMemberLookup:)` 下标调用，将有关该成员的信息作为参数传递。下标接收参数既可以是键路径，也可以是成员名称字符串；如果你同时实现这两种方式的下标调用，那么以键路径参数方式为准。
+在显式成员表达式中，如果指定成员没有相应的声明，则该表达式被理解为对该类型的 `subscript(dynamicMember:)` 下标调用，将有关该成员的信息作为参数传递。下标接收参数既可以是键路径，也可以是成员名称字符串；如果你同时实现这两种方式的下标调用，那么以键路径参数方式为准。
 
- `subscript(dynamicMemberLookup:)` 实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。它可以使用遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的类型作为参数来接受成员名 -- 通常情况下是 `String`。下标返回值类型可以为任意类型。
+ `subscript(dynamicMember:)` 实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。它可以使用遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的类型作为参数来接受成员名 -- 通常情况下是 `String`。下标返回值类型可以为任意类型。
 
 按成员名进行的动态成员查找可用于围绕编译时无法进行类型检查的数据创建包装类型，例如在将其他语言的数据桥接到 `Swift` 时。例如：
 
@@ -328,7 +328,7 @@ class ExampleClass: NSObject {
 
 ### `propertyWrapper` {#propertywrapper}
 
-在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问。局部和全局变量不能使用属性包装器。
+在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问；本地存储变量申明也能利用这个特性完成对它的访问封装。局部和全局变量不能使用属性包装器。
 
 包装器必须定义一个 `wrappedValue` 实例属性。该属性 _wrapped value_ 是该属性存取方法暴露的值。大多数时候，`wrappedValue` 是一个计算属性，但它可以是一个存储属性。包装器负责定义和管理其包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线（`_`）来为包装器的实例提供同步存储。例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的同步存储具有 `private` 的访问控制级别。
 
