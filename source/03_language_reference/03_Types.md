@@ -80,7 +80,7 @@ var someValue: ExampleModule.MyType
 > 
 
 #### type-identifier {#type-identifier}
-> *类型标识符* → [类型名称](#type-name) [泛型实参子句](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub> | [类型名称](#type-name) [泛型实参子句](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub> **.** [类型标识符](#type-identifier)
+> *类型标识符* → [类型名称](#type-name) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub> | [类型名称](#type-name) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub> **.** [类型标识符](#type-identifier)
 
 #### type-name {#type-name}
 > *类型名称* → [标识符](./02_Lexical_Structure.md#identifier)
@@ -129,7 +129,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 
 你可以对形参类型为 `() -> T`（其中 T 是任何类型）的函数使用 `autoclosure` 特性，这会在调用侧隐式创建一个闭包。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为形参的函数类型的例子详见 [自动闭包](../02_language_guide/07_Closures.md#autoclosures)。
 
-函数类型可以拥有一个可变参数在*形参类型*中。从语法角度上讲，可变参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
+函数类型可以拥有多个可变参数在*形参类型*中。从语法角度上讲，可变参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
 
 为了指定一个 `in-out` 参数，可以在形参类型前加 `inout` 前缀。但是你不可以对可变参数或返回值类型使用 `inout`。关于这种形参的详细讲解请参阅 [输入输出参数](../02_language_guide/06_Functions.md#in-out-parameters)。
 
@@ -164,7 +164,7 @@ var operation: (Int, Int) -> Int                // 正确
 
 如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `(Int) -> (Int) -> Int` 可以理解为 `(Int) -> ((Int) -> Int)`，也就是说，该函数传入 `Int`，并返回另一个传入并返回 `Int` 的函数。
 
-函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing-functions-and-methods) 和 [重抛函数与方法](./06-Declarations.md#rethrowing-functions-and-methods)。
+函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing-functions-and-methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing-functions-and-methods)。
 
 ### 对非逃逸闭包的限制 {#Restrictions for Nonescaping Closures}
 当非逃逸闭包函数是形参时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
@@ -202,7 +202,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *函数类型子句* → **(** [函数类型实参列表](#function-type-argument-list) *...*­ <sub>可选</sub> **)**  
 
 #### function-type-argument-list {#function-type-argument-list}
-> *函数类型实参列表* → [函数类型实参](function-type-argument) | [函数类型实参](function-type-argument)， [函数类型实参列表](#function-type-argument-list)
+> *函数类型实参列表* → [函数类型实参](#function-type-argument) | [函数类型实参](#function-type-argument)， [函数类型实参列表](#function-type-argument-list)
 
 #### function-type-argument {#function-type-argument}
 
@@ -345,7 +345,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 > `Protocol 1` & `Procotol 2`
 
-协议合成类型允许你指定一个值，其类型遵循多个协议的要求而不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议。同样的，你可以使用 `SuperClass & ProtocolA` 来取代申明一个新的协议作为 `SuperClass` 的子类并遵循 `ProtocolA`。
+协议合成类型允许你指定一个值，其类型遵循多个协议的要求而不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议。同样的，你可以使用 `SuperClass & ProtocolA` 来取代声明一个新的协议作为 `SuperClass` 的子类并遵循 `ProtocolA`。
 
 协议合成列表中的每一项都必须是下面所列情况之一，列表中最多只能包含一个类：  
 

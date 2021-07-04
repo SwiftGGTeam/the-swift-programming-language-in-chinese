@@ -213,7 +213,7 @@ struct LevelTracker {
 
 除了类型属性和类型方法，`LevelTracker` 还监测每个玩家的进度。它用实例属性 `currentLevel` 来监测每个玩家当前的等级。
 
-为了便于管理 `currentLevel` 属性，`LevelTracker` 定义了实例方法 `advance(to:)`。这个方法会在更新 `currentLevel` 之前检查所请求的新等级是否已经解锁。`advance(to:)` 方法返回布尔值以指示是否能够设置 `currentLevel`。因为允许在调用 `advance(to:)` 时候忽略返回值，不会产生编译警告，所以函数被标注为 `@discardableResult` 属性，更多关于属性信息，请参考 [特性](../03_language_reference/07_Attributes.html) 章节。
+为了便于管理 `currentLevel` 属性，`LevelTracker` 定义了实例方法 `advance(to:)`。这个方法会在更新 `currentLevel` 之前检查所请求的新等级是否已经解锁。`advance(to:)` 方法返回布尔值以指示是否能够设置 `currentLevel`。因为允许在调用 `advance(to:)` 时候忽略返回值，不会产生编译警告，所以函数被标注为 `@discardableResult` 属性，更多关于属性信息，请参考 [特性](../03_language_reference/07_Attributes.md) 章节。
 
 下面，`Player` 类使用 `LevelTracker` 来监测和更新每个玩家的发展进度：
 

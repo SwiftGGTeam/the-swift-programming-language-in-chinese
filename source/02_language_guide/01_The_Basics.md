@@ -75,7 +75,7 @@ var red, green, blue: Double
 
 ### 常量和变量的命名 {#naming}
 
-常量和变量名可以包含任何字符，包括 Unicode 字符：
+常量和变量名可以包含几乎所有的字符，包括 Unicode 字符：
 
 ```swift
 let π = 3.14159
@@ -213,7 +213,7 @@ Swift 也提供了一个特殊的无符号类型 `UInt`，长度与当前平台�
 
 > 注意
 > 
-> `Double` 精确度很高，至少有15位数字，而 `Float` 只有6位数字。选择哪个类型取决于你的代码需要处理的值的范围，在两种类型都匹配的情况下，将优先选择 `Double`。
+> `Double` 精确度很高，至少有 15 位小数，而 `Float` 只有 6 位小数。选择哪个类型取决于你的代码需要处理的值的范围，在两种类型都匹配的情况下，将优先选择 `Double`。
 
 ## 类型安全和类型推断 {#type-safety-and-type-inference}
 
@@ -481,7 +481,7 @@ print("The status message is \(http200Status.description)")
 
 > 注意
 > 
-> 当遇到一些相关值的简单分组时，元组是很有用的。元组不适合用来创建复杂的数据结构。如果你的数据结构比较复杂，不要使用元组，用类或结构体去建模。欲获得更多信息，请参考 [结构体和类](./09_Classes_and_Structures.md)。
+> 当遇到一些相关值的简单分组时，元组是很有用的。元组不适合用来创建复杂的数据结构。如果你的数据结构比较复杂，不要使用元组，用类或结构体去建模。欲获得更多信息，请参考 [结构体和类](./09_Structures_And_Classes.md)。
 
 ## 可选类型 {#optionals}
 
@@ -617,7 +617,7 @@ if let firstNumber = Int("4") {
 
 有时候在程序架构中，第一次被赋值之后，可以确定一个可选类型_总会_有值。在这种情况下，每次都要判断和解析可选值是非常低效的，因为可以确定它总会有值。
 
-这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。
+这种类型的可选状态被定义为隐式解析可选类型（implicitly unwrapped optionals）。把想要用作可选的类型的后面的问号（`String?`）改成感叹号（`String!`）来声明一个隐式解析可选类型。与其在使用时把感叹号放在可选类型的名称的后面，你可以在定义它时，直接把感叹号放在可选类型的后面。
 
 当可选类型被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选类型非常有用。隐式解析可选类型主要被用在 Swift 中类的构造过程中，请参考 [无主引用以及隐式解析可选属性](./24_Automatic_Reference_Counting.md#unowned-references-and-implicitly-unwrapped-optional-properties)。
 
@@ -631,13 +631,15 @@ let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString  // 不需要感叹号
 ```
 
-你可以把隐式解析可选类型当做一个可以自动解析的可选类型。你要做的只是声明的时候把感叹号放到类型的结尾，而不是每次取值的可选名字的结尾。
+你可以把隐式解析可选类型当做一个可以自动解析的可选类型。当你使用一个隐式解析可选值时，Swift 首先会把它当作普通的可选值；如果它不能被当成可选类型使用，Swift 会强制解析可选值。在以上的代码中，可选值 `assumedString` 在把自己的值赋给 `implicitString` 之前会被强制解析，原因是 `implicitString` 本身的类型是非可选类型的 `String`。在下面的代码中，`optionalString` 并没有显式的数据类型。那么根据类型推断，它就是一个普通的可选类型。
+```swift
+let optionalString = assumedString
+// optionalString 的类型是 "String?"，assumedString 也没有被强制解析。
+```
 
-> 注意
-> 
-> 如果你在隐式解析可选类型没有值的时候尝试取值，会触发运行时错误。和你在没有值的普通可选类型后面加一个惊叹号一样。
+如果你在隐式解析可选类型没有值的时候尝试取值，会触发运行时错误。和你在没有值的普通可选类型后面加一个感叹号一样。
 
-你仍然可以把隐式解析可选类型当做普通可选类型来判断它是否包含值：
+你可以把隐式解析可选类型当做普通可选类型来判断它是否包含值：
 
 ```swift
 if assumedString != nil {

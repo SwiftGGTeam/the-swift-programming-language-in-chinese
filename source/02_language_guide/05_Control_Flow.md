@@ -23,7 +23,7 @@ for name in names {
 // Hello, Jack!
 ```
 
-你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键声明会为 `animalName` 常量，字典的值会声明为 `legCount` 常量：
+你也可以通过遍历一个字典来访问它的键值对。遍历字典时，字典的每项元素会以 `(key, value)` 元组的形式返回，你可以在 `for-in` 循环中使用显式的常量名称来解读 `(key, value)` 元组。下面的例子中，字典的键会声明为 `animalName` 常量，字典的值会声明为 `legCount` 常量：
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -96,6 +96,8 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
     // 每3小时渲染一个刻度线（3, 6, 9, 12）
 }
 ```
+
+以上示例使用 `for-in` 循环来遍历范围、数组、字典和字符串。你可以用它来遍历任何的集合，包括实现了 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议的自定义类或集合类型。
 
 ## While 循环 {#while-loops}
 
@@ -527,7 +529,7 @@ default:
 - `return`
 - `throw`
 
-我们将会在下面讨论 `continue`、`break` 和 `fallthrough` 语句。`return` 语句将会在 [函数](./06_Functions.md) 章节讨论，`throw` 语句会在 [错误抛出](./18_Error_Handling.md#throwing-errors) 章节讨论。
+我们将会在下面讨论 `continue`、`break` 和 `fallthrough` 语句。`return` 语句将会在 [函数](./06_Functions.md) 章节讨论，`throw` 语句会在 [错误抛出](./17_Error_Handling.md#throwing-errors) 章节讨论。
 
 ### Continue {#continue}
 
@@ -754,7 +756,7 @@ if #available(iOS 10, macOS 10.12, *) {
 
 以上可用性条件指定，`if` 语句的代码块仅仅在 iOS 10 或 macOS 10.12 及更高版本才运行。最后一个参数，`*`，是必须的，用于指定在所有其它平台中，如果版本号高于你的设备指定的最低版本，if 语句的代码块将会运行。
 
-在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS` 和 `tvOS`——请访问 [声明属性](../03_language_reference/06_Attributes.html) 来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
+在它一般的形式中，可用性条件使用了一个平台名字和版本的列表。平台名字可以是 `iOS`，`macOS`，`watchOS` 和 `tvOS`——请访问 [声明属性](../03_language_reference/07_Attributes.md) 来获取完整列表。除了指定像 iOS 8 或 macOS 10.10 的大版本号，也可以指定像 iOS 11.2.6 以及 macOS 10.13.3 的小版本号。
 
 ```swift
 if #available(平台名称 版本号, ..., *) {

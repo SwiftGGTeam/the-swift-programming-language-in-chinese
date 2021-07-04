@@ -11,7 +11,7 @@
 
 简单来说，一个存储属性就是存储在特定类或结构体实例里的一个常量或变量。存储属性可以是*变量存储属性*（用关键字 `var` 定义），也可以是*常量存储属性*（用关键字 `let` 定义）。
 
-可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default-initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14-Initialization.md#assigning-constant-properties-during-initialization) 一节。
+可以在定义存储属性的时候指定默认值，请参考 [默认构造器](./14_Initialization.md#default-initializers) 一节。也可以在构造过程中设置或修改存储属性的值，甚至修改常量存储属性的值，请参考 [构造过程中常量属性的修改](./14_Initialization.md#assigning-constant-properties-during-initialization) 一节。
 
 下面的例子定义了一个名为 `FixedLengthRange` 的结构体，该结构体用于描述整数的区间，且这个范围值在被创建后不能被修改。
 
@@ -99,7 +99,7 @@ print(manager.importer.fileName)
 
 ### 存储属性和实例变量 {#stored-properties-and-instance-variables}
 
-如果您有过 Objective-C 经验，应该知道 Objective-C 为类实例存储值和引用提供两种方法。除了属性之外，还可以使用实例变量作为一个备份存储将变量值赋值给属性。
+如果你有过 Objective-C 经验，应该知道 Objective-C 为类实例存储值和引用提供两种方法。除了属性之外，还可以使用实例变量作为一个备份存储将变量值赋值给属性。
 
 Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的备份存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。属性的全部信息——包括命名、类型和内存管理特征——作为类型定义的一部分，都定义在一个地方。
 
@@ -225,7 +225,12 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 属性观察器监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，即使新值和当前值相同的时候也不例外。
 
-你可以为除了延时加载存储属性之外的其他存储属性添加属性观察器，你也可以在子类中通过重写属性的方式为继承的属性（包括存储属性和计算属性）添加属性观察器。你不必为非重写的计算属性添加属性观察器，因为你可以直接通过它的 setter 监控和响应值的变化。属性重写请参考 [重写](./13_Inheritance.md#overriding)。
+你可以在以下位置添加属性观察器：
+* 自定义的存储属性
+* 继承的存储属性
+* 继承的计算属性
+
+对于继承的属性，你可以在子类中通过重写属性的方式为它添加属性观察器。对于自定义的计算属性来说，使用它的 setter 监控和响应值的变化，而不是尝试创建观察器。属性重写请参考 [重写](./13_Inheritance.md#overriding)。
 
 可以为属性添加其中一个或两个观察器：
 
@@ -240,7 +245,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 在父类初始化方法调用之后，在子类构造器中给父类的属性赋值时，会调用父类属性的 `willSet` 和 `didSet` 观察器。而在父类初始化方法调用之前，给子类的属性赋值时不会调用子类属性的观察器。
 > 
-> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 和 [类的构造器代理](./14-Initialization.md#initializer-delegation-for-class-types)。
+> 有关构造器代理的更多信息，请参考 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 和 [类的构造器代理](./14_Initialization.md#initializer-delegation-for-class-types)。
 
 下面是一个 `willSet` 和 `didSet` 实际运用的例子，其中定义了一个名为 `StepCounter` 的类，用来统计一个人步行时的总步数。这个类可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
@@ -279,7 +284,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/05_Declarations.html#in-out-parameters)。
+> 如果将带有观察器的属性通过 in-out 方式传入函数，`willSet` 和 `didSet` 也会调用。这是因为 in-out 参数采用了拷入拷出内存模式：即在函数内部使用的是参数的 copy，函数结束后，又对参数重新赋值。关于 in-out 参数详细的介绍，请参考 [输入输出参数](../03_language_reference/06_Declarations.md#in-out-parameters)。
 
 ## 属性包装器 {#property-wrappers}
 属性包装器在管理属性如何存储和定义属性的代码之间添加了一个分隔层。举例来说，如果你的属性需要线程安全性检查或者需要在数据库中存储它们的基本数据，那么必须给每个属性添加同样的逻辑代码。当使用属性包装器时，你只需在定义属性包装器时编写一次管理代码，然后应用到多个属性上来进行复用。
@@ -301,7 +306,7 @@ struct TwelveOrLess {
 这个 setter 确保新值小于 12，而且返回被存储的值。
 > 注意
 > 
-> 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./25_Access_Control.md)
+> 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./26_Access_Control.md)
 
 通过在属性之前写上包装器名称作为特性的方式，你可以把一个包装器应用到一个属性上去。这里有个存储小矩形的结构体。通过 `TwelveOrLess` 属性包装器实现类似（挺随意的）对“小”的定义。
 

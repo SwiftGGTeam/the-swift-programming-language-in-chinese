@@ -433,7 +433,7 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 
 ### `autoclosure` {#autoclosure}
 
-这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 `autoclosure` 特性的例子，请参阅 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 和 [函数类型](./03-Types.md#function-type)。
+这个特性通过把表达式自动封装成无参数的闭包来延迟表达式的计算。它可以修饰类型为返回表达式结果类型的无参数函数类型的函数参数。关于如何使用 `autoclosure` 特性的例子，请参阅 [自动闭包](../02_language_guide/07_Closures.md#autoclosures) 和 [函数类型](./03_Types.md#function-type)。
 
 ### `convention` {#convention}
 

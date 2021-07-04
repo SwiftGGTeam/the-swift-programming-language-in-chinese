@@ -498,6 +498,62 @@ print(somethingTextRepresentable.textualDescription)
 > 
 > 即使满足了协议的所有要求，类型也不会自动遵循协议，必须显式地遵循协议。
 
+## 使用合成实现来采纳协议 {#adopting-a-protocol-using-a-synthesized-implementation}
+
+Swift 可以自动提供一些简单场景下遵循 `Equatable`、`Hashable` 和 `Comparable` 协议的实现。在使用这些合成实现之后，无需再编写重复的代码来实现这些协议所要求的方法。
+
+Swift 为以下几种自定义类型提供了 `Equatable` 协议的合成实现：
+
+- 遵循 `Equatable` 协议且只有存储属性的结构体。
+- 遵循 `Equatable` 协议且只有关联类型的枚举
+- 没有任何关联类型的枚举
+
+在包含类型原始声明的文件中声明对 `Equatable` 协议的遵循，可以得到 `==` 操作符的合成实现，且无需自己编写任何关于 `==` 的实现代码。`Equatable` 协议同时包含 `!=` 操作符的默认实现。
+
+下面的例子中定义了一个 `Vector3D` 结构体来表示一个类似 `Vector2D` 的三维向量 `(x, y, z)`。由于 `x`、`y` 和 `z` 都是满足 `Equatable` 的类型，`Vector3D` 可以得到连等判断的合成实现。
+
+```swift
+struct Vector3D: Equatable {
+    var x = 0.0, y = 0.0, z = 0.0
+}
+
+let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
+if twoThreeFour == anotherTwoThreeFour {
+    print("These two vectors are also equivalent.")
+}
+// 打印 "These two vectors are also equivalent."
+```
+
+Swift 为以下几种自定义类型提供了 `Hashable` 协议的合成实现：
+
+- 遵循 `Hashable` 协议且只有存储属性的结构体。
+- 遵循 `Hashable` 协议且只有关联类型的枚举
+- 没有任何关联类型的枚举
+
+在包含类型原始声明的文件中声明对 `Hashable` 协议的遵循，可以得到 `hash(into:)` 的合成实现，且无需自己编写任何关于 `hash(into:)` 的实现代码。
+
+Swift 为没有原始值的枚举类型提供了 `Comparable` 协议的合成实现。如果枚举类型包含关联类型，那这些关联类型也必须同时遵循 `Comparable` 协议。在包含原始枚举类型声明的文件中声明其对 `Comparable` 协议的遵循，可以得到 `<` 操作符的合成实现，且无需自己编写任何关于 `<` 的实现代码。`Comparable` 协议同时包含 `<=`、`>` 和 `>=` 操作符的默认实现。
+
+下面的例子中定义了 `SkillLevel` 枚举类型，其中定义了初学者（beginner）、中级（intermediate）和专家（expert）三种等级，专家等级会由额外的星级（stars）来进行排名。
+
+```swift
+enum SkillLevel: Comparable {
+    case beginner
+    case intermediate
+    case expert(stars: Int)
+}
+var levels = [SkillLevel.intermediate, SkillLevel.beginner,
+              SkillLevel.expert(stars: 5), SkillLevel.expert(stars: 3)]
+for level in levels.sorted() {
+    print(level)
+}
+// 打印 "beginner"
+// 打印 "intermediate"
+// 打印 "expert(stars: 3)"
+// 打印 "expert(stars: 5)"
+```
+
 ## 协议类型的集合 {#collections-of-protocol-types}
 
 协议类型可以在数组或者字典这样的集合中使用，在 [协议类型](./21_Protocols.md##protocols-as-types) 提到了这样的用法。下面的例子创建了一个元素类型为 `TextRepresentable` 的数组：
@@ -588,7 +644,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 
 > 注意
 > 
-> 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Classes_and_Structures.md#structures-and-enumerations-are-value-types) 和 [类是引用类型](./09-Classes-and-Structures.md#classes-are-reference-types)。
+> 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Structures_And_Classes.md#structures-and-enumerations-are-value-types) 和 [类是引用类型](./09_Structures_And_Classes.md#classes-are-reference-types)。
 
 ## 协议合成 {#protocol-composition}
 
@@ -772,7 +828,7 @@ class Counter {
 
 这里使用了两层可选链式调用。首先，由于 `dataSource` 可能为 `nil`，因此在 `dataSource` 后边加上了 `?`，以此表明只在 `dataSource` 非空时才去调用 `increment(forCount:)` 方法。其次，即使 `dataSource` 存在，也无法保证其是否实现了 `increment(forCount:)` 方法，因为这个方法是可选的。因此，`increment(forCount:)` 方法同样使用可选链式调用进行调用，只有在该方法被实现的情况下才能调用它，所以在 `increment(forCount:)` 方法后边也加上了 `?`。
 
-调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` 类型。虽然在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于这一点的更多信息，请查阅 [连接多层可选链式调用](./16_Optional_Chaining)。
+调用 `increment(forCount:)` 方法在上述两种情形下都有可能失败，所以返回值为 `Int?` 类型。虽然在 `CounterDataSource` 协议中，`increment(forCount:)` 的返回值类型是非可选 `Int`。另外，即使这里使用了两层可选链式调用，最后的返回结果依旧是单层的可选类型。关于这一点的更多信息，请查阅 [连接多层可选链式调用](./16_Optional_Chaining.md)。
 
 在调用 `increment(forCount:)` 方法后，`Int?` 型的返回值通过可选绑定解包并赋值给常量 `amount`。如果可选值确实包含一个数值，也就是说，数据源和方法都存在，数据源方法返回了一个有效值。之后便将解包后的 `amount` 加到 `count` 上，增量操作完成。
 

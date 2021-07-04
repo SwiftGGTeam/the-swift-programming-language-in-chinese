@@ -14,7 +14,7 @@
 
 > 注意
 > 
-> 当你为存储型属性分配默认值或者在构造器中为设置初始值时，它们的值是被直接设置的，不会触发任何属性观察者。
+> 当你为存储型属性分配默认值或者在构造器中设置初始值时，它们的值是被直接设置的，不会触发任何属性观察者。
 
 ### 构造器 {#initializers}
 
@@ -328,7 +328,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 
 > 注意
 > 
-> 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考 [扩展](./21_Extensions.md)。
+> 如果你想用另外一种不需要自己定义 `init()` 和 `init(origin:size:)` 的方式来实现这个例子，请参考 [扩展](./20_Extensions.md)。
 
 ## 类的继承和构造过程 {#class-inheritance-and-initialization}
 
@@ -1036,7 +1036,7 @@ class SomeClass {
 ```swift
 struct Chessboard {
     let boardColors: [Bool] = {
-        var temporaryBoard = [Bool]()
+        var temporaryBoard: [Bool] = []
         var isBlack = false
         for i in 1...8 {
             for j in 1...8 {

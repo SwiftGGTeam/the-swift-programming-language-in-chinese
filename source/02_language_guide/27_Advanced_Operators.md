@@ -219,7 +219,7 @@ signedOverflow = signedOverflow &- 1
 // 此时 signedOverflow 等于 127
 ```
 
-`Int8` 型整数能容纳的最小值是 `-128`，以二进制表示即 `10000000`。当使用溢出减法运算符对其进行减 `1` 运算时，符号位被翻转，得到二进制数值 `01111111`，也就是十进制数值的 `127`，这个值也是 `Int8` 型整所能容纳的最大值。
+`Int8` 型整数能容纳的最小值是 `-128`，以二进制表示即 `10000000`。当使用溢出减法运算符对其进行减 `1` 运算时，符号位被翻转，得到二进制数值 `01111111`，也就是十进制数值的 `127`，这个值也是 `Int8` 型整数所能容纳的最大值。
 
 ![Art/overflowSignedSubtraction_2x.png](https://docs.swift.org/swift-book/_images/overflowSignedSubtraction_2x.png)
 
@@ -266,7 +266,7 @@ signedOverflow = signedOverflow &- 1
 
 因此计算结果为 `17`。
 
-有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结核性设置的完整列表，请参见 [操作符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
+有关 Swift 标准库提供的操作符信息，包括操作符优先级组和结合性设置的完整列表，请参见 [操作符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 > 注意
 > 
@@ -438,7 +438,7 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 是一个 Vector2D 实例，并且它的值为 (4.0, -2.0)
 ```
 
-这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考 [运算符声明](./06_Declarations.md#operator-declaration)。
+这个运算符把两个向量的 `x` 值相加，同时从第一个向量的 `y` 中减去第二个向量的 `y` 。因为它本质上是属于“相加型”运算符，所以将它放置在 `+` 和 `-` 等默认中缀“相加型”运算符相同的优先级组中。关于 Swift 标准库提供的运算符，以及完整的运算符优先级组和结合性设置，请参考 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。而更多关于优先级组以及自定义操作符和优先级组的语法，请参考 [运算符声明](../03_language_reference/06_Declarations.md#operator-declaration)。
 
 > 注意
 > 

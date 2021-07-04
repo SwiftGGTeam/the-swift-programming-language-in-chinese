@@ -131,7 +131,7 @@ unit4A = Apartment(unit: "4A")
 
 ![](https://docs.swift.org/swift-book/_images/referenceCycle01_2x.png)
 
-现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来展开和访问可选变量 `john` 和 `unit4A` 中的实例，这样实例的属性才能被赋值：
+现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来解包和访问可选变量 `john` 和 `unit4A` 中的实例，这样实例的属性才能被赋值：
 
 ```swift
 john!.apartment = unit4A
@@ -230,7 +230,7 @@ unit4A = nil
 // 打印“Apartment 4A is being deinitialized”
 ```
 
-由于再也没有指向 `Person` 实例的强引用，该实例会被销毁：
+由于再也没有指向 `Apartment` 实例的强引用，该实例会被销毁：
 
 ![](https://docs.swift.org/swift-book/_images/weakReference03_2x.png)
 
@@ -331,7 +331,7 @@ john = nil
 
 然而，存在着第三种场景，在这种场景中，两个属性都必须有值，并且初始化完成后永远不会为 `nil`。在这种场景中，需要一个类使用无主属性，而另外一个类使用隐式解包可选值属性。
 
-这使两个属性在初始化完成后能被直接访问（不需要可选展开），同时避免了循环引用。这一节将为你展示如何建立这种关系。
+这使两个属性在初始化完成后能被直接访问（不需要可选解包），同时避免了循环引用。这一节将为你展示如何建立这种关系。
 
 下面的例子定义了两个类，`Country` 和 `City`，每个类将另外一个类的实例保存为属性。在这个模型中，每个国家必须有首都，每个城市必须属于一个国家。为了实现这种关系，`Country` 类拥有一个 `capitalCity` 属性，而 `City` 类有一个 `country` 属性：
 
@@ -359,11 +359,11 @@ class City {
 
 `Country` 的构造器调用了 `City` 的构造器。然而，只有 `Country` 的实例完全初始化后，`Country` 的构造器才能把 `self` 传给 `City` 的构造器。在 [两段式构造过程](./14_Initialization.md#two-phase-initialization) 中有具体描述。
 
-为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将 `Country` 的 `capitalCity` 属性声明为隐式解包可选值类型的属性。这意味着像其他可选类型一样，`capitalCity` 属性的默认值为 `nil`，但是不需要展开它的值就能访问它。在 [隐式解包可选值](./01_The_Basics.md#implicityly-unwrapped-optionals) 中有描述。
+为了满足这种需求，通过在类型结尾处加上感叹号（`City!`）的方式，将 `Country` 的 `capitalCity` 属性声明为隐式解包可选值类型的属性。这意味着像其他可选类型一样，`capitalCity` 属性的默认值为 `nil`，但是不需要解包它的值就能访问它。在 [隐式解包可选值](./01_The_Basics.md#implicityly-unwrapped-optionals) 中有描述。
 
 由于 `capitalCity` 默认值为 `nil`，一旦 `Country` 的实例在构造器中给 `name` 属性赋值后，整个初始化过程就完成了。这意味着一旦 `name` 属性被赋值后，`Country` 的构造器就能引用并传递隐式的 `self`。`Country` 的构造器在赋值 `capitalCity` 时，就能将 `self` 作为参数传递给 `City` 的构造器。
 
-上述的意义在于你可以通过一条语句同时创建 `Country` 和 `City` 的实例，而不产生循环强引用，并且 `capitalCity` 的属性能被直接访问，而不需要通过感叹号来展开它的可选值：
+上述的意义在于你可以通过一条语句同时创建 `Country` 和 `City` 的实例，而不产生循环强引用，并且 `capitalCity` 的属性能被直接访问，而不需要通过感叹号来解包它的可选值：
 
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
@@ -558,4 +558,4 @@ paragraph = nil
 // 打印“p is being deinitialized”
 ```
 
-你可以查看 [捕获列表](../03_language_reference/04_Expressions.html) 章节，获取更多关于捕获列表的信息。
+你可以查看 [捕获列表](../03_language_reference/04_Expressions.md) 章节，获取更多关于捕获列表的信息。
