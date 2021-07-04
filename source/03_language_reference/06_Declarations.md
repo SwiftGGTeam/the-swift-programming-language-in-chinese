@@ -25,6 +25,8 @@
 > 
 > *声明* → [类声明](#class-declaration)
 > 
+> *声明* → [actor 声明](#actor-declaration)
+>
 > *声明* → [协议声明](#protocol-declaration)
 > 
 > *声明* → [构造器声明](#initializer-declaration)
@@ -481,7 +483,7 @@ repeatGreeting("Hello, world!", count: 2) //  count 有标签, greeting 没有
 
 更多关于内存安全和内存独占权的讨论，请参阅 [内存安全](../02_language_guide/24_Memory_Safety.md)。
 
-如果一个闭包或者嵌套函数捕获了一个输入输出参数，那么这个闭包或者嵌套函数必须是非逃逸的。如果你需要捕获一个输入输出参数，但并不对其进行修改或者在其他代码中观察其值变化，那么你可以使用捕获列表来显式地表明这是个不可变捕获。
+如果一个闭包或者嵌套函数捕获了一个输入输出参数，那么这个闭包或者嵌套函数必须是非逃逸的。如果你需要捕获一个输入输出参数，但并不对其进行修改，那么你可以使用捕获列表来显式地表明这是个不可变捕获。
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
@@ -518,7 +520,7 @@ _ : 参数类型
 
 以下划线（`_`）命名的参数会被显式忽略，无法在函数内使用。
 
-一个参数的基本类型名称如果紧跟着三个点（`...`），会被视为可变参数。一个函数至多可以拥有一个可变参数，且必须是最后一个参数。可变参数会作为包含该参数类型元素的数组处理。举例来讲，可变参数 `Int...` 会作为 `[Int]` 来处理。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
+一个参数的基本类型名称如果紧跟着三个点（`...`），会被视为可变参数。紧随在可变参数后的参数必须拥有参数标签。一个函数可以拥有多个可变参数。可变参数会作为包含该参数类型元素的数组处理。举例来讲，可变参数 `Int...` 会作为 `[Int]` 来处理。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
 
 如果在参数类型后面有一个以等号（`=`）连接的表达式，该参数会拥有默认值，即给定表达式的值。当函数被调用时，给定的表达式会被求值。如果参数在函数调用时被省略了，就会使用其默认值。
 
@@ -568,10 +570,10 @@ let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
-如 [dynamicmemberlookup](./07_Attributes.md#dynamicmemberlookup) 描述的一样，`subscript(dynamicMemberLookup:)` 下标允许成员查找的语法糖。
+如 [dynamicmemberlookup](./07_Attributes.md#dynamicmemberlookup) 描述的一样，`subscript(dynamicMember:)` 下标允许成员查找的语法糖。
 
 ### 抛出错误的函数和方法 {#throwing-functions-and-methods}
-可以抛出错误的函数或方法必须使用 `throws` 关键字标记。这类函数和方法被称为抛出函数和抛出方法。它们有着下面的形式:
+可以抛出错误的函数或方法必须使用 `throws` 关键字标记。这类函数和方法被称为抛出函数和抛出方法。它们有着下面的形式：
 
 ```swift
 func 函数名称(参数列表) throws -> 返回类型 {
@@ -612,7 +614,21 @@ func someFunction(callback: () throws -> Void) rethrows {
 }
 ```
 
-抛出方法不能重写重抛方法，而且抛出方法不能满足协议对于重抛方法的要求。也就是说，重抛方法可以重写抛出方法，而且重抛方法可以满足协议对于抛出方法的要求。
+抛出方法不能重写重抛方法，而且抛出方法不能满足协议对于重抛方法的要求。也就是说，重抛方法可以重写抛出方法，而且重抛方法可以满足对抛出方法的协议要求。
+
+
+### 异步函数和方法 {#asynchronous-functions-and-methods}
+异步运行的函数和方法必须用 `async` 关键字标记。这些函数和方法称为异步函数和异步方法。它们有着下面的形式：
+
+```swift
+func 函数名称(参数列表) async -> 返回类型 {
+	语句
+}
+```
+
+对异步函数或异步方法的调用必须包含在 `await` 表达式中，即它们必须在 `await` 操作符的作用域内。
+
+`async` 关键字是函数类型中的一部分。同步函数是异步函数的子类型。所以，你可以在使用异步函数的地方，使用同步函数。同步方法可以重写异步方法，且同步方法可以满足对异步方法的协议要求。
 
 ### 永不返回的函数 {#functions-that-never-return}
 Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它的调用者。`Never` 返回类型的函数或方法可以称为不归，不归函数、方法要么引发不可恢复的错误，要么永远不停地运作，这会使调用后本应执行得代码就不再执行了。但即使是不归函数、方法，抛错函数和重抛出函数也可以将程序控制转移到合适的 `catch` 代码块。
@@ -697,7 +713,7 @@ Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它�
 ## 枚举声明 {#enumeration-declaration}
 在程序中使用*枚举声明（enumeration declaration）* 来引入一个枚举类型。
 
-枚举声明有两种基本形式，使用关键字 `enum` 来声明。枚举声明体包含零个或多个值，称为枚举用例，还可包含任意数量的声明，包括计算型属性、实例方法、类型方法、构造器、类型别名，甚至其他枚举、结构体和类。枚举声明不能包含析构器或者协议声明。
+枚举声明有两种基本形式，使用关键字 `enum` 来声明。枚举声明体包含零个或多个值，称为枚举用例，还可包含任意数量的声明，包括计算型属性、实例方法、类型方法、构造器、类型别名，甚至其他枚举、结构体、类和 actor。枚举声明不能包含析构器或者协议声明。
 
 枚举类型可以采纳任意数量的协议，但是枚举不能从类、结构体和其他枚举继承。
 
@@ -894,7 +910,7 @@ struct 结构体名称: 采纳的协议 {
 }
 ```
 
-结构体内可包含零个或多个声明。这些声明可以包括存储型和计算型属性、类型属性、实例方法、类型方法、构造器、下标、类型别名，甚至其他结构体、类、和枚举声明。结构体声明不能包含析构器或者协议声明。关于结构体的详细讨论和示例，请参阅 [类和结构体](../02_language_guide/09_Structures_And_Classes.md)。
+结构体内可包含零个或多个声明。这些声明可以包括存储型和计算型属性、类型属性、实例方法、类型方法、构造器、下标、类型别名，甚至其他结构体、类、actor 和枚举声明。结构体声明不能包含析构器或者协议声明。关于结构体的详细讨论和示例，请参阅 [类和结构体](../02_language_guide/09_Structures_And_Classes.md)。
 
 结构体可以采纳任意数量的协议，但是不能继承自类、枚举或者其他结构体。
 
@@ -956,7 +972,7 @@ class 类名: 超类, 采纳的协议 {
 }
 ```
 
-类内可以包含零个或多个声明。这些声明可以包括存储型和计算型属性、实例方法、类型方法、构造器、唯一的析构器、下标、类型别名，甚至其他结构体、类和枚举声明。类声明不能包含协议声明。关于类的详细讨论和示例，请参阅 [类和结构体](../02_language_guide/09_Structures_And_Classes.md)。
+类内可以包含零个或多个声明。这些声明可以包括存储型和计算型属性、实例方法、类型方法、构造器、唯一的析构器、下标、类型别名，甚至其他类、结构体、actor 和枚举声明。类声明不能包含协议声明。关于类的详细讨论和示例，请参阅 [类和结构体](../02_language_guide/09_Structures_And_Classes.md)。
 
 一个类只能继承自一个超类，但是可以采纳任意数量的协议。超类紧跟在类名和冒号后面，其后跟着采纳的协议。泛型类可以继承自其它泛型类和非泛型类，但是非泛型类只能继承自其它非泛型类。当在冒号后面写泛型超类的名称时，必须写上泛型类的全名，包括它的泛型形参子句。
 
@@ -976,7 +992,7 @@ class 类名: 超类, 采纳的协议 {
 
 类实例属性可以用点语法（`.`）来访问，请参阅 [访问属性](../02_language_guide/09_Structures_And_Classes.md#accessing-properties)。
 
-类是引用类型。当被赋予常量或变量，或者传递给函数作为参数时，类的实例会被引用，而不是被复制。关于引用类型的更多信息，请参阅 [结构体和枚举是值类型](../02_language_guide/09_Structures_And_Classes.md#structures-and-enumerations-are-value-types)。
+类是引用类型。当被赋予常量或变量，或者传递给函数作为参数时，类的实例会被引用，而不是被复制。关于引用类型的更多信息，请参阅 [类是引用类型](../02_language_guide/09_Structures_And_Classes.md#classes-are-reference-types)。
 
 可以使用扩展声明来扩展类的行为，请参阅 [扩展声明](#extension-declaration)。
 
@@ -1010,6 +1026,37 @@ class 类名: 超类, 采纳的协议 {
 > 
 > *类成员* →  [声明](#declaration) | [编译控制流语句](./05_Statements.md#compiler-control-statement)
 > 
+
+## Actor 声明 {#actor-declaration}
+可以在程序中使用 *actor 声明（actor declaration）* 来引入一个 actor。Actor 声明使用关键字 `actor`，遵循如下的形式：
+
+```swift
+actor 名称: 遵循的协议 {
+	多条声明
+}
+```
+
+Actor 内可包含零个或多个声明。这些声明包括存储属性和计算属性、实例方法、类型方法、构造器、唯一的析构器、下标、类型别名，甚至其他类、结构体和枚举声明。关于包含多种声明的 actors 的几种例子，请参考 `Actors`（附上跳转链接）
+
+Actor 类型可以遵循任意数量的协议，但是不能继承于其他类、枚举、结构体或者其他 actor。但是用 `@objc` 标记的 actor 隐性地遵循了 `NSObjectProtocol` 协议，且作为 `NSObject` 的子类型暴露给 Objective-C 运行时。
+
+有两种方法来创建声明过的 actor：
+* 如 [构造器](../02_language_guide/14_Initialization.md#initializers) 中所述，调用 actor 的构造器。
+* 如 [默认构造器](../02_language_guide/14_Initialization.md#default-initializers) 中所述，如果没有定义构造器，调用 actor 的默认构造器，actor 声明的所有属性会有默认值。
+
+默认情况下，actor 里的成员变量（方法）是与 actor 隔离的。某个函数内的代码或者某个属性 getter 的代码是在 actor 中执行的。由于这些代码已经在同一个 actor 中运行，所以 actor 内部的代码可以与之同步地交互。但 actor 外部的代码必须用 `await` 标记 actor 内部的代码，以表示这段代码正在另一个 actor 中异步执行。关键路径无法引用 actor 中的隔离成员。Actor 隔离的存储属性能以输入输出参数的方式传递给同步函数，而不能传递给异步函数。
+
+Actor 也有非隔离的成员变量（方法），这些成员变量（方法）以 `nonisolated` 关键字标记。非隔离的成员变量（方法）执行起来像 actor 外部的代码：它无法与 actor 任意一个隔离状态交互，而且使用时也无需用 `await` 标记。
+
+Actor 的成员变量（方法）只有是异步状态或非隔离状态时， 才能用 `@objc` 修饰符标记。
+
+初始化 actor 所声明的属性的过程在 [构造过程](../02_language_guide/14_Initialization.md) 一章中有说明。
+
+如 [属性访问](../02_language_guide/09_Structures_And_Classes.md#accessing-properties) 中所述，actor 实例的属性可以通过使用点语法（.）的方式来访问到。
+
+Actor 是引用类型；当被赋值给变量或常量，以及作为参数传递给函数调用时，actor 的实例会被引用，而不是被复制。关于引用类型的更多信息，请参阅 [类是引用类型](../02_language_guide/09_Structures_And_Classes.md#classes-are-reference-types)。
+
+可以使用扩展声明来扩展 actor 类型的行为，请参阅 [扩展声明](#extension-declaration)。
 
 ## 协议声明 {#protocol-declaration}
 *协议声明（protocol declaration）* 可以为程序引入一个命名的协议类型。协议声明只能在全局区域使用 `protocol` 关键字来进行声明，并遵循如下形式：
