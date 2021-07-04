@@ -69,7 +69,7 @@ class DataImporter {
 
 class DataManager {
     lazy var importer = DataImporter()
-    var data = [String]()
+    var data: [String] = []
     // 这里会提供数据管理功能
 }
 
@@ -294,8 +294,7 @@ stepCounter.totalSteps = 896
 ```swift
 @propertyWrapper
 struct TwelveOrLess {
-    private var number: Int
-    init() { self.number = 0 }
+    private var number = 0
     var wrappedValue: Int {
         get { return number }
         set { number = min(newValue, 12) }
@@ -308,7 +307,7 @@ struct TwelveOrLess {
 > 
 > 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./26_Access_Control.md)
 
-通过在属性之前写上包装器名称作为特性的方式，你可以把一个包装器应用到一个属性上去。这里有个存储小矩形的结构体。通过 `TwelveOrLess` 属性包装器实现类似（挺随意的）对“小”的定义。
+通过在属性之前写上包装器名称作为特性的方式，你可以把一个包装器应用到一个属性上去。这里有个存储小矩形的结构体，通过 `TwelveOrLess` 属性包装器来确保它的长宽均小于等于 12。
 
 ```swift
 struct SmallRectangle {
@@ -462,12 +461,8 @@ print(mixedRectangle.height)
 ```swift
 @propertyWrapper
 struct SmallNumber {
-    private var number: Int
-    var projectedValue: Bool
-    init() {
-        self.number = 0
-        self.projectedValue = false
-    }
+    private var number = 0
+    var projectedValue = false
     var wrappedValue: Int {
         get { return number }
         set {
@@ -539,6 +534,22 @@ struct SizedRectangle {
 > 全局的常量或变量都是延迟计算的，跟 [延时加载存储属性](#lazy-stored-properties) 相似，不同的地方在于，全局的常量或变量不需要标记 `lazy` 修饰符。
 > 
 > 局部范围的常量和变量从不延迟计算。
+
+可以在局部存储型变量上使用属性包装器，但不能在全局变量或者计算型变量上使用。比如下面的代码，`myNumber` 使用 `SmallNumber` 作为属性包装器。
+
+```swift
+func someFunction() {
+    @SmallNumber var myNumber: Int = 0
+
+    myNumber = 10
+    // 这时 myNumber 是 10
+
+    myNumber = 24
+    // 这时 myNumber 是 12
+}
+```
+
+就像将 `SmallNumber` 应用到属性上一样，将 `myNumber` 赋值为 10 是有效的。而因为这个属性包装器不允许值大于 12，将 `myNumber` 赋值为 24 时则会变成 12。
 
 ## 类型属性 {#type-properties}
 
