@@ -1630,14 +1630,14 @@ function, method, computed property, subscript,
 initializer, or deinitializer declaration
 to allow that symbol to be used in inlinable code
 that's defined in the same module as the declaration.
-The declaration must have the ``internal`` access level modifier.
+The declaration must have the ``internal`` access-level modifier.
 A structure or class marked ``usableFromInline``
 can use only types that are public or ``usableFromInline`` for its properties.
 An enumeration marked ``usableFromInline``
 can use only types that are public or ``usableFromInline``
 for the raw values and associated values of its cases.
 
-Like the ``public`` access level modifier,
+Like the ``public`` access-level modifier,
 this attribute
 exposes the declaration as part of the module's public interface.
 Unlike ``public``,
