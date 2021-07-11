@@ -14,7 +14,7 @@ protocol Shape {
 struct Triangle: Shape {
     var size: Int
     func draw() -> String {
-        var result = [String]()
+        var result: [String] = []
         for length in 1...size {
             result.append(String(repeating: "*", count: length))
         }
