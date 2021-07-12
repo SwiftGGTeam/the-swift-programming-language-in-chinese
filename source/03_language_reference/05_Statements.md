@@ -648,12 +648,12 @@ statements
 
 | 函数 | 可用参数 |
 | --- | --- |
-| `os()` | `OSX`, `iOS`, `watchOS`, `tvOS`, `Linux` |
-| `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `os()` | `OSX`、`iOS`、`watchOS`、`tvOS`、`Linux`、`Windows` |
+| `arch()` | `i386`、`x86_64`、`arm`、`arm64` |
 | `swift()` | `>=` 或 `<` 后跟版本号 |
 | `compiler()` | `>=` 或 `<` 后跟版本号 |
 | `canImport()` | 模块名 |
-| `targetEnvironment()` | `simulator`，`macCatalyst` |
+| `targetEnvironment()` | `simulator`、`macCatalyst` |
 
 在 `swift()` 和 `compiler()` 之后的版本号包含有主版本号，可选副版本号，可选补丁版本号类似，并且用（`.`）来分隔。在比较符和版本号之间不能有空格，版本号与前面的函数相对应，比如 `compiler()` 对应的就是这个编译器的版本号，`swift()` 对应的就是你要编译的 `Swift` 语言的版本号。举个简单的例子，如果你在使用 `Swift 5` 的编译器，想编译 `Swift 4.2` ，可以看下面的例子：
 
@@ -672,15 +672,14 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 // 打印 "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 ```
 
-`canImport()` 后面跟的变量是模块的名字，这里这个模块可能并不是每个平台上都存在的。使用它来检测是否可以导入这个模块，如果模块存在就返回 `true` 否则返回 `false` 。
+`canImport()` 条件传入的实参是模块的名字，这个模块可能并不是每个平台上都存在的。使用它可以检测是否可以导入这个模块，但实际上并没有导入。如果模块存在就返回 `true`，否则返回 `false` 。
 
-`targetEnvironment()` 当为模拟器编译时返回 `true`，否则返回 `false` 。
+`targetEnvironment()` 条件在特殊环境编译时会返回 `true`，否则返回 `false` 。
 
 > 注意
 > 
 >
 > `arch(arm)` 平台检测函数在 ARM 64 位设备上不会返回 `true`。如果代码在 32 位的 iOS 模拟器上编译，`arch(i386)` 平台检测函数会返回 `true`。
-> 
 
 你可以使用逻辑操作符 `&&`、`||` 和 `!` 来组合多个编译配置，还可以使用圆括号来进行分组。
 
@@ -699,34 +698,26 @@ statements to compile if both compilation conditions are false
 > 注意
 > 
 >
-> 即使没有被编译，编译配置中的语句仍然会被解析。然而，唯一的例外是编译配置语句中包含语言版本检测函数：仅当 `Swift` 编译器版本和语言版本检测函数中指定的版本号匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
-> 
+> 即使没有被编译，上面编译配置中的每个语句仍然会被解析。然而，唯一的例外是编译配置语句中包含 `swift()` 或 `compiler()` 条件：这时仅当编译器版本和语言版本匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
 
 #### build-config-statement {#build-config-statement}
 > 条件编译代码块语法
-> 
->
 
 #### grammar-conditional-compilation-block {#grammar-conditional-compilation-block}
 > *条件编译代码块* → [if-directive 语句](#grammar-if-directive-clause) [elseif-directive 语句（复数）](#grammar-elseif-directive-clauses)<sub>可选</sub> [else-directive 语句](#grammar-else-directive-clause)<sub>可选</sub> [endif-directive](#grammar-endif-directive)
-> 
 
 #### grammar-if-directive-clause {#grammar-if-directive-clause}
 > *if-directive 语句* → [if-directive](#grammar-if-directive) [编译条件](#compilation-condition) [语句（复数）](#statements)<sub>可选</sub>
-> 
 
 #### grammar-elseif-directive-clauses {#grammar-elseif-directive-clauses}
 > *elseif-directive 语句（复数）* → [elseif-directive 语句](#grammar-elseif-directive-clause) [elseif-directive 语句（复数）](#grammar-elseif-directive-clauses)
-> 
 
 #### grammar-elseif-directive-clauses {#grammar-elseif-directive-clauses}
 > *elseif-directive 语句* → [elseif-directive](#grammar-elseif-directive) [编译条件](#compilation-condition) [语句（复数）](#statements)<sub>可选</sub>
-> 
 
 #### grammar-else-directive-clause {#grammar-else-directive-clause}
 > *else-directive 语句* → [else-directive](#grammar-else-directive) [语句（复数）](#statements)<sub>可选</sub>
-> 
 
 
 > *if-directive* → **#if**
@@ -777,12 +768,10 @@ statements to compile if both compilation conditions are false
 > *平台条件* → **targetEnvironment ( [环境](#grammar-environment) )**
 
 #### operating-system {#operating-system}
-> *操作系统* → **macOS** | **iOS** | **watchOS** | **tvOS**
-> 
+> *操作系统* → **macOS** | **iOS** | **watchOS** | **tvOS**｜**Linux**｜**Windows**
 
 #### architecture {#architecture}
 > *架构* → **i386** | **x86_64** | **arm** | **arm64**
-> 
 
 #### swift-version {#swift-version}
 > *swift 版本* → [十进制数字](./02_Lexical_Structure.md#decimal-digit) ­**.** ­[swift 版本延续](#grammar-swift-version-continuation) <sub>可选</sub>
