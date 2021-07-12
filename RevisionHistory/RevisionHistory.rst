@@ -1,6 +1,11 @@
 Document Revision History
 =========================
 
+**2021-07-14**
+
+* Updated examples in the :doc:`../LanguageGuide/Concurrency` chapter
+  to use the current concurrency API.
+
 **2021-06-07**
 
 * Updated for Swift 5.5.
