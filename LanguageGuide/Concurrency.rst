@@ -580,10 +580,10 @@ for example, to wait for its result or to cancel it.
 ::
 
     let newPhoto = // ... some photo data ...
-    let handle = async {
+    let handle = Task {
         return await add(newPhoto, toGalleryNamed: "Spring Adventures")
     }
-    let result = await handle.get()
+    let result = await handle.value
 
 For more information about managing detached tasks,
 see `Task.Handle <//apple_ref/swift/fake/Task.Handle>`_.
