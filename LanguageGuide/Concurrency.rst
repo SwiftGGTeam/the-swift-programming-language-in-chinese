@@ -509,9 +509,9 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
     like how ``async``-``let`` can't outlive the (implicit) parent
     which is the function scope
 
-    - Adding a child with ``TaskGroup.addTask(priority:operation:``
+    - Adding a child with ``TaskGroup.addTask(priority:operation:)``
 
-    - awaiting ``addTask(priority:operation:``
+    - awaiting ``addTask(priority:operation:)``
     means waiting for that child task to be added,
     not waiting for that child task to finish
 
