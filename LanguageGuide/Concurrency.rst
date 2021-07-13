@@ -509,12 +509,13 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
     like how ``async``-``let`` can't outlive the (implicit) parent
     which is the function scope
 
-    - Adding a child with ``Task.Group.spawn``
+    - Adding a child with ``TaskGroup.addTask(priority:operation:``
 
-    - awaiting ``add`` means waiting for that child task to be added,
+    - awaiting ``addTask(priority:operation:``
+    means waiting for that child task to be added,
     not waiting for that child task to finish
 
-    - ?? maybe cover ``Task.Group.next``
+    - ?? maybe cover ``TaskGroup.next``
     probably nicer to use the ``for await result in someGroup`` syntax
 
     quote from the SE proposal --- I want to include this fact here too
@@ -536,9 +537,7 @@ see `TaskGroup <//apple_ref/swift/fake/TaskGroup>`_.
 
     - priority values defined by ``Task.Priority`` enum
 
-    - instance property ``Task.priority``
-    and type property ``Task.currentPriority``
-    (the latter is easier to use in most cases)
+    - type property ``Task.currentPriority``
 
     - The exact result of setting a task's priority depends on the executor
 
@@ -569,11 +568,11 @@ You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
-call the `async(priority:operation:) <//apple_ref/swift/fake/async>`_ function.
+call the `Task.init(priority:operation:) <//apple_ref/swift/fake/Task.init>`_ initializer.
 To create an unstructured task that's not part of the current actor,
 known more specifically as a :newTerm:`detached task`,
-call `asyncDetached(priority:operation:) <//apple_ref/swift/fake/asyncDetached>`_.
-Both of these functions return a task handle
+call the `Task.detached(priority:operation:) <//apple_ref/swift/fake/Task.detached>`_ class method.
+Both of these operations return a task handle
 that lets you interact with the task ---
 for example, to wait for its result or to cancel it.
 
@@ -586,7 +585,7 @@ for example, to wait for its result or to cancel it.
     let result = await handle.value
 
 For more information about managing detached tasks,
-see `Task.Handle <//apple_ref/swift/fake/Task.Handle>`_.
+see `Task <//apple_ref/swift/fake/Task>`_.
 
 .. TODO Add some conceptual guidance abeut
    when to make a method do its work in a detached task
@@ -620,7 +619,7 @@ a task that's downloading photos from a gallery
 might need to delete partial downloads and close network connections.
 
 To propagate cancellation manually,
-call `Task.Handle.cancel() <//apple_ref/swift/fake/Task.Handle.cancel>`_.
+call `Task.cancel() <//apple_ref/swift/fake/Task.cancel>`_.
 
 
 .. OUTLINE
@@ -644,7 +643,7 @@ call `Task.Handle.cancel() <//apple_ref/swift/fake/Task.Handle.cancel>`_.
         handle.cancel()
         // done!           <1>
 
-    - Use ``Task.withCancellationHandler`` to specify a closure to run
+    - Use ``withCancellationHandler()`` to specify a closure to run
     if the task is canceled
     along with a closure that defines the task's work
     (it doesn't throw like ``checkCancellation`` does)
