@@ -328,7 +328,7 @@ class ExampleClass: NSObject {
 
 ### `propertyWrapper` {#propertywrapper}
 
-在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问；本地存储变量申明也能利用这个特性完成对它的访问封装。局部和全局变量不能使用属性包装器。
+在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问；本地存储变量声明也能利用这个特性完成对它的访问封装。局部和全局变量不能使用属性包装器。
 
 包装器必须定义一个 `wrappedValue` 实例属性。该属性 _wrapped value_ 是该属性存取方法暴露的值。大多数时候，`wrappedValue` 是一个计算属性，但它可以是一个存储属性。包装器负责定义和管理其包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线（`_`）来为包装器的实例提供同步存储。例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的同步存储具有 `private` 的访问控制级别。
 
@@ -391,36 +391,36 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
-### `resultBuilder` {#resultBuilder}
+### `resultBuilder` {#result-builder}
 
-将该特性应用于类、结构体或者枚举，可以让其成为一个结果构造器。结果构造器能按顺序构造一组嵌套的数据结构。利用它，可以以一种自然的声明式语法为嵌套数据结构实现一套领域专门语言（DSL）。想了解如何使用 `resultBuild`，请参阅 [结果构造器](../02_language_guide/27_Advanced_Operators.md#result-builders)。
+将该特性应用于类、结构体或者枚举，可以把它作为结果构造器使用。结果构造器能按顺序构造一组嵌套的数据结构。利用它，可以以一种自然的声明式语法为嵌套数据结构实现一套领域专门语言（DSL）。想了解如何使用 `resultBuild`，请参阅 [结果构造器](../02_language_guide/27_Advanced_Operators.md#result-builders)。
 
 #### 结果构造方法 {#result-building-methods}
 
-结果构造器实现了下面的静态方法。由于所有结果构造器的功能已经通过这些静态方法得以展示，都不需要初始化对应类型的实例。实现 `buildBlock(_:)` 方法是必须的，而那些能让领域专门语言（DSL）拥有额外能力的方法则是可选的。事实上，结果构造器类型的声明不需要遵循任何协议。
+结果构造器实现了下面的静态方法。它所有的功能已经通过静态方法暴露了，因此不需要初始化一个实例。`buildBlock(_:)` 方法是必须实现的，而那些能让领域专门语言（DSL）拥有额外能力的方法则是可选的。事实上，结果构造器类型的声明不需要遵循任何协议。
 
-描述这些静态方法使用了三个类型做占位。`Expression` 为构造器的输入类型，`Component` 为中间结果类型，`FinalResult` 是构造器最终生成结果的类型。将它们替换成你构造器的真正类型。如果构造方法没有为 `Expression` 或 `FinalResult` 指定类型，默认会使用 `Component` 类型。
+这些静态方法的描述中用到了三种类型。`Expression` 为构造器的输入类型，`Component` 为中间结果类型，`FinalResult` 为构造器最终生成结果的类型。将它们替换成你构造器真正所需的类型。如果结果构造方法中没有明确 `Expression` 或 `FinalResult`，默认会使用 `Component` 的类型。
 
 结果构造方法如下：
 
 - `static func buildBlock(_ components: Component...) -> Component`
     将可变数量的中间结果合并成一个中间结果。必须实现这个方法。
 - `static func buildOptional(_ component: Component?) -> Component`
-    将一个可能为空的中间结果构造成另一个中间结果。用于支持支持表达式 `if` 不存在 `else` 闭包的场景。
+    将可选的中间结果构造成新的中间结果。用于支持不包含 `else` 闭包的场景 `if` 表达式。
 - `static func buildEither(first: Component) -> Component`
-    构造一个由某些条件约束的中间结果。同时实现它与 `buildEither(second:)` 来支持 `switch` 与包含 `else` 闭包 的 `if` 表达式。 
+    构造一个由条件约束的中间结果。同时实现它与 `buildEither(second:)` 来支持 `switch` 与包含 `else` 闭包的 `if` 表达式。 
 - `static func buildEither(second: Component) -> Component`
-    构造一个由某些条件约束的中间结果。同时实现它与 `buildEither(first:)` 来支持 `switch` 与包含 `else` 闭包 的 `if` 表达式。 
+    构造一个由条件约束的中间结果。同时实现它与 `buildEither(first:)` 来支持 `switch` 与包含 `else` 闭包的 `if` 表达式。 
 - `static func buildArray(_ components: [Component]) -> Component`
-    将一个中间结果数组构造成一个中间结果。用于支持 `for` 循环。
+    将中间结果数组构造成中间结果。用于支持 `for` 循环。
 - `static func buildExpression(_ expression: Expression) -> Component`
-    为输入构建一个中间结果。你可以利用它来执行预处理，比如，可以将入参转换为内部类型，或为适用房提供额外的类型推断信息。
+    将输入构造成中间结果。利用它来执行预处理，比如，将入参转换为内部类型，或为使用方提供额外的类型推断信息。
 - `static func buildFinalResult(_ component: Component) -> FinalResult`
-    为中间结果构造一个最终结果。你可以返回一个与中间结果不一样的类型最为最终结果，也可以在最终结果返回前对值进行处理。
+    将中间结果构造成最终结果。可以在中间结果与最终结果类型不一致的结果构造器中实现这个方法，或是在最终结果返回前对它做处理。
 - `static func buildLimitedAvailability(_ component: Component) -> Component`
-    构建一个中间结果，用于在编译器控制表达式以外传递或擦除类型信息，以进行有效性检查。你可以用它在条件分支中实现类型信息的擦除。
+    构建中间结果，用于在编译器控制表达式以外传递或擦除类型信息，以进行可用性检查。可以在不同的条件分支上擦除类型信息。
 
-以下代码定义了一个简易的结果构造器，用于构造整型数组。类型别名明确了 `Compontent` 与 `Expression` 的类型，以一种简单的方式让下面的例子满足上面的方法。
+下面的代码定义了一个简易的结果构造器，用于构造整型数组。类型别名明确了 `Compontent` 与 `Expression`，以一种简单的方式让下面的例子满足上面的方法。
 
 ```swift
 @resultBuilder
