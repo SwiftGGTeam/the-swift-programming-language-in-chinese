@@ -43,7 +43,6 @@
 > *循环语句* → [while 语句](#while-statement)
 > 
 > *循环语句* → [repeat-while 语句](#repeat-while-statement)
-> 
 
 ### For-In 语句 {#for-in-statements}
 
@@ -65,7 +64,6 @@ for item in collection {
 
 #### for-in-statement {#for-in-statement}
 > *for-in 语句* → **for** **case**<sub>可选</sub> [模式](./08_Patterns.md#pattern) **in** [表达式](./04_Expressions.md#expression) [where 子句](#where-clause)<sub>可选</sub> [代码块](./06_Declarations.md#code-block)
-> 
 
 ### While 语句 {#while-statements}
 只要循环条件为真，`while` 语句就会重复执行代码块。
@@ -93,12 +91,10 @@ while condition {
 
 #### while-statement {#while-statement}
 > *while 语句* → **while** [条件子句](#condition-clause) [代码块](./06_Declarations.md#code-block)
-> 
 
 
 #### condition-clause {#condition-clause}
 > *条件子句* → [表达式](./04_Expressions.md#expression)  | [表达式](./04_Expressions.md#expression) **,** [条件列表](#condition-list)
-> 
 
 #### condition {#condition}
 > *条件* → [表达式](./04_Expressions.md#expression) |[可用性条件](#availability-condition) | [case 条件](#case-condition) | [可选绑定条件](#optional-binding-condition)
@@ -107,11 +103,9 @@ while condition {
 
 #### case-condition {#case-condition}
 > *case 条件* → **case** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
-> 
 
 #### optional-binding-condition {#optional-binding-condition}
 > *可选绑定条件* →  **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer) | **var**  [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
-> 
 
 ### Repeat-While 语句 {#repeat-while-statements}
 `repeat-while` 语句至少执行一次代码块，之后只要循环条件为真，就会重复执行代码块。
@@ -139,7 +133,6 @@ repeat {
 
 #### repeat-while-statement {#repeat-while-statement}
 > *repeat-while 语句* → **repeat** [代码块](./06_Declarations.md#code-block) **while** [表达式](./04_Expressions.md#expression)
-> 
 
 ## 分支语句 {#branch-statements}
 分支语句会根据一个或者多个条件来执行指定部分的代码。分支语句中的条件将会决定程序如何分支以及执行哪部分代码。Swift 提供三种类型的分支语句：`if` 语句、 `guard` 语句和 `switch` 语句。
@@ -156,7 +149,6 @@ repeat {
 > *分支语句* → [guard 语句](#guard-statement)
 > 
 > *分支语句* → [switch 语句](#switch-statement)
-> 
 
 ### If 语句 {#if-statements}
 `if` 语句会根据一个或多个条件来决定执行哪一块代码。
@@ -201,7 +193,6 @@ if condition 1 {
 
 #### if-statement {#if-statement}
 > *if 语句* → **if** [条件子句](#condition-clause) [代码块](./06_Declarations.md#code-block) [else 子句](#else-clause)<sub>可选</sub>
-> 
 
 #### else-clause {#else-clause}
 > *else 子句* → **else** [代码块](./06_Declarations.md#code-block) | **else** [if 语句](#if-statement)
@@ -309,24 +300,19 @@ case .suppressed:
 
 #### switch-statement {#switch-statement}
 > *switch 语句* → **switch** [表达式](./04_Expressions.md#expression) **{** [switch-case 列表](#switch-cases)<sub>可选</sub> **}**
-> 
 
 #### switch-cases {#switch-cases}
 > *switch case 列表* → [switch-case](#switch-case) [switch-case 列表](#switch-cases)<sub>可选</sub>
-> 
 
 #### switch-case {#switch-case}
 > *switch case* → [case 标签](#case-label) [多条语句](#statements) | [default 标签](#default-label) [多条语句](#statements) | [conditional-switch-case](#conditional-switch-case-label)
-> 
 
 
 #### case-label {#case-label}
 > *case 标签* → [属性](#switch-case-attributes-label)<sub>可选</sub> **case** [case 项列表](#case-item-list) **:**
-> 
 
 #### case-item-list {#case-item-list}
 > *case 项列表* → [模式](./08_Patterns.md#pattern) [where 子句](#where-clause)<sub>可选</sub> | [模式](./08_Patterns.md#pattern) [where 子句](#where-clause)<sub>可选</sub> **,** [case 项列表](#case-item-list)
-> 
 
 #### default-label {#default-label}
 > *default 标签* → [属性](#switch-case-attributes-label)<sub>可选</sub> **default** **:**
@@ -335,7 +321,6 @@ case .suppressed:
 
 #### where-clause {#where-clause}
 > *where-clause* → **where** [where 表达式](#where-expression)
-> 
 
 #### where-expression {#where-expression}
 > *where-expression* → [表达式](./04_Expressions.md#expression)
@@ -344,23 +329,18 @@ case .suppressed:
 
 #### grammar-conditional-switch-case {#grammar-conditional-switch-case}
 > *conditional-switch-case* → [switch-if-directive-clause](#switch-case-attributes-label) [switch-elseif-directive-clauses](#switch-case-attributes-label) <sub>可选</sub> [switch-else-directive-clause](#switch-case-attributes-label) <sub>可选</sub> [endif-directive](#switch-case-attributes-label)
-> 
 
 #### grammar-switch-if-directive-clause {#grammar-switch-if-directive-clause}
 > *switch-if-directive 语句* → [if-directive](#switch-case-attributes-label) [compilation-condition](#switch-case-attributes-label) [switch-cases](#switch-case-attributes-label) <sub>可选</sub>
-> 
 
 #### grammar-switch-elseif-directive-clauses {#grammar-switch-elseif-directive-clauses}
 > *switch-elseif-directive 语句（复数）* → [elseif-directive-clause](#switch-case-attributes-label)  [switch-elseif-directive-clauses](#switch-case-attributes-label)<sub>可选</sub>
-> 
 
 #### grammar-switch-elseif-directive-clause {#grammar-switch-elseif-directive-clause}
 > *switch-elseif-directive 语句* → [elseif-directive](#switch-case-attributes-label)  [compilation-condition](#switch-case-attributes-label) [switch-cases](#switch-case-attributes-label)<sub>可选</sub>
-> 
 
 #### grammar-switch-else-directive-clause {#grammar-switch-else-directive-clause}
 > *switch-else-directive 语句* → [else-directive](#switch-case-attributes-label) [switch-cases](#switch-case-attributes-label) <sub>可选</sub>
-> 
 
 ## 带标签的语句 {#labeled-statements}
 你可以在循环语句或 `switch` 语句前面加上标签，它由标签名和紧随其后的冒号（`:`）组成。在 `break` 和 `continue` 后面跟上标签名可以显式地在循环语句或 `switch` 语句中改变相应的控制流。关于这两条语句用法，请参阅 [Break 语句](#break-statement) 和 [Continue 语句](#continue-statement)。
@@ -381,15 +361,12 @@ case .suppressed:
 > *带标签的语句* → [语句标签](#statement-label) [switch 语句](#switch-statement)
 > 
 > > *带标签的语句* → [语句标签](#statement-label) [do 语句](#sdo-statement)
-> 
 
 #### statement-label {#statement-label}
 > *语句标签* → [标签名称](#label-name) **:**
-> 
 
 #### label-name {#label-name}
 > *标签名称* → [标识符](./02_Lexical_Structure.md#identifier)
-> 
 
 ## 控制转移语句 {#control-transfer-statements}
 控制转移语句能够无条件地把控制权从一片代码转移到另一片代码，从而改变代码执行的顺序。Swift 提供五种类型的控制转移语句：`break` 语句、`continue` 语句、`fallthrough` 语句、`return` 语句和 `throw` 语句。
@@ -408,7 +385,6 @@ case .suppressed:
 > *控制转移语句* → [return 语句](#return-statement)
 > 
 > *控制转移语句* → [throw 语句](#throw-statement)
-> 
 
 ### Break 语句 {#break-statement}
 `break` 语句用于终止循环语句、`if` 语句或 `switch` 语句的执行。使用 `break` 语句时，可以只写 `break` 这个关键词，也可以在 `break` 后面跟上标签名，像下面这样：
@@ -416,7 +392,6 @@ case .suppressed:
 > break
 > 
 > break `label name`
-> 
 
 当 `break` 语句后面带标签名时，可用于终止由这个标签标记的循环语句、`if` 语句或 `switch` 语句的执行。
 
@@ -432,7 +407,6 @@ case .suppressed:
 
 #### break-statement {#break-statement}
 > *break 语句* → **break** [标签名称](#label-name)<sub>可选</sub>
-> 
 
 ### Continue 语句 {#continue-statement}
 `continue` 语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用 `continue` 语句时，可以只写 `continue` 这个关键词，也可以在 `continue` 后面跟上标签名，像下面这样：
@@ -440,7 +414,6 @@ case .suppressed:
 > continue
 > 
 > continue `label name`
-> 
 
 当 `continue` 语句后面带标签名时，可用于终止由这个标签标记的循环中当前迭代的执行。
 
@@ -458,7 +431,6 @@ case .suppressed:
 
 #### continue-statement {#continue-statement}
 > *continue 语句* → **continue** [标签名称](#label-name)<sub>可选</sub>
-> 
 
 ### Fallthrough 语句 {#fallthrough-statements}
 `fallthrough` 语句用于在 `switch` 语句中转移控制权。`fallthrough` 语句会把控制权从 `switch` 语句中的一个 `case` 转移到下一个 `case`。这种控制权转移是无条件的，即使下一个 `case` 的模式与 `switch` 语句的控制表达式的值不匹配。
@@ -473,7 +445,6 @@ case .suppressed:
 
 #### fallthrough-statement {#fallthrough-statement}
 > *fallthrough 语句* → **fallthrough**
-> 
 
 ### Return 语句 {#return-statements}
 `return` 语句用于在函数或方法的实现中将控制权转移到调用函数或方法，接着程序将会从调用位置继续向下执行。
@@ -483,7 +454,6 @@ case .suppressed:
 > return
 >
 > return `expression`
-> 
 
 当 `return` 语句后面带表达式时，表达式的值将会返回给调用函数或方法。如果表达式的值的类型与函数或者方法声明的返回类型不匹配，Swift 则会在返回表达式的值之前将表达式的值的类型转换为返回类型。
 
@@ -491,7 +461,6 @@ case .suppressed:
 > 
 >
 > 正如 [可失败构造器](./06_Declarations.md#failable-initializers) 中所描述的，`return nil` 在可失败构造器中用于表明构造失败。
-> 
 
 而只写 `return` 时，仅仅是从该函数或方法中返回，而不返回任何值（也就是说，函数或方法的返回类型为 `Void` 或者说 `()`）。
 
@@ -511,7 +480,6 @@ case .suppressed:
 `throw` 语句由 `throw` 关键字紧跟一个表达式组成，如下所示：
 
 > throw `expression`
-> 
 
 表达式的结果必须符合 `ErrorType` 协议。
 
@@ -523,7 +491,6 @@ case .suppressed:
 
 #### throw-statement {#throw-statement}
 > *throw 语句* → **throw**  [表达式](./04_Expressions.md#expression)
-> 
 
 ## Defer 语句 {#defer-statements}
 `defer` 语句用于在退出当前作用域之前执行代码。
@@ -560,7 +527,6 @@ f()
 
 #### defer-statement {#defer-statement}
 > *延迟语句* → **defer** [代码块](./06_Declarations.md#code-block)
-> 
 
 ## Do 语句 {#do-statements}
 `do` 语句用于引入一个新的作用域，该作用域中可以含有一个或多个 `catch` 子句，`catch` 子句中定义了一些匹配错误条件的模式。`do` 语句作用域内定义的常量和变量只能在 `do` 语句作用域内使用。
@@ -600,11 +566,9 @@ do {
 
 #### do-statement {#do-statement}
 > *do 语句* → **do** [代码块](./06_Declarations.md#code-block) [多条 catch 子句](#catch-clauses)<sub>可选</sub>
-> 
 
 #### catch-clauses {#catch-clauses}
 > *多条 catch 子句* → [catch 子句](#catch-clause) [多条 catch 子句](#catch-clauses)<sub>可选</sub>
-> 
 
 #### catch-clause {#catch-clause}
 > *catch 子句* → **catch** [模式](./08_Patterns.md#pattern)<sub>可选</sub> [where 子句](#where-clause)<sub>可选</sub> [代码块](./06_Declarations.md#code-block)
@@ -628,7 +592,6 @@ do {
 > *编译器控制语句* → [线路控制语句](#line-control-statement)
 > 
 > *编译器控制语句* → [诊断语句](#grammar-diagnostic-statement)
-> 
 
 ### 条件编译代码块 {#Conditional-Compilation-Block}
 
@@ -727,7 +690,6 @@ statements to compile if both compilation conditions are false
 > *else-directive* → **#else**
 > 
 > *endif-directive* → **#endif**
-> 
 
 
 #### compilation-condition {#compilation-condition}
@@ -744,7 +706,6 @@ statements to compile if both compilation conditions are false
 > *编译条件* → [编译条件](#compilation-condition) **&&** [编译条件](#compilation-condition)
 > 
 > *编译条件* → [编译条件](#compilation-condition) **||** [编译条件](#compilation-condition)
-> 
 
 
 #### grammar-platform-condition {#grammar-platform-condition}
@@ -810,7 +771,6 @@ statements to compile if both compilation conditions are false
 #### line-number {#line-number}
 
 > *行号* → 大于 0 的十进制整数
-> 
 
 #### file-name {#file-name}
 > *文件名* → [静态字符串字面量](./02_Lexical_Structure.md#static-string-literal)
@@ -828,7 +788,6 @@ statements to compile if both compilation conditions are false
 
 > 编译时诊断语句语法
 > 
->
 
 #### grammar-compile-time-diagnostic-statement {#grammar-compile-time-diagnostic-statement}
 > *诊断语句* → **#error** **(** [诊断消息](#grammar-diagnostic-message) **)**
@@ -859,7 +818,6 @@ if #available(platform name version, ..., *) {
 
 > 可用性条件语法
 > 
->
 
 #### availability-condition {#availability-condition}
 > *可用性条件* → **#available** **(** [可用性参数列表](#availability-arguments) **)**
@@ -871,8 +829,6 @@ if #available(platform name version, ..., *) {
 > *可用性参数* → [平台名称](#platform-name) [平台版本](#platform-version)
 > 
 > *可用性条件* → __*__
-> 
->
 
 #### platform-name {#platform-name}
 > *平台名称* → **iOS** | **iOSApplicationExtension**
@@ -882,7 +838,6 @@ if #available(platform name version, ..., *) {
 > *平台名称* → **watchOS**
 > 
 > *平台名称* → **tvOS**
-> 
 
 #### platform-version {#platform-version}
 > *平台版本* → [十进制数字](./02_Lexical_Structure.md#decimal-digits)
