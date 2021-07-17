@@ -1063,48 +1063,33 @@ myData.someMethod {$0 == 13}
 
 如果形参不是输入输出参数，并且类似下面的情况，则算是*结构上类似*函数类型：
 
-* 形参类型是函数类型，例如 `(Bool) -> Int`
-* 自动闭包形参包装的表达式是一个函数类型，例如 `@autoclosure () -> ((Bool) -> Int)`
-* 
+* 函数类型的形参，例如 `(Bool) -> Int`
+* 函数类型表达式的自动闭包形参，例如 `@autoclosure () -> ((Bool) -> Int)`
+* 元素是函数类型的可变参数，例如 `((Bool) -> Int)...`
+* 单层或多层可选类型的形参，例如 `Optional<(Bool) -> Int>`
+* 由上面这些类型组合而成的形参，例如 `(Optional<(Bool) -> Int>)...`
 
+尾随闭包和结构上类似函数类型的形参匹配，但它并不是函数，所以闭包会按需包装。例如，如果形参类是是可选类型，闭包会自动包装成 `Optional`。
 
+为了简化 Swift 5.3 之前版本（从右到左匹配）的代码迁移 —— 编译器会同时检查从左到右和从右到左的顺序。如果不同的扫描方向产生了不同的结果，编译器则使用旧的从右到左的顺序，并生成警告。Swift 的未来版本将都使用从左到右的顺序。
+
+```swift
+typealias Callback = (Int) -> Int
+func someFunction(firstClosure: Callback? = nil,
+                  secondClosure: Callback? = nil) {
+    let first = firstClosure?(10)
+    let second = secondClosure?(20)
+    print(first ?? "-", second ?? "-")
+}
+
+someFunction()  // 打印 "- -"
+someFunction { return $0 + 100 }  // 歧义
+someFunction { return $0 } secondClosure: { return $0 }  // 打印 "10 20"
+```
+
+在上面的例子中，Swift 5.3 中被标记为“歧义”的函数调用会打印”- 120“并产生一个编辑器警告。未来版本的 Swift 会打印”110 -“。
 
 如 [特殊名称方法](./06_Declarations.md#methods-with-special-names) 所述，通过声明几种方法中的一种，类、结构体或枚举类型可以为函数调用语法启用语法糖。
-
-> 函数调用表达式语法
-> 
-> 
-####  function-call-expression {#function-call-expression}
-> 
-> *函数调用表达式* → [后缀表达式](#postfix-expression) [函数调用参数子句](#function-call-argument-clause)
-> 
-> *函数调用表达式* → [后缀表达式](#postfix-expression) [函数调用参数子句](#function-call-argument-clause)<sub>可选</sub> [尾随闭包](#trailing-closure)
-> 
->####  function-call-argument-clause {#function-call-argument-clause}
->
-> *函数调用参数子句* → **(**  **)**  | **(** [函数调用参数表](#function-call-argument-list) **)**
-> 
-> ####  function-call-argument-list {#function-call-argument-list}
-> 
-> *函数调用参数表* → [函数调用参数](#function-call-argument) | [函数调用参数](#function-call-argument) **,** [*函数调用参数表*](#function-call-argument-list)
-> 
-> 
-> ####  function-call-argument {#function-call-argument}
-> 
-> *函数调用参数* → [表达式](#expression) | [标识符](./02_Lexical_Structure.md#identifier) **:** [表达式](#expression)
-> 
-> *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02_Lexical_Structure.md#identifier) **:** [运算符](./02_Lexical_Structure.md#operator)
-> 
-> ####  trailing-closure {#trailing-closure}
-> 
-> *尾随闭包* → [闭包表达式](#closure-expression)
->
-> #### labeled-trailing-closures {#labeled-trailing-closures}
-> 
-> *标签尾随闭包集*  → [标签尾随闭包](#labeled-trailing-closure) [标签尾随闭包集](#labeled-trailing-closures)<sub>可选</sub>
-> 
-> #### labeled-trailing-closure {#labeled-trailing-closure}
-> *标签尾随闭包* → [标识符](./02_Lexical_Structure.md#identifier) **:** [闭包表达式](#closure-expression) 
 
 ### 指针类型的隐式转换{#implicit-conversion-to-a-pointer}
 
@@ -1135,9 +1120,41 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 
 使用 `&` 代替类似 `withUnsafePointer(to:)` 的显式函数可以在调用底层 C 函数的可读性更高，特别是当函数传入多个指针实参时。如果是其他 Swift 代码调用函数，避免使用 `&` 代替显式的不安全 API。
 
-
-
-
+> 函数调用表达式语法
+>
+>
+> ####  function-call-expression {#function-call-expression}
+>
+> *函数调用表达式* → [后缀表达式](#postfix-expression) [函数调用参数子句](#function-call-argument-clause)
+>
+> *函数调用表达式* → [后缀表达式](#postfix-expression) [函数调用参数子句](#function-call-argument-clause)<sub>可选</sub> [尾随闭包](#trailing-closure)
+>
+> ####  function-call-argument-clause {#function-call-argument-clause}
+>
+> *函数调用参数子句* → **(**  **)**  | **(** [函数调用参数表](#function-call-argument-list) **)**
+>
+> ####  function-call-argument-list {#function-call-argument-list}
+>
+> *函数调用参数表* → [函数调用参数](#function-call-argument) | [函数调用参数](#function-call-argument) **,** [*函数调用参数表*](#function-call-argument-list)
+>
+>
+> ####  function-call-argument {#function-call-argument}
+>
+> *函数调用参数* → [表达式](#expression) | [标识符](./02_Lexical_Structure.md#identifier) **:** [表达式](#expression)
+>
+> *函数调用参数* → [运算符](./02_Lexical_Structure.md#operator) | [标识符](./02_Lexical_Structure.md#identifier) **:** [运算符](./02_Lexical_Structure.md#operator)
+>
+> ####  trailing-closure {#trailing-closure}
+>
+> *尾随闭包* → [闭包表达式](#closure-expression) [标签尾随闭包集](#labeled-trailing-closures)<sub>可选</sub>
+>
+> #### labeled-trailing-closures {#labeled-trailing-closures}
+>
+> *标签尾随闭包集*  → [标签尾随闭包](#labeled-trailing-closure) [标签尾随闭包集](#labeled-trailing-closures)<sub>可选</sub>
+>
+> #### labeled-trailing-closure {#labeled-trailing-closure}
+>
+> *标签尾随闭包* → [标识符](./02_Lexical_Structure.md#identifier) **:** [闭包表达式](#closure-expression) 
 
 ### 构造器表达式 {#initializer-expression}
 
