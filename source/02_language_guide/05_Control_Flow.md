@@ -97,6 +97,8 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 }
 ```
 
+以上示例使用 `for-in` 循环来遍历范围、数组、字典和字符串。你可以用它来遍历任何的集合，包括实现了 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议的自定义类或集合类型。
+
 ## While 循环 {#while-loops}
 
 `while` 循环会一直运行一段语句直到条件变成 `false`。这类循环适合使用在第一次迭代前，迭代次数未知的情况下。Swift 提供两种 `while` 循环形式：

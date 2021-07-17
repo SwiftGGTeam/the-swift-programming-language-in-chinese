@@ -121,7 +121,7 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 同样的，绿色部分通过对 `0xCC6699` 和 `0x00FF00` 进行按位与运算得到 `0x006600`。然后将这个数向右移动 8 位，得到 `0x66`，也就是十进制数值的 `102`。
 
-最后，蓝色部分通过对 `0xCC6699` 和 `0x0000FF` 进行按位与运算得到 `0x000099`。这里不需要再向右移位，而 `0x000099` 也就是 `0x99` ，也就是十进制数值的 `153`。
+最后，蓝色部分通过对 `0xCC6699` 和 `0x0000FF` 进行按位与运算得到 `0x000099`。因为 `0x000099` 已经等于 `0x99` ，也就是十进制数值的 `153`，所以这个值就不需要再向右移位了。
 
 #### 有符号整数的移位运算 {#shifting-behavior-for-signed-integers}
 
@@ -443,4 +443,150 @@ let plusMinusVector = firstVector +- secondVector
 > 注意
 > 
 > 当定义前缀与后缀运算符的时候，我们并没有指定优先级。然而，如果对同一个值同时使用前缀与后缀运算符，则后缀运算符会先参与运算。
+
+## 结果构造器
+
+*结果构造器*是一种自定义类型，支持添加自然的声明式语法来创建类似列表或者树这样的嵌套数据。使用结果构造器的代码可以包含普通的 Swift 语法，例如用来处理判断条件的 `if`，或者处理重复数据的 `for`。
+
+下面的代码定义了一些类型用于绘制星星线段和文字线段。
+
+```swift
+protocol Drawable {
+    func draw() -> String
+}
+struct Line: Drawable {
+    var elements: [Drawable]
+    func draw() -> String {
+        return elements.map { $0.draw() }.joined(separator: "")
+    }
+}
+struct Text: Drawable {
+    var content: String
+    init(_ content: String) { self.content = content }
+    func draw() -> String { return content }
+}
+struct Space: Drawable {
+    func draw() -> String { return " " }
+}
+struct Stars: Drawable {
+    var length: Int
+    func draw() -> String { return String(repeating: "*", count: length) }
+}
+struct AllCaps: Drawable {
+    var content: Drawable
+    func draw() -> String { return content.draw().uppercased() }
+}
+```
+
+`Drawable` 协议定义了绘制所需要遵循的方法，例如线或者形状都需要实现 `draw()` 方法。`Line` 结构体用来表示单行线段绘制，给大多数可绘制的元素提供了顶层容器。绘制 `Line` 时，调用了线段中每个元素的 `draw()`，然后将所有结果字符串连成单个字符串。`Text` 结构体包装了一个字符串作为绘制的一部分。`AllCaps` 结构体包装另一个可绘制元素，并将元素中所有文本转换为大写。
+
+可以组合这些类型的构造器来创建一个可绘制元素。
+
+```swift
+let name: String? = "Ravi Patel"
+let manualDrawing = Line(elements: [
+    Stars(length: 3),
+    Text("Hello"),
+    Space(),
+    AllCaps(content: Text((name ?? "World") + "!")),
+    Stars(length: 2),
+    ])
+print(manualDrawing.draw())
+// 打印 "***Hello RAVI PATEL!**"
+```
+
+代码没问题，但是不够优雅。`AllCaps` 后面的括号嵌套太深，可读性不佳。`name` 为 `nil` 时使用 “World” 的兜底逻辑必须要依赖 `??` 操作符，这在逻辑复杂的时候会更难以阅读。如果还需要 `switch` 或者 `for` 循环来构建绘制的一部分，就更难以编写了。使用结果构造器可以将这样的代码重构得更像普通的 Swift 代码。
+
+在类型的定义上加上 `@resultBuilder` 特性来定义一个结果构造器。比如下面的代码定义了允许使用声明式语法来描述绘制的结果构造器 `DrawingBuilder`：
+
+```swift
+@resultBuilder
+struct DrawingBuilder {
+    static func buildBlock(_ components: Drawable...) -> Drawable {
+        return Line(elements: components)
+    }
+    static func buildEither(first: Drawable) -> Drawable {
+        return first
+    }
+    static func buildEither(second: Drawable) -> Drawable {
+        return second
+    }
+}
+```
+
+`DrawingBuilder` 结构体定义了三个方法来实现部分结果构造器语法。`buildBlock(_:)` 方法添加了在方法块中写多行代码的支持。它将方法块中的多个元素组合成 `Line`。`buildEither(first:)` 和 `buildEither(second:)` 方法添加了对 `if`-`else` 的支持。
+
+可以在函数形参上应用 `@DrawingBuilder` 特性，它会将传递给函数的闭包转换为用结果构造器创建的值。例如：
+
+```swift
+func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
+    return content()
+}
+func caps(@DrawingBuilder content: () -> Drawable) -> Drawable {
+    return AllCaps(content: content())
+}
+
+func makeGreeting(for name: String? = nil) -> Drawable {
+    let greeting = draw {
+        Stars(length: 3)
+        Text("Hello")
+        Space()
+        caps {
+            if let name = name {
+                Text(name + "!")
+            } else {
+                Text("World!")
+            }
+        }
+        Stars(length: 2)
+    }
+    return greeting
+}
+let genericGreeting = makeGreeting()
+print(genericGreeting.draw())
+// 打印 "***Hello WORLD!**"
+
+let personalGreeting = makeGreeting(for: "Ravi Patel")
+print(personalGreeting.draw())
+// 打印 "***Hello RAVI PATEL!**"
+```
+
+`makeGreeting(for:)` 函数将传入的 `name` 形参用于绘制个性化问候。`draw(_:)` 和 `caps(_:)` 函数都传入应用 `@DrawingBuilder` 特性的单一闭包实参。当调用这些函数时，要使用 `DrawingBuilder` 定义的特殊语法。Swift 将绘制的声明式描述转换为一系列 `DrawingBuilder` 的方法调用，构造成最终传递进函数的实参值。例如，Swift 将例子中的 `caps(_:)` 的调用转换为下面的代码：
+
+```swift
+let capsDrawing = caps {
+    let partialDrawing: Drawable
+    if let name = name {
+        let text = Text(name + "!")
+        partialDrawing = DrawingBuilder.buildEither(first: text)
+    } else {
+        let text = Text("World!")
+        partialDrawing = DrawingBuilder.buildEither(second: text)
+    }
+    return partialDrawing
+}
+```
+
+Swift 将 `if-else` 方法块转换成调用 `buildEither(first:)` 和 `buildEither(second:)` 方法。虽然不会在自己的代码中调用这些方法，但是转换后的结果可以更清晰的理解在使用 `DrawingBuilder` 语法时 Swift 是如何进行转换的。
+
+为了支持 `for` 循环来满足某些特殊的绘制语法，需要添加 `buildArray(_:)` 方法。
+
+```swift
+extension DrawingBuilder {
+    static func buildArray(_ components: [Drawable]) -> Drawable {
+        return Line(elements: components)
+    }
+}
+let manyStars = draw {
+    Text("Stars:")
+    for length in 1...3 {
+        Space()
+        Stars(length: length)
+    }
+}
+```
+
+上面的代码中，使用 `for` 循环创建了一个绘制数组，`buildArray(_:)` 方法将该数组构建成 `Line`。
+
+有关 Swift 如何将构建器语法转换为构建器类型方法的完整信息，查看 [结果构造器](../03_language_reference/07_Attributes.md#resultbuilder)。
 

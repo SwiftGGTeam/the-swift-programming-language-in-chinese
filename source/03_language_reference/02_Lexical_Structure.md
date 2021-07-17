@@ -6,7 +6,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 ## 空白与注释 {#whitespace}
 
-空白（whitespace）有两个用途：分隔源文件中的符号以及帮助区分运算符属于前缀还是后缀（参见 [运算符](#operators)），在其他情况下空白则会被忽略。以下的字符会被当作空白：空格（U+0020）、换行符（U+000A）、回车符（U+000D）、水平制表符（U+0009）、垂直制表符（U+000B）、换页符（U+000C）以及空字符（U+0000）。
+空白（whitespace）有两个用途：分隔源文件中的符号和区分前缀、后缀和二元运算符（参见 [运算符](#operators)），在其他情况下空白则会被忽略。以下的字符会被当作空白：空格（U+0020）、换行符（U+000A）、回车符（U+000D）、水平制表符（U+0009）、垂直制表符（U+000B）、换页符（U+000C）以及空字符（U+0000）。
 
 注释被编译器当作空白处理。单行注释由 `//` 开始直至遇到换行符（U+000A）或者回车符（U+000D）。多行注释由 `/*` 开始，以 `*/` 结束。多行注释允许嵌套，但注释标记必须成对出现。
 
@@ -15,7 +15,6 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 空白语法
 > 
 > *空白* → [空白项](#whitespace-item) [空白](#whitespace)<sub>可选</sub>
-> 
 #### whitespace-item {#whitespace-item}
 > 
 > *空白项* → [断行符](#line-break)
@@ -78,12 +77,16 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 > 标识符语法
 > 
+> #### identifier {#identifier}
+> 
 > *标识符* → [头部标识符](#identifier-head) [标识符字符组](#identifier-characters)<sub>可选</sub>
 > 
 > *标识符* → \`[头部标识符](#identifier-head) [标识符字符组](#identifier-characters)<sub>可选</sub>\`
 > 
 > *标识符* → [隐式参数名](#implicit-parameter-name)
 > 
+> #### identifier-list {#identifier-list}
+>
 > *标识符列表* → [标识符](#identifier) | [标识符](#identifier) **,** [标识符列表](#identifier)
 > 
 > 
@@ -120,7 +123,6 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *头部标识符* → U+90000–U+9FFFD，U+A0000–U+AFFFD，U+B0000–U+BFFFD，或者 U+C0000–U+CFFFD
 > 
 > *头部标识符* → U+D0000–U+DFFFD 或者 U+E0000–U+EFFFD
->  
 #### identifier-character {#identifier-character}
 >
 > *标识符字符* → 数值 0 - 9
@@ -138,11 +140,9 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 #### implicit-parameter-name {#implicit-parameter-name}
 > 
 > *隐式参数名* → **$** [十进制数字列表](#decimal-digit)
->
 #### property-wrapper-projection {#property-wrapper-projection}
 >
 > *属性包装器呈现值* → **$** [标识符字符组](#identifier-characters)
->
 
 ## 关键字和标点符号 {#keywords-and-punctuation}
 
