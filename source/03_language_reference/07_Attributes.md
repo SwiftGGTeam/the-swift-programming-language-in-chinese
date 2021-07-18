@@ -182,11 +182,11 @@ repeatLabels(a: "four") // Error
 
 ### `dynamicMemberLookup` {#dynamicmemberlookup}
 
-该特性用于类、结构体、枚举或协议，让其能在运行时查找成员。该类型必须实现 `subscript(dynamicMemberLookup:)` 下标。
+该特性用于类、结构体、枚举或协议，让其能在运行时查找成员。该类型必须实现 `subscript(dynamicMember:)` 下标。
 
-在显式成员表达式中，如果指定成员没有相应的声明，则该表达式被理解为对该类型的 `subscript(dynamicMemberLookup:)` 下标调用，将有关该成员的信息作为参数传递。下标接收参数既可以是键路径，也可以是成员名称字符串；如果你同时实现这两种方式的下标调用，那么以键路径参数方式为准。
+在显式成员表达式中，如果指定成员没有相应的声明，则该表达式被理解为对该类型的 `subscript(dynamicMember:)` 下标调用，将有关该成员的信息作为参数传递。下标接收参数既可以是键路径，也可以是成员名称字符串；如果你同时实现这两种方式的下标调用，那么以键路径参数方式为准。
 
- `subscript(dynamicMemberLookup:)` 实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。它可以使用遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的类型作为参数来接受成员名 -- 通常情况下是 `String`。下标返回值类型可以为任意类型。
+ `subscript(dynamicMember:)` 实现允许接收 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)，[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath) 或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 类型的键路径参数。它可以使用遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 协议的类型作为参数来接受成员名 -- 通常情况下是 `String`。下标返回值类型可以为任意类型。
 
 按成员名进行的动态成员查找可用于围绕编译时无法进行类型检查的数据创建包装类型，例如在将其他语言的数据桥接到 `Swift` 时。例如：
 
@@ -328,7 +328,7 @@ class ExampleClass: NSObject {
 
 ### `propertyWrapper` {#propertywrapper}
 
-在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问。局部和全局变量不能使用属性包装器。
+在类、结构体或者枚举的声明时使用该特性，可以让其成为一个属性包装器。如果将该特性应用在一个类型上，将会创建一个与该类型同名的自定义特性。将这个新的特性用于类、结构体、枚举的属性，则可以通过包装器的实例封装对该属性的访问；本地存储变量声明也能利用这个特性完成对它的访问封装。局部和全局变量不能使用属性包装器。
 
 包装器必须定义一个 `wrappedValue` 实例属性。该属性 _wrapped value_ 是该属性存取方法暴露的值。大多数时候，`wrappedValue` 是一个计算属性，但它可以是一个存储属性。包装器负责定义和管理其包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线（`_`）来为包装器的实例提供同步存储。例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的同步存储具有 `private` 的访问控制级别。
 
@@ -391,7 +391,258 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
-### `requires-stored-property-inits` {#requires-stored-property-inits}
+### `resultBuilder` {#result-builder}
+
+将该特性应用于类、结构体或者枚举，可以把它作为结果构造器使用。结果构造器能按顺序构造一组嵌套的数据结构。利用它，可以以一种自然的声明式语法为嵌套数据结构实现一套领域专门语言（DSL）。想了解如何使用 `resultBuild`，请参阅 [结果构造器](../02_language_guide/27_Advanced_Operators.md#result-builders)。
+
+#### 结果构造方法 {#result-building-methods}
+
+结果构造器实现了下面的静态方法。它所有的功能已经通过静态方法暴露了，因此不需要初始化一个实例。`buildBlock(_:)` 方法是必须实现的，而那些能让领域专门语言（DSL）拥有额外能力的方法则是可选的。事实上，结果构造器类型的声明不需要遵循任何协议。
+
+这些静态方法的描述中用到了三种类型。`Expression` 为构造器的输入类型，`Component` 为中间结果类型，`FinalResult` 为构造器最终生成结果的类型。将它们替换成你构造器所使用的类型。如果结果构造方法中没有明确 `Expression` 或 `FinalResult`，默认会使用 `Component` 的类型。
+
+结果构造方法如下：
+
+- `static func buildBlock(_ components: Component...) -> Component`
+    将可变数量的中间结果合并成一个中间结果。必须实现这个方法。
+- `static func buildOptional(_ component: Component?) -> Component`
+    将可选的中间结果构造成新的中间结果。用于支持不包含 `else` 闭包的 `if` 表达式。
+- `static func buildEither(first: Component) -> Component`
+    构造一个由条件约束的中间结果。同时实现它与 `buildEither(second:)` 来支持 `switch` 与包含 `else` 闭包的 `if` 表达式。 
+- `static func buildEither(second: Component) -> Component`
+    构造一个由条件约束的中间结果。同时实现它与 `buildEither(first:)` 来支持 `switch` 与包含 `else` 闭包的 `if` 表达式。 
+- `static func buildArray(_ components: [Component]) -> Component`
+    将中间结果数组构造成中间结果。用于支持 `for` 循环。
+- `static func buildExpression(_ expression: Expression) -> Component`
+    将表达式构造成中间结果。利用它来执行预处理，比如，将入参转换为内部类型，或为使用方提供额外的类型推断信息。
+- `static func buildFinalResult(_ component: Component) -> FinalResult`
+    将中间结果构造成最终结果。可以在中间结果与最终结果类型不一致的结果构造器中实现这个方法，或是在最终结果返回前对它做处理。
+- `static func buildLimitedAvailability(_ component: Component) -> Component`
+    构建中间结果，用于在编译器控制（compiler-control）语句进行可用性检查之外，传递或擦除类型信息。可以在不同的条件分支上擦除类型信息。（译者注：这里的编译器控制语句主要指 `if #available`，参考 https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md#result-building-methods）
+
+下面的代码定义了一个简易的结果构造器，用于构造整型数组。类型别名明确了 `Compontent` 与 `Expression`，以一种简单的方式让下面的例子满足上面的方法。
+
+```swift
+@resultBuilder
+struct ArrayBuilder {
+    typealias Component = [Int]
+    typealias Expression = Int
+    static func buildExpression(_ element: Expression) -> Component {
+        return [element]
+    }
+    static func buildOptional(_ component: Component?) -> Component {
+        guard let component = component else { return [] }
+        return component
+    }
+    static func buildEither(first component: Component) -> Component {
+        return component
+    }
+    static func buildEither(second component: Component) -> Component {
+        return component
+    }
+    static func buildArray(_ components: [Component]) -> Component {
+        return Array(components.joined())
+    }
+    static func buildBlock(_ components: Component...) -> Component {
+        return Array(components.joined())
+    }
+}
+```
+
+#### 结果转换 {#result-transformations}
+
+使用了结果构造器语法的代码会被递归地转换，成为对结果构造器类型静态方法的调用：
+
+- 如果结果构造器实现了 `buildExpression(_:)` 方法，每个表达式都会转换成一次方法调用。这是转换的第一步。下面的声明方式是等价的：
+
+    ```swift
+    @ArrayBuilder var builderNumber: [Int] { 10 }
+    var manualNumber = ArrayBuilder.buildExpression(10)
+    ```
+
+- 赋值语句也会像表达式一样被转换，但它的类型会被当作 `()`。重载 `buildExpression(_:)` 方法，接收实参类型为 `()` 来特殊处理赋值。（译者注：重载方法参考 https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md#assignments）
+
+- 分支语句中对可用性的检查会转换成 `buildLimitedAvailability(_:)` 调用。这个转换早于 `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)`。类型信息会因进入的条件分支不同发生改变，使用 `buildLimitedAvailability(_:)` 方法可以将它擦除。下面的实例中 `buildEither(first:)` 和 `buildEither(second:)` 使用泛型捕获了不同条件分支的具体类型信息。
+
+    ```swift
+    protocol Drawable {
+        func draw() -> String
+    }
+    struct Text: Drawable {
+        var content: String
+        init(_ content: String) { self.content = content }
+        func draw() -> String { return content }
+    }
+    struct Line<D: Drawable>: Drawable {
+        var elements: [D]
+        func draw() -> String {
+            return elements.map { $0.draw() }.joined(separator: "")
+        }
+    }
+    struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+        var content: Drawable
+        func draw() -> String { return content.draw() }
+    }
+
+    @resultBuilder
+    struct DrawingBuilder {
+        static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+            return Line(elements: components)
+        }
+        static func buildEither<First, Second>(first: First)
+            -> DrawEither<First, Second> {
+                return DrawEither(content: first)
+        }
+        static func buildEither<First, Second>(second: Second)
+            -> DrawEither<First, Second> {
+                return DrawEither(content: second)
+        }
+    }
+    ```
+
+    然而，在面对有可用性检测的代码时会出现问题：
+
+    ```swift
+    @available(macOS 99, *)
+    struct FutureText: Drawable {
+        var content: String
+        init(_ content: String) { self.content = content }
+        func draw() -> String { return content }
+    }
+    @DrawingBuilder var brokenDrawing: Drawable {
+        if #available(macOS 99, *) {
+            FutureText("Inside.future")  // 问题所在
+        } else {
+            Text("Inside.present")
+        }
+    }
+    // brokenDrawing 的类型是 Line<DrawEither<Line<FutureText>, Line<Text>>>
+    ```
+
+    上面的代码中，由于 `FutureText` 是 `DrawEither` 泛型的一个类型，它成为了 `brokenDrawing` 类型的组成部分。`FutureText` 如果在运行时不可用会引起程序的崩溃，即使它没有被显式使用。
+
+    为了解决这个问题，实现 `buildLimitedAvailability(_:)` 方法擦除类型信息。举例来说，下面的代码构造了一个 `AnyDrawable` 用于可用性检查。
+
+    ```swift
+    struct AnyDrawable: Drawable {
+        var content: Drawable
+        func draw() -> String { return content.draw() }
+    }
+    extension DrawingBuilder {
+        static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+            return AnyDrawable(content: content)
+        }
+    }
+
+    @DrawingBuilder var typeErasedDrawing: Drawable {
+        if #available(macOS 99, *) {
+            FutureText("Inside.future")
+        } else {
+            Text("Inside.present")
+        }
+    }
+    // typeErasedDrawing 的类型是 Line<DrawEither<AnyDrawable, Line<Text>>>
+    ```
+
+- 分支语句会被转换成一连串 `buildEither(first:)` 与 `buildEither(second:)` 的方法调用。语句的不同条件分支会被映射到一颗二叉树的叶子结点上，语句则变成了从根节点到叶子结点路径的嵌套 `buildEither` 方法调用。
+  
+    举例来说，如果你的 `switch` 语句有三个条件分支，编译器会生成一颗拥有 3 个叶子结点的二叉树。同样地，从根节点到第二个分支相当于走了“第二个子节点”再到“第一个子节点”这样的路径，这种情况会转化成 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。下面的声明方式是等价的：
+
+    ```swift
+    let someNumber = 19
+    @ArrayBuilder var builderConditional: [Int] {
+        if someNumber < 12 {
+            31
+        } else if someNumber == 19 {
+            32
+        } else {
+            33
+        }
+    }
+
+    var manualConditional: [Int]
+    if someNumber < 12 {
+        let partialResult = ArrayBuilder.buildExpression(31)
+        let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+        manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+    } else if someNumber == 19 {
+        let partialResult = ArrayBuilder.buildExpression(32)
+        let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+        manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+    } else {
+        let partialResult = ArrayBuilder.buildExpression(33)
+        manualConditional = ArrayBuilder.buildEither(second: partialResult)
+    }
+    ```
+
+- 分支语句不一定会产生值，就像没有 `else` 闭包的 `if` 语句，会转换成 `buildOptional(_:)` 方法调用。如果 `if` 语句满足条件，它的代码块会被转换，作为实参进行传递；否则，`buildOptional(_:)` 会被调用，并用 `nil` 作为它的实参。下面的声明方式是等价的：
+
+    ```swift
+    @ArrayBuilder var builderOptional: [Int] {
+        if (someNumber % 2) == 1 { 20 }
+    }
+
+    var partialResult: [Int]? = nil
+    if (someNumber % 2) == 1 {
+        partialResult = ArrayBuilder.buildExpression(20)
+    }
+    var manualOptional = ArrayBuilder.buildOptional(partialResult)
+    ```
+
+- 代码块或 `do` 语句会转换成 `buildBlock(_:)` 调用。闭包中的每一条语句都会被转换，完成后作为实参传入 `buildBlock(_:)`。下面的声明方式是等价的：
+
+    ```swift
+    @ArrayBuilder var builderBlock: [Int] {
+        100
+        200
+        300
+    }
+
+    var manualBlock = ArrayBuilder.buildBlock(
+        ArrayBuilder.buildExpression(100),
+        ArrayBuilder.buildExpression(200),
+        ArrayBuilder.buildExpression(300)
+    )
+    ```
+
+- `for` 循环的转换分为三个部分：一个临时数组，一个 `for` 循环，以及一次 `buildArray(_:)` 方法调用。新的 `for` 循环会遍历整个序列，并把每一个中间结果存入临时数组。临时数组会作为实参传递给 `buildArray(_:)` 调用。下面的声明方式是等价的：
+
+    ```swift
+    @ArrayBuilder var builderArray: [Int] {
+        for i in 5...7 {
+            100 + i
+        }
+    }
+
+    var temporary: [[Int]] = []
+    for i in 5...7 {
+        let partialResult = ArrayBuilder.buildExpression(100 + i)
+        temporary.append(partialResult)
+    }
+    let manualArray = ArrayBuilder.buildArray(temporary)
+    ```
+
+- 如果结果构造器实现了 `buildFinalResult(_:)` 方法，最终结果会转换成对于这个方法的调用。它永远最后执行。
+
+虽然转换行为描述中会出现临时变量，但结果构造器不会创建任何对代码可见的临时变量。
+
+不能在结果构造器的转换中使用 `break`、`continue`、`defer`、`guard`，或是 `return` 语句、`while` 语句、`do-catch` 语句。
+
+转换过程不会改变代码中的声明，这样就可以使用临时常量或变量一步一步构造表达式。它也不会改变 `throw` 语句、编译时诊断语句，或包含 `return` 语句的闭包。
+
+在可能的情况下转换会被合并。例如，表达式 `4 + 5 * 6` 会被直接转换成 `buildExpression(4 + 5 * 6)` 而不是多个函数调用。同样地，嵌套分支语句也只会变成一颗调用 `buildEither` 方法的二叉树。
+
+#### 自定义结果构造器特性 {#custom-result-builder-attributes}
+
+创建一个结果构造器类型的同时也创建了一个同名的自定义特性。你可以将它应用于如下场景：
+
+- 用于函数声明时，会构造函数体
+- 用于变量或包含 getter 方法的下标声明时，会构造 getter 的函数体
+- 用于函数声明中的形参时，会构造传递相应实参的闭包
+
+应用结果构造器特性并不会影响 ABI 稳定。在形参上应用结果构造器，会把这个特性变成函数接口的一部分，从而影响源码稳定性。
+
+### `requires_stored_property_inits` {#requires-stored-property-inits}
 
 该特性用于类声明，以要求类中所有存储属性提供默认值作为其定义的一部分。对于从中继承的任何类都推断出 `NSManagedObject` 特性。
 
