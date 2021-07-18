@@ -399,14 +399,14 @@ s.$x.wrapper  // WrapperWithProjection value
 
 结果构造器实现了下面的静态方法。它所有的功能已经通过静态方法暴露了，因此不需要初始化一个实例。`buildBlock(_:)` 方法是必须实现的，而那些能让领域专门语言（DSL）拥有额外能力的方法则是可选的。事实上，结果构造器类型的声明不需要遵循任何协议。
 
-这些静态方法的描述中用到了三种类型。`Expression` 为构造器的输入类型，`Component` 为中间结果类型，`FinalResult` 为构造器最终生成结果的类型。将它们替换成你构造器真正所需的类型。如果结果构造方法中没有明确 `Expression` 或 `FinalResult`，默认会使用 `Component` 的类型。
+这些静态方法的描述中用到了三种类型。`Expression` 为构造器的输入类型，`Component` 为中间结果类型，`FinalResult` 为构造器最终生成结果的类型。将它们替换成你构造器所使用的类型。如果结果构造方法中没有明确 `Expression` 或 `FinalResult`，默认会使用 `Component` 的类型。
 
 结果构造方法如下：
 
 - `static func buildBlock(_ components: Component...) -> Component`
     将可变数量的中间结果合并成一个中间结果。必须实现这个方法。
 - `static func buildOptional(_ component: Component?) -> Component`
-    将可选的中间结果构造成新的中间结果。用于支持不包含 `else` 闭包的场景 `if` 表达式。
+    将可选的中间结果构造成新的中间结果。用于支持不包含 `else` 闭包的 `if` 表达式。
 - `static func buildEither(first: Component) -> Component`
     构造一个由条件约束的中间结果。同时实现它与 `buildEither(second:)` 来支持 `switch` 与包含 `else` 闭包的 `if` 表达式。 
 - `static func buildEither(second: Component) -> Component`
@@ -418,7 +418,7 @@ s.$x.wrapper  // WrapperWithProjection value
 - `static func buildFinalResult(_ component: Component) -> FinalResult`
     将中间结果构造成最终结果。可以在中间结果与最终结果类型不一致的结果构造器中实现这个方法，或是在最终结果返回前对它做处理。
 - `static func buildLimitedAvailability(_ component: Component) -> Component`
-    构建中间结果，用于在编译器控制语句（compiler-control）进行可用性检查之外，传递或擦除类型信息。可以在不同的条件分支上擦除类型信息。（译者注：这里的编译器控制语句主要指 `if #available`，参考 https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md#result-building-methods）
+    构建中间结果，用于在编译器控制（compiler-control）语句进行可用性检查之外，传递或擦除类型信息。可以在不同的条件分支上擦除类型信息。（译者注：这里的编译器控制语句主要指 `if #available`，参考 https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md#result-building-methods）
 
 下面的代码定义了一个简易的结果构造器，用于构造整型数组。类型别名明确了 `Compontent` 与 `Expression`，以一种简单的方式让下面的例子满足上面的方法。
 
@@ -451,7 +451,7 @@ struct ArrayBuilder {
 
 #### 结果转换 {#result-transformations}
 
-使用了结果构造器语法的代码会被递归地转换，转换成对结果构造器类型静态方法的调用：
+使用了结果构造器语法的代码会被递归地转换，成为对结果构造器类型静态方法的调用：
 
 - 如果结果构造器实现了 `buildExpression(_:)` 方法，每个表达式都会转换成一次方法调用。这是转换的第一步。下面的声明方式是等价的：
 
@@ -519,7 +519,7 @@ struct ArrayBuilder {
     // brokenDrawing 的类型是 Line<DrawEither<Line<FutureText>, Line<Text>>>
     ```
 
-    上面的代码中，由于 `FutureText` 是 `DrawEither` 泛型的一个类型，它成为了 `brokenDrawing` 类型的组成部分。`FutureText` 如果在运行时不可用会引起程序的崩溃，即使在它没有被显式使用。
+    上面的代码中，由于 `FutureText` 是 `DrawEither` 泛型的一个类型，它成为了 `brokenDrawing` 类型的组成部分。`FutureText` 如果在运行时不可用会引起程序的崩溃，即使它没有被显式使用。
 
     为了解决这个问题，实现 `buildLimitedAvailability(_:)` 方法擦除类型信息。举例来说，下面的代码构造了一个 `AnyDrawable` 用于可用性检查。
 
@@ -544,9 +544,9 @@ struct ArrayBuilder {
     // typeErasedDrawing 的类型是 Line<DrawEither<AnyDrawable, Line<Text>>>
     ```
 
-- 分支语句会被转换成一连串 `buildEither(first:)` 与 `buildEither(second:)` 的方法调用。语句的不同条件分支会被映射到了一颗二叉树的叶子结点上，语句则变成了从根节点到叶子结点路径的嵌套 `buildEither` 方法调用。
+- 分支语句会被转换成一连串 `buildEither(first:)` 与 `buildEither(second:)` 的方法调用。语句的不同条件分支会被映射到一颗二叉树的叶子结点上，语句则变成了从根节点到叶子结点路径的嵌套 `buildEither` 方法调用。
   
-    举例来说，如果你的 switch 语句有三个条件分支，编译器会生成一颗拥有 3 个叶子结点的二叉树。同样地，从根节点到第二个分支相当于走了"第二个子节点"再到"第一个子节点"这样的路径，这种情况会转化成 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。下面的声明方式是等价的：
+    举例来说，如果你的 `switch` 语句有三个条件分支，编译器会生成一颗拥有 3 个叶子结点的二叉树。同样地，从根节点到第二个分支相当于走了“第二个子节点”再到“第一个子节点”这样的路径，这种情况会转化成 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。下面的声明方式是等价的：
 
     ```swift
     let someNumber = 19
@@ -575,7 +575,7 @@ struct ArrayBuilder {
     }
     ```
 
-- 分支语句不一定会产生值，就像没有 `else` 闭包的 `if` 语句，会转换成 `buildOptional(_:)` 调用。如果 `if` 语句满足条件，它的代码块会被转换，作为实参进行传递；否则，`buildOptional(_:)` 会被调用，并用 `nil` 作为它的实参。下面的声明方式是等价的：
+- 分支语句不一定会产生值，就像没有 `else` 闭包的 `if` 语句，会转换成 `buildOptional(_:)` 方法调用。如果 `if` 语句满足条件，它的代码块会被转换，作为实参进行传递；否则，`buildOptional(_:)` 会被调用，并用 `nil` 作为它的实参。下面的声明方式是等价的：
 
     ```swift
     @ArrayBuilder var builderOptional: [Int] {
@@ -605,7 +605,7 @@ struct ArrayBuilder {
     )
     ```
 
-- `for` 循环的转换分为三个部分：一个临时数组，一个 `for` 循环，以及一次 `buildArray(_:)` 方法调用。新的 `for` 循环会遍历整个序列，并把每一个中间结果都放入临时数组中。临时数组会作为实参传递给 `buildArray(_:)` 调用。下面的声明方式是等价的：
+- `for` 循环的转换分为三个部分：一个临时数组，一个 `for` 循环，以及一次 `buildArray(_:)` 方法调用。新的 `for` 循环会遍历整个序列，并把每一个中间结果存入临时数组。临时数组会作为实参传递给 `buildArray(_:)` 调用。下面的声明方式是等价的：
 
     ```swift
     @ArrayBuilder var builderArray: [Int] {
