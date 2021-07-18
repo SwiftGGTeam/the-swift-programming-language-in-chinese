@@ -414,11 +414,11 @@ s.$x.wrapper  // WrapperWithProjection value
 - `static func buildArray(_ components: [Component]) -> Component`
     将中间结果数组构造成中间结果。用于支持 `for` 循环。
 - `static func buildExpression(_ expression: Expression) -> Component`
-    将输入构造成中间结果。利用它来执行预处理，比如，将入参转换为内部类型，或为使用方提供额外的类型推断信息。
+    将表达式构造成中间结果。利用它来执行预处理，比如，将入参转换为内部类型，或为使用方提供额外的类型推断信息。
 - `static func buildFinalResult(_ component: Component) -> FinalResult`
     将中间结果构造成最终结果。可以在中间结果与最终结果类型不一致的结果构造器中实现这个方法，或是在最终结果返回前对它做处理。
 - `static func buildLimitedAvailability(_ component: Component) -> Component`
-    构建中间结果，用于在编译器控制表达式以外传递或擦除类型信息，以进行可用性检查。可以在不同的条件分支上擦除类型信息。
+    构建中间结果，用于在编译器控制语句（compiler-control）进行可用性检查之外，传递或擦除类型信息。可以在不同的条件分支上擦除类型信息。（译者注：这里的编译器控制语句主要指 `if #available`，参考 https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md#result-building-methods）
 
 下面的代码定义了一个简易的结果构造器，用于构造整型数组。类型别名明确了 `Compontent` 与 `Expression`，以一种简单的方式让下面的例子满足上面的方法。
 
@@ -451,17 +451,18 @@ struct ArrayBuilder {
 
 #### 结果转换 {#result-transformations}
 
-以下的语法转换会递归地将应用了结果构造器语法的代码转换成结果构造器静态方法调用的方式：
+使用了结果构造器语法的代码会被递归地转换，转换成对结果构造器类型静态方法的调用：
 
-- 如果结果构造器实现了 `buildExpression(_:)` 方法，任何一个表达式都会变成一次方法调用。这种转换是最先发生的。下面的声明方式是一致的：
+- 如果结果构造器实现了 `buildExpression(_:)` 方法，每个表达式都会转换成一次方法调用。这是转换的第一步。下面的声明方式是等价的：
 
     ```swift
     @ArrayBuilder var builderNumber: [Int] { 10 }
     var manualNumber = ArrayBuilder.buildExpression(10)
     ```
 
-- 赋值语句也能像表达式一样被转换，但会被理解为对 () 求值。重载 `buildExpression(_:)` 方法，接收实参类型为 () 来特殊处理赋值。
-- 分支语句检查有效性是通过调用 `buildLimitedAvailability(_:)` 方法实现的。这个转换发生于调用 `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)` 之前。使用 `buildLimitedAvailability(_:)` 方法擦除变更所发生的分支信息。下面的 `buildEither(first:)` 和 `buildEither(second:)` 方法使用泛型捕获了每个分支场景的类型信息。
+- 赋值语句也会像表达式一样被转换，但它的类型会被当作 `()`。重载 `buildExpression(_:)` 方法，接收实参类型为 `()` 来特殊处理赋值。（译者注：重载方法参考 https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md#assignments）
+
+- 分支语句中对可用性的检查会转换成 `buildLimitedAvailability(_:)` 调用。这个转换早于 `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)`。类型信息会因进入的条件分支不同发生改变，使用 `buildLimitedAvailability(_:)` 方法可以将它擦除。下面的实例中 `buildEither(first:)` 和 `buildEither(second:)` 使用泛型捕获了不同条件分支的具体类型信息。
 
     ```swift
     protocol Drawable {
@@ -499,7 +500,7 @@ struct ArrayBuilder {
     }
     ```
 
-    然而这种方式对于带有代码有效性检验的情况会出现问题：
+    然而，在面对有可用性检测的代码时会出现问题：
 
     ```swift
     @available(macOS 99, *)
@@ -518,9 +519,9 @@ struct ArrayBuilder {
     // brokenDrawing 的类型是 Line<DrawEither<Line<FutureText>, Line<Text>>>
     ```
 
-    上面的代码中，`FutureText` 作为 `brokenDrawing` 类型的一部分出现，因为它是 `DrawEither` 泛型的其中一个类型。如果 `FutureText` 在运行时无效可能引起程序崩溃，即使在这个类型没有被显式调用。
+    上面的代码中，由于 `FutureText` 是 `DrawEither` 泛型的一个类型，它成为了 `brokenDrawing` 类型的组成部分。`FutureText` 如果在运行时不可用会引起程序的崩溃，即使在它没有被显式使用。
 
-    为了解决这个问题，实现 `buildLimitedAvailability(_:)` 方法擦除类型信息。举例来说，下面的代码构造了一个 `AnyDrawable` 用于有效性检验。
+    为了解决这个问题，实现 `buildLimitedAvailability(_:)` 方法擦除类型信息。举例来说，下面的代码构造了一个 `AnyDrawable` 用于可用性检查。
 
     ```swift
     struct AnyDrawable: Drawable {
@@ -543,9 +544,9 @@ struct ArrayBuilder {
     // typeErasedDrawing 的类型是 Line<DrawEither<AnyDrawable, Line<Text>>>
     ```
 
-- 分支语句会被转换成一连串 `buildEither(first:)` 与 `buildEither(second:)` 的方法调用。语句的场景被映射到了一颗二叉树的叶子结点上，语句则变成了从根节点到叶子结点路径的嵌套 `buildEither` 方法调用。
+- 分支语句会被转换成一连串 `buildEither(first:)` 与 `buildEither(second:)` 的方法调用。语句的不同条件分支会被映射到了一颗二叉树的叶子结点上，语句则变成了从根节点到叶子结点路径的嵌套 `buildEither` 方法调用。
   
-    举例来说，如果你的 switch 语句有三种情况，编译器会生成一个拥有 3 个叶子结点的二叉树。同样地，由于从根节点到第二种情况相当于走了"第二个子节点"再到"第一个子节点"这样的路径，就变成了像 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。下面的声明方式是一致的：
+    举例来说，如果你的 switch 语句有三个条件分支，编译器会生成一颗拥有 3 个叶子结点的二叉树。同样地，从根节点到第二个分支相当于走了"第二个子节点"再到"第一个子节点"这样的路径，这种情况会转化成 `buildEither(first: buildEither(second: ... ))` 这样的嵌套调用。下面的声明方式是等价的：
 
     ```swift
     let someNumber = 19
@@ -574,7 +575,7 @@ struct ArrayBuilder {
     }
     ```
 
-- 分支语句不一定会产生值，就像 `if` 语句没有 `else` 闭包时，会变成 `buildOptional(_:)` 调用。如果 `if` 语句满足条件，它的代码块会被转换，作为实参进行传递；否则，`buildOptional(_:)` 会被调用，并用 `nil` 作为它的实参。下面的声明方式是一致的：
+- 分支语句不一定会产生值，就像没有 `else` 闭包的 `if` 语句，会转换成 `buildOptional(_:)` 调用。如果 `if` 语句满足条件，它的代码块会被转换，作为实参进行传递；否则，`buildOptional(_:)` 会被调用，并用 `nil` 作为它的实参。下面的声明方式是等价的：
 
     ```swift
     @ArrayBuilder var builderOptional: [Int] {
@@ -588,7 +589,7 @@ struct ArrayBuilder {
     var manualOptional = ArrayBuilder.buildOptional(partialResult)
     ```
 
-- 代码块或 `do` 语句会变成 `buildBlock(_:)` 调用。闭包中的语句都会被转换，一次一句，接着它们会变成 `buildBlock(_:)` 方法的参数。下面的声明方式是一致的：
+- 代码块或 `do` 语句会转换成 `buildBlock(_:)` 调用。闭包中的每一条语句都会被转换，完成后作为实参传入 `buildBlock(_:)`。下面的声明方式是等价的：
 
     ```swift
     @ArrayBuilder var builderBlock: [Int] {
@@ -604,7 +605,7 @@ struct ArrayBuilder {
     )
     ```
 
-- `for` 循环会变成生成一个临时变量，一个 `for` 循环，以及一次 `buildArray(_:)` 方法调用。新的 `for` 循环遍历序列，将中间结果添加进数组中。临时数组会作为实参传递给 `buildArray(_:)` 调用。下面的声明方式是一致的：
+- `for` 循环的转换分为三个部分：一个临时数组，一个 `for` 循环，以及一次 `buildArray(_:)` 方法调用。新的 `for` 循环会遍历整个序列，并把每一个中间结果都放入临时数组中。临时数组会作为实参传递给 `buildArray(_:)` 调用。下面的声明方式是等价的：
 
     ```swift
     @ArrayBuilder var builderArray: [Int] {
@@ -621,23 +622,23 @@ struct ArrayBuilder {
     let manualArray = ArrayBuilder.buildArray(temporary)
     ```
 
-- 如果结果构造器实现了 `buildFinalResult(_:)` 方法，最终结果会变成对于这个方法的调用。它永远最后执行。
+- 如果结果构造器实现了 `buildFinalResult(_:)` 方法，最终结果会转换成对于这个方法的调用。它永远最后执行。
 
-虽然转变行为是根据临时变量进行描述的，使用结果构造器并不会真的创建任何新的对你剩余代码可见的声明。
+虽然转换行为描述中会出现临时变量，但结果构造器不会创建任何对代码可见的临时变量。
 
 不能在结果构造器的转换中使用 `break`、`continue`、`defer`、`guard`，或是 `return` 语句、`while` 语句、`do-catch` 语句。
 
-转换过程不会改变代码中的声明，这让使用临时常量或变量一步一步构造表达式成为可能。它也不会改变 `throw` 语句、编译时诊断语句，或包含 `return` 语句的闭包。
+转换过程不会改变代码中的声明，这样就可以使用临时常量或变量一步一步构造表达式。它也不会改变 `throw` 语句、编译时诊断语句，或包含 `return` 语句的闭包。
 
-在可能的情况下转换会被合并。例如，表达式 `4 + 5 * 6` 会被直接转换成 `buildExpression(4 + 5 * 6)` 而不是多个函数调用。同样地，嵌套分支语句也会变成一个二叉树的 `buildEither` 方法调用。
+在可能的情况下转换会被合并。例如，表达式 `4 + 5 * 6` 会被直接转换成 `buildExpression(4 + 5 * 6)` 而不是多个函数调用。同样地，嵌套分支语句也只会变成一颗调用 `buildEither` 方法的二叉树。
 
 #### 自定义结果构造器特性 {#custom-result-builder-attributes}
 
 创建一个结果构造器类型的同时也创建了一个同名的自定义特性。你可以将它应用于如下场景：
 
-- 用于函数声明时，会以函数体进行构造
-- 用于变量或包含 getter 方法的下标声明时，会以 getter 的函数体进行构造
-- 用于函数声明中的形参时，会以传递相应实参的闭包进行构造
+- 用于函数声明时，会构造函数体
+- 用于变量或包含 getter 方法的下标声明时，会构造 getter 的函数体
+- 用于函数声明中的形参时，会构造传递相应实参的闭包
 
 应用结果构造器特性并不会影响 ABI 稳定。在形参上应用结果构造器，会把这个特性变成函数接口的一部分，从而影响源码稳定性。
 
