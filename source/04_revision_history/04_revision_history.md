@@ -1,11 +1,34 @@
 # Swift 文档修订历史
 
-### 2020-02-05
+### 2021-07-14
+
+
+
+### 2021-06-07
+
+
+
+### 2021-04-26
+
+
+
+### 2020-09-16
+
+* 更新至 Swift 5.3。
+* 在 [尾随闭包](../02_language_guide/07_Closures.md#trailing-closures) 章节中新增了有关多个尾随闭包的内容，在 [函数调用表达式](03_language_reference/04_Expressions.md#function-call-expression) 章节中新增了有关尾随闭包如何匹配形参的内容。
+* 在 [使用合成实现来采纳协议](../02_language_guide/21_Protocols.md#adopting-a-protocol-using-a-synthesized-implementation) 章节中新增了枚举合成实现 `Comparable` 的内容。
+* 新增 [包含上下文关系的 where 分句](../02_language_guide/22_Generics.md#contextual-where-clauses) 章节，现在可以在更多位置编写范型 `where` 分句。
+* 新增 [无主可选引用](../02_language_guide/24_Automatic_Reference_Counting.md#unowned-optional-references) 章节，其中包含可选值使用无主引用的内容。
+* 
+
+### 2020-03-24
 
 * 更新至 Swift 5.2。
+* 在 [Key-Path 表达式](../03_language_reference/04_Expressions.md#key-path-expression) 章节中新增了有关传递 key path 代替闭包的内容。
 * 在 [特殊名称方法](../03_language_reference/06_Declarations.md#methods-with-special-names) 章节中新增了有关让类、结构体和枚举的实例作为函数调用语法糖的内容。
 * 更新 [下标选项](../02_language_guide/12_Subscripts.md#subscript-options) 章节，现在下标支持形参默认值。
 * 更新 [自身类型](../03_language_reference/03_Types.md#self-type-h) 章节，现在 `Self` 可以在更多上下文中使用。
+* 更新 [隐式解析可选类型](../02_language_guide/01_The_Basics.md/#implicityly-unwrapped-optionals) 章节，明确了隐式解析可选值可以作为可选值或者非可选值使用。
 
 ### 2019-09-10
 

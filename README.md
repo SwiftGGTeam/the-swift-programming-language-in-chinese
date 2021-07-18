@@ -58,6 +58,7 @@ diff 操作如下：
 
 | 术语 | 备选翻译 |
 | --- | --- |
+| result builder | 结果构造器 |
 | property wrapper | 属性包装器（[翻译相关讨论](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues/982#issuecomment-536244784)） |
 | projected value | 被呈现值 |
 | wrapped value | 被包装值 |
