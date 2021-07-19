@@ -7,7 +7,7 @@
 ### 2021-06-07
 
 * 更新至 Swift 5.5。
-* 在 [并发](../02_language_guide/28_Concurrency.md) 篇章、[Actor 声明](03_language_reference/06_Declarations.md#actor_declaration)、[异步函数和方法](03_language_reference/06_Declarations.md#asynchronous-functions-and-methods) 和 [Await 运算符](03_language_reference/04_Expressions.md#await-operators) 中新增了有关异步函数、任务和 actor 的内容。
+* 在 [并发](../02_language_guide/28_Concurrency.md) 篇章、[Actor 声明](03_language_reference/06_Declarations.md#actor-declaration)、[异步函数和方法](03_language_reference/06_Declarations.md#asynchronous-functions-and-methods) 和 [Await 运算符](03_language_reference/04_Expressions.md#await-operators) 中新增了有关异步函数、任务和 actor 的内容。
 
 ### 2021-04-26
 
