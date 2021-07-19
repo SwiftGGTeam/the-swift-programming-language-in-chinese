@@ -14,25 +14,25 @@
 * 更新至 Swift 5.4。
 * 新增 [结果构造器](../02_language_guide/27_Advanced_Operators.md#result-builders) 和 [resultBuilder](03_language_reference/07_Attributes.md#resultbuilder) 章节，其中包含结果构造器的内容。
 * 新增 [指针类型的隐式转换](03_language_reference/04_Expressions.md#implicit-conversion-to-a-pointer) 章节，其中包含在函数调用时输入输出形参可以隐式转换到不安全指针的内容。
-* 更新 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters) 和 [函数声明]() 章节，现在函数可以有多个可变参数了。
-* 更新 [隐式成员表达式]() 章节，现在可以链式调用隐式成员表达式了。
+* 更新 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters) 和 [函数声明](03_language_reference/06_Declarations.md#function-declaration) 章节，现在函数可以有多个可变参数了。
+* 更新 [隐式成员表达式](03_language_reference/04_Expressions.md#implicit-member-expression) 章节，现在可以链式调用隐式成员表达式了。
 
 ### 2020-09-16
 
 * 更新至 Swift 5.3。
-* 在 [尾随闭包](../02_language_guide/07_Closures.md#trailing-closures) 章节中新增了有关多个尾随闭包的内容，在 [函数调用表达式](03_language_reference/04_Expressions.md#function-call-expression) 章节中新增了有关尾随闭包如何匹配形参的内容。
+* 在 [尾随闭包](../02_language_guide/07_Closures.md#trailing-closures) 章节中新增了有关多个尾随闭包的内容，在 [函数调用表达式](../03_language_reference/04_Expressions.md#function-call-expression) 章节中新增了有关尾随闭包如何匹配形参的内容。
 * 在 [使用合成实现来采纳协议](../02_language_guide/21_Protocols.md#adopting-a-protocol-using-a-synthesized-implementation) 章节中新增了枚举合成实现 `Comparable` 的内容。
 * 新增 [包含上下文关系的 where 分句](../02_language_guide/22_Generics.md#contextual-where-clauses) 章节，现在可以在更多位置编写范型 `where` 分句。
 * 新增 [无主可选引用](../02_language_guide/24_Automatic_Reference_Counting.md#unowned-optional-references) 章节，其中包含可选值使用无主引用的内容。
-* 在 [main]() 章节中新增有关 `@main` 特性的内容。
-* 在 [字面量表达式]() 章节中新增 `#filePath`，并更新了 `#file` 的讨论。
-* 更新 [逃逸闭包]() 章节，现在闭包可以在更多场景隐式引用 `self`。
-* 更新 [用 Do-Catch 处理错误]() 和 [Do 语句]() 章节，现在 `catch` 子句可以匹配多个错误。
-* 新增更多有关 `Any` 的内容并移动到新增的 [Any 类型]() 章节。
-* 更新 [属性观察器]() 章节，现在 lazy 属性可以有观察器。
-* 更新 [协议声明]() 章节，现在枚举的成员可以用于遵循协议的要求。
-* 更新 [存储型变量和属性的观察器]() 章节，描述观察器之前 getter 是何时被调用的。
-* 更新 [内存安全]() 篇章并提及原子操作。
+* 在 [main](../03_language_reference/07_Attributes.md#main) 章节中新增有关 `@main` 特性的内容。
+* 在 [字面量表达式](../03_language_reference/04_Expressions.md#literal-expression) 章节中新增 `#filePath`，并更新了 `#file` 的讨论。
+* 更新 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures) 章节，现在闭包可以在更多场景隐式引用 `self`。
+* 更新 [用 Do-Catch 处理错误](../02_language_guide/17_Error_Handling.md#handling-errors-using-do-Catch) 和 [Do 语句](../03_language_reference/05_Statements.md#do-statements) 章节，现在 `catch` 子句可以匹配多个错误。
+* 新增更多有关 `Any` 的内容并移动到新增的 [Any 类型](../03_language_reference/03_Types.md#any-type) 章节。
+* 更新 [属性观察器](../02_language_guide/10_Properties.md#property-observers) 章节，现在 lazy 属性可以有观察器。
+* 更新 [协议声明](../03_language_reference/06_Declarations.md#protocol-declaration) 章节，现在枚举的成员可以用于遵循协议的要求。
+* 更新 [存储型变量和属性的观察器](../03_language_reference/06_Declarations.md#stored-variable-observers-and-property-observers) 章节，描述观察器之前 getter 是何时被调用的。
+* 更新 [内存安全](../02_language_guide/25_Memory_Safety.md) 篇章并提及原子操作。
 
 ### 2020-03-24
 
@@ -41,7 +41,7 @@
 * 在 [特殊名称方法](../03_language_reference/06_Declarations.md#methods-with-special-names) 章节中新增了有关让类、结构体和枚举的实例作为函数调用语法糖的内容。
 * 更新 [下标选项](../02_language_guide/12_Subscripts.md#subscript-options) 章节，现在下标支持形参默认值。
 * 更新 [自身类型](../03_language_reference/03_Types.md#self-type-h) 章节，现在 `Self` 可以在更多上下文中使用。
-* 更新 [隐式解析可选类型](../02_language_guide/01_The_Basics.md/#implicityly-unwrapped-optionals) 章节，明确了隐式解析可选值可以作为可选值或者非可选值使用。
+* 更新 [隐式解析可选类型](../02_language_guide/01_The_Basics.md#implicityly-unwrapped-optionals) 章节，明确了隐式解析可选值可以作为可选值或者非可选值使用。
 
 ### 2019-09-10
 
