@@ -2,15 +2,20 @@
 
 ### 2021-07-14
 
-
+* 更新 [并发](../02_language_guide/28_Concurrency.md) 篇章里的示例，使用当前的并发 API。
 
 ### 2021-06-07
 
-
+* 更新至 Swift 5.5。
+* 在 [并发](../02_language_guide/28_Concurrency.md) 篇章、[Actor 声明](03_language_reference/06_Declarations.md#actor_declaration)、[异步函数和方法](03_language_reference/06_Declarations.md#asynchronous-functions-and-methods) 和 [Await 运算符](03_language_reference/04_Expressions.md#await-operators) 中新增了有关异步函数、任务和 actor 的内容。
 
 ### 2021-04-26
 
-
+* 更新至 Swift 5.4。
+* 新增 [结果构造器](../02_language_guide/27_Advanced_Operators.md#result-builders) 和 [resultBuilder](03_language_reference/07_Attributes.md#resultbuilder) 章节，其中包含结果构造器的内容。
+* 新增 [指针类型的隐式转换](03_language_reference/04_Expressions.md#implicit-conversion-to-a-pointer) 章节，其中包含在函数调用时输入输出形参可以隐式转换到不安全指针的内容。
+* 更新 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters) 和 [函数声明]() 章节，现在函数可以有多个可变参数了。
+* 更新 [隐式成员表达式]() 章节，现在可以链式调用隐式成员表达式了。
 
 ### 2020-09-16
 
@@ -19,7 +24,15 @@
 * 在 [使用合成实现来采纳协议](../02_language_guide/21_Protocols.md#adopting-a-protocol-using-a-synthesized-implementation) 章节中新增了枚举合成实现 `Comparable` 的内容。
 * 新增 [包含上下文关系的 where 分句](../02_language_guide/22_Generics.md#contextual-where-clauses) 章节，现在可以在更多位置编写范型 `where` 分句。
 * 新增 [无主可选引用](../02_language_guide/24_Automatic_Reference_Counting.md#unowned-optional-references) 章节，其中包含可选值使用无主引用的内容。
-* 
+* 在 [main]() 章节中新增有关 `@main` 特性的内容。
+* 在 [字面量表达式]() 章节中新增 `#filePath`，并更新了 `#file` 的讨论。
+* 更新 [逃逸闭包]() 章节，现在闭包可以在更多场景隐式引用 `self`。
+* 更新 [用 Do-Catch 处理错误]() 和 [Do 语句]() 章节，现在 `catch` 子句可以匹配多个错误。
+* 新增更多有关 `Any` 的内容并移动到新增的 [Any 类型]() 章节。
+* 更新 [属性观察器]() 章节，现在 lazy 属性可以有观察器。
+* 更新 [协议声明]() 章节，现在枚举的成员可以用于遵循协议的要求。
+* 更新 [存储型变量和属性的观察器]() 章节，描述观察器之前 getter 是何时被调用的。
+* 更新 [内存安全]() 篇章并提及原子操作。
 
 ### 2020-03-24
 
