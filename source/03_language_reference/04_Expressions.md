@@ -85,7 +85,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
 #### try-operator {#try-operator}
 > *try 运算符*  → **try** | **try?** | **try!**
 
-### Await 运算符
+### Await 运算符{#await-operators}
 
 *await 表达式*由 `await` 运算符加上紧随其后的异步操作结果的表达式。形式如下：
 
