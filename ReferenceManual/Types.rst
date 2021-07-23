@@ -935,7 +935,7 @@ whose return type is ``Self``.
 .. assertion:: self-in-class-cant-be-a-parameter-type
 
    -> class C { func f(c: Self) { } }
-   !$ error: covariant 'Self' can only appear as the type of a property, subscript or method result; did you mean 'C'?
+   !$ error: covariant 'Self' or 'Self?' can only appear as the type of a property, subscript or method result; did you mean 'C'?
    !! class C { func f(c: Self) { } }
    !!                     ^~~~
    !!                     C

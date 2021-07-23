@@ -1051,13 +1051,13 @@ Experts are additionally ranked by the number of stars they have.
    !$ note: candidate would match if 'E' conformed to 'FloatingPoint'
    !! public static func < (lhs: Self, rhs: Self) -> Bool
    !! ^
-   !$ note: candidate would match if 'E' conformed to 'BinaryInteger'
+   !$ note: candidate has non-matching type '<Self, Other> (Self, Other) -> Bool'
    !! public static func < <Other>(lhs: Self, rhs: Other) -> Bool where Other : BinaryInteger
    !! ^
    !$ note: candidate would match if 'E' conformed to '_Pointer'
    !! public static func < (lhs: Self, rhs: Self) -> Bool
    !! ^
-   !$ note: candidate would match if 'E' conformed to 'Strideable'
+   !$ note: candidate has non-matching type '<Self> (Self, Self) -> Bool'
    !! @inlinable public static func < (x: Self, y: Self) -> Bool
    !! ^
    !$ note: candidate would match if 'E' conformed to 'StringProtocol'

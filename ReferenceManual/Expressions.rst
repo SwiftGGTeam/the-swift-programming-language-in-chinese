@@ -221,6 +221,7 @@ to be explicit about the scope of the operator's application.
 
     >> func someAsyncFunction() async -> Int { return 10 }
     >> func anotherAsyncFunction() async -> Int { return 5 }
+    >> func f() async {
     >> var sum = 0
     // await applies to both function calls
     -> sum = await someAsyncFunction() + anotherAsyncFunction()
@@ -231,10 +232,14 @@ to be explicit about the scope of the operator's application.
     // Error: await applies only to the first function call
     -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
     >> _ = sum  // Suppress irrelevant written-but-not-read warning
-    !$ error: call is 'async' but is not marked with 'await'
-    !! sum = (await someAsyncFunction()) + anotherAsyncFunction() // Error: await applies only to the first function call
-    !! ^~~~~~~~~~~~~~~~~~~~~~
+    >> }
+    !$ error: expression is 'async' but is not marked with 'await'
+    !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
+    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     !! await
+    !$ note: call is 'async'
+    !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
+    !! ^
 
 An ``await`` expression can't appear on the right-hand side of a binary operator,
 unless the binary operator is the assignment operator
@@ -242,6 +247,7 @@ or the ``await`` expression is enclosed in parentheses.
 
 .. assertion:: await-on-right
 
+    >> func f() async {
     >> func someAsyncFunction() async -> Int { return 10 }
     >> var sum = 0
     >> sum = 7 + await someAsyncFunction()    // Error
@@ -250,6 +256,7 @@ or the ``await`` expression is enclosed in parentheses.
     !! ^
     >> sum = 7 + (await someAsyncFunction())  // OK
     >> _ = sum  // Suppress irrelevant written-but-not-read warning
+    >> }
 
 If an expression includes both the ``await`` and ``try`` operator,
 the ``try`` operator must appear first.

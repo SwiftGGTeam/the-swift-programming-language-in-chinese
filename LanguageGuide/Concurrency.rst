@@ -61,6 +61,7 @@ and shows that photo to the user:
     >> func downloadPhoto(named name: String, completionHandler: (Data) -> Void) {
     >>     completionHandler(Data())
     >> }
+    >> func show(_ image: Data) { }
     -> listPhotos(inGallery: "Summer Vacation") { photoNames in
            let sortedNames = photoNames.sorted()
            let name = sortedNames[0]
@@ -138,11 +139,16 @@ and then shows the first picture:
     >> struct Data {}  // Instead of actually importing Foundation
     >> func downloadPhoto(named name: String) async -> Data { return Data() }
     >> func show(_ image: Data) { }
+    >> func listPhotos(inGallery name: String) async -> [String] {
+    >>     return ["IMG001", "IMG99", "IMG0404"]
+    >> }
+    >> func f() async {
     -> let photoNames = await listPhotos(inGallery: "Summer Vacation")
     -> let sortedNames = photoNames.sorted()
     -> let name = sortedNames[0]
     -> let photo = await downloadPhoto(named: name)
     -> show(photo)
+    >> }
 
 Because the ``listPhotos(inGallery:)`` and ``downloadPhoto(named:)`` functions
 both need to make network requests,
@@ -242,10 +248,14 @@ only certain places in your program can call asynchronous functions or methods:
    .. testcode:: sleep-in-toy-code
 
        >> struct Data {}  // Instead of actually importing Foundation
+       >> if #available(macOS 12.0, *) {
        -> func listPhotos(inGallery name: String) async -> [String] {
               await Task.sleep(2 * 1_000_000_000)  // Two seconds
               return ["IMG001", "IMG99", "IMG0404"]
        }
+       >> }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. TODO either add an example or maybe a short section
    about throwing and async together
@@ -340,12 +350,15 @@ as follows:
 .. testcode:: defining-async-function
 
     >> func show(_ images: [Data]) { }
+    >> func ff() async {
+    >> let photoNames = ["IMG001", "IMG99", "IMG0404"]
     -> let firstPhoto = await downloadPhoto(named: photoNames[0])
     -> let secondPhoto = await downloadPhoto(named: photoNames[1])
     -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
     ---
     -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
     -> show(photos)
+    >> }
 
 This approach has an important drawback:
 Although the download is asynchronous
@@ -362,13 +375,18 @@ and then write ``await`` each time you use the constant.
 
 .. testcode:: calling-with-async-let
 
+    >> struct Data {}  // Instead of actually importing Foundation
     >> func show(_ images: [Data]) { }
+    >> func downloadPhoto(named name: String) async -> Data { return Data() }
+    >> let photoNames = ["IMG001", "IMG99", "IMG0404"]
+    >> func f() async {
     -> async let firstPhoto = downloadPhoto(named: photoNames[0])
     -> async let secondPhoto = downloadPhoto(named: photoNames[1])
     -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
     ---
     -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
     -> show(photos)
+    >> }
 
 In this example,
 all three calls to ``downloadPhoto(named:)`` start
