@@ -431,7 +431,7 @@ and lets Swift detect some errors at compile time.
     await withTaskGroup(of: Data.self) { taskGroup in
         let photoNames = await listPhotos(inGallery: "Summer Vacation")
         for name in photoNames {
-            taskGroup.async { await downloadPhoto(named: name) }
+            taskGroup.addTask { await downloadPhoto(named: name) }
         }
     }
 
