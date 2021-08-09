@@ -1849,19 +1849,27 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 该修饰符用于修饰变量或存储型变量属性，表示该变量或属性持有其存储的对象的弱引用。这种变量或属性的类型必须是可选的类类型。使用 `weak` 修饰符可避免强引用循环。关于 `weak` 修饰符的更多信息和例子，请参阅 [弱引用](../02_language_guide/24_Automatic_Reference_Counting.md#resolving-strong-reference-cycles-between-class-instances)。
 
 ### 访问控制级别 {#access-control-levels}
-Swift 提供了三个级别的访问控制：`public`、`internal` 和 `private`。可以使用以下任意一种访问级别修饰符来指定声明的访问级别。访问控制在 [访问控制](../02_language_guide/26_Access_Control.md) 中有详细讨论。
+Swift 提供了五个级别的访问控制：`open`、`public`、`internal`、`file private` 和 `private`。可以使用以下任意一种访问级别修饰符来指定声明的访问级别。访问控制在 [访问控制](../02_language_guide/26_Access_Control.md) 中有详细讨论。
+
+`open`
+
+该修饰符表示声明可被同模块的代码访问，且可作为基类使用，只要其他模块导入了声明所在的模块，也可以进行访问，且可作为基类使用。
 
 `public`
 
-该修饰符表示声明可被同模块的代码访问，只要其他模块导入了声明所在的模块，也可以进行访问。
+该修饰符表示声明可被同模块的代码访问，且可作为基类使用，只要其他模块导入了声明所在的模块，也可以进行访问，但不可作为基类使用。
 
 `internal`
 
 该修饰符表示声明只能被同模块的代码访问。默认情况下，绝大多数声明会被隐式标记 `internal` 访问级别修饰符。
 
-`private`
+`fileprivate`
 
 该修饰符表示声明只能被所在源文件的代码访问。
+
+`private`
+
+该修饰符表示声明只能被声明所直接包含的作用域内的代码访问。
 
 以上访问级别修饰符都可以选择带上一个参数，该参数由一对圆括号和其中的 `set` 关键字组成（例如，`private(set)`）。使用这种形式的访问级别修饰符来限制某个属性或下标的 setter 的访问级别低于其本身的访问级别，正如 [Getter 和 Setter](../02_language_guide/26_Access_Control.md#getters-and-setters) 中所讨论的。
 
