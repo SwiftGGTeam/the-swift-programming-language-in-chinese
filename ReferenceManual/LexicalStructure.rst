@@ -230,7 +230,7 @@ so they must be escaped with backticks in that context.
   ``typealias``,
   and ``var``.
 
-.. XXX 'open' doesn't appear in Token.py
+.. Token.py doesn't include 'open' but DeclNodes.py does.
 
 * Keywords used in statements:
   ``break``,
