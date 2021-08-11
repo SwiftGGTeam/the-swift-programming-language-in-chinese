@@ -1,6 +1,87 @@
 Document Revision History
 =========================
 
+**2021-07-14**
+
+* Updated examples in the :doc:`../LanguageGuide/Concurrency` chapter
+  to use the current concurrency API.
+
+**2021-06-07**
+
+* Updated for Swift 5.5.
+
+* Added information about asynchronous functions, tasks, and actors
+  to the :doc:`../LanguageGuide/Concurrency` chapter,
+  and to the :ref:`Declarations_ActorDeclaration`,
+  :ref:`Declarations_AsyncFunctions`,
+  and :ref:`Expressions_AwaitExpression` sections.
+
+**2021-04-26**
+
+* Updated for Swift 5.4.
+
+* Added the :ref:`AdvancedOperators_ResultBuilders`
+  and :ref:`Attributes_resultBuilder` sections
+  with information about result builders.
+
+* Added the :ref:`Expressions_ImplicitConversion` section
+  with information about how in-out parameters
+  can be implicitly converted to unsafe pointers in a function call.
+
+* Updated the :ref:`Functions_VariadicParameters`
+  and :ref:`Declarations_FunctionDeclaration` sections,
+  now that a function can have multiple variadic parameters.
+
+* Updated the :ref:`Expressions_ImplicitMemberExpression` section,
+  now that implicit member expressions can be chained together.
+
+**2020-09-16**
+
+* Updated for Swift 5.3.
+
+* Added information about multiple trailing closures
+  to the :ref:`Closures_TrailingClosures` section,
+  and added information about how trailing closures are matched to parameters
+  to the :ref:`Expressions_FunctionCallExpression` section.
+
+* Added information about synthesized implementations
+  of ``Comparable`` for enumerations
+  to the :ref:`Protocols_SynthesizedImplementation` section.
+
+* Added the :ref:`Generics_ContextualWhereClause` section
+  now that you can write a generic ``where`` clause in more places.
+
+* Added the :ref:`AutomaticReferenceCounting_UnownedOptionalReferences` section
+  with information about using unowned references with optional values.
+
+* Added information about the ``@main`` attribute
+  to the :ref:`Attributes_main` section.
+
+* Added ``#filePath`` to the :ref:`Expressions_LiteralExpression` section,
+  and updated the discussion of ``#file``.
+
+* Updated the :ref:`Closures_Noescape` section,
+  now that closures can refer to ``self`` implicitly in more scenarios.
+
+* Updated the :ref:`ErrorHandling_DoCatch`
+  and :ref:`Statements_DoStatement` sections,
+  now that a ``catch`` clause can match against multiple errors.
+
+* Added more information about ``Any``
+  and moved it into the new :ref:`Types_AnyType` section.
+
+* Updated the :ref:`Properties_PropertyObservers` section,
+  now that lazy properties can have observers.
+
+* Updated the :ref:`Declarations_ProtocolDeclaration` section,
+  now that members of an enumeration can satisfy protocol requirements.
+
+* Updated the :ref:`Declarations_StoredVariableObserversAndPropertyObservers` section
+  to describe when the getter is called before the observer.
+
+* Updated the :doc:`../LanguageGuide/MemorySafety` chapter
+  to mention atomic operations.
+
 **2020-03-24**
 
 * Updated for Swift 5.2.
@@ -34,7 +115,7 @@ Document Revision History
 * Added information about property wrappers
   to the :ref:`Properties_PropertyWrapper` section.
 
-* Added information enumerations and structures
+* Added information about enumerations and structures
   that are frozen for library evolution
   to the :ref:`Attributes_frozen` section.
 
@@ -196,7 +277,7 @@ Document Revision History
   about using the ``available`` attribute with a Swift language version.
 
 * Updated the discussion in the :ref:`Types_FunctionType` section
-  to note that argument labels are not allowed when writing a function type.
+  to note that argument labels aren't allowed when writing a function type.
 
 * Updated the discussion of Swift language version numbers
   in the :ref:`Statements_BuildConfigurationStatement` section,
@@ -250,7 +331,7 @@ Document Revision History
 * Updated the discussion of the ``@noescape`` and ``@autoclosure`` attributes
   in the :ref:`Closures_Noescape` and :ref:`Closures_Autoclosures` sections
   and the :doc:`../ReferenceManual/Attributes` chapter
-  now that they are type attributes, rather than declaration attributes.
+  now that they're type attributes, rather than declaration attributes.
 
 * Added information about operator precedence groups
   to the :ref:`AdvancedOperators_PrecedenceAndAssociativityForCustomOperators` section
@@ -344,7 +425,7 @@ Document Revision History
 
 * Updated the discussion of optional protocol requirements
   in the :ref:`Protocols_OptionalProtocolRequirements` section
-  to clarify that they are used only in code that interoperates with Objective-C.
+  to clarify that they're used only in code that interoperates with Objective-C.
 
 * Removed the discussion of explicitly using ``let`` in function parameters
   from the :ref:`Declarations_FunctionDeclaration` section.
@@ -617,7 +698,7 @@ Document Revision History
 
 * ``@autoclosure`` is now an attribute of the parameter declaration,
   not its type.
-  There is also a new ``@noescape`` parameter declaration attribute.
+  There's also a new ``@noescape`` parameter declaration attribute.
   For more information, see :ref:`Attributes_DeclarationAttributes`.
 
 * Type methods and properties now use the ``static`` keyword
@@ -910,7 +991,7 @@ Document Revision History
 
 * Updated the information about :ref:`Initialization_MemberwiseInitializersForStructureTypes`
   to clarify that the memberwise structure initializer is made available
-  even if a structure's stored properties do not have default values.
+  even if a structure's stored properties don't have default values.
 
 * Updated to ``..<`` rather than ``..``
   for the :ref:`BasicOperators_HalfClosedRangeOperator`.

@@ -100,7 +100,7 @@ These keywords are described in the sections below.
    with the use of the ``try``, ``catch`` and ``throw`` keywords.
    Unlike exception handling in many languages ---
    including Objective-C ---
-   error handling in Swift does not involve unwinding the call stack,
+   error handling in Swift doesn't involve unwinding the call stack,
    a process that can be computationally expensive.
    As such, the performance characteristics
    of a ``throw`` statement
@@ -162,7 +162,7 @@ to the scope from which it's called.
 In the example below,
 the ``VendingMachine`` class has a ``vend(itemNamed:)`` method
 that throws an appropriate ``VendingMachineError``
-if the requested item is not available,
+if the requested item isn't available,
 is out of stock,
 or has a cost that exceeds the current deposited amount:
 
@@ -287,7 +287,7 @@ Handling Errors Using Do-Catch
 You use a ``do``-``catch`` statement to handle errors
 by running a block of code.
 If an error is thrown by the code in the ``do`` clause,
-it is matched against the ``catch`` clauses
+it's matched against the ``catch`` clauses
 to determine which one of them can handle the error.
 
 Here is the general form of a ``do``-``catch`` statement:
@@ -300,6 +300,8 @@ Here is the general form of a ``do``-``catch`` statement:
    } catch <#pattern 1#> {
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
+       <#statements#>
+   } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
        <#statements#>
    } catch {
        <#statements#>
@@ -376,7 +378,7 @@ caught by the calling function:
            do {
                try vendingMachine.vend(itemNamed: item)
            } catch is VendingMachineError {
-               print("Invalid selection, out of stock, or not enough money.")
+               print("Couldn't buy that from the vending machine.")
            }
        }
     ---
@@ -385,7 +387,7 @@ caught by the calling function:
        } catch {
            print("Unexpected non-vending-machine-related error: \(error)")
        }
-    <- Invalid selection, out of stock, or not enough money.
+    <- Couldn't buy that from the vending machine.
 
 In the ``nourish(with:)`` function,
 if ``vend(itemNamed:)`` throws an error that's
@@ -394,6 +396,35 @@ one of the cases of the ``VendingMachineError`` enumeration,
 Otherwise,
 ``nourish(with:)`` propagates the error to its call site.
 The error is then caught by the general ``catch`` clause.
+
+Another way to catch several related errors
+is to list them after ``catch``, separated by commas.
+For example:
+
+.. testcode:: errorHandling
+
+    -> func eat(item: String) throws {
+           do {
+               try vendingMachine.vend(itemNamed: item)
+           } catch VendingMachineError.invalidSelection, VendingMachineError.insufficientFunds, VendingMachineError.outOfStock {
+               print("Invalid selection, out of stock, or not enough money.")
+           }
+       }
+    >> do {
+    >>     try eat(item: "Beet-Flavored Chips")
+    >> } catch {
+    >>     print("Unexpected error: \(error)")
+    >> }
+    << Invalid selection, out of stock, or not enough money.
+
+.. FIXME the catch clause is getting indented oddly in HTML output if I hard wrap it
+
+The ``eat(item:)`` function lists the vending machine errors to catch,
+and its error text corresponds to the items in that list.
+If any of the three listed errors are thrown,
+this ``catch`` clause handles them by printing a message.
+Any other errors are propagated to the surrounding scope,
+including any vending-machine errors that might be added later.
 
 .. _ErrorHandling_Optional:
 
@@ -467,7 +498,7 @@ which loads the image resource at a given path
 or throws an error if the image can't be loaded.
 In this case, because the image is shipped with the application,
 no error will be thrown at runtime,
-so it is appropriate to disable error propagation.
+so it's appropriate to disable error propagation.
 
 .. testcode:: forceTryStatement
 

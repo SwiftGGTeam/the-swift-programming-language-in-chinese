@@ -274,7 +274,7 @@ in this case for a stack of ``Int`` values:
 .. testcode:: genericStack
 
    -> struct IntStack {
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
@@ -305,7 +305,7 @@ Here's a generic version of the same code:
 .. testcode:: genericStack
 
    -> struct Stack<Element> {
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
             items.append(item)
          }
@@ -440,20 +440,18 @@ the type of a dictionary's keys must be :newTerm:`hashable`.
 That is, it must provide a way to make itself uniquely representable.
 ``Dictionary`` needs its keys to be hashable so that it can
 check whether it already contains a value for a particular key.
-Without this requirement, ``Dictionary`` could not tell
+Without this requirement, ``Dictionary`` couldn't tell
 whether it should insert or replace a value for a particular key,
-nor would it be able to find a value for a given key that is already in the dictionary.
+nor would it be able to find a value for a given key that's already in the dictionary.
 
 This requirement is enforced by a type constraint on the key type for ``Dictionary``,
 which specifies that the key type must conform to the ``Hashable`` protocol,
 a special protocol defined in the Swift standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default.
-
-.. TODO: add some text to the following effect once we have documentation for Hashable:
-   You can make your own custom types conform to the ``Hashable`` protocol
-   so that they too can be dictionary keys,
-   as described in <link>.
+For information about
+making your own custom types conform to the ``Hashable`` protocol,
+see `Conforming to the Hashable Protocol <https://developer.apple.com/documentation/swift/hashable#2849490>`_.
 
 You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
@@ -568,7 +566,7 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    and you can make your own types conform to ``Equatable`` too,
    as described in <link>.
 
-Any type that is ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
+Any type that's ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
 because it's guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
@@ -588,7 +586,7 @@ The single type parameter for ``findIndex(of:in:)`` is written as ``T: Equatable
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
 The ``findIndex(of:in:)`` function now compiles successfully
-and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
+and can be used with any type that's ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
 
@@ -612,7 +610,7 @@ When defining a protocol,
 it's sometimes useful to declare one or more associated types
 as part of the protocol's definition.
 An :newTerm:`associated type` gives a placeholder name
-to a type that is used as part of the protocol.
+to a type that's used as part of the protocol.
 The actual type to use for that associated type
 isn't specified until the protocol is adopted.
 Associated types are specified with the ``associatedtype`` keyword.
@@ -684,7 +682,7 @@ adapted to conform to the ``Container`` protocol:
 
    -> struct IntStack: Container {
          // original IntStack implementation
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
@@ -729,7 +727,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
 
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
             items.append(item)
          }
@@ -1147,13 +1145,90 @@ It explicitly converts the count from ``Int`` to ``Double``
 to be able to do floating-point division.
 
 You can include multiple requirements in a generic ``where`` clause
-that is part of an extension,
+that's part of an extension,
 just like you can for a generic ``where`` clause that you write elsewhere.
 Separate each requirement in the list with a comma.
 
 .. No example of a compound where clause
    because Container only has one generic part ---
    there isn't anything to write a second constraint for.
+
+
+.. _Generics_ContextualWhereClause:
+
+Contextual Where Clauses
+------------------------
+
+You can write a generic ``where`` clause
+as part of a declaration that doesn't have its own generic type constraints,
+when you're already working in the context of generic types.
+For example,
+you can write a generic ``where`` clause
+on a subscript of a generic type
+or on a method in an extension to a generic type.
+The ``Container`` structure is generic,
+and the ``where`` clauses in the example below
+specify what type constraints have to be satisfied
+to make these new  methods available on a container.
+
+.. testcode:: associatedTypes
+
+   -> extension Container {
+          func average() -> Double where Item == Int {
+              var sum = 0.0
+              for index in 0..<count {
+                  sum += Double(self[index])
+              }
+              return sum / Double(count)
+          }
+          func endsWith(_ item: Item) -> Bool where Item: Equatable {
+              return count >= 1 && self[count-1] == item
+          }
+      }
+   -> let numbers = [1260, 1200, 98, 37]
+   -> print(numbers.average())
+   <- 648.75
+   -> print(numbers.endsWith(37))
+   <- true
+
+This example
+adds an ``average()`` method to ``Container`` when the items are integers,
+and it adds an ``endsWith(_:)`` method when the items are equatable.
+Both functions include a generic ``where`` clause
+that adds type constraints to the generic ``Item`` type parameter
+from the original declaration of ``Container``.
+
+If you want to write this code without using contextual ``where`` clauses,
+you write two extensions,
+one for each generic ``where`` clause.
+The example above and the example below have the same behavior.
+
+.. testcode:: associatedTypes-err
+
+   -> extension Container where Item == Int {
+          func average() -> Double {
+              var sum = 0.0
+              for index in 0..<count {
+                  sum += Double(self[index])
+              }
+              return sum / Double(count)
+          }
+      }
+      extension Container where Item: Equatable {
+          func endsWith(_ item: Item) -> Bool {
+              return count >= 1 && self[count-1] == item
+          }
+      }
+
+In the version of this example that uses contextual ``where`` clauses,
+the implementation of ``average()`` and ``endsWith(_:)``
+are both in the same extension
+because each method's generic ``where`` clause
+states the requirements that need to be satisfied
+to make that method available.
+Moving those requirements to the extensions' generic ``where`` clauses
+makes the methods available in the same situations,
+but requires one extension per requirement.
 
 .. _Generics_AssociatedTypesWithWhereClause:
 
@@ -1278,7 +1353,7 @@ For example:
    -> extension Container {
           subscript<Indices: Sequence>(indices: Indices) -> [Item]
                   where Indices.Iterator.Element == Int {
-              var result = [Item]()
+              var result: [Item] = []
               for index in indices {
                   result.append(self[index])
               }
@@ -1290,7 +1365,7 @@ For example:
 
    >> struct IntStack: Container {
          // original IntStack implementation
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }

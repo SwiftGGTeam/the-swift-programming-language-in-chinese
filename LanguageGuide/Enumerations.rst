@@ -190,7 +190,7 @@ You can use ``allCases`` like any other collection ---
 the collection's elements are instances of the enumeration type,
 so in this case they're ``Beverage`` values.
 The example above counts how many cases there are,
-and the example below uses a ``for`` loop to iterate over all the cases.
+and the example below uses a ``for``-``in`` loop to iterate over all the cases.
 
 .. testcode:: enums
 
@@ -270,7 +270,7 @@ or a value of ``qrCode`` with an associated value of type ``String``.”
 This definition doesn't provide any actual ``Int`` or ``String`` values ---
 it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
-when they are equal to ``Barcode.upc`` or ``Barcode.qrCode``.
+when they're equal to ``Barcode.upc`` or ``Barcode.qrCode``.
 
 You can then create new barcodes using either type:
 

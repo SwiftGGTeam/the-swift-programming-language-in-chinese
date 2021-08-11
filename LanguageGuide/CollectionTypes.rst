@@ -13,7 +13,7 @@ Dictionaries are unordered collections of key-value associations.
 
 Arrays, sets, and dictionaries in Swift are always clear about
 the types of values and keys that they can store.
-This means that you cannot insert a value of the wrong type
+This means that you can't insert a value of the wrong type
 into a collection by mistake.
 It also means you can be confident about the type of values
 you will retrieve from a collection.
@@ -36,17 +36,17 @@ Mutability of Collections
 -------------------------
 
 If you create an array, a set, or a dictionary, and assign it to a variable,
-the collection that is created will be :newTerm:`mutable`.
+the collection that's created will be :newTerm:`mutable`.
 This means that you can change (or :newTerm:`mutate`) the collection after it's created
 by adding, removing, or changing items in the collection.
 If you assign an array, a set, or a dictionary to a constant,
 that collection is :newTerm:`immutable`,
-and its size and contents cannot be changed.
+and its size and contents can't be changed.
 
 .. note::
 
-   It is good practice to create immutable collections
-   in all cases where the collection does not need to change.
+   It's good practice to create immutable collections
+   in all cases where the collection doesn't need to change.
    Doing so makes it easier for you to reason about your code
    and enables the Swift compiler to optimize the performance of
    the collections you create.
@@ -88,7 +88,7 @@ using initializer syntax:
 
 .. testcode:: arraysEmpty
 
-   -> var someInts = [Int]()
+   -> var someInts: [Int] = []
    -> print("someInts is of type [Int] with \(someInts.count) items.")
    <- someInts is of type [Int] with 0 items.
 
@@ -180,7 +180,7 @@ The example below creates an array called ``shoppingList`` to store ``String`` v
 The ``shoppingList`` variable is declared as
 “an array of string values”, written as ``[String]``.
 Because this particular array has specified a value type of ``String``,
-it is allowed to store ``String`` values only.
+it's allowed to store ``String`` values only.
 Here, the ``shoppingList`` array is initialized with two ``String`` values
 (``"Eggs"`` and ``"Milk"``), written within an array literal.
 
@@ -233,9 +233,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
    -> if shoppingList.isEmpty {
          print("The shopping list is empty.")
       } else {
-         print("The shopping list is not empty.")
+         print("The shopping list isn't empty.")
       }
-   <- The shopping list is not empty.
+   <- The shopping list isn't empty.
 
 You can add a new item to the end of an array by calling the array's ``append(_:)`` method:
 
@@ -318,7 +318,7 @@ indicated by an index of ``0``.
 
 Similarly, you remove an item from the array with the ``remove(at:)`` method.
 This method removes the item at the specified index and returns the removed item
-(although you can ignore the returned value if you do not need it):
+(although you can ignore the returned value if you don't need it):
 
 .. testcode:: arraysInferred
 
@@ -332,7 +332,7 @@ This method removes the item at the specified index and returns the removed item
 .. note::
 
    If you try to access or modify a value for an index
-   that is outside of an array's existing bounds,
+   that's outside of an array's existing bounds,
    you will trigger a runtime error.
    You can check that an index is valid before using it
    by comparing it to the array's ``count`` property.
@@ -414,7 +414,7 @@ Sets
 
 A :newTerm:`set` stores distinct values of the same type
 in a collection with no defined ordering.
-You can use a set instead of an array when the order of items is not important,
+You can use a set instead of an array when the order of items isn't important,
 or when you need to ensure that an item only appears once.
 
 .. note::
@@ -433,8 +433,9 @@ Hash Values for Set Types
 
 A type must be :newTerm:`hashable` in order to be stored in a set ---
 that is, the type must provide a way to compute a :newTerm:`hash value` for itself.
-A hash value is an ``Int`` value that is the same for all objects that compare equally,
-such that if ``a == b``, it follows that ``a.hashValue == b.hashValue``.
+A hash value is an ``Int`` value that's the same for all objects that compare equally,
+such that if ``a == b``,
+the hash value of ``a`` is equal to the hash value of ``b``.
 
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and can be used as set value types or dictionary key types.
@@ -445,25 +446,11 @@ are also hashable by default.
 .. note::
 
    You can use your own custom types as set value types or dictionary key types
-   by making them conform to the ``Hashable`` protocol from Swift's standard library.
-   Types that conform to the ``Hashable`` protocol must provide
-   a gettable ``Int`` property called ``hashValue``.
-   The value returned by a type's ``hashValue`` property
-   is not required to be the same across different executions of the same program,
-   or in different programs.
-
-   Because the ``Hashable`` protocol conforms to ``Equatable``,
-   conforming types must also provide an implementation of the equals operator (``==``).
-   The ``Equatable`` protocol requires
-   any conforming implementation of ``==`` to be an equivalence relation.
-   That is, an implementation of ``==`` must satisfy the following three conditions,
-   for all values ``a``, ``b``, and ``c``:
-
-   * ``a == a`` (Reflexivity)
-   * ``a == b`` implies ``b == a`` (Symmetry)
-   * ``a == b && b == c`` implies ``a == c`` (Transitivity)
-
-   For more information about conforming to protocols, see :doc:`Protocols`.
+   by making them conform to the ``Hashable`` protocol
+   from the Swift standard library.
+   For information about implementing the required ``hash(into:)`` method,
+   see `Hashable <//apple_ref/swift/fake/Hashable>`_.
+   For information about conforming to protocols, see :doc:`Protocols`.
 
 
 .. _CollectionTypes_SetTypeShorthandSyntax:
@@ -473,7 +460,7 @@ Set Type Syntax
 
 The type of a Swift set is written as ``Set<Element>``,
 where ``Element`` is the type that the set is allowed to store.
-Unlike arrays, sets do not have an equivalent shorthand form.
+Unlike arrays, sets don't have an equivalent shorthand form.
 
 
 .. _CollectionTypes_CreatingAndInitializingAnEmptySet:
@@ -526,7 +513,7 @@ The example below creates a set called ``favoriteGenres`` to store ``String`` va
 The ``favoriteGenres`` variable is declared as
 “a set of ``String`` values”, written as ``Set<String>``.
 Because this particular set has specified a value type of ``String``,
-it is *only* allowed to store ``String`` values.
+it's *only* allowed to store ``String`` values.
 Here, the ``favoriteGenres`` set is initialized with three ``String`` values
 (``"Rock"``, ``"Classical"``, and ``"Hip hop"``), written within an array literal.
 
@@ -536,7 +523,7 @@ Here, the ``favoriteGenres`` set is initialized with three ``String`` values
    and not a constant (with the ``let`` introducer)
    because items are added and removed in the examples below.
 
-A set type cannot be inferred from an array literal alone,
+A set type can't be inferred from an array literal alone,
 so the type ``Set`` must be explicitly declared.
 However, because of Swift's type inference,
 you don't have to write the type of the set's elements
@@ -591,7 +578,7 @@ You can add a new item into a set by calling the set's ``insert(_:)`` method:
 You can remove an item from a set by calling the set's ``remove(_:)`` method,
 which removes the item if it's a member of the set,
 and returns the removed value,
-or returns ``nil`` if the set did not contain it.
+or returns ``nil`` if the set didn't contain it.
 Alternatively, all items in a set can be removed with its ``removeAll()`` method.
 
 .. testcode:: setUsage
@@ -633,7 +620,7 @@ You can iterate over the values in a set with a ``for``-``in`` loop.
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
-Swift's ``Set`` type does not have a defined ordering.
+Swift's ``Set`` type doesn't have a defined ordering.
 To iterate over the values of a set in a specific order,
 use the ``sorted()`` method,
 which returns the set's elements as an array
@@ -759,7 +746,7 @@ keys of the same type and values of the same type
 in a collection with no defined ordering.
 Each value is associated with a unique :newTerm:`key`,
 which acts as an identifier for that value within the dictionary.
-Unlike items in an array, items in a dictionary do not have a specified order.
+Unlike items in an array, items in a dictionary don't have a specified order.
 You use a dictionary when you need to look up values based on their identifier,
 in much the same way that a real-world dictionary is used to look up
 the definition for a particular word.
@@ -801,7 +788,7 @@ you can create an empty ``Dictionary`` of a certain type by using initializer sy
 
 .. testcode:: dictionariesEmpty
 
-   -> var namesOfIntegers = [Int: String]()
+   -> var namesOfIntegers: [Int: String] = [:]
    // namesOfIntegers is an empty [Int: String] dictionary
 
 This example creates an empty dictionary of type ``[Int: String]``
@@ -912,9 +899,9 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
    -> if airports.isEmpty {
          print("The airports dictionary is empty.")
       } else {
-         print("The airports dictionary is not empty.")
+         print("The airports dictionary isn't empty.")
       }
-   <- The airports dictionary is not empty.
+   <- The airports dictionary isn't empty.
 
 You can add a new item to a dictionary with subscript syntax.
 Use a new key of the appropriate type as the subscript index,
@@ -960,7 +947,7 @@ or ``nil`` if no value existed:
    <- The old value for DUB was Dublin.
 
 You can also use subscript syntax to retrieve a value from the dictionary for a particular key.
-Because it is possible to request a key for which no value exists,
+Because it's possible to request a key for which no value exists,
 a dictionary's subscript returns an optional value of the dictionary's value type.
 If the dictionary contains a value for the requested key,
 the subscript returns an optional value containing the existing value for that key.
@@ -971,7 +958,7 @@ Otherwise, the subscript returns ``nil``:
    -> if let airportName = airports["DUB"] {
          print("The name of the airport is \(airportName).")
       } else {
-         print("That airport is not in the airports dictionary.")
+         print("That airport isn't in the airports dictionary.")
       }
    <- The name of the airport is Dublin Airport.
 
@@ -981,7 +968,7 @@ by assigning a value of ``nil`` for that key:
 .. testcode:: dictionariesInferred
 
    -> airports["APL"] = "Apple International"
-   // "Apple International" is not the real airport for APL, so delete it
+   // "Apple International" isn't the real airport for APL, so delete it
    -> airports["APL"] = nil
    // APL has now been removed from the dictionary
    >> if let deletedName = airports["APL"] {
@@ -1003,7 +990,7 @@ or returns ``nil`` if no value existed:
    -> if let removedValue = airports.removeValue(forKey: "DUB") {
          print("The removed airport's name is \(removedValue).")
       } else {
-         print("The airports dictionary does not contain a value for DUB.")
+         print("The airports dictionary doesn't contain a value for DUB.")
       }
    <- The removed airport's name is Dublin Airport.
 
@@ -1058,6 +1045,6 @@ with the ``keys`` or ``values`` property:
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["London Heathrow", "Toronto Pearson"]
 
-Swift's ``Dictionary`` type does not have a defined ordering.
+Swift's ``Dictionary`` type doesn't have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
 use the ``sorted()`` method on its ``keys`` or ``values`` property.

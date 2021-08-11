@@ -49,11 +49,16 @@ These arguments begin with one of the following platform or language names:
 * ``iOSApplicationExtension``
 * ``macOS``
 * ``macOSApplicationExtension``
+* ``macCatalyst``
+* ``macCatalystApplicationExtension``
 * ``watchOS``
 * ``watchOSApplicationExtension``
 * ``tvOS``
 * ``tvOSApplicationExtension``
 * ``swift``
+
+.. If you need to add a new platform to this list,
+   you probably need to update platform-name in the grammar too.
 
 .. For the list in source, see include/swift/AST/PlatformKinds.def
 
@@ -349,18 +354,18 @@ dynamicMemberLookup
 
 Apply this attribute to a class, structure, enumeration, or protocol
 to enable members to be looked up by name at runtime.
-The type must implement a ``subscript(dynamicMemberLookup:)`` subscript.
+The type must implement a ``subscript(dynamicMember:)`` subscript.
 
 In an explicit member expression,
 if there isn't a corresponding declaration for the named member,
 the expression is understood as a call to
-the type's ``subscript(dynamicMemberLookup:)`` subscript,
+the type's ``subscript(dynamicMember:)`` subscript,
 passing information about the member as the argument.
 The subscript can accept a parameter that's either a key path or a member name;
 if you implement both subscripts,
 the subscript that takes key path argument is used.
 
-An implementation of ``subscript(dynamicMemberLookup:)``
+An implementation of ``subscript(dynamicMember:)``
 can accept key paths using an argument of type
 `KeyPath <//apple_ref/swift/fake/KeyPath>`_,
 `WritableKeyPath <//apple_ref/swift/fake/WritableKeyPath>`_,
@@ -451,6 +456,7 @@ but they break ABI compatibility for frozen types.
 
 .. assertion:: frozen-is-fine-with-evolution
     :evolution: true
+    :compile: true
 
     >> @frozen public enum E { case x, y }
     >> @frozen public struct S { var a: Int = 10 }
@@ -480,6 +486,7 @@ as discussed in :ref:`Attributes_inlinable`.
 
 .. assertion:: frozen-struct-prop-init-cant-refer-to-private-type
     :evolution: true
+    :compile: true
 
     >> public protocol P { }
     >> private struct PrivateStruct: P { }
@@ -491,6 +498,12 @@ as discussed in :ref:`Attributes_inlinable`.
     !$ note: struct 'PrivateStruct' is not '@usableFromInline' or public
     !! private struct PrivateStruct: P { }
     !!                ^
+    !$ error: initializer 'init()' is private and cannot be referenced from a property initializer in a '@frozen' type
+    !! @frozen public struct S2 { var nope: P = PrivateStruct() }
+    !! ^
+    !$ note: initializer 'init()' is not '@usableFromInline' or public
+    !! private struct PrivateStruct: P { }
+    !! ^
 
 To enable library evolution mode on the command line,
 pass the ``-enable-library-evolution`` option to the Swift compiler.
@@ -513,6 +526,7 @@ produces a warning because that code is never executed.
 
 .. sourcefile:: NoUnknownDefaultOverFrozenEnum
     :evolution: true
+    :compile: true
 
     >> public enum E { case x, y }
     >> @frozen public enum F { case x, y }
@@ -633,6 +647,75 @@ even though they can't be marked with this attribute.
    yielding inconsistent results.
 
 
+.. _Attributes_main:
+
+main
+~~~~
+
+Apply this attribute to a structure, class, or enumeration declaration
+to indicate that it contains the top-level entry point for program flow.
+The type must provide a ``main`` type function
+that doesn't take any arguments and returns ``Void``.
+For example:
+
+.. testcode:: atMain
+   :compile: true
+   :library: true
+
+   -> @main
+   -> struct MyTopLevel {
+   ->     static func main() {
+   ->         // Top-level code goes here
+   >>         print("Hello")
+   ->     }
+   -> }
+   << Hello
+
+Another way to describe the requirements of the ``main`` attribute
+is that the type you write this attribute on
+must satisfy the same requirements
+as types that conform to the following hypothetical protocol:
+
+.. testcode:: atMain_ProvidesMain
+
+   -> protocol ProvidesMain {
+          static func main() throws
+      }
+
+The Swift code you compile to make an executable
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
+
+.. assertion:: no-at-main-in-top-level-code
+
+   // This is the same example as atMain, but without :compile: true.
+   >> @main
+   >> struct MyTopLevel {
+   >>     static func main() {
+   >>         print("Hello")
+   >>     }
+   >> }
+   !$ error: 'main' attribute cannot be used in a module that contains top-level code
+   !! @main
+   !! ^
+   !$ note: top-level code defined in this source file
+   !! @main
+   !! ^
+
+.. sourcefile:: atMain_library
+
+   -> // In file "library.swift"
+   -> open class C {
+          public static func main() { print("Hello") }
+      }
+
+.. sourcefile:: atMain_client
+   :library: true
+
+   -> import atMain_library
+   -> @main class CC: C { }
+
+
 .. _Attributes_nonobjc:
 
 nonobjc
@@ -678,15 +761,17 @@ If you don't use this attribute,
 supply a ``main.swift`` file with code at the top level
 that calls the ``NSApplicationMain(_:_:)`` function as follows:
 
-.. testcode:: nsapplicationmain
+.. code-block:: swift
 
-   -> import AppKit
-   >> let _ =
-   -> NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
-   !$ No Info.plist file in application bundle or no NSPrincipalClass in the Info.plist file, exiting
+   import AppKit
+   NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
-.. Rewrite the above to avoid discarding the function's return value.
-   Tracking bug is <rdar://problem/35301593>
+.. Above code isn't tested because it hangs the REPL indefinitely,
+   which is correct behavior if you call a non-returning function like this.
+
+The Swift code you compile to make an executable
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
 .. _Attributes_NSCopying:
@@ -851,18 +936,42 @@ to use that type as a property wrapper.
 When you apply this attribute to a type,
 you create a custom attribute with the same name as the type.
 Apply that new attribute to a property of a class, structure, or enumeration
-to wrap access to the property through an instance of the wrapper type.
-Local and global variables can't use property wrappers.
+to wrap access to the property through an instance of the wrapper type;
+apply the attribute to a local stored variable declaration
+to wrap access to the variable the same way.
+Computed variables, global variables, and constants can't use property wrappers.
 
-.. assertion:: property-wrappers-cant-go-on-variables
+.. assertion:: property-wrappers-can-go-on-stored-variable
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper var d: Int = 20
+    >>     print(d)
+    >> }
+    >> f()
+    << 20
+
+.. assertion:: property-wrappers-cant-go-on-constants
 
     >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
     >> func f() {
     >>     @UselessWrapper let d: Int = 20
     >>     print(d)
     >> }
-    !$ error: property wrappers are not yet supported on local properties
+    !$ error: property wrapper can only be applied to a 'var'
     !! @UselessWrapper let d: Int = 20
+    !! ^
+
+.. assertion:: property-wrappers-cant-go-on-computed-variable
+
+    >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+    >> func f() {
+    >>     @UselessWrapper var d: Int { return 20 }
+    >>     print(d)
+    >> }
+    >> f()
+    !$ error: property wrapper cannot be applied to a computed property
+    !! @UselessWrapper var d: Int { return 20 }
     !! ^
 
 The wrapper must define a ``wrappedValue`` instance property.
@@ -870,7 +979,7 @@ The *wrapped value* of the property
 is the value that the getter and setter for this property expose.
 In most cases, ``wrappedValue`` is a computed value,
 but it can be a stored value instead.
-The wrapper is responsible for defining and managing
+The wrapper defines and manages
 any underlying storage needed by its wrapped value.
 The compiler synthesizes storage for the instance of the wrapper type
 by prefixing the name of the wrapped property with an underscore (``_``) ---
@@ -977,6 +1086,469 @@ as the original wrapped property.
     -> s.$x.wrapper  // WrapperWithProjection value
 
 
+.. _Attributes_resultBuilder:
+
+resultBuilder
+~~~~~~~~~~~~~
+
+Apply this attribute to a class, structure, enumeration
+to use that type as a result builder.
+A :newTerm:`result builder` is a type
+that builds a nested data structure step by step.
+You use result builders to implement a domain-specific language (DSL)
+for creating nested data structures in a natural, declarative way.
+For an example of how to use the ``resultBuilder`` attribute,
+see :ref:`AdvancedOperators_ResultBuilders`.
+
+.. _Attributes_resultBuilder_methods:
+
+Result-Building Methods
++++++++++++++++++++++++
+
+A result builder implements static methods described below.
+Because all of the result builder's functionality
+is exposed through static methods,
+you don't ever initialize an instance of that type.
+The ``buildBlock(_:)`` method is required;
+the other methods ---
+which enable additional functionality in the DSL ---
+are optional.
+The declaration of a result builder type
+doesn't actually have to include any protocol conformance.
+
+The description of the static methods uses three types as placeholders.
+The type ``Expression`` is a placeholder
+for the type of the result builder's input,
+``Component`` is a placeholder for the type of a partial result,
+and ``FinalResult`` is a placeholder
+for the type of the result that the result builder produces.
+You replace these types with the actual types that your result builder uses.
+If your result-building methods
+don't specify a type for ``Expression`` or ``FinalResult``,
+they default to being the same as ``Component``.
+
+The result-building methods are as follows:
+
+.. start of term/defn list
+
+``static func buildBlock(_ components: Component...) -> Component``
+  Combines an array of partial results into a single partial result.
+  A result builder must implement this method.
+
+``static func buildOptional(_ component: Component?) -> Component``
+  Builds a partial result from a partial result that can be ``nil``.
+  Implement this method to support ``if`` statements
+  that don’t include an ``else`` clause.
+
+``static func buildEither(first: Component) -> Component``
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and ``buildEither(second:)``
+  to support ``switch`` statements
+  and ``if`` statements that include an ``else`` clause.
+
+``static func buildEither(second: Component) -> Component``
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and ``buildEither(first:)``
+  to support ``switch`` statements
+  and ``if`` statements that include an ``else`` clause.
+
+``static func buildArray(_ components: [Component]) -> Component``
+  Builds a partial result from an array of partial results.
+  Implement this method to support ``for`` loops.
+
+``static func buildExpression(_ expression: Expression) -> Component``
+  Builds a partial result from an expression.
+  You can implement this method to perform preprocessing ---
+  for example, converting expressions to an internal type ---
+  or to provide additional information for type inference at use sites.
+
+``static func buildFinalResult(_ component: Component) -> FinalResult``
+  Builds a final result from a partial result.
+  You can implement this method as part of a result builder
+  that uses a different type for partial and final results,
+  or to perform other postprocessing on a result before returning it.
+
+``static func buildLimitedAvailability(_ component: Component) -> Component``
+  Builds a partial result that propagates or erases type information
+  outside a compiler-control statement
+  that performs an availability check.
+  You can use this to erase type information
+  that varies between the conditional branches.
+
+.. end of term/defn list
+
+For example, the code below defines a simple result builder
+that builds an array of integers.
+This code defines ``Compontent`` and ``Expression`` as type aliases,
+to make it easier to match the examples below to the list of methods above.
+
+.. testcode:: array-result-builder
+
+   -> @resultBuilder
+   -> struct ArrayBuilder {
+          typealias Component = [Int]
+          typealias Expression = Int
+          static func buildExpression(_ element: Expression) -> Component {
+              return [element]
+          }
+          static func buildOptional(_ component: Component?) -> Component {
+   >>         print("Building optional...", component as Any)
+              guard let component = component else { return [] }
+              return component
+          }
+          static func buildEither(first component: Component) -> Component {
+   >>         print("Building first...", component)
+              return component
+          }
+          static func buildEither(second component: Component) -> Component {
+   >>         print("Building second...", component)
+              return component
+          }
+          static func buildArray(_ components: [Component]) -> Component {
+              return Array(components.joined())
+          }
+          static func buildBlock(_ components: Component...) -> Component {
+              return Array(components.joined())
+          }
+      }
+
+.. _Attributes_resultBuilder_transformation:
+
+Result Transformations
+++++++++++++++++++++++
+
+The following syntactic transformations are applied recursively
+to turn code that uses result-builder syntax
+into code that calls the static methods of the result builder type:
+
+- If the result builder has a ``buildExpression(_:)`` method,
+  each expression becomes a call to that method.
+  This transformation is always first.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderNumber: [Int] { 10 }
+     -> var manualNumber = ArrayBuilder.buildExpression(10)
+     >> assert(builderNumber == manualNumber)
+
+- An assignment statement is transformed like an expression,
+  but is understood to evaluate to ``()``.
+  You can define an overload of ``buildExpression(_:)``
+  that takes an argument of type ``()`` to handle assignments specifically.
+
+- A branch statement that checks an availability condition
+  becomes a call to the ``buildLimitedAvailability(_:)`` method.
+  This transformation happens before the transformation into a call to
+  ``buildEither(first:)``, ``buildEither(second:)``, or ``buildOptional(_:)``.
+  You use the ``buildLimitedAvailability(_:)`` method to erase type information
+  that changes depending on which branch is taken.
+  For example,
+  the ``buildEither(first:)`` and  ``buildEither(second:)`` methods below
+  use a generic type that captures type information about both branches.
+
+  .. testcode:: result-builder-limited-availability-broken, result-builder-limited-availability-ok
+
+     -> protocol Drawable {
+            func draw() -> String
+        }
+     -> struct Text: Drawable {
+            var content: String
+            init(_ content: String) { self.content = content }
+            func draw() -> String { return content }
+        }
+     -> struct Line<D: Drawable>: Drawable {
+            var elements: [D]
+            func draw() -> String {
+                return elements.map { $0.draw() }.joined(separator: "")
+            }
+        }
+     -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+            var content: Drawable
+            func draw() -> String { return content.draw() }
+        }
+     ---
+     -> @resultBuilder
+        struct DrawingBuilder {
+            static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+                return Line(elements: components)
+            }
+            static func buildEither<First, Second>(first: First)
+                    -> DrawEither<First, Second> {
+                return DrawEither(content: first)
+            }
+            static func buildEither<First, Second>(second: Second)
+                    -> DrawEither<First, Second> {
+                return DrawEither(content: second)
+            }
+        }
+
+  However, this approach causes a problem in code that has availability checks:
+
+  .. testcode:: result-builder-limited-availability-broken
+
+     -> @available(macOS 99, *)
+     -> struct FutureText: Drawable {
+            var content: String
+            init(_ content: String) { self.content = content }
+            func draw() -> String { return content }
+        }
+     -> @DrawingBuilder var brokenDrawing: Drawable {
+            if #available(macOS 99, *) {
+                FutureText("Inside.future")  // Problem
+            } else {
+                Text("Inside.present")
+            }
+        }
+     /> The type of brokenDrawing is \(type(of: brokenDrawing))
+     </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+     !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
+     !! if #available(macOS 99, *) {
+     !! ^
+     !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
+     !! struct DrawingBuilder {
+     !! ^
+
+  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+  In the code above,
+  ``FutureText`` appears as part of the type of ``brokenDrawing``
+  because it's one of the types in the ``DrawEither`` generic type.
+  This could cause your program to crash if ``FutureText``
+  isn't available at runtime,
+  even in the case where that type is explicitly not being used.
+
+  To solve this problem,
+  implement a ``buildLimitedAvailability(_:)`` method
+  to erase type information.
+  For example, the code below builds an ``AnyDrawable`` value
+  from its availability check.
+
+  .. testcode:: result-builder-limited-availability-ok
+
+     >> @available(macOS 99, *)
+     >> struct FutureText: Drawable {
+     >>     var content: String
+     >>     init(_ content: String) { self.content = content }
+     >>     func draw() -> String { return content }
+     >> }
+     >> @DrawingBuilder var x: Drawable {
+     >>     if #available(macOS 99, *) {
+     >>         FutureText("Inside.future")
+     >>     } else {
+     >>         Text("Inside.present")
+     >>     }
+     >> }
+     -> struct AnyDrawable: Drawable {
+            var content: Drawable
+            func draw() -> String { return content.draw() }
+        }
+     -> extension DrawingBuilder {
+            static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+                return AnyDrawable(content: content)
+            }
+        }
+     ---
+     -> @DrawingBuilder var typeErasedDrawing: Drawable {
+            if #available(macOS 99, *) {
+                FutureText("Inside.future")
+            } else {
+                Text("Inside.present")
+            }
+        }
+     /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
+     </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+
+  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+- A branch statement becomes a series of nested calls to the
+  ``buildEither(first:)`` and ``buildEither(second:)`` methods.
+  The statements' conditions and cases are mapped onto
+  the leaf nodes of a binary tree,
+  and the statement becomes
+  a nested call to the ``buildEither`` methods
+  following the path to that leaf node from the root node.
+
+  For example, if you write a switch statement that has three cases,
+  the compiler uses a binary tree with three leaf nodes.
+  Likewise,
+  because the path from the root node to the second case is
+  "second child" and then "first child",
+  that case becomes a nested call like
+  ``buildEither(first: buildEither(second: ... ))``.
+  The following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> let someNumber = 19
+     -> @ArrayBuilder var builderConditional: [Int] {
+            if someNumber < 12 {
+                31
+            } else if someNumber == 19 {
+                32
+            } else {
+                33
+            }
+        }
+     << Building second... [32]
+     << Building first... [32]
+     ---
+     -> var manualConditional: [Int]
+     -> if someNumber < 12 {
+            let partialResult = ArrayBuilder.buildExpression(31)
+            let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+            manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+        } else if someNumber == 19 {
+            let partialResult = ArrayBuilder.buildExpression(32)
+            let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+            manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+        } else {
+            let partialResult = ArrayBuilder.buildExpression(33)
+            manualConditional = ArrayBuilder.buildEither(second: partialResult)
+        }
+     >> assert(builderConditional == manualConditional)
+     << Building second... [32]
+     << Building first... [32]
+
+- A branch statement that might not produce a value,
+  like an ``if`` statement without an ``else`` clause,
+  becomes a call to ``buildOptional(_:)``.
+  If the ``if`` statement's condition is satisfied,
+  its code block is transformed and passed as the argument;
+  otherwise, ``buildOptional(_:)`` is called with ``nil`` as its argument.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderOptional: [Int] {
+            if (someNumber % 2) == 1 { 20 }
+        }
+     << Building optional... Optional([20])
+     ---
+     -> var partialResult: [Int]? = nil
+     -> if (someNumber % 2) == 1 {
+            partialResult = ArrayBuilder.buildExpression(20)
+        }
+     -> var manualOptional = ArrayBuilder.buildOptional(partialResult)
+     << Building optional... Optional([20])
+     >> assert(builderOptional == manualOptional)
+
+- A code block or ``do`` statement
+  becomes a call to the ``buildBlock(_:)`` method.
+  Each of the statements inside of the block is transformed,
+  one at a time,
+  and they become the arguments to the ``buildBlock(_:)`` method.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderBlock: [Int] {
+            100
+            200
+            300
+        }
+     ---
+     -> var manualBlock = ArrayBuilder.buildBlock(
+            ArrayBuilder.buildExpression(100),
+            ArrayBuilder.buildExpression(200),
+            ArrayBuilder.buildExpression(300)
+        )
+     >> assert(builderBlock == manualBlock)
+
+- A ``for`` loop becomes a temporary variable, a ``for`` loop,
+  and call to the ``buildArray(_:)`` method.
+  The new ``for`` loop iterates over the sequence
+  and appends each partial result to that array.
+  The temporary array is passed as the argument in the ``buildArray(_:)`` call.
+  For example, the following declarations are equivalent:
+
+  .. testcode:: array-result-builder
+
+     -> @ArrayBuilder var builderArray: [Int] {
+            for i in 5...7 {
+                100 + i
+            }
+        }
+     ---
+     -> var temporary: [[Int]] = []
+     -> for i in 5...7 {
+            let partialResult = ArrayBuilder.buildExpression(100 + i)
+            temporary.append(partialResult)
+        }
+     -> let manualArray = ArrayBuilder.buildArray(temporary)
+     >> assert(builderArray == manualArray)
+
+- If the result builder has a ``buildFinalResult(_:)`` method,
+  the final result becomes a call to that method.
+  This transformation is always last.
+
+Although the transformation behavior is described in terms of temporary variables,
+using a result builder doesn't actually create any new declarations
+that are visible from the rest of your code.
+
+You can't use
+``break``, ``continue``, ``defer``, ``guard``, or ``return`` statements,
+``while`` statements,
+or ``do``-``catch`` statements
+in the code that a result builder transforms.
+
+The transformation process doesn't change declarations in the code,
+which lets you use temporary constants and variables
+to build up expressions piece by piece.
+It also doesn't change
+``throw`` statements,
+compile-time diagnostic statements,
+or closures that contain a ``return`` statement.
+
+Whenever possible, transformations are coalesced.
+For example, the expression ``4 + 5 * 6`` becomes
+``buildExpression(4 + 5 * 6)`` rather multiple calls to that function.
+Likewise, nested branch statements become
+a single binary tree of calls to the ``buildEither`` methods.
+
+.. assertion:: result-builder-transform-complex-expression
+
+   >> @resultBuilder
+   >> struct ArrayBuilder {
+   >>     static func buildExpression(_ element: Int) -> [Int] {
+   >>         print("Building", element)
+   >>         return [element]
+   >>     }
+   >>     static func buildBlock(_ components: [Int]...) -> [Int] {
+   >>         return Array(components.joined())
+   >>     }
+   >> }
+   >> @ArrayBuilder var x: [Int] {
+   >>     10+12*3
+   >> }
+   << Building 46
+   >> print(x)
+   << [46]
+
+.. _Attributes_resultBuilder_attribute:
+
+Custom Result-Builder Attributes
+++++++++++++++++++++++++++++++++
+
+Creating a result builder type creates a custom attribute with the same name.
+You can apply that attribute in the following places:
+
+- On a function declaration,
+  the result builder builds the body of the function.
+
+- On a variable or subscript declaration that includes a getter,
+  the result builder builds the body of the getter.
+
+- On a parameter in a function declaration,
+  the result builder builds the body of a closure
+  that's passed as the corresponding argument.
+
+Applying a result builder attribute doesn't impact ABI compatibility.
+Applying a result builder attribute to a parameter
+makes that attribute part of the function's interface,
+which can effect source compatibility.
+
+
 .. _Attributes_requires_stored_property_inits:
 
 requires_stored_property_inits
@@ -1043,6 +1615,10 @@ as its principal class,
 call the ``UIApplicationMain(_:_:_:_:)`` function
 instead of using this attribute.
 
+The Swift code you compile to make an executable
+can contain at most one top-level entry point,
+as discussed in :ref:`LexicalStructure_ModuleScope`.
+
 
 .. _Attributes_usableFromInline:
 
@@ -1054,14 +1630,14 @@ function, method, computed property, subscript,
 initializer, or deinitializer declaration
 to allow that symbol to be used in inlinable code
 that's defined in the same module as the declaration.
-The declaration must have the ``internal`` access level modifier.
+The declaration must have the ``internal`` access-level modifier.
 A structure or class marked ``usableFromInline``
 can use only types that are public or ``usableFromInline`` for its properties.
 An enumeration marked ``usableFromInline``
 can use only types that are public or ``usableFromInline``
 for the raw values and associated values of its cases.
 
-Like the ``public`` access level modifier,
+Like the ``public`` access-level modifier,
 this attribute
 exposes the declaration as part of the module's public interface.
 Unlike ``public``,
@@ -1150,7 +1726,7 @@ autoclosure
 
 Apply this attribute to delay the evaluation of an expression
 by automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter's type in a method or function declaration,
+You apply it to a parameter's type in a function or method declaration,
 for a parameter whose type is a function type that takes no arguments
 and that returns a value of the type of the expression.
 For an example of how to use the ``autoclosure`` attribute,
@@ -1178,11 +1754,14 @@ one of the following arguments:
 * The ``c`` argument indicates a C function reference.
   The function value carries no context and uses the C calling convention.
 
+.. @convention(thin) is private, even though it doesn't have an underscore
+   https://forums.swift.org/t/12087/6
+
 With a few exceptions,
 a function of any calling convention can be used
 when a function any other calling convention is needed.
 A nongeneric global function,
-a local function that doesn't capture any local variables
+a local function that doesn't capture any local variables,
 or a closure that doesn't capture any local variables
 can be converted to the C calling convention.
 Other Swift functions can't be converted to the C calling convention.
@@ -1195,7 +1774,7 @@ can't be converted to the C calling convention.
 escaping
 ~~~~~~~~
 
-Apply this attribute to a parameter's type in a method or function declaration
+Apply this attribute to a parameter's type in a function or method declaration
 to indicate that the parameter's value can be stored for later execution.
 This means that the value is allowed to outlive the lifetime of the call.
 Function type parameters with the ``escaping`` type attribute

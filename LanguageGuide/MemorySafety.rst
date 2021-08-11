@@ -109,7 +109,7 @@ you have to determine what it was intended to do.
    Swift guarantees that you'll get an error
    at either compile time or runtime.
    For multithreaded code,
-   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+   use `Thread Sanitizer <https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early>`_
    to help detect conflicting access across threads.
 
 .. TODO: The xref above doesn't seem to give enough information.
@@ -129,7 +129,7 @@ Specifically,
 a conflict occurs if you have two accesses
 that meet all of the following conditions:
 
-- At least one is a write access.
+- At least one is a write access or a nonatomic access.
 - They access the same location in memory.
 - Their durations overlap.
 
@@ -142,6 +142,14 @@ refers to what is being accessed ---
 for example, a variable, constant, or property.
 The duration of a memory access
 is either instantaneous or long-term.
+
+An operation is :newTerm:`atomic`
+if it uses only C atomic operations;
+otherwise it's nonatomic.
+For a list of those functions, see the ``stdatomic(3)`` man page.
+
+.. Using these functions from Swift requires some shimming -- for example:
+   https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
 
 An access is :newTerm:`instantaneous`
 if it's not possible for other code to run
@@ -215,7 +223,7 @@ For example:
 
 In the code above,
 ``stepSize`` is a global variable,
-and it is normally accessible from within ``increment(_:)``.
+and it's normally accessible from within ``increment(_:)``.
 However,
 the read access to ``stepSize`` overlaps with
 the write access to ``number``.
@@ -558,7 +566,7 @@ it doesn't allow the access.
    is to use implicit pointer conversion
    when passing a value as a nonmutating unsafe pointer parameter,
    as in the example below.
-   There is discussion in <rdar://problem/33115142>
+   There's discussion in <rdar://problem/33115142>
    about changing the semantics of nonmutating method calls
    to be long-term reads,
    but it's not clear if/when that change will land.

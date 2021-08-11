@@ -7,21 +7,21 @@ Closures in Swift are similar to blocks in C and Objective-C
 and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
-from the context in which they are defined.
+from the context in which they're defined.
 This is known as :newTerm:`closing over` those constants and variables.
 Swift handles all of the memory management of capturing for you.
 
 .. note::
 
-   Don't worry if you are not familiar with the concept of capturing.
-   It is explained in detail below in :ref:`Closures_CapturingValues`.
+   Don't worry if you aren't familiar with the concept of capturing.
+   It's explained in detail below in :ref:`Closures_CapturingValues`.
 
 Global and nested functions, as introduced in :doc:`Functions`,
 are actually special cases of closures.
 Closures take one of three forms:
 
 * Global functions are closures that have a name
-  and do not capture any values.
+  and don't capture any values.
 * Nested functions are closures that have a name
   and can capture values from their enclosing function.
 * Closure expressions are unnamed closures written in a lightweight syntax
@@ -44,7 +44,7 @@ Closure Expressions
 Nested functions, as introduced in :ref:`Functions_NestedFunctions`,
 are a convenient means of naming and defining self-contained blocks of code
 as part of a larger function.
-However, it is sometimes useful to write shorter versions of function-like constructs
+However, it's sometimes useful to write shorter versions of function-like constructs
 without a full declaration and name.
 This is particularly true when you work with functions or methods that take functions
 as one or more of their arguments.
@@ -67,7 +67,7 @@ based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
 the ``sorted(by:)`` method returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
-The original array is not modified by the ``sorted(by:)`` method.
+The original array isn't modified by the ``sorted(by:)`` method.
 
 The closure expression examples below use the ``sorted(by:)`` method
 to sort an array of ``String`` values in reverse alphabetical order.
@@ -146,7 +146,7 @@ from above:
 
 Note that the declaration of parameters and return type for this inline closure
 is identical to the declaration from the ``backward(_:_:)`` function.
-In both cases, it is written as ``(s1: String, s2: String) -> Bool``.
+In both cases, it's written as ``(s1: String, s2: String) -> Bool``.
 However, for the inline closure expression,
 the parameters and return type are written *inside* the curly braces,
 not outside of them.
@@ -178,7 +178,7 @@ Swift can infer the types of its parameters
 and the type of the value it returns.
 The ``sorted(by:)`` method is being called on an array of strings,
 so its argument must be a function of type ``(String, String) -> Bool``.
-This means that the ``(String, String)`` and ``Bool`` types do not need to be written
+This means that the ``(String, String)`` and ``Bool`` types don't need to be written
 as part of the closure expression's definition.
 Because all of the types can be inferred,
 the return arrow (``->``) and the parentheses around the names of the parameters
@@ -189,7 +189,7 @@ can also be omitted:
    -> reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
-It is always possible to infer the parameter types and return type
+It's always possible to infer the parameter types and return type
 when passing a closure to a function or method as an inline closure expression.
 As a result, you never need to write an inline closure in its fullest form
 when the closure is used as a function or method argument.
@@ -198,9 +198,9 @@ Nonetheless, you can still make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
 In the case of the ``sorted(by:)`` method,
 the purpose of the closure is clear from the fact that sorting is taking place,
-and it is safe for a reader to assume that
+and it's safe for a reader to assume that
 the closure is likely to be working with ``String`` values,
-because it is assisting with the sorting of an array of strings.
+because it's assisting with the sorting of an array of strings.
 
 .. _Closures_ImplicitReturnsFromSingleExpressionClosures:
 
@@ -232,9 +232,11 @@ which can be used to refer to the values of the closure's arguments
 by the names ``$0``, ``$1``, ``$2``, and so on.
 
 If you use these shorthand argument names within your closure expression,
-you can omit the closure's argument list from its definition,
-and the number and type of the shorthand argument names
-will be inferred from the expected function type.
+you can omit the closure's argument list from its definition.
+The type of the shorthand argument names
+is inferred from the expected function type,
+and the highest numbered shorthand argument you use
+determines the number of arguments that the closure takes.
 The ``in`` keyword can also be omitted,
 because the closure expression is made up entirely of its body:
 
@@ -244,6 +246,21 @@ because the closure expression is made up entirely of its body:
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Here, ``$0`` and ``$1`` refer to the closure's first and second ``String`` arguments.
+Because ``$1`` is the shorthand argument with highest number,
+the closure is understood to take two arguments.
+Because the ``sorted(by:)`` function here expects a closure
+whose arguments are both strings,
+the shorthand arguments ``$0`` and ``$1`` are both of type ``String``.
+
+.. assertion:: closure-syntax-arity-inference
+
+   >> let a: [String: String] = [:]
+   >> var b: [String: String] = [:]
+   >> b.merge(a, uniquingKeysWith: { $1 })
+   >> b.merge(a, uniquingKeysWith: { $0 })
+   !$ error: contextual closure type '(String, String) throws -> String' expects 2 arguments, but 1 was used in closure body
+   !! b.merge(a, uniquingKeysWith: { $0 })
+   !! ^
 
 .. _Closures_OperatorFunctions:
 
@@ -274,11 +291,13 @@ Trailing Closures
 If you need to pass a closure expression to a function as the function's final argument
 and the closure expression is long,
 it can be useful to write it as a :newTerm:`trailing closure` instead.
-A trailing closure is written after the function call's parentheses,
-even though it is still an argument to the function.
+You write a trailing closure after the function call's parentheses,
+even though the trailing closure is still an argument to the function.
 When you use the trailing closure syntax,
-you don't write the argument label for the closure
+you don't write the argument label for the first closure
 as part of the function call.
+A function call can include multiple trailing closures;
+however, the first few examples below use a single trailing closure.
 
 .. testcode:: closureSyntax
 
@@ -306,9 +325,9 @@ can be written outside of the ``sorted(by:)`` method's parentheses as a trailing
    -> reversedNames = names.sorted() { $0 > $1 }
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
-If a closure expression is provided as the function or method's only argument
+If a closure expression is provided as the function's or method's only argument
 and you provide that expression as a trailing closure,
-you do not need to write a pair of parentheses ``()``
+you don't need to write a pair of parentheses ``()``
 after the function or method's name when you call the function:
 
 .. testcode:: closureSyntax
@@ -317,13 +336,14 @@ after the function or method's name when you call the function:
    >> assert(reversedNames == ["Ewa", "Daniella", "Chris", "Barry", "Alex"])
 
 Trailing closures are most useful when the closure is sufficiently long that
-it is not possible to write it inline on a single line.
-As an example, Swift's ``Array`` type has a ``map(_:)`` method
+it isn't possible to write it inline on a single line.
+As an example, Swift's ``Array`` type has a ``map(_:)`` method,
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
-The nature of the mapping and the type of the returned value
-is left up to the closure to specify.
+You specify
+the nature of the mapping and the type of the returned value
+by writing code in the closure that you pass to ``map(_:)``.
 
 After applying the provided closure to each array element,
 the ``map(_:)`` method returns a new array containing all of the new mapped values,
@@ -365,7 +385,7 @@ by passing a closure expression to the array's ``map(_:)`` method as a trailing 
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
 The ``map(_:)`` method calls the closure expression once for each item in the array.
-You do not need to specify the type of the closure's input parameter, ``number``,
+You don't need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
 
 In this example,
@@ -375,7 +395,7 @@ so that the value can be modified within the closure body.
 The closure expression also specifies a return type of ``String``,
 to indicate the type that will be stored in the mapped output array.
 
-The closure expression builds a string called ``output`` each time it is called.
+The closure expression builds a string called ``output`` each time it's called.
 It calculates the last digit of ``number`` by using the remainder operator (``number % 10``),
 and uses this digit to look up an appropriate string in the ``digitNames`` dictionary.
 The closure can be used to create a string representation of any integer greater than zero.
@@ -385,8 +405,8 @@ The closure can be used to create a string representation of any integer greater
    The call to the ``digitNames`` dictionary's subscript
    is followed by an exclamation point (``!``),
    because dictionary subscripts return an optional value
-   to indicate that the dictionary lookup can fail if the key does not exist.
-   In the example above, it is guaranteed that ``number % 10``
+   to indicate that the dictionary lookup can fail if the key doesn't exist.
+   In the example above, it's guaranteed that ``number % 10``
    will always be a valid subscript key for the ``digitNames`` dictionary,
    and so an exclamation point is used to force-unwrap the ``String`` value
    stored in the subscript's optional return value.
@@ -398,7 +418,7 @@ effectively building a string version of the number in reverse.
 ``6`` for ``16``, ``8`` for ``58``, and ``0`` for ``510``.)
 
 The ``number`` variable is then divided by ``10``.
-Because it is an integer, it is rounded down during the division,
+Because it's an integer, it's rounded down during the division,
 so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
 The process is repeated until ``number`` is equal to ``0``,
@@ -411,13 +431,65 @@ immediately after the function that closure supports,
 without needing to wrap the entire closure within
 the ``map(_:)`` method's outer parentheses.
 
+If a function takes multiple closures,
+you omit the argument label for the first trailing closure
+and you label the remaining trailing closures.
+For example,
+the function below loads a picture for a photo gallery:
+
+.. testcode:: multiple-trailing-closures
+
+   >> struct Server { }
+   >> struct Picture { }
+   >> func download(_ path: String, from server: Server) -> Picture? {
+   >>     return Picture()
+   >> }
+   -> func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: () -> Void) {
+          if let picture = download("photo.jpg", from: server) {
+              completion(picture)
+          } else {
+              onFailure()
+          }
+      }
+
+When you call this function to load a picture,
+you provide two closures.
+The first closure is a completion handler
+that displays a picture after a successful download.
+The second closure is an error handler
+that displays an error to the user.
+
+.. testcode:: multiple-trailing-closures
+
+   >> struct View {
+   >>    var currentPicture = Picture() { didSet { print("Changed picture") } }
+   >> }
+   >> var someView = View()
+   >> let someServer = Server()
+   -> loadPicture(from: someServer) { picture in
+          someView.currentPicture = picture
+      } onFailure: {
+          print("Couldn't download the next picture.")
+      }
+   << Changed picture
+
+In this example,
+the ``loadPicture(from:completion:onFailure:)`` function
+dispatches its network task into the background,
+and calls one of the two completion handlers when the network task finishes.
+Writing the function this way lets you cleanly separate the code
+that's responsible for handling a network failure
+from the code that updates the user interface after a successful download,
+instead of using just one closure that handles both circumstances.
+
+
 .. _Closures_CapturingValues:
 
 Capturing Values
 ----------------
 
 A closure can :newTerm:`capture` constants and variables
-from the surrounding context in which it is defined.
+from the surrounding context in which it's defined.
 The closure can then refer to and modify
 the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
@@ -434,7 +506,7 @@ The nested ``incrementer()`` function captures two values,
 from its surrounding context.
 After capturing these values,
 ``incrementer`` is returned by ``makeIncrementer`` as a closure
-that increments ``runningTotal`` by ``amount`` each time it is called.
+that increments ``runningTotal`` by ``amount`` each time it's called.
 
 .. testcode:: closures
 
@@ -450,7 +522,7 @@ that increments ``runningTotal`` by ``amount`` each time it is called.
 The return type of ``makeIncrementer`` is ``() -> Int``.
 This means that it returns a *function*, rather than a simple value.
 The function it returns has no parameters,
-and returns an ``Int`` value each time it is called.
+and returns an ``Int`` value each time it's called.
 To learn how functions can return other functions,
 see :ref:`Functions_FunctionTypesAsReturnTypes`.
 
@@ -483,7 +555,7 @@ The ``incrementer()`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing a *reference* to ``runningTotal`` and ``amount``
 from the surrounding function and using them within its own function body.
-Capturing by reference ensures that ``runningTotal`` and ``amount`` do not disappear
+Capturing by reference ensures that ``runningTotal`` and ``amount`` don't disappear
 when the call to ``makeIncrementer`` ends,
 and also ensures that ``runningTotal`` is available
 the next time the ``incrementer`` function is called.
@@ -492,11 +564,11 @@ the next time the ``incrementer`` function is called.
 
    As an optimization,
    Swift may instead capture and store a *copy* of a value
-   if that value is not mutated by a closure,
-   and if the value is not mutated after the closure is created.
+   if that value isn't mutated by a closure,
+   and if the value isn't mutated after the closure is created.
 
    Swift also handles all memory management involved in disposing of
-   variables when they are no longer needed.
+   variables when they're no longer needed.
 
 Here's an example of ``makeIncrementer`` in action:
 
@@ -506,7 +578,7 @@ Here's an example of ``makeIncrementer`` in action:
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementer function that adds ``10`` to
-its ``runningTotal`` variable each time it is called.
+its ``runningTotal`` variable each time it's called.
 Calling the function multiple times shows this behavior in action:
 
 .. testcode:: closures
@@ -540,7 +612,7 @@ it will have its own stored reference to a new, separate ``runningTotal`` variab
 
 Calling the original incrementer (``incrementByTen``) again
 continues to increment its own ``runningTotal`` variable,
-and does not affect the variable captured by ``incrementBySeven``:
+and doesn't affect the variable captured by ``incrementBySeven``:
 
 .. testcode:: closures
 
@@ -572,7 +644,7 @@ Whenever you assign a function or a closure to a constant or a variable,
 you are actually setting that constant or variable to be
 a *reference* to the function or closure.
 In the example above,
-it is the choice of closure that ``incrementByTen`` *refers to* that is constant,
+it's the choice of closure that ``incrementByTen`` *refers to* that's constant,
 and not the contents of the closure itself.
 
 This also means that if you assign a closure to two different constants or variables,
@@ -621,7 +693,7 @@ For example:
 
 .. testcode:: noescape-closure-as-argument, implicit-self-struct
 
-    -> var completionHandlers = [() -> Void]()
+    -> var completionHandlers: [() -> Void] = []
     -> func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
            completionHandlers.append(completionHandler)
        }
@@ -773,7 +845,7 @@ a mutable reference to ``self`` for structures.
 Autoclosures
 ------------
 
-An :newTerm:`autoclosure` is a closure that is automatically created 
+An :newTerm:`autoclosure` is a closure that's automatically created 
 to wrap an expression that's being passed as an argument to a function.
 It doesn't take any arguments,
 and when it's called, it returns the value
@@ -827,7 +899,7 @@ the array element isn't removed until the closure is actually called.
 If the closure is never called,
 the expression inside the closure is never evaluated,
 which means the array element is never removed.
-Note that the type of ``customerProvider`` is not ``String``
+Note that the type of ``customerProvider`` isn't ``String``
 but ``() -> String`` ---
 a function with no parameters that returns a string.
 
@@ -874,7 +946,7 @@ with the ``@autoclosure`` attribute.
    The context and function name should make it clear
    that evaluation is being deferred.
 
-If you want an autoclosure that is allowed to escape,
+If you want an autoclosure that's allowed to escape,
 use both the ``@autoclosure`` and ``@escaping`` attributes.
 The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
 
@@ -897,9 +969,6 @@ The ``@escaping`` attribute is described above in :ref:`Closures_Noescape`.
        }
     <- Now serving Barry!
     <- Now serving Daniella!
-
-.. Explicit type annotations instead of [Foo]() constructor syntax to work around
-   <rdar://problem/25150801> Array constructor syntax - can't parse arrays of function type
 
 In the code above,
 instead of calling the closure passed to it

@@ -11,7 +11,7 @@ created or a generic function or initializer is called.
 For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
 
 .. NOTE: Generic types are sometimes referred to as :newTerm:`parameterized types`
-    because they are declared with one or more type parameters.
+    because they're declared with one or more type parameters.
 
 
 .. _GenericParametersAndArguments_GenericParameterClause:
@@ -115,6 +115,50 @@ and that the elements of both sequences must be of the same type.
 Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
+A generic ``where`` clause can appear
+as part of a declaration that includes type parameters,
+or as part of a declaration
+that's nested inside of a declaration that includes type parameters.
+The generic ``where`` clause for a nested declaration
+can still refer to the type parameters of the enclosing declaration;
+however,
+the requirements from that ``where`` clause
+apply only to the declaration where it's written.
+
+If the enclosing declaration also has a ``where`` clause,
+the requirements from both clauses are combined.
+In the example below, ``startsWithZero()`` is available
+only if ``Element`` conforms to both ``SomeProtocol`` and ``Numeric``.
+
+.. testcode:: contextual-where-clauses-combine
+
+   >> protocol SomeProtocol { }
+   >> extension Int: SomeProtocol { }
+   -> extension Collection where Element: SomeProtocol {
+          func startsWithZero() -> Bool where Element: Numeric {
+              return first == .zero
+          }
+      }
+   >> print( [1, 2, 3].startsWithZero() )
+   << false
+
+.. assertion:: contextual-where-clause-combine-err
+
+   >> protocol SomeProtocol { }
+   >> extension Bool: SomeProtocol { }
+   ---
+   >> extension Collection where Element: SomeProtocol {
+   >>     func returnTrue() -> Bool where Element == Bool {
+   >>         return true
+   >>     }
+   >>     func returnTrue() -> Bool where Element == Int {
+   >>         return true
+   >>     }
+   >> }
+   !$ error: same-type constraint type 'Int' does not conform to required protocol 'SomeProtocol'
+   !! func returnTrue() -> Bool where Element == Int {
+   !!                                            ^
+
 You can overload a generic function or initializer by providing different
 constraints, requirements, or both on the type parameters.
 When you call an overloaded generic function or initializer,
@@ -185,7 +229,7 @@ requirements specified in a generic ``where`` clause. In the example above,
 the ``Key`` type parameter is constrained to conform to the ``Hashable`` protocol
 and therefore ``String`` must also conform to the ``Hashable`` protocol.
 
-You can also replace a type parameter with a type argument that is itself
+You can also replace a type parameter with a type argument that's itself
 a specialized version of a generic type (provided it satisfies the appropriate
 constraints and requirements). For example, you can replace the type parameter
 ``Element`` in ``Array<Element>`` with a specialized version of an array, ``Array<Int>``,

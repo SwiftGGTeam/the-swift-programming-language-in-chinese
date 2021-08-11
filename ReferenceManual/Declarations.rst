@@ -8,8 +8,8 @@ and to define enumeration, structure, class, and protocol types.
 You can also use a declaration to extend the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
 
-In Swift, most declarations are also definitions in the sense that they are implemented
-or initialized at the same time they are declared. That said, because protocols don't
+In Swift, most declarations are also definitions in the sense that they're implemented
+or initialized at the same time they're declared. That said, because protocols don't
 implement their members, most protocol members are declarations only. For convenience
 and because the distinction isn't that important in Swift,
 the term *declaration* covers both declarations and definitions.
@@ -26,6 +26,7 @@ the term *declaration* covers both declarations and definitions.
     declaration --> enum-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
+    declaration --> actor-declaration
     declaration --> protocol-declaration
     declaration --> initializer-declaration
     declaration --> deinitializer-declaration
@@ -45,12 +46,28 @@ The top-level code in a Swift source file consists of zero or more statements,
 declarations, and expressions.
 By default, variables, constants, and other named declarations that are declared
 at the top-level of a source file are accessible to code
-in every source file that is part of the same module.
+in every source file that's part of the same module.
 You can override this default behavior
 by marking the declaration with an access-level modifier,
 as described in :ref:`Declarations_AccessControlLevels`.
 
-.. TODO: Revisit and rewrite this section after WWDC
+There are two kinds of top-level code:
+top-level declarations and executable top-level code.
+Top-level declarations consist of only declarations,
+and are allowed in all Swift source files.
+Executable top-level code contains statements and expressions,
+not just declarations,
+and is allowed only as the top-level entry point for the program.
+
+The Swift code you compile to make an executable
+can contain at most one of the following approaches
+to mark the top-level entry point,
+regardless of how the code is organized into files and modules:
+the ``main`` attribute,
+the ``NSApplicationMain`` attribute,
+the ``UIApplicationMain`` attribute,
+a ``main.swift`` file,
+or a file that contains top-level executable code.
 
 .. syntax-grammar::
 
@@ -143,7 +160,7 @@ Constant declarations are declared using the ``let`` keyword and have the follow
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
-after the value of a constant is set, it cannot be changed.
+after the value of a constant is set, it can't be changed.
 That said, if a constant is initialized with a class object,
 the object itself can change,
 but the binding between the constant name and the object it refers to can't.
@@ -152,13 +169,13 @@ When a constant is declared at global scope,
 it must be initialized with a value.
 When a constant declaration occurs in the context of a function or method,
 it can be initialized later,
-as long as it is guaranteed to have a value set
+as long as it's guaranteed to have a value set
 before the first time its value is read.
 If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
 When a constant declaration occurs in the context of a class or structure
-declaration, it is considered a :newTerm:`constant property`.
-Constant declarations are not computed properties and therefore do not have getters
+declaration, it's considered a :newTerm:`constant property`.
+Constant declarations aren't computed properties and therefore don't have getters
 or setters.
 
 If the *constant name* of a constant declaration is a tuple pattern,
@@ -255,9 +272,9 @@ The following form declares a stored variable or stored variable property:
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
-scope of a function, it is referred to as a :newTerm:`stored variable`.
-When it is declared in the context of a class or structure declaration,
-it is referred to as a :newTerm:`stored variable property`.
+scope of a function, it's referred to as a :newTerm:`stored variable`.
+When it's declared in the context of a class or structure declaration,
+it's referred to as a :newTerm:`stored variable property`.
 
 The initializer *expression* can't be present in a protocol declaration,
 but in all other contexts, the initializer *expression* is optional.
@@ -294,10 +311,10 @@ The following form declares a computed variable or computed property:
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, enumeration, or extension declaration.
 When a variable declaration of this form is declared at global scope or the local
-scope of a function, it is referred to as a :newTerm:`computed variable`.
-When it is declared in the context of a class,
+scope of a function, it's referred to as a :newTerm:`computed variable`.
+When it's declared in the context of a class,
 structure, or extension declaration,
-it is referred to as a :newTerm:`computed property`.
+it's referred to as a :newTerm:`computed property`.
 
 The getter is used to read the value,
 and the setter is used to write the value.
@@ -308,12 +325,12 @@ as described in :ref:`Properties_ReadOnlyComputedProperties`.
 But if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses is optional.
-If you provide a setter name, it is used as the name of the parameter to the setter.
-If you do not provide a setter name, the default parameter name to the setter is ``newValue``,
+If you provide a setter name, it's used as the name of the parameter to the setter.
+If you don't provide a setter name, the default parameter name to the setter is ``newValue``,
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
 Unlike stored named values and stored variable properties,
-the value of a computed named value or a computed property is not stored in memory.
+the value of a computed named value or a computed property isn't stored in memory.
 
 For more information and to see examples of computed properties,
 see :ref:`Properties_ComputedProperties`.
@@ -342,7 +359,7 @@ You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, the observers are referred to as :newTerm:`stored variable observers`.
-When it is declared in the context of a class or structure declaration,
+When it's declared in the context of a class or structure declaration,
 the observers are referred to as :newTerm:`property observers`.
 
 You can add property observers to any stored property. You can also add property
@@ -352,12 +369,31 @@ the property within a subclass, as described in :ref:`Inheritance_OverridingProp
 The initializer *expression* is optional in the context of a class or structure declaration,
 but required elsewhere. The *type* annotation is optional
 when the type can be inferred from the initializer *expression*.
+This expression is evaluated the first time you read the property's value.
+If you overwrite the property's initial value without reading it,
+this expression is evaluated before the first time you write to the property.
+
+.. assertion:: overwriting-property-without-writing
+
+   >> func loudConst(_ x: Int) -> Int {
+   >>     print("initial value:", x)
+   >>     return x
+   >> }
+   >> var x = loudConst(10)
+   >> x = 20
+   >> print("x:", x)
+   << initial value: 10
+   << x: 20
+   >> var y = loudConst(100)
+   >> print("y:", y)
+   << initial value: 100
+   << y: 100
 
 The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
-The observers are not called when the variable or property
+The observers aren't called when the variable or property
 is first initialized.
-Instead, they are called only when the value is set outside of an initialization context.
+Instead, they're called only when the value is set outside of an initialization context.
 
 A ``willSet`` observer is called just before the value of the variable or property
 is set. The new value is passed to the ``willSet`` observer as a constant,
@@ -371,16 +407,73 @@ the ``willSet`` observer.
 
 The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
 If you provide setter names,
-they are used as the parameter names to the ``willSet`` and ``didSet`` observers.
-If you do not provide setter names,
+they're used as the parameter names to the ``willSet`` and ``didSet`` observers.
+If you don't provide setter names,
 the default parameter name to the ``willSet`` observer is ``newValue``
 and the default parameter name to the ``didSet`` observer is ``oldValue``.
 
 The ``didSet`` clause is optional when you provide a ``willSet`` clause.
 Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
 
+If the body of the ``didSet`` observer refers to the old value,
+the getter is called before the observer,
+to make the old value available.
+Otherwise, the new value is stored without calling the superclass's getter.
+The example below shows a computed property that's defined by the superclass
+and overridden by its subclasses to add an observer.
+
+.. testcode:: didSet-calls-superclass-getter
+
+   -> class Superclass {
+          private var xValue = 12
+          var x: Int {
+              get { print("Getter was called"); return xValue }
+              set { print("Setter was called"); xValue = newValue }
+          }
+      }
+   ---
+   // This subclass doesn't refer to oldValue in its observer, so the
+   // superclass's getter is called only once to print the value.
+   -> class New: Superclass {
+          override var x: Int {
+              didSet { print("New value \(x)") }
+          }
+      }
+      let new = New()
+      new.x = 100
+   <- Setter was called
+   <- Getter was called
+   <- New value 100
+   ---
+   // This subclass refers to oldValue in its observer, so the superclass's
+   // getter is called once before the setter, and again to print the value.
+   -> class NewAndOld: Superclass {
+          override var x: Int {
+              didSet { print("Old value \(oldValue) - new value \(x)") }
+          }
+      }
+      let newAndOld = NewAndOld()
+      newAndOld.x = 200
+   <- Getter was called
+   <- Setter was called
+   <- Getter was called
+   <- Old value 12 - new value 200
+
 For more information and to see an example of how to use property observers,
 see :ref:`Properties_PropertyObservers`.
+
+.. assertion:: cant-mix-get-set-and-didSet
+
+   >> struct S {
+   >>     var x: Int {
+   >>         get { print("S getter"); return 12 }
+   >>         set { return }
+   >>         didSet { print("S didSet") }
+   >>     }
+   >> }
+   !$ error: 'didSet' cannot be provided together with a getter
+   !! didSet { print("S didSet") }
+   !! ^
 
 
 .. _Declarations_TypeVariableProperties:
@@ -426,7 +519,7 @@ Type properties are discussed in :ref:`Properties_TypeProperties`.
     didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 
 .. NOTE: Type annotations are required for computed properties -- the
-   types of those properties are not computed/inferred.
+   types of those properties aren't computed/inferred.
 
 
 .. _Declarations_TypeAliasDeclaration:
@@ -444,7 +537,7 @@ Type alias declarations are declared using the ``typealias`` keyword and have th
 After a type alias is declared, the aliased *name* can be used
 instead of the *existing type* everywhere in your program.
 The *existing type* can be a named type or a compound type.
-Type aliases do not create new types;
+Type aliases don't create new types;
 they simply allow a name to refer to an existing type.
 
 A type alias declaration can use generic parameters
@@ -493,7 +586,7 @@ has the same generic parameters and constraints as ``Dictionary``.
 
 Inside a protocol declaration,
 a type alias can give a shorter and more convenient name
-to a type that is used frequently.
+to a type that's used frequently.
 For example:
 
 .. testcode:: typealias-in-prototol
@@ -564,6 +657,14 @@ in :ref:`Declarations_InOutParameters`, below.
 A function declaration whose *statements*
 include only a single expression
 is understood to return the value of that expression.
+This implicit return syntax is considered
+only when the expression's type and the function's return type
+aren't ``Void``
+and aren't an enumeration like ``Never`` that doesn't have any cases.
+
+.. As of Swift 5.3,
+   the only way to make an uninhabited type is to create an empty enum,
+   so just say that directly instead of using & defining the compiler jargon.
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
@@ -574,7 +675,7 @@ A function definition can appear inside another function declaration.
 This kind of function is known as a :newTerm:`nested function`.
 
 A nested function is nonescaping if it captures
-a value that is guaranteed to never escape---
+a value that's guaranteed to never escape---
 such as an in-out parameter---
 or passed as a nonescaping function argument.
 Otherwise, the nested function is an escaping function.
@@ -692,7 +793,7 @@ see :doc:`../LanguageGuide/MemorySafety`.
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
 If you need to capture an in-out parameter
-without mutating it or to observe changes made by other code,
+without mutating it,
 use a capture list to explicitly capture the parameter immutably.
 
 .. testcode:: explicit-capture-for-inout
@@ -700,6 +801,13 @@ use a capture list to explicitly capture the parameter immutably.
     -> func someFunction(a: inout Int) -> () -> Int {
            return { [a] in return a + 1 }
        }
+    >> class C { var x = 100 }
+    >> let c = C()
+    >> let f = someFunction(a: &c.x)
+    >> c.x = 200
+    >> let r = f()
+    >> print(r, r == c.x)
+    << 101 false
 
 If you need to capture and mutate an in-out parameter,
 use an explicit local copy,
@@ -774,7 +882,9 @@ is explicitly ignored and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
-A function can have at most one variadic parameter.
+A parameter that immediately follows a variadic parameter
+must have an argument label.
+A function can have multiple variadic parameters.
 A variadic parameter is treated as an array that contains elements of the base type name.
 For example, the variadic parameter ``Int...`` is treated as ``[Int]``.
 For an example that uses a variadic parameter,
@@ -905,7 +1015,6 @@ are also valid call-as-function method names.
 The following function calls are equivalent:
 
 .. testcode:: call-as-function
-   :compile: true
 
    -> struct CallableStruct {
           var value: Int
@@ -938,7 +1047,6 @@ as if it were a function in any context other than a function call expression.
 For example:
 
 .. testcode:: call-as-function-err
-   :compile: true
 
    >> struct CallableStruct {
    >>     var value: Int
@@ -949,11 +1057,11 @@ For example:
    -> let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
    >> _ = someFunction1 // suppress unused-constant warning
    >> _ = someFunction2 // suppress unused-constant warning
-   !$ error: use of unresolved identifier 'callable(_:scale:)'
+   !$ error: cannot find 'callable(_:scale:)' in scope
    !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
    !! ^~~~~~~~~~~~~~~~~~
 
-The ``subscript(dynamicMemberLookup:)`` subscript
+The ``subscript(dynamicMember:)`` subscript
 enables syntactic sugar for member lookup,
 as described in :ref:`Attributes_dynamicMemberLookup`.
 
@@ -979,7 +1087,8 @@ Calls to a throwing function or method must be wrapped in a ``try`` or ``try!`` 
 
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
-As a result, you can use a nonthrowing function in the same places as a throwing one.
+As a result, you can use a nonthrowing function
+in a context where as a throwing one is expected.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -1061,6 +1170,35 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+.. _Declarations_AsyncFunctions:
+
+Asynchronous Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions and methods that run asynchronously must be marked with the ``async`` keyword.
+These functions and methods are known as :newTerm:`asynchronous functions`
+and :newTerm:`asynchronous methods`.
+They have the following form:
+
+.. syntax-outline::
+
+    func <#function name#>(<#parameters#>) async -> <#return type#> {
+       <#statements#>
+    }
+
+Calls to an asynchronous function or method
+must be wrapped in an ``await`` expression ---
+that is, they must be in the scope of an ``await`` operator.
+
+The ``async`` keyword is part of the function's type,
+and synchronous functions are subtypes of asynchronous functions.
+As a result, you can use a synchronous function
+in a context where an asynchronous function is expected.
+For example,
+you can override an asynchronous method with a synchronous method,
+and a synchronous method can satisfy a protocol requirement
+that requires an asynchronous method.
+
 
 .. _Declarations_FunctionsThatNeverReturn:
 
@@ -1075,7 +1213,7 @@ or begin a sequence of work that continues indefinitely.
 This means that
 code that would otherwise run immediately after the call is never executed.
 Throwing and rethrowing functions can transfer program control
-to an appropriate ``catch`` block, even when they are nonreturning.
+to an appropriate ``catch`` block, even when they're nonreturning.
 
 A nonreturning function or method can be called to conclude the ``else`` clause
 of a guard statement,
@@ -1093,8 +1231,8 @@ but the new method must preserve its return type and nonreturning behavior.
     function-head --> attributes-OPT declaration-modifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> parameter-clause ``throws``-OPT function-result-OPT
-    function-signature --> parameter-clause ``rethrows`` function-result-OPT
+    function-signature --> parameter-clause ``async``-OPT ``throws``-OPT function-result-OPT
+    function-signature --> parameter-clause ``async``-OPT ``rethrows`` function-result-OPT
     function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
@@ -1111,7 +1249,7 @@ but the new method must preserve its return type and nonreturning behavior.
 .. NOTE: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
-    There is also the low-level "asm name" FFI
+    There's also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
 
@@ -1129,14 +1267,14 @@ zero or more values---called :newTerm:`enumeration cases`---
 and any number of declarations,
 including computed properties,
 instance methods, type methods, initializers, type aliases,
-and even other enumeration, structure, and class declarations.
+and even other enumeration, structure, class, and actor declarations.
 Enumeration declarations can't contain deinitializer or protocol declarations.
 
 Enumeration types can adopt any number of protocols, but can’t inherit from classes,
 structures, or other enumerations.
 
 Unlike classes and structures,
-enumeration types do not have an implicitly provided default initializer;
+enumeration types don't have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
 only after an initializer assigns one of the enumeration cases to ``self``.
@@ -1238,7 +1376,7 @@ mark the entire enumeration with the ``indirect`` modifier ---
 this is convenient when the enumeration contains many cases
 that would each need to be marked with the ``indirect`` modifier.
 
-An enumeration that is marked with the ``indirect`` modifier
+An enumeration that's marked with the ``indirect`` modifier
 can contain a mixture of cases that have associated values and cases those that don't.
 That said,
 it can't contain any cases that are also marked with the ``indirect`` modifier.
@@ -1303,9 +1441,9 @@ Each case must have a unique name and be assigned a unique raw value.
 
 If the raw-value type is specified as ``Int``
 and you don't assign a value to the cases explicitly,
-they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
+they're implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
-that is automatically incremented from the raw value of the previous case.
+that's automatically incremented from the raw value of the previous case.
 
 .. testcode:: raw-value-enum
 
@@ -1375,7 +1513,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     UPDATE: You can only have one raw-value type specified.
     I changed the grammar to be more restrictive in light of this.
 
-.. NOTE: Per Doug and Ted, "('->' type)?" is not part of the grammar.
+.. NOTE: Per Doug and Ted, "('->' type)?" isn't part of the grammar.
     We removed it from our grammar, below.
 
 .. syntax-grammar::
@@ -1408,7 +1546,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     I'm not sure I'm happy with the names I've chosen for two kinds of enums,
     so please let me know if you can think of better names (Tim and Dave are OK with them)!
     I chose union-style-enum, because this kind of enum behaves like a discriminated union,
-    not like an ordinary enum type. They are a kind of "sum" type in the language
+    not like an ordinary enum type. They're a kind of "sum" type in the language
     of ADTs (Algebraic Data Types). Functional languages, like F# for example,
     actually have both types (discriminated unions and enumeration types),
     because they behave differently. I'm not sure why we've blended them together,
@@ -1446,7 +1584,7 @@ Structure declarations are declared using the ``struct`` keyword and have the fo
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 type properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, and enumeration declarations.
+type aliases, and even other structure, class, actor, and enumeration declarations.
 Structure declarations can't contain deinitializer or protocol declarations.
 For a discussion and several examples of structures
 that include various kinds of declarations,
@@ -1511,7 +1649,7 @@ The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
 instance methods, type methods, initializers,
 a single deinitializer, subscripts, type aliases,
-and even other class, structure, and enumeration declarations.
+and even other class, structure, actor, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
 that include various kinds of declarations,
@@ -1551,7 +1689,7 @@ Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are only
 inherited when the subclass meets the conditions described in
 :ref:`Initialization_AutomaticInitializerInheritance`.
-Swift classes do not inherit from a universal base class.
+Swift classes don't inherit from a universal base class.
 
 There are two ways to create an instance of a previously declared class:
 
@@ -1568,7 +1706,7 @@ as described in :ref:`ClassesAndStructures_AccessingProperties`.
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+see :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -1584,6 +1722,97 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     class-members --> class-member class-members-OPT
     class-member --> declaration | compiler-control-statement
+
+.. _Declarations_ActorDeclaration:
+
+Actor Declaration
+-----------------
+
+An :newTerm:`actor declaration` introduces a named actor type into your program.
+Actor declarations are declared using the ``actor`` keyword and have the following form:
+
+.. syntax-outline::
+
+   actor <#actor name#>: <#adopted protocols#> {
+       <#declarations#>
+   }
+
+The body of an actor contains zero or more *declarations*.
+These *declarations* can include both stored and computed properties,
+instance methods, type methods, initializers,
+a single deinitializer, subscripts, type aliases,
+and even other class, structure, and enumeration declarations.
+For a discussion and several examples of actors
+that include various kinds of declarations,
+see :ref:`Concurrency_Actors`.
+
+Actor types can adopt any number of protocols,
+but can't inherit from classes, enumerations, structures, or other actors.
+However, an actor that is marked with the ``@objc`` attribute
+implicitly conforms to the ``NSObjectProtocol`` protocol
+and is exposed to the Objective-C runtime as a subtype of ``NSObject``.
+
+There are two ways to create an instance of a previously declared actor:
+
+* Call one of the initializers declared within the actor,
+  as described in :ref:`Initialization_Initializers`.
+* If no initializers are declared,
+  and all properties of the actor declaration were given initial values,
+  call the actor's default initializer,
+  as described in :ref:`Initialization_DefaultInitializers`.
+
+By default, members of an actor are isolated to that actor.
+Code, such as the body of a method or the getter for a property,
+is executed on that actor.
+Code within the actor can interact with them synchronously
+because that code is already running on the same actor,
+but code outside the actor must mark them with ``await``
+to indicate that this code is asynchronously running code on another actor.
+Key paths can't refer to isolated members of an actor.
+Actor-isolated stored properties can be passed as in-out parameters
+to synchronous functions,
+but not to asynchronous functions.
+
+Actors can also have nonisolated members,
+whose declarations are marked with the ``nonisolated`` keyword.
+A nonisolated member executes like code outside of the actor:
+It can't interact with any of the actor's isolated state,
+and callers don't mark it with ``await`` when using it.
+
+Members of an actor can be marked with the ``@objc`` attribute
+only if they are nonisolated or asynchronous.
+
+The process of initializing an actor's declared properties
+is described in :doc:`../LanguageGuide/Initialization`.
+
+Properties of a actor instance can be accessed using dot (``.``) syntax,
+as described in :ref:`ClassesAndStructures_AccessingProperties`.
+
+Actors are reference types; instances of an actor are referred to, rather than copied,
+when assigned to variables or constants, or when passed as arguments to a function call.
+For information about reference types,
+see :ref:`ClassesAndStructures_ClassesAreReferenceTypes`.
+
+You can extend the behavior of a structure type with an extension declaration,
+as discussed in :ref:`Declarations_ExtensionDeclaration`.
+
+.. TODO Additional bits from the SE-0306 actors proposal:
+
+   Partial applications of isolated functions are only permitted
+   when the expression is a direct argument
+   whose corresponding parameter is non-escaping and non-Sendable.
+
+.. syntax-grammar::
+
+    Grammar of an actor declaration
+
+    actor-declaration --> attributes-OPT access-level-modifier-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
+    actor-name --> identifier
+    actor-body --> ``{`` actor-members-OPT ``}``
+
+    actor-members --> actor-member actor-members-OPT
+    actor-member --> declaration | compiler-control-statement
+
 
 .. _Declarations_ProtocolDeclaration:
 
@@ -1651,6 +1880,29 @@ see :ref:`Protocols_OptionalProtocolRequirements`.
     compiler team. Update this section if they decide to make everything work
     properly for optional initializer requirements.
 
+The cases of an enumeration can satisfy
+protocol requirements for type members.
+Specifically,
+an enumeration case without any associated values
+satisfies a protocol requirement for
+a get-only type variable of type ``Self``,
+and an enumeration case with associated values
+satisfies a protocol requirement for a function that returns ``Self``
+whose parameters and their argument labels
+match the case's associated values.
+For example:
+
+.. testcode:: enum-case-satisfy-protocol-requirement
+
+    -> protocol SomeProtocol {
+           static var someValue: Self { get }
+           static func someFunction(x: Int) -> Self
+       }
+    -> enum MyEnum: SomeProtocol {
+           case someValue
+           case someFunction(x: Int)
+       }
+
 To restrict the adoption of a protocol to class types only,
 include the ``AnyObject`` protocol in the *inherited protocols*
 list after the colon.
@@ -1677,7 +1929,7 @@ Protocols are named types, and thus they can appear in all the same places
 in your code as other named types, as discussed in :ref:`Protocols_ProtocolsAsTypes`.
 However,
 you can't construct an instance of a protocol,
-because protocols do not actually provide the implementations for the requirements
+because protocols don't actually provide the implementations for the requirements
 they specify.
 
 You can use protocols to declare which methods a delegate of a class or structure
@@ -1720,12 +1972,12 @@ declaration:
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
 that conform to the protocol. As a result, you don't implement the getter or setter
-directly in the protocol in which it is declared.
+directly in the protocol in which it's declared.
 
 The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
 If a property declaration includes both the ``get`` and ``set`` keywords,
 a conforming type can implement it with a stored variable property
-or a computed property that is both readable and writeable
+or a computed property that's both readable and writeable
 (that is, one that implements both a getter and a setter). However,
 that property declaration can't be implemented as a constant property
 or a read-only computed property. If a property declaration includes
@@ -1831,7 +2083,7 @@ by implementing any kind of initializer.
 
 When a class implements an initializer to satisfy a protocol's initializer requirement,
 the initializer must be marked with the ``required`` declaration modifier
-if the class is not already marked with the ``final`` declaration modifier.
+if the class isn't already marked with the ``final`` declaration modifier.
 
 See also :ref:`Declarations_InitializerDeclaration`.
 
@@ -1891,7 +2143,7 @@ Protocol Associated Type Declaration
 
 Protocols declare associated types using the ``associatedtype`` keyword.
 An associated type provides an alias for a type
-that is used as part of a protocol's declaration.
+that's used as part of a protocol's declaration.
 Associated types are similar to type parameters in generic parameter clauses,
 but they're associated with ``Self`` in the protocol in which they're declared.
 In that context, ``Self`` refers to the eventual type that conforms to the protocol.
@@ -2058,7 +2310,7 @@ A subclass’s implementation of that initializer
 must also be marked with the ``required`` declaration modifier.
 
 By default, initializers declared in a superclass
-are not inherited by subclasses.
+aren't inherited by subclasses.
 That said, if a subclass initializes all of its stored properties with default values
 and doesn't define any initializers of its own,
 it inherits all of the superclass's initializers.
@@ -2183,10 +2435,10 @@ and each class can have at most one.
 
 A subclass inherits its superclass's deinitializer,
 which is implicitly called just before the subclass object is deallocated.
-The subclass object is not deallocated until all deinitializers in its inheritance chain
+The subclass object isn't deallocated until all deinitializers in its inheritance chain
 have finished executing.
 
-Deinitializers are not called directly.
+Deinitializers aren't called directly.
 
 For an example of how to use a deinitializer in a class declaration,
 see :doc:`../LanguageGuide/Deinitialization`.
@@ -2595,11 +2847,11 @@ return the requested value directly.
 That said, if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses are optional.
-If you provide a setter name, it is used as the name of the parameter to the setter.
-If you do not provide a setter name, the default parameter name to the setter is ``value``.
+If you provide a setter name, it's used as the name of the parameter to the setter.
+If you don't provide a setter name, the default parameter name to the setter is ``value``.
 The type of the parameter to the setter is the same as the *return type*.
 
-You can overload a subscript declaration in the type in which it is declared,
+You can overload a subscript declaration in the type in which it's declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with the ``override`` declaration modifier.
@@ -2683,7 +2935,7 @@ The following form declares a new infix operator:
 
     infix operator <#operator name#>: <#precedence group#>
 
-An :newTerm:`infix operator` is a binary operator that is written between its two operands,
+An :newTerm:`infix operator` is a binary operator that's written between its two operands,
 such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 
 Infix operators can optionally specify a precedence group.
@@ -2698,7 +2950,7 @@ The following form declares a new prefix operator:
 
     prefix operator <#operator name#>
 
-A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
+A :newTerm:`prefix operator` is a unary operator that's written immediately before its operand,
 such as the prefix logical NOT operator (``!``) in the expression ``!a``.
 
 Prefix operators declarations don't specify a precedence level.
@@ -2710,7 +2962,7 @@ The following form declares a new postfix operator:
 
     postfix operator <#operator name#>
 
-A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
+A :newTerm:`postfix operator` is a unary operator that's written immediately after its operand,
 such as the postfix forced-unwrap operator (``!``) in the expression ``a!``.
 
 As with prefix operators, postfix operator declarations don't specify a precedence level.
@@ -2776,7 +3028,7 @@ binds more tightly to its operands.
    using *lower group names* and *higher group names*
    must fit into a single relational hierarchy,
    but they *don't* have to form a linear hierarchy.
-   This means it is possible to have precedence groups
+   This means it's possible to have precedence groups
    with undefined relative precedence.
    Operators from those precedence groups
    can't be used next to each other without grouping parentheses.
@@ -2808,7 +3060,7 @@ Nonassociative operators of the same precedence level
 can't appear adjacent to each to other.
 For example,
 the ``<`` operator has an associativity of ``none``,
-which means ``1 < 2 < 3`` is not a valid expression.
+which means ``1 < 2 < 3`` isn't a valid expression.
 
 The *assignment* of a precedence group specifies the precedence of an operator
 when used in an operation that includes optional chaining.
@@ -3027,6 +3279,7 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
     declaration-modifier --> access-level-modifier
     declaration-modifier --> mutation-modifier
+    declaration-modifier --> actor-isolation-modifier
     declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
 
     access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
@@ -3036,3 +3289,5 @@ as discussed in :ref:`AccessControl_GettersAndSetters`.
     access-level-modifier --> ``open`` | ``open`` ``(`` ``set`` ``)``
 
     mutation-modifier --> ``mutating`` | ``nonmutating``
+
+    actor-isolation-modifier --> ``nonisolated``

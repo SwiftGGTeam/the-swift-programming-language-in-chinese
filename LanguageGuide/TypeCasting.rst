@@ -29,7 +29,7 @@ This class provides basic functionality for any kind of item that appears
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
 and an ``init name`` initializer.
-(It is assumed that all media items, including all movies and songs, will have a name.)
+(It's assumed that all media items, including all movies and songs, will have a name.)
 
 .. testcode:: typeCasting, typeCasting-err
 
@@ -103,7 +103,7 @@ Checking Type
 Use the :newTerm:`type check operator` (``is``) to check
 whether an instance is of a certain subclass type.
 The type check operator returns ``true`` if the instance is of that subclass type
-and ``false`` if it is not.
+and ``false`` if it's not.
 
 The example below defines two variables, ``movieCount`` and ``songCount``,
 which count the number of ``Movie`` and ``Song`` instances in the ``library`` array:
@@ -129,7 +129,7 @@ On each pass, the ``for``-``in`` loop sets the ``item`` constant
 to the next ``MediaItem`` in the array.
 
 ``item is Movie`` returns ``true`` if the current ``MediaItem``
-is a ``Movie`` instance and ``false`` if it is not.
+is a ``Movie`` instance and ``false`` if it's not.
 Similarly, ``item is Song`` checks whether the item is a ``Song`` instance.
 At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
 contain a count of how many ``MediaItem`` instances were found of each type.
@@ -152,7 +152,7 @@ The forced form, ``as!``, attempts the downcast and force-unwraps the result
 as a single compound action.
 
 Use the conditional form of the type cast operator (``as?``)
-when you are not sure if the downcast will succeed.
+when you aren't sure if the downcast will succeed.
 This form of the operator will always return an optional value,
 and the value will be ``nil`` if the downcast was not possible.
 This enables you to check for a successful downcast.
@@ -173,7 +173,7 @@ for use in the description.
 In this example, each item in the array might be a ``Movie``,
 or it might be a ``Song``.
 You don't know in advance which actual class to use for each item,
-and so it is appropriate to use the conditional form of the type cast operator (``as?``)
+and so it's appropriate to use the conditional form of the type cast operator (``as?``)
 to check the downcast each time through the loop:
 
 .. testcode:: typeCasting
@@ -221,8 +221,8 @@ whenever a ``Song`` is found in the library.
 
 .. note::
 
-   Casting does not actually modify the instance or change its values.
-   The underlying instance remains the same; it is simply treated and accessed
+   Casting doesn't actually modify the instance or change its values.
+   The underlying instance remains the same; it's simply treated and accessed
    as an instance of the type to which it has been cast.
 
 .. TODO: This example should be followed by the same example written with switch,
@@ -246,7 +246,7 @@ Swift provides two special types for working with nonspecific types:
 
 Use ``Any`` and ``AnyObject`` only when you explicitly need
 the behavior and capabilities they provide.
-It is always better to be specific about the types you expect to work with in your code.
+It's always better to be specific about the types you expect to work with in your code.
 
 Here's an example of using ``Any`` to work with a mix of different types,
 including function types and nonclass types.
@@ -254,7 +254,7 @@ The example creates an array called ``things``, which can store values of type `
 
 .. testcode:: typeCasting, typeCasting-err
 
-   -> var things = [Any]()
+   -> var things: [Any] = []
    ---
    -> things.append(0)
    -> things.append(0.0)
@@ -273,7 +273,7 @@ and a closure expression that takes a ``String`` value
 and returns another ``String`` value.
 
 To discover the specific type of a constant or variable
-that is known only to be of type ``Any`` or ``AnyObject``,
+that's known only to be of type ``Any`` or ``AnyObject``,
 you can use an ``is`` or ``as`` pattern in a ``switch`` statement's cases.
 The example below iterates over the items in the ``things`` array
 and queries the type of each item with a ``switch`` statement.

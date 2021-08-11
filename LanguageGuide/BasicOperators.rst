@@ -8,7 +8,7 @@ as in ``let i = 1 + 2``,
 and the logical AND operator (``&&``) combines two Boolean values,
 as in ``if enteredDoorCode && passedRetinaScan``.
 
-Swift supports most standard C operators
+Swift supports the operators you may already know from languages like C,
 and improves several capabilities to eliminate common coding errors.
 The assignment operator (``=``) doesn't return a value,
 to prevent it from being mistakenly used when
@@ -87,18 +87,18 @@ its elements can be decomposed into multiple constants or variables at once:
    rather than from the pattern.
 
 Unlike the assignment operator in C and Objective-C,
-the assignment operator in Swift does not itself return a value.
-The following statement is not valid:
+the assignment operator in Swift doesn't itself return a value.
+The following statement isn't valid:
 
 .. testcode:: assignmentOperatorInvalid
 
    -> if x = y {
-         // This is not valid, because x = y does not return a value.
+         // This isn't valid, because x = y doesn't return a value.
       }
-   !$ error: use of unresolved identifier 'x'
+   !$ error: cannot find 'x' in scope
    !! if x = y {
    !!    ^
-   !$ error: use of unresolved identifier 'y'
+   !$ error: cannot find 'y' in scope
    !! if x = y {
    !!        ^
 
@@ -157,7 +157,7 @@ Remainder Operator
 
 The :newTerm:`remainder operator` (``a % b``)
 works out how many multiples of ``b`` will fit inside ``a``
-and returns the value that is left over
+and returns the value that's left over
 (known as the :newTerm:`remainder`).
 
 .. note::
@@ -292,7 +292,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 Comparison Operators
 --------------------
 
-Swift supports all standard C :newTerm:`comparison operators`:
+Swift supports the following comparison operators:
 
 * Equal to (``a == b``)
 * Not equal to (``a != b``)
@@ -315,7 +315,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
    -> 1 == 1   // true because 1 is equal to 1
    >> )
    >> assert(
-   -> 2 != 1   // true because 2 is not equal to 1
+   -> 2 != 1   // true because 2 isn't equal to 1
    >> )
    >> assert(
    -> 2 > 1    // true because 2 is greater than 1
@@ -327,7 +327,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
    -> 1 >= 1   // true because 1 is greater than or equal to 1
    >> )
    >> assert( !(
-   -> 2 <= 1   // false because 2 is not less than or equal to 1
+   -> 2 <= 1   // false because 2 isn't less than or equal to 1
    >> ) )
 
 Comparison operators are often used in conditional statements,
@@ -362,7 +362,7 @@ For example:
 .. testcode:: tuple-comparison-operators
 
    >> let a =
-   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" are not compared
+   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" aren't compared
    >> let b =
    -> (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
    >> let c =
@@ -398,7 +398,10 @@ with the ``<`` operator because the ``<`` operator can't be applied to
    -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
    >> _ =
    -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
-   !$ error: type '(String, Bool)' cannot conform to 'Comparable'; only struct/enum/class types can conform to protocols
+   !$ error: type '(String, Bool)' cannot conform to 'Comparable'
+   !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+   !!                 ^
+   !$ note: only concrete types such as structs, enums and classes can conform to protocols
    !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
    !!                 ^
    !$ note: required by referencing operator function '<' on 'Comparable' where 'Self' = '(String, Bool)'
@@ -502,7 +505,7 @@ The :newTerm:`nil-coalescing operator` (``a ?? b``)
 unwraps an optional ``a`` if it contains a value,
 or returns a default value ``b`` if ``a`` is ``nil``.
 The expression ``a`` is always of an optional type.
-The expression ``b`` must match the type that is stored inside ``a``.
+The expression ``b`` must match the type that's stored inside ``a``.
 
 The nil-coalescing operator is shorthand for the code below:
 
@@ -516,7 +519,7 @@ The nil-coalescing operator is shorthand for the code below:
    << 42
 
 The code above uses the ternary conditional operator and forced unwrapping (``a!``)
-to access the value wrapped inside ``a`` when ``a`` is not ``nil``,
+to access the value wrapped inside ``a`` when ``a`` isn't ``nil``,
 and to return ``b`` otherwise.
 The nil-coalescing operator provides a more elegant way to encapsulate
 this conditional checking and unwrapping in a concise and readable form.
@@ -524,7 +527,7 @@ this conditional checking and unwrapping in a concise and readable form.
 .. note::
 
    If the value of ``a`` is non-``nil``,
-   the value of ``b`` is not evaluated.
+   the value of ``b`` isn't evaluated.
    This is known as :newTerm:`short-circuit evaluation`.
 
 The example below uses the nil-coalescing operator to choose between
@@ -557,8 +560,8 @@ the value wrapped inside ``userDefinedColorName`` is used instead of the default
 
    -> userDefinedColorName = "green"
    -> colorNameToUse = userDefinedColorName ?? defaultColorName
-   /> userDefinedColorName is not nil, so colorNameToUse is set to \"\(colorNameToUse)\"
-   </ userDefinedColorName is not nil, so colorNameToUse is set to "green"
+   /> userDefinedColorName isn't nil, so colorNameToUse is set to \"\(colorNameToUse)\"
+   </ userDefinedColorName isn't nil, so colorNameToUse is set to "green"
 
 .. _BasicOperators_RangeOperators:
 
@@ -823,7 +826,7 @@ for the overall expression to be ``true``.
 Like the Logical AND operator above,
 the Logical OR operator uses short-circuit evaluation to consider its expressions.
 If the left side of a Logical OR expression is ``true``,
-the right side is not evaluated,
+the right side isn't evaluated,
 because it can't change the outcome of the overall expression.
 
 In the example below,
