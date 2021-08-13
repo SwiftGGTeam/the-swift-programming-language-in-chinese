@@ -24,6 +24,8 @@
 - `iOSApplicationExtension`
 - `macOS`
 - `macOSApplicationExtension`
+- `macCatalyst`
+- `macCatalystApplicationExtension`
 - `watchOS`
 - `watchOSApplicationExtension`
 - `tvOS`
@@ -257,6 +259,29 @@ print(wrapper.x)
 
 该特性不能用于嵌套在函数内的声明，也不能用于 `fileprivate` 或 `private` 访问级别的声明。在内联函数内定义的函数和闭包都是隐式内联的，即使他们不能标记该特性。
 
+### `main` {#main}
+
+将该特性用于结构体、类，或枚举的声明，表示它包含了程序流的顶级入口。类型必须提供一个不接收任何参数，且返回值为 `Void` 的 `main` 类型函数。如下所示：
+
+```swift
+@main
+struct MyTopLevel {
+    static func main() {
+        // 顶级代码从这里开始
+    }
+}
+```
+
+换一个说法，应用了 `main` 特性的类型所必须满足的条件，与遵循下面这个假想的协议一样：
+
+```swift
+protocol ProvidesMain {
+    static func main() throws
+}
+```
+
+编译生成可执行程序的 Swift 代码最多只能拥有一个顶级代码入口，请参阅[顶级代码](../03_language_reference/06_Declarations.md#top-level-code)。
+
 ### `nonobjc` {#nonobjc}
 
 针对方法、属性、下标、或构造器的声明使用该特性将覆盖隐式的 `objc` 特性。`nonobjc` 特性告诉编译器该声明不能在 Objective-C 代码中使用，即便它能在 Objective-C 中表示。
@@ -277,6 +302,8 @@ print(wrapper.x)
 import AppKit
 NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
+
+编译生成可执行程序的 Swift 代码最多只能拥有一个顶级代码入口，请参阅[顶级代码](../03_language_reference/06_Declarations.md#top-level-code)。
 
 ### `NSCopying` {#nscopying}
 
@@ -655,6 +682,8 @@ struct ArrayBuilder {
 在类上使用该特性表示该类是应用程序委托类。使用该特性与调用 `UIApplicationMain` 函数并且把该类的名字作为委托类的名字传递给函数的效果相同。
 
 如果你不想使用这个特性，可以提供一个 `main.swift` 文件，并在代码顶层调用 `UIApplicationMain(_:_:_:_:)` 函数。比如，如果你的应用程序使用一个继承于 `UIApplication` 的自定义子类作为主要类，你可以调用 `UIApplicationMain(_:_:_:_:)` 函数而不是使用该特性。
+
+编译生成可执行程序的 Swift 代码最多只能拥有一个顶级代码入口，请参阅[顶级代码](../03_language_reference/06_Declarations.md#top-level-code)。
 
 ### `usableFromInline` {#usablefrominline}
 
