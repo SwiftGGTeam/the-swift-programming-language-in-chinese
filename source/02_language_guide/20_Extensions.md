@@ -11,7 +11,7 @@ Swift 中的扩展可以：
  - 定义和使用新的嵌套类型
  - 使已经存在的类型遵循（conform）一个协议
 
-在 Swift 中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。你可以从 [协议扩展](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID521) 获取更多细节。
+在 Swift 中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。你可以从 [协议扩展](./21_Protocols.md#protocol-extensions) 获取更多细节。
 
 > 注意
 > 
@@ -35,9 +35,9 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 }
 ```
 
-这种遵循协议的方式在 [使用扩展遵循协议](https://docs.swift.org/swift-book/LanguageGuide/Protocols.html#ID277) 中有描述。
+这种遵循协议的方式在 [在扩展里添加协议遵循](./21_Protocols.md#adding-protocol-conformance-with-an-extension) 中有描述。
 
-扩展可以使用在现有范型类型上，就像 [扩展范型类型](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID185) 中描述的一样。你还可以使用扩展给泛型类型有条件的添加功能，就像 [扩展一个带有 Where 字句的范型](https://docs.swift.org/swift-book/LanguageGuide/Generics.html#ID553) 中描述的一样。
+扩展可以使用在现有范型类型上，就像 [泛型扩展](./22_Generics.md#extending-a-generic-type) 中描述的一样。你还可以使用扩展给泛型类型有条件的添加功能，就像 [具有泛型 Where 子句的扩展](./22_Generics.md#extensions-with-a-generic-where-clause) 中描述的一样。
 
 > 注意
 > 
@@ -87,7 +87,7 @@ print("A marathon is \(aMarathon) meters long")
 
 扩展可以给一个类添加新的便利构造器，但是它们不能给类添加新的指定构造器或者析构器。指定构造器和析构器必须始终由类的原始实现提供。
 
-如果你使用扩展给一个值类型添加构造器，而这个值类型已经为所有存储属性提供默认值，且没有定义任何自定义构造器，那么你可以在该值类型扩展的构造器中使用默认构造器和成员构造器。如果你已经将构造器写在值类型的原始实现中，则不适用于这种情况，如同 [值类型的构造器委托](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID215) 中所描述的那样。
+如果你使用扩展给一个值类型添加构造器，而这个值类型已经为所有存储属性提供默认值，且没有定义任何自定义构造器，那么你可以在该值类型扩展的构造器中使用默认构造器和成员构造器。如果你已经将构造器写在值类型的原始实现中，则不适用于这种情况，如同 [值类型的构造器代理](./14_Initialization.md#initializer-delegation-for-value-types) 中所描述的那样。
 
 如果你使用扩展给另一个模块中定义的结构体添加构造器，那么新的构造器直到定义模块中使用一个构造器之前，不能访问 `self`。
 
@@ -106,7 +106,7 @@ struct Rect {
 }
 ```
 
-因为 `Rect` 结构体给所有的属性都提供了默认值，所以它自动获得了一个默认构造器和一个成员构造器，就像 [默认构造器](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID213) 中描述的一样。这些构造器可以用来创建新的 `Rect` 实例：
+因为 `Rect` 结构体给所有的属性都提供了默认值，所以它自动获得了一个默认构造器和一个成员构造器，就像 [默认构造器](./14_Initialization.md#default-initializers) 中描述的一样。这些构造器可以用来创建新的 `Rect` 实例：
 
 ```swift
 let defaultRect = Rect()
