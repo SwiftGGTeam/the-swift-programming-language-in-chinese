@@ -64,7 +64,7 @@ show(photo)
 
 * 异步函数，方法或变量内部的代码
 * 静态函数 `main()` 中被打上 `@main` 标记的结构体，类或者枚举中的代码
-* 游离的子任务中的代码，之后会在[非结构化并行](../03_language_reference/28_Concurrency.md#Unstructured-Concurrency)中说明
+* 游离的子任务中的代码，之后会在[非结构化并行](#Unstructured-Concurrency)中说明
 
 > 注意
 > 
@@ -73,7 +73,7 @@ show(photo)
 
 ```Swift
 func listPhotos(inGallery name: String) async -> [String] {
-    await Task.sleep(2 * 1_000_000_000)  // Two seconds
+    await Task.sleep(2 * 1_000_000_000)  // 两秒
     return ["IMG001", "IMG99", "IMG0404"]
 }
 ```
@@ -154,7 +154,7 @@ await withTaskGroup(of: Data.self) { taskGroup in
 对于并发来说，除了上一部分讲到的结构化的方式，Swift 还支持非结构化并发。与任务组中的任务不同的是，*非结构化任务（unstructured task）*并没有父任务。你能以任何方式来处理非结构化任务以满足你程序的需要，但与此同时，你对于他们的正确性需要付全责。如果想创建一个在当前 actor 上运行的非结构化任务，需要调用初始化方法 [Task.init(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856790-init)。如果想要创建一个不在当前 actor 上运行的非结构化任务（更具体地说就是*游离任务（detached task）*），需要调用类方法 [Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856786-detached)。两种方法都能返回一个能让你与任务交互（继续等待结果或取消任务）的任务句柄，如下：
 
 ```Swift
-let newPhoto = // ... some photo data ...
+let newPhoto = // ... 图片数据 ...
 let handle = Task {
     return await add(newPhoto, toGalleryNamed: "Spring Adventures")
 }
@@ -198,7 +198,7 @@ actor TemperatureLogger {
 ```Swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
 print(await logger.max)
-// Prints "25"
+// 输出 "25"
 ```
 
 在这个例子中，访问 `logger.max` 是一个可能的悬点。因为 actor 在同一时间只允许一个任务访问它的可变状态，如果别的任务正在与 logger 交互，上面这段代码将会在等待访问属性的时候被挂起。
