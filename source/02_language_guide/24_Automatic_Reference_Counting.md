@@ -323,9 +323,61 @@ john = nil
 
 ### 无主可选引用
 
-可以将类的可选引用标记为无主引用。按照 ARC 的所有权模型，
+可以将类的可选引用标记为无主引用。按照 ARC 的所有权模型，无主可选引用和弱应用都可以在同一上下文里使用。区别是使用无主可选引用时，需要保证引用的对象总是合法的，或者将它设置为 `nil`。
 
+这里有一个追踪学校特定系科所提供课程的示例：
 
+```swift
+class Department {
+    var name: String
+    var courses: [Course]
+    init(name: String) {
+        self.name = name
+        self.courses = []
+    }
+}
+
+class Course {
+    var name: String
+    unowned var department: Department
+    unowned var nextCourse: Course?
+    init(name: String, in department: Department) {
+        self.name = name
+        self.department = department
+        self.nextCourse = nil
+    }
+}
+```
+
+`Department` 维持着系科对其提供的每个课程的强引用。在 ARC 的所有权模型中，系科持有它的课程。`Course` 持有两个无主引用，一个是它对应的系科，另一个是学生应该修的后续课程，但课程不应该持有这两个对象。每个课程都有对应的系科，所以 `department` 属性不是可选的。然而某些课程没有推荐的后续课程，所以 `nextCourse` 属性是可选的。
+
+下面是使用这些类的示例：
+
+```swift
+let department = Department(name: "Horticulture")
+
+let intro = Course(name: "Survey of Plants", in: department)
+let intermediate = Course(name: "Growing Common Herbs", in: department)
+let advanced = Course(name: "Caring for Tropical Plants", in: department)
+
+intro.nextCourse = intermediate
+intermediate.nextCourse = advanced
+department.courses = [intro, intermediate, advanced]
+```
+
+上面的代码创建系科和它的三个课程。intro 和 intermediate 课程都将建议的后续课程存储在它们的 `nextCourse`属性中，通过无主可选引用关联学生完成该课程后的应修课程。
+
+![](https://docs.swift.org/swift-book/_images/unownedOptionalReference_2x.png)
+
+无主可选引用不会保持对包装类实例的强持有，所以它不会影响 ARC 对该实例的析构。在 ARC 下，无主可选引用除了可以为 `nil` 外，其他表现和无主引用一致。
+
+类似不可选无主引用，需要保证确保 `nextCourse` 总是引用一个还没被析构的课程。在这个案例中，假如需要从 `department.courses` 里删除一个课程，同时也需要在其他可能引用它的课程里移除它。
+
+> 注意
+>
+> 可选值的底层类型是 `Optional`，是 Swift 标准库里的枚举。然而，可选是值类型不能被标记为 `unowned` 的唯一例外。
+>
+> 可选值包装的类不使用引用计数，所以不需要维持对可选值的强引用。
 
 ### 无主引用和隐式解包可选值属性 {#unowned-references-and-implicitly-unwrapped-optional-properties}
 
