@@ -25,6 +25,7 @@ Swift 官方文档中文翻译由 [numbbbbb](https://github.com/numbbbbb) 发起
 - [WAMaker](https://github.com/WAMaker)
 - [YiYiZheng](https://github.com/YiYiZheng)
 - [Yousanflics](https://github.com/Yousanflics)
+- [CyberHex](https://cyberhex.me/)
 
 ## Swift 4.x 主要贡献者
 

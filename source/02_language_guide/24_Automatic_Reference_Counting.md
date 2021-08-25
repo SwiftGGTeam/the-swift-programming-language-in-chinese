@@ -321,7 +321,7 @@ john = nil
 > 上面的例子展示了如何使用安全的无主引用。对于需要禁用运行时的安全检查的情况（例如，出于性能方面的原因），Swift 还提供了不安全的无主引用。与所有不安全的操作一样，你需要负责检查代码以确保其安全性。
 > 你可以通过 `unowned(unsafe)` 来声明不安全无主引用。如果你试图在实例被销毁后，访问该实例的不安全无主引用，你的程序会尝试访问该实例之前所在的内存地址，这是一个不安全的操作。
 
-### 无主可选引用
+### 无主可选引用 {#unowned-optional-references}
 
 可以将类的可选引用标记为无主引用。按照 ARC 的所有权模型，无主可选引用和弱应用都可以在同一上下文里使用。区别是使用无主可选引用时，需要保证引用的对象总是合法的，或者将它设置为 `nil`。
 
@@ -365,7 +365,7 @@ intermediate.nextCourse = advanced
 department.courses = [intro, intermediate, advanced]
 ```
 
-上面的代码创建系科和它的三个课程。intro 和 intermediate 课程都将建议的后续课程存储在它们的 `nextCourse`属性中，通过无主可选引用关联学生完成该课程后的应修课程。
+上面的代码创建系科和它的三个课程。intro 和 intermediate 课程都将建议的后续课程存储在它们的 `nextCourse` 属性中，通过无主可选引用关联学生完成该课程后的应修课程。
 
 ![](https://docs.swift.org/swift-book/_images/unownedOptionalReference_2x.png)
 
