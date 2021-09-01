@@ -1881,7 +1881,7 @@ Swift 提供了五个级别的访问控制：`open`、`public`、`internal`、`f
 > 
 
 #### declaration-modifier {#declaration-modifier}
-> *声明修饰符* → **class** | **convenience**| **dynamic** | **final** | **infix** | **lazy** | **mutating** | **nonmutating** | **optional** | **override** | **postfix** | **prefix** | **required** | **static** | **unowned** | **unowned ( safe )** | **unowned ( unsafe )** | **weak**
+> *声明修饰符* → **class** | **convenience** | **dynamic** | **final** | **infix** | **lazy** | **optional** | **override** | **postfix** | **prefix** | **required** | **static** | **unowned** | **unowned ( safe )** | **unowned ( unsafe )** | **weak**
 > 
 > 声明修饰符 → [访问级别修饰符](#access-level-modifier)
 > 
