@@ -660,9 +660,9 @@ Swift 定义了 `Never` 类型，它表示函数或者方法不会返回给它�
 ####  function-signature {#function-signature}
 > 
 >
-> *函数签名* → [参数子句列表](#parameter-clauses) **throws**<sub>可选</sub> [函数结果](#function-result)<sub>可选</sub>
+> *函数签名* → [参数子句列表](#parameter-clauses) **async**<sub>可选</sub> **throws**<sub>可选</sub> [函数结果](#function-result)<sub>可选</sub>
 > 
-> *函数签名* → [参数子句列表](#parameter-clauses) **rethrows** [函数结果](#function-result)<sub>可选</sub>
+> *函数签名* → [参数子句列表](#parameter-clauses) **async**<sub>可选</sub> **rethrows** [函数结果](#function-result)<sub>可选</sub>
 > 
 > 
 ####  function-result {#function-result}
