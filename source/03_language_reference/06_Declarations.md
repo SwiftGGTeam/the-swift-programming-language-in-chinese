@@ -1754,11 +1754,11 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 > 
 
 #### precedence-group-declaration {#precedence-group-declaration}
-> *优先级组声明* → **precedence**[优先级组名称](#precedence-group-name){[多优先级组属性](#precedence-group-attributes)<sub>可选</sub> }
+> *优先级组声明* → **precedencegroup** [优先级组名称](#precedence-group-name) **{** [多优先级组属性](#precedence-group-attributes)<sub>可选</sub> **}**
 > 
 
 #### precedence-group-attributes {#precedence-group-attributes}
-> *优先级组属性* → [优先级组属性](#precedence-group-attribute)[多优先级组属性](#precedence-group-attributes)<sub>可选</sub> **{** **}**
+> *优先级组属性* → [优先级组属性](#precedence-group-attribute) [多优先级组属性](#precedence-group-attributes)<sub>可选</sub>
 > 
 
 #### precedence-group-attribute {#precedence-group-attribute}
@@ -1771,30 +1771,30 @@ Swift 定义了大量的优先级组来与标准库的运算符配合使用，�
 > 
 ####  precedence-group-relation {#precedence-group-relation}
 > 
-> *优先级组关系* → **higherThan:**[多优先级组名称](#precedence-group-names)
+> *优先级组关系* → **higherThan** **:** [多优先级组名称](#precedence-group-names)
 > 
-> *优先级组关系* → **lowerThan:**[多优先级组名称](#precedence-group-names)
+> *优先级组关系* → **lowerThan** **:** [多优先级组名称](#precedence-group-names)
 > 
 > 
 ####  precedence-group-assignment {#precedence-group-assignment}
 > 
-> *优先级组赋值* → **assignment:**[布尔字面值](./02_Lexical_Structure.md#boolean-literal)
+> *优先级组赋值* → **assignment** **:** [布尔字面值](./02_Lexical_Structure.md#boolean-literal)
 > 
 
 #### precedence-group-associativity {#precedence-group-associativity}
-> *优先级组结合性* → **associativity:left**
+> *优先级组结合性* → **associativity** **:** **left**
 > 
-> *优先级组结合性* → **associativity:right**
+> *优先级组结合性* → **associativity** **:** **right**
 > 
-> *优先级组结合性* → **associativity:none**
+> *优先级组结合性* → **associativity** **:** **none**
 > 
 
 #### precedence-group-names {#precedence-group-names}
-> *多优先级组名称* → [优先级组名称](#precedence-group-name) | [优先级组名称](#precedence-group-name) | [优先级组名称](#precedence-group-name)
+> *多优先级组名称* → [优先级组名称](#precedence-group-name) | [优先级组名称](#precedence-group-name) **,** [多优先级组名称](#precedence-group-names)
 > 
 
 #### precedence-group-name {#precedence-group-name}
-> *优先级组名称* →[标识符](./02_Lexical_Structure.md#identifier)
+> *优先级组名称* → [标识符](./02_Lexical_Structure.md#identifier)
 > 
 
 ## 声明修饰符 {#Declaration-Modifiers}
