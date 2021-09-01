@@ -1885,7 +1885,10 @@ Swift 提供了五个级别的访问控制：`open`、`public`、`internal`、`f
 > 
 > 声明修饰符 → [访问级别修饰符](#access-level-modifier)
 > 
+> 声明修饰符 → [可变修饰符](#mutation-modifier)
 > 
+> 声明修饰符 → [actor 隔离修饰符](#actor-isolation-modifier)
+>  
 ####  declaration-modifiers {#declaration-modifiers}
 > 
 > *声明修饰符列表* → [声明修饰符](#declaration-modifier) [声明修饰符列表](#declaration-modifiers)<sub>可选</sub>
