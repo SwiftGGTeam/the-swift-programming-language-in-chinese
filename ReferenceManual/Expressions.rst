@@ -2248,6 +2248,32 @@ split over several lines:
    >> print(x)
    << [1000, 1500, 2000]
 
+.. XXX
+
+   - you can include #if as part of a postfix expression
+   - combined with the syntax from above for chained methods
+     this gives you a way to apply methods in the chain
+     for only certain conditions
+   - the body of the #if is either:
+     + an implicit member expression followed by by zero or more postfixes,
+       to form a postfix expression
+     + another #if block
+     + a combination of the two
+   - the body of the #if can't be empty, but the #else can be
+   - this syntax is allowed anywhere an explicit member expression is allowed;
+     it's not restricted to the top level
+
+.. testcode:: pound-if-inside-postfix-expression
+
+   -> let numbers = [10, 20, 33, 43, 50]
+      #if os(iOS)
+          .filter { $0 < 40 }
+      #else
+          .filter { $0 > 25 }
+      #endif
+   >> print(numbers)
+   << [33, 43, 50]
+
 .. syntax-grammar::
 
     Grammar of an explicit member expression
@@ -2255,6 +2281,7 @@ split over several lines:
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
     explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
+    explicit-member-expression --> postfix-expression conditional-compilation-block
 
     argument-names --> argument-name argument-names-OPT
     argument-name --> identifier ``:``
