@@ -444,6 +444,38 @@ let anotherInstance = metatype.init(string: "some string")
 #### metatype-type {#metatype-type}
 > *元类型* → [类型](#type) **.** **Type** | [类型](#type) **.** **Protocol**
 
+## 任意类型{#any-type-h}
+
+`Any` 类型可以包含其他类型的值。`Any` 可以用于以下类型实例的具体类型：
+
+* 类、结构体或枚举
+* 元类型，例如 `Int.self`
+* 任意类型组成的元组
+* 闭包或函数类型
+
+```Swift
+let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
+```
+
+当使用 `Any` 作为实例的具体类型时，访问其属性和方法之前需要转换其为已知类型。类型是 `Any` 的实例保留其原始的动态类型，并且可以通过任一类型转换操作符 `as`、`as?` 或 `as!` 进行类型转换。例如下文，使用 `as?` 将进行混合数组中第一个对象根据情况向下转换为 `String` 。
+
+```swift
+if let first = mixed.first as? String {
+    print("The first item, '\(first)', is a string.")
+}
+// 打印 "The first item, 'one', is a string."
+```
+
+关于转换的更多细节，请参阅 [类型转换](../02_language_guide/18_Type_Casting.md)。
+
+`AnyObject` 协议和 `Any` 类型类似。所有类隐式遵循 `AnyObject`。和 `Any` 不一样，`AnyObject`  定义在 Swift 标准库中而不是在语言里。更多细节，请参阅 [类专属的协议](../02_language_guide/121_Protocols.md#class-only-protoco) 和  [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject)。
+
+> 任意类型语法
+
+#### any-type{#any-type}
+
+> *任意类型* → **Any**
+
 ## 自身类型 {#self-type-h}
 
 `Self` 类型不是具体的类型，而是让你更方便的引用当前类型，不需要重复或者知道该类的名字。
