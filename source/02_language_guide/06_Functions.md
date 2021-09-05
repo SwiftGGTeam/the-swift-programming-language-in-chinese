@@ -206,7 +206,7 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 ### 隐式返回的函数 {#functions-with-an-implicit-return}
 如果一个函数的整个函数体是一个单行表达式，这个函数可以隐式地返回这个表达式。举个例子，以下的函数有着同样的作用：
 
-```
+```swift
 func greeting(for person: String) -> String {
     "Hello, " + person + "!"
 }
