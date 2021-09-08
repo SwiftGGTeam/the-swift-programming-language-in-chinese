@@ -203,6 +203,10 @@ so they must be escaped with backticks in that context.
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
+   and from "utils/gyb_syntax_support/Token.py",
+   which generates the TokenKinds.def file.
+
+   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 
 * Keywords used in declarations:
   ``associatedtype``,
@@ -220,6 +224,7 @@ so they must be escaped with backticks in that context.
   ``open``,
   ``operator``,
   ``private``,
+  ``precedencegroup``,
   ``protocol``,
   ``public``,
   ``rethrows``,
@@ -229,9 +234,12 @@ so they must be escaped with backticks in that context.
   ``typealias``,
   and ``var``.
 
+.. Token.py doesn't include 'open' but DeclNodes.py does.
+
 * Keywords used in statements:
   ``break``,
   ``case``,
+  ``catch``,
   ``continue``,
   ``default``,
   ``defer``,
@@ -244,20 +252,22 @@ so they must be escaped with backticks in that context.
   ``in``,
   ``repeat``,
   ``return``,
+  ``throw``,
   ``switch``,
   ``where``,
   and ``while``.
 
 * Keywords used in expressions and types:
-  ``as``,
   ``Any``,
+  ``as``,
   ``catch``,
   ``false``,
   ``is``,
   ``nil``,
-  ``super``,
+  ``rethrows``,
   ``self``,
   ``Self``,
+  ``super``,
   ``throw``,
   ``throws``,
   ``true``,
@@ -270,31 +280,45 @@ so they must be escaped with backticks in that context.
   ``#available``,
   ``#colorLiteral``,
   ``#column``,
-  ``#else``,
+  ``#dsohandle``,
   ``#elseif``,
+  ``#else``,
   ``#endif``,
   ``#error``,
-  ``#file``,
   ``#fileID``,
   ``#fileLiteral``,
   ``#filePath``,
+  ``#file``,
   ``#function``,
   ``#if``,
   ``#imageLiteral``,
+  ``#keyPath``,
   ``#line``,
   ``#selector``,
   ``#sourceLocation``,
   and ``#warning``.
 
+.. Token.py includes #assert,
+   which looks like it's part of an experimental feature
+   based on the pound_assert_disabled diagnostic's error message:
+   #assert is an experimental feature that is currently disabled
+
+.. Token.py includes #fileID,
+   which looks like it's part of a future feature related to
+   -enable-experimental-concise-pound-file (see also Swift commit 0e569f5d9e66)
+
+.. Token.py includes 'yield' as a keyword,
+   which looks like it's related to a future feature around memory ownership.
+
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
-  ``dynamic``,
   ``didSet``,
+  ``dynamic``,
   ``final``,
   ``get``,
-  ``infix``,
   ``indirect``,
+  ``infix``,
   ``lazy``,
   ``left``,
   ``mutating``,
@@ -309,6 +333,7 @@ so they must be escaped with backticks in that context.
   ``required``,
   ``right``,
   ``set``,
+  ``some``,
   ``Type``,
   ``unowned``,
   ``weak``,
@@ -318,6 +343,9 @@ so they must be escaped with backticks in that context.
 
 .. NOTE: The list of context-sensitive keywords above
    is derived from the file "swift/include/swift/AST/Attr.def"
+   where they're marked CONTEXTUAL_SIMPLE_DECL_ATTR.
+   However, not all context-sensitive keywords appear there;
+
 
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
