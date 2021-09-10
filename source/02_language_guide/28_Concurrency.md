@@ -60,10 +60,10 @@ show(photo)
 5. 接下来的 `await` 标记是在调用 `downloadPhoto(named:)` 的地方。这里会再次暂停这段代码的执行直到函数返回，从而给了其他并行代码执行的机会。
 6. 在 `downloadPhoto(named:)` 返回后，它的返回值会被赋值到 `photo` 变量中，然后被作为参数传递给 `show(_:)`。
 
-代码中被 `await` 标记的悬点表明当前这段代码可能会暂停等待异步方法或函数的返回。这也被成为*让出线程（yielding the thread）*，因为在幕后 Swift 会挂起你这段代码在当前线程的执行，转而让其他代码在当前线程执行。因为有被 `await` 标记的代码得可以被挂起，所以程序中只有特定的地方才能调用异步方法或函数：
+代码中被 `await` 标记的悬点表明当前这段代码可能会暂停等待异步方法或函数的返回。这也被称为*让出线程（yielding the thread）*，因为在幕后 Swift 会挂起你这段代码在当前线程的执行，转而让其他代码在当前线程执行。因为有 `await` 标记的代码可以被挂起，所以在程序中只有特定的地方才能调用异步方法或函数：
 
 * 异步函数，方法或变量内部的代码
-* 静态函数 `main()` 中被打上 `@main` 标记的结构体，类或者枚举中的代码
+* 静态函数 `main()` 中被打上 `@main` 标记的结构体、类或者枚举中的代码
 * 游离的子任务中的代码，之后会在[非结构化并行](#Unstructured-Concurrency)中说明
 
 > 注意
@@ -136,7 +136,7 @@ show(photos)
 
 *任务（task)*是一项工作，可以作为程序的一部分并发执行。所有的异步代码都属于某个任务。上一部分介绍的 `async-let` 语法就会产生一个子任务。你也可以创建一个任务组并且给其中添加子任务，这可以让你对优先级和任务取消有了更多的掌控力，并且可以控制任务的数量。
 
-任务是按层级结构排列的。同一个任务组中的任务拥有相同的父任务，并且每个任务都可以添加子任务。由于任务和任务组之前明确的关系，这种方式又被称为*结构化并发（structured concurrency）*。虽然你需要确保代码的正确性，但任务间明确的父子关系让 Swift 能替你处理一些如扩散取消（propagating cancellation）之类的行为，并且能让 Swift 在编译阶段发现一些错误。
+任务是按层级结构排列的。同一个任务组中的任务拥有相同的父任务，并且每个任务都可以添加子任务。由于任务和任务组之间明确的关系，这种方式又被称为*结构化并发（structured concurrency）*。虽然你需要确保代码的正确性，但任务间明确的父子关系让 Swift 能替你处理一些如扩散取消（propagating cancellation）之类的行为，并且能让 Swift 在编译阶段发现一些错误。
 
 ```Swift
 await withTaskGroup(of: Data.self) { taskGroup in
@@ -151,7 +151,7 @@ await withTaskGroup(of: Data.self) { taskGroup in
 
 ### 非结构化并发 {#Unstructured-Concurrency}
 
-对于并发来说，除了上一部分讲到的结构化的方式，Swift 还支持非结构化并发。与任务组中的任务不同的是，*非结构化任务（unstructured task）*并没有父任务。你能以任何方式来处理非结构化任务以满足你程序的需要，但与此同时，你对于他们的正确性需要付全责。如果想创建一个在当前 actor 上运行的非结构化任务，需要调用初始化方法 [Task.init(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856790-init)。如果想要创建一个不在当前 actor 上运行的非结构化任务（更具体地说就是*游离任务（detached task）*），需要调用类方法 [Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856786-detached)。两种方法都能返回一个能让你与任务交互（继续等待结果或取消任务）的任务句柄，如下：
+对于并发来说，除了上一部分讲到的结构化的方式，Swift 还支持非结构化并发。与任务组中的任务不同的是，*非结构化任务（unstructured task）*并没有父任务。你能以任何方式来处理非结构化任务以满足你程序的需要，但与此同时，你需要对于他们的正确性付全责。如果想创建一个在当前 actor 上运行的非结构化任务，需要调用初始化方法 [Task.init(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856790-init)。如果想要创建一个不在当前 actor 上运行的非结构化任务（更具体地说就是*游离任务（detached task）*），需要调用类方法 [Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856786-detached)。以上两种方法都能返回一个能让你与任务交互（继续等待结果或取消任务）的任务句柄，如下：
 
 ```Swift
 let newPhoto = // ... 图片数据 ...
@@ -164,7 +164,7 @@ let result = await handle.value
 
 ### 任务取消 {#Task-Cancellation}
 
-Swift 中的并发使用合作取消模型。每个任务都在执行中合适的时间点检查自己是否被取消，并且会用任何合适的方式来响应取消操作。这些方式会根据你所执行的工作分为以下几种：
+Swift 中的并发使用合作取消模型。每个任务都会在执行中合适的时间点检查自己是否被取消了，并且会用任何合适的方式来响应取消操作。这些方式会根据你所执行的工作分为以下几种：
 
 * 抛出如 `CancellationError` 这样的错误
 * 返回 nil 或者空的集合
@@ -176,7 +176,7 @@ Swift 中的并发使用合作取消模型。每个任务都在执行中合适�
 
 ## Actors {#Actors}
 
-跟类一样，actor 是一个引用类型，所以 [类是引用类型](https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html#ID89) 中关于值类型和引用类型的比较同样适用于 actor 和类。不同于类的是，actor 在同一时间只允许一个任务访问它的可变状态，这使得多个任务中的代码和一个 actor 交互时更加安全。比如，下面是一个记录温度的 actor：
+跟类一样，actor 也是一个引用类型，所以 [类是引用类型](https://docs.swift.org/swift-book/LanguageGuide/ClassesAndStructures.html#ID89) 中关于值类型和引用类型的比较同样适用于 actor 和类。不同于类的是，actor 在同一时间只允许一个任务访问它的可变状态，这使得多个任务中的代码与一个 actor 交互时更加安全。比如，下面是一个记录温度的 actor：
 
 ```Swift
 actor TemperatureLogger {
@@ -216,13 +216,13 @@ extension TemperatureLogger {
 }
 ```
 
-`update(with:)` 方法本来就在 actor 中运行，所以没必要在访问如 `max` 等属性的时候加 `await` 关键字。这个方法也展示了为什么要在同一时间只允许一个任务访问其可变状态的其中一个理由：一些对于 actor 状态的改变暂时打破了不可变性。 `TemperatureLogger` 记录了一个温度的列表和最高温度，并且会在你更新了一个新测量值之后更新最大温度。在更新的过程中，在增加了新测量值但没有更新 `max` 前，`TemperatureLogger` 正处于一个暂时不一致的状态。阻止不同的任务和同一个 actor 实例交互可以防止一下事件序列的发生：
+`update(with:)` 方法本来就在 actor 中运行，所以没必要在访问如 `max` 等属性的时候加 `await` 关键字。这个方法也展示了为什么要在同一时间只允许一个任务访问其可变状态的其中一个理由：一些对于 actor 状态的改变暂时打破了不可变性。 `TemperatureLogger` 记录了一个温度的列表和最高温度，并且会在你更新了一个新测量值之后更新最大温度。在更新的过程中，在增加了新测量值但没有更新 `max` 前，`TemperatureLogger` 正处于一个暂时不一致的状态。阻止不同的任务和同一个 actor 实例交互可以防止以下事件序列的发生：
 
 1. 你的代码调用 `update(with:)` 方法，并且先更新了 `measurements` 数组。
 2. 在你的代码更新 `max` 前，其他地方的代码读取了最大值和温度列表的值。
 3. 你的代码更新了 `max` 完成调用。
 
-在这种情况下，其他的代码读取到了错误的值因为这次对于 actor 的读取操作被夹在 `update(with:)` 方法中间，而且是的数据正好是无效的。你可以用 Swift 中的 actor 以防止这种问题的发生，因为 actor 只允许同一时间内只有一个任务能访问它的状态，而且只有在被 `await` 标记为悬点的地方代码才会被打断。因为 `update(with:)` 方法没有任何悬点，没有其他任何代码可以在更新的过程中访问到数据。
+在这种情况下，其他的代码读取到了错误的值，因为 actor 的读取操作被夹在 `update(with:)` 方法中间，而此时数据暂时是无效的。你可以用 Swift 中的 actor 以防止这种问题的发生，因为 actor 在同一时刻只允许有一个任务能访问它的状态，而且只有在被 `await` 标记为悬点的地方代码才会被打断。因为 `update(with:)` 方法没有任何悬点，没有其他任何代码可以在更新的过程中访问到数据。
 
 如果你想在 actor 外部像访问类属性一样访问 actor 的属性，会得到一个编译时错误；比如：
 
