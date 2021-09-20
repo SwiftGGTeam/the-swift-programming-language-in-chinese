@@ -1,12 +1,7 @@
 Document Revision History
 =========================
 
-**2021-07-14**
-
-* Updated examples in the :doc:`../LanguageGuide/Concurrency` chapter
-  to use the current concurrency API.
-
-**2021-06-07**
+**2021-09-20**
 
 * Updated for Swift 5.5.
 
@@ -15,6 +10,9 @@ Document Revision History
   and to the :ref:`Declarations_ActorDeclaration`,
   :ref:`Declarations_AsyncFunctions`,
   and :ref:`Expressions_AwaitExpression` sections.
+
+* Updated the :ref:`LexicalStructure_Identifiers` section
+  with information about identifiers that start with an underscore.
 
 **2021-04-26**
 
