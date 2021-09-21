@@ -1121,9 +1121,11 @@ protocol SomeProtocol: AnyObject {
 > *协议主体* → **{** [协议成员声明列表](#protocol-member-declarations)<sub>可选</sub> **}**
 > 
 >
+####  protocol-members {#protocol-members}
+> 
 > *协议多个成员* → [协议成员](#protocol-member) [协议多个成员](#protocol-members)<sub>可选</sub>  
 > 
-> 
+>
 ####  protocol-member {#protocol-member}
 > 
 > *协议成员* →  [协议成员声明](#protocol-member-declaration) | [编译控制流语句](./05_Statements.md#compiler-control-statement)
@@ -1142,11 +1144,8 @@ protocol SomeProtocol: AnyObject {
 > 
 > *协议成员声明* → [协议关联类型声明](#protocol-associated-type-declaration)
 > 
-> 
-####  protocol-member-declarations {#protocol-member-declarations}
-> 
-> *协议成员声明列表* → [协议成员声明](#protocol-member-declaration) [协议成员声明列表](#protocol-member-declarations)<sub>可选</sub>
-> 
+> *协议成员声明* → [类型别名声明](#type-alias-declaration)
+>  
 
 ### 协议属性声明 {#protocol-property-declaration}
 协议可以通过在协议声明主体中引入一个协议属性声明，来声明符合的类型必须实现的属性。协议属性声明有一种特殊的变量声明形式：
