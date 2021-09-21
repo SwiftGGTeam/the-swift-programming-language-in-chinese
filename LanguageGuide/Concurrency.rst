@@ -209,7 +209,7 @@ only certain places in your program can call asynchronous functions or methods:
 
 .. SE-0296 specifically calls out that top-level code is *not* an async context,
    contrary to what you might expect.
-   If that get changed, add this bullet to the list above:
+   If that gets changed, add this bullet to the list above:
 
    - Code at the top level that forms an implicit main function.
 
