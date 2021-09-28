@@ -2248,25 +2248,11 @@ split over several lines:
    >> print(x)
    << [1000, 1500, 2000]
 
-You can include a compiler control statement
-in the middle of a postfix expression,
-using the chained method syntax described above,
-to apply a method only under certain conditions.
-The statements in the conditional compilation block
-are either an implicit member expression followed by by zero or more postfixes,
-to form a postfix expression,
-another conditional compilation block,
-or a combination of those.
-The ``#if`` portion of the conditional compilation block
-must contain at least one expression;
-the ``#else`` portion can be empty.
-
-.. XXX
-
-   - this syntax is allowed anywhere an explicit member expression is allowed;
-     it's not restricted to the top level
-   - introduce & explain the code listing
-
+You can combine this multiline chained syntax
+with compiler control statements
+to choose when each method is called.
+For example,
+the following code uses a different filtering rule on iOS:
 
 .. testcode:: pound-if-inside-postfix-expression
 
@@ -2278,6 +2264,24 @@ the ``#else`` portion can be empty.
       #endif
    >> print(numbers)
    << [33, 43, 50]
+
+.. XXX The indentation gets lost for the .filter lines above
+   even if I start them with -> instead of three spaces
+
+The statements in the conditional compilation block
+are either an implicit member expression followed by by zero or more postfixes,
+to form a postfix expression,
+another conditional compilation block,
+or a combination of those.
+The ``#if`` portion of the conditional compilation block
+must contain at least one expression;
+the ``#else`` portion can be empty.
+
+.. XXX
+   - this syntax is allowed anywhere an explicit member expression is allowed;
+     it's not restricted to the top level
+   - introduce & explain the code listing
+
 
 .. syntax-grammar::
 

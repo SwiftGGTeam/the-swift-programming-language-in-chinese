@@ -1130,6 +1130,10 @@ have the following form:
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
 
+For information about how you can use
+conditional compilation blocks and explicit member expressions together,
+see :ref:`Expressions_ExplicitMemberExpression`.
+
 .. syntax-grammar::
 
     Grammar of a conditional compilation block
