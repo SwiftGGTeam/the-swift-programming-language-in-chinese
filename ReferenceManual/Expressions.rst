@@ -2248,20 +2248,25 @@ split over several lines:
    >> print(x)
    << [1000, 1500, 2000]
 
+You can include a compiler control statement
+in the middle of a postfix expression,
+using the chained method syntax described above,
+to apply a method only under certain conditions.
+The statements in the conditional compilation block
+are either an implicit member expression followed by by zero or more postfixes,
+to form a postfix expression,
+another conditional compilation block,
+or a combination of those.
+The ``#if`` portion of the conditional compilation block
+must contain at least one expression;
+the ``#else`` portion can be empty.
+
 .. XXX
 
-   - you can include #if as part of a postfix expression
-   - combined with the syntax from above for chained methods
-     this gives you a way to apply methods in the chain
-     for only certain conditions
-   - the body of the #if is either:
-     + an implicit member expression followed by by zero or more postfixes,
-       to form a postfix expression
-     + another #if block
-     + a combination of the two
-   - the body of the #if can't be empty, but the #else can be
    - this syntax is allowed anywhere an explicit member expression is allowed;
      it's not restricted to the top level
+   - introduce & explain the code listing
+
 
 .. testcode:: pound-if-inside-postfix-expression
 
