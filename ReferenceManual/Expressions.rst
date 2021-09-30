@@ -2265,8 +2265,12 @@ the following code uses a different filtering rule on iOS:
    >> print(numbers)
    << [33, 43, 50]
 
-.. XXX The indentation gets lost for the .filter lines above
+.. The indentation gets lost for the .filter lines above
    even if I start them with -> instead of three spaces
+   because that's how swift-format re-indents them.
+   This is probably not the same issue as
+   <rdar://problem/32463195> for multiline string literals,
+   but they're likely related.
 
 The statements in the conditional compilation block
 are either an implicit member expression followed by by zero or more postfixes,
