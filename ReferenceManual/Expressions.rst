@@ -2286,6 +2286,37 @@ the ``#else`` portion can be empty.
      it's not restricted to the top level
    - introduce & explain the code listing
 
+.. assertion:: pound-if-empty-if-not-allowed
+
+   >> let numbers = [10, 20, 33, 43, 50]
+   >> #if os(iOS)
+   >> #else
+   >>     .filter { $0 > 25 }
+   >> #endif
+   !$ error: reference to member 'filter' cannot be resolved without a contextual type
+   !! .filter { $0 > 25 }
+   !! ~^~~~~~
+
+.. assertion:: pound-if-else-can-be-empty
+
+   >> let numbers = [10, 20, 33, 43, 50]
+   >> #if os(iOS)
+   >>     .filter { $0 > 25 }
+   >> #else
+   >> #endif
+   >> print(numbers)
+   << [10, 20, 33, 43, 50]
+
+.. assertion:: pound-if-cant-use-binary-operators
+
+   >> let s = "some string"
+   >> #if os(iOS)
+   >>     + " on iOS"
+   >> #endif
+   !$ error: unary operator cannot be separated from its operand
+   !! + " on iOS"
+   !! ^~
+   !!-
 
 .. syntax-grammar::
 
