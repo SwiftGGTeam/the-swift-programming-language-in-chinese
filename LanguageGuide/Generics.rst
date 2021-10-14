@@ -297,7 +297,7 @@ These methods are marked as ``mutating``,
 because they need to modify (or *mutate*) the structure's ``items`` array.
 
 The ``IntStack`` type shown above can only be used with ``Int`` values, however.
-It would be much more useful to define a *generic* ``Stack`` class,
+It would be much more useful to define a *generic* ``Stack`` structure,
 that can manage a stack of *any* type of value.
 
 Here's a generic version of the same code:
