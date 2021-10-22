@@ -2272,19 +2272,26 @@ the following code uses a different filtering rule on iOS:
    <rdar://problem/32463195> for multiline string literals,
    but they're likely related.
 
-The statements in the conditional compilation block
-are either an implicit member expression followed by by zero or more postfixes,
-to form a postfix expression,
-another conditional compilation block,
-or a combination of those.
-The ``#if`` portion of the conditional compilation block
-must contain at least one expression;
-the ``#else`` portion can be empty.
+The conditional compilation block
+contains one of the following:
 
-.. XXX
-   - this syntax is allowed anywhere an explicit member expression is allowed;
-     it's not restricted to the top level
-   - introduce & explain the code listing
+- An implicit member expression
+  followed by by zero or more postfixes,
+  to form a postfix expression.
+
+- Another conditional compilation block.
+
+- A combination of implicit member expressions
+  and conditional compilation blocks
+
+You can use this syntax anywhere that you can write
+an explicit member expression,
+not just in top-level code.
+
+In the conditional compilation block,
+the branch for the ``#if`` compilation directive
+must contain at least one expression.
+However, the branch for ``#else`` can be empty.
 
 .. assertion:: pound-if-empty-if-not-allowed
 
