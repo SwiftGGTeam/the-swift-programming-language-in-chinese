@@ -275,14 +275,16 @@ is to wait for one element of the collection at a time
 using an :newTerm:`asynchronous sequence`.
 Here's what iterating over an asynchronous sequence looks like:
 
-::
+.. testcode:: async-sequence
 
-    import Foundation
-
-    let handle = FileHandle.standardInput
-    for try await line in handle.bytes.lines {
-        print(line)
-    }
+    -> import Foundation
+    ---
+    >> func f() async throws {
+    -> let handle = FileHandle.standardInput
+    -> for try await line in handle.bytes.lines {
+           print(line)
+       }
+    >> }
 
 Instead of using an ordinary ``for``-``in`` loop,
 the example above writes ``for`` with ``await`` after it.
