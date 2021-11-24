@@ -475,6 +475,11 @@ struct SmallNumber {
             }
         }
     }
+
+    init() {
+        self.number = 0
+        self.projectedValue = false
+    }
 }
 struct SomeStructure {
     @SmallNumber var someNumber: Int
