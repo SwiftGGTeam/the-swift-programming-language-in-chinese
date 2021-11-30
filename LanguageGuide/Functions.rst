@@ -399,8 +399,27 @@ property getters can also use an implicit return.
    The code you write as an implicit return value
    needs to return some value.
    For example,
-   you can't use ``fatalError("Oh no!")`` or ``print(13)``
+   you can't use ``print(13)``
    as an implicit return value.
+   However, you can use a function that never returns
+   like ``fatalError("Oh no!")``
+   as an implicit return value,
+   because Swift knows that the implicit return doesn't happen.
+
+.. assertion:: implicit-return-print-instead
+
+   // This is ok:
+   >> func testFatal() -> Int {
+   >>     fatalError("Oh no!")
+   >> }
+   ---
+   // But not this:
+   >> func testPrint() -> Int {
+   >>     print(13)
+   >> }
+   !$ error: cannot convert return expression of type '()' to return type 'Int'
+   !! print(13)
+   !! ^~~~~~~~~
 
 .. _Functions_FunctionParameterNames:
 
