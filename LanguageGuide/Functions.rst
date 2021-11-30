@@ -401,7 +401,7 @@ property getters can also use an implicit return.
    For example,
    you can't use ``print(13)``
    as an implicit return value.
-   However, can use a function that never returns
+   However, you can use a function that never returns
    like ``fatalError("Oh no!")``
    as an implicit return value,
    because Swift knows that the implicit return doesn't happen.
