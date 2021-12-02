@@ -1097,6 +1097,31 @@ but classes are passed by reference.
    with one card of each combination of rank and suit.
 
 
+.. _Tour_Concurrency:
+
+Concurrency
+-----------
+
+Use ``async`` to mark a function that runs asynchronously.
+
+.. testcode:: guided-tour
+
+    -> func fetchUserID(from server: String) -> Int async {
+           if server == "primary" {
+               return 97
+           }
+           return 501
+       }
+
+.. async functions can call other async functions
+   but non-async can't call async
+
+.. Task { } syntax
+
+.. Actors?  Maybe let's add those later...
+
+
+
 .. _Tour_ProtocolsAndExtensions:
 
 Protocols and Extensions
@@ -1111,7 +1136,7 @@ Use ``protocol`` to declare a protocol.
             mutating func adjust()
        }
 
-Classes, enumerations, and structs can all adopt protocols.
+Classes, enumerations, and structures can all adopt protocols.
 
 .. REFERENCE
    The use of adjust() is totally a placeholder
