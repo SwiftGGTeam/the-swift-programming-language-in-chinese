@@ -1106,20 +1106,48 @@ Use ``async`` to mark a function that runs asynchronously.
 
 .. testcode:: guided-tour
 
-    -> func fetchUserID(from server: String) -> Int async {
+    -> func fetchUserID(from server: String) async -> Int {
            if server == "primary" {
                return 97
            }
            return 501
        }
 
-.. async functions can call other async functions
-   but non-async can't call async
+You mark a call to an asynchronous function by writing ``await`` in front of it.
 
-.. Task { } syntax
+.. testcode:: guided-tour
 
-.. Actors?  Maybe let's add those later...
+    -> func fetchUsername(from server: String) async -> String {
+           let userID = await fetchUserID(from: server)
+           if userID == 501 {
+               return "Test User"
+           }
+           return "Guest"
+       }
 
+Use ``async let`` to call an asynchronous function,
+letting it run in parallel.
+When you use its result, write ``await``.
+
+.. testcode:: guided-tour
+
+    -> func connectUser(to server: String) async {
+           async let userID = fetchUserID(from: server)
+           async let username = fetchUsername(from: server)
+           let greeting = await "Hello \(username), user ID \(userID)"
+           print(greeting)
+       }
+
+Use ``Task`` to call asynchronous functions from synchronous code
+without waiting for them to return.
+
+.. testcode:: guided-tour
+
+    -> Task {
+           await connectUser(to: "primary")
+       }
+    >> import Darwin; sleep(1)  // Pause for task to run
+    <- Hello Guest, user ID 97
 
 
 .. _Tour_ProtocolsAndExtensions:
