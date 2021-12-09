@@ -43,7 +43,7 @@ let explicitDouble: Double = 70
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
 
 ```swift
-let label = "The width is"
+let label = "The width is "
 let width = 94
 let widthLabel = label + String(width)
 ```
