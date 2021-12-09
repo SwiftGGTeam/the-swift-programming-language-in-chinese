@@ -461,8 +461,9 @@ print(mixedRectangle.height)
 ```swift
 @propertyWrapper
 struct SmallNumber {
-    private var number = 0
-    var projectedValue = false
+    private var number: Int
+    private(set) var projectedValue: Bool
+
     var wrappedValue: Int {
         get { return number }
         set {
@@ -474,6 +475,11 @@ struct SmallNumber {
                 projectedValue = false
             }
         }
+    }
+
+    init() {
+        self.number = 0
+        self.projectedValue = false
     }
 }
 struct SomeStructure {
