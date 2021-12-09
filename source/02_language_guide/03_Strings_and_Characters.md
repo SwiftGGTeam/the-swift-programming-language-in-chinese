@@ -631,6 +631,11 @@ let dogString = "Dog‼🐶"
  </tr>
 </table>
 
+如果表格无法正确显示，请参考下图：
+
+![image](https://user-images.githubusercontent.com/2572987/145422655-288a7d40-75f5-4329-b43f-0d942b9b4623.png)
+
+
 ```swift
 for codeUnit in dogString.utf8 {
     print("\(codeUnit) ", terminator: "")
@@ -673,6 +678,11 @@ print("")
   <td>5</td>
  </tr>
 </table>
+
+如果表格无法正确显示，请参考下图：
+
+![image](https://user-images.githubusercontent.com/2572987/145422770-cdcb214a-430e-4a6d-b763-36657b3c8d7e.png)
+
 
 ```swift
 for codeUnit in dogString.utf16 {
