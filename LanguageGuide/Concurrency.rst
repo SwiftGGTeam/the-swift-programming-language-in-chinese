@@ -204,7 +204,7 @@ only certain places in your program can call asynchronous functions or methods:
 - Code in the static ``main()`` method of
   a structure, class, or enumeration that's marked with ``@main``.
 
-- Code in a detached child task,
+- Code in an unstructured child task,
   as shown in :ref:`Concurrency_TaskHandle` below.
 
 .. SE-0296 specifically calls out that top-level code is *not* an async context,
