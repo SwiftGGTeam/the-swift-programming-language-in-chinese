@@ -69,6 +69,8 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 *标识符（identifier）* 可以由以下的字符开始：大写或小写的字母 `A` 到 `Z`、下划线（`_`）、基本多文种平面（Basic Multilingual Plane）中非字符数字组合的 Unicode 字符以及基本多文种平面以外的非个人专用区字符。在首字符之后，允许使用数字和组合 Unicode 字符。
 
+以下划线开头的标识视为内部标识符，即使声明了 `public` 访问级别。这个约定允许框架作者标记一部分不能被使用方调用或依赖的 API，即便因为某些限制原因导致它的声明必须是公开的。另外，双下划线开头的标识符是为 Swift 编译器和标准库预留的。
+
 使用保留字作为标识符，需要在其前后增加反引号（`` ` ``）。例如，`class` 不是合法的标识符，但可以使用 `` `class` ``。反引号不属于标识符的一部分，`` `x` `` 和 `x` 表示同一标识符。
 
 闭包中如果没有明确指定参数名称，参数将被隐式命名为 `$0`、`$1`、`$2` 等等。这些命名在闭包作用域范围内是合法的标识符。
@@ -148,12 +150,12 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 下面这些被保留的关键字不允许用作标识符，除非使用反引号转义，具体描述请参考 [标识符](#identifiers)。除了 `inout`、`var` 以及 `let` 之外的关键字可以用作某个函数声明或者函数调用当中的外部参数名，无需添加反引号转义。当一个成员与一个关键字具有相同的名称时，不需要使用反引号来转义对该成员的引用，除非在引用该成员和使用该关键字之间存在歧义 - 例如，`self`，`Type` 和 `Protocol` 在显式的成员表达式中具有特殊的含义，因此它们必须在该上下文中使用反引号进行转义。
 
-* 用在声明中的关键字：`associatedtype`、`class`、`deinit`、`enum`、`extension`、`fileprivate `、`func`、`import`、`init`、`inout`、`internal`、`let`、`open`、`operator`、`private`、`protocol`、`public`、`rethrows`、`static`、`struct`、`subscript`、`typealias` 以及 `var`。
-* 用在语句中的关键字：`break`、`case`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`switch`、`where` 以及 `while`。
-* 用在表达式和类型中的关键字：`as`、`Any`、`catch`、`false`、`is`、`nil`、`super`、`self`、`Self`、`throw`、`throws`、`true` 以及 `try `。
+* 用在声明中的关键字：`associatedtype`、`class`、`deinit`、`enum`、`extension`、`fileprivate `、`func`、`import`、`init`、`inout`、`internal`、`let`、`open`、`operator`、`private`、`precedencegroup`、`protocol`、`public`、`rethrows`、`static`、`struct`、`subscript`、`typealias` 以及 `var`。
+* 用在语句中的关键字：`break`、`case`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`throw`、`switch`、`where` 以及 `while`。
+* 用在表达式和类型中的关键字：`Any`、`as`、`catch`、`false`、`is`、`nil`、`rethrows`、`self`、`Self`、`super`、`throw`、`throws`、`true` 以及 `try `。
 * 用在模式中的关键字：`_`。
-* 以井字号（`#`）开头的关键字：`#available`、`#colorLiteral`、`#column`、`#else`、`#elseif`、`#endif`、`#error`、`#file`、`#filePath`、`#fileLiteral`、`#function`、`#if`、`#imageLiteral`、`#line`、`#selector`、`#sourceLocation`以及 `#warning`。
-* 特定上下文中被保留的关键字：`associativity`、`convenience`、`dynamic`、`didSet`、`final`、`get`、`infix`、`indirect`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`Type`、`unowned`、`weak` 以及 `willSet`。这些关键字在特定上下文之外可以被用做标识符。
+* 以井字号（`#`）开头的关键字：`#available`、`#colorLiteral`、`#column`、`#dsohandle`、`#elseif`、`#else`、`#endif`、`#error`、`#fileID`、`#fileLiteral`、`#filePath`、`#file`、`#function`、`#if`、`#imageLiteral`、`#keyPath`、`#line`、`#selector`、`#sourceLocation` 以及 `#warning`。
+* 特定上下文中被保留的关键字：`associativity`、`convenience`、`didSet`、`dynamic`、`final`、`get`、`indirect`、`infix`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`some`、`Type`、`unowned`、`weak` 以及 `willSet`。这些关键字在特定上下文之外可以被用做标识符。
 
 以下符号被保留为标点符号，不能用于自定义运算符：`(`、`)`、`{`、`}`、`[`、`]`、`.`、`,`、`:`、`;`、`=`、`@`、`#`、`&`（作为前缀运算符）、`->`、`` ` ``、`?`、以及 `!`（作为后缀运算符）。
 
