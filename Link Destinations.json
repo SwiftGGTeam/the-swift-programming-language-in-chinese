@@ -33,7 +33,7 @@
     "//apple_ref/swift/fake/Task.detached": "https://developer.apple.com/documentation/swift/task/3856786-detached",
     "//apple_ref/swift/fake/Task.init": "https://developer.apple.com/documentation/swift/task/3856790-init",
     "//apple_ref/swift/fake/Task.isCancelled": "https://developer.apple.com/documentation/swift/task/3814832-iscancelled",
-    "//apple_ref/swift/fake/Task.sleep(_:)": "https://developer.apple.com/documentation/swift/task/3814836-sleep",
+    "//apple_ref/swift/fake/Task.sleep(nanoseconds:)": "https://developer.apple.com/documentation/swift/task/3862701-sleep",
     "//apple_ref/swift/fake/TaskGroup": "https://developer.apple.com/documentation/swift/taskgroup",
     "//apple_ref/swift/fake/WritableKeyPath": "https://developer.apple.com/documentation/swift/writablekeypath",
     "//apple_ref/swift/func/c:@F@UIApplicationMain": "https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain",

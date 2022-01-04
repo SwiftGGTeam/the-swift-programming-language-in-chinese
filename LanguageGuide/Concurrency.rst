@@ -204,7 +204,7 @@ only certain places in your program can call asynchronous functions or methods:
 - Code in the static ``main()`` method of
   a structure, class, or enumeration that's marked with ``@main``.
 
-- Code in a detached child task,
+- Code in an unstructured child task,
   as shown in :ref:`Concurrency_TaskHandle` below.
 
 .. SE-0296 specifically calls out that top-level code is *not* an async context,
@@ -237,19 +237,19 @@ only certain places in your program can call asynchronous functions or methods:
 
 .. note::
 
-   The `Task.sleep(_:) <//apple_ref/swift/fake/Task.sleep(_:)>`_ method
+   The `Task.sleep(nanoseconds:) <//apple_ref/swift/fake/Task.sleep(nanoseconds:)>`_ method
    is useful when writing simple code
    to learn how concurrency works.
    This method does nothing,
    but waits at least the given number of nanoseconds before it returns.
    Here's a version of the ``listPhotos(inGallery:)`` function
-   that uses ``sleep()`` to simulate waiting for a network operation:
+   that uses ``sleep(nanoseconds:)`` to simulate waiting for a network operation:
 
    .. testcode:: sleep-in-toy-code
 
        >> struct Data {}  // Instead of actually importing Foundation
        -> func listPhotos(inGallery name: String) async throws -> [String] {
-              try await Task.sleep(2 * 1_000_000_000)  // Two seconds
+              try await Task.sleep(nanoseconds: 2 * 1_000_000_000)  // Two seconds
               return ["IMG001", "IMG99", "IMG0404"]
        }
 
