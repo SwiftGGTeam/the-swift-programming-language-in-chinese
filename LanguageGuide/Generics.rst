@@ -274,7 +274,7 @@ in this case for a stack of ``Int`` values:
 .. testcode:: genericStack
 
    -> struct IntStack {
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
@@ -297,7 +297,7 @@ These methods are marked as ``mutating``,
 because they need to modify (or *mutate*) the structure's ``items`` array.
 
 The ``IntStack`` type shown above can only be used with ``Int`` values, however.
-It would be much more useful to define a *generic* ``Stack`` class,
+It would be much more useful to define a *generic* ``Stack`` structure,
 that can manage a stack of *any* type of value.
 
 Here's a generic version of the same code:
@@ -305,7 +305,7 @@ Here's a generic version of the same code:
 .. testcode:: genericStack
 
    -> struct Stack<Element> {
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
             items.append(item)
          }
@@ -440,9 +440,9 @@ the type of a dictionary's keys must be :newTerm:`hashable`.
 That is, it must provide a way to make itself uniquely representable.
 ``Dictionary`` needs its keys to be hashable so that it can
 check whether it already contains a value for a particular key.
-Without this requirement, ``Dictionary`` could not tell
+Without this requirement, ``Dictionary`` couldn't tell
 whether it should insert or replace a value for a particular key,
-nor would it be able to find a value for a given key that is already in the dictionary.
+nor would it be able to find a value for a given key that's already in the dictionary.
 
 This requirement is enforced by a type constraint on the key type for ``Dictionary``,
 which specifies that the key type must conform to the ``Hashable`` protocol,
@@ -566,7 +566,7 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    and you can make your own types conform to ``Equatable`` too,
    as described in <link>.
 
-Any type that is ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
+Any type that's ``Equatable`` can be used safely with the ``findIndex(of:in:)`` function,
 because it's guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
@@ -586,7 +586,7 @@ The single type parameter for ``findIndex(of:in:)`` is written as ``T: Equatable
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
 The ``findIndex(of:in:)`` function now compiles successfully
-and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
+and can be used with any type that's ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
 
@@ -610,7 +610,7 @@ When defining a protocol,
 it's sometimes useful to declare one or more associated types
 as part of the protocol's definition.
 An :newTerm:`associated type` gives a placeholder name
-to a type that is used as part of the protocol.
+to a type that's used as part of the protocol.
 The actual type to use for that associated type
 isn't specified until the protocol is adopted.
 Associated types are specified with the ``associatedtype`` keyword.
@@ -682,7 +682,7 @@ adapted to conform to the ``Container`` protocol:
 
    -> struct IntStack: Container {
          // original IntStack implementation
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }
@@ -727,7 +727,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
 
    -> struct Stack<Element>: Container {
          // original Stack<Element> implementation
-         var items = [Element]()
+         var items: [Element] = []
          mutating func push(_ item: Element) {
             items.append(item)
          }
@@ -1145,7 +1145,7 @@ It explicitly converts the count from ``Int`` to ``Double``
 to be able to do floating-point division.
 
 You can include multiple requirements in a generic ``where`` clause
-that is part of an extension,
+that's part of an extension,
 just like you can for a generic ``where`` clause that you write elsewhere.
 Separate each requirement in the list with a comma.
 
@@ -1353,7 +1353,7 @@ For example:
    -> extension Container {
           subscript<Indices: Sequence>(indices: Indices) -> [Item]
                   where Indices.Iterator.Element == Int {
-              var result = [Item]()
+              var result: [Item] = []
               for index in indices {
                   result.append(self[index])
               }
@@ -1365,7 +1365,7 @@ For example:
 
    >> struct IntStack: Container {
          // original IntStack implementation
-         var items = [Int]()
+         var items: [Int] = []
          mutating func push(_ item: Int) {
             items.append(item)
          }

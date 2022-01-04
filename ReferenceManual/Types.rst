@@ -109,7 +109,7 @@ the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
-that is declared in the ``ExampleModule`` module.
+that's declared in the ``ExampleModule`` module.
 
 .. testcode:: type-identifier-dot
 
@@ -194,7 +194,7 @@ when you call the function.
 For an example of an autoclosure function type parameter,
 see :ref:`Closures_Autoclosures`.
 
-A function type can have a variadic parameter in its *parameter type*.
+A function type can have variadic parameters in its *parameter type*.
 Syntactically,
 a variadic parameter consists of a base type name followed immediately by three dots (``...``),
 as in ``Int...``. A variadic parameter is treated as an array that contains elements
@@ -221,12 +221,12 @@ and doesn't return any value.
 Likewise, because ``Void`` is a type alias for ``()``,
 the function type ``(Void) -> Void``
 is the same as ``(()) -> ()`` ---
-a function that takes a single argument that is an empty tuple.
-These types are not the same as ``() -> ()`` ---
+a function that takes a single argument that's an empty tuple.
+These types aren't the same as ``() -> ()`` ---
 a function that takes no arguments.
 
 Argument names in functions and methods
-are not part of the corresponding function type.
+aren't part of the corresponding function type.
 For example:
 
 .. assertion:: argument-names
@@ -263,7 +263,7 @@ For example:
    !! f = functionWithDifferentNumberOfArguments // Error
    !! ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because argument labels are not part of a function's type,
+Because argument labels aren't part of a function's type,
 you omit them when writing a function type.
 
 .. testcode:: omit-argument-names-in-function-type
@@ -667,7 +667,7 @@ Protocol Composition Type
 
 A :newTerm:`protocol composition type` defines a type that conforms to each protocol
 in a list of specified protocols,
-or a type that is a subclass of a given class
+or a type that's a subclass of a given class
 and conforms to each protocol in a list of specified protocols.
 Protocol composition types may be used only when specifying a type
 in type annotations,
@@ -692,7 +692,7 @@ instead of declaring a new protocol
 that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``.
 Likewise, you can use ``SuperClass & ProtocolA``
 instead of declaring a new protocol
-that is a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
+that's a subclass of ``SuperClass`` and conforms to ``ProtocolA``.
 
 Each item in a protocol composition list is one of the following;
 the list can contain at most one class:
@@ -935,7 +935,7 @@ whose return type is ``Self``.
 .. assertion:: self-in-class-cant-be-a-parameter-type
 
    -> class C { func f(c: Self) { } }
-   !$ error: covariant 'Self' can only appear as the type of a property, subscript or method result; did you mean 'C'?
+   !$ error: covariant 'Self' or 'Self?' can only appear as the type of a property, subscript or method result; did you mean 'C'?
    !! class C { func f(c: Self) { } }
    !!                     ^~~~
    !!                     C

@@ -7,9 +7,28 @@ See entry for *Swift*.
 ## function
 
 In the reference,
-"function" includes both free functions and member functions,
-so we don't also mention methods separately.
-In the guide, we write "functions and methods".
+“function” includes both free functions and member functions,
+so we don’t also mention methods separately.
+In the guide, we write “functions and methods”.
+
+## headings
+
+The underlines for headings are as follows:
+
+1. `=` Chapter
+2. `-` Section
+3. `~` Subsection
+4. `+` Sub-subsection
+
+The syntax for ReStructured Text determines a heading’s level
+from the order that underlined lines appear in a document,
+so if you use the wrong level or skip levels
+the output might be surprising or wrong.
+
+Although level four headings are allowed and the book does use them,
+you should generally try to avoid them.
+Deeply nested headings often indicate
+that there’s a better way to organize the content.
 
 ## memberwise initializer
 
@@ -26,6 +45,10 @@ Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
 See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
 
+## non-asynchronous
+
+Use “synchronous” instead of this double negation.
+
 ## operator
 
 When introducing a named operator for the first time,
@@ -34,14 +57,14 @@ In subsequent use, use the symbol on its own.
 For example:
 
 > By default,
-> custom classes and structures don't have an implementation of
-> the *equal to* operator (``==``) or *not equal to* operator (``!=``).
-> You usually implement the ``==`` operator,
-> and use the standard library's default implementation of the ``!=`` operator
-> that negates the result of the ``==`` operator.
-> There are two ways to implement the ``==`` operator.
+> custom classes and structures don’t have an implementation of
+> the *equal to* operator (`==`) or *not equal to* operator (`!=`).
+> You usually implement the `==` operator,
+> and use the standard library’s default implementation of the `!=` operator
+> that negates the result of the `==` operator.
+> There are two ways to implement the `==` operator.
 
-If the operator doesn't have an established English name,
+If the operator doesn’t have an established English name,
 make sure you get tech review on the name you invent for it.
 
 ## passive voice
@@ -62,8 +85,14 @@ For example, the phrase “X is understood as Y”
 appears several times in the reference
 when describing the meaning of a piece of syntax.
 In this case, passive voice is clearer than active
-because there isn't a clear agent performing the understanding
+because there isn’t a clear agent performing the understanding
 and the identity of that agent is irrelevant.
+
+## potential suspension point
+
+This is the preferred wording when describing the semantics of `await`.
+If context has already made that clear and repeating “potential” becomes wordy,
+you can shorten it to just “suspension point”.
 
 ## punctuation before a code listing
 
@@ -97,6 +126,23 @@ with the exception of phrases like “a run-time error” and “a runtime error
 which refer respectively to
 an error that occurs while running the code
 and an error that comes from or is related to the Swift runtime environment.
+
+## shared mutable state
+
+Avoid when describing actors.
+By design, actors specifically *avoid* having shared mutable state —
+their mutable state is private,
+and accessible only through the actor's (async) methods.
+
+## spawn, start
+
+Use “add” instead to refer to creating a new task,
+to match the API symbol name.
+(These names were used in an earlier version the SE proposal.)
+
+## suspension point
+
+See entry for *potential suspension point*.
 
 ## syntax outline
 
@@ -133,15 +179,15 @@ like the parser or the lexer or the optimizer.
 In general, and especially in the guide,
 the writing approach should carry a sense of joy.
 Examples should be easy and pleasant to read,
-which means we prefer code that's realistic
+which means we prefer code that’s realistic
 and many chapters weave a common narrative thread across multiple examples.
 Although that continuous narrative connection
 can make later changes more expensive,
-on the whole we think it's worth it because it makes the chapter
+on the whole we think it’s worth it because it makes the chapter
 flow better and hang together better as a cohesive whole.
 
 In the interest of readability and approachability,
-we don't write examples that have
+we don’t write examples that have
 single-letter or meaningless identifiers,
 even in the reference and even when we‘re only describing syntax.
 Instead, when there’s no relevant semantic meaning,
@@ -151,9 +197,9 @@ Some of our examples include humorous references to things outside the book,
 such as the joke about Firefly crew members in the guided tour.
 Some of them are marked with a REFERENCE comment that explains the reference.
 All of them need to be easily ignored
-if you didn't catch the reference,
+if you didn’t catch the reference,
 and it should be easy to search for the reference online
-if you noticed that there was a reference but didn't get the joke.
+if you noticed that there was a reference but didn’t get the joke.
 
 Code listings in the guide typically follow a three part formula.
 The paragraph before the code listing
@@ -198,25 +244,62 @@ so don’t feel the need to exactly follow any one approach.
 When you’re editing existing text,
 preserve the line breaks when feasible
 to help keep the diffs small and preserve per-line history.
-Don’t rewrap an existing line just because it’s a bit long
-unless you actually need to make other changes to it.
-There are parts of the book
-that run the line length out to 90 or 100 characters,
-and rewrapping them just for the sake of line length
-would make history harder to follow.
+Don’t rewrap an existing line just because it’s too long,
+unless you’re actually making other changes.
+For historical reasons,
+here are parts of the book
+that use a line length of 90 or 100 characters;
+rewrapping them just for the sake of line length
+would make history harder to follow and create a bunch of noisy diffs.
 
 More information about semantic line breaks
 is available in the following places:
 
-* “UNIX for Beginners”, Brian W. Kernighan, 1974 — Alex Martini has a PDF copy
+* “UNIX for Beginners” by Brian W. Kernighan in 1974
+  is possibly the origin of this approach.
+  Page 11 has the following guidance
+  in the section *Hints for Preparing Documents*:
+
+  > Most documents go through several versions
+  > (always more than you expected)
+  > before they are finally finished.
+  > Accordingly,
+  > you should do whatever possible to make the job of changing them easy.
+  >
+  > First,
+  > when you do the purely mechanical operations of typing,
+  > type so that subsequent editing will be easy.
+  > Start each sentence on a new line.
+  > Make lines short, and break lines at natural places,
+  > such as after commas and semicolons,
+  > rather than randomly.
+  > Since most people change documents by rewriting phrases
+  > and adding, deleting and rearranging sentences,
+  > these precautions simplify any editing you have to do later.
+
+  Although this guidance was originally written in the context of
+  preparing `nroff` and `troff` files
+  using the line editor `ed(1)` on a paper teletype,
+  it continues to hold up well today
+  because Git and other programming tools
+  still generally expect text to be made up of lines of <80 characters.
+
 * [Semantic Linefeeds](https://rhodesmill.org/brandon/2012/one-sentence-per-line/)
-  blog post about the advantages and history of this format
+  is blog post about the advantages and history of this format
   for authoring documentation.
+  It shows the advantages in a bit more detail,
+  walking through an example.
+
 * [Ventilated Prose](https://vanemden.wordpress.com/2009/01/01/ventilated-prose/)
   discusses Buckminster Fuller’s proposed use of this format
-  to improve reading comprehension.
+  to improve reading comprehension,
+  with some additional discussion of how semantic line breaks
+  can be a useful tool during writing
+  because the make the sentence and clause structure more visible.
+
 * [Semantic Line Breaks](https://sembr.org) describes a formalized spec,
-  maintained by Mattt Zmuda.
+  maintained by Mattt Zmuda,
+  based on his experience writing this way when he worked on TSPL.
 
 # Formal Grammar
 
@@ -235,10 +318,10 @@ For example:
 
 **Write syntactic category names without any extra markup.**
 Within a syntax-grammar block, they appear in italics automatically.
-Don't refer to them from the English prose above them.
+Don’t refer to them from the English prose above them.
 
 **Use full English words as the names for syntactic categories.**
-There are cases where this isn't feasible because of space considerations.
+There are cases where this isn’t feasible because of space considerations.
 For example, in the grammar for a C-style for statement,
 the category that defines the initialization part of the for statement
 had to be shortened to *for-init*
@@ -253,9 +336,9 @@ In this case, nothing seems lost from a readability or pedagogical perspective.
 **Use a pipe (`|`) to indicate alternation.**
 When there are too many alternatives
 to fit on a single line, use a new line for each alternative.
-Don't mix pipes and newlines.
+Don’t mix pipes and newlines.
 
-For example, to specify that a *case-block-item* can consist of a *declaration,
+For example, to specify that a *case-block-item* can consist of a *declaration*,
 *expression*, or a *statement*, you can use a pipe instead of a new line,
 because all three alternatives fit nicely on one line:
 
@@ -268,7 +351,7 @@ On the other hand, consider the grammar of a control transfer statement:
     control-transfer-statement --> fallthrough-statement
     control-transfer-statement --> return-statement
 
-There likely wouldn't be room on a single line to use a pipe to separate each alternative.
+There likely wouldn’t be room on a single line to use a pipe to separate each alternative.
 The following tends not to look good:
 
     control-transfer-statement --> break-statement | continue-statement | fallthrough-statement | return-statement
@@ -278,8 +361,8 @@ Within a syntax-grammar block,
 this is translated to a subscript “opt” automatically.
 
 **Use plural names for repetition.**
-In BNF, this is represented with a plus (`+`) or (`*`).
-The syntax of our formal grammar doesn't include repetition operators,
+In BNF, this is represented with a plus (`+`) or star (`*`).
+The syntax of our formal grammar doesn’t include repetition operators,
 so we use two syntactic categories to allow repetition.
 For example:
 
@@ -301,7 +384,7 @@ If you need separators like commas, call it a “list”.
 As shown above, use right-recursion when dealing with repetition.
 
 **Omit grouping parentheses.**
-Our formal grammar doesn't use grouping parentheses.
+Our formal grammar doesn’t use grouping parentheses.
 Optionality using `-OPT` always applies to exactly one token before it,
 and only one level of alternation using `|` or line breaks is allowed.
 

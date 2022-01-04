@@ -55,7 +55,7 @@ Stored Properties
 -----------------
 
 In its simplest form, a stored property is a constant or variable
-that is stored as part of an instance of a particular class or structure.
+that's stored as part of an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword)
 or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
@@ -68,7 +68,7 @@ as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitializa
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed after it is created:
+whose range length can't be changed after it's created:
 
 .. testcode:: storedProperties, storedProperties-err
 
@@ -85,7 +85,7 @@ Instances of ``FixedLengthRange`` have
 a variable stored property called ``firstValue``
 and a constant stored property called ``length``.
 In the example above, ``length`` is initialized when the new range is created
-and cannot be changed thereafter, because it is a constant property.
+and can't be changed thereafter, because it's a constant property.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
 
@@ -94,7 +94,7 @@ Stored Properties of Constant Structure Instances
 
 If you create an instance of a structure
 and assign that instance to a constant,
-you cannot modify the instance's properties,
+you can't modify the instance's properties,
 even if they were declared as variable properties:
 
 .. testcode:: storedProperties-err
@@ -112,14 +112,14 @@ even if they were declared as variable properties:
    // this will report an error, even though firstValue is a variable property
 
 Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
-it is not possible to change its ``firstValue`` property,
+it isn't possible to change its ``firstValue`` property,
 even though ``firstValue`` is a variable property.
 
 This behavior is due to structures being *value types*.
 When an instance of a value type is marked as a constant,
 so are all of its properties.
 
-The same is not true for classes, which are *reference types*.
+The same isn't true for classes, which are *reference types*.
 If you assign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
@@ -133,8 +133,8 @@ Lazy Stored Properties
 .. QUESTION: is this section too complex for this point in the book?
    Should it go in the Default Property Values section of Initialization instead?
 
-A :newTerm:`lazy stored property` is a property whose initial value is not calculated
-until the first time it is used.
+A :newTerm:`lazy stored property` is a property whose initial value isn't calculated
+until the first time it's used.
 You indicate a lazy stored property by writing
 the ``lazy`` modifier before its declaration.
 
@@ -144,7 +144,7 @@ the ``lazy`` modifier before its declaration.
    because its initial value might not be retrieved until
    after instance initialization completes.
    Constant properties must always have a value *before* initialization completes,
-   and therefore cannot be declared as lazy.
+   and therefore can't be declared as lazy.
 
 .. assertion:: lazyPropertiesMustAlwaysBeVariables
 
@@ -155,11 +155,11 @@ the ``lazy`` modifier before its declaration.
    !!-
 
 Lazy properties are useful when the initial value for a property
-is dependent on outside factors whose values are not known
+is dependent on outside factors whose values aren't known
 until after an instance's initialization is complete.
 Lazy properties are also useful when the initial value for a property requires
-complex or computationally expensive setup that should not be performed
-unless or until it is needed.
+complex or computationally expensive setup that shouldn't be performed
+unless or until it's needed.
 
 .. TODO: add a note that if you assign a value to a lazy property before first access,
    the initial value you give in your code will be ignored.
@@ -185,20 +185,20 @@ neither of which is shown in full:
    ---
    -> class DataManager {
          lazy var importer = DataImporter()
-         var data = [String]()
+         var data: [String] = []
          // the DataManager class would provide data management functionality here
       }
    ---
    -> let manager = DataManager()
    -> manager.data.append("Some data")
    -> manager.data.append("Some more data")
-   // the DataImporter instance for the importer property has not yet been created
+   // the DataImporter instance for the importer property hasn't yet been created
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The ``DataManager`` class has a stored property called ``data``,
 which is initialized with a new, empty array of ``String`` values.
-Although the rest of its functionality is not shown,
+Although the rest of its functionality isn't shown,
 the purpose of this ``DataManager`` class is to manage and provide access to
 this array of ``String`` data.
 
@@ -209,14 +209,14 @@ which is assumed to take a nontrivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
-It is possible for a ``DataManager`` instance to manage its data
+Because it's possible for a ``DataManager`` instance to manage its data
 without ever importing data from a file,
-so there is no need to create a new ``DataImporter`` instance
+``DataManager`` doesn't create a new ``DataImporter`` instance
 when the ``DataManager`` itself is created.
 Instead, it makes more sense to create the ``DataImporter`` instance
-if and when it is first used.
+if and when it's first used.
 
-Because it is marked with the ``lazy`` modifier,
+Because it's marked with the ``lazy`` modifier,
 the ``DataImporter`` instance for the ``importer`` property
 is only created when the ``importer`` property is first accessed,
 such as when its ``filename`` property is queried:
@@ -231,11 +231,11 @@ such as when its ``filename`` property is queried:
 
    If a property marked with the ``lazy`` modifier
    is accessed by multiple threads simultaneously
-   and the property has not yet been initialized,
+   and the property hasn't yet been initialized,
    there's no guarantee that the property will be initialized only once.
 
 .. 6/19/14, 10:54 PM [Contributor 7746]:
-   @lazy is not thread safe.  Global variables (and static struct/enum fields) *are*.
+   @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
 
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
@@ -249,8 +249,8 @@ In addition to properties,
 you can use instance variables as a backing store for the values stored in a property.
 
 Swift unifies these concepts into a single property declaration.
-A Swift property does not have a corresponding instance variable,
-and the backing store for a property is not accessed directly.
+A Swift property doesn't have a corresponding instance variable,
+and the backing store for a property isn't accessed directly.
 This approach avoids confusion about how the value is accessed in different contexts
 and simplifies the property's declaration into a single, definitive statement.
 All information about the property ---
@@ -266,7 +266,7 @@ Computed Properties
 
 In addition to stored properties,
 classes, structures, and enumerations can define :newTerm:`computed properties`,
-which do not actually store a value.
+which don't actually store a value.
 Instead, they provide a getter and an optional setter
 to retrieve and set other properties and values indirectly.
 
@@ -407,14 +407,14 @@ Read-Only Computed Properties
 
 A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
 A read-only computed property always returns a value,
-and can be accessed through dot syntax, but cannot be set to a different value.
+and can be accessed through dot syntax, but can't be set to a different value.
 
 .. note::
 
    You must declare computed properties --- including read-only computed properties ---
-   as variable properties with the ``var`` keyword, because their value is not fixed.
+   as variable properties with the ``var`` keyword, because their value isn't fixed.
    The ``let`` keyword is only used for constant properties,
-   to indicate that their values cannot be changed once they are set
+   to indicate that their values can't be changed once they're set
    as part of instance initialization.
 
 .. assertion:: readOnlyComputedPropertiesMustBeVariables
@@ -454,11 +454,11 @@ which calculates and returns the current volume of the cuboid.
 It doesn't make sense for ``volume`` to be settable,
 because it would be ambiguous as to which values of ``width``, ``height``, and ``depth``
 should be used for a particular ``volume`` value.
-Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
+Nonetheless, it's useful for a ``Cuboid`` to provide a read-only computed property
 to enable external users to discover its current calculated volume.
 
 .. NOTE: getters and setters are also allowed for constants and variables
-   that are not associated with a particular class or struct.
+   that aren't associated with a particular class or struct.
    Where should this be mentioned?
 
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
@@ -570,7 +570,7 @@ the new value that you assign replaces the one that was just set.
    The ``willSet`` and ``didSet`` observers of superclass properties
    are called when a property is set in a subclass initializer,
    after the superclass initializer has been called.
-   They are not called while a class is setting its own properties,
+   They aren't called while a class is setting its own properties,
    before the superclass initializer has been called.
 
    For more information about initializer delegation,
@@ -641,13 +641,13 @@ This is true even if the new value is the same as the current value.
 
 This example's ``willSet`` observer uses
 a custom parameter name of ``newTotalSteps`` for the upcoming new value.
-In this example, it simply prints out the value that is about to be set.
+In this example, it simply prints out the value that's about to be set.
 
 The ``didSet`` observer is called after the value of ``totalSteps`` is updated.
 It compares the new value of ``totalSteps`` against the old value.
 If the total number of steps has increased,
 a message is printed to indicate how many new steps have been taken.
-The ``didSet`` observer does not provide a custom parameter name for the old value,
+The ``didSet`` observer doesn't provide a custom parameter name for the old value,
 and the default name of ``oldValue`` is used instead.
 
 .. note::
@@ -706,13 +706,15 @@ If you ask it to store a larger number, it stores 12 instead.
 
     -> @propertyWrapper
     -> struct TwelveOrLess {
-           private var number: Int
-           init() { self.number = 0 }
+           private var number = 0
            var wrappedValue: Int {
                get { return number }
                set { number = min(newValue, 12) }
            }
        }
+
+.. No init(wrappedValue:) in this example -- that's in a later example.
+   Always initializing the wrapped value is a simpler starting point.
 
 The setter ensures that new values are less than 12,
 and the getter returns the stored value.
@@ -769,9 +771,9 @@ and the getter returns the stored value.
 You apply a wrapper to a property
 by writing the wrapper's name before the property
 as an attribute.
-Here's a structure that stores a small rectangle,
-using the same (rather arbitrary) definition of "small"
-that's implemented by the ``TwelveOrLess`` property wrapper:
+Here's a structure that stores a rectangle
+that uses the ``TwelveOrLess`` property wrapper
+to ensure its dimensions are always 12 or less:
 
 .. testcode:: small-number-wrapper
 
@@ -795,10 +797,11 @@ that's implemented by the ``TwelveOrLess`` property wrapper:
 The ``height`` and ``width`` properties get their initial values
 from the definition of ``TwelveOrLess``,
 which sets ``TwelveOrLess.number`` to zero.
-Storing the number 10 into ``rectangle.height`` succeeds
-because it's a small number.
-Trying to store 24 actually stores a value of 12 instead,
-because 24 is too large for the property setter's rule.
+The setter in ``TwelveOrLess`` treats 10 as a valid value
+so storing the number 10 in ``rectangle.height`` proceeds as written.
+However, 24 is larger than ``TwelveOrLess`` allows,
+so trying to store 24 end up setting ``rectangle.height``
+to 12 instead, the largest allowed value.
 
 When you apply a wrapper to a property,
 the compiler synthesizes code that provides storage for the wrapper
@@ -1086,11 +1089,8 @@ adjusted the new value for the property before storing that new value.
     -> @propertyWrapper
     -> struct SmallNumber {
            private var number: Int
-           var projectedValue: Bool
-           init() {
-               self.number = 0
-               self.projectedValue = false
-           }
+           private(set) var projectedValue: Bool
+    ---
            var wrappedValue: Int {
                get { return number }
                set {
@@ -1102,6 +1102,11 @@ adjusted the new value for the property before storing that new value.
                        projectedValue = false
                    }
                }
+           }
+    ---
+           init() {
+               self.number = 0
+               self.projectedValue = false
            }
        }
     -> struct SomeStructure {
@@ -1116,11 +1121,6 @@ adjusted the new value for the property before storing that new value.
     -> someStructure.someNumber = 55
     -> print(someStructure.$someNumber)
     <- true
-
-.. FIXME It looks like a rule changed or is now being enforced
-   that causes the "private var number" line above
-   to make the systhesized initializer private,
-   which is a problem because the property wrapper is internal.
 
 Writing ``someStructure.$someNumber`` accesses the wrapper's projected value.
 After storing a small number like four,
@@ -1214,7 +1214,7 @@ However, you can also define :newTerm:`computed variables`
 and define observers for stored variables,
 in either a global or local scope.
 Computed variables calculate their value, rather than storing it,
-and they are written in the same way as computed properties.
+and they're written in the same way as computed properties.
 
 .. assertion:: computedVariables
 
@@ -1236,9 +1236,40 @@ and they are written in the same way as computed properties.
    Global constants and variables are always computed lazily,
    in a similar manner to :ref:`Properties_LazyStoredProperties`.
    Unlike lazy stored properties,
-   global constants and variables do not need to be marked with the ``lazy`` modifier.
+   global constants and variables don't need to be marked with the ``lazy`` modifier.
 
    Local constants and variables are never computed lazily.
+
+You can apply a property wrapper to a local stored variable,
+but not to a global variable or a computed variable.
+For example,
+in the code below, ``myNumber`` uses ``SmallNumber`` as a property wrapper.
+
+.. testcode:: property-wrapper-init
+
+    -> func someFunction() {
+           @SmallNumber var myNumber: Int = 0
+    ---
+           myNumber = 10
+           // now myNumber is 10
+    >>     print(myNumber)
+    ---
+           myNumber = 24
+           // now myNumber is 12
+    >>     print(myNumber)
+       }
+    >> someFunction()
+    << 10
+    << 12
+
+Like when you apply ``SmallNumber`` to a property,
+setting the value of ``myNumber`` to 10 is valid.
+Because the property wrapper doesn't allow values higher than 12,
+it sets ``myNumber`` to 12 instead of 24.
+
+.. The discussion of local variables with property wrappers
+   has to come later, because we need to use init(wrappedValue:)
+   to work around <rdar://problem/74616133>.
 
 .. TODO: clarify what we mean by "global variables" here.
    According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
@@ -1265,7 +1296,7 @@ Type properties are useful for defining values that are universal to
 *all* instances of a particular type,
 such as a constant property that all instances can use
 (like a static constant in C),
-or a variable property that stores a value that is global to all instances of that type
+or a variable property that stores a value that's global to all instances of that type
 (like a static variable in C).
 
 Stored type properties can be variables or constants.
@@ -1276,13 +1307,13 @@ in the same way as computed instance properties.
 
    Unlike stored instance properties,
    you must always give stored type properties a default value.
-   This is because the type itself does not have an initializer
+   This is because the type itself doesn't have an initializer
    that can assign a value to a stored type property at initialization time.
 
    Stored type properties are lazily initialized on their first access.
-   They are guaranteed to be initialized only once,
+   They're guaranteed to be initialized only once,
    even when accessed by multiple threads simultaneously,
-   and they do not need to be marked with the ``lazy`` modifier.
+   and they don't need to be marked with the ``lazy`` modifier.
 
 .. _Properties_TypePropertySyntax:
 
@@ -1423,7 +1454,7 @@ a stored instance property called ``currentLevel``,
 which represents the channel's current audio level on a scale of ``0`` to ``10``.
 
 The ``currentLevel`` property has a ``didSet`` property observer
-to check the value of ``currentLevel`` whenever it is set.
+to check the value of ``currentLevel`` whenever it's set.
 This observer performs two checks:
 
 * If the new value of ``currentLevel`` is greater than the allowed ``thresholdLevel``,
@@ -1438,7 +1469,7 @@ This observer performs two checks:
 
    In the first of these two checks,
    the ``didSet`` observer sets ``currentLevel`` to a different value.
-   This does not, however, cause the observer to be called again.
+   This doesn't, however, cause the observer to be called again.
 
 You can use the ``AudioChannel`` structure to create
 two new audio channels called ``leftChannel`` and ``rightChannel``,

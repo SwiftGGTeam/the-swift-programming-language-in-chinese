@@ -21,7 +21,7 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> try-operator-OPT prefix-expression binary-expressions-OPT
+    expression --> try-operator-OPT await-operator-OPT prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 
@@ -41,20 +41,39 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 For information about the operators provided by the Swift standard library,
 see `Operator Declarations <https://developer.apple.com/documentation/swift/operator_declarations>`_.
 
-In addition to the standard library operators,
-you use ``&`` immediately before the name of a variable that's being passed
-as an in-out argument to a function call expression.
-For more information and to see an example,
-see :ref:`Functions_InOutParameters`.
-
-.. TODO: Need to a brief write up on the in-out-expression.
-
 .. syntax-grammar::
 
     Grammar of a prefix expression
 
     prefix-expression --> prefix-operator-OPT postfix-expression
     prefix-expression --> in-out-expression
+
+
+.. _Expressions_InOutExpression:
+
+In-Out Expression
+~~~~~~~~~~~~~~~~~
+
+An :newTerm:`in-out expression` marks a variable
+that's being passed
+as an in-out argument to a function call expression.
+
+.. syntax-outline::
+
+   &<#expression#>
+
+For more information about in-out parameters and to see an example,
+see :ref:`Functions_InOutParameters`.
+
+In-out expressions are also used
+when providing a non-pointer argument
+in a context where a pointer is needed,
+as described in :ref:`Expressions_ImplicitConversion`.
+
+.. syntax-grammar::
+
+    Grammar of an in-out expression
+
     in-out-expression --> ``&`` identifier
 
 
@@ -71,6 +90,8 @@ It has the following form:
 
    try <#expression#>
 
+The value of a ``try`` expression is the value of the *expression*.
+
 An :newTerm:`optional-try expression` consists of the ``try?`` operator
 followed by an expression that can throw an error.
 It has the following form:
@@ -79,7 +100,7 @@ It has the following form:
 
    try? <#expression#>
 
-If the *expression* does not throw an error,
+If the *expression* doesn't throw an error,
 the value of the optional-try expression
 is an optional containing the value of the *expression*.
 Otherwise, the value of the optional-try expression is ``nil``.
@@ -92,6 +113,7 @@ It has the following form:
 
    try! <#expression#>
 
+The value of a forced-try expression is the value of the *expression*.
 If the *expression* throws an error,
 a runtime error is produced.
 
@@ -105,22 +127,27 @@ That said, you can use parentheses to be explicit about the scope of the operato
     >> func someThrowingFunction() throws -> Int { return 10 }
     >> func anotherThrowingFunction() throws -> Int { return 5 }
     >> var sum = 0
-    -> sum = try someThrowingFunction() + anotherThrowingFunction()   // try applies to both function calls
-    -> sum = try (someThrowingFunction() + anotherThrowingFunction()) // try applies to both function calls
-    -> sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    // try applies to both function calls
+    -> sum = try someThrowingFunction() + anotherThrowingFunction()
+    ---
+    // try applies to both function calls
+    -> sum = try (someThrowingFunction() + anotherThrowingFunction())
+    ---
+    // Error: try applies only to the first function call
+    -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !$ error: call can throw but is not marked with 'try'
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
     !$ note: did you mean to use 'try'?
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^
     !!                                      try
     !$ note: did you mean to handle error as optional value?
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^
     !!                                      try?
     !$ note: did you mean to disable error propagation?
-    !! sum = (try someThrowingFunction()) + anotherThrowingFunction() // Error: try applies only to the first function call
+    !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
     !!                                      ^
     !!                                      try!
 
@@ -138,6 +165,12 @@ or the ``try`` expression is enclosed in parentheses.
     !!           ^
     -> sum = 7 + (try someThrowingFunction()) // OK
 
+If an expression includes both the ``try`` and ``await`` operator,
+the ``try`` operator must appear first.
+
+.. The "try await" ordering is also part of the grammar for 'expression',
+   but it's important enough to be worth re-stating in prose.
+
 For more information and to see examples of how to use ``try``, ``try?``, and ``try!``,
 see :doc:`../LanguageGuide/ErrorHandling`.
 
@@ -148,6 +181,95 @@ see :doc:`../LanguageGuide/ErrorHandling`.
     try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
 
 
+.. _Expressions_AwaitExpression:
+
+Await Operator
+~~~~~~~~~~~~~~
+
+An :newTerm:`await expression` consists of the ``await`` operator
+followed by an expression that uses the result of an asynchronous operation.
+It has the following form:
+
+.. syntax-outline::
+
+   await <#expression#>
+
+The value of an ``await`` expression is the value of the *expression*.
+
+An expression marked with ``await`` is called a :newTerm:`potential suspension point`.
+Execution of an asynchronous function can be suspended
+at each expression that's marked with ``await``.
+In addition,
+execution of concurrent code is never suspended at any other point.
+This means code between potential suspension points
+can safely update state that requires temporarily breaking invariants,
+provided that it completes the update
+before the next potential suspension point.
+
+An ``await`` expression can appear only within an asynchronous context,
+such as the trailing closure passed to the ``async(priority:operation:)`` function.
+It can't appear in the body of a ``defer`` statement,
+or in an autoclosure of synchronous function type.
+
+When the expression on the left-hand side of a binary operator
+is marked with the ``await`` operator,
+that operator applies to the whole binary expression.
+That said, you can use parentheses
+to be explicit about the scope of the operator's application.
+
+.. testcode:: placement-of-await
+
+    >> func someAsyncFunction() async -> Int { return 10 }
+    >> func anotherAsyncFunction() async -> Int { return 5 }
+    >> func f() async {
+    >> var sum = 0
+    // await applies to both function calls
+    -> sum = await someAsyncFunction() + anotherAsyncFunction()
+    ---
+    // await applies to both function calls
+    -> sum = await (someAsyncFunction() + anotherAsyncFunction())
+    ---
+    // Error: await applies only to the first function call
+    -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
+    >> _ = sum  // Suppress irrelevant written-but-not-read warning
+    >> }
+    !$ error: expression is 'async' but is not marked with 'await'
+    !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
+    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    !! await
+    !$ note: call is 'async'
+    !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
+    !! ^
+
+An ``await`` expression can't appear on the right-hand side of a binary operator,
+unless the binary operator is the assignment operator
+or the ``await`` expression is enclosed in parentheses.
+
+.. assertion:: await-on-right
+
+    >> func f() async {
+    >> func someAsyncFunction() async -> Int { return 10 }
+    >> var sum = 0
+    >> sum = 7 + await someAsyncFunction()    // Error
+    !$ error: 'await' cannot appear to the right of a non-assignment operator
+    !! sum = 7 + await someAsyncFunction()    // Error
+    !! ^
+    >> sum = 7 + (await someAsyncFunction())  // OK
+    >> _ = sum  // Suppress irrelevant written-but-not-read warning
+    >> }
+
+If an expression includes both the ``await`` and ``try`` operator,
+the ``try`` operator must appear first.
+
+.. The "try await" ordering is also part of the grammar for 'expression',
+   but it's important enough to be worth re-stating in prose.
+
+.. syntax-grammar::
+
+    Grammar of an await expression
+
+    await-operator --> ``await``
+
 .. _Expressions_BinaryExpressions:
 
 Binary Expressions
@@ -155,7 +277,7 @@ Binary Expressions
 
 :newTerm:`Binary expressions` combine
 an infix binary operator with the expression that it takes
-as its left-hand and right-hand arguments.
+as its left- and right-hand arguments.
 It has the following form:
 
 .. syntax-outline::
@@ -238,7 +360,7 @@ For example:
     /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
     </ a is "test", b is 12, c is 3, and 9.45 is ignored
 
-The assignment operator does not return any value.
+The assignment operator doesn't return any value.
 
 .. syntax-grammar::
 
@@ -265,7 +387,7 @@ the conditional operator evaluates the first expression
 and returns its value.
 Otherwise, it evaluates the second expression
 and returns its value.
-The unused expression is not evaluated.
+The unused expression isn't evaluated.
 
 For an example that uses the ternary conditional operator,
 see :ref:`BasicOperators_TernaryConditionalOperator`.
@@ -326,7 +448,7 @@ otherwise, it returns ``false``.
    !!          ^
 
 The ``as`` operator performs a cast
-when it is known at compile time
+when it's known at compile time
 that the cast always succeeds,
 such as upcasting or bridging.
 Upcasting lets you use an expression as an instance of its type's supertype,
@@ -485,11 +607,11 @@ or other code that doesn't become part of the shipping program.
 
 Inside a function,
 the value of ``#function`` is the name of that function,
-inside a method it is the name of that method,
-inside a property getter or setter it is the name of that property,
+inside a method it's the name of that method,
+inside a property getter or setter it's the name of that property,
 inside special members like ``init`` or ``subscript``
-it is the name of that keyword,
-and at the top level of a file it is the name of the current module.
+it's the name of that keyword,
+and at the top level of a file it's the name of the current module.
 
 When used as the default value of a function or method parameter,
 the special literal's value is determined
@@ -537,10 +659,6 @@ pair of square brackets and can be used to create an empty array of a specified 
 .. testcode:: array-literal-brackets
 
     -> var emptyArray: [Double] = []
-
-.. Note: The normal style for the above would be
-       var emptyArray = [Double]()
-   but we're explicitly demonstrating the [] literal syntax here.
 
 A :newTerm:`dictionary literal` is
 an unordered collection of key-value pairs.
@@ -775,7 +893,7 @@ As a result,
 whether a closure expression is escaping or nonescaping depends
 on the surrounding context of the expression.
 A closure expression is nonescaping
-if it is called immediately
+if it's called immediately
 or passed as a nonescaping function argument.
 Otherwise, the closure expression is escaping.
 
@@ -828,9 +946,9 @@ but only one variable named ``b``.
 The ``a`` in the inner scope is initialized
 with the value of the ``a`` in the outer scope
 when the closure is created,
-but their values are not connected in any special way.
+but their values aren't connected in any special way.
 This means that a change to the value of ``a`` in the outer scope
-does not affect the value of ``a`` in the inner scope,
+doesn't affect the value of ``a`` in the inner scope,
 nor does a change to ``a`` inside the closure
 affect the value of ``a`` outside the closure.
 In contrast, there's only one variable named ``b`` ---
@@ -844,7 +962,7 @@ so changes from inside or outside the closure are visible in both places.
    (unlike some other languages)
    so that description's not likely to be very helpful for developers.
 
-This distinction is not visible
+This distinction isn't visible
 when the captured variable's type has reference semantics.
 For example,
 there are two things named ``x`` in the code below,
@@ -954,7 +1072,9 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     capture-list --> ``[`` capture-list-items ``]``
     capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
-    capture-list-item --> capture-specifier-OPT expression
+    capture-list-item --> capture-specifier-OPT identifier
+    capture-list-item --> capture-specifier-OPT identifier ``=`` expression
+    capture-list-item --> capture-specifier-OPT self-expression
     capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
 
 .. _Expressions_ImplicitMemberExpression:
@@ -981,11 +1101,89 @@ For example:
     -> var x = MyEnumeration.someValue
     -> x = .anotherValue
 
+If the inferred type is an optional,
+you can also use a member of the non-optional type
+in an implicit member expression.
+
+.. testcode:: implicitMemberEnum
+
+    -> var someOptional: MyEnumeration? = .someValue
+
+Implicit member expressions can be followed by
+a postfix operator or other postfix syntax listed in
+:ref:`Expressions_PostfixExpressions`.
+This is called a :newTerm:`chained implicit member expression`.
+Although it's common for all of the chained postfix expressions
+to have the same type,
+the only requirement is that the whole chained implicit member expression
+needs to be convertible to the type implied by its context.
+Specifically,
+if the implied type is an optional
+you can use a value of the non-optional type,
+and if the implied type is a class type
+you can use a value of one of its subclasses.
+For example:
+
+.. testcode:: implicit-member-chain
+
+   -> class SomeClass {
+          static var shared = SomeClass()
+          static var sharedSubclass = SomeSubclass()
+          var a = AnotherClass()
+      }
+   -> class SomeSubclass: SomeClass { }
+   -> class AnotherClass {
+          static var s = SomeClass()
+          func f() -> SomeClass { return AnotherClass.s }
+      }
+   -> let x: SomeClass = .shared.a.f()
+   -> let y: SomeClass? = .shared
+   -> let z: SomeClass = .sharedSubclass
+
+In the code above,
+the type of ``x`` matches the type implied by its context exactly,
+the type of ``y`` is convertible from ``SomeClass`` to ``SomeClass?``,
+and the type of ``z`` is convertible from ``SomeSubclass`` to ``SomeClass``.
+
 .. syntax-grammar::
 
     Grammar of a implicit member expression
 
     implicit-member-expression --> ``.`` identifier
+    implicit-member-expression --> ``.`` identifier ``.`` postfix-expression
+
+.. The grammar above allows the additional pieces tested below,
+   which work even though they're omitted from the SE-0287 list.
+   The grammar also overproduces, allowing any primary expression
+   because of the definition of postfix-expression.
+
+.. assertion:: implicit-member-grammar
+
+    // self expression
+    >> enum E { case left, right }
+    >> let e: E = .left
+    >> let e2: E = .left.self
+    >> assert(e == e2)
+    ---
+    // postfix operator
+    >> postfix operator ~
+    >> extension E {
+    >>     static postfix func ~ (e: E) -> E {
+    >>         switch e {
+    >>         case .left: return .right
+    >>         case .right: return .left
+    >>         }
+    >>     }
+    >> }
+    >> let e3: E = .left~
+    >> assert(e3 == .right)
+    ---
+    // initializer expression
+    >> class S {
+    >>     var num: Int
+    >>     init(bestNumber: Int) { self.num = bestNumber }
+    >> }
+    >> let s: S = .init(bestNumber: 42)
 
 
 .. _Expressions_ParenthesizedExpression:
@@ -1376,7 +1574,7 @@ It has the following form:
    #selector(setter: <#property name#>)
 
 The *method name* and *property name* must be a reference to a method or a property
-that is available in the Objective-C runtime.
+that's available in the Objective-C runtime.
 The value of a selector expression is an instance of the ``Selector`` type.
 For example:
 
@@ -1446,7 +1644,7 @@ see `Using Objective-C Runtime Features in Swift <https://developer.apple.com/do
 
 .. Note: The parser does allow an arbitrary expression inside #selector(), not
    just a member name.  For example, see changes in Swift commit ef60d7289d in
-   lib/Sema/CSApply.cpp -- there is explicit code to look through parens and
+   lib/Sema/CSApply.cpp -- there's explicit code to look through parens and
    optional binding.
 
 
@@ -1465,7 +1663,7 @@ It has the following form:
    #keyPath(<#property name#>)
 
 The *property name* must be a reference to a property
-that is available in the Objective-C runtime.
+that's available in the Objective-C runtime.
 At compile time, the key-path string expression is replaced by a string literal.
 For example:
 
@@ -1514,7 +1712,7 @@ and `Key-Value Observing Programming Guide <//apple_ref/doc/uid/10000177i>`_.
 
 .. note::
 
-    Although the *property name* is an expression, it is never evaluated.
+    Although the *property name* is an expression, it's never evaluated.
 
 
 .. syntax-grammar::
@@ -1760,6 +1958,102 @@ can enable syntactic sugar for function call syntax
 by declaring one of several methods,
 as described in :ref:`Declarations_SpecialFuncNames`.
 
+.. _Expressions_ImplicitConversion:
+
+Implicit Conversion to a Pointer Type
++++++++++++++++++++++++++++++++++++++
+
+In a function call expression,
+if the argument and parameter have a different type,
+the compiler tries to make their types match
+by applying one of the implicit conversions in the following list:
+
+* ``inout SomeType`` can become
+  ``UnsafePointer<SomeType>`` or ``UnsafeMutablePointer<SomeType>``
+* ``inout Array<SomeType>`` can become
+  ``UnsafePointer<SomeType>`` or ``UnsafeMutablePointer<SomeType>``
+* ``Array<SomeType>`` can become ``UnsafePointer<SomeType>``
+* ``String`` can become ``UnsafePointer<CChar>``
+
+The following two function calls are equivalent:
+
+.. testcode:: inout-unsafe-pointer
+
+   -> func unsafeFunction(pointer: UnsafePointer<Int>) {
+   ->     // ...
+   >>     print(pointer.pointee)
+   -> }
+   -> var myNumber = 1234
+   ---
+   -> unsafeFunction(pointer: &myNumber)
+   -> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+   << 1234
+   << 1234
+
+A pointer that's created by these implicit conversions
+is valid only for the duration of the function call.
+To avoid undefined behavior,
+ensure that your code
+never persists the pointer after the function call ends.
+
+.. note::
+
+   When implicitly converting an array to an unsafe pointer,
+   Swift ensures that the array's storage is contiguous
+   by converting or copying the array as needed.
+   For example, you can use this syntax
+   with an array that was bridged to ``Array``
+   from an ``NSArray`` subclass that makes no API contract about its storage.
+   If you need to guarantee that the array's storage is already contiguous,
+   so the implicit conversion never needs to do this work,
+   use ``ContiguousArray`` instead of ``Array``.
+
+Using ``&`` instead of an explicit function like ``withUnsafePointer(to:)``
+can help make calls to low-level C functions more readable,
+especially when the function takes several pointer arguments.
+However, when calling functions from other Swift code,
+avoid using ``&`` instead of using the unsafe APIs explicitly.
+
+.. assertion:: implicit-conversion-to-pointer
+
+   >> import Foundation
+   >> func takesUnsafePointer(p: UnsafePointer<Int>) { }
+   >> func takesUnsafeMutablePointer(p: UnsafeMutablePointer<Int>) { }
+   >> func takesUnsafePointerCChar(p: UnsafePointer<CChar>) { }
+   >> func takesUnsafeMutablePointerCChar(p: UnsafeMutablePointer<CChar>) { }
+   >> var n = 12
+   >> var array = [1, 2, 3]
+   >> var nsarray: NSArray = [10, 20, 30]
+   >> var bridgedNSArray = nsarray as! Array<Int>
+   >> var string = "Hello"
+   ---
+   // bullet 1
+   >> takesUnsafePointer(p: &n)
+   >> takesUnsafeMutablePointer(p: &n)
+   ---
+   // bullet 2
+   >> takesUnsafePointer(p: &array)
+   >> takesUnsafeMutablePointer(p: &array)
+   >> takesUnsafePointer(p: &bridgedNSArray)
+   >> takesUnsafeMutablePointer(p: &bridgedNSArray)
+   ---
+   // bullet 3
+   >> takesUnsafePointer(p: array)
+   >> takesUnsafePointer(p: bridgedNSArray)
+   ---
+   // bullet 4
+   >> takesUnsafePointerCChar(p: string)
+   ---
+   // invailid conversions
+   >> takesUnsafeMutablePointer(p: array)
+   !$ error: cannot convert value of type '[Int]' to expected argument type 'UnsafeMutablePointer<Int>'
+   !! takesUnsafeMutablePointer(p: array)
+   !!                              ^
+   >> takesUnsafeMutablePointerCChar(p: string)
+   !$ error: cannot convert value of type 'String' to expected argument type 'UnsafeMutablePointer<CChar>' (aka 'UnsafeMutablePointer<Int8>')
+   !! takesUnsafeMutablePointerCChar(p: string)
+   !!                                   ^
+
 .. syntax-grammar::
 
     Grammar of a function call expression
@@ -1940,7 +2234,7 @@ For example:
     -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 
 If a period appears at the beginning of a line,
-it is understood as part of an explicit member expression,
+it's understood as part of an explicit member expression,
 not as an implicit member expression.
 For example, the following listing shows chained method calls
 split over several lines:
@@ -2061,14 +2355,14 @@ Forced-Value Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`forced-value expression` unwraps an optional value
-that you are certain is not ``nil``.
+that you are certain isn't ``nil``.
 It has the following form:
 
 .. syntax-outline::
 
    <#expression#>!
 
-If the value of the *expression* is not ``nil``,
+If the value of the *expression* isn't ``nil``,
 the optional value is unwrapped
 and returned with the corresponding non-optional type.
 Otherwise, a runtime error is raised.
@@ -2118,7 +2412,7 @@ and they cause the postfix expression to be evaluated in a special way.
 If the value of the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-If the value of the optional-chaining expression is not ``nil``,
+If the value of the optional-chaining expression isn't ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
@@ -2128,7 +2422,7 @@ If a postfix expression that contains an optional-chaining expression
 is nested inside other postfix expressions,
 only the outermost expression returns an optional type.
 In the example below,
-when ``c`` is not ``nil``,
+when ``c`` isn't ``nil``,
 its value is unwrapped and used to evaluate ``.property``,
 the value of which is used to evaluate ``.performAction()``.
 The entire expression ``c?.property.performAction()``
@@ -2161,7 +2455,7 @@ either by mutating the value itself,
 or by assigning to one of the value's members.
 If the value of the optional-chaining expression is ``nil``,
 the expression on the right-hand side of the assignment operator
-is not evaluated.
+isn't evaluated.
 For example:
 
 .. testcode:: optional-chaining-as-lvalue
@@ -2172,7 +2466,7 @@ For example:
    -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
    ---
    -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
-   // someFunctionWithSideEffects is not evaluated
+   // someFunctionWithSideEffects isn't evaluated
    /> someDictionary is still \(someDictionary)
    </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
    ---

@@ -34,7 +34,7 @@ which you can use as the requirement for the ``Shape`` protocol:
     -> struct Triangle: Shape {
           var size: Int
           func draw() -> String {
-              var result = [String]()
+              var result: [String] = []
               for length in 1...size {
                   result.append(String(repeating: "*", count: length))
               }
@@ -119,7 +119,7 @@ in a way that's abstracted away from the function implementation.
 For example, the function in the following code
 returns a type that depends on its caller:
 
-::
+.. code-block:: swift
 
     func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
 

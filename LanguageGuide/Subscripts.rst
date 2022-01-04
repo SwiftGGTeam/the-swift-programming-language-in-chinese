@@ -11,7 +11,7 @@ and elements in a ``Dictionary`` instance as ``someDictionary[key]``.
 You can define multiple subscripts for a single type,
 and the appropriate subscript overload to use is selected
 based on the type of index value you pass to the subscript.
-Subscripts are not limited to a single dimension,
+Subscripts aren't limited to a single dimension,
 and you can define subscripts with multiple input parameters
 to suit your custom type's needs.
 
@@ -51,7 +51,7 @@ The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify
 the setter's ``(newValue)`` parameter.
 A default parameter called ``newValue`` is provided to your setter
-if you do not provide one yourself.
+if you don't provide one yourself.
 
 As with read-only computed properties,
 you can simplify the declaration of a read-only subscript
@@ -94,7 +94,7 @@ which returns a value of ``18``, or ``3`` times ``6``.
 .. note::
 
    An *n*-times-table is based on a fixed mathematical rule.
-   It is not appropriate to set ``threeTimesTable[someIndex]`` to a new value,
+   It isn't appropriate to set ``threeTimesTable[someIndex]`` to a new value,
    and so the subscript for ``TimesTable`` is defined as a read-only subscript.
 
 .. _Subscripts_SubscriptUsage:
@@ -102,7 +102,7 @@ which returns a value of ``18``, or ``3`` times ``6``.
 Subscript Usage
 ---------------
 
-The exact meaning of “subscript” depends on the context in which it is used.
+The exact meaning of “subscript” depends on the context in which it's used.
 Subscripts are typically used as a shortcut for accessing
 the member elements in a collection, list, or sequence.
 You are free to implement subscripts in the most appropriate way for
@@ -174,9 +174,9 @@ the types of the value or values that are contained within the subscript bracket
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
 
-While it is most common for a subscript to take a single parameter,
+While it's most common for a subscript to take a single parameter,
 you can also define a subscript with multiple parameters
-if it is appropriate for your type.
+if it's appropriate for your type.
 The following example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
 The ``Matrix`` structure's subscript takes two integer parameters:
@@ -207,7 +207,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
       }
 
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
-and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
+and creates an array that's large enough to store ``rows * columns`` values of type ``Double``.
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
@@ -267,7 +267,7 @@ are inside the bounds of the matrix:
       }
 
 An assertion is triggered if you try to access a subscript
-that is outside of the matrix bounds:
+that's outside of the matrix bounds:
 
 .. testcode:: matrixSubscriptAssert
 

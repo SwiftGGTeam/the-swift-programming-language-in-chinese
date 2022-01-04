@@ -59,11 +59,11 @@ and the dictionary's values are decomposed into a constant called ``legCount``.
    </ spiders have 8 legs
 
 The contents of a ``Dictionary`` are inherently unordered,
-and iterating over them does not guarantee the order
+and iterating over them doesn't guarantee the order
 in which they will be retrieved.
 In particular,
 the order you insert items into a ``Dictionary``
-doesn't define the order they are iterated.
+doesn't define the order they're iterated.
 For more about arrays and dictionaries, see :doc:`CollectionTypes`.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
@@ -97,8 +97,8 @@ This process continues until the end of the range is reached.
 
 In the example above, ``index`` is a constant whose value is automatically set
 at the start of each iteration of the loop.
-As such, ``index`` does not have to be declared before it is used.
-It is implicitly declared simply by its inclusion in the loop declaration,
+As such, ``index`` doesn't have to be declared before it's used.
+It's implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
 
 If you don't need each value from a sequence,
@@ -128,7 +128,7 @@ the code simply executes the loop the correct number of times.
 The underscore character (``_``)
 used in place of a loop variable
 causes the individual values to be ignored
-and does not provide access to the current value during each iteration of the loop.
+and doesn't provide access to the current value during each iteration of the loop.
 
 In some situations, you might not want to use closed ranges,
 which include both endpoints.
@@ -141,7 +141,7 @@ For more about ranges, see :ref:`BasicOperators_RangeOperators`.
 .. testcode:: forLoops
 
    -> let minutes = 60
-   >> var result = [Int]()
+   >> var result: [Int] = []
    -> for tickMark in 0..<minutes {
          // render the tick mark each minute (60 times)
    >>    result.append(tickMark)
@@ -156,7 +156,7 @@ Use the ``stride(from:to:by:)`` function to skip the unwanted marks.
 .. testcode:: forLoops
 
    -> let minuteInterval = 5
-   >> result = [Int]()
+   >> result = []
    -> for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
          // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
    >>      result.append(tickMark)
@@ -179,13 +179,11 @@ Closed ranges are also available, by using ``stride(from:through:by:)`` instead:
    << 9
    << 12
 
-.. TODO: include the note below once we have some documentation for Sequence:
-   The examples above use a ``for``-``in`` loop to iterate
-   ranges, arrays, dictionaries, and strings.
-   However, you can use this syntax to iterate *any* collection,
-   including your own classes and collection types,
-   as long as they conform to the ``Sequence`` protocol.
-   <link to Sequence definition>
+The examples above use a ``for``-``in`` loop to iterate
+ranges, arrays, dictionaries, and strings.
+However, you can use this syntax to iterate *any* collection,
+including your own classes and collection types,
+as long as those types conform to the `Sequence <//apple_ref/swift/fake/Sequence>`_ protocol.
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
@@ -197,7 +195,7 @@ While Loops
 
 A ``while`` loop performs a set of statements until a condition becomes ``false``.
 These kinds of loops are best used when
-the number of iterations is not known before the first iteration begins.
+the number of iterations isn't known before the first iteration begins.
 Swift provides two kinds of ``while`` loops:
 
 * ``while`` evaluates its condition at the start of each pass through the loop.
@@ -331,7 +329,7 @@ Each time through the ``while`` loop,
 and is then checked to see whether it has become too large.
 Whenever this return value equals ``7``,
 the dice roll has become too large and is reset to a value of ``1``.
-The result is a sequence of ``diceRoll`` values that is always
+The result is a sequence of ``diceRoll`` values that's always
 ``1``, ``2``, ``3``, ``4``, ``5``, ``6``, ``1``, ``2`` and so on.
 
 After rolling the dice, the player moves forward by ``diceRoll`` squares.
@@ -345,7 +343,7 @@ to move the player up or down any ladders or snakes.
 
 .. note::
 
-   If this check is not performed,
+   If this check isn't performed,
    ``board[square]`` might try to access a value outside the bounds of the ``board`` array,
    which would trigger a runtime error.
 
@@ -355,7 +353,7 @@ If the player has moved on or beyond square number ``25``,
 the loop's condition evaluates to ``false`` and the game ends.
 
 A ``while`` loop is appropriate in this case,
-because the length of the game is not clear at the start of the ``while`` loop.
+because the length of the game isn't clear at the start of the ``while`` loop.
 Instead, the loop is executed until a particular condition is satisfied.
 
 .. _ControlFlow_DoWhile:
@@ -472,7 +470,7 @@ seen in the ``while`` loop version of the game described earlier.
 Conditional Statements
 ----------------------
 
-It is often useful to execute different pieces of code based on certain conditions.
+It's often useful to execute different pieces of code based on certain conditions.
 You might want to run an extra piece of code when an error occurs,
 or to display a message when a value becomes too high or too low.
 To do this, you make parts of your code :newTerm:`conditional`.
@@ -527,7 +525,7 @@ These statements are indicated by the ``else`` keyword.
 
 One of these two branches is always executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
-it is no longer cold enough to advise wearing a scarf
+it's no longer cold enough to advise wearing a scarf
 and so the ``else`` branch is triggered instead.
 
 You can chain multiple ``if`` statements together
@@ -550,7 +548,7 @@ The final ``else`` clause remains,
 and it prints a response for any temperatures that are neither too warm nor too cold.
 
 The final ``else`` clause is optional, however,
-and can be excluded if the set of conditions does not need to be complete.
+and can be excluded if the set of conditions doesn't need to be complete.
 
 .. testcode:: ifElse
 
@@ -600,13 +598,13 @@ These options are described later in this chapter.
 
 Like the body of an ``if`` statement, each ``case`` is a separate branch of code execution.
 The ``switch`` statement determines which branch should be selected.
-This procedure is known as :newTerm:`switching` on the value that is being considered.
+This procedure is known as :newTerm:`switching` on the value that's being considered.
 
 Every ``switch`` statement must be :newTerm:`exhaustive`.
 That is, every possible value of the type being considered
 must be matched by one of the ``switch`` cases.
 If it's not appropriate to provide a case for every possible value,
-you can define a default case to cover any values that are not addressed explicitly.
+you can define a default case to cover any values that aren't addressed explicitly.
 This default case is indicated by the ``default`` keyword,
 and must always appear last.
 
@@ -641,7 +639,7 @@ No Implicit Fallthrough
 +++++++++++++++++++++++
 
 In contrast with ``switch`` statements in C and Objective-C,
-``switch`` statements in Swift do not
+``switch`` statements in Swift don't
 fall through the bottom of each case and into the next one by default.
 Instead, the entire ``switch`` statement finishes its execution
 as soon as the first matching ``switch`` case is completed,
@@ -651,13 +649,13 @@ and avoids executing more than one ``switch`` case by mistake.
 
 .. note::
 
-   Although ``break`` is not required in Swift,
+   Although ``break`` isn't required in Swift,
    you can use a ``break`` statement to match and ignore a particular case
    or to break out of a matched case before that case has completed its execution.
    For details, see :ref:`ControlFlow_BreakInASwitchStatement`.
 
 The body of each case *must* contain at least one executable statement.
-It is not valid to write the following code, because the first case is empty:
+It isn't valid to write the following code, because the first case is empty:
 
 .. testcode:: noFallthrough
 
@@ -676,11 +674,11 @@ It is not valid to write the following code, because the first case is empty:
    // This will report a compile-time error.
 
 Unlike a ``switch`` statement in C,
-this ``switch`` statement does not match both ``"a"`` and ``"A"``.
+this ``switch`` statement doesn't match both ``"a"`` and ``"A"``.
 Rather, it reports a compile-time error that ``case "a":``
-does not contain any executable statements.
+doesn't contain any executable statements.
 This approach avoids accidental fallthrough from one case to another
-and makes for safer code that is clearer in its intent.
+and makes for safer code that's clearer in its intent.
 
 To make a ``switch`` with a single case that
 matches both ``"a"`` and ``"A"``,
@@ -844,14 +842,14 @@ and assigns the point's ``y`` value to the temporary constant ``y``.
 
 After the temporary constants are declared,
 they can be used within the case's code block.
-Here, they are used to print the categorization of the point.
+Here, they're used to print the categorization of the point.
 
-This ``switch`` statement does not have a ``default`` case.
+This ``switch`` statement doesn't have a ``default`` case.
 The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
 Because ``anotherPoint`` is always a tuple of two values,
 this case matches all possible remaining values,
-and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
+and a ``default`` case isn't needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_Where:
 
@@ -891,7 +889,7 @@ The ``switch`` case matches the current value of ``point``
 only if the ``where`` clause's condition evaluates to ``true`` for that value.
 
 As in the previous example, the final case matches all possible remaining values,
-and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
+and so a ``default`` case isn't needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_CompoundCases:
 
@@ -915,7 +913,7 @@ For example:
               "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
               print("\(someCharacter) is a consonant")
           default:
-              print("\(someCharacter) is not a vowel or a consonant")
+              print("\(someCharacter) isn't a vowel or a consonant")
       }
    <- e is a vowel
 
@@ -979,7 +977,7 @@ and the ``throw`` statement is described in :ref:`ErrorHandling_Throw`.
 Continue
 ~~~~~~~~
 
-The ``continue`` statement tells a loop to stop what it is doing
+The ``continue`` statement tells a loop to stop what it's doing
 and start again at the beginning of the next iteration through the loop.
 It says “I am done with the current loop iteration”
 without leaving the loop altogether.
@@ -1040,8 +1038,8 @@ the ``switch`` statement's closing brace (``}``).
 
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
 Because Swift's ``switch`` statement is exhaustive
-and does not allow empty cases,
-it is sometimes necessary to deliberately match and ignore a case
+and doesn't allow empty cases,
+it's sometimes necessary to deliberately match and ignore a case
 in order to make your intentions explicit.
 You do this by writing the ``break`` statement as the entire body of the case you want to ignore.
 When that case is matched by the ``switch`` statement,
@@ -1050,7 +1048,7 @@ the ``break`` statement inside the case ends the ``switch`` statement's executio
 .. note::
 
    A ``switch`` case that contains only a comment is reported as a compile-time error.
-   Comments are not statements and do not cause a ``switch`` case to be ignored.
+   Comments aren't statements and don't cause a ``switch`` case to be ignored.
    Always use a ``break`` statement to ignore a ``switch`` case.
 
 The following example switches on a ``Character`` value
@@ -1076,11 +1074,11 @@ For brevity, multiple values are covered in a single ``switch`` case.
    -> if let integerValue = possibleIntegerValue {
          print("The integer value of \(numberSymbol) is \(integerValue).")
       } else {
-         print("An integer value could not be found for \(numberSymbol).")
+         print("An integer value couldn't be found for \(numberSymbol).")
       }
    <- The integer value of 三 is 3.
 
-This example checks ``numberSymbol`` to determine whether it is
+This example checks ``numberSymbol`` to determine whether it's
 a Latin, Arabic, Chinese, or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
@@ -1097,9 +1095,9 @@ if ``possibleIntegerValue`` was set to an actual value
 by one of the ``switch`` statement's first four cases.
 
 Because it's not practical to list every possible ``Character`` value in the example above,
-a ``default`` case handles any characters that are not matched.
-This ``default`` case does not need to perform any action,
-and so it is written with a single ``break`` statement as its body.
+a ``default`` case handles any characters that aren't matched.
+This ``default`` case doesn't need to perform any action,
+and so it's written with a single ``break`` statement as its body.
 As soon as the ``default`` case is matched,
 the ``break`` statement ends the ``switch`` statement's execution,
 and code execution continues from the ``if let`` statement.
@@ -1146,7 +1144,7 @@ The ``default`` case adds some extra text to the end of the description,
 and the ``switch`` statement is complete.
 
 Unless the value of ``integerToDescribe`` is in the list of known prime numbers,
-it is not matched by the first ``switch`` case at all.
+it isn't matched by the first ``switch`` case at all.
 Because there are no other specific cases,
 ``integerToDescribe`` is matched by the ``default`` case.
 
@@ -1157,7 +1155,7 @@ the number ``5`` is correctly identified as a prime number.
 
 .. note::
 
-   The ``fallthrough`` keyword does not check the case conditions
+   The ``fallthrough`` keyword doesn't check the case conditions
    for the ``switch`` case that it causes execution to fall into.
    The ``fallthrough`` keyword simply causes code execution to move
    directly to the statements inside the next case (or ``default`` case) block,
@@ -1173,7 +1171,7 @@ inside other loops and conditional statements
 to create complex control flow structures.
 However, loops and conditional statements can both use the ``break`` statement
 to end their execution prematurely.
-Therefore, it is sometimes useful to be explicit about
+Therefore, it's sometimes useful to be explicit about
 which loop or conditional statement you want a ``break`` statement to terminate.
 Similarly, if you have multiple nested loops,
 it can be useful to be explicit about which loop the ``continue`` statement
@@ -1230,7 +1228,7 @@ are initialized in the same way as before:
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
 The ``while`` loop has a statement label called ``gameLoop``
-to indicate that it is the main game loop for the Snakes and Ladders game.
+to indicate that it's the main game loop for the Snakes and Ladders game.
 
 The ``while`` loop's condition is ``while square != finalSquare``,
 to reflect that you must land exactly on square 25.
@@ -1326,11 +1324,11 @@ and to determine whether the move is allowed:
 
 .. note::
 
-   If the ``break`` statement above did not use the ``gameLoop`` label,
+   If the ``break`` statement above didn't use the ``gameLoop`` label,
    it would break out of the ``switch`` statement, not the ``while`` statement.
    Using the ``gameLoop`` label makes it clear which control statement should be terminated.
 
-   It is not strictly necessary to use the ``gameLoop`` label
+   It isn't strictly necessary to use the ``gameLoop`` label
    when calling ``continue gameLoop`` to jump to the next iteration of the loop.
    there's only one loop in the game,
    and therefore no ambiguity as to which loop the ``continue`` statement will affect.
@@ -1349,7 +1347,7 @@ You use a ``guard`` statement to require that a condition must be true
 in order for the code after the ``guard`` statement to be executed.
 Unlike an ``if`` statement,
 a ``guard`` statement always has an ``else`` clause ---
-the code inside the ``else`` clause is executed if the condition is not true.
+the code inside the ``else`` clause is executed if the condition isn't true.
 
 .. testcode:: guard
 
@@ -1382,7 +1380,7 @@ using an optional binding as part of the condition
 are available for the rest of the code block
 that the ``guard`` statement appears in.
 
-If that condition is not met,
+If that condition isn't met,
 the code inside the ``else`` branch is executed.
 That branch must transfer control to exit the code block
 in which the ``guard`` statement appears.
