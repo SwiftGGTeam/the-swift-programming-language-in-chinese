@@ -248,14 +248,10 @@ only certain places in your program can call asynchronous functions or methods:
    .. testcode:: sleep-in-toy-code
 
        >> struct Data {}  // Instead of actually importing Foundation
-       >> if #available(macOS 12.0, *) {
-       -> func listPhotos(inGallery name: String) async -> [String] {
-              await Task.sleep(2 * 1_000_000_000)  // Two seconds
+       -> func listPhotos(inGallery name: String) async throws -> [String] {
+              try await Task.sleep(2 * 1_000_000_000)  // Two seconds
               return ["IMG001", "IMG99", "IMG0404"]
        }
-       >> }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. TODO either add an example or maybe a short section
    about throwing and async together
