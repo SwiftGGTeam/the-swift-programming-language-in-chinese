@@ -145,6 +145,8 @@ is made available in the current scope.
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
     import-path-identifier --> identifier | operator
 
+.. XXX TR: Should 'import-path-identifier' still produce 'operator'?
+
 
 .. _Declarations_ConstantDeclaration:
 

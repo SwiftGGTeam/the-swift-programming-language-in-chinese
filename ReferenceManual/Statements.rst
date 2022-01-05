@@ -1043,6 +1043,8 @@ but doesn't actually import it.
 If the module is present, the platform condition returns ``true``;
 otherwise, it returns ``false``.
 
+.. XXX ^-- nested modules like #canImport(A.B) are allowed too
+
 The ``targetEnvironment()`` platform condition
 returns ``true`` when code is being compiled for the specified environment;
 otherwise, it returns ``false``.
@@ -1164,7 +1166,7 @@ have the following form:
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
-    module-name --> identifier
+    module-name --> import-path
     environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
