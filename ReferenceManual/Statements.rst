@@ -1038,12 +1038,36 @@ the following code prints all three messages:
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
+The module can include periods (``.``) in its name.
 This condition tests whether it's possible to import the module,
 but doesn't actually import it.
 If the module is present, the platform condition returns ``true``;
 otherwise, it returns ``false``.
 
-.. XXX ^-- nested modules like #canImport(A.B) are allowed too
+.. sourcefile:: canImport_A
+
+   >> public struct SomeStruct {
+   >>     public init() { }
+   >> }
+
+.. sourcefile:: canImport_A.B
+
+   >> public struct AnotherStruct {
+   >>     public init() { }
+   >> }
+
+.. sourcefile:: canImport
+
+   >> import canImport_A
+   >> let s = SomeStruct()
+   >> #if canImport(canImport_A)
+   >> print("A")
+   >> #endif
+   << A
+   >> #if canImport(canImport_A.B)
+   >> print("A.B")
+   >> #endif
+   << A.B
 
 The ``targetEnvironment()`` platform condition
 returns ``true`` when code is being compiled for the specified environment;
