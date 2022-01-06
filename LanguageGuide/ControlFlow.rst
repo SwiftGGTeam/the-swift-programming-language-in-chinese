@@ -667,7 +667,7 @@ It isn't valid to write the following code, because the first case is empty:
          default:
             print("Not the letter A")
       }
-   !$ error: 'case' label in a 'switch' should have at least one executable statement
+   !$ error: 'case' label in a 'switch' must have at least one executable statement
    !!      case "a": // Invalid, the case has an empty body
    !!      ^~~~~~~~~
    !!                break
