@@ -2250,7 +2250,7 @@ split over several lines:
 
 You can combine this multiline chained syntax
 with compiler control statements
-to choose when each method is called.
+to control when each method is called.
 For example,
 the following code uses a different filtering rule on iOS:
 
@@ -2272,17 +2272,14 @@ the following code uses a different filtering rule on iOS:
    <rdar://problem/32463195> for multiline string literals,
    but they're likely related.
 
-The conditional compilation block
-contains one of the following:
-
-- An implicit member expression
-  followed by by zero or more postfixes,
-  to form a postfix expression.
-
-- Another conditional compilation block.
-
-- A combination of implicit member expressions
-  and conditional compilation blocks
+Between ``#if``, ``#endif``, and other compilation directives,
+the conditional compilation block can contain
+an implicit member expression
+followed by by zero or more postfixes,
+to form a postfix expression.
+It can also contain
+another conditional compilation block,
+or a combination of these expressions and blocks.
 
 You can use this syntax anywhere that you can write
 an explicit member expression,
@@ -2291,7 +2288,7 @@ not just in top-level code.
 In the conditional compilation block,
 the branch for the ``#if`` compilation directive
 must contain at least one expression.
-However, the branch for ``#else`` can be empty.
+The other branches can be empty.
 
 .. assertion:: pound-if-empty-if-not-allowed
 
