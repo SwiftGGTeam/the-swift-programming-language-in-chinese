@@ -20,7 +20,7 @@ Whitespace and Comments
 -----------------------
 
 Whitespace has two uses: to separate tokens in the source file
-and to help determine whether an operator is a prefix or postfix
+and to distinguish between prefix, postfix, and binary operators
 (see :ref:`LexicalStructure_Operators`),
 but is otherwise ignored.
 The following characters are considered whitespace:
@@ -90,9 +90,18 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
+Treat identifiers that begin with an underscore as internal,
+even if their declaration has the ``public`` access-level modifier.
+This convention lets framework authors mark part of an API
+that clients must not interact with or depend on,
+even though some limitation requires the declaration to be public.
+In addition,
+identifiers that begin with two underscores
+are reserved for the Swift compiler and standard library.
+
 To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
-For example, ``class`` is not a valid identifier,
+For example, ``class`` isn't a valid identifier,
 but :literal:`\`class\`` is valid.
 The backticks aren't considered part of the identifier;
 :literal:`\`x\`` and ``x`` have the same meaning.
@@ -203,6 +212,10 @@ so they must be escaped with backticks in that context.
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
+   and from "utils/gyb_syntax_support/Token.py",
+   which generates the TokenKinds.def file.
+
+   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 
 * Keywords used in declarations:
   ``associatedtype``,
@@ -220,6 +233,7 @@ so they must be escaped with backticks in that context.
   ``open``,
   ``operator``,
   ``private``,
+  ``precedencegroup``,
   ``protocol``,
   ``public``,
   ``rethrows``,
@@ -229,9 +243,12 @@ so they must be escaped with backticks in that context.
   ``typealias``,
   and ``var``.
 
+.. Token.py doesn't include 'open' but DeclNodes.py does.
+
 * Keywords used in statements:
   ``break``,
   ``case``,
+  ``catch``,
   ``continue``,
   ``default``,
   ``defer``,
@@ -244,20 +261,22 @@ so they must be escaped with backticks in that context.
   ``in``,
   ``repeat``,
   ``return``,
+  ``throw``,
   ``switch``,
   ``where``,
   and ``while``.
 
 * Keywords used in expressions and types:
-  ``as``,
   ``Any``,
+  ``as``,
   ``catch``,
   ``false``,
   ``is``,
   ``nil``,
-  ``super``,
+  ``rethrows``,
   ``self``,
   ``Self``,
+  ``super``,
   ``throw``,
   ``throws``,
   ``true``,
@@ -270,31 +289,45 @@ so they must be escaped with backticks in that context.
   ``#available``,
   ``#colorLiteral``,
   ``#column``,
-  ``#else``,
+  ``#dsohandle``,
   ``#elseif``,
+  ``#else``,
   ``#endif``,
   ``#error``,
-  ``#file``,
   ``#fileID``,
   ``#fileLiteral``,
   ``#filePath``,
+  ``#file``,
   ``#function``,
   ``#if``,
   ``#imageLiteral``,
+  ``#keyPath``,
   ``#line``,
   ``#selector``,
   ``#sourceLocation``,
   and ``#warning``.
 
+.. Token.py includes #assert,
+   which looks like it's part of an experimental feature
+   based on the pound_assert_disabled diagnostic's error message:
+   #assert is an experimental feature that is currently disabled
+
+.. Token.py includes #fileID,
+   which looks like it's part of a future feature related to
+   -enable-experimental-concise-pound-file (see also Swift commit 0e569f5d9e66)
+
+.. Token.py includes 'yield' as a keyword,
+   which looks like it's related to a future feature around memory ownership.
+
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
-  ``dynamic``,
   ``didSet``,
+  ``dynamic``,
   ``final``,
   ``get``,
-  ``infix``,
   ``indirect``,
+  ``infix``,
   ``lazy``,
   ``left``,
   ``mutating``,
@@ -309,6 +342,7 @@ so they must be escaped with backticks in that context.
   ``required``,
   ``right``,
   ``set``,
+  ``some``,
   ``Type``,
   ``unowned``,
   ``weak``,
@@ -318,6 +352,9 @@ so they must be escaped with backticks in that context.
 
 .. NOTE: The list of context-sensitive keywords above
    is derived from the file "swift/include/swift/AST/Attr.def"
+   where they're marked CONTEXTUAL_SIMPLE_DECL_ATTR.
+   However, not all context-sensitive keywords appear there;
+
 
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
@@ -576,7 +613,7 @@ It can't contain three unescaped double quotation marks next to each other.
 
 The line break after the ``"""``
 that begins the multiline string literal
-is not part of the string.
+isn't part of the string.
 The line break before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
@@ -585,7 +622,7 @@ write a blank line as its first or last line.
 
 A multiline string literal can be indented
 using any combination of spaces and tabs;
-this indentation is not included in the string.
+this indentation isn't included in the string.
 The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin
@@ -609,6 +646,8 @@ You can use this syntax
 to hard wrap a multiline string literal in your source code,
 without changing the value of the resulting string.
 
+.. x``  Bogus `` paired with the one in the listing, to fix VIM syntax highlighting.
+
 Special characters
 can be included in string literals
 of both the single-line and multiline forms
@@ -625,7 +664,7 @@ using the following escape sequences:
   where *n* is a hexadecimal number
   that has one to eight digits
 
-.. The behavior of \n and \r is not the same as C.
+.. The behavior of \n and \r isn't the same as C.
    We specify exactly what those escapes mean.
    The behavior on C is platform dependent --
    in text mode, \n maps to the platform's line separator
@@ -636,6 +675,8 @@ by placing the expression in parentheses after a backslash (``\``).
 The interpolated expression can contain a string literal,
 but can't contain an unescaped backslash,
 a carriage return, or a line feed.
+
+.. x``  Bogus `` paired with the one in the listing, to fix VIM syntax highlighting.
 
 For example, all of the following string literals have the same value:
 
@@ -747,8 +788,8 @@ no runtime concatenation is performed.
     static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
     static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
     
-    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
-    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
+    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter-OPT
     extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
 
     quoted-text --> quoted-text-item quoted-text-OPT
@@ -913,10 +954,11 @@ it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
-and may be split again. As a result, there's no need to use whitespace
+and may be split again.
+As a result, you don't need to add whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
-In this example, the closing ``>`` characters are not treated as a single token
+In this example, the closing ``>`` characters aren't treated as a single token
 that may then be misinterpreted as a bit shift ``>>`` operator.
 
 .. NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
@@ -926,6 +968,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
 
    This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
    don't write that.
+
+   We call out the > > vs >> because
+   C++ typically needs whitespace to resolve the ambiguity.
 
 To learn how to define new, custom operators,
 see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.

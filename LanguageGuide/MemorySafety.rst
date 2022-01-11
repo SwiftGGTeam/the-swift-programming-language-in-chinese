@@ -109,7 +109,7 @@ you have to determine what it was intended to do.
    Swift guarantees that you'll get an error
    at either compile time or runtime.
    For multithreaded code,
-   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+   use `Thread Sanitizer <https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early>`_
    to help detect conflicting access across threads.
 
 .. TODO: The xref above doesn't seem to give enough information.
@@ -223,7 +223,7 @@ For example:
 
 In the code above,
 ``stepSize`` is a global variable,
-and it is normally accessible from within ``increment(_:)``.
+and it's normally accessible from within ``increment(_:)``.
 However,
 the read access to ``stepSize`` overlaps with
 the write access to ``number``.
@@ -566,7 +566,7 @@ it doesn't allow the access.
    is to use implicit pointer conversion
    when passing a value as a nonmutating unsafe pointer parameter,
    as in the example below.
-   There is discussion in <rdar://problem/33115142>
+   There's discussion in <rdar://problem/33115142>
    about changing the semantics of nonmutating method calls
    to be long-term reads,
    but it's not clear if/when that change will land.

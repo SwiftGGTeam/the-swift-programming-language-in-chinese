@@ -26,11 +26,11 @@ regardless of whether it was originally defined as a stored or computed property
 Defining a Base Class
 ---------------------
 
-Any class that does not inherit from another class is known as a :newTerm:`base class`.
+Any class that doesn't inherit from another class is known as a :newTerm:`base class`.
 
 .. note::
 
-   Swift classes do not inherit from a universal base class.
+   Swift classes don't inherit from a universal base class.
    Classes you define without specifying a superclass
    automatically become base classes for you to build upon.
 
@@ -42,7 +42,7 @@ a read-only computed ``String`` property called ``description``
 to create a description of the vehicle.
 
 The ``Vehicle`` base class also defines a method called ``makeNoise``.
-This method does not actually do anything for a base ``Vehicle`` instance,
+This method doesn't actually do anything for a base ``Vehicle`` instance,
 but will be customized by subclasses of ``Vehicle`` later on:
 
 .. testcode:: inheritance
@@ -74,7 +74,7 @@ a human-readable description of the vehicle's current speed:
    </ Vehicle: traveling at 0.0 miles per hour
 
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
-but is not much use in itself.
+but isn't much use in itself.
 To make it more useful,
 you need to refine it to describe more specific kinds of vehicles.
 
@@ -174,7 +174,7 @@ This is known as :newTerm:`overriding`.
 To override a characteristic that would otherwise be inherited,
 you prefix your overriding definition with the ``override`` keyword.
 Doing so clarifies that you intend to provide an override
-and have not provided a matching definition by mistake.
+and haven't provided a matching definition by mistake.
 Overriding by accident can cause unexpected behavior,
 and any overrides without the ``override`` keyword are
 diagnosed as an error when your code is compiled.
@@ -190,7 +190,7 @@ Accessing Superclass Methods, Properties, and Subscripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you provide a method, property, or subscript override for a subclass,
-it is sometimes useful to use the existing superclass implementation
+it's sometimes useful to use the existing superclass implementation
 as part of your override.
 For example, you can refine the behavior of that existing implementation,
 or store a modified value in an existing inherited variable.
@@ -253,7 +253,7 @@ You can provide a custom getter (and setter, if appropriate)
 to override *any* inherited property,
 regardless of whether the inherited property is implemented as
 a stored or computed property at source.
-The stored or computed nature of an inherited property is not known by a subclass ---
+The stored or computed nature of an inherited property isn't known by a subclass ---
 it only knows that the inherited property has a certain name and type.
 You must always state both the name and the type of the property you are overriding,
 to enable the compiler to check that your override matches
@@ -261,7 +261,7 @@ a superclass property with the same name and type.
 
 You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property override.
-You cannot, however, present an inherited read-write property as a read-only property.
+You can't, however, present an inherited read-write property as a read-only property.
 
 .. note::
 
@@ -318,13 +318,13 @@ For more information on property observers, see :ref:`Properties_PropertyObserve
 
 .. note::
 
-   You cannot add property observers to
+   You can't add property observers to
    inherited constant stored properties or inherited read-only computed properties.
-   The value of these properties cannot be set,
-   and so it is not appropriate to provide a ``willSet`` or ``didSet`` implementation
+   The value of these properties can't be set,
+   and so it isn't appropriate to provide a ``willSet`` or ``didSet`` implementation
    as part of an override.
 
-   Note also that you cannot provide both
+   Note also that you can't provide both
    an overriding setter and an overriding property observer for the same property.
    If you want to observe changes to a property's value,
    and you are already providing a custom setter for that property,
@@ -348,7 +348,7 @@ which automatically selects an appropriate gear to use based on the current spee
 Whenever you set the ``currentSpeed`` property of an ``AutomaticCar`` instance,
 the property's ``didSet`` observer sets the instance's ``gear`` property to
 an appropriate choice of gear for the new speed.
-Specifically, the property observer chooses a gear that is
+Specifically, the property observer chooses a gear that's
 the new ``currentSpeed`` value divided by ``10``,
 rounded down to the nearest integer, plus ``1``.
 A speed of ``35.0`` produces a gear of ``4``:
@@ -446,8 +446,8 @@ Any attempt to subclass a final class is reported as a compile-time error.
 .. TODO: I should probably provide an example here.
 
 .. TODO: provide more information about function signatures,
-   and what does / does not make them unique.
-   For example, the parameter names do not have to match
+   and what does / doesn't make them unique.
+   For example, the parameter names don't have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)
 
