@@ -631,7 +631,7 @@ to make the vector ``(5.0, 5.0)``, as illustrated below.
 Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The example shown above demonstrates a custom implementation of an infix operator.
+The example shown above demonstrates a custom implementation of a binary infix operator.
 Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.
