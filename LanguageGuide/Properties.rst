@@ -317,7 +317,7 @@ to enable you to work with the rectangle's ``center`` as if it were a real store
 The example above creates a new ``Rect`` variable called ``square``.
 The ``square`` variable is initialized with an origin point of ``(0, 0)``,
 and a width and height of ``10``.
-This square is represented by the blue square in the diagram below.
+This square is represented by the light green square in the diagram below.
 
 The ``square`` variable's ``center`` property is then accessed through dot syntax (``square.center``),
 which causes the getter for ``center`` to be called,
@@ -328,7 +328,7 @@ As can be seen above, the getter correctly returns a center point of ``(5, 5)``.
 
 The ``center`` property is then set to a new value of ``(15, 15)``,
 which moves the square up and to the right,
-to the new position shown by the orange square in the diagram below.
+to the new position shown by the dark green square in the diagram below.
 Setting the ``center`` property calls the setter for ``center``,
 which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.

@@ -785,7 +785,7 @@ and categorizes it on the graph that follows the example.
 The ``switch`` statement determines whether the point is
 at the origin (0, 0),
 on the red x-axis,
-on the orange y-axis,
+on the green y-axis,
 inside the blue 4-by-4 box centered on the origin,
 or outside of the box.
 
@@ -828,7 +828,7 @@ and categorizes it on the graph that follows:
 
 The ``switch`` statement determines whether the point is
 on the red x-axis,
-on the orange y-axis,
+on the green y-axis,
 or elsewhere (on neither axis).
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
