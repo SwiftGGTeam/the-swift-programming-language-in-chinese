@@ -844,7 +844,7 @@ Setting Initial Values for Wrapped Properties
 The code in the examples above
 sets the initial value for the wrapped property
 by giving ``number`` an initial value in the definition of ``TwelveOrLess``.
-Code that uses this property wrapper,
+Code that uses this property wrapper
 can't specify a different initial value for a property
 that's wrapped by ``TwelveOrLess`` ---
 for example,
