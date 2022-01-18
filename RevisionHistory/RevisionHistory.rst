@@ -1,6 +1,12 @@
 Document Revision History
 =========================
 
+**2022-01-16**
+
+* Updated for Swift 5.6.
+
+
+
 **2021-09-20**
 
 * Updated for Swift 5.5.
