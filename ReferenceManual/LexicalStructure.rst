@@ -20,7 +20,7 @@ Whitespace and Comments
 -----------------------
 
 Whitespace has two uses: to separate tokens in the source file
-and to distinguish between prefix, postfix, and binary operators
+and to distinguish between prefix, postfix, and infix operators
 (see :ref:`LexicalStructure_Operators`),
 but is otherwise ignored.
 The following characters are considered whitespace:

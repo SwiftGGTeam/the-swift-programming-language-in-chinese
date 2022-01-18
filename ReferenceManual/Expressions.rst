@@ -211,9 +211,9 @@ such as the trailing closure passed to the ``async(priority:operation:)`` functi
 It can't appear in the body of a ``defer`` statement,
 or in an autoclosure of synchronous function type.
 
-When the expression on the left-hand side of a binary operator
+When the expression on the left-hand side of an infix operator
 is marked with the ``await`` operator,
-that operator applies to the whole binary expression.
+that operator applies to the whole infix expression.
 That said, you can use parentheses
 to be explicit about the scope of the operator's application.
 
@@ -241,8 +241,8 @@ to be explicit about the scope of the operator's application.
     !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
     !! ^
 
-An ``await`` expression can't appear on the right-hand side of a binary operator,
-unless the binary operator is the assignment operator
+An ``await`` expression can't appear on the right-hand side of an infix operator,
+unless the infix operator is the assignment operator
 or the ``await`` expression is enclosed in parentheses.
 
 .. assertion:: await-on-right
