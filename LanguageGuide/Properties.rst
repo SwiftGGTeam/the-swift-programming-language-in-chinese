@@ -716,7 +716,7 @@ If you ask it to store a larger number, it stores 12 instead.
 .. No init(wrappedValue:) in this example -- that's in a later example.
    Always initializing the wrapped value is a simpler starting point.
 
-The setter ensures that new values are less than 12,
+The setter ensures that new values are less than or equal to 12,
 and the getter returns the stored value.
 
 .. note::
