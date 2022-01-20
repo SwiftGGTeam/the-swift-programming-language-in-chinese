@@ -2275,7 +2275,7 @@ the following code uses a different filtering rule on iOS:
 Between ``#if``, ``#endif``, and other compilation directives,
 the conditional compilation block can contain
 an implicit member expression
-followed by by zero or more postfixes,
+followed by zero or more postfixes,
 to form a postfix expression.
 It can also contain
 another conditional compilation block,
