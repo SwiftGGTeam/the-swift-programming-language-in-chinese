@@ -11,7 +11,7 @@ and elements in a ``Dictionary`` instance as ``someDictionary[key]``.
 You can define multiple subscripts for a single type,
 and the appropriate subscript overload to use is selected
 based on the type of index value you pass to the subscript.
-Subscripts are not limited to a single dimension,
+Subscripts aren't limited to a single dimension,
 and you can define subscripts with multiple input parameters
 to suit your custom type's needs.
 
@@ -51,7 +51,7 @@ The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify
 the setter's ``(newValue)`` parameter.
 A default parameter called ``newValue`` is provided to your setter
-if you do not provide one yourself.
+if you don't provide one yourself.
 
 As with read-only computed properties,
 you can simplify the declaration of a read-only subscript
@@ -78,7 +78,6 @@ which defines a ``TimesTable`` structure to represent an *n*-times-table of inte
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = REPL.TimesTable(multiplier: 3)
    -> print("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -95,7 +94,7 @@ which returns a value of ``18``, or ``3`` times ``6``.
 .. note::
 
    An *n*-times-table is based on a fixed mathematical rule.
-   It is not appropriate to set ``threeTimesTable[someIndex]`` to a new value,
+   It isn't appropriate to set ``threeTimesTable[someIndex]`` to a new value,
    and so the subscript for ``TimesTable`` is defined as a read-only subscript.
 
 .. _Subscripts_SubscriptUsage:
@@ -103,7 +102,7 @@ which returns a value of ``18``, or ``3`` times ``6``.
 Subscript Usage
 ---------------
 
-The exact meaning of “subscript” depends on the context in which it is used.
+The exact meaning of “subscript” depends on the context in which it's used.
 Subscripts are typically used as a shortcut for accessing
 the member elements in a collection, list, or sequence.
 You are free to implement subscripts in the most appropriate way for
@@ -118,7 +117,6 @@ and assigning a value of the dictionary's value type to the subscript:
 .. testcode:: dictionarySubscript
 
    -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : [String : Int] = ["cat": 4, "ant": 6, "spider": 8]
    -> numberOfLegs["bird"] = 2
 
 The example above defines a variable called ``numberOfLegs``
@@ -149,10 +147,26 @@ Subscript Options
 
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
-Subscripts can also return any type.
-Subscripts can use variadic parameters
-and provide default parameter values,
-but they can't use in-out parameters.
+Subscripts can also return a value of any type.
+
+Like functions,
+subscripts can take a varying number of parameters
+and provide default values for their parameters,
+as discussed in :ref:`Functions_VariadicParameters`
+and :ref:`Functions_DefaultParameterValues`.
+However, unlike functions,
+subscripts can't use in-out parameters.
+
+.. assertion:: subscripts-can-have-default-arguments
+
+    >> struct Subscriptable {
+    >>     subscript(x: Int, y: Int = 0) -> Int {
+    >>         return 100
+    >>     }
+    >> }
+    >> let s = Subscriptable()
+    >> print(s[0])
+    << 100
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -160,9 +174,9 @@ the types of the value or values that are contained within the subscript bracket
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
 
-While it is most common for a subscript to take a single parameter,
+While it's most common for a subscript to take a single parameter,
 you can also define a subscript with multiple parameters
-if it is appropriate for your type.
+if it's appropriate for your type.
 The following example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
 The ``Matrix`` structure's subscript takes two integer parameters:
@@ -193,7 +207,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
       }
 
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
-and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
+and creates an array that's large enough to store ``rows * columns`` values of type ``Double``.
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
@@ -206,7 +220,7 @@ an appropriate row and column count to its initializer:
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
-   << // matrix : Matrix = REPL.Matrix(rows: 2, columns: 2, grid: [0.0, 0.0, 0.0, 0.0])
+   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
 
 The example above creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
@@ -247,15 +261,13 @@ are inside the bounds of the matrix:
 .. testcode:: matrixSubscript
 
    >> var rows = 2
-   << // rows : Int = 2
    >> var columns = 2
-   << // columns : Int = 2
    -> func indexIsValid(row: Int, column: Int) -> Bool {
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
 
 An assertion is triggered if you try to access a subscript
-that is outside of the matrix bounds:
+that's outside of the matrix bounds:
 
 .. testcode:: matrixSubscriptAssert
 
@@ -271,7 +283,7 @@ Type Subscripts
 Instance subscripts, as described above,
 are subscripts that you call on an instance of a particular type.
 You can also define subscripts that are called on the type itself.
-This kind of subscript is called a :newterm:`type subscript`.
+This kind of subscript is called a :newTerm:`type subscript`.
 You indicate a type subscript
 by writing the ``static`` keyword before the ``subscript`` keyword.
 Classes can use the ``class`` keyword instead,
@@ -287,6 +299,6 @@ The example below shows how you define and call a type subscript:
          }
       }
    -> let mars = Planet[4]
-   << // mars : Planet = REPL.Planet.mars
+   >> assert(mars == Planet.mars)
    -> print(mars)
    << mars

@@ -100,7 +100,7 @@ These keywords are described in the sections below.
    with the use of the ``try``, ``catch`` and ``throw`` keywords.
    Unlike exception handling in many languages ---
    including Objective-C ---
-   error handling in Swift does not involve unwinding the call stack,
+   error handling in Swift doesn't involve unwinding the call stack,
    a process that can be computationally expensive.
    As such, the performance characteristics
    of a ``throw`` statement
@@ -130,18 +130,15 @@ you write the ``throws`` keyword before the return arrow (``->``).
    >> { return "foo" }
 
 .. assertion:: throwing-function-cant-overload-nonthrowing
-   :compile: true
 
    -> func f() -> Int { return 10 }
    -> func f() throws -> Int { return 10 } // Error
-   !!  /tmp/swifttest.swift:2:6: error: invalid redeclaration of 'f()'
+   !$ error: invalid redeclaration of 'f()'
    !! func f() throws -> Int { return 10 } // Error
    !! ^
-   !! /tmp/swifttest.swift:1:6: note: 'f()' previously declared here
+   !$ note: 'f()' previously declared here
    !! func f() -> Int { return 10 }
    !! ^
-
-.. Above test needs to be compiled or it's not predictable which version of f() gets read first.
 
 .. assertion:: throwing-parameter-can-overload-nonthrowing
 
@@ -165,7 +162,7 @@ to the scope from which it's called.
 In the example below,
 the ``VendingMachine`` class has a ``vend(itemNamed:)`` method
 that throws an appropriate ``VendingMachineError``
-if the requested item is not available,
+if the requested item isn't available,
 is out of stock,
 or has a cost that exceeds the current deposited amount:
 
@@ -235,13 +232,11 @@ propagate up to the point where the ``buyFavoriteSnack(person:vendingMachine:)``
           "Bob": "Licorice",
           "Eve": "Pretzels",
       ]
-   << // favoriteSnacks : [String : String] = ["Eve": "Pretzels", "Bob": "Licorice", "Alice": "Chips"]
    -> func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
           let snackName = favoriteSnacks[person] ?? "Candy Bar"
           try vendingMachine.vend(itemNamed: snackName)
       }
    >> var v = VendingMachine()
-   << // v : VendingMachine = REPL.VendingMachine
    >> v.coinsDeposited = 100
    >> try buyFavoriteSnack(person: "Alice", vendingMachine: v)
    << Dispensing Chips
@@ -292,7 +287,7 @@ Handling Errors Using Do-Catch
 You use a ``do``-``catch`` statement to handle errors
 by running a block of code.
 If an error is thrown by the code in the ``do`` clause,
-it is matched against the ``catch`` clauses
+it's matched against the ``catch`` clauses
 to determine which one of them can handle the error.
 
 Here is the general form of a ``do``-``catch`` statement:
@@ -305,6 +300,8 @@ Here is the general form of a ``do``-``catch`` statement:
    } catch <#pattern 1#> {
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
+       <#statements#>
+   } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
        <#statements#>
    } catch {
        <#statements#>
@@ -328,7 +325,6 @@ of the ``VendingMachineError`` enumeration.
 .. testcode:: errorHandling
 
    -> var vendingMachine = VendingMachine()
-   << // vendingMachine : VendingMachine = REPL.VendingMachine
    -> vendingMachine.coinsDeposited = 8
    -> do {
           try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
@@ -362,10 +358,10 @@ the error propagates to the surrounding scope.
 However, the propagated error
 must be handled by *some* surrounding scope.
 In a nonthrowing function,
-an enclosing ``do``-``catch`` clause
+an enclosing ``do``-``catch`` statement
 must handle the error.
 In a throwing function,
-either an enclosing ``do``-``catch`` clause
+either an enclosing ``do``-``catch`` statement
 or the caller
 must handle the error.
 If the error propagates to the top-level scope
@@ -382,7 +378,7 @@ caught by the calling function:
            do {
                try vendingMachine.vend(itemNamed: item)
            } catch is VendingMachineError {
-               print("Invalid selection, out of stock, or not enough money.")
+               print("Couldn't buy that from the vending machine.")
            }
        }
     ---
@@ -391,7 +387,7 @@ caught by the calling function:
        } catch {
            print("Unexpected non-vending-machine-related error: \(error)")
        }
-    <- Invalid selection, out of stock, or not enough money.
+    <- Couldn't buy that from the vending machine.
 
 In the ``nourish(with:)`` function,
 if ``vend(itemNamed:)`` throws an error that's
@@ -400,6 +396,35 @@ one of the cases of the ``VendingMachineError`` enumeration,
 Otherwise,
 ``nourish(with:)`` propagates the error to its call site.
 The error is then caught by the general ``catch`` clause.
+
+Another way to catch several related errors
+is to list them after ``catch``, separated by commas.
+For example:
+
+.. testcode:: errorHandling
+
+    -> func eat(item: String) throws {
+           do {
+               try vendingMachine.vend(itemNamed: item)
+           } catch VendingMachineError.invalidSelection, VendingMachineError.insufficientFunds, VendingMachineError.outOfStock {
+               print("Invalid selection, out of stock, or not enough money.")
+           }
+       }
+    >> do {
+    >>     try eat(item: "Beet-Flavored Chips")
+    >> } catch {
+    >>     print("Unexpected error: \(error)")
+    >> }
+    << Invalid selection, out of stock, or not enough money.
+
+.. FIXME the catch clause is getting indented oddly in HTML output if I hard wrap it
+
+The ``eat(item:)`` function lists the vending machine errors to catch,
+and its error text corresponds to the items in that list.
+If any of the three listed errors are thrown,
+this ``catch`` clause handles them by printing a message.
+Any other errors are propagated to the surrounding scope,
+including any vending-machine errors that might be added later.
 
 .. _ErrorHandling_Optional:
 
@@ -413,7 +438,6 @@ For example,
 in the following code ``x`` and ``y`` have the same value and behavior:
 
 .. testcode:: optional-try
-    :compile: true
 
     -> func someThrowingFunction() throws -> Int {
           // ...
@@ -474,7 +498,7 @@ which loads the image resource at a given path
 or throws an error if the image can't be loaded.
 In this case, because the image is shipped with the application,
 no error will be thrown at runtime,
-so it is appropriate to disable error propagation.
+so it's appropriate to disable error propagation.
 
 .. testcode:: forceTryStatement
 
@@ -483,7 +507,6 @@ so it is appropriate to disable error propagation.
    >>     return Image()
    >> }
    -> let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
-   << // photo : Image = REPL.Image()
 
 .. _ErrorHandling_Defer:
 

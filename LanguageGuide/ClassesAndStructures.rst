@@ -62,6 +62,11 @@ will be structures and enumerations.
 For a more detailed comparison,
 see `Choosing Between Structures and Classes <https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes>`_.
 
+.. note::
+
+   Classes and actors share many of the same characteristics and behaviors.
+   For information about actors, see :doc:`./Concurrency`.
+
 .. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
@@ -144,9 +149,7 @@ The syntax for creating instances is very similar for both structures and classe
 .. testcode:: ClassesAndStructures
 
    -> let someResolution = Resolution()
-   << // someResolution : Resolution = REPL.Resolution(width: 0, height: 0)
    -> let someVideoMode = VideoMode()
-   << // someVideoMode : VideoMode = REPL.VideoMode
 
 Structures and classes both use initializer syntax for new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
@@ -206,7 +209,6 @@ can be passed to the memberwise initializer by name:
 .. testcode:: ClassesAndStructures
 
    -> let vga = Resolution(width: 640, height: 480)
-   << // vga : Resolution = REPL.Resolution(width: 640, height: 480)
 
 Unlike structures, class instances don't receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
@@ -215,9 +217,10 @@ Initializers are described in more detail in :doc:`Initialization`.
 
    -> class C { var x = 0, y = 0 }
    -> let c = C(x: 1, y: 1)
-   !! <REPL Input>:1:14: error: argument passed to call that takes no arguments
+   !$ error: argument passed to call that takes no arguments
    !! let c = C(x: 1, y: 1)
-   !!         ~~~~^~~~~~~~
+   !!         ^~~~~~~~~~~~
+   !!-
 
 .. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
@@ -228,6 +231,11 @@ A :newTerm:`value type` is a type whose value is *copied*
 when it's assigned to a variable or constant,
 or when it's passed to a function.
 
+.. Alternate definition:
+   A type has value semantics when
+   mutation of one variable of that type
+   can never be observed through a different variable of the same type.
+
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays and dictionaries ---
@@ -236,7 +244,7 @@ are value types, and are implemented as structures behind the scenes.
 All structures and enumerations are value types in Swift.
 This means that any structure and enumeration instances you create ---
 and any value types they have as properties ---
-are always copied when they are passed around in your code.
+are always copied when they're passed around in your code.
 
 .. note::
 
@@ -256,9 +264,7 @@ Consider this example, which uses the ``Resolution`` structure from the previous
 .. testcode:: ClassesAndStructures
 
    -> let hd = Resolution(width: 1920, height: 1080)
-   << // hd : Resolution = REPL.Resolution(width: 1920, height: 1080)
    -> var cinema = hd
-   << // cinema : Resolution = REPL.Resolution(width: 1920, height: 1080)
 
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
@@ -271,7 +277,7 @@ Because ``Resolution`` is a structure,
 a *copy* of the existing instance is made,
 and this new copy is assigned to ``cinema``.
 Even though ``hd`` and ``cinema`` now have the same width and height,
-they are two completely different instances behind the scenes.
+they're two completely different instances behind the scenes.
 
 Next, the ``width`` property of ``cinema`` is amended to be
 the width of the slightly wider 2K standard used for digital cinema projection
@@ -301,7 +307,7 @@ When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
 The end result was two completely separate instances
 that contained the same numeric values.
-However, because they are separate instances,
+However, because they're separate instances,
 setting the width of ``cinema`` to ``2048``
 doesn't affect the width stored in ``hd``,
 as shown in the figure below:
@@ -320,9 +326,7 @@ The same behavior applies to enumerations:
          }
       }
    -> var currentDirection = CompassPoint.west
-   << // currentDirection : CompassPoint = REPL.CompassPoint.west
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = REPL.CompassPoint.west
    -> currentDirection.turnNorth()
    ---
    -> print("The current direction is \(currentDirection)")
@@ -343,8 +347,8 @@ Classes Are Reference Types
 ---------------------------
 
 Unlike value types, :newTerm:`reference types` are *not* copied
-when they are assigned to a variable or constant,
-or when they are passed to a function.
+when they're assigned to a variable or constant,
+or when they're passed to a function.
 Rather than a copy, a reference to the same existing instance is used.
 
 Here's an example, using the ``VideoMode`` class defined above:
@@ -352,7 +356,6 @@ Here's an example, using the ``VideoMode`` class defined above:
 .. testcode:: ClassesAndStructures
 
    -> let tenEighty = VideoMode()
-   << // tenEighty : VideoMode = REPL.VideoMode
    -> tenEighty.resolution = hd
    -> tenEighty.interlaced = true
    -> tenEighty.name = "1080i"
@@ -371,12 +374,11 @@ and the frame rate of ``alsoTenEighty`` is modified:
 .. testcode:: ClassesAndStructures
 
    -> let alsoTenEighty = tenEighty
-   << // alsoTenEighty : VideoMode = REPL.VideoMode
    -> alsoTenEighty.frameRate = 30.0
 
 Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
-Effectively, they are just two different names for the same single instance,
+Effectively, they're just two different names for the same single instance,
 as shown in the figure below:
 
 .. image:: ../images/sharedStateClass_2x.png
@@ -407,7 +409,7 @@ However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameR
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves don't actually change.
 ``tenEighty`` and ``alsoTenEighty`` themselves don't “store” the ``VideoMode`` instance ---
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
-It's the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
+It's the ``frameRate`` property of the underlying ``VideoMode`` that's changed,
 not the values of the constant references to that ``VideoMode``.
 
 .. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
@@ -426,21 +428,19 @@ Because classes are reference types,
 it's possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
 (The same isn't true for structures and enumerations,
-because they are always copied when they are assigned to a constant or variable,
+because they're always copied when they're assigned to a constant or variable,
 or passed to a function.)
 
 .. assertion:: structuresDontSupportTheIdentityOperators
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'S' operands
+   !$ error: argument type 'S' expected to be an instance of a class or class-constrained type
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
-   !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !!       ^
+   !$ error: argument type 'S' expected to be an instance of a class or class-constrained type
    !! if s1 === s2 { print("s1 === s2") } else { print("s1 !== s2") }
    !!       ^
 
@@ -448,14 +448,12 @@ or passed to a function.)
 
    -> enum E { case a, b }
    -> let e1 = E.a
-   << // e1 : E = REPL.E.a
    -> let e2 = E.b
-   << // e2 : E = REPL.E.b
    -> if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !! <REPL Input>:1:7: error: binary operator '===' cannot be applied to two 'E' operands
+   !$ error: argument type 'E' expected to be an instance of a class or class-constrained type
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
-   !!    ~~ ^   ~~
-   !! <REPL Input>:1:7: note: expected an argument list of type '(AnyObject?, AnyObject?)'
+   !!       ^
+   !$ error: argument type 'E' expected to be an instance of a class or class-constrained type
    !! if e1 === e2 { print("e1 === e2") } else { print("e1 !== e2") }
    !!       ^
 
@@ -492,31 +490,21 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
    -> class C { var x = 0, y = 0 }
    -> let c1 = C()
-   << // c1 : C = REPL.C
    -> let c2 = C()
-   << // c2 : C = REPL.C
    -> if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'C' operands
+   !$ error: binary operator '==' cannot be applied to two 'C' operands
    !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
    !!    ~~ ^  ~~
-   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if c1 == c2 { print("c1 == c2") } else { print("c1 != c2") }
-   !!       ^
 
 .. assertion:: structuresDontGetEqualityByDefault
 
    -> struct S { var x = 0, y = 0 }
    -> let s1 = S()
-   << // s1 : S = REPL.S(x: 0, y: 0)
    -> let s2 = S()
-   << // s2 : S = REPL.S(x: 0, y: 0)
    -> if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !! <REPL Input>:1:7: error: binary operator '==' cannot be applied to two 'S' operands
+   !$ error: binary operator '==' cannot be applied to two 'S' operands
    !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
    !!    ~~ ^  ~~
-   !~ <REPL Input>:1:7: note: overloads for '==' exist with these partially matching parameter lists:
-   !! if s1 == s2 { print("s1 == s2") } else { print("s1 != s2") }
-   !!       ^
 
 .. TODO: This needs clarifying with regards to function references.
 

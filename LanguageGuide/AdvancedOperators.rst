@@ -7,7 +7,7 @@ These include all of the bitwise and bit shifting operators you will be familiar
 from C and Objective-C.
 
 Unlike arithmetic operators in C,
-arithmetic operators in Swift do not overflow by default.
+arithmetic operators in Swift don't overflow by default.
 Overflow behavior is trapped and reported as an error.
 To opt in to overflow behavior,
 use Swift's second set of arithmetic operators that overflow by default,
@@ -34,7 +34,7 @@ Bitwise Operators
 
 :newTerm:`Bitwise operators` enable you to manipulate
 the individual raw data bits within a data structure.
-They are often used in low-level programming,
+They're often used in low-level programming,
 such as graphics programming and device driver creation.
 Bitwise operators can also be useful when you work with raw data from external sources,
 such as encoding and decoding data for communication over a custom protocol.
@@ -58,9 +58,9 @@ without any white space:
 .. testcode:: bitwiseOperators
 
    -> let initialBits: UInt8 = 0b00001111
-   << // initialBits : UInt8 = 15
+   >> assert(initialBits == 15)
    -> let invertedBits = ~initialBits  // equals 11110000
-   << // invertedBits : UInt8 = 240
+   >> assert(invertedBits == 240)
 
 ``UInt8`` integers have eight bits
 and can store any value between ``0`` and ``255``.
@@ -99,11 +99,9 @@ which is equal to an unsigned decimal value of ``60``:
 .. testcode:: bitwiseOperators
 
    -> let firstSixBits: UInt8 = 0b11111100
-   << // firstSixBits : UInt8 = 252
    -> let lastSixBits: UInt8  = 0b00111111
-   << // lastSixBits : UInt8 = 63
    -> let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
-   << // middleFourBits : UInt8 = 60
+   >> assert(middleFourBits == 0b00111100)
 
 .. _AdvancedOperators_BitwiseOROperator:
 
@@ -127,11 +125,9 @@ which equals an unsigned decimal of ``254``:
 .. testcode:: bitwiseOperators
 
    -> let someBits: UInt8 = 0b10110010
-   << // someBits : UInt8 = 178
    -> let moreBits: UInt8 = 0b01011110
-   << // moreBits : UInt8 = 94
    -> let combinedbits = someBits | moreBits  // equals 11111110
-   << // combinedbits : UInt8 = 254
+   >> assert(combinedbits == 0b11111110)
 
 .. _AdvancedOperators_BitwiseXOROperator:
 
@@ -157,11 +153,9 @@ and are set to ``0`` in the output value:
 .. testcode:: bitwiseOperators
 
    -> let firstBits: UInt8 = 0b00010100
-   << // firstBits : UInt8 = 20
    -> let otherBits: UInt8 = 0b00000101
-   << // otherBits : UInt8 = 5
    -> let outputBits = firstBits ^ otherBits  // equals 00010001
-   << // outputBits : UInt8 = 17
+   >> assert(outputBits == 0b00010001)
 
 .. _AdvancedOperators_BitwiseLeftAndRightShiftOperators:
 
@@ -210,30 +204,36 @@ Here's how bit shifting looks in Swift code:
 .. testcode:: bitwiseShiftOperators
 
    -> let shiftBits: UInt8 = 4   // 00000100 in binary
-   << // shiftBits : UInt8 = 4
+   >> let r0 =
    -> shiftBits << 1             // 00001000
-   << // r0 : UInt8 = 8
+   >> assert(r0 == 8)
+   >> let r1 =
    -> shiftBits << 2             // 00010000
-   << // r1 : UInt8 = 16
+   >> assert(r1 == 16)
+   >> let r2 =
    -> shiftBits << 5             // 10000000
-   << // r2 : UInt8 = 128
+   >> assert(r2 == 128)
+   >> let r3 =
    -> shiftBits << 6             // 00000000
-   << // r3 : UInt8 = 0
+   >> assert(r3 == 0)
+   >> let r4 =
    -> shiftBits >> 2             // 00000001
-   << // r4 : UInt8 = 1
+   >> assert(r4 == 1)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 You can use bit shifting to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
    -> let pink: UInt32 = 0xCC6699
-   << // pink : UInt32 = 13395609
    -> let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
-   << // redComponent : UInt32 = 204
    -> let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
-   << // greenComponent : UInt32 = 102
    -> let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
-   << // blueComponent : UInt32 = 153
+   >> assert(redComponent == 204)
+   >> assert(greenComponent == 102)
+   >> assert(blueComponent == 153)
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
@@ -262,9 +262,9 @@ giving a value of ``0x66``, which has a decimal value of ``102``.
 Finally, the blue component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0x0000FF``,
 which gives an output value of ``0x000099``.
-There's no need to shift this to the right,
-as ``0x000099`` already equals ``0x99``,
-which has a decimal value of ``153``.
+Because ``0x000099`` already equals ``0x99``,
+which has a decimal value of ``153``,
+this value is used without shifting it to the right,
 
 .. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 
@@ -293,7 +293,7 @@ and the seven value bits are just the number ``4``,
 written in binary notation.
 
 Negative numbers, however, are stored differently.
-They are stored by subtracting their absolute value from ``2`` to the power of ``n``,
+They're stored by subtracting their absolute value from ``2`` to the power of ``n``,
 where ``n`` is the number of value bits.
 An eight-bit number has seven value bits,
 so this means ``2`` to the power of ``7``, or ``128``.
@@ -334,7 +334,7 @@ rather than with a zero.
 .. image:: ../images/bitshiftSigned_2x.png
    :align: center
 
-This action ensures that signed integers have the same sign after they are shifted to the right,
+This action ensures that signed integers have the same sign after they're shifted to the right,
 and is known as an :newTerm:`arithmetic shift`.
 
 Because of the special way that positive and negative numbers are stored,
@@ -348,7 +348,7 @@ Overflow Operators
 ------------------
 
 If you try to insert a number into an integer constant or variable
-that cannot hold that value,
+that can't hold that value,
 by default Swift reports an error rather than allowing an invalid value to be created.
 This behavior gives extra safety when you work with numbers that are too large or too small.
 
@@ -360,7 +360,6 @@ causes an error:
 .. testcode:: overflowOperatorsWillFailToOverflow
 
    -> var potentialOverflow = Int16.max
-   << // potentialOverflow : Int16 = 32767
    /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
    </ potentialOverflow equals 32767, which is the maximum value an Int16 can hold
    -> potentialOverflow += 1
@@ -395,7 +394,6 @@ using the overflow addition operator (``&+``):
 .. testcode:: overflowOperatorsWillOverflowInPositiveDirection
 
    -> var unsignedOverflow = UInt8.max
-   << // unsignedOverflow : UInt8 = 255
    /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
    </ unsignedOverflow equals 255, which is the maximum value a UInt8 can hold
    -> unsignedOverflow = unsignedOverflow &+ 1
@@ -404,7 +402,7 @@ using the overflow addition operator (``&+``):
 
 The variable ``unsignedOverflow`` is initialized with the maximum value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
-It is then incremented by ``1`` using the overflow addition operator (``&+``).
+It's then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
@@ -421,7 +419,6 @@ Here's an example using the overflow subtraction operator (``&-``):
 .. testcode:: overflowOperatorsWillOverflowInNegativeDirection
 
    -> var unsignedOverflow = UInt8.min
-   << // unsignedOverflow : UInt8 = 0
    /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
    </ unsignedOverflow equals 0, which is the minimum value a UInt8 can hold
    -> unsignedOverflow = unsignedOverflow &- 1
@@ -445,7 +442,6 @@ as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
 .. testcode:: overflowOperatorsWillOverflowSigned
 
    -> var signedOverflow = Int8.min
-   << // signedOverflow : Int8 = -128
    /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
    </ signedOverflow equals -128, which is the minimum value an Int8 can hold
    -> signedOverflow = signedOverflow &- 1
@@ -482,7 +478,7 @@ either grouped from the left, or grouped from the right.
 Think of it as meaning “they associate with the expression to their left,”
 or “they associate with the expression to their right.”
 
-It is important to consider
+It's important to consider
 each operator's precedence and associativity
 when working out the order in which a compound expression will be calculated.
 For example,
@@ -490,10 +486,14 @@ operator precedence explains why the following expression equals ``17``.
 
 .. testcode:: evaluationOrder
 
+   >> let r0 =
    -> 2 + 3 % 4 * 5
-   << // r0 : Int = 17
+   >> assert(r0 == 17)
    /> this equals \(2 + 3 % 4 * 5)
    </ this equals 17
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 If you read strictly from left to right,
 you might expect the expression to be calculated as follows:
@@ -507,7 +507,7 @@ Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the remainder operator (``%``) and the multiplication operator (``*``)
 have a higher precedence than the addition operator (``+``).
-As a result, they are both evaluated before the addition is considered.
+As a result, they're both evaluated before the addition is considered.
 
 However, remainder and multiplication have the *same* precedence as each other.
 To work out the exact evaluation order to use,
@@ -518,22 +518,34 @@ starting from their left:
 
 .. testcode:: evaluationOrder
 
+   >> let r1 =
    -> 2 + ((3 % 4) * 5)
-   << // r1 : Int = 17
+   >> assert(r1 == 17)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 ``(3 % 4)`` is ``3``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
+   >> let r2 =
    -> 2 + (3 * 5)
-   << // r2 : Int = 17
+   >> assert(r2 == 17)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 ``(3 * 5)`` is ``15``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
+   >> let r3 =
    -> 2 + 15
-   << // r3 : Int = 17
+   >> assert(r3 == 17)
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 This calculation yields the final answer of ``17``.
 
@@ -545,7 +557,7 @@ see `Operator Declarations <https://developer.apple.com/documentation/swift/oper
 
    Swift's operator precedences and associativity rules are simpler and more predictable
    than those found in C and Objective-C.
-   However, this means that they are not exactly the same as in C-based languages.
+   However, this means that they aren't exactly the same as in C-based languages.
    Be careful to ensure that operator interactions still behave in the way you intend
    when porting existing code to Swift.
 
@@ -559,9 +571,9 @@ This is known as :newTerm:`overloading` the existing operators.
 
 The example below shows how to implement
 the arithmetic addition operator (``+``) for a custom structure.
-The arithmetic addition operator is a :newTerm:`binary operator`
+The arithmetic addition operator is a binary operator
 because it operates on two targets
-and is said to be :newTerm:`infix` because it appears in between those two targets.
+and it's an infix operator because it appears between those two targets.
 
 The example defines a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``,
@@ -603,11 +615,8 @@ can be used as an infix operator between existing ``Vector2D`` instances:
 .. testcode:: customOperators
 
    -> let vector = Vector2D(x: 3.0, y: 1.0)
-   << // vector : Vector2D = REPL.Vector2D(x: 3.0, y: 1.0)
    -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
-   << // anotherVector : Vector2D = REPL.Vector2D(x: 2.0, y: 4.0)
    -> let combinedVector = vector + anotherVector
-   << // combinedVector : Vector2D = REPL.Vector2D(x: 5.0, y: 5.0)
    /> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
    </ combinedVector is a Vector2D instance with values of (5.0, 5.0)
 
@@ -626,7 +635,7 @@ The example shown above demonstrates a custom implementation of a binary infix o
 Classes and structures can also provide implementations
 of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target.
-They are :newTerm:`prefix` if they precede their target (such as ``-a``)
+They're :newTerm:`prefix` if they precede their target (such as ``-a``)
 and :newTerm:`postfix` operators if they follow their target (such as ``b!``).
 
 You implement a prefix or postfix unary operator by writing
@@ -654,13 +663,10 @@ performs this operation on both the ``x`` and ``y`` properties:
 .. testcode:: customOperators
 
    -> let positive = Vector2D(x: 3.0, y: 4.0)
-   << // positive : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let negative = -positive
-   << // negative : Vector2D = REPL.Vector2D(x: -3.0, y: -4.0)
    /> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
    </ negative is a Vector2D instance with values of (-3.0, -4.0)
    -> let alsoPositive = -negative
-   << // alsoPositive : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
    </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
@@ -695,9 +701,7 @@ and uses it to set the left value to be the left value plus the right value:
 .. testcode:: customOperators
 
    -> var original = Vector2D(x: 1.0, y: 2.0)
-   << // original : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
    -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
-   << // vectorToAdd : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> original += vectorToAdd
    /> original now has values of (\(original.x), \(original.y))
    </ original now has values of (4.0, 6.0)
@@ -709,6 +713,20 @@ and uses it to set the left value to be the left value plus the right value:
    Only the compound assignment operators can be overloaded.
    Similarly, the ternary conditional operator
    (``a ? b : c``) can't be overloaded.
+
+.. assertion:: cant-overload-assignment
+
+   >> struct Vector2D {
+   >>    var x = 0.0, y = 0.0
+   >> }
+   >> extension Vector2D {
+   >>     static func = (left: inout Vector2D, right: Vector2D) {
+   >>         left = right
+   >>     }
+   >> }
+   !$ error: expected identifier in function declaration
+   !! static func = (left: inout Vector2D, right: Vector2D) {
+   !!             ^
 
 .. _AdvancedOperators_EquivalenceOperators:
 
@@ -751,49 +769,16 @@ You can now use this operator to check whether two ``Vector2D`` instances are eq
 .. testcode:: customOperators
 
    -> let twoThree = Vector2D(x: 2.0, y: 3.0)
-   << // twoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
-   << // anotherTwoThree : Vector2D = REPL.Vector2D(x: 2.0, y: 3.0)
    -> if twoThree == anotherTwoThree {
          print("These two vectors are equivalent.")
       }
    <- These two vectors are equivalent.
 
 In many simple cases, you can ask Swift
-to provide synthesized implementations of the equivalence operators for you.
-Swift provides synthesized implementations
-for the following kinds of custom types:
+to provide synthesized implementations of the equivalence operators for you,
+as described in :ref:`Protocols_SynthesizedImplementation`.
 
-* Structures that have only stored properties that conform to the ``Equatable`` protocol
-* Enumerations that have only associated types that conform to the ``Equatable`` protocol
-* Enumerations that have no associated types
-
-To receive a synthesized implementation of ``==``,
-declare ``Equatable`` conformance
-in the file that contains the original declaration,
-without implementing an ``==`` operator yourself.
-
-The example below defines a ``Vector3D`` structure
-for a three-dimensional position vector ``(x, y, z)``,
-similar to the ``Vector2D`` structure.
-Because the ``x``, ``y``, and ``z`` properties are all of an ``Equatable`` type,
-``Vector3D`` receives synthesized implementations
-of the equivalence operators.
-
-.. testcode:: equatable_synthesis
-
-   -> struct Vector3D: Equatable {
-         var x = 0.0, y = 0.0, z = 0.0
-      }
-   ---
-   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
-   << // twoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
-   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0) 
-   << // anotherTwoThreeFour : Vector3D = REPL.Vector3D(x: 2.0, y: 3.0, z: 4.0)
-   -> if twoThreeFour == anotherTwoThreeFour {
-          print("These two vectors are also equivalent.")
-      }
-   <- These two vectors are also equivalent.
 
 .. _AdvancedOperators_CustomOperators:
 
@@ -813,8 +798,8 @@ and are marked with the ``prefix``, ``infix`` or ``postfix`` modifiers:
    -> prefix operator +++
 
 The example above defines a new prefix operator called ``+++``.
-This operator does not have an existing meaning in Swift,
-and so it is given its own custom meaning below in the specific context of
+This operator doesn't have an existing meaning in Swift,
+and so it's given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` is treated as a new “prefix doubling” operator.
 It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
@@ -832,16 +817,13 @@ you add a type method called ``+++`` to ``Vector2D`` as follows:
       }
    ---
    -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
-   << // toBeDoubled : Vector2D = REPL.Vector2D(x: 1.0, y: 4.0)
    -> let afterDoubling = +++toBeDoubled
-   << // afterDoubling : Vector2D = REPL.Vector2D(x: 2.0, y: 8.0)
    /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
    </ toBeDoubled now has values of (2.0, 8.0)
    /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
    </ afterDoubling also has values of (2.0, 8.0)
 
 .. _AdvancedOperators_PrecedenceAndAssociativityForCustomOperators:
-
 
 Precedence for Custom Infix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -853,7 +835,7 @@ See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these characteristics affect an infix operator's interaction
 with other infix operators.
 
-A custom infix operator that is not explicitly placed into a precedence group is 
+A custom infix operator that isn't explicitly placed into a precedence group is 
 given a default precedence group with a precedence immediately higher
 than the precedence of the ternary conditional operator.
 
@@ -869,17 +851,14 @@ which belongs to the precedence group ``AdditionPrecedence``:
          }
       }
    -> let firstVector = Vector2D(x: 1.0, y: 2.0)
-   << // firstVector : Vector2D = REPL.Vector2D(x: 1.0, y: 2.0)
    -> let secondVector = Vector2D(x: 3.0, y: 4.0)
-   << // secondVector : Vector2D = REPL.Vector2D(x: 3.0, y: 4.0)
    -> let plusMinusVector = firstVector +- secondVector
-   << // plusMinusVector : Vector2D = REPL.Vector2D(x: 4.0, y: -2.0)
    /> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
    </ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
-Because it is in essence an “additive” operator,
+Because it's in essence an “additive” operator,
 it has been given the same precedence group
 as additive infix operators such as ``+`` and ``-``.
 For information about the operators provided by the Swift standard library,
@@ -891,7 +870,7 @@ see :ref:`Declarations_OperatorDeclaration`.
 
 .. note::
 
-   You do not specify a precedence when defining a prefix or postfix operator.
+   You don't specify a precedence when defining a prefix or postfix operator.
    However, if you apply both a prefix and a postfix operator to the same operand,
    the postfix operator is applied first.
 
@@ -899,15 +878,237 @@ see :ref:`Declarations_OperatorDeclaration`.
 
    -> prefix operator +++
    -> postfix operator ---
-   -> extension Int { static prefix func +++ (x: Int) -> Int { return x * 2 } }
-   -> extension Int { static postfix func --- (x: Int) -> Int { return x - 1 } }
-   -> +++1---
-   << // r0 : Int = 0
+   -> extension Int {
+          static prefix func +++ (x: Int) -> Int {
+              return x * 2
+          }
+      }
+   -> extension Int {
+          static postfix func --- (x: Int) -> Int {
+              return x - 1
+          }
+      }
+   -> let x = +++1---
+   -> let y = +++(1---)
+   -> let z = (+++1)---
+   -> print(x, y, z)
+   <- 0 0 1
+   // Note that x==y
 
-.. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
-   This is being tracked as rdar://16061044.
-   If this Radar is fixed, the operator declaration above should be split over multiple lines
-   for consistency with the rest of the code.
+.. _AdvancedOperators_ResultBuilders:
+
+Result Builders
+---------------
+
+A :newTerm:`result builder` is a type you define
+that adds syntax for creating nested data,
+like a list or tree,
+in a natural, declarative way.
+The code that uses the result builder
+can include ordinary Swift syntax, like ``if``  and ``for``,
+to handle conditional or repeated pieces of data.
+
+The code below defines a few types for drawing on a single line
+using stars and text.
+
+.. testcode:: result-builder
+
+   -> protocol Drawable {
+          func draw() -> String
+      }
+   -> struct Line: Drawable {
+          var elements: [Drawable]
+          func draw() -> String {
+              return elements.map { $0.draw() }.joined(separator: "")
+          }
+      }
+   -> struct Text: Drawable {
+          var content: String
+          init(_ content: String) { self.content = content }
+          func draw() -> String { return content }
+      }
+   -> struct Space: Drawable {
+          func draw() -> String { return " " }
+      }
+   -> struct Stars: Drawable {
+          var length: Int
+          func draw() -> String { return String(repeating: "*", count: length) }
+      }
+   -> struct AllCaps: Drawable {
+          var content: Drawable
+          func draw() -> String { return content.draw().uppercased() }
+      }
+
+The ``Drawable`` protocol defines the requirement
+for something that can be drawn, like a line or shape:
+The type must implement a ``draw()`` method.
+The ``Line`` structure represents a single-line drawing,
+and it serves the top-level container for most drawings.
+To draw a ``Line``,
+the structure calls ``draw()`` on each of the line's components,
+and then concatenates the resulting strings into a single string.
+The ``Text`` structure wraps a string to make it part of a drawing.
+The ``AllCaps`` structure wraps and modifies another drawing,
+converting any text in the drawing to uppercase.
+
+It's possible to make a drawing with these types
+by calling their initializers:
+
+.. testcode:: result-builder
+
+   -> let name: String? = "Ravi Patel"
+   -> let manualDrawing = Line(elements: [
+           Stars(length: 3),
+           Text("Hello"),
+           Space(),
+           AllCaps(content: Text((name ?? "World") + "!")),
+           Stars(length: 2),
+      ])
+   -> print(manualDrawing.draw())
+   <- ***Hello RAVI PATEL!**
+
+This code works, but it's a little awkward.
+The deeply nested parentheses after ``AllCaps`` are hard to read.
+The fallback logic to use "World" when ``name`` is ``nil``
+has to be done inline using the ``??`` operator,
+which would be difficult with anything more complex.
+If you needed to include switches or ``for`` loops
+to build up part of the drawing, there's no way to do that.
+A result builder lets you rewrite code like this
+so that it looks like normal Swift code.
+
+To define a result builder,
+you write the ``@resultBuilder`` attribute on a type declaration.
+For example, this code defines a result builder called ``DrawingBuilder``,
+which lets you use a declarative syntax to describe a drawing:
+
+.. testcode:: result-builder
+
+   -> @resultBuilder
+   -> struct DrawingBuilder {
+          static func buildBlock(_ components: Drawable...) -> Drawable {
+              return Line(elements: components)
+          }
+          static func buildEither(first: Drawable) -> Drawable {
+              return first
+          }
+          static func buildEither(second: Drawable) -> Drawable {
+              return second
+          }
+      }
+
+The ``DrawingBuilder`` structure defines three methods
+that implement parts of the result builder syntax.
+The ``buildBlock(_:)`` method adds support for
+writing a series of lines in a block of code.
+It combines the components in that block into a ``Line``.
+The ``buildEither(first:)`` and ``buildEither(second:)`` methods
+add support for ``if``-``else``.
+
+You can apply the ``@DrawingBuilder`` attribute to a function's parameter,
+which turns a closure passed to the function
+into the value that the result builder creates from that closure.
+For example:
+
+.. testcode:: result-builder
+
+   -> func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
+          return content()
+      }
+   -> func caps(@DrawingBuilder content: () -> Drawable) -> Drawable {
+          return AllCaps(content: content())
+      }
+   ---
+   -> func makeGreeting(for name: String? = nil) -> Drawable {
+          let greeting = draw {
+              Stars(length: 3)
+              Text("Hello")
+              Space()
+              caps {
+                  if let name = name {
+                      Text(name + "!")
+                  } else {
+                      Text("World!")
+                  }
+              }
+              Stars(length: 2)
+          }
+          return greeting
+      }
+   -> let genericGreeting = makeGreeting()
+   -> print(genericGreeting.draw())
+   <- ***Hello WORLD!**
+   ---
+   -> let personalGreeting = makeGreeting(for: "Ravi Patel")
+   -> print(personalGreeting.draw())
+   <- ***Hello RAVI PATEL!**
+
+The ``makeGreeting(for:)`` function takes a ``name`` parameter
+and uses it to draw a personalized greeting.
+The ``draw(_:)`` and ``caps(_:)`` functions
+both take a single closure as their argument,
+which is marked with the ``@DrawingBuilder`` attribute.
+When you call those functions,
+you use the special syntax that ``DrawingBuilder`` defines.
+Swift transforms that declarative description of a drawing
+into a series of calls to the methods on ``DrawingBuilder``
+to build up the value that's passed as the function argument.
+For example,
+Swift transforms the call to ``caps(_:)`` in that example
+into code like the following:
+
+.. testcode:: result-builder
+
+   -> let capsDrawing = caps {
+          let partialDrawing: Drawable
+          if let name = name {
+              let text = Text(name + "!")
+              partialDrawing = DrawingBuilder.buildEither(first: text)
+          } else {
+              let text = Text("World!")
+              partialDrawing = DrawingBuilder.buildEither(second: text)
+          }
+          return partialDrawing
+   -> }
+   >> print(capsDrawing.draw())
+   << RAVI PATEL!
+
+Swift transforms the ``if``-``else`` block into
+calls to the ``buildEither(first:)`` and ``buildEither(second:)`` methods.
+Although you don't call these methods in your own code,
+showing the result of the transformation
+makes it easier to see how Swift transforms your code
+when you use the ``DrawingBuilder`` syntax.
+
+To add support for writing ``for`` loops in the special drawing syntax,
+add a ``buildArray(_:)`` method.
+
+.. testcode:: result-builder
+
+   -> extension DrawingBuilder {
+          static func buildArray(_ components: [Drawable]) -> Drawable {
+              return Line(elements: components)
+          }
+      }
+   -> let manyStars = draw {
+          Text("Stars:")
+          for length in 1...3 {
+              Space()
+              Stars(length: length)
+          }
+   -> }
+   >> print(manyStars.draw())
+   << Stars: * ** ***
+
+In the code above, the ``for`` loop creates an array of drawings,
+and the ``buildArray(_:)`` method turns that array into a ``Line``.
+
+For a complete list of how Swift transforms builder syntax
+into calls to the builder type's methods,
+see :ref:`Attributes_resultBuilder`.
+
+
+
 
 .. The following needs more work...
 
@@ -916,7 +1117,7 @@ see :ref:`Declarations_OperatorDeclaration`.
 
     You can include operators in the requirements of a protocol.
     A type conforms to the protocol
-    only if there is an implementation of the operator for that type.
+    only if there's an implementation of the operator for that type.
     You use ``Self`` to refer to the type that will conform to the protocol,
     just like you do in other protocol requirements.
     For example, the standard library defines the ``Equatable`` protocol
@@ -942,8 +1143,9 @@ see :ref:`Declarations_OperatorDeclaration`.
               return (left.x == right.x) && (left.y == right.y) && (left.z == right.z)
           }
       }
+   >> let r0 =
    >> Vector3D(x: 1.1, y: 2.3, z: 12) == Vector3D(x: 1.1, y: 2.3, z: 12)
-   << // r0 : Bool = true
+   >> assert(r0)
 
 .. FIXME: This doesn't work
    <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
@@ -956,7 +1158,7 @@ see :ref:`Declarations_OperatorDeclaration`.
     the code below defines the ``*`` operator
     to scale a vector by a given amount.
     The ``Vector2D`` structure conforms to this protocol
-    because there is an implementation of the operator
+    because there's an implementation of the operator
     that takes a ``Vector2D`` as its second argument,
     even though that implementation is a member of ``Double``.
 
@@ -975,7 +1177,6 @@ see :ref:`Declarations_OperatorDeclaration`.
       }
    -> extension Vector2D: AnotherProtocol {}
    -> let unitVector = Vector2D(x: 1.0, y: 1.0)
-   << // unitVector : Vector2D = REPL.Vector2D(x: 1.0, y: 1.0)
    -> print(2.5 *** unitVector)
    <- Vector2D(x: 2.5, y: 2.5)
 

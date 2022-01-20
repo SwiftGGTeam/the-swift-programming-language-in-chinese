@@ -40,7 +40,6 @@ the following code contains both a read access and a write access:
 
     // A write access to the memory where one is stored.
     -> var one = 1
-    << // one : Int = 1
     ---
     // A read access from the memory where one is stored.
     -> print("We're number \(one)!")
@@ -110,7 +109,7 @@ you have to determine what it was intended to do.
    Swift guarantees that you'll get an error
    at either compile time or runtime.
    For multithreaded code,
-   use `Thread Sanitizer <https://developer.apple.com/documentation/code_diagnostics/thread_sanitizer>`_
+   use `Thread Sanitizer <https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early>`_
    to help detect conflicting access across threads.
 
 .. TODO: The xref above doesn't seem to give enough information.
@@ -130,7 +129,7 @@ Specifically,
 a conflict occurs if you have two accesses
 that meet all of the following conditions:
 
-- At least one is a write access.
+- At least one is a write access or a nonatomic access.
 - They access the same location in memory.
 - Their durations overlap.
 
@@ -144,7 +143,15 @@ for example, a variable, constant, or property.
 The duration of a memory access
 is either instantaneous or long-term.
 
-An access is :newterm:`instantaneous`
+An operation is :newTerm:`atomic`
+if it uses only C atomic operations;
+otherwise it's nonatomic.
+For a list of those functions, see the ``stdatomic(3)`` man page.
+
+.. Using these functions from Swift requires some shimming -- for example:
+   https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
+
+An access is :newTerm:`instantaneous`
 if it's not possible for other code to run
 after that access starts but before it ends.
 By their nature, two instantaneous accesses can't happen at the same time.
@@ -159,14 +166,13 @@ all the read and write accesses in the code listing below are instantaneous:
        }
     ---
     -> var myNumber = 1
-    << // myNumber : Int = 1
     -> myNumber = oneMore(than: myNumber)
     -> print(myNumber)
     <- 2
 
 However,
 there are several ways to access memory,
-called :newterm:`long-term` accesses,
+called :newTerm:`long-term` accesses,
 that span the execution of other code.
 The difference between instantaneous access and long-term access
 is that it’s possible for other code to run
@@ -217,7 +223,7 @@ For example:
 
 In the code above,
 ``stepSize`` is a global variable,
-and it is normally accessible from within ``increment(_:)``.
+and it's normally accessible from within ``increment(_:)``.
 However,
 the read access to ``stepSize`` overlaps with
 the write access to ``number``.
@@ -236,13 +242,11 @@ is to make an explicit copy of ``stepSize``:
 .. testcode:: memory-increment-copy
 
     >> var stepSize = 1
-    << // stepSize : Int = 1
     >> func increment(_ number: inout Int) {
     >>     number += stepSize
     >> }
     // Make an explicit copy.
     -> var copyOfStepSize = stepSize
-    << // copyOfStepSize : Int = 1
     -> increment(&copyOfStepSize)
     ---
     // Update the original.
@@ -273,21 +277,19 @@ For example:
        }
     -> var playerOneScore = 42
     -> var playerTwoScore = 30
-    << // playerOneScore : Int = 42
-    << // playerTwoScore : Int = 30
     -> balance(&playerOneScore, &playerTwoScore)  // OK
     -> balance(&playerOneScore, &playerOneScore)
     // Error: conflicting accesses to playerOneScore
-    !! <REPL Input>:1:26: error: inout arguments are not allowed to alias each other
+    !$ error: inout arguments are not allowed to alias each other
     !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~
-    !! <REPL Input>:1:9: note: previous aliasing argument
+    !$ note: previous aliasing argument
     !! balance(&playerOneScore, &playerOneScore)
     !!         ^~~~~~~~~~~~~~~
-    !! <REPL Input>:1:9: error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
+    !$ error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
     !! balance(&playerOneScore, &playerOneScore)
     !!                          ^~~~~~~~~~~~~~~
-    !! <REPL Input>:1:26: note: conflicting access is here
+    !$ note: conflicting access is here
     !! balance(&playerOneScore, &playerOneScore)
     !!         ^~~~~~~~~~~~~~~
 
@@ -371,8 +373,6 @@ creating the possibility of overlapping accesses.
     ---
     -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
     -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    << // oscar : Player = REPL.Player(name: "Oscar", health: 10, energy: 10)
-    << // maria : Player = REPL.Player(name: "Maria", health: 5, energy: 10)
     -> oscar.shareHealth(with: &maria)  // OK
 
 In the example above,
@@ -400,16 +400,16 @@ there's a conflict:
 
     -> oscar.shareHealth(with: &oscar)
     // Error: conflicting accesses to oscar
-    !! <REPL Input>:1:25: error: inout arguments are not allowed to alias each other
+    !$ error: inout arguments are not allowed to alias each other
     !! oscar.shareHealth(with: &oscar)
     !!                         ^~~~~~
-    !! <REPL Input>:1:1: note: previous aliasing argument
+    !$ note: previous aliasing argument
     !! oscar.shareHealth(with: &oscar)
     !! ^~~~~
-    !! <REPL Input>:1:1: error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+    !$ error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
     !! oscar.shareHealth(with: &oscar)
     !!                          ^~~~~
-    !! <REPL Input>:1:25: note: conflicting access is here
+    !$ note: conflicting access is here
     !! oscar.shareHealth(with: &oscar)
     !! ^~~~~~
 
@@ -452,7 +452,6 @@ produces a conflict:
     >>     y = sum - x
     >> }
     -> var playerInformation = (health: 10, energy: 20)
-    << // playerInformation : (Int, Int) = (10, 20)
     -> balance(&playerInformation.health, &playerInformation.energy)
     // Error: conflicting access to properties of playerInformation
     xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
@@ -567,7 +566,7 @@ it doesn't allow the access.
    is to use implicit pointer conversion
    when passing a value as a nonmutating unsafe pointer parameter,
    as in the example below.
-   There is discussion in <rdar://problem/33115142>
+   There's discussion in <rdar://problem/33115142>
    about changing the semantics of nonmutating method calls
    to be long-term reads,
    but it's not clear if/when that change will land.

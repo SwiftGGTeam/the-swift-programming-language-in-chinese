@@ -4,10 +4,10 @@ Extensions
 :newTerm:`Extensions` add new functionality to an existing
 class, structure, enumeration, or protocol type.
 This includes the ability to extend types
-for which you do not have access to the original source code
+for which you don't have access to the original source code
 (known as :newTerm:`retroactive modeling`).
 Extensions are similar to categories in Objective-C.
-(Unlike Objective-C categories, Swift extensions do not have names.)
+(Unlike Objective-C categories, Swift extensions don't have names.)
 
 Extensions in Swift can:
 
@@ -26,10 +26,9 @@ For more details, see :ref:`Protocols_Extensions`.
 .. note::
 
    Extensions can add new functionality to a type,
-   but they cannot override existing functionality.
+   but they can't override existing functionality.
 
 .. assertion:: extensionsCannotOverrideExistingBehavior
-   :compile: true
 
    -> class C {
          var x = 0
@@ -45,24 +44,35 @@ For more details, see :ref:`Protocols_Extensions`.
             print("called overridden foo")
          }
       }
-   !! /tmp/swifttest.swift:6:17: error: invalid redeclaration of 'x'
-   !! override var x: Int {
-   !!              ^
-   !! /tmp/swifttest.swift:2:8: note: 'x' previously declared here
-   !! var x = 0
-   !!     ^
-   !! /tmp/swifttest.swift:11:18: error: invalid redeclaration of 'foo()'
-   !! override func foo() {
-   !!               ^
-   !! /tmp/swifttest.swift:3:9: note: 'foo()' previously declared here
-   !! func foo() {}
-   !!      ^
-   !! /tmp/swifttest.swift:6:17: error: property does not override any property from its superclass
+   !$ error: property does not override any property from its superclass
    !! override var x: Int {
    !! ~~~~~~~~     ^
-   !! /tmp/swifttest.swift:11:18: error: method does not override any method from its superclass
+   !$ error: ambiguous use of 'x'
+   !! print("new x is \(x)")
+   !!            ^
+   !$ note: found this candidate
+   !! var x = 0
+   !!     ^
+   !$ note: found this candidate
+   !! override var x: Int {
+   !!              ^
+   !$ error: invalid redeclaration of 'x'
+   !! override var x: Int {
+   !!              ^
+   !$ note: 'x' previously declared here
+   !! var x = 0
+   !!     ^
+   !$ error: method does not override any method from its superclass
    !! override func foo() {
    !! ~~~~~~~~      ^
+   !$ error: invalid redeclaration of 'foo()'
+   !! override func foo() {
+   !!               ^
+   !$ note: 'foo()' previously declared here
+   !! func foo() {}
+   !!      ^
+
+.. _Extensions_ExtensionSyntax:
 
 Extension Syntax
 ----------------
@@ -122,17 +132,15 @@ to provide basic support for working with distance units:
          var ft: Double { return self / 3.28084 }
       }
    -> let oneInch = 25.4.mm
-   << // oneInch : Double = 0.0254
    -> print("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
-   << // threeFeet : Double = 0.914399970739201
    -> print("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 
 These computed properties express that a ``Double`` value
 should be considered as a certain unit of length.
-Although they are implemented as computed properties,
+Although they're implemented as computed properties,
 the names of these properties can be appended to
 a floating-point literal value with dot syntax,
 as a way to use that literal value to perform distance conversions.
@@ -150,28 +158,26 @@ and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28084``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
-and so they are expressed without the ``get`` keyword, for brevity.
+and so they're expressed without the ``get`` keyword, for brevity.
 Their return value is of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
 .. testcode:: extensionsComputedProperties
 
    -> let aMarathon = 42.km + 195.m
-   << // aMarathon : Double = 42195.0
    -> print("A marathon is \(aMarathon) meters long")
    <- A marathon is 42195.0 meters long
 
 .. note::
 
-   Extensions can add new computed properties, but they cannot add stored properties,
+   Extensions can add new computed properties, but they can't add stored properties,
    or add property observers to existing properties.
 
 .. assertion:: extensionsCannotAddStoredProperties
-   :compile: true
 
    -> class C {}
    -> extension C { var x = 0 }
-   !! /tmp/swifttest.swift:2:19: error: extensions must not contain stored properties
+   !$ error: extensions must not contain stored properties
    !! extension C { var x = 0 }
    !!                   ^
 
@@ -189,13 +195,13 @@ or to provide additional initialization options
 that were not included as part of the type's original implementation.
 
 Extensions can add new convenience initializers to a class,
-but they cannot add new designated initializers or deinitializers to a class.
+but they can't add new designated initializers or deinitializers to a class.
 Designated initializers and deinitializers
 must always be provided by the original class implementation.
 
 If you use an extension to add an initializer to a value type that provides
 default values for all of its stored properties
-and does not define any custom initializers,
+and doesn't define any custom initializers,
 you can call the default initializer and memberwise initializer for that value type
 from within your extension's initializer.
 This wouldn't be the case if you had written the initializer
@@ -232,10 +238,8 @@ These initializers can be used to create new ``Rect`` instances:
 .. testcode:: extensionsInitializers
 
    -> let defaultRect = Rect()
-   << // defaultRect : Rect = REPL.Rect(origin: REPL.Point(x: 0.0, y: 0.0), size: REPL.Size(width: 0.0, height: 0.0))
    -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // memberwiseRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.0, y: 2.0), size: REPL.Size(width: 5.0, height: 5.0))
 
 You can extend the ``Rect`` structure to provide an additional initializer
 that takes a specific center point and size:
@@ -260,7 +264,6 @@ in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = REPL.Rect(origin: REPL.Point(x: 2.5, y: 2.5), size: REPL.Size(width: 3.0, height: 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -289,7 +292,7 @@ The following example adds a new instance method called ``repetitions`` to the `
       }
 
 The ``repetitions(task:)`` method takes a single argument of type ``() -> Void``,
-which indicates a function that has no parameters and does not return a value.
+which indicates a function that has no parameters and doesn't return a value.
 
 After defining this extension,
 you can call the ``repetitions(task:)`` method on any integer
@@ -325,7 +328,6 @@ which squares the original value:
          }
       }
    -> var someInt = 3
-   << // someInt : Int = 3
    -> someInt.square()
    /> someInt is now \(someInt)
    </ someInt is now 9
@@ -356,43 +358,50 @@ from the right of the number:
             return (self / decimalBase) % 10
          }
       }
+   >> let r0 =
    -> 746381295[0]
-   << // r0 : Int = 5
    /> returns \(r0)
    </ returns 5
+   >> let r1 =
    -> 746381295[1]
-   << // r1 : Int = 9
    /> returns \(r1)
    </ returns 9
+   >> let r2 =
    -> 746381295[2]
-   << // r2 : Int = 2
    /> returns \(r2)
    </ returns 2
+   >> let r3 =
    -> 746381295[8]
-   << // r3 : Int = 7
    /> returns \(r3)
    </ returns 7
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
 .. TODO: Replace the for loop above with an exponent,
    if/when integer exponents land in the stdlib.
    Darwin's pow() function is only for floating point.
 
-If the ``Int`` value does not have enough digits for the requested index,
+If the ``Int`` value doesn't have enough digits for the requested index,
 the subscript implementation returns ``0``,
 as if the number had been padded with zeros to the left:
 
 .. testcode:: extensionsSubscripts
 
+   >> let r4 =
    -> 746381295[9]
-   << // r4 : Int = 0
    /> returns \(r4), as if you had requested:
    </ returns 0, as if you had requested:
+   >> let r5 =
    -> 0746381295[9]
-   << // r5 : Int = 0
 
 .. TODO: provide an explanation of this example
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
+
 
 .. _Extensions_NestedTypes:
 

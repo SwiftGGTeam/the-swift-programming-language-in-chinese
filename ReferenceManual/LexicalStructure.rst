@@ -20,7 +20,7 @@ Whitespace and Comments
 -----------------------
 
 Whitespace has two uses: to separate tokens in the source file
-and to help determine whether an operator is a prefix or postfix
+and to distinguish between prefix, postfix, and infix operators
 (see :ref:`LexicalStructure_Operators`),
 but is otherwise ignored.
 The following characters are considered whitespace:
@@ -52,13 +52,17 @@ as described in `Markup Formatting Reference <//apple_ref/doc/uid/TP40016497>`_.
 
    whitespace --> whitespace-item whitespace-OPT
    whitespace-item --> line-break
+   whitespace-item --> inline-space
    whitespace-item --> comment
    whitespace-item --> multiline-comment
-   whitespace-item --> U+0000, U+0009, U+000B, U+000C, or U+0020
+   whitespace-item --> U+0000, U+000B, or U+000C
 
    line-break --> U+000A
    line-break --> U+000D
    line-break --> U+000D followed by U+000A
+
+   inline-spaces --> inline-space inline-spaces-OPT
+   inline-space --> U+0009 or U+0020
 
    comment --> ``//`` comment-text line-break
    multiline-comment --> ``/*`` multiline-comment-text ``*/``
@@ -86,9 +90,18 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
+Treat identifiers that begin with an underscore as internal,
+even if their declaration has the ``public`` access-level modifier.
+This convention lets framework authors mark part of an API
+that clients must not interact with or depend on,
+even though some limitation requires the declaration to be public.
+In addition,
+identifiers that begin with two underscores
+are reserved for the Swift compiler and standard library.
+
 To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
-For example, ``class`` is not a valid identifier,
+For example, ``class`` isn't a valid identifier,
 but :literal:`\`class\`` is valid.
 The backticks aren't considered part of the identifier;
 :literal:`\`x\`` and ``x`` have the same meaning.
@@ -97,6 +110,17 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
+The compiler synthesizes identifiers that begin with a dollar sign (``$``)
+for properties that have a property wrapper projection.
+Your code can interact with these identifiers,
+but you can't declare identifiers with that prefix.
+For more information, see the :ref:`Attributes_propertyWrapper` section
+of the :doc:`../ReferenceManual/Attributes` chapter.
+
+.. The cross reference above includes both the section and chapter because,
+   even though "propertyWrapper" is the title of the section,
+   the section name isn't title case so it doesn't necessarily look like a title.
+
 .. syntax-grammar::
 
     Grammar of an identifier
@@ -104,6 +128,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> identifier-head identifier-characters-OPT
     identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
+    identifier --> property-wrapper-projection
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -129,6 +154,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
+    property-wrapper-projection --> ``$`` identifier-characters
 
 
 .. _LexicalStructure_Keywords:
@@ -159,33 +185,37 @@ so they must be escaped with backticks in that context.
 
 .. assertion:: var-requires-backticks
 
-   -> func f(`var` x: Int) {}
+   -> func g(`var` x: Int) {}
    -> func f(var x: Int) {}
-   !! <REPL Input>:1:8: error: 'var' as a parameter attribute is not allowed
+   !$ warning: 'var' in this position is interpreted as an argument label
    !! func f(var x: Int) {}
    !!        ^~~
-   !!-
+   !!        `var`
 
 .. assertion:: let-requires-backticks
 
-   -> func f(`let` x: Int) {}
+   -> func g(`let` x: Int) {}
    -> func f(let x: Int) {}
-   !! <REPL Input>:1:8: error: 'let' as a parameter attribute is not allowed
+   !$ warning: 'let' in this position is interpreted as an argument label
    !! func f(let x: Int) {}
    !!        ^~~
-   !!-
+   !!        `let`
 
 .. assertion:: inout-requires-backticks
 
-   -> func f(`inout` x: Int) {}
+   -> func g(`inout` x: Int) {}
    -> func f(inout x: Int) {}
-   !! <REPL Input>:1:8: error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
+   !$ error: 'inout' before a parameter name is not allowed, place it before the parameter type instead
    !! func f(inout x: Int) {}
    !!        ^~~~~
    !!                 inout
 
 .. NOTE: This list of language keywords and punctuation
    is derived from the file "swift/include/swift/Parse/Tokens.def"
+   and from "utils/gyb_syntax_support/Token.py",
+   which generates the TokenKinds.def file.
+
+   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 
 * Keywords used in declarations:
   ``associatedtype``,
@@ -203,17 +233,22 @@ so they must be escaped with backticks in that context.
   ``open``,
   ``operator``,
   ``private``,
+  ``precedencegroup``,
   ``protocol``,
   ``public``,
+  ``rethrows``,
   ``static``,
   ``struct``,
   ``subscript``,
   ``typealias``,
   and ``var``.
 
+.. Token.py doesn't include 'open' but DeclNodes.py does.
+
 * Keywords used in statements:
   ``break``,
   ``case``,
+  ``catch``,
   ``continue``,
   ``default``,
   ``defer``,
@@ -226,21 +261,22 @@ so they must be escaped with backticks in that context.
   ``in``,
   ``repeat``,
   ``return``,
+  ``throw``,
   ``switch``,
   ``where``,
   and ``while``.
 
 * Keywords used in expressions and types:
-  ``as``,
   ``Any``,
+  ``as``,
   ``catch``,
   ``false``,
   ``is``,
   ``nil``,
   ``rethrows``,
-  ``super``,
   ``self``,
   ``Self``,
+  ``super``,
   ``throw``,
   ``throws``,
   ``true``,
@@ -253,29 +289,45 @@ so they must be escaped with backticks in that context.
   ``#available``,
   ``#colorLiteral``,
   ``#column``,
-  ``#else``,
+  ``#dsohandle``,
   ``#elseif``,
+  ``#else``,
   ``#endif``,
   ``#error``,
-  ``#file``,
+  ``#fileID``,
   ``#fileLiteral``,
+  ``#filePath``,
+  ``#file``,
   ``#function``,
   ``#if``,
   ``#imageLiteral``,
+  ``#keyPath``,
   ``#line``,
   ``#selector``,
   ``#sourceLocation``,
   and ``#warning``.
 
+.. Token.py includes #assert,
+   which looks like it's part of an experimental feature
+   based on the pound_assert_disabled diagnostic's error message:
+   #assert is an experimental feature that is currently disabled
+
+.. Token.py includes #fileID,
+   which looks like it's part of a future feature related to
+   -enable-experimental-concise-pound-file (see also Swift commit 0e569f5d9e66)
+
+.. Token.py includes 'yield' as a keyword,
+   which looks like it's related to a future feature around memory ownership.
+
 * Keywords reserved in particular contexts:
   ``associativity``,
   ``convenience``,
-  ``dynamic``,
   ``didSet``,
+  ``dynamic``,
   ``final``,
   ``get``,
-  ``infix``,
   ``indirect``,
+  ``infix``,
   ``lazy``,
   ``left``,
   ``mutating``,
@@ -290,6 +342,7 @@ so they must be escaped with backticks in that context.
   ``required``,
   ``right``,
   ``set``,
+  ``some``,
   ``Type``,
   ``unowned``,
   ``weak``,
@@ -299,6 +352,9 @@ so they must be escaped with backticks in that context.
 
 .. NOTE: The list of context-sensitive keywords above
    is derived from the file "swift/include/swift/AST/Attr.def"
+   where they're marked CONTEXTUAL_SIMPLE_DECL_ATTR.
+   However, not all context-sensitive keywords appear there;
+
 
 The following tokens are reserved as punctuation
 and can't be used as custom operators:
@@ -319,14 +375,22 @@ The following are examples of literals:
 
 .. testcode:: basic-literals
 
+    >> let r0 =
     -> 42               // Integer literal
+    >> let r1 =
     -> 3.14159          // Floating-point literal
+    >> let r2 =
     -> "Hello, world!"  // String literal
+    >> let r3 =
     -> true             // Boolean literal
-    <$ : Int = 42
-    <$ : Double = 3.14159
-    <$ : String = "Hello, world!"
-    <$ : Bool = true
+    >> for x in [r0, r1, r2, r3] as [Any] { print(type(of: x)) }
+    << Int
+    << Double
+    << String
+    << Bool
+
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A literal doesn't have a type on its own.
 Instead, a literal is parsed as having infinite precision and Swift's type inference
@@ -549,7 +613,7 @@ It can't contain three unescaped double quotation marks next to each other.
 
 The line break after the ``"""``
 that begins the multiline string literal
-is not part of the string.
+isn't part of the string.
 The line break before the ``"""``
 that ends the literal is also not part of the string.
 To make a multiline string literal
@@ -558,7 +622,7 @@ write a blank line as its first or last line.
 
 A multiline string literal can be indented
 using any combination of spaces and tabs;
-this indentation is not included in the string.
+this indentation isn't included in the string.
 The ``"""`` that ends the literal
 determines the indentation:
 Every nonblank line in the literal must begin
@@ -582,6 +646,8 @@ You can use this syntax
 to hard wrap a multiline string literal in your source code,
 without changing the value of the resulting string.
 
+.. x``  Bogus `` paired with the one in the listing, to fix VIM syntax highlighting.
+
 Special characters
 can be included in string literals
 of both the single-line and multiline forms
@@ -598,7 +664,7 @@ using the following escape sequences:
   where *n* is a hexadecimal number
   that has one to eight digits
 
-.. The behavior of \n and \r is not the same as C.
+.. The behavior of \n and \r isn't the same as C.
    We specify exactly what those escapes mean.
    The behavior on C is platform dependent --
    in text mode, \n maps to the platform's line separator
@@ -610,21 +676,31 @@ The interpolated expression can contain a string literal,
 but can't contain an unescaped backslash,
 a carriage return, or a line feed.
 
+.. x``  Bogus `` paired with the one in the listing, to fix VIM syntax highlighting.
+
 For example, all of the following string literals have the same value:
 
 .. testcode:: string-literals
 
+   >> let r0 =
    -> "1 2 3"
-   <$ : String = "1 2 3"
+   >> let r1 =
    -> "1 2 \("3")"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r1)
+   >> let r2 =
    -> "1 2 \(3)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r2)
+   >> let r3 =
    -> "1 2 \(1 + 2)"
-   <$ : String = "1 2 3"
+   >> assert(r0 == r3)
    -> let x = 3; "1 2 \(x)"
-   << // x : Int = 3
-   <$ : String = "1 2 3"
+   >> assert(r0 == "1 2 \(x)")
+   !$ warning: string literal is unused
+   !! let x = 3; "1 2 \(x)"
+   !!            ^~~~~~~~~~
+
+.. Refactor the above if possible to avoid using bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number signs (``#``).
@@ -655,8 +731,6 @@ that create equivalent string values:
 
     -> let string = #"\(x) \ " \u{2603}"#
     -> let escaped = "\\(x) \\ \" \\u{2603}"
-    << // string : String = "\\(x) \\ \" \\u{2603}"
-    << // escaped : String = "\\(x) \\ \" \\u{2603}"
     -> print(string)
     <- \(x) \ " \u{2603}
     -> print(string == escaped)
@@ -666,16 +740,20 @@ If you use more than one number sign to form
 a string delimited by extended delimiters,
 don't place whitespace in between the number signs:
 
-.. testcode:: extended-string-delimiters
+.. assertion:: extended-string-delimiters
 
     -> print(###"Line 1\###nLine 2"###) // OK
     << Line 1
     << Line 2
+
+.. testcode:: extended-string-delimiters-err
+
+    -> print(###"Line 1\###nLine 2"###) // OK
     -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
-    !! <REPL Input>:1:7: error: expected expression in list of expressions
+    !$ error: expected expression in list of expressions
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
-    !! <REPL Input>:1:21: error: invalid escape sequence in literal
+    !$ error: invalid escape sequence in literal
     !! print(# # #"Line 1\# # #nLine 2"# # #) // Error
     !! ^
 
@@ -695,10 +773,8 @@ no runtime concatenation is performed.
 
 .. testcode:: concatenated-strings
 
-  -> let textA = "Hello " + "world"
-  -> let textB = "Hello world"
-  << // textA : String = "Hello world"
-  << // textB : String = "Hello world"
+   -> let textA = "Hello " + "world"
+   -> let textB = "Hello world"
 
 .. syntax-grammar::
 
@@ -712,8 +788,8 @@ no runtime concatenation is performed.
     static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
     static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
     
-    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter ``"""``
-    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter
+    multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"""``
+    multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter-OPT
     extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
 
     quoted-text --> quoted-text-item quoted-text-OPT
@@ -726,7 +802,7 @@ no runtime concatenation is performed.
     multiline-quoted-text-item --> escaped-newline
 
     interpolated-string-literal --> string-literal-opening-delimiter interpolated-text-OPT string-literal-closing-delimiter
-    interpolated-string-literal --> multiline-string-literal-opening-delimiter interpolated-text-OPT multiline-string-literal-closing-delimiter
+    interpolated-string-literal --> multiline-string-literal-opening-delimiter multiline-interpolated-text-OPT multiline-string-literal-closing-delimiter
 
     interpolated-text --> interpolated-text-item interpolated-text-OPT
     interpolated-text-item --> ``\(`` expression ``)`` | quoted-text-item
@@ -739,7 +815,7 @@ no runtime concatenation is performed.
     escaped-character -->  escape-sequence ``u`` ``{`` unicode-scalar-digits ``}``
     unicode-scalar-digits --> Between one and eight hexadecimal digits
 
-    escaped-newline -->  escape-sequence whitespace-OPT line-break
+    escaped-newline -->  escape-sequence inline-spaces-OPT line-break
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-text rule which allows repetition; no need to allow
@@ -787,14 +863,14 @@ the ``+`` operator followed by the ``.+`` operator.
 .. assertion:: dot-operator-must-start-with-dot
 
    >> infix operator +.+ ;
-   !! <REPL Input>:1:17: error: consecutive statements on a line must be separated by ';'
+   !$ error: consecutive statements on a line must be separated by ';'
    !! infix operator +.+ ;
    !!                 ^
    !!                 ;
-   !! <REPL Input>:1:17: error: operator with postfix spacing cannot start a subexpression
+   !$ error: operator with postfix spacing cannot start a subexpression
    !! infix operator +.+ ;
    !!                 ^
-   !! <REPL Input>:1:20: error: expected expression
+   !$ error: expected expression
    !! infix operator +.+ ;
    !!                    ^
    >> infix operator .+
@@ -802,11 +878,10 @@ the ``+`` operator followed by the ``.+`` operator.
 
 Although you can define custom operators that contain a question mark (``?``),
 they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation mark (``!``),
-postfix operators can't begin with either a question mark or an exclamation mark.
+Additionally, although operators can contain an exclamation point (``!``),
+postfix operators can't begin with either a question mark or an exclamation point.
 
 .. assertion:: postfix-operators-dont-need-unique-prefix
-
 
    >> struct Num { var value: Int }
       postfix operator +
@@ -814,7 +889,6 @@ postfix operators can't begin with either a question mark or an exclamation mark
       postfix func + (x: Num) -> Int { return x.value + 1 }
       postfix func +* (x: Num) -> Int { return x.value * 100 }
    >> let n = Num(value: 5)
-   << // n : Num = REPL.Num(value: 5)
    >> print(n+)
    << 6
    >> print(n+*)
@@ -830,15 +904,12 @@ postfix operators can't begin with either a question mark or an exclamation mark
           return x + 1
       }
    >> print(1?+)
-   !! <REPL Input>:1:18: error: expected operator name in operator declaration
+   !$ error: postfix operator names starting with '?' or '!' are disallowed to avoid collisions with built-in unwrapping operators
    !! postfix operator ?+
-   !! ^
-   !! <REPL Input>:1:14: error: operator implementation without matching operator declaration
-   !! postfix func ?+ (x: Int) -> Int {
-   !! ^
-   !! <REPL Input>:1:9: error: '+' is not a postfix unary operator
+   !!                  ^
+   !$ error: '+' is not a postfix unary operator
    !! print(1?+)
-   !! ^
+   !!         ^
 
 .. note::
 
@@ -850,11 +921,11 @@ postfix operators can't begin with either a question mark or an exclamation mark
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
-or a binary operator. This behavior is summarized in the following rules:
+or an infix operator. This behavior has the following rules:
 
 * If an operator has whitespace around both sides or around neither side,
-  it's treated as a binary operator.
-  As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as a binary operator.
+  it's treated as an infix operator.
+  As an example, the ``+++`` operator in ``a+++b`` and ``a +++ b`` is treated as an infix operator.
 * If an operator has whitespace on the left side only,
   it's treated as a prefix unary operator.
   As an example, the ``+++`` operator in ``a +++b`` is treated as a prefix unary operator.
@@ -883,10 +954,11 @@ it must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
-and may be split again. As a result, there's no need to use whitespace
+and may be split again.
+As a result, you don't need to add whitespace
 to disambiguate between the closing ``>`` characters in constructs like
 ``Dictionary<String, Array<Int>>``.
-In this example, the closing ``>`` characters are not treated as a single token
+In this example, the closing ``>`` characters aren't treated as a single token
 that may then be misinterpreted as a bit shift ``>>`` operator.
 
 .. NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
@@ -896,6 +968,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
 
    This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
    don't write that.
+
+   We call out the > > vs >> because
+   C++ typically needs whitespace to resolve the ambiguity.
 
 To learn how to define new, custom operators,
 see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
@@ -945,6 +1020,6 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     dot-operator-character --> ``.`` | operator-character
     dot-operator-characters --> dot-operator-character dot-operator-characters-OPT
 
-    binary-operator --> operator
+    infix-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator

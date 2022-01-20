@@ -30,7 +30,7 @@ When you define a function,
 you can optionally define one or more named, typed values that the function takes as input,
 known as :newTerm:`parameters`.
 You can also optionally define
-a type of value that the function will pass back as output when it is done,
+a type of value that the function will pass back as output when it's done,
 known as its :newTerm:`return type`.
 
 Every function has a :newTerm:`function name`,
@@ -64,7 +64,7 @@ which is followed by the name of the type to return.
 
 The definition describes what the function does,
 what it expects to receive,
-and what it returns when it is done.
+and what it returns when it's done.
 The definition makes it easy for the function to be called unambiguously
 from elsewhere in your code:
 
@@ -99,7 +99,7 @@ In the line of code that says ``return greeting``,
 the function finishes its execution and returns the current value of ``greeting``.
 
 You can call the ``greet(person:)`` function multiple times with different input values.
-The example above shows what happens if it is called with an input value of ``"Anna"``,
+The example above shows what happens if it's called with an input value of ``"Anna"``,
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
@@ -128,9 +128,9 @@ to a complex function with expressive parameter names and different parameter op
 Functions Without Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions are not required to define input parameters.
+Functions aren't required to define input parameters.
 Here's a function with no input parameters,
-which always returns the same ``String`` message whenever it is called:
+which always returns the same ``String`` message whenever it's called:
 
 .. testcode:: functionsWithoutParameters
 
@@ -141,7 +141,7 @@ which always returns the same ``String`` message whenever it is called:
    <- hello, world
 
 The function definition still needs parentheses after the function's name,
-even though it does not take any parameters.
+even though it doesn't take any parameters.
 The function name is also followed by
 an empty pair of parentheses when the function is called.
 
@@ -184,7 +184,7 @@ but the ``greet(person:)`` function takes only one.
 Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions are not required to define a return type.
+Functions aren't required to define a return type.
 Here's a version of the ``greet(person:)`` function,
 which prints its own ``String`` value rather than returning it:
 
@@ -196,8 +196,8 @@ which prints its own ``String`` value rather than returning it:
    -> greet(person: "Dave")
    <- Hello, Dave!
 
-Because it does not need to return a value,
-the function's definition does not include the return arrow (``->``)
+Because it doesn't need to return a value,
+the function's definition doesn't include the return arrow (``->``)
 or a return type.
 
 .. note::
@@ -208,7 +208,7 @@ or a return type.
    This is simply an empty tuple,
    which is written as ``()``.
 
-The return value of a function can be ignored when it is called:
+The return value of a function can be ignored when it's called:
 
 .. testcode:: functionsWithoutReturnValues
 
@@ -219,13 +219,17 @@ The return value of a function can be ignored when it is called:
    -> func printWithoutCounting(string: String) {
          let _ = printAndCount(string: string)
       }
+   >> let a =
    -> printAndCount(string: "hello, world")
    << hello, world
+   >> assert(a == 12)
    // prints "hello, world" and returns a value of 12
-   << // r0 : Int = 12
    -> printWithoutCounting(string: "hello, world")
    << hello, world
-   // prints "hello, world" but does not return a value
+   // prints "hello, world" but doesn't return a value
+
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
 The first function, ``printAndCount(string:)``,
 prints a string, and then returns its character count as an ``Int``.
@@ -233,16 +237,19 @@ The second function, ``printWithoutCounting(string:)``,
 calls the first function, but ignores its return value.
 When the second function is called,
 the message is still printed by the first function,
-but the returned value is not used.
+but the returned value isn't used.
 
 .. note::
 
    Return values can be ignored,
    but a function that says it will return a value must always do so.
    A function with a defined return type
-   cannot allow control to fall out of the bottom of the function
+   can't allow control to fall out of the bottom of the function
    without returning a value,
    and attempting to do so will result in a compile-time error.
+
+.. FIXME Unless the function is marked @discardableResult,
+   ignoring its return value triggers a compile-time warning.
 
 .. _Functions_FunctionsWithMultipleReturnValues:
 
@@ -278,7 +285,7 @@ The body of the ``minMax(array:)`` function starts by setting
 two working variables called ``currentMin`` and ``currentMax``
 to the value of the first integer in the array.
 The function then iterates over the remaining values in the array
-and checks each value to see if it is smaller or larger than
+and checks each value to see if it's smaller or larger than
 the values of ``currentMin`` and ``currentMax`` respectively.
 Finally, the overall minimum and maximum values are returned as
 a tuple of two ``Int`` values.
@@ -289,11 +296,10 @@ they can be accessed with dot syntax to retrieve the minimum and maximum found v
 .. testcode:: tupleTypesAsReturnTypes
 
    -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
-   << // bounds : (min: Int, max: Int) = (min: -6, max: 109)
    -> print("min is \(bounds.min) and max is \(bounds.max)")
    <- min is -6 and max is 109
 
-Note that the tuple's members do not need to be named
+Note that the tuple's members don't need to be named
 at the point that the tuple is returned from the function,
 because their names are already specified as part of the function's return type.
 
@@ -319,7 +325,7 @@ such as ``(Int, Int)?`` or ``(String, Int, Bool)?``.
    not just each individual value within the tuple.
 
 The ``minMax(array:)`` function above returns a tuple containing two ``Int`` values.
-However, the function does not perform any safety checks on the array it is passed.
+However, the function doesn't perform any safety checks on the array it's passed.
 If the ``array`` argument contains an empty array,
 the ``minMax(array:)`` function, as defined above,
 will trigger a runtime error when attempting to access ``array[0]``.
@@ -388,6 +394,33 @@ Any function that you write as just one ``return`` line can omit the ``return``.
 As you'll see in :ref:`Properties_ImplicitReturn`,
 property getters can also use an implicit return.
 
+.. note::
+
+   The code you write as an implicit return value
+   needs to return some value.
+   For example,
+   you can't use ``print(13)``
+   as an implicit return value.
+   However, you can use a function that never returns
+   like ``fatalError("Oh no!")``
+   as an implicit return value,
+   because Swift knows that the implicit return doesn't happen.
+
+.. assertion:: implicit-return-print-instead
+
+   // This is ok:
+   >> func testFatal() -> Int {
+   >>     fatalError("Oh no!")
+   >> }
+   ---
+   // But not this:
+   >> func testPrint() -> Int {
+   >>     print(13)
+   >> }
+   !$ error: cannot convert return expression of type '()' to return type 'Int'
+   !! print(13)
+   !! ^~~~~~~~~
+
 .. _Functions_FunctionParameterNames:
 
 Function Argument Labels and Parameter Names
@@ -448,7 +481,7 @@ and returns a greeting:
 
 The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
-while still providing a function body that is readable and clear in intent.
+while still providing a function body that's readable and clear in intent.
 
 .. _Functions_OmittingParameterNames:
 
@@ -525,18 +558,44 @@ The example below calculates the :newTerm:`arithmetic mean`
          }
          return total / Double(numbers.count)
       }
+   >> let r0 =
    -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r0 : Double = 3.0
    /> returns \(r0), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
+   >> let r1 =
    -> arithmeticMean(3, 8.25, 18.75)
-   << // r1 : Double = 10.0
    /> returns \(r1), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
 
-.. note::
+.. Rewrite the above to avoid bare expressions.
+   Tracking bug is <rdar://problem/35301593>
 
-   A function may have at most one variadic parameter.
+A function can have multiple variadic parameters.
+The first parameter that comes after a variadic parameter
+must have an argument label.
+The argument label makes it unambiguous
+which arguments are passed to the variadic parameter
+and which arguments are passed to the parameters
+that come after the variadic parameter.
+
+.. assertion:: variadic-parameters-and-labels
+
+   // Labeled, immediately after
+   >> func f(_ a: Int..., b: String) {}
+   ---
+   // Unlabeled, not immediately after
+   >> func g(_ a: Int..., b: String, _ c: Int) {}
+   ---
+   // Multiple
+   >> func h(_a: Int..., b: String, _ c: Int..., d: String) {}
+
+.. assertion:: variadic-parameters-and-labels-failure
+
+   // Unlabeled, immediately after
+   >> func f(_ a: Int..., _ b: String) {}
+   !$ error: a parameter following a variadic parameter requires a label
+   !! func f(_ a: Int..., _ b: String) {}
+   !! ^
 
 .. _Functions_InOutParameters:
 
@@ -553,7 +612,7 @@ define that parameter as an :newTerm:`in-out parameter` instead.
 
 You write an in-out parameter by placing the ``inout`` keyword
 right before a parameter's type.
-An in-out parameter has a value that is passed *in* to the function,
+An in-out parameter has a value that's passed *in* to the function,
 is modified by the function,
 and is passed back *out* of the function to replace the original value.
 For a detailed discussion of the behavior of in-out parameters
@@ -561,16 +620,16 @@ and associated compiler optimizations,
 see :ref:`Declarations_InOutParameters`.
 
 You can only pass a variable as the argument for an in-out parameter.
-You cannot pass a constant or a literal value as the argument,
-because constants and literals cannot be modified.
+You can't pass a constant or a literal value as the argument,
+because constants and literals can't be modified.
 You place an ampersand (``&``) directly before a variable's name
 when you pass it as an argument to an in-out parameter,
 to indicate that it can be modified by the function.
 
 .. note::
 
-   In-out parameters cannot have default values,
-   and variadic parameters cannot be marked as ``inout``.
+   In-out parameters can't have default values,
+   and variadic parameters can't be marked as ``inout``.
 
 Here's an example of a function called ``swapTwoInts(_:_:)``,
 which has two in-out integer parameters called ``a`` and ``b``:
@@ -592,14 +651,12 @@ and then assigning ``temporaryA`` to ``b``.
 You can call the ``swapTwoInts(_:_:)`` function with two variables of type ``Int``
 to swap their values.
 Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
-when they are passed to the ``swapTwoInts(_:_:)`` function:
+when they're passed to the ``swapTwoInts(_:_:)`` function:
 
 .. testcode:: inoutParameters
 
    -> var someInt = 3
-   << // someInt : Int = 3
    -> var anotherInt = 107
-   << // anotherInt : Int = 107
    -> swapTwoInts(&someInt, &anotherInt)
    -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
@@ -611,8 +668,8 @@ even though they were originally defined outside of the function.
 
 .. note::
 
-   In-out parameters are not the same as returning a value from a function.
-   The ``swapTwoInts`` example above does not define a return type or return a value,
+   In-out parameters aren't the same as returning a value from a function.
+   The ``swapTwoInts`` example above doesn't define a return type or return a value,
    but it still modifies the values of ``someInt`` and ``anotherInt``.
    In-out parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.
@@ -635,13 +692,13 @@ For example:
    -> func addTwoInts(_ a: Int, _ b: Int) -> Int {
          return a + b
       }
-   >> addTwoInts
-   << // r0 : (Int, Int) -> Int = (Function)
+   >> print(type(of: addTwoInts))
+   << (Int, Int) -> Int
    -> func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
          return a * b
       }
-   >> multiplyTwoInts
-   << // r1 : (Int, Int) -> Int = (Function)
+   >> print(type(of: multiplyTwoInts))
+   << (Int, Int) -> Int
 
 This example defines two simple mathematical functions
 called ``addTwoInts`` and ``multiplyTwoInts``.
@@ -662,8 +719,8 @@ Here's another example, for a function with no parameters or return value:
    -> func printHelloWorld() {
          print("hello, world")
       }
-   >> printHelloWorld
-   << // r2 : () -> () = (Function)
+   >> print(type(of: printHelloWorld))
+   << () -> ()
 
 The type of this function is ``() -> Void``,
 or “a function that has no parameters, and returns ``Void``.”
@@ -680,7 +737,6 @@ and assign an appropriate function to that variable:
 .. testcode:: functionTypes
 
    -> var mathFunction: (Int, Int) -> Int = addTwoInts
-   << // mathFunction : (Int, Int) -> Int = (Function)
 
 This can be read as:
 
@@ -715,7 +771,8 @@ when you assign a function to a constant or variable:
 .. testcode:: functionTypes
 
    -> let anotherMathFunction = addTwoInts
-   << // anotherMathFunction : (Int, Int) -> Int = (Function)
+   >> print(type(of: anotherMathFunction))
+   << (Int, Int) -> Int
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 .. TODO: talk about defining typealiases for function types somewhere?
@@ -747,7 +804,7 @@ The second and third parameters are called ``a`` and ``b``, and are both of type
 These are used as the two input values for the provided math function.
 
 When ``printMathResult(_:_:_:)`` is called,
-it is passed the ``addTwoInts(_:_:)`` function, and the integer values ``3`` and ``5``.
+it's passed the ``addTwoInts(_:_:)`` function, and the integer values ``3`` and ``5``.
 It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
 
 The role of ``printMathResult(_:_:_:)`` is to print the result of
@@ -797,9 +854,9 @@ that will step in one direction or the other:
 .. testcode:: functionTypes
 
    -> var currentValue = 3
-   << // currentValue : Int = 3
    -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+   >> print(type(of: moveNearerToZero))
+   << (Int) -> Int
    // moveNearerToZero now refers to the stepBackward() function
 
 The example above determines whether a positive or negative step is needed
@@ -852,9 +909,9 @@ to use and return nested functions:
          return backward ? stepBackward : stepForward
       }
    -> var currentValue = -4
-   << // currentValue : Int = -4
    -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = (Function)
+   >> print(type(of: moveNearerToZero))
+   << (Int) -> Int
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {
          print("\(currentValue)... ")

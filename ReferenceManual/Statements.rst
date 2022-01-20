@@ -95,12 +95,12 @@ a type that conforms to the
 `IteratorProtocol <//apple_ref/swift/intf/s:Ps16IteratorProtocol>`_ protocol.
 The program begins executing a loop
 by calling the ``next()`` method on the iterator.
-If the value returned is not ``nil``,
-it is assigned to the *item* pattern,
+If the value returned isn't ``nil``,
+it's assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
-Otherwise, the program does not perform assignment or execute the *statements*,
-and it is finished executing the ``for``-``in`` statement.
+Otherwise, the program doesn't perform assignment or execute the *statements*,
+and it's finished executing the ``for``-``in`` statement.
 
 .. syntax-grammar::
 
@@ -375,7 +375,7 @@ If a ``where`` clause is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the expression of the ``where`` clause evaluates to ``true``.
 For example, a *control expression* matches the case in the example below
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
+only if it's a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
 .. testcode:: switch-case-statement
 
@@ -394,6 +394,9 @@ all of the patterns must contain the same constant or variable bindings,
 and each bound variable or constant must have the same type
 in all of the case's patterns.
 
+.. The discussion above about multi-pattern cases
+   matches discussion of multi-pattern catch under Do Stamement.
+
 A ``switch`` statement can also include a default case, introduced by the ``default`` keyword.
 The code within a default case is executed only if no other cases match the control expression.
 A ``switch`` statement can include only one default case,
@@ -411,17 +414,20 @@ the program executes only the code within the first matching case in source orde
 .. assertion:: switch-case-with-multiple-patterns
 
    >> let tuple = (1, 1)
-   << // tuple : (Int, Int) = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x, 1): print(x)
    >>     default: print(2)
    >> }
    << 1
+
+.. assertion:: switch-case-with-multiple-patterns-err
+
+   >> let tuple = (1, 1)
    >> switch tuple {
    >>     case (let x, 5), (let x as Any, 1): print(1)
    >>     default: print(2)
    >> }
-   !! <REPL Input>:2:29: error: pattern variable bound to type 'Any', expected type 'Int'
+   !$ error: pattern variable bound to type 'Any', expected type 'Int'
    !! case (let x, 5), (let x as Any, 1): print(1)
    !!                       ^
 
@@ -451,10 +457,12 @@ When a library's authors mark an enumeration as nonfrozen,
 they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
-Only the standard library,
+Code that's compiled in library evolution mode,
+code in the standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
-Enumerations you declare in Swift can't be nonfrozen. 
+For information about frozen and nonfrozen enumerations,
+see :ref:`Attributes_frozen`.
 
 When switching over a nonfrozen enumeration value,
 you always need to include a default case,
@@ -464,7 +472,7 @@ which indicates that the default case should match only enumeration cases
 that are added in the future.
 Swift produces a warning
 if the default case matches
-any enumeration case that is known at compiler time.
+any enumeration case that's known at compiler time.
 This future warning informs you that the library author
 added a new case to the enumeration
 that doesn't have a corresponding switch case.
@@ -480,7 +488,6 @@ to take the new cases into account.
 .. testcode:: unknown-case
 
    -> let representation: Mirror.AncestorRepresentation = .generated
-   << // representation : Mirror.AncestorRepresentation = Swift.Mirror.AncestorRepresentation.generated
    -> switch representation {
       case .customized:
           print("Use the nearest ancestor’s implementation.")
@@ -501,7 +508,7 @@ Execution Does Not Fall Through Cases Implicitly
 
 After the code within a matched case has finished executing,
 the program exits from the ``switch`` statement.
-Program execution does not continue or "fall through" to the next case or default case.
+Program execution doesn't continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
 which simply consists of the ``fallthrough`` keyword,
@@ -560,7 +567,6 @@ see :ref:`ControlFlow_LabeledStatements` in :doc:`../LanguageGuide/ControlFlow`.
 .. assertion:: backtick-identifier-is-legal-label
 
    -> var i = 0
-   << // i : Int = 0
    -> `return`: while i < 100 {
           i += 1
           if i == 10 {
@@ -625,7 +631,7 @@ When a ``break`` statement is followed by the name of a statement label,
 it ends program execution of the loop,
 ``if`` statement, or ``switch`` statement named by that label.
 
-When a ``break`` statement is not followed by the name of a statement label,
+When a ``break`` statement isn't followed by the name of a statement label,
 it ends program execution of the ``switch`` statement or the innermost enclosing loop
 statement in which it occurs.
 You can't use an unlabeled ``break`` statement to break out of an ``if`` statement.
@@ -650,7 +656,7 @@ Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
 A ``continue`` statement ends program execution of the current iteration of a loop
-statement but does not stop execution of the loop statement.
+statement but doesn't stop execution of the loop statement.
 A ``continue`` statement can consist of only the ``continue`` keyword,
 or it can consist of the ``continue`` keyword followed by the name of a statement label,
 as shown below.
@@ -664,7 +670,7 @@ When a ``continue`` statement is followed by the name of a statement label,
 it ends program execution of the current iteration
 of the loop statement named by that label.
 
-When a ``continue`` statement is not followed by the name of a statement label,
+When a ``continue`` statement isn't followed by the name of a statement label,
 it ends program execution of the current iteration
 of the innermost enclosing loop statement in which it occurs.
 
@@ -696,13 +702,13 @@ and occurs only in a case block of a ``switch`` statement.
 A ``fallthrough`` statement causes program execution to continue
 from one case in a ``switch`` statement to the next case.
 Program execution continues to the next case
-even if the patterns of the case label do not match
+even if the patterns of the case label don't match
 the value of the ``switch`` statement's control expression.
 
 A ``fallthrough`` statement can appear anywhere inside a ``switch`` statement,
 not just as the last statement of a case block,
 but it can't be used in the final case block.
-It also cannot transfer control into a case block
+It also can't transfer control into a case block
 whose pattern contains value binding patterns.
 
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
@@ -735,10 +741,10 @@ or it can consist of the ``return`` keyword followed by an expression, as shown 
 
 When a ``return`` statement is followed by an expression,
 the value of the expression is returned to the calling function or method.
-If the value of the expression does not match the value of the return type
+If the value of the expression doesn't match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
-before it is returned to the calling function or method.
+before it's returned to the calling function or method.
 
 .. note::
 
@@ -748,8 +754,8 @@ before it is returned to the calling function or method.
 .. TODO: Discuss how the conversion takes place and what is allowed to be converted
     in the (yet to be written) chapter on subtyping and type conversions.
 
-When a ``return`` statement is not followed by an expression,
-it can be used only to return from a function or method that does not return a value
+When a ``return`` statement isn't followed by an expression,
+it can be used only to return from a function or method that doesn't return a value
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 
 .. syntax-grammar::
@@ -817,7 +823,7 @@ to perform manual resource management such as closing file descriptors,
 and to perform actions that need to happen even if an error is thrown.
 
 If multiple ``defer`` statements appear in the same scope,
-the order they appear is the reverse of the order they are executed.
+the order they appear is the reverse of the order they're executed.
 Executing the last ``defer`` statement in a given scope first
 means that statements inside that last ``defer`` statement
 can refer to resources that will be cleaned up by other ``defer`` statements.
@@ -857,7 +863,7 @@ can be accessed only within that scope.
 
 A ``do`` statement in Swift is similar to
 curly braces (``{}``) in C used to delimit a code block,
-and does not incur a performance cost at runtime.
+and doesn't incur a performance cost at runtime.
 
 A ``do`` statement has the following form:
 
@@ -870,7 +876,19 @@ A ``do`` statement has the following form:
        <#statements#>
    } catch <#pattern 2#> where <#condition#> {
        <#statements#>
+   } catch <#pattern 3#>, <#pattern 4#> where <#condition#> {
+       <#statements#>
+   } catch {
+       <#statements#>
    }
+
+If any statement in the ``do`` code block throws an error,
+program control is transferred
+to the first ``catch`` clause whose pattern matches the error.
+If none of the clauses match,
+the error propagates to the surrounding scope.
+If an error is unhandled at the top level,
+program execution stops with a runtime error.
 
 Like a ``switch`` statement,
 the compiler attempts to infer whether ``catch`` clauses are exhaustive.
@@ -880,10 +898,20 @@ which means
 the error must be handled by an enclosing ``catch`` clause
 or the containing function must be declared with ``throws``.
 
+A ``catch`` clause that has multiple patterns
+matches the error if any of its patterns match the error.
+If a ``catch`` clause contains multiple patterns,
+all of the patterns must contain the same constant or variable bindings,
+and each bound variable or constant must have the same type
+in all of the ``catch`` clause's patterns.
+
+.. The discussion above of multi-pattern catch
+   matches the discussion of multi-pattern case under Switch Statement.
+
 To ensure that an error is handled,
 use a ``catch`` clause with a pattern that matches all errors,
 such as a wildcard pattern (``_``).
-If a ``catch`` clause does not specify a pattern,
+If a ``catch`` clause doesn't specify a pattern,
 the ``catch`` clause matches and binds any error to a local constant named ``error``.
 For more information about the patterns you can use in a ``catch`` clause,
 see :doc:`../ReferenceManual/Patterns`.
@@ -897,7 +925,9 @@ see :ref:`ErrorHandling_Catch`.
 
     do-statement --> ``do`` code-block catch-clauses-OPT
     catch-clauses --> catch-clause catch-clauses-OPT
-    catch-clause --> ``catch`` pattern-OPT where-clause-OPT code-block
+    catch-clause --> ``catch`` catch-pattern-list-OPT code-block
+    catch-pattern-list --> catch-pattern | catch-pattern ``,`` catch-pattern-list
+    catch-pattern --> pattern where-clause-OPT
 
 
 .. _Statements_CompilerControlStatements:
@@ -951,17 +981,30 @@ conditions listed in the table below.
 ========================  ===================================================
 Platform condition        Valid arguments
 ========================  ===================================================
-``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``, ``Linux``
+``os()``                  ``macOS``, ``iOS``, ``watchOS``, ``tvOS``,
+                          ``Linux``, ``Windows``
 ``arch()``                ``i386``, ``x86_64``, ``arm``, ``arm64``
 ``swift()``               ``>=`` or ``<`` followed by a version number
 ``compiler()``            ``>=`` or ``<`` followed by a version number
 ``canImport()``           A module name
-``targetEnvironment()``   ``simulator``
+``targetEnvironment()``   ``simulator``, ``macCatalyst``
 ========================  ===================================================
 
 .. For the full list in the compiler, see the values of
    SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
    in the file lib/Basic/LangOptions.cpp.
+   Some of the OSes and architectures are listed there
+   because there's experimental work to port Swift to them.
+   We won't list them here until they're officially supported.
+   The compiler also accepts pretty much any string --
+   for example "#if os(toaster)" compiles just fine,
+   but Swift doesn't actually support running on a toaster oven --
+   so don't rely on that when checking possible os/arch values.
+
+.. The target environment "UKitForMac"
+   is understood by the compiler as a synonym for "macCatalyst",
+   but that spelling is marked "Must be removed" outside of a few places,
+   so it's omitted from the table above.
 
 The version number for the ``swift()`` and ``compiler()`` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
@@ -1001,12 +1044,12 @@ If the module is present, the platform condition returns ``true``;
 otherwise, it returns ``false``.
 
 The ``targetEnvironment()`` platform condition
-returns ``true`` when code is compiled for a simulator;
+returns ``true`` when code is being compiled for the specified environment;
 otherwise, it returns ``false``.
 
 .. note::
 
-   The ``arch(arm)`` platform condition does not return ``true`` for ARM 64 devices.
+   The ``arch(arm)`` platform condition doesn't return ``true`` for ARM 64 devices.
    The ``arch(i386)`` platform condition returns ``true``
    when code is compiled for the 32–bit iOS simulator.
 
@@ -1023,17 +1066,20 @@ otherwise, it returns ``false``.
    -> #if swift(>=2.1) && false
           print(3)
       #endif
-   -> #if swift(>= 2.1)
-          print(4)
-      #endif
-   !! <REPL Input>:1:11: error: unary operator cannot be separated from its operand
-   !! #if swift(>= 2.1)
-   !!           ^ ~
-   !!-
    -> #if swift(>=2.1.9.9.9.9.9.9.9.9.9)
           print(5)
       #endif
    << 5
+
+.. assertion:: pound-if-swift-version-err
+
+   -> #if swift(>= 2.1)
+          print(4)
+      #endif
+   !$ error: unary operator cannot be separated from its operand
+   !! #if swift(>= 2.1)
+   !!           ^ ~
+   !!-
 
 .. assertion:: pound-if-compiler-version
 
@@ -1049,7 +1095,7 @@ otherwise, it returns ``false``.
           print(3)
       #endif
 
-You can combine compilation conditions using the logical operators
+You can combine and negate compilation conditions using the logical operators
 ``&&``, ``||``, and ``!``
 and use parentheses for grouping.
 These operators have the same associativity and precedence as the
@@ -1076,15 +1122,13 @@ have the following form:
 
     Each statement in the body of a conditional compilation block is parsed
     even if it's not compiled.
-    However, there is an exception
-    if the compilation condition includes a ``swift()`` platform condition:
+    However, there's an exception
+    if the compilation condition includes a ``swift()`` or ``compiler()`` platform condition:
     The statements are parsed
-    only if the compiler's version of Swift matches
+    only if the language or compiler version matches
     what is specified in the platform condition.
     This exception ensures that an older compiler doesn't attempt to parse
     syntax introduced in a newer version of Swift.
-
-.. The above note also appears in USWCAOC in Interoperability/InteractingWithCAPIs.rst
 
 .. syntax-grammar::
 
@@ -1116,19 +1160,17 @@ have the following form:
     platform-condition --> ``canImport`` ``(`` module-name ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
-    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS``
+    operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``Windows``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
     module-name --> identifier
-    environment --> ``simulator``
+    environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
 
    !!true doesn't work but !(!true) does -- this matches normal expressions
    #if can be nested, as expected
-   let's not explicitly document the broken precedence between && and ||
-       <rdar://problem/21692106> #if evaluates boolean operators without precedence
 
    Also, the body of a conditional compilation block contains *zero* or more statements.
    Thus, this is allowed:
@@ -1152,26 +1194,32 @@ A line control statement has the following forms:
 
 .. syntax-outline::
 
-    #sourceLocation(file: <#filename#>, line: <#line number#>)
+    #sourceLocation(file: <#file path#>, line: <#line number#>)
     #sourceLocation()
 
-The first form of a line control statement changes the values of the ``#line`` and ``#file``
+The first form of a line control statement changes the values
+of the ``#line``, ``#file``, ``#fileID``, and ``#filePath``
 literal expressions, beginning with the line of code following the line control statement.
-The *line number* changes the value of ``#line``
+The *line number* changes the value of ``#line``,
 and is any integer literal greater than zero.
-The *filename* changes the value of ``#file`` and is a string literal.
+The *file path* changes the value of ``#file``, ``#fileID``, and ``#filePath``,
+and is a string literal.
+The specified string becomes the value of ``#filePath``,
+and the last path component of the string is used by the value of ``#fileID``.
+For information about ``#file``, ``#fileID``, and ``#filePath``,
+see :ref:`Expressions_LiteralExpression`.
 
 The second form of a line control statement, ``#sourceLocation()``,
-resets the source code location back to the default line numbering and filename.
+resets the source code location back to the default line numbering and file path.
 
 .. syntax-grammar::
 
     Grammar of a line control statement
 
-    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-name ``,`` ``line:`` line-number ``)``
+    line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-path ``,`` ``line:`` line-number ``)``
     line-control-statement --> ``#sourceLocation`` ``(`` ``)``
     line-number --> A decimal integer greater than zero
-    file-name --> static-string-literal
+    file-path --> static-string-literal
 
 .. _Statements_ErrorWarning:
 
@@ -1206,7 +1254,6 @@ but they can use the multiline string literal syntax.
    diagnostic-message --> static-string-literal
 
 .. assertion:: good-diagnostic-statement-messages
-   :compile: true
 
    >> #warning("Single-line static string")
    !! /tmp/swifttest.swift:1:10: warning: Single-line static string
@@ -1223,16 +1270,18 @@ but they can use the multiline string literal syntax.
    !! """
    !! ^~~
 
+.. Using !! lines above instead of !$ lines,
+   to also confirm that the line number comes through correctly.
+
 .. assertion:: bad-diagnostic-statement-messages
-   :compile: true
 
    >> #warning("Interpolated \(1+1) string")
-   !! /tmp/swifttest.swift:1:10: error: string interpolation is not allowed in #warning directives
+   !$ error: string interpolation is not allowed in #warning directives
    !! #warning("Interpolated \(1+1) string")
    !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ---
    >> #warning("Concatenated " + "strings")
-   !! /tmp/swifttest.swift:2:26: error: extra tokens following #warning directive
+   !$ error: extra tokens following #warning directive
    !! #warning("Concatenated " + "strings")
    !! ^
 
@@ -1255,7 +1304,7 @@ An availability condition has the following form:
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
-.. x*  (Junk * to fix syntax highlighting from previous listing)
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
@@ -1283,10 +1332,37 @@ logical operators such as ``&&`` and ``||``.
 
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``macOS`` | ``macOSApplicationExtension``
+    platform-name --> ``macCatalyst`` | ``macCatalystApplicationExtension``
     platform-name --> ``watchOS``
     platform-name --> ``tvOS``
     platform-version --> decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 
-.. QUESTION: Is watchOSApplicationExtension allowed? Is it even a thing?
+.. If you need to add a new platform to this list,
+   you probably need to update the list under @available too.
+
+.. assertion:: pound-available-platform-names
+
+   >> if #available(iOS 1, iOSApplicationExtension 1,
+   >>               macOS 1, macOSApplicationExtension 1,
+   >>               macCatalyst 1, macCatalystApplicationExtension 1,
+   >>               watchOS 1, watchOsApplicationExtension 1,
+   >>               tvOS 1, *) {
+   >>     print("a")
+   >> } else {
+   >>     print("b")
+   >> }
+   >> if #available(madeUpPlatform 1, *) {
+   >>     print("c")
+   >> }
+   !$ warning: unrecognized platform name 'watchOsApplicationExtension'
+   !$ watchOS 1, watchOsApplicationExtension 1,
+   !$            ^
+   !$ warning: unrecognized platform name 'madeUpPlatform'
+   !$ if #available(madeUpPlatform 1, *) {
+   !$               ^
+   << a
+   << c
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.

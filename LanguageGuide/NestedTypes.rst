@@ -71,7 +71,7 @@ together with a raw ``Character`` value to represent their symbol.
 
 The ``Rank`` enumeration describes the thirteen possible playing card ranks,
 together with a raw ``Int`` value to represent their face value.
-(This raw ``Int`` value is not used for the Jack, Queen, King, and Ace cards.)
+(This raw ``Int`` value isn't used for the Jack, Queen, King, and Ace cards.)
 
 As mentioned above, the ``Rank`` enumeration defines
 a further nested structure of its own, called ``Values``.
@@ -93,7 +93,7 @@ The ``BlackjackCard`` structure itself has two properties --- ``rank`` and ``sui
 It also defines a computed property called ``description``,
 which uses the values stored in ``rank`` and ``suit`` to build
 a description of the name and value of the card.
-The ``description`` property uses optional binding to check whether there is
+The ``description`` property uses optional binding to check whether there's
 a second value to display, and if so,
 inserts additional description detail for that second value.
 
@@ -105,7 +105,6 @@ You can use this initializer to initialize a new constant called ``theAceOfSpade
 .. testcode:: nestedTypes
 
    -> let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
-   << // theAceOfSpades : BlackjackCard = REPL.BlackjackCard(rank: REPL.BlackjackCard.Rank.ace, suit: REPL.BlackjackCard.Suit.spades)
    -> print("theAceOfSpades: \(theAceOfSpades.description)")
    <- theAceOfSpades: suit is ♠, value is 1 or 11
 
@@ -122,15 +121,14 @@ Referring to Nested Types
 -------------------------
 
 To use a nested type outside of its definition context,
-prefix its name with the name of the type it is nested within:
+prefix its name with the name of the type it's nested within:
 
 .. testcode:: nestedTypes
 
    -> let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
-   << // heartsSymbol : Character = "♡"
    /> heartsSymbol is \"\(heartsSymbol)\"
    </ heartsSymbol is "♡"
 
 For the example above,
 this enables the names of ``Suit``, ``Rank``, and ``Values`` to be kept deliberately short,
-because their names are naturally qualified by the context in which they are defined.
+because their names are naturally qualified by the context in which they're defined.
