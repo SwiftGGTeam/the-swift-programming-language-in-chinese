@@ -2239,6 +2239,80 @@ split over several lines:
    >> print(x)
    << [1000, 1500, 2000]
 
+You can combine this multiline chained syntax
+with compiler control statements
+to control when each method is called.
+For example,
+the following code uses a different filtering rule on iOS:
+
+.. testcode:: pound-if-inside-postfix-expression
+
+   -> let numbers = [10, 20, 33, 43, 50]
+      #if os(iOS)
+          .filter { $0 < 40 }
+      #else
+          .filter { $0 > 25 }
+      #endif
+   >> print(numbers)
+   << [33, 43, 50]
+
+.. The indentation gets lost for the .filter lines above
+   even if I start them with -> instead of three spaces
+   because that's how swift-format re-indents them.
+   This is probably not the same issue as
+   <rdar://problem/32463195> for multiline string literals,
+   but they're likely related.
+
+Between ``#if``, ``#endif``, and other compilation directives,
+the conditional compilation block can contain
+an implicit member expression
+followed by zero or more postfixes,
+to form a postfix expression.
+It can also contain
+another conditional compilation block,
+or a combination of these expressions and blocks.
+
+You can use this syntax anywhere that you can write
+an explicit member expression,
+not just in top-level code.
+
+In the conditional compilation block,
+the branch for the ``#if`` compilation directive
+must contain at least one expression.
+The other branches can be empty.
+
+.. assertion:: pound-if-empty-if-not-allowed
+
+   >> let numbers = [10, 20, 33, 43, 50]
+   >> #if os(iOS)
+   >> #else
+   >>     .filter { $0 > 25 }
+   >> #endif
+   !$ error: reference to member 'filter' cannot be resolved without a contextual type
+   !! .filter { $0 > 25 }
+   !! ~^~~~~~
+
+.. assertion:: pound-if-else-can-be-empty
+
+   >> let numbers = [10, 20, 33, 43, 50]
+   >> #if os(iOS)
+   >>     .filter { $0 > 25 }
+   >> #else
+   >> #endif
+   >> print(numbers)
+   << [10, 20, 33, 43, 50]
+
+.. assertion:: pound-if-cant-use-binary-operators
+
+   >> let s = "some string"
+   >> #if os(iOS)
+   >>     + " on iOS"
+   >> #endif
+   !$ error: unary operator cannot be separated from its operand
+   !! + " on iOS"
+   !! ^~
+   !!-
+
 .. syntax-grammar::
 
     Grammar of an explicit member expression
@@ -2246,6 +2320,7 @@ split over several lines:
     explicit-member-expression --> postfix-expression ``.`` decimal-digits
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
     explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
+    explicit-member-expression --> postfix-expression conditional-compilation-block
 
     argument-names --> argument-name argument-names-OPT
     argument-name --> identifier ``:``
