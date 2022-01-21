@@ -1,15 +1,15 @@
 Document Revision History
 =========================
 
-**2022-01-16**
+**2022-01-26**
 
 * Updated for Swift 5.6.
 
 * Updated the :ref:`Expressions_ExplicitMemberExpression` section
   with information about using ``#if``
-  with chained method calls and other postfix expressions.
+  around chained method calls and other postfix expressions.
 
-* Revised figures throughout.
+* Revised figures throughout to use a consistent, current art style.
 
 **2021-09-20**
 
