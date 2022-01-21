@@ -9,7 +9,7 @@ Document Revision History
   with information about using ``#if``
   around chained method calls and other postfix expressions.
 
-* Revised figures throughout to use a consistent, current art style.
+* Updated the visual styling of figures throughout.
 
 **2021-09-20**
 
