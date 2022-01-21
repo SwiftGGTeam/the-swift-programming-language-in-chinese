@@ -296,8 +296,8 @@ to retrieve and set other properties and values indirectly.
    -> var square = Rect(origin: Point(x: 0.0, y: 0.0),
          size: Size(width: 10.0, height: 10.0))
    -> let initialSquareCenter = square.center
-   >> assert(initialSquareCenter.x == 5.0)
-   >> assert(initialSquareCenter.y == 5.0)
+   /> initialSquareCenter is at (\(initialSquareCenter.x), \(initialSquareCenter.y))
+   </ initialSquareCenter is at (5.0, 5.0)
    -> square.center = Point(x: 15.0, y: 15.0)
    -> print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
    <- square.origin is now at (10.0, 10.0)
