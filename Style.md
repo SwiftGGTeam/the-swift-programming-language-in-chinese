@@ -344,6 +344,12 @@ because all three alternatives fit nicely on one line:
 
     code-block-item --> declaration | expression | statement
 
+When using pipes,
+keep the number of items in each alternative small for readability.
+The most common case is that each alternative is either
+a single literal or a single syntactic category,
+although that's not always possible.
+
 On the other hand, consider the grammar of a control transfer statement:
 
     control-transfer-statement --> break-statement
