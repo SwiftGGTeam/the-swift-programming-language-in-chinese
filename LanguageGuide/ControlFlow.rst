@@ -1451,23 +1451,36 @@ you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
+When you use an availability condition with a guard,
+it refines the availability for code that follows it.
+
+.. testcode:: guard-with-pound-available
+
+   -> @available(macOS 10.12, *)
+   -> struct ColorPreference {
+          var bestColor = "blue"
+      }
+   ---
+   -> func chooseBestColor() -> String {
+         guard #available(macOS 10.12, *) else {
+             return "gray"
+         }
+         let colors = ColorPreference()
+         return colors.bestColor
+      }
+   >> print(chooseBestColor())
+   << blue
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+In the example above,
+the ``ColorPreference`` structure requires macOS 10.12 or later.
+The ``chooseBestColor()`` function begins with an availability guard.
+If the platform version is too old to use ``ColorPreference``,
+it falls back to behavior that's always available.
+After the guard,
+the rest of the function's code can use APIs like ``ColorPreference``.
+
 .. FIXME
     Not a general purpose condition; can't combine with &&, etc.
-    Use can use it with if-let, and other Boolean conditions, using a comma
-
-
-.. FIXME
-    When used with 'guard' it refines the availablity for the remainder of the
-    block of code.
-
-    You can do this on your own classes that depend on SDK versiosn
-
-    @available class Foo
-
-    guard #available {
-        fall back and return
-    }
-    let  f = Foo
-    do cool new stuff with Foo
-
-
+    You can use it with if-let, and other Boolean conditions, using a comma
