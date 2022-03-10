@@ -1481,6 +1481,26 @@ it falls back to behavior that's always available.
 After the guard,
 the rest of the function's code can use APIs like ``ColorPreference``.
 
+In addition to ``#available``,
+Swift also supports the opposite check using an unavailability condition.
+For example, the following two checks do the same thing:
+
+.. testcode:: availability-and-unavailability
+
+   -> if #available(iOS 10, *) {
+      } else {
+         // Fallback code
+      }
+   ---
+   -> if #unavailable(iOS 10, *) {
+         // Fallback code
+      }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+Using the ``#unavailable`` form helps make your code more readable
+when the check contains only fallback code.
+
 .. FIXME
     Not a general purpose condition; can't combine with &&, etc.
     You can use it with if-let, and other Boolean conditions, using a comma
