@@ -1323,13 +1323,28 @@ the body of the code block guarded by the availability condition
 executes on the minimum deployment target specified by your target.
 
 Unlike Boolean conditions, you can't combine availability conditions using
-logical operators such as ``&&`` and ``||``.
+logical operators like ``&&`` and ``||``.
+Instead of using ``!`` to negate an availability condition,
+use an unavailability condition, which as the following form:
+
+.. syntax-outline::
+
+   if #unavailable(<#platform name#> <#version#>, <#...#>, *) {
+       <#fallback statements to execute if the APIs are unavailable#>
+   } else {
+       <#statements to execute if the APIs are available#>
+   }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+The ``#unavailable`` form is syntactic sugar that negates the condition.
 
 .. syntax-grammar::
 
     Grammar of an availability condition
 
     availability-condition --> ``#available`` ``(`` availability-arguments ``)``
+    availability-condition --> ``#unavailable`` ``(`` availability-arguments ``)``
     availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
     availability-argument --> platform-name platform-version
     availability-argument --> ``*``
