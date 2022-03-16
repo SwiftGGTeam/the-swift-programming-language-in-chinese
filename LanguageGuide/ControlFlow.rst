@@ -1451,8 +1451,9 @@ you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
-When you use an availability condition with a guard,
-it refines the availability for code that follows it.
+When you use an availability condition with a ``guard`` statement,
+it refines the availability information that’s used
+for the rest of the code in that code block.
 
 .. testcode:: guard-with-pound-available
 
@@ -1478,8 +1479,8 @@ the ``ColorPreference`` structure requires macOS 10.12 or later.
 The ``chooseBestColor()`` function begins with an availability guard.
 If the platform version is too old to use ``ColorPreference``,
 it falls back to behavior that's always available.
-After the guard,
-the rest of the function's code can use APIs like ``ColorPreference``.
+After the ``guard`` statement,
+you can use APIs that require macOS 10.12 or later.
 
 In addition to ``#available``,
 Swift also supports the opposite check using an unavailability condition.
