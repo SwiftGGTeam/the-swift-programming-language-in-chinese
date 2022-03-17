@@ -270,6 +270,8 @@ that includes a special case for squares:
     !! return FlippedShape(shape: shape) // Error: return types don't match
     !! ^
 
+.. The above test produces a segfault on Swift 5.7 <rdar://90456579>
+
 If you call this function with a ``Square``, it returns a ``Square``;
 otherwise, it returns a ``FlippedShape``.
 This violates the requirement to return values of only one type
