@@ -44,6 +44,9 @@ to refer to this common combination of asynchronous and parallel code.
    can give up the thread that it's running on,
    which lets another asynchronous function run on that thread
    while the first function is blocked.
+   When an asynchronous function resumes,
+   Swift doesn't make any guarantee about which thread
+   that function will run on.
 
 Although it's possible to write concurrent code
 without using Swift's language support,
@@ -213,18 +216,42 @@ only certain places in your program can call asynchronous functions or methods:
 
    - Code at the top level that forms an implicit main function.
 
-.. TODO we might need a more explicit discussion
-   of what a (possible) suspension point is
-   and how it interacts with the flow of your program,
-   in particular how you can break invariants only between suspension points
-   There is a bit in the reference,
-   but it's important enough to walk through step by step.
+Code in between possible suspension points runs sequentially,
+without the possibility of interruption from other concurrent code.
+For example, the code below moves a picture from one gallery to another.
 
-   ideally, do this in a sync function,
-   which makes it easier to see your intention
-   that the operation must not contain any suspension points
+::
 
-   you can also explicitly insert a suspension point
+   let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
+   add(firstPhoto toGallery: "Road Trip")
+   // firstPhoto is temporarily in both galleries
+   remove(firstPhoto fromGallery: "Summer Vacation")
+
+There's no way for other code to run in between
+the call to ``add(_:toGallery:)`` and ``remove(_:fromGallery:)``.
+During that time, the first photo appears in both galleries,
+temporarily breaking one of the app's invariants.
+To make it even clearer that this chunk of code
+must not have ``await`` added to it in the future,
+you can wrap it in a synchronous function:
+
+::
+
+   func move(_ photoName: String, from source: String, to destination: String) {
+       add(photoName, to: destination)
+       remove(photoName, from: source)
+   }
+   // ...
+   let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
+   move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
+
+In the example above,
+because the ``move(_:from:to:)`` function is synchronous,
+any future changes that would try to add a possible suspension point
+in the middle of the operation
+would be a syntax error.
+
+.. TODO you can also explicitly insert a suspension point
    by calling ``Task.yield()``
    https://developer.apple.com/documentation/swift/task/3814840-yield
 
