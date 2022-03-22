@@ -62,7 +62,7 @@ the compiler infers that ``myVariable`` is an integer
 because its initial value is an integer.
 
 If the initial value doesn't provide enough information
-(or if isn't an initial value),
+(or if there isn't an initial value),
 specify the type by writing it after the variable,
 separated by a colon.
 
