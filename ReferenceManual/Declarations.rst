@@ -2330,6 +2330,8 @@ Just like functions and methods, initializers can throw or rethrow errors.
 And just like functions and methods,
 you use the ``throws`` or ``rethrows`` keyword after an initializer's parameters
 to indicate the appropriate behavior.
+Likewise, initializers can be asynchronous,
+and you use the ``async`` keyword to indicate this.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
@@ -2405,8 +2407,8 @@ see :ref:`Initialization_FailableInitializers`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT initializer-body
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``async``-OPT ``throws``-OPT generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``async``-OPT ``rethrows`` generic-where-clause-OPT initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
