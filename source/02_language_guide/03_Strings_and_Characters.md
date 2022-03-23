@@ -416,7 +416,7 @@ for index in greeting.indices {
 
 ### 插入和删除 {#inserting-and-removing}
 
-调用 `insert(_:at:)` 方法可以在一个字符串的指定索引插入一个字符，调用 `insert(contentsOf:at:)` 方法可以在一个字符串的指定索引插入一个段字符串。
+调用 `insert(_:at:)` 方法可以在一个字符串的指定索引插入一个字符，调用 `insert(contentsOf:at:)` 方法可以在一个字符串的指定索引插入一段字符串。
 
 ```swift
 var welcome = "hello"
