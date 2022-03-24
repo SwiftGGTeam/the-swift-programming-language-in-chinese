@@ -1070,9 +1070,11 @@ to see how its ``numberOfWheels`` property has been updated:
 
 If a subclass initializer performs no customization
 in phase 2 of the initialization process,
-and the superclass has a zero-argument designated initializer,
+and the superclass has a synchronous, zero-argument designated initializer,
 you can omit a call to ``super.init()``
 after assigning values to all of the subclass's stored properties.
+If the superclass's initializer is asynchronous,
+you need to write ``await super.init()`` explicitly.
 
 This example defines another subclass of ``Vehicle``, called ``Hoverboard``.
 In its initializer, the ``Hoverboard`` class sets only its ``color`` property.
