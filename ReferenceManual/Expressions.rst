@@ -1061,7 +1061,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
 
-    closure-signature --> capture-list-OPT closure-parameter-clause ``throws``-OPT function-result-OPT ``in``
+    closure-signature --> capture-list-OPT closure-parameter-clause ``async``-OPT ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``
 
     closure-parameter-clause --> ``(`` ``)`` | ``(`` closure-parameter-list ``)`` | identifier-list

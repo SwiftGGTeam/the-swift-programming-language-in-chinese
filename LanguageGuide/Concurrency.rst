@@ -285,6 +285,15 @@ would be a syntax error.
    to give a place where I can note the order of the keywords
    in the declaration and in the calls
 
+.. TODO closures can be async too -- outline
+
+   like how you can have an async function, a closure con be async
+   if a closure contains 'await' that implicity makes it async
+   you can mark it explicitly with "async -> in"
+
+   (discussion of @MainActor closures can probably go here too)
+
+
 .. _Concurrency_AsyncSequence:
 
 Asynchronous Sequences
