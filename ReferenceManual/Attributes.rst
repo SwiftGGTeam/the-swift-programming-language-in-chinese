@@ -1656,7 +1656,7 @@ applying both attributes is an error.
 .. assertion:: usableFromInline-and-inlinable-is-redundant
 
    >> @usableFromInline @inlinable internal func f() { }
-   !$ warning: '@inlinable' declaration is already '@usableFromInline'
+   !$ warning: '@usableFromInline' attribute has no effect on '@inlinable' global function 'f()'
    !! @usableFromInline @inlinable internal func f() { }
    !! ^~~~~~~~~~~~~~~~~~
 
