@@ -1199,6 +1199,15 @@ you can override an asynchronous method with a synchronous method,
 and a synchronous method can satisfy a protocol requirement
 that requires an asynchronous method.
 
+You can overload a function based on whether or not the function is asynchronous.
+At the call site, context determines which overload is used:
+In an asynchronous context, the asynchronous function is used,
+and in a synchronous context, the synchronous function is used.
+
+An asynchronous method can't override a synchronous method,
+and an asynchronous method can't satisfy a protocol requirement for a synchronous method.
+That said, a synchronous method can override an asynchronous method,
+and a synchronous method can satisfy a protocol requirement for an asynchronous method.
 
 .. _Declarations_FunctionsThatNeverReturn:
 
