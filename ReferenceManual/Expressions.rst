@@ -842,6 +842,20 @@ The *parameters* have the same form
 as the parameters in a function declaration,
 as described in :ref:`Declarations_FunctionDeclaration`.
 
+Writing ``throws`` or ``async`` in a closure expression
+explicitly marks a closure as throwing or asynchronous.
+
+.. syntax-outline::
+
+   { (<#parameters#>) async throws -> <#return type#> in
+      <#statements#>
+   }
+
+If the body of a closure includes a try expression,
+the closure is understood to be throwing.
+Likewise, if it includes an await expression,
+it's understood to be asynchronous.
+
 There are several special forms
 that allow closures to be written more concisely:
 
@@ -1054,6 +1068,24 @@ For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
 For more information and examples of capture lists,
 see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
+
+.. assertion:: async-throwing-closure-syntax
+
+   >> var a = 12
+   >> let c1 = { [a] in return a }                  // OK -- no async or throws
+   >> let c2 = { [a] async in return a }            // ERROR
+   >> let c3 = { [a] async -> in return a }         // ERROR
+   >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
+   !$ error: expected expression
+   !! let c3 = { [a] async -> in return a }         // ERROR
+   !! ^
+   !$ error: unable to infer type of a closure parameter 'async' in the current context
+   !! let c2 = { [a] async in return a }            // ERROR
+   !! ^
+   !$ error: cannot infer return type for closure with multiple statements; add explicit type to disambiguate
+   !! let c3 = { [a] async -> in return a }         // ERROR
+   !! ^
+   !! () -> <#Result#> in
 
 .. syntax-grammar::
 
