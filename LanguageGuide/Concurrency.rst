@@ -259,9 +259,6 @@ would be a syntax error.
    the async/await version better too
    and give you better guarantees and clearer errors
 
-.. TODO Revise the discussion in the Closures chapter
-   where we currently talk about completion handlers.
-
 .. note::
 
    The `Task.sleep(nanoseconds:) <//apple_ref/swift/fake/Task.sleep(nanoseconds:)>`_ method

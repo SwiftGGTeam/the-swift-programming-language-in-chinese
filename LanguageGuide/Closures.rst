@@ -482,6 +482,12 @@ that's responsible for handling a network failure
 from the code that updates the user interface after a successful download,
 instead of using just one closure that handles both circumstances.
 
+.. note::
+
+   Completion handlers can become hard to read,
+   especially when you have to nest multiple handlers.
+   An alternate approach is to use asynchronous code,
+   as described in :doc:`Concurrency`.
 
 .. _Closures_CapturingValues:
 
