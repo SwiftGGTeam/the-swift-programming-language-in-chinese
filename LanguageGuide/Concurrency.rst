@@ -224,7 +224,7 @@ For example, the code below moves a picture from one gallery to another.
 
    let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
    add(firstPhoto toGallery: "Road Trip")
-   // firstPhoto is temporarily in both galleries
+   // At this point, firstPhoto is temporarily in both galleries.
    remove(firstPhoto fromGallery: "Summer Vacation")
 
 There's no way for other code to run in between
@@ -233,7 +233,7 @@ During that time, the first photo appears in both galleries,
 temporarily breaking one of the app's invariants.
 To make it even clearer that this chunk of code
 must not have ``await`` added to it in the future,
-you can wrap it in a synchronous function:
+you can refactor that code into synchronous function:
 
 ::
 
@@ -247,9 +247,10 @@ you can wrap it in a synchronous function:
 
 In the example above,
 because the ``move(_:from:to:)`` function is synchronous,
-any future changes that would try to add a possible suspension point
-in the middle of the operation
-would be a syntax error.
+you guarantee that there it can never contain possible suspension points.
+Any change to the code,
+trying to write ``await`` in it,
+would result in a compile-time error instead of introducing a bug.
 
 .. TODO you can also explicitly insert a suspension point
    by calling ``Task.yield()``

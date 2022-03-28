@@ -1209,6 +1209,16 @@ and an asynchronous method can't satisfy a protocol requirement for a synchronou
 That said, a synchronous method can override an asynchronous method,
 and a synchronous method can satisfy a protocol requirement for an asynchronous method.
 
+.. assertion:: sync-satisfy-async-protocol-requirements
+
+   >> protocol P { func f() async -> Int }
+   >> class Super: P {
+   >>     func f() async -> Int { return 12 }
+   >> }
+   >> class Sub: Super {
+   >>     func f() -> Int { return 120 }
+   >> }
+
 .. _Declarations_FunctionsThatNeverReturn:
 
 Functions that Never Return

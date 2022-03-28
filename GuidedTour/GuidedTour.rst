@@ -1120,14 +1120,14 @@ You mark a call to an asynchronous function by writing ``await`` in front of it.
     -> func fetchUsername(from server: String) async -> String {
            let userID = await fetchUserID(from: server)
            if userID == 501 {
-               return "Test User"
+               return "John Appleseed"
            }
            return "Guest"
        }
 
 Use ``async let`` to call an asynchronous function,
-letting it run in parallel.
-When you use its result, write ``await``.
+letting it run in parallel with other asynchronous code.
+When you use the value it returns, write ``await``.
 
 .. testcode:: guided-tour
 
@@ -1138,7 +1138,7 @@ When you use its result, write ``await``.
            print(greeting)
        }
 
-Use ``Task`` to call asynchronous functions from synchronous code
+Use ``Task`` to call asynchronous functions from synchronous code,
 without waiting for them to return.
 
 .. testcode:: guided-tour
