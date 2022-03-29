@@ -1044,13 +1044,13 @@ but doesn't actually import it.
 If the module is present, the platform condition returns ``true``;
 otherwise, it returns ``false``.
 
-.. sourcefile:: canImport_A
+.. sourcefile:: canImport_A, canImport
 
    >> public struct SomeStruct {
    >>     public init() { }
    >> }
 
-.. sourcefile:: canImport_A.B
+.. sourcefile:: canImport_A.B, canImport
 
    >> public struct AnotherStruct {
    >>     public init() { }
@@ -1061,13 +1061,14 @@ otherwise, it returns ``false``.
    >> import canImport_A
    >> let s = SomeStruct()
    >> #if canImport(canImport_A)
-   >> print("A")
+   >> #else
+   >> #error("Can't import A")
    >> #endif
-   << A
+   ---
    >> #if canImport(canImport_A.B)
-   >> print("A.B")
+   >> #else
+   >> #error("Can't import A.B")
    >> #endif
-   << A.B
 
 The ``targetEnvironment()`` platform condition
 returns ``true`` when code is being compiled for the specified environment;
