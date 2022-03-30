@@ -866,6 +866,10 @@ This guarantee is known as :newTerm:`actor isolation`.
 
     TODO: Fill this in from SE-0302
 
+    Sendable functions are a subtype of non-sendable,
+    in the same way that escaping is a subtype of non-escaping
+
+
 .. OUTLINE
     .. _Concurrency_MainActor:
 
