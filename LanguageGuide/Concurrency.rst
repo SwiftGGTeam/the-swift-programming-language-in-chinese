@@ -869,6 +869,10 @@ This guarantee is known as :newTerm:`actor isolation`.
     Sendable functions are a subtype of non-sendable,
     in the same way that escaping is a subtype of non-escaping
 
+    Metatypes are always implicitly sendable.
+    For example, `Int.Type`, the type produced by the expression `Int.self`, is sendable.
+
+
 
 .. OUTLINE
     .. _Concurrency_MainActor:
