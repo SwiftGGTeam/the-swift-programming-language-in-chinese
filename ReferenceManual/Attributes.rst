@@ -1783,6 +1783,18 @@ For an example of how to use the ``escaping`` attribute,
 see :ref:`Closures_Noescape`.
 
 
+.. _Attributes_Sendable:
+
+Sendable
+~~~~~~~~~~
+
+Apply this attribute to the type of a function
+to indicate that the function or closure is sendable.
+Applying this attribute to a function type
+means the same thing as conforming a non–function type
+to the `Sendable <//apple_ref/fake/Sendable>`_ protocol.
+
+
 .. _Attributes_SwitchCaseAttributes:
 
 Switch Case Attributes
