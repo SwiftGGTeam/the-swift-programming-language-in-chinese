@@ -797,6 +797,9 @@ This guarantee is known as :newTerm:`actor isolation`.
     Actor Isolation
     ~~~~~~~~~~~~~~~
 
+    TODO outline impact from SE-0313 Control Over Actor Isolation
+    about the 'isolated' and 'nonisolated' keywords
+
     - actors protect their mutable state using :newTerm:`actor isolation`
     to prevent data races
     (one actor reading data that's in an inconsistent state
@@ -808,20 +811,6 @@ This guarantee is known as :newTerm:`actor isolation`.
 
     - method calls from outside the actor are always async,
     as is reading the value of an actor's property
-
-    - the values you pass to a method call from outside of an actor
-    have to be sendable (conform to the ``Sendable`` marker protocol)
-
-    + structs and enums implicitly conform to ``Sendable``
-        if they're non-public, non-frozen,
-        and all of their properties are also ``Sendable``
-
-    + all actors are implicitly sendable
-
-    + everything else needs to be marked ``Sendable`` explicitly
-
-    + the only valid superclass for a sendable class is ``NSObject``
-        (allowed for Obj-C interop)
 
     - you can't write to a property directly from outside the actor
 
@@ -859,18 +848,89 @@ This guarantee is known as :newTerm:`actor isolation`.
         await logger.update(with: "27 C")
         print(await logger.getMax())
 
-    .. _Concurrency_Sendable:
+.. _Concurrency_Sendable:
 
-    Sending Data Between Actors
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sendable Types
+--------------
 
-    TODO: Fill this in from SE-0302
+In Swift, every type is either sendable or nonsendable,
+similar to how every type is either a value type or a reference type
+(see "Structures and Classes").
+
+A :newTerm:`sendable` type is one that can be transferred
+from one unit of concurrent work to another,
+like being passed as an argument when calling an actor method
+or being returned as the result of a task.
+Sendable types either don't contain shared mutable state,
+or they manage their mutable state so that it can be shared safely.
+Only values of sendable types can be passed across units of concurrent work.
+
+.. XXX example goes here
+   stdlib doesn't declare any classes except for KeyPath and variations
+   need to contrive a reason to declare a class here
+
+    class TemperatureReading {
+        var measurement: Int
+        init(_ measurement: Int) {
+            self.measurement = measurement
+        }
+    }
+
+    extension TemperatureLogger {
+        func addReading(from reading: TemperatureReading) {
+            measurements.append(reading.measurement)
+        }
+    }
+
+    let l = TemperatureLogger(label: "Tea kettle", measurement: 85)
+    let r = TemperatureReading(45)
+    await l.addReading(from: r)
+
+You mark a type as being sendable
+by declaring conformance to the
+`Sendable <//apple_ref/swift/fake/Sendable>`_ protocol.
+That protocol doesn't have any code requirements,
+but it does have semantic requirements that Swift enforces.
+
+
+
+.. OUTLINE
+
+    - QUESTION: Do we need the term "concurrency domain" from SE-0302
+    or can we describe the behaviour without it?
+
+    - code that builds up some unsychronised mutable state
+    (like an instance of class with a bunch of properties)
+    and hands that off to an actor
+
+    When does something need to be sendable?
+    When you pass it between concurrency domains ---
+    like arguments and return value of an actor's methods,
+    and values passed in & out of a structured task
+
+    you get a compiler error
+    if you try to pass data across concurrency domains
+    in a way that could introduce unprotected shared mutable state
 
     Sendable functions are a subtype of non-sendable,
     in the same way that escaping is a subtype of non-escaping
 
     Metatypes are always implicitly sendable.
     For example, `Int.Type`, the type produced by the expression `Int.self`, is sendable.
+
+    - the values you pass to a method call from outside of an actor
+    have to be sendable (conform to the ``Sendable`` marker protocol)
+
+    + structs and enums implicitly conform to ``Sendable``
+        if they're non-public, non-frozen,
+        and all of their properties are also ``Sendable``
+
+    + all actors are implicitly sendable
+
+    + everything else needs to be marked ``Sendable`` explicitly
+
+    + the only valid superclass for a sendable class is ``NSObject``
+        (allowed for Obj-C interop)
 
 
 
