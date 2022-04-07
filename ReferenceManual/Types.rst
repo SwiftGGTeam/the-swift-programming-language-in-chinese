@@ -299,13 +299,23 @@ the function type ``(Int) -> (Int) -> Int`` is understood as ``(Int) -> ((Int) -
 that is, a function that takes an ``Int`` and returns
 another function that takes and returns an ``Int``.
 
-Function types that can throw or rethrow an error must be marked with the ``throws`` keyword.
+Function types for functions
+that can throw or rethrow an error must be marked with the ``throws`` keyword.
 The ``throws`` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function in the same places as a throwing one.
 Throwing and rethrowing functions are described in
 :ref:`Declarations_ThrowingFunctionsAndMethods`
 and :ref:`Declarations_RethrowingFunctionsAndMethods`.
+
+Function types for asynchronous functions
+must be marked with the ``async`` keyword.
+The ``async`` keyword is part of a function's type,
+and synchronous functions are subtypes of asynchronous functions.
+As a result, you can use a synchronous function
+in the same places as an asynchronous one.
+For information about asynchronous functions,
+see :ref:`Declarations_AsyncFunctions`.
 
 .. assertion:: function-arrow-is-right-associative
 
@@ -398,7 +408,7 @@ see :doc:`../LanguageGuide/MemorySafety`.
 
     Grammar of a function type
 
-    function-type --> attributes-OPT function-type-argument-clause ``throws``-OPT ``->`` type
+    function-type --> attributes-OPT function-type-argument-clause ``async``-OPT ``throws``-OPT ``->`` type
 
     function-type-argument-clause --> ``(`` ``)``
     function-type-argument-clause --> ``(`` function-type-argument-list ``...``-OPT ``)``
