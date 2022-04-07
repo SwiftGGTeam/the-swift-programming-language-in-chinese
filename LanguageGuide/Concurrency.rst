@@ -248,9 +248,10 @@ you can refactor that code into a synchronous function:
 In the example above,
 because the ``move(_:from:to:)`` function is synchronous,
 you guarantee that it can never contain possible suspension points.
-Any change to the code,
-such as trying to write ``await`` in it,
-would result in a compile-time error instead of introducing a bug.
+In the future,
+if you try to add concurrent code to this function,
+introducing a possible suspension point,
+you'll get compile-time error instead of introducing a bug.
 
 .. TODO you can also explicitly insert a suspension point
    by calling ``Task.yield()``
