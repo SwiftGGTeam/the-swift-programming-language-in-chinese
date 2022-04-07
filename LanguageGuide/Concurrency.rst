@@ -233,7 +233,7 @@ During that time, the first photo appears in both galleries,
 temporarily breaking one of the app's invariants.
 To make it even clearer that this chunk of code
 must not have ``await`` added to it in the future,
-you can refactor that code into synchronous function:
+you can refactor that code into a synchronous function:
 
 ::
 
@@ -247,9 +247,9 @@ you can refactor that code into synchronous function:
 
 In the example above,
 because the ``move(_:from:to:)`` function is synchronous,
-you guarantee that there it can never contain possible suspension points.
+you guarantee that it can never contain possible suspension points.
 Any change to the code,
-trying to write ``await`` in it,
+such as trying to write ``await`` in it,
 would result in a compile-time error instead of introducing a bug.
 
 .. TODO you can also explicitly insert a suspension point
