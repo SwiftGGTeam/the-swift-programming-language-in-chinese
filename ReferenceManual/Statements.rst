@@ -1325,7 +1325,7 @@ executes on the minimum deployment target specified by your target.
 Unlike Boolean conditions, you can't combine availability conditions using
 logical operators like ``&&`` and ``||``.
 Instead of using ``!`` to negate an availability condition,
-use an unavailability condition, which as the following form:
+use an unavailability condition, which has the following form:
 
 .. syntax-outline::
 
