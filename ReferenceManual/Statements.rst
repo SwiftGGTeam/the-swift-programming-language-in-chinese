@@ -1340,7 +1340,7 @@ use an unavailability condition, which as the following form:
 The ``#unavailable`` form is syntactic sugar that negates the condition.
 In an unavailability condition,
 the ``*`` argument is implicit and must not be included.
-It has the same meaning as the ``*`` argument in an availability condition,
+It has the same meaning as the ``*`` argument in an availability condition.
 
 .. syntax-grammar::
 
