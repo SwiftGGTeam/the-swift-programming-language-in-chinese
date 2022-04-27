@@ -1318,18 +1318,36 @@ when it verifies that the APIs in that block of code are available.
 The availability condition takes a comma-separated list of platform names and versions.
 Use ``iOS``, ``macOS``, ``watchOS``, and ``tvOS`` for the platform names,
 and include the corresponding version numbers.
-The ``*`` argument is required and specifies that on any other platform,
+The ``*`` argument is required and specifies that, on any other platform,
 the body of the code block guarded by the availability condition
 executes on the minimum deployment target specified by your target.
 
 Unlike Boolean conditions, you can't combine availability conditions using
-logical operators such as ``&&`` and ``||``.
+logical operators like ``&&`` and ``||``.
+Instead of using ``!`` to negate an availability condition,
+use an unavailability condition, which has the following form:
+
+.. syntax-outline::
+
+   if #unavailable(<#platform name#> <#version#>, <#...#>) {
+       <#fallback statements to execute if the APIs are unavailable#>
+   } else {
+       <#statements to execute if the APIs are available#>
+   }
+
+.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+The ``#unavailable`` form is syntactic sugar that negates the condition.
+In an unavailability condition,
+the ``*`` argument is implicit and must not be included.
+It has the same meaning as the ``*`` argument in an availability condition.
 
 .. syntax-grammar::
 
     Grammar of an availability condition
 
     availability-condition --> ``#available`` ``(`` availability-arguments ``)``
+    availability-condition --> ``#unavailable`` ``(`` availability-arguments ``)``
     availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
     availability-argument --> platform-name platform-version
     availability-argument --> ``*``
@@ -1360,13 +1378,35 @@ logical operators such as ``&&`` and ``||``.
    >> if #available(madeUpPlatform 1, *) {
    >>     print("c")
    >> }
+   >> if #unavailable(fakePlatform 1) {
+   >>     print("d")
+   >> } else {
+   >>     print("dd")
+   >> }
    !$ warning: unrecognized platform name 'watchOsApplicationExtension'
    !$ watchOS 1, watchOsApplicationExtension 1,
    !$            ^
    !$ warning: unrecognized platform name 'madeUpPlatform'
    !$ if #available(madeUpPlatform 1, *) {
    !$               ^
+   !$ warning: unrecognized platform name 'fakePlatform'
+   !$ if #unavailable(fakePlatform 1) {
+   !$                 ^
    << a
    << c
+   << dd
 
 .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
+
+.. assertion:: empty-availability-condition
+
+   >> if #available(*) { print("1") }
+   << 1
+
+.. assertion:: empty-unavailability-condition
+
+   >> if #unavailable() { print("2") }
+   !$ error: expected platform name
+   !$ if #unavailable() { print("2") }
+   !$                ^
+
