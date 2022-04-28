@@ -1184,14 +1184,13 @@ have the following form:
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)`` | ``swift`` ``(`` ``<`` swift-version ``)``
     platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)`` | ``compiler`` ``(`` ``<`` swift-version ``)``
-    platform-condition --> ``canImport`` ``(`` module-name ``)``
+    platform-condition --> ``canImport`` ``(`` import-path ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``Windows``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
-    module-name --> import-path
     environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
