@@ -623,8 +623,7 @@ call the `Task.init(priority:operation:) <//apple_ref/swift/fake/Task.init>`_ in
 To create an unstructured task that's not part of the current actor,
 known more specifically as a :newTerm:`detached task`,
 call the `Task.detached(priority:operation:) <//apple_ref/swift/fake/Task.detached>`_ class method.
-Both of these operations return a task handle
-that lets you interact with the task ---
+Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
 ::
@@ -675,7 +674,7 @@ call `Task.cancel() <//apple_ref/swift/fake/Task.cancel>`_.
 
 .. OUTLINE
 
-    - task handle
+    - task
 
     - cancellation propagates (Konrad's example below)
 
