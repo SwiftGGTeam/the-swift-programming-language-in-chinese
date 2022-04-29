@@ -1069,10 +1069,40 @@ It has already been initialized with the value contained *within* the optional,
 and so you don't use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
+After unwrapping a value,
+you often don't need to refer to the original wrapped version anymore.
+To unwrap a variable or a constant
+and use the same name for the unwrapped value,
+omit the equals sign (``=``) and the value that comes after it,
+as shown below.
+
+.. testcode:: optionals
+
+   -> let myNumber = Int(possibleNumber)
+   ---
+   // Explicit spelling
+   -> if let myNumber = myNumber {
+          print("My number is \(myNumber)")
+      }
+   <- My number is 123
+   ---
+   // Shorter spelling
+   -> if let myNumber {
+          print("My number is \(myNumber)")
+      }
+   <- My number is 123
+
+Both forms of optional unwrapping shown above do exactly the same thing.
+If there's a value in ``myNumber``,
+they unwrap its value
+and set the value of a new constant named ``myNumber`` to that unwrapped value.
+Inside the body of the ``if`` statement,
+writing ``myNumber`` refers to that new non-optional constant.
+
 You can use both constants and variables with optional binding.
-If you wanted to manipulate the value of ``actualNumber``
+If you wanted to manipulate the value of ``myNumber``
 within the first branch of the ``if`` statement,
-you could write ``if var actualNumber`` instead,
+you could write ``if var myNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
