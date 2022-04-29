@@ -152,7 +152,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     condition -->  expression | availability-condition | case-condition | optional-binding-condition
 
     case-condition --> ``case`` pattern initializer
-    optional-binding-condition --> ``let`` pattern initializer | ``var`` pattern initializer
+    optional-binding-condition --> ``let`` pattern initializer-OPT | ``var`` pattern initializer-OPT
 
 
 .. _Statements_Do-WhileStatement:
