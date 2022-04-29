@@ -1069,35 +1069,39 @@ It has already been initialized with the value contained *within* the optional,
 and so you don't use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
-After unwrapping a value,
-you often don't need to refer to the original wrapped version anymore.
-To unwrap a variable or a constant
-and use the same name for the unwrapped value,
-omit the equals sign (``=``) and the value that comes after it,
-as shown below.
+If you don't need to refer to optional constant or variable after unwrapping it,
+you can use the same name for the new constant or variable:
 
 .. testcode:: optionals
 
    -> let myNumber = Int(possibleNumber)
-   ---
-   // Explicit spelling
+   // Here, myNumber is an optional integer
    -> if let myNumber = myNumber {
-          print("My number is \(myNumber)")
-      }
-   <- My number is 123
-   ---
-   // Shorter spelling
-   -> if let myNumber {
+          // Here, myNumber is a non-optional integer
           print("My number is \(myNumber)")
       }
    <- My number is 123
 
-Both forms of optional unwrapping shown above do exactly the same thing.
 If there's a value in ``myNumber``,
 they unwrap its value
 and set the value of a new constant named ``myNumber`` to that unwrapped value.
 Inside the body of the ``if`` statement,
 writing ``myNumber`` refers to that new non-optional constant.
+Before the beginning of the ``if`` statement and after its end,
+writing ``myNumber`` refers to the optional integer constant.
+
+Because this kind of code is so common,
+there's a shorter spelling that does the same thing:
+You can write just the name of the constant or variable that you're unwrapping.
+The new, unwrapped constant or variable
+implicitly uses the same name as the optional value.
+
+.. testcode:: optionals
+
+   -> if let myNumber {
+          print("My number is \(myNumber)")
+      }
+   <- My number is 123
 
 You can use both constants and variables with optional binding.
 If you wanted to manipulate the value of ``myNumber``
