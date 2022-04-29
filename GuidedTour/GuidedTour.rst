@@ -302,6 +302,15 @@ the default value is used instead.
     >> print(informalGreeting)
     << Hi John Appleseed
 
+You can use a shorter spelling to unwrap a value,
+using the same name for that unwrapped value.
+
+.. testcode:: guided-tour
+
+   -> if let nickname {
+          print("Hey, \(nickname)")
+      }
+
 Switches support any kind of data
 and a wide variety of comparison operations ---
 they aren't limited to integers
