@@ -1620,6 +1620,18 @@ can contain at most one top-level entry point,
 as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
+.. _Attributes_unchecked:
+
+unchecked
+~~~~~~~~~
+
+Apply this attribute to a protocol type
+as part of a type declaration's list of adopted protocols
+to turn off enforcement of that protocol's requirements.
+
+The only supported protocol is `Sendable <//apple_ref/fake/Sendable>`_.
+
+
 .. _Attributes_usableFromInline:
 
 usableFromInline
