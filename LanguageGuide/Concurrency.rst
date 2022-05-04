@@ -44,6 +44,9 @@ to refer to this common combination of asynchronous and parallel code.
    can give up the thread that it's running on,
    which lets another asynchronous function run on that thread
    while the first function is blocked.
+   When an asynchronous function resumes,
+   Swift doesn't make any guarantee about which thread
+   that function will run on.
 
 Although it's possible to write concurrent code
 without using Swift's language support,
@@ -209,31 +212,54 @@ only certain places in your program can call asynchronous functions or methods:
 
 .. SE-0296 specifically calls out that top-level code is *not* an async context,
    contrary to what you might expect.
-   If that get changed, add this bullet to the list above:
+   If that gets changed, add this bullet to the list above:
 
    - Code at the top level that forms an implicit main function.
 
-.. TODO we might need a more explicit discussion
-   of what a (possible) suspension point is
-   and how it interacts with the flow of your program,
-   in particular how you can break invariants only between suspension points
-   There is a bit in the reference,
-   but it's important enough to walk through step by step.
+Code in between possible suspension points runs sequentially,
+without the possibility of interruption from other concurrent code.
+For example, the code below moves a picture from one gallery to another.
 
-   ideally, do this in a sync function,
-   which makes it easier to see your intention
-   that the operation must not contain any suspension points
+::
 
-   you can also explicitly insert a suspension point
+   let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
+   add(firstPhoto toGallery: "Road Trip")
+   // At this point, firstPhoto is temporarily in both galleries.
+   remove(firstPhoto fromGallery: "Summer Vacation")
+
+There's no way for other code to run in between
+the call to ``add(_:toGallery:)`` and ``remove(_:fromGallery:)``.
+During that time, the first photo appears in both galleries,
+temporarily breaking one of the app's invariants.
+To make it even clearer that this chunk of code
+must not have ``await`` added to it in the future,
+you can refactor that code into a synchronous function:
+
+::
+
+   func move(_ photoName: String, from source: String, to destination: String) {
+       add(photoName, to: destination)
+       remove(photoName, from: source)
+   }
+   // ...
+   let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
+   move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
+
+In the example above,
+because the ``move(_:from:to:)`` function is synchronous,
+you guarantee that it can never contain possible suspension points.
+In the future,
+if you try to add concurrent code to this function,
+introducing a possible suspension point,
+you'll get compile-time error instead of introducing a bug.
+
+.. TODO you can also explicitly insert a suspension point
    by calling ``Task.yield()``
    https://developer.apple.com/documentation/swift/task/3814840-yield
 
 .. TODO add detail above about how the *compiler* can reason about
    the async/await version better too
    and give you better guarantees and clearer errors
-
-.. TODO Revise the discussion in the Closures chapter
-   where we currently talk about completion handlers.
 
 .. note::
 
@@ -258,6 +284,15 @@ only certain places in your program can call asynchronous functions or methods:
    to give a place where I can note the order of the keywords
    in the declaration and in the calls
 
+.. TODO closures can be async too -- outline
+
+   like how you can have an async function, a closure con be async
+   if a closure contains 'await' that implicity makes it async
+   you can mark it explicitly with "async -> in"
+
+   (discussion of @MainActor closures can probably go here too)
+
+
 .. _Concurrency_AsyncSequence:
 
 Asynchronous Sequences
@@ -271,14 +306,16 @@ is to wait for one element of the collection at a time
 using an :newTerm:`asynchronous sequence`.
 Here's what iterating over an asynchronous sequence looks like:
 
-::
+.. testcode:: async-sequence
 
-    import Foundation
-
-    let handle = FileHandle.standardInput
-    for try await line in handle.bytes.lines {
-        print(line)
-    }
+    -> import Foundation
+    ---
+    >> func f() async throws {
+    -> let handle = FileHandle.standardInput
+    -> for try await line in handle.bytes.lines {
+           print(line)
+       }
+    >> }
 
 Instead of using an ordinary ``for``-``in`` loop,
 the example above writes ``for`` with ``await`` after it.
@@ -586,8 +623,7 @@ call the `Task.init(priority:operation:) <//apple_ref/swift/fake/Task.init>`_ in
 To create an unstructured task that's not part of the current actor,
 known more specifically as a :newTerm:`detached task`,
 call the `Task.detached(priority:operation:) <//apple_ref/swift/fake/Task.detached>`_ class method.
-Both of these operations return a task handle
-that lets you interact with the task ---
+Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
 ::
@@ -638,7 +674,7 @@ call `Task.cancel() <//apple_ref/swift/fake/Task.cancel>`_.
 
 .. OUTLINE
 
-    - task handle
+    - task
 
     - cancellation propagates (Konrad's example below)
 

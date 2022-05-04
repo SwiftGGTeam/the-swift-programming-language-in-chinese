@@ -1199,6 +1199,25 @@ you can override an asynchronous method with a synchronous method,
 and a synchronous method can satisfy a protocol requirement
 that requires an asynchronous method.
 
+You can overload a function based on whether or not the function is asynchronous.
+At the call site, context determines which overload is used:
+In an asynchronous context, the asynchronous function is used,
+and in a synchronous context, the synchronous function is used.
+
+An asynchronous method can't override a synchronous method,
+and an asynchronous method can't satisfy a protocol requirement for a synchronous method.
+That said, a synchronous method can override an asynchronous method,
+and a synchronous method can satisfy a protocol requirement for an asynchronous method.
+
+.. assertion:: sync-satisfy-async-protocol-requirements
+
+   >> protocol P { func f() async -> Int }
+   >> class Super: P {
+   >>     func f() async -> Int { return 12 }
+   >> }
+   >> class Sub: Super {
+   >>     func f() -> Int { return 120 }
+   >> }
 
 .. _Declarations_FunctionsThatNeverReturn:
 
@@ -2330,6 +2349,8 @@ Just like functions and methods, initializers can throw or rethrow errors.
 And just like functions and methods,
 you use the ``throws`` or ``rethrows`` keyword after an initializer's parameters
 to indicate the appropriate behavior.
+Likewise, initializers can be asynchronous,
+and you use the ``async`` keyword to indicate this.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
@@ -2405,8 +2426,8 @@ see :ref:`Initialization_FailableInitializers`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT initializer-body
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``async``-OPT ``throws``-OPT generic-where-clause-OPT initializer-body
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``async``-OPT ``rethrows`` generic-where-clause-OPT initializer-body
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
     initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
