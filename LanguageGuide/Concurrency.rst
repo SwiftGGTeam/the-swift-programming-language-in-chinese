@@ -903,15 +903,19 @@ Some kinds of data can't be shared between concurrency domains,
 because that data contains mutable state,
 but it doesn't protect against unsafe access
 from more than one piece of code at a time.
-For example,
-a class that contains mutable properties
+The examples above use only some very simple value types
+for data that's passed between concurrency domains,
+which are always safe to share.
+A type that can be shared from one concurrency domain to another
+is known as a :newTerm:`sendable` type.
+For example, it can be passed as an argument when calling an actor method
+or be returned as the result of a task.
+In contrast,
+some types aren't safe to pass across concurrency domains.
+A class that contains mutable properties
 and doesn't serialize access to those properties
 can produce data races when instances of that class
 are passed between different tasks.
-In contrast, a :newTerm:`sendable` type is one that can be shared
-from one concurrency domain to another ---
-for example, it can be passed as an argument when calling an actor method
-or be returned as the result of a task.
 
 .. XXX either define or replace "data race" in the paragraph above
 
