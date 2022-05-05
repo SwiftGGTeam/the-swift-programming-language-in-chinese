@@ -704,6 +704,12 @@ call `Task.cancel() <//apple_ref/swift/fake/Task.cancel>`_.
 Actors
 ------
 
+You can use tasks to break up your program into isolated, concurrent pieces.
+Tasks are isolated from each other,
+which is what makes it safe for them to run at the same time,
+but sometimes you need to share some information between tasks.
+Actors let you safely share information between concurrent code.
+
 Like classes, actors are reference types,
 so the comparison of value types and reference types
 in :ref:`ClassesAndStructures_ClassesAreReferenceTypes`
@@ -889,11 +895,25 @@ This guarantee is known as :newTerm:`actor isolation`.
 Sendable Types
 --------------
 
-A :newTerm:`sendable` type is one that can be transferred
-from one unit of concurrent work to another,
-like being passed as an argument when calling an actor method
-or being returned as the result of a task.
-Only values of sendable types can be passed across units of concurrent work.
+Tasks and actors let you divide a program up
+into pieces that can safely run concurrently.
+The code inside a task or actor
+is know as a :newTerm:`concurrency domain`.
+Some kinds of data can't be shared between concurrency domains,
+because that data contains mutable state,
+but it doesn't protect against unsafe access
+from more than one piece of code at a time.
+For example,
+a class that contains mutable properties
+and doesn't serialize access to those properties
+can produce data races when instances of that class
+are passed between different tasks.
+In contrast, a :newTerm:`sendable` type is one that can be shared
+from one concurrency domain to another ---
+for example, it can be passed as an argument when calling an actor method
+or be returned as the result of a task.
+
+.. XXX either define or replace "data race" in the paragraph above
 
 You mark a type as being sendable
 by declaring conformance to the ``Sendable`` protocol.
@@ -904,11 +924,10 @@ or they manage their mutable state so that it can be shared safely.
 For a detailed list of its semantic requirements,
 see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
 
-.. XXX transition into the example.
-
 Some types are always sendable,
 like structures that have only sendable properties
 and enumerations that have only sendable associated values.
+For example:
 
 .. testcode:: actors
 
@@ -940,18 +959,6 @@ where conformance to the ``Sendable`` protocol is implied:
 
 .. OUTLINE
 
-    - QUESTION: Do we need the term "concurrency domain" from SE-0302
-    or can we describe the behaviour without it?
-
-    - code that builds up some unsychronised mutable state
-    (like an instance of class with a bunch of properties)
-    and hands that off to an actor
-
-    When does something need to be sendable?
-    When you pass it between concurrency domains ---
-    like arguments and return value of an actor's methods,
-    and values passed in & out of a structured task
-
     you get a compiler error
     if you try to pass data across concurrency domains
     in a way that could introduce unprotected shared mutable state
@@ -962,9 +969,6 @@ where conformance to the ``Sendable`` protocol is implied:
     Metatypes are always implicitly sendable.
     For example, `Int.Type`, the type produced by the expression `Int.self`, is sendable.
 
-    - the values you pass to a method call from outside of an actor
-    have to be sendable (conform to the ``Sendable`` marker protocol)
-
     + structs and enums implicitly conform to ``Sendable``
         if they're non-public, non-frozen,
         and all of their properties are also ``Sendable``
@@ -972,11 +976,6 @@ where conformance to the ``Sendable`` protocol is implied:
     + all actors are implicitly sendable
 
     + everything else needs to be marked ``Sendable`` explicitly
-
-    + the only valid superclass for a sendable class is ``NSObject``
-        (allowed for Obj-C interop)
-
-
 
 .. OUTLINE
     .. _Concurrency_MainActor:
