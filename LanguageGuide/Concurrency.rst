@@ -714,7 +714,7 @@ which makes it safe for code in multiple tasks
 to interact with the same instance of an actor.
 For example, here's an actor that records temperatures:
 
-.. testcode:: actors, actors-sendable-class
+.. testcode:: actors, actors-implicity-sendable
 
     -> actor TemperatureLogger {
            let label: String
@@ -904,41 +904,11 @@ or they manage their mutable state so that it can be shared safely.
 For a detailed list of its semantic requirements,
 see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
 
-.. XXX xref 
-
-
-.. testcode:: actors-sendable-class
-
-    -> final class TemperatureReading: Sendable {
-           let measurement: Int
-           init(measurement: Int) {
-               self.measurement = measurement
-           }
-       }
-    ---
-    -> extension TemperatureLogger {
-           func addReading(from reading: TemperatureReading) {
-               measurements.append(reading.measurement)
-           }
-       }
-    ---
-    -> let l = TemperatureLogger(label: "Tea kettle", measurement: 85)
-    -> let r = TemperatureReading(measurement: 45)
-    -> await l.addReading(from: r)
-
-.. XXX 
-   transition this from being a class to a struct,
-   showing how that's easier to make sendable
+.. XXX transition into the example.
 
 Some types are always sendable,
 like structures that have only sendable properties
 and enumerations that have only sendable associated values.
-Although the code above to define ``TemperatureReading`` as a sendable class does work,
-a class isn't a good fit for this use case.
-That version of ``TemperatureReading`` has only stored constants,
-specifically avoiding any shared mutable state,
-essentially making it behave like a value type.
-Defining it as a structure gets that for free:
 
 .. testcode:: actors
 
@@ -952,11 +922,21 @@ Defining it as a structure gets that for free:
            }
        }
     ---
-    -> let l = TemperatureLogger(label: "Tea kettle", measurement: 85)
-    -> let r = TemperatureReading(measurement: 45)
-    -> await l.addReading(from: r)
+    -> let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
+    -> let reading = TemperatureReading(measurement: 45)
+    -> await logger.addReading(from: reading)
 
-.. XXX because this struct is ... it's implicitly Sendable
+Because ``TemperatureReading`` is a structure that has only sendable properties,
+and the structure isn't marked ``public`` or ``@usableFromInline``,
+it's implicitly sendable.
+Here's a version of the structure
+where conformance to the ``Sendable`` protocol is implied:
+
+.. testcode:: actors-implicitly-sendable
+
+    -> struct TemperatureReading {
+           var measurement: Int
+       }
 
 .. OUTLINE
 
