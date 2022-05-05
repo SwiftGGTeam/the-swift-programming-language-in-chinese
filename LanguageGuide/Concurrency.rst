@@ -714,19 +714,19 @@ which makes it safe for code in multiple tasks
 to interact with the same instance of an actor.
 For example, here's an actor that records temperatures:
 
-::
+.. testcode:: actors, actors-sendable-class
 
-    actor TemperatureLogger {
-        let label: String
-        var measurements: [Int]
-        private(set) var max: Int
+    -> actor TemperatureLogger {
+           let label: String
+           var measurements: [Int]
+           private(set) var max: Int
 
-        init(label: String, measurement: Int) {
-            self.label = label
-            self.measurements = [measurement]
-            self.max = measurement
-        }
-    }
+           init(label: String, measurement: Int) {
+               self.label = label
+               self.measurements = [measurement]
+               self.max = measurement
+           }
+       }
 
 You introduce an actor with the ``actor`` keyword,
 followed by its definition in a pair of braces.
@@ -889,46 +889,74 @@ This guarantee is known as :newTerm:`actor isolation`.
 Sendable Types
 --------------
 
-In Swift, every type is either sendable or nonsendable,
-similar to how every type is either a value type or a reference type
-(see "Structures and Classes").
-
 A :newTerm:`sendable` type is one that can be transferred
 from one unit of concurrent work to another,
 like being passed as an argument when calling an actor method
 or being returned as the result of a task.
-Sendable types either don't contain shared mutable state,
-or they manage their mutable state so that it can be shared safely.
 Only values of sendable types can be passed across units of concurrent work.
 
-.. XXX example goes here
-   stdlib doesn't declare any classes except for KeyPath and variations
-   need to contrive a reason to declare a class here
-
-    class TemperatureReading {
-        var measurement: Int
-        init(_ measurement: Int) {
-            self.measurement = measurement
-        }
-    }
-
-    extension TemperatureLogger {
-        func addReading(from reading: TemperatureReading) {
-            measurements.append(reading.measurement)
-        }
-    }
-
-    let l = TemperatureLogger(label: "Tea kettle", measurement: 85)
-    let r = TemperatureReading(45)
-    await l.addReading(from: r)
-
 You mark a type as being sendable
-by declaring conformance to the
-`Sendable <//apple_ref/swift/fake/Sendable>`_ protocol.
+by declaring conformance to the ``Sendable`` protocol.
 That protocol doesn't have any code requirements,
 but it does have semantic requirements that Swift enforces.
+Sendable types either don't contain shared mutable state,
+or they manage their mutable state so that it can be shared safely.
+For a detailed list of its semantic requirements,
+see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
+
+.. XXX xref 
 
 
+.. testcode:: actors-sendable-class
+
+    -> final class TemperatureReading: Sendable {
+           let measurement: Int
+           init(measurement: Int) {
+               self.measurement = measurement
+           }
+       }
+    ---
+    -> extension TemperatureLogger {
+           func addReading(from reading: TemperatureReading) {
+               measurements.append(reading.measurement)
+           }
+       }
+    ---
+    -> let l = TemperatureLogger(label: "Tea kettle", measurement: 85)
+    -> let r = TemperatureReading(measurement: 45)
+    -> await l.addReading(from: r)
+
+.. XXX 
+   transition this from being a class to a struct,
+   showing how that's easier to make sendable
+
+Some types are always sendable,
+like structures that have only sendable properties
+and enumerations that have only sendable associated values.
+Although the code above to define ``TemperatureReading`` as a sendable class does work,
+a class isn't a good fit for this use case.
+That version of ``TemperatureReading`` has only stored constants,
+specifically avoiding any shared mutable state,
+essentially making it behave like a value type.
+Defining it as a structure gets that for free:
+
+.. testcode:: actors
+
+    -> struct TemperatureReading: Sendable {
+           var measurement: Int
+       }
+    ---
+    -> extension TemperatureLogger {
+           func addReading(from reading: TemperatureReading) {
+               measurements.append(reading.measurement)
+           }
+       }
+    ---
+    -> let l = TemperatureLogger(label: "Tea kettle", measurement: 85)
+    -> let r = TemperatureReading(measurement: 45)
+    -> await l.addReading(from: r)
+
+.. XXX because this struct is ... it's implicitly Sendable
 
 .. OUTLINE
 
