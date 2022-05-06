@@ -417,7 +417,7 @@ Swift provides two signed floating-point number types:
    In situations where either type would be appropriate, ``Double`` is preferred.
 
 .. TODO: Explicitly mention situations where Float is appropriate,
-	 	 such as when optimizing for storage size of collections?
+   such as when optimizing for storage size of collections?
 
 .. TODO: mention infinity, -infinity etc.
 

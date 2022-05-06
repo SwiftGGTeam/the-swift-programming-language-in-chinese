@@ -429,11 +429,11 @@ in the declaration ``let x: Int8 = 42``.
 
     Grammar of a literal
 
-	literal --> numeric-literal | string-literal | boolean-literal | nil-literal
+    literal --> numeric-literal | string-literal | boolean-literal | nil-literal
 
-	numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
-	boolean-literal --> ``true`` | ``false``
-	nil-literal --> ``nil``
+    numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
+    boolean-literal --> ``true`` | ``false``
+    nil-literal --> ``nil``
 
 
 .. _LexicalStructure_IntegerLiterals:
