@@ -903,11 +903,11 @@ like variables and properties,
 is called a :newTerm:`concurrency domain`.
 Some kinds of data can't be shared between concurrency domains,
 because that data contains mutable state,
-but it doesn't protect against unsafe access
-from more than one piece of code at a time.
+but it doesn't protect against overlapping access.
 The examples above use only some very simple value types
 for data that's passed between concurrency domains,
 which are always safe to share.
+
 A type that can be shared from one concurrency domain to another
 is known as a :newTerm:`sendable` type.
 For example, it can be passed as an argument when calling an actor method
