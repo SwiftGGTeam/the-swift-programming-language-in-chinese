@@ -897,8 +897,10 @@ Sendable Types
 
 Tasks and actors let you divide a program up
 into pieces that can safely run concurrently.
-The code inside a task or actor
-is know as a :newTerm:`concurrency domain`.
+Inside of a task or an instance of an actor,
+the part of a program that contains mutable state,
+like variables and properties,
+is called a :newTerm:`concurrency domain`.
 Some kinds of data can't be shared between concurrency domains,
 because that data contains mutable state,
 but it doesn't protect against unsafe access
