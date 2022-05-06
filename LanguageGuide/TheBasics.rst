@@ -1112,7 +1112,7 @@ and the value contained within the optional
 would be made available as a variable rather than a constant.
 Changes you make to ``myNumber`` inside the body of the ``if`` statement
 apply only to that local variable,
-*not* to the original variable that you unwrapped.
+*not* to the original, optional constant or variable that you unwrapped.
 
 You can include as many optional bindings and Boolean conditions
 in a single ``if`` statement as you need to,
