@@ -1629,7 +1629,7 @@ Apply this attribute to a protocol type
 as part of a type declaration's list of adopted protocols
 to turn off enforcement of that protocol's requirements.
 
-The only supported protocol is `Sendable <//apple_ref/fake/Sendable>`_.
+The only supported protocol is `Sendable <//apple_ref/swift/fake/Sendable>`_.
 
 
 .. _Attributes_usableFromInline:
@@ -1804,7 +1804,7 @@ Apply this attribute to the type of a function
 to indicate that the function or closure is sendable.
 Applying this attribute to a function type
 means the same thing as conforming a non–function type
-to the `Sendable <//apple_ref/fake/Sendable>`_ protocol.
+to the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol.
 
 
 .. _Attributes_SwitchCaseAttributes:
