@@ -1069,7 +1069,8 @@ It has already been initialized with the value contained *within* the optional,
 and so you don't use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
-If you don't need to refer to optional constant or variable after unwrapping it,
+If you don't need to refer to
+the original constant or variable after unwrapping it,
 you can use the same name for the new constant or variable:
 
 .. testcode:: optionals
@@ -1109,6 +1110,9 @@ within the first branch of the ``if`` statement,
 you could write ``if var myNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
+Changes you make to ``myNumber`` inside the body of the ``if`` statement
+apply only to that local variable,
+*not* to the original variable that you unwrapped.
 
 You can include as many optional bindings and Boolean conditions
 in a single ``if`` statement as you need to,
