@@ -923,9 +923,23 @@ You mark a type as being sendable
 by declaring conformance to the ``Sendable`` protocol.
 That protocol doesn't have any code requirements,
 but it does have semantic requirements that Swift enforces.
-Sendable types either don't contain shared mutable state,
-or they manage their mutable state so that it can be shared safely.
-For a detailed list of its semantic requirements,
+In general, there are three ways for a type to be sendable:
+
+- The type's mutable state is made up of other sendable data,
+  like a structure with stored properties that are sendable
+  or an enumeration with associated values that are sendable.
+
+- The type doesn't have any mutable state,
+  like a structure or class that has only read-only properties.
+
+- The type has code that ensures the safety of its mutable state,
+  like a class that's marked ``@MainActor``
+  or a class that serializes access to its properties
+  on a particular thread or queue.
+
+.. XXX TR: Do we want to explain why a class can't fall under the first case?
+
+For a detailed list of of the semantic requirements,
 see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
 
 Some types are always sendable,
