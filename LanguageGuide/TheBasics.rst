@@ -1069,8 +1069,8 @@ It has already been initialized with the value contained *within* the optional,
 and so you don't use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
-If you don't need to refer to
-the original constant or variable after unwrapping it,
+If you don't need to refer to the original, optional constant or variable
+after accessing the value it contains,
 you can use the same name for the new constant or variable:
 
 .. testcode:: optionals
@@ -1083,9 +1083,10 @@ you can use the same name for the new constant or variable:
       }
    <- My number is 123
 
-If there's a value in ``myNumber``,
-they unwrap its value
-and set the value of a new constant named ``myNumber`` to that unwrapped value.
+This code starts by checking whether ``myNumber`` contains a value,
+just like the code in the previous example.
+If ``myNumber`` has a value,
+the value of a new constant named ``myNumber`` is set to that value.
 Inside the body of the ``if`` statement,
 writing ``myNumber`` refers to that new non-optional constant.
 Before the beginning of the ``if`` statement and after its end,
