@@ -1806,6 +1806,14 @@ Applying this attribute to a function type
 means the same thing as conforming a non–function type
 to the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol.
 
+This attribute is inferred on functions and closures
+if the function or closure is used in a context
+that expects a sendable value,
+and the function or closure satisfies the requirements to be sendable.
+
+A sendable function type
+is a subtype of the corresponding nonsendable function type.
+
 
 .. _Attributes_SwitchCaseAttributes:
 

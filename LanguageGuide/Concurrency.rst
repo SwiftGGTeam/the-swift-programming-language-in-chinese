@@ -904,22 +904,20 @@ is called a :newTerm:`concurrency domain`.
 Some kinds of data can't be shared between concurrency domains,
 because that data contains mutable state,
 but it doesn't protect against overlapping access.
-The examples above use only some very simple value types
-for data that's passed between concurrency domains,
-which are always safe to share.
 
 A type that can be shared from one concurrency domain to another
 is known as a :newTerm:`sendable` type.
 For example, it can be passed as an argument when calling an actor method
 or be returned as the result of a task.
+The examples earlier in this chapter didn't discuss sendability
+because they use simple value types that are always safe to share
+for the data that they pass between concurrency domains.
 In contrast,
 some types aren't safe to pass across concurrency domains.
 A class that contains mutable properties
 and doesn't serialize access to those properties
-can produce data races when instances of that class
-are passed between different tasks.
-
-.. XXX either define or replace "data race" in the paragraph above
+can produce unpredictable and incorrect results
+when you pass instances of that class between different tasks.
 
 You mark a type as being sendable
 by declaring conformance to the ``Sendable`` protocol.
@@ -962,26 +960,6 @@ where conformance to the ``Sendable`` protocol is implied:
     -> struct TemperatureReading {
            var measurement: Int
        }
-
-.. OUTLINE
-
-    you get a compiler error
-    if you try to pass data across concurrency domains
-    in a way that could introduce unprotected shared mutable state
-
-    Sendable functions are a subtype of non-sendable,
-    in the same way that escaping is a subtype of non-escaping
-
-    Metatypes are always implicitly sendable.
-    For example, `Int.Type`, the type produced by the expression `Int.self`, is sendable.
-
-    + structs and enums implicitly conform to ``Sendable``
-        if they're non-public, non-frozen,
-        and all of their properties are also ``Sendable``
-
-    + all actors are implicitly sendable
-
-    + everything else needs to be marked ``Sendable`` explicitly
 
 .. OUTLINE
     .. _Concurrency_MainActor:
