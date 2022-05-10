@@ -925,8 +925,9 @@ That protocol doesn't have any code requirements,
 but it does have semantic requirements that Swift enforces.
 In general, there are three ways for a type to be sendable:
 
-- The type's mutable state is made up of other sendable data,
-  like a structure with stored properties that are sendable
+- The type is a value type,
+  and its mutable state is made up of other sendable data ---
+  for example, a structure with stored properties that are sendable
   or an enumeration with associated values that are sendable.
 
 - The type doesn't have any mutable state,
@@ -937,7 +938,11 @@ In general, there are three ways for a type to be sendable:
   or a class that serializes access to its properties
   on a particular thread or queue.
 
-.. XXX TR: Do we want to explain why a class can't fall under the first case?
+.. There's no example of the third case,
+   where you serialize access to the class's members,
+   because the stdlib doesn't include the locking primitives you'd need.
+   Implementing it in terms of NSLock or some Darwin API
+   isn't a good fit for TSPL.
 
 For a detailed list of of the semantic requirements,
 see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
