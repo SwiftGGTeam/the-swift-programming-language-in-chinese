@@ -831,6 +831,65 @@ no runtime concatenation is performed.
    quoted-character --> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
 
 
+.. _LexicalStructure_RegexLiterals:
+
+Regular Expression Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A regular expression literal is a sequence of characters
+surrounded by forward slashes (``/``)
+with the following form:
+
+.. syntax-grammar::
+
+   /<#regular expression#>/
+
+
+.. OUTLINE
+
+   Can't start with a space or tab (either escape it with \ or use #/ foo/# syntax)
+   One line only
+   Unified dialect of POSIX + PCRE + 
+
+A regular expression literal delimited by extended delimiters
+is a sequence of characters surrounded by slashes (``/``)
+and a balanced set of one or more number signs (``#``).
+A regular expression literal
+delimited by extended delimiters has the following forms:
+
+.. syntax-outline::
+
+    #/<#regular expression#>/#
+    
+    #/
+    <#characters#>
+    /#
+
+Unlike a string literal delimited by extended delimiters,
+a backslash (``\\``) is treated the same in a regular expression literal,
+regardless of the regular expression literal's delimiters.
+That is, both ``/a\nb/`` and ``#/a\nb/#`` have the same meaning.
+
+.. OUTLINE
+
+   Multiline syntax -- the opening #/ must be at the end of a line
+
+   In a multiline regular expression literal,
+   you can use whitespace for readability and include ``#``-style comments
+   because the extended syntax is enabled by default.
+
+   Like #" "# string literals, the closing /# must be on its own line.
+
+   You can use the #//# syntax to write an empty regex.
+   The // syntax always makes a comment.
+
+   (Maybe move to the whitespace discussion?)
+   Whitespace is required between a regular expression literal
+   that doesn't use extended delimeters
+   and an infix binary operator.
+   For example ``a+/y/`` is invalid and must be written as ``a + /y/`` or ``a+#/y/#``.
+
+
 .. _LexicalStructure_Operators:
 
 Operators
