@@ -840,10 +840,9 @@ A regular expression literal is a sequence of characters
 surrounded by forward slashes (``/``)
 with the following form:
 
-.. syntax-grammar::
+.. syntax-outline::
 
    /<#regular expression#>/
-
 
 .. OUTLINE
 
@@ -865,10 +864,9 @@ delimited by extended delimiters has the following forms:
     <#characters#>
     /#
 
-Unlike a string literal delimited by extended delimiters,
-a backslash (``\\``) is treated the same in a regular expression literal,
-regardless of the regular expression literal's delimiters.
-That is, both ``/a\nb/`` and ``#/a\nb/#`` have the same meaning.
+A backslash (``\``) is as an escape character,
+regardless of the regular expression literal's delimiters,
+unlike a string literal delimited by extended delimiters,
 
 .. OUTLINE
 
@@ -885,7 +883,7 @@ That is, both ``/a\nb/`` and ``#/a\nb/#`` have the same meaning.
 
    (Maybe move to the whitespace discussion?)
    Whitespace is required between a regular expression literal
-   that doesn't use extended delimeters
+   that doesn't use extended delimiters
    and an infix binary operator.
    For example ``a+/y/`` is invalid and must be written as ``a + /y/`` or ``a+#/y/#``.
 
@@ -893,13 +891,13 @@ That is, both ``/a\nb/`` and ``#/a\nb/#`` have the same meaning.
 
     Grammar of a regular expression literal
 
-    regular-expression-literal --> regex-literal-opening-delimeter-OPT regex regex-literal-closing-delimeter
+    regular-expression-literal --> regex-literal-opening-delimiter-OPT regex regex-literal-closing-delimiter
     regex --> Any regular expression that doesn't begin with a space or tab
 
     regex-literal-opening-delimiter --> extended-regex-literal-delimiter-OPT ``/``
-    regex-literal-closing-delimiter --> ``/`` extended-regex-literal-delimeter-OPT
+    regex-literal-closing-delimiter --> ``/`` extended-regex-literal-delimiter-OPT
 
-    extended-regex-literal-delimeter --> ``#`` extended-regex-literal-delimeter-OPT
+    extended-regex-literal-delimiter --> ``#`` extended-regex-literal-delimiter-OPT
 
 
 .. _LexicalStructure_Operators:
