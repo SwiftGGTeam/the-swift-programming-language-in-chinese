@@ -597,6 +597,8 @@ an unescaped double quotation mark (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
+
 A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 
@@ -837,18 +839,30 @@ Regular Expression Literals
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A regular expression literal is a sequence of characters
-surrounded by forward slashes (``/``)
-with the following form:
+surrounded by slashes (``/``) with the following form:
 
 .. syntax-outline::
 
    /<#regular expression#>/
 
+Regular expression literals
+must not begin with an unescaped tab or space,
+and they can't contain
+an unescaped slash (``/``),
+an unescaped backslash (``\``),
+a carriage return, or a line feed.
+
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
+
 .. OUTLINE
 
-   Can't start with a space or tab (either escape it with \ or use #/ foo/# syntax)
-   One line only
-   Unified dialect of POSIX + PCRE + 
+   Regex syntax
+
+   Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET
+
+   XXX add information about the compile-time type info
+   that you get in the tuple type for Regex,
+   based on the list of captures
 
 A regular expression literal delimited by extended delimiters
 is a sequence of characters surrounded by slashes (``/``)
@@ -864,40 +878,55 @@ delimited by extended delimiters has the following forms:
     <#characters#>
     /#
 
+A regular expression literal that uses extended delimiters
+can begin with an unescaped space or tab,
+can contain unescaped slashes (``/``),
+and it can span across multiple lines.
+For a multiline regular expression literal,
+the opening delimiter must be at the end of a line,
+the regular expression implicitly uses the extended syntax,
+and the closing delimiter must be on its own line.
+
+.. XXX As details about the multiline syntax shake out during SE review,
+   like indentation and whitespace,
+   add them above or spin out a separate paragraph.
+
 A backslash (``\``) is as an escape character,
 regardless of the regular expression literal's delimiters,
-unlike a string literal delimited by extended delimiters,
+unlike a string literal delimited by extended delimiters.
 
-.. OUTLINE
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
 
-   Multiline syntax -- the opening #/ must be at the end of a line
+.. XXX I'm not sure this is quite right...
+   The SE proposal says backslashes aren't special,
+   but then it isn't clear whether \n means newline
+   because that's what it means as a regex
+   or because that's what the Swift compiler treats \n as meaning.
+   https://github.com/apple/swift-evolution/blob/main/proposals/0354-regex-literals.md#escaping-of-backslashes
 
-   In a multiline regular expression literal,
-   you can use whitespace for readability and include ``#``-style comments
-   because the extended syntax is enabled by default.
+If you use more than one number sign to form
+a regular expression literal delimited by extended delimiters,
+don't place whitespace in between the number signs:
 
-   Like #" "# string literals, the closing /# must be on its own line.
+.. testcode:: extended-regex-delimiters-err
 
-   You can use the #//# syntax to write an empty regex.
-   The // syntax always makes a comment.
+    -> let regex1 = ##/abc/##       // OK
+    -> let regex2 = # #/abc/# #     // Error
 
-   (Maybe move to the whitespace discussion?)
-   Whitespace is required between a regular expression literal
-   that doesn't use extended delimiters
-   and an infix binary operator.
-   For example ``a+/y/`` is invalid and must be written as ``a + /y/`` or ``a+#/y/#``.
+If you need to make an empty regular expression literal,
+you must use the extended delimiter syntax.
 
 .. syntax-grammar::
 
     Grammar of a regular expression literal
 
-    regular-expression-literal --> regex-literal-opening-delimiter-OPT regex regex-literal-closing-delimiter
-    regex --> Any regular expression that doesn't begin with a space or tab
+    regular-expression-literal --> regular-expression-literal-opening-delimiter-OPT regular-expression regular-expression-literal-closing-delimiter
+    regular-expression --> Any regular expression
 
-    regex-literal-opening-delimiter --> extended-regex-literal-delimiter-OPT ``/``
-    regex-literal-closing-delimiter --> ``/`` extended-regex-literal-delimiter-OPT
+    regular-expression-literal-opening-delimiter --> extended-regular-expression-literal-delimiter-OPT ``/``
+    regular-expression-literal-closing-delimiter --> ``/`` extended-regular-expression-literal-delimiter-OPT
 
-    extended-regex-literal-delimiter --> ``#`` extended-regex-literal-delimiter-OPT
+    extended-regular-expression-literal-delimiter --> ``#`` extended-regular-expression-literal-delimiter-OPT
 
 
 .. _LexicalStructure_Operators:
@@ -1012,7 +1041,6 @@ the characters ``)``, ``]``, and ``}`` after an operator,
 and the characters ``,``, ``;``, and ``:``
 are also considered whitespace.
 
-There's one caveat to the rules above.
 If the ``!`` or ``?`` predefined operator has no whitespace on the left,
 it's treated as a postfix operator,
 regardless of whether it has whitespace on the right.
@@ -1020,6 +1048,9 @@ To use the ``?`` as the optional-chaining operator,
 it must not have whitespace on the left.
 To use it in the ternary conditional (``?`` ``:``) operator,
 it must have whitespace around both sides.
+
+If one of the arguments to an infix operator is a regular expression literal,
+then the operator must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
