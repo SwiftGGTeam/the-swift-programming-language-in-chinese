@@ -429,7 +429,7 @@ in the declaration ``let x: Int8 = 42``.
 
     Grammar of a literal
 
-    literal --> numeric-literal | string-literal | boolean-literal | nil-literal
+    literal --> numeric-literal | string-literal | regular-expression-literal | boolean-literal | nil-literal
 
     numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
     boolean-literal --> ``true`` | ``false``
@@ -888,6 +888,18 @@ That is, both ``/a\nb/`` and ``#/a\nb/#`` have the same meaning.
    that doesn't use extended delimeters
    and an infix binary operator.
    For example ``a+/y/`` is invalid and must be written as ``a + /y/`` or ``a+#/y/#``.
+
+.. syntax-grammar::
+
+    Grammar of a regular expression literal
+
+    regular-expression-literal --> regex-literal-opening-delimeter-OPT regex regex-literal-closing-delimeter
+    regex --> Any regular expression that doesn't begin with a space or tab
+
+    regex-literal-opening-delimiter --> extended-regex-literal-delimiter-OPT ``/``
+    regex-literal-closing-delimiter --> ``/`` extended-regex-literal-delimeter-OPT
+
+    extended-regex-literal-delimeter --> ``#`` extended-regex-literal-delimeter-OPT
 
 
 .. _LexicalStructure_Operators:
