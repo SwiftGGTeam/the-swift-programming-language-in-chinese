@@ -863,11 +863,28 @@ a carriage return, or a line feed.
 
 .. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
 
+.. XXX TR: Can you backslash-escape a line break in a // style regex?
+
+Within a regular expression literal,
+a backslash is understood as a part of that regular expression,
+not just as an escape character like in string literals.
+It indicates that the following special character
+should be interpreted literally,
+or that the following nonspecial character
+should be interpreted in a special way.
+For example,
+``/\(/`` matches a single left parenthesis
+and ``/\d/`` matches a single digit.
+
 .. OUTLINE
 
-   Regex syntax -- some notes here, or just on Regex reference docs?
+   Doc comments on Regex struct don't have more syntax details,
+   or a cross reference to where you can learn more.
+   We probably need at least some baseline coverage
+   of the supported syntax here.
+   (Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET)
 
-   Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET
+   https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
 
    XXX add information about the compile-time type info
    that you get in the tuple type for Regex,
@@ -899,19 +916,6 @@ and the closing delimiter must be on its own line.
 .. XXX As details about the multiline syntax shake out during SE review,
    like indentation and whitespace,
    add them above or spin out a separate paragraph.
-
-A backslash (``\``) is as an escape character,
-regardless of the regular expression literal's delimiters,
-unlike a string literal delimited by extended delimiters.
-
-.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
-
-.. XXX I'm not sure this is quite right...
-   The SE proposal says backslashes aren't special,
-   but then it isn't clear whether \n means newline
-   because that's what it means as a regex
-   or because that's what the Swift compiler treats \n as meaning.
-   https://github.com/apple/swift-evolution/blob/main/proposals/0354-regex-literals.md#escaping-of-backslashes
 
 If you use more than one number sign to form
 a regular expression literal delimited by extended delimiters,
