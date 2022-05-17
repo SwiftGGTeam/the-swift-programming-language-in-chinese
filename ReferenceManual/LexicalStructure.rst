@@ -409,9 +409,9 @@ the annotation's type must be a type that can be instantiated from that literal 
 That is, the type must conform to the Swift standard library protocols
 listed in the table below.
 
-============        ============    =========================
+==================  ============    ===================================================================
 Literal             Default Type    Protocol
-============        ============    =========================
+==================  ============    ===================================================================
 Integer             ``Int``         ``ExpressibleByIntegerLiteral``
 Floating-point      ``Double``      ``ExpressibleByFloatLiteral``
 String              ``String``      ``ExpressibleByStringLiteral``,
@@ -421,7 +421,7 @@ String              ``String``      ``ExpressibleByStringLiteral``,
                                     that contain only a single extended grapheme cluster
 Regular expression  ``Regex``       None
 Boolean             ``Bool``        ``ExpressibleByBooleanLiteral``
-============        ============    =========================
+==================  ============    ===================================================================
 
 For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
