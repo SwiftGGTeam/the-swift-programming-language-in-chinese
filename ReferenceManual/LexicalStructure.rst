@@ -415,23 +415,18 @@ Literal             Default Type    Protocol
 Integer             ``Int``         ``ExpressibleByIntegerLiteral``
 Floating-point      ``Double``      ``ExpressibleByFloatLiteral``
 String              ``String``      ``ExpressibleByStringLiteral``,
-                                    ``ExpressibleByUnicodeScalarLiteral`` for string literal
+                                    ``ExpressibleByUnicodeScalarLiteral`` for string literals
                                     that contain only a single Unicode scalar,
-                                    ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literal
+                                    ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
                                     that contain only a single extended grapheme cluster
 Regular expression  ``Regex``       None
 Boolean             ``Bool``        ``ExpressibleByBooleanLiteral``
 ============        ============    =========================
 
-
-The default types are as follows:
-
 For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
 literal ``"Hello, world"`` is ``String``.
-
-
-For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
+Also, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
 in the declaration ``let x: Int8 = 42``.
 
