@@ -402,31 +402,34 @@ Swift uses the explicit type annotation (``: Int8``) to infer
 that the type of the integer literal ``42`` is ``Int8``.
 If there isn't suitable type information available,
 Swift infers that the literal's type is one of the default literal types
-defined in the Swift standard library.
-The default types are as follows:
+defined in the Swift standard library,
+and listed in the table below.
+When specifying the type annotation for a literal value,
+the annotation's type must be a type that can be instantiated from that literal value.
+That is, the type must conform to the Swift standard library protocols
+listed in the table below.
 
-- ``Int`` for integer literals
-- ``Double`` for floating-point literals
-- ``String`` for string literals
-- ``Regex`` for regular expression literals
-- ``Bool`` for Boolean literals
+============        ============    =========================
+Literal             Default Type    Protocol
+============        ============    =========================
+Integer             ``Int``         ``ExpressibleByIntegerLiteral``
+Floating-point      ``Double``      ``ExpressibleByFloatLiteral``
+String              ``String``      ``ExpressibleByStringLiteral``,
+                                    ``ExpressibleByUnicodeScalarLiteral`` for string literal
+                                    that contain only a single Unicode scalar,
+                                    ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literal
+                                    that contain only a single extended grapheme cluster
+Regular expression  ``Regex``       None
+Boolean             ``Bool``        ``ExpressibleByBooleanLiteral``
+============        ============    =========================
+
+
+The default types are as follows:
 
 For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
 literal ``"Hello, world"`` is ``String``.
 
-When specifying the type annotation for a literal value,
-the annotation's type must be a type that can be instantiated from that literal value.
-That is, the type must conform to one of the following Swift standard library protocols:
-
-- ``ExpressibleByIntegerLiteral`` for integer literals
-- ``ExpressibleByFloatLiteral`` for floating-point literals
-- ``ExpressibleByStringLiteral`` for string literals
-- ``ExpressibleByBooleanLiteral`` for Boolean literals
-- ``ExpressibleByUnicodeScalarLiteral`` for string literal
-  that contain only a single Unicode scalar
-- ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literal
-  that contain only a single extended grapheme cluster
 
 For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
