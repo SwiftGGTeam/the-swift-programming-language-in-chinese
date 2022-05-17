@@ -381,6 +381,8 @@ The following are examples of literals:
     -> 3.14159          // Floating-point literal
     >> let r2 =
     -> "Hello, world!"  // String literal
+    >> let r4 /
+    -> /Hello, .*/      // Regular expression literal
     >> let r3 =
     -> true             // Boolean literal
     >> for x in [r0, r1, r2, r3] as [Any] { print(type(of: x)) }
@@ -401,8 +403,14 @@ that the type of the integer literal ``42`` is ``Int8``.
 If there isn't suitable type information available,
 Swift infers that the literal's type is one of the default literal types
 defined in the Swift standard library.
-The default types are ``Int`` for integer literals, ``Double`` for floating-point literals,
-``String`` for string literals, and ``Bool`` for Boolean literals.
+The default types are as follows:
+
+- ``Int`` for integer literals
+- ``Double`` for floating-point literals
+- ``String`` for string literals
+- ``Regex`` for regular expression literals
+- ``Bool`` for Boolean literals
+
 For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
 literal ``"Hello, world"`` is ``String``.
@@ -410,20 +418,23 @@ literal ``"Hello, world"`` is ``String``.
 When specifying the type annotation for a literal value,
 the annotation's type must be a type that can be instantiated from that literal value.
 That is, the type must conform to one of the following Swift standard library protocols:
-``ExpressibleByIntegerLiteral`` for integer literals,
-``ExpressibleByFloatLiteral`` for floating-point literals,
-``ExpressibleByStringLiteral`` for string literals,
-``ExpressibleByBooleanLiteral`` for Boolean literals,
-``ExpressibleByUnicodeScalarLiteral`` for string literals
-that contain only a single Unicode scalar,
-and ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
-that contain only a single extended grapheme cluster.
+
+- ``ExpressibleByIntegerLiteral`` for integer literals
+- ``ExpressibleByFloatLiteral`` for floating-point literals
+- ``ExpressibleByStringLiteral`` for string literals
+- ``ExpressibleByBooleanLiteral`` for Boolean literals
+- ``ExpressibleByUnicodeScalarLiteral`` for string literal
+  that contain only a single Unicode scalar,
+- ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literal
+  that contain only a single extended grapheme cluster.
+
 For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
 in the declaration ``let x: Int8 = 42``.
 
 .. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
    ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
+   There is no protocol for regex literal in the list because the stdlib intentionally omits that.
 
 .. syntax-grammar::
 
@@ -856,7 +867,7 @@ a carriage return, or a line feed.
 
 .. OUTLINE
 
-   Regex syntax
+   Regex syntax -- some notes here, or just on Regex reference docs?
 
    Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET
 
