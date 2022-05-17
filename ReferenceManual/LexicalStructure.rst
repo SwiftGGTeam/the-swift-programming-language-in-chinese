@@ -424,9 +424,9 @@ That is, the type must conform to one of the following Swift standard library pr
 - ``ExpressibleByStringLiteral`` for string literals
 - ``ExpressibleByBooleanLiteral`` for Boolean literals
 - ``ExpressibleByUnicodeScalarLiteral`` for string literal
-  that contain only a single Unicode scalar,
+  that contain only a single Unicode scalar
 - ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literal
-  that contain only a single extended grapheme cluster.
+  that contain only a single extended grapheme cluster
 
 For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
