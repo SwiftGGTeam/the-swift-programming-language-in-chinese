@@ -890,6 +890,14 @@ and ``/\d/`` matches a single digit.
    that you get in the tuple type for Regex,
    based on the list of captures
 
+   From SE-0354:
+   A regex literal may be used with a prefix operator,
+   e.g `let r = ^^/x/` is parsed as `let r = ^^(/x/)`.
+   In this case,
+   when encountering operator characters containing `/` in an expression position,
+   the characters up to the first `/` are split into a prefix operator,
+   and regex literal parsing continues as normal.
+
 A regular expression literal delimited by extended delimiters
 is a sequence of characters surrounded by slashes (``/``)
 and a balanced set of one or more number signs (``#``).
