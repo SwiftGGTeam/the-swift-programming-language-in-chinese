@@ -45,6 +45,7 @@ type --> tuple-type
 type --> optional-type
 type --> implicitly-unwrapped-optional-type
 type --> protocol-composition-type
+type --> boxed-protocol-type
 type --> opaque-type
 type --> metatype-type
 type --> any-type
@@ -921,6 +922,43 @@ could return a value of type `T` or `Dictionary<String, T>`.
 Grammar of an opaque type
 
 opaque-type --> ``some`` type
+```
+
+
+## Boxed Protocol Type
+
+A *boxed protocol type* defines a type
+that conforms to a protocol or protocol composition.
+
+Boxed protocol types have the following form:
+
+```swift
+any <#constraint#>
+```
+
+The *constraint* is a protocol type,
+protocol composition type,
+a metatype of a protocol type,
+or a metatype of a protocol composition type.
+
+<!--
+XXX TR: Confirm metatypes above.
+The wording in SE-0355 is ambiguous about which/both is allowed.
+-->
+
+Unlike an opaque type,
+where there is some specific conforming type known at compile time,
+any conforming type can be used at runtime.
+To make this possible,
+storage for an instance of a boxed protocol type
+is allocated in a way that any conforming type can be stored.
+The additional level of indirection needed to handle any conforming type
+is called *boxing*.
+
+```
+Grammar of a boxed protocol type
+
+boxed-protocol-type --> ``any`` type
 ```
 
 
