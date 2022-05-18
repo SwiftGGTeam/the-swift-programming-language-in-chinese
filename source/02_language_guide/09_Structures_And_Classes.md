@@ -1,6 +1,6 @@
 # 结构体和类
 
-*结构体*和*类*作为一种通用而又灵活的结构，成为了人们构建代码的基础。你可以使用定义常量、变量和函数的语法，为你的结构体和类定义属性、添加方法。
+*结构体*和*类*作为一种通用而又灵活的结构，成为了人们构建代码的基础。你可以使用定义常量、变量和函数的语法，为你的结构体和类定义属性、添加方法。
 
 与其他编程语言所不同的是，Swift 并不要求你为自定义的结构体和类的接口与实现代码分别创建文件。你只需在单一的文件中定义一个结构体或者类，系统将会自动生成面向其它代码的外部接口。
 
@@ -129,7 +129,7 @@ let vga = Resolution(width: 640, height: 480)
 
 Swift 中所有的结构体和枚举类型都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型的属性，在代码中传递的时候都会被复制。
 
-> 注意
+> 注意
 >
 > 标准库定义的集合，例如数组，字典和字符串，都对复制进行了优化以降低性能成本。新集合不会立即复制，而是跟原集合共享同一份内存，共享同样的元素。在集合的某个副本要被修改前，才会复制它的元素。而你在代码中看起来就像是立即发生了复制。
 
@@ -225,7 +225,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 
 这个例子也显示了为何引用类型更加难以理解。如果 `tenEighty` 和 `alsoTenEighty` 在你代码中的位置相距很远，那么就很难找到所有修改视频模式的地方。无论在哪使用 `tenEighty`，你都要考虑使用 `alsoTenEighty` 的代码，反之亦然。相反，值类型就更容易理解了，因为你的源码中与同一个值交互的代码都很近。
 
-需要注意的是 `tenEighty` 和 `alsoTenEighty` 被声明为常量而不是变量。然而你依然可以改变 `tenEighty.frameRate` 和 `alsoTenEighty.frameRate`，这是因为 `tenEighty` 和 `alsoTenEighty` 这两个常量的值并未改变。它们并不“存储”这个 `VideoMode` 实例，而仅仅是对 `VideoMode` 实例的引用。所以，改变的是底层 `VideoMode` 实例的 `frameRate` 属性，而不是指向 `VideoMode` 的常量引用的值。
+需要注意的是 `tenEighty` 和 `alsoTenEighty` 被声明为常量而不是变量。然而你依然可以改变 `tenEighty.frameRate` 和 `alsoTenEighty.frameRate`，这是因为 `tenEighty` 和 `alsoTenEighty` 这两个常量的值并未改变。它们并不“存储”这个 `VideoMode` 实例，而仅仅是对 `VideoMode` 实例的引用。所以，改变的是底层 `VideoMode` 实例的 `frameRate` 属性，而不是指向 `VideoMode` 的常量引用的值。
 
 ### 恒等运算符 {#identity-operators}
 
@@ -251,4 +251,4 @@ if tenEighty === alsoTenEighty {
 
 ### 指针 {#pointers}
 
-如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用*指针*来引用内存中的地址。Swift 中引用了某个引用类型实例的常量或变量，与 C 语言中的指针类似，不过它并不直接指向某个内存地址，也不要求你使用星号（`*`）来表明你在创建一个引用。相反，Swift 中引用的定义方式与其它的常量或变量的一样。如果需要直接与指针交互，你可以使用标准库提供的指针和缓冲区类型 —— 参见 [手动管理内存](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management)。
+如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用*指针*来引用内存中的地址。Swift 中引用了某个引用类型实例的常量或变量，与 C 语言中的指针类似，不过它并不直接指向某个内存地址，也不要求你使用星号（`*`）来表明你在创建一个引用。相反，Swift 中引用的定义方式与其它的常量或变量的一样。如果需要直接与指针交互，你可以使用标准库提供的指针和缓冲区类型 —— 参见 [手动管理内存](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management)。
