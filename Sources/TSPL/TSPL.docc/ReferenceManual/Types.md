@@ -941,19 +941,48 @@ protocol composition type,
 a metatype of a protocol type,
 or a metatype of a protocol composition type.
 
+At runtime,
+an instance of a boxed protocol type can contain a value
+of any type that satisfies the *constraint*.
+This behavior contrasts with how an opaque types work,
+where there is some specific conforming type known at compile time.
+The additional level of indirection that's used
+when working with a boxed protocol type is called :newTerm:`boxing`.
+Applying ``any`` to the ``Any`` or ``AnyObject`` types
+is redundant and has no effect.
+
 <!--
-XXX TR: Confirm metatypes above.
-The wording in SE-0355 is ambiguous about which/both is allowed.
+  - test: `any-any-does-nothing`
+
+   >> var x: any Any = 12
+   >> var y: Any = 12
+   >> print(type(of: x))
+   << Int
+   >> print(type(of: y))
+   << Int
+   >> print(type(of: x) == type(of: y))
+   << true
 -->
 
-Unlike an opaque type,
-where there is some specific conforming type known at compile time,
-any conforming type can be used at runtime.
-To make this possible,
-storage for an instance of a boxed protocol type
-is allocated in a way that any conforming type can be stored.
-The additional level of indirection needed to handle any conforming type
-is called *boxing*.
+<!--
+  - test: `any-anyobject-does-nothing`
+
+   >> import Foundation
+   >> var x: any AnyObject = NSNumber(value: 12)
+   >> var y: AnyObject = NSNumber(value: 12)
+   >> print(type(of: x))
+   << __NSCFNumber
+   >> print(type(of: y))
+   << __NSCFNumber
+   >> print(type(of: x) == type(of: y))
+   << true
+-->
+
+<!--
+Contrast P.Type with (any P.Type) and (any P).Type
+https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
+-->
+ 
 
 ```
 Grammar of a boxed protocol type
