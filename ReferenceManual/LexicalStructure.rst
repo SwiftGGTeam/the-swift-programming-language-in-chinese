@@ -402,7 +402,7 @@ Swift uses the explicit type annotation (``: Int8``) to infer
 that the type of the integer literal ``42`` is ``Int8``.
 If there isn't suitable type information available,
 Swift infers that the literal's type is one of the default literal types
-defined in the Swift standard library,
+defined in the Swift standard library
 and listed in the table below.
 When specifying the type annotation for a literal value,
 the annotation's type must be a type that can be instantiated from that literal value.
@@ -410,7 +410,7 @@ That is, the type must conform to the Swift standard library protocols
 listed in the table below.
 
 ==================  ============    ===================================================================
-Literal             Default Type    Protocol
+Literal             Default type    Protocol
 ==================  ============    ===================================================================
 Integer             ``Int``         ``ExpressibleByIntegerLiteral``
 Floating-point      ``Double``      ``ExpressibleByFloatLiteral``
@@ -912,8 +912,8 @@ delimited by extended delimiters has the following forms:
 
 A regular expression literal that uses extended delimiters
 can begin with an unescaped space or tab,
-can contain unescaped slashes (``/``),
-and it can span across multiple lines.
+contain unescaped slashes (``/``),
+and span across multiple lines.
 For a multiline regular expression literal,
 the opening delimiter must be at the end of a line,
 the regular expression implicitly uses the extended syntax,
