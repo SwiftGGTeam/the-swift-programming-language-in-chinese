@@ -169,10 +169,12 @@
     "attributes-resultbuilder-attribute": "ID636",
     "attributes-resultbuilder-methods": "ID634",
     "attributes-resultbuilder-transformation": "ID635",
+    "attributes-sendable": "ID652",
     "attributes-switchcaseattributes": "ID604",
     "attributes-testable": "ID595",
     "attributes-typeattributes": "ID350",
     "attributes-uiapplicationmain": "ID596",
+    "attributes-unchecked": "ID651",
     "attributes-unknown": "ID605",
     "attributes-usablefrominline": "ID597",
     "attributes-warn-unqualified-access": "ID598",
@@ -269,6 +271,7 @@
     "concurrency-asyncfunc": "ID639",
     "concurrency-asynclet": "ID641",
     "concurrency-asyncsequence": "ID640",
+    "concurrency-sendable": "ID649",
     "concurrency-taskcancellation": "ID644",
     "concurrency-taskhandle": "ID643",
     "concurrency-tasks": "ID642",
@@ -499,6 +502,7 @@
     "lexicalstructure-literals": "ID414",
     "lexicalstructure-modulescope": "ID352",
     "lexicalstructure-operators": "ID418",
+    "lexicalstructure-regexliterals": "ID650",
     "lexicalstructure-stringliterals": "ID417",
     "lexicalstructure-whitespaceandcomments": "ID411",
     "memory-characteristics": "ID573",
@@ -718,5 +722,5 @@
     "operator-methods",
     "generic-where-clauses"
   ],
-  "next_id": 649
+  "next_id": 653
 }
