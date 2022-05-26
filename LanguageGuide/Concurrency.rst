@@ -744,8 +744,8 @@ can update the maximum value.
 You create an instance of an actor
 using the same initializer syntax as structures and classes.
 When you access a property or method of an actor,
-you use ``await`` to mark the potential suspension point ---
-for example:
+you use ``await`` to mark the potential suspension point.
+For example:
 
 ::
 
@@ -812,8 +812,8 @@ no other code can access the data in the middle of an update.
 
 If you try to access those properties from outside the actor,
 like you would with an instance of a class,
-you'll get a compile-time error;
-for example:
+you'll get a compile-time error.
+For example:
 
 ::
 
@@ -895,7 +895,7 @@ This guarantee is known as :newTerm:`actor isolation`.
 Sendable Types
 --------------
 
-Tasks and actors let you divide a program up
+Tasks and actors let you divide a program
 into pieces that can safely run concurrently.
 Inside of a task or an instance of an actor,
 the part of a program that contains mutable state,
@@ -947,7 +947,7 @@ In general, there are three ways for a type to be sendable:
    Implementing it in terms of isKnownUniquelyReferenced(_:)
    and copy-on-write is also probably too involved for TSPL.
 
-For a detailed list of of the semantic requirements,
+For a detailed list of the semantic requirements,
 see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
 
 Some types are always sendable,

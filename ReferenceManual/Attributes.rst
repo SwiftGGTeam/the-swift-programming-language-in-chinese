@@ -1803,7 +1803,7 @@ Sendable
 Apply this attribute to the type of a function
 to indicate that the function or closure is sendable.
 Applying this attribute to a function type
-means the same thing as conforming a non–function type
+has the same meaning as conforming a non–function type
 to the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol.
 
 This attribute is inferred on functions and closures
