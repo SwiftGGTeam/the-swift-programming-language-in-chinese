@@ -1093,8 +1093,8 @@ Before the beginning of the ``if`` statement and after its end,
 writing ``myNumber`` refers to the optional integer constant.
 
 Because this kind of code is so common,
-there's a shorter spelling that does the same thing:
-You can write just the name of the constant or variable that you're unwrapping.
+you can use a shorter spelling to unwrap an optional value:
+write just the name of the constant or variable that you're unwrapping.
 The new, unwrapped constant or variable
 implicitly uses the same name as the optional value.
 
