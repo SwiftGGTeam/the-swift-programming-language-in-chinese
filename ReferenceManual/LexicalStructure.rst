@@ -863,8 +863,6 @@ a carriage return, or a line feed.
 
 .. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
 
-.. XXX TR: Can you backslash-escape a line break in a // style regex?
-
 Within a regular expression literal,
 a backslash is understood as a part of that regular expression,
 not just as an escape character like in string literals.
