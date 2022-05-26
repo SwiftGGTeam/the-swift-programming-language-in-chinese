@@ -931,7 +931,8 @@ In general, there are three ways for a type to be sendable:
   or an enumeration with associated values that are sendable.
 
 - The type doesn't have any mutable state,
-  like a structure or class that has only read-only properties.
+  and its immutable state is made up of other sendable data ---
+  for example, a structure or class that has only read-only properties.
 
 - The type has code that ensures the safety of its mutable state,
   like a class that's marked ``@MainActor``
@@ -943,6 +944,8 @@ In general, there are three ways for a type to be sendable:
    because the stdlib doesn't include the locking primitives you'd need.
    Implementing it in terms of NSLock or some Darwin API
    isn't a good fit for TSPL.
+   Implementing it in terms of isKnownUniquelyReferenced(_:)
+   and copy-on-write is also probably too involved for TSPL.
 
 For a detailed list of of the semantic requirements,
 see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
