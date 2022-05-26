@@ -720,7 +720,7 @@ A string delimited by extended delimiters has the following forms:
 .. syntax-outline::
 
     #"<#characters#>"#
-    
+
     #"""
     <#characters#>
     """#
@@ -769,7 +769,7 @@ don't place whitespace in between the number signs:
     !! ^
 
 Multiline string literals that you create using extended delimiters
-have the same indentation requirements as regular multiline string literals. 
+have the same indentation requirements as regular multiline string literals.
 
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
@@ -798,7 +798,7 @@ no runtime concatenation is performed.
 
     static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
     static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
-    
+
     multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"""``
     multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter-OPT
     extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
@@ -905,7 +905,7 @@ delimited by extended delimiters has the following forms:
 .. syntax-outline::
 
     #/<#regular expression#>/#
-    
+
     #/
     <#characters#>
     /#
@@ -1126,7 +1126,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3020 
+    operator-head --> U+3008--U+3020
     operator-head --> U+3030
 
     operator-character --> operator-head
