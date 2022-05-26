@@ -886,9 +886,9 @@ and ``/\d/`` matches a single digit.
 
    https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
 
-   XXX add information about the compile-time type info
-   that you get in the tuple type for Regex,
-   based on the list of captures
+   Regex literals and the DSL take different approaches to captures.
+   The literals give you more type safety.
+   The DSL lets you access stuff by name.
 
    From SE-0354:
    A regex literal may be used with a prefix operator,
@@ -920,8 +920,11 @@ For a multiline regular expression literal,
 the opening delimiter must be at the end of a line,
 the regular expression implicitly uses the extended syntax,
 and the closing delimiter must be on its own line.
+Inside a multiline regular expression literal,
+the extended regular expression syntax is enabled by default ---
+for example, whitespace is ignored and comments are allowed.
 
-.. XXX As details about the multiline syntax shake out during SE review,
+.. TODO As details about the multiline syntax shake out during SE review,
    like indentation and whitespace,
    add them above or spin out a separate paragraph.
 
