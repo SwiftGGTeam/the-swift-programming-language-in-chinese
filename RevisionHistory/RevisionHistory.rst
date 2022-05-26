@@ -1,6 +1,25 @@
 Document Revision History
 =========================
 
+**2022-06-06**
+
+* Updated for Swift 5.7.
+
+.. shorthand spelling of if-let in :ref:`TheBasics_OptionalBinding`
+
+   concurrency added to the tour
+
+   guard #available() at the end of Control Flow
+   391cf1c3 Pull request #109: Add #unavailable
+
+   reference for @unchecked :ref:`Attributes_unchecked` and :ref:`Attributes_Sendable`
+
+* Added the :ref:`LexicalStructure_RegexLiterals` section
+  with information about creating a regular expression.
+
+* Added the :ref:`Concurrency_Sendable` section
+  with information about sending data between actors and tasks.
+
 **2022-03-14**
 
 * Updated for Swift 5.6.
