@@ -916,7 +916,6 @@ contain unescaped slashes (``/``),
 and span across multiple lines.
 For a multiline regular expression literal,
 the opening delimiter must be at the end of a line,
-the regular expression implicitly uses the extended syntax,
 and the closing delimiter must be on its own line.
 Inside a multiline regular expression literal,
 the extended regular expression syntax is enabled by default ---
