@@ -263,19 +263,19 @@ you'll get compile-time error instead of introducing a bug.
 
 .. note::
 
-   The `Task.sleep(nanoseconds:) <//apple_ref/swift/fake/Task.sleep(nanoseconds:)>`_ method
+   The `Task.sleep(until:clock:) <//apple_ref/swift/fake/Task.sleep(until:clock:)>`_ method
    is useful when writing simple code
    to learn how concurrency works.
    This method does nothing,
    but waits at least the given number of nanoseconds before it returns.
    Here's a version of the ``listPhotos(inGallery:)`` function
-   that uses ``sleep(nanoseconds:)`` to simulate waiting for a network operation:
+   that uses ``sleep(until:clock:)`` to simulate waiting for a network operation:
 
    .. testcode:: sleep-in-toy-code
 
        >> struct Data {}  // Instead of actually importing Foundation
        -> func listPhotos(inGallery name: String) async throws -> [String] {
-              try await Task.sleep(nanoseconds: 2 * 1_000_000_000)  // Two seconds
+              try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
               return ["IMG001", "IMG99", "IMG0404"]
        }
 
