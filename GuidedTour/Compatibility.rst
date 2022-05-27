@@ -2,8 +2,8 @@ Version Compatibility
 =====================
 
 This book describes Swift 5.7,
-the default version of Swift that's included in Xcode 13.
-You can use Xcode 13 to build targets
+the default version of Swift that's included in Xcode 14.
+You can use Xcode 14 to build targets
 that are written in either Swift 5.7, Swift 4.2, or Swift 4.
 
 .. assertion:: swift-version
@@ -29,7 +29,7 @@ that are written in either Swift 5.7, Swift 4.2, or Swift 4.
        print("An older compiler")
    #endif
 
-When you use Xcode 13 to build Swift 4 and Swift 4.2 code,
+When you use Xcode 14 to build Swift 4 and Swift 4.2 code,
 most Swift 5.7 functionality is available.
 That said,
 the following changes are available only to code that uses Swift 5.7 or later:
