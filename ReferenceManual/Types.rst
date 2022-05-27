@@ -1041,7 +1041,7 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
     Grammar of a type inheritance clause
 
     type-inheritance-clause --> ``:`` type-inheritance-list
-    type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
+    type-inheritance-list --> attributes-OPT type-identifier | attributes-OPT type-identifier ``,`` type-inheritance-list
 
 .. _Types_TypeInference:
 

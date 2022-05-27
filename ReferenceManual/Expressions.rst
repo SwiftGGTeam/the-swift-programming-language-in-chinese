@@ -1082,7 +1082,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT statements-OPT ``}``
+    closure-expression --> ``{`` attributes-OPT closure-signature-OPT statements-OPT ``}``
 
     closure-signature --> capture-list-OPT closure-parameter-clause ``async``-OPT ``throws``-OPT function-result-OPT ``in``
     closure-signature --> capture-list ``in``

@@ -704,6 +704,12 @@ call `Task.cancel() <//apple_ref/swift/fake/Task.cancel>`_.
 Actors
 ------
 
+You can use tasks to break up your program into isolated, concurrent pieces.
+Tasks are isolated from each other,
+which is what makes it safe for them to run at the same time,
+but sometimes you need to share some information between tasks.
+Actors let you safely share information between concurrent code.
+
 Like classes, actors are reference types,
 so the comparison of value types and reference types
 in :ref:`ClassesAndStructures_ClassesAreReferenceTypes`
@@ -714,19 +720,19 @@ which makes it safe for code in multiple tasks
 to interact with the same instance of an actor.
 For example, here's an actor that records temperatures:
 
-::
+.. testcode:: actors, actors-implicity-sendable
 
-    actor TemperatureLogger {
-        let label: String
-        var measurements: [Int]
-        private(set) var max: Int
+    -> actor TemperatureLogger {
+           let label: String
+           var measurements: [Int]
+           private(set) var max: Int
 
-        init(label: String, measurement: Int) {
-            self.label = label
-            self.measurements = [measurement]
-            self.max = measurement
-        }
-    }
+           init(label: String, measurement: Int) {
+               self.label = label
+               self.measurements = [measurement]
+               self.max = measurement
+           }
+       }
 
 You introduce an actor with the ``actor`` keyword,
 followed by its definition in a pair of braces.
@@ -738,8 +744,8 @@ can update the maximum value.
 You create an instance of an actor
 using the same initializer syntax as structures and classes.
 When you access a property or method of an actor,
-you use ``await`` to mark the potential suspension point ---
-for example:
+you use ``await`` to mark the potential suspension point.
+For example:
 
 ::
 
@@ -806,8 +812,8 @@ no other code can access the data in the middle of an update.
 
 If you try to access those properties from outside the actor,
 like you would with an instance of a class,
-you'll get a compile-time error;
-for example:
+you'll get a compile-time error.
+For example:
 
 ::
 
@@ -833,6 +839,9 @@ This guarantee is known as :newTerm:`actor isolation`.
     Actor Isolation
     ~~~~~~~~~~~~~~~
 
+    TODO outline impact from SE-0313 Control Over Actor Isolation
+    about the 'isolated' and 'nonisolated' keywords
+
     - actors protect their mutable state using :newTerm:`actor isolation`
     to prevent data races
     (one actor reading data that's in an inconsistent state
@@ -844,20 +853,6 @@ This guarantee is known as :newTerm:`actor isolation`.
 
     - method calls from outside the actor are always async,
     as is reading the value of an actor's property
-
-    - the values you pass to a method call from outside of an actor
-    have to be sendable (conform to the ``Sendable`` marker protocol)
-
-    + structs and enums implicitly conform to ``Sendable``
-        if they're non-public, non-frozen,
-        and all of their properties are also ``Sendable``
-
-    + all actors are implicitly sendable
-
-    + everything else needs to be marked ``Sendable`` explicitly
-
-    + the only valid superclass for a sendable class is ``NSObject``
-        (allowed for Obj-C interop)
 
     - you can't write to a property directly from outside the actor
 
@@ -895,12 +890,98 @@ This guarantee is known as :newTerm:`actor isolation`.
         await logger.update(with: "27 C")
         print(await logger.getMax())
 
-    .. _Concurrency_Sendable:
+.. _Concurrency_Sendable:
 
-    Sending Data Between Actors
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sendable Types
+--------------
 
-    TODO: Fill this in from SE-0302
+Tasks and actors let you divide a program
+into pieces that can safely run concurrently.
+Inside of a task or an instance of an actor,
+the part of a program that contains mutable state,
+like variables and properties,
+is called a :newTerm:`concurrency domain`.
+Some kinds of data can't be shared between concurrency domains,
+because that data contains mutable state,
+but it doesn't protect against overlapping access.
+
+A type that can be shared from one concurrency domain to another
+is known as a :newTerm:`sendable` type.
+For example, it can be passed as an argument when calling an actor method
+or be returned as the result of a task.
+The examples earlier in this chapter didn't discuss sendability
+because they use simple value types that are always safe to share
+for the data that they pass between concurrency domains.
+In contrast,
+some types aren't safe to pass across concurrency domains.
+A class that contains mutable properties
+and doesn't serialize access to those properties
+can produce unpredictable and incorrect results
+when you pass instances of that class between different tasks.
+
+You mark a type as being sendable
+by declaring conformance to the ``Sendable`` protocol.
+That protocol doesn't have any code requirements,
+but it does have semantic requirements that Swift enforces.
+In general, there are three ways for a type to be sendable:
+
+- The type is a value type,
+  and its mutable state is made up of other sendable data ---
+  for example, a structure with stored properties that are sendable
+  or an enumeration with associated values that are sendable.
+
+- The type doesn't have any mutable state,
+  and its immutable state is made up of other sendable data ---
+  for example, a structure or class that has only read-only properties.
+
+- The type has code that ensures the safety of its mutable state,
+  like a class that's marked ``@MainActor``
+  or a class that serializes access to its properties
+  on a particular thread or queue.
+
+.. There's no example of the third case,
+   where you serialize access to the class's members,
+   because the stdlib doesn't include the locking primitives you'd need.
+   Implementing it in terms of NSLock or some Darwin API
+   isn't a good fit for TSPL.
+   Implementing it in terms of isKnownUniquelyReferenced(_:)
+   and copy-on-write is also probably too involved for TSPL.
+
+For a detailed list of the semantic requirements,
+see the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol reference.
+
+Some types are always sendable,
+like structures that have only sendable properties
+and enumerations that have only sendable associated values.
+For example:
+
+.. testcode:: actors
+
+    -> struct TemperatureReading: Sendable {
+           var measurement: Int
+       }
+    ---
+    -> extension TemperatureLogger {
+           func addReading(from reading: TemperatureReading) {
+               measurements.append(reading.measurement)
+           }
+       }
+    ---
+    -> let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
+    -> let reading = TemperatureReading(measurement: 45)
+    -> await logger.addReading(from: reading)
+
+Because ``TemperatureReading`` is a structure that has only sendable properties,
+and the structure isn't marked ``public`` or ``@usableFromInline``,
+it's implicitly sendable.
+Here's a version of the structure
+where conformance to the ``Sendable`` protocol is implied:
+
+.. testcode:: actors-implicitly-sendable
+
+    -> struct TemperatureReading {
+           var measurement: Int
+       }
 
 .. OUTLINE
     .. _Concurrency_MainActor:

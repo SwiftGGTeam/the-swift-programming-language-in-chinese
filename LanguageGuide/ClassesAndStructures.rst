@@ -419,6 +419,11 @@ not the values of the constant references to that ``VideoMode``.
    as per the swift-discuss email thread "Dictionaries and key copying"
    started by Alex Migicovsky on Mar 1 2014.
 
+.. TODO: Add discussion about how
+   a struct that has a member of some reference type
+   is itself actually a reference type,
+   and about how you can make a class that's a value type.
+
 .. _ClassesAndStructures_IdentityOperators:
 
 Identity Operators

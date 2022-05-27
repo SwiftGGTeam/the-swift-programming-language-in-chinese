@@ -483,8 +483,8 @@ In the example above,
 the ``Size`` structure has a default value
 for both its ``height`` and ``width`` properties.
 You can omit either property or both properties,
-and the initializer uses the default value for anything you omit ---
-for example:
+and the initializer uses the default value for anything you omit.
+For example:
 
 .. testcode:: initialization
 

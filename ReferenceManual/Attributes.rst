@@ -1620,6 +1620,18 @@ can contain at most one top-level entry point,
 as discussed in :ref:`LexicalStructure_ModuleScope`.
 
 
+.. _Attributes_unchecked:
+
+unchecked
+~~~~~~~~~
+
+Apply this attribute to a protocol type
+as part of a type declaration's list of adopted protocols
+to turn off enforcement of that protocol's requirements.
+
+The only supported protocol is `Sendable <//apple_ref/swift/fake/Sendable>`_.
+
+
 .. _Attributes_usableFromInline:
 
 usableFromInline
@@ -1781,6 +1793,26 @@ Function type parameters with the ``escaping`` type attribute
 require explicit use of ``self.`` for properties or methods.
 For an example of how to use the ``escaping`` attribute,
 see :ref:`Closures_Noescape`.
+
+
+.. _Attributes_Sendable:
+
+Sendable
+~~~~~~~~~~
+
+Apply this attribute to the type of a function
+to indicate that the function or closure is sendable.
+Applying this attribute to a function type
+has the same meaning as conforming a non–function type
+to the `Sendable <//apple_ref/swift/fake/Sendable>`_ protocol.
+
+This attribute is inferred on functions and closures
+if the function or closure is used in a context
+that expects a sendable value,
+and the function or closure satisfies the requirements to be sendable.
+
+A sendable function type
+is a subtype of the corresponding nonsendable function type.
 
 
 .. _Attributes_SwitchCaseAttributes:

@@ -26,6 +26,7 @@
     "//apple_ref/swift/fake/Mirror.AncestorRepresentation": "https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation",
     "//apple_ref/swift/fake/NSClassFromString": "https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring",
     "//apple_ref/swift/fake/ReferenceWritableKeyPath": "https://developer.apple.com/documentation/swift/referencewritablekeypath",
+    "//apple_ref/swift/fake/Sendable": "https://developer.apple.com/documentation/swift/sendable",
     "//apple_ref/swift/fake/Sequence": "https://developer.apple.com/documentation/swift/sequence",
     "//apple_ref/swift/fake/Task": "https://developer.apple.com/documentation/swift/task",
     "//apple_ref/swift/fake/Task.cancel": "https://developer.apple.com/documentation/swift/task/3851218-cancel",
