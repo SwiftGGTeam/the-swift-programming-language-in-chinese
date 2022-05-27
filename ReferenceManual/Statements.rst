@@ -1038,10 +1038,37 @@ the following code prints all three messages:
 
 The argument for the ``canImport()`` platform condition
 is the name of a module that may not be present on all platforms.
+The module can include periods (``.``) in its name.
 This condition tests whether it's possible to import the module,
 but doesn't actually import it.
 If the module is present, the platform condition returns ``true``;
 otherwise, it returns ``false``.
+
+.. sourcefile:: canImport_A, canImport
+
+   >> public struct SomeStruct {
+   >>     public init() { }
+   >> }
+
+.. sourcefile:: canImport_A.B, canImport
+
+   >> public struct AnotherStruct {
+   >>     public init() { }
+   >> }
+
+.. sourcefile:: canImport
+
+   >> import canImport_A
+   >> let s = SomeStruct()
+   >> #if canImport(canImport_A)
+   >> #else
+   >> #error("Can't import A")
+   >> #endif
+   ---
+   >> #if canImport(canImport_A.B)
+   >> #else
+   >> #error("Can't import A.B")
+   >> #endif
 
 The ``targetEnvironment()`` platform condition
 returns ``true`` when code is being compiled for the specified environment;
@@ -1161,14 +1188,13 @@ see :ref:`Expressions_ExplicitMemberExpression`.
     platform-condition --> ``arch`` ``(`` architecture ``)``
     platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)`` | ``swift`` ``(`` ``<`` swift-version ``)``
     platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)`` | ``compiler`` ``(`` ``<`` swift-version ``)``
-    platform-condition --> ``canImport`` ``(`` module-name ``)``
+    platform-condition --> ``canImport`` ``(`` import-path ``)``
     platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
     
     operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``Windows``
     architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
     swift-version --> decimal-digits swift-version-continuation-OPT
     swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
-    module-name --> identifier
     environment --> ``simulator`` | ``macCatalyst``
 
 .. Testing notes:
