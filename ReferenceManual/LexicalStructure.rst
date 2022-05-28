@@ -941,7 +941,7 @@ you must use the extended delimiter syntax.
 
     Grammar of a regular expression literal
 
-    regular-expression-literal --> regular-expression-literal-opening-delimiter-OPT regular-expression regular-expression-literal-closing-delimiter
+    regular-expression-literal --> regular-expression-literal-opening-delimiter regular-expression regular-expression-literal-closing-delimiter
     regular-expression --> Any regular expression
 
     regular-expression-literal-opening-delimiter --> extended-regular-expression-literal-delimiter-OPT ``/``
