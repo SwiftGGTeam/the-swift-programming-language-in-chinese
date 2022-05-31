@@ -815,4 +815,4 @@ anyCommonElements([1, 2, 3], [3])
 > 
 > 修改 `anyCommonElements(_:_:)` 函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
-`<T: Equatable>` 和 `<T> ... where T: Equatable>` 的写法是等价的。
+`<T: Equatable>` 和 `<T> ... where T: Equatable` 的写法是等价的。
