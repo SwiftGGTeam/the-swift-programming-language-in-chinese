@@ -858,7 +858,6 @@ Regular expression literals
 must not begin with an unescaped tab or space,
 and they can't contain
 an unescaped slash (``/``),
-an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
 .. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
@@ -907,7 +906,7 @@ delimited by extended delimiters has the following forms:
     #/<#regular expression#>/#
 
     #/
-    <#characters#>
+    <#regular expression#>
     /#
 
 A regular expression literal that uses extended delimiters
@@ -919,7 +918,7 @@ the opening delimiter must be at the end of a line,
 and the closing delimiter must be on its own line.
 Inside a multiline regular expression literal,
 the extended regular expression syntax is enabled by default ---
-for example, whitespace is ignored and comments are allowed.
+specifically, whitespace is ignored and comments are allowed.
 
 .. TODO As details about the multiline syntax shake out during SE review,
    like indentation and whitespace,
