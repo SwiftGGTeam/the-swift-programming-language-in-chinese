@@ -381,6 +381,8 @@ The following are examples of literals:
     -> 3.14159          // Floating-point literal
     >> let r2 =
     -> "Hello, world!"  // String literal
+    >> let r4 /
+    -> /Hello, .*/      // Regular expression literal
     >> let r3 =
     -> true             // Boolean literal
     >> for x in [r0, r1, r2, r3] as [Any] { print(type(of: x)) }
@@ -400,36 +402,43 @@ Swift uses the explicit type annotation (``: Int8``) to infer
 that the type of the integer literal ``42`` is ``Int8``.
 If there isn't suitable type information available,
 Swift infers that the literal's type is one of the default literal types
-defined in the Swift standard library.
-The default types are ``Int`` for integer literals, ``Double`` for floating-point literals,
-``String`` for string literals, and ``Bool`` for Boolean literals.
+defined in the Swift standard library
+and listed in the table below.
+When specifying the type annotation for a literal value,
+the annotation's type must be a type that can be instantiated from that literal value.
+That is, the type must conform to the Swift standard library protocols
+listed in the table below.
+
+==================  ============    ===================================================================
+Literal             Default type    Protocol
+==================  ============    ===================================================================
+Integer             ``Int``         ``ExpressibleByIntegerLiteral``
+Floating-point      ``Double``      ``ExpressibleByFloatLiteral``
+String              ``String``      ``ExpressibleByStringLiteral``,
+                                    ``ExpressibleByUnicodeScalarLiteral`` for string literals
+                                    that contain only a single Unicode scalar,
+                                    ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
+                                    that contain only a single extended grapheme cluster
+Regular expression  ``Regex``       None
+Boolean             ``Bool``        ``ExpressibleByBooleanLiteral``
+==================  ============    ===================================================================
+
 For example, in the declaration ``let str = "Hello, world"``,
 the default inferred type of the string
 literal ``"Hello, world"`` is ``String``.
-
-When specifying the type annotation for a literal value,
-the annotation's type must be a type that can be instantiated from that literal value.
-That is, the type must conform to one of the following Swift standard library protocols:
-``ExpressibleByIntegerLiteral`` for integer literals,
-``ExpressibleByFloatLiteral`` for floating-point literals,
-``ExpressibleByStringLiteral`` for string literals,
-``ExpressibleByBooleanLiteral`` for Boolean literals,
-``ExpressibleByUnicodeScalarLiteral`` for string literals
-that contain only a single Unicode scalar,
-and ``ExpressibleByExtendedGraphemeClusterLiteral`` for string literals
-that contain only a single extended grapheme cluster.
-For example, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
+Also, ``Int8`` conforms to the ``ExpressibleByIntegerLiteral`` protocol,
 and therefore it can be used in the type annotation for the integer literal ``42``
 in the declaration ``let x: Int8 = 42``.
 
 .. The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
    ExpressibleByNilLiteral is left out of the list because conformance to it isn't recommended.
+   There is no protocol for regex literal in the list because the stdlib intentionally omits that.
 
 .. syntax-grammar::
 
     Grammar of a literal
 
-    literal --> numeric-literal | string-literal | boolean-literal | nil-literal
+    literal --> numeric-literal | string-literal | regular-expression-literal | boolean-literal | nil-literal
 
     numeric-literal --> ``-``-OPT integer-literal | ``-``-OPT floating-point-literal
     boolean-literal --> ``true`` | ``false``
@@ -597,6 +606,8 @@ an unescaped double quotation mark (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
+
 A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 
@@ -709,7 +720,7 @@ A string delimited by extended delimiters has the following forms:
 .. syntax-outline::
 
     #"<#characters#>"#
-    
+
     #"""
     <#characters#>
     """#
@@ -758,7 +769,7 @@ don't place whitespace in between the number signs:
     !! ^
 
 Multiline string literals that you create using extended delimiters
-have the same indentation requirements as regular multiline string literals. 
+have the same indentation requirements as regular multiline string literals.
 
 The default inferred type of a string literal is ``String``.
 For more information about the ``String`` type,
@@ -787,7 +798,7 @@ no runtime concatenation is performed.
 
     static-string-literal --> string-literal-opening-delimiter quoted-text-OPT string-literal-closing-delimiter
     static-string-literal --> multiline-string-literal-opening-delimiter multiline-quoted-text-OPT multiline-string-literal-closing-delimiter
-    
+
     multiline-string-literal-opening-delimiter --> extended-string-literal-delimiter-OPT ``"""``
     multiline-string-literal-closing-delimiter --> ``"""`` extended-string-literal-delimiter-OPT
     extended-string-literal-delimiter --> ``#`` extended-string-literal-delimiter-OPT
@@ -829,6 +840,113 @@ no runtime concatenation is performed.
    character-literal --> ``'`` quoted-character ``'``
    quoted-character --> escaped-character
    quoted-character --> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
+
+
+.. _LexicalStructure_RegexLiterals:
+
+Regular Expression Literals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A regular expression literal is a sequence of characters
+surrounded by slashes (``/``) with the following form:
+
+.. syntax-outline::
+
+   /<#regular expression#>/
+
+Regular expression literals
+must not begin with an unescaped tab or space,
+and they can't contain
+an unescaped slash (``/``),
+a carriage return, or a line feed.
+
+.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
+
+Within a regular expression literal,
+a backslash is understood as a part of that regular expression,
+not just as an escape character like in string literals.
+It indicates that the following special character
+should be interpreted literally,
+or that the following nonspecial character
+should be interpreted in a special way.
+For example,
+``/\(/`` matches a single left parenthesis
+and ``/\d/`` matches a single digit.
+
+.. OUTLINE
+
+   Doc comments on Regex struct don't have more syntax details,
+   or a cross reference to where you can learn more.
+   We probably need at least some baseline coverage
+   of the supported syntax here.
+   (Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET)
+
+   https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
+
+   Regex literals and the DSL take different approaches to captures.
+   The literals give you more type safety.
+   The DSL lets you access stuff by name.
+
+   From SE-0354:
+   A regex literal may be used with a prefix operator,
+   e.g `let r = ^^/x/` is parsed as `let r = ^^(/x/)`.
+   In this case,
+   when encountering operator characters containing `/` in an expression position,
+   the characters up to the first `/` are split into a prefix operator,
+   and regex literal parsing continues as normal.
+
+A regular expression literal delimited by extended delimiters
+is a sequence of characters surrounded by slashes (``/``)
+and a balanced set of one or more number signs (``#``).
+A regular expression literal
+delimited by extended delimiters has the following forms:
+
+.. syntax-outline::
+
+    #/<#regular expression#>/#
+
+    #/
+    <#regular expression#>
+    /#
+
+A regular expression literal that uses extended delimiters
+can begin with an unescaped space or tab,
+contain unescaped slashes (``/``),
+and span across multiple lines.
+For a multiline regular expression literal,
+the opening delimiter must be at the end of a line,
+and the closing delimiter must be on its own line.
+Inside a multiline regular expression literal,
+the extended regular expression syntax is enabled by default ---
+specifically, whitespace is ignored and comments are allowed.
+
+.. TODO As details about the multiline syntax shake out during SE review,
+   like indentation and whitespace,
+   add them above or spin out a separate paragraph.
+
+If you use more than one number sign to form
+a regular expression literal delimited by extended delimiters,
+don't place whitespace in between the number signs:
+
+.. testcode:: extended-regex-delimiters-err
+
+    -> let regex1 = ##/abc/##       // OK
+    -> let regex2 = # #/abc/# #     // Error
+
+If you need to make an empty regular expression literal,
+you must use the extended delimiter syntax.
+
+.. syntax-grammar::
+
+    Grammar of a regular expression literal
+
+    regular-expression-literal --> regular-expression-literal-opening-delimiter regular-expression regular-expression-literal-closing-delimiter
+    regular-expression --> Any regular expression
+
+    regular-expression-literal-opening-delimiter --> extended-regular-expression-literal-delimiter-OPT ``/``
+    regular-expression-literal-closing-delimiter --> ``/`` extended-regular-expression-literal-delimiter-OPT
+
+    extended-regular-expression-literal-delimiter --> ``#`` extended-regular-expression-literal-delimiter-OPT
 
 
 .. _LexicalStructure_Operators:
@@ -943,7 +1061,6 @@ the characters ``)``, ``]``, and ``}`` after an operator,
 and the characters ``,``, ``;``, and ``:``
 are also considered whitespace.
 
-There's one caveat to the rules above.
 If the ``!`` or ``?`` predefined operator has no whitespace on the left,
 it's treated as a postfix operator,
 regardless of whether it has whitespace on the right.
@@ -951,6 +1068,9 @@ To use the ``?`` as the optional-chaining operator,
 it must not have whitespace on the left.
 To use it in the ternary conditional (``?`` ``:``) operator,
 it must have whitespace around both sides.
+
+If one of the arguments to an infix operator is a regular expression literal,
+then the operator must have whitespace around both sides.
 
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
@@ -1004,7 +1124,7 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     operator-head --> U+2794--U+2BFF
     operator-head --> U+2E00--U+2E7F
     operator-head --> U+3001--U+3003
-    operator-head --> U+3008--U+3020 
+    operator-head --> U+3008--U+3020
     operator-head --> U+3030
 
     operator-character --> operator-head
