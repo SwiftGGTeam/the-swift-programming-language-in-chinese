@@ -910,11 +910,12 @@ is known as a :newTerm:`sendable` type.
 For example, it can be passed as an argument when calling an actor method
 or be returned as the result of a task.
 The examples earlier in this chapter didn't discuss sendability
-because they use simple value types that are always safe to share
-for the data that they pass between concurrency domains.
+because those examples use simple value types
+that are always safe to share
+for the data being passed between concurrency domains.
 In contrast,
 some types aren't safe to pass across concurrency domains.
-A class that contains mutable properties
+For example, a class that contains mutable properties
 and doesn't serialize access to those properties
 can produce unpredictable and incorrect results
 when you pass instances of that class between different tasks.
