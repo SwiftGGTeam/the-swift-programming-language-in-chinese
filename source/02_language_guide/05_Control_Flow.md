@@ -762,6 +762,6 @@ if #available(iOS 10, macOS 10.12, *) {
 if #available(平台名称 版本号, ..., *) {
     APIs 可用，语句将执行
 } else {
-    APIs 不可用，语句将不执行
+    APIs 不可用，使用先前版本API的语句将执行
 }
 ```
