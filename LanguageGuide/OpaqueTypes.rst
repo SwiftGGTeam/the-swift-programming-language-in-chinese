@@ -260,9 +260,9 @@ that includes a special case for squares:
            }
            return FlippedShape(shape: shape) // Error: return types don't match
        }
-    !$ error: function declares an opaque return type, but the return statements in its body do not have matching underlying types
+    !$ error: function declares an opaque return type 'some Shape', but the return statements in its body do not have matching underlying types
     !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
-    !! ^
+    !!      ^                                    ~~~~~~~~~~
     !$ note: return statement has underlying type 'T'
     !! return shape // Error: return types don't match
     !! ^
@@ -414,7 +414,7 @@ comparing results returned by this function.
     -> let protoFlippedTriangle = protoFlip(smallTriangle)
     -> let sameThing = protoFlip(smallTriangle)
     -> protoFlippedTriangle == sameThing  // Error
-    !$ error: binary operator '==' cannot be applied to two 'Shape' operands
+    !$ error: binary operator '==' cannot be applied to two 'any Shape' operands
     !! protoFlippedTriangle == sameThing  // Error
     !! ~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
 
@@ -482,9 +482,10 @@ to infer what the generic type needs to be.
     -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
            return [item]
        }
-    !$ error: protocol 'Container' can only be used as a generic constraint because it has Self or associated type requirements
+    !$ error: use of protocol 'Container' as a type must be written 'any Container'
     !! func makeProtocolContainer<T>(item: T) -> Container {
-    !! ^
+    !!                                           ^~~~~~~~~
+    !! any Container
     !$ error: cannot convert return expression of type '[T]' to return type 'C'
     !! return [item]
     !! ^~~~~~

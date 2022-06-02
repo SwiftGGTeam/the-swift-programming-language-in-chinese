@@ -2783,6 +2783,9 @@ resulting in an error:
    !$ note: did you mean to explicitly state the conformance like 'extension Array: Loggable where ...'?
    !! extension Array: TitledLoggable where Element: TitledLoggable {
    !! ^
+   !$ error: type 'Array<Element>' does not conform to protocol 'MarkedLoggable'
+   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+   !! ^
    !$ error: type 'Element' does not conform to protocol 'TitledLoggable'
    !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
    !! ^
