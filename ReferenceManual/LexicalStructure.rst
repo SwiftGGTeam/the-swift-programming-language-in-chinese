@@ -381,7 +381,7 @@ The following are examples of literals:
     -> 3.14159          // Floating-point literal
     >> let r2 =
     -> "Hello, world!"  // String literal
-    >> let r4 /
+    >> let r4 =
     -> /Hello, .*/      // Regular expression literal
     >> let r3 =
     -> true             // Boolean literal
