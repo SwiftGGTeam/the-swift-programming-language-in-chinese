@@ -114,7 +114,7 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
    size: Size(width: 5.0, height: 5.0))
 ```
 
-你可以通过扩展 `Rect` 结构体来提供一个允许指定 point 和 size 的构造器：
+你可以通过扩展 `Rect` 结构体来提供一个允许指定 center 和 size 的构造器：
 
 ```swift
 extension Rect {
@@ -184,7 +184,7 @@ someInt.square()
 
 ## 下标 {#subscripts}
 
-扩展可以给现有的类型添加新的下标。下面的例子中，对 Swift 的 `Int` 类型添加了一个整数类型的下标。下标 `[n]` 从数字右侧开始，返回小数点后的第 `n` 位：
+扩展可以给现有的类型添加新的下标。下面的例子中，对 Swift 的 `Int` 类型添加了一个整数类型的下标。下标 `[n]` 返回从数字右侧开始的第 `n` 位数字：
 
 - `123456789[0]` 返回 `9`
 - `123456789[1]` 返回 `8`
@@ -268,4 +268,4 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 
 > 注意
 >  
-> `number.kind` 已经被认为是 `Int.Kind` 类型。所以，在 `switch` 语句中所有的 `Int.Kind` case 分支可以被缩写，就像使用 `.negative` 替代 `Int.Kind.negative.`。
+> `number.kind` 已经被认为是 `Int.Kind` 类型。所以，在 `switch` 语句中所有的 `Int.Kind` case 分支可以被缩写，例如使用 `.negative` 替代 `Int.Kind.negative.`。
