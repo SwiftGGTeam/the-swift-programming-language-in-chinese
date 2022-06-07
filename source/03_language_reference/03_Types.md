@@ -187,7 +187,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 
 在上面代码里，`takesTwoFunctions(first:second:)` 的两个形参都是函数。它们都没有标记为 `@escaping`, 因此它们都是非逃逸的。
 
-上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为形参 `first` 和 `second` 是非逃逸函数，它们不能够作为实参被传递到另一个非闭包函数。相对的, 标记“正确”的两个函数不会产生编译错误。这些函数调用不会违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的形参之一。
+上述例子里的被标记为“错误”的四个函数调用会产生编译错误。因为形参 `first` 和 `second` 是非逃逸函数，它们不能够作为实参被传递到另一个非逃逸函数。相对的, 标记“正确”的两个函数不会产生编译错误。这些函数调用不会违反限制，因为 `external` 不是 `takesTwoFunctions(first:second:)` 的形参之一。
 
 如果你需要避免这个限制，标记其中一个形参为逃逸，或者使用 `withoutActuallyEscaping(_:do:)` 函数临时转换其中一个非逃逸函数形参为逃逸函数。关于避免内存访问冲突，可以参阅 [内存安全](../02_language_guide/25_Memory_Safety.md)。
 
@@ -304,7 +304,7 @@ optionalInteger! // 42
 > 
 
 ## 隐式解析可选类型 {#implicitly-unwrapped-optional-type-h}
-当可以被访问时，Swift 语言定义后缀 `!` 作为标准库中命名类型 `Optional<Wrapped>` 的语法糖，来实现自动解包的功能。如果尝试对一个值为 `nil` 的可选类型进行隐式解包，将会产生运行时错误。因为隐式解包，下面两个声明等价：
+Swift 语言定义后缀 `!` 作为标准库中命名类型 `Optional<Wrapped>` 的语法糖，其附加行为是在访问时自动解包。如果尝试对一个值为 `nil` 的可选类型进行隐式解包，将会产生运行时错误。除了隐式解包，下面两个声明等价：
 
 ```swift
 var implicitlyUnwrappedString: String!
@@ -345,7 +345,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 > `Protocol 1` & `Procotol 2`
 
-协议合成类型允许你指定一个值，其类型遵循多个协议的要求而不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议。同样的，你可以使用 `SuperClass & ProtocolA` 来取代声明一个新的协议作为 `SuperClass` 的子类并遵循 `ProtocolA`。
+协议合成类型允许你指定一个值，其类型遵循多个协议的要求而不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议。同样的，你可以使用 `SuperClass & ProtocolA` 而不是声明一个新的协议来表示其类型是 `SuperClass` 的子类并遵循 `ProtocolA`。
 
 协议合成列表中的每一项都必须是下面所列情况之一，列表中最多只能包含一个类：  
 
@@ -372,9 +372,9 @@ typealias PQR = PQ & Q & R
 
 ## 不透明类型 {#opaque-type-h}
 
-*不透明类型*定义了遵循某个协议或者合成协议的类型，但不需要指明底层的具体类型。
+*不透明类型*定义了一个遵循某个协议或者合成协议的类型，但不需要指明底层的具体类型。
 
-不透明类型可以作为函数或下标的返回值，亦或是属性的类型使用。
+不透明类型可以作为函数或下标的返回值类型，亦或是属性的类型使用。
 
 不透明类型不能作为元组类型的一部分或范型类型使用，比如数组元素类型或者可选值的包装类型。
 
@@ -382,11 +382,11 @@ typealias PQR = PQ & Q & R
 
 > some `constraint`
 
-*constraint* 可以是类类型，协议类型，协议组合类型或者 `Any`。值只有当它遵循该协议或者组合协议，或者从该类继承的时候，才能作为这个不透明类型的实例使用。和不透明值交互的代码只能使用该值定义在 *constraint* 上的接口。
+*constraint* 可以是类类型，协议类型，协议组合类型或者 `Any`。只有当一个值的类型遵循该协议或者组合协议，或者从该类继承的时候，这个值才能作为这个不透明类型的实例使用。和不透明值交互的代码只能使用该值定义在 *constraint* 上的接口。
 
-协议声明里不能包括不透明类型。类不能使用不透明类型作为非 final 方法的返回值。
+协议声明里不能包括不透明类型。类不能使用不透明类型作为非 final 方法的返回值类型。
 
-使用不透明类型作为返回值的函数必须返回单一公用底层类型。返回的类型可以包含函数范型类型形参的一部分。举个例子，函数 `someFunction<T>()` 可以返回类型 `T` 或者 `Dictionary<String,T>` 的值。
+使用不透明类型作为返回值类型的函数必须返回单一公用底层类型。返回值的类型可以包含函数范型类型形参的一部分。例如，函数 `someFunction<T>()` 可以返回类型为 `T` 或者 `Dictionary<String,T>` 的值。
 
 > 不透明类型语法
 
@@ -489,7 +489,7 @@ if let first = mixed.first as? String {
 * 作为只读计算属性的类型
 * 在方法体中
 
-举个例子，下面的代码演示了返回值是 `Self` 的实例方法 `f` 。
+举个例子，下面的代码演示了返回值类型是 `Self` 的实例方法 `f` 。
 
 ```swift
 class Superclass {
