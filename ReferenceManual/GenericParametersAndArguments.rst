@@ -155,7 +155,7 @@ only if ``Element`` conforms to both ``SomeProtocol`` and ``Numeric``.
    >>         return true
    >>     }
    >> }
-   !$ error: same-type constraint type 'Int' does not conform to required protocol 'SomeProtocol'
+   !$ error: no type for 'Self.Element' can satisfy both 'Self.Element == Int' and 'Self.Element : SomeProtocol'
    !! func returnTrue() -> Bool where Element == Int {
    !!                                            ^
 

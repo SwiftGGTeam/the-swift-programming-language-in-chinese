@@ -1493,7 +1493,7 @@ For example, the following two checks do the same thing:
          // Fallback code
       }
    ---
-   -> if #unavailable(iOS 10, *) {
+   -> if #unavailable(iOS 10) {
          // Fallback code
       }
 

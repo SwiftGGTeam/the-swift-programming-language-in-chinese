@@ -1,6 +1,24 @@
 Document Revision History
 =========================
 
+**2022-06-06**
+
+* Updated for Swift 5.7.
+
+* Added the :ref:`Concurrency_Sendable` section,
+  with information about sending data between actors and tasks,
+  and added information about the ``@Sendable`` and ``@unchecked`` attributes
+  to the :ref:`Attributes_Sendable` and :ref:`Attributes_unchecked` sections.
+
+* Added the :ref:`LexicalStructure_RegexLiterals` section
+  with information about creating a regular expression.
+
+* Added information about the short form of ``if``-``let``
+  to the :ref:`TheBasics_OptionalBinding` section.
+
+* Added information about ``#unavailable``
+  to the :ref:`ControlFlow_Available` section.
+
 **2022-03-14**
 
 * Updated for Swift 5.6.
