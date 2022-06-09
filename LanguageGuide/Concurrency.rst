@@ -263,13 +263,13 @@ you'll get compile-time error instead of introducing a bug.
 
 .. note::
 
-   The `Task.sleep(until:clock:) <//apple_ref/swift/fake/Task.sleep(until:clock:)>`_ method
+   The `Task.sleep(until:tolerance:clock:) <//apple_ref/swift/fake/Task.sleep(until:tolerance:clock:)>`_ method
    is useful when writing simple code
    to learn how concurrency works.
    This method does nothing,
    but waits at least the given number of nanoseconds before it returns.
    Here's a version of the ``listPhotos(inGallery:)`` function
-   that uses ``sleep(until:clock:)`` to simulate waiting for a network operation:
+   that uses ``sleep(until:tolerance:clock:)`` to simulate waiting for a network operation:
 
    .. testcode:: sleep-in-toy-code
 
