@@ -1,9 +1,0 @@
-{
-	"name": "The Swift Programming Language 中文版",
-	"introduction": "中文版《The Swift Programming Language》",
-	"path": {
-		"content": "source",
-		"toc": "source/SUMMARY.md",
-		"readme": "source/README.md"
-	}	
-}
