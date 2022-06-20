@@ -105,7 +105,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 // 打印“The point is now at (3.0, 4.0)”
 ```
 
-上面的 `Point` 结构体定义了一个可变方法 `moveBy（x：y :)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
+上面的 `Point` 结构体定义了一个可变方法 `moveBy(x:y:)` 来移动 `Point` 实例到给定的位置。该方法被调用时修改了这个点，而不是返回一个新的点。方法定义时加上了 `mutating` 关键字，从而允许修改属性。
 
 注意，不能在结构体类型的常量（a constant of structure type）上调用可变方法，因为其属性不能被改变，即使属性是变量属性，详情参见 [常量结构体的存储属性](./10_Properties.md#stored-properties-of-constant-structure-instances)：
 
