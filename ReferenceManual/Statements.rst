@@ -1381,8 +1381,8 @@ It has the same meaning as the ``*`` argument in an availability condition.
     platform-name --> ``iOS`` | ``iOSApplicationExtension``
     platform-name --> ``macOS`` | ``macOSApplicationExtension``
     platform-name --> ``macCatalyst`` | ``macCatalystApplicationExtension``
-    platform-name --> ``watchOS``
-    platform-name --> ``tvOS``
+    platform-name --> ``watchOS`` | ``watchOSApplicationExtension``
+    platform-name --> ``tvOS`` | ``tvOSApplicationExtension``
     platform-version --> decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits
     platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
@@ -1395,8 +1395,8 @@ It has the same meaning as the ``*`` argument in an availability condition.
    >> if #available(iOS 1, iOSApplicationExtension 1,
    >>               macOS 1, macOSApplicationExtension 1,
    >>               macCatalyst 1, macCatalystApplicationExtension 1,
-   >>               watchOS 1, watchOsApplicationExtension 1,
-   >>               tvOS 1, *) {
+   >>               watchOS 1, watchOSApplicationExtension 1,
+   >>               tvOS 1, tvOSApplicationExtension 1, *) {
    >>     print("a")
    >> } else {
    >>     print("b")
@@ -1409,9 +1409,6 @@ It has the same meaning as the ``*`` argument in an availability condition.
    >> } else {
    >>     print("dd")
    >> }
-   !$ warning: unrecognized platform name 'watchOsApplicationExtension'
-   !$ watchOS 1, watchOsApplicationExtension 1,
-   !$            ^
    !$ warning: unrecognized platform name 'madeUpPlatform'
    !$ if #available(madeUpPlatform 1, *) {
    !$               ^
