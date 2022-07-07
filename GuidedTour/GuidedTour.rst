@@ -142,9 +142,21 @@ the index or key in brackets.
 A comma is allowed after the last element.
 
 .. REFERENCE
-   Shopping list is a reference to the book "Paper Towns" by John Green
-   and the song "The List" by Hank Green.
-   See <https://www.youtube.com/watch?v=4JUvTTm0whA>
+   The list of fruits comes from the colors that the original iMac came in,
+   following the initial launch of the iMac in Bondi Blue, ordered by SKU --
+   which also lines up with the order they appeared in ads:
+
+        M7389LL/A (266 MHz Strawberry)
+        M7392LL/A (266 MHz Lime)
+        M7391LL/A (266 MHz Tangerine)
+        M7390LL/A (266 MHz Grape)
+        M7345LL/A (266 MHz Blueberry)
+
+        M7441LL/A (333 MHz Strawberry)
+        M7444LL/A (333 MHz Lime)
+        M7443LL/A (333 MHz Tangerine)
+        M7442LL/A (333 MHz Grape)
+        M7440LL/A (333 MHz Blueberry)
 
 .. REFERENCE
    Occupations is a reference to Firefly,
@@ -167,8 +179,8 @@ A comma is allowed after the last element.
 
 .. testcode:: guided-tour
 
-    -> var shoppingList = ["catfish", "water", "tulips"]
-    -> shoppingList[1] = "bottle of water"
+    -> var fruits = ["strawberries", "limes", "tangerines"]
+    -> fruits[1] = "grapes"
     ---
     -> var occupations = [
            "Malcolm": "Captain",
@@ -180,9 +192,9 @@ Arrays automatically grow as you add elements.
 
 .. testcode:: guided-tour
 
-    -> shoppingList.append("blue paint")
-    -> print(shoppingList)
-    << ["catfish", "bottle of water", "tulips", "blue paint"]
+    -> fruits.append("blueberries")
+    -> print(fruits)
+    << ["strawberries", "grapes", "tangerines", "blueberries"]
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -202,7 +214,7 @@ or pass an argument to a function.
 
 .. testcode:: guided-tour
 
-   -> shoppingList = []
+   -> fruits = []
    -> occupations = [:]
 
 
