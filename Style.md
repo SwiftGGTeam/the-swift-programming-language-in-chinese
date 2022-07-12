@@ -1,3 +1,101 @@
+# The Book’s Structure
+
+TSPL is divided into three main parts, plus some front matter,
+which serve complementary functions:
+
+**A Swift Tour**,
+commonly referred to as “the tour”,
+shows you a bunch of interesting Swift code,
+but it tells you almost nothing about how the language works.
+For example, the guide has an entire chapter about optional chaining,
+but it’s summarized in just a few sentences in the tour.
+The tour just needs to give you the syntax and a taste of how to use it;
+it relies on the guide to provide the actual in-depth explanation
+of how optional chaining works in general and when you should use it.
+
+The intention of the tour is that
+it can be read in its entirety in a single sitting.
+A beginner will get a high-level view of what’s possible in Swift.
+A reader with more programming background will learn
+“enough Swift to be dangerous” — that is,
+enough of the language syntax to start muddling along on a first project,
+and then come back to TSPL when they’re ready to learn more than
+just surface level syntax for concepts they already know from other languages.
+
+**Language Guide**,
+commonly referred to as “the guide”,
+leads you through the Swift language in a pedagogically useful, linear order.
+It doesn't promise to show you every feature of
+the language or the standard library,
+and it hand-waves over the exact details
+of some of the more complicated underlying bits.
+The guide leans on the reference to resolve the nitty-gritty detail questions
+and to exhaustively cover the language.
+Unlike the reference,
+it walks you through step-by-step explanations,
+showing examples of the language features in action,
+and it assumes very little prior knowledge.
+
+To maintain the promise of a linear reading order
+when you add new sections to the guide,
+make sure that all of the syntax and concepts that you use in your explanations
+are already discussed in previous chapters.
+“The Basics” exists, in large part, to introduce a bunch of syntax and concepts
+that the early chapters of the guide need
+— many topics from “The Basics” are covered again later in the guide in more detail.
+
+The guide includes types from the standard library for two reasons:
+they’re needed by an explanation of a language concept,
+or they’re so common that readers wouldn’t
+be able to build anything useful without them.
+The latter reason includes a judgement call.
+When new types are introduced in the standard library,
+we usually need to discuss whether & where to add them to TSPL.
+
+The guide can be broken down into three major chunks:
+basic topics, data-modeling topics, and advanced topics.
+Basic topics is everything before the introduction of
+enums, structs, and classes.
+Advanced topics is everything after deinitialization.
+Data modeling is the content in between.
+The linear flow is intended to make sense,
+even if you stop reading for a while between chunks.
+For example, reading just the basic topics gives you enough information
+to write programs that have only unstructured “primitive” data.
+The chapters in each chunk are ordered with fundamental topics at the beginning,
+and topics that most readers can skip at the end.
+
+**Language Reference**,
+commonly referred to as “the reference”,
+describes every aspect of the Swift language in complete detail,
+but it makes no attempt to be an instructional text.
+Its material is ordered according to the shape of the formal grammar,
+and it hand-waves over examples and applications.
+Several places explicitly link back to the guide for examples.
+It doesn't need to be as accessible,
+because the guide handles that,
+but it does need to be accurate and unambiguous,
+shining its flashlight into every dark corner of the language.
+To accomplish that,
+it sometimes must sacrifice approachability or user-friendliness.
+That's ok — many readers won't even need the reference,
+but if the reference is unclear,
+the readers who need an answer have nowhere else to go.
+
+Within the reference, sections follow a predictable four-part structure:
+
+* A few sentences briefly describe the language construct named by the heading.
+* A code outline shows its general syntactic shape.
+* A few paragraphs describe it in more detail.
+* A grammar formally describes the syntax.
+
+The purpose of the formal grammar
+is to be able to unambiguously answer questions of what’s valid Swift
+(without commenting on meaning)
+for readers whose question wasn’t fully answered by the prose in the reference.
+It’s primarily aimed at human readers,
+which means it’s not always suitable for generating a parser for Swift code.
+
 # Terms and Rules
 
 ## compiler, the
