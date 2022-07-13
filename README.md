@@ -32,8 +32,7 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 
 1. Install [Swift DocC](https://github.com/apple/swift-docc).
 
-1. Run `docc preview` in this directory.
+1. Run `docc preview` in this repository.
 
-1. Open the link to localhost that `docc` prints.
-
-<!-- FIXME: Confirm these steps. -->
+1. Open the link to <http://localhost:8000/> that `docc` prints,
+   to view the local preview.
