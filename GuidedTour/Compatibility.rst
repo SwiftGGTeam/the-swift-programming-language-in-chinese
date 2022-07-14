@@ -17,18 +17,6 @@ that are written in either Swift 5.7, Swift 4.2, or Swift 4.
    >> #endif
    << Just right
 
-.. The incantation to determine which Swift you're on:
-
-   #if swift(>=4)
-       print("Swift 4 compiler reading Swift 4 code")
-   #elseif swift(>=3.2)
-       print("Swift 4 compiler reading Swift 3 code")
-   #elseif swift(>=3.1)
-       print("Swift 3.1 compiler")
-   #else
-       print("An older compiler")
-   #endif
-
 When you use Xcode 14 to build Swift 4 and Swift 4.2 code,
 most Swift 5.7 functionality is available.
 That said,
