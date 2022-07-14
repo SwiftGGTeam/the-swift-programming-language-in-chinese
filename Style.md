@@ -55,7 +55,7 @@ we usually need to discuss whether & where to add them to TSPL.
 The guide can be broken down into three major chunks:
 basic topics, data-modeling topics, and advanced topics.
 Basic topics is everything before the introduction of
-enums, structs, and classes.
+enumerations, structures, and classes.
 Advanced topics is everything after deinitialization.
 Data modeling is the content in between.
 The linear flow is intended to make sense,
@@ -75,7 +75,7 @@ Several places explicitly link back to the guide for examples.
 It doesn't need to be as accessible,
 because the guide handles that,
 but it does need to be accurate and unambiguous,
-shining its flashlight into every dark corner of the language.
+shining its flashlight into infrequently explored areas of the language.
 To accomplish that,
 it sometimes must sacrifice approachability or user-friendliness.
 That's ok — many readers won't even need the reference,
