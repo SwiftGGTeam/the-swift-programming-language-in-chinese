@@ -72,7 +72,7 @@ but it makes no attempt to be an instructional text.
 Its material is ordered according to the shape of the formal grammar,
 and it hand-waves over examples and applications.
 Several places explicitly link back to the guide for examples.
-It doesn't need to be as accessible,
+It doesn't need to be as approachable for beginners,
 because the guide handles that,
 but it does need to be accurate and unambiguous,
 shining its flashlight into infrequently explored areas of the language.
