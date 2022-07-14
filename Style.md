@@ -252,54 +252,35 @@ that use a line length of 90 or 100 characters;
 rewrapping them just for the sake of line length
 would make history harder to follow and create a bunch of noisy diffs.
 
-More information about semantic line breaks
-is available in the following places:
+As a historical note,
+“UNIX for Beginners” by Brian W. Kernighan in 1974
+is possibly the origin of this approach.
+Page 11 has the following guidance
+in the section *Hints for Preparing Documents*:
 
-* “UNIX for Beginners” by Brian W. Kernighan in 1974
-  is possibly the origin of this approach.
-  Page 11 has the following guidance
-  in the section *Hints for Preparing Documents*:
+> Most documents go through several versions
+> (always more than you expected)
+> before they are finally finished.
+> Accordingly,
+> you should do whatever possible to make the job of changing them easy.
+>
+> First,
+> when you do the purely mechanical operations of typing,
+> type so that subsequent editing will be easy.
+> Start each sentence on a new line.
+> Make lines short, and break lines at natural places,
+> such as after commas and semicolons,
+> rather than randomly.
+> Since most people change documents by rewriting phrases
+> and adding, deleting and rearranging sentences,
+> these precautions simplify any editing you have to do later.
 
-  > Most documents go through several versions
-  > (always more than you expected)
-  > before they are finally finished.
-  > Accordingly,
-  > you should do whatever possible to make the job of changing them easy.
-  >
-  > First,
-  > when you do the purely mechanical operations of typing,
-  > type so that subsequent editing will be easy.
-  > Start each sentence on a new line.
-  > Make lines short, and break lines at natural places,
-  > such as after commas and semicolons,
-  > rather than randomly.
-  > Since most people change documents by rewriting phrases
-  > and adding, deleting and rearranging sentences,
-  > these precautions simplify any editing you have to do later.
-
-  Although this guidance was originally written in the context of
-  preparing `nroff` and `troff` files
-  using the line editor `ed(1)` on a paper teletype,
-  it continues to hold up well today
-  because Git and other programming tools
-  still generally expect text to be made up of lines of <80 characters.
-
-* [Semantic Linefeeds](https://rhodesmill.org/brandon/2012/one-sentence-per-line/)
-  is blog post about the advantages and history of this format
-  for authoring documentation.
-  It shows the advantages in a bit more detail,
-  walking through an example.
-
-* [Ventilated Prose](https://vanemden.wordpress.com/2009/01/01/ventilated-prose/)
-  discusses Buckminster Fuller’s proposed use of this format
-  to improve reading comprehension,
-  with some additional discussion of how semantic line breaks
-  can be a useful tool during writing
-  because the make the sentence and clause structure more visible.
-
-* [Semantic Line Breaks](https://sembr.org) describes a formalized spec,
-  maintained by Mattt Zmuda,
-  based on his experience writing this way when he worked on TSPL.
+Although this guidance was originally written in the context of
+preparing `nroff` and `troff` files
+using the line editor `ed(1)` on a paper teletype,
+it continues to hold up well today
+because Git and other programming tools
+still generally expect text to be made up of lines of <80 characters.
 
 # Formal Grammar
 
