@@ -765,3 +765,37 @@ if #available(平台名称 版本号, ..., *) {
     APIs 不可用，使用先前版本API的语句将执行
 }
 ```
+
+当您将可用性条件与 `guard` 语句一起使用时，它会细化用于该代码块中其余代码的可用性信息。
+
+```swift
+@available(macOS 10.12, *)
+struct ColorPreference {
+    var bestColor = "blue"
+}
+
+func chooseBestColor() -> String {
+    guard #available(macOS 10.12, *) else {
+        return "gray"
+    }
+    let colors = ColorPreference()
+    return colors.bestColor
+}
+```
+
+在上面的示例中，`ColorPreference` 结构需要 macOS 10.12 或更高版本。`chooseBestColor()` 函数以可用性保护开始。如果平台版本太旧而无法使用 `ColorPreference` ，它会退回到始终可用的行为。在守卫声明之后，您可以使用需要 macOS 10.12 或更高版本的 API。
+
+除了#available外，Swift还支持使用不可用条件进行相反的检查。例如，以下两个检查做同样的事情：
+
+```swift
+if #available(iOS 10, *) {
+} else {
+    // 回退代码
+}
+
+if #unavailable(iOS 10) {
+    // 回退代码
+}
+```
+
+当检查仅包含回退代码时，使用 `#unavailable` 的形式有助于使您的代码更具可读性。
