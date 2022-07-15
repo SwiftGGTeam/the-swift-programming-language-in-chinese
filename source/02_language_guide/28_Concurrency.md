@@ -234,7 +234,7 @@ print(logger.max)  // 报错
 
 ## 可发送类型 {#Sendable Types}
 
-任务（task）和参与者（actor）允许您将程序划分为可以安全地并发运行的部分。在角色的任务或实例中，包含可变状态（如变量和属性）的程序部分称为并发域（concurrency domain）。某些类型的数据无法在并发域之间共享，因为该数据包含可变状态，但不能防止重叠的访问。
+任务（task）和参与者（actor）允许您将程序划分为可以安全地并发运行的部分。在参与者的实例或的任务中，包含可变状态（如变量和属性）的程序部分称为并发域（concurrency domain）。某些类型的数据无法在并发域之间共享，因为该数据包含可变状态，但它不能防止重叠的访问。
 
 可以从一个并发域共享到另一个并发域的类型称为可发送类型。例如，在调用参与者方法时，它可以作为参数传递，也可以作为任务的结果返回。本章前面的示例没有讨论可发送性，因为这些示例使用简单的值类型，对于并发域之间传递的数据，这些值类型始终可以安全地共享。相比之下，某些类型通过并发域不安全。例如，当您在不同任务之间传递该类的实例时，包含可变属性且不序列化对这些属性的访问的类可能会产生不可预测和不正确的结果。
 
@@ -266,7 +266,7 @@ let reading = TemperatureReading(measurement: 45)
 await logger.addReading(from: reading)
 ```
 
-由于 `TemperatureReading` 是一个仅具有可发送属性的结构，并且该结构没有标记为 `public` 或 `@usableFromInline`，因此它是隐式可发送的。以下是隐含符合 `Sendable` 协议的结构体版本：
+由于 `TemperatureReading` 是一个仅具有可发送属性的结构体，并且该结构体没有被标记为 `public` 或 `@usableFromInline`，因此它是隐式可发送的。以下是隐含符合 `Sendable` 协议的结构体版本：
 
 ```swift
 struct TemperatureReading {
