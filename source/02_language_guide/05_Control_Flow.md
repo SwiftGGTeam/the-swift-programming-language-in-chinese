@@ -783,9 +783,9 @@ func chooseBestColor() -> String {
 }
 ```
 
-在上面的示例中，`ColorPreference` 结构需要 macOS 10.12 或更高版本。`chooseBestColor()` 函数以可用性保护开始。如果平台版本太旧而无法使用 `ColorPreference` ，它会退回到始终可用的行为。在守卫声明之后，您可以使用需要 macOS 10.12 或更高版本的 API。
+在上面的示例中，`ColorPreference` 结构体仅支持 macOS 10.12 或更高版本的系统使用。`chooseBestColor()` 函数在一开始便检查该 API 的可用性。如果系统平台版本太旧而无法使用 `ColorPreference`，它会退回到可使用的版本。在 `guard` 语句之后，您可以使用需要 macOS 10.12 或更高版本的 API。
 
-除了#available外，Swift还支持使用不可用条件进行相反的检查。例如，以下两个检查做同样的事情：
+除了 `#available` 外，Swift 还支持使用 `#unavailable` 检查 API 的不可用性。例如，以下两个判断语句相互等价：
 
 ```swift
 if #available(iOS 10, *) {
@@ -798,4 +798,4 @@ if #unavailable(iOS 10) {
 }
 ```
 
-当检查仅包含回退代码时，使用 `#unavailable` 的形式有助于使您的代码更具可读性。
+当判断条件仅包含回退代码时，使用 `#unavailable` 的形式有助于使您的代码更具可读性。
