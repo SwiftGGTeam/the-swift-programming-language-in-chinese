@@ -22,7 +22,7 @@ to discuss the approach and possible issues
 before you invest a lot of time in writing.
 
 Content in this book follows [Apple Style Guide][asg]
-and [this book‘s style guide][tspl-style].
+and [this book’s style guide][tspl-style].
 
 File bugs about the content using the [issues page][bugs] on Github.
 
