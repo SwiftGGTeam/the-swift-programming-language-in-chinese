@@ -1,7 +1,7 @@
 # The Swift Programming Language
 
 This repository contains a version of “The Swift Programming Language”
-that can be built using Swift-DocC.
+that you can build using Swift-DocC.
 
 The version of “The Swift Programming Language” published on docs.swift.org
 was built using a legacy toolchain,
