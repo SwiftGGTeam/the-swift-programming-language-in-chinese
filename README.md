@@ -1,9 +1,9 @@
 # The Swift Programming Language
 
-This repository contains a version of “The Swift Programming Language”
+This repository contains a version of *The Swift Programming Language*
 that you can build using Swift-DocC.
 
-The version of “The Swift Programming Language” published on docs.swift.org
+The version of *The Swift Programming Language* published on docs.swift.org
 was built using a legacy toolchain,
 not from this repository or its content.
 The goal is to replace that version with a version built from this repository,
@@ -32,11 +32,9 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 [bugs]: https://github.com/apple/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
 [forum]: https://forums.swift.org/c/swift-book
-[tsyl-style]: /Style.md
+[tspl-style]: /Style.md
 
 <!-- FIXME The 'forum' link above is speculative -->
-
-<!-- TODO Confirm that the link to TSPL's style guide works in prod -->
 
 ## Building
 
