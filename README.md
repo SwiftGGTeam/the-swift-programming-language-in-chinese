@@ -16,7 +16,7 @@ like typo fixes and changes to a few paragraphs,
 fork this repository and make a pull request.
 
 A formal contribution process for this document is still being developed.
-In the mean time,
+In the meantime,
 start a thread in the [Swift forums][forum] for larger changes
 to discuss the approach and possible issues
 before you invest a lot of time in writing.
