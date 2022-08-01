@@ -17,7 +17,7 @@ fork this repository and make a pull request.
 
 A formal contribution process for this document is still being developed.
 In the mean time,
-start a thread in the [Swift forums][forum] for larger changes,
+start a thread in the [Swift forums][forum] for larger changes
 to discuss the approach and possible issues
 before you invest a lot of time in writing.
 
