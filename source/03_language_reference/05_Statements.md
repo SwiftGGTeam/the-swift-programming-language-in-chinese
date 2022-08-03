@@ -28,7 +28,7 @@
 > 
 > *多条语句* → [语句](#statement) [多条语句](#statements)<sub>可选</sub>
 
-## 循环语句 {#loop-statements}
+## 循环语句 {#loop-statement}
 循环语句会根据特定的循环条件来重复执行代码块。Swift 提供三种类型的循环语句：`for-in` 语句、`while` 语句和 `repeat-while` 语句。
 
 通过 `break` 语句和 `continue` 语句可以改变循环语句的控制流。有关这两条语句，详情参阅 [Break 语句](#break-statement) 和 [Continue 语句](#continue-statement)。
@@ -44,7 +44,7 @@
 > 
 > *循环语句* → [repeat-while 语句](#repeat-while-statement)
 
-### For-In 语句 {#for-in-statements}
+### For-In 语句
 
 `for-in` 语句会为集合（或实现了 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议的任意类型）中的每一项执行一次代码块。
 
@@ -65,7 +65,7 @@ for item in collection {
 #### for-in-statement {#for-in-statement}
 > *for-in 语句* → **for** **case**<sub>可选</sub> [模式](./08_Patterns.md#pattern) **in** [表达式](./04_Expressions.md#expression) [where 子句](#where-clause)<sub>可选</sub> [代码块](./06_Declarations.md#code-block)
 
-### While 语句 {#while-statements}
+### While 语句
 只要循环条件为真，`while` 语句就会重复执行代码块。
 
 `while` 语句的形式如下：
@@ -107,7 +107,7 @@ while condition {
 #### optional-binding-condition {#optional-binding-condition}
 > *可选绑定条件* →  **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer) | **var**  [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
 
-### Repeat-While 语句 {#repeat-while-statements}
+### Repeat-While 语句
 `repeat-while` 语句至少执行一次代码块，之后只要循环条件为真，就会重复执行代码块。
 
 `repeat-while` 语句的形式如下：
@@ -150,7 +150,7 @@ repeat {
 > 
 > *分支语句* → [switch 语句](#switch-statement)
 
-### If 语句 {#if-statements}
+### If 语句
 `if` 语句会根据一个或多个条件来决定执行哪一块代码。
 
 `if` 语句有两种基本形式，无论哪种形式，都必须有花括号。
@@ -197,7 +197,7 @@ if condition 1 {
 #### else-clause {#else-clause}
 > *else 子句* → **else** [代码块](./06_Declarations.md#code-block) | **else** [if 语句](#if-statement)
 
-### Guard 语句 {#guard-statements}
+### Guard 语句
 如果一个或者多个条件不成立，可用 `guard` 语句来退出当前作用域。
 
 `guard` 语句的格式如下：
@@ -228,7 +228,7 @@ guard condition else {
 #### guard-statement {#guard-statement}
 > *guard 语句* → **guard** [条件子句](#condition-clause) **else** [代码块](./06_Declarations.md#code-block)
 
-### Switch 语句 {#switch-statements}
+### Switch 语句
 
 `switch` 语句会根据控制表达式的值来决定执行哪部分代码。
 
@@ -292,7 +292,7 @@ case .suppressed:
 
 #### 不存在隐式落入
 
-当匹配到的 `case` 中的代码执行完毕后，`switch` 语句会直接退出，而不会继续执行下一个 `case` 。这就意味着，如果你想执行下一个 `case`，需要显式地在当前 `case` 中使用 `fallthrough` 语句。关于 `fallthrough` 语句的更多信息，请参阅 [Fallthrough 语句](#fallthrough-statements)。
+当匹配到的 `case` 中的代码执行完毕后，`switch` 语句会直接退出，而不会继续执行下一个 `case` 。这就意味着，如果你想执行下一个 `case`，需要显式地在当前 `case` 中使用 `fallthrough` 语句。关于 `fallthrough` 语句的更多信息，请参阅 [Fallthrough 语句](#fallthrough-statement)。
 
 > switch 语句语法
 > 
@@ -342,7 +342,7 @@ case .suppressed:
 #### grammar-switch-else-directive-clause {#grammar-switch-else-directive-clause}
 > *switch-else-directive 语句* → [else-directive](#switch-case-attributes-label) [switch-cases](#switch-case-attributes-label) <sub>可选</sub>
 
-## 带标签的语句 {#labeled-statements}
+## 带标签的语句 {#labeled-statement}
 你可以在循环语句或 `switch` 语句前面加上标签，它由标签名和紧随其后的冒号（`:`）组成。在 `break` 和 `continue` 后面跟上标签名可以显式地在循环语句或 `switch` 语句中改变相应的控制流。关于这两条语句用法，请参阅 [Break 语句](#break-statement) 和 [Continue 语句](#continue-statement)。
 
 标签的作用域在该标签所标记的语句内。可以嵌套使用带标签的语句，但标签名必须唯一。
@@ -386,7 +386,7 @@ case .suppressed:
 > 
 > *控制转移语句* → [throw 语句](#throw-statement)
 
-### Break 语句 {#break-statement}
+### Break 语句
 `break` 语句用于终止循环语句、`if` 语句或 `switch` 语句的执行。使用 `break` 语句时，可以只写 `break` 这个关键词，也可以在 `break` 后面跟上标签名，像下面这样：
 
 > break
@@ -408,7 +408,7 @@ case .suppressed:
 #### break-statement {#break-statement}
 > *break 语句* → **break** [标签名称](#label-name)<sub>可选</sub>
 
-### Continue 语句 {#continue-statement}
+### Continue 语句
 `continue` 语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用 `continue` 语句时，可以只写 `continue` 这个关键词，也可以在 `continue` 后面跟上标签名，像下面这样：
 
 > continue
@@ -432,7 +432,7 @@ case .suppressed:
 #### continue-statement {#continue-statement}
 > *continue 语句* → **continue** [标签名称](#label-name)<sub>可选</sub>
 
-### Fallthrough 语句 {#fallthrough-statements}
+### Fallthrough 语句
 `fallthrough` 语句用于在 `switch` 语句中转移控制权。`fallthrough` 语句会把控制权从 `switch` 语句中的一个 `case` 转移到下一个 `case`。这种控制权转移是无条件的，即使下一个 `case` 的模式与 `switch` 语句的控制表达式的值不匹配。
 
 `fallthrough` 语句可出现在 `switch` 语句中的任意 `case` 中，但不能出现在最后一个 `case` 中。同时，`fallthrough` 语句也不能把控制权转移到使用了值绑定的 `case`。
@@ -446,7 +446,7 @@ case .suppressed:
 #### fallthrough-statement {#fallthrough-statement}
 > *fallthrough 语句* → **fallthrough**
 
-### Return 语句 {#return-statements}
+### Return 语句
 `return` 语句用于在函数或方法的实现中将控制权转移到调用函数或方法，接着程序将会从调用位置继续向下执行。
 
 使用 `return` 语句时，可以只写 `return` 这个关键词，也可以在 `return` 后面跟上表达式，像下面这样：
@@ -471,7 +471,7 @@ case .suppressed:
 #### return-statement {#return-statement}
 > *return 语句* → **return** [表达式](./04_Expressions.md#expression)<sub>可选</sub>
 
-### Throw 语句 {#throw-statements}
+### Throw 语句
 
 `throw` 语句出现在抛出函数或者抛出方法体内，或者类型被 `throws` 关键字标记的闭包表达式体内。
 
@@ -492,7 +492,7 @@ case .suppressed:
 #### throw-statement {#throw-statement}
 > *throw 语句* → **throw**  [表达式](./04_Expressions.md#expression)
 
-## Defer 语句 {#defer-statements}
+## Defer 语句 {#defer-statement}
 `defer` 语句用于在退出当前作用域之前执行代码。
 
 `defer` 语句形式如下：
@@ -528,7 +528,7 @@ f()
 #### defer-statement {#defer-statement}
 > *延迟语句* → **defer** [代码块](./06_Declarations.md#code-block)
 
-## Do 语句 {#do-statements}
+## Do 语句 {#do-statement}
 `do` 语句用于引入一个新的作用域，该作用域中可以含有一个或多个 `catch` 子句，`catch` 子句中定义了一些匹配错误条件的模式。`do` 语句作用域内定义的常量和变量只能在 `do` 语句作用域内使用。
 
 Swift 中的 `do` 语句与 C 中限定代码块界限的大括号（`{}`）很相似，也并不会降低程序运行时的性能。
@@ -593,7 +593,7 @@ do {
 > 
 > *编译器控制语句* → [诊断语句](#grammar-diagnostic-statement)
 
-### 条件编译代码块 {#Conditional-Compilation-Block}
+### 条件编译代码块
 
 条件编译代码块可以根据一个或多个配置来有条件地编译代码。
 
@@ -747,7 +747,7 @@ statements to compile if both compilation conditions are false
 
 > *环境* → **模拟器** | **macCatalyst**
 
-### 行控制语句 {#line-control-statements}
+### 行控制语句
 行控制语句可以为被编译的源代码指定行号和文件名，从而改变源代码的定位信息，以便进行分析和调试。
 
 行控制语句形式如下：
@@ -775,7 +775,7 @@ statements to compile if both compilation conditions are false
 #### file-name {#file-name}
 > *文件名* → [静态字符串字面量](./02_Lexical_Structure.md#static-string-literal)
 
-### 编译时诊断语句 {#compile-time-diagnostic-statement}
+### 编译时诊断语句
 
 编译时诊断语句允许编译器在编译的时候可以发出错误或者警告。语句形式如下：
 
@@ -789,7 +789,7 @@ statements to compile if both compilation conditions are false
 > 编译时诊断语句语法
 > 
 
-#### grammar-compile-time-diagnostic-statement {#grammar-compile-time-diagnostic-statement}
+#### grammar-compile-time-diagnostic-statement {#compile-time-diagnostic-statement}
 > *诊断语句* → **#error** **(** [诊断消息](#grammar-diagnostic-message) **)**
 > 
 > *诊断语句* → **#warning** **(** [诊断消息](#grammar-diagnostic-message) **)**
