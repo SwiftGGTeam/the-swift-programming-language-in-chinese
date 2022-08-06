@@ -504,11 +504,11 @@ Swift 可以自动提供一些简单场景下遵循 `Equatable`、`Hashable` 和
 
 Swift 为以下几种自定义类型提供了 `Equatable` 协议的合成实现：
 
-- 遵循 `Equatable` 协议且只有存储属性的结构体。
-- 遵循 `Equatable` 协议且只有关联类型的枚举
-- 没有任何关联类型的枚举
+- 只有遵循 `Equatable` 协议的存储属性的结构体
+- 只有遵循 `Equatable` 协议的关联类型的枚举
+- 没有关联类型的枚举
 
-在包含类型原始声明的文件中声明对 `Equatable` 协议的遵循，可以得到 `==` 操作符的合成实现，且无需自己编写任何关于 `==` 的实现代码。`Equatable` 协议同时包含 `!=` 操作符的默认实现。
+为得到 `==` 操作符的合成实现，仅需在包含类型原本的声明的文件中声明对 `Equatable` 协议的遵循，不必自己编写任何关于 `==` 的实现代码。`Equatable` 协议还包含 `!=` 操作符的默认实现。
 
 下面的例子中定义了一个 `Vector3D` 结构体来表示一个类似 `Vector2D` 的三维向量 `(x, y, z)`。由于 `x`、`y` 和 `z` 都是满足 `Equatable` 的类型，`Vector3D` 可以得到连等判断的合成实现。
 
@@ -646,7 +646,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 > 
 > 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Structures_And_Classes.md#structures-and-enumerations-are-value-types) 和 [类是引用类型](./09_Structures_And_Classes.md#classes-are-reference-types)。
 
-## 协议合成 {#protocol-composition}
+## 协议组合 {#protocol-composition}
 
 要求一个类型同时遵循多个协议是很有用的。你可以使用*协议组合*来复合多个协议到一个要求里。协议组合行为就和你定义的临时局部协议一样拥有构成中所有协议的需求。协议组合不定义任何新的协议类型。
 
@@ -785,7 +785,7 @@ for object in objects {
 
 ## 可选的协议要求 {#optional-protocol-requirements}
 
-协议可以定义*可选要求*，遵循协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。可选要求用在你需要和 Objective-C 打交道的代码中。协议和可选要求都必须带上 `@objc` 属性。标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类遵循，其他类以及结构体和枚举均不能遵循这种协议。
+协议可以定义*可选要求*，遵循协议的类型可以选择是否实现这些要求。在协议中使用 `optional` 关键字作为前缀来定义可选要求。可选要求用在你需要和 Objective-C 互操作的代码中。协议和可选要求都必须带上 `@objc` 属性。标记 `@objc` 特性的协议只能被继承自 Objective-C 类的类或者 `@objc` 类遵循，其他类以及结构体和枚举均不能遵循这种协议。
 
 使用可选要求时（例如，可选的方法或者属性），它们的类型会自动变成可选的。比如，一个类型为 `(Int) -> String` 的方法会变成 `((Int) -> String)?`。需要注意的是整个函数类型是可选的，而不是函数的返回值。
 
