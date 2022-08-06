@@ -646,7 +646,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 > 
 > 当协议定义的要求需要遵循协议的类型必须是引用语义而非值语义时，应该采用类类型专属协议。关于引用语义和值语义的更多内容，请查看 [结构体和枚举是值类型](./09_Structures_And_Classes.md#structures-and-enumerations-are-value-types) 和 [类是引用类型](./09_Structures_And_Classes.md#classes-are-reference-types)。
 
-## 协议合成 {#protocol-composition}
+## 协议组合 {#protocol-composition}
 
 要求一个类型同时遵循多个协议是很有用的。你可以使用*协议组合*来复合多个协议到一个要求里。协议组合行为就和你定义的临时局部协议一样拥有构成中所有协议的需求。协议组合不定义任何新的协议类型。
 
