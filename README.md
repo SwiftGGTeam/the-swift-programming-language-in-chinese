@@ -31,10 +31,8 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 [asg]: https://help.apple.com/applestyleguide/
 [bugs]: https://github.com/apple/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
-[forum]: https://forums.swift.org/c/swift-book
+[forum]: https://forums.swift.org/c/development/swift-docc/80
 [tspl-style]: /Style.md
-
-<!-- FIXME The 'forum' link above is speculative -->
 
 ## Building
 
