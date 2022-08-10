@@ -115,8 +115,6 @@ you can ignore the values by using an underscore in place of a variable name.
    -> print("\(base) to the power of \(power) is \(answer)")
    <- 3 to the power of 10 is 59049
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 The example above calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
 It multiplies a starting value of ``1``
@@ -1426,8 +1424,6 @@ when it verifies that the APIs in that block of code are available.
           // Fall back to earlier iOS and macOS APIs
       }
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 The availability condition above specifies that in iOS,
 the body of the ``if`` statement executes only in iOS 10 and later;
 in macOS, only in macOS 10.12 and later.
@@ -1449,8 +1445,6 @@ you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 When you use an availability condition with a ``guard`` statement,
 it refines the availability information that’s used
 for the rest of the code in that code block.
@@ -1471,8 +1465,6 @@ for the rest of the code in that code block.
       }
    >> print(chooseBestColor())
    << blue
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 In the example above,
 the ``ColorPreference`` structure requires macOS 10.12 or later.
@@ -1496,8 +1488,6 @@ For example, the following two checks do the same thing:
    -> if #unavailable(iOS 10) {
          // Fallback code
       }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Using the ``#unavailable`` form helps make your code more readable
 when the check contains only fallback code.

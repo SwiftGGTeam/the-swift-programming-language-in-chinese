@@ -1334,8 +1334,6 @@ An availability condition has the following form:
        <#fallback statements to execute if the APIs are unavailable#>
    }
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
 The compiler uses the information from the availability condition
@@ -1360,8 +1358,6 @@ use an unavailability condition, which has the following form:
    } else {
        <#statements to execute if the APIs are available#>
    }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The ``#unavailable`` form is syntactic sugar that negates the condition.
 In an unavailability condition,
@@ -1418,8 +1414,6 @@ It has the same meaning as the ``*`` argument in an availability condition.
    << a
    << c
    << dd
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 .. assertion:: empty-availability-condition
 

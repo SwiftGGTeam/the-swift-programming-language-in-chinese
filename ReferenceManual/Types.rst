@@ -66,8 +66,6 @@ as the following examples show:
     -> let someTuple: (Double, Double) = (3.14159, 2.71828)
     -> func someFunction(a: Int) { /* ... */ }
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 In the first example,
 the expression ``someTuple`` is specified to have the tuple type ``(Double, Double)``.
 In the second example,

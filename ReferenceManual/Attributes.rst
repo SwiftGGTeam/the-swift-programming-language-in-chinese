@@ -179,8 +179,6 @@ the platform and Swift availabilities.
    -> func foo() { }
    -> foo()
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 If an ``available`` attribute only specifies an ``introduced`` argument
 in addition to a platform or language name argument,
 you can use the following shorthand syntax instead:
@@ -189,8 +187,6 @@ you can use the following shorthand syntax instead:
 
    @available(<#platform name#> <#version number#>, *)
    @available(swift <#version number#>)
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 The shorthand syntax for ``available`` attributes
 concisely expresses availability for multiple platforms.
@@ -203,8 +199,6 @@ the shorthand form is preferred whenever possible.
    -> class MyClass {
           // class definition
       }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 An ``available`` attribute
 that specifies availability using a Swift version number
@@ -219,8 +213,6 @@ version availability and one or more platform availabilities.
    -> struct MyStruct {
           // struct definition
       }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 
 .. _Attributes_discardableResult:

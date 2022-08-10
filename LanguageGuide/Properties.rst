@@ -194,8 +194,6 @@ neither of which is shown in full:
    -> manager.data.append("Some more data")
    // the DataImporter instance for the importer property hasn't yet been created
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 The ``DataManager`` class has a stored property called ``data``,
 which is initialized with a new, empty array of ``String`` values.
 Although the rest of its functionality isn't shown,

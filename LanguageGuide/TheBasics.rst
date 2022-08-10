@@ -284,8 +284,6 @@ and end with an asterisk followed by a forward-slash (``*/``):
    -> /* This is also a comment
       but is written over multiple lines. */
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 Unlike multiline comments in C,
 multiline comments in Swift can be nested inside other multiline comments.
 You write nested comments by starting a multiline comment block
@@ -297,8 +295,6 @@ The second block is then closed, followed by the first block:
    -> /* This is the start of the first multiline comment.
          /* This is the second, nested multiline comment. */
       This is the end of the first multiline comment. */
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Nested multiline comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multiline comments.

@@ -375,8 +375,6 @@ from the right of the number:
    /> returns \(r3)
    </ returns 7
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 .. Rewrite the above to avoid bare expressions.
    Tracking bug is <rdar://problem/35301593>
 

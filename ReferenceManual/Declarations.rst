@@ -738,8 +738,6 @@ The corresponding argument must have no label in function or method calls.
    -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
    -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 .. _Declarations_InOutParameters:
 
 In-Out Parameters
@@ -1931,8 +1929,6 @@ For example, the following protocol can be adopted only by class types:
     -> protocol SomeProtocol: AnyObject {
            /* Protocol members go here */
        }
-
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 Any protocol that inherits from a protocol that's marked with the ``AnyObject`` requirement
 can likewise be adopted only by class types.

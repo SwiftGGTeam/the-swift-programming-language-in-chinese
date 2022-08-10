@@ -860,8 +860,6 @@ and they can't contain
 an unescaped slash (``/``),
 a carriage return, or a line feed.
 
-.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
-
 Within a regular expression literal,
 a backslash is understood as a part of that regular expression,
 not just as an escape character like in string literals.

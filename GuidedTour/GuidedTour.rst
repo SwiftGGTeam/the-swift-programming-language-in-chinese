@@ -429,8 +429,6 @@ ensuring that the loop is run at least once.
    -> print(m)
    <- 128
 
-.. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 You can keep an index in a loop
 by using ``..<`` to make a range of indexes.
 
