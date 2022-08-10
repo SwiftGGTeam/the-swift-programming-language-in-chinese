@@ -160,8 +160,6 @@ including important milestones.
      -> @available(*, unavailable, renamed: "MyRenamedProtocol")
         typealias MyProtocol = MyRenamedProtocol
 
-  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
 You can apply multiple ``available`` attributes on a single declaration
 to specify the declaration's availability on different platforms
 and different versions of Swift.
@@ -1301,8 +1299,6 @@ into code that calls the static methods of the result builder type:
      !! struct DrawingBuilder {
      !! ^
 
-  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
-
   In the code above,
   ``FutureText`` appears as part of the type of ``brokenDrawing``
   because it's one of the types in the ``DrawEither`` generic type.
@@ -1350,8 +1346,6 @@ into code that calls the static methods of the result builder type:
         }
      /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
      </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
-
-  .. x*  Bogus * paired with the one in the listing, to fix VIM syntax highlighting.
 
 - A branch statement becomes a series of nested calls to the
   ``buildEither(first:)`` and ``buildEither(second:)`` methods.

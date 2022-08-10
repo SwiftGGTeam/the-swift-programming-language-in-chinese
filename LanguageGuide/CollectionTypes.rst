@@ -841,8 +841,6 @@ The ``airports`` dictionary is declared as having a type of ``[String: String]``
 which means “a ``Dictionary`` whose keys are of type ``String``,
 and whose values are also of type ``String``”.
 
-.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
-
 .. note::
 
    The ``airports`` dictionary is declared as a variable (with the ``var`` introducer),

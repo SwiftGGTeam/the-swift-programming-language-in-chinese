@@ -764,8 +764,6 @@ and appears immediately before the value it operates on,
 without any white space.
 It can be read as “not ``a``”, as seen in the following example:
 
-.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
-
 .. testcode:: logicalOperators
 
    -> let allowedEntry = false

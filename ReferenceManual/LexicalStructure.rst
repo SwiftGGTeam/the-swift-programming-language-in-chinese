@@ -606,8 +606,6 @@ an unescaped double quotation mark (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
-.. x``  Bogus backticks paired with the one above, to fix VIM syntax highlighting.
-
 A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 
@@ -657,8 +655,6 @@ You can use this syntax
 to hard wrap a multiline string literal in your source code,
 without changing the value of the resulting string.
 
-.. x``  Bogus `` paired with the one in the listing, to fix VIM syntax highlighting.
-
 Special characters
 can be included in string literals
 of both the single-line and multiline forms
@@ -686,8 +682,6 @@ by placing the expression in parentheses after a backslash (``\``).
 The interpolated expression can contain a string literal,
 but can't contain an unescaped backslash,
 a carriage return, or a line feed.
-
-.. x``  Bogus `` paired with the one in the listing, to fix VIM syntax highlighting.
 
 For example, all of the following string literals have the same value:
 
