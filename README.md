@@ -36,10 +36,12 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 
 ## Building
 
-1. If you don’t have a Swift toolchain installed,
-   install [Swift-DocC](https://github.com/apple/swift-docc).
+If you have Xcode installed,
+run `xcrun docc preview` in this repository.
 
-1. Run `docc preview` in this repository.
+If you have a Swift toolchain installed,
+or if you installed [Swift-DocC](https://github.com/apple/swift-docc) directly,
+run `docc preview` in this repository.
 
-1. Open the link to <http://localhost:8000/> that `docc` prints
-   to view the local preview.
+After running DocC,
+open the link that `docc` outputs for the local preview.
