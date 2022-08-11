@@ -15,7 +15,7 @@ For small changes,
 like typo fixes and changes to a few paragraphs,
 fork this repository and make a pull request.
 
-A formal contribution process for this document is still being developed.
+A formal contribution process for this document is still in development.
 In the meantime,
 start a thread in the [Swift forums][forum] for larger changes
 to discuss the approach and possible issues
