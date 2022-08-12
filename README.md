@@ -36,12 +36,7 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 
 ## Building
 
-If you have Xcode installed,
-run `xcrun docc preview` in this repository.
+Run `swift package --disable-sandbox preview-documentation --target TSPL`
+in this repository.
 
-If you have a Swift toolchain installed,
-or if you installed [Swift-DocC](https://github.com/apple/swift-docc) directly,
-run `docc preview` in this repository.
-
-After running DocC,
-open the link that `docc` outputs for the local preview.
+After running DocC, open the link that `docc` outputs for the local preview.
