@@ -18,7 +18,7 @@ fork this repository and make a pull request.
 A formal contribution process for this document is still in development.
 In the meantime,
 start a thread in the [Swift forums][forum] for larger changes
-to discuss the approach and possible issues
+to discuss your approach and identify possible issues
 before you invest a lot of time in writing.
 
 Content in this book follows [Apple Style Guide][asg]
@@ -37,6 +37,7 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 ## Building
 
 Run `swift package --disable-sandbox preview-documentation --target TSPL`
-in this repository.
+in this repository's root directory.
 
-After running DocC, open the link that `docc` outputs for the local preview.
+After running DocC, open the link that `docc` outputs
+to display a local preview in your browser.
