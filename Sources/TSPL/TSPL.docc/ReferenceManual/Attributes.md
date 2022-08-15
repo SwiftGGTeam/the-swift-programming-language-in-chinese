@@ -1598,7 +1598,9 @@ into code that calls the static methods of the result builder type:
            }
        }
     ```
-  }However, this approach causes a problem in code that has availability checks:
+  }
+
+  However, this approach causes a problem in code that has availability checks:
   
   ```swift
   @available(macOS 99, *)
@@ -1644,7 +1646,9 @@ into code that calls the static methods of the result builder type:
     !! struct DrawingBuilder {
     !! ^
     ```
-  }In the code above,
+  }
+
+  In the code above,
   `FutureText` appears as part of the type of `brokenDrawing`
   because it's one of the types in the `DrawEither` generic type.
   This could cause your program to crash if `FutureText`
