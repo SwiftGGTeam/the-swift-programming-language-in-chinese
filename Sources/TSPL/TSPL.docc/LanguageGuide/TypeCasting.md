@@ -472,8 +472,7 @@ for thing in things {
 > things.append(optionalNumber)        // Warning
 > things.append(optionalNumber as Any) // No warning
 > ```
-> 
-> 
+
 @Comment {
   - test: `typeCasting-err`
 
@@ -501,11 +500,10 @@ for thing in things {
 
 @Comment {
   Rejected examples to illustrate AnyObject:
-}
 
-@Comment {
   Array of delegates which may conform to one or more of the class's delegate protocols.
   
+  ```
   protocol MovieDelegate {
       func willPlay(movie: Movie)
   }
@@ -519,15 +517,16 @@ for thing in things {
       guard let delegate = delegate as MovieDelegate else { continue }
       delegate.willPlay(movie: m)
   }
-}
+  ```
 
-@Comment {
   A userData object for associating some opaque piece of data or state with an API call.
   
+  ```
   class C {
       // Not userInfo -- that's usually a Dictionary
       let userData: AnyObject?  // In Cocoa APIs, userData is a void*
   }
+  ```
 }
 
 
