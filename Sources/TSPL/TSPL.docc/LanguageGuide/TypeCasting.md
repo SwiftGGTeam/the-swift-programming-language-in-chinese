@@ -474,30 +474,30 @@ for thing in things {
 > ```
 > 
 > 
-> @Comment {
-  > - test: `typeCasting-err`
-  > 
-  > ```swifttest
-  > -> let optionalNumber: Int? = 3
-  > -> things.append(optionalNumber)        // Warning
-  > !$ warning: expression implicitly coerced from 'Int?' to 'Any'
-  > !! things.append(optionalNumber)        // Warning
-  > !!               ^~~~~~~~~~~~~~
-  > !$ note: provide a default value to avoid this warning
-  > !! things.append(optionalNumber)        // Warning
-  > !!               ^~~~~~~~~~~~~~
-  > !!                              ?? <#default value#>
-  > !$ note: force-unwrap the value to avoid this warning
-  > !! things.append(optionalNumber)        // Warning
-  > !!               ^~~~~~~~~~~~~~
-  > !!                              !
-  > !$ note: explicitly cast to 'Any' with 'as Any' to silence this warning
-  > !! things.append(optionalNumber)        // Warning
-  > !!               ^~~~~~~~~~~~~~
-  > !!                              as Any
-  > -> things.append(optionalNumber as Any) // No warning
-  > ```
-> }
+@Comment {
+  - test: `typeCasting-err`
+
+  ```swifttest
+  -> let optionalNumber: Int? = 3
+  -> things.append(optionalNumber)        // Warning
+  !$ warning: expression implicitly coerced from 'Int?' to 'Any'
+  !! things.append(optionalNumber)        // Warning
+  !!               ^~~~~~~~~~~~~~
+  !$ note: provide a default value to avoid this warning
+  !! things.append(optionalNumber)        // Warning
+  !!               ^~~~~~~~~~~~~~
+  !!                              ?? <#default value#>
+  !$ note: force-unwrap the value to avoid this warning
+  !! things.append(optionalNumber)        // Warning
+  !!               ^~~~~~~~~~~~~~
+  !!                              !
+  !$ note: explicitly cast to 'Any' with 'as Any' to silence this warning
+  !! things.append(optionalNumber)        // Warning
+  !!               ^~~~~~~~~~~~~~
+  !!                              as Any
+  -> things.append(optionalNumber as Any) // No warning
+  ```
+}
 
 @Comment {
   Rejected examples to illustrate AnyObject:
