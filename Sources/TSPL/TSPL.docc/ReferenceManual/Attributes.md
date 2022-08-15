@@ -1559,46 +1559,7 @@ into code that calls the static methods of the result builder type:
   }
   ```
   
-  
-  @Comment {
-    - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
-    
-    ```swifttest
-    -> protocol Drawable {
-           func draw() -> String
-       }
-    -> struct Text: Drawable {
-           var content: String
-           init(_ content: String) { self.content = content }
-           func draw() -> String { return content }
-       }
-    -> struct Line<D: Drawable>: Drawable {
-           var elements: [D]
-           func draw() -> String {
-               return elements.map { $0.draw() }.joined(separator: "")
-           }
-       }
-    -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
-           var content: Drawable
-           func draw() -> String { return content.draw() }
-       }
-    ---
-    -> @resultBuilder
-       struct DrawingBuilder {
-           static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
-               return Line(elements: components)
-           }
-           static func buildEither<First, Second>(first: First)
-                   -> DrawEither<First, Second> {
-               return DrawEither(content: first)
-           }
-           static func buildEither<First, Second>(second: Second)
-                   -> DrawEither<First, Second> {
-               return DrawEither(content: second)
-           }
-       }
-    ```
-  }
+  <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
   However, this approach causes a problem in code that has availability checks:
   
@@ -1619,35 +1580,8 @@ into code that calls the static methods of the result builder type:
   // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
   ```
   
+  <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
   
-  @Comment {
-    - test: `result-builder-limited-availability-broken`
-    
-    ```swifttest
-    -> @available(macOS 99, *)
-    -> struct FutureText: Drawable {
-           var content: String
-           init(_ content: String) { self.content = content }
-           func draw() -> String { return content }
-       }
-    -> @DrawingBuilder var brokenDrawing: Drawable {
-           if #available(macOS 99, *) {
-               FutureText("Inside.future")  // Problem
-           } else {
-               Text("Inside.present")
-           }
-       }
-    /> The type of brokenDrawing is \(type(of: brokenDrawing))
-    </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
-    !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
-    !! if #available(macOS 99, *) {
-    !! ^
-    !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
-    !! struct DrawingBuilder {
-    !! ^
-    ```
-  }
-
   In the code above,
   `FutureText` appears as part of the type of `brokenDrawing`
   because it's one of the types in the `DrawEither` generic type.
@@ -1680,45 +1614,8 @@ into code that calls the static methods of the result builder type:
   // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
   ```
   
-  
-  @Comment {
-    - test: `result-builder-limited-availability-ok`
-    
-    ```swifttest
-    >> @available(macOS 99, *)
-    >> struct FutureText: Drawable {
-    >>     var content: String
-    >>     init(_ content: String) { self.content = content }
-    >>     func draw() -> String { return content }
-    >> }
-    >> @DrawingBuilder var x: Drawable {
-    >>     if #available(macOS 99, *) {
-    >>         FutureText("Inside.future")
-    >>     } else {
-    >>         Text("Inside.present")
-    >>     }
-    >> }
-    -> struct AnyDrawable: Drawable {
-           var content: Drawable
-           func draw() -> String { return content.draw() }
-       }
-    -> extension DrawingBuilder {
-           static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
-               return AnyDrawable(content: content)
-           }
-       }
-    ---
-    -> @DrawingBuilder var typeErasedDrawing: Drawable {
-           if #available(macOS 99, *) {
-               FutureText("Inside.future")
-           } else {
-               Text("Inside.present")
-           }
-       }
-    /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
-    </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
-    ```
-  }
+  <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
+
 - A branch statement becomes a series of nested calls to the
   `buildEither(first:)` and `buildEither(second:)` methods.
   The statements' conditions and cases are mapped onto
@@ -1921,6 +1818,114 @@ into code that calls the static methods of the result builder type:
 - If the result builder has a `buildFinalResult(_:)` method,
   the final result becomes a call to that method.
   This transformation is always last.
+
+
+@Comment {
+  - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
+  
+  ```swifttest
+  -> protocol Drawable {
+         func draw() -> String
+     }
+  -> struct Text: Drawable {
+         var content: String
+         init(_ content: String) { self.content = content }
+         func draw() -> String { return content }
+     }
+  -> struct Line<D: Drawable>: Drawable {
+         var elements: [D]
+         func draw() -> String {
+             return elements.map { $0.draw() }.joined(separator: "")
+         }
+     }
+  -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+         var content: Drawable
+         func draw() -> String { return content.draw() }
+     }
+  ---
+  -> @resultBuilder
+     struct DrawingBuilder {
+         static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+             return Line(elements: components)
+         }
+         static func buildEither<First, Second>(first: First)
+                 -> DrawEither<First, Second> {
+             return DrawEither(content: first)
+         }
+         static func buildEither<First, Second>(second: Second)
+                 -> DrawEither<First, Second> {
+             return DrawEither(content: second)
+         }
+     }
+  ```
+}
+
+@Comment {
+  - test: `result-builder-limited-availability-broken`
+  
+  ```swifttest
+  -> @available(macOS 99, *)
+  -> struct FutureText: Drawable {
+         var content: String
+         init(_ content: String) { self.content = content }
+         func draw() -> String { return content }
+     }
+  -> @DrawingBuilder var brokenDrawing: Drawable {
+         if #available(macOS 99, *) {
+             FutureText("Inside.future")  // Problem
+         } else {
+             Text("Inside.present")
+         }
+     }
+  /> The type of brokenDrawing is \(type(of: brokenDrawing))
+  </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+  !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
+  !! if #available(macOS 99, *) {
+  !! ^
+  !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
+  !! struct DrawingBuilder {
+  !! ^
+  ```
+}
+
+@Comment {
+  - test: `result-builder-limited-availability-ok`
+  
+  ```swifttest
+  >> @available(macOS 99, *)
+  >> struct FutureText: Drawable {
+  >>     var content: String
+  >>     init(_ content: String) { self.content = content }
+  >>     func draw() -> String { return content }
+  >> }
+  >> @DrawingBuilder var x: Drawable {
+  >>     if #available(macOS 99, *) {
+  >>         FutureText("Inside.future")
+  >>     } else {
+  >>         Text("Inside.present")
+  >>     }
+  >> }
+  -> struct AnyDrawable: Drawable {
+         var content: Drawable
+         func draw() -> String { return content.draw() }
+     }
+  -> extension DrawingBuilder {
+         static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+             return AnyDrawable(content: content)
+         }
+     }
+  ---
+  -> @DrawingBuilder var typeErasedDrawing: Drawable {
+         if #available(macOS 99, *) {
+             FutureText("Inside.future")
+         } else {
+             Text("Inside.present")
+         }
+     }
+  /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
+  </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  ```
+}
 
 Although the transformation behavior is described in terms of temporary variables,
 using a result builder doesn't actually create any new declarations
