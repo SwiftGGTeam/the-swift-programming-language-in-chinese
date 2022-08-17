@@ -11,6 +11,11 @@ working with the community to extend Swift-DocC where needed.
 
 ## Contributing
 
+For now,
+we’re expecting most pull requests to be enhancements and bug fixes
+to support the Swift-DocC publication,
+with only minor content changes.
+
 For small changes,
 like typo fixes and changes to a few paragraphs,
 fork this repository and make a pull request.
