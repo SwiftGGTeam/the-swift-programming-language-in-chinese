@@ -1073,10 +1073,7 @@ see :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures`.
    !$ error: unable to infer type of a closure parameter 'async' in the current context
    !! let c2 = { [a] async in return a }            // ERROR
    !! ^
-   !$ error: cannot infer return type for closure with multiple statements; add explicit type to disambiguate
-   !! let c3 = { [a] async -> in return a }         // ERROR
-   !! ^
-   !! () -> <#Result#> in
+   // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
 
 .. syntax-grammar::
 
