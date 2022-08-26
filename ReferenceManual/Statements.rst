@@ -1001,7 +1001,7 @@ Platform condition        Valid arguments
    but Swift doesn't actually support running on a toaster oven --
    so don't rely on that when checking possible os/arch values.
 
-.. The target environment "UKitForMac"
+.. The target environment "UIKitForMac"
    is understood by the compiler as a synonym for "macCatalyst",
    but that spelling is marked "Must be removed" outside of a few places,
    so it's omitted from the table above.
