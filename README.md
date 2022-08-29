@@ -33,9 +33,12 @@ File bugs about the content using the [issues page][bugs] on Github.
 
 Discussions and contributions follow the [Swift Code of Conduct][conduct].
 
+For more information, see [Contributing to The Swift Programming Language][contributing].
+
 [asg]: https://help.apple.com/applestyleguide/
 [bugs]: https://github.com/apple/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
+[contributing]: /CONTRIBUTING.md
 [forum]: https://forums.swift.org/c/development/swift-docc/80
 [tspl-style]: /Style.md
 
