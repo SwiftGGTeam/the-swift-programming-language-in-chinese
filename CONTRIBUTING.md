@@ -18,13 +18,7 @@ before you invest a lot of time in writing.
 Content in this book follows [Apple Style Guide][asg]
 and [this book’s style guide][tspl-style].
 
-File bugs about the content using the [issues page][bugs] on Github.
-
-Discussions and contributions follow the [Swift Code of Conduct][conduct].
-
 [asg]: https://help.apple.com/applestyleguide/
-[bugs]: https://github.com/apple/swift-book/issues
-[conduct]: https://www.swift.org/code-of-conduct
 [forum]: https://forums.swift.org/c/development/swift-docc/80
 [tspl-style]: /Style.md
 
@@ -32,8 +26,8 @@ Discussions and contributions follow the [Swift Code of Conduct][conduct].
 
 Use the following steps when creating a new pull request:
 
-- Create a local fork of this repo with your changes.
-- Test that your changes build locally with `swift package plugin generate-documentation --target TSPL --transform-for-static-hosting`.
-- Create a pull request in this repo.
+- Create a local fork of this repository with your changes.
+- Test that your changes build locally by running `swift package plugin generate-documentation --target TSPL --transform-for-static-hosting`.
+- Create a pull request in this repository.
 - Add @amartini51 and @krilnon as reviewers.
-- Check that your changes build in CI with a comment that requests `@swift-ci please test`.
+- Confirm that your changes build in CI by commenting `@swift-ci please test` on your pull request.
