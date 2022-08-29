@@ -36,4 +36,4 @@ Use the following steps when creating a new pull request:
 - Test that your changes build locally with `swift package plugin generate-documentation --target TSPL --transform-for-static-hosting`.
 - Create a pull request in this repo.
 - Add @amartini51 and @krilnon as reviewers.
-- Check that your changes build in CI by commenting with request "@swift-ci please test"."
+- Check that your changes build in CI with a comment that requests `@swift-ci please test`.
