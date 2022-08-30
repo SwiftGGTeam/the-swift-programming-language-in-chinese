@@ -233,12 +233,12 @@ and returns the value that's left over
 }
 
 Here's how the remainder operator works.
-To calculate `9 % 4`, you first work out how many `4`\ s will fit inside `9`:
+To calculate `9 % 4`, you first work out how many `4`s will fit inside `9`:
 
 ![](remainderInteger_2x.png)
 
 
-You can fit two `4`\ s inside `9`, and the remainder is `1` (shown in orange).
+You can fit two `4`s inside `9`, and the remainder is `1` (shown in orange).
 
 In Swift, this would be written as:
 
