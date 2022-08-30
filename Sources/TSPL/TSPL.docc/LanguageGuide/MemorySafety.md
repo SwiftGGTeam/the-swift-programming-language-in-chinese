@@ -1,5 +1,6 @@
-Memory Safety
-=============
+
+
+# Memory Safety
 
 By default, Swift prevents unsafe behavior from happening in your code.
 For example,
@@ -19,16 +20,15 @@ so you can avoid writing code that has conflicting access to memory.
 If your code does contain conflicts,
 you'll get a compile-time or runtime error.
 
-.. TODO: maybe re-introduce this text...
+@Comment {
+  TODO: maybe re-introduce this text...
+  
+  Memory safety refers to...
+  The term *safety* usually refers to :newTerm:`memory safety`...
+  Unsafe access to memory is available, if you ask for it explicitly...
+}
 
-   Memory safety refers to...
-   The term *safety* usually refers to :newTerm:`memory safety`...
-   Unsafe access to memory is available, if you ask for it explicitly...
-
-.. _MemorySafety_WhatIsExclusivity:
-
-Understanding Conflicting Access to Memory
-------------------------------------------
+## Understanding Conflicting Access to Memory
 
 Access to memory happens in your code
 when you do things like set the value of a variable
@@ -36,18 +36,32 @@ or pass an argument to a function.
 For example,
 the following code contains both a read access and a write access:
 
-.. testcode:: memory-read-write
+```swift
+// A write access to the memory where one is stored.
+var one = 1
 
-    // A write access to the memory where one is stored.
-    -> var one = 1
-    ---
-    // A read access from the memory where one is stored.
-    -> print("We're number \(one)!")
-    << We're number 1!
+// A read access from the memory where one is stored.
+print("We're number \(one)!")
+```
 
-.. Might be worth a different example,
-   or else I'm going to keep getting "We are Number One" stuck in my head.
-    
+
+@Comment {
+  - test: `memory-read-write`
+  
+  ```swifttest
+  // A write access to the memory where one is stored.
+  -> var one = 1
+  ---
+  // A read access from the memory where one is stored.
+  -> print("We're number \(one)!")
+  << We're number 1!
+  ```
+}
+
+@Comment {
+  Might be worth a different example,
+  or else I'm going to keep getting "We are Number One" stuck in my head.
+}
 
 A conflicting access to memory can occur
 when different parts of your code are trying
@@ -71,8 +85,8 @@ you can read any information from the budget
 and get a correct answer,
 as shown in the figure below.
 
-.. image:: ../images/memory_shopping_2x.png
-   :align: center
+![](memory_shopping_2x.png)
+
 
 While you're adding items to the budget,
 it's in a temporary, invalid state
@@ -95,30 +109,25 @@ either $5 or $320 could be the correct answer.
 Before you can fix the conflicting access,
 you have to determine what it was intended to do.
 
-.. note::
+> Note: If you've written concurrent or multithreaded code,
+> conflicting access to memory might be a familiar problem.
+> However,
+> the conflicting access discussed here can happen
+> on a single thread and
+> *doesn't* involve concurrent or multithreaded code.If you have conflicting access to memory
+> from within a single thread,
+> Swift guarantees that you'll get an error
+> at either compile time or runtime.
+> For multithreaded code,
+> use [Thread Sanitizer](https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early)
+> to help detect conflicting access across threads.
 
-   If you've written concurrent or multithreaded code,
-   conflicting access to memory might be a familiar problem.
-   However,
-   the conflicting access discussed here can happen
-   on a single thread and
-   *doesn't* involve concurrent or multithreaded code.
+@Comment {
+  TODO: The xref above doesn't seem to give enough information.
+  What should I be looking for when I get to the linked page?
+}
 
-   If you have conflicting access to memory
-   from within a single thread,
-   Swift guarantees that you'll get an error
-   at either compile time or runtime.
-   For multithreaded code,
-   use `Thread Sanitizer <https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early>`_
-   to help detect conflicting access across threads.
-
-.. TODO: The xref above doesn't seem to give enough information.
-   What should I be looking for when I get to the linked page?
-
-.. _Memory_Characteristics:
-
-Characteristics of Memory Access
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Characteristics of Memory Access
 
 There are three characteristics of memory access
 to consider in the context of conflicting access:
@@ -143,15 +152,17 @@ for example, a variable, constant, or property.
 The duration of a memory access
 is either instantaneous or long-term.
 
-An operation is :newTerm:`atomic`
+An operation is *atomic*
 if it uses only C atomic operations;
 otherwise it's nonatomic.
-For a list of those functions, see the ``stdatomic(3)`` man page.
+For a list of those functions, see the `stdatomic(3)` man page.
 
-.. Using these functions from Swift requires some shimming -- for example:
-   https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
+@Comment {
+  Using these functions from Swift requires some shimming -- for example:
+  https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
+}
 
-An access is :newTerm:`instantaneous`
+An access is *instantaneous*
 if it's not possible for other code to run
 after that access starts but before it ends.
 By their nature, two instantaneous accesses can't happen at the same time.
@@ -159,38 +170,51 @@ Most memory access is instantaneous.
 For example,
 all the read and write accesses in the code listing below are instantaneous:
 
-.. testcode:: memory-instantaneous
+```swift
+func oneMore(than number: Int) -> Int {
+    return number + 1
+}
 
-    -> func oneMore(than number: Int) -> Int {
-           return number + 1
-       }
-    ---
-    -> var myNumber = 1
-    -> myNumber = oneMore(than: myNumber)
-    -> print(myNumber)
-    <- 2
+var myNumber = 1
+myNumber = oneMore(than: myNumber)
+print(myNumber)
+// Prints "2"
+```
+
+
+@Comment {
+  - test: `memory-instantaneous`
+  
+  ```swifttest
+  -> func oneMore(than number: Int) -> Int {
+         return number + 1
+     }
+  ---
+  -> var myNumber = 1
+  -> myNumber = oneMore(than: myNumber)
+  -> print(myNumber)
+  <- 2
+  ```
+}
 
 However,
 there are several ways to access memory,
-called :newTerm:`long-term` accesses,
+called *long-term* accesses,
 that span the execution of other code.
 The difference between instantaneous access and long-term access
 is that it’s possible for other code to run
 after a long-term access starts but before it ends,
-which is called :newTerm:`overlap`.
+which is called *overlap*.
 A long-term access can overlap
 with other long-term accesses and instantaneous accesses.
 
-Overlapping accesses appear primarily in code that uses 
+Overlapping accesses appear primarily in code that uses
 in-out parameters in functions and methods
 or mutating methods of a structure.
 The specific kinds of Swift code that use long-term accesses
 are discussed in the sections below.
 
-.. _MemorySafety_Inout:
-
-Conflicting Access to In-Out Parameters
----------------------------------------
+## Conflicting Access to In-Out Parameters
 
 A function has long-term write access
 to all of its in-out parameters.
@@ -207,55 +231,86 @@ even if scoping rules and access control would otherwise permit it ---
 any access to the original creates a conflict.
 For example:
 
-.. testcode:: memory-increment
+```swift
+var stepSize = 1
 
-    -> var stepSize = 1
-    ---
-    -> func increment(_ number: inout Int) {
-           number += stepSize
-       }
-    ---
-    -> increment(&stepSize)
-    // Error: conflicting accesses to stepSize
-    xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x10e86b032).
-    xx Current access (a read) started at:
+func increment(_ number: inout Int) {
+    number += stepSize
+}
+
+increment(&stepSize)
+// Error: conflicting accesses to stepSize
+```
+
+
+@Comment {
+  - test: `memory-increment`
+  
+  ```swifttest
+  -> var stepSize = 1
+  ---
+  -> func increment(_ number: inout Int) {
+         number += stepSize
+     }
+  ---
+  -> increment(&stepSize)
+  // Error: conflicting accesses to stepSize
+  xx Simultaneous accesses to 0x10e8667d8, but modification requires exclusive access.
+  xx Previous access (a modification) started at  (0x10e86b032).
+  xx Current access (a read) started at:
+  ```
+}
 
 In the code above,
-``stepSize`` is a global variable,
-and it's normally accessible from within ``increment(_:)``.
+`stepSize` is a global variable,
+and it's normally accessible from within `increment(_:)`.
 However,
-the read access to ``stepSize`` overlaps with
-the write access to ``number``.
+the read access to `stepSize` overlaps with
+the write access to `number`.
 As shown in the figure below,
-both ``number`` and ``stepSize`` refer to the same location in memory.
+both `number` and `stepSize` refer to the same location in memory.
 The read and write accesses
 refer to the same memory and they overlap,
 producing a conflict.
 
-.. image:: ../images/memory_increment_2x.png
-   :align: center
+![](memory_increment_2x.png)
+
 
 One way to solve this conflict
-is to make an explicit copy of ``stepSize``:
+is to make an explicit copy of `stepSize`:
 
-.. testcode:: memory-increment-copy
+```swift
+// Make an explicit copy.
+var copyOfStepSize = stepSize
+increment(&copyOfStepSize)
 
-    >> var stepSize = 1
-    >> func increment(_ number: inout Int) {
-    >>     number += stepSize
-    >> }
-    // Make an explicit copy.
-    -> var copyOfStepSize = stepSize
-    -> increment(&copyOfStepSize)
-    ---
-    // Update the original.
-    -> stepSize = copyOfStepSize
-    /> stepSize is now \(stepSize)
-    </ stepSize is now 2
+// Update the original.
+stepSize = copyOfStepSize
+// stepSize is now 2
+```
 
-When you make a copy of ``stepSize`` before calling ``increment(_:)``,
-it's clear that the value of ``copyOfStepSize`` is incremented
+
+@Comment {
+  - test: `memory-increment-copy`
+  
+  ```swifttest
+  >> var stepSize = 1
+  >> func increment(_ number: inout Int) {
+  >>     number += stepSize
+  >> }
+  // Make an explicit copy.
+  -> var copyOfStepSize = stepSize
+  -> increment(&copyOfStepSize)
+  ---
+  // Update the original.
+  -> stepSize = copyOfStepSize
+  /> stepSize is now \(stepSize)
+  </ stepSize is now 2
+  ```
+}
+
+When you make a copy of `stepSize` before calling `increment(_:)`,
+it's clear that the value of `copyOfStepSize` is incremented
 by the current step size.
 The read access ends before the write access starts,
 so there isn't a conflict.
@@ -268,170 +323,229 @@ of the same function
 produces a conflict.
 For example:
 
-.. testcode:: memory-balance
+```swift
+func balance(_ x: inout Int, _ y: inout Int) {
+    let sum = x + y
+    x = sum / 2
+    y = sum - x
+}
+var playerOneScore = 42
+var playerTwoScore = 30
+balance(&playerOneScore, &playerTwoScore)  // OK
+balance(&playerOneScore, &playerOneScore)
+// Error: conflicting accesses to playerOneScore
+```
 
-    -> func balance(_ x: inout Int, _ y: inout Int) {
-           let sum = x + y
-           x = sum / 2
-           y = sum - x
-       }
-    -> var playerOneScore = 42
-    -> var playerTwoScore = 30
-    -> balance(&playerOneScore, &playerTwoScore)  // OK
-    -> balance(&playerOneScore, &playerOneScore)
-    // Error: conflicting accesses to playerOneScore
-    !$ error: inout arguments are not allowed to alias each other
-    !! balance(&playerOneScore, &playerOneScore)
-    !!                          ^~~~~~~~~~~~~~~
-    !$ note: previous aliasing argument
-    !! balance(&playerOneScore, &playerOneScore)
-    !!         ^~~~~~~~~~~~~~~
-    !$ error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
-    !! balance(&playerOneScore, &playerOneScore)
-    !!                          ^~~~~~~~~~~~~~~
-    !$ note: conflicting access is here
-    !! balance(&playerOneScore, &playerOneScore)
-    !!         ^~~~~~~~~~~~~~~
 
-The ``balance(_:_:)`` function above
+@Comment {
+  - test: `memory-balance`
+  
+  ```swifttest
+  -> func balance(_ x: inout Int, _ y: inout Int) {
+         let sum = x + y
+         x = sum / 2
+         y = sum - x
+     }
+  -> var playerOneScore = 42
+  -> var playerTwoScore = 30
+  -> balance(&playerOneScore, &playerTwoScore)  // OK
+  -> balance(&playerOneScore, &playerOneScore)
+  // Error: conflicting accesses to playerOneScore
+  !$ error: inout arguments are not allowed to alias each other
+  !! balance(&playerOneScore, &playerOneScore)
+  !!                          ^~~~~~~~~~~~~~~
+  !$ note: previous aliasing argument
+  !! balance(&playerOneScore, &playerOneScore)
+  !!         ^~~~~~~~~~~~~~~
+  !$ error: overlapping accesses to 'playerOneScore', but modification requires exclusive access; consider copying to a local variable
+  !! balance(&playerOneScore, &playerOneScore)
+  !!                          ^~~~~~~~~~~~~~~
+  !$ note: conflicting access is here
+  !! balance(&playerOneScore, &playerOneScore)
+  !!         ^~~~~~~~~~~~~~~
+  ```
+}
+
+The `balance(_:_:)` function above
 modifies its two parameters
 to divide the total value evenly between them.
-Calling it with ``playerOneScore`` and ``playerTwoScore`` as arguments
+Calling it with `playerOneScore` and `playerTwoScore` as arguments
 doesn't produce a conflict ---
 there are two write accesses that overlap in time,
 but they access different locations in memory.
 In contrast,
-passing ``playerOneScore`` as the value for both parameters
+passing `playerOneScore` as the value for both parameters
 produces a conflict
 because it tries to perform two write accesses
 to the same location in memory at the same time.
 
-.. note::
+> Note: Because operators are functions,
+> they can also have long-term accesses to their in-out parameters.
+> For example, if `balance(_:_:)` was an operator function named `<^>`,
+> writing `playerOneScore <^> playerOneScore`
+> would result in the same conflict
+> as `balance(&playerOneScore, &playerOneScore)`.
 
-    Because operators are functions,
-    they can also have long-term accesses to their in-out parameters.
-    For example, if ``balance(_:_:)`` was an operator function named ``<^>``,
-    writing ``playerOneScore <^> playerOneScore``
-    would result in the same conflict
-    as ``balance(&playerOneScore, &playerOneScore)``.
+## Conflicting Access to self in Methods
 
-.. _MemorySafety_Methods:
+@Comment {
+  This (probably?) applies to all value types,
+  but structures are the only place you can observe it.
+  Enumerations can have mutating methods
+  but you can't mutate their associated values in place,
+  and tuples can't have methods.
+}
 
-Conflicting Access to self in Methods
--------------------------------------
+@Comment {
+  Methods behave like self is passed to the method as inout
+  because, under the hood, that's exactly what happens.
+}
 
-.. This (probably?) applies to all value types,
-   but structures are the only place you can observe it.
-   Enumerations can have mutating methods
-   but you can't mutate their associated values in place,
-   and tuples can't have methods.
-
-.. Methods behave like self is passed to the method as inout
-   because, under the hood, that's exactly what happens.
-
-A mutating method on a structure has write access to ``self``
+A mutating method on a structure has write access to `self`
 for the duration of the method call.
 For example, consider a game where each player
 has a health amount, which decreases when taking damage,
 and an energy amount, which decreases when using special abilities.
 
-.. testcode:: memory-player-share-with-self
+```swift
+struct Player {
+    var name: String
+    var health: Int
+    var energy: Int
 
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> struct Player {
-           var name: String
-           var health: Int
-           var energy: Int
-           
-           static let maxHealth = 10
-           mutating func restoreHealth() {
-               health = Player.maxHealth
-           }
-       }
+    static let maxHealth = 10
+    mutating func restoreHealth() {
+        health = Player.maxHealth
+    }
+}
+```
 
-In the ``restoreHealth()`` method above,
-a write access to ``self`` starts at the beginning of the method
+
+@Comment {
+  - test: `memory-player-share-with-self`
+  
+  ```swifttest
+  >> func balance(_ x: inout Int, _ y: inout Int) {
+  >>     let sum = x + y
+  >>     x = sum / 2
+  >>     y = sum - x
+  >> }
+  -> struct Player {
+         var name: String
+         var health: Int
+         var energy: Int
+  
+         static let maxHealth = 10
+         mutating func restoreHealth() {
+             health = Player.maxHealth
+         }
+     }
+  ```
+}
+
+In the `restoreHealth()` method above,
+a write access to `self` starts at the beginning of the method
 and lasts until the method returns.
 In this case, there's no other code
-inside ``restoreHealth()``
-that could have an overlapping access to the properties of a ``Player`` instance.
-The ``shareHealth(with:)`` method below
-takes another ``Player`` instance as an in-out parameter,
+inside `restoreHealth()`
+that could have an overlapping access to the properties of a `Player` instance.
+The `shareHealth(with:)` method below
+takes another `Player` instance as an in-out parameter,
 creating the possibility of overlapping accesses.
 
-.. testcode:: memory-player-share-with-self
+```swift
+extension Player {
+    mutating func shareHealth(with teammate: inout Player) {
+        balance(&teammate.health, &health)
+    }
+}
 
-    -> extension Player {
-           mutating func shareHealth(with teammate: inout Player) {
-               balance(&teammate.health, &health)
-           }
-       }
-    ---
-    -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
-    -> var maria = Player(name: "Maria", health: 5, energy: 10)
-    -> oscar.shareHealth(with: &maria)  // OK
+var oscar = Player(name: "Oscar", health: 10, energy: 10)
+var maria = Player(name: "Maria", health: 5, energy: 10)
+oscar.shareHealth(with: &maria)  // OK
+```
+
+
+@Comment {
+  - test: `memory-player-share-with-self`
+  
+  ```swifttest
+  -> extension Player {
+         mutating func shareHealth(with teammate: inout Player) {
+             balance(&teammate.health, &health)
+         }
+     }
+  ---
+  -> var oscar = Player(name: "Oscar", health: 10, energy: 10)
+  -> var maria = Player(name: "Maria", health: 5, energy: 10)
+  -> oscar.shareHealth(with: &maria)  // OK
+  ```
+}
 
 In the example above,
-calling the ``shareHealth(with:)`` method
+calling the `shareHealth(with:)` method
 for Oscar's player to share health with Maria's player
 doesn't cause a conflict.
-There's a write access to ``oscar`` during the method call
-because ``oscar`` is the value of ``self`` in a mutating method,
-and there's a write access to ``maria``
+There's a write access to `oscar` during the method call
+because `oscar` is the value of `self` in a mutating method,
+and there's a write access to `maria`
 for the same duration
-because ``maria`` was passed as an in-out parameter.
+because `maria` was passed as an in-out parameter.
 As shown in the figure below,
 they access different locations in memory.
 Even though the two write accesses overlap in time,
 they don't conflict.
 
-.. image:: ../images/memory_share_health_maria_2x.png
-   :align: center
+![](memory_share_health_maria_2x.png)
+
 
 However,
-if you pass ``oscar`` as the argument to ``shareHealth(with:)``,
+if you pass `oscar` as the argument to `shareHealth(with:)`,
 there's a conflict:
 
-.. testcode:: memory-player-share-with-self
+```swift
+oscar.shareHealth(with: &oscar)
+// Error: conflicting accesses to oscar
+```
 
-    -> oscar.shareHealth(with: &oscar)
-    // Error: conflicting accesses to oscar
-    !$ error: inout arguments are not allowed to alias each other
-    !! oscar.shareHealth(with: &oscar)
-    !!                         ^~~~~~
-    !$ note: previous aliasing argument
-    !! oscar.shareHealth(with: &oscar)
-    !! ^~~~~
-    !$ error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
-    !! oscar.shareHealth(with: &oscar)
-    !!                          ^~~~~
-    !$ note: conflicting access is here
-    !! oscar.shareHealth(with: &oscar)
-    !! ^~~~~~
 
-The mutating method needs write access to ``self``
+@Comment {
+  - test: `memory-player-share-with-self`
+  
+  ```swifttest
+  -> oscar.shareHealth(with: &oscar)
+  // Error: conflicting accesses to oscar
+  !$ error: inout arguments are not allowed to alias each other
+  !! oscar.shareHealth(with: &oscar)
+  !!                         ^~~~~~
+  !$ note: previous aliasing argument
+  !! oscar.shareHealth(with: &oscar)
+  !! ^~~~~
+  !$ error: overlapping accesses to 'oscar', but modification requires exclusive access; consider copying to a local variable
+  !! oscar.shareHealth(with: &oscar)
+  !!                          ^~~~~
+  !$ note: conflicting access is here
+  !! oscar.shareHealth(with: &oscar)
+  !! ^~~~~~
+  ```
+}
+
+The mutating method needs write access to `self`
 for the duration of the method,
-and the in-out parameter needs write access to ``teammate``
+and the in-out parameter needs write access to `teammate`
 for the same duration.
 Within the method,
-both ``self`` and ``teammate`` refer to
+both `self` and `teammate` refer to
 the same location in memory ---
 as shown in the figure below.
 The two write accesses
 refer to the same memory and they overlap,
 producing a conflict.
 
-.. image:: ../images/memory_share_health_oscar_2x.png
-   :align: center
+![](memory_share_health_oscar_2x.png)
 
-.. _MemorySafety_Properties:
 
-Conflicting Access to Properties
---------------------------------
+## Conflicting Access to Properties
 
 Types like structures, tuples, and enumerations
 are made up of individual constituent values,
@@ -444,31 +558,42 @@ For example,
 overlapping write accesses to the elements of a tuple
 produces a conflict:
 
-.. testcode:: memory-tuple
+```swift
+var playerInformation = (health: 10, energy: 20)
+balance(&playerInformation.health, &playerInformation.energy)
+// Error: conflicting access to properties of playerInformation
+```
 
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> var playerInformation = (health: 10, energy: 20)
-    -> balance(&playerInformation.health, &playerInformation.energy)
-    // Error: conflicting access to properties of playerInformation
-    xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x107952037).
-    xx Current access (a modification) started at:
+
+@Comment {
+  - test: `memory-tuple`
+  
+  ```swifttest
+  >> func balance(_ x: inout Int, _ y: inout Int) {
+  >>     let sum = x + y
+  >>     x = sum / 2
+  >>     y = sum - x
+  >> }
+  -> var playerInformation = (health: 10, energy: 20)
+  -> balance(&playerInformation.health, &playerInformation.energy)
+  // Error: conflicting access to properties of playerInformation
+  xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
+  xx Previous access (a modification) started at  (0x107952037).
+  xx Current access (a modification) started at:
+  ```
+}
 
 In the example above,
-calling ``balance(_:_:)`` on the elements of a tuple
+calling `balance(_:_:)` on the elements of a tuple
 produces a conflict
-because there are overlapping write accesses to ``playerInformation``.
-Both ``playerInformation.health`` and ``playerInformation.energy``
+because there are overlapping write accesses to `playerInformation`.
+Both `playerInformation.health` and `playerInformation.energy`
 are passed as in-out parameters,
-which means ``balance(_:_:)`` needs write access to them
+which means `balance(_:_:)` needs write access to them
 for the duration of the function call.
 In both cases, a write access to the tuple element
 requires a write access to the entire tuple.
-This means there are two write accesses to ``playerInformation``
+This means there are two write accesses to `playerInformation`
 with durations that overlap,
 causing a conflict.
 
@@ -477,54 +602,76 @@ for overlapping write accesses
 to the properties of a structure
 that's stored in a global variable.
 
-.. testcode:: memory-share-health-global
+```swift
+var holly = Player(name: "Holly", health: 10, energy: 10)
+balance(&holly.health, &holly.energy)  // Error
+```
 
-    >> struct Player {
-    >>     var name: String
-    >>     var health: Int
-    >>     var energy: Int
-    >> }
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> var holly = Player(name: "Holly", health: 10, energy: 10)
-    -> balance(&holly.health, &holly.energy)  // Error
-    xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
-    xx Previous access (a modification) started at  (0x107952037).
-    xx Current access (a modification) started at:
+
+@Comment {
+  - test: `memory-share-health-global`
+  
+  ```swifttest
+  >> struct Player {
+  >>     var name: String
+  >>     var health: Int
+  >>     var energy: Int
+  >> }
+  >> func balance(_ x: inout Int, _ y: inout Int) {
+  >>     let sum = x + y
+  >>     x = sum / 2
+  >>     y = sum - x
+  >> }
+  -> var holly = Player(name: "Holly", health: 10, energy: 10)
+  -> balance(&holly.health, &holly.energy)  // Error
+  xx Simultaneous accesses to 0x10794d848, but modification requires exclusive access.
+  xx Previous access (a modification) started at  (0x107952037).
+  xx Current access (a modification) started at:
+  ```
+}
 
 In practice,
 most access to the properties of a structure
 can overlap safely.
 For example,
-if the variable ``holly`` in the example above
+if the variable `holly` in the example above
 is changed to a local variable instead of a global variable,
 the compiler can prove that overlapping access
 to stored properties of the structure is safe:
 
-.. testcode:: memory-share-health-local
+```swift
+func someFunction() {
+    var oscar = Player(name: "Oscar", health: 10, energy: 10)
+    balance(&oscar.health, &oscar.energy)  // OK
+}
+```
 
-    >> struct Player {
-    >>     var name: String
-    >>     var health: Int
-    >>     var energy: Int
-    >> }
-    >> func balance(_ x: inout Int, _ y: inout Int) {
-    >>     let sum = x + y
-    >>     x = sum / 2
-    >>     y = sum - x
-    >> }
-    -> func someFunction() {
-           var oscar = Player(name: "Oscar", health: 10, energy: 10)
-           balance(&oscar.health, &oscar.energy)  // OK
-       }
-    >> someFunction()
+
+@Comment {
+  - test: `memory-share-health-local`
+  
+  ```swifttest
+  >> struct Player {
+  >>     var name: String
+  >>     var health: Int
+  >>     var energy: Int
+  >> }
+  >> func balance(_ x: inout Int, _ y: inout Int) {
+  >>     let sum = x + y
+  >>     x = sum / 2
+  >>     y = sum - x
+  >> }
+  -> func someFunction() {
+         var oscar = Player(name: "Oscar", health: 10, energy: 10)
+         balance(&oscar.health, &oscar.energy)  // OK
+     }
+  >> someFunction()
+  ```
+}
 
 In the example above,
 Oscar's health and energy are passed
-as the two in-out parameters to ``balance(_:_:)``.
+as the two in-out parameters to `balance(_:_:)`.
 The compiler can prove that memory safety is preserved
 because the two stored properties don't interact in any way.
 
@@ -551,52 +698,59 @@ if the following conditions apply:
 If the compiler can't prove the access is safe,
 it doesn't allow the access.
 
-.. Because there's no syntax
-   to mutate an enum's associated value in place,
-   we can't show that overlapping mutations
-   to two different associated values on the same enum
-   would violate exclusivity.
-   Otherwise, we'd want an example of that
-   in this section too --
-   it's the moral equivalent of property access.
+@Comment {
+  Because there's no syntax
+  to mutate an enum's associated value in place,
+  we can't show that overlapping mutations
+  to two different associated values on the same enum
+  would violate exclusivity.
+  Otherwise, we'd want an example of that
+  in this section too --
+  it's the moral equivalent of property access.
+}
 
-.. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+@Comment {
+  .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+}
 
-.. In Swift 4, the only way to create a long-term read
-   is to use implicit pointer conversion
-   when passing a value as a nonmutating unsafe pointer parameter,
-   as in the example below.
-   There's discussion in <rdar://problem/33115142>
-   about changing the semantics of nonmutating method calls
-   to be long-term reads,
-   but it's not clear if/when that change will land.
+@Comment {
+  In Swift 4, the only way to create a long-term read
+  is to use implicit pointer conversion
+  when passing a value as a nonmutating unsafe pointer parameter,
+  as in the example below.
+  There's discussion in <rdar://problem/33115142>
+  about changing the semantics of nonmutating method calls
+  to be long-term reads,
+  but it's not clear if/when that change will land.
+  
+  ::
+  
+      var global = 4
+  
+      func foo(_ x: UnsafePointer<Int>){
+          global = 7
+      }
+  
+      foo(&global)
+      print(global)
+  
+      // Simultaneous accesses to 0x106761618, but modification requires exclusive access.
+      // Previous access (a read) started at temp2`main + 87 (0x10675e417).
+      // Current access (a modification) started at:
+      // 0    libswiftCore.dylib                 0x0000000106ac7b90 swift_beginAccess + 605
+      // 1    temp2                              0x000000010675e500 foo(_:) + 39
+      // 2    temp2                              0x000000010675e3c0 main + 102
+      // 3    libdyld.dylib                      0x00007fff69c75144 start + 1
+      // Fatal access conflict detected.
+}
 
-   ::
-
-       var global = 4
-
-       func foo(_ x: UnsafePointer<Int>){
-           global = 7
-       }
-
-       foo(&global)
-       print(global)
-
-       // Simultaneous accesses to 0x106761618, but modification requires exclusive access.
-       // Previous access (a read) started at temp2`main + 87 (0x10675e417).
-       // Current access (a modification) started at:
-       // 0    libswiftCore.dylib                 0x0000000106ac7b90 swift_beginAccess + 605
-       // 1    temp2                              0x000000010675e500 foo(_:) + 39
-       // 2    temp2                              0x000000010675e3c0 main + 102
-       // 3    libdyld.dylib                      0x00007fff69c75144 start + 1
-       // Fatal access conflict detected.
-
-.. TEXT FOR THE FUTURE
-
-   Versions of Swift before Swift 5 ensure memory safety
-   by aggressively making a copy of the shared mutable state
-   when a conflicting access is possible.
-   The copy is no longer shared, preventing the possibility of conflicts.
-   However, the copying approach has a negative impact
-   on performance and memory usage.
-
+@Comment {
+  TEXT FOR THE FUTURE
+  
+  Versions of Swift before Swift 5 ensure memory safety
+  by aggressively making a copy of the shared mutable state
+  when a conflicting access is possible.
+  The copy is no longer shared, preventing the possibility of conflicts.
+  However, the copying approach has a negative impact
+  on performance and memory usage.
+}

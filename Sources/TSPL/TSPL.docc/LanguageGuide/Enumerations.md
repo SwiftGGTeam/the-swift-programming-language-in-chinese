@@ -1,7 +1,8 @@
-Enumerations
-============
 
-An :newTerm:`enumeration` defines a common type for a group of related values
+
+# Enumerations
+
+An *enumeration* defines a common type for a group of related values
 and enables you to work with those values in a type-safe way within your code.
 
 If you are familiar with C,
@@ -29,223 +30,329 @@ can be extended to expand their functionality beyond their original implementati
 and can conform to protocols to provide standard functionality.
 
 For more about these capabilities, see
-:doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
-:doc:`Extensions`, and :doc:`Protocols`.
+<doc:Properties>, <doc:Methods>, <doc:Initialization>,
+<doc:Extensions>, and <doc:Protocols>.
 
-.. TODO: this chapter should probably mention that enums without associated values
-   are hashable and equatable by default (and what that means in practice)
+@Comment {
+  TODO: this chapter should probably mention that enums without associated values
+  are hashable and equatable by default (and what that means in practice)
+}
 
-.. _Enumerations_EnumerationSyntax:
+## Enumeration Syntax
 
-Enumeration Syntax
-------------------
-
-You introduce enumerations with the ``enum`` keyword
+You introduce enumerations with the `enum` keyword
 and place their entire definition within a pair of braces:
 
-.. testcode:: enums
+```swift
+enum SomeEnumeration {
+   // enumeration definition goes here
+}
+```
 
-   -> enum SomeEnumeration {
-         // enumeration definition goes here
-      }
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> enum SomeEnumeration {
+        // enumeration definition goes here
+     }
+  ```
+}
 
 Here's an example for the four main points of a compass:
 
-.. testcode:: enums
+```swift
+enum CompassPoint {
+   case north
+   case south
+   case east
+   case west
+}
+```
 
-   -> enum CompassPoint {
-         case north
-         case south
-         case east
-         case west
-      }
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> enum CompassPoint {
+        case north
+        case south
+        case east
+        case west
+     }
+  ```
+}
 
 The values defined in an enumeration
-(such as ``north``, ``south``, ``east``, and ``west``)
-are its :newTerm:`enumeration cases`.
-You use the ``case`` keyword to introduce new enumeration cases.
+(such as `north`, `south`, `east`, and `west`)
+are its *enumeration cases*.
+You use the `case` keyword to introduce new enumeration cases.
 
-.. note::
-
-   Swift enumeration cases don't have an integer value set by default,
-   unlike languages like C and Objective-C.
-   In the ``CompassPoint`` example above,
-   ``north``, ``south``, ``east`` and ``west``
-   don't implicitly equal
-   ``0``, ``1``, ``2`` and ``3``.
-   Instead, the different enumeration cases are values in their own right,
-   with an explicitly defined type of ``CompassPoint``.
+> Note: Swift enumeration cases don't have an integer value set by default,
+> unlike languages like C and Objective-C.
+> In the `CompassPoint` example above,
+> `north`, `south`, `east` and `west`
+> don't implicitly equal
+> `0`, `1`, `2` and `3`.
+> Instead, the different enumeration cases are values in their own right,
+> with an explicitly defined type of `CompassPoint`.
 
 Multiple cases can appear on a single line, separated by commas:
 
-.. testcode:: enums
+```swift
+enum Planet {
+   case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
+}
+```
 
-   -> enum Planet {
-         case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
-      }
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> enum Planet {
+        case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
+     }
+  ```
+}
 
 Each enumeration definition defines a new type.
 Like other types in Swift, their names
-(such as ``CompassPoint`` and ``Planet``)
+(such as `CompassPoint` and `Planet`)
 start with a capital letter.
 Give enumeration types singular rather than plural names,
 so that they read as self-evident:
 
-.. testcode:: enums
+```swift
+var directionToHead = CompassPoint.west
+```
 
-   -> var directionToHead = CompassPoint.west
 
-The type of ``directionToHead`` is inferred
-when it's initialized with one of the possible values of ``CompassPoint``.
-Once ``directionToHead`` is declared as a ``CompassPoint``,
-you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> var directionToHead = CompassPoint.west
+  ```
+}
 
-.. testcode:: enums
+The type of `directionToHead` is inferred
+when it's initialized with one of the possible values of `CompassPoint`.
+Once `directionToHead` is declared as a `CompassPoint`,
+you can set it to a different `CompassPoint` value using a shorter dot syntax:
 
-   -> directionToHead = .east
+```swift
+directionToHead = .east
+```
 
-The type of ``directionToHead`` is already known,
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> directionToHead = .east
+  ```
+}
+
+The type of `directionToHead` is already known,
 and so you can drop the type when setting its value.
 This makes for highly readable code when working with explicitly typed enumeration values.
 
-.. _Enumerations_MatchingEnumerationValuesWithASwitchStatement:
+## Matching Enumeration Values with a Switch Statement
 
-Matching Enumeration Values with a Switch Statement
----------------------------------------------------
+You can match individual enumeration values with a `switch` statement:
 
-You can match individual enumeration values with a ``switch`` statement:
+```swift
+directionToHead = .south
+switch directionToHead {
+   case .north:
+      print("Lots of planets have a north")
+   case .south:
+      print("Watch out for penguins")
+   case .east:
+      print("Where the sun rises")
+   case .west:
+      print("Where the skies are blue")
+}
+// Prints "Watch out for penguins"
+```
 
-.. testcode:: enums
 
-   -> directionToHead = .south
-   -> switch directionToHead {
-         case .north:
-            print("Lots of planets have a north")
-         case .south:
-            print("Watch out for penguins")
-         case .east:
-            print("Where the sun rises")
-         case .west:
-            print("Where the skies are blue")
-      }
-   <- Watch out for penguins
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> directionToHead = .south
+  -> switch directionToHead {
+        case .north:
+           print("Lots of planets have a north")
+        case .south:
+           print("Watch out for penguins")
+        case .east:
+           print("Where the sun rises")
+        case .west:
+           print("Where the skies are blue")
+     }
+  <- Watch out for penguins
+  ```
+}
 
 You can read this code as:
 
-“Consider the value of ``directionToHead``.
-In the case where it equals ``.north``,
-print ``"Lots of planets have a north"``.
-In the case where it equals ``.south``,
-print ``"Watch out for penguins"``.”
+“Consider the value of `directionToHead`.
+In the case where it equals `.north`,
+print `"Lots of planets have a north"`.
+In the case where it equals `.south`,
+print `"Watch out for penguins"`.”
 
 …and so on.
 
-As described in :doc:`ControlFlow`,
-a ``switch`` statement must be exhaustive when considering an enumeration's cases.
-If the ``case`` for ``.west`` is omitted,
+As described in <doc:ControlFlow>,
+a `switch` statement must be exhaustive when considering an enumeration's cases.
+If the `case` for `.west` is omitted,
 this code doesn't compile,
-because it doesn't consider the complete list of ``CompassPoint`` cases.
+because it doesn't consider the complete list of `CompassPoint` cases.
 Requiring exhaustiveness ensures that enumeration cases aren't accidentally omitted.
 
-When it isn't appropriate to provide a ``case`` for every enumeration case,
-you can provide a ``default`` case to cover any cases that aren't addressed explicitly:
+When it isn't appropriate to provide a `case` for every enumeration case,
+you can provide a `default` case to cover any cases that aren't addressed explicitly:
 
-.. testcode:: enums
+```swift
+let somePlanet = Planet.earth
+switch somePlanet {
+   case .earth:
+      print("Mostly harmless")
+   default:
+      print("Not a safe place for humans")
+}
+// Prints "Mostly harmless"
+```
 
-   -> let somePlanet = Planet.earth
-   -> switch somePlanet {
-         case .earth:
-            print("Mostly harmless")
-         default:
-            print("Not a safe place for humans")
-      }
-   <- Mostly harmless
 
-.. _Enumerations_AllCases:
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> let somePlanet = Planet.earth
+  -> switch somePlanet {
+        case .earth:
+           print("Mostly harmless")
+        default:
+           print("Not a safe place for humans")
+     }
+  <- Mostly harmless
+  ```
+}
 
-Iterating over Enumeration Cases
---------------------------------
+## Iterating over Enumeration Cases
 
 For some enumerations,
 it's useful to have a collection of all of that enumeration's cases.
 You enable this by
-writing ``: CaseIterable`` after the enumeration's name.
+writing `: CaseIterable` after the enumeration's name.
 Swift exposes a collection of all the cases
-as an ``allCases`` property of the enumeration type.
+as an `allCases` property of the enumeration type.
 Here's an example:
 
-.. testcode:: enums
+```swift
+enum Beverage: CaseIterable {
+    case coffee, tea, juice
+}
+let numberOfChoices = Beverage.allCases.count
+print("\(numberOfChoices) beverages available")
+// Prints "3 beverages available"
+```
 
-    -> enum Beverage: CaseIterable {
-           case coffee, tea, juice
-       }
-    -> let numberOfChoices = Beverage.allCases.count
-    -> print("\(numberOfChoices) beverages available")
-    <- 3 beverages available
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> enum Beverage: CaseIterable {
+         case coffee, tea, juice
+     }
+  -> let numberOfChoices = Beverage.allCases.count
+  -> print("\(numberOfChoices) beverages available")
+  <- 3 beverages available
+  ```
+}
 
 In the example above,
-you write ``Beverage.allCases`` to access a collection
-that contains all of the cases of the ``Beverage`` enumeration.
-You can use ``allCases`` like any other collection ---
+you write `Beverage.allCases` to access a collection
+that contains all of the cases of the `Beverage` enumeration.
+You can use `allCases` like any other collection ---
 the collection's elements are instances of the enumeration type,
-so in this case they're ``Beverage`` values.
+so in this case they're `Beverage` values.
 The example above counts how many cases there are,
-and the example below uses a ``for``-``in`` loop to iterate over all the cases.
+and the example below uses a `for`-`in` loop to iterate over all the cases.
 
-.. testcode:: enums
+```swift
+for beverage in Beverage.allCases {
+    print(beverage)
+}
+// coffee
+// tea
+// juice
+```
 
-    -> for beverage in Beverage.allCases {
-           print(beverage)
-       }
-    << coffee
-    << tea
-    << juice
-    // coffee
-    // tea
-    // juice
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> for beverage in Beverage.allCases {
+         print(beverage)
+     }
+  << coffee
+  << tea
+  << juice
+  // coffee
+  // tea
+  // juice
+  ```
+}
 
 The syntax used in the examples above
 marks the enumeration as conforming to the
-`CaseIterable <//apple_ref/swift/fake/CaseIterable>`_ protocol.
-For information about protocols, see :doc:`Protocols`.
+[CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) protocol.
+For information about protocols, see <doc:Protocols>.
 
-.. _Enumerations_AssociatedValues:
-
-Associated Values
------------------
+## Associated Values
 
 The examples in the previous section show how the cases of an enumeration are
 a defined (and typed) value in their own right.
-You can set a constant or variable to ``Planet.earth``,
+You can set a constant or variable to `Planet.earth`,
 and check for this value later.
 However, it's sometimes useful to be able to store
 values of other types alongside these case values.
-This additional information is called an :newTerm:`associated value`,
+This additional information is called an *associated value*,
 and it varies each time you use that case as a value in your code.
 
 You can define Swift enumerations to store associated values of any given type,
 and the value types can be different for each case of the enumeration if needed.
 Enumerations similar to these are known as
-:newTerm:`discriminated unions`, :newTerm:`tagged unions`, or :newTerm:`variants`
+*discriminated unions*, *tagged unions*, or *variants*
 in other programming languages.
 
 For example, suppose an inventory tracking system needs to
 track products by two different types of barcode.
 Some products are labeled with 1D barcodes in UPC format,
-which uses the numbers ``0`` to ``9``.
+which uses the numbers `0` to `9`.
 Each barcode has a number system digit,
 followed by five manufacturer code digits and five product code digits.
 These are followed by a check digit to verify that the code has been scanned correctly:
 
-.. image:: ../images/barcode_UPC_2x.png
-   :align: center
+![](barcode_UPC_2x.png)
+
 
 Other products are labeled with 2D barcodes in QR code format,
 which can use any ISO 8859-1 character
 and can encode a string up to 2,953 characters long:
 
-.. image:: ../images/barcode_QR_2x.png
-   :align: center
+![](barcode_QR_2x.png)
+
 
 It's convenient for an inventory tracking system to store UPC barcodes
 as a tuple of four integers,
@@ -253,128 +360,193 @@ and QR code barcodes as a string of any length.
 
 In Swift, an enumeration to define product barcodes of either type might look like this:
 
-.. testcode:: enums
+```swift
+enum Barcode {
+   case upc(Int, Int, Int, Int)
+   case qrCode(String)
+}
+```
 
-   -> enum Barcode {
-         case upc(Int, Int, Int, Int)
-         case qrCode(String)
-      }
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> enum Barcode {
+        case upc(Int, Int, Int, Int)
+        case qrCode(String)
+     }
+  ```
+}
 
 This can be read as:
 
-“Define an enumeration type called ``Barcode``,
-which can take either a value of ``upc``
-with an associated value of type (``Int``, ``Int``, ``Int``, ``Int``),
-or a value of ``qrCode`` with an associated value of type ``String``.”
+“Define an enumeration type called `Barcode`,
+which can take either a value of `upc`
+with an associated value of type (`Int`, `Int`, `Int`, `Int`),
+or a value of `qrCode` with an associated value of type `String`.”
 
-This definition doesn't provide any actual ``Int`` or ``String`` values ---
+This definition doesn't provide any actual `Int` or `String` values ---
 it just defines the *type* of associated values
-that ``Barcode`` constants and variables can store
-when they're equal to ``Barcode.upc`` or ``Barcode.qrCode``.
+that `Barcode` constants and variables can store
+when they're equal to `Barcode.upc` or `Barcode.qrCode`.
 
 You can then create new barcodes using either type:
 
-.. testcode:: enums
+```swift
+var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+```
 
-   -> var productBarcode = Barcode.upc(8, 85909, 51226, 3)
 
-This example creates a new variable called ``productBarcode``
-and assigns it a value of ``Barcode.upc``
-with an associated tuple value of ``(8, 85909, 51226, 3)``.
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+  ```
+}
+
+This example creates a new variable called `productBarcode`
+and assigns it a value of `Barcode.upc`
+with an associated tuple value of `(8, 85909, 51226, 3)`.
 
 You can assign the same product a different type of barcode:
 
-.. testcode:: enums
+```swift
+productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+```
 
-   -> productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
+  ```
+}
 
 At this point,
-the original ``Barcode.upc`` and its integer values are replaced by
-the new ``Barcode.qrCode`` and its string value.
-Constants and variables of type ``Barcode`` can store either a ``.upc`` or a ``.qrCode``
+the original `Barcode.upc` and its integer values are replaced by
+the new `Barcode.qrCode` and its string value.
+Constants and variables of type `Barcode` can store either a `.upc` or a `.qrCode`
 (together with their associated values),
 but they can store only one of them at any given time.
 
 You can check the different barcode types using a switch statement,
 similar to the example in
-:ref:`Enumerations_MatchingEnumerationValuesWithASwitchStatement`.
+<doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
 This time, however,
 the associated values are extracted as part of the switch statement.
-You extract each associated value as a constant (with the ``let`` prefix)
-or a variable (with the ``var`` prefix)
-for use within the ``switch`` case's body:
+You extract each associated value as a constant (with the `let` prefix)
+or a variable (with the `var` prefix)
+for use within the `switch` case's body:
 
-.. testcode:: enums
+```swift
+switch productBarcode {
+   case .upc(let numberSystem, let manufacturer, let product, let check):
+      print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+   case .qrCode(let productCode):
+      print("QR code: \(productCode).")
+}
+// Prints "QR code: ABCDEFGHIJKLMNOP."
+```
 
-   -> switch productBarcode {
-         case .upc(let numberSystem, let manufacturer, let product, let check):
-            print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
-         case .qrCode(let productCode):
-            print("QR code: \(productCode).")
-      }
-   <- QR code: ABCDEFGHIJKLMNOP.
+
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> switch productBarcode {
+        case .upc(let numberSystem, let manufacturer, let product, let check):
+           print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+        case .qrCode(let productCode):
+           print("QR code: \(productCode).")
+     }
+  <- QR code: ABCDEFGHIJKLMNOP.
+  ```
+}
 
 If all of the associated values for an enumeration case
 are extracted as constants, or if all are extracted as variables,
-you can place a single ``var`` or ``let`` annotation before the case name, for brevity:
+you can place a single `var` or `let` annotation before the case name, for brevity:
 
-.. testcode:: enums
+```swift
+switch productBarcode {
+   case let .upc(numberSystem, manufacturer, product, check):
+      print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
+   case let .qrCode(productCode):
+      print("QR code: \(productCode).")
+}
+// Prints "QR code: ABCDEFGHIJKLMNOP."
+```
 
-   -> switch productBarcode {
-         case let .upc(numberSystem, manufacturer, product, check):
-            print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
-         case let .qrCode(productCode):
-            print("QR code: \(productCode).")
-      }
-   <- QR code: ABCDEFGHIJKLMNOP.
 
-.. _Enumerations_RawValues:
+@Comment {
+  - test: `enums`
+  
+  ```swifttest
+  -> switch productBarcode {
+        case let .upc(numberSystem, manufacturer, product, check):
+           print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
+        case let .qrCode(productCode):
+           print("QR code: \(productCode).")
+     }
+  <- QR code: ABCDEFGHIJKLMNOP.
+  ```
+}
 
-Raw Values
-----------
+## Raw Values
 
-The barcode example in :ref:`Enumerations_AssociatedValues`
+The barcode example in <doc:Enumerations#Associated-Values>
 shows how cases of an enumeration can declare that they store
 associated values of different types.
 As an alternative to associated values,
 enumeration cases can come prepopulated with default values
-(called :newTerm:`raw values`),
+(called *raw values*),
 which are all of the same type.
 
 Here's an example that stores raw ASCII values alongside named enumeration cases:
 
-.. testcode:: rawValues
+```swift
+enum ASCIIControlCharacter: Character {
+   case tab = "\t"
+   case lineFeed = "\n"
+   case carriageReturn = "\r"
+}
+```
 
-   -> enum ASCIIControlCharacter: Character {
-         case tab = "\t"
-         case lineFeed = "\n"
-         case carriageReturn = "\r"
-      }
 
-Here, the raw values for an enumeration called ``ASCIIControlCharacter``
-are defined to be of type ``Character``,
+@Comment {
+  - test: `rawValues`
+  
+  ```swifttest
+  -> enum ASCIIControlCharacter: Character {
+        case tab = "\t"
+        case lineFeed = "\n"
+        case carriageReturn = "\r"
+     }
+  ```
+}
+
+Here, the raw values for an enumeration called `ASCIIControlCharacter`
+are defined to be of type `Character`,
 and are set to some of the more common ASCII control characters.
-``Character`` values are described in :doc:`StringsAndCharacters`.
+`Character` values are described in <doc:StringsAndCharacters>.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
 
-.. note::
+> Note: Raw values are *not* the same as associated values.
+> Raw values are set to prepopulated values
+> when you first define the enumeration in your code,
+> like the three ASCII codes above.
+> The raw value for a particular enumeration case is always the same.
+> Associated values are set when you create a new constant or variable
+> based on one of the enumeration's cases,
+> and can be different each time you do so.
 
-   Raw values are *not* the same as associated values.
-   Raw values are set to prepopulated values
-   when you first define the enumeration in your code,
-   like the three ASCII codes above.
-   The raw value for a particular enumeration case is always the same.
-   Associated values are set when you create a new constant or variable
-   based on one of the enumeration's cases,
-   and can be different each time you do so.
-
-.. _Enumerations_ImplicitlyAssignedRawValues:
-
-Implicitly Assigned Raw Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Implicitly Assigned Raw Values
 
 When you're working with enumerations that store integer or string raw values,
 you don't have to explicitly assign a raw value for each case.
@@ -382,183 +554,300 @@ When you don't, Swift automatically assigns the values for you.
 
 For example, when integers are used for raw values,
 the implicit value for each case is one more than the previous case.
-If the first case doesn't have a value set, its value is ``0``.
+If the first case doesn't have a value set, its value is `0`.
 
-The enumeration below is a refinement of the earlier ``Planet`` enumeration,
+The enumeration below is a refinement of the earlier `Planet` enumeration,
 with integer raw values to represent each planet's order from the sun:
 
-.. testcode:: rawValues
+```swift
+enum Planet: Int {
+   case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+}
+```
 
-   -> enum Planet: Int {
-         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
-      }
+
+@Comment {
+  - test: `rawValues`
+  
+  ```swifttest
+  -> enum Planet: Int {
+        case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+     }
+  ```
+}
 
 In the example above,
-``Planet.mercury`` has an explicit raw value of ``1``,
-``Planet.venus`` has an implicit raw value of ``2``, and so on.
+`Planet.mercury` has an explicit raw value of `1`,
+`Planet.venus` has an implicit raw value of `2`, and so on.
 
 When strings are used for raw values,
 the implicit value for each case is the text of that case's name.
 
-The enumeration below is a refinement of the earlier ``CompassPoint`` enumeration,
+The enumeration below is a refinement of the earlier `CompassPoint` enumeration,
 with string raw values to represent each direction's name:
 
-.. testcode:: rawValues
+```swift
+enum CompassPoint: String {
+   case north, south, east, west
+}
+```
 
-   -> enum CompassPoint: String {
-         case north, south, east, west
-      }
+
+@Comment {
+  - test: `rawValues`
+  
+  ```swifttest
+  -> enum CompassPoint: String {
+        case north, south, east, west
+     }
+  ```
+}
 
 In the example above,
-``CompassPoint.south`` has an implicit raw value of ``"south"``, and so on.
+`CompassPoint.south` has an implicit raw value of `"south"`, and so on.
 
-You access the raw value of an enumeration case with its ``rawValue`` property:
+You access the raw value of an enumeration case with its `rawValue` property:
 
-.. testcode:: rawValues
+```swift
+let earthsOrder = Planet.earth.rawValue
+// earthsOrder is 3
 
-   -> let earthsOrder = Planet.earth.rawValue
-   /> earthsOrder is \(earthsOrder)
-   </ earthsOrder is 3
-   ---
-   -> let sunsetDirection = CompassPoint.west.rawValue
-   /> sunsetDirection is \"\(sunsetDirection)\"
-   </ sunsetDirection is "west"
+let sunsetDirection = CompassPoint.west.rawValue
+// sunsetDirection is "west"
+```
 
 
-.. _Enumerations_InitializingFromARawValue:
+@Comment {
+  - test: `rawValues`
+  
+  ```swifttest
+  -> let earthsOrder = Planet.earth.rawValue
+  /> earthsOrder is \(earthsOrder)
+  </ earthsOrder is 3
+  ---
+  -> let sunsetDirection = CompassPoint.west.rawValue
+  /> sunsetDirection is \"\(sunsetDirection)\"
+  </ sunsetDirection is "west"
+  ```
+}
 
-Initializing from a Raw Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Initializing from a Raw Value
 
 If you define an enumeration with a raw-value type,
 the enumeration automatically receives an initializer
-that takes a value of the raw value's type (as a parameter called ``rawValue``)
-and returns either an enumeration case or ``nil``.
+that takes a value of the raw value's type (as a parameter called `rawValue`)
+and returns either an enumeration case or `nil`.
 You can use this initializer to try to create a new instance of the enumeration.
 
-This example identifies Uranus from its raw value of ``7``:
+This example identifies Uranus from its raw value of `7`:
 
-.. testcode:: rawValues
+```swift
+let possiblePlanet = Planet(rawValue: 7)
+// possiblePlanet is of type Planet? and equals Planet.uranus
+```
 
-   -> let possiblePlanet = Planet(rawValue: 7)
-   >> print(type(of: possiblePlanet))
-   << Optional<Planet>
-   >> assert(possiblePlanet == .uranus)
-   // possiblePlanet is of type Planet? and equals Planet.uranus
 
-Not all possible ``Int`` values will find a matching planet, however.
+@Comment {
+  - test: `rawValues`
+  
+  ```swifttest
+  -> let possiblePlanet = Planet(rawValue: 7)
+  >> print(type(of: possiblePlanet))
+  << Optional<Planet>
+  >> assert(possiblePlanet == .uranus)
+  // possiblePlanet is of type Planet? and equals Planet.uranus
+  ```
+}
+
+Not all possible `Int` values will find a matching planet, however.
 Because of this, the raw value initializer always returns an *optional* enumeration case.
-In the example above, ``possiblePlanet`` is of type ``Planet?``,
-or “optional ``Planet``.”
+In the example above, `possiblePlanet` is of type `Planet?`,
+or “optional `Planet`.”
 
-.. note::
+> Note: The raw value initializer is a failable initializer,
+> because not every raw value will return an enumeration case.
+> For more information, see <doc:Declarations#Failable-Initializers>.
 
-   The raw value initializer is a failable initializer,
-   because not every raw value will return an enumeration case.
-   For more information, see :ref:`Declarations_FailableInitializers`.
+If you try to find a planet with a position of `11`,
+the optional `Planet` value returned by the raw value initializer will be `nil`:
 
-If you try to find a planet with a position of ``11``,
-the optional ``Planet`` value returned by the raw value initializer will be ``nil``:
+```swift
+let positionToFind = 11
+if let somePlanet = Planet(rawValue: positionToFind) {
+   switch somePlanet {
+      case .earth:
+         print("Mostly harmless")
+      default:
+         print("Not a safe place for humans")
+   }
+} else {
+   print("There isn't a planet at position \(positionToFind)")
+}
+// Prints "There isn't a planet at position 11"
+```
 
-.. testcode:: rawValues
 
-   -> let positionToFind = 11
-   -> if let somePlanet = Planet(rawValue: positionToFind) {
-         switch somePlanet {
-            case .earth:
-               print("Mostly harmless")
-            default:
-               print("Not a safe place for humans")
-         }
-      } else {
-         print("There isn't a planet at position \(positionToFind)")
-      }
-   <- There isn't a planet at position 11
+@Comment {
+  - test: `rawValues`
+  
+  ```swifttest
+  -> let positionToFind = 11
+  -> if let somePlanet = Planet(rawValue: positionToFind) {
+        switch somePlanet {
+           case .earth:
+              print("Mostly harmless")
+           default:
+              print("Not a safe place for humans")
+        }
+     } else {
+        print("There isn't a planet at position \(positionToFind)")
+     }
+  <- There isn't a planet at position 11
+  ```
+}
 
-This example uses optional binding to try to access a planet with a raw value of ``11``.
-The statement ``if let somePlanet = Planet(rawValue: 11)`` creates an optional ``Planet``,
-and sets ``somePlanet`` to the value of that optional ``Planet`` if it can be retrieved.
-In this case, it isn't possible to retrieve a planet with a position of ``11``,
-and so the ``else`` branch is executed instead.
+This example uses optional binding to try to access a planet with a raw value of `11`.
+The statement `if let somePlanet = Planet(rawValue: 11)` creates an optional `Planet`,
+and sets `somePlanet` to the value of that optional `Planet` if it can be retrieved.
+In this case, it isn't possible to retrieve a planet with a position of `11`,
+and so the `else` branch is executed instead.
 
-.. TODO: Switch around the order of this chapter so that all of the non-union stuff
-   is together, and the union bits (aka Associated Values) come last.
+@Comment {
+  TODO: Switch around the order of this chapter so that all of the non-union stuff
+  is together, and the union bits (aka Associated Values) come last.
+}
 
-.. _Enumerations_RecursiveEnumerations:
+## Recursive Enumerations
 
-Recursive Enumerations
-----------------------
-
-A :newTerm:`recursive enumeration` is an enumeration
+A *recursive enumeration* is an enumeration
 that has another instance of the enumeration
 as the associated value for one or more of the enumeration cases.
 You indicate that an enumeration case is recursive
-by writing ``indirect`` before it,
+by writing `indirect` before it,
 which tells the compiler to insert the necessary layer of indirection.
 
 For example, here is an enumeration that stores simple arithmetic expressions:
 
-.. testcode:: recursive-enum-intro
+```swift
+enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
 
-    -> enum ArithmeticExpression {
-           case number(Int)
-           indirect case addition(ArithmeticExpression, ArithmeticExpression)
-           indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
-       }
 
-You can also write ``indirect`` before the beginning of the enumeration
+@Comment {
+  - test: `recursive-enum-intro`
+  
+  ```swifttest
+  -> enum ArithmeticExpression {
+         case number(Int)
+         indirect case addition(ArithmeticExpression, ArithmeticExpression)
+         indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+     }
+  ```
+}
+
+You can also write `indirect` before the beginning of the enumeration
 to enable indirection for all of the enumeration's cases that have an associated value:
 
-.. testcode:: recursive-enum
+```swift
+indirect enum ArithmeticExpression {
+    case number(Int)
+    case addition(ArithmeticExpression, ArithmeticExpression)
+    case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
 
-    -> indirect enum ArithmeticExpression {
-           case number(Int)
-           case addition(ArithmeticExpression, ArithmeticExpression)
-           case multiplication(ArithmeticExpression, ArithmeticExpression)
-       }
+
+@Comment {
+  - test: `recursive-enum`
+  
+  ```swifttest
+  -> indirect enum ArithmeticExpression {
+         case number(Int)
+         case addition(ArithmeticExpression, ArithmeticExpression)
+         case multiplication(ArithmeticExpression, ArithmeticExpression)
+     }
+  ```
+}
 
 This enumeration can store three kinds of arithmetic expressions:
 a plain number,
 the addition of two expressions,
 and the multiplication of two expressions.
-The ``addition`` and ``multiplication`` cases have associated values
+The `addition` and `multiplication` cases have associated values
 that are also arithmetic expressions ---
 these associated values make it possible to nest expressions.
-For example, the expression ``(5 + 4) * 2``
+For example, the expression `(5 + 4) * 2`
 has a number on the right-hand side of the multiplication
 and another expression on the left-hand side of the multiplication.
 Because the data is nested,
 the enumeration used to store the data also needs to support nesting ---
 this means the enumeration needs to be recursive.
-The code below shows the ``ArithmeticExpression`` recursive enumeration
-being created for ``(5 + 4) * 2``:
+The code below shows the `ArithmeticExpression` recursive enumeration
+being created for `(5 + 4) * 2`:
 
-.. testcode:: recursive-enum
+```swift
+let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+```
 
-    -> let five = ArithmeticExpression.number(5)
-    -> let four = ArithmeticExpression.number(4)
-    -> let sum = ArithmeticExpression.addition(five, four)
-    -> let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+
+@Comment {
+  - test: `recursive-enum`
+  
+  ```swifttest
+  -> let five = ArithmeticExpression.number(5)
+  -> let four = ArithmeticExpression.number(4)
+  -> let sum = ArithmeticExpression.addition(five, four)
+  -> let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+  ```
+}
 
 A recursive function is a straightforward way
 to work with data that has a recursive structure.
 For example, here's a function that evaluates an arithmetic expression:
 
-.. testcode:: recursive-enum
+```swift
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+        case let .number(value):
+            return value
+        case let .addition(left, right):
+            return evaluate(left) + evaluate(right)
+        case let .multiplication(left, right):
+            return evaluate(left) * evaluate(right)
+    }
+}
 
-    -> func evaluate(_ expression: ArithmeticExpression) -> Int {
-           switch expression {
-               case let .number(value):
-                   return value
-               case let .addition(left, right):
-                   return evaluate(left) + evaluate(right)
-               case let .multiplication(left, right):
-                   return evaluate(left) * evaluate(right)
-           }
-       }
-    ---
-    -> print(evaluate(product))
-    <- 18
+print(evaluate(product))
+// Prints "18"
+```
+
+
+@Comment {
+  - test: `recursive-enum`
+  
+  ```swifttest
+  -> func evaluate(_ expression: ArithmeticExpression) -> Int {
+         switch expression {
+             case let .number(value):
+                 return value
+             case let .addition(left, right):
+                 return evaluate(left) + evaluate(right)
+             case let .multiplication(left, right):
+                 return evaluate(left) * evaluate(right)
+         }
+     }
+  ---
+  -> print(evaluate(product))
+  <- 18
+  ```
+}
 
 This function evaluates a plain number
 by simply returning the associated value.
