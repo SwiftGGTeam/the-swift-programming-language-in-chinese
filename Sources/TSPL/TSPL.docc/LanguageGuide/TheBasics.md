@@ -2,9 +2,9 @@
 
 # The Basics
 
-Swift is a new programming language for iOS, macOS, watchOS, and tvOS app development.
-Nonetheless, many parts of Swift will be familiar
-from your experience of developing in C and Objective-C.
+Swift is a programming language for iOS, macOS, watchOS, and tvOS app development.
+If you have prior programming experience in languages such as C or Objective-C,
+some parts of Swift will be familiar to you.
 
 Swift provides its own versions of all fundamental C and Objective-C types,
 including `Int` for integers, `Double` and `Float` for floating-point values,
