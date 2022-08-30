@@ -2727,3 +2727,14 @@ print(differentNumbers.allEqual())
   Protocol requirements can be marked as @unavailable, but this currently only works if they're also marked as @objc.
   Checking for (and calling) optional implementations via optional binding and closures
 }
+
+
+@Comment {
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+}

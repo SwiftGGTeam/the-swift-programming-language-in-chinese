@@ -1261,3 +1261,14 @@ The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
 use parentheses where they help to make your intentions clear.
+
+
+@Comment {
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+}
