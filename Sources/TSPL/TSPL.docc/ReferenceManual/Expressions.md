@@ -2459,7 +2459,7 @@ the closure is wrapped in `Optional` automatically.
   
   ```swifttest
   // These tests match the example types given above
-  // when describing what "structucally resembles" a function type.
+  // when describing what "structurally resembles" a function type.
   ---
   >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
   >> f1(x: 10) { $0 ? 1 : 100 }
@@ -2643,7 +2643,7 @@ avoid using `&` instead of using the unsafe APIs explicitly.
   // bullet 4
   >> takesUnsafePointerCChar(p: string)
   ---
-  // invailid conversions
+  // invalid conversions
   >> takesUnsafeMutablePointer(p: array)
   !$ error: cannot convert value of type '[Int]' to expected argument type 'UnsafeMutablePointer<Int>'
   !! takesUnsafeMutablePointer(p: array)

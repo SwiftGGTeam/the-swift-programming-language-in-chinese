@@ -341,7 +341,7 @@ you'll get compile-time error instead of introducing a bug.
   TODO closures can be async too -- outline
   
   like how you can have an async function, a closure con be async
-  if a closure contains 'await' that implicity makes it async
+  if a closure contains 'await' that implicitly makes it async
   you can mark it explicitly with "async -> in"
   
   (discussion of @MainActor closures can probably go here too)
@@ -433,7 +433,7 @@ by adding conformance to the
   whether this work is actually carried out in parallel
   depends on what's happening at run time.
   However,
-  the synax introduced in this section contrasts to the previous section
+  the syntax introduced in this section contrasts to the previous section
   in that async-let makes it *possible* for that work to be parallel.
 }
 
@@ -729,7 +729,7 @@ For more information about managing detached tasks,
 see [Task](https://developer.apple.com/documentation/swift/task).
 
 @Comment {
-  TODO Add some conceptual guidance abeut
+  TODO Add some conceptual guidance about
   when to make a method do its work in a detached task
   versus making the method itself async?
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
@@ -822,7 +822,7 @@ actor TemperatureLogger {
 
 
 @Comment {
-  - test: `actors, actors-implicity-sendable`
+  - test: `actors, actors-implicitly-sendable`
   
   ```swifttest
   -> actor TemperatureLogger {
@@ -940,7 +940,7 @@ This guarantee is known as *actor isolation*.
 @Comment {
   OUTLINE
   
-  Add this post-WWDC when we have a more solid story to tell aroud Sendable
+  Add this post-WWDC when we have a more solid story to tell around Sendable
   
    .. _Concurrency_ActorIsolation:
   

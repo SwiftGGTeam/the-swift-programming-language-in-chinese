@@ -1058,7 +1058,7 @@ Likewise, method and function declarations are written the same way.
   REFERENCE
   Shapes are used as the example object
   because they're familiar and they have a sense of properties
-  and a sense of inheritence/subcategorization.
+  and a sense of inheritance/subcategorization.
   They're not a perfect fit --
   they might be better off modeled as structures --
   but that wouldn't let them inherit behavior.

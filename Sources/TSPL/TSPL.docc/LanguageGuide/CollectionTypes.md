@@ -391,7 +391,7 @@ to try to append an item to the end of the array
 results in a runtime error.
 
 @Comment {
-  Unlike Ruby and Javascript, where accesing an invalid index
+  Unlike Ruby and Javascript, where accessing an invalid index
   extends the array with nil or similar placeholder values,
   to make that index become valid.
 }
