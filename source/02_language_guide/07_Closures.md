@@ -214,6 +214,35 @@ let strings = numbers.map {
 
 在上面的例子中，通过尾随闭包语法，优雅地在函数后封装了闭包的具体功能，而不再需要将整个闭包包裹在 `map(_:)` 方法的括号内。
 
+如果一个函数接受多个闭包，您需要省略第一个尾随闭包的参数标签，并为其余尾随闭包添加标签。例如，以下函数将为图片库加载一张图片：
+
+```swift
+func loadPicture(from server: Server, completion:(Picture) -> Void,
+		onFailure: () -> Void) {
+	if let picture = download("photo.jpg", from: server){
+		completion(picture)
+	}else{
+		onFailure()
+	}
+}
+```
+
+当您调用该函数以加载图片时，需要提供两个闭包。第一个闭包是一个完成处理程序，它在成功下载后加载图片；第二个闭包是一个错误处理程序，它向用户显示错误。
+
+```swift
+loadPicture(from: someServer){	picture in
+	someView.currentPicture = picture
+} onFailure: {
+	print("Couldn't download the next picture.")
+}
+```
+
+在本例中，`loadPicture(from:completion:onFailure:)`函数将它的网络任务分配到后台，并在网络任务完成时调用两个完成处理程序中的一个。通过这种方法编写函数，您将能够把负责处理网络故障的代码和成功下载后更新用户界面的代码干净地区分开，而不是只使用一个闭包处理两种情况。
+
+>注意
+>
+>完成处理程序可能很难阅读，特别是您必须嵌套多个完成处理程序时。另一种方法是使用异步代码，如章节[并发](./28_Concurrency.md#function-types-as-return-types)中所述。
+
 ## 值捕获 {#capturing-values}
 
 闭包可以在其被定义的上下文中*捕获*常量或变量。即使定义这些常量和变量的原作用域已经不存在，闭包仍然可以在闭包函数体内引用和修改这些值。
