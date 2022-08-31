@@ -635,7 +635,7 @@ The key type of a dictionary must conform to the Swift standard library `Hashabl
 
 @Comment {
   Used to have an xref to :ref:`CollectionTypes_HashValuesForSetTypes` here.
-  But it doesnt really work now that the Hashable content moved from Dictionary to Set.
+  But it doesn't really work now that the Hashable content moved from Dictionary to Set.
 }
 
 For a detailed discussion of the Swift standard library `Dictionary` type,
@@ -903,7 +903,7 @@ that are part of the interface defined by the *constraint*.
 
 @Comment {
   The wording above intentionally follows generic constraints
-  because the meaninging here and there is the same,
+  because the meaning here and there is the same,
   and the compiler uses the same machinery for both under the hood.
 }
 

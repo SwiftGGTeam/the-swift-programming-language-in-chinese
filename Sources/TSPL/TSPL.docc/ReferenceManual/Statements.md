@@ -388,7 +388,7 @@ in all of the case's patterns.
 
 @Comment {
   The discussion above about multi-pattern cases
-  matches discussion of multi-pattern catch under Do Stamement.
+  matches discussion of multi-pattern catch under Do Statement.
 }
 
 A `switch` statement can also include a default case, introduced by the `default` keyword.

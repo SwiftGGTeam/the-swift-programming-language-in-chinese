@@ -653,7 +653,7 @@ as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a
 
 @Comment {
   This is the first time we're talking about a specific compiler flag/option.
-  In the long term, the discussion of library evololution mode
+  In the long term, the discussion of library evolution mode
   will need to move to a new chapter in the guide
   that also talks about things like @available and ABI.
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
@@ -1418,7 +1418,7 @@ that varies between the conditional branches.
 
 For example, the code below defines a simple result builder
 that builds an array of integers.
-This code defines `Compontent` and `Expression` as type aliases,
+This code defines `Component` and `Expression` as type aliases,
 to make it easier to match the examples below to the list of methods above.
 
 ```swift

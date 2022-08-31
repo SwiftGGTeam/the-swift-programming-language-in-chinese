@@ -2090,7 +2090,7 @@ by one of the switch's other cases.
 @Comment {
   TODO: In Xcode, can you set a breakpoint on assertion/precondition failure?
   If so, mention that fact and give a link to a guide that shows you how.
-  In LLDB, 'breakpoint set -E swift' catches when errors are thown,
+  In LLDB, 'breakpoint set -E swift' catches when errors are thrown,
   but doesn't stop at assertions.
 }
 

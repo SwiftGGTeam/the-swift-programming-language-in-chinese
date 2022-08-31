@@ -693,7 +693,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 
 @Comment {
-  - test: `typealias-in-prototol`
+  - test: `typealias-in-protocol`
   
   ```swifttest
   -> protocol Sequence {
@@ -1624,7 +1624,7 @@ mark it with the `indirect` declaration modifier.
 An indirect case must have an associated value.
 
 @Comment {
-  TODO The word "enable" is kind of a weasle word.
+  TODO The word "enable" is kind of a weasel word.
   Better to have a more concrete discussion of exactly when
   it is and isn't used.
   For example, does "indirect enum { X(Int) } mark X as indirect?
@@ -2572,10 +2572,10 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   
   We use "associated" in contrast with generic parameters in interfaces in C#.
   The interesting thing there is that they don't have a name like Self for the
-  actual type, but you can name any of these independant types.    In theory,
+  actual type, but you can name any of these independent types.    In theory,
   they're often independent but in practice they're often not -- you have an
   interface parameterized on T, where all the uses of the thing are that T are
-  the same as Self.  Instead of having these independant parameters to an
+  the same as Self.  Instead of having these independent parameters to an
   interface, we have a named thing (Self) and all these other things that hand
   off of it.
   
@@ -3266,7 +3266,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 }
 
 @Comment {
-  - test: `types-cant-have-multiple-implict-conformances`
+  - test: `types-cant-have-multiple-implicit-conformances`
   
   ```swifttest
   >> protocol Loggable { }
