@@ -111,17 +111,7 @@ In the guide, we write “functions and methods”.
 
 ## headings
 
-The underlines for headings are as follows:
-
-1. `=` Chapter
-2. `-` Section
-3. `~` Subsection
-4. `+` Sub-subsection
-
-The syntax for ReStructured Text determines a heading’s level
-from the order that underlined lines appear in a document,
-so if you use the wrong level or skip levels
-the output might be surprising or wrong.
+Use number signs (`#`) for headings, not underlines.
 
 Although level four headings are allowed and the book does use them,
 you should generally try to avoid them.
