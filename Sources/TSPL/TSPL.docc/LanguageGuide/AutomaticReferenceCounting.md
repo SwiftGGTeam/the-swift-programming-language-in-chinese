@@ -964,7 +964,7 @@ that other courses might have.
   >> c = nil
   // Now that the C instance is deallocated, access to d.a is an error.
   // We manually nil out d.b, which is safe because d.b is an Optional and the
-  // enum stays in memory regardles of ARC deallocating the C instance.
+  // enum stays in memory regardless of ARC deallocating the C instance.
   >> d.b = nil
   >> print(d.b?.x as Any)
   << nil
