@@ -2608,7 +2608,7 @@ extension PrettyTextRepresentable  {
 
 @Comment {
   You can't write ``final`` on a default implementation
-  to prevent someone from overriding it in a conforming tpye.
+  to prevent someone from overriding it in a conforming type.
 }
 
 ### Adding Constraints to Protocol Extensions
