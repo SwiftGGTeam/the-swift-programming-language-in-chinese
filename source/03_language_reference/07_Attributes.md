@@ -685,6 +685,12 @@ struct ArrayBuilder {
 
 编译生成可执行程序的 Swift 代码最多只能拥有一个顶级代码入口，请参阅[顶级代码](../03_language_reference/06_Declarations.md#top-level-code)。
 
+### `unchecked` {#unchecked}
+
+该特性用于协议类型，将其作为已采用协议的类型声明列表的一部分，以关闭该协议要求的强制执行。
+
+仅支持[Sendable](https://developer.apple.com/documentation/swift/sendable)协议。
+
 ### `usableFromInline` {#usablefrominline}
 
 该特性用于函数、方法、计算属性、下标、构造器或析构器的声明，以在同一模块中允许该符号用于内联代码的声明。声明必须具有 `internal` 访问级别修饰符。被标记为 `usableFromInline` 的结构体或类它们属性的类型只能是被标记为 public 或者 `usableFromInline` 的类型。被标记为 `usableFromInline` 的枚举，它 case 的真实值或者关联类型只能是被标记为 public 或者 `usableFromInline` 的类型。
@@ -732,6 +738,14 @@ Interface Builder 特性是 Interface Builder 用来与 Xcode 同步的声明特
 ### `escaping` {#escaping}
 
 在函数或者方法声明上使用该特性，它表示参数将不会被存储以供延迟执行。这将确保参数不会超出函数调用的生命周期。在使用 `escaping` 特性声明的函数类型中访问属性和方法时需要显式地使用 `self.`。关于如何使用 `escaping` 特性的例子，请参阅 [逃逸闭包](../02_language_guide/07_Closures.md#escaping-closures)。
+
+### `Sendable` {#Sendable}
+
+在函数类型上使用该特性以指示该函数是闭包或可发送的。在函数类型上使用该特性与使非函数类型符合 `Sendable` 协议具有相同的意义。
+
+当一个函数或闭包被用在需要可发送值的情况，且该函数或闭包满足可发送的要求，则可以在该函数或闭包上推断此特性。
+
+可发送函数类型是对应的不可发送函数类型的一个子类型。
 
 ## Switch Case 特性 {#switch-case-attributes}
 
