@@ -131,7 +131,7 @@ See entry for *function*.
 Hyphenated to avoid the misreading as nono-ptional.
 Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
-See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
+See also commit 51c4fbc135a5e82343a0f5d9121f8a060b59f1a3 and <rdar://problem/44881846>.
 
 ## non-asynchronous
 
