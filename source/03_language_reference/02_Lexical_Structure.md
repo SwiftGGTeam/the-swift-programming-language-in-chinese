@@ -6,7 +6,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 
 ## 空白与注释 {#whitespace}
 
-空白（whitespace）有两个用途：分隔源文件中的符号和区分前缀、后缀和二元运算符（参见 [运算符](#operators)），在其他情况下空白则会被忽略。以下的字符会被当作空白：空格（U+0020）、换行符（U+000A）、回车符（U+000D）、水平制表符（U+0009）、垂直制表符（U+000B）、换页符（U+000C）以及空字符（U+0000）。
+空白（whitespace）有两个用途：分隔源文件中的符号和区分前缀、后缀和中缀运算符（参见 [运算符](#operators)），在其他情况下空白则会被忽略。以下的字符会被当作空白：空格（U+0020）、换行符（U+000A）、回车符（U+000D）、水平制表符（U+0009）、垂直制表符（U+000B）、换页符（U+000C）以及空字符（U+0000）。
 
 注释被编译器当作空白处理。单行注释由 `//` 开始直至遇到换行符（U+000A）或者回车符（U+000D）。多行注释由 `/*` 开始，以 `*/` 结束。多行注释允许嵌套，但注释标记必须成对出现。
 
@@ -18,7 +18,9 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 #### whitespace-item {#whitespace-item}
 > 
 > *空白项* → [断行符](#line-break)
-> 
+>
+> *空白项* → [行内空白](#inline-space)
+>
 > *空白项* → [注释](#comment)
 > 
 > *空白项* → [多行注释](#multiline-comment)
@@ -34,7 +36,14 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > 
 > *断行符* → U+000D 接着是 U+000A
 > 
-> 
+
+#### inline-spaces {#inline-spaces}
+>
+> *行内空白组* → [行内空白](#inline-space) [行内空白组](#inline-spaces)<sub>可选</sub>
+
+#### inline-space {#inline-space}
+> *行内空白* → U+0009 或 U+0020
+
 #### comment {#comment}
 > 
 > *注释* → // [注释内容](#comment-text)  [断行符](#line-break)
@@ -86,7 +95,9 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 > *标识符* → \`[头部标识符](#identifier-head) [标识符字符组](#identifier-characters)<sub>可选</sub>\`
 > 
 > *标识符* → [隐式参数名](#implicit-parameter-name)
-> 
+>
+> *标识符* → [属性包装器呈现值](#property-wrapper-projection)
+>
 > #### identifier-list {#identifier-list}
 >
 > *标识符列表* → [标识符](#identifier) | [标识符](#identifier) **,** [标识符列表](#identifier)
@@ -151,7 +162,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 下面这些被保留的关键字不允许用作标识符，除非使用反引号转义，具体描述请参考 [标识符](#identifiers)。除了 `inout`、`var` 以及 `let` 之外的关键字可以用作某个函数声明或者函数调用当中的外部参数名，无需添加反引号转义。当一个成员与一个关键字具有相同的名称时，不需要使用反引号来转义对该成员的引用，除非在引用该成员和使用该关键字之间存在歧义 - 例如，`self`，`Type` 和 `Protocol` 在显式的成员表达式中具有特殊的含义，因此它们必须在该上下文中使用反引号进行转义。
 
 * 用在声明中的关键字：`associatedtype`、`class`、`deinit`、`enum`、`extension`、`fileprivate `、`func`、`import`、`init`、`inout`、`internal`、`let`、`open`、`operator`、`private`、`precedencegroup`、`protocol`、`public`、`rethrows`、`static`、`struct`、`subscript`、`typealias` 以及 `var`。
-* 用在语句中的关键字：`break`、`case`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`throw`、`switch`、`where` 以及 `while`。
+* 用在语句中的关键字：`break`、`case`、`catch`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`throw`、`switch`、`where` 以及 `while`。
 * 用在表达式和类型中的关键字：`Any`、`as`、`catch`、`false`、`is`、`nil`、`rethrows`、`self`、`Self`、`super`、`throw`、`throws`、`true` 以及 `try `。
 * 用在模式中的关键字：`_`。
 * 以井字号（`#`）开头的关键字：`#available`、`#colorLiteral`、`#column`、`#dsohandle`、`#elseif`、`#else`、`#endif`、`#error`、`#fileID`、`#fileLiteral`、`#filePath`、`#file`、`#function`、`#if`、`#imageLiteral`、`#keyPath`、`#line`、`#selector`、`#sourceLocation` 以及 `#warning`。
@@ -169,6 +180,7 @@ Swift 的*“词法结构（lexical structure）”* 描述了能构成该语言
 42              // 整数字面量
 3.14159         // 浮点数字面量
 "Hello, world!" // 字符串字面量
+/Hello, .*/     // 正则表达式字面量
 true		    // 布尔值字面量
 ```
 
@@ -476,8 +488,7 @@ let textB = "Hello world"
 > 
 #### multiline-quoted-text-item {#multiline-quoted-text-item}
 > 
-> *多行引用文本项* [转义字符](#escaped-character)<sub>可选</sub>
-> 
+> *多行引用文本项* → [转义字符](#escaped-character)<sub>可选</sub>
 > 
 #### multiline-quoted-text {#multiline-quoted-text}
 > 
@@ -528,6 +539,53 @@ let textB = "Hello world"
 > 
 > *转义换行符* → [转义序列](#escape-sequence) [空白](#whitespace)<sub>可选</sub> [断行符](#line-break)
 
+### 正则表达式字面量 {#regular-expression-literals}
+
+正则表达式字面量是被符号 `/` 以如下形式包围的一串字符：
+
+	/ 正则表达式 /
+
+正则表达式字面量不能以未转义的制表符或空格开头，且正则表达式字面量内不能包含未转义的 `/` 符号、回车或是换行符。
+
+在正则表达式字面量内部，反斜杠符号 (`/`) 被视作正则表达式的一部分，而非如字符串表达式中一样被视为一个转义符。反斜杠符号提示其后的特殊字符应当按照其字面义进行解读，其后的非特殊字符则应按照特殊方式进行解读。例如， `/\(/` 匹配了一个左括号 (`(`) ， 而 `/\d/` 匹配了一个单个数字。
+
+被一对反斜杠 `/` 和一对称数字符 `#` 包围的一串字符被称为由扩展分隔符分割的正则表达式字面量，它有以下两种形式：
+
+	`#/ 正则表达式 /#`
+
+	`#/
+	正则表达式
+	/#`
+
+由扩展分隔符分割的正则表达式字面量可以以未转义的制表符或是空格开头，也可以包含未转义的反斜杠符号 (`/`) 并占据多行代码。若需要占用多行，正则表达式字面量开头的扩展分隔符 `#` 应位于行末，末尾的扩展分隔符  `#` 应独占一行。在多行正则表达式字面量内默认启用了扩展正则表达式的语法规则——尤其是关于忽略空格并允许注释的部分。
+
+如果你使用多个数字符号 (`#`) 来形成扩展分隔符分隔的正则表达式，数字符号不应使用空格分隔。
+
+	let regex1 = ##/abc/##  //正常运行
+	let regex2 = # #/abc/# #  //报错
+
+若需要创建一个空白的正则表达式字面量，必须使用扩展分隔符语法。
+
+> 正则表达式字面量语法
+>
+> 正则表达式字面量 → [正则表达式字面量头部分隔符](#regular-expression-literal-opening-delimiter) [正则表达式字面量](#regular-expression) [正则表达式字面量尾部分隔符](#regular-expression-literal-closing-delimiter)
+>
+#### 正则表达式字面量 {#regular-expression}
+>
+> 正则表达式字面量 → 任何正则表达式
+>
+#### 正则表达式字面量头部分隔符 {#regular-expression-literal-opening-delimiter}
+>
+> 正则表达式字面量头部分隔符 → [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub> **/**
+>
+#### 正则表达式字面量尾部分隔符 {#regular-expression-literal-closing-delimiter}
+>
+> 正则表达式字面量尾部分隔符 → **/** [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub>
+>
+#### 扩展正则表达式分隔符 {#extended-regular-expression-literal-delimiter}
+>
+> 扩展正则表达式分隔符 → **#** [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub>
+>
 
 ## 运算符 {#operator}
 
@@ -553,6 +611,8 @@ Swift 标准库定义了许多可供使用的运算符，其中大部分在 [基
 鉴于这些规则，`(`、`[` 和 `{` 是在运算符前面，`)`、`]` 和 `}` 是在运算符后面，以及字符 `,`、`;` 和 `:` 都被视为空白。
 
 以上规则需注意一点。如果预定义运算符 `!` 或 `?` 左侧没有空白，则不管右侧是否有空白都将被看作后缀运算符。如果将 `?` 用作可选链式调用运算符，左侧必须无空白。如果用于条件运算符 `（? :）`，必须两侧都有空白。
+
+如果中缀操作符的参数之一是正则表达式字面量，则操作符两侧都必须有空格。
 
 在某些特定的设计中，以 `<` 或 `>` 开头的运算符会被分离成两个或多个符号。剩余部分可能会以同样的方式被再次分离。因此，在 `Dictionary<String, Array<Int>>` 中没有必要添加空白来消除闭合字符 `>` 的歧义。在这个例子中，闭合字符 `>` 不会被视为单独的符号，因而不会被错误解析为 `>>` 运算符。
 
