@@ -573,7 +573,7 @@ in an arbitrary order.
 
 @Comment {
   REFERENCE
-  Prime, square, and fibonacci numbers
+  Prime, square, and Fibonacci numbers
   are just convenient sets of numbers
   that many developers are already familiar with
   that we can use for some simple math.
