@@ -568,23 +568,23 @@ let textB = "Hello world"
 
 > 正则表达式字面量语法
 >
-> 正则表达式字面量 → [正则表达式字面量头部分隔符](#regular-expression-literal-opening-delimiter) [正则表达式字面量](#regular-expression) [正则表达式字面量尾部分隔符](#regular-expression-literal-closing-delimiter)
+> 正则表达式字面量 → [正则表达式字面量开分隔定界符](#regular-expression-literal-opening-delimiter) [正则表达式字面量](#regular-expression) [正则表达式字面量闭分隔定界符](#regular-expression-literal-closing-delimiter)
 >
 #### 正则表达式字面量 {#regular-expression}
 >
 > 正则表达式字面量 → 任何正则表达式
 >
-#### 正则表达式字面量头部分隔符 {#regular-expression-literal-opening-delimiter}
+#### 正则表达式字面量开分隔定界符 {#regular-expression-literal-opening-delimiter}
 >
-> 正则表达式字面量头部分隔符 → [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub> **/**
+> 正则表达式字面量开分隔定界符 → [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub> **/**
 >
-#### 正则表达式字面量尾部分隔符 {#regular-expression-literal-closing-delimiter}
+#### 正则表达式字面量闭分隔定界符 {#regular-expression-literal-closing-delimiter}
 >
-> 正则表达式字面量尾部分隔符 → **/** [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub>
+> 正则表达式字面量闭分隔定界符 → **/** [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub>
 >
 #### 扩展正则表达式分隔符 {#extended-regular-expression-literal-delimiter}
 >
-> 扩展正则表达式分隔符 → **#** [扩展正则表达式分隔符](#extended-regular-expression-literal-delimiter)<sub>可选</sub>
+> 扩展正则表达式分隔符 → **#** [扩展正则表达式分隔定界符](#extended-regular-expression-literal-delimiter)<sub>可选</sub>
 >
 
 ## 运算符 {#operator}
