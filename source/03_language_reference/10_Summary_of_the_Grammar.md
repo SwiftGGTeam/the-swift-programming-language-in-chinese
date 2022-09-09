@@ -1149,7 +1149,7 @@
 >
 > *声明* → [类声明](./06_Declarations.md#class-declaration)
 >
-> *声明* → [actor 申明](./06_Declarations.md#actor-declaration)
+> *声明* → [actor 声明](./06_Declarations.md#actor-declaration)
 >
 > *声明* → [协议声明](./06_Declarations.md#protocol-declaration)
 >

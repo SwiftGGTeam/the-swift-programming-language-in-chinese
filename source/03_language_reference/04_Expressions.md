@@ -463,9 +463,11 @@ struct Point {
 
 在闭包表达式中写入 `throws` 或 `async` 将显式地将闭包标记为丢掷或异步的。
 
-	{ (parameters) async throws -> return type in
-		statements
-	}
+```swift
+{ (parameters) async throws -> return type in
+	statements
+}
+```
 
 如果闭包的主体中含有 try 表达式，则认为该闭包会引发异常。同理，若闭包主体含有 await 表达式，则认为该闭包是异步的。
 
@@ -1265,12 +1267,14 @@ let x = [10, 3, 20, 15, 4]
 
 你可以将这种多行链式语法与编译器控制语句结合，以控制调用每个方法的时间。例如，以下代码在 iOS 上应用了不同的过滤规则：
 
-	let numbers = [10, 20, 33, 43, 50]
-	#if os(iOS)
-	.filter { $0 < 40}
-	#else
-	.filter {$0 > 25}
-	#endif
+```swift
+let numbers = [10, 20, 33, 43, 50]
+#if os(iOS)
+.filter { $0 < 40}
+#else
+.filter {$0 > 25}
+#endif
+```
 
 在 `#if` 、 `#endif` 和其它编译指令之间的条件编译块可以包含一个隐式成员表达式，后跟零个或多个后缀，以形成一个后缀表达式。这些条件编译块还可以包含另一个条件编译块，或者这些表达式和块的组合体。
 
