@@ -68,34 +68,38 @@ show(photo)
 
 在可能的悬点之间的代码将按顺序运行，并不可能被其它并发代码中断。例如，以下代码将一张图片从一个图库移动到另一个图库：
 
-	let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-	add(firstPhoto toGallery: "Road Trip")
-	//此时，firstPhoto暂时地同时存在于两个画廊中
-	remove(firstPhoto fromGallery: "Summer Vacation")
+```swift
+let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
+add(firstPhoto toGallery: "Road Trip")
+//此时，firstPhoto暂时地同时存在于两个画廊中
+remove(firstPhoto fromGallery: "Summer Vacation")
+```
 
-其它代码不能在`add(_:toGallery:)`和`remove(_:fromGallery:)`两个方法之间运行。在此期间，第一张图片同时存在于两个图库，暂时打破了应用程序的一个不变量。为了更明确地表示这段代码不能加入`await`标记，你可以将这段代码重构为一个同步函数：
+其它代码不能在 `add(_:toGallery:)` 和 `remove(_:fromGallery:)` 两个方法之间运行。在此期间，第一张图片同时存在于两个图库，暂时打破了应用程序的一个不变量。为了更明确地表示这段代码不能加入 `await` 标记，你可以将这段代码重构为一个同步函数：
 
-	func move(_photoName: String, from source: String, to destination: String) {
-		add(photoName, to: destination)
-		remove(photoName, from: source)
-	}
-	//...
-	let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-	move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
+```swift
+func move(_photoName: String, from source: String, to destination: String) {
+	add(photoName, to: destination)
+	remove(photoName, from: source)
+}
+//...
+let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
+move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
+```
 
-在上例中，由于`move(_:from:to:)`函数为同步函数，你将能够保证它将不会包含潜在的悬点。在未来，试图在该函数中写入并发代码将引发编译错误而非产生bug。
+在上例中，由于 `move(_:from:to:)` 函数为同步函数，你将能够保证它将不会包含潜在的悬点。在未来，试图在该函数中写入并发代码将引发编译错误而非产生bug。
 
 > 注意
 > 
 > 学习并行的过程中，[Task.sleep(_:)](https://developer.apple.com/documentation/swift/task/3814836-sleep) 方法非常有用。这个方法什么都没有做，只是等待不少于指定的时间（单位纳秒）后返回。下面是使用 `sleep(until:clock:)` 方法模拟网络请求实现 `listPhotos(inGallery:)` 的一个版本：
 > 
 
-	
-	func listPhotos(inGallery name: String) async throws -> [String] {
-	    try await Task.sleep(until: .now + .seconds(2), clock: .continuous) 
-	    return ["IMG001", "IMG99", "IMG0404"]
-	}
-	
+```swift	
+func listPhotos(inGallery name: String) async throws -> [String] {
+	try await Task.sleep(until: .now + .seconds(2), clock: .continuous) 
+	return ["IMG001", "IMG99", "IMG0404"]
+}
+```	
 
 ## 异步序列 {#Asynchronous-Sequences}
 
@@ -172,12 +176,13 @@ await withTaskGroup(of: Data.self) { taskGroup in
 
 对于并发来说，除了上一部分讲到的结构化的方式，Swift 还支持非结构化并发。与任务组中的任务不同的是，*非结构化任务（unstructured task）*并没有父任务。你能以任何方式来处理非结构化任务以满足你程序的需要，但与此同时，你需要对于他们的正确性付全责。如果想创建一个在当前 actor 上运行的非结构化任务，需要调用构造器 [Task.init(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856790-init)。如果想要创建一个不在当前 actor 上运行的非结构化任务（更具体地说就是*游离任务（detached task）*），需要调用类方法 [Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856786-detached)。以上两种方法都能返回一个能让你与任务交互（继续等待结果或取消任务）的任务句柄，如下：
 
-
-	let newPhoto = // ... 图片数据 ...
-	let handle = Task {
-	    return await add(newPhoto, toGalleryNamed: "Spring Adventures")
-	}
-	let result = await handle.value
+```swift
+let newPhoto = // ... 图片数据 ...
+let handle = Task {
+	return await add(newPhoto, toGalleryNamed: "Spring Adventures")
+}
+let result = await handle.value
+```
 
 如果你想更多的了解游离任务，可以参考 [Task](https://developer.apple.com/documentation/swift/task)。
 
@@ -259,34 +264,35 @@ print(logger.max)  // 报错
 
 能够在并发域间共享的类型被称为*可发送类型(Sendable Type)*。例如在调用Actor方法时被作为实参传递，或是作为任务的结果返回。本章之前的例子并未讨论可发送性，因为这些例子均使用了简单值类型，对于在并发域间传递的数据而言，简单值类型总是安全的。而与之相反，另一些类型并不能安全地在并发域间传递。例如，当你在不同的任务间传递该类的实例时，包含可变属性且并未序列化对这些属性的访问的类可能产生不可预测和不正确的结果。
 
-你可以通过声明其符合`Sendable`协议来将某个类型标记为可发送类型。该协议并不包含任何代码要求，但Swift对其做出了强制的语义要求。总之，有三种方法将一个类型声明为可发送类型：
+你可以通过声明其符合 `Sendable` 协议来将某个类型标记为可发送类型。该协议并不包含任何代码要求，但Swift对其做出了强制的语义要求。总之，有三种方法将一个类型声明为可发送类型：
 
 - 该类型为值类型，且其可变状态由其它可发送数据构成——例如具有存储属性的结构体或是具有关联值的枚举。
 
 - 该类型不包含任何可变状态，且其不可变状态由其它可发送数据构成——例如只包含只读属性的结构体或类
 
-- 该类型包含能确保其可变状态安全的代码——例如标记了`@MainActor`的类或序列化了对特定线程/队列上其属性的访问的类。
+- 该类型包含能确保其可变状态安全的代码——例如标记了 `@MainActor` 的类或序列化了对特定线程/队列上其属性的访问的类。
 
 如需了解Swift对Sendable协议的语义要求的详细信息，请访问[Sendable](https://developer.apple.com/documentation/swift/sendable)协议参考。
 
 部分类型总是可发送类型，如只有可发送属性的结构体和只有可发送关联值的枚举。例如：
 
-	struct TemperatureReading: Sendable {
-		var measurement: Int
+```swift
+struct TemperatureReading: Sendable {
+	var measurement: Int
+}
+extension TemperatureLogger {
+	func addReading(from reading: TemperatureReading) {
+		measurements.append(reading.measurement)
 	}
-	
-	extension TemperatureLogger {
-		func addReading(from reading: TemperatureReading) {
-			measurements.append(reading.measurement)
-		}
-	}
+}
+let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
+let reading = TemperatureReading(measurement: 45)
+await logger.addReading(from: reading)
+```
+由于 `TemperatureReading` 是只有可发送属性的结构体，且该结构体并未被标记为 `public` 或 `@usableFromInline` ，因此它是隐式可发送的。下文给出了该结构体的一个符合 `Sendable` 协议的版本：
 
-	let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
-	let reading = TemperatureReading(measurement: 45)
-	await logger.addReading(from: reading)
-
-由于`TemperatureReading`是只有可发送属性的结构体，且该结构体并未被标记为`public`或`@usableFromInline`，因此它是隐式可发送的。下文给出了该结构体的一个符合`Sendable`协议的版本：
-
-	struct TemperatureReading {
-		var measurement: Int
-	}
+```swift
+struct TemperatureReading {
+	var measurement: Int
+}
+```

@@ -589,33 +589,36 @@ if let actualNumber = Int(possibleNumber) {
 
 如果你在访问它包含的值后不需要引用原来的可选常量或是可选变量，你可以对新的常量或是新的变量使用相同的名称：
 
-	let myNumber = Int(possibleNumber)
-	// 此处 myNumber 为一可选整型
-	if let myNumber = myNumber {
-		// 此处 myNumber 为一不可选整型
-		print("My number is \(myNumber)")
-	}
-	// 输出 "My number is 123"
+```swift
+let myNumber = Int(possibleNumber)
+// 此处 myNumber 为一可选整型
+if let myNumber = myNumber {
+	// 此处 myNumber 为一不可选整型
+	print("My number is \(myNumber)")
+}
+// 输出 "My number is 123"
+```
 
 正如前一个例子中的代码一样，本例代码首先检查 `myNumber` 是否包含任何值。若 `myNumber` 包含有任何值，则该值将成为新常量 `myNumber` 的值。在 `if` 语句的主体中，写入的 `myNumber` 指向这一个新的非可选常量。在 `if` 语句开始前和语句结束后，写入的 `myNumber` 指向可选的整数常量。
 
 由于这种代码非常常见，你可以通过一个更简短的写法来解包一个可选值：只写你要展开的常量或变量的名称。新的常量/变量将使用相同的名称作为其隐式解包可选值。
 
-	if let myNumber {
-		print("My number is \(myNumber)")
-	}
-	// 输出 "My number is 123"
+``` swift
+if let myNumber{
+	print("My number is \(muNumber)")
+}
+// 输出 "My number is 123"
+```
 
 你可以在可选绑定中使用常量和变量。如果你想在 `if` 语句的第一个分支中操作 `actualNumber` 的值，你可以改成 `if var actualNumber`，这样可选类型包含的值就会被赋给一个变量而非常量。你在 `if` 语句中对 `myNumber` 所做的更改将仅作用于该局部变量而非你解包的原始可选常量/变量。
 
-你可以包含多个可选绑定或多个布尔条件在一个 `if` 语句中，只要使用逗号分开就行。只要有任意一个可选绑定的值为 `nil`，或者任意一个布尔条件为 `false`，则整个 `if` 条件判断为 `false`。下面的两个 `if` 语句是等价的：
+你可以包含多个可选绑定或多个布尔条件在一个 `if` 语句中，只要使用逗号分开就行。只要有任意一个可选绑定的值为 `nil`，或者任意一个布尔条件为 `false`，则整个 `if` 条件判断为 `false`。下面的两个 `if` 语句是等效的：
 
 ```swift
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
 // 输出“4 < 42 < 100”
-
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
         if firstNumber < secondNumber && secondNumber < 100 {
