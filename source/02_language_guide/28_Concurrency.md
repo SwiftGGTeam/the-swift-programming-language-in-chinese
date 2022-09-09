@@ -253,7 +253,7 @@ print(logger.max)  // 报错
 
 不添加 `await` 关键字的情况下访问 `logger.max` 会失败，因为 actor 的属性是它隔离的本地状态的一部分。Swift 可以保证只有 actor 内部的代码可以访问 actor 的内部状态。这个保证也被称为 *actor isolation*。
 
-## 可发送类型 {#Sendable Types}
+## 可发送类型 {#Sendable-Types}
 
 任务和Actor能够帮助你将程序分割为能够安全地并发运行的小块。在一个任务中，或是在一个Actor实例中，程序包含可变状态的部分（如变量和属性）被称为*并发域（Concurrency domain）*。部分类型的数据不能在并发域间共享，因为它们包含了可变状态，但它不能阻止重叠访问。
 
