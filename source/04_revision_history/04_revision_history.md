@@ -1,5 +1,18 @@
 # Swift 文档修订历史
 
+### 2022-06-06
+
+* 更新至 Swift 5.7。
+* 新增 [可发送类型](../02_language_guide/28_Concurrency.md#Sendable-Types) 章节，其中包含在 actors 和任务间发送数据的内容。在 [可发送](03_language_reference/07_Attributes.md#Sendable) 章节和 [unchecked](03_language_reference/07_Attributes.md#unchecked) 章节新增了有关特性 `@Sendable` 和 `@unchecked` 的内容。
+* 新增了 [正则表达式字面量](03_language_reference/02_Lexical_Structure.md#regular-expression-literals) 章节，其中包含新建正则表达式的内容。
+* 在 [可选绑定](../02_language_guide/01_The_Basics.md#optional-binding) 章节新增了 `if-let` 结构更简短的一种形式。
+* 在 [检查 API 可用性](../02_language_guide/05_Control_Flow.md#checking-api-availability) 章节新增了与不可用性检查 `#unavaliable` 有关的内容。
+
+### 2022-03-14
+
+* 更新至 Swift 5.6
+* 更新了 [显式成员表达式](../03_language_reference/04_Expressions.md#explicit-member-expression) 章节，现在可以在链式调用方法和其它后缀表达式周围使用 `#if` 了。
+
 ### 2021-07-14
 
 * 更新 [并发](../02_language_guide/28_Concurrency.md) 篇章里的示例，使用当前的并发 API。

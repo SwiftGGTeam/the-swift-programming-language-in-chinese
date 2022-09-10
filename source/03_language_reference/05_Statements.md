@@ -105,7 +105,7 @@ while condition {
 > *case 条件* → **case** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
 
 #### optional-binding-condition {#optional-binding-condition}
-> *可选绑定条件* →  **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer) | **var**  [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
+> *可选绑定条件* →  **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)<sub>可选</sub> | **var**  [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)<sub>可选</sub>
 
 ### Repeat-While 语句 {#repeat-while-statements}
 `repeat-while` 语句至少执行一次代码块，之后只要循环条件为真，就会重复执行代码块。
@@ -635,7 +635,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 // 打印 "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 ```
 
-`canImport()` 条件传入的实参是模块的名字，这个模块可能并不是每个平台上都存在的。使用它可以检测是否可以导入这个模块，但实际上并没有导入。如果模块存在就返回 `true`，否则返回 `false` 。
+`canImport()` 条件传入的实参是模块的名字，这个模块可能并不是每个平台上都存在的。该模块的命名可以包含 `.` 符号。使用它可以检测是否可以导入这个模块，但实际上并没有导入。如果模块存在就返回 `true`，否则返回 `false` 。
 
 `targetEnvironment()` 条件在特殊环境编译时会返回 `true`，否则返回 `false` 。
 
@@ -663,6 +663,7 @@ statements to compile if both compilation conditions are false
 >
 > 即使没有被编译，上面编译配置中的每个语句仍然会被解析。然而，唯一的例外是编译配置语句中包含 `swift()` 或 `compiler()` 条件：这时仅当编译器版本和语言版本匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
+关于在条件编译块中如何包装显式成员表达式，请参见 [显式成员表达式](#Expressions.xhtml#ID400) 章节。
 
 #### build-config-statement {#build-config-statement}
 > 条件编译代码块语法
@@ -821,7 +822,8 @@ if #available(platform name version, ..., *) {
 
 #### availability-condition {#availability-condition}
 > *可用性条件* → **#available** **(** [可用性参数列表](#availability-arguments) **)**
-
+>
+> *可用性条件* → **#unavaliable** **（** [可用性参数列表](#availability-arguments) **)**
 #### availability-arguments {#availability-arguments}
 > *可用性参数列表* → [可用性参数](#availability-argument) | [可用性参数](#availability-argument) **,** [可用性参数列表](#availability-arguments)
 

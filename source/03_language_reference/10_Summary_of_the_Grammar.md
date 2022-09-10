@@ -8,6 +8,8 @@
 >
 > *空白字符项*  → [换行符](./02_Lexical_Structure.md#line-break)
 >
+> *空白字符项* → [内联空间](./02_Lexical_Structure.md#ginline-space)
+>
 > *空白字符项*   → [注释](./02_Lexical_Structure.md#comment)
 >
 > *空白字符项*  → [多行注释](./02_Lexical_Structure.md#multiline-comment)
@@ -108,7 +110,7 @@
 
 > 字面量语法
 >
-> *字面量* → [数值型字面量](./02_Lexical_Structure.md#numeric-literal) | [字符串字面量](./02_Lexical_Structure.md#string-literal) | [布尔字面量](./02_Lexical_Structure.md#boolean-literal) | [空字面量](./02_Lexical_Structure.md#nil-literal)
+> *字面量* → [数值型字面量](./02_Lexical_Structure.md#numeric-literal) | [字符串字面量](./02_Lexical_Structure.md#string-literal) | [正则表达式字面量](./02_Lexical_Structure.md#regular-expression-literal)  | [布尔字面量](./02_Lexical_Structure.md#boolean-literal) | [空字面量](./02_Lexical_Structure.md#nil-literal)
 >
 > *数值型字面量* → **-**<sub>可选</sub>[整形字面量](./02_Lexical_Structure.md#integer-literal) | **-**<sub>可选</sub>[浮点型字面量](./02_Lexical_Structure.md#floating-point-literal)
 >
@@ -243,6 +245,19 @@
 >
 > *转义换行符* → [转义序列](./02_Lexical_Structure.md#escape-sequence) [空白](./02_Lexical_Structure.md#whitespace)<sub>可选</sub> [换行符](./02_Lexical_Structure.md#line-break)
 
+<!-- -->
+
+> 正则表达式字面量语法
+> 
+> *正则表达式字面量* → [正则表达式字面量开分隔定界符](./02_Lexical_Structure.md#regular-expression-literal-opening-delimiter) [正则表达式](./02_Lexical_Structure.md#regular-expression) [正则表达式字面量闭分隔定界符](./02_Lexical_Structure.md#regular-expression-literal-closing-delimiter)
+> 
+> *正则表达式* → 任何正则表达式
+> 
+> *正则表达式字面量开分隔定界符* → [正则表达式扩展分隔符](./02_Lexical_Structure.md#grammar_extended-regular-expression-literal-delimiter)<sub>可选</sub> **/**
+> 
+> *正则表达式字面量闭分割定界符* → **/** [正则表达式扩展分隔符](./02_Lexical_Structure.md#grammar_extended-regular-expression-literal-delimiter)<sub>可选</sub>
+> 
+> *正则表达式扩展分隔符* → **#** [正则表达式扩展分隔符](./02_Lexical_Structure.md#grammar_extended-regular-expression-literal-delimiter)<sub>可选</sub>
 
 <!-- -->
 
@@ -331,9 +346,13 @@
 >
 > *类型* → [协议合成类型](./03_Types.md#protocol-composition-type)
 >
-> *类型* → **Any**
+> *类型* → [隐含类型](./03_Types.md#opaque-type)
 >
-> *类型* → **Self**
+> *类型* → [元类型](./03_Types.md#metatype-type)
+>
+> *类型* → [任意类型](./03_Types.md#any-type)
+>
+> *类型* → [自身类型](./03_Types.md#self-type)
 >
 > *类型* → **（** [type](./03_Types.md#metatype-type) **）**
 
@@ -368,7 +387,7 @@
 
 > 函数类型语法
 >
-> *函数类型* → [类型](./03_Types.md#type)  **throws**<sub>可选</sub>**->** [类型](./03_Types.md#type)
+> *函数类型* → [类型](./03_Types.md#type) [函数类型子句](.03/Types.md#function-type-argument-clause) **async**<sub>可选</sub> **throws**<sub>可选</sub>**->** [类型](./03_Types.md#type)
 >
 > *函数类型* → [类型](./03_Types.md#)  **rethrows** **->** [类型](./03_Types.md#)
 > 
@@ -427,7 +446,7 @@
 >
 > *类型继承从句* → **:** [类型继承集](./03_Types.md#type-inheritance-list)
 >
-> *类型继承集* → [类型标识符](./03_Types.md#type-identifier) | [类型标识符](./03_Types.md#type-identifier) **,** [类型继承集](./03_Types.md#type-inheritance-list)
+> *类型继承集* → [特性](./07_Attributes.md#attributes)<sub>可选</sub> [类型标识符](./03_Types.md#type-identifier) | [特性](./07_Attributes.md#attributes)<sub>可选</sub> [类型标识符](./03_Types.md#type-identifier) **,** [类型继承集](./03_Types.md#type-inheritance-list)
 >
 > *类条件* → **class**
 
@@ -460,17 +479,23 @@
 
 <!-- -->
 
-> 二元表达式语法
+> await 表达式语法
 >
-> *二元表达式* → [二元运算符](./02_Lexical_Structure.md#binary-operator) [前缀表达式](./04_Expressions.md#prefix-expression)
+> *await 操作符* → **await**
+
+<!-- -->
+
+> 中缀表达式语法
 >
-> *二元表达式* → [赋值操作符](./06_Declarations.md#class-declaration) [try 运算符](./04_Expressions.md#try-operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
+> *中缀表达式* → [中缀运算符](./02_Lexical_Structure.md#infix-operator) [前缀表达式](./04_Expressions.md#prefix-expression)
 >
-> *二元表达式* → [条件运算符](./04_Expressions.md#conditional-operator) [try 运算符](./04_Expressions.md#try-operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
+> *中缀表达式* → [赋值操作符](./06_Declarations.md#class-declaration) [try 运算符](./04_Expressions.md#try-operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
 >
-> *二元表达式* → [类型转换运算符](./04_Expressions.md#type-casting-operator)
+> *中缀表达式* → [条件运算符](./04_Expressions.md#conditional-operator) [try 运算符](./04_Expressions.md#try-operator)<sub>可选</sub> [前缀表达式](./04_Expressions.md#prefix-expression)
 >
-> *二元表达式* → [二元表达式](./04_Expressions.md#binary-expression) [二元表达式列表](./04_Expressions.md#binary-expressions)<sub>可选</sub>
+> *中缀表达式* → [类型转换运算符](./04_Expressions.md#type-casting-operator)
+>
+> *中缀表达式* → [中缀表达式](./04_Expressions.md#infix-expression) [中缀表达式列表](./04_Expressions.md#infix-expressions)<sub>可选</sub>
 >
 
 <!-- -->
@@ -588,7 +613,7 @@
 > *闭包表达式* → **{** [闭包签名](./04_Expressions.md#closure-signature)<sub>可选</sub> [语句](./04_Expressions.md#statements) **}**
 >
 >
-> 闭包签名* → [参数子句](./04_Expressions.md#parameter-clause) [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
+> *闭包签名* → [捕获列表](./04_Expressions.md#capture-list) [参数子句](./04_Expressions.md#parameter-clause) **async**<sub>可选</sub> **throws**<sub>可选</sub> [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
 > *闭包签名* → [标识符列表](./04_Expressions.md#identifier-list) [函数结果](./06_Declarations.md#function-result)<sub>可选</sub> **in**
 > 
@@ -655,7 +680,7 @@
 > *key-path 组件* →  [标识符](./02_Lexical_Structure.md#identifier) [多个 key-path 后缀](./04_Expressions.md#key-path-postfixes)<sub>可选<sub> | [多个 key-path 后缀](./04_Expressions.md#key-path-postfixes)
 > *多个 key-path 后缀* →  [key-path 后缀](./04_Expressions.md#key-path-postfix) [多个 key-path 后缀](./04_Expressions.md#key-path-postfixes)<sub>可选<sub> key-path-postfixes {./04_Expressions.md#key-path-postfixes}
 > 
-> *key-path 后缀* → **?** | **!** | **self** | **\[** [函数调用参数表](./04_Expressions.md#function-call-argument-list) **\]** 
+> *key-path 后缀* → **?** | **!** | **self** | **[** [函数调用参数表](./04_Expressions.md#function-call-argument-list) **]** 
 > 
 
 
@@ -734,12 +759,14 @@
 
 > 显式成员表达式语法
 >
-> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [十进制数字]    (02_Lexical_Structure.md#decimal-digit)
+> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [十进制数字](02_Lexical_Structure.md#decimal-digit)
 > 
 > *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [标识符](02_Lexical_Structure.md#identifier) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub><br/>
 > 
-> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [标识符]    (02_Lexical_Structure.md#identifier) **(** [参数名称](./04_Expressions.md#argument-names) **)**
-> 
+> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) **.** [标识符](02_Lexical_Structure.md#identifier) **(** [参数名称](./04_Expressions.md#argument-names) **)**
+>
+> *显式成员表达式* → [后缀表达式](./04_Expressions.md#postfix-expression) [条件编译块](./05_Statements.md#conditional-compilation-block)
+>
 > *参数名称* → [参数名](./04_Expressions.md#argument-name) [参数名称](./04_Expressions.md#argument-names)<sub>可选</sub><br/>
 > 
 > *参数名* → [标识符](./02_Lexical_Structure.md#identifier) **:**
@@ -822,11 +849,12 @@
 > *while 语句* → **while** [条件集](./05_Statements.md#condition-list) [代码块](./06_Declarations.md#code-block)
 >
 > *条件集* → [条件](./05_Statements.md#condition) | [条件](./05_Statements.md#condition) **,** [条件集](./05_Statements.md#condition-list)
+> 
 > *条件* → [表达式](./04_Expressions.md#expression) | [可用性条件](./05_Statements.md#availability-condition) | [case 条件](./05_Statements.md#case-condition) | [可选绑定条件](./05_Statements.md#optional-binding-condition)
 >
 > *case 条件* → **case** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
 >
-> *可选绑定条件* → **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer) | **var** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)
+> *可选绑定条件* → **let** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)<sub>可选</sub> | **var** [模式](./08_Patterns.md#pattern) [构造器](./06_Declarations.md#initializer)<sub>可选</sub>
 >
 
 <!-- -->
@@ -978,7 +1006,7 @@
 >
 > *catch 子句集* → [catch 子句](./05_Statements.md#catch-clause) [catch 子句集](05_Statements.md#catch-clauses)<sub>可选</sub>
 >
-> *catch 子句* → **catch** [catch 模式列表]()<sub>可选</sub>  [代码块](./06_Declarations.md#code-block)<sub>可选</sub>
+> *catch 子句* → **catch** [catch 模式列表](./05_Statements.md#catch-pattern-list)<sub>可选</sub>  [代码块](./06_Declarations.md#code-block)<sub>可选</sub>
 > 
 > *catch 模式列表* → [catch 模式](./05_Statements.md#catch-pattern) | [catch 模式](./05_Statements.md#catch-pattern) ，[catch 模式列表](./05_Statements.md#catch-pattern-list)
 > 
@@ -1121,6 +1149,8 @@
 >
 > *声明* → [类声明](./06_Declarations.md#class-declaration)
 >
+> *声明* → [actor 声明](./06_Declarations.md#actor-declaration)
+>
 > *声明* → [协议声明](./06_Declarations.md#protocol-declaration)
 >
 > *声明* → [构造器声明](./06_Declarations.md#initializer-declaration)
@@ -1249,10 +1279,10 @@
 >
 > *函数名* → [标识符](./02_Lexical_Structure.md#identifier) | [运算符](./02_Lexical_Structure.md#operator)
 >
-> *函数签名* → [参数子句](./06_Declarations.md#parameter-clause) **throws**<sub>可选</sub> [函数结果](./06_Declarations.md#function-result)<sub>可选</sub>
+> *函数签名* → [参数子句](./06_Declarations.md#parameter-clause) **async**<sub>可选</sub> **throws**<sub>可选</sub> [函数结果](./06_Declarations.md#function-result)<sub>可选</sub>
 >
 
-> *函数签名* → [参数子句](./06_Declarations.md#parameter-clause) **rethrows** [函数结果](./06_Declarations.md#function-result)<sub>可选</sub>
+> *函数签名* → [参数子句](./06_Declarations.md#parameter-clause) **async**<sub>可选</sub> **rethrows** [函数结果](./06_Declarations.md#function-result)<sub>可选</sub>
 >
 > *函数结果* → **->** [特性](./07_Attributes.md#attributes)<sub>可选</sub> [类型](./03_Types.md#type)
 >
@@ -1516,6 +1546,8 @@
 > *声明修饰符* → [访问级别修饰符](./07_Attributes.md#access-level-modifier)
 >
 > *声明修饰符* → [可变性修饰符](./07_Attributes.md#mutation-modifier)
+> 
+> *声明修饰符* → [actor 隔离修饰符](./06_Deeclarations.md#actor-isolation-modifier)
 >
 > *声明修饰符集* → [声明修饰符](./06_Declarations.md#declaration-modifier) [声明修饰符集](./06_Declarations.md#declaration-modifiers)<sub>可选</sub>
 >
@@ -1531,6 +1563,8 @@
 >
 > *可变性修饰符* → **mutating** | **nonmutating**
 >  
+> *actor 隔离修饰符* → **nonisolated**
+>
 
 ## 属性 {#attributes}
 

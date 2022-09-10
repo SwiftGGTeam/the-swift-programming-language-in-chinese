@@ -132,6 +132,7 @@ struct Rect {
 var square = Rect(origin: Point(x: 0.0, y: 0.0),
     size: Size(width: 10.0, height: 10.0))
 let initialSquareCenter = square.center
+// initialSquareCenter 位于（5.0， 5.0）
 square.center = Point(x: 15.0, y: 15.0)
 print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 // 打印“square.origin is now at (10.0, 10.0)”
@@ -302,7 +303,7 @@ struct TwelveOrLess {
 }
 ```
 
-这个 setter 确保新值小于 12，而且返回被存储的值。
+这个 setter 确保新值小于或等于 12，而且返回被存储的值。
 > 注意
 > 
 > 上面例子以 `private` 的方式声明 `number` 变量，这使得 `number` 仅在 `TwelveOrLess` 的实现中使用。写在其他地方的代码通过使用 `wrappedValue` 的 getter 和 setter 来获取这个值，但不能直接使用 `number`。有关 `private` 的更多信息，请参考 [访问控制](./26_Access_Control.md)
