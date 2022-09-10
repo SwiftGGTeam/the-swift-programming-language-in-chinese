@@ -565,7 +565,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 >
 > ####  closure-expression {#closure-expression}
 >
-> *闭包表达式* → **{** [特性](#attribute)<sub>可选</sub>[闭包签名](#closure-signature)<sub>可选</sub> [语句](#statements) **}**
+> *闭包表达式* → **{** [特性](#attribute)<sub>可选</sub> [闭包签名](#closure-signature)<sub>可选</sub> [语句](#statements) **}**
 >
 > ####  closure-signature {#closure-signature}
 >
@@ -1276,9 +1276,9 @@ let numbers = [10, 20, 33, 43, 50]
 #endif
 ```
 
-在 `#if` 、 `#endif` 和其它编译指令之间的条件编译块可以包含一个隐式成员表达式，后跟零个或多个后缀，以形成一个后缀表达式。这些条件编译块还可以包含另一个条件编译块，或者这些表达式和块的组合体。
+在 `#if`、`#endif` 和其它编译指令之间的条件编译块可以包含一个隐式成员表达式，后跟零个或多个后缀，以形成一个后缀表达式。这些条件编译块还可以包含另一个条件编译块，或者这些表达式和块的组合体。
 
-不止在顶级代码（ top-level code ）中，你还可以在任何能编写显式成员表达式的地方使用上述语法。
+除了顶级代码（top-level code）以外，你还可以在任何能编写显式成员表达式的地方使用上述语法。
 
 在条件编译块中，编译指令 `#if` 的分支必须包含至少一个表达式，其它分支可以为空。
 

@@ -166,7 +166,7 @@ var operation: (Int, Int) -> Int                // 正确
 
 使用函数类型的函数若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing-functions-and-methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing-functions-and-methods)。
 
-异步函数的函数类型必须使用 `async` 关键字来标记。 `async` 关键字也是函数类型的一部分，且同步函数是异步函数的子类型。 因此，在使用异步函数的地方也可以使用同步函数。异步函数的相关描述见章节 [异步函数和方法](Declarations.xhtml#ID647)。
+异步函数的函数类型必须使用 `async` 关键字来标记。 `async` 关键字也是函数类型的一部分，且同步函数是异步函数的子类型。因此，在使用异步函数的地方也可以使用同步函数。异步函数的相关描述见章节 [异步函数和方法](Declarations.xhtml#ID647)。
 
 ### 对非逃逸闭包的限制 {#Restrictions for Nonescaping Closures}
 当非逃逸闭包函数是形参时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
@@ -541,7 +541,7 @@ print(type(of: z.f()))
 > 
 
 #### type-inheritance-list {#type-inheritance-list}
-> *类型继承列表* → [属性](../ReferenceManual/Attributes.xhtml#grammar_attributes)<sub>可选</sub> [类型标识符](#type-identifier) | [属性](../ReferenceManual/Attributes.xhtml#grammar_attributes)<sub>可选</sub>  [类型标识符](#type-identifier) **,** [类型继承列表](#type-inheritance-list)
+> *类型继承列表* → [属性](./07_Attributes.md#attributes)<sub>可选</sub> [类型标识符](#type-identifier) | [属性](./07_Attributes.md#attributes)<sub>可选</sub>  [类型标识符](#type-identifier) **,** [类型继承列表](#type-inheritance-list)
 
 ## 类型推断
 

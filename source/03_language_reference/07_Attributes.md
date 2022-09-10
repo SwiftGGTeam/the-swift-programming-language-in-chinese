@@ -689,7 +689,7 @@ struct ArrayBuilder {
 
 该特性用于协议类型，将其作为已采用协议的类型声明列表的一部分，以关闭该协议要求的强制执行。
 
-仅支持[Sendable](https://developer.apple.com/documentation/swift/sendable)协议。
+仅支持 [Sendable](https://developer.apple.com/documentation/swift/sendable) 协议。
 
 ### `usableFromInline` {#usablefrominline}
 

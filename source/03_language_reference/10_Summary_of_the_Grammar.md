@@ -8,7 +8,7 @@
 >
 > *空白字符项*  → [换行符](./02_Lexical_Structure.md#line-break)
 >
-> *空白字符项* → [内联空间](../ReferenceManual/LexicalStructure.xhtml#grammar_inline-space)
+> *空白字符项* → [内联空间](./02_Lexical_Structure.md#ginline-space)
 >
 > *空白字符项*   → [注释](./02_Lexical_Structure.md#comment)
 >
@@ -110,7 +110,7 @@
 
 > 字面量语法
 >
-> *字面量* → [数值型字面量](./02_Lexical_Structure.md#numeric-literal) | [字符串字面量](./02_Lexical_Structure.md#string-literal) | [正则表达式字面量](../ReferenceManual/LexicalStructure.xhtml#grammar_regular-expression-literal)  | [布尔字面量](./02_Lexical_Structure.md#boolean-literal) | [空字面量](./02_Lexical_Structure.md#nil-literal)
+> *字面量* → [数值型字面量](./02_Lexical_Structure.md#numeric-literal) | [字符串字面量](./02_Lexical_Structure.md#string-literal) | [正则表达式字面量](./02_Lexical_Structure.md#regular-expression-literal)  | [布尔字面量](./02_Lexical_Structure.md#boolean-literal) | [空字面量](./02_Lexical_Structure.md#nil-literal)
 >
 > *数值型字面量* → **-**<sub>可选</sub>[整形字面量](./02_Lexical_Structure.md#integer-literal) | **-**<sub>可选</sub>[浮点型字面量](./02_Lexical_Structure.md#floating-point-literal)
 >
@@ -1006,7 +1006,7 @@
 >
 > *catch 子句集* → [catch 子句](./05_Statements.md#catch-clause) [catch 子句集](05_Statements.md#catch-clauses)<sub>可选</sub>
 >
-> *catch 子句* → **catch** [catch 模式列表](./05_State,emts.md#catch-pattern-list)<sub>可选</sub>  [代码块](./06_Declarations.md#code-block)<sub>可选</sub>
+> *catch 子句* → **catch** [catch 模式列表](./05_Statements.md#catch-pattern-list)<sub>可选</sub>  [代码块](./06_Declarations.md#code-block)<sub>可选</sub>
 > 
 > *catch 模式列表* → [catch 模式](./05_Statements.md#catch-pattern) | [catch 模式](./05_Statements.md#catch-pattern) ，[catch 模式列表](./05_Statements.md#catch-pattern-list)
 > 

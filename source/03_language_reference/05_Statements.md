@@ -663,7 +663,7 @@ statements to compile if both compilation conditions are false
 >
 > 即使没有被编译，上面编译配置中的每个语句仍然会被解析。然而，唯一的例外是编译配置语句中包含 `swift()` 或 `compiler()` 条件：这时仅当编译器版本和语言版本匹配时，语句才会被解析。这种设定能确保旧的编译器不会尝试去解析新 Swift 版本的语法。
 
-关于在条件编译块中如何包装显式成员表达式，请参见[显式成员表达式](#Expressions.xhtml#ID400)章节。
+关于在条件编译块中如何包装显式成员表达式，请参见 [显式成员表达式](#Expressions.xhtml#ID400) 章节。
 
 #### build-config-statement {#build-config-statement}
 > 条件编译代码块语法
