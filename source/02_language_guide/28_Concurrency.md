@@ -64,7 +64,7 @@ show(photo)
 
 * 异步函数，方法或变量内部的代码
 * 静态函数 `main()` 中被打上 `@main` 标记的结构体、类或者枚举中的代码
-* 非结构化的子任务中的代码，之后会在[非结构化并行](#Unstructured-Concurrency)中说明
+* 非结构化的子任务中的代码，之后会在 [非结构化并行](#Unstructured-Concurrency) 中说明
 
 在可能的悬点之间的代码将按顺序运行，并不可能被其它并发代码中断。例如，以下代码将一张图片从一个图库移动到另一个图库：
 
@@ -272,7 +272,7 @@ print(logger.max)  // 报错
 
 - 该类型包含能确保其可变状态安全的代码——例如标记了 `@MainActor` 的类或序列化了对特定线程/队列上其属性的访问的类。
 
-如需了解Swift对Sendable协议的语义要求的详细信息，请访问[Sendable](https://developer.apple.com/documentation/swift/sendable)协议参考。
+如需了解Swift对Sendable协议的语义要求的详细信息，请访问 [Sendable](https://developer.apple.com/documentation/swift/sendable) 协议参考。
 
 部分类型总是可发送类型，如只有可发送属性的结构体和只有可发送关联值的枚举。例如：
 
@@ -289,7 +289,7 @@ let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
 let reading = TemperatureReading(measurement: 45)
 await logger.addReading(from: reading)
 ```
-由于 `TemperatureReading` 是只有可发送属性的结构体，且该结构体并未被标记为 `public` 或 `@usableFromInline` ，因此它是隐式可发送的。下文给出了该结构体的一个符合 `Sendable` 协议的版本：
+由于 `TemperatureReading` 是只有可发送属性的结构体，且该结构体并未被标记为 `public` 或 `@usableFromInline`，因此它是隐式可发送的。下文给出了该结构体的一个符合 `Sendable` 协议的版本：
 
 ```swift
 struct TemperatureReading {

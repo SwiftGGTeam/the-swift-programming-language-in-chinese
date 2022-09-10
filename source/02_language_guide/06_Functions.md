@@ -227,7 +227,7 @@ print(anotherGreeting(for: "Dave"))
 
 >注意
 
->作为隐式返回值编写的代码需要返回一些值。例如，你不能使用 `print(13)` 作为隐式返回值。然而，你可以使用不返回值的函数（如 `fatalError("Oh no!")` ）作为隐式返回值，因为 Swift 知道它们并不会产生任何隐式返回。
+>作为隐式返回值编写的代码需要返回一些值。例如，你不能使用 `print(13)` 作为隐式返回值。然而，你可以使用不返回值的函数（如 `fatalError("Oh no!")`）作为隐式返回值，因为 Swift 知道它们并不会产生任何隐式返回。
 
 ## 函数参数标签和参数名称 {#Function-Argument-Labels-and-Parameter-Names}
 

@@ -237,11 +237,11 @@ loadPicture(from: someServer){	picture in
 }
 ```
 
-在本例中，`loadPicture(from:completion:onFailure:)`函数将它的网络任务分配到后台，并在网络任务完成时调用两个完成处理程序中的一个。通过这种方法编写函数，您将能够把负责处理网络故障的代码和成功下载后更新用户界面的代码干净地区分开，而不是只使用一个闭包处理两种情况。
+在本例中，`loadPicture(from:completion:onFailure:)` 函数将它的网络任务分配到后台，并在网络任务完成时调用两个完成处理程序中的一个。通过这种方法编写函数，您将能够把负责处理网络故障的代码和成功下载后更新用户界面的代码干净地区分开，而不是只使用一个闭包处理两种情况。
 
 >注意
 >
->完成处理程序可能很难阅读，特别是您必须嵌套多个完成处理程序时。另一种方法是使用异步代码，如章节[并发](./28_Concurrency.md#function-types-as-return-types)中所述。
+>完成处理程序可能很难阅读，特别是您必须嵌套多个完成处理程序时。另一种方法是使用异步代码，如章节[并发](./28_Concurrency.md#function-types-as-return-types) 中所述。
 
 ## 值捕获 {#capturing-values}
 
