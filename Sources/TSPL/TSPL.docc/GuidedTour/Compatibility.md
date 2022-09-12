@@ -35,11 +35,11 @@ the following changes are available only to code that uses Swift 5.7 or later:
   For example, `UInt64(0xffff_ffff_ffff_ffff)` evaluates to the correct value
   rather than overflowing.
 
-Concurrency requires Swift 5.7 or later,
+Concurrency requires Swift 5.5 or later,
 and a version of the Swift standard library
 that provides the corresponding concurrency types.
 On Apple platforms, set a deployment target
-of at least iOS 15, macOS 12, tvOS 15, or watchOS 8.0.
+of at least iOS 13, macOS 10.15, tvOS 13, or watchOS 6.0.
 
 A target written in Swift 5.7 can depend on
 a target that's written in Swift 4.2 or Swift 4,
