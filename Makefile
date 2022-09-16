@@ -7,9 +7,10 @@
 .SUFFIXES:
 
 .DEFAULT: preview
+.IGNORE: preview
 .PHONY: preview
 preview:
-	-swift package --disable-sandbox preview-documentation --target TSPL
+	swift package --disable-sandbox preview-documentation --target TSPL
 
 .PHONY: archive
 archive: .build/plugins/Swift-DocC/outputs/TSPL.doccarchive
