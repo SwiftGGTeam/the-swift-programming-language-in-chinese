@@ -819,6 +819,52 @@ This means that a `defer` statement can be used, for example,
 to perform manual resource management such as closing file descriptors,
 and to perform actions that need to happen even if an error is thrown.
 
+The *statements* in the `defer` statement are executed at the end of the scope
+enclosing the `defer`.
+
+```swift
+func f(x: Int) {
+  defer { print("First defer") }
+
+  if x < 10 {
+    defer { print("Second defer") }
+    print("End of if")
+  }
+
+  print("End of function")
+}
+f(x: 5)
+// Prints "End of if"
+// Prints "Second defer"
+// Prints "End of function"
+// Prints "First defer"
+```
+
+
+@Comment {
+  ```swifttest
+  -> func f(x: Int) {
+    defer { print("First defer") }
+
+    if x < 10 {
+      defer { print("Second defer") }
+      print("End of if")
+    }
+
+    print("End of function")
+  }
+  f(x: 5)
+  <- End of if
+  <- Second defer
+  <- End of function
+  <- First defer
+  ```
+}
+
+The `defer` in the `if` statement executes before the `defer` declared in the
+function `f` because the scope of the `if` statement ends before the scope of
+the function.
+
 If multiple `defer` statements appear in the same scope,
 the order they appear is the reverse of the order they're executed.
 Executing the last `defer` statement in a given scope first
