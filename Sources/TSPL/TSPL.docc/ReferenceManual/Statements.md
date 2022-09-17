@@ -174,8 +174,6 @@ the *statements* in a `repeat`-`while` statement are executed at least once.
 
 The value of the *condition*
 must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
 
 ```
 Grammar of a repeat-while statement
