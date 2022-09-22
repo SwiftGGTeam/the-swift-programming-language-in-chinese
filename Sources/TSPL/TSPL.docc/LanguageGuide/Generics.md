@@ -324,7 +324,7 @@ Similarly, a stack allows items to be removed only from the end of the collectio
 
 The illustration below shows the push and pop behavior for a stack:
 
-![](stackPushPop_2x.png)
+![](stackPushPop)
 
 
 - There are currently three values on the stack.
@@ -468,7 +468,7 @@ stackOfStrings.push("cuatro")
 
 Here's how `stackOfStrings` looks after pushing these four values on to the stack:
 
-![](stackPushedFourStrings_2x.png)
+![](stackPushedFourStrings)
 
 
 Popping a value from the stack removes and returns the top value, `"cuatro"`:
@@ -491,7 +491,7 @@ let fromTheTop = stackOfStrings.pop()
 
 Here's how the stack looks after popping its top value:
 
-![](stackPoppedOneString_2x.png)
+![](stackPoppedOneString)
 
 
 ## Extending a Generic Type

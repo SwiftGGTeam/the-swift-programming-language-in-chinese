@@ -441,7 +441,7 @@ and moves the square to its new position.
   iBooks Store screenshot begins here.
 }
 
-![](computedProperties_2x.png)
+![](computedProperties)
 
 
 ### Shorthand Setter Declaration
@@ -1937,7 +1937,7 @@ When the audio level is `10`, all of the lights for that channel are lit.
 In this figure, the left channel has a current level of `9`,
 and the right channel has a current level of `7`:
 
-![](staticPropertiesVUMeter_2x.png)
+![](staticPropertiesVUMeter)
 
 
 The audio channels described above are represented by

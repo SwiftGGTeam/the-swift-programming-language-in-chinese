@@ -320,7 +320,7 @@ This example plays a simple game of *Snakes and Ladders*
   iBooks Store screenshot begins here.
 }
 
-![](snakesAndLadders_2x.png)
+![](snakesAndLadders)
 
 
 The rules of the game are as follows:
@@ -1086,7 +1086,7 @@ switch somePoint {
   ```
 }
 
-![](coordinateGraphSimple_2x.png)
+![](coordinateGraphSimple)
 
 
 The `switch` statement determines whether the point is
@@ -1145,7 +1145,7 @@ switch anotherPoint {
   ```
 }
 
-![](coordinateGraphMedium_2x.png)
+![](coordinateGraphMedium)
 
 
 The `switch` statement determines whether the point is
@@ -1210,7 +1210,7 @@ switch yetAnotherPoint {
   ```
 }
 
-![](coordinateGraphComplex_2x.png)
+![](coordinateGraphComplex)
 
 
 The `switch` statement determines whether the point is
@@ -1621,7 +1621,7 @@ you must roll again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before.
 
-![](snakesAndLadders_2x.png)
+![](snakesAndLadders)
 
 
 The values of `finalSquare`, `board`, `square`, and `diceRoll`

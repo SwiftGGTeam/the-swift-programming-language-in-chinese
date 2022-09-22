@@ -9,7 +9,7 @@ Arrays are ordered collections of values.
 Sets are unordered collections of unique values.
 Dictionaries are unordered collections of key-value associations.
 
-![](CollectionTypes_intro_2x.png)
+![](CollectionTypes_intro)
 
 
 Arrays, sets, and dictionaries in Swift are always clear about
@@ -933,7 +933,7 @@ or determining whether two sets contain all, some, or none of the same values.
 The illustration below depicts two sets---`a` and `b`---
 with the results of various set operations represented by the shaded regions.
 
-![](setVennDiagram_2x.png)
+![](setVennDiagram)
 
 
 - Use the `intersection(_:)` method to create a new set with only the values common to both sets.
@@ -1000,7 +1000,7 @@ because all elements in `b` are also contained by `a`.
 Set `b` and set `c` are *disjoint* with one another,
 because they share no elements in common.
 
-![](setEulerDiagram_2x.png)
+![](setEulerDiagram)
 
 
 - Use the “is equal” operator (`==`) to determine whether two sets contain all of the same values.

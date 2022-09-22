@@ -416,7 +416,7 @@ setting the width of `cinema` to `2048`
 doesn't affect the width stored in `hd`,
 as shown in the figure below:
 
-![](sharedStateStruct_2x.png)
+![](sharedStateStruct)
 
 
 The same behavior applies to enumerations:
@@ -529,7 +529,7 @@ Because classes are reference types,
 Effectively, they're just two different names for the same single instance,
 as shown in the figure below:
 
-![](sharedStateClass_2x.png)
+![](sharedStateClass)
 
 
 Checking the `frameRate` property of `tenEighty`

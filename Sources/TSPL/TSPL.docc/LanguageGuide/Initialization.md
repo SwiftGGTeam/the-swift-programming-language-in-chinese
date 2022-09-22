@@ -956,7 +956,7 @@ A simple way to remember this is:
 
 These rules are illustrated in the figure below:
 
-![](initializerDelegation01_2x.png)
+![](initializerDelegation01)
 
 
 Here, the superclass has a single designated initializer and two convenience initializers.
@@ -982,7 +982,7 @@ It illustrates how the designated initializers in this hierarchy
 act as “funnel” points for class initialization,
 simplifying the interrelationships among classes in the chain:
 
-![](initializerDelegation02_2x.png)
+![](initializerDelegation02)
 
 
 ### Two-Phase Initialization
@@ -1067,7 +1067,7 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 
 Here's how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
 
-![](twoPhaseInitialization01_2x.png)
+![](twoPhaseInitialization01)
 
 
 In this example, initialization begins with a call to
@@ -1089,7 +1089,7 @@ its memory is considered fully initialized, and phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
-![](twoPhaseInitialization02_2x.png)
+![](twoPhaseInitialization02)
 
 
 The superclass's designated initializer now has an opportunity
@@ -1529,7 +1529,7 @@ class Food {
 
 The figure below shows the initializer chain for the `Food` class:
 
-![](initializersExample01_2x.png)
+![](initializersExample01)
 
 
 Classes don't have a default memberwise initializer,
@@ -1621,7 +1621,7 @@ class RecipeIngredient: Food {
 
 The figure below shows the initializer chain for the `RecipeIngredient` class:
 
-![](initializersExample02_2x.png)
+![](initializersExample02)
 
 
 The `RecipeIngredient` class has a single designated initializer,
@@ -1734,7 +1734,7 @@ and doesn't define any initializers itself,
 
 The figure below shows the overall initializer chain for all three classes:
 
-![](initializersExample03_2x.png)
+![](initializersExample03)
 
 
 You can use all three of the inherited initializers
@@ -2910,7 +2910,7 @@ which models a board for the game of chess.
 Chess is played on an 8 x 8 board,
 with alternating black and white squares.
 
-![](chessBoard_2x.png)
+![](chessBoard)
 
 
 To represent this game board,
