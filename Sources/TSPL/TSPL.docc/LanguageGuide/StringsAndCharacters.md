@@ -198,7 +198,7 @@ However, if you write whitespace at the beginning of a line
 in addition to what's before the closing quotation marks,
 that whitespace *is* included.
 
-![](multilineStringWhitespace_2x.png)
+![](multilineStringWhitespace)
 
 
 @Comment {
@@ -1280,7 +1280,7 @@ The figure below shows these relationships:
   would be clearer if the variable names appeared in the figure.
 }
 
-![](stringSubstring_2x.png)
+![](stringSubstring)
 
 
 > Note: Both `String` and `Substring` conform to the
@@ -1647,7 +1647,7 @@ This property is of type `String.UTF8View`,
 which is a collection of unsigned 8-bit (`UInt8`) values,
 one for each byte in the string's UTF-8 representation:
 
-![](UTF8_2x.png)
+![](UTF8)
 
 
 ```swift
@@ -1703,7 +1703,7 @@ This property is of type `String.UTF16View`,
 which is a collection of unsigned 16-bit (`UInt16`) values,
 one for each 16-bit code unit in the string's UTF-16 representation:
 
-![](UTF16_2x.png)
+![](UTF16)
 
 
 ```swift
@@ -1759,7 +1759,7 @@ which is a collection of values of type `UnicodeScalar`.
 Each `UnicodeScalar` has a `value` property that returns
 the scalar's 21-bit value, represented within a `UInt32` value:
 
-![](UnicodeScalar_2x.png)
+![](UnicodeScalar)
 
 
 ```swift

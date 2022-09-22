@@ -321,7 +321,7 @@ Here's how the strong references look after creating and assigning these two ins
 The `john` variable now has a strong reference to the new `Person` instance,
 and the `unit4A` variable has a strong reference to the new `Apartment` instance:
 
-![](referenceCycle01_2x.png)
+![](referenceCycle01)
 
 
 You can now link the two instances together
@@ -347,7 +347,7 @@ unit4A!.tenant = john
 
 Here's how the strong references look after you link the two instances together:
 
-![](referenceCycle02_2x.png)
+![](referenceCycle02)
 
 
 Unfortunately, linking these two instances creates
@@ -382,7 +382,7 @@ from ever being deallocated, causing a memory leak in your app.
 Here's how the strong references look after you set
 the `john` and `unit4A` variables to `nil`:
 
-![](referenceCycle03_2x.png)
+![](referenceCycle03)
 
 
 The strong references between the `Person` instance
@@ -532,7 +532,7 @@ unit4A!.tenant = john
 
 Here's how the references look now that you've linked the two instances together:
 
-![](weakReference01_2x.png)
+![](weakReference01)
 
 
 The `Person` instance still has a strong reference to the `Apartment` instance,
@@ -560,7 +560,7 @@ Because there are no more strong references to the `Person` instance,
 it's deallocated
 and the `tenant` property is set to `nil`:
 
-![](weakReference02_2x.png)
+![](weakReference02)
 
 
 The only remaining strong reference to the `Apartment` instance
@@ -586,7 +586,7 @@ unit4A = nil
 Because there are no more strong references to the `Apartment` instance,
 it too is deallocated:
 
-![](weakReference03_2x.png)
+![](weakReference03)
 
 
 > Note: In systems that use garbage collection,
@@ -749,7 +749,7 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 Here's how the references look, now that you've linked the two instances:
 
-![](unownedReference01_2x.png)
+![](unownedReference01)
 
 
 The `Customer` instance now has a strong reference to the `CreditCard` instance,
@@ -759,7 +759,7 @@ Because of the unowned `customer` reference,
 when you break the strong reference held by the `john` variable,
 there are no more strong references to the `Customer` instance:
 
-![](unownedReference02_2x.png)
+![](unownedReference02)
 
 
 Because there are no more strong references to the `Customer` instance,
@@ -919,7 +919,7 @@ stored in their `nextCourse` property,
 which maintains an unowned optional reference to
 the course a student should take after completing this one.
 
-![](unownedOptionalReference_2x.png)
+![](unownedOptionalReference)
 
 
 An unowned optional reference doesn't keep a strong hold
@@ -1296,7 +1296,7 @@ creates a strong reference cycle between
 an `HTMLElement` instance and the closure used for its default `asHTML` value.
 Here's how the cycle looks:
 
-![](closureReferenceCycle01_2x.png)
+![](closureReferenceCycle01)
 
 
 The instance's `asHTML` property holds a strong reference to its closure.
@@ -1522,7 +1522,7 @@ print(paragraph!.asHTML())
 
 Here's how the references look with the capture list in place:
 
-![](closureReferenceCycle02_2x.png)
+![](closureReferenceCycle02)
 
 
 This time, the capture of `self` by the closure is an unowned reference,

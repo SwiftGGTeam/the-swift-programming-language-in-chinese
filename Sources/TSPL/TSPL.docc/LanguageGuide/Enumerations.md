@@ -344,14 +344,14 @@ Each barcode has a number system digit,
 followed by five manufacturer code digits and five product code digits.
 These are followed by a check digit to verify that the code has been scanned correctly:
 
-![](barcode_UPC_2x.png)
+![](barcode_UPC)
 
 
 Other products are labeled with 2D barcodes in QR code format,
 which can use any ISO 8859-1 character
 and can encode a string up to 2,953 characters long:
 
-![](barcode_QR_2x.png)
+![](barcode_QR)
 
 
 It's convenient for an inventory tracking system to store UPC barcodes

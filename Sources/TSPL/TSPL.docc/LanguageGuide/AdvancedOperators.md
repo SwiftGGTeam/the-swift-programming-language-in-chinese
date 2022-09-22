@@ -43,7 +43,7 @@ Swift supports all of the bitwise operators found in C, as described below.
 
 The *bitwise NOT operator* (`~`) inverts all bits in a number:
 
-![](bitwiseNOT_2x.png)
+![](bitwiseNOT)
 
 
 The bitwise NOT operator is a prefix operator,
@@ -91,7 +91,7 @@ The *bitwise AND operator* (`&`) combines the bits of two numbers.
 It returns a new number whose bits are set to `1`
 only if the bits were equal to `1` in *both* input numbers:
 
-![](bitwiseAND_2x.png)
+![](bitwiseAND)
 
 
 In the example below,
@@ -124,7 +124,7 @@ The *bitwise OR operator* (`|`) compares the bits of two numbers.
 The operator returns a new number whose bits are set to `1`
 if the bits are equal to `1` in *either* input number:
 
-![](bitwiseOR_2x.png)
+![](bitwiseOR)
 
 
 @Comment {
@@ -162,7 +162,7 @@ The operator returns a new number whose bits are set to `1`
 where the input bits are different
 and are set to `0` where the input bits are the same:
 
-![](bitwiseXOR_2x.png)
+![](bitwiseXOR)
 
 
 In the example below,
@@ -225,7 +225,7 @@ Blue numbers are shifted,
 gray numbers are discarded,
 and orange zeros are inserted:
 
-![](bitshiftUnsigned_2x.png)
+![](bitshiftUnsigned)
 
 
 Here's how bit shifting looks in Swift code:
@@ -339,7 +339,7 @@ Positive numbers are stored in exactly the same way as for unsigned integers,
 counting upwards from `0`.
 Here's how the bits inside an `Int8` look for the number `4`:
 
-![](bitshiftSignedFour_2x.png)
+![](bitshiftSignedFour)
 
 
 The sign bit is `0` (meaning “positive”),
@@ -354,13 +354,13 @@ so this means `2` to the power of `7`, or `128`.
 
 Here's how the bits inside an `Int8` look for the number `-4`:
 
-![](bitshiftSignedMinusFour_2x.png)
+![](bitshiftSignedMinusFour)
 
 
 This time, the sign bit is `1` (meaning “negative”),
 and the seven value bits have a binary value of `124` (which is `128 - 4`):
 
-![](bitshiftSignedMinusFourValue_2x.png)
+![](bitshiftSignedMinusFourValue)
 
 
 This encoding for negative numbers is known as a *two's complement* representation.
@@ -372,7 +372,7 @@ simply by performing a standard binary addition of all eight bits
 (including the sign bit),
 and discarding anything that doesn't fit in the eight bits once you're done:
 
-![](bitshiftSignedAddition_2x.png)
+![](bitshiftSignedAddition)
 
 
 Second, the two's complement representation also lets you
@@ -385,7 +385,7 @@ apply the same rules as for unsigned integers,
 but fill any empty bits on the left with the *sign bit*,
 rather than with a zero.
 
-![](bitshiftSigned_2x.png)
+![](bitshiftSigned)
 
 
 This action ensures that signed integers have the same sign after they're shifted to the right,
@@ -481,7 +481,7 @@ as shown in the diagram below.
 The value that remains within the bounds of the `UInt8`
 after the overflow addition is `00000000`, or zero.
 
-![](overflowAddition_2x.png)
+![](overflowAddition)
 
 
 Something similar happens when
@@ -515,7 +515,7 @@ If you subtract `1` from `00000000` using the overflow subtraction operator (`&-
 the number will overflow and wrap around to `11111111`,
 or `255` in decimal.
 
-![](overflowUnsignedSubtraction_2x.png)
+![](overflowUnsignedSubtraction)
 
 
 Overflow also occurs for signed integers.
@@ -551,7 +551,7 @@ gives a binary value of `01111111`,
 which toggles the sign bit and gives positive `127`,
 the maximum positive value that an `Int8` can hold.
 
-![](overflowSignedSubtraction_2x.png)
+![](overflowSignedSubtraction)
 
 
 For both signed and unsigned integers,
@@ -785,7 +785,7 @@ let combinedVector = vector + anotherVector
 This example adds together the vectors `(3.0, 1.0)` and `(2.0, 4.0)`
 to make the vector `(5.0, 5.0)`, as illustrated below.
 
-![](vectorAddition_2x.png)
+![](vectorAddition)
 
 
 ### Prefix and Postfix Operators

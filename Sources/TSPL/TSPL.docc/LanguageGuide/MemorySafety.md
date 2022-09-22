@@ -85,7 +85,7 @@ you can read any information from the budget
 and get a correct answer,
 as shown in the figure below.
 
-![](memory_shopping_2x.png)
+![](memory_shopping)
 
 
 While you're adding items to the budget,
@@ -273,7 +273,7 @@ The read and write accesses
 refer to the same memory and they overlap,
 producing a conflict.
 
-![](memory_increment_2x.png)
+![](memory_increment)
 
 
 One way to solve this conflict
@@ -496,7 +496,7 @@ they access different locations in memory.
 Even though the two write accesses overlap in time,
 they don't conflict.
 
-![](memory_share_health_maria_2x.png)
+![](memory_share_health_maria)
 
 
 However,
@@ -542,7 +542,7 @@ The two write accesses
 refer to the same memory and they overlap,
 producing a conflict.
 
-![](memory_share_health_oscar_2x.png)
+![](memory_share_health_oscar)
 
 
 ## Conflicting Access to Properties
