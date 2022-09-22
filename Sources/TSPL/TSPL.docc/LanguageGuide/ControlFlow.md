@@ -1870,6 +1870,46 @@ without wrapping it in an `else` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
 
+## Deferred Actions
+
+Unlike control-flow constructs like `if` and `while`,
+which let you control whether code is executed
+or how many times it gets executed,
+`defer` controls *when* a piece of code is executed.
+You use a `defer` block to write code that will be executed later,
+when your program reaches the end of the current scope.
+It doesn't matter how the program leaves this scope —
+it might be returning a value from a function,
+breaking out of a `for` loop,
+or throwing an error —
+the deferred code is always run before leaving the scope.
+The most common place to write `defer` is inside a function,
+to ensure that some code runs before returning from the function.
+For example:
+
+```
+func x() {
+	print(1)
+	defer { print(2) }
+	print(3)
+}
+```
+
+<!-- XXX Write a real example above -->
+
+◊ actions that happen in pairs
+
+- open and close
+- allocate and free
+- begin and end DB transaction
+
+◊ nested scopes - executed from inner to outer
+
+◊ example of "at function exit"
+◊ but you can do more than that - any { } scope
+◊ example with multiple defers
+
+
 ## Checking API Availability
 
 Swift has built-in support for checking API availability,
