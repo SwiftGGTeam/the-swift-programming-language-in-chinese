@@ -1429,7 +1429,7 @@ based on specified platforms arguments.
 
 An availability condition has the following form:
 
-```
+```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {
     <#statements to execute if the APIs are available#>
 } else {
@@ -1455,7 +1455,7 @@ logical operators like `&&` and `||`.
 Instead of using `!` to negate an availability condition,
 use an unavailability condition, which has the following form:
 
-```
+```swift
 if #unavailable(<#platform name#> <#version#>, <#...#>) {
     <#fallback statements to execute if the APIs are unavailable#>
 } else {
