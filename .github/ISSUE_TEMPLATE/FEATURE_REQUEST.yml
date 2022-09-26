@@ -12,7 +12,7 @@ body:
   attributes:
     label: Location
     description: |
-      The URL of the chapter or section where the new content would go
+      The URL of the chapter or section where the new content would go.
   validations:
     required: false
 - type: textarea
