@@ -8,9 +8,10 @@ These include `while` loops to perform a task multiple times;
 to execute different branches of code based on certain conditions;
 and statements such as `break` and `continue`
 to transfer the flow of execution to another point in your code.
-
-Swift also provides a `for`-`in` loop that makes it easy to iterate over
+Swift provides a `for`-`in` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
+Swift also provides `defer` statements,
+which wrap code to be executed when leaving the current scope.
 
 Swift's `switch` statement is considerably more powerful
 than its counterpart in many C-like languages.
@@ -1873,11 +1874,49 @@ next to the requirement.
 ## Deferred Actions
 
 Unlike control-flow constructs like `if` and `while`,
-which let you control whether code is executed
+which let you control whether part of your code is executed
 or how many times it gets executed,
 `defer` controls *when* a piece of code is executed.
 You use a `defer` block to write code that will be executed later,
 when your program reaches the end of the current scope.
+For example:
+
+```
+func someFunction() {
+    print("Start of the function")
+    defer { print("Deferred work") }
+    print("End of the function")
+}
+someFunction()
+print("After the function")
+```
+
+@Comment {
+  - test: `defer-function`
+
+  ``` swifttest
+  -> func someFunction() {
+  ->     print("Start of the function")
+  ->     defer { print("Deferred work") }
+  ->     print("End of the function")
+  -> }
+  -> someFunction()
+  -> print("After the function")
+  <- Start of the function
+  <- End of the function
+  <- Deferred work
+  <- After the function
+  ```
+}
+
+In this code, the `defer` block is defined
+inside the scope of a function,
+so Swift runs the code in that `defer` block
+while exiting from the function.
+
+
+◊ Other kinds of scopes work too
+
 It doesn't matter how the program leaves this scope —
 it might be returning a value from a function,
 breaking out of a `for` loop,
@@ -1886,14 +1925,6 @@ the deferred code is always run before leaving the scope.
 The most common place to write `defer` is inside a function,
 to ensure that some code runs before returning from the function.
 For example:
-
-```
-func x() {
-	print(1)
-	defer { print(2) }
-	print(3)
-}
-```
 
 <!-- XXX Write a real example above -->
 
