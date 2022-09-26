@@ -16,4 +16,5 @@ preview:
 archive: .build/plugins/Swift-DocC/outputs/TSPL.doccarchive
 
 .build/plugins/Swift-DocC/outputs/TSPL.doccarchive: Sources/TSPL/TSPL.docc/*/*.md
+.build/plugins/Swift-DocC/outputs/TSPL.doccarchive: Sources/TSPL/TSPL.docc/Assets/*.png
 	xcrun swift package plugin generate-documentation --target TSPL --transform-for-static-hosting
