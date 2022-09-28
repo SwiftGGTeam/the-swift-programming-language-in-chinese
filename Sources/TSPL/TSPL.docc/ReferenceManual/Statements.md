@@ -820,7 +820,7 @@ to perform manual resource management such as closing file descriptors,
 and to perform actions that need to happen even if an error is thrown.
 
 The *statements* in the `defer` statement
-are executed at the end of the scope enclosing the `defer`.
+are executed at the end of the scope that encloses the `defer` statement.
 
 ```swift
 func f(x: Int) {
@@ -861,7 +861,8 @@ f(x: 5)
   ```
 }
 
-The `defer` in the `if` statement
+In the code above,
+the `defer` in the `if` statement
 executes before the `defer` declared in the function `f`
 because the scope of the `if` statement ends
 before the scope of the function.
