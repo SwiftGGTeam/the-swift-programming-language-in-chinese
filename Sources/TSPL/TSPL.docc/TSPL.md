@@ -4,6 +4,11 @@
   @DisplayName("The Swift Programming Language")
 }
 
+@GlobalOptions {
+  @AutomaticSeeAlso(disabled)
+  @AutomaticTitleHeading(disabled)
+}
+
 ## Topics
 
 ### Guided Tour
