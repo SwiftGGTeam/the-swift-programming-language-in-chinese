@@ -36,4 +36,6 @@ Use the following steps when creating a new pull request:
 1. Create a local fork of this repository with your changes.
 2. Test that your changes build locally by running `swift package plugin generate-documentation --target TSPL --transform-for-static-hosting`.
 3. Create a pull request in this repository.
-4. Confirm that your changes build in CI by commenting `@swift-ci please test` on your pull request.
+
+Within a few days,
+someone will assign reviewers and start a build in CI.
