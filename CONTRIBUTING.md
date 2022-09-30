@@ -34,7 +34,7 @@ and [this book’s style guide][tspl-style].
 Use the following steps when creating a new pull request:
 
 1. Create a local fork of this repository with your changes.
-2. Test that your changes build locally by running `swift package plugin generate-documentation --target TSPL --transform-for-static-hosting`.
+2. Test that your changes build locally by running `make preview`.
 3. Create a pull request in this repository.
 
 Within a few days,
