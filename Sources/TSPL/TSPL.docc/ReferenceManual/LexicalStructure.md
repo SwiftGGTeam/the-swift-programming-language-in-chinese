@@ -284,6 +284,7 @@ so they must be escaped with backticks in that context.
 - Keywords used in expressions and types:
   `Any`,
   `as`,
+  `await`,
   `catch`,
   `false`,
   `is`,
