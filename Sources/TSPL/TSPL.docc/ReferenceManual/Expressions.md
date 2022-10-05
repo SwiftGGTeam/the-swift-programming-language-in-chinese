@@ -2,6 +2,8 @@
 
 # Expressions
 
+XXX Chapter abstract goes here
+
 In Swift, there are four kinds of expressions:
 prefix expressions, infix expressions, primary expressions, and postfix expressions.
 Evaluating an expression returns a value,

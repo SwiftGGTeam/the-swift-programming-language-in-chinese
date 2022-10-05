@@ -2,6 +2,8 @@
 
 # Concurrency
 
+XXX Chapter abstract goes here
+
 Swift has built-in support for writing asynchronous and parallel code
 in a structured way.
 *Asynchronous code* can be suspended and resumed later,

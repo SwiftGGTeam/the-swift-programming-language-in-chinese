@@ -2,6 +2,8 @@
 
 # Nested Types
 
+XXX Chapter abstract goes here
+
 Enumerations are often created to support a specific class or structure's functionality.
 Similarly, it can be convenient to define utility classes and structures
 purely for use within the context of a more complex type.

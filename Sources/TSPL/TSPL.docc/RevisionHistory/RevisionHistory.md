@@ -2,6 +2,8 @@
 
 # Document Revision History
 
+XXX Chapter abstract goes here
+
 **2022-06-06**
 
 - Updated for Swift 5.7.

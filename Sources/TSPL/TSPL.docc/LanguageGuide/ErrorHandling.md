@@ -2,6 +2,8 @@
 
 # Error Handling
 
+XXX Chapter abstract goes here
+
 *Error handling* is the process of responding to
 and recovering from error conditions in your program.
 Swift provides first-class support for

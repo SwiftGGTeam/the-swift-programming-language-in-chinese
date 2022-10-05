@@ -2,6 +2,8 @@
 
 # Inheritance
 
+XXX Chapter abstract goes here
+
 A class can *inherit* methods, properties, and other characteristics
 from another class.
 When one class inherits from another,

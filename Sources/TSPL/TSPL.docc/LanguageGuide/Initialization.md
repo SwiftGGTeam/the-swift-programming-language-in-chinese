@@ -2,6 +2,8 @@
 
 # Initialization
 
+XXX Chapter abstract goes here
+
 *Initialization* is the process of preparing an instance of
 a class, structure, or enumeration for use.
 This process involves setting an initial value for each stored property on that instance

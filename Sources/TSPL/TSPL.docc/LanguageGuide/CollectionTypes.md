@@ -2,6 +2,8 @@
 
 # Collection Types
 
+XXX Chapter abstract goes here
+
 Swift provides three primary *collection types*,
 known as arrays, sets, and dictionaries,
 for storing collections of values.

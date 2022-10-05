@@ -2,6 +2,8 @@
 
 # The Basics
 
+XXX Chapter abstract goes here
+
 Swift is a programming language for iOS, macOS, watchOS, and tvOS app development.
 If you have experience developing in C or Objective-C,
 many parts of Swift will be familiar to you.

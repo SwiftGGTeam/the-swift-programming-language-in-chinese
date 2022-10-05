@@ -2,6 +2,8 @@
 
 # Optional Chaining
 
+XXX Chapter abstract goes here
+
 *Optional chaining* is a process for querying and calling
 properties, methods, and subscripts on an optional that might currently be `nil`.
 If the optional contains a value,

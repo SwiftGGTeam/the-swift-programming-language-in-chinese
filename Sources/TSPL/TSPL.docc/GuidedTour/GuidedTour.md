@@ -2,6 +2,8 @@
 
 # A Swift Tour
 
+XXX Chapter abstract goes here
+
 
 
 Tradition suggests that the first program in a new language

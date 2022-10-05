@@ -2,6 +2,8 @@
 
 # Methods
 
+XXX Chapter abstract goes here
+
 *Methods* are functions that are associated with a particular type.
 Classes, structures, and enumerations can all define instance methods,
 which encapsulate specific tasks and functionality for working with an instance of a given type.

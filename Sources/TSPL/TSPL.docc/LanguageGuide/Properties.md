@@ -2,6 +2,8 @@
 
 # Properties
 
+XXX Chapter abstract goes here
+
 *Properties* associate values with a particular class, structure, or enumeration.
 Stored properties store constant and variable values as part of an instance,
 whereas computed properties calculate (rather than store) a value.

@@ -2,6 +2,8 @@
 
 # Control Flow
 
+XXX Chapter abstract goes here
+
 Swift provides a variety of control flow statements.
 These include `while` loops to perform a task multiple times;
 `if`, `guard`, and `switch` statements

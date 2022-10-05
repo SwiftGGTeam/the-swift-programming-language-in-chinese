@@ -2,6 +2,8 @@
 
 # Generics
 
+XXX Chapter abstract goes here
+
 *Generic code* enables you to write flexible, reusable functions and types
 that can work with any type, subject to requirements that you define.
 You can write code that avoids duplication

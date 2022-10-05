@@ -2,6 +2,8 @@
 
 # Memory Safety
 
+XXX Chapter abstract goes here
+
 By default, Swift prevents unsafe behavior from happening in your code.
 For example,
 Swift ensures that variables are initialized before they're used,

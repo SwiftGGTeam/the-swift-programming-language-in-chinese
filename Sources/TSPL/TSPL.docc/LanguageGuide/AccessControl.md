@@ -2,6 +2,8 @@
 
 # Access Control
 
+XXX Chapter abstract goes here
+
 *Access control* restricts access to parts of your code
 from code in other source files and modules.
 This feature enables you to hide the implementation details of your code,

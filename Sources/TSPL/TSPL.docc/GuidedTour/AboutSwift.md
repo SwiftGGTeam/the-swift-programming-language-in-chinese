@@ -2,6 +2,8 @@
 
 # About Swift
 
+XXX Chapter abstract goes here
+
 Swift is a fantastic way to write software,
 whether it’s for phones, desktops, servers,
 or anything else that runs code.

@@ -2,6 +2,8 @@
 
 # Statements
 
+XXX Chapter abstract goes here
+
 In Swift, there are three kinds of statements: simple statements, compiler control statements,
 and control flow statements.
 Simple statements are the most common and consist of either an expression or a declaration.
