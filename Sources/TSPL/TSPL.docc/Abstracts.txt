@@ -1,0 +1,76 @@
+About Swift
+Version Compatibility
+	Learn what functionality is available in older language modes.
+A Swift Tour
+	Explore the features and syntax of Swift.
+
+The Basics
+	Use common kinds of data
+	... this chapter is kind of a grab bag of, well, basics ...
+Basic Operators
+	XXX assignment, arithmetic, range, logical
+Strings And Characters
+	Work with text - understand Unicode
+Collection Types
+	Organize data using arrays, sets, and dictionaries.
+Control Flow
+	XXX what code gets executed - how many times - early exit
+Functions
+	Define functions, label their arguments, and use their return value.
+	XXX try to include the word "call" too?
+Closures
+Enumerations
+Structures and Classes
+Properties
+	Access stored and computed values that are part of an instance or type.
+Methods
+	Define and call instance and type methods.
+	XXX kind of repetitive of the title
+Subscripts
+	Access the elements of a collection.
+Inheritance
+	Subclass to add or override functionality.
+Initialization
+	Set the initial values for a type's stored properties.
+Deinitialization
+	Release resources that require custom cleanup.
+Optional Chaining
+	Access members of an optional value without unwrapping.
+Error Handling
+	Respond to and recover from errors.
+Concurrency
+	Perform asynchronous operations.
+Type Casting
+Nested Types
+	Define one data type inside of another data type.
+Extensions
+	Add functionality to an existing data type.
+Protocols
+	Define requirements that conforming types must implement.
+Generics
+Opaque Types
+Automatic Reference Counting
+Memory Safety
+Access Control
+Advanced Operators
+
+About The Language Reference
+Lexical Structure
+	Understand the lowest-level components of the syntax.
+Types
+	Use built-in nominal and structural types.
+Expressions
+	Access values and members, and apply operators.
+Statements
+	Structure groups of expressions and control their behavior.
+Declarations
+	Create things like types, operators, and variables.
+Attributes
+	Add information to declarations and types.
+Patterns
+	Match and destructure values.
+Generic Parameters And Arguments
+Summary of the Grammar
+
+Document Revision History
+	Review the recent changes to this book.
