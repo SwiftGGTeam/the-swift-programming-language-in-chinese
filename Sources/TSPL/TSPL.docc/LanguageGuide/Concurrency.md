@@ -257,9 +257,9 @@ For example, the code below moves a picture from one gallery to another.
 
 ```
 let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-add(firstPhoto toGallery: "Road Trip")
+add(firstPhoto, toGallery: "Road Trip")
 // At this point, firstPhoto is temporarily in both galleries.
-remove(firstPhoto fromGallery: "Summer Vacation")
+remove(firstPhoto, fromGallery: "Summer Vacation")
 ```
 
 
