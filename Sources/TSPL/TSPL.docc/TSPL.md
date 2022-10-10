@@ -4,7 +4,7 @@
   @DisplayName("The Swift Programming Language")
 }
 
-@GlobalOptions {
+@Options(scope: global) {
   @AutomaticSeeAlso(disabled)
   @AutomaticTitleHeading(disabled)
 }
