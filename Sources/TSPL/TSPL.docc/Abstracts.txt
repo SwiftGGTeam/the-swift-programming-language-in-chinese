@@ -19,8 +19,11 @@ Functions
 	Define functions, label their arguments, and use their return value.
 	XXX try to include the word "call" too?
 Closures
+	Group code that runs together, without creating a named function.
 Enumerations
+	Model custom types that define a list of possible values.
 Structures and Classes
+	Model custom types that encapsulate data.
 Properties
 	Access stored and computed values that are part of an instance or type.
 Methods
@@ -41,6 +44,7 @@ Error Handling
 Concurrency
 	Perform asynchronous operations.
 Type Casting
+	Determine a value's runtime type, and give it more specific type information.
 Nested Types
 	Define one data type inside of another data type.
 Extensions
