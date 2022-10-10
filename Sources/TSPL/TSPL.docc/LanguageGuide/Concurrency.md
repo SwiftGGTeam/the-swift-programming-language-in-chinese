@@ -273,8 +273,8 @@ you can refactor that code into a synchronous function:
 
 ```swift
 func move(_ photoName: String, from source: String, to destination: String) {
-    add(photoName, to: destination)
-    remove(photoName, from: source)
+    add(photoName, toGallery: destination)
+    remove(photoName, fromGallery: source)
 }
 // ...
 let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
