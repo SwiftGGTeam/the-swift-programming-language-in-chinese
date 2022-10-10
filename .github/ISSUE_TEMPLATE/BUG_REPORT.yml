@@ -1,6 +1,6 @@
-name: Bug Report
+name: Content Issue
 description: Something is missing or incorrect
-labels: [Bug]
+labels: ["Content Issue"]
 body:
 - type: markdown
   attributes:
@@ -12,7 +12,7 @@ body:
   attributes:
     label: Location
     description: |
-      The URL of the content that has a bug.
+      The URL of the content that has a problem.
   validations:
     required: false
 - type: textarea
