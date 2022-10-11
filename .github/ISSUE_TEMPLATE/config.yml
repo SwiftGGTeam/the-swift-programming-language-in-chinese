@@ -4,7 +4,7 @@ contact_links:
   - name: Documentation Forums Category
     url: https://forums.swift.org/c/92
     about: Ask and answer questions about writing documentation
-  - name: DocC Forums Category
+  - name: Swift-DocC Forums Category
     url: https://forums.swift.org/c/80
     about: Ask and answer questions about using Swift-DocC
   - name: Swift-DocC Documentation
