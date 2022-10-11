@@ -2,7 +2,7 @@
 
 # Version Compatibility
 
-XXX Chapter abstract goes here
+Learn what functionality is available in older language modes.
 
 This book describes Swift 5.7,
 the default version of Swift that's included in Xcode 14.

@@ -2,7 +2,7 @@
 
 # Control Flow
 
-XXX Chapter abstract goes here
+Structure code with branches, loops, and early exits.
 
 Swift provides a variety of control flow statements.
 These include `while` loops to perform a task multiple times;

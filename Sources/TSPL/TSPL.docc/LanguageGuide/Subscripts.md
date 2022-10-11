@@ -2,7 +2,7 @@
 
 # Subscripts
 
-XXX Chapter abstract goes here
+Access the elements of a collection.
 
 Classes, structures, and enumerations can define *subscripts*,
 which are shortcuts for accessing the member elements of a collection, list, or sequence.

@@ -2,7 +2,7 @@
 
 # Generic Parameters and Arguments
 
-XXX Chapter abstract goes here
+Generalize declarations to abstract away concrete types.
 
 This chapter describes parameters and arguments for generic types, functions, and
 initializers. When you declare a generic type, function, subscript, or initializer,

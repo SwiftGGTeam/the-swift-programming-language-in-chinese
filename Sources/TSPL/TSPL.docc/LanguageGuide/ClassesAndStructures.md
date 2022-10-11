@@ -2,7 +2,7 @@
 
 # Structures and Classes
 
-XXX Chapter abstract goes here
+Model custom types that encapsulate data.
 
 *Structures* and *classes* are general-purpose,
 flexible constructs that become the building blocks of your program's code.

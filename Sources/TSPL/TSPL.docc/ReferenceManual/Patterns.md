@@ -2,7 +2,7 @@
 
 # Patterns
 
-XXX Chapter abstract goes here
+Match and destructure values.
 
 A *pattern* represents the structure of a single value
 or a composite value.

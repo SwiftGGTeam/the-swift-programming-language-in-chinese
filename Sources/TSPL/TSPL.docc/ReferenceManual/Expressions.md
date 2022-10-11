@@ -2,7 +2,7 @@
 
 # Expressions
 
-XXX Chapter abstract goes here
+Access values and members, and apply operators.
 
 In Swift, there are four kinds of expressions:
 prefix expressions, infix expressions, primary expressions, and postfix expressions.

@@ -2,7 +2,7 @@
 
 # Access Control
 
-XXX Chapter abstract goes here
+Manage the visibility of code by declaration, file, and module.
 
 *Access control* restricts access to parts of your code
 from code in other source files and modules.

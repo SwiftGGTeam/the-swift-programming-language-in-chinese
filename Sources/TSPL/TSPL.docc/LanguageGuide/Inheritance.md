@@ -2,7 +2,7 @@
 
 # Inheritance
 
-XXX Chapter abstract goes here
+Subclass to add or override functionality.
 
 A class can *inherit* methods, properties, and other characteristics
 from another class.

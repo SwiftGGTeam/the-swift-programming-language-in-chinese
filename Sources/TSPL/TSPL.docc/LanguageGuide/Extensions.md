@@ -2,7 +2,7 @@
 
 # Extensions
 
-XXX Chapter abstract goes here
+Add functionality to an existing data type.
 
 *Extensions* add new functionality to an existing
 class, structure, enumeration, or protocol type.

@@ -2,7 +2,7 @@
 
 # Opaque Types
 
-XXX Chapter abstract goes here
+Hide implementation details about a value's type.
 
 A function or method with an opaque return type
 hides its return value's type information.

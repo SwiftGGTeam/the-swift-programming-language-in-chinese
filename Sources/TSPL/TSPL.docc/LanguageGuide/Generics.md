@@ -2,7 +2,7 @@
 
 # Generics
 
-XXX Chapter abstract goes here
+Write code that works for multiple types, and specify requirements for those types.
 
 *Generic code* enables you to write flexible, reusable functions and types
 that can work with any type, subject to requirements that you define.

@@ -2,7 +2,7 @@
 
 # Strings and Characters
 
-XXX Chapter abstract goes here
+Store and manipulate text.
 
 A *string* is a series of characters,
 such as `"hello, world"` or `"albatross"`.

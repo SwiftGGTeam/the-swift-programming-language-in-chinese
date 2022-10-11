@@ -2,7 +2,7 @@
 
 # Automatic Reference Counting
 
-XXX Chapter abstract goes here
+Model the lifetime of objects and their relationships.
 
 Swift uses *Automatic Reference Counting* (ARC)
 to track and manage your app's memory usage.

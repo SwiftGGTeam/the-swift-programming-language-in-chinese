@@ -2,7 +2,7 @@
 
 # A Swift Tour
 
-XXX Chapter abstract goes here
+Explore the features and syntax of Swift.
 
 
 

@@ -2,7 +2,7 @@
 
 # Document Revision History
 
-XXX Chapter abstract goes here
+Review the recent changes to this book.
 
 **2022-06-06**
 

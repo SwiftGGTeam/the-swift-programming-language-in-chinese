@@ -2,7 +2,7 @@
 
 # Protocols
 
-XXX Chapter abstract goes here
+Define requirements that conforming types must implement.
 
 A *protocol* defines a blueprint of
 methods, properties, and other requirements

@@ -2,7 +2,7 @@
 
 # Initialization
 
-XXX Chapter abstract goes here
+Set the initial values for a type's stored properties.
 
 *Initialization* is the process of preparing an instance of
 a class, structure, or enumeration for use.

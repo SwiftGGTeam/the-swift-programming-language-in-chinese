@@ -2,7 +2,7 @@
 
 # Deinitialization
 
-XXX Chapter abstract goes here
+Release resources that require custom cleanup.
 
 A *deinitializer* is called immediately before a class instance is deallocated.
 You write deinitializers with the `deinit` keyword,
