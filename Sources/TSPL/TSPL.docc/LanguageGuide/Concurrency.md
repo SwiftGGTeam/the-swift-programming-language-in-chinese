@@ -255,11 +255,11 @@ Code in between possible suspension points runs sequentially,
 without the possibility of interruption from other concurrent code.
 For example, the code below moves a picture from one gallery to another.
 
-```
+```swift
 let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-add(firstPhoto toGallery: "Road Trip")
+add(firstPhoto, toGallery: "Road Trip")
 // At this point, firstPhoto is temporarily in both galleries.
-remove(firstPhoto fromGallery: "Summer Vacation")
+remove(firstPhoto, fromGallery: "Summer Vacation")
 ```
 
 
@@ -271,10 +271,10 @@ To make it even clearer that this chunk of code
 must not have `await` added to it in the future,
 you can refactor that code into a synchronous function:
 
-```
+```swift
 func move(_ photoName: String, from source: String, to destination: String) {
-    add(photoName, to: destination)
-    remove(photoName, from: source)
+    add(photoName, toGallery: destination)
+    remove(photoName, fromGallery: source)
 }
 // ...
 let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
