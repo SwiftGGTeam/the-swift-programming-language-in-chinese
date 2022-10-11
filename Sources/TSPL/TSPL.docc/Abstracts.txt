@@ -1,25 +1,23 @@
 About Swift
+	Understand the high-level goals of the language
 Version Compatibility
 	Learn what functionality is available in older language modes.
 A Swift Tour
 	Explore the features and syntax of Swift.
-
 The Basics
-	Use common kinds of data
-	... this chapter is kind of a grab bag of, well, basics ...
+	Work with common kinds of data and write basic syntax.
 Basic Operators
-	XXX assignment, arithmetic, range, logical
+	Perform assignment, arithmetic, comparison, and Boolean operations
 Strings And Characters
-	Work with text - understand Unicode
+	Store and manipulate text.
 Collection Types
 	Organize data using arrays, sets, and dictionaries.
 Control Flow
-	XXX what code gets executed - how many times - early exit
+	Structure code with branches, loops, and early exits.
 Functions
-	Define functions, label their arguments, and use their return value.
-	XXX try to include the word "call" too?
+	Define and call functions, label their arguments, and use their return value.
 Closures
-	Group code that runs together, without creating a named function.
+	Group code that will execute together, without creating a named function.
 Enumerations
 	Model custom types that define a list of possible values.
 Structures and Classes
@@ -27,8 +25,7 @@ Structures and Classes
 Properties
 	Access stored and computed values that are part of an instance or type.
 Methods
-	Define and call instance and type methods.
-	XXX kind of repetitive of the title
+	Define and call functions that are part of an instance or type.
 Subscripts
 	Access the elements of a collection.
 Inheritance
@@ -52,29 +49,37 @@ Extensions
 Protocols
 	Define requirements that conforming types must implement.
 Generics
+	Write code that works for multiple types, and specify requirements for those types.
 Opaque Types
+	Hide implementation details about a value's type.
 Automatic Reference Counting
+	Model the lifetime of objects and their relationships.
 Memory Safety
+	Avoid conflicting access to memory.
 Access Control
+	Manage the visibility of code by declaration, file, and module.
 Advanced Operators
+	Define custom operators, perform bitwise operations, and use builder syntax.
 
 About The Language Reference
+	Read the notation used for the formal grammar.
 Lexical Structure
-	Understand the lowest-level components of the syntax.
+	Use the lowest-level components of the syntax.
 Types
 	Use built-in nominal and structural types.
 Expressions
 	Access values and members, and apply operators.
 Statements
-	Structure groups of expressions and control their behavior.
+	Structure groups of expressions, and control their behavior.
 Declarations
-	Create things like types, operators, and variables.
+	Introduce types, operators, variables, and other names and constructs.
 Attributes
 	Add information to declarations and types.
 Patterns
 	Match and destructure values.
 Generic Parameters And Arguments
+	Generalize declarations to abstract away concrete types.
 Summary of the Grammar
-
+	View the entire formal grammar, collected in one place.
 Document Revision History
 	Review the recent changes to this book.
