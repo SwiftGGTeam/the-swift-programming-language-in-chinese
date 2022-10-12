@@ -32,11 +32,15 @@ follows a few conventions:
 
 As an example, the grammar of a getter-setter block is defined as follows:
 
-```
-Grammar of a getter-setter block
-
-getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}`` | ``{`` setter-clause getter-clause ``}``
-```
+> Grammar of a getter-setter block:
+>
+> getter-setter-block → `{` getter-clause setter-clause? `}` | `{` setter-clause getter-clause `}`
+>
+> getter-setter-block → `{` getter-clause setter-clause-OPT `}` | `{` setter-clause getter-clause `}`
+>
+> getter-setter-block → `{` getter-clause setter-clause OPT `}` | `{` setter-clause getter-clause `}`
+>
+> getter-setter-block → `{` getter-clause setter-clause (opt) `}` | `{` setter-clause getter-clause `}`
 
 
 This definition indicates that a getter-setter block can consist of a getter clause
@@ -45,17 +49,47 @@ followed by an optional setter clause, enclosed in braces,
 The grammar production above is equivalent to the following two productions,
 where the alternatives are spelled out explicitly:
 
-```
-Grammar of a getter-setter block
+> Grammar of a getter-setter block:
+>
+>
+> getter-setter-block → `{` getter-clause setter-clause? `}`
+>
+> getter-setter-block → `{` getter-clause setter-clause-OPT `}`
+>
+> getter-setter-block → `{` getter-clause setter-clause OPT `}`
+>
+> getter-setter-block → `{` getter-clause setter-clause (opt) `}`
+>
+> getter-setter-block → `{` setter-clause getter-clause `}`
 
-getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
-getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-```
+> Grammar of a literal:
+>
+> literal → numeric-literal | string-literal | regular-expression-literal | boolean-literal | nil-literal
+>
+>
+> numeric-literal → `-`? integer-literal | `-`? floating-point-literal
+>
+> numeric-literal → `-`OPT integer-literal | `-`OPT floating-point-literal
+>
+> numeric-literal → `-` OPT integer-literal | `-` OPT floating-point-literal
+>
+> numeric-literal → `-` (opt) integer-literal | `-` (opt) floating-point-literal
+>
+> boolean-literal → `true` | `false`
+>
+> nil-literal → `nil`
 
 
-*getter-setter-block* → `{` *getter-clause* *setter-clause?* `}`
-
-*getter-setter-block* → `{` *setter-clause* *getter-clause* `}`
+> Grammar of a literal:
+>
+> literal → numeric-literal | string-literal | regular-expression-literal | boolean-literal | nil-literal
+>
+>
+> numeric-literal → `-`opt integer-literal | `-`OPT floating-point-literal
+>
+> boolean-literal → `true` | `false`
+>
+> nil-literal → `nil`
 
 
 @Comment {
