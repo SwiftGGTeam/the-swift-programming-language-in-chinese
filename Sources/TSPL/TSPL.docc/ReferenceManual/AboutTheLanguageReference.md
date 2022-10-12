@@ -28,20 +28,13 @@ follows a few conventions:
 - In a few cases, regular font text is used to describe the right-hand side
   of a grammar production rule.
 - Optional syntactic categories and literals are marked by a trailing
-  subscript, *opt*.
+  question mark, *?*.
 
 As an example, the grammar of a getter-setter block is defined as follows:
 
 > Grammar of a getter-setter block:
 >
-> getter-setter-block → `{` getter-clause setter-clause? `}` | `{` setter-clause getter-clause `}`
->
-> getter-setter-block → `{` getter-clause setter-clause-OPT `}` | `{` setter-clause getter-clause `}`
->
-> getter-setter-block → `{` getter-clause setter-clause OPT `}` | `{` setter-clause getter-clause `}`
->
-> getter-setter-block → `{` getter-clause setter-clause (opt) `}` | `{` setter-clause getter-clause `}`
-
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause* _?_ **`}`** | **`{`** *setter-clause* *getter-clause* **`}`**
 
 This definition indicates that a getter-setter block can consist of a getter clause
 followed by an optional setter clause, enclosed in braces,
@@ -52,44 +45,42 @@ where the alternatives are spelled out explicitly:
 > Grammar of a getter-setter block:
 >
 >
-> getter-setter-block → `{` getter-clause setter-clause? `}`
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause?* **`}`**
 >
-> getter-setter-block → `{` getter-clause setter-clause-OPT `}`
->
-> getter-setter-block → `{` getter-clause setter-clause OPT `}`
->
-> getter-setter-block → `{` getter-clause setter-clause (opt) `}`
->
-> getter-setter-block → `{` setter-clause getter-clause `}`
+> *getter-setter-block* → **`{`** setter-clause getter-clause **`}`**
 
 > Grammar of a literal:
 >
-> literal → numeric-literal | string-literal | regular-expression-literal | boolean-literal | nil-literal
+> *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
 >
-> numeric-literal → `-`? integer-literal | `-`? floating-point-literal
+> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal*
 >
-> numeric-literal → `-`OPT integer-literal | `-`OPT floating-point-literal
+> *boolean-literal* → **`true`** | **`false`**
 >
-> numeric-literal → `-` OPT integer-literal | `-` OPT floating-point-literal
->
-> numeric-literal → `-` (opt) integer-literal | `-` (opt) floating-point-literal
->
-> boolean-literal → `true` | `false`
->
-> nil-literal → `nil`
+> *nil-literal* → **`nil`**
 
+> Grammar of an identifier (partial):
+>
+> *identifier-head* → Upper- or lowercase letter A through Z
+>
+> *identifier-head* → **`_`**
+>
+> *identifier-head* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2--U+00B5, or U+00B7--U+00BA
+>
+> *identifier-head* → U+00BC--U+00BE, U+00C0--U+00D6, U+00D8--U+00F6, or U+00F8--U+00FF
 
-> Grammar of a literal:
+@Comment {
+`_`**  Fixes runaway syntax highlight from above
+}
+
+> Grammar of an optional type:
 >
-> literal → numeric-literal | string-literal | regular-expression-literal | boolean-literal | nil-literal
+> *optional-type* → *type* **`?`**
+
+> Grammar of a conditional operator:
 >
->
-> numeric-literal → `-`opt integer-literal | `-`OPT floating-point-literal
->
-> boolean-literal → `true` | `false`
->
-> nil-literal → `nil`
+> *conditional-operator* → **`?`** *expression* **`:`**
 
 
 @Comment {
