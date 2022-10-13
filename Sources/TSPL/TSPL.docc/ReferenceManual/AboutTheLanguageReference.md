@@ -20,7 +20,7 @@ follows a few conventions:
 - An arrow (→) is used to mark grammar productions and can be read as "can consist of."
 - Syntactic categories are indicated by *italic* text and appear on both sides
   of a grammar production rule.
-- Literal words and punctuation are indicated by boldface `constant width` text
+- Literal words and punctuation are indicated by **`boldface constant width`** text
   and appear only on the right-hand side of a grammar production rule.
 - Alternative grammar productions are separated by vertical
   bars (|). When alternative productions are too long to read easily,
