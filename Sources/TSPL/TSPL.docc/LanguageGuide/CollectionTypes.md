@@ -22,17 +22,17 @@ you will retrieve from a collection.
 > Note: Swift's array, set, and dictionary types are implemented as *generic collections*.
 > For more about generic types and collections, see <doc:Generics>.
 
-@Comment {
+<!--
   TODO: should I mention the Collection protocol, to which both of these conform?
-}
+-->
 
-@Comment {
+<!--
   TODO: mention for i in indices(collection) { collection[i] }
-}
+-->
 
-@Comment {
+<!--
   TODO: discuss collection equality
-}
+-->
 
 ## Mutability of Collections
 
@@ -79,7 +79,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 ```
 
 
-@Comment {
+<!--
   - test: `arraysEmpty`
   
   ```swifttest
@@ -87,7 +87,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   -> print("someInts is of type [Int] with \(someInts.count) items.")
   <- someInts is of type [Int] with 0 items.
   ```
-}
+-->
 
 Note that the type of the `someInts` variable is inferred to be `[Int]`
 from the type of the initializer.
@@ -106,7 +106,7 @@ someInts = []
 ```
 
 
-@Comment {
+<!--
   - test: `arraysEmpty`
   
   ```swifttest
@@ -116,7 +116,7 @@ someInts = []
   -> someInts = []
   // someInts is now an empty array, but is still of type [Int]
   ```
-}
+-->
 
 ### Creating an Array with a Default Value
 
@@ -133,7 +133,7 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
 ```
 
 
-@Comment {
+<!--
   - test: `arraysEmpty`
   
   ```swifttest
@@ -141,7 +141,7 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
   /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
   </ threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
   ```
-}
+-->
 
 ### Creating an Array by Adding Two Arrays Together
 
@@ -158,7 +158,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 ```
 
 
-@Comment {
+<!--
   - test: `arraysEmpty`
   
   ```swifttest
@@ -170,20 +170,20 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: func find<T: Equatable>(array: [T], value: T) -> Int?
   This is defined in Algorithm.swift,
   and gives a way to find the index of a value in an array if it exists.
   I'm holding off writing about it until NewArray lands.
-}
+-->
 
-@Comment {
+<!--
   TODO: mutating func sort(by: (T, T) -> Bool)
   This is defined in Array.swift.
   Likewise I'm holding off writing about it until NewArray lands.
-}
+-->
 
 ### Creating an Array with an Array Literal
 
@@ -205,14 +205,14 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 ```
 
 
-@Comment {
+<!--
   - test: `arrays`
   
   ```swifttest
   -> var shoppingList: [String] = ["Eggs", "Milk"]
   // shoppingList has been initialized with two initial items
   ```
-}
+-->
 
 The `shoppingList` variable is declared as
 “an array of string values”, written as `[String]`.
@@ -241,13 +241,13 @@ var shoppingList = ["Eggs", "Milk"]
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
   -> var shoppingList = ["Eggs", "Milk"]
   ```
-}
+-->
 
 Because all values in the array literal are of the same type,
 Swift can infer that `[String]` is
@@ -266,14 +266,14 @@ print("The shopping list contains \(shoppingList.count) items.")
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
   -> print("The shopping list contains \(shoppingList.count) items.")
   <- The shopping list contains 2 items.
   ```
-}
+-->
 
 Use the Boolean `isEmpty` property
 as a shortcut for checking whether the `count` property is equal to `0`:
@@ -288,7 +288,7 @@ if shoppingList.isEmpty {
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -299,7 +299,7 @@ if shoppingList.isEmpty {
      }
   <- The shopping list isn't empty.
   ```
-}
+-->
 
 You can add a new item to the end of an array by calling the array's `append(_:)` method:
 
@@ -309,7 +309,7 @@ shoppingList.append("Flour")
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -317,7 +317,7 @@ shoppingList.append("Flour")
   /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
   </ shoppingList now contains 3 items, and someone is making pancakes
   ```
-}
+-->
 
 Alternatively, append an array of one or more compatible items
 with the addition assignment operator (`+=`):
@@ -330,7 +330,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -341,7 +341,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
   /> shoppingList now contains \(shoppingList.count) items
   </ shoppingList now contains 7 items
   ```
-}
+-->
 
 Retrieve a value from the array by using *subscript syntax*,
 passing the index of the value you want to retrieve within square brackets
@@ -353,7 +353,7 @@ var firstItem = shoppingList[0]
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -361,7 +361,7 @@ var firstItem = shoppingList[0]
   /> firstItem is equal to \"\(firstItem)\"
   </ firstItem is equal to "Eggs"
   ```
-}
+-->
 
 > Note: The first item in the array has an index of `0`, not `1`.
 > Arrays in Swift are always zero-indexed.
@@ -374,7 +374,7 @@ shoppingList[0] = "Six eggs"
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -382,7 +382,7 @@ shoppingList[0] = "Six eggs"
   /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
   </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
   ```
-}
+-->
 
 When you use subscript syntax,
 the index you specify needs to be valid.
@@ -390,11 +390,11 @@ For example, writing `shoppingList[shoppingList.count] = "Salt"`
 to try to append an item to the end of the array
 results in a runtime error.
 
-@Comment {
+<!--
   Unlike Ruby and Javascript, where accessing an invalid index
   extends the array with nil or similar placeholder values,
   to make that index become valid.
-}
+-->
 
 You can also use subscript syntax to change a range of values at once,
 even if the replacement set of values has a different length than the range you are replacing.
@@ -407,7 +407,7 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -415,7 +415,7 @@ shoppingList[4...6] = ["Bananas", "Apples"]
   /> shoppingList now contains \(shoppingList.count) items
   </ shoppingList now contains 6 items
   ```
-}
+-->
 
 To insert an item into the array at a specified index,
 call the array's `insert(_:at:)` method:
@@ -427,7 +427,7 @@ shoppingList.insert("Maple Syrup", at: 0)
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -437,7 +437,7 @@ shoppingList.insert("Maple Syrup", at: 0)
   /> \"\(shoppingList[0])\" is now the first item in the list
   </ "Maple Syrup" is now the first item in the list
   ```
-}
+-->
 
 This call to the `insert(_:at:)` method inserts a new item with a value of `"Maple Syrup"`
 at the very beginning of the shopping list,
@@ -455,7 +455,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -466,7 +466,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
   /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
   </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
   ```
-}
+-->
 
 > Note: If you try to access or modify a value for an index
 > that's outside of an array's existing bounds,
@@ -487,7 +487,7 @@ firstItem = shoppingList[0]
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -495,7 +495,7 @@ firstItem = shoppingList[0]
   /> firstItem is now equal to \"\(firstItem)\"
   </ firstItem is now equal to "Six eggs"
   ```
-}
+-->
 
 If you want to remove the final item from an array,
 use the `removeLast()` method rather than the `remove(at:)` method
@@ -510,7 +510,7 @@ let apples = shoppingList.removeLast()
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -521,7 +521,7 @@ let apples = shoppingList.removeLast()
   /> the apples constant is now equal to the removed \"\(apples)\" string
   </ the apples constant is now equal to the removed "Apples" string
   ```
-}
+-->
 
 ### Iterating Over an Array
 
@@ -539,7 +539,7 @@ for item in shoppingList {
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -552,7 +552,7 @@ for item in shoppingList {
   </ Baking Powder
   </ Bananas
   ```
-}
+-->
 
 If you need the integer index of each item as well as its value,
 use the `enumerated()` method to iterate over the array instead.
@@ -577,7 +577,7 @@ for (index, value) in shoppingList.enumerated() {
 ```
 
 
-@Comment {
+<!--
   - test: `arraysInferred`
   
   ```swifttest
@@ -590,7 +590,7 @@ for (index, value) in shoppingList.enumerated() {
   </ Item 4: Baking Powder
   </ Item 5: Bananas
   ```
-}
+-->
 
 For more about the `for`-`in` loop, see <doc:ControlFlow#For-In-Loops>.
 
@@ -604,9 +604,9 @@ or when you need to ensure that an item only appears once.
 > Note: Swift's `Set` type is bridged to Foundation's `NSSet` class.For more information about using `Set` with Foundation and Cocoa,
 > see [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530).
 
-@Comment {
+<!--
   TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
-}
+-->
 
 ### Hash Values for Set Types
 
@@ -647,7 +647,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 ```
 
 
-@Comment {
+<!--
   - test: `setsEmpty`
   
   ```swifttest
@@ -655,7 +655,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
   -> print("letters is of type Set<Character> with \(letters.count) items.")
   <- letters is of type Set<Character> with 0 items.
   ```
-}
+-->
 
 > Note: The type of the `letters` variable is inferred to be `Set<Character>`,
 > from the type of the initializer.
@@ -672,7 +672,7 @@ letters = []
 ```
 
 
-@Comment {
+<!--
   - test: `setsEmpty`
   
   ```swifttest
@@ -682,7 +682,7 @@ letters = []
   -> letters = []
   // letters is now an empty set, but is still of type Set<Character>
   ```
-}
+-->
 
 ### Creating a Set with an Array Literal
 
@@ -697,14 +697,14 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 ```
 
 
-@Comment {
+<!--
   - test: `sets`
   
   ```swifttest
   -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
   // favoriteGenres has been initialized with three initial items
   ```
-}
+-->
 
 The `favoriteGenres` variable is declared as
 “a set of `String` values”, written as `Set<String>`.
@@ -730,13 +730,13 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 ```
 
 
-@Comment {
+<!--
   - test: `setsInferred`
   
   ```swifttest
   -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
   ```
-}
+-->
 
 Because all values in the array literal are of the same type,
 Swift can infer that `Set<String>` is
@@ -755,7 +755,7 @@ print("I have \(favoriteGenres.count) favorite music genres.")
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -763,7 +763,7 @@ print("I have \(favoriteGenres.count) favorite music genres.")
   -> print("I have \(favoriteGenres.count) favorite music genres.")
   <- I have 3 favorite music genres.
   ```
-}
+-->
 
 Use the Boolean `isEmpty` property
 as a shortcut for checking whether the `count` property is equal to `0`:
@@ -778,7 +778,7 @@ if favoriteGenres.isEmpty {
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -789,7 +789,7 @@ if favoriteGenres.isEmpty {
      }
   <- I have particular music preferences.
   ```
-}
+-->
 
 You can add a new item into a set by calling the set's `insert(_:)` method:
 
@@ -799,7 +799,7 @@ favoriteGenres.insert("[Tool J]")
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -807,7 +807,7 @@ favoriteGenres.insert("[Tool J]")
   /> favoriteGenres now contains \(favoriteGenres.count) items
   </ favoriteGenres now contains 4 items
   ```
-}
+-->
 
 You can remove an item from a set by calling the set's `remove(_:)` method,
 which removes the item if it's a member of the set,
@@ -825,7 +825,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -836,7 +836,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
      }
   <- Rock? I'm over it.
   ```
-}
+-->
 
 To check whether a set contains a particular item, use the `contains(_:)` method.
 
@@ -850,7 +850,7 @@ if favoriteGenres.contains("Funk") {
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -861,7 +861,7 @@ if favoriteGenres.contains("Funk") {
      }
   <- It's too funky in here.
   ```
-}
+-->
 
 ### Iterating Over a Set
 
@@ -877,7 +877,7 @@ for genre in favoriteGenres {
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -888,7 +888,7 @@ for genre in favoriteGenres {
   </ [Tool J]
   </ Hip hop
   ```
-}
+-->
 
 For more about the `for`-`in` loop, see <doc:ControlFlow#For-In-Loops>.
 
@@ -908,7 +908,7 @@ for genre in favoriteGenres.sorted() {
 ```
 
 
-@Comment {
+<!--
   - test: `setUsage`
   
   ```swifttest
@@ -919,7 +919,7 @@ for genre in favoriteGenres.sorted() {
   </ Hip hop
   </ [Tool J]
   ```
-}
+-->
 
 ## Performing Set Operations
 
@@ -957,7 +957,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 ```
 
 
-@Comment {
+<!--
   - test: `setOperations`
   
   ```swifttest
@@ -982,12 +982,12 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   >> assert(d == [1, 2, 9])
   // [1, 2, 9]
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 ### Set Membership and Equality
 
@@ -1023,7 +1023,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
 ```
 
 
-@Comment {
+<!--
   - test: `setOperations`
   
   ```swifttest
@@ -1044,12 +1044,12 @@ farmAnimals.isDisjoint(with: cityAnimals)
   >> assert(cc == true)
   // true
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 ## Dictionaries
 
@@ -1091,14 +1091,14 @@ var namesOfIntegers: [Int: String] = [:]
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesEmpty`
   
   ```swifttest
   -> var namesOfIntegers: [Int: String] = [:]
   // namesOfIntegers is an empty [Int: String] dictionary
   ```
-}
+-->
 
 This example creates an empty dictionary of type `[Int: String]`
 to store human-readable names of integer values.
@@ -1117,7 +1117,7 @@ namesOfIntegers = [:]
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesEmpty`
   
   ```swifttest
@@ -1127,7 +1127,7 @@ namesOfIntegers = [:]
   -> namesOfIntegers = [:]
   // namesOfIntegers is once again an empty dictionary of type [Int: String]
   ```
-}
+-->
 
 ### Creating a Dictionary with a Dictionary Literal
 
@@ -1156,13 +1156,13 @@ var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 ```
 
 
-@Comment {
+<!--
   - test: `dictionaries`
   
   ```swifttest
   -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
   ```
-}
+-->
 
 The `airports` dictionary is declared as having a type of `[String: String]`,
 which means “a `Dictionary` whose keys are of type `String`,
@@ -1193,13 +1193,13 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
   -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
   ```
-}
+-->
 
 Because all keys in the literal are of the same type as each other,
 and likewise all values are of the same type as each other,
@@ -1220,14 +1220,14 @@ print("The airports dictionary contains \(airports.count) items.")
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
   -> print("The airports dictionary contains \(airports.count) items.")
   <- The airports dictionary contains 2 items.
   ```
-}
+-->
 
 Use the Boolean `isEmpty` property
 as a shortcut for checking whether the `count` property is equal to `0`:
@@ -1242,7 +1242,7 @@ if airports.isEmpty {
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1253,7 +1253,7 @@ if airports.isEmpty {
      }
   <- The airports dictionary isn't empty.
   ```
-}
+-->
 
 You can add a new item to a dictionary with subscript syntax.
 Use a new key of the appropriate type as the subscript index,
@@ -1265,7 +1265,7 @@ airports["LHR"] = "London"
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1273,7 +1273,7 @@ airports["LHR"] = "London"
   /> the airports dictionary now contains \(airports.count) items
   </ the airports dictionary now contains 3 items
   ```
-}
+-->
 
 You can also use subscript syntax to change the value associated with a particular key:
 
@@ -1283,7 +1283,7 @@ airports["LHR"] = "London Heathrow"
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1291,7 +1291,7 @@ airports["LHR"] = "London Heathrow"
   /> the value for \"LHR\" has been changed to \"\(airports["LHR"]!)\"
   </ the value for "LHR" has been changed to "London Heathrow"
   ```
-}
+-->
 
 As an alternative to subscripting,
 use a dictionary's `updateValue(_:forKey:)` method
@@ -1319,7 +1319,7 @@ if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1328,7 +1328,7 @@ if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
      }
   <- The old value for DUB was Dublin.
   ```
-}
+-->
 
 You can also use subscript syntax to retrieve a value from the dictionary for a particular key.
 Because it's possible to request a key for which no value exists,
@@ -1347,7 +1347,7 @@ if let airportName = airports["DUB"] {
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1358,7 +1358,7 @@ if let airportName = airports["DUB"] {
      }
   <- The name of the airport is Dublin Airport.
   ```
-}
+-->
 
 You can use subscript syntax to remove a key-value pair from a dictionary
 by assigning a value of `nil` for that key:
@@ -1371,7 +1371,7 @@ airports["APL"] = nil
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1387,7 +1387,7 @@ airports["APL"] = nil
   >> }
   << APL has now been removed from the dictionary
   ```
-}
+-->
 
 Alternatively, remove a key-value pair from a dictionary
 with the `removeValue(forKey:)` method.
@@ -1405,7 +1405,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1416,7 +1416,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
      }
   <- The removed airport's name is Dublin Airport.
   ```
-}
+-->
 
 ### Iterating Over a Dictionary
 
@@ -1434,7 +1434,7 @@ for (airportCode, airportName) in airports {
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1444,7 +1444,7 @@ for (airportCode, airportName) in airports {
   </ LHR: London Heathrow
   </ YYZ: Toronto Pearson
   ```
-}
+-->
 
 For more about the `for`-`in` loop, see <doc:ControlFlow#For-In-Loops>.
 
@@ -1466,7 +1466,7 @@ for airportName in airports.values {
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1482,7 +1482,7 @@ for airportName in airports.values {
   </ Airport name: London Heathrow
   </ Airport name: Toronto Pearson
   ```
-}
+-->
 
 If you need to use a dictionary's keys or values
 with an API that takes an `Array` instance, initialize a new array
@@ -1497,7 +1497,7 @@ let airportNames = [String](airports.values)
 ```
 
 
-@Comment {
+<!--
   - test: `dictionariesInferred`
   
   ```swifttest
@@ -1509,14 +1509,14 @@ let airportNames = [String](airports.values)
   /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
   </ airportNames is ["London Heathrow", "Toronto Pearson"]
   ```
-}
+-->
 
 Swift's `Dictionary` type doesn't have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
 use the `sorted()` method on its `keys` or `values` property.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1524,4 +1524,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

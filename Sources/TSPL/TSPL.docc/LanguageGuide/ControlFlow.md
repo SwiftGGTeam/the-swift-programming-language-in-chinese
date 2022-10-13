@@ -39,7 +39,7 @@ for name in names {
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -52,7 +52,7 @@ for name in names {
   </ Hello, Brian!
   </ Hello, Jack!
   ```
-}
+-->
 
 You can also iterate over a dictionary to access its key-value pairs.
 Each item in the dictionary is returned as a `(key, value)` tuple
@@ -73,7 +73,7 @@ for (animalName, legCount) in numberOfLegs {
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -85,7 +85,7 @@ for (animalName, legCount) in numberOfLegs {
   </ ants have 6 legs
   </ spiders have 8 legs
   ```
-}
+-->
 
 The contents of a `Dictionary` are inherently unordered,
 and iterating over them doesn't guarantee the order
@@ -95,10 +95,10 @@ the order you insert items into a `Dictionary`
 doesn't define the order they're iterated.
 For more about arrays and dictionaries, see <doc:CollectionTypes>.
 
-@Comment {
+<!--
   TODO: provide some advice on how to iterate over a Dictionary in order
   (perhaps sorted by key), using a predicate or array sort or some kind.
-}
+-->
 
 You can also use `for`-`in` loops with numeric ranges.
 This example prints the first few entries in a five-times table:
@@ -115,7 +115,7 @@ for index in 1...5 {
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -128,7 +128,7 @@ for index in 1...5 {
   </ 4 times 5 is 20
   </ 5 times 5 is 25
   ```
-}
+-->
 
 The sequence being iterated over is
 a range of numbers from `1` to `5`, inclusive,
@@ -163,7 +163,7 @@ print("\(base) to the power of \(power) is \(answer)")
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -176,7 +176,7 @@ print("\(base) to the power of \(power) is \(answer)")
   -> print("\(base) to the power of \(power) is \(answer)")
   <- 3 to the power of 10 is 59049
   ```
-}
+-->
 
 The example above calculates the value of one number to the power of another
 (in this case, `3` to the power of `10`).
@@ -207,7 +207,7 @@ for tickMark in 0..<minutes {
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -220,7 +220,7 @@ for tickMark in 0..<minutes {
   >> print(result.first!, result.last!, result.count)
   << 0 59 60
   ```
-}
+-->
 
 Some users might want fewer tick marks in their UI.
 They could prefer one mark every `5` minutes instead.
@@ -234,7 +234,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -247,7 +247,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
   >> print(result.first!, result.last!, result.count)
   << 0 55 12
   ```
-}
+-->
 
 Closed ranges are also available, by using `stride(from:through:by:)` instead:
 
@@ -260,7 +260,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 ```
 
 
-@Comment {
+<!--
   - test: `forLoops`
   
   ```swifttest
@@ -275,7 +275,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
   << 9
   << 12
   ```
-}
+-->
 
 The examples above use a `for`-`in` loop to iterate
 ranges, arrays, dictionaries, and strings.
@@ -283,10 +283,10 @@ However, you can use this syntax to iterate *any* collection,
 including your own classes and collection types,
 as long as those types conform to the [Sequence](https://developer.apple.com/documentation/swift/sequence) protocol.
 
-@Comment {
+<!--
   TODO: for (index, object) in enumerate(collection)
   and also for i in indices(collection) { collection[i] }
-}
+-->
 
 ## While Loops
 
@@ -316,9 +316,9 @@ while <#condition#> {
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
-@Comment {
+<!--
   iBooks Store screenshot begins here.
-}
+-->
 
 ![](snakesAndLadders)
 
@@ -346,7 +346,7 @@ var board = [Int](repeating: 0, count: finalSquare + 1)
 ```
 
 
-@Comment {
+<!--
   - test: `snakesAndLadders1`
   
   ```swifttest
@@ -354,7 +354,7 @@ var board = [Int](repeating: 0, count: finalSquare + 1)
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
   >> assert(board == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   ```
-}
+-->
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -366,18 +366,18 @@ board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 ```
 
 
-@Comment {
+<!--
   - test: `snakesAndLadders1`
   
   ```swifttest
   -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
   -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
   ```
-}
+-->
 
-@Comment {
+<!--
   iBooks Store screenshot ends here.
-}
+-->
 
 Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, `board[03]` is equal to `+08`,
@@ -408,7 +408,7 @@ print("Game over!")
 ```
 
 
-@Comment {
+<!--
   - test: `snakesAndLadders1`
   
   ```swifttest
@@ -460,7 +460,7 @@ print("Game over!")
   << after diceRoll, square is 27
   << Game over!
   ```
-}
+-->
 
 The example above uses a very simple approach to dice rolling.
 Instead of generating a random number,
@@ -530,7 +530,7 @@ var diceRoll = 0
 ```
 
 
-@Comment {
+<!--
   - test: `snakesAndLadders2`
   
   ```swifttest
@@ -542,7 +542,7 @@ var diceRoll = 0
   -> var square = 0
   -> var diceRoll = 0
   ```
-}
+-->
 
 In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
@@ -567,7 +567,7 @@ print("Game over!")
 ```
 
 
-@Comment {
+<!--
   - test: `snakesAndLadders2`
   
   ```swifttest
@@ -616,7 +616,7 @@ print("Game over!")
   << after diceRoll, square is 27
   << Game over!
   ```
-}
+-->
 
 After the code checks for snakes and ladders,
 the dice is rolled and the player is moved forward by `diceRoll` squares.
@@ -663,7 +663,7 @@ if temperatureInFahrenheit <= 32 {
 ```
 
 
-@Comment {
+<!--
   - test: `ifElse`
   
   ```swifttest
@@ -673,7 +673,7 @@ if temperatureInFahrenheit <= 32 {
      }
   <- It's very cold. Consider wearing a scarf.
   ```
-}
+-->
 
 The example above checks whether the temperature
 is less than or equal to 32 degrees Fahrenheit
@@ -698,7 +698,7 @@ if temperatureInFahrenheit <= 32 {
 ```
 
 
-@Comment {
+<!--
   - test: `ifElse`
   
   ```swifttest
@@ -710,7 +710,7 @@ if temperatureInFahrenheit <= 32 {
      }
   <- It's not that cold. Wear a t-shirt.
   ```
-}
+-->
 
 One of these two branches is always executed.
 Because the temperature has increased to `40` degrees Fahrenheit,
@@ -733,7 +733,7 @@ if temperatureInFahrenheit <= 32 {
 ```
 
 
-@Comment {
+<!--
   - test: `ifElse`
   
   ```swifttest
@@ -747,7 +747,7 @@ if temperatureInFahrenheit <= 32 {
      }
   <- It's really warm. Don't forget to wear sunscreen.
   ```
-}
+-->
 
 Here, an additional `if` statement was added to respond to particularly warm temperatures.
 The final `else` clause remains,
@@ -766,7 +766,7 @@ if temperatureInFahrenheit <= 32 {
 ```
 
 
-@Comment {
+<!--
   - test: `ifElse`
   
   ```swifttest
@@ -777,7 +777,7 @@ if temperatureInFahrenheit <= 32 {
         print("It's really warm. Don't forget to wear sunscreen.")
      }
   ```
-}
+-->
 
 Because the temperature is neither too cold nor too warm to trigger the `if` or `else if` conditions,
 no message is printed.
@@ -843,7 +843,7 @@ switch someCharacter {
 ```
 
 
-@Comment {
+<!--
   - test: `switch`
   
   ```swifttest
@@ -858,7 +858,7 @@ switch someCharacter {
      }
   <- The last letter of the alphabet
   ```
-}
+-->
 
 The `switch` statement's first case matches
 the first letter of the English alphabet, `a`,
@@ -901,7 +901,7 @@ switch anotherCharacter {
 ```
 
 
-@Comment {
+<!--
   - test: `noFallthrough`
   
   ```swifttest
@@ -919,7 +919,7 @@ switch anotherCharacter {
   !!                break
   // This will report a compile-time error.
   ```
-}
+-->
 
 Unlike a `switch` statement in C,
 this `switch` statement doesn't match both `"a"` and `"A"`.
@@ -945,7 +945,7 @@ switch anotherCharacter {
 ```
 
 
-@Comment {
+<!--
   - test: `compoundCaseInsteadOfFallthrough`
   
   ```swifttest
@@ -958,7 +958,7 @@ switch anotherCharacter {
      }
   <- The letter A
   ```
-}
+-->
 
 For readability,
 a compound case can also be written over multiple lines.
@@ -975,10 +975,10 @@ Values in `switch` cases can be checked for their inclusion in an interval.
 This example uses number intervals
 to provide a natural-language count for numbers of any size:
 
-@Comment {
+<!--
   REFERENCE
   Saturn has 62 moons with confirmed orbits.
-}
+-->
 
 ```swift
 let approximateCount = 62
@@ -1003,7 +1003,7 @@ print("There are \(naturalCount) \(countedThings).")
 ```
 
 
-@Comment {
+<!--
   - test: `intervalMatching`
   
   ```swifttest
@@ -1027,7 +1027,7 @@ print("There are \(naturalCount) \(countedThings).")
   -> print("There are \(naturalCount) \(countedThings).")
   <- There are dozens of moons orbiting Saturn.
   ```
-}
+-->
 
 In the above example, `approximateCount` is evaluated in a `switch` statement.
 Each `case` compares that value to a number or interval.
@@ -1065,7 +1065,7 @@ switch somePoint {
 ```
 
 
-@Comment {
+<!--
   - test: `tuples`
   
   ```swifttest
@@ -1084,7 +1084,7 @@ switch somePoint {
      }
   <- (1, 1) is inside the box
   ```
-}
+-->
 
 ![](coordinateGraphSimple)
 
@@ -1128,7 +1128,7 @@ switch anotherPoint {
 ```
 
 
-@Comment {
+<!--
   - test: `valueBindings`
   
   ```swifttest
@@ -1143,7 +1143,7 @@ switch anotherPoint {
      }
   <- on the x-axis with an x value of 2
   ```
-}
+-->
 
 ![](coordinateGraphMedium)
 
@@ -1193,7 +1193,7 @@ switch yetAnotherPoint {
 ```
 
 
-@Comment {
+<!--
   - test: `where`
   
   ```swifttest
@@ -1208,7 +1208,7 @@ switch yetAnotherPoint {
      }
   <- (1, -1) is on the line x == -y
   ```
-}
+-->
 
 ![](coordinateGraphComplex)
 
@@ -1252,7 +1252,7 @@ switch someCharacter {
 ```
 
 
-@Comment {
+<!--
   - test: `compound-switch-case`
   
   ```swifttest
@@ -1268,7 +1268,7 @@ switch someCharacter {
      }
   <- e is a vowel
   ```
-}
+-->
 
 The `switch` statement's first case matches
 all five lowercase vowels in the English language.
@@ -1298,7 +1298,7 @@ switch stillAnotherPoint {
 ```
 
 
-@Comment {
+<!--
   - test: `compound-switch-case`
   
   ```swifttest
@@ -1311,7 +1311,7 @@ switch stillAnotherPoint {
      }
   <- On an axis, 9 from the origin
   ```
-}
+-->
 
 The `case` above has two patterns:
 `(let distance, 0)` matches points on the x-axis
@@ -1362,7 +1362,7 @@ print(puzzleOutput)
 ```
 
 
-@Comment {
+<!--
   - test: `continue`
   
   ```swifttest
@@ -1378,7 +1378,7 @@ print(puzzleOutput)
   -> print(puzzleOutput)
   <- grtmndsthnklk
   ```
-}
+-->
 
 The code above calls the `continue` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
@@ -1399,9 +1399,9 @@ and transfers control to the code after the loop's closing brace (`}`).
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
-@Comment {
+<!--
   TODO: I need an example here.
-}
+-->
 
 #### Break in a Switch Statement
 
@@ -1451,7 +1451,7 @@ if let integerValue = possibleIntegerValue {
 ```
 
 
-@Comment {
+<!--
   - test: `breakInASwitchStatement`
   
   ```swifttest
@@ -1476,7 +1476,7 @@ if let integerValue = possibleIntegerValue {
      }
   <- The integer value of 三 is 3.
   ```
-}
+-->
 
 This example checks `numberSymbol` to determine whether it's
 a Latin, Arabic, Chinese, or Thai symbol for
@@ -1531,7 +1531,7 @@ print(description)
 ```
 
 
-@Comment {
+<!--
   - test: `fallthrough`
   
   ```swifttest
@@ -1547,7 +1547,7 @@ print(description)
   -> print(description)
   <- The number 5 is a prime number, and also an integer.
   ```
-}
+-->
 
 This example declares a new `String` variable called `description`
 and assigns it an initial value.
@@ -1637,7 +1637,7 @@ var diceRoll = 0
 ```
 
 
-@Comment {
+<!--
   - test: `labels`
   
   ```swifttest
@@ -1649,7 +1649,7 @@ var diceRoll = 0
   -> var square = 0
   -> var diceRoll = 0
   ```
-}
+-->
 
 This version of the game uses a `while` loop and a `switch` statement
 to implement the game's logic.
@@ -1680,7 +1680,7 @@ print("Game over!")
 ```
 
 
-@Comment {
+<!--
   - test: `labels`
   
   ```swifttest
@@ -1752,7 +1752,7 @@ print("Game over!")
   << finalSquare, game is over
   << Game over!
   ```
-}
+-->
 
 The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
@@ -1818,7 +1818,7 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 ```
 
 
-@Comment {
+<!--
   - test: `guard`
   
   ```swifttest
@@ -1844,7 +1844,7 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
   <- Hello Jane!
   <- I hope the weather is nice in Cupertino.
   ```
-}
+-->
 
 If the `guard` statement's condition is met,
 code execution continues after the `guard` statement's closing brace.
@@ -1897,7 +1897,7 @@ if #available(iOS 10, macOS 10.12, *) {
 ```
 
 
-@Comment {
+<!--
   - test: `availability`
   
   ```swifttest
@@ -1907,7 +1907,7 @@ if #available(iOS 10, macOS 10.12, *) {
          // Fall back to earlier iOS and macOS APIs
      }
   ```
-}
+-->
 
 The availability condition above specifies that in iOS,
 the body of the `if` statement executes only in iOS 10 and later;
@@ -1951,7 +1951,7 @@ func chooseBestColor() -> String {
 ```
 
 
-@Comment {
+<!--
   - test: `guard-with-pound-available`
   
   ```swifttest
@@ -1970,7 +1970,7 @@ func chooseBestColor() -> String {
   >> print(chooseBestColor())
   << blue
   ```
-}
+-->
 
 In the example above,
 the `ColorPreference` structure requires macOS 10.12 or later.
@@ -1996,7 +1996,7 @@ if #unavailable(iOS 10) {
 ```
 
 
-@Comment {
+<!--
   - test: `availability-and-unavailability`
   
   ```swifttest
@@ -2009,19 +2009,19 @@ if #unavailable(iOS 10) {
         // Fallback code
      }
   ```
-}
+-->
 
 Using the `#unavailable` form helps make your code more readable
 when the check contains only fallback code.
 
-@Comment {
+<!--
   FIXME
   Not a general purpose condition; can't combine with &&, etc.
   You can use it with if-let, and other Boolean conditions, using a comma
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -2029,4 +2029,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

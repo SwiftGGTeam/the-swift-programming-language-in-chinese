@@ -52,7 +52,7 @@ enum VendingMachineError: Error {
 ```
 
 
-@Comment {
+<!--
   - test: `throw-enum-error`
   
   ```swifttest
@@ -62,7 +62,7 @@ enum VendingMachineError: Error {
          case outOfStock
      }
   ```
-}
+-->
 
 Throwing an error lets you indicate that something unexpected happened
 and the normal flow of execution can't continue.
@@ -76,14 +76,14 @@ throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 ```
 
 
-@Comment {
+<!--
   - test: `throw-enum-error`
   
   ```swifttest
   -> throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
   xx fatal error
   ```
-}
+-->
 
 ## Handling Errors
 
@@ -128,9 +128,9 @@ A function marked with `throws` is called a *throwing function*.
 If the function specifies a return type,
 you write the `throws` keyword before the return arrow (`->`).
 
-@Comment {
+<!--
   TODO Add discussion of throwing initializers
-}
+-->
 
 ```swift
 func canThrowErrors() throws -> String
@@ -139,7 +139,7 @@ func cannotThrowErrors() -> String
 ```
 
 
-@Comment {
+<!--
   - test: `throwingFunctionDeclaration`
   
   ```swifttest
@@ -149,9 +149,9 @@ func cannotThrowErrors() -> String
   -> func cannotThrowErrors() -> String
   >> { return "foo" }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `throwing-function-cant-overload-nonthrowing`
   
   ```swifttest
@@ -164,25 +164,25 @@ func cannotThrowErrors() -> String
   !! func f() -> Int { return 10 }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `throwing-parameter-can-overload-nonthrowing`
   
   ```swifttest
   -> func f(callback: () -> Int) {}
   -> func f(callback: () throws -> Int) {} // Allowed
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: Add more assertions to test these behaviors
-}
+-->
 
-@Comment {
+<!--
   TODO: Write about the fact the above rules that govern overloading
   for throwing and nonthrowing functions.
-}
+-->
 
 A throwing function propagates errors that are thrown inside of it
 to the scope from which it's called.
@@ -237,7 +237,7 @@ class VendingMachine {
 ```
 
 
-@Comment {
+<!--
   - test: `errorHandling`
   
   ```swifttest
@@ -282,7 +282,7 @@ class VendingMachine {
          }
      }
   ```
-}
+-->
 
 The implementation of the `vend(itemNamed:)` method
 uses `guard` statements to exit the method early and throw appropriate errors
@@ -313,7 +313,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 ```
 
 
-@Comment {
+<!--
   - test: `errorHandling`
   
   ```swifttest
@@ -331,7 +331,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
   >> try buyFavoriteSnack(person: "Alice", vendingMachine: v)
   << Dispensing Chips
   ```
-}
+-->
 
 In this example,
 the `buyFavoriteSnack(person: vendingMachine:)` function looks up a given person's favorite snack
@@ -356,7 +356,7 @@ struct PurchasedSnack {
 ```
 
 
-@Comment {
+<!--
   - test: `errorHandling`
   
   ```swifttest
@@ -383,7 +383,7 @@ struct PurchasedSnack {
   >> }
   << Threw EXPECTED error.
   ```
-}
+-->
 
 ### Handling Errors Using Do-Catch
 
@@ -419,11 +419,11 @@ and binds the error to a local constant named `error`.
 For more information about pattern matching,
 see <doc:Patterns>.
 
-@Comment {
+<!--
   TODO: Call out the reasoning why we don't let you
   consider a catch clause exhaustive by just matching
   the errors in an given enum without a general catch/default.
-}
+-->
 
 For example, the following code matches against all three cases
 of the `VendingMachineError` enumeration.
@@ -447,7 +447,7 @@ do {
 ```
 
 
-@Comment {
+<!--
   - test: `errorHandling`
   
   ```swifttest
@@ -467,7 +467,7 @@ do {
      }
   <- Insufficient funds. Please insert an additional 2 coins.
   ```
-}
+-->
 
 In the above example,
 the `buyFavoriteSnack(person:vendingMachine:)` function is called in a `try` expression,
@@ -519,7 +519,7 @@ do {
 ```
 
 
-@Comment {
+<!--
   - test: `errorHandling`
   
   ```swifttest
@@ -538,7 +538,7 @@ do {
      }
   <- Couldn't buy that from the vending machine.
   ```
-}
+-->
 
 In the `nourish(with:)` function,
 if `vend(itemNamed:)` throws an error that's
@@ -563,7 +563,7 @@ func eat(item: String) throws {
 ```
 
 
-@Comment {
+<!--
   - test: `errorHandling`
   
   ```swifttest
@@ -581,11 +581,11 @@ func eat(item: String) throws {
   >> }
   << Invalid selection, out of stock, or not enough money.
   ```
-}
+-->
 
-@Comment {
+<!--
   FIXME the catch clause is getting indented oddly in HTML output if I hard wrap it
-}
+-->
 
 The `eat(item:)` function lists the vending machine errors to catch,
 and its error text corresponds to the items in that list.
@@ -618,7 +618,7 @@ do {
 ```
 
 
-@Comment {
+<!--
   - test: `optional-try`
   
   ```swifttest
@@ -640,7 +640,7 @@ do {
   >> print(y as Any)
   << Optional(40)
   ```
-}
+-->
 
 If `someThrowingFunction()` throws an error,
 the value of `x` and `y` is `nil`.
@@ -664,7 +664,7 @@ func fetchData() -> Data? {
 ```
 
 
-@Comment {
+<!--
   - test: `optional-try-cached-data`
   
   ```swifttest
@@ -677,7 +677,7 @@ func fetchData() -> Data? {
          return nil
      }
   ```
-}
+-->
 
 ### Disabling Error Propagation
 
@@ -700,7 +700,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
 
 
-@Comment {
+<!--
   - test: `forceTryStatement`
   
   ```swifttest
@@ -710,7 +710,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   >> }
   -> let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   ```
-}
+-->
 
 ## Specifying Cleanup Actions
 
@@ -754,7 +754,7 @@ func processFile(filename: String) throws {
 ```
 
 
-@Comment {
+<!--
   - test: `defer`
   
   ```swifttest
@@ -778,7 +778,7 @@ func processFile(filename: String) throws {
         }
      }
   ```
-}
+-->
 
 The above example uses a `defer` statement
 to ensure that the `open(_:)` function
@@ -788,7 +788,7 @@ has a corresponding call to `close(_:)`.
 > even when no error handling code is involved.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -796,4 +796,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

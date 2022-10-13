@@ -46,7 +46,7 @@ print(smallTriangle.draw())
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -70,7 +70,7 @@ print(smallTriangle.draw())
   </ **
   </ ***
   ```
-}
+-->
 
 You could use generics to implement operations like flipping a shape vertically,
 as shown in the code below.
@@ -94,7 +94,7 @@ print(flippedTriangle.draw())
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -111,7 +111,7 @@ print(flippedTriangle.draw())
   </ **
   </ *
   ```
-}
+-->
 
 This approach to defining a `JoinedShape<T: Shape, U: Shape>` structure
 that joins two shapes together vertically, like the code below shows,
@@ -137,7 +137,7 @@ print(joinedTriangles.draw())
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -157,7 +157,7 @@ print(joinedTriangles.draw())
   </ **
   </ *
   ```
-}
+-->
 
 Exposing detailed information about the creation of a shape
 allows types that aren't meant to be
@@ -189,11 +189,11 @@ func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
 ```
 
 
-@Comment {
+<!--
   From https://developer.apple.com/documentation/swift/1538951-max
   Not test code because it won't actually compile
   and there's nothing to meaningfully test.
-}
+-->
 
 The code that calls `max(_:_:)` chooses the values for `x` and `y`,
 and the type of those values determines the concrete type of `T`.
@@ -242,7 +242,7 @@ print(trapezoid.draw())
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -274,7 +274,7 @@ print(trapezoid.draw())
   </ **
   </ *
   ```
-}
+-->
 
 The `makeTrapezoid()` function in this example
 declares its return type as `some Shape`;
@@ -324,7 +324,7 @@ print(opaqueJoinedTriangles.draw())
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -344,7 +344,7 @@ print(opaqueJoinedTriangles.draw())
   </ **
   </ *
   ```
-}
+-->
 
 The value of `opaqueJoinedTriangles` in this example
 is the same as `joinedTriangles` in the generics example
@@ -378,7 +378,7 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result-err`
   
   ```swifttest
@@ -408,7 +408,7 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   !! return FlippedShape(shape: shape) // Error: return types don't match
   !! ^
   ```
-}
+-->
 
 If you call this function with a `Square`, it returns a `Square`;
 otherwise, it returns a `FlippedShape`.
@@ -432,7 +432,7 @@ struct FlippedShape<T: Shape>: Shape {
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result-special-flip`
   
   ```swifttest
@@ -451,15 +451,15 @@ struct FlippedShape<T: Shape>: Shape {
          }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   Another way to fix it is with type erasure.
   Define a wrapper called AnyShape,
   and wrap whatever shape you created inside invalidFlip(_:)
   before returning it.
   That example is long enough that it breaks the flow here.
-}
+-->
 
 The requirement to always return a single type
 doesn't prevent you from using generics in an opaque return type.
@@ -473,7 +473,7 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -481,7 +481,7 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
          return Array<T>(repeating: shape, count: count)
      }
   ```
-}
+-->
 
 In this case,
 the underlying type of the return value
@@ -520,7 +520,7 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result-existential-error`
   
   ```swifttest
@@ -543,7 +543,7 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
         return FlippedShape(shape: shape)
      }
   ```
-}
+-->
 
 This version of `protoFlip(_:)`
 has the same body as `flip(_:)`,
@@ -568,7 +568,7 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result-existential-error`
   
   ```swifttest
@@ -586,7 +586,7 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
   !! func protoFlip<T: Shape>(_ shape: T) -> Shape {
   !!      ^
   ```
-}
+-->
 
 The revised version of the code returns
 an instance of `Square` or an instance of `FlippedShape`,
@@ -608,7 +608,7 @@ protoFlippedTriangle == sameThing  // Error
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result-existential-error`
   
   ```swifttest
@@ -620,7 +620,7 @@ protoFlippedTriangle == sameThing  // Error
   !! protoFlippedTriangle == sameThing  // Error
   !! ~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
   ```
-}
+-->
 
 The error on the last line of the example occurs for several reasons.
 The immediate issue is that the `Shape` doesn't include an `==` operator
@@ -670,7 +670,7 @@ extension Array: Container { }
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result, opaque-result-existential-error`
   
   ```swifttest
@@ -681,7 +681,7 @@ extension Array: Container { }
      }
   -> extension Array: Container { }
   ```
-}
+-->
 
 You can't use `Container` as the return type of a function
 because that protocol has an associated type.
@@ -702,7 +702,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result-existential-error`
   
   ```swifttest
@@ -724,7 +724,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   !! ^~~~~~
   !! as! C
   ```
-}
+-->
 
 Using the opaque type `some Container` as a return type
 expresses the desired API contract --- the function returns a container,
@@ -741,7 +741,7 @@ print(type(of: twelve))
 ```
 
 
-@Comment {
+<!--
   - test: `opaque-result`
   
   ```swifttest
@@ -753,7 +753,7 @@ print(type(of: twelve))
   -> print(type(of: twelve))
   <- Int
   ```
-}
+-->
 
 The type of `twelve` is inferred to be `Int`,
 which illustrates the fact that type inference works with opaque types.
@@ -765,7 +765,7 @@ and the `Item` associated type is inferred to be `Int`.
 The subscript on `Container` returns `Item`,
 which means that the type of `twelve` is also inferred to be `Int`.
 
-@Comment {
+<!--
   TODO: Expansion for the future
   
   You can combine the flexibility of returning a value of protocol type
@@ -797,10 +797,10 @@ which means that the type of `twelve` is also inferred to be `Int`.
       }
       return AnyP(p: result)
   }
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -808,4 +808,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

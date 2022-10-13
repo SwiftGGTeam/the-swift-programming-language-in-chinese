@@ -91,13 +91,13 @@ The *statements* inside a code block include declarations,
 expressions, and other kinds of statements and are executed in order
 of their appearance in source code.
 
-@Comment {
+<!--
   TR: What exactly are the scope rules for Swift?
-}
+-->
 
-@Comment {
+<!--
   TODO: Discuss scope.  I assume a code block creates a new scope?
-}
+-->
 
 ```
 Grammar of a code block
@@ -132,9 +132,9 @@ import <#module#>.<#submodule#>
 ```
 
 
-@Comment {
+<!--
   TODO: Need to add more to this section.
-}
+-->
 
 ```
 Grammar of an import declaration
@@ -185,13 +185,13 @@ let (firstNumber, secondNumber) = (10, 42)
 ```
 
 
-@Comment {
+<!--
   - test: `constant-decl`
   
   ```swifttest
   -> let (firstNumber, secondNumber) = (10, 42)
   ```
-}
+-->
 
 In this example,
 `firstNumber` is a named constant for the value `10`,
@@ -206,7 +206,7 @@ print("The second number is \(secondNumber).")
 ```
 
 
-@Comment {
+<!--
   - test: `constant-decl`
   
   ```swifttest
@@ -215,7 +215,7 @@ print("The second number is \(secondNumber).")
   -> print("The second number is \(secondNumber).")
   <- The second number is 42.
   ```
-}
+-->
 
 The type annotation (`:` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -228,7 +228,7 @@ you can't mark it with the `class` or `final` declaration modifier
 to allow or disallow overriding by subclasses.
 Type properties are discussed in <doc:Properties#Type-Properties>.
 
-@Comment {
+<!--
   - test: `class-constants-cant-have-class-or-final`
   
   ```swifttest
@@ -242,7 +242,7 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
   !!                  ^~~~~~
   !!-
   ```
-}
+-->
 
 For more information about constants and for guidance about when to use them,
 see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Properties>.
@@ -383,7 +383,7 @@ This expression is evaluated the first time you read the property's value.
 If you overwrite the property's initial value without reading it,
 this expression is evaluated before the first time you write to the property.
 
-@Comment {
+<!--
   - test: `overwriting-property-without-writing`
   
   ```swifttest
@@ -401,7 +401,7 @@ this expression is evaluated before the first time you write to the property.
   << initial value: 100
   << y: 100
   ```
-}
+-->
 
 The `willSet` and `didSet` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -474,7 +474,7 @@ newAndOld.x = 200
 ```
 
 
-@Comment {
+<!--
   - test: `didSet-calls-superclass-getter`
   
   ```swifttest
@@ -513,12 +513,12 @@ newAndOld.x = 200
   <- Getter was called
   <- Old value 12 - new value 200
   ```
-}
+-->
 
 For more information and to see an example of how to use property observers,
 see <doc:Properties#Property-Observers>.
 
-@Comment {
+<!--
   - test: `cant-mix-get-set-and-didSet`
   
   ```swifttest
@@ -533,7 +533,7 @@ see <doc:Properties#Property-Observers>.
   !! didSet { print("S didSet") }
   !! ^
   ```
-}
+-->
 
 ### Type Variable Properties
 
@@ -575,10 +575,10 @@ didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 ```
 
 
-@Comment {
+<!--
   NOTE: Type annotations are required for computed properties -- the
   types of those properties aren't computed/inferred.
-}
+-->
 
 ## Type Alias Declaration
 
@@ -611,7 +611,7 @@ var dictionary2: Dictionary<String, Int> = [:]
 ```
 
 
-@Comment {
+<!--
   - test: `typealias-with-generic`
   
   ```swifttest
@@ -621,7 +621,7 @@ var dictionary2: Dictionary<String, Int> = [:]
   -> var dictionary1: StringDictionary<Int> = [:]
   -> var dictionary2: Dictionary<String, Int> = [:]
   ```
-}
+-->
 
 When a type alias is declared with generic parameters, the constraints on those
 parameters must match exactly the constraints on the existing type's generic parameters.
@@ -632,13 +632,13 @@ typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 ```
 
 
-@Comment {
+<!--
   - test: `typealias-with-generic-constraint`
   
   ```swifttest
   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
   ```
-}
+-->
 
 Because the type alias and the existing type can be used interchangeably,
 the type alias can't introduce additional generic constraints.
@@ -654,26 +654,26 @@ typealias Diccionario = Dictionary
 ```
 
 
-@Comment {
+<!--
   - test: `typealias-using-shorthand`
   
   ```swifttest
   -> typealias Diccionario = Dictionary
   ```
-}
+-->
 
-@Comment {
+<!--
   Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
   typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
-}
+-->
 
-@Comment {
+<!--
   Things that shouldn't work:
   typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
   typealias NotRedeclaringAnyOfTheGenericParameters = Dictionary
   typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
   typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
-}
+-->
 
 Inside a protocol declaration,
 a type alias can give a shorter and more convenient name
@@ -692,7 +692,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 ```
 
 
-@Comment {
+<!--
   - test: `typealias-in-protocol`
   
   ```swifttest
@@ -706,7 +706,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
   >>     return 9000
      }
   ```
-}
+-->
 
 Without this type alias,
 the `sum` function would have to refer to the associated type
@@ -723,13 +723,13 @@ typealias-assignment --> ``=`` type
 ```
 
 
-@Comment {
+<!--
   Old grammar:
   typealias-declaration --> typealias-head typealias-assignment
   typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
   typealias-name --> identifier
   typealias-assignment --> ``=`` type
-}
+-->
 
 ## Function Declaration
 
@@ -770,18 +770,18 @@ only when the expression's type and the function's return type
 aren't `Void`
 and aren't an enumeration like `Never` that doesn't have any cases.
 
-@Comment {
+<!--
   As of Swift 5.3,
   the only way to make an uninhabited type is to create an empty enum,
   so just say that directly instead of using & defining the compiler jargon.
-}
+-->
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
 
-@Comment {
+<!--
   TODO: ^-- Add some more here.
-}
+-->
 
 A function definition can appear inside another function declaration.
 This kind of function is known as a *nested function*.
@@ -822,7 +822,7 @@ f(x: 1, y: 2) // both x and y are labeled
 ```
 
 
-@Comment {
+<!--
   - test: `default-parameter-names`
   
   ```swifttest
@@ -831,12 +831,12 @@ f(x: 1, y: 2) // both x and y are labeled
   -> f(x: 1, y: 2) // both x and y are labeled
   >> assert(r0 == 3)
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 You can override the default behavior for argument labels
 with one of the following forms:
@@ -863,14 +863,14 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 ```
 
 
-@Comment {
+<!--
   - test: `overridden-parameter-names`
   
   ```swifttest
   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
-}
+-->
 
 ### In-Out Parameters
 
@@ -912,13 +912,13 @@ you can't pass the same value to multiple in-out parameters.
 For more information about memory safety and memory exclusivity,
 see <doc:MemorySafety>.
 
-@Comment {
+<!--
   When the call-by-reference optimization is in play,
   it would happen to do what you want.
   But you still shouldn't do that --
   as noted above, you're not allowed to depend on
   behavioral differences that happen because of call by reference.
-}
+-->
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
@@ -933,7 +933,7 @@ func someFunction(a: inout Int) -> () -> Int {
 ```
 
 
-@Comment {
+<!--
   - test: `explicit-capture-for-inout`
   
   ```swifttest
@@ -948,7 +948,7 @@ func someFunction(a: inout Int) -> () -> Int {
   >> print(r, r == c.x)
   << 101 false
   ```
-}
+-->
 
 If you need to capture and mutate an in-out parameter,
 use an explicit local copy,
@@ -968,7 +968,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
 ```
 
 
-@Comment {
+<!--
   - test: `cant-pass-inout-aliasing`
   
   ```swifttest
@@ -984,12 +984,12 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
         queue.sync {}
      }
   ```
-}
+-->
 
 For more discussion and examples of in-out parameters,
 see <doc:Functions#In-Out-Parameters>.
 
-@Comment {
+<!--
   - test: `escaping-cant-capture-inout`
   
   ```swifttest
@@ -1021,7 +1021,7 @@ see <doc:Functions#In-Out-Parameters>.
   !! return { a += 1 }
   !! ^
   ```
-}
+-->
 
 ### Special Kinds of Parameters
 
@@ -1064,7 +1064,7 @@ f(7)      // Invalid, missing argument label
 ```
 
 
-@Comment {
+<!--
   - test: `default-args-and-labels`
   
   ```swifttest
@@ -1080,14 +1080,14 @@ f(7)      // Invalid, missing argument label
   !!   ^
   !!   x:
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid discarding the function's return value.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
-@Comment {
+<!--
   - test: `default-args-evaluated-at-call-site`
   
   ```swifttest
@@ -1105,7 +1105,7 @@ f(7)      // Invalid, missing argument label
   << evaluated
   << x is 10
   ```
-}
+-->
 
 ### Special Kinds of Methods
 
@@ -1126,7 +1126,7 @@ A class type method marked with the `class` declaration modifier
 can be overridden by a subclass implementation;
 a class type method marked with `class final` or `static` can't be overridden.
 
-@Comment {
+<!--
   - test: `overriding-class-methods-err`
   
   ```swifttest
@@ -1147,9 +1147,9 @@ a class type method marked with `class final` or `static` can't be overridden.
   !! class S2 { static func f() -> Int { return 12 } }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `overriding-class-methods`
   
   ```swifttest
@@ -1158,7 +1158,7 @@ a class type method marked with `class final` or `static` can't be overridden.
   -> print(SS3.f())
   <- 120
   ```
-}
+-->
 
 ### Methods with Special Names
 
@@ -1187,12 +1187,12 @@ and adds labeled or unlabeled arguments ---
 for example, `callAsFunction(_:_:)` and `callAsFunction(something:)`
 are also valid call-as-function method names.
 
-@Comment {
+<!--
   Above, callAsFunction( is in code voice even though
   it's not actually a symbol that exists in the reader's code.
   Per discussion with Chuck, this is the closest typographic convention
   to what we're trying to express here.
-}
+-->
 
 The following function calls are equivalent:
 
@@ -1210,7 +1210,7 @@ callable.callAsFunction(4, scale: 2)
 ```
 
 
-@Comment {
+<!--
   - test: `call-as-function`
   
   ```swifttest
@@ -1227,7 +1227,7 @@ callable.callAsFunction(4, scale: 2)
   << 208
   << 208
   ```
-}
+-->
 
 The call-as-function methods
 and the methods from the `dynamicCallable` attribute
@@ -1252,7 +1252,7 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
 
-@Comment {
+<!--
   - test: `call-as-function-err`
   
   ```swifttest
@@ -1269,7 +1269,7 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
   !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
   !! ^~~~~~~~~~~~~~~~~~
   ```
-}
+-->
 
 The `subscript(dynamicMember:)` subscript
 enables syntactic sugar for member lookup,
@@ -1322,7 +1322,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 ```
 
 
-@Comment {
+<!--
   - test: `rethrows`
   
   ```swifttest
@@ -1330,7 +1330,7 @@ func someFunction(callback: () throws -> Void) rethrows {
          try callback()
      }
   ```
-}
+-->
 
 A rethrowing function or method can contain a `throw` statement
 only inside a `catch` clause.
@@ -1359,7 +1359,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 ```
 
 
-@Comment {
+<!--
   - test: `double-negative-rethrows`
   
   ```swifttest
@@ -1380,9 +1380,9 @@ func someFunction(callback: () throws -> Void) rethrows {
   !!               throw AnotherError.error
   !!               ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `throwing-in-rethrowing-function`
   
   ```swifttest
@@ -1401,7 +1401,7 @@ func someFunction(callback: () throws -> Void) rethrows {
   !! throw SomeError.d  // Error
   !! ^
   ```
-}
+-->
 
 A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
@@ -1445,7 +1445,7 @@ and an asynchronous method can't satisfy a protocol requirement for a synchronou
 That said, a synchronous method can override an asynchronous method,
 and a synchronous method can satisfy a protocol requirement for an asynchronous method.
 
-@Comment {
+<!--
   - test: `sync-satisfy-async-protocol-requirements`
   
   ```swifttest
@@ -1457,7 +1457,7 @@ and a synchronous method can satisfy a protocol requirement for an asynchronous 
   >>     func f() -> Int { return 120 }
   >> }
   ```
-}
+-->
 
 ### Functions that Never Return
 
@@ -1502,14 +1502,14 @@ default-argument-clause --> ``=`` expression
 ```
 
 
-@Comment {
+<!--
   NOTE: Code block is optional in the context of a protocol.
   Everywhere else, it's required.
   We could refactor to have a separation between function definition/declaration.
   There's also the low-level "asm name" FFI
   which is a definition and declaration corner case.
   Let's just deal with this difference in prose.
-}
+-->
 
 ## Enumeration Declaration
 
@@ -1583,7 +1583,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 ```
 
 
-@Comment {
+<!--
   - test: `enum-case-as-function`
   
   ```swifttest
@@ -1597,14 +1597,14 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
   -> // Apply f to create an array of Number instances with integer values
   -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
   ```
-}
+-->
 
-@Comment {
+<!--
   No expectation for evenInts because there isn't a good way to spell one.
   Using print() puts a module prefix like tmpabc in front of Number
   so the expectation would need to be a regex (which we don't have),
   and assert() would require Number to conform to Equatable.
-}
+-->
 
 For more information and to see examples of cases with associated value types,
 see <doc:Enumerations#Associated-Values>.
@@ -1623,12 +1623,12 @@ To enable indirection for a particular enumeration case,
 mark it with the `indirect` declaration modifier.
 An indirect case must have an associated value.
 
-@Comment {
+<!--
   TODO The word "enable" is kind of a weasel word.
   Better to have a more concrete discussion of exactly when
   it is and isn't used.
   For example, does "indirect enum { X(Int) } mark X as indirect?
-}
+-->
 
 ```swift
 enum Tree<T> {
@@ -1638,7 +1638,7 @@ enum Tree<T> {
 ```
 
 
-@Comment {
+<!--
   - test: `indirect-enum`
   
   ```swifttest
@@ -1650,7 +1650,7 @@ enum Tree<T> {
   >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
   >> let t = Tree.node(value: 50, left: l1, right: l2)
   ```
-}
+-->
 
 To enable indirection for all the cases of an enumeration
 that have an associated value,
@@ -1663,22 +1663,22 @@ can contain a mixture of cases that have associated values and cases those that 
 That said,
 it can't contain any cases that are also marked with the `indirect` modifier.
 
-@Comment {
+<!--
   It really should be an associated value **that includes the enum type**
   but right now the compiler is satisfied with any associated value.
   Alex emailed Joe Groff 2015-07-08 about this.
-}
+-->
 
-@Comment {
+<!--
   assertion indirect-in-indirect
   
   -> indirect enum E { indirect case c(E) }
   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
   !! indirect enum E { indirect case c(E) }
   !!                   ^
-}
+-->
 
-@Comment {
+<!--
   assertion indirect-without-recursion
   
   -> enum E { indirect case c }
@@ -1690,7 +1690,7 @@ it can't contain any cases that are also marked with the `indirect` modifier.
   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
   ---
   -> indirect enum E3 { case x }
-}
+-->
 
 ### Enumerations with Cases of a Raw-Value Type
 
@@ -1721,10 +1721,10 @@ or `ExpressibleByExtendedGraphemeClusterLiteral` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 
-@Comment {
+<!--
   The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
   This list is shorter because these five protocols are explicitly supported in the compiler.
-}
+-->
 
 If the raw-value type is specified as `Int`
 and you don't assign a value to the cases explicitly,
@@ -1739,7 +1739,7 @@ enum ExampleEnum: Int {
 ```
 
 
-@Comment {
+<!--
   - test: `raw-value-enum`
   
   ```swifttest
@@ -1747,7 +1747,7 @@ enum ExampleEnum: Int {
         case a, b, c = 5, d
      }
   ```
-}
+-->
 
 In the above example, the raw value of `ExampleEnum.a` is `0` and the value of
 `ExampleEnum.b` is `1`. And because the value of `ExampleEnum.c` is
@@ -1765,7 +1765,7 @@ enum GamePlayMode: String {
 ```
 
 
-@Comment {
+<!--
   - test: `raw-value-enum-implicit-string-values`
   
   ```swifttest
@@ -1773,7 +1773,7 @@ enum GamePlayMode: String {
         case cooperative, individual, competitive
      }
   ```
-}
+-->
 
 In the above example, the raw value of `GamePlayMode.cooperative` is `"cooperative"`,
 the raw value of `GamePlayMode.individual` is `"individual"`,
@@ -1805,15 +1805,15 @@ The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the `switch` statement,
 as described in <doc:Patterns#Enumeration-Case-Pattern>.
 
-@Comment {
+<!--
   FIXME: Or use if-case:
   enum E { case c(Int) }
   let e = E.c(100)
   if case E.c(let i) = e { print(i) }
   // prints 100
-}
+-->
 
-@Comment {
+<!--
   NOTE: Note that you can require protocol adoption,
   by using a protocol type as the raw-value type,
   but you do need to make it be one of the types
@@ -1821,12 +1821,12 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   You can have: <#raw-value type, protocol conformance#>.
   UPDATE: You can only have one raw-value type specified.
   I changed the grammar to be more restrictive in light of this.
-}
+-->
 
-@Comment {
+<!--
   NOTE: Per Doug and Ted, "('->' type)?" isn't part of the grammar.
   We removed it from our grammar, below.
-}
+-->
 
 ```
 Grammar of an enumeration declaration
@@ -1854,7 +1854,7 @@ raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
 ```
 
 
-@Comment {
+<!--
   NOTE: The two types of enums are sufficiently different enough to warrant separating
   the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
   I'm not sure I'm happy with the names I've chosen for two kinds of enums,
@@ -1866,9 +1866,9 @@ raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
   because they behave differently. I'm not sure why we've blended them together,
   especially given that they have distinct syntactic declaration requirements
   and they behave differently.
-}
+-->
 
-@Comment {
+<!--
   old-grammar
   Grammar of an enumeration declaration
   
@@ -1881,7 +1881,7 @@ raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
   enumerator --> enumerator-name tuple-type-OPT
   enumerator-name --> identifier
   raw-value-assignment --> ``=`` literal
-}
+-->
 
 ## Structure Declaration
 
@@ -1987,14 +1987,14 @@ A class can override properties, methods, subscripts, and initializers of its su
 Overridden properties, methods, subscripts,
 and designated initializers must be marked with the `override` declaration modifier.
 
-@Comment {
+<!--
   - test: `designatedInitializersRequireOverride`
   
   ```swifttest
   -> class C { init() {} }
   -> class D: C { override init() { super.init() } }
   ```
-}
+-->
 
 To require that subclasses implement a superclass's initializer,
 mark the superclass's initializer with the `required` declaration modifier.
@@ -2111,13 +2111,13 @@ see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
-@Comment {
+<!--
   TODO Additional bits from the SE-0306 actors proposal:
   
   Partial applications of isolated functions are only permitted
   when the expression is a direct argument
   whose corresponding parameter is non-escaping and non-Sendable.
-}
+-->
 
 ```
 Grammar of an actor declaration
@@ -2187,13 +2187,13 @@ and for guidance about how to access optional protocol members---
 for example, when you're not sure whether a conforming type implements them---
 see <doc:Protocols#Optional-Protocol-Requirements>.
 
-@Comment {
+<!--
   TODO: Currently, you can't check for an optional initializer,
   so we're leaving those out of the documentation, even though you can mark
   an initializer with the @optional attribute. It's still being decided by the
   compiler team. Update this section if they decide to make everything work
   properly for optional initializer requirements.
-}
+-->
 
 The cases of an enumeration can satisfy
 protocol requirements for type members.
@@ -2219,7 +2219,7 @@ enum MyEnum: SomeProtocol {
 ```
 
 
-@Comment {
+<!--
   - test: `enum-case-satisfy-protocol-requirement`
   
   ```swifttest
@@ -2232,7 +2232,7 @@ enum MyEnum: SomeProtocol {
          case someFunction(x: Int)
      }
   ```
-}
+-->
 
 To restrict the adoption of a protocol to class types only,
 include the `AnyObject` protocol in the *inherited protocols*
@@ -2246,7 +2246,7 @@ protocol SomeProtocol: AnyObject {
 ```
 
 
-@Comment {
+<!--
   - test: `protocol-declaration`
   
   ```swifttest
@@ -2254,7 +2254,7 @@ protocol SomeProtocol: AnyObject {
          /* Protocol members go here */
      }
   ```
-}
+-->
 
 Any protocol that inherits from a protocol that's marked with the `AnyObject` requirement
 can likewise be adopted only by class types.
@@ -2332,7 +2332,7 @@ use the same keyword as the type they extend uses.
 Extensions that provide a default implementation for a type property requirement
 use the `static` keyword.
 
-@Comment {
+<!--
   - test: `protocols-with-type-property-requirements`
   
   ```swifttest
@@ -2349,9 +2349,9 @@ use the `static` keyword.
   !! class C2: P { class var x = 30 }
   !!               ~~~~~     ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocol-type-property-default-implementation`
   
   ```swifttest
@@ -2364,7 +2364,7 @@ use the `static` keyword.
   -> print(S2.x)
   <- 10
   ```
-}
+-->
 
 See also <doc:Declarations#Variable-Declaration>.
 
@@ -2398,9 +2398,9 @@ use the `static` keyword.
 
 See also <doc:Declarations#Function-Declaration>.
 
-@Comment {
+<!--
   TODO: Talk about using ``Self`` in parameters and return types.
-}
+-->
 
 ```
 Grammar of a protocol method declaration
@@ -2505,7 +2505,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 ```
 
 
-@Comment {
+<!--
   - test: `protocol-associatedtype`
   
   ```swifttest
@@ -2528,13 +2528,13 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   // This syntax is preferred.
   -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: Finish writing this section after WWDC.
-}
+-->
 
-@Comment {
+<!--
   NOTE:
   What are associated types? What are they "associated" with? Is "Self"
   an implicit associated type of every protocol? [...]
@@ -2597,7 +2597,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   class String : Sequence { typealias Element = ... }
   
   Here you have to pick one or the other -- you can't have both.
-}
+-->
 
 See also <doc:Declarations#Type-Alias-Declaration>.
 
@@ -2718,7 +2718,7 @@ struct SomeStruct {
 ```
 
 
-@Comment {
+<!--
   - test: `failable`
   
   ```swifttest
@@ -2734,7 +2734,7 @@ struct SomeStruct {
          }
      }
   ```
-}
+-->
 
 You call an `init?` failable initializer in the same way that you call a nonfailable initializer,
 except that you must deal with the optionality of the result.
@@ -2748,7 +2748,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 ```
 
 
-@Comment {
+<!--
   - test: `failable`
   
   ```swifttest
@@ -2759,7 +2759,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
          // initialization of 'SomeStruct' failed and the initializer returned 'nil'
      }
   ```
-}
+-->
 
 A failable initializer can return `nil`
 at any point in the implementation of the initializer's body.
@@ -2911,11 +2911,11 @@ To illustrate this behavior,
 the following example defines two protocols
 and a generic type that conditionally conforms to both protocols.
 
-@Comment {
+<!--
   This test needs to be compiled so that it will recognize Pair's
   CustomStringConvertible conformance -- the deprecated REPL doesn't
   seem to use the description property at all.
-}
+-->
 
 ```swift
 protocol Loggable {
@@ -2959,7 +2959,7 @@ extension String: TitledLoggable {
 ```
 
 
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3002,7 +3002,7 @@ extension String: TitledLoggable {
         }
      }
   ```
-}
+-->
 
 The `Pair` structure conforms to `Loggable` and `TitledLoggable`
 whenever its generic type conforms to `Loggable` or `TitledLoggable`, respectively.
@@ -3020,7 +3020,7 @@ oneAndTwo.log()
 ```
 
 
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3028,7 +3028,7 @@ oneAndTwo.log()
   -> oneAndTwo.log()
   <- Pair of 'String': (one, two)
   ```
-}
+-->
 
 However, when `oneAndTwo` is used in a generic context
 or as an instance of the `Loggable` protocol,
@@ -3047,7 +3047,7 @@ doSomething(with: oneAndTwo)
 ```
 
 
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3057,7 +3057,7 @@ doSomething(with: oneAndTwo)
      doSomething(with: oneAndTwo)
   <- (one, two)
   ```
-}
+-->
 
 When `log()` is called on the instance that's passed to `doSomething(_:)`,
 the customized title is omitted from the logged string.
@@ -3105,7 +3105,7 @@ extension Array: Serializable where Element == String {
 ```
 
 
-@Comment {
+<!--
   - test: `multiple-conformances`
   
   ```swifttest
@@ -3133,7 +3133,7 @@ extension Array: Serializable where Element == String {
   !! extension Array: Serializable where Element == Int {
   !! ^
   ```
-}
+-->
 
 If you need to add conditional conformance based on multiple concrete types,
 create a new protocol that each type can conform to
@@ -3152,7 +3152,7 @@ extension Array: Serializable where Element: SerializableInArray {
 ```
 
 
-@Comment {
+<!--
   - test: `multiple-conformances-success`
   
   ```swifttest
@@ -3168,7 +3168,7 @@ extension Array: Serializable where Element: SerializableInArray {
   ->     }
      }
   ```
-}
+-->
 
 #### Resolving Implicit Redundancy
 
@@ -3209,7 +3209,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```
 
 
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3232,7 +3232,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
      }
      extension Array: MarkedLoggable where Element: MarkedLoggable { }
   ```
-}
+-->
 
 Without the extension
 to explicitly declare conditional conformance to `Loggable`,
@@ -3246,7 +3246,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 ```
 
 
-@Comment {
+<!--
   - test: `conditional-conformance-implicit-overlap`
   
   ```swifttest
@@ -3263,9 +3263,9 @@ extension Array: Loggable where Element: MarkedLoggable { }
   !! extension Array: Loggable where Element: TitledLoggable { }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `types-cant-have-multiple-implicit-conformances`
   
   ```swifttest
@@ -3298,9 +3298,9 @@ extension Array: Loggable where Element: MarkedLoggable { }
   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extension-can-have-where-clause`
   
   ```swifttest
@@ -3312,9 +3312,9 @@ extension Array: Loggable where Element: MarkedLoggable { }
   >> let r0 = x.f(x: y)
   >> assert(r0 == 7)
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extensions-can-have-where-clause-and-inheritance-together`
   
   ```swifttest
@@ -3325,7 +3325,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
   >> let r0 = [1, 2, 3].foo()
   >> assert(r0 == 0)
   ```
-}
+-->
 
 ```
 Grammar of an extension declaration
@@ -3413,7 +3413,7 @@ In a class declaration,
 the `static` keyword has the same effect as marking the declaration
 with both the `class` and `final` declaration modifiers.
 
-@Comment {
+<!--
   - test: `cant-override-static-subscript-in-subclass`
   
   ```swifttest
@@ -3426,7 +3426,7 @@ with both the `class` and `final` declaration modifiers.
   !! class Super { static subscript(i: Int) -> Int { return 10 } }
   !!                      ^
   ```
-}
+-->
 
 ```
 Grammar of a subscript declaration
@@ -3663,13 +3663,13 @@ and for guidance about how to access optional protocol members---
 for example, when you're not sure whether a conforming type implements them---
 see <doc:Protocols#Optional-Protocol-Requirements>.
 
-@Comment {
+<!--
   TODO: Currently, you can't check for an optional initializer,
   so we're leaving those out of the documentation, even though you can mark
   an initializer with the @optional attribute. It's still being decided by the
   compiler team. Update this section if they decide to make everything work
   properly for optional initializer requirements.
-}
+-->
 - term `required`: Apply this modifier to a designated or convenience initializer
 of a class to indicate that every subclass must implement that initializer.
 The subclass's implementation of that initializer
@@ -3783,7 +3783,7 @@ actor-isolation-modifier --> ``nonisolated``
 
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -3791,4 +3791,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

@@ -33,7 +33,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 ```
 
 
-@Comment {
+<!--
   - test: `whyGenerics`
   
   ```swifttest
@@ -43,7 +43,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
         b = temporaryA
      }
   ```
-}
+-->
 
 This function makes use of in-out parameters to swap the values of `a` and `b`,
 as described in <doc:Functions#In-Out-Parameters>.
@@ -61,7 +61,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 ```
 
 
-@Comment {
+<!--
   - test: `whyGenerics`
   
   ```swifttest
@@ -71,7 +71,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   <- someInt is now 107, and anotherInt is now 3
   ```
-}
+-->
 
 The `swapTwoInts(_:_:)` function is useful, but it can only be used with `Int` values.
 If you want to swap two `String` values,
@@ -94,7 +94,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 ```
 
 
-@Comment {
+<!--
   - test: `whyGenerics`
   
   ```swifttest
@@ -110,7 +110,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         b = temporaryA
      }
   ```
-}
+-->
 
 You may have noticed that the bodies of
 the `swapTwoInts(_:_:)`, `swapTwoStrings(_:_:)`, and `swapTwoDoubles(_:_:)` functions are identical.
@@ -147,7 +147,7 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
 ```
 
 
-@Comment {
+<!--
   - test: `genericFunctions`
   
   ```swifttest
@@ -157,14 +157,14 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
         b = temporaryA
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   This could be done in one line using a tuple pattern: (a, b) = (b, a)
   That's probably not as approachable here, and the novel syntax to avoid an
   explicit placeholder variable might distract from the discussion of
   generics.
-}
+-->
 
 The body of the `swapTwoValues(_:_:)` function
 is identical to the body of the `swapTwoInts(_:_:)` function.
@@ -178,7 +178,7 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 ```
 
 
-@Comment {
+<!--
   - test: `genericFunctionsComparison`
   
   ```swifttest
@@ -195,7 +195,7 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
   >>    b = temporaryA
   >> }
   ```
-}
+-->
 
 The generic version of the function
 uses a *placeholder* type name (called `T`, in this case)
@@ -234,7 +234,7 @@ swapTwoValues(&someString, &anotherString)
 ```
 
 
-@Comment {
+<!--
   - test: `genericFunctions`
   
   ```swifttest
@@ -250,7 +250,7 @@ swapTwoValues(&someString, &anotherString)
   /> someString is now \"\(someString)\", and anotherString is now \"\(anotherString)\"
   </ someString is now "world", and anotherString is now "hello"
   ```
-}
+-->
 
 > Note: The `swapTwoValues(_:_:)` function defined above is inspired by
 > a generic function called `swap`, which is part of the Swift standard library,
@@ -349,7 +349,7 @@ struct IntStack {
 ```
 
 
-@Comment {
+<!--
   - test: `genericStack`
   
   ```swifttest
@@ -370,7 +370,7 @@ struct IntStack {
   >> print("the stack now contains \(intStack.items.count) integers")
   << the stack now contains 4 integers
   ```
-}
+-->
 
 This structure uses an `Array` property called `items` to store the values in the stack.
 `Stack` provides two methods, `push` and `pop`,
@@ -397,7 +397,7 @@ struct Stack<Element> {
 ```
 
 
-@Comment {
+<!--
   - test: `genericStack`
   
   ```swifttest
@@ -411,7 +411,7 @@ struct Stack<Element> {
         }
      }
   ```
-}
+-->
 
 Note how the generic version of `Stack`
 is essentially the same as the nongeneric version,
@@ -452,7 +452,7 @@ stackOfStrings.push("cuatro")
 ```
 
 
-@Comment {
+<!--
   - test: `genericStack`
   
   ```swifttest
@@ -464,7 +464,7 @@ stackOfStrings.push("cuatro")
   /> the stack now contains \(stackOfStrings.items.count) strings
   </ the stack now contains 4 strings
   ```
-}
+-->
 
 Here's how `stackOfStrings` looks after pushing these four values on to the stack:
 
@@ -479,7 +479,7 @@ let fromTheTop = stackOfStrings.pop()
 ```
 
 
-@Comment {
+<!--
   - test: `genericStack`
   
   ```swifttest
@@ -487,7 +487,7 @@ let fromTheTop = stackOfStrings.pop()
   /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stackOfStrings.items.count) strings
   </ fromTheTop is equal to "cuatro", and the stack now contains 3 strings
   ```
-}
+-->
 
 Here's how the stack looks after popping its top value:
 
@@ -516,7 +516,7 @@ extension Stack {
 ```
 
 
-@Comment {
+<!--
   - test: `genericStack`
   
   ```swifttest
@@ -526,7 +526,7 @@ extension Stack {
         }
      }
   ```
-}
+-->
 
 The `topItem` property returns an optional value of type `Element`.
 If the stack is empty, `topItem` returns `nil`;
@@ -548,7 +548,7 @@ if let topItem = stackOfStrings.topItem {
 ```
 
 
-@Comment {
+<!--
   - test: `genericStack`
   
   ```swifttest
@@ -557,7 +557,7 @@ if let topItem = stackOfStrings.topItem {
      }
   <- The top item on the stack is tres.
   ```
-}
+-->
 
 Extensions of a generic type can also include requirements
 that instances of the extended type must satisfy
@@ -616,7 +616,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 ```
 
 
-@Comment {
+<!--
   - test: `typeConstraints`
   
   ```swifttest
@@ -626,7 +626,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
         // function body goes here
      }
   ```
-}
+-->
 
 The hypothetical function above has two type parameters.
 The first type parameter, `T`, has a type constraint
@@ -655,7 +655,7 @@ func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
 ```
 
 
-@Comment {
+<!--
   - test: `typeConstraints`
   
   ```swifttest
@@ -668,7 +668,7 @@ func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
         return nil
      }
   ```
-}
+-->
 
 The `findIndex(ofString:in:)` function can be used to find a string value in an array of strings:
 
@@ -681,7 +681,7 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
 ```
 
 
-@Comment {
+<!--
   - test: `typeConstraints`
   
   ```swifttest
@@ -691,7 +691,7 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
      }
   <- The index of llama is 2
   ```
-}
+-->
 
 The principle of finding the index of a value in an array isn't useful only for strings, however.
 You can write the same functionality as a generic function
@@ -717,7 +717,7 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
 ```
 
 
-@Comment {
+<!--
   - test: `typeConstraints-err`
   
   ```swifttest
@@ -733,7 +733,7 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
   !!       if value == valueToFind {
   !!          ~~~~~ ^  ~~~~~~~~~~~
   ```
-}
+-->
 
 This function doesn't compile as written above.
 The problem lies with the equality check, “`if value == valueToFind`”.

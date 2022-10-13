@@ -38,7 +38,7 @@ statements --> statement statements-OPT
 ```
 
 
-@Comment {
+<!--
   NOTE: Removed semicolon-statement as syntactic category,
   because, according to Doug, they're not really statements.
   For example, you can't have
@@ -47,7 +47,7 @@ statements --> statement statements-OPT
   The semicolon isn't even required for the compiler; we just added
   rules that require them in some places to enforce a certain amount
   of readability.
-}
+-->
 
 ## Loop Statements
 
@@ -363,7 +363,7 @@ case let (x, y) where x == y:
 ```
 
 
-@Comment {
+<!--
   - test: `switch-case-statement`
   
   ```swifttest
@@ -373,7 +373,7 @@ case let (x, y) where x == y:
   >> default: break
   >> }
   ```
-}
+-->
 
 As the above example shows, patterns in a case can also bind constants
 using the `let` keyword (they can also bind variables using the `var` keyword).
@@ -384,10 +384,10 @@ all of the patterns must contain the same constant or variable bindings,
 and each bound variable or constant must have the same type
 in all of the case's patterns.
 
-@Comment {
+<!--
   The discussion above about multi-pattern cases
   matches discussion of multi-pattern catch under Do Statement.
-}
+-->
 
 A `switch` statement can also include a default case, introduced by the `default` keyword.
 The code within a default case is executed only if no other cases match the control expression.
@@ -403,7 +403,7 @@ As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
 
-@Comment {
+<!--
   - test: `switch-case-with-multiple-patterns`
   
   ```swifttest
@@ -414,9 +414,9 @@ the program executes only the code within the first matching case in source orde
   >> }
   << 1
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `switch-case-with-multiple-patterns-err`
   
   ```swifttest
@@ -429,7 +429,7 @@ the program executes only the code within the first matching case in source orde
   !! case (let x, 5), (let x as Any, 1): print(1)
   !!                       ^
   ```
-}
+-->
 
 #### Switch Statements Must Be Exhaustive
 
@@ -494,7 +494,7 @@ case .suppressed:
 ```
 
 
-@Comment {
+<!--
   - test: `unknown-case`
   
   ```swifttest
@@ -511,7 +511,7 @@ case .suppressed:
      }
   <- Generate a default mirror for all ancestor classes.
   ```
-}
+-->
 
 #### Execution Does Not Fall Through Cases Implicitly
 
@@ -549,11 +549,11 @@ switch-else-directive-clause --> else-directive switch-cases-OPT
 ```
 
 
-@Comment {
+<!--
   The grammar above uses attributes-OPT to match what's used
   in all other places where attributes are allowed,
   although as of Swift 4.2 only a single attribute (@unknown) is allowed.
-}
+-->
 
 ## Labeled Statement
 
@@ -572,7 +572,7 @@ For more information and to see examples
 of how to use statement labels,
 see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
 
-@Comment {
+<!--
   - test: `backtick-identifier-is-legal-label`
   
   ```swifttest
@@ -586,7 +586,7 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
   -> print(i)
   << 10
   ```
-}
+-->
 
 ```
 Grammar of a labeled statement
@@ -748,10 +748,10 @@ before it's returned to the calling function or method.
 > Note: As described in <doc:Declarations#Failable-Initializers>, a special form of the `return` statement (`return nil`)
 > can be used in a failable initializer to indicate initialization failure.
 
-@Comment {
+<!--
   TODO: Discuss how the conversion takes place and what is allowed to be converted
   in the (yet to be written) chapter on subtyping and type conversions.
-}
+-->
 
 When a `return` statement isn't followed by an expression,
 it can be used only to return from a function or method that doesn't return a value
@@ -839,7 +839,7 @@ f(x: 5)
 ```
 
 
-@Comment {
+<!--
   ```swifttest
   -> func f(x: Int) {
     defer { print("First defer") }
@@ -857,7 +857,7 @@ f(x: 5)
   <- End of function
   <- First defer
   ```
-}
+-->
 
 In the code above,
 the `defer` in the `if` statement
@@ -884,7 +884,7 @@ f()
 ```
 
 
-@Comment {
+<!--
   ```swifttest
   -> func f() {
          defer { print("First defer") }
@@ -896,7 +896,7 @@ f()
   <- Second defer
   <- First defer
   ```
-}
+-->
 
 The statements in the `defer` statement can't
 transfer program control outside of the `defer` statement.
@@ -961,10 +961,10 @@ all of the patterns must contain the same constant or variable bindings,
 and each bound variable or constant must have the same type
 in all of the `catch` clause's patterns.
 
-@Comment {
+<!--
   The discussion above of multi-pattern catch
   matches the discussion of multi-pattern case under Switch Statement.
-}
+-->
 
 To ensure that an error is handled,
 use a `catch` clause with a pattern that matches all errors,
@@ -1041,7 +1041,7 @@ conditions listed in the table below.
 | `canImport()` | A module name |
 | `targetEnvironment()` | `simulator`, `macCatalyst` |
 
-@Comment {
+<!--
   For the full list in the compiler, see the values of
   SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
   in the file lib/Basic/LangOptions.cpp.
@@ -1052,14 +1052,14 @@ conditions listed in the table below.
   for example "#if os(toaster)" compiles just fine,
   but Swift doesn't actually support running on a toaster oven --
   so don't rely on that when checking possible os/arch values.
-}
+-->
 
-@Comment {
+<!--
   The target environment "UIKitForMac"
   is understood by the compiler as a synonym for "macCatalyst",
   but that spelling is marked "Must be removed" outside of a few places,
   so it's omitted from the table above.
-}
+-->
 
 The version number for the `swift()` and `compiler()` platform conditions
 consists of a major number, optional minor number, optional patch number, and so on,
@@ -1089,7 +1089,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 ```
 
 
-@Comment {
+<!--
   ```swifttest
   -> #if compiler(>=5)
      print("Compiled with the Swift 5 compiler or later")
@@ -1104,12 +1104,12 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
   <- Compiled in Swift 4.2 mode or later
   // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
   ```
-}
+-->
 
-@Comment {
+<!--
   That testcode is cheating by explicitly printing the third line of output,
   since it's not actually running in Swift 4.2 mode.
-}
+-->
 
 The argument for the `canImport()` platform condition
 is the name of a module that may not be present on all platforms.
@@ -1119,7 +1119,7 @@ but doesn't actually import it.
 If the module is present, the platform condition returns `true`;
 otherwise, it returns `false`.
 
-@Comment {
+<!--
   - test: `canImport_A, canImport`
   
   ```swifttest
@@ -1127,9 +1127,9 @@ otherwise, it returns `false`.
   >>     public init() { }
   >> }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `canImport_A.B, canImport`
   
   ```swifttest
@@ -1137,9 +1137,9 @@ otherwise, it returns `false`.
   >>     public init() { }
   >> }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `canImport`
   
   ```swifttest
@@ -1155,7 +1155,7 @@ otherwise, it returns `false`.
   >> #error("Can't import A.B")
   >> #endif
   ```
-}
+-->
 
 The `targetEnvironment()` platform condition
 returns `true` when code is being compiled for the specified environment;
@@ -1165,7 +1165,7 @@ otherwise, it returns `false`.
 > The `arch(i386)` platform condition returns `true`
 > when code is compiled for the 32–bit iOS simulator.
 
-@Comment {
+<!--
   - test: `pound-if-swift-version`
   
   ```swifttest
@@ -1185,9 +1185,9 @@ otherwise, it returns `false`.
      #endif
   << 5
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `pound-if-swift-version-err`
   
   ```swifttest
@@ -1199,9 +1199,9 @@ otherwise, it returns `false`.
   !!           ^ ~
   !!-
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `pound-if-compiler-version`
   
   ```swifttest
@@ -1217,7 +1217,7 @@ otherwise, it returns `false`.
          print(3)
      #endif
   ```
-}
+-->
 
 You can combine and negate compilation conditions using the logical operators
 `&&`, `||`, and `!`
@@ -1294,7 +1294,7 @@ environment --> ``simulator`` | ``macCatalyst``
 ```
 
 
-@Comment {
+<!--
   Testing notes:
   
   !!true doesn't work but !(!true) does -- this matches normal expressions
@@ -1306,7 +1306,7 @@ environment --> ``simulator`` | ``macCatalyst``
       #elseif
       #else
       #endif
-}
+-->
 
 ### Line Control Statement
 
@@ -1379,7 +1379,7 @@ diagnostic-message --> static-string-literal
 ```
 
 
-@Comment {
+<!--
   - test: `good-diagnostic-statement-messages`
   
   ```swifttest
@@ -1398,14 +1398,14 @@ diagnostic-message --> static-string-literal
   !! """
   !! ^~~
   ```
-}
+-->
 
-@Comment {
+<!--
   Using !! lines above instead of !$ lines,
   to also confirm that the line number comes through correctly.
-}
+-->
 
-@Comment {
+<!--
   - test: `bad-diagnostic-statement-messages`
   
   ```swifttest
@@ -1419,7 +1419,7 @@ diagnostic-message --> static-string-literal
   !! #warning("Concatenated " + "strings")
   !! ^
   ```
-}
+-->
 
 ## Availability Condition
 
@@ -1489,12 +1489,12 @@ platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 ```
 
 
-@Comment {
+<!--
   If you need to add a new platform to this list,
   you probably need to update the list under @available too.
-}
+-->
 
-@Comment {
+<!--
   - test: `pound-available-platform-names`
   
   ```swifttest
@@ -1525,18 +1525,18 @@ platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
   << c
   << dd
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `empty-availability-condition`
   
   ```swifttest
   >> if #available(*) { print("1") }
   << 1
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `empty-unavailability-condition`
   
   ```swifttest
@@ -1545,10 +1545,10 @@ platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
   !$ if #unavailable() { print("2") }
   !$                ^
   ```
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1556,4 +1556,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

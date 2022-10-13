@@ -59,7 +59,7 @@ for _ in 1...3 {
 ```
 
 
-@Comment {
+<!--
   - test: `wildcard-pattern`
   
   ```swifttest
@@ -67,7 +67,7 @@ for _ in 1...3 {
         // Do something three times.
      }
   ```
-}
+-->
 
 ```
 Grammar of a wildcard pattern
@@ -88,13 +88,13 @@ let someValue = 42
 ```
 
 
-@Comment {
+<!--
   - test: `identifier-pattern`
   
   ```swifttest
   -> let someValue = 42
   ```
-}
+-->
 
 When the match succeeds, the value `42` is bound (assigned)
 to the constant name `someValue`.
@@ -133,7 +133,7 @@ switch point {
 ```
 
 
-@Comment {
+<!--
   - test: `value-binding-pattern`
   
   ```swifttest
@@ -145,7 +145,7 @@ switch point {
      }
   <- The point is at (3, 2).
   ```
-}
+-->
 
 In the example above, `let` distributes to each identifier pattern in the
 tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
@@ -158,13 +158,13 @@ value-binding-pattern --> ``var`` pattern | ``let`` pattern
 ```
 
 
-@Comment {
+<!--
   NOTE: We chose to call this "value-binding pattern"
   instead of "variable pattern",
   because it's a pattern that binds values to either variables or constants,
   not a pattern that varies.
   "Variable pattern" is ambiguous between those two meanings.
-}
+-->
 
 ## Tuple Pattern
 
@@ -193,7 +193,7 @@ for (x, 0) in points {
 ```
 
 
-@Comment {
+<!--
   - test: `tuple-pattern`
   
   ```swifttest
@@ -207,17 +207,17 @@ for (x, 0) in points {
   !! for (x, 0) in points {
   !!         ^
   ```
-}
+-->
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
 
-@Comment {
+<!--
   This test needs to be compiled.
   The error message in the REPL is unpredictable as of
   Swift version 1.1 (swift-600.0.54.20)
-}
+-->
 
 ```swift
 let a = 2        // a: Int = 2
@@ -226,7 +226,7 @@ let (a): Int = 2 // a: Int = 2
 ```
 
 
-@Comment {
+<!--
   - test: `single-element-tuple-pattern`
   
   ```swifttest
@@ -246,7 +246,7 @@ let (a): Int = 2 // a: Int = 2
   !! let a = 2        // a: Int = 2
   !! ^
   ```
-}
+-->
 
 ```
 Grammar of a tuple pattern
@@ -293,7 +293,7 @@ case nil:
 ```
 
 
-@Comment {
+<!--
   - test: `enum-pattern-matching-optional`
   
   ```swifttest
@@ -309,7 +309,7 @@ case nil:
      }
   <- Turn left
   ```
-}
+-->
 
 ```
 Grammar of an enumeration case pattern
@@ -343,7 +343,7 @@ if case let x? = someOptional {
 ```
 
 
-@Comment {
+<!--
   - test: `optional-pattern`
   
   ```swifttest
@@ -360,7 +360,7 @@ if case let x? = someOptional {
      }
   << 42
   ```
-}
+-->
 
 The optional pattern provides a convenient way to
 iterate over an array of optional values in a `for`-`in` statement,
@@ -378,7 +378,7 @@ for case let number? in arrayOfOptionalInts {
 ```
 
 
-@Comment {
+<!--
   - test: `optional-pattern-for-in`
   
   ```swifttest
@@ -391,7 +391,7 @@ for case let number? in arrayOfOptionalInts {
   </ Found a 3
   </ Found a 5
   ```
-}
+-->
 
 ```
 Grammar of an optional pattern
@@ -466,7 +466,7 @@ switch point {
 ```
 
 
-@Comment {
+<!--
   - test: `expression-pattern`
   
   ```swifttest
@@ -481,7 +481,7 @@ switch point {
      }
   <- (1, 2) is near the origin.
   ```
-}
+-->
 
 You can overload the `~=` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the `point` expression
@@ -502,7 +502,7 @@ switch point {
 ```
 
 
-@Comment {
+<!--
   - test: `expression-pattern`
   
   ```swifttest
@@ -518,7 +518,7 @@ switch point {
      }
   <- The point is at (1, 2).
   ```
-}
+-->
 
 ```
 Grammar of an expression pattern
@@ -528,7 +528,7 @@ expression-pattern --> expression
 
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -536,4 +536,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

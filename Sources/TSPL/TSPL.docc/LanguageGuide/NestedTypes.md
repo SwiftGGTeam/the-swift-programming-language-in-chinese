@@ -65,7 +65,7 @@ struct BlackjackCard {
 ```
 
 
-@Comment {
+<!--
   - test: `nestedTypes`
   
   ```swifttest
@@ -107,7 +107,7 @@ struct BlackjackCard {
         }
      }
   ```
-}
+-->
 
 The `Suit` enumeration describes the four common playing card suits,
 together with a raw `Character` value to represent their symbol.
@@ -152,7 +152,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 ```
 
 
-@Comment {
+<!--
   - test: `nestedTypes`
   
   ```swifttest
@@ -160,7 +160,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
   -> print("theAceOfSpades: \(theAceOfSpades.description)")
   <- theAceOfSpades: suit is ♠, value is 1 or 11
   ```
-}
+-->
 
 Even though `Rank` and `Suit` are nested within `BlackjackCard`,
 their type can be inferred from context,
@@ -180,7 +180,7 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 ```
 
 
-@Comment {
+<!--
   - test: `nestedTypes`
   
   ```swifttest
@@ -188,14 +188,14 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
   /> heartsSymbol is \"\(heartsSymbol)\"
   </ heartsSymbol is "♡"
   ```
-}
+-->
 
 For the example above,
 this enables the names of `Suit`, `Rank`, and `Values` to be kept deliberately short,
 because their names are naturally qualified by the context in which they're defined.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -203,4 +203,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->
