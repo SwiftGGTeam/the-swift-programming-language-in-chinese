@@ -2,7 +2,7 @@
 
 # Closures
 
-Group code that will execute together, without creating a named function.
+Group code that executes together, without creating a named function.
 
 *Closures* are self-contained blocks of functionality
 that can be passed around and used in your code.

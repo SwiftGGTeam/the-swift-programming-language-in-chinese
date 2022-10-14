@@ -2,7 +2,7 @@
 
 # Basic Operators
 
-Perform assignment, arithmetic, comparison, and Boolean operations
+Perform assignment, arithmetic, comparison, and Boolean operations.
 
 An *operator* is a special symbol or phrase that you use to
 check, change, or combine values.

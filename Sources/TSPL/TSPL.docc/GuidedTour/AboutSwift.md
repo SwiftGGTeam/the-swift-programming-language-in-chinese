@@ -2,7 +2,7 @@
 
 # About Swift
 
-Understand the high-level goals of the language
+Understand the high-level goals of the language.
 
 Swift is a fantastic way to write software,
 whether it’s for phones, desktops, servers,
