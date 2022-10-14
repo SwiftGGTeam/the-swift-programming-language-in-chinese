@@ -2,7 +2,7 @@
 
 # Initialization
 
-Set the initial values for a type's stored properties.
+Set the initial values for a type's stored properties and perform one-time setup.
 
 *Initialization* is the process of preparing an instance of
 a class, structure, or enumeration for use.

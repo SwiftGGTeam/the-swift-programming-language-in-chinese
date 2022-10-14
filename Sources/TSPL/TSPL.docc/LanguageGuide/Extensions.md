@@ -2,7 +2,7 @@
 
 # Extensions
 
-Add functionality to an existing data type.
+Add functionality to an existing type.
 
 *Extensions* add new functionality to an existing
 class, structure, enumeration, or protocol type.
