@@ -2,7 +2,7 @@
 
 # Statements
 
-Structure groups of expressions, and control their behavior.
+Structure groups of expressions and control their behavior.
 
 In Swift, there are three kinds of statements: simple statements, compiler control statements,
 and control flow statements.
