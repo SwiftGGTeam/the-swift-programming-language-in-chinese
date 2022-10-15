@@ -2,7 +2,7 @@
 
 # Memory Safety
 
-Avoid conflicting access to memory.
+Structure your code to avoid conflicts when accessing memory.
 
 By default, Swift prevents unsafe behavior from happening in your code.
 For example,
