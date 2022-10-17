@@ -13,7 +13,7 @@ the compiler shouldn't generate a warning if the return value is unused.
 You specify an attribute by writing the `@` symbol followed by the attribute's name
 and any arguments that the attribute accepts:
 
-```
+```swift
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
@@ -77,7 +77,7 @@ including important milestones.
   of the specified platform or language in which the declaration was introduced.
   It has the following form:
   
-  ```
+  ```swift
   introduced: <#version number#>
   ```
   The *version number* consists of one to three positive integers,
@@ -86,7 +86,7 @@ including important milestones.
   of the specified platform or language in which the declaration was deprecated.
   It has the following form:
   
-  ```
+  ```swift
   deprecated: <#version number#>
   ```
   The optional *version number* consists of one to three positive integers,
@@ -100,7 +100,7 @@ including important milestones.
   it's removed from the specified platform or language and can no longer be used.
   It has the following form:
   
-  ```
+  ```swift
   obsoleted: <#version number#>
   ```
   The *version number* consists of one to three positive integers, separated by periods.
@@ -108,7 +108,7 @@ including important milestones.
   when emitting a warning or error about the use of a deprecated or obsoleted declaration.
   It has the following form:
   
-  ```
+  ```swift
   message: <#message#>
   ```
   The *message* consists of a string literal.
@@ -118,7 +118,7 @@ including important milestones.
   when emitting an error about the use of a renamed declaration.
   It has the following form:
   
-  ```
+  ```swift
   renamed: <#new name#>
   ```
   The *new name* consists of a string literal.You can apply the `available` attribute
@@ -198,7 +198,7 @@ If an `available` attribute only specifies an `introduced` argument
 in addition to a platform or language name argument,
 you can use the following shorthand syntax instead:
 
-```
+```swift
 @available(<#platform name#> <#version number#>, *)
 @available(swift <#version number#>)
 ```

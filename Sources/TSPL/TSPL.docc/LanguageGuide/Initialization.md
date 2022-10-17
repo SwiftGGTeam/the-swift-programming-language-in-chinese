@@ -922,7 +922,7 @@ will save time or make initialization of the class clearer in intent.
 Designated initializers for classes are written in the same way as
 simple initializers for value types:
 
-```
+```swift
 init(<#parameters#>) {
    <#statements#>
 }
@@ -933,7 +933,7 @@ Convenience initializers are written in the same style,
 but with the `convenience` modifier placed before the `init` keyword,
 separated by a space:
 
-```
+```swift
 convenience init(<#parameters#>) {
    <#statements#>
 }

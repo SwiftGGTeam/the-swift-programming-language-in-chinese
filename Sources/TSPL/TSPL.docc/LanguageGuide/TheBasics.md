@@ -1411,7 +1411,7 @@ as part of a single action.
 
 Write an optional binding for an `if` statement as follows:
 
-```
+```swift
 if let <#constantName#> = <#someOptional#> {
    <#statements#>
 }

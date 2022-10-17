@@ -406,7 +406,7 @@ There are two type-casting patterns, the `is` pattern and the `as` pattern.
 The `is` pattern appears only in `switch` statement
 case labels. The `is` and `as` patterns have the following form:
 
-```
+```swift
 is <#type#>
 <#pattern#> as <#type#>
 ```

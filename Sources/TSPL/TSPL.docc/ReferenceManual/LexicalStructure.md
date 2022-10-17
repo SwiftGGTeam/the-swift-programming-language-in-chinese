@@ -622,7 +622,7 @@ A string literal is a sequence of characters surrounded by quotation marks.
 A single-line string literal is surrounded by double quotation marks
 and has the following form:
 
-```
+```swift
 "<#characters#>"
 ```
 
@@ -635,7 +635,7 @@ a carriage return, or a line feed.
 A multiline string literal is surrounded by three double quotation marks
 and has the following form:
 
-```
+```swift
 """
 <#characters#>
 """
@@ -755,7 +755,7 @@ A string delimited by extended delimiters is a sequence of characters
 surrounded by quotation marks and a balanced set of one or more number signs (`#`).
 A string delimited by extended delimiters has the following forms:
 
-```
+```swift
 #"<#characters#>"#
 
 #"""
@@ -928,7 +928,7 @@ escaped-newline -->  escape-sequence inline-spaces-OPT line-break
 A regular expression literal is a sequence of characters
 surrounded by slashes (`/`) with the following form:
 
-```
+```swift
 /<#regular expression#>/
 ```
 
@@ -980,7 +980,7 @@ and a balanced set of one or more number signs (`#`).
 A regular expression literal
 delimited by extended delimiters has the following forms:
 
-```
+```swift
 #/<#regular expression#>/#
 
 #/

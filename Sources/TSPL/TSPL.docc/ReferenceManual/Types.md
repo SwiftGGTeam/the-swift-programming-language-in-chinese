@@ -202,7 +202,7 @@ element-name --> identifier
 A *function type* represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow (`->`):
 
-```
+```swift
 (<#parameter type#>) -> <#return type#>
 ```
 
@@ -528,7 +528,7 @@ argument-label --> identifier
 The Swift language provides the following syntactic sugar for the Swift standard library
 `Array<Element>` type:
 
-```
+```swift
 [<#type#>]
 ```
 
@@ -597,7 +597,7 @@ array-type --> ``[`` type ``]``
 The Swift language provides the following syntactic sugar for the Swift standard library
 `Dictionary<Key, Value>` type:
 
-```
+```swift
 [<#key type#>: <#value type#>]
 ```
 
@@ -813,7 +813,7 @@ and in generic `where` clauses.
 
 Protocol composition types have the following form:
 
-```
+```swift
 <#Protocol 1#> & <#Protocol 2#>
 ```
 
@@ -884,7 +884,7 @@ such as the element type of an array or the wrapped type of an optional.
 
 Opaque types have the following form:
 
-```
+```swift
 some <#constraint#>
 ```
 
