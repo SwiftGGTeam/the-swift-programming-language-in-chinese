@@ -916,11 +916,11 @@ escaped-newline -->  escape-sequence inline-spaces-OPT line-break
   Now that single quotes are gone, we don't have a character literal.
   Because we may one bring them back, here's the old grammar for them:
   
-  textual-literal --> character-literal | string-literal
+  textual-literal -> character-literal | string-literal
   
-  character-literal --> ``'`` quoted-character ``'``
-  quoted-character --> escaped-character
-  quoted-character --> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
+  character-literal -> ``'`` quoted-character ``'``
+  quoted-character -> escaped-character
+  quoted-character -> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
 -->
 
 ### Regular Expression Literals

@@ -725,10 +725,10 @@ typealias-assignment --> ``=`` type
 
 <!--
   Old grammar:
-  typealias-declaration --> typealias-head typealias-assignment
-  typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
-  typealias-name --> identifier
-  typealias-assignment --> ``=`` type
+  typealias-declaration -> typealias-head typealias-assignment
+  typealias-head -> ``typealias`` typealias-name type-inheritance-clause-OPT
+  typealias-name -> identifier
+  typealias-assignment -> ``=`` type
 -->
 
 ## Function Declaration
@@ -1872,15 +1872,15 @@ raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
   old-grammar
   Grammar of an enumeration declaration
   
-  enum-declaration --> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
-  enum-name --> identifier
-  enum-body --> ``{`` declarations-OPT ``}``
+  enum-declaration -> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
+  enum-name -> identifier
+  enum-body -> ``{`` declarations-OPT ``}``
   
-  enum-member-declaration --> attribute-list-OPT ``case`` enumerator-list
-  enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-  enumerator --> enumerator-name tuple-type-OPT
-  enumerator-name --> identifier
-  raw-value-assignment --> ``=`` literal
+  enum-member-declaration -> attribute-list-OPT ``case`` enumerator-list
+  enumerator-list -> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
+  enumerator -> enumerator-name tuple-type-OPT
+  enumerator-name -> identifier
+  raw-value-assignment -> ``=`` literal
 -->
 
 ## Structure Declaration
@@ -2549,9 +2549,9 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   that are related to the type of ``Self``, such as a type of data stored in a
   collection or the node and edge types of a graph." Is this still true?
   
-  --> If we expand the discussion here,
-  --> add a link from Types_SelfType
-  --> to give more details about Self in protocols.
+    -> If we expand the discussion here,
+    -> add a link from Types_SelfType
+    -> to give more details about Self in protocols.
   
   NOTES from Doug:
   At one point, Self was an associated type, but that's the wrong modeling of
