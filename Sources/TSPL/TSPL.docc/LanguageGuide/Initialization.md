@@ -2719,7 +2719,7 @@ class SomeClass {
         init() {}
      }
   !$ error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
-  !! -->
+  !! }
   !! ^
   !$ note: 'required' initializer is declared in superclass here
   !!    required init(i: Int) {}
@@ -2741,7 +2741,7 @@ class SomeClass {
         init(s: String) {}
      }
   !$ error: 'required' initializer 'init(i:)' must be provided by subclass of 'C'
-  !! -->
+  !! }
   !! ^
   !$ note: 'required' initializer is declared in superclass here
   !!    required convenience init(i: Int) {
