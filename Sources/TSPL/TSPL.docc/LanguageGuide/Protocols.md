@@ -2229,9 +2229,9 @@ which has two optional requirements:
   ```swifttest
   >> import Foundation
   -> @objc protocol CounterDataSource {
-        @objc optional func increment(forCount count: Int) -> Int
-        @objc optional var fixedIncrement: Int { get }
-     }
+  ->    @objc optional func increment(forCount count: Int) -> Int
+  ->    @objc optional var fixedIncrement: Int { get }
+  -> }
   ```
 -->
 
@@ -2718,7 +2718,7 @@ print(differentNumbers.allEqual())
   TODO: Other things to be included
   ---------------------------------
   Class-only protocols
-  @obj-c protocols
+  Protocols marked @objc
   Standard-library protocols such as Sequence, Equatable etc.?
   Show how to make a custom type conform to Boolean or some other protocol
   Show a protocol being used by an enumeration

@@ -305,8 +305,7 @@ print(manager.importer.filename)
 > there's no guarantee that the property will be initialized only once.
 
 <!--
-  6/19/14, 10:54 PM [Contributor 7746]:
-  @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
+  6/19/14, 10:54 PM [Contributor 7746]: @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
 -->
 
 ### Stored Properties and Instance Variables
@@ -1035,9 +1034,9 @@ print(rectangle.height)
   
   ```swifttest
   -> struct SmallRectangle {
-         @TwelveOrLess var height: Int
-         @TwelveOrLess var width: Int
-     }
+  ->     @TwelveOrLess var height: Int
+  ->     @TwelveOrLess var width: Int
+  -> }
   ---
   -> var rectangle = SmallRectangle()
   -> print(rectangle.height)
@@ -1226,9 +1225,9 @@ print(zeroRectangle.height, zeroRectangle.width)
   
   ```swifttest
   -> struct ZeroRectangle {
-         @SmallNumber var height: Int
-         @SmallNumber var width: Int
-     }
+  ->     @SmallNumber var height: Int
+  ->     @SmallNumber var width: Int
+  -> }
   ---
   -> var zeroRectangle = ZeroRectangle()
   -> print(zeroRectangle.height, zeroRectangle.width)
@@ -1290,9 +1289,9 @@ print(unitRectangle.height, unitRectangle.width)
   
   ```swifttest
   -> struct UnitRectangle {
-         @SmallNumber var height: Int = 1
-         @SmallNumber var width: Int = 1
-     }
+  ->     @SmallNumber var height: Int = 1
+  ->     @SmallNumber var width: Int = 1
+  -> }
   ---
   -> var unitRectangle = UnitRectangle()
   -> print(unitRectangle.height, unitRectangle.width)
@@ -1356,9 +1355,9 @@ print(narrowRectangle.height, narrowRectangle.width)
   
   ```swifttest
   -> struct NarrowRectangle {
-         @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
-         @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
-     }
+  ->     @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+  ->     @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+  -> }
   ---
   -> var narrowRectangle = NarrowRectangle()
   -> print(narrowRectangle.height, narrowRectangle.width)
@@ -1436,9 +1435,9 @@ print(mixedRectangle.height)
   
   ```swifttest
   -> struct MixedRectangle {
-         @SmallNumber var height: Int = 1
-         @SmallNumber(maximum: 9) var width: Int = 2
-     }
+  ->     @SmallNumber var height: Int = 1
+  ->     @SmallNumber(maximum: 9) var width: Int = 2
+  -> }
   ---
   -> var mixedRectangle = MixedRectangle()
   -> print(mixedRectangle.height)
@@ -1542,8 +1541,8 @@ print(someStructure.$someNumber)
          }
      }
   -> struct SomeStructure {
-         @SmallNumber var someNumber: Int
-     }
+  ->     @SmallNumber var someNumber: Int
+  -> }
   -> var someStructure = SomeStructure()
   ---
   -> someStructure.someNumber = 4
@@ -1613,8 +1612,8 @@ struct SizedRectangle {
      }
   ---
   -> struct SizedRectangle {
-         @SmallNumber var height: Int
-         @SmallNumber var width: Int
+  ->     @SmallNumber var height: Int
+  ->     @SmallNumber var width: Int
   ---
          mutating func resize(to size: Size) -> Bool {
              switch size {
@@ -1726,7 +1725,7 @@ func someFunction() {
   
   ```swifttest
   -> func someFunction() {
-         @SmallNumber var myNumber: Int = 0
+  ->     @SmallNumber var myNumber: Int = 0
   ---
          myNumber = 10
          // now myNumber is 10

@@ -1679,11 +1679,11 @@ c.observe(\.someProperty) { object, change in
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
-         @objc dynamic var someProperty: Int
-         init(someProperty: Int) {
-             self.someProperty = someProperty
-         }
-     }
+  ->     @objc dynamic var someProperty: Int
+  ->     init(someProperty: Int) {
+  ->         self.someProperty = someProperty
+  ->     }
+  -> }
   ---
   -> let c = SomeClass(someProperty: 10)
   >> let r0 =
@@ -2077,9 +2077,9 @@ let selectorForPropertyGetter = #selector(getter: SomeClass.property)
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
-         @objc let property: String
+  ->     @objc let property: String
   ---
-         @objc(doSomethingWithInt:)
+  ->     @objc(doSomethingWithInt:)
          func doSomething(_ x: Int) { }
   ---
          init(property: String) {
@@ -2124,7 +2124,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
   >>     }
   >> }
   -> extension SomeClass {
-         @objc(doSomethingWithString:)
+  ->     @objc(doSomethingWithString:)
          func doSomething(_ x: String) { }
      }
   -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
@@ -2199,7 +2199,7 @@ if let value = c.value(forKey: keyPath) {
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
-        @objc var someProperty: Int
+  ->    @objc var someProperty: Int
         init(someProperty: Int) {
             self.someProperty = someProperty
         }

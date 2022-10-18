@@ -506,7 +506,7 @@ case .suppressed:
          print("Generate a default mirror for all ancestor classes.")
      case .suppressed:
          print("Suppress the representation of all ancestor classes.")
-     @unknown default:
+  -> @unknown default:
          print("Use a representation that was unknown when this code was compiled.")
      }
   <- Generate a default mirror for all ancestor classes.

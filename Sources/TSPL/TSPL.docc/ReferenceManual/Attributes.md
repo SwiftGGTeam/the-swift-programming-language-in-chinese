@@ -1056,13 +1056,13 @@ class ExampleClass: NSObject {
   ```swifttest
   >> import Foundation
   -> class ExampleClass: NSObject {
-        @objc var enabled: Bool {
-           @objc(isEnabled) get {
-              // Return the appropriate value
+  ->    @objc var enabled: Bool {
+  ->       @objc(isEnabled) get {
+  ->          // Return the appropriate value
   >>          return true
-           }
-        }
-     }
+  ->       }
+  ->    }
+  -> }
   ```
 -->
 
@@ -1248,16 +1248,16 @@ struct SomeStruct {
      }
   ---
   -> struct SomeStruct {
-         // Uses init()
-         @SomeWrapper var a: Int
+  ->     // Uses init()
+  ->     @SomeWrapper var a: Int
   ---
-         // Uses init(wrappedValue:)
-         @SomeWrapper var b = 10
+  ->     // Uses init(wrappedValue:)
+  ->     @SomeWrapper var b = 10
   ---
-         // Both use init(wrappedValue:custom:)
-         @SomeWrapper(custom: 98.7) var c = 30
-         @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
-     }
+  ->     // Both use init(wrappedValue:custom:)
+  ->     @SomeWrapper(custom: 98.7) var c = 30
+  ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+  -> }
   ```
 -->
 
@@ -1274,9 +1274,9 @@ struct SomeStruct {
   which currently can't have a property wrapper.
   It would look like this:
   
-  @SomeWrapper var e
-  e = 20  // Uses init(wrappedValue:)
-  e = 30  // Uses the property setter
+  -> @SomeWrapper var e
+  -> e = 20  // Uses init(wrappedValue:)
+  -> e = 30  // Uses the property setter
 -->
 
 The *projected value* for a wrapped property is a second value
@@ -1330,8 +1330,8 @@ s.$x.wrapper  // WrapperWithProjection value
   }
   ---
   -> struct SomeStruct {
-         @WrapperWithProjection var x = 123
-     }
+  ->     @WrapperWithProjection var x = 123
+  -> }
   -> let s = SomeStruct()
   >> _ =
   -> s.x           // Int value
@@ -2008,7 +2008,7 @@ that inherits from `NSManagedObject`.
          var value: Int = -1
          init() { self.value = 0 }
      }
-     @requires_stored_property_inits class NoDefaultValue {
+  -> @requires_stored_property_inits class NoDefaultValue {
          var value: Int
          init() { self.value = 0 }
      }
@@ -2181,7 +2181,7 @@ one of the following arguments:
   The function value carries no context and uses the C calling convention.
 
 <!--
-  @convention(thin) is private, even though it doesn't have an underscore
+  Note: @convention(thin) is private, even though it doesn't have an underscore
   https://forums.swift.org/t/12087/6
 -->
 
