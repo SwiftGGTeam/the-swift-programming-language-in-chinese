@@ -316,19 +316,18 @@ you'll get compile-time error instead of introducing a bug.
 >     return ["IMG001", "IMG99", "IMG0404"]
 > }
 > ```
-> 
-> 
-> <!--
-  > - test: `sleep-in-toy-code`
-  > 
-  > ```swifttest
-  > >> struct Data {}  // Instead of actually importing Foundation
-  > -> func listPhotos(inGallery name: String) async throws -> [String] {
-  >        try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
-  >        return ["IMG001", "IMG99", "IMG0404"]
-  > }
-  > ```
-> -->
+
+<!--
+  - test: `sleep-in-toy-code`
+
+  ```swifttest
+  >> struct Data {}  // Instead of actually importing Foundation
+  -> func listPhotos(inGallery name: String) async throws -> [String] {
+         try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+         return ["IMG001", "IMG99", "IMG0404"]
+  }
+  ```
+-->
 
 <!--
   TODO either add an example or maybe a short section

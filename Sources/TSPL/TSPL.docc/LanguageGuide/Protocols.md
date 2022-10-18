@@ -2707,12 +2707,12 @@ print(differentNumbers.allEqual())
 > Note: If a conforming type satisfies the requirements for multiple constrained extensions
 > that provide implementations for the same method or property,
 > Swift uses the implementation corresponding to the most specialized constraints.
-> 
-> <!--
-  > TODO: It would be great to pull this out of a note,
-  > but we should wait until we have a better narrative that shows how this
-  > works with some examples.
-> -->
+
+<!--
+  TODO: It would be great to pull this out of a note,
+  but we should wait until we have a better narrative that shows how this
+  works with some examples.
+-->
 
 <!--
   TODO: Other things to be included
