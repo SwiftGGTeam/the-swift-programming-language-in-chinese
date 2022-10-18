@@ -2,7 +2,7 @@
 
 # About the Language Reference
 
-Read the notation used for the formal grammar.
+Read the notation that the formal grammar uses.
 
 This part of the book describes the formal grammar of the Swift programming language.
 The grammar described here is intended to help you understand the language in more
