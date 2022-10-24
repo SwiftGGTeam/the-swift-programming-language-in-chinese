@@ -1,5 +1,3 @@
-
-
 # Nested Types
 
 Define one data type inside of another data type.
@@ -65,7 +63,6 @@ struct BlackjackCard {
     }
 }
 ```
-
 
 <!--
   - test: `nestedTypes`
@@ -153,7 +150,6 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 // Prints "theAceOfSpades: suit is ♠, value is 1 or 11"
 ```
 
-
 <!--
   - test: `nestedTypes`
   
@@ -181,7 +177,6 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 // heartsSymbol is "♡"
 ```
 
-
 <!--
   - test: `nestedTypes`
   
@@ -195,7 +190,6 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 For the example above,
 this enables the names of `Suit`, `Rank`, and `Values` to be kept deliberately short,
 because their names are naturally qualified by the context in which they're defined.
-
 
 <!--
 This source file is part of the Swift.org open source project

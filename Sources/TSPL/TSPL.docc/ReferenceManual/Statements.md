@@ -1,5 +1,3 @@
-
-
 # Statements
 
 Structure groups of expressions and control their behavior.
@@ -39,7 +37,6 @@ statement --> compiler-control-statement
 statements --> statement statements-OPT
 ```
 
-
 <!--
   NOTE: Removed semicolon-statement as syntactic category,
   because, according to Doug, they're not really statements.
@@ -72,7 +69,6 @@ loop-statement --> while-statement
 loop-statement --> repeat-while-statement
 ```
 
-
 ### For-In Statement
 
 A `for`-`in` statement allows a block of code to be executed
@@ -87,7 +83,6 @@ for <#item#> in <#collection#> {
    <#statements#>
 }
 ```
-
 
 The `makeIterator()` method is called on the *collection* expression
 to obtain a value of an iterator type---that is,
@@ -108,7 +103,6 @@ Grammar of a for-in statement
 for-in-statement --> ``for`` ``case``-OPT pattern ``in`` expression where-clause-OPT code-block
 ```
 
-
 ### While Statement
 
 A `while` statement allows a block of code to be executed repeatedly,
@@ -121,7 +115,6 @@ while <#condition#> {
    <#statements#>
 }
 ```
-
 
 A `while` statement is executed as follows:
 
@@ -149,7 +142,6 @@ case-condition --> ``case`` pattern initializer
 optional-binding-condition --> ``let`` pattern initializer-OPT | ``var`` pattern initializer-OPT
 ```
 
-
 ### Repeat-While Statement
 
 A `repeat`-`while` statement allows a block of code to be executed one or more times,
@@ -162,7 +154,6 @@ repeat {
    <#statements#>
 } while <#condition#>
 ```
-
 
 A `repeat`-`while` statement is executed as follows:
 
@@ -182,7 +173,6 @@ Grammar of a repeat-while statement
 
 repeat-while-statement --> ``repeat`` code-block ``while`` expression
 ```
-
 
 ## Branch Statements
 
@@ -204,7 +194,6 @@ branch-statement --> guard-statement
 branch-statement --> switch-statement
 ```
 
-
 ### If Statement
 
 An `if` statement is used for executing code
@@ -222,7 +211,6 @@ if <#condition#> {
 }
 ```
 
-
 The second form of an `if` statement provides an additional *else clause*
 (introduced by the `else` keyword)
 and is used for executing one part of code when the condition is true
@@ -236,7 +224,6 @@ if <#condition#> {
    <#statements to execute if condition is false#>
 }
 ```
-
 
 The else clause of an `if` statement can contain another `if` statement
 to test more than one condition.
@@ -252,7 +239,6 @@ if <#condition 1#> {
 }
 ```
 
-
 The value of any condition in an `if` statement
 must be of type `Bool` or a type bridged to `Bool`.
 The condition can also be an optional binding declaration,
@@ -264,7 +250,6 @@ Grammar of an if statement
 if-statement --> ``if`` condition-list code-block else-clause-OPT
 else-clause --> ``else`` code-block | ``else`` if-statement
 ```
-
 
 ### Guard Statement
 
@@ -278,7 +263,6 @@ guard <#condition#> else {
    <#statements#>
 }
 ```
-
 
 The value of any condition in a `guard` statement
 must be of type `Bool` or a type bridged to `Bool`.
@@ -309,7 +293,6 @@ Grammar of a guard statement
 guard-statement --> ``guard`` condition-list ``else`` code-block
 ```
 
-
 ### Switch Statement
 
 A `switch` statement allows certain blocks of code to be executed
@@ -330,7 +313,6 @@ default:
     <#statements#>
 }
 ```
-
 
 The *control expression* of the `switch` statement is evaluated
 and then compared with the patterns specified in each case.
@@ -363,7 +345,6 @@ only if it's a tuple that contains two elements of the same value, such as `(1, 
 ```swift
 case let (x, y) where x == y:
 ```
-
 
 <!--
   - test: `switch-case-statement`
@@ -495,7 +476,6 @@ case .suppressed:
 // Prints "Generate a default mirror for all ancestor classes."
 ```
 
-
 <!--
   - test: `unknown-case`
   
@@ -550,7 +530,6 @@ switch-elseif-directive-clause --> elseif-directive compilation-condition switch
 switch-else-directive-clause --> else-directive switch-cases-OPT
 ```
 
-
 <!--
   The grammar above uses attributes-OPT to match what's used
   in all other places where attributes are allowed,
@@ -602,7 +581,6 @@ statement-label --> label-name ``:``
 label-name --> identifier
 ```
 
-
 ## Control Transfer Statements
 
 Control transfer statements can change the order in which code in your program is executed
@@ -620,7 +598,6 @@ control-transfer-statement --> return-statement
 control-transfer-statement --> throw-statement
 ```
 
-
 ### Break Statement
 
 A `break` statement ends program execution of a loop,
@@ -633,7 +610,6 @@ as shown below.
 break
 break <#label name#>
 ```
-
 
 When a `break` statement is followed by the name of a statement label,
 it ends program execution of the loop,
@@ -657,7 +633,6 @@ Grammar of a break statement
 break-statement --> ``break`` label-name-OPT
 ```
 
-
 ### Continue Statement
 
 A `continue` statement ends program execution of the current iteration of a loop
@@ -670,7 +645,6 @@ as shown below.
 continue
 continue <#label name#>
 ```
-
 
 When a `continue` statement is followed by the name of a statement label,
 it ends program execution of the current iteration
@@ -696,7 +670,6 @@ Grammar of a continue statement
 
 continue-statement --> ``continue`` label-name-OPT
 ```
-
 
 ### Fallthrough Statement
 
@@ -724,7 +697,6 @@ Grammar of a fallthrough statement
 fallthrough-statement --> ``fallthrough``
 ```
 
-
 ### Return Statement
 
 A `return` statement occurs in the body of a function or method definition
@@ -738,7 +710,6 @@ or it can consist of the `return` keyword followed by an expression, as shown be
 return
 return <#expression#>
 ```
-
 
 When a `return` statement is followed by an expression,
 the value of the expression is returned to the calling function or method.
@@ -765,7 +736,6 @@ Grammar of a return statement
 return-statement --> ``return`` expression-OPT
 ```
 
-
 ### Throw Statement
 
 A `throw` statement occurs in the body of a throwing function or method,
@@ -783,7 +753,6 @@ followed by an expression, as shown below.
 throw <#expression#>
 ```
 
-
 The value of the *expression* must have a type that conforms to
 the `Error` protocol.
 
@@ -796,7 +765,6 @@ Grammar of a throw statement
 
 throw-statement --> ``throw`` expression
 ```
-
 
 ## Defer Statement
 
@@ -811,7 +779,6 @@ defer {
     <#statements#>
 }
 ```
-
 
 The statements within the `defer` statement are executed
 no matter how program control is transferred.
@@ -839,7 +806,6 @@ f(x: 5)
 // Prints "End of function"
 // Prints "First defer"
 ```
-
 
 <!--
   ```swifttest
@@ -885,7 +851,6 @@ f()
 // Prints "First defer"
 ```
 
-
 <!--
   ```swifttest
   -> func f() {
@@ -908,7 +873,6 @@ Grammar of a defer statement
 
 defer-statement --> ``defer`` code-block
 ```
-
 
 ## Do Statement
 
@@ -938,7 +902,6 @@ do {
     <#statements#>
 }
 ```
-
 
 If any statement in the `do` code block throws an error,
 program control is transferred
@@ -989,7 +952,6 @@ catch-pattern-list --> catch-pattern | catch-pattern ``,`` catch-pattern-list
 catch-pattern --> pattern where-clause-OPT
 ```
 
-
 ## Compiler Control Statements
 
 Compiler control statements allow the program to change aspects of the compiler's behavior.
@@ -1006,7 +968,6 @@ compiler-control-statement --> line-control-statement
 compiler-control-statement --> diagnostic-statement
 ```
 
-
 ### Conditional Compilation Block
 
 A conditional compilation block allows code to be conditionally compiled
@@ -1022,7 +983,6 @@ A simple conditional compilation block has the following form:
 #endif
 ```
 
-
 Unlike the condition of an `if` statement,
 the *compilation condition* is evaluated at compile time.
 As a result,
@@ -1032,7 +992,6 @@ evaluates to `true` at compile time.
 The *compilation condition* can include the `true` and `false` Boolean literals,
 an identifier used with the `-D` command line flag, or any of the platform
 conditions listed in the table below.
-
 
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
@@ -1089,7 +1048,6 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 // Prints "Compiled in Swift 4.2 mode or later"
 // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 ```
-
 
 <!--
   ```swifttest
@@ -1244,7 +1202,6 @@ have the following form:
 #endif
 ```
 
-
 > Note: Each statement in the body of a conditional compilation block is parsed
 > even if it's not compiled.
 > However, there's an exception
@@ -1295,7 +1252,6 @@ swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-O
 environment --> ``simulator`` | ``macCatalyst``
 ```
 
-
 <!--
   Testing notes:
   
@@ -1324,7 +1280,6 @@ A line control statement has the following forms:
 #sourceLocation()
 ```
 
-
 The first form of a line control statement changes the values
 of the `#line`, `#file`, `#fileID`, and `#filePath`
 literal expressions, beginning with the line of code following the line control statement.
@@ -1349,7 +1304,6 @@ line-number --> A decimal integer greater than zero
 file-path --> static-string-literal
 ```
 
-
 ### Compile-Time Diagnostic Statement
 
 A compile-time diagnostic statement causes the compiler
@@ -1360,7 +1314,6 @@ A compile-time diagnostic statement has the following forms:
 #error("<#error message#>")
 #warning("<#warning message#>")
 ```
-
 
 The first form emits the *error message* as a fatal error
 and terminates the compilation process.
@@ -1379,7 +1332,6 @@ diagnostic-statement --> ``#warning`` ``(`` diagnostic-message ``)``
 
 diagnostic-message --> static-string-literal
 ```
-
 
 <!--
   - test: `good-diagnostic-statement-messages`
@@ -1439,7 +1391,6 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 }
 ```
 
-
 You use an availability condition to execute a block of code,
 depending on whether the APIs you want to use are available at runtime.
 The compiler uses the information from the availability condition
@@ -1465,7 +1416,6 @@ if #unavailable(<#platform name#> <#version#>, <#...#>) {
 }
 ```
 
-
 The `#unavailable` form is syntactic sugar that negates the condition.
 In an unavailability condition,
 the `*` argument is implicit and must not be included.
@@ -1489,7 +1439,6 @@ platform-version --> decimal-digits
 platform-version --> decimal-digits ``.`` decimal-digits
 platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
 ```
-
 
 <!--
   If you need to add a new platform to this list,
@@ -1548,7 +1497,6 @@ platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
   !$                ^
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

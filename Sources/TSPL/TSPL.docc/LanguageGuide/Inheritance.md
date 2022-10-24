@@ -1,5 +1,3 @@
-
-
 # Inheritance
 
 Subclass to add or override functionality.
@@ -55,7 +53,6 @@ class Vehicle {
 }
 ```
 
-
 <!--
   - test: `inheritance`
   
@@ -79,7 +76,6 @@ which is written as a type name followed by empty parentheses:
 let someVehicle = Vehicle()
 ```
 
-
 <!--
   - test: `inheritance`
   
@@ -96,7 +92,6 @@ a human-readable description of the vehicle's current speed:
 print("Vehicle: \(someVehicle.description)")
 // Vehicle: traveling at 0.0 miles per hour
 ```
-
 
 <!--
   - test: `inheritance`
@@ -128,7 +123,6 @@ class SomeSubclass: SomeSuperclass {
 }
 ```
 
-
 <!--
   - test: `protocolSyntax`
   
@@ -148,7 +142,6 @@ class Bicycle: Vehicle {
     var hasBasket = false
 }
 ```
-
 
 <!--
   - test: `inheritance`
@@ -177,7 +170,6 @@ let bicycle = Bicycle()
 bicycle.hasBasket = true
 ```
 
-
 <!--
   - test: `inheritance`
   
@@ -195,7 +187,6 @@ bicycle.currentSpeed = 15.0
 print("Bicycle: \(bicycle.description)")
 // Bicycle: traveling at 15.0 miles per hour
 ```
-
 
 <!--
   - test: `inheritance`
@@ -216,7 +207,6 @@ class Tandem: Bicycle {
     var currentNumberOfPassengers = 0
 }
 ```
-
 
 <!--
   - test: `inheritance`
@@ -245,7 +235,6 @@ tandem.currentSpeed = 22.0
 print("Tandem: \(tandem.description)")
 // Tandem: traveling at 22.0 miles per hour
 ```
-
 
 <!--
   - test: `inheritance`
@@ -315,7 +304,6 @@ class Train: Vehicle {
 }
 ```
 
-
 <!--
   - test: `inheritance`
   
@@ -336,7 +324,6 @@ let train = Train()
 train.makeNoise()
 // Prints "Choo Choo"
 ```
-
 
 <!--
   - test: `inheritance`
@@ -394,7 +381,6 @@ class Car: Vehicle {
 }
 ```
 
-
 <!--
   - test: `inheritance`
   
@@ -425,7 +411,6 @@ car.gear = 3
 print("Car: \(car.description)")
 // Car: traveling at 25.0 miles per hour in gear 3
 ```
-
 
 <!--
   - test: `inheritance`
@@ -471,7 +456,6 @@ class AutomaticCar: Car {
 }
 ```
 
-
 <!--
   - test: `inheritance`
   
@@ -500,7 +484,6 @@ automatic.currentSpeed = 35.0
 print("AutomaticCar: \(automatic.description)")
 // AutomaticCar: traveling at 35.0 miles per hour in gear 4
 ```
-
 
 <!--
   - test: `inheritance`
@@ -620,7 +603,6 @@ Any attempt to subclass a final class is reported as a compile-time error.
   TODO: Overriding Type Methods
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

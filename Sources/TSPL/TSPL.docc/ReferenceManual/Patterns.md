@@ -1,5 +1,3 @@
-
-
 # Patterns
 
 Match and destructure values.
@@ -46,7 +44,6 @@ pattern --> type-casting-pattern
 pattern --> expression-pattern
 ```
 
-
 ## Wildcard Pattern
 
 A *wildcard pattern* matches and ignores any value and consists of an underscore
@@ -59,7 +56,6 @@ for _ in 1...3 {
     // Do something three times.
 }
 ```
-
 
 <!--
   - test: `wildcard-pattern`
@@ -77,7 +73,6 @@ Grammar of a wildcard pattern
 wildcard-pattern --> ``_``
 ```
 
-
 ## Identifier Pattern
 
 An *identifier pattern* matches any value and binds the matched value to a
@@ -88,7 +83,6 @@ that matches the value `42` of type `Int`:
 ```swift
 let someValue = 42
 ```
-
 
 <!--
   - test: `identifier-pattern`
@@ -111,7 +105,6 @@ Grammar of an identifier pattern
 identifier-pattern --> identifier
 ```
 
-
 ## Value-Binding Pattern
 
 A *value-binding pattern* binds matched values to variable or constant names.
@@ -133,7 +126,6 @@ case let (x, y):
 }
 // Prints "The point is at (3, 2)."
 ```
-
 
 <!--
   - test: `value-binding-pattern`
@@ -158,7 +150,6 @@ Grammar of a value-binding pattern
 
 value-binding-pattern --> ``var`` pattern | ``let`` pattern
 ```
-
 
 <!--
   NOTE: We chose to call this "value-binding pattern"
@@ -194,7 +185,6 @@ for (x, 0) in points {
 }
 ```
 
-
 <!--
   - test: `tuple-pattern`
   
@@ -227,7 +217,6 @@ let (a) = 2      // a: Int = 2
 let (a): Int = 2 // a: Int = 2
 ```
 
-
 <!--
   - test: `single-element-tuple-pattern`
   
@@ -257,7 +246,6 @@ tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
 tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
 tuple-pattern-element --> pattern | identifier ``:`` pattern
 ```
-
 
 ## Enumeration Case Pattern
 
@@ -294,7 +282,6 @@ case nil:
 // Prints "Turn left"
 ```
 
-
 <!--
   - test: `enum-pattern-matching-optional`
   
@@ -319,7 +306,6 @@ Grammar of an enumeration case pattern
 enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
 ```
 
-
 ## Optional Pattern
 
 An *optional pattern* matches values wrapped in a `some(Wrapped)` case
@@ -343,7 +329,6 @@ if case let x? = someOptional {
     print(x)
 }
 ```
-
 
 <!--
   - test: `optional-pattern`
@@ -379,7 +364,6 @@ for case let number? in arrayOfOptionalInts {
 // Found a 5
 ```
 
-
 <!--
   - test: `optional-pattern-for-in`
   
@@ -401,7 +385,6 @@ Grammar of an optional pattern
 optional-pattern --> identifier-pattern ``?``
 ```
 
-
 ## Type-Casting Patterns
 
 There are two type-casting patterns, the `is` pattern and the `as` pattern.
@@ -412,7 +395,6 @@ case labels. The `is` and `as` patterns have the following form:
 is <#type#>
 <#pattern#> as <#type#>
 ```
-
 
 The `is` pattern matches a value if the type of that value at runtime is the same as
 the type specified in the right-hand side of the `is` pattern---or a subclass of that type.
@@ -436,7 +418,6 @@ type-casting-pattern --> is-pattern | as-pattern
 is-pattern --> ``is`` type
 as-pattern --> pattern ``as`` type
 ```
-
 
 ## Expression Pattern
 
@@ -466,7 +447,6 @@ default:
 }
 // Prints "(1, 2) is near the origin."
 ```
-
 
 <!--
   - test: `expression-pattern`
@@ -503,7 +483,6 @@ default:
 // Prints "The point is at (1, 2)."
 ```
 
-
 <!--
   - test: `expression-pattern`
   
@@ -527,8 +506,6 @@ Grammar of an expression pattern
 
 expression-pattern --> expression
 ```
-
-
 
 <!--
 This source file is part of the Swift.org open source project

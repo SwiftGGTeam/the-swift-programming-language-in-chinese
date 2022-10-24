@@ -1,5 +1,3 @@
-
-
 # Optional Chaining
 
 Access members of an optional value without unwrapping.
@@ -55,7 +53,6 @@ class Residence {
 }
 ```
 
-
 <!--
   - test: `optionalChainingIntro, optionalChainingIntroAssert`
   
@@ -83,7 +80,6 @@ In the code below, `john` has a `residence` property value of `nil`:
 let john = Person()
 ```
 
-
 <!--
   - test: `optionalChainingIntro, optionalChainingIntroAssert`
   
@@ -101,7 +97,6 @@ because there's no `residence` value to unwrap:
 let roomCount = john.residence!.numberOfRooms
 // this triggers a runtime error
 ```
-
 
 <!--
   - test: `optionalChainingIntroAssert`
@@ -129,7 +124,6 @@ if let roomCount = john.residence?.numberOfRooms {
 }
 // Prints "Unable to retrieve the number of rooms."
 ```
-
 
 <!--
   - test: `optionalChainingIntro`
@@ -168,7 +162,6 @@ so that it no longer has a `nil` value:
 john.residence = Residence()
 ```
 
-
 <!--
   - test: `optionalChainingIntro`
   
@@ -190,7 +183,6 @@ if let roomCount = john.residence?.numberOfRooms {
 }
 // Prints "John's residence has 1 room(s)."
 ```
-
 
 <!--
   - test: `optionalChainingIntro`
@@ -229,7 +221,6 @@ class Person {
 }
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -264,7 +255,6 @@ class Residence {
     var address: Address?
 }
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -319,7 +309,6 @@ class Room {
 }
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -353,7 +342,6 @@ class Address {
     }
 }
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -402,7 +390,6 @@ if let roomCount = john.residence?.numberOfRooms {
 // Prints "Unable to retrieve the number of rooms."
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -428,7 +415,6 @@ someAddress.buildingNumber = "29"
 someAddress.street = "Acacia Road"
 john.residence?.address = someAddress
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -470,7 +456,6 @@ func createAddress() -> Address {
 john.residence?.address = createAddress()
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -509,7 +494,6 @@ func printNumberOfRooms() {
 }
 ```
 
-
 <!--
   - test: `optionalChainingCallouts`
   
@@ -544,7 +528,6 @@ if john.residence?.printNumberOfRooms() != nil {
 // Prints "It was not possible to print the number of rooms."
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -573,7 +556,6 @@ if (john.residence?.address = someAddress) != nil {
 }
 // Prints "It was not possible to set the address."
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -614,7 +596,6 @@ if let firstRoomName = john.residence?[0].name {
 // Prints "Unable to retrieve the first room name."
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -638,7 +619,6 @@ Similarly, you can try to set a new value through a subscript with optional chai
 ```swift
 john.residence?[0] = Room(name: "Bathroom")
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -668,7 +648,6 @@ if let firstRoomName = john.residence?[0].name {
 }
 // Prints "The first room name is Living Room."
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -702,7 +681,6 @@ testScores["Bev"]?[0] += 1
 testScores["Brian"]?[0] = 72
 // the "Dave" array is now [91, 82, 84] and the "Bev" array is now [80, 94, 81]
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -767,7 +745,6 @@ if let johnsStreet = john.residence?.address?.street {
 // Prints "Unable to retrieve the address."
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -809,7 +786,6 @@ if let johnsStreet = john.residence?.address?.street {
 }
 // Prints "John's street name is Laurel Street."
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -853,7 +829,6 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 // Prints "John's building identifier is The Larches."
 ```
 
-
 <!--
   - test: `optionalChaining`
   
@@ -879,7 +854,6 @@ if let beginsWithThe =
 }
 // Prints "John's building identifier begins with "The"."
 ```
-
 
 <!--
   - test: `optionalChaining`
@@ -908,7 +882,6 @@ if let beginsWithThe =
   This can then be tied in to a revised description of how
   the sugar for optional protocol requirements works.
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

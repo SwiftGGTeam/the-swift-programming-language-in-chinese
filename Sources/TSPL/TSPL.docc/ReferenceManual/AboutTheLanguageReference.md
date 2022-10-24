@@ -1,5 +1,3 @@
-
-
 # About the Language Reference
 
 Read the notation that the formal grammar uses.
@@ -40,7 +38,6 @@ Grammar of a getter-setter block
 getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}`` | ``{`` setter-clause getter-clause ``}``
 ```
 
-
 This definition indicates that a getter-setter block can consist of a getter clause
 followed by an optional setter clause, enclosed in braces,
 *or* a setter clause followed by a getter clause, enclosed in braces.
@@ -54,11 +51,9 @@ getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
 getter-setter-block --> ``{`` setter-clause getter-clause ``}``
 ```
 
-
 *getter-setter-block* → `{` *getter-clause* *setter-clause?* `}`
 
 *getter-setter-block* → `{` *setter-clause* *getter-clause* `}`
-
 
 <!--
 This source file is part of the Swift.org open source project

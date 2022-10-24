@@ -1,5 +1,3 @@
-
-
 # Document Revision History
 
 Review the recent changes to this book.
@@ -786,7 +784,6 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
-
 
 <!--
 This source file is part of the Swift.org open source project

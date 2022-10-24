@@ -1,5 +1,3 @@
-
-
 # Enumerations
 
 Model custom types that define a list of possible values.
@@ -51,7 +49,6 @@ enum SomeEnumeration {
 }
 ```
 
-
 <!--
   - test: `enums`
   
@@ -72,7 +69,6 @@ enum CompassPoint {
     case west
 }
 ```
-
 
 <!--
   - test: `enums`
@@ -109,7 +105,6 @@ enum Planet {
 }
 ```
 
-
 <!--
   - test: `enums`
   
@@ -131,7 +126,6 @@ so that they read as self-evident:
 var directionToHead = CompassPoint.west
 ```
 
-
 <!--
   - test: `enums`
   
@@ -148,7 +142,6 @@ you can set it to a different `CompassPoint` value using a shorter dot syntax:
 ```swift
 directionToHead = .east
 ```
-
 
 <!--
   - test: `enums`
@@ -180,7 +173,6 @@ case .west:
 }
 // Prints "Watch out for penguins"
 ```
-
 
 <!--
   - test: `enums`
@@ -232,7 +224,6 @@ default:
 // Prints "Mostly harmless"
 ```
 
-
 <!--
   - test: `enums`
   
@@ -267,7 +258,6 @@ print("\(numberOfChoices) beverages available")
 // Prints "3 beverages available"
 ```
 
-
 <!--
   - test: `enums`
   
@@ -298,7 +288,6 @@ for beverage in Beverage.allCases {
 // tea
 // juice
 ```
-
 
 <!--
   - test: `enums`
@@ -348,13 +337,11 @@ These are followed by a check digit to verify that the code has been scanned cor
 
 ![](barcode_UPC)
 
-
 Other products are labeled with 2D barcodes in QR code format,
 which can use any ISO 8859-1 character
 and can encode a string up to 2,953 characters long:
 
 ![](barcode_QR)
-
 
 It's convenient for an inventory tracking system to store UPC barcodes
 as a tuple of four integers,
@@ -368,7 +355,6 @@ enum Barcode {
     case qrCode(String)
 }
 ```
-
 
 <!--
   - test: `enums`
@@ -399,7 +385,6 @@ You can then create new barcodes using either type:
 var productBarcode = Barcode.upc(8, 85909, 51226, 3)
 ```
 
-
 <!--
   - test: `enums`
   
@@ -417,7 +402,6 @@ You can assign the same product a different type of barcode:
 ```swift
 productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
 ```
-
 
 <!--
   - test: `enums`
@@ -453,7 +437,6 @@ case .qrCode(let productCode):
 // Prints "QR code: ABCDEFGHIJKLMNOP."
 ```
 
-
 <!--
   - test: `enums`
   
@@ -481,7 +464,6 @@ case let .qrCode(productCode):
 }
 // Prints "QR code: ABCDEFGHIJKLMNOP."
 ```
-
 
 <!--
   - test: `enums`
@@ -516,7 +498,6 @@ enum ASCIIControlCharacter: Character {
     case carriageReturn = "\r"
 }
 ```
-
 
 <!--
   - test: `rawValues`
@@ -567,7 +548,6 @@ enum Planet: Int {
 }
 ```
 
-
 <!--
   - test: `rawValues`
   
@@ -594,7 +574,6 @@ enum CompassPoint: String {
 }
 ```
 
-
 <!--
   - test: `rawValues`
   
@@ -617,7 +596,6 @@ let earthsOrder = Planet.earth.rawValue
 let sunsetDirection = CompassPoint.west.rawValue
 // sunsetDirection is "west"
 ```
-
 
 <!--
   - test: `rawValues`
@@ -647,7 +625,6 @@ This example identifies Uranus from its raw value of `7`:
 let possiblePlanet = Planet(rawValue: 7)
 // possiblePlanet is of type Planet? and equals Planet.uranus
 ```
-
 
 <!--
   - test: `rawValues`
@@ -687,7 +664,6 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 }
 // Prints "There isn't a planet at position 11"
 ```
-
 
 <!--
   - test: `rawValues`
@@ -738,7 +714,6 @@ enum ArithmeticExpression {
 }
 ```
 
-
 <!--
   - test: `recursive-enum-intro`
   
@@ -761,7 +736,6 @@ indirect enum ArithmeticExpression {
     case multiplication(ArithmeticExpression, ArithmeticExpression)
 }
 ```
-
 
 <!--
   - test: `recursive-enum`
@@ -798,7 +772,6 @@ let sum = ArithmeticExpression.addition(five, four)
 let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
 ```
 
-
 <!--
   - test: `recursive-enum`
   
@@ -830,7 +803,6 @@ print(evaluate(product))
 // Prints "18"
 ```
 
-
 <!--
   - test: `recursive-enum`
   
@@ -857,7 +829,6 @@ It evaluates an addition or multiplication
 by evaluating the expression on the left-hand side,
 evaluating the expression on the right-hand side,
 and then adding them or multiplying them.
-
 
 <!--
 This source file is part of the Swift.org open source project

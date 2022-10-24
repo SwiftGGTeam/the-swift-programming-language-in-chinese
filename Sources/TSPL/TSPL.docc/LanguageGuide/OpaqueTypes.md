@@ -1,5 +1,3 @@
-
-
 # Opaque Types
 
 Hide implementation details about a value's type.
@@ -46,7 +44,6 @@ print(smallTriangle.draw())
 // **
 // ***
 ```
-
 
 <!--
   - test: `opaque-result`
@@ -95,7 +92,6 @@ print(flippedTriangle.draw())
 // *
 ```
 
-
 <!--
   - test: `opaque-result`
   
@@ -137,7 +133,6 @@ print(joinedTriangles.draw())
 // **
 // *
 ```
-
 
 <!--
   - test: `opaque-result`
@@ -190,7 +185,6 @@ returns a type that depends on its caller:
 func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
 ```
 
-
 <!--
   From https://developer.apple.com/documentation/swift/1538951-max
   Not test code because it won't actually compile
@@ -242,7 +236,6 @@ print(trapezoid.draw())
 // **
 // *
 ```
-
 
 <!--
   - test: `opaque-result`
@@ -325,7 +318,6 @@ print(opaqueJoinedTriangles.draw())
 // *
 ```
 
-
 <!--
   - test: `opaque-result`
   
@@ -378,7 +370,6 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     return FlippedShape(shape: shape) // Error: return types don't match
 }
 ```
-
 
 <!--
   - test: `opaque-result-err`
@@ -433,7 +424,6 @@ struct FlippedShape<T: Shape>: Shape {
 }
 ```
 
-
 <!--
   - test: `opaque-result-special-flip`
   
@@ -473,7 +463,6 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
     return Array<T>(repeating: shape, count: count)
 }
 ```
-
 
 <!--
   - test: `opaque-result`
@@ -520,7 +509,6 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
     return FlippedShape(shape: shape)
 }
 ```
-
 
 <!--
   - test: `opaque-result-existential-error`
@@ -569,7 +557,6 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 }
 ```
 
-
 <!--
   - test: `opaque-result-existential-error`
   
@@ -608,7 +595,6 @@ let protoFlippedTriangle = protoFlip(smallTriangle)
 let sameThing = protoFlip(smallTriangle)
 protoFlippedTriangle == sameThing  // Error
 ```
-
 
 <!--
   - test: `opaque-result-existential-error`
@@ -671,7 +657,6 @@ protocol Container {
 extension Array: Container { }
 ```
 
-
 <!--
   - test: `opaque-result, opaque-result-existential-error`
   
@@ -702,7 +687,6 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
     return [item]
 }
 ```
-
 
 <!--
   - test: `opaque-result-existential-error`
@@ -741,7 +725,6 @@ let twelve = opaqueContainer[0]
 print(type(of: twelve))
 // Prints "Int"
 ```
-
 
 <!--
   - test: `opaque-result`
@@ -800,7 +783,6 @@ which means that the type of `twelve` is also inferred to be `Int`.
       return AnyP(p: result)
   }
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

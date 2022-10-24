@@ -1,5 +1,3 @@
-
-
 # Extensions
 
 Add functionality to an existing type.
@@ -87,7 +85,6 @@ extension SomeType {
 }
 ```
 
-
 <!--
   - test: `extensionSyntax`
   
@@ -109,7 +106,6 @@ extension SomeType: SomeProtocol, AnotherProtocol {
     // implementation of protocol requirements goes here
 }
 ```
-
 
 <!--
   - test: `extensionSyntax`
@@ -156,7 +152,6 @@ let threeFeet = 3.ft
 print("Three feet is \(threeFeet) meters")
 // Prints "Three feet is 0.914399970739201 meters"
 ```
-
 
 <!--
   - test: `extensionsComputedProperties`
@@ -207,7 +202,6 @@ let aMarathon = 42.km + 195.m
 print("A marathon is \(aMarathon) meters long")
 // Prints "A marathon is 42195.0 meters long"
 ```
-
 
 <!--
   - test: `extensionsComputedProperties`
@@ -282,7 +276,6 @@ struct Rect {
 }
 ```
 
-
 <!--
   - test: `extensionsInitializers`
   
@@ -311,7 +304,6 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
     size: Size(width: 5.0, height: 5.0))
 ```
 
-
 <!--
   - test: `extensionsInitializers`
   
@@ -334,7 +326,6 @@ extension Rect {
     }
 }
 ```
-
 
 <!--
   - test: `extensionsInitializers`
@@ -361,7 +352,6 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
-
 
 <!--
   - test: `extensionsInitializers`
@@ -393,7 +383,6 @@ extension Int {
 }
 ```
 
-
 <!--
   - test: `extensionsInstanceMethods`
   
@@ -423,7 +412,6 @@ to perform a task that many number of times:
 // Hello!
 // Hello!
 ```
-
 
 <!--
   - test: `extensionsInstanceMethods`
@@ -458,7 +446,6 @@ var someInt = 3
 someInt.square()
 // someInt is now 9
 ```
-
 
 <!--
   - test: `extensionsInstanceMethods`
@@ -507,7 +494,6 @@ extension Int {
 746381295[8]
 // returns 7
 ```
-
 
 <!--
   - test: `extensionsSubscripts`
@@ -562,7 +548,6 @@ as if the number had been padded with zeros to the left:
 0746381295[9]
 ```
 
-
 <!--
   - test: `extensionsSubscripts`
   
@@ -606,7 +591,6 @@ extension Int {
     }
 }
 ```
-
 
 <!--
   - test: `extensionsNestedTypes`
@@ -660,7 +644,6 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 // Prints "+ + - 0 - 0 + "
 ```
 
-
 <!--
   - test: `extensionsNestedTypes`
   
@@ -698,7 +681,6 @@ and prints an appropriate description.
 > Because of this, all of the `Int.Kind` case values
 > can be written in shorthand form inside the `switch` statement,
 > such as `.negative` rather than `Int.Kind.negative`.
-
 
 <!--
 This source file is part of the Swift.org open source project

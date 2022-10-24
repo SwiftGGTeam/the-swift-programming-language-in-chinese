@@ -1,5 +1,3 @@
-
-
 # Declarations
 
 Introduce types, operators, variables, and other names and constructs.
@@ -39,7 +37,6 @@ declaration --> precedence-group-declaration
 declarations --> declaration declarations-OPT
 ```
 
-
 ## Top-Level Code
 
 The top-level code in a Swift source file consists of zero or more statements,
@@ -75,7 +72,6 @@ Grammar of a top-level declaration
 top-level-declaration --> statements-OPT
 ```
 
-
 ## Code Blocks
 
 A *code block* is used by a variety of declarations and control structures
@@ -87,7 +83,6 @@ It has the following form:
    <#statements#>
 }
 ```
-
 
 The *statements* inside a code block include declarations,
 expressions, and other kinds of statements and are executed in order
@@ -107,7 +102,6 @@ Grammar of a code block
 code-block --> ``{`` statements-OPT ``}``
 ```
 
-
 ## Import Declaration
 
 An *import declaration* lets you access symbols
@@ -118,7 +112,6 @@ it consists of the `import` keyword followed by a module name:
 ```swift
 import <#module#>
 ```
-
 
 Providing more detail limits which symbols are imported ---
 you can specify a specific submodule
@@ -133,7 +126,6 @@ import <#import kind#> <#module#>.<#symbol name#>
 import <#module#>.<#submodule#>
 ```
 
-
 <!--
   TODO: Need to add more to this section.
 -->
@@ -147,7 +139,6 @@ import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol``
 import-path --> identifier | identifier ``.`` import-path
 ```
 
-
 ## Constant Declaration
 
 A *constant declaration* introduces a constant named value into your program.
@@ -156,7 +147,6 @@ Constant declarations are declared using the `let` keyword and have the followin
 ```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
-
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
@@ -186,7 +176,6 @@ in the initializer *expression*.
 let (firstNumber, secondNumber) = (10, 42)
 ```
 
-
 <!--
   - test: `constant-decl`
   
@@ -206,7 +195,6 @@ print("The first number is \(firstNumber).")
 print("The second number is \(secondNumber).")
 // Prints "The second number is 42."
 ```
-
 
 <!--
   - test: `constant-decl`
@@ -259,7 +247,6 @@ pattern-initializer --> pattern initializer-OPT
 initializer --> ``=`` expression
 ```
 
-
 ## Variable Declaration
 
 A *variable declaration* introduces a variable named value into your program
@@ -285,7 +272,6 @@ The following form declares a stored variable or stored variable property:
 ```swift
 var <#variable name#>: <#type#> = <#expression#>
 ```
-
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
@@ -321,7 +307,6 @@ var <#variable name#>: <#type#> {
    }
 }
 ```
-
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, enumeration, or extension declaration.
@@ -365,7 +350,6 @@ var <#variable name#>: <#type#> = <#expression#> {
    }
 }
 ```
-
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
@@ -475,7 +459,6 @@ newAndOld.x = 200
 // Prints "Old value 12 - new value 200"
 ```
 
-
 <!--
   - test: `didSet-calls-superclass-getter`
   
@@ -576,7 +559,6 @@ willSet-clause --> attributes-OPT ``willSet`` setter-name-OPT code-block
 didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 ```
 
-
 <!--
   NOTE: Type annotations are required for computed properties -- the
   types of those properties aren't computed/inferred.
@@ -590,7 +572,6 @@ Type alias declarations are declared using the `typealias` keyword and have the 
 ```swift
 typealias <#name#> = <#existing type#>
 ```
-
 
 After a type alias is declared, the aliased *name* can be used
 instead of the *existing type* everywhere in your program.
@@ -612,7 +593,6 @@ var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
 ```
 
-
 <!--
   - test: `typealias-with-generic`
   
@@ -632,7 +612,6 @@ For example:
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 ```
-
 
 <!--
   - test: `typealias-with-generic-constraint`
@@ -654,7 +633,6 @@ has the same generic parameters and constraints as `Dictionary`.
 ```swift
 typealias Diccionario = Dictionary
 ```
-
 
 <!--
   - test: `typealias-using-shorthand`
@@ -693,7 +671,6 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 }
 ```
 
-
 <!--
   - test: `typealias-in-protocol`
   
@@ -724,7 +701,6 @@ typealias-name --> identifier
 typealias-assignment --> ``=`` type
 ```
 
-
 <!--
   Old grammar:
   typealias-declaration -> typealias-head typealias-assignment
@@ -746,7 +722,6 @@ func <#function name#>(<#parameters#>) -> <#return type#> {
 }
 ```
 
-
 If the function has a return type of `Void`,
 the return type can be omitted as follows:
 
@@ -755,7 +730,6 @@ func <#function name#>(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 The type of each parameter must be included ---
 it can't be inferred.
@@ -809,7 +783,6 @@ The simplest entry in a parameter list has the following form:
 <#parameter name#>: <#parameter type#>
 ```
 
-
 A parameter has a name,
 which is used within the function body,
 as well as an argument label,
@@ -822,7 +795,6 @@ For example:
 func f(x: Int, y: Int) -> Int { return x + y }
 f(x: 1, y: 2) // both x and y are labeled
 ```
-
 
 <!--
   - test: `default-parameter-names`
@@ -848,7 +820,6 @@ with one of the following forms:
 _ <#parameter name#>: <#parameter type#>
 ```
 
-
 A name before the parameter name
 gives the parameter an explicit argument label,
 which can be different from the parameter name.
@@ -863,7 +834,6 @@ The corresponding argument must have no label in function or method calls.
 func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
 repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 ```
-
 
 <!--
   - test: `overridden-parameter-names`
@@ -934,7 +904,6 @@ func someFunction(a: inout Int) -> () -> Int {
 }
 ```
 
-
 <!--
   - test: `explicit-capture-for-inout`
   
@@ -968,7 +937,6 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
     queue.sync {}
 }
 ```
-
 
 <!--
   - test: `cant-pass-inout-aliasing`
@@ -1038,7 +1006,6 @@ _ : <#parameter type#>
 <#parameter name#>: <#parameter type#> = <#default argument value#>
 ```
 
-
 An underscore (`_`) parameter
 is explicitly ignored and can't be accessed within the body of the function.
 
@@ -1064,7 +1031,6 @@ f()       // Valid, uses default value
 f(x: 7)   // Valid, uses the value provided
 f(7)      // Invalid, missing argument label
 ```
-
 
 <!--
   - test: `default-args-and-labels`
@@ -1211,7 +1177,6 @@ callable.callAsFunction(4, scale: 2)
 // Both function calls print 208.
 ```
 
-
 <!--
   - test: `call-as-function`
   
@@ -1253,7 +1218,6 @@ let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
-
 <!--
   - test: `call-as-function-err`
   
@@ -1290,7 +1254,6 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 }
 ```
 
-
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
@@ -1322,7 +1285,6 @@ func someFunction(callback: () throws -> Void) rethrows {
     try callback()
 }
 ```
-
 
 <!--
   - test: `rethrows`
@@ -1359,7 +1321,6 @@ func someFunction(callback: () throws -> Void) rethrows {
     }
 }
 ```
-
 
 <!--
   - test: `double-negative-rethrows`
@@ -1422,7 +1383,6 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
    <#statements#>
 }
 ```
-
 
 Calls to an asynchronous function or method
 must be wrapped in an `await` expression ---
@@ -1503,7 +1463,6 @@ local-parameter-name --> identifier
 default-argument-clause --> ``=`` expression
 ```
 
-
 <!--
   NOTE: Code block is optional in the context of a protocol.
   Everywhere else, it's required.
@@ -1556,7 +1515,6 @@ enum <#enumeration name#>: <#adopted protocols#> {
 }
 ```
 
-
 Enumerations declared in this form are sometimes called *discriminated unions*
 in other programming languages.
 
@@ -1583,7 +1541,6 @@ let f = Number.integer
 // Apply f to create an array of Number instances with integer values
 let evenInts: [Number] = [0, 2, 4, 6].map(f)
 ```
-
 
 <!--
   - test: `enum-case-as-function`
@@ -1638,7 +1595,6 @@ enum Tree<T> {
     indirect case node(value: T, left: Tree, right: Tree)
 }
 ```
-
 
 <!--
   - test: `indirect-enum`
@@ -1706,7 +1662,6 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-
 In this form, each case block consists of the `case` keyword,
 followed by one or more enumeration cases, separated by commas.
 Unlike the cases in the first form, each case has an underlying
@@ -1740,7 +1695,6 @@ enum ExampleEnum: Int {
 }
 ```
 
-
 <!--
   - test: `raw-value-enum`
   
@@ -1765,7 +1719,6 @@ enum GamePlayMode: String {
     case cooperative, individual, competitive
 }
 ```
-
 
 <!--
   - test: `raw-value-enum-implicit-string-values`
@@ -1855,7 +1808,6 @@ raw-value-assignment --> ``=`` raw-value-literal
 raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
 ```
 
-
 <!--
   NOTE: The two types of enums are sufficiently different enough to warrant separating
   the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
@@ -1895,7 +1847,6 @@ struct <#structure name#>: <#adopted protocols#> {
    <#declarations#>
 }
 ```
-
 
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
@@ -1946,7 +1897,6 @@ struct-members --> struct-member struct-members-OPT
 struct-member --> declaration | compiler-control-statement
 ```
 
-
 ## Class Declaration
 
 A *class declaration* introduces a named class type into your program.
@@ -1957,7 +1907,6 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
    <#declarations#>
 }
 ```
-
 
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
@@ -2041,7 +1990,6 @@ class-members --> class-member class-members-OPT
 class-member --> declaration | compiler-control-statement
 ```
 
-
 ## Actor Declaration
 
 An *actor declaration* introduces a named actor type into your program.
@@ -2052,7 +2000,6 @@ actor <#actor name#>: <#adopted protocols#> {
     <#declarations#>
 }
 ```
-
 
 The body of an actor contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
@@ -2132,7 +2079,6 @@ actor-members --> actor-member actor-members-OPT
 actor-member --> declaration | compiler-control-statement
 ```
 
-
 ## Protocol Declaration
 
 A *protocol declaration* introduces a named protocol type into your program.
@@ -2144,7 +2090,6 @@ protocol <#protocol name#>: <#inherited protocols#> {
    <#protocol member declarations#>
 }
 ```
-
 
 The body of a protocol contains zero or more *protocol member declarations*,
 which describe the conformance requirements that any type adopting the protocol must fulfill.
@@ -2220,7 +2165,6 @@ enum MyEnum: SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `enum-case-satisfy-protocol-requirement`
   
@@ -2246,7 +2190,6 @@ protocol SomeProtocol: AnyObject {
     /* Protocol members go here */
 }
 ```
-
 
 <!--
   - test: `protocol-declaration`
@@ -2293,7 +2236,6 @@ protocol-member-declaration --> protocol-associated-type-declaration
 protocol-member-declaration --> typealias-declaration
 ```
 
-
 ### Protocol Property Declaration
 
 Protocols declare that conforming types must implement a property
@@ -2305,7 +2247,6 @@ declaration:
 ```swift
 var <#property name#>: <#type#> { get set }
 ```
-
 
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
@@ -2376,7 +2317,6 @@ Grammar of a protocol property declaration
 protocol-property-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
 ```
 
-
 ### Protocol Method Declaration
 
 Protocols declare that conforming types must implement a method
@@ -2410,7 +2350,6 @@ Grammar of a protocol method declaration
 protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT
 ```
 
-
 ### Protocol Initializer Declaration
 
 Protocols declare that conforming types must implement an initializer
@@ -2436,7 +2375,6 @@ protocol-initializer-declaration --> initializer-head generic-parameter-clause-O
 protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT
 ```
 
-
 ### Protocol Subscript Declaration
 
 Protocols declare that conforming types must implement a subscript
@@ -2446,7 +2384,6 @@ Protocol subscript declarations have a special form of a subscript declaration:
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
-
 
 Subscript declarations only declare the minimum getter and setter implementation
 requirements for types that conform to the protocol.
@@ -2474,7 +2411,6 @@ Grammar of a protocol subscript declaration
 
 protocol-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
 ```
-
 
 ### Protocol Associated Type Declaration
 
@@ -2505,7 +2441,6 @@ protocol SubProtocolA: SomeProtocol {
 // This syntax is preferred.
 protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 ```
-
 
 <!--
   - test: `protocol-associatedtype`
@@ -2609,7 +2544,6 @@ Grammar of a protocol associated type declaration
 protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT generic-where-clause-OPT
 ```
 
-
 ## Initializer Declaration
 
 An *initializer declaration* introduces an initializer for a class,
@@ -2631,7 +2565,6 @@ init(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 A designated initializer of a class initializes
 all of the class's properties directly. It can't call any other initializers
@@ -2655,7 +2588,6 @@ convenience init(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 Convenience initializers can delegate the initialization process to another
 convenience initializer or to one of the class's designated initializers.
@@ -2719,7 +2651,6 @@ struct SomeStruct {
 }
 ```
 
-
 <!--
   - test: `failable`
   
@@ -2748,7 +2679,6 @@ if let actualInstance = SomeStruct(input: "Hello") {
     // initialization of 'SomeStruct' failed and the initializer returned 'nil'
 }
 ```
-
 
 <!--
   - test: `failable`
@@ -2800,7 +2730,6 @@ initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
 initializer-body --> code-block
 ```
 
-
 ## Deinitializer Declaration
 
 A *deinitializer declaration* declares a deinitializer for a class type.
@@ -2811,7 +2740,6 @@ deinit {
    <#statements#>
 }
 ```
-
 
 A deinitializer is called automatically when there are no longer any references
 to a class object, just before the class object is deallocated.
@@ -2835,7 +2763,6 @@ Grammar of a deinitializer declaration
 deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 ```
 
-
 ## Extension Declaration
 
 An *extension declaration* allows you to extend
@@ -2848,7 +2775,6 @@ extension <#type name#> where <#requirements#> {
    <#declarations#>
 }
 ```
-
 
 The body of an extension declaration contains zero or more *declarations*.
 These *declarations* can include computed properties, computed type properties,
@@ -2889,7 +2815,6 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
    <#declarations#>
 }
 ```
-
 
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
@@ -2960,7 +2885,6 @@ extension String: TitledLoggable {
 }
 ```
 
-
 <!--
   - test: `conditional-conformance`
   
@@ -3021,7 +2945,6 @@ oneAndTwo.log()
 // Prints "Pair of 'String': (one, two)"
 ```
 
-
 <!--
   - test: `conditional-conformance`
   
@@ -3047,7 +2970,6 @@ func doSomething<T: Loggable>(with x: T) {
 doSomething(with: oneAndTwo)
 // Prints "(one, two)"
 ```
-
 
 <!--
   - test: `conditional-conformance`
@@ -3106,7 +3028,6 @@ extension Array: Serializable where Element == String {
 // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
 ```
 
-
 <!--
   - test: `multiple-conformances`
   
@@ -3152,7 +3073,6 @@ extension Array: Serializable where Element: SerializableInArray {
     }
 }
 ```
-
 
 <!--
   - test: `multiple-conformances-success`
@@ -3210,7 +3130,6 @@ extension Array: TitledLoggable where Element: TitledLoggable {
 extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```
 
-
 <!--
   - test: `conditional-conformance`
   
@@ -3246,7 +3165,6 @@ extension Array: Loggable where Element: TitledLoggable { }
 extension Array: Loggable where Element: MarkedLoggable { }
 // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
 ```
-
 
 <!--
   - test: `conditional-conformance-implicit-overlap`
@@ -3339,7 +3257,6 @@ extension-members --> extension-member extension-members-OPT
 extension-member --> declaration | compiler-control-statement
 ```
 
-
 ## Subscript Declaration
 
 A *subscript* declaration allows you to add subscripting support for objects
@@ -3358,7 +3275,6 @@ subscript (<#parameters#>) -> <#return type#> {
    }
 }
 ```
-
 
 Subscript declarations can appear only in the context of a class, structure,
 enumeration, extension, or protocol declaration.
@@ -3440,7 +3356,6 @@ subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` generi
 subscript-result --> ``->`` attributes-OPT type
 ```
 
-
 ## Operator Declaration
 
 An *operator declaration* introduces a new infix, prefix,
@@ -3465,7 +3380,6 @@ The following form declares a new infix operator:
 infix operator <#operator name#>: <#precedence group#>
 ```
 
-
 An *infix operator* is a binary operator that's written between its two operands,
 such as the familiar addition operator (`+`) in the expression `1 + 2`.
 
@@ -3481,7 +3395,6 @@ The following form declares a new prefix operator:
 prefix operator <#operator name#>
 ```
 
-
 A *prefix operator* is a unary operator that's written immediately before its operand,
 such as the prefix logical NOT operator (`!`) in the expression `!a`.
 
@@ -3493,7 +3406,6 @@ The following form declares a new postfix operator:
 ```swift
 postfix operator <#operator name#>
 ```
-
 
 A *postfix operator* is a unary operator that's written immediately after its operand,
 such as the postfix forced-unwrap operator (`!`) in the expression `a!`.
@@ -3525,7 +3437,6 @@ infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-gr
 infix-operator-group --> ``:`` precedence-group-name
 ```
 
-
 ## Precedence Group Declaration
 
 A *precedence group declaration* introduces
@@ -3543,7 +3454,6 @@ precedencegroup <#precedence group name#> {
     assignment: <#assignment#>
 }
 ```
-
 
 The *lower group names* and *higher group names* lists specify
 the new precedence group's relation to existing precedence groups.
@@ -3623,7 +3533,6 @@ precedence-group-associativity --> ``associativity`` ``:`` ``none``
 precedence-group-names --> precedence-group-name | precedence-group-name ``,`` precedence-group-names
 precedence-group-name --> identifier
 ```
-
 
 ## Declaration Modifiers
 
@@ -3782,8 +3691,6 @@ mutation-modifier --> ``mutating`` | ``nonmutating``
 
 actor-isolation-modifier --> ``nonisolated``
 ```
-
-
 
 <!--
 This source file is part of the Swift.org open source project

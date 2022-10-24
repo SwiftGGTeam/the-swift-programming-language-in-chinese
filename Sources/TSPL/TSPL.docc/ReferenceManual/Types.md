@@ -1,5 +1,3 @@
-
-
 # Types
 
 Use built-in nominal and structural types.
@@ -54,7 +52,6 @@ type --> self-type
 type --> ``(`` type ``)``
 ```
 
-
 ## Type Annotation
 
 A *type annotation* explicitly specifies the type of a variable or expression.
@@ -65,7 +62,6 @@ as the following examples show:
 let someTuple: (Double, Double) = (3.14159, 2.71828)
 func someFunction(a: Int) { /* ... */ }
 ```
-
 
 <!--
   - test: `type-annotation`
@@ -89,7 +85,6 @@ Grammar of a type annotation
 type-annotation --> ``:`` attributes-OPT ``inout``-OPT type
 ```
 
-
 ## Type Identifier
 
 A *type identifier* refers to either a named type
@@ -111,7 +106,6 @@ typealias Point = (Int, Int)
 let origin: Point = (0, 0)
 ```
 
-
 <!--
   - test: `type-identifier`
   
@@ -130,7 +124,6 @@ that's declared in the `ExampleModule` module.
 var someValue: ExampleModule.MyType
 ```
 
-
 <!--
   - test: `type-identifier-dot`
   
@@ -148,7 +141,6 @@ Grammar of a type identifier
 type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
 type-name --> identifier
 ```
-
 
 ## Tuple Type
 
@@ -170,7 +162,6 @@ someTuple = (top: 4, bottom: 42) // OK: names match
 someTuple = (9, 99)              // OK: names are inferred
 someTuple = (left: 5, right: 5)  // Error: names don't match
 ```
-
 
 <!--
   - test: `tuple-type-names`
@@ -198,7 +189,6 @@ tuple-type-element --> element-name type-annotation | type
 element-name --> identifier
 ```
 
-
 ## Function Type
 
 A *function type* represents the type of a function, method, or closure
@@ -207,7 +197,6 @@ and consists of a parameter and return type separated by an arrow (`->`):
 ```swift
 (<#parameter type#>) -> <#return type#>
 ```
-
 
 The *parameter type* is comma-separated list of types.
 Because the *return type* can be a tuple type,
@@ -292,7 +281,6 @@ func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
 f = functionWithDifferentNumberOfArguments // Error
 ```
 
-
 <!--
   - test: `argument-names-err`
   
@@ -327,7 +315,6 @@ var operation: (lhs: Int, rhs: Int) -> Int     // Error
 var operation: (_ lhs: Int, _ rhs: Int) -> Int // OK
 var operation: (Int, Int) -> Int               // OK
 ```
-
 
 <!--
   - test: `omit-argument-names-in-function-type`
@@ -443,7 +430,6 @@ func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void
 }
 ```
 
-
 <!--
   - test: `memory-nonescaping-functions`
   
@@ -508,7 +494,6 @@ function-type-argument --> attributes-OPT ``inout``-OPT type | argument-label ty
 argument-label --> identifier
 ```
 
-
 <!--
   NOTE: Functions are first-class citizens in Swift,
   except for generic functions, i.e., parametric polymorphic functions.
@@ -534,14 +519,12 @@ The Swift language provides the following syntactic sugar for the Swift standard
 [<#type#>]
 ```
 
-
 In other words, the following two declarations are equivalent:
 
 ```swift
 let someArray: Array<String> = ["Alex", "Brian", "Dave"]
 let someArray: [String] = ["Alex", "Brian", "Dave"]
 ```
-
 
 <!--
   - test: `array-literal`
@@ -568,7 +551,6 @@ a three-dimensional array of integers using three sets of square brackets:
 var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 ```
 
-
 <!--
   - test: `array-3d`
   
@@ -593,7 +575,6 @@ Grammar of an array type
 array-type --> ``[`` type ``]``
 ```
 
-
 ## Dictionary Type
 
 The Swift language provides the following syntactic sugar for the Swift standard library
@@ -603,14 +584,12 @@ The Swift language provides the following syntactic sugar for the Swift standard
 [<#key type#>: <#value type#>]
 ```
 
-
 In other words, the following two declarations are equivalent:
 
 ```swift
 let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
 let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 ```
-
 
 <!--
   - test: `dictionary-literal`
@@ -649,7 +628,6 @@ Grammar of a dictionary type
 dictionary-type --> ``[`` type ``:`` type ``]``
 ```
 
-
 ## Optional Type
 
 The Swift language defines the postfix `?` as syntactic sugar for
@@ -660,7 +638,6 @@ In other words, the following two declarations are equivalent:
 var optionalInteger: Int?
 var optionalInteger: Optional<Int>
 ```
-
 
 <!--
   - test: `optional-literal`
@@ -700,7 +677,6 @@ optionalInteger = 42
 optionalInteger! // 42
 ```
 
-
 <!--
   - test: `optional-type`
   
@@ -734,7 +710,6 @@ Grammar of an optional type
 optional-type --> type ``?``
 ```
 
-
 ## Implicitly Unwrapped Optional Type
 
 The Swift language defines the postfix `!` as syntactic sugar for
@@ -750,7 +725,6 @@ the following two declarations are equivalent:
 var implicitlyUnwrappedString: String!
 var explicitlyUnwrappedString: Optional<String>
 ```
-
 
 Note that no whitespace may appear between the type and the `!`.
 
@@ -768,7 +742,6 @@ let implicitlyUnwrappedTuple: (Int, Int)!             // OK
 let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
 let implicitlyUnwrappedArray: [Int]!                  // OK
 ```
-
 
 Because implicitly unwrapped optionals
 have the same `Optional<Wrapped>` type as optional values,
@@ -796,7 +769,6 @@ Grammar of an implicitly unwrapped optional type
 implicitly-unwrapped-optional-type --> type ``!``
 ```
 
-
 ## Protocol Composition Type
 
 A *protocol composition type* defines a type that conforms to each protocol
@@ -818,7 +790,6 @@ Protocol composition types have the following form:
 ```swift
 <#Protocol 1#> & <#Protocol 2#>
 ```
-
 
 A protocol composition type allows you to specify a value whose type conforms to the requirements
 of multiple protocols without explicitly defining a new, named protocol
@@ -852,7 +823,6 @@ typealias PQ = P & Q
 typealias PQR = PQ & Q & R
 ```
 
-
 <!--
   - test: `protocol-composition-can-have-repeats`
   
@@ -872,7 +842,6 @@ protocol-composition-type --> type-identifier ``&`` protocol-composition-continu
 protocol-composition-continuation --> type-identifier | protocol-composition-type
 ```
 
-
 ## Opaque Type
 
 An *opaque type* defines a type
@@ -889,7 +858,6 @@ Opaque types have the following form:
 ```swift
 some <#constraint#>
 ```
-
 
 The *constraint* is a class type,
 protocol type,
@@ -924,7 +892,6 @@ Grammar of an opaque type
 
 opaque-type --> ``some`` type
 ```
-
 
 ## Metatype Type
 
@@ -965,7 +932,6 @@ let someInstance: SomeBaseClass = SomeSubClass()
 type(of: someInstance).printClassName()
 // Prints "SomeSubClass"
 ```
-
 
 <!--
   - test: `metatype-type`
@@ -1013,7 +979,6 @@ let metatype: AnotherSubClass.Type = AnotherSubClass.self
 let anotherInstance = metatype.init(string: "some string")
 ```
 
-
 <!--
   - test: `metatype-type`
   
@@ -1038,7 +1003,6 @@ Grammar of a metatype type
 metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
 ```
 
-
 ## Any Type
 
 The `Any` type can contain values from all other types.
@@ -1053,7 +1017,6 @@ for an instance of any of the following types:
 ```swift
 let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
 ```
-
 
 <!--
   - test: `any-type`
@@ -1080,7 +1043,6 @@ if let first = mixed.first as? String {
 }
 // Prints "The first item, 'one', is a string."
 ```
-
 
 <!--
   - test: `any-type`
@@ -1109,7 +1071,6 @@ Grammar of an Any type
 
 any-type --> ``Any``
 ```
-
 
 ## Self Type
 
@@ -1186,7 +1147,6 @@ print(type(of: z.f()))
 // Prints "Subclass"
 ```
 
-
 <!--
   - test: `self-gives-dynamic-type`
   
@@ -1236,7 +1196,6 @@ Grammar of a Self type
 self-type --> ``Self``
 ```
 
-
 ## Type Inheritance Clause
 
 A *type inheritance clause* is used to specify which class a named type inherits from
@@ -1272,7 +1231,6 @@ type-inheritance-clause --> ``:`` type-inheritance-list
 type-inheritance-list --> attributes-OPT type-identifier | attributes-OPT type-identifier ``,`` type-inheritance-list
 ```
 
-
 ## Type Inference
 
 Swift uses *type inference* extensively,
@@ -1301,7 +1259,6 @@ let e = 2.71828 // The type of e is inferred to be Double.
 let eFloat: Float = 2.71828 // The type of eFloat is Float.
 ```
 
-
 <!--
   - test: `type-inference`
   
@@ -1320,7 +1277,6 @@ the expression or one of its subexpressions.
   TODO: Email Doug for a list of rules or situations describing when type-inference
   is allowed and when types must be fully typed.
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

@@ -1,5 +1,3 @@
-
-
 # Type Casting
 
 Determine a value's runtime type and give it more specific type information.
@@ -40,7 +38,6 @@ class MediaItem {
 }
 ```
 
-
 <!--
   - test: `typeCasting, typeCasting-err`
   
@@ -78,7 +75,6 @@ class Song: MediaItem {
     }
 }
 ```
-
 
 <!--
   - test: `typeCasting, typeCasting-err`
@@ -120,7 +116,6 @@ let library = [
 ]
 // the type of "library" is inferred to be [MediaItem]
 ```
-
 
 <!--
   - test: `typeCasting`
@@ -173,7 +168,6 @@ for item in library {
 print("Media library contains \(movieCount) movies and \(songCount) songs")
 // Prints "Media library contains 2 movies and 3 songs"
 ```
-
 
 <!--
   - test: `typeCasting`
@@ -259,7 +253,6 @@ for item in library {
 // Song: The One And Only, by Chesney Hawkes
 // Song: Never Gonna Give You Up, by Rick Astley
 ```
-
 
 <!--
   - test: `typeCasting`
@@ -352,7 +345,6 @@ things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 things.append({ (name: String) -> String in "Hello, \(name)" })
 ```
 
-
 <!--
   - test: `typeCasting, typeCasting-err`
   
@@ -420,7 +412,6 @@ for thing in things {
 // a movie called Ghostbusters, dir. Ivan Reitman
 // Hello, Michael
 ```
-
 
 <!--
   - test: `typeCasting`
@@ -530,7 +521,6 @@ for thing in things {
   }
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

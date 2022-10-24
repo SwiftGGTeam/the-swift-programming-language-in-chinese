@@ -1,5 +1,3 @@
-
-
 # Strings and Characters
 
 Store and manipulate text.
@@ -46,7 +44,6 @@ Use a string literal as an initial value for a constant or variable:
 let someString = "Some string literal value"
 ```
 
-
 <!--
   - test: `stringLiterals`
   
@@ -80,7 +77,6 @@ till you come to the end; then stop."
 """
 ```
 
-
 <!--
   - test: `multiline-string-literals`
   
@@ -111,7 +107,6 @@ let multilineString = """
 These are the same.
 """
 ```
-
 
 <!--
   - test: `multiline-string-literals`
@@ -144,7 +139,6 @@ till you come to the end; then stop."
 """
 ```
 
-
 <!--
   - test: `multiline-string-literals`
   
@@ -175,7 +169,6 @@ It also ends with a line break.
 """
 ```
 
-
 <!--
   - test: `multiline-string-literals`
   
@@ -201,7 +194,6 @@ in addition to what's before the closing quotation marks,
 that whitespace *is* included.
 
 ![](multilineStringWhitespace)
-
 
 <!--
   Using an image here is a little clearer,
@@ -270,7 +262,6 @@ let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
 let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
 ```
 
-
 <!--
   - test: `specialCharacters`
   
@@ -300,7 +291,6 @@ Escaping the first quotation mark \"""
 Escaping all three quotation marks \"\"\"
 """
 ```
-
 
 <!--
   - test: `multiline-string-literals`
@@ -345,7 +335,6 @@ Here are three more double quotes: """
 """#
 ```
 
-
 <!--
   - test: `extended-string-delimiters`
   
@@ -371,7 +360,6 @@ var anotherEmptyString = String()  // initializer syntax
 // these two strings are both empty, and are equivalent to each other
 ```
 
-
 <!--
   - test: `emptyStrings`
   
@@ -392,7 +380,6 @@ if emptyString.isEmpty {
 }
 // Prints "Nothing to see here"
 ```
-
 
 <!--
   - test: `emptyStrings`
@@ -424,7 +411,6 @@ let constantString = "Highlander"
 constantString += " and another Highlander"
 // this reports a compile-time error - a constant string cannot be modified
 ```
-
 
 <!--
   - test: `stringMutability`
@@ -500,7 +486,6 @@ for character in "Dog!🐶" {
 // 🐶
 ```
 
-
 <!--
   - test: `characters`
   
@@ -525,7 +510,6 @@ from a single-character string literal by providing a `Character` type annotatio
 let exclamationMark: Character = "!"
 ```
 
-
 <!--
   - test: `characters`
   
@@ -543,7 +527,6 @@ let catString = String(catCharacters)
 print(catString)
 // Prints "Cat!🐱"
 ```
-
 
 <!--
   - test: `characters`
@@ -568,7 +551,6 @@ var welcome = string1 + string2
 // welcome now equals "hello there"
 ```
 
-
 <!--
   - test: `concatenation`
   
@@ -590,7 +572,6 @@ instruction += string2
 // instruction now equals "look over there"
 ```
 
-
 <!--
   - test: `concatenation`
   
@@ -610,7 +591,6 @@ let exclamationMark: Character = "!"
 welcome.append(exclamationMark)
 // welcome now equals "hello there!"
 ```
-
 
 <!--
   - test: `concatenation`
@@ -656,7 +636,6 @@ print(goodStart + end)
 // two
 // three
 ```
-
 
 <!--
   - test: `concatenate-multiline-string-literals`
@@ -716,7 +695,6 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 // message is "3 times 2.5 is 7.5"
 ```
 
-
 <!--
   - test: `stringInterpolation`
   
@@ -748,7 +726,6 @@ print(#"Write an interpolated string in Swift using \(multiplier)."#)
 // Prints "Write an interpolated string in Swift using \(multiplier)."
 ```
 
-
 <!--
   - test: `stringInterpolation`
   
@@ -768,7 +745,6 @@ For example:
 print(#"6 times 7 is \#(6 * 7)."#)
 // Prints "6 times 7 is 42."
 ```
-
 
 <!--
   - test: `stringInterpolation`
@@ -834,7 +810,6 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
 // eAcute is é, combinedEAcute is é
 ```
 
-
 <!--
   - test: `graphemeClusters1`
   
@@ -861,7 +836,6 @@ let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
 // precomposed is 한, decomposed is 한
 ```
 
-
 <!--
   - test: `graphemeClusters2`
   
@@ -884,7 +858,6 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 // enclosedEAcute is é⃝
 ```
 
-
 <!--
   - test: `graphemeClusters3`
   
@@ -905,7 +878,6 @@ and `REGIONAL INDICATOR SYMBOL LETTER S` (`U+1F1F8`):
 let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 // regionalIndicatorForUS is 🇺🇸
 ```
-
 
 <!--
   - test: `graphemeClusters4`
@@ -928,7 +900,6 @@ let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
 print("unusualMenagerie has \(unusualMenagerie.count) characters")
 // Prints "unusualMenagerie has 40 characters"
 ```
-
 
 <!--
   - test: `characterCount`
@@ -959,7 +930,6 @@ word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
 print("the number of characters in \(word) is \(word.count)")
 // Prints "the number of characters in café is 4"
 ```
-
 
 <!--
   - test: `characterCount`
@@ -1041,7 +1011,6 @@ greeting[index]
 // a
 ```
 
-
 <!--
   - test: `stringIndex`
   
@@ -1080,7 +1049,6 @@ greeting[greeting.endIndex] // Error
 greeting.index(after: greeting.endIndex) // Error
 ```
 
-
 <!--
   The code above triggers an assertion failure in the stdlib, causing a stack
   trace, which makes it a poor candidate for being tested.
@@ -1106,7 +1074,6 @@ for index in greeting.indices {
 }
 // Prints "G u t e n   T a g ! "
 ```
-
 
 <!--
   - test: `stringIndex`
@@ -1147,7 +1114,6 @@ welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex)
 // welcome now equals "hello there!"
 ```
 
-
 <!--
   - test: `stringInsertionAndRemoval`
   
@@ -1176,7 +1142,6 @@ let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
 welcome.removeSubrange(range)
 // welcome now equals "hello"
 ```
-
 
 <!--
   - test: `stringInsertionAndRemoval`
@@ -1229,7 +1194,6 @@ let beginning = greeting[..<index]
 // Convert the result to a String for long-term storage.
 let newString = String(beginning)
 ```
-
 
 <!--
   - test: `string-and-substring`
@@ -1284,7 +1248,6 @@ The figure below shows these relationships:
 
 ![](stringSubstring)
 
-
 > Note: Both `String` and `Substring` conform to the
 > [StringProtocol](https://developer.apple.com/documentation/swift/stringprotocol) protocol,
 > which means it's often convenient for string-manipulation functions
@@ -1310,7 +1273,6 @@ if quotation == sameQuotation {
 }
 // Prints "These two strings are considered equal"
 ```
-
 
 <!--
   - test: `stringEquality`
@@ -1380,7 +1342,6 @@ if eAcuteQuestion == combinedEAcuteQuestion {
 // Prints "These two strings are considered equal"
 ```
 
-
 <!--
   - test: `stringEquality`
   
@@ -1415,7 +1376,6 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 }
 // Prints "These two characters aren't equivalent."
 ```
-
 
 <!--
   - test: `stringEquality`
@@ -1507,7 +1467,6 @@ let romeoAndJuliet = [
 ]
 ```
 
-
 <!--
   - test: `prefixesAndSuffixes`
   
@@ -1542,7 +1501,6 @@ print("There are \(act1SceneCount) scenes in Act 1")
 // Prints "There are 5 scenes in Act 1"
 ```
 
-
 <!--
   - test: `prefixesAndSuffixes`
   
@@ -1574,7 +1532,6 @@ for scene in romeoAndJuliet {
 print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 // Prints "6 mansion scenes; 2 cell scenes"
 ```
-
 
 <!--
   - test: `prefixesAndSuffixes`
@@ -1632,7 +1589,6 @@ and the 🐶 character (`DOG FACE`, or Unicode scalar `U+1F436`):
 let dogString = "Dog‼🐶"
 ```
 
-
 <!--
   - test: `unicodeRepresentations`
   
@@ -1651,7 +1607,6 @@ one for each byte in the string's UTF-8 representation:
 
 ![](UTF8)
 
-
 ```swift
 for codeUnit in dogString.utf8 {
     print("\(codeUnit) ", terminator: "")
@@ -1659,7 +1614,6 @@ for codeUnit in dogString.utf8 {
 print("")
 // Prints "68 111 103 226 128 188 240 159 144 182 "
 ```
-
 
 <!--
   - test: `unicodeRepresentations`
@@ -1707,7 +1661,6 @@ one for each 16-bit code unit in the string's UTF-16 representation:
 
 ![](UTF16)
 
-
 ```swift
 for codeUnit in dogString.utf16 {
     print("\(codeUnit) ", terminator: "")
@@ -1715,7 +1668,6 @@ for codeUnit in dogString.utf16 {
 print("")
 // Prints "68 111 103 8252 55357 56374 "
 ```
-
 
 <!--
   - test: `unicodeRepresentations`
@@ -1763,7 +1715,6 @@ the scalar's 21-bit value, represented within a `UInt32` value:
 
 ![](UnicodeScalar)
 
-
 ```swift
 for scalar in dogString.unicodeScalars {
     print("\(scalar.value) ", terminator: "")
@@ -1771,7 +1722,6 @@ for scalar in dogString.unicodeScalars {
 print("")
 // Prints "68 111 103 8252 128054 "
 ```
-
 
 <!--
   - test: `unicodeRepresentations`
@@ -1818,7 +1768,6 @@ for scalar in dogString.unicodeScalars {
 // 🐶
 ```
 
-
 <!--
   - test: `unicodeRepresentations`
   
@@ -1833,7 +1782,6 @@ for scalar in dogString.unicodeScalars {
   </ 🐶
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

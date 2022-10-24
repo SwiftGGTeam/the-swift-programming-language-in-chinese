@@ -1,5 +1,3 @@
-
-
 # Advanced Operators
 
 Define custom operators, perform bitwise operations, and use builder syntax.
@@ -47,7 +45,6 @@ The *bitwise NOT operator* (`~`) inverts all bits in a number:
 
 ![](bitwiseNOT)
 
-
 The bitwise NOT operator is a prefix operator,
 and appears immediately before the value it operates on,
 without any white space:
@@ -56,7 +53,6 @@ without any white space:
 let initialBits: UInt8 = 0b00001111
 let invertedBits = ~initialBits  // equals 11110000
 ```
-
 
 <!--
   - test: `bitwiseOperators`
@@ -95,7 +91,6 @@ only if the bits were equal to `1` in *both* input numbers:
 
 ![](bitwiseAND)
 
-
 In the example below,
 the values of `firstSixBits` and `lastSixBits`
 both have four middle bits equal to `1`.
@@ -107,7 +102,6 @@ let firstSixBits: UInt8 = 0b11111100
 let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
 ```
-
 
 <!--
   - test: `bitwiseOperators`
@@ -128,7 +122,6 @@ if the bits are equal to `1` in *either* input number:
 
 ![](bitwiseOR)
 
-
 <!--
   iBooks Store screenshot ends here.
 -->
@@ -143,7 +136,6 @@ let someBits: UInt8 = 0b10110010
 let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits  // equals 11111110
 ```
-
 
 <!--
   - test: `bitwiseOperators`
@@ -166,7 +158,6 @@ and are set to `0` where the input bits are the same:
 
 ![](bitwiseXOR)
 
-
 In the example below,
 the values of `firstBits` and `otherBits` each have a bit set to `1`
 in a location that the other does not.
@@ -179,7 +170,6 @@ let firstBits: UInt8 = 0b00010100
 let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // equals 00010001
 ```
-
 
 <!--
   - test: `bitwiseOperators`
@@ -229,7 +219,6 @@ and orange zeros are inserted:
 
 ![](bitshiftUnsigned)
 
-
 Here's how bit shifting looks in Swift code:
 
 ```swift
@@ -240,7 +229,6 @@ shiftBits << 5             // 10000000
 shiftBits << 6             // 00000000
 shiftBits >> 2             // 00000001
 ```
-
 
 <!--
   - test: `bitwiseShiftOperators`
@@ -278,7 +266,6 @@ let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
 let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
 let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
 ```
-
 
 <!--
   - test: `bitwiseShiftOperators`
@@ -343,7 +330,6 @@ Here's how the bits inside an `Int8` look for the number `4`:
 
 ![](bitshiftSignedFour)
 
-
 The sign bit is `0` (meaning “positive”),
 and the seven value bits are just the number `4`,
 written in binary notation.
@@ -358,12 +344,10 @@ Here's how the bits inside an `Int8` look for the number `-4`:
 
 ![](bitshiftSignedMinusFour)
 
-
 This time, the sign bit is `1` (meaning “negative”),
 and the seven value bits have a binary value of `124` (which is `128 - 4`):
 
 ![](bitshiftSignedMinusFourValue)
-
 
 This encoding for negative numbers is known as a *two's complement* representation.
 It may seem an unusual way to represent negative numbers,
@@ -376,7 +360,6 @@ and discarding anything that doesn't fit in the eight bits once you're done:
 
 ![](bitshiftSignedAddition)
 
-
 Second, the two's complement representation also lets you
 shift the bits of negative numbers to the left and right like positive numbers,
 and still end up doubling them for every shift you make to the left,
@@ -388,7 +371,6 @@ but fill any empty bits on the left with the *sign bit*,
 rather than with a zero.
 
 ![](bitshiftSigned)
-
 
 This action ensures that signed integers have the same sign after they're shifted to the right,
 and is known as an *arithmetic shift*.
@@ -416,7 +398,6 @@ var potentialOverflow = Int16.max
 potentialOverflow += 1
 // this causes an error
 ```
-
 
 <!--
   - test: `overflowOperatorsWillFailToOverflow`
@@ -460,7 +441,6 @@ unsignedOverflow = unsignedOverflow &+ 1
 // unsignedOverflow is now equal to 0
 ```
 
-
 <!--
   - test: `overflowOperatorsWillOverflowInPositiveDirection`
   
@@ -485,7 +465,6 @@ after the overflow addition is `00000000`, or zero.
 
 ![](overflowAddition)
 
-
 Something similar happens when
 an unsigned integer is allowed to overflow in the negative direction.
 Here's an example using the overflow subtraction operator (`&-`):
@@ -496,7 +475,6 @@ var unsignedOverflow = UInt8.min
 unsignedOverflow = unsignedOverflow &- 1
 // unsignedOverflow is now equal to 255
 ```
-
 
 <!--
   - test: `overflowOperatorsWillOverflowInNegativeDirection`
@@ -519,7 +497,6 @@ or `255` in decimal.
 
 ![](overflowUnsignedSubtraction)
 
-
 Overflow also occurs for signed integers.
 All addition and subtraction for signed integers is performed in bitwise fashion,
 with the sign bit included as part of the numbers being added or subtracted,
@@ -531,7 +508,6 @@ var signedOverflow = Int8.min
 signedOverflow = signedOverflow &- 1
 // signedOverflow is now equal to 127
 ```
-
 
 <!--
   - test: `overflowOperatorsWillOverflowSigned`
@@ -554,7 +530,6 @@ which toggles the sign bit and gives positive `127`,
 the maximum positive value that an `Int8` can hold.
 
 ![](overflowSignedSubtraction)
-
 
 For both signed and unsigned integers,
 overflow in the positive direction
@@ -583,7 +558,6 @@ operator precedence explains why the following expression equals `17`.
 2 + 3 % 4 * 5
 // this equals 17
 ```
-
 
 <!--
   - test: `evaluationOrder`
@@ -627,7 +601,6 @@ starting from their left:
 2 + ((3 % 4) * 5)
 ```
 
-
 <!--
   - test: `evaluationOrder`
   
@@ -649,7 +622,6 @@ starting from their left:
 2 + (3 * 5)
 ```
 
-
 <!--
   - test: `evaluationOrder`
   
@@ -670,7 +642,6 @@ starting from their left:
 ```swift
 2 + 15
 ```
-
 
 <!--
   - test: `evaluationOrder`
@@ -727,7 +698,6 @@ extension Vector2D {
 }
 ```
 
-
 <!--
   - test: `customOperators`
   
@@ -771,7 +741,6 @@ let combinedVector = vector + anotherVector
 // combinedVector is a Vector2D instance with values of (5.0, 5.0)
 ```
 
-
 <!--
   - test: `customOperators`
   
@@ -788,7 +757,6 @@ This example adds together the vectors `(3.0, 1.0)` and `(2.0, 4.0)`
 to make the vector `(5.0, 5.0)`, as illustrated below.
 
 ![](vectorAddition)
-
 
 ### Prefix and Postfix Operators
 
@@ -810,7 +778,6 @@ extension Vector2D {
     }
 }
 ```
-
 
 <!--
   - test: `customOperators`
@@ -841,7 +808,6 @@ let negative = -positive
 let alsoPositive = -negative
 // alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 ```
-
 
 <!--
   - test: `customOperators`
@@ -876,7 +842,6 @@ extension Vector2D {
 }
 ```
 
-
 <!--
   - test: `customOperators`
   
@@ -901,7 +866,6 @@ let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
 original += vectorToAdd
 // original now has values of (4.0, 6.0)
 ```
-
 
 <!--
   - test: `customOperators`
@@ -965,7 +929,6 @@ extension Vector2D: Equatable {
 }
 ```
 
-
 <!--
   - test: `customOperators`
   
@@ -995,7 +958,6 @@ if twoThree == anotherTwoThree {
 }
 // Prints "These two vectors are equivalent."
 ```
-
 
 <!--
   - test: `customOperators`
@@ -1028,7 +990,6 @@ and are marked with the `prefix`, `infix` or `postfix` modifiers:
 prefix operator +++
 ```
 
-
 <!--
   - test: `customOperators`
   
@@ -1060,7 +1021,6 @@ let afterDoubling = +++toBeDoubled
 // toBeDoubled now has values of (2.0, 8.0)
 // afterDoubling also has values of (2.0, 8.0)
 ```
-
 
 <!--
   - test: `customOperators`
@@ -1110,7 +1070,6 @@ let secondVector = Vector2D(x: 3.0, y: 4.0)
 let plusMinusVector = firstVector +- secondVector
 // plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 ```
-
 
 <!--
   - test: `customOperators`
@@ -1212,7 +1171,6 @@ struct AllCaps: Drawable {
 }
 ```
 
-
 <!--
   - test: `result-builder`
   
@@ -1273,7 +1231,6 @@ print(manualDrawing.draw())
 // Prints "***Hello RAVI PATEL!**"
 ```
 
-
 <!--
   - test: `result-builder`
   
@@ -1320,7 +1277,6 @@ struct DrawingBuilder {
     }
 }
 ```
-
 
 <!--
   - test: `result-builder`
@@ -1387,7 +1343,6 @@ print(personalGreeting.draw())
 // Prints "***Hello RAVI PATEL!**"
 ```
 
-
 <!--
   - test: `result-builder`
   
@@ -1453,7 +1408,6 @@ let capsDrawing = caps {
 }
 ```
 
-
 <!--
   - test: `result-builder`
   
@@ -1498,7 +1452,6 @@ let manyStars = draw {
     }
 }
 ```
-
 
 <!--
   - test: `result-builder`
@@ -1611,7 +1564,6 @@ see <doc:Attributes#resultBuilder>.
 <!--
   TODO: generic operators
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project
