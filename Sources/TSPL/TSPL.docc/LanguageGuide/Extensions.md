@@ -594,12 +594,12 @@ extension Int {
     }
     var kind: Kind {
         switch self {
-            case 0:
-                return .zero
-            case let x where x > 0:
-                return .positive
-            default:
-                return .negative
+        case 0:
+            return .zero
+        case let x where x > 0:
+            return .positive
+        default:
+            return .negative
         }
     }
 }
@@ -644,12 +644,12 @@ The nested enumeration can now be used with any `Int` value:
 func printIntegerKinds(_ numbers: [Int]) {
     for number in numbers {
         switch number.kind {
-            case .negative:
-                print("- ", terminator: "")
-            case .zero:
-                print("0 ", terminator: "")
-            case .positive:
-                print("+ ", terminator: "")
+        case .negative:
+            print("- ", terminator: "")
+        case .zero:
+            print("0 ", terminator: "")
+        case .positive:
+            print("+ ", terminator: "")
         }
     }
     print("")

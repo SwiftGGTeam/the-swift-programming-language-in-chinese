@@ -41,12 +41,12 @@ struct BlackjackCard {
         }
         var values: Values {
             switch self {
-                case .ace:
-                    return Values(first: 1, second: 11)
-                case .jack, .queen, .king:
-                    return Values(first: 10, second: nil)
-                default:
-                    return Values(first: self.rawValue, second: nil)
+            case .ace:
+                return Values(first: 1, second: 11)
+            case .jack, .queen, .king:
+                return Values(first: 10, second: nil)
+            default:
+                return Values(first: self.rawValue, second: nil)
             }
         }
     }

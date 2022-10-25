@@ -514,14 +514,14 @@ and tests for equality.
 ```swift
 let vegetable = "red pepper"
 switch vegetable {
-    case "celery":
-        print("Add some raisins and make ants on a log.")
-    case "cucumber", "watercress":
-        print("That would make a good tea sandwich.")
-    case let x where x.hasSuffix("pepper"):
-        print("Is it a spicy \(x)?")
-    default:
-        print("Everything tastes good in soup.")
+case "celery":
+    print("Add some raisins and make ants on a log.")
+case "cucumber", "watercress":
+    print("That would make a good tea sandwich.")
+case let x where x.hasSuffix("pepper"):
+    print("Is it a spicy \(x)?")
+default:
+    print("Everything tastes good in soup.")
 }
 // Prints "Is it a spicy red pepper?"
 ```
@@ -1461,16 +1461,16 @@ enum Rank: Int {
 
     func simpleDescription() -> String {
         switch self {
-            case .ace:
-                return "ace"
-            case .jack:
-                return "jack"
-            case .queen:
-                return "queen"
-            case .king:
-                return "king"
-            default:
-                return String(self.rawValue)
+        case .ace:
+            return "ace"
+        case .jack:
+            return "jack"
+        case .queen:
+            return "queen"
+        case .king:
+            return "king"
+        default:
+            return String(self.rawValue)
         }
     }
 }
@@ -1558,14 +1558,14 @@ enum Suit {
 
     func simpleDescription() -> String {
         switch self {
-            case .spades:
-                return "spades"
-            case .hearts:
-                return "hearts"
-            case .diamonds:
-                return "diamonds"
-            case .clubs:
-                return "clubs"
+        case .spades:
+            return "spades"
+        case .hearts:
+            return "hearts"
+        case .diamonds:
+            return "diamonds"
+        case .clubs:
+            return "clubs"
         }
     }
 }
@@ -1681,10 +1681,10 @@ let success = ServerResponse.result("6:00 am", "8:09 pm")
 let failure = ServerResponse.failure("Out of cheese.")
 
 switch success {
-    case let .result(sunrise, sunset):
-        print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
-    case let .failure(message):
-        print("Failure...  \(message)")
+case let .result(sunrise, sunset):
+    print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+case let .failure(message):
+    print("Failure...  \(message)")
 }
 // Prints "Sunrise is at 6:00 am and sunset is at 8:09 pm."
 ```

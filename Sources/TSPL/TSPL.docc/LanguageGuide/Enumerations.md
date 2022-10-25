@@ -167,14 +167,14 @@ You can match individual enumeration values with a `switch` statement:
 ```swift
 directionToHead = .south
 switch directionToHead {
-    case .north:
-        print("Lots of planets have a north")
-    case .south:
-        print("Watch out for penguins")
-    case .east:
-        print("Where the sun rises")
-    case .west:
-        print("Where the skies are blue")
+case .north:
+    print("Lots of planets have a north")
+case .south:
+    print("Watch out for penguins")
+case .east:
+    print("Where the sun rises")
+case .west:
+    print("Where the skies are blue")
 }
 // Prints "Watch out for penguins"
 ```
@@ -222,10 +222,10 @@ you can provide a `default` case to cover any cases that aren't addressed explic
 ```swift
 let somePlanet = Planet.earth
 switch somePlanet {
-    case .earth:
-        print("Mostly harmless")
-    default:
-        print("Not a safe place for humans")
+case .earth:
+    print("Mostly harmless")
+default:
+    print("Not a safe place for humans")
 }
 // Prints "Mostly harmless"
 ```
@@ -443,10 +443,10 @@ for use within the `switch` case's body:
 
 ```swift
 switch productBarcode {
-    case .upc(let numberSystem, let manufacturer, let product, let check):
-        print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
-    case .qrCode(let productCode):
-        print("QR code: \(productCode).")
+case .upc(let numberSystem, let manufacturer, let product, let check):
+    print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+case .qrCode(let productCode):
+    print("QR code: \(productCode).")
 }
 // Prints "QR code: ABCDEFGHIJKLMNOP."
 ```
@@ -472,10 +472,10 @@ you can place a single `var` or `let` annotation before the case name, for brevi
 
 ```swift
 switch productBarcode {
-    case let .upc(numberSystem, manufacturer, product, check):
-        print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
-    case let .qrCode(productCode):
-        print("QR code: \(productCode).")
+case let .upc(numberSystem, manufacturer, product, check):
+    print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
+case let .qrCode(productCode):
+    print("QR code: \(productCode).")
 }
 // Prints "QR code: ABCDEFGHIJKLMNOP."
 ```
@@ -675,10 +675,10 @@ the optional `Planet` value returned by the raw value initializer will be `nil`:
 let positionToFind = 11
 if let somePlanet = Planet(rawValue: positionToFind) {
     switch somePlanet {
-        case .earth:
-            print("Mostly harmless")
-        default:
-            print("Not a safe place for humans")
+    case .earth:
+        print("Mostly harmless")
+    default:
+        print("Not a safe place for humans")
     }
 } else {
     print("There isn't a planet at position \(positionToFind)")
@@ -815,12 +815,12 @@ For example, here's a function that evaluates an arithmetic expression:
 ```swift
 func evaluate(_ expression: ArithmeticExpression) -> Int {
     switch expression {
-        case let .number(value):
-            return value
-        case let .addition(left, right):
-            return evaluate(left) + evaluate(right)
-        case let .multiplication(left, right):
-            return evaluate(left) * evaluate(right)
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
     }
 }
 

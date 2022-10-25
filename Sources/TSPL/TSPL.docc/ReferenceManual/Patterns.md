@@ -125,9 +125,9 @@ corresponding identifier pattern.
 ```swift
 let point = (3, 2)
 switch point {
-    // Bind x and y to the elements of point.
-    case let (x, y):
-        print("The point is at (\(x), \(y)).")
+// Bind x and y to the elements of point.
+case let (x, y):
+    print("The point is at (\(x), \(y)).")
 }
 // Prints "The point is at (3, 2)."
 ```
@@ -455,12 +455,12 @@ as the following example shows.
 ```swift
 let point = (1, 2)
 switch point {
-    case (0, 0):
-        print("(0, 0) is at the origin.")
-    case (-2...2, -2...2):
-        print("(\(point.0), \(point.1)) is near the origin.")
-    default:
-        print("The point is at (\(point.0), \(point.1)).")
+case (0, 0):
+    print("(0, 0) is at the origin.")
+case (-2...2, -2...2):
+    print("(\(point.0), \(point.1)) is near the origin.")
+default:
+    print("The point is at (\(point.0), \(point.1)).")
 }
 // Prints "(1, 2) is near the origin."
 ```
@@ -493,10 +493,10 @@ func ~= (pattern: String, value: Int) -> Bool {
     return pattern == "\(value)"
 }
 switch point {
-    case ("0", "0"):
-        print("(0, 0) is at the origin.")
-    default:
-        print("The point is at (\(point.0), \(point.1)).")
+case ("0", "0"):
+    print("(0, 0) is at the origin.")
+default:
+    print("The point is at (\(point.0), \(point.1)).")
 }
 // Prints "The point is at (1, 2)."
 ```

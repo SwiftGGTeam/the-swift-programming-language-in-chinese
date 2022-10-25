@@ -444,10 +444,10 @@ enum OnOffSwitch: Togglable {
     case off, on
     mutating func toggle() {
         switch self {
-            case .off:
-                self = .on
-            case .on:
-                self = .off
+        case .off:
+            self = .on
+        case .on:
+            self = .off
         }
     }
 }
@@ -970,13 +970,13 @@ class SnakesAndLadders: DiceGame {
             let diceRoll = dice.roll()
             delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
             switch square + diceRoll {
-                case finalSquare:
-                    break gameLoop
-                case let newSquare where newSquare > finalSquare:
-                    continue gameLoop
-                default:
-                    square += diceRoll
-                    square += board[square]
+            case finalSquare:
+                break gameLoop
+            case let newSquare where newSquare > finalSquare:
+                continue gameLoop
+            default:
+                square += diceRoll
+                square += board[square]
             }
         }
         delegate?.gameDidEnd(self)
@@ -1699,12 +1699,12 @@ extension SnakesAndLadders: PrettyTextRepresentable {
         var output = textualDescription + ":\n"
         for index in 1...finalSquare {
             switch board[index] {
-                case let ladder where ladder > 0:
-                    output += "▲ "
-                case let snake where snake < 0:
-                    output += "▼ "
-                default:
-                    output += "○ "
+            case let ladder where ladder > 0:
+                output += "▲ "
+            case let snake where snake < 0:
+                output += "▼ "
+            default:
+                output += "○ "
             }
         }
         return output
