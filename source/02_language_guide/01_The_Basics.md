@@ -605,7 +605,7 @@ if let myNumber = myNumber {
 
 ``` swift
 if let myNumber{
-	print("My number is \(muNumber)")
+	print("My number is \(myNumber)")
 }
 // 输出 "My number is 123"
 ```
