@@ -1882,6 +1882,41 @@ when your program reaches the end of the current scope.
 For example:
 
 ```
+var score = 1
+if score < 10 {
+    defer {
+        print(score)
+    }
+    score += 5
+}
+// Prints "6"
+```
+
+<!--
+  - test: `defer-with-if`
+
+  ```swifttest
+  -> var score = 3
+  -> if score < 10 {
+  ->     defer {
+  ->         print(score)
+  ->     }
+  ->     score += 5
+  -> }
+  <- 8
+  ```
+-->
+
+In the example above,
+the code inside of the `defer` block is executed
+before exiting the body of the `if` statement.
+First `score` is incremented by five,
+and then it's printed.
+
+
+XXX functions example -- not ideal here, because this chapter comes before Functions
+
+```
 func someFunction() {
     print("Start of the function")
     defer { print("Deferred work") }
