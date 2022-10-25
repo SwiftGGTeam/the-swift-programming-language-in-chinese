@@ -95,7 +95,7 @@ and to pass it in as an argument to the `sorted(by:)` method:
 
 ```swift
 func backward(_ s1: String, _ s2: String) -> Bool {
-   return s1 > s2
+    return s1 > s2
 }
 var reversedNames = names.sorted(by: backward)
 // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
@@ -152,7 +152,7 @@ from above:
 
 ```swift
 reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
-   return s1 > s2
+    return s1 > s2
 })
 ```
 
@@ -359,19 +359,19 @@ however, the first few examples below use a single trailing closure.
 
 ```swift
 func someFunctionThatTakesAClosure(closure: () -> Void) {
-   // function body goes here
+    // function body goes here
 }
 
 // Here's how you call this function without using a trailing closure:
 
 someFunctionThatTakesAClosure(closure: {
-   // closure's body goes here
+    // closure's body goes here
 })
 
 // Here's how you call this function with a trailing closure instead:
 
 someFunctionThatTakesAClosure() {
-   // trailing closure's body goes here
+    // trailing closure's body goes here
 }
 ```
 
@@ -455,8 +455,8 @@ The array `[16, 58, 510]` is used to create the new array
 
 ```swift
 let digitNames = [
-   0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
-   5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+    0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+    5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
 ]
 let numbers = [16, 58, 510]
 ```
@@ -483,13 +483,13 @@ by passing a closure expression to the array's `map(_:)` method as a trailing cl
 
 ```swift
 let strings = numbers.map { (number) -> String in
-   var number = number
-   var output = ""
-   repeat {
-      output = digitNames[number % 10]! + output
-      number /= 10
-   } while number > 0
-   return output
+    var number = number
+    var output = ""
+    repeat {
+        output = digitNames[number % 10]! + output
+        number /= 10
+    } while number > 0
+    return output
 }
 // strings is inferred to be of type [String]
 // its value is ["OneSix", "FiveEight", "FiveOneZero"]
@@ -668,12 +668,12 @@ that increments `runningTotal` by `amount` each time it's called.
 
 ```swift
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
-   var runningTotal = 0
-   func incrementer() -> Int {
-      runningTotal += amount
-      return runningTotal
-   }
-   return incrementer
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
 }
 ```
 
@@ -718,8 +718,8 @@ the nested `incrementer()` function might seem unusual:
 
 ```swift
 func incrementer() -> Int {
-   runningTotal += amount
-   return runningTotal
+    runningTotal += amount
+    return runningTotal
 }
 ```
 

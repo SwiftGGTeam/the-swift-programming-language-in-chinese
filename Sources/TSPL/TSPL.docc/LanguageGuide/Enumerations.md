@@ -45,7 +45,7 @@ and place their entire definition within a pair of braces:
 
 ```swift
 enum SomeEnumeration {
-   // enumeration definition goes here
+    // enumeration definition goes here
 }
 ```
 
@@ -64,10 +64,10 @@ Here's an example for the four main points of a compass:
 
 ```swift
 enum CompassPoint {
-   case north
-   case south
-   case east
-   case west
+    case north
+    case south
+    case east
+    case west
 }
 ```
 
@@ -103,7 +103,7 @@ Multiple cases can appear on a single line, separated by commas:
 
 ```swift
 enum Planet {
-   case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
+    case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
 }
 ```
 
@@ -167,14 +167,14 @@ You can match individual enumeration values with a `switch` statement:
 ```swift
 directionToHead = .south
 switch directionToHead {
-   case .north:
-      print("Lots of planets have a north")
-   case .south:
-      print("Watch out for penguins")
-   case .east:
-      print("Where the sun rises")
-   case .west:
-      print("Where the skies are blue")
+    case .north:
+        print("Lots of planets have a north")
+    case .south:
+        print("Watch out for penguins")
+    case .east:
+        print("Where the sun rises")
+    case .west:
+        print("Where the skies are blue")
 }
 // Prints "Watch out for penguins"
 ```
@@ -222,10 +222,10 @@ you can provide a `default` case to cover any cases that aren't addressed explic
 ```swift
 let somePlanet = Planet.earth
 switch somePlanet {
-   case .earth:
-      print("Mostly harmless")
-   default:
-      print("Not a safe place for humans")
+    case .earth:
+        print("Mostly harmless")
+    default:
+        print("Not a safe place for humans")
 }
 // Prints "Mostly harmless"
 ```
@@ -362,8 +362,8 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 ```swift
 enum Barcode {
-   case upc(Int, Int, Int, Int)
-   case qrCode(String)
+    case upc(Int, Int, Int, Int)
+    case qrCode(String)
 }
 ```
 
@@ -443,10 +443,10 @@ for use within the `switch` case's body:
 
 ```swift
 switch productBarcode {
-   case .upc(let numberSystem, let manufacturer, let product, let check):
-      print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
-   case .qrCode(let productCode):
-      print("QR code: \(productCode).")
+    case .upc(let numberSystem, let manufacturer, let product, let check):
+        print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+    case .qrCode(let productCode):
+        print("QR code: \(productCode).")
 }
 // Prints "QR code: ABCDEFGHIJKLMNOP."
 ```
@@ -472,10 +472,10 @@ you can place a single `var` or `let` annotation before the case name, for brevi
 
 ```swift
 switch productBarcode {
-   case let .upc(numberSystem, manufacturer, product, check):
-      print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
-   case let .qrCode(productCode):
-      print("QR code: \(productCode).")
+    case let .upc(numberSystem, manufacturer, product, check):
+        print("UPC : \(numberSystem), \(manufacturer), \(product), \(check).")
+    case let .qrCode(productCode):
+        print("QR code: \(productCode).")
 }
 // Prints "QR code: ABCDEFGHIJKLMNOP."
 ```
@@ -509,9 +509,9 @@ Here's an example that stores raw ASCII values alongside named enumeration cases
 
 ```swift
 enum ASCIIControlCharacter: Character {
-   case tab = "\t"
-   case lineFeed = "\n"
-   case carriageReturn = "\r"
+    case tab = "\t"
+    case lineFeed = "\n"
+    case carriageReturn = "\r"
 }
 ```
 
@@ -561,7 +561,7 @@ with integer raw values to represent each planet's order from the sun:
 
 ```swift
 enum Planet: Int {
-   case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
 }
 ```
 
@@ -588,7 +588,7 @@ with string raw values to represent each direction's name:
 
 ```swift
 enum CompassPoint: String {
-   case north, south, east, west
+    case north, south, east, west
 }
 ```
 
@@ -674,14 +674,14 @@ the optional `Planet` value returned by the raw value initializer will be `nil`:
 ```swift
 let positionToFind = 11
 if let somePlanet = Planet(rawValue: positionToFind) {
-   switch somePlanet {
-      case .earth:
-         print("Mostly harmless")
-      default:
-         print("Not a safe place for humans")
-   }
+    switch somePlanet {
+        case .earth:
+            print("Mostly harmless")
+        default:
+            print("Not a safe place for humans")
+    }
 } else {
-   print("There isn't a planet at position \(positionToFind)")
+    print("There isn't a planet at position \(positionToFind)")
 }
 // Prints "There isn't a planet at position 11"
 ```
@@ -816,11 +816,11 @@ For example, here's a function that evaluates an arithmetic expression:
 func evaluate(_ expression: ArithmeticExpression) -> Int {
     switch expression {
         case let .number(value):
-            return value
+                return value
         case let .addition(left, right):
-            return evaluate(left) + evaluate(right)
+                return evaluate(left) + evaluate(right)
         case let .multiplication(left, right):
-            return evaluate(left) * evaluate(right)
+                return evaluate(left) * evaluate(right)
     }
 }
 

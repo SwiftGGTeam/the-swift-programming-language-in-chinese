@@ -49,8 +49,8 @@ which will contain a greeting for that person:
 
 ```swift
 func greet(person: String) -> String {
-   let greeting = "Hello, " + person + "!"
-   return greeting
+    let greeting = "Hello, " + person + "!"
+    return greeting
 }
 ```
 
@@ -128,7 +128,7 @@ you can combine the message creation and the return statement into one line:
 
 ```swift
 func greetAgain(person: String) -> String {
-   return "Hello again, " + person + "!"
+    return "Hello again, " + person + "!"
 }
 print(greetAgain(person: "Anna"))
 // Prints "Hello again, Anna!"
@@ -161,7 +161,7 @@ which always returns the same `String` message whenever it's called:
 
 ```swift
 func sayHelloWorld() -> String {
-   return "hello, world"
+    return "hello, world"
 }
 print(sayHelloWorld())
 // Prints "hello, world"
@@ -241,7 +241,7 @@ which prints its own `String` value rather than returning it:
 
 ```swift
 func greet(person: String) {
-   print("Hello, \(person)!")
+    print("Hello, \(person)!")
 }
 greet(person: "Dave")
 // Prints "Hello, Dave!"
@@ -274,11 +274,11 @@ The return value of a function can be ignored when it's called:
 
 ```swift
 func printAndCount(string: String) -> Int {
-   print(string)
-   return string.count
+    print(string)
+    return string.count
 }
 func printWithoutCounting(string: String) {
-   let _ = printAndCount(string: string)
+    let _ = printAndCount(string: string)
 }
 printAndCount(string: "hello, world")
 // prints "hello, world" and returns a value of 12
@@ -344,16 +344,16 @@ which finds the smallest and largest numbers in an array of `Int` values:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
-   var currentMin = array[0]
-   var currentMax = array[0]
-   for value in array[1..<array.count] {
-      if value < currentMin {
-         currentMin = value
-      } else if value > currentMax {
-         currentMax = value
-      }
-   }
-   return (currentMin, currentMax)
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
 }
 ```
 
@@ -442,17 +442,17 @@ and return a value of `nil` when the array is empty:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
-   if array.isEmpty { return nil }
-   var currentMin = array[0]
-   var currentMax = array[0]
-   for value in array[1..<array.count] {
-      if value < currentMin {
-         currentMin = value
-      } else if value > currentMax {
-         currentMax = value
-      }
-   }
-   return (currentMin, currentMax)
+    if array.isEmpty { return nil }
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
 }
 ```
 
@@ -482,7 +482,7 @@ returns an actual tuple value or `nil`:
 
 ```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
-   print("min is \(bounds.min) and max is \(bounds.max)")
+    print("min is \(bounds.min) and max is \(bounds.max)")
 }
 // Prints "min is -6 and max is 109"
 ```
@@ -508,13 +508,13 @@ both functions below have the same behavior:
 
 ```swift
 func greeting(for person: String) -> String {
-   "Hello, " + person + "!"
+    "Hello, " + person + "!"
 }
 print(greeting(for: "Dave"))
 // Prints "Hello, Dave!"
 
 func anotherGreeting(for person: String) -> String {
-   return "Hello, " + person + "!"
+    return "Hello, " + person + "!"
 }
 print(anotherGreeting(for: "Dave"))
 // Prints "Hello, Dave!"
@@ -590,8 +590,8 @@ use their parameter name as their argument label.
 
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
-   // In the function body, firstParameterName and secondParameterName
-   // refer to the argument values for the first and second parameters.
+    // In the function body, firstParameterName and secondParameterName
+    // refer to the argument values for the first and second parameters.
 }
 someFunction(firstParameterName: 1, secondParameterName: 2)
 ```
@@ -630,8 +630,8 @@ separated by a space:
 
 ```swift
 func someFunction(argumentLabel parameterName: Int) {
-   // In the function body, parameterName refers to the argument value
-   // for that parameter.
+    // In the function body, parameterName refers to the argument value
+    // for that parameter.
 }
 ```
 
@@ -683,8 +683,8 @@ write an underscore (`_`) instead of an explicit argument label for that paramet
 
 ```swift
 func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
-   // In the function body, firstParameterName and secondParameterName
-   // refer to the argument values for the first and second parameters.
+    // In the function body, firstParameterName and secondParameterName
+    // refer to the argument values for the first and second parameters.
 }
 someFunction(1, secondParameterName: 2)
 ```
@@ -713,8 +713,8 @@ If a default value is defined, you can omit that parameter when calling the func
 
 ```swift
 func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
-   // If you omit the second argument when calling this function, then
-   // the value of parameterWithDefault is 12 inside the function body.
+    // If you omit the second argument when calling this function, then
+    // the value of parameterWithDefault is 12 inside the function body.
 }
 someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
 someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
@@ -762,11 +762,11 @@ The example below calculates the *arithmetic mean*
 
 ```swift
 func arithmeticMean(_ numbers: Double...) -> Double {
-   var total: Double = 0
-   for number in numbers {
-      total += number
-   }
-   return total / Double(numbers.count)
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
 }
 arithmeticMean(1, 2, 3, 4, 5)
 // returns 3.0, which is the arithmetic mean of these five numbers
@@ -871,9 +871,9 @@ which has two in-out integer parameters called `a` and `b`:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
-   let temporaryA = a
-   a = b
-   b = temporaryA
+    let temporaryA = a
+    a = b
+    b = temporaryA
 }
 ```
 
@@ -947,10 +947,10 @@ For example:
 
 ```swift
 func addTwoInts(_ a: Int, _ b: Int) -> Int {
-   return a + b
+    return a + b
 }
 func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
-   return a * b
+    return a * b
 }
 ```
 
@@ -988,7 +988,7 @@ Here's another example, for a function with no parameters or return value:
 
 ```swift
 func printHelloWorld() {
-   print("hello, world")
+    print("hello, world")
 }
 ```
 
@@ -1110,7 +1110,7 @@ Here's an example to print the results of the math functions from above:
 
 ```swift
 func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
-   print("Result: \(mathFunction(a, b))")
+    print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
 // Prints "Result: 8"
@@ -1159,10 +1159,10 @@ Both functions have a type of `(Int) -> Int`:
 
 ```swift
 func stepForward(_ input: Int) -> Int {
-   return input + 1
+    return input + 1
 }
 func stepBackward(_ input: Int) -> Int {
-   return input - 1
+    return input - 1
 }
 ```
 
@@ -1187,7 +1187,7 @@ or the `stepBackward(_:)` function based on a Boolean parameter called `backward
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
-   return backward ? stepBackward : stepForward
+    return backward ? stepBackward : stepForward
 }
 ```
 
@@ -1238,8 +1238,8 @@ it can be used to count to zero:
 print("Counting to zero:")
 // Counting to zero:
 while currentValue != 0 {
-   print("\(currentValue)... ")
-   currentValue = moveNearerToZero(currentValue)
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
 }
 print("zero!")
 // 3...
@@ -1284,16 +1284,16 @@ to use and return nested functions:
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
-   func stepForward(input: Int) -> Int { return input + 1 }
-   func stepBackward(input: Int) -> Int { return input - 1 }
-   return backward ? stepBackward : stepForward
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backward ? stepBackward : stepForward
 }
 var currentValue = -4
 let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 // moveNearerToZero now refers to the nested stepForward() function
 while currentValue != 0 {
-   print("\(currentValue)... ")
-   currentValue = moveNearerToZero(currentValue)
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
 }
 print("zero!")
 // -4...

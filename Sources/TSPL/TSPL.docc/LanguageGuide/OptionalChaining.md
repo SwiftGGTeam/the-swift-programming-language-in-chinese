@@ -45,11 +45,11 @@ First, two classes called `Person` and `Residence` are defined:
 
 ```swift
 class Person {
-   var residence: Residence?
+    var residence: Residence?
 }
 
 class Residence {
-   var numberOfRooms = 1
+    var numberOfRooms = 1
 }
 ```
 
@@ -121,9 +121,9 @@ To use optional chaining, use a question mark in place of the exclamation point:
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
-   print("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-   print("Unable to retrieve the number of rooms.")
+    print("Unable to retrieve the number of rooms.")
 }
 // Prints "Unable to retrieve the number of rooms."
 ```
@@ -182,9 +182,9 @@ the default `numberOfRooms` value of `1`:
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
-   print("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-   print("Unable to retrieve the number of rooms.")
+    print("Unable to retrieve the number of rooms.")
 }
 // Prints "John's residence has 1 room(s)."
 ```
@@ -223,7 +223,7 @@ The `Person` class is defined in the same way as before:
 
 ```swift
 class Person {
-   var residence: Residence?
+    var residence: Residence?
 }
 ```
 
@@ -244,22 +244,22 @@ which is initialized with an empty array of type `[Room]`:
 
 ```swift
 class Residence {
-   var rooms: [Room] = []
-   var numberOfRooms: Int {
-      return rooms.count
-   }
-   subscript(i: Int) -> Room {
-      get {
-         return rooms[i]
-      }
-      set {
-         rooms[i] = newValue
-      }
-   }
-   func printNumberOfRooms() {
-      print("The number of rooms is \(numberOfRooms)")
-   }
-   var address: Address?
+    var rooms: [Room] = []
+    var numberOfRooms: Int {
+        return rooms.count
+    }
+    subscript(i: Int) -> Room {
+        get {
+            return rooms[i]
+        }
+        set {
+            rooms[i] = newValue
+        }
+    }
+    func printNumberOfRooms() {
+        print("The number of rooms is \(numberOfRooms)")
+    }
+    var address: Address?
 }
 ```
 
@@ -312,8 +312,8 @@ and an initializer to set that property to a suitable room name:
 
 ```swift
 class Room {
-   let name: String
-   init(name: String) { self.name = name }
+    let name: String
+    init(name: String) { self.name = name }
 }
 ```
 
@@ -337,18 +337,18 @@ The third property, `street`, is used to name the street for that address:
 
 ```swift
 class Address {
-   var buildingName: String?
-   var buildingNumber: String?
-   var street: String?
-   func buildingIdentifier() -> String? {
-      if let buildingNumber = buildingNumber, let street = street {
+    var buildingName: String?
+    var buildingNumber: String?
+    var street: String?
+    func buildingIdentifier() -> String? {
+        if let buildingNumber = buildingNumber, let street = street {
           return "\(buildingNumber) \(street)"
-      } else if buildingName != nil {
+        } else if buildingName != nil {
           return buildingName
-      } else {
+        } else {
           return nil
-      }
-   }
+        }
+    }
 }
 ```
 
@@ -393,9 +393,9 @@ and try to access its `numberOfRooms` property as before:
 ```swift
 let john = Person()
 if let roomCount = john.residence?.numberOfRooms {
-   print("John's residence has \(roomCount) room(s).")
+    print("John's residence has \(roomCount) room(s).")
 } else {
-   print("Unable to retrieve the number of rooms.")
+    print("Unable to retrieve the number of rooms.")
 }
 // Prints "Unable to retrieve the number of rooms."
 ```
@@ -503,7 +503,7 @@ Here's how the method looks:
 
 ```swift
 func printNumberOfRooms() {
-   print("The number of rooms is \(numberOfRooms)")
+    print("The number of rooms is \(numberOfRooms)")
 }
 ```
 
@@ -535,9 +535,9 @@ to see if the method call was successful:
 
 ```swift
 if john.residence?.printNumberOfRooms() != nil {
-   print("It was possible to print the number of rooms.")
+    print("It was possible to print the number of rooms.")
 } else {
-   print("It was not possible to print the number of rooms.")
+    print("It was not possible to print the number of rooms.")
 }
 // Prints "It was not possible to print the number of rooms."
 ```
@@ -565,9 +565,9 @@ which enables you to compare against `nil` to see if the property was set succes
 
 ```swift
 if (john.residence?.address = someAddress) != nil {
-   print("It was possible to set the address.")
+    print("It was possible to set the address.")
 } else {
-   print("It was not possible to set the address.")
+    print("It was not possible to set the address.")
 }
 // Prints "It was not possible to set the address."
 ```
@@ -605,9 +605,9 @@ the subscript call fails:
 
 ```swift
 if let firstRoomName = john.residence?[0].name {
-   print("The first room name is \(firstRoomName).")
+    print("The first room name is \(firstRoomName).")
 } else {
-   print("Unable to retrieve the first room name.")
+    print("Unable to retrieve the first room name.")
 }
 // Prints "Unable to retrieve the first room name."
 ```
@@ -660,9 +660,9 @@ johnsHouse.rooms.append(Room(name: "Kitchen"))
 john.residence = johnsHouse
 
 if let firstRoomName = john.residence?[0].name {
-   print("The first room name is \(firstRoomName).")
+    print("The first room name is \(firstRoomName).")
 } else {
-   print("Unable to retrieve the first room name.")
+    print("Unable to retrieve the first room name.")
 }
 // Prints "The first room name is Living Room."
 ```
@@ -758,9 +758,9 @@ both of which are of optional type:
 
 ```swift
 if let johnsStreet = john.residence?.address?.street {
-   print("John's street name is \(johnsStreet).")
+    print("John's street name is \(johnsStreet).")
 } else {
-   print("Unable to retrieve the address.")
+    print("Unable to retrieve the address.")
 }
 // Prints "Unable to retrieve the address."
 ```
@@ -801,9 +801,9 @@ johnsAddress.street = "Laurel Street"
 john.residence?.address = johnsAddress
 
 if let johnsStreet = john.residence?.address?.street {
-   print("John's street name is \(johnsStreet).")
+    print("John's street name is \(johnsStreet).")
 } else {
-   print("Unable to retrieve the address.")
+    print("Unable to retrieve the address.")
 }
 // Prints "John's street name is Laurel Street."
 ```
@@ -846,7 +846,7 @@ is also `String?`:
 
 ```swift
 if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
-   print("John's building identifier is \(buildingIdentifier).")
+    print("John's building identifier is \(buildingIdentifier).")
 }
 // Prints "John's building identifier is The Larches."
 ```
@@ -868,12 +868,12 @@ place the optional chaining question mark *after* the method's parentheses:
 
 ```swift
 if let beginsWithThe =
-   john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
-   if beginsWithThe {
-      print("John's building identifier begins with \"The\".")
-   } else {
-      print("John's building identifier doesn't begin with \"The\".")
-   }
+    john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
+    if beginsWithThe {
+        print("John's building identifier begins with \"The\".")
+    } else {
+        print("John's building identifier doesn't begin with \"The\".")
+    }
 }
 // Prints "John's building identifier begins with "The"."
 ```

@@ -200,8 +200,8 @@ or has a cost that exceeds the current deposited amount:
 
 ```swift
 struct Item {
-   var price: Int
-   var count: Int
+    var price: Int
+    var count: Int
 }
 
 class VendingMachine {
@@ -214,15 +214,15 @@ class VendingMachine {
 
     func vend(itemNamed name: String) throws {
         guard let item = inventory[name] else {
-            throw VendingMachineError.invalidSelection
+                throw VendingMachineError.invalidSelection
         }
 
         guard item.count > 0 else {
-            throw VendingMachineError.outOfStock
+                throw VendingMachineError.outOfStock
         }
 
         guard item.price <= coinsDeposited else {
-            throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
+                throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
         }
 
         coinsDeposited -= item.price
@@ -604,7 +604,7 @@ in the following code `x` and `y` have the same value and behavior:
 
 ```swift
 func someThrowingFunction() throws -> Int {
-   // ...
+    // ...
 }
 
 let x = try? someThrowingFunction()
@@ -740,16 +740,16 @@ The last `defer` statement in source code order executes first.
 
 ```swift
 func processFile(filename: String) throws {
-   if exists(filename) {
-      let file = open(filename)
-      defer {
-         close(file)
-      }
-      while let line = try file.readline() {
-         // Work with the file.
-      }
-      // close(file) is called here, at the end of the scope.
-   }
+    if exists(filename) {
+        let file = open(filename)
+        defer {
+            close(file)
+        }
+        while let line = try file.readline() {
+            // Work with the file.
+        }
+        // close(file) is called here, at the end of the scope.
+    }
 }
 ```
 

@@ -957,13 +957,13 @@ all mutation has finished before the function returns.
 
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
-   // Make a local copy and manually copy it back.
-   var localX = x
-   defer { x = localX }
+    // Make a local copy and manually copy it back.
+    var localX = x
+    defer { x = localX }
 
-   // Operate on localX asynchronously, then wait before returning.
-   queue.async { someMutatingOperation(&localX) }
-   queue.sync {}
+    // Operate on localX asynchronously, then wait before returning.
+    queue.async { someMutatingOperation(&localX) }
+    queue.sync {}
 }
 ```
 
@@ -1349,12 +1349,12 @@ func alwaysThrows() throws {
     throw SomeError.error
 }
 func someFunction(callback: () throws -> Void) rethrows {
-   do {
-      try callback()
-      try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
-   } catch {
-      throw AnotherError.error
-   }
+    do {
+        try callback()
+        try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+    } catch {
+        throw AnotherError.error
+    }
 }
 ```
 
@@ -1572,8 +1572,8 @@ you can get a reference to an enumeration case and apply it later in your code.
 
 ```swift
 enum Number {
-   case integer(Int)
-   case real(Double)
+    case integer(Int)
+    case real(Double)
 }
 let f = Number.integer
 // f is a function of type (Int) -> Number
@@ -1632,8 +1632,8 @@ An indirect case must have an associated value.
 
 ```swift
 enum Tree<T> {
-   case empty
-   indirect case node(value: T, left: Tree, right: Tree)
+    case empty
+    indirect case node(value: T, left: Tree, right: Tree)
 }
 ```
 
@@ -1734,7 +1734,7 @@ that's automatically incremented from the raw value of the previous case.
 
 ```swift
 enum ExampleEnum: Int {
-   case a, b, c = 5, d
+    case a, b, c = 5, d
 }
 ```
 
@@ -1760,7 +1760,7 @@ each unassigned case is implicitly assigned a string with the same text as the n
 
 ```swift
 enum GamePlayMode: String {
-   case cooperative, individual, competitive
+    case cooperative, individual, competitive
 }
 ```
 
@@ -2709,8 +2709,8 @@ struct SomeStruct {
     // produces an optional instance of 'SomeStruct'
     init?(input: String) {
         if input.isEmpty {
-            // discard 'self' and return 'nil'
-            return nil
+                // discard 'self' and return 'nil'
+                return nil
         }
         property = input
     }
@@ -2952,9 +2952,9 @@ extension Pair: TitledLoggable where T: TitledLoggable {
 }
 
 extension String: TitledLoggable {
-   static var logTitle: String {
-      return "String"
-   }
+    static var logTitle: String {
+        return "String"
+    }
 }
 ```
 
@@ -3040,7 +3040,7 @@ the default implementation provided by the `Loggable` protocol is used instead.
 
 ```swift
 func doSomething<T: Loggable>(with x: T) {
-   x.log()
+    x.log()
 }
 doSomething(with: oneAndTwo)
 // Prints "(one, two)"
@@ -3088,7 +3088,7 @@ and one for arrays with `String` elements.
 
 ```swift
 protocol Serializable {
-   func serialize() -> Any
+    func serialize() -> Any
 }
 
 extension Array: Serializable where Element == Int {
@@ -3189,21 +3189,21 @@ to both `TitledLoggable` and the new `MarkedLoggable` protocol.
 
 ```swift
 protocol MarkedLoggable: Loggable {
-   func markAndLog()
+    func markAndLog()
 }
 
 extension MarkedLoggable {
-   func markAndLog() {
-      print("----------")
-      log()
-   }
+    func markAndLog() {
+        print("----------")
+        log()
+    }
 }
 
 extension Array: Loggable where Element: Loggable { }
 extension Array: TitledLoggable where Element: TitledLoggable {
-   static var logTitle: String {
-      return "Array of '\(Element.logTitle)'"
-   }
+    static var logTitle: String {
+        return "Array of '\(Element.logTitle)'"
+    }
 }
 extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```

@@ -132,7 +132,7 @@ including important milestones.
   ```swift
   // First release
   protocol MyProtocol {
-      // protocol definition
+        // protocol definition
   }
   ```
   
@@ -151,7 +151,7 @@ including important milestones.
   ```swift
   // Subsequent release renames MyProtocol
   protocol MyRenamedProtocol {
-      // protocol definition
+        // protocol definition
   }
   
   @available(*, unavailable, renamed: "MyRenamedProtocol")
@@ -278,9 +278,9 @@ as if it's a function that takes any number of arguments.
 struct TelephoneExchange {
     func dynamicallyCall(withArguments phoneNumber: [Int]) {
         if phoneNumber == [4, 1, 1] {
-            print("Get Swift help on forums.swift.org")
+                print("Get Swift help on forums.swift.org")
         } else {
-            print("Unrecognized number")
+                print("Unrecognized number")
         }
     }
 }
@@ -343,10 +343,10 @@ if you implement the `dynamicallyCall(withKeywordArguments:)` method.
 struct Repeater {
     func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, Int>) -> String {
         return pairs
-            .map { label, count in
+                .map { label, count in
                 repeatElement(label, count: count).joined(separator: " ")
-            }
-            .joined(separator: "\n")
+                }
+                .joined(separator: "\n")
     }
 }
 
@@ -1041,11 +1041,11 @@ rather than just as the name of the property itself.
 
 ```swift
 class ExampleClass: NSObject {
-   @objc var enabled: Bool {
-      @objc(isEnabled) get {
-         // Return the appropriate value
-      }
-   }
+    @objc var enabled: Bool {
+        @objc(isEnabled) get {
+            // Return the appropriate value
+        }
+    }
 }
 ```
 
@@ -1525,37 +1525,37 @@ into code that calls the static methods of the result builder type:
   
   ```swift
   protocol Drawable {
-      func draw() -> String
+        func draw() -> String
   }
   struct Text: Drawable {
-      var content: String
-      init(_ content: String) { self.content = content }
-      func draw() -> String { return content }
+        var content: String
+        init(_ content: String) { self.content = content }
+        func draw() -> String { return content }
   }
   struct Line<D: Drawable>: Drawable {
-      var elements: [D]
-      func draw() -> String {
+        var elements: [D]
+        func draw() -> String {
           return elements.map { $0.draw() }.joined(separator: "")
-      }
+        }
   }
   struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
-      var content: Drawable
-      func draw() -> String { return content.draw() }
+        var content: Drawable
+        func draw() -> String { return content.draw() }
   }
   
   @resultBuilder
   struct DrawingBuilder {
-      static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+        static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
           return Line(elements: components)
-      }
-      static func buildEither<First, Second>(first: First)
+        }
+        static func buildEither<First, Second>(first: First)
               -> DrawEither<First, Second> {
           return DrawEither(content: first)
-      }
-      static func buildEither<First, Second>(second: Second)
+        }
+        static func buildEither<First, Second>(second: Second)
               -> DrawEither<First, Second> {
           return DrawEither(content: second)
-      }
+        }
   }
   ```
   
@@ -1566,16 +1566,16 @@ into code that calls the static methods of the result builder type:
   ```swift
   @available(macOS 99, *)
   struct FutureText: Drawable {
-      var content: String
-      init(_ content: String) { self.content = content }
-      func draw() -> String { return content }
+        var content: String
+        init(_ content: String) { self.content = content }
+        func draw() -> String { return content }
   }
   @DrawingBuilder var brokenDrawing: Drawable {
-      if #available(macOS 99, *) {
+        if #available(macOS 99, *) {
           FutureText("Inside.future")  // Problem
-      } else {
+        } else {
           Text("Inside.present")
-      }
+        }
   }
   // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
   ```
@@ -1595,21 +1595,21 @@ into code that calls the static methods of the result builder type:
   
   ```swift
   struct AnyDrawable: Drawable {
-      var content: Drawable
-      func draw() -> String { return content.draw() }
+        var content: Drawable
+        func draw() -> String { return content.draw() }
   }
   extension DrawingBuilder {
-      static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+        static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
           return AnyDrawable(content: content)
-      }
+        }
   }
   
   @DrawingBuilder var typeErasedDrawing: Drawable {
-      if #available(macOS 99, *) {
+        if #available(macOS 99, *) {
           FutureText("Inside.future")
-      } else {
+        } else {
           Text("Inside.present")
-      }
+        }
   }
   // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
   ```
@@ -1634,27 +1634,27 @@ into code that calls the static methods of the result builder type:
   ```swift
   let someNumber = 19
   @ArrayBuilder var builderConditional: [Int] {
-      if someNumber < 12 {
+        if someNumber < 12 {
           31
-      } else if someNumber == 19 {
+        } else if someNumber == 19 {
           32
-      } else {
+        } else {
           33
-      }
+        }
   }
   
   var manualConditional: [Int]
   if someNumber < 12 {
-      let partialResult = ArrayBuilder.buildExpression(31)
-      let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
-      manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+        let partialResult = ArrayBuilder.buildExpression(31)
+        let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+        manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
   } else if someNumber == 19 {
-      let partialResult = ArrayBuilder.buildExpression(32)
-      let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
-      manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+        let partialResult = ArrayBuilder.buildExpression(32)
+        let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+        manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
   } else {
-      let partialResult = ArrayBuilder.buildExpression(33)
-      manualConditional = ArrayBuilder.buildEither(second: partialResult)
+        let partialResult = ArrayBuilder.buildExpression(33)
+        manualConditional = ArrayBuilder.buildEither(second: partialResult)
   }
   ```
   
@@ -1704,12 +1704,12 @@ into code that calls the static methods of the result builder type:
   
   ```swift
   @ArrayBuilder var builderOptional: [Int] {
-      if (someNumber % 2) == 1 { 20 }
+        if (someNumber % 2) == 1 { 20 }
   }
   
   var partialResult: [Int]? = nil
   if (someNumber % 2) == 1 {
-      partialResult = ArrayBuilder.buildExpression(20)
+        partialResult = ArrayBuilder.buildExpression(20)
   }
   var manualOptional = ArrayBuilder.buildOptional(partialResult)
   ```
@@ -1742,15 +1742,15 @@ into code that calls the static methods of the result builder type:
   
   ```swift
   @ArrayBuilder var builderBlock: [Int] {
-      100
-      200
-      300
+        100
+        200
+        300
   }
   
   var manualBlock = ArrayBuilder.buildBlock(
-      ArrayBuilder.buildExpression(100),
-      ArrayBuilder.buildExpression(200),
-      ArrayBuilder.buildExpression(300)
+        ArrayBuilder.buildExpression(100),
+        ArrayBuilder.buildExpression(200),
+        ArrayBuilder.buildExpression(300)
   )
   ```
   
@@ -1782,15 +1782,15 @@ into code that calls the static methods of the result builder type:
   
   ```swift
   @ArrayBuilder var builderArray: [Int] {
-      for i in 5...7 {
+        for i in 5...7 {
           100 + i
-      }
+        }
   }
   
   var temporary: [[Int]] = []
   for i in 5...7 {
-      let partialResult = ArrayBuilder.buildExpression(100 + i)
-      temporary.append(partialResult)
+        let partialResult = ArrayBuilder.buildExpression(100 + i)
+        temporary.append(partialResult)
   }
   let manualArray = ArrayBuilder.buildArray(temporary)
   ```

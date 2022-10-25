@@ -393,7 +393,7 @@ The second block is then closed, followed by the first block:
 
 ```swift
 /* This is the start of the first multiline comment.
-   /* This is the second, nested multiline comment. */
+    /* This is the second, nested multiline comment. */
 This is the end of the first multiline comment. */
 ```
 
@@ -993,9 +993,9 @@ such as the `if` statement:
 
 ```swift
 if turnipsAreDelicious {
-   print("Mmm, tasty turnips!")
+    print("Mmm, tasty turnips!")
 } else {
-   print("Eww, turnips are horrible.")
+    print("Eww, turnips are horrible.")
 }
 // Prints "Eww, turnips are horrible."
 ```
@@ -1022,7 +1022,7 @@ The following example reports a compile-time error:
 ```swift
 let i = 1
 if i {
-   // this example will not compile, and will report an error
+    // this example will not compile, and will report an error
 }
 ```
 
@@ -1047,7 +1047,7 @@ However, the alternative example below is valid:
 ```swift
 let i = 1
 if i == 1 {
-   // this example will compile successfully
+    // this example will compile successfully
 }
 ```
 
@@ -1349,7 +1349,7 @@ If an optional has a value, it's considered to be “not equal to” `nil`:
 
 ```swift
 if convertedNumber != nil {
-   print("convertedNumber contains some integer value.")
+    print("convertedNumber contains some integer value.")
 }
 // Prints "convertedNumber contains some integer value."
 ```
@@ -1375,7 +1375,7 @@ This is known as *forced unwrapping* of the optional's value:
 
 ```swift
 if convertedNumber != nil {
-   print("convertedNumber has an integer value of \(convertedNumber!).")
+    print("convertedNumber has an integer value of \(convertedNumber!).")
 }
 // Prints "convertedNumber has an integer value of 123."
 ```
@@ -1424,9 +1424,9 @@ to use optional binding rather than forced unwrapping:
 
 ```swift
 if let actualNumber = Int(possibleNumber) {
-   print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
+    print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
 } else {
-   print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
+    print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
 }
 // Prints "The string "123" has an integer value of 123"
 ```
@@ -1541,14 +1541,14 @@ The following `if` statements are equivalent:
 
 ```swift
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
-   print("\(firstNumber) < \(secondNumber) < 100")
+    print("\(firstNumber) < \(secondNumber) < 100")
 }
 // Prints "4 < 42 < 100"
 
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
         if firstNumber < secondNumber && secondNumber < 100 {
-            print("\(firstNumber) < \(secondNumber) < 100")
+                print("\(firstNumber) < \(secondNumber) < 100")
         }
     }
 }
@@ -1685,7 +1685,7 @@ the same way you check a normal optional:
 
 ```swift
 if assumedString != nil {
-   print(assumedString!)
+    print(assumedString!)
 }
 // Prints "An implicitly unwrapped optional string."
 ```
@@ -1707,7 +1707,7 @@ to check and unwrap its value in a single statement:
 
 ```swift
 if let definiteString = assumedString {
-   print(definiteString)
+    print(definiteString)
 }
 // Prints "An implicitly unwrapped optional string."
 ```
@@ -1745,7 +1745,7 @@ That function's caller can then *catch* the error and respond appropriately.
 
 ```swift
 func canThrowAnError() throws {
-   // this function may or may not throw an error
+    // this function may or may not throw an error
 }
 ```
 
@@ -1777,10 +1777,10 @@ until they're handled by a `catch` clause.
 
 ```swift
 do {
-   try canThrowAnError()
-   // no error was thrown
+    try canThrowAnError()
+    // no error was thrown
 } catch {
-   // an error was thrown
+    // an error was thrown
 }
 ```
 

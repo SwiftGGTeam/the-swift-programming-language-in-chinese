@@ -280,9 +280,9 @@ as a shortcut for checking whether the `count` property is equal to `0`:
 
 ```swift
 if shoppingList.isEmpty {
-   print("The shopping list is empty.")
+    print("The shopping list is empty.")
 } else {
-   print("The shopping list isn't empty.")
+    print("The shopping list isn't empty.")
 }
 // Prints "The shopping list isn't empty."
 ```
@@ -529,7 +529,7 @@ You can iterate over the entire set of values in an array with the `for`-`in` lo
 
 ```swift
 for item in shoppingList {
-   print(item)
+    print(item)
 }
 // Six eggs
 // Milk
@@ -567,7 +567,7 @@ as part of the iteration:
 
 ```swift
 for (index, value) in shoppingList.enumerated() {
-   print("Item \(index + 1): \(value)")
+    print("Item \(index + 1): \(value)")
 }
 // Item 1: Six eggs
 // Item 2: Milk
@@ -770,9 +770,9 @@ as a shortcut for checking whether the `count` property is equal to `0`:
 
 ```swift
 if favoriteGenres.isEmpty {
-   print("As far as music goes, I'm not picky.")
+    print("As far as music goes, I'm not picky.")
 } else {
-   print("I have particular music preferences.")
+    print("I have particular music preferences.")
 }
 // Prints "I have particular music preferences."
 ```
@@ -817,9 +817,9 @@ Alternatively, all items in a set can be removed with its `removeAll()` method.
 
 ```swift
 if let removedGenre = favoriteGenres.remove("Rock") {
-   print("\(removedGenre)? I'm over it.")
+    print("\(removedGenre)? I'm over it.")
 } else {
-   print("I never much cared for that.")
+    print("I never much cared for that.")
 }
 // Prints "Rock? I'm over it."
 ```
@@ -869,7 +869,7 @@ You can iterate over the values in a set with a `for`-`in` loop.
 
 ```swift
 for genre in favoriteGenres {
-   print("\(genre)")
+    print("\(genre)")
 }
 // Classical
 // [Tool J]
@@ -900,7 +900,7 @@ sorted using the `<` operator.
 
 ```swift
 for genre in favoriteGenres.sorted() {
-   print("\(genre)")
+    print("\(genre)")
 }
 // Classical
 // Hip hop
@@ -1234,9 +1234,9 @@ as a shortcut for checking whether the `count` property is equal to `0`:
 
 ```swift
 if airports.isEmpty {
-   print("The airports dictionary is empty.")
+    print("The airports dictionary is empty.")
 } else {
-   print("The airports dictionary isn't empty.")
+    print("The airports dictionary isn't empty.")
 }
 // Prints "The airports dictionary isn't empty."
 ```
@@ -1313,7 +1313,7 @@ or `nil` if no value existed:
 
 ```swift
 if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
-   print("The old value for DUB was \(oldValue).")
+    print("The old value for DUB was \(oldValue).")
 }
 // Prints "The old value for DUB was Dublin."
 ```
@@ -1339,9 +1339,9 @@ Otherwise, the subscript returns `nil`:
 
 ```swift
 if let airportName = airports["DUB"] {
-   print("The name of the airport is \(airportName).")
+    print("The name of the airport is \(airportName).")
 } else {
-   print("That airport isn't in the airports dictionary.")
+    print("That airport isn't in the airports dictionary.")
 }
 // Prints "The name of the airport is Dublin Airport."
 ```
@@ -1397,9 +1397,9 @@ or returns `nil` if no value existed:
 
 ```swift
 if let removedValue = airports.removeValue(forKey: "DUB") {
-   print("The removed airport's name is \(removedValue).")
+    print("The removed airport's name is \(removedValue).")
 } else {
-   print("The airports dictionary doesn't contain a value for DUB.")
+    print("The airports dictionary doesn't contain a value for DUB.")
 }
 // Prints "The removed airport's name is Dublin Airport."
 ```
@@ -1427,7 +1427,7 @@ as part of the iteration:
 
 ```swift
 for (airportCode, airportName) in airports {
-   print("\(airportCode): \(airportName)")
+    print("\(airportCode): \(airportName)")
 }
 // LHR: London Heathrow
 // YYZ: Toronto Pearson
@@ -1453,13 +1453,13 @@ by accessing its `keys` and `values` properties:
 
 ```swift
 for airportCode in airports.keys {
-   print("Airport code: \(airportCode)")
+    print("Airport code: \(airportCode)")
 }
 // Airport code: LHR
 // Airport code: YYZ
 
 for airportName in airports.values {
-   print("Airport name: \(airportName)")
+    print("Airport name: \(airportName)")
 }
 // Airport name: London Heathrow
 // Airport name: Toronto Pearson

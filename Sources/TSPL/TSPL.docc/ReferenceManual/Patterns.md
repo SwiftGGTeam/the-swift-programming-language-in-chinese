@@ -54,7 +54,7 @@ ignoring the current value of the range on each iteration of the loop:
 
 ```swift
 for _ in 1...3 {
-   // Do something three times.
+    // Do something three times.
 }
 ```
 
@@ -125,9 +125,9 @@ corresponding identifier pattern.
 ```swift
 let point = (3, 2)
 switch point {
-   // Bind x and y to the elements of point.
-   case let (x, y):
-      print("The point is at (\(x), \(y)).")
+    // Bind x and y to the elements of point.
+    case let (x, y):
+        print("The point is at (\(x), \(y)).")
 }
 // Prints "The point is at (3, 2)."
 ```
@@ -188,7 +188,7 @@ an expression pattern:
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
 // This code isn't valid.
 for (x, 0) in points {
-   /* ... */
+    /* ... */
 }
 ```
 
@@ -333,12 +333,12 @@ the following are equivalent:
 let someOptional: Int? = 42
 // Match using an enumeration case pattern.
 if case .some(let x) = someOptional {
-   print(x)
+    print(x)
 }
 
 // Match using an optional pattern.
 if case let x? = someOptional {
-   print(x)
+    print(x)
 }
 ```
 
@@ -370,7 +370,7 @@ executing the body of the loop only for non-`nil` elements.
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
 // Match only non-nil values.
 for case let number? in arrayOfOptionalInts {
-   print("Found a \(number)")
+    print("Found a \(number)")
 }
 // Found a 2
 // Found a 3
@@ -455,12 +455,12 @@ as the following example shows.
 ```swift
 let point = (1, 2)
 switch point {
-   case (0, 0):
-      print("(0, 0) is at the origin.")
-   case (-2...2, -2...2):
-      print("(\(point.0), \(point.1)) is near the origin.")
-   default:
-      print("The point is at (\(point.0), \(point.1)).")
+    case (0, 0):
+        print("(0, 0) is at the origin.")
+    case (-2...2, -2...2):
+        print("(\(point.0), \(point.1)) is near the origin.")
+    default:
+        print("The point is at (\(point.0), \(point.1)).")
 }
 // Prints "(1, 2) is near the origin."
 ```
@@ -490,13 +490,13 @@ with a string representations of points.
 ```swift
 // Overload the ~= operator to match a string with an integer.
 func ~= (pattern: String, value: Int) -> Bool {
-   return pattern == "\(value)"
+    return pattern == "\(value)"
 }
 switch point {
-   case ("0", "0"):
-      print("(0, 0) is at the origin.")
-   default:
-      print("The point is at (\(point.0), \(point.1)).")
+    case ("0", "0"):
+        print("(0, 0) is at the origin.")
+    default:
+        print("The point is at (\(point.0), \(point.1)).")
 }
 // Prints "The point is at (1, 2)."
 ```

@@ -715,7 +715,7 @@ to add together instances of the `Vector2D` structure:
 
 ```swift
 struct Vector2D {
-   var x = 0.0, y = 0.0
+    var x = 0.0, y = 0.0
 }
 
 extension Vector2D {
@@ -989,7 +989,7 @@ You can now use this operator to check whether two `Vector2D` instances are equi
 let twoThree = Vector2D(x: 2.0, y: 3.0)
 let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
 if twoThree == anotherTwoThree {
-   print("These two vectors are equivalent.")
+    print("These two vectors are equivalent.")
 }
 // Prints "These two vectors are equivalent."
 ```
@@ -1047,10 +1047,10 @@ you add a type method called `+++` to `Vector2D` as follows:
 
 ```swift
 extension Vector2D {
-   static prefix func +++ (vector: inout Vector2D) -> Vector2D {
-      vector += vector
-      return vector
-   }
+    static prefix func +++ (vector: inout Vector2D) -> Vector2D {
+        vector += vector
+        return vector
+    }
 }
 
 var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
@@ -1099,9 +1099,9 @@ which belongs to the precedence group `AdditionPrecedence`:
 ```swift
 infix operator +-: AdditionPrecedence
 extension Vector2D {
-   static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
-      return Vector2D(x: left.x + right.x, y: left.y - right.y)
-   }
+    static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+        return Vector2D(x: left.x + right.x, y: left.y - right.y)
+    }
 }
 let firstVector = Vector2D(x: 1.0, y: 2.0)
 let secondVector = Vector2D(x: 3.0, y: 4.0)

@@ -29,14 +29,14 @@ protocol Shape {
 }
 
 struct Triangle: Shape {
-   var size: Int
-   func draw() -> String {
+    var size: Int
+    func draw() -> String {
        var result: [String] = []
        for length in 1...size {
            result.append(String(repeating: "*", count: length))
        }
        return result.joined(separator: "\n")
-   }
+    }
 }
 let smallTriangle = Triangle(size: 3)
 print(smallTriangle.draw())
@@ -120,11 +120,11 @@ from joining a flipped triangle with another triangle.
 
 ```swift
 struct JoinedShape<T: Shape, U: Shape>: Shape {
-   var top: T
-   var bottom: U
-   func draw() -> String {
+    var top: T
+    var bottom: U
+    func draw() -> String {
        return top.draw() + "\n" + bottom.draw()
-   }
+    }
 }
 let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
 print(joinedTriangles.draw())
@@ -515,7 +515,7 @@ instead of an opaque return type:
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
-   return FlippedShape(shape: shape)
+    return FlippedShape(shape: shape)
 }
 ```
 
@@ -559,11 +559,11 @@ It reserves the flexibility to return values of multiple types:
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
-   if shape is Square {
-      return shape
-   }
+    if shape is Square {
+        return shape
+    }
 
-   return FlippedShape(shape: shape)
+    return FlippedShape(shape: shape)
 }
 ```
 

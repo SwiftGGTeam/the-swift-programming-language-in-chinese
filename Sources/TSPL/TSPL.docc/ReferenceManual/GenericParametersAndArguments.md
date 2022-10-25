@@ -52,10 +52,10 @@ for the type parameter `T` must conform to the `Comparable` protocol.
 
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
-   if x < y {
-      return y
-   }
-   return x
+    if x < y {
+        return y
+    }
+    return x
 }
 ```
 

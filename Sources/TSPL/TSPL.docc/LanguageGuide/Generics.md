@@ -26,9 +26,9 @@ which swaps two `Int` values:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
-   let temporaryA = a
-   a = b
-   b = temporaryA
+    let temporaryA = a
+    a = b
+    b = temporaryA
 }
 ```
 
@@ -81,15 +81,15 @@ such as the `swapTwoStrings(_:_:)` and `swapTwoDoubles(_:_:)` functions shown be
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
-   let temporaryA = a
-   a = b
-   b = temporaryA
+    let temporaryA = a
+    a = b
+    b = temporaryA
 }
 
 func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
-   let temporaryA = a
-   a = b
-   b = temporaryA
+    let temporaryA = a
+    a = b
+    b = temporaryA
 }
 ```
 
@@ -140,9 +140,9 @@ called `swapTwoValues(_:_:)`:
 
 ```swift
 func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
-   let temporaryA = a
-   a = b
-   b = temporaryA
+    let temporaryA = a
+    a = b
+    b = temporaryA
 }
 ```
 
@@ -338,13 +338,13 @@ in this case for a stack of `Int` values:
 
 ```swift
 struct IntStack {
-   var items: [Int] = []
-   mutating func push(_ item: Int) {
-      items.append(item)
-   }
-   mutating func pop() -> Int {
-      return items.removeLast()
-   }
+    var items: [Int] = []
+    mutating func push(_ item: Int) {
+        items.append(item)
+    }
+    mutating func pop() -> Int {
+        return items.removeLast()
+    }
 }
 ```
 
@@ -386,13 +386,13 @@ Here's a generic version of the same code:
 
 ```swift
 struct Stack<Element> {
-   var items: [Element] = []
-   mutating func push(_ item: Element) {
-      items.append(item)
-   }
-   mutating func pop() -> Element {
-      return items.removeLast()
-   }
+    var items: [Element] = []
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+    mutating func pop() -> Element {
+        return items.removeLast()
+    }
 }
 ```
 
@@ -509,9 +509,9 @@ which returns the top item on the stack without popping it from the stack:
 
 ```swift
 extension Stack {
-   var topItem: Element? {
-      return items.isEmpty ? nil : items[items.count - 1]
-   }
+    var topItem: Element? {
+        return items.isEmpty ? nil : items[items.count - 1]
+    }
 }
 ```
 
@@ -542,7 +542,7 @@ to access and query its top item without removing it.
 
 ```swift
 if let topItem = stackOfStrings.topItem {
-   print("The top item on the stack is \(topItem).")
+    print("The top item on the stack is \(topItem).")
 }
 // Prints "The top item on the stack is tres."
 ```
@@ -611,7 +611,7 @@ The basic syntax for type constraints on a generic function is shown below
 
 ```swift
 func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
-   // function body goes here
+    // function body goes here
 }
 ```
 
@@ -645,12 +645,12 @@ or `nil` if the string can't be found:
 
 ```swift
 func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
-   for (index, value) in array.enumerated() {
-      if value == valueToFind {
-         return index
-      }
-   }
-   return nil
+    for (index, value) in array.enumerated() {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
 }
 ```
 
@@ -675,7 +675,7 @@ The `findIndex(ofString:in:)` function can be used to find a string value in an 
 ```swift
 let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
 if let foundIndex = findIndex(ofString: "llama", in: strings) {
-   print("The index of llama is \(foundIndex)")
+    print("The index of llama is \(foundIndex)")
 }
 // Prints "The index of llama is 2"
 ```
@@ -707,12 +707,12 @@ for reasons explained after the example:
 
 ```swift
 func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
-   for (index, value) in array.enumerated() {
-      if value == valueToFind {
-         return index
-      }
-   }
-   return nil
+    for (index, value) in array.enumerated() {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
 }
 ```
 
@@ -767,12 +767,12 @@ as part of the type parameter's definition when you define the function:
 
 ```swift
 func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
-   for (index, value) in array.enumerated() {
-      if value == valueToFind {
-         return index
-      }
-   }
-   return nil
+    for (index, value) in array.enumerated() {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
 }
 ```
 
@@ -845,10 +845,10 @@ which declares an associated type called `Item`:
 
 ```swift
 protocol Container {
-   associatedtype Item
-   mutating func append(_ item: Item)
-   var count: Int { get }
-   subscript(i: Int) -> Item { get }
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
 }
 ```
 
@@ -914,25 +914,25 @@ adapted to conform to the `Container` protocol:
 
 ```swift
 struct IntStack: Container {
-   // original IntStack implementation
-   var items: [Int] = []
-   mutating func push(_ item: Int) {
-      items.append(item)
-   }
-   mutating func pop() -> Int {
-      return items.removeLast()
-   }
-   // conformance to the Container protocol
-   typealias Item = Int
-   mutating func append(_ item: Int) {
-      self.push(item)
-   }
-   var count: Int {
-      return items.count
-   }
-   subscript(i: Int) -> Int {
-      return items[i]
-   }
+    // original IntStack implementation
+    var items: [Int] = []
+    mutating func push(_ item: Int) {
+        items.append(item)
+    }
+    mutating func pop() -> Int {
+        return items.removeLast()
+    }
+    // conformance to the Container protocol
+    typealias Item = Int
+    mutating func append(_ item: Int) {
+        self.push(item)
+    }
+    var count: Int {
+        return items.count
+    }
+    subscript(i: Int) -> Int {
+        return items[i]
+    }
 }
 ```
 
@@ -988,24 +988,24 @@ You can also make the generic `Stack` type conform to the `Container` protocol:
 
 ```swift
 struct Stack<Element>: Container {
-   // original Stack<Element> implementation
-   var items: [Element] = []
-   mutating func push(_ item: Element) {
-      items.append(item)
-   }
-   mutating func pop() -> Element {
-      return items.removeLast()
-   }
-   // conformance to the Container protocol
-   mutating func append(_ item: Element) {
-      self.push(item)
-   }
-   var count: Int {
-      return items.count
-   }
-   subscript(i: Int) -> Element {
-      return items[i]
-   }
+    // original Stack<Element> implementation
+    var items: [Element] = []
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+    mutating func pop() -> Element {
+        return items.removeLast()
+    }
+    // conformance to the Container protocol
+    mutating func append(_ item: Element) {
+        self.push(item)
+    }
+    var count: Int {
+        return items.count
+    }
+    subscript(i: Int) -> Element {
+        return items[i]
+    }
 }
 ```
 
@@ -1085,10 +1085,10 @@ that requires the items in the container to be equatable.
 
 ```swift
 protocol Container {
-   associatedtype Item: Equatable
-   mutating func append(_ item: Item)
-   var count: Int { get }
-   subscript(i: Int) -> Item { get }
+    associatedtype Item: Equatable
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
 }
 ```
 
@@ -1158,7 +1158,7 @@ extension Stack: SuffixableContainer {
     func suffix(_ size: Int) -> Stack {
         var result = Stack()
         for index in (count-size)..<count {
-            result.append(self[index])
+                result.append(self[index])
         }
         return result
     }
@@ -1215,7 +1215,7 @@ extension IntStack: SuffixableContainer {
     func suffix(_ size: Int) -> Stack<Int> {
         var result = Stack<Int>()
         for index in (count-size)..<count {
-            result.append(self[index])
+                result.append(self[index])
         }
         return result
     }
@@ -1278,23 +1278,23 @@ and a generic `where` clause:
 
 ```swift
 func allItemsMatch<C1: Container, C2: Container>
-      (_ someContainer: C1, _ anotherContainer: C2) -> Bool
-      where C1.Item == C2.Item, C1.Item: Equatable {
+        (_ someContainer: C1, _ anotherContainer: C2) -> Bool
+        where C1.Item == C2.Item, C1.Item: Equatable {
 
-   // Check that both containers contain the same number of items.
-   if someContainer.count != anotherContainer.count {
-      return false
-   }
+    // Check that both containers contain the same number of items.
+    if someContainer.count != anotherContainer.count {
+        return false
+    }
 
-   // Check each pair of items to see if they're equivalent.
-   for i in 0..<someContainer.count {
-      if someContainer[i] != anotherContainer[i] {
-         return false
-      }
-   }
+    // Check each pair of items to see if they're equivalent.
+    for i in 0..<someContainer.count {
+        if someContainer[i] != anotherContainer[i] {
+            return false
+        }
+    }
 
-   // All items match, so return true.
-   return true
+    // All items match, so return true.
+    return true
 }
 ```
 
@@ -1385,9 +1385,9 @@ stackOfStrings.push("tres")
 var arrayOfStrings = ["uno", "dos", "tres"]
 
 if allItemsMatch(stackOfStrings, arrayOfStrings) {
-   print("All items match.")
+    print("All items match.")
 } else {
-   print("Not all items match.")
+    print("Not all items match.")
 }
 // Prints "All items match."
 ```
@@ -1436,7 +1436,7 @@ to add an `isTop(_:)` method.
 extension Stack where Element: Equatable {
     func isTop(_ item: Element) -> Bool {
         guard let topItem = items.last else {
-            return false
+                return false
         }
         return topItem == item
     }
@@ -1478,9 +1478,9 @@ Here's how the `isTop(_:)` method looks in action:
 
 ```swift
 if stackOfStrings.isTop("tres") {
-   print("Top element is tres.")
+    print("Top element is tres.")
 } else {
-   print("Top element is something else.")
+    print("Top element is something else.")
 }
 // Prints "Top element is tres."
 ```
@@ -1533,9 +1533,9 @@ to add a `startsWith(_:)` method.
 
 ```swift
 extension Container where Item: Equatable {
-   func startsWith(_ item: Item) -> Bool {
-      return count >= 1 && self[0] == item
-   }
+    func startsWith(_ item: Item) -> Bool {
+        return count >= 1 && self[0] == item
+    }
 }
 ```
 
@@ -1569,9 +1569,9 @@ as long as the container's items are equatable.
 
 ```swift
 if [9, 9, 9].startsWith(42) {
-   print("Starts with 42.")
+    print("Starts with 42.")
 } else {
-   print("Starts with something else.")
+    print("Starts with something else.")
 }
 // Prints "Starts with something else."
 ```
@@ -1601,7 +1601,7 @@ extension Container where Item == Double {
     func average() -> Double {
         var sum = 0.0
         for index in 0..<count {
-            sum += self[index]
+                sum += self[index]
         }
         return sum / Double(count)
     }
@@ -1666,7 +1666,7 @@ extension Container {
     func average() -> Double where Item == Int {
         var sum = 0.0
         for index in 0..<count {
-            sum += Double(self[index])
+                sum += Double(self[index])
         }
         return sum / Double(count)
     }
@@ -1723,7 +1723,7 @@ extension Container where Item == Int {
     func average() -> Double {
         var sum = 0.0
         for index in 0..<count {
-            sum += Double(self[index])
+                sum += Double(self[index])
         }
         return sum / Double(count)
     }
@@ -1777,13 +1777,13 @@ Here's how you write that:
 
 ```swift
 protocol Container {
-   associatedtype Item
-   mutating func append(_ item: Item)
-   var count: Int { get }
-   subscript(i: Int) -> Item { get }
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
 
-   associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
-   func makeIterator() -> Iterator
+    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+    func makeIterator() -> Iterator
 }
 ```
 
@@ -1911,10 +1911,10 @@ For example:
 ```swift
 extension Container {
     subscript<Indices: Sequence>(indices: Indices) -> [Item]
-            where Indices.Iterator.Element == Int {
+                where Indices.Iterator.Element == Int {
         var result: [Item] = []
         for index in indices {
-            result.append(self[index])
+                result.append(self[index])
         }
         return result
     }

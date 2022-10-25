@@ -35,16 +35,16 @@ which can be used to count the number of times an action occurs:
 
 ```swift
 class Counter {
-   var count = 0
-   func increment() {
-      count += 1
-   }
-   func increment(by amount: Int) {
-      count += amount
-   }
-   func reset() {
-      count = 0
-   }
+    var count = 0
+    func increment() {
+        count += 1
+    }
+    func increment(by amount: Int) {
+        count += amount
+    }
+    func reset() {
+        count = 0
+    }
 }
 ```
 
@@ -127,7 +127,7 @@ The `increment()` method in the example above could have been written like this:
 
 ```swift
 func increment() {
-   self.count += 1
+    self.count += 1
 }
 ```
 
@@ -168,14 +168,14 @@ a method parameter called `x` and an instance property that's also called `x`:
 
 ```swift
 struct Point {
-   var x = 0.0, y = 0.0
-   func isToTheRightOf(x: Double) -> Bool {
-      return self.x > x
-   }
+    var x = 0.0, y = 0.0
+    func isToTheRightOf(x: Double) -> Bool {
+        return self.x > x
+    }
 }
 let somePoint = Point(x: 4.0, y: 5.0)
 if somePoint.isToTheRightOf(x: 1.0) {
-   print("This point is to the right of the line where x == 1.0")
+    print("This point is to the right of the line where x == 1.0")
 }
 // Prints "This point is to the right of the line where x == 1.0"
 ```
@@ -225,11 +225,11 @@ before the `func` keyword for that method:
 
 ```swift
 struct Point {
-   var x = 0.0, y = 0.0
-   mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-      x += deltaX
-      y += deltaY
-   }
+    var x = 0.0, y = 0.0
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        x += deltaX
+        y += deltaY
+    }
 }
 var somePoint = Point(x: 1.0, y: 1.0)
 somePoint.moveBy(x: 2.0, y: 3.0)
@@ -312,10 +312,10 @@ The `Point` example shown above could have been written in the following way ins
 
 ```swift
 struct Point {
-   var x = 0.0, y = 0.0
-   mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-      self = Point(x: x + deltaX, y: y + deltaY)
-   }
+    var x = 0.0, y = 0.0
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        self = Point(x: x + deltaX, y: y + deltaY)
+    }
 }
 ```
 
@@ -347,17 +347,17 @@ a different case from the same enumeration:
 
 ```swift
 enum TriStateSwitch {
-   case off, low, high
-   mutating func next() {
-      switch self {
-         case .off:
-            self = .low
-         case .low:
-            self = .high
-         case .high:
-            self = .off
-      }
-   }
+    case off, low, high
+    mutating func next() {
+        switch self {
+            case .off:
+                self = .low
+            case .low:
+                self = .high
+            case .high:
+                self = .off
+        }
+    }
 }
 var ovenLight = TriStateSwitch.low
 ovenLight.next()
@@ -418,9 +418,9 @@ Here's how you call a type method on a class called `SomeClass`:
 
 ```swift
 class SomeClass {
-   class func someTypeMethod() {
-      // type method implementation goes here
-   }
+    class func someTypeMethod() {
+        // type method implementation goes here
+    }
 }
 SomeClass.someTypeMethod()
 ```
@@ -467,26 +467,26 @@ It also tracks the current level for an individual player.
 
 ```swift
 struct LevelTracker {
-   static var highestUnlockedLevel = 1
-   var currentLevel = 1
+    static var highestUnlockedLevel = 1
+    var currentLevel = 1
 
-   static func unlock(_ level: Int) {
-      if level > highestUnlockedLevel { highestUnlockedLevel = level }
-   }
+    static func unlock(_ level: Int) {
+        if level > highestUnlockedLevel { highestUnlockedLevel = level }
+    }
 
-   static func isUnlocked(_ level: Int) -> Bool {
-      return level <= highestUnlockedLevel
-   }
+    static func isUnlocked(_ level: Int) -> Bool {
+        return level <= highestUnlockedLevel
+    }
 
-   @discardableResult
-   mutating func advance(to level: Int) -> Bool {
-      if LevelTracker.isUnlocked(level) {
-         currentLevel = level
-         return true
-      } else {
-         return false
-      }
-   }
+    @discardableResult
+    mutating func advance(to level: Int) -> Bool {
+        if LevelTracker.isUnlocked(level) {
+            currentLevel = level
+            return true
+        } else {
+            return false
+        }
+    }
 }
 ```
 
@@ -555,15 +555,15 @@ to track and update the progress of an individual player:
 
 ```swift
 class Player {
-   var tracker = LevelTracker()
-   let playerName: String
-   func complete(level: Int) {
-      LevelTracker.unlock(level + 1)
-      tracker.advance(to: level + 1)
-   }
-   init(name: String) {
-      playerName = name
-   }
+    var tracker = LevelTracker()
+    let playerName: String
+    func complete(level: Int) {
+        LevelTracker.unlock(level + 1)
+        tracker.advance(to: level + 1)
+    }
+    init(name: String) {
+        playerName = name
+    }
 }
 ```
 
@@ -625,9 +625,9 @@ the attempt to set the player's current level fails:
 ```swift
 player = Player(name: "Beto")
 if player.tracker.advance(to: 6) {
-   print("player is now on level 6")
+    print("player is now on level 6")
 } else {
-   print("level 6 hasn't yet been unlocked")
+    print("level 6 hasn't yet been unlocked")
 }
 // Prints "level 6 hasn't yet been unlocked"
 ```

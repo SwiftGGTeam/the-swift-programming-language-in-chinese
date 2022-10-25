@@ -78,8 +78,8 @@ whose range length can't be changed after it's created:
 
 ```swift
 struct FixedLengthRange {
-   var firstValue: Int
-   let length: Int
+    var firstValue: Int
+    let length: Int
 }
 var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
 // the range represents integer values 0, 1, and 2
@@ -207,18 +207,18 @@ neither of which is shown in full:
 
 ```swift
 class DataImporter {
-   /*
-   DataImporter is a class to import data from an external file.
-   The class is assumed to take a nontrivial amount of time to initialize.
-   */
-   var filename = "data.txt"
-   // the DataImporter class would provide data importing functionality here
+    /*
+    DataImporter is a class to import data from an external file.
+    The class is assumed to take a nontrivial amount of time to initialize.
+    */
+    var filename = "data.txt"
+    // the DataImporter class would provide data importing functionality here
 }
 
 class DataManager {
-   lazy var importer = DataImporter()
-   var data: [String] = []
-   // the DataManager class would provide data management functionality here
+    lazy var importer = DataImporter()
+    var data: [String] = []
+    // the DataManager class would provide data management functionality here
 }
 
 let manager = DataManager()
@@ -340,28 +340,28 @@ to retrieve and set other properties and values indirectly.
 
 ```swift
 struct Point {
-   var x = 0.0, y = 0.0
+    var x = 0.0, y = 0.0
 }
 struct Size {
-   var width = 0.0, height = 0.0
+    var width = 0.0, height = 0.0
 }
 struct Rect {
-   var origin = Point()
-   var size = Size()
-   var center: Point {
-      get {
-         let centerX = origin.x + (size.width / 2)
-         let centerY = origin.y + (size.height / 2)
-         return Point(x: centerX, y: centerY)
-      }
-      set(newCenter) {
-         origin.x = newCenter.x - (size.width / 2)
-         origin.y = newCenter.y - (size.height / 2)
-      }
-   }
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
 }
 var square = Rect(origin: Point(x: 0.0, y: 0.0),
-   size: Size(width: 10.0, height: 10.0))
+    size: Size(width: 10.0, height: 10.0))
 let initialSquareCenter = square.center
 // initialSquareCenter is at (5.0, 5.0)
 square.center = Point(x: 15.0, y: 15.0)
@@ -453,19 +453,19 @@ that takes advantage of this shorthand notation:
 
 ```swift
 struct AlternativeRect {
-   var origin = Point()
-   var size = Size()
-   var center: Point {
-      get {
-         let centerX = origin.x + (size.width / 2)
-         let centerY = origin.y + (size.height / 2)
-         return Point(x: centerX, y: centerY)
-      }
-      set {
-         origin.x = newValue.x - (size.width / 2)
-         origin.y = newValue.y - (size.height / 2)
-      }
-   }
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return Point(x: centerX, y: centerY)
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
 }
 ```
 
@@ -506,18 +506,18 @@ and the shorthand notation for setters:
 
 ```swift
 struct CompactRect {
-   var origin = Point()
-   var size = Size()
-   var center: Point {
-      get {
-         Point(x: origin.x + (size.width / 2),
-               y: origin.y + (size.height / 2))
-      }
-      set {
-         origin.x = newValue.x - (size.width / 2)
-         origin.y = newValue.y - (size.height / 2)
-      }
-   }
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+        get {
+            Point(x: origin.x + (size.width / 2),
+                    y: origin.y + (size.height / 2))
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
 }
 ```
 
@@ -583,10 +583,10 @@ by removing the `get` keyword and its braces:
 
 ```swift
 struct Cuboid {
-   var width = 0.0, height = 0.0, depth = 0.0
-   var volume: Double {
-      return width * height * depth
-   }
+    var width = 0.0, height = 0.0, depth = 0.0
+    var volume: Double {
+        return width * height * depth
+    }
 }
 let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
@@ -791,16 +791,16 @@ to keep track of a person's exercise during their daily routine.
 
 ```swift
 class StepCounter {
-   var totalSteps: Int = 0 {
-      willSet(newTotalSteps) {
-         print("About to set totalSteps to \(newTotalSteps)")
-      }
-      didSet {
-         if totalSteps > oldValue  {
-            print("Added \(totalSteps - oldValue) steps")
-         }
-      }
-   }
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            print("About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
 }
 let stepCounter = StepCounter()
 stepCounter.totalSteps = 200
@@ -1484,13 +1484,13 @@ struct SmallNumber {
     var wrappedValue: Int {
         get { return number }
         set {
-            if newValue > 12 {
+                if newValue > 12 {
                 number = 12
                 projectedValue = true
-            } else {
+                } else {
                 number = newValue
                 projectedValue = false
-            }
+                }
         }
     }
 
@@ -1591,10 +1591,10 @@ struct SizedRectangle {
 
     mutating func resize(to size: Size) -> Bool {
         switch size {
-            case .small:
+                case .small:
                 height = 10
                 width = 20
-            case .large:
+                case .large:
                 height = 100
                 width = 100
         }
@@ -1810,25 +1810,25 @@ The example below shows the syntax for stored and computed type properties:
 
 ```swift
 struct SomeStructure {
-   static var storedTypeProperty = "Some value."
-   static var computedTypeProperty: Int {
-      return 1
-   }
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 1
+    }
 }
 enum SomeEnumeration {
-   static var storedTypeProperty = "Some value."
-   static var computedTypeProperty: Int {
-      return 6
-   }
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 6
+    }
 }
 class SomeClass {
-   static var storedTypeProperty = "Some value."
-   static var computedTypeProperty: Int {
-      return 27
-   }
-   class var overrideableComputedTypeProperty: Int {
-      return 107
-   }
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 27
+    }
+    class var overrideableComputedTypeProperty: Int {
+        return 107
+    }
 }
 ```
 
@@ -1945,20 +1945,20 @@ instances of the `AudioChannel` structure:
 
 ```swift
 struct AudioChannel {
-   static let thresholdLevel = 10
-   static var maxInputLevelForAllChannels = 0
-   var currentLevel: Int = 0 {
-      didSet {
-         if currentLevel > AudioChannel.thresholdLevel {
-            // cap the new audio level to the threshold level
-            currentLevel = AudioChannel.thresholdLevel
-         }
-         if currentLevel > AudioChannel.maxInputLevelForAllChannels {
-            // store this as the new overall maximum input level
-            AudioChannel.maxInputLevelForAllChannels = currentLevel
-         }
-      }
-   }
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // cap the new audio level to the threshold level
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // store this as the new overall maximum input level
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
+        }
+    }
 }
 ```
 

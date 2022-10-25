@@ -26,7 +26,7 @@ and is written without parentheses:
 
 ```swift
 deinit {
-   // perform the deinitialization
+    // perform the deinitialization
 }
 ```
 
@@ -68,15 +68,15 @@ to store and manage its current state:
 
 ```swift
 class Bank {
-   static var coinsInBank = 10_000
-   static func distribute(coins numberOfCoinsRequested: Int) -> Int {
-      let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
-      coinsInBank -= numberOfCoinsToVend
-      return numberOfCoinsToVend
-   }
-   static func receive(coins: Int) {
-      coinsInBank += coins
-   }
+    static var coinsInBank = 10_000
+    static func distribute(coins numberOfCoinsRequested: Int) -> Int {
+        let numberOfCoinsToVend = min(numberOfCoinsRequested, coinsInBank)
+        coinsInBank -= numberOfCoinsToVend
+        return numberOfCoinsToVend
+    }
+    static func receive(coins: Int) {
+        coinsInBank += coins
+    }
 }
 ```
 
@@ -117,16 +117,16 @@ This is represented by the player's `coinsInPurse` property:
 
 ```swift
 class Player {
-   var coinsInPurse: Int
-   init(coins: Int) {
-      coinsInPurse = Bank.distribute(coins: coins)
-   }
-   func win(coins: Int) {
-      coinsInPurse += Bank.distribute(coins: coins)
-   }
-   deinit {
-      Bank.receive(coins: coinsInPurse)
-   }
+    var coinsInPurse: Int
+    init(coins: Int) {
+        coinsInPurse = Bank.distribute(coins: coins)
+    }
+    func win(coins: Int) {
+        coinsInPurse += Bank.distribute(coins: coins)
+    }
+    deinit {
+        Bank.receive(coins: coinsInPurse)
+    }
 }
 ```
 
