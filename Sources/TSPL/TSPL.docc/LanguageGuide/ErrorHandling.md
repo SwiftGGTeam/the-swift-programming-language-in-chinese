@@ -214,15 +214,15 @@ class VendingMachine {
 
     func vend(itemNamed name: String) throws {
         guard let item = inventory[name] else {
-                throw VendingMachineError.invalidSelection
+            throw VendingMachineError.invalidSelection
         }
 
         guard item.count > 0 else {
-                throw VendingMachineError.outOfStock
+            throw VendingMachineError.outOfStock
         }
 
         guard item.price <= coinsDeposited else {
-                throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
+            throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
         }
 
         coinsDeposited -= item.price

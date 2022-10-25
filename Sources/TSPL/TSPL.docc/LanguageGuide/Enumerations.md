@@ -816,11 +816,11 @@ For example, here's a function that evaluates an arithmetic expression:
 func evaluate(_ expression: ArithmeticExpression) -> Int {
     switch expression {
         case let .number(value):
-                return value
+            return value
         case let .addition(left, right):
-                return evaluate(left) + evaluate(right)
+            return evaluate(left) + evaluate(right)
         case let .multiplication(left, right):
-                return evaluate(left) * evaluate(right)
+            return evaluate(left) * evaluate(right)
     }
 }
 

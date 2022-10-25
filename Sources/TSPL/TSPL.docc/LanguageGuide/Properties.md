@@ -511,7 +511,7 @@ struct CompactRect {
     var center: Point {
         get {
             Point(x: origin.x + (size.width / 2),
-                    y: origin.y + (size.height / 2))
+                  y: origin.y + (size.height / 2))
         }
         set {
             origin.x = newValue.x - (size.width / 2)
@@ -1484,13 +1484,13 @@ struct SmallNumber {
     var wrappedValue: Int {
         get { return number }
         set {
-                if newValue > 12 {
+            if newValue > 12 {
                 number = 12
                 projectedValue = true
-                } else {
+            } else {
                 number = newValue
                 projectedValue = false
-                }
+            }
         }
     }
 
@@ -1591,10 +1591,10 @@ struct SizedRectangle {
 
     mutating func resize(to size: Size) -> Bool {
         switch size {
-                case .small:
+            case .small:
                 height = 10
                 width = 20
-                case .large:
+            case .large:
                 height = 100
                 width = 100
         }

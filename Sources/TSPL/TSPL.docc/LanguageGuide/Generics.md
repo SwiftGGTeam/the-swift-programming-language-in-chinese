@@ -1158,7 +1158,7 @@ extension Stack: SuffixableContainer {
     func suffix(_ size: Int) -> Stack {
         var result = Stack()
         for index in (count-size)..<count {
-                result.append(self[index])
+            result.append(self[index])
         }
         return result
     }
@@ -1215,7 +1215,7 @@ extension IntStack: SuffixableContainer {
     func suffix(_ size: Int) -> Stack<Int> {
         var result = Stack<Int>()
         for index in (count-size)..<count {
-                result.append(self[index])
+            result.append(self[index])
         }
         return result
     }
@@ -1436,7 +1436,7 @@ to add an `isTop(_:)` method.
 extension Stack where Element: Equatable {
     func isTop(_ item: Element) -> Bool {
         guard let topItem = items.last else {
-                return false
+            return false
         }
         return topItem == item
     }
@@ -1601,7 +1601,7 @@ extension Container where Item == Double {
     func average() -> Double {
         var sum = 0.0
         for index in 0..<count {
-                sum += self[index]
+            sum += self[index]
         }
         return sum / Double(count)
     }
@@ -1666,7 +1666,7 @@ extension Container {
     func average() -> Double where Item == Int {
         var sum = 0.0
         for index in 0..<count {
-                sum += Double(self[index])
+            sum += Double(self[index])
         }
         return sum / Double(count)
     }
@@ -1723,7 +1723,7 @@ extension Container where Item == Int {
     func average() -> Double {
         var sum = 0.0
         for index in 0..<count {
-                sum += Double(self[index])
+            sum += Double(self[index])
         }
         return sum / Double(count)
     }
@@ -1911,10 +1911,10 @@ For example:
 ```swift
 extension Container {
     subscript<Indices: Sequence>(indices: Indices) -> [Item]
-                where Indices.Iterator.Element == Int {
+            where Indices.Iterator.Element == Int {
         var result: [Item] = []
         for index in indices {
-                result.append(self[index])
+            result.append(self[index])
         }
         return result
     }

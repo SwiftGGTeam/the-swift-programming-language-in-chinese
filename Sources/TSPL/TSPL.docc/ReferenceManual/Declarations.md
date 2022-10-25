@@ -2709,8 +2709,8 @@ struct SomeStruct {
     // produces an optional instance of 'SomeStruct'
     init?(input: String) {
         if input.isEmpty {
-                // discard 'self' and return 'nil'
-                return nil
+            // discard 'self' and return 'nil'
+            return nil
         }
         property = input
     }

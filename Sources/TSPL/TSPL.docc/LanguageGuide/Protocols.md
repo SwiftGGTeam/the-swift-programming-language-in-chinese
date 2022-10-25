@@ -344,7 +344,7 @@ class LinearCongruentialGenerator: RandomNumberGenerator {
     let c = 29573.0
     func random() -> Double {
         lastRandom = ((lastRandom * a + c)
-          .truncatingRemainder(dividingBy:m))
+            .truncatingRemainder(dividingBy:m))
         return lastRandom / m
     }
 }
@@ -2632,9 +2632,9 @@ you can use the `==` and `!=` operators to check for equality and inequality bet
 extension Collection where Element: Equatable {
     func allEqual() -> Bool {
         for element in self {
-                if element != self.first {
+            if element != self.first {
                 return false
-                }
+            }
         }
         return true
     }
