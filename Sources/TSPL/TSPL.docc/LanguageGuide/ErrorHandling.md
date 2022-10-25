@@ -395,7 +395,7 @@ to determine which one of them can handle the error.
 
 Here is the general form of a `do`-`catch` statement:
 
-```
+```swift
 do {
     try <#expression#>
     <#statements#>

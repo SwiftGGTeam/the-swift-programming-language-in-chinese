@@ -53,7 +53,7 @@ An *in-out expression* marks a variable
 that's being passed
 as an in-out argument to a function call expression.
 
-```
+```swift
 &<#expression#>
 ```
 
@@ -79,7 +79,7 @@ A *try expression* consists of the `try` operator
 followed by an expression that can throw an error.
 It has the following form:
 
-```
+```swift
 try <#expression#>
 ```
 
@@ -90,7 +90,7 @@ An *optional-try expression* consists of the `try?` operator
 followed by an expression that can throw an error.
 It has the following form:
 
-```
+```swift
 try? <#expression#>
 ```
 
@@ -104,7 +104,7 @@ A *forced-try expression* consists of the `try!` operator
 followed by an expression that can throw an error.
 It has the following form:
 
-```
+```swift
 try! <#expression#>
 ```
 
@@ -205,7 +205,7 @@ An *await expression* consists of the `await` operator
 followed by an expression that uses the result of an asynchronous operation.
 It has the following form:
 
-```
+```swift
 await <#expression#>
 ```
 
@@ -316,7 +316,7 @@ an infix binary operator with the expression that it takes
 as its left- and right-hand arguments.
 It has the following form:
 
-```
+```swift
 <#left-hand argument#> <#operator#> <#right-hand argument#>
 ```
 
@@ -364,7 +364,7 @@ The *assignment operator* sets a new value
 for a given expression.
 It has the following form:
 
-```
+```swift
 <#expression#> = <#value#>
 ```
 
@@ -411,7 +411,7 @@ The *ternary conditional operator* evaluates to one of two given values
 based on the value of a condition.
 It has the following form:
 
-```
+```swift
 <#condition#> ? <#expression used if true#> : <#expression used if false#>
 ```
 
@@ -443,7 +443,7 @@ and the `as!` operator.
 
 They have the following form:
 
-```
+```swift
 <#expression#> is <#type#>
 <#expression#> as <#type#>
 <#expression#> as? <#type#>
@@ -719,7 +719,7 @@ An *array literal* is
 an ordered collection of values.
 It has the following form:
 
-```
+```swift
 [<#value 1#>, <#value 2#>, <#...#>]
 ```
 
@@ -749,7 +749,7 @@ A *dictionary literal* is
 an unordered collection of key-value pairs.
 It has the following form:
 
-```
+```swift
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 ```
 
@@ -818,7 +818,7 @@ The `self` expression is an explicit reference to the current type
 or instance of the type in which it occurs.
 It has the following forms:
 
-```
+```swift
 self
 self.<#member name#>
 self[<#subscript index#>]
@@ -916,7 +916,7 @@ A *superclass expression* lets a class
 interact with its superclass.
 It has one of the following forms:
 
-```
+```swift
 super.<#member name#>
 super[<#subscript index#>]
 super.init(<#initializer arguments#>)
@@ -952,7 +952,7 @@ a closure contains statements,
 and it captures constants and variables from its enclosing scope.
 It has the following form:
 
-```
+```swift
 { (<#parameters#>) -> <#return type#> in
    <#statements#>
 }
@@ -966,7 +966,7 @@ as described in <doc:Declarations#Function-Declaration>.
 Writing `throws` or `async` in a closure expression
 explicitly marks a closure as throwing or asynchronous.
 
-```
+```swift
 { (<#parameters#>) async throws -> <#return type#> in
    <#statements#>
 }
@@ -1331,7 +1331,7 @@ in a context where type inference
 can determine the implied type.
 It has the following form:
 
-```
+```swift
 .<#member name#>
 ```
 
@@ -1503,7 +1503,7 @@ Each expression can have an optional identifier before it,
 separated by a colon (`:`).
 It has the following form:
 
-```
+```swift
 (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 ```
 
@@ -1590,7 +1590,7 @@ in dynamic programming tasks,
 such as key-value observing.
 They have the following form:
 
-```
+```swift
 \<#type name#>.<#path#>
 ```
 
@@ -2043,7 +2043,7 @@ used to refer to a method or to a property's
 getter or setter in Objective-C.
 It has the following form:
 
-```
+```swift
 #selector(<#method name#>)
 #selector(getter: <#property name#>)
 #selector(setter: <#property name#>)
@@ -2165,7 +2165,7 @@ used to refer to a property in Objective-C,
 for use in key-value coding and key-value observing APIs.
 It has the following form:
 
-```
+```swift
 #keyPath(<#property name#>)
 ```
 
@@ -2303,7 +2303,7 @@ A *function call expression* consists of a function name
 followed by a comma-separated list of the function's arguments in parentheses.
 Function call expressions have the following form:
 
-```
+```swift
 <#function name#>(<#argument value 1#>, <#argument value 2#>)
 ```
 
@@ -2315,7 +2315,7 @@ the function call must include names before its argument values,
 separated by a colon (`:`).
 This kind of function call expression has the following form:
 
-```
+```swift
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
@@ -2678,7 +2678,7 @@ An *initializer expression* provides access
 to a type's initializer.
 It has the following form:
 
-```
+```swift
 <#expression#>.init(<#initializer arguments#>)
 ```
 
@@ -2784,7 +2784,7 @@ to the members of a named type, a tuple, or a module.
 It consists of a period (`.`) between the item
 and the identifier of its member.
 
-```
+```swift
 <#expression#>.<#member name#>
 ```
 
@@ -3075,7 +3075,7 @@ argument-name --> identifier ``:``
 A postfix `self` expression consists of an expression or the name of a type,
 immediately followed by `.self`. It has the following forms:
 
-```
+```swift
 <#expression#>.self
 <#type#>.self
 ```
@@ -3103,7 +3103,7 @@ using the getter and setter
 of the corresponding subscript declaration.
 It has the following form:
 
-```
+```swift
 <#expression#>[<#index expressions#>]
 ```
 
@@ -3160,7 +3160,7 @@ A *forced-value expression* unwraps an optional value
 that you are certain isn't `nil`.
 It has the following form:
 
-```
+```swift
 <#expression#>!
 ```
 
@@ -3215,7 +3215,7 @@ An *optional-chaining expression* provides a simplified syntax
 for using optional values in postfix expressions.
 It has the following form:
 
-```
+```swift
 <#expression#>?
 ```
 

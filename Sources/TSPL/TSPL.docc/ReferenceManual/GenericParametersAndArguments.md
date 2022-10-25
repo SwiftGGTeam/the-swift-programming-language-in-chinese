@@ -23,7 +23,7 @@ type or function, along with any associated constraints and requirements on thos
 A generic parameter clause is enclosed in angle brackets (<>)
 and has the following form:
 
-```
+```swift
 <<#generic parameter list#>>
 ```
 
@@ -31,7 +31,7 @@ and has the following form:
 The *generic parameter list* is a comma-separated list of generic parameters,
 each of which has the following form:
 
-```
+```swift
 <#type parameter#>: <#constraint#>
 ```
 
@@ -111,7 +111,7 @@ of a type or function's body.
 A generic `where` clause consists of the `where` keyword,
 followed by a comma-separated list of one or more *requirements*.
 
-```
+```swift
 where <#requirements#>
 ```
 
@@ -242,7 +242,7 @@ type.
 A generic argument clause is enclosed in angle brackets (<>)
 and has the following form:
 
-```
+```swift
 <<#generic argument list#>>
 ```
 

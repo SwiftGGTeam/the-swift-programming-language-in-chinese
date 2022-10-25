@@ -80,7 +80,7 @@ that conforms to the
 
 A `for`-`in` statement has the following form:
 
-```
+```swift
 for <#item#> in <#collection#> {
    <#statements#>
 }
@@ -114,7 +114,7 @@ as long as a condition remains true.
 
 A `while` statement has the following form:
 
-```
+```swift
 while <#condition#> {
    <#statements#>
 }
@@ -155,7 +155,7 @@ as long as a condition remains true.
 
 A `repeat`-`while` statement has the following form:
 
-```
+```swift
 repeat {
    <#statements#>
 } while <#condition#>
@@ -214,7 +214,7 @@ In each form, the opening and closing braces are required.
 The first form allows code to be executed only when a condition is true
 and has the following form:
 
-```
+```swift
 if <#condition#> {
    <#statements#>
 }
@@ -227,7 +227,7 @@ and is used for executing one part of code when the condition is true
 and another part of code when the same condition is false.
 When a single else clause is present, an `if` statement has the following form:
 
-```
+```swift
 if <#condition#> {
    <#statements to execute if condition is true#>
 } else {
@@ -240,7 +240,7 @@ The else clause of an `if` statement can contain another `if` statement
 to test more than one condition.
 An `if` statement chained together in this way has the following form:
 
-```
+```swift
 if <#condition 1#> {
    <#statements to execute if condition 1 is true#>
 } else if <#condition 2#> {
@@ -271,7 +271,7 @@ if one or more conditions aren't met.
 
 A `guard` statement has the following form:
 
-```
+```swift
 guard <#condition#> else {
    <#statements#>
 }
@@ -315,7 +315,7 @@ depending on the value of a control expression.
 
 A `switch` statement has the following form:
 
-```
+```swift
 switch <#control expression#> {
    case <#pattern 1#>:
       <#statements#>
@@ -627,7 +627,7 @@ A `break` statement can consist of only the `break` keyword,
 or it can consist of the `break` keyword followed by the name of a statement label,
 as shown below.
 
-```
+```swift
 break
 break <#label name#>
 ```
@@ -664,7 +664,7 @@ A `continue` statement can consist of only the `continue` keyword,
 or it can consist of the `continue` keyword followed by the name of a statement label,
 as shown below.
 
-```
+```swift
 continue
 continue <#label name#>
 ```
@@ -732,7 +732,7 @@ Program execution continues at the point immediately following the function or m
 A `return` statement can consist of only the `return` keyword,
 or it can consist of the `return` keyword followed by an expression, as shown below.
 
-```
+```swift
 return
 return <#expression#>
 ```
@@ -777,7 +777,7 @@ of a `do` statement.
 A `throw` statement consists of the `throw` keyword
 followed by an expression, as shown below.
 
-```
+```swift
 throw <#expression#>
 ```
 
@@ -804,7 +804,7 @@ that the `defer` statement appears in.
 
 A `defer` statement has the following form:
 
-```
+```swift
 defer {
     <#statements#>
 }
@@ -922,7 +922,7 @@ and doesn't incur a performance cost at runtime.
 
 A `do` statement has the following form:
 
-```
+```swift
 do {
     try <#expression#>
     <#statements#>
@@ -1014,7 +1014,7 @@ Every conditional compilation block begins with the `#if` compilation directive
 and ends with the `#endif` compilation directive.
 A simple conditional compilation block has the following form:
 
-```
+```swift
 #if <#compilation condition#>
     <#statements#>
 #endif
@@ -1232,7 +1232,7 @@ You can also add a final additional branch using an `#else` clause.
 Conditional compilation blocks that contain multiple branches
 have the following form:
 
-```
+```swift
 #if <#compilation condition 1#>
     <#statements to compile if compilation condition 1 is true#>
 #elseif <#compilation condition 2#>
@@ -1317,7 +1317,7 @@ used by Swift for diagnostic and debugging purposes.
 
 A line control statement has the following forms:
 
-```
+```swift
 #sourceLocation(file: <#file path#>, line: <#line number#>)
 #sourceLocation()
 ```
@@ -1354,7 +1354,7 @@ A compile-time diagnostic statement causes the compiler
 to emit an error or a warning during compilation.
 A compile-time diagnostic statement has the following forms:
 
-```
+```swift
 #error("<#error message#>")
 #warning("<#warning message#>")
 ```
@@ -1429,7 +1429,7 @@ based on specified platforms arguments.
 
 An availability condition has the following form:
 
-```
+```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {
     <#statements to execute if the APIs are available#>
 } else {
@@ -1455,7 +1455,7 @@ logical operators like `&&` and `||`.
 Instead of using `!` to negate an availability condition,
 use an unavailability condition, which has the following form:
 
-```
+```swift
 if #unavailable(<#platform name#> <#version#>, <#...#>) {
     <#fallback statements to execute if the APIs are unavailable#>
 } else {

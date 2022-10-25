@@ -80,7 +80,7 @@ A *code block* is used by a variety of declarations and control structures
 to group statements together.
 It has the following form:
 
-```
+```swift
 {
    <#statements#>
 }
@@ -113,7 +113,7 @@ that are declared outside the current file.
 The basic form imports the entire module;
 it consists of the `import` keyword followed by a module name:
 
-```
+```swift
 import <#module#>
 ```
 
@@ -126,7 +126,7 @@ only the imported symbol
 (and not the module that declares it)
 is made available in the current scope.
 
-```
+```swift
 import <#import kind#> <#module#>.<#symbol name#>
 import <#module#>.<#submodule#>
 ```
@@ -151,7 +151,7 @@ import-path --> identifier | identifier ``.`` import-path
 A *constant declaration* introduces a constant named value into your program.
 Constant declarations are declared using the `let` keyword and have the following form:
 
-```
+```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
 
@@ -280,7 +280,7 @@ with the `override` declaration modifier, as described in <doc:Inheritance#Overr
 
 The following form declares a stored variable or stored variable property:
 
-```
+```swift
 var <#variable name#>: <#type#> = <#expression#>
 ```
 
@@ -309,7 +309,7 @@ is stored in memory.
 
 The following form declares a computed variable or computed property:
 
-```
+```swift
 var <#variable name#>: <#type#> {
    get {
       <#statements#>
@@ -353,7 +353,7 @@ see <doc:Properties#Computed-Properties>.
 You can also declare a stored variable or property with `willSet` and `didSet` observers.
 A stored variable or property declared with observers has the following form:
 
-```
+```swift
 var <#variable name#>: <#type#> = <#expression#> {
    willSet(<#setter name#>) {
       <#statements#>
@@ -585,7 +585,7 @@ didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 A *type alias declaration* introduces a named alias of an existing type into your program.
 Type alias declarations are declared using the `typealias` keyword and have the following form:
 
-```
+```swift
 typealias <#name#> = <#existing type#>
 ```
 
@@ -738,7 +738,7 @@ A function declared in the context of class, structure, enumeration, or protocol
 is referred to as a *method*.
 Function declarations are declared using the `func` keyword and have the following form:
 
-```
+```swift
 func <#function name#>(<#parameters#>) -> <#return type#> {
    <#statements#>
 }
@@ -748,7 +748,7 @@ func <#function name#>(<#parameters#>) -> <#return type#> {
 If the function has a return type of `Void`,
 the return type can be omitted as follows:
 
-```
+```swift
 func <#function name#>(<#parameters#>) {
    <#statements#>
 }
@@ -803,7 +803,7 @@ The order of arguments in a function call
 must match the order of parameters in the function's declaration.
 The simplest entry in a parameter list has the following form:
 
-```
+```swift
 <#parameter name#>: <#parameter type#>
 ```
 
@@ -841,7 +841,7 @@ f(x: 1, y: 2) // both x and y are labeled
 You can override the default behavior for argument labels
 with one of the following forms:
 
-```
+```swift
 <#argument label#> <#parameter name#>: <#parameter type#>
 _ <#parameter name#>: <#parameter type#>
 ```
@@ -1030,7 +1030,7 @@ take a variable number of values,
 and provide default values
 using the following forms:
 
-```
+```swift
 _ : <#parameter type#>
 <#parameter name#>: <#parameter type#>...
 <#parameter name#>: <#parameter type#> = <#default argument value#>
@@ -1282,7 +1282,7 @@ These functions and methods are known as *throwing functions*
 and *throwing methods*.
 They have the following form:
 
-```
+```swift
 func <#function name#>(<#parameters#>) throws -> <#return type#> {
    <#statements#>
 }
@@ -1415,7 +1415,7 @@ These functions and methods are known as *asynchronous functions*
 and *asynchronous methods*.
 They have the following form:
 
-```
+```swift
 func <#function name#>(<#parameters#>) async -> <#return type#> {
    <#statements#>
 }
@@ -1547,7 +1547,7 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 The following form declares an enumeration type that contains
 enumeration cases of any type:
 
-```
+```swift
 enum <#enumeration name#>: <#adopted protocols#> {
     case <#enumeration case 1#>
     case <#enumeration case 2#>(<#associated value types#>)
@@ -1697,7 +1697,7 @@ it can't contain any cases that are also marked with the `indirect` modifier.
 The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
 
-```
+```swift
 enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
     case <#enumeration case 1#> = <#raw value 1#>
     case <#enumeration case 2#> = <#raw value 2#>
@@ -1888,7 +1888,7 @@ raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
 A *structure declaration* introduces a named structure type into your program.
 Structure declarations are declared using the `struct` keyword and have the following form:
 
-```
+```swift
 struct <#structure name#>: <#adopted protocols#> {
    <#declarations#>
 }
@@ -1950,7 +1950,7 @@ struct-member --> declaration | compiler-control-statement
 A *class declaration* introduces a named class type into your program.
 Class declarations are declared using the `class` keyword and have the following form:
 
-```
+```swift
 class <#class name#>: <#superclass#>, <#adopted protocols#> {
    <#declarations#>
 }
@@ -2045,7 +2045,7 @@ class-member --> declaration | compiler-control-statement
 An *actor declaration* introduces a named actor type into your program.
 Actor declarations are declared using the `actor` keyword and have the following form:
 
-```
+```swift
 actor <#actor name#>: <#adopted protocols#> {
     <#declarations#>
 }
@@ -2137,7 +2137,7 @@ A *protocol declaration* introduces a named protocol type into your program.
 Protocol declarations are declared at global scope
 using the `protocol` keyword and have the following form:
 
-```
+```swift
 protocol <#protocol name#>: <#inherited protocols#> {
    <#protocol member declarations#>
 }
@@ -2300,7 +2300,7 @@ in the body of the protocol declaration.
 Protocol property declarations have a special form of a variable
 declaration:
 
-```
+```swift
 var <#property name#>: <#type#> { get set }
 ```
 
@@ -2441,7 +2441,7 @@ Protocols declare that conforming types must implement a subscript
 by including a protocol subscript declaration in the body of the protocol declaration.
 Protocol subscript declarations have a special form of a subscript declaration:
 
-```
+```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
@@ -2624,7 +2624,7 @@ as described in <doc:Initialization>.
 The following form declares initializers for structures, enumerations,
 and designated initializers of classes:
 
-```
+```swift
 init(<#parameters#>) {
    <#statements#>
 }
@@ -2648,7 +2648,7 @@ to delegate part or all of the initialization process.
 To declare convenience initializers for a class,
 mark the initializer declaration with the `convenience` declaration modifier.
 
-```
+```swift
 convenience init(<#parameters#>) {
    <#statements#>
 }
@@ -2804,7 +2804,7 @@ initializer-body --> code-block
 A *deinitializer declaration* declares a deinitializer for a class type.
 Deinitializers take no parameters and have the following form:
 
-```
+```swift
 deinit {
    <#statements#>
 }
@@ -2841,7 +2841,7 @@ the behavior of existing types.
 Extension declarations are declared using the `extension` keyword
 and have the following form:
 
-```
+```swift
 extension <#type name#> where <#requirements#> {
    <#declarations#>
 }
@@ -2882,7 +2882,7 @@ can't be overridden in an extension of that type.
 Extension declarations can add protocol conformance to an existing
 class, structure, or enumeration type by specifying *adopted protocols*:
 
-```
+```swift
 extension <#type name#>: <#adopted protocols#> where <#requirements#> {
    <#declarations#>
 }
@@ -3346,7 +3346,7 @@ for accessing the elements in a collection, list, or sequence.
 Subscript declarations are declared using the `subscript` keyword
 and have the following form:
 
-```
+```swift
 subscript (<#parameters#>) -> <#return type#> {
    get {
       <#statements#>
@@ -3459,7 +3459,7 @@ defined in <doc:LexicalStructure#Operators>.
 
 The following form declares a new infix operator:
 
-```
+```swift
 infix operator <#operator name#>: <#precedence group#>
 ```
 
@@ -3475,7 +3475,7 @@ For more information, see <doc:Declarations#Precedence-Group-Declaration>.
 
 The following form declares a new prefix operator:
 
-```
+```swift
 prefix operator <#operator name#>
 ```
 
@@ -3488,7 +3488,7 @@ Prefix operators are nonassociative.
 
 The following form declares a new postfix operator:
 
-```
+```swift
 postfix operator <#operator name#>
 ```
 
@@ -3533,7 +3533,7 @@ binds to its operands, in the absence of grouping parentheses.
 
 A precedence group declaration has the following form:
 
-```
+```swift
 precedencegroup <#precedence group name#> {
     higherThan: <#lower group names#>
     lowerThan: <#higher group names#>

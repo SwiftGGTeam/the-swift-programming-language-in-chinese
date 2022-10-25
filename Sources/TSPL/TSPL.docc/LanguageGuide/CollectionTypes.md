@@ -192,7 +192,7 @@ which is a shorthand way to write one or more values as an array collection.
 An array literal is written as a list of values, separated by commas,
 surrounded by a pair of square brackets:
 
-```
+```swift
 [<#value 1#>, <#value 2#>, <#value 3#>]
 ```
 
@@ -1142,7 +1142,7 @@ the key and value in each key-value pair are separated by a colon.
 The key-value pairs are written as a list, separated by commas,
 surrounded by a pair of square brackets:
 
-```
+```swift
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#key 3#>: <#value 3#>]
 ```
 

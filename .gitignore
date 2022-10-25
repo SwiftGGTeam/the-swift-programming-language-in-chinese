@@ -2,3 +2,4 @@
 .swiftpm
 /.build
 /Package.resolved
+.docc-build

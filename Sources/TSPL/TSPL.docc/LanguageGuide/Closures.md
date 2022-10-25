@@ -134,7 +134,7 @@ using closure expression syntax.
 
 Closure expression syntax has the following general form:
 
-```
+```swift
 { (<#parameters#>) -> <#return type#> in
    <#statements#>
 }

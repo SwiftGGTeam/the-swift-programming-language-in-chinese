@@ -306,7 +306,7 @@ a set of statements is repeated until the condition becomes `false`.
 
 Here's the general form of a `while` loop:
 
-```
+```swift
 while <#condition#> {
    <#statements#>
 }
@@ -508,7 +508,7 @@ It then continues to repeat the loop until the condition is `false`.
 
 Here's the general form of a `repeat`-`while` loop:
 
-```
+```swift
 repeat {
    <#statements#>
 } while <#condition#>
@@ -794,7 +794,7 @@ for responding to multiple potential states.
 In its simplest form, a `switch` statement compares a value against
 one or more values of the same type.
 
-```
+```swift
 switch <#some value to consider#> {
    case <#value 1#>:
       <#respond to value 1#>
@@ -1602,7 +1602,7 @@ a label on the same line as the statement's introducer keyword, followed by a co
 Here's an example of this syntax for a `while` loop,
 although the principle is the same for all loops and `switch` statements:
 
-```
+```swift
 <#label name#>: while <#condition#> {
    <#statements#>
 }
@@ -1922,7 +1922,7 @@ for the full list, see <doc:Attributes#Declaration-Attributes>.
 In addition to specifying major version numbers like iOS 8 or macOS 10.10,
 you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
 
-```
+```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {
     <#statements to execute if the APIs are available#>
 } else {
