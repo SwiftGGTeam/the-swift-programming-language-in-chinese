@@ -648,7 +648,7 @@ and the `protoFlip(_:)` function takes an argument
 of some type that conforms to the `Shape` protocol.
 However, a value of a protocol type doesn't conform to that protocol;
 the value returned by `protoFlip(_:)` doesn't conform to `Shape`.
-This means code like `protoFlip(protoFlip(smallTriange))`
+This means code like `protoFlip(protoFlip(smallTriangle))`
 that applies multiple transformations is invalid
 because the flipped shape isn't a valid argument to `protoFlip(_:)`.
 
