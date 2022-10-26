@@ -1910,71 +1910,62 @@ if score < 10 {
 In the example above,
 the code inside of the `defer` block is executed
 before exiting the body of the `if` statement.
-First `score` is incremented by five,
-and then it's printed.
+First, the code in the `if` statement runs,
+which increments `score` by five.
+Then, before exiting the `if` statement's scope,
+the deferred code is run, which prints `score`.
 
-
-XXX functions example -- not ideal here, because this chapter comes before Functions
-
-```
-func someFunction() {
-    print("Start of the function")
-    defer { print("Deferred work") }
-    print("End of the function")
-}
-someFunction()
-print("After the function")
-```
-
-@Comment {
-  - test: `defer-function`
-
-  ``` swifttest
-  -> func someFunction() {
-  ->     print("Start of the function")
-  ->     defer { print("Deferred work") }
-  ->     print("End of the function")
-  -> }
-  -> someFunction()
-  -> print("After the function")
-  <- Start of the function
-  <- End of the function
-  <- Deferred work
-  <- After the function
-  ```
-}
-
-In this code, the `defer` block is defined
-inside the scope of a function,
-so Swift runs the code in that `defer` block
-while exiting from the function.
-
-
-◊ Other kinds of scopes work too
-
-It doesn't matter how the program leaves this scope —
-it might be returning a value from a function,
+The code inside of the `defer` always runs,
+regardless of how the program exits that scope.
+That includes code like an early exit from a function,
 breaking out of a `for` loop,
-or throwing an error —
-the deferred code is always run before leaving the scope.
-The most common place to write `defer` is inside a function,
-to ensure that some code runs before returning from the function.
-For example:
+or throwing an error.
+This behavior makes `defer` useful for operations
+where you need to guarantee a pair of actions happen,
+like manually allocating and freeing memory,
+opening and closing low-level file descriptors,
+and beginning and ending transactions in a database.
+For information about using `defer` with error handling,
+see <docc:ErrorHandling:Specifying-Cleanup-Actions>.
 
-<!-- XXX Write a real example above -->
+If you write more than one `defer` block in the same scope,
+the first one you specify in the last one to run.
 
-◊ actions that happen in pairs
+```
+if score < 10 {
+    defer {
+        print(score)
+    }
+    defer {
+        print("The score is:")
+    }
+    score += 5
+}
+// Prints "The score is:"
+// Prints "6"
+```
 
-- open and close
-- allocate and free
-- begin and end DB transaction
+<!--
+  - test: `defer-with-if`
 
-◊ nested scopes - executed from inner to outer
+  ```swifttest
+  -> if score < 10 {
+  ->     defer {
+  ->         print(score)
+  ->     }
+  ->     defer {
+  ->         print("The score is:")
+  ->     }
+  ->     score += 5
+  -> }
+  <- 8
+  ```
+-->
 
-◊ example of "at function exit"
-◊ but you can do more than that - any { } scope
-◊ example with multiple defers
-
+> Note:
+> If your program stops running ---
+> for example, because of a runtime error or a crash,
+> deferred code doesn't execute.
 
 ## Checking API Availability
 
