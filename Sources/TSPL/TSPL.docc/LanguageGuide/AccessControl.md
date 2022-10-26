@@ -230,25 +230,25 @@ the default access level of the type's members will be internal.
 
 ```swift
 public class SomePublicClass {                  // explicitly public class
-   public var somePublicProperty = 0            // explicitly public class member
-   var someInternalProperty = 0                 // implicitly internal class member
-   fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
-   private func somePrivateMethod() {}          // explicitly private class member
+    public var somePublicProperty = 0            // explicitly public class member
+    var someInternalProperty = 0                 // implicitly internal class member
+    fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
+    private func somePrivateMethod() {}          // explicitly private class member
 }
 
 class SomeInternalClass {                       // implicitly internal class
-   var someInternalProperty = 0                 // implicitly internal class member
-   fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
-   private func somePrivateMethod() {}          // explicitly private class member
+    var someInternalProperty = 0                 // implicitly internal class member
+    fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
+    private func somePrivateMethod() {}          // explicitly private class member
 }
 
 fileprivate class SomeFilePrivateClass {        // explicitly file-private class
-   func someFilePrivateMethod() {}              // implicitly file-private class member
-   private func somePrivateMethod() {}          // explicitly private class member
+    func someFilePrivateMethod() {}              // implicitly file-private class member
+    private func somePrivateMethod() {}          // explicitly private class member
 }
 
 private class SomePrivateClass {                // explicitly private class
-   func somePrivateMethod() {}                  // implicitly private class member
+    func somePrivateMethod() {}                  // implicitly private class member
 }
 ```
 
@@ -378,7 +378,7 @@ In fact, `someFunction()` won't compile as written below:
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   // function implementation goes here
+    // function implementation goes here
 }
 ```
 
@@ -410,7 +410,7 @@ for the function declaration to be valid:
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-   // function implementation goes here
+    // function implementation goes here
 }
 ```
 
@@ -445,10 +445,10 @@ therefore also have an access level of public:
 
 ```swift
 public enum CompassPoint {
-   case north
-   case south
-   case east
-   case west
+    case north
+    case south
+    case east
+    case west
 }
 ```
 
@@ -668,11 +668,11 @@ the original implementation of `someMethod()`:
 
 ```swift
 public class A {
-   fileprivate func someMethod() {}
+    fileprivate func someMethod() {}
 }
 
 internal class B: A {
-   override internal func someMethod() {}
+    override internal func someMethod() {}
 }
 ```
 
@@ -700,13 +700,13 @@ or within the same module as the superclass for an internal member call):
 
 ```swift
 public class A {
-   fileprivate func someMethod() {}
+    fileprivate func someMethod() {}
 }
 
 internal class B: A {
-   override internal func someMethod() {
-      super.someMethod()
-   }
+    override internal func someMethod() {
+        super.someMethod()
+    }
 }
 ```
 
@@ -811,12 +811,12 @@ which keeps track of the number of times a string property is modified:
 
 ```swift
 struct TrackedString {
-   private(set) var numberOfEdits = 0
-   var value: String = "" {
-      didSet {
-         numberOfEdits += 1
-      }
-   }
+    private(set) var numberOfEdits = 0
+    var value: String = "" {
+        didSet {
+            numberOfEdits += 1
+        }
+    }
 }
 ```
 
@@ -923,13 +923,13 @@ by combining the `public` and `private(set)` access-level modifiers:
 
 ```swift
 public struct TrackedString {
-   public private(set) var numberOfEdits = 0
-   public var value: String = "" {
-      didSet {
-         numberOfEdits += 1
-      }
-   }
-   public init() {}
+    public private(set) var numberOfEdits = 0
+    public var value: String = "" {
+        didSet {
+            numberOfEdits += 1
+        }
+    }
+    public init() {}
 }
 ```
 

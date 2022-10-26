@@ -1041,11 +1041,11 @@ rather than just as the name of the property itself.
 
 ```swift
 class ExampleClass: NSObject {
-   @objc var enabled: Bool {
-      @objc(isEnabled) get {
-         // Return the appropriate value
-      }
-   }
+    @objc var enabled: Bool {
+        @objc(isEnabled) get {
+            // Return the appropriate value
+        }
+    }
 }
 ```
 
@@ -1533,8 +1533,8 @@ into code that calls the static methods of the result builder type:
       func draw() -> String { return content }
   }
   struct Line<D: Drawable>: Drawable {
-      var elements: [D]
-      func draw() -> String {
+        var elements: [D]
+        func draw() -> String {
           return elements.map { $0.draw() }.joined(separator: "")
       }
   }

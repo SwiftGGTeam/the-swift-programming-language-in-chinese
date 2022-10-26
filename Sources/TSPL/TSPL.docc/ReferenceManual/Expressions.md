@@ -686,7 +686,7 @@ func logFunctionName(string: String = #function) {
     print(string)
 }
 func myFunction() {
-   logFunctionName() // Prints "myFunction()".
+    logFunctionName() // Prints "myFunction()".
 }
 ```
 
@@ -870,10 +870,10 @@ For example:
 
 ```swift
 struct Point {
-   var x = 0.0, y = 0.0
-   mutating func moveBy(x deltaX: Double, y deltaY: Double) {
-      self = Point(x: x + deltaX, y: y + deltaY)
-   }
+    var x = 0.0, y = 0.0
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        self = Point(x: x + deltaX, y: y + deltaY)
+    }
 }
 ```
 
@@ -2177,10 +2177,10 @@ For example:
 
 ```swift
 class SomeClass: NSObject {
-   @objc var someProperty: Int
-   init(someProperty: Int) {
+    @objc var someProperty: Int
+    init(someProperty: Int) {
        self.someProperty = someProperty
-   }
+    }
 }
 
 let c = SomeClass(someProperty: 12)
@@ -2221,9 +2221,9 @@ by writing just the property name, without the class name.
 
 ```swift
 extension SomeClass {
-   func getSomeKeyPath() -> String {
-      return #keyPath(someProperty)
-   }
+    func getSomeKeyPath() -> String {
+        return #keyPath(someProperty)
+    }
 }
 print(keyPath == c.getSomeKeyPath())
 // Prints "true"
@@ -3269,7 +3269,7 @@ without using optional chaining.
 ```swift
 var result: Bool?
 if let unwrappedC = c {
-   result = unwrappedC.property.performAction()
+    result = unwrappedC.property.performAction()
 }
 ```
 
@@ -3298,7 +3298,7 @@ For example:
 
 ```swift
 func someFunctionWithSideEffects() -> Int {
-   return 42  // No actual side effects.
+    return 42  // No actual side effects.
 }
 var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
 

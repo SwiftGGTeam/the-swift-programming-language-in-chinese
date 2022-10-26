@@ -43,7 +43,7 @@ written using the `init` keyword:
 
 ```swift
 init() {
-   // perform some initialization here
+    // perform some initialization here
 }
 ```
 
@@ -67,10 +67,10 @@ The `Fahrenheit` structure has one stored property,
 
 ```swift
 struct Fahrenheit {
-   var temperature: Double
-   init() {
-      temperature = 32.0
-   }
+    var temperature: Double
+    init() {
+        temperature = 32.0
+    }
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
@@ -123,7 +123,7 @@ at the point that the property is declared:
 
 ```swift
 struct Fahrenheit {
-   var temperature = 32.0
+    var temperature = 32.0
 }
 ```
 
@@ -161,13 +161,13 @@ with a value from a different temperature scale:
 
 ```swift
 struct Celsius {
-   var temperatureInCelsius: Double
-   init(fromFahrenheit fahrenheit: Double) {
-      temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-   }
-   init(fromKelvin kelvin: Double) {
-      temperatureInCelsius = kelvin - 273.15
-   }
+    var temperatureInCelsius: Double
+    init(fromFahrenheit fahrenheit: Double) {
+        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    }
+    init(fromKelvin kelvin: Double) {
+        temperatureInCelsius = kelvin - 273.15
+    }
 }
 let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
 // boilingPointOfWater.temperatureInCelsius is 100.0
@@ -238,17 +238,17 @@ which is used to provide the same value for all three color components.
 
 ```swift
 struct Color {
-   let red, green, blue: Double
-   init(red: Double, green: Double, blue: Double) {
-      self.red   = red
-      self.green = green
-      self.blue  = blue
-   }
-   init(white: Double) {
-      red   = white
-      green = white
-      blue  = white
-   }
+    let red, green, blue: Double
+    init(red: Double, green: Double, blue: Double) {
+        self.red   = red
+        self.green = green
+        self.blue  = blue
+    }
+    init(white: Double) {
+        red   = white
+        green = white
+        blue  = white
+    }
 }
 ```
 
@@ -331,16 +331,16 @@ from a `Double` value that's already in the Celsius scale:
 
 ```swift
 struct Celsius {
-   var temperatureInCelsius: Double
-   init(fromFahrenheit fahrenheit: Double) {
-      temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-   }
-   init(fromKelvin kelvin: Double) {
-      temperatureInCelsius = kelvin - 273.15
-   }
-   init(_ celsius: Double) {
-      temperatureInCelsius = celsius
-   }
+    var temperatureInCelsius: Double
+    init(fromFahrenheit fahrenheit: Double) {
+        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    }
+    init(fromKelvin kelvin: Double) {
+        temperatureInCelsius = kelvin - 273.15
+    }
+    init(_ celsius: Double) {
+        temperatureInCelsius = celsius
+    }
 }
 let bodyTemperature = Celsius(37.0)
 // bodyTemperature.temperatureInCelsius is 37.0
@@ -389,14 +389,14 @@ with an optional `String` property called `response`:
 
 ```swift
 class SurveyQuestion {
-   var text: String
-   var response: String?
-   init(text: String) {
-      self.text = text
-   }
-   func ask() {
-      print(text)
-   }
+    var text: String
+    var response: String?
+    init(text: String) {
+        self.text = text
+    }
+    func ask() {
+        print(text)
+    }
 }
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
@@ -497,14 +497,14 @@ it can still be set within the class's initializer:
 
 ```swift
 class SurveyQuestion {
-   let text: String
-   var response: String?
-   init(text: String) {
-      self.text = text
-   }
-   func ask() {
-      print(text)
-   }
+    let text: String
+    var response: String?
+    init(text: String) {
+        self.text = text
+    }
+    func ask() {
+        print(text)
+    }
 }
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
@@ -563,9 +563,9 @@ of an item in a shopping list:
 
 ```swift
 class ShoppingListItem {
-   var name: String?
-   var quantity = 1
-   var purchased = false
+    var name: String?
+    var quantity = 1
+    var purchased = false
 }
 var item = ShoppingListItem()
 ```
@@ -632,7 +632,7 @@ which you can use to initialize a new `Size` instance:
 
 ```swift
 struct Size {
-   var width = 0.0, height = 0.0
+    var width = 0.0, height = 0.0
 }
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
@@ -727,10 +727,10 @@ both of which provide default values of `0.0` for all of their properties:
 
 ```swift
 struct Size {
-   var width = 0.0, height = 0.0
+    var width = 0.0, height = 0.0
 }
 struct Point {
-   var x = 0.0, y = 0.0
+    var x = 0.0, y = 0.0
 }
 ```
 
@@ -757,18 +757,18 @@ three custom initializers that are part of the `Rect` structure's definition:
 
 ```swift
 struct Rect {
-   var origin = Point()
-   var size = Size()
-   init() {}
-   init(origin: Point, size: Size) {
-      self.origin = origin
-      self.size = size
-   }
-   init(center: Point, size: Size) {
-      let originX = center.x - (size.width / 2)
-      let originY = center.y - (size.height / 2)
-      self.init(origin: Point(x: originX, y: originY), size: size)
-   }
+    var origin = Point()
+    var size = Size()
+    init() {}
+    init(origin: Point, size: Size) {
+        self.origin = origin
+        self.size = size
+    }
+    init(center: Point, size: Size) {
+        let originX = center.x - (size.width / 2)
+        let originY = center.y - (size.height / 2)
+        self.init(origin: Point(x: originX, y: originY), size: size)
+    }
 }
 ```
 
@@ -829,7 +829,7 @@ the appropriate stored properties:
 
 ```swift
 let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
-   size: Size(width: 5.0, height: 5.0))
+    size: Size(width: 5.0, height: 5.0))
 // originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 ```
 
@@ -853,7 +853,7 @@ which stores the new origin and size values in the appropriate properties:
 
 ```swift
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
-   size: Size(width: 3.0, height: 3.0))
+    size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
 
@@ -1242,10 +1242,10 @@ to create a `String` description of the vehicle's characteristics:
 
 ```swift
 class Vehicle {
-   var numberOfWheels = 0
-   var description: String {
-      return "\(numberOfWheels) wheel(s)"
-   }
+    var numberOfWheels = 0
+    var description: String {
+        return "\(numberOfWheels) wheel(s)"
+    }
 }
 ```
 
@@ -1291,10 +1291,10 @@ The next example defines a subclass of `Vehicle` called `Bicycle`:
 
 ```swift
 class Bicycle: Vehicle {
-   override init() {
-      super.init()
-      numberOfWheels = 2
-   }
+    override init() {
+        super.init()
+        numberOfWheels = 2
+    }
 }
 ```
 
@@ -1500,13 +1500,13 @@ and provides two initializers for creating `Food` instances:
 
 ```swift
 class Food {
-   var name: String
-   init(name: String) {
-      self.name = name
-   }
-   convenience init() {
-      self.init(name: "[Unnamed]")
-   }
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: "[Unnamed]")
+    }
 }
 ```
 
@@ -1590,14 +1590,14 @@ and defines two initializers for creating `RecipeIngredient` instances:
 
 ```swift
 class RecipeIngredient: Food {
-   var quantity: Int
-   init(name: String, quantity: Int) {
-      self.quantity = quantity
-      super.init(name: name)
-   }
-   override convenience init(name: String) {
-      self.init(name: name, quantity: 1)
-   }
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
 }
 ```
 
@@ -1698,12 +1698,12 @@ which provides a textual description of a `ShoppingListItem` instance:
 
 ```swift
 class ShoppingListItem: RecipeIngredient {
-   var purchased = false
-   var description: String {
-      var output = "\(quantity) x \(name)"
-      output += purchased ? " ✔" : " ✘"
-      return output
-   }
+    var purchased = false
+    var description: String {
+        var output = "\(quantity) x \(name)"
+        output += purchased ? " ✔" : " ✘"
+        return output
+    }
 }
 ```
 
@@ -1742,14 +1742,14 @@ to create a new `ShoppingListItem` instance:
 
 ```swift
 var breakfastList = [
-   ShoppingListItem(),
-   ShoppingListItem(name: "Bacon"),
-   ShoppingListItem(name: "Eggs", quantity: 6),
+    ShoppingListItem(),
+    ShoppingListItem(name: "Bacon"),
+    ShoppingListItem(name: "Eggs", quantity: 6),
 ]
 breakfastList[0].name = "Orange juice"
 breakfastList[0].purchased = true
 for item in breakfastList {
-   print(item.description)
+    print(item.description)
 }
 // 1 x Orange juice ✔
 // 1 x Bacon ✘
@@ -1906,11 +1906,11 @@ Otherwise, the `species` property's value is set, and initialization succeeds:
 
 ```swift
 struct Animal {
-   let species: String
-   init?(species: String) {
-      if species.isEmpty { return nil }
-      self.species = species
-   }
+    let species: String
+    init?(species: String) {
+        if species.isEmpty { return nil }
+        self.species = species
+    }
 }
 ```
 
@@ -1937,7 +1937,7 @@ let someCreature = Animal(species: "Giraffe")
 // someCreature is of type Animal?, not Animal
 
 if let giraffe = someCreature {
-   print("An animal was initialized with a species of \(giraffe.species)")
+    print("An animal was initialized with a species of \(giraffe.species)")
 }
 // Prints "An animal was initialized with a species of Giraffe"
 ```
@@ -1965,7 +1965,7 @@ let anonymousCreature = Animal(species: "")
 // anonymousCreature is of type Animal?, not Animal
 
 if anonymousCreature == nil {
-   print("The anonymous creature couldn't be initialized")
+    print("The anonymous creature couldn't be initialized")
 }
 // Prints "The anonymous creature couldn't be initialized"
 ```
@@ -2007,19 +2007,19 @@ for a `Character` value representing a temperature symbol:
 
 ```swift
 enum TemperatureUnit {
-   case kelvin, celsius, fahrenheit
-   init?(symbol: Character) {
-      switch symbol {
-         case "K":
+    case kelvin, celsius, fahrenheit
+    init?(symbol: Character) {
+        switch symbol {
+        case "K":
             self = .kelvin
-         case "C":
+        case "C":
             self = .celsius
-         case "F":
+        case "F":
             self = .fahrenheit
-         default:
+        default:
             return nil
-      }
-   }
+        }
+    }
 }
 ```
 
@@ -2054,13 +2054,13 @@ states:
 ```swift
 let fahrenheitUnit = TemperatureUnit(symbol: "F")
 if fahrenheitUnit != nil {
-   print("This is a defined temperature unit, so initialization succeeded.")
+    print("This is a defined temperature unit, so initialization succeeded.")
 }
 // Prints "This is a defined temperature unit, so initialization succeeded."
 
 let unknownUnit = TemperatureUnit(symbol: "X")
 if unknownUnit == nil {
-   print("This isn't a defined temperature unit, so initialization failed.")
+    print("This isn't a defined temperature unit, so initialization failed.")
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
 ```
@@ -2098,18 +2098,18 @@ and to take advantage of the `init?(rawValue:)` initializer:
 
 ```swift
 enum TemperatureUnit: Character {
-   case kelvin = "K", celsius = "C", fahrenheit = "F"
+    case kelvin = "K", celsius = "C", fahrenheit = "F"
 }
 
 let fahrenheitUnit = TemperatureUnit(rawValue: "F")
 if fahrenheitUnit != nil {
-   print("This is a defined temperature unit, so initialization succeeded.")
+    print("This is a defined temperature unit, so initialization succeeded.")
 }
 // Prints "This is a defined temperature unit, so initialization succeeded."
 
 let unknownUnit = TemperatureUnit(rawValue: "X")
 if unknownUnit == nil {
-   print("This isn't a defined temperature unit, so initialization failed.")
+    print("This isn't a defined temperature unit, so initialization failed.")
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
 ```
@@ -2208,20 +2208,20 @@ and ensures that this property always has a value of at least `1`:
 
 ```swift
 class Product {
-   let name: String
-   init?(name: String) {
-      if name.isEmpty { return nil }
-      self.name = name
-   }
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
 }
 
 class CartItem: Product {
-   let quantity: Int
-   init?(name: String, quantity: Int) {
-      if quantity < 1 { return nil }
-      self.quantity = quantity
-      super.init(name: name)
-   }
+    let quantity: Int
+    init?(name: String, quantity: Int) {
+        if quantity < 1 { return nil }
+        self.quantity = quantity
+        super.init(name: name)
+    }
 }
 ```
 
@@ -2265,7 +2265,7 @@ initialization succeeds:
 
 ```swift
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
-   print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+    print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
 // Prints "Item: sock, quantity: 2"
 ```
@@ -2287,9 +2287,9 @@ the `CartItem` initializer causes initialization to fail:
 
 ```swift
 if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
-   print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+    print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
 } else {
-   print("Unable to initialize zero shirts")
+    print("Unable to initialize zero shirts")
 }
 // Prints "Unable to initialize zero shirts"
 ```
@@ -2313,9 +2313,9 @@ the superclass `Product` initializer causes initialization to fail:
 
 ```swift
 if let oneUnnamed = CartItem(name: "", quantity: 1) {
-   print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+    print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
 } else {
-   print("Unable to initialize one unnamed product")
+    print("Unable to initialize one unnamed product")
 }
 // Prints "Unable to initialize one unnamed product"
 ```
@@ -2376,14 +2376,14 @@ but can't be an empty string:
 
 ```swift
 class Document {
-   var name: String?
-   // this initializer creates a document with a nil name value
-   init() {}
-   // this initializer creates a document with a nonempty name value
-   init?(name: String) {
-      if name.isEmpty { return nil }
-      self.name = name
-   }
+    var name: String?
+    // this initializer creates a document with a nil name value
+    init() {}
+    // this initializer creates a document with a nonempty name value
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
 }
 ```
 
@@ -2415,18 +2415,18 @@ or if an empty string is passed to the `init(name:)` initializer:
 
 ```swift
 class AutomaticallyNamedDocument: Document {
-   override init() {
-      super.init()
-      self.name = "[Untitled]"
-   }
-   override init(name: String) {
-      super.init()
-      if name.isEmpty {
-         self.name = "[Untitled]"
-      } else {
-         self.name = name
-      }
-   }
+    override init() {
+        super.init()
+        self.name = "[Untitled]"
+    }
+    override init(name: String) {
+        super.init()
+        if name.isEmpty {
+            self.name = "[Untitled]"
+        } else {
+            self.name = name
+        }
+    }
 }
 ```
 
@@ -2468,9 +2468,9 @@ from its superclass during initialization.
 
 ```swift
 class UntitledDocument: Document {
-   override init() {
-      super.init(name: "[Untitled]")!
-   }
+    override init() {
+        super.init(name: "[Untitled]")!
+    }
 }
 ```
 
@@ -2689,9 +2689,9 @@ to indicate that every subclass of the class must implement that initializer:
 
 ```swift
 class SomeClass {
-   required init() {
-      // initializer implementation goes here
-   }
+    required init() {
+        // initializer implementation goes here
+    }
 }
 ```
 
@@ -2756,9 +2756,9 @@ You don't write the `override` modifier when overriding a required designated in
 
 ```swift
 class SomeSubclass: SomeClass {
-   required init() {
-      // subclass implementation of the required initializer goes here
-   }
+    required init() {
+        // subclass implementation of the required initializer goes here
+    }
 }
 ```
 
@@ -2858,11 +2858,11 @@ to provide a default property value:
 
 ```swift
 class SomeClass {
-   let someProperty: SomeType = {
-      // create a default value for someProperty inside this closure
-      // someValue must be of the same type as SomeType
-      return someValue
-   }()
+    let someProperty: SomeType = {
+        // create a default value for someProperty inside this closure
+        // someValue must be of the same type as SomeType
+        return someValue
+    }()
 }
 ```
 
@@ -2925,21 +2925,21 @@ The `boardColors` array is initialized with a closure to set up its color values
 
 ```swift
 struct Chessboard {
-   let boardColors: [Bool] = {
-      var temporaryBoard: [Bool] = []
-      var isBlack = false
-      for i in 1...8 {
-         for j in 1...8 {
-            temporaryBoard.append(isBlack)
+    let boardColors: [Bool] = {
+        var temporaryBoard: [Bool] = []
+        var isBlack = false
+        for i in 1...8 {
+            for j in 1...8 {
+                temporaryBoard.append(isBlack)
+                isBlack = !isBlack
+            }
             isBlack = !isBlack
-         }
-         isBlack = !isBlack
-      }
-      return temporaryBoard
-   }()
-   func squareIsBlackAt(row: Int, column: Int) -> Bool {
-      return boardColors[(row * 8) + column]
-   }
+        }
+        return temporaryBoard
+    }()
+    func squareIsBlackAt(row: Int, column: Int) -> Bool {
+        return boardColors[(row * 8) + column]
+    }
 }
 ```
 

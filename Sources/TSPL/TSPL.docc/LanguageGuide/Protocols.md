@@ -31,7 +31,7 @@ You define protocols in a very similar way to classes, structures, and enumerati
 
 ```swift
 protocol SomeProtocol {
-   // protocol definition goes here
+    // protocol definition goes here
 }
 ```
 
@@ -53,7 +53,7 @@ Multiple protocols can be listed, and are separated by commas:
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
-   // structure definition goes here
+    // structure definition goes here
 }
 ```
 
@@ -75,7 +75,7 @@ before any protocols it adopts, followed by a comma:
 
 ```swift
 class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
-   // class definition goes here
+    // class definition goes here
 }
 ```
 
@@ -117,8 +117,8 @@ and gettable properties are indicated by writing `{ get }`.
 
 ```swift
 protocol SomeProtocol {
-   var mustBeSettable: Int { get set }
-   var doesNotNeedToBeSettable: Int { get }
+    var mustBeSettable: Int { get set }
+    var doesNotNeedToBeSettable: Int { get }
 }
 ```
 
@@ -141,7 +141,7 @@ the `class` or `static` keyword when implemented by a class:
 
 ```swift
 protocol AnotherProtocol {
-   static var someTypeProperty: Int { get set }
+    static var someTypeProperty: Int { get set }
 }
 ```
 
@@ -160,7 +160,7 @@ Here's an example of a protocol with a single instance property requirement:
 
 ```swift
 protocol FullyNamed {
-   var fullName: String { get }
+    var fullName: String { get }
 }
 ```
 
@@ -186,7 +186,7 @@ the `FullyNamed` protocol:
 
 ```swift
 struct Person: FullyNamed {
-   var fullName: String
+    var fullName: String
 }
 let john = Person(fullName: "John Appleseed")
 // john.fullName is "John Appleseed"
@@ -221,15 +221,15 @@ Here's a more complex class, which also adopts and conforms to the `FullyNamed` 
 
 ```swift
 class Starship: FullyNamed {
-   var prefix: String?
-   var name: String
-   init(name: String, prefix: String? = nil) {
-      self.name = name
-      self.prefix = prefix
-   }
-   var fullName: String {
-      return (prefix != nil ? prefix! + " " : "") + name
-   }
+    var prefix: String?
+    var name: String
+    init(name: String, prefix: String? = nil) {
+        self.name = name
+        self.prefix = prefix
+    }
+    var fullName: String {
+        return (prefix != nil ? prefix! + " " : "") + name
+    }
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // ncc1701.fullName is "USS Enterprise"
@@ -285,7 +285,7 @@ the `class` or `static` keyword when implemented by a class:
 
 ```swift
 protocol SomeProtocol {
-   static func someTypeMethod()
+    static func someTypeMethod()
 }
 ```
 
@@ -304,7 +304,7 @@ The following example defines a protocol with a single instance method requireme
 
 ```swift
 protocol RandomNumberGenerator {
-   func random() -> Double
+    func random() -> Double
 }
 ```
 
@@ -338,15 +338,15 @@ a *linear congruential generator*:
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
-   var lastRandom = 42.0
-   let m = 139968.0
-   let a = 3877.0
-   let c = 29573.0
-   func random() -> Double {
-      lastRandom = ((lastRandom * a + c)
-          .truncatingRemainder(dividingBy:m))
-      return lastRandom / m
-   }
+    var lastRandom = 42.0
+    let m = 139968.0
+    let a = 3877.0
+    let c = 29573.0
+    func random() -> Double {
+        lastRandom = ((lastRandom * a + c)
+            .truncatingRemainder(dividingBy:m))
+        return lastRandom / m
+    }
 }
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
@@ -413,7 +413,7 @@ when it's called:
 
 ```swift
 protocol Togglable {
-   mutating func toggle()
+    mutating func toggle()
 }
 ```
 
@@ -441,15 +441,15 @@ to match the `Togglable` protocol's requirements:
 
 ```swift
 enum OnOffSwitch: Togglable {
-   case off, on
-   mutating func toggle() {
-      switch self {
-         case .off:
+    case off, on
+    mutating func toggle() {
+        switch self {
+        case .off:
             self = .on
-         case .on:
+        case .on:
             self = .off
-      }
-   }
+        }
+    }
 }
 var lightSwitch = OnOffSwitch.off
 lightSwitch.toggle()
@@ -488,7 +488,7 @@ but without curly braces or an initializer body:
 
 ```swift
 protocol SomeProtocol {
-   init(someParameter: Int)
+    init(someParameter: Int)
 }
 ```
 
@@ -512,9 +512,9 @@ you must mark the initializer implementation with the `required` modifier:
 
 ```swift
 class SomeClass: SomeProtocol {
-   required init(someParameter: Int) {
-      // initializer implementation goes here
-   }
+    required init(someParameter: Int) {
+        // initializer implementation goes here
+    }
 }
 ```
 
@@ -631,20 +631,20 @@ mark the initializer implementation with both the `required` and `override` modi
 
 ```swift
 protocol SomeProtocol {
-   init()
+    init()
 }
 
 class SomeSuperClass {
-   init() {
-      // initializer implementation goes here
-   }
+    init() {
+        // initializer implementation goes here
+    }
 }
 
 class SomeSubClass: SomeSuperClass, SomeProtocol {
-   // "required" from SomeProtocol conformance; "override" from SomeSuperClass
-   required override init() {
-      // initializer implementation goes here
-   }
+    // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+    required override init() {
+        // initializer implementation goes here
+    }
 }
 ```
 
@@ -787,15 +787,15 @@ Here's an example of a protocol used as a type:
 
 ```swift
 class Dice {
-   let sides: Int
-   let generator: RandomNumberGenerator
-   init(sides: Int, generator: RandomNumberGenerator) {
-      self.sides = sides
-      self.generator = generator
-   }
-   func roll() -> Int {
-      return Int(generator.random() * Double(sides)) + 1
-   }
+    let sides: Int
+    let generator: RandomNumberGenerator
+    init(sides: Int, generator: RandomNumberGenerator) {
+        self.sides = sides
+        self.generator = generator
+    }
+    func roll() -> Int {
+        return Int(generator.random() * Double(sides)) + 1
+    }
 }
 ```
 
@@ -860,7 +860,7 @@ with a `LinearCongruentialGenerator` instance as its random number generator:
 ```swift
 var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
 for _ in 1...5 {
-   print("Random dice roll is \(d6.roll())")
+    print("Random dice roll is \(d6.roll())")
 }
 // Random dice roll is 3
 // Random dice roll is 5
@@ -903,13 +903,13 @@ The example below defines two protocols for use with dice-based board games:
 
 ```swift
 protocol DiceGame {
-   var dice: Dice { get }
-   func play()
+    var dice: Dice { get }
+    func play()
 }
 protocol DiceGameDelegate: AnyObject {
-   func gameDidStart(_ game: DiceGame)
-   func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-   func gameDidEnd(_ game: DiceGame)
+    func gameDidStart(_ game: DiceGame)
+    func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+    func gameDidEnd(_ game: DiceGame)
 }
 ```
 
@@ -953,34 +953,34 @@ and to notify a `DiceGameDelegate` about its progress:
 
 ```swift
 class SnakesAndLadders: DiceGame {
-   let finalSquare = 25
-   let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
-   var square = 0
-   var board: [Int]
-   init() {
-      board = Array(repeating: 0, count: finalSquare + 1)
-      board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-      board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-   }
-   weak var delegate: DiceGameDelegate?
-   func play() {
-      square = 0
-      delegate?.gameDidStart(self)
-      gameLoop: while square != finalSquare {
-         let diceRoll = dice.roll()
-         delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-         switch square + diceRoll {
+    let finalSquare = 25
+    let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
+    var square = 0
+    var board: [Int]
+    init() {
+        board = Array(repeating: 0, count: finalSquare + 1)
+        board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+        board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    }
+    weak var delegate: DiceGameDelegate?
+    func play() {
+        square = 0
+        delegate?.gameDidStart(self)
+        gameLoop: while square != finalSquare {
+            let diceRoll = dice.roll()
+            delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
+            switch square + diceRoll {
             case finalSquare:
-               break gameLoop
+                break gameLoop
             case let newSquare where newSquare > finalSquare:
-               continue gameLoop
+                continue gameLoop
             default:
-               square += diceRoll
-               square += board[square]
-         }
-      }
-      delegate?.gameDidEnd(self)
-   }
+                square += diceRoll
+                square += board[square]
+            }
+        }
+        delegate?.gameDidEnd(self)
+    }
 }
 ```
 
@@ -1068,21 +1068,21 @@ which adopts the `DiceGameDelegate` protocol:
 
 ```swift
 class DiceGameTracker: DiceGameDelegate {
-   var numberOfTurns = 0
-   func gameDidStart(_ game: DiceGame) {
-      numberOfTurns = 0
-      if game is SnakesAndLadders {
-         print("Started a new game of Snakes and Ladders")
-      }
-      print("The game is using a \(game.dice.sides)-sided dice")
-   }
-   func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-      numberOfTurns += 1
-      print("Rolled a \(diceRoll)")
-   }
-   func gameDidEnd(_ game: DiceGame) {
-      print("The game lasted for \(numberOfTurns) turns")
-   }
+    var numberOfTurns = 0
+    func gameDidStart(_ game: DiceGame) {
+        numberOfTurns = 0
+        if game is SnakesAndLadders {
+            print("Started a new game of Snakes and Ladders")
+        }
+        print("The game is using a \(game.dice.sides)-sided dice")
+    }
+    func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+        numberOfTurns += 1
+        print("Rolled a \(diceRoll)")
+    }
+    func gameDidEnd(_ game: DiceGame) {
+        print("The game lasted for \(numberOfTurns) turns")
+    }
 }
 ```
 
@@ -1186,7 +1186,7 @@ This might be a description of itself, or a text version of its current state:
 
 ```swift
 protocol TextRepresentable {
-   var textualDescription: String { get }
+    var textualDescription: String { get }
 }
 ```
 
@@ -1211,9 +1211,9 @@ The `Dice` class from above can be extended to adopt and conform to `TextReprese
 
 ```swift
 extension Dice: TextRepresentable {
-   var textualDescription: String {
-      return "A \(sides)-sided dice"
-   }
+    var textualDescription: String {
+        return "A \(sides)-sided dice"
+    }
 }
 ```
 
@@ -1260,9 +1260,9 @@ adopt and conform to the `TextRepresentable` protocol:
 
 ```swift
 extension SnakesAndLadders: TextRepresentable {
-   var textualDescription: String {
-      return "A game of Snakes and Ladders with \(finalSquare) squares"
-   }
+    var textualDescription: String {
+        return "A game of Snakes and Ladders with \(finalSquare) squares"
+    }
 }
 print(game.textualDescription)
 // Prints "A game of Snakes and Ladders with 25 squares"
@@ -1300,10 +1300,10 @@ whenever they store elements of a type that conforms to `TextRepresentable`.
 
 ```swift
 extension Array: TextRepresentable where Element: TextRepresentable {
-   var textualDescription: String {
-      let itemsAsText = self.map { $0.textualDescription }
-      return "[" + itemsAsText.joined(separator: ", ") + "]"
-   }
+    var textualDescription: String {
+        let itemsAsText = self.map { $0.textualDescription }
+        return "[" + itemsAsText.joined(separator: ", ") + "]"
+    }
 }
 let myDice = [d6, d12]
 print(myDice.textualDescription)
@@ -1335,10 +1335,10 @@ you can make it adopt the protocol with an empty extension:
 
 ```swift
 struct Hamster {
-   var name: String
-   var textualDescription: String {
-      return "A hamster named \(name)"
-   }
+    var name: String
+    var textualDescription: String {
+        return "A hamster named \(name)"
+    }
 }
 extension Hamster: TextRepresentable {}
 ```
@@ -1436,7 +1436,7 @@ of the equivalence operators.
 
 ```swift
 struct Vector3D: Equatable {
-   var x = 0.0, y = 0.0, z = 0.0
+    var x = 0.0, y = 0.0, z = 0.0
 }
 
 let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
@@ -1609,7 +1609,7 @@ and print each item's textual description:
 
 ```swift
 for thing in things {
-   print(thing.textualDescription)
+    print(thing.textualDescription)
 }
 // A game of Snakes and Ladders with 25 squares
 // A 12-sided dice
@@ -1646,7 +1646,7 @@ but with the option to list multiple inherited protocols, separated by commas:
 
 ```swift
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
-   // protocol definition goes here
+    // protocol definition goes here
 }
 ```
 
@@ -1668,7 +1668,7 @@ the `TextRepresentable` protocol from above:
 
 ```swift
 protocol PrettyTextRepresentable: TextRepresentable {
-   var prettyTextualDescription: String { get }
+    var prettyTextualDescription: String { get }
 }
 ```
 
@@ -1695,20 +1695,20 @@ The `SnakesAndLadders` class can be extended to adopt and conform to `PrettyText
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
-   var prettyTextualDescription: String {
-      var output = textualDescription + ":\n"
-      for index in 1...finalSquare {
-         switch board[index] {
+    var prettyTextualDescription: String {
+        var output = textualDescription + ":\n"
+        for index in 1...finalSquare {
+            switch board[index] {
             case let ladder where ladder > 0:
-               output += "▲ "
+                output += "▲ "
             case let snake where snake < 0:
-               output += "▼ "
+                output += "▼ "
             default:
-               output += "○ "
-         }
-      }
-      return output
-   }
+                output += "○ "
+            }
+        }
+        return output
+    }
 }
 ```
 
@@ -1782,7 +1782,7 @@ by adding the `AnyObject` protocol to a protocol's inheritance list.
 
 ```swift
 protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
-   // class-only protocol definition goes here
+    // class-only protocol definition goes here
 }
 ```
 
@@ -1846,17 +1846,17 @@ into a single protocol composition requirement on a function parameter:
 
 ```swift
 protocol Named {
-   var name: String { get }
+    var name: String { get }
 }
 protocol Aged {
-   var age: Int { get }
+    var age: Int { get }
 }
 struct Person: Named, Aged {
-   var name: String
-   var age: Int
+    var name: String
+    var age: Int
 }
 func wishHappyBirthday(to celebrator: Named & Aged) {
-   print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
+    print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(to: birthdayPerson)
@@ -1998,7 +1998,7 @@ with a single property requirement of a gettable `Double` property called `area`
 
 ```swift
 protocol HasArea {
-   var area: Double { get }
+    var area: Double { get }
 }
 ```
 
@@ -2018,14 +2018,14 @@ both of which conform to the `HasArea` protocol:
 
 ```swift
 class Circle: HasArea {
-   let pi = 3.1415927
-   var radius: Double
-   var area: Double { return pi * radius * radius }
-   init(radius: Double) { self.radius = radius }
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
 }
 class Country: HasArea {
-   var area: Double
-   init(area: Double) { self.area = area }
+    var area: Double
+    init(area: Double) { self.area = area }
 }
 ```
 
@@ -2056,8 +2056,8 @@ Here's a class called `Animal`, which doesn't conform to the `HasArea` protocol:
 
 ```swift
 class Animal {
-   var legs: Int
-   init(legs: Int) { self.legs = legs }
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
 }
 ```
 
@@ -2079,9 +2079,9 @@ can be used to initialize an array that stores values of type `AnyObject`:
 
 ```swift
 let objects: [AnyObject] = [
-   Circle(radius: 2.0),
-   Country(area: 243_610),
-   Animal(legs: 4)
+    Circle(radius: 2.0),
+    Country(area: 243_610),
+    Animal(legs: 4)
 ]
 ```
 
@@ -2110,11 +2110,11 @@ it conforms to the `HasArea` protocol:
 
 ```swift
 for object in objects {
-   if let objectWithArea = object as? HasArea {
-      print("Area is \(objectWithArea.area)")
-   } else {
-      print("Something that doesn't have an area")
-   }
+    if let objectWithArea = object as? HasArea {
+        print("Area is \(objectWithArea.area)")
+    } else {
+        print("Something that doesn't have an area")
+    }
 }
 // Area is 12.5663708
 // Area is 243610.0
@@ -2217,8 +2217,8 @@ which has two optional requirements:
 
 ```swift
 @objc protocol CounterDataSource {
-   @objc optional func increment(forCount count: Int) -> Int
-   @objc optional var fixedIncrement: Int { get }
+    @objc optional func increment(forCount count: Int) -> Int
+    @objc optional var fixedIncrement: Int { get }
 }
 ```
 
@@ -2252,15 +2252,15 @@ has an optional `dataSource` property of type `CounterDataSource?`:
 
 ```swift
 class Counter {
-   var count = 0
-   var dataSource: CounterDataSource?
-   func increment() {
-      if let amount = dataSource?.increment?(forCount: count) {
-         count += amount
-      } else if let amount = dataSource?.fixedIncrement {
-         count += amount
-      }
-   }
+    var count = 0
+    var dataSource: CounterDataSource?
+    func increment() {
+        if let amount = dataSource?.increment?(forCount: count) {
+            count += amount
+        } else if let amount = dataSource?.fixedIncrement {
+            count += amount
+        }
+    }
 }
 ```
 
@@ -2340,7 +2340,7 @@ It does this by implementing the optional `fixedIncrement` property requirement:
 
 ```swift
 class ThreeSource: NSObject, CounterDataSource {
-   let fixedIncrement = 3
+    let fixedIncrement = 3
 }
 ```
 
@@ -2361,8 +2361,8 @@ You can use an instance of `ThreeSource` as the data source for a new `Counter` 
 var counter = Counter()
 counter.dataSource = ThreeSource()
 for _ in 1...4 {
-   counter.increment()
-   print(counter.count)
+    counter.increment()
+    print(counter.count)
 }
 // 3
 // 6
@@ -2400,15 +2400,15 @@ from its current `count` value:
 
 ```swift
 class TowardsZeroSource: NSObject, CounterDataSource {
-   func increment(forCount count: Int) -> Int {
-      if count == 0 {
-         return 0
-      } else if count < 0 {
-         return 1
-      } else {
-         return -1
-      }
-   }
+    func increment(forCount count: Int) -> Int {
+        if count == 0 {
+            return 0
+        } else if count < 0 {
+            return 1
+        } else {
+            return -1
+        }
+    }
 }
 ```
 
@@ -2445,8 +2445,8 @@ Once the counter reaches zero, no more counting takes place:
 counter.count = -4
 counter.dataSource = TowardsZeroSource()
 for _ in 1...5 {
-   counter.increment()
-   print(counter.count)
+    counter.increment()
+    print(counter.count)
 }
 // -3
 // -2
@@ -2489,9 +2489,9 @@ to return a random `Bool` value:
 
 ```swift
 extension RandomNumberGenerator {
-   func randomBool() -> Bool {
-      return random() > 0.5
-   }
+    func randomBool() -> Bool {
+        return random() > 0.5
+    }
 }
 ```
 
@@ -2563,9 +2563,9 @@ to simply return the result of accessing the `textualDescription` property:
 
 ```swift
 extension PrettyTextRepresentable  {
-   var prettyTextualDescription: String {
-      return textualDescription
-   }
+    var prettyTextualDescription: String {
+        return textualDescription
+    }
 }
 ```
 

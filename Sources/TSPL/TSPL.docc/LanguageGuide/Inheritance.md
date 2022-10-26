@@ -43,13 +43,13 @@ but will be customized by subclasses of `Vehicle` later on:
 
 ```swift
 class Vehicle {
-   var currentSpeed = 0.0
-   var description: String {
-      return "traveling at \(currentSpeed) miles per hour"
-   }
-   func makeNoise() {
-      // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-   }
+    var currentSpeed = 0.0
+    var description: String {
+        return "traveling at \(currentSpeed) miles per hour"
+    }
+    func makeNoise() {
+        // do nothing - an arbitrary vehicle doesn't necessarily make a noise
+    }
 }
 ```
 
@@ -122,7 +122,7 @@ separated by a colon:
 
 ```swift
 class SomeSubclass: SomeSuperclass {
-   // subclass definition goes here
+    // subclass definition goes here
 }
 ```
 
@@ -143,7 +143,7 @@ with a superclass of `Vehicle`:
 
 ```swift
 class Bicycle: Vehicle {
-   var hasBasket = false
+    var hasBasket = false
 }
 ```
 
@@ -211,7 +211,7 @@ known as a “tandem”:
 
 ```swift
 class Tandem: Bicycle {
-   var currentNumberOfPassengers = 0
+    var currentNumberOfPassengers = 0
 }
 ```
 
@@ -307,9 +307,9 @@ which overrides the `makeNoise()` method that `Train` inherits from `Vehicle`:
 
 ```swift
 class Train: Vehicle {
-   override func makeNoise() {
-      print("Choo Choo")
-   }
+    override func makeNoise() {
+        print("Choo Choo")
+    }
 }
 ```
 
@@ -385,10 +385,10 @@ to provide a custom description that includes the current gear:
 
 ```swift
 class Car: Vehicle {
-   var gear = 1
-   override var description: String {
-      return super.description + " in gear \(gear)"
-   }
+    var gear = 1
+    override var description: String {
+        return super.description + " in gear \(gear)"
+    }
 }
 ```
 
@@ -461,11 +461,11 @@ which automatically selects an appropriate gear to use based on the current spee
 
 ```swift
 class AutomaticCar: Car {
-   override var currentSpeed: Double {
-      didSet {
-         gear = Int(currentSpeed / 10.0) + 1
-      }
-   }
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
+        }
+    }
 }
 ```
 

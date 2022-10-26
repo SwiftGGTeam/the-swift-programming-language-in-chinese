@@ -115,7 +115,7 @@ The following statement isn't valid:
 
 ```swift
 if x = y {
-   // This isn't valid, because x = y doesn't return a value.
+    // This isn't valid, because x = y doesn't return a value.
 }
 ```
 
@@ -437,9 +437,9 @@ such as the `if` statement:
 ```swift
 let name = "world"
 if name == "world" {
-   print("hello, world")
+    print("hello, world")
 } else {
-   print("I'm sorry \(name), but I don't recognize you")
+    print("I'm sorry \(name), but I don't recognize you")
 }
 // Prints "hello, world", because name is indeed equal to "world".
 ```
@@ -579,9 +579,9 @@ The ternary conditional operator is shorthand for the code below:
 
 ```swift
 if question {
-   answer1
+    answer1
 } else {
-   answer2
+    answer2
 }
 ```
 
@@ -643,9 +643,9 @@ let contentHeight = 40
 let hasHeader = true
 let rowHeight: Int
 if hasHeader {
-   rowHeight = contentHeight + 50
+    rowHeight = contentHeight + 50
 } else {
-   rowHeight = contentHeight + 20
+    rowHeight = contentHeight + 20
 }
 // rowHeight is equal to 90
 ```
@@ -818,7 +818,7 @@ such as with a `for`-`in` loop:
 
 ```swift
 for index in 1...5 {
-   print("\(index) times 5 is \(index * 5)")
+    print("\(index) times 5 is \(index * 5)")
 }
 // 1 times 5 is 5
 // 2 times 5 is 10
@@ -892,7 +892,7 @@ where it's useful to count up to (but not including) the length of the list:
 let names = ["Anna", "Alex", "Brian", "Jack"]
 let count = names.count
 for i in 0..<count {
-   print("Person \(i + 1) is called \(names[i])")
+    print("Person \(i + 1) is called \(names[i])")
 }
 // Person 1 is called Anna
 // Person 2 is called Alex
@@ -1061,7 +1061,7 @@ It can be read as “not `a`”, as seen in the following example:
 ```swift
 let allowedEntry = false
 if !allowedEntry {
-   print("ACCESS DENIED")
+    print("ACCESS DENIED")
 }
 // Prints "ACCESS DENIED"
 ```
@@ -1107,9 +1107,9 @@ and only allows access if both values are `true`:
 let enteredDoorCode = true
 let passedRetinaScan = false
 if enteredDoorCode && passedRetinaScan {
-   print("Welcome!")
+    print("Welcome!")
 } else {
-   print("ACCESS DENIED")
+    print("ACCESS DENIED")
 }
 // Prints "ACCESS DENIED"
 ```
@@ -1155,9 +1155,9 @@ and access is allowed:
 let hasDoorKey = false
 let knowsOverridePassword = true
 if hasDoorKey || knowsOverridePassword {
-   print("Welcome!")
+    print("Welcome!")
 } else {
-   print("ACCESS DENIED")
+    print("ACCESS DENIED")
 }
 // Prints "Welcome!"
 ```
@@ -1184,9 +1184,9 @@ You can combine multiple logical operators to create longer compound expressions
 
 ```swift
 if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
-   print("Welcome!")
+    print("Welcome!")
 } else {
-   print("ACCESS DENIED")
+    print("ACCESS DENIED")
 }
 // Prints "Welcome!"
 ```
@@ -1234,9 +1234,9 @@ to make its intent explicit:
 
 ```swift
 if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-   print("Welcome!")
+    print("Welcome!")
 } else {
-   print("ACCESS DENIED")
+    print("ACCESS DENIED")
 }
 // Prints "Welcome!"
 ```

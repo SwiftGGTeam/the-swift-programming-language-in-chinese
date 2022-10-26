@@ -317,15 +317,15 @@ A `switch` statement has the following form:
 
 ```swift
 switch <#control expression#> {
-   case <#pattern 1#>:
-      <#statements#>
-   case <#pattern 2#> where <#condition#>:
-      <#statements#>
-   case <#pattern 3#> where <#condition#>,
-        <#pattern 4#> where <#condition#>:
-      <#statements#>
-   default:
-      <#statements#>
+case <#pattern 1#>:
+    <#statements#>
+case <#pattern 2#> where <#condition#>:
+    <#statements#>
+case <#pattern 3#> where <#condition#>,
+    <#pattern 4#> where <#condition#>:
+    <#statements#>
+default:
+    <#statements#>
 }
 ```
 

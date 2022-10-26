@@ -61,14 +61,14 @@ which defines a stored constant property called `name`:
 
 ```swift
 class Person {
-   let name: String
-   init(name: String) {
-      self.name = name
-      print("\(name) is being initialized")
-   }
-   deinit {
-      print("\(name) is being deinitialized")
-   }
+    let name: String
+    init(name: String) {
+        self.name = name
+        print("\(name) is being initialized")
+    }
+    deinit {
+        print("\(name) is being deinitialized")
+    }
 }
 ```
 
@@ -231,17 +231,17 @@ which model a block of apartments and its residents:
 
 ```swift
 class Person {
-   let name: String
-   init(name: String) { self.name = name }
-   var apartment: Apartment?
-   deinit { print("\(name) is being deinitialized") }
+    let name: String
+    init(name: String) { self.name = name }
+    var apartment: Apartment?
+    deinit { print("\(name) is being deinitialized") }
 }
 
 class Apartment {
-   let unit: String
-   init(unit: String) { self.unit = unit }
-   var tenant: Person?
-   deinit { print("Apartment \(unit) is being deinitialized") }
+    let unit: String
+    init(unit: String) { self.unit = unit }
+    var tenant: Person?
+    deinit { print("Apartment \(unit) is being deinitialized") }
 }
 ```
 
@@ -465,17 +465,17 @@ is declared as a weak reference:
 
 ```swift
 class Person {
-   let name: String
-   init(name: String) { self.name = name }
-   var apartment: Apartment?
-   deinit { print("\(name) is being deinitialized") }
+    let name: String
+    init(name: String) { self.name = name }
+    var apartment: Apartment?
+    deinit { print("\(name) is being deinitialized") }
 }
 
 class Apartment {
-   let unit: String
-   init(unit: String) { self.unit = unit }
-   weak var tenant: Person?
-   deinit { print("Apartment \(unit) is being deinitialized") }
+    let unit: String
+    init(unit: String) { self.unit = unit }
+    weak var tenant: Person?
+    deinit { print("Apartment \(unit) is being deinitialized") }
 }
 ```
 
@@ -661,22 +661,22 @@ to avoid a strong reference cycle:
 
 ```swift
 class Customer {
-   let name: String
-   var card: CreditCard?
-   init(name: String) {
-      self.name = name
-   }
-   deinit { print("\(name) is being deinitialized") }
+    let name: String
+    var card: CreditCard?
+    init(name: String) {
+        self.name = name
+    }
+    deinit { print("\(name) is being deinitialized") }
 }
 
 class CreditCard {
-   let number: UInt64
-   unowned let customer: Customer
-   init(number: UInt64, customer: Customer) {
-      self.number = number
-      self.customer = customer
-   }
-   deinit { print("Card #\(number) is being deinitialized") }
+    let number: UInt64
+    unowned let customer: Customer
+    init(number: UInt64, customer: Customer) {
+        self.number = number
+        self.customer = customer
+    }
+    deinit { print("Card #\(number) is being deinitialized") }
 }
 ```
 
@@ -1008,21 +1008,21 @@ and the `City` class has a `country` property:
 
 ```swift
 class Country {
-   let name: String
-   var capitalCity: City!
-   init(name: String, capitalName: String) {
-      self.name = name
-      self.capitalCity = City(name: capitalName, country: self)
-   }
+    let name: String
+    var capitalCity: City!
+    init(name: String, capitalName: String) {
+        self.name = name
+        self.capitalCity = City(name: capitalName, country: self)
+    }
 }
 
 class City {
-   let name: String
-   unowned let country: Country
-   init(name: String, country: Country) {
-      self.name = name
-      self.country = country
-   }
+    let name: String
+    unowned let country: Country
+    init(name: String, country: Country) {
+        self.name = name
+        self.country = country
+    }
 }
 ```
 
@@ -1143,25 +1143,25 @@ which provides a simple model for an individual element within an HTML document:
 ```swift
 class HTMLElement {
 
-   let name: String
-   let text: String?
+    let name: String
+    let text: String?
 
-   lazy var asHTML: () -> String = {
-      if let text = self.text {
-         return "<\(self.name)>\(text)</\(self.name)>"
-      } else {
-         return "<\(self.name) />"
-      }
-   }
+    lazy var asHTML: () -> String = {
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
 
-   init(name: String, text: String? = nil) {
-      self.name = name
-      self.text = text
-   }
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
 
-   deinit {
-      print("\(name) is being deinitialized")
-   }
+    deinit {
+        print("\(name) is being deinitialized")
+    }
 
 }
 ```
@@ -1233,7 +1233,7 @@ in order to prevent the representation from returning an empty HTML tag:
 let heading = HTMLElement(name: "h1")
 let defaultText = "some default text"
 heading.asHTML = {
-   return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+    return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
 }
 print(heading.asHTML())
 // Prints "<h1>some default text</h1>"
@@ -1361,9 +1361,9 @@ if they're provided:
 
 ```swift
 lazy var someClosure = {
-      [unowned self, weak delegate = self.delegate]
-      (index: Int, stringToProcess: String) -> String in
-   // closure body goes here
+        [unowned self, weak delegate = self.delegate]
+        (index: Int, stringToProcess: String) -> String in
+    // closure body goes here
 }
 ```
 
@@ -1391,8 +1391,8 @@ followed by the `in` keyword:
 
 ```swift
 lazy var someClosure = {
-      [unowned self, weak delegate = self.delegate] in
-   // closure body goes here
+        [unowned self, weak delegate = self.delegate] in
+    // closure body goes here
 }
 ```
 
@@ -1440,26 +1440,26 @@ Here's how you write the `HTMLElement` class to avoid the cycle:
 ```swift
 class HTMLElement {
 
-   let name: String
-   let text: String?
+    let name: String
+    let text: String?
 
-   lazy var asHTML: () -> String = {
-         [unowned self] in
-      if let text = self.text {
-         return "<\(self.name)>\(text)</\(self.name)>"
-      } else {
-         return "<\(self.name) />"
-      }
-   }
+    lazy var asHTML: () -> String = {
+            [unowned self] in
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
 
-   init(name: String, text: String? = nil) {
-      self.name = name
-      self.text = text
-   }
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
 
-   deinit {
-      print("\(name) is being deinitialized")
-   }
+    deinit {
+        print("\(name) is being deinitialized")
+    }
 
 }
 ```

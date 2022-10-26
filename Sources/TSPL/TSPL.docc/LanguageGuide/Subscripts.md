@@ -35,12 +35,12 @@ in the same way as for computed properties:
 
 ```swift
 subscript(index: Int) -> Int {
-   get {
-      // Return an appropriate subscript value here.
-   }
-   set(newValue) {
-      // Perform a suitable setting action here.
-   }
+    get {
+        // Return an appropriate subscript value here.
+    }
+    set(newValue) {
+        // Perform a suitable setting action here.
+    }
 }
 ```
 
@@ -75,7 +75,7 @@ by removing the `get` keyword and its braces:
 
 ```swift
 subscript(index: Int) -> Int {
-   // Return an appropriate subscript value here.
+    // Return an appropriate subscript value here.
 }
 ```
 
@@ -98,10 +98,10 @@ which defines a `TimesTable` structure to represent an *n*-times-table of intege
 
 ```swift
 struct TimesTable {
-   let multiplier: Int
-   subscript(index: Int) -> Int {
-      return multiplier * index
-   }
+    let multiplier: Int
+    subscript(index: Int) -> Int {
+        return multiplier * index
+    }
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
@@ -231,26 +231,26 @@ The `Matrix` structure's subscript takes two integer parameters:
 
 ```swift
 struct Matrix {
-   let rows: Int, columns: Int
-   var grid: [Double]
-   init(rows: Int, columns: Int) {
-      self.rows = rows
-      self.columns = columns
-      grid = Array(repeating: 0.0, count: rows * columns)
-   }
-   func indexIsValid(row: Int, column: Int) -> Bool {
-      return row >= 0 && row < rows && column >= 0 && column < columns
-   }
-   subscript(row: Int, column: Int) -> Double {
-      get {
-         assert(indexIsValid(row: row, column: column), "Index out of range")
-         return grid[(row * columns) + column]
-      }
-      set {
-         assert(indexIsValid(row: row, column: column), "Index out of range")
-         grid[(row * columns) + column] = newValue
-      }
-   }
+    let rows: Int, columns: Int
+    var grid: [Double]
+    init(rows: Int, columns: Int) {
+        self.rows = rows
+        self.columns = columns
+        grid = Array(repeating: 0.0, count: rows * columns)
+    }
+    func indexIsValid(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < rows && column >= 0 && column < columns
+    }
+    subscript(row: Int, column: Int) -> Double {
+        get {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            return grid[(row * columns) + column]
+        }
+        set {
+            assert(indexIsValid(row: row, column: column), "Index out of range")
+            grid[(row * columns) + column] = newValue
+        }
+    }
 }
 ```
 
@@ -357,7 +357,7 @@ are inside the bounds of the matrix:
 
 ```swift
 func indexIsValid(row: Int, column: Int) -> Bool {
-   return row >= 0 && row < rows && column >= 0 && column < columns
+    return row >= 0 && row < rows && column >= 0 && column < columns
 }
 ```
 
@@ -407,10 +407,10 @@ The example below shows how you define and call a type subscript:
 
 ```swift
 enum Planet: Int {
-   case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
-   static subscript(n: Int) -> Planet {
-      return Planet(rawValue: n)!
-   }
+    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
+    static subscript(n: Int) -> Planet {
+        return Planet(rawValue: n)!
+    }
 }
 let mars = Planet[4]
 print(mars)

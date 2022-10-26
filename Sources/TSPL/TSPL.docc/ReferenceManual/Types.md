@@ -999,13 +999,13 @@ or the entire class marked with the `final` keyword.
 
 ```swift
 class AnotherSubClass: SomeBaseClass {
-   let string: String
-   required init(string: String) {
-      self.string = string
-   }
-   override class func printClassName() {
-      print("AnotherSubClass")
-   }
+    let string: String
+    required init(string: String) {
+        self.string = string
+    }
+    override class func printClassName() {
+        print("AnotherSubClass")
+    }
 }
 let metatype: AnotherSubClass.Type = AnotherSubClass.self
 let anotherInstance = metatype.init(string: "some string")

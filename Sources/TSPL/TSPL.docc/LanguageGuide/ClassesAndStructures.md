@@ -70,10 +70,10 @@ Both place their entire definition within a pair of braces:
 
 ```swift
 struct SomeStructure {
-   // structure definition goes here
+    // structure definition goes here
 }
 class SomeClass {
-   // class definition goes here
+    // class definition goes here
 }
 ```
 
@@ -105,14 +105,14 @@ Here's an example of a structure definition and a class definition:
 
 ```swift
 struct Resolution {
-   var width = 0
-   var height = 0
+    var width = 0
+    var height = 0
 }
 class VideoMode {
-   var resolution = Resolution()
-   var interlaced = false
-   var frameRate = 0.0
-   var name: String?
+    var resolution = Resolution()
+    var interlaced = false
+    var frameRate = 0.0
+    var name: String?
 }
 ```
 
@@ -423,10 +423,10 @@ The same behavior applies to enumerations:
 
 ```swift
 enum CompassPoint {
-   case north, south, east, west
-   mutating func turnNorth() {
-      self = .north
-   }
+    case north, south, east, west
+    mutating func turnNorth() {
+        self = .north
+    }
 }
 var currentDirection = CompassPoint.west
 let rememberedDirection = currentDirection
@@ -640,7 +640,7 @@ Use these operators to check whether two constants or variables refer to the sam
 
 ```swift
 if tenEighty === alsoTenEighty {
-   print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
+    print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
 }
 // Prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
 ```
