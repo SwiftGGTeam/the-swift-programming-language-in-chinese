@@ -10,7 +10,7 @@ Hiding type information
 is useful at boundaries between
 a module and code that calls into the module,
 because the underlying type of the return value can remain private.
-Unlike returning a value whose type is a protocol type,
+Unlike returning a value whose type is a boxed protocol type,
 opaque types preserve type identity ---
 the compiler has access to the type information,
 but clients of the module don't.

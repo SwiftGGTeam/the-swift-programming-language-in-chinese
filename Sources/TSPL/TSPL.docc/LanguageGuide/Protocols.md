@@ -764,6 +764,24 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 ## Protocols as Types
 
+<!--
+XXX Existentials are an advanced enough topic
+that maybe they shouldn't come before the reader has even seen generics?
+We need a better story contrasting when to use
+existentials, generics, and opaque types.
+
+Performance impact from SE-0335:
+
+Existential types are also significantly more expensive than using concrete types.
+Because they can store any value whose type conforms to the protocol,
+and the type of value stored can change dynamically,
+existential types require dynamic memory
+unless the value is small enough to fit within an inline 3-word buffer.
+In addition to heap allocation and reference counting,
+code using existential types incurs pointer indirection and dynamic method dispatch
+that cannot be optimized away.
+-->
+
 Protocols don't actually implement any functionality themselves.
 Nonetheless,
 you can use protocols as a fully fledged types in your code.
@@ -788,8 +806,8 @@ Here's an example of a protocol used as a type:
 ```swift
 class Dice {
    let sides: Int
-   let generator: RandomNumberGenerator
-   init(sides: Int, generator: RandomNumberGenerator) {
+   let generator: any RandomNumberGenerator
+   init(sides: Int, generator: any RandomNumberGenerator) {
       self.sides = sides
       self.generator = generator
    }
@@ -806,8 +824,8 @@ class Dice {
   ```swifttest
   -> class Dice {
         let sides: Int
-        let generator: RandomNumberGenerator
-        init(sides: Int, generator: RandomNumberGenerator) {
+        let generator: any RandomNumberGenerator
+        init(sides: Int, generator: any RandomNumberGenerator) {
            self.sides = sides
            self.generator = generator
         }

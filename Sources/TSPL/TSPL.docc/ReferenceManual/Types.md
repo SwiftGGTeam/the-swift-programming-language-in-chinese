@@ -878,6 +878,11 @@ An *opaque type* defines a type
 that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
+◊ there is a specific concrete type
+◊ the underlying type is known at compile time
+◊ the compiler can use that type for optimizations
+◊ but... the opaque type forms a boundary, which type information can't cross
+
 Opaque types appear as the return type of a function or subscript,
 or the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
@@ -929,6 +934,12 @@ opaque-type --> ``some`` type
 
 A *boxed protocol type* defines a type
 that conforms to a protocol or protocol composition.
+<!-- XXX
+what makes it "boxed" is that (usually) it requires a separate allocation
+and the fact that type erasure hides ynformation
+
+the first sentence of this section needs more contrast with opaque types
+-->
 
 Boxed protocol types have the following form:
 
