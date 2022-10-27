@@ -49,40 +49,6 @@ where the alternatives are spelled out explicitly:
 >
 > *getter-setter-block* → **`{`** setter-clause getter-clause **`}`**
 
-> Grammar of a literal:
->
-> *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
->
->
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal*
->
-> *boolean-literal* → **`true`** | **`false`**
->
-> *nil-literal* → **`nil`**
-
-> Grammar of an identifier (partial):
->
-> *identifier-head* → Upper- or lowercase letter A through Z
->
-> *identifier-head* → **`_`**
->
-> *identifier-head* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2--U+00B5, or U+00B7--U+00BA
->
-> *identifier-head* → U+00BC--U+00BE, U+00C0--U+00D6, U+00D8--U+00F6, or U+00F8--U+00FF
-
-@Comment {
-`_`**  Fixes runaway syntax highlight from above
-}
-
-> Grammar of an optional type:
->
-> *optional-type* → *type* **`?`**
-
-> Grammar of a conditional operator:
->
-> *conditional-operator* → **`?`** *expression* **`:`**
-
-
 @Comment {
 This source file is part of the Swift.org open source project
 
