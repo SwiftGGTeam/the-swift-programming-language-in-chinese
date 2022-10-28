@@ -2235,21 +2235,30 @@ at the time the code is compiled.
 For an example of how to use the `unknown` attribute,
 see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 
-```
-Grammar of an attribute
+> Grammar of an attribute:
+>
+> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_
+>
+> *attribute-name* → *identifier*
+>
+> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`**
+>
+> *attributes* → *attribute* *attributes*_?_
+>
+>
+>
+> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_
+>
+> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`**
+>
+> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`**
+>
+> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`**
+>
+> *balanced-token* → Any identifier, keyword, literal, or operator
+>
+> *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
 
-attribute --> ``@`` attribute-name attribute-argument-clause-OPT
-attribute-name --> identifier
-attribute-argument-clause --> ``(`` balanced-tokens-OPT ``)``
-attributes --> attribute attributes-OPT
-
-balanced-tokens --> balanced-token balanced-tokens-OPT
-balanced-token --> ``(`` balanced-tokens-OPT ``)``
-balanced-token --> ``[`` balanced-tokens-OPT ``]``
-balanced-token --> ``{`` balanced-tokens-OPT ``}``
-balanced-token --> Any identifier, keyword, literal, or operator
-balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
-```
 
 
 

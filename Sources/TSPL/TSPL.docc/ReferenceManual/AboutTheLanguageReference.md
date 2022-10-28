@@ -34,7 +34,7 @@ As an example, the grammar of a getter-setter block is defined as follows:
 
 > Grammar of a getter-setter block:
 >
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause* _?_ **`}`** | **`{`** *setter-clause* *getter-clause* **`}`**
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** | **`{`** *setter-clause* *getter-clause* **`}`**
 
 This definition indicates that a getter-setter block can consist of a getter clause
 followed by an optional setter clause, enclosed in braces,
@@ -45,9 +45,9 @@ where the alternatives are spelled out explicitly:
 > Grammar of a getter-setter block:
 >
 >
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause?* **`}`**
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`**
 >
-> *getter-setter-block* → **`{`** setter-clause getter-clause **`}`**
+> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`**
 
 @Comment {
 This source file is part of the Swift.org open source project
