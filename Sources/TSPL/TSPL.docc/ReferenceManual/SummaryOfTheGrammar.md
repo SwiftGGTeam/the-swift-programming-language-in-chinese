@@ -49,9 +49,7 @@
 > *multiline-comment-text-item* → *comment-text-item*
 >
 > *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
->
->
->
+
 
 > Grammar of an identifier:
 >
@@ -114,9 +112,7 @@
 > *implicit-parameter-name* → **`$`** *decimal-digits*
 >
 > *property-wrapper-projection* → **`$`** *identifier-characters*
->
->
->
+
 
 > Grammar of a literal:
 >
@@ -129,9 +125,7 @@
 > *boolean-literal* → **`true`** | **`false`**
 >
 > *nil-literal* → **`nil`**
->
->
->
+
 
 > Grammar of an integer literal:
 >
@@ -184,9 +178,7 @@
 > *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`**
 >
 > *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
->
->
->
+
 
 > Grammar of a floating-point literal:
 >
@@ -213,9 +205,7 @@
 > *floating-point-p* → **`p`** | **`P`**
 >
 > *sign* → **`+`** | **`-`**
->
->
->
+
 
 > Grammar of a string literal:
 >
@@ -290,9 +280,7 @@
 >
 >
 > *escaped-newline* → *escape-sequence* *inline-spaces*_?_ *line-break*
->
->
->
+
 
 > Grammar of a regular expression literal:
 >
@@ -309,9 +297,7 @@
 >
 >
 > *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
->
->
->
+
 
 > Grammar of operators:
 >
@@ -390,9 +376,7 @@
 > *prefix-operator* → *operator*
 >
 > *postfix-operator* → *operator*
->
->
->
+
 
 > Grammar of a type:
 >
@@ -421,25 +405,19 @@
 > *type* → *self-type*
 >
 > *type* → **`(`** *type* **`)`**
->
->
->
+
 
 > Grammar of a type annotation:
 >
 > *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
->
->
->
+
 
 > Grammar of a type identifier:
 >
 > *type-identifier* → *type-name* *generic-argument-clause*_?_ | *type-name* *generic-argument-clause*_?_ **`.`** *type-identifier*
 >
 > *type-name* → *identifier*
->
->
->
+
 
 > Grammar of a tuple type:
 >
@@ -450,9 +428,7 @@
 > *tuple-type-element* → *element-name* *type-annotation* | *type*
 >
 > *element-name* → *identifier*
->
->
->
+
 
 > Grammar of a function type:
 >
@@ -471,122 +447,90 @@
 > *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation*
 >
 > *argument-label* → *identifier*
->
->
->
+
 
 > Grammar of an array type:
 >
 > *array-type* → **`[`** *type* **`]`**
->
->
->
+
 
 > Grammar of a dictionary type:
 >
 > *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
->
->
->
+
 
 > Grammar of an optional type:
 >
 > *optional-type* → *type* **`?`**
->
->
->
+
 
 > Grammar of an implicitly unwrapped optional type:
 >
 > *implicitly-unwrapped-optional-type* → *type* **`!`**
->
->
->
+
 
 > Grammar of a protocol composition type:
 >
 > *protocol-composition-type* → *type-identifier* **`&`** *protocol-composition-continuation*
 >
 > *protocol-composition-continuation* → *type-identifier* | *protocol-composition-type*
->
->
->
+
 
 > Grammar of an opaque type:
 >
 > *opaque-type* → **`some`** *type*
->
->
->
+
 
 > Grammar of a metatype type:
 >
 > *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**
->
->
->
+
 
 > Grammar of an Any type:
 >
 > *any-type* → **`Any`**
->
->
->
+
 
 > Grammar of a Self type:
 >
 > *self-type* → **`Self`**
->
->
->
+
 
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list*
 >
 > *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
->
->
->
+
 
 > Grammar of an expression:
 >
 > *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
 >
 > *expression-list* → *expression* | *expression* **`,`** *expression-list*
->
->
->
+
 
 > Grammar of a prefix expression:
 >
 > *prefix-expression* → *prefix-operator*_?_ *postfix-expression*
 >
 > *prefix-expression* → *in-out-expression*
->
->
->
+
 
 > Grammar of an in-out expression:
 >
 > *in-out-expression* → **`&`** *identifier*
->
->
->
+
 
 > Grammar of a try expression:
 >
 > *try-operator* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
->
->
->
+
 
 > Grammar of an await expression:
 >
 > *await-operator* → **`await`**
->
->
->
+
 
 > Grammar of an infix expression:
 >
@@ -599,23 +543,17 @@
 > *infix-expression* → *type-casting-operator*
 >
 > *infix-expressions* → *infix-expression* *infix-expressions*_?_
->
->
->
+
 
 > Grammar of an assignment operator:
 >
 > *assignment-operator* → **`=`**
->
->
->
+
 
 > Grammar of a conditional operator:
 >
 > *conditional-operator* → **`?`** *expression* **`:`**
->
->
->
+
 
 > Grammar of a type-casting operator:
 >
@@ -626,9 +564,7 @@
 > *type-casting-operator* → **`as`** **`?`** *type*
 >
 > *type-casting-operator* → **`as`** **`!`** *type*
->
->
->
+
 
 > Grammar of a primary expression:
 >
@@ -655,9 +591,7 @@
 > *primary-expression* → *selector-expression*
 >
 > *primary-expression* → *key-path-string-expression*
->
->
->
+
 
 > Grammar of a literal expression:
 >
@@ -692,9 +626,7 @@
 > *playground-literal* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
 >
 > *playground-literal* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
->
->
->
+
 
 > Grammar of a self expression:
 >
@@ -707,9 +639,7 @@
 > *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`**
 >
 > *self-initializer-expression* → **`self`** **`.`** **`init`**
->
->
->
+
 
 > Grammar of a superclass expression:
 >
@@ -722,9 +652,7 @@
 > *superclass-subscript-expression* → **`super`** **`[`** *function-call-argument-list* **`]`**
 >
 > *superclass-initializer-expression* → **`super`** **`.`** **`init`**
->
->
->
+
 
 > Grammar of a closure expression:
 >
@@ -761,25 +689,19 @@
 > *capture-list-item* → *capture-specifier*_?_ *self-expression*
 >
 > *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
->
->
->
+
 
 > Grammar of a implicit member expression:
 >
 > *implicit-member-expression* → **`.`** *identifier*
 >
 > *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
->
->
->
+
 
 > Grammar of a parenthesized expression:
 >
 > *parenthesized-expression* → **`(`** *expression* **`)`**
->
->
->
+
 
 > Grammar of a tuple expression:
 >
@@ -788,16 +710,12 @@
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list*
 >
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
->
->
->
+
 
 > Grammar of a wildcard expression:
 >
 > *wildcard-expression* → **`_`**
->
->
->
+
 
 > Grammar of a key-path expression:
 >
@@ -812,9 +730,7 @@
 > *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_
 >
 > *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
->
->
->
+
 
 > Grammar of a selector expression:
 >
@@ -823,16 +739,12 @@
 > *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`**
 >
 > *selector-expression* → **`#selector`** **`(`** **`setter:`** *expression* **`)`**
->
->
->
+
 
 > Grammar of a key-path string expression:
 >
 > *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
->
->
->
+
 
 > Grammar of a postfix expression:
 >
@@ -853,9 +765,7 @@
 > *postfix-expression* → *forced-value-expression*
 >
 > *postfix-expression* → *optional-chaining-expression*
->
->
->
+
 
 > Grammar of a function call expression:
 >
@@ -880,18 +790,14 @@
 > *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*_?_
 >
 > *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
->
->
->
+
 
 > Grammar of an initializer expression:
 >
 > *initializer-expression* → *postfix-expression* **`.`** **`init`**
 >
 > *initializer-expression* → *postfix-expression* **`.`** **`init`** **`(`** *argument-names* **`)`**
->
->
->
+
 
 > Grammar of an explicit member expression:
 >
@@ -908,37 +814,27 @@
 > *argument-names* → *argument-name* *argument-names*_?_
 >
 > *argument-name* → *identifier* **`:`**
->
->
->
+
 
 > Grammar of a postfix self expression:
 >
 > *postfix-self-expression* → *postfix-expression* **`.`** **`self`**
->
->
->
+
 
 > Grammar of a subscript expression:
 >
 > *subscript-expression* → *postfix-expression* **`[`** *function-call-argument-list* **`]`**
->
->
->
+
 
 > Grammar of a forced-value expression:
 >
 > *forced-value-expression* → *postfix-expression* **`!`**
->
->
->
+
 
 > Grammar of an optional-chaining expression:
 >
 > *optional-chaining-expression* → *postfix-expression* **`?`**
->
->
->
+
 
 > Grammar of a statement:
 >
@@ -961,9 +857,7 @@
 > *statement* → *compiler-control-statement*
 >
 > *statements* → *statement* *statements*_?_
->
->
->
+
 
 > Grammar of a loop statement:
 >
@@ -972,16 +866,12 @@
 > *loop-statement* → *while-statement*
 >
 > *loop-statement* → *repeat-while-statement*
->
->
->
+
 
 > Grammar of a for-in statement:
 >
 > *for-in-statement* → **`for`** **`case`**_?_ *pattern* **`in`** *expression* *where-clause*_?_ *code-block*
->
->
->
+
 
 > Grammar of a while statement:
 >
@@ -998,16 +888,12 @@
 > *case-condition* → **`case`** *pattern* *initializer*
 >
 > *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
->
->
->
+
 
 > Grammar of a repeat-while statement:
 >
 > *repeat-while-statement* → **`repeat`** *code-block* **`while`** *expression*
->
->
->
+
 
 > Grammar of a branch statement:
 >
@@ -1016,25 +902,19 @@
 > *branch-statement* → *guard-statement*
 >
 > *branch-statement* → *switch-statement*
->
->
->
+
 
 > Grammar of an if statement:
 >
 > *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_
 >
 > *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
->
->
->
+
 
 > Grammar of a guard statement:
 >
 > *guard-statement* → **`guard`** *condition-list* **`else`** *code-block*
->
->
->
+
 
 > Grammar of a switch statement:
 >
@@ -1073,9 +953,7 @@
 > *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_
 >
 > *switch-else-directive-clause* → *else-directive* *switch-cases*_?_
->
->
->
+
 
 > Grammar of a labeled statement:
 >
@@ -1092,9 +970,7 @@
 > *statement-label* → *label-name* **`:`**
 >
 > *label-name* → *identifier*
->
->
->
+
 
 > Grammar of a control transfer statement:
 >
@@ -1107,51 +983,37 @@
 > *control-transfer-statement* → *return-statement*
 >
 > *control-transfer-statement* → *throw-statement*
->
->
->
+
 
 > Grammar of a break statement:
 >
 > *break-statement* → **`break`** *label-name*_?_
->
->
->
+
 
 > Grammar of a continue statement:
 >
 > *continue-statement* → **`continue`** *label-name*_?_
->
->
->
+
 
 > Grammar of a fallthrough statement:
 >
 > *fallthrough-statement* → **`fallthrough`**
->
->
->
+
 
 > Grammar of a return statement:
 >
 > *return-statement* → **`return`** *expression*_?_
->
->
->
+
 
 > Grammar of a throw statement:
 >
 > *throw-statement* → **`throw`** *expression*
->
->
->
+
 
 > Grammar of a defer statement:
 >
 > *defer-statement* → **`defer`** *code-block*
->
->
->
+
 
 > Grammar of a do statement:
 >
@@ -1164,9 +1026,7 @@
 > *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list*
 >
 > *catch-pattern* → *pattern* *where-clause*_?_
->
->
->
+
 
 > Grammar of a compiler control statement:
 >
@@ -1175,9 +1035,7 @@
 > *compiler-control-statement* → *line-control-statement*
 >
 > *compiler-control-statement* → *diagnostic-statement*
->
->
->
+
 
 > Grammar of a conditional compilation block:
 >
@@ -1242,9 +1100,7 @@
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_
 >
 > *environment* → **`simulator`** | **`macCatalyst`**
->
->
->
+
 
 > Grammar of a line control statement:
 >
@@ -1255,9 +1111,7 @@
 > *line-number* → A decimal integer greater than zero
 >
 > *file-path* → *static-string-literal*
->
->
->
+
 
 > Grammar of a compile-time diagnostic statement:
 >
@@ -1268,9 +1122,7 @@
 >
 >
 > *diagnostic-message* → *static-string-literal*
->
->
->
+
 
 > Grammar of an availability condition:
 >
@@ -1301,9 +1153,7 @@
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits*
 >
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
->
->
->
+
 
 > Grammar of a declaration:
 >
@@ -1340,23 +1190,17 @@
 > *declaration* → *precedence-group-declaration*
 >
 > *declarations* → *declaration* *declarations*_?_
->
->
->
+
 
 > Grammar of a top-level declaration:
 >
 > *top-level-declaration* → *statements*_?_
->
->
->
+
 
 > Grammar of a code block:
 >
 > *code-block* → **`{`** *statements*_?_ **`}`**
->
->
->
+
 
 > Grammar of an import declaration:
 >
@@ -1367,9 +1211,7 @@
 > *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`**
 >
 > *import-path* → *identifier* | *identifier* **`.`** *import-path*
->
->
->
+
 
 > Grammar of a constant declaration:
 >
@@ -1382,9 +1224,7 @@
 > *pattern-initializer* → *pattern* *initializer*_?_
 >
 > *initializer* → **`=`** *expression*
->
->
->
+
 
 > Grammar of a variable declaration:
 >
@@ -1439,9 +1279,7 @@
 > *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block*
 >
 > *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
->
->
->
+
 
 > Grammar of a type alias declaration:
 >
@@ -1450,9 +1288,7 @@
 > *typealias-name* → *identifier*
 >
 > *typealias-assignment* → **`=`** *type*
->
->
->
+
 
 > Grammar of a function declaration:
 >
@@ -1491,9 +1327,7 @@
 > *local-parameter-name* → *identifier*
 >
 > *default-argument-clause* → **`=`** *expression*
->
->
->
+
 
 > Grammar of an enumeration declaration:
 >
@@ -1536,9 +1370,7 @@
 > *raw-value-assignment* → **`=`** *raw-value-literal*
 >
 > *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
->
->
->
+
 
 > Grammar of a structure declaration:
 >
@@ -1553,9 +1385,7 @@
 > *struct-members* → *struct-member* *struct-members*_?_
 >
 > *struct-member* → *declaration* | *compiler-control-statement*
->
->
->
+
 
 > Grammar of a class declaration:
 >
@@ -1572,9 +1402,7 @@
 > *class-members* → *class-member* *class-members*_?_
 >
 > *class-member* → *declaration* | *compiler-control-statement*
->
->
->
+
 
 > Grammar of an actor declaration:
 >
@@ -1589,9 +1417,7 @@
 > *actor-members* → *actor-member* *actor-members*_?_
 >
 > *actor-member* → *declaration* | *compiler-control-statement*
->
->
->
+
 
 > Grammar of a protocol declaration:
 >
@@ -1620,46 +1446,34 @@
 > *protocol-member-declaration* → *protocol-associated-type-declaration*
 >
 > *protocol-member-declaration* → *typealias-declaration*
->
->
->
+
 
 > Grammar of a protocol property declaration:
 >
 > *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
->
->
->
+
 
 > Grammar of a protocol method declaration:
 >
 > *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
->
->
->
+
 
 > Grammar of a protocol initializer declaration:
 >
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_
 >
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
->
->
->
+
 
 > Grammar of a protocol subscript declaration:
 >
 > *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
->
->
->
+
 
 > Grammar of a protocol associated type declaration:
 >
 > *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
->
->
->
+
 
 > Grammar of an initializer declaration:
 >
@@ -1674,16 +1488,12 @@
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`**
 >
 > *initializer-body* → *code-block*
->
->
->
+
 
 > Grammar of a deinitializer declaration:
 >
 > *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
->
->
->
+
 
 > Grammar of an extension declaration:
 >
@@ -1696,9 +1506,7 @@
 > *extension-members* → *extension-member* *extension-members*_?_
 >
 > *extension-member* → *declaration* | *compiler-control-statement*
->
->
->
+
 
 > Grammar of a subscript declaration:
 >
@@ -1711,9 +1519,7 @@
 > *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause*
 >
 > *subscript-result* → **`->`** *attributes*_?_ *type*
->
->
->
+
 
 > Grammar of an operator declaration:
 >
@@ -1730,9 +1536,7 @@
 >
 >
 > *infix-operator-group* → **`:`** *precedence-group-name*
->
->
->
+
 
 > Grammar of a precedence group declaration:
 >
@@ -1771,9 +1575,7 @@
 > *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names*
 >
 > *precedence-group-name* → *identifier*
->
->
->
+
 
 > Grammar of a declaration modifier:
 >
@@ -1806,9 +1608,7 @@
 >
 >
 > *actor-isolation-modifier* → **`nonisolated`**
->
->
->
+
 
 > Grammar of an attribute:
 >
@@ -1833,9 +1633,6 @@
 > *balanced-token* → Any identifier, keyword, literal, or operator
 >
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
->
->
->
 
 > Grammar of a pattern:
 >
@@ -1854,30 +1651,22 @@
 > *pattern* → *type-casting-pattern*
 >
 > *pattern* → *expression-pattern*
->
->
->
+
 
 > Grammar of a wildcard pattern:
 >
 > *wildcard-pattern* → **`_`**
->
->
->
+
 
 > Grammar of an identifier pattern:
 >
 > *identifier-pattern* → *identifier*
->
->
->
+
 
 > Grammar of a value-binding pattern:
 >
 > *value-binding-pattern* → **`var`** *pattern* | **`let`** *pattern*
->
->
->
+
 
 > Grammar of a tuple pattern:
 >
@@ -1886,23 +1675,17 @@
 > *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list*
 >
 > *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
->
->
->
+
 
 > Grammar of an enumeration case pattern:
 >
 > *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
->
->
->
+
 
 > Grammar of an optional pattern:
 >
 > *optional-pattern* → *identifier-pattern* **`?`**
->
->
->
+
 
 > Grammar of a type casting pattern:
 >
@@ -1911,16 +1694,12 @@
 > *is-pattern* → **`is`** *type*
 >
 > *as-pattern* → *pattern* **`as`** *type*
->
->
->
+
 
 > Grammar of an expression pattern:
 >
 > *expression-pattern* → *expression*
->
->
->
+
 
 > Grammar of a generic parameter clause:
 >
@@ -1949,9 +1728,7 @@
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type*
 >
 > *same-type-requirement* → *type-identifier* **`==`** *type*
->
->
->
+
 
 > Grammar of a generic argument clause:
 >
@@ -1960,9 +1737,7 @@
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list*
 >
 > *generic-argument* → *type*
->
->
->
+
 
 
 @Comment {
