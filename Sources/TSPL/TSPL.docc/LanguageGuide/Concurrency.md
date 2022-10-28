@@ -1123,6 +1123,43 @@ struct TemperatureReading {
   ```
 -->
 
+To explicitly mark a type as not being sendable,
+overriding an implicit conformance to the `Sendable` protocol,
+use an extension:
+
+```swift
+struct NonsendableTemperatureReading {
+    var measurement: Int
+}
+
+@available(*, unavailable)
+extension NonsendableTemperatureReading: Sendable { }
+```
+
+<!--
+   - test: `suppressing-implied-sendable-conformance`
+
+   -> struct NonsendableTemperatureReading {
+   ->     var measurement: Int
+   -> }
+   ---
+   -> @available(*, unavailable)
+   -> extension NonsendableTemperatureReading: Sendable { }
+   >> let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+   !$ warning: conformance of 'NonsendableTemperatureReading' to 'Sendable' is unavailable; this is an error in Swift 6
+   !! let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+   !! ^
+   !$ note: conformance of 'NonsendableTemperatureReading' to 'Sendable' has been explicitly marked unavailable here
+   !! extension NonsendableTemperatureReading: Sendable { }
+   !! ^
+-->
+
+In the code above,
+the `NonsendableTemperatureReading` is a structure
+that meets the criteria to be implicitly sendable.
+However, the extension makes its conformance to `Sendable` unavailable,
+preventing the type from being sendable.
+
 <!--
   OUTLINE
   .. _Concurrency_MainActor:
