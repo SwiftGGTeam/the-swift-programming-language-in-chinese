@@ -1137,21 +1137,21 @@ extension NonsendableTemperatureReading: Sendable { }
 ```
 
 <!--
-   - test: `suppressing-implied-sendable-conformance`
+  - test: `suppressing-implied-sendable-conformance`
 
-   -> struct NonsendableTemperatureReading {
-   ->     var measurement: Int
-   -> }
-   ---
-   -> @available(*, unavailable)
-   -> extension NonsendableTemperatureReading: Sendable { }
-   >> let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
-   !$ warning: conformance of 'NonsendableTemperatureReading' to 'Sendable' is unavailable; this is an error in Swift 6
-   !! let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
-   !! ^
-   !$ note: conformance of 'NonsendableTemperatureReading' to 'Sendable' has been explicitly marked unavailable here
-   !! extension NonsendableTemperatureReading: Sendable { }
-   !! ^
+  -> struct NonsendableTemperatureReading {
+  ->     var measurement: Int
+  -> }
+  ---
+  -> @available(*, unavailable)
+  -> extension NonsendableTemperatureReading: Sendable { }
+  >> let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+  !$ warning: conformance of 'NonsendableTemperatureReading' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+  !! ^
+  !$ note: conformance of 'NonsendableTemperatureReading' to 'Sendable' has been explicitly marked unavailable here
+  !! extension NonsendableTemperatureReading: Sendable { }
+  !! ^
 -->
 
 In the code above,
