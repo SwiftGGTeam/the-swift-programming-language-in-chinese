@@ -2,6 +2,8 @@
 
 # Access Control
 
+Manage the visibility of code by declaration, file, and module.
+
 *Access control* restricts access to parts of your code
 from code in other source files and modules.
 This feature enables you to hide the implementation details of your code,

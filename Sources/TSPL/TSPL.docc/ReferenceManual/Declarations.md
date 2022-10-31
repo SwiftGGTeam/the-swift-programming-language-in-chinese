@@ -2,6 +2,8 @@
 
 # Declarations
 
+Introduce types, operators, variables, and other names and constructs.
+
 A *declaration* introduces a new name or construct into your program.
 For example, you use declarations to introduce functions and methods,
 to introduce variables and constants,

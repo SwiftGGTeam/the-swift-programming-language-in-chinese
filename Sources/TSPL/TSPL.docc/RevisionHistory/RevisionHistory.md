@@ -2,6 +2,8 @@
 
 # Document Revision History
 
+Review the recent changes to this book.
+
 **2022-06-06**
 
 - Updated for Swift 5.7.

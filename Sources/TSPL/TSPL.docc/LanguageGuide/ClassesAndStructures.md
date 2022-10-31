@@ -2,6 +2,8 @@
 
 # Structures and Classes
 
+Model custom types that encapsulate data.
+
 *Structures* and *classes* are general-purpose,
 flexible constructs that become the building blocks of your program's code.
 You define properties and methods to add functionality to your structures and classes

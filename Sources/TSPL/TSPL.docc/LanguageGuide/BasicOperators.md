@@ -2,6 +2,8 @@
 
 # Basic Operators
 
+Perform assignment, arithmetic, comparison, and Boolean operations.
+
 An *operator* is a special symbol or phrase that you use to
 check, change, or combine values.
 For example, the addition operator (`+`) adds two numbers,

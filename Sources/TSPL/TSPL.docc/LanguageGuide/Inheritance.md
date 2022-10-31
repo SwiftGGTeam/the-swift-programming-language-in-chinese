@@ -2,6 +2,8 @@
 
 # Inheritance
 
+Subclass to add or override functionality.
+
 A class can *inherit* methods, properties, and other characteristics
 from another class.
 When one class inherits from another,

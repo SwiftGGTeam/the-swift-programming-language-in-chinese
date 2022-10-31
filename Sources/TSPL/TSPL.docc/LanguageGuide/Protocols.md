@@ -2,6 +2,8 @@
 
 # Protocols
 
+Define requirements that conforming types must implement.
+
 A *protocol* defines a blueprint of
 methods, properties, and other requirements
 that suit a particular task or piece of functionality.

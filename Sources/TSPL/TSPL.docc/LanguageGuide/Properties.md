@@ -2,6 +2,8 @@
 
 # Properties
 
+Access stored and computed values that are part of an instance or type.
+
 *Properties* associate values with a particular class, structure, or enumeration.
 Stored properties store constant and variable values as part of an instance,
 whereas computed properties calculate (rather than store) a value.

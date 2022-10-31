@@ -2,6 +2,8 @@
 
 # Lexical Structure
 
+Use the lowest-level components of the syntax.
+
 The *lexical structure* of Swift describes what sequence of characters
 form valid tokens of the language.
 These valid tokens form the lowest-level building blocks of the language

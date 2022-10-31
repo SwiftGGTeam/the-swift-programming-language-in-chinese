@@ -2,6 +2,8 @@
 
 # Memory Safety
 
+Structure your code to avoid conflicts when accessing memory.
+
 By default, Swift prevents unsafe behavior from happening in your code.
 For example,
 Swift ensures that variables are initialized before they're used,

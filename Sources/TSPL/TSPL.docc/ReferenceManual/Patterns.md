@@ -2,6 +2,8 @@
 
 # Patterns
 
+Match and destructure values.
+
 A *pattern* represents the structure of a single value
 or a composite value.
 For example, the structure of a tuple `(1, 2)` is a comma-separated list of two

@@ -2,6 +2,8 @@
 
 # A Swift Tour
 
+Explore the features and syntax of Swift.
+
 
 
 Tradition suggests that the first program in a new language

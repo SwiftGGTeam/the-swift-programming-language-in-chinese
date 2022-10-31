@@ -2,6 +2,8 @@
 
 # Advanced Operators
 
+Define custom operators, perform bitwise operations, and use builder syntax.
+
 In addition to the operators described in <doc:BasicOperators>,
 Swift provides several advanced operators that perform more complex value manipulation.
 These include all of the bitwise and bit shifting operators you will be familiar with

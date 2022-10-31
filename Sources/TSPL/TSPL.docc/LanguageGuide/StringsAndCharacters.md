@@ -2,6 +2,8 @@
 
 # Strings and Characters
 
+Store and manipulate text.
+
 A *string* is a series of characters,
 such as `"hello, world"` or `"albatross"`.
 Swift strings are represented by the `String` type.

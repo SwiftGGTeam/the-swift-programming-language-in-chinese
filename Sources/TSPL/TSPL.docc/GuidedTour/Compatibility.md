@@ -2,6 +2,8 @@
 
 # Version Compatibility
 
+Learn what functionality is available in older language modes.
+
 This book describes Swift 5.7,
 the default version of Swift that's included in Xcode 14.
 You can use Xcode 14 to build targets

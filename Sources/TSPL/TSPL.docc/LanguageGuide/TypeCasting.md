@@ -2,6 +2,8 @@
 
 # Type Casting
 
+Determine a value's runtime type and give it more specific type information.
+
 *Type casting* is a way to check the type of an instance,
 or to treat that instance as a different
 superclass or subclass from somewhere else in its own class hierarchy.

@@ -2,6 +2,8 @@
 
 # Functions
 
+Define and call functions, label their arguments, and use their return values.
+
 *Functions* are self-contained chunks of code that perform a specific task.
 You give a function a name that identifies what it does,
 and this name is used to “call” the function to perform its task when needed.

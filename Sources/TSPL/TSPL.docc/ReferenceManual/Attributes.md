@@ -2,6 +2,8 @@
 
 # Attributes
 
+Add information to declarations and types.
+
 There are two kinds of attributes in Swift ---
 those that apply to declarations and those that apply to types.
 An attribute provides additional information about the declaration or type.

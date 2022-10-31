@@ -2,6 +2,8 @@
 
 # Methods
 
+Define and call functions that are part of an instance or type.
+
 *Methods* are functions that are associated with a particular type.
 Classes, structures, and enumerations can all define instance methods,
 which encapsulate specific tasks and functionality for working with an instance of a given type.
