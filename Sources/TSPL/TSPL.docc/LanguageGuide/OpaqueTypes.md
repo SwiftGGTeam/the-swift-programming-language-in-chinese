@@ -493,7 +493,7 @@ the return value always has the same underlying type of `[T]`,
 so it follows the requirement that functions with opaque return types
 must return values of only a single type.
 
-## Differences Between Opaque Types and Protocol Types
+## Differences Between Opaque Types and Boxed Protocol Types
 
 Returning an opaque type looks very similar
 to using a protocol type as the return type of a function,

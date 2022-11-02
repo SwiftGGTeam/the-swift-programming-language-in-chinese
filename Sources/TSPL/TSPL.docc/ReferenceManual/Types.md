@@ -936,7 +936,7 @@ A *boxed protocol type* defines a type
 that conforms to a protocol or protocol composition.
 <!-- XXX
 what makes it "boxed" is that (usually) it requires a separate allocation
-and the fact that type erasure hides ynformation
+and the fact that type erasure hides information
 
 the first sentence of this section needs more contrast with opaque types
 -->
