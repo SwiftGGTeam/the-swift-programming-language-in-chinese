@@ -274,6 +274,10 @@ occupations["Jayne"] = "Public Relations"
   ```
 -->
 
+@Comment {
+  iBooks Store screenshot begins here.
+}
+
 Arrays automatically grow as you add elements.
 
 ```swift
@@ -292,12 +296,14 @@ print(fruits)
   ```
 -->
 
-To create an empty array or dictionary,
-use the initializer syntax.
+To create an empty array, write `[]`
+and to create empty dictionary write `[:]` ---
+for example, when you set a new value for a variable
+or pass an argument to a function.
 
 ```swift
-let emptyArray: [String] = []
-let emptyDictionary: [String: Float] = [:]
+fruits = []
+occupations = [:]
 ```
 
 
@@ -305,8 +311,8 @@ let emptyDictionary: [String: Float] = [:]
   - test: `guided-tour`
   
   ```swifttest
-  -> let emptyArray: [String] = []
-  -> let emptyDictionary: [String: Float] = [:]
+  -> fruits = []
+  -> occupations = [:]
   ```
 -->
 
@@ -321,8 +327,8 @@ or pass an argument to a function.
 -->
 
 ```swift
-fruits = []
-occupations = [:]
+let emptyArray: [String] = []
+let emptyDictionary: [String: Float] = [:]
 ```
 
 
@@ -330,8 +336,11 @@ occupations = [:]
   - test: `guided-tour`
   
   ```swifttest
-  -> fruits = []
-  -> occupations = [:]
+  -> let emptyArray: [String] = []
+  -> let emptyDictionary: [String: Float] = [:]
+  ---
+  -> let anotherEmptyArray = [String]()
+  -> let emptyDictionary = [String: Float]()
   ```
 -->
 
