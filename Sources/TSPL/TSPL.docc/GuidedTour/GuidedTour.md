@@ -682,6 +682,10 @@ print(m)
   ```
 -->
 
+> Experiment:
+> Change the condition from `m < 100` to `m < 0`
+> to see the difference between `while` and `repeat`-`while`.
+
 You can keep an index in a loop
 by using `..<` to make a range of indexes.
 
