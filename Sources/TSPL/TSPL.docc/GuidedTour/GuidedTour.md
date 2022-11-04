@@ -274,9 +274,9 @@ occupations["Jayne"] = "Public Relations"
   ```
 -->
 
-@Comment {
+<!--
   iBooks Store screenshot begins here.
-}
+-->
 
 Arrays automatically grow as you add elements.
 
