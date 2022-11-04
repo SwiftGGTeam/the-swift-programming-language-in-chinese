@@ -22,20 +22,27 @@ and a `defer` statement for running cleanup actions just before the current scop
 A semicolon (`;`) can optionally appear after any statement
 and is used to separate multiple statements if they appear on the same line.
 
-```
-Grammar of a statement
-
-statement --> expression ``;``-OPT
-statement --> declaration ``;``-OPT
-statement --> loop-statement ``;``-OPT
-statement --> branch-statement ``;``-OPT
-statement --> labeled-statement ``;``-OPT
-statement --> control-transfer-statement ``;``-OPT
-statement --> defer-statement ``;``-OPT
-statement --> do-statement ``;``-OPT
-statement --> compiler-control-statement
-statements --> statement statements-OPT
-```
+> Grammar of a statement:
+>
+> *statement* → *expression* **`;`**_?_
+>
+> *statement* → *declaration* **`;`**_?_
+>
+> *statement* → *loop-statement* **`;`**_?_
+>
+> *statement* → *branch-statement* **`;`**_?_
+>
+> *statement* → *labeled-statement* **`;`**_?_
+>
+> *statement* → *control-transfer-statement* **`;`**_?_
+>
+> *statement* → *defer-statement* **`;`**_?_
+>
+> *statement* → *do-statement* **`;`**_?_
+>
+> *statement* → *compiler-control-statement*
+>
+> *statements* → *statement* *statements*_?_
 
 <!--
   NOTE: Removed semicolon-statement as syntactic category,
@@ -61,13 +68,13 @@ Control flow in a loop statement can be changed by a `break` statement
 and a `continue` statement and is discussed in <doc:Statements#Break-Statement> and
 <doc:Statements#Continue-Statement> below.
 
-```
-Grammar of a loop statement
-
-loop-statement --> for-in-statement
-loop-statement --> while-statement
-loop-statement --> repeat-while-statement
-```
+> Grammar of a loop statement:
+>
+> *loop-statement* → *for-in-statement*
+>
+> *loop-statement* → *while-statement*
+>
+> *loop-statement* → *repeat-while-statement*
 
 ### For-In Statement
 
@@ -97,11 +104,9 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program doesn't perform assignment or execute the *statements*,
 and it's finished executing the `for`-`in` statement.
 
-```
-Grammar of a for-in statement
-
-for-in-statement --> ``for`` ``case``-OPT pattern ``in`` expression where-clause-OPT code-block
-```
+> Grammar of a for-in statement:
+>
+> *for-in-statement* → **`for`** **`case`**_?_ *pattern* **`in`** *expression* *where-clause*_?_ *code-block*
 
 ### While Statement
 
@@ -130,17 +135,21 @@ must be of type `Bool` or a type bridged to `Bool`.
 The condition can also be an optional binding declaration,
 as discussed in <doc:TheBasics#Optional-Binding>.
 
-```
-Grammar of a while statement
-
-while-statement --> ``while`` condition-list code-block
-
-condition-list --> condition | condition ``,`` condition-list
-condition -->  expression | availability-condition | case-condition | optional-binding-condition
-
-case-condition --> ``case`` pattern initializer
-optional-binding-condition --> ``let`` pattern initializer-OPT | ``var`` pattern initializer-OPT
-```
+> Grammar of a while statement:
+>
+> *while-statement* → **`while`** *condition-list* *code-block*
+>
+>
+>
+> *condition-list* → *condition* | *condition* **`,`** *condition-list*
+>
+> *condition* → *expression* | *availability-condition* | *case-condition* | *optional-binding-condition*
+>
+>
+>
+> *case-condition* → **`case`** *pattern* *initializer*
+>
+> *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
 
 ### Repeat-While Statement
 
@@ -168,11 +177,9 @@ the *statements* in a `repeat`-`while` statement are executed at least once.
 The value of the *condition*
 must be of type `Bool` or a type bridged to `Bool`.
 
-```
-Grammar of a repeat-while statement
-
-repeat-while-statement --> ``repeat`` code-block ``while`` expression
-```
+> Grammar of a repeat-while statement:
+>
+> *repeat-while-statement* → **`repeat`** *code-block* **`while`** *expression*
 
 ## Branch Statements
 
@@ -186,13 +193,13 @@ an `if` statement, a `guard` statement, and a `switch` statement.
 Control flow in an `if` statement or a `switch` statement can be changed by a `break` statement
 and is discussed in <doc:Statements#Break-Statement> below.
 
-```
-Grammar of a branch statement
-
-branch-statement --> if-statement
-branch-statement --> guard-statement
-branch-statement --> switch-statement
-```
+> Grammar of a branch statement:
+>
+> *branch-statement* → *if-statement*
+>
+> *branch-statement* → *guard-statement*
+>
+> *branch-statement* → *switch-statement*
 
 ### If Statement
 
@@ -244,12 +251,11 @@ must be of type `Bool` or a type bridged to `Bool`.
 The condition can also be an optional binding declaration,
 as discussed in <doc:TheBasics#Optional-Binding>.
 
-```
-Grammar of an if statement
-
-if-statement --> ``if`` condition-list code-block else-clause-OPT
-else-clause --> ``else`` code-block | ``else`` if-statement
-```
+> Grammar of an if statement:
+>
+> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_
+>
+> *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
 
 ### Guard Statement
 
@@ -287,11 +293,9 @@ Control transfer statements are discussed in <doc:Statements#Control-Transfer-St
 For more information on functions with the `Never` return type,
 see <doc:Declarations#Functions-that-Never-Return>.
 
-```
-Grammar of a guard statement
-
-guard-statement --> ``guard`` condition-list ``else`` code-block
-```
+> Grammar of a guard statement:
+>
+> *guard-statement* → **`guard`** *condition-list* **`else`** *code-block*
 
 ### Switch Statement
 
@@ -507,28 +511,43 @@ in the case from which you want execution to continue.
 For more information about the `fallthrough` statement,
 see <doc:Statements#Fallthrough-Statement> below.
 
-```
-Grammar of a switch statement
-
-switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
-switch-cases --> switch-case switch-cases-OPT
-switch-case --> case-label statements
-switch-case --> default-label statements
-switch-case --> conditional-switch-case
-
-case-label --> attributes-OPT ``case`` case-item-list ``:``
-case-item-list --> pattern where-clause-OPT | pattern where-clause-OPT ``,`` case-item-list
-default-label --> attributes-OPT ``default`` ``:``
-
-where-clause --> ``where`` where-expression
-where-expression --> expression
-
-conditional-switch-case --> switch-if-directive-clause switch-elseif-directive-clauses-OPT switch-else-directive-clause-OPT endif-directive
-switch-if-directive-clause --> if-directive compilation-condition switch-cases-OPT
-switch-elseif-directive-clauses --> elseif-directive-clause switch-elseif-directive-clauses-OPT
-switch-elseif-directive-clause --> elseif-directive compilation-condition switch-cases-OPT
-switch-else-directive-clause --> else-directive switch-cases-OPT
-```
+> Grammar of a switch statement:
+>
+> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`**
+>
+> *switch-cases* → *switch-case* *switch-cases*_?_
+>
+> *switch-case* → *case-label* *statements*
+>
+> *switch-case* → *default-label* *statements*
+>
+> *switch-case* → *conditional-switch-case*
+>
+>
+>
+> *case-label* → *attributes*_?_ **`case`** *case-item-list* **`:`**
+>
+> *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ **`,`** *case-item-list*
+>
+> *default-label* → *attributes*_?_ **`default`** **`:`**
+>
+>
+>
+> *where-clause* → **`where`** *where-expression*
+>
+> *where-expression* → *expression*
+>
+>
+>
+> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*_?_ *switch-else-directive-clause*_?_ *endif-directive*
+>
+> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*_?_
+>
+> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*_?_
+>
+> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_
+>
+> *switch-else-directive-clause* → *else-directive* *switch-cases*_?_
 
 <!--
   The grammar above uses attributes-OPT to match what's used
@@ -569,17 +588,21 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
   ```
 -->
 
-```
-Grammar of a labeled statement
-
-labeled-statement --> statement-label loop-statement
-labeled-statement --> statement-label if-statement
-labeled-statement --> statement-label switch-statement
-labeled-statement --> statement-label do-statement
-
-statement-label --> label-name ``:``
-label-name --> identifier
-```
+> Grammar of a labeled statement:
+>
+> *labeled-statement* → *statement-label* *loop-statement*
+>
+> *labeled-statement* → *statement-label* *if-statement*
+>
+> *labeled-statement* → *statement-label* *switch-statement*
+>
+> *labeled-statement* → *statement-label* *do-statement*
+>
+>
+>
+> *statement-label* → *label-name* **`:`**
+>
+> *label-name* → *identifier*
 
 ## Control Transfer Statements
 
@@ -588,15 +611,17 @@ by unconditionally transferring program control from one piece of code to anothe
 Swift has five control transfer statements: a `break` statement, a `continue` statement,
 a `fallthrough` statement, a `return` statement, and a `throw` statement.
 
-```
-Grammar of a control transfer statement
-
-control-transfer-statement --> break-statement
-control-transfer-statement --> continue-statement
-control-transfer-statement --> fallthrough-statement
-control-transfer-statement --> return-statement
-control-transfer-statement --> throw-statement
-```
+> Grammar of a control transfer statement:
+>
+> *control-transfer-statement* → *break-statement*
+>
+> *control-transfer-statement* → *continue-statement*
+>
+> *control-transfer-statement* → *fallthrough-statement*
+>
+> *control-transfer-statement* → *return-statement*
+>
+> *control-transfer-statement* → *throw-statement*
 
 ### Break Statement
 
@@ -627,11 +652,9 @@ For examples of how to use a `break` statement,
 see <doc:ControlFlow#Break> and <doc:ControlFlow#Labeled-Statements>
 in <doc:ControlFlow>.
 
-```
-Grammar of a break statement
-
-break-statement --> ``break`` label-name-OPT
-```
+> Grammar of a break statement:
+>
+> *break-statement* → **`break`** *label-name*_?_
 
 ### Continue Statement
 
@@ -665,11 +688,9 @@ For examples of how to use a `continue` statement,
 see <doc:ControlFlow#Continue> and <doc:ControlFlow#Labeled-Statements>
 in <doc:ControlFlow>.
 
-```
-Grammar of a continue statement
-
-continue-statement --> ``continue`` label-name-OPT
-```
+> Grammar of a continue statement:
+>
+> *continue-statement* → **`continue`** *label-name*_?_
 
 ### Fallthrough Statement
 
@@ -691,11 +712,9 @@ For an example of how to use a `fallthrough` statement in a `switch` statement,
 see <doc:ControlFlow#Control-Transfer-Statements>
 in <doc:ControlFlow>.
 
-```
-Grammar of a fallthrough statement
-
-fallthrough-statement --> ``fallthrough``
-```
+> Grammar of a fallthrough statement:
+>
+> *fallthrough-statement* → **`fallthrough`**
 
 ### Return Statement
 
@@ -730,11 +749,9 @@ When a `return` statement isn't followed by an expression,
 it can be used only to return from a function or method that doesn't return a value
 (that is, when the return type of the function or method is `Void` or `()`).
 
-```
-Grammar of a return statement
-
-return-statement --> ``return`` expression-OPT
-```
+> Grammar of a return statement:
+>
+> *return-statement* → **`return`** *expression*_?_
 
 ### Throw Statement
 
@@ -760,11 +777,9 @@ For an example of how to use a `throw` statement,
 see <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>
 in <doc:ErrorHandling>.
 
-```
-Grammar of a throw statement
-
-throw-statement --> ``throw`` expression
-```
+> Grammar of a throw statement:
+>
+> *throw-statement* → **`throw`** *expression*
 
 ## Defer Statement
 
@@ -868,11 +883,9 @@ f()
 The statements in the `defer` statement can't
 transfer program control outside of the `defer` statement.
 
-```
-Grammar of a defer statement
-
-defer-statement --> ``defer`` code-block
-```
+> Grammar of a defer statement:
+>
+> *defer-statement* → **`defer`** *code-block*
 
 ## Do Statement
 
@@ -942,15 +955,17 @@ see <doc:Patterns>.
 To see an example of how to use a `do` statement with several `catch` clauses,
 see <doc:ErrorHandling#Handling-Errors>.
 
-```
-Grammar of a do statement
-
-do-statement --> ``do`` code-block catch-clauses-OPT
-catch-clauses --> catch-clause catch-clauses-OPT
-catch-clause --> ``catch`` catch-pattern-list-OPT code-block
-catch-pattern-list --> catch-pattern | catch-pattern ``,`` catch-pattern-list
-catch-pattern --> pattern where-clause-OPT
-```
+> Grammar of a do statement:
+>
+> *do-statement* → **`do`** *code-block* *catch-clauses*_?_
+>
+> *catch-clauses* → *catch-clause* *catch-clauses*_?_
+>
+> *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block*
+>
+> *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list*
+>
+> *catch-pattern* → *pattern* *where-clause*_?_
 
 ## Compiler Control Statements
 
@@ -960,13 +975,13 @@ a conditional compilation block
 a line control statement,
 and a compile-time diagnostic statement.
 
-```
-Grammar of a compiler control statement
-
-compiler-control-statement --> conditional-compilation-block
-compiler-control-statement --> line-control-statement
-compiler-control-statement --> diagnostic-statement
-```
+> Grammar of a compiler control statement:
+>
+> *compiler-control-statement* → *conditional-compilation-block*
+>
+> *compiler-control-statement* → *line-control-statement*
+>
+> *compiler-control-statement* → *diagnostic-statement*
 
 ### Conditional Compilation Block
 
@@ -1216,41 +1231,69 @@ For information about how you can wrap
 explicit member expressions in conditional compilation blocks,
 see <doc:Expressions#Explicit-Member-Expression>.
 
-```
-Grammar of a conditional compilation block
-
-conditional-compilation-block --> if-directive-clause elseif-directive-clauses-OPT else-directive-clause-OPT endif-directive
-
-if-directive-clause --> if-directive compilation-condition statements-OPT
-elseif-directive-clauses --> elseif-directive-clause elseif-directive-clauses-OPT
-elseif-directive-clause --> elseif-directive compilation-condition statements-OPT
-else-directive-clause --> else-directive statements-OPT
-if-directive --> ``#if``
-elseif-directive --> ``#elseif``
-else-directive --> ``#else``
-endif-directive --> ``#endif``
-
-compilation-condition --> platform-condition
-compilation-condition --> identifier
-compilation-condition --> boolean-literal
-compilation-condition --> ``(`` compilation-condition ``)``
-compilation-condition --> ``!`` compilation-condition
-compilation-condition --> compilation-condition ``&&`` compilation-condition
-compilation-condition --> compilation-condition ``||`` compilation-condition
-
-platform-condition --> ``os`` ``(`` operating-system ``)``
-platform-condition --> ``arch`` ``(`` architecture ``)``
-platform-condition --> ``swift`` ``(`` ``>=`` swift-version ``)`` | ``swift`` ``(`` ``<`` swift-version ``)``
-platform-condition --> ``compiler`` ``(`` ``>=`` swift-version ``)`` | ``compiler`` ``(`` ``<`` swift-version ``)``
-platform-condition --> ``canImport`` ``(`` import-path ``)``
-platform-condition --> ``targetEnvironment`` ``(`` environment ``)``
-
-operating-system --> ``macOS`` | ``iOS`` | ``watchOS`` | ``tvOS`` | ``Linux`` | ``Windows``
-architecture --> ``i386`` | ``x86_64`` |  ``arm`` | ``arm64``
-swift-version --> decimal-digits swift-version-continuation-OPT
-swift-version-continuation --> ``.`` decimal-digits swift-version-continuation-OPT
-environment --> ``simulator`` | ``macCatalyst``
-```
+> Grammar of a conditional compilation block:
+>
+> *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*_?_ *else-directive-clause*_?_ *endif-directive*
+>
+>
+>
+> *if-directive-clause* → *if-directive* *compilation-condition* *statements*_?_
+>
+> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*_?_
+>
+> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*_?_
+>
+> *else-directive-clause* → *else-directive* *statements*_?_
+>
+> *if-directive* → **`#if`**
+>
+> *elseif-directive* → **`#elseif`**
+>
+> *else-directive* → **`#else`**
+>
+> *endif-directive* → **`#endif`**
+>
+>
+>
+> *compilation-condition* → *platform-condition*
+>
+> *compilation-condition* → *identifier*
+>
+> *compilation-condition* → *boolean-literal*
+>
+> *compilation-condition* → **`(`** *compilation-condition* **`)`**
+>
+> *compilation-condition* → **`!`** *compilation-condition*
+>
+> *compilation-condition* → *compilation-condition* **`&&`** *compilation-condition*
+>
+> *compilation-condition* → *compilation-condition* **`||`** *compilation-condition*
+>
+>
+>
+> *platform-condition* → **`os`** **`(`** *operating-system* **`)`**
+>
+> *platform-condition* → **`arch`** **`(`** *architecture* **`)`**
+>
+> *platform-condition* → **`swift`** **`(`** **`>=`** *swift-version* **`)`** | **`swift`** **`(`** **`<`** *swift-version* **`)`**
+>
+> *platform-condition* → **`compiler`** **`(`** **`>=`** *swift-version* **`)`** | **`compiler`** **`(`** **`<`** *swift-version* **`)`**
+>
+> *platform-condition* → **`canImport`** **`(`** *import-path* **`)`**
+>
+> *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
+>
+>
+>
+> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`Linux`** | **`Windows`**
+>
+> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`**
+>
+> *swift-version* → *decimal-digits* *swift-version-continuation*_?_
+>
+> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_
+>
+> *environment* → **`simulator`** | **`macCatalyst`**
 
 <!--
   Testing notes:
@@ -1295,14 +1338,15 @@ see <doc:Expressions#Literal-Expression>.
 The second form of a line control statement, `#sourceLocation()`,
 resets the source code location back to the default line numbering and file path.
 
-```
-Grammar of a line control statement
-
-line-control-statement --> ``#sourceLocation`` ``(`` ``file:`` file-path ``,`` ``line:`` line-number ``)``
-line-control-statement --> ``#sourceLocation`` ``(`` ``)``
-line-number --> A decimal integer greater than zero
-file-path --> static-string-literal
-```
+> Grammar of a line control statement:
+>
+> *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`**
+>
+> *line-control-statement* → **`#sourceLocation`** **`(`** **`)`**
+>
+> *line-number* → A decimal integer greater than zero
+>
+> *file-path* → *static-string-literal*
 
 ### Compile-Time Diagnostic Statement
 
@@ -1324,14 +1368,15 @@ Static string literals can't use features like
 string interpolation or concatenation,
 but they can use the multiline string literal syntax.
 
-```
-Grammar of a compile-time diagnostic statement
-
-diagnostic-statement --> ``#error`` ``(`` diagnostic-message ``)``
-diagnostic-statement --> ``#warning`` ``(`` diagnostic-message ``)``
-
-diagnostic-message --> static-string-literal
-```
+> Grammar of a compile-time diagnostic statement:
+>
+> *diagnostic-statement* → **`#error`** **`(`** *diagnostic-message* **`)`**
+>
+> *diagnostic-statement* → **`#warning`** **`(`** *diagnostic-message* **`)`**
+>
+>
+>
+> *diagnostic-message* → *static-string-literal*
 
 <!--
   - test: `good-diagnostic-statement-messages`
@@ -1421,24 +1466,35 @@ In an unavailability condition,
 the `*` argument is implicit and must not be included.
 It has the same meaning as the `*` argument in an availability condition.
 
-```
-Grammar of an availability condition
-
-availability-condition --> ``#available`` ``(`` availability-arguments ``)``
-availability-condition --> ``#unavailable`` ``(`` availability-arguments ``)``
-availability-arguments --> availability-argument | availability-argument ``,`` availability-arguments
-availability-argument --> platform-name platform-version
-availability-argument --> ``*``
-
-platform-name --> ``iOS`` | ``iOSApplicationExtension``
-platform-name --> ``macOS`` | ``macOSApplicationExtension``
-platform-name --> ``macCatalyst`` | ``macCatalystApplicationExtension``
-platform-name --> ``watchOS`` | ``watchOSApplicationExtension``
-platform-name --> ``tvOS`` | ``tvOSApplicationExtension``
-platform-version --> decimal-digits
-platform-version --> decimal-digits ``.`` decimal-digits
-platform-version --> decimal-digits ``.`` decimal-digits ``.`` decimal-digits
-```
+> Grammar of an availability condition:
+>
+> *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`**
+>
+> *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`**
+>
+> *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments*
+>
+> *availability-argument* → *platform-name* *platform-version*
+>
+> *availability-argument* → **`*`**
+>
+>
+>
+> *platform-name* → **`iOS`** | **`iOSApplicationExtension`**
+>
+> *platform-name* → **`macOS`** | **`macOSApplicationExtension`**
+>
+> *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`**
+>
+> *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`**
+>
+> *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`**
+>
+> *platform-version* → *decimal-digits*
+>
+> *platform-version* → *decimal-digits* **`.`** *decimal-digits*
+>
+> *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
 
 <!--
   If you need to add a new platform to this list,
