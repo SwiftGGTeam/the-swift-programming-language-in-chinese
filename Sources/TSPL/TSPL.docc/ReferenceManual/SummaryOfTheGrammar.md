@@ -1,5 +1,18 @@
 # Summary of the Grammar
 
+<!--
+
+=== IMPORTANT ===
+
+This file is manually updated.
+
+If you edit formal grammar elsewhere in the reference,
+make the same change here also.
+
+=== IMPORTANT ===
+
+-->
+
 > Grammar of whitespace:
 >
 > *whitespace* → *whitespace-item* *whitespace*_?_
