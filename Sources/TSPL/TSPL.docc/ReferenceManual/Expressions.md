@@ -20,12 +20,11 @@ using postfixes such as function calls and member access.
 Each kind of expression is described in detail
 in the sections below.
 
-```
-Grammar of an expression
-
-expression --> try-operator-OPT await-operator-OPT prefix-expression infix-expressions-OPT
-expression-list --> expression | expression ``,`` expression-list
-```
+> Grammar of an expression:
+>
+> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
+>
+> *expression-list* → *expression* | *expression* **`,`** *expression-list*
 
 
 ## Prefix Expressions
@@ -41,12 +40,11 @@ see <doc:BasicOperators> and <doc:AdvancedOperators>.
 For information about the operators provided by the Swift standard library,
 see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
-```
-Grammar of a prefix expression
-
-prefix-expression --> prefix-operator-OPT postfix-expression
-prefix-expression --> in-out-expression
-```
+> Grammar of a prefix expression:
+>
+> *prefix-expression* → *prefix-operator*_?_ *postfix-expression*
+>
+> *prefix-expression* → *in-out-expression*
 
 
 ### In-Out Expression
@@ -68,11 +66,9 @@ when providing a non-pointer argument
 in a context where a pointer is needed,
 as described in <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>.
 
-```
-Grammar of an in-out expression
-
-in-out-expression --> ``&`` identifier
-```
+> Grammar of an in-out expression:
+>
+> *in-out-expression* → **`&`** *identifier*
 
 
 ### Try Operator
@@ -194,11 +190,9 @@ the `try` operator must appear first.
 For more information and to see examples of how to use `try`, `try?`, and `try!`,
 see <doc:ErrorHandling>.
 
-```
-Grammar of a try expression
-
-try-operator --> ``try`` | ``try`` ``?`` | ``try`` ``!``
-```
+> Grammar of a try expression:
+>
+> *try-operator* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
 
 
 ### Await Operator
@@ -304,11 +298,9 @@ the `try` operator must appear first.
   but it's important enough to be worth re-stating in prose.
 -->
 
-```
-Grammar of an await expression
-
-await-operator --> ``await``
-```
+> Grammar of an await expression:
+>
+> *await-operator* → **`await`**
 
 
 ## Infix Expressions
@@ -349,15 +341,17 @@ see [Operator Declarations](https://developer.apple.com/documentation/swift/oper
 > `2`, `+`, `3`, `*`, and `5`.
 > This process transforms it into the tree (2 + (3 * 5)).
 
-```
-Grammar of an infix expression
-
-infix-expression --> infix-operator prefix-expression
-infix-expression --> assignment-operator try-operator-OPT prefix-expression
-infix-expression --> conditional-operator try-operator-OPT prefix-expression
-infix-expression --> type-casting-operator
-infix-expressions --> infix-expression infix-expressions-OPT
-```
+> Grammar of an infix expression:
+>
+> *infix-expression* → *infix-operator* *prefix-expression*
+>
+> *infix-expression* → *assignment-operator* *try-operator*_?_ *prefix-expression*
+>
+> *infix-expression* → *conditional-operator* *try-operator*_?_ *prefix-expression*
+>
+> *infix-expression* → *type-casting-operator*
+>
+> *infix-expressions* → *infix-expression* *infix-expressions*_?_
 
 
 ### Assignment Operator
@@ -400,11 +394,9 @@ For example:
 
 The assignment operator doesn't return any value.
 
-```
-Grammar of an assignment operator
-
-assignment-operator --> ``=``
-```
+> Grammar of an assignment operator:
+>
+> *assignment-operator* → **`=`**
 
 
 ### Ternary Conditional Operator
@@ -428,11 +420,9 @@ The unused expression isn't evaluated.
 For an example that uses the ternary conditional operator,
 see <doc:BasicOperators#Ternary-Conditional-Operator>.
 
-```
-Grammar of a conditional operator
-
-conditional-operator --> ``?`` expression ``:``
-```
+> Grammar of a conditional operator:
+>
+> *conditional-operator* → **`?`** *expression* **`:`**
 
 
 ### Type-Casting Operators
@@ -559,14 +549,15 @@ For more information about type casting
 and to see examples that use the type-casting operators,
 see <doc:TypeCasting>.
 
-```
-Grammar of a type-casting operator
-
-type-casting-operator --> ``is`` type
-type-casting-operator --> ``as`` type
-type-casting-operator --> ``as`` ``?`` type
-type-casting-operator --> ``as`` ``!`` type
-```
+> Grammar of a type-casting operator:
+>
+> *type-casting-operator* → **`is`** *type*
+>
+> *type-casting-operator* → **`as`** *type*
+>
+> *type-casting-operator* → **`as`** **`?`** *type*
+>
+> *type-casting-operator* → **`as`** **`!`** *type*
 
 
 ## Primary Expressions
@@ -577,22 +568,31 @@ They can be used as expressions on their own,
 and they can be combined with other tokens
 to make prefix expressions, infix expressions, and postfix expressions.
 
-```
-Grammar of a primary expression
-
-primary-expression --> identifier generic-argument-clause-OPT
-primary-expression --> literal-expression
-primary-expression --> self-expression
-primary-expression --> superclass-expression
-primary-expression --> closure-expression
-primary-expression --> parenthesized-expression
-primary-expression --> tuple-expression
-primary-expression --> implicit-member-expression
-primary-expression --> wildcard-expression
-primary-expression --> key-path-expression
-primary-expression --> selector-expression
-primary-expression --> key-path-string-expression
-```
+> Grammar of a primary expression:
+>
+> *primary-expression* → *identifier* *generic-argument-clause*_?_
+>
+> *primary-expression* → *literal-expression*
+>
+> *primary-expression* → *self-expression*
+>
+> *primary-expression* → *superclass-expression*
+>
+> *primary-expression* → *closure-expression*
+>
+> *primary-expression* → *parenthesized-expression*
+>
+> *primary-expression* → *tuple-expression*
+>
+> *primary-expression* → *implicit-member-expression*
+>
+> *primary-expression* → *wildcard-expression*
+>
+> *primary-expression* → *key-path-expression*
+>
+> *primary-expression* → *selector-expression*
+>
+> *primary-expression* → *key-path-string-expression*
 
 
 <!--
@@ -792,26 +792,39 @@ For information on using playground literals in Xcode,
 see [Add a color, file, or image literal](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)
 in Xcode Help.
 
-```
-Grammar of a literal expression
-
-literal-expression --> literal
-literal-expression --> array-literal | dictionary-literal | playground-literal
-literal-expression --> ``#file`` | ``#fileID`` | ``#filePath``
-literal-expression --> ``#line`` | ``#column`` | ``#function`` | ``#dsohandle``
-
-array-literal --> ``[`` array-literal-items-OPT ``]``
-array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-array-literal-item --> expression
-
-dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
-dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-dictionary-literal-item --> expression ``:`` expression
-
-playground-literal --> ``#colorLiteral`` ``(`` ``red`` ``:`` expression ``,`` ``green`` ``:`` expression ``,`` ``blue`` ``:`` expression ``,`` ``alpha`` ``:`` expression ``)``
-playground-literal --> ``#fileLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
-playground-literal --> ``#imageLiteral`` ``(`` ``resourceName`` ``:`` expression ``)``
-```
+> Grammar of a literal expression:
+>
+> *literal-expression* → *literal*
+>
+> *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
+>
+> *literal-expression* → **`#file`** | **`#fileID`** | **`#filePath`**
+>
+> *literal-expression* → **`#line`** | **`#column`** | **`#function`** | **`#dsohandle`**
+>
+>
+>
+> *array-literal* → **`[`** *array-literal-items*_?_ **`]`**
+>
+> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items*
+>
+> *array-literal-item* → *expression*
+>
+>
+>
+> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`**
+>
+> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items*
+>
+> *dictionary-literal-item* → *expression* **`:`** *expression*
+>
+>
+>
+> *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`**
+>
+> *playground-literal* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
+>
+> *playground-literal* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
 
 
 ### Self Expression
@@ -901,15 +914,17 @@ struct Point {
   iBooks Store screenshot begins here.
 -->
 
-```
-Grammar of a self expression
-
-self-expression -->  ``self`` | self-method-expression | self-subscript-expression | self-initializer-expression
-
-self-method-expression --> ``self`` ``.`` identifier
-self-subscript-expression --> ``self`` ``[`` function-call-argument-list ``]``
-self-initializer-expression --> ``self`` ``.`` ``init``
-```
+> Grammar of a self expression:
+>
+> *self-expression* → **`self`** | *self-method-expression* | *self-subscript-expression* | *self-initializer-expression*
+>
+>
+>
+> *self-method-expression* → **`self`** **`.`** *identifier*
+>
+> *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`**
+>
+> *self-initializer-expression* → **`self`** **`.`** **`init`**
 
 
 ### Superclass Expression
@@ -933,15 +948,17 @@ Subclasses can use a superclass expression
 in their implementation of members, subscripting, and initializers
 to make use of the implementation in their superclass.
 
-```
-Grammar of a superclass expression
-
-superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
-
-superclass-method-expression --> ``super`` ``.`` identifier
-superclass-subscript-expression --> ``super`` ``[`` function-call-argument-list ``]``
-superclass-initializer-expression --> ``super`` ``.`` ``init``
-```
+> Grammar of a superclass expression:
+>
+> *superclass-expression* → *superclass-method-expression* | *superclass-subscript-expression* | *superclass-initializer-expression*
+>
+>
+>
+> *superclass-method-expression* → **`super`** **`.`** *identifier*
+>
+> *superclass-subscript-expression* → **`super`** **`[`** *function-call-argument-list* **`]`**
+>
+> *superclass-initializer-expression* → **`super`** **`.`** **`init`**
 
 
 ### Closure Expression
@@ -1301,27 +1318,41 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
   ```
 -->
 
-```
-Grammar of a closure expression
-
-closure-expression --> ``{`` attributes-OPT closure-signature-OPT statements-OPT ``}``
-
-closure-signature --> capture-list-OPT closure-parameter-clause ``async``-OPT ``throws``-OPT function-result-OPT ``in``
-closure-signature --> capture-list ``in``
-
-closure-parameter-clause --> ``(`` ``)`` | ``(`` closure-parameter-list ``)`` | identifier-list
-closure-parameter-list --> closure-parameter | closure-parameter ``,`` closure-parameter-list
-closure-parameter --> closure-parameter-name type-annotation-OPT
-closure-parameter --> closure-parameter-name type-annotation ``...``
-closure-parameter-name --> identifier
-
-capture-list --> ``[`` capture-list-items ``]``
-capture-list-items --> capture-list-item | capture-list-item ``,`` capture-list-items
-capture-list-item --> capture-specifier-OPT identifier
-capture-list-item --> capture-specifier-OPT identifier ``=`` expression
-capture-list-item --> capture-specifier-OPT self-expression
-capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
-```
+> Grammar of a closure expression:
+>
+> *closure-expression* → **`{`** *attributes*_?_ *closure-signature*_?_ *statements*_?_ **`}`**
+>
+>
+>
+> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ **`in`**
+>
+> *closure-signature* → *capture-list* **`in`**
+>
+>
+>
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list*
+>
+> *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list*
+>
+> *closure-parameter* → *closure-parameter-name* *type-annotation*_?_
+>
+> *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`**
+>
+> *closure-parameter-name* → *identifier*
+>
+>
+>
+> *capture-list* → **`[`** *capture-list-items* **`]`**
+>
+> *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items*
+>
+> *capture-list-item* → *capture-specifier*_?_ *identifier*
+>
+> *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression*
+>
+> *capture-list-item* → *capture-specifier*_?_ *self-expression*
+>
+> *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
 
 
 ### Implicit Member Expression
@@ -1430,12 +1461,11 @@ the type of `x` matches the type implied by its context exactly,
 the type of `y` is convertible from `SomeClass` to `SomeClass?`,
 and the type of `z` is convertible from `SomeSubclass` to `SomeClass`.
 
-```
-Grammar of a implicit member expression
-
-implicit-member-expression --> ``.`` identifier
-implicit-member-expression --> ``.`` identifier ``.`` postfix-expression
-```
+> Grammar of a implicit member expression:
+>
+> *implicit-member-expression* → **`.`** *identifier*
+>
+> *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
 
 
 <!--
@@ -1490,11 +1520,9 @@ for example, the type of `(1)` is simply `Int`.
   See "Tuple Expression" below for langref grammar.
 -->
 
-```
-Grammar of a parenthesized expression
-
-parenthesized-expression --> ``(`` expression ``)``
-```
+> Grammar of a parenthesized expression:
+>
+> *parenthesized-expression* → **`(`** *expression* **`)`**
 
 
 ### Tuple Expression
@@ -1544,13 +1572,13 @@ A single expression inside parentheses is a parenthesized expression.
 > However, like all type aliases, `Void` is always a type ---
 > you can't use it to write an empty tuple expression.
 
-```
-Grammar of a tuple expression
-
-tuple-expression --> ``(`` ``)`` | ``(`` tuple-element ``,`` tuple-element-list ``)``
-tuple-element-list --> tuple-element | tuple-element ``,`` tuple-element-list
-tuple-element --> expression | identifier ``:`` expression
-```
+> Grammar of a tuple expression:
+>
+> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`**
+>
+> *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list*
+>
+> *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
 
 ### Wildcard Expression
@@ -1576,11 +1604,9 @@ For example, in the following assignment
   ```
 -->
 
-```
-Grammar of a wildcard expression
-
-wildcard-expression --> ``_``
-```
+> Grammar of a wildcard expression:
+>
+> *wildcard-expression* → **`_`**
 
 
 ### Key-Path Expression
@@ -2026,16 +2052,19 @@ For information about key-value coding and key-value observing,
 see [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
 and [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
 
-```
-Grammar of a key-path expression
-
-key-path-expression --> ``\`` type-OPT ``.`` key-path-components
-key-path-components --> key-path-component | key-path-component ``.`` key-path-components
-key-path-component --> identifier key-path-postfixes-OPT | key-path-postfixes
-
-key-path-postfixes --> key-path-postfix key-path-postfixes-OPT
-key-path-postfix --> ``?`` | ``!`` | ``self`` | ``[`` function-call-argument-list ``]``
-```
+> Grammar of a key-path expression:
+>
+> *key-path-expression* → **`\`** *type*_?_ **`.`** *key-path-components*
+>
+> *key-path-components* → *key-path-component* | *key-path-component* **`.`** *key-path-components*
+>
+> *key-path-component* → *identifier* *key-path-postfixes*_?_ | *key-path-postfixes*
+>
+>
+>
+> *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_
+>
+> *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
 
 
 ### Selector Expression
@@ -2144,13 +2173,13 @@ For more information about using selectors
 in Swift code that interacts with Objective-C APIs,
 see [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
 
-```
-Grammar of a selector expression
-
-selector-expression --> ``#selector`` ``(`` expression  ``)``
-selector-expression --> ``#selector`` ``(`` ``getter:`` expression  ``)``
-selector-expression --> ``#selector`` ``(`` ``setter:`` expression  ``)``
-```
+> Grammar of a selector expression:
+>
+> *selector-expression* → **`#selector`** **`(`** *expression* **`)`**
+>
+> *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`**
+>
+> *selector-expression* → **`#selector`** **`(`** **`setter:`** *expression* **`)`**
 
 
 <!--
@@ -2259,11 +2288,9 @@ and [Key-Value Observing Programming Guide](https://developer.apple.com/library/
 
 > Note: Although the *property name* is an expression, it's never evaluated.
 
-```
-Grammar of a key-path string expression
-
-key-path-string-expression --> ``#keyPath`` ``(`` expression  ``)``
-```
+> Grammar of a key-path string expression:
+>
+> *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
 
 
 ## Postfix Expressions
@@ -2279,19 +2306,25 @@ see <doc:BasicOperators> and <doc:AdvancedOperators>.
 For information about the operators provided by the Swift standard library,
 see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
-```
-Grammar of a postfix expression
-
-postfix-expression --> primary-expression
-postfix-expression --> postfix-expression postfix-operator
-postfix-expression --> function-call-expression
-postfix-expression --> initializer-expression
-postfix-expression --> explicit-member-expression
-postfix-expression --> postfix-self-expression
-postfix-expression --> subscript-expression
-postfix-expression --> forced-value-expression
-postfix-expression --> optional-chaining-expression
-```
+> Grammar of a postfix expression:
+>
+> *postfix-expression* → *primary-expression*
+>
+> *postfix-expression* → *postfix-expression* *postfix-operator*
+>
+> *postfix-expression* → *function-call-expression*
+>
+> *postfix-expression* → *initializer-expression*
+>
+> *postfix-expression* → *explicit-member-expression*
+>
+> *postfix-expression* → *postfix-self-expression*
+>
+> *postfix-expression* → *subscript-expression*
+>
+> *postfix-expression* → *forced-value-expression*
+>
+> *postfix-expression* → *optional-chaining-expression*
 
 
 ### Function Call Expression
@@ -2657,21 +2690,29 @@ avoid using `&` instead of using the unsafe APIs explicitly.
   ```
 -->
 
-```
-Grammar of a function call expression
-
-function-call-expression --> postfix-expression function-call-argument-clause
-function-call-expression --> postfix-expression function-call-argument-clause-OPT trailing-closures
-
-function-call-argument-clause --> ``(`` ``)`` | ``(`` function-call-argument-list ``)``
-function-call-argument-list --> function-call-argument | function-call-argument ``,`` function-call-argument-list
-function-call-argument --> expression | identifier ``:`` expression
-function-call-argument --> operator | identifier ``:`` operator
-
-trailing-closures --> closure-expression labeled-trailing-closures-OPT
-labeled-trailing-closures --> labeled-trailing-closure labeled-trailing-closures-OPT
-labeled-trailing-closure --> identifier ``:`` closure-expression
-```
+> Grammar of a function call expression:
+>
+> *function-call-expression* → *postfix-expression* *function-call-argument-clause*
+>
+> *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
+>
+>
+>
+> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`**
+>
+> *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list*
+>
+> *function-call-argument* → *expression* | *identifier* **`:`** *expression*
+>
+> *function-call-argument* → *operator* | *identifier* **`:`** *operator*
+>
+>
+>
+> *trailing-closures* → *closure-expression* *labeled-trailing-closures*_?_
+>
+> *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*_?_
+>
+> *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
 
 
 ### Initializer Expression
@@ -2771,12 +2812,11 @@ let s4 = type(of: someValue)(data: 5)       // Error
   ```
 -->
 
-```
-Grammar of an initializer expression
-
-initializer-expression --> postfix-expression ``.`` ``init``
-initializer-expression --> postfix-expression ``.`` ``init`` ``(`` argument-names ``)``
-```
+> Grammar of an initializer expression:
+>
+> *initializer-expression* → *postfix-expression* **`.`** **`init`**
+>
+> *initializer-expression* → *postfix-expression* **`.`** **`init`** **`(`** *argument-names* **`)`**
 
 
 ### Explicit Member Expression
@@ -3049,17 +3089,21 @@ The other branches can be empty.
   ```
 -->
 
-```
-Grammar of an explicit member expression
-
-explicit-member-expression --> postfix-expression ``.`` decimal-digits
-explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
-explicit-member-expression --> postfix-expression ``.`` identifier ``(`` argument-names ``)``
-explicit-member-expression --> postfix-expression conditional-compilation-block
-
-argument-names --> argument-name argument-names-OPT
-argument-name --> identifier ``:``
-```
+> Grammar of an explicit member expression:
+>
+> *explicit-member-expression* → *postfix-expression* **`.`** *decimal-digits*
+>
+> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* *generic-argument-clause*_?_
+>
+> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* **`(`** *argument-names* **`)`**
+>
+> *explicit-member-expression* → *postfix-expression* *conditional-compilation-block*
+>
+>
+>
+> *argument-names* → *argument-name* *argument-names*_?_
+>
+> *argument-name* → *identifier* **`:`**
 
 
 <!--
@@ -3091,11 +3135,9 @@ to access a type as a value. For example,
 because `SomeClass.self` evaluates to the `SomeClass` type itself,
 you can pass it to a function or method that accepts a type-level argument.
 
-```
-Grammar of a postfix self expression
-
-postfix-self-expression --> postfix-expression ``.`` ``self``
-```
+> Grammar of a postfix self expression:
+>
+> *postfix-self-expression* → *postfix-expression* **`.`** **`self`**
 
 
 ### Subscript Expression
@@ -3133,11 +3175,9 @@ the subscript setter is called in the same way.
 For information about subscript declarations,
 see <doc:Declarations#Protocol-Subscript-Declaration>.
 
-```
-Grammar of a subscript expression
-
-subscript-expression --> postfix-expression ``[`` function-call-argument-list ``]``
-```
+> Grammar of a subscript expression:
+>
+> *subscript-expression* → *postfix-expression* **`[`** *function-call-argument-list* **`]`**
 
 
 <!--
@@ -3204,11 +3244,9 @@ someDictionary["a"]![0] = 100
   ```
 -->
 
-```
-Grammar of a forced-value expression
-
-forced-value-expression --> postfix-expression ``!``
-```
+> Grammar of a forced-value expression:
+>
+> *forced-value-expression* → *postfix-expression* **`!`**
 
 
 ### Optional-Chaining Expression
@@ -3336,11 +3374,9 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
   ```
 -->
 
-```
-Grammar of an optional-chaining expression
-
-optional-chaining-expression --> postfix-expression ``?``
-```
+> Grammar of an optional-chaining expression:
+>
+> *optional-chaining-expression* → *postfix-expression* **`?`**
 
 
 

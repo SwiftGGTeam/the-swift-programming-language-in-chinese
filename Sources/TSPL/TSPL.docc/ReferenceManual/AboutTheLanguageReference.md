@@ -22,7 +22,7 @@ follows a few conventions:
 - An arrow (→) is used to mark grammar productions and can be read as "can consist of."
 - Syntactic categories are indicated by *italic* text and appear on both sides
   of a grammar production rule.
-- Literal words and punctuation are indicated by boldface `constant width` text
+- Literal words and punctuation are indicated by **`boldface constant width`** text
   and appear only on the right-hand side of a grammar production rule.
 - Alternative grammar productions are separated by vertical
   bars (|). When alternative productions are too long to read easily,
@@ -30,16 +30,13 @@ follows a few conventions:
 - In a few cases, regular font text is used to describe the right-hand side
   of a grammar production rule.
 - Optional syntactic categories and literals are marked by a trailing
-  subscript, *opt*.
+  question mark, *?*.
 
 As an example, the grammar of a getter-setter block is defined as follows:
 
-```
-Grammar of a getter-setter block
-
-getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}`` | ``{`` setter-clause getter-clause ``}``
-```
-
+> Grammar of a getter-setter block:
+>
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** | **`{`** *setter-clause* *getter-clause* **`}`**
 
 This definition indicates that a getter-setter block can consist of a getter clause
 followed by an optional setter clause, enclosed in braces,
@@ -47,18 +44,12 @@ followed by an optional setter clause, enclosed in braces,
 The grammar production above is equivalent to the following two productions,
 where the alternatives are spelled out explicitly:
 
-```
-Grammar of a getter-setter block
-
-getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
-getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-```
-
-
-*getter-setter-block* → `{` *getter-clause* *setter-clause?* `}`
-
-*getter-setter-block* → `{` *setter-clause* *getter-clause* `}`
-
+> Grammar of a getter-setter block:
+>
+>
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`**
+>
+> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`**
 
 <!--
 This source file is part of the Swift.org open source project

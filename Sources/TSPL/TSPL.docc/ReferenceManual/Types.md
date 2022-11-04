@@ -36,23 +36,34 @@ For example, `(Int)` is equivalent to `Int`.
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
-```
-Grammar of a type
+> Grammar of a type:
+>
+> *type* → *function-type*
+>
+> *type* → *array-type*
+>
+> *type* → *dictionary-type*
+>
+> *type* → *type-identifier*
+>
+> *type* → *tuple-type*
+>
+> *type* → *optional-type*
+>
+> *type* → *implicitly-unwrapped-optional-type*
+>
+> *type* → *protocol-composition-type*
+>
+> *type* → *opaque-type*
+>
+> *type* → *metatype-type*
+>
+> *type* → *any-type*
+>
+> *type* → *self-type*
+>
+> *type* → **`(`** *type* **`)`**
 
-type --> function-type
-type --> array-type
-type --> dictionary-type
-type --> type-identifier
-type --> tuple-type
-type --> optional-type
-type --> implicitly-unwrapped-optional-type
-type --> protocol-composition-type
-type --> opaque-type
-type --> metatype-type
-type --> any-type
-type --> self-type
-type --> ``(`` type ``)``
-```
 
 
 ## Type Annotation
@@ -83,11 +94,9 @@ the parameter `a` to the function `someFunction` is specified to have the type `
 
 Type annotations can contain an optional list of type attributes before the type.
 
-```
-Grammar of a type annotation
-
-type-annotation --> ``:`` attributes-OPT ``inout``-OPT type
-```
+> Grammar of a type annotation:
+>
+> *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
 
 
 ## Type Identifier
@@ -142,12 +151,11 @@ var someValue: ExampleModule.MyType
   ```
 -->
 
-```
-Grammar of a type identifier
-
-type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
-type-name --> identifier
-```
+> Grammar of a type identifier:
+>
+> *type-identifier* → *type-name* *generic-argument-clause*_?_ | *type-name* *generic-argument-clause*_?_ **`.`** *type-identifier*
+>
+> *type-name* → *identifier*
 
 
 ## Tuple Type
@@ -189,14 +197,15 @@ someTuple = (left: 5, right: 5)  // Error: names don't match
 All tuple types contain two or more types,
 except for `Void` which is a type alias for the empty tuple type, `()`.
 
-```
-Grammar of a tuple type
-
-tuple-type --> ``(`` ``)`` | ``(`` tuple-type-element ``,`` tuple-type-element-list ``)``
-tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-tuple-type-element --> element-name type-annotation | type
-element-name --> identifier
-```
+> Grammar of a tuple type:
+>
+> *tuple-type* → **`(`** **`)`** | **`(`** *tuple-type-element* **`,`** *tuple-type-element-list* **`)`**
+>
+> *tuple-type-element-list* → *tuple-type-element* | *tuple-type-element* **`,`** *tuple-type-element-list*
+>
+> *tuple-type-element* → *element-name* *type-annotation* | *type*
+>
+> *element-name* → *identifier*
 
 
 ## Function Type
@@ -495,18 +504,23 @@ by using the `withoutActuallyEscaping(_:do:)` function.
 For information about avoiding conflicting access to memory,
 see <doc:MemorySafety>.
 
-```
-Grammar of a function type
-
-function-type --> attributes-OPT function-type-argument-clause ``async``-OPT ``throws``-OPT ``->`` type
-
-function-type-argument-clause --> ``(`` ``)``
-function-type-argument-clause --> ``(`` function-type-argument-list ``...``-OPT ``)``
-
-function-type-argument-list --> function-type-argument | function-type-argument ``,`` function-type-argument-list
-function-type-argument --> attributes-OPT ``inout``-OPT type | argument-label type-annotation
-argument-label --> identifier
-```
+> Grammar of a function type:
+>
+> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ **`throws`**_?_ **`->`** *type*
+>
+>
+>
+> *function-type-argument-clause* → **`(`** **`)`**
+>
+> *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
+>
+>
+>
+> *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list*
+>
+> *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation*
+>
+> *argument-label* → *identifier*
 
 
 <!--
@@ -587,11 +601,9 @@ the example above, `array3D[0]` refers to `[[1, 2], [3, 4]]`,
 For a detailed discussion of the Swift standard library `Array` type,
 see <doc:CollectionTypes#Arrays>.
 
-```
-Grammar of an array type
-
-array-type --> ``[`` type ``]``
-```
+> Grammar of an array type:
+>
+> *array-type* → **`[`** *type* **`]`**
 
 
 ## Dictionary Type
@@ -643,11 +655,9 @@ The key type of a dictionary must conform to the Swift standard library `Hashabl
 For a detailed discussion of the Swift standard library `Dictionary` type,
 see <doc:CollectionTypes#Dictionaries>.
 
-```
-Grammar of a dictionary type
-
-dictionary-type --> ``[`` type ``:`` type ``]``
-```
+> Grammar of a dictionary type:
+>
+> *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
 
 
 ## Optional Type
@@ -728,11 +738,9 @@ no operation is performed and therefore no runtime error is produced.
 For more information and to see examples that show how to use optional types,
 see <doc:TheBasics#Optionals>.
 
-```
-Grammar of an optional type
-
-optional-type --> type ``?``
-```
+> Grammar of an optional type:
+>
+> *optional-type* → *type* **`?`**
 
 
 ## Implicitly Unwrapped Optional Type
@@ -790,11 +798,9 @@ no operation is performed and therefore no runtime error is produced.
 For more information about implicitly unwrapped optional types,
 see <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
 
-```
-Grammar of an implicitly unwrapped optional type
-
-implicitly-unwrapped-optional-type --> type ``!``
-```
+> Grammar of an implicitly unwrapped optional type:
+>
+> *implicitly-unwrapped-optional-type* → *type* **`!`**
 
 
 ## Protocol Composition Type
@@ -865,12 +871,11 @@ typealias PQR = PQ & Q & R
   ```
 -->
 
-```
-Grammar of a protocol composition type
-
-protocol-composition-type --> type-identifier ``&`` protocol-composition-continuation
-protocol-composition-continuation --> type-identifier | protocol-composition-type
-```
+> Grammar of a protocol composition type:
+>
+> *protocol-composition-type* → *type-identifier* **`&`** *protocol-composition-continuation*
+>
+> *protocol-composition-continuation* → *type-identifier* | *protocol-composition-type*
 
 
 ## Opaque Type
@@ -919,11 +924,9 @@ that are part of the function's generic type parameters.
 For example, a function `someFunction<T>()`
 could return a value of type `T` or `Dictionary<String, T>`.
 
-```
-Grammar of an opaque type
-
-opaque-type --> ``some`` type
-```
+> Grammar of an opaque type:
+>
+> *opaque-type* → **`some`** *type*
 
 
 ## Metatype Type
@@ -1032,11 +1035,9 @@ let anotherInstance = metatype.init(string: "some string")
   ```
 -->
 
-```
-Grammar of a metatype type
-
-metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
-```
+> Grammar of a metatype type:
+>
+> *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**
 
 
 ## Any Type
@@ -1104,11 +1105,9 @@ For more information, see
 <doc:Protocols#Class-Only-Protocols>
 and [AnyObject](https://developer.apple.com/documentation/swift/anyobject).
 
-```
-Grammar of an Any type
-
-any-type --> ``Any``
-```
+> Grammar of an Any type:
+>
+> *any-type* → **`Any`**
 
 
 ## Self Type
@@ -1230,11 +1229,9 @@ function in the Swift standard library.
 Writing `Self.someStaticMember` to access a member of the current type
 is the same as writing `type(of: self).someStaticMember`.
 
-```
-Grammar of a Self type
-
-self-type --> ``Self``
-```
+> Grammar of a Self type:
+>
+> *self-type* → **`Self`**
 
 
 ## Type Inheritance Clause
@@ -1265,12 +1262,11 @@ a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
 to specify the type of its raw values, see <doc:Enumerations#Raw-Values>.
 
-```
-Grammar of a type inheritance clause
-
-type-inheritance-clause --> ``:`` type-inheritance-list
-type-inheritance-list --> attributes-OPT type-identifier | attributes-OPT type-identifier ``,`` type-inheritance-list
-```
+> Grammar of a type inheritance clause:
+>
+> *type-inheritance-clause* → **`:`** *type-inheritance-list*
+>
+> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 
 ## Type Inference

@@ -59,6 +59,7 @@
 - <doc:Attributes>
 - <doc:Patterns>
 - <doc:GenericParametersAndArguments>
+- <doc:SummaryOfTheGrammar>
 
 ### Revision History
 
