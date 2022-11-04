@@ -432,7 +432,7 @@ which modifies the `x` and `y` values of the stored `origin` property,
 and moves the square to its new position.
 
 <!--
-  iBooks Store screenshot begins here.
+  Apple Books screenshot begins here.
 -->
 
 ![](computedProperties)
@@ -485,7 +485,7 @@ struct AlternativeRect {
 -->
 
 <!--
-  iBooks Store screenshot ends here.
+  Apple Books screenshot ends here.
 -->
 
 ### Shorthand Getter Declaration

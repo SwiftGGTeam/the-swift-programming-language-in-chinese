@@ -264,7 +264,7 @@ occupations["Jayne"] = "Public Relations"
 -->
 
 <!--
-  iBooks Store screenshot begins here.
+  Apple Books screenshot begins here.
 -->
 
 Arrays automatically grow as you add elements.
@@ -391,7 +391,7 @@ Write a question mark (`?`) after the type of a value
 to mark the value as optional.
 
 <!--
-  iBooks Store screenshot ends here.
+  Apple Books screenshot ends here.
 -->
 
 <!--

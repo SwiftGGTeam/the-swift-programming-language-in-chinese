@@ -73,7 +73,7 @@ and its second four bits set to `1`.
 This is equivalent to a decimal value of `15`.
 
 <!--
-  iBooks Store screenshot begins here.
+  Apple Books screenshot begins here.
 -->
 
 The bitwise NOT operator is then used to create a new constant called `invertedBits`,
@@ -123,7 +123,7 @@ if the bits are equal to `1` in *either* input number:
 ![](bitwiseOR)
 
 <!--
-  iBooks Store screenshot ends here.
+  Apple Books screenshot ends here.
 -->
 
 In the example below,

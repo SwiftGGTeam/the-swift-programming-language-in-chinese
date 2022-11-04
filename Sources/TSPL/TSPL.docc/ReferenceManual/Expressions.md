@@ -876,7 +876,7 @@ struct Point {
 -->
 
 <!--
-  iBooks Store screenshot begins here.
+  Apple Books screenshot begins here.
 -->
 
 > Grammar of a self expression:
@@ -961,7 +961,7 @@ There are several special forms
 that allow closures to be written more concisely:
 
 <!--
-  iBooks Store screenshot ends here.
+  Apple Books screenshot ends here.
 -->
 
 - A closure can omit the types
