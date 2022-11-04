@@ -316,15 +316,9 @@ occupations = [:]
   ```
 -->
 
-If type information can be inferred,
-you can write an empty array as `[]`
-and an empty dictionary as `[:]` ---
-for example, when you set a new value for a variable
-or pass an argument to a function.
-
-<!--
-  iBooks Store screenshot begins here.
--->
+If you're assigning an empty array or dictionary to a new variable,
+or another place where there isn't any type information,
+you need to specify the type.
 
 ```swift
 let emptyArray: [String] = []
