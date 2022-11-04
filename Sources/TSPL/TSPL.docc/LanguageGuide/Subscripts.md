@@ -1,5 +1,3 @@
-
-
 # Subscripts
 
 Access the elements of a collection.
@@ -46,7 +44,6 @@ subscript(index: Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `subscriptSyntax`
   
@@ -81,7 +78,6 @@ subscript(index: Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `subscriptSyntax`
   
@@ -109,7 +105,6 @@ let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
 // Prints "six times three is 18"
 ```
-
 
 <!--
   - test: `timesTable`
@@ -159,7 +154,6 @@ and assigning a value of the dictionary's value type to the subscript:
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 numberOfLegs["bird"] = 2
 ```
-
 
 <!--
   - test: `dictionarySubscript`
@@ -256,7 +250,6 @@ struct Matrix {
 }
 ```
 
-
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
   
@@ -301,7 +294,6 @@ an appropriate row and column count to its initializer:
 var matrix = Matrix(rows: 2, columns: 2)
 ```
 
-
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
   
@@ -318,7 +310,6 @@ as read from top left to bottom right:
 
 ![](subscriptMatrix01)
 
-
 Values in the matrix can be set by passing row and column values into the subscript,
 separated by a comma:
 
@@ -326,7 +317,6 @@ separated by a comma:
 matrix[0, 1] = 1.5
 matrix[1, 0] = 3.2
 ```
-
 
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
@@ -349,7 +339,6 @@ and `3.2` in the bottom left position
 
 ![](subscriptMatrix02)
 
-
 The `Matrix` subscript's getter and setter both contain an assertion
 to check that the subscript's  `row` and `column` values are valid.
 To assist with these assertions,
@@ -362,7 +351,6 @@ func indexIsValid(row: Int, column: Int) -> Bool {
     return row >= 0 && row < rows && column >= 0 && column < columns
 }
 ```
-
 
 <!--
   - test: `matrixSubscript`
@@ -383,7 +371,6 @@ that's outside of the matrix bounds:
 let someValue = matrix[2, 2]
 // This triggers an assert, because [2, 2] is outside of the matrix bounds.
 ```
-
 
 <!--
   - test: `matrixSubscriptAssert`
@@ -418,7 +405,6 @@ let mars = Planet[4]
 print(mars)
 ```
 
-
 <!--
   - test: `static-subscript`
   
@@ -435,7 +421,6 @@ print(mars)
   << mars
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

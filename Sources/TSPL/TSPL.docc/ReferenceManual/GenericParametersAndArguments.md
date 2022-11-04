@@ -1,5 +1,3 @@
-
-
 # Generic Parameters and Arguments
 
 Generalize declarations to abstract away concrete types.
@@ -29,14 +27,12 @@ and has the following form:
 <<#generic parameter list#>>
 ```
 
-
 The *generic parameter list* is a comma-separated list of generic parameters,
 each of which has the following form:
 
 ```swift
 <#type parameter#>: <#constraint#>
 ```
-
 
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. A *type parameter* is simply the name
@@ -61,7 +57,6 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
 }
 ```
 
-
 <!--
   - test: `generic-params`
   
@@ -85,7 +80,6 @@ to the function or initializer.
 simpleMax(17, 42) // T is inferred to be Int
 simpleMax(3.14159, 2.71828) // T is inferred to be Double
 ```
-
 
 <!--
   - test: `generic-params`
@@ -116,7 +110,6 @@ followed by a comma-separated list of one or more *requirements*.
 ```swift
 where <#requirements#>
 ```
-
 
 The *requirements* in a generic `where` clause specify that a type parameter inherits from
 a class or conforms to a protocol or protocol composition.
@@ -163,7 +156,6 @@ extension Collection where Element: SomeProtocol {
     }
 }
 ```
-
 
 <!--
   - test: `contextual-where-clauses-combine`
@@ -240,7 +232,6 @@ see <doc:Generics#Generic-Where-Clauses>.
 >
 > *same-type-requirement* → *type-identifier* **`==`** *type*
 
-
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
   otherwise, you'd have a syntactic ambiguity
@@ -258,7 +249,6 @@ and has the following form:
 <<#generic argument list#>>
 ```
 
-
 The *generic argument list* is a comma-separated list of type arguments.
 A *type argument* is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type.
@@ -271,7 +261,6 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
     /* ... */
 }
 ```
-
 
 <!--
   TODO: How are we supposed to wrap code lines like the above?
@@ -295,7 +284,6 @@ to form an array whose elements are themselves arrays of integers.
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 ```
 
-
 <!--
   - test: `array-of-arrays`
   
@@ -315,8 +303,6 @@ of a generic function or initializer.
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list*
 >
 > *generic-argument* → *type*
-
-
 
 <!--
 This source file is part of the Swift.org open source project

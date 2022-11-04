@@ -1,5 +1,3 @@
-
-
 # Lexical Structure
 
 Use the lowest-level components of the syntax.
@@ -96,7 +94,6 @@ as described in [Markup Formatting Reference](https://developer.apple.com/librar
 > *multiline-comment-text-item* → *comment-text-item*
 >
 > *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
-
 
 ## Identifiers
 
@@ -207,7 +204,6 @@ of the <doc:Attributes> chapter.
 > *implicit-parameter-name* → **`$`** *decimal-digits*
 >
 > *property-wrapper-projection* → **`$`** *identifier-characters*
-
 
 ## Keywords and Punctuation
 
@@ -452,7 +448,6 @@ The following are examples of literals:
 true             // Boolean literal
 ```
 
-
 <!--
   - test: `basic-literals`
   
@@ -495,7 +490,6 @@ the annotation's type must be a type that can be instantiated from that literal 
 That is, the type must conform to the Swift standard library protocols
 listed in the table below.
 
-
 | Literal | Default type | Protocol |
 | ------- | ------------ | -------- |
 | Integer | `Int` | `ExpressibleByIntegerLiteral` |
@@ -528,7 +522,6 @@ in the declaration `let x: Int8 = 42`.
 > *boolean-literal* → **`true`** | **`false`**
 >
 > *nil-literal* → **`nil`**
-
 
 ### Integer Literals
 
@@ -628,7 +621,6 @@ as described in <doc:TheBasics#Integers>.
 >
 > *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
 
-
 ### Floating-Point Literals
 
 *Floating-point literals* represent floating-point values of unspecified precision.
@@ -701,7 +693,6 @@ which represents a 32-bit floating-point number.
 >
 > *sign* → **`+`** | **`-`**
 
-
 ### String Literals
 
 A string literal is a sequence of characters surrounded by quotation marks.
@@ -711,7 +702,6 @@ and has the following form:
 ```swift
 "<#characters#>"
 ```
-
 
 String literals can't contain
 an unescaped double quotation mark (`"`),
@@ -726,7 +716,6 @@ and has the following form:
 <#characters#>
 """
 ```
-
 
 Unlike a single-line string literal,
 a multiline string literal can contain
@@ -808,7 +797,6 @@ For example, all of the following string literals have the same value:
 let x = 3; "1 2 \(x)"
 ```
 
-
 <!--
   - test: `string-literals`
   
@@ -849,7 +837,6 @@ A string delimited by extended delimiters has the following forms:
 """#
 ```
 
-
 Special characters in a string delimited by extended delimiters
 appear in the resulting string as normal characters
 rather than as special characters.
@@ -871,7 +858,6 @@ print(string)
 print(string == escaped)
 // Prints "true"
 ```
-
 
 <!--
   - test: `extended-string-delimiters`
@@ -904,7 +890,6 @@ don't place whitespace in between the number signs:
 print(###"Line 1\###nLine 2"###) // OK
 print(# # #"Line 1\# # #nLine 2"# # #) // Error
 ```
-
 
 <!--
   - test: `extended-string-delimiters-err`
@@ -939,7 +924,6 @@ no runtime concatenation is performed.
 let textA = "Hello " + "world"
 let textB = "Hello world"
 ```
-
 
 <!--
   - test: `concatenated-strings`
@@ -1024,7 +1008,6 @@ let textB = "Hello world"
 >
 > *escaped-newline* → *escape-sequence* *inline-spaces*_?_ *line-break*
 
-
 <!--
   Quoted text resolves to a sequence of escaped characters by way of
   the quoted-text rule which allows repetition; no need to allow
@@ -1050,7 +1033,6 @@ surrounded by slashes (`/`) with the following form:
 ```swift
 /<#regular expression#>/
 ```
-
 
 Regular expression literals
 must not begin with an unescaped tab or space,
@@ -1107,7 +1089,6 @@ delimited by extended delimiters has the following forms:
 /#
 ```
 
-
 A regular expression literal that uses extended delimiters
 can begin with an unescaped space or tab,
 contain unescaped slashes (`/`),
@@ -1133,7 +1114,6 @@ don't place whitespace in between the number signs:
 let regex1 = ##/abc/##       // OK
 let regex2 = # #/abc/# #     // Error
 ```
-
 
 <!--
   - test: `extended-regex-delimiters-err`
@@ -1162,7 +1142,6 @@ you must use the extended delimiter syntax.
 >
 >
 > *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
-
 
 ## Operators
 
@@ -1404,8 +1383,6 @@ see <doc:AdvancedOperators#Operator-Methods>.
 > *prefix-operator* → *operator*
 >
 > *postfix-operator* → *operator*
-
-
 
 <!--
 This source file is part of the Swift.org open source project

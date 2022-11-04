@@ -1,5 +1,3 @@
-
-
 # Memory Safety
 
 Structure your code to avoid conflicts when accessing memory.
@@ -46,7 +44,6 @@ var one = 1
 print("We're number \(one)!")
 ```
 
-
 <!--
   - test: `memory-read-write`
   
@@ -88,7 +85,6 @@ and get a correct answer,
 as shown in the figure below.
 
 ![](memory_shopping)
-
 
 While you're adding items to the budget,
 it's in a temporary, invalid state
@@ -183,7 +179,6 @@ print(myNumber)
 // Prints "2"
 ```
 
-
 <!--
   - test: `memory-instantaneous`
   
@@ -244,7 +239,6 @@ increment(&stepSize)
 // Error: conflicting accesses to stepSize
 ```
 
-
 <!--
   - test: `memory-increment`
   
@@ -277,7 +271,6 @@ producing a conflict.
 
 ![](memory_increment)
 
-
 One way to solve this conflict
 is to make an explicit copy of `stepSize`:
 
@@ -290,7 +283,6 @@ increment(&copyOfStepSize)
 stepSize = copyOfStepSize
 // stepSize is now 2
 ```
-
 
 <!--
   - test: `memory-increment-copy`
@@ -337,7 +329,6 @@ balance(&playerOneScore, &playerTwoScore)  // OK
 balance(&playerOneScore, &playerOneScore)
 // Error: conflicting accesses to playerOneScore
 ```
-
 
 <!--
   - test: `memory-balance`
@@ -422,7 +413,6 @@ struct Player {
 }
 ```
 
-
 <!--
   - test: `memory-player-share-with-self`
   
@@ -467,7 +457,6 @@ var maria = Player(name: "Maria", health: 5, energy: 10)
 oscar.shareHealth(with: &maria)  // OK
 ```
 
-
 <!--
   - test: `memory-player-share-with-self`
   
@@ -500,7 +489,6 @@ they don't conflict.
 
 ![](memory_share_health_maria)
 
-
 However,
 if you pass `oscar` as the argument to `shareHealth(with:)`,
 there's a conflict:
@@ -509,7 +497,6 @@ there's a conflict:
 oscar.shareHealth(with: &oscar)
 // Error: conflicting accesses to oscar
 ```
-
 
 <!--
   - test: `memory-player-share-with-self`
@@ -546,7 +533,6 @@ producing a conflict.
 
 ![](memory_share_health_oscar)
 
-
 ## Conflicting Access to Properties
 
 Types like structures, tuples, and enumerations
@@ -565,7 +551,6 @@ var playerInformation = (health: 10, energy: 20)
 balance(&playerInformation.health, &playerInformation.energy)
 // Error: conflicting access to properties of playerInformation
 ```
-
 
 <!--
   - test: `memory-tuple`
@@ -609,7 +594,6 @@ var holly = Player(name: "Holly", health: 10, energy: 10)
 balance(&holly.health, &holly.energy)  // Error
 ```
 
-
 <!--
   - test: `memory-share-health-global`
   
@@ -647,7 +631,6 @@ func someFunction() {
     balance(&oscar.health, &oscar.energy)  // OK
 }
 ```
-
 
 <!--
   - test: `memory-share-health-local`
@@ -756,7 +739,6 @@ it doesn't allow the access.
   However, the copying approach has a negative impact
   on performance and memory usage.
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

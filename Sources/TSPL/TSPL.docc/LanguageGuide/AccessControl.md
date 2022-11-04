@@ -1,5 +1,3 @@
-
-
 # Access Control
 
 Manage the visibility of code by declaration, file, and module.
@@ -166,7 +164,6 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-
 <!--
   - test: `accessControlSyntax`
   
@@ -193,7 +190,6 @@ and will still have an access level of internal:
 class SomeInternalClass {}              // implicitly internal
 let someInternalConstant = 0            // implicitly internal
 ```
-
 
 <!--
   - test: `accessControlDefaulted`
@@ -253,7 +249,6 @@ private class SomePrivateClass {                // explicitly private class
     func somePrivateMethod() {}                  // implicitly private class member
 }
 ```
-
 
 <!--
   - test: `accessControl, accessControlWrong`
@@ -384,7 +379,6 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 }
 ```
 
-
 <!--
   - test: `accessControlWrong`
   
@@ -415,7 +409,6 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
     // function implementation goes here
 }
 ```
-
 
 <!--
   - test: `accessControl`
@@ -453,7 +446,6 @@ public enum CompassPoint {
     case west
 }
 ```
-
 
 <!--
   - test: `enumerationCases`
@@ -678,7 +670,6 @@ internal class B: A {
 }
 ```
 
-
 <!--
   - test: `subclassingNoCall`
   
@@ -712,7 +703,6 @@ internal class B: A {
 }
 ```
 
-
 <!--
   - test: `subclassingWithCall`
   
@@ -745,7 +735,6 @@ the constant, variable, property, or subscript must also be marked as `private`:
 ```swift
 private var privateInstance = SomePrivateClass()
 ```
-
 
 <!--
   - test: `accessControl`
@@ -822,7 +811,6 @@ struct TrackedString {
 }
 ```
 
-
 <!--
   - test: `reducedSetterScope, reducedSetterScope_error`
   
@@ -892,7 +880,6 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 // Prints "The number of edits is 3"
 ```
 
-
 <!--
   - test: `reducedSetterScope`
   
@@ -934,7 +921,6 @@ public struct TrackedString {
     public init() {}
 }
 ```
-
 
 <!--
   - test: `reducedSetterScopePublic`
@@ -1398,7 +1384,6 @@ protocol SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `extensions_privatemembers`
   
@@ -1422,7 +1407,6 @@ extension SomeStruct: SomeProtocol {
     }
 }
 ```
-
 
 <!--
   - test: `extensions_privatemembers`
@@ -1498,7 +1482,6 @@ but a public type alias can't alias an internal, file-private, or private type.
   !! ^
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

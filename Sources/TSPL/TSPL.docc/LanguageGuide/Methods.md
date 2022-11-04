@@ -1,5 +1,3 @@
-
-
 # Methods
 
 Define and call functions that are part of an instance or type.
@@ -50,7 +48,6 @@ class Counter {
 }
 ```
 
-
 <!--
   - test: `instanceMethods`
   
@@ -92,7 +89,6 @@ counter.reset()
 // the counter's value is now 0
 ```
 
-
 <!--
   - test: `instanceMethods`
   
@@ -132,7 +128,6 @@ func increment() {
     self.count += 1
 }
 ```
-
 
 <!--
   - test: `instanceMethodsIncrement`
@@ -181,7 +176,6 @@ if somePoint.isToTheRightOf(x: 1.0) {
 }
 // Prints "This point is to the right of the line where x == 1.0"
 ```
-
 
 <!--
   - test: `self`
@@ -239,7 +233,6 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 // Prints "The point is now at (3.0, 4.0)"
 ```
 
-
 <!--
   - test: `selfStructures`
   
@@ -274,7 +267,6 @@ let fixedPoint = Point(x: 3.0, y: 3.0)
 fixedPoint.moveBy(x: 2.0, y: 3.0)
 // this will report an error
 ```
-
 
 <!--
   - test: `selfStructures-err`
@@ -321,7 +313,6 @@ struct Point {
 }
 ```
 
-
 <!--
   - test: `selfStructuresAssign`
   
@@ -367,7 +358,6 @@ ovenLight.next()
 ovenLight.next()
 // ovenLight is now equal to .off
 ```
-
 
 <!--
   - test: `selfEnumerations`
@@ -426,7 +416,6 @@ class SomeClass {
 }
 SomeClass.someTypeMethod()
 ```
-
 
 <!--
   - test: `typeMethods`
@@ -491,7 +480,6 @@ struct LevelTracker {
     }
 }
 ```
-
 
 <!--
   - test: `typeMethods`
@@ -569,7 +557,6 @@ class Player {
 }
 ```
 
-
 <!--
   - test: `typeMethods`
   
@@ -608,7 +595,6 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
 // Prints "highest unlocked level is now 2"
 ```
 
-
 <!--
   - test: `typeMethods`
   
@@ -633,7 +619,6 @@ if player.tracker.advance(to: 6) {
 }
 // Prints "level 6 hasn't yet been unlocked"
 ```
-
 
 <!--
   - test: `typeMethods`
@@ -664,7 +649,6 @@ if player.tracker.advance(to: 6) {
   TODO: selector-style methods can be referenced as foo.bar:bas:
   (see Doug's comments from the 2014-03-12 release notes)
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

@@ -1,5 +1,3 @@
-
-
 # About Swift
 
 Understand the high-level goals of the language.
@@ -49,7 +47,6 @@ Swift has been years in the making,
 and it continues to evolve with new features and capabilities.
 Our goals for Swift are ambitious.
 We can’t wait to see what you create with it.
-
 
 <!--
 This source file is part of the Swift.org open source project

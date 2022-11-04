@@ -1,5 +1,3 @@
-
-
 # Attributes
 
 Add information to declarations and types.
@@ -19,7 +17,6 @@ and any arguments that the attribute accepts:
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
-
 
 Some declaration attributes accept arguments
 that specify more information about the attribute
@@ -205,7 +202,6 @@ you can use the following shorthand syntax instead:
 @available(swift <#version number#>)
 ```
 
-
 The shorthand syntax for `available` attributes
 concisely expresses availability for multiple platforms.
 Although the two forms are functionally equivalent,
@@ -217,7 +213,6 @@ class MyClass {
     // class definition
 }
 ```
-
 
 <!--
   - test: `availableShorthand`
@@ -243,7 +238,6 @@ struct MyStruct {
     // struct definition
 }
 ```
-
 
 <!--
   - test: `availableMultipleAvailabilities`
@@ -299,7 +293,6 @@ dial(8, 6, 7, 5, 3, 0, 9)
 // Call the underlying method directly.
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
-
 
 <!--
   - test: `dynamicCallable`
@@ -361,7 +354,6 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 // a
 ```
 
-
 <!--
   - test: `dynamicCallable`
   
@@ -415,7 +407,6 @@ that takes `KeyValuePairs<String, String>`.
 ```swift
 repeatLabels(a: "four") // Error
 ```
-
 
 <!--
   - test: `dynamicCallable-err`
@@ -492,7 +483,6 @@ print(dynamic == equivalent)
 // Prints "true"
 ```
 
-
 <!--
   - test: `dynamicMemberLookup`
   
@@ -539,7 +529,6 @@ let point = Point(x: 381, y: 431)
 let wrapper = PassthroughWrapper(value: point)
 print(wrapper.x)
 ```
-
 
 <!--
   - test: `dynamicMemberLookup`
@@ -820,7 +809,6 @@ struct MyTopLevel {
 }
 ```
 
-
 <!--
   - test: `atMain`
   
@@ -846,7 +834,6 @@ protocol ProvidesMain {
     static func main() throws
 }
 ```
-
 
 <!--
   - test: `atMain_ProvidesMain`
@@ -944,7 +931,6 @@ that calls the `NSApplicationMain(_:_:)` function as follows:
 import AppKit
 NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
-
 
 <!--
   Above code isn't tested because it hangs the REPL indefinitely,
@@ -1050,7 +1036,6 @@ class ExampleClass: NSObject {
     }
 }
 ```
-
 
 <!--
   - test: `objc-attribute`
@@ -1226,7 +1211,6 @@ struct SomeStruct {
 }
 ```
 
-
 <!--
   - test: `propertyWrapper`
   
@@ -1314,7 +1298,6 @@ s.x           // Int value
 s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
-
 
 <!--
   - test: `propertyWrapper-projection`
@@ -1449,7 +1432,6 @@ struct ArrayBuilder {
     }
 }
 ```
-
 
 <!--
   - test: `array-result-builder`
@@ -1820,7 +1802,6 @@ into code that calls the static methods of the result builder type:
 - If the result builder has a `buildFinalResult(_:)` method,
   the final result becomes a call to that method.
   This transformation is always last.
-
 
 <!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
@@ -2260,8 +2241,6 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 > *balanced-token* → Any identifier, keyword, literal, or operator
 >
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
-
-
 
 
 <!--

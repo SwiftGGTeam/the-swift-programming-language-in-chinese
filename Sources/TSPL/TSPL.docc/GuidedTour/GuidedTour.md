@@ -1,10 +1,6 @@
-
-
 # A Swift Tour
 
 Explore the features and syntax of Swift.
-
-
 
 Tradition suggests that the first program in a new language
 should print the words “Hello, world!” on the screen.
@@ -19,7 +15,6 @@ In Swift, this can be done in a single line:
 print("Hello, world!")
 // Prints "Hello, world!"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -63,7 +58,6 @@ myVariable = 50
 let myConstant = 42
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -94,7 +88,6 @@ let implicitDouble = 70.0
 let explicitDouble: Double = 70
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -117,7 +110,6 @@ let label = "The width is "
 let width = 94
 let widthLabel = label + String(width)
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -152,7 +144,6 @@ let appleSummary = "I have \(apples) apples."
 let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -184,7 +175,6 @@ I said "I have \(apples) apples."
 And then I said "I have \(apples + oranges) pieces of fruit."
 """
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -258,7 +248,6 @@ var occupations = [
 occupations["Jayne"] = "Public Relations"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -281,7 +270,6 @@ fruits.append("blueberries")
 print(fruits)
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -299,7 +287,6 @@ use the initializer syntax.
 let emptyArray: [String] = []
 let emptyDictionary: [String: Float] = [:]
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -324,7 +311,6 @@ or pass an argument to a function.
 fruits = []
 occupations = [:]
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -356,7 +342,6 @@ for score in individualScores {
 print(teamScore)
 // Prints "11"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -425,7 +410,6 @@ if let name = optionalName {
 }
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -467,7 +451,6 @@ let fullName: String = "John Appleseed"
 let informalGreeting = "Hi \(nickname ?? fullName)"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -488,7 +471,6 @@ if let nickname {
     print("Hey, \(nickname)")
 }
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -527,7 +509,6 @@ default:
 }
 // Prints "Is it a spicy red pepper?"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -599,7 +580,6 @@ print(largest)
 // Prints "25"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -652,7 +632,6 @@ print(m)
 // Prints "128"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -684,7 +663,6 @@ for i in 0..<4 {
 print(total)
 // Prints "6"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -725,7 +703,6 @@ func greet(person: String, day: String) -> String {
 greet(person: "Bob", day: "Tuesday")
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -755,7 +732,6 @@ func greet(_ person: String, on day: String) -> String {
 }
 greet("John", on: "Wednesday")
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -808,7 +784,6 @@ print(statistics.2)
 // Prints "120"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -858,7 +833,6 @@ func returnFifteen() -> Int {
 returnFifteen()
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -891,7 +865,6 @@ func makeIncrementer() -> ((Int) -> Int) {
 var increment = makeIncrementer()
 increment(7)
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -928,7 +901,6 @@ func lessThanTen(number: Int) -> Bool {
 var numbers = [20, 19, 7, 12]
 hasAnyMatches(list: numbers, condition: lessThanTen)
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -970,7 +942,6 @@ numbers.map({ (number: Int) -> Int in
 })
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1001,7 +972,6 @@ print(mappedNumbers)
 // Prints "[60, 57, 21, 36]"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1024,7 +994,6 @@ let sortedNumbers = numbers.sorted { $0 > $1 }
 print(sortedNumbers)
 // Prints "[20, 19, 12, 7]"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1075,7 +1044,6 @@ class Shape {
 }
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1104,7 +1072,6 @@ var shape = Shape()
 shape.numberOfSides = 7
 var shapeDescription = shape.simpleDescription()
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1136,7 +1103,6 @@ class NamedShape {
     }
 }
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1208,7 +1174,6 @@ let test = Square(sideLength: 5.2, name: "my test square")
 test.area()
 test.simpleDescription()
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1283,7 +1248,6 @@ triangle.perimeter = 9.9
 print(triangle.sideLength)
 // Prints "3.3000000000000003"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1375,7 +1339,6 @@ print(triangleAndSquare.triangle.sideLength)
 // Prints "50.0"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1429,7 +1392,6 @@ let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
 let sideLength = optionalSquare?.sideLength
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1479,7 +1441,6 @@ enum Rank: Int {
 let ace = Rank.ace
 let aceRawValue = ace.rawValue
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1535,7 +1496,6 @@ if let convertedRank = Rank(rawValue: 3) {
 }
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1574,7 +1534,6 @@ enum Suit {
 let hearts = Suit.hearts
 let heartsDescription = hearts.simpleDescription()
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1691,7 +1650,6 @@ case let .failure(message):
 // Prints "Sunrise is at 6:00 am and sunset is at 8:09 pm."
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1740,7 +1698,6 @@ let threeOfSpades = Card(rank: .three, suit: .spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1776,7 +1733,6 @@ func fetchUserID(from server: String) async -> Int {
 }
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1801,7 +1757,6 @@ func fetchUsername(from server: String) async -> String {
     return "Guest"
 }
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1830,7 +1785,6 @@ func connectUser(to server: String) async {
 }
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1854,7 +1808,6 @@ Task {
 // Prints "Hello Guest, user ID 97"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -1877,7 +1830,6 @@ protocol ExampleProtocol {
      mutating func adjust()
 }
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1922,7 +1874,6 @@ var b = SimpleStructure()
 b.adjust()
 let bDescription = b.simpleDescription
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -1986,7 +1937,6 @@ print(7.simpleDescription)
 // Prints "The number 7"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -2020,7 +1970,6 @@ print(protocolValue.simpleDescription)
 // Prints "A very simple class.  Now 100% adjusted."
 // print(protocolValue.anotherProperty)  // Uncomment to see the error
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -2071,7 +2020,6 @@ enum PrinterError: Error {
 }
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -2098,7 +2046,6 @@ func send(job: Int, toPrinter printerName: String) throws -> String {
     return "Job sent"
 }
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -2130,7 +2077,6 @@ do {
 }
 // Prints "Job sent"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -2191,7 +2137,6 @@ do {
 // Prints "Job sent"
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -2226,7 +2171,6 @@ the value that the function returned.
 let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
 let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -2265,7 +2209,6 @@ fridgeContains("banana")
 print(fridgeIsOpen)
 // Prints "false"
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -2315,7 +2258,6 @@ func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
 makeArray(repeating: "knock", numberOfTimes: 4)
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -2346,7 +2288,6 @@ enum OptionalValue<Wrapped> {
 var possibleInteger: OptionalValue<Int> = .none
 possibleInteger = .some(100)
 ```
-
 
 <!--
   - test: `guided-tour`
@@ -2385,7 +2326,6 @@ func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
 anyCommonElements([1, 2, 3], [3])
 ```
 
-
 <!--
   - test: `guided-tour`
   
@@ -2415,7 +2355,6 @@ anyCommonElements([1, 2, 3], [3])
 
 Writing `<T: Equatable>`
 is the same as writing `<T> ... where T: Equatable`.
-
 
 <!--
 This source file is part of the Swift.org open source project

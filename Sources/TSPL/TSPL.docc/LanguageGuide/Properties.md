@@ -1,5 +1,3 @@
-
-
 # Properties
 
 Access stored and computed values that are part of an instance or type.
@@ -89,7 +87,6 @@ rangeOfThreeItems.firstValue = 6
 // the range now represents integer values 6, 7, and 8
 ```
 
-
 <!--
   - test: `storedProperties, storedProperties-err`
   
@@ -124,7 +121,6 @@ let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
 rangeOfFourItems.firstValue = 6
 // this will report an error, even though firstValue is a variable property
 ```
-
 
 <!--
   - test: `storedProperties-err`
@@ -229,7 +225,6 @@ manager.data.append("Some more data")
 // the DataImporter instance for the importer property hasn't yet been created
 ```
 
-
 <!--
   - test: `lazyProperties`
   
@@ -289,7 +284,6 @@ print(manager.importer.filename)
 // the DataImporter instance for the importer property has now been created
 // Prints "data.txt"
 ```
-
 
 <!--
   - test: `lazyProperties`
@@ -370,7 +364,6 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 // Prints "square.origin is now at (10.0, 10.0)"
 ```
 
-
 <!--
   - test: `computedProperties`
   
@@ -444,7 +437,6 @@ and moves the square to its new position.
 
 ![](computedProperties)
 
-
 ### Shorthand Setter Declaration
 
 If a computed property's setter doesn't define a name for the new value to be set,
@@ -469,7 +461,6 @@ struct AlternativeRect {
     }
 }
 ```
-
 
 <!--
   - test: `computedProperties`
@@ -521,7 +512,6 @@ struct CompactRect {
     }
 }
 ```
-
 
 <!--
   - test: `computedProperties`
@@ -593,7 +583,6 @@ let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
 print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 // Prints "the volume of fourByFiveByTwo is 40.0"
 ```
-
 
 <!--
   - test: `computedProperties`
@@ -815,7 +804,6 @@ stepCounter.totalSteps = 896
 // Added 536 steps
 ```
 
-
 <!--
   - test: `storedProperties`
   
@@ -927,7 +915,6 @@ struct TwelveOrLess {
 }
 ```
 
-
 <!--
   - test: `small-number-wrapper, property-wrapper-expansion`
   
@@ -1030,7 +1017,6 @@ print(rectangle.height)
 // Prints "12"
 ```
 
-
 <!--
   - test: `small-number-wrapper`
   
@@ -1090,7 +1076,6 @@ struct SmallRectangle {
     }
 }
 ```
-
 
 <!--
   - test: `property-wrapper-expansion`
@@ -1158,7 +1143,6 @@ struct SmallNumber {
 }
 ```
 
-
 <!--
   - test: `property-wrapper-init, property-wrapper-mixed-init`
   
@@ -1220,7 +1204,6 @@ var zeroRectangle = ZeroRectangle()
 print(zeroRectangle.height, zeroRectangle.width)
 // Prints "0 0"
 ```
-
 
 <!--
   - test: `property-wrapper-init`
@@ -1284,7 +1267,6 @@ var unitRectangle = UnitRectangle()
 print(unitRectangle.height, unitRectangle.width)
 // Prints "1 1"
 ```
-
 
 <!--
   - test: `property-wrapper-init`
@@ -1350,7 +1332,6 @@ narrowRectangle.width = 100
 print(narrowRectangle.height, narrowRectangle.width)
 // Prints "5 4"
 ```
-
 
 <!--
   - test: `property-wrapper-init`
@@ -1430,7 +1411,6 @@ mixedRectangle.height = 20
 print(mixedRectangle.height)
 // Prints "12"
 ```
-
 
 <!--
   - test: `property-wrapper-mixed-init`
@@ -1513,7 +1493,6 @@ someStructure.someNumber = 55
 print(someStructure.$someNumber)
 // Prints "true"
 ```
-
 
 <!--
   - test: `small-number-wrapper-projection`
@@ -1603,7 +1582,6 @@ struct SizedRectangle {
     }
 }
 ```
-
 
 <!--
   - test: `small-number-wrapper-projection`
@@ -1721,7 +1699,6 @@ func someFunction() {
 }
 ```
 
-
 <!--
   - test: `property-wrapper-init`
   
@@ -1833,7 +1810,6 @@ class SomeClass {
 }
 ```
 
-
 <!--
   - test: `typePropertySyntax`
   
@@ -1910,7 +1886,6 @@ print(SomeClass.computedTypeProperty)
 // Prints "27"
 ```
 
-
 <!--
   - test: `typePropertySyntax`
   
@@ -1940,7 +1915,6 @@ and the right channel has a current level of `7`:
 
 ![](staticPropertiesVUMeter)
 
-
 The audio channels described above are represented by
 instances of the `AudioChannel` structure:
 
@@ -1962,7 +1936,6 @@ struct AudioChannel {
     }
 }
 ```
-
 
 <!--
   - test: `staticProperties`
@@ -2027,7 +2000,6 @@ var leftChannel = AudioChannel()
 var rightChannel = AudioChannel()
 ```
 
-
 <!--
   - test: `staticProperties`
   
@@ -2048,7 +2020,6 @@ print(leftChannel.currentLevel)
 print(AudioChannel.maxInputLevelForAllChannels)
 // Prints "7"
 ```
-
 
 <!--
   - test: `staticProperties`
@@ -2075,7 +2046,6 @@ print(AudioChannel.maxInputLevelForAllChannels)
 // Prints "10"
 ```
 
-
 <!--
   - test: `staticProperties`
   
@@ -2087,7 +2057,6 @@ print(AudioChannel.maxInputLevelForAllChannels)
   <- 10
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

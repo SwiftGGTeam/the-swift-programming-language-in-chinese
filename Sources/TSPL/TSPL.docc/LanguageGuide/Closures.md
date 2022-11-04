@@ -1,5 +1,3 @@
-
-
 # Closures
 
 Group code that executes together, without creating a named function.
@@ -72,7 +70,6 @@ Here's the initial array to be sorted:
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 ```
 
-
 <!--
   - test: `closureSyntax`
   
@@ -102,7 +99,6 @@ func backward(_ s1: String, _ s2: String) -> Bool {
 var reversedNames = names.sorted(by: backward)
 // reversedNames is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 ```
-
 
 <!--
   - test: `closureSyntax`
@@ -142,7 +138,6 @@ Closure expression syntax has the following general form:
 }
 ```
 
-
 The *parameters* in closure expression syntax
 can be in-out parameters,
 but they can't have a default value.
@@ -157,7 +152,6 @@ reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
 ```
-
 
 <!--
   - test: `closureSyntax`
@@ -189,7 +183,6 @@ it can even be written on a single line:
 reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
 ```
 
-
 <!--
   - test: `closureSyntax`
   
@@ -219,7 +212,6 @@ can also be omitted:
 ```swift
 reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
 ```
-
 
 <!--
   - test: `closureSyntax`
@@ -252,7 +244,6 @@ as in this version of the previous example:
 ```swift
 reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
 ```
-
 
 <!--
   - test: `closureSyntax`
@@ -287,7 +278,6 @@ because the closure expression is made up entirely of its body:
 ```swift
 reversedNames = names.sorted(by: { $0 > $1 } )
 ```
-
 
 <!--
   - test: `closureSyntax`
@@ -334,7 +324,6 @@ and Swift will infer that you want to use its string-specific implementation:
 reversedNames = names.sorted(by: >)
 ```
 
-
 <!--
   - test: `closureSyntax`
   
@@ -377,7 +366,6 @@ someFunctionThatTakesAClosure() {
 }
 ```
 
-
 <!--
   - test: `closureSyntax`
   
@@ -407,7 +395,6 @@ can be written outside of the `sorted(by:)` method's parentheses as a trailing c
 reversedNames = names.sorted() { $0 > $1 }
 ```
 
-
 <!--
   - test: `closureSyntax`
   
@@ -425,7 +412,6 @@ after the function or method's name when you call the function:
 ```swift
 reversedNames = names.sorted { $0 > $1 }
 ```
-
 
 <!--
   - test: `closureSyntax`
@@ -463,7 +449,6 @@ let digitNames = [
 let numbers = [16, 58, 510]
 ```
 
-
 <!--
   - test: `arrayMap`
   
@@ -496,7 +481,6 @@ let strings = numbers.map { (number) -> String in
 // strings is inferred to be of type [String]
 // its value is ["OneSix", "FiveEight", "FiveOneZero"]
 ```
-
 
 <!--
   - test: `arrayMap`
@@ -578,7 +562,6 @@ func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: 
 }
 ```
 
-
 <!--
   - test: `multiple-trailing-closures`
   
@@ -612,7 +595,6 @@ loadPicture(from: someServer) { picture in
     print("Couldn't download the next picture.")
 }
 ```
-
 
 <!--
   - test: `multiple-trailing-closures`
@@ -679,7 +661,6 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
 }
 ```
 
-
 <!--
   - test: `closures`
   
@@ -725,7 +706,6 @@ func incrementer() -> Int {
 }
 ```
 
-
 <!--
   - test: `closuresPullout`
   
@@ -760,7 +740,6 @@ Here's an example of `makeIncrementer` in action:
 let incrementByTen = makeIncrementer(forIncrement: 10)
 ```
 
-
 <!--
   - test: `closures`
   
@@ -782,7 +761,6 @@ incrementByTen()
 incrementByTen()
 // returns a value of 30
 ```
-
 
 <!--
   - test: `closures`
@@ -817,7 +795,6 @@ incrementBySeven()
 // returns a value of 7
 ```
 
-
 <!--
   - test: `closures`
   
@@ -838,7 +815,6 @@ and doesn't affect the variable captured by `incrementBySeven`:
 incrementByTen()
 // returns a value of 40
 ```
-
 
 <!--
   - test: `closures`
@@ -883,7 +859,6 @@ alsoIncrementByTen()
 incrementByTen()
 // returns a value of 60
 ```
-
 
 <!--
   - test: `closures`
@@ -932,7 +907,6 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
     completionHandlers.append(completionHandler)
 }
 ```
-
 
 <!--
   - test: `noescape-closure-as-argument, implicit-self-struct`
@@ -994,7 +968,6 @@ print(instance.x)
 // Prints "100"
 ```
 
-
 <!--
   - test: `noescape-closure-as-argument`
   
@@ -1036,7 +1009,6 @@ class SomeOtherClass {
 }
 ```
 
-
 <!--
   - test: `noescape-closure-as-argument`
   
@@ -1076,7 +1048,6 @@ struct SomeStruct {
     }
 }
 ```
-
 
 <!--
   - test: `struct-capture-mutable-self`
@@ -1192,7 +1163,6 @@ print(customersInLine.count)
 // Prints "4"
 ```
 
-
 <!--
   - test: `autoclosures`
   
@@ -1248,7 +1218,6 @@ serve(customer: { customersInLine.remove(at: 0) } )
 // Prints "Now serving Alex!"
 ```
 
-
 <!--
   - test: `autoclosures-function`
   
@@ -1284,7 +1253,6 @@ func serve(customer customerProvider: @autoclosure () -> String) {
 serve(customer: customersInLine.remove(at: 0))
 // Prints "Now serving Ewa!"
 ```
-
 
 <!--
   - test: `autoclosures-function-with-autoclosure`
@@ -1327,7 +1295,6 @@ for customerProvider in customerProviders {
 // Prints "Now serving Daniella!"
 ```
 
-
 <!--
   - test: `autoclosures-function-with-escape`
   
@@ -1362,7 +1329,6 @@ which means the closures in the array can be executed after the function returns
 As a result,
 the value of the `customerProvider` argument
 must be allowed to escape the function's scope.
-
 
 <!--
 This source file is part of the Swift.org open source project

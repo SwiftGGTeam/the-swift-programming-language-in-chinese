@@ -1,5 +1,3 @@
-
-
 # About the Language Reference
 
 Read the notation that the formal grammar uses.
