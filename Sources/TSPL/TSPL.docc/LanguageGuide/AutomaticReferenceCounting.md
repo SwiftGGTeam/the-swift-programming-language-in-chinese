@@ -75,7 +75,7 @@ class Person {
 ```
 
 
-@Comment {
+<!--
   - test: `howARCWorks`
   
   ```swifttest
@@ -90,7 +90,7 @@ class Person {
         }
      }
   ```
-}
+-->
 
 The `Person` class has an initializer that sets the instance's `name` property
 and prints a message to indicate that initialization is underway.
@@ -111,7 +111,7 @@ var reference3: Person?
 ```
 
 
-@Comment {
+<!--
   - test: `howARCWorks`
   
   ```swifttest
@@ -119,7 +119,7 @@ var reference3: Person?
   -> var reference2: Person?
   -> var reference3: Person?
   ```
-}
+-->
 
 You can now create a new `Person` instance
 and assign it to one of these three variables:
@@ -130,14 +130,14 @@ reference1 = Person(name: "John Appleseed")
 ```
 
 
-@Comment {
+<!--
   - test: `howARCWorks`
   
   ```swifttest
   -> reference1 = Person(name: "John Appleseed")
   <- John Appleseed is being initialized
   ```
-}
+-->
 
 Note that the message `"John Appleseed is being initialized"` is printed
 at the point that you call the `Person` class's initializer.
@@ -157,14 +157,14 @@ reference3 = reference1
 ```
 
 
-@Comment {
+<!--
   - test: `howARCWorks`
   
   ```swifttest
   -> reference2 = reference1
   -> reference3 = reference1
   ```
-}
+-->
 
 There are now *three* strong references to this single `Person` instance.
 
@@ -179,14 +179,14 @@ reference2 = nil
 ```
 
 
-@Comment {
+<!--
   - test: `howARCWorks`
   
   ```swifttest
   -> reference1 = nil
   -> reference2 = nil
   ```
-}
+-->
 
 ARC doesn't deallocate the `Person` instance until
 the third and final strong reference is broken,
@@ -198,14 +198,14 @@ reference3 = nil
 ```
 
 
-@Comment {
+<!--
   - test: `howARCWorks`
   
   ```swifttest
   -> reference3 = nil
   <- John Appleseed is being deinitialized
   ```
-}
+-->
 
 ## Strong Reference Cycles Between Class Instances
 
@@ -248,7 +248,7 @@ class Apartment {
 ```
 
 
-@Comment {
+<!--
   - test: `referenceCycles`
   
   ```swifttest
@@ -266,7 +266,7 @@ class Apartment {
         deinit { print("Apartment \(unit) is being deinitialized") }
      }
   ```
-}
+-->
 
 Every `Person` instance has a `name` property of type `String`
 and an optional `apartment` property that's initially `nil`.
@@ -292,14 +292,14 @@ var unit4A: Apartment?
 ```
 
 
-@Comment {
+<!--
   - test: `referenceCycles`
   
   ```swifttest
   -> var john: Person?
   -> var unit4A: Apartment?
   ```
-}
+-->
 
 You can now create a specific `Person` instance and `Apartment` instance
 and assign these new instances to the `john` and `unit4A` variables:
@@ -310,14 +310,14 @@ unit4A = Apartment(unit: "4A")
 ```
 
 
-@Comment {
+<!--
   - test: `referenceCycles`
   
   ```swifttest
   -> john = Person(name: "John Appleseed")
   -> unit4A = Apartment(unit: "4A")
   ```
-}
+-->
 
 Here's how the strong references look after creating and assigning these two instances.
 The `john` variable now has a strong reference to the new `Person` instance,
@@ -338,14 +338,14 @@ unit4A!.tenant = john
 ```
 
 
-@Comment {
+<!--
   - test: `referenceCycles`
   
   ```swifttest
   -> john!.apartment = unit4A
   -> unit4A!.tenant = john
   ```
-}
+-->
 
 Here's how the strong references look after you link the two instances together:
 
@@ -367,14 +367,14 @@ unit4A = nil
 ```
 
 
-@Comment {
+<!--
   - test: `referenceCycles`
   
   ```swifttest
   -> john = nil
   -> unit4A = nil
   ```
-}
+-->
 
 Note that neither deinitializer was called
 when you set these two variables to `nil`.
@@ -409,11 +409,11 @@ and so a weak reference is an appropriate way to break the reference cycle in th
 In contrast, use an unowned reference when the other instance
 has the same lifetime or a longer lifetime.
 
-@Comment {
+<!--
   QUESTION: how do I answer the question
   "which of the two properties in the reference cycle
   should be marked as weak or unowned?"
-}
+-->
 
 ### Weak References
 
@@ -441,7 +441,7 @@ a reference to an invalid instance that no longer exists.
 > Note: Property observers aren't called
 > when ARC sets a weak reference to `nil`.
 
-@Comment {
+<!--
   - test: `weak-reference-doesnt-trigger-didset`
   
   ```swifttest
@@ -458,7 +458,7 @@ a reference to an invalid instance that no longer exists.
   -> } // ARC deallocates c2; didSet doesn't fire.
   -> assert(c1.w == nil)
   ```
-}
+-->
 
 The example below is identical to the `Person` and `Apartment` example from above,
 with one important difference.
@@ -482,7 +482,7 @@ class Apartment {
 ```
 
 
-@Comment {
+<!--
   - test: `weakReferences`
   
   ```swifttest
@@ -500,7 +500,7 @@ class Apartment {
         deinit { print("Apartment \(unit) is being deinitialized") }
      }
   ```
-}
+-->
 
 The strong references from the two variables (`john` and `unit4A`)
 and the links between the two instances are created as before:
@@ -517,7 +517,7 @@ unit4A!.tenant = john
 ```
 
 
-@Comment {
+<!--
   - test: `weakReferences`
   
   ```swifttest
@@ -530,7 +530,7 @@ unit4A!.tenant = john
   -> john!.apartment = unit4A
   -> unit4A!.tenant = john
   ```
-}
+-->
 
 Here's how the references look now that you've linked the two instances together:
 
@@ -549,14 +549,14 @@ john = nil
 ```
 
 
-@Comment {
+<!--
   - test: `weakReferences`
   
   ```swifttest
   -> john = nil
   <- John Appleseed is being deinitialized
   ```
-}
+-->
 
 Because there are no more strong references to the `Person` instance,
 it's deallocated
@@ -576,14 +576,14 @@ unit4A = nil
 ```
 
 
-@Comment {
+<!--
   - test: `weakReferences`
   
   ```swifttest
   -> unit4A = nil
   <- Apartment 4A is being deinitialized
   ```
-}
+-->
 
 Because there are no more strong references to the `Apartment` instance,
 it too is deallocated:
@@ -616,26 +616,26 @@ As a result,
 marking a value as unowned doesn't make it optional,
 and ARC never sets an unowned reference's value to `nil`.
 
-@Comment {
+<!--
   Everything that unowned can do, weak can do slower and more awkwardly
   (but still correctly).
   Unowned is interesting because it's faster and easier (no optionals) ---
   in the cases where it's actually correct for your data.
-}
+-->
 
 > Important: Use an unowned reference only when you are sure that
 > the reference *always* refers to an instance that hasn't been deallocated.If you try to access the value of an unowned reference
 > after that instance has been deallocated,
 > you'll get a runtime error.
 
-@Comment {
+<!--
   One way to satisfy that requirement is to
   always access objects that have unmanaged properties through their owner
   instead of keeping a reference to them directly,
   because those direct references could outlive the owner.
   However... this strategy really only works when the unowned reference
   is a backpointer from an object up to its owner.
-}
+-->
 
 The following example defines two classes, `Customer` and `CreditCard`,
 which model a bank customer and a possible credit card for that customer.
@@ -683,7 +683,7 @@ class CreditCard {
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferences`
   
   ```swifttest
@@ -706,7 +706,7 @@ class CreditCard {
         deinit { print("Card #\(number) is being deinitialized") }
      }
   ```
-}
+-->
 
 > Note: The `number` property of the `CreditCard` class is defined with
 > a type of `UInt64` rather than `Int`,
@@ -722,13 +722,13 @@ var john: Customer?
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferences`
   
   ```swifttest
   -> var john: Customer?
   ```
-}
+-->
 
 You can now create a `Customer` instance,
 and use it to initialize and assign a new `CreditCard` instance
@@ -740,14 +740,14 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferences`
   
   ```swifttest
   -> john = Customer(name: "John Appleseed")
   -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
   ```
-}
+-->
 
 Here's how the references look, now that you've linked the two instances:
 
@@ -777,7 +777,7 @@ john = nil
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferences`
   
   ```swifttest
@@ -785,7 +785,7 @@ john = nil
   <- John Appleseed is being deinitialized
   <- Card #1234567890123456 is being deinitialized
   ```
-}
+-->
 
 The final code snippet above shows that
 the deinitializers for the `Customer` instance and `CreditCard` instance
@@ -804,10 +804,10 @@ after the `john` variable is set to `nil`.
 > where the instance used to be,
 > which is an unsafe operation.
 
-@Comment {
+<!--
   <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
   Try expanding the example above so each customer has an array of credit cards.
-}
+-->
 
 ### Unowned Optional References
 
@@ -845,7 +845,7 @@ class Course {
 ```
 
 
-@Comment {
+<!--
   - test: `unowned-optional-references`
   
   ```swifttest
@@ -869,7 +869,7 @@ class Course {
          }
      }
   ```
-}
+-->
 
 `Department` maintains a strong reference
 to each course that the department offers.
@@ -899,7 +899,7 @@ department.courses = [intro, intermediate, advanced]
 ```
 
 
-@Comment {
+<!--
   - test: `unowned-optional-references`
   
   ```swifttest
@@ -913,7 +913,7 @@ department.courses = [intro, intermediate, advanced]
   -> intermediate.nextCourse = advanced
   -> department.courses = [intro, intermediate, advanced]
   ```
-}
+-->
 
 The code above creates a department and its three courses.
 The intro and intermediate courses both have a suggested next course
@@ -945,7 +945,7 @@ that other courses might have.
 > doesn't use reference counting,
 > so you don't need to maintain a strong reference to the optional.
 
-@Comment {
+<!--
   - test: `unowned-can-be-optional`
   
   ```swifttest
@@ -971,7 +971,7 @@ that other courses might have.
   >> print(d.b?.x as Any)
   << nil
   ```
-}
+-->
 
 ### Unowned References and Implicitly Unwrapped Optional Properties
 
@@ -1029,7 +1029,7 @@ class City {
 ```
 
 
-@Comment {
+<!--
   - test: `implicitlyUnwrappedOptionals`
   
   ```swifttest
@@ -1051,7 +1051,7 @@ class City {
         }
      }
   ```
-}
+-->
 
 To set up the interdependency between the two classes,
 the initializer for `City` takes a `Country` instance,
@@ -1092,7 +1092,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 ```
 
 
-@Comment {
+<!--
   - test: `implicitlyUnwrappedOptionals`
   
   ```swifttest
@@ -1100,7 +1100,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
   -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
   <- Canada's capital city is called Ottawa
   ```
-}
+-->
 
 In the example above, the use of an implicitly unwrapped optional
 means that all of the two-phase class initializer requirements are satisfied.
@@ -1169,7 +1169,7 @@ class HTMLElement {
 ```
 
 
-@Comment {
+<!--
   - test: `strongReferenceCyclesForClosures`
   
   ```swifttest
@@ -1197,7 +1197,7 @@ class HTMLElement {
   ---
      }
   ```
-}
+-->
 
 The `HTMLElement` class defines a `name` property,
 which indicates the name of the element,
@@ -1242,7 +1242,7 @@ print(heading.asHTML())
 ```
 
 
-@Comment {
+<!--
   - test: `strongReferenceCyclesForClosures`
   
   ```swifttest
@@ -1254,7 +1254,7 @@ print(heading.asHTML())
   -> print(heading.asHTML())
   <- <h1>some default text</h1>
   ```
-}
+-->
 
 > Note: The `asHTML` property is declared as a lazy property,
 > because it's only needed if and when the element actually needs to be rendered
@@ -1279,7 +1279,7 @@ print(paragraph!.asHTML())
 ```
 
 
-@Comment {
+<!--
   - test: `strongReferenceCyclesForClosures`
   
   ```swifttest
@@ -1287,7 +1287,7 @@ print(paragraph!.asHTML())
   -> print(paragraph!.asHTML())
   <- <p>hello, world</p>
   ```
-}
+-->
 
 > Note: The `paragraph` variable above is defined as an *optional* `HTMLElement`,
 > so that it can be set to `nil` below to demonstrate
@@ -1323,13 +1323,13 @@ paragraph = nil
 ```
 
 
-@Comment {
+<!--
   - test: `strongReferenceCyclesForClosures`
   
   ```swifttest
   -> paragraph = nil
   ```
-}
+-->
 
 Note that the message in the `HTMLElement` deinitializer isn't printed,
 which shows that the `HTMLElement` instance isn't deallocated.
@@ -1370,7 +1370,7 @@ lazy var someClosure = {
 ```
 
 
-@Comment {
+<!--
   - test: `strongReferenceCyclesForClosures`
   
   ```swifttest
@@ -1384,7 +1384,7 @@ lazy var someClosure = {
      }
   >> }
   ```
-}
+-->
 
 If a closure doesn't specify a parameter list or return type
 because they can be inferred from context,
@@ -1399,7 +1399,7 @@ lazy var someClosure = {
 ```
 
 
-@Comment {
+<!--
   - test: `strongReferenceCyclesForClosures`
   
   ```swifttest
@@ -1412,7 +1412,7 @@ lazy var someClosure = {
      }
   >> }
   ```
-}
+-->
 
 ### Weak and Unowned References
 
@@ -1426,9 +1426,9 @@ Weak references are always of an optional type,
 and automatically become `nil` when the instance they reference is deallocated.
 This enables you to check for their existence within the closure's body.
 
-@Comment {
+<!--
   <rdar://problem/28812110> Reframe discussion of weak/unowned closure capture in terms of object graph
-}
+-->
 
 > Note: If the captured reference will never become `nil`,
 > it should always be captured as an unowned reference,
@@ -1467,7 +1467,7 @@ class HTMLElement {
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferencesForClosures`
   
   ```swifttest
@@ -1496,7 +1496,7 @@ class HTMLElement {
   ---
      }
   ```
-}
+-->
 
 This implementation of `HTMLElement` is identical to the previous implementation,
 apart from the addition of a capture list within the `asHTML` closure.
@@ -1512,7 +1512,7 @@ print(paragraph!.asHTML())
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferencesForClosures`
   
   ```swifttest
@@ -1520,7 +1520,7 @@ print(paragraph!.asHTML())
   -> print(paragraph!.asHTML())
   <- <p>hello, world</p>
   ```
-}
+-->
 
 Here's how the references look with the capture list in place:
 
@@ -1539,20 +1539,20 @@ paragraph = nil
 ```
 
 
-@Comment {
+<!--
   - test: `unownedReferencesForClosures`
   
   ```swifttest
   -> paragraph = nil
   <- p is being deinitialized
   ```
-}
+-->
 
 For more information about capture lists,
 see <doc:Expressions#Capture-Lists>.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1560,4 +1560,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

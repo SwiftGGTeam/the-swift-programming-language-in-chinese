@@ -10,7 +10,7 @@ whereas computed properties calculate (rather than store) a value.
 Computed properties are provided by classes, structures, and enumerations.
 Stored properties are provided only by classes and structures.
 
-@Comment {
+<!--
   - test: `enumerationsCantProvideStoredProperties`
   
   ```swifttest
@@ -19,7 +19,7 @@ Stored properties are provided only by classes and structures.
   !! enum E { case a, b; var x = 0 }
   !! ^
   ```
-}
+-->
 
 Stored and computed properties are usually associated with instances of a particular type.
 However, properties can also be associated with the type itself.
@@ -30,7 +30,7 @@ which you can respond to with custom actions.
 Property observers can be added to stored properties you define yourself,
 and also to properties that a subclass inherits from its superclass.
 
-@Comment {
+<!--
   - test: `propertyObserverIntroClaims`
   
   ```swifttest
@@ -55,7 +55,7 @@ and also to properties that a subclass inherits from its superclass.
   <- C didSet x from 0
   <- D didSet x from 0
   ```
-}
+-->
 
 You can also use a property wrapper
 to reuse code in the getter and setter of multiple properties.
@@ -90,7 +90,7 @@ rangeOfThreeItems.firstValue = 6
 ```
 
 
-@Comment {
+<!--
   - test: `storedProperties, storedProperties-err`
   
   ```swifttest
@@ -103,7 +103,7 @@ rangeOfThreeItems.firstValue = 6
   -> rangeOfThreeItems.firstValue = 6
   // the range now represents integer values 6, 7, and 8
   ```
-}
+-->
 
 Instances of `FixedLengthRange` have
 a variable stored property called `firstValue`
@@ -126,7 +126,7 @@ rangeOfFourItems.firstValue = 6
 ```
 
 
-@Comment {
+<!--
   - test: `storedProperties-err`
   
   ```swifttest
@@ -142,7 +142,7 @@ rangeOfFourItems.firstValue = 6
   !! var
   // this will report an error, even though firstValue is a variable property
   ```
-}
+-->
 
 Because `rangeOfFourItems` is declared as a constant (with the `let` keyword),
 it isn't possible to change its `firstValue` property,
@@ -156,16 +156,16 @@ The same isn't true for classes, which are *reference types*.
 If you assign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
-@Comment {
+<!--
   TODO: this explanation could still do to be improved.
-}
+-->
 
 ### Lazy Stored Properties
 
-@Comment {
+<!--
   QUESTION: is this section too complex for this point in the book?
   Should it go in the Default Property Values section of Initialization instead?
-}
+-->
 
 A *lazy stored property* is a property whose initial value isn't calculated
 until the first time it's used.
@@ -178,7 +178,7 @@ the `lazy` modifier before its declaration.
 > Constant properties must always have a value *before* initialization completes,
 > and therefore can't be declared as lazy.
 
-@Comment {
+<!--
   - test: `lazyPropertiesMustAlwaysBeVariables`
   
   ```swifttest
@@ -188,7 +188,7 @@ the `lazy` modifier before its declaration.
   !! ^~~~~
   !!-
   ```
-}
+-->
 
 Lazy properties are useful when the initial value for a property
 is dependent on outside factors whose values aren't known
@@ -197,10 +197,10 @@ Lazy properties are also useful when the initial value for a property requires
 complex or computationally expensive setup that shouldn't be performed
 unless or until it's needed.
 
-@Comment {
+<!--
   TODO: add a note that if you assign a value to a lazy property before first access,
   the initial value you give in your code will be ignored.
-}
+-->
 
 The example below uses a lazy stored property to avoid
 unnecessary initialization of a complex class.
@@ -230,7 +230,7 @@ manager.data.append("Some more data")
 ```
 
 
-@Comment {
+<!--
   - test: `lazyProperties`
   
   ```swifttest
@@ -257,7 +257,7 @@ manager.data.append("Some more data")
   -> manager.data.append("Some more data")
   // the DataImporter instance for the importer property hasn't yet been created
   ```
-}
+-->
 
 The `DataManager` class has a stored property called `data`,
 which is initialized with a new, empty array of `String` values.
@@ -291,7 +291,7 @@ print(manager.importer.filename)
 ```
 
 
-@Comment {
+<!--
   - test: `lazyProperties`
   
   ```swifttest
@@ -299,17 +299,16 @@ print(manager.importer.filename)
   </ the DataImporter instance for the importer property has now been created
   <- data.txt
   ```
-}
+-->
 
 > Note: If a property marked with the `lazy` modifier
 > is accessed by multiple threads simultaneously
 > and the property hasn't yet been initialized,
 > there's no guarantee that the property will be initialized only once.
 
-@Comment {
-  6/19/14, 10:54 PM [Contributor 7746]:
-  @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
-}
+<!--
+  6/19/14, 10:54 PM [Contributor 7746]: @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
+-->
 
 ### Stored Properties and Instance Variables
 
@@ -328,9 +327,9 @@ All information about the property ---
 including its name, type, and memory management characteristics ---
 is defined in a single location as part of the type's definition.
 
-@Comment {
+<!--
   TODO: what happens if one property of a constant structure is an object reference?
-}
+-->
 
 ## Computed Properties
 
@@ -372,7 +371,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 ```
 
 
-@Comment {
+<!--
   - test: `computedProperties`
   
   ```swifttest
@@ -406,7 +405,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
   -> print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
   <- square.origin is now at (10.0, 10.0)
   ```
-}
+-->
 
 This example defines three structures for working with geometric shapes:
 
@@ -439,9 +438,9 @@ Setting the `center` property calls the setter for `center`,
 which modifies the `x` and `y` values of the stored `origin` property,
 and moves the square to its new position.
 
-@Comment {
+<!--
   iBooks Store screenshot begins here.
-}
+-->
 
 ![](computedProperties)
 
@@ -472,7 +471,7 @@ struct AlternativeRect {
 ```
 
 
-@Comment {
+<!--
   - test: `computedProperties`
   
   ```swifttest
@@ -492,11 +491,11 @@ struct AlternativeRect {
         }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   iBooks Store screenshot ends here.
-}
+-->
 
 ### Shorthand Getter Declaration
 
@@ -524,7 +523,7 @@ struct CompactRect {
 ```
 
 
-@Comment {
+<!--
   - test: `computedProperties`
   
   ```swifttest
@@ -543,7 +542,7 @@ struct CompactRect {
         }
      }
   ```
-}
+-->
 
 Omitting the `return` from a getter
 follows the same rules as omitting `return` from a function,
@@ -561,7 +560,7 @@ and can be accessed through dot syntax, but can't be set to a different value.
 > to indicate that their values can't be changed once they're set
 > as part of instance initialization.
 
-@Comment {
+<!--
   - test: `readOnlyComputedPropertiesMustBeVariables`
   
   ```swifttest
@@ -578,7 +577,7 @@ and can be accessed through dot syntax, but can't be set to a different value.
   !! ~~~        ^
   !! var
   ```
-}
+-->
 
 You can simplify the declaration of a read-only computed property
 by removing the `get` keyword and its braces:
@@ -596,7 +595,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 ```
 
 
-@Comment {
+<!--
   - test: `computedProperties`
   
   ```swifttest
@@ -610,7 +609,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
   -> print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
   <- the volume of fourByFiveByTwo is 40.0
   ```
-}
+-->
 
 This example defines a new structure called `Cuboid`,
 which represents a 3D rectangular box with `width`, `height`, and `depth` properties.
@@ -622,20 +621,20 @@ should be used for a particular `volume` value.
 Nonetheless, it's useful for a `Cuboid` to provide a read-only computed property
 to enable external users to discover its current calculated volume.
 
-@Comment {
+<!--
   NOTE: getters and setters are also allowed for constants and variables
   that aren't associated with a particular class or struct.
   Where should this be mentioned?
-}
+-->
 
-@Comment {
+<!--
   TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
-}
+-->
 
-@Comment {
+<!--
   TODO: Add an example of a computed property for an enumeration
   (now that the Enumerations chapter no longer has an example of this itself).
-}
+-->
 
 ## Property Observers
 
@@ -643,7 +642,7 @@ Property observers observe and respond to changes in a property's value.
 Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
-@Comment {
+<!--
   - test: `observersAreCalledEvenIfNewValueIsTheSameAsOldValue`
   
   ```swifttest
@@ -656,7 +655,7 @@ even if the new value is the same as the property's current value.
   <- willSet
   <- didSet
   ```
-}
+-->
 
 You can add property observers in the following places:
 
@@ -671,7 +670,7 @@ use the property's setter to observe and respond to value changes,
 instead of trying to create an observer.
 Overriding properties is described in <doc:Inheritance#Overriding>.
 
-@Comment {
+<!--
   - test: `lazyPropertiesCanHaveObservers`
   
   ```swifttest
@@ -690,9 +689,9 @@ Overriding properties is described in <doc:Inheritance#Overriding>.
   >> print(c.x)
   << 12
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `storedAndComputedInheritedPropertiesCanBeObserved`
   
   ```swifttest
@@ -718,7 +717,7 @@ Overriding properties is described in <doc:Inheritance#Overriding>.
   <- D willSet y to 42
   <- D didSet y from 42
   ```
-}
+-->
 
 You have the option to define either or both of these observers on a property:
 
@@ -737,7 +736,7 @@ You can name the parameter or use the default parameter name of `oldValue`.
 If you assign a value to a property within its own `didSet` observer,
 the new value that you assign replaces the one that was just set.
 
-@Comment {
+<!--
   - test: `assigningANewValueInADidSetReplacesTheNewValue`
   
   ```swifttest
@@ -747,7 +746,7 @@ the new value that you assign replaces the one that was just set.
   -> print(c.x)
   <- -273
   ```
-}
+-->
 
 > Note: The `willSet` and `didSet` observers of superclass properties
 > are called when a property is set in a subclass initializer,
@@ -757,7 +756,7 @@ the new value that you assign replaces the one that was just set.
 > see <doc:Initialization#Initializer-Delegation-for-Value-Types>
 > and <doc:Initialization#Initializer-Delegation-for-Class-Types>.
 
-@Comment {
+<!--
   - test: `observersDuringInitialization`
   
   ```swifttest
@@ -783,7 +782,7 @@ the new value that you assign replaces the one that was just set.
   <- willSet x
   <- didSet x
   ```
-}
+-->
 
 Here's an example of `willSet` and `didSet` in action.
 The example below defines a new class called `StepCounter`,
@@ -817,7 +816,7 @@ stepCounter.totalSteps = 896
 ```
 
 
-@Comment {
+<!--
   - test: `storedProperties`
   
   ```swifttest
@@ -844,7 +843,7 @@ stepCounter.totalSteps = 896
   </ About to set totalSteps to 896
   </ Added 536 steps
   ```
-}
+-->
 
 The `StepCounter` class declares a `totalSteps` property of type `Int`.
 This is a stored property with `willSet` and `didSet` observers.
@@ -872,7 +871,7 @@ and the default name of `oldValue` is used instead.
 > For a detailed discussion of the behavior of in-out parameters,
 > see <doc:Declarations#In-Out-Parameters>.
 
-@Comment {
+<!--
   - test: `observersCalledAfterInout`
   
   ```swifttest
@@ -886,14 +885,14 @@ and the default name of `oldValue` is used instead.
   << willSet
   << didSet
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: If you add a property observer to a stored property of structure type,
   that property observer is fired whenever any of the subproperties
   of that structure instance are set. This is cool, but nonobvious.
   Provide an example of it here.
-}
+-->
 
 ## Property Wrappers
 
@@ -929,7 +928,7 @@ struct TwelveOrLess {
 ```
 
 
-@Comment {
+<!--
   - test: `small-number-wrapper, property-wrapper-expansion`
   
   ```swifttest
@@ -942,12 +941,12 @@ struct TwelveOrLess {
          }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   No init(wrappedValue:) in this example -- that's in a later example.
   Always initializing the wrapped value is a simpler starting point.
-}
+-->
 
 The setter ensures that new values are less than or equal to 12,
 and the getter returns the stored value.
@@ -961,7 +960,7 @@ and the getter returns the stored value.
 > and can't use `number` directly.
 > For information about `private`, see <doc:AccessControl>.
 
-@Comment {
+<!--
   In this example,
   the number is stored in the wrapper's private ``number`` property,
   but you could write a version of ``EvenNumber``
@@ -974,9 +973,9 @@ and the getter returns the stored value.
   so I'm not highlighting that fact here.
   The order of operations for willSet, set, and didSet is well defined,
   but might be something you have to pay attention to.
-}
+-->
 
-@Comment {
+<!--
   - test: `stored-property-wrappedValue`
   
   ```swifttest
@@ -1003,7 +1002,7 @@ and the getter returns the stored value.
   >> print(s.someNumber)
   << 12
   ```
-}
+-->
 
 You apply a wrapper to a property
 by writing the wrapper's name before the property
@@ -1032,14 +1031,14 @@ print(rectangle.height)
 ```
 
 
-@Comment {
+<!--
   - test: `small-number-wrapper`
   
   ```swifttest
   -> struct SmallRectangle {
-         @TwelveOrLess var height: Int
-         @TwelveOrLess var width: Int
-     }
+  ->     @TwelveOrLess var height: Int
+  ->     @TwelveOrLess var width: Int
+  -> }
   ---
   -> var rectangle = SmallRectangle()
   -> print(rectangle.height)
@@ -1053,7 +1052,7 @@ print(rectangle.height)
   -> print(rectangle.height)
   <- 12
   ```
-}
+-->
 
 The `height` and `width` properties get their initial values
 from the definition of `TwelveOrLess`,
@@ -1093,7 +1092,7 @@ struct SmallRectangle {
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-expansion`
   
   ```swifttest
@@ -1110,7 +1109,7 @@ struct SmallRectangle {
          }
      }
   ```
-}
+-->
 
 The `_height` and `_width` properties
 store an instance of the property wrapper, `TwelveOrLess`.
@@ -1160,7 +1159,7 @@ struct SmallNumber {
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-init, property-wrapper-mixed-init`
   
   ```swifttest
@@ -1188,9 +1187,9 @@ struct SmallNumber {
          }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   The initializers above could be written to use
   init(wrappedValue:maximum:) as the designated initializer,
   with the other two calling it instead of doing initialization.
@@ -1198,7 +1197,7 @@ struct SmallNumber {
   that the risk of bugs isn't significant,
   and the reader hasn't seen init syntax/rules in detail yet
   so it's clearer to make each init stand on its own.
-}
+-->
 
 The definition of `SmallNumber` includes three initializers ---
 `init()`, `init(wrappedValue:)`, and `init(wrappedValue:maximum:)` ---
@@ -1223,22 +1222,22 @@ print(zeroRectangle.height, zeroRectangle.width)
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
   -> struct ZeroRectangle {
-         @SmallNumber var height: Int
-         @SmallNumber var width: Int
-     }
+  ->     @SmallNumber var height: Int
+  ->     @SmallNumber var width: Int
+  -> }
   ---
   -> var zeroRectangle = ZeroRectangle()
   -> print(zeroRectangle.height, zeroRectangle.width)
   <- 0 0
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
@@ -1258,7 +1257,7 @@ print(zeroRectangle.height, zeroRectangle.width)
   -> print(zeroRectangle_equiv.height, zeroRectangle_equiv.width)
   <- 0 0
   ```
-}
+-->
 
 The instances of `SmallNumber` that wrap `height` and `width`
 are created by calling `SmallNumber()`.
@@ -1287,22 +1286,22 @@ print(unitRectangle.height, unitRectangle.width)
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
   -> struct UnitRectangle {
-         @SmallNumber var height: Int = 1
-         @SmallNumber var width: Int = 1
-     }
+  ->     @SmallNumber var height: Int = 1
+  ->     @SmallNumber var width: Int = 1
+  -> }
   ---
   -> var unitRectangle = UnitRectangle()
   -> print(unitRectangle.height, unitRectangle.width)
   <- 1 1
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
@@ -1322,7 +1321,7 @@ print(unitRectangle.height, unitRectangle.width)
   -> print(unitRectangle_equiv.height, unitRectangle_equiv.width)
   <- 1 1
   ```
-}
+-->
 
 When you write `= 1` on a property with a wrapper,
 that's translated into a call to the `init(wrappedValue:)` initializer.
@@ -1353,14 +1352,14 @@ print(narrowRectangle.height, narrowRectangle.width)
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
   -> struct NarrowRectangle {
-         @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
-         @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
-     }
+  ->     @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+  ->     @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+  -> }
   ---
   -> var narrowRectangle = NarrowRectangle()
   -> print(narrowRectangle.height, narrowRectangle.width)
@@ -1371,9 +1370,9 @@ print(narrowRectangle.height, narrowRectangle.width)
   -> print(narrowRectangle.height, narrowRectangle.width)
   <- 5 4
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
@@ -1397,7 +1396,7 @@ print(narrowRectangle.height, narrowRectangle.width)
   -> print(narrowRectangle_equiv.height, narrowRectangle_equiv.width)
   <- 5 4
   ```
-}
+-->
 
 The instance of `SmallNumber` that wraps `height`
 is created by calling `SmallNumber(wrappedValue: 2, maximum: 5)`,
@@ -1433,14 +1432,14 @@ print(mixedRectangle.height)
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-mixed-init`
   
   ```swifttest
   -> struct MixedRectangle {
-         @SmallNumber var height: Int = 1
-         @SmallNumber(maximum: 9) var width: Int = 2
-     }
+  ->     @SmallNumber var height: Int = 1
+  ->     @SmallNumber(maximum: 9) var width: Int = 2
+  -> }
   ---
   -> var mixedRectangle = MixedRectangle()
   -> print(mixedRectangle.height)
@@ -1450,7 +1449,7 @@ print(mixedRectangle.height)
   -> print(mixedRectangle.height)
   <- 12
   ```
-}
+-->
 
 The instance of `SmallNumber` that wraps `height`
 is created by calling `SmallNumber(wrappedValue: 1)`,
@@ -1516,7 +1515,7 @@ print(someStructure.$someNumber)
 ```
 
 
-@Comment {
+<!--
   - test: `small-number-wrapper-projection`
   
   ```swifttest
@@ -1544,8 +1543,8 @@ print(someStructure.$someNumber)
          }
      }
   -> struct SomeStructure {
-         @SmallNumber var someNumber: Int
-     }
+  ->     @SmallNumber var someNumber: Int
+  -> }
   -> var someStructure = SomeStructure()
   ---
   -> someStructure.someNumber = 4
@@ -1556,7 +1555,7 @@ print(someStructure.$someNumber)
   -> print(someStructure.$someNumber)
   <- true
   ```
-}
+-->
 
 Writing `someStructure.$someNumber` accesses the wrapper's projected value.
 After storing a small number like four,
@@ -1606,7 +1605,7 @@ struct SizedRectangle {
 ```
 
 
-@Comment {
+<!--
   - test: `small-number-wrapper-projection`
   
   ```swifttest
@@ -1615,8 +1614,8 @@ struct SizedRectangle {
      }
   ---
   -> struct SizedRectangle {
-         @SmallNumber var height: Int
-         @SmallNumber var width: Int
+  ->     @SmallNumber var height: Int
+  ->     @SmallNumber var width: Int
   ---
          mutating func resize(to size: Size) -> Bool {
              switch size {
@@ -1637,7 +1636,7 @@ struct SizedRectangle {
   >> print(adj, r.height, r.width)
   << true 12 12
   ```
-}
+-->
 
 Because property wrapper syntax is just syntactic sugar
 for a property with a getter and a setter,
@@ -1677,7 +1676,7 @@ in either a global or local scope.
 Computed variables calculate their value, rather than storing it,
 and they're written in the same way as computed properties.
 
-@Comment {
+<!--
   - test: `computedVariables`
   
   ```swifttest
@@ -1687,9 +1686,9 @@ and they're written in the same way as computed properties.
   -> print(a)
   <- 42
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `observersForStoredVariables`
   
   ```swifttest
@@ -1698,7 +1697,7 @@ and they're written in the same way as computed properties.
   <- willSet
   <- didSet
   ```
-}
+-->
 
 > Note: Global constants and variables are always computed lazily,
 > in a similar manner to <doc:Properties#Lazy-Stored-Properties>.
@@ -1723,12 +1722,12 @@ func someFunction() {
 ```
 
 
-@Comment {
+<!--
   - test: `property-wrapper-init`
   
   ```swifttest
   -> func someFunction() {
-         @SmallNumber var myNumber: Int = 0
+  ->     @SmallNumber var myNumber: Int = 0
   ---
          myNumber = 10
          // now myNumber is 10
@@ -1742,28 +1741,28 @@ func someFunction() {
   << 10
   << 12
   ```
-}
+-->
 
 Like when you apply `SmallNumber` to a property,
 setting the value of `myNumber` to 10 is valid.
 Because the property wrapper doesn't allow values higher than 12,
 it sets `myNumber` to 12 instead of 24.
 
-@Comment {
+<!--
   The discussion of local variables with property wrappers
   has to come later, because we need to use init(wrappedValue:)
   to work around <rdar://problem/74616133>.
-}
+-->
 
-@Comment {
+<!--
   TODO: clarify what we mean by "global variables" here.
   According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
   is a local variable in top-level code, not a global variable.
-}
+-->
 
-@Comment {
+<!--
   TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
-}
+-->
 
 ## Type Properties
 
@@ -1835,7 +1834,7 @@ class SomeClass {
 ```
 
 
-@Comment {
+<!--
   - test: `typePropertySyntax`
   
   ```swifttest
@@ -1861,9 +1860,9 @@ class SomeClass {
         }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classComputedTypePropertiesAreOverrideable`
   
   ```swifttest
@@ -1872,9 +1871,9 @@ class SomeClass {
   -> assert(A.cp == "A")
   -> assert(B.cp == "B")
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `staticComputedTypePropertiesAreFinal`
   
   ```swifttest
@@ -1887,7 +1886,7 @@ class SomeClass {
   !! class A { static var cp: String { return "A" } }
   !!                      ^
   ```
-}
+-->
 
 > Note: The computed type property examples above are for read-only computed type properties,
 > but you can also define read-write computed type properties
@@ -1912,7 +1911,7 @@ print(SomeClass.computedTypeProperty)
 ```
 
 
-@Comment {
+<!--
   - test: `typePropertySyntax`
   
   ```swifttest
@@ -1926,7 +1925,7 @@ print(SomeClass.computedTypeProperty)
   -> print(SomeClass.computedTypeProperty)
   <- 27
   ```
-}
+-->
 
 The examples that follow use two stored type properties as part of a structure
 that models an audio level meter for a number of audio channels.
@@ -1965,7 +1964,7 @@ struct AudioChannel {
 ```
 
 
-@Comment {
+<!--
   - test: `staticProperties`
   
   ```swifttest
@@ -1986,7 +1985,7 @@ struct AudioChannel {
         }
      }
   ```
-}
+-->
 
 The `AudioChannel` structure defines two stored type properties to support its functionality.
 The first, `thresholdLevel`, defines the maximum threshold value an audio level can take.
@@ -2029,14 +2028,14 @@ var rightChannel = AudioChannel()
 ```
 
 
-@Comment {
+<!--
   - test: `staticProperties`
   
   ```swifttest
   -> var leftChannel = AudioChannel()
   -> var rightChannel = AudioChannel()
   ```
-}
+-->
 
 If you set the `currentLevel` of the *left* channel to `7`,
 you can see that the `maxInputLevelForAllChannels` type property
@@ -2051,7 +2050,7 @@ print(AudioChannel.maxInputLevelForAllChannels)
 ```
 
 
-@Comment {
+<!--
   - test: `staticProperties`
   
   ```swifttest
@@ -2061,7 +2060,7 @@ print(AudioChannel.maxInputLevelForAllChannels)
   -> print(AudioChannel.maxInputLevelForAllChannels)
   <- 7
   ```
-}
+-->
 
 If you try to set the `currentLevel` of the *right* channel to `11`,
 you can see that the right channel's `currentLevel` property
@@ -2077,7 +2076,7 @@ print(AudioChannel.maxInputLevelForAllChannels)
 ```
 
 
-@Comment {
+<!--
   - test: `staticProperties`
   
   ```swifttest
@@ -2087,10 +2086,10 @@ print(AudioChannel.maxInputLevelForAllChannels)
   -> print(AudioChannel.maxInputLevelForAllChannels)
   <- 10
   ```
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -2098,4 +2097,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

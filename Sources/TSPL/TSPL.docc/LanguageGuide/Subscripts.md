@@ -18,10 +18,10 @@ Subscripts aren't limited to a single dimension,
 and you can define subscripts with multiple input parameters
 to suit your custom type's needs.
 
-@Comment {
+<!--
   TODO: this chapter should provide an example of subscripting an enumeration,
   as per Joe Groff's example from rdar://16555559.
-}
+-->
 
 ## Subscript Syntax
 
@@ -47,7 +47,7 @@ subscript(index: Int) -> Int {
 ```
 
 
-@Comment {
+<!--
   - test: `subscriptSyntax`
   
   ```swifttest
@@ -63,7 +63,7 @@ subscript(index: Int) -> Int {
      }
   >> }
   ```
-}
+-->
 
 The type of `newValue` is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify
@@ -82,7 +82,7 @@ subscript(index: Int) -> Int {
 ```
 
 
-@Comment {
+<!--
   - test: `subscriptSyntax`
   
   ```swifttest
@@ -93,7 +93,7 @@ subscript(index: Int) -> Int {
      }
   >> }
   ```
-}
+-->
 
 Here's an example of a read-only subscript implementation,
 which defines a `TimesTable` structure to represent an *n*-times-table of integers:
@@ -111,7 +111,7 @@ print("six times three is \(threeTimesTable[6])")
 ```
 
 
-@Comment {
+<!--
   - test: `timesTable`
   
   ```swifttest
@@ -125,7 +125,7 @@ print("six times three is \(threeTimesTable[6])")
   -> print("six times three is \(threeTimesTable[6])")
   <- six times three is 18
   ```
-}
+-->
 
 In this example, a new instance of `TimesTable` is created
 to represent the three-times-table.
@@ -161,14 +161,14 @@ numberOfLegs["bird"] = 2
 ```
 
 
-@Comment {
+<!--
   - test: `dictionarySubscript`
   
   ```swifttest
   -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
   -> numberOfLegs["bird"] = 2
   ```
-}
+-->
 
 The example above defines a variable called `numberOfLegs`
 and initializes it with a dictionary literal containing three key-value pairs.
@@ -203,7 +203,7 @@ and <doc:Functions#Default-Parameter-Values>.
 However, unlike functions,
 subscripts can't use in-out parameters.
 
-@Comment {
+<!--
   - test: `subscripts-can-have-default-arguments`
   
   ```swifttest
@@ -216,7 +216,7 @@ subscripts can't use in-out parameters.
   >> print(s[0])
   << 100
   ```
-}
+-->
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -257,7 +257,7 @@ struct Matrix {
 ```
 
 
-@Comment {
+<!--
   - test: `matrixSubscript, matrixSubscriptAssert`
   
   ```swifttest
@@ -284,7 +284,7 @@ struct Matrix {
         }
      }
   ```
-}
+-->
 
 `Matrix` provides an initializer that takes two parameters called `rows` and `columns`,
 and creates an array that's large enough to store `rows * columns` values of type `Double`.
@@ -302,14 +302,14 @@ var matrix = Matrix(rows: 2, columns: 2)
 ```
 
 
-@Comment {
+<!--
   - test: `matrixSubscript, matrixSubscriptAssert`
   
   ```swifttest
   -> var matrix = Matrix(rows: 2, columns: 2)
   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
   ```
-}
+-->
 
 The example above creates a new `Matrix` instance with two rows and two columns.
 The `grid` array for this `Matrix` instance
@@ -328,7 +328,7 @@ matrix[1, 0] = 3.2
 ```
 
 
-@Comment {
+<!--
   - test: `matrixSubscript, matrixSubscriptAssert`
   
   ```swifttest
@@ -339,7 +339,7 @@ matrix[1, 0] = 3.2
   >> print(matrix[1, 0])
   << 3.2
   ```
-}
+-->
 
 These two statements call the subscript's setter to set
 a value of `1.5` in the top right position of the matrix
@@ -364,7 +364,7 @@ func indexIsValid(row: Int, column: Int) -> Bool {
 ```
 
 
-@Comment {
+<!--
   - test: `matrixSubscript`
   
   ```swifttest
@@ -374,7 +374,7 @@ func indexIsValid(row: Int, column: Int) -> Bool {
         return row >= 0 && row < rows && column >= 0 && column < columns
      }
   ```
-}
+-->
 
 An assertion is triggered if you try to access a subscript
 that's outside of the matrix bounds:
@@ -385,7 +385,7 @@ let someValue = matrix[2, 2]
 ```
 
 
-@Comment {
+<!--
   - test: `matrixSubscriptAssert`
   
   ```swifttest
@@ -393,7 +393,7 @@ let someValue = matrix[2, 2]
   xx assert
   // This triggers an assert, because [2, 2] is outside of the matrix bounds.
   ```
-}
+-->
 
 ## Type Subscripts
 
@@ -419,7 +419,7 @@ print(mars)
 ```
 
 
-@Comment {
+<!--
   - test: `static-subscript`
   
   ```swifttest
@@ -434,10 +434,10 @@ print(mars)
   -> print(mars)
   << mars
   ```
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -445,4 +445,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

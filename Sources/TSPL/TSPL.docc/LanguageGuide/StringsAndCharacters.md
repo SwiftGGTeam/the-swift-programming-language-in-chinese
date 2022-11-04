@@ -47,13 +47,13 @@ let someString = "Some string literal value"
 ```
 
 
-@Comment {
+<!--
   - test: `stringLiterals`
   
   ```swifttest
   -> let someString = "Some string literal value"
   ```
-}
+-->
 
 Note that Swift infers a type of `String` for the `someString` constant
 because it's initialized with a string literal value.
@@ -65,10 +65,10 @@ use a multiline string literal ---
 a sequence of characters
 surrounded by three double quotation marks:
 
-@Comment {
+<!--
   Quote comes from "Alice's Adventures in Wonderland",
   which has been public domain as of 1907.
-}
+-->
 
 ```swift
 let quotation = """
@@ -81,7 +81,7 @@ till you come to the end; then stop."
 ```
 
 
-@Comment {
+<!--
   - test: `multiline-string-literals`
   
   ```swifttest
@@ -96,7 +96,7 @@ till you come to the end; then stop."
   >> print(newlines.count)
   << 4
   ```
-}
+-->
 
 A multiline string literal includes all of the lines between
 its opening and closing quotation marks.
@@ -113,7 +113,7 @@ These are the same.
 ```
 
 
-@Comment {
+<!--
   - test: `multiline-string-literals`
   
   ```swifttest
@@ -124,7 +124,7 @@ These are the same.
   >> print(singleLineString == multilineString)
   << true
   ```
-}
+-->
 
 When your source code includes a line break
 inside of a multiline string literal,
@@ -145,7 +145,7 @@ till you come to the end; then stop."
 ```
 
 
-@Comment {
+<!--
   - test: `multiline-string-literals`
   
   ```swifttest
@@ -160,7 +160,7 @@ till you come to the end; then stop."
   >> print(softNewlines.count)
   << 2
   ```
-}
+-->
 
 To make a multiline string literal that begins or ends with a line feed,
 write a blank line as the first or last line.
@@ -176,7 +176,7 @@ It also ends with a line break.
 ```
 
 
-@Comment {
+<!--
   - test: `multiline-string-literals`
   
   ```swifttest
@@ -187,11 +187,11 @@ It also ends with a line break.
   
      """
   ```
-}
+-->
 
-@Comment {
+<!--
   These are well-fed lines!
-}
+-->
 
 A multiline string can be indented to match the surrounding code.
 The whitespace before the closing quotation marks (`"""`)
@@ -203,14 +203,14 @@ that whitespace *is* included.
 ![](multilineStringWhitespace)
 
 
-@Comment {
+<!--
   Using an image here is a little clearer,
   since it can call out which spaces "count",
   but it also works around
   <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
-}
+-->
 
-@Comment {
+<!--
   - test: `multiline-string-literal-whitespace`
   
   ```swifttest
@@ -220,7 +220,7 @@ that whitespace *is* included.
          This line doesn't begin with whitespace.
          """
   ```
-}
+-->
 
 In the example above,
 even though the entire multiline string literal is indented,
@@ -239,7 +239,7 @@ String literals can include the following special characters:
   where *n* is a 1--8 digit hexadecimal number
   (Unicode is discussed in <doc:StringsAndCharacters#Unicode> below)
 
-@Comment {
+<!--
   - test: `stringLiteralUnicodeScalar`
   
   ```swifttest
@@ -255,7 +255,7 @@ String literals can include the following special characters:
   !! _ = "\u{110000}"
   !!      ^
   ```
-}
+-->
 
 The code below shows four examples of these special characters.
 The `wiseWords` constant contains two escaped double quotation marks.
@@ -271,7 +271,7 @@ let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
 ```
 
 
-@Comment {
+<!--
   - test: `specialCharacters`
   
   ```swifttest
@@ -285,7 +285,7 @@ let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
   -> let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
   >> assert(sparklingHeart == "💖")
   ```
-}
+-->
 
 Because multiline string literals use three double quotation marks instead of just one,
 you can include a double quotation mark (`"`) inside of a multiline string literal
@@ -302,7 +302,7 @@ Escaping all three quotation marks \"\"\"
 ```
 
 
-@Comment {
+<!--
   - test: `multiline-string-literals`
   
   ```swifttest
@@ -314,7 +314,7 @@ Escaping all three quotation marks \"\"\"
   << Escaping the first quotation mark """
   << Escaping all three quotation marks """
   ```
-}
+-->
 
 ### Extended String Delimiters
 
@@ -346,7 +346,7 @@ Here are three more double quotes: """
 ```
 
 
-@Comment {
+<!--
   - test: `extended-string-delimiters`
   
   ```swifttest
@@ -356,7 +356,7 @@ Here are three more double quotes: """
   >> print(threeMoreDoubleQuotationMarks)
   << Here are three more double quotes: """
   ```
-}
+-->
 
 ## Initializing an Empty String
 
@@ -372,7 +372,7 @@ var anotherEmptyString = String()  // initializer syntax
 ```
 
 
-@Comment {
+<!--
   - test: `emptyStrings`
   
   ```swifttest
@@ -381,7 +381,7 @@ var anotherEmptyString = String()  // initializer syntax
   // these two strings are both empty, and are equivalent to each other
   >> assert(emptyString == anotherEmptyString)
   ```
-}
+-->
 
 Find out whether a `String` value is empty
 by checking its Boolean `isEmpty` property:
@@ -394,7 +394,7 @@ if emptyString.isEmpty {
 ```
 
 
-@Comment {
+<!--
   - test: `emptyStrings`
   
   ```swifttest
@@ -403,11 +403,11 @@ if emptyString.isEmpty {
      }
   <- Nothing to see here
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: init(size, character)
-}
+-->
 
 ## String Mutability
 
@@ -426,7 +426,7 @@ constantString += " and another Highlander"
 ```
 
 
-@Comment {
+<!--
   - test: `stringMutability`
   
   ```swifttest
@@ -445,9 +445,9 @@ constantString += " and another Highlander"
   !! var
   // this reports a compile-time error - a constant string cannot be modified
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `stringMutability-ok`
   
   ```swifttest
@@ -456,7 +456,7 @@ constantString += " and another Highlander"
   /> variableString is now \"\(variableString)\"
   </ variableString is now "Horse and carriage"
   ```
-}
+-->
 
 > Note: This approach is different from string mutation in Objective-C and Cocoa,
 > where you choose between two classes (`NSString` and `NSMutableString`)
@@ -501,7 +501,7 @@ for character in "Dog!🐶" {
 ```
 
 
-@Comment {
+<!--
   - test: `characters`
   
   ```swifttest
@@ -514,7 +514,7 @@ for character in "Dog!🐶" {
   </ !
   </ 🐶
   ```
-}
+-->
 
 The `for`-`in` loop is described in <doc:ControlFlow#For-In-Loops>.
 
@@ -526,13 +526,13 @@ let exclamationMark: Character = "!"
 ```
 
 
-@Comment {
+<!--
   - test: `characters`
   
   ```swifttest
   -> let exclamationMark: Character = "!"
   ```
-}
+-->
 
 `String` values can be constructed by passing an array of `Character` values
 as an argument to its initializer:
@@ -545,7 +545,7 @@ print(catString)
 ```
 
 
-@Comment {
+<!--
   - test: `characters`
   
   ```swifttest
@@ -554,7 +554,7 @@ print(catString)
   -> print(catString)
   <- Cat!🐱
   ```
-}
+-->
 
 ## Concatenating Strings and Characters
 
@@ -569,7 +569,7 @@ var welcome = string1 + string2
 ```
 
 
-@Comment {
+<!--
   - test: `concatenation`
   
   ```swifttest
@@ -579,7 +579,7 @@ var welcome = string1 + string2
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello there"
   ```
-}
+-->
 
 You can also append a `String` value to an existing `String` variable
 with the addition assignment operator (`+=`):
@@ -591,7 +591,7 @@ instruction += string2
 ```
 
 
-@Comment {
+<!--
   - test: `concatenation`
   
   ```swifttest
@@ -600,7 +600,7 @@ instruction += string2
   /> instruction now equals \"\(instruction)\"
   </ instruction now equals "look over there"
   ```
-}
+-->
 
 You can append a `Character` value to a `String` variable
 with the `String` type's `append()` method:
@@ -612,7 +612,7 @@ welcome.append(exclamationMark)
 ```
 
 
-@Comment {
+<!--
   - test: `concatenation`
   
   ```swifttest
@@ -621,7 +621,7 @@ welcome.append(exclamationMark)
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello there!"
   ```
-}
+-->
 
 > Note: You can't append a `String` or `Character` to an existing `Character` variable,
 > because a `Character` value must contain a single character only.
@@ -658,7 +658,7 @@ print(goodStart + end)
 ```
 
 
-@Comment {
+<!--
   - test: `concatenate-multiline-string-literals`
   
   ```swifttest
@@ -685,7 +685,7 @@ print(goodStart + end)
   </ two
   </ three
   ```
-}
+-->
 
 In the code above,
 concatenating `badStart` with `end`
@@ -717,7 +717,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 ```
 
 
-@Comment {
+<!--
   - test: `stringInterpolation`
   
   ```swifttest
@@ -726,7 +726,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
   /> message is \"\(message)\"
   </ message is "3 times 2.5 is 7.5"
   ```
-}
+-->
 
 In the example above,
 the value of `multiplier` is inserted into a string literal as `\(multiplier)`.
@@ -749,14 +749,14 @@ print(#"Write an interpolated string in Swift using \(multiplier)."#)
 ```
 
 
-@Comment {
+<!--
   - test: `stringInterpolation`
   
   ```swifttest
   -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
   <- Write an interpolated string in Swift using \(multiplier).
   ```
-}
+-->
 
 To use string interpolation
 inside a string that uses extended delimiters,
@@ -770,14 +770,14 @@ print(#"6 times 7 is \#(6 * 7)."#)
 ```
 
 
-@Comment {
+<!--
   - test: `stringInterpolation`
   
   ```swifttest
   -> print(#"6 times 7 is \#(6 * 7)."#)
   <- 6 times 7 is 42.
   ```
-}
+-->
 
 > Note: The expressions you write inside parentheses within an interpolated string
 > can't contain an unescaped backslash (`\`), a carriage return, or a line feed.
@@ -835,7 +835,7 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
 ```
 
 
-@Comment {
+<!--
   - test: `graphemeClusters1`
   
   ```swifttest
@@ -847,7 +847,7 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
   </ eAcute is é, combinedEAcute is é
   >> assert(eAcute == combinedEAcute)
   ```
-}
+-->
 
 Extended grapheme clusters are a flexible way to represent
 many complex script characters as a single `Character` value.
@@ -862,7 +862,7 @@ let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
 ```
 
 
-@Comment {
+<!--
   - test: `graphemeClusters2`
   
   ```swifttest
@@ -873,7 +873,7 @@ let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
   /> precomposed is \(precomposed), decomposed is \(decomposed)
   </ precomposed is 한, decomposed is 한
   ```
-}
+-->
 
 Extended grapheme clusters enable
 scalars for enclosing marks (such as `COMBINING ENCLOSING CIRCLE`, or `U+20DD`)
@@ -885,7 +885,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 ```
 
 
-@Comment {
+<!--
   - test: `graphemeClusters3`
   
   ```swifttest
@@ -894,7 +894,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
   /> enclosedEAcute is \(enclosedEAcute)
   </ enclosedEAcute is é⃝
   ```
-}
+-->
 
 Unicode scalars for regional indicator symbols
 can be combined in pairs to make a single `Character` value,
@@ -907,7 +907,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 ```
 
 
-@Comment {
+<!--
   - test: `graphemeClusters4`
   
   ```swifttest
@@ -916,7 +916,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
   /> regionalIndicatorForUS is \(regionalIndicatorForUS)
   </ regionalIndicatorForUS is 🇺🇸
   ```
-}
+-->
 
 ## Counting Characters
 
@@ -930,7 +930,7 @@ print("unusualMenagerie has \(unusualMenagerie.count) characters")
 ```
 
 
-@Comment {
+<!--
   - test: `characterCount`
   
   ```swifttest
@@ -938,7 +938,7 @@ print("unusualMenagerie has \(unusualMenagerie.count) characters")
   -> print("unusualMenagerie has \(unusualMenagerie.count) characters")
   <- unusualMenagerie has 40 characters
   ```
-}
+-->
 
 Note that Swift's use of extended grapheme clusters for `Character` values
 means that string concatenation and modification may not always affect
@@ -961,7 +961,7 @@ print("the number of characters in \(word) is \(word.count)")
 ```
 
 
-@Comment {
+<!--
   - test: `characterCount`
   
   ```swifttest
@@ -974,7 +974,7 @@ print("the number of characters in \(word) is \(word.count)")
   -> print("the number of characters in \(word) is \(word.count)")
   <- the number of characters in café is 4
   ```
-}
+-->
 
 > Note: Extended grapheme clusters can be composed of multiple Unicode scalars.
 > This means that different characters—
@@ -1042,7 +1042,7 @@ greeting[index]
 ```
 
 
-@Comment {
+<!--
   - test: `stringIndex`
   
   ```swifttest
@@ -1069,7 +1069,7 @@ greeting[index]
   << a
   // a
   ```
-}
+-->
 
 Attempting to access an index outside of a string's range
 or a `Character` at an index outside of a string's range
@@ -1081,12 +1081,12 @@ greeting.index(after: greeting.endIndex) // Error
 ```
 
 
-@Comment {
+<!--
   The code above triggers an assertion failure in the stdlib, causing a stack
   trace, which makes it a poor candidate for being tested.
-}
+-->
 
-@Comment {
+<!--
   - test: `emptyStringIndices`
   
   ```swifttest
@@ -1095,7 +1095,7 @@ greeting.index(after: greeting.endIndex) // Error
   -> emptyString.isEmpty && emptyString.startIndex == emptyString.endIndex
   -> )
   ```
-}
+-->
 
 Use the `indices` property to access all of the
 indices of individual characters in a string.
@@ -1108,7 +1108,7 @@ for index in greeting.indices {
 ```
 
 
-@Comment {
+<!--
   - test: `stringIndex`
   
   ```swifttest
@@ -1119,11 +1119,11 @@ for index in greeting.indices {
   << G u t e n   T a g !
   // Prints "G u t e n   T a g ! "
   ```
-}
+-->
 
-@Comment {
+<!--
   Workaround for rdar://26016325
-}
+-->
 
 > Note: You can use the `startIndex` and `endIndex` properties
 > and the `index(before:)`, `index(after:)`, and `index(_:offsetBy:)` methods
@@ -1148,7 +1148,7 @@ welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex)
 ```
 
 
-@Comment {
+<!--
   - test: `stringInsertionAndRemoval`
   
   ```swifttest
@@ -1161,7 +1161,7 @@ welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex)
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello there!"
   ```
-}
+-->
 
 To remove a single character from a string at a specified index,
 use the `remove(at:)` method,
@@ -1178,7 +1178,7 @@ welcome.removeSubrange(range)
 ```
 
 
-@Comment {
+<!--
   - test: `stringInsertionAndRemoval`
   
   ```swifttest
@@ -1191,11 +1191,11 @@ welcome.removeSubrange(range)
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello"
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: Find and Replace section, once the standard library supports finding substrings
-}
+-->
 
 > Note: You can use the `insert(_:at:)`, `insert(contentsOf:at:)`,
 > `remove(at:)`, and `removeSubrange(_:)` methods
@@ -1231,7 +1231,7 @@ let newString = String(beginning)
 ```
 
 
-@Comment {
+<!--
   - test: `string-and-substring`
   
   ```swifttest
@@ -1244,7 +1244,7 @@ let newString = String(beginning)
   // Convert the result to a String for long-term storage.
   -> let newString = String(beginning)
   ```
-}
+-->
 
 Like strings, each substring has a region of memory
 where the characters that make up the substring are stored.
@@ -1277,10 +1277,10 @@ when it's created from the substring,
 it has its own storage.
 The figure below shows these relationships:
 
-@Comment {
+<!--
   FIXME: The connection between the code and the figure
   would be clearer if the variable names appeared in the figure.
-}
+-->
 
 ![](stringSubstring)
 
@@ -1312,7 +1312,7 @@ if quotation == sameQuotation {
 ```
 
 
-@Comment {
+<!--
   - test: `stringEquality`
   
   ```swifttest
@@ -1323,7 +1323,7 @@ if quotation == sameQuotation {
      }
   <- These two strings are considered equal
   ```
-}
+-->
 
 Two `String` values (or two `Character` values) are considered equal if
 their extended grapheme clusters are *canonically equivalent*.
@@ -1331,7 +1331,7 @@ Extended grapheme clusters are canonically equivalent if they have
 the same linguistic meaning and appearance,
 even if they're composed from different Unicode scalars behind the scenes.
 
-@Comment {
+<!--
   - test: `characterComparisonUsesCanonicalEquivalence`
   
   ```swifttest
@@ -1344,9 +1344,9 @@ even if they're composed from different Unicode scalars behind the scenes.
      }
   <- equivalent, as expected
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `stringComparisonUsesCanonicalEquivalence`
   
   ```swifttest
@@ -1359,7 +1359,7 @@ even if they're composed from different Unicode scalars behind the scenes.
      }
   <- equivalent, as expected
   ```
-}
+-->
 
 For example, `LATIN SMALL LETTER E WITH ACUTE` (`U+00E9`)
 is canonically equivalent to `LATIN SMALL LETTER E` (`U+0065`)
@@ -1381,7 +1381,7 @@ if eAcuteQuestion == combinedEAcuteQuestion {
 ```
 
 
-@Comment {
+<!--
   - test: `stringEquality`
   
   ```swifttest
@@ -1396,7 +1396,7 @@ if eAcuteQuestion == combinedEAcuteQuestion {
      }
   <- These two strings are considered equal
   ```
-}
+-->
 
 Conversely, `LATIN CAPITAL LETTER A` (`U+0041`, or `"A"`),
 as used in English, is *not* equivalent to
@@ -1417,7 +1417,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 ```
 
 
-@Comment {
+<!--
   - test: `stringEquality`
   
   ```swifttest
@@ -1432,15 +1432,15 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
      }
   <- These two characters aren't equivalent.
   ```
-}
+-->
 
 > Note: String and character comparisons in Swift aren't locale-sensitive.
 
-@Comment {
+<!--
   TODO: Add a cross reference to NSString.localizedCompare and
   NSString.localizedCaseInsensitiveCompare.  See also
   https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Strings/Articles/SearchingStrings.html#//apple_ref/doc/uid/20000149-SW4
-}
+-->
 
 ### Prefix and Suffix Equality
 
@@ -1448,7 +1448,7 @@ To check whether a string has a particular string prefix or suffix,
 call the string's `hasPrefix(_:)` and `hasSuffix(_:)` methods,
 both of which take a single argument of type `String` and return a Boolean value.
 
-@Comment {
+<!--
   - test: `prefixComparisonUsesCharactersNotScalars`
   
   ```swifttest
@@ -1466,9 +1466,9 @@ both of which take a single argument of type `String` and return a Boolean value
      }
   <- Has U+0065 U+0301 prefix, as expected.
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `suffixComparisonUsesCharactersNotScalars`
   
   ```swifttest
@@ -1486,7 +1486,7 @@ both of which take a single argument of type `String` and return a Boolean value
      }
   <- Has U+0065 U+0301 suffix, as expected.
   ```
-}
+-->
 
 The examples below consider an array of strings representing
 the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
@@ -1508,7 +1508,7 @@ let romeoAndJuliet = [
 ```
 
 
-@Comment {
+<!--
   - test: `prefixesAndSuffixes`
   
   ```swifttest
@@ -1526,7 +1526,7 @@ let romeoAndJuliet = [
         "Act 2 Scene 6: Friar Lawrence's cell"
      ]
   ```
-}
+-->
 
 You can use the `hasPrefix(_:)` method with the `romeoAndJuliet` array
 to count the number of scenes in Act 1 of the play:
@@ -1543,7 +1543,7 @@ print("There are \(act1SceneCount) scenes in Act 1")
 ```
 
 
-@Comment {
+<!--
   - test: `prefixesAndSuffixes`
   
   ```swifttest
@@ -1556,7 +1556,7 @@ print("There are \(act1SceneCount) scenes in Act 1")
   -> print("There are \(act1SceneCount) scenes in Act 1")
   <- There are 5 scenes in Act 1
   ```
-}
+-->
 
 Similarly, use the `hasSuffix(_:)` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
@@ -1576,7 +1576,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 ```
 
 
-@Comment {
+<!--
   - test: `prefixesAndSuffixes`
   
   ```swifttest
@@ -1592,7 +1592,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
   -> print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
   <- 6 mansion scenes; 2 cell scenes
   ```
-}
+-->
 
 > Note: The `hasPrefix(_:)` and `hasSuffix(_:)` methods
 > perform a character-by-character canonical equivalence comparison between
@@ -1633,13 +1633,13 @@ let dogString = "Dog‼🐶"
 ```
 
 
-@Comment {
+<!--
   - test: `unicodeRepresentations`
   
   ```swifttest
   -> let dogString = "Dog‼🐶"
   ```
-}
+-->
 
 ### UTF-8 Representation
 
@@ -1661,7 +1661,7 @@ print("")
 ```
 
 
-@Comment {
+<!--
   - test: `unicodeRepresentations`
   
   ```swifttest
@@ -1672,11 +1672,11 @@ print("")
   << 68 111 103 226 128 188 240 159 144 182
   // Prints "68 111 103 226 128 188 240 159 144 182 "
   ```
-}
+-->
 
-@Comment {
+<!--
   Workaround for rdar://26016325
-}
+-->
 
 In the example above, the first three decimal `codeUnit` values
 (`68`, `111`, `103`)
@@ -1688,14 +1688,14 @@ are a three-byte UTF-8 representation of the `DOUBLE EXCLAMATION MARK` character
 The last four `codeUnit` values (`240`, `159`, `144`, `182`)
 are a four-byte UTF-8 representation of the `DOG FACE` character.
 
-@Comment {
+<!--
   TODO: contiguousUTF8()
-}
+-->
 
-@Comment {
+<!--
   TODO: nulTerminatedUTF8()
   (which returns a NativeArray, but handwave this for now)
-}
+-->
 
 ### UTF-16 Representation
 
@@ -1717,7 +1717,7 @@ print("")
 ```
 
 
-@Comment {
+<!--
   - test: `unicodeRepresentations`
   
   ```swifttest
@@ -1728,11 +1728,11 @@ print("")
   << 68 111 103 8252 55357 56374
   // Prints "68 111 103 8252 55357 56374 "
   ```
-}
+-->
 
-@Comment {
+<!--
   Workaround for rdar://26016325
-}
+-->
 
 Again, the first three `codeUnit` values
 (`68`, `111`, `103`)
@@ -1773,7 +1773,7 @@ print("")
 ```
 
 
-@Comment {
+<!--
   - test: `unicodeRepresentations`
   
   ```swifttest
@@ -1784,11 +1784,11 @@ print("")
   << 68 111 103 8252 128054
   // Prints "68 111 103 8252 128054 "
   ```
-}
+-->
 
-@Comment {
+<!--
   Workaround for rdar://26016325
-}
+-->
 
 The `value` properties for the first three `UnicodeScalar` values
 (`68`, `111`, `103`)
@@ -1819,7 +1819,7 @@ for scalar in dogString.unicodeScalars {
 ```
 
 
-@Comment {
+<!--
   - test: `unicodeRepresentations`
   
   ```swifttest
@@ -1832,10 +1832,10 @@ for scalar in dogString.unicodeScalars {
   </ ‼
   </ 🐶
   ```
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1843,4 +1843,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

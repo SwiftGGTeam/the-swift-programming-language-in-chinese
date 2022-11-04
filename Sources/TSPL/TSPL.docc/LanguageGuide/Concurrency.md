@@ -67,7 +67,7 @@ listPhotos(inGallery: "Summer Vacation") { photoNames in
 ```
 
 
-@Comment {
+<!--
   - test: `async-via-nested-completion-handlers`
   
   ```swifttest
@@ -87,7 +87,7 @@ listPhotos(inGallery: "Summer Vacation") { photoNames in
          }
      }
   ```
-}
+-->
 
 Even in this simple case,
 because the code has to be written as a series of completion handlers,
@@ -123,7 +123,7 @@ func listPhotos(inGallery name: String) async -> [String] {
 ```
 
 
-@Comment {
+<!--
   - test: `async-function-shape`
   
   ```swifttest
@@ -133,12 +133,12 @@ func listPhotos(inGallery name: String) async -> [String] {
          return result
      }
   ```
-}
+-->
 
 For a function or method that's both asynchronous and throwing,
 you write `async` before `throws`.
 
-@Comment {
+<!--
   - test: `async-comes-before-throws`
   
   ```swifttest
@@ -149,7 +149,7 @@ you write `async` before `throws`.
   !! ^~~~~~
   !! async
   ```
-}
+-->
 
 When calling an asynchronous method,
 execution suspends until that method returns.
@@ -175,7 +175,7 @@ show(photo)
 ```
 
 
-@Comment {
+<!--
   - test: `defining-async-function`
   
   ```swifttest
@@ -193,7 +193,7 @@ show(photo)
   -> show(photo)
   >> }
   ```
-}
+-->
 
 Because the `listPhotos(inGallery:)` and `downloadPhoto(named:)` functions
 both need to make network requests,
@@ -245,13 +245,13 @@ only certain places in your program can call asynchronous functions or methods:
 - Code in an unstructured child task,
   as shown in <doc:Concurrency#Unstructured-Concurrency> below.
 
-@Comment {
+<!--
   SE-0296 specifically calls out that top-level code is *not* an async context,
   contrary to what you might expect.
   If that gets changed, add this bullet to the list above:
   
   - Code at the top level that forms an implicit main function.
-}
+-->
 
 Code in between possible suspension points runs sequentially,
 without the possibility of interruption from other concurrent code.
@@ -292,17 +292,17 @@ if you try to add concurrent code to this function,
 introducing a possible suspension point,
 you'll get compile-time error instead of introducing a bug.
 
-@Comment {
+<!--
   TODO you can also explicitly insert a suspension point
   by calling ``Task.yield()``
   https://developer.apple.com/documentation/swift/task/3814840-yield
-}
+-->
 
-@Comment {
+<!--
   TODO add detail above about how the *compiler* can reason about
   the async/await version better too
   and give you better guarantees and clearer errors
-}
+-->
 
 > Note: The [Task.sleep(until:tolerance:clock:)](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
 > is useful when writing simple code
@@ -318,28 +318,27 @@ you'll get compile-time error instead of introducing a bug.
 >     return ["IMG001", "IMG99", "IMG0404"]
 > }
 > ```
-> 
-> 
-> @Comment {
-  > - test: `sleep-in-toy-code`
-  > 
-  > ```swifttest
-  > >> struct Data {}  // Instead of actually importing Foundation
-  > -> func listPhotos(inGallery name: String) async throws -> [String] {
-  >        try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
-  >        return ["IMG001", "IMG99", "IMG0404"]
-  > }
-  > ```
-> }
 
-@Comment {
+<!--
+  - test: `sleep-in-toy-code`
+
+  ```swifttest
+  >> struct Data {}  // Instead of actually importing Foundation
+  -> func listPhotos(inGallery name: String) async throws -> [String] {
+         try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+         return ["IMG001", "IMG99", "IMG0404"]
+  }
+  ```
+-->
+
+<!--
   TODO either add an example or maybe a short section
   about throwing and async together
   to give a place where I can note the order of the keywords
   in the declaration and in the calls
-}
+-->
 
-@Comment {
+<!--
   TODO closures can be async too -- outline
   
   like how you can have an async function, a closure con be async
@@ -347,7 +346,7 @@ you'll get compile-time error instead of introducing a bug.
   you can mark it explicitly with "async -> in"
   
   (discussion of @MainActor closures can probably go here too)
-}
+-->
 
 ## Asynchronous Sequences
 
@@ -369,7 +368,7 @@ for try await line in handle.bytes.lines {
 ```
 
 
-@Comment {
+<!--
   - test: `async-sequence`
   
   ```swifttest
@@ -382,7 +381,7 @@ for try await line in handle.bytes.lines {
      }
   >> }
   ```
-}
+-->
 
 Instead of using an ordinary `for`-`in` loop,
 the example above writes `for` with `await` after it.
@@ -392,9 +391,9 @@ A `for`-`await`-`in` loop potentially suspends execution
 at the beginning of each iteration,
 when it's waiting for the next element to be available.
 
-@Comment {
+<!--
   FIXME TR: Where does the 'try' above come from?
-}
+-->
 
 In the same way that you can use your own types in a `for`-`in` loop
 by adding conformance to the [Sequence](https://developer.apple.com/documentation/swift/sequence) protocol,
@@ -402,7 +401,7 @@ you can use your own types in a `for`-`await`-`in` loop
 by adding conformance to the
 [AsyncSequence](https://developer.apple.com/documentation/swift/asyncsequence) protocol.
 
-@Comment {
+<!--
   TODO what happened to ``Series`` which was supposed to be a currency type?
   Is that coming from Combine instead of the stdlib maybe?
   
@@ -424,11 +423,11 @@ by adding conformance to the
   for await photo in Photos(names: names) {
       show(photo)
   }
-}
+-->
 
 ## Calling Asynchronous Functions in Parallel
 
-@Comment {
+<!--
   FIXME
   As pointed out on the Swift forums
   <https://forums.swift.org/t/swift-concurrency-feedback-wanted/49336/53>
@@ -437,7 +436,7 @@ by adding conformance to the
   However,
   the syntax introduced in this section contrasts to the previous section
   in that async-let makes it *possible* for that work to be parallel.
-}
+-->
 
 Calling an asynchronous function with `await`
 runs only one piece of code at a time.
@@ -459,7 +458,7 @@ show(photos)
 ```
 
 
-@Comment {
+<!--
   - test: `defining-async-function`
   
   ```swifttest
@@ -474,7 +473,7 @@ show(photos)
   -> show(photos)
   >> }
   ```
-}
+-->
 
 This approach has an important drawback:
 Although the download is asynchronous
@@ -499,7 +498,7 @@ show(photos)
 ```
 
 
-@Comment {
+<!--
   - test: `calling-with-async-let`
   
   ```swifttest
@@ -516,7 +515,7 @@ show(photos)
   -> show(photos)
   >> }
   ```
-}
+-->
 
 In this example,
 all three calls to `downloadPhoto(named:)` start
@@ -578,14 +577,14 @@ await withTaskGroup(of: Data.self) { taskGroup in
 ```
 
 
-@Comment {
+<!--
   TODO walk through the example
-}
+-->
 
 For more information about task groups,
 see [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup).
 
-@Comment {
+<!--
   OUTLINE
   
   - A task itself doesn't have any concurrency; it does one thing at a time
@@ -671,9 +670,9 @@ see [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup).
   > It makes it easier to reason about
   > the concurrent tasks that are executing within a given scope,
   > and also enables various optimizations.
-}
+-->
 
-@Comment {
+<!--
   OUTLINE
   
   .. _Concurrency_TaskPriority:
@@ -698,7 +697,7 @@ see [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup).
   - In addition, or instead of, setting a low priority,
   you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
   This is a sort of cooperative multitasking for long-running work.
-}
+-->
 
 ### Unstructured Concurrency
 
@@ -730,12 +729,12 @@ let result = await handle.value
 For more information about managing detached tasks,
 see [Task](https://developer.apple.com/documentation/swift/task).
 
-@Comment {
+<!--
   TODO Add some conceptual guidance about
   when to make a method do its work in a detached task
   versus making the method itself async?
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
-}
+-->
 
 ### Task Cancellation
 
@@ -762,7 +761,7 @@ might need to delete partial downloads and close network connections.
 To propagate cancellation manually,
 call [Task.cancel()](https://developer.apple.com/documentation/swift/task/3851218-cancel).
 
-@Comment {
+<!--
   OUTLINE
   
   - task
@@ -788,7 +787,7 @@ call [Task.cancel()](https://developer.apple.com/documentation/swift/task/385121
   if the task is canceled
   along with a closure that defines the task's work
   (it doesn't throw like ``checkCancellation`` does)
-}
+-->
 
 ## Actors
 
@@ -823,7 +822,7 @@ actor TemperatureLogger {
 ```
 
 
-@Comment {
+<!--
   - test: `actors, actors-implicitly-sendable`
   
   ```swifttest
@@ -839,7 +838,7 @@ actor TemperatureLogger {
          }
      }
   ```
-}
+-->
 
 You introduce an actor with the `actor` keyword,
 followed by its definition in a pair of braces.
@@ -933,13 +932,13 @@ Swift guarantees that
 only code inside an actor can access the actor's local state.
 This guarantee is known as *actor isolation*.
 
-@Comment {
+<!--
   OUTLINE -- design patterns for actors
   
   - do your mutation in a sync function
-}
+-->
 
-@Comment {
+<!--
   OUTLINE
   
   Add this post-WWDC when we have a more solid story to tell around Sendable
@@ -999,7 +998,7 @@ This guarantee is known as *actor isolation*.
   
        await logger.update(with: "27 C")
        print(await logger.getMax())
-}
+-->
 
 ## Sendable Types
 
@@ -1046,7 +1045,7 @@ In general, there are three ways for a type to be sendable:
   or a class that serializes access to its properties
   on a particular thread or queue.
 
-@Comment {
+<!--
   There's no example of the third case,
   where you serialize access to the class's members,
   because the stdlib doesn't include the locking primitives you'd need.
@@ -1054,7 +1053,7 @@ In general, there are three ways for a type to be sendable:
   isn't a good fit for TSPL.
   Implementing it in terms of isKnownUniquelyReferenced(_:)
   and copy-on-write is also probably too involved for TSPL.
-}
+-->
 
 For a detailed list of the semantic requirements,
 see the [Sendable](https://developer.apple.com/documentation/swift/sendable) protocol reference.
@@ -1081,7 +1080,7 @@ await logger.addReading(from: reading)
 ```
 
 
-@Comment {
+<!--
   - test: `actors`
   
   ```swifttest
@@ -1099,7 +1098,7 @@ await logger.addReading(from: reading)
   -> let reading = TemperatureReading(measurement: 45)
   -> await logger.addReading(from: reading)
   ```
-}
+-->
 
 Because `TemperatureReading` is a structure that has only sendable properties,
 and the structure isn't marked `public` or `@usableFromInline`,
@@ -1114,7 +1113,7 @@ struct TemperatureReading {
 ```
 
 
-@Comment {
+<!--
   - test: `actors-implicitly-sendable`
   
   ```swifttest
@@ -1122,9 +1121,9 @@ struct TemperatureReading {
          var measurement: Int
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   OUTLINE
   .. _Concurrency_MainActor:
   
@@ -1149,9 +1148,9 @@ struct TemperatureReading {
   If you mark the property of a type with one of these implicit-main-actor properties,
   that has the same effect as marking the type with ``@MainActor``
   you can wait for each child of a task
-}
+-->
 
-@Comment {
+<!--
   LEFTOVER OUTLINE BITS
   
   - like classes, actors can inherit from other actors
@@ -1184,10 +1183,10 @@ struct TemperatureReading {
   
   Probably don't cover unsafe continuations (SE-0300) in TSPL,
   but maybe link to them?
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1195,4 +1194,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

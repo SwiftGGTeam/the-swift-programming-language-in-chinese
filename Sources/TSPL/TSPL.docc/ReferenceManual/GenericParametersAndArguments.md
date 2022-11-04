@@ -13,10 +13,10 @@ created or a generic function or initializer is called.
 
 For an overview of generics in Swift, see <doc:Generics>.
 
-@Comment {
+<!--
   NOTE: Generic types are sometimes referred to as :newTerm:`parameterized types`
   because they're declared with one or more type parameters.
-}
+-->
 
 ## Generic Parameter Clause
 
@@ -62,7 +62,7 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
 ```
 
 
-@Comment {
+<!--
   - test: `generic-params`
   
   ```swifttest
@@ -73,7 +73,7 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
         return x
      }
   ```
-}
+-->
 
 Because `Int` and `Double`, for example, both conform to the `Comparable` protocol,
 this function accepts arguments of either type. In contrast with generic types, you don't
@@ -87,7 +87,7 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
 ```
 
 
-@Comment {
+<!--
   - test: `generic-params`
   
   ```swifttest
@@ -98,12 +98,12 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   -> simpleMax(3.14159, 2.71828) // T is inferred to be Double
   >> assert(r1 == 3.14159)
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 ### Generic Where Clauses
 
@@ -165,7 +165,7 @@ extension Collection where Element: SomeProtocol {
 ```
 
 
-@Comment {
+<!--
   - test: `contextual-where-clauses-combine`
   
   ```swifttest
@@ -179,9 +179,9 @@ extension Collection where Element: SomeProtocol {
   >> print( [1, 2, 3].startsWithZero() )
   << false
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `contextual-where-clause-combine-err`
   
   ```swifttest
@@ -200,7 +200,7 @@ extension Collection where Element: SomeProtocol {
   !! func returnTrue() -> Bool where Element == Int {
   !!                                            ^
   ```
-}
+-->
 
 You can overload a generic function or initializer by providing different
 constraints, requirements, or both on the type parameters.
@@ -231,11 +231,11 @@ same-type-requirement --> type-identifier ``==`` type
 ```
 
 
-@Comment {
+<!--
   NOTE: A conformance requirement can only have one type after the colon,
   otherwise, you'd have a syntactic ambiguity
   (a comma-separated list types inside of a comma-separated list of requirements).
-}
+-->
 
 ## Generic Argument Clause
 
@@ -263,9 +263,9 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
 ```
 
 
-@Comment {
+<!--
   TODO: How are we supposed to wrap code lines like the above?
-}
+-->
 
 The specialized version of the generic `Dictionary` type, `Dictionary<String, Int>`
 is formed by replacing the generic parameters `Key: Hashable` and `Value`
@@ -286,13 +286,13 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 ```
 
 
-@Comment {
+<!--
   - test: `array-of-arrays`
   
   ```swifttest
   -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
-}
+-->
 
 As mentioned in <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
 you don't use a generic argument clause to specify the type arguments
@@ -308,7 +308,7 @@ generic-argument --> type
 
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -316,4 +316,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

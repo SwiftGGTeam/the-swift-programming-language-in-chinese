@@ -9,7 +9,7 @@ the default version of Swift that's included in Xcode 14.
 You can use Xcode 14 to build targets
 that are written in either Swift 5.7, Swift 4.2, or Swift 4.
 
-@Comment {
+<!--
   - test: `swift-version`
   
   ```swifttest
@@ -22,7 +22,7 @@ that are written in either Swift 5.7, Swift 4.2, or Swift 4.
   >> #endif
   << Just right
   ```
-}
+-->
 
 When you use Xcode 14 to build Swift 4 and Swift 4.2 code,
 most Swift 5.7 functionality is available.
@@ -52,7 +52,7 @@ you can migrate your code from Swift 4 to Swift 5.7
 one framework at a time.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -60,4 +60,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

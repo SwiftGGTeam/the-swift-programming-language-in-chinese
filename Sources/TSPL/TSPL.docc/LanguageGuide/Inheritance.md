@@ -56,7 +56,7 @@ class Vehicle {
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -70,7 +70,7 @@ class Vehicle {
         }
      }
   ```
-}
+-->
 
 You create a new instance of `Vehicle` with *initializer syntax*,
 which is written as a type name followed by empty parentheses:
@@ -80,13 +80,13 @@ let someVehicle = Vehicle()
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
   -> let someVehicle = Vehicle()
   ```
-}
+-->
 
 Having created a new `Vehicle` instance,
 you can access its `description` property to print
@@ -98,14 +98,14 @@ print("Vehicle: \(someVehicle.description)")
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
   -> print("Vehicle: \(someVehicle.description)")
   </ Vehicle: traveling at 0.0 miles per hour
   ```
-}
+-->
 
 The `Vehicle` class defines common characteristics for an arbitrary vehicle,
 but isn't much use in itself.
@@ -129,7 +129,7 @@ class SomeSubclass: SomeSuperclass {
 ```
 
 
-@Comment {
+<!--
   - test: `protocolSyntax`
   
   ```swifttest
@@ -138,7 +138,7 @@ class SomeSubclass: SomeSuperclass {
         // subclass definition goes here
      }
   ```
-}
+-->
 
 The following example defines a subclass called `Bicycle`,
 with a superclass of `Vehicle`:
@@ -150,7 +150,7 @@ class Bicycle: Vehicle {
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -158,7 +158,7 @@ class Bicycle: Vehicle {
         var hasBasket = false
      }
   ```
-}
+-->
 
 The new `Bicycle` class automatically gains all of the characteristics of `Vehicle`,
 such as its `currentSpeed` and `description` properties and its `makeNoise()` method.
@@ -178,14 +178,14 @@ bicycle.hasBasket = true
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
   -> let bicycle = Bicycle()
   -> bicycle.hasBasket = true
   ```
-}
+-->
 
 You can also modify the inherited `currentSpeed` property of a `Bicycle` instance,
 and query the instance's inherited `description` property:
@@ -197,7 +197,7 @@ print("Bicycle: \(bicycle.description)")
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -205,7 +205,7 @@ print("Bicycle: \(bicycle.description)")
   -> print("Bicycle: \(bicycle.description)")
   </ Bicycle: traveling at 15.0 miles per hour
   ```
-}
+-->
 
 Subclasses can themselves be subclassed.
 The next example creates a subclass of `Bicycle` for a two-seater bicycle
@@ -218,7 +218,7 @@ class Tandem: Bicycle {
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -226,7 +226,7 @@ class Tandem: Bicycle {
         var currentNumberOfPassengers = 0
      }
   ```
-}
+-->
 
 `Tandem` inherits all of the properties and methods from `Bicycle`,
 which in turn inherits all of the properties and methods from `Vehicle`.
@@ -247,7 +247,7 @@ print("Tandem: \(tandem.description)")
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -258,7 +258,7 @@ print("Tandem: \(tandem.description)")
   -> print("Tandem: \(tandem.description)")
   </ Tandem: traveling at 22.0 miles per hour
   ```
-}
+-->
 
 ## Overriding
 
@@ -316,7 +316,7 @@ class Train: Vehicle {
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -326,7 +326,7 @@ class Train: Vehicle {
         }
      }
   ```
-}
+-->
 
 If you create a new instance of `Train` and call its `makeNoise()` method,
 you can see that the `Train` subclass version of the method is called:
@@ -338,7 +338,7 @@ train.makeNoise()
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -346,7 +346,7 @@ train.makeNoise()
   -> train.makeNoise()
   <- Choo Choo
   ```
-}
+-->
 
 ### Overriding Properties
 
@@ -395,7 +395,7 @@ class Car: Vehicle {
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -406,7 +406,7 @@ class Car: Vehicle {
         }
      }
   ```
-}
+-->
 
 The override of the `description` property starts by calling `super.description`,
 which returns the `Vehicle` class's `description` property.
@@ -427,7 +427,7 @@ print("Car: \(car.description)")
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -437,7 +437,7 @@ print("Car: \(car.description)")
   -> print("Car: \(car.description)")
   </ Car: traveling at 25.0 miles per hour in gear 3
   ```
-}
+-->
 
 #### Overriding Property Observers
 
@@ -472,7 +472,7 @@ class AutomaticCar: Car {
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -484,7 +484,7 @@ class AutomaticCar: Car {
         }
      }
   ```
-}
+-->
 
 Whenever you set the `currentSpeed` property of an `AutomaticCar` instance,
 the property's `didSet` observer sets the instance's `gear` property to
@@ -502,7 +502,7 @@ print("AutomaticCar: \(automatic.description)")
 ```
 
 
-@Comment {
+<!--
   - test: `inheritance`
   
   ```swifttest
@@ -511,7 +511,7 @@ print("AutomaticCar: \(automatic.description)")
   -> print("AutomaticCar: \(automatic.description)")
   </ AutomaticCar: traveling at 35.0 miles per hour in gear 4
   ```
-}
+-->
 
 ## Preventing Overrides
 
@@ -526,7 +526,7 @@ is reported as a compile-time error.
 Methods, properties, or subscripts that you add to a class in an extension
 can also be marked as final within the extension's definition.
 
-@Comment {
+<!--
   - test: `finalPreventsOverriding`
   
   ```swifttest
@@ -558,13 +558,13 @@ can also be marked as final within the extension's definition.
   !! final func someFunction() {
   !! ^
   ```
-}
+-->
 
 You can mark an entire class as final by writing the `final` modifier
 before the `class` keyword in its class definition (`final class`).
 Any attempt to subclass a final class is reported as a compile-time error.
 
-@Comment {
+<!--
   - test: `finalClassPreventsOverriding`
   
   ```swifttest
@@ -599,30 +599,30 @@ Any attempt to subclass a final class is reported as a compile-time error.
   !! class D : C {
   !!       ^
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: I should probably provide an example here.
-}
+-->
 
-@Comment {
+<!--
   TODO: provide more information about function signatures,
   and what does / doesn't make them unique.
   For example, the parameter names don't have to match
   in order for a function to override a similar signature in its parent.
   (This is true for both of the function declaration syntaxes.)
-}
+-->
 
-@Comment {
+<!--
   TODO: Mention that you can return more-specific types, and take less-specific types,
   when overriding methods that use optionals / unchecked optionals.
   
   TODO: Overriding Type Methods
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -630,4 +630,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

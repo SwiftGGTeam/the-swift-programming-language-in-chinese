@@ -29,7 +29,7 @@ For more details, see <doc:Protocols#Protocol-Extensions>.
 > Note: Extensions can add new functionality to a type,
 > but they can't override existing functionality.
 
-@Comment {
+<!--
   - test: `extensionsCannotOverrideExistingBehavior`
   
   ```swifttest
@@ -75,7 +75,7 @@ For more details, see <doc:Protocols#Protocol-Extensions>.
   !! func foo() {}
   !!      ^
   ```
-}
+-->
 
 ## Extension Syntax
 
@@ -88,7 +88,7 @@ extension SomeType {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionSyntax`
   
   ```swifttest
@@ -97,7 +97,7 @@ extension SomeType {
         // new functionality to add to SomeType goes here
      }
   ```
-}
+-->
 
 An extension can extend an existing type to make it adopt one or more protocols.
 To add protocol conformance,
@@ -111,7 +111,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionSyntax`
   
   ```swifttest
@@ -121,7 +121,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
         // implementation of protocol requirements goes here
      }
   ```
-}
+-->
 
 Adding protocol conformance in this way is described in
 <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>.
@@ -158,7 +158,7 @@ print("Three feet is \(threeFeet) meters")
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsComputedProperties`
   
   ```swifttest
@@ -176,7 +176,7 @@ print("Three feet is \(threeFeet) meters")
   -> print("Three feet is \(threeFeet) meters")
   <- Three feet is 0.914399970739201 meters
   ```
-}
+-->
 
 These computed properties express that a `Double` value
 should be considered as a certain unit of length.
@@ -209,7 +209,7 @@ print("A marathon is \(aMarathon) meters long")
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsComputedProperties`
   
   ```swifttest
@@ -217,12 +217,12 @@ print("A marathon is \(aMarathon) meters long")
   -> print("A marathon is \(aMarathon) meters long")
   <- A marathon is 42195.0 meters long
   ```
-}
+-->
 
 > Note: Extensions can add new computed properties, but they can't add stored properties,
 > or add property observers to existing properties.
 
-@Comment {
+<!--
   - test: `extensionsCannotAddStoredProperties`
   
   ```swifttest
@@ -232,11 +232,11 @@ print("A marathon is \(aMarathon) meters long")
   !! extension C { var x = 0 }
   !!                   ^
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: change this example to something more advisable / less contentious.
-}
+-->
 
 ## Initializers
 
@@ -283,7 +283,7 @@ struct Rect {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInitializers`
   
   ```swifttest
@@ -298,7 +298,7 @@ struct Rect {
         var size = Size()
      }
   ```
-}
+-->
 
 Because the `Rect` structure provides default values for all of its properties,
 it receives a default initializer and a memberwise initializer automatically,
@@ -312,7 +312,7 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInitializers`
   
   ```swifttest
@@ -320,7 +320,7 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
   -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
         size: Size(width: 5.0, height: 5.0))
   ```
-}
+-->
 
 You can extend the `Rect` structure to provide an additional initializer
 that takes a specific center point and size:
@@ -336,7 +336,7 @@ extension Rect {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInitializers`
   
   ```swifttest
@@ -348,7 +348,7 @@ extension Rect {
         }
      }
   ```
-}
+-->
 
 This new initializer starts by calculating an appropriate origin point based on
 the provided `center` point and `size` value.
@@ -363,7 +363,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInitializers`
   
   ```swifttest
@@ -372,7 +372,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
   /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
   </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
   ```
-}
+-->
 
 > Note: If you provide a new initializer with an extension,
 > you are still responsible for making sure that each instance is fully initialized
@@ -394,7 +394,7 @@ extension Int {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInstanceMethods`
   
   ```swifttest
@@ -406,7 +406,7 @@ extension Int {
         }
      }
   ```
-}
+-->
 
 The `repetitions(task:)` method takes a single argument of type `() -> Void`,
 which indicates a function that has no parameters and doesn't return a value.
@@ -425,7 +425,7 @@ to perform a task that many number of times:
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInstanceMethods`
   
   ```swifttest
@@ -436,7 +436,7 @@ to perform a task that many number of times:
   </ Hello!
   </ Hello!
   ```
-}
+-->
 
 ### Mutating Instance Methods
 
@@ -460,7 +460,7 @@ someInt.square()
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsInstanceMethods`
   
   ```swifttest
@@ -474,7 +474,7 @@ someInt.square()
   /> someInt is now \(someInt)
   </ someInt is now 9
   ```
-}
+-->
 
 ## Subscripts
 
@@ -509,7 +509,7 @@ extension Int {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsSubscripts`
   
   ```swifttest
@@ -539,18 +539,18 @@ extension Int {
   /> returns \(r3)
   </ returns 7
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
-@Comment {
+<!--
   TODO: Replace the for loop above with an exponent,
   if/when integer exponents land in the stdlib.
   Darwin's pow() function is only for floating point.
-}
+-->
 
 If the `Int` value doesn't have enough digits for the requested index,
 the subscript implementation returns `0`,
@@ -563,7 +563,7 @@ as if the number had been padded with zeros to the left:
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsSubscripts`
   
   ```swifttest
@@ -574,16 +574,16 @@ as if the number had been padded with zeros to the left:
   >> let r5 =
   -> 0746381295[9]
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: provide an explanation of this example
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 ## Nested Types
 
@@ -608,7 +608,7 @@ extension Int {
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsNestedTypes`
   
   ```swifttest
@@ -628,7 +628,7 @@ extension Int {
         }
      }
   ```
-}
+-->
 
 This example adds a new nested enumeration to `Int`.
 This enumeration, called `Kind`,
@@ -661,7 +661,7 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 ```
 
 
-@Comment {
+<!--
   - test: `extensionsNestedTypes`
   
   ```swifttest
@@ -682,11 +682,11 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
   << + + - 0 - 0 +
   // Prints "+ + - 0 - 0 + "
   ```
-}
+-->
 
-@Comment {
+<!--
   Workaround for rdar://26016325
-}
+-->
 
 This function, `printIntegerKinds(_:)`,
 takes an input array of `Int` values and iterates over those values in turn.
@@ -700,7 +700,7 @@ and prints an appropriate description.
 > such as `.negative` rather than `Int.Kind.negative`.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -708,4 +708,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

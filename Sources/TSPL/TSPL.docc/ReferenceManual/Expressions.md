@@ -132,7 +132,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
 
-@Comment {
+<!--
   - test: `placement-of-try`
   
   ```swifttest
@@ -163,13 +163,13 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   !!                                      ^
   !!                                      try!
   ```
-}
+-->
 
 A `try` expression can't appear on the right-hand side of an infix operator,
 unless the infix operator is the assignment operator
 or the `try` expression is enclosed in parentheses.
 
-@Comment {
+<!--
   - test: `try-on-right`
   
   ```swifttest
@@ -181,15 +181,15 @@ or the `try` expression is enclosed in parentheses.
   !!           ^
   -> sum = 7 + (try someThrowingFunction()) // OK
   ```
-}
+-->
 
 If an expression includes both the `try` and `await` operator,
 the `try` operator must appear first.
 
-@Comment {
+<!--
   The "try await" ordering is also part of the grammar for 'expression',
   but it's important enough to be worth re-stating in prose.
-}
+-->
 
 For more information and to see examples of how to use `try`, `try?`, and `try!`,
 see <doc:ErrorHandling>.
@@ -247,7 +247,7 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
 
-@Comment {
+<!--
   - test: `placement-of-await`
   
   ```swifttest
@@ -273,13 +273,13 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
   !! ^
   ```
-}
+-->
 
 An `await` expression can't appear on the right-hand side of an infix operator,
 unless the infix operator is the assignment operator
 or the `await` expression is enclosed in parentheses.
 
-@Comment {
+<!--
   - test: `await-on-right`
   
   ```swifttest
@@ -294,15 +294,15 @@ or the `await` expression is enclosed in parentheses.
   >> _ = sum  // Suppress irrelevant written-but-not-read warning
   >> }
   ```
-}
+-->
 
 If an expression includes both the `await` and `try` operator,
 the `try` operator must appear first.
 
-@Comment {
+<!--
   The "try await" ordering is also part of the grammar for 'expression',
   but it's important enough to be worth re-stating in prose.
-}
+-->
 
 ```
 Grammar of an await expression
@@ -329,7 +329,7 @@ see <doc:BasicOperators> and <doc:AdvancedOperators>.
 For information about the operators provided by the Swift standard library,
 see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
-@Comment {
+<!--
   You have essentially expression sequences here, and within it are
   parts of the expressions.  We're calling them "expressions" even
   though they aren't what we ordinarily think of as expressions.  We
@@ -337,7 +337,7 @@ see [Operator Declarations](https://developer.apple.com/documentation/swift/oper
   which gives a rough parse tree.  Then after name binding we know
   operator precedence and we do a second phase of parsing that builds
   something that's a more traditional tree.
-}
+-->
 
 > Note: At parse time,
 > an expression made up of infix operators is represented
@@ -387,7 +387,7 @@ For example:
 ```
 
 
-@Comment {
+<!--
   - test: `assignmentOperator`
   
   ```swifttest
@@ -396,7 +396,7 @@ For example:
   /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
   </ a is "test", b is 12, c is 3, and 9.45 is ignored
   ```
-}
+-->
 
 The assignment operator doesn't return any value.
 
@@ -458,7 +458,7 @@ can be cast to the specified *type*.
 It returns `true` if the *expression* can be cast to the specified *type*;
 otherwise, it returns `false`.
 
-@Comment {
+<!--
   - test: `triviallyTrueIsAndAs`
   
   ```swifttest
@@ -471,9 +471,9 @@ otherwise, it returns `false`.
   !! assert(!("hello" is Int))
   !!          ~~~~~~~ ^  ~~~
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `is-operator-tautology`
   
   ```swifttest
@@ -487,7 +487,7 @@ otherwise, it returns `false`.
   !! assert(s is Base)
   !!          ^
   ```
-}
+-->
 
 The `as` operator performs a cast
 when it's known at compile time
@@ -513,7 +513,7 @@ f(x as Any)
 ```
 
 
-@Comment {
+<!--
   - test: `explicit-type-with-as-operator`
   
   ```swifttest
@@ -530,7 +530,7 @@ f(x as Any)
   -> f(x as Any)
   <- Function for Any
   ```
-}
+-->
 
 Bridging lets you use an expression of
 a Swift standard library type such as `String`
@@ -595,18 +595,18 @@ primary-expression --> key-path-string-expression
 ```
 
 
-@Comment {
+<!--
   NOTE: One reason for breaking primary expressions out of postfix
   expressions is for exposition -- it makes it easier to organize the
   prose surrounding the production rules.
-}
+-->
 
-@Comment {
+<!--
   TR: Is a generic argument clause allowed
   after an identifier in expression context?
   It seems like that should only occur when an identifier
   is a *type* identifier.
-}
+-->
 
 ### Literal Expression
 
@@ -655,7 +655,7 @@ or other code that doesn't become part of the shipping program.
 > In the future, the string might contain multiple slashes,
 > such as `MyModule/some/disambiguation/MyFile.swift`.
 
-@Comment {
+<!--
   - test: `pound-file-flavors`
   
   ```swifttest
@@ -664,7 +664,7 @@ or other code that doesn't become part of the shipping program.
   >> print(#file == #fileID)
   << false
   ```
-}
+-->
 
 Inside a function,
 the value of `#function` is the name of that function,
@@ -678,10 +678,10 @@ When used as the default value of a function or method parameter,
 the special literal's value is determined
 when the default value expression is evaluated at the call site.
 
-@Comment {
+<!--
   See also "Special Kinds of Parameters" in "Declarations"
   where the general rule is defined.
-}
+-->
 
 ```swift
 func logFunctionName(string: String = #function) {
@@ -693,7 +693,7 @@ func myFunction() {
 ```
 
 
-@Comment {
+<!--
   - test: `special-literal-evaluated-at-call-site`
   
   ```swifttest
@@ -715,7 +715,7 @@ func myFunction() {
   >> namedArgs(i: 1, withJay: 2)
   << namedArgs(i:withJay:)
   ```
-}
+-->
 
 An *array literal* is
 an ordered collection of values.
@@ -739,13 +739,13 @@ var emptyArray: [Double] = []
 ```
 
 
-@Comment {
+<!--
   - test: `array-literal-brackets`
   
   ```swifttest
   -> var emptyArray: [Double] = []
   ```
-}
+-->
 
 A *dictionary literal* is
 an unordered collection of key-value pairs.
@@ -774,13 +774,13 @@ var emptyDictionary: [String: Double] = [:]
 ```
 
 
-@Comment {
+<!--
   - test: `dictionary-literal-brackets`
   
   ```swifttest
   -> var emptyDictionary: [String: Double] = [:]
   ```
-}
+-->
 
 A *playground literal*
 is used by Xcode to create an interactive representation
@@ -829,9 +829,9 @@ self.init(<#initializer arguments#>)
 ```
 
 
-@Comment {
+<!--
   TODO: Come back and explain the second to last form (i.e., self(arg: value)).
-}
+-->
 
 In an initializer, subscript, or instance method, `self` refers to the current
 instance of the type in which it occurs. In a type method,
@@ -853,7 +853,7 @@ class SomeClass {
 ```
 
 
-@Comment {
+<!--
   - test: `self-expression`
   
   ```swifttest
@@ -864,7 +864,7 @@ class SomeClass {
          }
      }
   ```
-}
+-->
 
 In a mutating method of a value type,
 you can assign a new instance of that value type to `self`.
@@ -880,7 +880,7 @@ struct Point {
 ```
 
 
-@Comment {
+<!--
   - test: `self-expression`
   
   ```swifttest
@@ -895,11 +895,11 @@ struct Point {
   >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
   << The point is now at (3.0, 4.0)
   ```
-}
+-->
 
-@Comment {
+<!--
   iBooks Store screenshot begins here.
-}
+-->
 
 ```
 Grammar of a self expression
@@ -983,9 +983,9 @@ it's understood to be asynchronous.
 There are several special forms
 that allow closures to be written more concisely:
 
-@Comment {
+<!--
   iBooks Store screenshot ends here.
-}
+-->
 
 - A closure can omit the types
   of its parameters, its return type, or both.
@@ -1019,7 +1019,7 @@ myFunction { $0 + $1 }
 ```
 
 
-@Comment {
+<!--
   - test: `closure-expression-forms`
   
   ```swifttest
@@ -1036,7 +1036,7 @@ myFunction { $0 + $1 }
   ---
   -> myFunction { $0 + $1 }
   ```
-}
+-->
 
 For information about passing a closure as an argument to a function,
 see <doc:Expressions#Function-Call-Expression>.
@@ -1094,7 +1094,7 @@ closure()
 ```
 
 
-@Comment {
+<!--
   - test: `capture-list-value-semantics`
   
   ```swifttest
@@ -1109,7 +1109,7 @@ closure()
   -> closure()
   <- 0 10
   ```
-}
+-->
 
 There are two different things named `a`,
 the variable in the surrounding scope
@@ -1127,14 +1127,14 @@ In contrast, there's only one variable named `b` ---
 the `b` in the outer scope ---
 so changes from inside or outside the closure are visible in both places.
 
-@Comment {
+<!--
   [Contributor 6004] also describes the distinction as
   "capturing the variable, not the value"
   but he notes that we don't have a rigorous definition of
   capturing a variable in Swift
   (unlike some other languages)
   so that description's not likely to be very helpful for developers.
-}
+-->
 
 This distinction isn't visible
 when the captured variable's type has reference semantics.
@@ -1161,7 +1161,7 @@ closure()
 ```
 
 
-@Comment {
+<!--
   - test: `capture-list-reference-semantics`
   
   ```swifttest
@@ -1179,9 +1179,9 @@ closure()
   -> closure()
   <- 10 10
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `capture-list-with-commas`
   
   ```swifttest
@@ -1191,14 +1191,14 @@ closure()
   >> let r0 = f()
   >> assert(r0 == 107)
   ```
-}
+-->
 
-@Comment {
+<!--
   It's not an error to capture things that aren't included in the capture list,
   although maybe it should be.  See also rdar://17024367.
-}
+-->
 
-@Comment {
+<!--
   - test: `capture-list-is-not-exhaustive`
   
   ```swifttest
@@ -1212,7 +1212,7 @@ closure()
   -> let r1 = g()
   -> assert(r1 == 107)
   ```
-}
+-->
 
 If the type of the expression's value is a class,
 you can mark the expression in a capture list
@@ -1227,7 +1227,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 ```
 
 
-@Comment {
+<!--
   - test: `closure-expression-weak`
   
   ```swifttest
@@ -1246,7 +1246,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
   << Title
   << Title
   ```
-}
+-->
 
 You can also bind an arbitrary expression
 to a named value in a capture list.
@@ -1260,7 +1260,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
 
-@Comment {
+<!--
   - test: `closure-expression-capture`
   
   ```swifttest
@@ -1275,14 +1275,14 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
   >> C().method()
   << Title
   ```
-}
+-->
 
 For more information and examples of closure expressions,
 see <doc:Closures#Closure-Expressions>.
 For more information and examples of capture lists,
 see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
 
-@Comment {
+<!--
   - test: `async-throwing-closure-syntax`
   
   ```swifttest
@@ -1299,7 +1299,7 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
   !! ^
   // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
   ```
-}
+-->
 
 ```
 Grammar of a closure expression
@@ -1346,7 +1346,7 @@ x = .anotherValue
 ```
 
 
-@Comment {
+<!--
   - test: `implicitMemberEnum`
   
   ```swifttest
@@ -1354,7 +1354,7 @@ x = .anotherValue
   -> var x = MyEnumeration.someValue
   -> x = .anotherValue
   ```
-}
+-->
 
 If the inferred type is an optional,
 you can also use a member of the non-optional type
@@ -1365,13 +1365,13 @@ var someOptional: MyEnumeration? = .someValue
 ```
 
 
-@Comment {
+<!--
   - test: `implicitMemberEnum`
   
   ```swifttest
   -> var someOptional: MyEnumeration? = .someValue
   ```
-}
+-->
 
 Implicit member expressions can be followed by
 a postfix operator or other postfix syntax listed in
@@ -1405,7 +1405,7 @@ let z: SomeClass = .sharedSubclass
 ```
 
 
-@Comment {
+<!--
   - test: `implicit-member-chain`
   
   ```swifttest
@@ -1423,7 +1423,7 @@ let z: SomeClass = .sharedSubclass
   -> let y: SomeClass? = .shared
   -> let z: SomeClass = .sharedSubclass
   ```
-}
+-->
 
 In the code above,
 the type of `x` matches the type implied by its context exactly,
@@ -1438,14 +1438,14 @@ implicit-member-expression --> ``.`` identifier ``.`` postfix-expression
 ```
 
 
-@Comment {
+<!--
   The grammar above allows the additional pieces tested below,
   which work even though they're omitted from the SE-0287 list.
   The grammar also overproduces, allowing any primary expression
   because of the definition of postfix-expression.
-}
+-->
 
-@Comment {
+<!--
   - test: `implicit-member-grammar`
   
   ```swifttest
@@ -1475,7 +1475,7 @@ implicit-member-expression --> ``.`` identifier ``.`` postfix-expression
   >> }
   >> let s: S = .init(bestNumber: 42)
   ```
-}
+-->
 
 ### Parenthesized Expression
 
@@ -1486,9 +1486,9 @@ by explicitly grouping expressions.
 Grouping parentheses don't change an expression's type ---
 for example, the type of `(1)` is simply `Int`.
 
-@Comment {
+<!--
   See "Tuple Expression" below for langref grammar.
-}
+-->
 
 ```
 Grammar of a parenthesized expression
@@ -1521,7 +1521,7 @@ However, `(a: 10, b: (a: 1, x: 2))` is valid ---
 although `a` appears twice,
 it appears once in the outer tuple and once in the inner tuple.
 
-@Comment {
+<!--
   - test: `tuple-labels-must-be-unique`
   
   ```swifttest
@@ -1531,7 +1531,7 @@ it appears once in the outer tuple and once in the inner tuple.
   !! let bad = (a: 10, a: 20)
   !! ^
   ```
-}
+-->
 
 A tuple expression can contain zero expressions,
 or it can contain two or more expressions.
@@ -1566,7 +1566,7 @@ For example, in the following assignment
 ```
 
 
-@Comment {
+<!--
   - test: `wildcardTuple`
   
   ```swifttest
@@ -1574,7 +1574,7 @@ For example, in the following assignment
   -> (x, _) = (10, 20)
   -> // x is 10, and 20 is ignored
   ```
-}
+-->
 
 ```
 Grammar of a wildcard expression
@@ -1617,12 +1617,12 @@ pass the key path to the `subscript(keyPath:)` subscript,
 which is available on all types.
 For example:
 
-@Comment {
+<!--
   The subscript name subscript(keyPath:) above is a little odd,
   but it matches what would be displayed on the web.
   There isn't actually an extension on Any that implements this subscript;
   it's a special case in the compiler.
-}
+-->
 
 ```swift
 struct SomeStructure {
@@ -1637,7 +1637,7 @@ let value = s[keyPath: pathToProperty]
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1652,7 +1652,7 @@ let value = s[keyPath: pathToProperty]
   /> value is \(value)
   </ value is 12
   ```
-}
+-->
 
 The *type name* can be omitted
 in contexts where type inference
@@ -1675,17 +1675,17 @@ c.observe(\.someProperty) { object, change in
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression-implicit-type-name`
   
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
-         @objc dynamic var someProperty: Int
-         init(someProperty: Int) {
-             self.someProperty = someProperty
-         }
-     }
+  ->     @objc dynamic var someProperty: Int
+  ->     init(someProperty: Int) {
+  ->         self.someProperty = someProperty
+  ->     }
+  -> }
   ---
   -> let c = SomeClass(someProperty: 10)
   >> let r0 =
@@ -1693,12 +1693,12 @@ c.observe(\.someProperty) { object, change in
          // ...
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid discarding the function's return value.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 The *path* can refer to `self` to create the identity key path (`\.self`).
 The identity key path refers to a whole instance,
@@ -1713,7 +1713,7 @@ compoundValue[keyPath: \.self] = (a: 10, b: 20)
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression-self-keypath`
   
   ```swifttest
@@ -1721,7 +1721,7 @@ compoundValue[keyPath: \.self] = (a: 10, b: 20)
   // Equivalent to compoundValue = (a: 10, b: 20)
   -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
   ```
-}
+-->
 
 The *path* can contain multiple property names,
 separated by periods,
@@ -1747,7 +1747,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1765,7 +1765,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
   /> nestedValue is \(nestedValue)
   </ nestedValue is 24
   ```
-}
+-->
 
 The *path* can include subscripts using brackets,
 as long as the subscript's parameter type conforms to the `Hashable` protocol.
@@ -1779,7 +1779,7 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1788,14 +1788,14 @@ let myGreeting = greetings[keyPath: \[String].[1]]
   /> myGreeting is '\(myGreeting)'
   </ myGreeting is 'hola'
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: Update examples here and below to remove type names once
   inference bugs are fixed. The compiler currently gives an error
   that the usage is ambiguous.
   <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
-}
+-->
 
 The value used in a subscript can be a named value or a literal.
 Values are captured in key paths using value semantics.
@@ -1827,7 +1827,7 @@ print(fn(greetings))
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1849,7 +1849,7 @@ print(fn(greetings))
   -> print(fn(greetings))
   <- 안녕
   ```
-}
+-->
 
 The *path* can use optional chaining and forced unwrapping.
 This code uses optional chaining in a key path
@@ -1867,7 +1867,7 @@ print(count as Any)
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1880,12 +1880,12 @@ print(count as Any)
   -> print(count as Any)
   <- Optional(5)
   ```
-}
+-->
 
-@Comment {
+<!--
   The test above is failing, which appears to be a compiler bug.
   <rdar://problem/58484319> Swift 5.2 regression in keypaths
-}
+-->
 
 You can mix and match components of key paths to access values
 that are deeply nested within a type.
@@ -1909,7 +1909,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1925,7 +1925,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
   -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
   <- 64
   ```
-}
+-->
 
 You can use a key path expression
 in contexts where you would normally provide a function or closure.
@@ -1952,7 +1952,7 @@ let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -1971,13 +1971,13 @@ let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
   -> let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
   >> assert(descriptions == descriptions2)
   ```
-}
+-->
 
-@Comment {
+<!--
   REFERENCE
   The to-do list above draws from the lyrics of the song
   "The Pirates Who Don't Do Anything".
-}
+-->
 
 Any side effects of a key path expression
 are evaluated only at the point where the expression is evaluated.
@@ -2000,7 +2000,7 @@ let someTask = toDoList[keyPath: taskKeyPath]
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-expression`
   
   ```swifttest
@@ -2017,7 +2017,7 @@ let someTask = toDoList[keyPath: taskKeyPath]
   // Using taskKeyPath doesn't call makeIndex() again.
   -> let someTask = toDoList[keyPath: taskKeyPath]
   ```
-}
+-->
 
 For more information about using key paths
 in code that interacts with Objective-C APIs,
@@ -2073,15 +2073,15 @@ let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 ```
 
 
-@Comment {
+<!--
   - test: `selector-expression`
   
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
-         @objc let property: String
+  ->     @objc let property: String
   ---
-         @objc(doSomethingWithInt:)
+  ->     @objc(doSomethingWithInt:)
          func doSomething(_ x: Int) { }
   ---
          init(property: String) {
@@ -2091,7 +2091,7 @@ let selectorForPropertyGetter = #selector(getter: SomeClass.property)
   -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
   -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
   ```
-}
+-->
 
 When creating a selector for a property's getter,
 the *property name* can be a reference to a variable or constant property.
@@ -2112,7 +2112,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 ```
 
 
-@Comment {
+<!--
   - test: `selector-expression-with-as`
   
   ```swifttest
@@ -2126,12 +2126,12 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
   >>     }
   >> }
   -> extension SomeClass {
-         @objc(doSomethingWithString:)
+  ->     @objc(doSomethingWithString:)
          func doSomething(_ x: String) { }
      }
   -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
   ```
-}
+-->
 
 Because a selector is created at compile time, not at runtime,
 the compiler can check that a method or property exists
@@ -2153,12 +2153,12 @@ selector-expression --> ``#selector`` ``(`` ``setter:`` expression  ``)``
 ```
 
 
-@Comment {
+<!--
   Note: The parser does allow an arbitrary expression inside #selector(), not
   just a member name.  For example, see changes in Swift commit ef60d7289d in
   lib/Sema/CSApply.cpp -- there's explicit code to look through parens and
   optional binding.
-}
+-->
 
 ### Key-Path String Expression
 
@@ -2195,13 +2195,13 @@ if let value = c.value(forKey: keyPath) {
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-string-expression`
   
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
-        @objc var someProperty: Int
+  ->    @objc var someProperty: Int
         init(someProperty: Int) {
             self.someProperty = someProperty
         }
@@ -2215,7 +2215,7 @@ if let value = c.value(forKey: keyPath) {
   -> }
   <- 12
   ```
-}
+-->
 
 When you use a key-path string expression within a class,
 you can refer to a property of that class
@@ -2232,7 +2232,7 @@ print(keyPath == c.getSomeKeyPath())
 ```
 
 
-@Comment {
+<!--
   - test: `keypath-string-expression`
   
   ```swifttest
@@ -2244,7 +2244,7 @@ print(keyPath == c.getSomeKeyPath())
   -> print(keyPath == c.getSomeKeyPath())
   <- true
   ```
-}
+-->
 
 Because the key path string is created at compile time, not at runtime,
 the compiler can check that the property exists
@@ -2296,10 +2296,10 @@ postfix-expression --> optional-chaining-expression
 
 ### Function Call Expression
 
-@Comment {
+<!--
   TODO: After we rewrite function decls,
   revisit this section to make sure that the names for things match.
-}
+-->
 
 A *function call expression* consists of a function name
 followed by a comma-separated list of the function's arguments in parentheses.
@@ -2342,7 +2342,7 @@ anotherFunction(x: x) { $0 == 13 } g: { print(99) }
 ```
 
 
-@Comment {
+<!--
   - test: `trailing-closure`
   
   ```swifttest
@@ -2371,12 +2371,12 @@ anotherFunction(x: x) { $0 == 13 } g: { print(99) }
   << 99
   >> assert(r3 == false)
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 If the trailing closure is the function's only argument,
 you can omit the parentheses.
@@ -2388,7 +2388,7 @@ myData.someMethod { $0 == 13 }
 ```
 
 
-@Comment {
+<!--
   - test: `no-paren-trailing-closure`
   
   ```swifttest
@@ -2407,12 +2407,12 @@ myData.someMethod { $0 == 13 }
   -> myData.someMethod { $0 == 13 }
   >> assert(r1 == false)
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 To include the trailing closures in the arguments,
 the compiler examines the function's parameters from left to right as follows:
@@ -2456,7 +2456,7 @@ the closure is wrapped as needed.
 For example, if the parameter's type is an optional type,
 the closure is wrapped in `Optional` automatically.
 
-@Comment {
+<!--
   - test: `when-can-you-use-trailing-closure`
   
   ```swifttest
@@ -2479,7 +2479,7 @@ the closure is wrapped in `Optional` automatically.
   >> f5(x: 50) { $0 ? 5 : 500 }
   << 55
   ```
-}
+-->
 
 To ease migration of code from versions of Swift prior to 5.3 ---
 which performed this matching from right to left ---
@@ -2504,7 +2504,7 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
 ```
 
 
-@Comment {
+<!--
   - test: `trailing-closure-scanning-direction`
   
   ```swifttest
@@ -2530,17 +2530,17 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
   -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
   << 10 20
   ```
-}
+-->
 
 In the example above,
 the function call marked "Ambiguous"
 prints "- 120" and produces a compiler warning on Swift 5.3.
 A future version of Swift will print “110 -”.
 
-@Comment {
+<!--
   Smart quotes on the line above are needed
   because the regex heuristics gets the close quote wrong.
-}
+-->
 
 A class, structure, or enumeration type
 can enable syntactic sugar for function call syntax
@@ -2574,7 +2574,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 ```
 
 
-@Comment {
+<!--
   - test: `inout-unsafe-pointer`
   
   ```swifttest
@@ -2589,7 +2589,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
   << 1234
   << 1234
   ```
-}
+-->
 
 A pointer that's created by these implicit conversions
 is valid only for the duration of the function call.
@@ -2613,7 +2613,7 @@ especially when the function takes several pointer arguments.
 However, when calling functions from other Swift code,
 avoid using `&` instead of using the unsafe APIs explicitly.
 
-@Comment {
+<!--
   - test: `implicit-conversion-to-pointer`
   
   ```swifttest
@@ -2655,7 +2655,7 @@ avoid using `&` instead of using the unsafe APIs explicitly.
   !! takesUnsafeMutablePointerCChar(p: string)
   !!                                   ^
   ```
-}
+-->
 
 ```
 Grammar of a function call expression
@@ -2700,7 +2700,7 @@ class SomeSubClass: SomeSuperClass {
 ```
 
 
-@Comment {
+<!--
   - test: `init-call-superclass`
   
   ```swifttest
@@ -2712,7 +2712,7 @@ class SomeSubClass: SomeSuperClass {
   ->     }
   -> }
   ```
-}
+-->
 
 Like a function, an initializer can be used as a value.
 For example:
@@ -2726,7 +2726,7 @@ print(oneTwoThree)
 ```
 
 
-@Comment {
+<!--
   - test: `init-as-value`
   
   ```swifttest
@@ -2736,7 +2736,7 @@ print(oneTwoThree)
   -> print(oneTwoThree)
   <- 123
   ```
-}
+-->
 
 If you specify a type by name,
 you can access the type's initializer without using an initializer expression.
@@ -2751,7 +2751,7 @@ let s4 = type(of: someValue)(data: 5)       // Error
 ```
 
 
-@Comment {
+<!--
   - test: `explicit-implicit-init`
   
   ```swifttest
@@ -2769,7 +2769,7 @@ let s4 = type(of: someValue)(data: 5)       // Error
   !!                              ^
   !!                              .init
   ```
-}
+-->
 
 ```
 Grammar of an initializer expression
@@ -2804,7 +2804,7 @@ let y = c.someProperty  // Member access
 ```
 
 
-@Comment {
+<!--
   - test: `explicitMemberExpression`
   
   ```swifttest
@@ -2814,7 +2814,7 @@ let y = c.someProperty  // Member access
   -> let c = SomeClass()
   -> let y = c.someProperty  // Member access
   ```
-}
+-->
 
 The members of a tuple
 are implicitly named using integers in the order they appear,
@@ -2828,7 +2828,7 @@ t.0 = t.1
 ```
 
 
-@Comment {
+<!--
   - test: `explicit-member-expression`
   
   ```swifttest
@@ -2836,7 +2836,7 @@ t.0 = t.1
   -> t.0 = t.1
   -> // Now t is (20, 20, 30)
   ```
-}
+-->
 
 The members of a module access
 the top-level declarations of that module.
@@ -2872,7 +2872,7 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 ```
 
 
-@Comment {
+<!--
   - test: `function-with-argument-names`
   
   ```swifttest
@@ -2918,7 +2918,7 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
   !!                   ^
   -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
   ```
-}
+-->
 
 If a period appears at the beginning of a line,
 it's understood as part of an explicit member expression,
@@ -2934,7 +2934,7 @@ let x = [10, 3, 20, 15, 4]
 ```
 
 
-@Comment {
+<!--
   - test: `period-at-start-of-line`
   
   ```swifttest
@@ -2945,7 +2945,7 @@ let x = [10, 3, 20, 15, 4]
   >> print(x)
   << [1000, 1500, 2000]
   ```
-}
+-->
 
 You can combine this multiline chained syntax
 with compiler control statements
@@ -2963,7 +2963,7 @@ let numbers = [10, 20, 33, 43, 50]
 ```
 
 
-@Comment {
+<!--
   - test: `pound-if-inside-postfix-expression`
   
   ```swifttest
@@ -2976,16 +2976,16 @@ let numbers = [10, 20, 33, 43, 50]
   >> print(numbers)
   << [33, 43, 50]
   ```
-}
+-->
 
-@Comment {
+<!--
   The indentation gets lost for the .filter lines above
   even if I start them with -> instead of three spaces
   because that's how swift-format re-indents them.
   This is probably not the same issue as
   <rdar://problem/32463195> for multiline string literals,
   but they're likely related.
-}
+-->
 
 Between `#if`, `#endif`, and other compilation directives,
 the conditional compilation block can contain
@@ -3005,7 +3005,7 @@ the branch for the `#if` compilation directive
 must contain at least one expression.
 The other branches can be empty.
 
-@Comment {
+<!--
   - test: `pound-if-empty-if-not-allowed`
   
   ```swifttest
@@ -3018,9 +3018,9 @@ The other branches can be empty.
   !! .filter { $0 > 25 }
   !! ~^~~~~~
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `pound-if-else-can-be-empty`
   
   ```swifttest
@@ -3032,9 +3032,9 @@ The other branches can be empty.
   >> print(numbers)
   << [10, 20, 33, 43, 50]
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `pound-if-cant-use-binary-operators`
   
   ```swifttest
@@ -3047,7 +3047,7 @@ The other branches can be empty.
   !! ^~
   !!-
   ```
-}
+-->
 
 ```
 Grammar of an explicit member expression
@@ -3062,15 +3062,15 @@ argument-name --> identifier ``:``
 ```
 
 
-@Comment {
+<!--
   The grammar for method-name doesn't include the following:
-      method-name --> identifier argument-names-OPT
+      method-name -> identifier argument-names-OPT
   because the "postfix-expression . identifier" line above already covers that case.
-}
+-->
 
-@Comment {
+<!--
   See grammar for initializer-expression for the related "argument name" production there.
-}
+-->
 
 ### Postfix Self Expression
 
@@ -3116,7 +3116,7 @@ with the *index expressions* passed as the subscript parameters.
 To set its value,
 the subscript setter is called in the same way.
 
-@Comment {
+<!--
   TR: Confirm that indexing on
   a comma-separated list of expressions
   is intentional, not just a side effect.
@@ -3128,7 +3128,7 @@ the subscript setter is called in the same way.
   // t : Test = <Test instance>
   (swift) t[1, 2]
   // r0 : Int = 12
-}
+-->
 
 For information about subscript declarations,
 see <doc:Declarations#Protocol-Subscript-Declaration>.
@@ -3140,7 +3140,7 @@ subscript-expression --> postfix-expression ``[`` function-call-argument-list ``
 ```
 
 
-@Comment {
+<!--
   - test: `subscripts-can-take-operators`
   
   ```swifttest
@@ -3154,7 +3154,7 @@ subscript-expression --> postfix-expression ``[`` function-call-argument-list ``
   >> let s = S(x: 10, y: 20)
   >> assert(s[+] == 30)
   ```
-}
+-->
 
 ### Forced-Value Expression
 
@@ -3188,7 +3188,7 @@ someDictionary["a"]![0] = 100
 ```
 
 
-@Comment {
+<!--
   - test: `optional-as-lvalue`
   
   ```swifttest
@@ -3202,7 +3202,7 @@ someDictionary["a"]![0] = 100
   /> someDictionary is now \(someDictionary)
   </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
   ```
-}
+-->
 
 ```
 Grammar of a forced-value expression
@@ -3252,7 +3252,7 @@ var result: Bool? = c?.property.performAction()
 ```
 
 
-@Comment {
+<!--
   - test: `optional-chaining`
   
   ```swifttest
@@ -3262,7 +3262,7 @@ var result: Bool? = c?.property.performAction()
   -> var result: Bool? = c?.property.performAction()
   >> assert(result == nil)
   ```
-}
+-->
 
 The following example shows the behavior
 of the example above
@@ -3276,7 +3276,7 @@ if let unwrappedC = c {
 ```
 
 
-@Comment {
+<!--
   - test: `optional-chaining-alt`
   
   ```swifttest
@@ -3288,7 +3288,7 @@ if let unwrappedC = c {
         result = unwrappedC.property.performAction()
      }
   ```
-}
+-->
 
 The unwrapped value of an optional-chaining expression can be modified,
 either by mutating the value itself,
@@ -3314,7 +3314,7 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 ```
 
 
-@Comment {
+<!--
   - test: `optional-chaining-as-lvalue`
   
   ```swifttest
@@ -3334,7 +3334,7 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
   /> someDictionary is now \(someDictionary)
   </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
   ```
-}
+-->
 
 ```
 Grammar of an optional-chaining expression
@@ -3344,7 +3344,7 @@ optional-chaining-expression --> postfix-expression ``?``
 
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -3352,4 +3352,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

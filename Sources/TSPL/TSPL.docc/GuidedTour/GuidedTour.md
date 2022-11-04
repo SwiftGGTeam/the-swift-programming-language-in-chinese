@@ -10,10 +10,10 @@ Tradition suggests that the first program in a new language
 should print the words “Hello, world!” on the screen.
 In Swift, this can be done in a single line:
 
-@Comment {
+<!--
   K&R uses “hello, world”.
   It seems worth breaking with tradition to use proper casing.
-}
+-->
 
 ```swift
 print("Hello, world!")
@@ -21,14 +21,14 @@ print("Hello, world!")
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
   -> print("Hello, world!")
   <- Hello, world!
   ```
-}
+-->
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you ---
@@ -64,7 +64,7 @@ let myConstant = 42
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -72,7 +72,7 @@ let myConstant = 42
   -> myVariable = 50
   -> let myConstant = 42
   ```
-}
+-->
 
 A constant or variable must have the same type
 as the value you want to assign to it.
@@ -95,7 +95,7 @@ let explicitDouble: Double = 70
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -103,7 +103,7 @@ let explicitDouble: Double = 70
   -> let implicitDouble = 70.0
   -> let explicitDouble: Double = 70
   ```
-}
+-->
 
 > Experiment: Create a constant with
 > an explicit type of `Float` and a value of `4`.
@@ -119,7 +119,7 @@ let widthLabel = label + String(width)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -129,16 +129,16 @@ let widthLabel = label + String(width)
   >> print(widthLabel)
   << The width is 94
   ```
-}
+-->
 
 > Experiment: Try removing the conversion to `String` from the last line.
 > What error do you get?
 
-@Comment {
+<!--
   TODO: Discuss with Core Writers ---
   are these experiments that make you familiar with errors
   helping you learn something?
-}
+-->
 
 There's an even simpler way to include values in strings:
 Write the value in parentheses,
@@ -153,7 +153,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -166,7 +166,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
   >> print(fruitSummary)
   << I have 8 pieces of fruit.
   ```
-}
+-->
 
 > Experiment: Use `\()` to
 > include a floating-point calculation in a string
@@ -186,7 +186,7 @@ And then I said "I have \(apples + oranges) pieces of fruit."
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -195,19 +195,19 @@ And then I said "I have \(apples + oranges) pieces of fruit."
      And then I said "I have \(apples + oranges) pieces of fruit."
      """
   ```
-}
+-->
 
-@Comment {
+<!--
   Can't show an example of indentation in the triple-quoted string above.
   <rdar://problem/49129068> Swift code formatting damages indentation
-}
+-->
 
 Create arrays and dictionaries using brackets (`[]`),
 and access their elements by writing
 the index or key in brackets.
 A comma is allowed after the last element.
 
-@Comment {
+<!--
   REFERENCE
   The list of fruits comes from the colors that the original iMac came in,
   following the initial launch of the iMac in Bondi Blue, ordered by SKU --
@@ -224,9 +224,9 @@ A comma is allowed after the last element.
        M7443LL/A (333 MHz Tangerine)
        M7442LL/A (333 MHz Grape)
        M7440LL/A (333 MHz Blueberry)
-}
+-->
 
-@Comment {
+<!--
   REFERENCE
   Occupations is a reference to Firefly,
   specifically to Mal's joke about Jayne's job on the ship.
@@ -245,7 +245,7 @@ A comma is allowed after the last element.
   Mal: What?
   Simon: I was just wondering what his job is - on the ship.
   Mal: Public relations.
-}
+-->
 
 ```swift
 var fruits = ["strawberries", "limes", "tangerines"]
@@ -259,7 +259,7 @@ occupations["Jayne"] = "Public Relations"
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -272,7 +272,7 @@ occupations["Jayne"] = "Public Relations"
       ]
   -> occupations["Jayne"] = "Public Relations"
   ```
-}
+-->
 
 Arrays automatically grow as you add elements.
 
@@ -282,7 +282,7 @@ print(fruits)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -290,7 +290,7 @@ print(fruits)
   -> print(fruits)
   << ["strawberries", "grapes", "tangerines", "blueberries"]
   ```
-}
+-->
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -301,14 +301,14 @@ let emptyDictionary: [String: Float] = [:]
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
   -> let emptyArray: [String] = []
   -> let emptyDictionary: [String: Float] = [:]
   ```
-}
+-->
 
 If type information can be inferred,
 you can write an empty array as `[]`
@@ -316,9 +316,9 @@ and an empty dictionary as `[:]` ---
 for example, when you set a new value for a variable
 or pass an argument to a function.
 
-@Comment {
+<!--
   iBooks Store screenshot begins here.
-}
+-->
 
 ```swift
 fruits = []
@@ -326,14 +326,14 @@ occupations = [:]
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
   -> fruits = []
   -> occupations = [:]
   ```
-}
+-->
 
 ## Control Flow
 
@@ -358,7 +358,7 @@ print(teamScore)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -374,20 +374,20 @@ print(teamScore)
   -> print(teamScore)
   <- 11
   ```
-}
+-->
 
-@Comment {
+<!--
   REFERENCE
   Jelly babies are a candy/sweet that was closely associated
   with past incarnations of the Doctor in Dr. Who.
-}
+-->
 
-@Comment {
+<!--
   -> let haveJellyBabies = true
   -> if haveJellyBabies {
      }
   << Would you like a jelly baby?
-}
+-->
 
 In an `if` statement,
 the conditional must be a Boolean expression ---
@@ -402,16 +402,16 @@ or contains `nil` to indicate that a value is missing.
 Write a question mark (`?`) after the type of a value
 to mark the value as optional.
 
-@Comment {
+<!--
   iBooks Store screenshot ends here.
-}
+-->
 
-@Comment {
+<!--
   REFERENCE
   John Appleseed is a stock Apple fake name,
   going back at least to the contacts database
   that ships with the SDK in the simulator.
-}
+-->
 
 ```swift
 var optionalString: String? = "Hello"
@@ -426,7 +426,7 @@ if let name = optionalName {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -442,7 +442,7 @@ if let name = optionalName {
   >> print(greeting)
   << Hello, John Appleseed
   ```
-}
+-->
 
 > Experiment: Change `optionalName` to `nil`.
 > What greeting do you get?
@@ -468,7 +468,7 @@ let informalGreeting = "Hi \(nickname ?? fullName)"
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -478,7 +478,7 @@ let informalGreeting = "Hi \(nickname ?? fullName)"
   >> print(informalGreeting)
   << Hi John Appleseed
   ```
-}
+-->
 
 You can use a shorter spelling to unwrap a value,
 using the same name for that unwrapped value.
@@ -490,7 +490,7 @@ if let nickname {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -498,20 +498,20 @@ if let nickname {
          print("Hey, \(nickname)")
      }
   ```
-}
+-->
 
 Switches support any kind of data
 and a wide variety of comparison operations ---
 they aren't limited to integers
 and tests for equality.
 
-@Comment {
+<!--
   REFERENCE
   The vegetables and foods made from vegetables
   were just a convenient choice for a switch statement.
   They have various properties
   and fit with the apples & oranges used in an earlier example.
-}
+-->
 
 ```swift
 let vegetable = "red pepper"
@@ -529,7 +529,7 @@ default:
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -546,7 +546,7 @@ default:
      }
   <- Is it a spicy red pepper?
   ```
-}
+-->
 
 > Experiment: Try removing the default case.
 > What error do you get?
@@ -561,10 +561,10 @@ Execution doesn't continue to the next case,
 so you don't need to explicitly break out of the switch
 at the end of each case’s code.
 
-@Comment {
+<!--
   Omitting mention of "fallthrough" keyword.
   It's in the guide/reference if you need it.
-}
+-->
 
 You use `for`-`in` to iterate over items in a dictionary
 by providing a pair of names to use
@@ -573,13 +573,13 @@ Dictionaries are an unordered collection,
 so their keys and values are iterated over
 in an arbitrary order.
 
-@Comment {
+<!--
   REFERENCE
   Prime, square, and Fibonacci numbers
   are just convenient sets of numbers
   that many developers are already familiar with
   that we can use for some simple math.
-}
+-->
 
 ```swift
 let interestingNumbers = [
@@ -600,7 +600,7 @@ print(largest)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -620,7 +620,7 @@ print(largest)
   -> print(largest)
   <- 25
   ```
-}
+-->
 
 > Experiment: Replace the `_` with a variable name,
 > and keep track of which kind of number was the largest.
@@ -629,12 +629,12 @@ Use `while` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
 ensuring that the loop is run at least once.
 
-@Comment {
+<!--
   REFERENCE
   This example is rather skeletal -- m and n are pretty boring.
   I couldn't come up with anything suitably interesting at the time though,
   so I just went ahead and used this.
-}
+-->
 
 ```swift
 var n = 2
@@ -653,7 +653,7 @@ print(m)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -671,7 +671,7 @@ print(m)
   -> print(m)
   <- 128
   ```
-}
+-->
 
 You can keep an index in a loop
 by using `..<` to make a range of indexes.
@@ -686,7 +686,7 @@ print(total)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -697,7 +697,7 @@ print(total)
   -> print(total)
   <- 6
   ```
-}
+-->
 
 Use `..<` to make a range that omits its upper value,
 and use `...` to make a range that includes both values.
@@ -710,13 +710,13 @@ with a list of arguments in parentheses.
 Use `->` to separate the parameter names and types
 from the function's return type.
 
-@Comment {
+<!--
   REFERENCE
   Bob is used as just a generic name,
   but also a callout to Alex's dad.
   Tuesday is used on the assumption that lots of folks would be reading
   on the Tuesday after the WWDC keynote.
-}
+-->
 
 ```swift
 func greet(person: String, day: String) -> String {
@@ -726,7 +726,7 @@ greet(person: "Bob", day: "Tuesday")
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -738,7 +738,7 @@ greet(person: "Bob", day: "Tuesday")
   >> print(greetBob)
   << Hello Bob, today is Tuesday.
   ```
-}
+-->
 
 > Experiment: Remove the `day` parameter.
 > Add a parameter to include today’s lunch special in the greeting.
@@ -757,7 +757,7 @@ greet("John", on: "Wednesday")
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -769,20 +769,20 @@ greet("John", on: "Wednesday")
   >> print(greetJohn)
   << Hello John, today is Wednesday.
   ```
-}
+-->
 
 Use a tuple to make a compound value ---
 for example, to return multiple values from a function.
 The elements of a tuple can be referred to
 either by name or by number.
 
-@Comment {
+<!--
   REFERENCE
   Min, max, and sum are convenient for this example
   because they're all simple operations
   that are performed on the same kind of data.
   This gives the function a reason to return a tuple.
-}
+-->
 
 ```swift
 func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
@@ -809,7 +809,7 @@ print(statistics.2)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -837,7 +837,7 @@ print(statistics.2)
   -> print(statistics.2)
   <- 120
   ```
-}
+-->
 
 Functions can be nested.
 Nested functions have access to variables
@@ -859,7 +859,7 @@ returnFifteen()
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -876,7 +876,7 @@ returnFifteen()
   >> print(fifteen)
   << 15
   ```
-}
+-->
 
 Functions are a first-class type.
 This means that a function can return another function as its value.
@@ -893,7 +893,7 @@ increment(7)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -909,7 +909,7 @@ increment(7)
   >> print(incrementResult)
   << 8
   ```
-}
+-->
 
 A function can take another function as one of its arguments.
 
@@ -930,7 +930,7 @@ hasAnyMatches(list: numbers, condition: lessThanTen)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -951,7 +951,7 @@ hasAnyMatches(list: numbers, condition: lessThanTen)
   >> print(anyMatches)
   << true
   ```
-}
+-->
 
 Functions are actually a special case of closures:
 blocks of code that can be called later.
@@ -971,7 +971,7 @@ numbers.map({ (number: Int) -> Int in
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -983,7 +983,7 @@ numbers.map({ (number: Int) -> Int in
   >> print(numbersMap)
   << [60, 57, 21, 36]
   ```
-}
+-->
 
 > Experiment: Rewrite the closure to return zero for all odd numbers.
 
@@ -1002,7 +1002,7 @@ print(mappedNumbers)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1010,7 +1010,7 @@ print(mappedNumbers)
   -> print(mappedNumbers)
   <- [60, 57, 21, 36]
   ```
-}
+-->
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
@@ -1026,7 +1026,7 @@ print(sortedNumbers)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1034,19 +1034,19 @@ print(sortedNumbers)
   -> print(sortedNumbers)
   <- [20, 19, 12, 7]
   ```
-}
+-->
 
-@Comment {
+<!--
   Called sorted() on a variable rather than a literal to work around an issue in Xcode.  See <rdar://17540974>.
-}
+-->
 
-@Comment {
+<!--
   Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
-}
+-->
 
-@Comment {
+<!--
   Omitted custom operators as "advanced" topics.
-}
+-->
 
 ## Objects and Classes
 
@@ -1056,7 +1056,7 @@ as a constant or variable declaration,
 except that it's in the context of a class.
 Likewise, method and function declarations are written the same way.
 
-@Comment {
+<!--
   REFERENCE
   Shapes are used as the example object
   because they're familiar and they have a sense of properties
@@ -1064,7 +1064,7 @@ Likewise, method and function declarations are written the same way.
   They're not a perfect fit --
   they might be better off modeled as structures --
   but that wouldn't let them inherit behavior.
-}
+-->
 
 ```swift
 class Shape {
@@ -1076,7 +1076,7 @@ class Shape {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1089,7 +1089,7 @@ class Shape {
   >> print(Shape().simpleDescription())
   << A shape with 0 sides.
   ```
-}
+-->
 
 > Experiment: Add a constant property with `let`,
 > and add another method that takes an argument.
@@ -1106,7 +1106,7 @@ var shapeDescription = shape.simpleDescription()
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1116,7 +1116,7 @@ var shapeDescription = shape.simpleDescription()
   >> print(shapeDescription)
   << A shape with 7 sides.
   ```
-}
+-->
 
 This version of the `Shape` class is missing something important:
 an initializer to set up the class when an instance is created.
@@ -1138,7 +1138,7 @@ class NamedShape {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1159,7 +1159,7 @@ class NamedShape {
   >> print(NamedShape(name: "test name").simpleDescription())
   << A shape with 0 sides.
   ```
-}
+-->
 
 Notice how `self` is used to distinguish the `name` property
 from the `name` argument to the initializer.
@@ -1210,7 +1210,7 @@ test.simpleDescription()
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1241,7 +1241,7 @@ test.simpleDescription()
   >> print(testDesc)
   << A square with sides of length 5.2.
   ```
-}
+-->
 
 > Experiment: Make another subclass of `NamedShape`
 > called `Circle`
@@ -1285,7 +1285,7 @@ print(triangle.sideLength)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1318,7 +1318,7 @@ print(triangle.sideLength)
   -> print(triangle.sideLength)
   <- 3.3000000000000003
   ```
-}
+-->
 
 In the setter for `perimeter`,
 the new value has the implicit name `newValue`.
@@ -1341,12 +1341,12 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
-@Comment {
+<!--
   This triangle + square example could use improvement.
   The goal is to show why you would want to use willSet,
   but it was constrained by the fact that
   we're working in the context of geometric shapes.
-}
+-->
 
 ```swift
 class TriangleAndSquare {
@@ -1376,7 +1376,7 @@ print(triangleAndSquare.triangle.sideLength)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1405,14 +1405,14 @@ print(triangleAndSquare.triangle.sideLength)
   -> print(triangleAndSquare.triangle.sideLength)
   <- 50.0
   ```
-}
+-->
 
-@Comment {
+<!--
   Grammatically, these clauses are general to variables.
   Not sure what it would look like
   (or if it's even allowed)
   to use them outside a class or a struct.
-}
+-->
 
 When working with optional values,
 you can write `?` before operations like methods, properties, and subscripting.
@@ -1430,14 +1430,14 @@ let sideLength = optionalSquare?.sideLength
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
   -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
   -> let sideLength = optionalSquare?.sideLength
   ```
-}
+-->
 
 ## Enumerations and Structures
 
@@ -1445,7 +1445,7 @@ Use `enum` to create an enumeration.
 Like classes and all other named types,
 enumerations can have methods associated with them.
 
-@Comment {
+<!--
   REFERENCE
   Playing cards work pretty well to demonstrate enumerations
   because they have two aspects, suit and rank,
@@ -1453,7 +1453,7 @@ enumerations can have methods associated with them.
   The deck used here is probably the most common,
   at least through most of Europe and the Americas,
   but there are many other regional variations.
-}
+-->
 
 ```swift
 enum Rank: Int {
@@ -1481,7 +1481,7 @@ let aceRawValue = ace.rawValue
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1510,7 +1510,7 @@ let aceRawValue = ace.rawValue
   >> print(aceRawValue)
   << 1
   ```
-}
+-->
 
 > Experiment: Write a function that compares two `Rank` values
 > by comparing their raw values.
@@ -1536,7 +1536,7 @@ if let convertedRank = Rank(rawValue: 3) {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1546,7 +1546,7 @@ if let convertedRank = Rank(rawValue: 3) {
   << 3
   -> }
   ```
-}
+-->
 
 The case values of an enumeration are actual values,
 not just another way of writing their raw values.
@@ -1576,7 +1576,7 @@ let heartsDescription = hearts.simpleDescription()
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1601,16 +1601,16 @@ let heartsDescription = hearts.simpleDescription()
   >> print(heartsDescription)
   << hearts
   ```
-}
+-->
 
 > Experiment: Add a `color()` method to `Suit` that returns "black"
 > for spades and clubs, and returns "red" for hearts and diamonds.
 
-@Comment {
+<!--
   Suits are in Bridge order, which matches Unicode order.
   In other games, orders differ.
   Wikipedia lists a good half dozen orders.
-}
+-->
 
 Notice the two ways that the `hearts` case of the enumeration
 is referred to above:
@@ -1639,7 +1639,7 @@ the sunrise and sunset times from a server.
 The server either responds with the requested information,
 or it responds with a description of what went wrong.
 
-@Comment {
+<!--
   REFERENCE
   The server response is a simple way to essentially re-implement Optional
   while sidestepping the fact that I'm doing so.
@@ -1671,7 +1671,7 @@ or it responds with a description of what went wrong.
   and told add more cheese if necessary --
   the officer in charge said that he didn't want
   an "out of cheese error" interrupting the calculation.
-}
+-->
 
 ```swift
 enum ServerResponse {
@@ -1692,7 +1692,7 @@ case let .failure(message):
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1712,7 +1712,7 @@ case let .failure(message):
      }
   <- Sunrise is at 6:00 am and sunset is at 8:09 pm.
   ```
-}
+-->
 
 > Experiment: Add a third case to `ServerResponse` and to the switch.
 
@@ -1741,7 +1741,7 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1757,7 +1757,7 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
   >> print(threeOfSpadesDescription)
   << The 3 of spades
   ```
-}
+-->
 
 > Experiment: Write a function that returns an array containing
 > a full deck of cards,
@@ -1777,7 +1777,7 @@ func fetchUserID(from server: String) async -> Int {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1788,7 +1788,7 @@ func fetchUserID(from server: String) async -> Int {
          return 501
      }
   ```
-}
+-->
 
 You mark a call to an asynchronous function by writing `await` in front of it.
 
@@ -1803,7 +1803,7 @@ func fetchUsername(from server: String) async -> String {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1815,7 +1815,7 @@ func fetchUsername(from server: String) async -> String {
          return "Guest"
      }
   ```
-}
+-->
 
 Use `async let` to call an asynchronous function,
 letting it run in parallel with other asynchronous code.
@@ -1831,7 +1831,7 @@ func connectUser(to server: String) async {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1842,7 +1842,7 @@ func connectUser(to server: String) async {
          print(greeting)
      }
   ```
-}
+-->
 
 Use `Task` to call asynchronous functions from synchronous code,
 without waiting for them to return.
@@ -1855,7 +1855,7 @@ Task {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1865,7 +1865,7 @@ Task {
   >> import Darwin; sleep(1)  // Pause for task to run
   <- Hello Guest, user ID 97
   ```
-}
+-->
 
 ## Protocols and Extensions
 
@@ -1879,7 +1879,7 @@ protocol ExampleProtocol {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1888,17 +1888,17 @@ protocol ExampleProtocol {
           mutating func adjust()
      }
   ```
-}
+-->
 
 Classes, enumerations, and structures can all adopt protocols.
 
-@Comment {
+<!--
   REFERENCE
   The use of adjust() is totally a placeholder
   for some more interesting operation.
   Likewise for the struct and classes -- placeholders
   for some more interesting data structure.
-}
+-->
 
 ```swift
 class SimpleClass: ExampleProtocol {
@@ -1924,7 +1924,7 @@ let bDescription = b.simpleDescription
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -1953,7 +1953,7 @@ let bDescription = b.simpleDescription
   >> print(bDescription)
   << A simple structure (adjusted)
   ```
-}
+-->
 
 > Experiment: Add another requirement to `ExampleProtocol`.
 > What changes do you need to make
@@ -1987,7 +1987,7 @@ print(7.simpleDescription)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2002,7 +2002,7 @@ print(7.simpleDescription)
   -> print(7.simpleDescription)
   <- The number 7
   ```
-}
+-->
 
 > Experiment: Write an extension for the `Double` type
 > that adds an `absoluteValue` property.
@@ -2022,7 +2022,7 @@ print(protocolValue.simpleDescription)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2031,7 +2031,7 @@ print(protocolValue.simpleDescription)
   <- A very simple class.  Now 100% adjusted.
   // print(protocolValue.anotherProperty)  // Uncomment to see the error
   ```
-}
+-->
 
 Even though the variable `protocolValue`
 has a runtime type of `SimpleClass`,
@@ -2044,7 +2044,7 @@ in addition to its protocol conformance.
 
 You represent errors using any type that adopts the `Error` protocol.
 
-@Comment {
+<!--
   REFERENCE
   PrinterError.OnFire is a reference to the Unix printing system's "lp0 on
   fire" error message, used when the kernel can't identify the specific error.
@@ -2061,7 +2061,7 @@ You represent errors using any type that adopts the `Error` protocol.
   to the previous manual typesetting.  It set an entire line of type (hence
   the name) at a time, and was controlled by a keyboard.  The Monotype
   machine, invented in 1885 by Tolbert Lanston, performed similar work.
-}
+-->
 
 ```swift
 enum PrinterError: Error {
@@ -2072,7 +2072,7 @@ enum PrinterError: Error {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2082,7 +2082,7 @@ enum PrinterError: Error {
          case onFire
      }
   ```
-}
+-->
 
 Use `throw` to throw an error
 and `throws` to mark a function that can throw an error.
@@ -2100,7 +2100,7 @@ func send(job: Int, toPrinter printerName: String) throws -> String {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2111,7 +2111,7 @@ func send(job: Int, toPrinter printerName: String) throws -> String {
          return "Job sent"
      }
   ```
-}
+-->
 
 There are several ways to handle errors.
 One way is to use `do`-`catch`.
@@ -2132,7 +2132,7 @@ do {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2144,16 +2144,16 @@ do {
      }
   <- Job sent
   ```
-}
+-->
 
 > Experiment: Change the printer name to `"Never Has Toner"`,
 > so that the `send(job:toPrinter:)` function throws an error.
 
-@Comment {
+<!--
   Assertion tests the change that the Experiment box instructs you to make.
-}
+-->
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2165,17 +2165,17 @@ do {
      }
   <- noToner
   ```
-}
+-->
 
 You can provide multiple `catch` blocks
 that handle specific errors.
 You write a pattern after `catch` just as you do
 after `case` in a switch.
 
-@Comment {
+<!--
   REFERENCE
   The "rest of the fire" quote comes from The IT Crowd, season 1 episode 2.
-}
+-->
 
 ```swift
 do {
@@ -2192,7 +2192,7 @@ do {
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2208,7 +2208,7 @@ do {
      }
   <- Job sent
   ```
-}
+-->
 
 > Experiment: Add code to throw an error inside the `do` block.
 > What kind of error do you need to throw
@@ -2228,7 +2228,7 @@ let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2239,7 +2239,7 @@ let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
   >> print(printerFailure as Any)
   << nil
   ```
-}
+-->
 
 Use `defer` to write a block of code
 that's executed after all other code in the function,
@@ -2267,7 +2267,7 @@ print(fridgeIsOpen)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2290,19 +2290,19 @@ print(fridgeIsOpen)
   -> print(fridgeIsOpen)
   <- false
   ```
-}
+-->
 
 ## Generics
 
 Write a name inside angle brackets
 to make a generic function or type.
 
-@Comment {
+<!--
   REFERENCE
   The four knocks is a reference to Dr Who series 4,
   in which knocking four times is a running aspect
   of the season's plot.
-}
+-->
 
 ```swift
 func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
@@ -2316,7 +2316,7 @@ makeArray(repeating: "knock", numberOfTimes: 4)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2332,7 +2332,7 @@ makeArray(repeating: "knock", numberOfTimes: 4)
   >> print(fourKnocks)
   << ["knock", "knock", "knock", "knock"]
   ```
-}
+-->
 
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
@@ -2348,7 +2348,7 @@ possibleInteger = .some(100)
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2360,7 +2360,7 @@ possibleInteger = .some(100)
   -> var possibleInteger: OptionalValue<Int> = .none
   -> possibleInteger = .some(100)
   ```
-}
+-->
 
 Use `where` right before the body
 to specify a list of requirements ---
@@ -2386,7 +2386,7 @@ anyCommonElements([1, 2, 3], [3])
 ```
 
 
-@Comment {
+<!--
   - test: `guided-tour`
   
   ```swifttest
@@ -2407,7 +2407,7 @@ anyCommonElements([1, 2, 3], [3])
   >> print(hasAnyCommon)
   << true
   ```
-}
+-->
 
 > Experiment: Modify the `anyCommonElements(_:_:)` function
 > to make a function that returns an array
@@ -2417,7 +2417,7 @@ Writing `<T: Equatable>`
 is the same as writing `<T> ... where T: Equatable`.
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -2425,4 +2425,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

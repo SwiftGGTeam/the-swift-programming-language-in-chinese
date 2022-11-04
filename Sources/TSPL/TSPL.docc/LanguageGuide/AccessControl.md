@@ -167,7 +167,7 @@ private func somePrivateFunction() {}
 ```
 
 
-@Comment {
+<!--
   - test: `accessControlSyntax`
   
   ```swifttest
@@ -181,7 +181,7 @@ private func somePrivateFunction() {}
   -> fileprivate func someFilePrivateFunction() {}
   -> private func somePrivateFunction() {}
   ```
-}
+-->
 
 Unless otherwise specified, the default access level is internal,
 as described in <doc:AccessControl#Default-Access-Levels>.
@@ -195,14 +195,14 @@ let someInternalConstant = 0            // implicitly internal
 ```
 
 
-@Comment {
+<!--
   - test: `accessControlDefaulted`
   
   ```swifttest
   -> class SomeInternalClass {}              // implicitly internal
   -> let someInternalConstant = 0            // implicitly internal
   ```
-}
+-->
 
 ## Custom Types
 
@@ -255,7 +255,7 @@ private class SomePrivateClass {                // explicitly private class
 ```
 
 
-@Comment {
+<!--
   - test: `accessControl, accessControlWrong`
   
   ```swifttest
@@ -281,7 +281,7 @@ private class SomePrivateClass {                // explicitly private class
         func somePrivateMethod() {}                  // implicitly private class member
      }
   ```
-}
+-->
 
 ### Tuple Types
 
@@ -291,7 +291,7 @@ For example, if you compose a tuple from two different types,
 one with internal access and one with private access,
 the access level for that compound tuple type will be private.
 
-@Comment {
+<!--
   - test: `tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private`
   
   ```swifttest
@@ -308,9 +308,9 @@ the access level for that compound tuple type will be private.
         return (PublicStruct(), FilePrivateStruct())
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `tupleTypes_Module1_PublicAndInternal`
   
   ```swifttest
@@ -318,9 +318,9 @@ the access level for that compound tuple type will be private.
   -> let publicTuple = returnPublicTuple()
   -> let internalTuple = returnInternalTuple()
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `tupleTypes_Module1_Private`
   
   ```swifttest
@@ -330,9 +330,9 @@ the access level for that compound tuple type will be private.
   !! let privateTuple = returnFilePrivateTuple()
   !!                    ^~~~~~~~~~~~~~~~~~~~~~
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `tupleTypes_Module2_Public`
   
   ```swifttest
@@ -340,9 +340,9 @@ the access level for that compound tuple type will be private.
   -> import tupleTypes_Module1
   -> let publicTuple = returnPublicTuple()
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `tupleTypes_Module2_InternalAndPrivate`
   
   ```swifttest
@@ -357,7 +357,7 @@ the access level for that compound tuple type will be private.
   !! let privateTuple = returnFilePrivateTuple()
   !!                    ^~~~~~~~~~~~~~~~~~~~~~
   ```
-}
+-->
 
 > Note: Tuple types don't have a standalone definition in the way that
 > classes, structures, enumerations, and functions do.
@@ -385,7 +385,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 ```
 
 
-@Comment {
+<!--
   - test: `accessControlWrong`
   
   ```swifttest
@@ -397,7 +397,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   !! ^
   ```
-}
+-->
 
 The function's return type is
 a tuple type composed from two of the custom classes defined above in <doc:AccessControl#Custom-Types>.
@@ -417,7 +417,7 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 ```
 
 
-@Comment {
+<!--
   - test: `accessControl`
   
   ```swifttest
@@ -426,7 +426,7 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   >>    return (SomeInternalClass(), SomePrivateClass())
      }
   ```
-}
+-->
 
 It's not valid to mark the definition of `someFunction()`
 with the `public` or `internal` modifiers,
@@ -455,7 +455,7 @@ public enum CompassPoint {
 ```
 
 
-@Comment {
+<!--
   - test: `enumerationCases`
   
   ```swifttest
@@ -466,9 +466,9 @@ public enum CompassPoint {
         case west
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `enumerationCases_Module1`
   
   ```swifttest
@@ -479,16 +479,16 @@ public enum CompassPoint {
         case west
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `enumerationCases_Module2`
   
   ```swifttest
   -> import enumerationCases_Module1
   -> let north = CompassPoint.north
   ```
-}
+-->
 
 #### Raw Values and Associated Values
 
@@ -507,7 +507,7 @@ have an automatic access level of internal.
 If you want a nested type within a public type to be publicly available,
 you must explicitly declare the nested type as public.
 
-@Comment {
+<!--
   - test: `nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private`
   
   ```swifttest
@@ -531,9 +531,9 @@ you must explicitly declare the nested type as public.
         private enum PrivateEnumInsidePrivateStruct { case a, b }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `nestedTypes_Module1_PublicAndInternal`
   
   ```swifttest
@@ -545,9 +545,9 @@ you must explicitly declare the nested type as public.
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `nestedTypes_Module1_Private`
   
   ```swifttest
@@ -578,9 +578,9 @@ you must explicitly declare the nested type as public.
   !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
   !!                                    ^~~~~~~~~~~~~
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `nestedTypes_Module2_Public`
   
   ```swifttest
@@ -588,9 +588,9 @@ you must explicitly declare the nested type as public.
   -> import nestedTypes_Module1
   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `nestedTypes_Module2_InternalAndPrivate`
   
   ```swifttest
@@ -641,7 +641,7 @@ you must explicitly declare the nested type as public.
   !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
   !!                                    ^~~~~~~~~~~~~
   ```
-}
+-->
 
 ## Subclassing
 
@@ -679,7 +679,7 @@ internal class B: A {
 ```
 
 
-@Comment {
+<!--
   - test: `subclassingNoCall`
   
   ```swifttest
@@ -691,7 +691,7 @@ internal class B: A {
         override internal func someMethod() {}
      }
   ```
-}
+-->
 
 It's even valid for a subclass member to call
 a superclass member that has lower access permissions than the subclass member,
@@ -713,7 +713,7 @@ internal class B: A {
 ```
 
 
-@Comment {
+<!--
   - test: `subclassingWithCall`
   
   ```swifttest
@@ -727,7 +727,7 @@ internal class B: A {
         }
      }
   ```
-}
+-->
 
 Because superclass `A` and subclass `B` are defined in the same source file,
 it's valid for the `B` implementation of `someMethod()` to call
@@ -747,15 +747,15 @@ private var privateInstance = SomePrivateClass()
 ```
 
 
-@Comment {
+<!--
   - test: `accessControl`
   
   ```swifttest
   -> private var privateInstance = SomePrivateClass()
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `useOfPrivateTypeRequiresPrivateModifier`
   
   ```swifttest
@@ -786,7 +786,7 @@ private var privateInstance = SomePrivateClass()
   !! private class SomePrivateClass {}
   !! ^
   ```
-}
+-->
 
 ### Getters and Setters
 
@@ -823,7 +823,7 @@ struct TrackedString {
 ```
 
 
-@Comment {
+<!--
   - test: `reducedSetterScope, reducedSetterScope_error`
   
   ```swifttest
@@ -836,7 +836,7 @@ struct TrackedString {
         }
      }
   ```
-}
+-->
 
 The `TrackedString` structure defines a stored string property called `value`,
 with an initial value of `""` (an empty string).
@@ -859,7 +859,7 @@ This enables `TrackedString` to modify the `numberOfEdits` property internally,
 but to present the property as a read-only property
 when it's used outside the structure's definition.
 
-@Comment {
+<!--
   - test: `reducedSetterScope_error`
   
   ```swifttest
@@ -873,12 +873,12 @@ when it's used outside the structure's definition.
   !! let resultA: Void = { s.numberOfEdits += 1 }()
   !!                       ~~~~~~~~~~~~~~~ ^
   ```
-}
+-->
 
-@Comment {
+<!--
   The assertion above must be compiled because of a REPL bug
   <rdar://problem/54089342> REPL fails to enforce private(set) on struct property
-}
+-->
 
 If you create a `TrackedString` instance and modify its string value a few times,
 you can see the `numberOfEdits` property value update to match the number of modifications:
@@ -893,7 +893,7 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 ```
 
 
-@Comment {
+<!--
   - test: `reducedSetterScope`
   
   ```swifttest
@@ -904,7 +904,7 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
   -> print("The number of edits is \(stringToEdit.numberOfEdits)")
   <- The number of edits is 3
   ```
-}
+-->
 
 Although you can query the current value of the `numberOfEdits` property
 from within another source file,
@@ -936,7 +936,7 @@ public struct TrackedString {
 ```
 
 
-@Comment {
+<!--
   - test: `reducedSetterScopePublic`
   
   ```swifttest
@@ -950,9 +950,9 @@ public struct TrackedString {
         public init() {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `reducedSetterScopePublic_Module1_Allowed, reducedSetterScopePublic_Module1_NotAllowed`
   
   ```swifttest
@@ -966,9 +966,9 @@ public struct TrackedString {
         public init() {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `reducedSetterScopePublic_Module1_Allowed`
   
   ```swifttest
@@ -976,9 +976,9 @@ public struct TrackedString {
   -> var stringToEdit_Module1B = TrackedString()
   -> let resultB = stringToEdit_Module1B.numberOfEdits
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `reducedSetterScopePublic_Module1_NotAllowed`
   
   ```swifttest
@@ -989,9 +989,9 @@ public struct TrackedString {
   !! let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
   !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `reducedSetterScopePublic_Module2`
   
   ```swifttest
@@ -1005,7 +1005,7 @@ public struct TrackedString {
   !! let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
   !!                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
   ```
-}
+-->
 
 ## Initializers
 
@@ -1063,7 +1063,7 @@ the protocol it supports.
 This ensures that all of the protocol's requirements will be visible
 on any type that adopts the protocol.
 
-@Comment {
+<!--
   - test: `protocolRequirementsCannotBeDifferentThanTheProtocol`
   
   ```swifttest
@@ -1102,7 +1102,7 @@ on any type that adopts the protocol.
   !! private var privateProperty: Int { get }
   !! ^
   ```
-}
+-->
 
 > Note: If you define a public protocol,
 > the protocol's requirements require a public access level
@@ -1111,7 +1111,7 @@ on any type that adopts the protocol.
 > where a public type definition implies
 > an access level of internal for the type's members.
 
-@Comment {
+<!--
   - test: `protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private`
   
   ```swifttest
@@ -1132,9 +1132,9 @@ on any type that adopts the protocol.
         func privateMethod()
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocols_Module1_PublicAndInternal`
   
   ```swifttest
@@ -1165,9 +1165,9 @@ on any type that adopts the protocol.
         func internalMethod() {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocols_Module1_Private`
   
   ```swifttest
@@ -1189,9 +1189,9 @@ on any type that adopts the protocol.
   !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
   !! ^~~~~~~~~~~~~~~
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocols_Module2_Public`
   
   ```swifttest
@@ -1210,9 +1210,9 @@ on any type that adopts the protocol.
         func publicMethod() {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocols_Module2_InternalAndPrivate`
   
   ```swifttest
@@ -1241,7 +1241,7 @@ on any type that adopts the protocol.
   !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
   !! ^~~~~~~~~~~~~~~
   ```
-}
+-->
 
 ### Protocol Inheritance
 
@@ -1296,7 +1296,7 @@ if you're using that extension to add protocol conformance.
 Instead, the protocol's own access level is used to provide
 the default access level for each protocol requirement implementation within the extension.
 
-@Comment {
+<!--
   - test: `extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private`
   
   ```swifttest
@@ -1315,9 +1315,9 @@ the default access level for each protocol requirement implementation within the
   -> let sameFileB = publicStructInSameFile.implicitlyInternalMethodFromExtension()
   -> let sameFileC = publicStructInSameFile.filePrivateMethod()
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extensions_Module1_PublicAndInternal`
   
   ```swifttest
@@ -1325,9 +1325,9 @@ the default access level for each protocol requirement implementation within the
   -> let differentFileA = publicStructInDifferentFile.implicitlyInternalMethodFromStruct()
   -> let differentFileB = publicStructInDifferentFile.implicitlyInternalMethodFromExtension()
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extensions_Module1_Private`
   
   ```swifttest
@@ -1340,9 +1340,9 @@ the default access level for each protocol requirement implementation within the
   !! func filePrivateMethod() -> Int { return 0 }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extensions_Module2`
   
   ```swifttest
@@ -1370,7 +1370,7 @@ the default access level for each protocol requirement implementation within the
   !! fileprivate func filePrivateMethod() -> Int
   !!                  ^
   ```
-}
+-->
 
 ### Private Members in Extensions
 
@@ -1399,7 +1399,7 @@ protocol SomeProtocol {
 ```
 
 
-@Comment {
+<!--
   - test: `extensions_privatemembers`
   
   ```swifttest
@@ -1407,7 +1407,7 @@ protocol SomeProtocol {
          func doSomething()
      }
   ```
-}
+-->
 
 You can use an extension to add protocol conformance, like this:
 
@@ -1424,7 +1424,7 @@ extension SomeStruct: SomeProtocol {
 ```
 
 
-@Comment {
+<!--
   - test: `extensions_privatemembers`
   
   ```swifttest
@@ -1441,7 +1441,7 @@ extension SomeStruct: SomeProtocol {
   >> s.doSomething()
   << 12
   ```
-}
+-->
 
 ## Generics
 
@@ -1458,7 +1458,7 @@ but a public type alias can't alias an internal, file-private, or private type.
 
 > Note: This rule also applies to type aliases for associated types used to satisfy protocol conformances.
 
-@Comment {
+<!--
   - test: `typeAliases`
   
   ```swifttest
@@ -1497,10 +1497,10 @@ but a public type alias can't alias an internal, file-private, or private type.
   !! private struct PrivateStruct {}
   !! ^
   ```
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1508,4 +1508,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

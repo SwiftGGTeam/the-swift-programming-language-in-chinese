@@ -41,7 +41,7 @@ class MediaItem {
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting, typeCasting-err`
   
   ```swifttest
@@ -52,7 +52,7 @@ class MediaItem {
         }
      }
   ```
-}
+-->
 
 The next snippet defines two subclasses of `MediaItem`.
 The first subclass, `Movie`, encapsulates additional information about a movie or film.
@@ -80,7 +80,7 @@ class Song: MediaItem {
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting, typeCasting-err`
   
   ```swifttest
@@ -100,7 +100,7 @@ class Song: MediaItem {
         }
      }
   ```
-}
+-->
 
 The final snippet creates a constant array called `library`,
 which contains two `Movie` instances and three `Song` instances.
@@ -122,7 +122,7 @@ let library = [
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting`
   
   ```swifttest
@@ -137,7 +137,7 @@ let library = [
   << Array<MediaItem>
   // the type of "library" is inferred to be [MediaItem]
   ```
-}
+-->
 
 The items stored in `library` are still `Movie` and `Song` instances behind the scenes.
 However, if you iterate over the contents of this array,
@@ -175,7 +175,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting`
   
   ```swifttest
@@ -193,7 +193,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
   -> print("Media library contains \(movieCount) movies and \(songCount) songs")
   <- Media library contains 2 movies and 3 songs
   ```
-}
+-->
 
 This example iterates through all items in the `library` array.
 On each pass, the `for`-`in` loop sets the `item` constant
@@ -261,7 +261,7 @@ for item in library {
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting`
   
   ```swifttest
@@ -279,7 +279,7 @@ for item in library {
   </ Song: The One And Only, by Chesney Hawkes
   </ Song: Never Gonna Give You Up, by Rick Astley
   ```
-}
+-->
 
 The example starts by trying to downcast the current `item` as a `Movie`.
 Because `item` is a `MediaItem` instance, it's possible that it *might* be a `Movie`;
@@ -312,17 +312,17 @@ whenever a `Song` is found in the library.
 > The underlying instance remains the same; it's simply treated and accessed
 > as an instance of the type to which it has been cast.
 
-@Comment {
+<!--
   TODO: This example should be followed by the same example written with switch,
   to introduce type casting in a pattern matching context
   and to set up the crazy Any example at the end of the chapter.
-}
+-->
 
-@Comment {
+<!--
   TODO: No section on upcasting because nobody can come up with
   an example that isn't excessively contrived.
   The reference shows the behavior in a contrived example.
-}
+-->
 
 ## Type Casting for Any and AnyObject
 
@@ -353,7 +353,7 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting, typeCasting-err`
   
   ```swifttest
@@ -368,7 +368,7 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
   -> things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
   -> things.append({ (name: String) -> String in "Hello, \(name)" })
   ```
-}
+-->
 
 The `things` array contains
 two `Int` values, two `Double` values, a `String` value,
@@ -422,7 +422,7 @@ for thing in things {
 ```
 
 
-@Comment {
+<!--
   - test: `typeCasting`
   
   ```swifttest
@@ -460,7 +460,7 @@ for thing in things {
   </ a movie called Ghostbusters, dir. Ivan Reitman
   </ Hello, Michael
   ```
-}
+-->
 
 > Note: The `Any` type represents values of any type, including optional types.
 > Swift gives you a warning if you use an optional value
@@ -475,7 +475,7 @@ for thing in things {
 > things.append(optionalNumber as Any) // No warning
 > ```
 
-@Comment {
+<!--
   - test: `typeCasting-err`
 
   ```swifttest
@@ -498,9 +498,9 @@ for thing in things {
   !!                              as Any
   -> things.append(optionalNumber as Any) // No warning
   ```
-}
+-->
 
-@Comment {
+<!--
   Rejected examples to illustrate AnyObject:
 
   Array of delegates which may conform to one or more of the class's delegate protocols.
@@ -529,10 +529,10 @@ for thing in things {
       let userData: AnyObject?  // In Cocoa APIs, userData is a void*
   }
   ```
-}
+-->
 
 
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -540,4 +540,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->
