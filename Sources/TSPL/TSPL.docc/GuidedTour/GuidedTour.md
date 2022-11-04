@@ -296,10 +296,9 @@ print(fruits)
   ```
 -->
 
-To create an empty array, write `[]`
-and to create empty dictionary write `[:]` ---
-for example, when you set a new value for a variable
-or pass an argument to a function.
+You also use brackets to write an empty array or dictionary.
+For an array, write `[]`,
+and for a dictionary, write `[:]`.
 
 ```swift
 fruits = []
