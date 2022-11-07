@@ -431,9 +431,7 @@ Setting the `center` property calls the setter for `center`,
 which modifies the `x` and `y` values of the stored `origin` property,
 and moves the square to its new position.
 
-<!--
-  Apple Books screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 ![](computedProperties)
 
@@ -484,9 +482,7 @@ struct AlternativeRect {
   ```
 -->
 
-<!--
-  Apple Books screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 ### Shorthand Getter Declaration
 

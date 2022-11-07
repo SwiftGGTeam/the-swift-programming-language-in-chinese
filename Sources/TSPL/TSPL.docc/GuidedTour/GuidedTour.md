@@ -263,9 +263,7 @@ occupations["Jayne"] = "Public Relations"
   ```
 -->
 
-<!--
-  Apple Books screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 Arrays automatically grow as you add elements.
 
@@ -390,9 +388,7 @@ or contains `nil` to indicate that a value is missing.
 Write a question mark (`?`) after the type of a value
 to mark the value as optional.
 
-<!--
-  Apple Books screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 <!--
   REFERENCE
