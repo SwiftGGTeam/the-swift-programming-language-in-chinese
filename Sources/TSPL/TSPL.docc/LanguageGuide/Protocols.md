@@ -764,12 +764,44 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 ## Protocols as Types
 
+Protocols don't actually implement any functionality themselves.
+Nonetheless, you can use a protocol as a type in your code.
+
+The most common way to use a protocol as a type
+is to use a protocol as generic constraint.
+Code with generic constraints can work with
+any type that conforms to the protocol,
+and the specific type is chosen by the code that uses the API.
+For example,
+when you call a function that takes an argument
+and that argument's type is generic,
+the caller chooses the type.
+For information about using protocols as generic constraints,
+see <doc:Generics>.
+
+Code with an opaque type
+works with some type that conforms to the protocol.
+The underlying type is known at compile time,
+and the API implementation chooses that type,
+but that type's identity is hidden from clients of the API.
+Using an opaque type lets you prevent implementation details of an API
+from leaking through the layer of abstraction --
+for example, by hiding the specific return type from a function,
+and only guaranteeing that the value conforms to a given protocol.
+For information about opaque types,
+see <doc:OpaqueTypes>.
+
+<!-- XXX TR: Is there any performance cost to call out when introducing opaque types? -->
+
+Code with a boxed protocol type
+works with any type, chosen at runtime, that conforms to the protocol.
+To support this runtime flexibility,
+Swift adds a level of indirection (known as a box),
+which has a performance cost.
+For information about boxed protocol types,
+see <doc:BoxedProtocolTypes>.
 
 <!--
-XXX Existentials are an advanced enough topic
-that maybe they shouldn't come before the reader has even seen generics?
-We need a better story contrasting when to use
-existentials, generics, and opaque types.
 
 Performance impact from SE-0335:
 
@@ -783,9 +815,6 @@ code using existential types incurs pointer indirection and dynamic method dispa
 that cannot be optimized away.
 -->
 
-Protocols don't actually implement any functionality themselves.
-Nonetheless,
-you can use protocols as a fully fledged types in your code.
 
 ## Delegation
 
