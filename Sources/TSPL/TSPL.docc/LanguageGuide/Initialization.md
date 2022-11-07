@@ -1,6 +1,6 @@
-
-
 # Initialization
+
+Set the initial values for a type's stored properties and perform one-time setup.
 
 *Initialization* is the process of preparing an instance of
 a class, structure, or enumeration for use.
@@ -43,12 +43,11 @@ written using the `init` keyword:
 
 ```swift
 init() {
-   // perform some initialization here
+    // perform some initialization here
 }
 ```
 
-
-@Comment {
+<!--
   - test: `initializerSyntax`
   
   ```swifttest
@@ -58,7 +57,7 @@ init() {
      }
   >> }
   ```
-}
+-->
 
 The example below defines a new structure called `Fahrenheit`
 to store temperatures expressed in the Fahrenheit scale.
@@ -67,18 +66,17 @@ The `Fahrenheit` structure has one stored property,
 
 ```swift
 struct Fahrenheit {
-   var temperature: Double
-   init() {
-      temperature = 32.0
-   }
+    var temperature: Double
+    init() {
+        temperature = 32.0
+    }
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
 // Prints "The default temperature is 32.0° Fahrenheit"
 ```
 
-
-@Comment {
+<!--
   - test: `fahrenheitInit`
   
   ```swifttest
@@ -92,7 +90,7 @@ print("The default temperature is \(f.temperature)° Fahrenheit")
   -> print("The default temperature is \(f.temperature)° Fahrenheit")
   <- The default temperature is 32.0° Fahrenheit
   ```
-}
+-->
 
 The structure defines a single initializer, `init`, with no parameters,
 which initializes the stored temperature with a value of `32.0`
@@ -123,12 +121,11 @@ at the point that the property is declared:
 
 ```swift
 struct Fahrenheit {
-   var temperature = 32.0
+    var temperature = 32.0
 }
 ```
 
-
-@Comment {
+<!--
   - test: `fahrenheitDefault`
   
   ```swifttest
@@ -136,7 +133,7 @@ struct Fahrenheit {
         var temperature = 32.0
      }
   ```
-}
+-->
 
 ## Customizing Initialization
 
@@ -161,13 +158,13 @@ with a value from a different temperature scale:
 
 ```swift
 struct Celsius {
-   var temperatureInCelsius: Double
-   init(fromFahrenheit fahrenheit: Double) {
-      temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-   }
-   init(fromKelvin kelvin: Double) {
-      temperatureInCelsius = kelvin - 273.15
-   }
+    var temperatureInCelsius: Double
+    init(fromFahrenheit fahrenheit: Double) {
+        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    }
+    init(fromKelvin kelvin: Double) {
+        temperatureInCelsius = kelvin - 273.15
+    }
 }
 let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
 // boilingPointOfWater.temperatureInCelsius is 100.0
@@ -175,8 +172,7 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 // freezingPointOfWater.temperatureInCelsius is 0.0
 ```
 
-
-@Comment {
+<!--
   - test: `initialization`
   
   ```swifttest
@@ -196,7 +192,7 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
   /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
   </ freezingPointOfWater.temperatureInCelsius is 0.0
   ```
-}
+-->
 
 The first initializer has a single initialization parameter
 with an argument label of `fromFahrenheit` and a parameter name of `fahrenheit`.
@@ -206,10 +202,10 @@ Both initializers convert their single argument into
 the corresponding Celsius value
 and store this value in a property called `temperatureInCelsius`.
 
-@Comment {
+<!--
   TODO: I need to provide an example of default values for initializer parameters,
   to show they can help you to get multiple initializers "for free" (after a fashion).
-}
+-->
 
 ### Parameter Names and Argument Labels
 
@@ -238,22 +234,21 @@ which is used to provide the same value for all three color components.
 
 ```swift
 struct Color {
-   let red, green, blue: Double
-   init(red: Double, green: Double, blue: Double) {
-      self.red   = red
-      self.green = green
-      self.blue  = blue
-   }
-   init(white: Double) {
-      red   = white
-      green = white
-      blue  = white
-   }
+    let red, green, blue: Double
+    init(red: Double, green: Double, blue: Double) {
+        self.red   = red
+        self.green = green
+        self.blue  = blue
+    }
+    init(white: Double) {
+        red   = white
+        green = white
+        blue  = white
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `externalParameterNames, externalParameterNames-err`
   
   ```swifttest
@@ -271,7 +266,7 @@ struct Color {
         }
      }
   ```
-}
+-->
 
 Both initializers can be used to create a new `Color` instance,
 by providing named values for each initializer parameter:
@@ -281,8 +276,7 @@ let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
 let halfGray = Color(white: 0.5)
 ```
 
-
-@Comment {
+<!--
   - test: `externalParameterNames`
   
   ```swifttest
@@ -292,7 +286,7 @@ let halfGray = Color(white: 0.5)
   >> assert(halfGray.green == 0.5)
   >> assert(halfGray.blue == 0.5)
   ```
-}
+-->
 
 Note that it isn't possible to call these initializers
 without using argument labels.
@@ -304,8 +298,7 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 // this reports a compile-time error - argument labels are required
 ```
 
-
-@Comment {
+<!--
   - test: `externalParameterNames-err`
   
   ```swifttest
@@ -316,7 +309,7 @@ let veryGreen = Color(0.0, 1.0, 0.0)
   !! ^
   !! red: green:  blue:
   ```
-}
+-->
 
 ### Initializer Parameters Without Argument Labels
 
@@ -331,23 +324,22 @@ from a `Double` value that's already in the Celsius scale:
 
 ```swift
 struct Celsius {
-   var temperatureInCelsius: Double
-   init(fromFahrenheit fahrenheit: Double) {
-      temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-   }
-   init(fromKelvin kelvin: Double) {
-      temperatureInCelsius = kelvin - 273.15
-   }
-   init(_ celsius: Double) {
-      temperatureInCelsius = celsius
-   }
+    var temperatureInCelsius: Double
+    init(fromFahrenheit fahrenheit: Double) {
+        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    }
+    init(fromKelvin kelvin: Double) {
+        temperatureInCelsius = kelvin - 273.15
+    }
+    init(_ celsius: Double) {
+        temperatureInCelsius = celsius
+    }
 }
 let bodyTemperature = Celsius(37.0)
 // bodyTemperature.temperatureInCelsius is 37.0
 ```
 
-
-@Comment {
+<!--
   - test: `initializersWithoutExternalParameterNames`
   
   ```swifttest
@@ -367,7 +359,7 @@ let bodyTemperature = Celsius(37.0)
   /> bodyTemperature.temperatureInCelsius is \(bodyTemperature.temperatureInCelsius)
   </ bodyTemperature.temperatureInCelsius is 37.0
   ```
-}
+-->
 
 The initializer call `Celsius(37.0)` is clear in its intent
 without the need for an argument label.
@@ -389,14 +381,14 @@ with an optional `String` property called `response`:
 
 ```swift
 class SurveyQuestion {
-   var text: String
-   var response: String?
-   init(text: String) {
-      self.text = text
-   }
-   func ask() {
-      print(text)
-   }
+    var text: String
+    var response: String?
+    init(text: String) {
+        self.text = text
+    }
+    func ask() {
+        print(text)
+    }
 }
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
@@ -404,8 +396,7 @@ cheeseQuestion.ask()
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
-
-@Comment {
+<!--
   - test: `surveyQuestionVariable`
   
   ```swifttest
@@ -424,7 +415,7 @@ cheeseQuestion.response = "Yes, I do like cheese."
   <- Do you like cheese?
   -> cheeseQuestion.response = "Yes, I do like cheese."
   ```
-}
+-->
 
 The response to a survey question can't be known until it's asked,
 and so the `response` property is declared with a type of `String?`,
@@ -440,7 +431,7 @@ as long as it's set to a definite value by the time initialization finishes.
 Once a constant property is assigned a value,
 it can't be further modified.
 
-@Comment {
+<!--
   - test: `constantPropertyAssignment`
   
   ```swifttest
@@ -459,9 +450,9 @@ it can't be further modified.
   !! ^~~
   !! var
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `constantPropertyAssignmentWithInitialValue`
   
   ```swifttest
@@ -482,7 +473,7 @@ it can't be further modified.
   !! ^~~
   !! var
   ```
-}
+-->
 
 > Note: For class instances,
 > a constant property can be modified during initialization
@@ -497,14 +488,14 @@ it can still be set within the class's initializer:
 
 ```swift
 class SurveyQuestion {
-   let text: String
-   var response: String?
-   init(text: String) {
-      self.text = text
-   }
-   func ask() {
-      print(text)
-   }
+    let text: String
+    var response: String?
+    init(text: String) {
+        self.text = text
+    }
+    func ask() {
+        print(text)
+    }
 }
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
@@ -512,8 +503,7 @@ beetsQuestion.ask()
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
-
-@Comment {
+<!--
   - test: `surveyQuestionConstant`
   
   ```swifttest
@@ -532,7 +522,7 @@ beetsQuestion.response = "I also like beets. (But not with cheese.)"
   <- How about beets?
   -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
   ```
-}
+-->
 
 ## Default Initializers
 
@@ -543,7 +533,7 @@ and doesn't provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 
-@Comment {
+<!--
   - test: `defaultInitializersForStructAndClass`
   
   ```swifttest
@@ -555,7 +545,7 @@ with all of its properties set to their default values.
   -> assert(B().a == "a")
   -> assert(B().b ==  "b")
   ```
-}
+-->
 
 This example defines a class called `ShoppingListItem`,
 which encapsulates the name, quantity, and purchase state
@@ -563,15 +553,14 @@ of an item in a shopping list:
 
 ```swift
 class ShoppingListItem {
-   var name: String?
-   var quantity = 1
-   var purchased = false
+    var name: String?
+    var quantity = 1
+    var purchased = false
 }
 var item = ShoppingListItem()
 ```
 
-
-@Comment {
+<!--
   - test: `initialization`
   
   ```swifttest
@@ -582,7 +571,7 @@ var item = ShoppingListItem()
      }
   -> var item = ShoppingListItem()
   ```
-}
+-->
 
 Because all properties of the `ShoppingListItem` class have default values,
 and because it's a base class with no superclass,
@@ -604,7 +593,7 @@ Unlike a default initializer,
 the structure receives a memberwise initializer
 even if it has stored properties that don't have default values.
 
-@Comment {
+<!--
   - test: `memberwiseInitializersDontRequireDefaultStoredPropertyValues`
   
   ```swifttest
@@ -614,7 +603,7 @@ even if it has stored properties that don't have default values.
   -> struct SS { var int = 10; var string: String }
   -> let ss = SS(int: 42, string: "hello")
   ```
-}
+-->
 
 The memberwise initializer is a shorthand way
 to initialize the member properties of new structure instances.
@@ -632,13 +621,12 @@ which you can use to initialize a new `Size` instance:
 
 ```swift
 struct Size {
-   var width = 0.0, height = 0.0
+    var width = 0.0, height = 0.0
 }
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
-
-@Comment {
+<!--
   - test: `initialization`
   
   ```swifttest
@@ -647,7 +635,7 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
      }
   -> let twoByTwo = Size(width: 2.0, height: 2.0)
   ```
-}
+-->
 
 When you call a memberwise initializer,
 you can omit values for any properties
@@ -669,8 +657,7 @@ print(zeroByZero.width, zeroByZero.height)
 // Prints "0.0 0.0"
 ```
 
-
-@Comment {
+<!--
   - test: `initialization`
   
   ```swifttest
@@ -682,7 +669,7 @@ print(zeroByZero.width, zeroByZero.height)
   -> print(zeroByZero.width, zeroByZero.height)
   <- 0.0 0.0
   ```
-}
+-->
 
 ## Initializer Delegation for Value Types
 
@@ -727,15 +714,14 @@ both of which provide default values of `0.0` for all of their properties:
 
 ```swift
 struct Size {
-   var width = 0.0, height = 0.0
+    var width = 0.0, height = 0.0
 }
 struct Point {
-   var x = 0.0, y = 0.0
+    var x = 0.0, y = 0.0
 }
 ```
 
-
-@Comment {
+<!--
   - test: `valueDelegation`
   
   ```swifttest
@@ -746,7 +732,7 @@ struct Point {
         var x = 0.0, y = 0.0
      }
   ```
-}
+-->
 
 You can initialize the `Rect` structure below in one of three ways ---
 by using its default zero-initialized `origin` and `size` property values,
@@ -757,23 +743,22 @@ three custom initializers that are part of the `Rect` structure's definition:
 
 ```swift
 struct Rect {
-   var origin = Point()
-   var size = Size()
-   init() {}
-   init(origin: Point, size: Size) {
-      self.origin = origin
-      self.size = size
-   }
-   init(center: Point, size: Size) {
-      let originX = center.x - (size.width / 2)
-      let originY = center.y - (size.height / 2)
-      self.init(origin: Point(x: originX, y: originY), size: size)
-   }
+    var origin = Point()
+    var size = Size()
+    init() {}
+    init(origin: Point, size: Size) {
+        self.origin = origin
+        self.size = size
+    }
+    init(center: Point, size: Size) {
+        let originX = center.x - (size.width / 2)
+        let originY = center.y - (size.height / 2)
+        self.init(origin: Point(x: originX, y: originY), size: size)
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `valueDelegation`
   
   ```swifttest
@@ -792,7 +777,7 @@ struct Rect {
         }
      }
   ```
-}
+-->
 
 The first `Rect` initializer, `init()`,
 is functionally the same as the default initializer that the structure would have received
@@ -810,8 +795,7 @@ let basicRect = Rect()
 // basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 ```
 
-
-@Comment {
+<!--
   - test: `valueDelegation`
   
   ```swifttest
@@ -819,7 +803,7 @@ let basicRect = Rect()
   /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
   </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
   ```
-}
+-->
 
 The second `Rect` initializer, `init(origin:size:)`,
 is functionally the same as the memberwise initializer that the structure would have received
@@ -829,12 +813,11 @@ the appropriate stored properties:
 
 ```swift
 let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
-   size: Size(width: 5.0, height: 5.0))
+    size: Size(width: 5.0, height: 5.0))
 // originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 ```
 
-
-@Comment {
+<!--
   - test: `valueDelegation`
   
   ```swifttest
@@ -843,7 +826,7 @@ let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
   /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
   </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
   ```
-}
+-->
 
 The third `Rect` initializer, `init(center:size:)`, is slightly more complex.
 It starts by calculating an appropriate origin point based on
@@ -853,12 +836,11 @@ which stores the new origin and size values in the appropriate properties:
 
 ```swift
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
-   size: Size(width: 3.0, height: 3.0))
+    size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
 
-
-@Comment {
+<!--
   - test: `valueDelegation`
   
   ```swifttest
@@ -867,7 +849,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
   /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
   </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
   ```
-}
+-->
 
 The `init(center:size:)` initializer could have assigned
 the new values of `origin` and `size` to the appropriate properties itself.
@@ -928,7 +910,6 @@ init(<#parameters#>) {
 }
 ```
 
-
 Convenience initializers are written in the same style,
 but with the `convenience` modifier placed before the `init` keyword,
 separated by a space:
@@ -938,7 +919,6 @@ convenience init(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 ### Initializer Delegation for Class Types
 
@@ -957,7 +937,6 @@ A simple way to remember this is:
 These rules are illustrated in the figure below:
 
 ![](initializerDelegation01)
-
 
 Here, the superclass has a single designated initializer and two convenience initializers.
 One convenience initializer calls another convenience initializer,
@@ -983,7 +962,6 @@ act as “funnel” points for class initialization,
 simplifying the interrelationships among classes in the chain:
 
 ![](initializerDelegation02)
-
 
 ### Two-Phase Initialization
 
@@ -1069,7 +1047,6 @@ Here's how phase 1 looks for an initialization call for a hypothetical subclass 
 
 ![](twoPhaseInitialization01)
 
-
 In this example, initialization begins with a call to
 a convenience initializer on the subclass.
 This convenience initializer can't yet modify any properties.
@@ -1090,7 +1067,6 @@ its memory is considered fully initialized, and phase 1 is complete.
 Here's how phase 2 looks for the same initialization call:
 
 ![](twoPhaseInitialization02)
-
 
 The superclass's designated initializer now has an opportunity
 to customize the instance further
@@ -1135,7 +1111,7 @@ and validates that the parameters for your overriding initializer have been spec
 > Note: You always write the `override` modifier when overriding a superclass designated initializer,
 > even if your subclass's implementation of the initializer is a convenience initializer.
 
-@Comment {
+<!--
   - test: `youHaveToWriteOverrideWhenOverridingADesignatedInitializer`
   
   ```swifttest
@@ -1158,9 +1134,9 @@ and validates that the parameters for your overriding initializer have been spec
   !! init() {}
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `youHaveToWriteOverrideEvenWhenOverridingADefaultInitializer`
   
   ```swifttest
@@ -1183,7 +1159,7 @@ and validates that the parameters for your overriding initializer have been spec
   !! class C {
   !! ^
   ```
-}
+-->
 
 Conversely, if you write a subclass initializer that matches a superclass *convenience* initializer,
 that superclass convenience initializer can never be called directly by your subclass,
@@ -1192,7 +1168,7 @@ Therefore, your subclass is not (strictly speaking) providing an override of the
 As a result, you don't write the `override` modifier when providing
 a matching implementation of a superclass convenience initializer.
 
-@Comment {
+<!--
   - test: `youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer`
   
   ```swifttest
@@ -1232,7 +1208,7 @@ a matching implementation of a superclass convenience initializer.
   !! convenience init() {
   !! ^
   ```
-}
+-->
 
 The example below defines a base class called `Vehicle`.
 This base class declares a stored property called `numberOfWheels`,
@@ -1242,15 +1218,14 @@ to create a `String` description of the vehicle's characteristics:
 
 ```swift
 class Vehicle {
-   var numberOfWheels = 0
-   var description: String {
-      return "\(numberOfWheels) wheel(s)"
-   }
+    var numberOfWheels = 0
+    var description: String {
+        return "\(numberOfWheels) wheel(s)"
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `initializerInheritance`
   
   ```swifttest
@@ -1261,7 +1236,7 @@ class Vehicle {
         }
      }
   ```
-}
+-->
 
 The `Vehicle` class provides a default value for its only stored property,
 and doesn't provide any custom initializers itself.
@@ -1276,8 +1251,7 @@ print("Vehicle: \(vehicle.description)")
 // Vehicle: 0 wheel(s)
 ```
 
-
-@Comment {
+<!--
   - test: `initializerInheritance`
   
   ```swifttest
@@ -1285,21 +1259,20 @@ print("Vehicle: \(vehicle.description)")
   -> print("Vehicle: \(vehicle.description)")
   </ Vehicle: 0 wheel(s)
   ```
-}
+-->
 
 The next example defines a subclass of `Vehicle` called `Bicycle`:
 
 ```swift
 class Bicycle: Vehicle {
-   override init() {
-      super.init()
-      numberOfWheels = 2
-   }
+    override init() {
+        super.init()
+        numberOfWheels = 2
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `initializerInheritance`
   
   ```swifttest
@@ -1310,7 +1283,7 @@ class Bicycle: Vehicle {
         }
      }
   ```
-}
+-->
 
 The `Bicycle` subclass defines a custom designated initializer, `init()`.
 This designated initializer matches a designated initializer from the superclass of `Bicycle`,
@@ -1333,8 +1306,7 @@ print("Bicycle: \(bicycle.description)")
 // Bicycle: 2 wheel(s)
 ```
 
-
-@Comment {
+<!--
   - test: `initializerInheritance`
   
   ```swifttest
@@ -1342,7 +1314,7 @@ print("Bicycle: \(bicycle.description)")
   -> print("Bicycle: \(bicycle.description)")
   </ Bicycle: 2 wheel(s)
   ```
-}
+-->
 
 If a subclass initializer performs no customization
 in phase 2 of the initialization process,
@@ -1371,8 +1343,7 @@ class Hoverboard: Vehicle {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `initializerInheritance`
   
   ```swifttest
@@ -1387,7 +1358,7 @@ class Hoverboard: Vehicle {
          }
      }
   ```
-}
+-->
 
 An instance of `Hoverboard` uses the default number of wheels
 supplied by the `Vehicle` initializer.
@@ -1398,8 +1369,7 @@ print("Hoverboard: \(hoverboard.description)")
 // Hoverboard: 0 wheel(s) in a beautiful silver
 ```
 
-
-@Comment {
+<!--
   - test: `initializerInheritance`
   
   ```swifttest
@@ -1407,12 +1377,12 @@ print("Hoverboard: \(hoverboard.description)")
   -> print("Hoverboard: \(hoverboard.description)")
   </ Hoverboard: 0 wheel(s) in a beautiful silver
   ```
-}
+-->
 
 > Note: Subclasses can modify inherited variable properties during initialization,
 > but can't modify inherited constant properties.
 
-@Comment {
+<!--
   - test: `youCantModifyInheritedConstantPropertiesFromASuperclass`
   
   ```swifttest
@@ -1447,7 +1417,7 @@ print("Hoverboard: \(hoverboard.description)")
   !! ^~~
   !! var
   ```
-}
+-->
 
 ### Automatic Initializer Inheritance
 
@@ -1474,16 +1444,16 @@ These rules apply even if your subclass adds further convenience initializers.
 > Note: A subclass can implement a superclass designated initializer
 > as a subclass convenience initializer as part of satisfying rule 2.
 
-@Comment {
+<!--
   TODO: feedback from Beto is that this note is a little hard to parse.
   Perhaps this point should be left until the later "in action" example,
   where this principle is demonstrated?
-}
+-->
 
-@Comment {
+<!--
   TODO: There are rare cases in which we automatically insert a call to super.init() for you.
   When is this? Either way, I need to mention it in here.
-}
+-->
 
 ### Designated and Convenience Initializers in Action
 
@@ -1500,18 +1470,17 @@ and provides two initializers for creating `Food` instances:
 
 ```swift
 class Food {
-   var name: String
-   init(name: String) {
-      self.name = name
-   }
-   convenience init() {
-      self.init(name: "[Unnamed]")
-   }
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: "[Unnamed]")
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1525,12 +1494,11 @@ class Food {
         }
      }
   ```
-}
+-->
 
 The figure below shows the initializer chain for the `Food` class:
 
 ![](initializersExample01)
-
 
 Classes don't have a default memberwise initializer,
 and so the `Food` class provides a designated initializer
@@ -1542,8 +1510,7 @@ let namedMeat = Food(name: "Bacon")
 // namedMeat's name is "Bacon"
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1551,7 +1518,7 @@ let namedMeat = Food(name: "Bacon")
   /> namedMeat's name is \"\(namedMeat.name)\"
   </ namedMeat's name is "Bacon"
   ```
-}
+-->
 
 The `init(name: String)` initializer from the `Food` class
 is provided as a *designated* initializer,
@@ -1571,8 +1538,7 @@ let mysteryMeat = Food()
 // mysteryMeat's name is "[Unnamed]"
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1580,7 +1546,7 @@ let mysteryMeat = Food()
   /> mysteryMeat's name is \"\(mysteryMeat.name)\"
   </ mysteryMeat's name is "[Unnamed]"
   ```
-}
+-->
 
 The second class in the hierarchy is a subclass of `Food` called `RecipeIngredient`.
 The `RecipeIngredient` class models an ingredient in a cooking recipe.
@@ -1590,19 +1556,18 @@ and defines two initializers for creating `RecipeIngredient` instances:
 
 ```swift
 class RecipeIngredient: Food {
-   var quantity: Int
-   init(name: String, quantity: Int) {
-      self.quantity = quantity
-      super.init(name: name)
-   }
-   override convenience init(name: String) {
-      self.init(name: name, quantity: 1)
-   }
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1617,12 +1582,11 @@ class RecipeIngredient: Food {
         }
      }
   ```
-}
+-->
 
 The figure below shows the initializer chain for the `RecipeIngredient` class:
 
 ![](initializersExample02)
-
 
 The `RecipeIngredient` class has a single designated initializer,
 `init(name: String, quantity: Int)`,
@@ -1674,8 +1638,7 @@ let oneBacon = RecipeIngredient(name: "Bacon")
 let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1683,7 +1646,7 @@ let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
   -> let oneBacon = RecipeIngredient(name: "Bacon")
   -> let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
   ```
-}
+-->
 
 The third and final class in the hierarchy is
 a subclass of `RecipeIngredient` called `ShoppingListItem`.
@@ -1698,17 +1661,16 @@ which provides a textual description of a `ShoppingListItem` instance:
 
 ```swift
 class ShoppingListItem: RecipeIngredient {
-   var purchased = false
-   var description: String {
-      var output = "\(quantity) x \(name)"
-      output += purchased ? " ✔" : " ✘"
-      return output
-   }
+    var purchased = false
+    var description: String {
+        var output = "\(quantity) x \(name)"
+        output += purchased ? " ✔" : " ✘"
+        return output
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1721,7 +1683,7 @@ class ShoppingListItem: RecipeIngredient {
         }
      }
   ```
-}
+-->
 
 > Note: `ShoppingListItem` doesn't define an initializer to provide
 > an initial value for `purchased`,
@@ -1736,28 +1698,26 @@ The figure below shows the overall initializer chain for all three classes:
 
 ![](initializersExample03)
 
-
 You can use all three of the inherited initializers
 to create a new `ShoppingListItem` instance:
 
 ```swift
 var breakfastList = [
-   ShoppingListItem(),
-   ShoppingListItem(name: "Bacon"),
-   ShoppingListItem(name: "Eggs", quantity: 6),
+    ShoppingListItem(),
+    ShoppingListItem(name: "Bacon"),
+    ShoppingListItem(name: "Eggs", quantity: 6),
 ]
 breakfastList[0].name = "Orange juice"
 breakfastList[0].purchased = true
 for item in breakfastList {
-   print(item.description)
+    print(item.description)
 }
 // 1 x Orange juice ✔
 // 1 x Bacon ✘
 // 6 x Eggs ✘
 ```
 
-
-@Comment {
+<!--
   - test: `designatedConvenience`
   
   ```swifttest
@@ -1775,7 +1735,7 @@ for item in breakfastList {
   </ 1 x Bacon ✘
   </ 6 x Eggs ✘
   ```
-}
+-->
 
 Here, a new array called `breakfastList` is created from
 an array literal containing three new `ShoppingListItem` instances.
@@ -1787,22 +1747,22 @@ and it's marked as having been purchased.
 Printing the description of each item in the array
 shows that their default states have been set as expected.
 
-@Comment {
+<!--
   TODO: talk about the general factory initializer pattern,
   and how Swift's approach to initialization removes the need for most factories.
-}
+-->
 
-@Comment {
+<!--
   NOTE: We import some Obj-C-imported factory initializers as init() -> MyType,
   but you can't currently write these in Swift yourself.
   After conferring with Doug, I've decided not to include these in the Guide
   if you can't write them yourself in pure Swift.
-}
+-->
 
-@Comment {
+<!--
   TODO: Feedback from Beto is that it would be useful to indicate the flow
   through these inherited initializers.
-}
+-->
 
 ## Failable Initializers
 
@@ -1821,7 +1781,7 @@ by placing a question mark after the `init` keyword (`init?`).
 > Note: You can't define a failable and a nonfailable initializer
 > with the same parameter types and names.
 
-@Comment {
+<!--
   - test: `failableAndNonFailableInitializersCannotMatch`
   
   ```swifttest
@@ -1837,7 +1797,7 @@ by placing a question mark after the `init` keyword (`init?`).
   !!            init(s: String) { self.s = s }
   !!            ^
   ```
-}
+-->
 
 A failable initializer creates an *optional* value of the type it initializes.
 You write `return nil` within a failable initializer
@@ -1873,8 +1833,7 @@ if valueChanged == nil {
 // Prints "3.14159 conversion to Int doesn't maintain value"
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -1894,7 +1853,7 @@ if valueChanged == nil {
      }
   <- 3.14159 conversion to Int doesn't maintain value
   ```
-}
+-->
 
 The example below defines a structure called `Animal`,
 with a constant `String` property called `species`.
@@ -1906,16 +1865,15 @@ Otherwise, the `species` property's value is set, and initialization succeeds:
 
 ```swift
 struct Animal {
-   let species: String
-   init?(species: String) {
-      if species.isEmpty { return nil }
-      self.species = species
-   }
+    let species: String
+    init?(species: String) {
+        if species.isEmpty { return nil }
+        self.species = species
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -1927,7 +1885,7 @@ struct Animal {
         }
      }
   ```
-}
+-->
 
 You can use this failable initializer to try to initialize a new `Animal` instance
 and to check if initialization succeeded:
@@ -1937,13 +1895,12 @@ let someCreature = Animal(species: "Giraffe")
 // someCreature is of type Animal?, not Animal
 
 if let giraffe = someCreature {
-   print("An animal was initialized with a species of \(giraffe.species)")
+    print("An animal was initialized with a species of \(giraffe.species)")
 }
 // Prints "An animal was initialized with a species of Giraffe"
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -1955,7 +1912,7 @@ if let giraffe = someCreature {
      }
   <- An animal was initialized with a species of Giraffe
   ```
-}
+-->
 
 If you pass an empty string value to the failable initializer's `species` parameter,
 the initializer triggers an initialization failure:
@@ -1965,13 +1922,12 @@ let anonymousCreature = Animal(species: "")
 // anonymousCreature is of type Animal?, not Animal
 
 if anonymousCreature == nil {
-   print("The anonymous creature couldn't be initialized")
+    print("The anonymous creature couldn't be initialized")
 }
 // Prints "The anonymous creature couldn't be initialized"
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -1983,7 +1939,7 @@ if anonymousCreature == nil {
      }
   <- The anonymous creature couldn't be initialized
   ```
-}
+-->
 
 > Note: Checking for an empty string value (such as `""` rather than `"Giraffe"`)
 > isn't the same as checking for `nil` to indicate the absence of an *optional* `String` value.
@@ -2007,24 +1963,23 @@ for a `Character` value representing a temperature symbol:
 
 ```swift
 enum TemperatureUnit {
-   case kelvin, celsius, fahrenheit
-   init?(symbol: Character) {
-      switch symbol {
-         case "K":
+    case kelvin, celsius, fahrenheit
+    init?(symbol: Character) {
+        switch symbol {
+        case "K":
             self = .kelvin
-         case "C":
+        case "C":
             self = .celsius
-         case "F":
+        case "F":
             self = .fahrenheit
-         default:
+        default:
             return nil
-      }
-   }
+        }
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2044,7 +1999,7 @@ enum TemperatureUnit {
         }
      }
   ```
-}
+-->
 
 You can use this failable initializer to choose
 an appropriate enumeration case for the three possible states
@@ -2054,19 +2009,18 @@ states:
 ```swift
 let fahrenheitUnit = TemperatureUnit(symbol: "F")
 if fahrenheitUnit != nil {
-   print("This is a defined temperature unit, so initialization succeeded.")
+    print("This is a defined temperature unit, so initialization succeeded.")
 }
 // Prints "This is a defined temperature unit, so initialization succeeded."
 
 let unknownUnit = TemperatureUnit(symbol: "X")
 if unknownUnit == nil {
-   print("This isn't a defined temperature unit, so initialization failed.")
+    print("This isn't a defined temperature unit, so initialization failed.")
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2082,7 +2036,7 @@ if unknownUnit == nil {
      }
   <- This isn't a defined temperature unit, so initialization failed.
   ```
-}
+-->
 
 ### Failable Initializers for Enumerations with Raw Values
 
@@ -2098,24 +2052,23 @@ and to take advantage of the `init?(rawValue:)` initializer:
 
 ```swift
 enum TemperatureUnit: Character {
-   case kelvin = "K", celsius = "C", fahrenheit = "F"
+    case kelvin = "K", celsius = "C", fahrenheit = "F"
 }
 
 let fahrenheitUnit = TemperatureUnit(rawValue: "F")
 if fahrenheitUnit != nil {
-   print("This is a defined temperature unit, so initialization succeeded.")
+    print("This is a defined temperature unit, so initialization succeeded.")
 }
 // Prints "This is a defined temperature unit, so initialization succeeded."
 
 let unknownUnit = TemperatureUnit(rawValue: "X")
 if unknownUnit == nil {
-   print("This isn't a defined temperature unit, so initialization failed.")
+    print("This isn't a defined temperature unit, so initialization failed.")
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializersForEnumerations`
   
   ```swifttest
@@ -2135,7 +2088,7 @@ if unknownUnit == nil {
      }
   <- This isn't a defined temperature unit, so initialization failed.
   ```
-}
+-->
 
 ### Propagation of Initialization Failure
 
@@ -2147,7 +2100,7 @@ In either case, if you delegate to another initializer that causes initializatio
 the entire initialization process fails immediately,
 and no further initialization code is executed.
 
-@Comment {
+<!--
   - test: `delegatingAcrossInAStructurePropagatesInitializationFailureImmediately`
   
   ```swifttest
@@ -2161,9 +2114,9 @@ and no further initialization code is executed.
   -> let s = S(string1: "bing")
   -> assert(s == nil)
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `delegatingAcrossInAClassPropagatesInitializationFailureImmediately`
   
   ```swifttest
@@ -2177,9 +2130,9 @@ and no further initialization code is executed.
   -> let c = C(string1: "bing")
   -> assert(c == nil)
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `delegatingUpInAClassPropagatesInitializationFailureImmediately`
   
   ```swifttest
@@ -2195,7 +2148,7 @@ and no further initialization code is executed.
   -> let d = D(string2: "bing")
   -> assert(d == nil)
   ```
-}
+-->
 
 > Note: A failable initializer can also delegate to a nonfailable initializer.
 > Use this approach if you need to add a potential failure state
@@ -2208,25 +2161,24 @@ and ensures that this property always has a value of at least `1`:
 
 ```swift
 class Product {
-   let name: String
-   init?(name: String) {
-      if name.isEmpty { return nil }
-      self.name = name
-   }
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
 }
 
 class CartItem: Product {
-   let quantity: Int
-   init?(name: String, quantity: Int) {
-      if quantity < 1 { return nil }
-      self.quantity = quantity
-      super.init(name: name)
-   }
+    let quantity: Int
+    init?(name: String, quantity: Int) {
+        if quantity < 1 { return nil }
+        self.quantity = quantity
+        super.init(name: name)
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2248,7 +2200,7 @@ class CartItem: Product {
         }
      }
   ```
-}
+-->
 
 The failable initializer for `CartItem` starts by
 validating that it has received a `quantity` value of `1` or more.
@@ -2265,13 +2217,12 @@ initialization succeeds:
 
 ```swift
 if let twoSocks = CartItem(name: "sock", quantity: 2) {
-   print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+    print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
 }
 // Prints "Item: sock, quantity: 2"
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2280,22 +2231,21 @@ if let twoSocks = CartItem(name: "sock", quantity: 2) {
      }
   <- Item: sock, quantity: 2
   ```
-}
+-->
 
 If you try to create a `CartItem` instance with a `quantity` value of `0`,
 the `CartItem` initializer causes initialization to fail:
 
 ```swift
 if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
-   print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+    print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
 } else {
-   print("Unable to initialize zero shirts")
+    print("Unable to initialize zero shirts")
 }
 // Prints "Unable to initialize zero shirts"
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2306,22 +2256,21 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
      }
   <- Unable to initialize zero shirts
   ```
-}
+-->
 
 Similarly, if you try to create a `CartItem` instance with an empty `name` value,
 the superclass `Product` initializer causes initialization to fail:
 
 ```swift
 if let oneUnnamed = CartItem(name: "", quantity: 1) {
-   print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+    print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
 } else {
-   print("Unable to initialize one unnamed product")
+    print("Unable to initialize one unnamed product")
 }
 // Prints "Unable to initialize one unnamed product"
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2332,7 +2281,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
      }
   <- Unable to initialize one unnamed product
   ```
-}
+-->
 
 ### Overriding a Failable Initializer
 
@@ -2350,7 +2299,7 @@ is to force-unwrap the result of the failable superclass initializer.
 > Note: You can override a failable initializer with a nonfailable initializer
 > but not the other way around.
 
-@Comment {
+<!--
   - test: `youCannotOverrideANonFailableInitializerWithAFailableInitializer`
   
   ```swifttest
@@ -2367,7 +2316,7 @@ is to force-unwrap the result of the failable superclass initializer.
   !!            init() {}
   !!            ^
   ```
-}
+-->
 
 The example below defines a class called `Document`.
 This class models a document that can be initialized with
@@ -2376,19 +2325,18 @@ but can't be an empty string:
 
 ```swift
 class Document {
-   var name: String?
-   // this initializer creates a document with a nil name value
-   init() {}
-   // this initializer creates a document with a nonempty name value
-   init?(name: String) {
-      if name.isEmpty { return nil }
-      self.name = name
-   }
+    var name: String?
+    // this initializer creates a document with a nil name value
+    init() {}
+    // this initializer creates a document with a nonempty name value
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2403,7 +2351,7 @@ class Document {
         }
      }
   ```
-}
+-->
 
 The next example defines a subclass of `Document` called `AutomaticallyNamedDocument`.
 The `AutomaticallyNamedDocument` subclass overrides
@@ -2415,23 +2363,22 @@ or if an empty string is passed to the `init(name:)` initializer:
 
 ```swift
 class AutomaticallyNamedDocument: Document {
-   override init() {
-      super.init()
-      self.name = "[Untitled]"
-   }
-   override init(name: String) {
-      super.init()
-      if name.isEmpty {
-         self.name = "[Untitled]"
-      } else {
-         self.name = name
-      }
-   }
+    override init() {
+        super.init()
+        self.name = "[Untitled]"
+    }
+    override init(name: String) {
+        super.init()
+        if name.isEmpty {
+            self.name = "[Untitled]"
+        } else {
+            self.name = name
+        }
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2450,7 +2397,7 @@ class AutomaticallyNamedDocument: Document {
         }
      }
   ```
-}
+-->
 
 The `AutomaticallyNamedDocument` overrides its superclass's
 failable `init?(name:)` initializer with a nonfailable `init(name:)` initializer.
@@ -2468,14 +2415,13 @@ from its superclass during initialization.
 
 ```swift
 class UntitledDocument: Document {
-   override init() {
-      super.init(name: "[Untitled]")!
-   }
+    override init() {
+        super.init(name: "[Untitled]")!
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failableInitializers`
   
   ```swifttest
@@ -2485,7 +2431,7 @@ class UntitledDocument: Document {
         }
      }
   ```
-}
+-->
 
 In this case, if the `init(name:)` initializer of the superclass
 were ever called with an empty string as the name,
@@ -2510,7 +2456,7 @@ You can also delegate from `init` to `init!`,
 although doing so will trigger an assertion
 if the `init!` initializer causes initialization to fail.
 
-@Comment {
+<!--
   - test: `structuresCanDelegateAcrossFromOptionalToIUO`
   
   ```swifttest
@@ -2519,9 +2465,9 @@ if the `init!` initializer causes initialization to fail.
         init!(iuo: Int) {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `structuresCanDelegateAcrossFromIUOToOptional`
   
   ```swifttest
@@ -2530,9 +2476,9 @@ if the `init!` initializer causes initialization to fail.
         init?(optional: Int) {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanDelegateAcrossFromOptionalToIUO`
   
   ```swifttest
@@ -2541,9 +2487,9 @@ if the `init!` initializer causes initialization to fail.
         init!(iuo: Int) {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanDelegateAcrossFromIUOToOptional`
   
   ```swifttest
@@ -2552,9 +2498,9 @@ if the `init!` initializer causes initialization to fail.
         init?(optional: Int) {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanDelegateUpFromOptionalToIUO`
   
   ```swifttest
@@ -2565,9 +2511,9 @@ if the `init!` initializer causes initialization to fail.
         init?(optional: Int) { super.init(iuo: optional) }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanDelegateUpFromIUOToOptional`
   
   ```swifttest
@@ -2578,9 +2524,9 @@ if the `init!` initializer causes initialization to fail.
         init!(iuo: Int) { super.init(optional: iuo) }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanOverrideOptionalWithIUO`
   
   ```swifttest
@@ -2591,9 +2537,9 @@ if the `init!` initializer causes initialization to fail.
         override init!(i: Int) { super.init(i: i) }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanOverrideIUOWithOptional`
   
   ```swifttest
@@ -2604,9 +2550,9 @@ if the `init!` initializer causes initialization to fail.
         override init?(i: Int) { super.init(i: i) }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `structuresCanDelegateAcrossFromNonFailingToIUO`
   
   ```swifttest
@@ -2615,9 +2561,9 @@ if the `init!` initializer causes initialization to fail.
         init!(iuo: Int) {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanDelegateAcrossFromNonFailingToIUO`
   
   ```swifttest
@@ -2626,9 +2572,9 @@ if the `init!` initializer causes initialization to fail.
         init!(iuo: Int) {}
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesCanDelegateUpFromNonFailingToIUO`
   
   ```swifttest
@@ -2639,9 +2585,9 @@ if the `init!` initializer causes initialization to fail.
         init(nonFailing: Int) { super.init(iuo: nonFailing) }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `structuresAssertWhenDelegatingAcrossFromNonFailingToNilIUO`
   
   ```swifttest
@@ -2652,9 +2598,9 @@ if the `init!` initializer causes initialization to fail.
   -> let s = S(nonFailing: 42)
   xx assertion
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesAssertWhenDelegatingAcrossFromNonFailingToNilIUO`
   
   ```swifttest
@@ -2665,9 +2611,9 @@ if the `init!` initializer causes initialization to fail.
   -> let c = C(nonFailing: 42)
   xx assertion
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `classesAssertWhenDelegatingUpFromNonFailingToNilIUO`
   
   ```swifttest
@@ -2680,7 +2626,7 @@ if the `init!` initializer causes initialization to fail.
   -> let d = D(nonFailing: 42)
   xx assertion
   ```
-}
+-->
 
 ## Required Initializers
 
@@ -2689,14 +2635,13 @@ to indicate that every subclass of the class must implement that initializer:
 
 ```swift
 class SomeClass {
-   required init() {
-      // initializer implementation goes here
-   }
+    required init() {
+        // initializer implementation goes here
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `requiredInitializers`
   
   ```swifttest
@@ -2706,9 +2651,9 @@ class SomeClass {
         }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `requiredDesignatedInitializersMustBeImplementedBySubclasses`
   
   ```swifttest
@@ -2725,9 +2670,9 @@ class SomeClass {
   !!    required init(i: Int) {}
   !!             ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `requiredConvenienceInitializersMustBeImplementedBySubclasses`
   
   ```swifttest
@@ -2747,7 +2692,7 @@ class SomeClass {
   !!    required convenience init(i: Int) {
   !!                         ^
   ```
-}
+-->
 
 You must also write the `required` modifier before
 every subclass implementation of a required initializer,
@@ -2756,14 +2701,13 @@ You don't write the `override` modifier when overriding a required designated in
 
 ```swift
 class SomeSubclass: SomeClass {
-   required init() {
-      // subclass implementation of the required initializer goes here
-   }
+    required init() {
+        // subclass implementation of the required initializer goes here
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `requiredInitializers`
   
   ```swifttest
@@ -2773,9 +2717,9 @@ class SomeSubclass: SomeClass {
         }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `youCannotWriteOverrideWhenOverridingARequiredDesignatedInitializer`
   
   ```swifttest
@@ -2793,12 +2737,12 @@ class SomeSubclass: SomeClass {
   !!    required init() {}
   !!             ^
   ```
-}
+-->
 
 > Note: You don't have to provide an explicit implementation of a required initializer
 > if you can satisfy the requirement with an inherited initializer.
 
-@Comment {
+<!--
   - test: `youCanSatisfyARequiredDesignatedInitializerWithAnInheritedInitializer`
   
   ```swifttest
@@ -2810,9 +2754,9 @@ class SomeSubclass: SomeClass {
         var y = 0
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `youCanSatisfyARequiredConvenienceInitializerWithAnInheritedInitializer`
   
   ```swifttest
@@ -2827,9 +2771,9 @@ class SomeSubclass: SomeClass {
         var y = 0
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   FIXME: This section still doesn't describe why required initializers are useful.
   This is because the reason for their usefulness -
   construction through a metatype of some protocol type with an initializer requirement -
@@ -2837,7 +2781,7 @@ class SomeSubclass: SomeClass {
   <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
   As of early 2015 that bug has been fixed.
   See the corresponding FIXME in the Protocols chapter introduction too.
-}
+-->
 
 ## Setting a Default Property Value with a Closure or Function
 
@@ -2858,16 +2802,15 @@ to provide a default property value:
 
 ```swift
 class SomeClass {
-   let someProperty: SomeType = {
-      // create a default value for someProperty inside this closure
-      // someValue must be of the same type as SomeType
-      return someValue
-   }()
+    let someProperty: SomeType = {
+        // create a default value for someProperty inside this closure
+        // someValue must be of the same type as SomeType
+        return someValue
+    }()
 }
 ```
 
-
-@Comment {
+<!--
   - test: `defaultPropertyWithClosure`
   
   ```swifttest
@@ -2881,7 +2824,7 @@ class SomeClass {
         }()
      }
   ```
-}
+-->
 
 Note that the closure's end curly brace is followed by an empty pair of parentheses.
 This tells Swift to execute the closure immediately.
@@ -2889,13 +2832,13 @@ If you omit these parentheses,
 you are trying to assign the closure itself to the property,
 and not the return value of the closure.
 
-@Comment {
+<!--
   TODO: feedback from Peter is that this is very close to the syntax for
   a computed property that doesn't define a separate getter.
   He's right, and it would be good to provide an additional example -
   perhaps with a stored property that's assigned the result of a function -
   to make the difference more explicit.
-}
+-->
 
 > Note: If you use a closure to initialize a property,
 > remember that the rest of the instance hasn't yet been initialized
@@ -2912,7 +2855,6 @@ with alternating black and white squares.
 
 ![](chessBoard)
 
-
 To represent this game board,
 the `Chessboard` structure has a single property called `boardColors`,
 which is an array of 64 `Bool` values.
@@ -2925,26 +2867,25 @@ The `boardColors` array is initialized with a closure to set up its color values
 
 ```swift
 struct Chessboard {
-   let boardColors: [Bool] = {
-      var temporaryBoard: [Bool] = []
-      var isBlack = false
-      for i in 1...8 {
-         for j in 1...8 {
-            temporaryBoard.append(isBlack)
+    let boardColors: [Bool] = {
+        var temporaryBoard: [Bool] = []
+        var isBlack = false
+        for i in 1...8 {
+            for j in 1...8 {
+                temporaryBoard.append(isBlack)
+                isBlack = !isBlack
+            }
             isBlack = !isBlack
-         }
-         isBlack = !isBlack
-      }
-      return temporaryBoard
-   }()
-   func squareIsBlackAt(row: Int, column: Int) -> Bool {
-      return boardColors[(row * 8) + column]
-   }
+        }
+        return temporaryBoard
+    }()
+    func squareIsBlackAt(row: Int, column: Int) -> Bool {
+        return boardColors[(row * 8) + column]
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `chessboard`
   
   ```swifttest
@@ -2966,7 +2907,7 @@ struct Chessboard {
         }
      }
   ```
-}
+-->
 
 Whenever a new `Chessboard` instance is created, the closure is executed,
 and the default value of `boardColors` is calculated and returned.
@@ -2986,8 +2927,7 @@ print(board.squareIsBlackAt(row: 7, column: 7))
 // Prints "false"
 ```
 
-
-@Comment {
+<!--
   - test: `chessboard`
   
   ```swifttest
@@ -2998,10 +2938,9 @@ print(board.squareIsBlackAt(row: 7, column: 7))
   -> print(board.squareIsBlackAt(row: 7, column: 7))
   <- false
   ```
-}
+-->
 
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -3009,4 +2948,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

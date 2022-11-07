@@ -1,6 +1,6 @@
-
-
 # Memory Safety
+
+Structure your code to avoid conflicts when accessing memory.
 
 By default, Swift prevents unsafe behavior from happening in your code.
 For example,
@@ -20,13 +20,13 @@ so you can avoid writing code that has conflicting access to memory.
 If your code does contain conflicts,
 you'll get a compile-time or runtime error.
 
-@Comment {
+<!--
   TODO: maybe re-introduce this text...
   
   Memory safety refers to...
   The term *safety* usually refers to :newTerm:`memory safety`...
   Unsafe access to memory is available, if you ask for it explicitly...
-}
+-->
 
 ## Understanding Conflicting Access to Memory
 
@@ -44,8 +44,7 @@ var one = 1
 print("We're number \(one)!")
 ```
 
-
-@Comment {
+<!--
   - test: `memory-read-write`
   
   ```swifttest
@@ -56,12 +55,12 @@ print("We're number \(one)!")
   -> print("We're number \(one)!")
   << We're number 1!
   ```
-}
+-->
 
-@Comment {
+<!--
   Might be worth a different example,
   or else I'm going to keep getting "We are Number One" stuck in my head.
-}
+-->
 
 A conflicting access to memory can occur
 when different parts of your code are trying
@@ -86,7 +85,6 @@ and get a correct answer,
 as shown in the figure below.
 
 ![](memory_shopping)
-
 
 While you're adding items to the budget,
 it's in a temporary, invalid state
@@ -122,10 +120,10 @@ you have to determine what it was intended to do.
 > use [Thread Sanitizer](https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early)
 > to help detect conflicting access across threads.
 
-@Comment {
+<!--
   TODO: The xref above doesn't seem to give enough information.
   What should I be looking for when I get to the linked page?
-}
+-->
 
 ### Characteristics of Memory Access
 
@@ -157,10 +155,10 @@ if it uses only C atomic operations;
 otherwise it's nonatomic.
 For a list of those functions, see the `stdatomic(3)` man page.
 
-@Comment {
+<!--
   Using these functions from Swift requires some shimming -- for example:
   https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
-}
+-->
 
 An access is *instantaneous*
 if it's not possible for other code to run
@@ -181,8 +179,7 @@ print(myNumber)
 // Prints "2"
 ```
 
-
-@Comment {
+<!--
   - test: `memory-instantaneous`
   
   ```swifttest
@@ -195,7 +192,7 @@ print(myNumber)
   -> print(myNumber)
   <- 2
   ```
-}
+-->
 
 However,
 there are several ways to access memory,
@@ -242,8 +239,7 @@ increment(&stepSize)
 // Error: conflicting accesses to stepSize
 ```
 
-
-@Comment {
+<!--
   - test: `memory-increment`
   
   ```swifttest
@@ -259,7 +255,7 @@ increment(&stepSize)
   xx Previous access (a modification) started at  (0x10e86b032).
   xx Current access (a read) started at:
   ```
-}
+-->
 
 In the code above,
 `stepSize` is a global variable,
@@ -275,7 +271,6 @@ producing a conflict.
 
 ![](memory_increment)
 
-
 One way to solve this conflict
 is to make an explicit copy of `stepSize`:
 
@@ -289,8 +284,7 @@ stepSize = copyOfStepSize
 // stepSize is now 2
 ```
 
-
-@Comment {
+<!--
   - test: `memory-increment-copy`
   
   ```swifttest
@@ -307,7 +301,7 @@ stepSize = copyOfStepSize
   /> stepSize is now \(stepSize)
   </ stepSize is now 2
   ```
-}
+-->
 
 When you make a copy of `stepSize` before calling `increment(_:)`,
 it's clear that the value of `copyOfStepSize` is incremented
@@ -336,8 +330,7 @@ balance(&playerOneScore, &playerOneScore)
 // Error: conflicting accesses to playerOneScore
 ```
 
-
-@Comment {
+<!--
   - test: `memory-balance`
   
   ```swifttest
@@ -364,7 +357,7 @@ balance(&playerOneScore, &playerOneScore)
   !! balance(&playerOneScore, &playerOneScore)
   !!         ^~~~~~~~~~~~~~~
   ```
-}
+-->
 
 The `balance(_:_:)` function above
 modifies its two parameters
@@ -388,18 +381,18 @@ to the same location in memory at the same time.
 
 ## Conflicting Access to self in Methods
 
-@Comment {
+<!--
   This (probably?) applies to all value types,
   but structures are the only place you can observe it.
   Enumerations can have mutating methods
   but you can't mutate their associated values in place,
   and tuples can't have methods.
-}
+-->
 
-@Comment {
+<!--
   Methods behave like self is passed to the method as inout
   because, under the hood, that's exactly what happens.
-}
+-->
 
 A mutating method on a structure has write access to `self`
 for the duration of the method call.
@@ -420,8 +413,7 @@ struct Player {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `memory-player-share-with-self`
   
   ```swifttest
@@ -441,7 +433,7 @@ struct Player {
          }
      }
   ```
-}
+-->
 
 In the `restoreHealth()` method above,
 a write access to `self` starts at the beginning of the method
@@ -465,8 +457,7 @@ var maria = Player(name: "Maria", health: 5, energy: 10)
 oscar.shareHealth(with: &maria)  // OK
 ```
 
-
-@Comment {
+<!--
   - test: `memory-player-share-with-self`
   
   ```swifttest
@@ -480,7 +471,7 @@ oscar.shareHealth(with: &maria)  // OK
   -> var maria = Player(name: "Maria", health: 5, energy: 10)
   -> oscar.shareHealth(with: &maria)  // OK
   ```
-}
+-->
 
 In the example above,
 calling the `shareHealth(with:)` method
@@ -498,7 +489,6 @@ they don't conflict.
 
 ![](memory_share_health_maria)
 
-
 However,
 if you pass `oscar` as the argument to `shareHealth(with:)`,
 there's a conflict:
@@ -508,8 +498,7 @@ oscar.shareHealth(with: &oscar)
 // Error: conflicting accesses to oscar
 ```
 
-
-@Comment {
+<!--
   - test: `memory-player-share-with-self`
   
   ```swifttest
@@ -528,7 +517,7 @@ oscar.shareHealth(with: &oscar)
   !! oscar.shareHealth(with: &oscar)
   !! ^~~~~~
   ```
-}
+-->
 
 The mutating method needs write access to `self`
 for the duration of the method,
@@ -543,7 +532,6 @@ refer to the same memory and they overlap,
 producing a conflict.
 
 ![](memory_share_health_oscar)
-
 
 ## Conflicting Access to Properties
 
@@ -564,8 +552,7 @@ balance(&playerInformation.health, &playerInformation.energy)
 // Error: conflicting access to properties of playerInformation
 ```
 
-
-@Comment {
+<!--
   - test: `memory-tuple`
   
   ```swifttest
@@ -581,7 +568,7 @@ balance(&playerInformation.health, &playerInformation.energy)
   xx Previous access (a modification) started at  (0x107952037).
   xx Current access (a modification) started at:
   ```
-}
+-->
 
 In the example above,
 calling `balance(_:_:)` on the elements of a tuple
@@ -607,8 +594,7 @@ var holly = Player(name: "Holly", health: 10, energy: 10)
 balance(&holly.health, &holly.energy)  // Error
 ```
 
-
-@Comment {
+<!--
   - test: `memory-share-health-global`
   
   ```swifttest
@@ -628,7 +614,7 @@ balance(&holly.health, &holly.energy)  // Error
   xx Previous access (a modification) started at  (0x107952037).
   xx Current access (a modification) started at:
   ```
-}
+-->
 
 In practice,
 most access to the properties of a structure
@@ -646,8 +632,7 @@ func someFunction() {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `memory-share-health-local`
   
   ```swifttest
@@ -667,7 +652,7 @@ func someFunction() {
      }
   >> someFunction()
   ```
-}
+-->
 
 In the example above,
 Oscar's health and energy are passed
@@ -698,7 +683,7 @@ if the following conditions apply:
 If the compiler can't prove the access is safe,
 it doesn't allow the access.
 
-@Comment {
+<!--
   Because there's no syntax
   to mutate an enum's associated value in place,
   we can't show that overlapping mutations
@@ -707,13 +692,13 @@ it doesn't allow the access.
   Otherwise, we'd want an example of that
   in this section too --
   it's the moral equivalent of property access.
-}
+-->
 
-@Comment {
+<!--
   .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
-}
+-->
 
-@Comment {
+<!--
   In Swift 4, the only way to create a long-term read
   is to use implicit pointer conversion
   when passing a value as a nonmutating unsafe pointer parameter,
@@ -742,9 +727,9 @@ it doesn't allow the access.
       // 2    temp2                              0x000000010675e3c0 main + 102
       // 3    libdyld.dylib                      0x00007fff69c75144 start + 1
       // Fatal access conflict detected.
-}
+-->
 
-@Comment {
+<!--
   TEXT FOR THE FUTURE
   
   Versions of Swift before Swift 5 ensure memory safety
@@ -753,10 +738,9 @@ it doesn't allow the access.
   The copy is no longer shared, preventing the possibility of conflicts.
   However, the copying approach has a negative impact
   on performance and memory usage.
-}
+-->
 
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -764,4 +748,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

@@ -1,6 +1,6 @@
-
-
 # Nested Types
+
+Define one data type inside of another data type.
 
 Enumerations are often created to support a specific class or structure's functionality.
 Similarly, it can be convenient to define utility classes and structures
@@ -27,45 +27,44 @@ which is nested within the `Rank` enumeration:
 ```swift
 struct BlackjackCard {
 
-   // nested Suit enumeration
-   enum Suit: Character {
-      case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
-   }
+    // nested Suit enumeration
+    enum Suit: Character {
+        case spades = "♠", hearts = "♡", diamonds = "♢", clubs = "♣"
+    }
 
-   // nested Rank enumeration
-   enum Rank: Int {
-      case two = 2, three, four, five, six, seven, eight, nine, ten
-      case jack, queen, king, ace
-      struct Values {
-         let first: Int, second: Int?
-      }
-      var values: Values {
-         switch self {
+    // nested Rank enumeration
+    enum Rank: Int {
+        case two = 2, three, four, five, six, seven, eight, nine, ten
+        case jack, queen, king, ace
+        struct Values {
+            let first: Int, second: Int?
+        }
+        var values: Values {
+            switch self {
             case .ace:
-               return Values(first: 1, second: 11)
+                return Values(first: 1, second: 11)
             case .jack, .queen, .king:
-               return Values(first: 10, second: nil)
+                return Values(first: 10, second: nil)
             default:
-               return Values(first: self.rawValue, second: nil)
-         }
-      }
-   }
+                return Values(first: self.rawValue, second: nil)
+            }
+        }
+    }
 
-   // BlackjackCard properties and methods
-   let rank: Rank, suit: Suit
-   var description: String {
-      var output = "suit is \(suit.rawValue),"
-      output += " value is \(rank.values.first)"
-      if let second = rank.values.second {
-         output += " or \(second)"
-      }
-      return output
-   }
+    // BlackjackCard properties and methods
+    let rank: Rank, suit: Suit
+    var description: String {
+        var output = "suit is \(suit.rawValue),"
+        output += " value is \(rank.values.first)"
+        if let second = rank.values.second {
+            output += " or \(second)"
+        }
+        return output
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `nestedTypes`
   
   ```swifttest
@@ -107,7 +106,7 @@ struct BlackjackCard {
         }
      }
   ```
-}
+-->
 
 The `Suit` enumeration describes the four common playing card suits,
 together with a raw `Character` value to represent their symbol.
@@ -151,8 +150,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 // Prints "theAceOfSpades: suit is ♠, value is 1 or 11"
 ```
 
-
-@Comment {
+<!--
   - test: `nestedTypes`
   
   ```swifttest
@@ -160,7 +158,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
   -> print("theAceOfSpades: \(theAceOfSpades.description)")
   <- theAceOfSpades: suit is ♠, value is 1 or 11
   ```
-}
+-->
 
 Even though `Rank` and `Suit` are nested within `BlackjackCard`,
 their type can be inferred from context,
@@ -179,8 +177,7 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 // heartsSymbol is "♡"
 ```
 
-
-@Comment {
+<!--
   - test: `nestedTypes`
   
   ```swifttest
@@ -188,14 +185,13 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
   /> heartsSymbol is \"\(heartsSymbol)\"
   </ heartsSymbol is "♡"
   ```
-}
+-->
 
 For the example above,
 this enables the names of `Suit`, `Rank`, and `Values` to be kept deliberately short,
 because their names are naturally qualified by the context in which they're defined.
 
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -203,4 +199,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

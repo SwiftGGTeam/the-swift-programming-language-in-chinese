@@ -1,6 +1,6 @@
-
-
 # Patterns
+
+Match and destructure values.
 
 A *pattern* represents the structure of a single value
 or a composite value.
@@ -31,19 +31,23 @@ statement, a `catch` clause of a `do` statement,
 or in the case condition of an `if`, `while`,
 `guard`, or `for`-`in` statement.
 
-```
-Grammar of a pattern
-
-pattern --> wildcard-pattern type-annotation-OPT
-pattern --> identifier-pattern type-annotation-OPT
-pattern --> value-binding-pattern
-pattern --> tuple-pattern type-annotation-OPT
-pattern --> enum-case-pattern
-pattern --> optional-pattern
-pattern --> type-casting-pattern
-pattern --> expression-pattern
-```
-
+> Grammar of a pattern:
+>
+> *pattern* → *wildcard-pattern* *type-annotation*_?_
+>
+> *pattern* → *identifier-pattern* *type-annotation*_?_
+>
+> *pattern* → *value-binding-pattern*
+>
+> *pattern* → *tuple-pattern* *type-annotation*_?_
+>
+> *pattern* → *enum-case-pattern*
+>
+> *pattern* → *optional-pattern*
+>
+> *pattern* → *type-casting-pattern*
+>
+> *pattern* → *expression-pattern*
 
 ## Wildcard Pattern
 
@@ -54,12 +58,11 @@ ignoring the current value of the range on each iteration of the loop:
 
 ```swift
 for _ in 1...3 {
-   // Do something three times.
+    // Do something three times.
 }
 ```
 
-
-@Comment {
+<!--
   - test: `wildcard-pattern`
   
   ```swifttest
@@ -67,14 +70,11 @@ for _ in 1...3 {
         // Do something three times.
      }
   ```
-}
+-->
 
-```
-Grammar of a wildcard pattern
-
-wildcard-pattern --> ``_``
-```
-
+> Grammar of a wildcard pattern:
+>
+> *wildcard-pattern* → **`_`**
 
 ## Identifier Pattern
 
@@ -87,14 +87,13 @@ that matches the value `42` of type `Int`:
 let someValue = 42
 ```
 
-
-@Comment {
+<!--
   - test: `identifier-pattern`
   
   ```swifttest
   -> let someValue = 42
   ```
-}
+-->
 
 When the match succeeds, the value `42` is bound (assigned)
 to the constant name `someValue`.
@@ -103,12 +102,9 @@ When the pattern on the left-hand side of a variable or constant declaration
 is an identifier pattern,
 the identifier pattern is implicitly a subpattern of a value-binding pattern.
 
-```
-Grammar of an identifier pattern
-
-identifier-pattern --> identifier
-```
-
+> Grammar of an identifier pattern:
+>
+> *identifier-pattern* → *identifier*
 
 ## Value-Binding Pattern
 
@@ -125,15 +121,14 @@ corresponding identifier pattern.
 ```swift
 let point = (3, 2)
 switch point {
-   // Bind x and y to the elements of point.
-   case let (x, y):
-      print("The point is at (\(x), \(y)).")
+// Bind x and y to the elements of point.
+case let (x, y):
+    print("The point is at (\(x), \(y)).")
 }
 // Prints "The point is at (3, 2)."
 ```
 
-
-@Comment {
+<!--
   - test: `value-binding-pattern`
   
   ```swifttest
@@ -145,26 +140,23 @@ switch point {
      }
   <- The point is at (3, 2).
   ```
-}
+-->
 
 In the example above, `let` distributes to each identifier pattern in the
 tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
 `case let (x, y):` and `case (let x, let y):` match the same values.
 
-```
-Grammar of a value-binding pattern
+> Grammar of a value-binding pattern:
+>
+> *value-binding-pattern* → **`var`** *pattern* | **`let`** *pattern*
 
-value-binding-pattern --> ``var`` pattern | ``let`` pattern
-```
-
-
-@Comment {
+<!--
   NOTE: We chose to call this "value-binding pattern"
   instead of "variable pattern",
   because it's a pattern that binds values to either variables or constants,
   not a pattern that varies.
   "Variable pattern" is ambiguous between those two meanings.
-}
+-->
 
 ## Tuple Pattern
 
@@ -188,12 +180,11 @@ an expression pattern:
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
 // This code isn't valid.
 for (x, 0) in points {
-   /* ... */
+    /* ... */
 }
 ```
 
-
-@Comment {
+<!--
   - test: `tuple-pattern`
   
   ```swifttest
@@ -207,17 +198,17 @@ for (x, 0) in points {
   !! for (x, 0) in points {
   !!         ^
   ```
-}
+-->
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
 equivalent:
 
-@Comment {
+<!--
   This test needs to be compiled.
   The error message in the REPL is unpredictable as of
   Swift version 1.1 (swift-600.0.54.20)
-}
+-->
 
 ```swift
 let a = 2        // a: Int = 2
@@ -225,8 +216,7 @@ let (a) = 2      // a: Int = 2
 let (a): Int = 2 // a: Int = 2
 ```
 
-
-@Comment {
+<!--
   - test: `single-element-tuple-pattern`
   
   ```swifttest
@@ -246,16 +236,15 @@ let (a): Int = 2 // a: Int = 2
   !! let a = 2        // a: Int = 2
   !! ^
   ```
-}
+-->
 
-```
-Grammar of a tuple pattern
-
-tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
-tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
-tuple-pattern-element --> pattern | identifier ``:`` pattern
-```
-
+> Grammar of a tuple pattern:
+>
+> *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`**
+>
+> *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list*
+>
+> *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
 ## Enumeration Case Pattern
 
@@ -292,8 +281,7 @@ case nil:
 // Prints "Turn left"
 ```
 
-
-@Comment {
+<!--
   - test: `enum-pattern-matching-optional`
   
   ```swifttest
@@ -309,14 +297,11 @@ case nil:
      }
   <- Turn left
   ```
-}
+-->
 
-```
-Grammar of an enumeration case pattern
-
-enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
-```
-
+> Grammar of an enumeration case pattern:
+>
+> *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
 
 ## Optional Pattern
 
@@ -333,17 +318,16 @@ the following are equivalent:
 let someOptional: Int? = 42
 // Match using an enumeration case pattern.
 if case .some(let x) = someOptional {
-   print(x)
+    print(x)
 }
 
 // Match using an optional pattern.
 if case let x? = someOptional {
-   print(x)
+    print(x)
 }
 ```
 
-
-@Comment {
+<!--
   - test: `optional-pattern`
   
   ```swifttest
@@ -360,7 +344,7 @@ if case let x? = someOptional {
      }
   << 42
   ```
-}
+-->
 
 The optional pattern provides a convenient way to
 iterate over an array of optional values in a `for`-`in` statement,
@@ -370,15 +354,14 @@ executing the body of the loop only for non-`nil` elements.
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
 // Match only non-nil values.
 for case let number? in arrayOfOptionalInts {
-   print("Found a \(number)")
+    print("Found a \(number)")
 }
 // Found a 2
 // Found a 3
 // Found a 5
 ```
 
-
-@Comment {
+<!--
   - test: `optional-pattern-for-in`
   
   ```swifttest
@@ -391,14 +374,11 @@ for case let number? in arrayOfOptionalInts {
   </ Found a 3
   </ Found a 5
   ```
-}
+-->
 
-```
-Grammar of an optional pattern
-
-optional-pattern --> identifier-pattern ``?``
-```
-
+> Grammar of an optional pattern:
+>
+> *optional-pattern* → *identifier-pattern* **`?`**
 
 ## Type-Casting Patterns
 
@@ -410,7 +390,6 @@ case labels. The `is` and `as` patterns have the following form:
 is <#type#>
 <#pattern#> as <#type#>
 ```
-
 
 The `is` pattern matches a value if the type of that value at runtime is the same as
 the type specified in the right-hand side of the `is` pattern---or a subclass of that type.
@@ -427,14 +406,13 @@ For an example that uses a `switch` statement
 to match values with `is` and `as` patterns,
 see <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
 
-```
-Grammar of a type casting pattern
-
-type-casting-pattern --> is-pattern | as-pattern
-is-pattern --> ``is`` type
-as-pattern --> pattern ``as`` type
-```
-
+> Grammar of a type casting pattern:
+>
+> *type-casting-pattern* → *is-pattern* | *as-pattern*
+>
+> *is-pattern* → **`is`** *type*
+>
+> *as-pattern* → *pattern* **`as`** *type*
 
 ## Expression Pattern
 
@@ -455,18 +433,17 @@ as the following example shows.
 ```swift
 let point = (1, 2)
 switch point {
-   case (0, 0):
-      print("(0, 0) is at the origin.")
-   case (-2...2, -2...2):
-      print("(\(point.0), \(point.1)) is near the origin.")
-   default:
-      print("The point is at (\(point.0), \(point.1)).")
+case (0, 0):
+    print("(0, 0) is at the origin.")
+case (-2...2, -2...2):
+    print("(\(point.0), \(point.1)) is near the origin.")
+default:
+    print("The point is at (\(point.0), \(point.1)).")
 }
 // Prints "(1, 2) is near the origin."
 ```
 
-
-@Comment {
+<!--
   - test: `expression-pattern`
   
   ```swifttest
@@ -481,7 +458,7 @@ switch point {
      }
   <- (1, 2) is near the origin.
   ```
-}
+-->
 
 You can overload the `~=` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the `point` expression
@@ -490,19 +467,18 @@ with a string representations of points.
 ```swift
 // Overload the ~= operator to match a string with an integer.
 func ~= (pattern: String, value: Int) -> Bool {
-   return pattern == "\(value)"
+    return pattern == "\(value)"
 }
 switch point {
-   case ("0", "0"):
-      print("(0, 0) is at the origin.")
-   default:
-      print("The point is at (\(point.0), \(point.1)).")
+case ("0", "0"):
+    print("(0, 0) is at the origin.")
+default:
+    print("The point is at (\(point.0), \(point.1)).")
 }
 // Prints "The point is at (1, 2)."
 ```
 
-
-@Comment {
+<!--
   - test: `expression-pattern`
   
   ```swifttest
@@ -518,17 +494,13 @@ switch point {
      }
   <- The point is at (1, 2).
   ```
-}
+-->
 
-```
-Grammar of an expression pattern
+> Grammar of an expression pattern:
+>
+> *expression-pattern* → *expression*
 
-expression-pattern --> expression
-```
-
-
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -536,4 +508,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

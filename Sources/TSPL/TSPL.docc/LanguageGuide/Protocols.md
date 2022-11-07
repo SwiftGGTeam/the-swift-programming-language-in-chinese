@@ -1,6 +1,6 @@
-
-
 # Protocols
+
+Define requirements that conforming types must implement.
 
 A *protocol* defines a blueprint of
 methods, properties, and other requirements
@@ -14,7 +14,7 @@ In addition to specifying requirements that conforming types must implement,
 you can extend a protocol to implement some of these requirements
 or to implement additional functionality that conforming types can take advantage of.
 
-@Comment {
+<!--
   FIXME: Protocols should also be able to support initializers,
   and indeed you can currently write them,
   but they don't work due to
@@ -23,7 +23,7 @@ or to implement additional functionality that conforming types can take advantag
   UPDATE: actually, they *can* be used right now,
   but only in a generic function, and not more generally with the protocol type.
   I'm not sure I should mention them in this chapter until they work more generally.
-}
+-->
 
 ## Protocol Syntax
 
@@ -31,12 +31,11 @@ You define protocols in a very similar way to classes, structures, and enumerati
 
 ```swift
 protocol SomeProtocol {
-   // protocol definition goes here
+    // protocol definition goes here
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolSyntax`
   
   ```swifttest
@@ -44,7 +43,7 @@ protocol SomeProtocol {
         // protocol definition goes here
      }
   ```
-}
+-->
 
 Custom types state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
@@ -53,12 +52,11 @@ Multiple protocols can be listed, and are separated by commas:
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
-   // structure definition goes here
+    // structure definition goes here
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolSyntax`
   
   ```swifttest
@@ -68,19 +66,18 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
         // structure definition goes here
      }
   ```
-}
+-->
 
 If a class has a superclass, list the superclass name
 before any protocols it adopts, followed by a comma:
 
 ```swift
 class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
-   // class definition goes here
+    // class definition goes here
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolSyntax`
   
   ```swifttest
@@ -89,7 +86,7 @@ class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
         // class definition goes here
      }
   ```
-}
+-->
 
 ## Property Requirements
 
@@ -117,13 +114,12 @@ and gettable properties are indicated by writing `{ get }`.
 
 ```swift
 protocol SomeProtocol {
-   var mustBeSettable: Int { get set }
-   var doesNotNeedToBeSettable: Int { get }
+    var mustBeSettable: Int { get set }
+    var doesNotNeedToBeSettable: Int { get }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `instanceProperties`
   
   ```swifttest
@@ -132,7 +128,7 @@ protocol SomeProtocol {
         var doesNotNeedToBeSettable: Int { get }
      }
   ```
-}
+-->
 
 Always prefix type property requirements with the `static` keyword
 when you define them in a protocol.
@@ -141,12 +137,11 @@ the `class` or `static` keyword when implemented by a class:
 
 ```swift
 protocol AnotherProtocol {
-   static var someTypeProperty: Int { get set }
+    static var someTypeProperty: Int { get set }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `instanceProperties`
   
   ```swifttest
@@ -154,18 +149,17 @@ protocol AnotherProtocol {
         static var someTypeProperty: Int { get set }
      }
   ```
-}
+-->
 
 Here's an example of a protocol with a single instance property requirement:
 
 ```swift
 protocol FullyNamed {
-   var fullName: String { get }
+    var fullName: String { get }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `instanceProperties`
   
   ```swifttest
@@ -173,7 +167,7 @@ protocol FullyNamed {
         var fullName: String { get }
      }
   ```
-}
+-->
 
 The `FullyNamed` protocol requires a conforming type to provide a fully qualified name.
 The protocol doesn't specify anything else about the nature of the conforming type ---
@@ -186,14 +180,13 @@ the `FullyNamed` protocol:
 
 ```swift
 struct Person: FullyNamed {
-   var fullName: String
+    var fullName: String
 }
 let john = Person(fullName: "John Appleseed")
 // john.fullName is "John Appleseed"
 ```
 
-
-@Comment {
+<!--
   - test: `instanceProperties`
   
   ```swifttest
@@ -204,7 +197,7 @@ let john = Person(fullName: "John Appleseed")
   /> john.fullName is \"\(john.fullName)\"
   </ john.fullName is "John Appleseed"
   ```
-}
+-->
 
 This example defines a structure called `Person`,
 which represents a specific named person.
@@ -221,22 +214,21 @@ Here's a more complex class, which also adopts and conforms to the `FullyNamed` 
 
 ```swift
 class Starship: FullyNamed {
-   var prefix: String?
-   var name: String
-   init(name: String, prefix: String? = nil) {
-      self.name = name
-      self.prefix = prefix
-   }
-   var fullName: String {
-      return (prefix != nil ? prefix! + " " : "") + name
-   }
+    var prefix: String?
+    var name: String
+    init(name: String, prefix: String? = nil) {
+        self.name = name
+        self.prefix = prefix
+    }
+    var fullName: String {
+        return (prefix != nil ? prefix! + " " : "") + name
+    }
 }
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // ncc1701.fullName is "USS Enterprise"
 ```
 
-
-@Comment {
+<!--
   - test: `instanceProperties`
   
   ```swifttest
@@ -255,7 +247,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
   /> ncc1701.fullName is \"\(ncc1701.fullName)\"
   </ ncc1701.fullName is "USS Enterprise"
   ```
-}
+-->
 
 This class implements the `fullName` property requirement as
 a computed read-only property for a starship.
@@ -263,9 +255,9 @@ Each `Starship` class instance stores a mandatory `name` and an optional `prefix
 The `fullName` property uses the `prefix` value if it exists,
 and prepends it to the beginning of `name` to create a full name for the starship.
 
-@Comment {
+<!--
   TODO: add some advice on how protocols should be named
-}
+-->
 
 ## Method Requirements
 
@@ -285,12 +277,11 @@ the `class` or `static` keyword when implemented by a class:
 
 ```swift
 protocol SomeProtocol {
-   static func someTypeMethod()
+    static func someTypeMethod()
 }
 ```
 
-
-@Comment {
+<!--
   - test: `typeMethods`
   
   ```swifttest
@@ -298,18 +289,17 @@ protocol SomeProtocol {
         static func someTypeMethod()
      }
   ```
-}
+-->
 
 The following example defines a protocol with a single instance method requirement:
 
 ```swift
 protocol RandomNumberGenerator {
-   func random() -> Double
+    func random() -> Double
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -317,7 +307,7 @@ protocol RandomNumberGenerator {
         func random() -> Double
      }
   ```
-}
+-->
 
 This protocol, `RandomNumberGenerator`, requires any conforming type
 to have an instance method called `random`,
@@ -338,15 +328,15 @@ a *linear congruential generator*:
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
-   var lastRandom = 42.0
-   let m = 139968.0
-   let a = 3877.0
-   let c = 29573.0
-   func random() -> Double {
-      lastRandom = ((lastRandom * a + c)
-          .truncatingRemainder(dividingBy:m))
-      return lastRandom / m
-   }
+    var lastRandom = 42.0
+    let m = 139968.0
+    let a = 3877.0
+    let c = 29573.0
+    func random() -> Double {
+        lastRandom = ((lastRandom * a + c)
+            .truncatingRemainder(dividingBy:m))
+        return lastRandom / m
+    }
 }
 let generator = LinearCongruentialGenerator()
 print("Here's a random number: \(generator.random())")
@@ -355,8 +345,7 @@ print("And another one: \(generator.random())")
 // Prints "And another one: 0.729023776863283"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -377,7 +366,7 @@ print("And another one: \(generator.random())")
   -> print("And another one: \(generator.random())")
   <- And another one: 0.729023776863283
   ```
-}
+-->
 
 ## Mutating Method Requirements
 
@@ -413,12 +402,11 @@ when it's called:
 
 ```swift
 protocol Togglable {
-   mutating func toggle()
+    mutating func toggle()
 }
 ```
 
-
-@Comment {
+<!--
   - test: `mutatingRequirements`
   
   ```swifttest
@@ -426,7 +414,7 @@ protocol Togglable {
         mutating func toggle()
      }
   ```
-}
+-->
 
 If you implement the `Togglable` protocol for a structure or enumeration,
 that structure or enumeration can conform to the protocol
@@ -441,23 +429,22 @@ to match the `Togglable` protocol's requirements:
 
 ```swift
 enum OnOffSwitch: Togglable {
-   case off, on
-   mutating func toggle() {
-      switch self {
-         case .off:
+    case off, on
+    mutating func toggle() {
+        switch self {
+        case .off:
             self = .on
-         case .on:
+        case .on:
             self = .off
-      }
-   }
+        }
+    }
 }
 var lightSwitch = OnOffSwitch.off
 lightSwitch.toggle()
 // lightSwitch is now equal to .on
 ```
 
-
-@Comment {
+<!--
   - test: `mutatingRequirements`
   
   ```swifttest
@@ -476,7 +463,7 @@ lightSwitch.toggle()
   -> lightSwitch.toggle()
   // lightSwitch is now equal to .on
   ```
-}
+-->
 
 ## Initializer Requirements
 
@@ -488,12 +475,11 @@ but without curly braces or an initializer body:
 
 ```swift
 protocol SomeProtocol {
-   init(someParameter: Int)
+    init(someParameter: Int)
 }
 ```
 
-
-@Comment {
+<!--
   - test: `initializers`
   
   ```swifttest
@@ -501,7 +487,7 @@ protocol SomeProtocol {
         init(someParameter: Int)
      }
   ```
-}
+-->
 
 ### Class Implementations of Protocol Initializer Requirements
 
@@ -512,14 +498,13 @@ you must mark the initializer implementation with the `required` modifier:
 
 ```swift
 class SomeClass: SomeProtocol {
-   required init(someParameter: Int) {
-      // initializer implementation goes here
-   }
+    required init(someParameter: Int) {
+        // initializer implementation goes here
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `initializers`
   
   ```swifttest
@@ -529,9 +514,9 @@ class SomeClass: SomeProtocol {
         }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocolInitializerRequirementsCanBeImplementedAsDesignatedOrConvenience`
   
   ```swifttest
@@ -548,7 +533,7 @@ class SomeClass: SomeProtocol {
         }
      }
   ```
-}
+-->
 
 The use of the `required` modifier ensures that
 you provide an explicit or inherited implementation of the initializer requirement
@@ -558,7 +543,7 @@ such that they also conform to the protocol.
 For more information on required initializers,
 see <doc:Initialization#Required-Initializers>.
 
-@Comment {
+<!--
   - test: `protocolInitializerRequirementsRequireTheRequiredModifierOnTheImplementingClass`
   
   ```swifttest
@@ -576,9 +561,9 @@ see <doc:Initialization#Required-Initializers>.
   !! ^
   !! required
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocolInitializerRequirementsRequireTheRequiredModifierOnSubclasses`
   
   ```swifttest
@@ -602,14 +587,14 @@ see <doc:Initialization#Required-Initializers>.
   !! required init(s: String) {}
   !! ^
   ```
-}
+-->
 
 > Note: You don't need to mark protocol initializer implementations with the `required` modifier
 > on classes that are marked with the `final` modifier,
 > because final classes can't subclassed.
 > For more about the `final` modifier, see <doc:Inheritance#Preventing-Overrides>.
 
-@Comment {
+<!--
   - test: `finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements`
   
   ```swifttest
@@ -623,7 +608,7 @@ see <doc:Initialization#Required-Initializers>.
         init(s: String) {}
      }
   ```
-}
+-->
 
 If a subclass overrides a designated initializer from a superclass,
 and also implements a matching initializer requirement from a protocol,
@@ -631,25 +616,24 @@ mark the initializer implementation with both the `required` and `override` modi
 
 ```swift
 protocol SomeProtocol {
-   init()
+    init()
 }
 
 class SomeSuperClass {
-   init() {
-      // initializer implementation goes here
-   }
+    init() {
+        // initializer implementation goes here
+    }
 }
 
 class SomeSubClass: SomeSuperClass, SomeProtocol {
-   // "required" from SomeProtocol conformance; "override" from SomeSuperClass
-   required override init() {
-      // initializer implementation goes here
-   }
+    // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+    required override init() {
+        // initializer implementation goes here
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `requiredOverrideInitializers`
   
   ```swifttest
@@ -670,7 +654,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
         }
      }
   ```
-}
+-->
 
 ### Failable Initializer Requirements
 
@@ -682,7 +666,7 @@ a failable or nonfailable initializer on a conforming type.
 A nonfailable initializer requirement can be satisfied by
 a nonfailable initializer or an implicitly unwrapped failable initializer.
 
-@Comment {
+<!--
   - test: `failableRequirementCanBeSatisfiedByFailableInitializer`
   
   ```swifttest
@@ -690,9 +674,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init?(i: Int) {} }
   -> struct S: P { init?(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `failableRequirementCanBeSatisfiedByIUOInitializer`
   
   ```swifttest
@@ -700,9 +684,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init!(i: Int) {} }
   -> struct S: P { init!(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `iuoRequirementCanBeSatisfiedByFailableInitializer`
   
   ```swifttest
@@ -710,9 +694,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init?(i: Int) {} }
   -> struct S: P { init?(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `iuoRequirementCanBeSatisfiedByIUOInitializer`
   
   ```swifttest
@@ -720,9 +704,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init!(i: Int) {} }
   -> struct S: P { init!(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `failableRequirementCanBeSatisfiedByNonFailableInitializer`
   
   ```swifttest
@@ -730,9 +714,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init(i: Int) {} }
   -> struct S: P { init(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `iuoRequirementCanBeSatisfiedByNonFailableInitializer`
   
   ```swifttest
@@ -740,9 +724,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init(i: Int) {} }
   -> struct S: P { init(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `nonFailableRequirementCanBeSatisfiedByNonFailableInitializer`
   
   ```swifttest
@@ -750,9 +734,9 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init(i: Int) {} }
   -> struct S: P { init(i: Int) {} }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `nonFailableRequirementCanBeSatisfiedByIUOInitializer`
   
   ```swifttest
@@ -760,7 +744,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   -> class C: P { required init!(i: Int) {} }
   -> struct S: P { init!(i: Int) {} }
   ```
-}
+-->
 
 ## Protocols as Types
 
@@ -833,18 +817,17 @@ The example below defines two protocols for use with dice-based board games:
 
 ```swift
 protocol DiceGame {
-   var dice: Dice { get }
-   func play()
+    var dice: Dice { get }
+    func play()
 }
 protocol DiceGameDelegate: AnyObject {
-   func gameDidStart(_ game: DiceGame)
-   func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-   func gameDidEnd(_ game: DiceGame)
+    func gameDidStart(_ game: DiceGame)
+    func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+    func gameDidEnd(_ game: DiceGame)
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -858,7 +841,7 @@ protocol DiceGameDelegate: AnyObject {
         func gameDidEnd(_ game: DiceGame)
      }
   ```
-}
+-->
 
 The `DiceGame` protocol is a protocol that can be adopted
 by any game that involves dice.
@@ -883,39 +866,38 @@ and to notify a `DiceGameDelegate` about its progress:
 
 ```swift
 class SnakesAndLadders: DiceGame {
-   let finalSquare = 25
-   let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
-   var square = 0
-   var board: [Int]
-   init() {
-      board = Array(repeating: 0, count: finalSquare + 1)
-      board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-      board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-   }
-   weak var delegate: DiceGameDelegate?
-   func play() {
-      square = 0
-      delegate?.gameDidStart(self)
-      gameLoop: while square != finalSquare {
-         let diceRoll = dice.roll()
-         delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-         switch square + diceRoll {
+    let finalSquare = 25
+    let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
+    var square = 0
+    var board: [Int]
+    init() {
+        board = Array(repeating: 0, count: finalSquare + 1)
+        board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+        board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    }
+    weak var delegate: DiceGameDelegate?
+    func play() {
+        square = 0
+        delegate?.gameDidStart(self)
+        gameLoop: while square != finalSquare {
+            let diceRoll = dice.roll()
+            delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
+            switch square + diceRoll {
             case finalSquare:
-               break gameLoop
+                break gameLoop
             case let newSquare where newSquare > finalSquare:
-               continue gameLoop
+                continue gameLoop
             default:
-               square += diceRoll
-               square += board[square]
-         }
-      }
-      delegate?.gameDidEnd(self)
-   }
+                square += diceRoll
+                square += board[square]
+            }
+        }
+        delegate?.gameDidEnd(self)
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -950,7 +932,7 @@ class SnakesAndLadders: DiceGame {
         }
      }
   ```
-}
+-->
 
 For a description of the *Snakes and Ladders* gameplay,
 see <doc:ControlFlow#Break>.
@@ -989,35 +971,34 @@ If the `delegate` property is non-nil,
 the delegate methods are called,
 and are passed the `SnakesAndLadders` instance as a parameter.
 
-@Comment {
+<!--
   TODO: add a cross-reference to optional chaining here.
-}
+-->
 
 This next example shows a class called `DiceGameTracker`,
 which adopts the `DiceGameDelegate` protocol:
 
 ```swift
 class DiceGameTracker: DiceGameDelegate {
-   var numberOfTurns = 0
-   func gameDidStart(_ game: DiceGame) {
-      numberOfTurns = 0
-      if game is SnakesAndLadders {
-         print("Started a new game of Snakes and Ladders")
-      }
-      print("The game is using a \(game.dice.sides)-sided dice")
-   }
-   func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-      numberOfTurns += 1
-      print("Rolled a \(diceRoll)")
-   }
-   func gameDidEnd(_ game: DiceGame) {
-      print("The game lasted for \(numberOfTurns) turns")
-   }
+    var numberOfTurns = 0
+    func gameDidStart(_ game: DiceGame) {
+        numberOfTurns = 0
+        if game is SnakesAndLadders {
+            print("Started a new game of Snakes and Ladders")
+        }
+        print("The game is using a \(game.dice.sides)-sided dice")
+    }
+    func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+        numberOfTurns += 1
+        print("Rolled a \(diceRoll)")
+    }
+    func gameDidEnd(_ game: DiceGame) {
+        print("The game lasted for \(numberOfTurns) turns")
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1039,7 +1020,7 @@ class DiceGameTracker: DiceGameDelegate {
         }
      }
   ```
-}
+-->
 
 `DiceGameTracker` implements all three methods required by `DiceGameDelegate`.
 It uses these methods to keep track of the number of turns a game has taken.
@@ -1080,8 +1061,7 @@ game.play()
 // The game lasted for 4 turns
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1097,7 +1077,7 @@ game.play()
   </ Rolled a 5
   </ The game lasted for 4 turns
   ```
-}
+-->
 
 ## Adding Protocol Conformance with an Extension
 
@@ -1116,12 +1096,11 @@ This might be a description of itself, or a text version of its current state:
 
 ```swift
 protocol TextRepresentable {
-   var textualDescription: String { get }
+    var textualDescription: String { get }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1129,26 +1108,25 @@ protocol TextRepresentable {
         var textualDescription: String { get }
      }
   ```
-}
+-->
 
 The `Dice` class from above can be extended to adopt and conform to `TextRepresentable`:
 
-@Comment {
+<!--
   No "from above" xref because
   even though Dice isn't defined in the section immediately previous
   it's part of a running example and Dice is used in that section.
-}
+-->
 
 ```swift
 extension Dice: TextRepresentable {
-   var textualDescription: String {
-      return "A \(sides)-sided dice"
-   }
+    var textualDescription: String {
+        return "A \(sides)-sided dice"
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1158,7 +1136,7 @@ extension Dice: TextRepresentable {
         }
      }
   ```
-}
+-->
 
 This extension adopts the new protocol in exactly the same way
 as if `Dice` had provided it in its original implementation.
@@ -1174,8 +1152,7 @@ print(d12.textualDescription)
 // Prints "A 12-sided dice"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1183,23 +1160,22 @@ print(d12.textualDescription)
   -> print(d12.textualDescription)
   <- A 12-sided dice
   ```
-}
+-->
 
 Similarly, the `SnakesAndLadders` game class can be extended to
 adopt and conform to the `TextRepresentable` protocol:
 
 ```swift
 extension SnakesAndLadders: TextRepresentable {
-   var textualDescription: String {
-      return "A game of Snakes and Ladders with \(finalSquare) squares"
-   }
+    var textualDescription: String {
+        return "A game of Snakes and Ladders with \(finalSquare) squares"
+    }
 }
 print(game.textualDescription)
 // Prints "A game of Snakes and Ladders with 25 squares"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1211,7 +1187,7 @@ print(game.textualDescription)
   -> print(game.textualDescription)
   <- A game of Snakes and Ladders with 25 squares
   ```
-}
+-->
 
 ### Conditionally Conforming to a Protocol
 
@@ -1230,18 +1206,17 @@ whenever they store elements of a type that conforms to `TextRepresentable`.
 
 ```swift
 extension Array: TextRepresentable where Element: TextRepresentable {
-   var textualDescription: String {
-      let itemsAsText = self.map { $0.textualDescription }
-      return "[" + itemsAsText.joined(separator: ", ") + "]"
-   }
+    var textualDescription: String {
+        let itemsAsText = self.map { $0.textualDescription }
+        return "[" + itemsAsText.joined(separator: ", ") + "]"
+    }
 }
 let myDice = [d6, d12]
 print(myDice.textualDescription)
 // Prints "[A 6-sided dice, A 12-sided dice]"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1255,7 +1230,7 @@ print(myDice.textualDescription)
   -> print(myDice.textualDescription)
   <- [A 6-sided dice, A 12-sided dice]
   ```
-}
+-->
 
 ### Declaring Protocol Adoption with an Extension
 
@@ -1265,16 +1240,15 @@ you can make it adopt the protocol with an empty extension:
 
 ```swift
 struct Hamster {
-   var name: String
-   var textualDescription: String {
-      return "A hamster named \(name)"
-   }
+    var name: String
+    var textualDescription: String {
+        return "A hamster named \(name)"
+    }
 }
 extension Hamster: TextRepresentable {}
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1286,7 +1260,7 @@ extension Hamster: TextRepresentable {}
      }
   -> extension Hamster: TextRepresentable {}
   ```
-}
+-->
 
 Instances of `Hamster` can now be used wherever `TextRepresentable` is the required type:
 
@@ -1297,8 +1271,7 @@ print(somethingTextRepresentable.textualDescription)
 // Prints "A hamster named Simon"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1307,7 +1280,7 @@ print(somethingTextRepresentable.textualDescription)
   -> print(somethingTextRepresentable.textualDescription)
   <- A hamster named Simon
   ```
-}
+-->
 
 > Note: Types don't automatically adopt a protocol just by satisfying its requirements.
 > They must always explicitly declare their adoption of the protocol.
@@ -1321,7 +1294,7 @@ Using this synthesized implementation
 means you don't have to write repetitive boilerplate code
 to implement the protocol requirements yourself.
 
-@Comment {
+<!--
   Linking directly to a section of an article like the URLs below do
   is expected to be stable --
   as long as the section stays around, that topic ID will be there too.
@@ -1342,7 +1315,7 @@ to implement the protocol requirements yourself.
   is also repeated in the "Conform Automatically to Equatable and Hashable" section
   of the article "Adopting Common Protocols".
   https://developer.apple.com/documentation/swift/adopting_common_protocols#2991123
-}
+-->
 
 Swift provides a synthesized implementation of `Equatable`
 for the following kinds of custom types:
@@ -1366,7 +1339,7 @@ of the equivalence operators.
 
 ```swift
 struct Vector3D: Equatable {
-   var x = 0.0, y = 0.0, z = 0.0
+    var x = 0.0, y = 0.0, z = 0.0
 }
 
 let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
@@ -1377,8 +1350,7 @@ if twoThreeFour == anotherTwoThreeFour {
 // Prints "These two vectors are also equivalent."
 ```
 
-
-@Comment {
+<!--
   - test: `equatable_synthesis`
   
   ```swifttest
@@ -1393,16 +1365,16 @@ if twoThreeFour == anotherTwoThreeFour {
      }
   <- These two vectors are also equivalent.
   ```
-}
+-->
 
-@Comment {
+<!--
   Need to cross reference here from "Adopting Common Protocols"
   https://developer.apple.com/documentation/swift/adopting_common_protocols
   
   Discussion in the article calls out that
   enums without associated values are Equatable & Hashable
   even if you don't declare the protocol conformance.
-}
+-->
 
 Swift provides a synthesized implementation of `Hashable`
 for the following kinds of custom types:
@@ -1448,8 +1420,7 @@ for level in levels.sorted() {
 // Prints "expert(stars: 5)"
 ```
 
-
-@Comment {
+<!--
   - test: `comparable-enum-synthesis`
   
   ```swifttest
@@ -1468,15 +1439,15 @@ for level in levels.sorted() {
   <- expert(stars: 3)
   <- expert(stars: 5)
   ```
-}
+-->
 
-@Comment {
+<!--
   The example above iterates and prints instead of printing the whole array
   because printing an array gives you the debug description of each element,
   which looks like temp123908.SkillLevel.expert(5) -- not nice to read.
-}
+-->
 
-@Comment {
+<!--
   - test: `no-synthesized-comparable-for-raw-value-enum`
   
   ```swifttest
@@ -1512,7 +1483,7 @@ for level in levels.sorted() {
   !! static func < (lhs: Self, rhs: Self) -> Bool
   !!                 ^
   ```
-}
+-->
 
 ## Collections of Protocol Types
 
@@ -1525,29 +1496,27 @@ This example creates an array of `TextRepresentable` things:
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
   -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
   ```
-}
+-->
 
 It's now possible to iterate over the items in the array,
 and print each item's textual description:
 
 ```swift
 for thing in things {
-   print(thing.textualDescription)
+    print(thing.textualDescription)
 }
 // A game of Snakes and Ladders with 25 squares
 // A 12-sided dice
 // A hamster named Simon
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1558,7 +1527,7 @@ for thing in things {
   </ A 12-sided dice
   </ A hamster named Simon
   ```
-}
+-->
 
 Note that the `thing` constant is of type `TextRepresentable`.
 It's not of type `Dice`, or `DiceGame`, or `Hamster`,
@@ -1576,12 +1545,11 @@ but with the option to list multiple inherited protocols, separated by commas:
 
 ```swift
 protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
-   // protocol definition goes here
+    // protocol definition goes here
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1591,19 +1559,18 @@ protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
         // protocol definition goes here
      }
   ```
-}
+-->
 
 Here's an example of a protocol that inherits
 the `TextRepresentable` protocol from above:
 
 ```swift
 protocol PrettyTextRepresentable: TextRepresentable {
-   var prettyTextualDescription: String { get }
+    var prettyTextualDescription: String { get }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1611,7 +1578,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
         var prettyTextualDescription: String { get }
      }
   ```
-}
+-->
 
 This example defines a new protocol, `PrettyTextRepresentable`,
 which inherits from `TextRepresentable`.
@@ -1625,25 +1592,24 @@ The `SnakesAndLadders` class can be extended to adopt and conform to `PrettyText
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
-   var prettyTextualDescription: String {
-      var output = textualDescription + ":\n"
-      for index in 1...finalSquare {
-         switch board[index] {
+    var prettyTextualDescription: String {
+        var output = textualDescription + ":\n"
+        for index in 1...finalSquare {
+            switch board[index] {
             case let ladder where ladder > 0:
-               output += "▲ "
+                output += "▲ "
             case let snake where snake < 0:
-               output += "▼ "
+                output += "▼ "
             default:
-               output += "○ "
-         }
-      }
-      return output
-   }
+                output += "○ "
+            }
+        }
+        return output
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1664,7 +1630,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
         }
      }
   ```
-}
+-->
 
 This extension states that it adopts the `PrettyTextRepresentable` protocol
 and provides an implementation of the `prettyTextualDescription` property
@@ -1694,8 +1660,7 @@ print(game.prettyTextualDescription)
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -1703,7 +1668,7 @@ print(game.prettyTextualDescription)
   </ A game of Snakes and Ladders with 25 squares:
   </ ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
   ```
-}
+-->
 
 ## Class-Only Protocols
 
@@ -1712,12 +1677,11 @@ by adding the `AnyObject` protocol to a protocol's inheritance list.
 
 ```swift
 protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
-   // class-only protocol definition goes here
+    // class-only protocol definition goes here
 }
 ```
 
-
-@Comment {
+<!--
   - test: `classOnlyProtocols`
   
   ```swifttest
@@ -1726,7 +1690,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
         // class-only protocol definition goes here
      }
   ```
-}
+-->
 
 In the example above, `SomeClassOnlyProtocol` can only be adopted by class types.
 It's a compile-time error to write a structure or enumeration definition
@@ -1739,7 +1703,7 @@ that tries to adopt `SomeClassOnlyProtocol`.
 > see <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>
 > and <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-@Comment {
+<!--
   - test: `anyobject-doesn't-have-to-be-first`
   
   ```swifttest
@@ -1748,11 +1712,11 @@ that tries to adopt `SomeClassOnlyProtocol`.
         // class-only protocol definition goes here
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: a Cacheable protocol might make a good example here?
-}
+-->
 
 ## Protocol Composition
 
@@ -1776,25 +1740,24 @@ into a single protocol composition requirement on a function parameter:
 
 ```swift
 protocol Named {
-   var name: String { get }
+    var name: String { get }
 }
 protocol Aged {
-   var age: Int { get }
+    var age: Int { get }
 }
 struct Person: Named, Aged {
-   var name: String
-   var age: Int
+    var name: String
+    var age: Int
 }
 func wishHappyBirthday(to celebrator: Named & Aged) {
-   print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
+    print("Happy birthday, \(celebrator.name), you're \(celebrator.age)!")
 }
 let birthdayPerson = Person(name: "Malcolm", age: 21)
 wishHappyBirthday(to: birthdayPerson)
 // Prints "Happy birthday, Malcolm, you're 21!"
 ```
 
-
-@Comment {
+<!--
   - test: `protocolComposition`
   
   ```swifttest
@@ -1815,7 +1778,7 @@ wishHappyBirthday(to: birthdayPerson)
   -> wishHappyBirthday(to: birthdayPerson)
   <- Happy birthday, Malcolm, you're 21!
   ```
-}
+-->
 
 In this example,
 the `Named` protocol
@@ -1864,8 +1827,7 @@ beginConcert(in: seattle)
 // Prints "Hello, Seattle!"
 ```
 
-
-@Comment {
+<!--
   - test: `protocolComposition`
   
   ```swifttest
@@ -1892,7 +1854,7 @@ beginConcert(in: seattle)
   -> beginConcert(in: seattle)
   <- Hello, Seattle!
   ```
-}
+-->
 
 The `beginConcert(in:)` function takes
 a parameter of type `Location & Named`,
@@ -1928,12 +1890,11 @@ with a single property requirement of a gettable `Double` property called `area`
 
 ```swift
 protocol HasArea {
-   var area: Double { get }
+    var area: Double { get }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -1941,26 +1902,25 @@ protocol HasArea {
         var area: Double { get }
      }
   ```
-}
+-->
 
 Here are two classes, `Circle` and `Country`,
 both of which conform to the `HasArea` protocol:
 
 ```swift
 class Circle: HasArea {
-   let pi = 3.1415927
-   var radius: Double
-   var area: Double { return pi * radius * radius }
-   init(radius: Double) { self.radius = radius }
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
 }
 class Country: HasArea {
-   var area: Double
-   init(area: Double) { self.area = area }
+    var area: Double
+    init(area: Double) { self.area = area }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -1975,7 +1935,7 @@ class Country: HasArea {
         init(area: Double) { self.area = area }
      }
   ```
-}
+-->
 
 The `Circle` class implements the `area` property requirement
 as a computed property, based on a stored `radius` property.
@@ -1986,13 +1946,12 @@ Here's a class called `Animal`, which doesn't conform to the `HasArea` protocol:
 
 ```swift
 class Animal {
-   var legs: Int
-   init(legs: Int) { self.legs = legs }
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2001,7 +1960,7 @@ class Animal {
         init(legs: Int) { self.legs = legs }
      }
   ```
-}
+-->
 
 The `Circle`, `Country` and `Animal` classes don't have a shared base class.
 Nonetheless, they're all classes, and so instances of all three types
@@ -2009,14 +1968,13 @@ can be used to initialize an array that stores values of type `AnyObject`:
 
 ```swift
 let objects: [AnyObject] = [
-   Circle(radius: 2.0),
-   Country(area: 243_610),
-   Animal(legs: 4)
+    Circle(radius: 2.0),
+    Country(area: 243_610),
+    Animal(legs: 4)
 ]
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2026,7 +1984,7 @@ let objects: [AnyObject] = [
         Animal(legs: 4)
      ]
   ```
-}
+-->
 
 The `objects` array is initialized with an array literal containing
 a `Circle` instance with a radius of 2 units;
@@ -2040,19 +1998,18 @@ it conforms to the `HasArea` protocol:
 
 ```swift
 for object in objects {
-   if let objectWithArea = object as? HasArea {
-      print("Area is \(objectWithArea.area)")
-   } else {
-      print("Something that doesn't have an area")
-   }
+    if let objectWithArea = object as? HasArea {
+        print("Area is \(objectWithArea.area)")
+    } else {
+        print("Something that doesn't have an area")
+    }
 }
 // Area is 12.5663708
 // Area is 243610.0
 // Something that doesn't have an area
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2067,7 +2024,7 @@ for object in objects {
   </ Area is 243610.0
   </ Something that doesn't have an area
   ```
-}
+-->
 
 Whenever an object in the array conforms to the `HasArea` protocol,
 the optional value returned by the `as?` operator is unwrapped with optional binding
@@ -2081,7 +2038,7 @@ However, at the point that they're stored in the `objectWithArea` constant,
 they're only known to be of type `HasArea`,
 and so only their `area` property can be accessed.
 
-@Comment {
+<!--
   TODO: This is an *extremely* contrived example.
   Also, it's not particularly useful to be able to get the area of these two objects,
   because there's no shared unit system.
@@ -2090,27 +2047,27 @@ and so only their `area` property can be accessed.
   which make the example far less focused than I'd like.
   The problem is, I can't use strings within an @objc protocol
   without also having to import Foundation, so it's numbers or bust, I'm afraid.
-}
+-->
 
-@Comment {
+<!--
   TODO: Since the restrictions on @objc of the previous TODO are now lifted,
   Should the previous examples be revisited?
-}
+-->
 
 ## Optional Protocol Requirements
 
-@Comment {
+<!--
   TODO: split this section into several subsections as per [Contributor 7746]'s feedback,
   and cover the missing alternative approaches that he mentioned.
-}
+-->
 
-@Comment {
+<!--
   TODO: you can specify optional subscripts,
   and the way you check for them / work with them is a bit esoteric.
   You have to try and access a value from the subscript,
   and see if the value you get back (which will be an optional)
   has a value or is nil.
-}
+-->
 
 You can define *optional requirements* for protocols.
 These requirements don't have to be implemented by types that conform to the protocol.
@@ -2147,23 +2104,22 @@ which has two optional requirements:
 
 ```swift
 @objc protocol CounterDataSource {
-   @objc optional func increment(forCount count: Int) -> Int
-   @objc optional var fixedIncrement: Int { get }
+    @objc optional func increment(forCount count: Int) -> Int
+    @objc optional var fixedIncrement: Int { get }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
   >> import Foundation
   -> @objc protocol CounterDataSource {
-        @objc optional func increment(forCount count: Int) -> Int
-        @objc optional var fixedIncrement: Int { get }
-     }
+  ->    @objc optional func increment(forCount count: Int) -> Int
+  ->    @objc optional var fixedIncrement: Int { get }
+  -> }
   ```
-}
+-->
 
 The `CounterDataSource` protocol defines
 an optional method requirement called `increment(forCount:)`
@@ -2182,20 +2138,19 @@ has an optional `dataSource` property of type `CounterDataSource?`:
 
 ```swift
 class Counter {
-   var count = 0
-   var dataSource: CounterDataSource?
-   func increment() {
-      if let amount = dataSource?.increment?(forCount: count) {
-         count += amount
-      } else if let amount = dataSource?.fixedIncrement {
-         count += amount
-      }
-   }
+    var count = 0
+    var dataSource: CounterDataSource?
+    func increment() {
+        if let amount = dataSource?.increment?(forCount: count) {
+            count += amount
+        } else if let amount = dataSource?.fixedIncrement {
+            count += amount
+        }
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2211,7 +2166,7 @@ class Counter {
         }
      }
   ```
-}
+-->
 
 The `Counter` class stores its current value in a variable property called `count`.
 The `Counter` class also defines a method called `increment`,
@@ -2270,12 +2225,11 @@ It does this by implementing the optional `fixedIncrement` property requirement:
 
 ```swift
 class ThreeSource: NSObject, CounterDataSource {
-   let fixedIncrement = 3
+    let fixedIncrement = 3
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2283,7 +2237,7 @@ class ThreeSource: NSObject, CounterDataSource {
         let fixedIncrement = 3
      }
   ```
-}
+-->
 
 You can use an instance of `ThreeSource` as the data source for a new `Counter` instance:
 
@@ -2291,8 +2245,8 @@ You can use an instance of `ThreeSource` as the data source for a new `Counter` 
 var counter = Counter()
 counter.dataSource = ThreeSource()
 for _ in 1...4 {
-   counter.increment()
-   print(counter.count)
+    counter.increment()
+    print(counter.count)
 }
 // 3
 // 6
@@ -2300,8 +2254,7 @@ for _ in 1...4 {
 // 12
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2316,7 +2269,7 @@ for _ in 1...4 {
   </ 9
   </ 12
   ```
-}
+-->
 
 The code above creates a new `Counter` instance;
 sets its data source to be a new `ThreeSource` instance;
@@ -2330,20 +2283,19 @@ from its current `count` value:
 
 ```swift
 class TowardsZeroSource: NSObject, CounterDataSource {
-   func increment(forCount count: Int) -> Int {
-      if count == 0 {
-         return 0
-      } else if count < 0 {
-         return 1
-      } else {
-         return -1
-      }
-   }
+    func increment(forCount count: Int) -> Int {
+        if count == 0 {
+            return 0
+        } else if count < 0 {
+            return 1
+        } else {
+            return -1
+        }
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2359,7 +2311,7 @@ class TowardsZeroSource: NSObject, CounterDataSource {
         }
      }
   ```
-}
+-->
 
 The `TowardsZeroSource` class implements
 the optional `increment(forCount:)` method from the `CounterDataSource` protocol
@@ -2375,8 +2327,8 @@ Once the counter reaches zero, no more counting takes place:
 counter.count = -4
 counter.dataSource = TowardsZeroSource()
 for _ in 1...5 {
-   counter.increment()
-   print(counter.count)
+    counter.increment()
+    print(counter.count)
 }
 // -3
 // -2
@@ -2385,8 +2337,7 @@ for _ in 1...5 {
 // 0
 ```
 
-
-@Comment {
+<!--
   - test: `protocolConformance`
   
   ```swifttest
@@ -2402,7 +2353,7 @@ for _ in 1...5 {
   </ 0
   </ 0
   ```
-}
+-->
 
 ## Protocol Extensions
 
@@ -2419,14 +2370,13 @@ to return a random `Bool` value:
 
 ```swift
 extension RandomNumberGenerator {
-   func randomBool() -> Bool {
-      return random() > 0.5
-   }
+    func randomBool() -> Bool {
+        return random() > 0.5
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -2436,7 +2386,7 @@ extension RandomNumberGenerator {
         }
      }
   ```
-}
+-->
 
 By creating an extension on the protocol,
 all conforming types automatically gain this method implementation
@@ -2450,8 +2400,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 // Prints "And here's a random Boolean: true"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -2463,12 +2412,12 @@ print("And here's a random Boolean: \(generator.randomBool())")
   <- And here's a random Boolean: true
   >> }
   ```
-}
+-->
 
-@Comment {
+<!--
   The extra scope in the above test code allows this 'generator' variable to shadow
   the variable that already exists from a previous testcode block.
-}
+-->
 
 Protocol extensions can add implementations to conforming types
 but can't make a protocol extend or inherit from another protocol.
@@ -2493,14 +2442,13 @@ to simply return the result of accessing the `textualDescription` property:
 
 ```swift
 extension PrettyTextRepresentable  {
-   var prettyTextualDescription: String {
-      return textualDescription
-   }
+    var prettyTextualDescription: String {
+        return textualDescription
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -2510,36 +2458,36 @@ extension PrettyTextRepresentable  {
         }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO <rdar://problem/32211512> TSPL: Explain when you can/can't override a protocol default implementation
-}
+-->
 
-@Comment {
+<!--
   If something is a protocol requirement,
   types that conform to the protocol can override the default implementation.
-}
+-->
 
-@Comment {
+<!--
   If something isn't a requirement,
   you get wonky behavior when you try to override the default implementation.
-}
+-->
 
-@Comment {
+<!--
   If the static type is the conforming type,
   your override is used.
-}
+-->
 
-@Comment {
+<!--
   If the static type is the protocol type,
   the default implementation is used.
-}
+-->
 
-@Comment {
+<!--
   You can't write ``final`` on a default implementation
   to prevent someone from overriding it in a conforming type.
-}
+-->
 
 ### Adding Constraints to Protocol Extensions
 
@@ -2571,8 +2519,7 @@ extension Collection where Element: Equatable {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -2587,7 +2534,7 @@ extension Collection where Element: Equatable {
          }
      }
   ```
-}
+-->
 
 The `allEqual()` method returns `true`
 only if all the elements in the collection are equal.
@@ -2601,15 +2548,14 @@ let equalNumbers = [100, 100, 100, 100, 100]
 let differentNumbers = [100, 100, 200, 100, 200]
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
   -> let equalNumbers = [100, 100, 100, 100, 100]
   -> let differentNumbers = [100, 100, 200, 100, 200]
   ```
-}
+-->
 
 Because arrays conform to `Collection`
 and integers conform to `Equatable`,
@@ -2622,8 +2568,7 @@ print(differentNumbers.allEqual())
 // Prints "false"
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -2632,23 +2577,23 @@ print(differentNumbers.allEqual())
   -> print(differentNumbers.allEqual())
   <- false
   ```
-}
+-->
 
 > Note: If a conforming type satisfies the requirements for multiple constrained extensions
 > that provide implementations for the same method or property,
 > Swift uses the implementation corresponding to the most specialized constraints.
-> 
-> @Comment {
-  > TODO: It would be great to pull this out of a note,
-  > but we should wait until we have a better narrative that shows how this
-  > works with some examples.
-> }
 
-@Comment {
+<!--
+  TODO: It would be great to pull this out of a note,
+  but we should wait until we have a better narrative that shows how this
+  works with some examples.
+-->
+
+<!--
   TODO: Other things to be included
   ---------------------------------
   Class-only protocols
-  @obj-c protocols
+  Protocols marked @objc
   Standard-library protocols such as Sequence, Equatable etc.?
   Show how to make a custom type conform to Boolean or some other protocol
   Show a protocol being used by an enumeration
@@ -2656,10 +2601,9 @@ print(differentNumbers.allEqual())
   Protocols can't be nested, but nested types can implement protocols
   Protocol requirements can be marked as @unavailable, but this currently only works if they're also marked as @objc.
   Checking for (and calling) optional implementations via optional binding and closures
-}
+-->
 
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -2667,4 +2611,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

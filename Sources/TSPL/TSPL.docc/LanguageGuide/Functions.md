@@ -1,6 +1,6 @@
-
-
 # Functions
+
+Define and call functions, label their arguments, and use their return values.
 
 *Functions* are self-contained chunks of code that perform a specific task.
 You give a function a name that identifies what it does,
@@ -49,13 +49,12 @@ which will contain a greeting for that person:
 
 ```swift
 func greet(person: String) -> String {
-   let greeting = "Hello, " + person + "!"
-   return greeting
+    let greeting = "Hello, " + person + "!"
+    return greeting
 }
 ```
 
-
-@Comment {
+<!--
   - test: `definingAndCalling`
   
   ```swifttest
@@ -64,7 +63,7 @@ func greet(person: String) -> String {
         return greeting
      }
   ```
-}
+-->
 
 All of this information is rolled up into the function's *definition*,
 which is prefixed with the `func` keyword.
@@ -85,8 +84,7 @@ print(greet(person: "Brian"))
 // Prints "Hello, Brian!"
 ```
 
-
-@Comment {
+<!--
   - test: `definingAndCalling`
   
   ```swifttest
@@ -95,7 +93,7 @@ print(greet(person: "Brian"))
   -> print(greet(person: "Brian"))
   <- Hello, Brian!
   ```
-}
+-->
 
 You call the `greet(person:)` function
 by passing it a `String` value after the `person` argument label,
@@ -128,14 +126,13 @@ you can combine the message creation and the return statement into one line:
 
 ```swift
 func greetAgain(person: String) -> String {
-   return "Hello again, " + person + "!"
+    return "Hello again, " + person + "!"
 }
 print(greetAgain(person: "Anna"))
 // Prints "Hello again, Anna!"
 ```
 
-
-@Comment {
+<!--
   - test: `definingAndCalling`
   
   ```swifttest
@@ -145,7 +142,7 @@ print(greetAgain(person: "Anna"))
   -> print(greetAgain(person: "Anna"))
   <- Hello again, Anna!
   ```
-}
+-->
 
 ## Function Parameters and Return Values
 
@@ -161,14 +158,13 @@ which always returns the same `String` message whenever it's called:
 
 ```swift
 func sayHelloWorld() -> String {
-   return "hello, world"
+    return "hello, world"
 }
 print(sayHelloWorld())
 // Prints "hello, world"
 ```
 
-
-@Comment {
+<!--
   - test: `functionsWithoutParameters`
   
   ```swifttest
@@ -178,7 +174,7 @@ print(sayHelloWorld())
   -> print(sayHelloWorld())
   <- hello, world
   ```
-}
+-->
 
 The function definition still needs parentheses after the function's name,
 even though it doesn't take any parameters.
@@ -206,8 +202,7 @@ print(greet(person: "Tim", alreadyGreeted: true))
 // Prints "Hello again, Tim!"
 ```
 
-
-@Comment {
+<!--
   - test: `definingAndCalling`
   
   ```swifttest
@@ -221,7 +216,7 @@ print(greet(person: "Tim", alreadyGreeted: true))
   -> print(greet(person: "Tim", alreadyGreeted: true))
   <- Hello again, Tim!
   ```
-}
+-->
 
 You call the `greet(person:alreadyGreeted:)` function
 by passing it both a `String` argument value labeled `person`
@@ -241,14 +236,13 @@ which prints its own `String` value rather than returning it:
 
 ```swift
 func greet(person: String) {
-   print("Hello, \(person)!")
+    print("Hello, \(person)!")
 }
 greet(person: "Dave")
 // Prints "Hello, Dave!"
 ```
 
-
-@Comment {
+<!--
   - test: `functionsWithoutReturnValues`
   
   ```swifttest
@@ -258,7 +252,7 @@ greet(person: "Dave")
   -> greet(person: "Dave")
   <- Hello, Dave!
   ```
-}
+-->
 
 Because it doesn't need to return a value,
 the function's definition doesn't include the return arrow (`->`)
@@ -274,11 +268,11 @@ The return value of a function can be ignored when it's called:
 
 ```swift
 func printAndCount(string: String) -> Int {
-   print(string)
-   return string.count
+    print(string)
+    return string.count
 }
 func printWithoutCounting(string: String) {
-   let _ = printAndCount(string: string)
+    let _ = printAndCount(string: string)
 }
 printAndCount(string: "hello, world")
 // prints "hello, world" and returns a value of 12
@@ -286,8 +280,7 @@ printWithoutCounting(string: "hello, world")
 // prints "hello, world" but doesn't return a value
 ```
 
-
-@Comment {
+<!--
   - test: `functionsWithoutReturnValues`
   
   ```swifttest
@@ -307,12 +300,12 @@ printWithoutCounting(string: "hello, world")
   << hello, world
   // prints "hello, world" but doesn't return a value
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 The first function, `printAndCount(string:)`,
 prints a string, and then returns its character count as an `Int`.
@@ -329,10 +322,10 @@ but the returned value isn't used.
 > without returning a value,
 > and attempting to do so will result in a compile-time error.
 
-@Comment {
+<!--
   FIXME Unless the function is marked @discardableResult,
   ignoring its return value triggers a compile-time warning.
-}
+-->
 
 ### Functions with Multiple Return Values
 
@@ -344,21 +337,20 @@ which finds the smallest and largest numbers in an array of `Int` values:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
-   var currentMin = array[0]
-   var currentMax = array[0]
-   for value in array[1..<array.count] {
-      if value < currentMin {
-         currentMin = value
-      } else if value > currentMax {
-         currentMax = value
-      }
-   }
-   return (currentMin, currentMax)
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
 }
 ```
 
-
-@Comment {
+<!--
   - test: `tupleTypesAsReturnTypes`
   
   ```swifttest
@@ -375,7 +367,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
         return (currentMin, currentMax)
      }
   ```
-}
+-->
 
 The `minMax(array:)` function returns a tuple containing two `Int` values.
 These values are labeled `min` and `max`
@@ -399,8 +391,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 // Prints "min is -6 and max is 109"
 ```
 
-
-@Comment {
+<!--
   - test: `tupleTypesAsReturnTypes`
   
   ```swifttest
@@ -408,7 +399,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
   -> print("min is \(bounds.min) and max is \(bounds.max)")
   <- min is -6 and max is 109
   ```
-}
+-->
 
 Note that the tuple's members don't need to be named
 at the point that the tuple is returned from the function,
@@ -442,22 +433,21 @@ and return a value of `nil` when the array is empty:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
-   if array.isEmpty { return nil }
-   var currentMin = array[0]
-   var currentMax = array[0]
-   for value in array[1..<array.count] {
-      if value < currentMin {
-         currentMin = value
-      } else if value > currentMax {
-         currentMax = value
-      }
-   }
-   return (currentMin, currentMax)
+    if array.isEmpty { return nil }
+    var currentMin = array[0]
+    var currentMax = array[0]
+    for value in array[1..<array.count] {
+        if value < currentMin {
+            currentMin = value
+        } else if value > currentMax {
+            currentMax = value
+        }
+    }
+    return (currentMin, currentMax)
 }
 ```
 
-
-@Comment {
+<!--
   - test: `tupleTypesAsReturnTypes2`
   
   ```swifttest
@@ -475,20 +465,19 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
         return (currentMin, currentMax)
      }
   ```
-}
+-->
 
 You can use optional binding to check whether this version of the `minMax(array:)` function
 returns an actual tuple value or `nil`:
 
 ```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
-   print("min is \(bounds.min) and max is \(bounds.max)")
+    print("min is \(bounds.min) and max is \(bounds.max)")
 }
 // Prints "min is -6 and max is 109"
 ```
 
-
-@Comment {
+<!--
   - test: `tupleTypesAsReturnTypes2`
   
   ```swifttest
@@ -497,7 +486,7 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
      }
   <- min is -6 and max is 109
   ```
-}
+-->
 
 ### Functions With an Implicit Return
 
@@ -508,20 +497,19 @@ both functions below have the same behavior:
 
 ```swift
 func greeting(for person: String) -> String {
-   "Hello, " + person + "!"
+    "Hello, " + person + "!"
 }
 print(greeting(for: "Dave"))
 // Prints "Hello, Dave!"
 
 func anotherGreeting(for person: String) -> String {
-   return "Hello, " + person + "!"
+    return "Hello, " + person + "!"
 }
 print(anotherGreeting(for: "Dave"))
 // Prints "Hello, Dave!"
 ```
 
-
-@Comment {
+<!--
   - test: `implicit-func-return`
   
   ```swifttest
@@ -537,7 +525,7 @@ print(anotherGreeting(for: "Dave"))
   -> print(anotherGreeting(for: "Dave"))
   <- Hello, Dave!
   ```
-}
+-->
 
 The entire definition of the `greeting(for:)` function
 is the greeting message that it returns,
@@ -559,7 +547,7 @@ property getters can also use an implicit return.
 > as an implicit return value,
 > because Swift knows that the implicit return doesn't happen.
 
-@Comment {
+<!--
   - test: `implicit-return-print-instead`
   
   ```swifttest
@@ -576,7 +564,7 @@ property getters can also use an implicit return.
   !! print(13)
   !! ^~~~~~~~~
   ```
-}
+-->
 
 ## Function Argument Labels and Parameter Names
 
@@ -590,14 +578,13 @@ use their parameter name as their argument label.
 
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
-   // In the function body, firstParameterName and secondParameterName
-   // refer to the argument values for the first and second parameters.
+    // In the function body, firstParameterName and secondParameterName
+    // refer to the argument values for the first and second parameters.
 }
 someFunction(firstParameterName: 1, secondParameterName: 2)
 ```
 
-
-@Comment {
+<!--
   - test: `functionParameterNames`
   
   ```swifttest
@@ -607,21 +594,21 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
      }
   -> someFunction(firstParameterName: 1, secondParameterName: 2)
   ```
-}
+-->
 
 All parameters must have unique names.
 Although it's possible for multiple parameters
 to have the same argument label,
 unique argument labels help make your code more readable.
 
-@Comment {
+<!--
   - test: `non-unique-external-name`
   
   ```swifttest
   -> func foo(external a: Int, external b: Int) {}
   -> foo(external: 7, external: 12)
   ```
-}
+-->
 
 ### Specifying Argument Labels
 
@@ -630,13 +617,12 @@ separated by a space:
 
 ```swift
 func someFunction(argumentLabel parameterName: Int) {
-   // In the function body, parameterName refers to the argument value
-   // for that parameter.
+    // In the function body, parameterName refers to the argument value
+    // for that parameter.
 }
 ```
 
-
-@Comment {
+<!--
   - test: `externalParameterNames`
   
   ```swifttest
@@ -645,7 +631,7 @@ func someFunction(argumentLabel parameterName: Int) {
         // for that parameter.
      }
   ```
-}
+-->
 
 Here's a variation of the `greet(person:)` function
 that takes a person's name and hometown
@@ -659,8 +645,7 @@ print(greet(person: "Bill", from: "Cupertino"))
 // Prints "Hello Bill!  Glad you could visit from Cupertino."
 ```
 
-
-@Comment {
+<!--
   - test: `externalParameterNames`
   
   ```swifttest
@@ -670,7 +655,7 @@ print(greet(person: "Bill", from: "Cupertino"))
   -> print(greet(person: "Bill", from: "Cupertino"))
   <- Hello Bill!  Glad you could visit from Cupertino.
   ```
-}
+-->
 
 The use of argument labels can allow a function
 to be called in an expressive, sentence-like manner,
@@ -683,14 +668,13 @@ write an underscore (`_`) instead of an explicit argument label for that paramet
 
 ```swift
 func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
-   // In the function body, firstParameterName and secondParameterName
-   // refer to the argument values for the first and second parameters.
+    // In the function body, firstParameterName and secondParameterName
+    // refer to the argument values for the first and second parameters.
 }
 someFunction(1, secondParameterName: 2)
 ```
 
-
-@Comment {
+<!--
   - test: `omittedExternalParameterNames`
   
   ```swifttest
@@ -700,7 +684,7 @@ someFunction(1, secondParameterName: 2)
      }
   -> someFunction(1, secondParameterName: 2)
   ```
-}
+-->
 
 If a parameter has an argument label,
 the argument *must* be labeled when you call the function.
@@ -713,15 +697,14 @@ If a default value is defined, you can omit that parameter when calling the func
 
 ```swift
 func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
-   // If you omit the second argument when calling this function, then
-   // the value of parameterWithDefault is 12 inside the function body.
+    // If you omit the second argument when calling this function, then
+    // the value of parameterWithDefault is 12 inside the function body.
 }
 someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
 someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 ```
 
-
-@Comment {
+<!--
   - test: `omittedExternalParameterNames`
   
   ```swifttest
@@ -732,7 +715,7 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   -> someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
   -> someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   ```
-}
+-->
 
 Place parameters that don't have default values
 at the beginning of a function's parameter list,
@@ -762,11 +745,11 @@ The example below calculates the *arithmetic mean*
 
 ```swift
 func arithmeticMean(_ numbers: Double...) -> Double {
-   var total: Double = 0
-   for number in numbers {
-      total += number
-   }
-   return total / Double(numbers.count)
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
 }
 arithmeticMean(1, 2, 3, 4, 5)
 // returns 3.0, which is the arithmetic mean of these five numbers
@@ -774,8 +757,7 @@ arithmeticMean(3, 8.25, 18.75)
 // returns 10.0, which is the arithmetic mean of these three numbers
 ```
 
-
-@Comment {
+<!--
   - test: `variadicParameters`
   
   ```swifttest
@@ -795,12 +777,12 @@ arithmeticMean(3, 8.25, 18.75)
   /> returns \(r1), which is the arithmetic mean of these three numbers
   </ returns 10.0, which is the arithmetic mean of these three numbers
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 A function can have multiple variadic parameters.
 The first parameter that comes after a variadic parameter
@@ -810,7 +792,7 @@ which arguments are passed to the variadic parameter
 and which arguments are passed to the parameters
 that come after the variadic parameter.
 
-@Comment {
+<!--
   - test: `variadic-parameters-and-labels`
   
   ```swifttest
@@ -823,9 +805,9 @@ that come after the variadic parameter.
   // Multiple
   >> func h(_a: Int..., b: String, _ c: Int..., d: String) {}
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `variadic-parameters-and-labels-failure`
   
   ```swifttest
@@ -835,7 +817,7 @@ that come after the variadic parameter.
   !! func f(_ a: Int..., _ b: String) {}
   !! ^
   ```
-}
+-->
 
 ### In-Out Parameters
 
@@ -871,14 +853,13 @@ which has two in-out integer parameters called `a` and `b`:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
-   let temporaryA = a
-   a = b
-   b = temporaryA
+    let temporaryA = a
+    a = b
+    b = temporaryA
 }
 ```
 
-
-@Comment {
+<!--
   - test: `inoutParameters`
   
   ```swifttest
@@ -888,7 +869,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
         b = temporaryA
      }
   ```
-}
+-->
 
 The `swapTwoInts(_:_:)` function simply swaps the value of `b` into `a`,
 and the value of `a` into `b`.
@@ -909,8 +890,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // Prints "someInt is now 107, and anotherInt is now 3"
 ```
 
-
-@Comment {
+<!--
   - test: `inoutParameters`
   
   ```swifttest
@@ -920,7 +900,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   <- someInt is now 107, and anotherInt is now 3
   ```
-}
+-->
 
 The example above shows that
 the original values of `someInt` and `anotherInt`
@@ -933,10 +913,10 @@ even though they were originally defined outside of the function.
 > In-out parameters are an alternative way for a function to have an effect
 > outside of the scope of its function body.
 
-@Comment {
+<!--
   TODO: you can pass a subproperty of something as an inout reference.
   Would be great to show an example of this as a way to avoid temporary variables.
-}
+-->
 
 ## Function Types
 
@@ -947,15 +927,14 @@ For example:
 
 ```swift
 func addTwoInts(_ a: Int, _ b: Int) -> Int {
-   return a + b
+    return a + b
 }
 func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
-   return a * b
+    return a * b
 }
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -970,7 +949,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
   >> print(type(of: multiplyTwoInts))
   << (Int, Int) -> Int
   ```
-}
+-->
 
 This example defines two simple mathematical functions
 called `addTwoInts` and `multiplyTwoInts`.
@@ -988,12 +967,11 @@ Here's another example, for a function with no parameters or return value:
 
 ```swift
 func printHelloWorld() {
-   print("hello, world")
+    print("hello, world")
 }
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1003,7 +981,7 @@ func printHelloWorld() {
   >> print(type(of: printHelloWorld))
   << () -> ()
   ```
-}
+-->
 
 The type of this function is `() -> Void`,
 or “a function that has no parameters, and returns `Void`.”
@@ -1018,14 +996,13 @@ and assign an appropriate function to that variable:
 var mathFunction: (Int, Int) -> Int = addTwoInts
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
   -> var mathFunction: (Int, Int) -> Int = addTwoInts
   ```
-}
+-->
 
 This can be read as:
 
@@ -1044,15 +1021,14 @@ print("Result: \(mathFunction(2, 3))")
 // Prints "Result: 5"
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
   -> print("Result: \(mathFunction(2, 3))")
   <- Result: 5
   ```
-}
+-->
 
 A different function with the same matching type can be assigned to the same variable,
 in the same way as for nonfunction types:
@@ -1063,8 +1039,7 @@ print("Result: \(mathFunction(2, 3))")
 // Prints "Result: 6"
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1072,7 +1047,7 @@ print("Result: \(mathFunction(2, 3))")
   -> print("Result: \(mathFunction(2, 3))")
   <- Result: 6
   ```
-}
+-->
 
 As with any other type,
 you can leave it to Swift to infer the function type
@@ -1083,8 +1058,7 @@ let anotherMathFunction = addTwoInts
 // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1093,11 +1067,11 @@ let anotherMathFunction = addTwoInts
   << (Int, Int) -> Int
   // anotherMathFunction is inferred to be of type (Int, Int) -> Int
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: talk about defining typealiases for function types somewhere?
-}
+-->
 
 ### Function Types as Parameter Types
 
@@ -1110,14 +1084,13 @@ Here's an example to print the results of the math functions from above:
 
 ```swift
 func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
-   print("Result: \(mathFunction(a, b))")
+    print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
 // Prints "Result: 8"
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1127,7 +1100,7 @@ printMathResult(addTwoInts, 3, 5)
   -> printMathResult(addTwoInts, 3, 5)
   <- Result: 8
   ```
-}
+-->
 
 This example defines a function called `printMathResult(_:_:_:)`, which has three parameters.
 The first parameter is called `mathFunction`, and is of type `(Int, Int) -> Int`.
@@ -1159,15 +1132,14 @@ Both functions have a type of `(Int) -> Int`:
 
 ```swift
 func stepForward(_ input: Int) -> Int {
-   return input + 1
+    return input + 1
 }
 func stepBackward(_ input: Int) -> Int {
-   return input - 1
+    return input - 1
 }
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1178,7 +1150,7 @@ func stepBackward(_ input: Int) -> Int {
         return input - 1
      }
   ```
-}
+-->
 
 Here's a function called `chooseStepFunction(backward:)`,
 whose return type is `(Int) -> Int`.
@@ -1187,12 +1159,11 @@ or the `stepBackward(_:)` function based on a Boolean parameter called `backward
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
-   return backward ? stepBackward : stepForward
+    return backward ? stepBackward : stepForward
 }
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1200,7 +1171,7 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
         return backward ? stepBackward : stepForward
      }
   ```
-}
+-->
 
 You can now use `chooseStepFunction(backward:)` to obtain a function
 that will step in one direction or the other:
@@ -1211,8 +1182,7 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 // moveNearerToZero now refers to the stepBackward() function
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1222,7 +1192,7 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
   << (Int) -> Int
   // moveNearerToZero now refers to the stepBackward() function
   ```
-}
+-->
 
 The example above determines whether a positive or negative step is needed
 to move a variable called `currentValue` progressively closer to zero.
@@ -1238,8 +1208,8 @@ it can be used to count to zero:
 print("Counting to zero:")
 // Counting to zero:
 while currentValue != 0 {
-   print("\(currentValue)... ")
-   currentValue = moveNearerToZero(currentValue)
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
 }
 print("zero!")
 // 3...
@@ -1248,8 +1218,7 @@ print("zero!")
 // zero!
 ```
 
-
-@Comment {
+<!--
   - test: `functionTypes`
   
   ```swifttest
@@ -1265,7 +1234,7 @@ print("zero!")
   </ 1...
   </ zero!
   ```
-}
+-->
 
 ## Nested Functions
 
@@ -1284,16 +1253,16 @@ to use and return nested functions:
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
-   func stepForward(input: Int) -> Int { return input + 1 }
-   func stepBackward(input: Int) -> Int { return input - 1 }
-   return backward ? stepBackward : stepForward
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backward ? stepBackward : stepForward
 }
 var currentValue = -4
 let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 // moveNearerToZero now refers to the nested stepForward() function
 while currentValue != 0 {
-   print("\(currentValue)... ")
-   currentValue = moveNearerToZero(currentValue)
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
 }
 print("zero!")
 // -4...
@@ -1303,8 +1272,7 @@ print("zero!")
 // zero!
 ```
 
-
-@Comment {
+<!--
   - test: `nestedFunctions`
   
   ```swifttest
@@ -1329,10 +1297,9 @@ print("zero!")
   </ -1...
   </ zero!
   ```
-}
+-->
 
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -1340,4 +1307,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

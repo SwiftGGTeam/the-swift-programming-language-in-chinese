@@ -1,6 +1,6 @@
-
-
 # Attributes
+
+Add information to declarations and types.
 
 There are two kinds of attributes in Swift ---
 those that apply to declarations and those that apply to types.
@@ -17,7 +17,6 @@ and any arguments that the attribute accepts:
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
-
 
 Some declaration attributes accept arguments
 that specify more information about the attribute
@@ -51,14 +50,14 @@ These arguments begin with one of the following platform or language names:
 - `tvOSApplicationExtension`
 - `swift`
 
-@Comment {
+<!--
   If you need to add a new platform to this list,
   you probably need to update platform-name in the grammar too.
-}
+-->
 
-@Comment {
+<!--
   For the list in source, see include/swift/AST/PlatformKinds.def
-}
+-->
 
 You can also use an asterisk (`*`) to indicate the
 availability of the declaration on all of the platform names listed above.
@@ -137,7 +136,7 @@ including important milestones.
   ```
   
   
-  @Comment {
+  <!--
     - test: `renamed1`
     
     ```swifttest
@@ -146,7 +145,7 @@ including important milestones.
            // protocol definition
        }
     ```
-  }
+  -->
   
   ```swift
   // Subsequent release renames MyProtocol
@@ -159,7 +158,7 @@ including important milestones.
   ```
   
   
-  @Comment {
+  <!--
     - test: `renamed2`
     
     ```swifttest
@@ -171,7 +170,7 @@ including important milestones.
     -> @available(*, unavailable, renamed: "MyRenamedProtocol")
        typealias MyProtocol = MyRenamedProtocol
     ```
-  }
+  -->
 
 You can apply multiple `available` attributes on a single declaration
 to specify the declaration's availability on different platforms
@@ -183,7 +182,7 @@ If you use multiple `available` attributes,
 the effective availability is the combination of
 the platform and Swift availabilities.
 
-@Comment {
+<!--
   - test: `multipleAvailableAttributes`
   
   ```swifttest
@@ -192,7 +191,7 @@ the platform and Swift availabilities.
   -> func foo() { }
   -> foo()
   ```
-}
+-->
 
 If an `available` attribute only specifies an `introduced` argument
 in addition to a platform or language name argument,
@@ -202,7 +201,6 @@ you can use the following shorthand syntax instead:
 @available(<#platform name#> <#version number#>, *)
 @available(swift <#version number#>)
 ```
-
 
 The shorthand syntax for `available` attributes
 concisely expresses availability for multiple platforms.
@@ -216,8 +214,7 @@ class MyClass {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `availableShorthand`
   
   ```swifttest
@@ -226,7 +223,7 @@ class MyClass {
          // class definition
      }
   ```
-}
+-->
 
 An `available` attribute
 that specifies availability using a Swift version number
@@ -242,8 +239,7 @@ struct MyStruct {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `availableMultipleAvailabilities`
   
   ```swifttest
@@ -253,7 +249,7 @@ struct MyStruct {
          // struct definition
      }
   ```
-}
+-->
 
 ### discardableResult
 
@@ -298,8 +294,7 @@ dial(8, 6, 7, 5, 3, 0, 9)
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
 
-
-@Comment {
+<!--
   - test: `dynamicCallable`
   
   ```swifttest
@@ -327,7 +322,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
   << Get Swift help on forums.swift.org
   ```
-}
+-->
 
 The declaration of the `dynamicallyCall(withArguments:)` method
 must have a single parameter that conforms to the
@@ -359,8 +354,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 // a
 ```
 
-
-@Comment {
+<!--
   - test: `dynamicCallable`
   
   ```swifttest
@@ -383,7 +377,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   </ b b
   </ a
   ```
-}
+-->
 
 The declaration of the `dynamicallyCall(withKeywordArguments:)` method
 must have a single parameter that conforms to the
@@ -414,8 +408,7 @@ that takes `KeyValuePairs<String, String>`.
 repeatLabels(a: "four") // Error
 ```
 
-
-@Comment {
+<!--
   - test: `dynamicCallable-err`
   
   ```swifttest
@@ -435,7 +428,7 @@ repeatLabels(a: "four") // Error
   !! repeatLabels(a: "four") // Error
   !! ^
   ```
-}
+-->
 
 ### dynamicMemberLookup
 
@@ -490,8 +483,7 @@ print(dynamic == equivalent)
 // Prints "true"
 ```
 
-
-@Comment {
+<!--
   - test: `dynamicMemberLookup`
   
   ```swifttest
@@ -515,7 +507,7 @@ print(dynamic == equivalent)
   -> print(dynamic == equivalent)
   <- true
   ```
-}
+-->
 
 Dynamic member lookup by key path
 can be used to implement a wrapper type
@@ -538,8 +530,7 @@ let wrapper = PassthroughWrapper(value: point)
 print(wrapper.x)
 ```
 
-
-@Comment {
+<!--
   - test: `dynamicMemberLookup`
   
   ```swifttest
@@ -558,7 +549,7 @@ print(wrapper.x)
   -> print(wrapper.x)
   << 381
   ```
-}
+-->
 
 ### frozen
 
@@ -576,27 +567,27 @@ but they break ABI compatibility for frozen types.
 > all structures and enumerations are implicitly frozen,
 > and this attribute is ignored.
 
-@Comment {
+<!--
   - test: `can-use-frozen-without-evolution`
   
   ```swifttest
   >> @frozen public enum E { case x, y }
   >> @frozen public struct S { var a: Int = 10 }
   ```
-}
+-->
 
-@Comment {
+<!--
   <rdar://problem/54041692> Using @frozen without Library Evolution has inconsistent error messages [SE-0260]
-}
+-->
 
-@Comment {
+<!--
   - test: `frozen-is-fine-with-evolution`
   
   ```swifttest
   >> @frozen public enum E { case x, y }
   >> @frozen public struct S { var a: Int = 10 }
   ```
-}
+-->
 
 In library evolution mode,
 code that interacts with members of nonfrozen structures and enumerations
@@ -621,7 +612,7 @@ and expressions that provide the initial value for stored instance properties
 must follow the same restrictions as inlinable functions,
 as discussed in <doc:Attributes#inlinable>.
 
-@Comment {
+<!--
   - test: `frozen-struct-prop-init-cant-refer-to-private-type`
   
   ```swifttest
@@ -642,7 +633,7 @@ as discussed in <doc:Attributes#inlinable>.
   !! private struct PrivateStruct: P { }
   !! ^
   ```
-}
+-->
 
 To enable library evolution mode on the command line,
 pass the `-enable-library-evolution` option to the Swift compiler.
@@ -651,13 +642,13 @@ set the "Build Libraries for Distribution" build setting
 (`BUILD_LIBRARY_FOR_DISTRIBUTION`) to Yes,
 as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba).
 
-@Comment {
+<!--
   This is the first time we're talking about a specific compiler flag/option.
   In the long term, the discussion of library evolution mode
   will need to move to a new chapter in the guide
   that also talks about things like @available and ABI.
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
-}
+-->
 
 A switch statement over a frozen enumeration doesn't require a `default` case,
 as discussed in <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
@@ -665,16 +656,16 @@ Including a `default` or `@unknown default` case
 when switching over a frozen enumeration
 produces a warning because that code is never executed.
 
-@Comment {
+<!--
   - test: `NoUnknownDefaultOverFrozenEnum`
   
   ```swifttest
   >> public enum E { case x, y }
   >> @frozen public enum F { case x, y }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `NoUnknownDefaultOverFrozenEnum_Test1`
   
   ```swifttest
@@ -689,9 +680,9 @@ produces a warning because that code is never executed.
   >> }
   // Note that there's no warning -- this is fine because E isn't frozen.
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `NoUnknownDefaultOverFrozenEnum_Test2`
   
   ```swifttest
@@ -719,7 +710,7 @@ produces a warning because that code is never executed.
   !! case .y: print(8)
   !! ^
   ```
-}
+-->
 
 ### GKInspectable
 
@@ -727,10 +718,10 @@ Apply this attribute to expose a custom GameplayKit component property
 to the SpriteKit editor UI.
 Applying this attribute also implies the `objc` attribute.
 
-@Comment {
+<!--
   See also <rdar://problem/27287369> Document @GKInspectable attribute
   which we will want to link to, once it's written.
-}
+-->
 
 ### inlinable
 
@@ -756,7 +747,7 @@ Functions and closures that are defined inside an inlinable function
 are implicitly inlinable,
 even though they can't be marked with this attribute.
 
-@Comment {
+<!--
   - test: `cant-inline-private`
   
   ```swifttest
@@ -765,9 +756,9 @@ even though they can't be marked with this attribute.
   !! @inlinable private func f() { }
   !! ^~~~~~~~~~~
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `cant-inline-nested`
   
   ```swifttest
@@ -779,9 +770,9 @@ even though they can't be marked with this attribute.
   !! ^~~~~~~~~~~
   !!-
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: When we get resilience, this will actually be a problem.
   Until then, per discussion with [Contributor 6004], there's no (supported) way
   for folks to get into the state where this behavior would be triggered.
@@ -799,7 +790,7 @@ even though they can't be marked with this attribute.
   inlined copies outside the module would use the old algorithm
   and the noninlined copy would use the new algorithm,
   yielding inconsistent results.
-}
+-->
 
 ### main
 
@@ -818,8 +809,7 @@ struct MyTopLevel {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `atMain`
   
   ```swifttest
@@ -832,7 +822,7 @@ struct MyTopLevel {
   -> }
   << Hello
   ```
-}
+-->
 
 Another way to describe the requirements of the `main` attribute
 is that the type you write this attribute on
@@ -845,8 +835,7 @@ protocol ProvidesMain {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `atMain_ProvidesMain`
   
   ```swifttest
@@ -854,13 +843,13 @@ protocol ProvidesMain {
          static func main() throws
      }
   ```
-}
+-->
 
 The Swift code you compile to make an executable
 can contain at most one top-level entry point,
 as discussed in <doc:Declarations#Top-Level-Code>.
 
-@Comment {
+<!--
   - test: `no-at-main-in-top-level-code`
   
   ```swifttest
@@ -878,9 +867,9 @@ as discussed in <doc:Declarations#Top-Level-Code>.
   !! @main
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `atMain_library`
   
   ```swifttest
@@ -889,16 +878,16 @@ as discussed in <doc:Declarations#Top-Level-Code>.
          public static func main() { print("Hello") }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `atMain_client`
   
   ```swifttest
   -> import atMain_library
   -> @main class CC: C { }
   ```
-}
+-->
 
 ### nonobjc
 
@@ -943,11 +932,10 @@ import AppKit
 NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
 
-
-@Comment {
+<!--
   Above code isn't tested because it hangs the REPL indefinitely,
   which is correct behavior if you call a non-returning function like this.
-}
+-->
 
 The Swift code you compile to make an executable
 can contain at most one top-level entry point,
@@ -964,10 +952,10 @@ The type of the property must conform to the `NSCopying` protocol.
 The `NSCopying` attribute behaves in a way similar to the Objective-C `copy`
 property attribute.
 
-@Comment {
+<!--
   TODO: If and when Dave includes a section about this in the Guide,
   provide a link to the relevant section.
-}
+-->
 
 ### NSManaged
 
@@ -1041,30 +1029,29 @@ rather than just as the name of the property itself.
 
 ```swift
 class ExampleClass: NSObject {
-   @objc var enabled: Bool {
-      @objc(isEnabled) get {
-         // Return the appropriate value
-      }
-   }
+    @objc var enabled: Bool {
+        @objc(isEnabled) get {
+            // Return the appropriate value
+        }
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `objc-attribute`
   
   ```swifttest
   >> import Foundation
   -> class ExampleClass: NSObject {
-        @objc var enabled: Bool {
-           @objc(isEnabled) get {
-              // Return the appropriate value
+  ->    @objc var enabled: Bool {
+  ->       @objc(isEnabled) get {
+  ->          // Return the appropriate value
   >>          return true
-           }
-        }
-     }
+  ->       }
+  ->    }
+  -> }
   ```
-}
+-->
 
 For more information, see
 [Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c).
@@ -1100,12 +1087,12 @@ the introspection facilities of the Objective-C runtime.
 Applying the `objc` attribute when it isn't needed
 can increase your binary size and adversely affect performance.
 
-@Comment {
+<!--
   The binary size comes from the additional thunks
   to translate between calling conventions.
   The performance of linking and launch are slower
   because of the larger symbol table slowing dyld down.
-}
+-->
 
 ### propertyWrapper
 
@@ -1119,7 +1106,7 @@ apply the attribute to a local stored variable declaration
 to wrap access to the variable the same way.
 Computed variables, global variables, and constants can't use property wrappers.
 
-@Comment {
+<!--
   - test: `property-wrappers-can-go-on-stored-variable`
   
   ```swifttest
@@ -1131,9 +1118,9 @@ Computed variables, global variables, and constants can't use property wrappers.
   >> f()
   << 20
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `property-wrappers-cant-go-on-constants`
   
   ```swifttest
@@ -1146,9 +1133,9 @@ Computed variables, global variables, and constants can't use property wrappers.
   !! @UselessWrapper let d: Int = 20
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `property-wrappers-cant-go-on-computed-variable`
   
   ```swifttest
@@ -1162,7 +1149,7 @@ Computed variables, global variables, and constants can't use property wrappers.
   !! @UselessWrapper var d: Int { return 20 }
   !! ^
   ```
-}
+-->
 
 The wrapper must define a `wrappedValue` instance property.
 The *wrapped value* of the property
@@ -1224,8 +1211,7 @@ struct SomeStruct {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `propertyWrapper`
   
   ```swifttest
@@ -1248,36 +1234,36 @@ struct SomeStruct {
      }
   ---
   -> struct SomeStruct {
-         // Uses init()
-         @SomeWrapper var a: Int
+  ->     // Uses init()
+  ->     @SomeWrapper var a: Int
   ---
-         // Uses init(wrappedValue:)
-         @SomeWrapper var b = 10
+  ->     // Uses init(wrappedValue:)
+  ->     @SomeWrapper var b = 10
   ---
-         // Both use init(wrappedValue:custom:)
-         @SomeWrapper(custom: 98.7) var c = 30
-         @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
-     }
+  ->     // Both use init(wrappedValue:custom:)
+  ->     @SomeWrapper(custom: 98.7) var c = 30
+  ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+  -> }
   ```
-}
+-->
 
-@Comment {
+<!--
   Comments in the SomeStruct part of the example above
   are on the line before instead of at the end of the line
   because the last example gets too long to fit on one line.
-}
+-->
 
-@Comment {
+<!--
   Initialization of a wrapped property using ``init(wrappedValue:)``
   can be split across multiple statements.
   However, you can only see that behavior using local variables
   which currently can't have a property wrapper.
   It would look like this:
   
-  @SomeWrapper var e
-  e = 20  // Uses init(wrappedValue:)
-  e = 30  // Uses the property setter
-}
+  -> @SomeWrapper var e
+  -> e = 20  // Uses init(wrappedValue:)
+  -> e = 30  // Uses the property setter
+-->
 
 The *projected value* for a wrapped property is a second value
 that a property wrapper can use to expose additional functionality.
@@ -1313,8 +1299,7 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
-
-@Comment {
+<!--
   - test: `propertyWrapper-projection`
   
   ```swifttest
@@ -1330,8 +1315,8 @@ s.$x.wrapper  // WrapperWithProjection value
   }
   ---
   -> struct SomeStruct {
-         @WrapperWithProjection var x = 123
-     }
+  ->     @WrapperWithProjection var x = 123
+  -> }
   -> let s = SomeStruct()
   >> _ =
   -> s.x           // Int value
@@ -1340,7 +1325,7 @@ s.$x.wrapper  // WrapperWithProjection value
   >> _ =
   -> s.$x.wrapper  // WrapperWithProjection value
   ```
-}
+-->
 
 ### resultBuilder
 
@@ -1379,9 +1364,9 @@ they default to being the same as `Component`.
 
 The result-building methods are as follows:
 
-@Comment {
+<!--
   start of term/defn list
-}
+-->
 
 - term `static func buildBlock(_ components: Component...) -> Component`: Combines an array of partial results into a single partial result.
 A result builder must implement this method.
@@ -1412,9 +1397,9 @@ that performs an availability check.
 You can use this to erase type information
 that varies between the conditional branches.
 
-@Comment {
+<!--
   end of term/defn list
-}
+-->
 
 For example, the code below defines a simple result builder
 that builds an array of integers.
@@ -1448,8 +1433,7 @@ struct ArrayBuilder {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `array-result-builder`
   
   ```swifttest
@@ -1481,7 +1465,7 @@ struct ArrayBuilder {
          }
      }
   ```
-}
+-->
 
 #### Result Transformations
 
@@ -1500,7 +1484,7 @@ into code that calls the static methods of the result builder type:
   ```
   
   
-  @Comment {
+  <!--
     - test: `array-result-builder`
     
     ```swifttest
@@ -1508,7 +1492,7 @@ into code that calls the static methods of the result builder type:
     -> var manualNumber = ArrayBuilder.buildExpression(10)
     >> assert(builderNumber == manualNumber)
     ```
-  }
+  -->
 - An assignment statement is transformed like an expression,
   but is understood to evaluate to `()`.
   You can define an overload of `buildExpression(_:)`
@@ -1533,8 +1517,8 @@ into code that calls the static methods of the result builder type:
       func draw() -> String { return content }
   }
   struct Line<D: Drawable>: Drawable {
-      var elements: [D]
-      func draw() -> String {
+        var elements: [D]
+        func draw() -> String {
           return elements.map { $0.draw() }.joined(separator: "")
       }
   }
@@ -1659,7 +1643,7 @@ into code that calls the static methods of the result builder type:
   ```
   
   
-  @Comment {
+  <!--
     - test: `array-result-builder`
     
     ```swifttest
@@ -1693,7 +1677,7 @@ into code that calls the static methods of the result builder type:
     << Building second... [32]
     << Building first... [32]
     ```
-  }
+  -->
 - A branch statement that might not produce a value,
   like an `if` statement without an `else` clause,
   becomes a call to `buildOptional(_:)`.
@@ -1715,7 +1699,7 @@ into code that calls the static methods of the result builder type:
   ```
   
   
-  @Comment {
+  <!--
     - test: `array-result-builder`
     
     ```swifttest
@@ -1732,7 +1716,7 @@ into code that calls the static methods of the result builder type:
     << Building optional... Optional([20])
     >> assert(builderOptional == manualOptional)
     ```
-  }
+  -->
 - A code block or `do` statement
   becomes a call to the `buildBlock(_:)` method.
   Each of the statements inside of the block is transformed,
@@ -1755,7 +1739,7 @@ into code that calls the static methods of the result builder type:
   ```
   
   
-  @Comment {
+  <!--
     - test: `array-result-builder`
     
     ```swifttest
@@ -1772,7 +1756,7 @@ into code that calls the static methods of the result builder type:
        )
     >> assert(builderBlock == manualBlock)
     ```
-  }
+  -->
 - A `for` loop becomes a temporary variable, a `for` loop,
   and call to the `buildArray(_:)` method.
   The new `for` loop iterates over the sequence
@@ -1796,7 +1780,7 @@ into code that calls the static methods of the result builder type:
   ```
   
   
-  @Comment {
+  <!--
     - test: `array-result-builder`
     
     ```swifttest
@@ -1814,13 +1798,12 @@ into code that calls the static methods of the result builder type:
     -> let manualArray = ArrayBuilder.buildArray(temporary)
     >> assert(builderArray == manualArray)
     ```
-  }
+  -->
 - If the result builder has a `buildFinalResult(_:)` method,
   the final result becomes a call to that method.
   This transformation is always last.
 
-
-@Comment {
+<!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
   
   ```swifttest
@@ -1858,9 +1841,9 @@ into code that calls the static methods of the result builder type:
          }
      }
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `result-builder-limited-availability-broken`
   
   ```swifttest
@@ -1886,9 +1869,9 @@ into code that calls the static methods of the result builder type:
   !! struct DrawingBuilder {
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `result-builder-limited-availability-ok`
   
   ```swifttest
@@ -1925,7 +1908,7 @@ into code that calls the static methods of the result builder type:
   /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
   </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
   ```
-}
+-->
 
 Although the transformation behavior is described in terms of temporary variables,
 using a result builder doesn't actually create any new declarations
@@ -1951,7 +1934,7 @@ For example, the expression `4 + 5 * 6` becomes
 Likewise, nested branch statements become
 a single binary tree of calls to the `buildEither` methods.
 
-@Comment {
+<!--
   - test: `result-builder-transform-complex-expression`
   
   ```swifttest
@@ -1972,7 +1955,7 @@ a single binary tree of calls to the `buildEither` methods.
   >> print(x)
   << [46]
   ```
-}
+-->
 
 #### Custom Result-Builder Attributes
 
@@ -2000,7 +1983,7 @@ to provide default values as part of their definitions.
 This attribute is inferred for any class
 that inherits from `NSManagedObject`.
 
-@Comment {
+<!--
   - test: `requires_stored_property_inits-requires-default-values`
   
   ```swifttest
@@ -2008,7 +1991,7 @@ that inherits from `NSManagedObject`.
          var value: Int = -1
          init() { self.value = 0 }
      }
-     @requires_stored_property_inits class NoDefaultValue {
+  -> @requires_stored_property_inits class NoDefaultValue {
          var value: Int
          init() { self.value = 0 }
      }
@@ -2019,7 +2002,7 @@ that inherits from `NSManagedObject`.
   !! @requires_stored_property_inits class NoDefaultValue {
   !! ^
   ```
-}
+-->
 
 ### testable
 
@@ -2093,7 +2076,7 @@ Although either `inlinable` or `usableFromInline`
 can be applied to `internal` declarations,
 applying both attributes is an error.
 
-@Comment {
+<!--
   - test: `usableFromInline-and-inlinable-is-redundant`
   
   ```swifttest
@@ -2102,7 +2085,7 @@ applying both attributes is an error.
   !! @usableFromInline @inlinable internal func f() { }
   !! ^~~~~~~~~~~~~~~~~~
   ```
-}
+-->
 
 ### warn_unqualified_access
 
@@ -2134,9 +2117,9 @@ Swift provides the following Interface Builder attributes:
 These attributes are conceptually the same as their
 Objective-C counterparts.
 
-@Comment {
+<!--
   TODO: Need to link to the relevant discussion of these attributes in Objc.
-}
+-->
 
 You apply the `IBOutlet` and `IBInspectable` attributes
 to property declarations of a class.
@@ -2180,10 +2163,10 @@ one of the following arguments:
 - The `c` argument indicates a C function reference.
   The function value carries no context and uses the C calling convention.
 
-@Comment {
-  @convention(thin) is private, even though it doesn't have an underscore
+<!--
+  Note: @convention(thin) is private, even though it doesn't have an underscore
   https://forums.swift.org/t/12087/6
-}
+-->
 
 With a few exceptions,
 a function of any calling convention can be used
@@ -2235,25 +2218,32 @@ at the time the code is compiled.
 For an example of how to use the `unknown` attribute,
 see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 
-```
-Grammar of an attribute
+> Grammar of an attribute:
+>
+> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_
+>
+> *attribute-name* → *identifier*
+>
+> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`**
+>
+> *attributes* → *attribute* *attributes*_?_
+>
+>
+>
+> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_
+>
+> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`**
+>
+> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`**
+>
+> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`**
+>
+> *balanced-token* → Any identifier, keyword, literal, or operator
+>
+> *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
 
-attribute --> ``@`` attribute-name attribute-argument-clause-OPT
-attribute-name --> identifier
-attribute-argument-clause --> ``(`` balanced-tokens-OPT ``)``
-attributes --> attribute attributes-OPT
 
-balanced-tokens --> balanced-token balanced-tokens-OPT
-balanced-token --> ``(`` balanced-tokens-OPT ``)``
-balanced-token --> ``[`` balanced-tokens-OPT ``]``
-balanced-token --> ``{`` balanced-tokens-OPT ``}``
-balanced-token --> Any identifier, keyword, literal, or operator
-balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
-```
-
-
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -2261,4 +2251,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

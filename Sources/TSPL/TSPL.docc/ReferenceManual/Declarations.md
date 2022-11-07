@@ -1,6 +1,6 @@
-
-
 # Declarations
+
+Introduce types, operators, variables, and other names and constructs.
 
 A *declaration* introduces a new name or construct into your program.
 For example, you use declarations to introduce functions and methods,
@@ -15,28 +15,41 @@ implement their members, most protocol members are declarations only. For conven
 and because the distinction isn't that important in Swift,
 the term *declaration* covers both declarations and definitions.
 
-```
-Grammar of a declaration
-
-declaration --> import-declaration
-declaration --> constant-declaration
-declaration --> variable-declaration
-declaration --> typealias-declaration
-declaration --> function-declaration
-declaration --> enum-declaration
-declaration --> struct-declaration
-declaration --> class-declaration
-declaration --> actor-declaration
-declaration --> protocol-declaration
-declaration --> initializer-declaration
-declaration --> deinitializer-declaration
-declaration --> extension-declaration
-declaration --> subscript-declaration
-declaration --> operator-declaration
-declaration --> precedence-group-declaration
-declarations --> declaration declarations-OPT
-```
-
+> Grammar of a declaration:
+>
+> *declaration* → *import-declaration*
+>
+> *declaration* → *constant-declaration*
+>
+> *declaration* → *variable-declaration*
+>
+> *declaration* → *typealias-declaration*
+>
+> *declaration* → *function-declaration*
+>
+> *declaration* → *enum-declaration*
+>
+> *declaration* → *struct-declaration*
+>
+> *declaration* → *class-declaration*
+>
+> *declaration* → *actor-declaration*
+>
+> *declaration* → *protocol-declaration*
+>
+> *declaration* → *initializer-declaration*
+>
+> *declaration* → *deinitializer-declaration*
+>
+> *declaration* → *extension-declaration*
+>
+> *declaration* → *subscript-declaration*
+>
+> *declaration* → *operator-declaration*
+>
+> *declaration* → *precedence-group-declaration*
+>
+> *declarations* → *declaration* *declarations*_?_
 
 ## Top-Level Code
 
@@ -67,12 +80,9 @@ the `UIApplicationMain` attribute,
 a `main.swift` file,
 or a file that contains top-level executable code.
 
-```
-Grammar of a top-level declaration
-
-top-level-declaration --> statements-OPT
-```
-
+> Grammar of a top-level declaration:
+>
+> *top-level-declaration* → *statements*_?_
 
 ## Code Blocks
 
@@ -86,25 +96,21 @@ It has the following form:
 }
 ```
 
-
 The *statements* inside a code block include declarations,
 expressions, and other kinds of statements and are executed in order
 of their appearance in source code.
 
-@Comment {
+<!--
   TR: What exactly are the scope rules for Swift?
-}
+-->
 
-@Comment {
+<!--
   TODO: Discuss scope.  I assume a code block creates a new scope?
-}
+-->
 
-```
-Grammar of a code block
-
-code-block --> ``{`` statements-OPT ``}``
-```
-
+> Grammar of a code block:
+>
+> *code-block* → **`{`** *statements*_?_ **`}`**
 
 ## Import Declaration
 
@@ -116,7 +122,6 @@ it consists of the `import` keyword followed by a module name:
 ```swift
 import <#module#>
 ```
-
 
 Providing more detail limits which symbols are imported ---
 you can specify a specific submodule
@@ -131,20 +136,19 @@ import <#import kind#> <#module#>.<#symbol name#>
 import <#module#>.<#submodule#>
 ```
 
-
-@Comment {
+<!--
   TODO: Need to add more to this section.
-}
+-->
 
-```
-Grammar of an import declaration
-
-import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
-
-import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``let`` | ``var`` | ``func``
-import-path --> identifier | identifier ``.`` import-path
-```
-
+> Grammar of an import declaration:
+>
+> *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
+>
+>
+>
+> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`**
+>
+> *import-path* → *identifier* | *identifier* **`.`** *import-path*
 
 ## Constant Declaration
 
@@ -154,7 +158,6 @@ Constant declarations are declared using the `let` keyword and have the followin
 ```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
-
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
@@ -184,14 +187,13 @@ in the initializer *expression*.
 let (firstNumber, secondNumber) = (10, 42)
 ```
 
-
-@Comment {
+<!--
   - test: `constant-decl`
   
   ```swifttest
   -> let (firstNumber, secondNumber) = (10, 42)
   ```
-}
+-->
 
 In this example,
 `firstNumber` is a named constant for the value `10`,
@@ -205,8 +207,7 @@ print("The second number is \(secondNumber).")
 // Prints "The second number is 42."
 ```
 
-
-@Comment {
+<!--
   - test: `constant-decl`
   
   ```swifttest
@@ -215,7 +216,7 @@ print("The second number is \(secondNumber).")
   -> print("The second number is \(secondNumber).")
   <- The second number is 42.
   ```
-}
+-->
 
 The type annotation (`:` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -228,7 +229,7 @@ you can't mark it with the `class` or `final` declaration modifier
 to allow or disallow overriding by subclasses.
 Type properties are discussed in <doc:Properties#Type-Properties>.
 
-@Comment {
+<!--
   - test: `class-constants-cant-have-class-or-final`
   
   ```swifttest
@@ -242,21 +243,22 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
   !!                  ^~~~~~
   !!-
   ```
-}
+-->
 
 For more information about constants and for guidance about when to use them,
 see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Properties>.
 
-```
-Grammar of a constant declaration
-
-constant-declaration --> attributes-OPT declaration-modifiers-OPT ``let`` pattern-initializer-list
-
-pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
-pattern-initializer --> pattern initializer-OPT
-initializer --> ``=`` expression
-```
-
+> Grammar of a constant declaration:
+>
+> *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
+>
+>
+>
+> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list*
+>
+> *pattern-initializer* → *pattern* *initializer*_?_
+>
+> *initializer* → **`=`** *expression*
 
 ## Variable Declaration
 
@@ -283,7 +285,6 @@ The following form declares a stored variable or stored variable property:
 ```swift
 var <#variable name#>: <#type#> = <#expression#>
 ```
-
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
@@ -319,7 +320,6 @@ var <#variable name#>: <#type#> {
    }
 }
 ```
-
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, enumeration, or extension declaration.
@@ -364,7 +364,6 @@ var <#variable name#>: <#type#> = <#expression#> {
 }
 ```
 
-
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
@@ -383,7 +382,7 @@ This expression is evaluated the first time you read the property's value.
 If you overwrite the property's initial value without reading it,
 this expression is evaluated before the first time you write to the property.
 
-@Comment {
+<!--
   - test: `overwriting-property-without-writing`
   
   ```swifttest
@@ -401,7 +400,7 @@ this expression is evaluated before the first time you write to the property.
   << initial value: 100
   << y: 100
   ```
-}
+-->
 
 The `willSet` and `didSet` observers provide a way to observe (and to respond appropriately)
 when the value of a variable or property is being set.
@@ -473,8 +472,7 @@ newAndOld.x = 200
 // Prints "Old value 12 - new value 200"
 ```
 
-
-@Comment {
+<!--
   - test: `didSet-calls-superclass-getter`
   
   ```swifttest
@@ -513,12 +511,12 @@ newAndOld.x = 200
   <- Getter was called
   <- Old value 12 - new value 200
   ```
-}
+-->
 
 For more information and to see an example of how to use property observers,
 see <doc:Properties#Property-Observers>.
 
-@Comment {
+<!--
   - test: `cant-mix-get-set-and-didSet`
   
   ```swifttest
@@ -533,7 +531,7 @@ see <doc:Properties#Property-Observers>.
   !! didSet { print("S didSet") }
   !! ^
   ```
-}
+-->
 
 ### Type Variable Properties
 
@@ -543,42 +541,64 @@ Classes can mark type computed properties with the `class` declaration modifier 
 to allow subclasses to override the superclass’s implementation.
 Type properties are discussed in <doc:Properties#Type-Properties>.
 
-```
-Grammar of a variable declaration
+> Grammar of a variable declaration:
+>
+> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list*
+>
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block*
+>
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block*
+>
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
+>
+> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block*
+>
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
+>
+>
+>
+> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`**
+>
+> *variable-name* → *identifier*
+>
+>
+>
+> *getter-setter-block* → *code-block*
+>
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`**
+>
+> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`**
+>
+> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block*
+>
+> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block*
+>
+> *setter-name* → **`(`** *identifier* **`)`**
+>
+>
+>
+> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`**
+>
+> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`**
+>
+> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`**
+>
+> *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
+>
+>
+>
+> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`**
+>
+> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`**
+>
+> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block*
+>
+> *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
 
-variable-declaration --> variable-declaration-head pattern-initializer-list
-variable-declaration --> variable-declaration-head variable-name type-annotation code-block
-variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-block
-variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
-variable-declaration --> variable-declaration-head variable-name initializer willSet-didSet-block
-variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
-
-variable-declaration-head --> attributes-OPT declaration-modifiers-OPT ``var``
-variable-name --> identifier
-
-getter-setter-block --> code-block
-getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
-getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-getter-clause --> attributes-OPT mutation-modifier-OPT ``get`` code-block
-setter-clause --> attributes-OPT mutation-modifier-OPT ``set`` setter-name-OPT code-block
-setter-name --> ``(`` identifier ``)``
-
-getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
-getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-getter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``get``
-setter-keyword-clause --> attributes-OPT mutation-modifier-OPT ``set``
-
-willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
-willSet-didSet-block --> ``{`` didSet-clause willSet-clause-OPT ``}``
-willSet-clause --> attributes-OPT ``willSet`` setter-name-OPT code-block
-didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
-```
-
-
-@Comment {
+<!--
   NOTE: Type annotations are required for computed properties -- the
   types of those properties aren't computed/inferred.
-}
+-->
 
 ## Type Alias Declaration
 
@@ -588,7 +608,6 @@ Type alias declarations are declared using the `typealias` keyword and have the 
 ```swift
 typealias <#name#> = <#existing type#>
 ```
-
 
 After a type alias is declared, the aliased *name* can be used
 instead of the *existing type* everywhere in your program.
@@ -610,8 +629,7 @@ var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
 ```
 
-
-@Comment {
+<!--
   - test: `typealias-with-generic`
   
   ```swifttest
@@ -621,7 +639,7 @@ var dictionary2: Dictionary<String, Int> = [:]
   -> var dictionary1: StringDictionary<Int> = [:]
   -> var dictionary2: Dictionary<String, Int> = [:]
   ```
-}
+-->
 
 When a type alias is declared with generic parameters, the constraints on those
 parameters must match exactly the constraints on the existing type's generic parameters.
@@ -631,14 +649,13 @@ For example:
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 ```
 
-
-@Comment {
+<!--
   - test: `typealias-with-generic-constraint`
   
   ```swifttest
   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
   ```
-}
+-->
 
 Because the type alias and the existing type can be used interchangeably,
 the type alias can't introduce additional generic constraints.
@@ -653,27 +670,26 @@ has the same generic parameters and constraints as `Dictionary`.
 typealias Diccionario = Dictionary
 ```
 
-
-@Comment {
+<!--
   - test: `typealias-using-shorthand`
   
   ```swifttest
   -> typealias Diccionario = Dictionary
   ```
-}
+-->
 
-@Comment {
+<!--
   Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
   typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
-}
+-->
 
-@Comment {
+<!--
   Things that shouldn't work:
   typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
   typealias NotRedeclaringAnyOfTheGenericParameters = Dictionary
   typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
   typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
-}
+-->
 
 Inside a protocol declaration,
 a type alias can give a shorter and more convenient name
@@ -691,8 +707,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `typealias-in-protocol`
   
   ```swifttest
@@ -706,7 +721,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
   >>     return 9000
      }
   ```
-}
+-->
 
 Without this type alias,
 the `sum` function would have to refer to the associated type
@@ -714,22 +729,21 @@ as `T.Iterator.Element` instead of `T.Element`.
 
 See also <doc:Declarations#Protocol-Associated-Type-Declaration>.
 
-```
-Grammar of a type alias declaration
+> Grammar of a type alias declaration:
+>
+> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment*
+>
+> *typealias-name* → *identifier*
+>
+> *typealias-assignment* → **`=`** *type*
 
-typealias-declaration --> attributes-OPT access-level-modifier-OPT ``typealias`` typealias-name generic-parameter-clause-OPT typealias-assignment
-typealias-name --> identifier
-typealias-assignment --> ``=`` type
-```
-
-
-@Comment {
+<!--
   Old grammar:
-  typealias-declaration --> typealias-head typealias-assignment
-  typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
-  typealias-name --> identifier
-  typealias-assignment --> ``=`` type
-}
+  typealias-declaration -> typealias-head typealias-assignment
+  typealias-head -> ``typealias`` typealias-name type-inheritance-clause-OPT
+  typealias-name -> identifier
+  typealias-assignment -> ``=`` type
+-->
 
 ## Function Declaration
 
@@ -744,7 +758,6 @@ func <#function name#>(<#parameters#>) -> <#return type#> {
 }
 ```
 
-
 If the function has a return type of `Void`,
 the return type can be omitted as follows:
 
@@ -753,7 +766,6 @@ func <#function name#>(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 The type of each parameter must be included ---
 it can't be inferred.
@@ -770,18 +782,18 @@ only when the expression's type and the function's return type
 aren't `Void`
 and aren't an enumeration like `Never` that doesn't have any cases.
 
-@Comment {
+<!--
   As of Swift 5.3,
   the only way to make an uninhabited type is to create an empty enum,
   so just say that directly instead of using & defining the compiler jargon.
-}
+-->
 
 Functions can return multiple values using a tuple type
 as the return type of the function.
 
-@Comment {
+<!--
   TODO: ^-- Add some more here.
-}
+-->
 
 A function definition can appear inside another function declaration.
 This kind of function is known as a *nested function*.
@@ -807,7 +819,6 @@ The simplest entry in a parameter list has the following form:
 <#parameter name#>: <#parameter type#>
 ```
 
-
 A parameter has a name,
 which is used within the function body,
 as well as an argument label,
@@ -821,8 +832,7 @@ func f(x: Int, y: Int) -> Int { return x + y }
 f(x: 1, y: 2) // both x and y are labeled
 ```
 
-
-@Comment {
+<!--
   - test: `default-parameter-names`
   
   ```swifttest
@@ -831,12 +841,12 @@ f(x: 1, y: 2) // both x and y are labeled
   -> f(x: 1, y: 2) // both x and y are labeled
   >> assert(r0 == 3)
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid bare expressions.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
 You can override the default behavior for argument labels
 with one of the following forms:
@@ -845,7 +855,6 @@ with one of the following forms:
 <#argument label#> <#parameter name#>: <#parameter type#>
 _ <#parameter name#>: <#parameter type#>
 ```
-
 
 A name before the parameter name
 gives the parameter an explicit argument label,
@@ -862,15 +871,14 @@ func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
 repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 ```
 
-
-@Comment {
+<!--
   - test: `overridden-parameter-names`
   
   ```swifttest
   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
-}
+-->
 
 ### In-Out Parameters
 
@@ -912,13 +920,13 @@ you can't pass the same value to multiple in-out parameters.
 For more information about memory safety and memory exclusivity,
 see <doc:MemorySafety>.
 
-@Comment {
+<!--
   When the call-by-reference optimization is in play,
   it would happen to do what you want.
   But you still shouldn't do that --
   as noted above, you're not allowed to depend on
   behavioral differences that happen because of call by reference.
-}
+-->
 
 A closure or nested function
 that captures an in-out parameter must be nonescaping.
@@ -932,8 +940,7 @@ func someFunction(a: inout Int) -> () -> Int {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `explicit-capture-for-inout`
   
   ```swifttest
@@ -948,7 +955,7 @@ func someFunction(a: inout Int) -> () -> Int {
   >> print(r, r == c.x)
   << 101 false
   ```
-}
+-->
 
 If you need to capture and mutate an in-out parameter,
 use an explicit local copy,
@@ -957,18 +964,17 @@ all mutation has finished before the function returns.
 
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
-   // Make a local copy and manually copy it back.
-   var localX = x
-   defer { x = localX }
+    // Make a local copy and manually copy it back.
+    var localX = x
+    defer { x = localX }
 
-   // Operate on localX asynchronously, then wait before returning.
-   queue.async { someMutatingOperation(&localX) }
-   queue.sync {}
+    // Operate on localX asynchronously, then wait before returning.
+    queue.async { someMutatingOperation(&localX) }
+    queue.sync {}
 }
 ```
 
-
-@Comment {
+<!--
   - test: `cant-pass-inout-aliasing`
   
   ```swifttest
@@ -984,12 +990,12 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
         queue.sync {}
      }
   ```
-}
+-->
 
 For more discussion and examples of in-out parameters,
 see <doc:Functions#In-Out-Parameters>.
 
-@Comment {
+<!--
   - test: `escaping-cant-capture-inout`
   
   ```swifttest
@@ -1021,7 +1027,7 @@ see <doc:Functions#In-Out-Parameters>.
   !! return { a += 1 }
   !! ^
   ```
-}
+-->
 
 ### Special Kinds of Parameters
 
@@ -1035,7 +1041,6 @@ _ : <#parameter type#>
 <#parameter name#>: <#parameter type#>...
 <#parameter name#>: <#parameter type#> = <#default argument value#>
 ```
-
 
 An underscore (`_`) parameter
 is explicitly ignored and can't be accessed within the body of the function.
@@ -1063,8 +1068,7 @@ f(x: 7)   // Valid, uses the value provided
 f(7)      // Invalid, missing argument label
 ```
 
-
-@Comment {
+<!--
   - test: `default-args-and-labels`
   
   ```swifttest
@@ -1080,14 +1084,14 @@ f(7)      // Invalid, missing argument label
   !!   ^
   !!   x:
   ```
-}
+-->
 
-@Comment {
+<!--
   Rewrite the above to avoid discarding the function's return value.
   Tracking bug is <rdar://problem/35301593>
-}
+-->
 
-@Comment {
+<!--
   - test: `default-args-evaluated-at-call-site`
   
   ```swifttest
@@ -1105,7 +1109,7 @@ f(7)      // Invalid, missing argument label
   << evaluated
   << x is 10
   ```
-}
+-->
 
 ### Special Kinds of Methods
 
@@ -1126,7 +1130,7 @@ A class type method marked with the `class` declaration modifier
 can be overridden by a subclass implementation;
 a class type method marked with `class final` or `static` can't be overridden.
 
-@Comment {
+<!--
   - test: `overriding-class-methods-err`
   
   ```swifttest
@@ -1147,9 +1151,9 @@ a class type method marked with `class final` or `static` can't be overridden.
   !! class S2 { static func f() -> Int { return 12 } }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `overriding-class-methods`
   
   ```swifttest
@@ -1158,7 +1162,7 @@ a class type method marked with `class final` or `static` can't be overridden.
   -> print(SS3.f())
   <- 120
   ```
-}
+-->
 
 ### Methods with Special Names
 
@@ -1187,12 +1191,12 @@ and adds labeled or unlabeled arguments ---
 for example, `callAsFunction(_:_:)` and `callAsFunction(something:)`
 are also valid call-as-function method names.
 
-@Comment {
+<!--
   Above, callAsFunction( is in code voice even though
   it's not actually a symbol that exists in the reader's code.
   Per discussion with Chuck, this is the closest typographic convention
   to what we're trying to express here.
-}
+-->
 
 The following function calls are equivalent:
 
@@ -1209,8 +1213,7 @@ callable.callAsFunction(4, scale: 2)
 // Both function calls print 208.
 ```
 
-
-@Comment {
+<!--
   - test: `call-as-function`
   
   ```swifttest
@@ -1227,7 +1230,7 @@ callable.callAsFunction(4, scale: 2)
   << 208
   << 208
   ```
-}
+-->
 
 The call-as-function methods
 and the methods from the `dynamicCallable` attribute
@@ -1251,8 +1254,7 @@ let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
-
-@Comment {
+<!--
   - test: `call-as-function-err`
   
   ```swifttest
@@ -1269,7 +1271,7 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
   !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
   !! ^~~~~~~~~~~~~~~~~~
   ```
-}
+-->
 
 The `subscript(dynamicMember:)` subscript
 enables syntactic sugar for member lookup,
@@ -1287,7 +1289,6 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
    <#statements#>
 }
 ```
-
 
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
@@ -1321,8 +1322,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `rethrows`
   
   ```swifttest
@@ -1330,7 +1330,7 @@ func someFunction(callback: () throws -> Void) rethrows {
          try callback()
      }
   ```
-}
+-->
 
 A rethrowing function or method can contain a `throw` statement
 only inside a `catch` clause.
@@ -1349,17 +1349,16 @@ func alwaysThrows() throws {
     throw SomeError.error
 }
 func someFunction(callback: () throws -> Void) rethrows {
-   do {
-      try callback()
-      try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
-   } catch {
-      throw AnotherError.error
-   }
+    do {
+        try callback()
+        try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+    } catch {
+        throw AnotherError.error
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `double-negative-rethrows`
   
   ```swifttest
@@ -1380,9 +1379,9 @@ func someFunction(callback: () throws -> Void) rethrows {
   !!               throw AnotherError.error
   !!               ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `throwing-in-rethrowing-function`
   
   ```swifttest
@@ -1401,7 +1400,7 @@ func someFunction(callback: () throws -> Void) rethrows {
   !! throw SomeError.d  // Error
   !! ^
   ```
-}
+-->
 
 A throwing method can't override a rethrowing method,
 and a throwing method can't satisfy a protocol requirement for a rethrowing method.
@@ -1420,7 +1419,6 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
    <#statements#>
 }
 ```
-
 
 Calls to an asynchronous function or method
 must be wrapped in an `await` expression ---
@@ -1445,7 +1443,7 @@ and an asynchronous method can't satisfy a protocol requirement for a synchronou
 That said, a synchronous method can override an asynchronous method,
 and a synchronous method can satisfy a protocol requirement for an asynchronous method.
 
-@Comment {
+<!--
   - test: `sync-satisfy-async-protocol-requirements`
   
   ```swifttest
@@ -1457,7 +1455,7 @@ and a synchronous method can satisfy a protocol requirement for an asynchronous 
   >>     func f() -> Int { return 120 }
   >> }
   ```
-}
+-->
 
 ### Functions that Never Return
 
@@ -1478,38 +1476,52 @@ as discussed in <doc:Statements#Guard-Statement>.
 You can override a nonreturning method,
 but the new method must preserve its return type and nonreturning behavior.
 
-```
-Grammar of a function declaration
+> Grammar of a function declaration:
+>
+> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
+>
+>
+>
+> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`**
+>
+> *function-name* → *identifier* | *operator*
+>
+>
+>
+> *function-signature* → *parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_
+>
+> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_
+>
+> *function-result* → **`->`** *attributes*_?_ *type*
+>
+> *function-body* → *code-block*
+>
+>
+>
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`**
+>
+> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list*
+>
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* *default-argument-clause*_?_
+>
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation*
+>
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* **`...`**
+>
+> *external-parameter-name* → *identifier*
+>
+> *local-parameter-name* → *identifier*
+>
+> *default-argument-clause* → **`=`** *expression*
 
-function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT function-body-OPT
-
-function-head --> attributes-OPT declaration-modifiers-OPT ``func``
-function-name --> identifier | operator
-
-function-signature --> parameter-clause ``async``-OPT ``throws``-OPT function-result-OPT
-function-signature --> parameter-clause ``async``-OPT ``rethrows`` function-result-OPT
-function-result --> ``->`` attributes-OPT type
-function-body --> code-block
-
-parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``)``
-parameter-list --> parameter | parameter ``,`` parameter-list
-parameter --> external-parameter-name-OPT local-parameter-name type-annotation default-argument-clause-OPT
-parameter --> external-parameter-name-OPT local-parameter-name type-annotation
-parameter --> external-parameter-name-OPT local-parameter-name type-annotation ``...``
-external-parameter-name --> identifier
-local-parameter-name --> identifier
-default-argument-clause --> ``=`` expression
-```
-
-
-@Comment {
+<!--
   NOTE: Code block is optional in the context of a protocol.
   Everywhere else, it's required.
   We could refactor to have a separation between function definition/declaration.
   There's also the low-level "asm name" FFI
   which is a definition and declaration corner case.
   Let's just deal with this difference in prose.
-}
+-->
 
 ## Enumeration Declaration
 
@@ -1554,7 +1566,6 @@ enum <#enumeration name#>: <#adopted protocols#> {
 }
 ```
 
-
 Enumerations declared in this form are sometimes called *discriminated unions*
 in other programming languages.
 
@@ -1572,8 +1583,8 @@ you can get a reference to an enumeration case and apply it later in your code.
 
 ```swift
 enum Number {
-   case integer(Int)
-   case real(Double)
+    case integer(Int)
+    case real(Double)
 }
 let f = Number.integer
 // f is a function of type (Int) -> Number
@@ -1582,8 +1593,7 @@ let f = Number.integer
 let evenInts: [Number] = [0, 2, 4, 6].map(f)
 ```
 
-
-@Comment {
+<!--
   - test: `enum-case-as-function`
   
   ```swifttest
@@ -1597,14 +1607,14 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
   -> // Apply f to create an array of Number instances with integer values
   -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
   ```
-}
+-->
 
-@Comment {
+<!--
   No expectation for evenInts because there isn't a good way to spell one.
   Using print() puts a module prefix like tmpabc in front of Number
   so the expectation would need to be a regex (which we don't have),
   and assert() would require Number to conform to Equatable.
-}
+-->
 
 For more information and to see examples of cases with associated value types,
 see <doc:Enumerations#Associated-Values>.
@@ -1623,22 +1633,21 @@ To enable indirection for a particular enumeration case,
 mark it with the `indirect` declaration modifier.
 An indirect case must have an associated value.
 
-@Comment {
+<!--
   TODO The word "enable" is kind of a weasel word.
   Better to have a more concrete discussion of exactly when
   it is and isn't used.
   For example, does "indirect enum { X(Int) } mark X as indirect?
-}
+-->
 
 ```swift
 enum Tree<T> {
-   case empty
-   indirect case node(value: T, left: Tree, right: Tree)
+    case empty
+    indirect case node(value: T, left: Tree, right: Tree)
 }
 ```
 
-
-@Comment {
+<!--
   - test: `indirect-enum`
   
   ```swifttest
@@ -1650,7 +1659,7 @@ enum Tree<T> {
   >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
   >> let t = Tree.node(value: 50, left: l1, right: l2)
   ```
-}
+-->
 
 To enable indirection for all the cases of an enumeration
 that have an associated value,
@@ -1663,22 +1672,22 @@ can contain a mixture of cases that have associated values and cases those that 
 That said,
 it can't contain any cases that are also marked with the `indirect` modifier.
 
-@Comment {
+<!--
   It really should be an associated value **that includes the enum type**
   but right now the compiler is satisfied with any associated value.
   Alex emailed Joe Groff 2015-07-08 about this.
-}
+-->
 
-@Comment {
+<!--
   assertion indirect-in-indirect
   
   -> indirect enum E { indirect case c(E) }
   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
   !! indirect enum E { indirect case c(E) }
   !!                   ^
-}
+-->
 
-@Comment {
+<!--
   assertion indirect-without-recursion
   
   -> enum E { indirect case c }
@@ -1690,7 +1699,7 @@ it can't contain any cases that are also marked with the `indirect` modifier.
   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
   ---
   -> indirect enum E3 { case x }
-}
+-->
 
 ### Enumerations with Cases of a Raw-Value Type
 
@@ -1703,7 +1712,6 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
     case <#enumeration case 2#> = <#raw value 2#>
 }
 ```
-
 
 In this form, each case block consists of the `case` keyword,
 followed by one or more enumeration cases, separated by commas.
@@ -1721,10 +1729,10 @@ or `ExpressibleByExtendedGraphemeClusterLiteral` for string literals
 that contain only a single character.
 Each case must have a unique name and be assigned a unique raw value.
 
-@Comment {
+<!--
   The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
   This list is shorter because these five protocols are explicitly supported in the compiler.
-}
+-->
 
 If the raw-value type is specified as `Int`
 and you don't assign a value to the cases explicitly,
@@ -1734,12 +1742,11 @@ that's automatically incremented from the raw value of the previous case.
 
 ```swift
 enum ExampleEnum: Int {
-   case a, b, c = 5, d
+    case a, b, c = 5, d
 }
 ```
 
-
-@Comment {
+<!--
   - test: `raw-value-enum`
   
   ```swifttest
@@ -1747,7 +1754,7 @@ enum ExampleEnum: Int {
         case a, b, c = 5, d
      }
   ```
-}
+-->
 
 In the above example, the raw value of `ExampleEnum.a` is `0` and the value of
 `ExampleEnum.b` is `1`. And because the value of `ExampleEnum.c` is
@@ -1760,12 +1767,11 @@ each unassigned case is implicitly assigned a string with the same text as the n
 
 ```swift
 enum GamePlayMode: String {
-   case cooperative, individual, competitive
+    case cooperative, individual, competitive
 }
 ```
 
-
-@Comment {
+<!--
   - test: `raw-value-enum-implicit-string-values`
   
   ```swifttest
@@ -1773,7 +1779,7 @@ enum GamePlayMode: String {
         case cooperative, individual, competitive
      }
   ```
-}
+-->
 
 In the above example, the raw value of `GamePlayMode.cooperative` is `"cooperative"`,
 the raw value of `GamePlayMode.individual` is `"individual"`,
@@ -1805,15 +1811,15 @@ The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the `switch` statement,
 as described in <doc:Patterns#Enumeration-Case-Pattern>.
 
-@Comment {
+<!--
   FIXME: Or use if-case:
   enum E { case c(Int) }
   let e = E.c(100)
   if case E.c(let i) = e { print(i) }
   // prints 100
-}
+-->
 
-@Comment {
+<!--
   NOTE: Note that you can require protocol adoption,
   by using a protocol type as the raw-value type,
   but you do need to make it be one of the types
@@ -1821,40 +1827,56 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   You can have: <#raw-value type, protocol conformance#>.
   UPDATE: You can only have one raw-value type specified.
   I changed the grammar to be more restrictive in light of this.
-}
+-->
 
-@Comment {
+<!--
   NOTE: Per Doug and Ted, "('->' type)?" isn't part of the grammar.
   We removed it from our grammar, below.
-}
+-->
 
-```
-Grammar of an enumeration declaration
+> Grammar of an enumeration declaration:
+>
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum*
+>
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
+>
+>
+>
+> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`**
+>
+> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_
+>
+> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement*
+>
+> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list*
+>
+> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list*
+>
+> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_
+>
+> *enum-name* → *identifier*
+>
+> *enum-case-name* → *identifier*
+>
+>
+>
+> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`**
+>
+> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_
+>
+> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement*
+>
+> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list*
+>
+> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list*
+>
+> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_
+>
+> *raw-value-assignment* → **`=`** *raw-value-literal*
+>
+> *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
 
-enum-declaration --> attributes-OPT access-level-modifier-OPT union-style-enum
-enum-declaration --> attributes-OPT access-level-modifier-OPT raw-value-style-enum
-
-union-style-enum --> ``indirect``-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT ``{`` union-style-enum-members-OPT ``}``
-union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-union-style-enum-member --> declaration | union-style-enum-case-clause | compiler-control-statement
-union-style-enum-case-clause --> attributes-OPT ``indirect``-OPT ``case`` union-style-enum-case-list
-union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
-union-style-enum-case --> enum-case-name tuple-type-OPT
-enum-name --> identifier
-enum-case-name --> identifier
-
-raw-value-style-enum --> ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause generic-where-clause-OPT ``{`` raw-value-style-enum-members ``}``
-raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause | compiler-control-statement
-raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
-raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
-raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
-raw-value-assignment --> ``=`` raw-value-literal
-raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
-```
-
-
-@Comment {
+<!--
   NOTE: The two types of enums are sufficiently different enough to warrant separating
   the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
   I'm not sure I'm happy with the names I've chosen for two kinds of enums,
@@ -1866,22 +1888,22 @@ raw-value-literal --> numeric-literal | static-string-literal | boolean-literal
   because they behave differently. I'm not sure why we've blended them together,
   especially given that they have distinct syntactic declaration requirements
   and they behave differently.
-}
+-->
 
-@Comment {
+<!--
   old-grammar
   Grammar of an enumeration declaration
   
-  enum-declaration --> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
-  enum-name --> identifier
-  enum-body --> ``{`` declarations-OPT ``}``
+  enum-declaration -> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
+  enum-name -> identifier
+  enum-body -> ``{`` declarations-OPT ``}``
   
-  enum-member-declaration --> attribute-list-OPT ``case`` enumerator-list
-  enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-  enumerator --> enumerator-name tuple-type-OPT
-  enumerator-name --> identifier
-  raw-value-assignment --> ``=`` literal
-}
+  enum-member-declaration -> attribute-list-OPT ``case`` enumerator-list
+  enumerator-list -> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
+  enumerator -> enumerator-name tuple-type-OPT
+  enumerator-name -> identifier
+  raw-value-assignment -> ``=`` literal
+-->
 
 ## Structure Declaration
 
@@ -1893,7 +1915,6 @@ struct <#structure name#>: <#adopted protocols#> {
    <#declarations#>
 }
 ```
-
 
 The body of a structure contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
@@ -1933,17 +1954,19 @@ see <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
-```
-Grammar of a structure declaration
-
-struct-declaration --> attributes-OPT access-level-modifier-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT struct-body
-struct-name --> identifier
-struct-body --> ``{`` struct-members-OPT ``}``
-
-struct-members --> struct-member struct-members-OPT
-struct-member --> declaration | compiler-control-statement
-```
-
+> Grammar of a structure declaration:
+>
+> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body*
+>
+> *struct-name* → *identifier*
+>
+> *struct-body* → **`{`** *struct-members*_?_ **`}`**
+>
+>
+>
+> *struct-members* → *struct-member* *struct-members*_?_
+>
+> *struct-member* → *declaration* | *compiler-control-statement*
 
 ## Class Declaration
 
@@ -1955,7 +1978,6 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
    <#declarations#>
 }
 ```
-
 
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
@@ -1987,14 +2009,14 @@ A class can override properties, methods, subscripts, and initializers of its su
 Overridden properties, methods, subscripts,
 and designated initializers must be marked with the `override` declaration modifier.
 
-@Comment {
+<!--
   - test: `designatedInitializersRequireOverride`
   
   ```swifttest
   -> class C { init() {} }
   -> class D: C { override init() { super.init() } }
   ```
-}
+-->
 
 To require that subclasses implement a superclass's initializer,
 mark the superclass's initializer with the `required` declaration modifier.
@@ -2027,18 +2049,21 @@ see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 You can extend the behavior of a class type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
-```
-Grammar of a class declaration
-
-class-declaration --> attributes-OPT access-level-modifier-OPT ``final``-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
-class-declaration --> attributes-OPT ``final`` access-level-modifier-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT class-body
-class-name --> identifier
-class-body --> ``{`` class-members-OPT ``}``
-
-class-members --> class-member class-members-OPT
-class-member --> declaration | compiler-control-statement
-```
-
+> Grammar of a class declaration:
+>
+> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body*
+>
+> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body*
+>
+> *class-name* → *identifier*
+>
+> *class-body* → **`{`** *class-members*_?_ **`}`**
+>
+>
+>
+> *class-members* → *class-member* *class-members*_?_
+>
+> *class-member* → *declaration* | *compiler-control-statement*
 
 ## Actor Declaration
 
@@ -2050,7 +2075,6 @@ actor <#actor name#>: <#adopted protocols#> {
     <#declarations#>
 }
 ```
-
 
 The body of an actor contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
@@ -2111,25 +2135,27 @@ see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
-@Comment {
+<!--
   TODO Additional bits from the SE-0306 actors proposal:
   
   Partial applications of isolated functions are only permitted
   when the expression is a direct argument
   whose corresponding parameter is non-escaping and non-Sendable.
-}
+-->
 
-```
-Grammar of an actor declaration
-
-actor-declaration --> attributes-OPT access-level-modifier-OPT ``actor`` actor-name generic-parameter-clause-OPT type-inheritance-clause-OPT generic-where-clause-OPT actor-body
-actor-name --> identifier
-actor-body --> ``{`` actor-members-OPT ``}``
-
-actor-members --> actor-member actor-members-OPT
-actor-member --> declaration | compiler-control-statement
-```
-
+> Grammar of an actor declaration:
+>
+> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body*
+>
+> *actor-name* → *identifier*
+>
+> *actor-body* → **`{`** *actor-members*_?_ **`}`**
+>
+>
+>
+> *actor-members* → *actor-member* *actor-members*_?_
+>
+> *actor-member* → *declaration* | *compiler-control-statement*
 
 ## Protocol Declaration
 
@@ -2142,7 +2168,6 @@ protocol <#protocol name#>: <#inherited protocols#> {
    <#protocol member declarations#>
 }
 ```
-
 
 The body of a protocol contains zero or more *protocol member declarations*,
 which describe the conformance requirements that any type adopting the protocol must fulfill.
@@ -2187,13 +2212,13 @@ and for guidance about how to access optional protocol members---
 for example, when you're not sure whether a conforming type implements them---
 see <doc:Protocols#Optional-Protocol-Requirements>.
 
-@Comment {
+<!--
   TODO: Currently, you can't check for an optional initializer,
   so we're leaving those out of the documentation, even though you can mark
   an initializer with the @optional attribute. It's still being decided by the
   compiler team. Update this section if they decide to make everything work
   properly for optional initializer requirements.
-}
+-->
 
 The cases of an enumeration can satisfy
 protocol requirements for type members.
@@ -2218,8 +2243,7 @@ enum MyEnum: SomeProtocol {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `enum-case-satisfy-protocol-requirement`
   
   ```swifttest
@@ -2232,7 +2256,7 @@ enum MyEnum: SomeProtocol {
          case someFunction(x: Int)
      }
   ```
-}
+-->
 
 To restrict the adoption of a protocol to class types only,
 include the `AnyObject` protocol in the *inherited protocols*
@@ -2245,8 +2269,7 @@ protocol SomeProtocol: AnyObject {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocol-declaration`
   
   ```swifttest
@@ -2254,7 +2277,7 @@ protocol SomeProtocol: AnyObject {
          /* Protocol members go here */
      }
   ```
-}
+-->
 
 Any protocol that inherits from a protocol that's marked with the `AnyObject` requirement
 can likewise be adopted only by class types.
@@ -2273,24 +2296,33 @@ they specify.
 You can use protocols to declare which methods a delegate of a class or structure
 should implement, as described in <doc:Protocols#Delegation>.
 
-```
-Grammar of a protocol declaration
-
-protocol-declaration --> attributes-OPT access-level-modifier-OPT ``protocol`` protocol-name type-inheritance-clause-OPT generic-where-clause-OPT protocol-body
-protocol-name --> identifier
-protocol-body --> ``{`` protocol-members-OPT ``}``
-
-protocol-members --> protocol-member protocol-members-OPT
-protocol-member --> protocol-member-declaration | compiler-control-statement
-
-protocol-member-declaration --> protocol-property-declaration
-protocol-member-declaration --> protocol-method-declaration
-protocol-member-declaration --> protocol-initializer-declaration
-protocol-member-declaration --> protocol-subscript-declaration
-protocol-member-declaration --> protocol-associated-type-declaration
-protocol-member-declaration --> typealias-declaration
-```
-
+> Grammar of a protocol declaration:
+>
+> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body*
+>
+> *protocol-name* → *identifier*
+>
+> *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
+>
+>
+>
+> *protocol-members* → *protocol-member* *protocol-members*_?_
+>
+> *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
+>
+>
+>
+> *protocol-member-declaration* → *protocol-property-declaration*
+>
+> *protocol-member-declaration* → *protocol-method-declaration*
+>
+> *protocol-member-declaration* → *protocol-initializer-declaration*
+>
+> *protocol-member-declaration* → *protocol-subscript-declaration*
+>
+> *protocol-member-declaration* → *protocol-associated-type-declaration*
+>
+> *protocol-member-declaration* → *typealias-declaration*
 
 ### Protocol Property Declaration
 
@@ -2303,7 +2335,6 @@ declaration:
 ```swift
 var <#property name#>: <#type#> { get set }
 ```
-
 
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
@@ -2332,7 +2363,7 @@ use the same keyword as the type they extend uses.
 Extensions that provide a default implementation for a type property requirement
 use the `static` keyword.
 
-@Comment {
+<!--
   - test: `protocols-with-type-property-requirements`
   
   ```swifttest
@@ -2349,9 +2380,9 @@ use the `static` keyword.
   !! class C2: P { class var x = 30 }
   !!               ~~~~~     ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `protocol-type-property-default-implementation`
   
   ```swifttest
@@ -2364,16 +2395,13 @@ use the `static` keyword.
   -> print(S2.x)
   <- 10
   ```
-}
+-->
 
 See also <doc:Declarations#Variable-Declaration>.
 
-```
-Grammar of a protocol property declaration
-
-protocol-property-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
-```
-
+> Grammar of a protocol property declaration:
+>
+> *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
 
 ### Protocol Method Declaration
 
@@ -2398,16 +2426,13 @@ use the `static` keyword.
 
 See also <doc:Declarations#Function-Declaration>.
 
-@Comment {
+<!--
   TODO: Talk about using ``Self`` in parameters and return types.
-}
+-->
 
-```
-Grammar of a protocol method declaration
-
-protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature generic-where-clause-OPT
-```
-
+> Grammar of a protocol method declaration:
+>
+> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
 
 ### Protocol Initializer Declaration
 
@@ -2427,13 +2452,11 @@ if the class isn't already marked with the `final` declaration modifier.
 
 See also <doc:Declarations#Initializer-Declaration>.
 
-```
-Grammar of a protocol initializer declaration
-
-protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``throws``-OPT generic-where-clause-OPT
-protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``rethrows`` generic-where-clause-OPT
-```
-
+> Grammar of a protocol initializer declaration:
+>
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_
+>
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### Protocol Subscript Declaration
 
@@ -2444,7 +2467,6 @@ Protocol subscript declarations have a special form of a subscript declaration:
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
-
 
 Subscript declarations only declare the minimum getter and setter implementation
 requirements for types that conform to the protocol.
@@ -2467,12 +2489,9 @@ use the `static` keyword.
 
 See also <doc:Declarations#Subscript-Declaration>.
 
-```
-Grammar of a protocol subscript declaration
-
-protocol-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
-```
-
+> Grammar of a protocol subscript declaration:
+>
+> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
 
 ### Protocol Associated Type Declaration
 
@@ -2504,8 +2523,7 @@ protocol SubProtocolA: SomeProtocol {
 protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 ```
 
-
-@Comment {
+<!--
   - test: `protocol-associatedtype`
   
   ```swifttest
@@ -2528,13 +2546,13 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   // This syntax is preferred.
   -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   ```
-}
+-->
 
-@Comment {
+<!--
   TODO: Finish writing this section after WWDC.
-}
+-->
 
-@Comment {
+<!--
   NOTE:
   What are associated types? What are they "associated" with? Is "Self"
   an implicit associated type of every protocol? [...]
@@ -2549,9 +2567,9 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   that are related to the type of ``Self``, such as a type of data stored in a
   collection or the node and edge types of a graph." Is this still true?
   
-  --> If we expand the discussion here,
-  --> add a link from Types_SelfType
-  --> to give more details about Self in protocols.
+    -> If we expand the discussion here,
+    -> add a link from Types_SelfType
+    -> to give more details about Self in protocols.
   
   NOTES from Doug:
   At one point, Self was an associated type, but that's the wrong modeling of
@@ -2597,16 +2615,13 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   class String : Sequence { typealias Element = ... }
   
   Here you have to pick one or the other -- you can't have both.
-}
+-->
 
 See also <doc:Declarations#Type-Alias-Declaration>.
 
-```
-Grammar of a protocol associated type declaration
-
-protocol-associated-type-declaration --> attributes-OPT access-level-modifier-OPT ``associatedtype`` typealias-name type-inheritance-clause-OPT typealias-assignment-OPT generic-where-clause-OPT
-```
-
+> Grammar of a protocol associated type declaration:
+>
+> *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
 
 ## Initializer Declaration
 
@@ -2630,7 +2645,6 @@ init(<#parameters#>) {
 }
 ```
 
-
 A designated initializer of a class initializes
 all of the class's properties directly. It can't call any other initializers
 of the same class, and if the class has a superclass, it must call one of
@@ -2653,7 +2667,6 @@ convenience init(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 Convenience initializers can delegate the initialization process to another
 convenience initializer or to one of the class's designated initializers.
@@ -2717,8 +2730,7 @@ struct SomeStruct {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failable`
   
   ```swifttest
@@ -2734,7 +2746,7 @@ struct SomeStruct {
          }
      }
   ```
-}
+-->
 
 You call an `init?` failable initializer in the same way that you call a nonfailable initializer,
 except that you must deal with the optionality of the result.
@@ -2747,8 +2759,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `failable`
   
   ```swifttest
@@ -2759,7 +2770,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
          // initialization of 'SomeStruct' failed and the initializer returned 'nil'
      }
   ```
-}
+-->
 
 A failable initializer can return `nil`
 at any point in the implementation of the initializer's body.
@@ -2787,17 +2798,19 @@ by a nonfailable designated initializer only.
 For more information and to see examples of failable initializers,
 see <doc:Initialization#Failable-Initializers>.
 
-```
-Grammar of an initializer declaration
-
-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``async``-OPT ``throws``-OPT generic-where-clause-OPT initializer-body
-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause ``async``-OPT ``rethrows`` generic-where-clause-OPT initializer-body
-initializer-head --> attributes-OPT declaration-modifiers-OPT ``init``
-initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``?``
-initializer-head --> attributes-OPT declaration-modifiers-OPT ``init`` ``!``
-initializer-body --> code-block
-```
-
+> Grammar of an initializer declaration:
+>
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`throws`**_?_ *generic-where-clause*_?_ *initializer-body*
+>
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body*
+>
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`**
+>
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`**
+>
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`**
+>
+> *initializer-body* → *code-block*
 
 ## Deinitializer Declaration
 
@@ -2809,7 +2822,6 @@ deinit {
    <#statements#>
 }
 ```
-
 
 A deinitializer is called automatically when there are no longer any references
 to a class object, just before the class object is deallocated.
@@ -2827,12 +2839,9 @@ Deinitializers aren't called directly.
 For an example of how to use a deinitializer in a class declaration,
 see <doc:Deinitialization>.
 
-```
-Grammar of a deinitializer declaration
-
-deinitializer-declaration --> attributes-OPT ``deinit`` code-block
-```
-
+> Grammar of a deinitializer declaration:
+>
+> *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
 
 ## Extension Declaration
 
@@ -2846,7 +2855,6 @@ extension <#type name#> where <#requirements#> {
    <#declarations#>
 }
 ```
-
 
 The body of an extension declaration contains zero or more *declarations*.
 These *declarations* can include computed properties, computed type properties,
@@ -2888,7 +2896,6 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
 }
 ```
 
-
 Extension declarations can't add class inheritance to an existing class,
 and therefore you can specify only a list of protocols after the *type name* and colon.
 
@@ -2911,11 +2918,11 @@ To illustrate this behavior,
 the following example defines two protocols
 and a generic type that conditionally conforms to both protocols.
 
-@Comment {
+<!--
   This test needs to be compiled so that it will recognize Pair's
   CustomStringConvertible conformance -- the deprecated REPL doesn't
   seem to use the description property at all.
-}
+-->
 
 ```swift
 protocol Loggable {
@@ -2952,14 +2959,13 @@ extension Pair: TitledLoggable where T: TitledLoggable {
 }
 
 extension String: TitledLoggable {
-   static var logTitle: String {
-      return "String"
-   }
+    static var logTitle: String {
+        return "String"
+    }
 }
 ```
 
-
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3002,7 +3008,7 @@ extension String: TitledLoggable {
         }
      }
   ```
-}
+-->
 
 The `Pair` structure conforms to `Loggable` and `TitledLoggable`
 whenever its generic type conforms to `Loggable` or `TitledLoggable`, respectively.
@@ -3019,8 +3025,7 @@ oneAndTwo.log()
 // Prints "Pair of 'String': (one, two)"
 ```
 
-
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3028,7 +3033,7 @@ oneAndTwo.log()
   -> oneAndTwo.log()
   <- Pair of 'String': (one, two)
   ```
-}
+-->
 
 However, when `oneAndTwo` is used in a generic context
 or as an instance of the `Loggable` protocol,
@@ -3040,14 +3045,13 @@ the default implementation provided by the `Loggable` protocol is used instead.
 
 ```swift
 func doSomething<T: Loggable>(with x: T) {
-   x.log()
+    x.log()
 }
 doSomething(with: oneAndTwo)
 // Prints "(one, two)"
 ```
 
-
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3057,7 +3061,7 @@ doSomething(with: oneAndTwo)
      doSomething(with: oneAndTwo)
   <- (one, two)
   ```
-}
+-->
 
 When `log()` is called on the instance that's passed to `doSomething(_:)`,
 the customized title is omitted from the logged string.
@@ -3088,7 +3092,7 @@ and one for arrays with `String` elements.
 
 ```swift
 protocol Serializable {
-   func serialize() -> Any
+    func serialize() -> Any
 }
 
 extension Array: Serializable where Element == Int {
@@ -3104,8 +3108,7 @@ extension Array: Serializable where Element == String {
 // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
 ```
 
-
-@Comment {
+<!--
   - test: `multiple-conformances`
   
   ```swifttest
@@ -3133,7 +3136,7 @@ extension Array: Serializable where Element == String {
   !! extension Array: Serializable where Element == Int {
   !! ^
   ```
-}
+-->
 
 If you need to add conditional conformance based on multiple concrete types,
 create a new protocol that each type can conform to
@@ -3151,8 +3154,7 @@ extension Array: Serializable where Element: SerializableInArray {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `multiple-conformances-success`
   
   ```swifttest
@@ -3168,7 +3170,7 @@ extension Array: Serializable where Element: SerializableInArray {
   ->     }
      }
   ```
-}
+-->
 
 #### Resolving Implicit Redundancy
 
@@ -3189,27 +3191,26 @@ to both `TitledLoggable` and the new `MarkedLoggable` protocol.
 
 ```swift
 protocol MarkedLoggable: Loggable {
-   func markAndLog()
+    func markAndLog()
 }
 
 extension MarkedLoggable {
-   func markAndLog() {
-      print("----------")
-      log()
-   }
+    func markAndLog() {
+        print("----------")
+        log()
+    }
 }
 
 extension Array: Loggable where Element: Loggable { }
 extension Array: TitledLoggable where Element: TitledLoggable {
-   static var logTitle: String {
-      return "Array of '\(Element.logTitle)'"
-   }
+    static var logTitle: String {
+        return "Array of '\(Element.logTitle)'"
+    }
 }
 extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```
 
-
-@Comment {
+<!--
   - test: `conditional-conformance`
   
   ```swifttest
@@ -3232,7 +3233,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
      }
      extension Array: MarkedLoggable where Element: MarkedLoggable { }
   ```
-}
+-->
 
 Without the extension
 to explicitly declare conditional conformance to `Loggable`,
@@ -3245,8 +3246,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
 ```
 
-
-@Comment {
+<!--
   - test: `conditional-conformance-implicit-overlap`
   
   ```swifttest
@@ -3263,9 +3263,9 @@ extension Array: Loggable where Element: MarkedLoggable { }
   !! extension Array: Loggable where Element: TitledLoggable { }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `types-cant-have-multiple-implicit-conformances`
   
   ```swifttest
@@ -3298,9 +3298,9 @@ extension Array: Loggable where Element: MarkedLoggable { }
   !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
   !! ^
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extension-can-have-where-clause`
   
   ```swifttest
@@ -3312,9 +3312,9 @@ extension Array: Loggable where Element: MarkedLoggable { }
   >> let r0 = x.f(x: y)
   >> assert(r0 == 7)
   ```
-}
+-->
 
-@Comment {
+<!--
   - test: `extensions-can-have-where-clause-and-inheritance-together`
   
   ```swifttest
@@ -3325,18 +3325,19 @@ extension Array: Loggable where Element: MarkedLoggable { }
   >> let r0 = [1, 2, 3].foo()
   >> assert(r0 == 0)
   ```
-}
+-->
 
-```
-Grammar of an extension declaration
-
-extension-declaration --> attributes-OPT access-level-modifier-OPT ``extension`` type-identifier type-inheritance-clause-OPT generic-where-clause-OPT extension-body
-extension-body --> ``{`` extension-members-OPT ``}``
-
-extension-members --> extension-member extension-members-OPT
-extension-member --> declaration | compiler-control-statement
-```
-
+> Grammar of an extension declaration:
+>
+> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body*
+>
+> *extension-body* → **`{`** *extension-members*_?_ **`}`**
+>
+>
+>
+> *extension-members* → *extension-member* *extension-members*_?_
+>
+> *extension-member* → *declaration* | *compiler-control-statement*
 
 ## Subscript Declaration
 
@@ -3356,7 +3357,6 @@ subscript (<#parameters#>) -> <#return type#> {
    }
 }
 ```
-
 
 Subscript declarations can appear only in the context of a class, structure,
 enumeration, extension, or protocol declaration.
@@ -3413,7 +3413,7 @@ In a class declaration,
 the `static` keyword has the same effect as marking the declaration
 with both the `class` and `final` declaration modifiers.
 
-@Comment {
+<!--
   - test: `cant-override-static-subscript-in-subclass`
   
   ```swifttest
@@ -3426,18 +3426,19 @@ with both the `class` and `final` declaration modifiers.
   !! class Super { static subscript(i: Int) -> Int { return 10 } }
   !!                      ^
   ```
-}
+-->
 
-```
-Grammar of a subscript declaration
-
-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT code-block
-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-block
-subscript-declaration --> subscript-head subscript-result generic-where-clause-OPT getter-setter-keyword-block
-subscript-head --> attributes-OPT declaration-modifiers-OPT ``subscript`` generic-parameter-clause-OPT parameter-clause
-subscript-result --> ``->`` attributes-OPT type
-```
-
+> Grammar of a subscript declaration:
+>
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block*
+>
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block*
+>
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
+>
+> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause*
+>
+> *subscript-result* → **`->`** *attributes*_?_ *type*
 
 ## Operator Declaration
 
@@ -3463,7 +3464,6 @@ The following form declares a new infix operator:
 infix operator <#operator name#>: <#precedence group#>
 ```
 
-
 An *infix operator* is a binary operator that's written between its two operands,
 such as the familiar addition operator (`+`) in the expression `1 + 2`.
 
@@ -3479,7 +3479,6 @@ The following form declares a new prefix operator:
 prefix operator <#operator name#>
 ```
 
-
 A *prefix operator* is a unary operator that's written immediately before its operand,
 such as the prefix logical NOT operator (`!`) in the expression `!a`.
 
@@ -3491,7 +3490,6 @@ The following form declares a new postfix operator:
 ```swift
 postfix operator <#operator name#>
 ```
-
 
 A *postfix operator* is a unary operator that's written immediately after its operand,
 such as the postfix forced-unwrap operator (`!`) in the expression `a!`.
@@ -3511,18 +3509,21 @@ declaration modifier.
 To see an example of how to create and implement a new operator,
 see <doc:AdvancedOperators#Custom-Operators>.
 
-```
-Grammar of an operator declaration
-
-operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
-
-prefix-operator-declaration --> ``prefix`` ``operator`` operator
-postfix-operator-declaration --> ``postfix`` ``operator`` operator
-infix-operator-declaration --> ``infix`` ``operator`` operator infix-operator-group-OPT
-
-infix-operator-group --> ``:`` precedence-group-name
-```
-
+> Grammar of an operator declaration:
+>
+> *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
+>
+>
+>
+> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator*
+>
+> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator*
+>
+> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
+>
+>
+>
+> *infix-operator-group* → **`:`** *precedence-group-name*
 
 ## Precedence Group Declaration
 
@@ -3541,7 +3542,6 @@ precedencegroup <#precedence group name#> {
     assignment: <#assignment#>
 }
 ```
-
 
 The *lower group names* and *higher group names* lists specify
 the new precedence group's relation to existing precedence groups.
@@ -3599,29 +3599,43 @@ Otherwise, when set to `false` or omitted,
 operators in the precedence group follows the same optional chaining rules
 as operators that don't perform assignment.
 
-```
-Grammar of a precedence group declaration
-
-precedence-group-declaration --> ``precedencegroup`` precedence-group-name ``{`` precedence-group-attributes-OPT ``}``
-
-precedence-group-attributes --> precedence-group-attribute precedence-group-attributes-OPT
-precedence-group-attribute --> precedence-group-relation
-precedence-group-attribute --> precedence-group-assignment
-precedence-group-attribute --> precedence-group-associativity
-
-precedence-group-relation --> ``higherThan`` ``:`` precedence-group-names
-precedence-group-relation --> ``lowerThan`` ``:`` precedence-group-names
-
-precedence-group-assignment --> ``assignment`` ``:`` boolean-literal
-
-precedence-group-associativity --> ``associativity`` ``:`` ``left``
-precedence-group-associativity --> ``associativity`` ``:`` ``right``
-precedence-group-associativity --> ``associativity`` ``:`` ``none``
-
-precedence-group-names --> precedence-group-name | precedence-group-name ``,`` precedence-group-names
-precedence-group-name --> identifier
-```
-
+> Grammar of a precedence group declaration:
+>
+> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
+>
+>
+>
+> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_
+>
+> *precedence-group-attribute* → *precedence-group-relation*
+>
+> *precedence-group-attribute* → *precedence-group-assignment*
+>
+> *precedence-group-attribute* → *precedence-group-associativity*
+>
+>
+>
+> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names*
+>
+> *precedence-group-relation* → **`lowerThan`** **`:`** *precedence-group-names*
+>
+>
+>
+> *precedence-group-assignment* → **`assignment`** **`:`** *boolean-literal*
+>
+>
+>
+> *precedence-group-associativity* → **`associativity`** **`:`** **`left`**
+>
+> *precedence-group-associativity* → **`associativity`** **`:`** **`right`**
+>
+> *precedence-group-associativity* → **`associativity`** **`:`** **`none`**
+>
+>
+>
+> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names*
+>
+> *precedence-group-name* → *identifier*
 
 ## Declaration Modifiers
 
@@ -3663,13 +3677,13 @@ and for guidance about how to access optional protocol members---
 for example, when you're not sure whether a conforming type implements them---
 see <doc:Protocols#Optional-Protocol-Requirements>.
 
-@Comment {
+<!--
   TODO: Currently, you can't check for an optional initializer,
   so we're leaving those out of the documentation, even though you can mark
   an initializer with the @optional attribute. It's still being decided by the
   compiler team. Update this section if they decide to make everything work
   properly for optional initializer requirements.
-}
+-->
 - term `required`: Apply this modifier to a designated or convenience initializer
 of a class to indicate that every subclass must implement that initializer.
 The subclass's implementation of that initializer
@@ -3761,29 +3775,39 @@ for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
 as discussed in <doc:AccessControl#Getters-and-Setters>.
 
-```
-Grammar of a declaration modifier
+> Grammar of a declaration modifier:
+>
+> *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`**
+>
+> *declaration-modifier* → *access-level-modifier*
+>
+> *declaration-modifier* → *mutation-modifier*
+>
+> *declaration-modifier* → *actor-isolation-modifier*
+>
+> *declaration-modifiers* → *declaration-modifier* *declaration-modifiers*_?_
+>
+>
+>
+> *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`**
+>
+> *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`**
+>
+> *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`**
+>
+> *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`**
+>
+> *access-level-modifier* → **`open`** | **`open`** **`(`** **`set`** **`)`**
+>
+>
+>
+> *mutation-modifier* → **`mutating`** | **`nonmutating`**
+>
+>
+>
+> *actor-isolation-modifier* → **`nonisolated`**
 
-declaration-modifier --> ``class`` | ``convenience`` | ``dynamic`` | ``final`` | ``infix`` | ``lazy`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``static`` | ``unowned`` | ``unowned`` ``(`` ``safe`` ``)`` | ``unowned`` ``(`` ``unsafe`` ``)`` | ``weak``
-declaration-modifier --> access-level-modifier
-declaration-modifier --> mutation-modifier
-declaration-modifier --> actor-isolation-modifier
-declaration-modifiers --> declaration-modifier declaration-modifiers-OPT
-
-access-level-modifier --> ``private`` | ``private`` ``(`` ``set`` ``)``
-access-level-modifier --> ``fileprivate`` | ``fileprivate`` ``(`` ``set`` ``)``
-access-level-modifier --> ``internal`` | ``internal`` ``(`` ``set`` ``)``
-access-level-modifier --> ``public`` | ``public`` ``(`` ``set`` ``)``
-access-level-modifier --> ``open`` | ``open`` ``(`` ``set`` ``)``
-
-mutation-modifier --> ``mutating`` | ``nonmutating``
-
-actor-isolation-modifier --> ``nonisolated``
-```
-
-
-
-@Comment {
+<!--
 This source file is part of the Swift.org open source project
 
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
@@ -3791,4 +3815,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
-}
+-->

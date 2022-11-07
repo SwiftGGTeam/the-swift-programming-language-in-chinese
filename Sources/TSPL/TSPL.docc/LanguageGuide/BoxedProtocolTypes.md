@@ -44,8 +44,7 @@ class Dice {
 }
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -61,7 +60,7 @@ class Dice {
         }
      }
   ```
-}
+-->
 
 This example defines a new class called `Dice`,
 which represents an *n*-sided dice for use in a board game.
@@ -114,8 +113,7 @@ for _ in 1...5 {
 // Random dice roll is 4
 ```
 
-
-@Comment {
+<!--
   - test: `protocols`
   
   ```swifttest
@@ -129,6 +127,5 @@ for _ in 1...5 {
   </ Random dice roll is 5
   </ Random dice roll is 4
   ```
-}
-
+-->
 
