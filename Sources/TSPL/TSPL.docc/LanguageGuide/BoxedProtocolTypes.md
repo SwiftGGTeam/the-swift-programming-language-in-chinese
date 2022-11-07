@@ -1,8 +1,20 @@
 # Boxed Protocol Types
 
+XXX chapter abstract goes here
+
 Using a protocol as a type is sometimes called an *existential type*,
 which comes from the phrase
 "there exists a type *T* such that *T* conforms to the protocol".
+
+<!--
+
+XXX OUTLINE
+
+- explain how they are "boxed"
+- introduce the "any" keyword
+- revisit the list of where you can use existentials
+
+-->
 
 You can use a protocol in many places where other types are allowed, including:
 

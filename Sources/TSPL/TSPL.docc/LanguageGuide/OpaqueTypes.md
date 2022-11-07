@@ -15,6 +15,8 @@ opaque types preserve type identity ---
 the compiler has access to the type information,
 but clients of the module don't.
 
+<!-- XXX introduce "some" keyword -->
+
 ## The Problem That Opaque Types Solve
 
 For example,
@@ -494,6 +496,8 @@ so it follows the requirement that functions with opaque return types
 must return values of only a single type.
 
 ## Differences Between Opaque Types and Boxed Protocol Types
+
+<!-- XXX revisit if existentials introduced after this chapter -->
 
 Returning an opaque type looks very similar
 to using a protocol type as the return type of a function,
