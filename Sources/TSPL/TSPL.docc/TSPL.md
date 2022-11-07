@@ -38,6 +38,7 @@
 - <doc:Protocols>
 - <doc:Generics>
 - <doc:OpaqueTypes>
+- <doc:BoxedProtocolTypes>
 - <doc:AutomaticReferenceCounting>
 - <doc:MemorySafety>
 - <doc:AccessControl>
