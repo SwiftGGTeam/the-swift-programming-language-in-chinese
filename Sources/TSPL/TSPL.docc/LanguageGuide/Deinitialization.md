@@ -32,7 +32,7 @@ deinit {
 
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   >> class Test {
   -> deinit {
@@ -81,7 +81,7 @@ class Bank {
 
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> class Bank {
         static var coinsInBank = 10_000
@@ -130,7 +130,7 @@ class Player {
 
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> class Player {
         var coinsInPurse: Int
@@ -169,7 +169,7 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> var playerOne: Player? = Player(coins: 100)
   -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
@@ -198,7 +198,7 @@ print("The bank now only has \(Bank.coinsInBank) coins left")
 
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> playerOne!.win(coins: 2_000)
   -> print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
@@ -222,7 +222,7 @@ print("The bank now has \(Bank.coinsInBank) coins")
 
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> playerOne = nil
   -> print("PlayerOne has left the game")

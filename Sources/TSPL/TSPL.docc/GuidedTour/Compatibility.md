@@ -9,7 +9,7 @@ that are written in either Swift 5.7, Swift 4.2, or Swift 4.
 
 <!--
   - test: `swift-version`
-  
+
   ```swifttest
   >> #if swift(>=5.7.1)
   >>     print("Too new")

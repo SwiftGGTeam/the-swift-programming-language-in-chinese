@@ -47,7 +47,7 @@ print(smallTriangle.draw())
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> protocol Shape {
          func draw() -> String
@@ -94,7 +94,7 @@ print(flippedTriangle.draw())
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> struct FlippedShape<T: Shape>: Shape {
          var shape: T
@@ -136,7 +136,7 @@ print(joinedTriangles.draw())
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> struct JoinedShape<T: Shape, U: Shape>: Shape {
         var top: T
@@ -239,7 +239,7 @@ print(trapezoid.draw())
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> struct Square: Shape {
          var size: Int
@@ -320,7 +320,7 @@ print(opaqueJoinedTriangles.draw())
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> func flip<T: Shape>(_ shape: T) -> some Shape {
          return FlippedShape(shape: shape)
@@ -373,7 +373,7 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
 
 <!--
   - test: `opaque-result-err`
-  
+
   ```swifttest
   >> protocol Shape {
   >>     func draw() -> String
@@ -426,7 +426,7 @@ struct FlippedShape<T: Shape>: Shape {
 
 <!--
   - test: `opaque-result-special-flip`
-  
+
   ```swifttest
   >> protocol Shape { func draw() -> String }
   >> struct Square: Shape {
@@ -466,7 +466,7 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
          return Array<T>(repeating: shape, count: count)
@@ -512,7 +512,7 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 
 <!--
   - test: `opaque-result-existential-error`
-  
+
   ```swifttest
   >> protocol Shape {
   >>     func draw() -> String
@@ -559,13 +559,13 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 
 <!--
   - test: `opaque-result-existential-error`
-  
+
   ```swifttest
   -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
         if shape is Square {
            return shape
         }
-  
+
         return FlippedShape(shape: shape)
      }
   !$ error: invalid redeclaration of 'protoFlip'
@@ -598,7 +598,7 @@ protoFlippedTriangle == sameThing  // Error
 
 <!--
   - test: `opaque-result-existential-error`
-  
+
   ```swifttest
   >> let smallTriangle = Triangle(size: 3)
   -> let protoFlippedTriangle = protoFlip(smallTriangle)
@@ -659,7 +659,7 @@ extension Array: Container { }
 
 <!--
   - test: `opaque-result, opaque-result-existential-error`
-  
+
   ```swifttest
   -> protocol Container {
          associatedtype Item
@@ -690,7 +690,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
 
 <!--
   - test: `opaque-result-existential-error`
-  
+
   ```swifttest
   // Error: Protocol with associated types can't be used as a return type.
   -> func makeProtocolContainer<T>(item: T) -> Container {
@@ -728,7 +728,7 @@ print(type(of: twelve))
 
 <!--
   - test: `opaque-result`
-  
+
   ```swifttest
   -> func makeOpaqueContainer<T>(item: T) -> some Container {
          return [item]
@@ -752,27 +752,27 @@ which means that the type of `twelve` is also inferred to be `Int`.
 
 <!--
   TODO: Expansion for the future
-  
+
   You can combine the flexibility of returning a value of protocol type
   with the API-boundary enforcement of opaque types
   by using type erasure
   like the Swift standard library uses in the
   `AnySequence <//apple_ref/fake/AnySequence`_ type.
-  
+
   protocol P { func f() -> Int }
-  
+
   struct AnyP: P {
       var p: P
       func f() -> Int { return p.f() }
   }
-  
+
   struct P1 {
       func f() -> Int { return 100 }
   }
   struct P2 {
       func f() -> Int { return 200 }
   }
-  
+
   func opaque(x: Int) -> some P {
       let result: P
       if x > 100 {

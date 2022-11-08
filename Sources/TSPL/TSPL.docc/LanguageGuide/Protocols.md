@@ -37,7 +37,7 @@ protocol SomeProtocol {
 
 <!--
   - test: `protocolSyntax`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
         // protocol definition goes here
@@ -58,7 +58,7 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 
 <!--
   - test: `protocolSyntax`
-  
+
   ```swifttest
   >> protocol FirstProtocol {}
   >> protocol AnotherProtocol {}
@@ -79,7 +79,7 @@ class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
 
 <!--
   - test: `protocolSyntax`
-  
+
   ```swifttest
   >> class SomeSuperclass {}
   -> class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
@@ -121,7 +121,7 @@ protocol SomeProtocol {
 
 <!--
   - test: `instanceProperties`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
         var mustBeSettable: Int { get set }
@@ -143,7 +143,7 @@ protocol AnotherProtocol {
 
 <!--
   - test: `instanceProperties`
-  
+
   ```swifttest
   -> protocol AnotherProtocol {
         static var someTypeProperty: Int { get set }
@@ -161,7 +161,7 @@ protocol FullyNamed {
 
 <!--
   - test: `instanceProperties`
-  
+
   ```swifttest
   -> protocol FullyNamed {
         var fullName: String { get }
@@ -188,7 +188,7 @@ let john = Person(fullName: "John Appleseed")
 
 <!--
   - test: `instanceProperties`
-  
+
   ```swifttest
   -> struct Person: FullyNamed {
         var fullName: String
@@ -230,7 +230,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 <!--
   - test: `instanceProperties`
-  
+
   ```swifttest
   -> class Starship: FullyNamed {
         var prefix: String?
@@ -283,7 +283,7 @@ protocol SomeProtocol {
 
 <!--
   - test: `typeMethods`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
         static func someTypeMethod()
@@ -301,7 +301,7 @@ protocol RandomNumberGenerator {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> protocol RandomNumberGenerator {
         func random() -> Double
@@ -347,7 +347,7 @@ print("And another one: \(generator.random())")
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> class LinearCongruentialGenerator: RandomNumberGenerator {
         var lastRandom = 42.0
@@ -408,7 +408,7 @@ protocol Togglable {
 
 <!--
   - test: `mutatingRequirements`
-  
+
   ```swifttest
   -> protocol Togglable {
         mutating func toggle()
@@ -446,7 +446,7 @@ lightSwitch.toggle()
 
 <!--
   - test: `mutatingRequirements`
-  
+
   ```swifttest
   -> enum OnOffSwitch: Togglable {
         case off, on
@@ -481,7 +481,7 @@ protocol SomeProtocol {
 
 <!--
   - test: `initializers`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
         init(someParameter: Int)
@@ -506,7 +506,7 @@ class SomeClass: SomeProtocol {
 
 <!--
   - test: `initializers`
-  
+
   ```swifttest
   -> class SomeClass: SomeProtocol {
         required init(someParameter: Int) {
@@ -518,7 +518,7 @@ class SomeClass: SomeProtocol {
 
 <!--
   - test: `protocolInitializerRequirementsCanBeImplementedAsDesignatedOrConvenience`
-  
+
   ```swifttest
   -> protocol P {
         init(x: Int)
@@ -545,7 +545,7 @@ see <doc:Initialization#Required-Initializers>.
 
 <!--
   - test: `protocolInitializerRequirementsRequireTheRequiredModifierOnTheImplementingClass`
-  
+
   ```swifttest
   -> protocol P {
         init(s: String)
@@ -565,7 +565,7 @@ see <doc:Initialization#Required-Initializers>.
 
 <!--
   - test: `protocolInitializerRequirementsRequireTheRequiredModifierOnSubclasses`
-  
+
   ```swifttest
   -> protocol P {
         init(s: String)
@@ -596,7 +596,7 @@ see <doc:Initialization#Required-Initializers>.
 
 <!--
   - test: `finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements`
-  
+
   ```swifttest
   -> protocol P {
         init(s: String)
@@ -635,7 +635,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 <!--
   - test: `requiredOverrideInitializers`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
         init()
@@ -668,7 +668,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `failableRequirementCanBeSatisfiedByFailableInitializer`
-  
+
   ```swifttest
   -> protocol P { init?(i: Int) }
   -> class C: P { required init?(i: Int) {} }
@@ -678,7 +678,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `failableRequirementCanBeSatisfiedByIUOInitializer`
-  
+
   ```swifttest
   -> protocol P { init?(i: Int) }
   -> class C: P { required init!(i: Int) {} }
@@ -688,7 +688,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `iuoRequirementCanBeSatisfiedByFailableInitializer`
-  
+
   ```swifttest
   -> protocol P { init!(i: Int) }
   -> class C: P { required init?(i: Int) {} }
@@ -698,7 +698,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `iuoRequirementCanBeSatisfiedByIUOInitializer`
-  
+
   ```swifttest
   -> protocol P { init!(i: Int) }
   -> class C: P { required init!(i: Int) {} }
@@ -708,7 +708,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `failableRequirementCanBeSatisfiedByNonFailableInitializer`
-  
+
   ```swifttest
   -> protocol P { init?(i: Int) }
   -> class C: P { required init(i: Int) {} }
@@ -718,7 +718,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `iuoRequirementCanBeSatisfiedByNonFailableInitializer`
-  
+
   ```swifttest
   -> protocol P { init!(i: Int) }
   -> class C: P { required init(i: Int) {} }
@@ -728,7 +728,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `nonFailableRequirementCanBeSatisfiedByNonFailableInitializer`
-  
+
   ```swifttest
   -> protocol P { init(i: Int) }
   -> class C: P { required init(i: Int) {} }
@@ -738,7 +738,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 
 <!--
   - test: `nonFailableRequirementCanBeSatisfiedByIUOInitializer`
-  
+
   ```swifttest
   -> protocol P { init(i: Int) }
   -> class C: P { required init!(i: Int) {} }
@@ -785,7 +785,7 @@ class Dice {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> class Dice {
         let sides: Int
@@ -854,7 +854,7 @@ for _ in 1...5 {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
   -> for _ in 1...5 {
@@ -897,7 +897,7 @@ protocol DiceGameDelegate: AnyObject {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> protocol DiceGame {
         var dice: Dice { get }
@@ -967,7 +967,7 @@ class SnakesAndLadders: DiceGame {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> class SnakesAndLadders: DiceGame {
         let finalSquare = 25
@@ -1068,7 +1068,7 @@ class DiceGameTracker: DiceGameDelegate {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> class DiceGameTracker: DiceGameDelegate {
         var numberOfTurns = 0
@@ -1131,7 +1131,7 @@ game.play()
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> let tracker = DiceGameTracker()
   -> let game = SnakesAndLadders()
@@ -1170,7 +1170,7 @@ protocol TextRepresentable {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> protocol TextRepresentable {
         var textualDescription: String { get }
@@ -1196,7 +1196,7 @@ extension Dice: TextRepresentable {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension Dice: TextRepresentable {
         var textualDescription: String {
@@ -1222,7 +1222,7 @@ print(d12.textualDescription)
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
   -> print(d12.textualDescription)
@@ -1245,7 +1245,7 @@ print(game.textualDescription)
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension SnakesAndLadders: TextRepresentable {
         var textualDescription: String {
@@ -1286,7 +1286,7 @@ print(myDice.textualDescription)
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension Array: TextRepresentable where Element: TextRepresentable {
         var textualDescription: String {
@@ -1318,7 +1318,7 @@ extension Hamster: TextRepresentable {}
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> struct Hamster {
         var name: String
@@ -1341,7 +1341,7 @@ print(somethingTextRepresentable.textualDescription)
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> let simonTheHamster = Hamster(name: "Simon")
   -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
@@ -1366,19 +1366,19 @@ to implement the protocol requirements yourself.
   Linking directly to a section of an article like the URLs below do
   is expected to be stable --
   as long as the section stays around, that topic ID will be there too.
-  
+
   Conforming to the Equatable Protocol
   https://developer.apple.com/documentation/swift/equatable#2847780
-  
+
   Conforming to the Hashable Protocol
   https://developer.apple.com/documentation/swift/hashable#2849490
-  
+
   Conforming to the Comparable Protocol
   https://developer.apple.com/documentation/swift/comparable#2845320
-  
+
   ^-- Need to add discussion of synthesized implementation
   to the reference for Comparable, since that's new
-  
+
   Some of the information in the type references above
   is also repeated in the "Conform Automatically to Equatable and Hashable" section
   of the article "Adopting Common Protocols".
@@ -1420,7 +1420,7 @@ if twoThreeFour == anotherTwoThreeFour {
 
 <!--
   - test: `equatable_synthesis`
-  
+
   ```swifttest
   -> struct Vector3D: Equatable {
         var x = 0.0, y = 0.0, z = 0.0
@@ -1438,7 +1438,7 @@ if twoThreeFour == anotherTwoThreeFour {
 <!--
   Need to cross reference here from "Adopting Common Protocols"
   https://developer.apple.com/documentation/swift/adopting_common_protocols
-  
+
   Discussion in the article calls out that
   enums without associated values are Equatable & Hashable
   even if you don't declare the protocol conformance.
@@ -1490,7 +1490,7 @@ for level in levels.sorted() {
 
 <!--
   - test: `comparable-enum-synthesis`
-  
+
   ```swifttest
   -> enum SkillLevel: Comparable {
          case beginner
@@ -1517,7 +1517,7 @@ for level in levels.sorted() {
 
 <!--
   - test: `no-synthesized-comparable-for-raw-value-enum`
-  
+
   ```swifttest
   >> enum E: Int, Comparable {
   >>     case ten = 10
@@ -1566,7 +1566,7 @@ let things: [TextRepresentable] = [game, d12, simonTheHamster]
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> let things: [TextRepresentable] = [game, d12, simonTheHamster]
   ```
@@ -1586,7 +1586,7 @@ for thing in things {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> for thing in things {
         print(thing.textualDescription)
@@ -1619,7 +1619,7 @@ protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   >> protocol SomeProtocol {}
   >> protocol AnotherProtocol {}
@@ -1640,7 +1640,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> protocol PrettyTextRepresentable: TextRepresentable {
         var prettyTextualDescription: String { get }
@@ -1679,7 +1679,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension SnakesAndLadders: PrettyTextRepresentable {
         var prettyTextualDescription: String {
@@ -1730,7 +1730,7 @@ print(game.prettyTextualDescription)
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> print(game.prettyTextualDescription)
   </ A game of Snakes and Ladders with 25 squares:
@@ -1751,7 +1751,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 
 <!--
   - test: `classOnlyProtocols`
-  
+
   ```swifttest
   >> protocol SomeInheritedProtocol {}
   -> protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
@@ -1773,7 +1773,7 @@ that tries to adopt `SomeClassOnlyProtocol`.
 
 <!--
   - test: `anyobject-doesn't-have-to-be-first`
-  
+
   ```swifttest
   >> protocol SomeInheritedProtocol {}
   -> protocol SomeClassOnlyProtocol: SomeInheritedProtocol, AnyObject {
@@ -1827,7 +1827,7 @@ wishHappyBirthday(to: birthdayPerson)
 
 <!--
   - test: `protocolComposition`
-  
+
   ```swifttest
   -> protocol Named {
         var name: String { get }
@@ -1897,7 +1897,7 @@ beginConcert(in: seattle)
 
 <!--
   - test: `protocolComposition`
-  
+
   ```swifttest
   -> class Location {
          var latitude: Double
@@ -1964,7 +1964,7 @@ protocol HasArea {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> protocol HasArea {
         var area: Double { get }
@@ -1990,7 +1990,7 @@ class Country: HasArea {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> class Circle: HasArea {
         let pi = 3.1415927
@@ -2021,7 +2021,7 @@ class Animal {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> class Animal {
         var legs: Int
@@ -2044,7 +2044,7 @@ let objects: [AnyObject] = [
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> let objects: [AnyObject] = [
         Circle(radius: 2.0),
@@ -2079,7 +2079,7 @@ for object in objects {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> for object in objects {
         if let objectWithArea = object as? HasArea {
@@ -2179,7 +2179,7 @@ which has two optional requirements:
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   >> import Foundation
   -> @objc protocol CounterDataSource {
@@ -2220,7 +2220,7 @@ class Counter {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> class Counter {
         var count = 0
@@ -2299,7 +2299,7 @@ class ThreeSource: NSObject, CounterDataSource {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> class ThreeSource: NSObject, CounterDataSource {
         let fixedIncrement = 3
@@ -2324,7 +2324,7 @@ for _ in 1...4 {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> var counter = Counter()
   -> counter.dataSource = ThreeSource()
@@ -2365,7 +2365,7 @@ class TowardsZeroSource: NSObject, CounterDataSource {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> class TowardsZeroSource: NSObject, CounterDataSource {
         func increment(forCount count: Int) -> Int {
@@ -2407,7 +2407,7 @@ for _ in 1...5 {
 
 <!--
   - test: `protocolConformance`
-  
+
   ```swifttest
   -> counter.count = -4
   -> counter.dataSource = TowardsZeroSource()
@@ -2446,7 +2446,7 @@ extension RandomNumberGenerator {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension RandomNumberGenerator {
         func randomBool() -> Bool {
@@ -2470,7 +2470,7 @@ print("And here's a random Boolean: \(generator.randomBool())")
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   >> do {
   -> let generator = LinearCongruentialGenerator()
@@ -2518,7 +2518,7 @@ extension PrettyTextRepresentable  {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension PrettyTextRepresentable  {
         var prettyTextualDescription: String {
@@ -2589,7 +2589,7 @@ extension Collection where Element: Equatable {
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> extension Collection where Element: Equatable {
          func allEqual() -> Bool {
@@ -2618,7 +2618,7 @@ let differentNumbers = [100, 100, 200, 100, 200]
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> let equalNumbers = [100, 100, 100, 100, 100]
   -> let differentNumbers = [100, 100, 200, 100, 200]
@@ -2638,7 +2638,7 @@ print(differentNumbers.allEqual())
 
 <!--
   - test: `protocols`
-  
+
   ```swifttest
   -> print(equalNumbers.allEqual())
   <- true

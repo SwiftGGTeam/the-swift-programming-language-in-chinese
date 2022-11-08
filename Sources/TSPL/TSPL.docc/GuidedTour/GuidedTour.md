@@ -18,7 +18,7 @@ print("Hello, world!")
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> print("Hello, world!")
   <- Hello, world!
@@ -60,7 +60,7 @@ let myConstant = 42
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var myVariable = 42
   -> myVariable = 50
@@ -90,7 +90,7 @@ let explicitDouble: Double = 70
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let implicitInteger = 70
   -> let implicitDouble = 70.0
@@ -113,7 +113,7 @@ let widthLabel = label + String(width)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let label = "The width is "
   -> let width = 94
@@ -146,7 +146,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let apples = 3
   -> let oranges = 5
@@ -178,7 +178,7 @@ And then I said "I have \(apples + oranges) pieces of fruit."
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let quotation = """
      I said "I have \(apples) apples."
@@ -202,13 +202,13 @@ A comma is allowed after the last element.
   The list of fruits comes from the colors that the original iMac came in,
   following the initial launch of the iMac in Bondi Blue, ordered by SKU --
   which also lines up with the order they appeared in ads:
-  
+
        M7389LL/A (266 MHz Strawberry)
        M7392LL/A (266 MHz Lime)
        M7391LL/A (266 MHz Tangerine)
        M7390LL/A (266 MHz Grape)
        M7345LL/A (266 MHz Blueberry)
-  
+
        M7441LL/A (333 MHz Strawberry)
        M7444LL/A (333 MHz Lime)
        M7443LL/A (333 MHz Tangerine)
@@ -220,12 +220,12 @@ A comma is allowed after the last element.
   REFERENCE
   Occupations is a reference to Firefly,
   specifically to Mal's joke about Jayne's job on the ship.
-  
-  
-  
+
+
+
   Can't find the specific episode,
   but it shows up in several lists of Firefly "best of" quotes:
-  
+
   Mal: Jayne, you will keep a civil tongue in that mouth, or I will sew it shut.
        Is there an understanding between us?
   Jayne: You don't pay me to talk pretty. [...]
@@ -250,7 +250,7 @@ occupations["Jayne"] = "Public Relations"
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var fruits = ["strawberries", "limes", "tangerines"]
   -> fruits[1] = "grapes"
@@ -272,7 +272,7 @@ print(fruits)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> fruits.append("blueberries")
   -> print(fruits)
@@ -290,7 +290,7 @@ let emptyDictionary: [String: Float] = [:]
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let emptyArray: [String] = []
   -> let emptyDictionary: [String: Float] = [:]
@@ -314,7 +314,7 @@ occupations = [:]
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> fruits = []
   -> occupations = [:]
@@ -345,7 +345,7 @@ print(teamScore)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let individualScores = [75, 43, 103, 87, 12]
   -> var teamScore = 0
@@ -412,7 +412,7 @@ if let name = optionalName {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var optionalString: String? = "Hello"
   -> print(optionalString == nil)
@@ -453,7 +453,7 @@ let informalGreeting = "Hi \(nickname ?? fullName)"
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let nickname: String? = nil
   -> let fullName: String = "John Appleseed"
@@ -474,7 +474,7 @@ if let nickname {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> if let nickname {
          print("Hey, \(nickname)")
@@ -512,7 +512,7 @@ default:
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let vegetable = "red pepper"
   -> switch vegetable {
@@ -582,7 +582,7 @@ print(largest)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let interestingNumbers = [
          "Prime": [2, 3, 5, 7, 11, 13],
@@ -634,7 +634,7 @@ print(m)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var n = 2
   -> while n < 100 {
@@ -666,7 +666,7 @@ print(total)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var total = 0
   -> for i in 0..<4 {
@@ -705,7 +705,7 @@ greet(person: "Bob", day: "Tuesday")
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func greet(person: String, day: String) -> String {
          return "Hello \(person), today is \(day)."
@@ -735,7 +735,7 @@ greet("John", on: "Wednesday")
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func greet(_ person: String, on day: String) -> String {
          return "Hello \(person), today is \(day)."
@@ -786,13 +786,13 @@ print(statistics.2)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
          var min = scores[0]
          var max = scores[0]
          var sum = 0
-  
+
          for score in scores {
              if score > max {
                  max = score
@@ -801,7 +801,7 @@ print(statistics.2)
              }
              sum += score
          }
-  
+
          return (min, max, sum)
      }
   -> let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
@@ -835,7 +835,7 @@ returnFifteen()
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func returnFifteen() -> Int {
          var y = 10
@@ -868,7 +868,7 @@ increment(7)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func makeIncrementer() -> ((Int) -> Int) {
          func addOne(number: Int) -> Int {
@@ -904,7 +904,7 @@ hasAnyMatches(list: numbers, condition: lessThanTen)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
          for item in list {
@@ -944,7 +944,7 @@ numbers.map({ (number: Int) -> Int in
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   >> let numbersMap =
   -> numbers.map({ (number: Int) -> Int in
@@ -974,7 +974,7 @@ print(mappedNumbers)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let mappedNumbers = numbers.map({ number in 3 * number })
   -> print(mappedNumbers)
@@ -997,7 +997,7 @@ print(sortedNumbers)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let sortedNumbers = numbers.sorted { $0 > $1 }
   -> print(sortedNumbers)
@@ -1046,7 +1046,7 @@ class Shape {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> class Shape {
          var numberOfSides = 0
@@ -1075,7 +1075,7 @@ var shapeDescription = shape.simpleDescription()
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var shape = Shape()
   -> shape.numberOfSides = 7
@@ -1106,7 +1106,7 @@ class NamedShape {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> class NamedShape {
          var numberOfSides: Int = 0
@@ -1177,7 +1177,7 @@ test.simpleDescription()
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> class Square: NamedShape {
          var sideLength: Double
@@ -1251,7 +1251,7 @@ print(triangle.sideLength)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> class EquilateralTriangle: NamedShape {
          var sideLength: Double = 0.0
@@ -1341,7 +1341,7 @@ print(triangleAndSquare.triangle.sideLength)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> class TriangleAndSquare {
          var triangle: EquilateralTriangle {
@@ -1394,7 +1394,7 @@ let sideLength = optionalSquare?.sideLength
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
   -> let sideLength = optionalSquare?.sideLength
@@ -1444,7 +1444,7 @@ let aceRawValue = ace.rawValue
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> enum Rank: Int {
          case ace = 1
@@ -1498,7 +1498,7 @@ if let convertedRank = Rank(rawValue: 3) {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> if let convertedRank = Rank(rawValue: 3) {
          let threeDescription = convertedRank.simpleDescription()
@@ -1537,7 +1537,7 @@ let heartsDescription = hearts.simpleDescription()
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> enum Suit {
          case spades, hearts, diamonds, clubs
@@ -1602,21 +1602,21 @@ or it responds with a description of what went wrong.
   REFERENCE
   The server response is a simple way to essentially re-implement Optional
   while sidestepping the fact that I'm doing so.
-  
+
   "Out of cheese" is a reference to a Terry Pratchet book,
   which features a computer named Hex.
   Hex's other error messages include:
-  
+
        - Out of Cheese Error. Redo From Start.
        - Mr. Jelly! Mr. Jelly! Error at Address Number 6, Treacle Mine Road.
        - Melon melon melon
        - +++ Wahhhhhhh! Mine! +++
        - +++ Divide By Cucumber Error. Please Reinstall Universe And Reboot +++
        - +++Whoops! Here comes the cheese! +++
-  
+
   These messages themselves are references to BASIC interpreters
   (REDO FROM START) and old Hayes-compatible modems (+++).
-  
+
   The "out of cheese error" may be a reference to a military computer
   although I can't find the source of this story anymore.
   As the story goes, during the course of a rather wild party,
@@ -1652,7 +1652,7 @@ case let .failure(message):
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> enum ServerResponse {
          case result(String, String)
@@ -1700,7 +1700,7 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> struct Card {
          var rank: Rank
@@ -1735,7 +1735,7 @@ func fetchUserID(from server: String) async -> Int {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func fetchUserID(from server: String) async -> Int {
          if server == "primary" {
@@ -1760,7 +1760,7 @@ func fetchUsername(from server: String) async -> String {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func fetchUsername(from server: String) async -> String {
          let userID = await fetchUserID(from: server)
@@ -1787,7 +1787,7 @@ func connectUser(to server: String) async {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func connectUser(to server: String) async {
          async let userID = fetchUserID(from: server)
@@ -1810,7 +1810,7 @@ Task {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> Task {
          await connectUser(to: "primary")
@@ -1833,7 +1833,7 @@ protocol ExampleProtocol {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> protocol ExampleProtocol {
           var simpleDescription: String { get }
@@ -1877,7 +1877,7 @@ let bDescription = b.simpleDescription
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> class SimpleClass: ExampleProtocol {
           var simpleDescription: String = "A very simple class."
@@ -1939,7 +1939,7 @@ print(7.simpleDescription)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> extension Int: ExampleProtocol {
          var simpleDescription: String {
@@ -1973,7 +1973,7 @@ print(protocolValue.simpleDescription)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let protocolValue: ExampleProtocol = a
   -> print(protocolValue.simpleDescription)
@@ -1999,7 +1999,7 @@ You represent errors using any type that adopts the `Error` protocol.
   fire" error message, used when the kernel can't identify the specific error.
   The names of printers used in the examples in this section are names of
   people who were important in the development of printing.
-  
+
   Bi Sheng is credited with inventing the first movable type out of porcelain
   in China in the 1040s.  It was a mixed success, in large part because of the
   vast number of characters needed to write Chinese, and failed to replace
@@ -2022,7 +2022,7 @@ enum PrinterError: Error {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> enum PrinterError: Error {
          case outOfPaper
@@ -2049,7 +2049,7 @@ func send(job: Int, toPrinter printerName: String) throws -> String {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func send(job: Int, toPrinter printerName: String) throws -> String {
          if printerName == "Never Has Toner" {
@@ -2080,7 +2080,7 @@ do {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> do {
          let printerResponse = try send(job: 1040, toPrinter: "Bi Sheng")
@@ -2101,7 +2101,7 @@ do {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   >> do {
          let printerResponse = try send(job: 500, toPrinter: "Never Has Toner")
@@ -2139,7 +2139,7 @@ do {
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> do {
          let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
@@ -2174,7 +2174,7 @@ let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
   >> print(printerSuccess as Any)
@@ -2212,7 +2212,7 @@ print(fridgeIsOpen)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> var fridgeIsOpen = false
   -> let fridgeContent = ["milk", "eggs", "leftovers"]
@@ -2260,7 +2260,7 @@ makeArray(repeating: "knock", numberOfTimes: 4)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
          var result: [Item] = []
@@ -2291,7 +2291,7 @@ possibleInteger = .some(100)
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   // Reimplement the Swift standard library's optional type
   -> enum OptionalValue<Wrapped> {
@@ -2328,7 +2328,7 @@ anyCommonElements([1, 2, 3], [3])
 
 <!--
   - test: `guided-tour`
-  
+
   ```swifttest
   -> func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
          where T.Element: Equatable, T.Element == U.Element

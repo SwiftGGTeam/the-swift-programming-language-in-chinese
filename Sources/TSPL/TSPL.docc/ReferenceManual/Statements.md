@@ -352,7 +352,7 @@ case let (x, y) where x == y:
 
 <!--
   - test: `switch-case-statement`
-  
+
   ```swifttest
   >> switch (1, 1) {
   -> case let (x, y) where x == y:
@@ -392,7 +392,7 @@ the program executes only the code within the first matching case in source orde
 
 <!--
   - test: `switch-case-with-multiple-patterns`
-  
+
   ```swifttest
   >> let tuple = (1, 1)
   >> switch tuple {
@@ -405,7 +405,7 @@ the program executes only the code within the first matching case in source orde
 
 <!--
   - test: `switch-case-with-multiple-patterns-err`
-  
+
   ```swifttest
   >> let tuple = (1, 1)
   >> switch tuple {
@@ -482,7 +482,7 @@ case .suppressed:
 
 <!--
   - test: `unknown-case`
-  
+
   ```swifttest
   -> let representation: Mirror.AncestorRepresentation = .generated
   -> switch representation {
@@ -574,7 +574,7 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
 
 <!--
   - test: `backtick-identifier-is-legal-label`
-  
+
   ```swifttest
   -> var i = 0
   -> `return`: while i < 100 {
@@ -1096,7 +1096,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `canImport_A, canImport`
-  
+
   ```swifttest
   >> public struct SomeStruct {
   >>     public init() { }
@@ -1106,7 +1106,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `canImport_A.B, canImport`
-  
+
   ```swifttest
   >> public struct AnotherStruct {
   >>     public init() { }
@@ -1116,7 +1116,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `canImport`
-  
+
   ```swifttest
   >> import canImport_A
   >> let s = SomeStruct()
@@ -1142,7 +1142,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `pound-if-swift-version`
-  
+
   ```swifttest
   -> #if swift(>=2.1)
          print(1)
@@ -1164,7 +1164,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `pound-if-swift-version-err`
-  
+
   ```swifttest
   -> #if swift(>= 2.1)
          print(4)
@@ -1178,7 +1178,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `pound-if-compiler-version`
-  
+
   ```swifttest
   -> #if compiler(>=4.2)
          print(1)
@@ -1297,10 +1297,10 @@ see <doc:Expressions#Explicit-Member-Expression>.
 
 <!--
   Testing notes:
-  
+
   !!true doesn't work but !(!true) does -- this matches normal expressions
   #if can be nested, as expected
-  
+
   Also, the body of a conditional compilation block contains *zero* or more statements.
   Thus, this is allowed:
       #if
@@ -1380,7 +1380,7 @@ but they can use the multiline string literal syntax.
 
 <!--
   - test: `good-diagnostic-statement-messages`
-  
+
   ```swifttest
   >> #warning("Single-line static string")
   !! /tmp/swifttest.swift:1:10: warning: Single-line static string
@@ -1406,7 +1406,7 @@ but they can use the multiline string literal syntax.
 
 <!--
   - test: `bad-diagnostic-statement-messages`
-  
+
   ```swifttest
   >> #warning("Interpolated \(1+1) string")
   !$ error: string interpolation is not allowed in #warning directives
@@ -1503,7 +1503,7 @@ It has the same meaning as the `*` argument in an availability condition.
 
 <!--
   - test: `pound-available-platform-names`
-  
+
   ```swifttest
   >> if #available(iOS 1, iOSApplicationExtension 1,
   >>               macOS 1, macOSApplicationExtension 1,
@@ -1536,7 +1536,7 @@ It has the same meaning as the `*` argument in an availability condition.
 
 <!--
   - test: `empty-availability-condition`
-  
+
   ```swifttest
   >> if #available(*) { print("1") }
   << 1
@@ -1545,7 +1545,7 @@ It has the same meaning as the `*` argument in an availability condition.
 
 <!--
   - test: `empty-unavailability-condition`
-  
+
   ```swifttest
   >> if #unavailable() { print("2") }
   !$ error: expected platform name

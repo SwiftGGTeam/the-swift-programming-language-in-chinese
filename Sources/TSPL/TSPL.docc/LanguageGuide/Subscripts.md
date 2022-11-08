@@ -46,7 +46,7 @@ subscript(index: Int) -> Int {
 
 <!--
   - test: `subscriptSyntax`
-  
+
   ```swifttest
   >> class Test1 {
   -> subscript(index: Int) -> Int {
@@ -80,7 +80,7 @@ subscript(index: Int) -> Int {
 
 <!--
   - test: `subscriptSyntax`
-  
+
   ```swifttest
   >> class Test2 {
   -> subscript(index: Int) -> Int {
@@ -108,7 +108,7 @@ print("six times three is \(threeTimesTable[6])")
 
 <!--
   - test: `timesTable`
-  
+
   ```swifttest
   -> struct TimesTable {
         let multiplier: Int
@@ -157,7 +157,7 @@ numberOfLegs["bird"] = 2
 
 <!--
   - test: `dictionarySubscript`
-  
+
   ```swifttest
   -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
   -> numberOfLegs["bird"] = 2
@@ -199,7 +199,7 @@ subscripts can't use in-out parameters.
 
 <!--
   - test: `subscripts-can-have-default-arguments`
-  
+
   ```swifttest
   >> struct Subscriptable {
   >>     subscript(x: Int, y: Int = 0) -> Int {
@@ -252,7 +252,7 @@ struct Matrix {
 
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
-  
+
   ```swifttest
   -> struct Matrix {
         let rows: Int, columns: Int
@@ -296,7 +296,7 @@ var matrix = Matrix(rows: 2, columns: 2)
 
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
-  
+
   ```swifttest
   -> var matrix = Matrix(rows: 2, columns: 2)
   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
@@ -320,7 +320,7 @@ matrix[1, 0] = 3.2
 
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
-  
+
   ```swifttest
   -> matrix[0, 1] = 1.5
   >> print(matrix[0, 1])
@@ -354,7 +354,7 @@ func indexIsValid(row: Int, column: Int) -> Bool {
 
 <!--
   - test: `matrixSubscript`
-  
+
   ```swifttest
   >> var rows = 2
   >> var columns = 2
@@ -374,7 +374,7 @@ let someValue = matrix[2, 2]
 
 <!--
   - test: `matrixSubscriptAssert`
-  
+
   ```swifttest
   -> let someValue = matrix[2, 2]
   xx assert
@@ -407,7 +407,7 @@ print(mars)
 
 <!--
   - test: `static-subscript`
-  
+
   ```swifttest
   -> enum Planet: Int {
         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
