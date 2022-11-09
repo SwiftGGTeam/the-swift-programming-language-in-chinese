@@ -1,5 +1,3 @@
-
-
 # Protocols
 
 Define requirements that conforming types must implement.
@@ -37,7 +35,6 @@ protocol SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `protocolSyntax`
   
@@ -59,7 +56,6 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 }
 ```
 
-
 <!--
   - test: `protocolSyntax`
   
@@ -80,7 +76,6 @@ class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
     // class definition goes here
 }
 ```
-
 
 <!--
   - test: `protocolSyntax`
@@ -124,7 +119,6 @@ protocol SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `instanceProperties`
   
@@ -147,7 +141,6 @@ protocol AnotherProtocol {
 }
 ```
 
-
 <!--
   - test: `instanceProperties`
   
@@ -165,7 +158,6 @@ protocol FullyNamed {
     var fullName: String { get }
 }
 ```
-
 
 <!--
   - test: `instanceProperties`
@@ -193,7 +185,6 @@ struct Person: FullyNamed {
 let john = Person(fullName: "John Appleseed")
 // john.fullName is "John Appleseed"
 ```
-
 
 <!--
   - test: `instanceProperties`
@@ -236,7 +227,6 @@ class Starship: FullyNamed {
 var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // ncc1701.fullName is "USS Enterprise"
 ```
-
 
 <!--
   - test: `instanceProperties`
@@ -291,7 +281,6 @@ protocol SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `typeMethods`
   
@@ -309,7 +298,6 @@ protocol RandomNumberGenerator {
     func random() -> Double
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -356,7 +344,6 @@ print("Here's a random number: \(generator.random())")
 print("And another one: \(generator.random())")
 // Prints "And another one: 0.729023776863283"
 ```
-
 
 <!--
   - test: `protocols`
@@ -419,7 +406,6 @@ protocol Togglable {
 }
 ```
 
-
 <!--
   - test: `mutatingRequirements`
   
@@ -458,7 +444,6 @@ lightSwitch.toggle()
 // lightSwitch is now equal to .on
 ```
 
-
 <!--
   - test: `mutatingRequirements`
   
@@ -494,7 +479,6 @@ protocol SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `initializers`
   
@@ -519,7 +503,6 @@ class SomeClass: SomeProtocol {
     }
 }
 ```
-
 
 <!--
   - test: `initializers`
@@ -649,7 +632,6 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
     }
 }
 ```
-
 
 <!--
   - test: `requiredOverrideInitializers`
@@ -801,7 +783,6 @@ class Dice {
 }
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -871,7 +852,6 @@ for _ in 1...5 {
 // Random dice roll is 4
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -914,7 +894,6 @@ protocol DiceGameDelegate: AnyObject {
     func gameDidEnd(_ game: DiceGame)
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -985,7 +964,6 @@ class SnakesAndLadders: DiceGame {
     }
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -1088,7 +1066,6 @@ class DiceGameTracker: DiceGameDelegate {
 }
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1152,7 +1129,6 @@ game.play()
 // The game lasted for 4 turns
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1192,7 +1168,6 @@ protocol TextRepresentable {
 }
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1218,7 +1193,6 @@ extension Dice: TextRepresentable {
     }
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -1246,7 +1220,6 @@ print(d12.textualDescription)
 // Prints "A 12-sided dice"
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1269,7 +1242,6 @@ extension SnakesAndLadders: TextRepresentable {
 print(game.textualDescription)
 // Prints "A game of Snakes and Ladders with 25 squares"
 ```
-
 
 <!--
   - test: `protocols`
@@ -1312,7 +1284,6 @@ print(myDice.textualDescription)
 // Prints "[A 6-sided dice, A 12-sided dice]"
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1345,7 +1316,6 @@ struct Hamster {
 extension Hamster: TextRepresentable {}
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1368,7 +1338,6 @@ let somethingTextRepresentable: TextRepresentable = simonTheHamster
 print(somethingTextRepresentable.textualDescription)
 // Prints "A hamster named Simon"
 ```
-
 
 <!--
   - test: `protocols`
@@ -1449,7 +1418,6 @@ if twoThreeFour == anotherTwoThreeFour {
 // Prints "These two vectors are also equivalent."
 ```
 
-
 <!--
   - test: `equatable_synthesis`
   
@@ -1519,7 +1487,6 @@ for level in levels.sorted() {
 // Prints "expert(stars: 3)"
 // Prints "expert(stars: 5)"
 ```
-
 
 <!--
   - test: `comparable-enum-synthesis`
@@ -1597,7 +1564,6 @@ This example creates an array of `TextRepresentable` things:
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1617,7 +1583,6 @@ for thing in things {
 // A 12-sided dice
 // A hamster named Simon
 ```
-
 
 <!--
   - test: `protocols`
@@ -1652,7 +1617,6 @@ protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
 }
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1673,7 +1637,6 @@ protocol PrettyTextRepresentable: TextRepresentable {
     var prettyTextualDescription: String { get }
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -1713,7 +1676,6 @@ extension SnakesAndLadders: PrettyTextRepresentable {
     }
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -1766,7 +1728,6 @@ print(game.prettyTextualDescription)
 // ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -1787,7 +1748,6 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
     // class-only protocol definition goes here
 }
 ```
-
 
 <!--
   - test: `classOnlyProtocols`
@@ -1865,7 +1825,6 @@ wishHappyBirthday(to: birthdayPerson)
 // Prints "Happy birthday, Malcolm, you're 21!"
 ```
 
-
 <!--
   - test: `protocolComposition`
   
@@ -1936,7 +1895,6 @@ beginConcert(in: seattle)
 // Prints "Hello, Seattle!"
 ```
 
-
 <!--
   - test: `protocolComposition`
   
@@ -2004,7 +1962,6 @@ protocol HasArea {
 }
 ```
 
-
 <!--
   - test: `protocolConformance`
   
@@ -2030,7 +1987,6 @@ class Country: HasArea {
     init(area: Double) { self.area = area }
 }
 ```
-
 
 <!--
   - test: `protocolConformance`
@@ -2063,7 +2019,6 @@ class Animal {
 }
 ```
 
-
 <!--
   - test: `protocolConformance`
   
@@ -2086,7 +2041,6 @@ let objects: [AnyObject] = [
     Animal(legs: 4)
 ]
 ```
-
 
 <!--
   - test: `protocolConformance`
@@ -2122,7 +2076,6 @@ for object in objects {
 // Area is 243610.0
 // Something that doesn't have an area
 ```
-
 
 <!--
   - test: `protocolConformance`
@@ -2224,7 +2177,6 @@ which has two optional requirements:
 }
 ```
 
-
 <!--
   - test: `protocolConformance`
   
@@ -2265,7 +2217,6 @@ class Counter {
     }
 }
 ```
-
 
 <!--
   - test: `protocolConformance`
@@ -2346,7 +2297,6 @@ class ThreeSource: NSObject, CounterDataSource {
 }
 ```
 
-
 <!--
   - test: `protocolConformance`
   
@@ -2371,7 +2321,6 @@ for _ in 1...4 {
 // 9
 // 12
 ```
-
 
 <!--
   - test: `protocolConformance`
@@ -2413,7 +2362,6 @@ class TowardsZeroSource: NSObject, CounterDataSource {
     }
 }
 ```
-
 
 <!--
   - test: `protocolConformance`
@@ -2457,7 +2405,6 @@ for _ in 1...5 {
 // 0
 ```
 
-
 <!--
   - test: `protocolConformance`
   
@@ -2497,7 +2444,6 @@ extension RandomNumberGenerator {
 }
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -2521,7 +2467,6 @@ print("Here's a random number: \(generator.random())")
 print("And here's a random Boolean: \(generator.randomBool())")
 // Prints "And here's a random Boolean: true"
 ```
-
 
 <!--
   - test: `protocols`
@@ -2570,7 +2515,6 @@ extension PrettyTextRepresentable  {
     }
 }
 ```
-
 
 <!--
   - test: `protocols`
@@ -2643,7 +2587,6 @@ extension Collection where Element: Equatable {
 }
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -2673,7 +2616,6 @@ let equalNumbers = [100, 100, 100, 100, 100]
 let differentNumbers = [100, 100, 200, 100, 200]
 ```
 
-
 <!--
   - test: `protocols`
   
@@ -2693,7 +2635,6 @@ print(equalNumbers.allEqual())
 print(differentNumbers.allEqual())
 // Prints "false"
 ```
-
 
 <!--
   - test: `protocols`
@@ -2729,7 +2670,6 @@ print(differentNumbers.allEqual())
   Protocol requirements can be marked as @unavailable, but this currently only works if they're also marked as @objc.
   Checking for (and calling) optional implementations via optional binding and closures
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

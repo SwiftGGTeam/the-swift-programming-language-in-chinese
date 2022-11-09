@@ -1,5 +1,3 @@
-
-
 # Functions
 
 Define and call functions, label their arguments, and use their return values.
@@ -56,7 +54,6 @@ func greet(person: String) -> String {
 }
 ```
 
-
 <!--
   - test: `definingAndCalling`
   
@@ -86,7 +83,6 @@ print(greet(person: "Anna"))
 print(greet(person: "Brian"))
 // Prints "Hello, Brian!"
 ```
-
 
 <!--
   - test: `definingAndCalling`
@@ -136,7 +132,6 @@ print(greetAgain(person: "Anna"))
 // Prints "Hello again, Anna!"
 ```
 
-
 <!--
   - test: `definingAndCalling`
   
@@ -168,7 +163,6 @@ func sayHelloWorld() -> String {
 print(sayHelloWorld())
 // Prints "hello, world"
 ```
-
 
 <!--
   - test: `functionsWithoutParameters`
@@ -207,7 +201,6 @@ func greet(person: String, alreadyGreeted: Bool) -> String {
 print(greet(person: "Tim", alreadyGreeted: true))
 // Prints "Hello again, Tim!"
 ```
-
 
 <!--
   - test: `definingAndCalling`
@@ -249,7 +242,6 @@ greet(person: "Dave")
 // Prints "Hello, Dave!"
 ```
 
-
 <!--
   - test: `functionsWithoutReturnValues`
   
@@ -287,7 +279,6 @@ printAndCount(string: "hello, world")
 printWithoutCounting(string: "hello, world")
 // prints "hello, world" but doesn't return a value
 ```
-
 
 <!--
   - test: `functionsWithoutReturnValues`
@@ -359,7 +350,6 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 }
 ```
 
-
 <!--
   - test: `tupleTypesAsReturnTypes`
   
@@ -400,7 +390,6 @@ let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
 // Prints "min is -6 and max is 109"
 ```
-
 
 <!--
   - test: `tupleTypesAsReturnTypes`
@@ -458,7 +447,6 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 }
 ```
 
-
 <!--
   - test: `tupleTypesAsReturnTypes2`
   
@@ -488,7 +476,6 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 }
 // Prints "min is -6 and max is 109"
 ```
-
 
 <!--
   - test: `tupleTypesAsReturnTypes2`
@@ -521,7 +508,6 @@ func anotherGreeting(for person: String) -> String {
 print(anotherGreeting(for: "Dave"))
 // Prints "Hello, Dave!"
 ```
-
 
 <!--
   - test: `implicit-func-return`
@@ -598,7 +584,6 @@ func someFunction(firstParameterName: Int, secondParameterName: Int) {
 someFunction(firstParameterName: 1, secondParameterName: 2)
 ```
 
-
 <!--
   - test: `functionParameterNames`
   
@@ -637,7 +622,6 @@ func someFunction(argumentLabel parameterName: Int) {
 }
 ```
 
-
 <!--
   - test: `externalParameterNames`
   
@@ -660,7 +644,6 @@ func greet(person: String, from hometown: String) -> String {
 print(greet(person: "Bill", from: "Cupertino"))
 // Prints "Hello Bill!  Glad you could visit from Cupertino."
 ```
-
 
 <!--
   - test: `externalParameterNames`
@@ -691,7 +674,6 @@ func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
 someFunction(1, secondParameterName: 2)
 ```
 
-
 <!--
   - test: `omittedExternalParameterNames`
   
@@ -721,7 +703,6 @@ func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) 
 someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
 someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 ```
-
 
 <!--
   - test: `omittedExternalParameterNames`
@@ -775,7 +756,6 @@ arithmeticMean(1, 2, 3, 4, 5)
 arithmeticMean(3, 8.25, 18.75)
 // returns 10.0, which is the arithmetic mean of these three numbers
 ```
-
 
 <!--
   - test: `variadicParameters`
@@ -879,7 +859,6 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 }
 ```
 
-
 <!--
   - test: `inoutParameters`
   
@@ -910,7 +889,6 @@ swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // Prints "someInt is now 107, and anotherInt is now 3"
 ```
-
 
 <!--
   - test: `inoutParameters`
@@ -956,7 +934,6 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `functionTypes`
   
@@ -994,7 +971,6 @@ func printHelloWorld() {
 }
 ```
 
-
 <!--
   - test: `functionTypes`
   
@@ -1019,7 +995,6 @@ and assign an appropriate function to that variable:
 ```swift
 var mathFunction: (Int, Int) -> Int = addTwoInts
 ```
-
 
 <!--
   - test: `functionTypes`
@@ -1046,7 +1021,6 @@ print("Result: \(mathFunction(2, 3))")
 // Prints "Result: 5"
 ```
 
-
 <!--
   - test: `functionTypes`
   
@@ -1064,7 +1038,6 @@ mathFunction = multiplyTwoInts
 print("Result: \(mathFunction(2, 3))")
 // Prints "Result: 6"
 ```
-
 
 <!--
   - test: `functionTypes`
@@ -1084,7 +1057,6 @@ when you assign a function to a constant or variable:
 let anotherMathFunction = addTwoInts
 // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 ```
-
 
 <!--
   - test: `functionTypes`
@@ -1117,7 +1089,6 @@ func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
 printMathResult(addTwoInts, 3, 5)
 // Prints "Result: 8"
 ```
-
 
 <!--
   - test: `functionTypes`
@@ -1168,7 +1139,6 @@ func stepBackward(_ input: Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `functionTypes`
   
@@ -1193,7 +1163,6 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `functionTypes`
   
@@ -1212,7 +1181,6 @@ var currentValue = 3
 let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 // moveNearerToZero now refers to the stepBackward() function
 ```
-
 
 <!--
   - test: `functionTypes`
@@ -1249,7 +1217,6 @@ print("zero!")
 // 1...
 // zero!
 ```
-
 
 <!--
   - test: `functionTypes`
@@ -1305,7 +1272,6 @@ print("zero!")
 // zero!
 ```
 
-
 <!--
   - test: `nestedFunctions`
   
@@ -1332,7 +1298,6 @@ print("zero!")
   </ zero!
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

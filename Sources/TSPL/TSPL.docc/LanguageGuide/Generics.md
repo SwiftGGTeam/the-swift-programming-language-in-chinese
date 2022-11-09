@@ -1,5 +1,3 @@
-
-
 # Generics
 
 Write code that works for multiple types and specify requirements for those types.
@@ -34,7 +32,6 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 }
 ```
 
-
 <!--
   - test: `whyGenerics`
   
@@ -61,7 +58,6 @@ swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // Prints "someInt is now 107, and anotherInt is now 3"
 ```
-
 
 <!--
   - test: `whyGenerics`
@@ -94,7 +90,6 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
     b = temporaryA
 }
 ```
-
 
 <!--
   - test: `whyGenerics`
@@ -148,7 +143,6 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
 }
 ```
 
-
 <!--
   - test: `genericFunctions`
   
@@ -178,7 +172,6 @@ Here's how the first lines compare:
 func swapTwoInts(_ a: inout Int, _ b: inout Int)
 func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 ```
-
 
 <!--
   - test: `genericFunctionsComparison`
@@ -234,7 +227,6 @@ var anotherString = "world"
 swapTwoValues(&someString, &anotherString)
 // someString is now "world", and anotherString is now "hello"
 ```
-
 
 <!--
   - test: `genericFunctions`
@@ -328,7 +320,6 @@ The illustration below shows the push and pop behavior for a stack:
 
 ![](stackPushPop)
 
-
 - There are currently three values on the stack.
 - A fourth value is pushed onto the top of the stack.
 - The stack now holds four values, with the most recent one at the top.
@@ -349,7 +340,6 @@ struct IntStack {
     }
 }
 ```
-
 
 <!--
   - test: `genericStack`
@@ -397,7 +387,6 @@ struct Stack<Element> {
     }
 }
 ```
-
 
 <!--
   - test: `genericStack`
@@ -453,7 +442,6 @@ stackOfStrings.push("cuatro")
 // the stack now contains 4 strings
 ```
 
-
 <!--
   - test: `genericStack`
   
@@ -472,14 +460,12 @@ Here's how `stackOfStrings` looks after pushing these four values on to the stac
 
 ![](stackPushedFourStrings)
 
-
 Popping a value from the stack removes and returns the top value, `"cuatro"`:
 
 ```swift
 let fromTheTop = stackOfStrings.pop()
 // fromTheTop is equal to "cuatro", and the stack now contains 3 strings
 ```
-
 
 <!--
   - test: `genericStack`
@@ -494,7 +480,6 @@ let fromTheTop = stackOfStrings.pop()
 Here's how the stack looks after popping its top value:
 
 ![](stackPoppedOneString)
-
 
 ## Extending a Generic Type
 
@@ -516,7 +501,6 @@ extension Stack {
     }
 }
 ```
-
 
 <!--
   - test: `genericStack`
@@ -548,7 +532,6 @@ if let topItem = stackOfStrings.topItem {
 }
 // Prints "The top item on the stack is tres."
 ```
-
 
 <!--
   - test: `genericStack`
@@ -617,7 +600,6 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 }
 ```
 
-
 <!--
   - test: `typeConstraints`
   
@@ -656,7 +638,6 @@ func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
 }
 ```
 
-
 <!--
   - test: `typeConstraints`
   
@@ -681,7 +662,6 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
 }
 // Prints "The index of llama is 2"
 ```
-
 
 <!--
   - test: `typeConstraints`
@@ -717,7 +697,6 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
     return nil
 }
 ```
-
 
 <!--
   - test: `typeConstraints-err`
@@ -778,7 +757,6 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
 }
 ```
 
-
 @Comment {
   - test: `typeConstraintsEquatable`
   
@@ -806,7 +784,6 @@ let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
 let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 // stringIndex is an optional Int containing a value of 2
 ```
-
 
 @Comment {
   - test: `typeConstraintsEquatable`
@@ -853,7 +830,6 @@ protocol Container {
     subscript(i: Int) -> Item { get }
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes, associatedTypes-err`
@@ -938,7 +914,6 @@ struct IntStack: Container {
 }
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1011,7 +986,6 @@ struct Stack<Element>: Container {
 }
 ```
 
-
 @Comment {
   - test: `associatedTypes, associatedTypes-err`
   
@@ -1063,7 +1037,6 @@ as described in <doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>:
 extension Array: Container {}
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1093,7 +1066,6 @@ protocol Container {
     subscript(i: Int) -> Item { get }
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes-equatable`
@@ -1127,7 +1099,6 @@ protocol SuffixableContainer: Container {
     func suffix(_ size: Int) -> Suffix
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes`
@@ -1173,7 +1144,6 @@ stackOfInts.append(30)
 let suffix = stackOfInts.suffix(2)
 // suffix contains 20 and 30
 ```
-
 
 @Comment {
   - test: `associatedTypes`
@@ -1224,7 +1194,6 @@ extension IntStack: SuffixableContainer {
     // Inferred that Suffix is Stack<Int>.
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes`
@@ -1299,7 +1268,6 @@ func allItemsMatch<C1: Container, C2: Container>
     return true
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes`
@@ -1394,7 +1362,6 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 // Prints "All items match."
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1445,7 +1412,6 @@ extension Stack where Element: Equatable {
 }
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1487,7 +1453,6 @@ if stackOfStrings.isTop("tres") {
 // Prints "Top element is tres."
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1512,7 +1477,6 @@ let notEquatableValue = NotEquatable()
 notEquatableStack.push(notEquatableValue)
 notEquatableStack.isTop(notEquatableValue)  // Error
 ```
-
 
 @Comment {
   - test: `associatedTypes-err`
@@ -1540,7 +1504,6 @@ extension Container where Item: Equatable {
     }
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes`
@@ -1578,7 +1541,6 @@ if [9, 9, 9].startsWith(42) {
 // Prints "Starts with something else."
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1611,7 +1573,6 @@ extension Container where Item == Double {
 print([1260.0, 1200.0, 98.6, 37.0].average())
 // Prints "648.9"
 ```
-
 
 @Comment {
   - test: `associatedTypes`
@@ -1683,7 +1644,6 @@ print(numbers.endsWith(37))
 // Prints "true"
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1737,7 +1697,6 @@ extension Container where Item: Equatable {
 }
 ```
 
-
 @Comment {
   - test: `associatedTypes-err`
   
@@ -1788,7 +1747,6 @@ protocol Container {
     func makeIterator() -> Iterator
 }
 ```
-
 
 @Comment {
   - test: `associatedTypes-iterator`
@@ -1858,7 +1816,6 @@ that requires `Item` to conform to `Comparable`:
 protocol ComparableContainer: Container where Item: Comparable { }
 ```
 
-
 @Comment {
   - test: `associatedTypes`
   
@@ -1922,7 +1879,6 @@ extension Container {
     }
 }
 ```
-
 
 @Comment {
   - test: `genericSubscript`
@@ -2007,7 +1963,6 @@ is a sequence of integers.
 @Comment {
   TODO: Describe how Optional<Wrapped> works
 }
-
 
 @Comment {
 This source file is part of the Swift.org open source project

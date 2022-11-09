@@ -1,5 +1,3 @@
-
-
 # Collection Types
 
 Organize data using arrays, sets, and dictionaries.
@@ -12,7 +10,6 @@ Sets are unordered collections of unique values.
 Dictionaries are unordered collections of key-value associations.
 
 ![](CollectionTypes_intro)
-
 
 Arrays, sets, and dictionaries in Swift are always clear about
 the types of values and keys that they can store.
@@ -80,7 +77,6 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 // Prints "someInts is of type [Int] with 0 items."
 ```
 
-
 <!--
   - test: `arraysEmpty`
   
@@ -106,7 +102,6 @@ someInts.append(3)
 someInts = []
 // someInts is now an empty array, but is still of type [Int]
 ```
-
 
 <!--
   - test: `arraysEmpty`
@@ -134,7 +129,6 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
 // threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
 ```
 
-
 <!--
   - test: `arraysEmpty`
   
@@ -158,7 +152,6 @@ var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
 var sixDoubles = threeDoubles + anotherThreeDoubles
 // sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 ```
-
 
 <!--
   - test: `arraysEmpty`
@@ -198,14 +191,12 @@ surrounded by a pair of square brackets:
 [<#value 1#>, <#value 2#>, <#value 3#>]
 ```
 
-
 The example below creates an array called `shoppingList` to store `String` values:
 
 ```swift
 var shoppingList: [String] = ["Eggs", "Milk"]
 // shoppingList has been initialized with two initial items
 ```
-
 
 <!--
   - test: `arrays`
@@ -242,7 +233,6 @@ The initialization of `shoppingList` could have been written in a shorter form i
 var shoppingList = ["Eggs", "Milk"]
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -267,7 +257,6 @@ print("The shopping list contains \(shoppingList.count) items.")
 // Prints "The shopping list contains 2 items."
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -289,7 +278,6 @@ if shoppingList.isEmpty {
 // Prints "The shopping list isn't empty."
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -310,7 +298,6 @@ shoppingList.append("Flour")
 // shoppingList now contains 3 items, and someone is making pancakes
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -330,7 +317,6 @@ shoppingList += ["Baking Powder"]
 shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 // shoppingList now contains 7 items
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -354,7 +340,6 @@ var firstItem = shoppingList[0]
 // firstItem is equal to "Eggs"
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -374,7 +359,6 @@ You can use subscript syntax to change an existing value at a given index:
 shoppingList[0] = "Six eggs"
 // the first item in the list is now equal to "Six eggs" rather than "Eggs"
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -408,7 +392,6 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 // shoppingList now contains 6 items
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -427,7 +410,6 @@ shoppingList.insert("Maple Syrup", at: 0)
 // shoppingList now contains 7 items
 // "Maple Syrup" is now the first item in the list
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -455,7 +437,6 @@ let mapleSyrup = shoppingList.remove(at: 0)
 // shoppingList now contains 6 items, and no Maple Syrup
 // the mapleSyrup constant is now equal to the removed "Maple Syrup" string
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -488,7 +469,6 @@ firstItem = shoppingList[0]
 // firstItem is now equal to "Six eggs"
 ```
 
-
 <!--
   - test: `arraysInferred`
   
@@ -510,7 +490,6 @@ let apples = shoppingList.removeLast()
 // shoppingList now contains 5 items, and no apples
 // the apples constant is now equal to the removed "Apples" string
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -539,7 +518,6 @@ for item in shoppingList {
 // Baking Powder
 // Bananas
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -577,7 +555,6 @@ for (index, value) in shoppingList.enumerated() {
 // Item 4: Baking Powder
 // Item 5: Bananas
 ```
-
 
 <!--
   - test: `arraysInferred`
@@ -648,7 +625,6 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 // Prints "letters is of type Set<Character> with 0 items."
 ```
 
-
 <!--
   - test: `setsEmpty`
   
@@ -673,7 +649,6 @@ letters = []
 // letters is now an empty set, but is still of type Set<Character>
 ```
 
-
 <!--
   - test: `setsEmpty`
   
@@ -697,7 +672,6 @@ The example below creates a set called `favoriteGenres` to store `String` values
 var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 // favoriteGenres has been initialized with three initial items
 ```
-
 
 <!--
   - test: `sets`
@@ -731,7 +705,6 @@ The initialization of `favoriteGenres` could have been written in a shorter form
 var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 ```
 
-
 <!--
   - test: `setsInferred`
   
@@ -756,7 +729,6 @@ print("I have \(favoriteGenres.count) favorite music genres.")
 // Prints "I have 3 favorite music genres."
 ```
 
-
 <!--
   - test: `setUsage`
   
@@ -779,7 +751,6 @@ if favoriteGenres.isEmpty {
 // Prints "I have particular music preferences."
 ```
 
-
 <!--
   - test: `setUsage`
   
@@ -799,7 +770,6 @@ You can add a new item into a set by calling the set's `insert(_:)` method:
 favoriteGenres.insert("[Tool J]")
 // favoriteGenres now contains 4 items
 ```
-
 
 <!--
   - test: `setUsage`
@@ -826,7 +796,6 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 // Prints "Rock? I'm over it."
 ```
 
-
 <!--
   - test: `setUsage`
   
@@ -850,7 +819,6 @@ if favoriteGenres.contains("Funk") {
 }
 // Prints "It's too funky in here."
 ```
-
 
 <!--
   - test: `setUsage`
@@ -877,7 +845,6 @@ for genre in favoriteGenres {
 // [Tool J]
 // Hip hop
 ```
-
 
 <!--
   - test: `setUsage`
@@ -909,7 +876,6 @@ for genre in favoriteGenres.sorted() {
 // [Tool J]
 ```
 
-
 <!--
   - test: `setUsage`
   
@@ -937,7 +903,6 @@ with the results of various set operations represented by the shaded regions.
 
 ![](setVennDiagram)
 
-
 - Use the `intersection(_:)` method to create a new set with only the values common to both sets.
 - Use the `symmetricDifference(_:)` method to create a new set with values in either set, but not both.
 - Use the `union(_:)` method to create a new set with all of the values in both sets.
@@ -957,7 +922,6 @@ oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
 oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 // [1, 2, 9]
 ```
-
 
 <!--
   - test: `setOperations`
@@ -1004,7 +968,6 @@ because they share no elements in common.
 
 ![](setEulerDiagram)
 
-
 - Use the “is equal” operator (`==`) to determine whether two sets contain all of the same values.
 - Use the `isSubset(of:)` method to determine whether all of the values of a set are contained in the specified set.
 - Use the `isSuperset(of:)` method to determine whether a set contains all of the values in a specified set.
@@ -1023,7 +986,6 @@ farmAnimals.isSuperset(of: houseAnimals)
 farmAnimals.isDisjoint(with: cityAnimals)
 // true
 ```
-
 
 <!--
   - test: `setOperations`
@@ -1092,7 +1054,6 @@ var namesOfIntegers: [Int: String] = [:]
 // namesOfIntegers is an empty [Int: String] dictionary
 ```
 
-
 <!--
   - test: `dictionariesEmpty`
   
@@ -1117,7 +1078,6 @@ namesOfIntegers[16] = "sixteen"
 namesOfIntegers = [:]
 // namesOfIntegers is once again an empty dictionary of type [Int: String]
 ```
-
 
 <!--
   - test: `dictionariesEmpty`
@@ -1148,7 +1108,6 @@ surrounded by a pair of square brackets:
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#key 3#>: <#value 3#>]
 ```
 
-
 The example below creates a dictionary to store the names of international airports.
 In this dictionary, the keys are three-letter International Air Transport Association codes,
 and the values are airport names:
@@ -1156,7 +1115,6 @@ and the values are airport names:
 ```swift
 var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 ```
-
 
 <!--
   - test: `dictionaries`
@@ -1194,7 +1152,6 @@ The initialization of `airports` could have been written in a shorter form inste
 var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1221,7 +1178,6 @@ print("The airports dictionary contains \(airports.count) items.")
 // Prints "The airports dictionary contains 2 items."
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1242,7 +1198,6 @@ if airports.isEmpty {
 }
 // Prints "The airports dictionary isn't empty."
 ```
-
 
 <!--
   - test: `dictionariesInferred`
@@ -1266,7 +1221,6 @@ airports["LHR"] = "London"
 // the airports dictionary now contains 3 items
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1283,7 +1237,6 @@ You can also use subscript syntax to change the value associated with a particul
 airports["LHR"] = "London Heathrow"
 // the value for "LHR" has been changed to "London Heathrow"
 ```
-
 
 <!--
   - test: `dictionariesInferred`
@@ -1320,7 +1273,6 @@ if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
 // Prints "The old value for DUB was Dublin."
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1348,7 +1300,6 @@ if let airportName = airports["DUB"] {
 // Prints "The name of the airport is Dublin Airport."
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1371,7 +1322,6 @@ airports["APL"] = "Apple International"
 airports["APL"] = nil
 // APL has now been removed from the dictionary
 ```
-
 
 <!--
   - test: `dictionariesInferred`
@@ -1406,7 +1356,6 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 // Prints "The removed airport's name is Dublin Airport."
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1434,7 +1383,6 @@ for (airportCode, airportName) in airports {
 // LHR: London Heathrow
 // YYZ: Toronto Pearson
 ```
-
 
 <!--
   - test: `dictionariesInferred`
@@ -1467,7 +1415,6 @@ for airportName in airports.values {
 // Airport name: Toronto Pearson
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1498,7 +1445,6 @@ let airportNames = [String](airports.values)
 // airportNames is ["London Heathrow", "Toronto Pearson"]
 ```
 
-
 <!--
   - test: `dictionariesInferred`
   
@@ -1516,7 +1462,6 @@ let airportNames = [String](airports.values)
 Swift's `Dictionary` type doesn't have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
 use the `sorted()` method on its `keys` or `values` property.
-
 
 <!--
 This source file is part of the Swift.org open source project

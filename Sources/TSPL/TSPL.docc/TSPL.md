@@ -59,11 +59,11 @@
 - <doc:Attributes>
 - <doc:Patterns>
 - <doc:GenericParametersAndArguments>
+- <doc:SummaryOfTheGrammar>
 
 ### Revision History
 
 - <doc:RevisionHistory>
-
 
 <!--
 This source file is part of the Swift.org open source project

@@ -1,5 +1,3 @@
-
-
 # Initialization
 
 Set the initial values for a type's stored properties and perform one-time setup.
@@ -49,7 +47,6 @@ init() {
 }
 ```
 
-
 <!--
   - test: `initializerSyntax`
   
@@ -78,7 +75,6 @@ var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
 // Prints "The default temperature is 32.0° Fahrenheit"
 ```
-
 
 <!--
   - test: `fahrenheitInit`
@@ -129,7 +125,6 @@ struct Fahrenheit {
 }
 ```
 
-
 <!--
   - test: `fahrenheitDefault`
   
@@ -176,7 +171,6 @@ let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
 let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 // freezingPointOfWater.temperatureInCelsius is 0.0
 ```
-
 
 <!--
   - test: `initialization`
@@ -254,7 +248,6 @@ struct Color {
 }
 ```
 
-
 <!--
   - test: `externalParameterNames, externalParameterNames-err`
   
@@ -283,7 +276,6 @@ let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
 let halfGray = Color(white: 0.5)
 ```
 
-
 <!--
   - test: `externalParameterNames`
   
@@ -305,7 +297,6 @@ and omitting them is a compile-time error:
 let veryGreen = Color(0.0, 1.0, 0.0)
 // this reports a compile-time error - argument labels are required
 ```
-
 
 <!--
   - test: `externalParameterNames-err`
@@ -347,7 +338,6 @@ struct Celsius {
 let bodyTemperature = Celsius(37.0)
 // bodyTemperature.temperatureInCelsius is 37.0
 ```
-
 
 <!--
   - test: `initializersWithoutExternalParameterNames`
@@ -405,7 +395,6 @@ cheeseQuestion.ask()
 // Prints "Do you like cheese?"
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
-
 
 <!--
   - test: `surveyQuestionVariable`
@@ -514,7 +503,6 @@ beetsQuestion.ask()
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
-
 <!--
   - test: `surveyQuestionConstant`
   
@@ -571,7 +559,6 @@ class ShoppingListItem {
 }
 var item = ShoppingListItem()
 ```
-
 
 <!--
   - test: `initialization`
@@ -639,7 +626,6 @@ struct Size {
 let twoByTwo = Size(width: 2.0, height: 2.0)
 ```
 
-
 <!--
   - test: `initialization`
   
@@ -670,7 +656,6 @@ let zeroByZero = Size()
 print(zeroByZero.width, zeroByZero.height)
 // Prints "0.0 0.0"
 ```
-
 
 <!--
   - test: `initialization`
@@ -736,7 +721,6 @@ struct Point {
 }
 ```
 
-
 <!--
   - test: `valueDelegation`
   
@@ -773,7 +757,6 @@ struct Rect {
     }
 }
 ```
-
 
 <!--
   - test: `valueDelegation`
@@ -812,7 +795,6 @@ let basicRect = Rect()
 // basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 ```
 
-
 <!--
   - test: `valueDelegation`
   
@@ -834,7 +816,6 @@ let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
     size: Size(width: 5.0, height: 5.0))
 // originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 ```
-
 
 <!--
   - test: `valueDelegation`
@@ -858,7 +839,6 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
-
 
 <!--
   - test: `valueDelegation`
@@ -930,7 +910,6 @@ init(<#parameters#>) {
 }
 ```
 
-
 Convenience initializers are written in the same style,
 but with the `convenience` modifier placed before the `init` keyword,
 separated by a space:
@@ -940,7 +919,6 @@ convenience init(<#parameters#>) {
    <#statements#>
 }
 ```
-
 
 ### Initializer Delegation for Class Types
 
@@ -959,7 +937,6 @@ A simple way to remember this is:
 These rules are illustrated in the figure below:
 
 ![](initializerDelegation01)
-
 
 Here, the superclass has a single designated initializer and two convenience initializers.
 One convenience initializer calls another convenience initializer,
@@ -985,7 +962,6 @@ act as “funnel” points for class initialization,
 simplifying the interrelationships among classes in the chain:
 
 ![](initializerDelegation02)
-
 
 ### Two-Phase Initialization
 
@@ -1071,7 +1047,6 @@ Here's how phase 1 looks for an initialization call for a hypothetical subclass 
 
 ![](twoPhaseInitialization01)
 
-
 In this example, initialization begins with a call to
 a convenience initializer on the subclass.
 This convenience initializer can't yet modify any properties.
@@ -1092,7 +1067,6 @@ its memory is considered fully initialized, and phase 1 is complete.
 Here's how phase 2 looks for the same initialization call:
 
 ![](twoPhaseInitialization02)
-
 
 The superclass's designated initializer now has an opportunity
 to customize the instance further
@@ -1251,7 +1225,6 @@ class Vehicle {
 }
 ```
 
-
 <!--
   - test: `initializerInheritance`
   
@@ -1278,7 +1251,6 @@ print("Vehicle: \(vehicle.description)")
 // Vehicle: 0 wheel(s)
 ```
 
-
 <!--
   - test: `initializerInheritance`
   
@@ -1299,7 +1271,6 @@ class Bicycle: Vehicle {
     }
 }
 ```
-
 
 <!--
   - test: `initializerInheritance`
@@ -1334,7 +1305,6 @@ let bicycle = Bicycle()
 print("Bicycle: \(bicycle.description)")
 // Bicycle: 2 wheel(s)
 ```
-
 
 <!--
   - test: `initializerInheritance`
@@ -1373,7 +1343,6 @@ class Hoverboard: Vehicle {
 }
 ```
 
-
 <!--
   - test: `initializerInheritance`
   
@@ -1399,7 +1368,6 @@ let hoverboard = Hoverboard(color: "silver")
 print("Hoverboard: \(hoverboard.description)")
 // Hoverboard: 0 wheel(s) in a beautiful silver
 ```
-
 
 <!--
   - test: `initializerInheritance`
@@ -1512,7 +1480,6 @@ class Food {
 }
 ```
 
-
 <!--
   - test: `designatedConvenience`
   
@@ -1533,7 +1500,6 @@ The figure below shows the initializer chain for the `Food` class:
 
 ![](initializersExample01)
 
-
 Classes don't have a default memberwise initializer,
 and so the `Food` class provides a designated initializer
 that takes a single argument called `name`.
@@ -1543,7 +1509,6 @@ This initializer can be used to create a new `Food` instance with a specific nam
 let namedMeat = Food(name: "Bacon")
 // namedMeat's name is "Bacon"
 ```
-
 
 <!--
   - test: `designatedConvenience`
@@ -1572,7 +1537,6 @@ a `name` value of `[Unnamed]`:
 let mysteryMeat = Food()
 // mysteryMeat's name is "[Unnamed]"
 ```
-
 
 <!--
   - test: `designatedConvenience`
@@ -1603,7 +1567,6 @@ class RecipeIngredient: Food {
 }
 ```
 
-
 <!--
   - test: `designatedConvenience`
   
@@ -1624,7 +1587,6 @@ class RecipeIngredient: Food {
 The figure below shows the initializer chain for the `RecipeIngredient` class:
 
 ![](initializersExample02)
-
 
 The `RecipeIngredient` class has a single designated initializer,
 `init(name: String, quantity: Int)`,
@@ -1676,7 +1638,6 @@ let oneBacon = RecipeIngredient(name: "Bacon")
 let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 ```
 
-
 <!--
   - test: `designatedConvenience`
   
@@ -1709,7 +1670,6 @@ class ShoppingListItem: RecipeIngredient {
 }
 ```
 
-
 <!--
   - test: `designatedConvenience`
   
@@ -1738,7 +1698,6 @@ The figure below shows the overall initializer chain for all three classes:
 
 ![](initializersExample03)
 
-
 You can use all three of the inherited initializers
 to create a new `ShoppingListItem` instance:
 
@@ -1757,7 +1716,6 @@ for item in breakfastList {
 // 1 x Bacon ✘
 // 6 x Eggs ✘
 ```
-
 
 <!--
   - test: `designatedConvenience`
@@ -1875,7 +1833,6 @@ if valueChanged == nil {
 // Prints "3.14159 conversion to Int doesn't maintain value"
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -1916,7 +1873,6 @@ struct Animal {
 }
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -1944,7 +1900,6 @@ if let giraffe = someCreature {
 // Prints "An animal was initialized with a species of Giraffe"
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -1971,7 +1926,6 @@ if anonymousCreature == nil {
 }
 // Prints "The anonymous creature couldn't be initialized"
 ```
-
 
 <!--
   - test: `failableInitializers`
@@ -2025,7 +1979,6 @@ enum TemperatureUnit {
 }
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -2066,7 +2019,6 @@ if unknownUnit == nil {
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
 ```
-
 
 <!--
   - test: `failableInitializers`
@@ -2115,7 +2067,6 @@ if unknownUnit == nil {
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
 ```
-
 
 <!--
   - test: `failableInitializersForEnumerations`
@@ -2227,7 +2178,6 @@ class CartItem: Product {
 }
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -2272,7 +2222,6 @@ if let twoSocks = CartItem(name: "sock", quantity: 2) {
 // Prints "Item: sock, quantity: 2"
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -2295,7 +2244,6 @@ if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
 }
 // Prints "Unable to initialize zero shirts"
 ```
-
 
 <!--
   - test: `failableInitializers`
@@ -2321,7 +2269,6 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
 }
 // Prints "Unable to initialize one unnamed product"
 ```
-
 
 <!--
   - test: `failableInitializers`
@@ -2389,7 +2336,6 @@ class Document {
 }
 ```
 
-
 <!--
   - test: `failableInitializers`
   
@@ -2431,7 +2377,6 @@ class AutomaticallyNamedDocument: Document {
     }
 }
 ```
-
 
 <!--
   - test: `failableInitializers`
@@ -2475,7 +2420,6 @@ class UntitledDocument: Document {
     }
 }
 ```
-
 
 <!--
   - test: `failableInitializers`
@@ -2697,7 +2641,6 @@ class SomeClass {
 }
 ```
 
-
 <!--
   - test: `requiredInitializers`
   
@@ -2763,7 +2706,6 @@ class SomeSubclass: SomeClass {
     }
 }
 ```
-
 
 <!--
   - test: `requiredInitializers`
@@ -2868,7 +2810,6 @@ class SomeClass {
 }
 ```
 
-
 <!--
   - test: `defaultPropertyWithClosure`
   
@@ -2914,7 +2855,6 @@ with alternating black and white squares.
 
 ![](chessBoard)
 
-
 To represent this game board,
 the `Chessboard` structure has a single property called `boardColors`,
 which is an array of 64 `Bool` values.
@@ -2944,7 +2884,6 @@ struct Chessboard {
     }
 }
 ```
-
 
 <!--
   - test: `chessboard`
@@ -2988,7 +2927,6 @@ print(board.squareIsBlackAt(row: 7, column: 7))
 // Prints "false"
 ```
 
-
 <!--
   - test: `chessboard`
   
@@ -3001,7 +2939,6 @@ print(board.squareIsBlackAt(row: 7, column: 7))
   <- false
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

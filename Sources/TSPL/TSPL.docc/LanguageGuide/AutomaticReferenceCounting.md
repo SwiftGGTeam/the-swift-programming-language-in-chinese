@@ -1,5 +1,3 @@
-
-
 # Automatic Reference Counting
 
 Model the lifetime of objects and their relationships.
@@ -74,7 +72,6 @@ class Person {
 }
 ```
 
-
 <!--
   - test: `howARCWorks`
   
@@ -110,7 +107,6 @@ var reference2: Person?
 var reference3: Person?
 ```
 
-
 <!--
   - test: `howARCWorks`
   
@@ -128,7 +124,6 @@ and assign it to one of these three variables:
 reference1 = Person(name: "John Appleseed")
 // Prints "John Appleseed is being initialized"
 ```
-
 
 <!--
   - test: `howARCWorks`
@@ -156,7 +151,6 @@ reference2 = reference1
 reference3 = reference1
 ```
 
-
 <!--
   - test: `howARCWorks`
   
@@ -178,7 +172,6 @@ reference1 = nil
 reference2 = nil
 ```
 
-
 <!--
   - test: `howARCWorks`
   
@@ -196,7 +189,6 @@ at which point it's clear that you are no longer using the `Person` instance:
 reference3 = nil
 // Prints "John Appleseed is being deinitialized"
 ```
-
 
 <!--
   - test: `howARCWorks`
@@ -247,7 +239,6 @@ class Apartment {
 }
 ```
 
-
 <!--
   - test: `referenceCycles`
   
@@ -291,7 +282,6 @@ var john: Person?
 var unit4A: Apartment?
 ```
 
-
 <!--
   - test: `referenceCycles`
   
@@ -309,7 +299,6 @@ john = Person(name: "John Appleseed")
 unit4A = Apartment(unit: "4A")
 ```
 
-
 <!--
   - test: `referenceCycles`
   
@@ -325,7 +314,6 @@ and the `unit4A` variable has a strong reference to the new `Apartment` instance
 
 ![](referenceCycle01)
 
-
 You can now link the two instances together
 so that the person has an apartment, and the apartment has a tenant.
 Note that an exclamation point (`!`) is used to unwrap and access
@@ -336,7 +324,6 @@ so that the properties of those instances can be set:
 john!.apartment = unit4A
 unit4A!.tenant = john
 ```
-
 
 <!--
   - test: `referenceCycles`
@@ -351,7 +338,6 @@ Here's how the strong references look after you link the two instances together:
 
 ![](referenceCycle02)
 
-
 Unfortunately, linking these two instances creates
 a strong reference cycle between them.
 The `Person` instance now has a strong reference to the `Apartment` instance,
@@ -365,7 +351,6 @@ and the instances aren't deallocated by ARC:
 john = nil
 unit4A = nil
 ```
-
 
 <!--
   - test: `referenceCycles`
@@ -385,7 +370,6 @@ Here's how the strong references look after you set
 the `john` and `unit4A` variables to `nil`:
 
 ![](referenceCycle03)
-
 
 The strong references between the `Person` instance
 and the `Apartment` instance remain and can't be broken.
@@ -481,7 +465,6 @@ class Apartment {
 }
 ```
 
-
 <!--
   - test: `weakReferences`
   
@@ -516,7 +499,6 @@ john!.apartment = unit4A
 unit4A!.tenant = john
 ```
 
-
 <!--
   - test: `weakReferences`
   
@@ -536,7 +518,6 @@ Here's how the references look now that you've linked the two instances together
 
 ![](weakReference01)
 
-
 The `Person` instance still has a strong reference to the `Apartment` instance,
 but the `Apartment` instance now has a *weak* reference to the `Person` instance.
 This means that when you break the strong reference held by
@@ -547,7 +528,6 @@ there are no more strong references to the `Person` instance:
 john = nil
 // Prints "John Appleseed is being deinitialized"
 ```
-
 
 <!--
   - test: `weakReferences`
@@ -564,7 +544,6 @@ and the `tenant` property is set to `nil`:
 
 ![](weakReference02)
 
-
 The only remaining strong reference to the `Apartment` instance
 is from the `unit4A` variable.
 If you break *that* strong reference,
@@ -574,7 +553,6 @@ there are no more strong references to the `Apartment` instance:
 unit4A = nil
 // Prints "Apartment 4A is being deinitialized"
 ```
-
 
 <!--
   - test: `weakReferences`
@@ -589,7 +567,6 @@ Because there are no more strong references to the `Apartment` instance,
 it too is deallocated:
 
 ![](weakReference03)
-
 
 > Note: In systems that use garbage collection,
 > weak pointers are sometimes used to implement a simple caching mechanism
@@ -682,7 +659,6 @@ class CreditCard {
 }
 ```
 
-
 <!--
   - test: `unownedReferences`
   
@@ -721,7 +697,6 @@ This variable has an initial value of nil, by virtue of being optional:
 var john: Customer?
 ```
 
-
 <!--
   - test: `unownedReferences`
   
@@ -739,7 +714,6 @@ john = Customer(name: "John Appleseed")
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 ```
 
-
 <!--
   - test: `unownedReferences`
   
@@ -753,7 +727,6 @@ Here's how the references look, now that you've linked the two instances:
 
 ![](unownedReference01)
 
-
 The `Customer` instance now has a strong reference to the `CreditCard` instance,
 and the `CreditCard` instance has an unowned reference to the `Customer` instance.
 
@@ -762,7 +735,6 @@ when you break the strong reference held by the `john` variable,
 there are no more strong references to the `Customer` instance:
 
 ![](unownedReference02)
-
 
 Because there are no more strong references to the `Customer` instance,
 it's deallocated.
@@ -775,7 +747,6 @@ john = nil
 // Prints "John Appleseed is being deinitialized"
 // Prints "Card #1234567890123456 is being deinitialized"
 ```
-
 
 <!--
   - test: `unownedReferences`
@@ -844,7 +815,6 @@ class Course {
 }
 ```
 
-
 <!--
   - test: `unowned-optional-references`
   
@@ -898,7 +868,6 @@ intermediate.nextCourse = advanced
 department.courses = [intro, intermediate, advanced]
 ```
 
-
 <!--
   - test: `unowned-optional-references`
   
@@ -922,7 +891,6 @@ which maintains an unowned optional reference to
 the course a student should take after completing this one.
 
 ![](unownedOptionalReference)
-
 
 An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
@@ -1028,7 +996,6 @@ class City {
 }
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
   
@@ -1090,7 +1057,6 @@ var country = Country(name: "Canada", capitalName: "Ottawa")
 print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // Prints "Canada's capital city is called Ottawa"
 ```
-
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
@@ -1168,7 +1134,6 @@ class HTMLElement {
 }
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
   
@@ -1241,7 +1206,6 @@ print(heading.asHTML())
 // Prints "<h1>some default text</h1>"
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
   
@@ -1278,7 +1242,6 @@ print(paragraph!.asHTML())
 // Prints "<p>hello, world</p>"
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
   
@@ -1300,7 +1263,6 @@ Here's how the cycle looks:
 
 ![](closureReferenceCycle01)
 
-
 The instance's `asHTML` property holds a strong reference to its closure.
 However, because the closure refers to `self` within its body
 (as a way to reference `self.name` and `self.text`),
@@ -1321,7 +1283,6 @@ because of the strong reference cycle:
 ```swift
 paragraph = nil
 ```
-
 
 <!--
   - test: `strongReferenceCyclesForClosures`
@@ -1369,7 +1330,6 @@ lazy var someClosure = {
 }
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
   
@@ -1397,7 +1357,6 @@ lazy var someClosure = {
     // closure body goes here
 }
 ```
-
 
 <!--
   - test: `strongReferenceCyclesForClosures`
@@ -1466,7 +1425,6 @@ class HTMLElement {
 }
 ```
 
-
 <!--
   - test: `unownedReferencesForClosures`
   
@@ -1511,7 +1469,6 @@ print(paragraph!.asHTML())
 // Prints "<p>hello, world</p>"
 ```
 
-
 <!--
   - test: `unownedReferencesForClosures`
   
@@ -1526,7 +1483,6 @@ Here's how the references look with the capture list in place:
 
 ![](closureReferenceCycle02)
 
-
 This time, the capture of `self` by the closure is an unowned reference,
 and doesn't keep a strong hold on the `HTMLElement` instance it has captured.
 If you set the strong reference from the `paragraph` variable to `nil`,
@@ -1537,7 +1493,6 @@ as can be seen from the printing of its deinitializer message in the example bel
 paragraph = nil
 // Prints "p is being deinitialized"
 ```
-
 
 <!--
   - test: `unownedReferencesForClosures`
@@ -1550,7 +1505,6 @@ paragraph = nil
 
 For more information about capture lists,
 see <doc:Expressions#Capture-Lists>.
-
 
 <!--
 This source file is part of the Swift.org open source project

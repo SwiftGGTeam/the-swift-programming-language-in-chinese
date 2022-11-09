@@ -1,5 +1,3 @@
-
-
 # Version Compatibility
 
 Learn what functionality is available in older language modes.
@@ -50,7 +48,6 @@ This means, if you have a large project
 that's divided into multiple frameworks,
 you can migrate your code from Swift 4 to Swift 5.7
 one framework at a time.
-
 
 <!--
 This source file is part of the Swift.org open source project

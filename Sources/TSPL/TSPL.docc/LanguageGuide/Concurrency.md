@@ -1,5 +1,3 @@
-
-
 # Concurrency
 
 Perform asynchronous operations.
@@ -66,7 +64,6 @@ listPhotos(inGallery: "Summer Vacation") { photoNames in
 }
 ```
 
-
 <!--
   - test: `async-via-nested-completion-handlers`
   
@@ -122,7 +119,6 @@ func listPhotos(inGallery name: String) async -> [String] {
 }
 ```
 
-
 <!--
   - test: `async-function-shape`
   
@@ -173,7 +169,6 @@ let name = sortedNames[0]
 let photo = await downloadPhoto(named: name)
 show(photo)
 ```
-
 
 <!--
   - test: `defining-async-function`
@@ -264,7 +259,6 @@ add(firstPhoto, toGallery: "Road Trip")
 remove(firstPhoto, fromGallery: "Summer Vacation")
 ```
 
-
 There's no way for other code to run in between
 the call to `add(_:toGallery:)` and `remove(_:fromGallery:)`.
 During that time, the first photo appears in both galleries,
@@ -282,7 +276,6 @@ func move(_ photoName: String, from source: String, to destination: String) {
 let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
 move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
 ```
-
 
 In the example above,
 because the `move(_:from:to:)` function is synchronous,
@@ -366,7 +359,6 @@ for try await line in handle.bytes.lines {
     print(line)
 }
 ```
-
 
 <!--
   - test: `async-sequence`
@@ -457,7 +449,6 @@ let photos = [firstPhoto, secondPhoto, thirdPhoto]
 show(photos)
 ```
 
-
 <!--
   - test: `defining-async-function`
   
@@ -496,7 +487,6 @@ async let thirdPhoto = downloadPhoto(named: photoNames[2])
 let photos = await [firstPhoto, secondPhoto, thirdPhoto]
 show(photos)
 ```
-
 
 <!--
   - test: `calling-with-async-let`
@@ -575,7 +565,6 @@ await withTaskGroup(of: Data.self) { taskGroup in
     }
 }
 ```
-
 
 <!--
   TODO walk through the example
@@ -725,7 +714,6 @@ let handle = Task {
 let result = await handle.value
 ```
 
-
 For more information about managing detached tasks,
 see [Task](https://developer.apple.com/documentation/swift/task).
 
@@ -821,7 +809,6 @@ actor TemperatureLogger {
 }
 ```
 
-
 <!--
   - test: `actors, actors-implicitly-sendable`
   
@@ -859,7 +846,6 @@ print(await logger.max)
 // Prints "25"
 ```
 
-
 In this example,
 accessing `logger.max` is a possible suspension point.
 Because the actor allows only one task at a time to access its mutable state,
@@ -882,7 +868,6 @@ extension TemperatureLogger {
     }
 }
 ```
-
 
 The `update(with:)` method is already running on the actor,
 so it doesn't mark its access to properties like `max` with `await`.
@@ -924,7 +909,6 @@ For example:
 ```
 print(logger.max)  // Error
 ```
-
 
 Accessing `logger.max` without writing `await` fails because
 the properties of an actor are part of that actor's isolated local state.
@@ -1079,7 +1063,6 @@ let reading = TemperatureReading(measurement: 45)
 await logger.addReading(from: reading)
 ```
 
-
 <!--
   - test: `actors`
   
@@ -1111,7 +1094,6 @@ struct TemperatureReading {
     var measurement: Int
 }
 ```
-
 
 <!--
   - test: `actors-implicitly-sendable`
@@ -1184,7 +1166,6 @@ struct TemperatureReading {
   Probably don't cover unsafe continuations (SE-0300) in TSPL,
   but maybe link to them?
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

@@ -1,5 +1,3 @@
-
-
 # Deinitialization
 
 Release resources that require custom cleanup.
@@ -31,7 +29,6 @@ deinit {
     // perform the deinitialization
 }
 ```
-
 
 <!--
   - test: `deinitializer`
@@ -82,7 +79,6 @@ class Bank {
 }
 ```
 
-
 <!--
   - test: `deinitializer`
   
@@ -132,7 +128,6 @@ class Player {
 }
 ```
 
-
 <!--
   - test: `deinitializer`
   
@@ -172,7 +167,6 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 // Prints "There are now 9900 coins left in the bank"
 ```
 
-
 <!--
   - test: `deinitializer`
   
@@ -202,7 +196,6 @@ print("The bank now only has \(Bank.coinsInBank) coins left")
 // Prints "The bank now only has 7900 coins left"
 ```
 
-
 <!--
   - test: `deinitializer`
   
@@ -227,7 +220,6 @@ print("The bank now has \(Bank.coinsInBank) coins")
 // Prints "The bank now has 10000 coins"
 ```
 
-
 <!--
   - test: `deinitializer`
   
@@ -249,7 +241,6 @@ No other properties or variables are still referring to the `Player` instance,
 and so it's deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.
-
 
 <!--
 This source file is part of the Swift.org open source project

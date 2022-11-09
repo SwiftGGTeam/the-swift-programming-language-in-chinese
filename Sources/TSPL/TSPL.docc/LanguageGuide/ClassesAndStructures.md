@@ -1,5 +1,3 @@
-
-
 # Structures and Classes
 
 Model custom types that encapsulate data.
@@ -79,7 +77,6 @@ class SomeClass {
 }
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -117,7 +114,6 @@ class VideoMode {
     var name: String?
 }
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -171,7 +167,6 @@ let someResolution = Resolution()
 let someVideoMode = VideoMode()
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -205,7 +200,6 @@ print("The width of someResolution is \(someResolution.width)")
 // Prints "The width of someResolution is 0"
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -227,7 +221,6 @@ print("The width of someVideoMode is \(someVideoMode.resolution.width)")
 // Prints "The width of someVideoMode is 0"
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -244,7 +237,6 @@ someVideoMode.resolution.width = 1280
 print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 // Prints "The width of someVideoMode is now 1280"
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -266,7 +258,6 @@ can be passed to the memberwise initializer by name:
 ```swift
 let vga = Resolution(width: 640, height: 480)
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -333,7 +324,6 @@ let hd = Resolution(width: 1920, height: 1080)
 var cinema = hd
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -364,7 +354,6 @@ the width of the slightly wider 2K standard used for digital cinema projection
 cinema.width = 2048
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -380,7 +369,6 @@ shows that it has indeed changed to be `2048`:
 print("cinema is now \(cinema.width) pixels wide")
 // Prints "cinema is now 2048 pixels wide"
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -398,7 +386,6 @@ still has the old value of `1920`:
 print("hd is still \(hd.width) pixels wide")
 // Prints "hd is still 1920 pixels wide"
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -420,7 +407,6 @@ as shown in the figure below:
 
 ![](sharedStateStruct)
 
-
 The same behavior applies to enumerations:
 
 ```swift
@@ -439,7 +425,6 @@ print("The remembered direction is \(rememberedDirection)")
 // Prints "The current direction is north"
 // Prints "The remembered direction is west"
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -488,7 +473,6 @@ tenEighty.name = "1080i"
 tenEighty.frameRate = 25.0
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -516,7 +500,6 @@ let alsoTenEighty = tenEighty
 alsoTenEighty.frameRate = 30.0
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -533,7 +516,6 @@ as shown in the figure below:
 
 ![](sharedStateClass)
 
-
 Checking the `frameRate` property of `tenEighty`
 shows that it correctly reports the new frame rate of `30.0`
 from the underlying `VideoMode` instance:
@@ -542,7 +524,6 @@ from the underlying `VideoMode` instance:
 print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 // Prints "The frameRate property of tenEighty is now 30.0"
 ```
-
 
 <!--
   - test: `ClassesAndStructures`
@@ -647,7 +628,6 @@ if tenEighty === alsoTenEighty {
 // Prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
 ```
 
-
 <!--
   - test: `ClassesAndStructures`
   
@@ -729,7 +709,6 @@ see [Manual Memory Management](https://developer.apple.com/documentation/swift/s
 <!--
   QUESTION: what's the deal with tuples and reference types / value types?
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

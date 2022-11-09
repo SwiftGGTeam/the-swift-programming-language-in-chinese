@@ -1,5 +1,3 @@
-
-
 # Basic Operators
 
 Perform assignment, arithmetic, comparison, and Boolean operations.
@@ -62,7 +60,6 @@ a = b
 // a is now equal to 10
 ```
 
-
 <!--
   - test: `assignmentOperator`
   
@@ -82,7 +79,6 @@ its elements can be decomposed into multiple constants or variables at once:
 let (x, y) = (1, 2)
 // x is equal to 1, and y is equal to 2
 ```
-
 
 <!--
   - test: `assignmentOperator`
@@ -120,7 +116,6 @@ if x = y {
     // This isn't valid, because x = y doesn't return a value.
 }
 ```
-
 
 <!--
   - test: `assignmentOperatorInvalid`
@@ -164,7 +159,6 @@ Swift supports the four standard *arithmetic operators* for all number types:
 10.0 / 2.5  // equals 4.0
 ```
 
-
 <!--
   - test: `arithmeticOperators`
   
@@ -194,7 +188,6 @@ The addition operator is also supported for `String` concatenation:
 ```swift
 "hello, " + "world"  // equals "hello, world"
 ```
-
 
 <!--
   - test: `arithmeticOperators`
@@ -239,7 +232,6 @@ To calculate `9 % 4`, you first work out how many `4`s will fit inside `9`:
 
 ![](remainderInteger)
 
-
 You can fit two `4`s inside `9`, and the remainder is `1` (shown in orange).
 
 In Swift, this would be written as:
@@ -247,7 +239,6 @@ In Swift, this would be written as:
 ```swift
 9 % 4    // equals 1
 ```
-
 
 <!--
   - test: `arithmeticOperators`
@@ -277,7 +268,6 @@ The same method is applied when calculating the remainder for a negative value o
 ```swift
 -9 % 4   // equals -1
 ```
-
 
 <!--
   - test: `arithmeticOperators`
@@ -309,7 +299,6 @@ let minusThree = -three       // minusThree equals -3
 let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
 ```
 
-
 <!--
   - test: `arithmeticOperators`
   
@@ -332,7 +321,6 @@ the value it operates on, without any change:
 let minusSix = -6
 let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
 ```
-
 
 <!--
   - test: `arithmeticOperators`
@@ -358,7 +346,6 @@ var a = 1
 a += 2
 // a is now equal to 3
 ```
-
 
 <!--
   - test: `compoundAssignment`
@@ -407,7 +394,6 @@ Each of the comparison operators returns a `Bool` value to indicate whether or n
 2 <= 1   // false because 2 isn't less than or equal to 1
 ```
 
-
 <!--
   - test: `comparisonOperators`
   
@@ -446,7 +432,6 @@ if name == "world" {
 // Prints "hello, world", because name is indeed equal to "world".
 ```
 
-
 <!--
   - test: `comparisonOperators`
   
@@ -482,7 +467,6 @@ For example:
 (3, "apple") < (3, "bird")    // true because 3 is equal to 3, and "apple" is less than "bird"
 (4, "dog") == (4, "dog")      // true because 4 is equal to 4, and "dog" is equal to "dog"
 ```
-
 
 <!--
   - test: `tuple-comparison-operators`
@@ -525,7 +509,6 @@ with the `<` operator because the `<` operator can't be applied to
 ("blue", -1) < ("purple", 1)        // OK, evaluates to true
 ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
 ```
-
 
 <!--
   - test: `tuple-comparison-operators-err`
@@ -587,7 +570,6 @@ if question {
 }
 ```
 
-
 <!--
   - test: `ternaryConditionalOperatorOutline`
   
@@ -625,7 +607,6 @@ let rowHeight = contentHeight + (hasHeader ? 50 : 20)
 // rowHeight is equal to 90
 ```
 
-
 <!--
   - test: `ternaryConditionalOperatorPart1`
   
@@ -651,7 +632,6 @@ if hasHeader {
 }
 // rowHeight is equal to 90
 ```
-
 
 <!--
   - test: `ternaryConditionalOperatorPart2`
@@ -694,7 +674,6 @@ The nil-coalescing operator is shorthand for the code below:
 a != nil ? a! : b
 ```
 
-
 <!--
   - test: `nilCoalescingOperatorOutline`
   
@@ -729,7 +708,6 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 // userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
 ```
 
-
 <!--
   - test: `nilCoalescingOperator`
   
@@ -762,7 +740,6 @@ userDefinedColorName = "green"
 colorNameToUse = userDefinedColorName ?? defaultColorName
 // userDefinedColorName isn't nil, so colorNameToUse is set to "green"
 ```
-
 
 <!--
   - test: `nilCoalescingOperator`
@@ -828,7 +805,6 @@ for index in 1...5 {
 // 4 times 5 is 20
 // 5 times 5 is 25
 ```
-
 
 <!--
   - test: `rangeOperators`
@@ -902,7 +878,6 @@ for i in 0..<count {
 // Person 4 is called Jack
 ```
 
-
 <!--
   - test: `rangeOperators`
   
@@ -955,7 +930,6 @@ for name in names[...2] {
 // Brian
 ```
 
-
 <!--
   - test: `rangeOperators`
   
@@ -990,7 +964,6 @@ for name in names[..<2] {
 // Alex
 ```
 
-
 <!--
   - test: `rangeOperators`
   
@@ -1020,7 +993,6 @@ range.contains(7)   // false
 range.contains(4)   // true
 range.contains(-1)  // true
 ```
-
 
 <!--
   - test: `rangeOperators`
@@ -1067,7 +1039,6 @@ if !allowedEntry {
 }
 // Prints "ACCESS DENIED"
 ```
-
 
 <!--
   - test: `logicalOperators`
@@ -1116,7 +1087,6 @@ if enteredDoorCode && passedRetinaScan {
 // Prints "ACCESS DENIED"
 ```
 
-
 <!--
   - test: `logicalOperators`
   
@@ -1164,7 +1134,6 @@ if hasDoorKey || knowsOverridePassword {
 // Prints "Welcome!"
 ```
 
-
 <!--
   - test: `logicalOperators`
   
@@ -1192,7 +1161,6 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 }
 // Prints "Welcome!"
 ```
-
 
 <!--
   - test: `logicalOperators`
@@ -1243,7 +1211,6 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 // Prints "Welcome!"
 ```
 
-
 <!--
   - test: `logicalOperators`
   
@@ -1263,7 +1230,6 @@ The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
 use parentheses where they help to make your intentions clear.
-
 
 <!--
 This source file is part of the Swift.org open source project

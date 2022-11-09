@@ -1,5 +1,3 @@
-
-
 # Error Handling
 
 Respond to and recover from errors.
@@ -53,7 +51,6 @@ enum VendingMachineError: Error {
 }
 ```
 
-
 <!--
   - test: `throw-enum-error`
   
@@ -76,7 +73,6 @@ that five additional coins are needed by the vending machine:
 ```swift
 throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 ```
-
 
 <!--
   - test: `throw-enum-error`
@@ -139,7 +135,6 @@ func canThrowErrors() throws -> String
 
 func cannotThrowErrors() -> String
 ```
-
 
 <!--
   - test: `throwingFunctionDeclaration`
@@ -238,7 +233,6 @@ class VendingMachine {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
   
@@ -314,7 +308,6 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
   
@@ -356,7 +349,6 @@ struct PurchasedSnack {
     }
 }
 ```
-
 
 <!--
   - test: `errorHandling`
@@ -412,7 +404,6 @@ do {
 }
 ```
 
-
 You write a pattern after `catch` to indicate what errors
 that clause can handle.
 If a `catch` clause doesn't have a pattern,
@@ -447,7 +438,6 @@ do {
 }
 // Prints "Insufficient funds. Please insert an additional 2 coins."
 ```
-
 
 <!--
   - test: `errorHandling`
@@ -520,7 +510,6 @@ do {
 // Prints "Couldn't buy that from the vending machine."
 ```
 
-
 <!--
   - test: `errorHandling`
   
@@ -563,7 +552,6 @@ func eat(item: String) throws {
     }
 }
 ```
-
 
 <!--
   - test: `errorHandling`
@@ -619,7 +607,6 @@ do {
 }
 ```
 
-
 <!--
   - test: `optional-try`
   
@@ -665,7 +652,6 @@ func fetchData() -> Data? {
 }
 ```
 
-
 <!--
   - test: `optional-try-cached-data`
   
@@ -700,7 +686,6 @@ so it's appropriate to disable error propagation.
 ```swift
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
-
 
 <!--
   - test: `forceTryStatement`
@@ -755,7 +740,6 @@ func processFile(filename: String) throws {
 }
 ```
 
-
 <!--
   - test: `defer`
   
@@ -788,7 +772,6 @@ has a corresponding call to `close(_:)`.
 
 > Note: You can use a `defer` statement
 > even when no error handling code is involved.
-
 
 <!--
 This source file is part of the Swift.org open source project
