@@ -50,16 +50,15 @@ but don't rebase commits that are part of a pull request.
 Use the Git commit message to communicate with other contributors --
 both the people working on the project now
 who are reviewing your changes,
-and the people who will join the project in the future
-and will need to understand your changes.
-Well-written commit messages make it possible
-to come back to content later using tools like `git-blame`,
-and find the reason why the content is written that way.
+and people who join the project in the future
+who will need to understand what you changed and why.
 
 Every commit starts with a one-sentence summary.
 The summary usually fits in 50 characters,
 but it's ok to exceed that amount occasionally
 if rewriting for brevity would make it too hard to read.
+If it's hard to write a good summary,
+try breaking your changes into multiple smaller commits.
 
 If you can't explain the commit entirely in its summary,
 skip one line and add additional information.
@@ -70,9 +69,12 @@ alternatives you considered,
 and a summary of what you changed.
 Hard wrap these lines at 72 characters
 and leave a blank line between paragraphs.
-Remember that the body of a commit is plain text,
+The body of a commit is plain text,
 not markdown like the content of the book.
 
+Following these formatting conventions in your commit
+makes it easier to read
+in places like the output from `git` and notification emails.
 Most text editors can help you write a commit message
 by marking lines that are too long
 and hard wrapping text automatically.
