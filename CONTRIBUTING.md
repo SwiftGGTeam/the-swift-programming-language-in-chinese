@@ -27,45 +27,20 @@ and [this book’s style guide][tspl-style].
 [forum]: https://forums.swift.org/c/development/swift-docc/80
 [tspl-style]: /Style.md
 
-## Creating a feature branch
+## Working on a feature branch
 
 If this is your first contribution,
 start by making a fork of the Git repository.
 
 In your fork,
-make a new branch off of `main`.
-Some suggested branch-naming practices include the following:
-
-- Include numbers like a GitHub issue or Swift Evolution proposal number,
-  to make it easy to go back from the branch to that issue or SE proposal.
-  However, put the numbers at the end of the branch name,
-  to avoid interfering with autocompletion.
-  You're more likely to remember the English word the branch name starts with
-  than to remember the numbers.
-
-- Prefer underscores (`_`) between words instead of hyphens (`-`).
-  Many editing environments consider hyphens to be word separators,
-  so using underscores makes makes it easier to select the branch name
-  by double-clicking or another editor command to select a whole word.
-
-- Avoid overly long branch names.
-  You can usually describe what a branch is for in a few words.
-  Remember that a branch name doesn't need to stand alone:
-  the commits on that branch help explain its purpose,
-  and during review the pull request provides more context.
-
-Note that branch names are ephemeral:
-When your branch is merged,
-the merge commit includes information like
-the name of the pull request and its number,
-but not the name of the merged branch or the name of the fork.
-Make sure the branch name isn't the only place you write a piece of information.
-For example,
-when you fix a GitHub issue,
-include a "Fixes" line in the description of your pull request.
+make a new branch starting at `main`
+with a brief, descriptive name.
+Branch names are ephemeral:
+When a pull request is merged,
+the merge commit doesn’t include name of your feature branch.
 
 If you need to incorporate changes from `main` or resolve a merge conflict,
-merge that branch into your feature branch.
+merge `main` into your feature branch.
 Before creating a pull request,
 you can instead rebase your feature branch onto `main` if you prefer,
 but don't rebase commits that are part of a pull request.
