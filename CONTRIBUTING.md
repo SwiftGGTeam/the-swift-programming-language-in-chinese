@@ -24,7 +24,7 @@ Content in this book follows [Apple Style Guide][asg]
 and [this book’s style guide][tspl-style].
 
 [asg]: https://help.apple.com/applestyleguide/
-[forum]: https://forums.swift.org/c/development/swift-docc/80
+[forum]: https://forums.swift.org/c/swift-documentation/92
 [tspl-style]: /Style.md
 
 ## Working on a feature branch
