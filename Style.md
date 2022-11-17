@@ -306,7 +306,7 @@ see the README file at the top level of this repository.
 
 # Semantic Line Breaks
 
-The RST files in this repository use semantic line breaks,
+The markdown files in this repository use semantic line breaks,
 where lines end at sentence and clause boundaries.
 This keeps lines short enough to ensure that
 diffs remain readable when shown in places like
@@ -335,7 +335,7 @@ to help keep the diffs small and preserve per-line history.
 Don’t rewrap an existing line just because it’s too long,
 unless you’re actually making other changes.
 For historical reasons,
-here are parts of the book
+there are parts of the book
 that use a line length of 90 or 100 characters;
 rewrapping them just for the sake of line length
 would make history harder to follow and create a bunch of noisy diffs.
