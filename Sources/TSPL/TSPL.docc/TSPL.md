@@ -11,7 +11,7 @@
 
 ## Topics
 
-### Guided Tour
+### Welcome to Swift
 
 - <doc:AboutSwift>
 - <doc:Compatibility>
