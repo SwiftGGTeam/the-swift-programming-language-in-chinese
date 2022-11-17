@@ -7,6 +7,7 @@
 @Options(scope: global) {
   @AutomaticSeeAlso(disabled)
   @AutomaticTitleHeading(disabled)
+  @AutomaticArticleSubheading(disabled)
 }
 
 ## Topics
