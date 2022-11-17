@@ -1,5 +1,5 @@
-#!/bin/bash
-#
+#! /bin/bash
+
 # This source file is part of the Swift.org open source project
 #
 # Copyright (c) 2022 Apple Inc. and the Swift project authors
@@ -7,64 +7,64 @@
 #
 # See https://swift.org/LICENSE.txt for license information
 # See https://swift.org/CONTRIBUTORS.txt for Swift project authors
-#
-# Updates the GitHub Pages documentation site thats published from the 'docs'
+
+# Updates the GitHub Pages documentation site that's published from the 'docs'
 # subdirectory in the 'gh-pages' branch of this repository.
 #
 # This script should be run by someone with commit access to the 'gh-pages' branch
 # at a regular frequency so that the documentation content on the GitHub Pages site
 # is up-to-date with the content in this repo.
+
+# To use top-of-tree DocC, set environment variables like the following:
 #
+#     DOCC_EXEC=~/git/DocC/.build/arm64-apple-macosx/debug/docc
+#     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
 
 set -eu
 
-# A `realpath` alternative using the default C implementation.
-filepath() {
-  [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
+REMOTE=${1:-origin}
+CURRENT_COMMIT_HASH="$(git rev-parse --short HEAD)"
 
-SWIFT_BOOK_ROOT="$(dirname $(dirname $(filepath $0)))"
+# Start at the top level directory of the repository.
+cd "$(git rev-parse --show-toplevel)"
 
-# Set current directory to the repository root
-cd "$SWIFT_BOOK_ROOT"
+# Check out the 'gh-pages' branch in a subdirectory.
+git worktree add --checkout gh-pages "$REMOTE"/gh-pages
 
-# Use git worktree to checkout the gh-pages branch of this repository in a gh-pages sub-directory
-git fetch
-git worktree add --checkout gh-pages origin/gh-pages
-
-# Pretty print DocC JSON output so that it can be consistently diffed between commits
+# Pretty print DocC JSON output, so that it has a stable ordering and
+# can be diffed.  This lets us determine whether rebuilding resulted in
+# any changes to the content.
 export DOCC_JSON_PRETTYPRINT="YES"
 
-# Generate documentation for TSPL and output it
-# to the /docs subdirectory in the gh-pages worktree directory.
+# Build documentation, writing output in the gh-pages/docs subdirectory.
 export SWIFTPM_ENABLE_COMMAND_PLUGINS=1
 swift package \
-    --allow-writing-to-directory "$SWIFT_BOOK_ROOT/gh-pages/docs" \
+    --allow-writing-to-directory "./gh-pages/docs" \
     generate-documentation \
     --target TSPL \
     --disable-indexing \
     --transform-for-static-hosting \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
-    --output-path "$SWIFT_BOOK_ROOT/gh-pages/docs"
-
-# Save the current commit we've just built documentation from in a variable
-CURRENT_COMMIT_HASH=`git rev-parse --short HEAD`
+    --output-path "./gh-pages/docs"
 
 # Commit and push our changes to the gh-pages branch
-cd gh-pages
+pushd gh-pages
 git add docs
 
-if [ -n "$(git status --porcelain)" ]; then
-    echo "Documentation changes found. Commiting the changes to the 'gh-pages' branch and pushing to origin."
+if [[ -n "$(git status --porcelain)" ]]
+then
+    echo "Found documentation changes."
+    echo "Committing the changes to the 'gh-pages' branch and pushing to $REMOTE."
     git commit -m "Update GitHub Pages documentation site to '$CURRENT_COMMIT_HASH'."
-    git push origin HEAD:gh-pages
+    echo
+    git push "$REMOTE" HEAD:gh-pages
 else
   # No changes found, nothing to commit.
   echo "No documentation changes found."
 fi
 
+popd
+
 # Delete the git worktree we created
-cd ..
-exit
 git worktree remove gh-pages
