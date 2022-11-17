@@ -1,7 +1,7 @@
-# The Swift Programming Language
+# ``TSPL``
 
 @Metadata {
-  @TechnologyRoot
+  @DisplayName("The Swift Programming Language")
 }
 
 @Options(scope: global) {
