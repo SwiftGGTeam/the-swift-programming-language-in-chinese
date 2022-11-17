@@ -60,11 +60,9 @@ then
     echo
     git push "$REMOTE" HEAD:gh-pages
 else
-  # No changes found, nothing to commit.
-  echo "No documentation changes found."
+    echo "No documentation changes found."
 fi
 
 popd
 
-# Delete the git worktree we created
 git worktree remove gh-pages
