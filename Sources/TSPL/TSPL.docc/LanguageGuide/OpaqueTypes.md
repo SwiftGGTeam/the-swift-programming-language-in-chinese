@@ -15,8 +15,6 @@ opaque types preserve type identity ---
 the compiler has access to the type information,
 but clients of the module don't.
 
-<!-- XXX introduce "some" keyword -->
-
 <!-- XXX introduce existentials -->
 
 ## The Problem That Opaque Types Solve
@@ -289,6 +287,8 @@ This implementation uses two triangles and a square,
 but the function could be rewritten to draw a trapezoid
 in a variety of other ways
 without changing its return type.
+
+<!-- XXX introduce "some" keyword -->
 
 This example highlights the way that an opaque return type
 is like the reverse of a generic type.
@@ -618,8 +618,6 @@ for _ in 1...5 {
 -->
 
 ## Differences Between Opaque Types and Boxed Protocol Types
-
-<!-- XXX revisit if existentials introduced after this chapter -->
 
 Returning an opaque type looks very similar
 to using a protocol type as the return type of a function,
