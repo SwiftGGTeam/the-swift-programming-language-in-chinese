@@ -760,8 +760,6 @@ For example,
 when you call a function that takes an argument
 and that argument's type is generic,
 the caller chooses the type.
-For information about using protocols as generic constraints,
-see <doc:Generics>.
 
 Code with an opaque type
 works with some type that conforms to the protocol.
@@ -772,8 +770,6 @@ Using an opaque type lets you prevent implementation details of an API
 from leaking through the layer of abstraction --
 for example, by hiding the specific return type from a function,
 and only guaranteeing that the value conforms to a given protocol.
-For information about opaque types,
-see <doc:OpaqueTypes>.
 
 <!-- XXX TR: Is there any performance cost to call out when introducing opaque types? -->
 
@@ -782,8 +778,11 @@ works with any type, chosen at runtime, that conforms to the protocol.
 To support this runtime flexibility,
 Swift adds a level of indirection (known as a box),
 which has a performance cost.
-For information about boxed protocol types,
-see <doc:BoxedProtocolTypes>.
+
+For information about using protocols as generic constraints,
+see <doc:Generics>.
+For information about opaque types, and boxed protocol types,
+see <doc:OpaqueTypes>.
 
 <!--
 
