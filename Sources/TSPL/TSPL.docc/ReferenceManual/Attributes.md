@@ -2242,7 +2242,6 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 >
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
 
-
 <!--
 This source file is part of the Swift.org open source project
 

@@ -62,7 +62,6 @@ and describes the type inference behavior of Swift.
 >
 > *type* → **`(`** *type* **`)`**
 
-
 ## Type Annotation
 
 A *type annotation* explicitly specifies the type of a variable or expression.

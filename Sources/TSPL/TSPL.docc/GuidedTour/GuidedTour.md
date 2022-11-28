@@ -263,6 +263,10 @@ occupations["Jayne"] = "Public Relations"
   ```
 -->
 
+<!--
+  iBooks Store screenshot begins here.
+-->
+
 Arrays automatically grow as you add elements.
 
 ```swift
@@ -280,32 +284,9 @@ print(fruits)
   ```
 -->
 
-To create an empty array or dictionary,
-use the initializer syntax.
-
-```swift
-let emptyArray: [String] = []
-let emptyDictionary: [String: Float] = [:]
-```
-
-<!--
-  - test: `guided-tour`
-
-  ```swifttest
-  -> let emptyArray: [String] = []
-  -> let emptyDictionary: [String: Float] = [:]
-  ```
--->
-
-If type information can be inferred,
-you can write an empty array as `[]`
-and an empty dictionary as `[:]` ---
-for example, when you set a new value for a variable
-or pass an argument to a function.
-
-<!--
-  iBooks Store screenshot begins here.
--->
+You also use brackets to write an empty array or dictionary.
+For an array, write `[]`,
+and for a dictionary, write `[:]`.
 
 ```swift
 fruits = []
@@ -318,6 +299,28 @@ occupations = [:]
   ```swifttest
   -> fruits = []
   -> occupations = [:]
+  ```
+-->
+
+If you're assigning an empty array or dictionary to a new variable,
+or another place where there isn't any type information,
+you need to specify the type.
+
+```swift
+let emptyArray: [String] = []
+let emptyDictionary: [String: Float] = [:]
+```
+
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> let emptyArray: [String] = []
+  -> let emptyDictionary: [String: Float] = [:]
+  ---
+  -> let anotherEmptyArray = [String]()
+  -> let emptyDictionary = [String: Float]()
   ```
 -->
 
