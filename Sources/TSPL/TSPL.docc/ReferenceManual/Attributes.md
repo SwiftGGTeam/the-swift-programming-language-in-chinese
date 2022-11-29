@@ -1364,42 +1364,49 @@ they default to being the same as `Component`.
 
 The result-building methods are as follows:
 
-<!--
-  start of term/defn list
--->
+- term `static func buildBlock(_ components: Component...) -> Component`:
+  Combines an array of partial results into a single partial result.
+  A result builder must implement this method.
 
-- term `static func buildBlock(_ components: Component...) -> Component`: Combines an array of partial results into a single partial result.
-A result builder must implement this method.
-- term `static func buildOptional(_ component: Component?) -> Component`: Builds a partial result from a partial result that can be `nil`.
-Implement this method to support `if` statements
-that don’t include an `else` clause.
-- term `static func buildEither(first: Component) -> Component`: Builds a partial result whose value varies depending on some condition.
-Implement both this method and `buildEither(second:)`
-to support `switch` statements
-and `if` statements that include an `else` clause.
-- term `static func buildEither(second: Component) -> Component`: Builds a partial result whose value varies depending on some condition.
-Implement both this method and `buildEither(first:)`
-to support `switch` statements
-and `if` statements that include an `else` clause.
-- term `static func buildArray(_ components: [Component]) -> Component`: Builds a partial result from an array of partial results.
-Implement this method to support `for` loops.
-- term `static func buildExpression(_ expression: Expression) -> Component`: Builds a partial result from an expression.
-You can implement this method to perform preprocessing ---
-for example, converting expressions to an internal type ---
-or to provide additional information for type inference at use sites.
-- term `static func buildFinalResult(_ component: Component) -> FinalResult`: Builds a final result from a partial result.
-You can implement this method as part of a result builder
-that uses a different type for partial and final results,
-or to perform other postprocessing on a result before returning it.
-- term `static func buildLimitedAvailability(_ component: Component) -> Component`: Builds a partial result that propagates or erases type information
-outside a compiler-control statement
-that performs an availability check.
-You can use this to erase type information
-that varies between the conditional branches.
+- term `static func buildOptional(_ component: Component?) -> Component`:
+  Builds a partial result from a partial result that can be `nil`.
+  Implement this method to support `if` statements
+  that don’t include an `else` clause.
 
-<!--
-  end of term/defn list
--->
+- term `static func buildEither(first: Component) -> Component`:
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and `buildEither(second:)`
+  to support `switch` statements
+  and `if` statements that include an `else` clause.
+
+- term `static func buildEither(second: Component) -> Component`:
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and `buildEither(first:)`
+  to support `switch` statements
+  and `if` statements that include an `else` clause.
+
+- term `static func buildArray(_ components: [Component]) -> Component`:
+  Builds a partial result from an array of partial results.
+  Implement this method to support `for` loops.
+
+- term `static func buildExpression(_ expression: Expression) -> Component`:
+  Builds a partial result from an expression.
+  You can implement this method to perform preprocessing ---
+  for example, converting expressions to an internal type ---
+  or to provide additional information for type inference at use sites.
+
+- term `static func buildFinalResult(_ component: Component) -> FinalResult`:
+  Builds a final result from a partial result.
+  You can implement this method as part of a result builder
+  that uses a different type for partial and final results,
+  or to perform other postprocessing on a result before returning it.
+
+- term `static func buildLimitedAvailability(_ component: Component) -> Component`:
+  Builds a partial result that propagates or erases type information
+  outside a compiler-control statement
+  that performs an availability check.
+  You can use this to erase type information
+  that varies between the conditional branches.
 
 For example, the code below defines a simple result builder
 that builds an array of integers.

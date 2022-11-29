@@ -3644,38 +3644,47 @@ or meaning of a declaration. You specify a declaration modifier by writing the a
 keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
 that introduces the declaration.
 
-- term `class`: Apply this modifier to a member of a class
-to indicate that the member is a member of the class itself,
-rather than a member of instances of the class.
-Members of a superclass that have this modifier
-and don't have the `final` modifier
-can be overridden by subclasses.
-- term `dynamic`: Apply this modifier to any member of a class that can be represented by Objective-C.
-When you mark a member declaration with the `dynamic` modifier,
-access to that member is always dynamically dispatched using the Objective-C runtime.
-Access to that member is never inlined or devirtualized by the compiler.Because declarations marked with the `dynamic` modifier are dispatched
-using the Objective-C runtime, they must be marked with the
-`objc` attribute.
-- term `final`: Apply this modifier to a class or to a property, method,
-or subscript member of a class. It's applied to a class to indicate that the class
-can't be subclassed. It's applied to a property, method, or subscript of a class
-to indicate that a class member can't be overridden in any subclass.
-For an example of how to use the `final` attribute,
-see <doc:Inheritance#Preventing-Overrides>.
-- term `lazy`: Apply this modifier to a stored variable property of a class or structure
-to indicate that the property's initial value is calculated and stored at most
-once, when the property is first accessed.
-For an example of how to use the `lazy` modifier,
-see <doc:Properties#Lazy-Stored-Properties>.
-- term `optional`: Apply this modifier to a protocol's property, method,
-or subscript members to indicate that a conforming type isn't required
-to implement those members.You can apply the `optional` modifier only to protocols that are marked
-with the `objc` attribute. As a result, only class types can adopt and conform
-to a protocol that contains optional member requirements.
-For more information about how to use the `optional` modifier
-and for guidance about how to access optional protocol members---
-for example, when you're not sure whether a conforming type implements them---
-see <doc:Protocols#Optional-Protocol-Requirements>.
+- term `class`:
+  Apply this modifier to a member of a class
+  to indicate that the member is a member of the class itself,
+  rather than a member of instances of the class.
+  Members of a superclass that have this modifier
+  and don't have the `final` modifier
+  can be overridden by subclasses.
+
+- term `dynamic`:
+  Apply this modifier to any member of a class that can be represented by Objective-C.
+  When you mark a member declaration with the `dynamic` modifier,
+  access to that member is always dynamically dispatched using the Objective-C runtime.
+  Access to that member is never inlined or devirtualized by the compiler.Because declarations marked with the `dynamic` modifier are dispatched
+  using the Objective-C runtime, they must be marked with the
+  `objc` attribute.
+
+- term `final`:
+  Apply this modifier to a class or to a property, method,
+  or subscript member of a class. It's applied to a class to indicate that the class
+  can't be subclassed. It's applied to a property, method, or subscript of a class
+  to indicate that a class member can't be overridden in any subclass.
+  For an example of how to use the `final` attribute,
+  see <doc:Inheritance#Preventing-Overrides>.
+
+- term `lazy`:
+  Apply this modifier to a stored variable property of a class or structure
+  to indicate that the property's initial value is calculated and stored at most
+  once, when the property is first accessed.
+  For an example of how to use the `lazy` modifier,
+  see <doc:Properties#Lazy-Stored-Properties>.
+
+- term `optional`:
+  Apply this modifier to a protocol's property, method,
+  or subscript members to indicate that a conforming type isn't required
+  to implement those members.You can apply the `optional` modifier only to protocols that are marked
+  with the `objc` attribute. As a result, only class types can adopt and conform
+  to a protocol that contains optional member requirements.
+  For more information about how to use the `optional` modifier
+  and for guidance about how to access optional protocol members---
+  for example, when you're not sure whether a conforming type implements them---
+  see <doc:Protocols#Optional-Protocol-Requirements>.
 
 <!--
   TODO: Currently, you can't check for an optional initializer,
@@ -3684,55 +3693,67 @@ see <doc:Protocols#Optional-Protocol-Requirements>.
   compiler team. Update this section if they decide to make everything work
   properly for optional initializer requirements.
 -->
-- term `required`: Apply this modifier to a designated or convenience initializer
-of a class to indicate that every subclass must implement that initializer.
-The subclass's implementation of that initializer
-must also be marked with the `required` modifier.
-- term `static`: Apply this modifier to a member of a structure, class, enumeration, or protocol
-to indicate that the member is a member of the type,
-rather than a member of instances of that type.
-In the scope of a class declaration,
-writing the `static` modifier on a member declaration
-has the same effect as writing the `class` and `final` modifiers
-on that member declaration.
-However, constant type properties of a class are an exception:
-`static` has its normal, nonclass meaning there
-because you can't write `class` or `final` on those declarations.
-- term `unowned`: Apply this modifier to a stored variable, constant, or stored property
-to indicate that the variable or property has an unowned reference
-to the object stored as its value.
-If you try to access the variable or property
-after the object has been deallocated,
-a runtime error is raised.
-Like a weak reference,
-the type of the property or value must be a class type;
-unlike a weak reference,
-the type is non-optional.
-For an example and more information about the `unowned` modifier,
-see <doc:AutomaticReferenceCounting#Unowned-References>.
-- term `unowned(safe)`: An explicit spelling of `unowned`.
-- term `unowned(unsafe)`: Apply this modifier to a stored variable, constant, or stored property
-to indicate that the variable or property has an unowned reference
-to the object stored as its value.
-If you try to access the variable or property
-after the object has been deallocated,
-you'll access the memory at the location where the object used to be,
-which is a memory-unsafe operation.
-Like a weak reference,
-the type of the property or value must be a class type;
-unlike a weak reference,
-the type is non-optional.
-For an example and more information about the `unowned` modifier,
-see <doc:AutomaticReferenceCounting#Unowned-References>.
-- term `weak`: Apply this modifier to a stored variable or stored variable property
-to indicate that the variable or property has a weak reference to the
-object stored as its value. The type of the variable or property
-must be an optional class type.
-If you access the variable or property
-after the object has been deallocated,
-its value is `nil`.
-For an example and more information about the `weak` modifier,
-see <doc:AutomaticReferenceCounting#Weak-References>.
+
+- term `required`:
+  Apply this modifier to a designated or convenience initializer
+  of a class to indicate that every subclass must implement that initializer.
+  The subclass's implementation of that initializer
+  must also be marked with the `required` modifier.
+
+- term `static`:
+  Apply this modifier to a member of a structure, class, enumeration, or protocol
+  to indicate that the member is a member of the type,
+  rather than a member of instances of that type.
+  In the scope of a class declaration,
+  writing the `static` modifier on a member declaration
+  has the same effect as writing the `class` and `final` modifiers
+  on that member declaration.
+  However, constant type properties of a class are an exception:
+  `static` has its normal, nonclass meaning there
+  because you can't write `class` or `final` on those declarations.
+
+- term `unowned`:
+  Apply this modifier to a stored variable, constant, or stored property
+  to indicate that the variable or property has an unowned reference
+  to the object stored as its value.
+  If you try to access the variable or property
+  after the object has been deallocated,
+  a runtime error is raised.
+  Like a weak reference,
+  the type of the property or value must be a class type;
+  unlike a weak reference,
+  the type is non-optional.
+  For an example and more information about the `unowned` modifier,
+  see <doc:AutomaticReferenceCounting#Unowned-References>.
+
+- term `unowned(safe)`:
+  An explicit spelling of `unowned`.
+
+- term `unowned(unsafe)`:
+  Apply this modifier to a stored variable, constant, or stored property
+  to indicate that the variable or property has an unowned reference
+  to the object stored as its value.
+  If you try to access the variable or property
+  after the object has been deallocated,
+  you'll access the memory at the location where the object used to be,
+  which is a memory-unsafe operation.
+  Like a weak reference,
+  the type of the property or value must be a class type;
+  unlike a weak reference,
+  the type is non-optional.
+  For an example and more information about the `unowned` modifier,
+  see <doc:AutomaticReferenceCounting#Unowned-References>.
+
+- term `weak`:
+  Apply this modifier to a stored variable or stored variable property
+  to indicate that the variable or property has a weak reference to the
+  object stored as its value. The type of the variable or property
+  must be an optional class type.
+  If you access the variable or property
+  after the object has been deallocated,
+  its value is `nil`.
+  For an example and more information about the `weak` modifier,
+  see <doc:AutomaticReferenceCounting#Weak-References>.
 
 ### Access Control Levels
 
@@ -3741,22 +3762,31 @@ You can mark a declaration with one of the access-level modifiers below
 to specify the declaration's access level.
 Access control is discussed in detail in <doc:AccessControl>.
 
-- term `open`: Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
-by code in the same module as the declaration.
-Declarations marked with the `open` access-level modifier can also be accessed and subclassed
-by code in a module that imports the module that contains that declaration.
-- term `public`: Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
-by code in the same module as the declaration.
-Declarations marked with the `public` access-level modifier can also be accessed (but not subclassed)
-by code in a module that imports the module that contains that declaration.
-- term `internal`: Apply this modifier to a declaration to indicate the declaration can be accessed
-only by code in the same module as the declaration.
-By default,
-most declarations are implicitly marked with the `internal` access-level modifier.
-- term `fileprivate`: Apply this modifier to a declaration to indicate the declaration can be accessed
-only by code in the same source file as the declaration.
-- term `private`: Apply this modifier to a declaration to indicate the declaration can be accessed
-only by code within the declaration's immediate enclosing scope.
+- term `open`:
+  Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
+  by code in the same module as the declaration.
+  Declarations marked with the `open` access-level modifier can also be accessed and subclassed
+  by code in a module that imports the module that contains that declaration.
+
+- term `public`:
+  Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
+  by code in the same module as the declaration.
+  Declarations marked with the `public` access-level modifier can also be accessed (but not subclassed)
+  by code in a module that imports the module that contains that declaration.
+
+- term `internal`:
+  Apply this modifier to a declaration to indicate the declaration can be accessed
+  only by code in the same module as the declaration.
+  By default,
+  most declarations are implicitly marked with the `internal` access-level modifier.
+
+- term `fileprivate`:
+  Apply this modifier to a declaration to indicate the declaration can be accessed
+  only by code in the same source file as the declaration.
+
+- term `private`:
+  Apply this modifier to a declaration to indicate the declaration can be accessed
+  only by code within the declaration's immediate enclosing scope.
 
 For the purpose of access control,
 extensions to the same type that are in the same file

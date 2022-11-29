@@ -925,9 +925,14 @@ convenience init(<#parameters#>) {
 To simplify the relationships between designated and convenience initializers,
 Swift applies the following three rules for delegation calls between initializers:
 
-- term **Rule 1**: A designated initializer must call a designated initializer from its immediate superclass.
-- term **Rule 2**: A convenience initializer must call another initializer from the *same* class.
-- term **Rule 3**: A convenience initializer must ultimately call a designated initializer.
+- term **Rule 1**:
+  A designated initializer must call a designated initializer from its immediate superclass.
+
+- term **Rule 2**:
+  A convenience initializer must call another initializer from the *same* class.
+
+- term **Rule 3**:
+  A convenience initializer must ultimately call a designated initializer.
 
 A simple way to remember this is:
 
@@ -990,8 +995,9 @@ by another initializer unexpectedly.
 Swift's compiler performs four helpful safety-checks to make sure that
 two-phase initialization is completed without error:
 
-- term **Safety check 1**: A designated initializer must ensure that all of the properties introduced by its class
-are initialized before it delegates up to a superclass initializer.
+- term **Safety check 1**:
+  A designated initializer must ensure that all of the properties introduced by its class
+  are initialized before it delegates up to a superclass initializer.
 
 As mentioned above,
 the memory for an object is only considered fully initialized
@@ -999,19 +1005,24 @@ once the initial state of all of its stored properties is known.
 In order for this rule to be satisfied, a designated initializer must make sure that
 all of its own properties are initialized before it hands off up the chain.
 
-- term **Safety check 2**: A designated initializer must delegate up to a superclass initializer
-before assigning a value to an inherited property.
-If it doesn't, the new value the designated initializer assigns
-will be overwritten by the superclass as part of its own initialization.
-- term **Safety check 3**: A convenience initializer must delegate to another initializer
-before assigning a value to *any* property
-(including properties defined by the same class).
-If it doesn't, the new value the convenience initializer assigns
-will be overwritten by its own class's designated initializer.
-- term **Safety check 4**: An initializer can't call any instance methods,
-read the values of any instance properties,
-or refer to `self` as a value
-until after the first phase of initialization is complete.
+- term **Safety check 2**:
+  A designated initializer must delegate up to a superclass initializer
+  before assigning a value to an inherited property.
+  If it doesn't, the new value the designated initializer assigns
+  will be overwritten by the superclass as part of its own initialization.
+
+- term **Safety check 3**:
+  A convenience initializer must delegate to another initializer
+  before assigning a value to *any* property
+  (including properties defined by the same class).
+  If it doesn't, the new value the convenience initializer assigns
+  will be overwritten by its own class's designated initializer.
+
+- term **Safety check 4**:
+  An initializer can't call any instance methods,
+  read the values of any instance properties,
+  or refer to `self` as a value
+  until after the first phase of initialization is complete.
 
 The class instance isn't fully valid until the first phase ends.
 Properties can only be accessed, and methods can only be called,
@@ -1431,13 +1442,16 @@ and can inherit your superclass initializers with minimal effort whenever it's s
 Assuming that you provide default values for any new properties you introduce in a subclass,
 the following two rules apply:
 
-- term **Rule 1**: If your subclass doesn't define any designated initializers,
-it automatically inherits all of its superclass designated initializers.
-- term **Rule 2**: If your subclass provides an implementation of
-*all* of its superclass designated initializers ---
-either by inheriting them as per rule 1,
-or by providing a custom implementation as part of its definition ---
-then it automatically inherits all of the superclass convenience initializers.
+- term **Rule 1**:
+  If your subclass doesn't define any designated initializers,
+  it automatically inherits all of its superclass designated initializers.
+
+- term **Rule 2**:
+  If your subclass provides an implementation of
+  *all* of its superclass designated initializers ---
+  either by inheriting them as per rule 1,
+  or by providing a custom implementation as part of its definition ---
+  then it automatically inherits all of the superclass convenience initializers.
 
 These rules apply even if your subclass adds further convenience initializers.
 
