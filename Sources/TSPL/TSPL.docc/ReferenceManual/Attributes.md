@@ -1368,6 +1368,17 @@ The result-building methods are as follows:
   Combines an array of partial results into a single partial result.
   A result builder must implement this method.
 
+- term `static func buildPartialBlock(first: Component) -> Component`:
+  Builds a partial result component from the first component.
+  Implement both this method and `buildPartialBlock(accumulated:next:)`
+  to support building blocks one component at a time.
+
+- term `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
+  Builds a partial result component
+  by combining an accumulated component with a new component.
+  Implement both this method and `buildPartialBlock(first:)`
+  to support building blocks one component at a time.
+
 - term `static func buildOptional(_ component: Component?) -> Component`:
   Builds a partial result from a partial result that can be `nil`.
   Implement this method to support `if` statements
