@@ -549,36 +549,77 @@ if you know the underlying type:
 Here's an example of a protocol used as a type:
 
 ```swift
-class Dice {
-   let sides: Int
-   let generator: any RandomNumberGenerator
-   init(sides: Int, generator: any RandomNumberGenerator) {
-      self.sides = sides
-      self.generator = generator
-   }
-   func roll() -> Int {
-      return Int(generator.random() * Double(sides)) + 1
-   }
+func drawVertically(_ shapes: any Shape...) {
+    for shape in shapes {
+        print(shape.draw())
+        print()
+    }
 }
+
+let largeTriangle = Triangle(size: 5)
+let largeSquare = Square(size: 5)
+drawVertically(largeTriangle, largeSquare)
 ```
 
+In the example above,
+`shapes` is an heterogeneous array: its values have different types,
+but they all conform to the `Shape` protocol.
+Within the `drawVertically(_:)` function,
+the code can use methods, properties, and subscripts
+that are required by the `Shape` protocol ---
+for example, this code calls the `draw()` method on each element of the array.
+
 <!--
-  - test: `protocols`
+  - test: `boxed-protocol-types`
   
   ```swifttest
-  -> class Dice {
-        let sides: Int
-        let generator: any RandomNumberGenerator
-        init(sides: Int, generator: any RandomNumberGenerator) {
-           self.sides = sides
-           self.generator = generator
-        }
-        func roll() -> Int {
-           return Int(generator.random() * Double(sides)) + 1
-        }
-     }
+   >> protocol Shape {
+   >>    func draw() -> String
+   >> }
+   >> struct Triangle: Shape {
+   >>    var size: Int
+   >>    func draw() -> String {
+   >>        var result: [String] = []
+   >>        for length in 1...size {
+   >>            result.append(String(repeating: "*", count: length))
+   >>        }
+   >>        return result.joined(separator: "\n")
+   >>    }
+   >> }
+   >> struct Square: Shape {
+   >>     var size: Int
+   >>     func draw() -> String {
+   >>         let line = String(repeating: "*", count: size)
+   >>         let result = Array<String>(repeating: line, count: size)
+   >>         return result.joined(separator: "\n")
+   >>     }
+   >> }
+   -> func drawVertically(_ shapes: any Shape...) {
+          for shape in shapes {
+              print(shape.draw())
+              print()
+          }
+      }
+   ---
+   -> let largeTriangle = Triangle(size: 5)
+   -> let largeSquare = Square(size: 5)
+   -> drawVertically(largeTriangle, largeSquare)
+   << *
+   << **
+   << ***
+   << ****
+   << *****
+   <<-
+   << *****
+   << *****
+   << *****
+   << *****
+   << *****
+   <<-
   ```
 -->
+
+<!-- XXX: Rewrite to end of section -->
 
 This example defines a new class called `Dice`,
 which represents an *n*-sided dice for use in a board game.

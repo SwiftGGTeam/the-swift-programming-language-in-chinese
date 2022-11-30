@@ -786,9 +786,11 @@ Swift adds a level of indirection when necessary ---
 this indirection is known as a *box*,
 and it has a performance cost.
 Because of this flexibility,
-Swift doesn't know the underlying type until the code is running,
-which means only protocol requirements are available,
-not any other APIs from the underlying type.
+Swift doesn't know the underlying type at compile time,
+which means you can access only the members
+that are required by the protocol.
+Accessing any other APIs on the underlying type
+requires casting at runtime.
 
 For information about using protocols as generic constraints,
 see <doc:Generics>.
