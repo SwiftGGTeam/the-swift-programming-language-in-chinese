@@ -500,21 +500,51 @@ XXX OUTLINE
 
 - explain how they are "boxed"
 - introduce the "any" keyword
+- list example(s) of why you would use boxed protocol type
+    e.g. heterogeneous array
 - revisit the list of where you can use existentials
 
+The existing dice and random numbers example
+isn't really a good illustration of using existentials.
+It would probably be better expressed as Dice<T: RandomNumberGenerator> instead;
+through the whole lifetime of a Dice instance,
+it only has a single type generating random numbers.
+
+Xiodi Wu wrote:
+
+    Rather, in terms of user-facing language semantics, I'd throw in a mention
+    there (even a short one) that because the underlying type can vary at
+    runtime, there isn't a statically known underlying type, and for that
+    reason not all APIs (nor protocol conformances) of the underlying type can
+    be made available through the box.  It would be really helpful if then in
+    the corresponding dedicated subsection on existentials some more detailed
+    but still didactically appropriate treatment of this issue could be
+    included, as it is a very common question here on the user forums and
+    probably more of what users trip up on when they use existentials than the
+    performance bit. (Feel free to lift any text I've contributed to the
+    educational notes in the Swift repository on this issue.)
+
+You can as-cast an existential,
+like other values of non-concrete types or subtypes,
+if you know the underlying type:
+
+    protocol P {
+        var p: Int { get }
+    }
+
+    struct S: P {
+        var p = 12
+        var q = 100
+    }
+
+    var s: any P = S()
+    print(s.p)
+
+    if let ss = s as? S { print(ss.q) }
+
+    print(type(of: s))
+
 -->
-
-You can use a protocol in many places where other types are allowed, including:
-
-- As a parameter type or return type in a function, method, or initializer
-- As the type of a constant, variable, or property
-- As the type of items in an array, dictionary, or other container
-
-> Note: Because protocols are types,
-> begin their names with a capital letter
-> (such as `FullyNamed` and `RandomNumberGenerator`)
-> to match the names of other types in Swift
-> (such as `Int`, `String`, and `Double`).
 
 Here's an example of a protocol used as a type:
 

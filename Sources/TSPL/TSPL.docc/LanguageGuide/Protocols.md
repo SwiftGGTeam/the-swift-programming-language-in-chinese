@@ -88,6 +88,12 @@ class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
   ```
 -->
 
+> Note: Because protocols are types,
+> begin their names with a capital letter
+> (such as `FullyNamed` and `RandomNumberGenerator`)
+> to match the names of other types in Swift
+> (such as `Int`, `String`, and `Double`).
+
 ## Property Requirements
 
 A protocol can require any conforming type to provide
@@ -776,8 +782,13 @@ and only guaranteeing that the value conforms to a given protocol.
 Code with a boxed protocol type
 works with any type, chosen at runtime, that conforms to the protocol.
 To support this runtime flexibility,
-Swift adds a level of indirection (known as a box),
-which has a performance cost.
+Swift adds a level of indirection when necessary ---
+this indirection is known as a *box*,
+and it has a performance cost.
+Because of this flexibility,
+Swift doesn't know the underlying type until the code is running,
+which means only protocol requirements are available,
+not any other APIs from the underlying type.
 
 For information about using protocols as generic constraints,
 see <doc:Generics>.
