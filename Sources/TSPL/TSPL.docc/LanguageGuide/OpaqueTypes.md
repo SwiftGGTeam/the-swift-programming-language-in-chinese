@@ -496,25 +496,7 @@ must return values of only a single type.
 
 ## Boxed Protocol Types
 
-Using a protocol as a type is sometimes called an *existential type*,
-which comes from the phrase
-"there exists a type *T* such that *T* conforms to the protocol".
-
 <!--
-
-XXX OUTLINE
-
-- explain how they are "boxed"
-- introduce the "any" keyword
-- list example(s) of why you would use boxed protocol type
-    e.g. heterogeneous array
-- revisit the list of where you can use existentials
-
-The existing dice and random numbers example
-isn't really a good illustration of using existentials.
-It would probably be better expressed as Dice<T: RandomNumberGenerator> instead;
-through the whole lifetime of a Dice instance,
-it only has a single type generating random numbers.
 
 Xiodi Wu wrote:
 
@@ -552,28 +534,26 @@ if you know the underlying type:
 
 -->
 
-Here's an example of a protocol used as a type:
+A boxed protocol type is also sometimes called an *existential type*,
+which comes from the phrase
+"there exists a type *T* such that *T* conforms to the protocol".
+To make a boxed protocol type,
+write `any` before the name of a protocol.
+Here's an example:
 
 ```swift
-func drawVertically(_ shapes: any Shape...) {
-    for shape in shapes {
-        print(shape.draw())
-        print()
+struct VerticalShapes: Shape {
+    var shapes: [any Shape]
+    func draw() -> String {
+        return shapes.map { $0.draw() }.joined(separator: "\n\n")
     }
 }
 
 let largeTriangle = Triangle(size: 5)
 let largeSquare = Square(size: 5)
-drawVertically(largeTriangle, largeSquare)
+let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
+print(vertical.draw())
 ```
-
-In the example above,
-`shapes` is an heterogeneous array: its values have different types,
-but they all conform to the `Shape` protocol.
-Within the `drawVertically(_:)` function,
-the code can use methods, properties, and subscripts
-that are required by the `Shape` protocol ---
-for example, this code calls the `draw()` method on each element of the array.
 
 <!--
   - test: `boxed-protocol-types`
@@ -599,17 +579,18 @@ for example, this code calls the `draw()` method on each element of the array.
    >>         let result = Array<String>(repeating: line, count: size)
    >>         return result.joined(separator: "\n")
    >>     }
-   >> }
-   -> func drawVertically(_ shapes: any Shape...) {
-          for shape in shapes {
-              print(shape.draw())
-              print()
+   >
+   -> struct VerticalShapes: Shape {
+          var shapes: [any Shape]
+          func draw() -> String {
+              return shapes.map { $0.draw() }.joined(separator: "\n\n")
           }
       }
-   ---
+   ->
    -> let largeTriangle = Triangle(size: 5)
    -> let largeSquare = Square(size: 5)
-   -> drawVertically(largeTriangle, largeSquare)
+   -> let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
+   -> print(vertical.draw())
    << *
    << **
    << ***
@@ -621,11 +602,51 @@ for example, this code calls the `draw()` method on each element of the array.
    << *****
    << *****
    << *****
-   <<-
   ```
 -->
 
-<!-- XXX: Rewrite to end of section -->
+In the example above,
+`VerticalShapes` declares the type of `shapes` as `[any Shape]` ---
+an array of boxed `Shape` elements.
+Each element in the array can be a different type,
+and each of those types must conform to the `Shape` protocol.
+
+Within the `VerticalShapes` type,
+the code can use methods, properties, and subscripts
+that are required by the `Shape` protocol.
+The `draw()` method of `VerticalShapes`
+calls the `draw()` method on each element of the array.
+This API is available because `Shape` requires a `draw()` method.
+In contrast,
+trying to access the `size` property of the triangle,
+or any other APIs that aren't required by `Shape`,
+produces an error.
+
+Contrast the three types you could use for `shapes`:
+
+- Using generics,
+  by writing `struct VerticalShapes<S: Shape>` and `var shapes: [S]`,
+  makes an array whose elements are some specific shape type,
+  and where the identity of that specific type
+  is visible to any code that interacts with the array.
+
+- Using an opaque type,
+  by writing `var shapes: [some Shape]`,
+  makes an array whose elements are some specific shape type,
+  and where that specific type's identify is hidden.
+
+- Using a boxed protocol type,
+  by writing `var shapes: [any Shape]`,
+  makes an array that can store elements of different types,
+  and where those types' identities are hidden.
+
+In this case,
+a boxed protocol type is the only approach
+that lets callers of `VerticalShapes` mix different kinds of shapes together.
+
+<!-- XXX explain how they are "boxed" --->
+
+<!-- XXX: Old version to delete & rewrite
 
 This example defines a new class called `Dice`,
 which represents an *n*-sided dice for use in a board game.
@@ -677,6 +698,8 @@ for _ in 1...5 {
 // Random dice roll is 5
 // Random dice roll is 4
 ```
+
+-->
 
 <!--
   - test: `protocols`
