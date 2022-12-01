@@ -932,7 +932,7 @@ This behavior contrasts with how an opaque types work,
 where there is some specific conforming type known at compile time.
 The additional level of indirection that's used
 when working with a boxed protocol type is called :newTerm:`boxing`.
-Applying ``any`` to the ``Any`` or ``AnyObject`` types
+Applying `any` to the `Any` or `AnyObject` types
 is redundant and has no effect.
 
 <!--
