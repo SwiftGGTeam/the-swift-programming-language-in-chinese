@@ -14,8 +14,14 @@
 # This script should be run by someone with commit access to the 'gh-pages' branch
 # at a regular frequency so that the documentation content on the GitHub Pages site
 # is up-to-date with the content in this repo.
-
-# To use top-of-tree DocC, set environment variables like the following:
+#
+# To use top-of-tree DocC, clone the following repositories:
+#
+#     https://github.com/apple/swift-docc
+#     https://github.com/apple/swift-docc-render
+#
+# Then set environment variables to paths in their working directories,
+# like the following, before running this script:
 #
 #     DOCC_EXEC=~/git/DocC/.build/arm64-apple-macosx/debug/docc
 #     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
