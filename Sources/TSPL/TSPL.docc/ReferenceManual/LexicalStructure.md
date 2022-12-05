@@ -430,7 +430,7 @@ The following tokens are reserved as punctuation
 and can't be used as custom operators:
 `(`, `)`, `{`, `}`, `[`, `]`,
 `.`, `,`, `:`, `;`, `=`, `@`, `#`,
-`&` (as a prefix operator), `->`, `\\``,
+`&` (as a prefix operator), `->`, `` ` ``,
 `?`, and `!` (as a postfix operator).
 
 ## Literals
