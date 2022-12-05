@@ -582,7 +582,9 @@ in a collection with no defined ordering.
 You can use a set instead of an array when the order of items isn't important,
 or when you need to ensure that an item only appears once.
 
-> Note: Swift's `Set` type is bridged to Foundation's `NSSet` class.For more information about using `Set` with Foundation and Cocoa,
+> Note: Swift's `Set` type is bridged to Foundation's `NSSet` class.
+>
+> For more information about using `Set` with Foundation and Cocoa,
 > see [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530).
 
 <!--
@@ -1029,7 +1031,9 @@ You use a dictionary when you need to look up values based on their identifier,
 in much the same way that a real-world dictionary is used to look up
 the definition for a particular word.
 
-> Note: Swift's `Dictionary` type is bridged to Foundation's `NSDictionary` class.For more information about using `Dictionary` with Foundation and Cocoa,
+> Note: Swift's `Dictionary` type is bridged to Foundation's `NSDictionary` class.
+>
+> For more information about using `Dictionary` with Foundation and Cocoa,
 > see [Bridging Between Dictionary and NSDictionary](https://developer.apple.com/documentation/swift/dictionary#2846239).
 
 ### Dictionary Type Shorthand Syntax
