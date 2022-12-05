@@ -1,6 +1,6 @@
 # Types
 
-Use built-in nominal and structural types.
+Use built-in named and compound types.
 
 In Swift, there are two kinds of types: named types and compound types.
 A *named type* is a type that can be given a particular name when it's defined.
