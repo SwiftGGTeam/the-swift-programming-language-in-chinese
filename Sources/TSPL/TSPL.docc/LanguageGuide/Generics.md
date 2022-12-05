@@ -320,11 +320,11 @@ The illustration below shows the push and pop behavior for a stack:
 
 ![](stackPushPop)
 
-- There are currently three values on the stack.
-- A fourth value is pushed onto the top of the stack.
-- The stack now holds four values, with the most recent one at the top.
-- The top item in the stack is popped.
-- After popping a value, the stack once again holds three values.
+1. There are currently three values on the stack.
+2. A fourth value is pushed onto the top of the stack.
+3. The stack now holds four values, with the most recent one at the top.
+4. The top item in the stack is popped.
+5. After popping a value, the stack once again holds three values.
 
 Here's how to write a nongeneric version of a stack,
 in this case for a stack of `Int` values:
