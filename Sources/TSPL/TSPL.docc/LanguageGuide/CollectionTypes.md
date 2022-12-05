@@ -898,7 +898,7 @@ or determining whether two sets contain all, some, or none of the same values.
 
 ### Fundamental Set Operations
 
-The illustration below depicts two sets---`a` and `b`---
+The illustration below depicts two sets --- `a` and `b` ---
 with the results of various set operations represented by the shaded regions.
 
 ![](setVennDiagram)
@@ -957,7 +957,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 
 ### Set Membership and Equality
 
-The illustration below depicts three sets---`a`, `b` and `c`---
+The illustration below depicts three sets --- `a`, `b` and `c` ---
 with overlapping regions representing elements shared among sets.
 Set `a` is a *superset* of set `b`,
 because `a` contains all elements in `b`.

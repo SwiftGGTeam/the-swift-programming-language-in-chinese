@@ -799,8 +799,8 @@ A function definition can appear inside another function declaration.
 This kind of function is known as a *nested function*.
 
 A nested function is nonescaping if it captures
-a value that's guaranteed to never escape---
-such as an in-out parameter---
+a value that's guaranteed to never escape ---
+such as an in-out parameter ---
 or passed as a nonescaping function argument.
 Otherwise, the nested function is an escaping function.
 
@@ -1529,7 +1529,7 @@ An *enumeration declaration* introduces a named enumeration type into your progr
 
 Enumeration declarations have two basic forms and are declared using the `enum` keyword.
 The body of an enumeration declared using either form contains
-zero or more values---called *enumeration cases*---
+zero or more values --- called *enumeration cases* ---
 and any number of declarations,
 including computed properties,
 instance methods, type methods, initializers, type aliases,
@@ -2208,8 +2208,8 @@ and only to members of protocols that are marked
 with the `objc` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the `optional` declaration modifier
-and for guidance about how to access optional protocol members---
-for example, when you're not sure whether a conforming type implements them---
+and for guidance about how to access optional protocol members ---
+for example, when you're not sure whether a conforming type implements them ---
 see <doc:Protocols#Optional-Protocol-Requirements>.
 
 <!--
@@ -2825,8 +2825,8 @@ deinit {
 
 A deinitializer is called automatically when there are no longer any references
 to a class object, just before the class object is deallocated.
-A deinitializer can be declared only in the body of a class declaration---
-but not in an extension of a class---
+A deinitializer can be declared only in the body of a class declaration ---
+but not in an extension of a class ---
 and each class can have at most one.
 
 A subclass inherits its superclass's deinitializer,
@@ -3673,8 +3673,8 @@ to implement those members.You can apply the `optional` modifier only to protoco
 with the `objc` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the `optional` modifier
-and for guidance about how to access optional protocol members---
-for example, when you're not sure whether a conforming type implements them---
+and for guidance about how to access optional protocol members ---
+for example, when you're not sure whether a conforming type implements them ---
 see <doc:Protocols#Optional-Protocol-Requirements>.
 
 <!--
