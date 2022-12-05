@@ -122,9 +122,9 @@ are reserved for the Swift compiler and standard library.
 To use a reserved word as an identifier,
 put a backtick (\`) before and after it.
 For example, `class` isn't a valid identifier,
-but \``class`\` is valid.
+but `` `class` `` is valid.
 The backticks aren't considered part of the identifier;
-\``x`\` and `x` have the same meaning.
+`` `x` `` and `x` have the same meaning.
 
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named `$0`, `$1`, `$2`, and so on.
