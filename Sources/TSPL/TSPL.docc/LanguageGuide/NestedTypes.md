@@ -1,6 +1,6 @@
 # Nested Types
 
-Define one data type inside of another data type.
+Define data types inside the scope of another data type.
 
 Enumerations are often created to support a specific class or structure's functionality.
 Similarly, it can be convenient to define utility classes and structures
