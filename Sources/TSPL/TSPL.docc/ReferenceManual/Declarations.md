@@ -3653,7 +3653,9 @@ can be overridden by subclasses.
 - term `dynamic`: Apply this modifier to any member of a class that can be represented by Objective-C.
 When you mark a member declaration with the `dynamic` modifier,
 access to that member is always dynamically dispatched using the Objective-C runtime.
-Access to that member is never inlined or devirtualized by the compiler.Because declarations marked with the `dynamic` modifier are dispatched
+Access to that member is never inlined or devirtualized by the compiler.
+
+Because declarations marked with the `dynamic` modifier are dispatched
 using the Objective-C runtime, they must be marked with the
 `objc` attribute.
 - term `final`: Apply this modifier to a class or to a property, method,
@@ -3669,7 +3671,9 @@ For an example of how to use the `lazy` modifier,
 see <doc:Properties#Lazy-Stored-Properties>.
 - term `optional`: Apply this modifier to a protocol's property, method,
 or subscript members to indicate that a conforming type isn't required
-to implement those members.You can apply the `optional` modifier only to protocols that are marked
+to implement those members.
+
+You can apply the `optional` modifier only to protocols that are marked
 with the `objc` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the `optional` modifier
