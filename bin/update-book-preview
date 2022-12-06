@@ -43,13 +43,11 @@ git worktree add --checkout gh-pages "$REMOTE"/gh-pages
 export DOCC_JSON_PRETTYPRINT="YES"
 
 # Build documentation, writing output in the gh-pages/docs subdirectory.
-export SWIFTPM_ENABLE_COMMAND_PLUGINS=1
 swift package \
     --allow-writing-to-directory "./gh-pages/docs" \
     generate-documentation \
     --target TSPL \
     --disable-indexing \
-    --transform-for-static-hosting \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
     --output-path "./gh-pages/docs"
