@@ -2005,7 +2005,9 @@ by one of the switch's other cases.
 > The compiler assumes that preconditions are always true,
 > and it optimizes your code accordingly.
 > However, the `fatalError(_:file:line:)` function always halts execution,
-> regardless of optimization settings.You can use the `fatalError(_:file:line:)` function
+> regardless of optimization settings.
+>
+> You can use the `fatalError(_:file:line:)` function
 > during prototyping and early development
 > to create stubs for functionality that hasn't been implemented yet,
 > by writing `fatalError("Unimplemented")` as the stub implementation.

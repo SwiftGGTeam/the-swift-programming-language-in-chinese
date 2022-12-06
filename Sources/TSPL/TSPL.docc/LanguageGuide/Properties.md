@@ -741,7 +741,9 @@ the new value that you assign replaces the one that was just set.
 > are called when a property is set in a subclass initializer,
 > after the superclass initializer has been called.
 > They aren't called while a class is setting its own properties,
-> before the superclass initializer has been called.For more information about initializer delegation,
+> before the superclass initializer has been called.
+>
+> For more information about initializer delegation,
 > see <doc:Initialization#Initializer-Delegation-for-Value-Types>
 > and <doc:Initialization#Initializer-Delegation-for-Class-Types>.
 
@@ -1680,7 +1682,9 @@ and they're written in the same way as computed properties.
 > Note: Global constants and variables are always computed lazily,
 > in a similar manner to <doc:Properties#Lazy-Stored-Properties>.
 > Unlike lazy stored properties,
-> global constants and variables don't need to be marked with the `lazy` modifier.Local constants and variables are never computed lazily.
+> global constants and variables don't need to be marked with the `lazy` modifier.
+>
+> Local constants and variables are never computed lazily.
 
 You can apply a property wrapper to a local stored variable,
 but not to a global variable or a computed variable.
@@ -1767,7 +1771,9 @@ in the same way as computed instance properties.
 > Note: Unlike stored instance properties,
 > you must always give stored type properties a default value.
 > This is because the type itself doesn't have an initializer
-> that can assign a value to a stored type property at initialization time.Stored type properties are lazily initialized on their first access.
+> that can assign a value to a stored type property at initialization time.
+>
+> Stored type properties are lazily initialized on their first access.
 > They're guaranteed to be initialized only once,
 > even when accessed by multiple threads simultaneously,
 > and they don't need to be marked with the `lazy` modifier.
