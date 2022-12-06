@@ -601,7 +601,9 @@ and ARC never sets an unowned reference's value to `nil`.
 -->
 
 > Important: Use an unowned reference only when you are sure that
-> the reference *always* refers to an instance that hasn't been deallocated.If you try to access the value of an unowned reference
+> the reference *always* refers to an instance that hasn't been deallocated.
+>
+> If you try to access the value of an unowned reference
 > after that instance has been deallocated,
 > you'll get a runtime error.
 
@@ -768,7 +770,9 @@ after the `john` variable is set to `nil`.
 > you need to disable runtime safety checks ---
 > for example, for performance reasons.
 > As with all unsafe operations,
-> you take on the responsibility for checking that code for safety.You indicate an unsafe unowned reference by writing `unowned(unsafe)`.
+> you take on the responsibility for checking that code for safety.
+>
+> You indicate an unsafe unowned reference by writing `unowned(unsafe)`.
 > If you try to access an unsafe unowned reference
 > after the instance that it refers to is deallocated,
 > your program will try to access the memory location
@@ -909,7 +913,9 @@ that other courses might have.
 > Note: The underlying type of an optional value is `Optional`,
 > which is an enumeration in the Swift standard library.
 > However, optionals are an exception to the rule that
-> value types can't be marked with `unowned`.The optional that wraps the class
+> value types can't be marked with `unowned`.
+>
+> The optional that wraps the class
 > doesn't use reference counting,
 > so you don't need to maintain a strong reference to the optional.
 
