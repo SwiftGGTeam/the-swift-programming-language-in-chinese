@@ -884,11 +884,11 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
 In-out parameters are passed as follows:
 
-- When the function is called,
+1. When the function is called,
    the value of the argument is copied.
-- In the body of the function,
+2. In the body of the function,
    the copy is modified.
-- When the function returns,
+3. When the function returns,
    the copy's value is assigned to the original argument.
 
 This behavior is known as *copy-in copy-out*

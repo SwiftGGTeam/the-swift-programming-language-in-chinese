@@ -883,11 +883,11 @@ the temperature logger is in a temporary inconsistent state.
 Preventing multiple tasks from interacting with the same instance simultaneously
 prevents problems like the following sequence of events:
 
-- Your code calls the `update(with:)` method.
+1. Your code calls the `update(with:)` method.
    It updates the `measurements` array first.
-- Before your code can update `max`,
+2. Before your code can update `max`,
    code elsewhere reads the maximum value and the array of temperatures.
-- Your code finishes its update by changing `max`.
+3. Your code finishes its update by changing `max`.
 
 In this case,
 the code running elsewhere would read incorrect information

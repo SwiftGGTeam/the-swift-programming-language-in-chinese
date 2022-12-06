@@ -202,9 +202,9 @@ whereas shifting it to the right by one position halves its value.
 
 The bit-shifting behavior for unsigned integers is as follows:
 
-- Existing bits are moved to the left or right by the requested number of places.
-- Any bits that are moved beyond the bounds of the integer's storage are discarded.
-- Zeros are inserted in the spaces left behind
+1. Existing bits are moved to the left or right by the requested number of places.
+2. Any bits that are moved beyond the bounds of the integer's storage are discarded.
+3. Zeros are inserted in the spaces left behind
    after the original bits are moved to the left or right.
 
 This approach is known as a *logical shift*.

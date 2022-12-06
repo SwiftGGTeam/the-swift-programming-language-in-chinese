@@ -1294,9 +1294,9 @@ You can provide an explicit name in parentheses after `set`.
 Notice that the initializer for the `EquilateralTriangle` class
 has three different steps:
 
-- Setting the value of properties that the subclass declares.
-- Calling the superclass's initializer.
-- Changing the value of properties defined by the superclass.
+1. Setting the value of properties that the subclass declares.
+2. Calling the superclass's initializer.
+3. Changing the value of properties defined by the superclass.
    Any additional setup work that uses methods, getters, or setters
    can also be done at this point.
 
