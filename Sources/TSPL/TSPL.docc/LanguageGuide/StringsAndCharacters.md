@@ -958,7 +958,9 @@ print("the number of characters in \(word) is \(word.count)")
 > If you are working with particularly long string values,
 > be aware that the `count` property
 > must iterate over the Unicode scalars in the entire string
-> in order to determine the characters for that string.The count of the characters returned by the `count` property
+> in order to determine the characters for that string.
+>
+> The count of the characters returned by the `count` property
 > isn't always the same as the `length` property of
 > an `NSString` that contains the same characters.
 > The length of an `NSString` is based on
