@@ -644,6 +644,13 @@ In this case,
 a boxed protocol type is the only approach
 that lets callers of `VerticalShapes` mix different kinds of shapes together.
 
+To support this runtime flexibility,
+Swift adds a level of indirection when necessary ---
+this indirection is known as a *box*,
+and it has a performance cost.
+Memory allocation for the box adds a level of indirection.
+<!-- XXX revisit para above -->
+
 <!-- XXX explain how they are "boxed" --->
 
 <!-- XXX: Old version to delete & rewrite
