@@ -308,9 +308,7 @@ while <#condition#> {
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 ![](snakesAndLadders)
 
@@ -364,9 +362,7 @@ board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
   ```
 -->
 
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, `board[03]` is equal to `+08`,

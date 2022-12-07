@@ -1,0 +1,41 @@
+#! /usr/bin/env zsh
+
+setopt ERR_EXIT NO_UNSET PIPE_FAIL
+
+# This script helps identify changes that show up in screenshots.
+#
+# Set $COMMIT to the oldest commit this script should consider:
+# ideally, that's the commit when the current screenshots were taken.
+#
+# Lines in the output that start with whitespace are unchanged since $COMMIT.
+# Lines that start with a commit ID were changed in that commit, after $COMMIT.
+#
+# To check whether we need to re-shoot the screenshots,
+# run this script and check whether any lines start with commit IDs.
+# For example:
+#
+#     ./bin/find_screenshot_changes.zsh | grep -v '^ '
+#
+# To show those commits that made scheenshot changes:
+#
+#     ./bin/find_screenshot_changes.zsh |
+#     cut -d ' ' -f 1 |
+#     sort -u |
+#     xargs -L1 git --no-pager log -1
+
+BEGIN='<!-- Apple Books screenshot begins here -->'
+END='<!-- Apple Books screenshot ends here -->'
+
+# The commit when these comment markers were originally added.
+# COMMIT=64627a260ed600015dbad1a853d8b85f611b61d4
+
+# The commit when the content was converted from RST to markdown.
+COMMIT=96f0925407c6bd9eadd9d58d253bad3e1ef7a9f2
+
+cd Sources/TSPL/TSPL.docc
+git grep --files-with-matches $BEGIN | while IFS= read -r FILE
+do
+    git --no-pager blame -bs $COMMIT.. -L /$BEGIN/,/$END/ $FILE
+    echo
+    echo
+done

@@ -875,9 +875,7 @@ struct Point {
   ```
 -->
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 > Grammar of a self expression:
 >
@@ -960,9 +958,7 @@ it's understood to be asynchronous.
 There are several special forms
 that allow closures to be written more concisely:
 
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 - A closure can omit the types
   of its parameters, its return type, or both.
