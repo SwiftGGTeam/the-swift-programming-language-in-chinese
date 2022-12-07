@@ -74,7 +74,7 @@ class Person {
 
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> class Person {
         let name: String
@@ -109,7 +109,7 @@ var reference3: Person?
 
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> var reference1: Person?
   -> var reference2: Person?
@@ -127,7 +127,7 @@ reference1 = Person(name: "John Appleseed")
 
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference1 = Person(name: "John Appleseed")
   <- John Appleseed is being initialized
@@ -153,7 +153,7 @@ reference3 = reference1
 
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference2 = reference1
   -> reference3 = reference1
@@ -174,7 +174,7 @@ reference2 = nil
 
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference1 = nil
   -> reference2 = nil
@@ -192,7 +192,7 @@ reference3 = nil
 
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference3 = nil
   <- John Appleseed is being deinitialized
@@ -241,7 +241,7 @@ class Apartment {
 
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> class Person {
         let name: String
@@ -284,7 +284,7 @@ var unit4A: Apartment?
 
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> var john: Person?
   -> var unit4A: Apartment?
@@ -301,7 +301,7 @@ unit4A = Apartment(unit: "4A")
 
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> john = Person(name: "John Appleseed")
   -> unit4A = Apartment(unit: "4A")
@@ -327,7 +327,7 @@ unit4A!.tenant = john
 
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> john!.apartment = unit4A
   -> unit4A!.tenant = john
@@ -354,7 +354,7 @@ unit4A = nil
 
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> john = nil
   -> unit4A = nil
@@ -427,7 +427,7 @@ a reference to an invalid instance that no longer exists.
 
 <!--
   - test: `weak-reference-doesnt-trigger-didset`
-  
+
   ```swifttest
   -> class C {
          weak var w: C? { didSet { print("did set") } }
@@ -467,7 +467,7 @@ class Apartment {
 
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> class Person {
         let name: String
@@ -501,7 +501,7 @@ unit4A!.tenant = john
 
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> var john: Person?
   -> var unit4A: Apartment?
@@ -531,7 +531,7 @@ john = nil
 
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> john = nil
   <- John Appleseed is being deinitialized
@@ -556,7 +556,7 @@ unit4A = nil
 
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> unit4A = nil
   <- Apartment 4A is being deinitialized
@@ -661,7 +661,7 @@ class CreditCard {
 
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> class Customer {
         let name: String
@@ -699,7 +699,7 @@ var john: Customer?
 
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> var john: Customer?
   ```
@@ -716,7 +716,7 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> john = Customer(name: "John Appleseed")
   -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
@@ -750,7 +750,7 @@ john = nil
 
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> john = nil
   <- John Appleseed is being deinitialized
@@ -817,7 +817,7 @@ class Course {
 
 <!--
   - test: `unowned-optional-references`
-  
+
   ```swifttest
   -> class Department {
          var name: String
@@ -870,7 +870,7 @@ department.courses = [intro, intermediate, advanced]
 
 <!--
   - test: `unowned-optional-references`
-  
+
   ```swifttest
   -> let department = Department(name: "Horticulture")
   ---
@@ -915,7 +915,7 @@ that other courses might have.
 
 <!--
   - test: `unowned-can-be-optional`
-  
+
   ```swifttest
   >> class C { var x = 100 }
   >> class D {
@@ -998,7 +998,7 @@ class City {
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> class Country {
         let name: String
@@ -1060,7 +1060,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> var country = Country(name: "Canada", capitalName: "Ottawa")
   -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
@@ -1136,7 +1136,7 @@ class HTMLElement {
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> class HTMLElement {
   ---
@@ -1208,7 +1208,7 @@ print(heading.asHTML())
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> let heading = HTMLElement(name: "h1")
   -> let defaultText = "some default text"
@@ -1244,7 +1244,7 @@ print(paragraph!.asHTML())
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
   -> print(paragraph!.asHTML())
@@ -1286,7 +1286,7 @@ paragraph = nil
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> paragraph = nil
   ```
@@ -1332,7 +1332,7 @@ lazy var someClosure = {
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   >> class SomeClass {
   >> var delegate: AnyObject?
@@ -1360,7 +1360,7 @@ lazy var someClosure = {
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   >> class AnotherClass {
   >> var delegate: AnyObject?
@@ -1427,7 +1427,7 @@ class HTMLElement {
 
 <!--
   - test: `unownedReferencesForClosures`
-  
+
   ```swifttest
   -> class HTMLElement {
   ---
@@ -1471,7 +1471,7 @@ print(paragraph!.asHTML())
 
 <!--
   - test: `unownedReferencesForClosures`
-  
+
   ```swifttest
   -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
   -> print(paragraph!.asHTML())
@@ -1496,7 +1496,7 @@ paragraph = nil
 
 <!--
   - test: `unownedReferencesForClosures`
-  
+
   ```swifttest
   -> paragraph = nil
   <- p is being deinitialized

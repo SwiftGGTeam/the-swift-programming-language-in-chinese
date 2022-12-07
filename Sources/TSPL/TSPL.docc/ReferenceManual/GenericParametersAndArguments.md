@@ -59,7 +59,7 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
 
 <!--
   - test: `generic-params`
-  
+
   ```swifttest
   -> func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
         if x < y {
@@ -83,7 +83,7 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
 
 <!--
   - test: `generic-params`
-  
+
   ```swifttest
   >> let r0 =
   -> simpleMax(17, 42) // T is inferred to be Int
@@ -159,7 +159,7 @@ extension Collection where Element: SomeProtocol {
 
 <!--
   - test: `contextual-where-clauses-combine`
-  
+
   ```swifttest
   >> protocol SomeProtocol { }
   >> extension Int: SomeProtocol { }
@@ -175,7 +175,7 @@ extension Collection where Element: SomeProtocol {
 
 <!--
   - test: `contextual-where-clause-combine-err`
-  
+
   ```swifttest
   >> protocol SomeProtocol { }
   >> extension Bool: SomeProtocol { }
@@ -286,7 +286,7 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 <!--
   - test: `array-of-arrays`
-  
+
   ```swifttest
   -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```

@@ -56,7 +56,7 @@ let invertedBits = ~initialBits  // equals 11110000
 
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let initialBits: UInt8 = 0b00001111
   >> assert(initialBits == 15)
@@ -103,7 +103,7 @@ let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
 
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let firstSixBits: UInt8 = 0b11111100
   -> let lastSixBits: UInt8  = 0b00111111
@@ -135,7 +135,7 @@ let combinedbits = someBits | moreBits  // equals 11111110
 
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let someBits: UInt8 = 0b10110010
   -> let moreBits: UInt8 = 0b01011110
@@ -169,7 +169,7 @@ let outputBits = firstBits ^ otherBits  // equals 00010001
 
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let firstBits: UInt8 = 0b00010100
   -> let otherBits: UInt8 = 0b00000101
@@ -228,7 +228,7 @@ shiftBits >> 2             // 00000001
 
 <!--
   - test: `bitwiseShiftOperators`
-  
+
   ```swifttest
   -> let shiftBits: UInt8 = 4   // 00000100 in binary
   >> let r0 =
@@ -265,7 +265,7 @@ let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
 
 <!--
   - test: `bitwiseShiftOperators`
-  
+
   ```swifttest
   -> let pink: UInt32 = 0xCC6699
   -> let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
@@ -397,7 +397,7 @@ potentialOverflow += 1
 
 <!--
   - test: `overflowOperatorsWillFailToOverflow`
-  
+
   ```swifttest
   -> var potentialOverflow = Int16.max
   /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
@@ -439,7 +439,7 @@ unsignedOverflow = unsignedOverflow &+ 1
 
 <!--
   - test: `overflowOperatorsWillOverflowInPositiveDirection`
-  
+
   ```swifttest
   -> var unsignedOverflow = UInt8.max
   /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
@@ -474,7 +474,7 @@ unsignedOverflow = unsignedOverflow &- 1
 
 <!--
   - test: `overflowOperatorsWillOverflowInNegativeDirection`
-  
+
   ```swifttest
   -> var unsignedOverflow = UInt8.min
   /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
@@ -507,7 +507,7 @@ signedOverflow = signedOverflow &- 1
 
 <!--
   - test: `overflowOperatorsWillOverflowSigned`
-  
+
   ```swifttest
   -> var signedOverflow = Int8.min
   /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
@@ -557,7 +557,7 @@ operator precedence explains why the following expression equals `17`.
 
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r0 =
   -> 2 + 3 % 4 * 5
@@ -599,7 +599,7 @@ starting from their left:
 
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r1 =
   -> 2 + ((3 % 4) * 5)
@@ -620,7 +620,7 @@ starting from their left:
 
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r2 =
   -> 2 + (3 * 5)
@@ -641,7 +641,7 @@ starting from their left:
 
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r3 =
   -> 2 + 15
@@ -696,7 +696,7 @@ extension Vector2D {
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> struct Vector2D {
         var x = 0.0, y = 0.0
@@ -739,7 +739,7 @@ let combinedVector = vector + anotherVector
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> let vector = Vector2D(x: 3.0, y: 1.0)
   -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
@@ -777,7 +777,7 @@ extension Vector2D {
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D {
          static prefix func - (vector: Vector2D) -> Vector2D {
@@ -807,7 +807,7 @@ let alsoPositive = -negative
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> let positive = Vector2D(x: 3.0, y: 4.0)
   -> let negative = -positive
@@ -840,7 +840,7 @@ extension Vector2D {
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D {
          static func += (left: inout Vector2D, right: Vector2D) {
@@ -865,7 +865,7 @@ original += vectorToAdd
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> var original = Vector2D(x: 1.0, y: 2.0)
   -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
@@ -883,7 +883,7 @@ original += vectorToAdd
 
 <!--
   - test: `cant-overload-assignment`
-  
+
   ```swifttest
   >> struct Vector2D {
   >>    var x = 0.0, y = 0.0
@@ -927,7 +927,7 @@ extension Vector2D: Equatable {
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D: Equatable {
          static func == (left: Vector2D, right: Vector2D) -> Bool {
@@ -957,7 +957,7 @@ if twoThree == anotherTwoThree {
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> let twoThree = Vector2D(x: 2.0, y: 3.0)
   -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
@@ -988,7 +988,7 @@ prefix operator +++
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> prefix operator +++
   ```
@@ -1020,7 +1020,7 @@ let afterDoubling = +++toBeDoubled
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D {
         static prefix func +++ (vector: inout Vector2D) -> Vector2D {
@@ -1069,7 +1069,7 @@ let plusMinusVector = firstVector +- secondVector
 
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> infix operator +-: AdditionPrecedence
   -> extension Vector2D {
@@ -1103,7 +1103,7 @@ see <doc:Declarations#Operator-Declaration>.
 
 <!--
   - test: `postfixOperatorsAreAppliedBeforePrefixOperators`
-  
+
   ```swifttest
   -> prefix operator +++
   -> postfix operator ---
@@ -1169,7 +1169,7 @@ struct AllCaps: Drawable {
 
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> protocol Drawable {
          func draw() -> String
@@ -1229,7 +1229,7 @@ print(manualDrawing.draw())
 
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> let name: String? = "Ravi Patel"
   -> let manualDrawing = Line(elements: [
@@ -1276,7 +1276,7 @@ struct DrawingBuilder {
 
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> @resultBuilder
   -> struct DrawingBuilder {
@@ -1341,7 +1341,7 @@ print(personalGreeting.draw())
 
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
          return content()
@@ -1406,7 +1406,7 @@ let capsDrawing = caps {
 
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> let capsDrawing = caps {
          let partialDrawing: Drawable
@@ -1451,7 +1451,7 @@ let manyStars = draw {
 
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> extension DrawingBuilder {
          static func buildArray(_ components: [Drawable]) -> Drawable {
@@ -1479,10 +1479,10 @@ see <doc:Attributes#resultBuilder>.
 
 <!--
   The following needs more work...
-  
+
    Protocol Operator Requirements
    ------------------------------
-  
+
    You can include operators in the requirements of a protocol.
    A type conforms to the protocol
    only if there's an implementation of the operator for that type.
@@ -1490,19 +1490,19 @@ see <doc:Attributes#resultBuilder>.
    just like you do in other protocol requirements.
    For example, the standard library defines the ``Equatable`` protocol
    which requires the ``==`` operator:
-  
+
    .. testcode:: protocolOperator
-  
+
       -> protocol Equatable {
              static func == (lhs: Self, rhs: Self) -> Bool
          }
-  
+
    To make a type conform to the protocol,
    you need to implement the ``==`` operator for that type.
    For example:
-  
+
    .. testcode:: protocolOperator
-  
+
   -> struct Vector3D {
         var x = 0.0, y = 0.0, z = 0.0
      }
@@ -1519,7 +1519,7 @@ see <doc:Attributes#resultBuilder>.
 <!--
   FIXME: This doesn't work
   <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
-  
+
    For operators that take values of two different types,
    the operator's implementation doesn't have to be
    a member of the type that conforms to the protocol ---
@@ -1531,9 +1531,9 @@ see <doc:Attributes#resultBuilder>.
    because there's an implementation of the operator
    that takes a ``Vector2D`` as its second argument,
    even though that implementation is a member of ``Double``.
-  
+
    .. testcode:: customOperators
-  
+
   -> infix operator *** {}
   -> protocol AnotherProtocol {
          // static func * (scale: Double, vector: Self) -> Self

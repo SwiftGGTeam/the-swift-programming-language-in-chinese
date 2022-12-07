@@ -189,7 +189,7 @@ let (firstNumber, secondNumber) = (10, 42)
 
 <!--
   - test: `constant-decl`
-  
+
   ```swifttest
   -> let (firstNumber, secondNumber) = (10, 42)
   ```
@@ -209,7 +209,7 @@ print("The second number is \(secondNumber).")
 
 <!--
   - test: `constant-decl`
-  
+
   ```swifttest
   -> print("The first number is \(firstNumber).")
   <- The first number is 10.
@@ -231,7 +231,7 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
 
 <!--
   - test: `class-constants-cant-have-class-or-final`
-  
+
   ```swifttest
   -> class Super { class let x = 10 }
   !$ error: class stored properties not supported in classes; did you mean 'static'?
@@ -384,7 +384,7 @@ this expression is evaluated before the first time you write to the property.
 
 <!--
   - test: `overwriting-property-without-writing`
-  
+
   ```swifttest
   >> func loudConst(_ x: Int) -> Int {
   >>     print("initial value:", x)
@@ -474,7 +474,7 @@ newAndOld.x = 200
 
 <!--
   - test: `didSet-calls-superclass-getter`
-  
+
   ```swifttest
   -> class Superclass {
          private var xValue = 12
@@ -518,7 +518,7 @@ see <doc:Properties#Property-Observers>.
 
 <!--
   - test: `cant-mix-get-set-and-didSet`
-  
+
   ```swifttest
   >> struct S {
   >>     var x: Int {
@@ -631,7 +631,7 @@ var dictionary2: Dictionary<String, Int> = [:]
 
 <!--
   - test: `typealias-with-generic`
-  
+
   ```swifttest
   -> typealias StringDictionary<Value> = Dictionary<String, Value>
   ---
@@ -651,7 +651,7 @@ typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 
 <!--
   - test: `typealias-with-generic-constraint`
-  
+
   ```swifttest
   -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
   ```
@@ -672,7 +672,7 @@ typealias Diccionario = Dictionary
 
 <!--
   - test: `typealias-using-shorthand`
-  
+
   ```swifttest
   -> typealias Diccionario = Dictionary
   ```
@@ -709,7 +709,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 <!--
   - test: `typealias-in-protocol`
-  
+
   ```swifttest
   -> protocol Sequence {
          associatedtype Iterator: IteratorProtocol
@@ -834,7 +834,7 @@ f(x: 1, y: 2) // both x and y are labeled
 
 <!--
   - test: `default-parameter-names`
-  
+
   ```swifttest
   -> func f(x: Int, y: Int) -> Int { return x + y }
   >> let r0 =
@@ -873,7 +873,7 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
 <!--
   - test: `overridden-parameter-names`
-  
+
   ```swifttest
   -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
   -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
@@ -942,7 +942,7 @@ func someFunction(a: inout Int) -> () -> Int {
 
 <!--
   - test: `explicit-capture-for-inout`
-  
+
   ```swifttest
   -> func someFunction(a: inout Int) -> () -> Int {
          return { [a] in return a + 1 }
@@ -976,7 +976,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
 
 <!--
   - test: `cant-pass-inout-aliasing`
-  
+
   ```swifttest
   >> import Dispatch
   >> func someMutatingOperation(_ a: inout Int) {}
@@ -984,7 +984,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
         // Make a local copy and manually copy it back.
         var localX = x
         defer { x = localX }
-  
+
         // Operate on localX asynchronously, then wait before returning.
         queue.async { someMutatingOperation(&localX) }
         queue.sync {}
@@ -997,7 +997,7 @@ see <doc:Functions#In-Out-Parameters>.
 
 <!--
   - test: `escaping-cant-capture-inout`
-  
+
   ```swifttest
   -> func outer(a: inout Int) -> () -> Void {
          func inner() {
@@ -1070,7 +1070,7 @@ f(7)      // Invalid, missing argument label
 
 <!--
   - test: `default-args-and-labels`
-  
+
   ```swifttest
   -> func f(x: Int = 42) -> Int { return x }
   >> let _ =
@@ -1093,7 +1093,7 @@ f(7)      // Invalid, missing argument label
 
 <!--
   - test: `default-args-evaluated-at-call-site`
-  
+
   ```swifttest
   -> func shout() -> Int {
         print("evaluated")
@@ -1132,7 +1132,7 @@ a class type method marked with `class final` or `static` can't be overridden.
 
 <!--
   - test: `overriding-class-methods-err`
-  
+
   ```swifttest
   -> class S { class final func f() -> Int { return 12 } }
   -> class SS: S { override class func f() -> Int { return 120 } }
@@ -1155,7 +1155,7 @@ a class type method marked with `class final` or `static` can't be overridden.
 
 <!--
   - test: `overriding-class-methods`
-  
+
   ```swifttest
   -> class S3 { class func f() -> Int { return 12 } }
   -> class SS3: S3 { override class func f() -> Int { return 120 } }
@@ -1215,7 +1215,7 @@ callable.callAsFunction(4, scale: 2)
 
 <!--
   - test: `call-as-function`
-  
+
   ```swifttest
   -> struct CallableStruct {
          var value: Int
@@ -1256,7 +1256,7 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 
 <!--
   - test: `call-as-function-err`
-  
+
   ```swifttest
   >> struct CallableStruct {
   >>     var value: Int
@@ -1324,7 +1324,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 
 <!--
   - test: `rethrows`
-  
+
   ```swifttest
   -> func someFunction(callback: () throws -> Void) rethrows {
          try callback()
@@ -1360,7 +1360,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 
 <!--
   - test: `double-negative-rethrows`
-  
+
   ```swifttest
   >> enum SomeError: Error { case error }
   >> enum AnotherError: Error { case error }
@@ -1383,7 +1383,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 
 <!--
   - test: `throwing-in-rethrowing-function`
-  
+
   ```swifttest
   -> enum SomeError: Error { case c, d }
   -> func f1(callback: () throws -> Void) rethrows {
@@ -1445,7 +1445,7 @@ and a synchronous method can satisfy a protocol requirement for an asynchronous 
 
 <!--
   - test: `sync-satisfy-async-protocol-requirements`
-  
+
   ```swifttest
   >> protocol P { func f() async -> Int }
   >> class Super: P {
@@ -1595,7 +1595,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 <!--
   - test: `enum-case-as-function`
-  
+
   ```swifttest
   -> enum Number {
         case integer(Int)
@@ -1649,7 +1649,7 @@ enum Tree<T> {
 
 <!--
   - test: `indirect-enum`
-  
+
   ```swifttest
   -> enum Tree<T> {
         case empty
@@ -1680,7 +1680,7 @@ it can't contain any cases that are also marked with the `indirect` modifier.
 
 <!--
   assertion indirect-in-indirect
-  
+
   -> indirect enum E { indirect case c(E) }
   !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
   !! indirect enum E { indirect case c(E) }
@@ -1689,7 +1689,7 @@ it can't contain any cases that are also marked with the `indirect` modifier.
 
 <!--
   assertion indirect-without-recursion
-  
+
   -> enum E { indirect case c }
   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
   !! enum E { indirect case c }
@@ -1748,7 +1748,7 @@ enum ExampleEnum: Int {
 
 <!--
   - test: `raw-value-enum`
-  
+
   ```swifttest
   -> enum ExampleEnum: Int {
         case a, b, c = 5, d
@@ -1773,7 +1773,7 @@ enum GamePlayMode: String {
 
 <!--
   - test: `raw-value-enum-implicit-string-values`
-  
+
   ```swifttest
   -> enum GamePlayMode: String {
         case cooperative, individual, competitive
@@ -1893,11 +1893,11 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
 <!--
   old-grammar
   Grammar of an enumeration declaration
-  
+
   enum-declaration -> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
   enum-name -> identifier
   enum-body -> ``{`` declarations-OPT ``}``
-  
+
   enum-member-declaration -> attribute-list-OPT ``case`` enumerator-list
   enumerator-list -> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
   enumerator -> enumerator-name tuple-type-OPT
@@ -2011,7 +2011,7 @@ and designated initializers must be marked with the `override` declaration modif
 
 <!--
   - test: `designatedInitializersRequireOverride`
-  
+
   ```swifttest
   -> class C { init() {} }
   -> class D: C { override init() { super.init() } }
@@ -2137,7 +2137,7 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 
 <!--
   TODO Additional bits from the SE-0306 actors proposal:
-  
+
   Partial applications of isolated functions are only permitted
   when the expression is a direct argument
   whose corresponding parameter is non-escaping and non-Sendable.
@@ -2245,7 +2245,7 @@ enum MyEnum: SomeProtocol {
 
 <!--
   - test: `enum-case-satisfy-protocol-requirement`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
          static var someValue: Self { get }
@@ -2271,7 +2271,7 @@ protocol SomeProtocol: AnyObject {
 
 <!--
   - test: `protocol-declaration`
-  
+
   ```swifttest
   -> protocol SomeProtocol: AnyObject {
          /* Protocol members go here */
@@ -2365,7 +2365,7 @@ use the `static` keyword.
 
 <!--
   - test: `protocols-with-type-property-requirements`
-  
+
   ```swifttest
   -> protocol P { static var x: Int { get } }
   -> protocol P2 { class var x: Int { get } }
@@ -2384,7 +2384,7 @@ use the `static` keyword.
 
 <!--
   - test: `protocol-type-property-default-implementation`
-  
+
   ```swifttest
   -> protocol P { static var x: Int { get } }
   -> extension P { static var x: Int { return 100 } }
@@ -2525,7 +2525,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 <!--
   - test: `protocol-associatedtype`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
          associatedtype SomeType
@@ -2556,21 +2556,21 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   NOTE:
   What are associated types? What are they "associated" with? Is "Self"
   an implicit associated type of every protocol? [...]
-  
+
   Here's an initial stab:
   An Associated Type is associated with an implementation of that protocol.
   The protocol declares it, and is defined as part of the protocol's implementation.
-  
+
   "The ``Self`` type allows you to refer to the eventual type of ``self``
   (where ``self`` is the type that conforms to the protocol).
   In addition to ``Self``, a protocol's operations often need to refer to types
   that are related to the type of ``Self``, such as a type of data stored in a
   collection or the node and edge types of a graph." Is this still true?
-  
+
     -> If we expand the discussion here,
     -> add a link from Types_SelfType
     -> to give more details about Self in protocols.
-  
+
   NOTES from Doug:
   At one point, Self was an associated type, but that's the wrong modeling of
   the problem.  Self is the stand-in type for the thing that conforms to the
@@ -2578,16 +2578,16 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   primary thing.  It's certainly not an associated type.  In many ways, you
   can think of associated types as being parameters that get filled in by the
   conformance of a specific concrete type to that protocol.
-  
+
   There's a substitution mapping here.  The parameters are associated with
   Self because they're derived from Self.  When you have a concrete type that
   conforms to a protocol, it supplies concrete types for Self and all the
   associated types.
-  
+
   The associated types are like parameters, but they're associated with Self in
   the protocol.  Self is the eventual type of the thing that conforms to the
   protocol -- you have to have a name for it so you can do things with it.
-  
+
   We use "associated" in contrast with generic parameters in interfaces in C#.
   The interesting thing there is that they don't have a name like Self for the
   actual type, but you can name any of these independent types.    In theory,
@@ -2596,24 +2596,24 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   the same as Self.  Instead of having these independent parameters to an
   interface, we have a named thing (Self) and all these other things that hand
   off of it.
-  
+
   Here's a stupid simple way to see the distinction:
-  
+
   C#:
-  
+
   interface Sequence <Element> {}
-  
+
   class String : Sequence <UnicodeScalar>
   class String : Sequence <GraphemeCluster>
-  
+
   These are both fine in C#
-  
+
   Swift:
-  
+
   protocol Sequence { typealias Element }
-  
+
   class String : Sequence { typealias Element = ... }
-  
+
   Here you have to pick one or the other -- you can't have both.
 -->
 
@@ -2732,7 +2732,7 @@ struct SomeStruct {
 
 <!--
   - test: `failable`
-  
+
   ```swifttest
   -> struct SomeStruct {
          let property: String
@@ -2761,7 +2761,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 <!--
   - test: `failable`
-  
+
   ```swifttest
   -> if let actualInstance = SomeStruct(input: "Hello") {
          // do something with the instance of 'SomeStruct'
@@ -2967,7 +2967,7 @@ extension String: TitledLoggable {
 
 <!--
   - test: `conditional-conformance`
-  
+
   ```swifttest
   -> protocol Loggable {
          func log()
@@ -3027,7 +3027,7 @@ oneAndTwo.log()
 
 <!--
   - test: `conditional-conformance`
-  
+
   ```swifttest
   -> let oneAndTwo = Pair(first: "one", second: "two")
   -> oneAndTwo.log()
@@ -3053,7 +3053,7 @@ doSomething(with: oneAndTwo)
 
 <!--
   - test: `conditional-conformance`
-  
+
   ```swifttest
   -> func doSomething<T: Loggable>(with x: T) {
         x.log()
@@ -3110,7 +3110,7 @@ extension Array: Serializable where Element == String {
 
 <!--
   - test: `multiple-conformances`
-  
+
   ```swifttest
   -> protocol Serializable {
         func serialize() -> Any
@@ -3156,7 +3156,7 @@ extension Array: Serializable where Element: SerializableInArray {
 
 <!--
   - test: `multiple-conformances-success`
-  
+
   ```swifttest
   >> protocol Serializable { }
   -> protocol SerializableInArray { }
@@ -3212,7 +3212,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
 
 <!--
   - test: `conditional-conformance`
-  
+
   ```swifttest
   -> protocol MarkedLoggable: Loggable {
         func markAndLog()
@@ -3248,7 +3248,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 <!--
   - test: `conditional-conformance-implicit-overlap`
-  
+
   ```swifttest
   >> protocol Loggable { }
   >> protocol MarkedLoggable : Loggable { }
@@ -3267,7 +3267,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 <!--
   - test: `types-cant-have-multiple-implicit-conformances`
-  
+
   ```swifttest
   >> protocol Loggable { }
      protocol TitledLoggable: Loggable { }
@@ -3302,7 +3302,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 <!--
   - test: `extension-can-have-where-clause`
-  
+
   ```swifttest
   >> extension Array where Element: Equatable {
          func f(x: Array) -> Int { return 7 }
@@ -3316,7 +3316,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 <!--
   - test: `extensions-can-have-where-clause-and-inheritance-together`
-  
+
   ```swifttest
   >> protocol P { func foo() -> Int }
   >> extension Array: P where Element: Equatable {
@@ -3415,7 +3415,7 @@ with both the `class` and `final` declaration modifiers.
 
 <!--
   - test: `cant-override-static-subscript-in-subclass`
-  
+
   ```swifttest
   -> class Super { static subscript(i: Int) -> Int { return 10 } }
   -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }

@@ -66,7 +66,7 @@ struct BlackjackCard {
 
 <!--
   - test: `nestedTypes`
-  
+
   ```swifttest
   -> struct BlackjackCard {
   ---
@@ -152,7 +152,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 
 <!--
   - test: `nestedTypes`
-  
+
   ```swifttest
   -> let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
   -> print("theAceOfSpades: \(theAceOfSpades.description)")
@@ -179,7 +179,7 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
 
 <!--
   - test: `nestedTypes`
-  
+
   ```swifttest
   -> let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
   /> heartsSymbol is \"\(heartsSymbol)\"

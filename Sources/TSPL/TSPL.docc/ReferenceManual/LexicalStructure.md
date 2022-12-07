@@ -224,7 +224,7 @@ so they must be escaped with backticks in that context.
 
 <!--
   - test: `keywords-without-backticks`
-  
+
   ```swifttest
   -> func f(x: Int, in y: Int) {
         print(x+y)
@@ -234,7 +234,7 @@ so they must be escaped with backticks in that context.
 
 <!--
   - test: `var-requires-backticks`
-  
+
   ```swifttest
   -> func g(`var` x: Int) {}
   -> func f(var x: Int) {}
@@ -247,7 +247,7 @@ so they must be escaped with backticks in that context.
 
 <!--
   - test: `let-requires-backticks`
-  
+
   ```swifttest
   -> func g(`let` x: Int) {}
   -> func f(let x: Int) {}
@@ -260,7 +260,7 @@ so they must be escaped with backticks in that context.
 
 <!--
   - test: `inout-requires-backticks`
-  
+
   ```swifttest
   -> func g(`inout` x: Int) {}
   -> func f(inout x: Int) {}
@@ -276,7 +276,7 @@ so they must be escaped with backticks in that context.
   is derived from the file "swift/include/swift/Parse/Tokens.def"
   and from "utils/gyb_syntax_support/Token.py",
   which generates the TokenKinds.def file.
-  
+
   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 -->
 
@@ -450,7 +450,7 @@ true             // Boolean literal
 
 <!--
   - test: `basic-literals`
-  
+
   ```swifttest
   >> let r0 =
   -> 42               // Integer literal
@@ -799,7 +799,7 @@ let x = 3; "1 2 \(x)"
 
 <!--
   - test: `string-literals`
-  
+
   ```swifttest
   >> let r0 =
   -> "1 2 3"
@@ -861,7 +861,7 @@ print(string == escaped)
 
 <!--
   - test: `extended-string-delimiters`
-  
+
   ```swifttest
   -> let string = #"\(x) \ " \u{2603}"#
   -> let escaped = "\\(x) \\ \" \\u{2603}"
@@ -878,7 +878,7 @@ don't place whitespace in between the number signs:
 
 <!--
   - test: `extended-string-delimiters`
-  
+
   ```swifttest
   -> print(###"Line 1\###nLine 2"###) // OK
   << Line 1
@@ -893,7 +893,7 @@ print(# # #"Line 1\# # #nLine 2"# # #) // Error
 
 <!--
   - test: `extended-string-delimiters-err`
-  
+
   ```swifttest
   -> print(###"Line 1\###nLine 2"###) // OK
   -> print(# # #"Line 1\# # #nLine 2"# # #) // Error
@@ -927,7 +927,7 @@ let textB = "Hello world"
 
 <!--
   - test: `concatenated-strings`
-  
+
   ```swifttest
   -> let textA = "Hello " + "world"
   -> let textB = "Hello world"
@@ -1017,9 +1017,9 @@ let textB = "Hello world"
 <!--
   Now that single quotes are gone, we don't have a character literal.
   Because we may one bring them back, here's the old grammar for them:
-  
+
   textual-literal -> character-literal | string-literal
-  
+
   character-literal -> ``'`` quoted-character ``'``
   quoted-character -> escaped-character
   quoted-character -> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
@@ -1053,19 +1053,19 @@ and `/\d/` matches a single digit.
 
 <!--
   OUTLINE
-  
+
   Doc comments on Regex struct don't have more syntax details,
   or a cross reference to where you can learn more.
   We probably need at least some baseline coverage
   of the supported syntax here.
   (Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET)
-  
+
   https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
-  
+
   Regex literals and the DSL take different approaches to captures.
   The literals give you more type safety.
   The DSL lets you access stuff by name.
-  
+
   From SE-0354:
   A regex literal may be used with a prefix operator,
   e.g `let r = ^^/x/` is parsed as `let r = ^^(/x/)`.
@@ -1117,7 +1117,7 @@ let regex2 = # #/abc/# #     // Error
 
 <!--
   - test: `extended-regex-delimiters-err`
-  
+
   ```swifttest
   -> let regex1 = ##/abc/##       // OK
   -> let regex2 = # #/abc/# #     // Error
@@ -1171,7 +1171,7 @@ the `+` operator followed by the `.+` operator.
 
 <!--
   - test: `dot-operator-must-start-with-dot`
-  
+
   ```swifttest
   >> infix operator +.+ ;
   !$ error: consecutive statements on a line must be separated by ';'
@@ -1196,7 +1196,7 @@ postfix operators can't begin with either a question mark or an exclamation poin
 
 <!--
   - test: `postfix-operators-dont-need-unique-prefix`
-  
+
   ```swifttest
   >> struct Num { var value: Int }
      postfix operator +
@@ -1213,7 +1213,7 @@ postfix operators can't begin with either a question mark or an exclamation poin
 
 <!--
   - test: `postfix-operator-cant-start-with-question-mark`
-  
+
   ```swifttest
   >> postfix operator ?+
   >> postfix func ?+ (x: Int) -> Int {
@@ -1287,10 +1287,10 @@ that may then be misinterpreted as a bit shift `>>` operator.
   matches < and > and looks at what token comes after the > -- if it's a . or
   a ( it treats the <...> as a generic parameter list, otherwise it treats
   them as less than and greater than.
-  
+
   This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
   don't write that.
-  
+
   We call out the > > vs >> because
   C++ typically needs whitespace to resolve the ambiguity.
 -->
