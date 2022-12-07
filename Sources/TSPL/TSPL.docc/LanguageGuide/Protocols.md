@@ -2145,9 +2145,8 @@ Optional requirements are available so that you can write code
 that interoperates with Objective-C.
 Both the protocol and the optional requirement
 must be marked with the `@objc` attribute.
-Note that `@objc` protocols can be adopted only by classes
-that inherit from Objective-C classes or other `@objc` classes.
-They can't be adopted by structures or enumerations.
+Note that `@objc` protocols can be adopted only by classes,
+not by structures or enumerations.
 
 When you use a method or property in an optional requirement,
 its type automatically becomes an optional.
