@@ -1,6 +1,6 @@
 # Summary of the Grammar
 
-View the entire formal grammar, collected in one place.
+Read the whole formal grammar.
 
 <!--
 
