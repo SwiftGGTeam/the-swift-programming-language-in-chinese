@@ -70,9 +70,9 @@ show(photo)
 
 ```swift
 let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-add(firstPhoto toGallery: "Road Trip")
+add(firstPhoto, toGallery: "Road Trip")
 //此时，firstPhoto暂时地同时存在于两个画廊中
-remove(firstPhoto fromGallery: "Summer Vacation")
+remove(firstPhoto, fromGallery: "Summer Vacation")
 ```
 
 其它代码不能在 `add(_:toGallery:)` 和 `remove(_:fromGallery:)` 两个方法之间运行。在此期间，第一张图片同时存在于两个图库，暂时打破了应用程序的一个不变量。为了更明确地表示这段代码不能加入 `await` 标记，你可以将这段代码重构为一个同步函数：
