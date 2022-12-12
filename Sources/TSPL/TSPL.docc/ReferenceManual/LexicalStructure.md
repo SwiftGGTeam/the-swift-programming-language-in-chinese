@@ -122,9 +122,17 @@ are reserved for the Swift compiler and standard library.
 To use a reserved word as an identifier,
 put a backtick (\`) before and after it.
 For example, `class` isn't a valid identifier,
-but \``class`\` is valid.
+but `` `class` `` is valid.
 The backticks aren't considered part of the identifier;
-\``x`\` and `x` have the same meaning.
+`` `x` `` and `x` have the same meaning.
+
+<!--
+The paragraph above produces a link-resolution warning
+because of a known issue with ` in code voice.
+
+https://github.com/apple/swift-book/issues/71
+https://github.com/apple/swift-markdown/issues/93
+-->
 
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named `$0`, `$1`, `$2`, and so on.
@@ -141,6 +149,15 @@ of the <doc:Attributes> chapter.
   The cross reference above includes both the section and chapter because,
   even though "propertyWrapper" is the title of the section,
   the section name isn't title case so it doesn't necessarily look like a title.
+-->
+
+<!--
+The formal grammar below for 'identifier'
+produces a link-resolution warning
+because of a known issue with ` in code voice.
+
+https://github.com/apple/swift-book/issues/71
+https://github.com/apple/swift-markdown/issues/93
 -->
 
 > Grammar of an identifier:
@@ -430,7 +447,7 @@ The following tokens are reserved as punctuation
 and can't be used as custom operators:
 `(`, `)`, `{`, `}`, `[`, `]`,
 `.`, `,`, `:`, `;`, `=`, `@`, `#`,
-`&` (as a prefix operator), `->`, `\\``,
+`&` (as a prefix operator), `->`, `` ` ``,
 `?`, and `!` (as a postfix operator).
 
 ## Literals
