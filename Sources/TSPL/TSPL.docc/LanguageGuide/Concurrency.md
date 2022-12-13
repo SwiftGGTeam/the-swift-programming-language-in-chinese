@@ -554,7 +554,7 @@ Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
 Although you take on some of the responsibility for correctness,
 the explicit parent-child relationships between tasks
-lets Swift handle some behaviors like propagating cancellation for you,
+let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
 ```
