@@ -1,5 +1,7 @@
 # Summary of the Grammar
 
+Read the whole formal grammar.
+
 <!--
 
 === IMPORTANT ===
@@ -12,6 +14,8 @@ make the same change here also.
 === IMPORTANT ===
 
 -->
+
+## Lexical Structure
 
 > Grammar of whitespace:
 >
@@ -383,6 +387,8 @@ make the same change here also.
 >
 > *postfix-operator* → *operator*
 
+## Types
+
 > Grammar of a type:
 >
 > *type* → *function-type*
@@ -492,6 +498,8 @@ make the same change here also.
 > *type-inheritance-clause* → **`:`** *type-inheritance-list*
 >
 > *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+
+## Expressions
 
 > Grammar of an expression:
 >
@@ -797,6 +805,8 @@ make the same change here also.
 >
 > *optional-chaining-expression* → *postfix-expression* **`?`**
 
+## Statements
+
 > Grammar of a statement:
 >
 > *statement* → *expression* **`;`**_?_
@@ -1092,6 +1102,8 @@ make the same change here also.
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits*
 >
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
+
+## Declarations
 
 > Grammar of a declaration:
 >
@@ -1523,6 +1535,8 @@ make the same change here also.
 >
 > *actor-isolation-modifier* → **`nonisolated`**
 
+## Attributes
+
 > Grammar of an attribute:
 >
 > *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_
@@ -1546,6 +1560,8 @@ make the same change here also.
 > *balanced-token* → Any identifier, keyword, literal, or operator
 >
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
+
+## Patterns
 
 > Grammar of a pattern:
 >
@@ -1604,6 +1620,8 @@ make the same change here also.
 > Grammar of an expression pattern:
 >
 > *expression-pattern* → *expression*
+
+## Generic Parameters and Arguments
 
 > Grammar of a generic parameter clause:
 >

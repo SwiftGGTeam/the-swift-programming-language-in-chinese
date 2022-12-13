@@ -64,7 +64,7 @@ for _ in 1...3 {
 
 <!--
   - test: `wildcard-pattern`
-  
+
   ```swifttest
   -> for _ in 1...3 {
         // Do something three times.
@@ -89,7 +89,7 @@ let someValue = 42
 
 <!--
   - test: `identifier-pattern`
-  
+
   ```swifttest
   -> let someValue = 42
   ```
@@ -130,7 +130,7 @@ case let (x, y):
 
 <!--
   - test: `value-binding-pattern`
-  
+
   ```swifttest
   -> let point = (3, 2)
   -> switch point {
@@ -186,7 +186,7 @@ for (x, 0) in points {
 
 <!--
   - test: `tuple-pattern`
-  
+
   ```swifttest
   -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
   -> // This code isn't valid.
@@ -218,7 +218,7 @@ let (a): Int = 2 // a: Int = 2
 
 <!--
   - test: `single-element-tuple-pattern`
-  
+
   ```swifttest
   -> let a = 2        // a: Int = 2
   -> let (a) = 2      // a: Int = 2
@@ -283,7 +283,7 @@ case nil:
 
 <!--
   - test: `enum-pattern-matching-optional`
-  
+
   ```swifttest
   -> enum SomeEnum { case left, right }
   -> let x: SomeEnum? = .left
@@ -329,7 +329,7 @@ if case let x? = someOptional {
 
 <!--
   - test: `optional-pattern`
-  
+
   ```swifttest
   -> let someOptional: Int? = 42
   -> // Match using an enumeration case pattern.
@@ -363,7 +363,7 @@ for case let number? in arrayOfOptionalInts {
 
 <!--
   - test: `optional-pattern-for-in`
-  
+
   ```swifttest
   -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
   -> // Match only non-nil values.
@@ -445,7 +445,7 @@ default:
 
 <!--
   - test: `expression-pattern`
-  
+
   ```swifttest
   -> let point = (1, 2)
   -> switch point {
@@ -480,7 +480,7 @@ default:
 
 <!--
   - test: `expression-pattern`
-  
+
   ```swifttest
   -> // Overload the ~= operator to match a string with an integer.
   -> func ~= (pattern: String, value: Int) -> Bool {

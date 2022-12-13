@@ -34,7 +34,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 
 <!--
   - test: `whyGenerics`
-  
+
   ```swifttest
   -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
         let temporaryA = a
@@ -61,7 +61,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 <!--
   - test: `whyGenerics`
-  
+
   ```swifttest
   -> var someInt = 3
   -> var anotherInt = 107
@@ -93,7 +93,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 
 <!--
   - test: `whyGenerics`
-  
+
   ```swifttest
   -> func swapTwoStrings(_ a: inout String, _ b: inout String) {
         let temporaryA = a
@@ -145,7 +145,7 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
 
 <!--
   - test: `genericFunctions`
-  
+
   ```swifttest
   -> func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
         let temporaryA = a
@@ -175,7 +175,7 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 
 <!--
   - test: `genericFunctionsComparison`
-  
+
   ```swifttest
   -> func swapTwoInts(_ a: inout Int, _ b: inout Int)
   >> {
@@ -230,7 +230,7 @@ swapTwoValues(&someString, &anotherString)
 
 <!--
   - test: `genericFunctions`
-  
+
   ```swifttest
   -> var someInt = 3
   -> var anotherInt = 107
@@ -343,7 +343,7 @@ struct IntStack {
 
 <!--
   - test: `genericStack`
-  
+
   ```swifttest
   -> struct IntStack {
         var items: [Int] = []
@@ -390,7 +390,7 @@ struct Stack<Element> {
 
 <!--
   - test: `genericStack`
-  
+
   ```swifttest
   -> struct Stack<Element> {
         var items: [Element] = []
@@ -444,7 +444,7 @@ stackOfStrings.push("cuatro")
 
 <!--
   - test: `genericStack`
-  
+
   ```swifttest
   -> var stackOfStrings = Stack<String>()
   -> stackOfStrings.push("uno")
@@ -469,7 +469,7 @@ let fromTheTop = stackOfStrings.pop()
 
 <!--
   - test: `genericStack`
-  
+
   ```swifttest
   -> let fromTheTop = stackOfStrings.pop()
   /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stackOfStrings.items.count) strings
@@ -504,7 +504,7 @@ extension Stack {
 
 <!--
   - test: `genericStack`
-  
+
   ```swifttest
   -> extension Stack {
         var topItem: Element? {
@@ -535,7 +535,7 @@ if let topItem = stackOfStrings.topItem {
 
 <!--
   - test: `genericStack`
-  
+
   ```swifttest
   -> if let topItem = stackOfStrings.topItem {
         print("The top item on the stack is \(topItem).")
@@ -602,7 +602,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 
 <!--
   - test: `typeConstraints`
-  
+
   ```swifttest
   >> class SomeClass {}
   >> protocol SomeProtocol {}
@@ -640,7 +640,7 @@ func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
 
 <!--
   - test: `typeConstraints`
-  
+
   ```swifttest
   -> func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
         for (index, value) in array.enumerated() {
@@ -665,7 +665,7 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
 
 <!--
   - test: `typeConstraints`
-  
+
   ```swifttest
   -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
   -> if let foundIndex = findIndex(ofString: "llama", in: strings) {
@@ -700,7 +700,7 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
 
 <!--
   - test: `typeConstraints-err`
-  
+
   ```swifttest
   -> func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
         for (index, value) in array.enumerated() {
@@ -759,7 +759,7 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
 
 <!--
   - test: `typeConstraintsEquatable`
-  
+
   ```swifttest
   -> func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
         for (index, value) in array.enumerated() {
@@ -787,7 +787,7 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 
 <!--
   - test: `typeConstraintsEquatable`
-  
+
   ```swifttest
   -> let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
   /> doubleIndex is an optional Int with no value, because 9.3 isn't in the array
@@ -833,7 +833,7 @@ protocol Container {
 
 <!--
   - test: `associatedTypes, associatedTypes-err`
-  
+
   ```swifttest
   -> protocol Container {
         associatedtype Item
@@ -916,7 +916,7 @@ struct IntStack: Container {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> struct IntStack: Container {
         // original IntStack implementation
@@ -988,7 +988,7 @@ struct Stack<Element>: Container {
 
 <!--
   - test: `associatedTypes, associatedTypes-err`
-  
+
   ```swifttest
   -> struct Stack<Element>: Container {
         // original Stack<Element> implementation
@@ -1039,7 +1039,7 @@ extension Array: Container {}
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension Array: Container {}
   ```
@@ -1069,7 +1069,7 @@ protocol Container {
 
 <!--
   - test: `associatedTypes-equatable`
-  
+
   ```swifttest
   -> protocol Container {
         associatedtype Item: Equatable
@@ -1102,7 +1102,7 @@ protocol SuffixableContainer: Container {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> protocol SuffixableContainer: Container {
          associatedtype Suffix: SuffixableContainer where Suffix.Item == Item
@@ -1147,7 +1147,7 @@ let suffix = stackOfInts.suffix(2)
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension Stack: SuffixableContainer {
          func suffix(_ size: Int) -> Stack {
@@ -1197,7 +1197,7 @@ extension IntStack: SuffixableContainer {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension IntStack: SuffixableContainer {
          func suffix(_ size: Int) -> Stack<Int> {
@@ -1271,7 +1271,7 @@ func allItemsMatch<C1: Container, C2: Container>
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> func allItemsMatch<C1: Container, C2: Container>
            (_ someContainer: C1, _ anotherContainer: C2) -> Bool
@@ -1364,7 +1364,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> var stackOfStrings = Stack<String>()
   -> stackOfStrings.push("uno")
@@ -1414,7 +1414,7 @@ extension Stack where Element: Equatable {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension Stack where Element: Equatable {
          func isTop(_ item: Element) -> Bool {
@@ -1455,7 +1455,7 @@ if stackOfStrings.isTop("tres") {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> if stackOfStrings.isTop("tres") {
         print("Top element is tres.")
@@ -1480,7 +1480,7 @@ notEquatableStack.isTop(notEquatableValue)  // Error
 
 <!--
   - test: `associatedTypes-err`
-  
+
   ```swifttest
   -> struct NotEquatable { }
   -> var notEquatableStack = Stack<NotEquatable>()
@@ -1507,7 +1507,7 @@ extension Container where Item: Equatable {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension Container where Item: Equatable {
         func startsWith(_ item: Item) -> Bool {
@@ -1543,7 +1543,7 @@ if [9, 9, 9].startsWith(42) {
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> if [9, 9, 9].startsWith(42) {
         print("Starts with 42.")
@@ -1576,7 +1576,7 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension Container where Item == Double {
          func average() -> Double {
@@ -1646,7 +1646,7 @@ print(numbers.endsWith(37))
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> extension Container {
          func average() -> Double where Item == Int {
@@ -1699,7 +1699,7 @@ extension Container where Item: Equatable {
 
 <!--
   - test: `associatedTypes-err`
-  
+
   ```swifttest
   -> extension Container where Item == Int {
          func average() -> Double {
@@ -1750,7 +1750,7 @@ protocol Container {
 
 <!--
   - test: `associatedTypes-iterator`
-  
+
   ```swifttest
   -> protocol Container {
         associatedtype Item
@@ -1778,23 +1778,23 @@ The `makeIterator()` function provides access to a container's iterator.
 <!--
   This example requires SE-0157 Recursive protocol constraints
   which is tracked by rdar://20531108
-  
+
    that accepts a ranged of indexes it its subscript
    and returns a subcontainer ---
    similar to how ``Collection`` works in the standard library.
-  
+
    .. testcode:: associatedTypes-subcontainer
-  
+
       -> protocol Container {
             associatedtype Item
             associatedtype SubContainer: Container where SubContainer.Item == Item
-  
+
             mutating func append(_ item: Item)
             var count: Int { get }
             subscript(i: Int) -> Item { get }
             subscript(range: Range<Int>) -> SubContainer { get }
          }
-  
+
    The generic ``where`` clause on ``SubContainer`` requires that
    the subcontainer must have the same item type as the container has,
    regardless of what type the subcontainer is.
@@ -1818,7 +1818,7 @@ protocol ComparableContainer: Container where Item: Comparable { }
 
 <!--
   - test: `associatedTypes`
-  
+
   ```swifttest
   -> protocol ComparableContainer: Container where Item: Comparable { }
   ```
@@ -1828,7 +1828,7 @@ protocol ComparableContainer: Container where Item: Comparable { }
   This version throws a warning as of Swift commit de66b0c25c70:
   "redeclaration of associated type %0 from protocol %1 is better
   expressed as a 'where' clause on the protocol"
-  
+
    -> protocol ComparableContainer: Container {
           associatedtype Item: Comparable
       }
@@ -1837,7 +1837,7 @@ protocol ComparableContainer: Container where Item: Comparable { }
 <!--
   Exercise the new container -- this might not actually be needed,
   and it adds a level of complexity.
-  
+
   function < (lhs: ComparableContainer, rhs: ComparableContainer) -> Bool {
       // Sort empty containers before nonempty containers.
       if lhs.count == 0 {
@@ -1845,7 +1845,7 @@ protocol ComparableContainer: Container where Item: Comparable { }
       } else if rhs.count  == 0 {
           return false
       }
-  
+
       // Sort nonempty containers by their first element.
       // (In real code, you would want to compare the second element
       // if the first elements are equal, and so on.)
@@ -1882,7 +1882,7 @@ extension Container {
 
 <!--
   - test: `genericSubscript`
-  
+
   ```swifttest
   >> protocol Container {
   >>    associatedtype Item
@@ -1905,7 +1905,7 @@ extension Container {
 
 <!--
   - test: `genericSubscript`
-  
+
   ```swifttest
   >> struct IntStack: Container {
         // original IntStack implementation

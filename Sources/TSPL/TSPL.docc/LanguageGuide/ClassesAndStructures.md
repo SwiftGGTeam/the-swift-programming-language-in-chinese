@@ -79,7 +79,7 @@ class SomeClass {
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> struct SomeStructure {
         // structure definition goes here
@@ -117,7 +117,7 @@ class VideoMode {
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> struct Resolution {
         var width = 0
@@ -169,7 +169,7 @@ let someVideoMode = VideoMode()
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> let someResolution = Resolution()
   -> let someVideoMode = VideoMode()
@@ -202,7 +202,7 @@ print("The width of someResolution is \(someResolution.width)")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> print("The width of someResolution is \(someResolution.width)")
   <- The width of someResolution is 0
@@ -223,7 +223,7 @@ print("The width of someVideoMode is \(someVideoMode.resolution.width)")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> print("The width of someVideoMode is \(someVideoMode.resolution.width)")
   <- The width of someVideoMode is 0
@@ -240,7 +240,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> someVideoMode.resolution.width = 1280
   -> print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
@@ -261,7 +261,7 @@ let vga = Resolution(width: 640, height: 480)
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> let vga = Resolution(width: 640, height: 480)
   ```
@@ -272,7 +272,7 @@ Initializers are described in more detail in <doc:Initialization>.
 
 <!--
   - test: `classesDontHaveADefaultMemberwiseInitializer`
-  
+
   ```swifttest
   -> class C { var x = 0, y = 0 }
   -> let c = C(x: 1, y: 1)
@@ -326,7 +326,7 @@ var cinema = hd
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> let hd = Resolution(width: 1920, height: 1080)
   -> var cinema = hd
@@ -356,7 +356,7 @@ cinema.width = 2048
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> cinema.width = 2048
   ```
@@ -372,7 +372,7 @@ print("cinema is now \(cinema.width) pixels wide")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> print("cinema is now \(cinema.width) pixels wide")
   <- cinema is now 2048 pixels wide
@@ -389,7 +389,7 @@ print("hd is still \(hd.width) pixels wide")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> print("hd is still \(hd.width) pixels wide")
   <- hd is still 1920 pixels wide
@@ -428,7 +428,7 @@ print("The remembered direction is \(rememberedDirection)")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> enum CompassPoint {
         case north, south, east, west
@@ -475,7 +475,7 @@ tenEighty.frameRate = 25.0
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> let tenEighty = VideoMode()
   -> tenEighty.resolution = hd
@@ -502,7 +502,7 @@ alsoTenEighty.frameRate = 30.0
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> let alsoTenEighty = tenEighty
   -> alsoTenEighty.frameRate = 30.0
@@ -527,7 +527,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
   <- The frameRate property of tenEighty is now 30.0
@@ -580,7 +580,7 @@ or passed to a function.)
 
 <!--
   - test: `structuresDontSupportTheIdentityOperators`
-  
+
   ```swifttest
   -> struct S { var x = 0, y = 0 }
   -> let s1 = S()
@@ -597,7 +597,7 @@ or passed to a function.)
 
 <!--
   - test: `enumerationsDontSupportTheIdentityOperators`
-  
+
   ```swifttest
   -> enum E { case a, b }
   -> let e1 = E.a
@@ -630,7 +630,7 @@ if tenEighty === alsoTenEighty {
 
 <!--
   - test: `ClassesAndStructures`
-  
+
   ```swifttest
   -> if tenEighty === alsoTenEighty {
         print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
@@ -654,7 +654,7 @@ is described in <doc:AdvancedOperators#Equivalence-Operators>.
 
 <!--
   - test: `classesDontGetEqualityByDefault`
-  
+
   ```swifttest
   -> class C { var x = 0, y = 0 }
   -> let c1 = C()
@@ -668,7 +668,7 @@ is described in <doc:AdvancedOperators#Equivalence-Operators>.
 
 <!--
   - test: `structuresDontGetEqualityByDefault`
-  
+
   ```swifttest
   -> struct S { var x = 0, y = 0 }
   -> let s1 = S()

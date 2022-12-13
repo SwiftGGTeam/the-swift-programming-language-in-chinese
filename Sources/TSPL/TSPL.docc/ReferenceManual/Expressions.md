@@ -120,7 +120,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
 
 <!--
   - test: `placement-of-try`
-  
+
   ```swifttest
   >> func someThrowingFunction() throws -> Int { return 10 }
   >> func anotherThrowingFunction() throws -> Int { return 5 }
@@ -157,7 +157,7 @@ or the `try` expression is enclosed in parentheses.
 
 <!--
   - test: `try-on-right`
-  
+
   ```swifttest
   >> func someThrowingFunction() throws -> Int { return 10 }
   >> var sum = 0
@@ -230,7 +230,7 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 
 <!--
   - test: `placement-of-await`
-  
+
   ```swifttest
   >> func someAsyncFunction() async -> Int { return 10 }
   >> func anotherAsyncFunction() async -> Int { return 5 }
@@ -262,7 +262,7 @@ or the `await` expression is enclosed in parentheses.
 
 <!--
   - test: `await-on-right`
-  
+
   ```swifttest
   >> func f() async {
   >> func someAsyncFunction() async -> Int { return 10 }
@@ -365,7 +365,7 @@ For example:
 
 <!--
   - test: `assignmentOperator`
-  
+
   ```swifttest
   >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
   -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
@@ -428,7 +428,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `triviallyTrueIsAndAs`
-  
+
   ```swifttest
   -> assert("hello" is String)
   -> assert(!("hello" is Int))
@@ -443,7 +443,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `is-operator-tautology`
-  
+
   ```swifttest
   -> class Base {}
   -> class Subclass: Base {}
@@ -482,7 +482,7 @@ f(x as Any)
 
 <!--
   - test: `explicit-type-with-as-operator`
-  
+
   ```swifttest
   -> func f(_ any: Any) { print("Function for Any") }
   -> func f(_ int: Int) { print("Function for Int") }
@@ -631,7 +631,7 @@ or other code that doesn't become part of the shipping program.
 
 <!--
   - test: `pound-file-flavors`
-  
+
   ```swifttest
   >> print(#file == #filePath)
   << true
@@ -668,7 +668,7 @@ func myFunction() {
 
 <!--
   - test: `special-literal-evaluated-at-call-site`
-  
+
   ```swifttest
   -> func logFunctionName(string: String = #function) {
          print(string)
@@ -712,7 +712,7 @@ var emptyArray: [Double] = []
 
 <!--
   - test: `array-literal-brackets`
-  
+
   ```swifttest
   -> var emptyArray: [Double] = []
   ```
@@ -745,7 +745,7 @@ var emptyDictionary: [String: Double] = [:]
 
 <!--
   - test: `dictionary-literal-brackets`
-  
+
   ```swifttest
   -> var emptyDictionary: [String: Double] = [:]
   ```
@@ -834,7 +834,7 @@ class SomeClass {
 
 <!--
   - test: `self-expression`
-  
+
   ```swifttest
   -> class SomeClass {
          var greeting: String
@@ -860,7 +860,7 @@ struct Point {
 
 <!--
   - test: `self-expression`
-  
+
   ```swifttest
   -> struct Point {
         var x = 0.0, y = 0.0
@@ -875,9 +875,7 @@ struct Point {
   ```
 -->
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 > Grammar of a self expression:
 >
@@ -960,9 +958,7 @@ it's understood to be asynchronous.
 There are several special forms
 that allow closures to be written more concisely:
 
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 - A closure can omit the types
   of its parameters, its return type, or both.
@@ -997,7 +993,7 @@ myFunction { $0 + $1 }
 
 <!--
   - test: `closure-expression-forms`
-  
+
   ```swifttest
   >> func myFunction(f: (Int, Int) -> Int) {}
   -> myFunction { (x: Int, y: Int) -> Int in
@@ -1071,7 +1067,7 @@ closure()
 
 <!--
   - test: `capture-list-value-semantics`
-  
+
   ```swifttest
   -> var a = 0
   -> var b = 0
@@ -1137,7 +1133,7 @@ closure()
 
 <!--
   - test: `capture-list-reference-semantics`
-  
+
   ```swifttest
   -> class SimpleClass {
          var value: Int = 0
@@ -1157,7 +1153,7 @@ closure()
 
 <!--
   - test: `capture-list-with-commas`
-  
+
   ```swifttest
   -> var x = 100
   -> var y = 7
@@ -1174,7 +1170,7 @@ closure()
 
 <!--
   - test: `capture-list-is-not-exhaustive`
-  
+
   ```swifttest
   -> var x = 100
      var y = 7
@@ -1202,7 +1198,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 
 <!--
   - test: `closure-expression-weak`
-  
+
   ```swifttest
   >> func myFunction(f: () -> Void) { f() }
   >> class C {
@@ -1234,7 +1230,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 <!--
   - test: `closure-expression-capture`
-  
+
   ```swifttest
   >> func myFunction(f: () -> Void) { f() }
   >> class P { let title = "Title" }
@@ -1256,7 +1252,7 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 
 <!--
   - test: `async-throwing-closure-syntax`
-  
+
   ```swifttest
   >> var a = 12
   >> let c1 = { [a] in return a }                  // OK -- no async or throws
@@ -1331,7 +1327,7 @@ x = .anotherValue
 
 <!--
   - test: `implicitMemberEnum`
-  
+
   ```swifttest
   >> enum MyEnumeration { case someValue, anotherValue }
   -> var x = MyEnumeration.someValue
@@ -1349,7 +1345,7 @@ var someOptional: MyEnumeration? = .someValue
 
 <!--
   - test: `implicitMemberEnum`
-  
+
   ```swifttest
   -> var someOptional: MyEnumeration? = .someValue
   ```
@@ -1388,7 +1384,7 @@ let z: SomeClass = .sharedSubclass
 
 <!--
   - test: `implicit-member-chain`
-  
+
   ```swifttest
   -> class SomeClass {
          static var shared = SomeClass()
@@ -1426,7 +1422,7 @@ and the type of `z` is convertible from `SomeSubclass` to `SomeClass`.
 
 <!--
   - test: `implicit-member-grammar`
-  
+
   ```swifttest
   // self expression
   >> enum E { case left, right }
@@ -1498,7 +1494,7 @@ it appears once in the outer tuple and once in the inner tuple.
 
 <!--
   - test: `tuple-labels-must-be-unique`
-  
+
   ```swifttest
   >> let bad = (a: 10, a: 20)
   >> let good = (a: 10, b: (a: 1, x: 2))
@@ -1541,7 +1537,7 @@ For example, in the following assignment
 
 <!--
   - test: `wildcardTuple`
-  
+
   ```swifttest
   >> var (x, _) = (10, 20)
   -> (x, _) = (10, 20)
@@ -1607,7 +1603,7 @@ let value = s[keyPath: pathToProperty]
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> struct SomeStructure {
          var someValue: Int
@@ -1644,7 +1640,7 @@ c.observe(\.someProperty) { object, change in
 
 <!--
   - test: `keypath-expression-implicit-type-name`
-  
+
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
@@ -1681,7 +1677,7 @@ compoundValue[keyPath: \.self] = (a: 10, b: 20)
 
 <!--
   - test: `keypath-expression-self-keypath`
-  
+
   ```swifttest
   -> var compoundValue = (a: 1, b: 2)
   // Equivalent to compoundValue = (a: 10, b: 20)
@@ -1714,7 +1710,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> struct OuterStructure {
          var outer: SomeStructure
@@ -1745,7 +1741,7 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> let greetings = ["hello", "hola", "bonjour", "안녕"]
   -> let myGreeting = greetings[keyPath: \[String].[1]]
@@ -1792,7 +1788,7 @@ print(fn(greetings))
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> var index = 2
   -> let path = \[String].[index]
@@ -1831,7 +1827,7 @@ print(count as Any)
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> let firstGreeting: String? = greetings.first
   -> print(firstGreeting?.count as Any)
@@ -1872,7 +1868,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                                "triangular": [1, 3, 6, 10, 15, 21, 28],
@@ -1914,7 +1910,7 @@ let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> struct Task {
          var description: String
@@ -1961,7 +1957,7 @@ let someTask = toDoList[keyPath: taskKeyPath]
 
 <!--
   - test: `keypath-expression`
-  
+
   ```swifttest
   -> func makeIndex() -> Int {
          print("Made an index")
@@ -2034,7 +2030,7 @@ let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 
 <!--
   - test: `selector-expression`
-  
+
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
@@ -2072,7 +2068,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 
 <!--
   - test: `selector-expression-with-as`
-  
+
   ```swifttest
   >> import Foundation
   >> class SomeClass: NSObject {
@@ -2152,7 +2148,7 @@ if let value = c.value(forKey: keyPath) {
 
 <!--
   - test: `keypath-string-expression`
-  
+
   ```swifttest
   >> import Foundation
   -> class SomeClass: NSObject {
@@ -2188,7 +2184,7 @@ print(keyPath == c.getSomeKeyPath())
 
 <!--
   - test: `keypath-string-expression`
-  
+
   ```swifttest
   -> extension SomeClass {
         func getSomeKeyPath() -> String {
@@ -2297,7 +2293,7 @@ anotherFunction(x: x) { $0 == 13 } g: { print(99) }
 
 <!--
   - test: `trailing-closure`
-  
+
   ```swifttest
   >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
   >>    return f(x)
@@ -2342,7 +2338,7 @@ myData.someMethod { $0 == 13 }
 
 <!--
   - test: `no-paren-trailing-closure`
-  
+
   ```swifttest
   >> class Data {
   >>    let data = 10
@@ -2409,7 +2405,7 @@ the closure is wrapped in `Optional` automatically.
 
 <!--
   - test: `when-can-you-use-trailing-closure`
-  
+
   ```swifttest
   // These tests match the example types given above
   // when describing what "structurally resembles" a function type.
@@ -2456,7 +2452,7 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
 
 <!--
   - test: `trailing-closure-scanning-direction`
-  
+
   ```swifttest
   -> typealias Callback = (Int) -> Int
   -> func someFunction(firstClosure: Callback? = nil,
@@ -2525,7 +2521,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 
 <!--
   - test: `inout-unsafe-pointer`
-  
+
   ```swifttest
   -> func unsafeFunction(pointer: UnsafePointer<Int>) {
   ->     // ...
@@ -2564,7 +2560,7 @@ avoid using `&` instead of using the unsafe APIs explicitly.
 
 <!--
   - test: `implicit-conversion-to-pointer`
-  
+
   ```swifttest
   >> import Foundation
   >> func takesUnsafePointer(p: UnsafePointer<Int>) { }
@@ -2656,7 +2652,7 @@ class SomeSubClass: SomeSuperClass {
 
 <!--
   - test: `init-call-superclass`
-  
+
   ```swifttest
   >> class SomeSuperClass { }
   -> class SomeSubClass: SomeSuperClass {
@@ -2681,7 +2677,7 @@ print(oneTwoThree)
 
 <!--
   - test: `init-as-value`
-  
+
   ```swifttest
   // Type annotation is required because String has multiple initializers.
   -> let initializer: (Int) -> String = String.init
@@ -2705,7 +2701,7 @@ let s4 = type(of: someValue)(data: 5)       // Error
 
 <!--
   - test: `explicit-implicit-init`
-  
+
   ```swifttest
   >> struct SomeType {
   >>     let data: Int
@@ -2754,7 +2750,7 @@ let y = c.someProperty  // Member access
 
 <!--
   - test: `explicitMemberExpression`
-  
+
   ```swifttest
   -> class SomeClass {
          var someProperty = 42
@@ -2777,7 +2773,7 @@ t.0 = t.1
 
 <!--
   - test: `explicit-member-expression`
-  
+
   ```swifttest
   -> var t = (10, 20, 30)
   -> t.0 = t.1
@@ -2820,7 +2816,7 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 
 <!--
   - test: `function-with-argument-names`
-  
+
   ```swifttest
   -> class SomeClass {
          func someMethod(x: Int, y: Int) {}
@@ -2881,7 +2877,7 @@ let x = [10, 3, 20, 15, 4]
 
 <!--
   - test: `period-at-start-of-line`
-  
+
   ```swifttest
   -> let x = [10, 3, 20, 15, 4]
   ->     .sorted()
@@ -2909,7 +2905,7 @@ let numbers = [10, 20, 33, 43, 50]
 
 <!--
   - test: `pound-if-inside-postfix-expression`
-  
+
   ```swifttest
   -> let numbers = [10, 20, 33, 43, 50]
      #if os(iOS)
@@ -2951,7 +2947,7 @@ The other branches can be empty.
 
 <!--
   - test: `pound-if-empty-if-not-allowed`
-  
+
   ```swifttest
   >> let numbers = [10, 20, 33, 43, 50]
   >> #if os(iOS)
@@ -2966,7 +2962,7 @@ The other branches can be empty.
 
 <!--
   - test: `pound-if-else-can-be-empty`
-  
+
   ```swifttest
   >> let numbers = [10, 20, 33, 43, 50]
   >> #if os(iOS)
@@ -2980,7 +2976,7 @@ The other branches can be empty.
 
 <!--
   - test: `pound-if-cant-use-binary-operators`
-  
+
   ```swifttest
   >> let s = "some string"
   >> #if os(iOS)
@@ -3081,7 +3077,7 @@ see <doc:Declarations#Protocol-Subscript-Declaration>.
 
 <!--
   - test: `subscripts-can-take-operators`
-  
+
   ```swifttest
   >> struct S {
          let x: Int
@@ -3127,7 +3123,7 @@ someDictionary["a"]![0] = 100
 
 <!--
   - test: `optional-as-lvalue`
-  
+
   ```swifttest
   -> var x: Int? = 0
   -> x! += 1
@@ -3186,7 +3182,7 @@ var result: Bool? = c?.property.performAction()
 
 <!--
   - test: `optional-chaining`
-  
+
   ```swifttest
   >> class OtherClass { func performAction() -> Bool {return true} }
   >> class SomeClass { var property: OtherClass = OtherClass() }
@@ -3209,7 +3205,7 @@ if let unwrappedC = c {
 
 <!--
   - test: `optional-chaining-alt`
-  
+
   ```swifttest
   >> class OtherClass { func performAction() -> Bool {return true} }
   >> class SomeClass { var property: OtherClass = OtherClass() }
@@ -3246,7 +3242,7 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 
 <!--
   - test: `optional-chaining-as-lvalue`
-  
+
   ```swifttest
   -> func someFunctionWithSideEffects() -> Int {
         return 42  // No actual side effects.

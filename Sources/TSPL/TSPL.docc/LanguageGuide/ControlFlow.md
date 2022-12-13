@@ -40,7 +40,7 @@ for name in names {
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let names = ["Anna", "Alex", "Brian", "Jack"]
   -> for name in names {
@@ -73,7 +73,7 @@ for (animalName, legCount) in numberOfLegs {
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
   -> for (animalName, legCount) in numberOfLegs {
@@ -114,7 +114,7 @@ for index in 1...5 {
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> for index in 1...5 {
         print("\(index) times 5 is \(index * 5)")
@@ -161,7 +161,7 @@ print("\(base) to the power of \(power) is \(answer)")
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let base = 3
   -> let power = 10
@@ -204,7 +204,7 @@ for tickMark in 0..<minutes {
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let minutes = 60
   >> var result: [Int] = []
@@ -230,7 +230,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let minuteInterval = 5
   >> result = []
@@ -255,7 +255,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let hours = 12
   -> let hourInterval = 3
@@ -308,9 +308,7 @@ while <#condition#> {
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 ![](snakesAndLadders)
 
@@ -338,7 +336,7 @@ var board = [Int](repeating: 0, count: finalSquare + 1)
 
 <!--
   - test: `snakesAndLadders1`
-  
+
   ```swifttest
   -> let finalSquare = 25
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -357,16 +355,14 @@ board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 
 <!--
   - test: `snakesAndLadders1`
-  
+
   ```swifttest
   -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
   -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
   ```
 -->
 
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, `board[03]` is equal to `+08`,
@@ -398,7 +394,7 @@ print("Game over!")
 
 <!--
   - test: `snakesAndLadders1`
-  
+
   ```swifttest
   -> var square = 0
   -> var diceRoll = 0
@@ -518,7 +514,7 @@ var diceRoll = 0
 
 <!--
   - test: `snakesAndLadders2`
-  
+
   ```swifttest
   -> let finalSquare = 25
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -554,7 +550,7 @@ print("Game over!")
 
 <!--
   - test: `snakesAndLadders2`
-  
+
   ```swifttest
   -> repeat {
         // move up or down for a snake or ladder
@@ -649,7 +645,7 @@ if temperatureInFahrenheit <= 32 {
 
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> var temperatureInFahrenheit = 30
   -> if temperatureInFahrenheit <= 32 {
@@ -683,7 +679,7 @@ if temperatureInFahrenheit <= 32 {
 
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> temperatureInFahrenheit = 40
   -> if temperatureInFahrenheit <= 32 {
@@ -717,7 +713,7 @@ if temperatureInFahrenheit <= 32 {
 
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> temperatureInFahrenheit = 90
   -> if temperatureInFahrenheit <= 32 {
@@ -749,7 +745,7 @@ if temperatureInFahrenheit <= 32 {
 
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> temperatureInFahrenheit = 72
   -> if temperatureInFahrenheit <= 32 {
@@ -824,7 +820,7 @@ default:
 
 <!--
   - test: `switch`
-  
+
   ```swifttest
   -> let someCharacter: Character = "z"
   -> switch someCharacter {
@@ -881,7 +877,7 @@ default:
 
 <!--
   - test: `noFallthrough`
-  
+
   ```swifttest
   -> let anotherCharacter: Character = "a"
   -> switch anotherCharacter {
@@ -924,7 +920,7 @@ default:
 
 <!--
   - test: `compoundCaseInsteadOfFallthrough`
-  
+
   ```swifttest
   -> let anotherCharacter: Character = "a"
   -> switch anotherCharacter {
@@ -981,7 +977,7 @@ print("There are \(naturalCount) \(countedThings).")
 
 <!--
   - test: `intervalMatching`
-  
+
   ```swifttest
   -> let approximateCount = 62
   -> let countedThings = "moons orbiting Saturn"
@@ -1042,7 +1038,7 @@ default:
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let somePoint = (1, 1)
   -> switch somePoint {
@@ -1103,7 +1099,7 @@ case let (x, y):
 
 <!--
   - test: `valueBindings`
-  
+
   ```swifttest
   -> let anotherPoint = (2, 0)
   -> switch anotherPoint {
@@ -1166,7 +1162,7 @@ case let (x, y):
 
 <!--
   - test: `where`
-  
+
   ```swifttest
   -> let yetAnotherPoint = (1, -1)
   -> switch yetAnotherPoint {
@@ -1223,7 +1219,7 @@ default:
 
 <!--
   - test: `compound-switch-case`
-  
+
   ```swifttest
   -> let someCharacter: Character = "e"
   -> switch someCharacter {
@@ -1268,7 +1264,7 @@ default:
 
 <!--
   - test: `compound-switch-case`
-  
+
   ```swifttest
   -> let stillAnotherPoint = (9, 0)
   -> switch stillAnotherPoint {
@@ -1331,7 +1327,7 @@ print(puzzleOutput)
 
 <!--
   - test: `continue`
-  
+
   ```swifttest
   -> let puzzleInput = "great minds think alike"
   -> var puzzleOutput = ""
@@ -1419,7 +1415,7 @@ if let integerValue = possibleIntegerValue {
 
 <!--
   - test: `breakInASwitchStatement`
-  
+
   ```swifttest
   -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
   -> var possibleIntegerValue: Int?
@@ -1498,7 +1494,7 @@ print(description)
 
 <!--
   - test: `fallthrough`
-  
+
   ```swifttest
   -> let integerToDescribe = 5
   -> var description = "The number \(integerToDescribe) is"
@@ -1601,7 +1597,7 @@ var diceRoll = 0
 
 <!--
   - test: `labels`
-  
+
   ```swifttest
   -> let finalSquare = 25
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -1643,7 +1639,7 @@ print("Game over!")
 
 <!--
   - test: `labels`
-  
+
   ```swifttest
   -> gameLoop: while square != finalSquare {
         diceRoll += 1
@@ -1780,7 +1776,7 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 
 <!--
   - test: `guard`
-  
+
   ```swifttest
   -> func greet(person: [String: String]) {
          guard let name = person["name"] else {
@@ -1858,7 +1854,7 @@ if #available(iOS 10, macOS 10.12, *) {
 
 <!--
   - test: `availability`
-  
+
   ```swifttest
   -> if #available(iOS 10, macOS 10.12, *) {
          // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
@@ -1910,7 +1906,7 @@ func chooseBestColor() -> String {
 
 <!--
   - test: `guard-with-pound-available`
-  
+
   ```swifttest
   -> @available(macOS 10.12, *)
   -> struct ColorPreference {
@@ -1954,7 +1950,7 @@ if #unavailable(iOS 10) {
 
 <!--
   - test: `availability-and-unavailability`
-  
+
   ```swifttest
   -> if #available(iOS 10, *) {
      } else {

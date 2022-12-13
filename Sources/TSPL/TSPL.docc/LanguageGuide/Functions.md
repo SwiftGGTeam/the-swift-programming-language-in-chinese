@@ -56,7 +56,7 @@ func greet(person: String) -> String {
 
 <!--
   - test: `definingAndCalling`
-  
+
   ```swifttest
   -> func greet(person: String) -> String {
         let greeting = "Hello, " + person + "!"
@@ -86,7 +86,7 @@ print(greet(person: "Brian"))
 
 <!--
   - test: `definingAndCalling`
-  
+
   ```swifttest
   -> print(greet(person: "Anna"))
   <- Hello, Anna!
@@ -134,7 +134,7 @@ print(greetAgain(person: "Anna"))
 
 <!--
   - test: `definingAndCalling`
-  
+
   ```swifttest
   -> func greetAgain(person: String) -> String {
         return "Hello again, " + person + "!"
@@ -166,7 +166,7 @@ print(sayHelloWorld())
 
 <!--
   - test: `functionsWithoutParameters`
-  
+
   ```swifttest
   -> func sayHelloWorld() -> String {
         return "hello, world"
@@ -204,7 +204,7 @@ print(greet(person: "Tim", alreadyGreeted: true))
 
 <!--
   - test: `definingAndCalling`
-  
+
   ```swifttest
   -> func greet(person: String, alreadyGreeted: Bool) -> String {
          if alreadyGreeted {
@@ -244,7 +244,7 @@ greet(person: "Dave")
 
 <!--
   - test: `functionsWithoutReturnValues`
-  
+
   ```swifttest
   -> func greet(person: String) {
         print("Hello, \(person)!")
@@ -282,7 +282,7 @@ printWithoutCounting(string: "hello, world")
 
 <!--
   - test: `functionsWithoutReturnValues`
-  
+
   ```swifttest
   -> func printAndCount(string: String) -> Int {
         print(string)
@@ -352,7 +352,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 
 <!--
   - test: `tupleTypesAsReturnTypes`
-  
+
   ```swifttest
   -> func minMax(array: [Int]) -> (min: Int, max: Int) {
         var currentMin = array[0]
@@ -393,7 +393,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 
 <!--
   - test: `tupleTypesAsReturnTypes`
-  
+
   ```swifttest
   -> let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
   -> print("min is \(bounds.min) and max is \(bounds.max)")
@@ -449,7 +449,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 
 <!--
   - test: `tupleTypesAsReturnTypes2`
-  
+
   ```swifttest
   -> func minMax(array: [Int]) -> (min: Int, max: Int)? {
         if array.isEmpty { return nil }
@@ -479,7 +479,7 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 
 <!--
   - test: `tupleTypesAsReturnTypes2`
-  
+
   ```swifttest
   -> if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
         print("min is \(bounds.min) and max is \(bounds.max)")
@@ -511,7 +511,7 @@ print(anotherGreeting(for: "Dave"))
 
 <!--
   - test: `implicit-func-return`
-  
+
   ```swifttest
   -> func greeting(for person: String) -> String {
         "Hello, " + person + "!"
@@ -549,7 +549,7 @@ property getters can also use an implicit return.
 
 <!--
   - test: `implicit-return-print-instead`
-  
+
   ```swifttest
   // This is ok:
   >> func testFatal() -> Int {
@@ -586,7 +586,7 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
 
 <!--
   - test: `functionParameterNames`
-  
+
   ```swifttest
   -> func someFunction(firstParameterName: Int, secondParameterName: Int) {
         // In the function body, firstParameterName and secondParameterName
@@ -603,7 +603,7 @@ unique argument labels help make your code more readable.
 
 <!--
   - test: `non-unique-external-name`
-  
+
   ```swifttest
   -> func foo(external a: Int, external b: Int) {}
   -> foo(external: 7, external: 12)
@@ -624,7 +624,7 @@ func someFunction(argumentLabel parameterName: Int) {
 
 <!--
   - test: `externalParameterNames`
-  
+
   ```swifttest
   -> func someFunction(argumentLabel parameterName: Int) {
         // In the function body, parameterName refers to the argument value
@@ -647,7 +647,7 @@ print(greet(person: "Bill", from: "Cupertino"))
 
 <!--
   - test: `externalParameterNames`
-  
+
   ```swifttest
   -> func greet(person: String, from hometown: String) -> String {
          return "Hello \(person)!  Glad you could visit from \(hometown)."
@@ -676,7 +676,7 @@ someFunction(1, secondParameterName: 2)
 
 <!--
   - test: `omittedExternalParameterNames`
-  
+
   ```swifttest
   -> func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
         // In the function body, firstParameterName and secondParameterName
@@ -706,7 +706,7 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 
 <!--
   - test: `omittedExternalParameterNames`
-  
+
   ```swifttest
   -> func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
         // If you omit the second argument when calling this function, then
@@ -759,7 +759,7 @@ arithmeticMean(3, 8.25, 18.75)
 
 <!--
   - test: `variadicParameters`
-  
+
   ```swifttest
   -> func arithmeticMean(_ numbers: Double...) -> Double {
         var total: Double = 0
@@ -794,7 +794,7 @@ that come after the variadic parameter.
 
 <!--
   - test: `variadic-parameters-and-labels`
-  
+
   ```swifttest
   // Labeled, immediately after
   >> func f(_ a: Int..., b: String) {}
@@ -809,7 +809,7 @@ that come after the variadic parameter.
 
 <!--
   - test: `variadic-parameters-and-labels-failure`
-  
+
   ```swifttest
   // Unlabeled, immediately after
   >> func f(_ a: Int..., _ b: String) {}
@@ -861,7 +861,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 
 <!--
   - test: `inoutParameters`
-  
+
   ```swifttest
   -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
         let temporaryA = a
@@ -892,7 +892,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 
 <!--
   - test: `inoutParameters`
-  
+
   ```swifttest
   -> var someInt = 3
   -> var anotherInt = 107
@@ -936,7 +936,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> func addTwoInts(_ a: Int, _ b: Int) -> Int {
         return a + b
@@ -973,7 +973,7 @@ func printHelloWorld() {
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> func printHelloWorld() {
         print("hello, world")
@@ -998,7 +998,7 @@ var mathFunction: (Int, Int) -> Int = addTwoInts
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> var mathFunction: (Int, Int) -> Int = addTwoInts
   ```
@@ -1023,7 +1023,7 @@ print("Result: \(mathFunction(2, 3))")
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> print("Result: \(mathFunction(2, 3))")
   <- Result: 5
@@ -1041,7 +1041,7 @@ print("Result: \(mathFunction(2, 3))")
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> mathFunction = multiplyTwoInts
   -> print("Result: \(mathFunction(2, 3))")
@@ -1060,7 +1060,7 @@ let anotherMathFunction = addTwoInts
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> let anotherMathFunction = addTwoInts
   >> print(type(of: anotherMathFunction))
@@ -1092,7 +1092,7 @@ printMathResult(addTwoInts, 3, 5)
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
         print("Result: \(mathFunction(a, b))")
@@ -1141,7 +1141,7 @@ func stepBackward(_ input: Int) -> Int {
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> func stepForward(_ input: Int) -> Int {
         return input + 1
@@ -1165,7 +1165,7 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
         return backward ? stepBackward : stepForward
@@ -1184,7 +1184,7 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> var currentValue = 3
   -> let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
@@ -1220,7 +1220,7 @@ print("zero!")
 
 <!--
   - test: `functionTypes`
-  
+
   ```swifttest
   -> print("Counting to zero:")
   </ Counting to zero:
@@ -1274,7 +1274,7 @@ print("zero!")
 
 <!--
   - test: `nestedFunctions`
-  
+
   ```swifttest
   -> func chooseStepFunction(backward: Bool) -> (Int) -> Int {
         func stepForward(input: Int) -> Int { return input + 1 }
