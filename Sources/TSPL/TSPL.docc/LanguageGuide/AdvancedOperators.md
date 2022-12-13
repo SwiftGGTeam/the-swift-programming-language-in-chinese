@@ -1,5 +1,3 @@
-
-
 # Advanced Operators
 
 Define custom operators, perform bitwise operations, and use builder syntax.
@@ -47,7 +45,6 @@ The *bitwise NOT operator* (`~`) inverts all bits in a number:
 
 ![](bitwiseNOT)
 
-
 The bitwise NOT operator is a prefix operator,
 and appears immediately before the value it operates on,
 without any white space:
@@ -57,10 +54,9 @@ let initialBits: UInt8 = 0b00001111
 let invertedBits = ~initialBits  // equals 11110000
 ```
 
-
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let initialBits: UInt8 = 0b00001111
   >> assert(initialBits == 15)
@@ -76,9 +72,7 @@ which has its first four bits set to `0`,
 and its second four bits set to `1`.
 This is equivalent to a decimal value of `15`.
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 The bitwise NOT operator is then used to create a new constant called `invertedBits`,
 which is equal to `initialBits`,
@@ -95,7 +89,6 @@ only if the bits were equal to `1` in *both* input numbers:
 
 ![](bitwiseAND)
 
-
 In the example below,
 the values of `firstSixBits` and `lastSixBits`
 both have four middle bits equal to `1`.
@@ -108,10 +101,9 @@ let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
 ```
 
-
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let firstSixBits: UInt8 = 0b11111100
   -> let lastSixBits: UInt8  = 0b00111111
@@ -128,10 +120,7 @@ if the bits are equal to `1` in *either* input number:
 
 ![](bitwiseOR)
 
-
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 In the example below,
 the values of `someBits` and `moreBits` have different bits set to `1`.
@@ -144,10 +133,9 @@ let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits  // equals 11111110
 ```
 
-
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let someBits: UInt8 = 0b10110010
   -> let moreBits: UInt8 = 0b01011110
@@ -166,7 +154,6 @@ and are set to `0` where the input bits are the same:
 
 ![](bitwiseXOR)
 
-
 In the example below,
 the values of `firstBits` and `otherBits` each have a bit set to `1`
 in a location that the other does not.
@@ -180,10 +167,9 @@ let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // equals 00010001
 ```
 
-
 <!--
   - test: `bitwiseOperators`
-  
+
   ```swifttest
   -> let firstBits: UInt8 = 0b00010100
   -> let otherBits: UInt8 = 0b00000101
@@ -229,7 +215,6 @@ and orange zeros are inserted:
 
 ![](bitshiftUnsigned)
 
-
 Here's how bit shifting looks in Swift code:
 
 ```swift
@@ -241,10 +226,9 @@ shiftBits << 6             // 00000000
 shiftBits >> 2             // 00000001
 ```
 
-
 <!--
   - test: `bitwiseShiftOperators`
-  
+
   ```swifttest
   -> let shiftBits: UInt8 = 4   // 00000100 in binary
   >> let r0 =
@@ -279,10 +263,9 @@ let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
 let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
 ```
 
-
 <!--
   - test: `bitwiseShiftOperators`
-  
+
   ```swifttest
   -> let pink: UInt32 = 0xCC6699
   -> let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
@@ -343,7 +326,6 @@ Here's how the bits inside an `Int8` look for the number `4`:
 
 ![](bitshiftSignedFour)
 
-
 The sign bit is `0` (meaning “positive”),
 and the seven value bits are just the number `4`,
 written in binary notation.
@@ -358,12 +340,10 @@ Here's how the bits inside an `Int8` look for the number `-4`:
 
 ![](bitshiftSignedMinusFour)
 
-
 This time, the sign bit is `1` (meaning “negative”),
 and the seven value bits have a binary value of `124` (which is `128 - 4`):
 
 ![](bitshiftSignedMinusFourValue)
-
 
 This encoding for negative numbers is known as a *two's complement* representation.
 It may seem an unusual way to represent negative numbers,
@@ -376,7 +356,6 @@ and discarding anything that doesn't fit in the eight bits once you're done:
 
 ![](bitshiftSignedAddition)
 
-
 Second, the two's complement representation also lets you
 shift the bits of negative numbers to the left and right like positive numbers,
 and still end up doubling them for every shift you make to the left,
@@ -388,7 +367,6 @@ but fill any empty bits on the left with the *sign bit*,
 rather than with a zero.
 
 ![](bitshiftSigned)
-
 
 This action ensures that signed integers have the same sign after they're shifted to the right,
 and is known as an *arithmetic shift*.
@@ -417,10 +395,9 @@ potentialOverflow += 1
 // this causes an error
 ```
 
-
 <!--
   - test: `overflowOperatorsWillFailToOverflow`
-  
+
   ```swifttest
   -> var potentialOverflow = Int16.max
   /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
@@ -460,10 +437,9 @@ unsignedOverflow = unsignedOverflow &+ 1
 // unsignedOverflow is now equal to 0
 ```
 
-
 <!--
   - test: `overflowOperatorsWillOverflowInPositiveDirection`
-  
+
   ```swifttest
   -> var unsignedOverflow = UInt8.max
   /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
@@ -485,7 +461,6 @@ after the overflow addition is `00000000`, or zero.
 
 ![](overflowAddition)
 
-
 Something similar happens when
 an unsigned integer is allowed to overflow in the negative direction.
 Here's an example using the overflow subtraction operator (`&-`):
@@ -497,10 +472,9 @@ unsignedOverflow = unsignedOverflow &- 1
 // unsignedOverflow is now equal to 255
 ```
 
-
 <!--
   - test: `overflowOperatorsWillOverflowInNegativeDirection`
-  
+
   ```swifttest
   -> var unsignedOverflow = UInt8.min
   /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
@@ -519,7 +493,6 @@ or `255` in decimal.
 
 ![](overflowUnsignedSubtraction)
 
-
 Overflow also occurs for signed integers.
 All addition and subtraction for signed integers is performed in bitwise fashion,
 with the sign bit included as part of the numbers being added or subtracted,
@@ -532,10 +505,9 @@ signedOverflow = signedOverflow &- 1
 // signedOverflow is now equal to 127
 ```
 
-
 <!--
   - test: `overflowOperatorsWillOverflowSigned`
-  
+
   ```swifttest
   -> var signedOverflow = Int8.min
   /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
@@ -554,7 +526,6 @@ which toggles the sign bit and gives positive `127`,
 the maximum positive value that an `Int8` can hold.
 
 ![](overflowSignedSubtraction)
-
 
 For both signed and unsigned integers,
 overflow in the positive direction
@@ -584,10 +555,9 @@ operator precedence explains why the following expression equals `17`.
 // this equals 17
 ```
 
-
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r0 =
   -> 2 + 3 % 4 * 5
@@ -627,10 +597,9 @@ starting from their left:
 2 + ((3 % 4) * 5)
 ```
 
-
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r1 =
   -> 2 + ((3 % 4) * 5)
@@ -649,10 +618,9 @@ starting from their left:
 2 + (3 * 5)
 ```
 
-
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r2 =
   -> 2 + (3 * 5)
@@ -671,10 +639,9 @@ starting from their left:
 2 + 15
 ```
 
-
 <!--
   - test: `evaluationOrder`
-  
+
   ```swifttest
   >> let r3 =
   -> 2 + 15
@@ -727,10 +694,9 @@ extension Vector2D {
 }
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> struct Vector2D {
         var x = 0.0, y = 0.0
@@ -771,10 +737,9 @@ let combinedVector = vector + anotherVector
 // combinedVector is a Vector2D instance with values of (5.0, 5.0)
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> let vector = Vector2D(x: 3.0, y: 1.0)
   -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
@@ -788,7 +753,6 @@ This example adds together the vectors `(3.0, 1.0)` and `(2.0, 4.0)`
 to make the vector `(5.0, 5.0)`, as illustrated below.
 
 ![](vectorAddition)
-
 
 ### Prefix and Postfix Operators
 
@@ -811,10 +775,9 @@ extension Vector2D {
 }
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D {
          static prefix func - (vector: Vector2D) -> Vector2D {
@@ -842,10 +805,9 @@ let alsoPositive = -negative
 // alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> let positive = Vector2D(x: 3.0, y: 4.0)
   -> let negative = -positive
@@ -876,10 +838,9 @@ extension Vector2D {
 }
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D {
          static func += (left: inout Vector2D, right: Vector2D) {
@@ -902,10 +863,9 @@ original += vectorToAdd
 // original now has values of (4.0, 6.0)
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> var original = Vector2D(x: 1.0, y: 2.0)
   -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
@@ -923,7 +883,7 @@ original += vectorToAdd
 
 <!--
   - test: `cant-overload-assignment`
-  
+
   ```swifttest
   >> struct Vector2D {
   >>    var x = 0.0, y = 0.0
@@ -965,10 +925,9 @@ extension Vector2D: Equatable {
 }
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D: Equatable {
          static func == (left: Vector2D, right: Vector2D) -> Bool {
@@ -996,10 +955,9 @@ if twoThree == anotherTwoThree {
 // Prints "These two vectors are equivalent."
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> let twoThree = Vector2D(x: 2.0, y: 3.0)
   -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
@@ -1028,10 +986,9 @@ and are marked with the `prefix`, `infix` or `postfix` modifiers:
 prefix operator +++
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> prefix operator +++
   ```
@@ -1061,10 +1018,9 @@ let afterDoubling = +++toBeDoubled
 // afterDoubling also has values of (2.0, 8.0)
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> extension Vector2D {
         static prefix func +++ (vector: inout Vector2D) -> Vector2D {
@@ -1111,10 +1067,9 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 ```
 
-
 <!--
   - test: `customOperators`
-  
+
   ```swifttest
   -> infix operator +-: AdditionPrecedence
   -> extension Vector2D {
@@ -1148,7 +1103,7 @@ see <doc:Declarations#Operator-Declaration>.
 
 <!--
   - test: `postfixOperatorsAreAppliedBeforePrefixOperators`
-  
+
   ```swifttest
   -> prefix operator +++
   -> postfix operator ---
@@ -1212,10 +1167,9 @@ struct AllCaps: Drawable {
 }
 ```
 
-
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> protocol Drawable {
          func draw() -> String
@@ -1273,10 +1227,9 @@ print(manualDrawing.draw())
 // Prints "***Hello RAVI PATEL!**"
 ```
 
-
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> let name: String? = "Ravi Patel"
   -> let manualDrawing = Line(elements: [
@@ -1321,10 +1274,9 @@ struct DrawingBuilder {
 }
 ```
 
-
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> @resultBuilder
   -> struct DrawingBuilder {
@@ -1387,10 +1339,9 @@ print(personalGreeting.draw())
 // Prints "***Hello RAVI PATEL!**"
 ```
 
-
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
          return content()
@@ -1453,10 +1404,9 @@ let capsDrawing = caps {
 }
 ```
 
-
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> let capsDrawing = caps {
          let partialDrawing: Drawable
@@ -1499,10 +1449,9 @@ let manyStars = draw {
 }
 ```
 
-
 <!--
   - test: `result-builder`
-  
+
   ```swifttest
   -> extension DrawingBuilder {
          static func buildArray(_ components: [Drawable]) -> Drawable {
@@ -1530,10 +1479,10 @@ see <doc:Attributes#resultBuilder>.
 
 <!--
   The following needs more work...
-  
+
    Protocol Operator Requirements
    ------------------------------
-  
+
    You can include operators in the requirements of a protocol.
    A type conforms to the protocol
    only if there's an implementation of the operator for that type.
@@ -1541,19 +1490,19 @@ see <doc:Attributes#resultBuilder>.
    just like you do in other protocol requirements.
    For example, the standard library defines the ``Equatable`` protocol
    which requires the ``==`` operator:
-  
+
    .. testcode:: protocolOperator
-  
+
       -> protocol Equatable {
              static func == (lhs: Self, rhs: Self) -> Bool
          }
-  
+
    To make a type conform to the protocol,
    you need to implement the ``==`` operator for that type.
    For example:
-  
+
    .. testcode:: protocolOperator
-  
+
   -> struct Vector3D {
         var x = 0.0, y = 0.0, z = 0.0
      }
@@ -1570,7 +1519,7 @@ see <doc:Attributes#resultBuilder>.
 <!--
   FIXME: This doesn't work
   <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
-  
+
    For operators that take values of two different types,
    the operator's implementation doesn't have to be
    a member of the type that conforms to the protocol ---
@@ -1582,9 +1531,9 @@ see <doc:Attributes#resultBuilder>.
    because there's an implementation of the operator
    that takes a ``Vector2D`` as its second argument,
    even though that implementation is a member of ``Double``.
-  
+
    .. testcode:: customOperators
-  
+
   -> infix operator *** {}
   -> protocol AnotherProtocol {
          // static func * (scale: Double, vector: Self) -> Self
@@ -1611,7 +1560,6 @@ see <doc:Attributes#resultBuilder>.
 <!--
   TODO: generic operators
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

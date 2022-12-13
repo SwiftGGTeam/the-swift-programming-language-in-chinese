@@ -1,5 +1,3 @@
-
-
 # Attributes
 
 Add information to declarations and types.
@@ -19,7 +17,6 @@ and any arguments that the attribute accepts:
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
-
 
 Some declaration attributes accept arguments
 that specify more information about the attribute
@@ -78,7 +75,7 @@ including important milestones.
 - The `introduced` argument indicates the first version
   of the specified platform or language in which the declaration was introduced.
   It has the following form:
-  
+
   ```swift
   introduced: <#version number#>
   ```
@@ -87,7 +84,7 @@ including important milestones.
 - The `deprecated` argument indicates the first version
   of the specified platform or language in which the declaration was deprecated.
   It has the following form:
-  
+
   ```swift
   deprecated: <#version number#>
   ```
@@ -101,7 +98,7 @@ including important milestones.
   When a declaration is obsoleted,
   it's removed from the specified platform or language and can no longer be used.
   It has the following form:
-  
+
   ```swift
   obsoleted: <#version number#>
   ```
@@ -109,7 +106,7 @@ including important milestones.
 - The `message` argument provides a textual message that the compiler displays
   when emitting a warning or error about the use of a deprecated or obsoleted declaration.
   It has the following form:
-  
+
   ```swift
   message: <#message#>
   ```
@@ -119,7 +116,7 @@ including important milestones.
   The compiler displays the new name
   when emitting an error about the use of a renamed declaration.
   It has the following form:
-  
+
   ```swift
   renamed: <#new name#>
   ```
@@ -130,18 +127,18 @@ including important milestones.
   between releases of a framework or library.
   This combination results in a compile-time error
   that the declaration has been renamed.
-  
+
   ```swift
   // First release
   protocol MyProtocol {
       // protocol definition
   }
   ```
-  
-  
+
+
   <!--
     - test: `renamed1`
-    
+
     ```swifttest
     -> // First release
     -> protocol MyProtocol {
@@ -149,21 +146,21 @@ including important milestones.
        }
     ```
   -->
-  
+
   ```swift
   // Subsequent release renames MyProtocol
   protocol MyRenamedProtocol {
       // protocol definition
   }
-  
+
   @available(*, unavailable, renamed: "MyRenamedProtocol")
   typealias MyProtocol = MyRenamedProtocol
   ```
-  
-  
+
+
   <!--
     - test: `renamed2`
-    
+
     ```swifttest
     -> // Subsequent release renames MyProtocol
     -> protocol MyRenamedProtocol {
@@ -187,7 +184,7 @@ the platform and Swift availabilities.
 
 <!--
   - test: `multipleAvailableAttributes`
-  
+
   ```swifttest
   -> @available(iOS 9, *)
   -> @available(macOS 10.9, *)
@@ -205,7 +202,6 @@ you can use the following shorthand syntax instead:
 @available(swift <#version number#>)
 ```
 
-
 The shorthand syntax for `available` attributes
 concisely expresses availability for multiple platforms.
 Although the two forms are functionally equivalent,
@@ -218,10 +214,9 @@ class MyClass {
 }
 ```
 
-
 <!--
   - test: `availableShorthand`
-  
+
   ```swifttest
   -> @available(iOS 10.0, macOS 10.12, *)
   -> class MyClass {
@@ -244,10 +239,9 @@ struct MyStruct {
 }
 ```
 
-
 <!--
   - test: `availableMultipleAvailabilities`
-  
+
   ```swifttest
   -> @available(swift 3.0.2)
   -> @available(macOS 10.12, *)
@@ -300,10 +294,9 @@ dial(8, 6, 7, 5, 3, 0, 9)
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
 
-
 <!--
   - test: `dynamicCallable`
-  
+
   ```swifttest
   -> @dynamicCallable
   -> struct TelephoneExchange {
@@ -361,10 +354,9 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 // a
 ```
 
-
 <!--
   - test: `dynamicCallable`
-  
+
   ```swifttest
   -> @dynamicCallable
      struct Repeater {
@@ -416,10 +408,9 @@ that takes `KeyValuePairs<String, String>`.
 repeatLabels(a: "four") // Error
 ```
 
-
 <!--
   - test: `dynamicCallable-err`
-  
+
   ```swifttest
   >> @dynamicCallable
   >> struct Repeater {
@@ -492,10 +483,9 @@ print(dynamic == equivalent)
 // Prints "true"
 ```
 
-
 <!--
   - test: `dynamicMemberLookup`
-  
+
   ```swifttest
   -> @dynamicMemberLookup
   -> struct DynamicStruct {
@@ -540,10 +530,9 @@ let wrapper = PassthroughWrapper(value: point)
 print(wrapper.x)
 ```
 
-
 <!--
   - test: `dynamicMemberLookup`
-  
+
   ```swifttest
   -> struct Point { var x, y: Int }
   ---
@@ -580,7 +569,7 @@ but they break ABI compatibility for frozen types.
 
 <!--
   - test: `can-use-frozen-without-evolution`
-  
+
   ```swifttest
   >> @frozen public enum E { case x, y }
   >> @frozen public struct S { var a: Int = 10 }
@@ -593,7 +582,7 @@ but they break ABI compatibility for frozen types.
 
 <!--
   - test: `frozen-is-fine-with-evolution`
-  
+
   ```swifttest
   >> @frozen public enum E { case x, y }
   >> @frozen public struct S { var a: Int = 10 }
@@ -625,7 +614,7 @@ as discussed in <doc:Attributes#inlinable>.
 
 <!--
   - test: `frozen-struct-prop-init-cant-refer-to-private-type`
-  
+
   ```swifttest
   >> public protocol P { }
   >> private struct PrivateStruct: P { }
@@ -669,7 +658,7 @@ produces a warning because that code is never executed.
 
 <!--
   - test: `NoUnknownDefaultOverFrozenEnum`
-  
+
   ```swifttest
   >> public enum E { case x, y }
   >> @frozen public enum F { case x, y }
@@ -678,7 +667,7 @@ produces a warning because that code is never executed.
 
 <!--
   - test: `NoUnknownDefaultOverFrozenEnum_Test1`
-  
+
   ```swifttest
   >> import NoUnknownDefaultOverFrozenEnum
   >> func main() {
@@ -695,7 +684,7 @@ produces a warning because that code is never executed.
 
 <!--
   - test: `NoUnknownDefaultOverFrozenEnum_Test2`
-  
+
   ```swifttest
   >> import NoUnknownDefaultOverFrozenEnum
   >> func main() {
@@ -760,7 +749,7 @@ even though they can't be marked with this attribute.
 
 <!--
   - test: `cant-inline-private`
-  
+
   ```swifttest
   >> @inlinable private func f() { }
   !$ error: '@inlinable' attribute can only be applied to public declarations, but 'f' is private
@@ -771,7 +760,7 @@ even though they can't be marked with this attribute.
 
 <!--
   - test: `cant-inline-nested`
-  
+
   ```swifttest
   >> public func outer() {
   >>    @inlinable func f() { }
@@ -787,7 +776,7 @@ even though they can't be marked with this attribute.
   TODO: When we get resilience, this will actually be a problem.
   Until then, per discussion with [Contributor 6004], there's no (supported) way
   for folks to get into the state where this behavior would be triggered.
-  
+
   If a project uses a module that includes inlinable functions,
   the inlined copies aren't necessarily updated
   when the module's implementation of the function changes.
@@ -820,10 +809,9 @@ struct MyTopLevel {
 }
 ```
 
-
 <!--
   - test: `atMain`
-  
+
   ```swifttest
   -> @main
   -> struct MyTopLevel {
@@ -847,10 +835,9 @@ protocol ProvidesMain {
 }
 ```
 
-
 <!--
   - test: `atMain_ProvidesMain`
-  
+
   ```swifttest
   -> protocol ProvidesMain {
          static func main() throws
@@ -864,7 +851,7 @@ as discussed in <doc:Declarations#Top-Level-Code>.
 
 <!--
   - test: `no-at-main-in-top-level-code`
-  
+
   ```swifttest
   // This is the same example as atMain, but without :compile: true.
   >> @main
@@ -884,7 +871,7 @@ as discussed in <doc:Declarations#Top-Level-Code>.
 
 <!--
   - test: `atMain_library`
-  
+
   ```swifttest
   -> // In file "library.swift"
   -> open class C {
@@ -895,7 +882,7 @@ as discussed in <doc:Declarations#Top-Level-Code>.
 
 <!--
   - test: `atMain_client`
-  
+
   ```swifttest
   -> import atMain_library
   -> @main class CC: C { }
@@ -944,7 +931,6 @@ that calls the `NSApplicationMain(_:_:)` function as follows:
 import AppKit
 NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ```
-
 
 <!--
   Above code isn't tested because it hangs the REPL indefinitely,
@@ -1051,10 +1037,9 @@ class ExampleClass: NSObject {
 }
 ```
 
-
 <!--
   - test: `objc-attribute`
-  
+
   ```swifttest
   >> import Foundation
   -> class ExampleClass: NSObject {
@@ -1123,7 +1108,7 @@ Computed variables, global variables, and constants can't use property wrappers.
 
 <!--
   - test: `property-wrappers-can-go-on-stored-variable`
-  
+
   ```swifttest
   >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
   >> func f() {
@@ -1137,7 +1122,7 @@ Computed variables, global variables, and constants can't use property wrappers.
 
 <!--
   - test: `property-wrappers-cant-go-on-constants`
-  
+
   ```swifttest
   >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
   >> func f() {
@@ -1152,7 +1137,7 @@ Computed variables, global variables, and constants can't use property wrappers.
 
 <!--
   - test: `property-wrappers-cant-go-on-computed-variable`
-  
+
   ```swifttest
   >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
   >> func f() {
@@ -1226,10 +1211,9 @@ struct SomeStruct {
 }
 ```
 
-
 <!--
   - test: `propertyWrapper`
-  
+
   ```swifttest
   -> @propertyWrapper
   -> struct SomeWrapper {
@@ -1275,7 +1259,7 @@ struct SomeStruct {
   However, you can only see that behavior using local variables
   which currently can't have a property wrapper.
   It would look like this:
-  
+
   -> @SomeWrapper var e
   -> e = 20  // Uses init(wrappedValue:)
   -> e = 30  // Uses the property setter
@@ -1315,10 +1299,9 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
-
 <!--
   - test: `propertyWrapper-projection`
-  
+
   ```swifttest
   -> @propertyWrapper
   -> struct WrapperWithProjection {
@@ -1381,42 +1364,49 @@ they default to being the same as `Component`.
 
 The result-building methods are as follows:
 
-<!--
-  start of term/defn list
--->
+- term `static func buildBlock(_ components: Component...) -> Component`:
+  Combines an array of partial results into a single partial result.
+  A result builder must implement this method.
 
-- term `static func buildBlock(_ components: Component...) -> Component`: Combines an array of partial results into a single partial result.
-A result builder must implement this method.
-- term `static func buildOptional(_ component: Component?) -> Component`: Builds a partial result from a partial result that can be `nil`.
-Implement this method to support `if` statements
-that don’t include an `else` clause.
-- term `static func buildEither(first: Component) -> Component`: Builds a partial result whose value varies depending on some condition.
-Implement both this method and `buildEither(second:)`
-to support `switch` statements
-and `if` statements that include an `else` clause.
-- term `static func buildEither(second: Component) -> Component`: Builds a partial result whose value varies depending on some condition.
-Implement both this method and `buildEither(first:)`
-to support `switch` statements
-and `if` statements that include an `else` clause.
-- term `static func buildArray(_ components: [Component]) -> Component`: Builds a partial result from an array of partial results.
-Implement this method to support `for` loops.
-- term `static func buildExpression(_ expression: Expression) -> Component`: Builds a partial result from an expression.
-You can implement this method to perform preprocessing ---
-for example, converting expressions to an internal type ---
-or to provide additional information for type inference at use sites.
-- term `static func buildFinalResult(_ component: Component) -> FinalResult`: Builds a final result from a partial result.
-You can implement this method as part of a result builder
-that uses a different type for partial and final results,
-or to perform other postprocessing on a result before returning it.
-- term `static func buildLimitedAvailability(_ component: Component) -> Component`: Builds a partial result that propagates or erases type information
-outside a compiler-control statement
-that performs an availability check.
-You can use this to erase type information
-that varies between the conditional branches.
+- term `static func buildOptional(_ component: Component?) -> Component`:
+  Builds a partial result from a partial result that can be `nil`.
+  Implement this method to support `if` statements
+  that don’t include an `else` clause.
 
-<!--
-  end of term/defn list
--->
+- term `static func buildEither(first: Component) -> Component`:
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and `buildEither(second:)`
+  to support `switch` statements
+  and `if` statements that include an `else` clause.
+
+- term `static func buildEither(second: Component) -> Component`:
+  Builds a partial result whose value varies depending on some condition.
+  Implement both this method and `buildEither(first:)`
+  to support `switch` statements
+  and `if` statements that include an `else` clause.
+
+- term `static func buildArray(_ components: [Component]) -> Component`:
+  Builds a partial result from an array of partial results.
+  Implement this method to support `for` loops.
+
+- term `static func buildExpression(_ expression: Expression) -> Component`:
+  Builds a partial result from an expression.
+  You can implement this method to perform preprocessing ---
+  for example, converting expressions to an internal type ---
+  or to provide additional information for type inference at use sites.
+
+- term `static func buildFinalResult(_ component: Component) -> FinalResult`:
+  Builds a final result from a partial result.
+  You can implement this method as part of a result builder
+  that uses a different type for partial and final results,
+  or to perform other postprocessing on a result before returning it.
+
+- term `static func buildLimitedAvailability(_ component: Component) -> Component`:
+  Builds a partial result that propagates or erases type information
+  outside a compiler-control statement
+  that performs an availability check.
+  You can use this to erase type information
+  that varies between the conditional branches.
 
 For example, the code below defines a simple result builder
 that builds an array of integers.
@@ -1450,10 +1440,9 @@ struct ArrayBuilder {
 }
 ```
 
-
 <!--
   - test: `array-result-builder`
-  
+
   ```swifttest
   -> @resultBuilder
   -> struct ArrayBuilder {
@@ -1495,16 +1484,16 @@ into code that calls the static methods of the result builder type:
   each expression becomes a call to that method.
   This transformation is always first.
   For example, the following declarations are equivalent:
-  
+
   ```swift
   @ArrayBuilder var builderNumber: [Int] { 10 }
   var manualNumber = ArrayBuilder.buildExpression(10)
   ```
-  
-  
+
+
   <!--
     - test: `array-result-builder`
-    
+
     ```swifttest
     -> @ArrayBuilder var builderNumber: [Int] { 10 }
     -> var manualNumber = ArrayBuilder.buildExpression(10)
@@ -1524,7 +1513,7 @@ into code that calls the static methods of the result builder type:
   For example,
   the `buildEither(first:)` and  `buildEither(second:)` methods below
   use a generic type that captures type information about both branches.
-  
+
   ```swift
   protocol Drawable {
       func draw() -> String
@@ -1544,7 +1533,7 @@ into code that calls the static methods of the result builder type:
       var content: Drawable
       func draw() -> String { return content.draw() }
   }
-  
+
   @resultBuilder
   struct DrawingBuilder {
       static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
@@ -1560,11 +1549,11 @@ into code that calls the static methods of the result builder type:
       }
   }
   ```
-  
+
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
   However, this approach causes a problem in code that has availability checks:
-  
+
   ```swift
   @available(macOS 99, *)
   struct FutureText: Drawable {
@@ -1581,9 +1570,9 @@ into code that calls the static methods of the result builder type:
   }
   // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
   ```
-  
+
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
-  
+
   In the code above,
   `FutureText` appears as part of the type of `brokenDrawing`
   because it's one of the types in the `DrawEither` generic type.
@@ -1594,7 +1583,7 @@ into code that calls the static methods of the result builder type:
   to erase type information.
   For example, the code below builds an `AnyDrawable` value
   from its availability check.
-  
+
   ```swift
   struct AnyDrawable: Drawable {
       var content: Drawable
@@ -1605,7 +1594,7 @@ into code that calls the static methods of the result builder type:
           return AnyDrawable(content: content)
       }
   }
-  
+
   @DrawingBuilder var typeErasedDrawing: Drawable {
       if #available(macOS 99, *) {
           FutureText("Inside.future")
@@ -1615,7 +1604,7 @@ into code that calls the static methods of the result builder type:
   }
   // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
   ```
-  
+
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
 - A branch statement becomes a series of nested calls to the
@@ -1632,7 +1621,7 @@ into code that calls the static methods of the result builder type:
   that case becomes a nested call like
   `buildEither(first: buildEither(second: ... ))`.
   The following declarations are equivalent:
-  
+
   ```swift
   let someNumber = 19
   @ArrayBuilder var builderConditional: [Int] {
@@ -1644,7 +1633,7 @@ into code that calls the static methods of the result builder type:
           33
       }
   }
-  
+
   var manualConditional: [Int]
   if someNumber < 12 {
       let partialResult = ArrayBuilder.buildExpression(31)
@@ -1659,11 +1648,11 @@ into code that calls the static methods of the result builder type:
       manualConditional = ArrayBuilder.buildEither(second: partialResult)
   }
   ```
-  
-  
+
+
   <!--
     - test: `array-result-builder`
-    
+
     ```swifttest
     -> let someNumber = 19
     -> @ArrayBuilder var builderConditional: [Int] {
@@ -1703,23 +1692,23 @@ into code that calls the static methods of the result builder type:
   its code block is transformed and passed as the argument;
   otherwise, `buildOptional(_:)` is called with `nil` as its argument.
   For example, the following declarations are equivalent:
-  
+
   ```swift
   @ArrayBuilder var builderOptional: [Int] {
       if (someNumber % 2) == 1 { 20 }
   }
-  
+
   var partialResult: [Int]? = nil
   if (someNumber % 2) == 1 {
       partialResult = ArrayBuilder.buildExpression(20)
   }
   var manualOptional = ArrayBuilder.buildOptional(partialResult)
   ```
-  
-  
+
+
   <!--
     - test: `array-result-builder`
-    
+
     ```swifttest
     -> @ArrayBuilder var builderOptional: [Int] {
            if (someNumber % 2) == 1 { 20 }
@@ -1741,25 +1730,25 @@ into code that calls the static methods of the result builder type:
   one at a time,
   and they become the arguments to the `buildBlock(_:)` method.
   For example, the following declarations are equivalent:
-  
+
   ```swift
   @ArrayBuilder var builderBlock: [Int] {
       100
       200
       300
   }
-  
+
   var manualBlock = ArrayBuilder.buildBlock(
       ArrayBuilder.buildExpression(100),
       ArrayBuilder.buildExpression(200),
       ArrayBuilder.buildExpression(300)
   )
   ```
-  
-  
+
+
   <!--
     - test: `array-result-builder`
-    
+
     ```swifttest
     -> @ArrayBuilder var builderBlock: [Int] {
            100
@@ -1781,14 +1770,14 @@ into code that calls the static methods of the result builder type:
   and appends each partial result to that array.
   The temporary array is passed as the argument in the `buildArray(_:)` call.
   For example, the following declarations are equivalent:
-  
+
   ```swift
   @ArrayBuilder var builderArray: [Int] {
       for i in 5...7 {
           100 + i
       }
   }
-  
+
   var temporary: [[Int]] = []
   for i in 5...7 {
       let partialResult = ArrayBuilder.buildExpression(100 + i)
@@ -1796,11 +1785,11 @@ into code that calls the static methods of the result builder type:
   }
   let manualArray = ArrayBuilder.buildArray(temporary)
   ```
-  
-  
+
+
   <!--
     - test: `array-result-builder`
-    
+
     ```swifttest
     -> @ArrayBuilder var builderArray: [Int] {
            for i in 5...7 {
@@ -1821,10 +1810,9 @@ into code that calls the static methods of the result builder type:
   the final result becomes a call to that method.
   This transformation is always last.
 
-
 <!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
-  
+
   ```swifttest
   -> protocol Drawable {
          func draw() -> String
@@ -1864,7 +1852,7 @@ into code that calls the static methods of the result builder type:
 
 <!--
   - test: `result-builder-limited-availability-broken`
-  
+
   ```swifttest
   -> @available(macOS 99, *)
   -> struct FutureText: Drawable {
@@ -1892,7 +1880,7 @@ into code that calls the static methods of the result builder type:
 
 <!--
   - test: `result-builder-limited-availability-ok`
-  
+
   ```swifttest
   >> @available(macOS 99, *)
   >> struct FutureText: Drawable {
@@ -1955,7 +1943,7 @@ a single binary tree of calls to the `buildEither` methods.
 
 <!--
   - test: `result-builder-transform-complex-expression`
-  
+
   ```swifttest
   >> @resultBuilder
   >> struct ArrayBuilder {
@@ -2004,7 +1992,7 @@ that inherits from `NSManagedObject`.
 
 <!--
   - test: `requires_stored_property_inits-requires-default-values`
-  
+
   ```swifttest
   >> @requires_stored_property_inits class DefaultValueProvided {
          var value: Int = -1
@@ -2097,7 +2085,7 @@ applying both attributes is an error.
 
 <!--
   - test: `usableFromInline-and-inlinable-is-redundant`
-  
+
   ```swifttest
   >> @usableFromInline @inlinable internal func f() { }
   !$ warning: '@usableFromInline' attribute has no effect on '@inlinable' global function 'f()'
@@ -2237,23 +2225,29 @@ at the time the code is compiled.
 For an example of how to use the `unknown` attribute,
 see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 
-```
-Grammar of an attribute
-
-attribute --> ``@`` attribute-name attribute-argument-clause-OPT
-attribute-name --> identifier
-attribute-argument-clause --> ``(`` balanced-tokens-OPT ``)``
-attributes --> attribute attributes-OPT
-
-balanced-tokens --> balanced-token balanced-tokens-OPT
-balanced-token --> ``(`` balanced-tokens-OPT ``)``
-balanced-token --> ``[`` balanced-tokens-OPT ``]``
-balanced-token --> ``{`` balanced-tokens-OPT ``}``
-balanced-token --> Any identifier, keyword, literal, or operator
-balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
-```
-
-
+> Grammar of an attribute:
+>
+> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_
+>
+> *attribute-name* → *identifier*
+>
+> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`**
+>
+> *attributes* → *attribute* *attributes*_?_
+>
+>
+>
+> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_
+>
+> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`**
+>
+> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`**
+>
+> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`**
+>
+> *balanced-token* → Any identifier, keyword, literal, or operator
+>
+> *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
 
 <!--
 This source file is part of the Swift.org open source project

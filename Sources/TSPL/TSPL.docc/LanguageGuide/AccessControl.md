@@ -1,5 +1,3 @@
-
-
 # Access Control
 
 Manage the visibility of code by declaration, file, and module.
@@ -166,10 +164,9 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-
 <!--
   - test: `accessControlSyntax`
-  
+
   ```swifttest
   -> public class SomePublicClass {}
   -> internal class SomeInternalClass {}
@@ -194,10 +191,9 @@ class SomeInternalClass {}              // implicitly internal
 let someInternalConstant = 0            // implicitly internal
 ```
 
-
 <!--
   - test: `accessControlDefaulted`
-  
+
   ```swifttest
   -> class SomeInternalClass {}              // implicitly internal
   -> let someInternalConstant = 0            // implicitly internal
@@ -254,10 +250,9 @@ private class SomePrivateClass {                // explicitly private class
 }
 ```
 
-
 <!--
   - test: `accessControl, accessControlWrong`
-  
+
   ```swifttest
   -> public class SomePublicClass {                  // explicitly public class
         public var somePublicProperty = 0            // explicitly public class member
@@ -293,7 +288,7 @@ the access level for that compound tuple type will be private.
 
 <!--
   - test: `tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private`
-  
+
   ```swifttest
   -> public struct PublicStruct {}
   -> internal struct InternalStruct {}
@@ -312,7 +307,7 @@ the access level for that compound tuple type will be private.
 
 <!--
   - test: `tupleTypes_Module1_PublicAndInternal`
-  
+
   ```swifttest
   // tuples with (at least) internal members can be accessed within their own module
   -> let publicTuple = returnPublicTuple()
@@ -322,7 +317,7 @@ the access level for that compound tuple type will be private.
 
 <!--
   - test: `tupleTypes_Module1_Private`
-  
+
   ```swifttest
   // a tuple with one or more private members can't be accessed from outside of its source file
   -> let privateTuple = returnFilePrivateTuple()
@@ -334,7 +329,7 @@ the access level for that compound tuple type will be private.
 
 <!--
   - test: `tupleTypes_Module2_Public`
-  
+
   ```swifttest
   // a public tuple with all-public members can be used in another module
   -> import tupleTypes_Module1
@@ -344,7 +339,7 @@ the access level for that compound tuple type will be private.
 
 <!--
   - test: `tupleTypes_Module2_InternalAndPrivate`
-  
+
   ```swifttest
   // tuples with internal or private members can't be used outside of their own module
   -> import tupleTypes_Module1
@@ -384,10 +379,9 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 }
 ```
 
-
 <!--
   - test: `accessControlWrong`
-  
+
   ```swifttest
   -> func someFunction() -> (SomeInternalClass, SomePrivateClass) {
         // function implementation goes here
@@ -416,10 +410,9 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 }
 ```
 
-
 <!--
   - test: `accessControl`
-  
+
   ```swifttest
   -> private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
         // function implementation goes here
@@ -454,10 +447,9 @@ public enum CompassPoint {
 }
 ```
 
-
 <!--
   - test: `enumerationCases`
-  
+
   ```swifttest
   -> public enum CompassPoint {
         case north
@@ -470,7 +462,7 @@ public enum CompassPoint {
 
 <!--
   - test: `enumerationCases_Module1`
-  
+
   ```swifttest
   -> public enum CompassPoint {
         case north
@@ -483,7 +475,7 @@ public enum CompassPoint {
 
 <!--
   - test: `enumerationCases_Module2`
-  
+
   ```swifttest
   -> import enumerationCases_Module1
   -> let north = CompassPoint.north
@@ -509,7 +501,7 @@ you must explicitly declare the nested type as public.
 
 <!--
   - test: `nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private`
-  
+
   ```swifttest
   -> public struct PublicStruct {
         public enum PublicEnumInsidePublicStruct { case a, b }
@@ -535,7 +527,7 @@ you must explicitly declare the nested type as public.
 
 <!--
   - test: `nestedTypes_Module1_PublicAndInternal`
-  
+
   ```swifttest
   // these are all expected to succeed within the same module
   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
@@ -549,7 +541,7 @@ you must explicitly declare the nested type as public.
 
 <!--
   - test: `nestedTypes_Module1_Private`
-  
+
   ```swifttest
   // these are all expected to fail, because they're private to the other file
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
@@ -582,7 +574,7 @@ you must explicitly declare the nested type as public.
 
 <!--
   - test: `nestedTypes_Module2_Public`
-  
+
   ```swifttest
   // this is the only expected to succeed within the second module
   -> import nestedTypes_Module1
@@ -592,7 +584,7 @@ you must explicitly declare the nested type as public.
 
 <!--
   - test: `nestedTypes_Module2_InternalAndPrivate`
-  
+
   ```swifttest
   // these are all expected to fail, because they're private or internal to the other module
   -> import nestedTypes_Module1
@@ -678,10 +670,9 @@ internal class B: A {
 }
 ```
 
-
 <!--
   - test: `subclassingNoCall`
-  
+
   ```swifttest
   -> public class A {
         fileprivate func someMethod() {}
@@ -712,10 +703,9 @@ internal class B: A {
 }
 ```
 
-
 <!--
   - test: `subclassingWithCall`
-  
+
   ```swifttest
   -> public class A {
         fileprivate func someMethod() {}
@@ -746,10 +736,9 @@ the constant, variable, property, or subscript must also be marked as `private`:
 private var privateInstance = SomePrivateClass()
 ```
 
-
 <!--
   - test: `accessControl`
-  
+
   ```swifttest
   -> private var privateInstance = SomePrivateClass()
   ```
@@ -757,7 +746,7 @@ private var privateInstance = SomePrivateClass()
 
 <!--
   - test: `useOfPrivateTypeRequiresPrivateModifier`
-  
+
   ```swifttest
   -> class Scope {  // Need to be in a scope to meaningfully use private (vs fileprivate)
   -> private class SomePrivateClass {}
@@ -822,10 +811,9 @@ struct TrackedString {
 }
 ```
 
-
 <!--
   - test: `reducedSetterScope, reducedSetterScope_error`
-  
+
   ```swifttest
   -> struct TrackedString {
         private(set) var numberOfEdits = 0
@@ -861,7 +849,7 @@ when it's used outside the structure's definition.
 
 <!--
   - test: `reducedSetterScope_error`
-  
+
   ```swifttest
   -> extension TrackedString {
          mutating func f() { numberOfEdits += 1 }
@@ -892,10 +880,9 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 // Prints "The number of edits is 3"
 ```
 
-
 <!--
   - test: `reducedSetterScope`
-  
+
   ```swifttest
   -> var stringToEdit = TrackedString()
   -> stringToEdit.value = "This string will be tracked."
@@ -935,10 +922,9 @@ public struct TrackedString {
 }
 ```
 
-
 <!--
   - test: `reducedSetterScopePublic`
-  
+
   ```swifttest
   -> public struct TrackedString {
         public private(set) var numberOfEdits = 0
@@ -954,7 +940,7 @@ public struct TrackedString {
 
 <!--
   - test: `reducedSetterScopePublic_Module1_Allowed, reducedSetterScopePublic_Module1_NotAllowed`
-  
+
   ```swifttest
   -> public struct TrackedString {
         public private(set) var numberOfEdits = 0
@@ -970,7 +956,7 @@ public struct TrackedString {
 
 <!--
   - test: `reducedSetterScopePublic_Module1_Allowed`
-  
+
   ```swifttest
   // check that we can retrieve its value with the public getter from another file in the same module
   -> var stringToEdit_Module1B = TrackedString()
@@ -980,7 +966,7 @@ public struct TrackedString {
 
 <!--
   - test: `reducedSetterScopePublic_Module1_NotAllowed`
-  
+
   ```swifttest
   // check that we can't set its value from another file in the same module
   -> var stringToEdit_Module1C = TrackedString()
@@ -993,7 +979,7 @@ public struct TrackedString {
 
 <!--
   - test: `reducedSetterScopePublic_Module2`
-  
+
   ```swifttest
   // check that we can retrieve its value with the public getter from a different module
   -> import reducedSetterScopePublic_Module1_Allowed
@@ -1065,7 +1051,7 @@ on any type that adopts the protocol.
 
 <!--
   - test: `protocolRequirementsCannotBeDifferentThanTheProtocol`
-  
+
   ```swifttest
   -> public protocol PublicProtocol {
         public var publicProperty: Int { get }
@@ -1113,7 +1099,7 @@ on any type that adopts the protocol.
 
 <!--
   - test: `protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private`
-  
+
   ```swifttest
   -> public protocol PublicProtocol {
         var publicProperty: Int { get }
@@ -1136,7 +1122,7 @@ on any type that adopts the protocol.
 
 <!--
   - test: `protocols_Module1_PublicAndInternal`
-  
+
   ```swifttest
   // these should all be allowed without problem
   -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
@@ -1169,7 +1155,7 @@ on any type that adopts the protocol.
 
 <!--
   - test: `protocols_Module1_Private`
-  
+
   ```swifttest
   // these will fail, because FilePrivateProtocol isn't visible outside of its file
   -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
@@ -1193,7 +1179,7 @@ on any type that adopts the protocol.
 
 <!--
   - test: `protocols_Module2_Public`
-  
+
   ```swifttest
   // these should all be allowed without problem
   -> import protocols_Module1
@@ -1214,7 +1200,7 @@ on any type that adopts the protocol.
 
 <!--
   - test: `protocols_Module2_InternalAndPrivate`
-  
+
   ```swifttest
   // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
   // aren't visible to other modules
@@ -1298,7 +1284,7 @@ the default access level for each protocol requirement implementation within the
 
 <!--
   - test: `extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private`
-  
+
   ```swifttest
   -> public struct PublicStruct {
         public init() {}
@@ -1319,7 +1305,7 @@ the default access level for each protocol requirement implementation within the
 
 <!--
   - test: `extensions_Module1_PublicAndInternal`
-  
+
   ```swifttest
   -> var publicStructInDifferentFile = PublicStruct()
   -> let differentFileA = publicStructInDifferentFile.implicitlyInternalMethodFromStruct()
@@ -1329,7 +1315,7 @@ the default access level for each protocol requirement implementation within the
 
 <!--
   - test: `extensions_Module1_Private`
-  
+
   ```swifttest
   -> var publicStructInDifferentFile = PublicStruct()
   -> let differentFileC = publicStructInDifferentFile.filePrivateMethod()
@@ -1344,7 +1330,7 @@ the default access level for each protocol requirement implementation within the
 
 <!--
   - test: `extensions_Module2`
-  
+
   ```swifttest
   -> import extensions_Module1
   -> var publicStructInDifferentModule = PublicStruct()
@@ -1398,10 +1384,9 @@ protocol SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `extensions_privatemembers`
-  
+
   ```swifttest
   -> protocol SomeProtocol {
          func doSomething()
@@ -1423,10 +1408,9 @@ extension SomeStruct: SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `extensions_privatemembers`
-  
+
   ```swifttest
   -> struct SomeStruct {
          private var privateVariable = 12
@@ -1460,7 +1444,7 @@ but a public type alias can't alias an internal, file-private, or private type.
 
 <!--
   - test: `typeAliases`
-  
+
   ```swifttest
   -> public struct PublicStruct {}
   -> internal struct InternalStruct {}
@@ -1498,7 +1482,6 @@ but a public type alias can't alias an internal, file-private, or private type.
   !! ^
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

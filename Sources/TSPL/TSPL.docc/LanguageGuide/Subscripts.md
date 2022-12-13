@@ -1,5 +1,3 @@
-
-
 # Subscripts
 
 Access the elements of a collection.
@@ -46,10 +44,9 @@ subscript(index: Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `subscriptSyntax`
-  
+
   ```swifttest
   >> class Test1 {
   -> subscript(index: Int) -> Int {
@@ -81,10 +78,9 @@ subscript(index: Int) -> Int {
 }
 ```
 
-
 <!--
   - test: `subscriptSyntax`
-  
+
   ```swifttest
   >> class Test2 {
   -> subscript(index: Int) -> Int {
@@ -110,10 +106,9 @@ print("six times three is \(threeTimesTable[6])")
 // Prints "six times three is 18"
 ```
 
-
 <!--
   - test: `timesTable`
-  
+
   ```swifttest
   -> struct TimesTable {
         let multiplier: Int
@@ -160,10 +155,9 @@ var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
 numberOfLegs["bird"] = 2
 ```
 
-
 <!--
   - test: `dictionarySubscript`
-  
+
   ```swifttest
   -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
   -> numberOfLegs["bird"] = 2
@@ -205,7 +199,7 @@ subscripts can't use in-out parameters.
 
 <!--
   - test: `subscripts-can-have-default-arguments`
-  
+
   ```swifttest
   >> struct Subscriptable {
   >>     subscript(x: Int, y: Int = 0) -> Int {
@@ -256,10 +250,9 @@ struct Matrix {
 }
 ```
 
-
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
-  
+
   ```swifttest
   -> struct Matrix {
         let rows: Int, columns: Int
@@ -301,10 +294,9 @@ an appropriate row and column count to its initializer:
 var matrix = Matrix(rows: 2, columns: 2)
 ```
 
-
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
-  
+
   ```swifttest
   -> var matrix = Matrix(rows: 2, columns: 2)
   >> assert(matrix.grid == [0.0, 0.0, 0.0, 0.0])
@@ -318,7 +310,6 @@ as read from top left to bottom right:
 
 ![](subscriptMatrix01)
 
-
 Values in the matrix can be set by passing row and column values into the subscript,
 separated by a comma:
 
@@ -327,10 +318,9 @@ matrix[0, 1] = 1.5
 matrix[1, 0] = 3.2
 ```
 
-
 <!--
   - test: `matrixSubscript, matrixSubscriptAssert`
-  
+
   ```swifttest
   -> matrix[0, 1] = 1.5
   >> print(matrix[0, 1])
@@ -349,7 +339,6 @@ and `3.2` in the bottom left position
 
 ![](subscriptMatrix02)
 
-
 The `Matrix` subscript's getter and setter both contain an assertion
 to check that the subscript's  `row` and `column` values are valid.
 To assist with these assertions,
@@ -363,10 +352,9 @@ func indexIsValid(row: Int, column: Int) -> Bool {
 }
 ```
 
-
 <!--
   - test: `matrixSubscript`
-  
+
   ```swifttest
   >> var rows = 2
   >> var columns = 2
@@ -384,10 +372,9 @@ let someValue = matrix[2, 2]
 // This triggers an assert, because [2, 2] is outside of the matrix bounds.
 ```
 
-
 <!--
   - test: `matrixSubscriptAssert`
-  
+
   ```swifttest
   -> let someValue = matrix[2, 2]
   xx assert
@@ -418,10 +405,9 @@ let mars = Planet[4]
 print(mars)
 ```
 
-
 <!--
   - test: `static-subscript`
-  
+
   ```swifttest
   -> enum Planet: Int {
         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
@@ -435,7 +421,6 @@ print(mars)
   << mars
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

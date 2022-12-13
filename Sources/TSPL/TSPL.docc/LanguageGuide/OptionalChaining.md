@@ -1,5 +1,3 @@
-
-
 # Optional Chaining
 
 Access members of an optional value without unwrapping.
@@ -55,10 +53,9 @@ class Residence {
 }
 ```
 
-
 <!--
   - test: `optionalChainingIntro, optionalChainingIntroAssert`
-  
+
   ```swifttest
   -> class Person {
         var residence: Residence?
@@ -83,10 +80,9 @@ In the code below, `john` has a `residence` property value of `nil`:
 let john = Person()
 ```
 
-
 <!--
   - test: `optionalChainingIntro, optionalChainingIntroAssert`
-  
+
   ```swifttest
   -> let john = Person()
   ```
@@ -102,10 +98,9 @@ let roomCount = john.residence!.numberOfRooms
 // this triggers a runtime error
 ```
 
-
 <!--
   - test: `optionalChainingIntroAssert`
-  
+
   ```swifttest
   -> let roomCount = john.residence!.numberOfRooms
   xx assert
@@ -130,10 +125,9 @@ if let roomCount = john.residence?.numberOfRooms {
 // Prints "Unable to retrieve the number of rooms."
 ```
 
-
 <!--
   - test: `optionalChainingIntro`
-  
+
   ```swifttest
   -> if let roomCount = john.residence?.numberOfRooms {
         print("John's residence has \(roomCount) room(s).")
@@ -168,10 +162,9 @@ so that it no longer has a `nil` value:
 john.residence = Residence()
 ```
 
-
 <!--
   - test: `optionalChainingIntro`
-  
+
   ```swifttest
   -> john.residence = Residence()
   ```
@@ -191,10 +184,9 @@ if let roomCount = john.residence?.numberOfRooms {
 // Prints "John's residence has 1 room(s)."
 ```
 
-
 <!--
   - test: `optionalChainingIntro`
-  
+
   ```swifttest
   -> if let roomCount = john.residence?.numberOfRooms {
         print("John's residence has \(roomCount) room(s).")
@@ -229,10 +221,9 @@ class Person {
 }
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> class Person {
         var residence: Residence?
@@ -265,10 +256,9 @@ class Residence {
 }
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> class Residence {
         var rooms: [Room] = []
@@ -319,10 +309,9 @@ class Room {
 }
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> class Room {
         let name: String
@@ -354,10 +343,9 @@ class Address {
 }
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> class Address {
         var buildingName: String?
@@ -402,10 +390,9 @@ if let roomCount = john.residence?.numberOfRooms {
 // Prints "Unable to retrieve the number of rooms."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> let john = Person()
   -> if let roomCount = john.residence?.numberOfRooms {
@@ -429,10 +416,9 @@ someAddress.street = "Acacia Road"
 john.residence?.address = someAddress
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> let someAddress = Address()
   -> someAddress.buildingNumber = "29"
@@ -470,10 +456,9 @@ func createAddress() -> Address {
 john.residence?.address = createAddress()
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> func createAddress() -> Address {
          print("Function was called.")
@@ -509,10 +494,9 @@ func printNumberOfRooms() {
 }
 ```
 
-
 <!--
   - test: `optionalChainingCallouts`
-  
+
   ```swifttest
   -> func printNumberOfRooms() {
   >>    let numberOfRooms = 3
@@ -544,10 +528,9 @@ if john.residence?.printNumberOfRooms() != nil {
 // Prints "It was not possible to print the number of rooms."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> if john.residence?.printNumberOfRooms() != nil {
         print("It was possible to print the number of rooms.")
@@ -574,10 +557,9 @@ if (john.residence?.address = someAddress) != nil {
 // Prints "It was not possible to set the address."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> if (john.residence?.address = someAddress) != nil {
         print("It was possible to set the address.")
@@ -614,10 +596,9 @@ if let firstRoomName = john.residence?[0].name {
 // Prints "Unable to retrieve the first room name."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> if let firstRoomName = john.residence?[0].name {
         print("The first room name is \(firstRoomName).")
@@ -639,10 +620,9 @@ Similarly, you can try to set a new value through a subscript with optional chai
 john.residence?[0] = Room(name: "Bathroom")
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> john.residence?[0] = Room(name: "Bathroom")
   ```
@@ -669,10 +649,9 @@ if let firstRoomName = john.residence?[0].name {
 // Prints "The first room name is Living Room."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> let johnsHouse = Residence()
   -> johnsHouse.rooms.append(Room(name: "Living Room"))
@@ -703,10 +682,9 @@ testScores["Brian"]?[0] = 72
 // the "Dave" array is now [91, 82, 84] and the "Bev" array is now [80, 94, 81]
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
   -> testScores["Dave"]?[0] = 91
@@ -767,10 +745,9 @@ if let johnsStreet = john.residence?.address?.street {
 // Prints "Unable to retrieve the address."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> if let johnsStreet = john.residence?.address?.street {
         print("John's street name is \(johnsStreet).")
@@ -810,10 +787,9 @@ if let johnsStreet = john.residence?.address?.street {
 // Prints "John's street name is Laurel Street."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> let johnsAddress = Address()
   -> johnsAddress.buildingName = "The Larches"
@@ -853,10 +829,9 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 // Prints "John's building identifier is The Larches."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
         print("John's building identifier is \(buildingIdentifier).")
@@ -880,10 +855,9 @@ if let beginsWithThe =
 // Prints "John's building identifier begins with "The"."
 ```
 
-
 <!--
   - test: `optionalChaining`
-  
+
   ```swifttest
   -> if let beginsWithThe =
         john.residence?.address?.buildingIdentifier()?.hasPrefix("The") {
@@ -908,7 +882,6 @@ if let beginsWithThe =
   This can then be tied in to a revised description of how
   the sugar for optional protocol requirements works.
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

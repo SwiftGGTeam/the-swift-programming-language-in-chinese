@@ -1,5 +1,3 @@
-
-
 # Control Flow
 
 Structure code with branches, loops, and early exits.
@@ -40,10 +38,9 @@ for name in names {
 // Hello, Jack!
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let names = ["Anna", "Alex", "Brian", "Jack"]
   -> for name in names {
@@ -74,10 +71,9 @@ for (animalName, legCount) in numberOfLegs {
 // spiders have 8 legs
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
   -> for (animalName, legCount) in numberOfLegs {
@@ -116,10 +112,9 @@ for index in 1...5 {
 // 5 times 5 is 25
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> for index in 1...5 {
         print("\(index) times 5 is \(index * 5)")
@@ -164,10 +159,9 @@ print("\(base) to the power of \(power) is \(answer)")
 // Prints "3 to the power of 10 is 59049"
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let base = 3
   -> let power = 10
@@ -208,10 +202,9 @@ for tickMark in 0..<minutes {
 }
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let minutes = 60
   >> var result: [Int] = []
@@ -235,10 +228,9 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 }
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let minuteInterval = 5
   >> result = []
@@ -261,10 +253,9 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 }
 ```
 
-
 <!--
   - test: `forLoops`
-  
+
   ```swifttest
   -> let hours = 12
   -> let hourInterval = 3
@@ -314,16 +305,12 @@ while <#condition#> {
 }
 ```
 
-
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 ![](snakesAndLadders)
-
 
 The rules of the game are as follows:
 
@@ -347,10 +334,9 @@ let finalSquare = 25
 var board = [Int](repeating: 0, count: finalSquare + 1)
 ```
 
-
 <!--
   - test: `snakesAndLadders1`
-  
+
   ```swifttest
   -> let finalSquare = 25
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -367,19 +353,16 @@ board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
 board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 ```
 
-
 <!--
   - test: `snakesAndLadders1`
-  
+
   ```swifttest
   -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
   -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
   ```
 -->
 
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, `board[03]` is equal to `+08`,
@@ -409,10 +392,9 @@ while square < finalSquare {
 print("Game over!")
 ```
 
-
 <!--
   - test: `snakesAndLadders1`
-  
+
   ```swifttest
   -> var square = 0
   -> var diceRoll = 0
@@ -516,7 +498,6 @@ repeat {
 } while <#condition#>
 ```
 
-
 Here's the *Snakes and Ladders* example again,
 written as a `repeat`-`while` loop rather than a `while` loop.
 The values of `finalSquare`, `board`, `square`, and `diceRoll`
@@ -531,10 +512,9 @@ var square = 0
 var diceRoll = 0
 ```
 
-
 <!--
   - test: `snakesAndLadders2`
-  
+
   ```swifttest
   -> let finalSquare = 25
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -568,10 +548,9 @@ repeat {
 print("Game over!")
 ```
 
-
 <!--
   - test: `snakesAndLadders2`
-  
+
   ```swifttest
   -> repeat {
         // move up or down for a snake or ladder
@@ -664,10 +643,9 @@ if temperatureInFahrenheit <= 32 {
 // Prints "It's very cold. Consider wearing a scarf."
 ```
 
-
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> var temperatureInFahrenheit = 30
   -> if temperatureInFahrenheit <= 32 {
@@ -699,10 +677,9 @@ if temperatureInFahrenheit <= 32 {
 // Prints "It's not that cold. Wear a t-shirt."
 ```
 
-
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> temperatureInFahrenheit = 40
   -> if temperatureInFahrenheit <= 32 {
@@ -734,10 +711,9 @@ if temperatureInFahrenheit <= 32 {
 // Prints "It's really warm. Don't forget to wear sunscreen."
 ```
 
-
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> temperatureInFahrenheit = 90
   -> if temperatureInFahrenheit <= 32 {
@@ -767,10 +743,9 @@ if temperatureInFahrenheit <= 32 {
 }
 ```
 
-
 <!--
   - test: `ifElse`
-  
+
   ```swifttest
   -> temperatureInFahrenheit = 72
   -> if temperatureInFahrenheit <= 32 {
@@ -808,7 +783,6 @@ default:
 }
 ```
 
-
 Every `switch` statement consists of multiple possible *cases*,
 each of which begins with the `case` keyword.
 In addition to comparing against specific values,
@@ -844,10 +818,9 @@ default:
 // Prints "The last letter of the alphabet"
 ```
 
-
 <!--
   - test: `switch`
-  
+
   ```swifttest
   -> let someCharacter: Character = "z"
   -> switch someCharacter {
@@ -902,10 +875,9 @@ default:
 // This will report a compile-time error.
 ```
 
-
 <!--
   - test: `noFallthrough`
-  
+
   ```swifttest
   -> let anotherCharacter: Character = "a"
   -> switch anotherCharacter {
@@ -946,10 +918,9 @@ default:
 // Prints "The letter A"
 ```
 
-
 <!--
   - test: `compoundCaseInsteadOfFallthrough`
-  
+
   ```swifttest
   -> let anotherCharacter: Character = "a"
   -> switch anotherCharacter {
@@ -1004,10 +975,9 @@ print("There are \(naturalCount) \(countedThings).")
 // Prints "There are dozens of moons orbiting Saturn."
 ```
 
-
 <!--
   - test: `intervalMatching`
-  
+
   ```swifttest
   -> let approximateCount = 62
   -> let countedThings = "moons orbiting Saturn"
@@ -1066,10 +1036,9 @@ default:
 // Prints "(1, 1) is inside the box"
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let somePoint = (1, 1)
   -> switch somePoint {
@@ -1089,7 +1058,6 @@ default:
 -->
 
 ![](coordinateGraphSimple)
-
 
 The `switch` statement determines whether the point is
 at the origin (0, 0),
@@ -1129,10 +1097,9 @@ case let (x, y):
 // Prints "on the x-axis with an x value of 2"
 ```
 
-
 <!--
   - test: `valueBindings`
-  
+
   ```swifttest
   -> let anotherPoint = (2, 0)
   -> switch anotherPoint {
@@ -1148,7 +1115,6 @@ case let (x, y):
 -->
 
 ![](coordinateGraphMedium)
-
 
 The `switch` statement determines whether the point is
 on the red x-axis,
@@ -1194,10 +1160,9 @@ case let (x, y):
 // Prints "(1, -1) is on the line x == -y"
 ```
 
-
 <!--
   - test: `where`
-  
+
   ```swifttest
   -> let yetAnotherPoint = (1, -1)
   -> switch yetAnotherPoint {
@@ -1213,7 +1178,6 @@ case let (x, y):
 -->
 
 ![](coordinateGraphComplex)
-
 
 The `switch` statement determines whether the point is
 on the green diagonal line where `x == y`,
@@ -1253,10 +1217,9 @@ default:
 // Prints "e is a vowel"
 ```
 
-
 <!--
   - test: `compound-switch-case`
-  
+
   ```swifttest
   -> let someCharacter: Character = "e"
   -> switch someCharacter {
@@ -1299,10 +1262,9 @@ default:
 // Prints "On an axis, 9 from the origin"
 ```
 
-
 <!--
   - test: `compound-switch-case`
-  
+
   ```swifttest
   -> let stillAnotherPoint = (9, 0)
   -> switch stillAnotherPoint {
@@ -1363,10 +1325,9 @@ print(puzzleOutput)
 // Prints "grtmndsthnklk"
 ```
 
-
 <!--
   - test: `continue`
-  
+
   ```swifttest
   -> let puzzleInput = "great minds think alike"
   -> var puzzleOutput = ""
@@ -1452,10 +1413,9 @@ if let integerValue = possibleIntegerValue {
 // Prints "The integer value of 三 is 3."
 ```
 
-
 <!--
   - test: `breakInASwitchStatement`
-  
+
   ```swifttest
   -> let numberSymbol: Character = "三"  // Chinese symbol for the number 3
   -> var possibleIntegerValue: Int?
@@ -1532,10 +1492,9 @@ print(description)
 // Prints "The number 5 is a prime number, and also an integer."
 ```
 
-
 <!--
   - test: `fallthrough`
-  
+
   ```swifttest
   -> let integerToDescribe = 5
   -> var description = "The number \(integerToDescribe) is"
@@ -1610,7 +1569,6 @@ although the principle is the same for all loops and `switch` statements:
 }
 ```
 
-
 The following example uses the `break` and `continue` statements
 with a labeled `while` loop for an adapted version of the *Snakes and Ladders* game
 that you saw earlier in this chapter.
@@ -1625,7 +1583,6 @@ The game board is the same as before.
 
 ![](snakesAndLadders)
 
-
 The values of `finalSquare`, `board`, `square`, and `diceRoll`
 are initialized in the same way as before:
 
@@ -1638,10 +1595,9 @@ var square = 0
 var diceRoll = 0
 ```
 
-
 <!--
   - test: `labels`
-  
+
   ```swifttest
   -> let finalSquare = 25
   -> var board = [Int](repeating: 0, count: finalSquare + 1)
@@ -1681,10 +1637,9 @@ gameLoop: while square != finalSquare {
 print("Game over!")
 ```
 
-
 <!--
   - test: `labels`
-  
+
   ```swifttest
   -> gameLoop: while square != finalSquare {
         diceRoll += 1
@@ -1819,10 +1774,9 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 // Prints "I hope the weather is nice in Cupertino."
 ```
 
-
 <!--
   - test: `guard`
-  
+
   ```swifttest
   -> func greet(person: [String: String]) {
          guard let name = person["name"] else {
@@ -1898,10 +1852,9 @@ if #available(iOS 10, macOS 10.12, *) {
 }
 ```
 
-
 <!--
   - test: `availability`
-  
+
   ```swifttest
   -> if #available(iOS 10, macOS 10.12, *) {
          // Use iOS 10 APIs on iOS, and use macOS 10.12 APIs on macOS
@@ -1932,7 +1885,6 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 }
 ```
 
-
 When you use an availability condition with a `guard` statement,
 it refines the availability information that’s used
 for the rest of the code in that code block.
@@ -1952,10 +1904,9 @@ func chooseBestColor() -> String {
 }
 ```
 
-
 <!--
   - test: `guard-with-pound-available`
-  
+
   ```swifttest
   -> @available(macOS 10.12, *)
   -> struct ColorPreference {
@@ -1997,10 +1948,9 @@ if #unavailable(iOS 10) {
 }
 ```
 
-
 <!--
   - test: `availability-and-unavailability`
-  
+
   ```swifttest
   -> if #available(iOS 10, *) {
      } else {
@@ -2021,7 +1971,6 @@ when the check contains only fallback code.
   Not a general purpose condition; can't combine with &&, etc.
   You can use it with if-let, and other Boolean conditions, using a comma
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

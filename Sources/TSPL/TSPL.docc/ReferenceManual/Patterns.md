@@ -1,5 +1,3 @@
-
-
 # Patterns
 
 Match and destructure values.
@@ -33,19 +31,23 @@ statement, a `catch` clause of a `do` statement,
 or in the case condition of an `if`, `while`,
 `guard`, or `for`-`in` statement.
 
-```
-Grammar of a pattern
-
-pattern --> wildcard-pattern type-annotation-OPT
-pattern --> identifier-pattern type-annotation-OPT
-pattern --> value-binding-pattern
-pattern --> tuple-pattern type-annotation-OPT
-pattern --> enum-case-pattern
-pattern --> optional-pattern
-pattern --> type-casting-pattern
-pattern --> expression-pattern
-```
-
+> Grammar of a pattern:
+>
+> *pattern* → *wildcard-pattern* *type-annotation*_?_
+>
+> *pattern* → *identifier-pattern* *type-annotation*_?_
+>
+> *pattern* → *value-binding-pattern*
+>
+> *pattern* → *tuple-pattern* *type-annotation*_?_
+>
+> *pattern* → *enum-case-pattern*
+>
+> *pattern* → *optional-pattern*
+>
+> *pattern* → *type-casting-pattern*
+>
+> *pattern* → *expression-pattern*
 
 ## Wildcard Pattern
 
@@ -60,10 +62,9 @@ for _ in 1...3 {
 }
 ```
 
-
 <!--
   - test: `wildcard-pattern`
-  
+
   ```swifttest
   -> for _ in 1...3 {
         // Do something three times.
@@ -71,12 +72,9 @@ for _ in 1...3 {
   ```
 -->
 
-```
-Grammar of a wildcard pattern
-
-wildcard-pattern --> ``_``
-```
-
+> Grammar of a wildcard pattern:
+>
+> *wildcard-pattern* → **`_`**
 
 ## Identifier Pattern
 
@@ -89,10 +87,9 @@ that matches the value `42` of type `Int`:
 let someValue = 42
 ```
 
-
 <!--
   - test: `identifier-pattern`
-  
+
   ```swifttest
   -> let someValue = 42
   ```
@@ -105,12 +102,9 @@ When the pattern on the left-hand side of a variable or constant declaration
 is an identifier pattern,
 the identifier pattern is implicitly a subpattern of a value-binding pattern.
 
-```
-Grammar of an identifier pattern
-
-identifier-pattern --> identifier
-```
-
+> Grammar of an identifier pattern:
+>
+> *identifier-pattern* → *identifier*
 
 ## Value-Binding Pattern
 
@@ -134,10 +128,9 @@ case let (x, y):
 // Prints "The point is at (3, 2)."
 ```
 
-
 <!--
   - test: `value-binding-pattern`
-  
+
   ```swifttest
   -> let point = (3, 2)
   -> switch point {
@@ -153,12 +146,9 @@ In the example above, `let` distributes to each identifier pattern in the
 tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
 `case let (x, y):` and `case (let x, let y):` match the same values.
 
-```
-Grammar of a value-binding pattern
-
-value-binding-pattern --> ``var`` pattern | ``let`` pattern
-```
-
+> Grammar of a value-binding pattern:
+>
+> *value-binding-pattern* → **`var`** *pattern* | **`let`** *pattern*
 
 <!--
   NOTE: We chose to call this "value-binding pattern"
@@ -194,10 +184,9 @@ for (x, 0) in points {
 }
 ```
 
-
 <!--
   - test: `tuple-pattern`
-  
+
   ```swifttest
   -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
   -> // This code isn't valid.
@@ -227,10 +216,9 @@ let (a) = 2      // a: Int = 2
 let (a): Int = 2 // a: Int = 2
 ```
 
-
 <!--
   - test: `single-element-tuple-pattern`
-  
+
   ```swifttest
   -> let a = 2        // a: Int = 2
   -> let (a) = 2      // a: Int = 2
@@ -250,14 +238,13 @@ let (a): Int = 2 // a: Int = 2
   ```
 -->
 
-```
-Grammar of a tuple pattern
-
-tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
-tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
-tuple-pattern-element --> pattern | identifier ``:`` pattern
-```
-
+> Grammar of a tuple pattern:
+>
+> *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`**
+>
+> *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list*
+>
+> *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
 ## Enumeration Case Pattern
 
@@ -294,10 +281,9 @@ case nil:
 // Prints "Turn left"
 ```
 
-
 <!--
   - test: `enum-pattern-matching-optional`
-  
+
   ```swifttest
   -> enum SomeEnum { case left, right }
   -> let x: SomeEnum? = .left
@@ -313,12 +299,9 @@ case nil:
   ```
 -->
 
-```
-Grammar of an enumeration case pattern
-
-enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
-```
-
+> Grammar of an enumeration case pattern:
+>
+> *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
 
 ## Optional Pattern
 
@@ -344,10 +327,9 @@ if case let x? = someOptional {
 }
 ```
 
-
 <!--
   - test: `optional-pattern`
-  
+
   ```swifttest
   -> let someOptional: Int? = 42
   -> // Match using an enumeration case pattern.
@@ -379,10 +361,9 @@ for case let number? in arrayOfOptionalInts {
 // Found a 5
 ```
 
-
 <!--
   - test: `optional-pattern-for-in`
-  
+
   ```swifttest
   -> let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
   -> // Match only non-nil values.
@@ -395,12 +376,9 @@ for case let number? in arrayOfOptionalInts {
   ```
 -->
 
-```
-Grammar of an optional pattern
-
-optional-pattern --> identifier-pattern ``?``
-```
-
+> Grammar of an optional pattern:
+>
+> *optional-pattern* → *identifier-pattern* **`?`**
 
 ## Type-Casting Patterns
 
@@ -412,7 +390,6 @@ case labels. The `is` and `as` patterns have the following form:
 is <#type#>
 <#pattern#> as <#type#>
 ```
-
 
 The `is` pattern matches a value if the type of that value at runtime is the same as
 the type specified in the right-hand side of the `is` pattern---or a subclass of that type.
@@ -429,14 +406,13 @@ For an example that uses a `switch` statement
 to match values with `is` and `as` patterns,
 see <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
 
-```
-Grammar of a type casting pattern
-
-type-casting-pattern --> is-pattern | as-pattern
-is-pattern --> ``is`` type
-as-pattern --> pattern ``as`` type
-```
-
+> Grammar of a type casting pattern:
+>
+> *type-casting-pattern* → *is-pattern* | *as-pattern*
+>
+> *is-pattern* → **`is`** *type*
+>
+> *as-pattern* → *pattern* **`as`** *type*
 
 ## Expression Pattern
 
@@ -467,10 +443,9 @@ default:
 // Prints "(1, 2) is near the origin."
 ```
 
-
 <!--
   - test: `expression-pattern`
-  
+
   ```swifttest
   -> let point = (1, 2)
   -> switch point {
@@ -503,10 +478,9 @@ default:
 // Prints "The point is at (1, 2)."
 ```
 
-
 <!--
   - test: `expression-pattern`
-  
+
   ```swifttest
   -> // Overload the ~= operator to match a string with an integer.
   -> func ~= (pattern: String, value: Int) -> Bool {
@@ -522,13 +496,9 @@ default:
   ```
 -->
 
-```
-Grammar of an expression pattern
-
-expression-pattern --> expression
-```
-
-
+> Grammar of an expression pattern:
+>
+> *expression-pattern* → *expression*
 
 <!--
 This source file is part of the Swift.org open source project

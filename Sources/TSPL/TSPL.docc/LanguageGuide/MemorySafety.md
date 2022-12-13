@@ -1,5 +1,3 @@
-
-
 # Memory Safety
 
 Structure your code to avoid conflicts when accessing memory.
@@ -24,7 +22,7 @@ you'll get a compile-time or runtime error.
 
 <!--
   TODO: maybe re-introduce this text...
-  
+
   Memory safety refers to...
   The term *safety* usually refers to :newTerm:`memory safety`...
   Unsafe access to memory is available, if you ask for it explicitly...
@@ -46,10 +44,9 @@ var one = 1
 print("We're number \(one)!")
 ```
 
-
 <!--
   - test: `memory-read-write`
-  
+
   ```swifttest
   // A write access to the memory where one is stored.
   -> var one = 1
@@ -88,7 +85,6 @@ and get a correct answer,
 as shown in the figure below.
 
 ![](memory_shopping)
-
 
 While you're adding items to the budget,
 it's in a temporary, invalid state
@@ -183,10 +179,9 @@ print(myNumber)
 // Prints "2"
 ```
 
-
 <!--
   - test: `memory-instantaneous`
-  
+
   ```swifttest
   -> func oneMore(than number: Int) -> Int {
          return number + 1
@@ -244,10 +239,9 @@ increment(&stepSize)
 // Error: conflicting accesses to stepSize
 ```
 
-
 <!--
   - test: `memory-increment`
-  
+
   ```swifttest
   -> var stepSize = 1
   ---
@@ -277,7 +271,6 @@ producing a conflict.
 
 ![](memory_increment)
 
-
 One way to solve this conflict
 is to make an explicit copy of `stepSize`:
 
@@ -291,10 +284,9 @@ stepSize = copyOfStepSize
 // stepSize is now 2
 ```
 
-
 <!--
   - test: `memory-increment-copy`
-  
+
   ```swifttest
   >> var stepSize = 1
   >> func increment(_ number: inout Int) {
@@ -338,10 +330,9 @@ balance(&playerOneScore, &playerOneScore)
 // Error: conflicting accesses to playerOneScore
 ```
 
-
 <!--
   - test: `memory-balance`
-  
+
   ```swifttest
   -> func balance(_ x: inout Int, _ y: inout Int) {
          let sum = x + y
@@ -422,10 +413,9 @@ struct Player {
 }
 ```
 
-
 <!--
   - test: `memory-player-share-with-self`
-  
+
   ```swifttest
   >> func balance(_ x: inout Int, _ y: inout Int) {
   >>     let sum = x + y
@@ -436,7 +426,7 @@ struct Player {
          var name: String
          var health: Int
          var energy: Int
-  
+
          static let maxHealth = 10
          mutating func restoreHealth() {
              health = Player.maxHealth
@@ -467,10 +457,9 @@ var maria = Player(name: "Maria", health: 5, energy: 10)
 oscar.shareHealth(with: &maria)  // OK
 ```
 
-
 <!--
   - test: `memory-player-share-with-self`
-  
+
   ```swifttest
   -> extension Player {
          mutating func shareHealth(with teammate: inout Player) {
@@ -500,7 +489,6 @@ they don't conflict.
 
 ![](memory_share_health_maria)
 
-
 However,
 if you pass `oscar` as the argument to `shareHealth(with:)`,
 there's a conflict:
@@ -510,10 +498,9 @@ oscar.shareHealth(with: &oscar)
 // Error: conflicting accesses to oscar
 ```
 
-
 <!--
   - test: `memory-player-share-with-self`
-  
+
   ```swifttest
   -> oscar.shareHealth(with: &oscar)
   // Error: conflicting accesses to oscar
@@ -546,7 +533,6 @@ producing a conflict.
 
 ![](memory_share_health_oscar)
 
-
 ## Conflicting Access to Properties
 
 Types like structures, tuples, and enumerations
@@ -566,10 +552,9 @@ balance(&playerInformation.health, &playerInformation.energy)
 // Error: conflicting access to properties of playerInformation
 ```
 
-
 <!--
   - test: `memory-tuple`
-  
+
   ```swifttest
   >> func balance(_ x: inout Int, _ y: inout Int) {
   >>     let sum = x + y
@@ -609,10 +594,9 @@ var holly = Player(name: "Holly", health: 10, energy: 10)
 balance(&holly.health, &holly.energy)  // Error
 ```
 
-
 <!--
   - test: `memory-share-health-global`
-  
+
   ```swifttest
   >> struct Player {
   >>     var name: String
@@ -648,10 +632,9 @@ func someFunction() {
 }
 ```
 
-
 <!--
   - test: `memory-share-health-local`
-  
+
   ```swifttest
   >> struct Player {
   >>     var name: String
@@ -724,18 +707,18 @@ it doesn't allow the access.
   about changing the semantics of nonmutating method calls
   to be long-term reads,
   but it's not clear if/when that change will land.
-  
+
   ::
-  
+
       var global = 4
-  
+
       func foo(_ x: UnsafePointer<Int>){
           global = 7
       }
-  
+
       foo(&global)
       print(global)
-  
+
       // Simultaneous accesses to 0x106761618, but modification requires exclusive access.
       // Previous access (a read) started at temp2`main + 87 (0x10675e417).
       // Current access (a modification) started at:
@@ -748,7 +731,7 @@ it doesn't allow the access.
 
 <!--
   TEXT FOR THE FUTURE
-  
+
   Versions of Swift before Swift 5 ensure memory safety
   by aggressively making a copy of the shared mutable state
   when a conflicting access is possible.
@@ -756,7 +739,6 @@ it doesn't allow the access.
   However, the copying approach has a negative impact
   on performance and memory usage.
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

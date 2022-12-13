@@ -1,5 +1,3 @@
-
-
 # The Basics
 
 Work with common kinds of data and write basic syntax.
@@ -66,10 +64,9 @@ let maximumNumberOfLoginAttempts = 10
 var currentLoginAttempt = 0
 ```
 
-
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> let maximumNumberOfLoginAttempts = 10
   -> var currentLoginAttempt = 0
@@ -96,10 +93,9 @@ separated by commas:
 var x = 0.0, y = 0.0, z = 0.0
 ```
 
-
 <!--
   - test: `multipleDeclarations`
-  
+
   ```swifttest
   -> var x = 0.0, y = 0.0, z = 0.0
   >> print(x, y, z)
@@ -125,10 +121,9 @@ to indicate that the variable can store `String` values:
 var welcomeMessage: String
 ```
 
-
 <!--
   - test: `typeAnnotations`
-  
+
   ```swifttest
   -> var welcomeMessage: String
   ```
@@ -148,10 +143,9 @@ The `welcomeMessage` variable can now be set to any string value without error:
 welcomeMessage = "Hello"
 ```
 
-
 <!--
   - test: `typeAnnotations`
-  
+
   ```swifttest
   -> welcomeMessage = "Hello"
   >> print(welcomeMessage)
@@ -166,10 +160,9 @@ separated by commas, with a single type annotation after the final variable name
 var red, green, blue: Double
 ```
 
-
 <!--
   - test: `typeAnnotations`
-  
+
   ```swifttest
   -> var red, green, blue: Double
   ```
@@ -194,10 +187,9 @@ let 你好 = "你好世界"
 let 🐶🐮 = "dogcow"
 ```
 
-
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> let π = 3.14159
   -> let 你好 = "你好世界"
@@ -231,10 +223,9 @@ friendlyWelcome = "Bonjour!"
 // friendlyWelcome is now "Bonjour!"
 ```
 
-
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> var friendlyWelcome = "Hello!"
   -> friendlyWelcome = "Bonjour!"
@@ -252,10 +243,9 @@ languageName = "Swift++"
 // This is a compile-time error: languageName cannot be changed.
 ```
 
-
 <!--
   - test: `constantsAndVariables_err`
-  
+
   ```swifttest
   -> let languageName = "Swift"
   -> languageName = "Swift++"
@@ -279,10 +269,9 @@ print(friendlyWelcome)
 // Prints "Bonjour!"
 ```
 
-
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> print(friendlyWelcome)
   <- Bonjour!
@@ -305,7 +294,7 @@ see <doc:Functions#Default-Parameter-Values>.
 
 <!--
   - test: `printingWithoutNewline`
-  
+
   ```swifttest
   >> let someValue = 10
   -> print(someValue, terminator: "")
@@ -334,10 +323,9 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 // Prints "The current value of friendlyWelcome is Bonjour!"
 ```
 
-
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> print("The current value of friendlyWelcome is \(friendlyWelcome)")
   <- The current value of friendlyWelcome is Bonjour!
@@ -360,10 +348,9 @@ Single-line comments begin with two forward-slashes (`//`):
 // This is a comment.
 ```
 
-
 <!--
   - test: `comments`
-  
+
   ```swifttest
   -> // This is a comment.
   ```
@@ -377,10 +364,9 @@ and end with an asterisk followed by a forward-slash (`*/`):
 but is written over multiple lines. */
 ```
 
-
 <!--
   - test: `comments`
-  
+
   ```swifttest
   -> /* This is also a comment
      but is written over multiple lines. */
@@ -399,10 +385,9 @@ The second block is then closed, followed by the first block:
 This is the end of the first multiline comment. */
 ```
 
-
 <!--
   - test: `comments`
-  
+
   ```swifttest
   -> /* This is the start of the first multiline comment.
         /* This is the second, nested multiline comment. */
@@ -426,10 +411,9 @@ let cat = "🐱"; print(cat)
 // Prints "🐱"
 ```
 
-
 <!--
   - test: `semiColons`
-  
+
   ```swifttest
   -> let cat = "🐱"; print(cat)
   <- 🐱
@@ -459,10 +443,9 @@ let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
 let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
 ```
 
-
 <!--
   - test: `integerBounds`
-  
+
   ```swifttest
   -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
   -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
@@ -576,10 +559,9 @@ let meaningOfLife = 42
 // meaningOfLife is inferred to be of type Int
 ```
 
-
 <!--
   - test: `typeInference`
-  
+
   ```swifttest
   -> let meaningOfLife = 42
   // meaningOfLife is inferred to be of type Int
@@ -596,10 +578,9 @@ let pi = 3.14159
 // pi is inferred to be of type Double
 ```
 
-
 <!--
   - test: `typeInference`
-  
+
   ```swifttest
   -> let pi = 3.14159
   // pi is inferred to be of type Double
@@ -619,10 +600,9 @@ let anotherPi = 3 + 0.14159
 // anotherPi is also inferred to be of type Double
 ```
 
-
 <!--
   - test: `typeInference`
-  
+
   ```swifttest
   -> let anotherPi = 3 + 0.14159
   // anotherPi is also inferred to be of type Double
@@ -653,10 +633,9 @@ let octalInteger = 0o21           // 17 in octal notation
 let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
 ```
 
-
 <!--
   - test: `numberLiterals`
-  
+
   ```swifttest
   -> let decimalInteger = 17
   -> let binaryInteger = 0b10001       // 17 in binary notation
@@ -677,7 +656,7 @@ indicated by an uppercase or lowercase `p`.
 
 <!--
   - test: `float-required-vs-optional-exponent-err`
-  
+
   ```swifttest
   -> let hexWithout = 0x1.5
   !$ error: hexadecimal floating point literal must end with an exponent
@@ -688,7 +667,7 @@ indicated by an uppercase or lowercase `p`.
 
 <!--
   - test: `float-required-vs-optional-exponent`
-  
+
   ```swifttest
   -> let hexWith = 0x1.5p7
   -> let decimalWithout = 0.5
@@ -716,10 +695,9 @@ let exponentDouble = 1.21875e1
 let hexadecimalDouble = 0xC.3p0
 ```
 
-
 <!--
   - test: `numberLiterals`
-  
+
   ```swifttest
   -> let decimalDouble = 12.1875
   -> let exponentDouble = 1.21875e1
@@ -738,10 +716,9 @@ let oneMillion = 1_000_000
 let justOverOneMillion = 1_000_000.000_000_1
 ```
 
-
 <!--
   - test: `numberLiterals`
-  
+
   ```swifttest
   -> let paddedDouble = 000123.456
   -> let oneMillion = 1_000_000
@@ -781,10 +758,9 @@ let tooBig: Int8 = Int8.max + 1
 // and so this will also report an error
 ```
 
-
 <!--
   - test: `constantsAndVariablesOverflowError`
-  
+
   ```swifttest
   -> let cannotBeNegative: UInt8 = -1
   // UInt8 can't store negative numbers, and so this will report an error
@@ -822,10 +798,9 @@ let one: UInt8 = 1
 let twoThousandAndOne = twoThousand + UInt16(one)
 ```
 
-
 <!--
   - test: `typeConversion`
-  
+
   ```swifttest
   -> let twoThousand: UInt16 = 2_000
   -> let one: UInt8 = 1
@@ -861,10 +836,9 @@ let pi = Double(three) + pointOneFourOneFiveNine
 // pi equals 3.14159, and is inferred to be of type Double
 ```
 
-
 <!--
   - test: `typeConversion`
-  
+
   ```swifttest
   -> let three = 3
   -> let pointOneFourOneFiveNine = 0.14159
@@ -886,10 +860,9 @@ let integerPi = Int(pi)
 // integerPi equals 3, and is inferred to be of type Int
 ```
 
-
 <!--
   - test: `typeConversion`
-  
+
   ```swifttest
   -> let integerPi = Int(pi)
   /> integerPi equals \(integerPi), and is inferred to be of type Int
@@ -925,10 +898,9 @@ such as when working with data of a specific size from an external source:
 typealias AudioSample = UInt16
 ```
 
-
 <!--
   - test: `typeAliases`
-  
+
   ```swifttest
   -> typealias AudioSample = UInt16
   ```
@@ -942,10 +914,9 @@ var maxAmplitudeFound = AudioSample.min
 // maxAmplitudeFound is now 0
 ```
 
-
 <!--
   - test: `typeAliases`
-  
+
   ```swifttest
   -> var maxAmplitudeFound = AudioSample.min
   /> maxAmplitudeFound is now \(maxAmplitudeFound)
@@ -971,10 +942,9 @@ let orangesAreOrange = true
 let turnipsAreDelicious = false
 ```
 
-
 <!--
   - test: `booleans`
-  
+
   ```swifttest
   -> let orangesAreOrange = true
   -> let turnipsAreDelicious = false
@@ -1002,10 +972,9 @@ if turnipsAreDelicious {
 // Prints "Eww, turnips are horrible."
 ```
 
-
 <!--
   - test: `booleans`
-  
+
   ```swifttest
   -> if turnipsAreDelicious {
         print("Mmm, tasty turnips!")
@@ -1028,10 +997,9 @@ if i {
 }
 ```
 
-
 <!--
   - test: `booleansNotBoolean`
-  
+
   ```swifttest
   -> let i = 1
   -> if i {
@@ -1053,10 +1021,9 @@ if i == 1 {
 }
 ```
 
-
 <!--
   - test: `booleansIsBoolean`
-  
+
   ```swifttest
   -> let i = 1
   -> if i == 1 {
@@ -1088,10 +1055,9 @@ let http404Error = (404, "Not Found")
 // http404Error is of type (Int, String), and equals (404, "Not Found")
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let http404Error = (404, "Not Found")
   /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
@@ -1121,10 +1087,9 @@ print("The status message is \(statusMessage)")
 // Prints "The status message is Not Found"
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let (statusCode, statusMessage) = http404Error
   -> print("The status code is \(statusCode)")
@@ -1144,10 +1109,9 @@ print("The status code is \(justTheStatusCode)")
 // Prints "The status code is 404"
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let (justTheStatusCode, _) = http404Error
   -> print("The status code is \(justTheStatusCode)")
@@ -1165,10 +1129,9 @@ print("The status message is \(http404Error.1)")
 // Prints "The status message is Not Found"
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> print("The status code is \(http404Error.0)")
   <- The status code is 404
@@ -1183,10 +1146,9 @@ You can name the individual elements in a tuple when the tuple is defined:
 let http200Status = (statusCode: 200, description: "OK")
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let http200Status = (statusCode: 200, description: "OK")
   ```
@@ -1202,10 +1164,9 @@ print("The status message is \(http200Status.description)")
 // Prints "The status message is OK"
 ```
 
-
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> print("The status code is \(http200Status.statusCode)")
   <- The status code is 200
@@ -1265,10 +1226,9 @@ let convertedNumber = Int(possibleNumber)
 // convertedNumber is inferred to be of type "Int?", or "optional Int"
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> let possibleNumber = "123"
   -> let convertedNumber = Int(possibleNumber)
@@ -1299,10 +1259,9 @@ serverResponseCode = nil
 // serverResponseCode now contains no value
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> var serverResponseCode: Int? = 404
   /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
@@ -1325,10 +1284,9 @@ var surveyAnswer: String?
 // surveyAnswer is automatically set to nil
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> var surveyAnswer: String?
   // surveyAnswer is automatically set to nil
@@ -1356,10 +1314,9 @@ if convertedNumber != nil {
 // Prints "convertedNumber contains some integer value."
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if convertedNumber != nil {
         print("convertedNumber contains some integer value.")
@@ -1382,10 +1339,9 @@ if convertedNumber != nil {
 // Prints "convertedNumber has an integer value of 123."
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if convertedNumber != nil {
         print("convertedNumber has an integer value of \(convertedNumber!).")
@@ -1419,7 +1375,6 @@ if let <#constantName#> = <#someOptional#> {
 }
 ```
 
-
 You can rewrite the `possibleNumber` example from
 the <doc:TheBasics#Optionals> section
 to use optional binding rather than forced unwrapping:
@@ -1433,10 +1388,9 @@ if let actualNumber = Int(possibleNumber) {
 // Prints "The string "123" has an integer value of 123"
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if let actualNumber = Int(possibleNumber) {
         print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
@@ -1473,10 +1427,9 @@ if let myNumber = myNumber {
 // Prints "My number is 123"
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> let myNumber = Int(possibleNumber)
   // Here, myNumber is an optional integer
@@ -1510,10 +1463,9 @@ if let myNumber {
 // Prints "My number is 123"
 ```
 
-
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if let myNumber {
          print("My number is \(myNumber)")
@@ -1557,10 +1509,9 @@ if let firstNumber = Int("4") {
 // Prints "4 < 42 < 100"
 ```
 
-
 <!--
   - test: `multipleOptionalBindings`
-  
+
   ```swifttest
   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
         print("\(firstNumber) < \(secondNumber) < 100")
@@ -1634,10 +1585,9 @@ let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString // no need for an exclamation point
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> let possibleString: String? = "An optional string."
   -> let forcedString: String = possibleString! // requires an exclamation point
@@ -1665,10 +1615,9 @@ let optionalString = assumedString
 // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> let optionalString = assumedString
   // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
@@ -1692,10 +1641,9 @@ if assumedString != nil {
 // Prints "An implicitly unwrapped optional string."
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> if assumedString != nil {
         print(assumedString!)
@@ -1714,10 +1662,9 @@ if let definiteString = assumedString {
 // Prints "An implicitly unwrapped optional string."
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> if let definiteString = assumedString {
         print(definiteString)
@@ -1751,10 +1698,9 @@ func canThrowAnError() throws {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   >> enum SimpleError: Error {
   >>    case someError
@@ -1786,10 +1732,9 @@ do {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> do {
   ->    try canThrowAnError()
@@ -1824,10 +1769,9 @@ do {
 }
 ```
 
-
 <!--
   - test: `errorHandlingTwo`
-  
+
   ```swifttest
   >> enum SandwichError: Error {
   >>     case outOfCleanDishes
@@ -1944,10 +1888,9 @@ assert(age >= 0, "A person's age can't be less than zero.")
 // This assertion fails because -3 isn't >= 0.
 ```
 
-
 <!--
   - test: `assertions-1`
-  
+
   ```swifttest
   -> let age = -3
   -> assert(age >= 0, "A person's age can't be less than zero.")
@@ -1969,10 +1912,9 @@ for example, when it would just repeat the condition as prose.
 assert(age >= 0)
 ```
 
-
 <!--
   - test: `assertions-2`
-  
+
   ```swifttest
   >> let age = -3
   -> assert(age >= 0)
@@ -1982,7 +1924,7 @@ assert(age >= 0)
 
 <!--
   - test: `assertionsCanUseStringInterpolation`
-  
+
   ```swifttest
   -> let age = -3
   -> assert(age >= 0, "A person's age can't be less than zero, but value is \(age).")
@@ -2006,10 +1948,9 @@ if age > 10 {
 }
 ```
 
-
 <!--
   - test: `assertions-3`
-  
+
   ```swifttest
   >> let age = -3
   -> if age > 10 {
@@ -2041,10 +1982,9 @@ For example:
 precondition(index > 0, "Index must be greater than zero.")
 ```
 
-
 <!--
   - test: `preconditions`
-  
+
   ```swifttest
   >> let index = -1
   // In the implementation of a subscript...
@@ -2077,7 +2017,7 @@ by one of the switch's other cases.
 <!--
   "\ " in the first cell below lets it be empty.
   Otherwise RST treats the row as a continuation.
-  
+
   ============ =====  ==========  ===============================
   \            Debug  Production  Production with ``-Ounchecked``
   ============ =====  ==========  ===============================
@@ -2095,7 +2035,6 @@ by one of the switch's other cases.
   In LLDB, 'breakpoint set -E swift' catches when errors are thrown,
   but doesn't stop at assertions.
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

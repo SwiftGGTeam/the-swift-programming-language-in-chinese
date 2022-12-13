@@ -1,5 +1,3 @@
-
-
 # Generic Parameters and Arguments
 
 Generalize declarations to abstract away concrete types.
@@ -29,14 +27,12 @@ and has the following form:
 <<#generic parameter list#>>
 ```
 
-
 The *generic parameter list* is a comma-separated list of generic parameters,
 each of which has the following form:
 
 ```swift
 <#type parameter#>: <#constraint#>
 ```
-
 
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. A *type parameter* is simply the name
@@ -61,10 +57,9 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
 }
 ```
 
-
 <!--
   - test: `generic-params`
-  
+
   ```swifttest
   -> func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
         if x < y {
@@ -86,10 +81,9 @@ simpleMax(17, 42) // T is inferred to be Int
 simpleMax(3.14159, 2.71828) // T is inferred to be Double
 ```
 
-
 <!--
   - test: `generic-params`
-  
+
   ```swifttest
   >> let r0 =
   -> simpleMax(17, 42) // T is inferred to be Int
@@ -116,7 +110,6 @@ followed by a comma-separated list of one or more *requirements*.
 ```swift
 where <#requirements#>
 ```
-
 
 The *requirements* in a generic `where` clause specify that a type parameter inherits from
 a class or conforms to a protocol or protocol composition.
@@ -164,10 +157,9 @@ extension Collection where Element: SomeProtocol {
 }
 ```
 
-
 <!--
   - test: `contextual-where-clauses-combine`
-  
+
   ```swifttest
   >> protocol SomeProtocol { }
   >> extension Int: SomeProtocol { }
@@ -183,7 +175,7 @@ extension Collection where Element: SomeProtocol {
 
 <!--
   - test: `contextual-where-clause-combine-err`
-  
+
   ```swifttest
   >> protocol SomeProtocol { }
   >> extension Bool: SomeProtocol { }
@@ -212,24 +204,33 @@ For more information about generic `where` clauses and to see an example
 of one in a generic function declaration,
 see <doc:Generics#Generic-Where-Clauses>.
 
-```
-Grammar of a generic parameter clause
-
-generic-parameter-clause --> ``<`` generic-parameter-list ``>``
-generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
-generic-parameter --> type-name
-generic-parameter --> type-name ``:`` type-identifier
-generic-parameter --> type-name ``:`` protocol-composition-type
-
-generic-where-clause --> ``where`` requirement-list
-requirement-list --> requirement | requirement ``,`` requirement-list
-requirement --> conformance-requirement | same-type-requirement
-
-conformance-requirement --> type-identifier ``:`` type-identifier
-conformance-requirement --> type-identifier ``:`` protocol-composition-type
-same-type-requirement --> type-identifier ``==`` type
-```
-
+> Grammar of a generic parameter clause:
+>
+> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`**
+>
+> *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list*
+>
+> *generic-parameter* → *type-name*
+>
+> *generic-parameter* → *type-name* **`:`** *type-identifier*
+>
+> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+>
+>
+>
+> *generic-where-clause* → **`where`** *requirement-list*
+>
+> *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list*
+>
+> *requirement* → *conformance-requirement* | *same-type-requirement*
+>
+>
+>
+> *conformance-requirement* → *type-identifier* **`:`** *type-identifier*
+>
+> *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type*
+>
+> *same-type-requirement* → *type-identifier* **`==`** *type*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -248,7 +249,6 @@ and has the following form:
 <<#generic argument list#>>
 ```
 
-
 The *generic argument list* is a comma-separated list of type arguments.
 A *type argument* is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type.
@@ -261,7 +261,6 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
     /* ... */
 }
 ```
-
 
 <!--
   TODO: How are we supposed to wrap code lines like the above?
@@ -285,10 +284,9 @@ to form an array whose elements are themselves arrays of integers.
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 ```
 
-
 <!--
   - test: `array-of-arrays`
-  
+
   ```swifttest
   -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
@@ -298,15 +296,13 @@ As mentioned in <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
 
-```
-Grammar of a generic argument clause
-
-generic-argument-clause --> ``<`` generic-argument-list ``>``
-generic-argument-list --> generic-argument | generic-argument ``,`` generic-argument-list
-generic-argument --> type
-```
-
-
+> Grammar of a generic argument clause:
+>
+> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`**
+>
+> *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list*
+>
+> *generic-argument* → *type*
 
 <!--
 This source file is part of the Swift.org open source project

@@ -1,5 +1,3 @@
-
-
 # Error Handling
 
 Respond to and recover from errors.
@@ -53,10 +51,9 @@ enum VendingMachineError: Error {
 }
 ```
 
-
 <!--
   - test: `throw-enum-error`
-  
+
   ```swifttest
   -> enum VendingMachineError: Error {
          case invalidSelection
@@ -77,10 +74,9 @@ that five additional coins are needed by the vending machine:
 throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 ```
 
-
 <!--
   - test: `throw-enum-error`
-  
+
   ```swifttest
   -> throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
   xx fatal error
@@ -140,10 +136,9 @@ func canThrowErrors() throws -> String
 func cannotThrowErrors() -> String
 ```
 
-
 <!--
   - test: `throwingFunctionDeclaration`
-  
+
   ```swifttest
   -> func canThrowErrors() throws -> String
   >> { return "foo" }
@@ -155,7 +150,7 @@ func cannotThrowErrors() -> String
 
 <!--
   - test: `throwing-function-cant-overload-nonthrowing`
-  
+
   ```swifttest
   -> func f() -> Int { return 10 }
   -> func f() throws -> Int { return 10 } // Error
@@ -170,7 +165,7 @@ func cannotThrowErrors() -> String
 
 <!--
   - test: `throwing-parameter-can-overload-nonthrowing`
-  
+
   ```swifttest
   -> func f(callback: () -> Int) {}
   -> func f(callback: () throws -> Int) {} // Allowed
@@ -238,10 +233,9 @@ class VendingMachine {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   >> enum VendingMachineError: Error {
   >>     case invalidSelection
@@ -265,21 +259,21 @@ class VendingMachine {
              guard let item = inventory[name] else {
                  throw VendingMachineError.invalidSelection
              }
-  
+
              guard item.count > 0 else {
                  throw VendingMachineError.outOfStock
              }
-  
+
              guard item.price <= coinsDeposited else {
                  throw VendingMachineError.insufficientFunds(coinsNeeded: item.price - coinsDeposited)
              }
-  
+
              coinsDeposited -= item.price
-  
+
              var newItem = item
              newItem.count -= 1
              inventory[name] = newItem
-  
+
              print("Dispensing \(name)")
          }
      }
@@ -314,10 +308,9 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> let favoriteSnacks = [
          "Alice": "Chips",
@@ -357,10 +350,9 @@ struct PurchasedSnack {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> struct PurchasedSnack {
          let name: String
@@ -412,7 +404,6 @@ do {
 }
 ```
 
-
 You write a pattern after `catch` to indicate what errors
 that clause can handle.
 If a `catch` clause doesn't have a pattern,
@@ -448,10 +439,9 @@ do {
 // Prints "Insufficient funds. Please insert an additional 2 coins."
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> var vendingMachine = VendingMachine()
   -> vendingMachine.coinsDeposited = 8
@@ -520,10 +510,9 @@ do {
 // Prints "Couldn't buy that from the vending machine."
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> func nourish(with item: String) throws {
          do {
@@ -564,10 +553,9 @@ func eat(item: String) throws {
 }
 ```
 
-
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> func eat(item: String) throws {
          do {
@@ -619,10 +607,9 @@ do {
 }
 ```
 
-
 <!--
   - test: `optional-try`
-  
+
   ```swifttest
   -> func someThrowingFunction() throws -> Int {
         // ...
@@ -665,10 +652,9 @@ func fetchData() -> Data? {
 }
 ```
 
-
 <!--
   - test: `optional-try-cached-data`
-  
+
   ```swifttest
   >> struct Data {}
   >> func fetchDataFromDisk() throws -> Data { return Data() }
@@ -701,10 +687,9 @@ so it's appropriate to disable error propagation.
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
 
-
 <!--
   - test: `forceTryStatement`
-  
+
   ```swifttest
   >> struct Image {}
   >> func loadImage(atPath path: String) throws -> Image {
@@ -755,10 +740,9 @@ func processFile(filename: String) throws {
 }
 ```
 
-
 <!--
   - test: `defer`
-  
+
   ```swifttest
   >> func exists(_ file: String) -> Bool { return true }
   >> struct File {
@@ -788,7 +772,6 @@ has a corresponding call to `close(_:)`.
 
 > Note: You can use a `defer` statement
 > even when no error handling code is involved.
-
 
 <!--
 This source file is part of the Swift.org open source project

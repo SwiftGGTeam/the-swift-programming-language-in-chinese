@@ -1,5 +1,3 @@
-
-
 # Properties
 
 Access stored and computed values that are part of an instance or type.
@@ -12,7 +10,7 @@ Stored properties are provided only by classes and structures.
 
 <!--
   - test: `enumerationsCantProvideStoredProperties`
-  
+
   ```swifttest
   -> enum E { case a, b; var x = 0 }
   !$ error: enums must not contain stored properties
@@ -32,7 +30,7 @@ and also to properties that a subclass inherits from its superclass.
 
 <!--
   - test: `propertyObserverIntroClaims`
-  
+
   ```swifttest
   -> class C {
         var x: Int = 0 {
@@ -89,10 +87,9 @@ rangeOfThreeItems.firstValue = 6
 // the range now represents integer values 6, 7, and 8
 ```
 
-
 <!--
   - test: `storedProperties, storedProperties-err`
-  
+
   ```swifttest
   -> struct FixedLengthRange {
         var firstValue: Int
@@ -125,10 +122,9 @@ rangeOfFourItems.firstValue = 6
 // this will report an error, even though firstValue is a variable property
 ```
 
-
 <!--
   - test: `storedProperties-err`
-  
+
   ```swifttest
   -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
   // this range represents integer values 0, 1, 2, and 3
@@ -180,7 +176,7 @@ the `lazy` modifier before its declaration.
 
 <!--
   - test: `lazyPropertiesMustAlwaysBeVariables`
-  
+
   ```swifttest
   -> class C { lazy let x = 0 }
   !$ error: 'lazy' cannot be used on a let
@@ -229,10 +225,9 @@ manager.data.append("Some more data")
 // the DataImporter instance for the importer property hasn't yet been created
 ```
 
-
 <!--
   - test: `lazyProperties`
-  
+
   ```swifttest
   -> class DataImporter {
         /*
@@ -290,10 +285,9 @@ print(manager.importer.filename)
 // Prints "data.txt"
 ```
 
-
 <!--
   - test: `lazyProperties`
-  
+
   ```swifttest
   -> print(manager.importer.filename)
   </ the DataImporter instance for the importer property has now been created
@@ -370,10 +364,9 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 // Prints "square.origin is now at (10.0, 10.0)"
 ```
 
-
 <!--
   - test: `computedProperties`
-  
+
   ```swifttest
   -> struct Point {
         var x = 0.0, y = 0.0
@@ -438,12 +431,9 @@ Setting the `center` property calls the setter for `center`,
 which modifies the `x` and `y` values of the stored `origin` property,
 and moves the square to its new position.
 
-<!--
-  iBooks Store screenshot begins here.
--->
+<!-- Apple Books screenshot begins here. -->
 
 ![](computedProperties)
-
 
 ### Shorthand Setter Declaration
 
@@ -470,10 +460,9 @@ struct AlternativeRect {
 }
 ```
 
-
 <!--
   - test: `computedProperties`
-  
+
   ```swifttest
   -> struct AlternativeRect {
         var origin = Point()
@@ -493,9 +482,7 @@ struct AlternativeRect {
   ```
 -->
 
-<!--
-  iBooks Store screenshot ends here.
--->
+<!-- Apple Books screenshot ends here. -->
 
 ### Shorthand Getter Declaration
 
@@ -522,10 +509,9 @@ struct CompactRect {
 }
 ```
 
-
 <!--
   - test: `computedProperties`
-  
+
   ```swifttest
   -> struct CompactRect {
         var origin = Point()
@@ -562,7 +548,7 @@ and can be accessed through dot syntax, but can't be set to a different value.
 
 <!--
   - test: `readOnlyComputedPropertiesMustBeVariables`
-  
+
   ```swifttest
   -> class C {
         let x: Int { return 42 }
@@ -594,10 +580,9 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 // Prints "the volume of fourByFiveByTwo is 40.0"
 ```
 
-
 <!--
   - test: `computedProperties`
-  
+
   ```swifttest
   -> struct Cuboid {
         var width = 0.0, height = 0.0, depth = 0.0
@@ -644,7 +629,7 @@ even if the new value is the same as the property's current value.
 
 <!--
   - test: `observersAreCalledEvenIfNewValueIsTheSameAsOldValue`
-  
+
   ```swifttest
   -> class C { var x: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } } }
   -> let c = C()
@@ -672,7 +657,7 @@ Overriding properties is described in <doc:Inheritance#Overriding>.
 
 <!--
   - test: `lazyPropertiesCanHaveObservers`
-  
+
   ```swifttest
   >> class C {
         lazy var x: Int = 0 {
@@ -693,7 +678,7 @@ Overriding properties is described in <doc:Inheritance#Overriding>.
 
 <!--
   - test: `storedAndComputedInheritedPropertiesCanBeObserved`
-  
+
   ```swifttest
   -> class C {
         var x = 0
@@ -738,7 +723,7 @@ the new value that you assign replaces the one that was just set.
 
 <!--
   - test: `assigningANewValueInADidSetReplacesTheNewValue`
-  
+
   ```swifttest
   -> class C { var x: Int = 0 { didSet { x = -273 } } }
   -> let c = C()
@@ -758,7 +743,7 @@ the new value that you assign replaces the one that was just set.
 
 <!--
   - test: `observersDuringInitialization`
-  
+
   ```swifttest
   -> class C {
         var x: Int { willSet { print("willSet x") } didSet { print("didSet x") } }
@@ -815,10 +800,9 @@ stepCounter.totalSteps = 896
 // Added 536 steps
 ```
 
-
 <!--
   - test: `storedProperties`
-  
+
   ```swifttest
   -> class StepCounter {
         var totalSteps: Int = 0 {
@@ -873,7 +857,7 @@ and the default name of `oldValue` is used instead.
 
 <!--
   - test: `observersCalledAfterInout`
-  
+
   ```swifttest
   -> var a: Int = 0 {
          willSet { print("willSet") }
@@ -927,10 +911,9 @@ struct TwelveOrLess {
 }
 ```
 
-
 <!--
   - test: `small-number-wrapper, property-wrapper-expansion`
-  
+
   ```swifttest
   -> @propertyWrapper
   -> struct TwelveOrLess {
@@ -966,7 +949,7 @@ and the getter returns the stored value.
   but you could write a version of ``EvenNumber``
   that implements ``wrappedValue`` as a stored property
   and uses ``didSet`` to ensure the number is always even.
-  
+
   However, the general framing we use in the docs
   is that didSet is mostly for reacting to the new value,
   not changing it,
@@ -977,7 +960,7 @@ and the getter returns the stored value.
 
 <!--
   - test: `stored-property-wrappedValue`
-  
+
   ```swifttest
   >> @propertyWrapper
   >> struct TwelveOrLess {
@@ -1030,10 +1013,9 @@ print(rectangle.height)
 // Prints "12"
 ```
 
-
 <!--
   - test: `small-number-wrapper`
-  
+
   ```swifttest
   -> struct SmallRectangle {
   ->     @TwelveOrLess var height: Int
@@ -1091,10 +1073,9 @@ struct SmallRectangle {
 }
 ```
 
-
 <!--
   - test: `property-wrapper-expansion`
-  
+
   ```swifttest
   -> struct SmallRectangle {
          private var _height = TwelveOrLess()
@@ -1158,10 +1139,9 @@ struct SmallNumber {
 }
 ```
 
-
 <!--
   - test: `property-wrapper-init, property-wrapper-mixed-init`
-  
+
   ```swifttest
   -> @propertyWrapper
   -> struct SmallNumber {
@@ -1221,10 +1201,9 @@ print(zeroRectangle.height, zeroRectangle.width)
 // Prints "0 0"
 ```
 
-
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> struct ZeroRectangle {
   ->     @SmallNumber var height: Int
@@ -1239,7 +1218,7 @@ print(zeroRectangle.height, zeroRectangle.width)
 
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> struct ZeroRectangle_equiv {
          private var _height = SmallNumber()
@@ -1285,10 +1264,9 @@ print(unitRectangle.height, unitRectangle.width)
 // Prints "1 1"
 ```
 
-
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> struct UnitRectangle {
   ->     @SmallNumber var height: Int = 1
@@ -1303,7 +1281,7 @@ print(unitRectangle.height, unitRectangle.width)
 
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> struct UnitRectangle_equiv {
          private var _height = SmallNumber(wrappedValue: 1)
@@ -1351,10 +1329,9 @@ print(narrowRectangle.height, narrowRectangle.width)
 // Prints "5 4"
 ```
 
-
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> struct NarrowRectangle {
   ->     @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
@@ -1374,7 +1351,7 @@ print(narrowRectangle.height, narrowRectangle.width)
 
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> struct NarrowRectangle_equiv {
          private var _height = SmallNumber(wrappedValue: 2, maximum: 5)
@@ -1431,10 +1408,9 @@ print(mixedRectangle.height)
 // Prints "12"
 ```
 
-
 <!--
   - test: `property-wrapper-mixed-init`
-  
+
   ```swifttest
   -> struct MixedRectangle {
   ->     @SmallNumber var height: Int = 1
@@ -1514,10 +1490,9 @@ print(someStructure.$someNumber)
 // Prints "true"
 ```
 
-
 <!--
   - test: `small-number-wrapper-projection`
-  
+
   ```swifttest
   -> @propertyWrapper
   -> struct SmallNumber {
@@ -1604,10 +1579,9 @@ struct SizedRectangle {
 }
 ```
 
-
 <!--
   - test: `small-number-wrapper-projection`
-  
+
   ```swifttest
   -> enum Size {
          case small, large
@@ -1678,7 +1652,7 @@ and they're written in the same way as computed properties.
 
 <!--
   - test: `computedVariables`
-  
+
   ```swifttest
   -> var a: Int { get { return 42 } set { print("set a to \(newValue)") } }
   -> a = 37
@@ -1690,7 +1664,7 @@ and they're written in the same way as computed properties.
 
 <!--
   - test: `observersForStoredVariables`
-  
+
   ```swifttest
   -> var a: Int = 0 { willSet { print("willSet") } didSet { print("didSet") } }
   -> a = 42
@@ -1721,10 +1695,9 @@ func someFunction() {
 }
 ```
 
-
 <!--
   - test: `property-wrapper-init`
-  
+
   ```swifttest
   -> func someFunction() {
   ->     @SmallNumber var myNumber: Int = 0
@@ -1833,10 +1806,9 @@ class SomeClass {
 }
 ```
 
-
 <!--
   - test: `typePropertySyntax`
-  
+
   ```swifttest
   -> struct SomeStructure {
         static var storedTypeProperty = "Some value."
@@ -1864,7 +1836,7 @@ class SomeClass {
 
 <!--
   - test: `classComputedTypePropertiesAreOverrideable`
-  
+
   ```swifttest
   -> class A { class var cp: String { return "A" } }
   -> class B: A { override class var cp: String { return "B" } }
@@ -1875,7 +1847,7 @@ class SomeClass {
 
 <!--
   - test: `staticComputedTypePropertiesAreFinal`
-  
+
   ```swifttest
   -> class A { static var cp: String { return "A" } }
   -> class B: A { override static var cp: String { return "B" } }
@@ -1910,10 +1882,9 @@ print(SomeClass.computedTypeProperty)
 // Prints "27"
 ```
 
-
 <!--
   - test: `typePropertySyntax`
-  
+
   ```swifttest
   -> print(SomeStructure.storedTypeProperty)
   <- Some value.
@@ -1940,7 +1911,6 @@ and the right channel has a current level of `7`:
 
 ![](staticPropertiesVUMeter)
 
-
 The audio channels described above are represented by
 instances of the `AudioChannel` structure:
 
@@ -1963,10 +1933,9 @@ struct AudioChannel {
 }
 ```
 
-
 <!--
   - test: `staticProperties`
-  
+
   ```swifttest
   -> struct AudioChannel {
         static let thresholdLevel = 10
@@ -2027,10 +1996,9 @@ var leftChannel = AudioChannel()
 var rightChannel = AudioChannel()
 ```
 
-
 <!--
   - test: `staticProperties`
-  
+
   ```swifttest
   -> var leftChannel = AudioChannel()
   -> var rightChannel = AudioChannel()
@@ -2049,10 +2017,9 @@ print(AudioChannel.maxInputLevelForAllChannels)
 // Prints "7"
 ```
 
-
 <!--
   - test: `staticProperties`
-  
+
   ```swifttest
   -> leftChannel.currentLevel = 7
   -> print(leftChannel.currentLevel)
@@ -2075,10 +2042,9 @@ print(AudioChannel.maxInputLevelForAllChannels)
 // Prints "10"
 ```
 
-
 <!--
   - test: `staticProperties`
-  
+
   ```swifttest
   -> rightChannel.currentLevel = 11
   -> print(rightChannel.currentLevel)
@@ -2087,7 +2053,6 @@ print(AudioChannel.maxInputLevelForAllChannels)
   <- 10
   ```
 -->
-
 
 <!--
 This source file is part of the Swift.org open source project

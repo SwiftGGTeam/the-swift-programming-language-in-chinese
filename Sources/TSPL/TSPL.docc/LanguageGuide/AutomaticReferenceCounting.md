@@ -1,5 +1,3 @@
-
-
 # Automatic Reference Counting
 
 Model the lifetime of objects and their relationships.
@@ -74,10 +72,9 @@ class Person {
 }
 ```
 
-
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> class Person {
         let name: String
@@ -110,10 +107,9 @@ var reference2: Person?
 var reference3: Person?
 ```
 
-
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> var reference1: Person?
   -> var reference2: Person?
@@ -129,10 +125,9 @@ reference1 = Person(name: "John Appleseed")
 // Prints "John Appleseed is being initialized"
 ```
 
-
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference1 = Person(name: "John Appleseed")
   <- John Appleseed is being initialized
@@ -156,10 +151,9 @@ reference2 = reference1
 reference3 = reference1
 ```
 
-
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference2 = reference1
   -> reference3 = reference1
@@ -178,10 +172,9 @@ reference1 = nil
 reference2 = nil
 ```
 
-
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference1 = nil
   -> reference2 = nil
@@ -197,10 +190,9 @@ reference3 = nil
 // Prints "John Appleseed is being deinitialized"
 ```
 
-
 <!--
   - test: `howARCWorks`
-  
+
   ```swifttest
   -> reference3 = nil
   <- John Appleseed is being deinitialized
@@ -247,10 +239,9 @@ class Apartment {
 }
 ```
 
-
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> class Person {
         let name: String
@@ -291,10 +282,9 @@ var john: Person?
 var unit4A: Apartment?
 ```
 
-
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> var john: Person?
   -> var unit4A: Apartment?
@@ -309,10 +299,9 @@ john = Person(name: "John Appleseed")
 unit4A = Apartment(unit: "4A")
 ```
 
-
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> john = Person(name: "John Appleseed")
   -> unit4A = Apartment(unit: "4A")
@@ -325,7 +314,6 @@ and the `unit4A` variable has a strong reference to the new `Apartment` instance
 
 ![](referenceCycle01)
 
-
 You can now link the two instances together
 so that the person has an apartment, and the apartment has a tenant.
 Note that an exclamation point (`!`) is used to unwrap and access
@@ -337,10 +325,9 @@ john!.apartment = unit4A
 unit4A!.tenant = john
 ```
 
-
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> john!.apartment = unit4A
   -> unit4A!.tenant = john
@@ -350,7 +337,6 @@ unit4A!.tenant = john
 Here's how the strong references look after you link the two instances together:
 
 ![](referenceCycle02)
-
 
 Unfortunately, linking these two instances creates
 a strong reference cycle between them.
@@ -366,10 +352,9 @@ john = nil
 unit4A = nil
 ```
 
-
 <!--
   - test: `referenceCycles`
-  
+
   ```swifttest
   -> john = nil
   -> unit4A = nil
@@ -385,7 +370,6 @@ Here's how the strong references look after you set
 the `john` and `unit4A` variables to `nil`:
 
 ![](referenceCycle03)
-
 
 The strong references between the `Person` instance
 and the `Apartment` instance remain and can't be broken.
@@ -443,7 +427,7 @@ a reference to an invalid instance that no longer exists.
 
 <!--
   - test: `weak-reference-doesnt-trigger-didset`
-  
+
   ```swifttest
   -> class C {
          weak var w: C? { didSet { print("did set") } }
@@ -481,10 +465,9 @@ class Apartment {
 }
 ```
 
-
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> class Person {
         let name: String
@@ -516,10 +499,9 @@ john!.apartment = unit4A
 unit4A!.tenant = john
 ```
 
-
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> var john: Person?
   -> var unit4A: Apartment?
@@ -536,7 +518,6 @@ Here's how the references look now that you've linked the two instances together
 
 ![](weakReference01)
 
-
 The `Person` instance still has a strong reference to the `Apartment` instance,
 but the `Apartment` instance now has a *weak* reference to the `Person` instance.
 This means that when you break the strong reference held by
@@ -548,10 +529,9 @@ john = nil
 // Prints "John Appleseed is being deinitialized"
 ```
 
-
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> john = nil
   <- John Appleseed is being deinitialized
@@ -564,7 +544,6 @@ and the `tenant` property is set to `nil`:
 
 ![](weakReference02)
 
-
 The only remaining strong reference to the `Apartment` instance
 is from the `unit4A` variable.
 If you break *that* strong reference,
@@ -575,10 +554,9 @@ unit4A = nil
 // Prints "Apartment 4A is being deinitialized"
 ```
 
-
 <!--
   - test: `weakReferences`
-  
+
   ```swifttest
   -> unit4A = nil
   <- Apartment 4A is being deinitialized
@@ -589,7 +567,6 @@ Because there are no more strong references to the `Apartment` instance,
 it too is deallocated:
 
 ![](weakReference03)
-
 
 > Note: In systems that use garbage collection,
 > weak pointers are sometimes used to implement a simple caching mechanism
@@ -682,10 +659,9 @@ class CreditCard {
 }
 ```
 
-
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> class Customer {
         let name: String
@@ -721,10 +697,9 @@ This variable has an initial value of nil, by virtue of being optional:
 var john: Customer?
 ```
 
-
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> var john: Customer?
   ```
@@ -739,10 +714,9 @@ john = Customer(name: "John Appleseed")
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 ```
 
-
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> john = Customer(name: "John Appleseed")
   -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
@@ -753,7 +727,6 @@ Here's how the references look, now that you've linked the two instances:
 
 ![](unownedReference01)
 
-
 The `Customer` instance now has a strong reference to the `CreditCard` instance,
 and the `CreditCard` instance has an unowned reference to the `Customer` instance.
 
@@ -762,7 +735,6 @@ when you break the strong reference held by the `john` variable,
 there are no more strong references to the `Customer` instance:
 
 ![](unownedReference02)
-
 
 Because there are no more strong references to the `Customer` instance,
 it's deallocated.
@@ -776,10 +748,9 @@ john = nil
 // Prints "Card #1234567890123456 is being deinitialized"
 ```
 
-
 <!--
   - test: `unownedReferences`
-  
+
   ```swifttest
   -> john = nil
   <- John Appleseed is being deinitialized
@@ -844,10 +815,9 @@ class Course {
 }
 ```
 
-
 <!--
   - test: `unowned-optional-references`
-  
+
   ```swifttest
   -> class Department {
          var name: String
@@ -898,10 +868,9 @@ intermediate.nextCourse = advanced
 department.courses = [intro, intermediate, advanced]
 ```
 
-
 <!--
   - test: `unowned-optional-references`
-  
+
   ```swifttest
   -> let department = Department(name: "Horticulture")
   ---
@@ -922,7 +891,6 @@ which maintains an unowned optional reference to
 the course a student should take after completing this one.
 
 ![](unownedOptionalReference)
-
 
 An unowned optional reference doesn't keep a strong hold
 on the instance of the class that it wraps,
@@ -947,7 +915,7 @@ that other courses might have.
 
 <!--
   - test: `unowned-can-be-optional`
-  
+
   ```swifttest
   >> class C { var x = 100 }
   >> class D {
@@ -1028,10 +996,9 @@ class City {
 }
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> class Country {
         let name: String
@@ -1091,10 +1058,9 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // Prints "Canada's capital city is called Ottawa"
 ```
 
-
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> var country = Country(name: "Canada", capitalName: "Ottawa")
   -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
@@ -1168,10 +1134,9 @@ class HTMLElement {
 }
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> class HTMLElement {
   ---
@@ -1241,10 +1206,9 @@ print(heading.asHTML())
 // Prints "<h1>some default text</h1>"
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> let heading = HTMLElement(name: "h1")
   -> let defaultText = "some default text"
@@ -1278,10 +1242,9 @@ print(paragraph!.asHTML())
 // Prints "<p>hello, world</p>"
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
   -> print(paragraph!.asHTML())
@@ -1299,7 +1262,6 @@ an `HTMLElement` instance and the closure used for its default `asHTML` value.
 Here's how the cycle looks:
 
 ![](closureReferenceCycle01)
-
 
 The instance's `asHTML` property holds a strong reference to its closure.
 However, because the closure refers to `self` within its body
@@ -1322,10 +1284,9 @@ because of the strong reference cycle:
 paragraph = nil
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   -> paragraph = nil
   ```
@@ -1369,10 +1330,9 @@ lazy var someClosure = {
 }
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   >> class SomeClass {
   >> var delegate: AnyObject?
@@ -1398,10 +1358,9 @@ lazy var someClosure = {
 }
 ```
 
-
 <!--
   - test: `strongReferenceCyclesForClosures`
-  
+
   ```swifttest
   >> class AnotherClass {
   >> var delegate: AnyObject?
@@ -1466,10 +1425,9 @@ class HTMLElement {
 }
 ```
 
-
 <!--
   - test: `unownedReferencesForClosures`
-  
+
   ```swifttest
   -> class HTMLElement {
   ---
@@ -1511,10 +1469,9 @@ print(paragraph!.asHTML())
 // Prints "<p>hello, world</p>"
 ```
 
-
 <!--
   - test: `unownedReferencesForClosures`
-  
+
   ```swifttest
   -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
   -> print(paragraph!.asHTML())
@@ -1525,7 +1482,6 @@ print(paragraph!.asHTML())
 Here's how the references look with the capture list in place:
 
 ![](closureReferenceCycle02)
-
 
 This time, the capture of `self` by the closure is an unowned reference,
 and doesn't keep a strong hold on the `HTMLElement` instance it has captured.
@@ -1538,10 +1494,9 @@ paragraph = nil
 // Prints "p is being deinitialized"
 ```
 
-
 <!--
   - test: `unownedReferencesForClosures`
-  
+
   ```swifttest
   -> paragraph = nil
   <- p is being deinitialized
@@ -1550,7 +1505,6 @@ paragraph = nil
 
 For more information about capture lists,
 see <doc:Expressions#Capture-Lists>.
-
 
 <!--
 This source file is part of the Swift.org open source project

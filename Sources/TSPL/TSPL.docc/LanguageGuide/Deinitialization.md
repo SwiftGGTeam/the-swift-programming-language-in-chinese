@@ -1,5 +1,3 @@
-
-
 # Deinitialization
 
 Release resources that require custom cleanup.
@@ -32,10 +30,9 @@ deinit {
 }
 ```
 
-
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   >> class Test {
   -> deinit {
@@ -82,10 +79,9 @@ class Bank {
 }
 ```
 
-
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> class Bank {
         static var coinsInBank = 10_000
@@ -132,10 +128,9 @@ class Player {
 }
 ```
 
-
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> class Player {
         var coinsInPurse: Int
@@ -172,10 +167,9 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 // Prints "There are now 9900 coins left in the bank"
 ```
 
-
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> var playerOne: Player? = Player(coins: 100)
   -> print("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
@@ -202,10 +196,9 @@ print("The bank now only has \(Bank.coinsInBank) coins left")
 // Prints "The bank now only has 7900 coins left"
 ```
 
-
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> playerOne!.win(coins: 2_000)
   -> print("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
@@ -227,10 +220,9 @@ print("The bank now has \(Bank.coinsInBank) coins")
 // Prints "The bank now has 10000 coins"
 ```
 
-
 <!--
   - test: `deinitializer`
-  
+
   ```swifttest
   -> playerOne = nil
   -> print("PlayerOne has left the game")
@@ -249,7 +241,6 @@ No other properties or variables are still referring to the `Player` instance,
 and so it's deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.
-
 
 <!--
 This source file is part of the Swift.org open source project

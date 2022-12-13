@@ -1,5 +1,3 @@
-
-
 # Version Compatibility
 
 Learn what functionality is available in older language modes.
@@ -11,7 +9,7 @@ that are written in either Swift 5.7, Swift 4.2, or Swift 4.
 
 <!--
   - test: `swift-version`
-  
+
   ```swifttest
   >> #if swift(>=5.7.1)
   >>     print("Too new")
@@ -50,7 +48,6 @@ This means, if you have a large project
 that's divided into multiple frameworks,
 you can migrate your code from Swift 4 to Swift 5.7
 one framework at a time.
-
 
 <!--
 This source file is part of the Swift.org open source project

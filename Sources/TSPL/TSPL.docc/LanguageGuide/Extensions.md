@@ -1,5 +1,3 @@
-
-
 # Extensions
 
 Add functionality to an existing type.
@@ -31,7 +29,7 @@ For more details, see <doc:Protocols#Protocol-Extensions>.
 
 <!--
   - test: `extensionsCannotOverrideExistingBehavior`
-  
+
   ```swifttest
   -> class C {
         var x = 0
@@ -87,10 +85,9 @@ extension SomeType {
 }
 ```
 
-
 <!--
   - test: `extensionSyntax`
-  
+
   ```swifttest
   >> struct SomeType {}
   -> extension SomeType {
@@ -110,10 +107,9 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 }
 ```
 
-
 <!--
   - test: `extensionSyntax`
-  
+
   ```swifttest
   >> protocol SomeProtocol {}
   >> protocol AnotherProtocol {}
@@ -157,10 +153,9 @@ print("Three feet is \(threeFeet) meters")
 // Prints "Three feet is 0.914399970739201 meters"
 ```
 
-
 <!--
   - test: `extensionsComputedProperties`
-  
+
   ```swifttest
   -> extension Double {
         var km: Double { return self * 1_000.0 }
@@ -208,10 +203,9 @@ print("A marathon is \(aMarathon) meters long")
 // Prints "A marathon is 42195.0 meters long"
 ```
 
-
 <!--
   - test: `extensionsComputedProperties`
-  
+
   ```swifttest
   -> let aMarathon = 42.km + 195.m
   -> print("A marathon is \(aMarathon) meters long")
@@ -224,7 +218,7 @@ print("A marathon is \(aMarathon) meters long")
 
 <!--
   - test: `extensionsCannotAddStoredProperties`
-  
+
   ```swifttest
   -> class C {}
   -> extension C { var x = 0 }
@@ -282,10 +276,9 @@ struct Rect {
 }
 ```
 
-
 <!--
   - test: `extensionsInitializers`
-  
+
   ```swifttest
   -> struct Size {
         var width = 0.0, height = 0.0
@@ -311,10 +304,9 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
     size: Size(width: 5.0, height: 5.0))
 ```
 
-
 <!--
   - test: `extensionsInitializers`
-  
+
   ```swifttest
   -> let defaultRect = Rect()
   -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
@@ -335,10 +327,9 @@ extension Rect {
 }
 ```
 
-
 <!--
   - test: `extensionsInitializers`
-  
+
   ```swifttest
   -> extension Rect {
         init(center: Point, size: Size) {
@@ -362,10 +353,9 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
 
-
 <!--
   - test: `extensionsInitializers`
-  
+
   ```swifttest
   -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
         size: Size(width: 3.0, height: 3.0))
@@ -393,10 +383,9 @@ extension Int {
 }
 ```
 
-
 <!--
   - test: `extensionsInstanceMethods`
-  
+
   ```swifttest
   -> extension Int {
         func repetitions(task: () -> Void) {
@@ -424,10 +413,9 @@ to perform a task that many number of times:
 // Hello!
 ```
 
-
 <!--
   - test: `extensionsInstanceMethods`
-  
+
   ```swifttest
   -> 3.repetitions {
         print("Hello!")
@@ -459,10 +447,9 @@ someInt.square()
 // someInt is now 9
 ```
 
-
 <!--
   - test: `extensionsInstanceMethods`
-  
+
   ```swifttest
   -> extension Int {
         mutating func square() {
@@ -508,10 +495,9 @@ extension Int {
 // returns 7
 ```
 
-
 <!--
   - test: `extensionsSubscripts`
-  
+
   ```swifttest
   -> extension Int {
         subscript(digitIndex: Int) -> Int {
@@ -562,10 +548,9 @@ as if the number had been padded with zeros to the left:
 0746381295[9]
 ```
 
-
 <!--
   - test: `extensionsSubscripts`
-  
+
   ```swifttest
   >> let r4 =
   -> 746381295[9]
@@ -607,10 +592,9 @@ extension Int {
 }
 ```
 
-
 <!--
   - test: `extensionsNestedTypes`
-  
+
   ```swifttest
   -> extension Int {
         enum Kind {
@@ -660,10 +644,9 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 // Prints "+ + - 0 - 0 + "
 ```
 
-
 <!--
   - test: `extensionsNestedTypes`
-  
+
   ```swifttest
   -> func printIntegerKinds(_ numbers: [Int]) {
         for number in numbers {
@@ -698,7 +681,6 @@ and prints an appropriate description.
 > Because of this, all of the `Int.Kind` case values
 > can be written in shorthand form inside the `switch` statement,
 > such as `.negative` rather than `Int.Kind.negative`.
-
 
 <!--
 This source file is part of the Swift.org open source project
