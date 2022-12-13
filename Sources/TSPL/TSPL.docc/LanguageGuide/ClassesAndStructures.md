@@ -53,7 +53,7 @@ come at the cost of increased complexity.
 As a general guideline,
 prefer structures because they're easier to reason about,
 and use classes when they're appropriate or necessary.
-In practice, this means most of the custom data types you define
+In practice, this means most of the custom types you define
 will be structures and enumerations.
 For a more detailed comparison,
 see [Choosing Between Structures and Classes](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes).

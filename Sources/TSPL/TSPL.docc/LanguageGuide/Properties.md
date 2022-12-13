@@ -1549,7 +1549,7 @@ the property wrapper exposes only one piece of information ---
 whether the number was adjusted ---
 so it exposes that Boolean value as its projected value.
 A wrapper that needs to expose more information
-can return an instance of some other data type,
+can return an instance of some other type,
 or it can return `self`
 to expose the instance of the wrapper as its projected value.
 
