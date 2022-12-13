@@ -55,7 +55,7 @@ class Vehicle {
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> class Vehicle {
         var currentSpeed = 0.0
@@ -78,7 +78,7 @@ let someVehicle = Vehicle()
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> let someVehicle = Vehicle()
   ```
@@ -95,7 +95,7 @@ print("Vehicle: \(someVehicle.description)")
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> print("Vehicle: \(someVehicle.description)")
   </ Vehicle: traveling at 0.0 miles per hour
@@ -125,7 +125,7 @@ class SomeSubclass: SomeSuperclass {
 
 <!--
   - test: `protocolSyntax`
-  
+
   ```swifttest
   >> class SomeSuperclass {}
   -> class SomeSubclass: SomeSuperclass {
@@ -145,7 +145,7 @@ class Bicycle: Vehicle {
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> class Bicycle: Vehicle {
         var hasBasket = false
@@ -172,7 +172,7 @@ bicycle.hasBasket = true
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> let bicycle = Bicycle()
   -> bicycle.hasBasket = true
@@ -190,7 +190,7 @@ print("Bicycle: \(bicycle.description)")
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> bicycle.currentSpeed = 15.0
   -> print("Bicycle: \(bicycle.description)")
@@ -210,7 +210,7 @@ class Tandem: Bicycle {
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> class Tandem: Bicycle {
         var currentNumberOfPassengers = 0
@@ -238,7 +238,7 @@ print("Tandem: \(tandem.description)")
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> let tandem = Tandem()
   -> tandem.hasBasket = true
@@ -306,7 +306,7 @@ class Train: Vehicle {
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> class Train: Vehicle {
         override func makeNoise() {
@@ -327,7 +327,7 @@ train.makeNoise()
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> let train = Train()
   -> train.makeNoise()
@@ -383,7 +383,7 @@ class Car: Vehicle {
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> class Car: Vehicle {
         var gear = 1
@@ -414,7 +414,7 @@ print("Car: \(car.description)")
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> let car = Car()
   -> car.currentSpeed = 25.0
@@ -460,7 +460,7 @@ class AutomaticCar: Car {
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> class AutomaticCar: Car {
         override var currentSpeed: Double {
@@ -489,7 +489,7 @@ print("AutomaticCar: \(automatic.description)")
 
 <!--
   - test: `inheritance`
-  
+
   ```swifttest
   -> let automatic = AutomaticCar()
   -> automatic.currentSpeed = 35.0
@@ -513,7 +513,7 @@ can also be marked as final within the extension's definition.
 
 <!--
   - test: `finalPreventsOverriding`
-  
+
   ```swifttest
   -> class C {
         final var someVar = 0
@@ -551,7 +551,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
 
 <!--
   - test: `finalClassPreventsOverriding`
-  
+
   ```swifttest
   -> final class C {
         var someVar = 0
@@ -601,7 +601,7 @@ Any attempt to subclass a final class is reported as a compile-time error.
 <!--
   TODO: Mention that you can return more-specific types, and take less-specific types,
   when overriding methods that use optionals / unchecked optionals.
-  
+
   TODO: Overriding Type Methods
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->

@@ -48,7 +48,7 @@ let someString = "Some string literal value"
 
 <!--
   - test: `stringLiterals`
-  
+
   ```swifttest
   -> let someString = "Some string literal value"
   ```
@@ -81,12 +81,12 @@ till you come to the end; then stop."
 
 <!--
   - test: `multiline-string-literals`
-  
+
   ```swifttest
   -> let quotation = """
      The White Rabbit put on his spectacles.  "Where shall I begin,
      please your Majesty?" he asked.
-  
+
      "Begin at the beginning," the King said gravely, "and go on
      till you come to the end; then stop."
      """
@@ -112,7 +112,7 @@ These are the same.
 
 <!--
   - test: `multiline-string-literals`
-  
+
   ```swifttest
   -> let singleLineString = "These are the same."
   -> let multilineString = """
@@ -143,12 +143,12 @@ till you come to the end; then stop."
 
 <!--
   - test: `multiline-string-literals`
-  
+
   ```swifttest
   -> let softWrappedQuotation = """
      The White Rabbit put on his spectacles.  "Where shall I begin, \
      please your Majesty?" he asked.
-  
+
      "Begin at the beginning," the King said gravely, "and go on \
      till you come to the end; then stop."
      """
@@ -173,13 +173,13 @@ It also ends with a line break.
 
 <!--
   - test: `multiline-string-literals`
-  
+
   ```swifttest
   -> let lineBreaks = """
-  
+
      This string starts with a line break.
      It also ends with a line break.
-  
+
      """
   ```
 -->
@@ -206,7 +206,7 @@ that whitespace *is* included.
 
 <!--
   - test: `multiline-string-literal-whitespace`
-  
+
   ```swifttest
   -> let linesWithIndentation = """
          This line doesn't begin with whitespace.
@@ -235,7 +235,7 @@ String literals can include the following special characters:
 
 <!--
   - test: `stringLiteralUnicodeScalar`
-  
+
   ```swifttest
   >> _ = "\u{0}"
   >> _ = "\u{00000000}"
@@ -266,7 +266,7 @@ let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
 
 <!--
   - test: `specialCharacters`
-  
+
   ```swifttest
   -> let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
   >> print(wiseWords)
@@ -296,7 +296,7 @@ Escaping all three quotation marks \"\"\"
 
 <!--
   - test: `multiline-string-literals`
-  
+
   ```swifttest
   -> let threeDoubleQuotationMarks = """
      Escaping the first quotation mark \"""
@@ -339,7 +339,7 @@ Here are three more double quotes: """
 
 <!--
   - test: `extended-string-delimiters`
-  
+
   ```swifttest
   -> let threeMoreDoubleQuotationMarks = #"""
      Here are three more double quotes: """
@@ -364,7 +364,7 @@ var anotherEmptyString = String()  // initializer syntax
 
 <!--
   - test: `emptyStrings`
-  
+
   ```swifttest
   -> var emptyString = ""               // empty string literal
   -> var anotherEmptyString = String()  // initializer syntax
@@ -385,7 +385,7 @@ if emptyString.isEmpty {
 
 <!--
   - test: `emptyStrings`
-  
+
   ```swifttest
   -> if emptyString.isEmpty {
         print("Nothing to see here")
@@ -416,7 +416,7 @@ constantString += " and another Highlander"
 
 <!--
   - test: `stringMutability`
-  
+
   ```swifttest
   -> var variableString = "Horse"
   -> variableString += " and carriage"
@@ -437,7 +437,7 @@ constantString += " and another Highlander"
 
 <!--
   - test: `stringMutability-ok`
-  
+
   ```swifttest
   -> var variableString = "Horse"
   -> variableString += " and carriage"
@@ -490,7 +490,7 @@ for character in "Dog!🐶" {
 
 <!--
   - test: `characters`
-  
+
   ```swifttest
   -> for character in "Dog!🐶" {
         print(character)
@@ -514,7 +514,7 @@ let exclamationMark: Character = "!"
 
 <!--
   - test: `characters`
-  
+
   ```swifttest
   -> let exclamationMark: Character = "!"
   ```
@@ -532,7 +532,7 @@ print(catString)
 
 <!--
   - test: `characters`
-  
+
   ```swifttest
   -> let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
   -> let catString = String(catCharacters)
@@ -555,7 +555,7 @@ var welcome = string1 + string2
 
 <!--
   - test: `concatenation`
-  
+
   ```swifttest
   -> let string1 = "hello"
   -> let string2 = " there"
@@ -576,7 +576,7 @@ instruction += string2
 
 <!--
   - test: `concatenation`
-  
+
   ```swifttest
   -> var instruction = "look over"
   -> instruction += string2
@@ -596,7 +596,7 @@ welcome.append(exclamationMark)
 
 <!--
   - test: `concatenation`
-  
+
   ```swifttest
   -> let exclamationMark: Character = "!"
   -> welcome.append(exclamationMark)
@@ -641,7 +641,7 @@ print(goodStart + end)
 
 <!--
   - test: `concatenate-multiline-string-literals`
-  
+
   ```swifttest
   -> let badStart = """
          one
@@ -658,7 +658,7 @@ print(goodStart + end)
   -> let goodStart = """
          one
          two
-  
+
          """
   -> print(goodStart + end)
   // Prints three lines:
@@ -699,7 +699,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 
 <!--
   - test: `stringInterpolation`
-  
+
   ```swifttest
   -> let multiplier = 3
   -> let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
@@ -730,7 +730,7 @@ print(#"Write an interpolated string in Swift using \(multiplier)."#)
 
 <!--
   - test: `stringInterpolation`
-  
+
   ```swifttest
   -> print(#"Write an interpolated string in Swift using \(multiplier)."#)
   <- Write an interpolated string in Swift using \(multiplier).
@@ -750,7 +750,7 @@ print(#"6 times 7 is \#(6 * 7)."#)
 
 <!--
   - test: `stringInterpolation`
-  
+
   ```swifttest
   -> print(#"6 times 7 is \#(6 * 7)."#)
   <- 6 times 7 is 42.
@@ -814,7 +814,7 @@ let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
 
 <!--
   - test: `graphemeClusters1`
-  
+
   ```swifttest
   -> let eAcute: Character = "\u{E9}"                         // é
   >> assert(eAcute == "é")
@@ -840,7 +840,7 @@ let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
 
 <!--
   - test: `graphemeClusters2`
-  
+
   ```swifttest
   -> let precomposed: Character = "\u{D55C}"                  // 한
   >> assert(precomposed == "한")
@@ -862,7 +862,7 @@ let enclosedEAcute: Character = "\u{E9}\u{20DD}"
 
 <!--
   - test: `graphemeClusters3`
-  
+
   ```swifttest
   -> let enclosedEAcute: Character = "\u{E9}\u{20DD}"
   >> assert(enclosedEAcute == "é⃝")
@@ -883,7 +883,7 @@ let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
 
 <!--
   - test: `graphemeClusters4`
-  
+
   ```swifttest
   -> let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
   >> assert(regionalIndicatorForUS == "🇺🇸")
@@ -905,7 +905,7 @@ print("unusualMenagerie has \(unusualMenagerie.count) characters")
 
 <!--
   - test: `characterCount`
-  
+
   ```swifttest
   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
   -> print("unusualMenagerie has \(unusualMenagerie.count) characters")
@@ -935,7 +935,7 @@ print("the number of characters in \(word) is \(word.count)")
 
 <!--
   - test: `characterCount`
-  
+
   ```swifttest
   -> var word = "cafe"
   -> print("the number of characters in \(word) is \(word.count)")
@@ -1017,7 +1017,7 @@ greeting[index]
 
 <!--
   - test: `stringIndex`
-  
+
   ```swifttest
   -> let greeting = "Guten Tag!"
   >> print(
@@ -1060,7 +1060,7 @@ greeting.index(after: greeting.endIndex) // Error
 
 <!--
   - test: `emptyStringIndices`
-  
+
   ```swifttest
   -> let emptyString = ""
   -> assert(
@@ -1081,7 +1081,7 @@ for index in greeting.indices {
 
 <!--
   - test: `stringIndex`
-  
+
   ```swifttest
   -> for index in greeting.indices {
         print("\(greeting[index]) ", terminator: "")
@@ -1120,7 +1120,7 @@ welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex)
 
 <!--
   - test: `stringInsertionAndRemoval`
-  
+
   ```swifttest
   -> var welcome = "hello"
   -> welcome.insert("!", at: welcome.endIndex)
@@ -1149,7 +1149,7 @@ welcome.removeSubrange(range)
 
 <!--
   - test: `stringInsertionAndRemoval`
-  
+
   ```swifttest
   -> welcome.remove(at: welcome.index(before: welcome.endIndex))
   /> welcome now equals \"\(welcome)\"
@@ -1201,7 +1201,7 @@ let newString = String(beginning)
 
 <!--
   - test: `string-and-substring`
-  
+
   ```swifttest
   -> let greeting = "Hello, world!"
   -> let index = greeting.firstIndex(of: ",") ?? greeting.endIndex
@@ -1280,7 +1280,7 @@ if quotation == sameQuotation {
 
 <!--
   - test: `stringEquality`
-  
+
   ```swifttest
   -> let quotation = "We're a lot alike, you and I."
   -> let sameQuotation = "We're a lot alike, you and I."
@@ -1299,7 +1299,7 @@ even if they're composed from different Unicode scalars behind the scenes.
 
 <!--
   - test: `characterComparisonUsesCanonicalEquivalence`
-  
+
   ```swifttest
   -> let eAcute: Character = "\u{E9}"
   -> let combinedEAcute: Character = "\u{65}\u{301}"
@@ -1314,7 +1314,7 @@ even if they're composed from different Unicode scalars behind the scenes.
 
 <!--
   - test: `stringComparisonUsesCanonicalEquivalence`
-  
+
   ```swifttest
   -> let cafe1 = "caf\u{E9}"
   -> let cafe2 = "caf\u{65}\u{301}"
@@ -1348,7 +1348,7 @@ if eAcuteQuestion == combinedEAcuteQuestion {
 
 <!--
   - test: `stringEquality`
-  
+
   ```swifttest
   // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
   -> let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
@@ -1383,7 +1383,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 
 <!--
   - test: `stringEquality`
-  
+
   ```swifttest
   -> let latinCapitalLetterA: Character = "\u{41}"
   >> assert(latinCapitalLetterA == "A")
@@ -1414,7 +1414,7 @@ both of which take a single argument of type `String` and return a Boolean value
 
 <!--
   - test: `prefixComparisonUsesCharactersNotScalars`
-  
+
   ```swifttest
   -> let ecole = "\u{E9}cole"
   -> if ecole.hasPrefix("\u{E9}") {
@@ -1434,7 +1434,7 @@ both of which take a single argument of type `String` and return a Boolean value
 
 <!--
   - test: `suffixComparisonUsesCharactersNotScalars`
-  
+
   ```swifttest
   -> let cafe = "caf\u{E9}"
   -> if cafe.hasSuffix("\u{E9}") {
@@ -1473,7 +1473,7 @@ let romeoAndJuliet = [
 
 <!--
   - test: `prefixesAndSuffixes`
-  
+
   ```swifttest
   -> let romeoAndJuliet = [
         "Act 1 Scene 1: Verona, A public place",
@@ -1507,7 +1507,7 @@ print("There are \(act1SceneCount) scenes in Act 1")
 
 <!--
   - test: `prefixesAndSuffixes`
-  
+
   ```swifttest
   -> var act1SceneCount = 0
   -> for scene in romeoAndJuliet {
@@ -1539,7 +1539,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 
 <!--
   - test: `prefixesAndSuffixes`
-  
+
   ```swifttest
   -> var mansionCount = 0
   -> var cellCount = 0
@@ -1595,7 +1595,7 @@ let dogString = "Dog‼🐶"
 
 <!--
   - test: `unicodeRepresentations`
-  
+
   ```swifttest
   -> let dogString = "Dog‼🐶"
   ```
@@ -1621,7 +1621,7 @@ print("")
 
 <!--
   - test: `unicodeRepresentations`
-  
+
   ```swifttest
   -> for codeUnit in dogString.utf8 {
         print("\(codeUnit) ", terminator: "")
@@ -1675,7 +1675,7 @@ print("")
 
 <!--
   - test: `unicodeRepresentations`
-  
+
   ```swifttest
   -> for codeUnit in dogString.utf16 {
         print("\(codeUnit) ", terminator: "")
@@ -1729,7 +1729,7 @@ print("")
 
 <!--
   - test: `unicodeRepresentations`
-  
+
   ```swifttest
   -> for scalar in dogString.unicodeScalars {
         print("\(scalar.value) ", terminator: "")
@@ -1774,7 +1774,7 @@ for scalar in dogString.unicodeScalars {
 
 <!--
   - test: `unicodeRepresentations`
-  
+
   ```swifttest
   -> for scalar in dogString.unicodeScalars {
         print("\(scalar) ")

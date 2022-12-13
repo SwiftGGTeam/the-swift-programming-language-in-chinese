@@ -50,7 +50,7 @@ class Counter {
 
 <!--
   - test: `instanceMethods`
-  
+
   ```swifttest
   -> class Counter {
         var count = 0
@@ -91,7 +91,7 @@ counter.reset()
 
 <!--
   - test: `instanceMethods`
-  
+
   ```swifttest
   -> let counter = Counter()
   /> the initial counter value is \(counter.count)
@@ -131,7 +131,7 @@ func increment() {
 
 <!--
   - test: `instanceMethodsIncrement`
-  
+
   ```swifttest
   >> class Counter {
   >> var count: Int = 0
@@ -179,7 +179,7 @@ if somePoint.isToTheRightOf(x: 1.0) {
 
 <!--
   - test: `self`
-  
+
   ```swifttest
   -> struct Point {
         var x = 0.0, y = 0.0
@@ -235,7 +235,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 <!--
   - test: `selfStructures`
-  
+
   ```swifttest
   -> struct Point {
         var x = 0.0, y = 0.0
@@ -270,7 +270,7 @@ fixedPoint.moveBy(x: 2.0, y: 3.0)
 
 <!--
   - test: `selfStructures-err`
-  
+
   ```swifttest
   >> struct Point {
   >>    var x = 0.0, y = 0.0
@@ -315,7 +315,7 @@ struct Point {
 
 <!--
   - test: `selfStructuresAssign`
-  
+
   ```swifttest
   -> struct Point {
         var x = 0.0, y = 0.0
@@ -361,7 +361,7 @@ ovenLight.next()
 
 <!--
   - test: `selfEnumerations`
-  
+
   ```swifttest
   -> enum TriStateSwitch {
         case off, low, high
@@ -419,7 +419,7 @@ SomeClass.someTypeMethod()
 
 <!--
   - test: `typeMethods`
-  
+
   ```swifttest
   -> class SomeClass {
         class func someTypeMethod() {
@@ -483,7 +483,7 @@ struct LevelTracker {
 
 <!--
   - test: `typeMethods`
-  
+
   ```swifttest
   -> struct LevelTracker {
         static var highestUnlockedLevel = 1
@@ -559,7 +559,7 @@ class Player {
 
 <!--
   - test: `typeMethods`
-  
+
   ```swifttest
   -> class Player {
         var tracker = LevelTracker()
@@ -597,7 +597,7 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
 
 <!--
   - test: `typeMethods`
-  
+
   ```swifttest
   -> var player = Player(name: "Argyrios")
   -> player.complete(level: 1)
@@ -622,7 +622,7 @@ if player.tracker.advance(to: 6) {
 
 <!--
   - test: `typeMethods`
-  
+
   ```swifttest
   -> player = Player(name: "Beto")
   -> if player.tracker.advance(to: 6) {

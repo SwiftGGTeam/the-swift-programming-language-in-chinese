@@ -75,7 +75,7 @@ func someFunction(a: Int) { /* ... */ }
 
 <!--
   - test: `type-annotation`
-  
+
   ```swifttest
   -> let someTuple: (Double, Double) = (3.14159, 2.71828)
   -> func someFunction(a: Int) { /* ... */ }
@@ -116,7 +116,7 @@ let origin: Point = (0, 0)
 
 <!--
   - test: `type-identifier`
-  
+
   ```swifttest
   -> typealias Point = (Int, Int)
   -> let origin: Point = (0, 0)
@@ -134,7 +134,7 @@ var someValue: ExampleModule.MyType
 
 <!--
   - test: `type-identifier-dot`
-  
+
   ```swifttest
   -> var someValue: ExampleModule.MyType
   !$ error: cannot find type 'ExampleModule' in scope
@@ -172,7 +172,7 @@ someTuple = (left: 5, right: 5)  // Error: names don't match
 
 <!--
   - test: `tuple-type-names`
-  
+
   ```swifttest
   -> var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
   -> someTuple = (top: 4, bottom: 42) // OK: names match
@@ -259,7 +259,7 @@ For example:
 
 <!--
   - test: `argument-names`
-  
+
   ```swifttest
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
@@ -291,7 +291,7 @@ f = functionWithDifferentNumberOfArguments // Error
 
 <!--
   - test: `argument-names-err`
-  
+
   ```swifttest
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
@@ -326,7 +326,7 @@ var operation: (Int, Int) -> Int               // OK
 
 <!--
   - test: `omit-argument-names-in-function-type`
-  
+
   ```swifttest
   -> var operation: (lhs: Int, rhs: Int) -> Int     // Error
   !$ error: function types cannot have argument labels; use '_' before 'lhs'
@@ -381,7 +381,7 @@ see <doc:Declarations#Asynchronous-Functions-and-Methods>.
 
 <!--
   - test: `function-arrow-is-right-associative`
-  
+
   ```swifttest
   >> func f(i: Int) -> (Int) -> Int {
   >>     func g(j: Int) -> Int {
@@ -408,7 +408,7 @@ because that might allow the value to escape.
 
 <!--
   - test: `cant-store-nonescaping-as-Any`
-  
+
   ```swifttest
   -> func f(g: ()->Void) { let x: Any = g }
   !$ error: converting non-escaping value to 'Any' may allow it to escape
@@ -440,16 +440,16 @@ func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void
 
 <!--
   - test: `memory-nonescaping-functions`
-  
+
   ```swifttest
   -> let external: (() -> Void) -> Void = { _ in () }
   -> func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
          first { first {} }       // Error
          second { second {}  }    // Error
-  
+
          first { second {} }      // Error
          second { first {} }      // Error
-  
+
          first { external {} }    // OK
          external { first {} }    // OK
      }
@@ -513,13 +513,13 @@ see <doc:MemorySafety>.
   This means that monomorphic functions can be assigned to variables
   and can be passed as arguments to other functions.
   As an example, the following three lines of code are OK::
-  
+
       func polymorphicF<T>(a: Int) -> T { return a }
       func monomorphicF(a: Int) -> Int { return a }
       var myMonomorphicF = monomorphicF
-  
+
   But, the following is NOT allowed::
-  
+
       var myPolymorphicF = polymorphicF
 -->
 
@@ -541,7 +541,7 @@ let someArray: [String] = ["Alex", "Brian", "Dave"]
 
 <!--
   - test: `array-literal`
-  
+
   ```swifttest
   >> let someArray1: Array<String> = ["Alex", "Brian", "Dave"]
   >> let someArray2: [String] = ["Alex", "Brian", "Dave"]
@@ -566,7 +566,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 <!--
   - test: `array-3d`
-  
+
   ```swifttest
   -> var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
   ```
@@ -604,7 +604,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 <!--
   - test: `dictionary-literal`
-  
+
   ```swifttest
   >> let someDictionary1: [String: Int] = ["Alex": 31, "Paul": 39]
   >> let someDictionary2: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
@@ -650,7 +650,7 @@ var optionalInteger: Optional<Int>
 
 <!--
   - test: `optional-literal`
-  
+
   ```swifttest
   >> var optionalInteger1: Int?
   >> var optionalInteger2: Optional<Int>
@@ -688,7 +688,7 @@ optionalInteger! // 42
 
 <!--
   - test: `optional-type`
-  
+
   ```swifttest
   >> var optionalInteger: Int?
   -> optionalInteger = 42
@@ -830,7 +830,7 @@ typealias PQR = PQ & Q & R
 
 <!--
   - test: `protocol-composition-can-have-repeats`
-  
+
   ```swifttest
   >> protocol P {}
   >> protocol Q {}
@@ -937,7 +937,7 @@ type(of: someInstance).printClassName()
 
 <!--
   - test: `metatype-type`
-  
+
   ```swifttest
   -> class SomeBaseClass {
          class func printClassName() {
@@ -983,7 +983,7 @@ let anotherInstance = metatype.init(string: "some string")
 
 <!--
   - test: `metatype-type`
-  
+
   ```swifttest
   -> class AnotherSubClass: SomeBaseClass {
         let string: String
@@ -1020,7 +1020,7 @@ let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
 
 <!--
   - test: `any-type`
-  
+
   ```swifttest
   -> let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
   ```
@@ -1046,7 +1046,7 @@ if let first = mixed.first as? String {
 
 <!--
   - test: `any-type`
-  
+
   ```swifttest
   -> if let first = mixed.first as? String {
          print("The first item, '\(first)', is a string.")
@@ -1097,7 +1097,7 @@ whose return type is `Self`.
 
 <!--
   - test: `self-in-class-cant-be-a-parameter-type`
-  
+
   ```swifttest
   -> class C { func f(c: Self) { } }
   !$ error: covariant 'Self' or 'Self?' can only appear as the type of a property, subscript or method result; did you mean 'C'?
@@ -1109,7 +1109,7 @@ whose return type is `Self`.
 
 <!--
   - test: `self-in-class-can-be-a-subscript-param`
-  
+
   ```swifttest
   >> class C { subscript(s: Int) -> Self { return self } }
   >> let c = C()
@@ -1119,7 +1119,7 @@ whose return type is `Self`.
 
 <!--
   - test: `self-in-class-can-be-a-computed-property-type`
-  
+
   ```swifttest
   >> class C { var s: Self { return self } }
   >> let c = C()
@@ -1147,7 +1147,7 @@ print(type(of: z.f()))
 
 <!--
   - test: `self-gives-dynamic-type`
-  
+
   ```swifttest
   -> class Superclass {
          func f() -> Self { return self }
@@ -1256,7 +1256,7 @@ let eFloat: Float = 2.71828 // The type of eFloat is Float.
 
 <!--
   - test: `type-inference`
-  
+
   ```swifttest
   -> let e = 2.71828 // The type of e is inferred to be Double.
   -> let eFloat: Float = 2.71828 // The type of eFloat is Float.

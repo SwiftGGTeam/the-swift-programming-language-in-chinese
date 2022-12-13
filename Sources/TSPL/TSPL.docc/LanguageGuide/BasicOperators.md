@@ -62,7 +62,7 @@ a = b
 
 <!--
   - test: `assignmentOperator`
-  
+
   ```swifttest
   -> let b = 10
   -> var a = 5
@@ -82,7 +82,7 @@ let (x, y) = (1, 2)
 
 <!--
   - test: `assignmentOperator`
-  
+
   ```swifttest
   -> let (x, y) = (1, 2)
   /> x is equal to \(x), and y is equal to \(y)
@@ -92,7 +92,7 @@ let (x, y) = (1, 2)
 
 <!--
   - test: `tuple-unwrapping-with-var`
-  
+
   ```swifttest
   >> var (x, y) = (1, 2)
   ```
@@ -119,7 +119,7 @@ if x = y {
 
 <!--
   - test: `assignmentOperatorInvalid`
-  
+
   ```swifttest
   -> if x = y {
         // This isn't valid, because x = y doesn't return a value.
@@ -161,7 +161,7 @@ Swift supports the four standard *arithmetic operators* for all number types:
 
 <!--
   - test: `arithmeticOperators`
-  
+
   ```swifttest
   >> let r0 =
   -> 1 + 2       // equals 3
@@ -191,7 +191,7 @@ The addition operator is also supported for `String` concatenation:
 
 <!--
   - test: `arithmeticOperators`
-  
+
   ```swifttest
   >> let r4 =
   -> "hello, " + "world"  // equals "hello, world"
@@ -213,7 +213,7 @@ and returns the value that's left over
 
 <!--
   - test: `percentOperatorIsRemainderNotModulo`
-  
+
   ```swifttest
   -> for i in -5...0 {
         print(i % 4)
@@ -242,7 +242,7 @@ In Swift, this would be written as:
 
 <!--
   - test: `arithmeticOperators`
-  
+
   ```swifttest
   >> let r5 =
   -> 9 % 4    // equals 1
@@ -271,7 +271,7 @@ The same method is applied when calculating the remainder for a negative value o
 
 <!--
   - test: `arithmeticOperators`
-  
+
   ```swifttest
   >> let r6 =
   -> -9 % 4   // equals -1
@@ -301,7 +301,7 @@ let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
 
 <!--
   - test: `arithmeticOperators`
-  
+
   ```swifttest
   -> let three = 3
   -> let minusThree = -three       // minusThree equals -3
@@ -324,7 +324,7 @@ let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
 
 <!--
   - test: `arithmeticOperators`
-  
+
   ```swifttest
   -> let minusSix = -6
   -> let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
@@ -349,7 +349,7 @@ a += 2
 
 <!--
   - test: `compoundAssignment`
-  
+
   ```swifttest
   -> var a = 1
   -> a += 2
@@ -396,7 +396,7 @@ Each of the comparison operators returns a `Bool` value to indicate whether or n
 
 <!--
   - test: `comparisonOperators`
-  
+
   ```swifttest
   >> assert(
   -> 1 == 1   // true because 1 is equal to 1
@@ -434,7 +434,7 @@ if name == "world" {
 
 <!--
   - test: `comparisonOperators`
-  
+
   ```swifttest
   -> let name = "world"
   -> if name == "world" {
@@ -470,7 +470,7 @@ For example:
 
 <!--
   - test: `tuple-comparison-operators`
-  
+
   ```swifttest
   >> let a =
   -> (1, "zebra") < (2, "apple")   // true because 1 is less than 2; "zebra" and "apple" aren't compared
@@ -512,7 +512,7 @@ with the `<` operator because the `<` operator can't be applied to
 
 <!--
   - test: `tuple-comparison-operators-err`
-  
+
   ```swifttest
   >> _ =
   -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
@@ -532,7 +532,7 @@ with the `<` operator because the `<` operator can't be applied to
 
 <!--
   - test: `tuple-comparison-operators-ok`
-  
+
   ```swifttest
   >> let x = ("blue", -1) < ("purple", 1)        // OK, evaluates to true
   >> print(x)
@@ -572,7 +572,7 @@ if question {
 
 <!--
   - test: `ternaryConditionalOperatorOutline`
-  
+
   ```swifttest
   >> let question = true
   >> let answer1 = true
@@ -609,7 +609,7 @@ let rowHeight = contentHeight + (hasHeader ? 50 : 20)
 
 <!--
   - test: `ternaryConditionalOperatorPart1`
-  
+
   ```swifttest
   -> let contentHeight = 40
   -> let hasHeader = true
@@ -635,7 +635,7 @@ if hasHeader {
 
 <!--
   - test: `ternaryConditionalOperatorPart2`
-  
+
   ```swifttest
   -> let contentHeight = 40
   -> let hasHeader = true
@@ -676,7 +676,7 @@ a != nil ? a! : b
 
 <!--
   - test: `nilCoalescingOperatorOutline`
-  
+
   ```swifttest
   >> var a: Int?
   >> let b = 42
@@ -710,7 +710,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 
 <!--
   - test: `nilCoalescingOperator`
-  
+
   ```swifttest
   -> let defaultColorName = "red"
   -> var userDefinedColorName: String?   // defaults to nil
@@ -743,7 +743,7 @@ colorNameToUse = userDefinedColorName ?? defaultColorName
 
 <!--
   - test: `nilCoalescingOperator`
-  
+
   ```swifttest
   -> userDefinedColorName = "green"
   -> colorNameToUse = userDefinedColorName ?? defaultColorName
@@ -766,7 +766,7 @@ The value of `a` must not be greater than `b`.
 
 <!--
   - test: `closedRangeStartCanBeLessThanEnd`
-  
+
   ```swifttest
   -> let range = 1...2
   >> print(type(of: range))
@@ -776,7 +776,7 @@ The value of `a` must not be greater than `b`.
 
 <!--
   - test: `closedRangeStartCanBeTheSameAsEnd`
-  
+
   ```swifttest
   -> let range = 1...1
   ```
@@ -784,7 +784,7 @@ The value of `a` must not be greater than `b`.
 
 <!--
   - test: `closedRangeStartCannotBeGreaterThanEnd`
-  
+
   ```swifttest
   -> let range = 1...0
   xx assertion
@@ -808,7 +808,7 @@ for index in 1...5 {
 
 <!--
   - test: `rangeOperators`
-  
+
   ```swifttest
   -> for index in 1...5 {
         print("\(index) times 5 is \(index * 5)")
@@ -837,7 +837,7 @@ then the resulting range will be empty.
 
 <!--
   - test: `halfOpenRangeStartCanBeLessThanEnd`
-  
+
   ```swifttest
   -> let range = 1..<2
   >> print(type(of: range))
@@ -847,7 +847,7 @@ then the resulting range will be empty.
 
 <!--
   - test: `halfOpenRangeStartCanBeTheSameAsEnd`
-  
+
   ```swifttest
   -> let range = 1..<1
   ```
@@ -855,7 +855,7 @@ then the resulting range will be empty.
 
 <!--
   - test: `halfOpenRangeStartCannotBeGreaterThanEnd`
-  
+
   ```swifttest
   -> let range = 1..<0
   xx assertion
@@ -880,7 +880,7 @@ for i in 0..<count {
 
 <!--
   - test: `rangeOperators`
-  
+
   ```swifttest
   -> let names = ["Anna", "Alex", "Brian", "Jack"]
   -> let count = names.count
@@ -932,7 +932,7 @@ for name in names[...2] {
 
 <!--
   - test: `rangeOperators`
-  
+
   ```swifttest
   -> for name in names[2...] {
          print(name)
@@ -966,7 +966,7 @@ for name in names[..<2] {
 
 <!--
   - test: `rangeOperators`
-  
+
   ```swifttest
   -> for name in names[..<2] {
          print(name)
@@ -996,7 +996,7 @@ range.contains(-1)  // true
 
 <!--
   - test: `rangeOperators`
-  
+
   ```swifttest
   -> let range = ...5
   >> print(type(of: range))
@@ -1042,7 +1042,7 @@ if !allowedEntry {
 
 <!--
   - test: `logicalOperators`
-  
+
   ```swifttest
   -> let allowedEntry = false
   -> if !allowedEntry {
@@ -1089,7 +1089,7 @@ if enteredDoorCode && passedRetinaScan {
 
 <!--
   - test: `logicalOperators`
-  
+
   ```swifttest
   -> let enteredDoorCode = true
   -> let passedRetinaScan = false
@@ -1136,7 +1136,7 @@ if hasDoorKey || knowsOverridePassword {
 
 <!--
   - test: `logicalOperators`
-  
+
   ```swifttest
   -> let hasDoorKey = false
   -> let knowsOverridePassword = true
@@ -1164,7 +1164,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 
 <!--
   - test: `logicalOperators`
-  
+
   ```swifttest
   -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
         print("Welcome!")
@@ -1213,7 +1213,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 
 <!--
   - test: `logicalOperators`
-  
+
   ```swifttest
   -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
         print("Welcome!")

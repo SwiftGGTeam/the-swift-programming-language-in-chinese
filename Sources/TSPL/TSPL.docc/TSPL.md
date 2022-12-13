@@ -7,11 +7,12 @@
 @Options(scope: global) {
   @AutomaticSeeAlso(disabled)
   @AutomaticTitleHeading(disabled)
+  @AutomaticArticleSubheading(disabled)
 }
 
 ## Topics
 
-### Guided Tour
+### Welcome to Swift
 
 - <doc:AboutSwift>
 - <doc:Compatibility>
