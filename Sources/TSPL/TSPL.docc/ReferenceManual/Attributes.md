@@ -1281,13 +1281,13 @@ as the original wrapped property.
 ```swift
 @propertyWrapper
 struct WrapperWithProjection {
- var wrappedValue: Int
- var projectedValue: SomeProjection {
-     return SomeProjection(wrapper: self)
- }
+    var wrappedValue: Int
+    var projectedValue: SomeProjection {
+        return SomeProjection(wrapper: self)
+    }
 }
 struct SomeProjection {
- var wrapper: WrapperWithProjection
+    var wrapper: WrapperWithProjection
 }
 
 struct SomeStruct {
@@ -1305,13 +1305,13 @@ s.$x.wrapper  // WrapperWithProjection value
   ```swifttest
   -> @propertyWrapper
   -> struct WrapperWithProjection {
-      var wrappedValue: Int
-      var projectedValue: SomeProjection {
-          return SomeProjection(wrapper: self)
-      }
+         var wrappedValue: Int
+         var projectedValue: SomeProjection {
+             return SomeProjection(wrapper: self)
+         }
   }
   -> struct SomeProjection {
-      var wrapper: WrapperWithProjection
+         var wrapper: WrapperWithProjection
   }
   ---
   -> struct SomeStruct {
