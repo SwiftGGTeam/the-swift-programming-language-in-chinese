@@ -274,7 +274,7 @@ The examples above use a `for`-`in` loop to iterate
 ranges, arrays, dictionaries, and strings.
 However, you can use this syntax to iterate *any* collection,
 including your own classes and collection types,
-as long as those types conform to the [Sequence](https://developer.apple.com/documentation/swift/sequence) protocol.
+as long as those types conform to the [`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
 
 <!--
   TODO: for (index, object) in enumerate(collection)

@@ -326,7 +326,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 
 The declaration of the `dynamicallyCall(withArguments:)` method
 must have a single parameter that conforms to the
-[ExpressibleByArrayLiteral](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral)
+[`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral)
 protocol---like `[Int]` in the example above.
 The return type can be any type.
 
@@ -381,13 +381,13 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 
 The declaration of the `dynamicallyCall(withKeywordArguments:)` method
 must have a single parameter that conforms to the
-[ExpressibleByDictionaryLiteral](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral)
+[`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral)
 protocol,
 and the return type can be any type.
-The parameter's [Key](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)
+The parameter's [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)
 must be
-[ExpressibleByStringLiteral](https://developer.apple.com/documentation/swift/expressiblebystringliteral).
-The previous example uses [KeyValuePairs](https://developer.apple.com/documentation/swift/keyvaluepairs)
+[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral).
+The previous example uses [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)
 as the parameter type
 so that callers can include duplicate parameter labels---
 `a` and `b` appear multiple times in the call to `repeat`.
@@ -447,11 +447,11 @@ the subscript that takes key path argument is used.
 
 An implementation of `subscript(dynamicMember:)`
 can accept key paths using an argument of type
-[KeyPath](https://developer.apple.com/documentation/swift/keypath),
-[WritableKeyPath](https://developer.apple.com/documentation/swift/writablekeypath),
-or [ReferenceWritableKeyPath](https://developer.apple.com/documentation/swift/referencewritablekeypath).
+[`KeyPath`](https://developer.apple.com/documentation/swift/keypath),
+[`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath),
+or [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath).
 It can accept member names using an argument of a type that conforms to the
-[ExpressibleByStringLiteral](https://developer.apple.com/documentation/swift/expressiblebystringliteral) protocol ---
+[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) protocol ---
 in most cases, `String`.
 The subscript's return type can be any type.
 
@@ -1060,7 +1060,7 @@ For more information, see
 > can also change the runtime name for that declaration.
 > You use the runtime name when calling functions
 > that interact with the Objective-C runtime,
-> like [NSClassFromString](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring),
+> like [`NSClassFromString`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring),
 > and when specifying class names in an app's Info.plist file.
 > If you specify a name by passing an argument,
 > that name is used as the name in Objective-C code
@@ -2034,7 +2034,7 @@ passing this class's name as the name of the delegate class.
 
 If you don't use this attribute,
 supply a `main.swift` file with code at the top level
-that calls the [UIApplicationMain(_:_:_:_:)](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) function.
+that calls the [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) function.
 For example,
 if your app uses a custom subclass of `UIApplication`
 as its principal class,
@@ -2051,7 +2051,7 @@ Apply this attribute to a protocol type
 as part of a type declaration's list of adopted protocols
 to turn off enforcement of that protocol's requirements.
 
-The only supported protocol is [Sendable](https://developer.apple.com/documentation/swift/sendable).
+The only supported protocol is [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
 
 ### usableFromInline
 
@@ -2106,9 +2106,9 @@ with the same name that are accessible from the same scope.
 
 For example,
 the Swift standard library includes both a top-level
-[min(_:_:)](https://developer.apple.com/documentation/swift/1538339-min/)
+[`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/)
 function and a
-[min()](https://developer.apple.com/documentation/swift/sequence/1641174-min)
+[`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min)
 method for sequences with comparable elements.
 The sequence method is declared with the `warn_unqualified_access` attribute
 to help reduce confusion
@@ -2202,7 +2202,7 @@ Apply this attribute to the type of a function
 to indicate that the function or closure is sendable.
 Applying this attribute to a function type
 has the same meaning as conforming a non–function type
-to the [Sendable](https://developer.apple.com/documentation/swift/sendable) protocol.
+to the [`Sendable`](https://developer.apple.com/documentation/swift/sendable) protocol.
 
 This attribute is inferred on functions and closures
 if the function or closure is used in a context

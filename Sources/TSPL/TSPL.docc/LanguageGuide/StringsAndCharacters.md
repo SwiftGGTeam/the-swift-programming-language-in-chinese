@@ -1173,7 +1173,7 @@ welcome.removeSubrange(range)
 When you get a substring from a string ---
 for example, using a subscript or a method like `prefix(_:)` ---
 the result is an instance
-of [Substring](https://developer.apple.com/documentation/swift/substring),
+of [`Substring`](https://developer.apple.com/documentation/swift/substring),
 not another string.
 Substrings in Swift have most of the same methods as strings,
 which means you can work with substrings
@@ -1249,7 +1249,7 @@ The figure below shows these relationships:
 ![](stringSubstring)
 
 > Note: Both `String` and `Substring` conform to the
-> [StringProtocol](https://developer.apple.com/documentation/swift/stringprotocol) protocol,
+> [`StringProtocol`](https://developer.apple.com/documentation/swift/stringprotocol) protocol,
 > which means it's often convenient for string-manipulation functions
 > to accept a `StringProtocol` value.
 > You can call such functions with either a `String` or `Substring` value.

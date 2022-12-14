@@ -81,7 +81,7 @@ and a `continue` statement and is discussed in <doc:Statements#Break-Statement> 
 A `for`-`in` statement allows a block of code to be executed
 once for each item in a collection (or any type)
 that conforms to the
-[Sequence](https://developer.apple.com/documentation/swift/sequence) protocol.
+[`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
 
 A `for`-`in` statement has the following form:
 
@@ -94,7 +94,7 @@ for <#item#> in <#collection#> {
 The `makeIterator()` method is called on the *collection* expression
 to obtain a value of an iterator type---that is,
 a type that conforms to the
-[IteratorProtocol](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
+[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
 The program begins executing a loop
 by calling the `next()` method on the iterator.
 If the value returned isn't `nil`,
@@ -458,7 +458,7 @@ added a new case to the enumeration
 that doesn't have a corresponding switch case.
 
 The following example switches over all three existing cases of
-the standard library's [Mirror.AncestorRepresentation](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
+the standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
 enumeration.
 If you add additional cases in the future,
 the compiler generates a warning to indicate
