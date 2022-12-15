@@ -123,11 +123,11 @@ while <#condition#> {
 
 A `while` statement is executed as follows:
 
-- The *condition* is evaluated.
+1. The *condition* is evaluated.
 
    If `true`, execution continues to step 2.
    If `false`, the program is finished executing the `while` statement.
-- The program executes the *statements*, and execution returns to step 1.
+2. The program executes the *statements*, and execution returns to step 1.
 
 Because the value of the *condition* is evaluated before the *statements* are executed,
 the *statements* in a `while` statement can be executed zero or more times.
@@ -168,9 +168,9 @@ repeat {
 
 A `repeat`-`while` statement is executed as follows:
 
-- The program executes the *statements*,
+1. The program executes the *statements*,
    and execution continues to step 2.
-- The *condition* is evaluated.
+2. The *condition* is evaluated.
 
    If `true`, execution returns to step 1.
    If `false`, the program is finished executing the `repeat`-`while` statement.
