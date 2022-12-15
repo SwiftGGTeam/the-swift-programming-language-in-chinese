@@ -270,6 +270,7 @@ Arrays automatically grow as you add elements.
 ```swift
 fruits.append("blueberries")
 print(fruits)
+// Prints "["strawberries", "grapes", "tangerines", "blueberries"]"
 ```
 
 <!--
@@ -278,7 +279,7 @@ print(fruits)
   ```swifttest
   -> fruits.append("blueberries")
   -> print(fruits)
-  << ["strawberries", "grapes", "tangerines", "blueberries"]
+  <- ["strawberries", "grapes", "tangerines", "blueberries"]
   ```
 -->
 
