@@ -26,7 +26,7 @@ The first snippet defines a new base class called `MediaItem`.
 This class provides basic functionality for any kind of item that appears
 in a digital media library.
 Specifically, it declares a `name` property of type `String`,
-and an `init name` initializer.
+and an `init(name:)` initializer.
 (It's assumed that all media items, including all movies and songs, will have a name.)
 
 ```swift
@@ -40,7 +40,7 @@ class MediaItem {
 
 <!--
   - test: `typeCasting, typeCasting-err`
-  
+
   ```swifttest
   -> class MediaItem {
         var name: String
@@ -78,7 +78,7 @@ class Song: MediaItem {
 
 <!--
   - test: `typeCasting, typeCasting-err`
-  
+
   ```swifttest
   -> class Movie: MediaItem {
         var director: String
@@ -119,7 +119,7 @@ let library = [
 
 <!--
   - test: `typeCasting`
-  
+
   ```swifttest
   -> let library = [
         Movie(name: "Casablanca", director: "Michael Curtiz"),
@@ -171,7 +171,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 
 <!--
   - test: `typeCasting`
-  
+
   ```swifttest
   -> var movieCount = 0
   -> var songCount = 0
@@ -256,7 +256,7 @@ for item in library {
 
 <!--
   - test: `typeCasting`
-  
+
   ```swifttest
   -> for item in library {
         if let movie = item as? Movie {
@@ -347,7 +347,7 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
 
 <!--
   - test: `typeCasting, typeCasting-err`
-  
+
   ```swifttest
   -> var things: [Any] = []
   ---
@@ -415,7 +415,7 @@ for thing in things {
 
 <!--
   - test: `typeCasting`
-  
+
   ```swifttest
   -> for thing in things {
         switch thing {
@@ -459,7 +459,7 @@ for thing in things {
 > If you really do need to use an optional value as an `Any` value,
 > you can use the `as` operator to explicitly cast the optional to `Any`,
 > as shown below.
-> 
+>
 > ```swift
 > let optionalNumber: Int? = 3
 > things.append(optionalNumber)        // Warning
@@ -495,17 +495,17 @@ for thing in things {
   Rejected examples to illustrate AnyObject:
 
   Array of delegates which may conform to one or more of the class's delegate protocols.
-  
+
   ```
   protocol MovieDelegate {
       func willPlay(movie: Movie)
   }
-  
+
   class Library {
       var delegates = [AnyObject]
       ...
   }
-  
+
   for delegate in delegates {
       guard let delegate = delegate as MovieDelegate else { continue }
       delegate.willPlay(movie: m)
@@ -513,7 +513,7 @@ for thing in things {
   ```
 
   A userData object for associating some opaque piece of data or state with an API call.
-  
+
   ```
   class C {
       // Not userInfo -- that's usually a Dictionary

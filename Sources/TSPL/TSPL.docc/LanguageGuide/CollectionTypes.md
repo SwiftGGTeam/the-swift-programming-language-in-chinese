@@ -54,7 +54,9 @@ and its size and contents can't be changed.
 An *array* stores values of the same type in an ordered list.
 The same value can appear in an array multiple times at different positions.
 
-> Note: Swift's `Array` type is bridged to Foundation's `NSArray` class.For more information about using `Array` with Foundation and Cocoa,
+> Note: Swift's `Array` type is bridged to Foundation's `NSArray` class.
+>
+> For more information about using `Array` with Foundation and Cocoa,
 > see [Bridging Between Array and NSArray](https://developer.apple.com/documentation/swift/array#2846730).
 
 ### Array Type Shorthand Syntax
@@ -79,7 +81,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 
 <!--
   - test: `arraysEmpty`
-  
+
   ```swifttest
   -> var someInts: [Int] = []
   -> print("someInts is of type [Int] with \(someInts.count) items.")
@@ -105,7 +107,7 @@ someInts = []
 
 <!--
   - test: `arraysEmpty`
-  
+
   ```swifttest
   -> someInts.append(3)
   /> someInts now contains \(someInts.count) value of type Int
@@ -131,7 +133,7 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
 
 <!--
   - test: `arraysEmpty`
-  
+
   ```swifttest
   -> var threeDoubles = Array(repeating: 0.0, count: 3)
   /> threeDoubles is of type [Double], and equals [\(threeDoubles[0]), \(threeDoubles[1]), \(threeDoubles[2])]
@@ -155,7 +157,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 
 <!--
   - test: `arraysEmpty`
-  
+
   ```swifttest
   -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
@@ -200,7 +202,7 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 
 <!--
   - test: `arrays`
-  
+
   ```swifttest
   -> var shoppingList: [String] = ["Eggs", "Milk"]
   // shoppingList has been initialized with two initial items
@@ -235,7 +237,7 @@ var shoppingList = ["Eggs", "Milk"]
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> var shoppingList = ["Eggs", "Milk"]
   ```
@@ -259,7 +261,7 @@ print("The shopping list contains \(shoppingList.count) items.")
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> print("The shopping list contains \(shoppingList.count) items.")
   <- The shopping list contains 2 items.
@@ -280,7 +282,7 @@ if shoppingList.isEmpty {
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> if shoppingList.isEmpty {
         print("The shopping list is empty.")
@@ -300,7 +302,7 @@ shoppingList.append("Flour")
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> shoppingList.append("Flour")
   /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
@@ -320,7 +322,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> shoppingList += ["Baking Powder"]
   /> shoppingList now contains \(shoppingList.count) items
@@ -342,7 +344,7 @@ var firstItem = shoppingList[0]
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> var firstItem = shoppingList[0]
   /> firstItem is equal to \"\(firstItem)\"
@@ -362,7 +364,7 @@ shoppingList[0] = "Six eggs"
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> shoppingList[0] = "Six eggs"
   /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
@@ -394,7 +396,7 @@ shoppingList[4...6] = ["Bananas", "Apples"]
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> shoppingList[4...6] = ["Bananas", "Apples"]
   /> shoppingList now contains \(shoppingList.count) items
@@ -413,7 +415,7 @@ shoppingList.insert("Maple Syrup", at: 0)
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> shoppingList.insert("Maple Syrup", at: 0)
   /> shoppingList now contains \(shoppingList.count) items
@@ -440,7 +442,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> let mapleSyrup = shoppingList.remove(at: 0)
   // the item that was at index 0 has just been removed
@@ -471,7 +473,7 @@ firstItem = shoppingList[0]
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> firstItem = shoppingList[0]
   /> firstItem is now equal to \"\(firstItem)\"
@@ -493,7 +495,7 @@ let apples = shoppingList.removeLast()
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> let apples = shoppingList.removeLast()
   // the last item in the array has just been removed
@@ -521,7 +523,7 @@ for item in shoppingList {
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> for item in shoppingList {
         print(item)
@@ -558,7 +560,7 @@ for (index, value) in shoppingList.enumerated() {
 
 <!--
   - test: `arraysInferred`
-  
+
   ```swifttest
   -> for (index, value) in shoppingList.enumerated() {
         print("Item \(index + 1): \(value)")
@@ -580,7 +582,9 @@ in a collection with no defined ordering.
 You can use a set instead of an array when the order of items isn't important,
 or when you need to ensure that an item only appears once.
 
-> Note: Swift's `Set` type is bridged to Foundation's `NSSet` class.For more information about using `Set` with Foundation and Cocoa,
+> Note: Swift's `Set` type is bridged to Foundation's `NSSet` class.
+>
+> For more information about using `Set` with Foundation and Cocoa,
 > see [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530).
 
 <!--
@@ -605,7 +609,7 @@ are also hashable by default.
 > by making them conform to the `Hashable` protocol
 > from the Swift standard library.
 > For information about implementing the required `hash(into:)` method,
-> see [Hashable](https://developer.apple.com/documentation/swift/hashable).
+> see [`Hashable`](https://developer.apple.com/documentation/swift/hashable).
 > For information about conforming to protocols, see <doc:Protocols>.
 
 ### Set Type Syntax
@@ -627,7 +631,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
 
 <!--
   - test: `setsEmpty`
-  
+
   ```swifttest
   -> var letters = Set<Character>()
   -> print("letters is of type Set<Character> with \(letters.count) items.")
@@ -651,7 +655,7 @@ letters = []
 
 <!--
   - test: `setsEmpty`
-  
+
   ```swifttest
   -> letters.insert("a")
   /> letters now contains \(letters.count) value of type Character
@@ -675,7 +679,7 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 
 <!--
   - test: `sets`
-  
+
   ```swifttest
   -> var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
   // favoriteGenres has been initialized with three initial items
@@ -707,7 +711,7 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
 
 <!--
   - test: `setsInferred`
-  
+
   ```swifttest
   -> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
   ```
@@ -731,7 +735,7 @@ print("I have \(favoriteGenres.count) favorite music genres.")
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   >> var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
   -> print("I have \(favoriteGenres.count) favorite music genres.")
@@ -753,7 +757,7 @@ if favoriteGenres.isEmpty {
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   -> if favoriteGenres.isEmpty {
         print("As far as music goes, I'm not picky.")
@@ -773,7 +777,7 @@ favoriteGenres.insert("[Tool J]")
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   -> favoriteGenres.insert("[Tool J]")
   /> favoriteGenres now contains \(favoriteGenres.count) items
@@ -798,7 +802,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   -> if let removedGenre = favoriteGenres.remove("Rock") {
         print("\(removedGenre)? I'm over it.")
@@ -822,7 +826,7 @@ if favoriteGenres.contains("Funk") {
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   -> if favoriteGenres.contains("Funk") {
          print("I get up on the good foot.")
@@ -848,7 +852,7 @@ for genre in favoriteGenres {
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   -> for genre in favoriteGenres {
         print("\(genre)")
@@ -878,7 +882,7 @@ for genre in favoriteGenres.sorted() {
 
 <!--
   - test: `setUsage`
-  
+
   ```swifttest
   -> for genre in favoriteGenres.sorted() {
         print("\(genre)")
@@ -898,7 +902,7 @@ or determining whether two sets contain all, some, or none of the same values.
 
 ### Fundamental Set Operations
 
-The illustration below depicts two sets---`a` and `b`---
+The illustration below depicts two sets --- `a` and `b` ---
 with the results of various set operations represented by the shaded regions.
 
 ![](setVennDiagram)
@@ -925,7 +929,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 
 <!--
   - test: `setOperations`
-  
+
   ```swifttest
   -> let oddDigits: Set = [1, 3, 5, 7, 9]
   -> let evenDigits: Set = [0, 2, 4, 6, 8]
@@ -957,7 +961,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 
 ### Set Membership and Equality
 
-The illustration below depicts three sets---`a`, `b` and `c`---
+The illustration below depicts three sets --- `a`, `b` and `c` ---
 with overlapping regions representing elements shared among sets.
 Set `a` is a *superset* of set `b`,
 because `a` contains all elements in `b`.
@@ -989,7 +993,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
 
 <!--
   - test: `setOperations`
-  
+
   ```swifttest
   -> let houseAnimals: Set = ["🐶", "🐱"]
   -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
@@ -1027,7 +1031,9 @@ You use a dictionary when you need to look up values based on their identifier,
 in much the same way that a real-world dictionary is used to look up
 the definition for a particular word.
 
-> Note: Swift's `Dictionary` type is bridged to Foundation's `NSDictionary` class.For more information about using `Dictionary` with Foundation and Cocoa,
+> Note: Swift's `Dictionary` type is bridged to Foundation's `NSDictionary` class.
+>
+> For more information about using `Dictionary` with Foundation and Cocoa,
 > see [Bridging Between Dictionary and NSDictionary](https://developer.apple.com/documentation/swift/dictionary#2846239).
 
 ### Dictionary Type Shorthand Syntax
@@ -1056,7 +1062,7 @@ var namesOfIntegers: [Int: String] = [:]
 
 <!--
   - test: `dictionariesEmpty`
-  
+
   ```swifttest
   -> var namesOfIntegers: [Int: String] = [:]
   // namesOfIntegers is an empty [Int: String] dictionary
@@ -1081,7 +1087,7 @@ namesOfIntegers = [:]
 
 <!--
   - test: `dictionariesEmpty`
-  
+
   ```swifttest
   -> namesOfIntegers[16] = "sixteen"
   /> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
@@ -1118,7 +1124,7 @@ var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 <!--
   - test: `dictionaries`
-  
+
   ```swifttest
   -> var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
   ```
@@ -1154,7 +1160,7 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
   ```
@@ -1180,7 +1186,7 @@ print("The airports dictionary contains \(airports.count) items.")
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> print("The airports dictionary contains \(airports.count) items.")
   <- The airports dictionary contains 2 items.
@@ -1201,7 +1207,7 @@ if airports.isEmpty {
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> if airports.isEmpty {
         print("The airports dictionary is empty.")
@@ -1223,7 +1229,7 @@ airports["LHR"] = "London"
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> airports["LHR"] = "London"
   /> the airports dictionary now contains \(airports.count) items
@@ -1240,7 +1246,7 @@ airports["LHR"] = "London Heathrow"
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> airports["LHR"] = "London Heathrow"
   /> the value for \"LHR\" has been changed to \"\(airports["LHR"]!)\"
@@ -1275,7 +1281,7 @@ if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
         print("The old value for DUB was \(oldValue).")
@@ -1302,7 +1308,7 @@ if let airportName = airports["DUB"] {
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> if let airportName = airports["DUB"] {
         print("The name of the airport is \(airportName).")
@@ -1325,7 +1331,7 @@ airports["APL"] = nil
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> airports["APL"] = "Apple International"
   // "Apple International" isn't the real airport for APL, so delete it
@@ -1358,7 +1364,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> if let removedValue = airports.removeValue(forKey: "DUB") {
         print("The removed airport's name is \(removedValue).")
@@ -1386,7 +1392,7 @@ for (airportCode, airportName) in airports {
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> for (airportCode, airportName) in airports {
         print("\(airportCode): \(airportName)")
@@ -1417,7 +1423,7 @@ for airportName in airports.values {
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> for airportCode in airports.keys {
         print("Airport code: \(airportCode)")
@@ -1447,7 +1453,7 @@ let airportNames = [String](airports.values)
 
 <!--
   - test: `dictionariesInferred`
-  
+
   ```swifttest
   -> let airportCodes = [String](airports.keys)
   /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]

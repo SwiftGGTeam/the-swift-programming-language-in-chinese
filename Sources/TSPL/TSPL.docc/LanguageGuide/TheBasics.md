@@ -66,7 +66,7 @@ var currentLoginAttempt = 0
 
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> let maximumNumberOfLoginAttempts = 10
   -> var currentLoginAttempt = 0
@@ -95,7 +95,7 @@ var x = 0.0, y = 0.0, z = 0.0
 
 <!--
   - test: `multipleDeclarations`
-  
+
   ```swifttest
   -> var x = 0.0, y = 0.0, z = 0.0
   >> print(x, y, z)
@@ -123,7 +123,7 @@ var welcomeMessage: String
 
 <!--
   - test: `typeAnnotations`
-  
+
   ```swifttest
   -> var welcomeMessage: String
   ```
@@ -145,7 +145,7 @@ welcomeMessage = "Hello"
 
 <!--
   - test: `typeAnnotations`
-  
+
   ```swifttest
   -> welcomeMessage = "Hello"
   >> print(welcomeMessage)
@@ -162,7 +162,7 @@ var red, green, blue: Double
 
 <!--
   - test: `typeAnnotations`
-  
+
   ```swifttest
   -> var red, green, blue: Double
   ```
@@ -189,7 +189,7 @@ let 🐶🐮 = "dogcow"
 
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> let π = 3.14159
   -> let 你好 = "你好世界"
@@ -225,7 +225,7 @@ friendlyWelcome = "Bonjour!"
 
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> var friendlyWelcome = "Hello!"
   -> friendlyWelcome = "Bonjour!"
@@ -245,7 +245,7 @@ languageName = "Swift++"
 
 <!--
   - test: `constantsAndVariables_err`
-  
+
   ```swifttest
   -> let languageName = "Swift"
   -> languageName = "Swift++"
@@ -271,7 +271,7 @@ print(friendlyWelcome)
 
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> print(friendlyWelcome)
   <- Bonjour!
@@ -294,7 +294,7 @@ see <doc:Functions#Default-Parameter-Values>.
 
 <!--
   - test: `printingWithoutNewline`
-  
+
   ```swifttest
   >> let someValue = 10
   -> print(someValue, terminator: "")
@@ -325,7 +325,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 
 <!--
   - test: `constantsAndVariables`
-  
+
   ```swifttest
   -> print("The current value of friendlyWelcome is \(friendlyWelcome)")
   <- The current value of friendlyWelcome is Bonjour!
@@ -350,7 +350,7 @@ Single-line comments begin with two forward-slashes (`//`):
 
 <!--
   - test: `comments`
-  
+
   ```swifttest
   -> // This is a comment.
   ```
@@ -366,7 +366,7 @@ but is written over multiple lines. */
 
 <!--
   - test: `comments`
-  
+
   ```swifttest
   -> /* This is also a comment
      but is written over multiple lines. */
@@ -387,7 +387,7 @@ This is the end of the first multiline comment. */
 
 <!--
   - test: `comments`
-  
+
   ```swifttest
   -> /* This is the start of the first multiline comment.
         /* This is the second, nested multiline comment. */
@@ -413,7 +413,7 @@ let cat = "🐱"; print(cat)
 
 <!--
   - test: `semiColons`
-  
+
   ```swifttest
   -> let cat = "🐱"; print(cat)
   <- 🐱
@@ -445,7 +445,7 @@ let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
 
 <!--
   - test: `integerBounds`
-  
+
   ```swifttest
   -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
   -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
@@ -561,7 +561,7 @@ let meaningOfLife = 42
 
 <!--
   - test: `typeInference`
-  
+
   ```swifttest
   -> let meaningOfLife = 42
   // meaningOfLife is inferred to be of type Int
@@ -580,7 +580,7 @@ let pi = 3.14159
 
 <!--
   - test: `typeInference`
-  
+
   ```swifttest
   -> let pi = 3.14159
   // pi is inferred to be of type Double
@@ -602,7 +602,7 @@ let anotherPi = 3 + 0.14159
 
 <!--
   - test: `typeInference`
-  
+
   ```swifttest
   -> let anotherPi = 3 + 0.14159
   // anotherPi is also inferred to be of type Double
@@ -635,7 +635,7 @@ let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
 
 <!--
   - test: `numberLiterals`
-  
+
   ```swifttest
   -> let decimalInteger = 17
   -> let binaryInteger = 0b10001       // 17 in binary notation
@@ -656,7 +656,7 @@ indicated by an uppercase or lowercase `p`.
 
 <!--
   - test: `float-required-vs-optional-exponent-err`
-  
+
   ```swifttest
   -> let hexWithout = 0x1.5
   !$ error: hexadecimal floating point literal must end with an exponent
@@ -667,7 +667,7 @@ indicated by an uppercase or lowercase `p`.
 
 <!--
   - test: `float-required-vs-optional-exponent`
-  
+
   ```swifttest
   -> let hexWith = 0x1.5p7
   -> let decimalWithout = 0.5
@@ -697,7 +697,7 @@ let hexadecimalDouble = 0xC.3p0
 
 <!--
   - test: `numberLiterals`
-  
+
   ```swifttest
   -> let decimalDouble = 12.1875
   -> let exponentDouble = 1.21875e1
@@ -718,7 +718,7 @@ let justOverOneMillion = 1_000_000.000_000_1
 
 <!--
   - test: `numberLiterals`
-  
+
   ```swifttest
   -> let paddedDouble = 000123.456
   -> let oneMillion = 1_000_000
@@ -760,7 +760,7 @@ let tooBig: Int8 = Int8.max + 1
 
 <!--
   - test: `constantsAndVariablesOverflowError`
-  
+
   ```swifttest
   -> let cannotBeNegative: UInt8 = -1
   // UInt8 can't store negative numbers, and so this will report an error
@@ -800,7 +800,7 @@ let twoThousandAndOne = twoThousand + UInt16(one)
 
 <!--
   - test: `typeConversion`
-  
+
   ```swifttest
   -> let twoThousand: UInt16 = 2_000
   -> let one: UInt8 = 1
@@ -838,7 +838,7 @@ let pi = Double(three) + pointOneFourOneFiveNine
 
 <!--
   - test: `typeConversion`
-  
+
   ```swifttest
   -> let three = 3
   -> let pointOneFourOneFiveNine = 0.14159
@@ -862,7 +862,7 @@ let integerPi = Int(pi)
 
 <!--
   - test: `typeConversion`
-  
+
   ```swifttest
   -> let integerPi = Int(pi)
   /> integerPi equals \(integerPi), and is inferred to be of type Int
@@ -900,7 +900,7 @@ typealias AudioSample = UInt16
 
 <!--
   - test: `typeAliases`
-  
+
   ```swifttest
   -> typealias AudioSample = UInt16
   ```
@@ -916,7 +916,7 @@ var maxAmplitudeFound = AudioSample.min
 
 <!--
   - test: `typeAliases`
-  
+
   ```swifttest
   -> var maxAmplitudeFound = AudioSample.min
   /> maxAmplitudeFound is now \(maxAmplitudeFound)
@@ -944,7 +944,7 @@ let turnipsAreDelicious = false
 
 <!--
   - test: `booleans`
-  
+
   ```swifttest
   -> let orangesAreOrange = true
   -> let turnipsAreDelicious = false
@@ -974,7 +974,7 @@ if turnipsAreDelicious {
 
 <!--
   - test: `booleans`
-  
+
   ```swifttest
   -> if turnipsAreDelicious {
         print("Mmm, tasty turnips!")
@@ -999,7 +999,7 @@ if i {
 
 <!--
   - test: `booleansNotBoolean`
-  
+
   ```swifttest
   -> let i = 1
   -> if i {
@@ -1023,7 +1023,7 @@ if i == 1 {
 
 <!--
   - test: `booleansIsBoolean`
-  
+
   ```swifttest
   -> let i = 1
   -> if i == 1 {
@@ -1057,7 +1057,7 @@ let http404Error = (404, "Not Found")
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let http404Error = (404, "Not Found")
   /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
@@ -1089,7 +1089,7 @@ print("The status message is \(statusMessage)")
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let (statusCode, statusMessage) = http404Error
   -> print("The status code is \(statusCode)")
@@ -1111,7 +1111,7 @@ print("The status code is \(justTheStatusCode)")
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let (justTheStatusCode, _) = http404Error
   -> print("The status code is \(justTheStatusCode)")
@@ -1131,7 +1131,7 @@ print("The status message is \(http404Error.1)")
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> print("The status code is \(http404Error.0)")
   <- The status code is 404
@@ -1148,7 +1148,7 @@ let http200Status = (statusCode: 200, description: "OK")
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> let http200Status = (statusCode: 200, description: "OK")
   ```
@@ -1166,7 +1166,7 @@ print("The status message is \(http200Status.description)")
 
 <!--
   - test: `tuples`
-  
+
   ```swifttest
   -> print("The status code is \(http200Status.statusCode)")
   <- The status code is 200
@@ -1228,7 +1228,7 @@ let convertedNumber = Int(possibleNumber)
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> let possibleNumber = "123"
   -> let convertedNumber = Int(possibleNumber)
@@ -1261,7 +1261,7 @@ serverResponseCode = nil
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> var serverResponseCode: Int? = 404
   /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
@@ -1286,7 +1286,7 @@ var surveyAnswer: String?
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> var surveyAnswer: String?
   // surveyAnswer is automatically set to nil
@@ -1316,7 +1316,7 @@ if convertedNumber != nil {
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if convertedNumber != nil {
         print("convertedNumber contains some integer value.")
@@ -1341,7 +1341,7 @@ if convertedNumber != nil {
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if convertedNumber != nil {
         print("convertedNumber has an integer value of \(convertedNumber!).")
@@ -1390,7 +1390,7 @@ if let actualNumber = Int(possibleNumber) {
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if let actualNumber = Int(possibleNumber) {
         print("The string \"\(possibleNumber)\" has an integer value of \(actualNumber)")
@@ -1429,7 +1429,7 @@ if let myNumber = myNumber {
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> let myNumber = Int(possibleNumber)
   // Here, myNumber is an optional integer
@@ -1465,7 +1465,7 @@ if let myNumber {
 
 <!--
   - test: `optionals`
-  
+
   ```swifttest
   -> if let myNumber {
          print("My number is \(myNumber)")
@@ -1511,7 +1511,7 @@ if let firstNumber = Int("4") {
 
 <!--
   - test: `multipleOptionalBindings`
-  
+
   ```swifttest
   -> if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
         print("\(firstNumber) < \(secondNumber) < 100")
@@ -1587,7 +1587,7 @@ let implicitString: String = assumedString // no need for an exclamation point
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> let possibleString: String? = "An optional string."
   -> let forcedString: String = possibleString! // requires an exclamation point
@@ -1617,7 +1617,7 @@ let optionalString = assumedString
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> let optionalString = assumedString
   // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
@@ -1643,7 +1643,7 @@ if assumedString != nil {
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> if assumedString != nil {
         print(assumedString!)
@@ -1664,7 +1664,7 @@ if let definiteString = assumedString {
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-  
+
   ```swifttest
   -> if let definiteString = assumedString {
         print(definiteString)
@@ -1700,7 +1700,7 @@ func canThrowAnError() throws {
 
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   >> enum SimpleError: Error {
   >>    case someError
@@ -1734,7 +1734,7 @@ do {
 
 <!--
   - test: `errorHandling`
-  
+
   ```swifttest
   -> do {
   ->    try canThrowAnError()
@@ -1771,7 +1771,7 @@ do {
 
 <!--
   - test: `errorHandlingTwo`
-  
+
   ```swifttest
   >> enum SandwichError: Error {
   >>     case outOfCleanDishes
@@ -1876,7 +1876,7 @@ without impacting performance in production.
 -->
 
 You write an assertion by calling the
-[assert(_:_:file:line:)](https://developer.apple.com/documentation/swift/1541112-assert) function
+[`assert(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1541112-assert) function
 from the Swift standard library.
 You pass this function an expression that evaluates to `true` or `false`
 and a message to display if the result of the condition is `false`.
@@ -1890,7 +1890,7 @@ assert(age >= 0, "A person's age can't be less than zero.")
 
 <!--
   - test: `assertions-1`
-  
+
   ```swifttest
   -> let age = -3
   -> assert(age >= 0, "A person's age can't be less than zero.")
@@ -1914,7 +1914,7 @@ assert(age >= 0)
 
 <!--
   - test: `assertions-2`
-  
+
   ```swifttest
   >> let age = -3
   -> assert(age >= 0)
@@ -1924,7 +1924,7 @@ assert(age >= 0)
 
 <!--
   - test: `assertionsCanUseStringInterpolation`
-  
+
   ```swifttest
   -> let age = -3
   -> assert(age >= 0, "A person's age can't be less than zero, but value is \(age).")
@@ -1934,7 +1934,7 @@ assert(age >= 0)
 
 If the code already checks the condition,
 you use the
-[assertionFailure(_:file:line:)](https://developer.apple.com/documentation/swift/1539616-assertionfailure) function
+[`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539616-assertionfailure) function
 to indicate that an assertion has failed.
 For example:
 
@@ -1950,7 +1950,7 @@ if age > 10 {
 
 <!--
   - test: `assertions-3`
-  
+
   ```swifttest
   >> let age = -3
   -> if age > 10 {
@@ -1972,7 +1972,7 @@ For example, use a precondition to check that a subscript isn't out of bounds,
 or to check that a function has been passed a valid value.
 
 You write a precondition by calling the
-[precondition(_:_:file:line:)](https://developer.apple.com/documentation/swift/1540960-precondition) function.
+[`precondition(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1540960-precondition) function.
 You pass this function an expression that evaluates to `true` or `false`
 and a message to display if the result of the condition is `false`.
 For example:
@@ -1984,7 +1984,7 @@ precondition(index > 0, "Index must be greater than zero.")
 
 <!--
   - test: `preconditions`
-  
+
   ```swifttest
   >> let index = -1
   // In the implementation of a subscript...
@@ -1994,7 +1994,7 @@ precondition(index > 0, "Index must be greater than zero.")
 -->
 
 You can also call the
-[preconditionFailure(_:file:line:)](https://developer.apple.com/documentation/swift/1539374-preconditionfailure) function
+[`preconditionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539374-preconditionfailure) function
 to indicate that a failure has occurred ---
 for example, if the default case of a switch was taken,
 but all valid input data should have been handled
@@ -2005,7 +2005,9 @@ by one of the switch's other cases.
 > The compiler assumes that preconditions are always true,
 > and it optimizes your code accordingly.
 > However, the `fatalError(_:file:line:)` function always halts execution,
-> regardless of optimization settings.You can use the `fatalError(_:file:line:)` function
+> regardless of optimization settings.
+>
+> You can use the `fatalError(_:file:line:)` function
 > during prototyping and early development
 > to create stubs for functionality that hasn't been implemented yet,
 > by writing `fatalError("Unimplemented")` as the stub implementation.
@@ -2017,7 +2019,7 @@ by one of the switch's other cases.
 <!--
   "\ " in the first cell below lets it be empty.
   Otherwise RST treats the row as a continuation.
-  
+
   ============ =====  ==========  ===============================
   \            Debug  Production  Production with ``-Ounchecked``
   ============ =====  ==========  ===============================

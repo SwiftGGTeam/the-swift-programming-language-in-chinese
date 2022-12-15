@@ -81,7 +81,7 @@ and a `continue` statement and is discussed in <doc:Statements#Break-Statement> 
 A `for`-`in` statement allows a block of code to be executed
 once for each item in a collection (or any type)
 that conforms to the
-[Sequence](https://developer.apple.com/documentation/swift/sequence) protocol.
+[`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
 
 A `for`-`in` statement has the following form:
 
@@ -92,9 +92,9 @@ for <#item#> in <#collection#> {
 ```
 
 The `makeIterator()` method is called on the *collection* expression
-to obtain a value of an iterator type---that is,
+to obtain a value of an iterator type --- that is,
 a type that conforms to the
-[IteratorProtocol](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
+[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
 The program begins executing a loop
 by calling the `next()` method on the iterator.
 If the value returned isn't `nil`,
@@ -123,7 +123,9 @@ while <#condition#> {
 
 A `while` statement is executed as follows:
 
-1. The *condition* is evaluated.If `true`, execution continues to step 2.
+1. The *condition* is evaluated.
+
+   If `true`, execution continues to step 2.
    If `false`, the program is finished executing the `while` statement.
 2. The program executes the *statements*, and execution returns to step 1.
 
@@ -168,7 +170,9 @@ A `repeat`-`while` statement is executed as follows:
 
 1. The program executes the *statements*,
    and execution continues to step 2.
-2. The *condition* is evaluated.If `true`, execution returns to step 1.
+2. The *condition* is evaluated.
+
+   If `true`, execution returns to step 1.
    If `false`, the program is finished executing the `repeat`-`while` statement.
 
 Because the value of the *condition* is evaluated after the *statements* are executed,
@@ -352,7 +356,7 @@ case let (x, y) where x == y:
 
 <!--
   - test: `switch-case-statement`
-  
+
   ```swifttest
   >> switch (1, 1) {
   -> case let (x, y) where x == y:
@@ -384,7 +388,7 @@ which must appear at the end of the `switch` statement.
 Although the actual execution order of pattern-matching operations,
 and in particular the evaluation order of patterns in cases, is unspecified,
 pattern matching in a `switch` statement behaves
-as if the evaluation is performed in source order---that is,
+as if the evaluation is performed in source order --- that is,
 the order in which they appear in source code.
 As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
@@ -392,7 +396,7 @@ the program executes only the code within the first matching case in source orde
 
 <!--
   - test: `switch-case-with-multiple-patterns`
-  
+
   ```swifttest
   >> let tuple = (1, 1)
   >> switch tuple {
@@ -405,7 +409,7 @@ the program executes only the code within the first matching case in source orde
 
 <!--
   - test: `switch-case-with-multiple-patterns-err`
-  
+
   ```swifttest
   >> let tuple = (1, 1)
   >> switch tuple {
@@ -430,7 +434,7 @@ you can include a default case to satisfy the requirement.
 #### Switching Over Future Enumeration Cases
 
 A *nonfrozen enumeration* is a special kind of enumeration
-that may gain new enumeration cases in the future---
+that may gain new enumeration cases in the future ---
 even after you compile and ship an app.
 Switching over a nonfrozen enumeration requires extra consideration.
 When a library's authors mark an enumeration as nonfrozen,
@@ -458,7 +462,7 @@ added a new case to the enumeration
 that doesn't have a corresponding switch case.
 
 The following example switches over all three existing cases of
-the standard library's [Mirror.AncestorRepresentation](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
+the standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
 enumeration.
 If you add additional cases in the future,
 the compiler generates a warning to indicate
@@ -482,7 +486,7 @@ case .suppressed:
 
 <!--
   - test: `unknown-case`
-  
+
   ```swifttest
   -> let representation: Mirror.AncestorRepresentation = .generated
   -> switch representation {
@@ -574,7 +578,7 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
 
 <!--
   - test: `backtick-identifier-is-legal-label`
-  
+
   ```swifttest
   -> var i = 0
   -> `return`: while i < 100 {
@@ -1096,7 +1100,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `canImport_A, canImport`
-  
+
   ```swifttest
   >> public struct SomeStruct {
   >>     public init() { }
@@ -1106,7 +1110,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `canImport_A.B, canImport`
-  
+
   ```swifttest
   >> public struct AnotherStruct {
   >>     public init() { }
@@ -1116,7 +1120,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `canImport`
-  
+
   ```swifttest
   >> import canImport_A
   >> let s = SomeStruct()
@@ -1142,7 +1146,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `pound-if-swift-version`
-  
+
   ```swifttest
   -> #if swift(>=2.1)
          print(1)
@@ -1164,7 +1168,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `pound-if-swift-version-err`
-  
+
   ```swifttest
   -> #if swift(>= 2.1)
          print(4)
@@ -1178,7 +1182,7 @@ otherwise, it returns `false`.
 
 <!--
   - test: `pound-if-compiler-version`
-  
+
   ```swifttest
   -> #if compiler(>=4.2)
          print(1)
@@ -1297,10 +1301,10 @@ see <doc:Expressions#Explicit-Member-Expression>.
 
 <!--
   Testing notes:
-  
+
   !!true doesn't work but !(!true) does -- this matches normal expressions
   #if can be nested, as expected
-  
+
   Also, the body of a conditional compilation block contains *zero* or more statements.
   Thus, this is allowed:
       #if
@@ -1380,7 +1384,7 @@ but they can use the multiline string literal syntax.
 
 <!--
   - test: `good-diagnostic-statement-messages`
-  
+
   ```swifttest
   >> #warning("Single-line static string")
   !! /tmp/swifttest.swift:1:10: warning: Single-line static string
@@ -1406,7 +1410,7 @@ but they can use the multiline string literal syntax.
 
 <!--
   - test: `bad-diagnostic-statement-messages`
-  
+
   ```swifttest
   >> #warning("Interpolated \(1+1) string")
   !$ error: string interpolation is not allowed in #warning directives
@@ -1503,7 +1507,7 @@ It has the same meaning as the `*` argument in an availability condition.
 
 <!--
   - test: `pound-available-platform-names`
-  
+
   ```swifttest
   >> if #available(iOS 1, iOSApplicationExtension 1,
   >>               macOS 1, macOSApplicationExtension 1,
@@ -1536,7 +1540,7 @@ It has the same meaning as the `*` argument in an availability condition.
 
 <!--
   - test: `empty-availability-condition`
-  
+
   ```swifttest
   >> if #available(*) { print("1") }
   << 1
@@ -1545,7 +1549,7 @@ It has the same meaning as the `*` argument in an availability condition.
 
 <!--
   - test: `empty-unavailability-condition`
-  
+
   ```swifttest
   >> if #unavailable() { print("2") }
   !$ error: expected platform name

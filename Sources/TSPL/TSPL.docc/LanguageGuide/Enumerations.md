@@ -51,7 +51,7 @@ enum SomeEnumeration {
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> enum SomeEnumeration {
         // enumeration definition goes here
@@ -72,7 +72,7 @@ enum CompassPoint {
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> enum CompassPoint {
         case north
@@ -107,7 +107,7 @@ enum Planet {
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> enum Planet {
         case mercury, venus, earth, mars, jupiter, saturn, uranus, neptune
@@ -128,7 +128,7 @@ var directionToHead = CompassPoint.west
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> var directionToHead = CompassPoint.west
   ```
@@ -145,7 +145,7 @@ directionToHead = .east
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> directionToHead = .east
   ```
@@ -176,7 +176,7 @@ case .west:
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> directionToHead = .south
   -> switch directionToHead {
@@ -226,7 +226,7 @@ default:
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> let somePlanet = Planet.earth
   -> switch somePlanet {
@@ -260,7 +260,7 @@ print("\(numberOfChoices) beverages available")
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> enum Beverage: CaseIterable {
          case coffee, tea, juice
@@ -291,7 +291,7 @@ for beverage in Beverage.allCases {
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> for beverage in Beverage.allCases {
          print(beverage)
@@ -307,7 +307,7 @@ for beverage in Beverage.allCases {
 
 The syntax used in the examples above
 marks the enumeration as conforming to the
-[CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) protocol.
+[`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) protocol.
 For information about protocols, see <doc:Protocols>.
 
 ## Associated Values
@@ -358,7 +358,7 @@ enum Barcode {
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> enum Barcode {
         case upc(Int, Int, Int, Int)
@@ -387,7 +387,7 @@ var productBarcode = Barcode.upc(8, 85909, 51226, 3)
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> var productBarcode = Barcode.upc(8, 85909, 51226, 3)
   ```
@@ -405,7 +405,7 @@ productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
   ```
@@ -439,7 +439,7 @@ case .qrCode(let productCode):
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> switch productBarcode {
         case .upc(let numberSystem, let manufacturer, let product, let check):
@@ -467,7 +467,7 @@ case let .qrCode(productCode):
 
 <!--
   - test: `enums`
-  
+
   ```swifttest
   -> switch productBarcode {
         case let .upc(numberSystem, manufacturer, product, check):
@@ -501,7 +501,7 @@ enum ASCIIControlCharacter: Character {
 
 <!--
   - test: `rawValues`
-  
+
   ```swifttest
   -> enum ASCIIControlCharacter: Character {
         case tab = "\t"
@@ -550,7 +550,7 @@ enum Planet: Int {
 
 <!--
   - test: `rawValues`
-  
+
   ```swifttest
   -> enum Planet: Int {
         case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
@@ -576,7 +576,7 @@ enum CompassPoint: String {
 
 <!--
   - test: `rawValues`
-  
+
   ```swifttest
   -> enum CompassPoint: String {
         case north, south, east, west
@@ -599,7 +599,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 
 <!--
   - test: `rawValues`
-  
+
   ```swifttest
   -> let earthsOrder = Planet.earth.rawValue
   /> earthsOrder is \(earthsOrder)
@@ -628,7 +628,7 @@ let possiblePlanet = Planet(rawValue: 7)
 
 <!--
   - test: `rawValues`
-  
+
   ```swifttest
   -> let possiblePlanet = Planet(rawValue: 7)
   >> print(type(of: possiblePlanet))
@@ -667,7 +667,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 
 <!--
   - test: `rawValues`
-  
+
   ```swifttest
   -> let positionToFind = 11
   -> if let somePlanet = Planet(rawValue: positionToFind) {
@@ -716,7 +716,7 @@ enum ArithmeticExpression {
 
 <!--
   - test: `recursive-enum-intro`
-  
+
   ```swifttest
   -> enum ArithmeticExpression {
          case number(Int)
@@ -739,7 +739,7 @@ indirect enum ArithmeticExpression {
 
 <!--
   - test: `recursive-enum`
-  
+
   ```swifttest
   -> indirect enum ArithmeticExpression {
          case number(Int)
@@ -774,7 +774,7 @@ let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.numb
 
 <!--
   - test: `recursive-enum`
-  
+
   ```swifttest
   -> let five = ArithmeticExpression.number(5)
   -> let four = ArithmeticExpression.number(4)
@@ -805,7 +805,7 @@ print(evaluate(product))
 
 <!--
   - test: `recursive-enum`
-  
+
   ```swifttest
   -> func evaluate(_ expression: ArithmeticExpression) -> Int {
          switch expression {
