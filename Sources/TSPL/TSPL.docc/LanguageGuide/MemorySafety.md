@@ -112,7 +112,9 @@ you have to determine what it was intended to do.
 > However,
 > the conflicting access discussed here can happen
 > on a single thread and
-> *doesn't* involve concurrent or multithreaded code.If you have conflicting access to memory
+> *doesn't* involve concurrent or multithreaded code.
+>
+> If you have conflicting access to memory
 > from within a single thread,
 > Swift guarantees that you'll get an error
 > at either compile time or runtime.

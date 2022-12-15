@@ -297,7 +297,7 @@ you'll get compile-time error instead of introducing a bug.
   and give you better guarantees and clearer errors
 -->
 
-> Note: The [Task.sleep(until:tolerance:clock:)](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
+> Note: The [`Task.sleep(until:tolerance:clock:)`](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
 > is useful when writing simple code
 > to learn how concurrency works.
 > This method does nothing,
@@ -388,10 +388,10 @@ when it's waiting for the next element to be available.
 -->
 
 In the same way that you can use your own types in a `for`-`in` loop
-by adding conformance to the [Sequence](https://developer.apple.com/documentation/swift/sequence) protocol,
+by adding conformance to the [`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol,
 you can use your own types in a `for`-`await`-`in` loop
 by adding conformance to the
-[AsyncSequence](https://developer.apple.com/documentation/swift/asyncsequence) protocol.
+[`AsyncSequence`](https://developer.apple.com/documentation/swift/asyncsequence) protocol.
 
 <!--
   TODO what happened to ``Series`` which was supposed to be a currency type?
@@ -554,7 +554,7 @@ Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
 Although you take on some of the responsibility for correctness,
 the explicit parent-child relationships between tasks
-lets Swift handle some behaviors like propagating cancellation for you,
+let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
 ```
@@ -571,7 +571,7 @@ await withTaskGroup(of: Data.self) { taskGroup in
 -->
 
 For more information about task groups,
-see [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup).
+see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
 
 <!--
   OUTLINE
@@ -699,10 +699,10 @@ You have complete flexibility to manage unstructured tasks
 in whatever way your program needs,
 but you're also completely responsible for their correctness.
 To create an unstructured task that runs on the current actor,
-call the [Task.init(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856790-init) initializer.
+call the [`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) initializer.
 To create an unstructured task that's not part of the current actor,
 known more specifically as a *detached task*,
-call the [Task.detached(priority:operation:)](https://developer.apple.com/documentation/swift/task/3856786-detached) class method.
+call the [`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached) class method.
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
@@ -715,7 +715,7 @@ let result = await handle.value
 ```
 
 For more information about managing detached tasks,
-see [Task](https://developer.apple.com/documentation/swift/task).
+see [`Task`](https://developer.apple.com/documentation/swift/task).
 
 <!--
   TODO Add some conceptual guidance about
@@ -738,16 +738,16 @@ that usually means one of the following:
 - Returning the partially completed work
 
 To check for cancellation,
-either call [Task.checkCancellation()](https://developer.apple.com/documentation/swift/task/3814826-checkcancellation),
+either call [`Task.checkCancellation()`](https://developer.apple.com/documentation/swift/task/3814826-checkcancellation),
 which throws `CancellationError` if the task has been canceled,
-or check the value of [Task.isCancelled](https://developer.apple.com/documentation/swift/task/3814832-iscancelled)
+or check the value of [`Task.isCancelled`](https://developer.apple.com/documentation/swift/task/3814832-iscancelled)
 and handle the cancellation in your own code.
 For example,
 a task that's downloading photos from a gallery
 might need to delete partial downloads and close network connections.
 
 To propagate cancellation manually,
-call [Task.cancel()](https://developer.apple.com/documentation/swift/task/3851218-cancel).
+call [`Task.cancel()`](https://developer.apple.com/documentation/swift/task/3851218-cancel).
 
 <!--
   OUTLINE
@@ -1040,7 +1040,7 @@ In general, there are three ways for a type to be sendable:
 -->
 
 For a detailed list of the semantic requirements,
-see the [Sendable](https://developer.apple.com/documentation/swift/sendable) protocol reference.
+see the [`Sendable`](https://developer.apple.com/documentation/swift/sendable) protocol reference.
 
 Some types are always sendable,
 like structures that have only sendable properties

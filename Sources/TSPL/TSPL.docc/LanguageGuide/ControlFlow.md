@@ -274,7 +274,7 @@ The examples above use a `for`-`in` loop to iterate
 ranges, arrays, dictionaries, and strings.
 However, you can use this syntax to iterate *any* collection,
 including your own classes and collection types,
-as long as those types conform to the [Sequence](https://developer.apple.com/documentation/swift/sequence) protocol.
+as long as those types conform to the [`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
 
 <!--
   TODO: for (index, object) in enumerate(collection)
@@ -1732,9 +1732,11 @@ and to determine whether the move is allowed:
 
 > Note: If the `break` statement above didn't use the `gameLoop` label,
 > it would break out of the `switch` statement, not the `while` statement.
-> Using the `gameLoop` label makes it clear which control statement should be terminated.It isn't strictly necessary to use the `gameLoop` label
+> Using the `gameLoop` label makes it clear which control statement should be terminated.
+>
+> It isn't strictly necessary to use the `gameLoop` label
 > when calling `continue gameLoop` to jump to the next iteration of the loop.
-> there's only one loop in the game,
+> There's only one loop in the game,
 > and therefore no ambiguity as to which loop the `continue` statement will affect.
 > However, there's no harm in using the `gameLoop` label with the `continue` statement.
 > Doing so is consistent with the label's use alongside the `break` statement

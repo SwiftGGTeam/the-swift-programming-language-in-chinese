@@ -29,7 +29,9 @@ and provides support for accessing those characters in various Unicode represent
 > Note: Swift's `String` type is bridged with Foundation's `NSString` class.
 > Foundation also extends `String` to expose methods defined by `NSString`.
 > This means, if you import Foundation,
-> you can access those `NSString` methods on `String` without casting.For more information about using `String` with Foundation and Cocoa,
+> you can access those `NSString` methods on `String` without casting.
+>
+> For more information about using `String` with Foundation and Cocoa,
 > see [Bridging Between String and NSString](https://developer.apple.com/documentation/swift/string#2919514).
 
 ## String Literals
@@ -958,7 +960,9 @@ print("the number of characters in \(word) is \(word.count)")
 > If you are working with particularly long string values,
 > be aware that the `count` property
 > must iterate over the Unicode scalars in the entire string
-> in order to determine the characters for that string.The count of the characters returned by the `count` property
+> in order to determine the characters for that string.
+>
+> The count of the characters returned by the `count` property
 > isn't always the same as the `length` property of
 > an `NSString` that contains the same characters.
 > The length of an `NSString` is based on
@@ -1173,7 +1177,7 @@ welcome.removeSubrange(range)
 When you get a substring from a string ---
 for example, using a subscript or a method like `prefix(_:)` ---
 the result is an instance
-of [Substring](https://developer.apple.com/documentation/swift/substring),
+of [`Substring`](https://developer.apple.com/documentation/swift/substring),
 not another string.
 Substrings in Swift have most of the same methods as strings,
 which means you can work with substrings
@@ -1249,7 +1253,7 @@ The figure below shows these relationships:
 ![](stringSubstring)
 
 > Note: Both `String` and `Substring` conform to the
-> [StringProtocol](https://developer.apple.com/documentation/swift/stringprotocol) protocol,
+> [`StringProtocol`](https://developer.apple.com/documentation/swift/stringprotocol) protocol,
 > which means it's often convenient for string-manipulation functions
 > to accept a `StringProtocol` value.
 > You can call such functions with either a `String` or `Substring` value.

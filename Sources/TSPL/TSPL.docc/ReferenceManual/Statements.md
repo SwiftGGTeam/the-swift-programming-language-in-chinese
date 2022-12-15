@@ -81,7 +81,7 @@ and a `continue` statement and is discussed in <doc:Statements#Break-Statement> 
 A `for`-`in` statement allows a block of code to be executed
 once for each item in a collection (or any type)
 that conforms to the
-[Sequence](https://developer.apple.com/documentation/swift/sequence) protocol.
+[`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
 
 A `for`-`in` statement has the following form:
 
@@ -94,7 +94,7 @@ for <#item#> in <#collection#> {
 The `makeIterator()` method is called on the *collection* expression
 to obtain a value of an iterator type --- that is,
 a type that conforms to the
-[IteratorProtocol](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
+[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
 The program begins executing a loop
 by calling the `next()` method on the iterator.
 If the value returned isn't `nil`,
@@ -123,7 +123,9 @@ while <#condition#> {
 
 A `while` statement is executed as follows:
 
-- The *condition* is evaluated.If `true`, execution continues to step 2.
+- The *condition* is evaluated.
+
+   If `true`, execution continues to step 2.
    If `false`, the program is finished executing the `while` statement.
 - The program executes the *statements*, and execution returns to step 1.
 
@@ -168,7 +170,9 @@ A `repeat`-`while` statement is executed as follows:
 
 - The program executes the *statements*,
    and execution continues to step 2.
-- The *condition* is evaluated.If `true`, execution returns to step 1.
+- The *condition* is evaluated.
+
+   If `true`, execution returns to step 1.
    If `false`, the program is finished executing the `repeat`-`while` statement.
 
 Because the value of the *condition* is evaluated after the *statements* are executed,
@@ -458,7 +462,7 @@ added a new case to the enumeration
 that doesn't have a corresponding switch case.
 
 The following example switches over all three existing cases of
-the standard library's [Mirror.AncestorRepresentation](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
+the standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
 enumeration.
 If you add additional cases in the future,
 the compiler generates a warning to indicate
