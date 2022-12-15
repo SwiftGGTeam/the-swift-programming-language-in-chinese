@@ -1060,7 +1060,7 @@ For more information, see
 > can also change the runtime name for that declaration.
 > You use the runtime name when calling functions
 > that interact with the Objective-C runtime,
-> like [`NSClassFromString`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring),
+> like [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring),
 > and when specifying class names in an app's Info.plist file.
 > If you specify a name by passing an argument,
 > that name is used as the name in Objective-C code
