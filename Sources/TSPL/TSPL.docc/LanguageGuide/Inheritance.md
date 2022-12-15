@@ -435,7 +435,9 @@ For more information on property observers, see <doc:Properties#Property-Observe
 > inherited constant stored properties or inherited read-only computed properties.
 > The value of these properties can't be set,
 > and so it isn't appropriate to provide a `willSet` or `didSet` implementation
-> as part of an override.Note also that you can't provide both
+> as part of an override.
+>
+> Note also that you can't provide both
 > an overriding setter and an overriding property observer for the same property.
 > If you want to observe changes to a property's value,
 > and you are already providing a custom setter for that property,

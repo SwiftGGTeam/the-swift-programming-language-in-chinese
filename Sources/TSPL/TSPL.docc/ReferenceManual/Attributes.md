@@ -120,7 +120,9 @@ including important milestones.
   ```swift
   renamed: <#new name#>
   ```
-  The *new name* consists of a string literal.You can apply the `available` attribute
+  The *new name* consists of a string literal.
+
+  You can apply the `available` attribute
   with the `renamed` and `unavailable` arguments
   to a type alias declaration, as shown below,
   to indicate that the name of a declaration changed
@@ -1578,7 +1580,9 @@ into code that calls the static methods of the result builder type:
   because it's one of the types in the `DrawEither` generic type.
   This could cause your program to crash if `FutureText`
   isn't available at runtime,
-  even in the case where that type is explicitly not being used.To solve this problem,
+  even in the case where that type is explicitly not being used.
+
+  To solve this problem,
   implement a `buildLimitedAvailability(_:)` method
   to erase type information.
   For example, the code below builds an `AnyDrawable` value
@@ -1613,7 +1617,9 @@ into code that calls the static methods of the result builder type:
   the leaf nodes of a binary tree,
   and the statement becomes
   a nested call to the `buildEither` methods
-  following the path to that leaf node from the root node.For example, if you write a switch statement that has three cases,
+  following the path to that leaf node from the root node.
+
+  For example, if you write a switch statement that has three cases,
   the compiler uses a binary tree with three leaf nodes.
   Likewise,
   because the path from the root node to the second case is
