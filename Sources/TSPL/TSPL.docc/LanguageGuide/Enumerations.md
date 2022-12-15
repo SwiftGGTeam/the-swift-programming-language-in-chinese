@@ -307,7 +307,7 @@ for beverage in Beverage.allCases {
 
 The syntax used in the examples above
 marks the enumeration as conforming to the
-[CaseIterable](https://developer.apple.com/documentation/swift/caseiterable) protocol.
+[`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) protocol.
 For information about protocols, see <doc:Protocols>.
 
 ## Associated Values

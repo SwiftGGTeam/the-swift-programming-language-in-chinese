@@ -958,7 +958,7 @@ type(of: someInstance).printClassName()
 -->
 
 For more information,
-see [type(of:)](https://developer.apple.com/documentation/swift/2885064-type)
+see [`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type)
 in the Swift standard library.
 
 Use an initializer expression to construct an instance of a type
@@ -1064,7 +1064,7 @@ which is defined by the language,
 `AnyObject` is defined by the Swift standard library.
 For more information, see
 <doc:Protocols#Class-Only-Protocols>
-and [AnyObject](https://developer.apple.com/documentation/swift/anyobject).
+and [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject).
 
 > Grammar of an Any type:
 >
@@ -1183,7 +1183,7 @@ the `Self` type refers to the type
 introduced by the innermost type declaration.
 
 The `Self` type refers to the same type
-as the [type(of:)](https://developer.apple.com/documentation/swift/2885064-type)
+as the [`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type)
 function in the Swift standard library.
 Writing `Self.someStaticMember` to access a member of the current type
 is the same as writing `type(of: self).someStaticMember`.

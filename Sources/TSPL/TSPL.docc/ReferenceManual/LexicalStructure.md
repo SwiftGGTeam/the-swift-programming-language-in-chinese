@@ -929,7 +929,7 @@ have the same indentation requirements as regular multiline string literals.
 The default inferred type of a string literal is `String`.
 For more information about the `String` type,
 see <doc:StringsAndCharacters>
-and [String](https://developer.apple.com/documentation/swift/string).
+and [`String`](https://developer.apple.com/documentation/swift/string).
 
 String literals that are concatenated by the `+` operator
 are concatenated at compile time.

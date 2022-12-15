@@ -1575,7 +1575,7 @@ in any order.
 
 At compile time, a key-path expression
 is replaced by an instance
-of the [KeyPath](https://developer.apple.com/documentation/swift/keypath) class.
+of the [`KeyPath`](https://developer.apple.com/documentation/swift/keypath) class.
 
 To access a value using a key path,
 pass the key path to the `subscript(keyPath:)` subscript,

@@ -605,7 +605,7 @@ are also hashable by default.
 > by making them conform to the `Hashable` protocol
 > from the Swift standard library.
 > For information about implementing the required `hash(into:)` method,
-> see [Hashable](https://developer.apple.com/documentation/swift/hashable).
+> see [`Hashable`](https://developer.apple.com/documentation/swift/hashable).
 > For information about conforming to protocols, see <doc:Protocols>.
 
 ### Set Type Syntax
