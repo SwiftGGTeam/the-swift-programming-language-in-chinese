@@ -11,8 +11,8 @@ In addition to user-defined named types,
 the Swift standard library defines many commonly used named types,
 including those that represent arrays, dictionaries, and optional values.
 
-Data types that are normally considered basic or primitive in other languages---
-such as types that represent numbers, characters, and strings---
+Data types that are normally considered basic or primitive in other languages ---
+such as types that represent numbers, characters, and strings ---
 are actually named types,
 defined and implemented in the Swift standard library using structures.
 Because they're named types,
@@ -1244,7 +1244,7 @@ That is,
 the type of `x` in `var x: Int = 0` is inferred by first checking the type of `0`
 and then passing this type information up to the root (the variable `x`).
 
-In Swift, type information can also flow in the opposite direction---from the root down to the leaves.
+In Swift, type information can also flow in the opposite direction --- from the root down to the leaves.
 In the following example, for instance,
 the explicit type annotation (`: Float`) on the constant `eFloat`
 causes the numeric literal `2.71828` to have an inferred type of `Float` instead of `Double`.

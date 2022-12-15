@@ -92,7 +92,7 @@ for <#item#> in <#collection#> {
 ```
 
 The `makeIterator()` method is called on the *collection* expression
-to obtain a value of an iterator type---that is,
+to obtain a value of an iterator type --- that is,
 a type that conforms to the
 [`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
 The program begins executing a loop
@@ -388,7 +388,7 @@ which must appear at the end of the `switch` statement.
 Although the actual execution order of pattern-matching operations,
 and in particular the evaluation order of patterns in cases, is unspecified,
 pattern matching in a `switch` statement behaves
-as if the evaluation is performed in source order---that is,
+as if the evaluation is performed in source order --- that is,
 the order in which they appear in source code.
 As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
@@ -434,7 +434,7 @@ you can include a default case to satisfy the requirement.
 #### Switching Over Future Enumeration Cases
 
 A *nonfrozen enumeration* is a special kind of enumeration
-that may gain new enumeration cases in the future---
+that may gain new enumeration cases in the future ---
 even after you compile and ship an app.
 Switching over a nonfrozen enumeration requires extra consideration.
 When a library's authors mark an enumeration as nonfrozen,

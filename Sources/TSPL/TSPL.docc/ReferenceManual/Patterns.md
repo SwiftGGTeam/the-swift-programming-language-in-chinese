@@ -392,12 +392,12 @@ is <#type#>
 ```
 
 The `is` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the `is` pattern---or a subclass of that type.
+the type specified in the right-hand side of the `is` pattern --- or a subclass of that type.
 The `is` pattern behaves like the `is` operator in that they both perform a type cast
 but discard the returned type.
 
 The `as` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the `as` pattern---or a subclass of that type.
+the type specified in the right-hand side of the `as` pattern --- or a subclass of that type.
 If the match succeeds,
 the type of the matched value is cast to the *pattern* specified in the right-hand side
 of the `as` pattern.

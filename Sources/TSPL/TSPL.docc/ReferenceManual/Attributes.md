@@ -329,7 +329,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 The declaration of the `dynamicallyCall(withArguments:)` method
 must have a single parameter that conforms to the
 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral)
-protocol---like `[Int]` in the example above.
+protocol --- like `[Int]` in the example above.
 The return type can be any type.
 
 You can include labels in a dynamic method call
@@ -391,7 +391,7 @@ must be
 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral).
 The previous example uses [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)
 as the parameter type
-so that callers can include duplicate parameter labels---
+so that callers can include duplicate parameter labels ---
 `a` and `b` appear multiple times in the call to `repeat`.
 
 If you implement both `dynamicallyCall` methods,
@@ -947,7 +947,7 @@ as discussed in <doc:Declarations#Top-Level-Code>.
 
 Apply this attribute to a stored variable property of a class.
 This attribute causes the property's setter to be synthesized with a *copy*
-of the property's value---returned by the `copyWithZone(_:)` method---instead of the
+of the property's value --- returned by the `copyWithZone(_:)` method --- instead of the
 value of the property itself.
 The type of the property must conform to the `NSCopying` protocol.
 
@@ -971,7 +971,7 @@ Applying this attribute also implies the `objc` attribute.
 
 ### objc
 
-Apply this attribute to any declaration that can be represented in Objective-C---
+Apply this attribute to any declaration that can be represented in Objective-C ---
 for example, nonnested classes, protocols,
 nongeneric enumerations (constrained to integer raw-value types),
 properties and methods (including getters and setters) of classes,
