@@ -470,6 +470,7 @@ using the same name for that unwrapped value.
 if let nickname {
     print("Hey, \(nickname)")
 }
+// Doesn't print anything, because nickname is nil.
 ```
 
 <!--
