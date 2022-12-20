@@ -98,6 +98,10 @@ which means it’s not always suitable for generating a parser for Swift code.
 
 # Terms and Rules
 
+## back deploy
+
+Spelled as two words, not closed up or hyphenated.
+
 ## compiler, the
 
 See entry for *Swift*.
