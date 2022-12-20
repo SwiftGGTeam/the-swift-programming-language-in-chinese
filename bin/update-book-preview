@@ -1,0 +1,72 @@
+#! /bin/bash
+
+# This source file is part of the Swift.org open source project
+#
+# Copyright (c) 2022 Apple Inc. and the Swift project authors
+# Licensed under Apache License v2.0 with Runtime Library Exception
+#
+# See https://swift.org/LICENSE.txt for license information
+# See https://swift.org/CONTRIBUTORS.txt for Swift project authors
+
+# Updates the GitHub Pages documentation site that's published from the 'docs'
+# subdirectory in the 'gh-pages' branch of this repository.
+#
+# This script should be run by someone with commit access to the 'gh-pages' branch
+# at a regular frequency so that the documentation content on the GitHub Pages site
+# is up-to-date with the content in this repo.
+#
+# To use top-of-tree DocC, clone the following repositories:
+#
+#     https://github.com/apple/swift-docc
+#     https://github.com/apple/swift-docc-render
+#
+# Then set environment variables to paths in their working directories,
+# like the following, before running this script:
+#
+#     DOCC_EXEC=~/git/DocC/.build/arm64-apple-macosx/debug/docc
+#     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
+
+set -eu
+
+REMOTE=${1:-origin}
+CURRENT_COMMIT_HASH="$(git rev-parse --short HEAD)"
+
+# Start at the top level directory of the repository.
+cd "$(git rev-parse --show-toplevel)"
+
+# Check out the 'gh-pages' branch in a subdirectory.
+git worktree add --checkout gh-pages "$REMOTE"/gh-pages
+
+# Pretty print DocC JSON output, so that it has a stable ordering and
+# can be diffed.  This lets us determine whether rebuilding resulted in
+# any changes to the content.
+export DOCC_JSON_PRETTYPRINT="YES"
+
+# Build documentation, writing output in the gh-pages/docs subdirectory.
+swift package \
+    --allow-writing-to-directory "./gh-pages/docs" \
+    generate-documentation \
+    --target TSPL \
+    --disable-indexing \
+    --experimental-enable-custom-templates \
+    --hosting-base-path swift-book \
+    --output-path "./gh-pages/docs"
+
+# Commit and push our changes to the gh-pages branch
+pushd gh-pages
+git add docs
+
+if [[ -n "$(git status --porcelain)" ]]
+then
+    echo "Found documentation changes."
+    echo "Committing the changes to the 'gh-pages' branch and pushing to $REMOTE."
+    git commit -m "Update GitHub Pages documentation site to '$CURRENT_COMMIT_HASH'."
+    echo
+    git push "$REMOTE" HEAD:gh-pages
+else
+    echo "No documentation changes found."
+fi
+
+popd
+
+git worktree remove gh-pages
