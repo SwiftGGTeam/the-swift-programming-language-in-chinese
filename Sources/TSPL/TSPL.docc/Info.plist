@@ -9,7 +9,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>org.swift.tspl</string>
 	<key>CDDefaultCodeListingLanguage</key>
-	<string>markdown</string>
+	<string>swift</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleIconFile</key>

@@ -557,7 +557,7 @@ the explicit parent-child relationships between tasks
 let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
-```
+```swift
 await withTaskGroup(of: Data.self) { taskGroup in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -706,7 +706,7 @@ call the [`Task.detached(priority:operation:)`](https://developer.apple.com/docu
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
-```
+```swift
 let newPhoto = // ... some photo data ...
 let handle = Task {
     return await add(newPhoto, toGalleryNamed: "Spring Adventures")
@@ -840,7 +840,7 @@ When you access a property or method of an actor,
 you use `await` to mark the potential suspension point.
 For example:
 
-```
+```swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
 print(await logger.max)
 // Prints "25"
@@ -858,7 +858,7 @@ when accessing the actor's properties.
 For example,
 here's a method that updates a `TemperatureLogger` with a new temperature:
 
-```
+```swift
 extension TemperatureLogger {
     func update(with measurement: Int) {
         measurements.append(measurement)
@@ -906,7 +906,7 @@ like you would with an instance of a class,
 you'll get a compile-time error.
 For example:
 
-```
+```swift
 print(logger.max)  // Error
 ```
 
