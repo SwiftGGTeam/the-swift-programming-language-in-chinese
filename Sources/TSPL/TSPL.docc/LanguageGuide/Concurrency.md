@@ -293,15 +293,46 @@ introducing a possible suspension point,
 you'll get compile-time error instead of introducing a bug.
 
 <!--
-  TODO you can also explicitly insert a suspension point
-  by calling ``Task.yield()``
-  https://developer.apple.com/documentation/swift/task/3814840-yield
--->
-
-<!--
   TODO add detail above about how the *compiler* can reason about
   the async/await version better too
   and give you better guarantees and clearer errors
+-->
+
+The example above showed an approach you can use
+to prevent a piece of code from containing any possible suspension points.
+In contrast,
+you can explicitly insert a suspension point
+by calling the[`Task.yield()`][] method.
+
+[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
+
+```swift
+func generateThumbnail(for photoName: String) {
+    // Prepare the thumbnail, which might take a while
+}
+
+func generateThumbnails(forGallery gallery: String) {
+	let photos = await listPhotos(inGallery: gallery)
+	for photo in photos {
+		generateThumbnail(for: photo)
+		Task.yield()
+	}
+}
+```
+
+Because `generateThumbnail(for:)` is a synchronous function,
+it can't contain any potential suspension points.
+However, calling it repeatedly for every photograph in a large gallery
+might take a long time.
+Explicitly inserting possible suspension points in between calls to this function
+lets Swift balance between making progress on thumbnails for this task,
+and letting other tasks make progress on other work.
+Without the explicit suspension point,
+this task would run to completion without ever yielding its thread.
+
+<!--
+TR: Do we have some general guidance about when you need to insert yield?
+SE-0304 says "if all are executing on a shared, limited-concurrency pool".
 -->
 
 > Note: The [`Task.sleep(until:tolerance:clock:)`](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
