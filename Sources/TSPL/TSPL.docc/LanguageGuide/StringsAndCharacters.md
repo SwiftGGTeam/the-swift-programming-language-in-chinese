@@ -353,7 +353,7 @@ Here are three more double quotes: """
 
 To create an empty `String` value as the starting point
 for building a longer string,
-either assign an empty string literal to a variable,
+either assign an empty string literal to a variable
 or initialize a new `String` instance with initializer syntax:
 
 ```swift
