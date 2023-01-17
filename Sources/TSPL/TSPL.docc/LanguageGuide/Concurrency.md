@@ -307,28 +307,24 @@ by calling the[`Task.yield()`][] method.
 [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
 
 ```swift
-func generateThumbnail(for photoName: String) {
-    // Prepare the thumbnail, which might take a while
-}
-
-func generateThumbnails(forGallery gallery: String) {
+func generateSlideshow(forGallery gallery: String) async {
 	let photos = await listPhotos(inGallery: gallery)
 	for photo in photos {
-		generateThumbnail(for: photo)
+		// ... render a few seconds of video for this photo ...
 		Task.yield()
 	}
 }
 ```
 
-Because `generateThumbnail(for:)` is a synchronous function,
+Because `generateSlideshow(for:)` is a synchronous function,
 it can't contain any potential suspension points.
 However, calling it repeatedly for every photograph in a large gallery
 might take a long time.
-Explicitly inserting possible suspension points in between calls to this function
-lets Swift balance between making progress on thumbnails for this task,
+Explicitly inserting a possible suspension point with `Task.yield()`
+lets Swift balance between making progress on this task,
 and letting other tasks make progress on other work.
-Without the explicit suspension point,
-this task would run to completion without ever yielding its thread.
+Without the suspension point,
+this task would render the entire slideshow without ever yielding its thread.
 
 <!--
 TR: Do we have some general guidance about when you need to insert yield?
