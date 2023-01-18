@@ -331,20 +331,20 @@ TR: Do we have some general guidance about when you need to insert yield?
 SE-0304 says "if all are executing on a shared, limited-concurrency pool".
 -->
 
-> Note: The [`Task.sleep(until:tolerance:clock:)`](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
-> is useful when writing simple code
-> to learn how concurrency works.
-> This method does nothing,
-> but waits at least the given number of nanoseconds before it returns.
-> Here's a version of the `listPhotos(inGallery:)` function
-> that uses `sleep(until:tolerance:clock:)` to simulate waiting for a network operation:
->
-> ```swift
-> func listPhotos(inGallery name: String) async throws -> [String] {
->     try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
->     return ["IMG001", "IMG99", "IMG0404"]
-> }
-> ```
+The [`Task.sleep(until:tolerance:clock:)`](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
+is useful when writing simple code
+to learn how concurrency works.
+This method does nothing,
+but waits at least the given number of nanoseconds before it returns.
+Here's a version of the `listPhotos(inGallery:)` function
+that uses `sleep(until:tolerance:clock:)` to simulate waiting for a network operation:
+
+```swift
+func listPhotos(inGallery name: String) async throws -> [String] {
+    try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+    return ["IMG001", "IMG99", "IMG0404"]
+}
+```
 
 <!--
   - test: `sleep-in-toy-code`
@@ -358,12 +358,15 @@ SE-0304 says "if all are executing on a shared, limited-concurrency pool".
   ```
 -->
 
-<!--
-  TODO either add an example or maybe a short section
-  about throwing and async together
-  to give a place where I can note the order of the keywords
-  in the declaration and in the calls
--->
+The version of `listPhotos(inGallery:)` in the code above
+is both asynchronous and throwing,
+because the call to `Task.sleep(until:tolerance:clock:)` can throw an error.
+When you call this version of `listPhotos(inGallery:)`,
+you write both `try` and `await`:
+
+```swift
+let photos = try await listPhotos(inGallery: "A Rainy Weekend")
+```
 
 <!--
   TODO closures can be async too -- outline
