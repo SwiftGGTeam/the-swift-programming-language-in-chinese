@@ -368,8 +368,42 @@ you write both `try` and `await`:
 let photos = try await listPhotos(inGallery: "A Rainy Weekend")
 ```
 
+Asynchronous and throwing functions have some similarities:
+When you define an asynchronous or throwing function,
+you mark it `async` or `throws`,
+and you mark calls to that function with `await` or `try`.
+An asynchronous function can call another asynchronous function,
+just like a throwing function can call another throwing function.
+
+However, there's a very important difference.
+You can wrap throwing code in a `do`-`catch` block to handle errors,
+or use `Result` to store the error for code elsewhere to handle it.
+These approaches let you call throwing functions
+from nonthrowing code.
+For example:
+
+```swift
+func getRainyWeekendPhotos() await -> Result<[String]> {
+    return Result {
+        photos = try await listPhotos(inGallery: "A Rainy Weekend")
+    }
+}
+```
+
+In contrast,
+there's no safe way to wrap asynchronous code
+so you can call it from synchronous code.
+The Swift standard library intentionally omits this unsafe functionality,
+and trying to implement them yourself introduces
+problems like memory races, threading bugs, and deadlocks.
+To call asynchronous functions,
+the caller must also be an asynchronous function ---
+and so on, all the way up to the top-level code of the program.
+
 <!--
-  TODO closures can be async too -- outline
+  OUTLINE
+
+  ## Asynchronous Closures
 
   like how you can have an async function, a closure con be async
   if a closure contains 'await' that implicitly makes it async
