@@ -200,27 +200,27 @@ while this code waits for the picture to be ready.
 To understand the concurrent nature of the example above,
 here's one possible order of execution:
 
-- The code starts running from the first line
+1. The code starts running from the first line
    and runs up to the first `await`.
    It calls the `listPhotos(inGallery:)` function
    and suspends execution while it waits for that function to return.
-- While this code's execution is suspended,
+2. While this code's execution is suspended,
    some other concurrent code in the same program runs.
    For example, maybe a long-running background task
    continues updating a list of new photo galleries.
    That code also runs until the next suspension point, marked by `await`,
    or until it completes.
-- After `listPhotos(inGallery:)` returns,
+3. After `listPhotos(inGallery:)` returns,
    this code continues execution starting at that point.
    It assigns the value that was returned to `photoNames`.
-- The lines that define `sortedNames` and `name`
+4. The lines that define `sortedNames` and `name`
    are regular, synchronous code.
    Because nothing is marked `await` on these lines,
    there aren't any possible suspension points.
-- The next `await` marks the call to the `downloadPhoto(named:)` function.
+5. The next `await` marks the call to the `downloadPhoto(named:)` function.
    This code pauses execution again until that function returns,
    giving other concurrent code an opportunity to run.
-- After `downloadPhoto(named:)` returns,
+6. After `downloadPhoto(named:)` returns,
    its return value is assigned to `photo`
    and then passed as an argument when calling `show(_:)`.
 
