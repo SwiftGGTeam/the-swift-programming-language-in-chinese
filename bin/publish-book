@@ -1,0 +1,25 @@
+#! /bin/bash
+
+# This source file is part of the Swift.org open source project
+#
+# Copyright (c) 2023 Apple Inc. and the Swift project authors
+# Licensed under Apache License v2.0 with Runtime Library Exception
+#
+# See https://swift.org/LICENSE.txt for license information
+# See https://swift.org/CONTRIBUTORS.txt for Swift project authors
+
+# Prepares a version of the book suitable for publication on swift.org.
+
+export DOCC_JSON_PRETTYPRINT="YES"
+
+# The staging version of the book gets the staging header.
+cp Sources/TSPL/TSPL.docc/header-publish.html Sources/TSPL/TSPL.docc/header.html
+
+swift package \
+    --allow-writing-to-directory "./swift-book" \
+    generate-documentation \
+    --target TSPL \
+    --disable-indexing \
+    --experimental-enable-custom-templates \
+    --hosting-base-path swift-book \
+    --output-path "./swift-book"
