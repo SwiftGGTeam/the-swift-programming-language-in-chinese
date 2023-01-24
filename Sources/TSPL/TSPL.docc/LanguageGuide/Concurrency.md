@@ -405,13 +405,10 @@ func getRainyWeekendPhotos() await -> Result<[String]> {
 
 In contrast,
 there's no safe way to wrap asynchronous code
-so you can call it from synchronous code.
+so you can call it from synchronous code and wait for the result.
 The Swift standard library intentionally omits this unsafe functionality,
-and trying to implement them yourself introduces
+and trying to implement it yourself introduces
 problems like memory races, threading bugs, and deadlocks.
-To call asynchronous functions,
-the caller must also be an asynchronous function ---
-and so on, all the way up to the top-level code of the program.
 
 <!--
   OUTLINE
