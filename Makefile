@@ -15,6 +15,6 @@ preview:
 .PHONY: archive
 archive: .build/plugins/Swift-DocC/outputs/TSPL.doccarchive
 
-.build/plugins/Swift-DocC/outputs/TSPL.doccarchive: Sources/TSPL/TSPL.docc/*/*.md
-.build/plugins/Swift-DocC/outputs/TSPL.doccarchive: Sources/TSPL/TSPL.docc/Assets/*.png
+.build/plugins/Swift-DocC/outputs/TSPL.doccarchive: TSPL.docc/*/*.md
+.build/plugins/Swift-DocC/outputs/TSPL.doccarchive: TSPL.docc/Assets/*.png
 	docc convert --output-path TSPL.doccarchive TSPL.docc
