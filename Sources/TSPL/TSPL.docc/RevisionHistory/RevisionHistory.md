@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**2022-06-06**
+**2022-09-12**
 
 - Updated for Swift 5.7.
 - Added the <doc:Concurrency#Sendable-Types> section,
