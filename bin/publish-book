@@ -12,7 +12,7 @@
 
 export DOCC_JSON_PRETTYPRINT="YES"
 
-# The staging version of the book gets the staging header.
+# The published version of the book gets the swift.org header.
 cp TSPL.docc/header-publish.html TSPL.docc/header.html
 
 docc convert \
