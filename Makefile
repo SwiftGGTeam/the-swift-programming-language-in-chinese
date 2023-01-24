@@ -10,11 +10,11 @@
 .IGNORE: preview
 .PHONY: preview
 preview:
-	swift package --disable-sandbox preview-documentation
+	docc preview TSPL.docc
 
 .PHONY: archive
 archive: .build/plugins/Swift-DocC/outputs/TSPL.doccarchive
 
 .build/plugins/Swift-DocC/outputs/TSPL.doccarchive: Sources/TSPL/TSPL.docc/*/*.md
 .build/plugins/Swift-DocC/outputs/TSPL.doccarchive: Sources/TSPL/TSPL.docc/Assets/*.png
-	swift package generate-documentation
+	docc convert --output-path TSPL.doccarchive TSPL.docc

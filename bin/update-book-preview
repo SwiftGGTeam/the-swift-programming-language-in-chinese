@@ -46,14 +46,11 @@ export DOCC_JSON_PRETTYPRINT="YES"
 cp Sources/TSPL/TSPL.docc/header-staging.html Sources/TSPL/TSPL.docc/header.html
 
 # Build documentation, writing output in the gh-pages/docs subdirectory.
-swift package \
-    --allow-writing-to-directory "./gh-pages/docs" \
-    generate-documentation \
-    --target TSPL \
-    --disable-indexing \
+docc convert \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
-    --output-path "./gh-pages/docs"
+    --output-path "./gh-pages/docs" \
+    TSPL.docc
 
 # Commit and push our changes to the gh-pages branch
 pushd gh-pages

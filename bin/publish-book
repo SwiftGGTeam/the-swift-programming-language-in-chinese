@@ -13,13 +13,10 @@
 export DOCC_JSON_PRETTYPRINT="YES"
 
 # The staging version of the book gets the staging header.
-cp Sources/TSPL/TSPL.docc/header-publish.html Sources/TSPL/TSPL.docc/header.html
+cp TSPL.docc/header-publish.html TSPL.docc/header.html
 
-swift package \
-    --allow-writing-to-directory "./swift-book" \
-    generate-documentation \
-    --target TSPL \
-    --disable-indexing \
+docc convert \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
-    --output-path "./swift-book"
+    --output-path "./swift-book" \
+    TSPL.docc
