@@ -267,12 +267,21 @@ remove(firstPhoto, fromGallery: "Summer Vacation")
 ```
 
 There's no way for other code to run in between
-the call to `add(_:toGallery:)` and `remove(_:fromGallery:)`.
-During that time, the first photo appears in both galleries,
-temporarily breaking one of the app's invariants.
-To make it even clearer that this chunk of code
-must not have `await` added to it in the future,
-you can refactor that code into a synchronous function:
+the call to `add(_:toGallery:)` and `remove(_:fromGallery:)` ---
+neither of these lines of code have `await` in them,
+so there aren't any possible suspension points in this code.
+When the last two lines of code are executing,
+the first photo appears in both galleries,
+temporarily making the program's data model inconsistent.
+It's important that no code from another part of the program
+can run during that period of time.
+Otherwise, that other code
+would treat the inconsistent state as if it were real,
+leading to problems like incorrect behavior or data loss.
+
+To make it even clearer that these lines of code
+must not have `await` added to in the future,
+you can refactor them into a synchronous function:
 
 ```swift
 func move(_ photoName: String, from source: String, to destination: String) {
@@ -287,6 +296,10 @@ move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
 In the example above,
 because the `move(_:from:to:)` function is synchronous,
 you guarantee that it can never contain possible suspension points.
+This encapsulates the code that temporarily makes the data model inconsistent,
+and makes it easier for anyone reading the code
+to recognize that no other code can run
+before data consistency is restored by completing the work.
 In the future,
 if you try to add concurrent code to this function,
 introducing a possible suspension point,
