@@ -9,7 +9,23 @@
 # See https://swift.org/CONTRIBUTORS.txt for Swift project authors
 
 # Prepares a version of the book suitable for publication on swift.org.
+#
+# To use top-of-tree DocC, clone the following repositories:
+#
+#     https://github.com/apple/swift-docc
+#     https://github.com/apple/swift-docc-render
+#
+# Then set environment variables to paths in their working directories,
+# like the following, before running this script:
+#
+#     DOCC_EXEC=~/git/DocC/.build/arm64-apple-macosx/debug/docc
+#     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
 
+set -eu
+
+# Pretty print DocC JSON output, so that it has a stable ordering and
+# can be diffed.  This lets us determine whether rebuilding resulted in
+# any changes to the content.
 export DOCC_JSON_PRETTYPRINT="YES"
 
 # The published version of the book gets the swift.org header.
