@@ -315,7 +315,7 @@ The example above showed an approach you can use
 to prevent a piece of code from containing any possible suspension points.
 In contrast,
 you can explicitly insert a suspension point
-by calling the[`Task.yield()`][] method.
+by calling the [`Task.yield()`][] method.
 
 [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
 
