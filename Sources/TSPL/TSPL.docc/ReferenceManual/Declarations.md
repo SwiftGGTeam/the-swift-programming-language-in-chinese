@@ -1459,7 +1459,7 @@ and a synchronous method can satisfy a protocol requirement for an asynchronous 
 
 ### Functions that Never Return
 
-Swift defines a `Never` type,
+Swift defines a [`Never`][] type,
 which indicates that a function or method doesn't return to its caller.
 Functions and methods with the `Never` return type are called *nonreturning*.
 Nonreturning functions and methods either cause an irrecoverable error
@@ -1468,6 +1468,8 @@ This means that
 code that would otherwise run immediately after the call is never executed.
 Throwing and rethrowing functions can transfer program control
 to an appropriate `catch` block, even when they're nonreturning.
+
+[`Never`]: https://developer.apple.com/documentation/swift/never
 
 A nonreturning function or method can be called to conclude the `else` clause
 of a guard statement,
