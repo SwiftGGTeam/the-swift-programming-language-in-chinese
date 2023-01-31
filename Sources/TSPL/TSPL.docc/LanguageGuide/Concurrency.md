@@ -621,10 +621,14 @@ You can also mix both of these approaches in the same code.
 A *task* is a unit of work
 that can be run asynchronously as part of your program.
 All asynchronous code runs as part of some task.
+A task itself does only one thing at a time,
+but when you create multiple tasks,
+Swift can schedule them to run simultaneously.
+
 The `async`-`let` syntax described in the previous section
-creates a child task for you.
+implicitly creates a child task.
 You can also create a task group
-and add child tasks to that group,
+and explicitly add child tasks to that group,
 which gives you more control over priority and cancellation,
 and lets you create a dynamic number of tasks.
 
@@ -639,17 +643,33 @@ let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
 ```swift
-await withTaskGroup(of: Data.self) { taskGroup in
+let downloadGroup = await withTaskGroup(of: Data.self) { taskGroup in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
         taskGroup.addTask { await downloadPhoto(named: name) }
     }
 }
+
+for await photo in downloadGroup {
+    
+}
 ```
 
-<!--
-  TODO walk through the example
--->
+The code above creates a new task group,
+and then creates child tasks of that task group
+to download each photo is the gallery.
+Because there isn't a specific priority passed
+when calling `addTask(priority:operation:)`,
+these child tasks tasks get the same priority as the task group.
+Swift schedules these tasks,
+running as many of them at the same time as it can.
+
+> Note:
+> If the code to download a photo could throw an error,
+> you would call `withThrowingTaskGroup(of:returning:body:)` instead.
+
+
+<!-- XXX would this be a good time to talk about implementing cancellation? -->
 
 For more information about task groups,
 see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
@@ -722,8 +742,6 @@ see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
   - a child task can't outlive its parent,
   like how ``async``-``let`` can't outlive the (implicit) parent
   which is the function scope
-
-  - Adding a child with ``TaskGroup.addTask(priority:operation:)``
 
   - awaiting ``addTask(priority:operation:)``
   means waiting for that child task to be added,
