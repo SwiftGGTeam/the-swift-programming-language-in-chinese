@@ -1,12 +1,42 @@
 <html>
 <head><title>TSPL Redirect Test</title><head>
 <body>
-<p>This is a test.</p>
+<div>
+This content has moved; redirecting to the <a href="" id="redirect">new location</a>.
+<noscript>
+<aside>
+This page requires JavaScript.
+Please turn on JavaScript and refresh the page.
+</aside>
+</noscript>
+</div>
 <script>
-var a = window.location.pathname;
-var f = window.location.hash;
-document.write("<p>URL: " + a + "</p>");
-document.write("<p>Hash: " + f + "</p>");
+const baseURL = "https://krilnon.github.io/swift-book/documentation/the-swift-programming-language/";  // FIXME
+const redirects = {
+    "#ID461": "guidedtour#Simple-Values",
+    "#ID462": "guidedtour#Control-Flow",
+    "#ID463": "guidedtour#Functions-and-Closures",
+    "GuidedTour/GuidedTour.html": "guidedtour",
+    "mockups/mockup.html": "aboutswift",  // FIXME
+}
+
+const path = window.location.pathname;
+const hash = window.location.hash;
+
+var newURL = baseURL;
+var redirectKey = hash;
+if (hash == "") {
+    var components = path.split("/");
+    var bookPart = components[components.length - 2];
+    var bookChapter = components[components.length - 1];
+    redirectKey = bookPart + "/" + bookChapter;
+}
+
+if (redirectKey in redirects) {
+    newURL += redirects[redirectKey];
+}
+
+document.getElementById("redirect").setAttribute("href", newURL);
 </script>
 </body>
 </html>
