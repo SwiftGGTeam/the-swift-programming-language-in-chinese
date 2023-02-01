@@ -44,7 +44,7 @@ For more information, see [Contributing to The Swift Programming Language][contr
 
 ## Building
 
-Run `swift package --disable-sandbox preview-documentation --target TSPL`
+Run `docc preview TSPL.docc`
 in this repository's root directory.
 
 After running DocC, open the link that `docc` outputs

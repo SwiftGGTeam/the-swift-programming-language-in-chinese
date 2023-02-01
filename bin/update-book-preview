@@ -42,15 +42,17 @@ git worktree add --checkout gh-pages "$REMOTE"/gh-pages
 # any changes to the content.
 export DOCC_JSON_PRETTYPRINT="YES"
 
+# The staging version of the book gets the staging header.
+cp -n TSPL.docc/header-staging.html TSPL.docc/header.html
+
 # Build documentation, writing output in the gh-pages/docs subdirectory.
-swift package \
-    --allow-writing-to-directory "./gh-pages/docs" \
-    generate-documentation \
-    --target TSPL \
-    --disable-indexing \
+docc convert \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
-    --output-path "./gh-pages/docs"
+    --output-path "./gh-pages/docs" \
+    TSPL.docc
+
+rm TSPL.docc/header.html
 
 # Commit and push our changes to the gh-pages branch
 pushd gh-pages
