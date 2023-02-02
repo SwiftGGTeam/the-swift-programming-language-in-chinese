@@ -200,27 +200,32 @@ while this code waits for the picture to be ready.
 To understand the concurrent nature of the example above,
 here's one possible order of execution:
 
-- The code starts running from the first line
+1. The code starts running from the first line
    and runs up to the first `await`.
    It calls the `listPhotos(inGallery:)` function
    and suspends execution while it waits for that function to return.
-- While this code's execution is suspended,
+
+2. While this code's execution is suspended,
    some other concurrent code in the same program runs.
    For example, maybe a long-running background task
    continues updating a list of new photo galleries.
    That code also runs until the next suspension point, marked by `await`,
    or until it completes.
-- After `listPhotos(inGallery:)` returns,
+
+3. After `listPhotos(inGallery:)` returns,
    this code continues execution starting at that point.
    It assigns the value that was returned to `photoNames`.
-- The lines that define `sortedNames` and `name`
+
+4. The lines that define `sortedNames` and `name`
    are regular, synchronous code.
    Because nothing is marked `await` on these lines,
    there aren't any possible suspension points.
-- The next `await` marks the call to the `downloadPhoto(named:)` function.
+
+5. The next `await` marks the call to the `downloadPhoto(named:)` function.
    This code pauses execution again until that function returns,
    giving other concurrent code an opportunity to run.
-- After `downloadPhoto(named:)` returns,
+
+6. After `downloadPhoto(named:)` returns,
    its return value is assigned to `photo`
    and then passed as an argument when calling `show(_:)`.
 
@@ -235,8 +240,10 @@ Because code with `await` needs to be able to suspend execution,
 only certain places in your program can call asynchronous functions or methods:
 
 - Code in the body of an asynchronous function, method, or property.
+
 - Code in the static `main()` method of
   a structure, class, or enumeration that's marked with `@main`.
+
 - Code in an unstructured child task,
   as shown in <doc:Concurrency#Unstructured-Concurrency> below.
 
@@ -557,7 +564,7 @@ the explicit parent-child relationships between tasks
 let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
-```
+```swift
 await withTaskGroup(of: Data.self) { taskGroup in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -706,7 +713,7 @@ call the [`Task.detached(priority:operation:)`](https://developer.apple.com/docu
 Both of these operations return a task that you can interact with ---
 for example, to wait for its result or to cancel it.
 
-```
+```swift
 let newPhoto = // ... some photo data ...
 let handle = Task {
     return await add(newPhoto, toGalleryNamed: "Spring Adventures")
@@ -840,7 +847,7 @@ When you access a property or method of an actor,
 you use `await` to mark the potential suspension point.
 For example:
 
-```
+```swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
 print(await logger.max)
 // Prints "25"
@@ -858,7 +865,7 @@ when accessing the actor's properties.
 For example,
 here's a method that updates a `TemperatureLogger` with a new temperature:
 
-```
+```swift
 extension TemperatureLogger {
     func update(with measurement: Int) {
         measurements.append(measurement)
@@ -906,7 +913,7 @@ like you would with an instance of a class,
 you'll get a compile-time error.
 For example:
 
-```
+```swift
 print(logger.max)  // Error
 ```
 

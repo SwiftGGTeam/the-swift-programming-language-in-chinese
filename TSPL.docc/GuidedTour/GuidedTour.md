@@ -270,6 +270,7 @@ Arrays automatically grow as you add elements.
 ```swift
 fruits.append("blueberries")
 print(fruits)
+// Prints "["strawberries", "grapes", "tangerines", "blueberries"]"
 ```
 
 <!--
@@ -278,7 +279,7 @@ print(fruits)
   ```swifttest
   -> fruits.append("blueberries")
   -> print(fruits)
-  << ["strawberries", "grapes", "tangerines", "blueberries"]
+  <- ["strawberries", "grapes", "tangerines", "blueberries"]
   ```
 -->
 
@@ -469,6 +470,7 @@ using the same name for that unwrapped value.
 if let nickname {
     print("Hey, \(nickname)")
 }
+// Doesn't print anything, because nickname is nil.
 ```
 
 <!--
