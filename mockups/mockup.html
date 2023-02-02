@@ -1,5 +1,8 @@
 <html>
-<head><title>TSPL Redirect Test</title><head>
+<head>
+    <title>TSPL Redirect Test</title>
+    <meta http-equiv="refresh" content="5; url=https://example.com/"> <!-- FIXME -->
+<head>
 <body>
 <div>
 This content has moved; redirecting to the <a href="" id="redirect">new location</a>.
@@ -37,6 +40,7 @@ if (redirectKey in redirects) {
 }
 
 document.getElementById("redirect").setAttribute("href", newURL);
+window.location = newURL;
 </script>
 </body>
 </html>
