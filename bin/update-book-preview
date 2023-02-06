@@ -23,7 +23,7 @@
 # Then set environment variables to paths in their working directories,
 # like the following, before running this script:
 #
-#     DOCC_EXEC=~/git/DocC/.build/arm64-apple-macosx/debug/docc
+#     PATH=~/git/DocC/.build/arm64-apple-macosx/debug:$PATH
 #     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
 
 set -eu
