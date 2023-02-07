@@ -615,7 +615,9 @@ but when you create multiple tasks,
 Swift can schedule them to run simultaneously.
 
 The `async`-`let` syntax described in the previous section
-implicitly creates a child task.
+implicitly creates a child task ---
+this syntax works well when you already know
+what tasks your program needs to run.
 You can also create a task group
 and explicitly add child tasks to that group,
 which gives you more control over priority and cancellation,
@@ -631,16 +633,16 @@ the explicit parent-child relationships between tasks
 let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
+
 ```swift
-let downloadGroup = await withTaskGroup(of: Data.self) { taskGroup in
+await withTaskGroup(of: Data.self) { taskGroup in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        taskGroup.addTask { await downloadPhoto(named: name) }
+        taskGroup.addTask {
+            let photo = downloadPhoto(named: name)
+            show(photo)
+        }
     }
-}
-
-for await photo in downloadGroup {
-    
 }
 ```
 
@@ -651,12 +653,43 @@ Because there isn't a specific priority passed
 when calling `addTask(priority:operation:)`,
 these child tasks tasks get the same priority as the task group.
 Swift schedules these tasks,
-running as many of them at the same time as it can.
+running as many of them at the same time as conditions allow.
 
 > Note:
 > If the code to download a photo could throw an error,
 > you would call `withThrowingTaskGroup(of:returning:body:)` instead.
 
+In the code listing above,
+each photo is downloaded and immediately displayed,
+so the task group doesn't return any results.
+For a task group that returns a result,
+you add code that accumulates its result
+inside the closure you pass to `withTaskGroup(of:returning:body:)`.
+
+```
+let photos = await withTaskGroup(of: Data.self) { taskGroup in
+    let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    for name in photoNames {
+        taskGroup.addTask { await downloadPhoto(named: name) }
+    }
+
+    var results: [Data] = []
+    for await photo in taskGroup {
+        results.append(photo)
+    }
+    return results
+}
+```
+
+Like the previous example,
+this example creates a child task for each photo to download it.
+Unlike the previous example,
+the `for`-`await`-`in` loop waits for the next child task to finish,
+appends the result of that task to the array of results,
+and then continues waiting until all child tasks have finished.
+Finally,
+the task group returns the array of downloaded photos
+as its overall result.
 
 <!-- XXX would this be a good time to talk about implementing cancellation? -->
 
@@ -665,8 +698,6 @@ see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
 
 <!--
   OUTLINE
-
-  - A task itself doesn't have any concurrency; it does one thing at a time
 
   - other reasons to use the API include setting:
 
@@ -723,8 +754,6 @@ see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
 
   Adding Child Tasks to a Task Group
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  - Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
 
   - awaiting ``withGroup`` means waiting for all child tasks to complete
 
