@@ -1,6 +1,27 @@
 #! /usr/bin/env python3
 
-import requests
+"""
+Reads a list of chapter in TSPL and uses them to spider over a draft of the
+DocC version of the book, extracting its HTML anchors and matching them up with
+the old Sphinx version's stable links where possible.
+"""
+
+import requests  # pip3 install requests
+import bs4 # pip3 install bs4
+
+def extract_ids(url):
+    response = requests.get(url)
+    html = bs4.BeautifulSoup(markup=response.text, features='html.parser')
+
+    for link in html.find_all('a'):
+        if link.get('class') != 'header-anchor':
+            print(9, link)
+            continue
+        print(link.get('href'))
+
+    """
+    <a data-v-635e28c1="" href="/swift-book/documentation/the-swift-programming-language/basicoperators/#Terminology" class="header-anchor" aria-label="Scroll to section">
+    """
 
 BASE_URL = 'https://krilnon.github.io/swift-book/documentation/the-swift-programming-language/'
 
@@ -20,4 +41,6 @@ for chapter in CHAPTERS:
     if chapter == "zzSummaryOfTheGrammar":
         chapter = "summaryofthegrammar"  # No zz hack in DocC
     url = BASE_URL + chapter.lower() + "/"
-    print('curl --head "' + url + '"')
+    extract_ids(url)
+
+    exit()  # XXX
