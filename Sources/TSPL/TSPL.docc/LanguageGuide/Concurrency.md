@@ -623,7 +623,8 @@ and explicitly add child tasks to that group,
 which gives you more control over priority and cancellation,
 and lets you create a dynamic number of tasks.
 
-Tasks are arranged in a hierarchy.
+Tasks are arranged in a hierarchy using
+[`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
 Each task in a task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
@@ -633,6 +634,10 @@ the explicit parent-child relationships between tasks
 let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
+<!-- TR: What's a good example of this kind of error? -->
+
+Here's another version of the code to download photos
+that handles any number of photos:
 
 ```swift
 await withTaskGroup(of: Data.self) { taskGroup in
@@ -649,6 +654,8 @@ await withTaskGroup(of: Data.self) { taskGroup in
 The code above creates a new task group,
 and then creates child tasks of that task group
 to download each photo is the gallery.
+Each task group downloads a single photograph
+and then adds it to the photographs being displayed.
 Because there isn't a specific priority passed
 when calling `addTask(priority:operation:)`,
 these child tasks tasks get the same priority as the task group.
@@ -691,20 +698,57 @@ Finally,
 the task group returns the array of downloaded photos
 as its overall result.
 
-<!-- XXX would this be a good time to talk about implementing cancellation? -->
+The process of downloading many pictures could take a long time.
+To let the user stop this work,
+without waiting for all of the tasks to complete,
+the tasks need check for cancellation and stop running if they are canceled.
+There are two ways a task can do this:
+by calling the `checkCancellation()` method,
+or by checking the `isCancelled` property.
+Calling `checkCancellation()` throws an error if the task is canceled;
+a throwing task can let that error propagate out of the task,
+stopping all of the task's work.
+This has the advantage of being simple to implement and understand.
+For more flexibility, use the `isCancelled` property,
+which lets you perform clean-up work as part of stopping the task,
+like closing network connections and deleting temporary files.
 
-For more information about task groups,
-see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
+```
+let photos = await withTaskGroup(of: Data.self) { taskGroup in
+    let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    for name in photoNames {
+        taskGroup.addTask {
+            guard isCancelled == false else { return nil }
+            return await downloadPhoto(named: name)
+        }
+    }
+
+    var results: [Data] = []
+    for await photo in taskGroup {
+        if let photo { results.append(photo) }
+    }
+    return results
+}
+```
+
+The code above makes two changes from the previous version:
+Each task checks for cancellation
+before starting to download the photo.
+If it has been canceled, the task returns `nil`.
+At the end,
+the task group skips `nil` values when collecting the results.
+Handling cancellation by returning `nil`
+means the task group can return a partial result
+instead of discarding the work that has already completed.
+
+> Note:
+> To loop over only the non-`nil` values,
+> you could write `for case await let photo? in taskGroup`,
+> although that can be hard to read.
 
 <!--
-  OUTLINE
+  Not for WWDC, but keep for future:
 
-  - other reasons to use the API include setting:
-
-  + cancellation (``Task.isCancelled``)
-  + priority (``Task.currentPriority``)
-
-  .. not for WWDC, but keep for future:
   task have deadlines, not timeouts --- like "now + 20 ms" ---
   a deadline is usually what you want anyhow when you think of a timeout
 
@@ -842,6 +886,8 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
 -->
 
 ### Task Cancellation
+
+<!-- FIXME: Move this up, to connect to the photos example -->
 
 Swift concurrency uses a cooperative cancellation model.
 Each task checks whether it has been canceled
