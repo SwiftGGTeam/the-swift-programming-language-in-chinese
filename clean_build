@@ -1,0 +1,24 @@
+#! /bin/zsh
+
+setopt ERR_EXIT NO_UNSET PIPE_FAIL XTRACE
+
+git clone --depth=1 --branch 'release/5.8' 'https://github.com/apple/swift-docc.git'
+pushd swift-docc
+git checkout 825d7a46fa2a76b314657f05bf978e0c389bab44
+swift build
+popd
+
+git clone --depth=1 --branch 'release/5.8' 'https://github.com/apple/swift-docc-render-artifact.git'
+pushd swift-docc-render-artifact
+git checkout 5693c43c5d931ad4db1bf54c888c395d7bce8fd2
+popd
+
+git clone --depth=1 --branch 'main' 'https://github.com/apple/swift-book.git'
+pushd swift-book
+export PATH=../swift-docc/.build/arm64-apple-macosx/debug/:$PATH
+export DOCC_HTML_DIR=../swift-docc-render-artifact/dist/
+which docc
+./bin/publish-book
+popd
+
+./copy_redirects_page swift-book/
