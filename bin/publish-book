@@ -28,13 +28,70 @@ set -eu
 # any changes to the content.
 export DOCC_JSON_PRETTYPRINT="YES"
 
+output="./swift-book"
+
+# Start at the top level directory of the repository.
+cd "$(git rev-parse --show-toplevel)"
+
 # The published version of the book gets the swift.org header.
 cp -n TSPL.docc/header-publish.html TSPL.docc/header.html
 
 docc convert \
     --experimental-enable-custom-templates \
     --hosting-base-path swift-book \
-    --output-path "./swift-book" \
+    --output-path "$output" \
     TSPL.docc
 
 rm TSPL.docc/header.html
+
+
+# Copy the redirect page into every location where the legacy RST-based
+# pipeline created an HTML page, to keep links to those chapters and
+# sections working.
+
+mkdir "$output"/GuidedTour
+mkdir "$output"/LanguageGuide
+mkdir "$output"/ReferenceManual
+mkdir "$output"/RevisionHistory
+
+cp bin/redirect.html "$output"/GuidedTour/Compatibility.html
+cp bin/redirect.html "$output"/GuidedTour/GuidedTour.html
+cp bin/redirect.html "$output"/LanguageGuide/AccessControl.html
+cp bin/redirect.html "$output"/LanguageGuide/AdvancedOperators.html
+cp bin/redirect.html "$output"/LanguageGuide/AutomaticReferenceCounting.html
+cp bin/redirect.html "$output"/LanguageGuide/BasicOperators.html
+cp bin/redirect.html "$output"/LanguageGuide/ClassesAndStructures.html
+cp bin/redirect.html "$output"/LanguageGuide/Closures.html
+cp bin/redirect.html "$output"/LanguageGuide/CollectionTypes.html
+cp bin/redirect.html "$output"/LanguageGuide/Concurrency.html
+cp bin/redirect.html "$output"/LanguageGuide/ControlFlow.html
+cp bin/redirect.html "$output"/LanguageGuide/Deinitialization.html
+cp bin/redirect.html "$output"/LanguageGuide/Enumerations.html
+cp bin/redirect.html "$output"/LanguageGuide/ErrorHandling.html
+cp bin/redirect.html "$output"/LanguageGuide/Extensions.html
+cp bin/redirect.html "$output"/LanguageGuide/Functions.html
+cp bin/redirect.html "$output"/LanguageGuide/Generics.html
+cp bin/redirect.html "$output"/LanguageGuide/Inheritance.html
+cp bin/redirect.html "$output"/LanguageGuide/Initialization.html
+cp bin/redirect.html "$output"/LanguageGuide/MemorySafety.html
+cp bin/redirect.html "$output"/LanguageGuide/Methods.html
+cp bin/redirect.html "$output"/LanguageGuide/NestedTypes.html
+cp bin/redirect.html "$output"/LanguageGuide/OpaqueTypes.html
+cp bin/redirect.html "$output"/LanguageGuide/OptionalChaining.html
+cp bin/redirect.html "$output"/LanguageGuide/Properties.html
+cp bin/redirect.html "$output"/LanguageGuide/Protocols.html
+cp bin/redirect.html "$output"/LanguageGuide/StringsAndCharacters.html
+cp bin/redirect.html "$output"/LanguageGuide/Subscripts.html
+cp bin/redirect.html "$output"/LanguageGuide/TheBasics.html
+cp bin/redirect.html "$output"/LanguageGuide/TypeCasting.html
+cp bin/redirect.html "$output"/ReferenceManual/AboutTheLanguageReference.html
+cp bin/redirect.html "$output"/ReferenceManual/Attributes.html
+cp bin/redirect.html "$output"/ReferenceManual/Declarations.html
+cp bin/redirect.html "$output"/ReferenceManual/Expressions.html
+cp bin/redirect.html "$output"/ReferenceManual/GenericParametersAndArguments.html
+cp bin/redirect.html "$output"/ReferenceManual/LexicalStructure.html
+cp bin/redirect.html "$output"/ReferenceManual/Patterns.html
+cp bin/redirect.html "$output"/ReferenceManual/Statements.html
+cp bin/redirect.html "$output"/ReferenceManual/Types.html
+cp bin/redirect.html "$output"/ReferenceManual/zzSummaryOfTheGrammar.html
+cp bin/redirect.html "$output"/RevisionHistory/RevisionHistory.html
