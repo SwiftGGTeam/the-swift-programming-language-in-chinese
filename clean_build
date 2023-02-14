@@ -22,4 +22,4 @@ which docc
 ./bin/publish-book
 popd
 
-./copy_redirects_page swift-book/
+./copy_redirects_page TSPL/swift-book/
