@@ -14,8 +14,18 @@ git checkout 5693c43c5d931ad4db1bf54c888c395d7bce8fd2
 popd
 
 # git clone --depth=1 --branch 'main' 'https://github.com/apple/swift-book.git'
-git clone --depth=1 --branch 'release/5.8' '/Users/alexmartini/git/TSPL Staging' TSPL
+git clone '/Users/alexmartini/git/TSPL' TSPL
 pushd TSPL
+
+git checkout release/5.8
+git merge --no-edit origin/redirects_103560951
+ed TSPL.docc/RevisionHistory/RevisionHistory.md << EOF
+/XXX/ c
+**2023-03-15**
+.
+wq
+EOF
+
 export PATH=../DocC/.build/arm64-apple-macosx/debug/:$PATH
 export DOCC_HTML_DIR=../DocC-Render/dist/
 which docc
