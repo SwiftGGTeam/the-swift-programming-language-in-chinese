@@ -20,6 +20,8 @@ export PATH=../DocC/.build/arm64-apple-macosx/debug/:$PATH
 export DOCC_HTML_DIR=../DocC-Render/dist/
 which docc
 ./bin/publish-book
+zip -r swift-book.zip swift-book/
+mv swift-book.zip ../
 popd
 
-./copy_redirects_page TSPL/swift-book/
+del DocC DocC-Render TSPL
