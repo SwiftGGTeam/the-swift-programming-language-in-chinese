@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>The Swift Programming Language: Redirect</title>
+    <meta http-equiv="refresh" content="10; url=https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting">
+<head>
+<body>
+<div>
+This content has moved; redirecting to the
+<a href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/" id="redirect">new location</a>.
+<noscript>
+<aside>
+This page requires JavaScript.
+Please turn on JavaScript and refresh the page.
+</aside>
+</noscript>
+</div>
+<script>
+const baseURL = "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/";
+
+const headingRedirects = {
+    "#ID461": "guidedtour#Simple-Values",
+    "#ID462": "guidedtour#Control-Flow",
+    "#ID463": "guidedtour#Functions-and-Closures",
+}
+
+const chapterRedirects = {
+    "GuidedTour/GuidedTour.html": "guidedtour",
+    "GuidedTour/AboutSwift.html": "aboutswift",
+    "GuidedTour/Compatibility.html": "compatibility",
+    "GuidedTour/GuidedTour.html": "guidedtour",
+    "GuidedTour/GuidedTourPart.html": "guidedtour",
+
+    "LanguageGuide/AccessControl.html": "accesscontrol",
+    "LanguageGuide/AdvancedOperators.html": "advancedoperators",
+    "LanguageGuide/AutomaticReferenceCounting.html": "automaticreferencecounting",
+    "LanguageGuide/BasicOperators.html": "basicoperators",
+    "LanguageGuide/ClassesAndStructures.html": "classesandstructures",
+    "LanguageGuide/Closures.html": "closures",
+    "LanguageGuide/CollectionTypes.html": "collectiontypes",
+    "LanguageGuide/Concurrency.html": "concurrency",
+    "LanguageGuide/ControlFlow.html": "controlflow",
+    "LanguageGuide/Deinitialization.html": "deinitialization",
+    "LanguageGuide/Enumerations.html": "enumerations",
+    "LanguageGuide/ErrorHandling.html": "errorhandling",
+    "LanguageGuide/Extensions.html": "extensions",
+    "LanguageGuide/Functions.html": "functions",
+    "LanguageGuide/Generics.html": "generics",
+    "LanguageGuide/Inheritance.html": "inheritance",
+    "LanguageGuide/Initialization.html": "initialization",
+    "LanguageGuide/LanguageGuidePart.html": "languageguide",
+    "LanguageGuide/MemorySafety.html": "memorysafety",
+    "LanguageGuide/Methods.html": "methods",
+    "LanguageGuide/NestedTypes.html": "nestedtypes",
+    "LanguageGuide/OpaqueTypes.html": "opaquetypes",
+    "LanguageGuide/OptionalChaining.html": "optionalchaining",
+    "LanguageGuide/Properties.html": "properties",
+    "LanguageGuide/Protocols.html": "protocols",
+    "LanguageGuide/StringsAndCharacters.html": "stringsandcharacters",
+    "LanguageGuide/Subscripts.html": "subscripts",
+    "LanguageGuide/TheBasics.html": "thebasics",
+    "LanguageGuide/TypeCasting.html": "typecasting",
+
+    "ReferenceManual/AboutTheLanguageReference.html": "aboutthelanguagereference",
+    "ReferenceManual/Attributes.html": "attributes",
+    "ReferenceManual/Declarations.html": "declarations",
+    "ReferenceManual/Expressions.html": "expressions",
+    "ReferenceManual/GenericParametersAndArguments.html": "genericparametersandarguments",
+    "ReferenceManual/LexicalStructure.html": "lexicalstructure",
+    "ReferenceManual/Patterns.html": "patterns",
+    "ReferenceManual/ReferenceManualPart.html": "referencemanual",
+    "ReferenceManual/Statements.html": "statements",
+    "ReferenceManual/Types.html": "types",
+    "ReferenceManual/zzSummaryOfTheGrammar.html": "summaryofthegrammar",
+
+    "RevisionHistory/RevisionHistory.html": "revisionhistory",
+    "RevisionHistory/RevisionHistoryPart.html": "revisionhistory",
+}
+
+const path = window.location.pathname;
+const hash = window.location.hash;
+
+var newURL = baseURL;
+if (hash == "") {
+    const components = path.split("/");
+    const part = components[components.length - 2];
+    const chapter = components[components.length - 1];
+    const redirectPath = chapterRedirects[part + "/" + chapter];
+    newURL += redirectPath;
+} else {
+    const redirectPath = headingRedirects[hash];
+    newURL += redirectPath;
+}
+
+document.getElementById("redirect").setAttribute("href", newURL);
+window.location = newURL;
+</script>
+</body>
+</html>
