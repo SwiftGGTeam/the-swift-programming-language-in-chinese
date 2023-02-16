@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**XXX date goes here XXX**
+**2023-02-16**
 
 - Updated for Swift 5.8.
 - Adopted Swift-DocC for publication.
