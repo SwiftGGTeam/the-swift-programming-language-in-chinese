@@ -13,15 +13,13 @@ pushd DocC-Render
 git checkout 5693c43c5d931ad4db1bf54c888c395d7bce8fd2
 popd
 
-# git clone --depth=1 --branch 'main' 'https://github.com/apple/swift-book.git'
-git clone '/Users/alexmartini/git/TSPL' TSPL
+git clone --depth=1 --branch 'release/5.8' 'https://github.com/apple/swift-book.git' TSPL
+# git clone '/Users/alexmartini/git/TSPL' TSPL
 pushd TSPL
 
-git checkout release/5.8
-git merge --no-edit origin/redirects_103560951
 ed TSPL.docc/RevisionHistory/RevisionHistory.md << EOF
 /XXX/ c
-**2023-03-15**
+**2023-03-16**
 .
 wq
 EOF
