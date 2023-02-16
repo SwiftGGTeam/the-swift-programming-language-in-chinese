@@ -17,13 +17,6 @@ git clone --depth=1 --branch 'release/5.8' 'https://github.com/apple/swift-book.
 # git clone '/Users/alexmartini/git/TSPL' TSPL
 pushd TSPL
 
-ed TSPL.docc/RevisionHistory/RevisionHistory.md << EOF
-/XXX/ c
-**2023-03-16**
-.
-wq
-EOF
-
 export PATH=../DocC/.build/arm64-apple-macosx/debug/:$PATH
 export DOCC_HTML_DIR=../DocC-Render/dist/
 which docc
