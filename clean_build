@@ -14,8 +14,8 @@ git checkout 5693c43c5d931ad4db1bf54c888c395d7bce8fd2
 popd
 
 git clone --depth=1 --branch 'release/5.8' 'https://github.com/apple/swift-book.git' TSPL
-# git clone '/Users/alexmartini/git/TSPL' TSPL
 pushd TSPL
+git checkout 3afe79e218e9919dd79b555f03340eb185243682
 
 export PATH=../DocC/.build/arm64-apple-macosx/debug/:$PATH
 export DOCC_HTML_DIR=../DocC-Render/dist/
