@@ -84,13 +84,13 @@ if (hash == "") {
     const components = path.split("/");
     const part = components[components.length - 2];
     const chapter = components[components.length - 1];
-    const key = part + "/" + chapter;
-    if key in chapterRedirects {
-        const redirectPath = chapterRedirects[part + "/" + chapter];
+    const newPath = part + "/" + chapter;
+    if (newPath in chapterRedirects) {
+        const redirectPath chapterRedirects[newPath];
         newURL += redirectPath;
     }
 } else {
-    if hash in headingRedirects {
+    if (hash in headingRedirects) {
         const redirectPath = headingRedirects[hash];
         newURL += redirectPath;
     }
