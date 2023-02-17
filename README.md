@@ -34,7 +34,7 @@ For more information, see [Contributing to The Swift Programming Language][contr
 [bugs]: https://github.com/apple/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
 [contributing]: /CONTRIBUTING.md
-[forum]: https://forums.swift.org/c/development/swift-docc/80
+[forum]: https://forums.swift.org/c/swift-documentation/92
 [tspl-style]: /Style.md
 
 ## Building
