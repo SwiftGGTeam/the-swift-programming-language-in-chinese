@@ -84,11 +84,16 @@ if (hash == "") {
     const components = path.split("/");
     const part = components[components.length - 2];
     const chapter = components[components.length - 1];
-    const redirectPath = chapterRedirects[part + "/" + chapter];
-    newURL += redirectPath;
+    const key = part + "/" + chapter;
+    if key in chapterRedirects {
+        const redirectPath = chapterRedirects[part + "/" + chapter];
+        newURL += redirectPath;
+    }
 } else {
-    const redirectPath = headingRedirects[hash];
-    newURL += redirectPath;
+    if hash in headingRedirects {
+        const redirectPath = headingRedirects[hash];
+        newURL += redirectPath;
+    }
 }
 
 document.getElementById("redirect").setAttribute("href", newURL);
