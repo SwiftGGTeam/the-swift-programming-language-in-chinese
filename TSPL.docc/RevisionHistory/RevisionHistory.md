@@ -2,6 +2,12 @@
 
 Review the recent changes to this book.
 
+**2023-02-16**
+
+- Updated for Swift 5.8.
+- Adopted Swift-DocC for publication.
+- Minor corrections and additions throughout.
+
 **2022-09-12**
 
 - Updated for Swift 5.7.
