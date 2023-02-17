@@ -123,7 +123,7 @@ swapTwoValues(&someString, &anotherString)
 
 下图展示了入栈（push）和出栈（pop）的行为：
 
-![](https://docs.swift.org/swift-book/_images/stackPushPop_2x.png)
+![](https://docs.swift.org/swift-book/images/stackPushPop~dark@2x.png)
 
 1. 现在有三个值在栈中。
 2. 第四个值被压入到栈的顶部。
@@ -186,7 +186,7 @@ stackOfStrings.push("cuatro")
 
 下图展示了 `stackOfStrings` 如何将这四个值压栈：
 
-![](https://docs.swift.org/swift-book/_images/stackPushedFourStrings_2x.png)
+![](https://docs.swift.org/swift-book/images/stackPushedFourStrings~dark@2x.png)
 
 移除并返回栈顶部的值“cuatro”，即出栈：
 
@@ -197,7 +197,7 @@ let fromTheTop = stackOfStrings.pop()
 
 下图展示了如何将顶部的值出栈：
 
-![](https://docs.swift.org/swift-book/_images/stackPoppedOneString_2x.png)
+![](https://docs.swift.org/swift-book/images/stackPoppedOneString~dark@2x.png)
 
 ## 泛型扩展 {#extending-a-generic-type}
 
