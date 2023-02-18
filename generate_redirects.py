@@ -50,7 +50,7 @@ for stable_id in mapped_sphinx_ids.keys():
                 and chapter.lower() == filename.lower():
             if mapped_docc_ids[stable_id] is not None:
                 print("Replaced mapping:", mapped_docc_ids[stable_id])
-            mapped_docc_ids[stable_id] = docc_id
+            mapped_docc_ids[stable_id] = filename + '#' + docc_id
 
 for stable_id in mapped_sphinx_ids.keys():
     sphinx = mapped_sphinx_ids[stable_id] or ''
