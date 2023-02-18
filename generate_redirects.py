@@ -11,20 +11,45 @@ import json
 with open("chapters") as chapters_file:
     CHAPTERS = chapters_file.read().rstrip("\n").split("\n")
 
-"""
-STABLE_IDS = {}  # keys are IDs; values are Sphinx names
+mapped_sphinx_ids = {}  # keys are IDs; values are Sphinx names
+mapped_docc_ids = {}  # keys are IDs; values are DocC names
 with open("ids.tsv") as stable_ids_file:
+    first_line = True
     for line in stable_ids_file.readlines():
-        stable_id, name = line.rstrip("\n").split("\t")
-        STABLE_IDS[stable_id] = name
-"""
+        if first_line:
+            first_line = False
+            continue
+        stable_id, sphinx, docc = line.rstrip("\n").split("\t")
+        if sphinx == "": sphinx = None
+        if docc == "": docc = None
+        mapped_sphinx_ids[stable_id] = sphinx
+        mapped_docc_ids[stable_id] = docc
 
-DOCC_OUTPUT_PATH = "/Users/alexmartini/git/TSPL/swift-book/data/documentation/the-swift-programming-language/"
-# for file in DocC output:
+DOCC_BUILT_PATH = "/Users/alexmartini/git/TSPL/swift-book/data/documentation/the-swift-programming-language/"
+# FIXME for file in DocC output:
 filename = "advancedoperators.json"
-with open(DOCC_OUTPUT_PATH + filename) as json_file:
+
+built_docc_ids = []  # tuples of (filenames, DocC names)
+with open(DOCC_BUILT_PATH + filename) as json_file:
     json_data = json.load(json_file)
     content = json_data["primaryContentSections"][0]["content"]
     for item in content:
         if "anchor" in item.keys():
-            print(item["anchor"])
+            built_docc_ids.append( (filename, item["anchor"]) )
+
+# Yes, this is quadratic -- but in practice it doesn't actualy matter.
+for stable_id in mapped_sphinx_ids.keys():
+    sphinx_name = mapped_sphinx_ids[stable_id]
+    if '/' in sphinx_name:
+        # FIXME: chapter
+        continue
+    chapter, section = sphinx_name.split('-', 1)
+    for filename, docc_id in built_docc_ids:
+        if section.replace('-', '').lower() == docc_id.replace('-', '').lower():
+            assert mapped_docc_ids[stable_id] is None
+            mapped_docc_ids[stable_id] = docc_id
+
+for stable_id in mapped_sphinx_ids.keys():
+    sphinx = mapped_sphinx_ids[stable_id] or ''
+    docc = mapped_docc_ids[stable_id] or ''
+    print(stable_id + '\t' + sphinx + '\t' + docc)
