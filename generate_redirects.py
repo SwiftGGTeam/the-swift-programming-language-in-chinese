@@ -7,6 +7,7 @@ the old Sphinx version's stable links where possible.
 """
 
 import json
+import os
 
 with open("chapters") as chapters_file:
     CHAPTERS = chapters_file.read().rstrip("\n").split("\n")
@@ -26,16 +27,15 @@ with open("ids.tsv") as stable_ids_file:
         mapped_docc_ids[stable_id] = docc
 
 DOCC_BUILT_PATH = "/Users/alexmartini/git/TSPL/swift-book/data/documentation/the-swift-programming-language/"
-# FIXME for file in DocC output:
-filename = "advancedoperators.json"
 
 built_docc_ids = []  # tuples of (filenames, DocC names)
-with open(DOCC_BUILT_PATH + filename) as json_file:
-    json_data = json.load(json_file)
-    content = json_data["primaryContentSections"][0]["content"]
-    for item in content:
-        if "anchor" in item.keys():
-            built_docc_ids.append( (filename, item["anchor"]) )
+for filename in os.listdir(DOCC_BUILT_PATH):
+    with open(DOCC_BUILT_PATH + filename) as json_file:
+        json_data = json.load(json_file)
+        content = json_data["primaryContentSections"][0]["content"]
+        for item in content:
+            if "anchor" in item.keys():
+                built_docc_ids.append( (filename, item["anchor"]) )
 
 # Yes, this is quadratic -- but in practice it doesn't actualy matter.
 for stable_id in mapped_sphinx_ids.keys():
@@ -45,8 +45,11 @@ for stable_id in mapped_sphinx_ids.keys():
         continue
     chapter, section = sphinx_name.split('-', 1)
     for filename, docc_id in built_docc_ids:
-        if section.replace('-', '').lower() == docc_id.replace('-', '').lower():
-            assert mapped_docc_ids[stable_id] is None
+        filename, extension = filename.split('.')  # Bail on multiple dots
+        if section.replace('-', '').lower() == docc_id.replace('-', '').lower() \
+                and chapter.lower() == filename.lower():
+            if mapped_docc_ids[stable_id] is not None:
+                print("Replaced mapping:", mapped_docc_ids[stable_id])
             mapped_docc_ids[stable_id] = docc_id
 
 for stable_id in mapped_sphinx_ids.keys():

@@ -3,455 +3,455 @@ ID0	GuidedTour/AboutSwift
 ID1	GuidedTour/GuidedTour	
 ID2	GuidedTour/GuidedTourPart	
 ID3	LanguageGuide/AccessControl	
-ID4	accesscontrol-modulesandsourcefiles	
-ID5	accesscontrol-accesslevels	
-ID6	accesscontrol-guidingprincipleofaccesslevels	
-ID7	accesscontrol-defaultaccesslevels	
-ID8	accesscontrol-accesslevelsforsingletargetapps	
-ID9	accesscontrol-accesslevelsforframeworks	
-ID10	accesscontrol-accesscontrolsyntax	
-ID11	accesscontrol-customtypes	
-ID12	accesscontrol-tupletypes	
-ID13	accesscontrol-functiontypes	
-ID14	accesscontrol-enumerationtypes	
-ID15	accesscontrol-nestedtypes	
-ID16	accesscontrol-subclassing	
-ID17	accesscontrol-constantsvariablespropertiesandsubscripts	
-ID18	accesscontrol-gettersandsetters	
-ID19	accesscontrol-initializers	
-ID20	accesscontrol-defaultinitializers	
-ID21	accesscontrol-defaultmemberwiseinitializersforstructuretypes	
-ID22	accesscontrol-protocols	
-ID23	accesscontrol-protocolinheritance	
-ID24	accesscontrol-protocolconformance	
-ID25	accesscontrol-extensions	
-ID26	accesscontrol-generics	
-ID27	accesscontrol-typealiases	
+ID4	accesscontrol-modulesandsourcefiles	Modules-and-Source-Files
+ID5	accesscontrol-accesslevels	Access-Levels
+ID6	accesscontrol-guidingprincipleofaccesslevels	Guiding-Principle-of-Access-Levels
+ID7	accesscontrol-defaultaccesslevels	Default-Access-Levels
+ID8	accesscontrol-accesslevelsforsingletargetapps	Access-Levels-for-Single-Target-Apps
+ID9	accesscontrol-accesslevelsforframeworks	Access-Levels-for-Frameworks
+ID10	accesscontrol-accesscontrolsyntax	Access-Control-Syntax
+ID11	accesscontrol-customtypes	Custom-Types
+ID12	accesscontrol-tupletypes	Tuple-Types
+ID13	accesscontrol-functiontypes	Function-Types
+ID14	accesscontrol-enumerationtypes	Enumeration-Types
+ID15	accesscontrol-nestedtypes	Nested-Types
+ID16	accesscontrol-subclassing	Subclassing
+ID17	accesscontrol-constantsvariablespropertiesandsubscripts	Constants-Variables-Properties-and-Subscripts
+ID18	accesscontrol-gettersandsetters	Getters-and-Setters
+ID19	accesscontrol-initializers	Initializers
+ID20	accesscontrol-defaultinitializers	Default-Initializers
+ID21	accesscontrol-defaultmemberwiseinitializersforstructuretypes	Default-Memberwise-Initializers-for-Structure-Types
+ID22	accesscontrol-protocols	Protocols
+ID23	accesscontrol-protocolinheritance	Protocol-Inheritance
+ID24	accesscontrol-protocolconformance	Protocol-Conformance
+ID25	accesscontrol-extensions	Extensions
+ID26	accesscontrol-generics	Generics
+ID27	accesscontrol-typealiases	Type-Aliases
 ID28	LanguageGuide/AdvancedOperators	
-ID29	advancedoperators-bitwiseoperators	
-ID30	advancedoperators-bitwisenotoperator	
-ID31	advancedoperators-bitwiseandoperator	
-ID32	advancedoperators-bitwiseoroperator	
-ID33	advancedoperators-bitwisexoroperator	
-ID34	advancedoperators-bitwiseleftandrightshiftoperators	
-ID35	advancedoperators-shiftingbehaviorforunsignedintegers	
-ID36	advancedoperators-shiftingbehaviorforsignedintegers	
-ID37	advancedoperators-overflowoperators	
-ID38	advancedoperators-valueoverflow	
+ID29	advancedoperators-bitwiseoperators	Bitwise-Operators
+ID30	advancedoperators-bitwisenotoperator	Bitwise-NOT-Operator
+ID31	advancedoperators-bitwiseandoperator	Bitwise-AND-Operator
+ID32	advancedoperators-bitwiseoroperator	Bitwise-OR-Operator
+ID33	advancedoperators-bitwisexoroperator	Bitwise-XOR-Operator
+ID34	advancedoperators-bitwiseleftandrightshiftoperators	Bitwise-Left-and-Right-Shift-Operators
+ID35	advancedoperators-shiftingbehaviorforunsignedintegers	Shifting-Behavior-for-Unsigned-Integers
+ID36	advancedoperators-shiftingbehaviorforsignedintegers	Shifting-Behavior-for-Signed-Integers
+ID37	advancedoperators-overflowoperators	Overflow-Operators
+ID38	advancedoperators-valueoverflow	Value-Overflow
 ID40	advancedoperators-divisionbyzero	
-ID41	advancedoperators-precedenceandassociativity	
+ID41	advancedoperators-precedenceandassociativity	Precedence-and-Associativity
 ID42	advancedoperators-operatorfunctions	
-ID43	advancedoperators-prefixandpostfixoperators	
-ID44	advancedoperators-compoundassignmentoperators	
-ID45	advancedoperators-equivalenceoperators	
-ID46	advancedoperators-customoperators	
+ID43	advancedoperators-prefixandpostfixoperators	Prefix-and-Postfix-Operators
+ID44	advancedoperators-compoundassignmentoperators	Compound-Assignment-Operators
+ID45	advancedoperators-equivalenceoperators	Equivalence-Operators
+ID46	advancedoperators-customoperators	Custom-Operators
 ID47	advancedoperators-precedenceandassociativityforcustomoperators	
 ID48	LanguageGuide/AutomaticReferenceCounting	
-ID49	automaticreferencecounting-howarcworks	
-ID50	automaticreferencecounting-arcinaction	
-ID51	automaticreferencecounting-strongreferencecyclesbetweenclassinstances	
-ID52	automaticreferencecounting-resolvingstrongreferencecyclesbetweenclassinstances	
+ID49	automaticreferencecounting-howarcworks	How-ARC-Works
+ID50	automaticreferencecounting-arcinaction	ARC-in-Action
+ID51	automaticreferencecounting-strongreferencecyclesbetweenclassinstances	Strong-Reference-Cycles-Between-Class-Instances
+ID52	automaticreferencecounting-resolvingstrongreferencecyclesbetweenclassinstances	Resolving-Strong-Reference-Cycles-Between-Class-Instances
 ID53	automaticreferencecounting-weakreferencesbetweenclassinstances	
 ID54	automaticreferencecounting-unownedreferencesbetweenclassinstances	
-ID55	automaticreferencecounting-unownedreferencesandimplicitlyunwrappedoptionalproperties	
-ID56	automaticreferencecounting-strongreferencecyclesforclosures	
-ID57	automaticreferencecounting-resolvingstrongreferencecyclesforclosures	
-ID58	automaticreferencecounting-definingacapturelist	
+ID55	automaticreferencecounting-unownedreferencesandimplicitlyunwrappedoptionalproperties	Unowned-References-and-Implicitly-Unwrapped-Optional-Properties
+ID56	automaticreferencecounting-strongreferencecyclesforclosures	Strong-Reference-Cycles-for-Closures
+ID57	automaticreferencecounting-resolvingstrongreferencecyclesforclosures	Resolving-Strong-Reference-Cycles-for-Closures
+ID58	automaticreferencecounting-definingacapturelist	Defining-a-Capture-List
 ID59	automaticreferencecounting-weakandunownedreferencesforclosures	
 ID60	LanguageGuide/BasicOperators	
-ID61	basicoperators-terminology	
-ID62	basicoperators-assignmentoperator	
-ID63	basicoperators-arithmeticoperators	
-ID64	basicoperators-remainderoperator	
+ID61	basicoperators-terminology	Terminology
+ID62	basicoperators-assignmentoperator	Assignment-Operator
+ID63	basicoperators-arithmeticoperators	Arithmetic-Operators
+ID64	basicoperators-remainderoperator	Remainder-Operator
 ID65	basicoperators-floatingpointremaindercalculations	
 ID66	basicoperators-incrementanddecrementoperators	
-ID67	basicoperators-unaryminusoperator	
-ID68	basicoperators-unaryplusoperator	
-ID69	basicoperators-compoundassignmentoperators	
-ID70	basicoperators-comparisonoperators	
-ID71	basicoperators-ternaryconditionaloperator	
-ID72	basicoperators-nilcoalescingoperator	
-ID73	basicoperators-rangeoperators	
-ID74	basicoperators-closedrangeoperator	
+ID67	basicoperators-unaryminusoperator	Unary-Minus-Operator
+ID68	basicoperators-unaryplusoperator	Unary-Plus-Operator
+ID69	basicoperators-compoundassignmentoperators	Compound-Assignment-Operators
+ID70	basicoperators-comparisonoperators	Comparison-Operators
+ID71	basicoperators-ternaryconditionaloperator	Ternary-Conditional-Operator
+ID72	basicoperators-nilcoalescingoperator	Nil-Coalescing-Operator
+ID73	basicoperators-rangeoperators	Range-Operators
+ID74	basicoperators-closedrangeoperator	Closed-Range-Operator
 ID75	basicoperators-halfclosedrangeoperator	
-ID76	basicoperators-logicaloperators	
-ID77	basicoperators-logicalnotoperator	
-ID78	basicoperators-logicalandoperator	
-ID79	basicoperators-logicaloroperator	
-ID80	basicoperators-combininglogicaloperators	
-ID81	basicoperators-explicit-parentheses	
+ID76	basicoperators-logicaloperators	Logical-Operators
+ID77	basicoperators-logicalnotoperator	Logical-NOT-Operator
+ID78	basicoperators-logicalandoperator	Logical-AND-Operator
+ID79	basicoperators-logicaloroperator	Logical-OR-Operator
+ID80	basicoperators-combininglogicaloperators	Combining-Logical-Operators
+ID81	basicoperators-explicit-parentheses	Explicit-Parentheses
 ID82	LanguageGuide/ClassesAndStructures	
 ID83	classesandstructures-comparingclassesandstructures	
-ID84	classesandstructures-definitionsyntax	
+ID84	classesandstructures-definitionsyntax	Definition-Syntax
 ID85	classesandstructures-classandstructureinstances	
-ID86	classesandstructures-accessingproperties	
-ID87	classesandstructures-memberwiseinitializersforstructuretypes	
-ID88	classesandstructures-structuresandenumerationsarevaluetypes	
-ID89	classesandstructures-classesarereferencetypes	
-ID90	classesandstructures-identityoperators	
-ID91	classesandstructures-pointers	
+ID86	classesandstructures-accessingproperties	Accessing-Properties
+ID87	classesandstructures-memberwiseinitializersforstructuretypes	Memberwise-Initializers-for-Structure-Types
+ID88	classesandstructures-structuresandenumerationsarevaluetypes	Structures-and-Enumerations-Are-Value-Types
+ID89	classesandstructures-classesarereferencetypes	Classes-Are-Reference-Types
+ID90	classesandstructures-identityoperators	Identity-Operators
+ID91	classesandstructures-pointers	Pointers
 ID92	classesandstructures-choosingbetweenclassesandstructures	
 ID93	classesandstructures-assignmentandcopybehaviorforstringsarraysanddictionaries	
 ID94	LanguageGuide/Closures	
-ID95	closures-closureexpressions	
+ID95	closures-closureexpressions	Closure-Expressions
 ID96	closures-thesortedfunction	
-ID97	closures-closureexpressionsyntax	
-ID98	closures-inferringtypefromcontext	
-ID99	closures-implicitreturnsfromsingleexpressionclosures	
-ID100	closures-shorthandargumentnames	
+ID97	closures-closureexpressionsyntax	Closure-Expression-Syntax
+ID98	closures-inferringtypefromcontext	Inferring-Type-From-Context
+ID99	closures-implicitreturnsfromsingleexpressionclosures	Implicit-Returns-from-Single-Expression-Closures
+ID100	closures-shorthandargumentnames	Shorthand-Argument-Names
 ID101	closures-operatorfunctions	
-ID102	closures-trailingclosures	
-ID103	closures-capturingvalues	
-ID104	closures-closuresarereferencetypes	
+ID102	closures-trailingclosures	Trailing-Closures
+ID103	closures-capturingvalues	Capturing-Values
+ID104	closures-closuresarereferencetypes	Closures-Are-Reference-Types
 ID105	LanguageGuide/CollectionTypes	
-ID106	collectiontypes-mutabilityofcollections	
-ID107	collectiontypes-arrays	
-ID108	collectiontypes-arraytypeshorthandsyntax	
+ID106	collectiontypes-mutabilityofcollections	Mutability-of-Collections
+ID107	collectiontypes-arrays	Arrays
+ID108	collectiontypes-arraytypeshorthandsyntax	Array-Type-Shorthand-Syntax
 ID109	collectiontypes-arrayliterals	
-ID110	collectiontypes-accessingandmodifyinganarray	
-ID111	collectiontypes-iteratingoveranarray	
+ID110	collectiontypes-accessingandmodifyinganarray	Accessing-and-Modifying-an-Array
+ID111	collectiontypes-iteratingoveranarray	Iterating-Over-an-Array
 ID112	collectiontypes-creatingandinitializinganarray	
-ID113	collectiontypes-dictionaries	
-ID114	collectiontypes-dictionarytypeshorthandsyntax	
+ID113	collectiontypes-dictionaries	Dictionaries
+ID114	collectiontypes-dictionarytypeshorthandsyntax	Dictionary-Type-Shorthand-Syntax
 ID115	collectiontypes-dictionaryliterals	
-ID116	collectiontypes-accessingandmodifyingadictionary	
-ID117	collectiontypes-iteratingoveradictionary	
-ID118	collectiontypes-creatinganemptydictionary	
+ID116	collectiontypes-accessingandmodifyingadictionary	Accessing-and-Modifying-a-Dictionary
+ID117	collectiontypes-iteratingoveradictionary	Iterating-Over-a-Dictionary
+ID118	collectiontypes-creatinganemptydictionary	Creating-an-Empty-Dictionary
 ID119	collectiontypes-hashvaluesfordictionarykeytypes	
 ID120	LanguageGuide/ControlFlow	
 ID121	controlflow-forloops	
 ID122	controlflow-forin	
 ID123	controlflow-forconditionincrement	
-ID124	controlflow-whileloops	
-ID125	controlflow-while	
+ID124	controlflow-whileloops	While-Loops
+ID125	controlflow-while	While
 ID126	controlflow-dowhile	
-ID127	controlflow-conditionalstatements	
-ID128	controlflow-if	
-ID129	controlflow-switch	
-ID130	controlflow-noimplicitfallthrough	
+ID127	controlflow-conditionalstatements	Conditional-Statements
+ID128	controlflow-if	If
+ID129	controlflow-switch	Switch
+ID130	controlflow-noimplicitfallthrough	No-Implicit-Fallthrough
 ID131	controlflow-rangematching	
-ID132	controlflow-tuples	
-ID133	controlflow-valuebindings	
-ID134	controlflow-where	
-ID135	controlflow-controltransferstatements	
-ID136	controlflow-continue	
-ID137	controlflow-break	
+ID132	controlflow-tuples	Tuples
+ID133	controlflow-valuebindings	Value-Bindings
+ID134	controlflow-where	Where
+ID135	controlflow-controltransferstatements	Control-Transfer-Statements
+ID136	controlflow-continue	Continue
+ID137	controlflow-break	Break
 ID138	controlflow-breakinaloop	
-ID139	controlflow-breakinaswitchstatement	
-ID140	controlflow-fallthrough	
-ID141	controlflow-labeledstatements	
+ID139	controlflow-breakinaswitchstatement	Break-in-a-Switch-Statement
+ID140	controlflow-fallthrough	Fallthrough
+ID141	controlflow-labeledstatements	Labeled-Statements
 ID142	LanguageGuide/Deinitialization	
-ID143	deinitialization-howdeinitializationworks	
-ID144	deinitialization-deinitializersinaction	
+ID143	deinitialization-howdeinitializationworks	How-Deinitialization-Works
+ID144	deinitialization-deinitializersinaction	Deinitializers-in-Action
 ID145	LanguageGuide/Enumerations	
-ID146	enumerations-enumerationsyntax	
-ID147	enumerations-matchingenumerationvalueswithaswitchstatement	
-ID148	enumerations-associatedvalues	
-ID149	enumerations-rawvalues	
-ID150	enumerations-initializingfromarawvalue	
+ID146	enumerations-enumerationsyntax	Enumeration-Syntax
+ID147	enumerations-matchingenumerationvalueswithaswitchstatement	Matching-Enumeration-Values-with-a-Switch-Statement
+ID148	enumerations-associatedvalues	Associated-Values
+ID149	enumerations-rawvalues	Raw-Values
+ID150	enumerations-initializingfromarawvalue	Initializing-from-a-Raw-Value
 ID151	LanguageGuide/Extensions	
-ID152	extensions-computedproperties	
-ID153	extensions-initializers	
-ID154	extensions-methods	
-ID155	extensions-mutatinginstancemethods	
-ID156	extensions-subscripts	
-ID157	extensions-nestedtypes	
+ID152	extensions-computedproperties	Computed-Properties
+ID153	extensions-initializers	Initializers
+ID154	extensions-methods	Methods
+ID155	extensions-mutatinginstancemethods	Mutating-Instance-Methods
+ID156	extensions-subscripts	Subscripts
+ID157	extensions-nestedtypes	Nested-Types
 ID158	LanguageGuide/Functions	
-ID159	functions-definingandcallingfunctions	
-ID160	functions-functionparametersandreturnvalues	
-ID162	functions-functionswithoutparameters	
-ID163	functions-functionswithoutreturnvalues	
-ID164	functions-functionswithmultiplereturnvalues	
-ID165	functions-optionaltuplereturntypes	
+ID159	functions-definingandcallingfunctions	Defining-and-Calling-Functions
+ID160	functions-functionparametersandreturnvalues	Function-Parameters-and-Return-Values
+ID162	functions-functionswithoutparameters	Functions-Without-Parameters
+ID163	functions-functionswithoutreturnvalues	Functions-Without-Return-Values
+ID164	functions-functionswithmultiplereturnvalues	Functions-with-Multiple-Return-Values
+ID165	functions-optionaltuplereturntypes	Optional-Tuple-Return-Types
 ID166	functions-functionparameternames	
 ID167	functions-externalparameternames	
 ID168	functions-shorthandexternalparameternames	
-ID169	functions-defaultparametervalues	
+ID169	functions-defaultparametervalues	Default-Parameter-Values
 ID170	functions-externalnamesforparameterswithdefaultvalues	
-ID171	functions-variadicparameters	
+ID171	functions-variadicparameters	Variadic-Parameters
 ID172	functions-constantandvariableparameters	
-ID173	functions-inoutparameters	
-ID174	functions-functiontypes	
-ID175	functions-usingfunctiontypes	
-ID176	functions-functiontypesasparametertypes	
-ID177	functions-functiontypesasreturntypes	
-ID178	functions-nestedfunctions	
+ID173	functions-inoutparameters	In-Out-Parameters
+ID174	functions-functiontypes	Function-Types
+ID175	functions-usingfunctiontypes	Using-Function-Types
+ID176	functions-functiontypesasparametertypes	Function-Types-as-Parameter-Types
+ID177	functions-functiontypesasreturntypes	Function-Types-as-Return-Types
+ID178	functions-nestedfunctions	Nested-Functions
 ID179	LanguageGuide/Generics	
-ID180	generics-theproblemthatgenericssolve	
-ID181	generics-genericfunctions	
-ID182	generics-typeparameters	
-ID183	generics-namingtypeparameters	
-ID184	generics-generictypes	
-ID185	generics-extendingagenerictype	
-ID186	generics-typeconstraints	
-ID187	generics-typeconstraintsyntax	
-ID188	generics-typeconstraintsinaction	
-ID189	generics-associatedtypes	
-ID190	generics-associatedtypesinaction	
-ID191	generics-extendinganexistingtypetospecifyanassociatedtype	
+ID180	generics-theproblemthatgenericssolve	The-Problem-That-Generics-Solve
+ID181	generics-genericfunctions	Generic-Functions
+ID182	generics-typeparameters	Type-Parameters
+ID183	generics-namingtypeparameters	Naming-Type-Parameters
+ID184	generics-generictypes	Generic-Types
+ID185	generics-extendingagenerictype	Extending-a-Generic-Type
+ID186	generics-typeconstraints	Type-Constraints
+ID187	generics-typeconstraintsyntax	Type-Constraint-Syntax
+ID188	generics-typeconstraintsinaction	Type-Constraints-in-Action
+ID189	generics-associatedtypes	Associated-Types
+ID190	generics-associatedtypesinaction	Associated-Types-in-Action
+ID191	generics-extendinganexistingtypetospecifyanassociatedtype	Extending-an-Existing-Type-to-Specify-an-Associated-Type
 ID192	generics-whereclauses	
 ID193	LanguageGuide/Inheritance	
-ID194	inheritance-definingabaseclass	
-ID195	inheritance-subclassing	
-ID196	inheritance-overriding	
+ID194	inheritance-definingabaseclass	Defining-a-Base-Class
+ID195	inheritance-subclassing	Subclassing
+ID196	inheritance-overriding	Overriding
 ID197	inheritance-accessingsuperclass	
-ID198	inheritance-overridingmethods	
-ID199	inheritance-overridingproperties	
-ID200	inheritance-overridingpropertygettersandsetters	
-ID201	inheritance-overridingpropertyobservers	
-ID202	inheritance-preventingoverrides	
+ID198	inheritance-overridingmethods	Overriding-Methods
+ID199	inheritance-overridingproperties	Overriding-Properties
+ID200	inheritance-overridingpropertygettersandsetters	Overriding-Property-Getters-and-Setters
+ID201	inheritance-overridingpropertyobservers	Overriding-Property-Observers
+ID202	inheritance-preventingoverrides	Preventing-Overrides
 ID203	LanguageGuide/Initialization	
-ID204	initialization-settinginitialvaluesforstoredproperties	
-ID205	initialization-initializers	
-ID206	initialization-defaultpropertyvalues	
-ID207	initialization-customizinginitialization	
-ID208	initialization-initializationparameters	
+ID204	initialization-settinginitialvaluesforstoredproperties	Setting-Initial-Values-for-Stored-Properties
+ID205	initialization-initializers	Initializers
+ID206	initialization-defaultpropertyvalues	Default-Property-Values
+ID207	initialization-customizinginitialization	Customizing-Initialization
+ID208	initialization-initializationparameters	Initialization-Parameters
 ID209	initialization-localandexternalnames	
 ID210	initialization-initializerparameterswithoutexternalnames	
-ID211	initialization-optionalpropertytypes	
+ID211	initialization-optionalpropertytypes	Optional-Property-Types
 ID212	initialization-modifyingconstantpropertiesduringinitialization	
-ID213	initialization-defaultinitializers	
-ID214	initialization-memberwiseinitializersforstructuretypes	
-ID215	initialization-initializerdelegationforvaluetypes	
-ID216	initialization-classinheritanceandinitialization	
-ID217	initialization-designatedinitializersandconvenienceinitializers	
-ID218	initialization-syntaxfordesignatedandconvenienceinitializers	
+ID213	initialization-defaultinitializers	Default-Initializers
+ID214	initialization-memberwiseinitializersforstructuretypes	Memberwise-Initializers-for-Structure-Types
+ID215	initialization-initializerdelegationforvaluetypes	Initializer-Delegation-for-Value-Types
+ID216	initialization-classinheritanceandinitialization	Class-Inheritance-and-Initialization
+ID217	initialization-designatedinitializersandconvenienceinitializers	Designated-Initializers-and-Convenience-Initializers
+ID218	initialization-syntaxfordesignatedandconvenienceinitializers	Syntax-for-Designated-and-Convenience-Initializers
 ID219	initialization-initializerchaining	
-ID220	initialization-twophaseinitialization	
-ID221	initialization-initializerinheritanceandoverriding	
-ID222	initialization-automaticinitializerinheritance	
-ID223	initialization-designatedandconvenienceinitializersinaction	
-ID224	initialization-failableinitializers	
-ID225	initialization-failableinitializersforenumerations	
-ID226	initialization-failableinitializersforenumerationswithrawvalues	
-ID228	initialization-propagationofinitializationfailure	
-ID229	initialization-overridingafailableinitializer	
+ID220	initialization-twophaseinitialization	Two-Phase-Initialization
+ID221	initialization-initializerinheritanceandoverriding	Initializer-Inheritance-and-Overriding
+ID222	initialization-automaticinitializerinheritance	Automatic-Initializer-Inheritance
+ID223	initialization-designatedandconvenienceinitializersinaction	Designated-and-Convenience-Initializers-in-Action
+ID224	initialization-failableinitializers	Failable-Initializers
+ID225	initialization-failableinitializersforenumerations	Failable-Initializers-for-Enumerations
+ID226	initialization-failableinitializersforenumerationswithrawvalues	Failable-Initializers-for-Enumerations-with-Raw-Values
+ID228	initialization-propagationofinitializationfailure	Propagation-of-Initialization-Failure
+ID229	initialization-overridingafailableinitializer	Overriding-a-Failable-Initializer
 ID230	initialization-implicitlyunwrappedfailableinitializers	
-ID231	initialization-requiredinitializers	
-ID232	initialization-settingadefaultpropertyvaluewithaclosureorfunction	
+ID231	initialization-requiredinitializers	Required-Initializers
+ID232	initialization-settingadefaultpropertyvaluewithaclosureorfunction	Setting-a-Default-Property-Value-with-a-Closure-or-Function
 ID233	LanguageGuide/LanguageGuidePart	
 ID234	LanguageGuide/Methods	
-ID235	methods-instancemethods	
+ID235	methods-instancemethods	Instance-Methods
 ID236	methods-localandexternalnamesformethods	
-ID238	methods-theselfproperty	
-ID239	methods-modifyingvaluetypesfromwithininstancemethods	
-ID240	methods-assigningtoselfwithinamutatingmethod	
-ID241	methods-typemethods	
+ID238	methods-theselfproperty	The-self-Property
+ID239	methods-modifyingvaluetypesfromwithininstancemethods	Modifying-Value-Types-from-Within-Instance-Methods
+ID240	methods-assigningtoselfwithinamutatingmethod	Assigning-to-self-Within-a-Mutating-Method
+ID241	methods-typemethods	Type-Methods
 ID242	LanguageGuide/NestedTypes	
-ID243	nestedtypes-nestedtypesinaction	
-ID244	nestedtypes-referringtonestedtypes	
+ID243	nestedtypes-nestedtypesinaction	Nested-Types-in-Action
+ID244	nestedtypes-referringtonestedtypes	Referring-to-Nested-Types
 ID245	LanguageGuide/OptionalChaining	
-ID246	optionalchaining-optionalchainingasanalternativetoforcedunwrapping	
-ID247	optionalchaining-definingmodelclassesforoptionalchaining	
+ID246	optionalchaining-optionalchainingasanalternativetoforcedunwrapping	Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping
+ID247	optionalchaining-definingmodelclassesforoptionalchaining	Defining-Model-Classes-for-Optional-Chaining
 ID248	optionalchaining-callingpropertiesthroughoptionalchaining	
-ID249	optionalchaining-callingmethodsthroughoptionalchaining	
+ID249	optionalchaining-callingmethodsthroughoptionalchaining	Calling-Methods-Through-Optional-Chaining
 ID250	optionalchaining-callingsubscriptsthroughoptionalchaining	
-ID251	optionalchaining-accessingsubscriptsofoptionaltype	
-ID252	optionalchaining-linkingmultiplelevelsofchaining	
-ID253	optionalchaining-chainingonmethodswithoptionalreturnvalues	
+ID251	optionalchaining-accessingsubscriptsofoptionaltype	Accessing-Subscripts-of-Optional-Type
+ID252	optionalchaining-linkingmultiplelevelsofchaining	Linking-Multiple-Levels-of-Chaining
+ID253	optionalchaining-chainingonmethodswithoptionalreturnvalues	Chaining-on-Methods-with-Optional-Return-Values
 ID254	LanguageGuide/Properties	
-ID255	properties-storedproperties	
-ID256	properties-storedpropertiesofconstantstructureinstances	
-ID257	properties-lazystoredproperties	
-ID258	properties-storedpropertiesandinstancevariables	
-ID259	properties-computedproperties	
-ID260	properties-shorthandsetterdeclaration	
-ID261	properties-readonlycomputedproperties	
-ID262	properties-propertyobservers	
-ID263	properties-globalandlocalvariables	
-ID264	properties-typeproperties	
-ID265	properties-typepropertysyntax	
-ID266	properties-queryingandsettingtypeproperties	
+ID255	properties-storedproperties	Stored-Properties
+ID256	properties-storedpropertiesofconstantstructureinstances	Stored-Properties-of-Constant-Structure-Instances
+ID257	properties-lazystoredproperties	Lazy-Stored-Properties
+ID258	properties-storedpropertiesandinstancevariables	Stored-Properties-and-Instance-Variables
+ID259	properties-computedproperties	Computed-Properties
+ID260	properties-shorthandsetterdeclaration	Shorthand-Setter-Declaration
+ID261	properties-readonlycomputedproperties	Read-Only-Computed-Properties
+ID262	properties-propertyobservers	Property-Observers
+ID263	properties-globalandlocalvariables	Global-and-Local-Variables
+ID264	properties-typeproperties	Type-Properties
+ID265	properties-typepropertysyntax	Type-Property-Syntax
+ID266	properties-queryingandsettingtypeproperties	Querying-and-Setting-Type-Properties
 ID267	LanguageGuide/Protocols	
-ID268	protocols-protocolsyntax	
-ID269	protocols-propertyrequirements	
-ID270	protocols-methodrequirements	
-ID271	protocols-mutatingmethodrequirements	
-ID272	protocols-initializerrequirements	
-ID273	protocols-classimplementationsofprotocolinitializerrequirements	
-ID274	protocols-failableinitializerrequirements	
-ID275	protocols-protocolsastypes	
-ID276	protocols-delegation	
-ID277	protocols-addingprotocolconformancewithanextension	
-ID278	protocols-declaringprotocoladoptionwithanextension	
-ID279	protocols-collectionsofprotocoltypes	
-ID280	protocols-protocolinheritance	
-ID281	protocols-classonlyprotocols	
-ID282	protocols-protocolcomposition	
-ID283	protocols-checkingforprotocolconformance	
-ID284	protocols-optionalprotocolrequirements	
+ID268	protocols-protocolsyntax	Protocol-Syntax
+ID269	protocols-propertyrequirements	Property-Requirements
+ID270	protocols-methodrequirements	Method-Requirements
+ID271	protocols-mutatingmethodrequirements	Mutating-Method-Requirements
+ID272	protocols-initializerrequirements	Initializer-Requirements
+ID273	protocols-classimplementationsofprotocolinitializerrequirements	Class-Implementations-of-Protocol-Initializer-Requirements
+ID274	protocols-failableinitializerrequirements	Failable-Initializer-Requirements
+ID275	protocols-protocolsastypes	Protocols-as-Types
+ID276	protocols-delegation	Delegation
+ID277	protocols-addingprotocolconformancewithanextension	Adding-Protocol-Conformance-with-an-Extension
+ID278	protocols-declaringprotocoladoptionwithanextension	Declaring-Protocol-Adoption-with-an-Extension
+ID279	protocols-collectionsofprotocoltypes	Collections-of-Protocol-Types
+ID280	protocols-protocolinheritance	Protocol-Inheritance
+ID281	protocols-classonlyprotocols	Class-Only-Protocols
+ID282	protocols-protocolcomposition	Protocol-Composition
+ID283	protocols-checkingforprotocolconformance	Checking-for-Protocol-Conformance
+ID284	protocols-optionalprotocolrequirements	Optional-Protocol-Requirements
 ID285	LanguageGuide/StringsAndCharacters	
 ID286	stringsandcharacters-literals	
-ID287	stringsandcharacters-initializinganemptystring	
-ID288	stringsandcharacters-stringmutability	
-ID289	stringsandcharacters-stringsarevaluetypes	
-ID290	stringsandcharacters-workingwithcharacters	
-ID291	stringsandcharacters-concatenatingstringsandcharacters	
-ID292	stringsandcharacters-stringinterpolation	
-ID293	stringsandcharacters-unicode	
+ID287	stringsandcharacters-initializinganemptystring	Initializing-an-Empty-String
+ID288	stringsandcharacters-stringmutability	String-Mutability
+ID289	stringsandcharacters-stringsarevaluetypes	Strings-Are-Value-Types
+ID290	stringsandcharacters-workingwithcharacters	Working-with-Characters
+ID291	stringsandcharacters-concatenatingstringsandcharacters	Concatenating-Strings-and-Characters
+ID292	stringsandcharacters-stringinterpolation	String-Interpolation
+ID293	stringsandcharacters-unicode	Unicode
 ID294	stringsandcharacters-stringsareunicodescalars	
-ID295	stringsandcharacters-specialcharactersinstringliterals	
-ID296	stringsandcharacters-extendedgraphemeclusters	
-ID297	stringsandcharacters-countingcharacters	
-ID298	stringsandcharacters-comparingstrings	
+ID295	stringsandcharacters-specialcharactersinstringliterals	Special-Characters-in-String-Literals
+ID296	stringsandcharacters-extendedgraphemeclusters	Extended-Grapheme-Clusters
+ID297	stringsandcharacters-countingcharacters	Counting-Characters
+ID298	stringsandcharacters-comparingstrings	Comparing-Strings
 ID299	stringsandcharacters-stringequality	
-ID300	stringsandcharacters-prefixandsuffixequality	
-ID301	stringsandcharacters-unicoderepresentationsofstrings	
+ID300	stringsandcharacters-prefixandsuffixequality	Prefix-and-Suffix-Equality
+ID301	stringsandcharacters-unicoderepresentationsofstrings	Unicode-Representations-of-Strings
 ID302	stringsandcharacters-utf8	
 ID303	stringsandcharacters-utf16	
 ID304	stringsandcharacters-unicodescalars	
 ID305	LanguageGuide/Subscripts	
-ID306	subscripts-subscriptsyntax	
-ID307	subscripts-subscriptusage	
-ID308	subscripts-subscriptoptions	
+ID306	subscripts-subscriptsyntax	Subscript-Syntax
+ID307	subscripts-subscriptusage	Subscript-Usage
+ID308	subscripts-subscriptoptions	Subscript-Options
 ID309	LanguageGuide/TheBasics	
-ID310	thebasics-constantsandvariables	
-ID311	thebasics-declaringconstantsandvariables	
-ID312	thebasics-typeannotations	
-ID313	thebasics-namingconstantsandvariables	
-ID314	thebasics-printingconstantsandvariables	
-ID315	thebasics-comments	
-ID316	thebasics-semicolons	
-ID317	thebasics-integers	
-ID318	thebasics-integerbounds	
-ID319	thebasics-int	
-ID320	thebasics-uint	
-ID321	thebasics-floatingpointnumbers	
-ID322	thebasics-typesafetyandtypeinference	
-ID323	thebasics-numericliterals	
-ID324	thebasics-numerictypeconversion	
-ID325	thebasics-integerconversion	
-ID326	thebasics-integerandfloatingpointconversion	
-ID327	thebasics-typealiases	
-ID328	thebasics-booleans	
-ID329	thebasics-tuples	
-ID330	thebasics-optionals	
-ID331	thebasics-nil	
-ID332	thebasics-ifstatementsandforcedunwrapping	
-ID333	thebasics-optionalbinding	
-ID334	thebasics-implicitlyunwrappedoptionals	
+ID310	thebasics-constantsandvariables	Constants-and-Variables
+ID311	thebasics-declaringconstantsandvariables	Declaring-Constants-and-Variables
+ID312	thebasics-typeannotations	Type-Annotations
+ID313	thebasics-namingconstantsandvariables	Naming-Constants-and-Variables
+ID314	thebasics-printingconstantsandvariables	Printing-Constants-and-Variables
+ID315	thebasics-comments	Comments
+ID316	thebasics-semicolons	Semicolons
+ID317	thebasics-integers	Integers
+ID318	thebasics-integerbounds	Integer-Bounds
+ID319	thebasics-int	Int
+ID320	thebasics-uint	UInt
+ID321	thebasics-floatingpointnumbers	Floating-Point-Numbers
+ID322	thebasics-typesafetyandtypeinference	Type-Safety-and-Type-Inference
+ID323	thebasics-numericliterals	Numeric-Literals
+ID324	thebasics-numerictypeconversion	Numeric-Type-Conversion
+ID325	thebasics-integerconversion	Integer-Conversion
+ID326	thebasics-integerandfloatingpointconversion	Integer-and-Floating-Point-Conversion
+ID327	thebasics-typealiases	Type-Aliases
+ID328	thebasics-booleans	Booleans
+ID329	thebasics-tuples	Tuples
+ID330	thebasics-optionals	Optionals
+ID331	thebasics-nil	nil
+ID332	thebasics-ifstatementsandforcedunwrapping	If-Statements-and-Forced-Unwrapping
+ID333	thebasics-optionalbinding	Optional-Binding
+ID334	thebasics-implicitlyunwrappedoptionals	Implicitly-Unwrapped-Optionals
 ID335	thebasics-assertions	
-ID336	thebasics-debuggingwithassertions	
+ID336	thebasics-debuggingwithassertions	Debugging-with-Assertions
 ID337	thebasics-whentouseassertions	
 ID338	LanguageGuide/TypeCasting	
-ID339	typecasting-definingaclasshierarchyfortypecasting	
-ID340	typecasting-checkingtype	
-ID341	typecasting-downcasting	
-ID342	typecasting-typecastingforanyandanyobject	
+ID339	typecasting-definingaclasshierarchyfortypecasting	Defining-a-Class-Hierarchy-for-Type-Casting
+ID340	typecasting-checkingtype	Checking-Type
+ID341	typecasting-downcasting	Downcasting
+ID342	typecasting-typecastingforanyandanyobject	Type-Casting-for-Any-and-AnyObject
 ID343	typecasting-anyobject	
 ID344	typecasting-any	
 ID345	ReferenceManual/AboutTheLanguageReference	
 ID346	introduction-howtoreadthegrammar	
 ID347	ReferenceManual/Attributes	
-ID348	attributes-declarationattributes	
-ID349	attributes-declarationattributesusedbyinterfacebuilder	
-ID350	attributes-typeattributes	
+ID348	attributes-declarationattributes	Declaration-Attributes
+ID349	attributes-declarationattributesusedbyinterfacebuilder	Declaration-Attributes-Used-by-Interface-Builder
+ID350	attributes-typeattributes	Type-Attributes
 ID351	ReferenceManual/Declarations	
 ID352	lexicalstructure-modulescope	
 ID353	lexicalstructure-codeblocks	
-ID354	declarations-importdeclaration	
-ID355	declarations-constantdeclaration	
-ID356	declarations-variabledeclaration	
+ID354	declarations-importdeclaration	Import-Declaration
+ID355	declarations-constantdeclaration	Constant-Declaration
+ID356	declarations-variabledeclaration	Variable-Declaration
 ID357	declarations-storedvariablesandvariablestoredproperties	
-ID358	declarations-computedvariablesandcomputedproperties	
-ID359	declarations-storedvariableobserversandpropertyobservers	
+ID358	declarations-computedvariablesandcomputedproperties	Computed-Variables-and-Computed-Properties
+ID359	declarations-storedvariableobserversandpropertyobservers	Stored-Variable-Observers-and-Property-Observers
 ID360	declarations-staticvariableproperties	
-ID361	declarations-typealiasdeclaration	
-ID362	declarations-functiondeclaration	
-ID364	declarations-enumerationdeclaration	
-ID365	declarations-enumerationswithcasesofanytype	
+ID361	declarations-typealiasdeclaration	Type-Alias-Declaration
+ID362	declarations-functiondeclaration	Function-Declaration
+ID364	declarations-enumerationdeclaration	Enumeration-Declaration
+ID365	declarations-enumerationswithcasesofanytype	Enumerations-with-Cases-of-Any-Type
 ID366	declarations-enumerationswithrawcasevalues	
-ID367	declarations-structuredeclaration	
-ID368	declarations-classdeclaration	
-ID369	declarations-protocoldeclaration	
-ID370	declarations-protocolpropertydeclaration	
-ID371	declarations-protocolmethoddeclaration	
-ID372	declarations-protocolinitializerdeclaration	
-ID373	declarations-protocolsubscriptdeclaration	
-ID374	declarations-protocolassociatedtypedeclaration	
-ID375	declarations-initializerdeclaration	
-ID376	declarations-failableinitializers	
-ID377	declarations-deinitializerdeclaration	
-ID378	declarations-extensiondeclaration	
-ID379	declarations-subscriptdeclaration	
-ID380	declarations-operatordeclaration	
-ID381	declarations-declarationmodifiers	
-ID382	declarations-accesscontrollevels	
+ID367	declarations-structuredeclaration	Structure-Declaration
+ID368	declarations-classdeclaration	Class-Declaration
+ID369	declarations-protocoldeclaration	Protocol-Declaration
+ID370	declarations-protocolpropertydeclaration	Protocol-Property-Declaration
+ID371	declarations-protocolmethoddeclaration	Protocol-Method-Declaration
+ID372	declarations-protocolinitializerdeclaration	Protocol-Initializer-Declaration
+ID373	declarations-protocolsubscriptdeclaration	Protocol-Subscript-Declaration
+ID374	declarations-protocolassociatedtypedeclaration	Protocol-Associated-Type-Declaration
+ID375	declarations-initializerdeclaration	Initializer-Declaration
+ID376	declarations-failableinitializers	Failable-Initializers
+ID377	declarations-deinitializerdeclaration	Deinitializer-Declaration
+ID378	declarations-extensiondeclaration	Extension-Declaration
+ID379	declarations-subscriptdeclaration	Subscript-Declaration
+ID380	declarations-operatordeclaration	Operator-Declaration
+ID381	declarations-declarationmodifiers	Declaration-Modifiers
+ID382	declarations-accesscontrollevels	Access-Control-Levels
 ID383	ReferenceManual/Expressions	
-ID384	expressions-prefixexpressions	
+ID384	expressions-prefixexpressions	Prefix-Expressions
 ID385	expressions-binaryexpressions	
-ID386	expressions-assignmentoperator	
-ID387	expressions-ternaryconditionaloperator	
-ID388	expressions-type-castingoperators	
-ID389	expressions-primaryexpressions	
-ID390	expressions-literalexpression	
-ID391	expressions-selfexpression	
-ID392	expressions-superclassexpression	
-ID393	expressions-closureexpression	
-ID394	expressions-implicitmemberexpression	
-ID395	expressions-parenthesizedexpression	
-ID396	expressions-wildcardexpression	
-ID397	expressions-postfixexpressions	
-ID398	expressions-functioncallexpression	
-ID399	expressions-initializerexpression	
-ID400	expressions-explicitmemberexpression	
-ID401	expressions-postfixselfexpression	
+ID386	expressions-assignmentoperator	Assignment-Operator
+ID387	expressions-ternaryconditionaloperator	Ternary-Conditional-Operator
+ID388	expressions-type-castingoperators	Type-Casting-Operators
+ID389	expressions-primaryexpressions	Primary-Expressions
+ID390	expressions-literalexpression	Literal-Expression
+ID391	expressions-selfexpression	Self-Expression
+ID392	expressions-superclassexpression	Superclass-Expression
+ID393	expressions-closureexpression	Closure-Expression
+ID394	expressions-implicitmemberexpression	Implicit-Member-Expression
+ID395	expressions-parenthesizedexpression	Parenthesized-Expression
+ID396	expressions-wildcardexpression	Wildcard-Expression
+ID397	expressions-postfixexpressions	Postfix-Expressions
+ID398	expressions-functioncallexpression	Function-Call-Expression
+ID399	expressions-initializerexpression	Initializer-Expression
+ID400	expressions-explicitmemberexpression	Explicit-Member-Expression
+ID401	expressions-postfixselfexpression	Postfix-Self-Expression
 ID402	expressions-dynamictypeexpression	
-ID403	expressions-subscriptexpression	
-ID404	expressions-forced-valueexpression	
+ID403	expressions-subscriptexpression	Subscript-Expression
+ID404	expressions-forced-valueexpression	Forced-Value-Expression
 ID405	expression-optionalchainingoperator	
 ID406	ReferenceManual/GenericParametersAndArguments	
-ID407	genericparametersandarguments-genericparameterclause	
+ID407	genericparametersandarguments-genericparameterclause	Generic-Parameter-Clause
 ID408	genericparametersandarguments-whereclauses	
-ID409	genericparametersandarguments-genericargumentclause	
+ID409	genericparametersandarguments-genericargumentclause	Generic-Argument-Clause
 ID410	ReferenceManual/LexicalStructure	
-ID411	lexicalstructure-whitespaceandcomments	
-ID412	lexicalstructure-identifiers	
+ID411	lexicalstructure-whitespaceandcomments	Whitespace-and-Comments
+ID412	lexicalstructure-identifiers	Identifiers
 ID413	lexicalstructure-keywords	
-ID414	lexicalstructure-literals	
-ID415	lexicalstructure-integerliterals	
-ID416	lexicalstructure-floating-pointliterals	
-ID417	lexicalstructure-stringliterals	
-ID418	lexicalstructure-operators	
+ID414	lexicalstructure-literals	Literals
+ID415	lexicalstructure-integerliterals	Integer-Literals
+ID416	lexicalstructure-floating-pointliterals	Floating-Point-Literals
+ID417	lexicalstructure-stringliterals	String-Literals
+ID418	lexicalstructure-operators	Operators
 ID419	ReferenceManual/Patterns	
-ID420	patterns-wildcardpattern	
-ID421	patterns-identifierpattern	
-ID422	patterns-value-bindingpattern	
-ID423	patterns-tuplepattern	
-ID424	patterns-enumerationcasepattern	
-ID425	patterns-type-castingpatterns	
-ID426	patterns-expressionpattern	
+ID420	patterns-wildcardpattern	Wildcard-Pattern
+ID421	patterns-identifierpattern	Identifier-Pattern
+ID422	patterns-value-bindingpattern	Value-Binding-Pattern
+ID423	patterns-tuplepattern	Tuple-Pattern
+ID424	patterns-enumerationcasepattern	Enumeration-Case-Pattern
+ID425	patterns-type-castingpatterns	Type-Casting-Patterns
+ID426	patterns-expressionpattern	Expression-Pattern
 ID427	ReferenceManual/ReferenceManualPart	
 ID428	ReferenceManual/Statements	
-ID429	statements-loopstatements	
+ID429	statements-loopstatements	Loop-Statements
 ID430	statements-forstatement	
-ID431	statements-for-instatement	
-ID432	statements-whilestatement	
+ID431	statements-for-instatement	For-In-Statement
+ID432	statements-whilestatement	While-Statement
 ID433	statements-do-whilestatement	
-ID434	statements-branchstatements	
-ID435	statements-ifstatement	
-ID436	statements-switchstatement	
-ID437	statements-switchstatementsmustbeexhaustive	
-ID438	statements-executiondoesnotfallthroughcasesimplicitly	
-ID439	statements-labeledstatement	
-ID440	statements-controltransferstatements	
-ID441	statements-breakstatement	
-ID442	statements-continuestatement	
-ID443	statements-fallthroughstatement	
-ID444	statements-returnstatement	
+ID434	statements-branchstatements	Branch-Statements
+ID435	statements-ifstatement	If-Statement
+ID436	statements-switchstatement	Switch-Statement
+ID437	statements-switchstatementsmustbeexhaustive	Switch-Statements-Must-Be-Exhaustive
+ID438	statements-executiondoesnotfallthroughcasesimplicitly	Execution-Does-Not-Fall-Through-Cases-Implicitly
+ID439	statements-labeledstatement	Labeled-Statement
+ID440	statements-controltransferstatements	Control-Transfer-Statements
+ID441	statements-breakstatement	Break-Statement
+ID442	statements-continuestatement	Continue-Statement
+ID443	statements-fallthroughstatement	Fallthrough-Statement
+ID444	statements-returnstatement	Return-Statement
 ID445	ReferenceManual/Types	
-ID446	types-typeannotation	
-ID447	types-typeidentifier	
-ID448	types-tupletype	
-ID449	types-functiontype	
-ID450	types-arraytype	
-ID451	types-dictionarytype	
-ID452	types-optionaltype	
-ID453	types-implicitlyunwrappedoptionaltype	
-ID454	types-protocolcompositiontype	
-ID455	types-metatypetype	
-ID456	types-typeinheritanceclause	
-ID457	types-typeinference	
+ID446	types-typeannotation	Type-Annotation
+ID447	types-typeidentifier	Type-Identifier
+ID448	types-tupletype	Tuple-Type
+ID449	types-functiontype	Function-Type
+ID450	types-arraytype	Array-Type
+ID451	types-dictionarytype	Dictionary-Type
+ID452	types-optionaltype	Optional-Type
+ID453	types-implicitlyunwrappedoptionaltype	Implicitly-Unwrapped-Optional-Type
+ID454	types-protocolcompositiontype	Protocol-Composition-Type
+ID455	types-metatypetype	Metatype-Type
+ID456	types-typeinheritanceclause	Type-Inheritance-Clause
+ID457	types-typeinference	Type-Inference
 ID458	ReferenceManual/zzSummaryOfTheGrammar	
 ID459	RevisionHistory/RevisionHistory	
 ID460	RevisionHistory/RevisionHistoryPart	
@@ -461,11 +461,11 @@ ID463	tour-functionsandclosures
 ID464	tour-classes	
 ID465	tour-enumsandstructs	
 ID466	tour-protocolsandextensions	
-ID468	accesscontrol-rawvaluesandassociatedvalues	
-ID470	extensions-extensionsyntax	
-ID471	declarations-parameternames	
-ID472	declarations-specialkindsofparameters	
-ID473	declarations-specialkindsofmethods	
+ID468	accesscontrol-rawvaluesandassociatedvalues	Raw-Values-and-Associated-Values
+ID470	extensions-extensionsyntax	Extension-Syntax
+ID471	declarations-parameternames	Parameter-Names
+ID472	declarations-specialkindsofparameters	Special-Kinds-of-Parameters
+ID473	declarations-specialkindsofmethods	Special-Kinds-of-Methods
 ID474	declarations-enumerationcases	
 ID475	grammar-summary--Statements	
 ID476	grammar-summary--Generic Parameters and Arguments	
@@ -475,28 +475,28 @@ ID479	grammar-summary--Attributes
 ID480	grammar-summary--Expressions	
 ID481	grammar-summary--Lexical Structure	
 ID482	grammar-summary--Types	
-ID483	declarations-typevariableproperties	
-ID484	collectiontypes-sets	
+ID483	declarations-typevariableproperties	Type-Variable-Properties
+ID484	collectiontypes-sets	Sets
 ID485	collectiontypes-settypeshorthandsyntax	
 ID486	collectiontypes-creatingandinitializingaset	
 ID487	collectiontypes-setwitharrayliterals	
-ID488	collectiontypes-accessingandmodifyingaset	
-ID489	collectiontypes-iteratingoveraset	
-ID490	collectiontypes-performingsetoperations	
+ID488	collectiontypes-accessingandmodifyingaset	Accessing-and-Modifying-a-Set
+ID489	collectiontypes-iteratingoveraset	Iterating-Over-a-Set
+ID490	collectiontypes-performingsetoperations	Performing-Set-Operations
 ID492	collectiontypes-comparingsets	
-ID493	collectiontypes-hashvaluesforsettypes	
-ID494	stringsandcharacters-accessingandmodifyingastring	
+ID493	collectiontypes-hashvaluesforsettypes	Hash-Values-for-Set-Types
+ID494	stringsandcharacters-accessingandmodifyingastring	Accessing-and-Modifying-a-String
 ID495	stringsandcharacters-stringindexes	
-ID496	stringsandcharacters-insertingandremoving	
+ID496	stringsandcharacters-insertingandremoving	Inserting-and-Removing
 ID499	collectiontypes-constructingsets	
-ID500	collectiontypes-creatinganemptyarray	
-ID501	collectiontypes-creatinganarraywithadefaultvalue	
-ID502	collectiontypes-creatinganarraybyaddingtwoarraystogether	
-ID503	collectiontypes-creatingandinitializinganemptyset	
-ID504	collectiontypes-creatingasetwithanarrayliteral	
-ID505	collectiontypes-fundamentalsetoperations	
-ID506	collectiontypes-setmembershipandequality	
-ID507	collectiontypes-creatingadictionarywithadictionaryliteral	
+ID500	collectiontypes-creatinganemptyarray	Creating-an-Empty-Array
+ID501	collectiontypes-creatinganarraywithadefaultvalue	Creating-an-Array-with-a-Default-Value
+ID502	collectiontypes-creatinganarraybyaddingtwoarraystogether	Creating-an-Array-by-Adding-Two-Arrays-Together
+ID503	collectiontypes-creatingandinitializinganemptyset	Creating-and-Initializing-an-Empty-Set
+ID504	collectiontypes-creatingasetwithanarrayliteral	Creating-a-Set-with-an-Array-Literal
+ID505	collectiontypes-fundamentalsetoperations	Fundamental-Set-Operations
+ID506	collectiontypes-setmembershipandequality	Set-Membership-and-Equality
+ID507	collectiontypes-creatingadictionarywithadictionaryliteral	Creating-a-Dictionary-with-a-Dictionary-Literal
 ID508	LanguageGuide/ErrorHandling	
 ID509	errorhandling-represent	
 ID510	errorhandling-throw	
@@ -504,53 +504,53 @@ ID511	errorhandling-rethrow
 ID512	errorhandling-catch	
 ID513	errorhandling-force	
 ID514	errorhandling-defer	
-ID515	thebasics-errorhandling	
+ID515	thebasics-errorhandling	Error-Handling
 ID516	expressions-tryexpression	
 ID517	expressions-forcedtryexpression	
-ID518	statements-throwstatement	
+ID518	statements-throwstatement	Throw-Statement
 ID519	accesscontrol-accesslevelsfortesttargets	
-ID520	patterns-optionalpattern	
+ID520	patterns-optionalpattern	Optional-Pattern
 ID521	protocols-extensions	
-ID522	statements-availabilitycondition	
+ID522	statements-availabilitycondition	Availability-Condition
 ID523	controlflow-available	
-ID524	statements-guardstatement	
+ID524	statements-guardstatement	Guard-Statement
 ID525	controlflow-guard	
 ID526	functions-omittingparameternames	
-ID527	protocols-addingconstraintstoprotocolextensions	
+ID527	protocols-addingconstraintstoprotocolextensions	Adding-Constraints-to-Protocol-Extensions
 ID528	functions-functionswithmultipleinputparameters	
-ID529	protocols-providingdefaultimplementations	
-ID530	declarations-throwingfunctionsandmethods	
-ID531	declarations-rethrowingfunctionsandmethods	
-ID532	statements-deferstatement	
-ID533	statements-dostatement	
-ID534	stringsandcharacters-stringindices	
-ID535	enumerations-implicitlyassignedrawvalues	
-ID536	enumerations-recursiveenumerations	
-ID537	declarations-enumerationswithindirection	
-ID538	statements-compilercontrolstatements	
+ID529	protocols-providingdefaultimplementations	Providing-Default-Implementations
+ID530	declarations-throwingfunctionsandmethods	Throwing-Functions-and-Methods
+ID531	declarations-rethrowingfunctionsandmethods	Rethrowing-Functions-and-Methods
+ID532	statements-deferstatement	Defer-Statement
+ID533	statements-dostatement	Do-Statement
+ID534	stringsandcharacters-stringindices	String-Indices
+ID535	enumerations-implicitlyassignedrawvalues	Implicitly-Assigned-Raw-Values
+ID536	enumerations-recursiveenumerations	Recursive-Enumerations
+ID537	declarations-enumerationswithindirection	Enumerations-with-Indirection
+ID538	statements-compilercontrolstatements	Compiler-Control-Statements
 ID539	statements-buildconfigurationstatement	
-ID540	statements-linecontrolstatement	
+ID540	statements-linecontrolstatement	Line-Control-Statement
 ID541	errorhandling-docatch	
 ID542	errorhandling-optional	
-ID543	closures-autoclosures	
-ID544	expressions-capturelists	
-ID545	declarations-inoutparameters	
+ID543	closures-autoclosures	Autoclosures
+ID544	expressions-capturelists	Capture-Lists
+ID545	declarations-inoutparameters	In-Out-Parameters
 ID546	closures-noescape	
 ID547	expression-selectorexpression	
-ID548	controlflow-compoundcases	
+ID548	controlflow-compoundcases	Compound-Cases
 ID549	expression-keypathexpression	
-ID550	declarations-precedencegroupdeclaration	
-ID551	declarations-functionsthatneverreturn	
-ID552	expressions-tupleexpression	
+ID550	declarations-precedencegroupdeclaration	Precedence-Group-Declaration
+ID551	declarations-functionsthatneverreturn	Functions-that-Never-Return
+ID552	expressions-tupleexpression	Tuple-Expression
 ID553	generics-extensionwithwhereclause	
 ID554	thebasics-preconditions	
-ID555	stringsandcharacters-substrings	
+ID555	stringsandcharacters-substrings	Substrings
 ID557	generics-associatedtypeswithwhereclause	
 ID558	generics-subscripts	
 ID559	accesscontrol-privateextension	
 ID560	generics-constrainassociatedtype	
 ID561	GuidedTour/Compatibility	
-ID562	basicoperators-onesidedranges	
+ID562	basicoperators-onesidedranges	One-Sided-Ranges
 ID563	expression-typedkeypathexpression	
 ID564	stringsandcharacters-multilineliterals	
 ID565	stringsandcharacters-multilineliteralslinebreaks	
@@ -564,64 +564,64 @@ ID572	types-functionparameterconflicts
 ID573	memory-characteristics	
 ID574	protocols-declaringconditionalconformancetoaprotocol	
 ID575	generics-recursiveprotocol	
-ID576	declarations-conditionalconformance	
+ID576	declarations-conditionalconformance	Conditional-Conformance
 ID577	declarations-overrideconformance	
 ID578	declarations-noredundantconformance	
-ID579	declarations-resolvingexplicitredundancy	
+ID579	declarations-resolvingexplicitredundancy	Resolving-Explicit-Redundancy
 ID580	declarations-explicitconformanceinheritance	
 ID581	enumerations-allcases	
 ID582	statements-errorwarning	
-ID583	attributes-available	
-ID584	attributes-discardableresult	
-ID585	attributes-dynamicmemberlookup	
-ID586	attributes-gkinspectable	
-ID587	attributes-inlinable	
-ID588	attributes-nonobjc	
-ID589	attributes-nsapplicationmain	
-ID590	attributes-nscopying	
-ID591	attributes-nsmanaged	
-ID592	attributes-objc	
-ID593	attributes-objcmembers	
-ID594	attributes-requires-stored-property-inits	
-ID595	attributes-testable	
-ID596	attributes-uiapplicationmain	
-ID597	attributes-usablefrominline	
-ID598	attributes-warn-unqualified-access	
-ID599	attributes-autoclosure	
-ID600	attributes-convention	
-ID601	attributes-escaping	
-ID602	statements-switchingoverfutureenumerationcases	
-ID603	attributes-dynamiccallable	
-ID604	attributes-switchcaseattributes	
-ID605	attributes-unknown	
+ID583	attributes-available	available
+ID584	attributes-discardableresult	discardableResult
+ID585	attributes-dynamicmemberlookup	dynamicMemberLookup
+ID586	attributes-gkinspectable	GKInspectable
+ID587	attributes-inlinable	inlinable
+ID588	attributes-nonobjc	nonobjc
+ID589	attributes-nsapplicationmain	NSApplicationMain
+ID590	attributes-nscopying	NSCopying
+ID591	attributes-nsmanaged	NSManaged
+ID592	attributes-objc	objc
+ID593	attributes-objcmembers	objcMembers
+ID594	attributes-requires-stored-property-inits	requiresstoredpropertyinits
+ID595	attributes-testable	testable
+ID596	attributes-uiapplicationmain	UIApplicationMain
+ID597	attributes-usablefrominline	usableFromInline
+ID598	attributes-warn-unqualified-access	warnunqualifiedaccess
+ID599	attributes-autoclosure	autoclosure
+ID600	attributes-convention	convention
+ID601	attributes-escaping	escaping
+ID602	statements-switchingoverfutureenumerationcases	Switching-Over-Future-Enumeration-Cases
+ID603	attributes-dynamiccallable	dynamicCallable
+ID604	attributes-switchcaseattributes	Switch-Case-Attributes
+ID605	attributes-unknown	unknown
 ID606	stringsandcharacters-extendeddelimiters	
 ID607	functions-implicitreturns	
 ID608	properties-implicitreturn	
-ID609	subscripts-typesubscripts	
-ID610	types-selftype	
+ID609	subscripts-typesubscripts	Type-Subscripts
+ID610	types-selftype	Self-Type
 ID611	declarations-typesubscriptdeclaration	
 ID612	LanguageGuide/OpaqueTypes	
 ID613	opaquetypes-limitsofgenerics	
 ID614	opaquetypes-returning	
 ID615	opaquetypes-limitsofexistentials	
-ID616	types-opaquetype	
+ID616	types-opaquetype	Opaque-Type
 ID617	properties-propertywrapper	
 ID618	properties-propertywrapperinit	
 ID619	properties-projectedvalues	
-ID620	attributes-frozen	
-ID621	attributes-propertywrapper	
+ID620	attributes-frozen	frozen
+ID621	attributes-propertywrapper	propertyWrapper
 ID622	declarations-specialfuncnames	
 ID623	tour-errorhandling	
 ID624	tour-generics	
-ID625	automaticreferencecounting-unownedoptionalreferences	
-ID626	attributes-main	
+ID625	automaticreferencecounting-unownedoptionalreferences	Unowned-Optional-References
+ID626	attributes-main	main
 ID627	protocols-synthesizedimplementation	
 ID628	generics-contextualwhereclause	
-ID629	types-anytype	
-ID630	advancedoperators-resultbuilders	
-ID631	expressions-inoutexpression	
+ID629	types-anytype	Any-Type
+ID630	advancedoperators-resultbuilders	Result-Builders
+ID631	expressions-inoutexpression	In-Out-Expression
 ID632	expressions-implicitconversion	
-ID633	attributes-resultbuilder	
+ID633	attributes-resultbuilder	resultBuilder
 ID634	attributes-resultbuilder-methods	
 ID635	attributes-resultbuilder-transformation	
 ID636	attributes-resultbuilder-attribute	
@@ -632,12 +632,12 @@ ID640	concurrency-asyncsequence
 ID641	concurrency-asynclet	
 ID642	concurrency-tasks	
 ID643	concurrency-taskhandle	
-ID644	concurrency-taskcancellation	
-ID645	concurrency-actors	
+ID644	concurrency-taskcancellation	Task-Cancellation
+ID645	concurrency-actors	Actors
 ID646	expressions-awaitexpression	
 ID647	declarations-asyncfunctions	
-ID648	declarations-actordeclaration	
+ID648	declarations-actordeclaration	Actor-Declaration
 ID649	concurrency-sendable	
 ID650	lexicalstructure-regexliterals	
-ID651	attributes-unchecked	
-ID652	attributes-sendable	
+ID651	attributes-unchecked	unchecked
+ID652	attributes-sendable	Sendable
