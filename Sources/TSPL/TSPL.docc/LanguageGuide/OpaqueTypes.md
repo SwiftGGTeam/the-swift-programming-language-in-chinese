@@ -727,21 +727,21 @@ for _ in 1...5 {
 ## Differences Between Opaque Types and Boxed Protocol Types
 
 Returning an opaque type looks very similar
-to using a protocol type as the return type of a function,
+to using a boxed protocol type as the return type of a function,
 but these two kinds of return type differ in
 whether they preserve type identity.
 An opaque type refers to one specific type,
 although the caller of the function isn't able to see which type;
-a protocol type can refer to any type that conforms to the protocol.
+a boxed protocol type can refer to any type that conforms to the protocol.
 Generally speaking,
-protocol types give you more flexibility
+boxed protocol types give you more flexibility
 about the underlying types of the values they store,
 and opaque types let you make stronger guarantees
 about those underlying types.
 
 For example,
 here's a version of `flip(_:)`
-that uses a protocol type as its return type
+that uses a boxed protocol type as its return type
 instead of an opaque return type:
 
 ```swift
@@ -862,19 +862,19 @@ but adding a `Self` requirement to the protocol
 doesn't allow for the type erasure that happens
 when you use the protocol as a type.
 
-Using a protocol type as the return type for a function
+Using a boxed protocol type as the return type for a function
 gives you the flexibility to return any type that conforms to the protocol.
 However, the cost of that flexibility
 is that some operations aren't possible on the returned values.
 The example shows how the `==` operator isn't available ---
 it depends on specific type information
-that isn't preserved by using a protocol type.
+that isn't preserved by using a boxed protocol type.
 
 Another problem with this approach is that the shape transformations don't nest.
 The result of flipping a triangle is a value of type `Shape`,
 and the `protoFlip(_:)` function takes an argument
 of some type that conforms to the `Shape` protocol.
-However, a value of a protocol type doesn't conform to that protocol;
+However, a value of a boxed protocol type doesn't conform to that protocol;
 the value returned by `protoFlip(_:)` doesn't conform to `Shape`.
 This means code like `protoFlip(protoFlip(smallTriangle))`
 that applies multiple transformations is invalid
@@ -884,7 +884,7 @@ In contrast,
 opaque types preserve the identity of the underlying type.
 Swift can infer associated types,
 which lets you use an opaque return value
-in places where a protocol type can't be used as a return value.
+in places where a boxed protocol type can't be used as a return value.
 For example,
 here's a version of the `Container` protocol from <doc:Generics>:
 
