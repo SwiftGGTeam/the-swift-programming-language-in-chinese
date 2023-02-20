@@ -855,11 +855,6 @@ An *opaque type* defines a type
 that conforms to a protocol or protocol composition,
 without specifying the underlying concrete type.
 
-◊ there is a specific concrete type
-◊ the underlying type is known at compile time
-◊ the compiler can use that type for optimizations
-◊ but... the opaque type forms a boundary, which type information can't cross
-
 Opaque types appear as the return type of a function or subscript,
 or the type of a property.
 Opaque types can't appear as part of a tuple type or a generic type,
@@ -889,6 +884,13 @@ that are part of the interface defined by the *constraint*.
   and the compiler uses the same machinery for both under the hood.
 -->
 
+At compile time,
+a value whose type is opaque has a specific concrete type,
+and Swift can use that underlying type for optimizations.
+However,
+the opaque type forms a boundary
+that information about that underlying type can't cross.
+
 Protocol declarations can't include opaque types.
 Classes can't use an opaque type as the return type of a nonfinal method.
 
@@ -906,13 +908,9 @@ could return a value of type `T` or `Dictionary<String, T>`.
 ## Boxed Protocol Type
 
 A *boxed protocol type* defines a type
-that conforms to a protocol or protocol composition.
-<!-- XXX
-what makes it "boxed" is that (usually) it requires a separate allocation
-and the fact that type erasure hides information
-
-the first sentence of this section needs more contrast with opaque types
--->
+that conforms to a protocol or protocol composition,
+with the ability for that conforming type
+to vary while the program is running.
 
 Boxed protocol types have the following form:
 
@@ -932,6 +930,9 @@ This behavior contrasts with how an opaque types work,
 where there is some specific conforming type known at compile time.
 The additional level of indirection that's used
 when working with a boxed protocol type is called :newTerm:`boxing`.
+Boxing typically requires a separate memory allocation for storage
+and an additional level of indirection for access.
+
 Applying `any` to the `Any` or `AnyObject` types
 is redundant and has no effect.
 
