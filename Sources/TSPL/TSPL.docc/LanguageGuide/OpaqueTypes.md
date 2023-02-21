@@ -294,8 +294,6 @@ but the function could be rewritten to draw a trapezoid
 in a variety of other ways
 without changing its return type.
 
-<!-- XXX introduce "some" keyword -->
-
 This example highlights the way that an opaque return type
 is like the reverse of a generic type.
 The code inside `makeTrapezoid()` can return any type it needs to,
@@ -610,16 +608,20 @@ In the example above,
 an array of boxed `Shape` elements.
 Each element in the array can be a different type,
 and each of those types must conform to the `Shape` protocol.
+To support this runtime flexibility,
+Swift adds a level of indirection when necessary ---
+this indirection is called a *box*,
+and it has a performance cost.
 
 Within the `VerticalShapes` type,
 the code can use methods, properties, and subscripts
 that are required by the `Shape` protocol.
-The `draw()` method of `VerticalShapes`
+For example, the `draw()` method of `VerticalShapes`
 calls the `draw()` method on each element of the array.
-This API is available because `Shape` requires a `draw()` method.
+This method is available because `Shape` requires a `draw()` method.
 In contrast,
 trying to access the `size` property of the triangle,
-or any other APIs that aren't required by `Shape`,
+or any other properties or methods that aren't required by `Shape`,
 produces an error.
 
 Contrast the three types you could use for `shapes`:
@@ -643,15 +645,6 @@ Contrast the three types you could use for `shapes`:
 In this case,
 a boxed protocol type is the only approach
 that lets callers of `VerticalShapes` mix different kinds of shapes together.
-
-To support this runtime flexibility,
-Swift adds a level of indirection when necessary ---
-this indirection is known as a *box*,
-and it has a performance cost.
-Memory allocation for the box adds a level of indirection.
-<!-- XXX revisit para above -->
-
-<!-- XXX explain how they are "boxed" --->
 
 ## Differences Between Opaque Types and Boxed Protocol Types
 
