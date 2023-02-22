@@ -494,44 +494,6 @@ must return values of only a single type.
 
 ## Boxed Protocol Types
 
-<!--
-
-Xiodi Wu wrote:
-
-    Rather, in terms of user-facing language semantics, I'd throw in a mention
-    there (even a short one) that because the underlying type can vary at
-    runtime, there isn't a statically known underlying type, and for that
-    reason not all APIs (nor protocol conformances) of the underlying type can
-    be made available through the box.  It would be really helpful if then in
-    the corresponding dedicated subsection on existentials some more detailed
-    but still didactically appropriate treatment of this issue could be
-    included, as it is a very common question here on the user forums and
-    probably more of what users trip up on when they use existentials than the
-    performance bit. (Feel free to lift any text I've contributed to the
-    educational notes in the Swift repository on this issue.)
-
-You can as-cast an existential,
-like other values of non-concrete types or subtypes,
-if you know the underlying type:
-
-    protocol P {
-        var p: Int { get }
-    }
-
-    struct S: P {
-        var p = 12
-        var q = 100
-    }
-
-    var s: any P = S()
-    print(s.p)
-
-    if let ss = s as? S { print(ss.q) }
-
-    print(type(of: s))
-
--->
-
 A boxed protocol type is also sometimes called an *existential type*,
 which comes from the phrase
 "there exists a type *T* such that *T* conforms to the protocol".
@@ -645,6 +607,19 @@ Contrast the three types you could use for `shapes`:
 In this case,
 a boxed protocol type is the only approach
 that lets callers of `VerticalShapes` mix different kinds of shapes together.
+
+You can use an `as` cast
+when you know the underlying type of a boxed value.
+For example:
+
+```swift
+if let downcastTriangle = vertical.shapes[0] as? Triangle {
+    print(downcastTriangle.size)
+}
+// Prints "5"
+```
+
+For more information, see <doc:Typecasting#Downcasting>.
 
 ## Differences Between Opaque Types and Boxed Protocol Types
 
