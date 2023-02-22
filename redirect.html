@@ -101,3 +101,23 @@ window.location = newURL;
 </script>
 </body>
 </html>
+
+
+<!--
+URL with chapter, with hash
+ - try to redirect by hash
+ - if the hash is unknown, ignore it
+   and fall through/back to chapter case
+
+URL with chapter, no hash
+ - try to redirect by chapter
+ - fall back to the top level
+
+URL with no chapter, no hash
+ - fall back to the top level
+
+URL with no chapter, with hash
+ - input is probably invalid, but do the best we can
+ - try to redirect by hash
+ - fall back to the top level
+-->
