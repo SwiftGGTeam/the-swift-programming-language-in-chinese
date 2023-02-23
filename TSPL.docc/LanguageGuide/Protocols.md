@@ -773,7 +773,7 @@ The underlying type is known at compile time,
 and the API implementation chooses that type,
 but that type's identity is hidden from clients of the API.
 Using an opaque type lets you prevent implementation details of an API
-from leaking through the layer of abstraction --
+from leaking through the layer of abstraction ---
 for example, by hiding the specific return type from a function,
 and only guaranteeing that the value conforms to a given protocol.
 
