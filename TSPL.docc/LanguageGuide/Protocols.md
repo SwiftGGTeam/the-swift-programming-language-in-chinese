@@ -758,7 +758,7 @@ Protocols don't actually implement any functionality themselves.
 Nonetheless, you can use a protocol as a type in your code.
 
 The most common way to use a protocol as a type
-is to use a protocol as generic constraint.
+is to use a protocol as a generic constraint.
 Code with generic constraints can work with
 any type that conforms to the protocol,
 and the specific type is chosen by the code that uses the API.

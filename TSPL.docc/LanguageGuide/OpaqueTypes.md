@@ -21,7 +21,7 @@ A boxed protocol type can store an instance of any type
 that conforms to the given protocol.
 Boxed protocol types don't preserve type identity ---
 the value's specific type isn't known until runtime,
-and can change over time as different values are stored.
+and it can change over time as different values are stored.
 
 ## The Problem That Opaque Types Solve
 
