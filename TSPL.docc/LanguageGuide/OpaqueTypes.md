@@ -619,7 +619,7 @@ if let downcastTriangle = vertical.shapes[0] as? Triangle {
 // Prints "5"
 ```
 
-For more information, see <doc:Typecasting#Downcasting>.
+For more information, see <doc:TypeCasting#Downcasting>.
 
 ## Differences Between Opaque Types and Boxed Protocol Types
 
