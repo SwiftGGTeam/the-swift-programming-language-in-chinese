@@ -920,6 +920,12 @@ for a method marked with the `objc` attribute.
 
 ### NSApplicationMain
 
+> Note:
+> This attribute is deprecated;
+> use the <doc:Attributes:main> attribute instead.
+> In Swift 6,
+> using this attribute will be an error.
+
 Apply this attribute to a class
 to indicate that it's the application delegate.
 Using this attribute is equivalent to calling the
@@ -2031,6 +2037,12 @@ are imported as if they were declared with the `open` access-level modifier.
 The imported module must be compiled with testing enabled.
 
 ### UIApplicationMain
+
+> Note:
+> This attribute is deprecated;
+> use the <doc:Attributes:main> attribute instead.
+> In Swift 6,
+> using this attribute will be an error.
 
 Apply this attribute to a class
 to indicate that it's the application delegate.
