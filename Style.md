@@ -113,6 +113,25 @@ In the reference,
 so we don’t also mention methods separately.
 In the guide, we write “functions and methods”.
 
+## future features
+
+Starting with the implementation of
+[SE-0362: Piecemeal adoption of upcoming language improvements][SE-0362],
+some language features are available on an opt-in basis
+before being enabled by default.
+
+At the beginning of a section or chapter about a future feature,
+include a note as follows.
+
+> Note:
+> This language feature will be part of Swift *n*.
+> To enable it in current versions of Swift,
+> use the feature identifier `SomeFeatureIdentifier`.
+> For information about enabling future language features,
+> see [Enabling future language features](FIXME).
+
+[SE-0362]: https://github.com/apple/swift-evolution/blob/main/proposals/0362-piecemeal-future-features.md
+
 ## headings
 
 Use number signs (`#`) for headings, not underlines.
