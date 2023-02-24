@@ -4,11 +4,11 @@
 #
 # To use this file for a single blame operation,
 #
-#   git blame --ignore-revs-file .git_ignored_revs <somefile>
+#   git blame --ignore-revs-file .git-blame-ignore-revs <somefile>
 #
 # To use this file for all blame operations, run the following command:
 #
-#   git config --local blame.ignoredRevsFile .git_ignored_revs
+#   git config --local blame.ignoredRevsFile .git-blame-ignore-revs
 #
 # For more information, see the git-blame(1) man page's discussion of
 # the --ignore-revs-file option, and the git-config(1) man page's
