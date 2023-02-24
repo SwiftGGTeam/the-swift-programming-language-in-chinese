@@ -2126,7 +2126,7 @@ only if they are nonisolated or asynchronous.
 The process of initializing an actor's declared properties
 is described in <doc:Initialization>.
 
-Properties of a actor instance can be accessed using dot (`.`) syntax,
+Properties of an actor instance can be accessed using dot (`.`) syntax,
 as described in <doc:ClassesAndStructures#Accessing-Properties>.
 
 Actors are reference types; instances of an actor are referred to, rather than copied,
@@ -2134,7 +2134,7 @@ when assigned to variables or constants, or when passed as arguments to a functi
 For information about reference types,
 see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-You can extend the behavior of a structure type with an extension declaration,
+You can extend the behavior of an actor type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
 <!--
