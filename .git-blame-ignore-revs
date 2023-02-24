@@ -8,7 +8,7 @@
 #
 # To use this file for all blame operations, run the following command:
 #
-#   git config --local blame.ignoredRevsFile .git-blame-ignore-revs
+#   git config --local blame.ignoreRevsFile .git-blame-ignore-revs
 #
 # For more information, see the git-blame(1) man page's discussion of
 # the --ignore-revs-file option, and the git-config(1) man page's
