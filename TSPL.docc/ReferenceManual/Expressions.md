@@ -921,6 +921,41 @@ to make use of the implementation in their superclass.
 >
 > *superclass-initializer-expression* → **`super`** **`.`** **`init`**
 
+### Conditional Expression
+
+A *conditional expression* XXX
+
+A conditional expression can appear only in the following contexts:
+
+- As the value assigned to a variable.
+- As the initial value in a variable or constant declaration.
+- As the value returned by a function, closure, or property getter.
+
+<!--
+OUTLINE
+
+- each branch must be a single expression -- except for branches that throw or trap
+- each branch must produce a value of the same type -- and must typecheck independently
+- an 'if' must have an 'else' -- does a 'switch' have to have a default?
+- conditional expressions can't be used inside a result builder
+-->
+
+> Grammar of a conditional expression:
+>
+> *if-expression* → **`if`** *condition-list* **`{`** expression **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** *condition-list* **`{`** expression **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** *if-expression*
+>
+>
+>
+> *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`**
+>
+> *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_
+>
+> *switch-expression-case* → *case-label* *expression*
+>
+> *switch-expression-case* → *default-label* *expression*
+
 ### Closure Expression
 
 A *closure expression* creates a closure,
