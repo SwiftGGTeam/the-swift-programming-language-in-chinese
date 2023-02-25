@@ -936,7 +936,7 @@ OUTLINE
 
 - each branch must be a single expression -- except for branches that throw or trap
 - each branch must produce a value of the same type -- and must typecheck independently
-- an 'if' must have an 'else' -- does a 'switch' have to have a default?
+- an 'if' must have an 'else' -- 'switch' must be exhaustive
 - conditional expressions can't be used inside a result builder
 -->
 
