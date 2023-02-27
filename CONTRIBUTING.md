@@ -83,7 +83,7 @@ and hard wrapping text automatically.
 
 Use the following steps when creating a new pull request:
 
-1. Test that your changes build locally by running `make preview`.
+1. Test that your changes build locally by running `docc preview TSPL.docc`.
 2. Create a pull request in this repository.
 3. Write a brief message in the pull request to introduce your work in context.
 
