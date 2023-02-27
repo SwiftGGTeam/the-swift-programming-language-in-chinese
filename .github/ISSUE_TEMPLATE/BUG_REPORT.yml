@@ -1,0 +1,31 @@
+name: Content Issue
+description: Something is missing or incorrect
+labels: ["Content Issue"]
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thank you for contributing to "The Swift Programming Language"!
+
+      Before you submit your issue, please provide the relevant details in the text areas below.
+- type: textarea
+  attributes:
+    label: Location
+    description: |
+      The URL of the content that has a problem.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Description
+    description: |
+      A short description of what's wrong.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Correction
+    description: |
+      What should the documentation say instead?
+  validations:
+    required: false
