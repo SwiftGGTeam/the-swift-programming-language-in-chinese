@@ -1887,7 +1887,7 @@ For information about using `defer` with error handling,
 see <docc:ErrorHandling:Specifying-Cleanup-Actions>.
 
 If you write more than one `defer` block in the same scope,
-the first one you specify in the last one to run.
+the first one you specify is the last one to run.
 
 ```
 if score < 10 {
