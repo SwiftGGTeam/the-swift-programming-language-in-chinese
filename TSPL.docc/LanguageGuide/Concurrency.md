@@ -639,7 +639,7 @@ see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
   .. _Concurrency_ChildTasks:
 
   Adding Child Tasks to a Task Group
-  
+
   - Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
 
   - awaiting ``withGroup`` means waiting for all child tasks to complete
