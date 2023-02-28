@@ -969,7 +969,18 @@ with the following differences:
 - Each branch must produce a value of the same type.
   Type checking of each branch happens independently.
 
+  <!--
+  XXX If you use literals of different types on different branches
+  or you include a nil literal,
+  you need to provide type context so those will type check.
+  -->
+
 - A conditional expression can't appear inside a result builder.
+
+  <!--
+  XXX  But the SE proposal also says:
+  The variable declaration form of an if will be allowed in result builders.
+  -->
 
 > Grammar of a conditional expression:
 >

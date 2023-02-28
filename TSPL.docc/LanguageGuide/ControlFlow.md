@@ -1285,6 +1285,37 @@ and `distance` is an integer in both patterns ---
 which means that the code in the body of the `case`
 can always access a value for `distance`.
 
+
+### If and Switch Expressions
+
+```swift
+let temperatureInCelsius = 25
+
+let weatherAdvice = if temperatureInCelsius <= 0 {
+    "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    "It's really warm. Don't forget to wear sunscreen."
+} else {
+    "It's not that cold. Wear a t-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a t-shirt."
+```
+
+```swift
+let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+    print("(\(x), \(y)) is on the line x == y")
+case let (x, y) where x == -y:
+    print("(\(x), \(y)) is on the line x == -y")
+case let (x, y):
+    print("(\(x), \(y)) is just some arbitrary point")
+}
+// Prints "(1, -1) is on the line x == -y"
+```
+
 ## Control Transfer Statements
 
 *Control transfer statements* change the order in which your code is executed,
