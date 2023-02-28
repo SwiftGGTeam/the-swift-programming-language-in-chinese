@@ -923,22 +923,53 @@ to make use of the implementation in their superclass.
 
 ### Conditional Expression
 
-A *conditional expression* XXX
+A *conditional expression* evaluates to one of several given values
+based on the value of a condition.
+It has one the following forms:
 
-A conditional expression can appear only in the following contexts:
+```swift
+if <#condition 1#> {
+   <#expression used if condition 1 is true#>
+} else if <#condition 2#> {
+   <#expression used if condition 2 is true#>
+} else {
+   <#expression used if both conditions are false#>
+}
 
-- As the value assigned to a variable.
-- As the initial value in a variable or constant declaration.
-- As the value returned by a function, closure, or property getter.
+switch <#expression#> {
+case <#pattern 1#>:
+    <#expression 1#>
+case <#pattern 2#> where <#condition#>:
+    <#expression 2#>
+default:
+    <#expression 3#>
+}
+```
 
-<!--
-OUTLINE
+A conditional expression
+has the same behavior and syntax as an if statement or switch statement,
+with the following differences:
 
-- each branch must be a single expression -- except for branches that throw or trap
-- each branch must produce a value of the same type -- and must typecheck independently
-- an 'if' must have an 'else' -- 'switch' must be exhaustive
-- conditional expressions can't be used inside a result builder
--->
+- A conditional expression can appear only in the following contexts:
+
+    - As the value assigned to a variable.
+
+    - As the initial value in a variable or constant declaration.
+
+    - As the value returned by a function, closure, or property getter.
+
+- Each branch must contain a single expression,
+  which is used as the value for the conditional expression
+  when that branch's conditional is true.
+
+  <!-- XXX can also include throw or fatalError() and so on -->
+
+- An `if` branch must have a corresponding `else` branch.
+
+- Each branch must produce a value of the same type.
+  Type checking of each branch happens independently.
+
+- A conditional expression can't appear inside a result builder.
 
 > Grammar of a conditional expression:
 >
