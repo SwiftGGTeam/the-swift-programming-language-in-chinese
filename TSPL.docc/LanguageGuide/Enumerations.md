@@ -830,6 +830,12 @@ by evaluating the expression on the left-hand side,
 evaluating the expression on the right-hand side,
 and then adding them or multiplying them.
 
+> BETA SOFTWARE:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/)
+
 <!--
 This source file is part of the Swift.org open source project
 
