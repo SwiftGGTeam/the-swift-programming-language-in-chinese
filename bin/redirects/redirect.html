@@ -92,7 +92,7 @@ if (hash == "") {
     const chapter = components[components.length - 1];
     const newPath = part + "/" + chapter;
     if (newPath in chapterRedirects) {
-        const redirectPath chapterRedirects[newPath];
+        const redirectPath = chapterRedirects[newPath];
         newURL += redirectPath;
     }
 } else {
