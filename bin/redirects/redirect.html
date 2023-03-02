@@ -80,6 +80,12 @@ const path = window.location.pathname;
 const hash = window.location.hash;
 
 var newURL = baseURL;
+
+if (hash.startsWith("#//apple_ref/doc/uid/")) {
+    const appleRefParts = hash.split("-");
+    hash = appleRefParts[2];
+}
+
 if (hash == "") {
     const components = path.split("/");
     const part = components[components.length - 2];
