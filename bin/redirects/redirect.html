@@ -15,8 +15,6 @@ Please turn on JavaScript and refresh the page.
 </noscript>
 </div>
 <script>
-const baseURL = "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/";
-
 const headingRedirects = {
     "#ID461": "guidedtour#Simple-Values",
     "#ID462": "guidedtour#Control-Flow",
@@ -80,25 +78,25 @@ const chapterRedirects = {
 }
 
 const path = window.location.pathname;
-const hash = window.location.hash;
+const pathComponents = path.split("/");
+const chapter = pathComponents[pathComponents.length - 1];
 
-var newURL = baseURL;
+const hash = window.location.hash;
 
 if (hash.startsWith("#//apple_ref/doc/uid/")) {
     const appleRefParts = hash.split("-");
     hash = appleRefParts[2];
 }
 
+const baseURL = "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/";
+var newURL = baseURL;
+
 if (hash in headingRedirects) {
     const redirectPath = headingRedirects[hash];
     newURL = baseURL + redirectPath;
-} else {
-    const components = path.split("/");
-    const chapter = components[components.length - 1];
-    if (chapter in chapterRedirects) {
-        const redirectPath = chapterRedirects[newPath];
-        newURL = baseURL + redirectPath;
-    }
+} else if (chapter in chapterRedirects) {
+    const redirectPath = chapterRedirects[newPath];
+    newURL = baseURL + redirectPath;
 }
 
 document.getElementById("redirect").setAttribute("href", newURL);
