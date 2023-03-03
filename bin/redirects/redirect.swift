@@ -700,7 +700,6 @@ let chapters = [
 
 
 // Values to interpolate into the JavaScript
-var chapter = "XXX"
 var headingRedirects = ""
 var chapterRedirects = ""
 
@@ -709,6 +708,13 @@ for case let (stableID, _, docc) in headings {
     headingRedirects += 
         """
         "#\(stableID)": "\(docc)",\n
+        """
+}
+
+for case let (chapterPath, filename) in chapters {
+    chapterRedirects +=
+        """
+        "\(chapterPath)": "\(filename)",\n
         """
 }
 
