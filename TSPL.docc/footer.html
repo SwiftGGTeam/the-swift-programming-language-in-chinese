@@ -53,11 +53,11 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
         outline: none;
         --toggle-color-fill: var(--color-button-background);
         font-size: 12px;
-        border: 1px solid var(--color-nav-link-color);
-        border-radius: var(--border-radius);
+        border: 1px solid #fff;
+        border-radius: 4px;
         display: inline-flex;
         padding: 1px;
-        margin-bottom:var(--content-margin-bottom)
+        margin-bottom: 1em;
     }
 
     .color-scheme-toggle input {
@@ -75,7 +75,6 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
     .color-scheme-toggle-label {
         border: 1px solid transparent;
         border-radius: var(--toggle-border-radius-inner, 2px);
-        color: var(--color-nav-link-color);
         display: inline-block;
         text-align: center;
         padding: 1px 6px;
@@ -88,7 +87,7 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
     }
 
     input:checked + .color-scheme-toggle-label {
-        background: var(--color-nav-link-color);
+        background: #fff;
         color: var(--color-nav-stuck)
     }
 
