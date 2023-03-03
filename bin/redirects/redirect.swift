@@ -646,56 +646,56 @@ let headings: [(String, String, String)] = [
     (stableID: "ID652", sphinx: "attributes-sendable", docc: "attributes#Sendable"),
 ]
 
-let chapters = [
-    "GuidedTour/AboutSwift.html": "aboutswift",
-    "GuidedTour/Compatibility.html": "compatibility",
-    "GuidedTour/GuidedTour.html": "guidedtour",
-    "GuidedTour/GuidedTourPart.html": "guidedtour",
+let chapters: [(String, String, String)] = [
+    (part: "GuidedTour", filename: "AboutSwift.html", docc: "aboutswift"),
+    (part: "GuidedTour", filename: "Compatibility.html", docc: "compatibility"),
+    (part: "GuidedTour", filename: "GuidedTour.html", docc: "guidedtour"),
+    (part: "GuidedTour", filename: "GuidedTourPart.html", docc: "guidedtour"),
 
-    "LanguageGuide/AccessControl.html": "accesscontrol",
-    "LanguageGuide/AdvancedOperators.html": "advancedoperators",
-    "LanguageGuide/AutomaticReferenceCounting.html": "automaticreferencecounting",
-    "LanguageGuide/BasicOperators.html": "basicoperators",
-    "LanguageGuide/ClassesAndStructures.html": "classesandstructures",
-    "LanguageGuide/Closures.html": "closures",
-    "LanguageGuide/CollectionTypes.html": "collectiontypes",
-    "LanguageGuide/Concurrency.html": "concurrency",
-    "LanguageGuide/ControlFlow.html": "controlflow",
-    "LanguageGuide/Deinitialization.html": "deinitialization",
-    "LanguageGuide/Enumerations.html": "enumerations",
-    "LanguageGuide/ErrorHandling.html": "errorhandling",
-    "LanguageGuide/Extensions.html": "extensions",
-    "LanguageGuide/Functions.html": "functions",
-    "LanguageGuide/Generics.html": "generics",
-    "LanguageGuide/Inheritance.html": "inheritance",
-    "LanguageGuide/Initialization.html": "initialization",
-    "LanguageGuide/LanguageGuidePart.html": "languageguide",
-    "LanguageGuide/MemorySafety.html": "memorysafety",
-    "LanguageGuide/Methods.html": "methods",
-    "LanguageGuide/NestedTypes.html": "nestedtypes",
-    "LanguageGuide/OpaqueTypes.html": "opaquetypes",
-    "LanguageGuide/OptionalChaining.html": "optionalchaining",
-    "LanguageGuide/Properties.html": "properties",
-    "LanguageGuide/Protocols.html": "protocols",
-    "LanguageGuide/StringsAndCharacters.html": "stringsandcharacters",
-    "LanguageGuide/Subscripts.html": "subscripts",
-    "LanguageGuide/TheBasics.html": "thebasics",
-    "LanguageGuide/TypeCasting.html": "typecasting",
+    (part: "LanguageGuide", filename: "AccessControl.html", docc: "accesscontrol"),
+    (part: "LanguageGuide", filename: "AdvancedOperators.html", docc: "advancedoperators"),
+    (part: "LanguageGuide", filename: "AutomaticReferenceCounting.html", docc: "automaticreferencecounting"),
+    (part: "LanguageGuide", filename: "BasicOperators.html", docc: "basicoperators"),
+    (part: "LanguageGuide", filename: "ClassesAndStructures.html", docc: "classesandstructures"),
+    (part: "LanguageGuide", filename: "Closures.html", docc: "closures"),
+    (part: "LanguageGuide", filename: "CollectionTypes.html", docc: "collectiontypes"),
+    (part: "LanguageGuide", filename: "Concurrency.html", docc: "concurrency"),
+    (part: "LanguageGuide", filename: "ControlFlow.html", docc: "controlflow"),
+    (part: "LanguageGuide", filename: "Deinitialization.html", docc: "deinitialization"),
+    (part: "LanguageGuide", filename: "Enumerations.html", docc: "enumerations"),
+    (part: "LanguageGuide", filename: "ErrorHandling.html", docc: "errorhandling"),
+    (part: "LanguageGuide", filename: "Extensions.html", docc: "extensions"),
+    (part: "LanguageGuide", filename: "Functions.html", docc: "functions"),
+    (part: "LanguageGuide", filename: "Generics.html", docc: "generics"),
+    (part: "LanguageGuide", filename: "Inheritance.html", docc: "inheritance"),
+    (part: "LanguageGuide", filename: "Initialization.html", docc: "initialization"),
+    (part: "LanguageGuide", filename: "LanguageGuidePart.html", docc: "languageguide"),
+    (part: "LanguageGuide", filename: "MemorySafety.html", docc: "memorysafety"),
+    (part: "LanguageGuide", filename: "Methods.html", docc: "methods"),
+    (part: "LanguageGuide", filename: "NestedTypes.html", docc: "nestedtypes"),
+    (part: "LanguageGuide", filename: "OpaqueTypes.html", docc: "opaquetypes"),
+    (part: "LanguageGuide", filename: "OptionalChaining.html", docc: "optionalchaining"),
+    (part: "LanguageGuide", filename: "Properties.html", docc: "properties"),
+    (part: "LanguageGuide", filename: "Protocols.html", docc: "protocols"),
+    (part: "LanguageGuide", filename: "StringsAndCharacters.html", docc: "stringsandcharacters"),
+    (part: "LanguageGuide", filename: "Subscripts.html", docc: "subscripts"),
+    (part: "LanguageGuide", filename: "TheBasics.html", docc: "thebasics"),
+    (part: "LanguageGuide", filename: "TypeCasting.html", docc: "typecasting"),
 
-    "ReferenceManual/AboutTheLanguageReference.html": "aboutthelanguagereference",
-    "ReferenceManual/Attributes.html": "attributes",
-    "ReferenceManual/Declarations.html": "declarations",
-    "ReferenceManual/Expressions.html": "expressions",
-    "ReferenceManual/GenericParametersAndArguments.html": "genericparametersandarguments",
-    "ReferenceManual/LexicalStructure.html": "lexicalstructure",
-    "ReferenceManual/Patterns.html": "patterns",
-    "ReferenceManual/ReferenceManualPart.html": "referencemanual",
-    "ReferenceManual/Statements.html": "statements",
-    "ReferenceManual/Types.html": "types",
-    "ReferenceManual/zzSummaryOfTheGrammar.html": "summaryofthegrammar",
+    (part: "ReferenceManual", filename: "AboutTheLanguageReference.html", docc: "aboutthelanguagereference"),
+    (part: "ReferenceManual", filename: "Attributes.html", docc: "attributes"),
+    (part: "ReferenceManual", filename: "Declarations.html", docc: "declarations"),
+    (part: "ReferenceManual", filename: "Expressions.html", docc: "expressions"),
+    (part: "ReferenceManual", filename: "GenericParametersAndArguments.html", docc: "genericparametersandarguments"),
+    (part: "ReferenceManual", filename: "LexicalStructure.html", docc: "lexicalstructure"),
+    (part: "ReferenceManual", filename: "Patterns.html", docc: "patterns"),
+    (part: "ReferenceManual", filename: "ReferenceManualPart.html", docc: "referencemanual"),
+    (part: "ReferenceManual", filename: "Statements.html", docc: "statements"),
+    (part: "ReferenceManual", filename: "Types.html", docc: "types"),
+    (part: "ReferenceManual", filename: "zzSummaryOfTheGrammar.html", docc: "summaryofthegrammar"),
 
-    "RevisionHistory/RevisionHistory.html": "revisionhistory",
-    "RevisionHistory/RevisionHistoryPart.html": "revisionhistory",
+    (part: "RevisionHistory", filename: "RevisionHistory.html", docc: "revisionhistory"),
+    (part: "RevisionHistory", filename: "RevisionHistoryPart.html", docc: "revisionhistory"),
 ]
 
 
@@ -711,20 +711,20 @@ for case let (stableID, _, docc) in headings {
         """
 }
 
-for case let (chapterPath, filename) in chapters {
+for case let (part, filename, docc) in chapters {
     chapterRedirects +=
         """
-        "\(chapterPath)": "\(filename)",\n
+        "\(part)/\(filename)": "\(docc)",\n
         """
 }
 
-for case let (chapterPath, filename) in chapters {
+for case let (part, filename, docc) in chapters {
     let html = 
     """
     <html>
     <head>
         <title>The Swift Programming Language: Redirect</title>
-        <meta http-equiv="refresh" content="10; url=https://docs.swift.org/swift-book/documentation/the-swift-programming-language/\(filename)">
+        <meta http-equiv="refresh" content="10; url=https://docs.swift.org/swift-book/documentation/the-swift-programming-language/\(docc)">
     <head>
     <body>
     <div>
@@ -775,6 +775,6 @@ for case let (chapterPath, filename) in chapters {
     </html>
     """
 
-    let chapterURL = URL(fileURLWithPath: chapterPath)
-    try html.data(using: .utf8)!.write(to: chapterURL)
+    let outputURL = URL(fileURLWithPath: part + "/" + filename)
+    try html.data(using: .utf8)!.write(to: outputURL)
 }
