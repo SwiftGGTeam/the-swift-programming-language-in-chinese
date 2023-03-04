@@ -626,22 +626,23 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 使用 `async` 标记异步运行的函数
 
 ```swift
-func fetchUserID(from server: String) async -> Int{
-	if server == "primary"
-		return 97
+func fetchUserID(from server: String) async -> Int {
+    if server == "primary" {
+        return 97
+    }
+    return 501
 }
-	return 501
 ```
 
 您还可以通过在函数名前添加 `await` 来标记对异步函数的调用
 
 ```swift
-func fetchUsername(from server:String) async -> String{
-	let userID = await fetchUserID(from: server)
-	if userID == 501{
-		return "John Appleseed"
-	}
-	return "Guest"
+func fetchUsername(from server: String) async -> String {
+    let userID = await fetchUserID(from: server)
+    if userID == 501 {
+        return "John Appleseed"
+    }
+    return "Guest"
 }
 ```
 
@@ -649,11 +650,11 @@ func fetchUsername(from server:String) async -> String{
 使用 `await` 以使用该异步函数返回的值。
 
 ```swift
-func connectUser(to server: String) async{
-	async let userID = fetchUserID(from: server)
-	async let username = fetchUsername(from: server)
-	let greeting = await "Hello \(username), user ID \(userID)"
-	print(greeting)
+func connectUser(to server: String) async {
+    async let userID = fetchUserID(from: server)
+    async let username = fetchUsername(from: server)
+    let greeting = await "Hello \(username), user ID \(userID)"
+    print(greeting)
 }
 ```
 
