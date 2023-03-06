@@ -381,6 +381,21 @@ the conditional must be a Boolean expression ---
 this means that code such as `if score { ... }` is an error,
 not an implicit comparison to zero.
 
+You can write `if` or `switch`
+after the equals sign (`=`) of an assignment
+or after `return`,
+to choose a value based on the condition.
+
+```swift
+let scoreDecoration = if teamScore > 10 {
+    "🎉"
+} else {
+    ""
+}
+print("Score:", teamScore, scoreDecoration)
+// Prints "Score: 11 🎉"
+```
+
 You can use `if` and `let` together
 to work with values that might be missing.
 These values are represented as optionals.
