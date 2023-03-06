@@ -48,6 +48,10 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
     </div>
   </div>
   <style type="text/css">
+    /*
+    Expanded SCSS from apple/swift-org-website commit a09c14493f812:
+    /assets/stylesheets/_screen.scss#L925
+    */
     .color-scheme-toggle {
         display: block;
         outline: none;
@@ -108,10 +112,12 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
     }
   </style>
   <script type="text/javascript">
+    // DocC uses this local storage key to persist appearance preferences.
     const appearanceKey = 'developer.setting.preferredColorScheme'
     window.addEventListener('DOMContentLoaded', _ => {
       let appearancePreference = localStorage.getItem(appearanceKey)
       if (appearancePreference) {
+        // Set a color scheme according to a saved preference.
         document.body.dataset.colorScheme = appearancePreference
         document.querySelector('custom-footer')
           .shadowRoot
@@ -125,6 +131,7 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
       }
     })
 
+    // Set a color scheme based on user choice and persist it.
     function doccAppearance(mode) {
       switch(mode) {
       case 'light':
