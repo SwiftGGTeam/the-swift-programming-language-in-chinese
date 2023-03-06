@@ -759,6 +759,73 @@ if temperatureInFahrenheit <= 32 {
 Because the temperature is neither too cold nor too warm to trigger the `if` or `else if` conditions,
 no message is printed.
 
+Swift provides another version of `if` statements
+that you can use to set a value based on certain conditions.
+For example,
+consider the following code that uses `if` statements:
+
+```
+
+```swift
+let temperatureInCelsius = 25
+let weatherAdvice: String
+
+if temperatureInCelsius <= 0 {
+    weatherAdvice = "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    weatherAdvice = "It's really warm. Don't forget to wear sunscreen."
+} else {
+    weatherAdvice = "It's not that cold. Wear a t-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a t-shirt."
+```
+
+Here, each of the branches sets a value for the `weatherAdvice` constant,
+which is printed after the `if` statement.
+<!-- XXX have we shown deferred initialization like in an earlier chapter? -->
+
+Using the alternate syntax,
+known as an `if` expression,
+you could write this code more concisely:
+
+```swift
+let weatherAdvice = if temperatureInCelsius <= 0 {
+    "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    "It's really warm. Don't forget to wear sunscreen."
+} else {
+    "It's not that cold. Wear a t-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a t-shirt."
+```
+
+In this `if` expression version of the code,
+each branch contains a single value.
+If that branch's condition is true,
+then its value is used as the value for the whole `if` expression
+in the assignment of `weatherAdvice`.
+Every `if` branch has a corresponding `else if` branch or `else` branch,
+ensuring that one of the branches always produces a value,
+regardless of which conditions are true.
+
+Because the syntax for the assignment starts outside the `if` expression,
+there's no need to repeat `weatherAdvice =` inside each branch ---
+instead,
+each branch of the `if` expression
+produces of the three possible values for `weatherAdvice`,
+and the assignment uses that value.
+
+You can use `if` expressions
+on the right-hand side of an assignment,
+as shown in the example above,
+and as the value that a function or closure returns.
+
+<!--- XXX exception to the "one expression" rule -->
+
 ### Switch
 
 A `switch` statement considers a value
@@ -843,6 +910,26 @@ not just every alphabetic character,
 this `switch` statement uses a `default` case
 to match all characters other than `a` and `z`.
 This provision ensures that the `switch` statement is exhaustive.
+
+Like `if` statements,
+`switch` statements also have an expression form:
+
+```swift
+let anotherCharacter: Character = "a"
+let message = switch anotherCharacter {
+case "a":
+    "The first letter of the alphabet"
+case "z":
+    "The last letter of the alphabet"
+default:
+    "Some other character"
+}
+
+print(message)
+// Prints "The first letter of the alphabet"
+```
+
+<!-- XXX walkthru -->
 
 #### No Implicit Fallthrough
 
@@ -1284,37 +1371,6 @@ Both patterns include a binding for `distance`
 and `distance` is an integer in both patterns ---
 which means that the code in the body of the `case`
 can always access a value for `distance`.
-
-
-### If and Switch Expressions
-
-```swift
-let temperatureInCelsius = 25
-
-let weatherAdvice = if temperatureInCelsius <= 0 {
-    "It's very cold. Consider wearing a scarf."
-} else if temperatureInCelsius >= 30 {
-    "It's really warm. Don't forget to wear sunscreen."
-} else {
-    "It's not that cold. Wear a t-shirt."
-}
-
-print(weatherAdvice)
-// Prints "It's not that cold. Wear a t-shirt."
-```
-
-```swift
-let yetAnotherPoint = (1, -1)
-switch yetAnotherPoint {
-case let (x, y) where x == y:
-    print("(\(x), \(y)) is on the line x == y")
-case let (x, y) where x == -y:
-    print("(\(x), \(y)) is on the line x == -y")
-case let (x, y):
-    print("(\(x), \(y)) is just some arbitrary point")
-}
-// Prints "(1, -1) is on the line x == -y"
-```
 
 ## Control Transfer Statements
 
