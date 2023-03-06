@@ -88,7 +88,7 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 
     input:checked + .color-scheme-toggle-label {
         background: #fff;
-        color: var(--color-nav-stuck)
+        color: rgba(42,42,42,0.9);
     }
 
     [role="contentinfo"] {
@@ -113,6 +113,15 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
       let appearancePreference = localStorage.getItem(appearanceKey)
       if (appearancePreference) {
         document.body.dataset.colorScheme = appearancePreference
+        document.querySelector('custom-footer')
+          .shadowRoot
+          .querySelector(`#scheme-${appearancePreference}`)
+          .checked = true
+      } else {
+        document.querySelector('custom-footer')
+          .shadowRoot
+          .querySelector(`#scheme-auto`)
+          .checked = true
       }
     })
 
