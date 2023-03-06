@@ -144,10 +144,7 @@ See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
         break
       case 'auto':
         localStorage.removeItem(appearanceKey)
-        document.body.dataset.colorScheme =
-          window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light'
+        document.body.dataset.colorScheme = 'auto'
         break
       }
     }
