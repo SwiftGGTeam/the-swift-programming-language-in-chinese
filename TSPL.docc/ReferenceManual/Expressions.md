@@ -950,23 +950,28 @@ A conditional expression
 has the same behavior and syntax as an if statement or switch statement,
 with the following differences:
 
-- A conditional expression can appear only in the following contexts:
+- A conditional expression appears only in the following contexts:
 
     - As the value assigned to a variable.
 
     - As the initial value in a variable or constant declaration.
 
+    - As the error thrown by a `throw` expression.
+
     - As the value returned by a function, closure, or property getter.
 
-- Each branch must contain a single expression,
+- Each branch contains either a single expression,
   which is used as the value for the conditional expression
-  when that branch's conditional is true.
+  when that branch's conditional is true,
+  a `throw` statement,
+  or a call to a function that never returns.
+  <!--
+  You can't add precondition() to a branch before the expression.
+  -->
 
-  <!-- XXX can also include throw or fatalError() and so on -->
+- Each `if` branch has a corresponding `else` branch.
 
-- An `if` branch must have a corresponding `else` branch.
-
-- Each branch must produce a value of the same type.
+- Each branch produces a value of the same type.
   Type checking of each branch happens independently.
 
   <!--
@@ -982,11 +987,28 @@ with the following differences:
   The variable declaration form of an if will be allowed in result builders.
   -->
 
+Don't put a conditional expression in a `try` expression,
+even if one of the branches of a conditional expression is throwing.
+
+<!--
+XXX The SE proposal says this isn't required,
+but in my testing I see it's actually an error.
+
+In the case where a branch throws,
+either because a call in the expression throws
+(which requires a try)
+or with an explicit throw,
+there is no requirement to mark the overall expression
+with an additional try (e.g. before the if).
+-->
+
 > Grammar of a conditional expression:
 >
-> *if-expression* → **`if`** *condition-list* **`{`** expression **`}`** *if-expression-tail*
-> *if-expression-tail* → **`else`** *condition-list* **`{`** expression **`}`** *if-expression-tail*
+> *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
+>
 > *if-expression-tail* → **`else`** *if-expression*
+>
+> *if-expression-tail* → **`else`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
 >
 >
 >
@@ -994,9 +1016,9 @@ with the following differences:
 >
 > *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_
 >
-> *switch-expression-case* → *case-label* *expression*
+> *switch-expression-case* → *case-label* *statement*
 >
-> *switch-expression-case* → *default-label* *expression*
+> *switch-expression-case* → *default-label* *statement*
 
 ### Closure Expression
 

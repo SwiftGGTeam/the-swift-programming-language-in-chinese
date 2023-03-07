@@ -788,7 +788,7 @@ which is printed after the `if` statement.
 
 Using the alternate syntax,
 known as an `if` expression,
-you could write this code more concisely:
+you can write this code more concisely:
 
 ```swift
 let weatherAdvice = if temperatureInCelsius <= 0 {
