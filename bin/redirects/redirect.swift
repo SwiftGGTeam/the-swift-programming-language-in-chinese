@@ -725,7 +725,7 @@ for case let (part, filename, docc) in chapters {
     <head>
         <title>The Swift Programming Language: Redirect</title>
         <meta http-equiv="refresh" content="10; url=https://docs.swift.org/swift-book/documentation/the-swift-programming-language/\(docc)">
-    <head>
+    </head>
     <body>
     <div>
     This content has moved; redirecting to the
