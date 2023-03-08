@@ -947,60 +947,48 @@ default:
 ```
 
 A conditional expression
-has the same behavior and syntax as an if statement or switch statement,
-with the following differences:
+has the same behavior and syntax as an `if` statement or a `switch` statement,
+except for the differences listed below.
 
-- A conditional expression appears only in the following contexts:
+A conditional expression appears only in the following contexts:
 
-    - As the value assigned to a variable.
+  - As the value assigned to a variable.
+  - As the initial value in a variable or constant declaration.
+  - As the error thrown by a `throw` expression.
+  - As the value returned by a function, closure, or property getter.
 
-    - As the initial value in a variable or constant declaration.
+The branches of a conditional expression are exhaustive,
+ensuring that the expression always produces a value
+regardless of the condition.
+This means each `if` branch needs a corresponding `else` branch.
 
-    - As the error thrown by a `throw` expression.
+Each branch contains either a single expression,
+which is used as the value for the conditional expression
+when that branch's conditional is true,
+a `throw` statement,
+or a call to a function that never returns.
 
-    - As the value returned by a function, closure, or property getter.
+Each branch must produce a value of the same type.
+Because type checking of each branch is independent,
+conditional expressions that that include a `nil` literal
+or different kinds of literals typically need type context,
+like an explicit type annotation.
 
-- Each branch contains either a single expression,
-  which is used as the value for the conditional expression
-  when that branch's conditional is true,
-  a `throw` statement,
-  or a call to a function that never returns.
-  <!--
-  You can't add precondition() to a branch before the expression.
-  -->
+```swift
+let number: Double = if someCondition { 10 } else {12.34 }
+```
 
-- Each `if` branch has a corresponding `else` branch.
+A conditional expression can't appear inside a result builder.
 
-- Each branch produces a value of the same type.
-  Type checking of each branch happens independently.
+<!--
+XXX  TR: The SE proposal says the above,
+but then also says this, which appears to contradict:
 
-  <!--
-  XXX If you use literals of different types on different branches
-  or you include a nil literal,
-  you need to provide type context so those will type check.
-  -->
-
-- A conditional expression can't appear inside a result builder.
-
-  <!--
-  XXX  But the SE proposal also says:
-  The variable declaration form of an if will be allowed in result builders.
-  -->
+The variable declaration form of an if will be allowed in result builders.
+-->
 
 Don't put a conditional expression in a `try` expression,
 even if one of the branches of a conditional expression is throwing.
-
-<!--
-XXX The SE proposal says this isn't required,
-but in my testing I see it's actually an error.
-
-In the case where a branch throws,
-either because a call in the expression throws
-(which requires a try)
-or with an explicit throw,
-there is no requirement to mark the overall expression
-with an additional try (e.g. before the if).
--->
 
 > Grammar of a conditional expression:
 >
