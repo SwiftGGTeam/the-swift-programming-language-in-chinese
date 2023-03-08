@@ -819,12 +819,33 @@ each branch of the `if` expression
 produces of the three possible values for `weatherAdvice`,
 and the assignment uses that value.
 
+An `if` expression that checks for conditions
+that are invalid or that it can't handle
+can throw an error
+or call a function like `fatalError(_:file:line:)` that never returns.
+For example:
+
+```swift
+let weatherAdvice = if temperatureInCelsius > 100 {
+    throw TemperatureError.boiling
+} else {
+    "It's a reasonable temperature."
+}
+```
+
+In this example,
+the `if` expression checks whether the forecast temperature
+is hotter than 100° C, the temperature that water boils at.
+A temperature this hot causes the `if` expression to throw a `.boiling` error
+instead of returning a textual summary.
+Even though this `if` expression can throw an error,
+you don't write `try` before it.
+For information about working with errors, see <doc:ErrorHandling>.
+
 You can use `if` expressions
 on the right-hand side of an assignment,
 as shown in the example above,
 and as the value that a function or closure returns.
-
-<!--- XXX exception to the "one expression" rule -->
 
 ### Switch
 
@@ -929,7 +950,22 @@ print(message)
 // Prints "The first letter of the alphabet"
 ```
 
-<!-- XXX walkthru -->
+In this example,
+each case in the `switch` expression
+contains the value for `message`
+to be used when that case matches `anotherCharacter`.
+Because `switch` is always exhaustive,
+there will always be a value to assign.
+
+As with `if` expressions,
+you can throw an error
+or call a function like `fatalError(_:file:line:)` that never returns
+instead of providing a value for a given case.
+You can use `switch` expressions
+on the right-hand side of an assignment,
+as shown in the example above,
+and as the value that a function or closure returns.
+
 
 #### No Implicit Fallthrough
 
