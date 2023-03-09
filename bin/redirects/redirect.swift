@@ -751,7 +751,7 @@ for case let (part, filename, docc) in chapters {
     const pathComponents = path.split("/");
     const chapter = pathComponents[pathComponents.length - 1];
 
-    const hash = window.location.hash;
+    let hash = window.location.hash;
 
     if (hash.startsWith("#//apple_ref/doc/uid/")) {
         const appleRefParts = hash.split("-");
