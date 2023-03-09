@@ -120,7 +120,7 @@ while condition {
 
 下面的例子来玩一个叫做*蛇和梯子*（也叫做*滑道和梯子*）的小游戏：
 
-![image](https://docs.swift.org/swift-book/_images/snakesAndLadders_2x.png)
+![image](https://docs.swift.org/swift-book/images/snakesAndLadders@2x.png)
 
 游戏的规则如下：
 
@@ -422,7 +422,7 @@ default:
 // 输出“(1, 1) is inside the box”
 ```
 
-![image](https://docs.swift.org/swift-book/_images/coordinateGraphSimple_2x.png)
+![image](https://docs.swift.org/swift-book/images/coordinateGraphSimple@2x.png)
 
 在上面的例子中，`switch` 语句会判断某个点是否是原点 (0, 0)，是否在红色的 x 轴上，是否在橘黄色的 y 轴上，是否在一个以原点为中心的4x4的蓝色矩形里，或者在这个矩形外面。
 
@@ -447,7 +447,7 @@ case let (x, y):
 // 输出“on the x-axis with an x value of 2”
 ```
 
-![image](https://docs.swift.org/swift-book/_images/coordinateGraphMedium_2x.png)
+![image](https://docs.swift.org/swift-book/images/coordinateGraphMedium@2x.png)
 
 在上面的例子中，`switch` 语句会判断某个点是否在红色的 x 轴上，是否在橘黄色的 y 轴上，或者不在坐标轴上。
 
@@ -476,7 +476,7 @@ case let (x, y):
 // 输出“(1, -1) is on the line x == -y”
 ```
 
-![image](https://docs.swift.org/swift-book/_images/coordinateGraphComplex_2x.png)
+![image](https://docs.swift.org/swift-book/images/coordinateGraphComplex@2x.png)
 
 在上面的例子中，`switch` 语句会判断某个点是否在绿色的对角线 `x == y` 上，是否在紫色的对角线 `x == -y` 上，或者不在对角线上。
 
@@ -655,7 +655,7 @@ print(description)
 
 游戏的棋盘和之前一样：
 
-![image](https://docs.swift.org/swift-book/_images/snakesAndLadders_2x.png)
+![image](https://docs.swift.org/swift-book/images/snakesAndLadders@2x.png)
 
 `finalSquare`、`board`、`square` 和 `diceRoll` 值被和之前一样的方式初始化：
 
