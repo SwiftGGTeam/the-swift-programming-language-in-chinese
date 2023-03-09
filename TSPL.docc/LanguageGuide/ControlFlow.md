@@ -997,7 +997,6 @@ on the right-hand side of an assignment,
 as shown in the example above,
 and as the value that a function or closure returns.
 
-
 #### No Implicit Fallthrough
 
 In contrast with `switch` statements in C and Objective-C,
