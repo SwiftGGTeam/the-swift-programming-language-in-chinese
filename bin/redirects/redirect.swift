@@ -715,7 +715,7 @@ for case let (stableID, _, docc) in headings {
 for case let (part, filename, docc) in chapters {
     chapterRedirects +=
         """
-            "\(part)/\(filename)": "\(docc)",\n
+            "\(filename)": "\(docc)",\n
         """
 }
 
