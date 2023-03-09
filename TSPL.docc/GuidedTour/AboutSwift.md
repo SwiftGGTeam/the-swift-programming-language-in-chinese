@@ -48,7 +48,7 @@ and it continues to evolve with new features and capabilities.
 Our goals for Swift are ambitious.
 We can’t wait to see what you create with it.
 
-> BETA SOFTWARE:
+> Beta Software:
 >
 > This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
 >

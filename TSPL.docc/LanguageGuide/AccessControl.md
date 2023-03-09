@@ -1483,7 +1483,7 @@ but a public type alias can't alias an internal, file-private, or private type.
   ```
 -->
 
-> BETA SOFTWARE:
+> Beta Software:
 >
 > This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
 >

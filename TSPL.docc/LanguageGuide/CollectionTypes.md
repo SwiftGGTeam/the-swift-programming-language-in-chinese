@@ -1469,7 +1469,7 @@ Swift's `Dictionary` type doesn't have a defined ordering.
 To iterate over the keys or values of a dictionary in a specific order,
 use the `sorted()` method on its `keys` or `values` property.
 
-> BETA SOFTWARE:
+> Beta Software:
 >
 > This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
 >
