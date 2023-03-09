@@ -817,6 +817,39 @@ each branch of the `if` expression
 produces of the three possible values for `weatherAdvice`,
 and the assignment uses that value.
 
+All of the branches of an `if` expression
+need to contain values of the same type.
+Because Swift checks the type of each branch separately,
+values like `nil` that can be used with multiple types
+prevent Swift from determining the `if` expression's type automatically.
+Instead, you need to specify the type explicitly ---
+for example:
+
+```swift
+let freezeWarning: String? = if temperatureInCelsius <= 0 {
+    "It's below freezing. Watch for ice!"
+} else {
+    nil
+}
+```
+
+In the code above,
+one branch of the `if` statement has a string value
+and the other branch has a `nil` value.
+The `nil` value could be used as a value for any optional type,
+so you have to explicitly write that `freezeWarning` is an optional string.
+An alternate way to provide this type information
+is to provide an explicit type for `nil`,
+instead of providing an explicit type for `freezeWarning`:
+
+```swift
+let freezeWarning = if temperatureInCelsius <= 0 {
+    "It's below freezing. Watch for ice!"
+} else {
+    nil as String?
+}
+```
+
 An `if` expression that checks for conditions
 that are invalid or that it can't handle
 can throw an error
