@@ -565,6 +565,8 @@ make the same change here also.
 >
 > *primary-expression* → *superclass-expression*
 >
+> *primary-expression* → *conditional-expression*
+>
 > *primary-expression* → *closure-expression*
 >
 > *primary-expression* → *parenthesized-expression*
@@ -641,11 +643,15 @@ make the same change here also.
 
 > Grammar of a conditional expression:
 >
+> *conditional-expression* → *if-expression* | *switch-expression*
+>
+>
+>
 > *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
 >
 > *if-expression-tail* → **`else`** *if-expression*
 >
-> *if-expression-tail* → **`else`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** **`{`** *statement* **`}`** *if-expression-tail*
 >
 >
 >

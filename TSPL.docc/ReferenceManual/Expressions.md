@@ -554,6 +554,8 @@ to make prefix expressions, infix expressions, and postfix expressions.
 >
 > *primary-expression* → *superclass-expression*
 >
+> *primary-expression* → *conditional-expression*
+>
 > *primary-expression* → *closure-expression*
 >
 > *primary-expression* → *parenthesized-expression*
@@ -991,6 +993,10 @@ Don't put a conditional expression in a `try` expression,
 even if one of the branches of a conditional expression is throwing.
 
 > Grammar of a conditional expression:
+>
+> *conditional-expression* → *if-expression* | *switch-expression*
+>
+>
 >
 > *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
 >
