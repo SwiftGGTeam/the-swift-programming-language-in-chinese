@@ -956,6 +956,7 @@ A conditional expression appears only in the following contexts:
   - As the initial value in a variable or constant declaration.
   - As the error thrown by a `throw` expression.
   - As the value returned by a function, closure, or property getter.
+  - As the value inside a branch of a conditional expression.
 
 The branches of a conditional expression are exhaustive,
 ensuring that the expression always produces a value
@@ -978,14 +979,13 @@ like an explicit type annotation.
 let number: Double = if someCondition { 10 } else {12.34 }
 ```
 
-A conditional expression can't appear inside a result builder.
-
-<!--
-XXX  TR: The SE proposal says the above,
-but then also says this, which appears to contradict:
-
-The variable declaration form of an if will be allowed in result builders.
--->
+Inside a result builder,
+conditional expressions can appear
+only as the initial value of a variable or constant.
+This behavior means when you write `if` or `switch` in a result builder,
+outside of a variable or constant declaration,
+that code is understood as a branch statement
+and one of the result builder's methods transforms that code.
 
 Don't put a conditional expression in a `try` expression,
 even if one of the branches of a conditional expression is throwing.
@@ -996,7 +996,7 @@ even if one of the branches of a conditional expression is throwing.
 >
 > *if-expression-tail* → **`else`** *if-expression*
 >
-> *if-expression-tail* → **`else`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** **`{`** *statement* **`}`** *if-expression-tail*
 >
 >
 >
