@@ -2,7 +2,7 @@
 
 Swift 语言提供数组（Array）、集合（Set）和字典（Dictionary）三种基本的*集合类型*用来存储集合数据。数组是有序数据的集。集合是无序无重复数据的集。字典是无序的键值对的集。
 
-![](https://docs.swift.org/swift-book/_images/CollectionTypes_intro_2x.png)
+![](https://docs.swift.org/swift-book/images/CollectionTypes_intro~dark@2x.png)
 
 Swift 中的数组、集合和字典必须明确其中保存的键和值类型，这样就可以避免插入一个错误数据类型的值。同理，对于获取到的值你也可以放心，其数据类型是确定的。
 
@@ -401,7 +401,7 @@ for genre in favoriteGenres.sorted() {
 
 下面的插图描述了两个集合 `a` 和 `b`，以及通过阴影部分的区域显示集合各种操作的结果。
 
-![](https://docs.swift.org/swift-book/_images/setVennDiagram_2x.png)
+![](https://docs.swift.org/swift-book/images/setVennDiagram@2x.png)
 
 * 使用 `intersection(_:)` 方法根据两个集合的交集创建一个新的集合。
 * 使用 `symmetricDifference(_:)` 方法根据两个集合不相交的值创建一个新的集合。
@@ -427,7 +427,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
 
 下面的插图描述了三个集合 `a`、`b` 和 `c`，以及通过重叠区域表述集合间共享的元素。集合 `a` 是集合 `b` 的*父集合*，因为 `a` 包含了 `b` 中所有的元素。相反的，集合 `b` 是集合 `a` 的*子集合*，因为属于 `b` 的元素也被 `a` 包含。集合 `b` 和集合 `c` 是*不相交*的，因为它们之间没有共同的元素。
 
-![](https://docs.swift.org/swift-book/_images/setEulerDiagram_2x.png)
+![](https://docs.swift.org/swift-book/images/setEulerDiagram@2x.png)
 
 * 使用“是否相等”运算符（`==`）来判断两个集合包含的值是否全部相同。
 * 使用 `isSubset(of:)` 方法来判断一个集合中的所有值是否也被包含在另外一个集合中。

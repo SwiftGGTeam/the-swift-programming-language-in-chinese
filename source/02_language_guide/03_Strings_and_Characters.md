@@ -460,7 +460,7 @@ let newString = String(beginning)
 
 上面的例子，`greeting` 是一个 `String`，意味着它在内存里有一片空间保存字符集。而由于 `beginning` 是 `greeting` 的 `Substring`，它重用了 `greeting` 的内存空间。相反，`newString` 是一个 `String` —— 它是使用 `Substring` 创建的，拥有一片自己的内存空间。下面的图展示了他们之间的关系：
 
-![](https://docs.swift.org/swift-book/_images/stringSubstring_2x.png)
+![](https://docs.swift.org/swift-book/images/stringSubstring@2x.png)
 
 > 注意
 > 
