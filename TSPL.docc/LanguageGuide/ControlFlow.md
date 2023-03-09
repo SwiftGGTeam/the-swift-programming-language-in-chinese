@@ -764,8 +764,6 @@ that you can use to set a value based on certain conditions.
 For example,
 consider the following code that uses `if` statements:
 
-```
-
 ```swift
 let temperatureInCelsius = 25
 let weatherAdvice: String
