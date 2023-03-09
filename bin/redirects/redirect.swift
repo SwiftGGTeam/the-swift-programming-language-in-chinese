@@ -1,6 +1,7 @@
 import Foundation
 
 // TODO: Add redirects for the formal grammar's anchors.
+// TODO: Entries below where the 'docc' value is "" couldn't be automatically filled in -- they need to be filled in manually.
 let headings: [(String, String, String)] = [
     (stableID: "ID0", sphinx: "GuidedTour/AboutSwift", docc: "aboutswift"),
     (stableID: "ID1", sphinx: "GuidedTour/GuidedTour", docc: "guidedtour"),
@@ -608,12 +609,12 @@ let headings: [(String, String, String)] = [
     (stableID: "ID614", sphinx: "opaquetypes-returning", docc: ""),
     (stableID: "ID615", sphinx: "opaquetypes-limitsofexistentials", docc: ""),
     (stableID: "ID616", sphinx: "types-opaquetype", docc: "types#Opaque-Type"),
-    (stableID: "ID617", sphinx: "properties-propertywrapper", docc: ""),
-    (stableID: "ID618", sphinx: "properties-propertywrapperinit", docc: ""),
-    (stableID: "ID619", sphinx: "properties-projectedvalues", docc: ""),
+    (stableID: "ID617", sphinx: "properties-propertywrapper", docc: "properties#Property-Wrappers"),
+    (stableID: "ID618", sphinx: "properties-propertywrapperinit", docc: "properties#Setting-Initial-Values-for-Wrapped-Properties"),
+    (stableID: "ID619", sphinx: "properties-projectedvalues", docc: "properties#Projecting-a-Value-From-a-Property-Wrapper"),
     (stableID: "ID620", sphinx: "attributes-frozen", docc: "attributes#frozen"),
     (stableID: "ID621", sphinx: "attributes-propertywrapper", docc: "attributes#propertyWrapper"),
-    (stableID: "ID622", sphinx: "declarations-specialfuncnames", docc: ""),
+    (stableID: "ID622", sphinx: "declarations-specialfuncnames", docc: "declarations#Methods-with-Special-Names"),
     (stableID: "ID623", sphinx: "tour-errorhandling", docc: ""),
     (stableID: "ID624", sphinx: "tour-generics", docc: ""),
     (stableID: "ID625", sphinx: "automaticreferencecounting-unownedoptionalreferences", docc: "automaticreferencecounting#Unowned-Optional-References"),
