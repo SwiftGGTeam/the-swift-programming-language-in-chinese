@@ -765,7 +765,7 @@ for case let (part, filename, docc) in chapters {
         const redirectPath = headingRedirects[hash];
         newURL = baseURL + redirectPath;
     } else if (chapter in chapterRedirects) {
-        const redirectPath = chapterRedirects[newPath];
+        const redirectPath = chapterRedirects[chapter];
         newURL = baseURL + redirectPath;
     }
 
