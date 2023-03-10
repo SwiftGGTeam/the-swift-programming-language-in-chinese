@@ -973,12 +973,16 @@ or a call to a function that never returns.
 
 Each branch must produce a value of the same type.
 Because type checking of each branch is independent,
-conditional expressions that that include a `nil` literal
-or different kinds of literals typically need type context,
-like an explicit type annotation.
+you sometimes need to add type context,
+like when branches include different kinds of literals,
+or when a branch's value is `nil`.
+To provide this type context,
+add a type annotation to the variable that the result is assigned to,
+or add an `as` cast to the branches' values.
 
 ```swift
-let number: Double = if someCondition { 10 } else {12.34 }
+let number: Double = if someCondition { 10 } else { 12.34 }
+let number = if someCondition { 10 as Double } else { 12.34 }
 ```
 
 Inside a result builder,

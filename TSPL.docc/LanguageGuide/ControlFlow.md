@@ -759,10 +759,10 @@ if temperatureInFahrenheit <= 32 {
 Because the temperature is neither too cold nor too warm to trigger the `if` or `else if` conditions,
 no message is printed.
 
-Swift provides another version of `if` statements
-that you can use to set a value based on certain conditions.
+Swift provides a shorthand spelling of `if`
+that you can use when setting values.
 For example,
-consider the following code that uses `if` statements:
+consider the following code:
 
 ```swift
 let temperatureInCelsius = 25
@@ -803,11 +803,12 @@ print(weatherAdvice)
 
 In this `if` expression version of the code,
 each branch contains a single value.
-If that branch's condition is true,
-then its value is used as the value for the whole `if` expression
+If a branch's condition is true,
+then that branch's value is used as the value for the whole `if` expression
 in the assignment of `weatherAdvice`.
 Every `if` branch has a corresponding `else if` branch or `else` branch,
-ensuring that one of the branches always produces a value,
+ensuring that one of the branches always matches
+and that the `if` expression always produces a value,
 regardless of which conditions are true.
 
 Because the syntax for the assignment starts outside the `if` expression,
@@ -820,7 +821,7 @@ and the assignment uses that value.
 All of the branches of an `if` expression
 need to contain values of the same type.
 Because Swift checks the type of each branch separately,
-values like `nil` that can be used with multiple types
+values like `nil` that can be used with more than one type
 prevent Swift from determining the `if` expression's type automatically.
 Instead, you need to specify the type explicitly ---
 for example:
@@ -834,10 +835,12 @@ let freezeWarning: String? = if temperatureInCelsius <= 0 {
 ```
 
 In the code above,
-one branch of the `if` statement has a string value
+one branch of the `if` expression has a string value
 and the other branch has a `nil` value.
 The `nil` value could be used as a value for any optional type,
-so you have to explicitly write that `freezeWarning` is an optional string.
+so you have to explicitly write that `freezeWarning` is an optional string,
+as described in <doc:TheBasics#Type-Annotations>.
+
 An alternate way to provide this type information
 is to provide an explicit type for `nil`,
 instead of providing an explicit type for `freezeWarning`:
@@ -850,10 +853,8 @@ let freezeWarning = if temperatureInCelsius <= 0 {
 }
 ```
 
-An `if` expression that checks for conditions
-that are invalid or that it can't handle
-can throw an error
-or call a function like `fatalError(_:file:line:)` that never returns.
+An `if` expression can respond to unexpected failures by throwing an error
+or calling a function like `fatalError(_:file:line:)` that never returns.
 For example:
 
 ```swift
@@ -873,10 +874,10 @@ Even though this `if` expression can throw an error,
 you don't write `try` before it.
 For information about working with errors, see <doc:ErrorHandling>.
 
-You can use `if` expressions
+In addition to using `if` expressions
 on the right-hand side of an assignment,
-as shown in the example above,
-and as the value that a function or closure returns.
+as shown in the examples above,
+you can also use them as the value that a function or closure returns.
 
 ### Switch
 
@@ -986,7 +987,7 @@ each case in the `switch` expression
 contains the value for `message`
 to be used when that case matches `anotherCharacter`.
 Because `switch` is always exhaustive,
-there will always be a value to assign.
+there is always a value to assign.
 
 As with `if` expressions,
 you can throw an error
