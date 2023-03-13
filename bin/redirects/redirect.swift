@@ -555,7 +555,7 @@ let headings: [(String, String, String)] = [
     (stableID: "ID560", sphinx: "generics-constrainassociatedtype", docc: ""),
     (stableID: "ID561", sphinx: "GuidedTour/Compatibility", docc: ""),
     (stableID: "ID562", sphinx: "basicoperators-onesidedranges", docc: "basicoperators#One-Sided-Ranges"),
-    (stableID: "ID563", sphinx: "expression-typedkeypathexpression", docc: ""),
+    (stableID: "ID563", sphinx: "expression-typedkeypathexpression", docc: "expressions#Key-Path-Expression"),
     (stableID: "ID564", sphinx: "stringsandcharacters-multilineliterals", docc: ""),
     (stableID: "ID565", sphinx: "stringsandcharacters-multilineliteralslinebreaks", docc: ""),
     (stableID: "ID566", sphinx: "stringsandcharacters-multilineliteralsindentation", docc: ""),
