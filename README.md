@@ -1,7 +1,8 @@
 # The Swift Programming Language
 
-This repository contains the source for *The Swift Programming Language*,
-which is published on [docs.swift.org][published],
+This repository contains the source for *The Swift Programming Language*
+(sometimes abbreviated as TSPL),
+which is published on [docs.swift.org][published]
 and built using [Swift-DocC][docc].
 
 ## Contributing
