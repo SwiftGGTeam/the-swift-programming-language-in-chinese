@@ -1,13 +1,8 @@
 # The Swift Programming Language
 
-This repository contains a version of *The Swift Programming Language*
-that you can build using Swift-DocC.
-
-The version of *The Swift Programming Language* published on [docs.swift.org](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/)
-is currently built using a legacy toolchain,
-not from this repository or its content.
-The goal is to replace that version with a version built from this repository,
-working with the community to extend Swift-DocC where needed.
+This repository contains the source for *The Swift Programming Language*,
+which is published on [docs.swift.org][published],
+and built using [Swift-DocC][docc].
 
 ## Contributing
 
@@ -36,6 +31,8 @@ For more information, see [Contributing to The Swift Programming Language][contr
 [contributing]: /CONTRIBUTING.md
 [forum]: https://forums.swift.org/c/swift-documentation/92
 [tspl-style]: /Style.md
+[published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
+[docc]: https://github.com/apple/swift-docc
 
 ## Building
 
