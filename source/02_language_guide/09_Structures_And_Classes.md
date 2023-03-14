@@ -166,7 +166,7 @@ print("hd is still \(hd.width) pixels wide")
 
 将 `hd` 赋值给 `cinema` 时，`hd` 中所存储的*值*会拷贝到新的 `cinema` 实例中。结果就是两个完全独立的实例包含了相同的数值。由于两者相互独立，因此将 `cinema` 的 `width` 修改为 `2048` 并不会影响 `hd` 中的 `width` 的值，如下图所示：
 
-![sharedStateStruct_2x](https://docs.swift.org/swift-book/_images/sharedStateStruct_2x.png)
+![sharedStateStruct_2x](https://docs.swift.org/swift-book/images/sharedStateStruct@2x.png)
 
 枚举也遵循相同的行为准则：
 
@@ -214,7 +214,7 @@ alsoTenEighty.frameRate = 30.0
 
 因为类是引用类型，所以 `tenEight` 和 `alsoTenEight` 实际上引用的是同一个 `VideoMode` 实例。换句话说，它们是同一个实例的两种叫法，如下图所示：
 
-![sharedStateClass_2x](https://docs.swift.org/swift-book/_images/sharedStateClass_2x.png)
+![sharedStateClass_2x](https://docs.swift.org/swift-book/images/sharedStateClass@2x.png)
 
 通过查看 `tenEighty` 的 `frameRate` 属性，可以看到它正确地显示了底层的 `VideoMode` 实例的新帧率 `30.0`：
 
