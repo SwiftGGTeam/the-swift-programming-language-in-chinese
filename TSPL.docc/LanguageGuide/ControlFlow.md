@@ -1953,7 +1953,7 @@ if score < 10 {
 -->
 
 If your program stops running ---
-for example, because of a runtime error or a crash,
+for example, because of a runtime error or a crash ---
 deferred code doesn't execute.
 However, deferred code does execute after an error is thrown;
 for information about using `defer` with error handling,
