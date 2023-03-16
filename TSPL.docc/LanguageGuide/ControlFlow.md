@@ -1839,7 +1839,7 @@ You use a `defer` block to write code that will be executed later,
 when your program reaches the end of the current scope.
 For example:
 
-```
+```swift
 var score = 1
 if score < 10 {
     defer {
@@ -1879,17 +1879,49 @@ That includes code like an early exit from a function,
 breaking out of a `for` loop,
 or throwing an error.
 This behavior makes `defer` useful for operations
-where you need to guarantee a pair of actions happen,
+where you need to guarantee a pair of actions happen ---
 like manually allocating and freeing memory,
 opening and closing low-level file descriptors,
-and beginning and ending transactions in a database.
-For information about using `defer` with error handling,
-see <docc:ErrorHandling:Specifying-Cleanup-Actions>.
+and beginning and ending transactions in a database ---
+because you can write both actions next to each other in your code.
+For example,
+the following code gives a temporary bonus to the score,
+by adding and subtracting 100 inside a chunk of code:
+
+```swift
+var score = 3
+if score < 100 {
+    score += 100
+    defer {
+        score -= 100
+    }
+    // Other code that uses the score with its bonus goes here.
+    print(score)
+}
+// Prints "103"
+```
+
+<!--
+  - test: `defer-paired-actions`
+
+  ```swift
+  -> var score = 3
+  -> if score < 100 {
+  ->     score += 100
+  ->     defer {
+  ->         score -= 100
+  ->     }
+  ->     // Other code that uses the score with its bonus goes here.
+  ->     print(score)
+  -> }
+  <- 103
+  ```
+-->
 
 If you write more than one `defer` block in the same scope,
 the first one you specify is the last one to run.
 
-```
+```swift
 if score < 10 {
     defer {
         print(score)
@@ -1920,10 +1952,12 @@ if score < 10 {
   ```
 -->
 
-> Note:
-> If your program stops running ---
-> for example, because of a runtime error or a crash,
-> deferred code doesn't execute.
+If your program stops running ---
+for example, because of a runtime error or a crash,
+deferred code doesn't execute.
+However, deferred code does execute after an error is thrown;
+for information about using `defer` with error handling,
+see <docc:ErrorHandling:Specifying-Cleanup-Actions>.
 
 ## Checking API Availability
 
