@@ -2126,7 +2126,7 @@ only if they are nonisolated or asynchronous.
 The process of initializing an actor's declared properties
 is described in <doc:Initialization>.
 
-Properties of a actor instance can be accessed using dot (`.`) syntax,
+Properties of an actor instance can be accessed using dot (`.`) syntax,
 as described in <doc:ClassesAndStructures#Accessing-Properties>.
 
 Actors are reference types; instances of an actor are referred to, rather than copied,
@@ -2134,7 +2134,7 @@ when assigned to variables or constants, or when passed as arguments to a functi
 For information about reference types,
 see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-You can extend the behavior of a structure type with an extension declaration,
+You can extend the behavior of an actor type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
 <!--
@@ -3658,7 +3658,9 @@ that introduces the declaration.
   Apply this modifier to any member of a class that can be represented by Objective-C.
   When you mark a member declaration with the `dynamic` modifier,
   access to that member is always dynamically dispatched using the Objective-C runtime.
-  Access to that member is never inlined or devirtualized by the compiler.Because declarations marked with the `dynamic` modifier are dispatched
+  Access to that member is never inlined or devirtualized by the compiler.
+
+  Because declarations marked with the `dynamic` modifier are dispatched
   using the Objective-C runtime, they must be marked with the
   `objc` attribute.
 
@@ -3680,7 +3682,9 @@ that introduces the declaration.
 - term `optional`:
   Apply this modifier to a protocol's property, method,
   or subscript members to indicate that a conforming type isn't required
-  to implement those members.You can apply the `optional` modifier only to protocols that are marked
+  to implement those members.
+
+  You can apply the `optional` modifier only to protocols that are marked
   with the `objc` attribute. As a result, only class types can adopt and conform
   to a protocol that contains optional member requirements.
   For more information about how to use the `optional` modifier
@@ -3838,6 +3842,12 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 >
 >
 > *actor-isolation-modifier* → **`nonisolated`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -1,0 +1,18 @@
+# This file is a list of commits that made uninteresting formatting
+# changes, which should be ignored by git-blame, so that it can instead
+# display more the relevant history and attribution information.
+#
+# To use this file for a single blame operation,
+#
+#   git blame --ignore-revs-file .git-blame-ignore-revs <somefile>
+#
+# To use this file for all blame operations, run the following command:
+#
+#   git config --local blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# For more information, see the git-blame(1) man page's discussion of
+# the --ignore-revs-file option, and the git-config(1) man page's
+# discussion of the blame.ignoreRevsFile option.
+
+# Convert RST to markdown.
+96f0925407c6bd9eadd9d58d253bad3e1ef7a9f2
