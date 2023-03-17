@@ -1116,13 +1116,24 @@ overriding an implicit conformance to the `Sendable` protocol,
 use an extension:
 
 ```swift
-struct NonsendableTemperatureReading {
-    var measurement: Int
+struct FileDescriptor {
+    let rawValue: CInt
 }
 
 @available(*, unavailable)
-extension NonsendableTemperatureReading: Sendable { }
+extension FileDescriptor: Sendable { }
 ```
+
+<!--
+The example above is abbreviated from a Swift System API.
+https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+-->
+
+The code above shows part of a wrapper around POSIX file descriptors.
+Even though interface for file descriptors uses integers
+to identify and interact with open files,
+and integer values are sendable,
+a file descriptor isn't safe to send across concurrency domains.
 
 <!--
   - test: `suppressing-implied-sendable-conformance`
