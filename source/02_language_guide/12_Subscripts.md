@@ -115,7 +115,7 @@ var matrix = Matrix(rows: 2, columns: 2)
 
 上例中创建了一个两行两列的 `Matrix` 实例。该 `Matrix` 实例的 `grid` 数组按照从左上到右下的阅读顺序将矩阵扁平化存储：
 
-![](https://docs.swift.org/swift-book/_images/subscriptMatrix01_2x.png)
+![](https://docs.swift.org/swift-book/images/subscriptMatrix01@2x.png)
 
 将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔：
 
@@ -126,7 +126,7 @@ matrix[1, 0] = 3.2
 
 上面两条语句分别调用下标的 setter 将矩阵右上角位置（即 `row` 为 `0`、`column` 为 `1` 的位置）的值设置为 `1.5`，将矩阵左下角位置（即 `row` 为 `1`、`column` 为 `0` 的位置）的值设置为 `3.2`：
 
-![](https://docs.swift.org/swift-book/_images/subscriptMatrix02_2x.png)
+![](https://docs.swift.org/swift-book/images/subscriptMatrix02@2x.png)
 
 `Matrix` 下标的 getter 和 setter 中都含有断言，用来检查下标入参 `row` 和 `column` 的值是否有效。为了方便进行断言，`Matrix` 包含了一个名为 `indexIsValid(row:column:)` 的便利方法，用来检查入参 `row` 和 `column` 的值是否在矩阵范围内：
 
@@ -143,7 +143,7 @@ let someValue = matrix[2, 2]
 // 断言将会触发，因为 [2, 2] 已经超过了 matrix 的范围
 ```
 
-## 类型下标{#type-subscripts}
+## 类型下标 {#type-subscripts}
 正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型自身上调用的下标。这种下标被称作_类型下标_。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类型可以使用 `class` 关键字来代替 `static`，它允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标：
 ```
 enum Planet: Int {
