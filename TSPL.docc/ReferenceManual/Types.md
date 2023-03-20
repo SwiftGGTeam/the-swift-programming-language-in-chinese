@@ -934,7 +934,8 @@ and an additional level of indirection for access,
 which incurs a performance cost at runtime.
 
 Applying `any` to the `Any` or `AnyObject` types
-is redundant and has no effect.
+has no effect,
+because those types are already boxed protocol types.
 
 <!--
   - test: `any-any-does-nothing`
