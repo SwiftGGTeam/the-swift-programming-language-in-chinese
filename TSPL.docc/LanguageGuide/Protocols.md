@@ -777,8 +777,6 @@ from leaking through the layer of abstraction ---
 for example, by hiding the specific return type from a function,
 and only guaranteeing that the value conforms to a given protocol.
 
-<!-- XXX TR: Is there any performance cost to call out when introducing opaque types? -->
-
 Code with a boxed protocol type
 works with any type, chosen at runtime, that conforms to the protocol.
 To support this runtime flexibility,
