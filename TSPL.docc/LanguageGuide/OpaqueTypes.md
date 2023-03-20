@@ -517,7 +517,7 @@ print(vertical.draw())
 
 <!--
   - test: `boxed-protocol-types`
-  
+
   ```swifttest
    >> protocol Shape {
    >>    func draw() -> String

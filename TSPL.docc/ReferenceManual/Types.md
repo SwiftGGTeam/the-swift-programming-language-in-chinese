@@ -968,9 +968,9 @@ because those types are already boxed protocol types.
 Contrast P.Type with (any P.Type) and (any P).Type
 https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
- 
+
 > Grammar of a boxed protocol type:
-> 
+>
 > *boxed-protocol-type* → **`any`** *type*
 
 ## Metatype Type

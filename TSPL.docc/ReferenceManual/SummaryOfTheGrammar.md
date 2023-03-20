@@ -482,7 +482,7 @@ make the same change here also.
 > *opaque-type* → **`some`** *type*
 
 > Grammar of a boxed protocol type:
-> 
+>
 > *boxed-protocol-type* → **`any`** *type*
 
 > Grammar of a metatype type:
