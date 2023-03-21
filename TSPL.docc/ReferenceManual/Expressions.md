@@ -2918,15 +2918,6 @@ let numbers = [10, 20, 33, 43, 50]
   ```
 -->
 
-<!--
-  The indentation gets lost for the .filter lines above
-  even if I start them with -> instead of three spaces
-  because that's how swift-format re-indents them.
-  This is probably not the same issue as
-  <rdar://problem/32463195> for multiline string literals,
-  but they're likely related.
--->
-
 Between `#if`, `#endif`, and other compilation directives,
 the conditional compilation block can contain
 an implicit member expression

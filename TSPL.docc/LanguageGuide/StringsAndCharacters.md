@@ -198,10 +198,8 @@ that whitespace *is* included.
 ![](multilineStringWhitespace)
 
 <!--
-  Using an image here is a little clearer,
-  since it can call out which spaces "count",
-  but it also works around
-  <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
+  Using an image here is a little clearer than a code listing,
+  since it can call out which spaces "count".
 -->
 
 <!--
