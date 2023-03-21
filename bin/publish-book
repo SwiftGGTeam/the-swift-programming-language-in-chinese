@@ -1,0 +1,51 @@
+#! /bin/bash
+
+# This source file is part of the Swift.org open source project
+#
+# Copyright (c) 2023 Apple Inc. and the Swift project authors
+# Licensed under Apache License v2.0 with Runtime Library Exception
+#
+# See https://swift.org/LICENSE.txt for license information
+# See https://swift.org/CONTRIBUTORS.txt for Swift project authors
+
+# Prepares a version of the book suitable for publication on swift.org.
+#
+# To use top-of-tree DocC, clone the following repositories:
+#
+#     https://github.com/apple/swift-docc
+#     https://github.com/apple/swift-docc-render
+#
+# Then set environment variables to paths in their working directories,
+# like the following, before running this script:
+#
+#     PATH=~/git/DocC/.build/arm64-apple-macosx/debug:$PATH
+#     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
+
+set -eu
+
+# Pretty print DocC JSON output, so that it has a stable ordering and
+# can be diffed.  This lets us determine whether rebuilding resulted in
+# any changes to the content.
+export DOCC_JSON_PRETTYPRINT="YES"
+
+output="./swift-book"
+
+# Start at the top level directory of the repository.
+cd "$(git rev-parse --show-toplevel)"
+
+# The published version of the book gets the swift.org header.
+cp -n TSPL.docc/header-publish.html TSPL.docc/header.html
+
+docc convert \
+    --experimental-enable-custom-templates \
+    --hosting-base-path swift-book \
+    --output-path "$output" \
+    TSPL.docc
+
+rm TSPL.docc/header.html
+
+
+# Copy the redirect pages into every location where the legacy RST-based
+# pipeline created an HTML page, to keep links to those chapters and
+# sections working.
+cp -r bin/redirects/* "$output"
