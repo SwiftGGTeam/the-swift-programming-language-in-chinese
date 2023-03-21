@@ -1386,15 +1386,14 @@ The block-building methods are as follows:
   this approach reduces the need for generic overloads
   that handle different numbers of arguments.
 
-If a result builder implements all three of the block-building methods listed above,
-availability determines which method gets used.
-If the availability of the enclosing declaration is the same as
-the availability of `buildPartialBlock(first:)`
-and `buildPartialBlock(accumulated:next:)`,
-the build-partial-block methods are used.
-If the enclosing declaration is also available in older versions of the library,
-the build-partial-block methods are used.
-Otherwise, `buildBlock(_:)` is used.
+A result builder can implement
+all three of the block-building methods listed above ---
+in that case,
+availability determines which method is used.
+If the enclosing declaration is available
+before the build-partial-block methods,
+the `buildBlock(_:)` method is used.
+Otherwise, the build-partial-block methods are used.
 
 The additional result-building methods are as follows:
 
