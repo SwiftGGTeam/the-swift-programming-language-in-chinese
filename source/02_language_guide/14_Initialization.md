@@ -225,7 +225,7 @@ var item = ShoppingListItem()
 
 ### 结构体的逐一成员构造器 {#memberwise-initializers-for-structure-types}
 
-结构体如果没有定义任何自定义构造器，它们将自动获得一个*逐一成员构造器（memberwise initializer）*。不像默认构造器，即使存储型属性没有默认值，结构体也能会获得逐一成员构造器。
+结构体如果没有定义任何自定义构造器，它们将自动获得一个*逐一成员构造器（memberwise initializer）*。不像默认构造器，即使存储型属性没有默认值，结构体也会获得逐一成员构造器。
 
 逐一成员构造器是用来初始化结构体新实例里成员属性的快捷方法。新实例的属性初始值可以通过名字传入逐一成员构造器中。
 
@@ -301,7 +301,7 @@ struct Rect {
 }
 ```
 
-第一个 `Rect` 构造器 `init()`，在功能上跟没有自定义构造器时自动获得的默认构造器是一样的。这个构造器是函数体是空的，使用一对大括号 `{}` 来表示。调用这个构造器将返回一个 `Rect` 实例，它的 `origin` 和 `size` 属性都使用定义时的默认值 `Point(x: 0.0, y: 0.0)` 和 `Size(width: 0.0, height: 0.0)`：
+第一个 `Rect` 构造器 `init()`，在功能上跟没有自定义构造器时自动获得的默认构造器是一样的。这个构造器的函数体是空的，使用一对大括号 `{}` 来表示。调用这个构造器将返回一个 `Rect` 实例，它的 `origin` 和 `size` 属性都使用定义时的默认值 `Point(x: 0.0, y: 0.0)` 和 `Size(width: 0.0, height: 0.0)`：
 
 ```swift
 let basicRect = Rect()
@@ -389,7 +389,7 @@ convenience init(parameters) {
 
 这些规则可以通过下面图例来说明：
 
-![构造器代理图](https://docs.swift.org/swift-book/_images/initializerDelegation01_2x.png)
+![构造器代理图](https://docs.swift.org/swift-book/images/initializerDelegation01@2x.png)
 
 如图所示，父类中包含一个指定构造器和两个便利构造器。其中一个便利构造器调用了另外一个便利构造器，而后者又调用了唯一的指定构造器。这满足了上面提到的规则 2 和 3。这个父类没有自己的父类，所以规则 1 没有用到。
 
@@ -401,7 +401,7 @@ convenience init(parameters) {
 
 下面图例中展示了一种涉及四个类的更复杂的类层级结构。它演示了指定构造器是如何在类层级中充当“漏斗”的作用，在类的构造器链上简化了类之间的相互关系。
 
-![复杂构造器代理图](https://docs.swift.org/swift-book/_images/initializerDelegation02_2x.png)
+![复杂构造器代理图](https://docs.swift.org/swift-book/images/initializerDelegation02@2x.png)
 
 ### 两段式构造过程 {#two-phase-initialization}
 
@@ -417,7 +417,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 ##### 安全检查 1
 
-&nbsp;&nbsp;&nbsp;&nbsp;指定构造器必须保证它所在类的所有属性都必须先初始化完成，之后才能将其它构造任务向上代理给父类中的构造器。
+&nbsp;&nbsp;&nbsp;&nbsp;指定构造器必须保证它所在类的所有属性都初始化完成，之后才能将其它构造任务向上代理给父类中的构造器。
 
 如上所述，一个对象的内存只有在其所有存储型属性确定之后才能完全初始化。为了满足这一规则，指定构造器必须保证它所在类的属性在它往上代理之前先完成初始化。
 
@@ -453,7 +453,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 下图展示了在假定的子类和父类之间的构造阶段 1：
 
-![构建过程阶段1](https://docs.swift.org/swift-book/_images/twoPhaseInitialization01_2x.png)
+![构建过程阶段1](https://docs.swift.org/swift-book/images/twoPhaseInitialization01@2x.png)
 
 在这个例子中，构造过程从对子类中一个便利构造器的调用开始。这个便利构造器此时还不能修改任何属性，它会代理到该类中的指定构造器。
 
@@ -465,7 +465,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 以下展示了相同构造过程的阶段 2：
 
-![构建过程阶段2](https://docs.swift.org/swift-book/_images/twoPhaseInitialization02_2x.png)
+![构建过程阶段2](https://docs.swift.org/swift-book/images/twoPhaseInitialization02@2x.png)
 
 父类中的指定构造器现在有机会进一步自定义实例（尽管这不是必须的）。
 
@@ -475,7 +475,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 ### 构造器的继承和重写 {#initializer-inheritance-and-overriding}
 
-跟 Objective-C 中的子类不同，Swift 中的子类默认情况下不会继承父类的构造器。Swift 的这种机制可以防止一个父类的简单构造器被一个更精细的子类继承，而在用来创建子类时的新实例时没有完全或错误被初始化。
+跟 Objective-C 中的子类不同，Swift 中的子类默认情况下不会继承父类的构造器。Swift 的这种机制可以防止一个父类的简单构造器被一个更精细的子类继承，而在用来创建子类的新实例时没有完全或错误被初始化。
 
 > 注意
 > 
@@ -485,7 +485,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 当你在编写一个和父类中指定构造器相匹配的子类构造器时，你实际上是在重写父类的这个指定构造器。因此，你必须在定义子类构造器时带上 `override` 修饰符。即使你重写的是系统自动提供的默认构造器，也需要带上 `override` 修饰符，具体内容请参考 [默认构造器](#default-initializers)。
 
-正如重写属性，方法或者是下标，`override` 修饰符会让编译器去检查父类中是否有相匹配的指定构造器，并验证构造器参数是否被按预想中被指定。
+正如重写属性，方法或者是下标，`override` 修饰符会让编译器去检查父类中是否有相匹配的指定构造器，并验证构造器参数是否按预想中被指定。
 
 > 注意
 > 
@@ -537,7 +537,7 @@ print("Bicycle: \(bicycle.description)")
 
 如果子类的构造器没有在阶段 2 过程中做自定义操作，并且父类有一个同步、无参数的指定构造器，你可以在所有子类的存储属性赋值之后省略 `super.init()` 的调用。若父类有一个异步的构造器，你就需要明确地写入 `await super.init()`。
 
-这个例子定义了另一个 `Vehicle` 的子类 `Hoverboard` ，只设置它的 `color` 属性。这个构造器依赖隐式调用父类的构造器来完成，而不是显示调用 `super.init()`。
+这个例子定义了另一个 `Vehicle` 的子类 `Hoverboard` ，只设置它的 `color` 属性。这个构造器依赖隐式调用父类的构造器来完成，而不是显式调用 `super.init()`。
 
 ```swift
 class Hoverboard: Vehicle {
@@ -605,7 +605,7 @@ class Food {
 
 下图中展示了 `Food` 的构造器链：
 
-![Food 构造器链](https://docs.swift.org/swift-book/_images/initializersExample01_2x.png)
+![Food 构造器链](https://docs.swift.org/swift-book/images/initializersExample01@2x.png)
 
 类类型没有默认的逐一成员构造器，所以 `Food` 类提供了一个接受单一参数 `name` 的指定构造器。这个构造器可以使用一个特定的名字来创建新的 `Food` 实例：
 
@@ -640,7 +640,7 @@ class RecipeIngredient: Food {
 
 下图中展示了 `RecipeIngredient` 类的构造器链：
 
-![RecipeIngredient 构造器](https://docs.swift.org/swift-book/_images/initializersExample02_2x.png)
+![RecipeIngredient 构造器](https://docs.swift.org/swift-book/images/initializersExample02@2x.png)
 
 `RecipeIngredient` 类拥有一个指定构造器 `init(name: String, quantity: Int)`，它可以用来填充 `RecipeIngredient` 实例的所有属性值。这个构造器一开始先将传入的 `quantity` 实参赋值给 `quantity` 属性，这个属性也是唯一在 `RecipeIngredient` 中新引入的属性。随后，构造器向上代理到父类 `Food` 的 `init(name: String)`。这个过程满足 [两段式构造过程](#two-phase-initialization) 中的安全检查 1。
 
@@ -683,7 +683,7 @@ class ShoppingListItem: RecipeIngredient {
 
 下图展示了这三个类的构造器链：
 
-![三类构造器图](https://docs.swift.org/swift-book/_images/initializersExample03_2x.png)
+![三类构造器图](https://docs.swift.org/swift-book/images/initializersExample03@2x.png)
 
 你可以使用三个继承来的构造器来创建 `ShoppingListItem` 的新实例：
 
@@ -1027,7 +1027,7 @@ class SomeClass {
 
 下面例子中定义了一个结构体 `Chessboard`，它构建了西洋跳棋游戏的棋盘，西洋跳棋游戏在一副黑白格交替的 8 x 8 的棋盘中进行的：
 
-![西洋跳棋棋盘](https://docs.swift.org/swift-book/_images/chessBoard_2x.png)
+![西洋跳棋棋盘](https://docs.swift.org/swift-book/images/chessBoard@2x.png)
 
 为了呈现这副游戏棋盘，`Chessboard` 结构体定义了一个属性 `boardColors`，它是一个包含 `64` 个 `Bool` 值的数组。在数组中，值为 `true` 的元素表示一个黑格，值为 `false` 的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
 
