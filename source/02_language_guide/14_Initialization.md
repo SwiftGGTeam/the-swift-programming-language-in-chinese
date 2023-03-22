@@ -389,7 +389,7 @@ convenience init(parameters) {
 
 这些规则可以通过下面图例来说明：
 
-![构造器代理图](https://docs.swift.org/swift-book/_images/initializerDelegation01_2x.png)
+![构造器代理图](https://docs.swift.org/swift-book/images/initializerDelegation01@2x.png)
 
 如图所示，父类中包含一个指定构造器和两个便利构造器。其中一个便利构造器调用了另外一个便利构造器，而后者又调用了唯一的指定构造器。这满足了上面提到的规则 2 和 3。这个父类没有自己的父类，所以规则 1 没有用到。
 
@@ -401,7 +401,7 @@ convenience init(parameters) {
 
 下面图例中展示了一种涉及四个类的更复杂的类层级结构。它演示了指定构造器是如何在类层级中充当“漏斗”的作用，在类的构造器链上简化了类之间的相互关系。
 
-![复杂构造器代理图](https://docs.swift.org/swift-book/_images/initializerDelegation02_2x.png)
+![复杂构造器代理图](https://docs.swift.org/swift-book/images/initializerDelegation02@2x.png)
 
 ### 两段式构造过程 {#two-phase-initialization}
 
@@ -453,7 +453,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 下图展示了在假定的子类和父类之间的构造阶段 1：
 
-![构建过程阶段1](https://docs.swift.org/swift-book/_images/twoPhaseInitialization01_2x.png)
+![构建过程阶段1](https://docs.swift.org/swift-book/images/twoPhaseInitialization01@2x.png)
 
 在这个例子中，构造过程从对子类中一个便利构造器的调用开始。这个便利构造器此时还不能修改任何属性，它会代理到该类中的指定构造器。
 
@@ -465,7 +465,7 @@ Swift 编译器将执行 4 种有效的安全检查，以确保两段式构造�
 
 以下展示了相同构造过程的阶段 2：
 
-![构建过程阶段2](https://docs.swift.org/swift-book/_images/twoPhaseInitialization02_2x.png)
+![构建过程阶段2](https://docs.swift.org/swift-book/images/twoPhaseInitialization02@2x.png)
 
 父类中的指定构造器现在有机会进一步自定义实例（尽管这不是必须的）。
 
@@ -605,7 +605,7 @@ class Food {
 
 下图中展示了 `Food` 的构造器链：
 
-![Food 构造器链](https://docs.swift.org/swift-book/_images/initializersExample01_2x.png)
+![Food 构造器链](https://docs.swift.org/swift-book/images/initializersExample01@2x.png)
 
 类类型没有默认的逐一成员构造器，所以 `Food` 类提供了一个接受单一参数 `name` 的指定构造器。这个构造器可以使用一个特定的名字来创建新的 `Food` 实例：
 
@@ -640,7 +640,7 @@ class RecipeIngredient: Food {
 
 下图中展示了 `RecipeIngredient` 类的构造器链：
 
-![RecipeIngredient 构造器](https://docs.swift.org/swift-book/_images/initializersExample02_2x.png)
+![RecipeIngredient 构造器](https://docs.swift.org/swift-book/images/initializersExample02@2x.png)
 
 `RecipeIngredient` 类拥有一个指定构造器 `init(name: String, quantity: Int)`，它可以用来填充 `RecipeIngredient` 实例的所有属性值。这个构造器一开始先将传入的 `quantity` 实参赋值给 `quantity` 属性，这个属性也是唯一在 `RecipeIngredient` 中新引入的属性。随后，构造器向上代理到父类 `Food` 的 `init(name: String)`。这个过程满足 [两段式构造过程](#two-phase-initialization) 中的安全检查 1。
 
@@ -683,7 +683,7 @@ class ShoppingListItem: RecipeIngredient {
 
 下图展示了这三个类的构造器链：
 
-![三类构造器图](https://docs.swift.org/swift-book/_images/initializersExample03_2x.png)
+![三类构造器图](https://docs.swift.org/swift-book/images/initializersExample03@2x.png)
 
 你可以使用三个继承来的构造器来创建 `ShoppingListItem` 的新实例：
 
@@ -1027,7 +1027,7 @@ class SomeClass {
 
 下面例子中定义了一个结构体 `Chessboard`，它构建了西洋跳棋游戏的棋盘，西洋跳棋游戏在一副黑白格交替的 8 x 8 的棋盘中进行的：
 
-![西洋跳棋棋盘](https://docs.swift.org/swift-book/_images/chessBoard_2x.png)
+![西洋跳棋棋盘](https://docs.swift.org/swift-book/images/chessBoard@2x.png)
 
 为了呈现这副游戏棋盘，`Chessboard` 结构体定义了一个属性 `boardColors`，它是一个包含 `64` 个 `Bool` 值的数组。在数组中，值为 `true` 的元素表示一个黑格，值为 `false` 的元素表示一个白格。数组中第一个元素代表棋盘上左上角的格子，最后一个元素代表棋盘上右下角的格子。
 
