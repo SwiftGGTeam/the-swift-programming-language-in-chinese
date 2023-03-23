@@ -764,9 +764,27 @@ Handling cancellation by returning `nil`
 means the task group can return a partial result ---
 the photos that were already downloaded at the time of cancellation ---
 instead of discarding that completed work.
+
 A full version of this code would include clean-up work
 as part of cancellation,
 like deleting partial downloads and closing network connections.
+<!--
+XXX maybe move outside TaskGroup discussion
+XXX in a TaskGroup, you probably want addTaskUnlessCancelled(...)
+-->
+If that clean-up work XXX
+[`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
+
+[`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
+
+
+```swift
+await Task.withTaskCancellationHandler {
+    XXX
+} onCancel: {
+    XXX
+}
+```
 
 <!--
   OUTLINE
@@ -789,11 +807,6 @@ like deleting partial downloads and closing network connections.
 
       handle.cancel()
       // done!           <1>
-
-  - Use ``withCancellationHandler()`` to specify a closure to run
-  if the task is canceled
-  along with a closure that defines the task's work
-  (it doesn't throw like ``checkCancellation`` does)
 -->
 
 <!--
