@@ -344,13 +344,15 @@ TR: Do we have some general guidance about when you need to insert yield?
 SE-0304 says "if all are executing on a shared, limited-concurrency pool".
 -->
 
-The [`Task.sleep(until:tolerance:clock:)`](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
+The [`Task.sleep(until:tolerance:clock:)`][] method
 is useful when writing simple code
 to learn how concurrency works.
 This method does nothing,
 but waits at least the given number of nanoseconds before it returns.
 Here's a version of the `listPhotos(inGallery:)` function
 that uses `sleep(until:tolerance:clock:)` to simulate waiting for a network operation:
+
+[`Task.sleep(until:tolerance:clock:)`]: https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)
 
 ```swift
 func listPhotos(inGallery name: String) async throws -> [String] {
@@ -469,10 +471,12 @@ when it's waiting for the next element to be available.
 -->
 
 In the same way that you can use your own types in a `for`-`in` loop
-by adding conformance to the [`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol,
+by adding conformance to the [`Sequence`][] protocol,
 you can use your own types in a `for`-`await`-`in` loop
-by adding conformance to the
-[`AsyncSequence`](https://developer.apple.com/documentation/swift/asyncsequence) protocol.
+by adding conformance to the [`AsyncSequence`] protocol.
+
+[`Sequence`]: https://developer.apple.com/documentation/swift/sequence
+[`AsyncSequence`]: https://developer.apple.com/documentation/swift/asyncsequence
 
 <!--
   TODO what happened to ``Series`` which was supposed to be a currency type?
@@ -623,8 +627,7 @@ and explicitly add child tasks to that group,
 which gives you more control over priority and cancellation,
 and lets you create a dynamic number of tasks.
 
-Tasks are arranged in a hierarchy using
-[`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
+Tasks are arranged in a hierarchy using [`TaskGroup`][].
 Each task in a task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
@@ -633,6 +636,8 @@ Although you take on some of the responsibility for correctness,
 the explicit parent-child relationships between tasks
 let Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
+
+[`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
 
 <!-- TR: What's a good example of this kind of error? -->
 
@@ -698,13 +703,28 @@ Finally,
 the task group returns the array of downloaded photos
 as its overall result.
 
-The process of downloading many pictures could take a long time.
+
+### Task Cancellation
+
+Swift concurrency uses a cooperative cancellation model.
+Each task checks whether it has been canceled
+at the appropriate points in its execution,
+and responds to cancellation an appropriate way.
+Depending on the work you're doing,
+that usually means one of the following:
+
+- Throwing an error like `CancellationError`
+- Returning `nil` or an empty collection
+- Returning the partially completed work
+
+Downloading pictures could take a long time
+if the pictures are large or the network is slow.
 To let the user stop this work,
 without waiting for all of the tasks to complete,
 the tasks need check for cancellation and stop running if they are canceled.
 There are two ways a task can do this:
-by calling the `checkCancellation()` method,
-or by checking the `isCancelled` property.
+by calling the [`Task.checkCancellation()`][] method,
+or by reading the [`Task.isCancelled`][] property.
 Calling `checkCancellation()` throws an error if the task is canceled;
 a throwing task can let that error propagate out of the task,
 stopping all of the task's work.
@@ -712,6 +732,9 @@ This has the advantage of being simple to implement and understand.
 For more flexibility, use the `isCancelled` property,
 which lets you perform clean-up work as part of stopping the task,
 like closing network connections and deleting temporary files.
+
+[`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
+[`Task.isCancelled`]: https://developer.apple.com/documentation/swift/task/3814832-iscancelled
 
 ```
 let photos = await withTaskGroup(of: Data.self) { taskGroup in
@@ -738,13 +761,40 @@ If it has been canceled, the task returns `nil`.
 At the end,
 the task group skips `nil` values when collecting the results.
 Handling cancellation by returning `nil`
-means the task group can return a partial result
-instead of discarding the work that has already completed.
+means the task group can return a partial result ---
+the photos that were already downloaded at the time of cancellation ---
+instead of discarding that completed work.
+A full version of this code would include clean-up work
+as part of cancellation,
+like deleting partial downloads and closing network connections.
 
-> Note:
-> To loop over only the non-`nil` values,
-> you could write `for case await let photo? in taskGroup`,
-> although that can be hard to read.
+<!--
+  OUTLINE
+
+  - task
+
+  - cancellation propagates (Konrad's example below)
+
+  ::
+
+      let handle = spawnDetached {
+      await withTaskGroup(of: Bool.self) { group in
+          var done = false
+          while done {
+          await group.spawn { Task.isCancelled } // is this child task cancelled?
+          done = try await group.next() ?? false
+          }
+      print("done!") // <1>
+      }
+
+      handle.cancel()
+      // done!           <1>
+
+  - Use ``withCancellationHandler()`` to specify a closure to run
+  if the task is canceled
+  along with a closure that defines the task's work
+  (it doesn't throw like ``checkCancellation`` does)
+-->
 
 <!--
   Not for WWDC, but keep for future:
@@ -883,61 +933,6 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
   when to make a method do its work in a detached task
   versus making the method itself async?
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
--->
-
-### Task Cancellation
-
-<!-- FIXME: Move this up, to connect to the photos example -->
-
-Swift concurrency uses a cooperative cancellation model.
-Each task checks whether it has been canceled
-at the appropriate points in its execution,
-and responds to cancellation in whatever way is appropriate.
-Depending on the work you're doing,
-that usually means one of the following:
-
-- Throwing an error like `CancellationError`
-- Returning `nil` or an empty collection
-- Returning the partially completed work
-
-To check for cancellation,
-either call [`Task.checkCancellation()`](https://developer.apple.com/documentation/swift/task/3814826-checkcancellation),
-which throws `CancellationError` if the task has been canceled,
-or check the value of [`Task.isCancelled`](https://developer.apple.com/documentation/swift/task/3814832-iscancelled)
-and handle the cancellation in your own code.
-For example,
-a task that's downloading photos from a gallery
-might need to delete partial downloads and close network connections.
-
-To propagate cancellation manually,
-call [`Task.cancel()`](https://developer.apple.com/documentation/swift/task/3851218-cancel).
-
-<!--
-  OUTLINE
-
-  - task
-
-  - cancellation propagates (Konrad's example below)
-
-  ::
-
-      let handle = spawnDetached {
-      await withTaskGroup(of: Bool.self) { group in
-          var done = false
-          while done {
-          await group.spawn { Task.isCancelled } // is this child task cancelled?
-          done = try await group.next() ?? false
-          }
-      print("done!") // <1>
-      }
-
-      handle.cancel()
-      // done!           <1>
-
-  - Use ``withCancellationHandler()`` to specify a closure to run
-  if the task is canceled
-  along with a closure that defines the task's work
-  (it doesn't throw like ``checkCancellation`` does)
 -->
 
 ## Actors
