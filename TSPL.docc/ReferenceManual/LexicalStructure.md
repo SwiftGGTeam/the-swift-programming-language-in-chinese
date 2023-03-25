@@ -387,6 +387,19 @@ so they must be escaped with backticks in that context.
   `#sourceLocation`,
   and `#warning`.
 
+<!-- XXX Update the list above for thing that are now macros. -->
+
+<!-- XXX Add a note like the following:
+
+> Note:
+> Prior to Swift 5.9,
+> the following keywords were reserved,
+> which are now implemented as macros in the Swift standard library:
+> `#colorLiteral`,
+> `#dsohandle`,
+> `#file`.
+-->
+
 <!--
   Token.py includes #assert,
   which looks like it's part of an experimental feature

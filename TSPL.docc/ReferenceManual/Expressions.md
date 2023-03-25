@@ -564,6 +564,8 @@ to make prefix expressions, infix expressions, and postfix expressions.
 >
 > *primary-expression* → *wildcard-expression*
 >
+> *primary-expression* → *macro-expansion-expression*
+>
 > *primary-expression* → *key-path-expression*
 >
 > *primary-expression* → *selector-expression*
@@ -590,6 +592,27 @@ either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
 a playground literal,
 or one of the following special literals:
+
+<!--
+XXX Update the table below
+for things that are macros now,
+and add a note like the following:
+
+> Note:
+> Prior to Swift 5.9,
+> the following special literals were recognized,
+> which are now implemented as macros in the Swift standard library:
+> `#column`,
+> `#dsohandle`,
+> `#fileID`,
+> `#filePath`,
+> `#file`,
+> `#function`,
+> and `#line`.
+
+I think we might actually not have anything in this table left.
+Confirm this, also checking the special case of playground literals.
+-->
 
 | Literal | Type | Value |
 | ------- | ---- | ----- |
@@ -1548,6 +1571,22 @@ For example, in the following assignment
 > Grammar of a wildcard expression:
 >
 > *wildcard-expression* → **`_`**
+
+### Macro-Expansion Expression
+
+<!--
+A macro that takes no arguments can omit the ()
+and that bit is implied.
+XXX Can you explicitly include the () still?
+
+-->
+
+A macro expression can't appear as the default value for a parameter,
+except for the `#file` and `#line` macros from the Swift standard library.
+
+> Grammar of a macro-expansion expression:
+>
+> *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
 
 ### Key-Path Expression
 

@@ -45,6 +45,8 @@ the term *declaration* covers both declarations and definitions.
 >
 > *declaration* → *subscript-declaration*
 >
+> *declaration* → *macro-declaration*
+>
 > *declaration* → *operator-declaration*
 >
 > *declaration* → *precedence-group-declaration*
@@ -3441,6 +3443,37 @@ with both the `class` and `final` declaration modifiers.
 > *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause*
 >
 > *subscript-result* → **`->`** *attributes*_?_ *type*
+
+## Macro Declaration
+
+<!-- XXX OUTLINE
+Macro overloading is allowed, like with functions.
+
+SE proposal says the expression in a macro-definition
+is parsed and evaluated as an expression,
+but must specifically be a macro-expansion-expression.
+However, I think that restriction has been relaxed
+to also allow a type to appear
+when the macro implementation is defined in the same module.
+-->
+
+A macro declaration appears only at file scope.
+
+> Grammar of a macro declaration:
+>
+> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause*
+>
+> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** 
+>
+> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_
+>
+> *macro-function-signature-result* → **`->``** *type*
+>
+> *macro-definition* → **`=``** *expression*
+
+<!--
+XXX TR: Confirm that the 'where' clause goes after the equals sign.
+-->
 
 ## Operator Declaration
 
