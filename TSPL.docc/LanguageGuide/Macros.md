@@ -32,16 +32,9 @@ XXX OUTLINE:
   you write them after the name like a function call.
   For example XXX.
 
-- When you compile your code (very brief version):
-
-  1. The compiler ensures that the code inside the macro call is valid Swift.
-  1. The compiler represents your code in memory
-     using an abstract syntax tree.
-  1. The compiler sends the AST to the code that implements the macro.
-  1. The macro implementation modifies the AST and sends it back.
-  1. The compiler builds the modified Swift code.
-
-- Figure: moving parts [see ASCII art below]
+- When you compile your code,
+  the macro implementation modifies your code.
+  (very brief version with xref to section below)
 
 - Example of a macro and its expanded form.
 
@@ -69,66 +62,110 @@ XXX OUTLINE:
 
 XXX OUTLINE:
 
+- The macro expansion process:
+
+  1. The compiler ensures that the code inside the macro call is valid Swift.
+  1. The compiler represents your code in memory
+     using an abstract syntax tree.
+  1. The compiler sends the AST to the code that implements the macro.
+  1. The macro implementation modifies the AST and sends it back.
+  1. The compiler builds the modified Swift code.
+
+- Figure: moving parts [see ASCII art below]
+
+- Macro arguments are type-checked before macro expansion.
+  The macro implementation transforms well-typed, well-formed input
+  into well-typed, well-formed output.
+
+- Macros can be nested,
+  but macro expansion can't be recursive.
+  Nested macros are expanded from the outside in.
+  If the AST returned by a macro tries to call other macros,
+  that's a compile-time error.
+
+- Macro expansion happens in their surrounding context.
+  A macro can affect that environment if it needs to —
+  and a macro that has bugs can interfere with that environment.
+
+- Generated symbol names let a macro
+  avoid accidentally interacting with symbols in that environment.
+  (XXX What’s our spelling of GENSYM?)
+
+## Declaring a Macro
+
+XXX OUTLINE:
+
+- A macro has two parts: the declaration, and the implementation.
+  This is different from most things in Swift,
+  where the declaration also contains the implementation.
+
+- Macro declaration includes the `macro` keyword.
+  Attributes on the macro declaration specify where and how it is used.
+  [`@freestanding` and `@attached` introduced already above]
+
+- The first half of the declaration,
+  the parts before the equals sign (`=`)
+  specify how the macro is used.
+  The second half tells you which type implements the macro
+  and what module that type is in.
+
+- Macro attributes and their meaning:
+  XXX expand this bullet
+
+    - `@freestanding(expression)`
+    - `@attached(peer, names:)`
+    - `@attached(member, names:)`
+    - `@attached(memberAttribute)`  (XXX TR: Can this take `names:` too?)
+    - `@attached(accessor, names:)`
+
+- Every declaration a macro introduces in its expansion
+  must be included in the list of names the macro declares.
+  However, a macro can declare a name
+  but omit a corresponding declaration in the expansion.
+  (For example, because one already exists.)
+
+- Macro declaration naming:
+
+    - `named(someDeclarationName)`
+    - `arbitrary`
+    - `overloaded`
+    - `prefixed()` usually `prefixed(_)`
+      but others including `$` are allowed.
+    - `suffixed()` like `suffixed(_docInfo)`
+
+- After the `=` you either write the type name
+  if the type that implements the macro is in the same module,
+  or you call `#externalMacro(module:type:)`.
+
+- XXX TR: What guidance can we give
+  about choosing where the implementation goes?
+
+## Implementing a Macro
+
+[Probably multiple sections]
+
+XXX OUTLINE:
+
+- You use Swift Syntax APIs to modify the AST
+
+- XXX QUESTION: What are the most important APIs to show in examples?
+
+- Tips for debugging a macro
+
 - Ways to view the macro expansion while debugging
   XXX what options does the compiler give you?
 
 
-XXX Facts to be incorporated into this section's outline:
+## XXX Figure: The moving parts in macro expansion
 
-QUESTION:
-Should some of these bits move to a discussion about
-how to build your own macros?
+XXX Series of figures for ASTs, interleaved with text
 
-Macro arguments are type-checked before macro expansion.
-The macro implementation transforms well-typed, well-formed input
-into well-typed, well-formed output.
+QUESTION: Is this better served as nested bulleted lists?
+Maybe draw out the full tree the first time,
+and then switch to the textual version?
 
-Macro expansion happens in their surrounding context.
-A macro can affect that environment if it needs to —
-and a macro that has bugs can interfere with that environment.
-Generated symbol names let a macro
-avoid accidentally interacting with symbols in that environment.
-(XXX What’s our spelling of GENSYM?)
-
-Macros can be nested,
-but macro expansion can't be recursive.
-Nested macros are expanded from the outside in.
-If the AST returned by a macro tries to call other macros,
-that's a compile-time error.
-
-Macro attributes and their meaning:
-
-`@freestanding(expression)`
-`@attached(peer, names:)`
-`@attached(member, names:)`
-`@attached(memberAttribute)`  (XXX TR: Can this take `names:` too?)
-`@attached(accessor, names:)`
-
-Macro declaration naming:
-
-- `named(someDeclarationName)`
-- `arbitrary`
-- `overloaded`
-- `prefixed()` usually `prefixed(_)` but others including `$` are allowed.
-- `suffixed()` like `suffixed(_docInfo)`
-
-Every declaration a macro introduces in its expansion
-must be included in the list of names the macro declares.
-However, a macro can declare a name
-but omit a corresponding declaration in the expansion.
-(For example, because one already exists.)
-
-## XXX OUTLINE XXX
-
-- How do I define a new macro?
-    - It can go in the same module, or in an external module.
-    - Q: What guidance can we give
-      about choosing where the implementation goes?
-- You use Swift Syntax APIs to modify the AST
-    - Q: What are the most important APIs to show in examples?
-- Tips for debugging a macro
-
-## Figure: The moving parts in macro expansion
+XXX TR: What labels should we use on the nodes here?
+Are the type names from Swift Syntax stable enough to use here?
 
 Starts with your code:
 
@@ -148,9 +185,11 @@ Swift compiler converts code to an to AST:
   line        #line
 ```
 
-Swift compiler serialized the AST
+Swift compiler serializes the AST
 and passes it to a separate binary
 that implement the macro.
+
+[Highlight which part of the AST gets passed over.]
 
 Macro implementation uses Swift Syntax APIs
 to manipulate the AST
@@ -168,7 +207,7 @@ to manipulate the AST
 Macro binary serializes the AST
 and returns it the Swift compiler.
 
-Swift compiler handles the AST
+The code is compiled
 as if it had been written in source
 in the expanded form.
 
