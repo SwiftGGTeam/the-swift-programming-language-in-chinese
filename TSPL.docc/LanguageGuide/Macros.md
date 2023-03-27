@@ -24,6 +24,9 @@ XXX OUTLINE:
   rather than being attached to another piece of syntax.
   Contrast with "attached" macros, described below.
 
+- Also called "expression macros"
+  because the result of expansion is an expression.
+
 - If the macro doesn't take arguments,
   you just write its name to call it.
   For example: `#line`.
@@ -48,6 +51,9 @@ XXX OUTLINE:
 - Macro declaration includes `@attached`
   followed by information about the kinds of code the macro produces,
   and information about the names of the generated symbols.
+
+- Also called "declaration macros"
+  because the result of expansion is a (modified) declaration.
 
 - To apply the macro to a declaration,
   you write its name and any parameters it takes before that declaration,
@@ -154,6 +160,58 @@ XXX OUTLINE:
 
 - Ways to view the macro expansion while debugging
   XXX what options does the compiler give you?
+
+XXX APIs to introduce, not yet in teaching order:
+
+- Expression macros:
+
+    - `ExpresionMacro` protocol,
+    which implementation of freestanding macro conforms to
+
+    - `FreestandingMacroExpansionSyntax`
+
+    - `MacroExpansionContext`
+
+    - `ExprSyntax`, which expression macros produce
+
+        - ways to create a syntax node include calling an init
+          and conversion from a string literal
+          (which can include interpolation)
+
+    - `SyntaxRewriter` visitor pattern for modifying the AST
+
+    - `Diagnostic`, like `SimpleDiagnosticMessage`,
+      which you use to create a compile-time warning/error
+
+    - `DiagnosticMessage`
+
+    - `FixIt` maybe?
+
+    - concept of "trivia"
+
+    - `expansion(of:in:)`
+
+    - `TokenSyntax`
+
+- Attached macros:
+
+    - `MemberMacro` and `MemberAttributeMacro` protocols,
+    which attached macros conform to
+
+    - concept of "syntax nodes"
+
+    - `AttributeSyntax` and `DeclGroupSyntax`,
+    which declaration macros produce
+
+    - `DeclSyntax` and `DeclSyntaxProtocol`
+
+    - `expansion(of:providingAttributesFor:in:)`
+
+    - `expansion(of:attachedTo:providingAttributesFor:in:)`
+
+    - `PeerMacros` and `expansion(of:providingPeersOf:in:)`
+
+    - `ConformanceMacro` and `expansion(of:providingConformanceOf:in:)`
 
 
 ## XXX Figure: The moving parts in macro expansion
