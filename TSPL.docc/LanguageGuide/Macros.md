@@ -170,7 +170,11 @@ XXX APIs to introduce, not yet in teaching order:
 
     - `FreestandingMacroExpansionSyntax`
 
-    - `MacroExpansionContext`
+    - `MacroExpansionContext` lets you query source location
+      and produce diagnostics.
+      Use diagnostics for macros that have constraints/requirements,
+      to give a meaningful error to users
+      instead of letting the compiler try & fail to build the generated code.
 
     - `ExprSyntax`, which expression macros produce
 
