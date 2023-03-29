@@ -279,9 +279,9 @@ Otherwise, that other code
 would treat the inconsistent state as if it were real,
 leading to problems like incorrect behavior or data loss.
 
-To make it even clearer that these lines of code
-must not have `await` added to in the future,
-you can refactor them into a synchronous function:
+To make it even clearer that any future changes to this code
+must not add `await` between the add and remove operations,
+you can refactor those two operations into a synchronous function:
 
 ```swift
 func move(_ photoName: String, from source: String, to destination: String) {
