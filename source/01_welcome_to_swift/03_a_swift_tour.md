@@ -10,12 +10,6 @@ print("Hello, world!")
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解到。
 
-> 注意
-> 
-> 最好的体验是把这一章作为 Playground 文件在 Xcode 中打开。 Playgrounds 允许你可以编辑代码并立刻看到输出结果。
-> 
-> [下载 Playground](https://docs.swift.org/swift-book/GuidedTour/GuidedTour.playground.zip)
-
 ## 简单值 {#simple-values}
 
 使用 `let` 来声明常量，使用 `var` 来声明变量。一个常量的值，在编译的时候，并不需要有明确的值，但是你只能为它赋值一次。这说明你可以用一个常量来命名一个值，一次赋值就可在多个地方使用。
