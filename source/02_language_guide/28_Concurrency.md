@@ -114,7 +114,7 @@ for try await line in handle.bytes.lines {
 }
 ```
 
-与普通的 `for-in` 循环相比，上面的列子在 `for` 之后添加了 `await` 关键字。就像在调用异步函数或方法时一样，`await` 表明代码中有一个可能的悬点。`for-await-in` 循环会在每次循环开始的时候因为有可能需要等待下一个元素而挂起当前代码的执行。
+与普通的 `for-in` 循环相比，上面的例子在 `for` 之后添加了 `await` 关键字。就像在调用异步函数或方法时一样，`await` 表明代码中有一个可能的悬点。`for-await-in` 循环会在每次循环开始的时候因为有可能需要等待下一个元素而挂起当前代码的执行。
 
 想让自己创建的类型使用 `for-in` 循环需要遵循 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议，这里也同理，如果想让自己创建的类型使用 `for-await-in` 循环，就需要遵循 [AsyncSequence](https://developer.apple.com/documentation/swift/asyncsequence) 协议。
 

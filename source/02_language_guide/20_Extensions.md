@@ -37,7 +37,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 
 这种遵循协议的方式在 [在扩展里添加协议遵循](./21_Protocols.md#adding-protocol-conformance-with-an-extension) 中有描述。
 
-扩展可以使用在现有范型类型上，就像 [泛型扩展](./22_Generics.md#extending-a-generic-type) 中描述的一样。你还可以使用扩展给泛型类型有条件的添加功能，就像 [具有泛型 Where 子句的扩展](./22_Generics.md#extensions-with-a-generic-where-clause) 中描述的一样。
+扩展可以使用在现有泛型类型上，就像 [泛型扩展](./22_Generics.md#extending-a-generic-type) 中描述的一样。你还可以使用扩展给泛型类型有条件的添加功能，就像 [具有泛型 Where 子句的扩展](./22_Generics.md#extensions-with-a-generic-where-clause) 中描述的一样。
 
 > 注意
 > 
@@ -210,7 +210,7 @@ extension Int {
 // 返回 7
 ```
 
-如果操作的 `Int` 值没有足够的位数满足所请求的下标，那么下标的现实将返回 `0`，将好像在数字的左边补上了 0：
+如果操作的 `Int` 值没有足够的位数满足所请求的下标，那么下标的实现将返回 `0`，就好像在数字的左边补上了 0：
 
 ```swift
 746381295[9]
