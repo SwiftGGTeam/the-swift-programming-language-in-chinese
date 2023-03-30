@@ -8,9 +8,10 @@ These include `while` loops to perform a task multiple times;
 to execute different branches of code based on certain conditions;
 and statements such as `break` and `continue`
 to transfer the flow of execution to another point in your code.
-
-Swift also provides a `for`-`in` loop that makes it easy to iterate over
+Swift provides a `for`-`in` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
+Swift also provides `defer` statements,
+which wrap code to be executed when leaving the current scope.
 
 Swift's `switch` statement is considerably more powerful
 than its counterpart in many C-like languages.
@@ -1827,6 +1828,136 @@ It lets you write the code that's typically executed
 without wrapping it in an `else` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
+
+## Deferred Actions
+
+Unlike control-flow constructs like `if` and `while`,
+which let you control whether part of your code is executed
+or how many times it gets executed,
+`defer` controls *when* a piece of code is executed.
+You use a `defer` block to write code that will be executed later,
+when your program reaches the end of the current scope.
+For example:
+
+```swift
+var score = 1
+if score < 10 {
+    defer {
+        print(score)
+    }
+    score += 5
+}
+// Prints "6"
+```
+
+<!--
+  - test: `defer-with-if`
+
+  ```swifttest
+  -> var score = 1
+  -> if score < 10 {
+  ->     defer {
+  ->         print(score)
+  ->     }
+  ->     score += 5
+  -> }
+  <- 6
+  ```
+-->
+
+In the example above,
+the code inside of the `defer` block is executed
+before exiting the body of the `if` statement.
+First, the code in the `if` statement runs,
+which increments `score` by five.
+Then, before exiting the `if` statement's scope,
+the deferred code is run, which prints `score`.
+
+The code inside of the `defer` always runs,
+regardless of how the program exits that scope.
+That includes code like an early exit from a function,
+breaking out of a `for` loop,
+or throwing an error.
+This behavior makes `defer` useful for operations
+where you need to guarantee a pair of actions happen ---
+like manually allocating and freeing memory,
+opening and closing low-level file descriptors,
+and beginning and ending transactions in a database ---
+because you can write both actions next to each other in your code.
+For example,
+the following code gives a temporary bonus to the score,
+by adding and subtracting 100 inside a chunk of code:
+
+```swift
+var score = 3
+if score < 100 {
+    score += 100
+    defer {
+        score -= 100
+    }
+    // Other code that uses the score with its bonus goes here.
+    print(score)
+}
+// Prints "103"
+```
+
+<!--
+  - test: `defer-paired-actions`
+
+  ```swift
+  -> var score = 3
+  -> if score < 100 {
+  ->     score += 100
+  ->     defer {
+  ->         score -= 100
+  ->     }
+  ->     // Other code that uses the score with its bonus goes here.
+  ->     print(score)
+  -> }
+  <- 103
+  ```
+-->
+
+If you write more than one `defer` block in the same scope,
+the first one you specify is the last one to run.
+
+```swift
+if score < 10 {
+    defer {
+        print(score)
+    }
+    defer {
+        print("The score is:")
+    }
+    score += 5
+}
+// Prints "The score is:"
+// Prints "6"
+```
+
+<!--
+  - test: `defer-with-if`
+
+  ```swifttest
+  -> if score < 10 {
+  ->     defer {
+  ->         print(score)
+  ->     }
+  ->     defer {
+  ->         print("The score is:")
+  ->     }
+  ->     score += 5
+  -> }
+  <- 6
+  ```
+-->
+
+If your program stops running ---
+for example, because of a runtime error or a crash ---
+deferred code doesn't execute.
+However, deferred code does execute after an error is thrown;
+for information about using `defer` with error handling,
+see <docc:ErrorHandling:Specifying-Cleanup-Actions>.
 
 ## Checking API Availability
 
