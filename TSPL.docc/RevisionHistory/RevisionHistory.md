@@ -5,6 +5,8 @@ Review the recent changes to this book.
 **XXX FCS DATE GOES HERE XXX**
 
 - Updated for Swift 5.8.
+- Added the <doc:ControlFlow#Deferred-Actions> section,
+  showing `defer` outside of error handling.
 - Adopted Swift-DocC for publication.
 - Minor corrections and additions throughout.
 
