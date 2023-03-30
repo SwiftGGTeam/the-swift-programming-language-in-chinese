@@ -1957,7 +1957,7 @@ for example, because of a runtime error or a crash ---
 deferred code doesn't execute.
 However, deferred code does execute after an error is thrown;
 for information about using `defer` with error handling,
-see <docc:ErrorHandling:Specifying-Cleanup-Actions>.
+see <doc:ErrorHandling#Specifying-Cleanup-Actions>.
 
 ## Checking API Availability
 
