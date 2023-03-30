@@ -105,7 +105,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 ```swift
 protocol SomeProtocol {
-	static func someTypeMethod()
+    static func someTypeMethod()
 }
 ```
 
