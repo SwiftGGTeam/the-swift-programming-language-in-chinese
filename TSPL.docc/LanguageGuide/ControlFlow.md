@@ -1854,14 +1854,14 @@ if score < 10 {
   - test: `defer-with-if`
 
   ```swifttest
-  -> var score = 3
+  -> var score = 1
   -> if score < 10 {
   ->     defer {
   ->         print(score)
   ->     }
   ->     score += 5
   -> }
-  <- 8
+  <- 6
   ```
 -->
 
@@ -1948,7 +1948,7 @@ if score < 10 {
   ->     }
   ->     score += 5
   -> }
-  <- 8
+  <- 6
   ```
 -->
 
