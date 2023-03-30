@@ -171,9 +171,13 @@ For example:
 
 ```swift
 let quotation = """
-I said "I have \(apples) apples."
-And then I said "I have \(apples + oranges) pieces of fruit."
-"""
+        Even though there's whitespace to the left,
+        the actual lines aren't indented.
+            Except for this line.
+        Double quotes (") can appear without being escaped.
+
+        I still have \(apples + oranges) pieces of fruit.
+        """
 ```
 
 <!--
