@@ -105,7 +105,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 ```swift
 protocol SomeProtocol {
-	static func someTypeMethod()
+    static func someTypeMethod()
 }
 ```
 
@@ -675,7 +675,7 @@ wishHappyBirthday(to: birthdayPerson)
 
 `Named` 协议包含 `String` 类型的 `name` 属性。`Aged` 协议包含 `Int` 类型的 `age` 属性。`Person` 结构体采纳了这两个协议。
 
-`wishHappyBirthday(to:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`， 这意味着“任何同时遵循 Named 和 Aged 的协议”。它不关心参数的具体类型，只要参数遵循这两个协议即可。
+`wishHappyBirthday(to:)` 函数的参数 `celebrator` 的类型为 `Named & Aged`， 这意味着“任何同时遵循 Named 和 Aged 协议的类型”。它不关心参数的具体类型，只要参数遵循这两个协议即可。
 
 上面的例子创建了一个名为 `birthdayPerson` 的 `Person` 的实例，作为参数传递给了 `wishHappyBirthday(to:)` 函数。因为 `Person` 同时遵循这两个协议，所以这个参数合法，函数将打印生日问候语。
 
@@ -857,7 +857,7 @@ for _ in 1...4 {
 // 12
 ```
 
-上述代码新建了一个 `Counter` 实例，并将它的数据源设置为一个 `ThreeSource` 的实例，然后调用 `increment()` 方法 `4` 次。按照预期预期一样，每次调用都会将 `count` 的值增加 `3`.
+上述代码新建了一个 `Counter` 实例，并将它的数据源设置为一个 `ThreeSource` 的实例，然后调用 `increment()` 方法 `4` 次。正如预期一样，每次调用都会将 `count` 的值增加 `3`.
 
 下面是一个更为复杂的数据源 `TowardsZeroSource`，它将使得最后的值变为 `0`：
 

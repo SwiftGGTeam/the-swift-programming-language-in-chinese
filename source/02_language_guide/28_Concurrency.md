@@ -114,7 +114,7 @@ for try await line in handle.bytes.lines {
 }
 ```
 
-与普通的 `for-in` 循环相比，上面的列子在 `for` 之后添加了 `await` 关键字。就像在调用异步函数或方法时一样，`await` 表明代码中有一个可能的悬点。`for-await-in` 循环会在每次循环开始的时候因为有可能需要等待下一个元素而挂起当前代码的执行。
+与普通的 `for-in` 循环相比，上面的例子在 `for` 之后添加了 `await` 关键字。就像在调用异步函数或方法时一样，`await` 表明代码中有一个可能的悬点。`for-await-in` 循环会在每次循环开始的时候因为有可能需要等待下一个元素而挂起当前代码的执行。
 
 想让自己创建的类型使用 `for-in` 循环需要遵循 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议，这里也同理，如果想让自己创建的类型使用 `for-await-in` 循环，就需要遵循 [AsyncSequence](https://developer.apple.com/documentation/swift/asyncsequence) 协议。
 
@@ -157,7 +157,7 @@ show(photos)
 
 ## 任务和任务组 {#Tasks-and-Task-Groups}
 
-*任务（task)*是一项工作，可以作为程序的一部分并发执行。所有的异步代码都属于某个任务。上一部分介绍的 `async-let` 语法就会产生一个子任务。你也可以创建一个任务组并且给其中添加子任务，这可以让你对优先级和任务取消有了更多的掌控力，并且可以控制任务的数量。
+*任务（task)* 是一项工作，可以作为程序的一部分并发执行。所有的异步代码都属于某个任务。上一部分介绍的 `async-let` 语法就会产生一个子任务。你也可以创建一个任务组并且给其中添加子任务，这可以让你对优先级和任务取消有了更多的掌控力，并且可以控制任务的数量。
 
 任务是按层级结构排列的。同一个任务组中的任务拥有相同的父任务，并且每个任务都可以添加子任务。由于任务和任务组之间明确的关系，这种方式又被称为*结构化并发（structured concurrency）*。虽然你需要确保代码的正确性，但任务间明确的父子关系让 Swift 能替你处理一些如扩散取消（propagating cancellation）之类的行为，并且能让 Swift 在编译阶段发现一些错误。
 
