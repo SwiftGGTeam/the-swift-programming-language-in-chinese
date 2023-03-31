@@ -44,8 +44,11 @@ docc convert \
 
 rm TSPL.docc/header.html
 
-
 # Copy the redirect pages into every location where the legacy RST-based
 # pipeline created an HTML page, to keep links to those chapters and
 # sections working.
-cp -r bin/redirects/* "$output"
+cp -r bin/redirects/GuidedTour "$output"
+cp -r bin/redirects/LanguageGuide "$output"
+cp -r bin/redirects/ReferenceManual "$output"
+cp -r bin/redirects/RevisionHistory "$output"
+cp -r bin/redirects/index.html "$output"

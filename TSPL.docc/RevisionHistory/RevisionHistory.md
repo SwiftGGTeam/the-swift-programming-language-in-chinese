@@ -2,9 +2,11 @@
 
 Review the recent changes to this book.
 
-**2023-02-16**
+**2023-04-30**
 
 - Updated for Swift 5.8.
+- Added the <doc:ControlFlow#Deferred-Actions> section,
+  showing `defer` outside of error handling.
 - Adopted Swift-DocC for publication.
 - Minor corrections and additions throughout.
 
@@ -790,12 +792,6 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
