@@ -10,6 +10,7 @@ XXX OUTLINE:
 - Macros use the Swift Syntax library in their implementation.
 - Macros either produce a value ("pound" syntax)
   or modify a declaration ("at" syntax).
+- XXX Terminology: Settle on names for the kinds of macros.
 
 ## Using a Macro to Produce a Value
 
@@ -26,6 +27,11 @@ XXX OUTLINE:
 
 - Also called "expression macros"
   because the result of expansion is an expression.
+
+- NOTE:
+  Today, expression macros are the only kind of freestanding macros,
+  but more are expected in the future via
+  https://github.com/DougGregor/swift-evolution/blob/freestanding-macros/proposals/nnnn-freestanding-macros.md
 
 - If the macro doesn't take arguments,
   you just write its name to call it.
@@ -48,6 +54,10 @@ XXX OUTLINE:
 - Spelled with an at sign (`@`) like an attribute.
   FIXME: Good example macro from the stdlib
 
+- These are "attached" because you write them as an attribute
+  that's attached to a declaration,
+  like a structure or a property.
+
 - Macro declaration includes `@attached`
   followed by information about the kinds of code the macro produces,
   and information about the names of the generated symbols.
@@ -60,7 +70,7 @@ XXX OUTLINE:
   like an attribute.
   For example XXX
 
-- Expansion works the same way as for freestanding macros.
+- Expansion works the same way as for expression macros.
 
 - Example of a macro and its expanded form.
 
@@ -115,20 +125,27 @@ XXX OUTLINE:
   The second half tells you which type implements the macro
   and what module that type is in.
 
-- Macro attributes and their meaning:
-  XXX expand this bullet
+- Freestanding macros are marked with `@freestanding`.
+  Attached macros are marked with `@attached`.
 
-    - `@freestanding(expression)`
+- Arguments to those macros describe usage more specifically:
+
+    - `@freestanding(expression)`   (XXX TR: Any other kind of freestanding?)
     - `@attached(peer, names:)`
     - `@attached(member, names:)`
     - `@attached(memberAttribute)`  (XXX TR: Can this take `names:` too?)
     - `@attached(accessor, names:)`
 
-- Every declaration a macro introduces in its expansion
-  must be included in the list of names the macro declares.
+- Every declaration that a macro creates in its expansion
+  must be included in the list of names the macro declares in an attribute.
+  Exception: A macro that uses `arbitrary`.
   However, a macro can declare a name
   but omit a corresponding declaration in the expansion.
   (For example, because one already exists.)
+
+- TR: Are any of the options in these macros expected to be uncommon enough
+  that we should document them in the reference
+  but omit them from the guide's teaching path?
 
 - Macro declaration naming:
 
@@ -152,82 +169,117 @@ XXX OUTLINE:
 
 XXX OUTLINE:
 
-- You use Swift Syntax APIs to modify the AST
+- You use the Swift Syntax APIs to modify swift code
+  by manipulating the abstract syntax tree (AST).
 
-- XXX QUESTION: What are the most important APIs to show in examples?
+- Link to Swift Syntax repository
+  <https://github.com/apple/swift-syntax/>
+
+- XXX Question: Should we show SwiftPM syntax for depending on Swift Syntax?
+  Nothing else in TSPL shows how to build projects,
+  so it might feel a little out of place here.
+
+- XXX TR: Do you deserialize the AST from JSON?
+  From the examples, it seems like this is done for you,
+  so I don't think there's anything to say about it.
+
+- Your type that implements an expression macro
+  conforms to the `ExpresionMacro` protocol,
+  and implements the required method:
+
+  ```swift
+  static func expansion<
+    Node: FreestandingMacroExpansionSyntax,
+    Context: MacroExpansionContext
+  >(
+    of node: Node,
+    in context: Context
+  ) throws -> ExprSyntax
+  ```
+
+- This method is passed the specific AST node representing your macro.
+
+- This method is also passed a macro-expansion context, which you use to:
+
+    + Generate unique symbol names
+    + Produce diagnostics (`Diagnostic` and `SimpleDiagnosticMessage`)
+    + Find a node's location in source
+
+- Use diagnostics for macros that have constraints/requirements
+  so your code can give a meaningful error to users when those aren't met,
+  instead of letting the compiler try & fail to build the generated code.
+
+- Ways to create a syntax node include
+  Making an instance of the `Syntax` struct,
+  or `SyntaxToken`
+  or `ExprSyntax`.
+  (Need to give folks some general ideas,
+  and enough guidance so they can sort through
+  all the various Swift Syntax node types and find the right one.)
+
+- XXX TR: Many of the example macros look like they're
+  creating syntax nodes using string literal,
+  but I can't find any conformance to `StringLiteralConvertible` to point to.
+  How does this work?
 
 - Tips for debugging a macro
 
-- Ways to view the macro expansion while debugging
-  XXX what options does the compiler give you?
+- Ways to view the macro expansion while debugging.
+  XXX TR: What options (if any) does the compiler give you?
 
-XXX APIs to introduce, not yet in teaching order:
+- Attached macros follow the same general model as expression macros,
+  but with more moving parts.
 
-- Expression macros:
+- Pick the subprotocol of `AttachedMacro` to conform to,
+  depending on which kind of attached macro you're making.
+  [This is probably a table]
 
-    - `ExpresionMacro` protocol,
-    which implementation of freestanding macro conforms to
+  + `AccessorMacro` goes with `@attached(accessor)`
+  + `ConformanceMacro` goes with `@attached(conformance)`
+    [XXX missing from the list under Declaring a Macro]
+  + `MemberMacro` goes with `@attached(member)`
+  + `PeerMacro` goes with `@attached(peer)`
+  + [XXX What about `@member(memberAttribute)`?
 
-    - `FreestandingMacroExpansionSyntax`
+- Code example of conforming to `MemberMacro`.
 
-    - `MacroExpansionContext` lets you query source location
-      and produce diagnostics.
-      Use diagnostics for macros that have constraints/requirements,
-      to give a meaningful error to users
-      instead of letting the compiler try & fail to build the generated code.
+  ```
+  static func expansion<
+    Declaration: DeclGroupSyntax,
+    Context: MacroExpansionContext
+  >(
+    of node: AttributeSyntax,
+    providingMembersOf declaration: Declaration,
+    in context: Context
+  ) throws -> [DeclSyntax]
+  ```
 
-    - `ExprSyntax`, which expression macros produce
+- Adding a new member by making an instance of `Declaration`,
+  and returning it as part of the `[DeclSyntax]` list.
 
-        - ways to create a syntax node include calling an init
-          and conversion from a string literal
-          (which can include interpolation)
+XXX Additional APIs and concepts to introduce in the future,
+in no particular order:
 
-    - `SyntaxRewriter` visitor pattern for modifying the AST
+- Using `SyntaxRewriter` and the visitor pattern for modifying the AST
 
-    - `Diagnostic`, like `SimpleDiagnosticMessage`,
-      which you use to create a compile-time warning/error
+- Adding a suggested correction using `FixIt`
 
-    - `DiagnosticMessage`
+- concept of trivia
 
-    - `FixIt` maybe?
-
-    - concept of "trivia"
-
-    - `expansion(of:in:)`
-
-    - `TokenSyntax`
-
-- Attached macros:
-
-    - `MemberMacro` and `MemberAttributeMacro` protocols,
-    which attached macros conform to
-
-    - concept of "syntax nodes"
-
-    - `AttributeSyntax` and `DeclGroupSyntax`,
-    which declaration macros produce
-
-    - `DeclSyntax` and `DeclSyntaxProtocol`
-
-    - `expansion(of:providingAttributesFor:in:)`
-
-    - `expansion(of:attachedTo:providingAttributesFor:in:)`
-
-    - `PeerMacros` and `expansion(of:providingPeersOf:in:)`
-
-    - `ConformanceMacro` and `expansion(of:providingConformanceOf:in:)`
-
+- `TokenSyntax`
 
 ## XXX Figure: The moving parts in macro expansion
 
-XXX Series of figures for ASTs, interleaved with text
+Series of figures for ASTs, interleaved with text
 
 QUESTION: Is this better served as nested bulleted lists?
 Maybe draw out the full tree the first time,
 and then switch to the textual version?
 
 XXX TR: What labels should we use on the nodes here?
-Are the type names from Swift Syntax stable enough to use here?
+Are the type names from Swift Syntax stable enough
+that TSPL won't be constantly out of sync with it,
+or would English words better?
 
 Starts with your code:
 
