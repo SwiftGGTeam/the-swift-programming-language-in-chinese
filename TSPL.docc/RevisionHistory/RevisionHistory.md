@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**2023-04-30**
+**2023-03-30**
 
 - Updated for Swift 5.8.
 - Added the <doc:ControlFlow#Deferred-Actions> section,
