@@ -786,7 +786,7 @@ using the following escape sequences:
 - Carriage return (`\r`)
 - Double quotation mark (`\"`)
 - Single quotation mark (`\'`)
-- Unicode scalar (`\\u{`*n*`}`),
+- Unicode scalar (`\u{`*n*`}`),
   where *n* is a hexadecimal number
   that has one to eight digits
 

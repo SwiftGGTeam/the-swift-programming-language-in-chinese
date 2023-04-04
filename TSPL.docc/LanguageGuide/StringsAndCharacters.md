@@ -227,7 +227,7 @@ String literals can include the following special characters:
 - The escaped special characters `\0` (null character), `\\` (backslash),
   `\t` (horizontal tab), `\n` (line feed), `\r` (carriage return),
   `\"` (double quotation mark) and `\'` (single quotation mark)
-- An arbitrary Unicode scalar value, written as `\\u{`*n*`}`,
+- An arbitrary Unicode scalar value, written as `\u{`*n*`}`,
   where *n* is a 1--8 digit hexadecimal number
   (Unicode is discussed in <doc:StringsAndCharacters#Unicode> below)
 
