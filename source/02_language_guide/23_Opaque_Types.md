@@ -133,7 +133,7 @@ print(opaqueJoinedTriangles.draw())
 // *
 ```
 
-这个例子中 `opaqueJoinedTriangles` 的值和前文 [不透明类型解决的问题](#the-problem-that-opaque-types-solve) 中关于泛型的那个例子中的 `joinedTriangles` 完全一样。不过和前文不一样的是，`flip(-:)` 和 `join(-:-:)` 将对泛型参数的操作后的返回结果包装成了不透明类型，这样保证了在结果中泛型参数类型不可见。两个函数都是泛型函数，因为他们都依赖于泛型参数，而泛型参数又将 `FlippedShape` 和 `JoinedShape` 所需要的类型信息传递给它们。
+这个例子中 `opaqueJoinedTriangles` 的值和前文 [不透明类型解决的问题](#the-problem-that-opaque-types-solve) 中关于泛型的那个例子中的 `joinedTriangles` 完全一样。不过和前文不一样的是，`flip(_:)` 和 `join(_:_:)` 将对泛型参数的操作后的返回结果包装成了不透明类型，这样保证了在结果中泛型参数类型不可见。两个函数都是泛型函数，因为他们都依赖于泛型参数，而泛型参数又将 `FlippedShape` 和 `JoinedShape` 所需要的类型信息传递给它们。
 
 如果函数中有多个地方返回了不透明类型，那么所有可能的返回值都必须是同一类型。即使对于泛型函数，不透明返回类型可以使用泛型参数，但仍需保证返回类型唯一。比如，下面就是一个*非法*示例 —— 包含针对 `Square` 类型进行特殊处理的翻转函数。
 
@@ -207,7 +207,7 @@ protoFlippedTriangle == sameThing  // 错误
 
 将协议类型作为函数的返回类型能更加灵活，函数只要返回遵循协议的类型即可。然而，更具灵活性导致牺牲了对返回值执行某些操作的能力。上面的例子就说明了为什么不能使用 == 运算符 —— 它依赖于具体的类型信息，而这正是使用协议类型所无法提供的。
 
-这种方法的另一个问题在于，变换形状的操作不能嵌套。翻转三角形的结果是一个 `Shape` 类型的值，而 `protoFlip(_:)` 方法的则将遵循 `Shape` 协议的类型作为形参，然而协议类型的值并不遵循这个协议；`protoFlip(_:)` 的返回值也并不遵循 `Shape` 协议。这就是说 `protoFlip(protoFlip(smallTriangle))` 这样的多重变换操作是非法的，因为经过翻转操作后的结果类型并不能作为 `protoFlip(_:)` 的形参。
+这种方法的另一个问题在于，变换形状的操作不能嵌套。翻转三角形的结果是一个 `Shape` 类型的值，而 `protoFlip(_:)` 方法则将遵循 `Shape` 协议的类型作为形参，然而协议类型的值并不遵循这个协议；`protoFlip(_:)` 的返回值也并不遵循 `Shape` 协议。这就是说 `protoFlip(protoFlip(smallTriangle))` 这样的多重变换操作是非法的，因为经过翻转操作后的结果类型并不能作为 `protoFlip(_:)` 的形参。
 
 相比之下，不透明类型则保留了底层类型的唯一性。Swift 能够推断出关联类型，这个特点使得作为函数返回值，不透明类型比协议类型有更大的使用场景。比如，下面这个例子是 [泛型](./22_Generics.md) 中讲到的 `Container` 协议：
 
@@ -246,4 +246,4 @@ print(type(of: twelve))
 // 输出 "Int"
 ```
 
-`twelve` 的类型可以被推断出为 `Int`， 这说明了类型推断适用于不透明类型。在 `makeOpaqueContainer(item:)` 的实现中，底层类型是不透明集合 `[T]`。在上述这种情况下，`T` 就是 `Int` 类型，所以返回值就是整数数组，而关联类型 `Item` 也被推断出为 `Int`。`Container` 协议中的 `subscipt` 方法会返回 `Item`，这也意味着 `twelve` 的类型也被能推断出为 `Int`。
+`twelve` 的类型可以被推断出为 `Int`， 这说明了类型推断适用于不透明类型。在 `makeOpaqueContainer(item:)` 的实现中，底层类型是不透明集合 `[T]`。在上述这种情况下，`T` 就是 `Int` 类型，所以返回值就是整数数组，而关联类型 `Item` 也被推断出为 `Int`。`Container` 协议中的 `subscript` 方法会返回 `Item`，这也意味着 `twelve` 的类型也被能推断出为 `Int`。
