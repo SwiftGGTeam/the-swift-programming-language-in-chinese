@@ -129,7 +129,7 @@ unit4A = Apartment(unit: "4A")
 
 在两个实例被创建和赋值后，下图表现了强引用的关系。变量 `john` 现在有一个指向 `Person` 实例的强引用，而变量 `unit4A` 有一个指向 `Apartment` 实例的强引用：
 
-![](https://docs.swift.org/swift-book/_images/referenceCycle01_2x.png)
+![](https://docs.swift.org/swift-book/images/referenceCycle01@2x.png)
 
 现在你能够将这两个实例关联在一起，这样人就能有公寓住了，而公寓也有了房客。注意感叹号是用来解包和访问可选变量 `john` 和 `unit4A` 中的实例，这样实例的属性才能被赋值：
 
@@ -140,7 +140,7 @@ unit4A!.tenant = john
 
 在将两个实例联系在一起之后，强引用的关系如图所示：
 
-![](https://docs.swift.org/swift-book/_images/referenceCycle02_2x.png)
+![](https://docs.swift.org/swift-book/images/referenceCycle02@2x.png)
 
 不幸的是，这两个实例关联后会产生一个循环强引用。`Person` 实例现在有了一个指向 `Apartment` 实例的强引用，而 `Apartment` 实例也有了一个指向 `Person` 实例的强引用。因此，当你断开 `john` 和 `unit4A` 变量所持有的强引用时，引用计数并不会降为 `0`，实例也不会被 ARC 销毁：
 
@@ -153,7 +153,7 @@ unit4A = nil
 
 在你将 `john` 和 `unit4A` 赋值为 `nil` 后，强引用关系如下图：
 
-![](https://docs.swift.org/swift-book/_images/referenceCycle03_2x.png)
+![](https://docs.swift.org/swift-book/images/referenceCycle03@2x.png)
 
 `Person` 和 `Apartment` 实例之间的强引用关系保留了下来并且不会被断开。
 
@@ -210,7 +210,7 @@ unit4A!.tenant = john
 
 现在，两个关联在一起的实例的引用关系如下图所示：
 
-![](https://docs.swift.org/swift-book/_images/weakReference01_2x.png)
+![](https://docs.swift.org/swift-book/images/weakReference01@2x.png)
 
 `Person` 实例依然保持对 `Apartment` 实例的强引用，但是 `Apartment` 实例只持有对 `Person` 实例的弱引用。这意味着当你通过把 `john` 变量赋值为 `nil` 而断开其所保持的强引用时，再也没有指向 `Person` 实例的强引用了：
 
@@ -221,7 +221,7 @@ john = nil
 
 由于再也没有指向 `Person` 实例的强引用，该实例会被销毁，且 `tenant` 属性会被赋值为 `nil`：
 
-![](https://docs.swift.org/swift-book/_images/weakReference02_2x.png)
+![](https://docs.swift.org/swift-book/images/weakReference02@2x.png)
 
 唯一剩下的指向 `Apartment` 实例的强引用来自于变量 `unit4A`。如果你断开这个强引用，再也没有指向 `Apartment` 实例的强引用了：
 
@@ -232,7 +232,7 @@ unit4A = nil
 
 由于再也没有指向 `Apartment` 实例的强引用，该实例会被销毁：
 
-![](https://docs.swift.org/swift-book/_images/weakReference03_2x.png)
+![](https://docs.swift.org/swift-book/images/weakReference03@2x.png)
 
 > 注意
 > 
@@ -298,13 +298,13 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 在你关联两个实例后，它们的引用关系如下图所示：
 
-![](https://docs.swift.org/swift-book/_images/unownedReference01_2x.png)
+![](https://docs.swift.org/swift-book/images/unownedReference01@2x.png)
 
 `Customer` 实例持有对 `CreditCard` 实例的强引用，而 `CreditCard` 实例持有对 `Customer` 实例的无主引用。
 
 由于 `customer` 的无主引用，当你断开 `john` 变量持有的强引用时，再也没有指向 `Customer` 实例的强引用了：
 
-![](https://docs.swift.org/swift-book/_images/unownedReference02_2x.png)
+![](https://docs.swift.org/swift-book/images/unownedReference02@2x.png)
 
 由于再也没有指向 `Customer` 实例的强引用，该实例被销毁了。其后，再也没有指向 `CreditCard` 实例的强引用，该实例也随之被销毁了：
 
@@ -367,7 +367,7 @@ department.courses = [intro, intermediate, advanced]
 
 上面的代码创建系科和它的三个课程。intro 和 intermediate 课程都将建议的后续课程存储在它们的 `nextCourse` 属性中，通过无主可选引用关联学生完成该课程后的应修课程。
 
-![](https://docs.swift.org/swift-book/_images/unownedOptionalReference_2x.png)
+![](https://docs.swift.org/swift-book/images/unownedOptionalReference@2x.png)
 
 无主可选引用不会保持对包装类实例的强持有，所以它不会影响 ARC 对该实例的析构。在 ARC 下，无主可选引用除了可以为 `nil` 外，其他表现和无主引用一致。
 
@@ -509,7 +509,7 @@ print(paragraph!.asHTML())
 
 不幸的是，上面写的 `HTMLElement` 类产生了类实例和作为 `asHTML` 默认值的闭包之间的循环强引用。循环强引用如下图所示：
 
-![](https://docs.swift.org/swift-book/_images/closureReferenceCycle01_2x.png)
+![](https://docs.swift.org/swift-book/images/closureReferenceCycle01@2x.png)
 
 实例的 `asHTML` 属性持有闭包的强引用。但是，闭包在其闭包体内使用了 `self`（引用了 `self.name` 和 `self.text`），因此闭包捕获了 `self`，这意味着闭包又反过来持有了 `HTMLElement` 实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考 [值捕获](./07_Closures.md#capturing-values)）。
 
@@ -607,7 +607,7 @@ print(paragraph!.asHTML())
 
 使用捕获列表后引用关系如下图所示：
 
-![](https://docs.swift.org/swift-book/_images/closureReferenceCycle02_2x.png)
+![](https://docs.swift.org/swift-book/images/closureReferenceCycle02@2x.png)
 
 这一次，闭包以无主引用的形式捕获 `self`，并不会持有 `HTMLElement` 实例的强引用。如果将 `paragraph` 赋值为 `nil`，`HTMLElement` 实例将会被销毁，并能看到它的析构器打印出的消息：
 
