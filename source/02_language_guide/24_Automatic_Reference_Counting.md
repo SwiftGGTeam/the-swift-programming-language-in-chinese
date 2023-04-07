@@ -1,6 +1,6 @@
 # 自动引用计数
 
-Swift 使用*自动引用计数（ARC）*机制来跟踪和管理你的应用程序的内存。通常情况下，Swift 内存管理机制会一直起作用，你无须自己来考虑内存的管理。ARC 会在类的实例不再被使用时，自动释放其占用的内存。
+Swift 使用*自动引用计数（ARC）* 机制来跟踪和管理你的应用程序的内存。通常情况下，Swift 内存管理机制会一直起作用，你无须自己来考虑内存的管理。ARC 会在类的实例不再被使用时，自动释放其占用的内存。
 
 然而在少数情况下，为了能帮助你管理内存，ARC 需要更多的，代码之间关系的信息。本章描述了这些情况，并且为你示范怎样才能使 ARC 来管理你的应用程序的所有内存。在 Swift 使用 ARC 与在 Obejctive-C 中使用 ARC 非常类似，具体请参考 [过渡到 ARC 的发布说明](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple-ref/doc/uid/TP40011226)。
 
@@ -365,7 +365,7 @@ intermediate.nextCourse = advanced
 department.courses = [intro, intermediate, advanced]
 ```
 
-上面的代码创建系科和它的三个课程。intro 和 intermediate 课程都将建议的后续课程存储在它们的 `nextCourse` 属性中，通过无主可选引用关联学生完成该课程后的应修课程。
+上面的代码创建系科和它的三个课程。intro 和 intermediate 课程都将建议的后续课程存储在它们的 `nextCourse` 属性中，通过无主可选引用关联学生完成该课程后的应修课程。
 
 ![](https://docs.swift.org/swift-book/_images/unownedOptionalReference_2x.png)
 
