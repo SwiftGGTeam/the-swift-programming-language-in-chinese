@@ -80,7 +80,7 @@ increment(&stepSize)
 
 ![](https://docs.swift.org/swift-book/images/memory_increment@2x.png)
 
-解决这个冲突的一种方式，是显示拷贝一份 `stepSize` ：
+解决这个冲突的一种方式，是显式拷贝一份 `stepSize` ：
 
 ```swift
 // 显式拷贝
@@ -163,7 +163,7 @@ mutating 方法在调用期间需要对 `self` 发起写访问，而同时 in-ou
 
 ## 属性的访问冲突 {#conflicting-access-to-properties}
 
-如结构体，元组和枚举的类型都是由多个独立的值组成的，例如结构体的属性或元组的元素。因为它们都是值类型，修改值的任何一部分都是对于整个值的修改，意味着其中一个属性的读或写访问都需要访问整一个值。例如，元组元素的写访问重叠会产生冲突：
+如结构体，元组和枚举的类型都是由多个独立的值组成的，例如结构体的属性或元组的元素。因为它们都是值类型，修改值的任何一部分都是对于整个值的修改，意味着其中一个属性的读或写访问都需要访问一整个值。例如，元组元素的写访问重叠会产生冲突：
 
 ```swift
 var playerInformation = (health: 10, energy: 20)
@@ -180,7 +180,7 @@ var holly = Player(name: "Holly", health: 10, energy: 10)
 balance(&holly.health, &holly.energy)  // 错误
 ```
 
-在实践中，大多数对于结构体属性的访问都会安全的重叠。例如，将上面例子里的变量 `holly` 改为本地变量而非全局变量，编译器就会可以保证这个重叠访问是安全的：
+在实践中，大多数对于结构体属性的访问都会安全的重叠。例如，将上面例子里的变量 `holly` 改为本地变量而非全局变量，编译器就可以保证这个重叠访问是安全的：
 
 ```swift
 func someFunction() {
