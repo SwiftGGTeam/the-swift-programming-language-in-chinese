@@ -371,7 +371,7 @@ department.courses = [intro, intermediate, advanced]
 
 无主可选引用不会保持对包装类实例的强持有，所以它不会影响 ARC 对该实例的析构。在 ARC 下，无主可选引用除了可以为 `nil` 外，其他表现和无主引用一致。
 
-类似不可选无主引用，需要保证确保 `nextCourse` 总是引用一个还没被析构的课程。在这个案例中，假如需要从 `department.courses` 里删除一个课程，同时也需要在其他可能引用它的课程里移除它。
+类似不可选无主引用，需要确保 `nextCourse` 总是引用一个还没被析构的课程。在这个案例中，假如需要从 `department.courses` 里删除一个课程，同时也需要在其他可能引用它的课程里移除它。
 
 > 注意
 >
@@ -429,7 +429,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // 打印“Canada's capital city is called Ottawa”
 ```
 
-在上面的例子中，使用隐式解包可选值值意味着满足了类的构造器的两个构造阶段的要求。`capitalCity` 属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
+在上面的例子中，使用隐式解包可选值意味着满足了类的构造器的两个构造阶段的要求。`capitalCity` 属性在初始化完成后，能像非可选值一样使用和存取，同时还避免了循环强引用。
 
 ## 闭包的循环强引用 {#strong-reference-cycles-for-closures}
 
