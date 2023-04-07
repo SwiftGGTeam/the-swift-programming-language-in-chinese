@@ -20,7 +20,7 @@ print("We're number \(one)!")
 
 你可以思考一下预算表更新的过程，会看到同样的问题。更新预算表总共有两步：首先你把预算项的名字和费用加上，然后再更新总数来反映预算表的现况。在更新之前和之后，你都可以从预算表里读取任何信息并获得正确的答案，就像下面展示的那样。
 
-![](https://docs.swift.org/swift-book/_images/memory_shopping_2x.png)
+![](https://docs.swift.org/swift-book/images/memory_shopping@2x.png)
 
 而当你添加预算项进入表里的时候，它只是在一个临时的，错误的状态，因为总数还没有被更新。在添加数据的过程中读取总数就会读取到错误的信息。
 
@@ -78,9 +78,9 @@ increment(&stepSize)
 
 在上面的代码里，`stepSize` 是一个全局变量，并且它可以在 `increment(_:)` 里正常访问。然而，对于 `stepSize` 的读访问与 `number` 的写访问重叠了。就像下面展示的那样，`number` 和 `stepSize` 都指向了同一个存储地址。同一块内存的读和写访问重叠了，就此产生了冲突。
 
-![](https://docs.swift.org/swift-book/_images/memory_increment_2x.png)
+![](https://docs.swift.org/swift-book/images/memory_increment@2x.png)
 
-解决这个冲突的一种方式，是显示拷贝一份 `stepSize` ：
+解决这个冲突的一种方式，是显式拷贝一份 `stepSize` ：
 
 ```swift
 // 显式拷贝
@@ -148,7 +148,7 @@ oscar.shareHealth(with: &maria)  // 正常
 
 上面的例子里，调用 `shareHealth(with:)` 方法去把 `oscar` 玩家的血量分享给 `maria` 玩家并不会造成冲突。在方法调用期间会对 `oscar` 发起写访问，因为在 mutating 方法里 `self` 就是 `oscar`，同时对于 `maria` 也会发起写访问，因为 `maria` 作为 in-out 参数传入。过程如下，它们会访问内存的不同位置。即使两个写访问重叠了，它们也不会冲突。
 
-![](https://docs.swift.org/swift-book/_images/memory_share_health_maria_2x.png)
+![](https://docs.swift.org/swift-book/images/memory_share_health_maria@2x.png)
 
 当然，如果你将 `oscar` 作为参数传入 `shareHealth(with:)` 里，就会产生冲突：
 
@@ -159,11 +159,11 @@ oscar.shareHealth(with: &oscar)
 
 mutating 方法在调用期间需要对 `self` 发起写访问，而同时 in-out 参数也需要写访问。在方法里，`self` 和 `teammate` 都指向了同一个存储地址——就像下面展示的那样。对于同一块内存同时进行两个写访问，并且它们重叠了，就此产生了冲突。
 
-![](https://docs.swift.org/swift-book/_images/memory_share_health_oscar_2x.png)
+![](https://docs.swift.org/swift-book/images/memory_share_health_oscar@2x.png)
 
 ## 属性的访问冲突 {#conflicting-access-to-properties}
 
-如结构体，元组和枚举的类型都是由多个独立的值组成的，例如结构体的属性或元组的元素。因为它们都是值类型，修改值的任何一部分都是对于整个值的修改，意味着其中一个属性的读或写访问都需要访问整一个值。例如，元组元素的写访问重叠会产生冲突：
+如结构体，元组和枚举的类型都是由多个独立的值组成的，例如结构体的属性或元组的元素。因为它们都是值类型，修改值的任何一部分都是对于整个值的修改，意味着其中一个属性的读或写访问都需要访问一整个值。例如，元组元素的写访问重叠会产生冲突：
 
 ```swift
 var playerInformation = (health: 10, energy: 20)
@@ -180,7 +180,7 @@ var holly = Player(name: "Holly", health: 10, energy: 10)
 balance(&holly.health, &holly.energy)  // 错误
 ```
 
-在实践中，大多数对于结构体属性的访问都会安全的重叠。例如，将上面例子里的变量 `holly` 改为本地变量而非全局变量，编译器就会可以保证这个重叠访问是安全的：
+在实践中，大多数对于结构体属性的访问都会安全的重叠。例如，将上面例子里的变量 `holly` 改为本地变量而非全局变量，编译器就可以保证这个重叠访问是安全的：
 
 ```swift
 func someFunction() {
