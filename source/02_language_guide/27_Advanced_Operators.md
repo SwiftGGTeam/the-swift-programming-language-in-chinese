@@ -18,7 +18,7 @@ Swift 支持 C 语言中的全部位运算符，接下来会一一介绍。
 
 *按位取反运算符（`~`）* 对一个数值的全部比特位进行取反：
 
-![Art/bitwiseNOT_2x.png](https://docs.swift.org/swift-book/_images/bitwiseNOT_2x.png)
+![Art/bitwiseNOT_2x.png](https://docs.swift.org/swift-book/images/bitwiseNOT@2x.png)
 
 按位取反运算符是一个前缀运算符，直接放在运算数之前，并且它们之间不能添加任何空格：
 
@@ -35,7 +35,7 @@ let invertedBits = ~initialBits // 等于 0b11110000
 
 *按位与运算符（`&`）* 对两个数的比特位进行合并。它返回一个新的数，只有当两个数的对应位*都*为 `1` 的时候，新数的对应位才为 `1`：
 
-![Art/bitwiseAND_2x.png](https://docs.swift.org/swift-book/_images/bitwiseAND_2x.png)
+![Art/bitwiseAND_2x.png](https://docs.swift.org/swift-book/images/bitwiseAND@2x.png)
 
 在下面的示例当中，`firstSixBits` 和 `lastSixBits` 中间 4 个位的值都为 `1`。使用按位与运算符之后，得到二进制数值 `00111100`，等价于无符号十进制数的 `60`：
 
@@ -49,7 +49,7 @@ let middleFourBits = firstSixBits & lastSixBits // 等于 00111100
 
 *按位或运算符（`|`）*可以对两个数的比特位进行比较。它返回一个新的数，只要两个数的对应位中有*任意一个*为 `1` 时，新数的对应位就为 `1`：
 
-![Art/bitwiseOR_2x.png](https://docs.swift.org/swift-book/_images/bitwiseOR_2x.png)
+![Art/bitwiseOR_2x.png](https://docs.swift.org/swift-book/images/bitwiseOR@2x.png)
 
 在下面的示例中，`someBits` 和 `moreBits` 存在不同的位被设置为 `1`。使用按位或运算符之后，得到二进制数值 `11111110`，等价于无符号十进制数的 `254`：
 
@@ -63,7 +63,7 @@ let combinedbits = someBits | moreBits // 等于 11111110
 
 *按位异或运算符*，或称“排外的或运算符”（`^`），可以对两个数的比特位进行比较。它返回一个新的数，当两个数的对应位不相同时，新数的对应位就为 `1`，并且对应位相同时则为 `0`：
 
-![Art/bitwiseXOR_2x.png](https://docs.swift.org/swift-book/_images/bitwiseXOR_2x.png)
+![Art/bitwiseXOR_2x.png](https://docs.swift.org/swift-book/images/bitwiseXOR@2x.png)
 
 在下面的示例当中，`firstBits` 和 `otherBits` 都有一个自己为 `1`，而对方为 `0` 的位。按位异或运算符将新数的这两个位都设置为 `1`。在其余的位上 `firstBits` 和 `otherBits` 是相同的，所以设置为 `0`：
 
@@ -91,7 +91,7 @@ let outputBits = firstBits ^ otherBits // 等于 00010001
 
 以下这张图展示了 `11111111 << 1`（即把 `11111111` 向左移动 `1` 位），和 `11111111 >> 1`（即把 `11111111` 向右移动 `1` 位）的结果。蓝色的数字是被移位的，灰色的数字是被抛弃的，橙色的 `0` 则是被填充进来的：
 
-![Art/bitshiftUnsigned_2x.png](https://docs.swift.org/swift-book/_images/bitshiftUnsigned_2x.png)
+![Art/bitshiftUnsigned_2x.png](https://docs.swift.org/swift-book/images/bitshiftUnsigned@2x.png)
 
 下面的代码演示了 Swift 中的移位运算：
 
@@ -131,7 +131,7 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 其余的比特位（通常被称为*数值位*）存储了实际的值。有符号正整数和无符号数的存储方式是一样的，都是从 `0` 开始算起。这是值为 `4` 的 `Int8` 型整数的二进制位表现形式：
 
-![Art/bitshiftSignedFour_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSignedFour_2x.png)
+![Art/bitshiftSignedFour_2x.png](https://docs.swift.org/swift-book/images/bitshiftSignedFour@2x.png)
 
 符号位为 `0`（代表这是一个“正数”），另外 7 位则代表了十进制数值 `4` 的二进制表示。
 
@@ -139,21 +139,21 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 这是值为 `-4` 的 `Int8` 型整数的二进制表现形式：
 
-![Art/bitshiftSignedMinusFour_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSignedMinusFour_2x.png)
+![Art/bitshiftSignedMinusFour_2x.png](https://docs.swift.org/swift-book/images/bitshiftSignedMinusFour@2x.png)
 
 这次的符号位为 `1`，说明这是一个负数，另外 7 个位则代表了数值 `124`（即 `128 - 4`）的二进制表示：
 
-![Art/bitshiftSignedMinusFourValue_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSignedMinusFourValue_2x.png)
+![Art/bitshiftSignedMinusFourValue_2x.png](https://docs.swift.org/swift-book/images/bitshiftSignedMinusFourValue@2x.png)
 
 负数的表示通常被称为*二进制补码*。用这种方法来表示负数乍看起来有点奇怪，但它有几个优点。
 
 首先，如果想对 `-1` 和 `-4` 进行加法运算，我们只需要对这两个数的全部 8 个比特位执行标准的二进制相加（包括符号位），并且将计算结果中超出 8 位的数值丢弃：
 
-![Art/bitshiftSignedAddition_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSignedAddition_2x.png)
+![Art/bitshiftSignedAddition_2x.png](https://docs.swift.org/swift-book/images/bitshiftSignedAddition@2x.png)
 
 其次，使用二进制补码可以使负数的按位左移和右移运算得到跟正数同样的效果，即每向左移一位就将自身的数值乘以 2，每向右移一位就将自身的数值除以 2。要达到此目的，对有符号整数的右移有一个额外的规则：当对有符号整数进行按位右移运算时，遵循与无符号整数相同的规则，但是对于移位产生的空白位使用*符号位*进行填充，而不是用 `0`。
 
-![Art/bitshiftSigned_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSigned_2x.png)
+![Art/bitshiftSigned_2x.png](https://docs.swift.org/swift-book/images/bitshiftSigned@2x.png)
 
 这个行为可以确保有符号整数的符号位不会因为右移运算而改变，这通常被称为*算术移位*。
 
@@ -195,7 +195,7 @@ unsignedOverflow = unsignedOverflow &+ 1
 
 `unsignedOverflow` 被初始化为 `UInt8` 所能容纳的最大整数（`255`，以二进制表示即 `11111111`）。然后使用溢出加法运算符（`&+`）对其进行加 `1` 运算。这使得它的二进制表示正好超出 `UInt8` 所能容纳的位数，也就导致了数值的溢出，如下图所示。数值溢出后，仍然留在 `UInt8` 边界内的值是 `00000000`，也就是十进制数值的 `0`。
 
-![Art/overflowAddition_2x.png](https://docs.swift.org/swift-book/_images/overflowAddition_2x.png)
+![Art/overflowAddition_2x.png](https://docs.swift.org/swift-book/images/overflowAddition@2x.png)
 
 当允许对一个无符号整数进行下溢运算时也会产生类似的情况。这里有一个使用溢出减法运算符（`&-`）的例子：
 
@@ -208,7 +208,7 @@ unsignedOverflow = unsignedOverflow &- 1
 
 `UInt8` 型整数能容纳的最小值是 `0`，以二进制表示即 `00000000`。当使用溢出减法运算符对其进行减 `1` 运算时，数值会产生下溢并被截断为 `11111111`， 也就是十进制数值的 `255`。
 
-![Art/overflowUnsignedSubtraction_2x.png](https://docs.swift.org/swift-book/_images/overflowUnsignedSubtraction_2x.png)
+![Art/overflowUnsignedSubtraction_2x.png](https://docs.swift.org/swift-book/images/overflowUnsignedSubtraction@2x.png)
 
 溢出也会发生在有符号整型上。针对有符号整型的所有溢出加法或者减法运算都是按位运算的方式执行的，符号位也需要参与计算，正如 [按位左移、右移运算符](#bitwise-left-and-right-shift-operators) 所描述的。
 
@@ -221,7 +221,7 @@ signedOverflow = signedOverflow &- 1
 
 `Int8` 型整数能容纳的最小值是 `-128`，以二进制表示即 `10000000`。当使用溢出减法运算符对其进行减 `1` 运算时，符号位被翻转，得到二进制数值 `01111111`，也就是十进制数值的 `127`，这个值也是 `Int8` 型整数所能容纳的最大值。
 
-![Art/overflowSignedSubtraction_2x.png](https://docs.swift.org/swift-book/_images/overflowSignedSubtraction_2x.png)
+![Art/overflowSignedSubtraction_2x.png](https://docs.swift.org/swift-book/images/overflowSignedSubtraction@2x.png)
 
 对于无符号与有符号整型数值来说，当出现上溢时，它们会从数值所能容纳的最大数变成最小数。同样地，当发生下溢时，它们会从所能容纳的最小数变成最大数。
 
@@ -307,7 +307,7 @@ let combinedVector = vector + anotherVector
 
 这个例子实现两个向量 `(3.0，1.0)` 和 `(2.0，4.0)` 的相加，并得到新的向量 `(5.0，5.0)`。这个过程如下图示：
 
-![Art/vectorAddition_2x.png](https://docs.swift.org/swift-book/_images/vectorAddition_2x.png)
+![Art/vectorAddition_2x.png](https://docs.swift.org/swift-book/images/vectorAddition@2x.png)
 
 ### 前缀和后缀运算符 {#prefix-and-postfix-operators}
 
