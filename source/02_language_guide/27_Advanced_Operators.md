@@ -16,7 +16,7 @@ Swift 支持 C 语言中的全部位运算符，接下来会一一介绍。
 
 ### Bitwise NOT Operator（按位取反运算符） {#bitwise-not-operator}
 
-*按位取反运算符（`~`）*对一个数值的全部比特位进行取反：
+*按位取反运算符（`~`）* 对一个数值的全部比特位进行取反：
 
 ![Art/bitwiseNOT_2x.png](https://docs.swift.org/swift-book/_images/bitwiseNOT_2x.png)
 
@@ -75,7 +75,7 @@ let outputBits = firstBits ^ otherBits // 等于 00010001
 
 ### Bitwise Left and Right Shift Operators（按位左移、右移运算符） {#bitwise-left-and-right-shift-operators}
 
-*按位左移运算符（`<<`）* 和 *按位右移运算符（`>>`）*可以对一个数的所有位进行指定位数的左移和右移，但是需要遵守下面定义的规则。
+*按位左移运算符（`<<`）* 和 *按位右移运算符（`>>`）* 可以对一个数的所有位进行指定位数的左移和右移，但是需要遵守下面定义的规则。
 
 对一个数进行按位左移或按位右移，相当于对这个数进行乘以 2 或除以 2 的运算。将一个整数左移一位，等价于将这个数乘以 2，同样地，将一个整数右移一位，等价于将这个数除以 2。
 
@@ -151,7 +151,7 @@ let blueComponent = pink & 0x0000FF         // blueComponent 是 0x99，即 153
 
 ![Art/bitshiftSignedAddition_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSignedAddition_2x.png)
 
-其次，使用二进制补码可以使负数的按位左移和右移运算得到跟正数同样的效果，即每向左移一位就将自身的数值乘以 2，每向右一位就将自身的数值除以 2。要达到此目的，对有符号整数的右移有一个额外的规则：当对有符号整数进行按位右移运算时，遵循与无符号整数相同的规则，但是对于移位产生的空白位使用*符号位*进行填充，而不是用 `0`。
+其次，使用二进制补码可以使负数的按位左移和右移运算得到跟正数同样的效果，即每向左移一位就将自身的数值乘以 2，每向右移一位就将自身的数值除以 2。要达到此目的，对有符号整数的右移有一个额外的规则：当对有符号整数进行按位右移运算时，遵循与无符号整数相同的规则，但是对于移位产生的空白位使用*符号位*进行填充，而不是用 `0`。
 
 ![Art/bitshiftSigned_2x.png](https://docs.swift.org/swift-book/_images/bitshiftSigned_2x.png)
 
