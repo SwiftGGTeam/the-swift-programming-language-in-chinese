@@ -770,8 +770,10 @@ The above example uses a `defer` statement
 to ensure that the `open(_:)` function
 has a corresponding call to `close(_:)`.
 
-> Note: You can use a `defer` statement
-> even when no error handling code is involved.
+You can use a `defer` statement
+even when no error handling code is involved.
+For more information,
+see <doc:ControlFlow#Deferred-Actions>.
 
 <!--
 This source file is part of the Swift.org open source project
