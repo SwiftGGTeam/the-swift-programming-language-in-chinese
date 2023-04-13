@@ -387,7 +387,7 @@
 
 > 函数类型语法
 >
-> *函数类型* → [类型](./03_Types.md#type) [函数类型子句](.03/Types.md#function-type-argument-clause) **async**<sub>可选</sub> **throws**<sub>可选</sub>**->** [类型](./03_Types.md#type)
+> *函数类型* → [类型](./03_Types.md#type) [函数类型子句](./03_Types.md#function-type-argument-clause) **async**<sub>可选</sub> **throws**<sub>可选</sub>**->** [类型](./03_Types.md#type)
 >
 > *函数类型* → [类型](./03_Types.md#)  **rethrows** **->** [类型](./03_Types.md#)
 > 
