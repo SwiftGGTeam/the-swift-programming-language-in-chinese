@@ -9,29 +9,32 @@ XXX OUTLINE:
 - Macros are written in Swift, typically in a separate module.
 - Macros use the Swift Syntax library in their implementation.
 - Macros either produce a value ("pound" syntax)
-  or modify a declaration ("at" syntax).
+  or add to a declaration ("at" syntax).
 - XXX Terminology: Settle on names for the kinds of macros.
 
-## Using a Macro to Produce a Value
+- You can identify a use site of a macro by the `#` or `@`
+  in front of the macro's name.
+
+- Freestanding macros can take some action (`#warning`)
+  produce a value (`#line`)
+  or produce a declaration (future SE proposal).
+
+- Attached macros can add members to a declaration,
+  but they never change or remove the code you wrote.
+
+## Freestanding Macros
 
 XXX OUTLINE:
 
 - Spelled with a pound sign (`#`),
   indicating that this is a compile-time operation.
-  Like `#if` etc.
+  This spelling looks like `#if` and other things that happen at compile time.
 
 - Macro declaration includes `@freestanding(expression)`.
-  These are "freestanding" because they produce a value on their own,
+  These are "freestanding" because
+  they produce a value or declaration on their own,
   rather than being attached to another piece of syntax.
   Contrast with "attached" macros, described below.
-
-- Also called "expression macros"
-  because the result of expansion is an expression.
-
-- NOTE:
-  Today, expression macros are the only kind of freestanding macros,
-  but more are expected in the future via
-  https://github.com/DougGregor/swift-evolution/blob/freestanding-macros/proposals/nnnn-freestanding-macros.md
 
 - If the macro doesn't take arguments,
   you just write its name to call it.
@@ -47,30 +50,37 @@ XXX OUTLINE:
 
 - Example of a macro and its expanded form.
 
-## Using a Macro to Modify a Declaration
+- NOTE:
+  Today, expression macros are the only kind of freestanding macros,
+  but more are expected in the future via
+  https://github.com/DougGregor/swift-evolution/blob/freestanding-macros/proposals/nnnn-freestanding-macros.md
+
+## Attached Macros
 
 XXX OUTLINE:
 
-- Spelled with an at sign (`@`) like an attribute.
-  FIXME: Good example macro from the stdlib
+- Spelled with an at sign (`@`).
+  This looks like an attribute because XXX
+
+- FIXME: Example attached macro from the stdlib
 
 - These are "attached" because you write them as an attribute
   that's attached to a declaration,
   like a structure or a property.
+  Attached macros augment the declaration they're attached to ---
+  for example, by adding additional members to a structure declaration.
 
 - Macro declaration includes `@attached`
   followed by information about the kinds of code the macro produces,
   and information about the names of the generated symbols.
-
-- Also called "declaration macros"
-  because the result of expansion is a (modified) declaration.
 
 - To apply the macro to a declaration,
   you write its name and any parameters it takes before that declaration,
   like an attribute.
   For example XXX
 
-- Expansion works the same way as for expression macros.
+- Expansion works the same way as for freestanding macros.
+  Arguments also work the same way.
 
 - Example of a macro and its expanded form.
 
@@ -83,9 +93,11 @@ XXX OUTLINE:
   1. The compiler ensures that the code inside the macro call is valid Swift.
   1. The compiler represents your code in memory
      using an abstract syntax tree.
-  1. The compiler sends the AST to the code that implements the macro.
-  1. The macro implementation modifies the AST and sends it back.
-  1. The compiler builds the modified Swift code.
+  1. The compiler calls the code that implements the macro,
+     passing it information about context where the macro appeared.
+  1. The macro implementation creates new AST nodes.
+  1. The compiler splices the new AST nodes into the declaration.
+  1. The compiler builds the expanded Swift code.
 
 - Figure: moving parts [see ASCII art below]
 
@@ -93,19 +105,26 @@ XXX OUTLINE:
   The macro implementation transforms well-typed, well-formed input
   into well-typed, well-formed output.
 
-- Macros can be nested,
-  but macro expansion can't be recursive.
+- Macros can be nested.
   Nested macros are expanded from the outside in.
-  If the AST returned by a macro tries to call other macros,
-  that's a compile-time error.
+
+- Macro recursion is limited.
+  One macro can call another,
+  but a given macro can't directly or indirectly call itself.
+  The result of macro expansion can include other macros,
+  but it can't include a macro that uses this macro in its expansion
+  or declare a new macro.
+  (XXX likely need to iterate with Doug here)
 
 - Macro expansion happens in their surrounding context.
   A macro can affect that environment if it needs to —
   and a macro that has bugs can interfere with that environment.
+  (XXX Give guidance on when you'd do this.  It should be rare.)
 
 - Generated symbol names let a macro
   avoid accidentally interacting with symbols in that environment.
-  (XXX What’s our spelling of GENSYM?)
+  To generate a unique symbol name,
+  call the `MacroExpansionContext.makeUniqueName()` method.
 
 ## Declaring a Macro
 
@@ -133,7 +152,7 @@ XXX OUTLINE:
     - `@freestanding(expression)`   (XXX TR: Any other kind of freestanding?)
     - `@attached(peer, names:)`
     - `@attached(member, names:)`
-    - `@attached(memberAttribute)`  (XXX TR: Can this take `names:` too?)
+    - `@attached(memberAttribute)`  (Note: You can't specify names here.)
     - `@attached(accessor, names:)`
 
 - Every declaration that a macro creates in its expansion
@@ -142,10 +161,6 @@ XXX OUTLINE:
   However, a macro can declare a name
   but omit a corresponding declaration in the expansion.
   (For example, because one already exists.)
-
-- TR: Are any of the options in these macros expected to be uncommon enough
-  that we should document them in the reference
-  but omit them from the guide's teaching path?
 
 - Macro declaration naming:
 
@@ -156,16 +171,15 @@ XXX OUTLINE:
       but others including `$` are allowed.
     - `suffixed()` like `suffixed(_docInfo)`
 
-- After the `=` you either write the type name
-  if the type that implements the macro is in the same module,
-  or you call `#externalMacro(module:type:)`.
+- After the `=` you either write `#externalMacro(module:type:)`
+  or call a different macro that expands to the macro's implementation.
 
 - XXX TR: What guidance can we give
   about choosing where the implementation goes?
 
 ## Implementing a Macro
 
-[Probably multiple sections]
+[TODO: Re-order for better flow, and split into multiple sections.]
 
 XXX OUTLINE:
 
@@ -175,13 +189,18 @@ XXX OUTLINE:
 - Link to Swift Syntax repository
   <https://github.com/apple/swift-syntax/>
 
-- XXX Question: Should we show SwiftPM syntax for depending on Swift Syntax?
-  Nothing else in TSPL shows how to build projects,
-  so it might feel a little out of place here.
+- Setting up the SwiftPM bits.
+  This should include an example `Package.swift` file
+  and a list of the moving parts:
+  a package that contains the macro implementation,
+  a package that exposes the macro as API,
+  and your code that uses the macro
+  (which might be in a different package).
 
-- XXX TR: Do you deserialize the AST from JSON?
-  From the examples, it seems like this is done for you,
-  so I don't think there's anything to say about it.
+- Note:
+  Behind the scenes, Swift serializes and deserializes the AST,
+  to pass the data across process boundaries,
+  but your macro implementation doesn't need to deal with any of that.
 
 - Your type that implements an expression macro
   conforms to the `ExpresionMacro` protocol,
@@ -217,15 +236,22 @@ XXX OUTLINE:
   and enough guidance so they can sort through
   all the various Swift Syntax node types and find the right one.)
 
-- XXX TR: Many of the example macros look like they're
-  creating syntax nodes using string literal,
-  but I can't find any conformance to `StringLiteralConvertible` to point to.
-  How does this work?
+- Implementation tip:
+  All of the types you need to return
+  (`ExprSyntax`, `DeclSyntax`, `TypeSyntax`, and so on)
+  conform to the `StringLiteralConvertible` protocol ---
+  so you can use string interpolation to create the resulting AST nodes.
+  XXX show an example of the `\(raw:)` and non-raw version.
+
+  The APIs come from here
+  https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 
 - Tips for debugging a macro
 
 - Ways to view the macro expansion while debugging.
-  XXX TR: What options (if any) does the compiler give you?
+  The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
+  [XXX TR: Is this flag what we should suggest folks use,
+  or will there be better command-line options coming?]
 
 - Attached macros follow the same general model as expression macros,
   but with more moving parts.
@@ -239,7 +265,7 @@ XXX OUTLINE:
     [XXX missing from the list under Declaring a Macro]
   + `MemberMacro` goes with `@attached(member)`
   + `PeerMacro` goes with `@attached(peer)`
-  + [XXX What about `@member(memberAttribute)`?
+  + `MemberAttributeMacro` goes with `@member(memberAttribute)`
 
 - Code example of conforming to `MemberMacro`.
 
@@ -276,58 +302,86 @@ QUESTION: Is this better served as nested bulleted lists?
 Maybe draw out the full tree the first time,
 and then switch to the textual version?
 
-XXX TR: What labels should we use on the nodes here?
-Are the type names from Swift Syntax stable enough
-that TSPL won't be constantly out of sync with it,
-or would English words better?
+XXX
+ASTs below are illustrative only,
+and need to be rewritten to at least follow the shape
+of what your macro will actually see.
+However, for teaching purposes,
+I still plan use a simplified AST in this example,
+omitting the full details of the SwiftSyntax tree.
 
-Starts with your code:
+Starts with your code as an unparsed string:
 
-```ascii-art
-let line = #line
+```swift
+let line = #colorLiteral(red: 10, green: 20, blue: 30)
 ```
 
-Swift compiler converts code to an to AST:
+Swift compiler parses the code to build an AST:
 
-```ascii-art
-    Assignment
-    /       \
-    |       |
-  Constant  \
-    |      Macro
-    |        \
-  line        #line
-```
+- assignment
+  - identifier `line`
+  - macro
+    - identifier `colorLiteral`
+    - label `red:`
+    - integer 10
+    - label `green:`
+    - integer 20
+    - label `blue:`
+    - integer 30
 
-Swift compiler serializes the AST
-and passes it to a separate binary
-that implement the macro.
+Swift compiler passes the AST nodes that correspond to the macro
+to the separate binary that implement the macro.
+Here, that means the AST nodes that correspond to `line =` are omitted.
 
-[Highlight which part of the AST gets passed over.]
+- macro
+  - identifier `colorLiteral`
+  - label `red:`
+  - integer 10
+  - label `green:`
+  - integer 20
+  - label `blue:`
+  - integer 30
 
 Macro implementation uses Swift Syntax APIs
-to manipulate the AST
+to manipulate the AST.
 
-```ascii-art
-    Assignment
-    /       \
-    |       |
-  Constant  \
-    |      IntegerLiteral
-    |        \
-  line        23
-```
+- function call
+  - member access
+    - identifier `Color`
+    - identifier `init`
+  - label `red:`
+  - integer 10
+  - label `green:`
+  - integer 20
+  - label `blue:`
+  - integer 30
 
-Macro binary serializes the AST
-and returns it the Swift compiler.
+Macro binary and returns AST nodes the Swift compiler.
+The compiler type-checks that result,
+and replaces the macro node with the new syntax tree.
+
+- assignment
+  - identifier `line`
+  - function call
+    - member access
+      - identifier `Color`
+      - identifier `init`
+    - label `red:`
+    - integer 10
+    - label `green:`
+    - integer 20
+    - label `blue:`
+    - integer 30
 
 The code is compiled
 as if it had been written in source
 in the expanded form.
 
-```ascii-art
-let line = 23
+```swift
+let line = Color.init(red: 10, green: 20, blue: 30)
 ```
+
+(This might be a good point to mention the "dump macro expansion" flag.)
 
 
 <!--
