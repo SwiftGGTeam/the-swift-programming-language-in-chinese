@@ -189,7 +189,7 @@ Review the recent changes to this book.
   and to the <doc:Protocols#Conditionally-Conforming-to-a-Protocol> section
   of the <doc:Protocols> chapter.
 - Added information about recursive protocol constraints
-  to the <doc:Generics#Using-a-Protocol-in-Its-Associated-Type's-Constraints> section.
+  to the <doc:Generics#Using-a-Protocol-in-Its-Associated-Types-Constraints> section.
 - Added information about
   the `canImport()` and `targetEnvironment()` platform conditions
   to <doc:Statements#Conditional-Compilation-Block>.
