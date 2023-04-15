@@ -7,10 +7,9 @@ XXX OUTLINE:
 - Macros transform Swift code at compile time,
   letting you reduce repeated or boilerplate code.
 - Macros are written in Swift, typically in a separate module.
-- Macros use the Swift Syntax library in their implementation.
+- Macros use the `SwiftSyntax` library in their implementation.
 - Macros either produce a value ("pound" syntax)
   or add to a declaration ("at" syntax).
-- XXX Terminology: Settle on names for the kinds of macros.
 
 - You can identify a use site of a macro by the `#` or `@`
   in front of the macro's name.
@@ -21,6 +20,8 @@ XXX OUTLINE:
 
 - Attached macros can add members to a declaration,
   but they never change or remove the code you wrote.
+
+- XXX High-level view of the macro expansion figure
 
 ## Freestanding Macros
 
@@ -49,6 +50,8 @@ XXX OUTLINE:
   (very brief version with xref to section below)
 
 - Example of a macro and its expanded form.
+
+  `#colorLiteral(red:green:blue)` expands to `Color.init(red:green:blue)`
 
 - NOTE:
   Today, expression macros are the only kind of freestanding macros,
@@ -183,10 +186,10 @@ XXX OUTLINE:
 
 XXX OUTLINE:
 
-- You use the Swift Syntax APIs to modify swift code
+- You use the `SwiftSyntax` APIs to modify swift code
   by manipulating the abstract syntax tree (AST).
 
-- Link to Swift Syntax repository
+- Link to `SwiftSyntax` repository
   <https://github.com/apple/swift-syntax/>
 
 - Setting up the SwiftPM bits.
@@ -234,7 +237,7 @@ XXX OUTLINE:
   or `ExprSyntax`.
   (Need to give folks some general ideas,
   and enough guidance so they can sort through
-  all the various Swift Syntax node types and find the right one.)
+  all the various `SwiftSyntax` node types and find the right one.)
 
 - Implementation tip:
   All of the types you need to return
@@ -246,7 +249,7 @@ XXX OUTLINE:
   The APIs come from here
   https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 
-- Tips for debugging a macro
+## Debugging macros
 
 - Ways to view the macro expansion while debugging.
   The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
@@ -342,7 +345,7 @@ Here, that means the AST nodes that correspond to `line =` are omitted.
   - label `blue:`
   - integer 30
 
-Macro implementation uses Swift Syntax APIs
+Macro implementation uses `SwiftSyntax` APIs
 to manipulate the AST.
 
 - function call
