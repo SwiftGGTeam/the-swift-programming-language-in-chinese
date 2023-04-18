@@ -2,26 +2,100 @@
 
 Transform code at compile time to automate repetition and generate code.
 
-XXX OUTLINE:
+Macros transform your source code when you compile it,
+letting you avoid writing out repetitive code by hand
+and omit boilerplate code.
+The implementation of a macro is written in Swift,
+using the [`SwiftSyntax`][] module.
+You can identify a call to a macro in Swift code
+because it starts with either a number sign (`#`) or an at sign (`@`).
+For example:
 
-- Macros transform Swift code at compile time,
-  letting you reduce repeated or boilerplate code.
-- Macros are written in Swift, typically in a separate module.
-- Macros use the `SwiftSyntax` library in their implementation.
-- Macros either produce a value ("pound" syntax)
-  or add to a declaration ("at" syntax).
+[`SwiftSyntax`]: http://github.com/apple/swift-syntax/
 
-- You can identify a use site of a macro by the `#` or `@`
-  in front of the macro's name.
+```swift
+let currentLine = #line
 
-- Freestanding macros can take some action (`#warning`)
-  produce a value (`#line`)
-  or produce a declaration (future SE proposal).
+#warning("Some custom compile-time warning.")
 
-- Attached macros can add members to a declaration,
-  but they never change or remove the code you wrote.
+@OptionSet<UInt8>
+struct SundaeToppings<UInt8> {
+    private enum Options: Int {
+        case whippedCream
+        case nuts
+        case cherry
+        case chocolateSyrup
+    }
+}
+```
 
-- XXX High-level view of the macro expansion figure
+<!-- XXX The above code is untested -->
+
+The code above calls three macros:
+
+- In the first line,
+  `#line` is a call to the `line` macro from the Swift standard library.
+  You can recognize that it's a call to a macro
+  because of the `#` in front of it.
+  When you compile this code,
+  Swift calls that macro's implementation,
+  and replaces `#line` with the current line number.
+
+- In the second line,
+  `#warning` calls another macro from the standard library
+  to produce a custom warning when the code is compiled.
+  Again, the `#` marks this as a macro call.
+  Unlike `#line`, `#warning` doesn't produce any value.
+
+- In the remaining lines,
+  `@OptionSet` creates a type that conforms to the [`OptionSet`][] protocol,
+  automatically declaring the necessary static members.
+  Here, the `@` marks a macro that behaves like an attribute,
+  modifying the declaration that the macro is attached to.
+
+[`OptionSet`]: https://developer.apple.com/documentation/swift/optionset
+
+Macros like `@OptionSet` are known as *attached macros*
+because they are always attached to a declaration.
+Attached macros can add members to the declaration that they're attached to.
+Macros like `#line` and `#warning` are known as *freestanding macros*
+because they can appear on their own,
+without being attached to a declaration.
+Freestanding macros can produce a value, like `#line`,
+they can perform some compile-time action, like `#warning`,
+or they can generate new declarations.
+Both attached and freestanding macros are always additive:
+They can expand to add new code,
+but they can't ever delete code
+or modify code that you wrote by hand.
+
+Swift expands both attached and freestanding macros
+using the following general steps:
+
+1. The compiler reads and parses the code,
+   creating an in-memory representation of the syntax.
+
+1. The compiler passes part of that in-memory representation
+   to the implementation of the macro,
+   which returns the macro's expansion.
+
+1. The compiler replaces the macro with its expanded form,
+   and then continues compilation.
+
+[XXX FIGURE XXX]
+
+```
+let currentLine = #line
+       |
+       v
+    #line
+       |
+       v
+      123
+       |
+       v
+let currentLine = 123
+```
 
 ## Freestanding Macros
 
