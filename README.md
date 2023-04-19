@@ -1,20 +1,11 @@
 # The Swift Programming Language
 
-This repository contains a version of *The Swift Programming Language*
-that you can build using Swift-DocC.
-
-The version of *The Swift Programming Language* published on [docs.swift.org](https://docs.swift.org/swift-book/)
-is currently built using a legacy toolchain,
-not from this repository or its content.
-The goal is to replace that version with a version built from this repository,
-working with the community to extend Swift-DocC where needed.
+This repository contains the source for *The Swift Programming Language*
+(sometimes abbreviated as TSPL),
+which is published on [docs.swift.org][published]
+and built using [Swift-DocC][docc].
 
 ## Contributing
-
-For now,
-we’re expecting most pull requests to be enhancements and bug fixes
-to support the Swift-DocC publication,
-with only minor content changes.
 
 For small changes,
 like typo fixes and changes to a few paragraphs,
@@ -22,7 +13,7 @@ fork this repository and make a pull request.
 
 A formal contribution process for this document is still in development.
 In the meantime,
-start a thread in the [Swift forums][forum] for larger changes
+start a pitch thread in the [Swift forums][forum] for larger changes
 to discuss your approach and identify possible issues
 before you invest a lot of time in writing.
 
@@ -39,12 +30,14 @@ For more information, see [Contributing to The Swift Programming Language][contr
 [bugs]: https://github.com/apple/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
 [contributing]: /CONTRIBUTING.md
-[forum]: https://forums.swift.org/c/development/swift-docc/80
+[forum]: https://forums.swift.org/c/swift-documentation/92
 [tspl-style]: /Style.md
+[published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
+[docc]: https://github.com/apple/swift-docc
 
 ## Building
 
-Run `swift package --disable-sandbox preview-documentation --target TSPL`
+Run `docc preview TSPL.docc`
 in this repository's root directory.
 
 After running DocC, open the link that `docc` outputs
