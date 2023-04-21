@@ -5,13 +5,9 @@ Transform code at compile time to automate repetition and generate code.
 Macros transform your source code when you compile it,
 letting you avoid writing out repetitive code by hand
 and omit boilerplate code.
-The implementation of a macro is written in Swift,
-using the [`SwiftSyntax`][] module.
 You can identify a call to a macro in Swift code
 because it starts with either a number sign (`#`) or an at sign (`@`).
 For example:
-
-[`SwiftSyntax`]: http://github.com/apple/swift-syntax/
 
 ```swift
 let currentLine = #line
@@ -72,10 +68,12 @@ or modify code that you wrote by hand.
 Swift expands both attached and freestanding macros
 using the following general steps:
 
-1. The compiler reads and parses the code,
+1. The compiler reads the code, just like when it's compiling,
    creating an in-memory representation of the syntax.
+   This representation is known as an _abstract syntax tree_ or AST.
 
 1. The compiler passes part of that in-memory representation
+   <!-- XXX which part? just the part that needs to be expanded -->
    to the implementation of the macro,
    which returns the macro's expansion.
 
@@ -96,6 +94,55 @@ let currentLine = #line
        v
 let currentLine = 123
 ```
+
+<!--
+XXX
+If #colorLiteral will be a macro in the stdlib, use that in the figure instead.
+It's a more interesting example because it has more than just 1 syntax node.
+-->
+
+If you've used macros in another programming language,
+some parts of Swift macros will be familiar
+and some parts will feel different.
+All of the components of the Swift macro system are made up of Swift code:
+
+- The declaration of a Swift macro,
+  including information about where it can appear
+  and what kind of output it produces,
+  is written in Swift like the declaration of a structure or function.
+
+- The implementation of a macro is written in Swift,
+  using the functionality provided by the [SwiftSyntax][] module
+  to read Swift code and add to it.
+  Even though there are convenience APIs in SwiftSyntax
+  to create new syntax nodes using strings,
+  the input, expansion, and output all consists of
+  structured information (AST nodes).
+  <!-- XXX don't introduce AST mid bulleted list -->
+
+- The result of macro expansion is Swift code,
+  which you can debug as normal.
+  XXX debugging - how to expand macros
+
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
+
+Both the input to a macro and the output of macro expansion
+are always valid Swift code ---
+they're syntactically well-formed
+and the values type-check.
+
+<!-- XXX try to avoid "type check" above; too much jargon -->
+
+<!-- XXX OUTLINE NOTE
+Why can't my macro and the rest of my code all be in one target?
+In brief, because that would create a circular dependency.
+A macro's implementation has to be compiled
+before it can be used to compile other code.
+So if your single-target project contained both the macro
+and other code that used the macro,
+then the compiler would have had to already compiled your code
+in order to have the macro expanded and be able to compiler your code.
+-->
 
 ## Freestanding Macros
 
@@ -360,6 +407,11 @@ XXX OUTLINE:
 - Adding a new member by making an instance of `Declaration`,
   and returning it as part of the `[DeclSyntax]` list.
 
+- Because macros are deterministic and stateless ---
+  they don't depend on any external state,
+  don't have any side effects ---
+  they're a great place to use use test cases during development.
+
 XXX Additional APIs and concepts to introduce in the future,
 in no particular order:
 
@@ -459,7 +511,6 @@ let line = Color.init(red: 10, green: 20, blue: 30)
 ```
 
 (This might be a good point to mention the "dump macro expansion" flag.)
-
 
 <!--
 This source file is part of the Swift.org open source project
