@@ -639,7 +639,6 @@ see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
   .. _Concurrency_ChildTasks:
 
   Adding Child Tasks to a Task Group
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   - Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
 
@@ -1111,6 +1110,54 @@ struct TemperatureReading {
      }
   ```
 -->
+
+To explicitly mark a type as not being sendable,
+overriding an implicit conformance to the `Sendable` protocol,
+use an extension:
+
+```swift
+struct FileDescriptor {
+    let rawValue: CInt
+}
+
+@available(*, unavailable)
+extension FileDescriptor: Sendable { }
+```
+
+<!--
+The example above is abbreviated from a Swift System API.
+https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+-->
+
+The code above shows part of a wrapper around POSIX file descriptors.
+Even though interface for file descriptors uses integers
+to identify and interact with open files,
+and integer values are sendable,
+a file descriptor isn't safe to send across concurrency domains.
+
+<!--
+  - test: `suppressing-implied-sendable-conformance`
+
+  -> struct NonsendableTemperatureReading {
+  ->     var measurement: Int
+  -> }
+  ---
+  -> @available(*, unavailable)
+  -> extension NonsendableTemperatureReading: Sendable { }
+  >> let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+  !$ warning: conformance of 'NonsendableTemperatureReading' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+  !! ^
+  !$ note: conformance of 'NonsendableTemperatureReading' to 'Sendable' has been explicitly marked unavailable here
+  !! extension NonsendableTemperatureReading: Sendable { }
+  !! ^
+-->
+
+In the code above,
+the `NonsendableTemperatureReading` is a structure
+that meets the criteria to be implicitly sendable.
+However, the extension makes its conformance to `Sendable` unavailable,
+preventing the type from being sendable.
 
 <!--
   OUTLINE
