@@ -639,8 +639,8 @@ if tenEighty === alsoTenEighty {
   ```
 -->
 
-Note that *identical to* (represented by three equals signs, or `===`)
-doesn't mean the same thing as *equal to* (represented by two equals signs, or `==`).
+Note that *identical to* (represented by three equal signs, or `===`)
+doesn't mean the same thing as *equal to* (represented by two equal signs, or `==`).
 *Identical to* means that
 two constants or variables of class type refer to exactly the same class instance.
 *Equal to* means that

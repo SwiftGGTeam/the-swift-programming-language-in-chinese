@@ -379,7 +379,7 @@ this means that code such as `if score { ... }` is an error,
 not an implicit comparison to zero.
 
 You can write `if` or `switch`
-after the equals sign (`=`) of an assignment
+after the equal sign (`=`) of an assignment
 or after `return`,
 to choose a value based on the condition.
 
