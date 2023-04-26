@@ -973,10 +973,10 @@ or a call to a function that never returns.
 
 Each branch must produce a value of the same type.
 Because type checking of each branch is independent,
-you sometimes need to add type context,
+you sometimes need to specify the value's type explicitly,
 like when branches include different kinds of literals,
 or when a branch's value is `nil`.
-To provide this type context,
+When you need to provide this information,
 add a type annotation to the variable that the result is assigned to,
 or add an `as` cast to the branches' values.
 
@@ -988,8 +988,8 @@ let number = if someCondition { 10 as Double } else { 12.34 }
 Inside a result builder,
 conditional expressions can appear
 only as the initial value of a variable or constant.
-This behavior means when you write `if` or `switch` in a result builder,
-outside of a variable or constant declaration,
+This behavior means when you write `if` or `switch` in a result builder ---
+outside of a variable or constant declaration ---
 that code is understood as a branch statement
 and one of the result builder's methods transforms that code.
 

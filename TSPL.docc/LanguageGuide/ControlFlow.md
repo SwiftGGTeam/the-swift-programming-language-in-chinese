@@ -801,7 +801,7 @@ print(weatherAdvice)
 // Prints "It's not that cold. Wear a T-shirt."
 ```
 
-In this `if` expression version of the code,
+In this `if` expression version,
 each branch contains a single value.
 If a branch's condition is true,
 then that branch's value is used as the value for the whole `if` expression
@@ -812,10 +812,10 @@ and that the `if` expression always produces a value,
 regardless of which conditions are true.
 
 Because the syntax for the assignment starts outside the `if` expression,
-there's no need to repeat `weatherAdvice =` inside each branch ---
-instead,
+there's no need to repeat `weatherAdvice =` inside each branch.
+Instead,
 each branch of the `if` expression
-produces of the three possible values for `weatherAdvice`,
+produces one of the three possible values for `weatherAdvice`,
 and the assignment uses that value.
 
 All of the branches of an `if` expression
@@ -867,7 +867,7 @@ let weatherAdvice = if temperatureInCelsius > 100 {
 
 In this example,
 the `if` expression checks whether the forecast temperature
-is hotter than 100° C, the temperature that water boils at.
+is hotter than 100° C --- the boiling point of water.
 A temperature this hot causes the `if` expression to throw a `.boiling` error
 instead of returning a textual summary.
 Even though this `if` expression can throw an error,
