@@ -5,17 +5,31 @@ Transform code at compile time to automate repetition and generate code.
 Macros transform your source code when you compile it,
 letting you avoid writing out repetitive code by hand
 and omit boilerplate code.
-You can identify a call to a macro in Swift code
-because it starts with either a number sign (`#`) or an at sign (`@`).
 For example:
 
 ```swift
-let currentLine = #line
+struct SundaeToppings: OptionSet {
+    let rawValue: Int
 
-#warning("Some custom compile-time warning.")
+    static let nuts = SundaeToppings(rawValue: 1 << 0)
+    static let cherry = SundaeToppings(rawValue: 1 << 1)
+    static let fudge = SundaeToppings(rawValue: 1 << 2)
+}
+```
 
-@OptionSet<UInt8>
-struct SundaeToppings<UInt8> {
+In this code,
+each of the options in the `SundaeToppings` option set
+includes a call to the initializer,
+which is repetitive and manual.
+It would be easy to make a mistake when adding a new option,
+like typing the wrong number at the end of the line.
+
+Here's what that code looks like
+using a macro instead:
+
+```swift
+@OptionSet
+struct SundaeToppings {
     private enum Options: Int {
         case whippedCream
         case nuts
@@ -27,29 +41,41 @@ struct SundaeToppings<UInt8> {
 
 <!-- XXX The above code is untested -->
 
-The code above calls three macros:
+This version of `SundaeToppings`
+calls the `OptionSet` macro from the Swift standard library.
+The macro reads the list of cases in the private enumeration,
+generates the list of constants for each option,
+and marks `SundaeToppings` as conforming to the `OptionSet` protocol.
 
-- In the first line,
-  `#line` is a call to the `line` macro from the Swift standard library.
-  You can recognize that it's a call to a macro
-  because of the `#` in front of it.
-  When you compile this code,
-  Swift calls that macro's implementation,
-  and replaces `#line` with the current line number.
-
-- In the second line,
-  `#warning` calls another macro from the standard library
-  to produce a custom warning when the code is compiled.
-  Again, the `#` marks this as a macro call.
-  Unlike `#line`, `#warning` doesn't produce any value.
-
-- In the remaining lines,
-  `@OptionSet` creates a type that conforms to the [`OptionSet`][] protocol,
-  automatically declaring the necessary static members.
-  Here, the `@` marks a macro that behaves like an attribute,
-  modifying the declaration that the macro is attached to.
-
+<!-- XXX link above to both the macro and the protocol -->
 [`OptionSet`]: https://developer.apple.com/documentation/swift/optionset
+
+You can identify Swift code that uses a macro
+because the starts with an at sign (`@`)
+like `@OptionSet` in the example above,
+or a number sign (`#`)
+like `#line` in the example below.
+
+```swift
+let currentLine = #line
+let black = #colorLiteral(red: 0, green: 0, blue: 0)
+```
+
+<!-- XXX The above code is untested -->
+
+In the first line,
+`#line` is a call to the `line` macro from the Swift standard library.
+You can recognize that it's a call to a macro
+because of the `#` in front of it.
+When you compile this code,
+Swift calls that macro's implementation,
+and replaces `#line` with the current line number.
+
+In the second line,
+`#warning` calls another macro from the standard library
+to produce a custom warning when the code is compiled.
+Again, the `#` marks this as a macro call.
+Unlike `#line`, `#warning` doesn't produce any value.
 
 Macros like `@OptionSet` are known as *attached macros*
 because they are always attached to a declaration.
