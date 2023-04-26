@@ -929,13 +929,13 @@ a single lowercase character called `someCharacter`:
 let someCharacter: Character = "z"
 switch someCharacter {
 case "a":
-    print("The first letter of the alphabet")
+    print("The first letter of the Latin alphabet")
 case "z":
-    print("The last letter of the alphabet")
+    print("The last letter of the Latin alphabet")
 default:
     print("Some other character")
 }
-// Prints "The last letter of the alphabet"
+// Prints "The last letter of the Latin alphabet"
 ```
 
 <!--
@@ -945,13 +945,13 @@ default:
   -> let someCharacter: Character = "z"
   -> switch someCharacter {
         case "a":
-           print("The first letter of the alphabet")
+           print("The first letter of the Latin alphabet")
         case "z":
-           print("The last letter of the alphabet")
+           print("The last letter of the Latin alphabet")
         default:
            print("Some other character")
      }
-  <- The last letter of the alphabet
+  <- The last letter of the Latin alphabet
   ```
 -->
 
@@ -971,15 +971,15 @@ Like `if` statements,
 let anotherCharacter: Character = "a"
 let message = switch anotherCharacter {
 case "a":
-    "The first letter of the alphabet"
+    "The first letter of the Latin alphabet"
 case "z":
-    "The last letter of the alphabet"
+    "The last letter of the Latin alphabet"
 default:
     "Some other character"
 }
 
 print(message)
-// Prints "The first letter of the alphabet"
+// Prints "The first letter of the Latin alphabet"
 ```
 
 In this example,
