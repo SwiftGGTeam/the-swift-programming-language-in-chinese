@@ -672,9 +672,9 @@ temperatureInFahrenheit = 40
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 } else {
-    print("It's not that cold. Wear a t-shirt.")
+    print("It's not that cold. Wear a T-shirt.")
 }
-// Prints "It's not that cold. Wear a t-shirt."
+// Prints "It's not that cold. Wear a T-shirt."
 ```
 
 <!--
@@ -685,9 +685,9 @@ if temperatureInFahrenheit <= 32 {
   -> if temperatureInFahrenheit <= 32 {
         print("It's very cold. Consider wearing a scarf.")
      } else {
-        print("It's not that cold. Wear a t-shirt.")
+        print("It's not that cold. Wear a T-shirt.")
      }
-  <- It's not that cold. Wear a t-shirt.
+  <- It's not that cold. Wear a T-shirt.
   ```
 -->
 
@@ -706,7 +706,7 @@ if temperatureInFahrenheit <= 32 {
 } else if temperatureInFahrenheit >= 86 {
     print("It's really warm. Don't forget to wear sunscreen.")
 } else {
-    print("It's not that cold. Wear a t-shirt.")
+    print("It's not that cold. Wear a T-shirt.")
 }
 // Prints "It's really warm. Don't forget to wear sunscreen."
 ```
@@ -721,7 +721,7 @@ if temperatureInFahrenheit <= 32 {
      } else if temperatureInFahrenheit >= 86 {
         print("It's really warm. Don't forget to wear sunscreen.")
      } else {
-        print("It's not that cold. Wear a t-shirt.")
+        print("It's not that cold. Wear a T-shirt.")
      }
   <- It's really warm. Don't forget to wear sunscreen.
   ```
@@ -773,11 +773,11 @@ if temperatureInCelsius <= 0 {
 } else if temperatureInCelsius >= 30 {
     weatherAdvice = "It's really warm. Don't forget to wear sunscreen."
 } else {
-    weatherAdvice = "It's not that cold. Wear a t-shirt."
+    weatherAdvice = "It's not that cold. Wear a T-shirt."
 }
 
 print(weatherAdvice)
-// Prints "It's not that cold. Wear a t-shirt."
+// Prints "It's not that cold. Wear a T-shirt."
 ```
 
 Here, each of the branches sets a value for the `weatherAdvice` constant,
@@ -794,11 +794,11 @@ let weatherAdvice = if temperatureInCelsius <= 0 {
 } else if temperatureInCelsius >= 30 {
     "It's really warm. Don't forget to wear sunscreen."
 } else {
-    "It's not that cold. Wear a t-shirt."
+    "It's not that cold. Wear a T-shirt."
 }
 
 print(weatherAdvice)
-// Prints "It's not that cold. Wear a t-shirt."
+// Prints "It's not that cold. Wear a T-shirt."
 ```
 
 In this `if` expression version of the code,
