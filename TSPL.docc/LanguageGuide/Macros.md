@@ -5,7 +5,7 @@ Transform code at compile time to automate repetition and generate code.
 Macros transform your source code when you compile it,
 letting you avoid writing out repetitive code by hand
 and omit boilerplate code.
-For example:
+For example, consider the following code:
 
 ```swift
 struct SundaeToppings: OptionSet {
@@ -24,8 +24,7 @@ which is repetitive and manual.
 It would be easy to make a mistake when adding a new option,
 like typing the wrong number at the end of the line.
 
-Here's what that code looks like
-using a macro instead:
+Here's a version of this code that uses a macro instead:
 
 ```swift
 @OptionSet
@@ -45,16 +44,14 @@ This version of `SundaeToppings`
 calls the `OptionSet` macro from the Swift standard library.
 The macro reads the list of cases in the private enumeration,
 generates the list of constants for each option,
-and marks `SundaeToppings` as conforming to the `OptionSet` protocol.
+and adds a conformance to the `OptionSet` protocol.
 
 <!-- XXX link above to both the macro and the protocol -->
 [`OptionSet`]: https://developer.apple.com/documentation/swift/optionset
 
-You can identify Swift code that uses a macro
-because the starts with an at sign (`@`)
-like `@OptionSet` in the example above,
-or a number sign (`#`)
-like `#line` in the example below.
+Macros can also stand on their own,
+without being attached to any specific declaration,
+as shown in the example below.
 
 ```swift
 let currentLine = #line
@@ -65,48 +62,33 @@ let black = #colorLiteral(red: 0, green: 0, blue: 0)
 
 In the first line,
 `#line` is a call to the `line` macro from the Swift standard library.
-You can recognize that it's a call to a macro
-because of the `#` in front of it.
 When you compile this code,
 Swift calls that macro's implementation,
 and replaces `#line` with the current line number.
-
 In the second line,
 `#warning` calls another macro from the standard library
 to produce a custom warning when the code is compiled.
-Again, the `#` marks this as a macro call.
-Unlike `#line`, `#warning` doesn't produce any value.
 
-Macros like `@OptionSet` are known as *attached macros*
-because they are always attached to a declaration.
-Attached macros can add members to the declaration that they're attached to.
-Macros like `#line` and `#warning` are known as *freestanding macros*
-because they can appear on their own,
-without being attached to a declaration.
-Freestanding macros can produce a value, like `#line`,
-they can perform some compile-time action, like `#warning`,
-or they can generate new declarations.
-Both attached and freestanding macros are always additive:
-They can expand to add new code,
-but they can't ever delete code
+Expanding a macro is always an additive operation:
+Macros add new code,
+but they never delete code
 or modify code that you wrote by hand.
+At a high level, macros are expanded as follows:
 
-Swift expands both attached and freestanding macros
-using the following general steps:
-
-1. The compiler reads the code, just like when it's compiling,
+1. The compiler reads the code,
    creating an in-memory representation of the syntax.
-   This representation is known as an _abstract syntax tree_ or AST.
+   This representation is also called an abstract syntax tree.
 
-1. The compiler passes part of that in-memory representation
-   <!-- XXX which part? just the part that needs to be expanded -->
-   to the implementation of the macro,
-   which returns the macro's expansion.
+1. The compiler sends part of this in-memory representation
+   to the executable that implements the macro.
+   That code expands the macro.
 
-1. The compiler replaces the macro with its expanded form,
-   and then continues compilation.
+1. The compiler replaces the macro call with its expanded form,
+   and then continues with compilation.
 
-[XXX FIGURE XXX]
+<!-- XXX transition from the list to the figure -->
+
+[XXX FIGURE: Overview]
 
 ```
 let currentLine = #line
@@ -121,76 +103,36 @@ let currentLine = #line
 let currentLine = 123
 ```
 
-<!--
-XXX
-If #colorLiteral will be a macro in the stdlib, use that in the figure instead.
-It's a more interesting example because it has more than just 1 syntax node.
--->
-
-If you've used macros in another programming language,
-some parts of Swift macros will be familiar
-and some parts will feel different.
-All of the components of the Swift macro system are made up of Swift code:
-
-- The declaration of a Swift macro,
-  including information about where it can appear
-  and what kind of output it produces,
-  is written in Swift like the declaration of a structure or function.
-
-- The implementation of a macro is written in Swift,
-  using the functionality provided by the [SwiftSyntax][] module
-  to read Swift code and add to it.
-  Even though there are convenience APIs in SwiftSyntax
-  to create new syntax nodes using strings,
-  the input, expansion, and output all consists of
-  structured information (AST nodes).
-  <!-- XXX don't introduce AST mid bulleted list -->
-
-- The result of macro expansion is Swift code,
-  which you can debug as normal.
-  XXX debugging - how to expand macros
-
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
-
 Both the input to a macro and the output of macro expansion
-are always valid Swift code ---
-they're syntactically well-formed
-and the values type-check.
-
-<!-- XXX try to avoid "type check" above; too much jargon -->
-
-<!-- XXX OUTLINE NOTE
-Why can't my macro and the rest of my code all be in one target?
-In brief, because that would create a circular dependency.
-A macro's implementation has to be compiled
-before it can be used to compile other code.
-So if your single-target project contained both the macro
-and other code that used the macro,
-then the compiler would have had to already compiled your code
-in order to have the macro expanded and be able to compiler your code.
--->
+are checked to ensure they're syntactically valid Swift code.
+Likewise, the values you pass to a macro
+and the values in code generated by a macro
+are checked to ensure they have the correct types.
 
 ## Freestanding Macros
 
-XXX OUTLINE:
+A *freestanding macro* is a macro that appears by itself,
+and that doesn't modify a declaration.
+When you call a freestanding macro,
+you write a number sign (`#`) before the macro name.
+The `#` indicates that the macro is a compile-time operation,
+like `#if` and `#available`.
+After the macro's name,
+you write any arguments to the macro in parentheses,
+like when you call a function.
 
-- Spelled with a pound sign (`#`),
-  indicating that this is a compile-time operation.
-  This spelling looks like `#if` and other things that happen at compile time.
+Freestanding macros can produce a value, like `#line`,
+they can perform some compile-time action, like `#warning`,
+or they can generate new declarations.
+<!-- XXX confirm freestanding decl macros have landed & add an example -->
+
+XXX OUTLINE:
 
 - Macro declaration includes `@freestanding(expression)`.
   These are "freestanding" because
   they produce a value or declaration on their own,
   rather than being attached to another piece of syntax.
   Contrast with "attached" macros, described below.
-
-- If the macro doesn't take arguments,
-  you just write its name to call it.
-  For example: `#line`.
-
-- If the macro takes arguments,
-  you write them after the name like a function call.
-  For example XXX.
 
 - When you compile your code,
   the macro implementation modifies your code.
@@ -207,18 +149,18 @@ XXX OUTLINE:
 
 ## Attached Macros
 
+An *attached macro* is a macro that comes before a declaration,
+in the same position where you write attributes.
+When you call an attached macro,
+you write an at sign (`@`) before its name,
+followed by any arguments to the macro in parentheses.
+
+Attached macros modify the declaration that they're attached to.
+They can add code like a new method or property on a type,
+conformance of a type to a property,
+XXX examples of other roles
+
 XXX OUTLINE:
-
-- Spelled with an at sign (`@`).
-  This looks like an attribute because XXX
-
-- FIXME: Example attached macro from the stdlib
-
-- These are "attached" because you write them as an attribute
-  that's attached to a declaration,
-  like a structure or a property.
-  Attached macros augment the declaration they're attached to ---
-  for example, by adding additional members to a structure declaration.
 
 - Macro declaration includes `@attached`
   followed by information about the kinds of code the macro produces,
@@ -275,6 +217,146 @@ XXX OUTLINE:
   avoid accidentally interacting with symbols in that environment.
   To generate a unique symbol name,
   call the `MacroExpansionContext.makeUniqueName()` method.
+
+XXX MOVED PROSE:
+
+Why can't my macro and the rest of my code all be in one target?
+In brief, because that would create a circular dependency.
+A macro's implementation has to be compiled
+before it can be used to compile other code.
+So if your single-target project contained both the macro
+and other code that used the macro,
+then the compiler would have had to already compiled your code
+in order to have the macro expanded and be able to compiler your code.
+XXX
+Also, the macro runs on your development machine
+but the final build product might run elsewhere ---
+like compiling code on a computer
+to run on a server or mobile device.
+
+* * *
+
+All of the components of the Swift macro system are made up of Swift code:
+
+- The declaration of a Swift macro,
+  including information about where it can appear
+  and what kind of output it produces,
+  is written in Swift like the declaration of a structure or function.
+
+- The implementation of a macro is written in Swift,
+  using the functionality provided by the [SwiftSyntax][] module
+  to read and generate Swift code.
+
+- The result of macro expansion is Swift code.
+
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
+
+* * *
+
+If you've used macros in another programming language,
+some parts of Swift macros will be familiar
+and some parts will feel different.
+
+hygienic macros
+gensym
+
+XXX END OUTLINE BITS XXX
+
+To illustrate the process of expanding a macro,
+consider the following code:
+
+```swift
+let line = #colorLiteral(red: 10, green: 20, blue: 30)
+```
+
+Swift reads this code,
+checks its syntax and types,
+and produces a representation of the code
+called an *abstract syntax tree* (AST).
+The AST is made of nodes that correspond to
+the meaning and structure of the code that it represents.
+A simplified AST for the code above looks like this:
+
+- Constant declaration
+    - Identifier `black`
+    - Initial value
+        - Macro
+            - Identifier `colorLiteral`
+            - Arguments
+                - Label `red:`
+                - Integer literal `0`
+                - Label `green:`
+                - Integer literal `0`
+                - Label `blue:`
+                - Integer literal `0`
+
+To continue with compilation,
+Swift needs to expand the `colorLiteral(red:green:blue:)` macro.
+It passes that part of the AST
+to another executable that implements this macro.
+Here's what the macro implementation sees:
+
+- Macro
+    - Identifier `colorLiteral`
+    - Arguments
+        - Label `red:`
+        - Integer literal `0`
+        - Label `green:`
+        - Integer literal `0`
+        - Label `blue:`
+        - Integer literal `0`
+
+A macro expansion operates only on the code that contains the macro.
+In this example,
+that means that the AST nodes representing `let black =` are omitted.
+
+The implementation of the `colorLiteral(red:green:blue:)` macro
+generates a new AST with the expanded version of the macro,
+calling an initializer on `Color` directly.
+Here's what the macro implementation returns:
+
+- Function call
+    - Member access
+        - Identifier `Color`
+        - Identifier `init`
+    - Arguments
+        - Label `red:`
+        - Integer literal `0`
+        - Label `green:`
+        - Integer literal `0`
+        - Label `blue:`
+        - Integer literal `0`
+
+The macro implementation sends this new AST back to the compiler.
+Swift replaces the macro node in the AST
+with the newly expanded version,
+and then checks that the resulting AST is syntactically valid
+and that the values in it have the needed types.
+The AST looks like this after macro expansion:
+
+- Constant declaration
+    - Identifier `black`
+    - Initial value
+    - Function call
+        - Member access
+            - Identifier `Color`
+            - Identifier `init`
+        - Arguments
+            - Label `red:`
+            - Integer literal `0`
+            - Label `green:`
+            - Integer literal `0`
+            - Label `blue:`
+            - Integer literal `0`
+
+Finally,
+the code is compiled
+as if it had been written in source
+in the expanded form.
+
+```swift
+let black = Color.init(red: 0, green: 0, blue: 0)
+```
 
 ## Declaring a Macro
 
@@ -396,6 +478,8 @@ XXX OUTLINE:
   The APIs come from here
   https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 
+XXX mention idempotency and sandboxing
+
 ## Debugging macros
 
 - Ways to view the macro expansion while debugging.
@@ -449,94 +533,7 @@ in no particular order:
 
 - `TokenSyntax`
 
-## XXX Figure: The moving parts in macro expansion
-
-Series of figures for ASTs, interleaved with text
-
-QUESTION: Is this better served as nested bulleted lists?
-Maybe draw out the full tree the first time,
-and then switch to the textual version?
-
-XXX
-ASTs below are illustrative only,
-and need to be rewritten to at least follow the shape
-of what your macro will actually see.
-However, for teaching purposes,
-I still plan use a simplified AST in this example,
-omitting the full details of the SwiftSyntax tree.
-
-Starts with your code as an unparsed string:
-
-```swift
-let line = #colorLiteral(red: 10, green: 20, blue: 30)
-```
-
-Swift compiler parses the code to build an AST:
-
-- assignment
-  - identifier `line`
-  - macro
-    - identifier `colorLiteral`
-    - label `red:`
-    - integer 10
-    - label `green:`
-    - integer 20
-    - label `blue:`
-    - integer 30
-
-Swift compiler passes the AST nodes that correspond to the macro
-to the separate binary that implement the macro.
-Here, that means the AST nodes that correspond to `line =` are omitted.
-
-- macro
-  - identifier `colorLiteral`
-  - label `red:`
-  - integer 10
-  - label `green:`
-  - integer 20
-  - label `blue:`
-  - integer 30
-
-Macro implementation uses `SwiftSyntax` APIs
-to manipulate the AST.
-
-- function call
-  - member access
-    - identifier `Color`
-    - identifier `init`
-  - label `red:`
-  - integer 10
-  - label `green:`
-  - integer 20
-  - label `blue:`
-  - integer 30
-
-Macro binary and returns AST nodes the Swift compiler.
-The compiler type-checks that result,
-and replaces the macro node with the new syntax tree.
-
-- assignment
-  - identifier `line`
-  - function call
-    - member access
-      - identifier `Color`
-      - identifier `init`
-    - label `red:`
-    - integer 10
-    - label `green:`
-    - integer 20
-    - label `blue:`
-    - integer 30
-
-The code is compiled
-as if it had been written in source
-in the expanded form.
-
-```swift
-let line = Color.init(red: 10, green: 20, blue: 30)
-```
-
-(This might be a good point to mention the "dump macro expansion" flag.)
+XXX Swift front-end flag for "dump macro expansion"
 
 <!--
 This source file is part of the Swift.org open source project
