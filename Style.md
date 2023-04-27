@@ -98,6 +98,11 @@ which means it’s not always suitable for generating a parser for Swift code.
 
 # Terms and Rules
 
+## attribute names
+
+In the guide, write `@` before attribute names;
+in the reference, omit it.
+
 ## back deploy
 
 Spelled as two words, not closed up or hyphenated.
@@ -121,6 +126,13 @@ Although level four headings are allowed and the book does use them,
 you should generally try to avoid them.
 Deeply nested headings often indicate
 that there’s a better way to organize the content.
+
+## macro names
+
+In the guide,
+write `@` before the name when referring to attached macros
+and `#` before the name when referring to freestanding macros.
+In the reference, omit it.
 
 ## memberwise initializer
 
