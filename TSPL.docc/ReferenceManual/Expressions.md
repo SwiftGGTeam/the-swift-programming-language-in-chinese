@@ -950,7 +950,7 @@ default:
 
 A conditional expression
 has the same behavior and syntax as an `if` statement or a `switch` statement,
-except for the differences listed below.
+except for the differences that the paragraphs below describe.
 
 A conditional expression appears only in the following contexts:
 
