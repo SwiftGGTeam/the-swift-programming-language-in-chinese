@@ -755,7 +755,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 ## Protocols as Types
 
 Protocols don't actually implement any functionality themselves.
-Nonetheless, you can use a protocol as a type in your code.
+Regardless, you can use a protocol as a type in your code.
 
 The most common way to use a protocol as a type
 is to use a protocol as a generic constraint.
@@ -781,8 +781,8 @@ Code with a boxed protocol type
 works with any type, chosen at runtime, that conforms to the protocol.
 To support this runtime flexibility,
 Swift adds a level of indirection when necessary ---
-this indirection is known as a *box*,
-and it has a performance cost.
+known as a *box*,
+which has a performance cost.
 Because of this flexibility,
 Swift doesn't know the underlying type at compile time,
 which means you can access only the members
