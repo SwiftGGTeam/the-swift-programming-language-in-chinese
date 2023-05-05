@@ -1,6 +1,6 @@
 # Macros
 
-Transform code at compile time to automate repetition and generate code.
+Transform code at compile time to automate generate repetitive code.
 
 Macros transform your source code when you compile it,
 letting you avoid writing out repetitive code by hand
@@ -199,6 +199,15 @@ XXX OUTLINE:
 
 - Macros can be nested.
   Nested macros are expanded from the outside in.
+  XXX TR: Is there any limit to nesting?
+  XXX TR: Is it valid to nest like this -- if so, anything to note about it?
+
+  ```
+  let something = #someMacro {
+      struct A { }
+      @someMacro struct B { }
+  }
+  ```
 
 - Macro recursion is limited.
   One macro can call another,
@@ -271,7 +280,7 @@ let line = #colorLiteral(red: 10, green: 20, blue: 30)
 
 Swift reads this code,
 checks its syntax and types,
-and produces a representation of the code
+and produces a structured representation of the code in memory
 called an *abstract syntax tree* (AST).
 The AST is made of nodes that correspond to
 the meaning and structure of the code that it represents.
@@ -456,10 +465,6 @@ XXX OUTLINE:
     + Produce diagnostics (`Diagnostic` and `SimpleDiagnosticMessage`)
     + Find a node's location in source
 
-- Use diagnostics for macros that have constraints/requirements
-  so your code can give a meaningful error to users when those aren't met,
-  instead of letting the compiler try & fail to build the generated code.
-
 - Ways to create a syntax node include
   Making an instance of the `Syntax` struct,
   or `SyntaxToken`
@@ -477,15 +482,6 @@ XXX OUTLINE:
 
   The APIs come from here
   https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
-
-XXX mention idempotency and sandboxing
-
-## Debugging macros
-
-- Ways to view the macro expansion while debugging.
-  The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
-  [XXX TR: Is this flag what we should suggest folks use,
-  or will there be better command-line options coming?]
 
 - Attached macros follow the same general model as expression macros,
   but with more moving parts.
@@ -517,12 +513,28 @@ XXX mention idempotency and sandboxing
 - Adding a new member by making an instance of `Declaration`,
   and returning it as part of the `[DeclSyntax]` list.
 
+## Debugging Macros
+
+XXX OUTLINE:
+
+- Ways to view the macro expansion while debugging.
+  The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
+  [XXX TR: Is this flag what we should suggest folks use,
+  or will there be better command-line options coming?]
+
 - Because macros are deterministic and stateless ---
   they don't depend on any external state,
   don't have any side effects ---
   they're a great place to use use test cases during development.
 
-XXX Additional APIs and concepts to introduce in the future,
+- Use diagnostics for macros that have constraints/requirements
+  so your code can give a meaningful error to users when those aren't met,
+  instead of letting the compiler try & fail to build the generated code.
+
+- idempotency and sandboxing
+
+<!-- XXX
+Additional APIs and concepts to introduce in the future,
 in no particular order:
 
 - Using `SyntaxRewriter` and the visitor pattern for modifying the AST
@@ -532,8 +544,7 @@ in no particular order:
 - concept of trivia
 
 - `TokenSyntax`
-
-XXX Swift front-end flag for "dump macro expansion"
+-->
 
 <!--
 This source file is part of the Swift.org open source project
