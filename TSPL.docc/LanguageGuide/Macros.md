@@ -61,16 +61,6 @@ Freestanding macros can produce a value, like `#line`,
 or they can perform an action at compile time, like `#warning`.
 <!-- SE-0397: or they can generate new declarations.  -->
 
-XXX OUTLINE:
-
-- Macro declaration includes `@freestanding(expression)`.
-
-- Example of a macro and its expanded form.
-
-  `#colorLiteral(red:green:blue)` expands to `Color.init(red:green:blue)`
-
-  XXX use a different example -- colorLiteral has uninteresting expansion
-
 ## Attached Macros
 
 To call an attached macro,
@@ -145,18 +135,11 @@ struct SundaeToppings {
 extension SundaeToppings: OptionSet  {}
 ```
 
-XXX OUTLINE:
-
-- Macro declaration includes `@attached`
-  followed by information about the kinds of code the macro produces,
-  and information about the names of the generated symbols.
-
-- Expansion works the same way as for freestanding macros.
-  Arguments also work the same way.
-
-- Example of a macro and its expanded form.
-
 ## How Macros Are Expanded
+
+XXX
+Defer the AST details to section on creating macros,
+maybe move this whole section down
 
 XXX OUTLINE:
 
@@ -354,7 +337,7 @@ let black = Color.init(red: 0, green: 0, blue: 0)
 
 ## Declaring a Macro
 
-XX INTRO
+XXX INTRO
 
 Here's the declaration for `#OptionSet` from the Swift standard library:
 
@@ -419,6 +402,28 @@ XXX OUTLINE:
 
 - XXX TR: What guidance can we give
   about choosing where the implementation goes?
+
+
+XXX OUTLINE freestanding:
+
+- Macro declaration includes `@freestanding(expression)`.
+
+- Example of a macro and its expanded form.
+
+  `#colorLiteral(red:green:blue)` expands to `Color.init(red:green:blue)`
+
+  XXX use a different example — colorLiteral has uninteresting expansion
+
+XXX OUTLINE attached:
+
+- Macro declaration includes `@attached`
+  followed by information about the kinds of code the macro produces,
+  and information about the names of the generated symbols.
+
+- Expansion works the same way as for freestanding macros.
+  Arguments also work the same way.
+
+- Example of a macro and its expanded form.
 
 ## Implementing a Macro
 
