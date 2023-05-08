@@ -135,11 +135,99 @@ struct SundaeToppings {
 extension SundaeToppings: OptionSet  {}
 ```
 
-## How Macros Are Expanded
+## Macro Declarations
 
-XXX
-Defer the AST details to section on creating macros,
-maybe move this whole section down
+XXX INTRO
+
+Here's the declaration for `#OptionSet` from the Swift standard library:
+
+
+```swift
+@attached(member, names: named(RawValue), named(rawValue), named(`init`), arbitrary)
+@attached(conformance)
+public macro OptionSet<RawType>() =
+        #externalMacro(module: "SwiftMacros", type: "OptionSetMacro")
+```
+This macro has two roles: member, and conformance.
+The first line gives it the member role,
+and lists the names of the members that the macro generates ---
+`RawValue`, `rawValue`, and `init`.
+
+
+XXX OUTLINE:
+
+- [This section is mainly focused on *reading* a macro declaration]
+
+- A macro has two parts: the declaration, and the implementation.
+  This is different from most things in Swift,
+  where the declaration also contains the implementation.
+
+- Macro declaration includes the `macro` keyword.
+  Attributes on the macro declaration specify where and how it is used.
+  [`@freestanding` and `@attached` introduced already above]
+
+- The first half of the declaration,
+  the parts before the equals sign (`=`)
+  specify how the macro is used.
+  The second half tells you which type implements the macro
+  and what module that type is in.
+
+- Freestanding macros are marked with `@freestanding`.
+  Attached macros are marked with `@attached`.
+
+- Arguments to those macros describe usage more specifically:
+
+    - `@freestanding(expression)`   (XXX TR: Any other kind of freestanding?)
+    - `@attached(peer, names:)`
+    - `@attached(member, names:)`
+    - `@attached(memberAttribute)`  (Note: You can't specify names here.)
+    - `@attached(accessor, names:)`
+
+- Every declaration that a macro creates in its expansion
+  must be included in the list of names the macro declares in an attribute.
+  Exception: A macro that uses `arbitrary`.
+  However, a macro can declare a name
+  but omit a corresponding declaration in the expansion.
+  (For example, because one already exists.)
+
+- Macro declaration naming:
+
+    - `named(someDeclarationName)`
+    - `arbitrary`
+    - `overloaded`
+    - `prefixed()` usually `prefixed(_)`
+      but others including `$` are allowed.
+    - `suffixed()` like `suffixed(_docInfo)`
+
+- After the `=` you either write `#externalMacro(module:type:)`
+  or call a different macro that expands to the macro's implementation.
+
+- XXX TR: What guidance can we give
+  about choosing where the implementation goes?
+
+
+XXX OUTLINE freestanding:
+
+- Macro declaration includes `@freestanding(expression)`.
+
+- Example of a macro and its expanded form.
+
+  `#colorLiteral(red:green:blue)` expands to `Color.init(red:green:blue)`
+
+  XXX use a different example — colorLiteral has uninteresting expansion
+
+XXX OUTLINE attached:
+
+- Macro declaration includes `@attached`
+  followed by information about the kinds of code the macro produces,
+  and information about the names of the generated symbols.
+
+- Expansion works the same way as for freestanding macros.
+  Arguments also work the same way.
+
+- Example of a macro and its expanded form.
+
+## Macro Expansion
 
 XXX OUTLINE:
 
@@ -189,22 +277,6 @@ XXX OUTLINE:
   avoid accidentally interacting with symbols in that environment.
   To generate a unique symbol name,
   call the `MacroExpansionContext.makeUniqueName()` method.
-
-XXX MOVED PROSE:
-
-Why can't my macro and the rest of my code all be in one target?
-In brief, because that would create a circular dependency.
-A macro's implementation has to be compiled
-before it can be used to compile other code.
-So if your single-target project contained both the macro
-and other code that used the macro,
-then the compiler would have had to already compiled your code
-in order to have the macro expanded and be able to compiler your code.
-XXX
-Also, the macro runs on your development machine
-but the final build product might run elsewhere ---
-like compiling code on a computer
-to run on a server or mobile device.
 
 * * *
 
@@ -335,96 +407,6 @@ in the expanded form.
 let black = Color.init(red: 0, green: 0, blue: 0)
 ```
 
-## Declaring a Macro
-
-XXX INTRO
-
-Here's the declaration for `#OptionSet` from the Swift standard library:
-
-
-```swift
-@attached(member, names: named(RawValue), named(rawValue), named(`init`), arbitrary)
-@attached(conformance)
-public macro OptionSet<RawType>() =
-        #externalMacro(module: "SwiftMacros", type: "OptionSetMacro")
-```
-This macro has two roles: member, and conformance.
-The first line gives it the member role,
-and lists the names of the members that the macro generates ---
-`RawValue`, `rawValue`, and `init`.
-
-
-XXX OUTLINE:
-
-- A macro has two parts: the declaration, and the implementation.
-  This is different from most things in Swift,
-  where the declaration also contains the implementation.
-
-- Macro declaration includes the `macro` keyword.
-  Attributes on the macro declaration specify where and how it is used.
-  [`@freestanding` and `@attached` introduced already above]
-
-- The first half of the declaration,
-  the parts before the equals sign (`=`)
-  specify how the macro is used.
-  The second half tells you which type implements the macro
-  and what module that type is in.
-
-- Freestanding macros are marked with `@freestanding`.
-  Attached macros are marked with `@attached`.
-
-- Arguments to those macros describe usage more specifically:
-
-    - `@freestanding(expression)`   (XXX TR: Any other kind of freestanding?)
-    - `@attached(peer, names:)`
-    - `@attached(member, names:)`
-    - `@attached(memberAttribute)`  (Note: You can't specify names here.)
-    - `@attached(accessor, names:)`
-
-- Every declaration that a macro creates in its expansion
-  must be included in the list of names the macro declares in an attribute.
-  Exception: A macro that uses `arbitrary`.
-  However, a macro can declare a name
-  but omit a corresponding declaration in the expansion.
-  (For example, because one already exists.)
-
-- Macro declaration naming:
-
-    - `named(someDeclarationName)`
-    - `arbitrary`
-    - `overloaded`
-    - `prefixed()` usually `prefixed(_)`
-      but others including `$` are allowed.
-    - `suffixed()` like `suffixed(_docInfo)`
-
-- After the `=` you either write `#externalMacro(module:type:)`
-  or call a different macro that expands to the macro's implementation.
-
-- XXX TR: What guidance can we give
-  about choosing where the implementation goes?
-
-
-XXX OUTLINE freestanding:
-
-- Macro declaration includes `@freestanding(expression)`.
-
-- Example of a macro and its expanded form.
-
-  `#colorLiteral(red:green:blue)` expands to `Color.init(red:green:blue)`
-
-  XXX use a different example — colorLiteral has uninteresting expansion
-
-XXX OUTLINE attached:
-
-- Macro declaration includes `@attached`
-  followed by information about the kinds of code the macro produces,
-  and information about the names of the generated symbols.
-
-- Expansion works the same way as for freestanding macros.
-  Arguments also work the same way.
-
-- Example of a macro and its expanded form.
-
 ## Implementing a Macro
 
 [TODO: Re-order for better flow, and split into multiple sections.]
@@ -519,6 +501,22 @@ XXX OUTLINE:
 
 - Adding a new member by making an instance of `Declaration`,
   and returning it as part of the `[DeclSyntax]` list.
+
+XXX MOVED PROSE:
+
+Why can't my macro and the rest of my code all be in one target?
+In brief, because that would create a circular dependency.
+A macro's implementation has to be compiled
+before it can be used to compile other code.
+So if your single-target project contained both the macro
+and other code that used the macro,
+then the compiler would have had to already compiled your code
+in order to have the macro expanded and be able to compiler your code.
+XXX
+Also, the macro runs on your development machine
+but the final build product might run elsewhere ---
+like compiling code on a computer
+to run on a server or mobile device.
 
 ## Debugging Macros
 
