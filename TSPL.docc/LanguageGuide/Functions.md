@@ -323,8 +323,13 @@ but the returned value isn't used.
 > and attempting to do so will result in a compile-time error.
 
 <!--
-  FIXME Unless the function is marked @discardableResult,
-  ignoring its return value triggers a compile-time warning.
+FIXME Unless the function is marked @discardableResult,
+ignoring its return value triggers a compile-time warning.
+
+If the returned value is coincidental
+marking with @discardableResult is good,
+like array.removeFirst(...) ---
+otherwise, using `_ = foo()` at the call site is better.
 -->
 
 ### Functions with Multiple Return Values
