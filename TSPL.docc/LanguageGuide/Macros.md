@@ -220,51 +220,24 @@ A *macro role* indicates where the code that the macro generate goes.
 Every macro has one or more roles,
 which you write as part of the attributes
 at the beginning of the macro declaration.
+
 For example,
-the `@OptionSet` macro above has two roles --- `member` and `conformance` ---
-and the `#line` macro above has the `expression` role.
-The full list of macro roles is as follows:
-
-- A member macro adds new members to the type you apply the macro to.
-  For example,
-  a member macro that you write on a structure
-  can add methods or properties to that structure.
-  Member macros are always attached.
-
-- A member-attribute macro adds attributes
-  to members of the type you apply the macro to.
-  For example,
-  a member-attribute macro that you write on a class
-  can add attributes to that class's properties.
-  Member macros are always attached.
-
-- A peer macro adds new declarations
-  at the same level as the symbol you apply the macro to.
-  For example,
-  a peer macro that you write on a method
-  can define another method that's part of the same structure or class.
-  Peer macros are always attached.
-
-- A conformance macro adds protocol conformance to that type.
-  For example,
-  a conformance macro that you write on an enumeration
-  can generate the code to make that enumeration conform to a protocol.
-  Conformance macros are always attached.
-
-- An expression macro produces a value or performs an action.
-  Expression macros are always freestanding.
-
-<!-- XXX
-The list of roles above kind of duplicates what's in the reference.
-What's the right place to list out when names are required?
-Maybe narrow this list to cover just the 3 roles
-that show up in the running examples?
--->
+the `#line` macro above has the `expression` role,
+and the `@OptionSet` macro above has two roles --- `conformance` and `member`.
+An expression macro produces a value or performs an action.
+A conformance macro adds one or more protocol conformances.
+The `@OptionSet` macro
+extends the type that you apply the macro to,
+to add conformance to the `OptionSet` protocol.
+A member macro adds new members to the type you apply the macro to.
+In this case,
+the `@OptionSet` macro adds an `init(rawValue:)` initializer
+that's required by the `OptionSet` protocol,
+as well as some additional members.
 
 In addition to the macro's role,
 a macro's declaration provides information about
 the names of the symbols that the macro generates.
-This list is included only for the XXX macro roles.
 For example,
 the `@OptionSet` macro generates
 symbols named `RawValue`, `rawValue`, and `init`.
@@ -272,7 +245,7 @@ When a macro declaration provides a list of names,
 it's guaranteed to produce only declarations that use those names,
 which helps you understand and debug the generated code.
 
-For more information about macro roles,
+For a full list of macro roles and more information,
 see <doc:Attributes#attached> and <doc:Attributes:freestanding>
 in <doc:Attributes>
 
