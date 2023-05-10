@@ -18,7 +18,7 @@ At a high level, macros are expanded as follows:
 1. The compiler replaces the macro call with its expanded form,
    and then continues with compilation.
 
-![](macro-expansion)
+![](macro-expansion-full)
 
 Expanding a macro is always an additive operation:
 Macros add new code,
