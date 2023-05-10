@@ -373,7 +373,18 @@ This AST corresponds to Swift code like this:
 let magicNumber = 1145258561
 ```
 
-## XXX Macro Expansion OUTLINE
+In this example, the input source code has only one macro,
+but a real program could have several instances of the same macro
+and several calls to different macros.
+The compiler expands macros one at a time.
+
+If one macro appears inside another,
+the outer macro is expanded first ---
+this lets the outer macro modify the inner macro before it's expanded.
+
+<!--
+
+OUTLINE bits for the future
 
 - Macros can be nested.
   Nested macros are expanded from the outside in.
@@ -395,43 +406,11 @@ let magicNumber = 1145258561
   or declare a new macro.
   (XXX likely need to iterate with Doug here)
 
-- Macro expansion happens in their surrounding context.
-  A macro can affect that environment if it needs to —
-  and a macro that has bugs can interfere with that environment.
-  (XXX Give guidance on when you'd do this.  It should be rare.)
-
-- Generated symbol names let a macro
-  avoid accidentally interacting with symbols in that environment.
-  To generate a unique symbol name,
-  call the `MacroExpansionContext.makeUniqueName()` method.
-
-* * *
-
-All of the components of the Swift macro system are made up of Swift code:
-
-- The declaration of a Swift macro,
-  including information about where it can appear
-  and what kind of output it produces,
-  is written in Swift like the declaration of a structure or function.
-
-- The implementation of a macro is written in Swift,
-  using the functionality provided by the [SwiftSyntax][] module
-  to read and generate Swift code.
-
-- The result of macro expansion is Swift code.
-
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
-
-* * *
-
-If you've used macros in another programming language,
-some parts of Swift macros will be familiar
-and some parts will feel different.
-
-hygienic macros
-gensym
+-->
 
 ## Implementing a Macro
+
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
 
 [TODO: Re-order for better flow, and split into multiple sections.]
 
@@ -477,6 +456,16 @@ XXX OUTLINE:
     + Generate unique symbol names
     + Produce diagnostics (`Diagnostic` and `SimpleDiagnosticMessage`)
     + Find a node's location in source
+
+- Macro expansion happens in their surrounding context.
+  A macro can affect that environment if it needs to —
+  and a macro that has bugs can interfere with that environment.
+  (XXX Give guidance on when you'd do this.  It should be rare.)
+
+- Generated symbol names let a macro
+  avoid accidentally interacting with symbols in that environment.
+  To generate a unique symbol name,
+  call the `MacroExpansionContext.makeUniqueName()` method.
 
 - Ways to create a syntax node include
   Making an instance of the `Syntax` struct,
