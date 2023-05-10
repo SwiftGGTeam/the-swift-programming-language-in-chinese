@@ -271,24 +271,101 @@ in <doc:Attributes>
 
 ## Macro Expansion
 
-XXX OUTLINE:
+As part of building Swift code that uses macros,
+the compiler and the macro's implementation
+pass that code back and forth to expand the macros.
 
-- The macro expansion process:
+To go through the specific steps,
+consider the following code:
 
-  1. The compiler ensures that the code inside the macro call is valid Swift.
-  1. The compiler represents your code in memory
-     using an abstract syntax tree.
-  1. The compiler calls the code that implements the macro,
-     passing it information about context where the macro appeared.
-  1. The macro implementation creates new AST nodes.
-  1. The compiler splices the new AST nodes into the declaration.
-  1. The compiler builds the expanded Swift code.
+```
+let magicNumber = #fourCharacterCode("ABCD")
+```
 
-- Figure: moving parts [see ASCII art below]
+The `#fourCharacterCode` macro takes a string that's four characters long
+and returns a unsigned 32-bin integer
+that corresponds to the ASCII values in the string joined together.
+Some file formats use a integers like this to identify data,
+because they're compact but still readable in a debugger.
+The <doc:Macros#Debugging-Macros> section below
+shows how to implement this macro.
 
-- Macro arguments are type-checked before macro expansion.
-  The macro implementation transforms well-typed, well-formed input
-  into well-typed, well-formed output.
+To expand the macros in the code above,
+the compiler reads the Swift file
+and creates an in-memory representation of that code
+known an as *abstract syntax tree* or AST.
+The AST makes the code's meaning and structure explicit,
+which makes it easier to write code that interacts with that structure ---
+like a compiler or a macro implementation.
+Here's a representation of the AST for the code above,
+slightly simplified by omitting some extra detail.
+
+- Constant declaration
+    - Identifier `magicNumber`
+    - Initial value
+        - Macro
+            - Identifier `fourCharacterCode`
+            - Arguments
+                - String literal `"ABCD"`
+
+<!-- XXX
+walk through the AST
+don't assume people know how to read this kind of diagram
+-->
+
+The compiler also ensures that the input code is valid Swift:
+for example, that the input to macros is syntactically valid
+and that the types of values match.
+For example, in the code above,
+it checks that the argument to `#fourCharacterCode` is a string.
+<!-- XXX trying to avoid jargon "type checking" here -->
+
+The compiler finds the places in the code where you call a macro,
+and loads the external binary that implements those macros.
+For each macro call,
+the compiler passes part of the AST to that macro's implementation.
+<!-- behind the scenes, the AST is serialized thru JSON -->
+Here's a representation of that partial AST:
+
+- Macro
+    - Identifier `fourCharacterCode`
+    - Arguments
+        - String literal `"ABCD"`
+
+The implementation of a macro
+operates only on the code that contains the macro.
+In this example,
+the implementation of the `#fourCharacterCode` macro
+reads this partial AST that contains only the macro call.
+A macro can't depend on code outside of the place where it's used.
+
+The implementation of `#fourCharacterCode`
+generates a new AST containing the expanded code.
+Here's what that code returns to the compiler:
+
+- Integer literal `1145258561`
+
+When the compiler gets this expansion back,
+it replaces the AST element that contains the macro call
+with the element that contains the macro's expansion.
+After macro expansion,
+the compiler checks again to ensure
+the program is still syntactically valid Swift
+and the all the types are correct.
+That produces a final AST that can be compiled as usual:
+
+- Constant declaration
+    - Identifier `magicNumber`
+    - Initial value
+        - Integer literal `1145258561`
+
+This AST corresponds to Swift code like this:
+
+```
+let magicNumber = 1145258561
+```
+
+## XXX Macro Expansion OUTLINE
 
 - Macros can be nested.
   Nested macros are expanded from the outside in.
@@ -345,109 +422,6 @@ and some parts will feel different.
 
 hygienic macros
 gensym
-
-XXX END OUTLINE BITS XXX
-
-To illustrate the process of expanding a macro,
-consider the following code:
-
-```swift
-let black = #colorLiteral(red: 0, green: 0, blue: 0)
-```
-
-<!-- XXX
-need to replace colorLiteral, which seems to still be a special literal
-grepping for 'macro colorLiteral' in the stdlib source has no results
--->
-
-Swift reads this code,
-checks its syntax and types,
-and produces a structured representation of the code in memory
-called an *abstract syntax tree* (AST).
-The AST is made of nodes that correspond to
-the meaning and structure of the code that it represents.
-A simplified AST for the code above looks like this:
-
-- Constant declaration
-    - Identifier `black`
-    - Initial value
-        - Macro
-            - Identifier `colorLiteral`
-            - Arguments
-                - Label `red:`
-                - Integer literal `0`
-                - Label `green:`
-                - Integer literal `0`
-                - Label `blue:`
-                - Integer literal `0`
-
-To continue with compilation,
-Swift needs to expand the `colorLiteral(red:green:blue:)` macro.
-It passes that part of the AST
-to another executable that implements this macro.
-Here's what the macro implementation sees:
-
-- Macro
-    - Identifier `colorLiteral`
-    - Arguments
-        - Label `red:`
-        - Integer literal `0`
-        - Label `green:`
-        - Integer literal `0`
-        - Label `blue:`
-        - Integer literal `0`
-
-A macro expansion operates only on the code that contains the macro.
-In this example,
-that means that the AST nodes representing `let black =` are omitted.
-
-The implementation of the `colorLiteral(red:green:blue:)` macro
-generates a new AST with the expanded version of the macro,
-calling an initializer on `Color` directly.
-Here's what the macro implementation returns:
-
-- Function call
-    - Member access
-        - Identifier `Color`
-        - Identifier `init`
-    - Arguments
-        - Label `red:`
-        - Integer literal `0`
-        - Label `green:`
-        - Integer literal `0`
-        - Label `blue:`
-        - Integer literal `0`
-
-The macro implementation sends this new AST back to the compiler.
-Swift replaces the macro node in the AST
-with the newly expanded version,
-and then checks that the resulting AST is syntactically valid
-and that the values in it have the needed types.
-The AST looks like this after macro expansion:
-
-- Constant declaration
-    - Identifier `black`
-    - Initial value
-    - Function call
-        - Member access
-            - Identifier `Color`
-            - Identifier `init`
-        - Arguments
-            - Label `red:`
-            - Integer literal `0`
-            - Label `green:`
-            - Integer literal `0`
-            - Label `blue:`
-            - Integer literal `0`
-
-Finally,
-the code is compiled
-as if it had been written in source
-in the expanded form.
-
-```swift
-let black = Color.init(red: 0, green: 0, blue: 0)
-```
 
 ## Implementing a Macro
 
