@@ -1,24 +1,14 @@
 # Macros
 
-Transform code at compile time to automate generate repetitive code.
+Transform code at compile time to generate repetitive code.
 
 Macros transform your source code when you compile it,
 letting you avoid writing out repetitive code by hand
 and omit boilerplate code.
+For code that uses macros,
+Swift expands each macro as the first step in building that code.
 
-At a high level, macros are expanded as follows:
-
-1. The compiler reads the code,
-   creating an in-memory representation of the syntax.
-
-1. The compiler sends part of the in-memory representation
-   to the macro implementation,
-   which expands the macro.
-
-1. The compiler replaces the macro call with its expanded form,
-   and then continues with compilation.
-
-![](macro-expansion-full)
+![](macro-expansion)
 
 Expanding a macro is always an additive operation:
 Macros add new code,
@@ -275,6 +265,21 @@ As part of building Swift code that uses macros,
 the compiler and the macro's implementation
 pass that code back and forth to expand the macros.
 
+Macros are expanded as follows:
+
+1. The compiler reads the code,
+   creating an in-memory representation of the syntax.
+
+1. The compiler sends part of the in-memory representation
+   to the macro implementation,
+   which expands the macro.
+
+1. The compiler replaces the macro call with its expanded form,
+   and then continues with compilation.
+
+
+![](macro-expansion-full)
+
 To go through the specific steps,
 consider the following code:
 
@@ -410,46 +415,158 @@ OUTLINE bits for the future
 
 ## Implementing a Macro
 
+To implement a macro, you make two parts:
+A type that performs the macro expansion,
+and a library that declares the macro to expose it as API.
+These parts are built separately from code that uses the macro,
+even if you're developing the macro and its clients together,
+because the macro implementation runs
+as part of building the macro's clients.
+
+To create a new macro using Swift Package Manager,
+run `swift package init --type macro` ---
+this creates several files,
+including a template for a macro implementation and declaration.
+To add macros to an existing project,
+add a target for the macro implementation
+and a target for the macro library.
+For example,
+you can add something like the following to your `Package.swift` file,
+changing the names to match your project:
+
+```swift
+targets: [
+    // Macro implementation that performs the source transformations
+    .macro(
+        name: "MyProjectMacros",
+        dependencies: [
+            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+            .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+        ]
+    ),
+
+    // Library that exposes a macro as part of its API
+    .target(name: "MyProject", dependencies: ["MyProjectMacros"]),
+]
+```
+
+<!-- XXX additional framing of the code listing above -->
+
+The implementation of a macro is a Swift type
+that uses the [SwiftSyntax][] module to interact with an AST.
+If you're adding macros to an existing project,
+add a dependency on SwiftSyntax in your `Package.swift` file:
+
 [SwiftSyntax]: http://github.com/apple/swift-syntax/
 
-[TODO: Re-order for better flow, and split into multiple sections.]
+```swift
+dependencies: [
+    .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
+],
+```
 
+<!-- XXX TR:
+Is there tag that's less likely to change over time
+that this example can use instead?
+-->
+
+Depending on your macro's role,
+there's a corresponding protocol from SwiftSystem
+that the macro implementation conforms to.
+For example,
+consider `#fourCharacterCode` from the previous section.
+Here's a structure that implements that macro:
+
+```swift
+public struct FourCharacterCode: ExpressionMacro {
+    public static func expansion(
+        of node: some FreestandingMacroExpansionSyntax,
+        in context: some MacroExpansionContext
+    ) throws -> ExprSyntax {
+        guard let argument = node.argumentList.first?.expression,
+              let segments = argument.as(StringLiteralExprSyntax.self)?.segments,
+              segments.count == 1,
+              case .stringSegment(let literalSegment)? = segments.first
+        else {
+            throw CustomError.message("Need a static string")
+        }
+
+        let string = literalSegment.content.text
+        guard let result = fourCharacterCode(for: string) else {
+            throw CustomError.message("Invalid four-character code")
+        }
+
+        return "\(raw: result)"
+    }
+}
+
+private func fourCharacterCode(for characters: String) -> UInt32? {
+    var result: UInt32 = 0
+
+    for character in characters {
+        result = result << 8
+        guard let asciiValue = character.asciiValue else { return nil }
+        result += UInt32(exactly: asciiValue)!
+    }
+    return result.bigEndian
+}
+```
+
+This is a freestanding macro that produces an expression,
+so the `FourCharacterCode` type that implements the macro
+conforms to the `ExpressionMacro` protocol.
+The `ExpressionMacro` protocol has one requirement,
+a `expansion(of:in:)` method that expands the AST.
+For the list of macro roles and their corresponding SwiftSystem protocols,
+see <doc:Attributes#attached> and <doc:Attributes:freestanding>
+in <doc:Attributes>
+
+To expand the `#fourCharacterCode` macro,
+Swift sends the AST for the code that uses this macro
+to the library that contains the macro implementation.
+Inside the library, Swift calls `FourCharacterCode.expansion(of:in:)`,
+passing in the AST and the context as arguments to the method.
+The implementation of `expansion(of:in:)`
+finds the string that was passed as an argument to `#fourCharacterCode`
+and calculates the corresponding integer literal value.
+
+In the example above,
+the first `guard` block extracts the string literal from the AST,
+and the second `gaurd` block
+calls the private `FourCharacterCode(for:)` function.
+Both of these blocks of code throw an error if the macro is use incorrectly ---
+the error message becomes a compiler error
+at the malformed call site.
+For example,
+if you try to call the macro as `#fourCharacterCode("AB" + "CD")`
+the compiler shows the error "Need a static string".
+<!-- XXX generate good diagnostics when your macro is used wrong -->
+
+The `expansion(of:in:)` method returns an instance of `ExprSyntax`,
+a type from SwiftSyntax that represents an expression in an AST.
+Because this type conforms to the `StringLiteralConvertible` protocol,
+the macro implementation uses a string literal
+as a lightweight syntax to create its result.
+All of the SwiftSyntax types that you return from a macro implementation
+conform to `StringLiteralConvertible`,
+so you can use this approach when implementing any kind  of macro.
+
+<!-- XXX contrast the `\(raw:)` and non-raw version.  -->
+
+<!--
+The return-a-string APIs come from here
+
+https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
+-->
+
+
+<!--
 XXX OUTLINE:
-
-- You use the `SwiftSyntax` APIs to modify swift code
-  by manipulating the abstract syntax tree (AST).
-
-- Link to `SwiftSyntax` repository
-  <https://github.com/apple/swift-syntax/>
-
-- Setting up the SwiftPM bits.
-  This should include an example `Package.swift` file
-  and a list of the moving parts:
-  a package that contains the macro implementation,
-  a package that exposes the macro as API,
-  and your code that uses the macro
-  (which might be in a different package).
 
 - Note:
   Behind the scenes, Swift serializes and deserializes the AST,
   to pass the data across process boundaries,
   but your macro implementation doesn't need to deal with any of that.
-
-- Your type that implements an expression macro
-  conforms to the `ExpresionMacro` protocol,
-  and implements the required method:
-
-  ```swift
-  static func expansion<
-    Node: FreestandingMacroExpansionSyntax,
-    Context: MacroExpansionContext
-  >(
-    of node: Node,
-    in context: Context
-  ) throws -> ExprSyntax
-  ```
-
-- This method is passed the specific AST node representing your macro.
 
 - This method is also passed a macro-expansion context, which you use to:
 
@@ -474,16 +591,6 @@ XXX OUTLINE:
   (Need to give folks some general ideas,
   and enough guidance so they can sort through
   all the various `SwiftSyntax` node types and find the right one.)
-
-- Implementation tip:
-  All of the types you need to return
-  (`ExprSyntax`, `DeclSyntax`, `TypeSyntax`, and so on)
-  conform to the `StringLiteralConvertible` protocol ---
-  so you can use string interpolation to create the resulting AST nodes.
-  XXX show an example of the `\(raw:)` and non-raw version.
-
-  The APIs come from here
-  https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 
 - Attached macros follow the same general model as expression macros,
   but with more moving parts.
@@ -515,21 +622,7 @@ XXX OUTLINE:
 - Adding a new member by making an instance of `Declaration`,
   and returning it as part of the `[DeclSyntax]` list.
 
-XXX MOVED PROSE:
-
-Why can't my macro and the rest of my code all be in one target?
-In brief, because that would create a circular dependency.
-A macro's implementation has to be compiled
-before it can be used to compile other code.
-So if your single-target project contained both the macro
-and other code that used the macro,
-then the compiler would have had to already compiled your code
-in order to have the macro expanded and be able to compiler your code.
-XXX
-Also, the macro runs on your development machine
-but the final build product might run elsewhere ---
-like compiling code on a computer
-to run on a server or mobile device.
+-->
 
 ## Debugging Macros
 
@@ -573,8 +666,7 @@ precondition(transformedSF.description == expectedDescription)
 The example above tests the macro using a precondition,
 but you could use a testing framework instead.
 
-
-XXX OUTLINE:
+<!-- XXX OUTLINE:
 
 - Ways to view the macro expansion while debugging.
   The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
@@ -586,6 +678,7 @@ XXX OUTLINE:
   instead of letting the compiler try & fail to build the generated code.
 
 - idempotency and sandboxing
+-->
 
 <!-- XXX
 Additional APIs and concepts to introduce in the future,
