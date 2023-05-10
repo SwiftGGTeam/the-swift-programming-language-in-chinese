@@ -544,17 +544,53 @@ to run on a server or mobile device.
 
 ## Debugging Macros
 
+Macros are well suited to development using tests:
+they transform one AST into another AST,
+without depending on any external state,
+and without causing any any side effects.
+In addition, you can create syntax nodes from a string literal,
+which simplifies setting up the input for a unit test.
+You can also read the `description` property of an AST
+to get a string that you can compare to an expected value.
+For example,
+here's a test of the `#fourCharacterCode` macro from previous sections:
+
+```swift
+let source: SourceFileSyntax =
+"""
+let abcd = #fourCharacterCode("ABCD")
+"""
+
+let file = BasicMacroExpansionContext.KnownSourceFile(
+    moduleName: "MyModule",
+    fullFilePath: "test.swift"
+)
+
+let context = BasicMacroExpansionContext(sourceFiles: [source: file])
+
+let transformedSF = source.expand(
+    macros:["fourCharacterCode": FourCC.self],
+    in: context
+)
+
+let expectedDescription =
+"""
+let abcd = 1145258561
+"""
+
+precondition(transformedSF.description == expectedDescription)
+```
+
+The example above tests the macro using a precondition,
+but you could use a testing framework instead.
+
+
 XXX OUTLINE:
 
 - Ways to view the macro expansion while debugging.
   The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
   [XXX TR: Is this flag what we should suggest folks use,
   or will there be better command-line options coming?]
-
-- Because macros are deterministic and stateless ---
-  they don't depend on any external state,
-  don't have any side effects ---
-  they're a great place to use use test cases during development.
 
 - Use diagnostics for macros that have constraints/requirements
   so your code can give a meaningful error to users when those aren't met,
