@@ -300,13 +300,15 @@ like a compiler or a macro implementation.
 Here's a representation of the AST for the code above,
 slightly simplified by omitting some extra detail.
 
+[XXX placeholder art]
+
 - Constant declaration
-    - Identifier `magicNumber`
-    - Initial value
+    - Identifier: `magicNumber`
+    - Value
         - Macro
-            - Identifier `fourCharacterCode`
+            - Identifier: `fourCharacterCode`
             - Arguments
-                - String literal `"ABCD"`
+                - String literal: `"ABCD"`
 
 <!-- XXX
 walk through the AST
@@ -327,8 +329,10 @@ the compiler passes part of the AST to that macro's implementation.
 <!-- behind the scenes, the AST is serialized thru JSON -->
 Here's a representation of that partial AST:
 
+[XXX placeholder art]
+
 - Macro
-    - Identifier `fourCharacterCode`
+    - Identifier: `fourCharacterCode`
     - Arguments
         - String literal `"ABCD"`
 
@@ -343,7 +347,9 @@ The implementation of `#fourCharacterCode`
 generates a new AST containing the expanded code.
 Here's what that code returns to the compiler:
 
-- Integer literal `1145258561`
+[XXX placeholder art]
+
+- Integer literal: `1145258561`
 
 When the compiler gets this expansion back,
 it replaces the AST element that contains the macro call
@@ -354,10 +360,12 @@ the program is still syntactically valid Swift
 and the all the types are correct.
 That produces a final AST that can be compiled as usual:
 
+[XXX placeholder art]
+
 - Constant declaration
-    - Identifier `magicNumber`
-    - Initial value
-        - Integer literal `1145258561`
+    - Identifier: `magicNumber`
+    - Value
+        - Integer literal: `1145258561`
 
 This AST corresponds to Swift code like this:
 
