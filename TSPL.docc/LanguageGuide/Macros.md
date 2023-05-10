@@ -274,9 +274,10 @@ Macros are expanded as follows:
    to the macro implementation,
    which expands the macro.
 
-1. The compiler replaces the macro call with its expanded form,
-   and then continues with compilation.
+1. The compiler replaces the macro call with its expanded form.
 
+1. The compiler continues with compilation,
+   using the expanded source code.
 
 ![](macro-expansion-full)
 
