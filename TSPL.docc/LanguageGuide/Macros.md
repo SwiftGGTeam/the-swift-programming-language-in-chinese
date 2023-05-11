@@ -256,7 +256,7 @@ for each case in the private `Options` enumeration,
 
 For more information,
 including a full list of macro roles,
-see <doc:Attributes#attached> and <doc:Attributes:freestanding>
+see <doc:Attributes#attached> and <doc:Attributes#freestanding>
 in <doc:Attributes>
 
 ## Macro Expansion
