@@ -507,7 +507,7 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
     for character in characters {
         result = result << 8
         guard let asciiValue = character.asciiValue else { return nil }
-        result += UInt32(exactly: asciiValue)!
+        result += UInt32(asciiValue)
     }
     return result.bigEndian
 }
