@@ -293,7 +293,7 @@ and returns a unsigned 32-bin integer
 that corresponds to the ASCII values in the string joined together.
 Some file formats use a integers like this to identify data,
 because they're compact but still readable in a debugger.
-The <doc:Macros#Debugging-Macros> section below
+The <doc:Macros#Implementing-Macros> section below
 shows how to implement this macro.
 
 To expand the macros in the code above,
