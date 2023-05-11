@@ -502,8 +502,9 @@ public struct FourCharacterCode: ExpressionMacro {
 }
 
 private func fourCharacterCode(for characters: String) -> UInt32? {
-    var result: UInt32 = 0
+    guard characters.count == 4 else { return nil }
 
+    var result: UInt32 = 0
     for character in characters {
         result = result << 8
         guard let asciiValue = character.asciiValue else { return nil }
