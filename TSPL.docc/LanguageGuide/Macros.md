@@ -306,15 +306,7 @@ like a compiler or a macro implementation.
 Here's a representation of the AST for the code above,
 slightly simplified by omitting some extra detail.
 
-[XXX placeholder art]
-
-- Constant declaration
-    - Identifier: `magicNumber`
-    - Value
-        - Macro
-            - Identifier: `fourCharacterCode`
-            - Arguments
-                - String literal: `"ABCD"`
+![](macro-ast-original)
 
 <!-- XXX
 walk through the AST
@@ -337,9 +329,9 @@ Here's a representation of that partial AST:
 
 [XXX placeholder art]
 
-- Macro
-    - Identifier: `fourCharacterCode`
-    - Arguments
+- Macro call
+    - Macro name: `fourCharacterCode`
+    - Macro rguments
         - String literal `"ABCD"`
 
 The implementation of a macro
@@ -369,8 +361,8 @@ That produces a final AST that can be compiled as usual:
 [XXX placeholder art]
 
 - Constant declaration
-    - Identifier: `magicNumber`
-    - Value
+    - Constant name: `magicNumber`
+    - Constant value
         - Integer literal: `1145258561`
 
 This AST corresponds to Swift code like this:
