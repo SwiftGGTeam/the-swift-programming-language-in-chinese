@@ -196,6 +196,7 @@ The `@attached` attribute on this macro declaration
 indicates that the `@OptionSet` macro is an attached macro.
 That attribute appears twice in this declaration,
 once for each macro role that `@OptionSet` has.
+<!-- XXX "macro role" used before being defined -->
 For a freestanding macro, you write `@freestanding` instead.
 
 ```
@@ -205,6 +206,12 @@ public macro line<T: ExpressibleByIntegerLiteral>() -> T =
 ```
 
 A *macro role* indicates where the code that the macro generate goes.
+<!-- XXX
+The role determines:
+- Where it can be used
+- What kinds of code it expands into
+- Where the expansions are inserted
+-->
 Every macro has one or more roles,
 which you write as part of the attributes
 at the beginning of the macro declaration.
