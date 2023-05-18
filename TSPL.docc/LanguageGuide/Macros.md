@@ -327,12 +327,7 @@ the compiler passes part of the AST to that macro's implementation.
 <!-- behind the scenes, the AST is serialized thru JSON -->
 Here's a representation of that partial AST:
 
-[XXX placeholder art]
-
-- Macro call
-    - Macro name: `fourCharacterCode`
-    - Macro rguments
-        - String literal `"ABCD"`
+![](macro-ast-input)
 
 The implementation of a macro
 operates only on the code that contains the macro.
@@ -345,9 +340,7 @@ The implementation of `#fourCharacterCode`
 generates a new AST containing the expanded code.
 Here's what that code returns to the compiler:
 
-[XXX placeholder art]
-
-- Integer literal: `1145258561`
+![](macro-ast-output)
 
 When the compiler gets this expansion back,
 it replaces the AST element that contains the macro call
@@ -358,12 +351,7 @@ the program is still syntactically valid Swift
 and the all the types are correct.
 That produces a final AST that can be compiled as usual:
 
-[XXX placeholder art]
-
-- Constant declaration
-    - Constant name: `magicNumber`
-    - Constant value
-        - Integer literal: `1145258561`
+![](macro-ast-result)
 
 This AST corresponds to Swift code like this:
 
