@@ -368,37 +368,29 @@ so they must be escaped with backticks in that context.
 - Keywords that begin with a number sign (`#`):
   `#available`,
   `#colorLiteral`,
-  `#column`,
-  `#dsohandle`,
   `#elseif`,
   `#else`,
   `#endif`,
-  `#error`,
-  `#fileID`,
-  `#fileLiteral`,
-  `#filePath`,
-  `#file`,
-  `#function`,
   `#if`,
   `#imageLiteral`,
   `#keyPath`,
-  `#line`,
   `#selector`,
-  `#sourceLocation`,
-  and `#warning`.
-
-<!-- XXX Update the list above for thing that are now macros. -->
-
-<!-- XXX Add a note like the following:
+  `#sourceLocation`.
 
 > Note:
 > Prior to Swift 5.9,
-> the following keywords were reserved,
+> the following keywords are reserved,
 > which are now implemented as macros in the Swift standard library:
-> `#colorLiteral`,
+> `#column`,
 > `#dsohandle`,
-> `#file`.
--->
+> `#error`,
+> `#fileID`,
+> `#fileLiteral`,
+> `#filePath`,
+> `#file`,
+> `#function`,
+> `#line`,
+> and `#warning`.
 
 <!--
   Token.py includes #assert,
