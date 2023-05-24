@@ -1388,14 +1388,12 @@ The block-building methods are as follows:
   this approach reduces the need for generic overloads
   that handle different numbers of arguments.
 
-A result builder can implement
-all three of the block-building methods listed above ---
-in that case,
-availability determines which method is used.
-If the enclosing declaration is available
-before the build-partial-block methods,
-the `buildBlock(_:)` method is used.
-Otherwise, the build-partial-block methods are used.
+A result builder can implement all three of the block-building methods listed above;
+in that case, availability determines which method is called.
+By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(second:)` methods.
+To make Swift call `buildBlock(_:)` instead,
+mark the enclosing declaration as being available
+before the availability you write on `buildPartialBlock(first:)` and `buildPartialBlock(second:)`.
 
 The additional result-building methods are as follows:
 
