@@ -441,6 +441,7 @@ To create a new macro using Swift Package Manager,
 run `swift package init --type macro` ---
 this creates several files,
 including a template for a macro implementation and declaration.
+
 To add macros to an existing project,
 add a target for the macro implementation
 and a target for the macro library.
@@ -464,10 +465,16 @@ targets: [
 ]
 ```
 
-<!-- XXX additional framing of the code listing above -->
+The code above defines two targets:
+`MyProjectMacros` contains the implementation of the macros,
+and `MyProject` makes those macros available.
 
-The implementation of a macro is a Swift type
-that uses the [SwiftSyntax][] module to interact with an AST.
+The implementation of a macro
+uses the [SwiftSyntax][] module to interact with Swift code
+in a structured way, using an abstract syntax trees (AST).
+If you created a new macro package with Swift Package Manager,
+the generated `Package.swift` file
+automatically includes a dependency on SwiftSyntax.
 If you're adding macros to an existing project,
 add a dependency on SwiftSyntax in your `Package.swift` file:
 
@@ -475,14 +482,12 @@ add a dependency on SwiftSyntax in your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
+    .package(url: "https://github.com/apple/swift-syntax.git", from: "some-tag"),
 ],
 ```
 
-<!-- XXX TR:
-Is there tag that's less likely to change over time
-that this example can use instead?
--->
+Replace the `some-tag` placeholder in the code above
+with the Git tag for the version of SwiftSyntax you want to use.
 
 Depending on your macro's role,
 there's a corresponding protocol from SwiftSystem
@@ -527,8 +532,9 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
 }
 ```
 
-This is a freestanding macro that produces an expression,
-so the `FourCharacterCode` type that implements the macro
+The `#fourCharacterCode` macro
+is a freestanding macro that produces an expression,
+so the `FourCharacterCode` type that implements it
 conforms to the `ExpressionMacro` protocol.
 The `ExpressionMacro` protocol has one requirement,
 a `expansion(of:in:)` method that expands the AST.
@@ -547,7 +553,8 @@ and calculates the corresponding integer literal value.
 
 In the example above,
 the first `guard` block extracts the string literal from the AST,
-and the second `guard` block
+assigning that AST element to `literalSegment`.
+The second `guard` block
 calls the private `FourCharacterCode(for:)` function.
 Both of these blocks throw an error if the macro is use incorrectly ---
 the error message becomes a compiler error
@@ -555,7 +562,7 @@ at the malformed call site.
 For example,
 if you try to call the macro as `#fourCharacterCode("AB" + "CD")`
 the compiler shows the error "Need a static string".
-<!-- XXX generate good diagnostics when your macro is used wrong -->
+<!-- XXX Call out where CustomError comes from -->
 
 The `expansion(of:in:)` method returns an instance of `ExprSyntax`,
 a type from SwiftSyntax that represents an expression in an AST.
@@ -566,7 +573,7 @@ All of the SwiftSyntax types that you return from a macro implementation
 conform to `StringLiteralConvertible`,
 so you can use this approach when implementing any kind of macro.
 
-<!-- XXX contrast the `\(raw:)` and non-raw version.  -->
+<!-- TODO contrast the `\(raw:)` and non-raw version.  -->
 
 <!--
 The return-a-string APIs come from here
@@ -643,11 +650,11 @@ https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Synta
 Macros are well suited to development using tests:
 they transform one AST into another AST
 without depending on any external state,
-and without causing any side effects.
+and without making changes to any external state..
 In addition, you can create syntax nodes from a string literal,
 which simplifies setting up the input for a unit test.
 You can also read the `description` property of an AST
-to get a string that you can compare to an expected value.
+to get a string to compare against an expected value.
 For example,
 here's a test of the `#fourCharacterCode` macro from previous sections:
 
@@ -680,7 +687,7 @@ precondition(transformedSF.description == expectedDescription)
 The example above tests the macro using a precondition,
 but you could use a testing framework instead.
 
-<!-- XXX OUTLINE:
+<!-- OUTLINE:
 
 - Ways to view the macro expansion while debugging.
   The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
@@ -691,10 +698,6 @@ but you could use a testing framework instead.
   so your code can give a meaningful error to users when those aren't met,
   instead of letting the compiler try & fail to build the generated code.
 
-- idempotency and sandboxing
--->
-
-<!--
 Additional APIs and concepts to introduce in the future,
 in no particular order:
 
