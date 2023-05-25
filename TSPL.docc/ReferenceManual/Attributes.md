@@ -30,7 +30,7 @@ You can apply a declaration attribute to declarations only.
 
 ### attached
 
-Apply the `attached` attribute, to the declaration of an macro.
+Apply the `attached` attribute to a macro declaration.
 The arguments to this attribute indicate the macro's role.
 For a macro that has multiple roles,
 apply the `attached` macro multiple times, once for each role.
@@ -47,7 +47,8 @@ https://swiftpackageindex.com/apple/swift-syntax/508.0.0/documentation/swiftsynt
 The first argument to this attribute
 indicates the macros role:
 
-- Peer macros have `peer` as the first argument to this attribute.
+- term Peer macros:
+  Write `peer` as the first argument to this attribute.
   The type that implements the macro conforms to the `PeerMacro` protocol.
   These macros produce new declarations
   in the same scope as the declaration
@@ -56,7 +57,8 @@ indicates the macros role:
   applying a peer macro to a method of a structure
   can define additional methods and properties on that structure.
 
-- Member macros have `member` as the first argument to this attribute.
+- term Member macros:
+  Write `member` as the first argument to this attribute.
   The type that implements the macro conforms to the `MemberMacro` protocol.
   These macros produce new declarations
   that are members of the type or extension
@@ -65,21 +67,24 @@ indicates the macros role:
   applying a member macro to a structure declaration
   can define additional methods and properties on that structure.
 
-- Member attribute macros have `memberAttribute` as the first argument to this attribute.
+- term Member attribute:
+  Write have `memberAttribute` as the first argument to this attribute.
   The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
   These macros add attributes to members of the type or extension
   that the macro is attached to.
 
-- Accessor macros have `accessor` as the first argument to this attribute.
+- term Accessor macros:
+  Write `accessor` as the first argument to this attribute.
   The type that implements the macro conforms to the `AccessorMacro` protocol.
   These macros add accessors to the stored property they're attached to,
   turning it into a computed property.
 
-- Conformance macros have `conformance` as the first argument to this attribute.
+- term Conformance macros:
+  Write `conformance` as the first argument to this attribute.
   The type that implements the macro conforms to the `ConformanceMacro` protocol.
   These macros add protocol conformance to the type they're attached to.
 
-The XXX and XXX macro roles require a `named:` argument,
+The peer, member, and accessor macro roles require a `named:` argument,
 listing the names of the symbols that the macro generates.
 When a macro declaration includes the `named:` argument,
 the macro implementation must generate
@@ -90,21 +95,21 @@ The value for that argument is a list of one or more of the following:
 
 - `named(<#name#>)`
   where *name* is that fixed symbol name,
-  for a name that's known in advanced
+  for a name that's known in advance.
 
 - `overloaded`
-  for a name that's the same as an existing symbol
+  for a name that's the same as an existing symbol.
 
 - `prefixed(<#prefix#>)`
   where *prefix* is prepended to the symbol name,
-  for a name that starts with a fixed string
+  for a name that starts with a fixed string.
 
 - `suffixed(<#suffix#>`
   where *suffix* is appended to the symbol name,
-  for a name that ends with a fixed string
+  for a name that ends with a fixed string.
 
-- `arbirtary`
-  for a name that can't be determined until the macro is expanded
+- `arbitrary`
+  for a name that can't be determined until macro expansion.
 
 As a special case,
 you can write `prefixed($)`
