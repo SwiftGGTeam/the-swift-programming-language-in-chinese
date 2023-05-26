@@ -783,7 +783,6 @@ print(weatherAdvice)
 
 Here, each of the branches sets a value for the `weatherAdvice` constant,
 which is printed after the `if` statement.
-<!-- XXX have we shown deferred initialization like in an earlier chapter? -->
 
 Using the alternate syntax,
 known as an `if` expression,
