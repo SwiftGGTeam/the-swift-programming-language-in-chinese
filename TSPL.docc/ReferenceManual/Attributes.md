@@ -1346,8 +1346,10 @@ A result builder implements static methods described below.
 Because all of the result builder's functionality
 is exposed through static methods,
 you don't ever initialize an instance of that type.
-The `buildBlock(_:)` method is required;
-the other methods ---
+A result builder must implement either the `buildBlock(_:)` method
+or both the `buildPartialBlock(first:)`
+and `buildPartialBlock(accumulated:next:)` methods.
+The other methods ---
 which enable additional functionality in the DSL ---
 are optional.
 The declaration of a result builder type
@@ -1364,11 +1366,36 @@ If your result-building methods
 don't specify a type for `Expression` or `FinalResult`,
 they default to being the same as `Component`.
 
-The result-building methods are as follows:
+The block-building methods are as follows:
 
 - term `static func buildBlock(_ components: Component...) -> Component`:
   Combines an array of partial results into a single partial result.
-  A result builder must implement this method.
+
+- term `static func buildPartialBlock(first: Component) -> Component`:
+  Builds a partial result component from the first component.
+  Implement both this method and `buildPartialBlock(accumulated:next:)`
+  to support building blocks one component at a time.
+  Compared to `buildBlock(_:)`,
+  this approach reduces the need for generic overloads
+  that handle different numbers of arguments.
+
+- term `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
+  Builds a partial result component
+  by combining an accumulated component with a new component.
+  Implement both this method and `buildPartialBlock(first:)`
+  to support building blocks one component at a time.
+  Compared to `buildBlock(_:)`,
+  this approach reduces the need for generic overloads
+  that handle different numbers of arguments.
+
+A result builder can implement all three of the block-building methods listed above;
+in that case, availability determines which method is called.
+By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(second:)` methods.
+To make Swift call `buildBlock(_:)` instead,
+mark the enclosing declaration as being available
+before the availability you write on `buildPartialBlock(first:)` and `buildPartialBlock(second:)`.
+
+The additional result-building methods are as follows:
 
 - term `static func buildOptional(_ component: Component?) -> Component`:
   Builds a partial result from a partial result that can be `nil`.
