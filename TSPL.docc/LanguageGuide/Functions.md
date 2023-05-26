@@ -323,8 +323,13 @@ but the returned value isn't used.
 > and attempting to do so will result in a compile-time error.
 
 <!--
-  FIXME Unless the function is marked @discardableResult,
-  ignoring its return value triggers a compile-time warning.
+FIXME Unless the function is marked @discardableResult,
+ignoring its return value triggers a compile-time warning.
+
+If the returned value is coincidental
+marking with @discardableResult is good,
+like array.removeFirst(...) ---
+otherwise, using `_ = foo()` at the call site is better.
 -->
 
 ### Functions with Multiple Return Values
@@ -1298,6 +1303,12 @@ print("zero!")
   </ zero!
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

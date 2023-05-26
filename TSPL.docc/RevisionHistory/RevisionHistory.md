@@ -189,7 +189,7 @@ Review the recent changes to this book.
   and to the <doc:Protocols#Conditionally-Conforming-to-a-Protocol> section
   of the <doc:Protocols> chapter.
 - Added information about recursive protocol constraints
-  to the <doc:Generics#Using-a-Protocol-in-Its-Associated-Type's-Constraints> section.
+  to the <doc:Generics#Using-a-Protocol-in-Its-Associated-Types-Constraints> section.
 - Added information about
   the `canImport()` and `targetEnvironment()` platform conditions
   to <doc:Statements#Conditional-Compilation-Block>.
@@ -792,6 +792,12 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
