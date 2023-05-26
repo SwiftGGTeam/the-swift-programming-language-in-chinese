@@ -46,7 +46,7 @@ and you write any arguments to the macro in parentheses after its name.
 For example:
 
 ```swift
-let currentFunctionname = #function
+let currentFunctionName = #function
 #warning("Something's wrong")
 ```
 
