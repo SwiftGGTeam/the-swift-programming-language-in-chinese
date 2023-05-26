@@ -1055,7 +1055,7 @@ For example, the variadic parameter `Int...` is treated as `[Int]`.
 For an example that uses a variadic parameter,
 see <doc:Functions#Variadic-Parameters>.
 
-A parameter with an equals sign (`=`) and an expression after its type
+A parameter with an equal sign (`=`) and an expression after its type
 is understood to have a default value of the given expression.
 The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,

@@ -673,9 +673,9 @@ temperatureInFahrenheit = 40
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 } else {
-    print("It's not that cold. Wear a t-shirt.")
+    print("It's not that cold. Wear a T-shirt.")
 }
-// Prints "It's not that cold. Wear a t-shirt."
+// Prints "It's not that cold. Wear a T-shirt."
 ```
 
 <!--
@@ -686,9 +686,9 @@ if temperatureInFahrenheit <= 32 {
   -> if temperatureInFahrenheit <= 32 {
         print("It's very cold. Consider wearing a scarf.")
      } else {
-        print("It's not that cold. Wear a t-shirt.")
+        print("It's not that cold. Wear a T-shirt.")
      }
-  <- It's not that cold. Wear a t-shirt.
+  <- It's not that cold. Wear a T-shirt.
   ```
 -->
 
@@ -707,7 +707,7 @@ if temperatureInFahrenheit <= 32 {
 } else if temperatureInFahrenheit >= 86 {
     print("It's really warm. Don't forget to wear sunscreen.")
 } else {
-    print("It's not that cold. Wear a t-shirt.")
+    print("It's not that cold. Wear a T-shirt.")
 }
 // Prints "It's really warm. Don't forget to wear sunscreen."
 ```
@@ -722,7 +722,7 @@ if temperatureInFahrenheit <= 32 {
      } else if temperatureInFahrenheit >= 86 {
         print("It's really warm. Don't forget to wear sunscreen.")
      } else {
-        print("It's not that cold. Wear a t-shirt.")
+        print("It's not that cold. Wear a T-shirt.")
      }
   <- It's really warm. Don't forget to wear sunscreen.
   ```
@@ -759,6 +759,126 @@ if temperatureInFahrenheit <= 32 {
 
 Because the temperature is neither too cold nor too warm to trigger the `if` or `else if` conditions,
 no message is printed.
+
+Swift provides a shorthand spelling of `if`
+that you can use when setting values.
+For example,
+consider the following code:
+
+```swift
+let temperatureInCelsius = 25
+let weatherAdvice: String
+
+if temperatureInCelsius <= 0 {
+    weatherAdvice = "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    weatherAdvice = "It's really warm. Don't forget to wear sunscreen."
+} else {
+    weatherAdvice = "It's not that cold. Wear a T-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a T-shirt."
+```
+
+Here, each of the branches sets a value for the `weatherAdvice` constant,
+which is printed after the `if` statement.
+<!-- XXX have we shown deferred initialization like in an earlier chapter? -->
+
+Using the alternate syntax,
+known as an `if` expression,
+you can write this code more concisely:
+
+```swift
+let weatherAdvice = if temperatureInCelsius <= 0 {
+    "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    "It's really warm. Don't forget to wear sunscreen."
+} else {
+    "It's not that cold. Wear a T-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a T-shirt."
+```
+
+In this `if` expression version,
+each branch contains a single value.
+If a branch's condition is true,
+then that branch's value is used as the value for the whole `if` expression
+in the assignment of `weatherAdvice`.
+Every `if` branch has a corresponding `else if` branch or `else` branch,
+ensuring that one of the branches always matches
+and that the `if` expression always produces a value,
+regardless of which conditions are true.
+
+Because the syntax for the assignment starts outside the `if` expression,
+there's no need to repeat `weatherAdvice =` inside each branch.
+Instead,
+each branch of the `if` expression
+produces one of the three possible values for `weatherAdvice`,
+and the assignment uses that value.
+
+All of the branches of an `if` expression
+need to contain values of the same type.
+Because Swift checks the type of each branch separately,
+values like `nil` that can be used with more than one type
+prevent Swift from determining the `if` expression's type automatically.
+Instead, you need to specify the type explicitly ---
+for example:
+
+```swift
+let freezeWarning: String? = if temperatureInCelsius <= 0 {
+    "It's below freezing. Watch for ice!"
+} else {
+    nil
+}
+```
+
+In the code above,
+one branch of the `if` expression has a string value
+and the other branch has a `nil` value.
+The `nil` value could be used as a value for any optional type,
+so you have to explicitly write that `freezeWarning` is an optional string,
+as described in <doc:TheBasics#Type-Annotations>.
+
+An alternate way to provide this type information
+is to provide an explicit type for `nil`,
+instead of providing an explicit type for `freezeWarning`:
+
+```swift
+let freezeWarning = if temperatureInCelsius <= 0 {
+    "It's below freezing. Watch for ice!"
+} else {
+    nil as String?
+}
+```
+
+An `if` expression can respond to unexpected failures by throwing an error
+or calling a function like `fatalError(_:file:line:)` that never returns.
+For example:
+
+```swift
+let weatherAdvice = if temperatureInCelsius > 100 {
+    throw TemperatureError.boiling
+} else {
+    "It's a reasonable temperature."
+}
+```
+
+In this example,
+the `if` expression checks whether the forecast temperature
+is hotter than 100° C --- the boiling point of water.
+A temperature this hot causes the `if` expression to throw a `.boiling` error
+instead of returning a textual summary.
+Even though this `if` expression can throw an error,
+you don't write `try` before it.
+For information about working with errors, see <doc:ErrorHandling>.
+
+In addition to using `if` expressions
+on the right-hand side of an assignment,
+as shown in the examples above,
+you can also use them as the value that a function or closure returns.
 
 ### Switch
 
@@ -810,13 +930,13 @@ a single lowercase character called `someCharacter`:
 let someCharacter: Character = "z"
 switch someCharacter {
 case "a":
-    print("The first letter of the alphabet")
+    print("The first letter of the Latin alphabet")
 case "z":
-    print("The last letter of the alphabet")
+    print("The last letter of the Latin alphabet")
 default:
     print("Some other character")
 }
-// Prints "The last letter of the alphabet"
+// Prints "The last letter of the Latin alphabet"
 ```
 
 <!--
@@ -826,13 +946,13 @@ default:
   -> let someCharacter: Character = "z"
   -> switch someCharacter {
         case "a":
-           print("The first letter of the alphabet")
+           print("The first letter of the Latin alphabet")
         case "z":
-           print("The last letter of the alphabet")
+           print("The last letter of the Latin alphabet")
         default:
            print("Some other character")
      }
-  <- The last letter of the alphabet
+  <- The last letter of the Latin alphabet
   ```
 -->
 
@@ -844,6 +964,40 @@ not just every alphabetic character,
 this `switch` statement uses a `default` case
 to match all characters other than `a` and `z`.
 This provision ensures that the `switch` statement is exhaustive.
+
+Like `if` statements,
+`switch` statements also have an expression form:
+
+```swift
+let anotherCharacter: Character = "a"
+let message = switch anotherCharacter {
+case "a":
+    "The first letter of the Latin alphabet"
+case "z":
+    "The last letter of the Latin alphabet"
+default:
+    "Some other character"
+}
+
+print(message)
+// Prints "The first letter of the Latin alphabet"
+```
+
+In this example,
+each case in the `switch` expression
+contains the value for `message`
+to be used when that case matches `anotherCharacter`.
+Because `switch` is always exhaustive,
+there is always a value to assign.
+
+As with `if` expressions,
+you can throw an error
+or call a function like `fatalError(_:file:line:)` that never returns
+instead of providing a value for a given case.
+You can use `switch` expressions
+on the right-hand side of an assignment,
+as shown in the example above,
+and as the value that a function or closure returns.
 
 #### No Implicit Fallthrough
 

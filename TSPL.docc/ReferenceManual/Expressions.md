@@ -554,6 +554,8 @@ to make prefix expressions, infix expressions, and postfix expressions.
 >
 > *primary-expression* → *superclass-expression*
 >
+> *primary-expression* → *conditional-expression*
+>
 > *primary-expression* → *closure-expression*
 >
 > *primary-expression* → *parenthesized-expression*
@@ -920,6 +922,101 @@ to make use of the implementation in their superclass.
 > *superclass-subscript-expression* → **`super`** **`[`** *function-call-argument-list* **`]`**
 >
 > *superclass-initializer-expression* → **`super`** **`.`** **`init`**
+
+### Conditional Expression
+
+A *conditional expression* evaluates to one of several given values
+based on the value of a condition.
+It has one the following forms:
+
+```swift
+if <#condition 1#> {
+   <#expression used if condition 1 is true#>
+} else if <#condition 2#> {
+   <#expression used if condition 2 is true#>
+} else {
+   <#expression used if both conditions are false#>
+}
+
+switch <#expression#> {
+case <#pattern 1#>:
+    <#expression 1#>
+case <#pattern 2#> where <#condition#>:
+    <#expression 2#>
+default:
+    <#expression 3#>
+}
+```
+
+A conditional expression
+has the same behavior and syntax as an `if` statement or a `switch` statement,
+except for the differences that the paragraphs below describe.
+
+A conditional expression appears only in the following contexts:
+
+  - As the value assigned to a variable.
+  - As the initial value in a variable or constant declaration.
+  - As the error thrown by a `throw` expression.
+  - As the value returned by a function, closure, or property getter.
+  - As the value inside a branch of a conditional expression.
+
+The branches of a conditional expression are exhaustive,
+ensuring that the expression always produces a value
+regardless of the condition.
+This means each `if` branch needs a corresponding `else` branch.
+
+Each branch contains either a single expression,
+which is used as the value for the conditional expression
+when that branch's conditional is true,
+a `throw` statement,
+or a call to a function that never returns.
+
+Each branch must produce a value of the same type.
+Because type checking of each branch is independent,
+you sometimes need to specify the value's type explicitly,
+like when branches include different kinds of literals,
+or when a branch's value is `nil`.
+When you need to provide this information,
+add a type annotation to the variable that the result is assigned to,
+or add an `as` cast to the branches' values.
+
+```swift
+let number: Double = if someCondition { 10 } else { 12.34 }
+let number = if someCondition { 10 as Double } else { 12.34 }
+```
+
+Inside a result builder,
+conditional expressions can appear
+only as the initial value of a variable or constant.
+This behavior means when you write `if` or `switch` in a result builder ---
+outside of a variable or constant declaration ---
+that code is understood as a branch statement
+and one of the result builder's methods transforms that code.
+
+Don't put a conditional expression in a `try` expression,
+even if one of the branches of a conditional expression is throwing.
+
+> Grammar of a conditional expression:
+>
+> *conditional-expression* → *if-expression* | *switch-expression*
+>
+>
+>
+> *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail*
+>
+> *if-expression-tail* → **`else`** *if-expression*
+>
+> *if-expression-tail* → **`else`** **`{`** *statement* **`}`** *if-expression-tail*
+>
+>
+>
+> *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`**
+>
+> *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_
+>
+> *switch-expression-case* → *case-label* *statement*
+>
+> *switch-expression-case* → *default-label* *statement*
 
 ### Closure Expression
 

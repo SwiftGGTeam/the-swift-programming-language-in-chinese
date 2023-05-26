@@ -225,8 +225,6 @@ A comma is allowed after the last element.
   Occupations is a reference to Firefly,
   specifically to Mal's joke about Jayne's job on the ship.
 
-
-
   Can't find the specific episode,
   but it shows up in several lists of Firefly "best of" quotes:
 
@@ -314,7 +312,6 @@ let emptyArray: [String] = []
 let emptyDictionary: [String: Float] = [:]
 ```
 
-
 <!--
   - test: `guided-tour`
 
@@ -384,6 +381,21 @@ In an `if` statement,
 the conditional must be a Boolean expression ---
 this means that code such as `if score { ... }` is an error,
 not an implicit comparison to zero.
+
+You can write `if` or `switch`
+after the equal sign (`=`) of an assignment
+or after `return`,
+to choose a value based on the condition.
+
+```swift
+let scoreDecoration = if teamScore > 10 {
+    "🎉"
+} else {
+    ""
+}
+print("Score:", teamScore, scoreDecoration)
+// Prints "Score: 11 🎉"
+```
 
 You can use `if` and `let` together
 to work with values that might be missing.
