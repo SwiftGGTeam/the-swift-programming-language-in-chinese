@@ -1971,11 +1971,11 @@ You can use a protocol name just like any other named type ---
 for example, to create a collection of objects
 that have different types
 but that all conform to a single protocol.
-When you work with values whose type is a protocol type,
+When you work with values whose type is a boxed protocol type,
 methods outside the protocol definition aren't available.
 
 ```swift
-let protocolValue: ExampleProtocol = a
+let protocolValue: any ExampleProtocol = a
 print(protocolValue.simpleDescription)
 // Prints "A very simple class.  Now 100% adjusted."
 // print(protocolValue.anotherProperty)  // Uncomment to see the error

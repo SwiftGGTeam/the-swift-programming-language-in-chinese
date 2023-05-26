@@ -88,6 +88,12 @@ class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
   ```
 -->
 
+> Note: Because protocols are types,
+> begin their names with a capital letter
+> (such as `FullyNamed` and `RandomNumberGenerator`)
+> to match the names of other types in Swift
+> (such as `Int`, `String`, and `Double`).
+
 ## Property Requirements
 
 A protocol can require any conforming type to provide
@@ -749,124 +755,60 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
 ## Protocols as Types
 
 Protocols don't actually implement any functionality themselves.
-Nonetheless,
-you can use protocols as a fully fledged types in your code.
-Using a protocol as a type is sometimes called an *existential type*,
-which comes from the phrase
-"there exists a type *T* such that *T* conforms to the protocol".
+Regardless, you can use a protocol as a type in your code.
 
-You can use a protocol in many places where other types are allowed, including:
+The most common way to use a protocol as a type
+is to use a protocol as a generic constraint.
+Code with generic constraints can work with
+any type that conforms to the protocol,
+and the specific type is chosen by the code that uses the API.
+For example,
+when you call a function that takes an argument
+and that argument's type is generic,
+the caller chooses the type.
 
-- As a parameter type or return type in a function, method, or initializer
-- As the type of a constant, variable, or property
-- As the type of items in an array, dictionary, or other container
+Code with an opaque type
+works with some type that conforms to the protocol.
+The underlying type is known at compile time,
+and the API implementation chooses that type,
+but that type's identity is hidden from clients of the API.
+Using an opaque type lets you prevent implementation details of an API
+from leaking through the layer of abstraction ---
+for example, by hiding the specific return type from a function,
+and only guaranteeing that the value conforms to a given protocol.
 
-> Note: Because protocols are types,
-> begin their names with a capital letter
-> (such as `FullyNamed` and `RandomNumberGenerator`)
-> to match the names of other types in Swift
-> (such as `Int`, `String`, and `Double`).
+Code with a boxed protocol type
+works with any type, chosen at runtime, that conforms to the protocol.
+To support this runtime flexibility,
+Swift adds a level of indirection when necessary ---
+known as a *box*,
+which has a performance cost.
+Because of this flexibility,
+Swift doesn't know the underlying type at compile time,
+which means you can access only the members
+that are required by the protocol.
+Accessing any other APIs on the underlying type
+requires casting at runtime.
 
-Here's an example of a protocol used as a type:
-
-```swift
-class Dice {
-    let sides: Int
-    let generator: RandomNumberGenerator
-    init(sides: Int, generator: RandomNumberGenerator) {
-        self.sides = sides
-        self.generator = generator
-    }
-    func roll() -> Int {
-        return Int(generator.random() * Double(sides)) + 1
-    }
-}
-```
-
-<!--
-  - test: `protocols`
-
-  ```swifttest
-  -> class Dice {
-        let sides: Int
-        let generator: RandomNumberGenerator
-        init(sides: Int, generator: RandomNumberGenerator) {
-           self.sides = sides
-           self.generator = generator
-        }
-        func roll() -> Int {
-           return Int(generator.random() * Double(sides)) + 1
-        }
-     }
-  ```
--->
-
-This example defines a new class called `Dice`,
-which represents an *n*-sided dice for use in a board game.
-`Dice` instances have an integer property called `sides`,
-which represents how many sides they have,
-and a property called `generator`,
-which provides a random number generator
-from which to create dice roll values.
-
-The `generator` property is of type `RandomNumberGenerator`.
-Therefore, you can set it to an instance of
-*any* type that adopts the `RandomNumberGenerator` protocol.
-Nothing else is required of the instance you assign to this property,
-except that the instance must adopt the `RandomNumberGenerator` protocol.
-Because its type is `RandomNumberGenerator`,
-code inside the `Dice` class can only interact with `generator`
-in ways that apply to all generators that conform to this protocol.
-That means it can't use any methods or properties
-that are defined by the underlying type of the generator.
-However, you can downcast from a protocol type to an underlying type
-in the same way you can downcast from a superclass to a subclass,
-as discussed in <doc:TypeCasting#Downcasting>.
-
-`Dice` also has an initializer, to set up its initial state.
-This initializer has a parameter called `generator`,
-which is also of type `RandomNumberGenerator`.
-You can pass a value of any conforming type in to this parameter
-when initializing a new `Dice` instance.
-
-`Dice` provides one instance method, `roll`,
-which returns an integer value between 1 and the number of sides on the dice.
-This method calls the generator's `random()` method to create
-a new random number between `0.0` and `1.0`,
-and uses this random number to create a dice roll value within the correct range.
-Because `generator` is known to adopt `RandomNumberGenerator`,
-it's guaranteed to have a `random()` method to call.
-
-Here's how the `Dice` class can be used to create a six-sided dice
-with a `LinearCongruentialGenerator` instance as its random number generator:
-
-```swift
-var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
-for _ in 1...5 {
-    print("Random dice roll is \(d6.roll())")
-}
-// Random dice roll is 3
-// Random dice roll is 5
-// Random dice roll is 4
-// Random dice roll is 5
-// Random dice roll is 4
-```
+For information about using protocols as generic constraints,
+see <doc:Generics>.
+For information about opaque types, and boxed protocol types,
+see <doc:OpaqueTypes>.
 
 <!--
-  - test: `protocols`
 
-  ```swifttest
-  -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
-  -> for _ in 1...5 {
-        print("Random dice roll is \(d6.roll())")
-     }
-  </ Random dice roll is 3
-  </ Random dice roll is 5
-  </ Random dice roll is 4
-  </ Random dice roll is 5
-  </ Random dice roll is 4
-  ```
+Performance impact from SE-0335:
+
+Existential types are also significantly more expensive than using concrete types.
+Because they can store any value whose type conforms to the protocol,
+and the type of value stored can change dynamically,
+existential types require dynamic memory
+unless the value is small enough to fit within an inline 3-word buffer.
+In addition to heap allocation and reference counting,
+code using existential types incurs pointer indirection and dynamic method dispatch
+that cannot be optimized away.
 -->
+
 
 ## Delegation
 
