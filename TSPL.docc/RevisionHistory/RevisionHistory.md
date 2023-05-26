@@ -2,6 +2,10 @@
 
 Review the recent changes to this book.
 
+**XXX release date XXX**
+
+- Updated for Swift 5.9.
+
 **2023-03-30**
 
 - Updated for Swift 5.8.
