@@ -28,10 +28,10 @@ or a macro implementation that has a bug.
 
 Swift has two kinds of macros:
 
-- *Attached macros* modify the declaration that they're attached to.
-
 - *Freestanding macros* appear on their own,
   without being attached to a declaration.
+
+- *Attached macros* modify the declaration that they're attached to.
 
 You call attached and freestanding macros slightly differently,
 but they both follow the same model for macro expansion,
@@ -556,7 +556,7 @@ the first `guard` block extracts the string literal from the AST,
 assigning that AST element to `literalSegment`.
 The second `guard` block
 calls the private `FourCharacterCode(for:)` function.
-Both of these blocks throw an error if the macro is use incorrectly ---
+Both of these blocks throw an error if the macro is used incorrectly ---
 the error message becomes a compiler error
 at the malformed call site.
 For example,
