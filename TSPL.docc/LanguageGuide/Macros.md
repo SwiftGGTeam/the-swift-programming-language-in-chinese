@@ -73,7 +73,6 @@ Attached macros modify the declaration that they're attached to.
 They add code to that declaration,
 like defining a new method or adding conformance to a protocol.
 
-<!-- XXX Frame differently; this is motivation, not an example -->
 For example, consider the following code
 that doesn't use macros:
 
@@ -159,7 +158,6 @@ and its declaration
 as well as the macro's name, the parameters it takes,
 where it can be used,
 and what kind of code it generates.
-<!-- XXX typically (always?) in different libraries -->
 
 You introduce a macro declaration with the `macro` keyword.
 For example,
@@ -530,6 +528,7 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
     }
     return result.bigEndian
 }
+enum CustomError: Error { case message(String) }
 ```
 
 The `#fourCharacterCode` macro
@@ -562,7 +561,6 @@ at the malformed call site.
 For example,
 if you try to call the macro as `#fourCharacterCode("AB" + "CD")`
 the compiler shows the error "Need a static string".
-<!-- XXX Call out where CustomError comes from -->
 
 The `expansion(of:in:)` method returns an instance of `ExprSyntax`,
 a type from SwiftSyntax that represents an expression in an AST.
@@ -691,7 +689,7 @@ but you could use a testing framework instead.
 
 - Ways to view the macro expansion while debugging.
   The SE prototype provides `-Xfrontend -dump-macro-expansions` for this.
-  [XXX TR: Is this flag what we should suggest folks use,
+  [TR: Is this flag what we should suggest folks use,
   or will there be better command-line options coming?]
 
 - Use diagnostics for macros that have constraints/requirements

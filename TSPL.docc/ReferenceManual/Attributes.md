@@ -660,7 +660,6 @@ The arguments to this attribute indicate the macro's roles:
 - `declaration`
   A macro that produces a declaration
 
-XXX
 Or are those supported today?
 I see #error and #warning as @freestanding(declaration)
 in the stdlib already:
