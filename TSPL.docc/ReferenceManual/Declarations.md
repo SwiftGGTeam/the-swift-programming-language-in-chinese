@@ -3446,18 +3446,25 @@ with both the `class` and `final` declaration modifiers.
 
 ## Macro Declaration
 
-<!-- XXX OUTLINE
-Macro overloading is allowed, like with functions.
+A *macro declaration* introduces a new macro.
+It begins with the `macro` keyword
+and has the following form:
 
-SE proposal says the expression in a macro-definition
-is parsed and evaluated as an expression,
-but must specifically be a macro-expansion-expression.
-However, I think that restriction has been relaxed
-to also allow a type to appear
-when the macro implementation is defined in the same module.
--->
+```swift
+macro <#name#> = <#macro implementation#>
+```
 
+The *macro implementation* is another macro,
+and indicates the location of the code that performs this macro's expansion.
+Call the `externalMacro(module:type:)` macro from the Swift standard library,
+passing in the name of a type that contains the macro's implementation,
+and the name of the module that contains that type.
+
+Macros can be overloaded,
+following the same model used by functions.
 A macro declaration appears only at file scope.
+
+For more information, see <doc:Macros>.
 
 > Grammar of a macro declaration:
 >

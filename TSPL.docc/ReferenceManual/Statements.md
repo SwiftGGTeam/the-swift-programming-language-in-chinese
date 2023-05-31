@@ -1356,9 +1356,11 @@ resets the source code location back to the default line numbering and file path
 
 Prior to Swift 5.9,
 the `#warning` and `#error` statements emit a diagnostic during compilation.
-This behavior is now implemented as macros in the Swift standard library.
+This behavior is now provided by
+the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
 
-<!-- XXX add links -->
+[`warning(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/warning(_:)
+[`error(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/error(_:)
 
 ## Availability Condition
 

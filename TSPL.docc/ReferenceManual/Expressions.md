@@ -692,10 +692,6 @@ in Xcode Help.
 >
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
 >
-> *literal-expression* → **`#file`** | **`#fileID`** | **`#filePath`**
->
-> *literal-expression* → **`#line`** | **`#column`** | **`#function`** | **`#dsohandle`**
->
 >
 >
 > *array-literal* → **`[`** *array-literal-items*_?_ **`]`**
@@ -1476,15 +1472,26 @@ For example, in the following assignment
 
 ### Macro-Expansion Expression
 
-<!--
-A macro that takes no arguments can omit the ()
-and that bit is implied.
-XXX Can you explicitly include the () still?
+A *macro-expansion expression* consists of a macro name
+followed by a comma-separated list of the macro's arguments in parentheses.
+The macro is expanded at compile time.
+Macro-expansion expressions have the following form:
 
--->
+```swift
+<#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
+```
+
+A macro-expansion expression omits the parentheses
+if the macro doesn't take any arguments.
 
 A macro expression can't appear as the default value for a parameter,
-except for the `#file` and `#line` macros from the Swift standard library.
+except for the [`file`][] and [`line`][] macros from the Swift standard library.
+When used as the default value of a function or method parameter,
+These macros' value is determined
+when the default value expression is evaluated at the call site.
+
+[`file`]: http://developer.apple.com/documentation/swift/documentation/swift/file
+[`line`]: http://developer.apple.com/documentation/swift/documentation/swift/line
 
 > Grammar of a macro-expansion expression:
 >
