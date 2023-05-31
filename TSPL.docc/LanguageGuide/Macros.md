@@ -136,7 +136,7 @@ struct SundaeToppings {
     static let cherry: Self = Self(rawValue: 1 << Options.cherry.rawValue)
     static let fudge: Self = Self(rawValue: 1 << Options.fudge.rawValue)
 }
-extension SundaeToppings: OptionSet  {}
+extension SundaeToppings: OptionSet { }
 ```
 
 All of the code after the private enumeration
