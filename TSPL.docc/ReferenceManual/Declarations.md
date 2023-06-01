@@ -3470,13 +3470,13 @@ For more information, see <doc:Macros>.
 >
 > *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause*
 >
-> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** 
+> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`**
 >
 > *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_
 >
-> *macro-function-signature-result* → **`->``** *type*
+> *macro-function-signature-result* → **`->`** *type*
 >
-> *macro-definition* → **`=``** *expression*
+> *macro-definition* → **`=`** *expression*
 
 <!--
 XXX TR: Confirm that the 'where' clause goes after the equals sign.
