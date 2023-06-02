@@ -35,13 +35,8 @@ The arguments to this attribute indicate the macro's role.
 For a macro that has multiple roles,
 apply the `attached` macro multiple times, once for each role.
 
-<!-- XXX TR:
-Is there a stable URL we can use to make the macro protocols below links?
-The current build of SwiftSyntax docs doesn't appear to include any of these protocols.
-That URL also looks like it includes a build number,
-so it seems likely to change over time.
-
-https://swiftpackageindex.com/apple/swift-syntax/508.0.0/documentation/swiftsyntax
+<!-- TODO:
+If there's a stable URL we can use, make the macro protocols below links.
 -->
 
 The first argument to this attribute
@@ -115,7 +110,7 @@ As a special case,
 you can write `prefixed($)`
 for a macro that behaves similar to a property wrapper.
 <!--
-XXX TR: Is there any more detail about this case?
+TODO TR: Is there any more detail about this case?
 -->
 
 ### available

@@ -356,7 +356,7 @@ regardless of what code comes before and after it.
 This limitation helps make macro expansion easier to understand,
 and helps your code build faster
 because Swift can avoid expanding macros that haven't changed.
-<!-- XXX TR: Confirm -->
+<!-- TODO TR: Confirm -->
 Swift helps macro authors avoid accidentally reading other input
 by restricting the code that implements macros:
 

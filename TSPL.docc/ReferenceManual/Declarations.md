@@ -3479,7 +3479,7 @@ For more information, see <doc:Macros>.
 > *macro-definition* → **`=`** *expression*
 
 <!--
-XXX TR: Confirm that the 'where' clause goes after the equals sign.
+TODO TR: Confirm that the 'where' clause goes after the equals sign.
 -->
 
 ## Operator Declaration
