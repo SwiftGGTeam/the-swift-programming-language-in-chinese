@@ -45,6 +45,8 @@ the term *declaration* covers both declarations and definitions.
 >
 > *declaration* → *subscript-declaration*
 >
+> *declaration* → *macro-declaration*
+>
 > *declaration* → *operator-declaration*
 >
 > *declaration* → *precedence-group-declaration*
@@ -3441,6 +3443,44 @@ with both the `class` and `final` declaration modifiers.
 > *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause*
 >
 > *subscript-result* → **`->`** *attributes*_?_ *type*
+
+## Macro Declaration
+
+A *macro declaration* introduces a new macro.
+It begins with the `macro` keyword
+and has the following form:
+
+```swift
+macro <#name#> = <#macro implementation#>
+```
+
+The *macro implementation* is another macro,
+and indicates the location of the code that performs this macro's expansion.
+Call the `externalMacro(module:type:)` macro from the Swift standard library,
+passing in the name of a type that contains the macro's implementation,
+and the name of the module that contains that type.
+
+Macros can be overloaded,
+following the same model used by functions.
+A macro declaration appears only at file scope.
+
+For more information, see <doc:Macros>.
+
+> Grammar of a macro declaration:
+>
+> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause*
+>
+> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`**
+>
+> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_
+>
+> *macro-function-signature-result* → **`->`** *type*
+>
+> *macro-definition* → **`=`** *expression*
+
+<!--
+TODO TR: Confirm that the 'where' clause goes after the equals sign.
+-->
 
 ## Operator Declaration
 

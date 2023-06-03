@@ -1354,75 +1354,13 @@ resets the source code location back to the default line numbering and file path
 
 ### Compile-Time Diagnostic Statement
 
-A compile-time diagnostic statement causes the compiler
-to emit an error or a warning during compilation.
-A compile-time diagnostic statement has the following forms:
+Prior to Swift 5.9,
+the `#warning` and `#error` statements emit a diagnostic during compilation.
+This behavior is now provided by
+the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
 
-```swift
-#error("<#error message#>")
-#warning("<#warning message#>")
-```
-
-The first form emits the *error message* as a fatal error
-and terminates the compilation process.
-The second form emits the *warning message* as a nonfatal warning
-and allows compilation to proceed.
-You write the diagnostic message as a static string literal.
-Static string literals can't use features like
-string interpolation or concatenation,
-but they can use the multiline string literal syntax.
-
-> Grammar of a compile-time diagnostic statement:
->
-> *diagnostic-statement* → **`#error`** **`(`** *diagnostic-message* **`)`**
->
-> *diagnostic-statement* → **`#warning`** **`(`** *diagnostic-message* **`)`**
->
->
->
-> *diagnostic-message* → *static-string-literal*
-
-<!--
-  - test: `good-diagnostic-statement-messages`
-
-  ```swifttest
-  >> #warning("Single-line static string")
-  !! /tmp/swifttest.swift:1:10: warning: Single-line static string
-  !! #warning("Single-line static string")
-  !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ---
-  >> #warning(
-     """
-     Multi-line string literal
-     warning message
-     """)
-  !! /tmp/swifttest.swift:3:1: warning: Multi-line string literal
-  !! warning message
-  !! """
-  !! ^~~
-  ```
--->
-
-<!--
-  Using !! lines above instead of !$ lines,
-  to also confirm that the line number comes through correctly.
--->
-
-<!--
-  - test: `bad-diagnostic-statement-messages`
-
-  ```swifttest
-  >> #warning("Interpolated \(1+1) string")
-  !$ error: string interpolation is not allowed in #warning directives
-  !! #warning("Interpolated \(1+1) string")
-  !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ---
-  >> #warning("Concatenated " + "strings")
-  !$ error: extra tokens following #warning directive
-  !! #warning("Concatenated " + "strings")
-  !! ^
-  ```
--->
+[`warning(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/warning(_:)
+[`error(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/error(_:)
 
 ## Availability Condition
 

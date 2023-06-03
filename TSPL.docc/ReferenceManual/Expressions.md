@@ -566,6 +566,8 @@ to make prefix expressions, infix expressions, and postfix expressions.
 >
 > *primary-expression* → *wildcard-expression*
 >
+> *primary-expression* → *macro-expansion-expression*
+>
 > *primary-expression* → *key-path-expression*
 >
 > *primary-expression* → *selector-expression*
@@ -590,46 +592,19 @@ to make prefix expressions, infix expressions, and postfix expressions.
 A *literal expression* consists of
 either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
-a playground literal,
-or one of the following special literals:
+or a playground literal.
 
-| Literal | Type | Value |
-| ------- | ---- | ----- |
-| `#file` | `String` | The path to the file in which it appears. |
-| `#fileID` | `String` | The name of the file and module in which it appears. |
-| `#filePath` | `String` | The path to the file in which it appears. |
-| `#line` | `Int` | The line number on which it appears. |
-| `#column` | `Int` | The column number in which it begins. |
-| `#function` | `String` | The name of the declaration in which it appears. |
-| `#dsohandle` | `UnsafeRawPointer` | The dynamic shared object (DSO) handle in use where it appears. |
-
-The string value of `#file` depends on the language version,
-to enable migration from the old `#filePath` behavior
-to the new `#fileID` behavior.
-Currently, `#file` has the same value as `#filePath`.
-In a future version of Swift,
-`#file` will have the same value as `#fileID` instead.
-To adopt the future behavior,
-replace `#file` with `#fileID` or `#filePath` as appropriate.
-
-The string value of a `#fileID` expression has the form *module*/*file*,
-where *file* is the name of the file in which the expression appears
-and *module* is the name of the module that this file is part of.
-The string value of a `#filePath` expression
-is the full file-system path to the file in which the expression appears.
-Both of these values can be changed by `#sourceLocation`,
-as described in <doc:Statements#Line-Control-Statement>.
-Because `#fileID` doesn't embed the full path to the source file,
-unlike `#filePath`,
-it gives you better privacy and reduces the size of the compiled binary.
-Avoid using `#filePath` outside of tests, build scripts,
-or other code that doesn't become part of the shipping program.
-
-> Note: To parse a `#fileID` expression,
-> read the module name as the text before the first slash (`/`)
-> and the filename as the text after the last slash.
-> In the future, the string might contain multiple slashes,
-> such as `MyModule/some/disambiguation/MyFile.swift`.
+> Note:
+> Prior to Swift 5.9,
+> the following special literals were recognized,
+> which are now implemented as macros in the Swift standard library:
+> `#column`,
+> `#dsohandle`,
+> `#fileID`,
+> `#filePath`,
+> `#file`,
+> `#function`,
+> and `#line`.
 
 <!--
   - test: `pound-file-flavors`
@@ -639,56 +614,6 @@ or other code that doesn't become part of the shipping program.
   << true
   >> print(#file == #fileID)
   << false
-  ```
--->
-
-Inside a function,
-the value of `#function` is the name of that function,
-inside a method it's the name of that method,
-inside a property getter or setter it's the name of that property,
-inside special members like `init` or `subscript`
-it's the name of that keyword,
-and at the top level of a file it's the name of the current module.
-
-When used as the default value of a function or method parameter,
-the special literal's value is determined
-when the default value expression is evaluated at the call site.
-
-<!--
-  See also "Special Kinds of Parameters" in "Declarations"
-  where the general rule is defined.
--->
-
-```swift
-func logFunctionName(string: String = #function) {
-    print(string)
-}
-func myFunction() {
-    logFunctionName() // Prints "myFunction()".
-}
-```
-
-<!--
-  - test: `special-literal-evaluated-at-call-site`
-
-  ```swifttest
-  -> func logFunctionName(string: String = #function) {
-         print(string)
-     }
-  -> func myFunction() {
-        logFunctionName() // Prints "myFunction()".
-     }
-  >> myFunction()
-  << myFunction()
-  >> func noNamedArgs(_ i: Int, _ j: Int) { logFunctionName() }
-  >> noNamedArgs(1, 2)
-  << noNamedArgs(_:_:)
-  >> func oneNamedArg(_ i: Int, withJay j: Int) { logFunctionName() }
-  >> oneNamedArg(1, withJay: 2)
-  << oneNamedArg(_:withJay:)
-  >> func namedArgs(i: Int, withJay j: Int) { logFunctionName() }
-  >> namedArgs(i: 1, withJay: 2)
-  << namedArgs(i:withJay:)
   ```
 -->
 
@@ -768,10 +693,6 @@ in Xcode Help.
 > *literal-expression* → *literal*
 >
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
->
-> *literal-expression* → **`#file`** | **`#fileID`** | **`#filePath`**
->
-> *literal-expression* → **`#line`** | **`#column`** | **`#function`** | **`#dsohandle`**
 >
 >
 >
@@ -1645,6 +1566,33 @@ For example, in the following assignment
 > Grammar of a wildcard expression:
 >
 > *wildcard-expression* → **`_`**
+
+### Macro-Expansion Expression
+
+A *macro-expansion expression* consists of a macro name
+followed by a comma-separated list of the macro's arguments in parentheses.
+The macro is expanded at compile time.
+Macro-expansion expressions have the following form:
+
+```swift
+<#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
+```
+
+A macro-expansion expression omits the parentheses
+if the macro doesn't take any arguments.
+
+A macro expression can't appear as the default value for a parameter,
+except for the [`file`][] and [`line`][] macros from the Swift standard library.
+When used as the default value of a function or method parameter,
+These macros' value is determined
+when the default value expression is evaluated at the call site.
+
+[`file`]: http://developer.apple.com/documentation/swift/documentation/swift/file
+[`line`]: http://developer.apple.com/documentation/swift/documentation/swift/line
+
+> Grammar of a macro-expansion expression:
+>
+> *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
 
 ### Key-Path Expression
 
