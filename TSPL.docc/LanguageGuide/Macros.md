@@ -1,11 +1,11 @@
 # Macros
 
-Transform code at compile time to generate repetitive code.
+Use macros to generate code at compile time.
 
 Macros transform your source code when you compile it,
 letting you avoid writing repetitive code by hand.
 During compilation,
-Swift expands macros before building your code as usual.
+Swift expands any macros in your code before building your code as usual.
 
 ![A diagram showing an overview of macro expansion.  On the left, a stylized representation of Swift code.  On the right, the same code with several lines added by the macro.](macro-expansion)
 
@@ -23,7 +23,7 @@ if the macro's implementation encounters an error when expanding that macro,
 the compiler treats this as a compilation error.
 These guarantees make it easier to reason about code that uses macros,
 and they make it easier to identify issues
-like using macro incorrectly
+like using a macro incorrectly
 or a macro implementation that has a bug.
 
 Swift has two kinds of macros:
@@ -46,18 +46,25 @@ and you write any arguments to the macro in parentheses after its name.
 For example:
 
 ```swift
-let currentFunctionName = #function
-#warning("Something's wrong")
+func myFunction() {
+    print("Currently running \(#function)")
+    #warning("Something's wrong")
+}
 ```
 
 In the first line,
-`#function` calls the `function` macro from the Swift standard library.
+`#function` calls the [`function`][] macro from the Swift standard library.
 When you compile this code,
 Swift calls that macro's implementation,
 which replaces `#function` with the name of the current function.
+When you run this code and call `myFunction()`,
+it prints `Currently running myFunction()`.
 In the second line,
-`#warning` calls another macro from the standard library
+`#warning` calls the [`warning(_:)`][] macro from the Swift standard library
 to produce a custom compile-time warning.
+
+[`function`]: https://developer.apple.com/documentation/swift/function
+[`warning(_:)`]: https://developer.apple.comdocumentation/swift/warning(_:)
 
 Freestanding macros can produce a value, like `#function` does,
 or they can perform an action at compile time, like `#warning` does.
@@ -144,20 +151,20 @@ comes from the `@OptionSet` macro.
 The version of `SundaeToppings`
 that uses a macro to generate all of the static variables
 is easier to read and easier to maintain
-than the manual-coded version, earlier.
+than the manually coded version, earlier.
 
 ## Macro Declarations
 
 In most Swift code,
-you implement a symbol, like a function or type,
-and there's no separate declaration.
+when you implement a symbol, like a function or type,
+there's no separate declaration.
 However, for macros, the declaration and implementation are separate.
-A macro's implementation contains the code
-that expands the macro by generating Swift code,
-and its declaration 
-as well as the macro's name, the parameters it takes,
+A macro's declaration contains its name,
+the parameters it takes,
 where it can be used,
 and what kind of code it generates.
+A macro's implementation contains the code
+that expands the macro by generating Swift code.
 
 You introduce a macro declaration with the `macro` keyword.
 For example,
@@ -170,18 +177,18 @@ public macro OptionSet<RawType>() =
 ```
 
 The first line
-specifies the macro's name, `OptionSet`,
-and the arguments that takes, in this case none.
+specifies the macro's name and its arguments ---
+the name is `OptionSet`, and it doesn't take any arguments.
 The second line
 uses the `#externalMacro(module:type:)` macro from the Swift standard library
-to tell Swift where the macro's implementation is.
+to tell Swift where the macro's implementation is located.
 In this case,
 the `SwiftMacros` module
 contains a type named `OptionSetMacro`,
 which implements the `@OptionSet` macro.
 
 Because `OptionSet` is an attached macro,
-its name uses upper camel case
+its name uses upper camel case,
 like the names for structures and classes.
 Freestanding macros have lower camel case names,
 like the names for variables and functions.
@@ -198,7 +205,7 @@ and the kinds of code the macro can generate.
 Every macro has one or more roles,
 which you write as part of the attributes
 at the beginning of the macro declaration.
-Here's a partial declaration of `@OptionSet`,
+Here's a bit more of the declaration for `@OptionSet`,
 including the attributes for its roles:
 
 ```swift
@@ -229,6 +236,13 @@ you write the `@freestanding` attribute to specify its role:
 public macro line<T: ExpressibleByIntegerLiteral>() -> T =
         /* ... location of the macro implementation... */
 ```
+
+<!--
+Elided the implementation of #line above
+because it's a compiler built-in:
+
+public macro line<T: ExpressibleByIntegerLiteral>() -> T = Builtin.LineMacro
+-->
 
 The `#line` macro above has the `expression` role.
 An expression macro produces a value,
@@ -261,22 +275,24 @@ the macro declaration lists them explicitly.
 The macro declaration also includes `arbitrary` after the list of names,
 allowing the macro to generate declarations
 whose names aren't known until you use the macro.
-In this case,
-for each case in the private `Options` enumeration,
-`@OptionSet` generates a corresponding declaration with the same name.
+For example,
+when the `@OptionSet` macro is applied to the `SundaeToppings` above,
+it generates type properties that correspond to the enumeration cases,
+`nuts`, `cherry`, and `fudge`.
 
 For more information,
 including a full list of macro roles,
 see <doc:Attributes#attached> and <doc:Attributes#freestanding>
-in <doc:Attributes>
+in <doc:Attributes>.
 
 ## Macro Expansion
 
-As part of building Swift code that uses macros,
-the compiler and the macro's implementation
-pass that code back and forth to expand the macros.
+When building Swift code that uses macros,
+the compiler calls the macros' implementation to expand them.
 
-Macros are expanded as follows:
+![Diagram showing the four steps of expanding macros.  The input is Swift source code.  This becomes a tree, representing the code's structure.  The macro implementation adds branches to the tree.  The result is Swift source with additional code.](macro-expansion-full)
+
+Specifically, Swift expands macros in the following way:
 
 1. The compiler reads the code,
    creating an in-memory representation of the syntax.
@@ -290,10 +306,6 @@ Macros are expanded as follows:
 1. The compiler continues with compilation,
    using the expanded source code.
 
-These steps transform the code as shown below:
-
-![Diagram showing the four steps of expanding macros.  The input is Swift source code.  This becomes a tree, representing the code's structure.  The macro implementation adds branches to the tree.  The result is Swift source with additional code.](macro-expansion-full)
-
 To go through the specific steps, consider the following:
 
 ```
@@ -301,18 +313,18 @@ let magicNumber = #fourCharacterCode("ABCD")
 ```
 
 The `#fourCharacterCode` macro takes a string that's four characters long
-and returns a unsigned 32-bit integer
+and returns an unsigned 32-bit integer
 that corresponds to the ASCII values in the string joined together.
 Some file formats use integers like this to identify data
 because they're compact but still readable in a debugger.
-The <doc:Macros#Implementing-Macros> section below
+The <doc:Macros#Implementing-a-Macro> section below
 shows how to implement this macro.
 
 To expand the macros in the code above,
 the compiler reads the Swift file
 and creates an in-memory representation of that code
 known an as *abstract syntax tree*, or AST.
-The AST makes the code's meaning and structure explicit,
+The AST makes the code's structure explicit,
 which makes it easier to write code that interacts with that structure ---
 like a compiler or a macro implementation.
 Here's a representation of the AST for the code above,
@@ -322,8 +334,8 @@ slightly simplified by omitting some extra detail:
 
 The diagram above shows how the structure of this code
 is represented in memory.
-Each of the elements in the AST
-corresponds to part of the source code's meaning.
+Each element in the AST
+corresponds to a part of the source code.
 The "Constant declaration" AST element
 has two child elements under it,
 which represent the two parts of a constant declaration:
@@ -331,6 +343,7 @@ its name and its value.
 The "Macro call" element has child elements
 that represent the macro's name
 and the list of arguments being passed to the macro.
+
 As part of constructing this AST,
 the compiler checks that the source code is valid Swift.
 For example, `#fourCharacterCode` takes a single argument,
@@ -370,7 +383,7 @@ by restricting the code that implements macros:
 In addition to these safeguards,
 the macro's author is responsible for not reading or modifying anything
 outside of the macro's inputs.
-For example, a macro's expansion can't depend on the current time of day.
+For example, a macro's expansion must not depend on the current time of day.
 
 The implementation of `#fourCharacterCode`
 generates a new AST containing the expanded code.
@@ -469,7 +482,7 @@ and `MyProject` makes those macros available.
 
 The implementation of a macro
 uses the [SwiftSyntax][] module to interact with Swift code
-in a structured way, using an abstract syntax trees (AST).
+in a structured way, using an AST.
 If you created a new macro package with Swift Package Manager,
 the generated `Package.swift` file
 automatically includes a dependency on SwiftSyntax.
@@ -538,7 +551,7 @@ conforms to the `ExpressionMacro` protocol.
 The `ExpressionMacro` protocol has one requirement,
 a `expansion(of:in:)` method that expands the AST.
 For the list of macro roles and their corresponding SwiftSystem protocols,
-see <doc:Attributes#attached> and <doc:Attributes:freestanding>
+see <doc:Attributes#attached> and <doc:Attributes#freestanding>
 in <doc:Attributes>
 
 To expand the `#fourCharacterCode` macro,
@@ -646,9 +659,9 @@ https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Synta
 ## Developing and Debugging Macros
 
 Macros are well suited to development using tests:
-they transform one AST into another AST
+They transform one AST into another AST
 without depending on any external state,
-and without making changes to any external state..
+and without making changes to any external state.
 In addition, you can create syntax nodes from a string literal,
 which simplifies setting up the input for a unit test.
 You can also read the `description` property of an AST
