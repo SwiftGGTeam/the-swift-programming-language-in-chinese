@@ -8,6 +8,8 @@ Review the recent changes to this book.
 - Added information about `if` and `switch` expressions
   to the <doc:ControlFlow> chapter
   and the <doc:Expressions#Conditional-Expression> section.
+- Added the <doc:Macros> chapter,
+  with information about generating code at compile time.
 - Added information about boxed protocol types
   to the <doc:OpaqueTypes> chapter.
 - Updated the <doc:Attributes#Result-Building-Methods> section
