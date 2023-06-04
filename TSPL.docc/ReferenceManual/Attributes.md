@@ -63,7 +63,7 @@ indicates the macros role:
   can define additional methods and properties on that structure.
 
 - term Member attribute:
-  Write have `memberAttribute` as the first argument to this attribute.
+  Write `memberAttribute` as the first argument to this attribute.
   The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
   These macros add attributes to members of the type or extension
   that the macro is attached to.
