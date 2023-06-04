@@ -180,12 +180,14 @@ The first line
 specifies the macro's name and its arguments ---
 the name is `OptionSet`, and it doesn't take any arguments.
 The second line
-uses the `#externalMacro(module:type:)` macro from the Swift standard library
+uses the [`externalMacro(module:type:)`][] macro from the Swift standard library
 to tell Swift where the macro's implementation is located.
 In this case,
 the `SwiftMacros` module
 contains a type named `OptionSetMacro`,
 which implements the `@OptionSet` macro.
+
+[`externalMacro(module:type:)`]: https://developer.apple.com/documentation/swift/externalmacro(module:type:)
 
 Because `OptionSet` is an attached macro,
 its name uses upper camel case,
