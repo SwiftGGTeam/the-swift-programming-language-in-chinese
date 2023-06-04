@@ -58,7 +58,7 @@ When you compile this code,
 Swift calls that macro's implementation,
 which replaces `#function` with the name of the current function.
 When you run this code and call `myFunction()`,
-it prints `Currently running myFunction()`.
+it prints "Currently running myFunction()".
 In the second line,
 `#warning` calls the [`warning(_:)`][] macro from the Swift standard library
 to produce a custom compile-time warning.
