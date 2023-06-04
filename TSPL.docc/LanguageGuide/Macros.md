@@ -665,7 +665,7 @@ They transform one AST into another AST
 without depending on any external state,
 and without making changes to any external state.
 In addition, you can create syntax nodes from a string literal,
-which simplifies setting up the input for a unit test.
+which simplifies setting up the input for a test.
 You can also read the `description` property of an AST
 to get a string to compare against an expected value.
 For example,
