@@ -64,7 +64,7 @@ In the second line,
 to produce a custom compile-time warning.
 
 [`function`]: https://developer.apple.com/documentation/swift/function
-[`warning(_:)`]: https://developer.apple.comdocumentation/swift/warning(_:)
+[`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
 
 Freestanding macros can produce a value, like `#function` does,
 or they can perform an action at compile time, like `#warning` does.
