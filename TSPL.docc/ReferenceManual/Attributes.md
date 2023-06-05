@@ -28,6 +28,91 @@ and their format is defined by the attribute they belong to.
 
 You can apply a declaration attribute to declarations only.
 
+### attached
+
+Apply the `attached` attribute to a macro declaration.
+The arguments to this attribute indicate the macro's role.
+For a macro that has multiple roles,
+apply the `attached` macro multiple times, once for each role.
+
+<!-- TODO:
+If there's a stable URL we can use, make the macro protocols below links.
+-->
+
+The first argument to this attribute
+indicates the macros role:
+
+- term Peer macros:
+  Write `peer` as the first argument to this attribute.
+  The type that implements the macro conforms to the `PeerMacro` protocol.
+  These macros produce new declarations
+  in the same scope as the declaration
+  that the macro is attached to.
+  For example,
+  applying a peer macro to a method of a structure
+  can define additional methods and properties on that structure.
+
+- term Member macros:
+  Write `member` as the first argument to this attribute.
+  The type that implements the macro conforms to the `MemberMacro` protocol.
+  These macros produce new declarations
+  that are members of the type or extension
+  that the macro is attached to.
+  For example,
+  applying a member macro to a structure declaration
+  can define additional methods and properties on that structure.
+
+- term Member attribute:
+  Write `memberAttribute` as the first argument to this attribute.
+  The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
+  These macros add attributes to members of the type or extension
+  that the macro is attached to.
+
+- term Accessor macros:
+  Write `accessor` as the first argument to this attribute.
+  The type that implements the macro conforms to the `AccessorMacro` protocol.
+  These macros add accessors to the stored property they're attached to,
+  turning it into a computed property.
+
+- term Conformance macros:
+  Write `conformance` as the first argument to this attribute.
+  The type that implements the macro conforms to the `ConformanceMacro` protocol.
+  These macros add protocol conformance to the type they're attached to.
+
+The peer, member, and accessor macro roles require a `named:` argument,
+listing the names of the symbols that the macro generates.
+When a macro declaration includes the `named:` argument,
+the macro implementation must generate
+only symbol with names that match that list.
+That said,
+a macro need not generate a symbol for every listed name.
+The value for that argument is a list of one or more of the following:
+
+- `named(<#name#>)`
+  where *name* is that fixed symbol name,
+  for a name that's known in advance.
+
+- `overloaded`
+  for a name that's the same as an existing symbol.
+
+- `prefixed(<#prefix#>)`
+  where *prefix* is prepended to the symbol name,
+  for a name that starts with a fixed string.
+
+- `suffixed(<#suffix#>`
+  where *suffix* is appended to the symbol name,
+  for a name that ends with a fixed string.
+
+- `arbitrary`
+  for a name that can't be determined until macro expansion.
+
+As a special case,
+you can write `prefixed($)`
+for a macro that behaves similar to a property wrapper.
+<!--
+TODO TR: Is there any more detail about this case?
+-->
+
 ### available
 
 Apply this attribute to indicate a declaration's life cycle
@@ -551,6 +636,30 @@ print(wrapper.x)
   -> print(wrapper.x)
   << 381
   ```
+-->
+
+### freestanding
+
+Apply the `freestanding` attribute
+to the declaration of a freestanding macro.
+
+<!--
+
+For the future, when other roles are supported:
+
+The arguments to this attribute indicate the macro's roles:
+
+- `expression`
+  A macro that produces an expression
+
+- `declaration`
+  A macro that produces a declaration
+
+Or are those supported today?
+I see #error and #warning as @freestanding(declaration)
+in the stdlib already:
+
+https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 -->
 
 ### frozen

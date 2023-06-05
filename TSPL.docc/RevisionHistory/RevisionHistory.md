@@ -2,6 +2,20 @@
 
 Review the recent changes to this book.
 
+**2023-06-05**
+
+- Updated for Swift 5.9.
+- Added information about `if` and `switch` expressions
+  to the <doc:ControlFlow> chapter
+  and the <doc:Expressions#Conditional-Expression> section.
+- Added the <doc:Macros> chapter,
+  with information about generating code at compile time.
+- Added information about boxed protocol types
+  to the <doc:OpaqueTypes> chapter.
+- Updated the <doc:Attributes#Result-Building-Methods> section
+  with information about the `buildPartialBlock(first:)`
+  and `buildPartialBlock(accumulated:next:)` methods.
+
 **2023-03-30**
 
 - Updated for Swift 5.8.
