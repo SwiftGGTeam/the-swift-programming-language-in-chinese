@@ -198,7 +198,7 @@ like the names for variables and functions.
 > Macros are always declared as `public`.
 > Because the code that declares a macro
 > is in a different module from code that uses that macro,
-> there isn't anywhere you could apply a non-public macro.
+> there isn't anywhere you could apply a nonpublic macro.
 
 A macro declaration defines the macro's *roles* ---
 the places in source code where that macro can be called,
