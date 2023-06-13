@@ -1,4 +1,111 @@
+# The Book’s Structure
+
+TSPL is divided into three main parts, plus some front matter,
+which serve complementary functions:
+
+**A Swift Tour**,
+commonly referred to as “the tour”,
+shows you a bunch of interesting Swift code,
+but it tells you almost nothing about how the language works.
+For example, the guide has an entire chapter about optional chaining,
+but it’s summarized in just a few sentences in the tour.
+The tour just needs to give you the syntax and a taste of how to use it;
+it relies on the guide to provide the actual in-depth explanation
+of how optional chaining works in general and when you should use it.
+
+The intention of the tour is that
+it can be read in its entirety in a single sitting.
+A beginner will get a high-level view of what’s possible in Swift.
+A reader with more programming background will learn
+“enough Swift to be dangerous” — that is,
+enough of the language syntax to start muddling along on a first project,
+and then come back to TSPL when they’re ready to learn more than
+just surface level syntax for concepts they already know from other languages.
+
+**Language Guide**,
+commonly referred to as “the guide”,
+leads you through the Swift language in a pedagogically useful, linear order.
+It doesn't promise to show you every feature of
+the language or the standard library,
+and it hand-waves over the exact details
+of some of the more complicated underlying bits.
+The guide leans on the reference to resolve the nitty-gritty detail questions
+and to exhaustively cover the language.
+Unlike the reference,
+it walks you through step-by-step explanations,
+showing examples of the language features in action,
+and it assumes very little prior knowledge.
+
+To maintain the promise of a linear reading order
+when you add new sections to the guide,
+make sure that all of the syntax and concepts that you use in your explanations
+are already discussed in previous chapters.
+“The Basics” exists, in large part, to introduce a bunch of syntax and concepts
+that the early chapters of the guide need
+— many topics from “The Basics” are covered again later in the guide in more detail.
+
+The guide includes types from the standard library for two reasons:
+they’re needed by an explanation of a language concept,
+or they’re so common that readers wouldn’t
+be able to build anything useful without them.
+The latter reason includes a judgement call.
+When new types are introduced in the standard library,
+we usually need to discuss whether & where to add them to TSPL.
+
+The guide can be broken down into three major chunks:
+basic topics, data-modeling topics, and advanced topics.
+Basic topics is everything before the introduction of
+enumerations, structures, and classes.
+Advanced topics is everything after deinitialization.
+Data modeling is the content in between.
+The linear flow is intended to make sense,
+even if you stop reading for a while between chunks.
+For example, reading just the basic topics gives you enough information
+to write programs that have only unstructured “primitive” data.
+The chapters in each chunk are ordered with fundamental topics at the beginning,
+and topics that most readers can skip at the end.
+
+**Language Reference**,
+commonly referred to as “the reference”,
+describes every aspect of the Swift language in complete detail,
+but it makes no attempt to be an instructional text.
+Its material is ordered according to the shape of the formal grammar,
+and it hand-waves over examples and applications.
+Several places explicitly link back to the guide for examples.
+It doesn't need to be as approachable for beginners,
+because the guide handles that,
+but it does need to be accurate and unambiguous,
+shining its flashlight into infrequently explored areas of the language.
+To accomplish that,
+it sometimes must sacrifice approachability or user-friendliness.
+That's ok — many readers won't even need the reference,
+but if the reference is unclear,
+the readers who need an answer have nowhere else to go.
+
+Within the reference, sections follow a predictable four-part structure:
+
+* A few sentences briefly describe the language construct named by the heading.
+* A code outline shows its general syntactic shape.
+* A few paragraphs describe it in more detail.
+* A grammar formally describes the syntax.
+
+The purpose of the formal grammar
+is to be able to unambiguously answer questions of what’s valid Swift
+(without commenting on meaning)
+for readers whose question wasn’t fully answered by the prose in the reference.
+It’s primarily aimed at human readers,
+which means it’s not always suitable for generating a parser for Swift code.
+
 # Terms and Rules
+
+## attribute names
+
+In the guide, write `@` before attribute names;
+in the reference, omit it.
+
+## back deploy
+
+Spelled as two words, not closed up or hyphenated.
 
 ## compiler, the
 
@@ -13,22 +120,19 @@ In the guide, we write “functions and methods”.
 
 ## headings
 
-The underlines for headings are as follows:
-
-1. `=` Chapter
-2. `-` Section
-3. `~` Subsection
-4. `+` Sub-subsection
-
-The syntax for ReStructured Text determines a heading’s level
-from the order that underlined lines appear in a document,
-so if you use the wrong level or skip levels
-the output might be surprising or wrong.
+Use number signs (`#`) for headings, not underlines.
 
 Although level four headings are allowed and the book does use them,
 you should generally try to avoid them.
 Deeply nested headings often indicate
 that there’s a better way to organize the content.
+
+## macro names
+
+In the guide,
+write `@` before the name when referring to attached macros
+and `#` before the name when referring to freestanding macros.
+In the reference, omit it.
 
 ## memberwise initializer
 
@@ -43,7 +147,7 @@ See entry for *function*.
 Hyphenated to avoid the misreading as nono-ptional.
 Normal rules for hyphenation from Apple Style Guide would omit the hyphen.
 
-See also commit 6ed6a956139772851e466e8419f48c5293f9574a and <rdar://problem/44881846>.
+See also commit 51c4fbc135a5e82343a0f5d9121f8a060b59f1a3 and <rdar://problem/44881846>.
 
 ## non-asynchronous
 
@@ -218,7 +322,7 @@ see the README file at the top level of this repository.
 
 # Semantic Line Breaks
 
-The RST files in this repository use semantic line breaks,
+The markdown files in this repository use semantic line breaks,
 where lines end at sentence and clause boundaries.
 This keeps lines short enough to ensure that
 diffs remain readable when shown in places like
@@ -247,59 +351,40 @@ to help keep the diffs small and preserve per-line history.
 Don’t rewrap an existing line just because it’s too long,
 unless you’re actually making other changes.
 For historical reasons,
-here are parts of the book
+there are parts of the book
 that use a line length of 90 or 100 characters;
 rewrapping them just for the sake of line length
 would make history harder to follow and create a bunch of noisy diffs.
 
-More information about semantic line breaks
-is available in the following places:
+As a historical note,
+“UNIX for Beginners” by Brian W. Kernighan in 1974
+is possibly the origin of this approach.
+Page 11 has the following guidance
+in the section *Hints for Preparing Documents*:
 
-* “UNIX for Beginners” by Brian W. Kernighan in 1974
-  is possibly the origin of this approach.
-  Page 11 has the following guidance
-  in the section *Hints for Preparing Documents*:
+> Most documents go through several versions
+> (always more than you expected)
+> before they are finally finished.
+> Accordingly,
+> you should do whatever possible to make the job of changing them easy.
+>
+> First,
+> when you do the purely mechanical operations of typing,
+> type so that subsequent editing will be easy.
+> Start each sentence on a new line.
+> Make lines short, and break lines at natural places,
+> such as after commas and semicolons,
+> rather than randomly.
+> Since most people change documents by rewriting phrases
+> and adding, deleting and rearranging sentences,
+> these precautions simplify any editing you have to do later.
 
-  > Most documents go through several versions
-  > (always more than you expected)
-  > before they are finally finished.
-  > Accordingly,
-  > you should do whatever possible to make the job of changing them easy.
-  >
-  > First,
-  > when you do the purely mechanical operations of typing,
-  > type so that subsequent editing will be easy.
-  > Start each sentence on a new line.
-  > Make lines short, and break lines at natural places,
-  > such as after commas and semicolons,
-  > rather than randomly.
-  > Since most people change documents by rewriting phrases
-  > and adding, deleting and rearranging sentences,
-  > these precautions simplify any editing you have to do later.
-
-  Although this guidance was originally written in the context of
-  preparing `nroff` and `troff` files
-  using the line editor `ed(1)` on a paper teletype,
-  it continues to hold up well today
-  because Git and other programming tools
-  still generally expect text to be made up of lines of <80 characters.
-
-* [Semantic Linefeeds](https://rhodesmill.org/brandon/2012/one-sentence-per-line/)
-  is blog post about the advantages and history of this format
-  for authoring documentation.
-  It shows the advantages in a bit more detail,
-  walking through an example.
-
-* [Ventilated Prose](https://vanemden.wordpress.com/2009/01/01/ventilated-prose/)
-  discusses Buckminster Fuller’s proposed use of this format
-  to improve reading comprehension,
-  with some additional discussion of how semantic line breaks
-  can be a useful tool during writing
-  because the make the sentence and clause structure more visible.
-
-* [Semantic Line Breaks](https://sembr.org) describes a formalized spec,
-  maintained by Mattt Zmuda,
-  based on his experience writing this way when he worked on TSPL.
+Although this guidance was originally written in the context of
+preparing `nroff` and `troff` files
+using the line editor `ed(1)` on a paper teletype,
+it continues to hold up well today
+because Git and other programming tools
+still generally expect text to be made up of lines of <80 characters.
 
 # Formal Grammar
 
@@ -343,6 +428,12 @@ For example, to specify that a *case-block-item* can consist of a *declaration*,
 because all three alternatives fit nicely on one line:
 
     code-block-item --> declaration | expression | statement
+
+When using pipes,
+keep the number of items in each alternative small for readability.
+The most common case is that each alternative is either
+a single literal or a single syntactic category,
+although that's not always possible.
 
 On the other hand, consider the grammar of a control transfer statement:
 

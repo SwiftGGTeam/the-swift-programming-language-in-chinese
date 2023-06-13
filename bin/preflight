@@ -1,0 +1,42 @@
+#! /bin/zsh
+
+# This source file is part of the Swift.org open source project
+#
+# Copyright (c) 2023 Apple Inc. and the Swift project authors
+# Licensed under Apache License v2.0 with Runtime Library Exception
+#
+# See https://swift.org/LICENSE.txt for license information
+# See https://swift.org/CONTRIBUTORS.txt for Swift project authors
+
+
+# Basic checks before building the book for publication.
+
+setopt ERR_EXIT NO_UNSET PIPE_FAIL
+
+exit_status=0
+
+if [[ -n "$(git status --porcelain)" ]]
+then
+    echo "Error: Git repository has uncommitted changes."
+    exit_status=1
+fi
+
+# The publication scripts copy in the appropriate header template for
+# draft or publication builds.
+if [[ -e "TSPL.docc/header.html" ]]
+then
+    echo "Error: header.html already exists."
+    exit_status=1
+fi
+
+# Check for tasks that were marked as needing to be resolved before
+# merging the feature branch to 'main' or a release branch.
+#
+# Odd quoting below prevents the check itself from matching.
+if git grep -I X""XX
+then
+    echo "Error: X""XX marks unresolved tasks."
+    exit_status=1
+fi
+
+exit $exit_status

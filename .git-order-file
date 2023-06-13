@@ -1,0 +1,65 @@
+# This file lists the chapters of TSPL, in the order they appear in the
+# book.  When reviewing changes, the diff can be easier to read when it
+# appears in this order.
+#
+# To use this file for single command, run a command like the following:
+#
+#     git log -O .git-order-file
+#     git diff -O .git-order-file
+#
+# To use it for all diffs, run the following command:
+#
+#     git config --local diff.orderFile .git-order-file
+#
+# For more information, see the git-log(1) and git-diff(1) man pages'
+# discussions of the -O option, and the git-config(1) man page's
+# discussion of diff.orderFile option.
+
+TSPL.docc/GuidedTour/AboutSwift.md
+TSPL.docc/GuidedTour/Compatibility.md
+TSPL.docc/GuidedTour/GuidedTour.md
+
+TSPL.docc/LanguageGuide/TheBasics.md
+TSPL.docc/LanguageGuide/BasicOperators.md
+TSPL.docc/LanguageGuide/StringsAndCharacters.md
+TSPL.docc/LanguageGuide/CollectionTypes.md
+TSPL.docc/LanguageGuide/ControlFlow.md
+TSPL.docc/LanguageGuide/Functions.md
+TSPL.docc/LanguageGuide/Closures.md
+TSPL.docc/LanguageGuide/Enumerations.md
+TSPL.docc/LanguageGuide/ClassesAndStructures.md
+TSPL.docc/LanguageGuide/Properties.md
+TSPL.docc/LanguageGuide/Methods.md
+TSPL.docc/LanguageGuide/Subscripts.md
+TSPL.docc/LanguageGuide/Inheritance.md
+TSPL.docc/LanguageGuide/Initialization.md
+TSPL.docc/LanguageGuide/Deinitialization.md
+TSPL.docc/LanguageGuide/OptionalChaining.md
+TSPL.docc/LanguageGuide/ErrorHandling.md
+TSPL.docc/LanguageGuide/Concurrency.md
+TSPL.docc/LanguageGuide/Macros.md
+TSPL.docc/LanguageGuide/TypeCasting.md
+TSPL.docc/LanguageGuide/NestedTypes.md
+TSPL.docc/LanguageGuide/Extensions.md
+TSPL.docc/LanguageGuide/Protocols.md
+TSPL.docc/LanguageGuide/Generics.md
+TSPL.docc/LanguageGuide/OpaqueTypes.md
+TSPL.docc/LanguageGuide/AutomaticReferenceCounting.md
+TSPL.docc/LanguageGuide/MemorySafety.md
+TSPL.docc/LanguageGuide/AccessControl.md
+TSPL.docc/LanguageGuide/AdvancedOperators.md
+
+TSPL.docc/ReferenceManual/AboutTheLanguageReference.md
+TSPL.docc/ReferenceManual/LexicalStructure.md
+TSPL.docc/ReferenceManual/Types.md
+TSPL.docc/ReferenceManual/Expressions.md
+TSPL.docc/ReferenceManual/Statements.md
+TSPL.docc/ReferenceManual/Declarations.md
+TSPL.docc/ReferenceManual/Attributes.md
+TSPL.docc/ReferenceManual/Patterns.md
+TSPL.docc/ReferenceManual/GenericParametersAndArguments.md
+TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md
+
+TSPL.docc/RevisionHistory/RevisionHistory.md
+
+# Files that don't match a pattern listed above appear at the end.

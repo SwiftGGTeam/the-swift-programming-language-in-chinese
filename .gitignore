@@ -1,0 +1,7 @@
+.DS_Store
+.docc-build
+.swiftpm
+/.build
+/Package.resolved
+/TSPL.docc/header.html
+/swift-book

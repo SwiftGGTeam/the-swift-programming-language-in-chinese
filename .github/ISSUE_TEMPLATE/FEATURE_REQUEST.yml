@@ -1,0 +1,36 @@
+name: Enhancement
+description: A suggestion for new content
+labels: [Enhancement]
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thank you for contributing to "The Swift Programming Language"!
+
+      Before you submit your issue, please provide the relevant details in the text areas below.
+- type: textarea
+  attributes:
+    label: Location
+    description: |
+      The URL of the chapter or section where the new content would go.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Description
+    description: |
+      A short description of your proposed addition.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Motivation
+    description: A description of the use-case this proposed documentation will serve.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Alternatives Considered
+    description: If you considered alternative approaches, please include them here.
+  validations:
+    required: false
