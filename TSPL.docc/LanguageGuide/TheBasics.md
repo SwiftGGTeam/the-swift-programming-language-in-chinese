@@ -1197,20 +1197,6 @@ An optional represents two possibilities:
 Either there *is* a value, and you can unwrap the optional to access that value,
 or there *isn't* a value at all.
 
-> Note: The concept of optionals doesn't exist in C or Objective-C.
-> The nearest thing in Objective-C is
-> the ability to return `nil` from a method that would otherwise return an object,
-> with `nil` meaning “the absence of a valid object.”
-> However, this only works for objects --- it doesn't work for
-> structures, basic C types, or enumeration values.
-> For these types,
-> Objective-C methods typically return a special value (such as `NSNotFound`)
-> to indicate the absence of a value.
-> This approach assumes that the method's caller knows there's a special value to test against
-> and remembers to check for it.
-> Swift's optionals let you indicate the absence of a value for *any type at all*,
-> without the need for special constants.
-
 Here's an example of how optionals can be used to cope with the absence of a value.
 Swift's `Int` type has an initializer
 which tries to convert a `String` value into an `Int` value.
@@ -1244,8 +1230,32 @@ An optional `Int` is written as `Int?`, not `Int`.
 The question mark indicates that the value it contains is optional,
 meaning that it might contain *some* `Int` value,
 or it might contain *no value at all*.
-(It can't contain anything else, such as a `Bool` value or a `String` value.
-It's either an `Int`, or it's nothing at all.)
+It can't contain anything else, such as a `Bool` value or a `String` value;
+it's either an `Int`, or it's nothing at all.
+
+Using optionals lets you explicitly mark what information can be missing,
+and makes sure that code accounts for ``nil`` when working with that information.
+The reverse is also true:
+if a value isn't an optional, it's guaranteed to never be ``nil``
+and isn't allowed to be missing.
+If you try to assign ``nill`` to a non-optional,
+you'll get a compile-time error.
+
+> Note:
+> The concept of optionals doesn't exist in C or Objective-C.
+> The nearest thing in Objective-C is
+> the ability to return ``nil`` from a method that would otherwise return an object,
+> with ``nil`` meaning “the absence of a valid object.”
+> However, this only works for objects --- it doesn't work for
+> structures, basic C types, or enumeration values.
+> For these types,
+> Objective-C methods typically return a special value (such as ``NSNotFound``)
+> to indicate the absence of a value.
+> This approach assumes that the method's caller knows there's a special value to test against
+> and remembers to check for it.
+> Swift's optionals let you indicate the absence of a value for *any type at all*,
+> without the need for special constants.
+
 
 ### nil
 
@@ -1271,10 +1281,13 @@ serverResponseCode = nil
   ```
 -->
 
-> Note: You can't use `nil` with non-optional constants and variables.
-> If a constant or variable in your code needs to work with
-> the absence of a value under certain conditions,
-> always declare it as an optional value of the appropriate type.
+You can't use `nil` with non-optional constants or variables.
+If a constant or variable in your code needs to work with
+the absence of a value under certain conditions,
+declare it as an optional value of the appropriate type.
+Likewise,
+if a constant or variable isn't declared as an optional value,
+it's guaranteed to never contain a `nil` value.
 
 If you define an optional variable without providing a default value,
 the variable is automatically set to `nil` for you:
@@ -1298,7 +1311,7 @@ var surveyAnswer: String?
 > In Swift, `nil` isn't a pointer --- it's the absence of a value of a certain type.
 > Optionals of *any* type can be set to `nil`, not just object types.
 
-### If Statements and Forced Unwrapping
+### Unwrapping Optionals
 
 You can use an `if` statement to find out whether an optional contains a value
 by comparing the optional against `nil`.
@@ -1325,9 +1338,9 @@ if convertedNumber != nil {
   ```
 -->
 
-Once you're sure that the optional *does* contain a value,
-you can access its underlying value
-by adding an exclamation point (`!`) to the end of the optional's name.
+After you're sure that the optional contains a value,
+one way to access its underlying value
+is adding an exclamation mark (`!`) to the end of the optional's name.
 The exclamation point effectively says,
 “I know that this optional definitely has a value; please use it.”
 This is known as *forced unwrapping* of the optional's value:
@@ -1350,16 +1363,25 @@ if convertedNumber != nil {
   ```
 -->
 
+Trying to use `!` to access a nonexistent optional value
+triggers a runtime error.
+Always make sure that an optional contains a non-``nil`` value
+before using `!` to force-unwrap its value.
 For more about the `if` statement, see <doc:ControlFlow>.
 
-> Note: Trying to use `!` to access a nonexistent optional value triggers
-> a runtime error.
-> Always make sure that an optional contains a non-`nil` value
-> before using `!` to force-unwrap its value.
+<!--
+FIXME: writing foo! means that you know foo won't be nil,
+and you can convince another person,
+but you can't encode that proof into the type system
+in a way the compiler understands.
+It's also used when a nil value indicates a catastrophic error,
+like loading a resource from withit the app bundle.
+-->
 
-### Optional Binding
-
-You use *optional binding* to find out whether an optional contains a value,
+Instead of writing the optional's name twice,
+a simpler way to access the value of an optional
+is to use *optional binding*.
+You use optional binding to find out whether an optional contains a value,
 and if so, to make that value available as a temporary constant or variable.
 Optional binding can be used with `if` and `while` statements
 to check for a value inside an optional,
@@ -1538,11 +1560,46 @@ if let firstNumber = Int("4") {
   using the && operator instead of a comma.
 -->
 
-> Note: Constants and variables created with optional binding in an `if` statement
-> are available only within the body of the `if` statement.
-> In contrast, the constants and variables created with a `guard` statement
-> are available in the lines of code that follow the `guard` statement,
-> as described in <doc:ControlFlow#Early-Exit>.
+Constants and variables created with optional binding in an `if` statement
+are available only within the body of the `if` statement.
+In contrast, the constants and variables created with a `guard` statement
+are available in the lines of code that follow the `guard` statement,
+as described in <doc:ControlFlow#Early-Exit>.
+
+# Providing a Fallback Value
+
+Instead of using `if`-`let` or `guard`-`let`
+to skip a block of code when a value is `nil`,
+another way to handle the missing value is to supply
+a default value using the “fallback” operator (`??`).
+If the optional on the left side of the `??` isn't `nil`,
+that value is unwrapped and used.
+Otherwise, the value on the right side of `??` is used.
+For example,
+the code below greets someone by name if one is specified,
+and uses a generic greeting when the name is `nil`.
+
+```swift
+let name: String? = nil
+let greeting = "Hello, " + (name ?? "friend") + "!"
+print(greeting)
+// Prints "Hello, friend!"
+```
+
+<!--
+.. testcode:: optionalFallback
+
+   -> let name: String? = nil
+   -> let greeting = "Hello, " + (name ?? "friend") + "!"
+   -> print(greeting)
+   <- Hello, friend!
+-->
+
+<!--
+XXX Following the pattern of the guide, the ?? operator needs a name.
+Is "fallback operator" ok with tech reviewers?
+-->
+
 
 ### Implicitly Unwrapped Optionals
 
@@ -1569,6 +1626,11 @@ an optional's value is confirmed to exist immediately after the optional is firs
 and can definitely be assumed to exist at every point thereafter.
 The primary use of implicitly unwrapped optionals in Swift is during class initialization,
 as described in <doc:AutomaticReferenceCounting#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties>.
+
+Don't use an implicitly unwrapped optional when there's a possibility of
+a variable becoming `nil` at a later point.
+Always use a normal optional type if you need to check for a `nil` value
+during the lifetime of a variable.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a non-optional value,
@@ -1672,11 +1734,6 @@ if let definiteString = assumedString {
   <- An implicitly unwrapped optional string.
   ```
 -->
-
-> Note: Don't use an implicitly unwrapped optional when there's a possibility of
-> a variable becoming `nil` at a later point.
-> Always use a normal optional type if you need to check for a `nil` value
-> during the lifetime of a variable.
 
 ## Error Handling
 
