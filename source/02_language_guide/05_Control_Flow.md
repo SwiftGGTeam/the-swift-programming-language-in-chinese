@@ -449,7 +449,7 @@ case let (x, y):
 
 ![image](https://docs.swift.org/swift-book/images/coordinateGraphMedium@2x.png)
 
-在上面的例子中，`switch` 语句会判断某个点是否在红色的 x 轴上，是否在橘黄色的 y 轴上，或者不在坐标轴上。
+在上面的例子中，`switch` 语句会判断某个点是否在红色的 x 轴上，是否在绿色的 y 轴上，或者不在坐标轴上。
 
 这三个 case 都声明了常量 `x` 和 `y` 的占位符，用于临时获取元组 `anotherPoint` 的一个或两个值。第一个 case ——`case (let x, 0)` 将匹配一个纵坐标为 `0` 的点，并把这个点的横坐标赋给临时的常量 `x`。类似的，第二个 case ——`case (0, let y)` 将匹配一个横坐标为 `0` 的点，并把这个点的纵坐标赋给临时的常量 `y`。
 
