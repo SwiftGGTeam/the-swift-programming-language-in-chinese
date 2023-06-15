@@ -210,7 +210,7 @@ Nor can you change a constant into a variable
 or a variable into a constant.
 
 > Note: If you need to give a constant or variable the same name as a reserved Swift keyword,
-> surround the keyword with backticks (```) when using it as a name.
+> surround the keyword with backticks (`` ` ``) when using it as a name.
 > However, avoid using keywords as names unless you have absolutely no choice.
 
 You can change the value of an existing variable to another value of a compatible type.
