@@ -1899,13 +1899,6 @@ code execution continues as usual.
 If the condition evaluates to `false`,
 the current state of the program is invalid;
 code execution ends, and your app is terminated.
-Stopping execution immediately helps make the program easier to debug.
-In a program with unchecked assumptions,
-you might not notice this kind problem until much later
-when code elsewhere starts failing visibly,
-and after user data has been silently corrupted.
-Although termination isn't a good experience for your users,
-it contains the user impact of the problem and helps reduce data loss.
 
 You use assertions and preconditions
 to express the assumptions you make
@@ -1938,6 +1931,10 @@ using them to enforce valid data and state
 causes your app to terminate more predictably
 if an invalid state occurs,
 and helps make the problem easier to debug.
+When assumptions aren't checked,
+you might not notice this kind problem until much later
+when code elsewhere starts failing visibly,
+and after user data has been silently corrupted.
 Stopping execution as soon as an invalid state is detected
 also helps limit the damage caused by that invalid state.
 
