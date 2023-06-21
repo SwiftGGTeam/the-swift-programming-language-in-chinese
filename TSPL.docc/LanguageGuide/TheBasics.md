@@ -1905,6 +1905,13 @@ code execution continues as usual.
 If the condition evaluates to `false`,
 the current state of the program is invalid;
 code execution ends, and your app is terminated.
+Stopping execution immediately helps make the program easier to debug.
+In a program with unchecked assumptions,
+you might not notice this kind problem until much later
+when code elsewhere starts failing visibly,
+and after user data has been silently corrupted.
+Although termination isn't a good experience for your users,
+it contains the user impact of the problem and helps reduce data loss.
 
 You use assertions and preconditions
 to express the assumptions you make
@@ -1923,6 +1930,11 @@ for recoverable or expected errors.
 Because a failed assertion or precondition
 indicates an invalid program state,
 there's no way to catch a failed assertion.
+Trying to recover from an invalid state isn't possible ---
+because the assertion failed,
+you know that at least one piece of the program's data is invalid,
+but you don't know why it's invalid
+or what additional state is also invalid.
 
 Using assertions and preconditions
 isn't a substitute for designing your code in such a way
