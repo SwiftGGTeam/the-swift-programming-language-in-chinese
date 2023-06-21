@@ -1523,10 +1523,12 @@ print(greeting)
 <!--
 .. testcode:: optionalFallback
 
+   ```swifttest
    -> let name: String? = nil
    -> let greeting = "Hello, " + (name ?? "friend") + "!"
    -> print(greeting)
    <- Hello, friend!
+   ```
 -->
 
 <!--
