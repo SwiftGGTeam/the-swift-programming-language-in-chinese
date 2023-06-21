@@ -1494,19 +1494,17 @@ if let firstNumber = Int("4") {
   using the && operator instead of a comma.
 -->
 
-<!-- XXX show an example of guard-let -->
-
 Constants and variables created with optional binding in an `if` statement
 are available only within the body of the `if` statement.
 In contrast, the constants and variables created with a `guard` statement
 are available in the lines of code that follow the `guard` statement,
 as described in <doc:ControlFlow#Early-Exit>.
 
+<!-- XXX guard-let is useful when the rest of a function or method accesses the unwrapped value -->
+
 ### Providing a Fallback Value
 
-Instead of using `if`-`let` or `guard`-`let`
-to skip a block of code when a value is `nil`,
-another way to handle the missing value is to supply
+Another way to handle a missing value is to supply
 a default value using the “fallback” operator (`??`).
 If the optional on the left side of the `??` isn't `nil`,
 that value is unwrapped and used.
@@ -1592,19 +1590,36 @@ if convertedNumber != nil {
   ```
 -->
 
-Trying to use `!` to access a nonexistent optional value
-triggers a runtime error.
-Always make sure that an optional contains a non-``nil`` value
-before using `!` to force-unwrap its value.
+When you force unwrap a non-`nil` value,
+the result is its unwrapped value.
+Force unwrapping a `nil` value triggers a runtime error.
 
-<!-- XXX
-writing foo! means that you know foo won't be nil,
-and you can convince another person,
-but you can't encode that proof into the type system
-in a way the compiler understands.
-It's also used when a nil value indicates an unrecoverable (or programmer) error,
-like failing to load a resource from within the app bundle.
--->
+Because a `nil` value stops the program,
+another reason to force unwrap an optional
+is when `nil` represents an unrecoverable failure,
+such a programmer error or corrupted data.
+In that usage, the `!` is a shorter spelling of [`fatalError(_:file:line:)`][].
+For example, the code below shows two equivalent approaches:
+
+[`fatalError(_:file:line:)`]: https://developer.apple.com/documentation/swift/fatalerror(_:file:line:)
+
+```swift
+let number = convertedNumber!
+
+guard let number = convertedNumber else {
+    fatalError("The number was invalid")
+}
+```
+
+Both versions of the code above depend on `convertedNumber`
+always containing a value.
+Writing that requirement as part of the code,
+using either of the approaches above,
+lets your code check that the requirement is true at run time.
+
+For more information about enforcing data requirements
+and checking assumptions at runtime,
+see <doc:TheBasics#Assertions-and-Preconditions> below.
 
 ### Implicitly Unwrapped Optionals
 
