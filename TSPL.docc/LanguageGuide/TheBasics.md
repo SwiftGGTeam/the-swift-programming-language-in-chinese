@@ -1502,7 +1502,7 @@ as described in <doc:ControlFlow#Early-Exit>.
 ### Providing a Fallback Value
 
 Another way to handle a missing value is to supply
-a default value using the “fallback” operator (`??`).
+a default value using the nil-coalescing operator operator (`??`).
 If the optional on the left side of the `??` isn't `nil`,
 that value is unwrapped and used.
 Otherwise, the value on the right side of `??` is used.
@@ -1528,11 +1528,8 @@ print(greeting)
    ```
 -->
 
-<!--
-XXX TR:
-Following the pattern of the guide, the ?? operator needs a name.
-Is "fallback operator" ok?
--->
+For more information about using `??` to provide a fallback value,
+see <doc:BasicOperators#Nil-Coalescing-Operator>.
 
 ### Force Unwrapping
 
