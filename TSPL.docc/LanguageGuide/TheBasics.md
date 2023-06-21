@@ -1320,7 +1320,6 @@ and to extract that value into a constant or variable,
 as part of a single action.
 For more information about `if`, `guard`, and `while` statements,
 see <doc:ControlFlow>.
-<!-- XXX really only these these 3?  What about other flow control? -->
 
 Write an optional binding for an `if` statement as follows:
 
@@ -1499,8 +1498,6 @@ are available only within the body of the `if` statement.
 In contrast, the constants and variables created with a `guard` statement
 are available in the lines of code that follow the `guard` statement,
 as described in <doc:ControlFlow#Early-Exit>.
-
-<!-- XXX guard-let is useful when the rest of a function or method accesses the unwrapped value -->
 
 ### Providing a Fallback Value
 
