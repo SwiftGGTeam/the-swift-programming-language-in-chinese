@@ -1502,7 +1502,7 @@ as described in <doc:ControlFlow#Early-Exit>.
 ### Providing a Fallback Value
 
 Another way to handle a missing value is to supply
-a default value using the nil-coalescing operator operator (`??`).
+a default value using the nil-coalescing operator (`??`).
 If the optional on the left side of the `??` isn't `nil`,
 that value is unwrapped and used.
 Otherwise, the value on the right side of `??` is used.
