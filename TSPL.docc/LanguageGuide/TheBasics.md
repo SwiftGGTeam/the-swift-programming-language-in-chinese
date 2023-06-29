@@ -1270,6 +1270,34 @@ var surveyAnswer: String?
   ```
 -->
 
+You can use an `if` statement to find out whether an optional contains a value
+by comparing the optional against `nil`.
+You perform this comparison with the “equal to” operator (`==`)
+or the “not equal to” operator (`!=`).
+
+If an optional has a value, it's considered to be “not equal to” `nil`:
+
+```swift
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+
+if convertedNumber != nil {
+    print("convertedNumber contains some integer value.")
+}
+// Prints "convertedNumber contains some integer value."
+```
+
+<!--
+  - test: `optionals`
+
+  ```swifttest
+  -> if convertedNumber != nil {
+        print("convertedNumber contains some integer value.")
+     }
+  <- convertedNumber contains some integer value.
+  ```
+-->
+
 You can't use `nil` with non-optional constants or variables.
 If a constant or variable in your code needs to work with
 the absence of a value under certain conditions,
@@ -1282,8 +1310,7 @@ you'll get a compile-time error.
 This separation of optional and non-optional values
 lets you explicitly mark what information can be missing,
 and makes it easier to write correct code that handle missing values.
-You can't accidentally treat an optional as if it were non-optional,
-forgetting to check for `nil` and assuming there's a value,
+You can't accidentally treat an optional as if it were non-optional
 because this mistake produces an error at compile time.
 After you unwrap the value,
 none of the other code that works with that value needs to check for `nil`,
@@ -1533,73 +1560,24 @@ see <doc:BasicOperators#Nil-Coalescing-Operator>.
 
 ### Force Unwrapping
 
-You can use an `if` statement to find out whether an optional contains a value
-by comparing the optional against `nil`.
-You perform this comparison with the “equal to” operator (`==`)
-or the “not equal to” operator (`!=`).
-
-If an optional has a value, it's considered to be “not equal to” `nil`:
-
-```swift
-let possibleNumber = "123"
-let convertedNumber = Int(possibleNumber)
-
-if convertedNumber != nil {
-    print("convertedNumber contains some integer value.")
-}
-// Prints "convertedNumber contains some integer value."
-```
-
-<!--
-  - test: `optionals`
-
-  ```swifttest
-  -> if convertedNumber != nil {
-        print("convertedNumber contains some integer value.")
-     }
-  <- convertedNumber contains some integer value.
-  ```
--->
-
-After you're sure that the optional contains a value,
-one way to access its underlying value
-is adding an exclamation mark (`!`) to the end of the optional's name.
-The exclamation point effectively says,
-“I know that this optional definitely has a value; please use it.”
-This is known as *forced unwrapping* of the optional's value:
-
-```swift
-if convertedNumber != nil {
-    print("convertedNumber has an integer value of \(convertedNumber!).")
-}
-// Prints "convertedNumber has an integer value of 123."
-```
-
-<!--
-  - test: `optionals`
-
-  ```swifttest
-  -> if convertedNumber != nil {
-        print("convertedNumber has an integer value of \(convertedNumber!).")
-     }
-  <- convertedNumber has an integer value of 123.
-  ```
--->
-
+When `nil` represents an unrecoverable failure,
+such a programmer error or corrupted state,
+you can access the underlying value
+by adding an exclamation mark (`!`) to the end of the optional's name.
+This is known as *force unwrapping* the optional's value.
 When you force unwrap a non-`nil` value,
 the result is its unwrapped value.
 Force unwrapping a `nil` value triggers a runtime error.
 
-Because a `nil` value stops the program,
-another reason to force unwrap an optional
-is when `nil` represents an unrecoverable failure,
-such a programmer error or corrupted data.
-In that usage, the `!` is a shorter spelling of [`fatalError(_:file:line:)`][].
+The `!` is, effectively, a shorter spelling of [`fatalError(_:file:line:)`][].
 For example, the code below shows two equivalent approaches:
 
 [`fatalError(_:file:line:)`]: https://developer.apple.com/documentation/swift/fatalerror(_:file:line:)
 
 ```swift
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+
 let number = convertedNumber!
 
 guard let number = convertedNumber else {
