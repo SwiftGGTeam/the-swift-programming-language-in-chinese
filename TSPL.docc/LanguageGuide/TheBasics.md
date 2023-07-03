@@ -1190,22 +1190,22 @@ For more information, see <doc:Functions#Functions-with-Multiple-Return-Values>.
 
 You use *optionals* in situations where a value may be absent.
 An optional represents two possibilities:
-Either there *is* a value, and you can unwrap the optional to access that value,
+Either there *is* a value of a specified type,
+and you can unwrap the optional to access that value,
 or there *isn't* a value at all.
 
-For example,
+As an example of a value that might be missing,
 Swift's `Int` type has an initializer
 that tries to convert a `String` value into an `Int` value.
-However, not every string can be converted into an integer.
+However, only some strings can be converted into integers.
 The string `"123"` can be converted into the numeric value `123`,
-but the string `"hello, world"` doesn't have an obvious numeric value to convert to.
-
+but the string `"hello, world"` doesn't have a corresponding numeric value.
 The example below uses the initializer to try to convert a `String` into an `Int`:
 
 ```swift
 let possibleNumber = "123"
 let convertedNumber = Int(possibleNumber)
-// convertedNumber is inferred to be of type "Int?", or "optional Int"
+// The type of convertedNumber is "optional Int"
 ```
 
 <!--
@@ -1220,14 +1220,16 @@ let convertedNumber = Int(possibleNumber)
   ```
 -->
 
-Because the initializer might fail,
+Because the initializer in the code above might fail,
 it returns an *optional* `Int`, rather than an `Int`.
-An optional `Int` is written as `Int?`,
-with a question mark to indicate that the value it contains is optional,
-meaning that it might contain *some* `Int` value,
-or it might contain *no value at all*.
-It can't contain anything else, such as a `Bool` value or a `String` value;
-it's either an `Int`, or it's nothing at all.
+
+To write an optional type,
+you write a question mark (`?`)
+after the name of the type that the optional contains ---
+for example, the type of an optional `Int` is `Int?`.
+An optional `Int` always contains
+either some `Int` value or no value at all.
+It can't contain anything else, like a `Bool` value or a `String` value.
 
 ### nil
 
