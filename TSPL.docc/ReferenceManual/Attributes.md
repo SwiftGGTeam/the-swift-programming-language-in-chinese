@@ -1499,10 +1499,11 @@ The block-building methods are as follows:
 
 A result builder can implement all three of the block-building methods listed above;
 in that case, availability determines which method is called.
-By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(second:)` methods.
-To make Swift call `buildBlock(_:)` instead,
+By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(accumulated:next:)`
+methods. To make Swift call `buildBlock(_:)` instead,
 mark the enclosing declaration as being available
-before the availability you write on `buildPartialBlock(first:)` and `buildPartialBlock(second:)`.
+before the availability you write on `buildPartialBlock(first:)` and
+`buildPartialBlock(accumulated:next:)`.
 
 The additional result-building methods are as follows:
 
