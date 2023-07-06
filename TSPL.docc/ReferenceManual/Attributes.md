@@ -1866,7 +1866,84 @@ into code that calls the static methods of the result builder type:
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- A code block or `do` statement
+- If the result builder implements the `buildPartialBlock(first:)` and
+  `buildPartialBlock(accumulated:next:)` methods, a code block or `do`
+  statement becomes a call to those methods. The first statement inside
+  of the block is transformed to become an argument to the
+  `buildPartialBlock(first:)` method, and the remaining statements
+  become nested calls to the `buildPartialBlock(accumulated:next:)`
+  method. For example, the following declarations are equivalent:
+
+  ```swift
+  struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
+      var first: First
+      var second: Second
+      func draw() -> String { return first.draw() + second.draw() }
+  }
+  
+  @resultBuilder
+  struct DrawingPartialBlockBuilder {
+      static func buildPartialBlock<D: Drawable>(first: D) -> D {
+          return first
+      }
+      static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
+          accumulated: Accumulated, next: Next
+      ) -> DrawBoth<Accumulated, Next> {
+          return DrawBoth(first: accumulated, second: next)
+      }
+  }
+  
+  @DrawingPartialBlockBuilder var builderBlock: some Drawable {
+      Text("First")
+      Line(elements: [Text("Second"), Text("Third")])
+      Text("Last")
+  }
+
+  let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
+  let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
+      accumulated: partialResult1,
+      next: Line(elements: [Text("Second"), Text("Third")])
+  )
+  let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
+      accumulated: partialResult2,
+      next: Text("Last")
+  )
+  ```
+
+  <!--
+    - test: `drawing-partial-block-builder`
+
+    ```swifttest
+    -> @resultBuilder
+    -> struct DrawingPartialBlockBuilder {
+           static func buildPartialBlock<D: Drawable>(first: D) -> D {
+               return first
+           }
+           static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
+               accumulated: Accumulated, next: Next
+           ) -> DrawBoth<Accumulated, Next> {
+               return DrawBoth(first: accumulated, second: next)
+           }
+       }
+    -> @DrawingPartialBlockBuilder var builderBlock: some Drawable {
+          Text("First")
+          Line(elements: [Text("Second"), Text("Third")])
+          Text("Last")
+       }
+    ---
+    -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
+    -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
+          accumulated: partialResult1,
+          next: Line(elements: [Text("Second"), Text("Third")])
+       )
+       let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
+           accumulated: partialResult2,
+           next: Text("Last")
+       )
+    >> assert(type(of: builderBlock) == type(of: manualResult))
+    ```
+  -->
+- Otherwise, a code block or `do` statement
   becomes a call to the `buildBlock(_:)` method.
   Each of the statements inside of the block is transformed,
   one at a time,
@@ -1953,7 +2030,7 @@ into code that calls the static methods of the result builder type:
   This transformation is always last.
 
 <!--
-  - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
+  - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
 
   ```swifttest
   -> protocol Drawable {
