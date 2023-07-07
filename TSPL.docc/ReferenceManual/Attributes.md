@@ -1866,13 +1866,16 @@ into code that calls the static methods of the result builder type:
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- If the result builder implements the `buildPartialBlock(first:)` and
-  `buildPartialBlock(accumulated:next:)` methods, a code block or `do`
-  statement becomes a call to those methods. The first statement inside
-  of the block is transformed to become an argument to the
-  `buildPartialBlock(first:)` method, and the remaining statements
-  become nested calls to the `buildPartialBlock(accumulated:next:)`
-  method. For example, the following declarations are equivalent:
+- If the result builder implements
+  the `buildPartialBlock(first:)`
+  and `buildPartialBlock(accumulated:next:)` methods,
+  a code block or `do` statement becomes a call to those methods.
+  The first statement inside of the block
+  is transformed to become an argument
+  to the `buildPartialBlock(first:)` method,
+  and the remaining statements become nested calls
+  to the `buildPartialBlock(accumulated:next:)` method.
+  For example, the following declarations are equivalent:
 
   ```swift
   struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
