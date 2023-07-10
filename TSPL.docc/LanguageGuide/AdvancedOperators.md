@@ -209,9 +209,9 @@ The illustration below shows the results of `11111111 << 1`
 (which is `11111111` shifted to the left by `1` place),
 and `11111111 >> 1`
 (which is `11111111` shifted to the right by `1` place).
-Blue numbers are shifted,
+Green numbers are shifted,
 gray numbers are discarded,
-and orange zeros are inserted:
+and pink zeros are inserted:
 
 ![](bitshiftUnsigned)
 
