@@ -45,8 +45,7 @@ where the alternatives are spelled out explicitly:
 > Grammar of a getter-setter block:
 >
 >
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`**
->
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
 > *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`**
 
 > Beta Software:

@@ -33,20 +33,13 @@ or in the case condition of an `if`, `while`,
 
 > Grammar of a pattern:
 >
-> *pattern* → *wildcard-pattern* *type-annotation*_?_
->
-> *pattern* → *identifier-pattern* *type-annotation*_?_
->
-> *pattern* → *value-binding-pattern*
->
-> *pattern* → *tuple-pattern* *type-annotation*_?_
->
-> *pattern* → *enum-case-pattern*
->
-> *pattern* → *optional-pattern*
->
-> *pattern* → *type-casting-pattern*
->
+> *pattern* → *wildcard-pattern* *type-annotation*_?_ \
+> *pattern* → *identifier-pattern* *type-annotation*_?_ \
+> *pattern* → *value-binding-pattern* \
+> *pattern* → *tuple-pattern* *type-annotation*_?_ \
+> *pattern* → *enum-case-pattern* \
+> *pattern* → *optional-pattern* \
+> *pattern* → *type-casting-pattern* \
 > *pattern* → *expression-pattern*
 
 ## Wildcard Pattern
@@ -240,10 +233,8 @@ let (a): Int = 2 // a: Int = 2
 
 > Grammar of a tuple pattern:
 >
-> *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`**
->
-> *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list*
->
+> *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`** \
+> *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list* \
 > *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
 ## Enumeration Case Pattern
@@ -408,10 +399,8 @@ see <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
 
 > Grammar of a type casting pattern:
 >
-> *type-casting-pattern* → *is-pattern* | *as-pattern*
->
-> *is-pattern* → **`is`** *type*
->
+> *type-casting-pattern* → *is-pattern* | *as-pattern* \
+> *is-pattern* → **`is`** *type* \
 > *as-pattern* → *pattern* **`as`** *type*
 
 ## Expression Pattern
