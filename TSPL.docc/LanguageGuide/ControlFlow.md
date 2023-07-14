@@ -730,7 +730,7 @@ if temperatureInFahrenheit <= 32 {
 
 Here, an additional `if` statement was added to respond to particularly warm temperatures.
 The final `else` clause remains,
-and it prints a response for any temperatures that are neither too warm nor too cold.
+and it prints a response for any temperatures that aren't too warm or too cold.
 
 The final `else` clause is optional, however,
 and can be excluded if the set of conditions doesn't need to be complete.
@@ -757,7 +757,8 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-Because the temperature is neither too cold nor too warm to trigger the `if` or `else if` conditions,
+Because the temperature isn't cold enough to trigger the `if` condition
+or warm enough to trigger the `else if` condition,
 no message is printed.
 
 Swift provides a shorthand spelling of `if`
