@@ -934,7 +934,7 @@ even if one of the branches of a conditional expression is throwing.
 >
 > *if-expression-tail* → **`else`** *if-expression*
 >
-> *if-expression-tail* → **`else`** **`{`** *statement* **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** **`{`** *statement* **`}`**
 >
 >
 >
