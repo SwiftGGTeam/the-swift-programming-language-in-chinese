@@ -112,8 +112,7 @@ struct SundaeToppings {
 }
 ```
 
-This version of `SundaeToppings`
-calls the [`@OptionSet`][] macro from the Swift standard library.
+This version of `SundaeToppings` calls an `@OptionSet` macro.
 The macro reads the list of cases in the private enumeration,
 generates the list of constants for each option,
 and adds a conformance to the [`OptionSet`][] protocol.
