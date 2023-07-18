@@ -2227,7 +2227,10 @@ func fridgeContains(_ food: String) -> Bool {
     let result = fridgeContent.contains(food)
     return result
 }
-fridgeContains("banana")
+let fridgeContainsBanana = fridgeContains("banana")
+if fridgeContainsBanana {
+    print("Banana found!")
+}
 print(fridgeIsOpen)
 // Prints "false"
 ```
