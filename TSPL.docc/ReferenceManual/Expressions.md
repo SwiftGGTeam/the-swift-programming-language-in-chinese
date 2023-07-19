@@ -605,13 +605,13 @@ or a playground literal.
 > `#function`,
 > and `#line`.
 > These are now implemented as macros in the Swift standard library:
-> [`column`](https://developer.apple.com/documentation/swift/column),
-> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle),
-> [`fileID`](https://developer.apple.com/documentation/swift/fileID),
-> [`filePath`](https://developer.apple.com/documentation/swift/filePath),
-> [`file`](https://developer.apple.com/documentation/swift/file),
-> [`function`](https://developer.apple.com/documentation/swift/function),
-> and [`line`](https://developer.apple.com/documentation/swift/line).
+> [`column`](https://developer.apple.com/documentation/swift/column()),
+> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
+> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
+> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
+> [`file`](https://developer.apple.com/documentation/swift/file()),
+> [`function`](https://developer.apple.com/documentation/swift/function()),
+> and [`line`](https://developer.apple.com/documentation/swift/line()).
 
 <!--
   - test: `pound-file-flavors`

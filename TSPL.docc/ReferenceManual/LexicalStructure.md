@@ -391,14 +391,14 @@ so they must be escaped with backticks in that context.
 > `#line`,
 > and `#warning`.
 > These are now implemented as macros in the Swift standard library:
-> [`column`](https://developer.apple.com/documentation/swift/column),
-> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle),
+> [`column`](https://developer.apple.com/documentation/swift/column()),
+> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
 > [`error(_:)`](https://developer.apple.com/documentation/swift/error(_:)),
-> [`fileID`](https://developer.apple.com/documentation/swift/fileID),
-> [`filePath`](https://developer.apple.com/documentation/swift/filePath),
-> [`file`](https://developer.apple.com/documentation/swift/file),
-> [`function`](https://developer.apple.com/documentation/swift/function),
-> [`line`](https://developer.apple.com/documentation/swift/line),
+> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
+> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
+> [`file`](https://developer.apple.com/documentation/swift/file()),
+> [`function`](https://developer.apple.com/documentation/swift/function()),
+> [`line`](https://developer.apple.com/documentation/swift/line()),
 > and [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:)).
 
 <!--
