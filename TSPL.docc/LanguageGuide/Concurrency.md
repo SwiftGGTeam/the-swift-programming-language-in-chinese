@@ -740,7 +740,7 @@ like closing network connections and deleting temporary files.
 let photos = await withTaskGroup(of: Data.self) { taskGroup in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        taskGroup.addTask {
+        taskGroup.addTaskUnlessCancelled {
             guard isCancelled == false else { return nil }
             return await downloadPhoto(named: name)
         }
@@ -754,42 +754,53 @@ let photos = await withTaskGroup(of: Data.self) { taskGroup in
 }
 ```
 
-The code above makes two changes from the previous version:
-Each task checks for cancellation
-before starting to download the photo.
-If it has been canceled, the task returns `nil`.
-At the end,
-the task group skips `nil` values when collecting the results.
-Handling cancellation by returning `nil`
-means the task group can return a partial result ---
-the photos that were already downloaded at the time of cancellation ---
-instead of discarding that completed work.
+<!-- XXX TR:
+Should the listing above add a call to taskGroup.cancelAll()
+to show that part of cancellation?
+If so, what's the best practice for where to put that?
+-->
+
+The code above makes several changes from the previous version:
+
+- Each task is added using the
+  `TaskGroup.addTaskUnlessCancelled(priority:operation:)` method,
+  to avoid adding new tasks after the task group has been canceled.
+
+- Each task checks for cancellation
+  before starting to download the photo.
+  If it has been canceled, the task returns `nil`.
+
+- At the end,
+  the task group skips `nil` values when collecting the results.
+  Handling cancellation by returning `nil`
+  means the task group can return a partial result ---
+  the photos that were already downloaded at the time of cancellation ---
+  instead of discarding that completed work.
+
+[`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
 
 A full version of this code would include clean-up work
 as part of cancellation,
 like deleting partial downloads and closing network connections.
-<!--
-XXX maybe move outside TaskGroup discussion
-XXX in a TaskGroup, you probably want addTaskUnlessCancelled(...)
--->
-If that clean-up work XXX
-[`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
+
+An task that isn't part of a task group can handle cancellation
+using the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
+For example:
 
 [`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
 
-
 ```swift
-await Task.withTaskCancellationHandler {
-    XXX
+let video = await Task.withTaskCancellationHandler {
+    let file = makeTemporaryFile()
+    renderSlideshow(of: photos, to: file)
+    return file
 } onCancel: {
-    XXX
+    deleteTemporaryFile(file)
 }
 ```
 
 <!--
   OUTLINE
-
-  - task
 
   - cancellation propagates (Konrad's example below)
 
@@ -799,7 +810,7 @@ await Task.withTaskCancellationHandler {
       await withTaskGroup(of: Bool.self) { group in
           var done = false
           while done {
-          await group.spawn { Task.isCancelled } // is this child task cancelled?
+          await group.spawn { Task.isCancelled } // is this child task canceled?
           done = try await group.next() ?? false
           }
       print("done!") // <1>
