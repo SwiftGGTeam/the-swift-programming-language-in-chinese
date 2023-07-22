@@ -324,7 +324,7 @@ shows how to implement this macro.
 To expand the macros in the code above,
 the compiler reads the Swift file
 and creates an in-memory representation of that code
-known an as *abstract syntax tree*, or AST.
+known as an *abstract syntax tree*, or AST.
 The AST makes the code's structure explicit,
 which makes it easier to write code that interacts with that structure ---
 like a compiler or a macro implementation.
@@ -553,7 +553,7 @@ The `ExpressionMacro` protocol has one requirement,
 a `expansion(of:in:)` method that expands the AST.
 For the list of macro roles and their corresponding SwiftSystem protocols,
 see <doc:Attributes#attached> and <doc:Attributes#freestanding>
-in <doc:Attributes>
+in <doc:Attributes>.
 
 To expand the `#fourCharacterCode` macro,
 Swift sends the AST for the code that uses this macro
