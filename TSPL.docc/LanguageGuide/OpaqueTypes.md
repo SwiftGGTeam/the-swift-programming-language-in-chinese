@@ -597,7 +597,7 @@ Contrast the three types you could use for `shapes`:
 - Using an opaque type,
   by writing `var shapes: [some Shape]`,
   makes an array whose elements are some specific shape type,
-  and where that specific type's identify is hidden.
+  and where that specific type's identity is hidden.
 
 - Using a boxed protocol type,
   by writing `var shapes: [any Shape]`,
