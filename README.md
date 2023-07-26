@@ -42,7 +42,7 @@ in this repository's root directory.
 
 > If you see the error `command not found: docc`, consider adding `docc` to your shell's `$PATH`.
 >
-> Currently, It is locating at a relative path of "/usr/bin/docc" inside your Swift toolchain.
+> In Swift toolchains downloaded from swift.org, `docc` is located at `/usr/bin/docc` relative to the installation path of the toolchain.
 >
 > If you have Xcode installed on `/Applications`, it will be `/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/docc`. You can also use `xcrun docc` to help locate it.
 
