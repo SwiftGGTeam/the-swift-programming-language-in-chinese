@@ -44,7 +44,7 @@ in this repository's root directory.
 >
 > In Swift toolchains downloaded from swift.org, `docc` is located at `/usr/bin/docc` relative to the installation path of the toolchain.
 >
-> If you have Xcode installed on `/Applications`, it will be `/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/docc`. You can also use `xcrun docc` to help locate it.
+> If you have Xcode installed, run `xcrun docc preview TSPL.docc`.
 
 After running DocC, open the link that `docc` outputs
 to display a local preview in your browser.
