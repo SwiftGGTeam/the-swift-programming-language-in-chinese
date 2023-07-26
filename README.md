@@ -40,7 +40,7 @@ For more information, see [Contributing to The Swift Programming Language][contr
 Run `docc preview TSPL.docc`
 in this repository's root directory.
 
-> If you see an error "command not found: docc", you may consider adding `docc` to your $PATH.
+> If you see the error `command not found: docc`, consider adding `docc` to your shell's `$PATH`.
 >
 > Currently, It is locating at a relative path of "/usr/bin/docc" inside your Swift toolchain.
 >
