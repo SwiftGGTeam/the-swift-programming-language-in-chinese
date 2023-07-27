@@ -40,11 +40,17 @@ For more information, see [Contributing to The Swift Programming Language][contr
 Run `docc preview TSPL.docc`
 in this repository's root directory.
 
-> If you see the error `command not found: docc`, consider adding `docc` to your shell's `$PATH`.
->
-> In Swift toolchains downloaded from swift.org, `docc` is located at `/usr/bin/docc` relative to the installation path of the toolchain.
->
-> If you have Xcode installed, run `xcrun docc preview TSPL.docc`.
-
 After running DocC, open the link that `docc` outputs
 to display a local preview in your browser.
+
+> Note:
+>
+> If you installed DocC by downloading a toolchain from Swift.org,
+> `docc` is located in `usr/bin/`,
+> relative to the installation path of the toolchain.
+> Make sure your shell's `PATH` environment variable
+> includes that directory.
+>
+> If you installed DocC by downloading Xcode,
+> run `xcrun docc preview TSPL.docc` instead.
+
