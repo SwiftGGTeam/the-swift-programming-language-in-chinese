@@ -1117,6 +1117,8 @@ make the same change here also.
 >
 > *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`**
 >
+> *platform-name* → **`visionOS`**
+>
 > *platform-version* → *decimal-digits*
 >
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits*
