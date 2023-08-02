@@ -133,6 +133,7 @@ These arguments begin with one of the following platform or language names:
 - `watchOSApplicationExtension`
 - `tvOS`
 - `tvOSApplicationExtension`
+- `visionOS`
 - `swift`
 
 <!--

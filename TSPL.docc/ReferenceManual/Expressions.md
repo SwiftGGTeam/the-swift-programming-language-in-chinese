@@ -574,8 +574,7 @@ or a playground literal.
 
 > Note:
 > Prior to Swift 5.9,
-> the following special literals were recognized,
-> which are now implemented as macros in the Swift standard library:
+> the following special literals were recognized:
 > `#column`,
 > `#dsohandle`,
 > `#fileID`,
@@ -583,6 +582,14 @@ or a playground literal.
 > `#file`,
 > `#function`,
 > and `#line`.
+> These are now implemented as macros in the Swift standard library:
+> [`column`](https://developer.apple.com/documentation/swift/column()),
+> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
+> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
+> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
+> [`file`](https://developer.apple.com/documentation/swift/file()),
+> [`function`](https://developer.apple.com/documentation/swift/function()),
+> and [`line`](https://developer.apple.com/documentation/swift/line()).
 
 <!--
   - test: `pound-file-flavors`
@@ -880,7 +887,7 @@ even if one of the branches of a conditional expression is throwing.
 >
 > *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail* \
 > *if-expression-tail* → **`else`** *if-expression* \
-> *if-expression-tail* → **`else`** **`{`** *statement* **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** **`{`** *statement* **`}`**
 >
 > *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`** \
 > *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_ \

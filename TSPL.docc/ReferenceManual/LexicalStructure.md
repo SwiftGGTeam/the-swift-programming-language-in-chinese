@@ -319,6 +319,7 @@ so they must be escaped with backticks in that context.
   `#elseif`,
   `#else`,
   `#endif`,
+  `#fileLiteral`,
   `#if`,
   `#imageLiteral`,
   `#keyPath`,
@@ -327,18 +328,26 @@ so they must be escaped with backticks in that context.
 
 > Note:
 > Prior to Swift 5.9,
-> the following keywords are reserved,
-> which are now implemented as macros in the Swift standard library:
+> the following keywords were reserved:
 > `#column`,
 > `#dsohandle`,
 > `#error`,
 > `#fileID`,
-> `#fileLiteral`,
 > `#filePath`,
 > `#file`,
 > `#function`,
 > `#line`,
 > and `#warning`.
+> These are now implemented as macros in the Swift standard library:
+> [`column`](https://developer.apple.com/documentation/swift/column()),
+> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
+> [`error(_:)`](https://developer.apple.com/documentation/swift/error(_:)),
+> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
+> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
+> [`file`](https://developer.apple.com/documentation/swift/file()),
+> [`function`](https://developer.apple.com/documentation/swift/function()),
+> [`line`](https://developer.apple.com/documentation/swift/line()),
+> and [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:)).
 
 <!--
   Token.py includes #assert,

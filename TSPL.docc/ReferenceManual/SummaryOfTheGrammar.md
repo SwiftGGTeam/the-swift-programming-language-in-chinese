@@ -412,7 +412,7 @@ make the same change here also.
 >
 > *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail* \
 > *if-expression-tail* → **`else`** *if-expression* \
-> *if-expression-tail* → **`else`** **`{`** *statement* **`}`** *if-expression-tail*
+> *if-expression-tail* → **`else`** **`{`** *statement* **`}`**
 >
 > *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`** \
 > *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_ \
@@ -723,6 +723,7 @@ make the same change here also.
 > *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
 > *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`** \
 > *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`** \
+> *platform-name* → **`visionOS`** \
 > *platform-version* → *decimal-digits* \
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* \
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*

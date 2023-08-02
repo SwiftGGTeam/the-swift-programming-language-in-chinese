@@ -961,7 +961,7 @@ conditions listed in the table below.
 
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
-| `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `Linux`, `Windows` |
+| `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
 | `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
 | `swift()` | `>=` or `<` followed by a version number |
 | `compiler()` | `>=` or `<` followed by a version number |
@@ -1330,11 +1330,14 @@ It has the same meaning as the `*` argument in an availability condition.
 > *availability-argument* → *platform-name* *platform-version* \
 > *availability-argument* → **`*`**
 >
+>
+>
 > *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
 > *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \
 > *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
 > *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`** \
 > *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`** \
+> *platform-name* → **`visionOS`** \
 > *platform-version* → *decimal-digits* \
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* \
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
