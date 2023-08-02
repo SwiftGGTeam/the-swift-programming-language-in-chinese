@@ -42,3 +42,15 @@ in this repository's root directory.
 
 After running DocC, open the link that `docc` outputs
 to display a local preview in your browser.
+
+> Note:
+>
+> If you installed DocC by downloading a toolchain from Swift.org,
+> `docc` is located in `usr/bin/`,
+> relative to the installation path of the toolchain.
+> Make sure your shell's `PATH` environment variable
+> includes that directory.
+>
+> If you installed DocC by downloading Xcode,
+> run `xcrun docc preview TSPL.docc` instead.
+
