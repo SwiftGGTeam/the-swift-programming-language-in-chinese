@@ -53,7 +53,7 @@ whereas a *variable* can be set to a different value in the future.
 
 ### Declaring Constants and Variables
 
-Constants and variables must be declared before they're used.
+Constants and variables must be declared and initialized with a value before they're used.
 You declare constants with the `let` keyword
 and variables with the `var` keyword.
 Here's an example of how constants and variables can be used
@@ -85,6 +85,40 @@ the maximum number of allowed login attempts is declared as a constant,
 because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
+
+You can declare a constant or a variable without assigning a value to it
+immediately, as long as you're initializing them with a value before they're used:
+
+```swift
+var environment = "development"
+let maximumNumberOfLoginAttempts: Int
+
+if environment == "development" {
+    maximumNumberOfLoginAttempts = 100
+} else {
+    maximumNumberOfLoginAttempts = 10
+}
+
+// You can use maximumNumberOfLoginAttempts here.
+```
+<!--
+  - test: `constantsWithDeferredInitialization`
+
+  ```swifttest
+  -> var environment = "development"
+  -> let maximumNumberOfLoginAttempts: Int
+  -> if environment == "development" {
+      maximumNumberOfLoginAttempts = 100
+     } else {
+      maximumNumberOfLoginAttempts = 10
+     }
+  >> print(maxNumberOfLoginAttempts)
+  << 100
+  ```
+-->
+
+In this example, the maximum number of login attemts is set
+to 100 for development environment, or to 10 for any other environments.
 
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:
