@@ -831,7 +831,49 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
-### In-Out Parameters
+
+### Parameter Modifiers
+
+A parameter can also include one of the *parameter modifier*
+keywords `inout`, `borrowing`, or `consuming`
+to modify how the
+argument is passed to the function.
+
+```swift
+<#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
+```
+
+>
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
+
+
+You can specify at most one parameter modifier next to the type
+of the argument:
+```swift
+func someFunction(a: inout A, b: consuming B, c: C) { ... }
+```
+
+#### In-Out Parameters
+
+By default, function arguments in Swift are passed by value:
+any changes made within the function are not visible in the caller.
+You can change this with the `inout` parameter modifier.
+
+```swift
+func someFunction(a: inout Int) {
+    a += 1
+}
+```
+
+When calling such a function, the `inout` argument is
+prefixed with a `&` symbol to mark that the value may
+be changed by the function call.
+
+```swift
+var x = 7
+someFunction(&x)
+print(x) // 8
+```
 
 In-out parameters are passed as follows:
 
@@ -865,8 +907,30 @@ Within a function, don't access a value that was passed as an in-out argument,
 even if the original value is available in the current scope.
 Accessing the original is a simultaneous access of the value,
 which violates Swift's memory exclusivity guarantee.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int) {
+    a += someValue
+}
+
+// Error: This will cause a runtime exclusivity violation
+someFunction(&someValue)
+```
+
 For the same reason,
 you can't pass the same value to multiple in-out parameters.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int, b: inout Int) {
+    a += b
+    b += 1
+}
+
+// Error: Cannot pass the same value to multiple in-out parameters
+someFunction(&someValue, &someValue)
+```
 
 For more information about memory safety and memory exclusivity,
 see <doc:MemorySafety>.
@@ -978,6 +1042,117 @@ see <doc:Functions#In-Out-Parameters>.
   !! return { a += 1 }
   !! ^
   ```
+-->
+
+#### Borrowing and Consuming Parameters
+
+The Swift compiler has varying ownership rules that it
+can use to manage object lifetimes across function calls.
+The default rules work well for most cases,
+but if necessary, you can use one of the `borrowing`
+or `consuming` modifiers to choose a specific ownership
+rule for a particular argument.
+
+Unlike `inout`, neither `borrowing` nor
+`consuming` parameters require any special
+notation when you call the function:
+
+```swift
+func someFunction(a: borrowing A, b: consuming B) { ... }
+
+someFunction(a: someA, b: someB)
+```
+
+The `borrowing` modifier indicates that the function
+does not expect to keep the value.
+In this case, the caller will retain ownership
+and ensure that the
+object remains alive,
+which minimizes overhead when the function
+is making only transient use of the object.
+However, if the function does try to keep the
+value - for example, by storing it in a global
+variable - the function will have to copy
+the value.
+
+```swift
+// `isLessThan` does not keep either argument
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    ...
+}
+```
+
+Conversely, the `consuming` modifier indicates
+that the function *does* expect to keep the value,
+either to store it or to destroy it.
+This implicitly transfers ownership from the
+caller to the function,
+minimizing overhead when the caller no longer
+needs to use the object after the call.
+But if the caller does need to use the object
+after the call, it might need to make a private
+copy before calling the function.
+
+```swift
+// `store` keeps its argument, so we mark it `consuming`
+func store(a: consuming A) {
+    someGlobalVariable = a
+}
+```
+
+Note that Swift guarantees that object lifetime and
+ownership will be correctly managed in all cases,
+with or without one of these modifiers.
+These modifiers only impact the relative efficiency
+for particular patterns of usage.
+
+The explicit use of either `borrowing` or `consuming`
+indicates your intention to more tightly control
+the overhead of runtime ownership management.
+Since copies can trigger unexpected runtime ownership
+operations,
+parameters marked with either of these
+modifiers cannot be copied unless you
+use an explicit `copy` keyword:
+
+```swift
+func borrowingFunction1(a: borrowing A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // `a` is only borrowed from the caller.
+    someGlobalVariable = a
+}
+
+func borrowingFunction2(a: borrowing A) {
+    // OK: Explicit copying works
+    someGlobalVariable = copy a
+}
+
+func consumingFunction1(a: consuming A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // of the following `print`
+    someGlobalVariable = a
+    print(a)
+}
+
+func consumingFunction2(a: consuming A) {
+    // OK: Explicit copying works regardless
+    someGlobalVariable = copy a
+    print(a)
+}
+
+func consumingFunction3(a: consuming A) {
+    // OK: No copy needed here because this is the last use
+    someGlobalVariable = a
+}
+```
+
+<!--
+  TODO: `borrowing` and `consuming` keywords with noncopyable argument types
+-->
+<!--
+  TODO: Any change of parameter modifier is ABI-breaking
 -->
 
 ### Special Kinds of Parameters
