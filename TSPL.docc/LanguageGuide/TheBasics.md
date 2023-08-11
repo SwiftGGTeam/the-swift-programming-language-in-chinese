@@ -108,9 +108,9 @@ if environment == "development" {
   -> var environment = "development"
   -> let maximumNumberOfLoginAttempts: Int
   -> if environment == "development" {
-      maximumNumberOfLoginAttempts = 100
+         maximumNumberOfLoginAttempts = 100
      } else {
-      maximumNumberOfLoginAttempts = 10
+         maximumNumberOfLoginAttempts = 10
      }
   >> print(maxNumberOfLoginAttempts)
   << 100
