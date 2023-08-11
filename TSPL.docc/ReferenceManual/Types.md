@@ -44,8 +44,8 @@ and describes the type inference behavior of Swift.
 > *type* → *optional-type* \
 > *type* → *implicitly-unwrapped-optional-type* \
 > *type* → *protocol-composition-type* \
-> *type* → *boxed-protocol-type* \
 > *type* → *opaque-type* \
+> *type* → *boxed-protocol-type* \
 > *type* → *metatype-type* \
 > *type* → *any-type* \
 > *type* → *self-type* \
