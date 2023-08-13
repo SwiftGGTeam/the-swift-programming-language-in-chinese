@@ -117,8 +117,12 @@ if environment == "development" {
   ```
 -->
 
-In this example, the maximum number of login attemts is set
-to 100 for development environment, or to 10 for any other environments.
+In this example, the maximum number of login attemts is set to 100 for
+development environment, or to 10 for any other environments. Swift verifies
+that all code paths assign a value to the constant at compile time.
+In the example above, it's important that both branches of the `if` statement
+assign a value to `maximumNumberOfLoginAttempts`. If one of the branches did not
+assign a value, that code would raise a compilation error.
 
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:
