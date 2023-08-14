@@ -2296,7 +2296,7 @@ without waiting for it to complete,
 which lets the operations run at the same time.
 Because you still need to wait for the operation to finish
 before you can use the value it returns,
-you write `await` when you use that constant.
+you write `await` when you read that constant's value.
 
 ```swift
 async let cookies = makeCookies()
@@ -2322,13 +2322,11 @@ can all interact with an instance of the same actor at the same time.
 
 ```swift
 actor Oven {
-    var contents: [String] = []
+    private var contents: [String] = []
     func bake(_ food: String) -> String {
-        let index = contents.endIndex
         contents.append(food)
         // ... wait for food to bake ...
-        contents.remove(at: index)
-        return food
+        return contents.removeLast()
     }
 }
 ```
@@ -2340,11 +2338,9 @@ actor Oven {
   -> actor Oven {
          var contents: [String] = []
          func bake(_ food: String) -> String {
-             let index = contents.endIndex
              contents.append(food)
              // ... wait for food to bake ...
-             contents.remove(at: index)
-             return food
+             return contents.removeLast()
          }
      }
   ```
@@ -2358,9 +2354,6 @@ that's already running on the actor to finish.
 ```swift
 let oven = Oven()
 let biscuits = await oven.bake("biscuits")
-for item in await oven.contents {
-    print(item)
-}
 ```
 
 <!--
@@ -2369,9 +2362,6 @@ for item in await oven.contents {
   ```swifttest
   -> let oven = Oven()
   -> let biscuits = await oven.bake("biscuits")
-  -> for item in await oven.contents {
-         print(item)
-     }
   ```
 -->
 
