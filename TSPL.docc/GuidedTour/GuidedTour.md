@@ -2316,6 +2316,50 @@ let bakedGoods = await [cookies, bread]
   ```
 -->
 
+You structure concurrent code using task groups and child tasks.
+Writing `async`-`let` implicitly creates a child task.
+
+```swift
+let desserts = await withTaskGroup(of: String.self) { group in
+    for recipe in ["biscuit", "croissant", "egg tart"] {
+        group.addTask {
+            return await bake(recipe)
+        }
+    }
+
+    var results: [String] = []
+    for await result in group {
+        results.append(result)
+    }
+
+    return results
+}
+```
+
+
+<!--
+  - test: guided-tour-async
+
+  ``` swifttest
+  -> let desserts = await withTaskGroup(of: String.self) { group in
+         for recipe in ["biscuit", "croissant", "egg tart"] {
+             group.addTask {
+                 return await bake(recipe)
+             }
+         }
+  ---
+         var results: [String] = []
+         for await result in group {
+             results.append(result)
+         }
+  ---
+         return results
+     }
+  >> print(desserts)
+  << ["biscuit", "croissant", "egg tart"]
+  ```
+-->
+
 Actors are similar to classes,
 except they ensure that different asynchronous functions
 can all interact with an instance of the same actor at the same time.
