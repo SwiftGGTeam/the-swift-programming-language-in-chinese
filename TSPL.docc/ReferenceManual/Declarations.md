@@ -831,6 +831,10 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
+> Grammar of a function parameter:
+>
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
 
 ### Parameter Modifiers
 
@@ -842,10 +846,6 @@ argument is passed to the function.
 ```swift
 <#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
 ```
-
->
-> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
-
 
 You can specify at most one parameter modifier next to the type
 of the argument:
@@ -1048,10 +1048,18 @@ see <doc:Functions#In-Out-Parameters>.
 
 The Swift compiler has varying ownership rules that it
 can use to manage object lifetimes across function calls.
-The default rules work well for most cases,
-but if necessary, you can use one of the `borrowing`
-or `consuming` modifiers to choose a specific ownership
-rule for a particular argument.
+The default rules are designed to minimize overhead in most cases,
+but if you want to more carefully control ownership for
+a particular case,
+you can explicitly specify `borrowing`
+or `consuming` behavior for a particular parameter.
+
+Note:
+Swift guarantees that object lifetime and
+ownership will be correctly managed in all cases,
+with or without one of these modifiers.
+These modifiers only impact the relative efficiency
+for particular patterns of usage.
 
 Unlike `inout`, neither `borrowing` nor
 `consuming` parameters require any special
@@ -1064,16 +1072,11 @@ someFunction(a: someA, b: someB)
 ```
 
 The `borrowing` modifier indicates that the function
-does not expect to keep the value.
+will not keep the value.
 In this case, the caller will retain ownership
-and ensure that the
-object remains alive,
+and will be responsible for ensuring that the object remains alive,
 which minimizes overhead when the function
 is making only transient use of the object.
-However, if the function does try to keep the
-value - for example, by storing it in a global
-variable - the function will have to copy
-the value.
 
 ```swift
 // `isLessThan` does not keep either argument
@@ -1082,16 +1085,30 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 }
 ```
 
-Conversely, the `consuming` modifier indicates
-that the function *does* expect to keep the value,
-either to store it or to destroy it.
-This implicitly transfers ownership from the
-caller to the function,
-minimizing overhead when the caller no longer
-needs to use the object after the call.
-But if the caller does need to use the object
-after the call, it might need to make a private
-copy before calling the function.
+However,
+if the function does keep the value
+- for example, by storing it in a global variable
+- you will have to make a copy.
+
+```swift
+// As above, but this `isLessThan` also wants to record the smallest value
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    if lhs < storedValue {
+        storedValue = copy lhs
+    } else if rhs < storedValue {
+        storedValue = copy rhs
+    }
+    return lhs < rhs
+}
+```
+
+Conversely,
+the `consuming` modifier indicates
+that the function will take ownership of the
+value,
+accepting responsibility for
+either storing or destroying it before the
+function returns.
 
 ```swift
 // `store` keeps its argument, so we mark it `consuming`
@@ -1100,11 +1117,24 @@ func store(a: consuming A) {
 }
 ```
 
-Note that Swift guarantees that object lifetime and
-ownership will be correctly managed in all cases,
-with or without one of these modifiers.
-These modifiers only impact the relative efficiency
-for particular patterns of usage.
+This minimizes overhead when the caller no longer
+needs to use the object after the call.
+
+```swift
+// Usually, this is the last thing we do with a value
+store(a: value)
+```
+
+But if the caller does need to use the object
+after the call,
+it might need to make a separate
+copy before calling the function.
+
+```swift
+// The compiler will insert an implicit copy here
+store(a: value) // This consumes the value
+print(value) // This uses the copy
+```
 
 The explicit use of either `borrowing` or `consuming`
 indicates your intention to more tightly control
