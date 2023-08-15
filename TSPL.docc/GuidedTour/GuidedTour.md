@@ -1842,6 +1842,75 @@ Task {
   ```
 -->
 
+Use task groups and tasks to structure concurrent code.
+Writing `async`-`let` implicitly creates a task.
+
+```swift
+let userIDs = await withTaskGroup(of: Int.self) { taskGroup in
+    for server in ["primary", "secondary", "development"] {
+        taskGroup.addTask {
+            return await fetchUserID(from: server)
+        }
+    }
+
+    var results: [Int] = []
+    for await result in taskGroup {
+        results.append(result)
+    }
+    return results
+}
+```
+
+Actors are similar to classes,
+except they ensure that different asynchronous functions
+can all interact with an instance of the same actor at the same time.
+
+```swift
+actor Oven {
+    private var contents: [String] = []
+    func bake(_ food: String) -> String {
+        contents.append(food)
+        // ... wait for food to bake ...
+        return contents.removeLast()
+    }
+}
+```
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> actor Oven {
+         var contents: [String] = []
+         func bake(_ food: String) -> String {
+             contents.append(food)
+             // ... wait for food to bake ...
+             return contents.removeLast()
+         }
+     }
+  ```
+-->
+
+When you call a method on an actor or access one of its properties,
+you mark that code with `await`
+to indicate that it might have to wait for other code
+that's already running on the actor to finish.
+
+```swift
+let oven = Oven()
+let biscuits = await oven.bake("biscuits")
+```
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> let oven = Oven()
+  -> let biscuits = await oven.bake("biscuits")
+  ```
+-->
+
+
 ## Protocols and Extensions
 
 Use `protocol` to declare a protocol.
@@ -2254,158 +2323,6 @@ print(fridgeIsOpen)
   << false
   -> print(fridgeIsOpen)
   <- false
-  ```
--->
-
-## Concurrency
-
-You use `async` to mark an asynchronous function.
-You mark an asynchronous operation,
-like a call to an asynchronous function,
-by writing `await`
-if you want to wait for it to complete.
-
-```swift
-func bake(_ food: String) async -> String {
-    // ... wait for food to bake ...
-    return food
-}
-func makeCookies() async -> String {
-    let cookies = await bake("cookies")
-    return cookies
-}
-```
-
-<!--
-  - test: `guided-tour`
-
-  ```swifttest
-  -> func bake(_ food: String) async -> String {
-         // ... wait for food to bake ...
-         return food
-     }
-  -> func makeCookies() async -> String {
-         let cookies = await bake("cookies")
-         return cookies
-     }
-  ```
--->
-
-You can use `async`-`let` to start an asynchronous operation
-without waiting for it to complete,
-which lets the operations run at the same time.
-Because you still need to wait for the operation to finish
-before you can use the value it returns,
-you write `await` when you read that constant's value.
-
-```swift
-async let cookies = makeCookies()
-async let bread = bake("bread")
-
-let bakedGoods = await [cookies, bread]
-```
-
-<!--
-  - test: guided-tour-async
-
-  ```swifttest
-  -> async let cookies = makeCookies()
-  -> async let bread = bake("bread")
-  ---
-  -> let bakedGoods = await [cookies, bread]
-  ```
--->
-
-You structure concurrent code using task groups and child tasks.
-Writing `async`-`let` implicitly creates a child task.
-
-```swift
-let desserts = await withTaskGroup(of: String.self) { group in
-    for recipe in ["biscuit", "croissant", "egg tart"] {
-        group.addTask {
-            return await bake(recipe)
-        }
-    }
-
-    var results: [String] = []
-    for await result in group {
-        results.append(result)
-    }
-
-    return results
-}
-```
-
-
-<!--
-  - test: guided-tour-async
-
-  ``` swifttest
-  -> let desserts = await withTaskGroup(of: String.self) { group in
-         for recipe in ["biscuit", "croissant", "egg tart"] {
-             group.addTask {
-                 return await bake(recipe)
-             }
-         }
-  ---
-         var results: [String] = []
-         for await result in group {
-             results.append(result)
-         }
-  ---
-         return results
-     }
-  >> print(desserts)
-  << ["biscuit", "croissant", "egg tart"]
-  ```
--->
-
-Actors are similar to classes,
-except they ensure that different asynchronous functions
-can all interact with an instance of the same actor at the same time.
-
-```swift
-actor Oven {
-    private var contents: [String] = []
-    func bake(_ food: String) -> String {
-        contents.append(food)
-        // ... wait for food to bake ...
-        return contents.removeLast()
-    }
-}
-```
-
-<!--
-  - test: `guided-tour`
-
-  ```swifttest
-  -> actor Oven {
-         var contents: [String] = []
-         func bake(_ food: String) -> String {
-             contents.append(food)
-             // ... wait for food to bake ...
-             return contents.removeLast()
-         }
-     }
-  ```
--->
-
-When you call a method on an actor or access one of its properties,
-you mark that code with `await`
-to indicate that it might have to wait for other code
-that's already running on the actor to finish.
-
-```swift
-let oven = Oven()
-let biscuits = await oven.bake("biscuits")
-```
-
-<!--
-  - test: `guided-tour`
-
-  ```swifttest
-  -> let oven = Oven()
-  -> let biscuits = await oven.bake("biscuits")
   ```
 -->
 
