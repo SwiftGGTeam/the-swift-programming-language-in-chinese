@@ -1842,8 +1842,7 @@ Task {
   ```
 -->
 
-Use task groups and tasks to structure concurrent code.
-Writing `async`-`let` implicitly creates a task.
+Use task groups to structure concurrent code.
 
 ```swift
 let userIDs = await withTaskGroup(of: Int.self) { taskGroup in
@@ -1863,15 +1862,17 @@ let userIDs = await withTaskGroup(of: Int.self) { taskGroup in
 
 Actors are similar to classes,
 except they ensure that different asynchronous functions
-can all interact with an instance of the same actor at the same time.
+can safely interact with an instance of the same actor at the same time.
 
 ```swift
-actor Oven {
-    private var contents: [String] = []
-    func bake(_ food: String) -> String {
-        contents.append(food)
-        // ... wait for food to bake ...
-        return contents.removeLast()
+actor ServerConnection {
+    var server: String = "primary"
+    private var activeUsers: [Int] = []
+    func connect() async -> Int {
+        let userID = await fetchUserID(from: server)
+        // ... communicate with server ...
+        activeUsers.append(userID)
+        return userID
     }
 }
 ```
@@ -1897,8 +1898,8 @@ to indicate that it might have to wait for other code
 that's already running on the actor to finish.
 
 ```swift
-let oven = Oven()
-let biscuits = await oven.bake("biscuits")
+let server = ServerConnection()
+let userID = await server.connect()
 ```
 
 <!--
