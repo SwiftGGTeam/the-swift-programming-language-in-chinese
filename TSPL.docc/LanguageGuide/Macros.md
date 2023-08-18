@@ -117,8 +117,15 @@ The macro reads the list of cases in the private enumeration,
 generates the list of constants for each option,
 and adds a conformance to the [`OptionSet`][] protocol.
 
+[`OptionSet`]: https://developer.apple.com/documentation/swift/optionset
+
+<!--
+When the @OptionSet macro comes back, change both links back:
+
 [`@OptionSet`]: https://developer.apple.com/documentation/swift/optionset-swift.macro
 [`OptionSet`]: https://developer.apple.com/documentation/swift/optionset-swift.protocol
+-->
+
 
 For comparison,
 here's what the expanded version of the `@OptionSet` macro looks like.
