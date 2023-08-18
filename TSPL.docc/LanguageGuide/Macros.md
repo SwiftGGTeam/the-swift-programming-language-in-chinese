@@ -53,7 +53,7 @@ func myFunction() {
 ```
 
 In the first line,
-`#function` calls the [`function`][] macro from the Swift standard library.
+`#function` calls the [`function()`][] macro from the Swift standard library.
 When you compile this code,
 Swift calls that macro's implementation,
 which replaces `#function` with the name of the current function.
@@ -63,7 +63,7 @@ In the second line,
 `#warning` calls the [`warning(_:)`][] macro from the Swift standard library
 to produce a custom compile-time warning.
 
-[`function`]: https://developer.apple.com/documentation/swift/function
+[`function()`]: https://developer.apple.com/documentation/swift/function()
 [`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
 
 Freestanding macros can produce a value, like `#function` does,
