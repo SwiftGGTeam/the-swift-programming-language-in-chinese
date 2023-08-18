@@ -583,13 +583,13 @@ or a playground literal.
 > `#function`,
 > and `#line`.
 > These are now implemented as macros in the Swift standard library:
-> [`column`](https://developer.apple.com/documentation/swift/column()),
-> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
-> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
-> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
-> [`file`](https://developer.apple.com/documentation/swift/file()),
-> [`function`](https://developer.apple.com/documentation/swift/function()),
-> and [`line`](https://developer.apple.com/documentation/swift/line()).
+> [`column()`](https://developer.apple.com/documentation/swift/column()),
+> [`dsohandle()`](https://developer.apple.com/documentation/swift/dsohandle()),
+> [`fileID()`](https://developer.apple.com/documentation/swift/fileID()),
+> [`filePath()`](https://developer.apple.com/documentation/swift/filePath()),
+> [`file()`](https://developer.apple.com/documentation/swift/file()),
+> [`function()`](https://developer.apple.com/documentation/swift/function()),
+> and [`line()`](https://developer.apple.com/documentation/swift/line()).
 
 <!--
   - test: `pound-file-flavors`
@@ -1518,13 +1518,13 @@ A macro-expansion expression omits the parentheses
 if the macro doesn't take any arguments.
 
 A macro expression can't appear as the default value for a parameter,
-except for the [`file`][] and [`line`][] macros from the Swift standard library.
+except for the [`file()`][] and [`line()`][] macros from the Swift standard library.
 When used as the default value of a function or method parameter,
 These macros' value is determined
 when the default value expression is evaluated at the call site.
 
-[`file`]: http://developer.apple.com/documentation/swift/documentation/swift/file
-[`line`]: http://developer.apple.com/documentation/swift/documentation/swift/line
+[`file()`]: https://developer.apple.com/documentation/swift/file()
+[`line()`]: https://developer.apple.com/documentation/swift/line()
 
 > Grammar of a macro-expansion expression:
 >
