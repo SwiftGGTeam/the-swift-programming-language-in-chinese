@@ -53,7 +53,6 @@ whereas a *variable* can be set to a different value in the future.
 
 ### Declaring Constants and Variables
 
-Constants and variables must be declared and initialized with a value before they're used.
 You declare constants with the `let` keyword
 and variables with the `var` keyword.
 Here's an example of how constants and variables can be used
@@ -75,19 +74,18 @@ var currentLoginAttempt = 0
 
 This code can be read as:
 
-“Declare a new constant called `maximumNumberOfLoginAttempts`,
-and give it a value of `10`.
-Then, declare a new variable called `currentLoginAttempt`,
+“Declare a new constant called `maximumNumberOfLoginAttempts`, and give it
+a value of `10`. Then, declare a new variable called `currentLoginAttempt`,
 and give it an initial value of `0`.”
 
-In this example,
-the maximum number of allowed login attempts is declared as a constant,
-because the maximum value never changes.
-The current login attempt counter is declared as a variable,
-because this value must be incremented after each failed login attempt.
+In this example, the maximum number of allowed login attempts is declared as
+a constant, because the maximum value never changes. The current login attempt
+counter is declared as a variable, because this value must be incremented after
+each failed login attempt.
 
 You can declare a constant or a variable without assigning a value to it
-immediately, as long as you're initializing them with a value before they're used:
+immediately, as long as you're initializing them with a value before they're
+used.
 
 ```swift
 var environment = "development"
@@ -118,11 +116,17 @@ if environment == "development" {
 -->
 
 In this example, the maximum number of login attemts is set to 100 for
-development environment, or to 10 for any other environments. Swift verifies
-that all code paths assign a value to the constant at compile time.
-In the example above, it's important that both branches of the `if` statement
-assign a value to `maximumNumberOfLoginAttempts`. If one of the branches did not
-assign a value, that code would raise a compilation error.
+development environment, or to 10 for any other environments.
+
+In Swift, variables and constants don't have an implicit default value.
+When Swift compiles your code, it performs a dataflow analysis and verifies that
+all constants and variables are defined and initialized with a value before
+they are used. This technique is referred to as
+[definitive initialization](http://en.wikipedia.org/wiki/Definite_assignment_analysis)
+
+The example above is valid, because both branches of the `if` statement
+initialize `maximumNumberOfLoginAttempts` with some value. If one of the
+branches did not assign a value, Swift would return a compilation error.
 
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:
