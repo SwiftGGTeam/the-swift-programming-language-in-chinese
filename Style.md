@@ -171,6 +171,10 @@ For example:
 If the operator doesn’t have an established English name,
 make sure you get tech review on the name you invent for it.
 
+## optional binding
+
+Omit the article: "use optional binding", not "use an optional binding".
+
 ## passive voice
 
 In general,

@@ -1229,7 +1229,7 @@ after the name of the type that the optional contains ---
 for example, the type of an optional `Int` is `Int?`.
 An optional `Int` always contains
 either some `Int` value or no value at all.
-It can't contain anything else, like a `Bool` value or a `String` value.
+It can't contain anything else, like a `Bool` or `String` value.
 
 ### nil
 
@@ -1256,7 +1256,7 @@ serverResponseCode = nil
 -->
 
 If you define an optional variable without providing a default value,
-the variable is automatically set to `nil` for you:
+the variable is automatically set to `nil`:
 
 ```swift
 var surveyAnswer: String?
@@ -1277,7 +1277,7 @@ by comparing the optional against `nil`.
 You perform this comparison with the “equal to” operator (`==`)
 or the “not equal to” operator (`!=`).
 
-If an optional has a value, it's considered to be “not equal to” `nil`:
+If an optional has a value, it's considered as “not equal to” `nil`:
 
 ```swift
 let possibleNumber = "123"
@@ -1304,14 +1304,14 @@ You can't use `nil` with non-optional constants or variables.
 If a constant or variable in your code needs to work with
 the absence of a value under certain conditions,
 declare it as an optional value of the appropriate type.
-A constant or variable that's declared as a non-optional value,
+A constant or variable that's declared as a non-optional value
 is guaranteed to never contain a `nil` value.
 If you try to assign `nil` to a non-optional value,
 you'll get a compile-time error.
 
 This separation of optional and non-optional values
 lets you explicitly mark what information can be missing,
-and makes it easier to write correct code that handle missing values.
+and makes it easier to write code that handle missing values.
 You can't accidentally treat an optional as if it were non-optional
 because this mistake produces an error at compile time.
 After you unwrap the value,
@@ -1322,7 +1322,7 @@ in different parts of your code.
 When you access an optional value,
 your code always handles both the `nil` and non-`nil` case.
 There are several things you can do when a value is missing,
-which are described in more detail in the following sections:
+as described in the following sections:
 
 - Skip the code that operates on the value when it's `nil`.
 
@@ -1392,9 +1392,9 @@ set a new constant called `actualNumber` to the value contained in the optional.
 If the conversion is successful,
 the `actualNumber` constant becomes available for use within
 the first branch of the `if` statement.
-It has already been initialized with the value contained *within* the optional,
+It has already been initialized with the value contained within the optional,
 and has the corresponding non-optional type.
-In this case, the type of `possibleNumber` is `Int?`
+In this case, the type of `possibleNumber` is `Int?`,
 so the type of `actualNumber` is `Int`.
 
 If you don't need to refer to the original, optional constant or variable
@@ -1431,8 +1431,8 @@ If `myNumber` has a value,
 the value of a new constant named `myNumber` is set to that value.
 Inside the body of the `if` statement,
 writing `myNumber` refers to that new non-optional constant.
-Before the beginning of the `if` statement and after its end,
-writing `myNumber` refers to the original optional integer constant.
+Writing `myNumber` before or after the `if` statement
+refers to the original optional integer constant.
 
 Because this kind of code is so common,
 you can use a shorter spelling to unwrap an optional value:
@@ -1532,9 +1532,9 @@ as described in <doc:ControlFlow#Early-Exit>.
 
 Another way to handle a missing value is to supply
 a default value using the nil-coalescing operator (`??`).
-If the optional on the left side of the `??` isn't `nil`,
+If the optional on the left of the `??` isn't `nil`,
 that value is unwrapped and used.
-Otherwise, the value on the right side of `??` is used.
+Otherwise, the value on the right of `??` is used.
 For example,
 the code below greets someone by name if one is specified,
 and uses a generic greeting when the name is `nil`.
@@ -1591,11 +1591,11 @@ Both versions of the code above depend on `convertedNumber`
 always containing a value.
 Writing that requirement as part of the code,
 using either of the approaches above,
-lets your code check that the requirement is true at run time.
+lets your code check that the requirement is true at runtime.
 
 For more information about enforcing data requirements
 and checking assumptions at runtime,
-see <doc:TheBasics#Assertions-and-Preconditions> below.
+see <doc:TheBasics#Assertions-and-Preconditions>.
 
 ### Implicitly Unwrapped Optionals
 
@@ -1897,11 +1897,11 @@ for recoverable or expected errors.
 Because a failed assertion or precondition
 indicates an invalid program state,
 there's no way to catch a failed assertion.
-Trying to recover from an invalid state isn't possible ---
-because the assertion failed,
-you know that at least one piece of the program's data is invalid,
+Recovering from an invalid state is impossible.
+When an assertion fails, 
+at least one piece of the program's data is invalid ---
 but you don't know why it's invalid
-or what additional state is also invalid.
+or whether an additional state is also invalid.
 
 Using assertions and preconditions
 isn't a substitute for designing your code in such a way
