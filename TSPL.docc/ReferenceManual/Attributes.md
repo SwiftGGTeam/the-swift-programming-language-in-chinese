@@ -1883,7 +1883,7 @@ into code that calls the static methods of the result builder type:
       var second: Second
       func draw() -> String { return first.draw() + second.draw() }
   }
-  
+
   @resultBuilder
   struct DrawingPartialBlockBuilder {
       static func buildPartialBlock<D: Drawable>(first: D) -> D {
@@ -1895,7 +1895,7 @@ into code that calls the static methods of the result builder type:
           return DrawBoth(first: accumulated, second: next)
       }
   }
-  
+
   @DrawingPartialBlockBuilder var builderBlock: some Drawable {
       Text("First")
       Line(elements: [Text("Second"), Text("Third")])
