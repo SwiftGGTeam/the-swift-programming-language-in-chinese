@@ -321,42 +321,33 @@ by calling the [`Task.yield()`][] method.
 
 ```swift
 func generateSlideshow(forGallery gallery: String) async {
-	let photos = await listPhotos(inGallery: gallery)
-	for photo in photos {
-		// ... render a few seconds of video for this photo ...
-		Task.yield()
-	}
+    let photos = await listPhotos(inGallery: gallery)
+    for photo in photos {
+        // ... render a few seconds of video for this photo ...
+        await Task.yield()
+    }
 }
 ```
 
-Because `generateSlideshow(for:)` is a synchronous function,
-it can't contain any potential suspension points.
-However, calling it repeatedly for every photograph in a large gallery
-might take a long time.
-Explicitly inserting a possible suspension point with `Task.yield()`
-lets Swift balance between making progress on this task,
+Assuming the code that renders video is synchronous,
+it doesn't contain any suspension points.
+However, that work might take a long time.
+Periodically calling `Task.yield()` explicitly adds suspension points,
+which let Swift balance between making progress on this work,
 and letting other tasks make progress on other work.
-Without the suspension point,
-this task would render the entire slideshow without ever yielding its thread.
 
-<!--
-TR: Do we have some general guidance about when you need to insert yield?
-SE-0304 says "if all are executing on a shared, limited-concurrency pool".
--->
-
-The [`Task.sleep(until:tolerance:clock:)`][] method
+The [`Task.sleep(for:tolerance:clock:)`][] method
 is useful when writing simple code
 to learn how concurrency works.
-This method does nothing,
-but waits at least the given number of nanoseconds before it returns.
+This method suspends the current task for at least the given amount of time.
 Here's a version of the `listPhotos(inGallery:)` function
-that uses `sleep(until:tolerance:clock:)` to simulate waiting for a network operation:
+that uses `sleep(for:tolerance:clock:)` to simulate waiting for a network operation:
 
-[`Task.sleep(until:tolerance:clock:)`]: https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)
+[`Task.sleep(for:tolerance:clock:)`]: https://developer.apple.com/documentation/swift/task/sleep(for:tolerance:clock:)
 
 ```swift
 func listPhotos(inGallery name: String) async throws -> [String] {
-    try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+    try await Task.sleep(for: .seconds(2))
     return ["IMG001", "IMG99", "IMG0404"]
 }
 ```
@@ -367,7 +358,7 @@ func listPhotos(inGallery name: String) async throws -> [String] {
   ```swifttest
   >> struct Data {}  // Instead of actually importing Foundation
   -> func listPhotos(inGallery name: String) async throws -> [String] {
-         try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+         try await Task.sleep(for: .seconds(2))
          return ["IMG001", "IMG99", "IMG0404"]
   }
   ```
@@ -398,9 +389,9 @@ from nonthrowing code.
 For example:
 
 ```swift
-func getRainyWeekendPhotos() await -> Result<[String]> {
+func getRainyWeekendPhotos() async -> Result<[String]> {
     return Result {
-        photos = try await listPhotos(inGallery: "A Rainy Weekend")
+        try await listPhotos(inGallery: "A Rainy Weekend")
     }
 }
 ```
@@ -409,8 +400,8 @@ In contrast,
 there's no safe way to wrap asynchronous code
 so you can call it from synchronous code and wait for the result.
 The Swift standard library intentionally omits this unsafe functionality,
-and trying to implement it yourself introduces
-problems like memory races, threading bugs, and deadlocks.
+and trying to implement it yourself can lead to
+problems like subtle races, threading issues, and deadlocks.
 
 <!--
   OUTLINE
@@ -634,7 +625,7 @@ Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
 Although you take on some of the responsibility for correctness,
 the explicit parent-child relationships between tasks
-let Swift handle some behaviors like propagating cancellation for you,
+lets Swift handle some behaviors like propagating cancellation for you,
 and lets Swift detect some errors at compile time.
 
 [`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
@@ -645,16 +636,22 @@ Here's another version of the code to download photos
 that handles any number of photos:
 
 ```swift
-await withTaskGroup(of: Data.self) { taskGroup in
+await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        taskGroup.addTask {
+        group.addTask {
             let photo = downloadPhoto(named: name)
             show(photo)
         }
     }
 }
 ```
+
+<!-- XXX
+The above listing uses TaskGroup<Data> but doesn't return Data,
+and its child tasks also don't return Data.
+I think that's a mistake.
+-->
 
 The code above creates a new task group,
 and then creates child tasks of that task group
@@ -679,14 +676,14 @@ you add code that accumulates its result
 inside the closure you pass to `withTaskGroup(of:returning:body:)`.
 
 ```
-let photos = await withTaskGroup(of: Data.self) { taskGroup in
+let photos = await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        taskGroup.addTask { await downloadPhoto(named: name) }
+        group.addTask { await downloadPhoto(named: name) }
     }
 
     var results: [Data] = []
-    for await photo in taskGroup {
+    for await photo in group {
         results.append(photo)
     }
     return results
@@ -726,7 +723,7 @@ There are two ways a task can do this:
 by calling the [`Task.checkCancellation()`][] method,
 or by reading the [`Task.isCancelled`][] property.
 Calling `checkCancellation()` throws an error if the task is canceled;
-a throwing task can let that error propagate out of the task,
+a throwing task can propagate the error out of the task,
 stopping all of the task's work.
 This has the advantage of being simple to implement and understand.
 For more flexibility, use the `isCancelled` property,
@@ -737,17 +734,17 @@ like closing network connections and deleting temporary files.
 [`Task.isCancelled`]: https://developer.apple.com/documentation/swift/task/3814832-iscancelled
 
 ```
-let photos = await withTaskGroup(of: Data.self) { taskGroup in
+let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        taskGroup.addTaskUnlessCancelled {
+        group.addTaskUnlessCancelled {
             guard isCancelled == false else { return nil }
             return await downloadPhoto(named: name)
         }
     }
 
     var results: [Data] = []
-    for await photo in taskGroup {
+    for await photo in group {
         if let photo { results.append(photo) }
     }
     return results
@@ -755,7 +752,7 @@ let photos = await withTaskGroup(of: Data.self) { taskGroup in
 ```
 
 <!-- XXX TR:
-Should the listing above add a call to taskGroup.cancelAll()
+Should the listing above add a call to group.cancelAll()
 to show that part of cancellation?
 If so, what's the best practice for where to put that?
 -->
@@ -783,7 +780,7 @@ A full version of this code would include clean-up work
 as part of cancellation,
 like deleting partial downloads and closing network connections.
 
-An task that isn't part of a task group can handle cancellation
+A task that isn't part of a task group can handle cancellation
 using the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
 For example:
 
@@ -806,11 +803,11 @@ let video = await Task.withTaskCancellationHandler {
 
   ::
 
-      let handle = spawnDetached {
+      let handle = Task.detached {
       await withTaskGroup(of: Bool.self) { group in
           var done = false
           while done {
-          await group.spawn { Task.isCancelled } // is this child task canceled?
+          await group.addTask { Task.isCancelled } // is this child task canceled?
           done = try await group.next() ?? false
           }
       print("done!") // <1>
