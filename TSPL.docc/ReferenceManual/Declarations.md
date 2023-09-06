@@ -3335,7 +3335,18 @@ Macros can be overloaded,
 following the same model used by functions.
 A macro declaration appears only at file scope.
 
-For more information, see <doc:Macros>.
+For an overview of macros in Swift, see <doc:Macros>.
+
+<!-- XXX OUTLINE
+
+the implementation of a macro is a separate Swift program
+xref SwiftSyntax
+
+xref the guide's chapter
+
+TODO TR: Confirm that the 'where' clause goes after the equals sign in the grammar.
+-->
+
 
 > Grammar of a macro declaration:
 >
@@ -3344,10 +3355,6 @@ For more information, see <doc:Macros>.
 > *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
 > *macro-function-signature-result* → **`->`** *type* \
 > *macro-definition* → **`=`** *expression*
-
-<!--
-TODO TR: Confirm that the 'where' clause goes after the equals sign.
--->
 
 ## Operator Declaration
 

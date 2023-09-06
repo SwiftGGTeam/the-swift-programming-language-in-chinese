@@ -1514,6 +1514,8 @@ Macro-expansion expressions have the following form:
 <#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
 ```
 
+
+
 A macro-expansion expression omits the parentheses
 if the macro doesn't take any arguments.
 
@@ -1525,6 +1527,25 @@ when the default value expression is evaluated at the call site.
 
 [`file`]: http://developer.apple.com/documentation/swift/documentation/swift/file
 [`line`]: http://developer.apple.com/documentation/swift/documentation/swift/line
+
+For an overview of macros in Swift, see <doc:Macros>.
+
+<!-- XXX OUTLINE
+this is the syntax to call a freestanding macro
+to call an attached macro, you spell it as a custom attribute
+
+types are checked before expanding macros
+the type info about a macro comes from its declaration (its definition isn't involved)
+
+Nested macros are expanded from the outside in.
+
+Elsewhere:
+attached macros that have multiple roles
+are expanded multiple times --
+but all expansions get the same original AST as their input
+
+xref the guide's chapter
+-->
 
 > Grammar of a macro-expansion expression:
 >
