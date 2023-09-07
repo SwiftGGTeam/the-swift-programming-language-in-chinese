@@ -53,7 +53,7 @@ func myFunction() {
 ```
 
 In the first line,
-`#function` calls the [`function`][] macro from the Swift standard library.
+`#function` calls the [`function()`][] macro from the Swift standard library.
 When you compile this code,
 Swift calls that macro's implementation,
 which replaces `#function` with the name of the current function.
@@ -63,7 +63,7 @@ In the second line,
 `#warning` calls the [`warning(_:)`][] macro from the Swift standard library
 to produce a custom compile-time warning.
 
-[`function`]: https://developer.apple.com/documentation/swift/function
+[`function()`]: https://developer.apple.com/documentation/swift/function()
 [`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
 
 Freestanding macros can produce a value, like `#function` does,
@@ -117,8 +117,15 @@ The macro reads the list of cases in the private enumeration,
 generates the list of constants for each option,
 and adds a conformance to the [`OptionSet`][] protocol.
 
+[`OptionSet`]: https://developer.apple.com/documentation/swift/optionset
+
+<!--
+When the @OptionSet macro comes back, change both links back:
+
 [`@OptionSet`]: https://developer.apple.com/documentation/swift/optionset-swift.macro
 [`OptionSet`]: https://developer.apple.com/documentation/swift/optionset-swift.protocol
+-->
+
 
 For comparison,
 here's what the expanded version of the `@OptionSet` macro looks like.

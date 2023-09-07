@@ -39,4 +39,19 @@ then
     exit_status=1
 fi
 
+echo "Checking links..."
+cmark --to xml TSPL.docc/*/*.md |
+xpath -q -n -e '//link/@destination' |
+sort -u | cut -f2 -d= | grep -v '^"doc:' | sed 's/^"//; s/"$//' |
+while read url
+do
+    if curl --silent --output /dev/null --fail --head $url
+    then
+        echo "     $url"
+    else
+        echo "BAD: $url"
+        exit_status=1
+    fi
+done
+
 exit $exit_status
