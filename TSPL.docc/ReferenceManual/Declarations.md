@@ -3327,9 +3327,13 @@ macro <#name#> = <#macro implementation#>
 
 The *macro implementation* is another macro,
 and indicates the location of the code that performs this macro's expansion.
+The code that performs macro expansion is a separate Swift program,
+that uses the [SwiftSyntax][] module to interact with Swift code.
 Call the `externalMacro(module:type:)` macro from the Swift standard library,
 passing in the name of a type that contains the macro's implementation,
 and the name of the module that contains that type.
+
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
 
 Macros can be overloaded,
 following the same model used by functions.
@@ -3338,12 +3342,6 @@ A macro declaration appears only at file scope.
 For an overview of macros in Swift, see <doc:Macros>.
 
 <!-- XXX OUTLINE
-
-the implementation of a macro is a separate Swift program
-xref SwiftSyntax
-
-xref the guide's chapter
-
 TODO TR: Confirm that the 'where' clause goes after the equals sign in the grammar.
 -->
 

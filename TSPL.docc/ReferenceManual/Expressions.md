@@ -1514,37 +1514,41 @@ Macro-expansion expressions have the following form:
 <#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
 ```
 
+You use macro expressions to call freestanding macros.
+To call an attached macro,
+use the custom attribute syntax described in <doc:Attributes>.
 
-
-A macro-expansion expression omits the parentheses
+A macro-expansion expression omits the parentheses after the macro's name
 if the macro doesn't take any arguments.
 
-A macro expression can't appear as the default value for a parameter,
-except for the [`file()`][] and [`line()`][] macros from the Swift standard library.
+A macro-expansion expression can't appear as the default value for a parameter,
+except the [`file()`][] and [`line()`][] macros from the Swift standard library.
 When used as the default value of a function or method parameter,
-These macros' value is determined
-when the default value expression is evaluated at the call site.
+these macros are evaluated using the source code location of the call site,
+not the location where they appear in a function definition.
 
 [`file()`]: https://developer.apple.com/documentation/swift/file()
 [`line()`]: https://developer.apple.com/documentation/swift/line()
 
+Nested macro-expansion expressions are evaluated from the outside in.
+For example, in the code below
+`outerMacro(_:)` is expanded first and the unexpanded call to `innerMacro(_:)`
+appears in the abstract syntax tree that `outerMacro(_:)` sees.
+
+```swift
+#outerMacro(12, #innerMacro(34), "some text")
+```
+
 For an overview of macros in Swift, see <doc:Macros>.
 
 <!-- XXX OUTLINE
-this is the syntax to call a freestanding macro
-to call an attached macro, you spell it as a custom attribute
-
 types are checked before expanding macros
 the type info about a macro comes from its declaration (its definition isn't involved)
-
-Nested macros are expanded from the outside in.
 
 Elsewhere:
 attached macros that have multiple roles
 are expanded multiple times --
 but all expansions get the same original AST as their input
-
-xref the guide's chapter
 -->
 
 > Grammar of a macro-expansion expression:
