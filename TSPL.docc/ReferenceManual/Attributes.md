@@ -24,6 +24,12 @@ and how it applies to a particular declaration.
 These *attribute arguments* are enclosed in parentheses,
 and their format is defined by the attribute they belong to.
 
+<!-- XXX
+Custom attributes
+Attached macros use custom attribute syntax
+Xref the macro-expansion expression section
+-->
+
 ## Declaration Attributes
 
 You can apply a declaration attribute to declarations only.

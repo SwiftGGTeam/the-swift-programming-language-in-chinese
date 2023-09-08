@@ -1514,10 +1514,6 @@ Macro-expansion expressions have the following form:
 <#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
 ```
 
-You use macro expressions to call freestanding macros.
-To call an attached macro,
-use the custom attribute syntax described in <doc:Attributes>.
-
 A macro-expansion expression omits the parentheses after the macro's name
 if the macro doesn't take any arguments.
 
@@ -1530,6 +1526,30 @@ not the location where they appear in a function definition.
 [`file()`]: https://developer.apple.com/documentation/swift/file()
 [`line()`]: https://developer.apple.com/documentation/swift/line()
 
+You use macro expressions to call freestanding macros.
+To call an attached macro,
+use the custom attribute syntax described in <doc:Attributes>.
+Both freestanding and attached macros are expanded as follows:
+
+1. Swift parses the source code and performs type checking,
+   to produce an abstract syntax tree (AST).
+
+2. The macro implementation receives AST nodes as its input
+   and performs the transformations needed by that macro.
+
+3. The transformed AST nodes that the macro implementation produced
+   are added to the original AST.
+
+The expansion of each macro is independent and self contained.
+However, as a performance optimization,
+Swift might start an external process that implements the macro
+and reuse the same process to expand multiple macros.
+When you implement a macro,
+that code must not depend on what macros your code previously expanded,
+or on any other external state like the current time.
+
+For nested macros and attached macros that have multiple roles,
+the expansion process repeats.
 Nested macro-expansion expressions are evaluated from the outside in.
 For example, in the code below
 `outerMacro(_:)` is expanded first and the unexpanded call to `innerMacro(_:)`
@@ -1539,17 +1559,13 @@ appears in the abstract syntax tree that `outerMacro(_:)` sees.
 #outerMacro(12, #innerMacro(34), "some text")
 ```
 
+An attached macro that has multiple roles is expanded once for each role.
+Each expansion receives the same, original, AST as its input.
+Swift forms the overall expansion
+by collecting all of the generated AST nodes
+and putting them in their corresponding places in the AST.
+
 For an overview of macros in Swift, see <doc:Macros>.
-
-<!-- XXX OUTLINE
-types are checked before expanding macros
-the type info about a macro comes from its declaration (its definition isn't involved)
-
-Elsewhere:
-attached macros that have multiple roles
-are expanded multiple times --
-but all expansions get the same original AST as their input
--->
 
 > Grammar of a macro-expansion expression:
 >
