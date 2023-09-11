@@ -24,11 +24,11 @@ and how it applies to a particular declaration.
 These *attribute arguments* are enclosed in parentheses,
 and their format is defined by the attribute they belong to.
 
-<!-- XXX
-Custom attributes
-Attached macros use custom attribute syntax
-Xref the macro-expansion expression section
--->
+Attached macros and property wrappers also use attribute syntax.
+For information about how macros are expanded,
+see <doc:Expressions#Macro-Expansion-Expression>;
+for information about property wrappers,
+see <doc:Attributes#propertyWrapper>.
 
 ## Declaration Attributes
 
