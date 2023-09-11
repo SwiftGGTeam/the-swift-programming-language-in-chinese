@@ -3341,10 +3341,11 @@ A macro declaration appears only at file scope.
 
 For an overview of macros in Swift, see <doc:Macros>.
 
-<!-- XXX OUTLINE
-TODO TR: Confirm that the 'where' clause goes after the equals sign in the grammar.
+<!--
+The placement of the 'where' clause in the grammar below is atypical.
+On other declarations, it goes between the name and definition,
+but here it goes at the end after the #externalMacro(...) bit.
 -->
-
 
 > Grammar of a macro declaration:
 >

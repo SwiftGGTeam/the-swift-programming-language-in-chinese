@@ -1540,7 +1540,7 @@ Both freestanding and attached macros are expanded as follows:
 3. The transformed AST nodes that the macro implementation produced
    are added to the original AST.
 
-The expansion of each macro is independent and self contained.
+The expansion of each macro is independent and self-contained.
 However, as a performance optimization,
 Swift might start an external process that implements the macro
 and reuse the same process to expand multiple macros.
@@ -1550,10 +1550,11 @@ or on any other external state like the current time.
 
 For nested macros and attached macros that have multiple roles,
 the expansion process repeats.
-Nested macro-expansion expressions are evaluated from the outside in.
+Nested macro-expansion expressions expand from the outside in.
 For example, in the code below
 `outerMacro(_:)` is expanded first and the unexpanded call to `innerMacro(_:)`
-appears in the abstract syntax tree that `outerMacro(_:)` sees.
+appears in the abstract syntax tree
+that `outerMacro(_:)` receives as its input.
 
 ```swift
 #outerMacro(12, #innerMacro(34), "some text")
