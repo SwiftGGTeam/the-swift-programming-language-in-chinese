@@ -1842,6 +1842,76 @@ Task {
   ```
 -->
 
+Use task groups to structure concurrent code.
+
+```swift
+let userIDs = await withTaskGroup(of: Int.self) { taskGroup in
+    for server in ["primary", "secondary", "development"] {
+        taskGroup.addTask {
+            return await fetchUserID(from: server)
+        }
+    }
+
+    var results: [Int] = []
+    for await result in taskGroup {
+        results.append(result)
+    }
+    return results
+}
+```
+
+Actors are similar to classes,
+except they ensure that different asynchronous functions
+can safely interact with an instance of the same actor at the same time.
+
+```swift
+actor ServerConnection {
+    var server: String = "primary"
+    private var activeUsers: [Int] = []
+    func connect() async -> Int {
+        let userID = await fetchUserID(from: server)
+        // ... communicate with server ...
+        activeUsers.append(userID)
+        return userID
+    }
+}
+```
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> actor Oven {
+         var contents: [String] = []
+         func bake(_ food: String) -> String {
+             contents.append(food)
+             // ... wait for food to bake ...
+             return contents.removeLast()
+         }
+     }
+  ```
+-->
+
+When you call a method on an actor or access one of its properties,
+you mark that code with `await`
+to indicate that it might have to wait for other code
+that's already running on the actor to finish.
+
+```swift
+let server = ServerConnection()
+let userID = await server.connect()
+```
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> let oven = Oven()
+  -> let biscuits = await oven.bake("biscuits")
+  ```
+-->
+
+
 ## Protocols and Extensions
 
 Use `protocol` to declare a protocol.
