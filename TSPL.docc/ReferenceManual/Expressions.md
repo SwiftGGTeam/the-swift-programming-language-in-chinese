@@ -327,8 +327,8 @@ see [Operator Declarations](https://developer.apple.com/documentation/swift/oper
 > Grammar of an infix expression:
 >
 > *infix-expression* → *infix-operator* *prefix-expression* \
-> *infix-expression* → *assignment-operator* *try-operator*_?_ *prefix-expression* \
-> *infix-expression* → *conditional-operator* *try-operator*_?_ *prefix-expression* \
+> *infix-expression* → *assignment-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
+> *infix-expression* → *conditional-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
 > *infix-expression* → *type-casting-operator* \
 > *infix-expressions* → *infix-expression* *infix-expressions*_?_
 
