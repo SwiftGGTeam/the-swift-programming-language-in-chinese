@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**XXX release date**
+**2023-09-18**
 
 - Updated for Swift 5.9.
 - Added information about `if` and `switch` expressions
