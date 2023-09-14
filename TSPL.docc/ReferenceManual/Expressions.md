@@ -1529,7 +1529,7 @@ not the location where they appear in a function definition.
 You use macro expressions to call freestanding macros.
 To call an attached macro,
 use the custom attribute syntax described in <doc:Attributes>.
-Both freestanding and attached macros are expanded as follows:
+Both freestanding and attached macros expand as follows:
 
 1. Swift parses the source code and performs type checking,
    to produce an abstract syntax tree (AST).
@@ -1552,7 +1552,7 @@ For nested macros and attached macros that have multiple roles,
 the expansion process repeats.
 Nested macro-expansion expressions expand from the outside in.
 For example, in the code below
-`outerMacro(_:)` is expanded first and the unexpanded call to `innerMacro(_:)`
+`outerMacro(_:)` expands first and the unexpanded call to `innerMacro(_:)`
 appears in the abstract syntax tree
 that `outerMacro(_:)` receives as its input.
 
@@ -1560,7 +1560,7 @@ that `outerMacro(_:)` receives as its input.
 #outerMacro(12, #innerMacro(34), "some text")
 ```
 
-An attached macro that has multiple roles is expanded once for each role.
+An attached macro that has multiple roles expands once for each role.
 Each expansion receives the same, original, AST as its input.
 Swift forms the overall expansion
 by collecting all of the generated AST nodes
