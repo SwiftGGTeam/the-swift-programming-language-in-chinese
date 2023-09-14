@@ -1531,7 +1531,7 @@ To call an attached macro,
 use the custom attribute syntax described in <doc:Attributes>.
 Both freestanding and attached macros expand as follows:
 
-1. Swift parses the source code and performs type checking,
+1. Swift parses the source code
    to produce an abstract syntax tree (AST).
 
 2. The macro implementation receives AST nodes as its input
