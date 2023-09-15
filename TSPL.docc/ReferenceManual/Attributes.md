@@ -24,6 +24,12 @@ and how it applies to a particular declaration.
 These *attribute arguments* are enclosed in parentheses,
 and their format is defined by the attribute they belong to.
 
+Attached macros and property wrappers also use attribute syntax.
+For information about how macros expand,
+see <doc:Expressions#Macro-Expansion-Expression>.
+For information about property wrappers,
+see <doc:Attributes#propertyWrapper>.
+
 ## Declaration Attributes
 
 You can apply a declaration attribute to declarations only.
