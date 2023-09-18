@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**2023-06-05**
+**2023-09-18**
 
 - Updated for Swift 5.9.
 - Added information about `if` and `switch` expressions
@@ -10,11 +10,17 @@ Review the recent changes to this book.
   and the <doc:Expressions#Conditional-Expression> section.
 - Added the <doc:Macros> chapter,
   with information about generating code at compile time.
+- Expanded the discussion of optionals in <doc:TheBasics>.
+- Added an example of concurrency to <doc:GuidedTour>.
 - Added information about boxed protocol types
   to the <doc:OpaqueTypes> chapter.
-- Updated the <doc:Attributes#Result-Building-Methods> section
-  with information about the `buildPartialBlock(first:)`
-  and `buildPartialBlock(accumulated:next:)` methods.
+- Added information about the `buildPartialBlock(first:)`
+  and `buildPartialBlock(accumulated:next:)` methods
+  to the <doc:Attributes#Result-Transformations> section.
+- Added visionOS to the lists of platforms in
+  <doc:Attributes#available>
+  and <doc:Statements#Conditional-Compilation-Block>.
+- Formatted the formal grammar to use blank lines for grouping.
 
 **2023-03-30**
 
@@ -806,12 +812,6 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

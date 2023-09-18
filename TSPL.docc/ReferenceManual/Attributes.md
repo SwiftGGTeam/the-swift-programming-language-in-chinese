@@ -24,6 +24,12 @@ and how it applies to a particular declaration.
 These *attribute arguments* are enclosed in parentheses,
 and their format is defined by the attribute they belong to.
 
+Attached macros and property wrappers also use attribute syntax.
+For information about how macros expand,
+see <doc:Expressions#Macro-Expansion-Expression>.
+For information about property wrappers,
+see <doc:Attributes#propertyWrapper>.
+
 ## Declaration Attributes
 
 You can apply a declaration attribute to declarations only.
@@ -2462,12 +2468,6 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 > *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
 > *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -3327,15 +3327,19 @@ macro <#name#> = <#macro implementation#>
 
 The *macro implementation* is another macro,
 and indicates the location of the code that performs this macro's expansion.
+The code that performs macro expansion is a separate Swift program,
+that uses the [SwiftSyntax][] module to interact with Swift code.
 Call the `externalMacro(module:type:)` macro from the Swift standard library,
 passing in the name of a type that contains the macro's implementation,
 and the name of the module that contains that type.
+
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
 
 Macros can be overloaded,
 following the same model used by functions.
 A macro declaration appears only at file scope.
 
-For more information, see <doc:Macros>.
+For an overview of macros in Swift, see <doc:Macros>.
 
 > Grammar of a macro declaration:
 >
@@ -3344,10 +3348,6 @@ For more information, see <doc:Macros>.
 > *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
 > *macro-function-signature-result* → **`->`** *type* \
 > *macro-definition* → **`=`** *expression*
-
-<!--
-TODO TR: Confirm that the 'where' clause goes after the equals sign.
--->
 
 ## Operator Declaration
 
@@ -3712,12 +3712,6 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 > *mutation-modifier* → **`mutating`** | **`nonmutating`**
 >
 > *actor-isolation-modifier* → **`nonisolated`**
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
