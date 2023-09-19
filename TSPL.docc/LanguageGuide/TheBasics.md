@@ -74,14 +74,16 @@ var currentLoginAttempt = 0
 
 This code can be read as:
 
-“Declare a new constant called `maximumNumberOfLoginAttempts`, and give it
-a value of `10`. Then, declare a new variable called `currentLoginAttempt`,
+“Declare a new constant called `maximumNumberOfLoginAttempts`,
+and give it a value of `10`.
+Then, declare a new variable called `currentLoginAttempt`,
 and give it an initial value of `0`.”
 
-In this example, the maximum number of allowed login attempts is declared as
-a constant, because the maximum value never changes. The current login attempt
-counter is declared as a variable, because this value must be incremented after
-each failed login attempt.
+In this example,
+the maximum number of allowed login attempts is declared as a constant,
+because the maximum value never changes.
+The current login attempt counter is declared as a variable,
+because this value must be incremented after each failed login attempt.
 
 You can declare a constant or a variable without assigning a value to it
 immediately, as long as you're initializing them with a value before they're
