@@ -53,6 +53,7 @@ whereas a *variable* can be set to a different value in the future.
 
 ### Declaring Constants and Variables
 
+Constants and variables must be declared before they're used.
 You declare constants with the `let` keyword
 and variables with the `var` keyword.
 Here's an example of how constants and variables can be used
@@ -85,22 +86,31 @@ because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-You can declare a constant or a variable without assigning a value to it
-immediately, as long as you're initializing them with a value before they're
-used.
+If a stored value in your code won't change,
+always declare it as a constant with the `let` keyword.
+Use variables only for storing values that need to be able to change.
+
+When you declare a constant or a variable,
+you can give it a value as part of that declaration,
+like the examples above.
+Alternately,
+you can assign its initial value later in the program,
+as long as it's guaranteed to have a value
+before the first time you read from it.
 
 ```swift
 var environment = "development"
 let maximumNumberOfLoginAttempts: Int
+// maximumNumberOfLoginAttempts has no value yet.
 
 if environment == "development" {
     maximumNumberOfLoginAttempts = 100
 } else {
     maximumNumberOfLoginAttempts = 10
 }
-
-// You can use maximumNumberOfLoginAttempts here.
+// Now maximumNumberOfLoginAttempts has a value, and can be read.
 ```
+
 <!--
   - test: `constantsWithDeferredInitialization`
 
@@ -117,18 +127,30 @@ if environment == "development" {
   ```
 -->
 
-In this example, the maximum number of login attemts is set to 100 for
-development environment, or to 10 for any other environments.
+In this example,
+the maximum number of login attempts is constant,
+and its value depends on the environment.
+In the development environment,
+it has a value of 100;
+in any other environment, its value is 10.
+Both branches of the `if` statement
+initialize `maximumNumberOfLoginAttempts` with some value,
+which guarantees that the constant always gets a value.
 
-In Swift, variables and constants don't have an implicit default value.
-When Swift compiles your code, it performs a dataflow analysis and verifies that
-all constants and variables are defined and initialized with a value before
-they are used. This technique is referred to as
-[definitive initialization](http://en.wikipedia.org/wiki/Definite_assignment_analysis)
+When you define a constant or variable
+without giving it a value,
+Swift analyzes your code at compile time
+and confirms that all possible paths of execution
+are guaranteed to set a value before reading a value.
+This analysis is called *definitive initialization*.
 
-The example above is valid, because both branches of the `if` statement
-initialize `maximumNumberOfLoginAttempts` with some value. If one of the
-branches did not assign a value, Swift would return a compilation error.
+> Note:
+> Definitive initialization
+> can't construct proofs that require domain knowledge,
+> and its ability to track state across conditionals is finite.
+> If you can determine that a value is always set,
+> but Swift can't prove this is the case,
+> try simplifying the conditionals or use a variable instead.
 
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:
@@ -146,10 +168,6 @@ var x = 0.0, y = 0.0, z = 0.0
   << 0.0 0.0 0.0
   ```
 -->
-
-> Note: If a stored value in your code won't change,
-> always declare it as a constant with the `let` keyword.
-> Use variables only for storing values that need to be able to change.
 
 ### Type Annotations
 
