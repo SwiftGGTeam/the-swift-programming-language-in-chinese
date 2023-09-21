@@ -1898,7 +1898,7 @@ Because a failed assertion or precondition
 indicates an invalid program state,
 there's no way to catch a failed assertion.
 Recovering from an invalid state is impossible.
-When an assertion fails, 
+When an assertion fails,
 at least one piece of the program's data is invalid ---
 but you don't know why it's invalid
 or whether an additional state is also invalid.
