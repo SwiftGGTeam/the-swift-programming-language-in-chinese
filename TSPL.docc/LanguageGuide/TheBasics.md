@@ -152,6 +152,12 @@ This analysis is called *definitive initialization*.
 > but Swift can't prove this is the case,
 > try simplifying the conditionals or use a variable instead.
 
+<!--
+In the most general case,
+DI reduces to the halting problem,
+as shown by Rice's theorem.
+-->
+
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:
 
