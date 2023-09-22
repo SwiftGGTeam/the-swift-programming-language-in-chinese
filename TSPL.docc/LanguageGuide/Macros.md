@@ -615,7 +615,7 @@ https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Synta
     + Find a node's location in source
 
 - Macro expansion happens in their surrounding context.
-  A macro can affect that environment if it needs to —
+  A macro can affect that environment if it needs to ---
   and a macro that has bugs can interfere with that environment.
   (Give guidance on when you'd do this.  It should be rare.)
 

@@ -947,8 +947,8 @@ print("the number of characters in \(word) is \(word.count)")
 -->
 
 > Note: Extended grapheme clusters can be composed of multiple Unicode scalars.
-> This means that different characters—
-> and different representations of the same character—
+> This means that different characters ---
+> and different representations of the same character ---
 > can require different amounts of memory to store.
 > Because of this, characters in Swift don't each take up
 > the same amount of memory within a string's representation.
