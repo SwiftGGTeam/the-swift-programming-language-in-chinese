@@ -831,11 +831,6 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
-> Grammar of a function parameter:
->
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
-> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
-
 ### Parameter Modifiers
 
 A parameter can also include one of the *parameter modifier*
@@ -1086,9 +1081,9 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 ```
 
 However,
-if the function does keep the value
-- for example, by storing it in a global variable
-- you will have to make a copy.
+if the function does keep the value ---
+for example, by storing it in a global variable ---
+you will have to make a copy.
 
 ```swift
 // As above, but this `isLessThan` also wants to record the smallest value
@@ -1654,6 +1649,14 @@ but the new method must preserve its return type and nonreturning behavior.
 > *external-parameter-name* → *identifier* \
 > *local-parameter-name* → *identifier* \
 > *default-argument-clause* → **`=`** *expression*
+
+<!-- XXX merge into the box above -->
+
+> Grammar of a function parameter:
+>
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
+
 
 <!--
   NOTE: Code block is optional in the context of a protocol.
