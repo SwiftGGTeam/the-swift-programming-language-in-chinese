@@ -462,7 +462,25 @@ this creates several files,
 including a template for a macro implementation and declaration.
 
 To add macros to an existing project,
-add a target for the macro implementation
+first ensure that your `swift-tools-version` is set to  5.9 or greater.
+Your `platforms` list must similarly specify a macOS version of 10.15 or greater.
+You also need to import the `CompilerPluginSupport` module.
+The first few lines of your `Package.swift` file might look something like this:
+
+```swift
+// swift-tools-version: 5.9
+
+import PackageDescription
+import CompilerPluginSupport
+
+let package = Package(
+    name: "MyPackage",
+    platforms: [
+        .iOS(.v17), .macOS(.v13),
+    ],
+```
+
+Next, add a target for the macro implementation
 and a target for the macro library.
 For example,
 you can add something like the following to your `Package.swift` file,
@@ -516,6 +534,9 @@ consider `#fourCharacterCode` from the previous section.
 Here's a structure that implements that macro:
 
 ```swift
+import SwiftSyntax
+import SwiftSyntaxMacros
+
 public struct FourCharacterCode: ExpressionMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
