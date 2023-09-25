@@ -552,6 +552,19 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
 enum CustomError: Error { case message(String) }
 ```
 
+If you're adding this macro to an existing Swift Package Manager project,
+add a type that acts as the entry point for the macro target
+and lists the macros that the target defines:
+
+```swift
+import SwiftCompilerPlugin
+
+@main
+struct MyProjectMacros: CompilerPlugin {
+    var providingMacros: [Macro.Type] = [FourCharacterCode.self]
+}
+```
+
 The `#fourCharacterCode` macro
 is a freestanding macro that produces an expression,
 so the `FourCharacterCode` type that implements it
