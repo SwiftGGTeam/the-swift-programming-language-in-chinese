@@ -833,17 +833,16 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
 ### Parameter Modifiers
 
-A parameter can also include one of the *parameter modifier*
-keywords `inout`, `borrowing`, or `consuming`
-to modify how the
-argument is passed to the function.
+A *parameter modifier* changes how the argument is passed to the function.
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
 ```
 
-You can specify at most one parameter modifier next to the type
-of the argument:
+To use a parameter modifier,
+write `inout`, `borrowing`, or `consuming`
+before the argument's type.
+
 ```swift
 func someFunction(a: inout A, b: consuming B, c: C) { ... }
 ```
@@ -851,8 +850,10 @@ func someFunction(a: inout A, b: consuming B, c: C) { ... }
 #### In-Out Parameters
 
 By default, function arguments in Swift are passed by value:
-any changes made within the function are not visible in the caller.
-You can change this with the `inout` parameter modifier.
+Any changes made within the function are not visible in the caller.
+To make an in-out parameter instead,
+you apply the `inout` parameter modifier.
+
 
 ```swift
 func someFunction(a: inout Int) {
@@ -860,14 +861,14 @@ func someFunction(a: inout Int) {
 }
 ```
 
-When calling such a function, the `inout` argument is
-prefixed with a `&` symbol to mark that the value may
-be changed by the function call.
+When calling a function that includes in-out parameters,
+the in-out argument prefixed with an ampersand (`&`)
+to mark that the function call can change the argument's value.
 
 ```swift
 var x = 7
 someFunction(&x)
-print(x) // 8
+print(x)  // Prints "8"
 ```
 
 In-out parameters are passed as follows:
@@ -1041,36 +1042,30 @@ see <doc:Functions#In-Out-Parameters>.
 
 #### Borrowing and Consuming Parameters
 
-The Swift compiler has varying ownership rules that it
-can use to manage object lifetimes across function calls.
-The default rules are designed to minimize overhead in most cases,
-but if you want to more carefully control ownership for
-a particular case,
-you can explicitly specify `borrowing`
-or `consuming` behavior for a particular parameter.
+By default, Swift uses a set of rules
+to automatically manage manage object lifetime across function calls,
+copying values when required.
+<!-- XXX "object lifetime" is a new term -->
+The default rules are designed to minimize overhead in most cases ---
+if you want more specific control,
+you can apply the `borrowing` or `consuming` parameter modifier.
+In this case,
+you must use `copy` to explicitly mark copy operations.
 
-Note:
+Regardless of whether you use the default rules,
 Swift guarantees that object lifetime and
-ownership will be correctly managed in all cases,
-with or without one of these modifiers.
-These modifiers only impact the relative efficiency
-for particular patterns of usage.
+ownership are correctly managed in all cases.
+These parameter modifiers impact only the relative efficiency
+of particular usage patterns, not correctness.
 
-Unlike `inout`, neither `borrowing` nor
-`consuming` parameters require any special
-notation when you call the function:
-
-```swift
-func someFunction(a: borrowing A, b: consuming B) { ... }
-
-someFunction(a: someA, b: someB)
-```
+<!-- XXX xref the ARC chapter, for info about the default behavior -->
 
 The `borrowing` modifier indicates that the function
-will not keep the value.
-In this case, the caller will retain ownership
-and will be responsible for ensuring that the object remains alive,
-which minimizes overhead when the function
+does not keep the parameter's value.
+In this case, the caller retains ownership
+and is responsible for ensuring that the object remains alive.
+<!-- XXX we don't use "alive" elsewhere in this sense -->
+Using `borrowing` minimizes overhead when the function
 is making only transient use of the object.
 
 ```swift
@@ -1080,10 +1075,9 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 }
 ```
 
-However,
-if the function does keep the value ---
+If the function needs to keep the parameter's value
 for example, by storing it in a global variable ---
-you will have to make a copy.
+you use `copy` to explicitly copy that value.
 
 ```swift
 // As above, but this `isLessThan` also wants to record the smallest value
@@ -1098,12 +1092,10 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 ```
 
 Conversely,
-the `consuming` modifier indicates
-that the function will take ownership of the
-value,
-accepting responsibility for
-either storing or destroying it before the
-function returns.
+the `consuming` parameter modifier indicates
+that the function takes ownership of the value,
+accepting responsibility for either storing or destroying it
+before the function returns.
 
 ```swift
 // `store` keeps its argument, so we mark it `consuming`
@@ -1112,29 +1104,42 @@ func store(a: consuming A) {
 }
 ```
 
-This minimizes overhead when the caller no longer
-needs to use the object after the call.
+Using `consuming` minimizes overhead when the caller no longer
+needs to use the object after the function call.
 
 ```swift
 // Usually, this is the last thing we do with a value
 store(a: value)
 ```
 
-But if the caller does need to use the object
-after the call,
+If the caller does need to use the object after the function call,
 it might need to make a separate
 copy before calling the function.
+<!-- XXX TR:
+When do you need to explicitly copy?
+When does the compiler implicitly insert a copy, as shown below?
+-->
 
 ```swift
-// The compiler will insert an implicit copy here
-store(a: value) // This consumes the value
-print(value) // This uses the copy
+// The compiler inserts an implicit copy here
+store(a: someValue)  // This function consumes someValue
+print(someValue)  // This uses the copy of someValue
+```
+
+Unlike `inout`, neither `borrowing` nor
+`consuming` parameters require any special
+notation when you call the function:
+
+```swift
+func someFunction(a: borrowing A, b: consuming B) { ... }
+
+someFunction(a: someA, b: someB)
 ```
 
 The explicit use of either `borrowing` or `consuming`
 indicates your intention to more tightly control
 the overhead of runtime ownership management.
-Since copies can trigger unexpected runtime ownership
+Because copies can trigger unexpected runtime ownership
 operations,
 parameters marked with either of these
 modifiers cannot be copied unless you
