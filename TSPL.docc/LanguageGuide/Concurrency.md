@@ -623,14 +623,20 @@ Each task in a task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
-Although you take on some of the responsibility for correctness,
-the explicit parent-child relationships between tasks
-lets Swift handle some behaviors like propagating cancellation for you,
-and lets Swift detect some errors at compile time.
+The explicit parent-child relationships between tasks has several advantages:
+
+- In a parent task,
+  you can't forget to wait for its child tasks to complete.
+
+- When setting a higher priority on a child task,
+  the parent task's priority is automatically escalated.
+
+- When a parent task is canceled,
+  each of its child tasks is also automatically canceled.
+
+- Talk-local values propagate to child tasks efficiently and automatically.
 
 [`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
-
-<!-- TR: What's a good example of this kind of error? -->
 
 Here's another version of the code to download photos
 that handles any number of photos:
@@ -655,14 +661,16 @@ I think that's a mistake.
 
 The code above creates a new task group,
 and then creates child tasks of that task group
-to download each photo is the gallery.
-Each task group downloads a single photograph
-and then adds it to the photographs being displayed.
+to download each photo in the gallery.
 Because there isn't a specific priority passed
 when calling `addTask(priority:operation:)`,
 these child tasks tasks get the same priority as the task group.
 Swift schedules these tasks,
 running as many of them at the same time as conditions allow.
+As soon a child task finishes downloading a photo,
+that photo is displayed.
+There's no guarantee about the order that child tasks complete,
+so the photos from this gallery can be shown in any order.
 
 > Note:
 > If the code to download a photo could throw an error,
