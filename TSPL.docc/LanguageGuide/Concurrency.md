@@ -646,18 +646,15 @@ await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
         group.addTask {
-            let photo = downloadPhoto(named: name)
-            show(photo)
+            return await downloadPhoto(named: name)
         }
+    }
+
+    for await photo in group {
+        show(photo)
     }
 }
 ```
-
-<!-- XXX
-The above listing uses TaskGroup<Data> but doesn't return Data,
-and its child tasks also don't return Data.
-I think that's a mistake.
--->
 
 The code above creates a new task group,
 and then creates child tasks of that task group
@@ -677,7 +674,7 @@ so the photos from this gallery can be shown in any order.
 > you would call `withThrowingTaskGroup(of:returning:body:)` instead.
 
 In the code listing above,
-each photo is downloaded and immediately displayed,
+each photo is downloaded and then displayed,
 so the task group doesn't return any results.
 For a task group that returns a result,
 you add code that accumulates its result
@@ -687,13 +684,16 @@ inside the closure you pass to `withTaskGroup(of:returning:body:)`.
 let photos = await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        group.addTask { await downloadPhoto(named: name) }
+        group.addTask {
+            return await downloadPhoto(named: name)
+        }
     }
 
     var results: [Data] = []
     for await photo in group {
         results.append(photo)
     }
+
     return results
 }
 ```
@@ -707,7 +707,6 @@ and then continues waiting until all child tasks have finished.
 Finally,
 the task group returns the array of downloaded photos
 as its overall result.
-
 
 ### Task Cancellation
 
