@@ -305,12 +305,6 @@ if you try to add concurrent code to this function,
 introducing a possible suspension point,
 you'll get compile-time error instead of introducing a bug.
 
-<!--
-  TODO add detail above about how the *compiler* can reason about
-  the async/await version better too
-  and give you better guarantees and clearer errors
--->
-
 The example above showed an approach you can use
 to prevent a piece of code from containing any possible suspension points.
 In contrast,
