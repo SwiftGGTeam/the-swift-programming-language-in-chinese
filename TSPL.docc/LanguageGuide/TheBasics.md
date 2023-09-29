@@ -136,12 +136,8 @@ in any other environment, its value is 10.
 Both branches of the `if` statement
 initialize `maximumNumberOfLoginAttempts` with some value,
 guaranteeing that the constant always gets a value.
-
-When you define a constant or variable
-without giving it a value,
-Swift analyzes your code to make sure you set a value
-before the first time you read its value.
-For more information about this analysis,
+For information about how Swift checks your code
+when you set an initial value this way,
 see <doc:Declarations#Constant-Declaration>.
 
 You can declare multiple constants or multiple variables on a single line,
