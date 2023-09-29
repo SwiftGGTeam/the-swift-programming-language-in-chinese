@@ -88,7 +88,7 @@ because this value must be incremented after each failed login attempt.
 
 If a stored value in your code won't change,
 always declare it as a constant with the `let` keyword.
-Use variables only for storing values that need to be able to change.
+Use variables only for storing values that change.
 
 When you declare a constant or a variable,
 you can give it a value as part of that declaration,
@@ -135,28 +135,14 @@ it has a value of 100;
 in any other environment, its value is 10.
 Both branches of the `if` statement
 initialize `maximumNumberOfLoginAttempts` with some value,
-which guarantees that the constant always gets a value.
+guaranteeing that the constant always gets a value.
 
 When you define a constant or variable
 without giving it a value,
-Swift analyzes your code at compile time
-and confirms that all possible paths of execution
-are guaranteed to set a value before reading a value.
-This analysis is called *definitive initialization*.
-
-> Note:
-> Definitive initialization
-> can't construct proofs that require domain knowledge,
-> and its ability to track state across conditionals is finite.
-> If you can determine that a value is always set,
-> but Swift can't prove this is the case,
-> try simplifying the conditionals or use a variable instead.
-
-<!--
-In the most general case,
-DI reduces to the halting problem,
-as shown by Rice's theorem.
--->
+Swift analyzes your code to make sure you set a value
+before the first time you read its value.
+For more information about this analysis,
+see <doc:Declarations#Constant-Declaration>.
 
 You can declare multiple constants or multiple variables on a single line,
 separated by commas:

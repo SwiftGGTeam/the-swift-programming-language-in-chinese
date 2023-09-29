@@ -156,6 +156,24 @@ as long as it's guaranteed to have a value set
 before the first time its value is read.
 If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
+This analysis is called *definite initialization* ---
+the compiler proves that a value is definitely set before being read.
+
+> Note:
+> Definite initialization
+> can't construct proofs that require domain knowledge,
+> and its ability to track state across conditionals has a limit.
+> If you can determine that constant always has a value set,
+> but the compiler can't prove this is the case,
+> try simplifying the code paths that set the value,
+> or use a variable declaration instead.
+
+<!--
+In the most general case,
+DI reduces to the halting problem,
+as shown by Rice's theorem.
+-->
+
 When a constant declaration occurs in the context of a class or structure
 declaration, it's considered a *constant property*.
 Constant declarations aren't computed properties and therefore don't have getters
@@ -277,6 +295,9 @@ That said, if no initializer *expression* is present,
 the variable declaration must include an explicit type annotation (`:` *type*).
 
 As with constant declarations,
+if a variable declaration omits the initializer *expression*,
+the variable must have a value set before the first time it is read.
+Also like constant declarations,
 if the *variable name* is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
