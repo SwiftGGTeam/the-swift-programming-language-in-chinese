@@ -34,7 +34,6 @@ the term *declaration* covers both declarations and definitions.
 > *declaration* → *macro-declaration* \
 > *declaration* → *operator-declaration* \
 > *declaration* → *precedence-group-declaration* \
-> *declarations* → *declaration* *declarations*_?_
 
 ## Top-Level Code
 
