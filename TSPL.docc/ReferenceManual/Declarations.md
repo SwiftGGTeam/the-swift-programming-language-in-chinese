@@ -1807,21 +1807,6 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   and they behave differently.
 -->
 
-<!--
-  old-grammar
-  Grammar of an enumeration declaration
-
-  enum-declaration -> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
-  enum-name -> identifier
-  enum-body -> ``{`` declarations-OPT ``}``
-
-  enum-member-declaration -> attribute-list-OPT ``case`` enumerator-list
-  enumerator-list -> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-  enumerator -> enumerator-name tuple-type-OPT
-  enumerator-name -> identifier
-  raw-value-assignment -> ``=`` literal
--->
-
 ## Structure Declaration
 
 A *structure declaration* introduces a named structure type into your program.
