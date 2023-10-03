@@ -588,7 +588,7 @@ In the example above,
 the first `guard` block extracts the string literal from the AST,
 assigning that AST element to `literalSegment`.
 The second `guard` block
-calls the private `FourCharacterCode(for:)` function.
+calls the private `fourCharacterCode(for:)` function.
 Both of these blocks throw an error if the macro is used incorrectly ---
 the error message becomes a compiler error
 at the malformed call site.
