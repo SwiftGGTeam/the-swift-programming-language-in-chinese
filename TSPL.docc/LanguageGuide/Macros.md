@@ -704,7 +704,7 @@ let file = BasicMacroExpansionContext.KnownSourceFile(
 let context = BasicMacroExpansionContext(sourceFiles: [source: file])
 
 let transformedSF = source.expand(
-    macros:["fourCharacterCode": FourCC.self],
+    macros:["fourCharacterCode": FourCharacterCode.self],
     in: context
 )
 
