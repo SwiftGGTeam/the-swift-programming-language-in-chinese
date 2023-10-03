@@ -752,17 +752,11 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
 }
 ```
 
-<!-- XXX TR:
-Should the listing above add a call to group.cancelAll()
-to show that part of cancellation?
-If so, what's the best practice for where to put that?
--->
-
 The code above makes several changes from the previous version:
 
 - Each task is added using the
-  `TaskGroup.addTaskUnlessCancelled(priority:operation:)` method,
-  to avoid adding new tasks after the task group has been canceled.
+  [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] method,
+  to avoid adding starting new work after cancellation.
 
 - Each task checks for cancellation
   before starting to download the photo.
@@ -777,25 +771,30 @@ The code above makes several changes from the previous version:
 
 [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
 
-A full version of this code would include clean-up work
-as part of cancellation,
-like deleting partial downloads and closing network connections.
-
-A task that isn't part of a task group can handle cancellation
-using the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
+For work that needs immediate notification of cancellation,
+use the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
 For example:
 
 [`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
 
 ```swift
-let video = await Task.withTaskCancellationHandler {
-    let file = makeTemporaryFile()
-    renderSlideshow(of: photos, to: file)
-    return file
+let task = await Task.withTaskCancellationHandler {
+    // ...
 } onCancel: {
-    deleteTemporaryFile(file)
+    print("Canceled!")
 }
+
+// ... some time later...
+task.cancel()  // Prints "Canceled!"
 ```
+
+When using a cancellation handler,
+task cancellation is still cooperative:
+The task either runs to completion
+or checks for cancellation and stops early.
+Because the task is still running when the cancellation handler starts,
+avoid sharing state between the task and its cancellation handler,
+which could create a race condition.
 
 <!--
   OUTLINE
