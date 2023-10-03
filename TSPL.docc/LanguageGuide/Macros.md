@@ -509,7 +509,7 @@ Replace the `some-tag` placeholder in the code above
 with the Git tag for the version of SwiftSyntax you want to use.
 
 Depending on your macro's role,
-there's a corresponding protocol from SwiftSystem
+there's a corresponding protocol from SwiftSyntax
 that the macro implementation conforms to.
 For example,
 consider `#fourCharacterCode` from the previous section.
@@ -571,7 +571,7 @@ so the `FourCharacterCode` type that implements it
 conforms to the `ExpressionMacro` protocol.
 The `ExpressionMacro` protocol has one requirement,
 a `expansion(of:in:)` method that expands the AST.
-For the list of macro roles and their corresponding SwiftSystem protocols,
+For the list of macro roles and their corresponding SwiftSyntax protocols,
 see <doc:Attributes#attached> and <doc:Attributes#freestanding>
 in <doc:Attributes>.
 
