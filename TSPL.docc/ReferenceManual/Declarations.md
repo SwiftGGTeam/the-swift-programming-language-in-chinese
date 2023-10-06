@@ -1648,20 +1648,15 @@ but the new method must preserve its return type and nonreturning behavior.
 >
 > *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* *default-argument-clause*_?_ \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* **`...`** \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`** \
+>
 > *external-parameter-name* → *identifier* \
 > *local-parameter-name* → *identifier* \
-> *default-argument-clause* → **`=`** *expression*
-
-<!-- XXX merge into the box above -->
-
-> Grammar of a function parameter:
->
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type*
 > *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
-
+> *default-argument-clause* → **`=`** *expression*
 
 <!--
   NOTE: Code block is optional in the context of a protocol.
