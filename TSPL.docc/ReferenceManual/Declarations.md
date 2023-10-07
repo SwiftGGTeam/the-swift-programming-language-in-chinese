@@ -862,7 +862,7 @@ func someFunction(a: inout Int) {
 ```
 
 When calling a function that includes in-out parameters,
-the in-out argument prefixed with an ampersand (`&`)
+the in-out argument must be prefixed with an ampersand (`&`)
 to mark that the function call can change the argument's value.
 
 ```swift
