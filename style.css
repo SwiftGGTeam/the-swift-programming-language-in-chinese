@@ -1,0 +1,14 @@
+body{
+    margin: 0%;
+    padding: 0%;
+}
+
+i{
+    font-size: 50px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+}
