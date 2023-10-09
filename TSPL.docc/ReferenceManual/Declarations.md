@@ -1045,7 +1045,6 @@ see <doc:Functions#In-Out-Parameters>.
 By default, Swift uses a set of rules
 to automatically manage manage object lifetime across function calls,
 copying values when required.
-<!-- XXX "object lifetime" is a new term -->
 The default rules are designed to minimize overhead in most cases ---
 if you want more specific control,
 you can apply the `borrowing` or `consuming` parameter modifier.
@@ -1058,13 +1057,15 @@ ownership are correctly managed in all cases.
 These parameter modifiers impact only the relative efficiency
 of particular usage patterns, not correctness.
 
-<!-- XXX xref the ARC chapter, for info about the default behavior -->
+<!-- XXX TR:
+Should we describe the default rules somewhere?
+Here or in the ARC chapter?
+-->
 
 The `borrowing` modifier indicates that the function
 does not keep the parameter's value.
-In this case, the caller retains ownership
-and is responsible for ensuring that the object remains alive.
-<!-- XXX we don't use "alive" elsewhere in this sense -->
+In this case, the caller maintains ownership of the object
+and the responsibility for the object's lifetime.
 Using `borrowing` minimizes overhead when the function
 is making only transient use of the object.
 
