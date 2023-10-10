@@ -501,7 +501,7 @@ add a dependency on SwiftSyntax in your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax.git", from: "some-tag"),
+    .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0")
 ],
 ```
 
