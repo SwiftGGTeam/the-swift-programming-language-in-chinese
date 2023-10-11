@@ -1057,9 +1057,11 @@ ownership are correctly managed in all cases.
 These parameter modifiers impact only the relative efficiency
 of particular usage patterns, not correctness.
 
-<!-- XXX TR:
-Should we describe the default rules somewhere?
-Here or in the ARC chapter?
+<!--
+TODO: Describe the default rules.
+Essentially, inits and property setters are consuming,
+and everything else is borrowing.
+Where are copies implicitly inserted?
 -->
 
 The `borrowing` modifier indicates that the function
