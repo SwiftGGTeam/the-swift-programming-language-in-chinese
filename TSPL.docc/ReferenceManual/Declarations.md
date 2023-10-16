@@ -3486,7 +3486,7 @@ binds more tightly to its operands.
 > can't be used next to each other without grouping parentheses.
 
 Swift defines numerous precedence groups to go along
-with the operators provided by the standard library.
+with the operators provided by the Swift standard library.
 For example, the addition (`+`) and subtraction (`-`) operators
 belong to the `AdditionPrecedence` group,
 and the multiplication (`*`) and division (`/`) operators
@@ -3518,7 +3518,7 @@ The *assignment* of a precedence group specifies the precedence of an operator
 when used in an operation that includes optional chaining.
 When set to `true`, an operator in the corresponding precedence group
 uses the same grouping rules during optional chaining
-as the assignment operators from the standard library.
+as the assignment operators from the Swift standard library.
 Otherwise, when set to `false` or omitted,
 operators in the precedence group follows the same optional chaining rules
 as operators that don't perform assignment.
