@@ -608,12 +608,15 @@ implicitly creates a child task ---
 this syntax works well when you already know
 what tasks your program needs to run.
 You can also create a task group
+(an instance of [`TaskGroup`][])
 and explicitly add child tasks to that group,
 which gives you more control over priority and cancellation,
 and lets you create a dynamic number of tasks.
 
-Tasks are arranged in a hierarchy using [`TaskGroup`][].
-Each task in a task group has the same parent task,
+[`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
+
+Tasks are arranged in a hierarchy.
+Each task in a given task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
@@ -629,8 +632,6 @@ The explicit parent-child relationships between tasks has several advantages:
   each of its child tasks is also automatically canceled.
 
 - Task-local values propagate to child tasks efficiently and automatically.
-
-[`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
 
 Here's another version of the code to download photos
 that handles any number of photos:
@@ -651,13 +652,9 @@ await withTaskGroup(of: Data.self) { group in
 ```
 
 The code above creates a new task group,
-and then creates child tasks of that task group
+and then creates child tasks
 to download each photo in the gallery.
-Because there isn't a specific priority passed
-when calling `addTask(priority:operation:)`,
-these child tasks tasks get the same priority as the task group.
-Swift schedules these tasks,
-running as many of them at the same time as conditions allow.
+Swift runs as many of these tasks concurrently as conditions allow.
 As soon a child task finishes downloading a photo,
 that photo is displayed.
 There's no guarantee about the order that child tasks complete,
