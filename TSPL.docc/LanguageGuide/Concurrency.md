@@ -628,7 +628,7 @@ The explicit parent-child relationships between tasks has several advantages:
 - When a parent task is canceled,
   each of its child tasks is also automatically canceled.
 
-- Talk-local values propagate to child tasks efficiently and automatically.
+- Task-local values propagate to child tasks efficiently and automatically.
 
 [`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
 
