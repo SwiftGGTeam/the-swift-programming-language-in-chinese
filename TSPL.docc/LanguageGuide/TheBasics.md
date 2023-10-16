@@ -93,7 +93,7 @@ Use variables only for storing values that change.
 When you declare a constant or a variable,
 you can give it a value as part of that declaration,
 like the examples above.
-Alternately,
+Alternatively,
 you can assign its initial value later in the program,
 as long as it's guaranteed to have a value
 before the first time you read from it.
