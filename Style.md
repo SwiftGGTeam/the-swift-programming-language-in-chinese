@@ -247,6 +247,17 @@ By design, actors specifically *avoid* having shared mutable state —
 their mutable state is private,
 and accessible only through the actor's (async) methods.
 
+## standard library
+
+Spell out in full as “the Swift standard library“ on the first use.
+If context already makes it clear
+and repeating the full name becomes wordy,
+you can shorted it to just “the standard library”
+in continued discussion.
+(We currently don‘t have any examples of doing that.)
+
+Not “stdlib“ or “the stdlib“.
+
 ## spawn, start
 
 Use “add” instead to refer to creating a new task,
