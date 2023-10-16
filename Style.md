@@ -111,6 +111,11 @@ Spelled as two words, not closed up or hyphenated.
 
 See entry for *Swift*.
 
+## definite initialization
+
+Not “definitive initialization”.
+Don‘t abbreviate as DI.
+
 ## function
 
 In the reference,
