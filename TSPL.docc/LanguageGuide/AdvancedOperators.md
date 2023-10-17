@@ -905,14 +905,14 @@ By default, custom classes and structures don't have an implementation of
 the *equivalence operators*,
 known as the *equal to* operator (`==`) and *not equal to* operator (`!=`).
 You usually implement the `==` operator,
-and use the standard library's default implementation of the `!=` operator
+and use the Swift standard library's default implementation of the `!=` operator
 that negates the result of the `==` operator.
 There are two ways to implement the `==` operator:
 You can implement it yourself,
 or for many types, you can ask Swift to synthesize
 an implementation for you.
 In both cases,
-you add conformance to the standard library's `Equatable` protocol.
+you add conformance to the Swift standard library's `Equatable` protocol.
 
 You provide an implementation of the `==` operator
 in the same way as you implement other infix operators:
@@ -1488,7 +1488,7 @@ see <doc:Attributes#resultBuilder>.
    only if there's an implementation of the operator for that type.
    You use ``Self`` to refer to the type that will conform to the protocol,
    just like you do in other protocol requirements.
-   For example, the standard library defines the ``Equatable`` protocol
+   For example, the Swift standard library defines the ``Equatable`` protocol
    which requires the ``==`` operator:
 
    .. testcode:: protocolOperator

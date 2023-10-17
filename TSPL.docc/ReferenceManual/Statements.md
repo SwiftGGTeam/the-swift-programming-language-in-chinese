@@ -422,7 +422,7 @@ they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
 Code that's compiled in library evolution mode,
-code in the standard library,
+code in the Swift standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
 For information about frozen and nonfrozen enumerations,
@@ -442,7 +442,7 @@ added a new case to the enumeration
 that doesn't have a corresponding switch case.
 
 The following example switches over all three existing cases of
-the standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
+the Swift standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
 enumeration.
 If you add additional cases in the future,
 the compiler generates a warning to indicate

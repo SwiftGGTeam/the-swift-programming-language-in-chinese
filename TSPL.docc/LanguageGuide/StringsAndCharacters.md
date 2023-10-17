@@ -1161,7 +1161,7 @@ welcome.removeSubrange(range)
 -->
 
 <!--
-  TODO: Find and Replace section, once the standard library supports finding substrings
+  TODO: Find and Replace section, once the Swift standard library supports finding substrings
 -->
 
 > Note: You can use the `insert(_:at:)`, `insert(contentsOf:at:)`,

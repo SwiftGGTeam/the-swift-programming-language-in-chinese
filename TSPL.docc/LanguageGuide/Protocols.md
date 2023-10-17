@@ -2512,7 +2512,7 @@ you can define an extension to the `Collection` protocol
 that applies to any collection whose elements conform
 to the `Equatable` protocol.
 By constraining a collection's elements to the `Equatable` protocol,
-a part of the standard library,
+a part of the Swift standard library,
 you can use the `==` and `!=` operators to check for equality and inequality between two elements.
 
 ```swift
