@@ -462,10 +462,13 @@ this creates several files,
 including a template for a macro implementation and declaration.
 
 To add macros to an existing project,
-first ensure that your `swift-tools-version` is set to  5.9 or greater.
-Your `platforms` list must similarly specify a macOS version of 10.15 or greater.
-You also need to import the `CompilerPluginSupport` module.
-The first few lines of your `Package.swift` file might look something like this:
+Edit your `Package.swift` file as follows:
+
+- Set a Swift tools version of 5.9 or later in the `swift-tools-version` comment
+- Import the `CompilerPluginSupport` module.
+- Include macOS 10.15 as a minimum deployment target in the `platforms` list
+
+The code below shows the beginning of an example `Package.swift` file.
 
 ```swift
 // swift-tools-version: 5.9
