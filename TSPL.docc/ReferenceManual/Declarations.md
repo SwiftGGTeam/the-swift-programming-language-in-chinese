@@ -1118,10 +1118,6 @@ store(a: value)
 If the caller does need to use the object after the function call,
 it might need to make a separate
 copy before calling the function.
-<!-- XXX TR:
-When do you need to explicitly copy?
-When does the compiler implicitly insert a copy, as shown below?
--->
 
 ```swift
 // The compiler inserts an implicit copy here
