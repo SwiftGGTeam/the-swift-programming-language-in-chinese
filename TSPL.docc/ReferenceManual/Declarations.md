@@ -1115,9 +1115,9 @@ needs to use the object after the function call.
 store(a: value)
 ```
 
-If the caller does need to use the object after the function call,
-it might need to make a separate
-copy before calling the function.
+If you keep using a copyable object after the function call,
+the compiler automatically makes a copy of that object
+before the function call.
 
 ```swift
 // The compiler inserts an implicit copy here
