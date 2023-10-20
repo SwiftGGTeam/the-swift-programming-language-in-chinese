@@ -61,7 +61,7 @@ as described in <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>.
 
 > Grammar of an in-out expression:
 >
-> *in-out-expression* → **`&`** *identifier*
+> *in-out-expression* → **`&`** *primary-expression*
 
 ### Try Operator
 
