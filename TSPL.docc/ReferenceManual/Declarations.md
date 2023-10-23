@@ -1043,7 +1043,7 @@ see <doc:Functions#In-Out-Parameters>.
 #### Borrowing and Consuming Parameters
 
 By default, Swift uses a set of rules
-to automatically manage manage object lifetime across function calls,
+to automatically manage object lifetime across function calls,
 copying values when required.
 The default rules are designed to minimize overhead in most cases ---
 if you want more specific control,
