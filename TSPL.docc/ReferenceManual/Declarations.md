@@ -1049,7 +1049,7 @@ The default rules are designed to minimize overhead in most cases ---
 if you want more specific control,
 you can apply the `borrowing` or `consuming` parameter modifier.
 In this case,
-you must use `copy` to explicitly mark copy operations.
+use `copy` to explicitly mark copy operations.
 
 Regardless of whether you use the default rules,
 Swift guarantees that object lifetime and
