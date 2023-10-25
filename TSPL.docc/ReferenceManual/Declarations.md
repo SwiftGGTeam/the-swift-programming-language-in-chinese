@@ -833,7 +833,7 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 
 ### Parameter Modifiers
 
-A *parameter modifier* changes how the argument is passed to the function.
+A *parameter modifier* changes how an argument is passed to the function.
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
@@ -902,7 +902,7 @@ so that it behaves correctly with or without the optimization.
 Within a function, don't access a value that was passed as an in-out argument,
 even if the original value is available in the current scope.
 Accessing the original is a simultaneous access of the value,
-which violates Swift's memory exclusivity guarantee.
+which violates memory exclusivity.
 
 ```swift
 var someValue: Int
@@ -910,7 +910,7 @@ func someFunction(a: inout Int) {
     a += someValue
 }
 
-// Error: This will cause a runtime exclusivity violation
+// Error: This causes a runtime exclusivity violation
 someFunction(&someValue)
 ```
 
@@ -1069,7 +1069,7 @@ does not keep the parameter's value.
 In this case, the caller maintains ownership of the object
 and the responsibility for the object's lifetime.
 Using `borrowing` minimizes overhead when the function
-is making only transient use of the object.
+uses the object only transiently.
 
 ```swift
 // `isLessThan` does not keep either argument
@@ -1101,7 +1101,7 @@ accepting responsibility for either storing or destroying it
 before the function returns.
 
 ```swift
-// `store` keeps its argument, so we mark it `consuming`
+// `store` keeps its argument, so mark it `consuming`
 func store(a: consuming A) {
     someGlobalVariable = a
 }
@@ -1111,7 +1111,7 @@ Using `consuming` minimizes overhead when the caller no longer
 needs to use the object after the function call.
 
 ```swift
-// Usually, this is the last thing we do with a value
+// Usually, this is the last thing you do with a value
 store(a: value)
 ```
 
@@ -1138,7 +1138,7 @@ someFunction(a: someA, b: someB)
 The explicit use of either `borrowing` or `consuming`
 indicates your intention to more tightly control
 the overhead of runtime ownership management.
-Because copies can trigger unexpected runtime ownership
+Because copies can cause unexpected runtime ownership
 operations,
 parameters marked with either of these
 modifiers cannot be copied unless you
