@@ -255,60 +255,7 @@ only certain places in your program can call asynchronous functions or methods:
   - Code at the top level that forms an implicit main function.
 -->
 
-Code in between possible suspension points runs sequentially,
-without the possibility of interruption from other concurrent code.
-For example, the code below moves a picture from one gallery to another.
-
-```swift
-let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-add(firstPhoto, toGallery: "Road Trip")
-// At this point, firstPhoto is temporarily in both galleries.
-remove(firstPhoto, fromGallery: "Summer Vacation")
-```
-
-There's no way for other code to run in between
-the call to `add(_:toGallery:)` and `remove(_:fromGallery:)` ---
-neither of these lines of code have `await` in them,
-so there aren't any possible suspension points in this code.
-When the last two lines of code are executing,
-the first photo appears in both galleries,
-temporarily making the program's data model inconsistent.
-It's important that no code from another part of the program
-can run during that period of time.
-Otherwise, that other code
-would treat the inconsistent state as if it were real,
-leading to problems like incorrect behavior or data loss.
-
-To make it even clearer that any future changes to this code
-must not add `await` between the add and remove operations,
-you can refactor those two operations into a synchronous function:
-
-```swift
-func move(_ photoName: String, from source: String, to destination: String) {
-    add(photoName, toGallery: destination)
-    remove(photoName, fromGallery: source)
-}
-// ...
-let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
-```
-
-In the example above,
-because the `move(_:from:to:)` function is synchronous,
-you guarantee that it can never contain possible suspension points.
-This encapsulates the code that temporarily makes the data model inconsistent,
-and makes it easier for anyone reading the code
-to recognize that no other code can run
-before data consistency is restored by completing the work.
-In the future,
-if you try to add concurrent code to this function,
-introducing a possible suspension point,
-you'll get compile-time error instead of introducing a bug.
-
-The example above showed an approach you can use
-to prevent a piece of code from containing any possible suspension points.
-In contrast,
-you can explicitly insert a suspension point
+You can explicitly insert a suspension point
 by calling the [`Task.yield()`][] method.
 
 [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
@@ -1077,8 +1024,8 @@ only in places where `await` marks a suspension point.
 Because `update(with:)` doesn't contain any suspension points,
 no other code can access the data in the middle of an update.
 
-If you try to access those properties from outside the actor,
-like you would with an instance of a class,
+If code outside the actor tries to access those properties directly,
+like accessing a structure or class's properties,
 you'll get a compile-time error.
 For example:
 
@@ -1088,15 +1035,64 @@ print(logger.max)  // Error
 
 Accessing `logger.max` without writing `await` fails because
 the properties of an actor are part of that actor's isolated local state.
+The code to access this property needs to run as part of the actor,
+which is an asynchronous operation and requires writing `await`.
 Swift guarantees that
-only code inside an actor can access the actor's local state.
+only code running on an actor can access that actor's local state.
 This guarantee is known as *actor isolation*.
 
-<!--
-  OUTLINE -- design patterns for actors
+The following aspects of the Swift concurrency model
+combine to make it easier to reason about shared mutable state:
 
-  - do your mutation in a sync function
--->
+- Code in between possible suspension points runs sequentially,
+  without the possibility of interruption from other concurrent code.
+
+- Code that interacts with an actor's local state
+  runs only on that actor.
+
+- An actor runs only one piece of code at a time.
+
+Because of these guarantees,
+code that doesn't include `await` and that's inside an actor
+can make the updates without a risk of other places in your program
+observing the temporarily invalid state.
+For example,
+the code below converts measured temperatures from Fahrenheit to Celsius:
+
+```swift
+extension TemperatureLogger {
+    func convertFarenheitToCelsius() {
+        measurements = measurements.map { measurement in
+            (measurement - 32) * 5 / 9
+        }
+    }
+}
+```
+
+The code above converts one measurement at a time.
+While the map operation is in progress,
+some temperatures are in Fahrenheit and others are in Celsius.
+However, because none of the code includes `await`,
+there are no potential suspension points in this method.
+The state that this method modifies belongs to the actor,
+which protects it against code reading or modifying it
+except when that code is running on the actor.
+This means there's no way for other code
+to read a list of partially converted temperatures
+while unit conversion is in progress.
+
+The `convertFarenheitToCelsius()` method makes an even stronger guarantee:
+It's a synchronous method,
+so it's guaranteed to *never* contain potential suspension points.
+This function encapsulates the code
+that temporarily makes the data model inconsistent,
+and makes it easier for anyone reading the code
+to recognize that no other code can run
+before data consistency is restored by completing the work.
+In the future,
+if you try to add concurrent code to this function,
+introducing a possible suspension point,
+you'll get compile-time error instead of introducing a bug.
 
 <!--
   OUTLINE
