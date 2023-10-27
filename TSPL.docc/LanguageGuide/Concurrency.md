@@ -157,6 +157,8 @@ Inside an asynchronous method,
 the flow of execution is suspended *only* when you call another asynchronous method ---
 suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with `await`.
+Marking all of the possible suspension points in your code
+helps make concurrent code easier to read and reason about.
 
 For example,
 the code below fetches the names of all the pictures in a gallery
