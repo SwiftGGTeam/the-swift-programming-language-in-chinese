@@ -345,6 +345,51 @@ struct MyStruct {
   ```
 -->
 
+### backDeployed
+
+Apply this attribute to a function, method, subscript, or computed property
+to include a copy of the symbol's implementation
+in programs that call or access the symbol.
+You use this attribute to annotate symbols that ship as part of an SDK
+when they can be made available retroactively
+by including a copy of their implementation in programs that access them.
+
+This attribute takes a single argument,
+specifying the first version of a platform that provides this symbol.
+For example, consider a library that contains the following code:
+
+```swift
+@available(iOS 15, *)
+@backDeployed(before: iOS 17)
+func someFunction() { /* ... */ }
+```
+
+This SDK makes `someFunction()` available on iOS 15 and later.
+When compiling code that calls this function,
+Swift inserts a layer of indirection that find the function's implementation,
+and includes a copy of the implementation of `someFunction()`
+as part of the compiled code.
+When running on iOS 17 or later,
+calling `someFunction()` uses the implementation from the SDK,
+but when running on iOS 15 or 16,
+calling this function uses the version that's emitted into the caller.
+
+> Note:
+> When the caller's minimum deployment target
+> is the same as or greater than
+> the first version of the SDK that includes the symbol,
+> the compiler can optimize away the runtime check
+> and call the SDK's implementation directly.
+
+Functions, methods, subscripts, and computed properties
+that meet the following criteria can be back deployed:
+
+- It's marked `public` or `@usableFromInline`.
+- For class instance and type methods,
+  the method is marked `final` and isn't marked `@objc`.
+- The implementation satisfies the requirements for an inlinable function,
+  described in <doc:Attributes:inlinable>.
+
 ### discardableResult
 
 Apply this attribute to a function or method declaration
