@@ -2,13 +2,12 @@
 
 Understand the high-level goals of the language.
 
-Swift is a fantastic way to write software,
-whether it’s for phones, tablets, desktops, servers,
+Swift is a fantastic way to write software
+for phones, tablets, desktops, servers,
 or anything else that runs code.
 It's a safe and fast programming language
 that combines the best in modern language thinking
-with wisdom from Apple engineers
-and a diverse open source community.
+with wisdom from a diverse open source community.
 
 Swift is friendly to new programmers.
 It's an industrial-quality programming language
@@ -40,9 +39,8 @@ allowing complex ideas to be expressed in a clear and concise manner.
 As a result, code is not just easier to write,
 but easier to read and maintain as well.
 
-Swift has been years in the making,
-and it continues to evolve with new features and capabilities.
-Our goals for Swift are ambitious.
+Swift continues to evolve with thoughtful new features and powerful capabilities.
+The goals for Swift are ambitious.
 We can’t wait to see what you create with it.
 
 <!--
