@@ -353,26 +353,35 @@ in programs that call or access the symbol.
 You use this attribute to annotate symbols that ship as part of an SDK
 when they can be made available retroactively
 by including a copy of their implementation in programs that access them.
+Copying the implementation is also known as *emitting into the client*.
 
-This attribute takes a single argument,
-specifying the first version of a platform that provides this symbol.
+This attribute takes a `before:` argument,
+specifying the first version of platforms that provide this symbol.
+Unlike the `available` attribute,
+the list platforms can't contain an asterisk (`*`) to refer to all platforms.
 For example, consider a library that contains the following code:
 
 ```swift
-@available(iOS 15, *)
+@available(iOS 16, *)
 @backDeployed(before: iOS 17)
 func someFunction() { /* ... */ }
 ```
 
-This SDK makes `someFunction()` available on iOS 15 and later.
+In the example above,
+the iOS SDK provides `someFunction()` starting in version 17.
+In addition,
+`someFunction()` is available on iOS 16 using back deployment.
+
 When compiling code that calls this function,
-Swift inserts a layer of indirection that find the function's implementation,
-and includes a copy of the implementation of `someFunction()`
-as part of the compiled code.
-When running on iOS 17 or later,
-calling `someFunction()` uses the implementation from the SDK,
-but when running on iOS 15 or 16,
-calling this function uses the version that's emitted into the caller.
+Swift inserts a layer of indirection that find the function's implementation.
+If the code is run using a version of the SDK that includes this function,
+the SDK's implementation is used.
+Otherwise, the copy included in the caller is used.
+In the example above,
+calling `someFunction()` uses the implementation from the SDK
+when running on iOS 17 or later,
+and when running on iOS 16
+it uses the copy of `someFunction()` that's included in the caller.
 
 > Note:
 > When the caller's minimum deployment target
@@ -381,11 +390,19 @@ calling this function uses the version that's emitted into the caller.
 > the compiler can optimize away the runtime check
 > and call the SDK's implementation directly.
 
+<!--
+XXX TR: The intro to the SE proposal suggests that it can also omit
+the emit-into-client copy of the implementation
+when the minimum deployment target is high enough.
+Is that always the case?
+Or does that depend on other optimizations like dead-code stripping?
+-->
+
 Functions, methods, subscripts, and computed properties
 that meet the following criteria can be back deployed:
 
-- It's marked `public` or `@usableFromInline`.
-- For class instance and type methods,
+- The declaration is `public` or `@usableFromInline`.
+- For class instance methods and class type methods,
   the method is marked `final` and isn't marked `@objc`.
 - The implementation satisfies the requirements for an inlinable function,
   described in <doc:Attributes:inlinable>.
