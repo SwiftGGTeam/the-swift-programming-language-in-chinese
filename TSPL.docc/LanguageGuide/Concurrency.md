@@ -317,7 +317,7 @@ you write both `try` and `await`:
 let photos = try await listPhotos(inGallery: "A Rainy Weekend")
 ```
 
-Asynchronous and throwing functions have some similarities:
+Asynchronous functions have some similarities to throwing functions:
 When you define an asynchronous or throwing function,
 you mark it `async` or `throws`,
 and you mark calls to that function with `await` or `try`.
