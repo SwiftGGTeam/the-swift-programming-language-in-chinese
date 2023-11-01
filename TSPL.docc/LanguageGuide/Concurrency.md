@@ -16,9 +16,8 @@ for example, a computer with a four-core processor
 can run four pieces of code at the same time,
 with each core carrying out one of the tasks.
 A program that uses parallel and asynchronous code
-carries out multiple operations at a time;
-it suspends operations that are waiting for an external system,
-and makes it easier to write this code in a memory-safe way.
+carries out multiple operations at a time,
+and it suspends operations that are waiting for an external system.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
@@ -345,6 +344,14 @@ so you can call it from synchronous code and wait for the result.
 The Swift standard library intentionally omits this unsafe functionality,
 and trying to implement it yourself can lead to
 problems like subtle races, threading issues, and deadlocks.
+When adding concurrent code to an existing project,
+work from the top down.
+Specifically,
+start by converting the topmost layer of code to use concurrency,
+and then start converting the functions and methods that it calls,
+working through the project's architecture one layer at a time.
+There's no way to take a bottom-up approach,
+because synchronous code can't ever call asynchronous code.
 
 <!--
   OUTLINE
@@ -655,7 +662,7 @@ Each task checks whether it has been canceled
 at the appropriate points in its execution,
 and responds to cancellation an appropriate way.
 Depending on the work you're doing,
-that usually means one of the following:
+responding to cancellation usually means one of the following:
 
 - Throwing an error like `CancellationError`
 - Returning `nil` or an empty collection
@@ -1044,7 +1051,7 @@ only code running on an actor can access that actor's local state.
 This guarantee is known as *actor isolation*.
 
 The following aspects of the Swift concurrency model
-combine to make it easier to reason about shared mutable state:
+work together to make it easier to reason about shared mutable state:
 
 - Code in between possible suspension points runs sequentially,
   without the possibility of interruption from other concurrent code.
@@ -1071,7 +1078,7 @@ extension TemperatureLogger {
 }
 ```
 
-The code above converts one measurement at a time.
+The code above converts the array of measurements, one at a time.
 While the map operation is in progress,
 some temperatures are in Fahrenheit and others are in Celsius.
 However, because none of the code includes `await`,
@@ -1083,8 +1090,10 @@ This means there's no way for other code
 to read a list of partially converted temperatures
 while unit conversion is in progress.
 
-The `convertFarenheitToCelsius()` method makes an even stronger guarantee:
-It's a synchronous method,
+In addition to writing code in an actor
+that protects temporary invalid state by omitting potential suspension points,
+you can move that code into a synchronous method.
+The `convertFarenheitToCelsius()` method above is method,
 so it's guaranteed to *never* contain potential suspension points.
 This function encapsulates the code
 that temporarily makes the data model inconsistent,
