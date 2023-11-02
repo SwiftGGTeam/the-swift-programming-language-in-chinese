@@ -25,7 +25,7 @@ print("Hello, world!")
   ```
 -->
 
-This syntax should look familiar if you know another language---
+This syntax should look familiar if you know another language ---
 in Swift, this line of code is a complete program.
 You don't need to import a separate library for functionality like
 input/output or string handling.
