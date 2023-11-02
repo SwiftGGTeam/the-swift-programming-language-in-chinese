@@ -36,8 +36,8 @@ everything from "Hello, world!" to an entire operating system.
 Swift combines powerful type inference and pattern matching with
 a modern, lightweight syntax,
 allowing complex ideas to be expressed in a clear and concise manner.
-As a result, code is not just easier to write,
-but easier to read and maintain as well.
+As a result, code is easier to write,
+and also easier to read and maintain.
 
 Swift continues to evolve with thoughtful new features and powerful capabilities.
 The goals for Swift are ambitious.
