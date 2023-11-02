@@ -2,7 +2,7 @@
 
 Work with common kinds of data and write basic syntax.
 
-Swift is a programming language designed for developing many types of software, from mobile and desktop apps, to server, system, and embedded software.
+Swift is designed for developing many types of software, from mobile and desktop apps, to server, system, and embedded software.
 Many parts of Swift will be familiar if you have experience developing in other popular languages.
 
 Swift provides its own versions of fundamental types,
