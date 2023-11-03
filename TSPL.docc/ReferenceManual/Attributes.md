@@ -350,16 +350,19 @@ struct MyStruct {
 Apply this attribute to a function, method, subscript, or computed property
 to include a copy of the symbol's implementation
 in programs that call or access the symbol.
-You use this attribute to annotate symbols that ship as part of an SDK
-when they can be made available retroactively
+You use this attribute to annotate symbols that ship as part of a platform,
+like the APIs that are included with an operating system.
+This attribute marks symbols that can be made available retroactively
 by including a copy of their implementation in programs that access them.
 Copying the implementation is also known as *emitting into the client*.
 
 This attribute takes a `before:` argument,
 specifying the first version of platforms that provide this symbol.
+These platform versions have the same meaning
+as the platform version you specify for the `available` attribute.
 Unlike the `available` attribute,
-the list platforms can't contain an asterisk (`*`) to refer to all platforms.
-For example, consider a library that contains the following code:
+the list can't contain an asterisk (`*`) to refer to all versions.
+For example, consider the following code:
 
 ```swift
 @available(iOS 16, *)
@@ -370,7 +373,7 @@ func someFunction() { /* ... */ }
 In the example above,
 the iOS SDK provides `someFunction()` starting in version 17.
 In addition,
-`someFunction()` is available on iOS 16 using back deployment.
+the SDK makes `someFunction()` available on iOS 16 using back deployment.
 
 When compiling code that calls this function,
 Swift inserts a layer of indirection that find the function's implementation.
