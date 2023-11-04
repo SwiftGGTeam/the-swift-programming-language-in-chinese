@@ -392,13 +392,19 @@ it uses the copy of `someFunction()` that's included in the caller.
 > the first version of the SDK that includes the symbol,
 > the compiler can optimize away the runtime check
 > and call the SDK's implementation directly.
+> In this case,
+> if you access the back-deployed symbol directly,
+> the compiler can also omit
+> the copy of the symbol's implementation from the client.
 
 <!--
-XXX TR: The intro to the SE proposal suggests that it can also omit
-the emit-into-client copy of the implementation
-when the minimum deployment target is high enough.
-Is that always the case?
-Or does that depend on other optimizations like dead-code stripping?
+Stripping out the copy emitted into the client
+depends on a chain of optimizations that must all take place --
+inlining the thunk,
+constant-folding the availability check,
+and stripping the emitted copy as dead code --
+and the details could change over time,
+so we don't guarantee in docs that it always happens.
 -->
 
 Functions, methods, subscripts, and computed properties
