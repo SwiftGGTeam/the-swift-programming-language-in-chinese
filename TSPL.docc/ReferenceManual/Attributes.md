@@ -86,6 +86,8 @@ indicates the macros role:
   These macros can add protocol conformance,
   a `where` clause,
   and new declarations that are members of the type the macro is attached to.
+  If the macro adds protocol conformances,
+  include the `conformances:` argument listing those protocols.
 
 The peer, member, and accessor macro roles require a `named:` argument,
 listing the names of the symbols that the macro generates.

@@ -218,7 +218,7 @@ including the attributes for its roles:
 
 ```swift
 @attached(member)
-@attached(extension)
+@attached(extension, conformances: OptionSet)
 public macro OptionSet<RawType>() =
         #externalMacro(module: "SwiftMacros", type: "OptionSetMacro")
 ```
@@ -230,8 +230,9 @@ adds new members to the type you apply it to.
 The `@OptionSet` macro adds an `init(rawValue:)` initializer
 that's required by the `OptionSet` protocol,
 as well as some additional members.
-The second use, `@attached(extension)`, tells you that `@OptionSet`
-adds one or more protocol conformances.
+The second use, `@attached(extension, conformances: OptionSet)`,
+tells you that `@OptionSet`
+adds one or conformance to the `OptionSet` protocol.
 The `@OptionSet` macro
 extends the type that you apply the macro to,
 to add conformance to the `OptionSet` protocol.
