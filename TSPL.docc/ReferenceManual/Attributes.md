@@ -89,9 +89,11 @@ indicates the macros role:
   If the macro adds protocol conformances,
   include the `conformances:` argument listing those protocols.
 
-The peer, member, and accessor macro roles require a `named:` argument,
+The peer, member, and accessor macro roles require a `names:` argument,
 listing the names of the symbols that the macro generates.
-When a macro declaration includes the `named:` argument,
+The extension macro role also requires a `names:` argument
+if the macro adds declarations inside the extension.
+When a macro declaration includes the `names:` argument,
 the macro implementation must generate
 only symbol with names that match that list.
 That said,
