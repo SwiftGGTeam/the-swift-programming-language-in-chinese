@@ -547,7 +547,7 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
         guard let asciiValue = character.asciiValue else { return nil }
         result += UInt32(asciiValue)
     }
-    return UInt32(bigEndian: result)
+    return result
 }
 enum CustomError: Error { case message(String) }
 ```
