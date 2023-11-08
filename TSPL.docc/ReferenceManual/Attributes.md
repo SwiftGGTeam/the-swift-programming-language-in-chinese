@@ -371,12 +371,12 @@ func someFunction() { /* ... */ }
 ```
 
 In the example above,
-the iOS SDK provides `someFunction()` starting in version 17.
+the iOS SDK provides `someFunction()` starting in iOS 17.
 In addition,
 the SDK makes `someFunction()` available on iOS 16 using back deployment.
 
 When compiling code that calls this function,
-Swift inserts a layer of indirection that find the function's implementation.
+Swift inserts a layer of indirection that finds the function's implementation.
 If the code is run using a version of the SDK that includes this function,
 the SDK's implementation is used.
 Otherwise, the copy included in the caller is used.
