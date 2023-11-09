@@ -397,7 +397,7 @@ The implementation of `#fourCharacterCode`
 generates a new AST containing the expanded code.
 Here's what that code returns to the compiler:
 
-![A tree diagram with a sigle node, the integer literal 1145258561.](macro-ast-output)
+![A tree diagram with the integer literal 1145258561 of type UInt32.](macro-ast-output)
 
 When the compiler receives this expansion,
 it replaces the AST element that contains the macro call
@@ -408,12 +408,12 @@ the program is still syntactically valid Swift
 and all the types are correct.
 That produces a final AST that can be compiled as usual:
 
-![A tree diagram, with a constant as the root element.  The constant has a name, magic number, and a value.  The constant's value is the integer literal 1145258561](macro-ast-result)
+![A tree diagram, with a constant as the root element.  The constant has a name, magic number, and a value.  The constant's value is the integer literal 1145258561 of type UInt32.](macro-ast-result)
 
 This AST corresponds to Swift code like this:
 
 ```
-let magicNumber = 1145258561
+let magicNumber = 1145258561 as UInt32
 ```
 
 In this example, the input source code has only one macro,
@@ -501,7 +501,7 @@ add a dependency on SwiftSyntax in your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax.git", from: "some-tag"),
+    .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0")
 ],
 ```
 
@@ -534,7 +534,7 @@ public struct FourCharacterCode: ExpressionMacro {
             throw CustomError.message("Invalid four-character code")
         }
 
-        return "\(raw: result)"
+        return "\(raw: result) as UInt32"
     }
 }
 
@@ -547,7 +547,7 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
         guard let asciiValue = character.asciiValue else { return nil }
         result += UInt32(asciiValue)
     }
-    return result.bigEndian
+    return result
 }
 enum CustomError: Error { case message(String) }
 ```
@@ -582,7 +582,7 @@ Inside the library, Swift calls `FourCharacterCode.expansion(of:in:)`,
 passing in the AST and the context as arguments to the method.
 The implementation of `expansion(of:in:)`
 finds the string that was passed as an argument to `#fourCharacterCode`
-and calculates the corresponding integer literal value.
+and calculates the corresponding 32-bit unsigned integer literal value.
 
 In the example above,
 the first `guard` block extracts the string literal from the AST,
@@ -710,7 +710,7 @@ let transformedSF = source.expand(
 
 let expectedDescription =
     """
-    let abcd = 1145258561
+    let abcd = 1145258561 as UInt32
     """
 
 precondition(transformedSF.description == expectedDescription)
