@@ -345,6 +345,77 @@ struct MyStruct {
   ```
 -->
 
+### backDeployed
+
+Apply this attribute to a function, method, subscript, or computed property
+to include a copy of the symbol's implementation
+in programs that call or access the symbol.
+You use this attribute to annotate symbols that ship as part of a platform,
+like the APIs that are included with an operating system.
+This attribute marks symbols that can be made available retroactively
+by including a copy of their implementation in programs that access them.
+Copying the implementation is also known as *emitting into the client*.
+
+This attribute takes a `before:` argument,
+specifying the first version of platforms that provide this symbol.
+These platform versions have the same meaning
+as the platform version you specify for the `available` attribute.
+Unlike the `available` attribute,
+the list can't contain an asterisk (`*`) to refer to all versions.
+For example, consider the following code:
+
+```swift
+@available(iOS 16, *)
+@backDeployed(before: iOS 17)
+func someFunction() { /* ... */ }
+```
+
+In the example above,
+the iOS SDK provides `someFunction()` starting in iOS 17.
+In addition,
+the SDK makes `someFunction()` available on iOS 16 using back deployment.
+
+When compiling code that calls this function,
+Swift inserts a layer of indirection that finds the function's implementation.
+If the code is run using a version of the SDK that includes this function,
+the SDK's implementation is used.
+Otherwise, the copy included in the caller is used.
+In the example above,
+calling `someFunction()` uses the implementation from the SDK
+when running on iOS 17 or later,
+and when running on iOS 16
+it uses the copy of `someFunction()` that's included in the caller.
+
+> Note:
+> When the caller's minimum deployment target
+> is the same as or greater than
+> the first version of the SDK that includes the symbol,
+> the compiler can optimize away the runtime check
+> and call the SDK's implementation directly.
+> In this case,
+> if you access the back-deployed symbol directly,
+> the compiler can also omit
+> the copy of the symbol's implementation from the client.
+
+<!--
+Stripping out the copy emitted into the client
+depends on a chain of optimizations that must all take place --
+inlining the thunk,
+constant-folding the availability check,
+and stripping the emitted copy as dead code --
+and the details could change over time,
+so we don't guarantee in docs that it always happens.
+-->
+
+Functions, methods, subscripts, and computed properties
+that meet the following criteria can be back deployed:
+
+- The declaration is `public` or `@usableFromInline`.
+- For class instance methods and class type methods,
+  the method is marked `final` and isn't marked `@objc`.
+- The implementation satisfies the requirements for an inlinable function,
+  described in <doc:Attributes:inlinable>.
+
 ### discardableResult
 
 Apply this attribute to a function or method declaration
