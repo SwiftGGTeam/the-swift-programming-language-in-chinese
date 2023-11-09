@@ -87,7 +87,13 @@ indicates the macros role:
   a `where` clause,
   and new declarations that are members of the type the macro is attached to.
   If the macro adds protocol conformances,
-  include the `conformances:` argument listing those protocols.
+  include the `conformances:` argument and specify those protocols.
+  The conformance list contains protocol names,
+  type aliases that refer to conformance list items,
+  or protocol compositions of conformance list items.
+  You can't write an extension macro
+  on an extension, type alias, or nested type,
+  or use an extension macro to add an extension that has a peer macro.
 
 The peer, member, and accessor macro roles require a `names:` argument,
 listing the names of the symbols that the macro generates.
