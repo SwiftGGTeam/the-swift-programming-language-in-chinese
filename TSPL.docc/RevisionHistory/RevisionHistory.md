@@ -5,8 +5,12 @@ Review the recent changes to this book.
 **XXX release date XXX**
 
 - Updated for Swift 5.9.2.
+- Added information about the `borrowing` and `consuming` modifiers
+  to the <doc:Declarations#Parameter-Modifiers> section.
 - Added information in <doc:TheBasics#Declaring-Constants-and-Variables>
   about setting a constant's value after its declaration.
+- Added the <doc:Attributes#backDeployed> section
+  with information about back deployment.
 
 **2023-09-18**
 
