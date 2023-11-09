@@ -80,7 +80,7 @@ Type annotations can contain an optional list of type attributes before the type
 
 > Grammar of a type annotation:
 >
-> *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
+> *type-annotation* → **`:`** *attributes*_?_ *type*
 
 ## Type Identifier
 
@@ -482,7 +482,7 @@ see <doc:MemorySafety>.
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
 >
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
-> *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation* \
+> *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
 
 <!--
