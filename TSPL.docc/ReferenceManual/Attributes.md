@@ -414,7 +414,7 @@ that meet the following criteria can be back deployed:
 - For class instance methods and class type methods,
   the method is marked `final` and isn't marked `@objc`.
 - The implementation satisfies the requirements for an inlinable function,
-  described in <doc:Attributes:inlinable>.
+  described in <doc:Attributes#inlinable>.
 
 ### discardableResult
 
