@@ -157,7 +157,7 @@ the flow of execution is suspended *only* when you call another asynchronous met
 suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with `await`.
 Marking all of the possible suspension points in your code
-helps make concurrent code easier to read and reason about.
+helps make concurrent code easier to read and understand.
 
 For example,
 the code below fetches the names of all the pictures in a gallery
@@ -318,7 +318,7 @@ let photos = try await listPhotos(inGallery: "A Rainy Weekend")
 
 Asynchronous functions have some similarities to throwing functions:
 When you define an asynchronous or throwing function,
-you mark it `async` or `throws`,
+you mark it with `async` or `throws`,
 and you mark calls to that function with `await` or `try`.
 An asynchronous function can call another asynchronous function,
 just like a throwing function can call another throwing function.
@@ -341,13 +341,13 @@ func getRainyWeekendPhotos() async -> Result<[String]> {
 In contrast,
 there's no safe way to wrap asynchronous code
 so you can call it from synchronous code and wait for the result.
-The Swift standard library intentionally omits this unsafe functionality,
-and trying to implement it yourself can lead to
+The Swift standard library intentionally omits this unsafe functionality ---
+trying to implement it yourself can lead to
 problems like subtle races, threading issues, and deadlocks.
 When adding concurrent code to an existing project,
 work from the top down.
 Specifically,
-start by converting the topmost layer of code to use concurrency,
+start by converting the top-most layer of code to use concurrency,
 and then start converting the functions and methods that it calls,
 working through the project's architecture one layer at a time.
 There's no way to take a bottom-up approach,
@@ -660,8 +660,8 @@ as its overall result.
 Swift concurrency uses a cooperative cancellation model.
 Each task checks whether it has been canceled
 at the appropriate points in its execution,
-and responds to cancellation an appropriate way.
-Depending on the work you're doing,
+and responds to cancellation appropriately.
+Depending on what work the task is doing,
 responding to cancellation usually means one of the following:
 
 - Throwing an error like `CancellationError`
@@ -1085,7 +1085,7 @@ However, because none of the code includes `await`,
 there are no potential suspension points in this method.
 The state that this method modifies belongs to the actor,
 which protects it against code reading or modifying it
-except when that code is running on the actor.
+except when that code runs on the actor.
 This means there's no way for other code
 to read a list of partially converted temperatures
 while unit conversion is in progress.
