@@ -1669,11 +1669,11 @@ but the new method must preserve its return type and nonreturning behavior.
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`** \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
 >
 > *external-parameter-name* → *identifier* \
 > *local-parameter-name* → *identifier* \
-> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type*
+> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
 > *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
 > *default-argument-clause* → **`=`** *expression*
 
@@ -3924,6 +3924,12 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 > *mutation-modifier* → **`mutating`** | **`nonmutating`**
 >
 > *actor-isolation-modifier* → **`nonisolated`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -414,7 +414,7 @@ that meet the following criteria can be back deployed:
 - For class instance methods and class type methods,
   the method is marked `final` and isn't marked `@objc`.
 - The implementation satisfies the requirements for an inlinable function,
-  described in <doc:Attributes:inlinable>.
+  described in <doc:Attributes#inlinable>.
 
 ### discardableResult
 
@@ -2539,6 +2539,12 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 > *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
 > *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
