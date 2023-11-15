@@ -306,7 +306,7 @@ This means that any structure and enumeration instances you create ---
 and any value types they have as properties ---
 are always copied when they're passed around in your code.
 
-> Note: Collections defined by the standard library
+> Note: Collections defined by the Swift standard library
 > like arrays, dictionaries, and strings
 > use an optimization to reduce the performance cost of copying.
 > Instead of making a copy immediately,
@@ -694,7 +694,7 @@ but isn't a direct pointer to an address in memory,
 and doesn't require you to write an asterisk (`*`)
 to indicate that you are creating a reference.
 Instead, these references are defined like any other constant or variable in Swift.
-The standard library provides pointer and buffer types
+The Swift standard library provides pointer and buffer types
 that you can use if you need to interact with pointers directly ---
 see [Manual Memory Management](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management).
 
@@ -709,6 +709,12 @@ see [Manual Memory Management](https://developer.apple.com/documentation/swift/s
 <!--
   QUESTION: what's the deal with tuples and reference types / value types?
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

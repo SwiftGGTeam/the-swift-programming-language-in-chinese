@@ -26,7 +26,7 @@ just surface level syntax for concepts they already know from other languages.
 commonly referred to as “the guide”,
 leads you through the Swift language in a pedagogically useful, linear order.
 It doesn't promise to show you every feature of
-the language or the standard library,
+the language or the Swift standard library,
 and it hand-waves over the exact details
 of some of the more complicated underlying bits.
 The guide leans on the reference to resolve the nitty-gritty detail questions
@@ -44,12 +44,12 @@ are already discussed in previous chapters.
 that the early chapters of the guide need
 — many topics from “The Basics” are covered again later in the guide in more detail.
 
-The guide includes types from the standard library for two reasons:
+The guide includes types from the Swift standard library for two reasons:
 they’re needed by an explanation of a language concept,
 or they’re so common that readers wouldn’t
 be able to build anything useful without them.
 The latter reason includes a judgement call.
-When new types are introduced in the standard library,
+When new types are introduced in the Swift standard library,
 we usually need to discuss whether & where to add them to TSPL.
 
 The guide can be broken down into three major chunks:
@@ -111,6 +111,11 @@ Spelled as two words, not closed up or hyphenated.
 
 See entry for *Swift*.
 
+## definite initialization
+
+Not “definitive initialization”.
+Don‘t abbreviate as DI.
+
 ## function
 
 In the reference,
@@ -164,7 +169,7 @@ For example:
 > custom classes and structures don’t have an implementation of
 > the *equal to* operator (`==`) or *not equal to* operator (`!=`).
 > You usually implement the `==` operator,
-> and use the standard library’s default implementation of the `!=` operator
+> and use the Swift standard library’s default implementation of the `!=` operator
 > that negates the result of the `==` operator.
 > There are two ways to implement the `==` operator.
 
@@ -241,6 +246,17 @@ Avoid when describing actors.
 By design, actors specifically *avoid* having shared mutable state —
 their mutable state is private,
 and accessible only through the actor's (async) methods.
+
+## standard library
+
+Spell out in full as “the Swift standard library“ on the first use.
+If context already makes it clear
+and repeating the full name becomes wordy,
+you can shorted it to just “the standard library”
+in continued discussion.
+(We currently don‘t have any examples of doing that.)
+
+Not “stdlib“ or “the stdlib“.
 
 ## spawn, start
 

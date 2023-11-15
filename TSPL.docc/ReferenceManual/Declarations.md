@@ -34,7 +34,6 @@ the term *declaration* covers both declarations and definitions.
 > *declaration* → *macro-declaration* \
 > *declaration* → *operator-declaration* \
 > *declaration* → *precedence-group-declaration* \
-> *declarations* → *declaration* *declarations*_?_
 
 ## Top-Level Code
 
@@ -156,6 +155,24 @@ as long as it's guaranteed to have a value set
 before the first time its value is read.
 If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
+This analysis is called *definite initialization* ---
+the compiler proves that a value is definitely set before being read.
+
+> Note:
+> Definite initialization
+> can't construct proofs that require domain knowledge,
+> and its ability to track state across conditionals has a limit.
+> If you can determine that constant always has a value set,
+> but the compiler can't prove this is the case,
+> try simplifying the code paths that set the value,
+> or use a variable declaration instead.
+
+<!--
+In the most general case,
+DI reduces to the halting problem,
+as shown by Rice's theorem.
+-->
+
 When a constant declaration occurs in the context of a class or structure
 declaration, it's considered a *constant property*.
 Constant declarations aren't computed properties and therefore don't have getters
@@ -277,6 +294,9 @@ That said, if no initializer *expression* is present,
 the variable declaration must include an explicit type annotation (`:` *type*).
 
 As with constant declarations,
+if a variable declaration omits the initializer *expression*,
+the variable must have a value set before the first time it is read.
+Also like constant declarations,
 if the *variable name* is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
@@ -831,7 +851,45 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
-### In-Out Parameters
+### Parameter Modifiers
+
+A *parameter modifier* changes how an argument is passed to the function.
+
+```swift
+<#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
+```
+
+To use a parameter modifier,
+write `inout`, `borrowing`, or `consuming`
+before the argument's type.
+
+```swift
+func someFunction(a: inout A, b: consuming B, c: C) { ... }
+```
+
+#### In-Out Parameters
+
+By default, function arguments in Swift are passed by value:
+Any changes made within the function are not visible in the caller.
+To make an in-out parameter instead,
+you apply the `inout` parameter modifier.
+
+
+```swift
+func someFunction(a: inout Int) {
+    a += 1
+}
+```
+
+When calling a function that includes in-out parameters,
+the in-out argument must be prefixed with an ampersand (`&`)
+to mark that the function call can change the argument's value.
+
+```swift
+var x = 7
+someFunction(&x)
+print(x)  // Prints "8"
+```
 
 In-out parameters are passed as follows:
 
@@ -864,9 +922,31 @@ so that it behaves correctly with or without the optimization.
 Within a function, don't access a value that was passed as an in-out argument,
 even if the original value is available in the current scope.
 Accessing the original is a simultaneous access of the value,
-which violates Swift's memory exclusivity guarantee.
+which violates memory exclusivity.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int) {
+    a += someValue
+}
+
+// Error: This causes a runtime exclusivity violation
+someFunction(&someValue)
+```
+
 For the same reason,
 you can't pass the same value to multiple in-out parameters.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int, b: inout Int) {
+    a += b
+    b += 1
+}
+
+// Error: Cannot pass the same value to multiple in-out parameters
+someFunction(&someValue, &someValue)
+```
 
 For more information about memory safety and memory exclusivity,
 see <doc:MemorySafety>.
@@ -978,6 +1058,150 @@ see <doc:Functions#In-Out-Parameters>.
   !! return { a += 1 }
   !! ^
   ```
+-->
+
+#### Borrowing and Consuming Parameters
+
+By default, Swift uses a set of rules
+to automatically manage object lifetime across function calls,
+copying values when required.
+The default rules are designed to minimize overhead in most cases ---
+if you want more specific control,
+you can apply the `borrowing` or `consuming` parameter modifier.
+In this case,
+use `copy` to explicitly mark copy operations.
+
+Regardless of whether you use the default rules,
+Swift guarantees that object lifetime and
+ownership are correctly managed in all cases.
+These parameter modifiers impact only the relative efficiency
+of particular usage patterns, not correctness.
+
+<!--
+TODO: Describe the default rules.
+Essentially, inits and property setters are consuming,
+and everything else is borrowing.
+Where are copies implicitly inserted?
+-->
+
+The `borrowing` modifier indicates that the function
+does not keep the parameter's value.
+In this case, the caller maintains ownership of the object
+and the responsibility for the object's lifetime.
+Using `borrowing` minimizes overhead when the function
+uses the object only transiently.
+
+```swift
+// `isLessThan` does not keep either argument
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    ...
+}
+```
+
+If the function needs to keep the parameter's value
+for example, by storing it in a global variable ---
+you use `copy` to explicitly copy that value.
+
+```swift
+// As above, but this `isLessThan` also wants to record the smallest value
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    if lhs < storedValue {
+        storedValue = copy lhs
+    } else if rhs < storedValue {
+        storedValue = copy rhs
+    }
+    return lhs < rhs
+}
+```
+
+Conversely,
+the `consuming` parameter modifier indicates
+that the function takes ownership of the value,
+accepting responsibility for either storing or destroying it
+before the function returns.
+
+```swift
+// `store` keeps its argument, so mark it `consuming`
+func store(a: consuming A) {
+    someGlobalVariable = a
+}
+```
+
+Using `consuming` minimizes overhead when the caller no longer
+needs to use the object after the function call.
+
+```swift
+// Usually, this is the last thing you do with a value
+store(a: value)
+```
+
+If you keep using a copyable object after the function call,
+the compiler automatically makes a copy of that object
+before the function call.
+
+```swift
+// The compiler inserts an implicit copy here
+store(a: someValue)  // This function consumes someValue
+print(someValue)  // This uses the copy of someValue
+```
+
+Unlike `inout`, neither `borrowing` nor
+`consuming` parameters require any special
+notation when you call the function:
+
+```swift
+func someFunction(a: borrowing A, b: consuming B) { ... }
+
+someFunction(a: someA, b: someB)
+```
+
+The explicit use of either `borrowing` or `consuming`
+indicates your intention to more tightly control
+the overhead of runtime ownership management.
+Because copies can cause unexpected runtime ownership
+operations,
+parameters marked with either of these
+modifiers cannot be copied unless you
+use an explicit `copy` keyword:
+
+```swift
+func borrowingFunction1(a: borrowing A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // `a` is only borrowed from the caller.
+    someGlobalVariable = a
+}
+
+func borrowingFunction2(a: borrowing A) {
+    // OK: Explicit copying works
+    someGlobalVariable = copy a
+}
+
+func consumingFunction1(a: consuming A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // of the following `print`
+    someGlobalVariable = a
+    print(a)
+}
+
+func consumingFunction2(a: consuming A) {
+    // OK: Explicit copying works regardless
+    someGlobalVariable = copy a
+    print(a)
+}
+
+func consumingFunction3(a: consuming A) {
+    // OK: No copy needed here because this is the last use
+    someGlobalVariable = a
+}
+```
+
+<!--
+  TODO: `borrowing` and `consuming` keywords with noncopyable argument types
+-->
+<!--
+  TODO: Any change of parameter modifier is ABI-breaking
 -->
 
 ### Special Kinds of Parameters
@@ -1443,11 +1667,14 @@ but the new method must preserve its return type and nonreturning behavior.
 >
 > *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* *default-argument-clause*_?_ \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* **`...`** \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
+>
 > *external-parameter-name* → *identifier* \
 > *local-parameter-name* → *identifier* \
+> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
 > *default-argument-clause* → **`=`** *expression*
 
 <!--
@@ -1805,21 +2032,6 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   because they behave differently. I'm not sure why we've blended them together,
   especially given that they have distinct syntactic declaration requirements
   and they behave differently.
--->
-
-<!--
-  old-grammar
-  Grammar of an enumeration declaration
-
-  enum-declaration -> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
-  enum-name -> identifier
-  enum-body -> ``{`` declarations-OPT ``}``
-
-  enum-member-declaration -> attribute-list-OPT ``case`` enumerator-list
-  enumerator-list -> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-  enumerator -> enumerator-name tuple-type-OPT
-  enumerator-name -> identifier
-  raw-value-assignment -> ``=`` literal
 -->
 
 ## Structure Declaration
@@ -3465,7 +3677,7 @@ binds more tightly to its operands.
 > can't be used next to each other without grouping parentheses.
 
 Swift defines numerous precedence groups to go along
-with the operators provided by the standard library.
+with the operators provided by the Swift standard library.
 For example, the addition (`+`) and subtraction (`-`) operators
 belong to the `AdditionPrecedence` group,
 and the multiplication (`*`) and division (`/`) operators
@@ -3497,7 +3709,7 @@ The *assignment* of a precedence group specifies the precedence of an operator
 when used in an operation that includes optional chaining.
 When set to `true`, an operator in the corresponding precedence group
 uses the same grouping rules during optional chaining
-as the assignment operators from the standard library.
+as the assignment operators from the Swift standard library.
 Otherwise, when set to `false` or omitted,
 operators in the precedence group follows the same optional chaining rules
 as operators that don't perform assignment.
@@ -3712,6 +3924,12 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 > *mutation-modifier* → **`mutating`** | **`nonmutating`**
 >
 > *actor-isolation-modifier* → **`nonisolated`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

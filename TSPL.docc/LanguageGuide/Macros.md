@@ -397,7 +397,7 @@ The implementation of `#fourCharacterCode`
 generates a new AST containing the expanded code.
 Here's what that code returns to the compiler:
 
-![A tree diagram with a sigle node, the integer literal 1145258561.](macro-ast-output)
+![A tree diagram with the integer literal 1145258561 of type UInt32.](macro-ast-output)
 
 When the compiler receives this expansion,
 it replaces the AST element that contains the macro call
@@ -408,12 +408,12 @@ the program is still syntactically valid Swift
 and all the types are correct.
 That produces a final AST that can be compiled as usual:
 
-![A tree diagram, with a constant as the root element.  The constant has a name, magic number, and a value.  The constant's value is the integer literal 1145258561](macro-ast-result)
+![A tree diagram, with a constant as the root element.  The constant has a name, magic number, and a value.  The constant's value is the integer literal 1145258561 of type UInt32.](macro-ast-result)
 
 This AST corresponds to Swift code like this:
 
 ```
-let magicNumber = 1145258561
+let magicNumber = 1145258561 as UInt32
 ```
 
 In this example, the input source code has only one macro,
@@ -524,7 +524,7 @@ in a structured way, using an AST.
 [SwiftSyntax]: http://github.com/apple/swift-syntax/
 
 Depending on your macro's role,
-there's a corresponding protocol from SwiftSystem
+there's a corresponding protocol from SwiftSyntax
 that the macro implementation conforms to.
 For example,
 consider `#fourCharacterCode` from the previous section.
@@ -552,7 +552,7 @@ public struct FourCharacterCode: ExpressionMacro {
             throw CustomError.message("Invalid four-character code")
         }
 
-        return "\(raw: result)"
+        return "\(raw: result) as UInt32"
     }
 }
 
@@ -565,9 +565,22 @@ private func fourCharacterCode(for characters: String) -> UInt32? {
         guard let asciiValue = character.asciiValue else { return nil }
         result += UInt32(asciiValue)
     }
-    return result.bigEndian
+    return result
 }
 enum CustomError: Error { case message(String) }
+```
+
+If you're adding this macro to an existing Swift Package Manager project,
+add a type that acts as the entry point for the macro target
+and lists the macros that the target defines:
+
+```swift
+import SwiftCompilerPlugin
+
+@main
+struct MyProjectMacros: CompilerPlugin {
+    var providingMacros: [Macro.Type] = [FourCharacterCode.self]
+}
 ```
 
 The `#fourCharacterCode` macro
@@ -576,7 +589,7 @@ so the `FourCharacterCode` type that implements it
 conforms to the `ExpressionMacro` protocol.
 The `ExpressionMacro` protocol has one requirement,
 a `expansion(of:in:)` method that expands the AST.
-For the list of macro roles and their corresponding SwiftSystem protocols,
+For the list of macro roles and their corresponding SwiftSyntax protocols,
 see <doc:Attributes#attached> and <doc:Attributes#freestanding>
 in <doc:Attributes>.
 
@@ -587,13 +600,13 @@ Inside the library, Swift calls `FourCharacterCode.expansion(of:in:)`,
 passing in the AST and the context as arguments to the method.
 The implementation of `expansion(of:in:)`
 finds the string that was passed as an argument to `#fourCharacterCode`
-and calculates the corresponding integer literal value.
+and calculates the corresponding 32-bit unsigned integer literal value.
 
 In the example above,
 the first `guard` block extracts the string literal from the AST,
 assigning that AST element to `literalSegment`.
 The second `guard` block
-calls the private `FourCharacterCode(for:)` function.
+calls the private `fourCharacterCode(for:)` function.
 Both of these blocks throw an error if the macro is used incorrectly ---
 the error message becomes a compiler error
 at the malformed call site.
@@ -633,7 +646,7 @@ https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Synta
     + Find a node's location in source
 
 - Macro expansion happens in their surrounding context.
-  A macro can affect that environment if it needs to —
+  A macro can affect that environment if it needs to ---
   and a macro that has bugs can interfere with that environment.
   (Give guidance on when you'd do this.  It should be rare.)
 
@@ -709,13 +722,13 @@ let file = BasicMacroExpansionContext.KnownSourceFile(
 let context = BasicMacroExpansionContext(sourceFiles: [source: file])
 
 let transformedSF = source.expand(
-    macros:["fourCharacterCode": FourCC.self],
+    macros:["fourCharacterCode": FourCharacterCode.self],
     in: context
 )
 
 let expectedDescription =
     """
-    let abcd = 1145258561
+    let abcd = 1145258561 as UInt32
     """
 
 precondition(transformedSF.description == expectedDescription)
@@ -746,6 +759,12 @@ in no particular order:
 
 - `TokenSyntax`
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

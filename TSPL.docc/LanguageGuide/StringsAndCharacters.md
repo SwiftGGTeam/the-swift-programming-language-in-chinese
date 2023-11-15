@@ -947,8 +947,8 @@ print("the number of characters in \(word) is \(word.count)")
 -->
 
 > Note: Extended grapheme clusters can be composed of multiple Unicode scalars.
-> This means that different characters—
-> and different representations of the same character—
+> This means that different characters ---
+> and different representations of the same character ---
 > can require different amounts of memory to store.
 > Because of this, characters in Swift don't each take up
 > the same amount of memory within a string's representation.
@@ -1161,7 +1161,7 @@ welcome.removeSubrange(range)
 -->
 
 <!--
-  TODO: Find and Replace section, once the standard library supports finding substrings
+  TODO: Find and Replace section, once the Swift standard library supports finding substrings
 -->
 
 > Note: You can use the `insert(_:at:)`, `insert(contentsOf:at:)`,
@@ -1784,6 +1784,12 @@ for scalar in dogString.unicodeScalars {
   </ 🐶
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -80,7 +80,7 @@ Type annotations can contain an optional list of type attributes before the type
 
 > Grammar of a type annotation:
 >
-> *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
+> *type-annotation* → **`:`** *attributes*_?_ *type*
 
 ## Type Identifier
 
@@ -482,7 +482,7 @@ see <doc:MemorySafety>.
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
 >
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
-> *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation* \
+> *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
 
 <!--
@@ -1324,6 +1324,12 @@ the expression or one of its subexpressions.
   TODO: Email Doug for a list of rules or situations describing when type-inference
   is allowed and when types must be fully typed.
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

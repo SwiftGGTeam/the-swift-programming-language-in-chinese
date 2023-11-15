@@ -1845,15 +1845,15 @@ Task {
 Use task groups to structure concurrent code.
 
 ```swift
-let userIDs = await withTaskGroup(of: Int.self) { taskGroup in
+let userIDs = await withTaskGroup(of: Int.self) { group in
     for server in ["primary", "secondary", "development"] {
-        taskGroup.addTask {
+        group.addTask {
             return await fetchUserID(from: server)
         }
     }
 
     var results: [Int] = []
-    for await result in taskGroup {
+    for await result in group {
         results.append(result)
     }
     return results
@@ -2449,6 +2449,12 @@ anyCommonElements([1, 2, 3], [3])
 
 Writing `<T: Equatable>`
 is the same as writing `<T> ... where T: Equatable`.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
