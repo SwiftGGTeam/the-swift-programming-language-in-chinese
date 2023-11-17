@@ -462,14 +462,11 @@ this creates several files,
 including a template for a macro implementation and declaration.
 
 To add macros to an existing project,
-Edit your `Package.swift` file as follows:
+edit the beginning of your `Package.swift` file as follows:
 
 - Set a Swift tools version of 5.9 or later in the `swift-tools-version` comment.
 - Import the `CompilerPluginSupport` module.
 - Include macOS 10.15 as a minimum deployment target in the `platforms` list.
-- Add a dependency on [SwiftSyntax][].
-  Replace the `some-tag` placeholder in the code below
-  with the Git tag for the version of SwiftSyntax you want to use.
 
 The code below shows the beginning of an example `Package.swift` file.
 
@@ -481,20 +478,16 @@ import CompilerPluginSupport
 
 let package = Package(
     name: "MyPackage",
-    platforms: [
-        .iOS(.v17), .macOS(.v13),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "some-tag"),
-    ],
+    platforms: [ .iOS(.v17), .macOS(.v13)],
     // ...
 )
 ```
 
 Next, add a target for the macro implementation
-and a target for the macro library.
+and a target for the macro library
+to your existing `Package.swift` file.
 For example,
-you can add something like the following to your `Package.swift` file,
+you can add something like the following,
 changing the names to match your project:
 
 ```swift
@@ -520,8 +513,19 @@ and `MyProject` makes those macros available.
 The implementation of a macro
 uses the [SwiftSyntax][] module to interact with Swift code
 in a structured way, using an AST.
+If you created a new macro package with Swift Package Manager,
+the generated `Package.swift` file
+automatically includes a dependency on SwiftSyntax.
+If you're adding macros to an existing project,
+add a dependency on SwiftSyntax in your `Package.swift` file:
 
 [SwiftSyntax]: http://github.com/apple/swift-syntax/
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0")
+],
+```
 
 Depending on your macro's role,
 there's a corresponding protocol from SwiftSyntax
