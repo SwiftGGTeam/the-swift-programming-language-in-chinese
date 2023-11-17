@@ -262,7 +262,7 @@ Not “stdlib“ or “the stdlib“.
 
 Use “add” instead to refer to creating a new task,
 to match the API symbol name.
-(These names were used in an earlier version the SE proposal.)
+(These names were used in an earlier version of the SE proposal.)
 
 ## suspension point
 
