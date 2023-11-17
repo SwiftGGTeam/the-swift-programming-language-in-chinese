@@ -505,9 +505,6 @@ dependencies: [
 ],
 ```
 
-Replace the `some-tag` placeholder in the code above
-with the Git tag for the version of SwiftSyntax you want to use.
-
 Depending on your macro's role,
 there's a corresponding protocol from SwiftSyntax
 that the macro implementation conforms to.
