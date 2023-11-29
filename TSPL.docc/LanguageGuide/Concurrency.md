@@ -709,7 +709,7 @@ The code above makes several changes from the previous version:
 
 - Each task is added using the
   [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] method,
-  to avoid adding starting new work after cancellation.
+  to avoid starting new work after cancellation.
 
 - Each task checks for cancellation
   before starting to download the photo.
