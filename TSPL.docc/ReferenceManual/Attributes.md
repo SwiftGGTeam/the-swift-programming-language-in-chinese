@@ -80,14 +80,28 @@ indicates the macros role:
   These macros add accessors to the stored property they're attached to,
   turning it into a computed property.
 
-- term Conformance macros:
-  Write `conformance` as the first argument to this attribute.
-  The type that implements the macro conforms to the `ConformanceMacro` protocol.
-  These macros add protocol conformance to the type they're attached to.
+- term Extension macros:
+  Write `extension` as the first argument to this attribute.
+  The type that implements the macro conforms to the `ExtensionMacro` protocol.
+  These macros can add protocol conformance,
+  a `where` clause,
+  and new declarations that are members of the type the macro is attached to.
+  If the macro adds protocol conformances,
+  include the `conformances:` argument and specify those protocols.
+  The conformance list contains protocol names,
+  type aliases that refer to conformance list items,
+  or protocol compositions of conformance list items.
+  An extension macro on a nested type
+  expands to an extension at the top level of that file.
+  You can't write an extension macro
+  on an extension, a type alias, or a type that's nested inside a function,
+  or use an extension macro to add an extension that has a peer macro.
 
-The peer, member, and accessor macro roles require a `named:` argument,
+The peer, member, and accessor macro roles require a `names:` argument,
 listing the names of the symbols that the macro generates.
-When a macro declaration includes the `named:` argument,
+The extension macro role also requires a `names:` argument
+if the macro adds declarations inside the extension.
+When a macro declaration includes the `names:` argument,
 the macro implementation must generate
 only symbol with names that match that list.
 That said,
