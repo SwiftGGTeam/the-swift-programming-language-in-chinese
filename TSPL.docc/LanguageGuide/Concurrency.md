@@ -658,6 +658,24 @@ Finally,
 the task group returns the array of downloaded photos
 as its overall result.
 
+<!--
+TODO:
+In the future,
+we could extend the example above
+to show how you can limit the number of concurrent tasks
+that get spun up by a task group.
+There isn't a specific guideline we can give
+in terms of how many concurrent tasks to run --
+it's more "profile your code, and then adjust".
+
+See also:
+https://developer.apple.com/videos/play/wwdc2023/10170?time=688
+
+We could also show withDiscardingTaskGroup(...)
+since that's optimized for child tasks
+whose values aren't collected.
+-->
+
 ### Task Cancellation
 
 Swift concurrency uses a cooperative cancellation model.
