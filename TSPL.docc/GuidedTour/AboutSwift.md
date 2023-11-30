@@ -9,7 +9,9 @@ It's a safe and fast programming language
 that combines the best in modern language thinking
 with wisdom from a diverse open source community.
 
-Swift is friendly to new programmers.
+Swift is friendly to new programmers,
+without sacrificing the power and flexibility
+that experienced programmers need.
 It's an industrial-quality programming language
 that's as expressive and enjoyable as a scripting language.
 The compiler is optimized for performance
@@ -37,8 +39,7 @@ Swift combines powerful features like type inference and pattern matching with
 a modern, lightweight syntax
 that's familiar for developers coming from other popular languages,
 allowing complex ideas to be expressed in a clear and concise manner.
-As a result, code is easier to write,
-and also easier to read and maintain.
+As a result, code is easier to read, write, and maintain.
 
 Swift continues to evolve with thoughtful new features and powerful capabilities.
 The goals for Swift are ambitious.
