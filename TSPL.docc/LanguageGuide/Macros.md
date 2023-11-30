@@ -268,7 +268,7 @@ Here's the full declaration of `@OptionSet`:
 ```swift
 @attached(member, names: named(RawValue), named(rawValue),
         named(`init`), arbitrary)
-@attached(extension)
+@attached(extension, conformances: OptionSet)
 public macro OptionSet<RawType>() =
         #externalMacro(module: "SwiftMacros", type: "OptionSetMacro")
 ```
