@@ -232,7 +232,7 @@ that's required by the `OptionSet` protocol,
 as well as some additional members.
 The second use, `@attached(extension, conformances: OptionSet)`,
 tells you that `@OptionSet`
-adds one or conformance to the `OptionSet` protocol.
+adds conformance to the `OptionSet` protocol.
 The `@OptionSet` macro
 extends the type that you apply the macro to,
 to add conformance to the `OptionSet` protocol.
