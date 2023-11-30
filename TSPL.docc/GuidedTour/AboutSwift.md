@@ -35,9 +35,9 @@ the obvious way to write your code should also perform the best.
 Its combination of safety and speed make Swift an excellent choice for
 everything from "Hello, world!" to an entire operating system.
 
-Swift combines powerful features like type inference and pattern matching with
-a modern, lightweight syntax
-that's familiar for developers coming from other popular languages,
+Swift combines a modern, lightweight syntax
+that's familiar for developers coming from other popular languages
+with powerful features like type inference and pattern matching,
 allowing complex ideas to be expressed in a clear and concise manner.
 As a result, code is easier to read, write, and maintain.
 
