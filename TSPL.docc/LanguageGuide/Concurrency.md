@@ -273,10 +273,13 @@ func generateSlideshow(forGallery gallery: String) async {
 
 Assuming the code that renders video is synchronous,
 it doesn't contain any suspension points.
-However, that work might take a long time.
-Periodically calling `Task.yield()` explicitly adds suspension points,
-which let Swift balance between making progress on this work,
-and letting other tasks make progress on other work.
+The work to render video could also take a long time.
+However,
+you can periodically call `Task.yield()`
+to explicitly add suspension points.
+Structuring long-running code this way
+lets Swift balance between making progress on this task,
+and letting other tasks in your program make progress on their work.
 
 The [`Task.sleep(for:tolerance:clock:)`][] method
 is useful when writing simple code
