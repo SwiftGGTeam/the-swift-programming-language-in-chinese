@@ -91,8 +91,10 @@ indicates the macros role:
   The conformance list contains protocol names,
   type aliases that refer to conformance list items,
   or protocol compositions of conformance list items.
+  An extension macro on a nested type
+  expands to an extension at the top level of that file.
   You can't write an extension macro
-  on an extension, type alias, or nested type,
+  on an extension, a type alias, or a type that's nested inside a function,
   or use an extension macro to add an extension that has a peer macro.
 
 The peer, member, and accessor macro roles require a `names:` argument,
