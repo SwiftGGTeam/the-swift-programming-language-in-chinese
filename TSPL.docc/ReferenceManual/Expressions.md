@@ -1364,7 +1364,7 @@ the type of `x` matches the type implied by its context exactly,
 the type of `y` is convertible from `SomeClass` to `SomeClass?`,
 and the type of `z` is convertible from `SomeSubclass` to `SomeClass`.
 
-> Grammar of a implicit member expression:
+> Grammar of an implicit member expression:
 >
 > *implicit-member-expression* → **`.`** *identifier* \
 > *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*

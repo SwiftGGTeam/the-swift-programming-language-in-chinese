@@ -1471,7 +1471,7 @@ Calls to a throwing function or method must be wrapped in a `try` or `try!` expr
 The `throws` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function
-in a context where as a throwing one is expected.
+in a context where a throwing one is expected.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -3182,7 +3182,7 @@ even if the extensions' requirements are mutually exclusive.
 This restriction is demonstrated in the example below.
 Two extension declarations attempt to add conditional conformance
 to the `Serializable` protocol,
-one for for arrays with `Int` elements,
+one for arrays with `Int` elements,
 and one for arrays with `String` elements.
 
 ```swift
