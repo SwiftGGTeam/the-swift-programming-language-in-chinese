@@ -2295,7 +2295,7 @@ You can apply that attribute in the following places:
 Applying a result builder attribute doesn't impact ABI compatibility.
 Applying a result builder attribute to a parameter
 makes that attribute part of the function's interface,
-which can effect source compatibility.
+which can affect source compatibility.
 
 ### requires_stored_property_inits
 

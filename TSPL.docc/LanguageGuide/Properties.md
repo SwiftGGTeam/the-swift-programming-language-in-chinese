@@ -488,7 +488,7 @@ struct AlternativeRect {
 
 If the entire body of a getter is a single expression,
 the getter implicitly returns that expression.
-Here's an another version of the `Rect` structure
+Here's another version of the `Rect` structure
 that takes advantage of this shorthand notation
 and the shorthand notation for setters:
 

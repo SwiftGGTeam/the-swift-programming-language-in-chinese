@@ -439,7 +439,7 @@ make the same change here also.
 > *capture-list-item* → *capture-specifier*_?_ *self-expression* \
 > *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
 
-> Grammar of a implicit member expression:
+> Grammar of an implicit member expression:
 >
 > *implicit-member-expression* → **`.`** *identifier* \
 > *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*

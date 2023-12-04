@@ -568,7 +568,7 @@ is a freestanding macro that produces an expression,
 so the `FourCharacterCode` type that implements it
 conforms to the `ExpressionMacro` protocol.
 The `ExpressionMacro` protocol has one requirement,
-a `expansion(of:in:)` method that expands the AST.
+an `expansion(of:in:)` method that expands the AST.
 For the list of macro roles and their corresponding SwiftSyntax protocols,
 see <doc:Attributes#attached> and <doc:Attributes#freestanding>
 in <doc:Attributes>.
