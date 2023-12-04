@@ -2,23 +2,21 @@
 
 Understand the high-level goals of the language.
 
-Swift is a fantastic way to write software,
-whether it’s for phones, desktops, servers,
+Swift is a fantastic way to write software
+for phones, tablets, desktops, servers,
 or anything else that runs code.
-It's a safe, fast, and interactive programming language
+It's a safe and fast programming language
 that combines the best in modern language thinking
-with wisdom from the wider Apple engineering culture
-and the diverse contributions from its open-source community.
+with wisdom from a diverse open source community.
+
+Swift is friendly to new programmers,
+without sacrificing the power and flexibility
+that experienced programmers need.
+It's an industrial-quality programming language
+that's as expressive and enjoyable as a scripting language.
 The compiler is optimized for performance
 and the language is optimized for development,
 without compromising on either.
-
-Swift is friendly to new programmers.
-It's an industrial-quality programming language
-that's as expressive and enjoyable as a scripting language.
-Writing Swift code in a playground
-lets you experiment with code and see the results immediately,
-without the overhead of building and running an app.
 
 Swift defines away large classes of common programming errors
 by adopting modern programming patterns:
@@ -37,15 +35,14 @@ the obvious way to write your code should also perform the best.
 Its combination of safety and speed make Swift an excellent choice for
 everything from "Hello, world!" to an entire operating system.
 
-Swift combines powerful type inference and pattern matching with
-a modern, lightweight syntax,
+Swift combines a modern, lightweight syntax
+that's familiar for developers coming from other popular languages
+with powerful features like type inference and pattern matching,
 allowing complex ideas to be expressed in a clear and concise manner.
-As a result, code is not just easier to write,
-but easier to read and maintain as well.
+As a result, code is easier to read, write, and maintain.
 
-Swift has been years in the making,
-and it continues to evolve with new features and capabilities.
-Our goals for Swift are ambitious.
+Swift continues to evolve with thoughtful new features and powerful capabilities.
+The goals for Swift are ambitious.
 We can’t wait to see what you create with it.
 
 > Beta Software:

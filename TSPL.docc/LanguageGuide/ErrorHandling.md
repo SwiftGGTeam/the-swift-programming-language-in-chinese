@@ -288,7 +288,7 @@ an item will be vended only if all of these requirements are met.
 
 Because the `vend(itemNamed:)` method propagates any errors it throws,
 any code that calls this method must either handle the errors ---
-using a `do`-`catch` statement, `try?`, or `try!`---
+using a `do`-`catch` statement, `try?`, or `try!` ---
 or continue to propagate them.
 For example,
 the `buyFavoriteSnack(person:vendingMachine:)` in the example below

@@ -2,25 +2,22 @@
 
 Work with common kinds of data and write basic syntax.
 
-Swift is a programming language for iOS, macOS, watchOS, and tvOS app development.
-If you have experience developing in C or Objective-C,
-many parts of Swift will be familiar to you.
-
-Swift provides its own versions of all fundamental C and Objective-C types,
-including `Int` for integers, `Double` and `Float` for floating-point values,
-`Bool` for Boolean values, and `String` for textual data.
+Swift provides many fundamental data types,
+including `Int` for integers,
+`Double` for floating-point values,
+`Bool` for Boolean values,
+and `String` for text.
 Swift also provides powerful versions of the three primary collection types,
 `Array`, `Set`, and `Dictionary`,
 as described in <doc:CollectionTypes>.
 
-Like C, Swift uses variables to store and refer to values by an identifying name.
+Swift uses variables to store and refer to values by an identifying name.
 Swift also makes extensive use of variables whose values can't be changed.
-These are known as constants, and are much more powerful than constants in C.
-Constants are used throughout Swift to make code safer and clearer in intent
+These are known as constants, and are used throughout Swift to make code safer and clearer in intent
 when you work with values that don't need to change.
 
 In addition to familiar types,
-Swift introduces advanced types not found in Objective-C, such as tuples.
+Swift introduces advanced types such as tuples.
 Tuples enable you to create and pass around groupings of values.
 You can use a tuple to return multiple values from a function as a single compound value.
 
