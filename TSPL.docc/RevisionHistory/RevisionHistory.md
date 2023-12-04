@@ -13,7 +13,7 @@ Review the recent changes to this book.
   to the <doc:Concurrency> chapter.
 - Added information in the <doc:Macros> chapter
   about implementing macros in an existing Swift package.
-- Updated the <doc:Attributes:attached> section,
+- Updated the <doc:Attributes#attached> section,
   now that extension macros have replaced conformance macros.
 - Added the <doc:Attributes#backDeployed> section
   with information about back deployment.
