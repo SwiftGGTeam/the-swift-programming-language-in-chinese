@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**XXX release date XXX**
+**2023-12-11**
 
 - Updated for Swift 5.9.2.
 - Added information about the `borrowing` and `consuming` modifiers
