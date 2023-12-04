@@ -16,9 +16,8 @@ for example, a computer with a four-core processor
 can run four pieces of code at the same time,
 with each core carrying out one of the tasks.
 A program that uses parallel and asynchronous code
-carries out multiple operations at a time;
-it suspends operations that are waiting for an external system,
-and makes it easier to write this code in a memory-safe way.
+carries out multiple operations at a time,
+and it suspends operations that are waiting for an external system.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
@@ -157,6 +156,8 @@ Inside an asynchronous method,
 the flow of execution is suspended *only* when you call another asynchronous method ---
 suspension is never implicit or preemptive ---
 which means every possible suspension point is marked with `await`.
+Marking all of the possible suspension points in your code
+helps make concurrent code easier to read and understand.
 
 For example,
 the code below fetches the names of all the pictures in a gallery
@@ -255,69 +256,46 @@ only certain places in your program can call asynchronous functions or methods:
   - Code at the top level that forms an implicit main function.
 -->
 
-Code in between possible suspension points runs sequentially,
-without the possibility of interruption from other concurrent code.
-For example, the code below moves a picture from one gallery to another.
+You can explicitly insert a suspension point
+by calling the [`Task.yield()`][] method.
+
+[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
 
 ```swift
-let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-add(firstPhoto, toGallery: "Road Trip")
-// At this point, firstPhoto is temporarily in both galleries.
-remove(firstPhoto, fromGallery: "Summer Vacation")
-```
-
-There's no way for other code to run in between
-the call to `add(_:toGallery:)` and `remove(_:fromGallery:)`.
-During that time, the first photo appears in both galleries,
-temporarily breaking one of the app's invariants.
-To make it even clearer that this chunk of code
-must not have `await` added to it in the future,
-you can refactor that code into a synchronous function:
-
-```swift
-func move(_ photoName: String, from source: String, to destination: String) {
-    add(photoName, toGallery: destination)
-    remove(photoName, fromGallery: source)
+func generateSlideshow(forGallery gallery: String) async {
+    let photos = await listPhotos(inGallery: gallery)
+    for photo in photos {
+        // ... render a few seconds of video for this photo ...
+        await Task.yield()
+    }
 }
-// ...
-let firstPhoto = await listPhotos(inGallery: "Summer Vacation")[0]
-move(firstPhoto, from: "Summer Vacation", to: "Road Trip")
 ```
 
-In the example above,
-because the `move(_:from:to:)` function is synchronous,
-you guarantee that it can never contain possible suspension points.
-In the future,
-if you try to add concurrent code to this function,
-introducing a possible suspension point,
-you'll get compile-time error instead of introducing a bug.
+Assuming the code that renders video is synchronous,
+it doesn't contain any suspension points.
+The work to render video could also take a long time.
+However,
+you can periodically call `Task.yield()`
+to explicitly add suspension points.
+Structuring long-running code this way
+lets Swift balance between making progress on this task,
+and letting other tasks in your program make progress on their work.
 
-<!--
-  TODO you can also explicitly insert a suspension point
-  by calling ``Task.yield()``
-  https://developer.apple.com/documentation/swift/task/3814840-yield
--->
+The [`Task.sleep(for:tolerance:clock:)`][] method
+is useful when writing simple code
+to learn how concurrency works.
+This method suspends the current task for at least the given amount of time.
+Here's a version of the `listPhotos(inGallery:)` function
+that uses `sleep(for:tolerance:clock:)` to simulate waiting for a network operation:
 
-<!--
-  TODO add detail above about how the *compiler* can reason about
-  the async/await version better too
-  and give you better guarantees and clearer errors
--->
+[`Task.sleep(for:tolerance:clock:)`]: https://developer.apple.com/documentation/swift/task/sleep(for:tolerance:clock:)
 
-> Note: The [`Task.sleep(until:tolerance:clock:)`](https://developer.apple.com/documentation/swift/task/sleep(until:tolerance:clock:)) method
-> is useful when writing simple code
-> to learn how concurrency works.
-> This method does nothing,
-> but waits at least the given number of nanoseconds before it returns.
-> Here's a version of the `listPhotos(inGallery:)` function
-> that uses `sleep(until:tolerance:clock:)` to simulate waiting for a network operation:
->
-> ```swift
-> func listPhotos(inGallery name: String) async throws -> [String] {
->     try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
->     return ["IMG001", "IMG99", "IMG0404"]
-> }
-> ```
+```swift
+func listPhotos(inGallery name: String) async throws -> [String] {
+    try await Task.sleep(for: .seconds(2))
+    return ["IMG001", "IMG99", "IMG0404"]
+}
+```
 
 <!--
   - test: `sleep-in-toy-code`
@@ -325,21 +303,63 @@ you'll get compile-time error instead of introducing a bug.
   ```swifttest
   >> struct Data {}  // Instead of actually importing Foundation
   -> func listPhotos(inGallery name: String) async throws -> [String] {
-         try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+         try await Task.sleep(for: .seconds(2))
          return ["IMG001", "IMG99", "IMG0404"]
   }
   ```
 -->
 
-<!--
-  TODO either add an example or maybe a short section
-  about throwing and async together
-  to give a place where I can note the order of the keywords
-  in the declaration and in the calls
--->
+The version of `listPhotos(inGallery:)` in the code above
+is both asynchronous and throwing,
+because the call to `Task.sleep(until:tolerance:clock:)` can throw an error.
+When you call this version of `listPhotos(inGallery:)`,
+you write both `try` and `await`:
+
+```swift
+let photos = try await listPhotos(inGallery: "A Rainy Weekend")
+```
+
+Asynchronous functions have some similarities to throwing functions:
+When you define an asynchronous or throwing function,
+you mark it with `async` or `throws`,
+and you mark calls to that function with `await` or `try`.
+An asynchronous function can call another asynchronous function,
+just like a throwing function can call another throwing function.
+
+However, there's a very important difference.
+You can wrap throwing code in a `do`-`catch` block to handle errors,
+or use `Result` to store the error for code elsewhere to handle it.
+These approaches let you call throwing functions
+from nonthrowing code.
+For example:
+
+```swift
+func getRainyWeekendPhotos() async -> Result<[String]> {
+    return Result {
+        try await listPhotos(inGallery: "A Rainy Weekend")
+    }
+}
+```
+
+In contrast,
+there's no safe way to wrap asynchronous code
+so you can call it from synchronous code and wait for the result.
+The Swift standard library intentionally omits this unsafe functionality ---
+trying to implement it yourself can lead to
+problems like subtle races, threading issues, and deadlocks.
+When adding concurrent code to an existing project,
+work from the top down.
+Specifically,
+start by converting the top-most layer of code to use concurrency,
+and then start converting the functions and methods that it calls,
+working through the project's architecture one layer at a time.
+There's no way to take a bottom-up approach,
+because synchronous code can't ever call asynchronous code.
 
 <!--
-  TODO closures can be async too -- outline
+  OUTLINE
+
+  ## Asynchronous Closures
 
   like how you can have an async function, a closure con be async
   if a closure contains 'await' that implicitly makes it async
@@ -395,10 +415,12 @@ when it's waiting for the next element to be available.
 -->
 
 In the same way that you can use your own types in a `for`-`in` loop
-by adding conformance to the [`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol,
+by adding conformance to the [`Sequence`][] protocol,
 you can use your own types in a `for`-`await`-`in` loop
-by adding conformance to the
-[`AsyncSequence`](https://developer.apple.com/documentation/swift/asyncsequence) protocol.
+by adding conformance to the [`AsyncSequence`] protocol.
+
+[`Sequence`]: https://developer.apple.com/documentation/swift/sequence
+[`AsyncSequence`]: https://developer.apple.com/documentation/swift/asyncsequence
 
 <!--
   TODO what happened to ``Series`` which was supposed to be a currency type?
@@ -425,17 +447,6 @@ by adding conformance to the
 -->
 
 ## Calling Asynchronous Functions in Parallel
-
-<!--
-  FIXME
-  As pointed out on the Swift forums
-  <https://forums.swift.org/t/swift-concurrency-feedback-wanted/49336/53>
-  whether this work is actually carried out in parallel
-  depends on what's happening at run time.
-  However,
-  the syntax introduced in this section contrasts to the previous section
-  in that async-let makes it *possible* for that work to be parallel.
--->
 
 Calling an asynchronous function with `await`
 runs only one piece of code at a time.
@@ -547,50 +558,242 @@ You can also mix both of these approaches in the same code.
 A *task* is a unit of work
 that can be run asynchronously as part of your program.
 All asynchronous code runs as part of some task.
+A task itself does only one thing at a time,
+but when you create multiple tasks,
+Swift can schedule them to run simultaneously.
+
 The `async`-`let` syntax described in the previous section
-creates a child task for you.
+implicitly creates a child task ---
+this syntax works well when you already know
+what tasks your program needs to run.
 You can also create a task group
-and add child tasks to that group,
+(an instance of [`TaskGroup`][])
+and explicitly add child tasks to that group,
 which gives you more control over priority and cancellation,
 and lets you create a dynamic number of tasks.
 
+[`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
+
 Tasks are arranged in a hierarchy.
-Each task in a task group has the same parent task,
+Each task in a given task group has the same parent task,
 and each task can have child tasks.
 Because of the explicit relationship between tasks and task groups,
 this approach is called *structured concurrency*.
-Although you take on some of the responsibility for correctness,
-the explicit parent-child relationships between tasks
-let Swift handle some behaviors like propagating cancellation for you,
-and lets Swift detect some errors at compile time.
+The explicit parent-child relationships between tasks has several advantages:
+
+- In a parent task,
+  you can't forget to wait for its child tasks to complete.
+
+- When setting a higher priority on a child task,
+  the parent task's priority is automatically escalated.
+
+- When a parent task is canceled,
+  each of its child tasks is also automatically canceled.
+
+- Task-local values propagate to child tasks efficiently and automatically.
+
+Here's another version of the code to download photos
+that handles any number of photos:
 
 ```swift
-await withTaskGroup(of: Data.self) { taskGroup in
+await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        taskGroup.addTask { await downloadPhoto(named: name) }
+        group.addTask {
+            return await downloadPhoto(named: name)
+        }
+    }
+
+    for await photo in group {
+        show(photo)
     }
 }
 ```
 
+The code above creates a new task group,
+and then creates child tasks
+to download each photo in the gallery.
+Swift runs as many of these tasks concurrently as conditions allow.
+As soon a child task finishes downloading a photo,
+that photo is displayed.
+There's no guarantee about the order that child tasks complete,
+so the photos from this gallery can be shown in any order.
+
+> Note:
+> If the code to download a photo could throw an error,
+> you would call `withThrowingTaskGroup(of:returning:body:)` instead.
+
+In the code listing above,
+each photo is downloaded and then displayed,
+so the task group doesn't return any results.
+For a task group that returns a result,
+you add code that accumulates its result
+inside the closure you pass to `withTaskGroup(of:returning:body:)`.
+
+```
+let photos = await withTaskGroup(of: Data.self) { group in
+    let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    for name in photoNames {
+        group.addTask {
+            return await downloadPhoto(named: name)
+        }
+    }
+
+    var results: [Data] = []
+    for await photo in group {
+        results.append(photo)
+    }
+
+    return results
+}
+```
+
+Like the previous example,
+this example creates a child task for each photo to download it.
+Unlike the previous example,
+the `for`-`await`-`in` loop waits for the next child task to finish,
+appends the result of that task to the array of results,
+and then continues waiting until all child tasks have finished.
+Finally,
+the task group returns the array of downloaded photos
+as its overall result.
+
 <!--
-  TODO walk through the example
+TODO:
+In the future,
+we could extend the example above
+to show how you can limit the number of concurrent tasks
+that get spun up by a task group.
+There isn't a specific guideline we can give
+in terms of how many concurrent tasks to run --
+it's more "profile your code, and then adjust".
+
+See also:
+https://developer.apple.com/videos/play/wwdc2023/10170?time=688
+
+We could also show withDiscardingTaskGroup(...)
+since that's optimized for child tasks
+whose values aren't collected.
 -->
 
-For more information about task groups,
-see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
+### Task Cancellation
+
+Swift concurrency uses a cooperative cancellation model.
+Each task checks whether it has been canceled
+at the appropriate points in its execution,
+and responds to cancellation appropriately.
+Depending on what work the task is doing,
+responding to cancellation usually means one of the following:
+
+- Throwing an error like `CancellationError`
+- Returning `nil` or an empty collection
+- Returning the partially completed work
+
+Downloading pictures could take a long time
+if the pictures are large or the network is slow.
+To let the user stop this work,
+without waiting for all of the tasks to complete,
+the tasks need check for cancellation and stop running if they are canceled.
+There are two ways a task can do this:
+by calling the [`Task.checkCancellation()`][] method,
+or by reading the [`Task.isCancelled`][] property.
+Calling `checkCancellation()` throws an error if the task is canceled;
+a throwing task can propagate the error out of the task,
+stopping all of the task's work.
+This has the advantage of being simple to implement and understand.
+For more flexibility, use the `isCancelled` property,
+which lets you perform clean-up work as part of stopping the task,
+like closing network connections and deleting temporary files.
+
+[`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
+[`Task.isCancelled`]: https://developer.apple.com/documentation/swift/task/3814832-iscancelled
+
+```
+let photos = await withTaskGroup(of: Optional<Data>.self) { group in
+    let photoNames = await listPhotos(inGallery: "Summer Vacation")
+    for name in photoNames {
+        group.addTaskUnlessCancelled {
+            guard isCancelled == false else { return nil }
+            return await downloadPhoto(named: name)
+        }
+    }
+
+    var results: [Data] = []
+    for await photo in group {
+        if let photo { results.append(photo) }
+    }
+    return results
+}
+```
+
+The code above makes several changes from the previous version:
+
+- Each task is added using the
+  [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] method,
+  to avoid starting new work after cancellation.
+
+- Each task checks for cancellation
+  before starting to download the photo.
+  If it has been canceled, the task returns `nil`.
+
+- At the end,
+  the task group skips `nil` values when collecting the results.
+  Handling cancellation by returning `nil`
+  means the task group can return a partial result ---
+  the photos that were already downloaded at the time of cancellation ---
+  instead of discarding that completed work.
+
+[`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
+
+For work that needs immediate notification of cancellation,
+use the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
+For example:
+
+[`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
+
+```swift
+let task = await Task.withTaskCancellationHandler {
+    // ...
+} onCancel: {
+    print("Canceled!")
+}
+
+// ... some time later...
+task.cancel()  // Prints "Canceled!"
+```
+
+When using a cancellation handler,
+task cancellation is still cooperative:
+The task either runs to completion
+or checks for cancellation and stops early.
+Because the task is still running when the cancellation handler starts,
+avoid sharing state between the task and its cancellation handler,
+which could create a race condition.
 
 <!--
   OUTLINE
 
-  - A task itself doesn't have any concurrency; it does one thing at a time
+  - cancellation propagates (Konrad's example below)
 
-  - other reasons to use the API include setting:
+  ::
 
-  + cancellation (``Task.isCancelled``)
-  + priority (``Task.currentPriority``)
+      let handle = Task.detached {
+      await withTaskGroup(of: Bool.self) { group in
+          var done = false
+          while done {
+          await group.addTask { Task.isCancelled } // is this child task canceled?
+          done = try await group.next() ?? false
+          }
+      print("done!") // <1>
+      }
 
-  .. not for WWDC, but keep for future:
+      handle.cancel()
+      // done!           <1>
+-->
+
+<!--
+  Not for WWDC, but keep for future:
+
   task have deadlines, not timeouts --- like "now + 20 ms" ---
   a deadline is usually what you want anyhow when you think of a timeout
 
@@ -640,15 +843,11 @@ see [`TaskGroup`](https://developer.apple.com/documentation/swift/taskgroup).
 
   Adding Child Tasks to a Task Group
 
-  - Creating a group with ``withTaskGroup`` and ``withThrowingTaskGroup``
-
   - awaiting ``withGroup`` means waiting for all child tasks to complete
 
   - a child task can't outlive its parent,
   like how ``async``-``let`` can't outlive the (implicit) parent
   which is the function scope
-
-  - Adding a child with ``TaskGroup.addTask(priority:operation:)``
 
   - awaiting ``addTask(priority:operation:)``
   means waiting for that child task to be added,
@@ -728,59 +927,6 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
   when to make a method do its work in a detached task
   versus making the method itself async?
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
--->
-
-### Task Cancellation
-
-Swift concurrency uses a cooperative cancellation model.
-Each task checks whether it has been canceled
-at the appropriate points in its execution,
-and responds to cancellation in whatever way is appropriate.
-Depending on the work you're doing,
-that usually means one of the following:
-
-- Throwing an error like `CancellationError`
-- Returning `nil` or an empty collection
-- Returning the partially completed work
-
-To check for cancellation,
-either call [`Task.checkCancellation()`](https://developer.apple.com/documentation/swift/task/3814826-checkcancellation),
-which throws `CancellationError` if the task has been canceled,
-or check the value of [`Task.isCancelled`](https://developer.apple.com/documentation/swift/task/3814832-iscancelled)
-and handle the cancellation in your own code.
-For example,
-a task that's downloading photos from a gallery
-might need to delete partial downloads and close network connections.
-
-To propagate cancellation manually,
-call [`Task.cancel()`](https://developer.apple.com/documentation/swift/task/3851218-cancel).
-
-<!--
-  OUTLINE
-
-  - task
-
-  - cancellation propagates (Konrad's example below)
-
-  ::
-
-      let handle = spawnDetached {
-      await withTaskGroup(of: Bool.self) { group in
-          var done = false
-          while done {
-          await group.spawn { Task.isCancelled } // is this child task cancelled?
-          done = try await group.next() ?? false
-          }
-      print("done!") // <1>
-      }
-
-      handle.cancel()
-      // done!           <1>
-
-  - Use ``withCancellationHandler()`` to specify a closure to run
-  if the task is canceled
-  along with a closure that defines the task's work
-  (it doesn't throw like ``checkCancellation`` does)
 -->
 
 ## Actors
@@ -907,8 +1053,8 @@ only in places where `await` marks a suspension point.
 Because `update(with:)` doesn't contain any suspension points,
 no other code can access the data in the middle of an update.
 
-If you try to access those properties from outside the actor,
-like you would with an instance of a class,
+If code outside the actor tries to access those properties directly,
+like accessing a structure or class's properties,
 you'll get a compile-time error.
 For example:
 
@@ -918,15 +1064,66 @@ print(logger.max)  // Error
 
 Accessing `logger.max` without writing `await` fails because
 the properties of an actor are part of that actor's isolated local state.
+The code to access this property needs to run as part of the actor,
+which is an asynchronous operation and requires writing `await`.
 Swift guarantees that
-only code inside an actor can access the actor's local state.
+only code running on an actor can access that actor's local state.
 This guarantee is known as *actor isolation*.
 
-<!--
-  OUTLINE -- design patterns for actors
+The following aspects of the Swift concurrency model
+work together to make it easier to reason about shared mutable state:
 
-  - do your mutation in a sync function
--->
+- Code in between possible suspension points runs sequentially,
+  without the possibility of interruption from other concurrent code.
+
+- Code that interacts with an actor's local state
+  runs only on that actor.
+
+- An actor runs only one piece of code at a time.
+
+Because of these guarantees,
+code that doesn't include `await` and that's inside an actor
+can make the updates without a risk of other places in your program
+observing the temporarily invalid state.
+For example,
+the code below converts measured temperatures from Fahrenheit to Celsius:
+
+```swift
+extension TemperatureLogger {
+    func convertFarenheitToCelsius() {
+        measurements = measurements.map { measurement in
+            (measurement - 32) * 5 / 9
+        }
+    }
+}
+```
+
+The code above converts the array of measurements, one at a time.
+While the map operation is in progress,
+some temperatures are in Fahrenheit and others are in Celsius.
+However, because none of the code includes `await`,
+there are no potential suspension points in this method.
+The state that this method modifies belongs to the actor,
+which protects it against code reading or modifying it
+except when that code runs on the actor.
+This means there's no way for other code
+to read a list of partially converted temperatures
+while unit conversion is in progress.
+
+In addition to writing code in an actor
+that protects temporary invalid state by omitting potential suspension points,
+you can move that code into a synchronous method.
+The `convertFarenheitToCelsius()` method above is method,
+so it's guaranteed to *never* contain potential suspension points.
+This function encapsulates the code
+that temporarily makes the data model inconsistent,
+and makes it easier for anyone reading the code
+to recognize that no other code can run
+before data consistency is restored by completing the work.
+In the future,
+if you try to add concurrent code to this function,
+introducing a possible suspension point,
+you'll get compile-time error instead of introducing a bug.
 
 <!--
   OUTLINE
