@@ -2,13 +2,19 @@
 
 Review the recent changes to this book.
 
-**2023-11-14**
+**2023-12-11**
 
 - Updated for Swift 5.9.2.
 - Added information about the `borrowing` and `consuming` modifiers
   to the <doc:Declarations#Parameter-Modifiers> section.
 - Added information in <doc:TheBasics#Declaring-Constants-and-Variables>
   about setting a constant's value after its declaration.
+- Added more information about tasks, task groups, and task cancellation
+  to the <doc:Concurrency> chapter.
+- Added information in the <doc:Macros> chapter
+  about implementing macros in an existing Swift package.
+- Updated the <doc:Attributes#attached> section,
+  now that extension macros have replaced conformance macros.
 - Added the <doc:Attributes#backDeployed> section
   with information about back deployment.
 
@@ -822,12 +828,6 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
