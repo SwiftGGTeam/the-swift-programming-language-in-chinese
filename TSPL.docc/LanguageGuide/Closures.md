@@ -5,8 +5,8 @@ Group code that executes together, without creating a named function.
 *Closures* are self-contained blocks of functionality
 that can be passed around and used in your code.
 Closures in Swift are similar
-to anonymous functions and lambdas in other programming languages,
-and to blocks in Objective-C.
+to closures, anonymous functions, lambdas, and blocks
+in other programming languages.
 
 Closures can capture and store references to any constants and variables
 from the context in which they're defined.
