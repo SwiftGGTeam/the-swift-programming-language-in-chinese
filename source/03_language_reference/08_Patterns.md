@@ -156,7 +156,7 @@ case nil:
 ```swift
 let someOptional: Int? = 42
 // 使用枚举用例模式匹配
-if case .Some(let x) = someOptional {
+if case .some(let x) = someOptional {
     print(x)
 }
 
