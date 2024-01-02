@@ -922,7 +922,7 @@ for a method marked with the `objc` attribute.
 
 > Note:
 > This attribute is deprecated;
-> use the <doc:Attributes:main> attribute instead.
+> use the <doc:Attributes#main> attribute instead.
 > In Swift 6,
 > using this attribute will be an error.
 
