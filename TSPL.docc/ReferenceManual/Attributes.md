@@ -2040,7 +2040,7 @@ The imported module must be compiled with testing enabled.
 
 > Note:
 > This attribute is deprecated;
-> use the <doc:Attributes:main> attribute instead.
+> use the <doc:Attributes#main> attribute instead.
 > In Swift 6,
 > using this attribute will be an error.
 
