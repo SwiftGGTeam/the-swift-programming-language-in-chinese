@@ -1351,7 +1351,7 @@ a file descriptor isn't safe to send across concurrency domains.
 -->
 
 In the code above,
-the `NonsendableTemperatureReading` is a structure
+the `FileDescriptor` is a structure
 that meets the criteria to be implicitly sendable.
 However, the extension makes its conformance to `Sendable` unavailable,
 preventing the type from being sendable.
