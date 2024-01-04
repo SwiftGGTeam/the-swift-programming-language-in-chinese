@@ -23,9 +23,10 @@ you may not need to specify explicit access control levels at all.
 > (properties, types, functions, and so on)
 > are referred to as “entities” in the sections below, for brevity.
 
-## Modules and Source Files
+## Modules, Source Files, and Packages
 
-Swift's access control model is based on the concept of modules and source files.
+Swift's access control model is based on the concept of
+modules, source files, and packages.
 
 A *module* is a single unit of code distribution ---
 a framework or application that's built and shipped as a single unit
@@ -43,6 +44,15 @@ A *source file* is a single Swift source code file within a module
 (in effect, a single file within an app or framework).
 Although it's common to define individual types in separate source files,
 a single source file can contain definitions for multiple types, functions, and so on.
+
+A *package* is a group of modules and source files,
+with boundaries that are defined by the build system.
+The package name isn't part of your Swift source code,
+but does appear in your configuration for the build system.
+For example, if your use Swift Package Manager to build your code,
+you define the package name using [`Package`][] in your package manifest.
+
+[`Package`](https://developer.apple.com/documentation/PackageDescription/Package)
 
 ## Access Levels
 
