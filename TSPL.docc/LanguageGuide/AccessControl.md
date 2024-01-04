@@ -46,15 +46,22 @@ a single source file can contain definitions for multiple types, functions, and 
 
 ## Access Levels
 
-Swift provides five different *access levels* for entities within your code.
+Swift provides six different *access levels* for entities within your code.
 These access levels are relative to the source file in which an entity is defined,
-and also relative to the module that source file belongs to.
+the module that source file belongs to,
+and the package that the module belongs to.
 
 - *Open access* and *public access*
   enable entities to be used within any source file from their defining module,
   and also in a source file from another module that imports the defining module.
   You typically use open or public access when specifying the public interface to a framework.
   The difference between open and public access is described below.
+- *Package access*
+  enables entities to be used within
+  any source files from their defining package,
+  but not in any source file outside of that package.
+  You typically use package access
+  within an app or framework that's structured into multiple modules.
 - *Internal access*
   enables entities to be used within any source file from their defining module,
   but not in any source file outside of that module.
