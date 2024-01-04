@@ -920,14 +920,14 @@ for a method marked with the `objc` attribute.
 
 ### NSApplicationMain
 
-> Note:
+> Deprecated:
 > This attribute is deprecated;
 > use the <doc:Attributes#main> attribute instead.
 > In Swift 6,
 > using this attribute will be an error.
 
 Apply this attribute to a class
-to indicate that it's the application delegate.
+to indicate that it's the app delegate.
 Using this attribute is equivalent to calling the
 `NSApplicationMain(_:_:)` function.
 
@@ -2038,14 +2038,14 @@ The imported module must be compiled with testing enabled.
 
 ### UIApplicationMain
 
-> Note:
+> Deprecated:
 > This attribute is deprecated;
 > use the <doc:Attributes#main> attribute instead.
 > In Swift 6,
 > using this attribute will be an error.
 
 Apply this attribute to a class
-to indicate that it's the application delegate.
+to indicate that it's the app delegate.
 Using this attribute is equivalent to calling the
 `UIApplicationMain` function and
 passing this class's name as the name of the delegate class.
