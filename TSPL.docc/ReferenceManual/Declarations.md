@@ -2273,7 +2273,8 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 ## Protocol Declaration
 
 A *protocol declaration* introduces a named protocol type into your program.
-Protocol declarations are declared at global scope
+Protocol declarations are declared either at global scope
+or nested inside a nongeneric type or nongeneric function,
 using the `protocol` keyword and have the following form:
 
 ```swift
