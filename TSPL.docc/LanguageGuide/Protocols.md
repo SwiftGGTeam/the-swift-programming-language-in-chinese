@@ -829,11 +829,12 @@ The example below defines two protocols for use with dice-based board games:
 protocol DiceGame {
     var dice: Dice { get }
     func play()
-}
-protocol DiceGameDelegate: AnyObject {
-    func gameDidStart(_ game: DiceGame)
-    func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-    func gameDidEnd(_ game: DiceGame)
+
+    protocol Delegate: AnyObject {
+        func gameDidStart(_ game: DiceGame)
+        func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+        func gameDidEnd(_ game: DiceGame)
+    }
 }
 ```
 
@@ -856,8 +857,15 @@ protocol DiceGameDelegate: AnyObject {
 The `DiceGame` protocol is a protocol that can be adopted
 by any game that involves dice.
 
-The `DiceGameDelegate` protocol can be adopted
+The `DiceGame.Delegate` protocol can be adopted
 to track the progress of a `DiceGame`.
+Because the `DiceGame.Delegate` protocol
+is always used in the context of a dice game,
+it's nested inside of the `DiceGame` protocol.
+Protocols can be nested inside of other protocols
+and inside of type declarations like structures and classes,
+as long as the outer declaration isn't generic.
+
 To prevent strong reference cycles,
 delegates are declared as weak references.
 For information about weak references,
@@ -872,7 +880,7 @@ as discussed in <doc:Protocols#Class-Only-Protocols>.
 Here's a version of the *Snakes and Ladders* game originally introduced in <doc:ControlFlow>.
 This version is adapted to use a `Dice` instance for its dice-rolls;
 to adopt the `DiceGame` protocol;
-and to notify a `DiceGameDelegate` about its progress:
+and to notify a `DiceGame.Delegate` about its progress:
 
 ```swift
 class SnakesAndLadders: DiceGame {
@@ -885,7 +893,7 @@ class SnakesAndLadders: DiceGame {
         board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
         board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
     }
-    weak var delegate: DiceGameDelegate?
+    weak var delegate: DiceGame.Delegate?
     func play() {
         square = 0
         delegate?.gameDidStart(self)
@@ -921,7 +929,7 @@ class SnakesAndLadders: DiceGame {
            board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
            board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
         }
-        weak var delegate: DiceGameDelegate?
+        weak var delegate: DiceGame.Delegate?
         func play() {
            square = 0
            delegate?.gameDidStart(self)
@@ -960,20 +968,20 @@ the class's `init()` initializer.
 All game logic is moved into the protocol's `play` method,
 which uses the protocol's required `dice` property to provide its dice roll values.
 
-Note that the `delegate` property is defined as an *optional* `DiceGameDelegate`,
+Note that the `delegate` property is defined as an *optional* `DiceGame.Delegate`,
 because a delegate isn't required in order to play the game.
 Because it's of an optional type,
 the `delegate` property is automatically set to an initial value of `nil`.
 Thereafter, the game instantiator has the option to set the property to a suitable delegate.
-Because the `DiceGameDelegate` protocol is class-only, you can declare the
+Because the `DiceGame.Delegate` protocol is class-only, you can declare the
 delegate to be `weak` to prevent reference cycles.
 
-`DiceGameDelegate` provides three methods for tracking the progress of a game.
+`DiceGame.Delegate` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
 the `play()` method above, and are called when
 a new game starts, a new turn begins, or the game ends.
 
-Because the `delegate` property is an *optional* `DiceGameDelegate`,
+Because the `delegate` property is an *optional* `DiceGame.Delegate`,
 the `play()` method uses optional chaining each time it calls a method on the delegate.
 If the `delegate` property is nil,
 these delegate calls fail gracefully and without error.
@@ -986,10 +994,10 @@ and are passed the `SnakesAndLadders` instance as a parameter.
 -->
 
 This next example shows a class called `DiceGameTracker`,
-which adopts the `DiceGameDelegate` protocol:
+which adopts the `DiceGame.Delegate` protocol:
 
 ```swift
-class DiceGameTracker: DiceGameDelegate {
+class DiceGameTracker: DiceGame.Delegate {
     var numberOfTurns = 0
     func gameDidStart(_ game: DiceGame) {
         numberOfTurns = 0
@@ -1012,7 +1020,7 @@ class DiceGameTracker: DiceGameDelegate {
   - test: `protocols`
 
   ```swifttest
-  -> class DiceGameTracker: DiceGameDelegate {
+  -> class DiceGameTracker: DiceGame.Delegate {
         var numberOfTurns = 0
         func gameDidStart(_ game: DiceGame) {
            numberOfTurns = 0
@@ -1032,7 +1040,7 @@ class DiceGameTracker: DiceGameDelegate {
   ```
 -->
 
-`DiceGameTracker` implements all three methods required by `DiceGameDelegate`.
+`DiceGameTracker` implements all three methods required by `DiceGame.Delegate`.
 It uses these methods to keep track of the number of turns a game has taken.
 It resets a `numberOfTurns` property to zero when the game starts,
 increments it each time a new turn begins,
