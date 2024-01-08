@@ -858,13 +858,14 @@ The `DiceGame` protocol is a protocol that can be adopted
 by any game that involves dice.
 
 The `DiceGame.Delegate` protocol can be adopted
-to track the progress of a `DiceGame`.
+to track the progress of a type that implements `DiceGame`.
 Because the `DiceGame.Delegate` protocol
 is always used in the context of a dice game,
 it's nested inside of the `DiceGame` protocol.
 Protocols can be nested inside of other protocols
 and inside of type declarations like structures and classes,
 as long as the outer declaration isn't generic.
+For information about nesting types, see <doc:NestedTypes>.
 
 To prevent strong reference cycles,
 delegates are declared as weak references.
