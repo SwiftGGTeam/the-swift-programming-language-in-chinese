@@ -106,6 +106,21 @@ Spelled as two words, not closed up or hyphenated.
 
 See entry for *Swift*.
 
+## deprecation
+
+In the language reference,
+include a deprecation note at the start of a section
+that describes a deprecated feature.
+Use wording and markup like the following:
+
+```
+> Deprecated:
+> This attribute is deprecated;
+> use the <doc:Attributes#main> attribute instead.
+> In Swift 6,
+> using this attribute will be an error.
+```
+
 ## function
 
 In the reference,
