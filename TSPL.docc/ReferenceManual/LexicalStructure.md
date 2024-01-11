@@ -324,7 +324,8 @@ so they must be escaped with backticks in that context.
   `#imageLiteral`,
   `#keyPath`,
   `#selector`,
-  `#sourceLocation`.
+  `#sourceLocation`,
+  `#unavailable`.
 
 > Note:
 > Prior to Swift 5.9,
