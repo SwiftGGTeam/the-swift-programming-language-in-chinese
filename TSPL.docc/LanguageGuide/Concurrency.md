@@ -1335,23 +1335,23 @@ a file descriptor isn't safe to send across concurrency domains.
 <!--
   - test: `suppressing-implied-sendable-conformance`
 
-  -> struct NonsendableTemperatureReading {
-  ->     var measurement: Int
+  -> struct FileDescriptor {
+  ->     let rawValue: CInt
   -> }
   ---
   -> @available(*, unavailable)
-  -> extension NonsendableTemperatureReading: Sendable { }
-  >> let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
-  !$ warning: conformance of 'NonsendableTemperatureReading' to 'Sendable' is unavailable; this is an error in Swift 6
-  !! let nonsendable: Sendable = NonsendableTemperatureReading(measurement: 10)
+  -> extension FileDescriptor: Sendable { }
+  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
   !! ^
-  !$ note: conformance of 'NonsendableTemperatureReading' to 'Sendable' has been explicitly marked unavailable here
-  !! extension NonsendableTemperatureReading: Sendable { }
+  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
+  !! extension FileDescriptor: Sendable { }
   !! ^
 -->
 
 In the code above,
-the `NonsendableTemperatureReading` is a structure
+the `FileDescriptor` is a structure
 that meets the criteria to be implicitly sendable.
 However, the extension makes its conformance to `Sendable` unavailable,
 preventing the type from being sendable.
