@@ -154,6 +154,7 @@ These arguments begin with one of the following platform or language names:
 - `tvOS`
 - `tvOSApplicationExtension`
 - `visionOS`
+- `visionOSApplicationExtension`
 - `swift`
 
 <!--
