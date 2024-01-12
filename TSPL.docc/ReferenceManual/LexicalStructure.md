@@ -316,15 +316,16 @@ so they must be escaped with backticks in that context.
 - Keywords that begin with a number sign (`#`):
   `#available`,
   `#colorLiteral`,
-  `#elseif`,
   `#else`,
+  `#elseif`,
   `#endif`,
   `#fileLiteral`,
   `#if`,
   `#imageLiteral`,
   `#keyPath`,
   `#selector`,
-  `#sourceLocation`.
+  `#sourceLocation`,
+  `#unavailable`.
 
 > Note:
 > Prior to Swift 5.9,
