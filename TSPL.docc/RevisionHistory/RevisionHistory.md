@@ -2,9 +2,47 @@
 
 Review the recent changes to this book.
 
-**2023-02-16**
+**2023-12-11**
+
+- Updated for Swift 5.9.2.
+- Added information about the `borrowing` and `consuming` modifiers
+  to the <doc:Declarations#Parameter-Modifiers> section.
+- Added information in <doc:TheBasics#Declaring-Constants-and-Variables>
+  about setting a constant's value after its declaration.
+- Added more information about tasks, task groups, and task cancellation
+  to the <doc:Concurrency> chapter.
+- Added information in the <doc:Macros> chapter
+  about implementing macros in an existing Swift package.
+- Updated the <doc:Attributes#attached> section,
+  now that extension macros have replaced conformance macros.
+- Added the <doc:Attributes#backDeployed> section
+  with information about back deployment.
+
+**2023-09-18**
+
+- Updated for Swift 5.9.
+- Added information about `if` and `switch` expressions
+  to the <doc:ControlFlow> chapter
+  and the <doc:Expressions#Conditional-Expression> section.
+- Added the <doc:Macros> chapter,
+  with information about generating code at compile time.
+- Expanded the discussion of optionals in <doc:TheBasics>.
+- Added an example of concurrency to <doc:GuidedTour>.
+- Added information about boxed protocol types
+  to the <doc:OpaqueTypes> chapter.
+- Added information about the `buildPartialBlock(first:)`
+  and `buildPartialBlock(accumulated:next:)` methods
+  to the <doc:Attributes#Result-Transformations> section.
+- Added visionOS to the lists of platforms in
+  <doc:Attributes#available>
+  and <doc:Statements#Conditional-Compilation-Block>.
+- Formatted the formal grammar to use blank lines for grouping.
+
+**2023-03-30**
 
 - Updated for Swift 5.8.
+- Added the <doc:ControlFlow#Deferred-Actions> section,
+  showing `defer` outside of error handling.
 - Adopted Swift-DocC for publication.
 - Minor corrections and additions throughout.
 
@@ -187,7 +225,7 @@ Review the recent changes to this book.
   and to the <doc:Protocols#Conditionally-Conforming-to-a-Protocol> section
   of the <doc:Protocols> chapter.
 - Added information about recursive protocol constraints
-  to the <doc:Generics#Using-a-Protocol-in-Its-Associated-Type's-Constraints> section.
+  to the <doc:Generics#Using-a-Protocol-in-Its-Associated-Types-Constraints> section.
 - Added information about
   the `canImport()` and `targetEnvironment()` platform conditions
   to <doc:Statements#Conditional-Compilation-Block>.

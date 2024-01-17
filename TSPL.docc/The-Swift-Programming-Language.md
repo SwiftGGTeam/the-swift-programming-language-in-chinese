@@ -1,4 +1,4 @@
-# The Swift Programming Language
+# The Swift Programming Language (5.9.2)
 
 @Metadata {
   @TechnologyRoot
@@ -38,6 +38,7 @@
 - <doc:OptionalChaining>
 - <doc:ErrorHandling>
 - <doc:Concurrency>
+- <doc:Macros>
 - <doc:TypeCasting>
 - <doc:NestedTypes>
 - <doc:Extensions>

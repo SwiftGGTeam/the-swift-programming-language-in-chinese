@@ -1,13 +1,9 @@
 # The Swift Programming Language
 
-This repository contains a version of *The Swift Programming Language*
-that you can build using Swift-DocC.
-
-The version of *The Swift Programming Language* published on [docs.swift.org](https://docs.swift.org/swift-book/)
-is currently built using a legacy toolchain,
-not from this repository or its content.
-The goal is to replace that version with a version built from this repository,
-working with the community to extend Swift-DocC where needed.
+This repository contains the source for *The Swift Programming Language*
+(sometimes abbreviated as TSPL),
+which is published on [docs.swift.org][published]
+and built using [Swift-DocC][docc].
 
 ## Contributing
 
@@ -34,8 +30,10 @@ For more information, see [Contributing to The Swift Programming Language][contr
 [bugs]: https://github.com/apple/swift-book/issues
 [conduct]: https://www.swift.org/code-of-conduct
 [contributing]: /CONTRIBUTING.md
-[forum]: https://forums.swift.org/c/development/swift-docc/80
+[forum]: https://forums.swift.org/c/swift-documentation/92
 [tspl-style]: /Style.md
+[published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
+[docc]: https://github.com/apple/swift-docc
 
 ## Building
 
@@ -44,3 +42,15 @@ in this repository's root directory.
 
 After running DocC, open the link that `docc` outputs
 to display a local preview in your browser.
+
+> Note:
+>
+> If you installed DocC by downloading a toolchain from Swift.org,
+> `docc` is located in `usr/bin/`,
+> relative to the installation path of the toolchain.
+> Make sure your shell's `PATH` environment variable
+> includes that directory.
+>
+> If you installed DocC by downloading Xcode,
+> run `xcrun docc preview TSPL.docc` instead.
+

@@ -288,7 +288,7 @@ an item will be vended only if all of these requirements are met.
 
 Because the `vend(itemNamed:)` method propagates any errors it throws,
 any code that calls this method must either handle the errors ---
-using a `do`-`catch` statement, `try?`, or `try!`---
+using a `do`-`catch` statement, `try?`, or `try!` ---
 or continue to propagate them.
 For example,
 the `buyFavoriteSnack(person:vendingMachine:)` in the example below
@@ -770,8 +770,10 @@ The above example uses a `defer` statement
 to ensure that the `open(_:)` function
 has a corresponding call to `close(_:)`.
 
-> Note: You can use a `defer` statement
-> even when no error handling code is involved.
+You can use a `defer` statement
+even when no error handling code is involved.
+For more information,
+see <doc:ControlFlow#Deferred-Actions>.
 
 <!--
 This source file is part of the Swift.org open source project

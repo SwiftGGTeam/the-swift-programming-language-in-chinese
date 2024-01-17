@@ -198,10 +198,8 @@ that whitespace *is* included.
 ![](multilineStringWhitespace)
 
 <!--
-  Using an image here is a little clearer,
-  since it can call out which spaces "count",
-  but it also works around
-  <rdar://problem/32463195> Multiline string literals lose (meaningful) indentation
+  Using an image here is a little clearer than a code listing,
+  since it can call out which spaces "count".
 -->
 
 <!--
@@ -229,7 +227,7 @@ String literals can include the following special characters:
 - The escaped special characters `\0` (null character), `\\` (backslash),
   `\t` (horizontal tab), `\n` (line feed), `\r` (carriage return),
   `\"` (double quotation mark) and `\'` (single quotation mark)
-- An arbitrary Unicode scalar value, written as `\\u{`*n*`}`,
+- An arbitrary Unicode scalar value, written as `\u{`*n*`}`,
   where *n* is a 1--8 digit hexadecimal number
   (Unicode is discussed in <doc:StringsAndCharacters#Unicode> below)
 
@@ -949,8 +947,8 @@ print("the number of characters in \(word) is \(word.count)")
 -->
 
 > Note: Extended grapheme clusters can be composed of multiple Unicode scalars.
-> This means that different characters—
-> and different representations of the same character—
+> This means that different characters ---
+> and different representations of the same character ---
 > can require different amounts of memory to store.
 > Because of this, characters in Swift don't each take up
 > the same amount of memory within a string's representation.
@@ -1163,7 +1161,7 @@ welcome.removeSubrange(range)
 -->
 
 <!--
-  TODO: Find and Replace section, once the standard library supports finding substrings
+  TODO: Find and Replace section, once the Swift standard library supports finding substrings
 -->
 
 > Note: You can use the `insert(_:at:)`, `insert(contentsOf:at:)`,

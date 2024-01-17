@@ -25,11 +25,10 @@ print("Hello, world!")
   ```
 -->
 
-If you have written code in C or Objective-C,
-this syntax looks familiar to you ---
+This syntax should look familiar if you know another language ---
 in Swift, this line of code is a complete program.
 You don't need to import a separate library for functionality like
-input/output or string handling.
+outputting text or handling strings.
 Code written at global scope is used
 as the entry point for the program,
 so you don't need a `main()` function.
@@ -171,9 +170,13 @@ For example:
 
 ```swift
 let quotation = """
-I said "I have \(apples) apples."
-And then I said "I have \(apples + oranges) pieces of fruit."
-"""
+        Even though there's whitespace to the left,
+        the actual lines aren't indented.
+            Except for this line.
+        Double quotes (") can appear without being escaped.
+
+        I still have \(apples + oranges) pieces of fruit.
+        """
 ```
 
 <!--
@@ -220,8 +223,6 @@ A comma is allowed after the last element.
   REFERENCE
   Occupations is a reference to Firefly,
   specifically to Mal's joke about Jayne's job on the ship.
-
-
 
   Can't find the specific episode,
   but it shows up in several lists of Firefly "best of" quotes:
@@ -310,7 +311,6 @@ let emptyArray: [String] = []
 let emptyDictionary: [String: Float] = [:]
 ```
 
-
 <!--
   - test: `guided-tour`
 
@@ -380,6 +380,21 @@ In an `if` statement,
 the conditional must be a Boolean expression ---
 this means that code such as `if score { ... }` is an error,
 not an implicit comparison to zero.
+
+You can write `if` or `switch`
+after the equal sign (`=`) of an assignment
+or after `return`,
+to choose a value based on the condition.
+
+```swift
+let scoreDecoration = if teamScore > 10 {
+    "🎉"
+} else {
+    ""
+}
+print("Score:", teamScore, scoreDecoration)
+// Prints "Score: 11 🎉"
+```
 
 You can use `if` and `let` together
 to work with values that might be missing.
@@ -652,6 +667,11 @@ print(m)
   <- 128
   ```
 -->
+
+> Experiment:
+> Change the condition from `m < 100` to `m < 0`
+> to see how `while` and `repeat`-`while` behave differently
+> when the loop condition is already true.
 
 You can keep an index in a loop
 by using `..<` to make a range of indexes.
@@ -1821,6 +1841,76 @@ Task {
   ```
 -->
 
+Use task groups to structure concurrent code.
+
+```swift
+let userIDs = await withTaskGroup(of: Int.self) { group in
+    for server in ["primary", "secondary", "development"] {
+        group.addTask {
+            return await fetchUserID(from: server)
+        }
+    }
+
+    var results: [Int] = []
+    for await result in group {
+        results.append(result)
+    }
+    return results
+}
+```
+
+Actors are similar to classes,
+except they ensure that different asynchronous functions
+can safely interact with an instance of the same actor at the same time.
+
+```swift
+actor ServerConnection {
+    var server: String = "primary"
+    private var activeUsers: [Int] = []
+    func connect() async -> Int {
+        let userID = await fetchUserID(from: server)
+        // ... communicate with server ...
+        activeUsers.append(userID)
+        return userID
+    }
+}
+```
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> actor Oven {
+         var contents: [String] = []
+         func bake(_ food: String) -> String {
+             contents.append(food)
+             // ... wait for food to bake ...
+             return contents.removeLast()
+         }
+     }
+  ```
+-->
+
+When you call a method on an actor or access one of its properties,
+you mark that code with `await`
+to indicate that it might have to wait for other code
+that's already running on the actor to finish.
+
+```swift
+let server = ServerConnection()
+let userID = await server.connect()
+```
+
+<!--
+  - test: `guided-tour`
+
+  ```swifttest
+  -> let oven = Oven()
+  -> let biscuits = await oven.bake("biscuits")
+  ```
+-->
+
+
 ## Protocols and Extensions
 
 Use `protocol` to declare a protocol.
@@ -1962,11 +2052,11 @@ You can use a protocol name just like any other named type ---
 for example, to create a collection of objects
 that have different types
 but that all conform to a single protocol.
-When you work with values whose type is a protocol type,
+When you work with values whose type is a boxed protocol type,
 methods outside the protocol definition aren't available.
 
 ```swift
-let protocolValue: ExampleProtocol = a
+let protocolValue: any ExampleProtocol = a
 print(protocolValue.simpleDescription)
 // Prints "A very simple class.  Now 100% adjusted."
 // print(protocolValue.anotherProperty)  // Uncomment to see the error
@@ -2206,7 +2296,9 @@ func fridgeContains(_ food: String) -> Bool {
     let result = fridgeContent.contains(food)
     return result
 }
-fridgeContains("banana")
+if fridgeContains("banana") {
+    print("Found a banana")
+}
 print(fridgeIsOpen)
 // Prints "false"
 ```

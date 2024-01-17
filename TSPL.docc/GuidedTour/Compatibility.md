@@ -2,18 +2,18 @@
 
 Learn what functionality is available in older language modes.
 
-This book describes Swift 5.8,
-the default version of Swift that's included in Xcode 14.
-You can use Xcode 14 to build targets
-that are written in either Swift 5.8, Swift 4.2, or Swift 4.
+This book describes Swift 5.9.2,
+the default version of Swift that's included in Xcode 15.1.
+You can use Xcode 15.1 to build targets
+that are written in either 5.9.2, Swift 4.2, or Swift 4.
 
 <!--
   - test: `swift-version`
 
   ```swifttest
-  >> #if swift(>=5.8.1)
+  >> #if swift(>=5.9.3)
   >>     print("Too new")
-  >> #elseif swift(>=5.8)
+  >> #elseif swift(>=5.9.2)
   >>     print("Just right")
   >> #else
   >>     print("Too old")
@@ -22,10 +22,10 @@ that are written in either Swift 5.8, Swift 4.2, or Swift 4.
   ```
 -->
 
-When you use Xcode 14 to build Swift 4 and Swift 4.2 code,
-most Swift 5.8 functionality is available.
+When you use Xcode 15.1 to build Swift 4 and Swift 4.2 code,
+most Swift 5.9.2 functionality is available.
 That said,
-the following changes are available only to code that uses Swift 5.8 or later:
+the following changes are available only to code that uses 5.9.2 or later:
 
 - Functions that return an opaque type require the Swift 5.1 runtime.
 - The `try?` expression doesn't introduce an extra level of optionality
@@ -35,18 +35,18 @@ the following changes are available only to code that uses Swift 5.8 or later:
   For example, `UInt64(0xffff_ffff_ffff_ffff)` evaluates to the correct value
   rather than overflowing.
 
-Concurrency requires Swift 5.8 or later,
+Concurrency requires 5.9.2 or later,
 and a version of the Swift standard library
 that provides the corresponding concurrency types.
 On Apple platforms, set a deployment target
 of at least iOS 13, macOS 10.15, tvOS 13, or watchOS 6.
 
-A target written in Swift 5.8 can depend on
+A target written in 5.9.2 can depend on
 a target that's written in Swift 4.2 or Swift 4,
 and vice versa.
 This means, if you have a large project
 that's divided into multiple frameworks,
-you can migrate your code from Swift 4 to Swift 5.8
+you can migrate your code from Swift 4 to 5.9.2
 one framework at a time.
 
 <!--

@@ -1283,8 +1283,8 @@ see <doc:Closures#Capturing-Values>.)
 
 If you set the `paragraph` variable to `nil`
 and break its strong reference to the `HTMLElement` instance,
-neither the `HTMLElement` instance nor its closure are deallocated,
-because of the strong reference cycle:
+the strong reference cycle prevents deallocating
+both the `HTMLElement` instance and its closure:
 
 ```swift
 paragraph = nil

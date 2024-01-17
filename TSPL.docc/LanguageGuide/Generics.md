@@ -1733,7 +1733,7 @@ but requires one extension per requirement.
 You can include a generic `where` clause on an associated type.
 For example, suppose you want to make a version of `Container`
 that includes an iterator,
-like what the `Sequence` protocol uses in the standard library.
+like what the `Sequence` protocol uses in the Swift standard library.
 Here's how you write that:
 
 ```swift
@@ -1781,7 +1781,7 @@ The `makeIterator()` function provides access to a container's iterator.
 
    that accepts a ranged of indexes it its subscript
    and returns a subcontainer ---
-   similar to how ``Collection`` works in the standard library.
+   similar to how ``Collection`` works in the Swift standard library.
 
    .. testcode:: associatedTypes-subcontainer
 
@@ -1942,7 +1942,7 @@ This generic subscript is constrained as follows:
 
 - The generic parameter `Indices` in angle brackets
   has to be a type that conforms to the `Sequence` protocol
-  from the standard library.
+  from the Swift standard library.
 - The subscript takes a single parameter, `indices`,
   which is an instance of that `Indices` type.
 - The generic `where` clause requires

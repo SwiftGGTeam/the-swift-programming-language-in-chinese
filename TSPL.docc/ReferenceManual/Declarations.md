@@ -17,39 +17,23 @@ the term *declaration* covers both declarations and definitions.
 
 > Grammar of a declaration:
 >
-> *declaration* → *import-declaration*
->
-> *declaration* → *constant-declaration*
->
-> *declaration* → *variable-declaration*
->
-> *declaration* → *typealias-declaration*
->
-> *declaration* → *function-declaration*
->
-> *declaration* → *enum-declaration*
->
-> *declaration* → *struct-declaration*
->
-> *declaration* → *class-declaration*
->
-> *declaration* → *actor-declaration*
->
-> *declaration* → *protocol-declaration*
->
-> *declaration* → *initializer-declaration*
->
-> *declaration* → *deinitializer-declaration*
->
-> *declaration* → *extension-declaration*
->
-> *declaration* → *subscript-declaration*
->
-> *declaration* → *operator-declaration*
->
-> *declaration* → *precedence-group-declaration*
->
-> *declarations* → *declaration* *declarations*_?_
+> *declaration* → *import-declaration* \
+> *declaration* → *constant-declaration* \
+> *declaration* → *variable-declaration* \
+> *declaration* → *typealias-declaration* \
+> *declaration* → *function-declaration* \
+> *declaration* → *enum-declaration* \
+> *declaration* → *struct-declaration* \
+> *declaration* → *class-declaration* \
+> *declaration* → *actor-declaration* \
+> *declaration* → *protocol-declaration* \
+> *declaration* → *initializer-declaration* \
+> *declaration* → *deinitializer-declaration* \
+> *declaration* → *extension-declaration* \
+> *declaration* → *subscript-declaration* \
+> *declaration* → *macro-declaration* \
+> *declaration* → *operator-declaration* \
+> *declaration* → *precedence-group-declaration* \
 
 ## Top-Level Code
 
@@ -144,10 +128,7 @@ import <#module#>.<#submodule#>
 >
 > *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
 >
->
->
-> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`**
->
+> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
 > *import-path* → *identifier* | *identifier* **`.`** *import-path*
 
 ## Constant Declaration
@@ -174,6 +155,24 @@ as long as it's guaranteed to have a value set
 before the first time its value is read.
 If the compiler can prove that the constant's value is never read,
 the constant isn't required to have a value set at all.
+This analysis is called *definite initialization* ---
+the compiler proves that a value is definitely set before being read.
+
+> Note:
+> Definite initialization
+> can't construct proofs that require domain knowledge,
+> and its ability to track state across conditionals has a limit.
+> If you can determine that constant always has a value set,
+> but the compiler can't prove this is the case,
+> try simplifying the code paths that set the value,
+> or use a variable declaration instead.
+
+<!--
+In the most general case,
+DI reduces to the halting problem,
+as shown by Rice's theorem.
+-->
+
 When a constant declaration occurs in the context of a class or structure
 declaration, it's considered a *constant property*.
 Constant declarations aren't computed properties and therefore don't have getters
@@ -252,12 +251,8 @@ see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Propertie
 >
 > *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
 >
->
->
-> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list*
->
-> *pattern-initializer* → *pattern* *initializer*_?_
->
+> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
+> *pattern-initializer* → *pattern* *initializer*_?_ \
 > *initializer* → **`=`** *expression*
 
 ## Variable Declaration
@@ -299,6 +294,9 @@ That said, if no initializer *expression* is present,
 the variable declaration must include an explicit type annotation (`:` *type*).
 
 As with constant declarations,
+if a variable declaration omits the initializer *expression*,
+the variable must have a value set before the first time it is read.
+Also like constant declarations,
 if the *variable name* is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
@@ -543,56 +541,31 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
 
 > Grammar of a variable declaration:
 >
-> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list*
->
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block*
->
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block*
->
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
->
-> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block*
->
+> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
 > *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
 >
->
->
-> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`**
->
+> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`** \
 > *variable-name* → *identifier*
 >
->
->
-> *getter-setter-block* → *code-block*
->
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`**
->
-> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`**
->
-> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block*
->
-> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block*
->
+> *getter-setter-block* → *code-block* \
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
+> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
+> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block* \
+> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block* \
 > *setter-name* → **`(`** *identifier* **`)`**
 >
->
->
-> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`**
->
-> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`**
->
-> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`**
->
+> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`** \
+> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
+> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** \
 > *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
 >
->
->
-> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`**
->
-> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`**
->
-> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block*
->
+> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`** \
+> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`** \
+> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block* \
 > *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
 
 <!--
@@ -731,10 +704,8 @@ See also <doc:Declarations#Protocol-Associated-Type-Declaration>.
 
 > Grammar of a type alias declaration:
 >
-> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment*
->
-> *typealias-name* → *identifier*
->
+> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
+> *typealias-name* → *identifier* \
 > *typealias-assignment* → **`=`** *type*
 
 <!--
@@ -880,7 +851,45 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
-### In-Out Parameters
+### Parameter Modifiers
+
+A *parameter modifier* changes how an argument is passed to the function.
+
+```swift
+<#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
+```
+
+To use a parameter modifier,
+write `inout`, `borrowing`, or `consuming`
+before the argument's type.
+
+```swift
+func someFunction(a: inout A, b: consuming B, c: C) { ... }
+```
+
+#### In-Out Parameters
+
+By default, function arguments in Swift are passed by value:
+Any changes made within the function are not visible in the caller.
+To make an in-out parameter instead,
+you apply the `inout` parameter modifier.
+
+
+```swift
+func someFunction(a: inout Int) {
+    a += 1
+}
+```
+
+When calling a function that includes in-out parameters,
+the in-out argument must be prefixed with an ampersand (`&`)
+to mark that the function call can change the argument's value.
+
+```swift
+var x = 7
+someFunction(&x)
+print(x)  // Prints "8"
+```
 
 In-out parameters are passed as follows:
 
@@ -913,9 +922,31 @@ so that it behaves correctly with or without the optimization.
 Within a function, don't access a value that was passed as an in-out argument,
 even if the original value is available in the current scope.
 Accessing the original is a simultaneous access of the value,
-which violates Swift's memory exclusivity guarantee.
+which violates memory exclusivity.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int) {
+    a += someValue
+}
+
+// Error: This causes a runtime exclusivity violation
+someFunction(&someValue)
+```
+
 For the same reason,
 you can't pass the same value to multiple in-out parameters.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int, b: inout Int) {
+    a += b
+    b += 1
+}
+
+// Error: Cannot pass the same value to multiple in-out parameters
+someFunction(&someValue, &someValue)
+```
 
 For more information about memory safety and memory exclusivity,
 see <doc:MemorySafety>.
@@ -1029,6 +1060,150 @@ see <doc:Functions#In-Out-Parameters>.
   ```
 -->
 
+#### Borrowing and Consuming Parameters
+
+By default, Swift uses a set of rules
+to automatically manage object lifetime across function calls,
+copying values when required.
+The default rules are designed to minimize overhead in most cases ---
+if you want more specific control,
+you can apply the `borrowing` or `consuming` parameter modifier.
+In this case,
+use `copy` to explicitly mark copy operations.
+
+Regardless of whether you use the default rules,
+Swift guarantees that object lifetime and
+ownership are correctly managed in all cases.
+These parameter modifiers impact only the relative efficiency
+of particular usage patterns, not correctness.
+
+<!--
+TODO: Describe the default rules.
+Essentially, inits and property setters are consuming,
+and everything else is borrowing.
+Where are copies implicitly inserted?
+-->
+
+The `borrowing` modifier indicates that the function
+does not keep the parameter's value.
+In this case, the caller maintains ownership of the object
+and the responsibility for the object's lifetime.
+Using `borrowing` minimizes overhead when the function
+uses the object only transiently.
+
+```swift
+// `isLessThan` does not keep either argument
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    ...
+}
+```
+
+If the function needs to keep the parameter's value
+for example, by storing it in a global variable ---
+you use `copy` to explicitly copy that value.
+
+```swift
+// As above, but this `isLessThan` also wants to record the smallest value
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    if lhs < storedValue {
+        storedValue = copy lhs
+    } else if rhs < storedValue {
+        storedValue = copy rhs
+    }
+    return lhs < rhs
+}
+```
+
+Conversely,
+the `consuming` parameter modifier indicates
+that the function takes ownership of the value,
+accepting responsibility for either storing or destroying it
+before the function returns.
+
+```swift
+// `store` keeps its argument, so mark it `consuming`
+func store(a: consuming A) {
+    someGlobalVariable = a
+}
+```
+
+Using `consuming` minimizes overhead when the caller no longer
+needs to use the object after the function call.
+
+```swift
+// Usually, this is the last thing you do with a value
+store(a: value)
+```
+
+If you keep using a copyable object after the function call,
+the compiler automatically makes a copy of that object
+before the function call.
+
+```swift
+// The compiler inserts an implicit copy here
+store(a: someValue)  // This function consumes someValue
+print(someValue)  // This uses the copy of someValue
+```
+
+Unlike `inout`, neither `borrowing` nor
+`consuming` parameters require any special
+notation when you call the function:
+
+```swift
+func someFunction(a: borrowing A, b: consuming B) { ... }
+
+someFunction(a: someA, b: someB)
+```
+
+The explicit use of either `borrowing` or `consuming`
+indicates your intention to more tightly control
+the overhead of runtime ownership management.
+Because copies can cause unexpected runtime ownership
+operations,
+parameters marked with either of these
+modifiers cannot be copied unless you
+use an explicit `copy` keyword:
+
+```swift
+func borrowingFunction1(a: borrowing A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // `a` is only borrowed from the caller.
+    someGlobalVariable = a
+}
+
+func borrowingFunction2(a: borrowing A) {
+    // OK: Explicit copying works
+    someGlobalVariable = copy a
+}
+
+func consumingFunction1(a: consuming A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // of the following `print`
+    someGlobalVariable = a
+    print(a)
+}
+
+func consumingFunction2(a: consuming A) {
+    // OK: Explicit copying works regardless
+    someGlobalVariable = copy a
+    print(a)
+}
+
+func consumingFunction3(a: consuming A) {
+    // OK: No copy needed here because this is the last use
+    someGlobalVariable = a
+}
+```
+
+<!--
+  TODO: `borrowing` and `consuming` keywords with noncopyable argument types
+-->
+<!--
+  TODO: Any change of parameter modifier is ABI-breaking
+-->
+
 ### Special Kinds of Parameters
 
 Parameters can be ignored,
@@ -1055,7 +1230,7 @@ For example, the variadic parameter `Int...` is treated as `[Int]`.
 For an example that uses a variadic parameter,
 see <doc:Functions#Variadic-Parameters>.
 
-A parameter with an equals sign (`=`) and an expression after its type
+A parameter with an equal sign (`=`) and an expression after its type
 is understood to have a default value of the given expression.
 The given expression is evaluated when the function is called.
 If the parameter is omitted when calling the function,
@@ -1296,7 +1471,7 @@ Calls to a throwing function or method must be wrapped in a `try` or `try!` expr
 The `throws` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
 As a result, you can use a nonthrowing function
-in a context where as a throwing one is expected.
+in a context where a throwing one is expected.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -1482,38 +1657,24 @@ but the new method must preserve its return type and nonreturning behavior.
 >
 > *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
 >
->
->
-> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`**
->
+> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
 > *function-name* → *identifier* | *operator*
 >
->
->
-> *function-signature* → *parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_
->
-> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_
->
-> *function-result* → **`->`** *attributes*_?_ *type*
->
+> *function-signature* → *parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ \
+> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
+> *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
 >
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
 >
->
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`**
->
-> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list*
->
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* *default-argument-clause*_?_
->
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation*
->
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *type-annotation* **`...`**
->
-> *external-parameter-name* → *identifier*
->
-> *local-parameter-name* → *identifier*
->
+> *external-parameter-name* → *identifier* \
+> *local-parameter-name* → *identifier* \
+> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
 > *default-argument-clause* → **`=`** *expression*
 
 <!--
@@ -1838,44 +1999,25 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
 
 > Grammar of an enumeration declaration:
 >
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum*
->
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
 >
->
->
-> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`**
->
-> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_
->
-> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement*
->
-> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list*
->
-> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list*
->
-> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_
->
-> *enum-name* → *identifier*
->
+> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`** \
+> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_ \
+> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
+> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list* \
+> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
+> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_ \
+> *enum-name* → *identifier* \
 > *enum-case-name* → *identifier*
 >
->
->
-> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`**
->
-> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_
->
-> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement*
->
-> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list*
->
-> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list*
->
-> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_
->
-> *raw-value-assignment* → **`=`** *raw-value-literal*
->
+> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`** \
+> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_ \
+> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
+> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_ \
+> *raw-value-assignment* → **`=`** *raw-value-literal* \
 > *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
 
 <!--
@@ -1890,21 +2032,6 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   because they behave differently. I'm not sure why we've blended them together,
   especially given that they have distinct syntactic declaration requirements
   and they behave differently.
--->
-
-<!--
-  old-grammar
-  Grammar of an enumeration declaration
-
-  enum-declaration -> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
-  enum-name -> identifier
-  enum-body -> ``{`` declarations-OPT ``}``
-
-  enum-member-declaration -> attribute-list-OPT ``case`` enumerator-list
-  enumerator-list -> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-  enumerator -> enumerator-name tuple-type-OPT
-  enumerator-name -> identifier
-  raw-value-assignment -> ``=`` literal
 -->
 
 ## Structure Declaration
@@ -1958,16 +2085,11 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 
 > Grammar of a structure declaration:
 >
-> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body*
->
-> *struct-name* → *identifier*
->
+> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
+> *struct-name* → *identifier* \
 > *struct-body* → **`{`** *struct-members*_?_ **`}`**
 >
->
->
-> *struct-members* → *struct-member* *struct-members*_?_
->
+> *struct-members* → *struct-member* *struct-members*_?_ \
 > *struct-member* → *declaration* | *compiler-control-statement*
 
 ## Class Declaration
@@ -2053,18 +2175,12 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 
 > Grammar of a class declaration:
 >
-> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body*
->
-> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body*
->
-> *class-name* → *identifier*
->
+> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-name* → *identifier* \
 > *class-body* → **`{`** *class-members*_?_ **`}`**
 >
->
->
-> *class-members* → *class-member* *class-members*_?_
->
+> *class-members* → *class-member* *class-members*_?_ \
 > *class-member* → *declaration* | *compiler-control-statement*
 
 ## Actor Declaration
@@ -2126,7 +2242,7 @@ only if they are nonisolated or asynchronous.
 The process of initializing an actor's declared properties
 is described in <doc:Initialization>.
 
-Properties of a actor instance can be accessed using dot (`.`) syntax,
+Properties of an actor instance can be accessed using dot (`.`) syntax,
 as described in <doc:ClassesAndStructures#Accessing-Properties>.
 
 Actors are reference types; instances of an actor are referred to, rather than copied,
@@ -2134,7 +2250,7 @@ when assigned to variables or constants, or when passed as arguments to a functi
 For information about reference types,
 see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-You can extend the behavior of a structure type with an extension declaration,
+You can extend the behavior of an actor type with an extension declaration,
 as discussed in <doc:Declarations#Extension-Declaration>.
 
 <!--
@@ -2147,16 +2263,11 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 
 > Grammar of an actor declaration:
 >
-> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body*
->
-> *actor-name* → *identifier*
->
+> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
+> *actor-name* → *identifier* \
 > *actor-body* → **`{`** *actor-members*_?_ **`}`**
 >
->
->
-> *actor-members* → *actor-member* *actor-members*_?_
->
+> *actor-members* → *actor-member* *actor-members*_?_ \
 > *actor-member* → *declaration* | *compiler-control-statement*
 
 ## Protocol Declaration
@@ -2300,30 +2411,18 @@ should implement, as described in <doc:Protocols#Delegation>.
 
 > Grammar of a protocol declaration:
 >
-> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body*
->
-> *protocol-name* → *identifier*
->
+> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
+> *protocol-name* → *identifier* \
 > *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
 >
->
->
-> *protocol-members* → *protocol-member* *protocol-members*_?_
->
+> *protocol-members* → *protocol-member* *protocol-members*_?_ \
 > *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
 >
->
->
-> *protocol-member-declaration* → *protocol-property-declaration*
->
-> *protocol-member-declaration* → *protocol-method-declaration*
->
-> *protocol-member-declaration* → *protocol-initializer-declaration*
->
-> *protocol-member-declaration* → *protocol-subscript-declaration*
->
-> *protocol-member-declaration* → *protocol-associated-type-declaration*
->
+> *protocol-member-declaration* → *protocol-property-declaration* \
+> *protocol-member-declaration* → *protocol-method-declaration* \
+> *protocol-member-declaration* → *protocol-initializer-declaration* \
+> *protocol-member-declaration* → *protocol-subscript-declaration* \
+> *protocol-member-declaration* → *protocol-associated-type-declaration* \
 > *protocol-member-declaration* → *typealias-declaration*
 
 ### Protocol Property Declaration
@@ -2456,8 +2555,7 @@ See also <doc:Declarations#Initializer-Declaration>.
 
 > Grammar of a protocol initializer declaration:
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_
->
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### Protocol Subscript Declaration
@@ -2802,16 +2900,11 @@ see <doc:Initialization#Failable-Initializers>.
 
 > Grammar of an initializer declaration:
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`throws`**_?_ *generic-where-clause*_?_ *initializer-body*
->
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body*
->
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`**
->
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`**
->
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`**
->
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`throws`**_?_ *generic-where-clause*_?_ *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
 > *initializer-body* → *code-block*
 
 ## Deinitializer Declaration
@@ -3089,7 +3182,7 @@ even if the extensions' requirements are mutually exclusive.
 This restriction is demonstrated in the example below.
 Two extension declarations attempt to add conditional conformance
 to the `Serializable` protocol,
-one for for arrays with `Int` elements,
+one for arrays with `Int` elements,
 and one for arrays with `String` elements.
 
 ```swift
@@ -3331,14 +3424,10 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 > Grammar of an extension declaration:
 >
-> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body*
->
+> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
 > *extension-body* → **`{`** *extension-members*_?_ **`}`**
 >
->
->
-> *extension-members* → *extension-member* *extension-members*_?_
->
+> *extension-members* → *extension-member* *extension-members*_?_ \
 > *extension-member* → *declaration* | *compiler-control-statement*
 
 ## Subscript Declaration
@@ -3432,15 +3521,45 @@ with both the `class` and `final` declaration modifiers.
 
 > Grammar of a subscript declaration:
 >
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block*
->
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block*
->
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
->
-> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause*
->
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block* \
+> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
 > *subscript-result* → **`->`** *attributes*_?_ *type*
+
+## Macro Declaration
+
+A *macro declaration* introduces a new macro.
+It begins with the `macro` keyword
+and has the following form:
+
+```swift
+macro <#name#> = <#macro implementation#>
+```
+
+The *macro implementation* is another macro,
+and indicates the location of the code that performs this macro's expansion.
+The code that performs macro expansion is a separate Swift program,
+that uses the [SwiftSyntax][] module to interact with Swift code.
+Call the `externalMacro(module:type:)` macro from the Swift standard library,
+passing in the name of a type that contains the macro's implementation,
+and the name of the module that contains that type.
+
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
+
+Macros can be overloaded,
+following the same model used by functions.
+A macro declaration appears only at file scope.
+
+For an overview of macros in Swift, see <doc:Macros>.
+
+> Grammar of a macro declaration:
+>
+> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
+> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** \
+> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
+> *macro-function-signature-result* → **`->`** *type* \
+> *macro-definition* → **`=`** *expression*
 
 ## Operator Declaration
 
@@ -3515,15 +3634,9 @@ see <doc:AdvancedOperators#Custom-Operators>.
 >
 > *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
 >
->
->
-> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator*
->
-> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator*
->
+> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator* \
+> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator* \
 > *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
->
->
 >
 > *infix-operator-group* → **`:`** *precedence-group-name*
 
@@ -3564,7 +3677,7 @@ binds more tightly to its operands.
 > can't be used next to each other without grouping parentheses.
 
 Swift defines numerous precedence groups to go along
-with the operators provided by the standard library.
+with the operators provided by the Swift standard library.
 For example, the addition (`+`) and subtraction (`-`) operators
 belong to the `AdditionPrecedence` group,
 and the multiplication (`*`) and division (`/`) operators
@@ -3596,7 +3709,7 @@ The *assignment* of a precedence group specifies the precedence of an operator
 when used in an operation that includes optional chaining.
 When set to `true`, an operator in the corresponding precedence group
 uses the same grouping rules during optional chaining
-as the assignment operators from the standard library.
+as the assignment operators from the Swift standard library.
 Otherwise, when set to `false` or omitted,
 operators in the precedence group follows the same optional chaining rules
 as operators that don't perform assignment.
@@ -3605,38 +3718,21 @@ as operators that don't perform assignment.
 >
 > *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
 >
->
->
-> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_
->
-> *precedence-group-attribute* → *precedence-group-relation*
->
-> *precedence-group-attribute* → *precedence-group-assignment*
->
+> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_ \
+> *precedence-group-attribute* → *precedence-group-relation* \
+> *precedence-group-attribute* → *precedence-group-assignment* \
 > *precedence-group-attribute* → *precedence-group-associativity*
 >
->
->
-> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names*
->
+> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names* \
 > *precedence-group-relation* → **`lowerThan`** **`:`** *precedence-group-names*
->
->
 >
 > *precedence-group-assignment* → **`assignment`** **`:`** *boolean-literal*
 >
->
->
-> *precedence-group-associativity* → **`associativity`** **`:`** **`left`**
->
-> *precedence-group-associativity* → **`associativity`** **`:`** **`right`**
->
+> *precedence-group-associativity* → **`associativity`** **`:`** **`left`** \
+> *precedence-group-associativity* → **`associativity`** **`:`** **`right`** \
 > *precedence-group-associativity* → **`associativity`** **`:`** **`none`**
 >
->
->
-> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names*
->
+> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names* \
 > *precedence-group-name* → *identifier*
 
 ## Declaration Modifiers
@@ -3658,7 +3754,9 @@ that introduces the declaration.
   Apply this modifier to any member of a class that can be represented by Objective-C.
   When you mark a member declaration with the `dynamic` modifier,
   access to that member is always dynamically dispatched using the Objective-C runtime.
-  Access to that member is never inlined or devirtualized by the compiler.Because declarations marked with the `dynamic` modifier are dispatched
+  Access to that member is never inlined or devirtualized by the compiler.
+
+  Because declarations marked with the `dynamic` modifier are dispatched
   using the Objective-C runtime, they must be marked with the
   `objc` attribute.
 
@@ -3680,7 +3778,9 @@ that introduces the declaration.
 - term `optional`:
   Apply this modifier to a protocol's property, method,
   or subscript members to indicate that a conforming type isn't required
-  to implement those members.You can apply the `optional` modifier only to protocols that are marked
+  to implement those members.
+
+  You can apply the `optional` modifier only to protocols that are marked
   with the `objc` attribute. As a result, only class types can adopt and conform
   to a protocol that contains optional member requirements.
   For more information about how to use the `optional` modifier
@@ -3809,33 +3909,19 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 
 > Grammar of a declaration modifier:
 >
-> *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`**
->
-> *declaration-modifier* → *access-level-modifier*
->
-> *declaration-modifier* → *mutation-modifier*
->
-> *declaration-modifier* → *actor-isolation-modifier*
->
+> *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
+> *declaration-modifier* → *access-level-modifier* \
+> *declaration-modifier* → *mutation-modifier* \
+> *declaration-modifier* → *actor-isolation-modifier* \
 > *declaration-modifiers* → *declaration-modifier* *declaration-modifiers*_?_
 >
->
->
-> *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`**
->
-> *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`**
->
-> *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`**
->
-> *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`**
->
+> *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`open`** | **`open`** **`(`** **`set`** **`)`**
 >
->
->
 > *mutation-modifier* → **`mutating`** | **`nonmutating`**
->
->
 >
 > *actor-isolation-modifier* → **`nonisolated`**
 

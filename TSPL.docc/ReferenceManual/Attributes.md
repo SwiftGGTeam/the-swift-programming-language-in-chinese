@@ -24,9 +24,114 @@ and how it applies to a particular declaration.
 These *attribute arguments* are enclosed in parentheses,
 and their format is defined by the attribute they belong to.
 
+Attached macros and property wrappers also use attribute syntax.
+For information about how macros expand,
+see <doc:Expressions#Macro-Expansion-Expression>.
+For information about property wrappers,
+see <doc:Attributes#propertyWrapper>.
+
 ## Declaration Attributes
 
 You can apply a declaration attribute to declarations only.
+
+### attached
+
+Apply the `attached` attribute to a macro declaration.
+The arguments to this attribute indicate the macro's role.
+For a macro that has multiple roles,
+apply the `attached` macro multiple times, once for each role.
+
+<!-- TODO:
+If there's a stable URL we can use, make the macro protocols below links.
+-->
+
+The first argument to this attribute
+indicates the macros role:
+
+- term Peer macros:
+  Write `peer` as the first argument to this attribute.
+  The type that implements the macro conforms to the `PeerMacro` protocol.
+  These macros produce new declarations
+  in the same scope as the declaration
+  that the macro is attached to.
+  For example,
+  applying a peer macro to a method of a structure
+  can define additional methods and properties on that structure.
+
+- term Member macros:
+  Write `member` as the first argument to this attribute.
+  The type that implements the macro conforms to the `MemberMacro` protocol.
+  These macros produce new declarations
+  that are members of the type or extension
+  that the macro is attached to.
+  For example,
+  applying a member macro to a structure declaration
+  can define additional methods and properties on that structure.
+
+- term Member attribute:
+  Write `memberAttribute` as the first argument to this attribute.
+  The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
+  These macros add attributes to members of the type or extension
+  that the macro is attached to.
+
+- term Accessor macros:
+  Write `accessor` as the first argument to this attribute.
+  The type that implements the macro conforms to the `AccessorMacro` protocol.
+  These macros add accessors to the stored property they're attached to,
+  turning it into a computed property.
+
+- term Extension macros:
+  Write `extension` as the first argument to this attribute.
+  The type that implements the macro conforms to the `ExtensionMacro` protocol.
+  These macros can add protocol conformance,
+  a `where` clause,
+  and new declarations that are members of the type the macro is attached to.
+  If the macro adds protocol conformances,
+  include the `conformances:` argument and specify those protocols.
+  The conformance list contains protocol names,
+  type aliases that refer to conformance list items,
+  or protocol compositions of conformance list items.
+  An extension macro on a nested type
+  expands to an extension at the top level of that file.
+  You can't write an extension macro
+  on an extension, a type alias, or a type that's nested inside a function,
+  or use an extension macro to add an extension that has a peer macro.
+
+The peer, member, and accessor macro roles require a `names:` argument,
+listing the names of the symbols that the macro generates.
+The extension macro role also requires a `names:` argument
+if the macro adds declarations inside the extension.
+When a macro declaration includes the `names:` argument,
+the macro implementation must generate
+only symbol with names that match that list.
+That said,
+a macro need not generate a symbol for every listed name.
+The value for that argument is a list of one or more of the following:
+
+- `named(<#name#>)`
+  where *name* is that fixed symbol name,
+  for a name that's known in advance.
+
+- `overloaded`
+  for a name that's the same as an existing symbol.
+
+- `prefixed(<#prefix#>)`
+  where *prefix* is prepended to the symbol name,
+  for a name that starts with a fixed string.
+
+- `suffixed(<#suffix#>`
+  where *suffix* is appended to the symbol name,
+  for a name that ends with a fixed string.
+
+- `arbitrary`
+  for a name that can't be determined until macro expansion.
+
+As a special case,
+you can write `prefixed($)`
+for a macro that behaves similar to a property wrapper.
+<!--
+TODO TR: Is there any more detail about this case?
+-->
 
 ### available
 
@@ -48,6 +153,7 @@ These arguments begin with one of the following platform or language names:
 - `watchOSApplicationExtension`
 - `tvOS`
 - `tvOSApplicationExtension`
+- `visionOS`
 - `swift`
 
 <!--
@@ -252,6 +358,77 @@ struct MyStruct {
      }
   ```
 -->
+
+### backDeployed
+
+Apply this attribute to a function, method, subscript, or computed property
+to include a copy of the symbol's implementation
+in programs that call or access the symbol.
+You use this attribute to annotate symbols that ship as part of a platform,
+like the APIs that are included with an operating system.
+This attribute marks symbols that can be made available retroactively
+by including a copy of their implementation in programs that access them.
+Copying the implementation is also known as *emitting into the client*.
+
+This attribute takes a `before:` argument,
+specifying the first version of platforms that provide this symbol.
+These platform versions have the same meaning
+as the platform version you specify for the `available` attribute.
+Unlike the `available` attribute,
+the list can't contain an asterisk (`*`) to refer to all versions.
+For example, consider the following code:
+
+```swift
+@available(iOS 16, *)
+@backDeployed(before: iOS 17)
+func someFunction() { /* ... */ }
+```
+
+In the example above,
+the iOS SDK provides `someFunction()` starting in iOS 17.
+In addition,
+the SDK makes `someFunction()` available on iOS 16 using back deployment.
+
+When compiling code that calls this function,
+Swift inserts a layer of indirection that finds the function's implementation.
+If the code is run using a version of the SDK that includes this function,
+the SDK's implementation is used.
+Otherwise, the copy included in the caller is used.
+In the example above,
+calling `someFunction()` uses the implementation from the SDK
+when running on iOS 17 or later,
+and when running on iOS 16
+it uses the copy of `someFunction()` that's included in the caller.
+
+> Note:
+> When the caller's minimum deployment target
+> is the same as or greater than
+> the first version of the SDK that includes the symbol,
+> the compiler can optimize away the runtime check
+> and call the SDK's implementation directly.
+> In this case,
+> if you access the back-deployed symbol directly,
+> the compiler can also omit
+> the copy of the symbol's implementation from the client.
+
+<!--
+Stripping out the copy emitted into the client
+depends on a chain of optimizations that must all take place --
+inlining the thunk,
+constant-folding the availability check,
+and stripping the emitted copy as dead code --
+and the details could change over time,
+so we don't guarantee in docs that it always happens.
+-->
+
+Functions, methods, subscripts, and computed properties
+that meet the following criteria can be back deployed:
+
+- The declaration is `public` or `@usableFromInline`.
+- For class instance methods and class type methods,
+  the method is marked `final` and isn't marked `@objc`.
+- The implementation satisfies the requirements for an inlinable function,
+  described in <doc:Attributes#inlinable>.
 
 ### discardableResult
 
@@ -551,6 +728,30 @@ print(wrapper.x)
   -> print(wrapper.x)
   << 381
   ```
+-->
+
+### freestanding
+
+Apply the `freestanding` attribute
+to the declaration of a freestanding macro.
+
+<!--
+
+For the future, when other roles are supported:
+
+The arguments to this attribute indicate the macro's roles:
+
+- `expression`
+  A macro that produces an expression
+
+- `declaration`
+  A macro that produces a declaration
+
+Or are those supported today?
+I see #error and #warning as @freestanding(declaration)
+in the stdlib already:
+
+https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 -->
 
 ### frozen
@@ -1352,8 +1553,10 @@ A result builder implements static methods described below.
 Because all of the result builder's functionality
 is exposed through static methods,
 you don't ever initialize an instance of that type.
-The `buildBlock(_:)` method is required;
-the other methods ---
+A result builder must implement either the `buildBlock(_:)` method
+or both the `buildPartialBlock(first:)`
+and `buildPartialBlock(accumulated:next:)` methods.
+The other methods ---
 which enable additional functionality in the DSL ---
 are optional.
 The declaration of a result builder type
@@ -1370,11 +1573,37 @@ If your result-building methods
 don't specify a type for `Expression` or `FinalResult`,
 they default to being the same as `Component`.
 
-The result-building methods are as follows:
+The block-building methods are as follows:
 
 - term `static func buildBlock(_ components: Component...) -> Component`:
   Combines an array of partial results into a single partial result.
-  A result builder must implement this method.
+
+- term `static func buildPartialBlock(first: Component) -> Component`:
+  Builds a partial result component from the first component.
+  Implement both this method and `buildPartialBlock(accumulated:next:)`
+  to support building blocks one component at a time.
+  Compared to `buildBlock(_:)`,
+  this approach reduces the need for generic overloads
+  that handle different numbers of arguments.
+
+- term `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
+  Builds a partial result component
+  by combining an accumulated component with a new component.
+  Implement both this method and `buildPartialBlock(first:)`
+  to support building blocks one component at a time.
+  Compared to `buildBlock(_:)`,
+  this approach reduces the need for generic overloads
+  that handle different numbers of arguments.
+
+A result builder can implement all three of the block-building methods listed above;
+in that case, availability determines which method is called.
+By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(accumulated:next:)`
+methods. To make Swift call `buildBlock(_:)` instead,
+mark the enclosing declaration as being available
+before the availability you write on `buildPartialBlock(first:)` and
+`buildPartialBlock(accumulated:next:)`.
+
+The additional result-building methods are as follows:
 
 - term `static func buildOptional(_ component: Component?) -> Component`:
   Builds a partial result from a partial result that can be `nil`.
@@ -1736,7 +1965,87 @@ into code that calls the static methods of the result builder type:
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- A code block or `do` statement
+- If the result builder implements
+  the `buildPartialBlock(first:)`
+  and `buildPartialBlock(accumulated:next:)` methods,
+  a code block or `do` statement becomes a call to those methods.
+  The first statement inside of the block
+  is transformed to become an argument
+  to the `buildPartialBlock(first:)` method,
+  and the remaining statements become nested calls
+  to the `buildPartialBlock(accumulated:next:)` method.
+  For example, the following declarations are equivalent:
+
+  ```swift
+  struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
+      var first: First
+      var second: Second
+      func draw() -> String { return first.draw() + second.draw() }
+  }
+
+  @resultBuilder
+  struct DrawingPartialBlockBuilder {
+      static func buildPartialBlock<D: Drawable>(first: D) -> D {
+          return first
+      }
+      static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
+          accumulated: Accumulated, next: Next
+      ) -> DrawBoth<Accumulated, Next> {
+          return DrawBoth(first: accumulated, second: next)
+      }
+  }
+
+  @DrawingPartialBlockBuilder var builderBlock: some Drawable {
+      Text("First")
+      Line(elements: [Text("Second"), Text("Third")])
+      Text("Last")
+  }
+
+  let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
+  let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
+      accumulated: partialResult1,
+      next: Line(elements: [Text("Second"), Text("Third")])
+  )
+  let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
+      accumulated: partialResult2,
+      next: Text("Last")
+  )
+  ```
+
+  <!--
+    - test: `drawing-partial-block-builder`
+
+    ```swifttest
+    -> @resultBuilder
+    -> struct DrawingPartialBlockBuilder {
+           static func buildPartialBlock<D: Drawable>(first: D) -> D {
+               return first
+           }
+           static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
+               accumulated: Accumulated, next: Next
+           ) -> DrawBoth<Accumulated, Next> {
+               return DrawBoth(first: accumulated, second: next)
+           }
+       }
+    -> @DrawingPartialBlockBuilder var builderBlock: some Drawable {
+          Text("First")
+          Line(elements: [Text("Second"), Text("Third")])
+          Text("Last")
+       }
+    ---
+    -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
+    -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
+          accumulated: partialResult1,
+          next: Line(elements: [Text("Second"), Text("Third")])
+       )
+       let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
+           accumulated: partialResult2,
+           next: Text("Last")
+       )
+    >> assert(type(of: builderBlock) == type(of: manualResult))
+    ```
+  -->
+- Otherwise, a code block or `do` statement
   becomes a call to the `buildBlock(_:)` method.
   Each of the statements inside of the block is transformed,
   one at a time,
@@ -1823,7 +2132,7 @@ into code that calls the static methods of the result builder type:
   This transformation is always last.
 
 <!--
-  - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`
+  - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
 
   ```swifttest
   -> protocol Drawable {
@@ -1992,7 +2301,7 @@ You can apply that attribute in the following places:
 Applying a result builder attribute doesn't impact ABI compatibility.
 Applying a result builder attribute to a parameter
 makes that attribute part of the function's interface,
-which can effect source compatibility.
+which can affect source compatibility.
 
 ### requires_stored_property_inits
 
@@ -2245,26 +2554,16 @@ see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 
 > Grammar of an attribute:
 >
-> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_
->
-> *attribute-name* → *identifier*
->
-> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`**
->
+> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_ \
+> *attribute-name* → *identifier* \
+> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`** \
 > *attributes* → *attribute* *attributes*_?_
 >
->
->
-> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_
->
-> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`**
->
-> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`**
->
-> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`**
->
-> *balanced-token* → Any identifier, keyword, literal, or operator
->
+> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_ \
+> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`** \
+> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`** \
+> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
+> *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
 
 <!--

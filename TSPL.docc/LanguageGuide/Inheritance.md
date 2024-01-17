@@ -510,6 +510,7 @@ Any attempt to override a final method, property, or subscript in a subclass
 is reported as a compile-time error.
 Methods, properties, or subscripts that you add to a class in an extension
 can also be marked as final within the extension's definition.
+For more information, see <doc:Extensions>.
 
 <!--
   - test: `finalPreventsOverriding`

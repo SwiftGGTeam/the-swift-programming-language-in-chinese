@@ -8,9 +8,10 @@ These include `while` loops to perform a task multiple times;
 to execute different branches of code based on certain conditions;
 and statements such as `break` and `continue`
 to transfer the flow of execution to another point in your code.
-
-Swift also provides a `for`-`in` loop that makes it easy to iterate over
+Swift provides a `for`-`in` loop that makes it easy to iterate over
 arrays, dictionaries, ranges, strings, and other sequences.
+Swift also provides `defer` statements,
+which wrap code to be executed when leaving the current scope.
 
 Swift's `switch` statement is considerably more powerful
 than its counterpart in many C-like languages.
@@ -672,9 +673,9 @@ temperatureInFahrenheit = 40
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 } else {
-    print("It's not that cold. Wear a t-shirt.")
+    print("It's not that cold. Wear a T-shirt.")
 }
-// Prints "It's not that cold. Wear a t-shirt."
+// Prints "It's not that cold. Wear a T-shirt."
 ```
 
 <!--
@@ -685,9 +686,9 @@ if temperatureInFahrenheit <= 32 {
   -> if temperatureInFahrenheit <= 32 {
         print("It's very cold. Consider wearing a scarf.")
      } else {
-        print("It's not that cold. Wear a t-shirt.")
+        print("It's not that cold. Wear a T-shirt.")
      }
-  <- It's not that cold. Wear a t-shirt.
+  <- It's not that cold. Wear a T-shirt.
   ```
 -->
 
@@ -706,7 +707,7 @@ if temperatureInFahrenheit <= 32 {
 } else if temperatureInFahrenheit >= 86 {
     print("It's really warm. Don't forget to wear sunscreen.")
 } else {
-    print("It's not that cold. Wear a t-shirt.")
+    print("It's not that cold. Wear a T-shirt.")
 }
 // Prints "It's really warm. Don't forget to wear sunscreen."
 ```
@@ -721,7 +722,7 @@ if temperatureInFahrenheit <= 32 {
      } else if temperatureInFahrenheit >= 86 {
         print("It's really warm. Don't forget to wear sunscreen.")
      } else {
-        print("It's not that cold. Wear a t-shirt.")
+        print("It's not that cold. Wear a T-shirt.")
      }
   <- It's really warm. Don't forget to wear sunscreen.
   ```
@@ -729,7 +730,7 @@ if temperatureInFahrenheit <= 32 {
 
 Here, an additional `if` statement was added to respond to particularly warm temperatures.
 The final `else` clause remains,
-and it prints a response for any temperatures that are neither too warm nor too cold.
+and it prints a response for any temperatures that aren't too warm or too cold.
 
 The final `else` clause is optional, however,
 and can be excluded if the set of conditions doesn't need to be complete.
@@ -756,8 +757,128 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-Because the temperature is neither too cold nor too warm to trigger the `if` or `else if` conditions,
+Because the temperature isn't cold enough to trigger the `if` condition
+or warm enough to trigger the `else if` condition,
 no message is printed.
+
+Swift provides a shorthand spelling of `if`
+that you can use when setting values.
+For example,
+consider the following code:
+
+```swift
+let temperatureInCelsius = 25
+let weatherAdvice: String
+
+if temperatureInCelsius <= 0 {
+    weatherAdvice = "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    weatherAdvice = "It's really warm. Don't forget to wear sunscreen."
+} else {
+    weatherAdvice = "It's not that cold. Wear a T-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a T-shirt."
+```
+
+Here, each of the branches sets a value for the `weatherAdvice` constant,
+which is printed after the `if` statement.
+
+Using the alternate syntax,
+known as an `if` expression,
+you can write this code more concisely:
+
+```swift
+let weatherAdvice = if temperatureInCelsius <= 0 {
+    "It's very cold. Consider wearing a scarf."
+} else if temperatureInCelsius >= 30 {
+    "It's really warm. Don't forget to wear sunscreen."
+} else {
+    "It's not that cold. Wear a T-shirt."
+}
+
+print(weatherAdvice)
+// Prints "It's not that cold. Wear a T-shirt."
+```
+
+In this `if` expression version,
+each branch contains a single value.
+If a branch's condition is true,
+then that branch's value is used as the value for the whole `if` expression
+in the assignment of `weatherAdvice`.
+Every `if` branch has a corresponding `else if` branch or `else` branch,
+ensuring that one of the branches always matches
+and that the `if` expression always produces a value,
+regardless of which conditions are true.
+
+Because the syntax for the assignment starts outside the `if` expression,
+there's no need to repeat `weatherAdvice =` inside each branch.
+Instead,
+each branch of the `if` expression
+produces one of the three possible values for `weatherAdvice`,
+and the assignment uses that value.
+
+All of the branches of an `if` expression
+need to contain values of the same type.
+Because Swift checks the type of each branch separately,
+values like `nil` that can be used with more than one type
+prevent Swift from determining the `if` expression's type automatically.
+Instead, you need to specify the type explicitly ---
+for example:
+
+```swift
+let freezeWarning: String? = if temperatureInCelsius <= 0 {
+    "It's below freezing. Watch for ice!"
+} else {
+    nil
+}
+```
+
+In the code above,
+one branch of the `if` expression has a string value
+and the other branch has a `nil` value.
+The `nil` value could be used as a value for any optional type,
+so you have to explicitly write that `freezeWarning` is an optional string,
+as described in <doc:TheBasics#Type-Annotations>.
+
+An alternate way to provide this type information
+is to provide an explicit type for `nil`,
+instead of providing an explicit type for `freezeWarning`:
+
+```swift
+let freezeWarning = if temperatureInCelsius <= 0 {
+    "It's below freezing. Watch for ice!"
+} else {
+    nil as String?
+}
+```
+
+An `if` expression can respond to unexpected failures by throwing an error
+or calling a function like `fatalError(_:file:line:)` that never returns.
+For example:
+
+```swift
+let weatherAdvice = if temperatureInCelsius > 100 {
+    throw TemperatureError.boiling
+} else {
+    "It's a reasonable temperature."
+}
+```
+
+In this example,
+the `if` expression checks whether the forecast temperature
+is hotter than 100° C --- the boiling point of water.
+A temperature this hot causes the `if` expression to throw a `.boiling` error
+instead of returning a textual summary.
+Even though this `if` expression can throw an error,
+you don't write `try` before it.
+For information about working with errors, see <doc:ErrorHandling>.
+
+In addition to using `if` expressions
+on the right-hand side of an assignment,
+as shown in the examples above,
+you can also use them as the value that a function or closure returns.
 
 ### Switch
 
@@ -809,13 +930,13 @@ a single lowercase character called `someCharacter`:
 let someCharacter: Character = "z"
 switch someCharacter {
 case "a":
-    print("The first letter of the alphabet")
+    print("The first letter of the Latin alphabet")
 case "z":
-    print("The last letter of the alphabet")
+    print("The last letter of the Latin alphabet")
 default:
     print("Some other character")
 }
-// Prints "The last letter of the alphabet"
+// Prints "The last letter of the Latin alphabet"
 ```
 
 <!--
@@ -825,13 +946,13 @@ default:
   -> let someCharacter: Character = "z"
   -> switch someCharacter {
         case "a":
-           print("The first letter of the alphabet")
+           print("The first letter of the Latin alphabet")
         case "z":
-           print("The last letter of the alphabet")
+           print("The last letter of the Latin alphabet")
         default:
            print("Some other character")
      }
-  <- The last letter of the alphabet
+  <- The last letter of the Latin alphabet
   ```
 -->
 
@@ -843,6 +964,40 @@ not just every alphabetic character,
 this `switch` statement uses a `default` case
 to match all characters other than `a` and `z`.
 This provision ensures that the `switch` statement is exhaustive.
+
+Like `if` statements,
+`switch` statements also have an expression form:
+
+```swift
+let anotherCharacter: Character = "a"
+let message = switch anotherCharacter {
+case "a":
+    "The first letter of the Latin alphabet"
+case "z":
+    "The last letter of the Latin alphabet"
+default:
+    "Some other character"
+}
+
+print(message)
+// Prints "The first letter of the Latin alphabet"
+```
+
+In this example,
+each case in the `switch` expression
+contains the value for `message`
+to be used when that case matches `anotherCharacter`.
+Because `switch` is always exhaustive,
+there is always a value to assign.
+
+As with `if` expressions,
+you can throw an error
+or call a function like `fatalError(_:file:line:)` that never returns
+instead of providing a value for a given case.
+You can use `switch` expressions
+on the right-hand side of an assignment,
+as shown in the example above,
+and as the value that a function or closure returns.
 
 #### No Implicit Fallthrough
 
@@ -1827,6 +1982,136 @@ It lets you write the code that's typically executed
 without wrapping it in an `else` block,
 and it lets you keep the code that handles a violated requirement
 next to the requirement.
+
+## Deferred Actions
+
+Unlike control-flow constructs like `if` and `while`,
+which let you control whether part of your code is executed
+or how many times it gets executed,
+`defer` controls *when* a piece of code is executed.
+You use a `defer` block to write code that will be executed later,
+when your program reaches the end of the current scope.
+For example:
+
+```swift
+var score = 1
+if score < 10 {
+    defer {
+        print(score)
+    }
+    score += 5
+}
+// Prints "6"
+```
+
+<!--
+  - test: `defer-with-if`
+
+  ```swifttest
+  -> var score = 1
+  -> if score < 10 {
+  ->     defer {
+  ->         print(score)
+  ->     }
+  ->     score += 5
+  -> }
+  <- 6
+  ```
+-->
+
+In the example above,
+the code inside of the `defer` block is executed
+before exiting the body of the `if` statement.
+First, the code in the `if` statement runs,
+which increments `score` by five.
+Then, before exiting the `if` statement's scope,
+the deferred code is run, which prints `score`.
+
+The code inside of the `defer` always runs,
+regardless of how the program exits that scope.
+That includes code like an early exit from a function,
+breaking out of a `for` loop,
+or throwing an error.
+This behavior makes `defer` useful for operations
+where you need to guarantee a pair of actions happen ---
+like manually allocating and freeing memory,
+opening and closing low-level file descriptors,
+and beginning and ending transactions in a database ---
+because you can write both actions next to each other in your code.
+For example,
+the following code gives a temporary bonus to the score,
+by adding and subtracting 100 inside a chunk of code:
+
+```swift
+var score = 3
+if score < 100 {
+    score += 100
+    defer {
+        score -= 100
+    }
+    // Other code that uses the score with its bonus goes here.
+    print(score)
+}
+// Prints "103"
+```
+
+<!--
+  - test: `defer-paired-actions`
+
+  ```swift
+  -> var score = 3
+  -> if score < 100 {
+  ->     score += 100
+  ->     defer {
+  ->         score -= 100
+  ->     }
+  ->     // Other code that uses the score with its bonus goes here.
+  ->     print(score)
+  -> }
+  <- 103
+  ```
+-->
+
+If you write more than one `defer` block in the same scope,
+the first one you specify is the last one to run.
+
+```swift
+if score < 10 {
+    defer {
+        print(score)
+    }
+    defer {
+        print("The score is:")
+    }
+    score += 5
+}
+// Prints "The score is:"
+// Prints "6"
+```
+
+<!--
+  - test: `defer-with-if`
+
+  ```swifttest
+  -> if score < 10 {
+  ->     defer {
+  ->         print(score)
+  ->     }
+  ->     defer {
+  ->         print("The score is:")
+  ->     }
+  ->     score += 5
+  -> }
+  <- 6
+  ```
+-->
+
+If your program stops running ---
+for example, because of a runtime error or a crash ---
+deferred code doesn't execute.
+However, deferred code does execute after an error is thrown;
+for information about using `defer` with error handling,
+see <doc:ErrorHandling#Specifying-Cleanup-Actions>.
 
 ## Checking API Availability
 

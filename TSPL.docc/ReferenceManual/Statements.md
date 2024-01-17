@@ -24,24 +24,15 @@ and is used to separate multiple statements if they appear on the same line.
 
 > Grammar of a statement:
 >
-> *statement* → *expression* **`;`**_?_
->
-> *statement* → *declaration* **`;`**_?_
->
-> *statement* → *loop-statement* **`;`**_?_
->
-> *statement* → *branch-statement* **`;`**_?_
->
-> *statement* → *labeled-statement* **`;`**_?_
->
-> *statement* → *control-transfer-statement* **`;`**_?_
->
-> *statement* → *defer-statement* **`;`**_?_
->
-> *statement* → *do-statement* **`;`**_?_
->
-> *statement* → *compiler-control-statement*
->
+> *statement* → *expression* **`;`**_?_ \
+> *statement* → *declaration* **`;`**_?_ \
+> *statement* → *loop-statement* **`;`**_?_ \
+> *statement* → *branch-statement* **`;`**_?_ \
+> *statement* → *labeled-statement* **`;`**_?_ \
+> *statement* → *control-transfer-statement* **`;`**_?_ \
+> *statement* → *defer-statement* **`;`**_?_ \
+> *statement* → *do-statement* **`;`**_?_ \
+> *statement* → *compiler-control-statement* \
 > *statements* → *statement* *statements*_?_
 
 <!--
@@ -70,10 +61,8 @@ and a `continue` statement and is discussed in <doc:Statements#Break-Statement> 
 
 > Grammar of a loop statement:
 >
-> *loop-statement* → *for-in-statement*
->
-> *loop-statement* → *while-statement*
->
+> *loop-statement* → *for-in-statement* \
+> *loop-statement* → *while-statement* \
 > *loop-statement* → *repeat-while-statement*
 
 ### For-In Statement
@@ -141,16 +130,10 @@ as discussed in <doc:TheBasics#Optional-Binding>.
 >
 > *while-statement* → **`while`** *condition-list* *code-block*
 >
->
->
-> *condition-list* → *condition* | *condition* **`,`** *condition-list*
->
+> *condition-list* → *condition* | *condition* **`,`** *condition-list* \
 > *condition* → *expression* | *availability-condition* | *case-condition* | *optional-binding-condition*
 >
->
->
-> *case-condition* → **`case`** *pattern* *initializer*
->
+> *case-condition* → **`case`** *pattern* *initializer* \
 > *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
 
 ### Repeat-While Statement
@@ -199,10 +182,8 @@ and is discussed in <doc:Statements#Break-Statement> below.
 
 > Grammar of a branch statement:
 >
-> *branch-statement* → *if-statement*
->
-> *branch-statement* → *guard-statement*
->
+> *branch-statement* → *if-statement* \
+> *branch-statement* → *guard-statement* \
 > *branch-statement* → *switch-statement*
 
 ### If Statement
@@ -257,8 +238,7 @@ as discussed in <doc:TheBasics#Optional-Binding>.
 
 > Grammar of an if statement:
 >
-> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_
->
+> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_ \
 > *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
 
 ### Guard Statement
@@ -442,7 +422,7 @@ they reserve the right to add new enumeration cases,
 and any code that interacts with that enumeration
 *must* be able to handle those future cases without being recompiled.
 Code that's compiled in library evolution mode,
-code in the standard library,
+code in the Swift standard library,
 Swift overlays for Apple frameworks,
 and C and Objective-C code can declare nonfrozen enumerations.
 For information about frozen and nonfrozen enumerations,
@@ -462,7 +442,7 @@ added a new case to the enumeration
 that doesn't have a corresponding switch case.
 
 The following example switches over all three existing cases of
-the standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
+the Swift standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
 enumeration.
 If you add additional cases in the future,
 the compiler generates a warning to indicate
@@ -517,40 +497,23 @@ see <doc:Statements#Fallthrough-Statement> below.
 
 > Grammar of a switch statement:
 >
-> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`**
->
-> *switch-cases* → *switch-case* *switch-cases*_?_
->
-> *switch-case* → *case-label* *statements*
->
-> *switch-case* → *default-label* *statements*
->
+> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`** \
+> *switch-cases* → *switch-case* *switch-cases*_?_ \
+> *switch-case* → *case-label* *statements* \
+> *switch-case* → *default-label* *statements* \
 > *switch-case* → *conditional-switch-case*
 >
->
->
-> *case-label* → *attributes*_?_ **`case`** *case-item-list* **`:`**
->
-> *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ **`,`** *case-item-list*
->
+> *case-label* → *attributes*_?_ **`case`** *case-item-list* **`:`** \
+> *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ **`,`** *case-item-list* \
 > *default-label* → *attributes*_?_ **`default`** **`:`**
 >
->
->
-> *where-clause* → **`where`** *where-expression*
->
+> *where-clause* → **`where`** *where-expression* \
 > *where-expression* → *expression*
 >
->
->
-> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*_?_ *switch-else-directive-clause*_?_ *endif-directive*
->
-> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*_?_
->
-> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*_?_
->
-> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_
->
+> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*_?_ *switch-else-directive-clause*_?_ *endif-directive* \
+> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*_?_ \
+> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*_?_ \
+> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_ \
 > *switch-else-directive-clause* → *else-directive* *switch-cases*_?_
 
 <!--
@@ -594,18 +557,12 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
 
 > Grammar of a labeled statement:
 >
-> *labeled-statement* → *statement-label* *loop-statement*
->
-> *labeled-statement* → *statement-label* *if-statement*
->
-> *labeled-statement* → *statement-label* *switch-statement*
->
+> *labeled-statement* → *statement-label* *loop-statement* \
+> *labeled-statement* → *statement-label* *if-statement* \
+> *labeled-statement* → *statement-label* *switch-statement* \
 > *labeled-statement* → *statement-label* *do-statement*
 >
->
->
-> *statement-label* → *label-name* **`:`**
->
+> *statement-label* → *label-name* **`:`** \
 > *label-name* → *identifier*
 
 ## Control Transfer Statements
@@ -617,14 +574,10 @@ a `fallthrough` statement, a `return` statement, and a `throw` statement.
 
 > Grammar of a control transfer statement:
 >
-> *control-transfer-statement* → *break-statement*
->
-> *control-transfer-statement* → *continue-statement*
->
-> *control-transfer-statement* → *fallthrough-statement*
->
-> *control-transfer-statement* → *return-statement*
->
+> *control-transfer-statement* → *break-statement* \
+> *control-transfer-statement* → *continue-statement* \
+> *control-transfer-statement* → *fallthrough-statement* \
+> *control-transfer-statement* → *return-statement* \
 > *control-transfer-statement* → *throw-statement*
 
 ### Break Statement
@@ -961,14 +914,10 @@ see <doc:ErrorHandling#Handling-Errors>.
 
 > Grammar of a do statement:
 >
-> *do-statement* → **`do`** *code-block* *catch-clauses*_?_
->
-> *catch-clauses* → *catch-clause* *catch-clauses*_?_
->
-> *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block*
->
-> *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list*
->
+> *do-statement* → **`do`** *code-block* *catch-clauses*_?_ \
+> *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
+> *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block* \
+> *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \
 > *catch-pattern* → *pattern* *where-clause*_?_
 
 ## Compiler Control Statements
@@ -981,10 +930,8 @@ and a compile-time diagnostic statement.
 
 > Grammar of a compiler control statement:
 >
-> *compiler-control-statement* → *conditional-compilation-block*
->
-> *compiler-control-statement* → *line-control-statement*
->
+> *compiler-control-statement* → *conditional-compilation-block* \
+> *compiler-control-statement* → *line-control-statement* \
 > *compiler-control-statement* → *diagnostic-statement*
 
 ### Conditional Compilation Block
@@ -1014,7 +961,7 @@ conditions listed in the table below.
 
 | Platform condition | Valid arguments |
 | ------------------ | --------------- |
-| `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `Linux`, `Windows` |
+| `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
 | `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
 | `swift()` | `>=` or `<` followed by a version number |
 | `compiler()` | `>=` or `<` followed by a version number |
@@ -1239,64 +1186,34 @@ see <doc:Expressions#Explicit-Member-Expression>.
 >
 > *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*_?_ *else-directive-clause*_?_ *endif-directive*
 >
->
->
-> *if-directive-clause* → *if-directive* *compilation-condition* *statements*_?_
->
-> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*_?_
->
-> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*_?_
->
-> *else-directive-clause* → *else-directive* *statements*_?_
->
-> *if-directive* → **`#if`**
->
-> *elseif-directive* → **`#elseif`**
->
-> *else-directive* → **`#else`**
->
+> *if-directive-clause* → *if-directive* *compilation-condition* *statements*_?_ \
+> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*_?_ \
+> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*_?_ \
+> *else-directive-clause* → *else-directive* *statements*_?_ \
+> *if-directive* → **`#if`** \
+> *elseif-directive* → **`#elseif`** \
+> *else-directive* → **`#else`** \
 > *endif-directive* → **`#endif`**
 >
->
->
-> *compilation-condition* → *platform-condition*
->
-> *compilation-condition* → *identifier*
->
-> *compilation-condition* → *boolean-literal*
->
-> *compilation-condition* → **`(`** *compilation-condition* **`)`**
->
-> *compilation-condition* → **`!`** *compilation-condition*
->
-> *compilation-condition* → *compilation-condition* **`&&`** *compilation-condition*
->
+> *compilation-condition* → *platform-condition* \
+> *compilation-condition* → *identifier* \
+> *compilation-condition* → *boolean-literal* \
+> *compilation-condition* → **`(`** *compilation-condition* **`)`** \
+> *compilation-condition* → **`!`** *compilation-condition* \
+> *compilation-condition* → *compilation-condition* **`&&`** *compilation-condition* \
 > *compilation-condition* → *compilation-condition* **`||`** *compilation-condition*
 >
->
->
-> *platform-condition* → **`os`** **`(`** *operating-system* **`)`**
->
-> *platform-condition* → **`arch`** **`(`** *architecture* **`)`**
->
-> *platform-condition* → **`swift`** **`(`** **`>=`** *swift-version* **`)`** | **`swift`** **`(`** **`<`** *swift-version* **`)`**
->
-> *platform-condition* → **`compiler`** **`(`** **`>=`** *swift-version* **`)`** | **`compiler`** **`(`** **`<`** *swift-version* **`)`**
->
-> *platform-condition* → **`canImport`** **`(`** *import-path* **`)`**
->
+> *platform-condition* → **`os`** **`(`** *operating-system* **`)`** \
+> *platform-condition* → **`arch`** **`(`** *architecture* **`)`** \
+> *platform-condition* → **`swift`** **`(`** **`>=`** *swift-version* **`)`** | **`swift`** **`(`** **`<`** *swift-version* **`)`** \
+> *platform-condition* → **`compiler`** **`(`** **`>=`** *swift-version* **`)`** | **`compiler`** **`(`** **`<`** *swift-version* **`)`** \
+> *platform-condition* → **`canImport`** **`(`** *import-path* **`)`** \
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
->
->
-> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`Linux`** | **`Windows`**
->
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`**
->
-> *swift-version* → *decimal-digits* *swift-version-continuation*_?_
->
-> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_
->
+> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`Linux`** | **`Windows`** \
+> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
+> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
 > *environment* → **`simulator`** | **`macCatalyst`**
 
 <!--
@@ -1344,85 +1261,20 @@ resets the source code location back to the default line numbering and file path
 
 > Grammar of a line control statement:
 >
-> *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`**
->
-> *line-control-statement* → **`#sourceLocation`** **`(`** **`)`**
->
-> *line-number* → A decimal integer greater than zero
->
+> *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`** \
+> *line-control-statement* → **`#sourceLocation`** **`(`** **`)`** \
+> *line-number* → A decimal integer greater than zero \
 > *file-path* → *static-string-literal*
 
 ### Compile-Time Diagnostic Statement
 
-A compile-time diagnostic statement causes the compiler
-to emit an error or a warning during compilation.
-A compile-time diagnostic statement has the following forms:
+Prior to Swift 5.9,
+the `#warning` and `#error` statements emit a diagnostic during compilation.
+This behavior is now provided by
+the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
 
-```swift
-#error("<#error message#>")
-#warning("<#warning message#>")
-```
-
-The first form emits the *error message* as a fatal error
-and terminates the compilation process.
-The second form emits the *warning message* as a nonfatal warning
-and allows compilation to proceed.
-You write the diagnostic message as a static string literal.
-Static string literals can't use features like
-string interpolation or concatenation,
-but they can use the multiline string literal syntax.
-
-> Grammar of a compile-time diagnostic statement:
->
-> *diagnostic-statement* → **`#error`** **`(`** *diagnostic-message* **`)`**
->
-> *diagnostic-statement* → **`#warning`** **`(`** *diagnostic-message* **`)`**
->
->
->
-> *diagnostic-message* → *static-string-literal*
-
-<!--
-  - test: `good-diagnostic-statement-messages`
-
-  ```swifttest
-  >> #warning("Single-line static string")
-  !! /tmp/swifttest.swift:1:10: warning: Single-line static string
-  !! #warning("Single-line static string")
-  !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ---
-  >> #warning(
-     """
-     Multi-line string literal
-     warning message
-     """)
-  !! /tmp/swifttest.swift:3:1: warning: Multi-line string literal
-  !! warning message
-  !! """
-  !! ^~~
-  ```
--->
-
-<!--
-  Using !! lines above instead of !$ lines,
-  to also confirm that the line number comes through correctly.
--->
-
-<!--
-  - test: `bad-diagnostic-statement-messages`
-
-  ```swifttest
-  >> #warning("Interpolated \(1+1) string")
-  !$ error: string interpolation is not allowed in #warning directives
-  !! #warning("Interpolated \(1+1) string")
-  !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ---
-  >> #warning("Concatenated " + "strings")
-  !$ error: extra tokens following #warning directive
-  !! #warning("Concatenated " + "strings")
-  !! ^
-  ```
--->
+[`warning(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/warning(_:)
+[`error(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/error(_:)
 
 ## Availability Condition
 
@@ -1472,32 +1324,22 @@ It has the same meaning as the `*` argument in an availability condition.
 
 > Grammar of an availability condition:
 >
-> *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`**
->
-> *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`**
->
-> *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments*
->
-> *availability-argument* → *platform-name* *platform-version*
->
+> *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`** \
+> *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`** \
+> *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments* \
+> *availability-argument* → *platform-name* *platform-version* \
 > *availability-argument* → **`*`**
 >
 >
 >
-> *platform-name* → **`iOS`** | **`iOSApplicationExtension`**
->
-> *platform-name* → **`macOS`** | **`macOSApplicationExtension`**
->
-> *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`**
->
-> *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`**
->
-> *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`**
->
-> *platform-version* → *decimal-digits*
->
-> *platform-version* → *decimal-digits* **`.`** *decimal-digits*
->
+> *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
+> *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \
+> *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
+> *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`** \
+> *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`** \
+> *platform-name* → **`visionOS`** \
+> *platform-version* → *decimal-digits* \
+> *platform-version* → *decimal-digits* **`.`** *decimal-digits* \
 > *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
 
 <!--

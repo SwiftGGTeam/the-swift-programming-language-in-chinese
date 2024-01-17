@@ -453,7 +453,7 @@ case .qrCode(let productCode):
 
 If all of the associated values for an enumeration case
 are extracted as constants, or if all are extracted as variables,
-you can place a single `var` or `let` annotation before the case name, for brevity:
+you can place a single `let` or `var` annotation before the case name, for brevity:
 
 ```swift
 switch productBarcode {

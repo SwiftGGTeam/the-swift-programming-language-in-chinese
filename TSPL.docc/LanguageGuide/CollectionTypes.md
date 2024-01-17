@@ -771,7 +771,7 @@ if favoriteGenres.isEmpty {
 You can add a new item into a set by calling the set's `insert(_:)` method:
 
 ```swift
-favoriteGenres.insert("[Tool J]")
+favoriteGenres.insert("Jazz")
 // favoriteGenres now contains 4 items
 ```
 
@@ -779,7 +779,7 @@ favoriteGenres.insert("[Tool J]")
   - test: `setUsage`
 
   ```swifttest
-  -> favoriteGenres.insert("[Tool J]")
+  -> favoriteGenres.insert("Jazz")
   /> favoriteGenres now contains \(favoriteGenres.count) items
   </ favoriteGenres now contains 4 items
   ```
@@ -846,7 +846,7 @@ for genre in favoriteGenres {
     print("\(genre)")
 }
 // Classical
-// [Tool J]
+// Jazz
 // Hip hop
 ```
 
@@ -858,7 +858,7 @@ for genre in favoriteGenres {
         print("\(genre)")
      }
   </ Classical
-  </ [Tool J]
+  </ Jazz
   </ Hip hop
   ```
 -->
@@ -877,7 +877,7 @@ for genre in favoriteGenres.sorted() {
 }
 // Classical
 // Hip hop
-// [Tool J]
+// Jazz
 ```
 
 <!--
@@ -889,7 +889,7 @@ for genre in favoriteGenres.sorted() {
      }
   </ Classical
   </ Hip hop
-  </ [Tool J]
+  </ Jazz
   ```
 -->
 

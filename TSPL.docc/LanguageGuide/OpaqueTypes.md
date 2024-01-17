@@ -1,19 +1,27 @@
-# Opaque Types
+# Opaque and Boxed Types
 
 Hide implementation details about a value's type.
 
-A function or method with an opaque return type
-hides its return value's type information.
-Instead of providing a concrete type as the function's return type,
-the return value is described in terms of the protocols it supports.
+Swift provides two ways to hide details about a value's type:
+opaque types and boxed protocol types.
 Hiding type information
 is useful at boundaries between
 a module and code that calls into the module,
 because the underlying type of the return value can remain private.
-Unlike returning a value whose type is a protocol type,
-opaque types preserve type identity ---
+
+A function or method that returns an opaque type
+hides its return value's type information.
+Instead of providing a concrete type as the function's return type,
+the return value is described in terms of the protocols it supports.
+Opaque types preserve type identity ---
 the compiler has access to the type information,
 but clients of the module don't.
+
+A boxed protocol type can store an instance of any type
+that conforms to the given protocol.
+Boxed protocol types don't preserve type identity ---
+the value's specific type isn't known until runtime,
+and it can change over time as different values are stored.
 
 ## The Problem That Opaque Types Solve
 
@@ -484,24 +492,153 @@ the return value always has the same underlying type of `[T]`,
 so it follows the requirement that functions with opaque return types
 must return values of only a single type.
 
-## Differences Between Opaque Types and Protocol Types
+## Boxed Protocol Types
+
+A boxed protocol type is also sometimes called an *existential type*,
+which comes from the phrase
+"there exists a type *T* such that *T* conforms to the protocol".
+To make a boxed protocol type,
+write `any` before the name of a protocol.
+Here's an example:
+
+```swift
+struct VerticalShapes: Shape {
+    var shapes: [any Shape]
+    func draw() -> String {
+        return shapes.map { $0.draw() }.joined(separator: "\n\n")
+    }
+}
+
+let largeTriangle = Triangle(size: 5)
+let largeSquare = Square(size: 5)
+let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
+print(vertical.draw())
+```
+
+<!--
+  - test: `boxed-protocol-types`
+
+  ```swifttest
+   >> protocol Shape {
+   >>    func draw() -> String
+   >> }
+   >> struct Triangle: Shape {
+   >>    var size: Int
+   >>    func draw() -> String {
+   >>        var result: [String] = []
+   >>        for length in 1...size {
+   >>            result.append(String(repeating: "*", count: length))
+   >>        }
+   >>        return result.joined(separator: "\n")
+   >>    }
+   >> }
+   >> struct Square: Shape {
+   >>     var size: Int
+   >>     func draw() -> String {
+   >>         let line = String(repeating: "*", count: size)
+   >>         let result = Array<String>(repeating: line, count: size)
+   >>         return result.joined(separator: "\n")
+   >>     }
+   >
+   -> struct VerticalShapes: Shape {
+          var shapes: [any Shape]
+          func draw() -> String {
+              return shapes.map { $0.draw() }.joined(separator: "\n\n")
+          }
+      }
+   ->
+   -> let largeTriangle = Triangle(size: 5)
+   -> let largeSquare = Square(size: 5)
+   -> let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
+   -> print(vertical.draw())
+   << *
+   << **
+   << ***
+   << ****
+   << *****
+   <<-
+   << *****
+   << *****
+   << *****
+   << *****
+   << *****
+  ```
+-->
+
+In the example above,
+`VerticalShapes` declares the type of `shapes` as `[any Shape]` ---
+an array of boxed `Shape` elements.
+Each element in the array can be a different type,
+and each of those types must conform to the `Shape` protocol.
+To support this runtime flexibility,
+Swift adds a level of indirection when necessary ---
+this indirection is called a *box*,
+and it has a performance cost.
+
+Within the `VerticalShapes` type,
+the code can use methods, properties, and subscripts
+that are required by the `Shape` protocol.
+For example, the `draw()` method of `VerticalShapes`
+calls the `draw()` method on each element of the array.
+This method is available because `Shape` requires a `draw()` method.
+In contrast,
+trying to access the `size` property of the triangle,
+or any other properties or methods that aren't required by `Shape`,
+produces an error.
+
+Contrast the three types you could use for `shapes`:
+
+- Using generics,
+  by writing `struct VerticalShapes<S: Shape>` and `var shapes: [S]`,
+  makes an array whose elements are some specific shape type,
+  and where the identity of that specific type
+  is visible to any code that interacts with the array.
+
+- Using an opaque type,
+  by writing `var shapes: [some Shape]`,
+  makes an array whose elements are some specific shape type,
+  and where that specific type's identity is hidden.
+
+- Using a boxed protocol type,
+  by writing `var shapes: [any Shape]`,
+  makes an array that can store elements of different types,
+  and where those types' identities are hidden.
+
+In this case,
+a boxed protocol type is the only approach
+that lets callers of `VerticalShapes` mix different kinds of shapes together.
+
+You can use an `as` cast
+when you know the underlying type of a boxed value.
+For example:
+
+```swift
+if let downcastTriangle = vertical.shapes[0] as? Triangle {
+    print(downcastTriangle.size)
+}
+// Prints "5"
+```
+
+For more information, see <doc:TypeCasting#Downcasting>.
+
+## Differences Between Opaque Types and Boxed Protocol Types
 
 Returning an opaque type looks very similar
-to using a protocol type as the return type of a function,
+to using a boxed protocol type as the return type of a function,
 but these two kinds of return type differ in
 whether they preserve type identity.
 An opaque type refers to one specific type,
 although the caller of the function isn't able to see which type;
-a protocol type can refer to any type that conforms to the protocol.
+a boxed protocol type can refer to any type that conforms to the protocol.
 Generally speaking,
-protocol types give you more flexibility
+boxed protocol types give you more flexibility
 about the underlying types of the values they store,
 and opaque types let you make stronger guarantees
 about those underlying types.
 
 For example,
 here's a version of `flip(_:)`
-that uses a protocol type as its return type
+that uses a boxed protocol type as its return type
 instead of an opaque return type:
 
 ```swift
@@ -622,19 +759,19 @@ but adding a `Self` requirement to the protocol
 doesn't allow for the type erasure that happens
 when you use the protocol as a type.
 
-Using a protocol type as the return type for a function
+Using a boxed protocol type as the return type for a function
 gives you the flexibility to return any type that conforms to the protocol.
 However, the cost of that flexibility
 is that some operations aren't possible on the returned values.
 The example shows how the `==` operator isn't available ---
 it depends on specific type information
-that isn't preserved by using a protocol type.
+that isn't preserved by using a boxed protocol type.
 
 Another problem with this approach is that the shape transformations don't nest.
 The result of flipping a triangle is a value of type `Shape`,
 and the `protoFlip(_:)` function takes an argument
 of some type that conforms to the `Shape` protocol.
-However, a value of a protocol type doesn't conform to that protocol;
+However, a value of a boxed protocol type doesn't conform to that protocol;
 the value returned by `protoFlip(_:)` doesn't conform to `Shape`.
 This means code like `protoFlip(protoFlip(smallTriangle))`
 that applies multiple transformations is invalid
@@ -644,7 +781,7 @@ In contrast,
 opaque types preserve the identity of the underlying type.
 Swift can infer associated types,
 which lets you use an opaque return value
-in places where a protocol type can't be used as a return value.
+in places where a boxed protocol type can't be used as a return value.
 For example,
 here's a version of the `Container` protocol from <doc:Generics>:
 
@@ -793,3 +930,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
