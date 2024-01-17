@@ -826,47 +826,55 @@ the underlying type of that source.
 The example below defines two protocols for use with dice-based board games:
 
 ```swift
-protocol DiceGame {
-    var dice: Dice { get }
-    func play()
+class DiceGame {
+    let sides: Int
+    let generator = LinearCongruentialGenerator()
+    weak var delegate: Delegate?
+
+    init(sides: Int) {
+        self.sides = sides
+    }
+
+    func roll() -> Int {
+        return Int(generator.random() * Double(sides)) + 1
+    }
+
+    func play(rounds: Int) {
+        delegate?.gameDidStart(self)
+        for round in 1...rounds {
+            let player1 = roll()
+            let player2 = roll()
+            if player1 == player2 {
+                delegate?.game(self, didEndRound: round, winner: nil)
+            } else if player1 > player2 {
+                delegate?.game(self, didEndRound: round, winner: 1)
+            } else {
+                delegate?.game(self, didEndRound: round, winner: 2)
+            }
+        }
+        delegate?.gameDidEnd(self)
+    }
 
     protocol Delegate: AnyObject {
         func gameDidStart(_ game: DiceGame)
-        func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+        func game(_ game: DiceGame, didEndRound round: Int, winner: Int?)
         func gameDidEnd(_ game: DiceGame)
     }
 }
 ```
 
-<!--
-  - test: `protocols`
-
-  ```swifttest
-  -> protocol DiceGame {
-        var dice: Dice { get }
-        func play()
-     }
-  -> protocol DiceGameDelegate: AnyObject {
-        func gameDidStart(_ game: DiceGame)
-        func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
-        func gameDidEnd(_ game: DiceGame)
-     }
-  ```
--->
-
-The `DiceGame` protocol is a protocol that can be adopted
-by any game that involves dice.
-
+The `DiceGame` class implements a simple game using dice.
 The `DiceGame.Delegate` protocol can be adopted
-to track the progress of a type that implements `DiceGame`.
+to track the progress of this game.
 Because the `DiceGame.Delegate` protocol
 is always used in the context of a dice game,
 it's nested inside of the `DiceGame` protocol.
-Protocols can be nested inside of other protocols
-and inside of type declarations like structures and classes,
+Protocols can be nested
+inside of type declarations like structures and classes,
 as long as the outer declaration isn't generic.
 For information about nesting types, see <doc:NestedTypes>.
 
+<!-- XXX delete forward reference? -->
 To prevent strong reference cycles,
 delegates are declared as weak references.
 For information about weak references,
@@ -878,84 +886,7 @@ A class-only protocol
 is marked by its inheritance from `AnyObject`,
 as discussed in <doc:Protocols#Class-Only-Protocols>.
 
-Here's a version of the *Snakes and Ladders* game originally introduced in <doc:ControlFlow>.
-This version is adapted to use a `Dice` instance for its dice-rolls;
-to adopt the `DiceGame` protocol;
-and to notify a `DiceGame.Delegate` about its progress:
-
-```swift
-class SnakesAndLadders: DiceGame {
-    let finalSquare = 25
-    let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
-    var square = 0
-    var board: [Int]
-    init() {
-        board = Array(repeating: 0, count: finalSquare + 1)
-        board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-        board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-    }
-    weak var delegate: DiceGame.Delegate?
-    func play() {
-        square = 0
-        delegate?.gameDidStart(self)
-        gameLoop: while square != finalSquare {
-            let diceRoll = dice.roll()
-            delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-            switch square + diceRoll {
-            case finalSquare:
-                break gameLoop
-            case let newSquare where newSquare > finalSquare:
-                continue gameLoop
-            default:
-                square += diceRoll
-                square += board[square]
-            }
-        }
-        delegate?.gameDidEnd(self)
-    }
-}
-```
-
-<!--
-  - test: `protocols`
-
-  ```swifttest
-  -> class SnakesAndLadders: DiceGame {
-        let finalSquare = 25
-        let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
-        var square = 0
-        var board: [Int]
-        init() {
-           board = Array(repeating: 0, count: finalSquare + 1)
-           board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-           board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-        }
-        weak var delegate: DiceGame.Delegate?
-        func play() {
-           square = 0
-           delegate?.gameDidStart(self)
-           gameLoop: while square != finalSquare {
-              let diceRoll = dice.roll()
-              delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-              switch square + diceRoll {
-                 case finalSquare:
-                    break gameLoop
-                 case let newSquare where newSquare > finalSquare:
-                    continue gameLoop
-                 default:
-                    square += diceRoll
-                    square += board[square]
-              }
-           }
-           delegate?.gameDidEnd(self)
-        }
-     }
-  ```
--->
-
-For a description of the *Snakes and Ladders* gameplay,
-see <doc:ControlFlow#Break>.
-
+<!-- XXX rewrite paragraph -->
 This version of the game is wrapped up as a class called `SnakesAndLadders`,
 which adopts the `DiceGame` protocol.
 It provides a gettable `dice` property and a `play()` method
@@ -964,11 +895,13 @@ in order to conform to the protocol.
 because it doesn't need to change after initialization,
 and the protocol only requires that it must be gettable.)
 
+<!-- XXX rewrite paragraph -->
 The *Snakes and Ladders* game board setup takes place within
 the class's `init()` initializer.
 All game logic is moved into the protocol's `play` method,
 which uses the protocol's required `dice` property to provide its dice roll values.
 
+<!-- XXX rewrite paragraph -->
 Note that the `delegate` property is defined as an *optional* `DiceGame.Delegate`,
 because a delegate isn't required in order to play the game.
 Because it's of an optional type,
@@ -988,7 +921,7 @@ If the `delegate` property is nil,
 these delegate calls fail gracefully and without error.
 If the `delegate` property is non-nil,
 the delegate methods are called,
-and are passed the `SnakesAndLadders` instance as a parameter.
+and are passed the `DiceGame` instance as a parameter.
 
 <!--
   TODO: add a cross-reference to optional chaining here.
@@ -999,54 +932,44 @@ which adopts the `DiceGame.Delegate` protocol:
 
 ```swift
 class DiceGameTracker: DiceGame.Delegate {
-    var numberOfTurns = 0
+    var playerScore1 = 0
+    var playerScore2 = 0
     func gameDidStart(_ game: DiceGame) {
-        numberOfTurns = 0
-        if game is SnakesAndLadders {
-            print("Started a new game of Snakes and Ladders")
-        }
-        print("The game is using a \(game.dice.sides)-sided dice")
+        print("Started a new game")
+        playerScore1 = 0
+        playerScore2 = 0
     }
-    func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-        numberOfTurns += 1
-        print("Rolled a \(diceRoll)")
+    func game(_ game: DiceGame, didEndRound round: Int, winner: Int?) {
+        switch winner {
+            case 1:
+                playerScore1 += 1
+                print("Player 1 won round \(round)")
+            case 2: playerScore2 += 1
+                print("Player 2 won round \(round)")
+            default:
+                print("Round was a draw")
+        }
     }
     func gameDidEnd(_ game: DiceGame) {
-        print("The game lasted for \(numberOfTurns) turns")
+        if playerScore1 == playerScore2 {
+            print("The game ended in a draw.")
+        } else if playerScore1 > playerScore2 {
+            print("Player 1 won!")
+        } else {
+            print("Player 2 won!")
+        }
     }
 }
 ```
 
-<!--
-  - test: `protocols`
-
-  ```swifttest
-  -> class DiceGameTracker: DiceGame.Delegate {
-        var numberOfTurns = 0
-        func gameDidStart(_ game: DiceGame) {
-           numberOfTurns = 0
-           if game is SnakesAndLadders {
-              print("Started a new game of Snakes and Ladders")
-           }
-           print("The game is using a \(game.dice.sides)-sided dice")
-        }
-        func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
-           numberOfTurns += 1
-           print("Rolled a \(diceRoll)")
-        }
-        func gameDidEnd(_ game: DiceGame) {
-           print("The game lasted for \(numberOfTurns) turns")
-        }
-     }
-  ```
--->
-
+<!-- XXX rewrite paragraph -->
 `DiceGameTracker` implements all three methods required by `DiceGame.Delegate`.
 It uses these methods to keep track of the number of turns a game has taken.
 It resets a `numberOfTurns` property to zero when the game starts,
 increments it each time a new turn begins,
 and prints out the total number of turns once the game has ended.
 
+<!-- XXX rewrite paragraph -->
 The implementation of `gameDidStart(_:)` shown above uses the `game` parameter
 to print some introductory information about the game that's about to be played.
 The `game` parameter has a type of `DiceGame`, not `SnakesAndLadders`,
@@ -1058,6 +981,7 @@ In this example, it checks whether `game` is actually
 an instance of `SnakesAndLadders` behind the scenes,
 and prints an appropriate message if so.
 
+<!-- XXX rewrite paragraph -->
 The `gameDidStart(_:)` method also accesses the `dice` property of the passed `game` parameter.
 Because `game` is known to conform to the `DiceGame` protocol,
 it's guaranteed to have a `dice` property,
@@ -1068,35 +992,15 @@ Here's how `DiceGameTracker` looks in action:
 
 ```swift
 let tracker = DiceGameTracker()
-let game = SnakesAndLadders()
+let game = DiceGame(sides: 6)
 game.delegate = tracker
-game.play()
-// Started a new game of Snakes and Ladders
-// The game is using a 6-sided dice
-// Rolled a 3
-// Rolled a 5
-// Rolled a 4
-// Rolled a 5
-// The game lasted for 4 turns
+game.play(rounds: 3)
+// Started a new game
+// Player 2 won round 1
+// Player 2 won round 2
+// Player 1 won round 3
+// Player 2 won!
 ```
-
-<!--
-  - test: `protocols`
-
-  ```swifttest
-  -> let tracker = DiceGameTracker()
-  -> let game = SnakesAndLadders()
-  -> game.delegate = tracker
-  -> game.play()
-  </ Started a new game of Snakes and Ladders
-  </ The game is using a 6-sided dice
-  </ Rolled a 3
-  </ Rolled a 5
-  </ Rolled a 4
-  </ Rolled a 5
-  </ The game lasted for 4 turns
-  ```
--->
 
 ## Adding Protocol Conformance with an Extension
 
