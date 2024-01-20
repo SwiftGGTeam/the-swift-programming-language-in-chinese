@@ -823,7 +823,9 @@ Delegation can be used to respond to a particular action,
 or to retrieve data from an external source without needing to know
 the underlying type of that source.
 
-The example below defines two protocols for use with dice-based board games:
+The example below defines a dice game
+and a nested protocol for a delegate
+that tracks the game's progress.
 
 ```swift
 class DiceGame {
@@ -863,9 +865,16 @@ class DiceGame {
 }
 ```
 
-The `DiceGame` class implements a simple game using dice.
+The `DiceGame` class implements a game where
+each player takes a turn rolling dice,
+and the player who rolls the highest number wins the round.
+It uses a linear congruential generator,
+from the example earlier in the chapter,
+to generate random numbers for dice rolls.
+
+
 The `DiceGame.Delegate` protocol can be adopted
-to track the progress of this game.
+to track the progress of a dice game.
 Because the `DiceGame.Delegate` protocol
 is always used in the context of a dice game,
 it's nested inside of the `DiceGame` protocol.
@@ -874,41 +883,16 @@ inside of type declarations like structures and classes,
 as long as the outer declaration isn't generic.
 For information about nesting types, see <doc:NestedTypes>.
 
-<!-- XXX delete forward reference? -->
 To prevent strong reference cycles,
 delegates are declared as weak references.
 For information about weak references,
 see <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-Between-Class-Instances>.
 Marking the protocol as class-only
-lets the `SnakesAndLadders` class later in this chapter
+lets the `DiceGame` class
 declare that its delegate must use a weak reference.
 A class-only protocol
 is marked by its inheritance from `AnyObject`,
 as discussed in <doc:Protocols#Class-Only-Protocols>.
-
-<!-- XXX rewrite paragraph -->
-This version of the game is wrapped up as a class called `SnakesAndLadders`,
-which adopts the `DiceGame` protocol.
-It provides a gettable `dice` property and a `play()` method
-in order to conform to the protocol.
-(The `dice` property is declared as a constant property
-because it doesn't need to change after initialization,
-and the protocol only requires that it must be gettable.)
-
-<!-- XXX rewrite paragraph -->
-The *Snakes and Ladders* game board setup takes place within
-the class's `init()` initializer.
-All game logic is moved into the protocol's `play` method,
-which uses the protocol's required `dice` property to provide its dice roll values.
-
-<!-- XXX rewrite paragraph -->
-Note that the `delegate` property is defined as an *optional* `DiceGame.Delegate`,
-because a delegate isn't required in order to play the game.
-Because it's of an optional type,
-the `delegate` property is automatically set to an initial value of `nil`.
-Thereafter, the game instantiator has the option to set the property to a suitable delegate.
-Because the `DiceGame.Delegate` protocol is class-only, you can declare the
-delegate to be `weak` to prevent reference cycles.
 
 `DiceGame.Delegate` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
