@@ -796,7 +796,6 @@ For information about opaque types, and boxed protocol types,
 see <doc:OpaqueTypes>.
 
 <!--
-
 Performance impact from SE-0335:
 
 Existential types are also significantly more expensive than using concrete types.
@@ -872,7 +871,6 @@ It uses a linear congruential generator,
 from the example earlier in the chapter,
 to generate random numbers for dice rolls.
 
-
 The `DiceGame.Delegate` protocol can be adopted
 to track the progress of a dice game.
 Because the `DiceGame.Delegate` protocol
@@ -908,7 +906,7 @@ the delegate methods are called,
 and are passed the `DiceGame` instance as a parameter.
 
 <!--
-  TODO: add a cross-reference to optional chaining here.
+TODO: add a cross-reference to optional chaining here.
 -->
 
 This next example shows a class called `DiceGameTracker`,
