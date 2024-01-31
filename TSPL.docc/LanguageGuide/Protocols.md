@@ -808,7 +808,6 @@ code using existential types incurs pointer indirection and dynamic method dispa
 that cannot be optimized away.
 -->
 
-
 ## Delegation
 
 *Delegation* is a design pattern that enables
@@ -893,15 +892,16 @@ is marked by its inheritance from `AnyObject`,
 as discussed in <doc:Protocols#Class-Only-Protocols>.
 
 `DiceGame.Delegate` provides three methods for tracking the progress of a game.
-These three methods have been incorporated into the game logic within
-the `play()` method above, and are called when
+These three methods are incorporated into the game logic
+in the `play(rounds:)` method above.
+The `DiceGame` class calls its delegate methods when
 a new game starts, a new turn begins, or the game ends.
 
 Because the `delegate` property is an *optional* `DiceGame.Delegate`,
-the `play()` method uses optional chaining each time it calls a method on the delegate,
+the `play(rounds:)` method uses optional chaining each time it calls a method on the delegate,
 as discussed in <doc:OptionalChaining>.
 If the `delegate` property is nil,
-these delegate calls fail gracefully and without error.
+these delegate calls are just skipped.
 If the `delegate` property is non-nil,
 the delegate methods are called,
 and are passed the `DiceGame` instance as a parameter.
@@ -941,33 +941,14 @@ class DiceGameTracker: DiceGame.Delegate {
 }
 ```
 
-<!-- XXX rewrite paragraph -->
-`DiceGameTracker` implements all three methods required by `DiceGame.Delegate`.
-It uses these methods to keep track of the number of turns a game has taken.
-It resets a `numberOfTurns` property to zero when the game starts,
-increments it each time a new turn begins,
-and prints out the total number of turns once the game has ended.
+The `DiceGameTracker` class implements all three methods
+that are required by the `DiceGame.Delegate` protocol.
+It uses these methods to zero out both players' scores
+at the start of a new game,
+to update their scores at the end of each round,
+and to announce a winner at the end of the game.
 
-<!-- XXX rewrite paragraph -->
-The implementation of `gameDidStart(_:)` shown above uses the `game` parameter
-to print some introductory information about the game that's about to be played.
-The `game` parameter has a type of `DiceGame`, not `SnakesAndLadders`,
-and so `gameDidStart(_:)` can access and use only methods and properties that
-are implemented as part of the `DiceGame` protocol.
-However, the method is still able to use type casting to
-query the type of the underlying instance.
-In this example, it checks whether `game` is actually
-an instance of `SnakesAndLadders` behind the scenes,
-and prints an appropriate message if so.
-
-<!-- XXX rewrite paragraph -->
-The `gameDidStart(_:)` method also accesses the `dice` property of the passed `game` parameter.
-Because `game` is known to conform to the `DiceGame` protocol,
-it's guaranteed to have a `dice` property,
-and so the `gameDidStart(_:)` method is able to access and print the dice's `sides` property,
-regardless of what kind of game is being played.
-
-Here's how `DiceGameTracker` looks in action:
+Here's how `DiceGame` and `DiceGameTracker` look in action:
 
 ```swift
 let tracker = DiceGameTracker()
