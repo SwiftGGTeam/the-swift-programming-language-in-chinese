@@ -898,16 +898,13 @@ the `play()` method above, and are called when
 a new game starts, a new turn begins, or the game ends.
 
 Because the `delegate` property is an *optional* `DiceGame.Delegate`,
-the `play()` method uses optional chaining each time it calls a method on the delegate.
+the `play()` method uses optional chaining each time it calls a method on the delegate,
+as discussed in <doc:OptionalChaining>.
 If the `delegate` property is nil,
 these delegate calls fail gracefully and without error.
 If the `delegate` property is non-nil,
 the delegate methods are called,
 and are passed the `DiceGame` instance as a parameter.
-
-<!--
-TODO: add a cross-reference to optional chaining here.
--->
 
 This next example shows a class called `DiceGameTracker`,
 which adopts the `DiceGame.Delegate` protocol:
