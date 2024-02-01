@@ -874,7 +874,7 @@ The `DiceGame.Delegate` protocol can be adopted
 to track the progress of a dice game.
 Because the `DiceGame.Delegate` protocol
 is always used in the context of a dice game,
-it's nested inside of the `DiceGame` protocol.
+it's nested inside of the `DiceGame` class.
 Protocols can be nested
 inside of type declarations like structures and classes,
 as long as the outer declaration isn't generic.
