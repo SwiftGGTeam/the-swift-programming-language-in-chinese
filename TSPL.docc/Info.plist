@@ -2,26 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleName</key>
-	<string>TSPL</string>
 	<key>CFBundleDisplayName</key>
 	<string>The Swift Programming Language</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.swift.tspl</string>
 	<key>CDDefaultCodeListingLanguage</key>
 	<string>swift</string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleIconFile</key>
-	<string>DocumentationIcon</string>
-	<key>CFBundleIconName</key>
-	<string>DocumentationIcon</string>
-	<key>CFBundlePackageType</key>
-	<string>DOCS</string>
-	<key>CFBundleShortVersionString</key>
-	<string>0.1.0</string>
-	<key>CFBundleVersion</key>
-	<string>0.1.0</string>
 	<key>CDDefaultModuleKind</key>
 	<string></string>
 </dict>
