@@ -2,6 +2,15 @@
 
 Review the recent changes to this book.
 
+**XXX release date XXX*
+
+- Updated for Swift 5.10.
+- Added information about nested protocols
+  to the <doc:Protocols#Delegation> section.
+- Added deprecation information
+  in the <doc:Attributes#UIApplicationMain>
+  and <doc:Attributes#NSApplicationMain> sections.
+
 **2023-12-11**
 
 - Updated for Swift 5.9.2.
