@@ -1090,7 +1090,7 @@ the code below converts measured temperatures from Fahrenheit to Celsius:
 
 ```swift
 extension TemperatureLogger {
-    func convertFarenheitToCelsius() {
+    func convertFahrenheitToCelsius() {
         measurements = measurements.map { measurement in
             (measurement - 32) * 5 / 9
         }
@@ -1113,7 +1113,7 @@ while unit conversion is in progress.
 In addition to writing code in an actor
 that protects temporary invalid state by omitting potential suspension points,
 you can move that code into a synchronous method.
-The `convertFarenheitToCelsius()` method above is a synchronous method,
+The `convertFahrenheitToCelsius()` method above is a synchronous method,
 so it's guaranteed to *never* contain potential suspension points.
 This function encapsulates the code
 that temporarily makes the data model inconsistent,
