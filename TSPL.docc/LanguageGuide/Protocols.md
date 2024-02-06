@@ -823,7 +823,7 @@ the underlying type of that source.
 
 The example below defines a dice game
 and a nested protocol for a delegate
-that tracks the game's progress.
+that tracks the game's progress:
 
 ```swift
 class DiceGame {
@@ -866,7 +866,7 @@ class DiceGame {
 The `DiceGame` class implements a game where
 each player takes a turn rolling dice,
 and the player who rolls the highest number wins the round.
-It uses a linear congruential generator,
+It uses a linear congruential generator
 from the example earlier in the chapter,
 to generate random numbers for dice rolls.
 
@@ -901,7 +901,7 @@ Because the `delegate` property is an *optional* `DiceGame.Delegate`,
 the `play(rounds:)` method uses optional chaining each time it calls a method on the delegate,
 as discussed in <doc:OptionalChaining>.
 If the `delegate` property is nil,
-these delegate calls are just skipped.
+these delegate calls are ignored.
 If the `delegate` property is non-nil,
 the delegate methods are called,
 and are passed the `DiceGame` instance as a parameter.
@@ -926,7 +926,7 @@ class DiceGameTracker: DiceGame.Delegate {
             case 2: playerScore2 += 1
                 print("Player 2 won round \(round)")
             default:
-                print("Round was a draw")
+                print("The round was a draw")
         }
     }
     func gameDidEnd(_ game: DiceGame) {

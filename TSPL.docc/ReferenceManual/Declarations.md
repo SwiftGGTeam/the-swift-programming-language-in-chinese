@@ -2273,8 +2273,7 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 ## Protocol Declaration
 
 A *protocol declaration* introduces a named protocol type into your program.
-Protocol declarations are declared either at global scope
-or nested inside a nongeneric type or nongeneric function,
+Protocol declarations are declared
 using the `protocol` keyword and have the following form:
 
 ```swift
@@ -2282,6 +2281,9 @@ protocol <#protocol name#>: <#inherited protocols#> {
    <#protocol member declarations#>
 }
 ```
+
+Protocol declarations can appear at global scope,
+or nested inside a nongeneric type or nongeneric function.
 
 The body of a protocol contains zero or more *protocol member declarations*,
 which describe the conformance requirements that any type adopting the protocol must fulfill.
