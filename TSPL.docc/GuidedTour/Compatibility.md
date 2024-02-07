@@ -3,11 +3,11 @@
 Learn what functionality is available in older language modes.
 
 This book describes Swift 5.10,
-the default version of Swift that's included in Xcode 15.1.
-You can use Xcode 15.1 to build targets
+the default version of Swift that's included in Xcode 15.3.
+You can use Xcode 15.3 to build targets
 that are written in either 5.10, Swift 4.2, or Swift 4.
 
-When you use Xcode 15.1 to build Swift 4 and Swift 4.2 code,
+When you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
 most Swift 5.10 functionality is available.
 That said,
 the following changes are available only to code that uses 5.10 or later:
