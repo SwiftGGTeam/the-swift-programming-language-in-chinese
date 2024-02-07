@@ -7,21 +7,6 @@ the default version of Swift that's included in Xcode 15.1.
 You can use Xcode 15.1 to build targets
 that are written in either 5.10, Swift 4.2, or Swift 4.
 
-<!--
-  - test: `swift-version`
-
-  ```swifttest
-  >> #if swift(>=5.9.3)
-  >>     print("Too new")
-  >> #elseif swift(>=5.9.2)
-  >>     print("Just right")
-  >> #else
-  >>     print("Too old")
-  >> #endif
-  << Just right
-  ```
--->
-
 When you use Xcode 15.1 to build Swift 4 and Swift 4.2 code,
 most Swift 5.10 functionality is available.
 That said,
