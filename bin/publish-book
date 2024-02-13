@@ -21,7 +21,7 @@
 #     PATH=~/git/DocC/.build/arm64-apple-macosx/debug:$PATH
 #     DOCC_HTML_DIR=~/git/DocC-Renderer/dist/
 
-set -eu
+set -eux
 
 # Pretty print DocC JSON output, so that it has a stable ordering and
 # can be diffed.  This lets us determine whether rebuilding resulted in
