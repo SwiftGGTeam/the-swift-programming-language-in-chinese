@@ -314,7 +314,6 @@ make the same change here also.
 > Grammar of an expression:
 >
 > *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
-> *expression-list* → *expression* | *expression* **`,`** *expression-list*
 
 > Grammar of a prefix expression:
 >
