@@ -334,9 +334,9 @@ from nonthrowing code.
 For example:
 
 ```swift
-func getRainyWeekendPhotos() async -> Result<[String]> {
+func availableRainyWeekendPhotos() -> Result<[String], Error> {
     return Result {
-        try await listPhotos(inGallery: "A Rainy Weekend")
+        try listDownloadedPhotos(inGallery: "A Rainy Weekend")
     }
 }
 ```
