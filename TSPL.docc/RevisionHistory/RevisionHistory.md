@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**2024-02-13**
+**XXX release date XXX**
 
 - Updated for Swift 5.10.
 - Added information about nested protocols
