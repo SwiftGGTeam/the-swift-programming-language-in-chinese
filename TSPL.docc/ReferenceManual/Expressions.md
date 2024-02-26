@@ -1245,7 +1245,7 @@ see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closur
 >
 > *closure-expression* → **`{`** *attributes*_?_ *closure-signature*_?_ *statements*_?_ **`}`**
 >
-> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ **`in`** \
+> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
 > *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \

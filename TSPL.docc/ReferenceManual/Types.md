@@ -476,7 +476,7 @@ see <doc:MemorySafety>.
 
 > Grammar of a function type:
 >
-> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ **`throws`**_?_ **`->`** *type*
+> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
 >
 > *function-type-argument-clause* → **`(`** **`)`** \
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
@@ -484,6 +484,8 @@ see <doc:MemorySafety>.
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
 > *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
+>
+> *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
 
 <!--
   NOTE: Functions are first-class citizens in Swift,

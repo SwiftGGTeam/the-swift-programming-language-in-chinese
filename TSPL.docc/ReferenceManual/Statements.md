@@ -914,7 +914,7 @@ see <doc:ErrorHandling#Handling-Errors>.
 
 > Grammar of a do statement:
 >
-> *do-statement* → **`do`** *code-block* *catch-clauses*_?_ \
+> *do-statement* → **`do`** *throws-clause*_?_ *code-block* *catch-clauses*_?_ \
 > *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
 > *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block* \
 > *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \

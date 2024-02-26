@@ -1660,7 +1660,7 @@ but the new method must preserve its return type and nonreturning behavior.
 > *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
 > *function-name* → *identifier* | *operator*
 >
-> *function-signature* → *parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ \
+> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
 > *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
@@ -2558,7 +2558,7 @@ See also <doc:Declarations#Initializer-Declaration>.
 
 > Grammar of a protocol initializer declaration:
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_ \
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### Protocol Subscript Declaration
@@ -2903,7 +2903,7 @@ see <doc:Initialization#Failable-Initializers>.
 
 > Grammar of an initializer declaration:
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`throws`**_?_ *generic-where-clause*_?_ *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
