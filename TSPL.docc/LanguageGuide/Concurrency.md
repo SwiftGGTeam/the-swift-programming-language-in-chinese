@@ -695,8 +695,8 @@ To let the user stop this work,
 without waiting for all of the tasks to complete,
 the tasks need check for cancellation and stop running if they are canceled.
 There are two ways a task can do this:
-by calling the [`Task.checkCancellation()`][] method,
-or by reading the [`Task.isCancelled`][] property.
+by calling the [`Task.checkCancellation()`][] type method,
+or by reading the [`Task.isCancelled`][`Task.isCancelled` type] type property.
 Calling `checkCancellation()` throws an error if the task is canceled;
 a throwing task can propagate the error out of the task,
 stopping all of the task's work.
@@ -706,7 +706,7 @@ which lets you perform clean-up work as part of stopping the task,
 like closing network connections and deleting temporary files.
 
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
-[`Task.isCancelled`]: https://developer.apple.com/documentation/swift/task/3814832-iscancelled
+[`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
 ```
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
@@ -744,6 +744,13 @@ The code above makes several changes from the previous version:
   instead of discarding that completed work.
 
 [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
+
+> Note:
+> To check whether a task has been canceled from outside that task,
+> use the [`Task.isCancelled`][`Task.isCancelled` instance] instance property
+> instead of the type property.
+
+[`Task.isCancelled` instance]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.property
 
 For work that needs immediate notification of cancellation,
 use the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
