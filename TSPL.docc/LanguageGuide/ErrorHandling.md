@@ -699,6 +699,94 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   ```
 -->
 
+## Specifying a Concrete Error Type
+
+XXX OUTLINE XXX
+
+- Most code that throws errors just writes `throws`.
+  This is the same as writing `throws(any Error)`.
+  However, you can write `throws(SomeErrorType)`
+  to throw errors of a specific concrete type.
+
+- What is a boxed protocol (aka existential) error type?
+
+- What is a concrete error type?
+
+- Because you write a type after `throws`
+  this syntax is also called "typed throws".
+
+- You can also use opaque types like `throws(some MyErrorProtocol)` --
+  this is still "concrete" in sense that
+  the errors are all instances of the concrete type
+  that's hidden behind the opaque type.
+
+- When should I use concrete error types?
+  (See SE-0413 for a list.)
+  Why shouldn't I just use this everywhere?
+
+- How do I write a concrete error type for a `do` block?
+
+- How do I write a concrete error type for a throwing function?
+
+- What's the type-system relationship
+  between plain `throws` and `throws(SomeErrorType)`?
+  When can I interchange them?
+
+- If a function or `do` block throws only errors of a single type,
+  the compiler infers that as the concrete error type.
+  You can explicitly write `throws(any Error` to suppress that.
+
+- How do I exhaustively handle errors of a concrete type in a `catch` block?
+
+<!--
+The outline above doesn't discuss
+the similarity and comparison between throws(E) and rethrows
+because this chapter doesn't discuss rethrows.
+That information will go in the reference.
+-->
+
+XXX RUNNING EXAMPLE XXX
+
+```swift
+enum StatisticsError: Error {
+    case noRatings
+    case invalidRating(Int)
+}
+
+func summarize(_ ratings: [Int]) throws(StatisticsError) {
+    guard !ratings.isEmpty else { throw .noRatings }
+
+    var counts = [1: 0, 2: 0, 3: 0]
+    for rating in ratings {
+        guard rating > 0 && rating <= 3 else { throw .invalidRating(rating) }
+        counts[rating]! += 1
+    }
+
+    print("One star:", counts[1]!)
+    print("Two stars:", counts[2]!)
+    print("Three stars:", counts[3]!)
+
+    print("*", counts[1]!, "-- **", counts[2]!, "-- ***", counts[3]!)
+}
+
+func printSummary(_ ratings: [Int]) {
+    do {
+        try summarize(ratings)
+    } catch {
+        switch error {
+        case .noRatings:
+            print("No ratings available")
+        case .invalidRating(let rating):
+            print("Invalid rating: \(rating)")
+        }
+    }
+}
+
+printSummary([1, 2, 3, 2, 2, 1])
+printSummary([])
+printSummary([1, 100])
+```
+
 ## Specifying Cleanup Actions
 
 You use a `defer` statement to execute a set of statements
