@@ -713,7 +713,7 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
         group.addTaskUnlessCancelled {
-            guard isCancelled == false else { return nil }
+            guard Task.isCancelled == false else { return nil }
             return await downloadPhoto(named: name)
         }
     }
