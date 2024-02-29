@@ -712,10 +712,11 @@ like closing network connections and deleting temporary files.
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        group.addTaskUnlessCancelled {
-            guard Task.isCancelled == false else { return nil }
+        let added = group.addTaskUnlessCancelled {
+            guard !Task.isCancelled else { return nil }
             return await downloadPhoto(named: name)
         }
+        guard added else { break }
     }
 
     var results: [Data] = []
@@ -731,6 +732,11 @@ The code above makes several changes from the previous version:
 - Each task is added using the
   [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] method,
   to avoid starting new work after cancellation.
+
+- After each call to `addTaskUnlessCancelled(priority:operation:)`,
+  the code confirms that the new child task was added.
+  If the group is canceled, the value of `added` is `false` ---
+  in that case, the code stops trying to download additional photos.
 
 - Each task checks for cancellation
   before starting to download the photo.
