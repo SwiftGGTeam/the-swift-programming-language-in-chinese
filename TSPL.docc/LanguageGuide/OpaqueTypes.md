@@ -121,8 +121,8 @@ print(flippedTriangle.draw())
 
 This approach to defining a `JoinedShape<T: Shape, U: Shape>` structure
 that joins two shapes together vertically, like the code below shows,
-results in types like `JoinedShape<FlippedShape<Triangle>, Triangle>`
-from joining a flipped triangle with another triangle.
+results in types like `JoinedShape<Triangle, FlippedShape<Triangle>>`
+from joining a triangle with a flipped triangle.
 
 ```swift
 struct JoinedShape<T: Shape, U: Shape>: Shape {
