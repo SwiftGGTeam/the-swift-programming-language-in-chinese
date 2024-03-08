@@ -708,42 +708,53 @@ XXX OUTLINE XXX
   However, you can write `throws(SomeErrorType)`
   to throw errors of a specific concrete type.
 
-- What is a boxed protocol (aka existential) error type?
-
-- What is a concrete error type?
-
 - Because you write a type after `throws`
   this syntax is also called "typed throws".
+
+- A boxed protocol (aka existential) type matches the reality of most code.
+  At compile time, you don't know every possible way things could go wrong.
+  In particular, some errors will come from calling other throwing functions.
+
+- In contrast, a concrete error type is useful:
+
+  * When the code that throws errors
+    and the code that handles those errors
+    are all part of the same larger unit,
+    like a package or module or library.
+    These errors are an implementation detail
+    that users of the library don't see or recover from.
+
+  * In code that only rethrows errors,
+    especially when the throwing code comes from a closure the caller provided.
+    Example: `map` in the stdlib.
+    Xref to reference section -- this chapter doesn't discuss rethrows
+
+  * In an environment where runtime memory allocation isn't possible,
+    like a constrained embedded system.
+    Throwing an instance of `any Error` requires allocation.
+    The type isn't known at compile time -- allocation happens at run time.
+    (Aside: The performance cost of allocation is small.)
+
+  * In code that has no dependencies, and only ever throws its own errors.
+    TR: Does this include not depending on the stdlib?
 
 - You can also use opaque types like `throws(some MyErrorProtocol)` --
   this is still "concrete" in sense that
   the errors are all instances of the concrete type
   that's hidden behind the opaque type.
 
-- When should I use concrete error types?
-  (See SE-0413 for a list.)
-  Why shouldn't I just use this everywhere?
-
-- How do I write a concrete error type for a `do` block?
-
-- How do I write a concrete error type for a throwing function?
-
-- What's the type-system relationship
-  between plain `throws` and `throws(SomeErrorType)`?
-  When can I interchange them?
+- To specify the error type for a `do` block or a throwing function,
+  write `throws(E)` where `E` is an error type.
+  For example -- insert `summarize` from RUNNING EXAMPLE below.
 
 - If a function or `do` block throws only errors of a single type,
   the compiler infers that as the concrete error type.
-  You can explicitly write `throws(any Error` to suppress that.
+  You can explicitly write `throws(any Error)` to suppress that.
 
-- How do I exhaustively handle errors of a concrete type in a `catch` block?
-
-<!--
-The outline above doesn't discuss
-the similarity and comparison between throws(E) and rethrows
-because this chapter doesn't discuss rethrows.
-That information will go in the reference.
--->
+- For a normal error (of boxed protocol type)
+  the `catch` clause needs to either include a general catch/default
+  or to propagate the errors it doesn't handle.
+  For a typed error, the catch clause can be exhaustive.
 
 XXX RUNNING EXAMPLE XXX
 
@@ -770,7 +781,7 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 }
 
 func printSummary(_ ratings: [Int]) {
-    do {
+    do throws(StatisticsError) {
         try summarize(ratings)
     } catch {
         switch error {
