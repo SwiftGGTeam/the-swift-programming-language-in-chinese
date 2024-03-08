@@ -897,7 +897,7 @@ or the boxed protocol type `any Error`.
 If the `do` statement doesn't specify the type of error it throws,
 that type is implied to be `any Error`.
 For more information about working with errors that have explicit types,
-see <!-- XXX xref guide -->.
+see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
 
 If any statement in the `do` code block throws an error,
 program control is transferred

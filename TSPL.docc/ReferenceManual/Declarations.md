@@ -1468,8 +1468,16 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
+<!-- XXX
+Rule for inferring the thrown error type
+Xref to the guide <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>
+-->
+
 The `throws` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
+<!-- XXX
+Subtyping rule for throws(any Error) vs throws(MyErrorType)
+-->
 As a result, you can use a nonthrowing function
 in a context where a throwing one is expected.
 

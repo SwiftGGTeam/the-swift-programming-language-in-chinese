@@ -924,6 +924,10 @@ explicitly marks a closure as throwing or asynchronous.
 
 If the body of a closure includes a try expression,
 the closure is understood to be throwing.
+<!-- XXX
+The same rule to infer the thrown error type
+applies to closures as to functions.
+-->
 Likewise, if it includes an await expression,
 it's understood to be asynchronous.
 
