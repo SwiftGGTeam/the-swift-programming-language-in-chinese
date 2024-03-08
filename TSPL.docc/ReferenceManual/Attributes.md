@@ -119,7 +119,7 @@ The value for that argument is a list of one or more of the following:
   where *prefix* is prepended to the symbol name,
   for a name that starts with a fixed string.
 
-- `suffixed(<#suffix#>`
+- `suffixed(<#suffix#>)`
   where *suffix* is appended to the symbol name,
   for a name that ends with a fixed string.
 
