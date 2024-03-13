@@ -1469,6 +1469,10 @@ Calls to a throwing function or method must be wrapped in a `try` or `try!` expr
 (that is, in the scope of a `try` or `try!` operator).
 
 <!-- XXX
+spellings:
+- throws is the same as throws(any Error)
+- throws(Never) is the same as not-throwing
+
 Rule for inferring the thrown error type
 Xref to the guide <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>
 -->
