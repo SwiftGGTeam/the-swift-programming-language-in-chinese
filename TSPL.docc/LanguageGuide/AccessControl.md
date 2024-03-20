@@ -45,14 +45,15 @@ A *source file* is a single Swift source code file within a module
 Although it's common to define individual types in separate source files,
 a single source file can contain definitions for multiple types, functions, and so on.
 
-A *package* is a group of modules and source files,
-with boundaries that are defined by the build system.
-The package name isn't part of your Swift source code,
-but does appear in your configuration for the build system.
-For example, if your use Swift Package Manager to build your code,
-you define the package name using [`Package`][] in your package manifest.
+A *package* is a group of modules that you develop as a unit.
+You define the modules that form a package
+as part of configuring the build system you're using,
+not as part of your Swift source code.
+For example, if you use Swift Package Manager to build your code,
+you define a package in your `Package.swift` file
+using APIs from the [PackageDescription][] module.
 
-[`Package`](https://developer.apple.com/documentation/PackageDescription/Package)
+[PackageDescription](https://developer.apple.com/documentation/packagedescription)
 
 ## Access Levels
 
