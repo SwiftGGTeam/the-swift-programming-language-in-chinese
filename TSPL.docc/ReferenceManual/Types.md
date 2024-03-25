@@ -350,15 +350,18 @@ Function types for functions
 that can throw or rethrow an error must be marked with the `throws` keyword.
 The `throws` keyword is part of a function's type,
 and nonthrowing functions are subtypes of throwing functions.
-<!-- XXX
-A function that throws a concrete error
-is a subtype of one that throws 'any Error'.
+A function that throws a concrete error type
+includes the error type that it throws in its function type.
+If that error type is a subtype,
+then functions that throw the subtype as an error
+are subtypes of functions that throw the supertype as an error.
 
-TR:
-If EE is a subtype of E,
-is a function that throws EE a subtype of one that throws E?
--->
-As a result, you can use a nonthrowing function in the same places as a throwing one.
+As a result, you can use a nonthrowing function
+in the same places as a throwing function,
+you can use a function that throws a concrete error type
+in the same places as a throwing function,
+and you can use a function that throws a more specific concrete error type
+in the same places as a function that throws a more general error type.
 Throwing and rethrowing functions are described in
 <doc:Declarations#Throwing-Functions-and-Methods>
 and <doc:Declarations#Rethrowing-Functions-and-Methods>.

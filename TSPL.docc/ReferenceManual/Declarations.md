@@ -1465,25 +1465,33 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 }
 ```
 
+A function that declares what error type it throws
+has the following form:
+
+```swift
+func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
+   <#statements#>
+}
+```
+
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
 <!-- XXX
-spellings:
-- throws is the same as throws(any Error)
-- throws(Never) is the same as not-throwing
-
 Rule for inferring the thrown error type
 Xref to the guide <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>
 -->
 
-The `throws` keyword is part of a function's type,
-and nonthrowing functions are subtypes of throwing functions.
-<!-- XXX
-Subtyping rule for throws(any Error) vs throws(MyErrorType)
--->
+Writing `throws` without specifying the error type that the function throws
+is the same as writing `throws(any Error)`.
+Writing `throws(Never)` is the same as omitting throws;
+it declares a nonthrowing function.
+
+A functions type includes whether it throws,
+and what type of error it throws.
 As a result, you can use a nonthrowing function
 in a context where a throwing one is expected.
+For more information, see <doc:Types#Throwing-Functions>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
