@@ -1482,11 +1482,6 @@ Rule for inferring the thrown error type
 Xref to the guide <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>
 -->
 
-Writing `throws` without specifying the error type that the function throws
-is the same as writing `throws(any Error)`.
-Writing `throws(Never)` is the same as omitting throws;
-it declares a nonthrowing function.
-
 A functions type includes whether it throws,
 and what type of error it throws.
 As a result, you can use a nonthrowing function

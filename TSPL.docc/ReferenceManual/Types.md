@@ -347,21 +347,34 @@ that is, a function that takes an `Int` and returns
 another function that takes and returns an `Int`.
 
 Function types for functions
-that can throw or rethrow an error must be marked with the `throws` keyword.
-The `throws` keyword is part of a function's type,
-and nonthrowing functions are subtypes of throwing functions.
-A function that throws a concrete error type
-includes the error type that it throws in its function type.
-If that error type is a subtype,
-then functions that throw the subtype as an error
-are subtypes of functions that throw the supertype as an error.
+that can throw or rethrow an error must include the `throws` keyword.
+<!-- XXX TR: Confirm rethrowing functions use 'throws' -->
+You can include a type after `throws` in parentheses
+to specify the type of error that the function throws.
+Writing `throws` without specifying an type
+is the same as writing `throws(any Error)`.
+Omitting `throws` is the same as writing `throws(Never)`.
 
-As a result, you can use a nonthrowing function
-in the same places as a throwing function,
-you can use a function that throws a concrete error type
-in the same places as a throwing function,
-and you can use a function that throws a more specific concrete error type
-in the same places as a function that throws a more general error type.
+The type of error that a function throws is part of that function's type,
+and a subtype relationship between error types
+means the corresponding function types are also subtypes.
+For example, if you declare a custom `MyError` type,
+the relationship between some function types is as follows,
+from supertype to subtype:
+
+1. Functions that throw any error, marked `throws(any Error)`.
+1. Functions that throw a specific error, marked `throws(MyError)`.
+1. Functions that don't throw, marked `throws(Never)`.
+
+As a result of these subtype relationships:
+
+- You can use a nonthrowing function
+  in the same places as a throwing function.
+- You can use a function that throws a concrete error type
+  in the same places as a throwing function.
+- You can use a function that throws a more specific error type
+  in the same places as a function that throws a more general error type.
+
 Throwing and rethrowing functions are described in
 <doc:Declarations#Throwing-Functions-and-Methods>
 and <doc:Declarations#Rethrowing-Functions-and-Methods>.
