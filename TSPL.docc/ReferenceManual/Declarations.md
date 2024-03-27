@@ -1465,8 +1465,7 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 }
 ```
 
-A function that declares what error type it throws
-has the following form:
+A function that throws a specific error type has the following form:
 
 ```swift
 func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
@@ -1482,11 +1481,11 @@ Rule for inferring the thrown error type
 Xref to the guide <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>
 -->
 
-A functions type includes whether it throws,
+A function's type includes whether it can throw an error,
 and what type of error it throws.
-As a result, you can use a nonthrowing function
+This means, for example, you can use a nonthrowing function
 in a context where a throwing one is expected.
-For more information, see <doc:Types#Throwing-Functions>.
+For more information, see <doc:Types#Function-Type>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
