@@ -1476,16 +1476,14 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
-<!-- XXX
-Rule for inferring the thrown error type
-Xref to the guide <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>
--->
-
 A function's type includes whether it can throw an error,
 and what type of error it throws.
 This means, for example, you can use a nonthrowing function
 in a context where a throwing one is expected.
-For more information, see <doc:Types#Function-Type>.
+For more information about the type of a throwing function,
+see <doc:Types#Function-Type>.
+For examples of working with errors that have explicit types,
+see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
