@@ -889,13 +889,31 @@ do throws(<#type#>) {
 }
 ```
 
+<!-- XXX Is "do throws { }" allowed? -->
+
 If the `do` statement includes a `throws` clause,
-the `do` block can throw only errors of the specified type.
-The *type* must be a concrete type that conforms to the `Error` protocol,
+the `do` block can throw errors of only the specified *type*.
+The *type* must be either
+a concrete type that conforms to the `Error` protocol,
 an opaque type that conforms to the `Error` protocol,
 or the boxed protocol type `any Error`.
 If the `do` statement doesn't specify the type of error it throws,
-that type is implied to be `any Error`.
+the error type is inferred as follows:
+
+- If every `throws` statement and `try` expression in the `do` code block
+  is nested inside of an exhaustive error handling mechanism,
+  then the `do` statement is inferred as nonthrowing.
+
+- If the `do` code block contains code that throws
+  errors of only a single type
+  outside of exhaustive error handling,
+  then the `do` statement is inferred as throwing that concrete error type.
+
+- If the `do` code block contains code that throws
+  errors of more than a single type
+  outside of exhaustive error handling,
+  then the `do` statement is inferred as throwing `any Error`.
+
 For more information about working with errors that have explicit types,
 see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
 
