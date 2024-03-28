@@ -376,6 +376,11 @@ As a result of these subtype relationships:
 - You can use a function that throws a more specific error type
   in the same places as a function that throws a more general error type.
 
+If you use an associated type or a generic type parameter
+as the thrown error type in a function type,
+then that associated type or generic type parameter
+is implicitly required to conform to the `Error` protocol.
+
 Throwing and rethrowing functions are described in
 <doc:Declarations#Throwing-Functions-and-Methods>
 and <doc:Declarations#Rethrowing-Functions-and-Methods>.
