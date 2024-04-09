@@ -566,10 +566,14 @@ A type safe language encourages you to be clear about
 the types of values your code can work with.
 If part of your code requires a `String`, you can't pass it an `Int` by mistake.
 
+<!-- XXX define "type safe" in the para above -->
+
 Because Swift is type safe,
 it performs *type checks* when compiling your code
 and flags any mismatched types as errors.
 This enables you to catch and fix errors as early as possible in the development process.
+
+<!-- XXX define "type checks" in the para above -->
 
 Type-checking helps you avoid errors when you're working with different types of values.
 However, this doesn't mean that you have to specify the type of
@@ -1776,6 +1780,32 @@ if let definiteString = assumedString {
      }
   <- An implicitly unwrapped optional string.
   ```
+-->
+
+## Data Safety
+
+XXX OUTLINE XXX
+
+* “Safe” means the compiler verifies, at compile time:
+    - Values are set before being read — no uninitialized data
+    - Arrays and buffers are accessed only at valid indexes — no out-of-bounds access
+    - Memory is accessed only during the value’s lifetime — no use-after-free errors or wild pointers
+    - Access to memory overlaps only in provably safe ways — no races
+* In addition, for programs that use concurrency, XXX
+* When you see APIs whose name starts with “unsafe”
+  this means you take on the responsability for these guarantees
+
+<!-- XXX Borrow terminology from this blog post
+https://www.swift.org/blog/swift-5.10-released/
+
+An increasingly important source of undefined behavior is concurrent code
+that inadvertently accesses memory from one thread
+at the same time that another thread is writing to the same memory.
+This kind of unsafety is called a data race,
+and data races make concurrent programs
+exceptionally difficult to write correctly.
+Swift solves this problem through data isolation provided by actors and tasks,
+which guarantees mutually exclusive access to shared mutable state.
 -->
 
 ## Error Handling
