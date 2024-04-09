@@ -752,6 +752,24 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   ```
 -->
 
+## Protocols Without Requirements
+
+<!-- XXX NOTES
+Some protocols don’t require methods or properties;
+they require some other characteristic to be true on conforming types.
+
+- `Copyable`
+- `Sendable`
+- `BitwiseCopyable`
+
+You conform to these as usual --
+just there’s nothing in the body,
+because there aren’t any requirements to satisfy.
+
+```
+extension struct MyStruct: Codable { }
+-->
+
 ## Protocols as Types
 
 Protocols don't actually implement any functionality themselves.
@@ -1366,6 +1384,42 @@ for level in levels.sorted() {
   !! static func < (lhs: Self, rhs: Self) -> Bool
   !!                 ^
   ```
+-->
+
+## Implicit Conformance to a Protocol
+
+<!-- XXX NOTES
+Some protocols get conformance implicitly if they satisfy the requirements.
+For details on exactly when this is implied,
+see the reference for each type:
+
+- `Codable`
+- `Copyable`
+- `Sendable`
+- `BitwiseCopyale`
+
+Normally,
+the struct in example below would be implicitly codable,
+but this syntax lets you suppress that conformance:
+
+```
+struct MyStruct: ~Codable { var someNumber: Int }
+```
+
+Writing `~Sendable` suppresses implicit sendability.
+In contrast,
+the following suppresses implicit conformance,
+and also prevents you from conforming elsewhere:
+
+```
+@available(*, unavailable) extension X: Sendable {}
+```
+
+This replaces the existing `@available(*, unavailable)` example from the Concurrency chapter for most use cases.
+
+See also the comparison on this forum thread <https://forums.swift.org/t/70525/96>
+
+XREF new section in Generics about `~Foo` syntax in a requirement.
 -->
 
 ## Collections of Protocol Types

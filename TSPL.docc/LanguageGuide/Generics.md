@@ -618,6 +618,18 @@ that requires `T` to be a subclass of `SomeClass`.
 The second type parameter, `U`, has a type constraint
 that requires `U` to conform to the protocol `SomeProtocol`.
 
+<!-- XXX NOTES
+Some constraints are implicit.
+Writing `~Foo` lets you suppress the implicit constraint.
+
+```
+func f<T>(t: T) { /* show copying t -- ok */ }
+func f<T: ~Copyable>(t: T) { /* show copying t -- error */ }
+```
+
+QUESTION: Is there too much detail about when a constraint is inferred to put it all here?
+-->
+
 ### Type Constraints in Action
 
 Here's a nongeneric function called `findIndex(ofString:in:)`,
