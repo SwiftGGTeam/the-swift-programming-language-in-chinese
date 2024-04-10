@@ -1762,8 +1762,8 @@ into code that calls the static methods of the result builder type:
       func draw() -> String { return content }
   }
   struct Line<D: Drawable>: Drawable {
-        var elements: [D]
-        func draw() -> String {
+      var elements: [D]
+      func draw() -> String {
           return elements.map { $0.draw() }.joined(separator: "")
       }
   }
