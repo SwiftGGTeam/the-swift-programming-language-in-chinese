@@ -714,8 +714,9 @@ XXX OUTLINE XXX
 - A boxed protocol (aka existential) type matches the reality of most code.
   At compile time, you don't know every possible way things could go wrong.
   In particular, some errors will come from calling other throwing functions.
+  This is why most code uses a boxed protocol type as its error type.
 
-- In contrast, a concrete error type is useful:
+- In contrast, a concrete error type is useful in some special circumstances:
 
   * When the code that throws errors
     and the code that handles those errors
@@ -726,6 +727,7 @@ XXX OUTLINE XXX
 
   * In code that only rethrows errors,
     especially when the throwing code comes from a closure the caller provided.
+    (However, neither rethrows nor typed throws is a strict superset of the other.)
     Example: `map` in the stdlib.
     Xref to reference section -- this chapter doesn't discuss rethrows
 
@@ -742,6 +744,7 @@ XXX OUTLINE XXX
   this is still "concrete" in sense that
   the errors are all instances of the concrete type
   that's hidden behind the opaque type.
+  And there's still one specific error type.
 
 - To specify the error type for a `do` block or a throwing function,
   write `throws(E)` where `E` is an error type.
@@ -753,8 +756,11 @@ XXX OUTLINE XXX
 
 - For a normal error (of boxed protocol type)
   the `catch` clause needs to either include a general catch/default
+  that handles errors whose types the other clauses don't handle,
   or to propagate the errors it doesn't handle.
-  For a typed error, the catch clause can be exhaustive.
+  For a typed error, the catch clause can be exhaustive
+  without a default clause
+  by handling just that specific error type.
 
 XXX RUNNING EXAMPLE XXX
 

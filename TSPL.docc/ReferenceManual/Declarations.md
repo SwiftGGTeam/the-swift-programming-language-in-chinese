@@ -1594,6 +1594,12 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+<!-- XXX comparison between rethrows and generic typed throws 
+
+func f<E: Error>(closure: () throws(E) -> Int) throws(E) -> Int { ... }
+func g(closure: () throws -> Int) rethrows -> Int { ... }
+-->
+
 ### Asynchronous Functions and Methods
 
 Functions and methods that run asynchronously must be marked with the `async` keyword.
