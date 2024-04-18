@@ -699,46 +699,123 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   ```
 -->
 
-## Specifying a Concrete Error Type
+## Specifying the Error Type
 
-XXX OUTLINE XXX
+All of the examples above use the most common kind of error handling,
+where the errors that your code throws
+can be values of any type that conforms to the `Error` protocol.
+This approach matches the reality that
+you don't know ahead of time every error that could happen
+while the code is running,
+especially when propagating errors thrown by code you didn't write.
+New versions of a library can throw new errors ---
+including libraries used by your dependencies ---
+and the rich complexity of real-world user configurations
+can expose failure modes that weren't visible during development or testing.
+The error handling code in the examples above
+always includes a default case to handle errors
+that don't have their own specific `catch` clause.
+
+However,
+some code throws error of only a specific type,
+so it's useful to specify that type.
+
+- When you encapsulate errors within some unit of code,
+  like a library,
+  if using a specific error type is useful for you.
+  In this case,
+  the library always handles all of its own errors.
+  This kind of error is an implementation detail of the library.
+
+- When targeting an embedded system
+  where dynamic allocation of memory isn't possible.
+  Swift needs to allocate memory at run time
+  when throwing an instance `any Error` or other boxed protocol types.
+
+- When you throw errors from code that
+  doesn't depend on any other throwing code,
+  and throws only its own errors.
+  <!-- XXX This also feels like "implementation detail errors" -->
+  <!-- XXX TR: Does this include not depending on the stdlib? -->
+
+- When you rethrow errors,
+  if you want to preserve the error type.
+  <!-- XXX TR: Need to motivate why you'd use rethrow vs throws(T) -->
+
+For example,
+consider code that summarizes ratings
+and uses the following error type:
+
+```swift
+enum StatisticsError: Error {
+    case noRatings
+    case invalidRating(Int)
+}
+```
+
+To specify that a function throws only `StatisticsError`
+you write `throws(StatisticsError)` when declaring the function.
+Because you write a type after `throws`
+this syntax is also called *typed throws*.
+
+```swift
+func summarize(_ ratings: [Int]) throws(StatisticsError) {
+    guard !ratings.isEmpty else { throw .noRatings }
+
+    var counts = [1: 0, 2: 0, 3: 0]
+    for rating in ratings {
+        guard rating > 0 && rating <= 3 else { throw .invalidRating(rating) }
+        counts[rating]! += 1
+    }
+
+    print("One star:", counts[1]!)
+    print("Two stars:", counts[2]!)
+    print("Three stars:", counts[3]!)
+
+    print("*", counts[1]!, "-- **", counts[2]!, "-- ***", counts[3]!)
+}
+```
+
+<!-- XXX pick one flavor of summary above -->
+
+When you write a specific error type,
+Swift checks at compile time that you don't throw any other errors.
+
+
+Code that throws a single specific error type
+doesn't include the default `catch` clause ---
+instead, Swift verifies that every possible error value
+has a corresponding `catch` clause.
+
+```swift
+func printSummary(_ ratings: [Int]) {
+    do throws(StatisticsError) {
+        try summarize(ratings)
+    } catch {
+        switch error {
+        case .noRatings:
+            print("No ratings available")
+        case .invalidRating(let rating):
+            print("Invalid rating: \(rating)")
+        }
+    }
+}
+```
+
+## XXX OUTLINE XXX
 
 - Most code that throws errors just writes `throws`.
   This is the same as writing `throws(any Error)`.
   However, you can write `throws(SomeErrorType)`
   to throw errors of a specific concrete type.
 
-- Because you write a type after `throws`
-  this syntax is also called "typed throws".
-
-- A boxed protocol (aka existential) type matches the reality of most code.
-  At compile time, you don't know every possible way things could go wrong.
-  In particular, some errors will come from calling other throwing functions.
-  This is why most code uses a boxed protocol type as its error type.
-
 - In contrast, a concrete error type is useful in some special circumstances:
-
-  * When the code that throws errors
-    and the code that handles those errors
-    are all part of the same larger unit,
-    like a package or module or library.
-    These errors are an implementation detail
-    that users of the library don't see or recover from.
 
   * In code that only rethrows errors,
     especially when the throwing code comes from a closure the caller provided.
     (However, neither rethrows nor typed throws is a strict superset of the other.)
     Example: `map` in the stdlib.
     Xref to reference section -- this chapter doesn't discuss rethrows
-
-  * In an environment where runtime memory allocation isn't possible,
-    like a constrained embedded system.
-    Throwing an instance of `any Error` requires allocation.
-    The type isn't known at compile time -- allocation happens at run time.
-    (Aside: The performance cost of allocation is small.)
-
-  * In code that has no dependencies, and only ever throws its own errors.
-    TR: Does this include not depending on the stdlib?
 
 - You can also use opaque types like `throws(some MyErrorProtocol)` --
   this is still "concrete" in sense that
@@ -765,40 +842,6 @@ XXX OUTLINE XXX
 XXX RUNNING EXAMPLE XXX
 
 ```swift
-enum StatisticsError: Error {
-    case noRatings
-    case invalidRating(Int)
-}
-
-func summarize(_ ratings: [Int]) throws(StatisticsError) {
-    guard !ratings.isEmpty else { throw .noRatings }
-
-    var counts = [1: 0, 2: 0, 3: 0]
-    for rating in ratings {
-        guard rating > 0 && rating <= 3 else { throw .invalidRating(rating) }
-        counts[rating]! += 1
-    }
-
-    print("One star:", counts[1]!)
-    print("Two stars:", counts[2]!)
-    print("Three stars:", counts[3]!)
-
-    print("*", counts[1]!, "-- **", counts[2]!, "-- ***", counts[3]!)
-}
-
-func printSummary(_ ratings: [Int]) {
-    do throws(StatisticsError) {
-        try summarize(ratings)
-    } catch {
-        switch error {
-        case .noRatings:
-            print("No ratings available")
-        case .invalidRating(let rating):
-            print("Invalid rating: \(rating)")
-        }
-    }
-}
-
 printSummary([1, 2, 3, 2, 2, 1])
 printSummary([])
 printSummary([1, 100])
