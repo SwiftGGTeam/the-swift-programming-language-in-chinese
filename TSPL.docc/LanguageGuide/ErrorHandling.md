@@ -707,7 +707,8 @@ can be values of any type that conforms to the `Error` protocol.
 This approach matches the reality that
 you don't know ahead of time every error that could happen
 while the code is running,
-especially when propagating errors thrown by code you didn't write.
+especially when propagating errors thrown somewhere else.
+This approach also reflects the fact that errors can change over time.
 New versions of a library can throw new errors ---
 including libraries used by your dependencies ---
 and the rich complexity of real-world user configurations
@@ -716,21 +717,48 @@ The error handling code in the examples above
 always includes a default case to handle errors
 that don't have their own specific `catch` clause.
 
-However,
-some code throws error of only a specific type,
-so it's useful to specify that type.
+In some special cases,
+you might write code that's specific about what error it throws:
 
-- When you encapsulate errors within some unit of code,
-  like a library,
-  if using a specific error type is useful for you.
-  In this case,
-  the library always handles all of its own errors.
-  This kind of error is an implementation detail of the library.
-
-- When targeting an embedded system
+- When running code on an embedded system
   where dynamic allocation of memory isn't possible.
-  Swift needs to allocate memory at run time
-  when throwing an instance `any Error` or other boxed protocol types.
+  Throwing an instance `any Error` or another boxed protocol type
+  requires allocating memory at run time to store the error.
+  Throwing an error of a specific type instead
+  lets Swift allocate that memory upfront.
+
+- When the errors are an implementation detail of a library,
+  or some other unit of code,
+  and aren't part of the interface to that code.
+  Because only the library's code throws errors ---
+  it doesn't propagate errors from other code ---
+  you can make an exhaustive list of all possible failures.
+  And because the library always handles its own errors,
+
+  
+  Because all of these errors are thrown within the library's code,
+  and they're always handled within that library.
+  Because 
+  Because the library's clients never see the errors,
+  ◊ the API surface expressively limitations don't matter
+
+- 
+  * In code that only rethrows errors,
+    especially when the throwing code comes from a closure the caller provided.
+    (However, neither rethrows nor typed throws is a strict superset of the other.)
+    Example: `map` in the stdlib.
+    Xref to reference section -- this chapter doesn't discuss rethrows
+
+
+In most code,
+you don't specify the type for the errors it throws,
+implicitly throwing an error of type `any Error`
+However,
+Swift also supports 
+some code only throws errors of a specific type.
+in some places your code only throws
+you might need to write code that throws errors of only a specific type,
+so it's useful to specify that type.
 
 - When you throw errors from code that
   doesn't depend on any other throwing code,
@@ -754,9 +782,10 @@ enum StatisticsError: Error {
 ```
 
 To specify that a function throws only `StatisticsError`
-you write `throws(StatisticsError)` when declaring the function.
-Because you write a type after `throws`
-this syntax is also called *typed throws*.
+you write `throws(StatisticsError)` when declaring the function,
+instead of just writing `throws`.
+This syntax is also called *typed throws*
+because you write the error type after `throws` --- for example:
 
 ```swift
 func summarize(_ ratings: [Int]) throws(StatisticsError) {
@@ -768,68 +797,81 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
         counts[rating]! += 1
     }
 
-    print("One star:", counts[1]!)
-    print("Two stars:", counts[2]!)
-    print("Three stars:", counts[3]!)
-
     print("*", counts[1]!, "-- **", counts[2]!, "-- ***", counts[3]!)
 }
 ```
 
-<!-- XXX pick one flavor of summary above -->
+In the code above,
+the `summarize(_:)` function summarizes a list of ratings
+expressed on a scale of 1 to 3.
+This function throws an instance of `StatisticsError` if the input isn't valid.
 
-When you write a specific error type,
-Swift checks at compile time that you don't throw any other errors.
+You can use the shorthand notation `throw .noRatings`
+instead of writing `throw StatisticsError.noRatings`
+because the function's error type is already defined.
 
 
-Code that throws a single specific error type
-doesn't include the default `catch` clause ---
-instead, Swift verifies that every possible error value
-has a corresponding `catch` clause.
-
-```swift
-func printSummary(_ ratings: [Int]) {
-    do throws(StatisticsError) {
-        try summarize(ratings)
-    } catch {
-        switch error {
-        case .noRatings:
-            print("No ratings available")
-        case .invalidRating(let rating):
-            print("Invalid rating: \(rating)")
-        }
-    }
-}
-```
-
-## XXX OUTLINE XXX
-
+◊ throws(StatisticsError) is a subtype of throws(any Error)
+◊ so you can write `try summarize(...)` in a plain `throwing` context too
 - Most code that throws errors just writes `throws`.
   This is the same as writing `throws(any Error)`.
   However, you can write `throws(SomeErrorType)`
   to throw errors of a specific concrete type.
 
-- In contrast, a concrete error type is useful in some special circumstances:
 
-  * In code that only rethrows errors,
-    especially when the throwing code comes from a closure the caller provided.
-    (However, neither rethrows nor typed throws is a strict superset of the other.)
-    Example: `map` in the stdlib.
-    Xref to reference section -- this chapter doesn't discuss rethrows
+
+When you write a specific error type,
+Swift checks that you don't throw any other errors.
+For example,
+if you tried to use `VendingMachineError` from examples earlier in this chapter
+in the `summarize(_:)` function above,
+that code would produce an error at compile time.
+
+◊ rewrite
+Code that throws a single specific error type
+doesn't need to include the default `catch` clause ---
+instead, Swift verifies that every possible error value
+has a corresponding `catch` clause.
+
+
+
+
+In addition to specifying the error type for a function,
+you can also write a specific error type
+in a `do`-`catch` block.
+For example:
+
+```swift
+let ratings = [1, 2, 3, 2, 2, 1]
+do throws(StatisticsError) {
+    try summarize(ratings)
+} catch {
+    switch error {
+    case .noRatings:
+        print("No ratings available")
+    case .invalidRating(let rating):
+        print("Invalid rating: \(rating)")
+    }
+}
+// Prints XXX
+```
+
+In this code, XXX
+
+
+XXX
+If a function or `do` block throws only errors of a single type,
+the compiler infers that as the concrete error type.
+You can explicitly write `throws(any Error)` to suppress that.
+
+
+## XXX OUTLINE XXX
 
 - You can also use opaque types like `throws(some MyErrorProtocol)` --
   this is still "concrete" in sense that
   the errors are all instances of the concrete type
   that's hidden behind the opaque type.
   And there's still one specific error type.
-
-- To specify the error type for a `do` block or a throwing function,
-  write `throws(E)` where `E` is an error type.
-  For example -- insert `summarize` from RUNNING EXAMPLE below.
-
-- If a function or `do` block throws only errors of a single type,
-  the compiler infers that as the concrete error type.
-  You can explicitly write `throws(any Error)` to suppress that.
 
 - For a normal error (of boxed protocol type)
   the `catch` clause needs to either include a general catch/default
@@ -838,14 +880,6 @@ func printSummary(_ ratings: [Int]) {
   For a typed error, the catch clause can be exhaustive
   without a default clause
   by handling just that specific error type.
-
-XXX RUNNING EXAMPLE XXX
-
-```swift
-printSummary([1, 2, 3, 2, 2, 1])
-printSummary([])
-printSummary([1, 100])
-```
 
 ## Specifying Cleanup Actions
 
