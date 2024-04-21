@@ -717,58 +717,33 @@ The error handling code in the examples above
 always includes a default case to handle errors
 that don't have their own specific `catch` clause.
 
-In some special cases,
-you might write code that's specific about what error it throws:
+Most Swift code doesn't specify the type for the errors it throws.
+However,
+in some special cases,
+you might limit code to throwing errors of only one specific type:
 
 - When running code on an embedded system
-  where dynamic allocation of memory isn't possible.
+  that doesn't support dynamic allocation of memory.
   Throwing an instance `any Error` or another boxed protocol type
-  requires allocating memory at run time to store the error.
-  Throwing an error of a specific type instead
-  lets Swift allocate that memory upfront.
+  requires allocating memory at runtime to store the error.
+  Throwing an error of a specific type
+  lets Swift allocate that memory upfront instead.
 
-- When the errors are an implementation detail of a library,
-  or some other unit of code,
+- When the errors are used only within some unit of code,
+  like a library,
   and aren't part of the interface to that code.
-  Because only the library's code throws errors ---
-  it doesn't propagate errors from other code ---
+  Because the errors come only from the library,
+  and not from other dependencies or the library's clients,
   you can make an exhaustive list of all possible failures.
-  And because the library always handles its own errors,
-
-  
-  Because all of these errors are thrown within the library's code,
+  And because these errors are an implementation detail of the library,
   and they're always handled within that library.
-  Because 
-  Because the library's clients never see the errors,
-  ◊ the API surface expressively limitations don't matter
 
-- 
-  * In code that only rethrows errors,
-    especially when the throwing code comes from a closure the caller provided.
-    (However, neither rethrows nor typed throws is a strict superset of the other.)
-    Example: `map` in the stdlib.
-    Xref to reference section -- this chapter doesn't discuss rethrows
-
-
-In most code,
-you don't specify the type for the errors it throws,
-implicitly throwing an error of type `any Error`
-However,
-Swift also supports 
-some code only throws errors of a specific type.
-in some places your code only throws
-you might need to write code that throws errors of only a specific type,
-so it's useful to specify that type.
-
-- When you throw errors from code that
-  doesn't depend on any other throwing code,
-  and throws only its own errors.
-  <!-- XXX This also feels like "implementation detail errors" -->
-  <!-- XXX TR: Does this include not depending on the stdlib? -->
-
-- When you rethrow errors,
-  if you want to preserve the error type.
-  <!-- XXX TR: Need to motivate why you'd use rethrow vs throws(T) -->
+- In code that only throws errors that were thrown elsewhere,
+  like a function that takes a closure argument
+  and propagates any errors from that closure.
+  For a comparison between `rethrows`
+  and throwing a specific, generic, error type
+  see <doc:Declarations:Rethrowing-Functions-and-Methods>.
 
 For example,
 consider code that summarizes ratings
@@ -781,7 +756,7 @@ enum StatisticsError: Error {
 }
 ```
 
-To specify that a function throws only `StatisticsError`
+To specify that a function throws only `StatisticsError` values as its errors
 you write `throws(StatisticsError)` when declaring the function,
 instead of just writing `throws`.
 This syntax is also called *typed throws*
@@ -805,44 +780,54 @@ In the code above,
 the `summarize(_:)` function summarizes a list of ratings
 expressed on a scale of 1 to 3.
 This function throws an instance of `StatisticsError` if the input isn't valid.
-
-You can use the shorthand notation `throw .noRatings`
-instead of writing `throw StatisticsError.noRatings`
+Both places in the code above that throw an error
+omit the type of the error
 because the function's error type is already defined.
+You can use the short form like `throw .noRatings`
+instead of writing `throw StatisticsError.noRatings`
+when throwing an error in a function like this.
 
-
-◊ throws(StatisticsError) is a subtype of throws(any Error)
-◊ so you can write `try summarize(...)` in a plain `throwing` context too
-- Most code that throws errors just writes `throws`.
-  This is the same as writing `throws(any Error)`.
-  However, you can write `throws(SomeErrorType)`
-  to throw errors of a specific concrete type.
-
-
-
-When you write a specific error type,
+When you write a specific error type at the start of the function,
 Swift checks that you don't throw any other errors.
 For example,
 if you tried to use `VendingMachineError` from examples earlier in this chapter
 in the `summarize(_:)` function above,
 that code would produce an error at compile time.
 
-◊ rewrite
-Code that throws a single specific error type
-doesn't need to include the default `catch` clause ---
-instead, Swift verifies that every possible error value
-has a corresponding `catch` clause.
+You can call a function that uses typed throws
+from within a regular throwing function:
 
+```swift
+func someThrowingFunction() -> throws {
+    let ratings = [1, 2, 3, 2, 2, 1]
+    try summarize(ratings)
+}
+```
 
+The code above doesn't specify an error type for `someThrowingFunction()`,
+so it throws `any Error`.
+You could also write the error type explicitly as `throws(any Error)` ---
+the code below is equivalent to the code above:
 
+```swift
+func someThrowingFunction() -> throws(any Error) {
+    let ratings = [1, 2, 3, 2, 2, 1]
+    try summarize(ratings)
+}
+```
 
-In addition to specifying the error type for a function,
-you can also write a specific error type
-in a `do`-`catch` block.
+In this code,
+`someThrowingFunction()` propagates any errors that `summarize(_:)` throws.
+The errors from `summarize(_:)` are always `StatisticsError` values,
+which is also a valid error for `someThrowingFunction()` to throw.
+<!-- XXX Expand on subtyping here? -->
+
+In addition to specifying a function's error type,
+you can also write a specific error type for a `do`-`catch` statement.
 For example:
 
 ```swift
-let ratings = [1, 2, 3, 2, 2, 1]
+let ratings = []
 do throws(StatisticsError) {
     try summarize(ratings)
 } catch {
@@ -853,33 +838,60 @@ do throws(StatisticsError) {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints XXX
+// Prints "No ratings available"
 ```
 
-In this code, XXX
+In this code,
+writing `do throws(StatisticsError)` indicates that
+the `do`-`catch` statement throws `StatisticsError` values as its errors.
+Like other `do`-`catch` statements,
+the `catch` clause can either handle every possible error,
+or it can propagate unhandled errors for some surrounding scope to handle.
+Here, it handles all of the errors,
+using a switch with one case for each enumeration value.
+Like other `catch` clauses that don't have a pattern,
+the clause matches any error
+and binds the error to a local constant named `error`.
+Because the `do`-`catch` statement throws `StatisticsError` values,
+`error` is a value of type `StatisticsError`.
 
+<!-- XXX show multiple catch clauses with different patterns? -->
 
-XXX
+The `catch` clause above uses a switch
+to match and handle each possible error.
+If you tried to add a new case to `StatisticsError`
+without updating the error-handling code,
+Swift would give you an error
+because the switch wouldn't be exhaustive anymore.
+For a library that catches all of its own errors,
+you could use this approach to ensure any new errors
+get corresponding new code to handle them.
+
 If a function or `do` block throws only errors of a single type,
-the compiler infers that as the concrete error type.
-You can explicitly write `throws(any Error)` to suppress that.
+Swift infers that this code is using typed throws.
+Using this shorter syntax,
+you could write the `do`-`catch` example above as follows:
 
+```swift
+let ratings = []
+do {
+    try summarize(ratings)
+} catch {
+    switch error {
+    case .noRatings:
+        print("No ratings available")
+    case .invalidRating(let rating):
+        print("Invalid rating: \(rating)")
+    }
+}
+// Prints "No ratings available"
+```
 
-## XXX OUTLINE XXX
-
-- You can also use opaque types like `throws(some MyErrorProtocol)` --
-  this is still "concrete" in sense that
-  the errors are all instances of the concrete type
-  that's hidden behind the opaque type.
-  And there's still one specific error type.
-
-- For a normal error (of boxed protocol type)
-  the `catch` clause needs to either include a general catch/default
-  that handles errors whose types the other clauses don't handle,
-  or to propagate the errors it doesn't handle.
-  For a typed error, the catch clause can be exhaustive
-  without a default clause
-  by handling just that specific error type.
+Even though the `do`-`catch` block above
+doesn't specify what type of error it throws,
+it's still understood as throwing `StatisticsError`.
+You can explicitly write `throws(any Error)`
+to avoid letting Swift infer typed throws.
 
 ## Specifying Cleanup Actions
 

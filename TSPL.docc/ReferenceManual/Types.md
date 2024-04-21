@@ -355,6 +355,9 @@ The throw error type must conform to the `Error` protocol.
 Writing `throws` without specifying an type
 is the same as writing `throws(any Error)`.
 Omitting `throws` is the same as writing `throws(Never)`.
+The error type that a function throws
+can be any type that conforms to `Error`,
+including generic types, boxed protocol types, and opaque types.
 
 The type of error that a function throws is part of that function's type,
 and a subtype relationship between error types

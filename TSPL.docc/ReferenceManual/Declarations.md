@@ -1598,6 +1598,8 @@ and a rethrowing method can satisfy a protocol requirement for a throwing method
 
 func f<E: Error>(closure: () throws(E) -> Int) throws(E) -> Int { ... }
 func g(closure: () throws -> Int) rethrows -> Int { ... }
+
+map() from the stdlib is another example
 -->
 
 ### Asynchronous Functions and Methods
