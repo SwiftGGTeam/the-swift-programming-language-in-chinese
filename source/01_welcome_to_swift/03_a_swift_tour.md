@@ -151,7 +151,7 @@ let informalGreeting = "Hi \(nickName ?? fullName)"
 你还可以使用较短的代码解包一个值，并且对该被包装值使用相同的名称。
 
 ```swift
-if let nickname {
+if let nickName {
 	print("Hey, \(nickName)")
 }
 ```
