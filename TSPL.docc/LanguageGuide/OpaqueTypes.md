@@ -1,4 +1,4 @@
-# Opaque and Boxed Types
+# Opaque and Boxed Protocol Types
 
 Hide implementation details about a value's type.
 
