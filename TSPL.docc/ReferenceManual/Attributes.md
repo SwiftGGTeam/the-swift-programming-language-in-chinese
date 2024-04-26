@@ -938,7 +938,7 @@ The compiler is allowed to replace calls to an inlinable symbol
 with a copy of the symbol's implementation at the call site.
 
 Inlinable code
-can interact with `public` symbols declared in any module,
+can interact with `open` and `public` symbols declared in any module,
 and it can interact with `internal` symbols
 declared in the same module
 that are marked with the `usableFromInline` attribute.

@@ -384,6 +384,7 @@ so they must be escaped with backticks in that context.
   `nonmutating`,
   `optional`,
   `override`,
+  `package`,
   `postfix`,
   `precedence`,
   `prefix`,

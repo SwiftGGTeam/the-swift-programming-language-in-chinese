@@ -23,9 +23,10 @@ you may not need to specify explicit access control levels at all.
 > (properties, types, functions, and so on)
 > are referred to as “entities” in the sections below, for brevity.
 
-## Modules and Source Files
+## Modules, Source Files, and Packages
 
-Swift's access control model is based on the concept of modules and source files.
+Swift's access control model is based on the concept of
+modules, source files, and packages.
 
 A *module* is a single unit of code distribution ---
 a framework or application that's built and shipped as a single unit
@@ -44,17 +45,36 @@ A *source file* is a single Swift source code file within a module
 Although it's common to define individual types in separate source files,
 a single source file can contain definitions for multiple types, functions, and so on.
 
+A *package* is a group of modules that you develop as a unit.
+You define the modules that form a package
+as part of configuring the build system you're using,
+not as part of your Swift source code.
+For example, if you use Swift Package Manager to build your code,
+you define a package in your `Package.swift` file
+using APIs from the [PackageDescription][] module,
+and if you use Xcode, you specify the package name
+in the Package Access Identifier build setting.
+
+[PackageDescription](https://developer.apple.com/documentation/packagedescription)
+
 ## Access Levels
 
-Swift provides five different *access levels* for entities within your code.
+Swift provides six different *access levels* for entities within your code.
 These access levels are relative to the source file in which an entity is defined,
-and also relative to the module that source file belongs to.
+the module that source file belongs to,
+and the package that the module belongs to.
 
 - *Open access* and *public access*
   enable entities to be used within any source file from their defining module,
   and also in a source file from another module that imports the defining module.
   You typically use open or public access when specifying the public interface to a framework.
   The difference between open and public access is described below.
+- *Package access*
+  enables entities to be used within
+  any source files from their defining package
+  but not in any source file outside of that package.
+  You typically use package access
+  within an app or framework that's structured into multiple modules.
 - *Internal access*
   enables entities to be used within any source file from their defining module,
   but not in any source file outside of that module.
@@ -790,14 +810,15 @@ the constant, variable, property, or subscript they belong to.
 You can give a setter a *lower* access level than its corresponding getter,
 to restrict the read-write scope of that variable, property, or subscript.
 You assign a lower access level by writing
-`fileprivate(set)`, `private(set)`, or `internal(set)`
+`fileprivate(set)`, `private(set)`, `internal(set)`, or `package(set)`
 before the `var` or `subscript` introducer.
 
 > Note: This rule applies to stored properties as well as computed properties.
 > Even though you don't write an explicit getter and setter for a stored property,
 > Swift still synthesizes an implicit getter and setter for you
 > to provide access to the stored property's backing storage.
-> Use `fileprivate(set)`, `private(set)`, and `internal(set)` to change the access level
+> Use `fileprivate(set)`, `private(set)`, `internal(set)`, and `package(set)`
+> to change the access level
 > of this synthesized setter in exactly the same way as for an explicit setter
 > in a computed property.
 

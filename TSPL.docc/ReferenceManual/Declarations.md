@@ -3879,6 +3879,18 @@ Access control is discussed in detail in <doc:AccessControl>.
   Declarations marked with the `public` access-level modifier can also be accessed (but not subclassed)
   by code in a module that imports the module that contains that declaration.
 
+- term `package`:
+  Apply this modifier to a declaration
+  to indicate that the declaration can be accessed
+  only by code in the same package as the declaration.
+  A package is a unit of code distribution
+  that you define in the build system you're using.
+  When the build system compiles code,
+  it specifies the package name
+  by passing the `-package-name` flag to the Swift compiler.
+  Two modules are part of the same package
+  if the build system specifies the same package name when building them.
+
 - term `internal`:
   Apply this modifier to a declaration to indicate the declaration can be accessed
   only by code in the same module as the declaration.
@@ -3921,6 +3933,7 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 > *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`package`** | **`package`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`open`** | **`open`** **`(`** **`set`** **`)`**
 >
