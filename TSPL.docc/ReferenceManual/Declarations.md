@@ -3886,7 +3886,7 @@ Access control is discussed in detail in <doc:AccessControl>.
   it specifies the package name
   by passing the `-package-name` flag to the Swift compiler.
   Two modules are part of the same package
-  if the build system specifies the same package name when building them both.
+  if the build system specifies the same package name when building them.
 
 - term `internal`:
   Apply this modifier to a declaration to indicate the declaration can be accessed

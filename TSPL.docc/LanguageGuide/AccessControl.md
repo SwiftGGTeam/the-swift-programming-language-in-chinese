@@ -71,7 +71,7 @@ and the package that the module belongs to.
   The difference between open and public access is described below.
 - *Package access*
   enables entities to be used within
-  any source files from their defining package,
+  any source files from their defining package
   but not in any source file outside of that package.
   You typically use package access
   within an app or framework that's structured into multiple modules.
