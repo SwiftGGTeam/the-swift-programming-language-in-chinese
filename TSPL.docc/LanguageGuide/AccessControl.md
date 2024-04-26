@@ -51,8 +51,8 @@ as part of configuring the build system you're using,
 not as part of your Swift source code.
 For example, if you use Swift Package Manager to build your code,
 you define a package in your `Package.swift` file
-using APIs from the [PackageDescription][] module;
-if you use Xcode, you specify the package name
+using APIs from the [PackageDescription][] module,
+and if you use Xcode, you specify the package name
 in the Package Access Identifier build setting.
 
 [PackageDescription](https://developer.apple.com/documentation/packagedescription)
