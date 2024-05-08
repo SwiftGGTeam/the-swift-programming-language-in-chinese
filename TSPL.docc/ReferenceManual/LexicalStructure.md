@@ -247,7 +247,9 @@ so they must be escaped with backticks in that context.
 
 - Keywords used in declarations:
   `associatedtype`,
+  `borrowing`,
   `class`,
+  `consuming`,
   `deinit`,
   `enum`,
   `extension`,
