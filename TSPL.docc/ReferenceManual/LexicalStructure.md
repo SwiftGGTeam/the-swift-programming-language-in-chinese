@@ -260,6 +260,7 @@ so they must be escaped with backticks in that context.
   `inout`,
   `internal`,
   `let`,
+  `nonisolated`,
   `open`,
   `operator`,
   `private`,
