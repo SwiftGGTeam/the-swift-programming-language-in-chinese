@@ -18,26 +18,26 @@ with each core carrying out one of the tasks.
 A program that uses parallel and asynchronous code
 carries out multiple operations at a time,
 and it suspends operations that are waiting for an external system.
+The rest of this chapter uses the term *concurrency*
+to refer to this common combination of asynchronous and parallel code.
 
 The additional scheduling flexibility from parallel or asynchronous code
 also comes with a cost of increased complexity.
-Swift lets you express your intent
-in a way that enables some compile-time checking ---
-for example, you can use actors to safely access mutable state.
-However, adding concurrency to slow or buggy code
-isn't a guarantee that it will become fast or correct.
-In fact, adding concurrency might even make your code harder to debug.
-However, using Swift's language-level support for concurrency
-in code that needs to be concurrent
-means Swift can help you catch problems at compile time.
+When you write concurrent code,
+you don't know ahead of time what code will run at the same time,
+and you might not always know the order that code will run.
+A common problem in concurrent code happens
+when multiple pieces of code try to access
+some piece of shared mutable state —
+this is known as a *data race*.
+When you use the language-level support for concurrency,
+Swift detects data races at compile time.
+<!-- XXX in some cases, it has to detect them at run time -->
 
 <!-- XXX OUTLINE
 Summarize the safety guarantees we make for concurrent code.
 Forward reference the new section below
 -->
-
-The rest of this chapter uses the term *concurrency*
-to refer to this common combination of asynchronous and parallel code.
 
 > Note: If you've written concurrent code before,
 > you might be used to working with threads.
@@ -1170,13 +1170,6 @@ you'll get compile-time error instead of introducing a bug.
 
    - you can't write to a property directly from outside the actor
 
-   TODO: Either define "data race" or use a different term;
-   the chapter on exclusive ownership talks about "conflicting access",
-   which is related, but different.
-   Konrad defines "data race" as concurrent access to shared state,
-   noting that our current design doesn't prevent all race conditions
-   because suspension points allow for interleaving.
-
    - The same actor method can be called multiple times, overlapping itself.
    This is sometimes referred to as *reentrant code*.
    The behavior is defined and safe... but might have unexpected results.
@@ -1440,7 +1433,7 @@ preventing the type from being sendable.
 
 XXX OUTLINE XXX
 
-* Definition of data race
+* As you're writing code, you might see errors about data races
 
 * Data race triangle
   Overlapping access to shared mutable data
