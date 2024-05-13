@@ -1367,32 +1367,27 @@ that meets the criteria to be implicitly sendable.
 However, the extension makes its conformance to `Sendable` unavailable,
 preventing the type from being sendable.
 
-<!--
-  OUTLINE
-  .. _Concurrency_MainActor:
+## The Main Actor
 
-  The Main Actor
-  ~~~~~~~~~~~~~~
+XXX OUTLINE:
 
+- the main actor is kinda-sorta like the main thread
 
-  - the main actor is kinda-sorta like the main thread
-
-  - use it when you have shared mutable state,
+- use it when you have shared mutable state,
   but that state isn't neatly wrapped up in a single type
 
-  - you can put it on a function,
+- you can put it on a function,
   which makes calls to the function always run on the main actor
 
-  - you can put it on a type,
+- you can put it on a type,
   which makes calls to all of the type's methods run on the main actor
 
-  - some property wrappers like ``@EnvironmentObject`` from SwiftUI
-  imply ``@MainActor`` on a type.
-  Check for a ``wrappedValue`` that's marked ``@MainActor``.
+- some property wrappers like `@EnvironmentObject` from SwiftUI
+  imply `@MainActor` on a type.
+  Check for a `wrappedValue` that's marked `@MainActor`.
   If you mark the property of a type with one of these implicit-main-actor properties,
-  that has the same effect as marking the type with ``@MainActor``
+  that has the same effect as marking the type with `@MainActor`
   you can wait for each child of a task
--->
 
 <!--
   LEFTOVER OUTLINE BITS
