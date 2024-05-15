@@ -893,7 +893,7 @@ do throws(<#type#>) {
 
 If the `do` statement includes a `throws` clause,
 the `do` block can throw errors of only the specified *type*.
-The *type* must be either
+The *type* must be
 a concrete type that conforms to the `Error` protocol,
 an opaque type that conforms to the `Error` protocol,
 or the boxed protocol type `any Error`.
@@ -901,7 +901,7 @@ If the `do` statement doesn't specify the type of error it throws,
 the error type is inferred as follows:
 
 - If every `throws` statement and `try` expression in the `do` code block
-  is nested inside of an exhaustive error handling mechanism,
+  is nested inside of an exhaustive error-handling mechanism,
   then the `do` statement is inferred as nonthrowing.
 
 - If the `do` code block contains code that throws

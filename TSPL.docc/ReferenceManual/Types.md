@@ -352,7 +352,7 @@ that can throw or rethrow an error must include the `throws` keyword.
 You can include a type after `throws` in parentheses
 to specify the type of error that the function throws.
 The throw error type must conform to the `Error` protocol.
-Writing `throws` without specifying an type
+Writing `throws` without specifying a type
 is the same as writing `throws(any Error)`.
 Omitting `throws` is the same as writing `throws(Never)`.
 The error type that a function throws
@@ -366,9 +366,9 @@ For example, if you declare a custom `MyError` type,
 the relationship between some function types is as follows,
 from supertype to subtype:
 
-1. Functions that throw any error, marked `throws(any Error)`.
-1. Functions that throw a specific error, marked `throws(MyError)`.
-1. Functions that don't throw, marked `throws(Never)`.
+1. Functions that throw any error, marked `throws(any Error)`
+1. Functions that throw a specific error, marked `throws(MyError)`
+1. Functions that don't throw, marked `throws(Never)`
 
 As a result of these subtype relationships:
 

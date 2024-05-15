@@ -709,40 +709,42 @@ you don't know ahead of time every error that could happen
 while the code is running,
 especially when propagating errors thrown somewhere else.
 This approach also reflects the fact that errors can change over time.
-New versions of a library can throw new errors ---
-including libraries used by your dependencies ---
+New versions of a library ---
+including libraries that your dependencies use ---
+can throw new errors,
 and the rich complexity of real-world user configurations
 can expose failure modes that weren't visible during development or testing.
 The error handling code in the examples above
 always includes a default case to handle errors
-that don't have their own specific `catch` clause.
+that don't have a specific `catch` clause.
 
 Most Swift code doesn't specify the type for the errors it throws.
 However,
-in some special cases,
-you might limit code to throwing errors of only one specific type:
+you might limit code to throwing errors of only one specific type
+in the following special cases:
 
 - When running code on an embedded system
   that doesn't support dynamic allocation of memory.
-  Throwing an instance `any Error` or another boxed protocol type
+  Throwing an instance of `any Error` or another boxed protocol type
   requires allocating memory at runtime to store the error.
-  Throwing an error of a specific type
-  lets Swift allocate that memory upfront instead.
+  In contrast,
+  throwing an error of a specific type
+  lets Swift allocate that memory upfront.
 
-- When the errors are used only within some unit of code,
+- When the errors are an implementation detail of some unit of code,
   like a library,
   and aren't part of the interface to that code.
-  Because the errors come only from the library,
+  Because the errors come from only the library,
   and not from other dependencies or the library's clients,
   you can make an exhaustive list of all possible failures.
   And because these errors are an implementation detail of the library,
-  and they're always handled within that library.
+  they're always handled within that library.
 
-- In code that only throws errors that were thrown elsewhere,
+- In code that throws only errors that were thrown elsewhere,
   like a function that takes a closure argument
   and propagates any errors from that closure.
-  For a comparison between `rethrows`
-  and throwing a specific, generic, error type
+  For a comparison between propagating a specific error type
+  and using `rethrows`,
   see <doc:Declarations:Rethrowing-Functions-and-Methods>.
 
 For example,
@@ -756,9 +758,9 @@ enum StatisticsError: Error {
 }
 ```
 
-To specify that a function throws only `StatisticsError` values as its errors
-you write `throws(StatisticsError)` when declaring the function,
-instead of just writing `throws`.
+To specify that a function throws only `StatisticsError` values as its errors,
+you write `throws(StatisticsError)` instead of only `throws`
+when declaring the function.
 This syntax is also called *typed throws*
 because you write the error type after `throws` --- for example:
 
@@ -783,7 +785,7 @@ This function throws an instance of `StatisticsError` if the input isn't valid.
 Both places in the code above that throw an error
 omit the type of the error
 because the function's error type is already defined.
-You can use the short form like `throw .noRatings`
+You can use the short form, `throw .noRatings`,
 instead of writing `throw StatisticsError.noRatings`
 when throwing an error in a function like this.
 
@@ -845,10 +847,10 @@ In this code,
 writing `do throws(StatisticsError)` indicates that
 the `do`-`catch` statement throws `StatisticsError` values as its errors.
 Like other `do`-`catch` statements,
-the `catch` clause can either handle every possible error,
-or it can propagate unhandled errors for some surrounding scope to handle.
-Here, it handles all of the errors,
-using a switch with one case for each enumeration value.
+the `catch` clause can either handle every possible error
+or propagate unhandled errors for some surrounding scope to handle.
+This code handles all of the errors,
+using a `switch` statement with one case for each enumeration value.
 Like other `catch` clauses that don't have a pattern,
 the clause matches any error
 and binds the error to a local constant named `error`.
@@ -857,17 +859,17 @@ Because the `do`-`catch` statement throws `StatisticsError` values,
 
 <!-- XXX show multiple catch clauses with different patterns? -->
 
-The `catch` clause above uses a switch
+The `catch` clause above uses a `switch` statement
 to match and handle each possible error.
 If you tried to add a new case to `StatisticsError`
 without updating the error-handling code,
 Swift would give you an error
-because the switch wouldn't be exhaustive anymore.
+because the `switch` statement wouldn't be exhaustive anymore.
 For a library that catches all of its own errors,
 you could use this approach to ensure any new errors
 get corresponding new code to handle them.
 
-If a function or `do` block throws only errors of a single type,
+If a function or `do` block throws errors of only a single type,
 Swift infers that this code is using typed throws.
 Using this shorter syntax,
 you could write the `do`-`catch` example above as follows:
@@ -889,7 +891,7 @@ do {
 
 Even though the `do`-`catch` block above
 doesn't specify what type of error it throws,
-it's still understood as throwing `StatisticsError`.
+Swift infers that it throws `StatisticsError`.
 You can explicitly write `throws(any Error)`
 to avoid letting Swift infer typed throws.
 

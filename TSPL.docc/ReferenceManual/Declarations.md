@@ -1476,7 +1476,7 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
-A function's type includes whether it can throw an error,
+A function's type includes whether it can throw an error
 and what type of error it throws.
 This means, for example, you can use a nonthrowing function
 in a context where a throwing one is expected.

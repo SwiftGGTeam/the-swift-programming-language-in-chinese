@@ -925,9 +925,9 @@ explicitly marks a closure as throwing or asynchronous.
 If the body of a closure includes a `throws` statement or a `try` expression
 that isn't nested inside of a `do` statement with exhaustive error handling,
 the closure is understood to be throwing.
-If a throwing closure throws only errors of a single type,
+If a throwing closure throws errors of only a single type,
 the closure is understood as throwing that error type;
-otherwise it's understood as throwing `any Error`.
+otherwise, it's understood as throwing `any Error`.
 Likewise, if the body includes an `await` expression,
 it's understood to be asynchronous.
 
