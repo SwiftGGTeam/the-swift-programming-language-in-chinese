@@ -618,18 +618,6 @@ that requires `T` to be a subclass of `SomeClass`.
 The second type parameter, `U`, has a type constraint
 that requires `U` to conform to the protocol `SomeProtocol`.
 
-<!-- XXX NOTES
-Some constraints are implicit.
-Writing `~Foo` lets you suppress the implicit constraint.
-
-```
-func f<T>(t: T) { /* show copying t -- ok */ }
-func f<T: ~Copyable>(t: T) { /* show copying t -- error */ }
-```
-
-QUESTION: Is there too much detail about when a constraint is inferred to put it all here?
--->
-
 ### Type Constraints in Action
 
 Here's a nongeneric function called `findIndex(ofString:in:)`,
@@ -1966,6 +1954,43 @@ This generic subscript is constrained as follows:
 Taken together, these constraints mean that
 the value passed for the `indices` parameter
 is a sequence of integers.
+
+## Implicit Constraints
+
+In addition to the constraints you write explicitly,
+many places in your code <!-- XXX WHERE? -->
+also implicitly include an constraint
+that types conform to the `Copyable` protocol.
+This constraint is implicit because almost all types in Swift are copyable,
+so you only have to specify when something shouldn't be copyable.
+For example, both of the following function declarations
+require `T` to be copyable:
+
+```
+function someFunction<T> { ... }
+function someFunction<T: Copyable> { ... }
+```
+
+To suppress an implicit conformance to `Copyable`
+you write the protocol name with a tilde (`~`) in front of it.
+You can read `~Copyable` as "maybe copyable",
+because can can contain values of both copyable an noncopyable types.
+
+```
+func f<T>(t: inout T) {
+    let t1 = t  // The value of 't' is copyied into 't1'
+    let t2 = t  // The value of 't' is copyied into 't2'
+}
+
+func g<T: ~Copyable>(t: inout T) {
+    let t1 = t  // The value of 't' is consumed by 't1'
+    let t2 = t  // Error: 't' consumed more than once
+}
+```
+
+XXX
+noncopyable values must be passed as in-out, borrowing, or consuming
+xref reference > Declarations > Borrowing and Consuming Parameters
 
 <!--
   TODO: Generic Enumerations

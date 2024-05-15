@@ -752,7 +752,7 @@ a nonfailable initializer or an implicitly unwrapped failable initializer.
   ```
 -->
 
-## Protocols Without Requirements
+## Protocols That Don't Have Requirements
 
 <!-- XXX NOTES
 Some protocols don’t require methods or properties;
