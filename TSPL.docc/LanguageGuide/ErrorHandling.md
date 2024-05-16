@@ -762,7 +762,9 @@ To specify that a function throws only `StatisticsError` values as its errors,
 you write `throws(StatisticsError)` instead of only `throws`
 when declaring the function.
 This syntax is also called *typed throws*
-because you write the error type after `throws` --- for example:
+because you write the error type after `throws` in the declaration.
+For example,
+the function below throws `StatisticsError` values as its errors.
 
 ```swift
 func summarize(_ ratings: [Int]) throws(StatisticsError) {
@@ -808,7 +810,7 @@ func someThrowingFunction() -> throws {
 
 The code above doesn't specify an error type for `someThrowingFunction()`,
 so it throws `any Error`.
-You could also write the error type explicitly as `throws(any Error)` ---
+You could also write the error type explicitly as `throws(any Error)`;
 the code below is equivalent to the code above:
 
 ```swift

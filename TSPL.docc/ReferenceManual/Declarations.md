@@ -1478,7 +1478,7 @@ Calls to a throwing function or method must be wrapped in a `try` or `try!` expr
 
 A function's type includes whether it can throw an error
 and what type of error it throws.
-This means, for example, you can use a nonthrowing function
+This subtype relationship means, for example, you can use a nonthrowing function
 in a context where a throwing one is expected.
 For more information about the type of a throwing function,
 see <doc:Types#Function-Type>.

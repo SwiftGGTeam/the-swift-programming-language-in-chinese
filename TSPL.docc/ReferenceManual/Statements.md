@@ -898,21 +898,21 @@ a concrete type that conforms to the `Error` protocol,
 an opaque type that conforms to the `Error` protocol,
 or the boxed protocol type `any Error`.
 If the `do` statement doesn't specify the type of error it throws,
-the error type is inferred as follows:
+Swift infers the error type as follows:
 
 - If every `throws` statement and `try` expression in the `do` code block
   is nested inside of an exhaustive error-handling mechanism,
-  then the `do` statement is inferred as nonthrowing.
+  then Swift infers that the `do` statement is nonthrowing.
 
 - If the `do` code block contains code that throws
   errors of only a single type
   outside of exhaustive error handling,
-  then the `do` statement is inferred as throwing that concrete error type.
+  then Swift infers that the `do` statement throws that concrete error type.
 
 - If the `do` code block contains code that throws
   errors of more than a single type
   outside of exhaustive error handling,
-  then the `do` statement is inferred as throwing `any Error`.
+  then Swift infers that the `do` statement throws `any Error`.
 
 For more information about working with errors that have explicit types,
 see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
