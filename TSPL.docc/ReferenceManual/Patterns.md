@@ -411,7 +411,7 @@ case labels.
 
 The expression represented by the expression pattern
 is compared with the value of an input expression
-using the Swift standard library `~=` operator.
+using the pattern-matching operator (`~=`) from the Swift standard library.
 The matches succeeds
 if the `~=` operator returns `true`. By default, the `~=` operator compares
 two values of the same type using the `==` operator.
