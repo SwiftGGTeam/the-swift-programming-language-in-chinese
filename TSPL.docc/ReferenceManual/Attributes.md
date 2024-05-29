@@ -1320,7 +1320,7 @@ can be used in a context that requires sendable types.
 On other declarations,
 this attribute reduces the strictness of concurrency checking
 for code that uses the symbol being declared.
-When you use this symbol in a scope that has  minimal concurrency checking,
+When you use this symbol in a scope that has minimal concurrency checking,
 you can use members of this type
 that aren't explicitly marked as either sendable or nonsendable
 in a context that requires sendable types.
