@@ -1306,18 +1306,24 @@ can increase your binary size and adversely affect performance.
 
 ### preconcurrency
 
-Apply this attribute to an import declaration or a declaration,
+Apply this attribute to a declaration,
 to suppress strict concurrency checking.
 
 On an import declaration,
-this attribute reduces the strictness of conccurrency checking
+this attribute reduces the strictness of concurrency checking
 for code that uses types from the imported module.
 Specifically,
-types fromthe imported module
-that aren't explicitly marked as either sendeble or nonsendable
+types from the imported module
+that aren't explicitly marked as either sendable or nonsendable
 can be used in a context that requires sendable types.
-<!--XXX If the attribute isn't doing anything, it produces a warning.-->
 
+On other declarations,
+this attribute reduces the strictness of concurrency checking
+for code that uses the symbol being declared.
+When you use this symbol in a scope that has  minimal concurrency checking,
+you can use members of this type
+that aren't explicitly marked as either sendable or nonsendable
+in a context that requires sendable types.
 You can apply this attribute
 to the following kinds of declarations:
 
@@ -1329,29 +1335,22 @@ to the following kinds of declarations:
 - Initializers
 - Functions
 
-On a declaration,
-this attribute indicates
+You can use this attribute as follows,
+to aid in migrating code to strict concurrency checking:
 
-<!-- XXX from SE-0337
-Its name is mangled as though it does not use any of the listed features.
-
-At use sites whose enclosing scope uses Minimal concurrency checking, the compiler will suppress any diagnostics about mismatches in these traits.
-
-The ABI checker will remove any use of these features when it produces its digests.
--->
-
-<!-- Probably move to some migration article/context:
-
-You can use this attribute to aid in migration to strict concurrency checking:
-
-1. Enable strict checking
-1. Annotate imports with `@preconcurrency` as needed
-1. After migrating the imported module, XXX
-1. Remove `@preconcurrency` from import declarations
--->
+1. Enable strict checking.
+1. Annotate imports and declarations that need to be migrated
+   with the `preconcurrency` attribute.
+1. After migrating a declaration,
+   remove the `preconcurrency` attribute from it.
+1. After migrating a module,
+   the compiler will warn you about
+   any places where the `preconcurrency` attribute on an import
+   no longer has an effect and should be removed.
 
 Declarations from Objective-C are always imported
 as if they were marked with the `preconcurrency` attribute.
+
 ### propertyWrapper
 
 Apply this attribute to a class, structure, or enumeration declaration
