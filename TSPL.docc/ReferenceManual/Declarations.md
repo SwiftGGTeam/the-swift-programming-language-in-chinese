@@ -1600,6 +1600,12 @@ func f<E: Error>(closure: () throws(E) -> Int) throws(E) -> Int { ... }
 func g(closure: () throws -> Int) rethrows -> Int { ... }
 
 map() from the stdlib is another example
+
+XXX FROM DOUG
+Part of me wants to suggest that this whole section be revised to replace rethrows entirely with the use of generic typed throws, because that's how I expect the language to go over time. Then, rethrows would become more of a historical anecdote. However, that is a lot of work, and perhaps we'll find that rethrows will remain for longer than I expect. If so, I think it's fine to keep this comparison short: take the someFunction example from the beginning of the section and make it generic over the thrown error type, and note that it's providing a more precise guarantee about what errors it rethrows than rethrows does (because rethrows always produces an any Error).
+XXX END FROM DOUG
+
+Filed rdar://128972373
 -->
 
 ### Asynchronous Functions and Methods

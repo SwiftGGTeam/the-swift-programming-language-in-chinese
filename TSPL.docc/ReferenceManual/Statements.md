@@ -889,8 +889,6 @@ do throws(<#type#>) {
 }
 ```
 
-<!-- XXX Is "do throws { }" allowed? -->
-
 If the `do` statement includes a `throws` clause,
 the `do` block can throw errors of only the specified *type*.
 The *type* must be
@@ -907,6 +905,7 @@ Swift infers the error type as follows:
 - If the `do` code block contains code that throws
   errors of only a single type
   outside of exhaustive error handling,
+  other than throwing `Never`,
   then Swift infers that the `do` statement throws that concrete error type.
 
 - If the `do` code block contains code that throws

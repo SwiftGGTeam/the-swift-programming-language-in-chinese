@@ -708,7 +708,7 @@ This approach matches the reality that
 you don't know ahead of time every error that could happen
 while the code is running,
 especially when propagating errors thrown somewhere else.
-This approach also reflects the fact that errors can change over time.
+It also reflects the fact that errors can change over time.
 New versions of a library ---
 including libraries that your dependencies use ---
 can throw new errors,
@@ -729,7 +729,7 @@ in the following special cases:
   requires allocating memory at runtime to store the error.
   In contrast,
   throwing an error of a specific type
-  lets Swift allocate that memory upfront.
+  lets Swift avoid heap allocation for errors.
 
 - When the errors are an implementation detail of some unit of code,
   like a library,
@@ -740,7 +740,7 @@ in the following special cases:
   And because these errors are an implementation detail of the library,
   they're always handled within that library.
 
-- In code that throws only errors that were thrown elsewhere,
+- In code that only propagates errors described by generic parameters,
   like a function that takes a closure argument
   and propagates any errors from that closure.
   For a comparison between propagating a specific error type
@@ -824,7 +824,18 @@ In this code,
 `someThrowingFunction()` propagates any errors that `summarize(_:)` throws.
 The errors from `summarize(_:)` are always `StatisticsError` values,
 which is also a valid error for `someThrowingFunction()` to throw.
-<!-- XXX Expand on subtyping here? -->
+
+Just like you can write a function that never returns
+with a return type of `Never`,
+you can write a function that never throws with `throws(Never)`:
+
+```swift
+func nonThrowingFunction() throws(Never) {
+  // ...
+}
+```
+This function can't throw because
+it's impossible to create a value of type `Never` to throw.
 
 In addition to specifying a function's error type,
 you can also write a specific error type for a `do`-`catch` statement.
@@ -858,8 +869,6 @@ the clause matches any error
 and binds the error to a local constant named `error`.
 Because the `do`-`catch` statement throws `StatisticsError` values,
 `error` is a value of type `StatisticsError`.
-
-<!-- XXX show multiple catch clauses with different patterns? -->
 
 The `catch` clause above uses a `switch` statement
 to match and handle each possible error.

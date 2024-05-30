@@ -348,7 +348,6 @@ another function that takes and returns an `Int`.
 
 Function types for functions
 that can throw or rethrow an error must include the `throws` keyword.
-<!-- XXX TR: Confirm rethrowing functions use 'throws' -->
 You can include a type after `throws` in parentheses
 to specify the type of error that the function throws.
 The throw error type must conform to the `Error` protocol.
