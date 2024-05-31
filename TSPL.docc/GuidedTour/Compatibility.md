@@ -7,9 +7,12 @@ the default version of Swift that's included in Xcode XXX.
 You can use Xcode XXX to build targets
 that are written in Swift 6, Swift 5, Swift 4.2, or Swift 4.
 
-When you use Xcode XXX to build code that uses the Swift 5 language mode,
-most of the features from Swift 6 are still available,
-either by default of when you enable an use upcoming feature.
+When you use the Swift 6 compiler
+to build code that uses the Swift 5 language mode,
+you can use the new features from Swift 6 ---
+they're enabled either by default or by an upcoming feature flag.
+However, to enable strict concurrency checking,
+you need to upgrade to the Swift 6 language mode.
 
 In addition,
 when you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
