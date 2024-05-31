@@ -4,8 +4,8 @@ Learn what functionality is available in older language modes.
 
 This book describes Swift 6,
 the default version of Swift that's included in Xcode XXX.
-You can use Xcode XXX to build targets
-that are written in Swift 6, Swift 5, Swift 4.2, or Swift 4.
+You can use the Swift 6 compiler to build code
+that's written in Swift 6, Swift 5, Swift 4.2, or Swift 4.
 
 When you use the Swift 6 compiler
 to build code that uses the Swift 5 language mode,
