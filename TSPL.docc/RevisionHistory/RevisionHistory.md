@@ -2,6 +2,16 @@
 
 Review the recent changes to this book.
 
+**XXX date XXX**
+
+- Updated for Swift 6.
+- Added the <doc:Attributes#preconcurrency> section
+  with information about migrating to strict concurrency checking.
+- Added the <doc:ErrorHandling#Specifying-the-Error-Type> section
+  with information about throwing errors of a specific type.
+- Added information about package-level access
+  to the <doc:AccessControl> chapter.
+
 **2024-03-05**
 
 - Updated for Swift 5.10.
