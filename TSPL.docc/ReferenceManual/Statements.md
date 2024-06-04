@@ -729,6 +729,9 @@ throw <#expression#>
 
 The value of the *expression* must have a type that conforms to
 the `Error` protocol.
+If the `do` statement or function that contains the `throw` statement
+declares the type of errors it throws,
+the value of the *expression* must be an instance of that type.
 
 For an example of how to use a `throw` statement,
 see <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>
@@ -873,6 +876,46 @@ do {
 }
 ```
 
+A `do` statement can optionally specify the type of error it throws,
+which has the following form:
+
+```swift
+do throws(<#type#>) {
+    try <#expression#>
+} catch <#pattern> {
+    <#statements#>
+} catch {
+    <#statements#>
+}
+```
+
+If the `do` statement includes a `throws` clause,
+the `do` block can throw errors of only the specified *type*.
+The *type* must be
+a concrete type that conforms to the `Error` protocol,
+an opaque type that conforms to the `Error` protocol,
+or the boxed protocol type `any Error`.
+If the `do` statement doesn't specify the type of error it throws,
+Swift infers the error type as follows:
+
+- If every `throws` statement and `try` expression in the `do` code block
+  is nested inside of an exhaustive error-handling mechanism,
+  then Swift infers that the `do` statement is nonthrowing.
+
+- If the `do` code block contains code that throws
+  errors of only a single type
+  outside of exhaustive error handling,
+  other than throwing `Never`,
+  then Swift infers that the `do` statement throws that concrete error type.
+
+- If the `do` code block contains code that throws
+  errors of more than a single type
+  outside of exhaustive error handling,
+  then Swift infers that the `do` statement throws `any Error`.
+
+For more information about working with errors that have explicit types,
+see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
+
 If any statement in the `do` code block throws an error,
 program control is transferred
 to the first `catch` clause whose pattern matches the error.
@@ -914,7 +957,7 @@ see <doc:ErrorHandling#Handling-Errors>.
 
 > Grammar of a do statement:
 >
-> *do-statement* → **`do`** *code-block* *catch-clauses*_?_ \
+> *do-statement* → **`do`** *throws-clause*_?_ *code-block* *catch-clauses*_?_ \
 > *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
 > *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block* \
 > *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \

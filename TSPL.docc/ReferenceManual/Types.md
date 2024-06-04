@@ -347,10 +347,42 @@ that is, a function that takes an `Int` and returns
 another function that takes and returns an `Int`.
 
 Function types for functions
-that can throw or rethrow an error must be marked with the `throws` keyword.
-The `throws` keyword is part of a function's type,
-and nonthrowing functions are subtypes of throwing functions.
-As a result, you can use a nonthrowing function in the same places as a throwing one.
+that can throw or rethrow an error must include the `throws` keyword.
+You can include a type after `throws` in parentheses
+to specify the type of error that the function throws.
+The throw error type must conform to the `Error` protocol.
+Writing `throws` without specifying a type
+is the same as writing `throws(any Error)`.
+Omitting `throws` is the same as writing `throws(Never)`.
+The error type that a function throws
+can be any type that conforms to `Error`,
+including generic types, boxed protocol types, and opaque types.
+
+The type of error that a function throws is part of that function's type,
+and a subtype relationship between error types
+means the corresponding function types are also subtypes.
+For example, if you declare a custom `MyError` type,
+the relationship between some function types is as follows,
+from supertype to subtype:
+
+1. Functions that throw any error, marked `throws(any Error)`
+1. Functions that throw a specific error, marked `throws(MyError)`
+1. Functions that don't throw, marked `throws(Never)`
+
+As a result of these subtype relationships:
+
+- You can use a nonthrowing function
+  in the same places as a throwing function.
+- You can use a function that throws a concrete error type
+  in the same places as a throwing function.
+- You can use a function that throws a more specific error type
+  in the same places as a function that throws a more general error type.
+
+If you use an associated type or a generic type parameter
+as the thrown error type in a function type,
+then that associated type or generic type parameter
+is implicitly required to conform to the `Error` protocol.
+
 Throwing and rethrowing functions are described in
 <doc:Declarations#Throwing-Functions-and-Methods>
 and <doc:Declarations#Rethrowing-Functions-and-Methods>.
@@ -476,7 +508,7 @@ see <doc:MemorySafety>.
 
 > Grammar of a function type:
 >
-> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ **`throws`**_?_ **`->`** *type*
+> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
 >
 > *function-type-argument-clause* → **`(`** **`)`** \
 > *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
@@ -484,6 +516,8 @@ see <doc:MemorySafety>.
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
 > *function-type-argument* → *attributes*_?_ *parameter-modifier*_?_ *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
+>
+> *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
 
 <!--
   NOTE: Functions are first-class citizens in Swift,

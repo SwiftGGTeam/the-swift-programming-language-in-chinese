@@ -1465,13 +1465,25 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 }
 ```
 
+A function that throws a specific error type has the following form:
+
+```swift
+func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
+   <#statements#>
+}
+```
+
 Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
 (that is, in the scope of a `try` or `try!` operator).
 
-The `throws` keyword is part of a function's type,
-and nonthrowing functions are subtypes of throwing functions.
-As a result, you can use a nonthrowing function
+A function's type includes whether it can throw an error
+and what type of error it throws.
+This subtype relationship means, for example, you can use a nonthrowing function
 in a context where a throwing one is expected.
+For more information about the type of a throwing function,
+see <doc:Types#Function-Type>.
+For examples of working with errors that have explicit types,
+see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -1582,6 +1594,28 @@ and a throwing method can't satisfy a protocol requirement for a rethrowing meth
 That said, a rethrowing method can override a throwing method,
 and a rethrowing method can satisfy a protocol requirement for a throwing method.
 
+An alternative to rethrowing is throwing a specific error type in generic code.
+For example:
+
+```swift
+func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
+    try callback()
+}
+```
+
+This approach to propagating an error
+preserves type information about the error.
+However, unlike marking a function `rethrows`,
+this approach doesn't prevent the function
+from throwing an error of the same type.
+
+<!--
+TODO: Revisit the comparison between rethrows and throws(E) above,
+since it seems likely that the latter will generally replace the former.
+
+See also rdar://128972373
+-->
+
 ### Asynchronous Functions and Methods
 
 Functions and methods that run asynchronously must be marked with the `async` keyword.
@@ -1660,7 +1694,7 @@ but the new method must preserve its return type and nonreturning behavior.
 > *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
 > *function-name* → *identifier* | *operator*
 >
-> *function-signature* → *parameter-clause* **`async`**_?_ **`throws`**_?_ *function-result*_?_ \
+> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
 > *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
@@ -2558,7 +2592,7 @@ See also <doc:Declarations#Initializer-Declaration>.
 
 > Grammar of a protocol initializer declaration:
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`throws`**_?_ *generic-where-clause*_?_ \
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### Protocol Subscript Declaration
@@ -2903,7 +2937,7 @@ see <doc:Initialization#Failable-Initializers>.
 
 > Grammar of an initializer declaration:
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`throws`**_?_ *generic-where-clause*_?_ *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
