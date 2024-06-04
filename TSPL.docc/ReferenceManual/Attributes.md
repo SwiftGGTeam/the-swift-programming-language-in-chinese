@@ -1308,6 +1308,17 @@ can increase your binary size and adversely affect performance.
 
 Apply this attribute to a declaration,
 to suppress strict concurrency checking.
+You can apply this attribute
+to the following kinds of declarations:
+
+- Imports
+- Structures, classes, and actors
+- Enumerations and enumeration cases
+- Protocols
+- Variables and constants
+- Subscripts
+- Initializers
+- Functions
 
 On an import declaration,
 this attribute reduces the strictness of concurrency checking
@@ -1324,17 +1335,6 @@ When you use this symbol in a scope that has minimal concurrency checking,
 concurrency-related constraints specified by that symbol,
 such as `Sendable` requirements or global actors,
 aren't checked.
-You can apply this attribute
-to the following kinds of declarations:
-
-- Imports
-- Structures, classes, and actors
-- Enumerations and enumeration cases
-- Protocols
-- Variables and constants
-- Subscripts
-- Initializers
-- Functions
 
 You can use this attribute as follows,
 to aid in migrating code to strict concurrency checking:
