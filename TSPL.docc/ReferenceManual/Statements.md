@@ -914,7 +914,7 @@ Swift infers the error type as follows:
   then Swift infers that the `do` statement throws `any Error`.
 
 For more information about working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
+see <doc:ErrorHandling#Specifying-the-Error-Type>.
 
 If any statement in the `do` code block throws an error,
 program control is transferred

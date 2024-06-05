@@ -1483,7 +1483,7 @@ in a context where a throwing one is expected.
 For more information about the type of a throwing function,
 see <doc:Types#Function-Type>.
 For examples of working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
+see <doc:ErrorHandling#Specifying-the-Error-Type>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
