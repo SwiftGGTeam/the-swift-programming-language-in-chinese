@@ -1304,6 +1304,60 @@ can increase your binary size and adversely affect performance.
   because of the larger symbol table slowing dyld down.
 -->
 
+### preconcurrency
+
+Apply this attribute to a declaration,
+to suppress strict concurrency checking.
+You can apply this attribute
+to the following kinds of declarations:
+
+- Imports
+- Structures, classes, and actors
+- Enumerations and enumeration cases
+- Protocols
+- Variables and constants
+- Subscripts
+- Initializers
+- Functions
+
+On an import declaration,
+this attribute reduces the strictness of concurrency checking
+for code that uses types from the imported module.
+Specifically,
+types from the imported module
+that aren't explicitly marked as nonsendable
+can be used in a context that requires sendable types.
+
+On other declarations,
+this attribute reduces the strictness of concurrency checking
+for code that uses the symbol being declared.
+When you use this symbol in a scope that has minimal concurrency checking,
+concurrency-related constraints specified by that symbol,
+such as `Sendable` requirements or global actors,
+aren't checked.
+
+You can use this attribute as follows,
+to aid in migrating code to strict concurrency checking:
+
+1. Enable strict checking.
+1. Annotate imports with the `preconcurrency` attribute
+   for modules that haven't enabled strict checking.
+1. After migrating a module to strict checking,
+   remove the `preconcurrency` attribute.
+   The compiler warns you about
+   any places where the `preconcurrency` attribute on an import
+   no longer has an effect and should be removed.
+
+For other declarations,
+add the `preconcurrency` attribute
+when you add concurrency-related constraints to the declaration,
+if you still have clients
+that haven't migrated to strict checking.
+Remove the `preconcurrency` attribute after all your clients have migrated.
+
+Declarations from Objective-C are always imported
+as if they were marked with the `preconcurrency` attribute.
+
 ### propertyWrapper
 
 Apply this attribute to a class, structure, or enumeration declaration
