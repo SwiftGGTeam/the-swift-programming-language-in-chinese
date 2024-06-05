@@ -55,7 +55,7 @@ using APIs from the [PackageDescription][] module,
 and if you use Xcode, you specify the package name
 in the Package Access Identifier build setting.
 
-[PackageDescription](https://developer.apple.com/documentation/packagedescription)
+[PackageDescription]: https://developer.apple.com/documentation/packagedescription
 
 ## Access Levels
 
