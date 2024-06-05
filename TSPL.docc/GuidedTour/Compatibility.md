@@ -18,7 +18,8 @@ In addition,
 when you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
 most Swift 5 functionality is still available.
 That said,
-the following changes are available only to code that uses Swift 5:
+the following changes are available only to code
+that uses the Swift 5 language mode:
 
 - Functions that return an opaque type require the Swift 5.1 runtime.
 - The `try?` expression doesn't introduce an extra level of optionality
@@ -28,13 +29,13 @@ the following changes are available only to code that uses Swift 5:
   For example, `UInt64(0xffff_ffff_ffff_ffff)` evaluates to the correct value
   rather than overflowing.
 
-Concurrency requires Swift 5
+Concurrency requires the Swift 5 language mode
 and a version of the Swift standard library
 that provides the corresponding concurrency types.
 On Apple platforms, set a deployment target
 of at least iOS 13, macOS 10.15, tvOS 13, or watchOS 6.
 
-A target written in 6 can depend on
+A target written in Swift 6 can depend on
 a target that's written in Swift 5, Swift 4.2 or Swift 4,
 and vice versa.
 This means, if you have a large project
