@@ -3950,7 +3950,8 @@ and private members declared in one extension
 can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the `set` keyword enclosed in parentheses (for example, `private(set)`).
+which consists of the `set` keyword enclosed in parentheses ---
+for example, `private(set)`.
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
