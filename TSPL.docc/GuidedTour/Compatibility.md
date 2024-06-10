@@ -3,7 +3,7 @@
 Learn what functionality is available in older language modes.
 
 This book describes Swift 6,
-the default version of Swift that's included in Xcode XXX.
+the default version of Swift that's included in Xcode 16.
 You can use the Swift 6 compiler to build code
 that's written in Swift 6, Swift 5, Swift 4.2, or Swift 4.
 
@@ -42,6 +42,12 @@ This means, if you have a large project
 that's divided into multiple frameworks,
 you can migrate your code to a newer language version
 one framework at a time.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

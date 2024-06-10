@@ -1483,7 +1483,7 @@ in a context where a throwing one is expected.
 For more information about the type of a throwing function,
 see <doc:Types#Function-Type>.
 For examples of working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
+see <doc:ErrorHandling#Specifying-the-Error-Type>.
 
 You can't overload a function based only on whether the function can throw an error.
 That said,
@@ -3950,7 +3950,8 @@ and private members declared in one extension
 can be accessed from other extensions and from the type's declaration.
 
 Each access-level modifier above optionally accepts a single argument,
-which consists of the `set` keyword enclosed in parentheses (for example, `private(set)`).
+which consists of the `set` keyword enclosed in parentheses ---
+for example, `private(set)`.
 Use this form of an access-level modifier when you want to specify an access level
 for the setter of a variable or subscript that's less than or equal
 to the access level of the variable or subscript itself,
@@ -3974,6 +3975,12 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 > *mutation-modifier* → **`mutating`** | **`nonmutating`**
 >
 > *actor-isolation-modifier* → **`nonisolated`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

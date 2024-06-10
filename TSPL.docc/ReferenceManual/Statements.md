@@ -914,7 +914,7 @@ Swift infers the error type as follows:
   then Swift infers that the `do` statement throws `any Error`.
 
 For more information about working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-a-Concrete-Error-Type>.
+see <doc:ErrorHandling#Specifying-the-Error-Type>.
 
 If any statement in the `do` code block throws an error,
 program control is transferred
@@ -1442,6 +1442,12 @@ It has the same meaning as the `*` argument in an availability condition.
   !$                ^
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

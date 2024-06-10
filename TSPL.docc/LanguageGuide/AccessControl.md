@@ -55,7 +55,7 @@ using APIs from the [PackageDescription][] module,
 and if you use Xcode, you specify the package name
 in the Package Access Identifier build setting.
 
-[PackageDescription](https://developer.apple.com/documentation/packagedescription)
+[PackageDescription]: https://developer.apple.com/documentation/packagedescription
 
 ## Access Levels
 
@@ -1507,6 +1507,12 @@ but a public type alias can't alias an internal, file-private, or private type.
   !! ^
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
