@@ -33,7 +33,7 @@ Concurrency requires the Swift 5 language mode
 and a version of the Swift standard library
 that provides the corresponding concurrency types.
 On Apple platforms, set a deployment target
-of at least iOS 13, macOS 10.15, tvOS 13, or watchOS 6.
+of at least iOS 13, macOS 10.15, tvOS 13, watchOS 6, or visionOS 1.
 
 A target written in Swift 6 can depend on
 a target that's written in Swift 5, Swift 4.2 or Swift 4,
