@@ -2159,7 +2159,7 @@ the body of the `if` executes on the minimum deployment target specified by your
 
 In its general form,
 the availability condition takes a list of platform names and versions.
-You use platform names such as `iOS`, `macOS`, `watchOS`, and `tvOS` ---
+You use platform names such as `iOS`, `macOS`, `watchOS`, `tvOS`, and `visionOS` ---
 for the full list, see <doc:Attributes#Declaration-Attributes>.
 In addition to specifying major version numbers like iOS 8 or macOS 10.10,
 you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.

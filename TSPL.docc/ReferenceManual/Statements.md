@@ -1253,7 +1253,7 @@ see <doc:Expressions#Explicit-Member-Expression>.
 > *platform-condition* → **`canImport`** **`(`** *import-path* **`)`** \
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
-> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`Linux`** | **`Windows`** \
+> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
 > *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
 > *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
@@ -1341,7 +1341,7 @@ The compiler uses the information from the availability condition
 when it verifies that the APIs in that block of code are available.
 
 The availability condition takes a comma-separated list of platform names and versions.
-Use `iOS`, `macOS`, `watchOS`, and `tvOS` for the platform names,
+Use `iOS`, `macOS`, `watchOS`, `tvOS` and `visionOS` for the platform names,
 and include the corresponding version numbers.
 The `*` argument is required and specifies that, on any other platform,
 the body of the code block guarded by the availability condition
@@ -1398,7 +1398,8 @@ It has the same meaning as the `*` argument in an availability condition.
   >>               macOS 1, macOSApplicationExtension 1,
   >>               macCatalyst 1, macCatalystApplicationExtension 1,
   >>               watchOS 1, watchOSApplicationExtension 1,
-  >>               tvOS 1, tvOSApplicationExtension 1, *) {
+  >>               tvOS 1, tvOSApplicationExtension 1,
+  >>               visionOS 1, visionOSApplicationExtension 1, *) {
   >>     print("a")
   >> } else {
   >>     print("b")
