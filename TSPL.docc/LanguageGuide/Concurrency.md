@@ -1093,6 +1093,9 @@ work together to make it easier to reason about shared mutable state:
 
 - Code in between possible suspension points runs sequentially,
   without the possibility of interruption from other concurrent code.
+  However,
+  multiple pieces of concurrent code can run at the same time,
+  so other code could be running simultaneously.
 
 - Code that interacts with an actor's local state
   runs only on that actor.
@@ -1138,6 +1141,9 @@ that temporarily makes the data model inconsistent,
 and makes it easier for anyone reading the code
 to recognize that no other code can run
 before data consistency is restored by completing the work.
+It's important that Swift doesn't switch from this code
+to run code from another part of the program
+during that period of time.
 In the future,
 if you try to add concurrent code to this function,
 introducing a possible suspension point,
