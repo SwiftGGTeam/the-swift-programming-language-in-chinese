@@ -745,7 +745,7 @@ in the following special cases:
   and propagates any errors from that closure.
   For a comparison between propagating a specific error type
   and using `rethrows`,
-  see <doc:Declarations:Rethrowing-Functions-and-Methods>.
+  see <doc:Declarations#Rethrowing-Functions-and-Methods>.
 
 For example,
 consider code that summarizes ratings
