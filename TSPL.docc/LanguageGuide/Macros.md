@@ -274,7 +274,7 @@ public macro OptionSet<RawType>() =
 ```
 
 In the declaration above,
-the `@attached(member)` macro includes arguments after the `named:` label
+the `@attached(member)` macro includes arguments after the `names:` label
 for each of the symbols that the `@OptionSet` macro generates.
 The macro adds declarations for symbols named
 `RawValue`, `rawValue`, and `init` ---
