@@ -21,19 +21,21 @@ Swift introduces advanced types such as tuples.
 Tuples enable you to create and pass around groupings of values.
 You can use a tuple to return multiple values from a function as a single compound value.
 
-Swift also introduces optional types,
-which handle the absence of a value.
-Optionals say either “there *is* a value, and it equals *x*”
+Swift handles the absence of a value
+using optional types.
+Optionals say either “there *is* a value, which is *x*”
 or “there *isn't* a value at all”.
 
-Swift is a *type-safe* language,
-which means the language helps you to be clear about the types of values your code can work with.
+Swift is a type-safe language,
+which means the language helps you to be clear about
+the types of values your code works with.
 If part of your code requires a `String`,
 type safety prevents you from passing it an `Int` by mistake.
 Likewise, type safety prevents you from
 accidentally passing an optional `String`
 to a piece of code that requires a non-optional `String`.
-Type safety helps you catch and fix errors as early as possible in the development process.
+Type safety helps you catch and fix these kinds of errors
+as early as possible during the development process.
 
 ## Constants and Variables
 
@@ -562,18 +564,34 @@ Swift provides two signed floating-point number types:
 ## Type Safety and Type Inference
 
 Swift is a *type-safe* language.
+Every value in a Swift program has a type,
+Every place you store a value —
+including constants, variables, and properties —
+also has a type,
+which you might write explicitly using a type annotation
+or which might inferred from an initial value.
+Every place in your code where you provide a value,
+that value's type must be compatible the place you use it.
+For example,
+if part of your code requires a `String`,
+you can't pass it an `Int` by mistake.
+Values of one type are never implicitly converted to another type.
+However, some types can be explicitly converted.
+<!-- XXX mention subtypes? -->
+
 A type safe language encourages you to be clear about
 the types of values your code can work with.
-If part of your code requires a `String`, you can't pass it an `Int` by mistake.
 
 <!-- XXX define "type safe" in the para above -->
 
 Because Swift is type safe,
 it performs *type checks* when compiling your code
 and flags any mismatched types as errors.
-This enables you to catch and fix errors as early as possible in the development process.
+This enables you to catch and fix errors
+as early as possible during the development process.
 
 <!-- XXX define "type checks" in the para above -->
+<!-- XXX reduce overlap with intro paras? -->
 
 Type-checking helps you avoid errors when you're working with different types of values.
 However, this doesn't mean that you have to specify the type of
