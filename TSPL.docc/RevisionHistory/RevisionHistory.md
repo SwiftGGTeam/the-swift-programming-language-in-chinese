@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**XXX release date XXX**
+**2024-08-05**
 
 - Minor corrections throughout.
 
