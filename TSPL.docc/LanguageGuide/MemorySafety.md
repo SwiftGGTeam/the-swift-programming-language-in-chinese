@@ -138,7 +138,7 @@ Specifically,
 a conflict occurs if you have two accesses
 that meet all of the following conditions:
 
-- At least one is a write access or a nonatomic access.
+- The accesses aren't both reads, and aren't both atomic.
 - They access the same location in memory.
 - Their durations overlap.
 
