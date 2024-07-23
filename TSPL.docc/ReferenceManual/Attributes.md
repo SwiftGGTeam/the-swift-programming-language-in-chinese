@@ -1694,11 +1694,10 @@ The additional result-building methods are as follows:
   or to perform other postprocessing on a result before returning it.
 
 - term `static func buildLimitedAvailability(_ component: Component) -> Component`:
-  Builds a partial result that propagates or erases type information
-  outside a compiler-control statement
+  Builds a partial result that erases type information.
+  You can implement this method to prevent type information
+  from propagating outside a compiler-control statement
   that performs an availability check.
-  You can use this to erase type information
-  that varies between the conditional branches.
 
 For example, the code below defines a simple result builder
 that builds an array of integers.
@@ -1797,9 +1796,14 @@ into code that calls the static methods of the result builder type:
   You can define an overload of `buildExpression(_:)`
   that takes an argument of type `()` to handle assignments specifically.
 - A branch statement that checks an availability condition
-  becomes a call to the `buildLimitedAvailability(_:)` method.
+  becomes a call to the `buildLimitedAvailability(_:)` method,
+  if that method is implemented.
+  If you don't implement `buildLimitedAvailability(_:)`,
+  then branch statements that check availability
+  use the same transformations as other branch statements.
   This transformation happens before the transformation into a call to
   `buildEither(first:)`, `buildEither(second:)`, or `buildOptional(_:)`.
+
   You use the `buildLimitedAvailability(_:)` method to erase type information
   that changes depending on which branch is taken.
   For example,
@@ -1874,7 +1878,7 @@ into code that calls the static methods of the result builder type:
 
   To solve this problem,
   implement a `buildLimitedAvailability(_:)` method
-  to erase type information.
+  to erase type information by returning a type that's always available.
   For example, the code below builds an `AnyDrawable` value
   from its availability check.
 
@@ -1884,7 +1888,7 @@ into code that calls the static methods of the result builder type:
       func draw() -> String { return content.draw() }
   }
   extension DrawingBuilder {
-      static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+      static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
           return AnyDrawable(content: content)
       }
   }
@@ -2276,7 +2280,7 @@ into code that calls the static methods of the result builder type:
          func draw() -> String { return content.draw() }
      }
   -> extension DrawingBuilder {
-         static func buildLimitedAvailability(_ content: Drawable) -> AnyDrawable {
+         static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
              return AnyDrawable(content: content)
          }
      }
