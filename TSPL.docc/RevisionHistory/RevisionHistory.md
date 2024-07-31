@@ -2,6 +2,10 @@
 
 Review the recent changes to this book.
 
+**XXX release date XXX**
+
+- Minor corrections throughout.
+
 **2024-06-10**
 
 - Updated for Swift 6.
