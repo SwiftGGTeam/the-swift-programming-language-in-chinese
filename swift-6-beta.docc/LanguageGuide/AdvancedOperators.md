@@ -1,3 +1,8 @@
+<!--
+要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/AdvancedOperators.md
+Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/advancedoperators
+-->
+
 # Advanced Operators
 
 Define custom operators, perform bitwise operations, and use builder syntax.
