@@ -1,0 +1,11 @@
+<!--
+  This source file is part of the Swift.org open source project
+
+  Copyright (c) 2021 Apple Inc. and the Swift project authors
+  Licensed under Apache License v2.0 with Runtime Library Exception
+
+  See https://swift.org/LICENSE.txt for license information
+  See https://swift.org/CONTRIBUTORS.txt for Swift project authors
+-->
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="rgb(102, 102, 102)" viewBox="0 0 20 20"><path d="M10,0A10,10,0,1,1,0,10H0A10,10,0,0,1,10,0Zm4.477,8.705c-.129.186-.259.377-.388.57a3.817,3.817,0,0,1-.42.528,2.046,2.046,0,0,1-.5.388,1.215,1.215,0,0,1-.592.154,2.492,2.492,0,0,1-1.034-.259c-.374-.172-.757-.358-1.153-.56s-.8-.388-1.206-.56a3.073,3.073,0,0,0-1.2-.258,2.9,2.9,0,0,0-1.12.2,3.211,3.211,0,0,0-.883.539,3.553,3.553,0,0,0-.668.769c-.125.191-.235.383-.335.574l-.139.288,1.163,1.033a4.364,4.364,0,0,1,.722-1.109,1.468,1.468,0,0,1,1.144-.529,2.547,2.547,0,0,1,1.088.258q.549.259,1.12.56t1.185.56a3.259,3.259,0,0,0,1.281.259,2.465,2.465,0,0,0,1.034-.205,3.122,3.122,0,0,0,.819-.538,4.827,4.827,0,0,0,.667-.754c.134-.186.262-.379.383-.574l.177-.3Z" fill-rule="evenodd"/></svg>
