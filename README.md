@@ -1,71 +1,52 @@
-《The Swift Programming Language》in Chinese
-=============================================
+# The Swift Programming Language (Simplified Chinese Version by SwiftGG)
 
-中文版 Apple 官方 Swift 教程《The Swift Programming Language》
+This repository contains the source for *The Swift Programming Language*
+(sometimes abbreviated as TSPL),
+which is published on [docs.swift.org][published]
+and built using [Swift-DocC][docc].
 
-[英文原版在线版](https://docs.swift.org/swift-book/)
+This repository includes the latest version of TSPL, as well as Simplified Chinese translations corresponding to different Swift versions.
 
-# 在线阅读
+## Building
 
-使用 GitBook 制作，可以在 [GitBook](https://swiftgg.gitbook.io/swift/) 网站阅读。
+Clone this repository and run `docc preview swift-6-beta-translation.docc`
+in this repository's root directory.
 
-# 当前阶段
+After running DocC, open the link that `docc` outputs
+to display a local preview in your browser.
 
-- 更新到 Swift 5.7，2022-06-06
-- 更新到 Swift 5.6，2022-03-14
-- 更新到 Swift 5.5，2021-06-07
-- 更新到 Swift 5.4，2021-04-26
-- 更新到 Swift 5.3，2020-09-16
-- 更新到 Swift 5.2，2020-02-15
-- 更新到 Swift 5.1，2019-11-11
-- 更新到 Swift 5.0，2019-04-05
-- 更新到 Swift 4.5，2019-03-16
-- 更新到 Swift 4.2，2019-01-29
-- 更新到 Swift 4.1，2018-04-12，感谢 [@Mylittleswift](https://github.com/Mylittleswift)
-- 更新到 Swift 3.0，2016-09-23
+## Current Status
 
+- Latest English version of The Swift Programming Language. [Latest commit: 11a2b29][11a2b29]
+- Corresponding Simplified Chinese translations (in progress and archived):
+  - Swift 6 beta (currently in translation)
+  - Swift 5.x and earlier versions (available for reading on [GitBook][legacy-documentations])
 
-# 贡献力量
+## How to Contribute
 
-如果想做出贡献的话，你可以：
+1. Fork this repository to your account. Claim a translation task labeled as `Swift x translation` in the issues. Create a branch in your forked repository corresponding to the issue, setting the source branch to the current Swift version being translated (e.g., swift-6-beta-translation).
 
-- 参与翻译
-- 帮忙校对，挑错别字、病句等等
-- 提出修改建议
-- 提出术语翻译建议
+2. Install the `docc` command-line tool by either downloading the toolchain from Swift.org or installing Xcode.
 
-# 翻译建议
+   > Note:
+   >
+   > If you installed DocC by downloading a toolchain from Swift.org,
+   > `docc` is located in `usr/bin/`,
+   > relative to the installation path of the toolchain.
+   > Make sure your shell's `PATH` environment variable
+   > includes that directory.
+   >
+   > If you installed DocC by downloading Xcode,
+   > run `xcrun docc preview swift-6-beta-translation.docc` instead.
 
-如果你有兴趣参与项目，请仔细阅读说明：
+3. Replace the content of the original Markdown file with your Chinese translation, following the terminology table below and the [SwiftGG style guide][swiftgg-style-guide]. Submit your translation through a Pull Request. Once verified by SwiftGG members, it will be merged into the current translation branch.
 
-排版格式和流程说明：
+## Terminology Table
 
-- 翻译排版格式要求参考 SwiftGG [排版指南](https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md)
-- Pull Request 发起方式参考 SwiftGG [Pull Request 说明](https://github.com/SwiftGGTeam/translation/blob/master/%E7%BF%BB%E8%AF%91%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0%E5%8F%8APR%E8%AF%B4%E6%98%8E.md#%E5%A6%82%E4%BD%95%E5%8F%91%E8%B5%B7-pull-request)
-
-原版文档差异比较：
-
-在翻译时可以通过 Calibre 软件对 [document 目录下](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/tree/gh-pages/document) 不同版本的文档进行 diff，检查待更新部分。
-
-diff 操作如下：
-
-将最新文档加入到 Calibre 中，点击 **Edit Book**，然后在编辑界面选择 **File** -> **Compare to other book** 检查各模块的更新内容，详见 [链接](https://manual.calibre-ebook.com/diff.html)。
-
-其他说明：
-
-- 相关术语请严格按照术语表来翻译，如果有问题可以发 Issue 大家一起讨论
-- 使用 Markdown 进行翻译，文件名必须使用英文
-- 翻译后的文档请放到 source 文件夹下的对应章节中，然后 Pull Request 即可，我们会用 GitBook 编译成网页
-- 有其他任何问题都欢迎发 Issue
-
-# 术语表
-
-翻译术语的时候请参考这个对照表：
-
-| 术语 | 备选翻译 |
+| Term | Suggest Transition |
 | --- | --- |
 | result builder | 结果构造器 |
-| property wrapper | 属性包装器（[翻译相关讨论](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/issues/982#issuecomment-536244784)） |
+| property wrapper | 属性包装器 |
 | projected value | 被呈现值 |
 | wrapped value | 被包装值 |
 | argument | 实参 |
@@ -143,11 +124,13 @@ diff 操作如下：
 | function | 函数 |
 | runtime | 运行时 |
 
-# 贡献者
+## Contributors
 
-[贡献者列表](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/contributors.md)，感谢大家！
+We extend our heartfelt thanks to all our contributors. You can find the [list of contributors here][contributors].
 
-
-
-# 协议
-和 [苹果官方文档](https://swift.org/documentation/) 协议一致：[Creative Commons Attribution 4.0 International (CC BY 4.0) License](https://creativecommons.org/licenses/by/4.0/)。
+[published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
+[docc]: https://github.com/apple/swift-docc
+[11a2b29]: https://github.com/swiftlang/swift-book/commit/11a2b29983e9401c179d6269c9becc1256b11bc6
+[legacy-documentations]: https://swiftgg.gitbook.io/swift/
+[swiftgg-style-guide]: https://github.com/SwiftGGTeam/translation/blob/master/SwiftGG%20排版指南.md
+[contributors]: https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/gh-pages/source/contributors.md
