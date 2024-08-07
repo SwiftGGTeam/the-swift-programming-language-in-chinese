@@ -26,6 +26,18 @@ function traverseDirectory(dir) {
     });
 }
 
+// 计算翻译估计用时
+function calculateTranslationTime(content) {
+    const wordCount = content.split(/\s+/).length;
+    const hours = Math.ceil(wordCount / 500); // 假设平均翻译速度为每小时500词
+
+    if (hours <= 1) return '⭐️';
+    if (hours <= 2) return '⭐️⭐️';
+    if (hours <= 4) return '⭐️⭐️⭐️';
+    if (hours <= 6) return '⭐️⭐️⭐️⭐️';
+    return '⭐️⭐️⭐️⭐️⭐️';
+}
+
 // 处理 Markdown 文件
 function processMarkdownFile(filePath) {
     const relativePath = path.relative(rootDir, filePath);
@@ -47,23 +59,28 @@ function processMarkdownFile(filePath) {
     }
 
     if (matchingUrl) {
-        const content = fs.readFileSync(filePath, 'utf8');
+        let content = fs.readFileSync(filePath, 'utf8');
+        const translationTime = calculateTranslationTime(content);
 
-        // 检查文件是否已经包含了注释
-        if (content.includes('要翻译的文件：') && content.includes('Swift 文档源文件地址：')) {
-            console.log(`Already updated: ${filePath}`);
-            return;
-        }
-
-        const newContent = `<!--
+        const newComment = `<!--
 要翻译的文件：${githubBaseUrl}/${relativePath.replace(/\\/g, '/')}
 Swift 文档源文件地址：${matchingUrl}
--->
+翻译估计用时：${translationTime}
+-->`;
 
-${content}`;
+        // 检查文件是否已经包含了注释
+        const commentRegex = /<!--[\s\S]*?-->/;
+        if (commentRegex.test(content)) {
+            // 更新已存在的注释
+            content = content.replace(commentRegex, newComment);
+            console.log(`Updated existing comment: ${filePath}`);
+        } else {
+            // 添加新的注释
+            content = `${newComment}\n\n${content}`;
+            console.log(`Added new comment: ${filePath}`);
+        }
 
-        fs.writeFileSync(filePath, newContent);
-        console.log(`Updated: ${filePath}`);
+        fs.writeFileSync(filePath, content);
     } else {
         console.log(`No matching URL found for: ${filePath}`);
     }
