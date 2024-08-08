@@ -1,4 +1,5 @@
 const axios = require('axios');
+const fs = require('fs').promises;
 
 // GitHub API 配置
 const API_URL = "https://api.github.com";
@@ -6,7 +7,7 @@ const REPO_OWNER = "SwiftGGTeam";
 const REPO_NAME = "the-swift-programming-language-in-chinese";
 const BRANCH = "swift-6-beta-translation";
 
-// TODO: 请在运行脚本之前设置您的个人访问令牌
+// 您的个人访问令牌
 const TOKEN = process.env.GITHUB_TOKEN;
 
 // 设置请求头
@@ -28,24 +29,24 @@ async function getExistingIssues() {
     return issues;
 }
 
-async function createIssue(title, body, labels, retries = 3) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            const url = `${API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/issues`;
-            const data = { title, body, labels };
-            const response = await axios.post(url, data, { headers });
+async function createIssue(title, body, labels) {
+    try {
+        const url = `${API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/issues`;
+        const data = { title, body, labels };
+        const response = await axios.post(url, data, { headers });
 
-            if (response.status === 201) {
-                console.log(`Issue created successfully: ${title}`);
-                return response.data;
-            }
-        } catch (error) {
-            console.error(`Error creating issue (attempt ${i + 1}):`, error.message);
-            if (i === retries - 1) throw error;
-            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))); // 等待时间递增
+        if (response.status === 201) {
+            console.log(`Issue created successfully: ${title}`);
+            return response.data;
+        } else {
+            console.log(`Failed to create issue: ${response.status}`);
+            console.log(response.data);
+            return null;
         }
+    } catch (error) {
+        console.error("Error creating issue:", error.message);
+        return null;
     }
-    return null;
 }
 
 async function getFilesInDirectory(path) {
@@ -64,11 +65,18 @@ async function getFilesInDirectory(path) {
     }
 }
 
-function formatIssueTitle(filePath) {
+function formatIssueTitle(filePath, estimatedTime) {
     const parts = filePath.split('/');
-    const fileName = parts.pop().toLowerCase().replace('.md', '');
+    const fileName = parts.pop().toLowerCase();
     const folderName = parts[parts.length - 1];
-    return `${folderName} / ${fileName}.md`;
+
+    // Convert camelCase or PascalCase to kebab-case
+    const kebabFileName = fileName
+        .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+        .toLowerCase();
+
+    return `${folderName} / ${kebabFileName} ${estimatedTime}`;
 }
 
 function formatIssueBody(filePath) {
@@ -76,15 +84,37 @@ function formatIssueBody(filePath) {
     return `翻译文件：${fileUrl}\n请在认领任务前查看 Markdown 文件内容，并了解对应的 Swift 原文档链接和翻译预估时长`;
 }
 
+async function getFileContent(filePath) {
+    try {
+        const url = `${API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`;
+        const response = await axios.get(url, { headers });
+        if (response.status === 200) {
+            return Buffer.from(response.data.content, 'base64').toString('utf-8');
+        }
+    } catch (error) {
+        console.error(`Error getting file content: ${error.message}`);
+    }
+    return null;
+}
+
+function extractEstimatedTime(content) {
+    const match = content.match(/翻译估计用时：(.*)/);
+    return match ? match[1].trim() : '';
+}
+
 async function processDirectory(path, existingIssues) {
     const files = await getFilesInDirectory(path);
     for (const file of files) {
-        const issueTitle = formatIssueTitle(file.path);
-        if (!existingIssues.has(issueTitle)) {
-            const issueBody = formatIssueBody(file.path);
-            await createIssue(issueTitle, issueBody, ["Swift 6 beta translation"]);
-        } else {
-            console.log(`Issue already exists: ${issueTitle}`);
+        const content = await getFileContent(file.path);
+        if (content) {
+            const estimatedTime = extractEstimatedTime(content);
+            const issueTitle = formatIssueTitle(file.path, estimatedTime);
+            if (!existingIssues.has(issueTitle)) {
+                const issueBody = formatIssueBody(file.path);
+                await createIssue(issueTitle, issueBody, ["Swift 6 beta translation"]);
+            } else {
+                console.log(`Issue already exists: ${issueTitle}`);
+            }
         }
     }
 }
