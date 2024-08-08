@@ -1544,6 +1544,16 @@ are expressions that contain a macro ---
 the macros in those expressions are evaluated
 using the source code location where `f(a:b:c:)` is defined.
 
+When you use a macro as a default value,
+it's type checked without expanding the macro,
+to check the following requirements:
+
+- The macro either takes no arguments,
+  or its arguments are literals without string interpolation.
+- The macro's return type matches the parameter's type.
+- The access level for the macro's return type
+  is the same as or less restrictive than the function that uses it.
+
 You use macro expressions to call freestanding macros.
 To call an attached macro,
 use the custom attribute syntax described in <doc:Attributes>.
