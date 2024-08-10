@@ -95,84 +95,84 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 
 | Term | Suggest Transition |
 | --- | --- |
-| result builder | 结果构造器 |
-| property wrapper | 属性包装器 |
-| projected value | 被呈现值 |
-| wrapped value | 被包装值 |
-| argument | 实参 |
-| parameter | 形参 |
-| variadic parameters| 可变参数 |
-| associated type | 关联类型 |
-| range | 区间 |
-| type property | 类型属性 |
-| unary operator | 一元运算符 |
-| binary operator | 二元运算符 |
-| ternary operator | 三元运算符 |
-| labeled statement | 具名语句 |
-| conform protocol | 遵循协议 |
-| availability-condition | 可用性条件 |
-| fallthrough | 贯穿 |
-| branch statement | 分支语句 |
-| control transfer statement | 控制传递语句 |
-| type annotation | 类型注解 |
-| type identifier | 类型标识符 |
-| metatype type | 元类型 |
-| protocol composition type | 复合协议类型 |
-| associated value | 关联值 |
-| raw value | 原始值 |
-| computed property | 计算属性 |
-| stored property | 存储属性 |
-| operator | 运算符 |
-| playground | 不翻译 |
+| alias | 别名 |
 | array | 数组 |
+| argument | 实参 |
+| assertion | 断言 |
+| associated type | 关联类型 |
+| associated value | 关联值 |
+| attribute | 特性或者属性，根据上下文 |
+| automatic reference counting | 自动引用计数 |
+| availability-condition | 可用性条件 |
+| base class | 基类 |
+| binary operator | 二元运算符 |
+| branch statement | 分支语句 |
+| closure | 闭包 |
+| collection | 集合 |
+| computed property | 计算属性 |
+| conditional compilation | 条件编译 |
+| conform protocol | 遵循协议 |
+| control transfer statement | 控制传递语句 |
+| convenience initializer | 便利构造器 |
+| convention | 约定 |
+| deinitialization | 析构过程 |
+| deinitializer | 析构器 |
+| designated initializer | 指定构造器 |
 | dictionary | 字典 |
-| list | 列表 |
-| statement | 语句 |
+| enumeration | 枚举 |
 | expression | 表达式 |
-| optional | 可选 |
+| extension | 扩展 |
+| fallthrough | 贯穿 |
+| first-class | 一等 |
+| function | 函数 |
+| generic | 泛型 |
+| getter | 不翻译 |
 | implicitly unwrapped optional | 隐式解包可选值 |
+| inheritance | 继承 |
+| initialization | 构造过程 |
+| initializer | 构造器 |
+| iterate | 迭代 |
+| labeled statement | 具名语句 |
+| list | 列表 |
+| literal value | 字面量 |
+| metatype type | 元类型 |
+| method | 方法 |
+| nest | 嵌套 |
+| note | 注意 |
+| opaque type | 不透明类型 |
+| operator | 运算符 |
+| optional | 可选 |
 | optional binding | 可选绑定 |
 | optional chaining | 可选链 |
-| collection | 集合 |
-| convention | 约定 |
-| iterate | 迭代 |
-| nest | 嵌套 |
-| inheritance | 继承 |
 | override | 重写 |
-| base class | 基类 |
-| designated initializer | 指定构造器 |
-| convenience initializer | 便利构造器 |
-| automatic reference counting | 自动引用计数 |
+| parameter | 形参 |
+| playground | 不翻译 |
+| projected value | 被呈现值 |
+| property | 属性 |
+| property wrapper | 属性包装器 |
+| protocol | 协议 |
+| protocol composition type | 复合协议类型 |
+| result builder | 结果构造器 |
+| range | 区间 |
+| raw value | 原始值 |
+| runtime | 运行时 |
+| setter | 不翻译 |
+| statement | 语句 |
+| stored property | 存储属性 |
+| structure | 结构体 |
+| subscript | 下标 |
+| ternary operator | 三元运算符 |
+| tuple | 元组 |
+| type annotation | 类型注解 |
+| type identifier | 类型标识符 |
+| type property | 类型属性 |
 | type inference | 类型推断 |
 | type casting | 类型转换 |
+| unary operator | 一元运算符 |
 | unwrapped | 解包 |
+| variadic parameters| 可变参数 |
 | wrapped | 包装 |
-| note | 注意 |
-| closure | 闭包 |
-| tuple | 元组 |
-| first-class | 一等 |
-| deinitializer | 析构器 |
-| initializer | 构造器 |
-| initialization | 构造过程 |
-| deinitialization | 析构过程 |
-| getter | 不翻译 |
-| setter | 不翻译 |
-| subscript | 下标 |
-| property | 属性 |
-| attribute | 特性或者属性，根据上下文 |
-| method | 方法 |
-| enumeration | 枚举 |
-| structure | 结构体 |
-| protocol | 协议 |
-| extension | 扩展 |
-| generic | 泛型 |
-| literal value | 字面量 |
-| alias | 别名 |
-| assertion | 断言 |
-| conditional compilation | 条件编译 |
-| opaque type | 不透明类型 |
-| function | 函数 |
-| runtime | 运行时 |
+| wrapped value | 被包装值 |
 
 [published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
 [docc]: https://github.com/apple/swift-docc
