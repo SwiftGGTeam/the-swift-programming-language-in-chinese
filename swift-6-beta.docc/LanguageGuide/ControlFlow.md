@@ -10,8 +10,8 @@ Swift 提供了 `for`-`in` 循环，用来更简单地遍历数组（Array），
 Swift 还提供了 `defer` 语句，用来包含离开当前代码块时要执行的代码。
 
 Swift 的 `switch` 语句比许多类 C 语言要更加强大。
-case 还可以匹配很多不同的模式，包括范围匹配，元组（tuple）和特定类型匹配。 and casts to a specific type.
-`switch` 语句的 case 中匹配的值可以声明为临时常量或变量，在 case 作用域内使用，也可以配合  `where` 来描述更复杂的匹配条件。
+case 还可以匹配很多不同的模式，包括范围匹配，元组（tuple）和特定类型匹配。
+`switch` 语句的 `case` 中匹配的值可以声明为临时常量或变量以便在 `case` 作用域内使用，也可以配合  `where` 来描述更复杂的匹配条件。
 
 ## For-In 循环
 
