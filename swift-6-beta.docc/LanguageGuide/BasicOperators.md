@@ -27,14 +27,54 @@ Swift 还提供了 C 语言中没有的区间运算符，如 `a..<b` 和 `a...b`
 ```swift
 let b = 10
 var a = 5
-a = b // a 现在等于 10
+a = b
+// a 现在等于 10
 ```
 
-如果赋值的右侧是一个包含多个值的元组，它的元素可以一次分解为多个常量或变量：
+<!--
+  - 测试: `assignmentOperator`
+
+  ```swifttest
+  -> let b = 10
+  -> var a = 5
+  -> a = b
+  /> a 现在等于 \(a)
+  </ a 现在等于 10
+  ```
+-->
+
+如果赋值运算符的右侧是一个包含多个值的元组，可以将其元素同时分解为多个常量或变量：
 
 ```swift
 let (x, y) = (1, 2) // x 等于 1, y 等于 2
 ```
+
+<!--
+  - 测试: `assignmentOperator`
+
+  ```swifttest
+  -> let (x, y) = (1, 2)
+  /> x 等于 \(x),  y 等于 \(y)
+  </ x 等于 1,  y 等于 2
+  ```
+-->
+
+<!--
+  - 测试: `tuple-unwrapping-with-var`
+
+  ```swifttest
+  >> var (x, y) = (1, 2)
+  ```
+-->
+
+<!--
+  这仍然允许变量赋值，
+  即使 var 模式已经被移除，
+  因为它被解析为一个变量声明，
+  使用第一个替代方案，其中 (x, y) 是一个模式，
+  但 `var` 来自变量声明头部，
+  而不是来自模式。
+-->
 
 与 C 和 Objective-C 中的赋值运算符不同，Swift 中的赋值运算符本身不返回值。以下语句无效：
 
@@ -43,7 +83,28 @@ if x = y { // 这是无效的，因为 x = y 不返回值。
 }
 ```
 
+<!--
+  - 测试: `assignmentOperatorInvalid`
+
+  ```swifttest
+  -> if x = y {
+        // 这是无效的，因为 x = y 不返回值。
+     }
+  !$ error: cannot find 'x' in scope
+  !! if x = y {
+  !!    ^
+  !$ error: cannot find 'y' in scope
+  !! if x = y {
+  !!        ^
+  ```
+-->
+
 因为 Swift 语言规定 `if x = y` 这种写法是无效的，这个特性可以防止不小心使用赋值运算符（=） 而非等于运算符（==）。Swift 帮助你避免代码中出现这种错误。
+
+<!--
+  TODO: 我们是否应该提到 x = y = z 也是无效的？
+  如果是这样，是否有一个令人信服的理由说明这为什么我们要这么做？
+-->
 
 ## 算术运算符
 
@@ -61,6 +122,25 @@ Swift 为所有数值类型支持四种标准*算术运算符*：
 10.0 / 2.5  // 等于 4.0
 ```
 
+<!--
+  - 测试: `arithmeticOperators`
+
+  ```swifttest
+  >> let r0 =
+  -> 1 + 2       // equals 3
+  >> assert(r0 == 3)
+  >> let r1 =
+  -> 5 - 3       // equals 2
+  >> assert(r1 == 2)
+  >> let r2 =
+  -> 2 * 3       // equals 6
+  >> assert(r2 == 6)
+  >> let r3 =
+  -> 10.0 / 2.5  // equals 4.0
+  >> assert(r3 == 4.0)
+  ```
+-->
+
 Swift 的算术运算符与 C 和 Objective-C 中的不同，默认情况下不允许值溢出。您可以选择使用 Swift 的溢出运算符（如 `a &+ b`）来启用值溢出行为。请参阅 <doc:AdvancedOperators#Overflow-Operators>。
 
 加法运算符也支持 `String` 拼接：
@@ -69,13 +149,41 @@ Swift 的算术运算符与 C 和 Objective-C 中的不同，默认情况下不�
 "hello, " + "world"  // 等于 "hello, world"
 ```
 
+<!--
+  - 测试: `arithmeticOperators`
+
+  ```swifttest
+  >> let r4 =
+  -> "hello, " + "world"  // 等于 "hello, world"
+  >> assert(r4 == "hello, world")
+  ```
+-->
+
 ### 余数运算符
 
 *余数运算符*（`a % b`）计算出 `b` 在 `a` 中能容纳多少个倍数，并返回剩余的值（称为*余数*）。
 
-> 注意: 需要注意的是，尽管余数运算符在其他语言中也被称为模运算符，但在 Swift 中对负数的处理与模运算符有所不同。
+> 注意: 需要注意的是，尽管余数运算符在其他语言中也被称为模运算符，
+> 但在 Swift 中对负数的处理与模运算符有所不同。
 
-让我们来看看余数运算符是如何工作的。要计算 `9 % 4`，首先要计算 `4` 在 `9` 中能容纳多少个：
+<!--
+  - 测试: `percentOperatorIsRemainderNotModulo`
+
+  ```swifttest
+  -> for i in -5...0 {
+        print(i % 4)
+     }
+  << -1
+  << 0
+  << -3
+  << -2
+  << -1
+  << 0
+  ```
+-->
+
+让我们来看看余数运算符是如何工作的。
+要计算 `9 % 4`，首先要确定 `9` 中可以包含多少个 `4`：
 
 ![](remainderInteger)
 
@@ -86,6 +194,16 @@ Swift 的算术运算符与 C 和 Objective-C 中的不同，默认情况下不�
 ```swift
 9 % 4    // 等于 1
 ```
+
+<!--
+  - 测试: `arithmeticOperators`
+
+  ```swifttest
+  >> let r5 =
+  -> 9 % 4    // equals 1
+  >> assert(r5 == 1)
+  ```
+-->
 
 为了确定 `a % b` 的答案，`%` 运算符计算以下等式并返回 `余数` 作为输出：
 
@@ -102,6 +220,16 @@ Swift 的算术运算符与 C 和 Objective-C 中的不同，默认情况下不�
 ```swift
 -9 % 4   // 等于 -1
 ```
+
+<!--
+  - 测试: `arithmeticOperators`
+
+  ```swifttest
+  >> let r6 =
+  -> -9 % 4   // equals -1
+  >> assert(r6 == -1)
+  ```
+-->
 
 将 `-9` 和 `4` 代入等式，得：
 
@@ -121,7 +249,7 @@ let minusThree = -three       // minusThree 等于 -3
 let plusThree = -minusThree   // plusThree 等于 3，或 "负负三"
 ```
 
-<!-- - test: `arithmeticOperators`
+<!-- - 测试: `arithmeticOperators`
 
   ```swifttest 
 -> let three = 3
@@ -140,7 +268,7 @@ let minusSix = -6
 let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6  
 ```
 
-<!-- - test: `arithmeticOperators`
+<!-- - 测试: `arithmeticOperators`
 
   ```swifttest
 -> let minusSix = -6
@@ -157,10 +285,11 @@ let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
 
 ```swift
 var a = 1
-a += 2 // a 现在等于 3
+a += 2
+// a 现在等于 3
 ```
 
-<!-- - test: `compoundAssignment`
+<!-- - 测试: `compoundAssignment`
 
   ```swifttest
 -> var a = 1
@@ -203,15 +332,27 @@ Swift 支持以下比较运算符：
 2 <= 1   // false 因为 2 不小于等于 1
 ```
 
-<!-- - test: `comparisonOperators`
+<!-- - 测试: `comparisonOperators`
 
   ```swifttest
->> assert( -> 1 == 1   // true 因为 1 等于 1 >> )
->> assert( -> 2 != 1   // true 因为 2 不等于 1 >> )
->> assert( -> 2 > 1    // true 因为 2 大于 1 >> )
->> assert( -> 1 < 2    // true 因为 1 小于 2 >> )
->> assert( -> 1 >= 1   // true 因为 1 大于等于 1 >> )
->> assert( !( -> 2 <= 1   // false 因为 2 不小于等于 1 >> ) )
+>> assert(
+-> 1 == 1   // true 因为 1 等于 1
+>> )
+>> assert(
+-> 2 != 1   // true 因为 2 不等于 1
+>> )
+>> assert(
+-> 2 > 1    // true 因为 2 大于 1
+>> )
+>> assert(
+-> 1 < 2    // true 因为 1 小于 2
+>> )
+>> assert(
+-> 1 >= 1   // true 因为 1 大于等于 1
+>> )
+>> assert( !(
+-> 2 <= 1   // false 因为 2 不小于等于 1
+>> ) )
 ``` -->
 
 比较运算符通常用于条件语句中，例如 `if` 语句：
@@ -225,12 +366,17 @@ if name == "world" {
 } // 打印 "hello, world", 因为 name 确实等于 "world"。
 ```
 
-<!-- - test: `comparisonOperators`
+<!-- - 测试: `comparisonOperators`
 
   ```swifttest
 -> let name = "world"
--> if name == "world" { print("hello, world") } else { print("对不起 \(name), 但我不认识你") }
-<< hello, world // 打印 "hello, world", 因为 name 确实等于 "world"。
+-> if name == "world" {
+      print("hello, world")
+    } else {
+      print("对不起 \(name), 但我不认识你")
+    }
+<< hello, world
+// 打印 "hello, world", 因为 name 确实等于 "world"。
   ```
 -->
 
@@ -248,6 +394,21 @@ if name == "world" {
 (4, "dog") == (4, "dog")      // 为 true，因为 4 等于 4，而 "dog" 等于 "dog"
 ```
 
+<!--
+  - test: `tuple-comparison-operators`
+
+  ```swifttest
+  >> let a =
+  -> (1, "zebra") < (2, "apple")   // 为 true，因为 1 小于 2; "zebra" 和 "apple" 未比较aren't compared
+  >> let b =
+  -> (3, "apple") < (3, "bird")    // 为 true，因为 3 等于 3，而 "apple" 小于 "bird"
+  >> let c =
+  -> (4, "dog") == (4, "dog")      // 为 true，因为 4 等于 4，而 "dog" 等于 "dog"
+  >> print(a, b, c)
+  << true true true
+  ```
+-->
+
 在上面的示例中，您可以看到第一行的从左到右比较行为。
 因为 `1` 小于 `2`，所以 `(1, "zebra")` 被认为小于 `(2, "apple")`，而不管元组中的任何其他值如何。
 即使 `"zebra"` 不小于 `"apple"`，也无关紧要，因为比较已经由元组的第一个元素决定了。
@@ -260,10 +421,45 @@ if name == "world" {
 ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
 ```
 
+<!--
+  - test: `tuple-comparison-operators-err`
+
+  ```swifttest
+  >> _ =
+  -> ("blue", -1) < ("purple", 1)        // 可以，计算结果为 true
+  >> _ =
+  -> ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !$ error: type '(String, Bool)' cannot conform to 'Comparable'
+  !! ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !!                 ^
+  !$ note: only concrete types such as structs, enums and classes can conform to protocols
+  !! ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !!                 ^
+  !$ note: required by referencing operator function '<' on 'Comparable' where 'Self' = '(String, Bool)'
+  !! ("blue", false) < ("purple", true)  // 错误，因为 < 不能比较布尔值
+  !!                 ^
+  ```
+-->
+
+<!--
+  - test: `tuple-comparison-operators-ok`
+
+  ```swifttest
+  >> let x = ("blue", -1) < ("purple", 1)        // 可以，计算结果为 true
+  >> print(x)
+  << true
+  ```
+-->
+
 > 注意: Swift 标准库包含用于具有少于七个元素的元组的比较运算符。
 > 要比较具有七个或更多元素的元组，
 > 您必须自己实现比较运算符。
 
+<!--
+  TODO: 这些默认操作于哪些类型？
+  它们如何处理字符串？
+  如果是自定义的类型又会怎样？
+-->
 
 ## 三元条件运算符
 
@@ -272,20 +468,59 @@ if name == "world" {
 三元条件运算符是以下代码的简写形式：
 
 ```swift
-if 问题 {
-    答案1
+if question {
+    answer1
 } else {
-    答案2
+    answer2
 }
 ```
+
+<!--
+  - 测试: `ternaryConditionalOperatorOutline`
+
+  ```swifttest
+  >> let question = true
+  >> let answer1 = true
+  >> let answer2 = true
+  -> if question {
+        answer1
+     } else {
+        answer2
+     }
+  !! /tmp/swifttest.swift:5:4: warning: expression of type 'Bool' is unused
+  !! answer1
+  !! ^~~~~~~
+  !! /tmp/swifttest.swift:7:4: warning: expression of type 'Bool' is unused
+  !! answer2
+  !! ^~~~~~~
+  ```
+-->
+
+<!--
+  FIXME 这个例子含糊其辞的地方太多了。
+  Swift 中并没有 'if' 表达式。
+-->
 
 下面是一个例子，用于计算表格行的高度。如果该行有标题，则行高应比内容高度高 50 点；如果该行没有标题，则行高应比内容高度高 20 点：
 
 ```swift
 let contentHeight = 40
 let hasHeader = true
-let rowHeight = contentHeight + (hasHeader ? 50 : 20) // rowHeight 等于 90
+let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+// rowHeight 等于 90
 ```
+
+<!--
+  - 测试: `ternaryConditionalOperatorPart1`
+
+  ```swifttest
+  -> let contentHeight = 40
+  -> let hasHeader = true
+  -> let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+  /> rowHeight is equal to \(rowHeight)
+  </ rowHeight is equal to 90
+  ```
+-->
 
 上面的例子是下面代码的简写形式：
 
@@ -301,6 +536,23 @@ if hasHeader {
 // rowHeight 等于 90
 ```
 
+<!--
+  - 测试: `ternaryConditionalOperatorPart2`
+
+  ```swifttest
+  -> let contentHeight = 40
+  -> let hasHeader = true
+  -> let rowHeight: Int
+  -> if hasHeader {
+        rowHeight = contentHeight + 50
+     } else {
+        rowHeight = contentHeight + 20
+     }
+  /> rowHeight is equal to \(rowHeight)
+  </ rowHeight is equal to 90
+  ```
+-->
+
 第一个例子使用三元条件运算符意味着`rowHeight`可以在一行代码中设置为正确的值，这比第二个例子中使用的代码更加简洁。
 
 三元条件运算符提供了一种有效的简写方式来决定考虑两个表达式中的哪一个。不过，要谨慎使用三元条件运算符。如果过度使用，代码的可读性会下降。避免将多个三元条件运算符实例组合成一个复合语句。
@@ -315,11 +567,24 @@ if hasHeader {
 a != nil ? a! : b
 ```
 
+<!--
+  - 测试: `nilCoalescingOperatorOutline`
+
+  ```swifttest
+  >> var a: Int?
+  >> let b = 42
+  >> let c =
+  -> a != nil ? a! : b
+  >> print(c)
+  << 42
+  ```
+-->
+
 上面的代码使用三元条件运算符和强制解包（`a!`）来访问 `a` 中包装的值（当 `a` 不是 `nil` 时），否则返回 `b`。空合并运算符提供了一种更优雅的方式，以简洁和可读的形式封装这种条件检查和解包。
 
 > 注意: 如果 `a` 的值是非 `nil` 的，则不会计算 `b` 的值。这被称为*短路求值*。
 
-下面的示例使用 空合并运算符在默认颜色名称和可选用户定义的颜色名称之间进行选择：
+下面的示例使用空合并运算符在默认颜色名称和可选用户定义的颜色名称之间进行选择：
 
 ```swift
 let defaultColorName = "red"
@@ -328,6 +593,19 @@ var userDefinedColorName: String?   // 默认为 nil
 var colorNameToUse = userDefinedColorName ?? defaultColorName
 // userDefinedColorName 为空，所以 colorNameToUse 为默认值 "red"
 ```
+
+<!--
+  - test: `nilCoalescingOperator`
+
+  ```swifttest
+  -> let defaultColorName = "red"
+  -> var userDefinedColorName: String?   // 默认为 nil
+  ---
+  -> var colorNameToUse = userDefinedColorName ?? defaultColorName
+  /> userDefinedColorName 为空，所以 colorNameToUse 为默认值 \"\(colorNameToUse)\"
+  </ userDefinedColorName 为空，所以 colorNameToUse 为默认值 "red"
+  ```
+-->
 
 变量 `userDefinedColorName` 被定义为一个可选的 `String` 类型，默认值为 `nil`。由于 `userDefinedColorName` 是一个可选类型，你可以使用空合并运算符来考虑它的值。在上面的例子中，该运算符被用于确定一个名为 `colorNameToUse` 的 `String` 变量的初始值。因为 `userDefinedColorName` 是 `nil`，所以表达式 `userDefinedColorName ?? defaultColorName` 返回 `defaultColorName` 的值，即 `"red"`。
 
@@ -339,6 +617,17 @@ colorNameToUse = userDefinedColorName ?? defaultColorName
 // userDefinedColorName 不是 nil，所以 colorNameToUse 被设置为 "green"
 ```
 
+<!--
+  - 测试: `nilCoalescingOperator`
+
+  ```swifttest
+  -> userDefinedColorName = "green"
+  -> colorNameToUse = userDefinedColorName ?? defaultColorName
+  /> userDefinedColorName 不是 nil，所以 colorNameToUse 被设置为 \"\(colorNameToUse)\"
+  </ userDefinedColorName 不是 nil，所以 colorNameToUse 被设置为 "green"
+  ```
+-->
+
 ## 区间运算符
 
 Swift 包含几个*区间运算符*，这些是表达一个值范围的快捷方式。
@@ -346,6 +635,33 @@ Swift 包含几个*区间运算符*，这些是表达一个值范围的快捷方
 ### 闭区间运算符  
 
 *闭区间运算符*（`a...b`）定义了一个从 `a` 到 `b` 的范围，包括 `a` 和 `b` 的值。`a` 的值不能大于 `b`。
+
+<!--
+  - 测试: `closedRangeStartCanBeLessThanEnd`
+
+  ```swifttest
+  -> let range = 1...2
+  >> print(type(of: range))
+  << ClosedRange<Int>
+  ```
+-->
+
+<!--
+  - 测试: `closedRangeStartCanBeTheSameAsEnd`
+
+  ```swifttest
+  -> let range = 1...1
+  ```
+-->
+
+<!--
+  - 测试: `closedRangeStartCannotBeGreaterThanEnd`
+
+  ```swifttest
+  -> let range = 1...0
+  xx assertion
+  ```
+-->
 
 闭区间运算符在需要使用所有值的情况下很有用，例如在 `for-in` 循环中：
 
@@ -360,11 +676,53 @@ for index in 1...5 {
 // 5 乘以 5 等于 25
 ```
 
+<!--
+  - 测试: `rangeOperators`
+
+  ```swifttest
+  -> for index in 1...5 {
+        print("\(index) 乘以 5 等于 \(index * 5)")
+     }
+  </ 1 乘以 5 等于 5
+  </ 2 乘以 5 等于 10
+  </ 3 乘以 5 等于 15 
+  </ 4 乘以 5 等于 20
+  </ 5 乘以 5 等于 25
+  ```
+-->
+
 更多关于 `for-in` 循环的内容，请参阅 <doc:ControlFlow>。
 
 ### 半开区间运算符
 
 *半开区间运算符*（`a..<b`）定义了一个从 `a` 到 `b` 但不包括 `b` 的范围。它被称为*半开*是因为它包含第一个值但不包含最后一个值。与闭区间运算符一样，`a` 的值不能大于 `b`。如果 `a` 等于 `b`，那么结果范围将是空的。
+
+<!--
+  - 测试: `halfOpenRangeStartCanBeLessThanEnd`
+
+  ```swifttest
+  -> let range = 1..<2
+  >> print(type(of: range))
+  << Range<Int>
+  ```
+-->
+
+<!--
+  - 测试: `halfOpenRangeStartCanBeTheSameAsEnd`
+
+  ```swifttest
+  -> let range = 1..<1
+  ```
+-->
+
+<!--
+  - 测试: `halfOpenRangeStartCannotBeGreaterThanEnd`
+
+  ```swifttest
+  -> let range = 1..<0
+  xx assertion
+  ```
+-->
 
 半开区间对于处理从基数 0 开始的列表（如数组）时特别有用，因为它可以计数到列表长度（但不包括列表长度）：
 
@@ -380,9 +738,22 @@ for i in 0..<count {
 // 第 4 个人叫 Jack
 ```
 
-<!-- - test: `rangeOperators`
+<!--
+  - 测试: `rangeOperators`
 
-  ```swifttest -> let names = ["Anna", "Alex", "Brian", "Jack"] -> let count = names.count >> assert(count == 4) -> for i in 0..<count { print("第 \(i + 1) 个人叫 \(names[i])") } </ 第 1 个人叫 Anna </ 第 2 个人叫 Alex </ 第 3 个人叫 Brian </ 第 4 个人叫 Jack ``` -->
+  ```swifttest
+  -> let names = ["Anna", "Alex", "Brian", "Jack"]
+  -> let count = names.count
+  >> assert(count == 4)
+  -> for i in 0..<count {
+        print("第 \(i + 1) 个人叫 \(names[i])")
+     }
+  </ 第 1 个人叫 Anna
+  </ 第 2 个人叫 Alex
+  </ 第 3 个人叫 Brian 
+  </ 第 4 个人叫 Jack
+```
+-->
 
 注意数组包含四个元素，但 `0..<count` 只计数到 `3`（数组中最后一个元素的索引），因为它是一个半开区间。
 有关数组的更多信息，请参阅 <doc:CollectionTypes#Arrays>。
@@ -405,9 +776,24 @@ for name in names[...2] { print(name) }
 // Brian 
 ```
 
-<!-- - test: `rangeOperators`
+<!--
+  - 测试: `rangeOperators`
 
-  ```swifttest -> for name in names[2...] { print(name) } </ Brian </ Jack --- -> for name in names[...2] { print(name) } </ Anna </ Alex </ Brian ``` -->
+  ```swifttest
+  -> for name in names[2...] {
+         print(name)
+     }
+  </ Brian
+  </ Jack
+  ---
+  -> for name in names[...2] {
+         print(name)
+     }
+  </ Anna
+  </ Alex
+  </ Brian
+  ```
+-->
 
 半开区间运算符也有一种只写最后一个值的单侧形式。
 就像在两侧都包含值时一样，最后一个值不包含在区间内。
@@ -419,9 +805,17 @@ for name in names[..<2] { print(name) }
 // Alex
 ```
 
-<!-- - test: `rangeOperators`
+<!--
+  - 测试: `rangeOperators`
 
-  ```swifttest -> for name in names[..<2] { print(name) } </ Anna </ Alex ``` -->
+  ```swifttest
+  -> for name in names[..<2] {
+         print(name)
+     }
+  </ Anna
+  </ Alex
+  ```
+-->
 
 单侧区间不仅可以用于下标，还可以用于其他上下文。
 对于省略了第一个值的单侧区间，你不能遍历它，因为不清楚他从哪里开始迭代。
@@ -435,9 +829,23 @@ range.contains(4)   // true
 range.contains(-1)  // true
 ```
 
-<!-- - test: `rangeOperators`
+<!--
+  - 测试: `rangeOperators`
 
-  ```swifttest -> let range = ...5 >> print(type(of: range)) << PartialRangeThrough<Int> >> let a = -> range.contains(7)   // false >> let b = -> range.contains(4)   // true >> let c = -> range.contains(-1)  // true >> print(a, b, c) << false true true ``` -->
+  ```swifttest
+  -> let range = ...5
+  >> print(type(of: range))
+  << PartialRangeThrough<Int>
+  >> let a =
+  -> range.contains(7)   // false
+  >> let b =
+  -> range.contains(4)   // true
+  >> let c =
+  -> range.contains(-1)  // true
+  >> print(a, b, c)
+  << false true true
+  ```
+-->
 
 ## 逻辑运算符  
 
@@ -464,9 +872,17 @@ if !allowedEntry {
 } // 打印 "ACCESS DENIED"
 ```
 
-<!-- - 测试: `logicalOperators`
+<!--
+  - 测试: `logicalOperators`
 
-  ```swifttest -> let allowedEntry = false -> if !allowedEntry { print("ACCESS DENIED") } <- ACCESS DENIED ``` -->
+  ```swifttest
+  -> let allowedEntry = false
+  -> if !allowedEntry {
+        print("ACCESS DENIED")
+     }
+  <- ACCESS DENIED
+  ```
+-->
 
 短语 `if !allowedEntry` 可以理解为 "如果不允许进入"。只有当 "不允许进入" 为真时，才会执行后续的那一行；也就是说，如果 `allowedEntry` 为 `false`。
 
@@ -488,9 +904,20 @@ if enteredDoorCode && passedRetinaScan {
 } // 打印 "ACCESS DENIED"
 ```
 
-<!-- - 测试: `logicalOperators`
+<!--
+  - 测试: `logicalOperators`
 
-  ```swifttest -> let enteredDoorCode = true -> let passedRetinaScan = false -> if enteredDoorCode && passedRetinaScan { print("Welcome!") } else { print("ACCESS DENIED") } <- ACCESS DENIED ``` -->
+  ```swifttest
+  -> let enteredDoorCode = true
+  -> let passedRetinaScan = false
+  -> if enteredDoorCode && passedRetinaScan {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- ACCESS DENIED
+  ```
+-->
 
 ### 逻辑或运算符
 
@@ -510,10 +937,20 @@ if hasDoorKey || knowsOverridePassword {
 } // 打印 "Welcome!"
 ```
 
-<!-- - 测试: `logicalOperators`
+<!--
+  - 测试: `logicalOperators`
 
-  ```swifttest -> let hasDoorKey = false -> let knowsOverridePassword = true -> if hasDoorKey || knowsOverridePassword { print("Welcome!") } else { print("ACCESS DENIED") } <- Welcome!
-  ``` -->
+  ```swifttest
+  -> let hasDoorKey = false
+  -> let knowsOverridePassword = true
+  -> if hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- Welcome!
+  ```
+-->
 
 ### 组合逻辑运算符
 
@@ -527,10 +964,18 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } // 打印 "Welcome!"
 ```
 
-<!-- - 测试: `logicalOperators`
+<!--
+  - 测试: `logicalOperators`
 
-  ```swifttest -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword { print("Welcome!") } else { print("ACCESS DENIED") } <- Welcome!
-  ``` -->
+  ```swifttest
+  -> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- Welcome!
+  ```
+-->
 
 这个例子使用多个 `&&` 和 `||` 运算符来创建一个更长的复合表达式。然而，`&&` 和 `||` 运算符仍然只作用于两个值，所以这实际上是三个较小的表达式链接在一起。这个例子可以理解为：
 
@@ -538,7 +983,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 
 根据 `enteredDoorCode`、`passedRetinaScan` 和 `hasDoorKey` 的值，前两个子表达式为 `false`。然而，由于知道紧急覆盖密码，整个复合表达式仍然评估为 `true`。
 
-> 注意: Swift 逻辑运算符 `&&` 和 `||` 是左关联的，这意味着带有多个逻辑运算符的复合表达式会首先评估最左边的子表达式。
+> 注意: Swift 逻辑运算符 `&&` 和 `||` 遵循从左到右的结合顺序，这意味着带有多个逻辑运算符的复合表达式会首先评估最左边的子表达式。
 
 ### 显式括号
 
@@ -553,6 +998,19 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } // 打印 "Welcome!"
 ```
 
+<!--
+  - 测试: `logicalOperators`
+
+  ```swifttest
+  -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- Welcome!
+  ```
+-->
+
 括号明确表示前两个条件被视为整体逻辑中的一种可能状态。
 虽然复合表达式的输出没有改变，但整体意图对读者来说更加清晰明了。
 可读性永远比简洁性更重要，因此在有助于阐明意图的地方使用括号是很有必要的。
@@ -562,3 +1020,14 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 > 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
 >
 > 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
+
+
+<!--
+此源文件属于 Swift.org 开源项目的一部分
+
+版权所有 (c) 2014 - 2022 Apple Inc. 及 Swift 项目作者
+根据 Apache License v2.0 许可证及运行库例外条款授权
+
+有关许可证信息，请参见 https://swift.org/LICENSE.txt
+有关 Swift 项目作者的列表，请参见 https://swift.org/CONTRIBUTORS.txt
+-->
