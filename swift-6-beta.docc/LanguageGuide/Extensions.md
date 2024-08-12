@@ -1,8 +1,8 @@
-# 拓展
+# 扩展
 
 为现有类型添加功能。
 
-*扩展*可以给一个现有的类，结构体，枚举，或协议添加新的功能。
+**扩展（Extensions）**用于为现有的类、结构体、枚举或协议类型添加新功能。
 这包括了扩展那些您无法访问原始源代码的类型的能力（即*追溯建模*）。
 扩展和 Objective-C 的分类很相似。
 （与 Objective-C 分类不同的是，Swift 扩展是没有名字的。）
@@ -218,10 +218,11 @@ print("A marathon is \(aMarathon) meters long")
 ## 构造器
 
 扩展可以为现有类型添加新的构造器。
-这使你可以扩展其他类型以接受你自己的自定义类型作为初始化器参数，
+这使你可以扩展其他类型以接受你自己的自定义类型作为构造器参数，
 或提供类型的原始实现中未包含的其他构造选项。
 
-扩展可以为一个类添加新的便利构造器，但是它们不能为一个类添加新的指定构造器或析构器。
+扩展可以为一个类添加新的便利构造器（convenience initializer），
+但是它们不能为一个类添加新的指定构造器（designated initializer）或析构器（deinitializer）。
 指定构造器和析构器必须始终由类的原始实现提供。
 
 如果你使用扩展为一个值类型添加构造器，并且该值类型提供了所有存储属性的默认值，
@@ -391,13 +392,13 @@ extension Int {
   ```
 -->
 
-### 可变实例方法
+### 变值实例方法
 
 通过扩展添加的实例方法同样也可以修改（modify）（或 *改变（mutating）*）实例本身。
 修改 `self` 或其属性的结构体和枚举方法，必须将实例方法标记为 `mutating`，
-就像原始实现中的修改方法一样。<!-- FIXME: 这里没想好 `mutating methods` 怎么翻译比较好>
+就像原始实现中的变值方法（mutating methods）一样。
 
-下面的示例为 Swift 的 `Int` 类型添加了一个新的修改方法 `square`，它可以将原始值平方：
+下面的示例为 Swift 的 `Int` 类型添加了一个新的变值方法 `square`，它可以计算原始值的平方：
 
 ```swift
 extension Int {
@@ -427,11 +428,6 @@ someInt.square()
 -->
 
 ## 下标
-
-Extensions can add new subscripts to an existing type.
-This example adds an integer subscript to Swift's built-in `Int` type.
-This subscript `[n]` returns the decimal digit `n` places in
-from the right of the number:
 
 扩展可以为现有类型添加新的下标。
 这个示例为 Swift 内置的 `Int` 类型添加了一个整数下标。
@@ -582,12 +578,12 @@ extension Int {
 
 这个例子给 `Int` 添加了一个新的嵌套枚举。
 这个枚举叫做 `Kind`，表示特定整数所代表的数字类型。
-具体来说，它表示数字是负的、零的还是正的。
+具体来说，它表示数字是负数、零还是正数。
 
 这个例子也给 `Int` 添加了一个新的计算实例属性，叫做 `kind`，
 它返回被操作整数所对应的 `Kind` 枚举值。
 
-现在，任意 `Int` 的值都可以使用这个嵌套枚举：
+现在，这个嵌套枚举可以用于任何 `Int` 值：
 
 ```swift
 func printIntegerKinds(_ numbers: [Int]) {
@@ -640,3 +636,17 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
 > 注意: `number.kind` 已经被认为是 `Int.Kind` 类型。
 > 所以，在 `switch` 语句中所有的 `Int.Kind` 枚举值可以被缩写，
 > 例如使用 `.negative` 替代 `Int.Kind.negative`。
+
+> 测试版软件:
+>
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
+>
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
+
+<!--
+This source file is part of the Swift.org open source project
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
