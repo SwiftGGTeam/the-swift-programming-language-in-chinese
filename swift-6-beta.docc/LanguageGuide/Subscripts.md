@@ -1,51 +1,28 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Subscripts.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/subscripts
-翻译估计用时：⭐️⭐️⭐️⭐️
--->
 
-# Subscripts
+# 下标
 
-Access the elements of a collection.
+访问集合的元素
 
-Classes, structures, and enumerations can define *subscripts*,
-which are shortcuts for accessing the member elements of a collection, list, or sequence.
-You use subscripts to set and retrieve values by index without needing
-separate methods for setting and retrieval.
-For example, you access elements in an `Array` instance as `someArray[index]`
-and elements in a `Dictionary` instance as `someDictionary[key]`.
+下标可以定义在类、结构体和枚举中，是访问集合、列表或序列中元素的快捷方式。可以使用下标的索引，设置和获取值，而不需要再调用对应的存取方法。举例来说，用下标访问一个 `Array` 实例中的元素可以写作 `someArray[index]`，访问 `Dictionary` 实例中的元素可以写作 `someDictionary[key]`。
 
-You can define multiple subscripts for a single type,
-and the appropriate subscript overload to use is selected
-based on the type of index value you pass to the subscript.
-Subscripts aren't limited to a single dimension,
-and you can define subscripts with multiple input parameters
-to suit your custom type's needs.
+一个类型可以定义多个下标，通过不同索引类型进行对应的重载。下标不限于一维，你可以定义具有多个入参的下标满足自定义类型的需求。
 
 <!--
   TODO: this chapter should provide an example of subscripting an enumeration,
   as per Joe Groff's example from rdar://16555559.
 -->
 
-## Subscript Syntax
+## 下标语法
 
-Subscripts enable you to query instances of a type
-by writing one or more values in square brackets after the instance name.
-Their syntax is similar to both instance method syntax and computed property syntax.
-You write subscript definitions with the `subscript` keyword,
-and specify one or more input parameters and a return type,
-in the same way as instance methods.
-Unlike instance methods, subscripts can be read-write or read-only.
-This behavior is communicated by a getter and setter
-in the same way as for computed properties:
+下标使您能够通过在实例名称后将一个或多个值写在方括号中来查询类型的实例。它们的语法类似于实例方法语法和计算属性语法。您可以使用 `subscript` 关键字编写下标定义，并指定一个或多个输入参数和返回类型，其方式与实例方法相同。与实例方法不同，下标可以是读写或只读。此行为由 getter 和 setter 以与计算属性相同的方式进行传达：
 
 ```swift
 subscript(index: Int) -> Int {
     get {
-        // Return an appropriate subscript value here.
+        // 返回一个适当的 Int 类型的值
     }
     set(newValue) {
-        // Perform a suitable setting action here.
+        // 执行适当的赋值操作
     }
 }
 ```
@@ -68,19 +45,13 @@ subscript(index: Int) -> Int {
   ```
 -->
 
-The type of `newValue` is the same as the return value of the subscript.
-As with computed properties, you can choose not to specify
-the setter's `(newValue)` parameter.
-A default parameter called `newValue` is provided to your setter
-if you don't provide one yourself.
+`newValue` 的类型与下标的返回值相同。与计算属性一样，您可以选择不指定 setter 的 `（newValue）` 参数。如果您自己不提供一个名为 `newValue` 的默认参数，则会提供给您的设置者。
 
-As with read-only computed properties,
-you can simplify the declaration of a read-only subscript
-by removing the `get` keyword and its braces:
+与只读计算属性一样，您可以通过删除 get 关键字及其大括号来简化只读下标的声明：
 
 ```swift
 subscript(index: Int) -> Int {
-    // Return an appropriate subscript value here.
+    // 返回一个适当的 Int 类型的值
 }
 ```
 
@@ -97,8 +68,7 @@ subscript(index: Int) -> Int {
   ```
 -->
 
-Here's an example of a read-only subscript implementation,
-which defines a `TimesTable` structure to represent an *n*-times-table of integers:
+以下是一个只读下标实现的示例，它定义了一个 `TimesTable` 结构体，用于表示一个整数的 n 倍表。
 
 ```swift
 struct TimesTable {
@@ -109,7 +79,7 @@ struct TimesTable {
 }
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")
-// Prints "six times three is 18"
+// 打印“six times three is 18”
 ```
 
 <!--
@@ -128,33 +98,18 @@ print("six times three is \(threeTimesTable[6])")
   ```
 -->
 
-In this example, a new instance of `TimesTable` is created
-to represent the three-times-table.
-This is indicated by passing a value of `3` to the structure's `initializer`
-as the value to use for the instance's `multiplier` parameter.
+在此示例中，将创建 `TimesTable` 的新实例来表示三次表。通过将值 `3` 作为用于实例的乘数参数的值传递给结构的`初始值设定项`来指示这一点。
 
-You can query the `threeTimesTable` instance by calling its subscript,
-as shown in the call to `threeTimesTable[6]`.
-This requests the sixth entry in the three-times-table,
-which returns a value of `18`, or `3` times `6`.
+您可以通过调用其下标来查询 `threeTimesTable` 实例，如对 `threeTimesTable[6]` 的调用中所示。这将请求 `three-times-table` 中的第 6 个条目，该条目返回值 `18`，即 `3` 乘以 `6`。
 
-> Note: An *n*-times-table is based on a fixed mathematical rule.
-> It isn't appropriate to set `threeTimesTable[someIndex]` to a new value,
-> and so the subscript for `TimesTable` is defined as a read-only subscript.
+>注意:
+`TimesTable` 例子基于一个固定的数学公式。将 `threeTimesTable[someIndex]` 设置为新值是不合适的，因此 `TimesTable` 的下标被定义为只读下标。
 
-## Subscript Usage
+## 下标用法
 
-The exact meaning of “subscript” depends on the context in which it's used.
-Subscripts are typically used as a shortcut for accessing
-the member elements in a collection, list, or sequence.
-You are free to implement subscripts in the most appropriate way for
-your particular class or structure's functionality.
+“下标”的确切含义取决于使用它的上下文。下标通常用作访问集合、列表或序列中的成员元素的快捷方式。您可以根据特定类或结构的功能以最合适的方式自由实现下标。
 
-For example, Swift's `Dictionary` type implements a subscript
-to set and retrieve the values stored in a `Dictionary` instance.
-You can set a value in a dictionary
-by providing a key of the dictionary's key type within subscript brackets,
-and assigning a value of the dictionary's value type to the subscript:
+例如，Swift 的 `Dictionary` 类型实现了一个下标，用于设置和检索存储在 `Dictionary` 实例中的值。您可以通过在下标括号内提供字典的键类型键，并将字典的值类型的值分配给下标来在字典中设置值：
 
 ```swift
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -170,38 +125,18 @@ numberOfLegs["bird"] = 2
   ```
 -->
 
-The example above defines a variable called `numberOfLegs`
-and initializes it with a dictionary literal containing three key-value pairs.
-The type of the `numberOfLegs` dictionary is inferred to be `[String: Int]`.
-After creating the dictionary,
-this example uses subscript assignment to add
-a `String` key of `"bird"` and an `Int` value of `2` to the dictionary.
+上面的示例定义了一个名为 `numberOfLegs` 的变量，并使用包含三个键值对的字典文本对其进行初始化。`numberOfLegs` 字典的类型推断为 `[String： Int]`。创建字典后，此示例使用下标赋值将 `String` 键`bird`和 `Int` 值 `2` 添加到字典中。
 
-For more information about `Dictionary` subscripting,
-see <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
+有关字典下标的更多信息，请参阅 doc： <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
-> Note: Swift's `Dictionary` type implements its key-value subscripting
-> as a subscript that takes and returns an *optional* type.
-> For the `numberOfLegs` dictionary above,
-> the key-value subscript takes and returns a value of type `Int?`,
-> or “optional int”.
-> The `Dictionary` type uses an optional subscript type to model the fact that
-> not every key will have a value, and to give a way to delete a value for a key
-> by assigning a `nil` value for that key.
+>注意:
+>Swift 的 `Dictionary` 类型将其键值下标实现为接受并返回可选类型的下标。对于上面的 `numberOfLegs` 字典，键值下标接>受并返回 `Int?`（可选 int）类型的值。`Dictionary` 类型使用可选的下标类型来对并非每个键都有值这一事实进行建模，并通过为该>键分配 `nil` 值来提供删除该键的值的方法。
 
-## Subscript Options
+## 下标选项
 
-Subscripts can take any number of input parameters,
-and these input parameters can be of any type.
-Subscripts can also return a value of any type.
+下标可以采用任意数量的输入参数，这些输入参数可以是任何类型。下标还可以返回任何类型的值。
 
-Like functions,
-subscripts can take a varying number of parameters
-and provide default values for their parameters,
-as discussed in <doc:Functions#Variadic-Parameters>
-and <doc:Functions#Default-Parameter-Values>.
-However, unlike functions,
-subscripts can't use in-out parameters.
+与函数一样，下标可以接受不同数量的参数并为其参数提供默认值，如 <doc:Functions#Variadic-Parameters> 和 <doc:Functions#Default-Parameter-Values>中所述。但是，与函数不同，下标不能使用 in-out 参数。
 
 <!--
   - test: `subscripts-can-have-default-arguments`
@@ -218,18 +153,9 @@ subscripts can't use in-out parameters.
   ```
 -->
 
-A class or structure can provide as many subscript implementations as it needs,
-and the appropriate subscript to be used will be inferred based on
-the types of the value or values that are contained within the subscript brackets
-at the point that the subscript is used.
-This definition of multiple subscripts is known as *subscript overloading*.
+类或结构可以根据需要提供任意数量的下标实现，并且将根据使用下标时下标括号中包含的值的类型推断要使用的相应下标。多个下标的这种定义称为*下标重载*。
 
-While it's most common for a subscript to take a single parameter,
-you can also define a subscript with multiple parameters
-if it's appropriate for your type.
-The following example defines a `Matrix` structure,
-which represents a two-dimensional matrix of `Double` values.
-The `Matrix` structure's subscript takes two integer parameters:
+虽然下标采用单个参数是最常见的，但如果它适合您的类型，您也可以定义具有多个参数的下标。下面的示例定义一个 `Matrix` 结构，该结构表示 `Double` 值的二维矩阵。`Matrix` 结构的下标采用两个整数参数：
 
 ```swift
 struct Matrix {
@@ -285,16 +211,9 @@ struct Matrix {
   ```
 -->
 
-`Matrix` provides an initializer that takes two parameters called `rows` and `columns`,
-and creates an array that's large enough to store `rows * columns` values of type `Double`.
-Each position in the matrix is given an initial value of `0.0`.
-To achieve this, the array's size, and an initial cell value of `0.0`,
-are passed to an array initializer that creates and initializes a new array of the correct size.
-This initializer is described in more detail
-in <doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.
+`Matrix` 提供了一个初始值设定项，该初始值设定项采用两个称为 `rows` 和 `columns` 的参数，并创建一个足够大的数组来存储 `Double` 类型的`rows * columns`值。矩阵中的每个位置的初始值为 `0.0`。为了实现这一点，数组的大小和初始单元格值 `0.0` 被传递给数组初始值设定项，该初始值设定项创建并初始化正确大小的新数<doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.中对此初始值设定项进行了更详细的描述。
 
-You can construct a new `Matrix` instance by passing
-an appropriate row and column count to its initializer:
+您可以通过将适当的 `row` 和 `column` 计数传递给其初始值设定项来构造新的 `Matrix` 实例：
 
 ```swift
 var matrix = Matrix(rows: 2, columns: 2)
@@ -309,15 +228,9 @@ var matrix = Matrix(rows: 2, columns: 2)
   ```
 -->
 
-The example above creates a new `Matrix` instance with two rows and two columns.
-The `grid` array for this `Matrix` instance
-is effectively a flattened version of the matrix,
-as read from top left to bottom right:
+上面的示例创建了一个包含两行和两列的新 `Matrix` 实例。此 `Matrix` 实例的`grid`数组实际上是矩阵的扁平化版本，从左上角到右下角如下图所示：
 
-![](subscriptMatrix01)
-
-Values in the matrix can be set by passing row and column values into the subscript,
-separated by a comma:
+将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔：
 
 ```swift
 matrix[0, 1] = 1.5
@@ -337,20 +250,9 @@ matrix[1, 0] = 3.2
   ```
 -->
 
-These two statements call the subscript's setter to set
-a value of `1.5` in the top right position of the matrix
-(where `row` is `0` and `column` is `1`),
-and `3.2` in the bottom left position
-(where `row` is `1` and `column` is `0`):
+上面两条语句分别调用下标的 setter 将矩阵右上角位置（即 `row` 为 `0`、`column` 为 `1` 的位置）的值设置为 `1.5`，将矩阵左下角位置（即 `row` 为 `1`、`column` 为 `0` 的位置）的值设置为 `3.2`：
 
-![](subscriptMatrix02)
-
-The `Matrix` subscript's getter and setter both contain an assertion
-to check that the subscript's  `row` and `column` values are valid.
-To assist with these assertions,
-`Matrix` includes a convenience method called `indexIsValid(row:column:)`,
-which checks whether the requested `row` and `column`
-are inside the bounds of the matrix:
+`Matrix` 下标的 getter 和 setter 中都含有断言，用来检查下标入参 `row` 和 `column` 的值是否有效。为了方便进行断言，`Matrix` 包含了一个名为 `indexIsValid(row:column:)` 的便利方法，用来检查入参 `row` 和 `column` 的值是否在矩阵范围内：
 
 ```swift
 func indexIsValid(row: Int, column: Int) -> Bool {
@@ -370,12 +272,11 @@ func indexIsValid(row: Int, column: Int) -> Bool {
   ```
 -->
 
-An assertion is triggered if you try to access a subscript
-that's outside of the matrix bounds:
+断言在下标越界时触发：
 
 ```swift
 let someValue = matrix[2, 2]
-// This triggers an assert, because [2, 2] is outside of the matrix bounds.
+// 断言将会触发，因为 [2, 2] 已经超过了 matrix 的范围
 ```
 
 <!--
@@ -388,17 +289,9 @@ let someValue = matrix[2, 2]
   ```
 -->
 
-## Type Subscripts
+## 类型下标
 
-Instance subscripts, as described above,
-are subscripts that you call on an instance of a particular type.
-You can also define subscripts that are called on the type itself.
-This kind of subscript is called a *type subscript*.
-You indicate a type subscript
-by writing the `static` keyword before the `subscript` keyword.
-Classes can use the `class` keyword instead,
-to allow subclasses to override the superclass’s implementation of that subscript.
-The example below shows how you define and call a type subscript:
+正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型自身上调用的下标。这种下标被称作_类型下标_。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类型可以使用 `class` 关键字来代替 `static`，它允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标：
 
 ```swift
 enum Planet: Int {
@@ -428,11 +321,9 @@ print(mars)
   ```
 -->
 
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+>测试版软件:
+>本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
+>了解有关使用  [Apple 测试版软件](https://developer.apple.com/support/beta-software/)的更多信息.
 
 <!--
 This source file is part of the Swift.org open source project
