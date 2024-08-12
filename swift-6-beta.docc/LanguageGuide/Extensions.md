@@ -1,37 +1,26 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Extensions.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions
-翻译估计用时：⭐️⭐️⭐️⭐️
--->
+# 拓展
 
-# Extensions
+为现有类型添加功能。
 
-Add functionality to an existing type.
+*扩展*可以给一个现有的类，结构体，枚举，或协议添加新的功能。
+这包括了扩展那些您无法访问原始源代码的类型的能力（即*追溯建模*）。
+扩展和 Objective-C 的分类很相似。
+（与 Objective-C 分类不同的是，Swift 扩展是没有名字的。）
 
-*Extensions* add new functionality to an existing
-class, structure, enumeration, or protocol type.
-This includes the ability to extend types
-for which you don't have access to the original source code
-(known as *retroactive modeling*).
-Extensions are similar to categories in Objective-C.
-(Unlike Objective-C categories, Swift extensions don't have names.)
+Swift 中的扩展可以：
 
-Extensions in Swift can:
+ - 添加计算实例属性和计算类属性
+ - 定义实例方法和类方法
+ - 提供新的构造器
+ - 定义下标
+ - 定义和使用新的嵌套类型
+ - 使已经存在的类型遵循一个协议
 
-- Add computed instance properties and computed type properties
-- Define instance methods and type methods
-- Provide new initializers
-- Define subscripts
-- Define and use new nested types
-- Make an existing type conform to a protocol
+在 Swift 中，你甚至可以扩展协议以提供其需要的实现，或者添加额外功能给遵循的类型所使用。
+你可以从 <doc:Protocols#Protocol-Extensions> 获取更多细节。
 
-In Swift,
-you can even extend a protocol to provide implementations of its requirements
-or add additional functionality that conforming types can take advantage of.
-For more details, see <doc:Protocols#Protocol-Extensions>.
-
-> Note: Extensions can add new functionality to a type,
-> but they can't override existing functionality.
+> 注意:
+> 扩展可以给一个类型添加新的功能，但是不能重写已经存在的功能。
 
 <!--
   - test: `extensionsCannotOverrideExistingBehavior`
@@ -81,13 +70,13 @@ For more details, see <doc:Protocols#Protocol-Extensions>.
   ```
 -->
 
-## Extension Syntax
+## 扩展的语法
 
-Declare extensions with the `extension` keyword:
+使用 `extension` 关键字声明扩展：
 
 ```swift
 extension SomeType {
-    // new functionality to add to SomeType goes here
+    // 在这里给 SomeType 添加新的功能
 }
 ```
 
@@ -102,14 +91,12 @@ extension SomeType {
   ```
 -->
 
-An extension can extend an existing type to make it adopt one or more protocols.
-To add protocol conformance,
-you write the protocol names
-the same way as you write them for a class or structure:
+扩展可以扩充一个现有的类型，给它添加一个或多个协议。
+在添加协议的遵循声明时，协议名称的写法和类或者结构体一样：
 
 ```swift
 extension SomeType: SomeProtocol, AnotherProtocol {
-    // implementation of protocol requirements goes here
+    // 协议所需要的实现写在这里
 }
 ```
 
@@ -125,23 +112,21 @@ extension SomeType: SomeProtocol, AnotherProtocol {
   ```
 -->
 
-Adding protocol conformance in this way is described in
-<doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>.
+这种遵循协议的方式在 <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension> 中有描述。
 
-An extension can be used to extend an existing generic type,
-as described in <doc:Generics#Extending-a-Generic-Type>.
-You can also extend a generic type to conditionally add functionality,
-as described in <doc:Generics#Extensions-with-a-Generic-Where-Clause>.
+扩展可以使用在现有泛型类型上，就像 <doc:Generics#Extending-a-Generic-Type> 中描述的一样。
+你还可以使用扩展给泛型类型有条件地添加功能，
+就像 <doc:Generics#Extensions-with-a-Generic-Where-Clause> 中描述的一样。
 
-> Note: If you define an extension to add new functionality to an existing type,
-> the new functionality will be available on all existing instances of that type,
-> even if they were created before the extension was defined.
+> 注意:
+> 对一个现有的类型，如果你定义了一个扩展来添加新的功能，
+> 那么这个类型的所有实例都可以使用这个新功能，包括那些在扩展定义之前就存在的实例。
 
-## Computed Properties
+## 计算属性
 
-Extensions can add computed instance properties and computed type properties to existing types.
-This example adds five computed instance properties to Swift's built-in `Double` type,
-to provide basic support for working with distance units:
+扩展可以给现有类型添加计算实例属性和计算类属性。
+这个例子给 Swift 内建的 `Double` 类型添加了五个计算型实例属性，
+以提供基本的距离单位处理功能：
 
 ```swift
 extension Double {
@@ -153,10 +138,10 @@ extension Double {
 }
 let oneInch = 25.4.mm
 print("One inch is \(oneInch) meters")
-// Prints "One inch is 0.0254 meters"
+// 打印“One inch is 0.0254 meters”
 let threeFeet = 3.ft
 print("Three feet is \(threeFeet) meters")
-// Prints "Three feet is 0.914399970739201 meters"
+// 打印“Three feet is 0.914399970739201 meters”
 ```
 
 <!--
@@ -179,34 +164,27 @@ print("Three feet is \(threeFeet) meters")
   ```
 -->
 
-These computed properties express that a `Double` value
-should be considered as a certain unit of length.
-Although they're implemented as computed properties,
-the names of these properties can be appended to
-a floating-point literal value with dot syntax,
-as a way to use that literal value to perform distance conversions.
+这些计算属性表示一个 `Double` 值应该被视为某种长度单位。
+尽管它们是作为计算属性实现的，
+但是这些属性的名称可以使用点语法附加到浮点字面量值之后，
+作为一种使用该字面量值执行距离转换的方式。
 
-In this example, a `Double` value of `1.0` is considered to represent “one meter”.
-This is why the `m` computed property returns `self` ---
-the expression `1.m` is considered to calculate a `Double` value of `1.0`.
+在这个例子中，`Double` 类型的 `1.0` 代表的是“一米”。
+这就是为什么计算属性 `m` 返回的是 `self` ——
+表达式 `1.m` 被认为是计算一个 `Double` 类型的 `1.0`。
 
-Other units require some conversion to be expressed as a value measured in meters.
-One kilometer is the same as 1,000 meters,
-so the `km` computed property multiplies the value by `1_000.00`
-to convert into a number expressed in meters.
-Similarly, there are 3.28084 feet in a meter,
-and so the `ft` computed property divides the underlying `Double` value
-by `3.28084`, to convert it from feet to meters.
+其他单位需要进行一些转换，才能表示为以米为单位的值。
+一千米等于 1000 米，所以计算属性 `km` 将该值乘以 `1_000.00`
+来将其转换为以米为单位的数字。类似地，一米等于 3.28084 英尺，
+因此计算属性 `ft` 将底层的 `Double` 值除以 `3.28084` 来将其从英尺转换为米。
 
-These properties are read-only computed properties,
-and so they're expressed without the `get` keyword, for brevity.
-Their return value is of type `Double`,
-and can be used within mathematical calculations wherever a `Double` is accepted:
+这些属性是只读的计算属性，因此为了简便，它们的表达方式省略了 `get` 关键字。
+它们的返回值是 `Double` 类型，可以在任何接受 `Double` 的数学计算中使用:
 
 ```swift
 let aMarathon = 42.km + 195.m
 print("A marathon is \(aMarathon) meters long")
-// Prints "A marathon is 42195.0 meters long"
+// 打印“A marathon is 42195.0 meters long”
 ```
 
 <!--
@@ -219,8 +197,7 @@ print("A marathon is \(aMarathon) meters long")
   ```
 -->
 
-> Note: Extensions can add new computed properties, but they can't add stored properties,
-> or add property observers to existing properties.
+> 注意: 扩展可以添加新的计算属性，但是它们不能添加存储属性，也不能为现有属性添加属性观察器。
 
 <!--
   - test: `extensionsCannotAddStoredProperties`
@@ -238,36 +215,25 @@ print("A marathon is \(aMarathon) meters long")
   TODO: change this example to something more advisable / less contentious.
 -->
 
-## Initializers
+## 构造器
 
-Extensions can add new initializers to existing types.
-This enables you to extend other types to accept
-your own custom types as initializer parameters,
-or to provide additional initialization options
-that were not included as part of the type's original implementation.
+扩展可以为现有类型添加新的构造器。
+这使你可以扩展其他类型以接受你自己的自定义类型作为初始化器参数，
+或提供类型的原始实现中未包含的其他构造选项。
 
-Extensions can add new convenience initializers to a class,
-but they can't add new designated initializers or deinitializers to a class.
-Designated initializers and deinitializers
-must always be provided by the original class implementation.
+扩展可以为一个类添加新的便利构造器，但是它们不能为一个类添加新的指定构造器或析构器。
+指定构造器和析构器必须始终由类的原始实现提供。
 
-If you use an extension to add an initializer to a value type that provides
-default values for all of its stored properties
-and doesn't define any custom initializers,
-you can call the default initializer and memberwise initializer for that value type
-from within your extension's initializer.
-This wouldn't be the case if you had written the initializer
-as part of the value type's original implementation,
-as described in <doc:Initialization#Initializer-Delegation-for-Value-Types>.
+如果你使用扩展为一个值类型添加构造器，并且该值类型提供了所有存储属性的默认值，
+且没有定义任何自定义构造器，你就可以在扩展的构造器中调用该值类型的默认构造器和成员构造器。
+如果你已经将构造器写在该值类型的原始实现中，则不适用于这种情况，
+正如 <doc:Initialization#Initializer-Delegation-for-Value-Types> 中所描述的那样。
 
-If you use an extension to add an initializer to a structure
-that was declared in another module,
-the new initializer can't access `self` until it calls
-an initializer from the defining module.
+如果你使用扩展为另一个模块中声明的结构体添加构造器，
+那么在调用定义模块中的构造器之前，新的构造器是不能访问 `self` 的。
 
-The example below defines a custom `Rect` structure to represent a geometric rectangle.
-The example also defines two supporting structures called `Size` and `Point`,
-both of which provide default values of `0.0` for all of their properties:
+以下示例定义了一个自定义的 `Rect` 结构体来表示几何矩形。
+该示例还定义了两个辅助结构体 `Size` 和 `Point`，它们都为所有属性提供了默认值 `0.0`：
 
 ```swift
 struct Size {
@@ -299,10 +265,9 @@ struct Rect {
   ```
 -->
 
-Because the `Rect` structure provides default values for all of its properties,
-it receives a default initializer and a memberwise initializer automatically,
-as described in <doc:Initialization#Default-Initializers>.
-These initializers can be used to create new `Rect` instances:
+因为 `Rect` 结构体为所有属性都提供了默认值，它会自动获得默认构造器和成员构造器，
+如 <doc:Initialization#Default-Initializers> 中所述。
+这些构造器可用于创建新的 `Rect` 实例:
 
 ```swift
 let defaultRect = Rect()
@@ -320,8 +285,7 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
   ```
 -->
 
-You can extend the `Rect` structure to provide an additional initializer
-that takes a specific center point and size:
+你可以通过扩展 `Rect` 结构体来额外提供一个允许指定 center 和 size 的构造器：
 
 ```swift
 extension Rect {
@@ -347,16 +311,14 @@ extension Rect {
   ```
 -->
 
-This new initializer starts by calculating an appropriate origin point based on
-the provided `center` point and `size` value.
-The initializer then calls the structure's automatic memberwise initializer
-`init(origin:size:)`, which stores the new origin and size values
-in the appropriate properties:
+这个新的构造器首先根据提供的 `center` 和 `size` 计算一个适当的原点。
+然后这个构造器调用结构体自带的成员构造器 `init(origin:size:)`，
+它会将新的 origin 和 size 值储存在相应的属性中：
 
 ```swift
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
-// centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
+// centerRect 的 origin 是 (2.5, 2.5) 并且它的 size 是 (3.0, 3.0)
 ```
 
 <!--
@@ -370,14 +332,13 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
   ```
 -->
 
-> Note: If you provide a new initializer with an extension,
-> you are still responsible for making sure that each instance is fully initialized
-> once the initializer completes.
+> 注意: 如果你使用扩展提供了一个新的构造器，
+> 你仍然需要确保在构造器完成时每个实例都被完全初始化。
 
-## Methods
+## 方法
 
-Extensions can add new instance methods and type methods to existing types.
-The following example adds a new instance method called `repetitions` to the `Int` type:
+扩展可以为现有类型添加新的实例方法和类方法。
+以下示例为 `Int` 类型添加了一个名为 `repetitions` 的新实例方法：
 
 ```swift
 extension Int {
@@ -403,12 +364,10 @@ extension Int {
   ```
 -->
 
-The `repetitions(task:)` method takes a single argument of type `() -> Void`,
-which indicates a function that has no parameters and doesn't return a value.
+`repetitions(task:)` 方法仅接受一个类型为 `() -> Void` 的参数，
+它表示一个没有参数没有返回值的函数。
 
-After defining this extension,
-you can call the `repetitions(task:)` method on any integer
-to perform a task that many number of times:
+定义了这个扩展之后，你可以对任意整形数值调用 `repetitions(task:)` 方法，以执行指定次数的任务:
 
 ```swift
 3.repetitions {
@@ -432,15 +391,13 @@ to perform a task that many number of times:
   ```
 -->
 
-### Mutating Instance Methods
+### 可变实例方法
 
-Instance methods added with an extension can also modify (or *mutate*) the instance itself.
-Structure and enumeration methods that modify `self` or its properties
-must mark the instance method as `mutating`,
-just like mutating methods from an original implementation.
+通过扩展添加的实例方法同样也可以修改（modify）（或 *改变（mutating）*）实例本身。
+修改 `self` 或其属性的结构体和枚举方法，必须将实例方法标记为 `mutating`，
+就像原始实现中的修改方法一样。<!-- FIXME: 这里没想好 `mutating methods` 怎么翻译比较好>
 
-The example below adds a new mutating method called `square` to Swift's `Int` type,
-which squares the original value:
+下面的示例为 Swift 的 `Int` 类型添加了一个新的修改方法 `square`，它可以将原始值平方：
 
 ```swift
 extension Int {
@@ -450,7 +407,7 @@ extension Int {
 }
 var someInt = 3
 someInt.square()
-// someInt is now 9
+// someInt 现在是 9
 ```
 
 <!--
@@ -469,17 +426,21 @@ someInt.square()
   ```
 -->
 
-## Subscripts
+## 下标
 
 Extensions can add new subscripts to an existing type.
 This example adds an integer subscript to Swift's built-in `Int` type.
 This subscript `[n]` returns the decimal digit `n` places in
 from the right of the number:
 
-- `123456789[0]` returns `9`
-- `123456789[1]` returns `8`
+扩展可以为现有类型添加新的下标。
+这个示例为 Swift 内置的 `Int` 类型添加了一个整数下标。
+下标 `[n]` 返回数字从右边数第 `n` 位的十进制数字:
 
-…and so on:
+- `123456789[0]` 返回 `9`
+- `123456789[1]` 返回 `8`
+
+……以此类推：
 
 ```swift
 extension Int {
@@ -492,13 +453,13 @@ extension Int {
     }
 }
 746381295[0]
-// returns 5
+// 返回 5
 746381295[1]
-// returns 9
+// 返回 9
 746381295[2]
-// returns 2
+// 返回 2
 746381295[8]
-// returns 7
+// 返回 7
 ```
 
 <!--
@@ -544,13 +505,12 @@ extension Int {
   Darwin's pow() function is only for floating point.
 -->
 
-If the `Int` value doesn't have enough digits for the requested index,
-the subscript implementation returns `0`,
-as if the number had been padded with zeros to the left:
+如果 `Int` 值的数字位数不足以满足所请求的索引，
+那么下标实现会返回 `0`，就好像在数字左边补上了 0：
 
 ```swift
 746381295[9]
-// returns 0, as if you had requested:
+// 返回 0，就好像你进行了这个请求：
 0746381295[9]
 ```
 
@@ -576,9 +536,9 @@ as if the number had been padded with zeros to the left:
   Tracking bug is <rdar://problem/35301593>
 -->
 
-## Nested Types
+## 嵌套类型
 
-Extensions can add new nested types to existing classes, structures, and enumerations:
+扩展可以给现有的类，结构体，和枚举添加新的嵌套类型：
 
 ```swift
 extension Int {
@@ -620,17 +580,14 @@ extension Int {
   ```
 -->
 
-This example adds a new nested enumeration to `Int`.
-This enumeration, called `Kind`,
-expresses the kind of number that a particular integer represents.
-Specifically, it expresses whether the number is
-negative, zero, or positive.
+这个例子给 `Int` 添加了一个新的嵌套枚举。
+这个枚举叫做 `Kind`，表示特定整数所代表的数字类型。
+具体来说，它表示数字是负的、零的还是正的。
 
-This example also adds a new computed instance property to `Int`,
-called `kind`,
-which returns the appropriate `Kind` enumeration case for that integer.
+这个例子也给 `Int` 添加了一个新的计算实例属性，叫做 `kind`，
+它返回被操作整数所对应的 `Kind` 枚举值。
 
-The nested enumeration can now be used with any `Int` value:
+现在，任意 `Int` 的值都可以使用这个嵌套枚举：
 
 ```swift
 func printIntegerKinds(_ numbers: [Int]) {
@@ -647,7 +604,7 @@ func printIntegerKinds(_ numbers: [Int]) {
     print("")
 }
 printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
-// Prints "+ + - 0 - 0 + "
+// 打印“+ + - 0 - 0 + ”
 ```
 
 <!--
@@ -677,29 +634,9 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
   Workaround for rdar://26016325
 -->
 
-This function, `printIntegerKinds(_:)`,
-takes an input array of `Int` values and iterates over those values in turn.
-For each integer in the array,
-the function considers the `kind` computed property for that integer,
-and prints an appropriate description.
+这个函数 `printIntegerKinds(_:)` 接受一个 `Int` 值的数组作为输入，并逐个遍历这些值。
+对于数组中的每个整数，该函数都会检查它的 `kind` 计算属性，然后打印适当的描述。
 
-> Note: `number.kind` is already known to be of type `Int.Kind`.
-> Because of this, all of the `Int.Kind` case values
-> can be written in shorthand form inside the `switch` statement,
-> such as `.negative` rather than `Int.Kind.negative`.
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
-
-<!--
-This source file is part of the Swift.org open source project
-
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
-
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
--->
+> 注意: `number.kind` 已经被认为是 `Int.Kind` 类型。
+> 所以，在 `switch` 语句中所有的 `Int.Kind` 枚举值可以被缩写，
+> 例如使用 `.negative` 替代 `Int.Kind.negative`。
