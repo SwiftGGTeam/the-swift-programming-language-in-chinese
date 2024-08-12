@@ -33,3 +33,17 @@ Swift 采用了现代化、轻量级的语法，
 Swift 仍在不断发展，不断推出经过深思熟虑的新功能和强大的特性。
 Swift 的目标非常远大。
 我们非常期待看到你使用它创造出的作品。
+
+> 测试版软件:
+>
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
+>
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
+
+<!--
+This source file is part of the Swift.org open source project
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
