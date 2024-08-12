@@ -14,7 +14,7 @@
 
 ## 下标语法
 
-下标使您能够通过在实例名称后将一个或多个值写在方括号中来查询类型的实例。它们的语法类似于实例方法语法和计算属性语法。您可以使用 `subscript` 关键字编写下标定义，并指定一个或多个输入参数和返回类型，其方式与实例方法相同。与实例方法不同，下标可以是读写或只读。此行为由 getter 和 setter 以与计算属性相同的方式进行传达：
+下标使您能够通过在实例名称后将一个或多个值写在方括号中来查询类型的实例。它们的语法类似于实例方法语法和计算属性语法。您可以使用 `subscript` 关键字编写下标定义，并指定一个或多个输入参数和返回类型，其方式与实例方法相同。与实例方法不同，下标可以是读写或只读。此行为由 getter 和 setter 以与计算属性相同的方式进行传达:
 
 ```swift
 subscript(index: Int) -> Int {
@@ -47,7 +47,7 @@ subscript(index: Int) -> Int {
 
 `newValue` 的类型与下标的返回值相同。与计算属性一样，您可以选择不指定 setter 的 `（newValue）` 参数。如果您自己不提供一个名为 `newValue` 的默认参数，则会提供给您的设置者。
 
-与只读计算属性一样，您可以通过删除 get 关键字及其大括号来简化只读下标的声明：
+与只读计算属性一样，您可以通过删除 get 关键字及其大括号来简化只读下标的声明:
 
 ```swift
 subscript(index: Int) -> Int {
@@ -109,7 +109,7 @@ print("six times three is \(threeTimesTable[6])")
 
 “下标”的确切含义取决于使用它的上下文。下标通常用作访问集合、列表或序列中的成员元素的快捷方式。您可以根据特定类或结构的功能以最合适的方式自由实现下标。
 
-例如，Swift 的 `Dictionary` 类型实现了一个下标，用于设置和检索存储在 `Dictionary` 实例中的值。您可以通过在下标括号内提供字典的键类型键，并将字典的值类型的值分配给下标来在字典中设置值：
+例如，Swift 的 `Dictionary` 类型实现了一个下标，用于设置和检索存储在 `Dictionary` 实例中的值。您可以通过在下标括号内提供字典的键类型键，并将字典的值类型的值分配给下标来在字典中设置值:
 
 ```swift
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -125,9 +125,9 @@ numberOfLegs["bird"] = 2
   ```
 -->
 
-上面的示例定义了一个名为 `numberOfLegs` 的变量，并使用包含三个键值对的字典文本对其进行初始化。`numberOfLegs` 字典的类型推断为 `[String： Int]`。创建字典后，此示例使用下标赋值将 `String` 键`bird`和 `Int` 值 `2` 添加到字典中。
+上面的示例定义了一个名为 `numberOfLegs` 的变量，并使用包含三个键值对的字典文本对其进行初始化。`numberOfLegs` 字典的类型推断为 `[String: Int]`。创建字典后，此示例使用下标赋值将 `String` 键`bird`和 `Int` 值 `2` 添加到字典中。
 
-有关字典下标的更多信息，请参阅 doc： <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
+有关字典下标的更多信息，请参阅 doc: <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
 >注意:
 >Swift 的 `Dictionary` 类型将其键值下标实现为接受并返回可选类型的下标。对于上面的 `numberOfLegs` 字典，键值下标接>受并返回 `Int?`（可选 int）类型的值。`Dictionary` 类型使用可选的下标类型来对并非每个键都有值这一事实进行建模，并通过为该>键分配 `nil` 值来提供删除该键的值的方法。
@@ -155,7 +155,7 @@ numberOfLegs["bird"] = 2
 
 类或结构可以根据需要提供任意数量的下标实现，并且将根据使用下标时下标括号中包含的值的类型推断要使用的相应下标。多个下标的这种定义称为*下标重载*。
 
-虽然下标采用单个参数是最常见的，但如果它适合您的类型，您也可以定义具有多个参数的下标。下面的示例定义一个 `Matrix` 结构，该结构表示 `Double` 值的二维矩阵。`Matrix` 结构的下标采用两个整数参数：
+虽然下标采用单个参数是最常见的，但如果它适合您的类型，您也可以定义具有多个参数的下标。下面的示例定义一个 `Matrix` 结构，该结构表示 `Double` 值的二维矩阵。`Matrix` 结构的下标采用两个整数参数:
 
 ```swift
 struct Matrix {
@@ -213,7 +213,7 @@ struct Matrix {
 
 `Matrix` 提供了一个初始值设定项，该初始值设定项采用两个称为 `rows` 和 `columns` 的参数，并创建一个足够大的数组来存储 `Double` 类型的`rows * columns`值。矩阵中的每个位置的初始值为 `0.0`。为了实现这一点，数组的大小和初始单元格值 `0.0` 被传递给数组初始值设定项，该初始值设定项创建并初始化正确大小的新数<doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.中对此初始值设定项进行了更详细的描述。
 
-您可以通过将适当的 `row` 和 `column` 计数传递给其初始值设定项来构造新的 `Matrix` 实例：
+您可以通过将适当的 `row` 和 `column` 计数传递给其初始值设定项来构造新的 `Matrix` 实例:
 
 ```swift
 var matrix = Matrix(rows: 2, columns: 2)
@@ -228,9 +228,9 @@ var matrix = Matrix(rows: 2, columns: 2)
   ```
 -->
 
-上面的示例创建了一个包含两行和两列的新 `Matrix` 实例。此 `Matrix` 实例的`grid`数组实际上是矩阵的扁平化版本，从左上角到右下角如下图所示：
+上面的示例创建了一个包含两行和两列的新 `Matrix` 实例。此 `Matrix` 实例的`grid`数组实际上是矩阵的扁平化版本，从左上角到右下角如下图所示:
 
-将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔：
+将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔:
 
 ```swift
 matrix[0, 1] = 1.5
@@ -250,9 +250,9 @@ matrix[1, 0] = 3.2
   ```
 -->
 
-上面两条语句分别调用下标的 setter 将矩阵右上角位置（即 `row` 为 `0`、`column` 为 `1` 的位置）的值设置为 `1.5`，将矩阵左下角位置（即 `row` 为 `1`、`column` 为 `0` 的位置）的值设置为 `3.2`：
+上面两条语句分别调用下标的 setter 将矩阵右上角位置（即 `row` 为 `0`、`column` 为 `1` 的位置）的值设置为 `1.5`，将矩阵左下角位置（即 `row` 为 `1`、`column` 为 `0` 的位置）的值设置为 `3.2`:
 
-`Matrix` 下标的 getter 和 setter 中都含有断言，用来检查下标入参 `row` 和 `column` 的值是否有效。为了方便进行断言，`Matrix` 包含了一个名为 `indexIsValid(row:column:)` 的便利方法，用来检查入参 `row` 和 `column` 的值是否在矩阵范围内：
+`Matrix` 下标的 getter 和 setter 中都含有断言，用来检查下标入参 `row` 和 `column` 的值是否有效。为了方便进行断言，`Matrix` 包含了一个名为 `indexIsValid(row:column:)` 的便利方法，用来检查入参 `row` 和 `column` 的值是否在矩阵范围内:
 
 ```swift
 func indexIsValid(row: Int, column: Int) -> Bool {
@@ -272,7 +272,7 @@ func indexIsValid(row: Int, column: Int) -> Bool {
   ```
 -->
 
-断言在下标越界时触发：
+断言在下标越界时触发:
 
 ```swift
 let someValue = matrix[2, 2]
@@ -291,7 +291,7 @@ let someValue = matrix[2, 2]
 
 ## 类型下标
 
-正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型自身上调用的下标。这种下标被称作_类型下标_。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类型可以使用 `class` 关键字来代替 `static`，它允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标：
+正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型自身上调用的下标。这种下标被称作_类型下标_。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类型可以使用 `class` 关键字来代替 `static`，它允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标:
 
 ```swift
 enum Planet: Int {
