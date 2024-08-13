@@ -1,62 +1,44 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/TheBasics.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 基础知识
 
-# The Basics
+处理常见数据类型并编写基本语法。
 
-Work with common kinds of data and write basic syntax.
+Swift 提供了许多基本数据类型，
+包括表示整数的 `Int`、
+表示浮点数的 `Double`、
+表示布尔值的 `Bool` 
+和表示文本的 `String`。
+Swift 还提供了三种主要集合类型（`Array`（数组），`Set`（集合），和 `Dictionary`（字典））的强大版本，
+详见<doc:CollectionTypes>。
 
-Swift provides many fundamental data types,
-including `Int` for integers,
-`Double` for floating-point values,
-`Bool` for Boolean values,
-and `String` for text.
-Swift also provides powerful versions of the three primary collection types,
-`Array`, `Set`, and `Dictionary`,
-as described in <doc:CollectionTypes>.
+Swift 使用变量来存储值，并通过标识名称来引用值。
+Swift 还广泛使用不可更改其值的变量。
+这些变量被称为常量，在整个 Swift 中都有使用，以便在处理无需更改的值时使代码更安全、更清晰。
 
-Swift uses variables to store and refer to values by an identifying name.
-Swift also makes extensive use of variables whose values can't be changed.
-These are known as constants, and are used throughout Swift to make code safer and clearer in intent
-when you work with values that don't need to change.
+除了熟悉的类型外，Swift 还引入了元组等高级类型。
+通过元组，你可以创建并传递一组值。
+你可以使用元组从函数返回一个包含了多个值的复合值。
 
-In addition to familiar types,
-Swift introduces advanced types such as tuples.
-Tuples enable you to create and pass around groupings of values.
-You can use a tuple to return multiple values from a function as a single compound value.
+Swift 还引入了可选类型，用于处理值缺失的情况。
+可选类型要么表示“变量*有*值，且等于 *x*”，要么表示“压根就*没有*值”。
 
-Swift also introduces optional types,
-which handle the absence of a value.
-Optionals say either “there *is* a value, and it equals *x*”
-or “there *isn't* a value at all”.
+Swift 是一种*类型安全*的语言，这意味着该语言可以帮助你明确代码可以处理的值的类型。
+如果你的部分代码需要字符串，类型安全可以防止你错误地将整数传递给它。
+同样，类型安全也能防止你不小心将可选字符串传递给需要非可选字符串的代码。
+类型安全可帮助你在开发过程中尽早发现并修复错误。
 
-Swift is a *type-safe* language,
-which means the language helps you to be clear about the types of values your code can work with.
-If part of your code requires a `String`,
-type safety prevents you from passing it an `Int` by mistake.
-Likewise, type safety prevents you from
-accidentally passing an optional `String`
-to a piece of code that requires a non-optional `String`.
-Type safety helps you catch and fix errors as early as possible in the development process.
+## 常量和变量
 
-## Constants and Variables
+常量和变量将名称（如 `maximumNumberOfLoginAttempts` 或 `welcomeMessage`）
+与特定类型的值（如数字 `10` 或字符串 `"Hello"`）相关联。
+*常量*的值一旦设置就不能更改，
+而*变量*则可以在将来设置不同的值。
 
-Constants and variables associate a name
-(such as `maximumNumberOfLoginAttempts` or `welcomeMessage`)
-with a value of a particular type
-(such as the number `10` or the string `"Hello"`).
-The value of a *constant* can't be changed once it's set,
-whereas a *variable* can be set to a different value in the future.
+### 声明常量和变量
 
-### Declaring Constants and Variables
-
-Constants and variables must be declared before they're used.
-You declare constants with the `let` keyword
-and variables with the `var` keyword.
-Here's an example of how constants and variables can be used
-to track the number of login attempts a user has made:
+常量和变量在使用前必须先声明。
+使用 `let` 关键字声明常量，
+使用 `var` 关键字声明变量。
+下面举例说明如何使用常量和变量来追踪用户尝试登录的次数：
 
 ```swift
 let maximumNumberOfLoginAttempts = 10
@@ -72,42 +54,34 @@ var currentLoginAttempt = 0
   ```
 -->
 
-This code can be read as:
+该代码可理解为：
 
-“Declare a new constant called `maximumNumberOfLoginAttempts`,
-and give it a value of `10`.
-Then, declare a new variable called `currentLoginAttempt`,
-and give it an initial value of `0`.”
+“声明一个名为 `maximumNumberOfLoginAttempts` 的新常量，
+并赋予其 `10` 的值。
+然后，声明一个名为 `currentLoginAttempt` 的新变量，
+并赋予其 `0` 的初始值。”
 
-In this example,
-the maximum number of allowed login attempts is declared as a constant,
-because the maximum value never changes.
-The current login attempt counter is declared as a variable,
-because this value must be incremented after each failed login attempt.
+在这个示例中，允许的最大登录尝试次数被声明为一个常量，因为最大值永远不会改变。
+当前登录尝试计数器被声明为变量，因为每次登录尝试失败后，该值都必须递增。
 
-If a stored value in your code won't change,
-always declare it as a constant with the `let` keyword.
-Use variables only for storing values that change.
+如果代码中的某个存储值不会改变，请使用 `let` 关键字将其声明为常量。
+变量只用于存储会发生变化的值。
 
-When you declare a constant or a variable,
-you can give it a value as part of that declaration,
-like the examples above.
-Alternatively,
-you can assign its initial value later in the program,
-as long as it's guaranteed to have a value
-before the first time you read from it.
+在声明常量或变量时，可以像上面的示例一样，在声明中为其赋值。
+或者你也可以稍后在程序中为变量分配初始值，
+只要能保证在第一次读取前它有值即可。
 
 ```swift
 var environment = "development"
 let maximumNumberOfLoginAttempts: Int
-// maximumNumberOfLoginAttempts has no value yet.
+// maximumNumberOfLoginAttempts 尚无值。
 
 if environment == "development" {
     maximumNumberOfLoginAttempts = 100
 } else {
     maximumNumberOfLoginAttempts = 10
 }
-// Now maximumNumberOfLoginAttempts has a value, and can be read.
+// 现在 maximumNumberOfLoginAttempts 有了值，可以读取了。
 ```
 
 <!--
@@ -126,21 +100,13 @@ if environment == "development" {
   ```
 -->
 
-In this example,
-the maximum number of login attempts is constant,
-and its value depends on the environment.
-In the development environment,
-it has a value of 100;
-in any other environment, its value is 10.
-Both branches of the `if` statement
-initialize `maximumNumberOfLoginAttempts` with some value,
-guaranteeing that the constant always gets a value.
-For information about how Swift checks your code
-when you set an initial value this way,
-see <doc:Declarations#Constant-Declaration>.
+在本例中，登录尝试的最大次数是常数，其值取决于环境。
+在开发环境中，其值为 100；
+在其他环境中，其值为 10。
+`if` 语句的两个分支都将 `maximumNumberOfLoginAttempts` 初始化为某个值，从而保证该常量一定有一个值。
+有关 Swift 如何在以这种方式设置初始值时检查代码的详情，请参阅<doc:Declarations#Constant-Declaration>。
 
-You can declare multiple constants or multiple variables on a single line,
-separated by commas:
+你可以在一行中声明多个常量或多个变量，中间用逗号隔开：
 
 ```swift
 var x = 0.0, y = 0.0, z = 0.0
@@ -156,15 +122,12 @@ var x = 0.0, y = 0.0, z = 0.0
   ```
 -->
 
-### Type Annotations
+### 类型注解
 
-You can provide a *type annotation* when you declare a constant or variable,
-to be clear about the kind of values the constant or variable can store.
-Write a type annotation by placing a colon after the constant or variable name,
-followed by a space, followed by the name of the type to use.
+在声明常量或变量时，可以提供*类型注解*，以明确常量或变量可以存储的值的类型。
+编写类型注解时，在常量或变量名后加上冒号，后跟一个空格，然后是要使用的类型名称。
 
-This example provides a type annotation for a variable called `welcomeMessage`,
-to indicate that the variable can store `String` values:
+本例为名为 `welcomeMessage` 的变量提供了一个类型注解，以指示该变量可以存储字符串值：
 
 ```swift
 var welcomeMessage: String
@@ -178,15 +141,14 @@ var welcomeMessage: String
   ```
 -->
 
-The colon in the declaration means “…of type…,”
-so the code above can be read as:
+声明中的冒号表示“…类型的…”，因此上面的代码可以理解为：
 
-“Declare a variable called `welcomeMessage` that's of type `String`.”
+“声明一个名为 `welcomeMessage` 的字符串类型的变量。”
 
-The phrase “of type `String`” means “can store any `String` value.”
-Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
+短语“字符串类型”意味着“可以存储任何字符串值“。
+请将其理解为变量可以存储的“值的类型”。
 
-The `welcomeMessage` variable can now be set to any string value without error:
+现在，你可以将 `welcomeMessage` 变量设置为任何字符串值且不会出错：
 
 ```swift
 welcomeMessage = "Hello"
@@ -202,8 +164,7 @@ welcomeMessage = "Hello"
   ```
 -->
 
-You can define multiple related variables of the same type on a single line,
-separated by commas, with a single type annotation after the final variable name:
+你可以在一行中定义多个相同类型的相关变量，中间用逗号隔开，并在最后一个变量名后加一个类型注解：
 
 ```swift
 var red, green, blue: Double
@@ -217,18 +178,15 @@ var red, green, blue: Double
   ```
 -->
 
-> Note: It's rare that you need to write type annotations in practice.
-> If you provide an initial value for a constant or variable at the point that it's defined,
-> Swift can almost always infer the type to be used for that constant or variable,
-> as described in <doc:TheBasics#Type-Safety-and-Type-Inference>.
-> In the `welcomeMessage` example above, no initial value is provided,
-> and so the type of the `welcomeMessage` variable is specified with a type annotation
-> rather than being inferred from an initial value.
+> 备注: 在实践中很少需要编写类型注解。
+> 如果你在定义常量或变量时为其提供了初始值，Swift 几乎总是可以推断出该常量或变量的类型，如 <doc:TheBasics#类型安全和类型推断> 中所述。
+> 上面的 `welcomeMessage` 示例中，没有提供初始值，
+> 因此 `welcomeMessage` 变量的类型是通过类型注解指定的，
+> 而不是从初始值推断出来的。
 
-### Naming Constants and Variables
+### 命名常量和变量
 
-Constant and variable names can contain almost any character,
-including Unicode characters:
+常量和变量名几乎可以包含任何字符，包括 Unicode 字符：
 
 ```swift
 let π = 3.14159
@@ -246,30 +204,22 @@ let 🐶🐮 = "dogcow"
   ```
 -->
 
-Constant and variable names can't contain
-whitespace characters, mathematical symbols, arrows, private-use Unicode scalar values,
-or line- and box-drawing characters.
-Nor can they begin with a number,
-although numbers may be included elsewhere within the name.
+常量和变量名不能包含空格字符、数学符号、箭头、专用的 Unicode 标量值，或画线和画框字符。
+常量和变量名也不能以数字开头，尽管数字可以包含在名称的其他部分。
 
-Once you've declared a constant or variable of a certain type,
-you can't declare it again with the same name,
-or change it to store values of a different type.
-Nor can you change a constant into a variable
-or a variable into a constant.
+一旦声明了某个类型的常量或变量，就不能再用相同的名称声明，也不能更改它以存储不同类型的值。
+同时也不能将常量改为变量，或将变量改为常量。
 
-> Note: If you need to give a constant or variable the same name as a reserved Swift keyword,
-> surround the keyword with backticks (`` ` ``) when using it as a name.
-> However, avoid using keywords as names unless you have absolutely no choice.
+> 备注: 如果要使用与 Swift 保留关键字相同的名称命名常量或变量，在使用关键字时，请用反引号 (`` ` ``) 包裹。
+> 不过，除非别无他选，请尽量避免使用关键字作为变量名称。
 
-You can change the value of an existing variable to another value of a compatible type.
-In this example, the value of `friendlyWelcome` is changed from
-`"Hello!"` to `"Bonjour!"`:
+你可以将现有变量的值更改为另一个兼容类型的值。
+在本例中，`friendlyWelcome` 的值从 `"Hello!"` 改为了 `"Bonjour!"`：
 
 ```swift
 var friendlyWelcome = "Hello!"
 friendlyWelcome = "Bonjour!"
-// friendlyWelcome is now "Bonjour!"
+// friendlyWelcome 的当前值是 "Bonjour!"
 ```
 
 <!--
@@ -283,13 +233,13 @@ friendlyWelcome = "Bonjour!"
   ```
 -->
 
-Unlike a variable, the value of a constant can't be changed after it's set.
-Attempting to do so is reported as an error when your code is compiled:
+与变量不同，常量的值在设置后不能更改。
+在编译代码时，如果试图更改常量的值，就会报错：
 
 ```swift
 let languageName = "Swift"
 languageName = "Swift++"
-// This is a compile-time error: languageName cannot be changed.
+// 这是一个编译时错误：languageName 不能更改。
 ```
 
 <!--
@@ -309,13 +259,13 @@ languageName = "Swift++"
   ```
 -->
 
-### Printing Constants and Variables
+### 打印常量和变量
 
-You can print the current value of a constant or variable with the `print(_:separator:terminator:)` function:
+使用 `print(_:separator:terminator:)` 函数可以打印常量或变量的当前值：
 
 ```swift
 print(friendlyWelcome)
-// Prints "Bonjour!"
+// 打印 "Bonjour!"
 ```
 
 <!--
@@ -327,19 +277,13 @@ print(friendlyWelcome)
   ```
 -->
 
-The `print(_:separator:terminator:)` function
-is a global function that prints one or more values
-to an appropriate output.
-In Xcode, for example,
-the `print(_:separator:terminator:)` function prints its output in Xcode's “console” pane.
-The `separator` and `terminator` parameter have default values,
-so you can omit them when you call this function.
-By default, the function terminates the line it prints by adding a line break.
-To print a value without a line break after it,
-pass an empty string as the terminator --- for example,
-`print(someValue, terminator: "")`.
-For information about parameters with default values,
-see <doc:Functions#Default-Parameter-Values>.
+`print(_:separator:terminator:)` 函数是一个全局函数，
+用于将一个或多个值打印到适当的输出端。
+例如，在 Xcode 中，`print(_:separator:termininator:)` 函数将在 Xcode 的 “控制台” 窗格中打印输出。
+参数 `separator`（分隔符） 和 `terminator`（结束符） 有默认值，因此在调用此函数时可以省略。
+默认情况下，该函数通过添加换行符来结束打印行。
+如果要打印一个值且不换行，可以传递一个空字符串作为结束符，例如 `print(someValue,termininator:"")`。
+有关带默认值参数的信息，请参阅 <doc:Functions#Default-Parameter-Values>。
 
 <!--
   - test: `printingWithoutNewline`
@@ -362,14 +306,12 @@ see <doc:Functions#Default-Parameter-Values>.
   It will be expanded later on.
 -->
 
-Swift uses *string interpolation* to include the name of a constant or variable
-as a placeholder in a longer string,
-and to prompt Swift to replace it with the current value of that constant or variable.
-Wrap the name in parentheses and escape it with a backslash before the opening parenthesis:
+Swift 使用*字符串插值*将常量或变量的名称作为占位符包含在较长的字符串中，并提示 Swift 将其替换为该常量或变量的当前值。
+将名称包在括号中，并在左括号前用反斜杠进行转义：
 
 ```swift
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
-// Prints "The current value of friendlyWelcome is Bonjour!"
+// 打印 "The current value of friendlyWelcome is Bonjour！"
 ```
 
 <!--
@@ -381,20 +323,18 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
   ```
 -->
 
-> Note: All options you can use with string interpolation
-> are described in <doc:StringsAndCharacters#String-Interpolation>.
+> 备注: 在 <doc:StringsAndCharacters#String-Interpolation> 中描述了所有字符串插值选项。
 
-## Comments
+## 注释
 
-Use comments to include nonexecutable text in your code,
-as a note or reminder to yourself.
-Comments are ignored by the Swift compiler when your code is compiled.
+使用注释在代码中包含不可执行的文本，作为给自己的注释或提醒。
+在编译代码时，Swift 编译器会忽略注释。
 
-Comments in Swift are very similar to comments in C.
-Single-line comments begin with two forward-slashes (`//`):
+Swift 中的注释与 C 语言中的注释非常相似。
+单行注释以两个正斜杠 (`//`) 开头：
 
 ```swift
-// This is a comment.
+// 这是一个注释。
 ```
 
 <!--
@@ -405,12 +345,11 @@ Single-line comments begin with two forward-slashes (`//`):
   ```
 -->
 
-Multiline comments start with a forward-slash followed by an asterisk (`/*`)
-and end with an asterisk followed by a forward-slash (`*/`):
+多行注释以正斜杠 + 星号 (`/*`) 开始，并以星号 + 正斜杠 (`*/`) 结束：
 
 ```swift
-/* This is also a comment
-but is written over multiple lines. */
+/* 这也是一个注释
+但写了多行。*/
 ```
 
 <!--
@@ -422,16 +361,14 @@ but is written over multiple lines. */
   ```
 -->
 
-Unlike multiline comments in C,
-multiline comments in Swift can be nested inside other multiline comments.
-You write nested comments by starting a multiline comment block
-and then starting a second multiline comment within the first block.
-The second block is then closed, followed by the first block:
+与 C 语言中的多行注释不同，Swift 中的多行注释可以嵌套在其他多行注释中。
+在编写嵌套注释时，你可以先编写一个多行注释块，然后在第一个注释块中编写第二个多行注释块。
+然后关闭第二个注释块，接着关闭第一个注释块：
 
 ```swift
-/* This is the start of the first multiline comment.
-    /* This is the second, nested multiline comment. */
-This is the end of the first multiline comment. */
+/* 这是第一个多行注释的开始。
+    /* 这是第二个嵌套的多行注释。*/
+这是第一个多行注释的结束。*/
 ```
 
 <!--
@@ -444,20 +381,17 @@ This is the end of the first multiline comment. */
   ```
 -->
 
-Nested multiline comments enable you to comment out large blocks of code quickly and easily,
-even if the code already contains multiline comments.
+通过嵌套多行注释，即使代码中已包含多行注释，你也能快速、轻松地注释大块代码。
 
-## Semicolons
+## 分号
 
-Unlike many other languages,
-Swift doesn't require you to write a semicolon (`;`) after each statement in your code,
-although you can do so if you wish.
-However, semicolons *are* required
-if you want to write multiple separate statements on a single line:
+与许多其他语言不同，Swift 并不要求你在代码中的每条语句后都写上分号（`;`），
+不过如果你愿意，也可以这样做。
+不过，如果你想在一行中编写多个独立语句，则*必须*使用分号：
 
 ```swift
 let cat = "🐱"; print(cat)
-// Prints "🐱"
+// 打印 "🐱"
 ```
 
 <!--
@@ -469,27 +403,22 @@ let cat = "🐱"; print(cat)
   ```
 -->
 
-## Integers
+## 整数
 
-*Integers* are whole numbers with no fractional component,
-such as `42` and `-23`.
-Integers are either *signed* (positive, zero, or negative)
-or *unsigned* (positive or zero).
+*整数*是没有小数成分的数字，如 `42` 和 `-23`。 
+整数可以是*有符号的*（正数、零或负数），也可以是*无符号的*（正数或零）。
 
-Swift provides signed and unsigned integers in 8, 16, 32, and 64 bit forms.
-These integers follow a naming convention similar to C,
-in that an 8-bit unsigned integer is of type `UInt8`,
-and a 32-bit signed integer is of type `Int32`.
-Like all types in Swift, these integer types have capitalized names.
+Swift 提供 8、16、32 和 64 位有符号和无符号整数。
+这些整数遵循与 C 类似的命名规则，即 8 位无符号整数的类型是 `UInt8`，32 位有符号整数的类型是 `Int32`。
+与 Swift 中的所有类型一样，这些整数类型的名称也是大写的。
 
-### Integer Bounds
+### 整数边界
 
-You can access the minimum and maximum values of each integer type
-with its `min` and `max` properties:
+你可以使用 `min` 和 `max` 属性访问每个整数类型的最小值和最大值：
 
 ```swift
-let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
+let minValue = UInt8.min  // minValue 等于 0，类型为 UInt8
+let maxValue = UInt8.max  // maxValue 等于 255，类型为 UInt8
 ```
 
 <!--
@@ -503,58 +432,46 @@ let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
   ```
 -->
 
-The values of these properties are of the appropriate-sized number type
-(such as `UInt8` in the example above)
-and can therefore be used in expressions alongside other values of the same type.
+这些属性的值属于适当大小的数字类型（如上例中的 `UInt8`），因此可以在表达式中与同类型的其他值一起使用。
 
-### Int
+### Int（整数）
 
-In most cases, you don't need to pick a specific size of integer to use in your code.
-Swift provides an additional integer type, `Int`,
-which has the same size as the current platform's native word size:
+在大多数情况下，你不需要在代码中使用特定大小的整数。
+Swift 提供了一种额外的整数类型 `Int`，其大小与当前平台的原生字长大小相同：
 
-- On a 32-bit platform, `Int` is the same size as `Int32`.
-- On a 64-bit platform, `Int` is the same size as `Int64`.
+- 在 32 位平台上，`Int` 的大小与 `Int32` 相同。
+- 在 64 位平台上，`Int` 的大小与 `Int64` 相同。
 
-Unless you need to work with a specific size of integer,
-always use `Int` for integer values in your code.
-This aids code consistency and interoperability.
-Even on 32-bit platforms, `Int` can store any value between `-2,147,483,648` and `2,147,483,647`,
-and is large enough for many integer ranges.
+除非你需要使用特定大小的整数，否则在代码中始终使用 `Int` 表示整数值。
+这有助于代码的一致性和互操作性。
+即使在 32 位平台上，`Int` 也可以存储介于 `-2,147,483,648` 和 `2,147,483,647` 之间的任何值，其大小足以容纳许多整数范围。
 
-### UInt
+### UInt（无符号整数）
 
-Swift also provides an unsigned integer type, `UInt`,
-which has the same size as the current platform's native word size:
+Swift 还提供了无符号整数类型 `UInt`，其大小与当前平台的原生字长大小相同：
 
-- On a 32-bit platform, `UInt` is the same size as `UInt32`.
-- On a 64-bit platform, `UInt` is the same size as `UInt64`.
+- 在 32 位平台上，`UInt` 的大小与 `UInt32` 相同。
+- 在 64 位平台上，`UInt` 的大小与 `UInt64` 相同。
 
-> Note: Use `UInt` only when you specifically need
-> an unsigned integer type with the same size as the platform's native word size.
-> If this isn't the case, `Int` is preferred,
-> even when the values to be stored are known to be nonnegative.
-> A consistent use of `Int` for integer values aids code interoperability,
-> avoids the need to convert between different number types,
-> and matches integer type inference, as described in <doc:TheBasics#Type-Safety-and-Type-Inference>.
+> 备注: 只有在特别需要无符号整数类型且其大小与平台的原生字长大小相同时，才使用 `UInt`。
+> 如果不是这种情况，最好使用 `Int`，即使要存储的值是非负值。
+> 对整数值一致使用 `Int` 可以提高代码的互操作性，
+> 避免在不同数字类型之间进行转换，
+> 并符合 <doc:TheBasics#类型安全和类型推断> 中所述的整数类型推断。
 
-## Floating-Point Numbers
+## 浮点数
 
-*Floating-point numbers* are numbers with a fractional component,
-such as `3.14159`, `0.1`, and `-273.15`.
+*浮点数*是带有小数成分的数字，如 `3.14159`、`0.1` 和 `-273.15`。
 
-Floating-point types can represent a much wider range of values than integer types,
-and can store numbers that are much larger or smaller than can be stored in an `Int`.
-Swift provides two signed floating-point number types:
+与整数类型相比，浮点类型可以表示的数值范围更广，而且可以存储比 `Int` 类型大得多或小得多的数字。
+Swift 提供了两种带符号浮点数类型：
 
-- `Double` represents a 64-bit floating-point number.
-- `Float` represents a 32-bit floating-point number.
+- `Double` 表示 64 位浮点数。
+- `Float` 表示 32 位浮点数。
 
-> Note: `Double` has a precision of at least 15 decimal digits,
-> whereas the precision of `Float` can be as little as 6 decimal digits.
-> The appropriate floating-point type to use depends on the nature and range of
-> values you need to work with in your code.
-> In situations where either type would be appropriate, `Double` is preferred.
+> 注意: `Double` 的精度至少为小数点后 15 位，而 `Float` 的精度可以少至小数点后 6 位。
+> 使用哪种浮点类型更合适，取决于代码中需要处理数值的性质和范围。
+> 在两种类型都适用的情况下，`Double` 是首选。
 
 <!--
   TODO: Explicitly mention situations where Float is appropriate,
@@ -565,47 +482,32 @@ Swift provides two signed floating-point number types:
   TODO: mention infinity, -infinity etc.
 -->
 
-## Type Safety and Type Inference
+## 类型安全和类型推断
 
-Swift is a *type-safe* language.
-A type safe language encourages you to be clear about
-the types of values your code can work with.
-If part of your code requires a `String`, you can't pass it an `Int` by mistake.
+Swift 是一种*类型安全*的语言。
+类型安全语言鼓励你明确指示代码可处理的值的类型。
+如果代码的一部分需要 `String`，你就不能错误地将 `Int` 传递给它。
 
-Because Swift is type safe,
-it performs *type checks* when compiling your code
-and flags any mismatched types as errors.
-This enables you to catch and fix errors as early as possible in the development process.
+由于 Swift 是类型安全的语言，因此它在编译代码时会执行*类型检查*，
+并将任何不匹配的类型标记为错误。
+这样，你就能在开发过程中尽早发现并修复错误。
 
-Type-checking helps you avoid errors when you're working with different types of values.
-However, this doesn't mean that you have to specify the type of
-every constant and variable that you declare.
-If you don't specify the type of value you need,
-Swift uses *type inference* to work out the appropriate type.
-Type inference enables a compiler to
-deduce the type of a particular expression automatically when it compiles your code,
-simply by examining the values you provide.
+类型检查可帮助你在处理不同类型的值时避免错误。
+但是，这并不意味着你必须指定你声明的每个常量和变量的类型。
+如果你没有指定所需值的类型，Swift 会使用*类型推断*来确定适当的类型。
+类型推断使编译器在编译代码时，仅通过检查你提供的值，就能自动推断出特定表达式的类型。
 
-Because of type inference, Swift requires far fewer type declarations
-than languages such as C or Objective-C.
-Constants and variables are still explicitly typed,
-but much of the work of specifying their type is done for you.
+由于有了类型推断，Swift 所需的类型声明比 C 或 Objective-C 等语言要少得多。
+常量和变量仍然是显式类型的，但为其指定类型的大部分工作都是自动完成的。
 
-Type inference is particularly useful
-when you declare a constant or variable with an initial value.
-This is often done by assigning a *literal value* (or *literal*)
-to the constant or variable at the point that you declare it.
-(A literal value is a value that appears directly in your source code,
-such as `42` and `3.14159` in the examples below.)
+当你声明一个带有初始值的常量或变量时，类型推断尤其有用。
+通常的做法是在声明常量或变量时为其赋*字面量*。（字面量指的是直接出现在源代码中的值，如下面示例中的 `42` 和 `3.14159`）。
 
-For example, if you assign a literal value of `42` to a new constant
-without saying what type it is,
-Swift infers that you want the constant to be an `Int`,
-because you have initialized it with a number that looks like an integer:
+例如，如果你将字面量 `42` 赋给一个新常量，但没有说明它是什么类型，Swift 就会推断你希望该常量是一个 `Int` 常量，因为你刚使用了一个看起来像整数的数字对它进行了初始化：
 
 ```swift
 let meaningOfLife = 42
-// meaningOfLife is inferred to be of type Int
+// meaningOfLife 被推断为 Int 类型
 ```
 
 <!--
@@ -619,12 +521,11 @@ let meaningOfLife = 42
   ```
 -->
 
-Likewise, if you don't specify a type for a floating-point literal,
-Swift infers that you want to create a `Double`:
+同样，如果你没有为浮点数字面量指定类型，Swift 会认为你想创建一个 `Double`：
 
 ```swift
 let pi = 3.14159
-// pi is inferred to be of type Double
+// pi 推断为 Double 类型
 ```
 
 <!--
@@ -638,15 +539,13 @@ let pi = 3.14159
   ```
 -->
 
-Swift always chooses `Double` (rather than `Float`)
-when inferring the type of floating-point numbers.
+在推断浮点数类型时，Swift 总是选择 `Double`（而非 `Float`）。
 
-If you combine integer and floating-point literals in an expression,
-a type of `Double` will be inferred from the context:
+如果在表达式中结合使用整数和浮点数字面量，则会根据上下文推断出 `Double` 类型：
 
 ```swift
 let anotherPi = 3 + 0.14159
-// anotherPi is also inferred to be of type Double
+// anotherPi 也被推断为 Double 类型
 ```
 
 <!--
@@ -660,26 +559,24 @@ let anotherPi = 3 + 0.14159
   ```
 -->
 
-The literal value of `3` has no explicit type in and of itself,
-and so an appropriate output type of `Double` is inferred
-from the presence of a floating-point literal as part of the addition.
+`3` 的字面量本身并没有明确的类型，因此可以根据加法中的浮点数字面量推断出合适的输出类型 `Double`。
 
-## Numeric Literals
+## 数值字面量
 
-Integer literals can be written as:
+整数字面量可以写成：
 
-- A *decimal* number, with no prefix
-- A *binary* number, with a `0b` prefix
-- An *octal* number, with a `0o` prefix
-- A *hexadecimal* number, with a `0x` prefix
+- 不带前缀的*十进制*数
+- 带 `0b` 前缀的*二进制*数
+- 带前缀 `0o` 的*八进制*数，
+- 带前缀 `0x` 的*十六进制*数
 
-All of these integer literals have a decimal value of `17`:
+以下所有整数字面量的十进制值都是 `17`：
 
 ```swift
 let decimalInteger = 17
-let binaryInteger = 0b10001       // 17 in binary notation
-let octalInteger = 0o21           // 17 in octal notation
-let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
+let binaryInteger = 0b10001       // 以二进制表示的 17
+let octalInteger = 0o21           // 以八进制表示的 17
+let hexadecimalInteger = 0x11     // 以十六进制表示的 17
 ```
 
 <!--
@@ -695,13 +592,11 @@ let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
   ```
 -->
 
-Floating-point literals can be decimal (with no prefix),
-or hexadecimal (with a `0x` prefix).
-They must always have a number (or hexadecimal number) on both sides of the decimal point.
-Decimal floats can also have an optional *exponent*,
-indicated by an uppercase or lowercase `e`;
-hexadecimal floats must have an exponent,
-indicated by an uppercase or lowercase `p`.
+浮点字面量可以是十进制（不带前缀），
+也可以是十六进制（带 `0x` 前缀）。
+浮点数的小数点两边必须始终有一个数字（或十六进制数）。
+十进制浮点数还可以有一个可选的*指数*，用大写或小写 `e` 表示；
+十六进制浮点数必须有一个指数，用大写或小写 `p` 表示。
 
 <!--
   - test: `float-required-vs-optional-exponent-err`
@@ -724,19 +619,17 @@ indicated by an uppercase or lowercase `p`.
   ```
 -->
 
-For decimal numbers with an exponent of `x`,
-the base number is multiplied by 10ˣ:
+对于指数为 `x` 的十进制数，字面量是基数乘以 10ˣ：
 
-- `1.25e2` means 1.25 x 10², or `125.0`.
-- `1.25e-2` means 1.25 x 10⁻², or `0.0125`.
+- `1.25e2` 表示 1.25 x 10² 或 `125.0`。
+- `1.25e-2` 表示 1.25 x 10⁻² 或 `0.0125`。
 
-For hexadecimal numbers with an exponent of `x`,
-the base number is multiplied by 2ˣ:
+对于指数为 `x` 的十六进制数，字面量是基数乘以 2ˣ：
 
-- `0xFp2` means 15 x 2², or `60.0`.
-- `0xFp-2` means 15 x 2⁻², or `3.75`.
+- `0xFp2` 表示 15 x 2² 或 `60.0`。
+- `0xFp-2` 表示 15 x 2⁻²，或 `3.75`。
 
-All of these floating-point literals have a decimal value of `12.1875`:
+以下所有浮点字面量的十进制值都是 `12.1875`：
 
 ```swift
 let decimalDouble = 12.1875
@@ -754,10 +647,9 @@ let hexadecimalDouble = 0xC.3p0
   ```
 -->
 
-Numeric literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with extra zeros
-and can contain underscores to help with readability.
-Neither type of formatting affects the underlying value of the literal:
+数值字面量可以包含额外的格式，以便于阅读。
+整数和浮点数都可以填充额外的零，也可以包含下划线，以提高可读性。
+这两种格式都不会影响字面量的实际值：
 
 ```swift
 let paddedDouble = 000123.456
@@ -775,36 +667,31 @@ let justOverOneMillion = 1_000_000.000_000_1
   ```
 -->
 
-## Numeric Type Conversion
+## 数字类型转换
 
-Use the `Int` type for all general-purpose integer constants and variables in your code,
-even if they're known to be nonnegative.
-Using the default integer type in everyday situations means that
-integer constants and variables are immediately interoperable in your code
-and will match the inferred type for integer literal values.
+对代码中的所有通用整数常量和变量使用 `Int` 类型，即使它们已知是非负值。
+在通常情况下使用默认整数类型意味着整数常量和变量可以立即在代码中互操作，
+并且与整数字面量的推断类型相匹配。
 
-Use other integer types only when they're specifically needed for the task at hand,
-because of explicitly sized data from an external source,
-or for performance, memory usage, or other necessary optimization.
-Using explicitly sized types in these situations
-helps to catch any accidental value overflows
-and implicitly documents the nature of the data being used.
+只有当手头的任务特别需要其他整数类型时，
+或者因为外部数据源提供了明确大小的数据，
+或者为了性能、内存使用或其他必要的优化，再考虑使用其他整数类型。
+在这些情况下使用明确大小的类型有助于捕捉任何意外的数值溢出，
+并隐式地记录所使用数据的性质。
 
-### Integer Conversion
+### 整数转换
 
-The range of numbers that can be stored in an integer constant or variable
-is different for each numeric type.
-An `Int8` constant or variable can store numbers between `-128` and `127`,
-whereas a `UInt8` constant or variable can store numbers between `0` and `255`.
-A number that won't fit into a constant or variable of a sized integer type
-is reported as an error when your code is compiled:
+每种数字类型的整数常量或变量可存储的数字范围都不同。
+`Int8` 常量或变量可以存储 `-128` 到 `127` 之间的数字，
+而 `UInt8` 常量或变量可以存储 `0` 到 `255` 之间的数字。
+编译代码时，如果一个数字无法放入一个规定大小的整数类型常量或变量中，就会报错：
 
 ```swift
 let cannotBeNegative: UInt8 = -1
-// UInt8 can't store negative numbers, and so this will report an error
+// UInt8 不能存储负数，因此会报错
 let tooBig: Int8 = Int8.max + 1
-// Int8 can't store a number larger than its maximum value,
-// and so this will also report an error
+// Int8 不能存储大于其最大值的数字，
+// 因此也会报错
 ```
 
 <!--
@@ -825,21 +712,17 @@ let tooBig: Int8 = Int8.max + 1
   ```
 -->
 
-Because each numeric type can store a different range of values,
-you must opt in to numeric type conversion on a case-by-case basis.
-This opt-in approach prevents hidden conversion errors
-and helps make type conversion intentions explicit in your code.
+由于每种数值类型可以存储不同范围的值，
+因此必须根据具体情况选择是否进行数值类型转换。
+这种选择加入的方法可以防止隐藏的转换错误，
+并有助于在代码中明确类型转换的意图。
 
-To convert one specific number type to another,
-you initialize a new number of the desired type with the existing value.
-In the example below,
-the constant `twoThousand` is of type `UInt16`,
-whereas the constant `one` is of type `UInt8`.
-They can't be added together directly,
-because they're not of the same type.
-Instead, this example calls `UInt16(one)` to create
-a new `UInt16` initialized with the value of `one`,
-and uses this value in place of the original:
+要将一种特定的数字类型转换为另一种，需要用现有值初始化一个所需类型的新数字。
+在下面的示例中，常量 `twoThousand` 的类型是 `UInt16`，
+而常量 `one` 的类型是 `UInt8`。
+由于它们的类型不同，因此不能直接相加。
+所以，本例调用 `UInt16(one)` 创建了一个初始值为 `one` 的新 `UInt16`，
+并用这个值代替原来的值进行计算：
 
 ```swift
 let twoThousand: UInt16 = 2_000
@@ -859,30 +742,25 @@ let twoThousandAndOne = twoThousand + UInt16(one)
   ```
 -->
 
-Because both sides of the addition are now of type `UInt16`,
-the addition is allowed.
-The output constant (`twoThousandAndOne`) is inferred to be of type `UInt16`,
-because it's the sum of two `UInt16` values.
+因为加法的两边现在都是 UInt16 类型，所以加法是允许的。
+输出常量 (`twoThousandAndOne`) 被推断为 `UInt16` 类型，
+因为它是两个 `UInt16` 值的和。
 
-`SomeType(ofInitialValue)` is the default way to call the initializer of a Swift type
-and pass in an initial value.
-Behind the scenes, `UInt16` has an initializer that accepts a `UInt8` value,
-and so this initializer is used to make a new `UInt16` from an existing `UInt8`.
-You can't pass in *any* type here, however ---
-it has to be a type for which `UInt16` provides an initializer.
-Extending existing types to provide initializers that accept new types
-(including your own type definitions)
-is covered in <doc:Extensions>.
+`SomeType(ofInitialValue)` 是调用 Swift 类型初始化器并赋予初始值的默认方式。
+在后台，`UInt16` 有一个接受 `UInt8` 值的初始化器，
+因此该初始化器用于从现有的 `UInt8` 生成一个新的 `UInt16`。
+但在这里不能使用*随意*类型，而必须是 `UInt16` 提供了初始化器的类型。
+扩展现有类型以提供接受新类型（包括你自己的类型定义）的初始化器，将在 <doc:Extensions> 中介绍。
 
-### Integer and Floating-Point Conversion
+### 整数和浮点数转换
 
-Conversions between integer and floating-point numeric types must be made explicit:
+整数和浮点数值类型之间的转换必须明确：
 
 ```swift
 let three = 3
 let pointOneFourOneFiveNine = 0.14159
 let pi = Double(three) + pointOneFourOneFiveNine
-// pi equals 3.14159, and is inferred to be of type Double
+// pi 等于 3.14159，并被推断为 Double 类型
 ```
 
 <!--
@@ -897,16 +775,16 @@ let pi = Double(three) + pointOneFourOneFiveNine
   ```
 -->
 
-Here, the value of the constant `three` is used to create a new value of type `Double`,
-so that both sides of the addition are of the same type.
-Without this conversion in place, the addition would not be allowed.
+在这里，常量 `three` 的值被用来创建一个 `Double` 类型的新值，
+这样加法的两边都是相同的类型。
+如果没有这种转换，加法运算将无法进行。
 
-Floating-point to integer conversion must also be made explicit.
-An integer type can be initialized with a `Double` or `Float` value:
+浮点数到整数的转换也必须明确。
+整数类型可以用 `Double` 或 `Float` 值进行初始化：
 
 ```swift
 let integerPi = Int(pi)
-// integerPi equals 3, and is inferred to be of type Int
+// integerPi 等于 3，并被推断为 Int 类型
 ```
 
 <!--
@@ -919,14 +797,12 @@ let integerPi = Int(pi)
   ```
 -->
 
-Floating-point values are always truncated when used to initialize a new integer value in this way.
-This means that `4.75` becomes `4`, and `-3.9` becomes `-3`.
+用这种方法初始化一个新的整数值时，浮点数总是被截断的。
+这意味着 `4.75` 变为 `4`，`-3.9` 变为 `-3`。
 
-> Note: The rules for combining numeric constants and variables are different from
-> the rules for numeric literals.
-> The literal value `3` can be added directly to the literal value `0.14159`,
-> because number literals don't have an explicit type in and of themselves.
-> Their type is inferred only at the point that they're evaluated by the compiler.
+> 注意: 组合数值常量和变量的规则与组合数值字面量的规则不同。
+> 字面量 `3` 可以与字面量 `0.14159` 相加，因为数值字面量本身并没有明确的类型。
+> 只有在编译器对其进行评估时才会推断出其类型。
 
 <!--
   NOTE: this section on explicit conversions could be included in the Operators section.
@@ -934,14 +810,13 @@ This means that `4.75` becomes `4`, and `-3.9` becomes `-3`.
   and helps to reinforce the “just use Int” message.
 -->
 
-## Type Aliases
+## 类型别名
 
-*Type aliases* define an alternative name for an existing type.
-You define type aliases with the `typealias` keyword.
+*类型别名*用于定义现有类型的替代名称。
+你可以使用 `typealias` 关键字定义类型别名。
 
-Type aliases are useful when you want to refer to an existing type
-by a name that's contextually more appropriate,
-such as when working with data of a specific size from an external source:
+当你想用一个更适合上下文的名称来代指现有类型时，
+比如在处理源自外部的特定大小的数据时，类型别名就非常有用：
 
 ```swift
 typealias AudioSample = UInt16
@@ -955,12 +830,11 @@ typealias AudioSample = UInt16
   ```
 -->
 
-Once you define a type alias,
-you can use the alias anywhere you might use the original name:
+一旦定义了类型别名，就可以在任何可以使用原名的地方使用此别名：
 
 ```swift
 var maxAmplitudeFound = AudioSample.min
-// maxAmplitudeFound is now 0
+// maxAmplitudeFound 现在为 0
 ```
 
 <!--
@@ -973,18 +847,14 @@ var maxAmplitudeFound = AudioSample.min
   ```
 -->
 
-Here, `AudioSample` is defined as an alias for `UInt16`.
-Because it's an alias,
-the call to `AudioSample.min` actually calls `UInt16.min`,
-which provides an initial value of `0` for the `maxAmplitudeFound` variable.
+`在这里，AudioSample` 被定义为 `UInt16` 的别名。
+因为是别名，所以调用 `AudioSample.min` 实际上是调用 `UInt16.min`，为 `maxAmplitudeFound` 变量提供一个初始值 `0`。
 
-## Booleans
+## 布尔类型
 
-Swift has a basic *Boolean* type, called `Bool`.
-Boolean values are referred to as *logical*,
-because they can only ever be true or false.
-Swift provides two Boolean constant values,
-`true` and `false`:
+Swift 有一种基本的*布尔*类型，称为 `Bool`。
+布尔值又被称为*逻辑值*，因为它们只能为真或假。
+Swift 提供了两个布尔常量值：`true` 和 `false`。
 
 ```swift
 let orangesAreOrange = true
@@ -1000,17 +870,13 @@ let turnipsAreDelicious = false
   ```
 -->
 
-The types of `orangesAreOrange` and `turnipsAreDelicious`
-have been inferred as `Bool` from the fact that
-they were initialized with Boolean literal values.
-As with `Int` and `Double` above,
-you don't need to declare constants or variables as `Bool`
-if you set them to `true` or `false` as soon as you create them.
-Type inference helps make Swift code more concise and readable
-when it initializes constants or variables with other values whose type is already known.
+`orangesAreOrange` 和 `turnipsAreDelicious` 的类型已被推断为 `Bool`，
+因为它们使用了布尔字面量初始化。
+与上述的 `Int` 和 `Double` 一样，
+如果你在创建常量或变量时将其设置为 `true` 或 `false`，则无需将其声明为 Bool。
+类型推断有助于让 Swift 代码在使用类型已知的值初始化常量或变量时更简洁易读。
 
-Boolean values are particularly useful when you work with conditional statements
-such as the `if` statement:
+布尔值在使用条件语句（如 `if` 语句）时尤其有用：
 
 ```swift
 if turnipsAreDelicious {
@@ -1018,7 +884,7 @@ if turnipsAreDelicious {
 } else {
     print("Eww, turnips are horrible.")
 }
-// Prints "Eww, turnips are horrible."
+// 打印 "Eww, turnips are horrible."
 ```
 
 <!--
@@ -1034,15 +900,15 @@ if turnipsAreDelicious {
   ```
 -->
 
-Conditional statements such as the `if` statement are covered in more detail in <doc:ControlFlow>.
+<doc:ControlFlow> 将详细介绍 `if` 语句等条件语句。
 
-Swift's type safety prevents non-Boolean values from being substituted for `Bool`.
-The following example reports a compile-time error:
+Swift 的类型安全防止非布尔值被替换为布尔值。
+下面的示例代码会报告编译时错误：
 
 ```swift
 let i = 1
 if i {
-    // this example will not compile, and will report an error
+    // 该示例将无法编译，并报错
 }
 ```
 
@@ -1061,12 +927,12 @@ if i {
   ```
 -->
 
-However, the alternative example below is valid:
+不过，下面的替代示例是合法的：
 
 ```swift
 let i = 1
 if i == 1 {
-    // this example will compile successfully
+    // 此示例将成功编译
 }
 ```
 
@@ -1081,27 +947,23 @@ if i == 1 {
   ```
 -->
 
-The result of the `i == 1` comparison is of type `Bool`,
-and so this second example passes the type-check.
-Comparisons like `i == 1` are discussed in <doc:BasicOperators>.
+`i == 1` 的比较结果是 `Bool` 类型，因此第二个示例通过了类型检查。
+类似 `i == 1` 的比较结果将在<doc:BasicOperators>中讨论。
 
-As with other examples of type safety in Swift,
-this approach avoids accidental errors
-and ensures that the intention of a particular section of code is always clear.
+与 Swift 中其他类型安全示例一样，这种方法可以避免意外错误，并确保特定代码部分的意图始终清晰明了。
 
-## Tuples
+## 元组
 
-*Tuples* group multiple values into a single compound value.
-The values within a tuple can be of any type
-and don't have to be of the same type as each other.
+*元组*将多个值组合成一个复合值。
+元组内的值可以是任何类型，且不必彼此属于同一类型。
 
-In this example, `(404, "Not Found")` is a tuple that describes an *HTTP status code*.
-An HTTP status code is a special value returned by a web server whenever you request a web page.
-A status code of `404 Not Found` is returned if you request a webpage that doesn't exist.
+在下例中，`(404, "Not Found")` 是一个描述 *HTTP 状态代码*的元组。
+HTTP 状态代码是网络服务器在你请求网页时返回的一个特殊值。
+如果你请求一个不存在的网页，返回的状态代码就是 `404 Not Found`。
 
 ```swift
 let http404Error = (404, "Not Found")
-// http404Error is of type (Int, String), and equals (404, "Not Found")
+// http404Error 的类型为（Int，String），且等于（404，"Not Found"）
 ```
 
 <!--
@@ -1114,26 +976,23 @@ let http404Error = (404, "Not Found")
   ```
 -->
 
-The `(404, "Not Found")` tuple groups together an `Int` and a `String`
-to give the HTTP status code two separate values:
-a number and a human-readable description.
-It can be described as “a tuple of type `(Int, String)`”.
+`(404，"Not Found")` 元组将一个 `Int` 和一个 `String` 组合在一起，
+赋予 HTTP 状态代码两个独立的值：
+一个数字和一个人类可读的描述。
+它可以描述为 “一个 `(Int, String)` 类型的元组”。
 
-You can create tuples from any permutation of types,
-and they can contain as many different types as you like.
-There's nothing stopping you from having
-a tuple of type `(Int, Int, Int)`, or `(String, Bool)`,
-or indeed any other permutation you require.
+你可以从任何的类型排列中创建元组，而且元组中可以包含任意多的不同类型。
+没有什么能阻止你创建一个 `(Int, Int, Int)` 或 `(String, Bool)` 类型的元组，
+或者其他任何你需要的排列。
 
-You can *decompose* a tuple's contents into separate constants or variables,
-which you then access as usual:
+你可以将元组的内容*分解*成单独的常量或变量，然后像往常一样访问它们：
 
 ```swift
 let (statusCode, statusMessage) = http404Error
 print("The status code is \(statusCode)")
-// Prints "The status code is 404"
+// 打印 "The status code is 404"
 print("The status message is \(statusMessage)")
-// Prints "The status message is Not Found"
+// 打印 "The status message is Not Found"
 ```
 
 <!--
@@ -1148,14 +1007,12 @@ print("The status message is \(statusMessage)")
   ```
 -->
 
-If you only need some of the tuple's values,
-ignore parts of the tuple with an underscore (`_`)
-when you decompose the tuple:
+如果只需要元组的部分值，则在分解元组时使用下划线 (`_`) 忽略不需要的部分：
 
 ```swift
 let (justTheStatusCode, _) = http404Error
 print("The status code is \(justTheStatusCode)")
-// Prints "The status code is 404"
+// 打印 "The status code is 404"
 ```
 
 <!--
@@ -1168,14 +1025,13 @@ print("The status code is \(justTheStatusCode)")
   ```
 -->
 
-Alternatively,
-access the individual element values in a tuple using index numbers starting at zero:
+或者，使用从零开始的索引号访问元组中的单个元素值：
 
 ```swift
 print("The status code is \(http404Error.0)")
-// Prints "The status code is 404"
+// 打印 "The status code is 404"
 print("The status message is \(http404Error.1)")
-// Prints "The status message is Not Found"
+// 打印 "The status message is Not Found"
 ```
 
 <!--
@@ -1189,7 +1045,7 @@ print("The status message is \(http404Error.1)")
   ```
 -->
 
-You can name the individual elements in a tuple when the tuple is defined:
+你可以在定义元组时为元组中的各个元素命名：
 
 ```swift
 let http200Status = (statusCode: 200, description: "OK")
@@ -1203,14 +1059,13 @@ let http200Status = (statusCode: 200, description: "OK")
   ```
 -->
 
-If you name the elements in a tuple,
-you can use the element names to access the values of those elements:
+如果为元组中的元素命名了，就可以使用元素名访问这些元素的值：
 
 ```swift
 print("The status code is \(http200Status.statusCode)")
-// Prints "The status code is 200"
+// 打印 "The status code is 200"
 print("The status message is \(http200Status.description)")
-// Prints "The status message is OK"
+// 打印 "The status message is OK"
 ```
 
 <!--
@@ -1224,41 +1079,35 @@ print("The status message is \(http200Status.description)")
   ```
 -->
 
-Tuples are particularly useful as the return values of functions.
-A function that tries to retrieve a web page might return the `(Int, String)` tuple type
-to describe the success or failure of the page retrieval.
-By returning a tuple with two distinct values,
-each of a different type,
-the function provides more useful information about its outcome
-than if it could only return a single value of a single type.
-For more information, see <doc:Functions#Functions-with-Multiple-Return-Values>.
+元组作为函数的返回值特别有用。
+一个试图检索网页的函数可能会返回 `(Int, String)` 元组类型来描述网页检索的成功或失败。
+在函数中返回包含两个不同值（每个值的类型都不同）的元组，
+比只能返回单一类型的单个值提供了更多关于其结果的有用信息。
+更多信息，请参阅 <doc:Functions#Functions-with-Multiple-Return-Values>。
 
-> Note: Tuples are useful for simple groups of related values.
-> They're not suited to the creation of complex data structures.
-> If your data structure is likely to be more complex,
-> model it as a class or structure, rather than as a tuple.
-> For more information, see <doc:ClassesAndStructures>.
+> 注意: 元组适用于简单的相关值组。
+> 它们不适合创建复杂的数据结构。
+> 如果你的数据结构可能会变得复杂，请将其创建为类或结构体，而不是元组。
+> 更多信息，请参阅 <doc:ClassesAndStructures>。
 
-## Optionals
+## 可选
 
-You use *optionals* in situations where a value may be absent.
-An optional represents two possibilities:
-Either there *is* a value of a specified type,
-and you can unwrap the optional to access that value,
-or there *isn't* a value at all.
+在可能缺失值的情况下，请使用*可选*。
+可选代表两种可能性：
+要么*存在*一个指定类型的值，并可以解包可选以访问该值；
+要么*根本就没有*值。
 
-As an example of a value that might be missing,
-Swift's `Int` type has an initializer
-that tries to convert a `String` value into an `Int` value.
-However, only some strings can be converted into integers.
-The string `"123"` can be converted into the numeric value `123`,
-but the string `"hello, world"` doesn't have a corresponding numeric value.
-The example below uses the initializer to try to convert a `String` into an `Int`:
+举一个可能缺失值的例子，Swift 的 `Int` 类型有一个初始化器，
+它会尝试将 `String` 值转换为 `Int` 值。
+但是，只有某些字符串可以转换成整数。
+字符串 `"123"` 可以转换成数值 `123`，
+但字符串 `"hello, world"` 却没有对应的数值。
+下面的示例使用初始化器尝试将 `String` 转换为 `Int`：
 
 ```swift
 let possibleNumber = "123"
 let convertedNumber = Int(possibleNumber)
-// The type of convertedNumber is "optional Int"
+// convertedNumber 的类型是 "可选 Int"。
 ```
 
 <!--
@@ -1273,27 +1122,22 @@ let convertedNumber = Int(possibleNumber)
   ```
 -->
 
-Because the initializer in the code above might fail,
-it returns an *optional* `Int`, rather than an `Int`.
+因为上面代码中的初始化器可能会失败，所以它返回的是*可选* `Int`，而不是 `Int`。
 
-To write an optional type,
-you write a question mark (`?`)
-after the name of the type that the optional contains ---
-for example, the type of an optional `Int` is `Int?`.
-An optional `Int` always contains
-either some `Int` value or no value at all.
-It can't contain anything else, like a `Bool` or `String` value.
+要编写可选类型，需要在可选包含的类型名称后面加一个问号（`?`）。
+例如，可选 `Int` 的类型是 `Int?`。
+可选 `Int` 只能储存某个 `Int` 值或不储存任何值。
+它不能储存任何其他值，如 `Bool` 或 `String` 值。
 
 ### nil
 
-You set an optional variable to a valueless state
-by assigning it the special value `nil`:
+通过给可选变量赋特殊值 `nil`，可以将其设置为无值状态：
 
 ```swift
 var serverResponseCode: Int? = 404
-// serverResponseCode contains an actual Int value of 404
+// serverResponseCode 包含一个实际 Int 值 404
 serverResponseCode = nil
-// serverResponseCode now contains no value
+// serverResponseCode 现在不包含任何值
 ```
 
 <!--
@@ -1308,12 +1152,11 @@ serverResponseCode = nil
   ```
 -->
 
-If you define an optional variable without providing a default value,
-the variable is automatically set to `nil`:
+如果你定义了一个可选变量，但没有提供默认值，那么该变量将自动设置为 `nil`：
 
 ```swift
 var surveyAnswer: String?
-// surveyAnswer is automatically set to nil
+// surveyAnswer 自动设置为 nil
 ```
 
 <!--
@@ -1325,12 +1168,10 @@ var surveyAnswer: String?
   ```
 -->
 
-You can use an `if` statement to find out whether an optional contains a value
-by comparing the optional against `nil`.
-You perform this comparison with the “equal to” operator (`==`)
-or the “not equal to” operator (`!=`).
+你可以使用 `if` 语句，通过比较可选和 nil 来确定可选是否包含一个值。
+你可以使用“等于”操作符（`==`）或“不等于”操作符（`!=`）进行比较。
 
-If an optional has a value, it's considered as “not equal to” `nil`:
+如果可选有一个值，它就被视为“不等于” `nil`：
 
 ```swift
 let possibleNumber = "123"
@@ -1339,7 +1180,7 @@ let convertedNumber = Int(possibleNumber)
 if convertedNumber != nil {
     print("convertedNumber contains some integer value.")
 }
-// Prints "convertedNumber contains some integer value."
+// 打印 "convertedNumber contains some integer value."
 ```
 
 <!--
@@ -1353,57 +1194,45 @@ if convertedNumber != nil {
   ```
 -->
 
-You can't use `nil` with non-optional constants or variables.
-If a constant or variable in your code needs to work with
-the absence of a value under certain conditions,
-declare it as an optional value of the appropriate type.
-A constant or variable that's declared as a non-optional value
-is guaranteed to never contain a `nil` value.
-If you try to assign `nil` to a non-optional value,
-you'll get a compile-time error.
+不能在非可选常量或变量中使用 `nil`。
+如果代码中的常量或变量在某些条件下需要在没有值的情况下工作，
+请将其声明为适当类型的可选值。
+声明为非可选值的常量或变量保证永远不会包含 `nil` 值。
+如果尝试将 `nil` 赋值给一个非可选值，就会出现编译时错误。
 
-This separation of optional and non-optional values
-lets you explicitly mark what information can be missing,
-and makes it easier to write code that handle missing values.
-You can't accidentally treat an optional as if it were non-optional
-because this mistake produces an error at compile time.
-After you unwrap the value,
-none of the other code that works with that value needs to check for `nil`,
-so there's no need to repeatedly check the same value
-in different parts of your code.
+通过将可选值和非可选值分开，
+可以明确标记哪些信息可能缺失，
+从而更方便编写处理缺失值的代码。
+你不能意外地将可选值当作非可选值来处理，因为这种错误会在编译时产生错误。
+在对值进行解包后，使用该值的其他代码都不需要检查 `nil`，
+因此不需要在代码的不同部分重复检查同一个值。
 
-When you access an optional value,
-your code always handles both the `nil` and non-`nil` case.
-There are several things you can do when a value is missing,
-as described in the following sections:
+在访问可选值时，代码总是同时处理 `nil` 和非 `nil` 两种情况。
+当值缺失时，可以执行如以下各节所述的几项操作：
 
-- Skip the code that operates on the value when it's `nil`.
+- 当值为 `nil` 时，跳过对其进行操作的代码。
 
-- Propagate the `nil` value,
-  by returning `nil`
-  or using the `?.` operator described in <doc:OptionalChaining>.
+- 通过返回 `nil` 或使用 <doc:OptionalChaining> 中记述的 `?.` 运算符传播 `nil` 值。
 
-- Provide a fallback value, using the `??` operator.
+- 使用 `??` 运算符提供一个后备值。
 
-- Stop program execution, using the `!` operator.
+- 使用 `!` 运算符停止程序执行。
 
-> Note:
-> In Objective-C, `nil` is a pointer to a nonexistent object.
-> In Swift, `nil` isn't a pointer --- it's the absence of a value of a certain type.
-> Optionals of *any* type can be set to `nil`, not just object types.
+> 注意: 在 Objective-C 中，`nil` 是指向不存在对象的指针。
+在 Swift 中，`nil` 并非指针，而是特定类型值的缺失。
+*任何*类型的可选都可以被设置为 `nil`，而不仅仅是对象类型。
 
-### Optional Binding
+### 可选绑定
 
-You use optional binding to find out whether an optional contains a value,
-and if so, to make that value available as a temporary constant or variable.
-Optional binding can be used with `if`, `guard`, and `while` statements
-to check for a value inside an optional,
-and to extract that value into a constant or variable,
-as part of a single action.
-For more information about `if`, `guard`, and `while` statements,
-see <doc:ControlFlow>.
 
-Write an optional binding for an `if` statement as follows:
+你可以使用可选绑定来确定可选是否包含值，如果包含，
+则将该值作为临时常量或变量使用。
+可选绑定可与 `if`、`guard` 和 `while` 语句一起使用，
+以检查可选中的值，并将该值提取到常量或变量中，作为单个操作的一部分。
+有关 `if`、`guard` 和 `while` 语句的更多信息，
+请参阅 <doc:ControlFlow>。
+
+使用 `if` 语句编写的可选绑定如下：
 
 ```swift
 if let <#constantName#> = <#someOptional#> {
@@ -1411,9 +1240,7 @@ if let <#constantName#> = <#someOptional#> {
 }
 ```
 
-You can rewrite the `possibleNumber` example from
-the <doc:TheBasics#Optionals> section
-to use optional binding rather than forced unwrapping:
+你可以重写 <doc:TheBasics#可选> 部分中的 `possibleNumber` 示例，使用可选绑定而不是强制解包：
 
 ```swift
 if let actualNumber = Int(possibleNumber) {
@@ -1421,7 +1248,7 @@ if let actualNumber = Int(possibleNumber) {
 } else {
     print("The string \"\(possibleNumber)\" couldn't be converted to an integer")
 }
-// Prints "The string "123" has an integer value of 123"
+// 打印 "The string "123" has an integer value of 123"
 ```
 
 <!--
@@ -1437,31 +1264,26 @@ if let actualNumber = Int(possibleNumber) {
   ```
 -->
 
-This code can be read as:
+该代码可理解为：
 
-“If the optional `Int` returned by `Int(possibleNumber)` contains a value,
-set a new constant called `actualNumber` to the value contained in the optional.”
+“如果 `Int(possibleNumber)` 返回的可选 `Int` 中包含一个值，则将它赋值给名为 `actualNumber` 的新常量。”
 
-If the conversion is successful,
-the `actualNumber` constant becomes available for use within
-the first branch of the `if` statement.
-It has already been initialized with the value contained within the optional,
-and has the corresponding non-optional type.
-In this case, the type of `possibleNumber` is `Int?`,
-so the type of `actualNumber` is `Int`.
+如果转换成功，`actualNumber` 常量就可以在 `if` 语句的第一个分支中使用。
+这个常量已经用可选中的值进行了初始化，并具有相应的非可选类型。
+在本例中，`possibleNumber` 的类型是 `Int?`，
+因此 `actualNumber` 的类型是 `Int`。
 
-If you don't need to refer to the original, optional constant or variable
-after accessing the value it contains,
-you can use the same name for the new constant or variable:
+如果在访问原可选常量或变量的值后不需要再引用它，
+则可以考虑使用相同的名称来命名新常量或变量：
 
 ```swift
 let myNumber = Int(possibleNumber)
-// Here, myNumber is an optional integer
+// 这里，myNumber 是一个可选整数
 if let myNumber = myNumber {
-    // Here, myNumber is a non-optional integer
+    // 这里，myNumber 是一个非可选整数
     print("My number is \(myNumber)")
 }
-// Prints "My number is 123"
+// 打印 "My number is 123"
 ```
 
 <!--
@@ -1478,26 +1300,21 @@ if let myNumber = myNumber {
   ```
 -->
 
-This code starts by checking whether `myNumber` contains a value,
-just like the code in the previous example.
-If `myNumber` has a value,
-the value of a new constant named `myNumber` is set to that value.
-Inside the body of the `if` statement,
-writing `myNumber` refers to that new non-optional constant.
-Writing `myNumber` before or after the `if` statement
-refers to the original optional integer constant.
+这段代码首先检查 `myNumber` 是否包含一个值，就像上一个示例中的代码一样。
+如果 `myNumber` 有一个值，
+名为 `myNumber` 的新常量的值就会被设置为该值。
+在 `if` 语句的正文中，`myNumber` 指的就是这个新的非可选常量。
+在 `if` 语句之前或之后写 `myNumber`，指的是原来的可选整数常量。
 
-Because this kind of code is so common,
-you can use a shorter spelling to unwrap an optional value:
-Write just the name of the constant or variable that you're unwrapping.
-The new, unwrapped constant or variable
-implicitly uses the same name as the optional value.
+由于这种代码非常常见，因此可以使用更简短的语法来解包可选值：
+只写常量或变量的名称即可。
+解包后的新常量或变量隐式地使用与可选值相同的名称。
 
 ```swift
 if let myNumber {
     print("My number is \(myNumber)")
 }
-// Prints "My number is 123"
+// 打印 "My number is 123"
 ```
 
 <!--
@@ -1511,30 +1328,23 @@ if let myNumber {
   ```
 -->
 
-You can use both constants and variables with optional binding.
-If you wanted to manipulate the value of `myNumber`
-within the first branch of the `if` statement,
-you could write `if var myNumber` instead,
-and the value contained within the optional
-would be made available as a variable rather than a constant.
-Changes you make to `myNumber` inside the body of the `if` statement
-apply only to that local variable,
-*not* to the original, optional constant or variable that you unwrapped.
+你可以在可选绑定时使用常量或变量。
+如果你想在 `if` 语句的第一个分支中修改 `myNumber` 的值，
+你可以改写为 `if var myNumber`，
+这样，包含在可选中的值就可以作为变量而不是常量使用了。
+在 `if` 语句正文中对 `myNumber` 所做的修改仅适用于该局部变量，
+而*不适用于*原来的可选常量或变量。
 
-You can include as many optional bindings and Boolean conditions
-in a single `if` statement as you need to,
-separated by commas.
-If any of the values in the optional bindings are `nil`
-or any Boolean condition evaluates to `false`,
-the whole `if` statement's condition
-is considered to be `false`.
-The following `if` statements are equivalent:
+你可以在一个 `if` 语句中包含任意数量的可选绑定和布尔条件，并用逗号分隔。
+如果可选绑定中的任何值为 `nil`，或任何布尔条件的值为 `false`，
+则整个 `if` 语句的条件被视为 `false`。
+以下 `if` 语句是等价的：
 
 ```swift
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
-// Prints "4 < 42 < 100"
+// 打印 "4 < 42 < 100"
 
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
@@ -1543,7 +1353,7 @@ if let firstNumber = Int("4") {
         }
     }
 }
-// Prints "4 < 42 < 100"
+// 打印 "4 < 42 < 100"
 ```
 
 <!--
@@ -1575,28 +1385,23 @@ if let firstNumber = Int("4") {
   using the && operator instead of a comma.
 -->
 
-Constants and variables created with optional binding in an `if` statement
-are available only within the body of the `if` statement.
-In contrast, the constants and variables created with a `guard` statement
-are available in the lines of code that follow the `guard` statement,
-as described in <doc:ControlFlow#Early-Exit>.
+在 `if` 语句中使用可选绑定创建的常量和变量只能在 `if` 语句的正文中使用。
+与此相反，用 `guard` 语句创建的常量和变量仅在 `guard` 语句后的代码行中可用，
+如 <doc:ControlFlow#Early-Exit> 中所述。
 
-### Providing a Fallback Value
+### 提供后备值
 
-Another way to handle a missing value is to supply
-a default value using the nil-coalescing operator (`??`).
-If the optional on the left of the `??` isn't `nil`,
-that value is unwrapped and used.
-Otherwise, the value on the right of `??` is used.
-For example,
-the code below greets someone by name if one is specified,
-and uses a generic greeting when the name is `nil`.
+处理缺失值的另一种方法是使用 nil-coalescing 操作符（`??`）提供一个缺省值。
+如果 `??` 左边的可选值不是 `nil`，那么该值将被解包并使用。
+否则，将使用 `??` 右侧的值。
+例如，如果指定了姓名，下面的代码会用姓名问候某人，
+如果姓名为 `nil`，则使用通用问候语。
 
 ```swift
 let name: String? = nil
 let greeting = "Hello, " + (name ?? "friend") + "!"
 print(greeting)
-// Prints "Hello, friend!"
+// 打印 "Hello, friend!"
 ```
 
 <!--
@@ -1610,22 +1415,18 @@ print(greeting)
    ```
 -->
 
-For more information about using `??` to provide a fallback value,
-see <doc:BasicOperators#Nil-Coalescing-Operator>.
+关于使用 `??` 提供后备值的更多信息，请参阅 <doc:BasicOperators#Nil-Coalescing-Operator>。
 
-### Force Unwrapping
+### 强制解包
 
-When `nil` represents an unrecoverable failure,
-such as a programmer error or corrupted state,
-you can access the underlying value
-by adding an exclamation mark (`!`) to the end of the optional's name.
-This is known as *force unwrapping* the optional's value.
-When you force unwrap a non-`nil` value,
-the result is its unwrapped value.
-Force unwrapping a `nil` value triggers a runtime error.
+当 `nil` 表示不可恢复的故障时（如程序员错误或状态损坏），
+你可以通过在可选名称的末尾添加感叹号 (`!`) 来访问底层值。
+这被称为*强制解包*可选的值。
+强制解包一个非 `nil` 值时，结果是其解包值。
+强制解包一个 `nil` 值则会引发运行时错误。
 
-The `!` is, effectively, a shorter spelling of [`fatalError(_:file:line:)`][].
-For example, the code below shows two equivalent approaches:
+实际上，`!` 是 [`fatalError(_:file:line:)`][] 的简写。
+例如，下面的代码显示了两种等效的方法：
 
 [`fatalError(_:file:line:)`]: https://developer.apple.com/documentation/swift/fatalerror(_:file:line:)
 
@@ -1640,60 +1441,45 @@ guard let number = convertedNumber else {
 }
 ```
 
-Both versions of the code above depend on `convertedNumber`
-always containing a value.
-Writing that requirement as part of the code,
-using either of the approaches above,
-lets your code check that the requirement is true at runtime.
+上述两个版本的代码都要求于 `convertedNumber` 始终包含一个值。
+使用上述任一方法将该要求写入代码，可让代码在运行时检查该要求是否为真。
 
-For more information about enforcing data requirements
-and checking assumptions at runtime,
-see <doc:TheBasics#Assertions-and-Preconditions>.
+有关在运行时执行数据要求和检查假设的更多信息，
+请参阅 <doc:TheBasics#断言和先决条件>。
 
-### Implicitly Unwrapped Optionals
+### 隐式解包可选
 
-As described above,
-optionals indicate that a constant or variable is allowed to have “no value”.
-Optionals can be checked with an `if` statement to see if a value exists,
-and can be conditionally unwrapped with optional binding
-to access the optional's value if it does exist.
+如上所述，可选表示允许常量或变量“无值”。
+可以用 `if` 语句检查可选值是否存在，如果可选值确实存在，
+则可以通过可选绑定有条件地解除对可选值的包裹。
 
-Sometimes it's clear from a program's structure that an optional will *always* have a value,
-after that value is first set.
-In these cases, it's useful to remove the need
-to check and unwrap the optional's value every time it's accessed,
-because it can be safely assumed to have a value all of the time.
+有时，从程序结构中可以清楚地看出，在首次设置可选值后，该可选将*始终*有一个值。
+在这种情况下，无需在每次访问可选时都对其值进行检查和解包，
+因为你可以安全地假定它一直都有值。
 
-These kinds of optionals are defined as *implicitly unwrapped optionals*.
-You write an implicitly unwrapped optional by placing an exclamation point (`String!`)
-rather than a question mark (`String?`) after the type that you want to make optional.
-Rather than placing an exclamation point after the optional's name when you use it,
-you place an exclamation point after the optional's type when you declare it.
+这类可选被定义为*隐式解包可选*。
+在编写隐式解包可选时，需要在可选类型后面加上感叹号（`String!`）而不是问号（`String?`）。
+要注意不是在使用可选时在其名称后加上感叹号，
+而是在声明可选时在其类型后加上感叹号。
 
-Implicitly unwrapped optionals are useful when
-an optional's value is confirmed to exist immediately after the optional is first defined
-and can definitely be assumed to exist at every point thereafter.
-The primary use of implicitly unwrapped optionals in Swift is during class initialization,
-as described in <doc:AutomaticReferenceCounting#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties>.
+当首次定义可选后，可选的值立即被确认存在，
+并且可以确保在此后的每一个时间点都存在值时，隐式解包可选就非常有用了。
+在 Swift 中，隐式解包可选的主要用途是在类初始化过程中，如 <doc:AutomaticReferenceCounting#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties> 中所述。
 
-Don't use an implicitly unwrapped optional when there's a possibility of
-a variable becoming `nil` at a later point.
-Always use a normal optional type if you need to check for a `nil` value
-during the lifetime of a variable.
+当变量有可能在稍后阶段变为 `nil` 时，不要使用隐式解包可选。
+如果需要在变量的生命周期内检查变量是否为 `nil`，
+请务必使用普通的可选类型。
 
-An implicitly unwrapped optional is a normal optional behind the scenes,
-but can also be used like a non-optional value,
-without the need to unwrap the optional value each time it's accessed.
-The following example shows the difference in behavior between
-an optional string and an implicitly unwrapped optional string
-when accessing their wrapped value as an explicit `String`:
+隐式解包的可选在幕后是一个普通的可选值，但也可以像非可选值一样使用，
+而无需在每次访问时都进行解包。
+下面的示例显示了可选字符串和隐式解包的可选字符串在作为显式字符串访问其包装值时的行为差异：
 
 ```swift
 let possibleString: String? = "An optional string."
-let forcedString: String = possibleString! // Requires explicit unwrapping
+let forcedString: String = possibleString! // 需要明确的解包
 
 let assumedString: String! = "An implicitly unwrapped optional string."
-let implicitString: String = assumedString // Unwrapped automatically
+let implicitString: String = assumedString // 隐式解包
 ```
 
 <!--
@@ -1708,22 +1494,17 @@ let implicitString: String = assumedString // Unwrapped automatically
   ```
 -->
 
-You can think of an implicitly unwrapped optional as
-giving permission for the optional to be force-unwrapped if needed.
-When you use an implicitly unwrapped optional value,
-Swift first tries to use it as an ordinary optional value;
-if it can't be used as an optional, Swift force-unwraps the value.
-In the code above,
-the optional value `assumedString` is force-unwrapped
-before assigning its value to `implicitString`
-because `implicitString` has an explicit, non-optional type of `String`.
-In code below,
-`optionalString` doesn't have an explicit type
-so it's an ordinary optional.
+你可以将隐式解包可选视为允许可选值在需要时被强制解包。
+在使用隐式解包的可选值时，Swift 会首先尝试将其作为普通可选值使用；
+如果不能将其作为可选值使用，Swift 就会强制解包该值。
+在上面的代码中，
+可选值 `assumedString` 在赋值给 `implicitString` 之前被强制解包，
+因为 `implicitString` 的类型是显式定义的非可选字符串。
+在下面的代码中，`optionalString` 没有显式类型，所以它是一个普通的可选值。
 
 ```swift
 let optionalString = assumedString
-// The type of optionalString is "String?" and assumedString isn't force-unwrapped.
+// optionalString 的类型是 "String?"，而 assumedString 没有强制解包。
 ```
 
 <!--
@@ -1737,19 +1518,16 @@ let optionalString = assumedString
   ```
 -->
 
-If an implicitly unwrapped optional is `nil` and you try to access its wrapped value,
-you'll trigger a runtime error.
-The result is exactly the same as if you write an exclamation point
-to force unwrap a normal optional that doesn't contain a value.
+如果一个隐式解包的可选值为 `nil`，而你试图访问它的包装值，就会触发运行时错误。
+其结果与用感叹号来强制解包一个不包含值的普通可选完全相同。
 
-You can check whether an implicitly unwrapped optional is `nil`
-the same way you check a normal optional:
+你可以像检查普通可选一样，检查隐式解包的可选是否为 `nil`：
 
 ```swift
 if assumedString != nil {
     print(assumedString!)
 }
-// Prints "An implicitly unwrapped optional string."
+// 打印 "An implicitly unwrapped optional string."
 ```
 
 <!--
@@ -1763,14 +1541,13 @@ if assumedString != nil {
   ```
 -->
 
-You can also use an implicitly unwrapped optional with optional binding,
-to check and unwrap its value in a single statement:
+你也可以对隐式解包的可选使用可选绑定，在单个语句中检查并解包其值：
 
 ```swift
 if let definiteString = assumedString {
     print(definiteString)
 }
-// Prints "An implicitly unwrapped optional string."
+// 打印 "An implicitly unwrapped optional string."
 ```
 
 <!--
@@ -1784,23 +1561,19 @@ if let definiteString = assumedString {
   ```
 -->
 
-## Error Handling
+## 错误处理
 
-You use *error handling* to respond to error conditions
-your program may encounter during execution.
+你可以使用*错误处理*来应对程序在执行过程中可能遇到的错误情况。
 
-In contrast to optionals,
-which can use the presence or absence of a value
-to communicate success or failure of a function,
-error handling allows you to determine the underlying cause of failure,
-and, if necessary, propagate the error to another part of your program.
+与可以使用值的存在与否来传达函数的成功或失败的可选不同，
+错误处理允许你确定失败的根本原因，并在必要时将错误传播到程序的另一部分。
 
-When a function encounters an error condition, it *throws* an error.
-That function's caller can then *catch* the error and respond appropriately.
+当函数遇到错误条件时，它会*抛出*一个错误。
+该函数的调用者可以*捕获*错误并做出适当的响应。
 
 ```swift
 func canThrowAnError() throws {
-    // this function may or may not throw an error
+    // 此函数可能抛出错误，也可能不抛错
 }
 ```
 
@@ -1821,20 +1594,17 @@ func canThrowAnError() throws {
   ```
 -->
 
-A function indicates that it can throw an error
-by including the `throws` keyword in its declaration.
-When you call a function that can throw an error,
-you prepend the `try` keyword to the expression.
+函数在声明中包含 `throws` 关键字，表示它可以抛出错误。
+调用可以抛出错误的函数时，要在表达式前加上 `try` 关键字。
 
-Swift automatically propagates errors out of their current scope
-until they're handled by a `catch` clause.
+Swift 会自动将错误传播到当前作用域之外，直到它们被 `catch` 子句处理为止。
 
 ```swift
 do {
     try canThrowAnError()
-    // no error was thrown
+    // 无错误的情况
 } catch {
-    // an error was thrown
+    // 抛出错误的情况
 }
 ```
 
@@ -1854,11 +1624,9 @@ do {
   ```
 -->
 
-A `do` statement creates a new containing scope,
-which allows errors to be propagated to one or more `catch` clauses.
+`do` 语句会创建一个新的包含作用域，允许错误传播到一个或多个 `catch` 子句。
 
-Here's an example of how error handling can be used
-to respond to different error conditions:
+下面的示例说明了如何使用错误处理来应对不同的错误条件：
 
 ```swift
 func makeASandwich() throws {
@@ -1901,86 +1669,58 @@ do {
   ```
 -->
 
-In this example, the `makeASandwich()` function will throw an error
-if no clean dishes are available
-or if any ingredients are missing.
-Because `makeASandwich()` can throw an error,
-the function call is wrapped in a `try` expression.
-By wrapping the function call in a `do` statement,
-any errors that are thrown will be propagated
-to the provided `catch` clauses.
+在本例中，如果没有干净的餐具或缺少任何配料，
+`makeASandwich()` 函数就会出错。
+由于 `makeASandwich()` 可能会出错，
+因此函数调用被封装在 `try` 表达式中。
+通过将函数调用封装在 `do` 语句中，
+任何抛出的错误都会传播到所提供的 `catch` 子句中。
 
-If no error is thrown, the `eatASandwich()` function is called.
-If an error is thrown and it matches the `SandwichError.outOfCleanDishes` case,
-then the `washDishes()` function will be called.
-If an error is thrown and it matches the `SandwichError.missingIngredients` case,
-then the `buyGroceries(_:)` function is called
-with the associated `[String]` value captured by the `catch` pattern.
+如果函数没有出错，就会继续调用 `eatASandwich()` 函数。
+如果函数抛错且错误符合 `SandwichError.outOfCleanDishes` 的情况，
+则会调用 `washDishes()` 函数。
+如果出现与 `SandwichError.missingIngredients` 情况匹配的错误，
+则会调用 `buyGroceries(_:)` 函数，
+并使用 `catch` 模式捕获相关的 `[String]` 值。
 
-Throwing, catching, and propagating errors is covered in greater detail in
-<doc:ErrorHandling>.
+在 <doc:ErrorHandling> 中有对于抛出、捕获和传播错误更详细的介绍。
 
-## Assertions and Preconditions
+## 断言和先决条件
 
-*Assertions* and *preconditions*
-are checks that happen at runtime.
-You use them to make sure an essential condition is satisfied
-before executing any further code.
-If the Boolean condition in the assertion or precondition
-evaluates to `true`,
-code execution continues as usual.
-If the condition evaluates to `false`,
-the current state of the program is invalid;
-code execution ends, and your app is terminated.
+*断言*和*先决条件*是在运行时进行的检查。
+使用它们可以确保在执行任何进一步代码之前满足一个基本条件。
+如果断言或前提条件中的布尔条件为 `true`，代码将照常执行。
+如果条件的计算结果为 `false`，则程序的当前状态无效;
+代码执行结束，应用会被终止。
 
-You use assertions and preconditions
-to express the assumptions you make
-and the expectations you have
-while coding,
-so you can include them as part of your code.
-Assertions help you find mistakes and incorrect assumptions during development,
-and preconditions help you detect issues in production.
+你可以使用断言和前提条件来表达你在编码时的假设和期望，
+因此你可以将它们作为代码的一部分。
+断言可以帮助你在开发过程中发现错误和不正确的假设，
+而前提条件可以帮助你在生产过程中发现问题。
 
-In addition to verifying your expectations at runtime,
-assertions and preconditions also become a useful form of documentation
-within the code.
-Unlike the error conditions discussed in <doc:TheBasics#Error-Handling> above,
-assertions and preconditions aren't used
-for recoverable or expected errors.
-Because a failed assertion or precondition
-indicates an invalid program state,
-there's no way to catch a failed assertion.
-Recovering from an invalid state is impossible.
-When an assertion fails,
-at least one piece of the program's data is invalid ---
-but you don't know why it's invalid
-or whether an additional state is also invalid.
+除了在运行时验证你的预期，断言和前提条件也是代码中一种有用的文档形式。
+与上文 <doc:TheBasics#错误处理> 中讨论的错误条件不同，
+断言和前提条件不用于可恢复或预期的错误。
+因为一个失败的断言或前提条件表示程序状态无效，
+所以没有办法捕获一个失败的断言。
+从无效状态恢复是不可能的。
+当断言失败时，程序中至少有一个数据是无效的，
+但你不知道它为什么无效，也不知道是否还有其他状态也无效。
 
-Using assertions and preconditions
-isn't a substitute for designing your code in such a way
-that invalid conditions are unlikely to arise.
-However,
-using them to enforce valid data and state
-causes your app to terminate more predictably
-if an invalid state occurs,
-and helps make the problem easier to debug.
-When assumptions aren't checked,
-you might not notice this kind problem until much later
-when code elsewhere starts failing visibly,
-and after user data has been silently corrupted.
-Stopping execution as soon as an invalid state is detected
-also helps limit the damage caused by that invalid state.
+使用断言和先决条件并不能代替代码设计，减少无效条件出现的可能。
+但是，使用断言和前提条件来强制确保有效的数据和状态，
+会使应用在出现无效状态时以更可预测的方式终止，并使问题更容易调试。
+如果不对假设进行检查，可能要到很久以后，当其他地方的代码开始明显失效，
+以及用户数据被悄无声息地破坏后，你才会注意到这类问题。
+一旦检测到无效状态，立即停止执行也有助于限制无效状态造成的损害。
 
-The difference between assertions and preconditions is in when they're checked:
-Assertions are checked only in debug builds,
-but preconditions are checked in both debug and production builds.
-In production builds,
-the condition inside an assertion isn't evaluated.
-This means you can use as many assertions as you want
-during your development process,
-without impacting performance in production.
+断言和前提条件的区别在于何时检查：
+断言只在调试构建中进行检查，
+而前提条件则在调试构建和生产构建中都进行检查。
+在生产版本中，断言中的条件不会被评估。
+这意味着你可以在开发过程中随意使用断言，而不会影响生产过程中的性能。
 
-### Debugging with Assertions
+### 使用断言进行调试
 
 <!--
   If your code triggers an assertion while running in a debug environment,
@@ -1990,17 +1730,17 @@ without impacting performance in production.
   An assertion also lets you provide a suitable debug message as to the nature of the assert.
 -->
 
-You write an assertion by calling the
-[`assert(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1541112-assert) function
-from the Swift standard library.
-You pass this function an expression that evaluates to `true` or `false`
-and a message to display if the result of the condition is `false`.
-For example:
+你可以调用 Swift 标准库中的 
+[`assert(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1541112-assert) 
+函数来编写断言。
+你可以向该函数传递一个计算结果为 `true` 或 `false` 的表达式，
+以及一条在条件结果为 `false` 时显示的信息。
+例如：
 
 ```swift
 let age = -3
 assert(age >= 0, "A person's age can't be less than zero.")
-// This assertion fails because -3 isn't >= 0.
+// 该断言失败的原因是 -3 并不 >= 0。
 ```
 
 <!--
@@ -2014,14 +1754,12 @@ assert(age >= 0, "A person's age can't be less than zero.")
   ```
 -->
 
-In this example, code execution continues if `age >= 0` evaluates to `true`,
-that is, if the value of `age` is nonnegative.
-If the value of `age` is negative, as in the code above,
-then `age >= 0` evaluates to `false`,
-and the assertion fails, terminating the application.
+在本例中，如果 `age >= 0` 的值为 `true`，
+即 `age` 的值为非负值，代码将继续执行。
+如果 `age` 的值为负数（如上面的代码），
+则 `age >= 0 `的值为 `false`，断言失败，应用终止。
 
-You can omit the assertion message ---
-for example, when it would just repeat the condition as prose.
+你可以省略断言信息，例如，当信息只是重复解释断言条件时。
 
 ```swift
 assert(age >= 0)
@@ -2047,11 +1785,10 @@ assert(age >= 0)
   ```
 -->
 
-If the code already checks the condition,
-you use the
-[`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539616-assertionfailure) function
-to indicate that an assertion has failed.
-For example:
+如果代码已经检查了条件，则使用 
+[`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539616-assertionfailure) 
+函数来表示断言失败。
+例如：
 
 ```swift
 if age > 10 {
@@ -2079,21 +1816,20 @@ if age > 10 {
   ```
 -->
 
-### Enforcing Preconditions
+### 强制执行先决条件
 
-Use a precondition whenever a condition has the potential to be false,
-but must *definitely* be true for your code to continue execution.
-For example, use a precondition to check that a subscript isn't out of bounds,
-or to check that a function has been passed a valid value.
+当条件有可能为假，但*必须*为真才能继续执行代码时，请使用先决条件。
+例如，使用先决条件检查下标是否越界，或检查函数是否传递了有效值。
 
-You write a precondition by calling the
-[`precondition(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1540960-precondition) function.
-You pass this function an expression that evaluates to `true` or `false`
-and a message to display if the result of the condition is `false`.
-For example:
+你可以通过调用 
+[`precondition(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1540960-precondition) 
+函数来编写前提条件。
+你可以向该函数传递一个计算结果为 `true` 或 `false` 的表达式，
+以及一条在条件结果为 `false` 时显示的信息。
+例如：
 
 ```swift
-// In the implementation of a subscript...
+// 在下标的实现中...
 precondition(index > 0, "Index must be greater than zero.")
 ```
 
@@ -2108,28 +1844,21 @@ precondition(index > 0, "Index must be greater than zero.")
   ```
 -->
 
-You can also call the
-[`preconditionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539374-preconditionfailure) function
-to indicate that a failure has occurred ---
-for example, if the default case of a switch was taken,
-but all valid input data should have been handled
-by one of the switch's other cases.
+你还可以调用 
+[`preconditionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539374-preconditionfailure) 
+函数来表示发生了故障，
+例如，如果执行了 switch 的默认情况，
+但所有有效输入数据本应由其他情况来处理。
 
-> Note: If you compile in unchecked mode (`-Ounchecked`),
-> preconditions aren't checked.
-> The compiler assumes that preconditions are always true,
-> and it optimizes your code accordingly.
-> However, the `fatalError(_:file:line:)` function always halts execution,
-> regardless of optimization settings.
+> 备注: 如果以非检查模式（`-Ounchecked`）编译，则不会检查前置条件。
+> 编译器会假定前提条件总是为真，并据此优化代码。
+> 不过，无论优化设置如何，`fatalError(_:file:line:)` 函数始终会停止执行。
 >
-> You can use the `fatalError(_:file:line:)` function
-> during prototyping and early development
-> to create stubs for functionality that hasn't been implemented yet,
-> by writing `fatalError("Unimplemented")` as the stub implementation.
-> Because fatal errors are never optimized out,
-> unlike assertions or preconditions,
-> you can be sure that execution always halts
-> if it encounters a stub implementation.
+> 在原型开发和早期开发过程中，
+> 你可以使用 `fatalError(_:file:line:)` 函数为尚未实现的功能创建存根，
+> 方法是将 `fatalError("Unimplemented")` 写成存根实现。
+> 与断言或先决条件不同，致命错误永远不会被优化掉，
+> 因此可以确保在遇到存根实现时始终停止执行。
 
 <!--
   "\ " in the first cell below lets it be empty.
@@ -2153,11 +1882,12 @@ by one of the switch's other cases.
   but doesn't stop at assertions.
 -->
 
-> Beta Software:
+> 测试版软件: 
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。
+> 这些信息可能会发生变化，根据本文档制作的软件应使用最终的操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/)的更多信息。
 
 <!--
 This source file is part of the Swift.org open source project
