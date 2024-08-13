@@ -13,7 +13,7 @@
 > 注意: 类的实例我们通常称为*对象*。
 > 但是，与其他语言相比，Swift 中的*结构体*和*类*在功能上更为接近，
 > 本章大部分介绍的功能都适用于结构体*或*类的实例，
-> 因此，本章使用了更通用的术语*实例*。
+> 因此，本章使用了更通用的术语：*实例*。
 
 ## 比较结构体和类
 
@@ -64,7 +64,7 @@ class SomeClass {
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> struct SomeStructure {
@@ -101,7 +101,7 @@ class VideoMode {
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> struct Resolution {
@@ -126,21 +126,21 @@ class VideoMode {
 上面的示例还定义了一个名为 `VideoMode` 的类，
 用于描述视频显示的特定视频模式。
 该结构体有四个变量存储属性。
-第一个 `resolution` 被初始化为一个新的 `Resolution` 结构实例，
+第一个 `resolution` 被初始化为一个新的 `Resolution` 结构体实例，
 它的属性类型被推断为 `Resolution`。
 新的 `VideoMode` 实例还会初始化其他三个属性。
 分别是初始化为 `false` 的 `interlaced`（表示 “非隔行扫描视频”）、
 初始化为 `0.0` 的播放帧率和一个值为可选 `String` 的 `name`。
 由于 `name` 属性是可选类型，它会自动获得默认值 `nil`，又称 “空 `name` 值”。
 
-### 结构和类的实例
+### 结构体和类的实例
 
-`Resolution` 结构定义和 `VideoMode` 类定义本身
+`Resolution` 结构体定义和 `VideoMode` 类定义本身
 只描述了 `Resolution` 或 `VideoMode` 将是什么样子。
 它们并不描述特定的分辨率或视频模式。
-要做到这一点，你需要创建结构的实例。
+要做到这一点，你需要创建结构体的实例。
 
-创建实例的语法对于结构和类都非常相似：
+创建实例的语法对于结构体和类都非常相似：
 
 ```swift
 let someResolution = Resolution()
@@ -148,7 +148,7 @@ let someVideoMode = VideoMode()
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> let someResolution = Resolution()
@@ -157,14 +157,14 @@ let someVideoMode = VideoMode()
 -->
 
 结构体和类都使用构造器语法来创建新实例。
-最简单的初始化语法形式是使用结构的类型名后跟空括号，
+最简单的初始化语法形式是使用结构体的类型名后跟空括号，
 例如 `Resolution()` 或 `VideoMode()`。
 这将创建类或结构体的新实例，并将任何属性初始化为其默认值。
 类和结构体的初始化在 <doc:Initialization> 中有更详细的描述。
 
 <!--
   TODO: 需要注意的是，
-  只有为结构或类的所有属性提供默认值时，才能使用默认构造函数。
+  只有为结构体或类的所有属性提供默认值时，才能使用默认构造函数。
 -->
 
 ### 访问属性
@@ -179,7 +179,7 @@ print("The width of someResolution is \(someResolution.width)")
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> print("The width of someResolution is \(someResolution.width)")
@@ -195,11 +195,12 @@ print("The width of someResolution is \(someResolution.width)")
 例如 `VideoMode` 中 `resolution` 属性的 `width` 属性：
 
 ```swift
-print("The width of someVideoMode is \(someVideoMode.resolution.width)") // 打印 "The width of someVideoMode is 0"
+print("The width of someVideoMode is \(someVideoMode.resolution.width)")
+// 打印 "The width of someVideoMode is 0"
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> print("The width of someVideoMode is \(someVideoMode.resolution.width)")
@@ -216,7 +217,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> someVideoMode.resolution.width = 1280
@@ -228,7 +229,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 ### 结构体逐一成员构造器
 
 所有结构体都有一个自动生成的*逐一成员构造器*，
-你可以使用它来初始化新结构实例的成员属性。
+你可以使用它来初始化新结构体实例的成员属性。
 可以通过属性成员名称将新实例的属性初始值传递给成员构造器：
 
 ```swift
@@ -236,7 +237,7 @@ let vga = Resolution(width: 640, height: 480)
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> let vga = Resolution(width: 640, height: 480)
@@ -247,7 +248,7 @@ let vga = Resolution(width: 640, height: 480)
 构造器在 <doc:Initialization> 中有更详细的描述。
 
 <!--
-  - 测试: `classesDontHaveADefaultMemberwiseInitializer`
+  - test: `classesDontHaveADefaultMemberwiseInitializer`
 
   ```swifttest
   -> class C { var x = 0, y = 0 }
@@ -259,7 +260,7 @@ let vga = Resolution(width: 640, height: 480)
   ```
 -->
 
-## 结构和枚举是值类型
+## 结构体和枚举是值类型
 
 *值类型*是一种在被赋值给变量或常量时，
 或者在传递给函数时，其值会被*复制*的类型。
@@ -277,8 +278,8 @@ let vga = Resolution(width: 640, height: 480)
 在 Swift 中，所有的结构体和枚举都是值类型。
 这意味着它们的实例，以及实例中所包含的任何值类型的属性在代码中传递时都会被复制。
 
-> 注意: 由 Swift 标准库定义的集合如数组、字典和字符串
-> 优化了实现来减少复制的性能开销。它们不会立即进行复制，
+> 注意: Swift 标准库定义的集合类型，如数组、字典和字符串，
+> 使用了一种优化技术来降低复制操作的性能消耗。它们不会立即进行复制，
 > 而是共享了原始实例和任何副本之间存储元素的内存。
 > 如果集合的某个副本被修改，则在修改之前会复制元素。
 > 您在代码中看到的样子就像立即进行了复制一样。
@@ -291,7 +292,7 @@ var cinema = hd
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> let hd = Resolution(width: 1920, height: 1080)
@@ -316,7 +317,7 @@ cinema.width = 2048
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> cinema.width = 2048
@@ -331,7 +332,7 @@ print("cinema is now \(cinema.width) pixels wide")
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> print("cinema is now \(cinema.width) pixels wide")
@@ -347,7 +348,7 @@ print("hd is still \(hd.width) pixels wide")
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> print("hd is still \(hd.width) pixels wide")
@@ -383,7 +384,7 @@ print("The remembered direction is \(rememberedDirection)")
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> enum CompassPoint {
@@ -430,7 +431,7 @@ tenEighty.frameRate = 25.0
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> let tenEighty = VideoMode()
@@ -455,7 +456,7 @@ alsoTenEighty.frameRate = 30.0
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> let alsoTenEighty = tenEighty
@@ -478,7 +479,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
@@ -494,9 +495,10 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 相比之下，值类型更容易理解，因为操作同一个值的代码都集中在一起。
 
 需要注意的是，`tenEighty` 和 `alsoTenEighty` 虽然被声明为常量而不是变量，
-但你任然可以修改 `tenEighty.frameRate` 和 `alsoTenEighty.frameRate`，
-因为 `tenEighty` 和 `alsoTenEighty` 本身常量的值并没有变化。`VideoMode` 实例，
-而是对 `VideoMode` 的引用。
+但你仍然可以修改 `tenEighty.frameRate` 和 `alsoTenEighty.frameRate`，
+tenEighty 和 alsoTenEighty 常量的值本身并没有变化。
+它们并不“存储”这个 VideoMode 实例，
+而仅仅是对 VideoMode 实例的引用。
 所以，改变的是底层 `VideoMode` 实例的 `frameRate` 属性，
 而不是指向 `VideoMode` 的常量引用的值。
 
@@ -520,7 +522,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 变量或传递给函数时，总是会被复制。
 
 <!--
-  - 测试: `structuresDontSupportTheIdentityOperators`
+  - test: `structuresDontSupportTheIdentityOperators`
 
   ```swifttest
   -> struct S { var x = 0, y = 0 }
@@ -537,7 +539,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 -->
 
 <!--
-  - 测试: `enumerationsDontSupportTheIdentityOperators`
+  - test: `enumerationsDontSupportTheIdentityOperators`
 
   ```swifttest
   -> enum E { case a, b }
@@ -569,7 +571,7 @@ if tenEighty === alsoTenEighty {
 ```
 
 <!--
-  - 测试: `ClassesAndStructures`
+  - test: `ClassesAndStructures`
 
   ```swifttest
   -> if tenEighty === alsoTenEighty {
@@ -589,7 +591,7 @@ if tenEighty === alsoTenEighty {
 定义自己的 `==` 和 `!=` 运算符实现的过程在 <doc:AdvancedOperators#Equivalence-Operators> 中有描述。
 
 <!--
-  - 测试: `classesDontGetEqualityByDefault`
+  - test: `classesDontGetEqualityByDefault`
 
   ```swifttest
   -> class C { var x = 0, y = 0 }
@@ -603,7 +605,7 @@ if tenEighty === alsoTenEighty {
 -->
 
 <!--
-  - 测试: `structuresDontGetEqualityByDefault`
+  - test: `structuresDontGetEqualityByDefault`
 
   ```swifttest
   -> struct S { var x = 0, y = 0 }
