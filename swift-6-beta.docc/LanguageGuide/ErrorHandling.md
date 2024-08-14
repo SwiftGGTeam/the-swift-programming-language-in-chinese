@@ -1,59 +1,28 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/ErrorHandling.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 错误处理
 
-# Error Handling
+响应错误并从错误中恢复。
 
-Respond to and recover from errors.
+*错误处理(Error handling)* 是对程序中的错误条件做出响应并从中恢复的过程。Swift 为在运行时抛出、捕获、传递和处理可恢复错误提供了一等支持。
 
-*Error handling* is the process of responding to
-and recovering from error conditions in your program.
-Swift provides first-class support for
-throwing, catching, propagating, and manipulating
-recoverable errors at runtime.
+有些操作并不能保证总是能执行完成或生成有用的结果。可选项用于表示值缺失，但当操作失败时，理解造成失败的原因有助于你的代码作出相应的应对。
 
-Some operations
-aren't guaranteed to always complete execution or produce a useful output.
-Optionals are used to represent the absence of a value,
-but when an operation fails,
-it's often useful to understand what caused the failure,
-so that your code can respond accordingly.
+以从磁盘文件读取和处理数据为例。该任务失败的原因有很多，包括指定路径下的文件不存在、文件没有读取权限或文件编码格式不兼容。通过区分这些不同的失败情况来让程序处理和解决一些错误，并将无法解决的错误告知用户。
 
-As an example, consider the task of reading and processing data from a file on disk.
-There are a number of ways this task can fail, including
-the file not existing at the specified path,
-the file not having read permissions, or
-the file not being encoded in a compatible format.
-Distinguishing among these different situations
-allows a program to resolve some errors
-and to communicate to the user any errors it can't resolve.
+> 注意
+> Swift 中的错误处理与 Cocoa 和 Objective-C 中使用 NSError 类的错误处理模式互操作。
+> 有关该类的更多信息，请参阅 [在 Swift 中处理 Cocoa 错误](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift).
 
-> Note: Error handling in Swift interoperates with error handling patterns
-> that use the `NSError` class in Cocoa and Objective-C.
-> For more information about this class,
-> see [Handling Cocoa Errors in Swift](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift).
+## 表示与抛出错误
 
-## Representing and Throwing Errors
+在 Swift 中，错误由遵循 Error 协议的类型值表示。这个空协议表示一种类型可用于错误处理。
 
-In Swift, errors are represented by
-values of types that conform to the `Error` protocol.
-This empty protocol indicates that a type
-can be used for error handling.
-
-Swift enumerations are particularly well suited to modeling
-a group of related error conditions,
-with associated values allowing for additional information
-about the nature of an error to be communicated.
-For example, here's how you might represent the error conditions
-of operating a vending machine inside a game:
+Swift 枚举特别适用于对一组相关的错误条件，枚举的关联值还可以提供错误状态的额外信息。例如，您可以用以下方式表示在游戏中操作自动售货机的错误条件：
 
 ```swift
 enum VendingMachineError: Error {
-    case invalidSelection
-    case insufficientFunds(coinsNeeded: Int)
-    case outOfStock
+    case invalidSelection                       // 不可选择
+    case insufficientFunds(coinsNeeded: Int)    // 金额不足
+    case outOfStock                             // 缺货
 }
 ```
 
@@ -69,12 +38,7 @@ enum VendingMachineError: Error {
   ```
 -->
 
-Throwing an error lets you indicate that something unexpected happened
-and the normal flow of execution can't continue.
-You use a `throw` statement to throw an error.
-For example,
-the following code throws an error to indicate
-that five additional coins are needed by the vending machine:
+通过抛出错误可以让你表明发生了意外情况，导致正常的流程无法继续执行。您可以使用 throw 语句来抛出错误。例如，下面的代码抛出了一个错误，表示自动售货机还需要 5 枚硬币：
 
 ```swift
 throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
@@ -89,48 +53,24 @@ throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
   ```
 -->
 
-## Handling Errors
+## 处理错误
 
-When an error is thrown,
-some surrounding piece of code must be responsible
-for handling the error ---
-for example, by correcting the problem,
-trying an alternative approach,
-or informing the user of the failure.
+当错误被抛出时，周围的部分代码必须负责处理该错误，例如，纠正这个问题、尝试其他方法或将错误通知用户。
 
-There are four ways to handle errors in Swift.
-You can propagate the error from a function to the code that calls that function,
-handle the error using a `do`-`catch` statement,
-handle the error as an optional value,
-or assert that the error will not occur.
-Each approach is described in a section below.
+在 Swift 中有四种处理错误的方法。您可以把函数抛出的错误传递给调用此函数的代码、使用 do-catch 语句处理错误、将错误作为可选类型处理、或者断言此错误根本不会发生。下文将对每种方法分段说明。
 
-When a function throws an error,
-it changes the flow of your program,
-so it's important that you can quickly identify places in your code that can throw errors.
-To identify these places in your code, write the `try` keyword ---
-or the `try?` or `try!` variation ---
-before a piece of code that calls a function, method, or initializer that can throw an error.
-These keywords are described in the sections below.
+当函数抛出错误时，程序的流程会发生改变，因此快速识别代码中可能抛出错误的地方非常重要。
+要识别代码中的这些地方，请在调用可能抛出错误的函数、方法或构造器的代码之前加上 `try` 关键字或 `try?` 或 `try!` 变体。
+下文将对这些关键字进行说明。
 
-> Note: Error handling in Swift resembles exception handling in other languages,
-> with the use of the `try`, `catch` and `throw` keywords.
-> Unlike exception handling in many languages ---
-> including Objective-C ---
-> error handling in Swift doesn't involve unwinding the call stack,
-> a process that can be computationally expensive.
-> As such, the performance characteristics
-> of a `throw` statement
-> are comparable to those of a `return` statement.
+> 注意
+> Swift 中的错误处理与其他语言中的错误处理类似，使用 `try`, `catch` and `throw` 关键字。
+> 区别于其他语言（包括 Objective-C ）的是，Swift 中的错误处理并不涉及解除调用栈,而解除调用栈的过程可能会耗费大量计算资源。
+> 因此，`throw` 语句的性能特征与 `return` 语句的性能特征相当。
 
-### Propagating Errors Using Throwing Functions
+### 用抛错函数传递错误
 
-To indicate that a function, method, or initializer can throw an error,
-you write the `throws` keyword in the function's declaration
-after its parameters.
-A function marked with `throws` is called a *throwing function*.
-If the function specifies a return type,
-you write the `throws` keyword before the return arrow (`->`).
+为了表示函数、方法或构造器可以抛出错误，您可以在函数声明中的参数后写入 `throws` 关键字。标有 `throws` 的函数称为 *抛错函数(throwing function)*。如果该函数指定了返回类型，则应在返回箭头（`->`）之前写入 `throws` 关键字。
 
 <!--
   TODO Add discussion of throwing initializers
@@ -187,19 +127,14 @@ func cannotThrowErrors() -> String
   for throwing and nonthrowing functions.
 -->
 
-A throwing function propagates errors that are thrown inside of it
-to the scope from which it's called.
+抛错函数会将内部抛出的错误传递到调用它的作用域。
 
-> Note: Only throwing functions can propagate errors.
-> Any errors thrown inside a nonthrowing function
-> must be handled inside the function.
+> 注意
+> 只有抛错函数可以传递错误。任何在非抛错函数中抛出的错误都必须在函数内部处理。
 
-In the example below,
-the `VendingMachine` class has a `vend(itemNamed:)` method
-that throws an appropriate `VendingMachineError`
-if the requested item isn't available,
-is out of stock,
-or has a cost that exceeds the current deposited amount:
+在下面的示例中，
+`VendingMachine` 类有一个 `vend(itemNamed:)` 方法
+该方法会在请求物品不存在、缺货或者投入金额小于物品价格时，抛出相应的 `VendingMachineError`错误：
 
 ```swift
 struct Item {
@@ -286,21 +221,16 @@ class VendingMachine {
   ```
 -->
 
-The implementation of the `vend(itemNamed:)` method
-uses `guard` statements to exit the method early and throw appropriate errors
-if any of the requirements for purchasing a snack aren't met.
-Because a `throw` statement immediately transfers program control,
-an item will be vended only if all of these requirements are met.
+在 `vend(itemNamed:)` 方法的实现中使用 `guard` 语句来确保在物品成功购买所需条件中不满足任一一个条件时提前退出方法并抛出相应的错误。
+由于 `throw` 语句会立刻退出方法，所以物品只有在所有条件都满足时才会被售出。
 
-Because the `vend(itemNamed:)` method propagates any errors it throws,
-any code that calls this method must either handle the errors ---
-using a `do`-`catch` statement, `try?`, or `try!` ---
-or continue to propagate them.
-For example,
-the `buyFavoriteSnack(person:vendingMachine:)` in the example below
-is also a throwing function,
-and any errors that the `vend(itemNamed:)` method throws will
-propagate up to the point where the `buyFavoriteSnack(person:vendingMachine:)` function is called.
+由于 `vend(itemNamed:)` 方法会传递出它抛出的任何错误，
+因此调用此方法的代码必须直接处理错误 ---
+使用 `do`-`catch` 语句, `try?`, 或 `try!` ---
+或者把这些错误继续传递下去。
+例如,
+下面例子中的 `buyFavoriteSnack(person:vendingMachine:)` 也是一个抛错函数，
+所以 `vend(itemNamed:)` 方法抛出的任何错误将传递到调用 `buyFavoriteSnack(person:vendingMachine:)` 函数的位置。
 
 ```swift
 let favoriteSnacks = [
@@ -334,17 +264,10 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
   ```
 -->
 
-In this example,
-the `buyFavoriteSnack(person: vendingMachine:)` function looks up a given person's favorite snack
-and tries to buy it for them by calling the `vend(itemNamed:)` method.
-Because the `vend(itemNamed:)` method can throw an error,
-it's called with the `try` keyword in front of it.
+在这个示例中， `buyFavoriteSnack(person: vendingMachine:)` 函数会查找某人最喜欢的零食并尝试通过调用 `vend(itemNamed:)` 方法为其购买。
+由于 `vend(itemNamed:)` 方法可能会出错，因此在调用该方法时会在前面加上 `try` 关键字。
 
-Throwing initializers can propagate errors in the same way as throwing functions.
-For example,
-the initializer for the `PurchasedSnack` structure in the listing below
-calls a throwing function as part of the initialization process,
-and it handles any errors that it encounters by propagating them to its caller.
+抛出构造器错误的方式与抛出函数错误的方式相同。例如，下表中的 `PurchasedSnack` 结构体的构造器在初始化过程中调用了一个抛错函数，并将抛出的错误传递给这个构造器的调用者来处理这些错误。
 
 ```swift
 struct PurchasedSnack {
@@ -385,15 +308,11 @@ struct PurchasedSnack {
   ```
 -->
 
-### Handling Errors Using Do-Catch
+### 使用 Do-Catch 处理错误
 
-You use a `do`-`catch` statement to handle errors
-by running a block of code.
-If an error is thrown by the code in the `do` clause,
-it's matched against the `catch` clauses
-to determine which one of them can handle the error.
+您可以使用 `do`-`catch` 语句通过运行闭包来处理错误。如果 `do` 子句中的代码抛出错误，就会与 `catch` 子句进行匹配，以确定哪个子句可以处理该错误。
 
-Here is the general form of a `do`-`catch` statement:
+下面是 `do`-`catch` 语句的一般形式：
 
 ```swift
 do {
@@ -410,13 +329,7 @@ do {
 }
 ```
 
-You write a pattern after `catch` to indicate what errors
-that clause can handle.
-If a `catch` clause doesn't have a pattern,
-the clause matches any error
-and binds the error to a local constant named `error`.
-For more information about pattern matching,
-see <doc:Patterns>.
+您可以在 `catch` 后编写一个模式，以指示该子句可以处理哪些错误。如果 `catch` 子句没有模式，该子句将匹配任何错误，并将错误绑定到名为 `error` 的局部常量。有关模式匹配的更多信息，请参阅 <doc:Patterns>。
 
 <!--
   TODO: Call out the reasoning why we don't let you
@@ -424,8 +337,7 @@ see <doc:Patterns>.
   the errors in an given enum without a general catch/default.
 -->
 
-For example, the following code matches against all three cases
-of the `VendingMachineError` enumeration.
+例如，以下代码匹配了 `VendingMachineError` 枚举的全部三种情况。
 
 ```swift
 var vendingMachine = VendingMachine()
@@ -442,7 +354,7 @@ do {
 } catch {
     print("Unexpected error: \(error).")
 }
-// Prints "Insufficient funds. Please insert an additional 2 coins."
+// 打印 "Insufficient funds. Please insert an additional 2 coins."
 ```
 
 <!--
@@ -467,37 +379,14 @@ do {
   ```
 -->
 
-In the above example,
-the `buyFavoriteSnack(person:vendingMachine:)` function is called in a `try` expression,
-because it can throw an error.
-If an error is thrown,
-execution immediately transfers to the `catch` clauses,
-which decide whether to allow propagation to continue.
-If no pattern is matched, the error gets caught by the final `catch`
-clause and is bound to a local `error` constant.
-If no error is thrown,
-the remaining statements in the `do` statement are executed.
+在上面的示例中，`buyFavoriteSnack(person:vendingMachine:)` 函数在 `try` 表达式中被调用，因为它可能会抛出错误。
+如果抛出错误，执行将立即转移到 `catch` 子句，由其决定是否继续传递。如果错误没有被匹配，它将被最后的 `catch` 子句捕获，并绑定到本地 `error` 常量。
+如果没有错误抛出，则执行 `do` 语句中的其余语句。
 
-The `catch` clauses don't have to handle every possible error
-that the code in the `do` clause can throw.
-If none of the `catch` clauses handle the error,
-the error propagates to the surrounding scope.
-However, the propagated error
-must be handled by *some* surrounding scope.
-In a nonthrowing function,
-an enclosing `do`-`catch` statement
-must handle the error.
-In a throwing function,
-either an enclosing `do`-`catch` statement
-or the caller
-must handle the error.
-If the error propagates to the top-level scope
-without being handled,
-you'll get a runtime error.
+`catch` 子句不必处理 `do` 子句中的代码可能抛出的所有错误。如果没有 `catch` 子句处理错误，则错误会传播到周围的作用域。但是，传播的错误必须由 *某个* 周围作用域处理。
+在非抛错函数中， `do`-`catch` 语句必须处理错误。在抛错函数中，必须由 `do`-`catch` 语句或调用者处理错误。如果错误传递到了顶层作用域却依然没有被处理，则会出现运行时错误。
 
-For example, the above example can be written so any
-error that isn't a `VendingMachineError` is instead
-caught by the calling function:
+例如，在编写上述示例时，只要不是 `VendingMachineError` 中声明的错误，都会被调用函数捕获：
 
 ```swift
 func nourish(with item: String) throws {
@@ -513,7 +402,7 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-// Prints "Couldn't buy that from the vending machine."
+// 打印 "Couldn't buy that from the vending machine."
 ```
 
 <!--
@@ -537,17 +426,11 @@ do {
   ```
 -->
 
-In the `nourish(with:)` function,
-if `vend(itemNamed:)` throws an error that's
-one of the cases of the `VendingMachineError` enumeration,
-`nourish(with:)` handles the error by printing a message.
-Otherwise,
-`nourish(with:)` propagates the error to its call site.
-The error is then caught by the general `catch` clause.
+在 `nourish(with:)` 函数中，如果 `vend(itemNamed:)` 抛出的错误属于 `VendingMachineError` 枚举的情况之一，`nourish(with:)` 会通过打印信息来处理该错误。
+否则，`nourish(with:)` 会将错误传递到它的调用方。然后，该错误将被通用的 `catch` 子句捕获。
 
-Another way to catch several related errors
-is to list them after `catch`, separated by commas.
-For example:
+另一种捕获多个相关错误的方式是将它们放在 `catch` 后，并用逗号分隔。
+例如：
 
 ```swift
 func eat(item: String) throws {
@@ -583,20 +466,12 @@ func eat(item: String) throws {
   FIXME the catch clause is getting indented oddly in HTML output if I hard wrap it
 -->
 
-The `eat(item:)` function lists the vending machine errors to catch,
-and its error text corresponds to the items in that list.
-If any of the three listed errors are thrown,
-this `catch` clause handles them by printing a message.
-Any other errors are propagated to the surrounding scope,
-including any vending-machine errors that might be added later.
+`eat(item:)` 函数列出了要捕获的自动售货机错误，其错误文本与它列出的相对应。如果列出来的三个错误中任意一个被抛出，该 `catch` 子句将通过打印一条消息来处理这些错误。
+任何其他错误都会传播到周围的作用域，包括以后可能添加的任何自动售货机错误(`VendingMachineError`)。
 
-### Converting Errors to Optional Values
+### 将错误转换成可选值
 
-You use `try?` to handle an error by converting it to an optional value.
-If an error is thrown while evaluating the `try?` expression,
-the value of the expression is `nil`.
-For example,
-in the following code `x` and `y` have the same value and behavior:
+您可以使用 `try?` 将错误转换为可选值来处理错误。如果在计算 `try?` 表达式时抛出错误，则表达式的值为 `nil` 。例如，在以下代码中，`x` 和 `y` 有着相同的数值和等价的含义：
 
 ```swift
 func someThrowingFunction() throws -> Int {
@@ -637,18 +512,12 @@ do {
   ```
 -->
 
-If `someThrowingFunction()` throws an error,
-the value of `x` and `y` is `nil`.
-Otherwise, the value of `x` and `y` is the value that the function returned.
-Note that `x` and `y` are an optional of whatever type `someThrowingFunction()` returns.
-Here the function returns an integer, so `x` and `y` are optional integers.
+如果 `someThrowingFunction()` 抛出一个错误，泽 `x` 和 `y` 的值是 `nil`。
+否则 `x` 和 `y` 的值就是该函数的返回值。注意，无论 `someThrowingFunction()` 的返回值类型是什么类型，`x` 和 `y` 都是这个类型的可选类型。
+例子中此函数返回一个整型，所以 `x` 和 `y` 是可选整型。
 
-Using `try?` lets you write concise error handling code
-when you want to handle all errors in the same way.
-For example,
-the following code
-uses several approaches to fetch data,
-or returns `nil` if all of the approaches fail.
+使用 `try?` 可让您在希望以相同方式处理所有错误时编写简洁的错误处理代码。
+例如，以下代码使用多种方法获取数据，如果所有方法都失败，则返回 `nil` 。
 
 ```swift
 func fetchData() -> Data? {
@@ -673,21 +542,14 @@ func fetchData() -> Data? {
   ```
 -->
 
-### Disabling Error Propagation
+### 禁用错误传递
 
-Sometimes you know a throwing function or method
-won't, in fact, throw an error at runtime.
-On those occasions,
-you can write `try!` before the expression to disable error propagation
-and wrap the call in a runtime assertion that no error will be thrown.
-If an error actually is thrown, you'll get a runtime error.
+有时，您知道一个抛错函数或方法实际上不会在运行时抛出错误。
+在这种情况下，您可以在表达式之前写入 `try!` 以禁用错误传递，并在运行时断言不会抛出错误的情况下封装调用。
+如果实际抛出了错误，将会发生运行时错误。
 
-For example, the following code uses a `loadImage(atPath:)` function,
-which loads the image resource at a given path
-or throws an error if the image can't be loaded.
-In this case, because the image is shipped with the application,
-no error will be thrown at runtime,
-so it's appropriate to disable error propagation.
+例如，下面的代码使用了 `loadImage(atPath:)` 函数，该函数从给定的路径加载图片资源，如果无法加载图像则抛出一个错误。
+在这种情况下，因为图片是和应用绑定的，运行时不会有错误抛出，所以适合禁用错误传递。
 
 ```swift
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
@@ -705,57 +567,30 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   ```
 -->
 
-## Specifying the Error Type
+## 指定错误类型
 
-All of the examples above use the most common kind of error handling,
-where the errors that your code throws
-can be values of any type that conforms to the `Error` protocol.
-This approach matches the reality that
-you don't know ahead of time every error that could happen
-while the code is running,
-especially when propagating errors thrown somewhere else.
-It also reflects the fact that errors can change over time.
-New versions of a library ---
-including libraries that your dependencies use ---
-can throw new errors,
-and the rich complexity of real-world user configurations
-can expose failure modes that weren't visible during development or testing.
-The error handling code in the examples above
-always includes a default case to handle errors
-that don't have a specific `catch` clause.
+上述所有示例都使用了最常见的错误处理方式，即代码抛出的错误可以是符合 `Error` 协议的任何类型的值。
+这种方法符合实际情况，即您不可能提前知道代码运行时可能发生的所有错误，尤其是在传递其他地方抛出的错误时。
+它还反映了一个事实，即错误会随着时间的推移而改变。
+新版本的库，包括你的依赖库使用的库，可能会产生新的错误，而现实世界中用户配置的复杂性可能会暴露出开发或测试过程中不可见的故障模式。
+上述示例中的错误处理代码始终包含一个默认情况，用于处理没有特定 `catch` 子句的错误。
 
-Most Swift code doesn't specify the type for the errors it throws.
-However,
-you might limit code to throwing errors of only one specific type
-in the following special cases:
+大多数 Swift 代码都不会指定所抛出错误的类型。
+不过，在以下特殊情况下，您可能会限制代码只抛出一种特定类型的错误：
 
-- When running code on an embedded system
-  that doesn't support dynamic allocation of memory.
-  Throwing an instance of `any Error` or another boxed protocol type
-  requires allocating memory at runtime to store the error.
-  In contrast,
-  throwing an error of a specific type
-  lets Swift avoid heap allocation for errors.
+- 在不支持动态分配内存的嵌入式系统上运行代码时。
+  抛出 `any Error` 或其他封装的协议类型(boxed protocol type)的实例需要在运行时分配内存来存储错误。
+  相比之下，抛出特定类型的错误可以让 Swift 避免为错误进行堆分配。
 
-- When the errors are an implementation detail of some unit of code,
-  like a library,
-  and aren't part of the interface to that code.
-  Because the errors come from only the library,
-  and not from other dependencies or the library's clients,
-  you can make an exhaustive list of all possible failures.
-  And because these errors are an implementation detail of the library,
-  they're always handled within that library.
+- 当错误是代码单元（如库）的实现细节，而不是代码接口的一部分时。
+  由于错误只来自于库，而不是来自于其他依赖库或库的客户端，因此您可以列出所有可能出现的错误的详尽列表。
+  而且，由于这些错误是库的实现细节，因此可以全部在库内部处理。
 
-- In code that only propagates errors described by generic parameters,
-  like a function that takes a closure argument
-  and propagates any errors from that closure.
-  For a comparison between propagating a specific error type
-  and using `rethrows`,
-  see <doc:Declarations#Rethrowing-Functions-and-Methods>.
+- 在只传递由通用参数描述的错误的代码中，例如函数接收一个闭包参数并传递来自该闭包的任何错误。
+  有关传播特定错误类型与使用 rethrows 的比较，
+  请参阅 <doc:Declarations#Rethrowing-Functions-and-Methods>。
 
-For example,
-consider code that summarizes ratings
-and uses the following error type:
+例如，思考一下如何实现汇总评分并使用以下错误类型的代码：
 
 ```swift
 enum StatisticsError: Error {
@@ -764,13 +599,10 @@ enum StatisticsError: Error {
 }
 ```
 
-To specify that a function throws only `StatisticsError` values as its errors,
-you write `throws(StatisticsError)` instead of only `throws`
-when declaring the function.
-This syntax is also called *typed throws*
-because you write the error type after `throws` in the declaration.
-For example,
-the function below throws `StatisticsError` values as its errors.
+要指定函数只抛出 `StatisticsError` 值作为其错误，
+您可以在声明函数时写入 `throws(StatisticsError)` 而不是 `throws` 。
+这种语法也被称为 *指定类型抛错(typed throws)*，因为您在声明中的 `throws` 后面指定了错误类型。
+例如，下面的函数抛出 `StatisticsError` 值作为其错误。
 
 ```swift
 func summarize(_ ratings: [Int]) throws(StatisticsError) {
@@ -786,26 +618,15 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 }
 ```
 
-In the code above,
-the `summarize(_:)` function summarizes a list of ratings
-expressed on a scale of 1 to 3.
-This function throws an instance of `StatisticsError` if the input isn't valid.
-Both places in the code above that throw an error
-omit the type of the error
-because the function's error type is already defined.
-You can use the short form, `throw .noRatings`,
-instead of writing `throw StatisticsError.noRatings`
-when throwing an error in a function like this.
+上面的代码中，`summarize(_:)` 函数汇总了评分从 1 到 3 数量的列表。
+如果输入无效，该函数将抛出 `StatisticsError` 实例。
+上面代码中抛出错误的两个地方都省略了错误类型，因为函数已经指定了错误类型。
+在这样的函数中抛出错误时，您可以使用省略形式 `throw .noRatings` 代替 `throw StatisticsError.noRatings` 。
 
-When you write a specific error type at the start of the function,
-Swift checks that you don't throw any other errors.
-For example,
-if you tried to use `VendingMachineError` from examples earlier in this chapter
-in the `summarize(_:)` function above,
-that code would produce an error at compile time.
+当您在函数开头指定错误类型时，Swift 会检查您是否抛出了其他错误。
+例如，如果您尝试在 `VendingMachineError` 函数中使用本章前面示例中的 `summarize(_:)` 函数，该代码将在编译时产生错误。
 
-You can call a function that uses typed throws
-from within a regular throwing function:
+您可以在普通的抛错函数中调用使用指定类型抛错的函数：
 
 ```swift
 func someThrowingFunction() -> throws {
@@ -814,10 +635,8 @@ func someThrowingFunction() -> throws {
 }
 ```
 
-The code above doesn't specify an error type for `someThrowingFunction()`,
-so it throws `any Error`.
-You could also write the error type explicitly as `throws(any Error)`;
-the code below is equivalent to the code above:
+上面的代码没有为 `someThrowingFunction()` 指定错误类型，因此它抛出了 `any Error`。
+您也可以将错误类型写为 `throws(any Error)`; 下面的代码等同于上面的代码：
 
 ```swift
 func someThrowingFunction() -> throws(any Error) {
@@ -826,26 +645,20 @@ func someThrowingFunction() -> throws(any Error) {
 }
 ```
 
-In this code,
-`someThrowingFunction()` propagates any errors that `summarize(_:)` throws.
-The errors from `summarize(_:)` are always `StatisticsError` values,
-which is also a valid error for `someThrowingFunction()` to throw.
+在此代码中，`someThrowingFunction()` 会传递 `summarize(_:)` 抛出的任何错误。
+`summarize(_：)` 抛出的错误总是 `StatisticsError` 值，这也是 `someThrowingFunction()` 可抛出的有效错误。
 
-Just like you can write a function that never returns
-with a return type of `Never`,
-you can write a function that never throws with `throws(Never)`:
+就像您可以使用 `Never` 的返回类型编写一个永不返回的函数一样，
+您也可以使用 `throws(Never)` 编写一个永不抛错的函数：
 
 ```swift
 func nonThrowingFunction() throws(Never) {
   // ...
 }
 ```
-This function can't throw because
-it's impossible to create a value of type `Never` to throw.
+这个函数不能抛错，因为不可能创建一个 `Never` 类型的值来抛出。
 
-In addition to specifying a function's error type,
-you can also write a specific error type for a `do`-`catch` statement.
-For example:
+除了指定函数的错误类型外，您还可以为 `do`-`catch` 语句编写特定的错误类型子句。例如：
 
 ```swift
 let ratings = []
@@ -859,37 +672,21 @@ do throws(StatisticsError) {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints "No ratings available"
+// 打印 "No ratings available"
 ```
 
-In this code,
-writing `do throws(StatisticsError)` indicates that
-the `do`-`catch` statement throws `StatisticsError` values as its errors.
-Like other `do`-`catch` statements,
-the `catch` clause can either handle every possible error
-or propagate unhandled errors for some surrounding scope to handle.
-This code handles all of the errors,
-using a `switch` statement with one case for each enumeration value.
-Like other `catch` clauses that don't have a pattern,
-the clause matches any error
-and binds the error to a local constant named `error`.
-Because the `do`-`catch` statement throws `StatisticsError` values,
-`error` is a value of type `StatisticsError`.
+在此代码中，写入 `do throws(StatisticsError)` 表明 `do`-`catch` 语句抛出 `StatisticsError` 值作为其错误。
+与其他 `do`-`catch` 语句一样，`catch` 子句可以处理所有可能的错误，也可以传递未处理的错误让周围的作用域处理。
+此代码使用 `switch` 语句处理所有错误，每个枚举值有一个分支(case)。
+与其他没有模式的 `catch` 子句一样，该子句匹配任何错误并将错误绑定到名为 `error` 的局部常量。
+`do`-`catch` 语句会抛出 `StatisticsError` 值，所以`error` 是 `StatisticsError` 类型的值。
 
-The `catch` clause above uses a `switch` statement
-to match and handle each possible error.
-If you tried to add a new case to `StatisticsError`
-without updating the error-handling code,
-Swift would give you an error
-because the `switch` statement wouldn't be exhaustive anymore.
-For a library that catches all of its own errors,
-you could use this approach to ensure any new errors
-get corresponding new code to handle them.
+上述 `catch` 子句使用 `switch` 语句来匹配和处理每个可能的错误。
+如果您尝试在不更新错误处理代码的情况下为 `StatisticsError` 添加新的分支(case)，Swift 将提示您错误，因为 `switch` 语句不再穷尽所有分支。
+对于捕获自身所有错误的库，您可以使用这种方法来确保任何新错误都有相应的新代码来处理。
 
-If a function or `do` block throws errors of only a single type,
-Swift infers that this code is using typed throws.
-Using this shorter syntax,
-you could write the `do`-`catch` example above as follows:
+如果函数或 `do` 闭包只抛出单一类型的错误，Swift 会推断该代码使用了指定类型抛错。
+使用这种更短的语法，您可以将上述 `do`-`catch` 示例编写如下：
 
 ```swift
 let ratings = []
@@ -903,40 +700,28 @@ do {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints "No ratings available"
+// 打印 "No ratings available"
 ```
 
+尽管上面的 `do`-`catch` 块没有指定它抛出的错误类型，Swift 仍会推断它抛出 `StatisticsError` 。
+您可以显式地编写 `throws(any Error)` 以避免让 Swift 推断出指定类型抛错。
 Even though the `do`-`catch` block above
 doesn't specify what type of error it throws,
 Swift infers that it throws `StatisticsError`.
 You can explicitly write `throws(any Error)`
 to avoid letting Swift infer typed throws.
 
-## Specifying Cleanup Actions
+## 指定清理操作
 
-You use a `defer` statement to execute a set of statements
-just before code execution leaves the current block of code.
-This statement lets you do any necessary cleanup
-that should be performed regardless
-of *how* execution leaves the current block of code ---
-whether it leaves because an error was thrown
-or because of a statement such as `return` or `break`.
-For example, you can use a `defer` statement
-to ensure that file descriptors are closed
-and manually allocated memory is freed.
+您可以使用 `defer` 语句在代码执行离开当前代码块之前执行一组语句。
+无论是以何种方式离开当前代码块--是由于抛出错误，还是由于 return 或 break 等语句，该语句都可让您执行任何必要的清理。
+例如，您可以使用 `defer` 语句来确保关闭文件描述符，以及释放手动分配的内存。
 
-A `defer` statement defers execution until the current scope is exited.
-This statement consists of the `defer` keyword and the statements to be executed later.
-The deferred statements may not contain any code
-that would transfer control out of the statements,
-such as a `break` or a `return` statement,
-or by throwing an error.
-Deferred actions are executed in the reverse of
-the order that they're written in your source code.
-That is, the code in the first `defer` statement executes last,
-the code in the second `defer` statement executes second to last,
-and so on.
-The last `defer` statement in source code order executes first.
+`defer` 语句将代码的执行延迟到当前的作用域退出之前。
+该语句由 `defer` 关键字和要被延迟执行的语句组成。
+延迟执行的语句不能包含任何控制转移语句，例如 `break`、`return` 语句，或是抛出一个错误。
+延迟执行的操作会按照它们声明的顺序从后往前执行——也就是说，第一条 `defer` 语句中的代码最后才执行，第二条 `defer` 语句中的代码倒数第二个执行，以此类推。
+最后一条语句会第一个执行。
 
 ```swift
 func processFile(filename: String) throws {
@@ -946,9 +731,9 @@ func processFile(filename: String) throws {
             close(file)
         }
         while let line = try file.readline() {
-            // Work with the file.
+            // 处理文件。
         }
-        // close(file) is called here, at the end of the scope.
+        // close(file) 会在这里被调用，即作用域的最后。
     }
 }
 ```
@@ -979,20 +764,16 @@ func processFile(filename: String) throws {
   ```
 -->
 
-The above example uses a `defer` statement
-to ensure that the `open(_:)` function
-has a corresponding call to `close(_:)`.
+上面的示例使用 `defer` 语句确保 `open(_:)` 函数有相应的 `close(_:)` 调用。
 
-You can use a `defer` statement
-even when no error handling code is involved.
-For more information,
-see <doc:ControlFlow#Deferred-Actions>.
+即使不涉及错误处理代码，您也可以使用 `defer` 语句。
+有关详细信息，请参阅 <doc:ControlFlow#Deferred-Actions>。
 
-> Beta Software:
+> 测试版软件
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档开发实现的软件应与最终的操作系统软件一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 点击了解更多关于使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的信息。
 
 <!--
 This source file is part of the Swift.org open source project
