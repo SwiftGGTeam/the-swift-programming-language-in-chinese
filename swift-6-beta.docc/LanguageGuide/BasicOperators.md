@@ -57,9 +57,24 @@ initializes or updates the value of `a` with the value of `b`:
 let b = 10
 var a = 5
 a = b
+// a 现在等于 10
+a = b
 // a is now equal to 10
 ```
 
+<!--
+  - 测试: `assignmentOperator`
+
+  ```swifttest
+  -> let b = 10
+  -> var a = 5
+  -> a = b
+  /> a 现在等于 \(a)
+  </ a 现在等于 10
+  ```
+-->
+
+如果赋值运算符的右侧是一个包含多个值的元组，可以将其元素同时分解为多个常量或变量：
 <!--
   - test: `assignmentOperator`
 
@@ -241,6 +256,16 @@ In Swift, this would be written as:
 ```
 
 <!--
+  - 测试: `arithmeticOperators`
+
+  ```swifttest
+  >> let r5 =
+  -> 9 % 4    // equals 1
+  >> assert(r5 == 1)
+  ```
+-->
+
+<!--
   - test: `arithmeticOperators`
 
   ```swifttest
@@ -268,6 +293,16 @@ The same method is applied when calculating the remainder for a negative value o
 ```swift
 -9 % 4   // equals -1
 ```
+
+<!--
+  - 测试: `arithmeticOperators`
+
+  ```swifttest
+  >> let r6 =
+  -> -9 % 4   // equals -1
+  >> assert(r6 == -1)
+  ```
+-->
 
 <!--
   - test: `arithmeticOperators`
@@ -299,6 +334,7 @@ let minusThree = -three       // minusThree equals -3
 let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
 ```
 
+<!-- - 测试: `arithmeticOperators`
 <!--
   - test: `arithmeticOperators`
 
@@ -322,6 +358,7 @@ let minusSix = -6
 let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
 ```
 
+<!-- - 测试: `arithmeticOperators`
 <!--
   - test: `arithmeticOperators`
 
@@ -344,9 +381,12 @@ One example is the *addition assignment operator* (`+=`):
 ```swift
 var a = 1
 a += 2
+// a 现在等于 3
+a += 2
 // a is now equal to 3
 ```
 
+<!-- - 测试: `compoundAssignment`
 <!--
   - test: `compoundAssignment`
 
@@ -394,10 +434,30 @@ Each of the comparison operators returns a `Bool` value to indicate whether or n
 2 <= 1   // false because 2 isn't less than or equal to 1
 ```
 
+<!-- - 测试: `comparisonOperators`
 <!--
   - test: `comparisonOperators`
 
   ```swifttest
+>> assert(
+-> 1 == 1   // true 因为 1 等于 1
+>> )
+>> assert(
+-> 2 != 1   // true 因为 2 不等于 1
+>> )
+>> assert(
+-> 2 > 1    // true 因为 2 大于 1
+>> )
+>> assert(
+-> 1 < 2    // true 因为 1 小于 2
+>> )
+>> assert(
+-> 1 >= 1   // true 因为 1 大于等于 1
+>> )
+>> assert( !(
+-> 2 <= 1   // false 因为 2 不小于等于 1
+>> ) )
+``` -->
   >> assert(
   -> 1 == 1   // true because 1 is equal to 1
   >> )
@@ -432,10 +492,19 @@ if name == "world" {
 // Prints "hello, world", because name is indeed equal to "world".
 ```
 
+<!-- - 测试: `comparisonOperators`
 <!--
   - test: `comparisonOperators`
 
   ```swifttest
+-> let name = "world"
+-> if name == "world" {
+      print("hello, world")
+    } else {
+      print("对不起 \(name), 但我不认识你")
+    }
+<< hello, world
+// 打印 "hello, world", 因为 name 确实等于 "world"。
   -> let name = "world"
   -> if name == "world" {
         print("hello, world")
@@ -565,10 +634,39 @@ The ternary conditional operator is shorthand for the code below:
 ```swift
 if question {
     answer1
+if question {
+    answer1
 } else {
+    answer2
     answer2
 }
 ```
+
+<!--
+  - 测试: `ternaryConditionalOperatorOutline`
+
+  ```swifttest
+  >> let question = true
+  >> let answer1 = true
+  >> let answer2 = true
+  -> if question {
+        answer1
+     } else {
+        answer2
+     }
+  !! /tmp/swifttest.swift:5:4: warning: expression of type 'Bool' is unused
+  !! answer1
+  !! ^~~~~~~
+  !! /tmp/swifttest.swift:7:4: warning: expression of type 'Bool' is unused
+  !! answer2
+  !! ^~~~~~~
+  ```
+-->
+
+<!--
+  FIXME 这个例子含糊其辞的地方太多了。
+  Swift 中并没有 'if' 表达式。
+-->
 
 <!--
   - test: `ternaryConditionalOperatorOutline`
@@ -604,8 +702,22 @@ if the row has a header, and 20 points taller if the row doesn't have a header:
 let contentHeight = 40
 let hasHeader = true
 let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+// rowHeight 等于 90
+let rowHeight = contentHeight + (hasHeader ? 50 : 20)
 // rowHeight is equal to 90
 ```
+
+<!--
+  - 测试: `ternaryConditionalOperatorPart1`
+
+  ```swifttest
+  -> let contentHeight = 40
+  -> let hasHeader = true
+  -> let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+  /> rowHeight is equal to \(rowHeight)
+  </ rowHeight is equal to 90
+  ```
+-->
 
 <!--
   - test: `ternaryConditionalOperatorPart1`
@@ -632,6 +744,23 @@ if hasHeader {
 }
 // rowHeight is equal to 90
 ```
+
+<!--
+  - 测试: `ternaryConditionalOperatorPart2`
+
+  ```swifttest
+  -> let contentHeight = 40
+  -> let hasHeader = true
+  -> let rowHeight: Int
+  -> if hasHeader {
+        rowHeight = contentHeight + 50
+     } else {
+        rowHeight = contentHeight + 20
+     }
+  /> rowHeight is equal to \(rowHeight)
+  </ rowHeight is equal to 90
+  ```
+-->
 
 <!--
   - test: `ternaryConditionalOperatorPart2`
@@ -673,6 +802,19 @@ The nil-coalescing operator is shorthand for the code below:
 ```swift
 a != nil ? a! : b
 ```
+
+<!--
+  - 测试: `nilCoalescingOperatorOutline`
+
+  ```swifttest
+  >> var a: Int?
+  >> let b = 42
+  >> let c =
+  -> a != nil ? a! : b
+  >> print(c)
+  << 42
+  ```
+-->
 
 <!--
   - test: `nilCoalescingOperatorOutline`
@@ -879,6 +1021,8 @@ for i in 0..<count {
 ```
 
 <!--
+  - 测试: `rangeOperators`
+<!--
   - test: `rangeOperators`
 
   ```swifttest
@@ -931,6 +1075,8 @@ for name in names[...2] {
 ```
 
 <!--
+  - 测试: `rangeOperators`
+<!--
   - test: `rangeOperators`
 
   ```swifttest
@@ -965,6 +1111,8 @@ for name in names[..<2] {
 ```
 
 <!--
+  - 测试: `rangeOperators`
+<!--
   - test: `rangeOperators`
 
   ```swifttest
@@ -995,8 +1143,24 @@ range.contains(-1)  // true
 ```
 
 <!--
+  - 测试: `rangeOperators`
+<!--
   - test: `rangeOperators`
 
+  ```swifttest
+  -> let range = ...5
+  >> print(type(of: range))
+  << PartialRangeThrough<Int>
+  >> let a =
+  -> range.contains(7)   // false
+  >> let b =
+  -> range.contains(4)   // true
+  >> let c =
+  -> range.contains(-1)  // true
+  >> print(a, b, c)
+  << false true true
+  ```
+-->
   ```swifttest
   -> let range = ...5
   >> print(type(of: range))
@@ -1040,6 +1204,8 @@ if !allowedEntry {
 // Prints "ACCESS DENIED"
 ```
 
+<!--
+  - 测试: `logicalOperators`
 <!--
   - test: `logicalOperators`
 
@@ -1088,8 +1254,21 @@ if enteredDoorCode && passedRetinaScan {
 ```
 
 <!--
+  - 测试: `logicalOperators`
+<!--
   - test: `logicalOperators`
 
+  ```swifttest
+  -> let enteredDoorCode = true
+  -> let passedRetinaScan = false
+  -> if enteredDoorCode && passedRetinaScan {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- ACCESS DENIED
+  ```
+-->
   ```swifttest
   -> let enteredDoorCode = true
   -> let passedRetinaScan = false
@@ -1135,8 +1314,21 @@ if hasDoorKey || knowsOverridePassword {
 ```
 
 <!--
+  - 测试: `logicalOperators`
+<!--
   - test: `logicalOperators`
 
+  ```swifttest
+  -> let hasDoorKey = false
+  -> let knowsOverridePassword = true
+  -> if hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- Welcome!
+  ```
+-->
   ```swifttest
   -> let hasDoorKey = false
   -> let knowsOverridePassword = true
@@ -1162,6 +1354,8 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 // Prints "Welcome!"
 ```
 
+<!--
+  - 测试: `logicalOperators`
 <!--
   - test: `logicalOperators`
 
@@ -1212,6 +1406,19 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 ```
 
 <!--
+  - 测试: `logicalOperators`
+
+  ```swifttest
+  -> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+        print("Welcome!")
+     } else {
+        print("ACCESS DENIED")
+     }
+  <- Welcome!
+  ```
+-->
+
+<!--
   - test: `logicalOperators`
 
   ```swifttest
@@ -1235,6 +1442,18 @@ use parentheses where they help to make your intentions clear.
 >
 > This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
 >
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
+
+
+<!--
+此源文件属于 Swift.org 开源项目的一部分
+
+版权所有 (c) 2014 - 2022 Apple Inc. 及 Swift 项目作者
+根据 Apache License v2.0 许可证及运行库例外条款授权
+
+有关许可证信息，请参见 https://swift.org/LICENSE.txt
+有关 Swift 项目作者的列表，请参见 https://swift.org/CONTRIBUTORS.txt
+-->
 > Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
