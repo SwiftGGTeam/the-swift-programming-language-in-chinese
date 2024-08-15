@@ -1,41 +1,21 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/OpaqueTypes.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/opaquetypes
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 不透明类型和封装协议类型
 
-# Opaque and Boxed Protocol Types
+隐藏关于值类型的实现细节。
 
-Hide implementation details about a value's type.
+Swift 提供了两种隐藏值类型细节的方法：不透明类型和封装协议类型。
+在模块与调用该模块的代码之间的边界上隐藏类型信息是有用的，因为这样返回值的底层类型可以保持为私有的可访问状态。
 
-Swift provides two ways to hide details about a value's type:
-opaque types and boxed protocol types.
-Hiding type information
-is useful at boundaries between
-a module and code that calls into the module,
-because the underlying type of the return value can remain private.
+返回不透明类型的函数或方法隐藏了其返回值的类型信息。
+相较于提供一个具体的类型作为函数的返回类型，它会根据它支持的协议来描述它返回值。
+不透明类型会保留类型的身份标识 —— 编译器可以访问类型信息，但模块的调用端则无法访问。
 
-A function or method that returns an opaque type
-hides its return value's type information.
-Instead of providing a concrete type as the function's return type,
-the return value is described in terms of the protocols it supports.
-Opaque types preserve type identity ---
-the compiler has access to the type information,
-but clients of the module don't.
+封装协议类型可以存储符合给定协议的任何类型的实例。
+封装协议类型不保留类型的身份标识 —— 值的具体类型在运行时才会被知道，并且随着不同的值被存储其中，它的具体类型可能会发生变化。
 
-A boxed protocol type can store an instance of any type
-that conforms to the given protocol.
-Boxed protocol types don't preserve type identity ---
-the value's specific type isn't known until runtime,
-and it can change over time as different values are stored.
+## 不透明类型所解决的问题
 
-## The Problem That Opaque Types Solve
-
-For example,
-suppose you're writing a module that draws ASCII art shapes.
-The basic characteristic of an ASCII art shape
-is a `draw()` function that returns the string representation of that shape,
-which you can use as the requirement for the `Shape` protocol:
+举个例子，假设你正在编写一个用 ASCII 字符绘制几何形状的程序模块。
+每个几何形状结构体的基本特征是有一个 `draw()` 函数，该函数返回表示那个几何形状的字符串，这样你就可以把这个基本特征作为 `Shape` 协议的要求之一：
 
 ```swift
 protocol Shape {
@@ -85,11 +65,8 @@ print(smallTriangle.draw())
   ```
 -->
 
-You could use generics to implement operations like flipping a shape vertically,
-as shown in the code below.
-However, there's an important limitation to this approach:
-The flipped result exposes the exact generic types
-that were used to create it.
+如下面的代码所示，你可以使用泛型来实现像垂直翻转某个几何转形状这样的操作。
+然而，这种方法有一个重要的局限性：翻转后的结果会暴露用于创建该结果的确切的泛型类型。
 
 ```swift
 struct FlippedShape<T: Shape>: Shape {
@@ -125,10 +102,7 @@ print(flippedTriangle.draw())
   ```
 -->
 
-This approach to defining a `JoinedShape<T: Shape, U: Shape>` structure
-that joins two shapes together vertically, like the code below shows,
-results in types like `JoinedShape<Triangle, FlippedShape<Triangle>>`
-from joining a triangle with a flipped triangle.
+又比如下面这样的代码，这种方法定义了一个 `JoinedShape<T: Shape, U: Shape>` 结构体将两个形状垂直连接在一起，如果把一个三角形与一个翻转过的三角形连接在一起，就产生了像 `JoinedShape<Triangle, FlippedShape<Triangle>>` 这样的类型。
 
 ```swift
 struct JoinedShape<T: Shape, U: Shape>: Shape {
@@ -170,21 +144,10 @@ print(joinedTriangles.draw())
   ```
 -->
 
-Exposing detailed information about the creation of a shape
-allows types that aren't meant to be
-part of the ASCII art module's public interface
-to leak out because of the need to state the full return type.
-The code inside the module
-could build up the same shape in a variety of ways,
-and other code outside the module
-that uses the shape shouldn't have to account for
-the implementation details about the list of transformations.
-Wrapper types like `JoinedShape` and `FlippedShape`
-don't matter to the module's users,
-and they shouldn't be visible.
-The module's public interface
-consists of operations like joining and flipping a shape,
-and those operations return another `Shape` value.
+因为我们总是需要声明完整的返回类型，所以暴露关于形状创建的详细信息会导致类型泄露，这些泄漏的类型本不应成为绘制几何形状程序模块公开接口的一部分。
+模块内部的代码可以以多种不同的方式构建相同的形状，而其他使用该形状的模块外部代码不应需要考虑关于变换几何形状的具体实现细节。
+像 `JoinedShape` 和 `FlippedShape` 这样的包装类型（wrapper types）对模块的用户来说并不重要，它们不应被可见。
+该模块的公开接口包括连接和翻转形状等操作，这些操作会返回另一个 `Shape` 值。
 
 ## Returning an Opaque Type
 
