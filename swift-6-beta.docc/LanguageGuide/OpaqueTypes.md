@@ -2,20 +2,15 @@
 
 隐藏关于值类型的实现细节。
 
-Swift 提供了两种隐藏值类型细节的方法：不透明类型和封装协议类型。
-在模块与调用该模块的代码之间的边界上隐藏类型信息是有用的，因为这样返回值的底层类型可以保持为私有的可访问状态。
+Swift 提供了两种隐藏值类型细节的方法：不透明类型（Opaque Type）和封装协议类型（Boxed Protocol Type）。在模块与模块调用端之间的边界上隐藏类型信息是有用的，因为这样返回值的底层类型可以保持为私有的可访问状态。
 
-返回不透明类型的函数或方法隐藏了其返回值的类型信息。
-相较于提供一个具体的类型作为函数的返回类型，它会根据它支持的协议来描述它返回值。
-不透明类型会保留类型的身份标识 —— 编译器可以访问类型信息，但模块的调用端则无法访问。
+返回不透明类型的函数或方法隐藏了其返回值的类型信息。相较于提供一个具体的类型作为函数的返回类型，它会根据它支持的协议来描述它的返回值。不透明类型会保留类型的身份信息 —— 编译器可以访问该类型信息，但模块的调用端则无法访问。
 
-封装协议类型可以存储符合给定协议的任何类型的实例。
-封装协议类型不保留类型的身份标识 —— 值的具体类型在运行时才会被知道，并且随着不同的值被存储其中，它的具体类型可能会发生变化。
+封装协议类型可以存储遵循给定协议的任何类型的实例。封装协议类型不保留类型的身份信息 —— 值的具体类型在运行时才会被知道，并且随着不同的值被存储其中，它的具体类型可能会发生变化。
 
 ## 不透明类型所解决的问题
 
-举个例子，假设你正在编写一个用 ASCII 字符绘制几何形状的程序模块。
-每个几何形状结构体的基本特征是有一个 `draw()` 函数，该函数返回表示那个几何形状的字符串，这样你就可以把这个基本特征作为 `Shape` 协议的要求之一：
+举个例子，假设你正在编写一个用 ASCII 字符绘制几何形状的程序模块。每个几何形状结构体的基本特征是有一个 `draw()` 函数，该函数返回表示那个几何形状的字符串，这样你就可以把这个基本特征作为 `Shape` 协议的要求之一：
 
 ```swift
 protocol Shape {
@@ -65,8 +60,7 @@ print(smallTriangle.draw())
   ```
 -->
 
-如下面的代码所示，你可以使用泛型来实现像垂直翻转某个几何转形状这样的操作。
-然而，这种方法有一个重要的局限性：翻转后的结果会暴露用于创建该结果的确切的泛型类型。
+如下面的代码所示，你可以使用泛型来实现像垂直翻转某个几何转形状这样的操作。然而，这种方法有一个重要的局限性：翻转后的结果会暴露用于创建该结果的确切的泛型类型。
 
 ```swift
 struct FlippedShape<T: Shape>: Shape {
@@ -144,19 +138,12 @@ print(joinedTriangles.draw())
   ```
 -->
 
-因为我们总是需要声明完整的返回类型，所以暴露关于形状创建的详细信息会导致类型泄露，这些泄漏的类型本不应成为绘制几何形状程序模块公开接口的一部分。
-模块内部的代码可以以多种不同的方式构建相同的形状，而其他使用该形状的模块外部代码不应需要考虑关于变换几何形状的具体实现细节。
-像 `JoinedShape` 和 `FlippedShape` 这样的包装类型（wrapper types）对模块的用户来说并不重要，它们不应被可见。
-该模块的公开接口包括连接和翻转形状等操作，这些操作会返回另一个 `Shape` 值。
+因为我们总是需要声明完整的返回类型，所以暴露关于形状创建的详细信息会导致类型泄露，这些泄漏的类型本不应成为绘制几何形状程序模块公开接口的一部分。模块内部的代码可以以多种不同的方式构建相同的形状，而其他使用该形状的模块外部代码不应需要考虑关于变换几何形状的具体实现细节。
+像 `JoinedShape` 和 `FlippedShape` 这样的包装类型（wrapper types）对模块的用户来说并不重要，它们不应被可见。该模块的公开接口包括连接和翻转形状等操作，这些操作会返回另一个 `Shape` 值。
 
-## Returning an Opaque Type
+## 返回一个不透明类型
 
-You can think of an opaque type like being the reverse of a generic type.
-Generic types let the code that calls a function
-pick the type for that function's parameters and return value
-in a way that's abstracted away from the function implementation.
-For example, the function in the following code
-returns a type that depends on its caller:
+你可以把不透明类型看作是泛型类型的反面。泛型类型允许函数的调用端选择参数和返回值的类型，而这些类型与函数的实现是分离的。例如，以下代码中的函数返回一个调用端指定的类型：
 
 ```swift
 func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
@@ -168,21 +155,9 @@ func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
   and there's nothing to meaningfully test.
 -->
 
-The code that calls `max(_:_:)` chooses the values for `x` and `y`,
-and the type of those values determines the concrete type of `T`.
-The calling code can use any type
-that conforms to the `Comparable` protocol.
-The code inside the function is written in a general way
-so it can handle whatever type the caller provides.
-The implementation of `max(_:_:)` uses only functionality
-that all `Comparable` types share.
+`max(_:_:)` 的调用端会指定 `x`和 `y` 的值，这些值的类型决定了 `T` 的具体类型。调用端可以使用任何遵循 `Comparable` 协议的类型来调用这个函数。函数内部的代码以一种通用的方式编写，因此可以处理调用端提供的任何类型。`max(_:_:)` 的实现将仅使用所有遵循 `Comparable` 协议的类型所共享的功能。
 
-Those roles are reversed for a function with an opaque return type.
-An opaque type lets the function implementation
-pick the type for the value it returns
-in a way that's abstracted away from the code that calls the function.
-For example, the function in the following example returns a trapezoid
-without exposing the underlying type of that shape.
+在这一点上，返回不透明类型函数的角色是反过来的。不透明类型将允许函数的实现来选择返回值的类型，而返回值的类型与函数的调用端是分离的。例如，以下示例中的函数返回一个梯形，却没有暴露该形状的底层类型。
 
 ```swift
 struct Square: Shape {
@@ -248,34 +223,11 @@ print(trapezoid.draw())
   ```
 -->
 
-The `makeTrapezoid()` function in this example
-declares its return type as `some Shape`;
-as a result, the function
-returns a value of some given type that conforms to the `Shape` protocol,
-without specifying any particular concrete type.
-Writing `makeTrapezoid()` this way lets it express
-the fundamental aspect of its public interface ---
-the value it returns is a shape ---
-without making the specific types that the shape is made from
-a part of its public interface.
-This implementation uses two triangles and a square,
-but the function could be rewritten to draw a trapezoid
-in a variety of other ways
-without changing its return type.
+在这个例子中，`makeTrapezoid()` 函数声明它的返回类型为 `some Shape`；因此，该函数会返回一个遵循 `Shape` 协议的某种给定类型的值，却可以不必指定任何特定的具体返回类型。以这种方式编写 `makeTrapezoid()` 使其能够只需表达其公开接口的基本特征 —— 它返回的值是一个形状 —— 而不会将构成该形状的具体类型暴露为其公开接口的一部分。这个实现使用了两个三角形和一个正方形来绘制梯形，但是你也可以用其他不同的方式来实现同样的功能，而无需改变函数的返回类型。
 
-This example highlights the way that an opaque return type
-is like the reverse of a generic type.
-The code inside `makeTrapezoid()` can return any type it needs to,
-as long as that type conforms to the `Shape` protocol,
-like the calling code does for a generic function.
-The code that calls the function needs to be written in a general way,
-like the implementation of a generic function,
-so that it can work with any `Shape` value
-that's returned by `makeTrapezoid()`.
+这个例子凸显了不透明类型与泛型类型的反向关系。就像泛型函数的调用端一样，`makeTrapezoid()` 中的代码可以返回它所需的任何类型，只要该类型遵循 `Shape` 协议。类似于泛型函数的实现，该函数的调用端也需要以一种通用的方式来编写，以便能够兼容由 `makeTrapezoid()` 返回的任何 `Shape` 值。
 
-You can also combine opaque return types with generics.
-The functions in the following code both return a value
-of some type that conforms to the `Shape` protocol.
+你还可以将不透明返回类型与泛型结合使用。以下代码中的函数都返回了遵循 `Shape` 协议的某种类型的值。
 
 ```swift
 func flip<T: Shape>(_ shape: T) -> some Shape {
@@ -317,34 +269,16 @@ print(opaqueJoinedTriangles.draw())
   ```
 -->
 
-The value of `opaqueJoinedTriangles` in this example
-is the same as `joinedTriangles` in the generics example
-in the <doc:OpaqueTypes#The-Problem-That-Opaque-Types-Solve> section earlier in this chapter.
-However, unlike the value in that example,
-`flip(_:)` and `join(_:_:)` wrap the underlying types
-that the generic shape operations return
-in an opaque return type,
-which prevents those types from being visible.
-Both functions are generic because the types they rely on are generic,
-and the type parameters to the function
-pass along the type information needed by `FlippedShape` and `JoinedShape`.
+在这个例子中，`opaqueJoinedTriangles` 的值与前面章节<doc:OpaqueTypes#The-Problem-That-Opaque-Types-Solve>中所举的泛型例子里的 `joinedTriangles` 的值相同。但是，与那个例子不同的是，`flip(_:)` 和 `join(_:_:)` 将泛型形状操作所返回的底层类型包装在不透明返回类型中，使得这些类型不再可见。这两个函数是泛型函数，因为它们依赖的类型是泛型类型，函数的类型参数传递出了 `FlippedShape` 和 `JoinedShape` 所需的类型信息。
 
-If a function with an opaque return type
-returns from multiple places,
-all of the possible return values must have the same type.
-For a generic function,
-that return type can use the function's generic type parameters,
-but it must still be a single type.
-For example,
-here's an *invalid* version of the shape-flipping function
-that includes a special case for squares:
+如果一个返回不透明类型的函数从多处返回值，则所有可能的返回值必须具有相同的类型。对于一个泛型函数，它可以使用函数的泛型参数作为其返回类型，但这个返回类型仍然必须是相同的某个单一类型。例如，下面是一个*不合法的*形状翻转函数版本，它包含了正方形的一个特例：
 
 ```swift
 func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     if shape is Square {
-        return shape // Error: return types don't match
+        return shape // 错误：返回类型不一致
     }
-    return FlippedShape(shape: shape) // Error: return types don't match
+    return FlippedShape(shape: shape) // 错误：返回类型不一致
 }
 ```
 
@@ -380,13 +314,7 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   ```
 -->
 
-If you call this function with a `Square`, it returns a `Square`;
-otherwise, it returns a `FlippedShape`.
-This violates the requirement to return values of only one type
-and makes `invalidFlip(_:)` invalid code.
-One way to fix `invalidFlip(_:)` is to move the special case for squares
-into the implementation of `FlippedShape`,
-which lets this function always return a `FlippedShape` value:
+如果你用一个 `Square` 调用这个函数，它会返回一个 `Square`；否则，它会返回一个 `FlippedShape`。这违反了只返回同一种单一类型值的要求，使得 `invalidFlip(_:)` 成为不合法的代码。修复 `invalidFlip(_:)` 的一种方法是将正方形特例的处理移入 `FlippedShape` 的实现中，这样可以让这个函数始终返回一个 `FlippedShape` 值：
 
 ```swift
 struct FlippedShape<T: Shape>: Shape {
@@ -430,10 +358,7 @@ struct FlippedShape<T: Shape>: Shape {
   That example is long enough that it breaks the flow here.
 -->
 
-The requirement to always return a single type
-doesn't prevent you from using generics in an opaque return type.
-Here's an example of a function that incorporates its type parameter
-into the underlying type of the value it returns:
+始终返回同一种单一类型的要求并不妨碍你在不透明返回类型中使用泛型。以下是一个示例函数，它将它的类型参数作为其返回值的基础类型：
 
 ```swift
 func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
@@ -451,24 +376,11 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
   ```
 -->
 
-In this case,
-the underlying type of the return value
-varies depending on `T`:
-Whatever shape is passed it,
-`repeat(shape:count:)` creates and returns an array of that shape.
-Nevertheless,
-the return value always has the same underlying type of `[T]`,
-so it follows the requirement that functions with opaque return types
-must return values of only a single type.
+在这个例子中，返回值的基础类型取决于 `T`：无论传入的形状是什么，`repeat(shape:count:)` 都会创建并返回该形状的数组。然而，因为返回值始终具有相同的基础类型 `[T]`，所以它遵循了具有不透明返回类型的函数必须仅返回某种单一类型值的要求。
 
-## Boxed Protocol Types
+## 封装协议类型
 
-A boxed protocol type is also sometimes called an *existential type*,
-which comes from the phrase
-"there exists a type *T* such that *T* conforms to the protocol".
-To make a boxed protocol type,
-write `any` before the name of a protocol.
-Here's an example:
+封装协议类型有时也被称为*存在类型（existential type）*，这个术语源于这样的一个表达：“存在一个类型 *T*，使得 *T* 遵循该协议”。要创建一个封装协议类型，在协议名称前加上 `any`。下面是一个示例：
 
 ```swift
 struct VerticalShapes: Shape {
@@ -534,81 +446,36 @@ print(vertical.draw())
   ```
 -->
 
-In the example above,
-`VerticalShapes` declares the type of `shapes` as `[any Shape]` ---
-an array of boxed `Shape` elements.
-Each element in the array can be a different type,
-and each of those types must conform to the `Shape` protocol.
-To support this runtime flexibility,
-Swift adds a level of indirection when necessary ---
-this indirection is called a *box*,
-and it has a performance cost.
+在上面的例子中，`VerticalShapes` 声明了 `shapes` 的类型为 `[any Shape]` —— 一个封装 `Shape` 类型元素的数组。数组中的每个元素可以是不同的类型，但所有这些类型都必须遵循 `Shape` 协议。为了支持这种运行时的灵活性，Swift 在必要时会增加一层间接的抽象分层 —— 这种分层被称为*封装层（Box）*，并且它有性能成本。
 
-Within the `VerticalShapes` type,
-the code can use methods, properties, and subscripts
-that are required by the `Shape` protocol.
-For example, the `draw()` method of `VerticalShapes`
-calls the `draw()` method on each element of the array.
-This method is available because `Shape` requires a `draw()` method.
-In contrast,
-trying to access the `size` property of the triangle,
-or any other properties or methods that aren't required by `Shape`,
-produces an error.
+在 `VerticalShapes` 类型中，代码可以使用 `Shape` 协议所要求的方法、属性和下标。例如，`VerticalShapes` 的 `draw()` 方法调用了数组中每个元素的 `draw()` 方法。因为 `Shape` 协议要求必须有一个 `draw()` 方法，所以这个方法是可用的。相反，如果尝试访问三角形的 `size` 属性，或任何其他不被 `Shape` 协议所要求的属性或方法，会产生错误。
 
-Contrast the three types you could use for `shapes`:
+我们来对比一下可用于 `shapes` 的三种类型：
 
-- Using generics,
-  by writing `struct VerticalShapes<S: Shape>` and `var shapes: [S]`,
-  makes an array whose elements are some specific shape type,
-  and where the identity of that specific type
-  is visible to any code that interacts with the array.
+- 使用泛型：通过编写 `struct VerticalShapes<S: Shape>` 和 `var shapes: [S]`，可以创建一个数组，其元素是某种特定的形状类型，并且这个特定类型的身份对任何与数组交互的代码都是可见的。
 
-- Using an opaque type,
-  by writing `var shapes: [some Shape]`,
-  makes an array whose elements are some specific shape type,
-  and where that specific type's identity is hidden.
+- 使用不透明类型：通过编写 `var shapes: [some Shape]` 来创建一个数组，其元素是某种特定形状类型，并且这个特定类型的身份是隐藏的。
 
-- Using a boxed protocol type,
-  by writing `var shapes: [any Shape]`,
-  makes an array that can store elements of different types,
-  and where those types' identities are hidden.
+- 使用封装协议类型：通过编写 `var shapes: [any Shape]` 能创建一个可以存储不同类型元素的数组，并且这些类型的身份是隐藏的。
 
-In this case,
-a boxed protocol type is the only approach
-that lets callers of `VerticalShapes` mix different kinds of shapes together.
+在上面的例子中，封装协议类型是唯一允许 `VerticalShapes` 的调用者将不同种类的形状混合在一起的方法。
 
-You can use an `as` cast
-when you know the underlying type of a boxed value.
-For example:
+你可以在知道被封装值的基础类型时使用一个 `as` 来进行类型转换。例如：
 
 ```swift
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
     print(downcastTriangle.size)
 }
-// Prints "5"
+// 打印输出 "5"
 ```
 
-For more information, see <doc:TypeCasting#Downcasting>.
+要了解更多信息请参考<doc:TypeCasting#Downcasting>。
 
-## Differences Between Opaque Types and Boxed Protocol Types
+## 不透明类型与封装协议类型之间的区别
 
-Returning an opaque type looks very similar
-to using a boxed protocol type as the return type of a function,
-but these two kinds of return type differ in
-whether they preserve type identity.
-An opaque type refers to one specific type,
-although the caller of the function isn't able to see which type;
-a boxed protocol type can refer to any type that conforms to the protocol.
-Generally speaking,
-boxed protocol types give you more flexibility
-about the underlying types of the values they store,
-and opaque types let you make stronger guarantees
-about those underlying types.
+函数返回一个不透明类型与返回一个封装协议类型看起来非常相似，但这两种返回类型在是否保留类型的身份信息上有所不同。不透明类型指的是某种特定类型，尽管函数的调用者无法看到是哪种具体类型；而封装协议类型可以指任何遵循该协议的类型。一般来说，封装协议类型在存储值的底层类型上提供了更多的灵活性，而不透明类型则需要你对这些底层类型做出更严格的保证。
 
-For example,
-here's a version of `flip(_:)`
-that uses a boxed protocol type as its return type
-instead of an opaque return type:
+例如，以下是前文中 `flip(_:)` 的另一个版本，它使用封装协议类型而不是不透明类型作为其返回类型：
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
@@ -641,17 +508,7 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
   ```
 -->
 
-This version of `protoFlip(_:)`
-has the same body as `flip(_:)`,
-and it always returns a value of the same type.
-Unlike `flip(_:)`,
-the value that `protoFlip(_:)` returns isn't required
-to always have the same type ---
-it just has to conform to the `Shape` protocol.
-Put another way,
-`protoFlip(_:)` makes a much looser API contract with its caller
-than `flip(_:)` makes.
-It reserves the flexibility to return values of multiple types:
+这个版本的 `protoFlip(_:)` 与 `flip(_:)` 的主体相同，并且它始终返回相同类型的值。与 `flip(_:)` 不同的是，`protoFlip(_:)` 的返回值其实不需要总是具有相同的类型 —— 这个返回值只需遵循 `Shape` 协议即可。换句话说，`protoFlip(_:)` 与其调用者之间的 API 约束比 `flip(_:)` 更加宽松。它保留了返回多种类型值的灵活性：
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
@@ -683,23 +540,12 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
   ```
 -->
 
-The revised version of the code returns
-an instance of `Square` or an instance of `FlippedShape`,
-depending on what shape is passed in.
-Two flipped shapes returned by this function
-might have completely different types.
-Other valid versions of this function could return values of different types
-when flipping multiple instances of the same shape.
-The less specific return type information from `protoFlip(_:)` means that
-many operations that depend on type information
-aren't available on the returned value.
-For example, it's not possible to write an `==` operator
-comparing results returned by this function.
+修改后的 `protoFlip(_:)` 函数根据传入的形状返回一个 `Square` 实例或一个 `FlippedShape` 实例。由这个函数在两处返回的两个翻转形状可能具有完全不同的类型。其他合法版本的这个函数在翻转同一形状的多个实例时，可能会返回不同类型的值。`protoFlip(_:)` 返回值的类型信息不够具体，这意味着许多依赖于类型信息的操作无法在返回值上使用。例如，无法编写用于比较这个函数返回结果的 `==` 运算符。
 
 ```swift
 let protoFlippedTriangle = protoFlip(smallTriangle)
 let sameThing = protoFlip(smallTriangle)
-protoFlippedTriangle == sameThing  // Error
+protoFlippedTriangle == sameThing  // 错误
 ```
 
 <!--
@@ -716,43 +562,13 @@ protoFlippedTriangle == sameThing  // Error
   ```
 -->
 
-The error on the last line of the example occurs for several reasons.
-The immediate issue is that the `Shape` doesn't include an `==` operator
-as part of its protocol requirements.
-If you try adding one, the next issue you'll encounter
-is that the `==` operator needs to know
-the types of its left-hand and right-hand arguments.
-This sort of operator usually takes arguments of type `Self`,
-matching whatever concrete type adopts the protocol,
-but adding a `Self` requirement to the protocol
-doesn't allow for the type erasure that happens
-when you use the protocol as a type.
+示例中最后一行的错误有几个原因。最直接的问题是 `Shape` 协议的要求中不包含 `==` 运算符。如果你尝试添加一个，你会遇到的下一个问题是 `==` 运算符需要知道其左右参数的类型。此类运算符通常要接受 `Self` 类型的参数，即与遵循协议的具体类型具有一致类型的参数，但如果为协议添加 `Self` 要求，在将协议当作类型使用时将不再允许进行类型抹消（Type Erasure）。
 
-Using a boxed protocol type as the return type for a function
-gives you the flexibility to return any type that conforms to the protocol.
-However, the cost of that flexibility
-is that some operations aren't possible on the returned values.
-The example shows how the `==` operator isn't available ---
-it depends on specific type information
-that isn't preserved by using a boxed protocol type.
+将封装协议类型用作函数的返回类型，给你带来了返回任何遵循该协议的类型的灵活性。然而，这种灵活性的代价是，某些操作无法在返回的值上执行。上面的示例显示了 `==` 运算符不可用的情况 —— 它依赖于特定的类型信息，而使用封装协议类型时这些信息无法保留。
 
-Another problem with this approach is that the shape transformations don't nest.
-The result of flipping a triangle is a value of type `Shape`,
-and the `protoFlip(_:)` function takes an argument
-of some type that conforms to the `Shape` protocol.
-However, a value of a boxed protocol type doesn't conform to that protocol;
-the value returned by `protoFlip(_:)` doesn't conform to `Shape`.
-This means code like `protoFlip(protoFlip(smallTriangle))`
-that applies multiple transformations is invalid
-because the flipped shape isn't a valid argument to `protoFlip(_:)`.
+这种方法的另一个问题是形状变换无法嵌套。翻转三角形的结果是一个类型为 `Shape` 的值，而 `protoFlip(_:)` 函数的参数是某种遵循 `Shape` 协议的类型。然而，封装协议类型的值并不遵循该协议。因此，`protoFlip(_:)` 返回的值并不遵循 `Shape` 协议。这意味着像 `protoFlip(protoFlip(smallTriangle))` 这样试图嵌套多次变换的代码是不合法的，因为翻转后的形状不是 `protoFlip(_:)` 的合法参数。（译者注：在此例中，封装协议类型的函数返回值允许该返回值是任何符合 `Shape` 协议的类型，但这个封装本身并不保留原始类型的信息，即“存在某种遵循 `Shape` 协议的类型，但具体是什么类型你不知道”。这种类型信息在被封装后是被抹除的。因此，虽然 `any Shape` 可以持有一个遵循 `Shape` 协议的值，但 `any Shape` 本身并不遵循 `Shape` 协议。）
 
-In contrast,
-opaque types preserve the identity of the underlying type.
-Swift can infer associated types,
-which lets you use an opaque return value
-in places where a boxed protocol type can't be used as a return value.
-For example,
-here's a version of the `Container` protocol from <doc:Generics>:
+相比之下，不透明类型保留了底层类型的身份信息。Swift 可以推断出关联的类型，这使得你可以在封装协议类型不能用作返回值的地方使用不透明返回值。例如，下面是一个来自<doc:Generics>的 `Container` 协议的版本：
 
 ```swift
 protocol Container {
@@ -776,11 +592,7 @@ extension Array: Container { }
   ```
 -->
 
-You can't use `Container` as the return type of a function
-because that protocol has an associated type.
-You also can't use it as constraint in a generic return type
-because there isn't enough information outside the function body
-to infer what the generic type needs to be.
+你不能将 `Container` 用作函数的返回类型，因为该协议具有一个关联类型（Associated Type）。你也不能将其用作泛型返回类型的约束，因为在函数体外部没有足够的信息来推断泛型类型需要是什么具体类型。（译者注：因为协议中的关联类型在定义时并未具体化，而是在实际遵循协议的类型中被确定。由于关联类型在编译时无法确定具体类型，这会对类型推断和函数的返回类型造成影响。当你尝试将 `Container` 用作函数的返回类型时，编译器无法确定 `Container` 的具体实现，因为 `Container` 只定义了协议的要求，但未指定关联类型 `Item` 的具体类型。编译器需要知道 `Container` 具体的 `Item` 类型才能确定返回值的具体类型，但 `Container` 协议并没有提供这些信息。当在泛型函数中使用 `Container` 作为约束时，也会遇到类似的问题。泛型的约束需要在编译时知道具体的类型信息，以便生成正确的代码。假设泛型类型 `T` 需要遵循 `Container` 协议，但 `Container` 的关联类型 `Item` 并未在泛型约束中指定，因此编译器无法确定 `T` 的具体类型。）
 
 ```swift
 // Error: Protocol with associated types can't be used as a return type.
