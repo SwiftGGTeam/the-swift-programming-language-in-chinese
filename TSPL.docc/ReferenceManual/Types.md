@@ -937,7 +937,7 @@ of any type that satisfies the *constraint*.
 This behavior contrasts with how an opaque types work,
 where there is some specific conforming type known at compile time.
 The additional level of indirection that's used
-when working with a boxed protocol type is called :newTerm:`boxing`.
+when working with a boxed protocol type is called *boxing*.
 Boxing typically requires a separate memory allocation for storage
 and an additional level of indirection for access,
 which incurs a performance cost at runtime.
