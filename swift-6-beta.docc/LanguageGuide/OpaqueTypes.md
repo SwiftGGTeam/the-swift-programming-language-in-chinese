@@ -595,12 +595,12 @@ extension Array: Container { }
 你不能将 `Container` 用作函数的返回类型，因为该协议具有一个关联类型（Associated Type）。你也不能将其用作泛型返回类型的约束，因为在函数体外部没有足够的信息来推断泛型类型需要是什么具体类型。（译者注：因为协议中的关联类型在定义时并未具体化，而是在实际遵循协议的类型中被确定。由于关联类型在编译时无法确定具体类型，这会对类型推断和函数的返回类型造成影响。当你尝试将 `Container` 用作函数的返回类型时，编译器无法确定 `Container` 的具体实现，因为 `Container` 只定义了协议的要求，但未指定关联类型 `Item` 的具体类型。编译器需要知道 `Container` 具体的 `Item` 类型才能确定返回值的具体类型，但 `Container` 协议并没有提供这些信息。当在泛型函数中使用 `Container` 作为约束时，也会遇到类似的问题。泛型的约束需要在编译时知道具体的类型信息，以便生成正确的代码。假设泛型类型 `T` 需要遵循 `Container` 协议，但 `Container` 的关联类型 `Item` 并未在泛型约束中指定，因此编译器无法确定 `T` 的具体类型。）
 
 ```swift
-// Error: Protocol with associated types can't be used as a return type.
+// 错误：具有关联类型的协议不能用作返回类型。
 func makeProtocolContainer<T>(item: T) -> Container {
     return [item]
 }
 
-// Error: Not enough information to infer C.
+// 错误：没有足够的信息来推断 C 的类型。
 func makeProtocolContainer<T, C: Container>(item: T) -> C {
     return [item]
 }
@@ -630,9 +630,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   ```
 -->
 
-Using the opaque type `some Container` as a return type
-expresses the desired API contract --- the function returns a container,
-but declines to specify the container's type:
+使用不透明类型 `some Container` 作为返回类型，表达了想要的 API 合约 —— 函数返回一个容器，但不指定容器的具体类型：
 
 ```swift
 func makeOpaqueContainer<T>(item: T) -> some Container {
@@ -641,7 +639,7 @@ func makeOpaqueContainer<T>(item: T) -> some Container {
 let opaqueContainer = makeOpaqueContainer(item: 12)
 let twelve = opaqueContainer[0]
 print(type(of: twelve))
-// Prints "Int"
+// 打印输出 "Int"
 ```
 
 <!--
@@ -658,15 +656,7 @@ print(type(of: twelve))
   ```
 -->
 
-The type of `twelve` is inferred to be `Int`,
-which illustrates the fact that type inference works with opaque types.
-In the implementation of `makeOpaqueContainer(item:)`,
-the underlying type of the opaque container is `[T]`.
-In this case, `T` is `Int`,
-so the return value is an array of integers
-and the `Item` associated type is inferred to be `Int`.
-The subscript on `Container` returns `Item`,
-which means that the type of `twelve` is also inferred to be `Int`.
+`twelve` 的类型被推断为 `Int`，这说明了类型推断在不透明类型中也能起作用。在 `makeOpaqueContainer(item:)` 的实现中，不透明容器的底层类型是 `[T]`。在这种情况下，`T` 是 `Int`，所以返回值是一个整数数组，并且关联类型 `Item` 被推断为 `Int`。由于 `Container` 的下标操作（`subscript` 方法）返回 `Item` 类型的值，所以 `twelve` 的类型也被推断为 `Int`。
 
 <!--
   TODO: Expansion for the future
@@ -702,11 +692,11 @@ which means that the type of `twelve` is also inferred to be `Int`.
   }
 -->
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档实施的软件应与最终的操作系统软件一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多有关使用 [Apple's beta software](https://developer.apple.com/support/beta-software/) 的信息。
 
 <!--
 This source file is part of the Swift.org open source project
