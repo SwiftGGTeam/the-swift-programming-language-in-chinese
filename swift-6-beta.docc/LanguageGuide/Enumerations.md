@@ -19,7 +19,7 @@
 
 ## 枚举语法
 
-使用 enum 关键词来创建枚举并且把它们的整个定义放在一对大括号内：
+使用 `enum` 关键词来创建枚举并且把它们的整个定义放在一对大括号内：
 
 ```swift
 enum SomeEnumeration {
@@ -190,7 +190,7 @@ default:
 
 ## 枚举成员的遍历
 
-在一些情况下，你会需要得到一个包含枚举所有成员的集合。你可以这样实现：在枚举名的后面添加 `: CaseIterable`——令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。下面是一个例子：
+在一些情况下，你会需要得到一个包含枚举所有成员的集合。你可以这样实现：在枚举名的后面添加 `: CaseIterable` ——令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。下面是一个例子：
 
 ```swift
 enum Beverage: CaseIterable {
@@ -395,7 +395,7 @@ enum ASCIIControlCharacter: Character {
   ```
 -->
 
-上面的例子，中枚举类型 `ASCIIControlCharacter` 的原始值类型被定义为 `Character`，并设置了一些比较常见的 ASCII 控制字符。`Character` 的描述详见<doc:StringsAndCharacters>部分。
+上面的例子中，枚举类型 `ASCIIControlCharacter` 的原始值类型被定义为 `Character`，并设置了一些比较常见的 ASCII 控制字符。`Character` 的描述详见<doc:StringsAndCharacters>部分。
 
 原始值可以是字符串、字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
@@ -426,7 +426,7 @@ enum Planet: Int {
   ```
 -->
 
-在上面的例子中，`Plant.mercury` 的显式原始值为 1，`Planet.venus` 的隐式原始值为 2，依次类推。
+在上面的例子中，`Plant.mercury` 的显式原始值为 1，`Planet.venus` 的隐式原始值为 2，依此类推。
 
 当使用字符串作为枚举类型的原始值时，每个枚举成员的隐式原始值为该枚举成员的名称。
 
