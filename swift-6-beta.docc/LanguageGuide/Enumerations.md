@@ -1,57 +1,29 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Enumerations.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 枚举
 
-# Enumerations
+定义一个包含可能值的列表的自定义类型。
 
-Model custom types that define a list of possible values.
+*枚举*为一组相关的值定义了一个共同的类型，并使你能够以类型安全的方式在代码中使用这些值。
 
-An *enumeration* defines a common type for a group of related values
-and enables you to work with those values in a type-safe way within your code.
+如果你对 C 语言很熟悉，你会知道 C 的枚举将相关的名称分配给一组整数值。不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为*原始*值），则该值的类型可以是字符串、字符，或是一个整型值或浮点数。
 
-If you are familiar with C,
-you will know that C enumerations assign related names to a set of integer values.
-Enumerations in Swift are much more flexible,
-and don't have to provide a value for each case of the enumeration.
-If a value (known as a *raw* value) is provided for each enumeration case,
-the value can be a string, a character,
-or a value of any integer or floating-point type.
+此外，枚举成员可以指定任意类型的关联值存储到枚举成员中，就像其他语言中的联合体（unions）或变体（variants）。每一个枚举成员都可以有适当类型的关联值。
 
-Alternatively, enumeration cases can specify
-associated values of *any* type to be stored along with each different case value,
-much as unions or variants do in other languages.
-You can define a common set of related cases as part of one enumeration,
-each of which has a different set of values of appropriate types associated with it.
+在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造器来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
 
-Enumerations in Swift are first-class types in their own right.
-They adopt many features traditionally supported only by classes,
-such as computed properties to provide additional information about
-the enumeration's current value,
-and instance methods to provide functionality related to
-the values the enumeration represents.
-Enumerations can also define initializers to provide an initial case value;
-can be extended to expand their functionality beyond their original implementation;
-and can conform to protocols to provide standard functionality.
-
-For more about these capabilities, see
-<doc:Properties>, <doc:Methods>, <doc:Initialization>,
-<doc:Extensions>, and <doc:Protocols>.
+想了解更多相关信息，请参阅<doc:Properties>，<doc:Methods>，<doc:Initialization>，<doc:Extensions>，和<doc:Protocols>。
 
 <!--
   TODO: this chapter should probably mention that enums without associated values
   are hashable and equatable by default (and what that means in practice)
 -->
 
-## Enumeration Syntax
+## 枚举语法
 
-You introduce enumerations with the `enum` keyword
-and place their entire definition within a pair of braces:
+使用 enum 关键词来创建枚举并且把它们的整个定义放在一对大括号内：
 
 ```swift
 enum SomeEnumeration {
-    // enumeration definition goes here
+    // 枚举定义放在这里
 }
 ```
 
@@ -65,7 +37,7 @@ enum SomeEnumeration {
   ```
 -->
 
-Here's an example for the four main points of a compass:
+下面是用枚举表示指南针四个方向的例子：
 
 ```swift
 enum CompassPoint {
@@ -89,21 +61,12 @@ enum CompassPoint {
   ```
 -->
 
-The values defined in an enumeration
-(such as `north`, `south`, `east`, and `west`)
-are its *enumeration cases*.
-You use the `case` keyword to introduce new enumeration cases.
+枚举中定义的值（如 `north`，`south`，`east` 和 `west`）是这个枚举的*成员值*（或成员）。你可以使用 `case` 关键字来定义新的枚举成员值。
 
-> Note: Swift enumeration cases don't have an integer value set by default,
-> unlike languages like C and Objective-C.
-> In the `CompassPoint` example above,
-> `north`, `south`, `east` and `west`
-> don't implicitly equal
-> `0`, `1`, `2` and `3`.
-> Instead, the different enumeration cases are values in their own right,
-> with an explicitly defined type of `CompassPoint`.
+>注意:
+>与 C 和 Objective-C 语言不同，Swift 的枚举成员在被创建时不会被赋予一个默认的整型值。在上面的 `CompassPoint` 例子中，`north`，`south`，`east` 和 `west` 不会被隐式地赋值为 `0`，`1`，`2` 和 `3`。相反，这些枚举成员本身就是完备的值，这些值的类型是已经明确定义好的 `CompassPoint` 类型。
 
-Multiple cases can appear on a single line, separated by commas:
+多个成员值可以出现在同一行上，用逗号隔开：
 
 ```swift
 enum Planet {
@@ -121,12 +84,7 @@ enum Planet {
   ```
 -->
 
-Each enumeration definition defines a new type.
-Like other types in Swift, their names
-(such as `CompassPoint` and `Planet`)
-start with a capital letter.
-Give enumeration types singular rather than plural names,
-so that they read as self-evident:
+每个枚举都定义了一个全新的类型。像 Swift 中其他类型一样，它们的名字（如 `CompassPoint` 和 `Planet`）以一个大写字母开头。给枚举类型使用单数名称而非复数名称，以便它们能够自然而然地表达其含义：
 
 ```swift
 var directionToHead = CompassPoint.west
@@ -140,10 +98,7 @@ var directionToHead = CompassPoint.west
   ```
 -->
 
-The type of `directionToHead` is inferred
-when it's initialized with one of the possible values of `CompassPoint`.
-Once `directionToHead` is declared as a `CompassPoint`,
-you can set it to a different `CompassPoint` value using a shorter dot syntax:
+`directionToHead` 的类型可以在它被 `CompassPoint` 的某个值初始化时推断出来。一旦 `directionToHead` 被声明为 `CompassPoint` 类型，你可以使用更简短的点语法将其设置为不同的 `CompassPoint` 值：
 
 ```swift
 directionToHead = .east
@@ -157,13 +112,11 @@ directionToHead = .east
   ```
 -->
 
-The type of `directionToHead` is already known,
-and so you can drop the type when setting its value.
-This makes for highly readable code when working with explicitly typed enumeration values.
+当 `directionToHead` 的类型已知时，再次为其赋值可以省略枚举类型名。在使用具有显式类型的枚举值时，这种写法让代码具有更好的可读性。
 
-## Matching Enumeration Values with a Switch Statement
+## 使用 Switch 语句匹配枚举值
 
-You can match individual enumeration values with a `switch` statement:
+你可以使用 `switch` 语句匹配单个枚举值：
 
 ```swift
 directionToHead = .south
@@ -177,7 +130,7 @@ case .east:
 case .west:
     print("Where the skies are blue")
 }
-// Prints "Watch out for penguins"
+// 打印 "Watch out for penguins"
 ```
 
 <!--
@@ -199,25 +152,15 @@ case .west:
   ```
 -->
 
-You can read this code as:
+你可以这样理解这段代码：
 
-“Consider the value of `directionToHead`.
-In the case where it equals `.north`,
-print `"Lots of planets have a north"`.
-In the case where it equals `.south`,
-print `"Watch out for penguins"`.”
+“判断 `directionToHead` 的值。当它等于 `.north`时，打印 `“Lots of planets have a north”`。当它等于 `.south`时，打印 `“Watch out for penguins”`。”
 
-…and so on.
+……以此类推。
 
-As described in <doc:ControlFlow>,
-a `switch` statement must be exhaustive when considering an enumeration's cases.
-If the `case` for `.west` is omitted,
-this code doesn't compile,
-because it doesn't consider the complete list of `CompassPoint` cases.
-Requiring exhaustiveness ensures that enumeration cases aren't accidentally omitted.
+正如在<doc:ControlFlow>中介绍的那样，在判断一个枚举类型的值时，`switch` 语句必须穷举所有情况。如果遗漏了 `.west` 这种情况，上面那段代码将无法通过编译，因为它没有考虑到 `CompassPoint` 的全部成员。强制穷举确保了枚举成员不会被意外遗漏。
 
-When it isn't appropriate to provide a `case` for every enumeration case,
-you can provide a `default` case to cover any cases that aren't addressed explicitly:
+当不需要匹配每个枚举成员的时候，你可以提供一个 `default` 分支来涵盖所有未明确列出的枚举成员：
 
 ```swift
 let somePlanet = Planet.earth
@@ -227,7 +170,7 @@ case .earth:
 default:
     print("Not a safe place for humans")
 }
-// Prints "Mostly harmless"
+// 打印 "Mostly harmless"
 ```
 
 <!--
@@ -245,15 +188,9 @@ default:
   ```
 -->
 
-## Iterating over Enumeration Cases
+## 枚举成员的遍历
 
-For some enumerations,
-it's useful to have a collection of all of that enumeration's cases.
-You enable this by
-writing `: CaseIterable` after the enumeration's name.
-Swift exposes a collection of all the cases
-as an `allCases` property of the enumeration type.
-Here's an example:
+在一些情况下，你会需要得到一个包含枚举所有成员的集合。你可以这样实现：在枚举名的后面添加 `: CaseIterable`——令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。下面是一个例子：
 
 ```swift
 enum Beverage: CaseIterable {
@@ -261,7 +198,7 @@ enum Beverage: CaseIterable {
 }
 let numberOfChoices = Beverage.allCases.count
 print("\(numberOfChoices) beverages available")
-// Prints "3 beverages available"
+// 打印 "3 beverages available"
 ```
 
 <!--
@@ -277,14 +214,7 @@ print("\(numberOfChoices) beverages available")
   ```
 -->
 
-In the example above,
-you write `Beverage.allCases` to access a collection
-that contains all of the cases of the `Beverage` enumeration.
-You can use `allCases` like any other collection ---
-the collection's elements are instances of the enumeration type,
-so in this case they're `Beverage` values.
-The example above counts how many cases there are,
-and the example below uses a `for`-`in` loop to iterate over all the cases.
+在上面的例子中，通过 `Beverage.allCases` 可以访问到一个包含 `Beverage` 枚举所有成员的集合。`allCases` 的使用方法和其它一般集合一样——集合中的元素是枚举类型的实例，因此在本例中这些元素是 `Beverage` 的值。在上面的例子中，统计了总共有多少个枚举成员。在下面的例子中我们来演示如何使用 `for`-`in` 循环来遍历所有枚举成员。
 
 ```swift
 for beverage in Beverage.allCases {
@@ -311,49 +241,25 @@ for beverage in Beverage.allCases {
   ```
 -->
 
-The syntax used in the examples above
-marks the enumeration as conforming to the
-[`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) protocol.
-For information about protocols, see <doc:Protocols>.
+在前面的例子中，使用的语法表明这个枚举遵循 [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) 协议。想了解协议的相关信息，请参阅<doc:Protocols>。
 
-## Associated Values
+## 关联值
 
-The examples in the previous section show how the cases of an enumeration are
-a defined (and typed) value in their own right.
-You can set a constant or variable to `Planet.earth`,
-and check for this value later.
-However, it's sometimes useful to be able to store
-values of other types alongside these case values.
-This additional information is called an *associated value*,
-and it varies each time you use that case as a value in your code.
+在枚举语法那一小节的例子中演示了如何为枚举的成员定义值和类型，你可以将常量或变量设置为 `Planet.earth`，并在赋值之后检查这个值。然而，有时候把其他类型的值与枚举的成员值一起存储起来会很有用。这额外的信息称为*关联值*，并且你每次在代码中使用该枚举成员时，还可以修改这个关联值。
 
-You can define Swift enumerations to store associated values of any given type,
-and the value types can be different for each case of the enumeration if needed.
-Enumerations similar to these are known as
-*discriminated unions*, *tagged unions*, or *variants*
-in other programming languages.
+你可以定义 Swift 枚举来存储任意类型的关联值，如果需要的话，每个枚举成员的关联值类型可以各不相同。枚举的这种特性跟其他语言中的*可识别联合（discriminated unions）*，*标签联合（tagged unions）*，或者*变体（variants）*相似。
 
-For example, suppose an inventory tracking system needs to
-track products by two different types of barcode.
-Some products are labeled with 1D barcodes in UPC format,
-which uses the numbers `0` to `9`.
-Each barcode has a number system digit,
-followed by five manufacturer code digits and five product code digits.
-These are followed by a check digit to verify that the code has been scanned correctly:
+例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有使用 `0` 到 `9` 数字的 UPC 格式的一维条形码。每一个条形码都有一个代表数字系统的数字，该数字后接五位代表厂商代码的数字，接下来是五位代表产品代码的数字。最后一个数字是检查位，用来验证代码是否被正确扫描：
 
 ![](barcode_UPC)
 
-Other products are labeled with 2D barcodes in QR code format,
-which can use any ISO 8859-1 character
-and can encode a string up to 2,953 characters long:
+其他商品上标有 QR 码格式的二维码，它可以使用任何 ISO 8859-1 字符，并且可以编码一个最多拥有 2,953 个字符的字符串：
 
 ![](barcode_QR)
 
-It's convenient for an inventory tracking system to store UPC barcodes
-as a tuple of four integers,
-and QR code barcodes as a string of any length.
+这便于库存跟踪系统用包含四个整型值的元组存储 UPC 码，以及用任意长度的字符串储存 QR 码。
 
-In Swift, an enumeration to define product barcodes of either type might look like this:
+在 Swift 中，使用如下方式定义一个表示两种商品条形码的枚举：
 
 ```swift
 enum Barcode {
@@ -373,19 +279,13 @@ enum Barcode {
   ```
 -->
 
-This can be read as:
+这段代码可以这么理解：
 
-“Define an enumeration type called `Barcode`,
-which can take either a value of `upc`
-with an associated value of type (`Int`, `Int`, `Int`, `Int`),
-or a value of `qrCode` with an associated value of type `String`.”
+“定义一个名为 `Barcode` 的枚举类型，它的一个成员值是具有 (`Int`，`Int`，`Int`，`Int`) 类型关联值的 `upc`，另一个成员值是具有 `String` 类型关联值的 `qrCode`。”
 
-This definition doesn't provide any actual `Int` or `String` values ---
-it just defines the *type* of associated values
-that `Barcode` constants and variables can store
-when they're equal to `Barcode.upc` or `Barcode.qrCode`.
+这个定义不提供任何 `Int` 或 `String` 类型的关联值，它只是定义了，当 `Barcode` 常量和变量等于 `Barcode.upc` 或 `Barcode.qrCode` 时，可以存储的关联值的类型。
 
-You can then create new barcodes using either type:
+然后你可以使用任意一种条形码类型创建新的条形码，例如：
 
 ```swift
 var productBarcode = Barcode.upc(8, 85909, 51226, 3)
@@ -399,11 +299,9 @@ var productBarcode = Barcode.upc(8, 85909, 51226, 3)
   ```
 -->
 
-This example creates a new variable called `productBarcode`
-and assigns it a value of `Barcode.upc`
-with an associated tuple value of `(8, 85909, 51226, 3)`.
+上面的例子创建了一个名为 `productBarcode` 的变量，并将 `Barcode.upc` 赋值给它，关联的元组值为 `(8, 85909, 51226, 3)`。
 
-You can assign the same product a different type of barcode:
+同一个商品可以分配不同类型的条形码，例如：
 
 ```swift
 productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
@@ -417,21 +315,9 @@ productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
   ```
 -->
 
-At this point,
-the original `Barcode.upc` and its integer values are replaced by
-the new `Barcode.qrCode` and its string value.
-Constants and variables of type `Barcode` can store either a `.upc` or a `.qrCode`
-(together with their associated values),
-but they can store only one of them at any given time.
+这时，原始的 `Barcode.upc` 和其整数关联值被新的 `Barcode.qrCode` 和其字符串关联值所替代。`Barcode` 类型的常量和变量可以存储一个 `.upc` 或者一个 `.qrCode`（连同它们的关联值），但是在同一时间只能存储这两个值中的一个。
 
-You can check the different barcode types using a switch statement,
-similar to the example in
-<doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
-This time, however,
-the associated values are extracted as part of the switch statement.
-You extract each associated value as a constant (with the `let` prefix)
-or a variable (with the `var` prefix)
-for use within the `switch` case's body:
+你可以使用一个 switch 语句来检查不同的条形码类型，和<doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>中的例子一样。然而，这一次，关联值可以被提取出来作为 switch 语句的一部分。你可以在 `switch` 的 `case` 分支代码中提取每个关联值作为一个常量（用 `let` 前缀）或者作为一个变量（用 `var` 前缀）来使用：
 
 ```swift
 switch productBarcode {
@@ -440,7 +326,7 @@ case .upc(let numberSystem, let manufacturer, let product, let check):
 case .qrCode(let productCode):
     print("QR code: \(productCode).")
 }
-// Prints "QR code: ABCDEFGHIJKLMNOP."
+// 打印 "QR code: ABCDEFGHIJKLMNOP."
 ```
 
 <!--
@@ -457,9 +343,7 @@ case .qrCode(let productCode):
   ```
 -->
 
-If all of the associated values for an enumeration case
-are extracted as constants, or if all are extracted as variables,
-you can place a single `let` or `var` annotation before the case name, for brevity:
+如果一个枚举成员的所有关联值都被提取为常量，或者都被提取为变量，为了简洁，你可以只在成员名称前标注一个 `let` 或者 `var`：
 
 ```swift
 switch productBarcode {
@@ -468,7 +352,7 @@ case let .upc(numberSystem, manufacturer, product, check):
 case let .qrCode(productCode):
     print("QR code: \(productCode).")
 }
-// Prints "QR code: ABCDEFGHIJKLMNOP."
+// 打印 "QR code: ABCDEFGHIJKLMNOP."
 ```
 
 <!--
@@ -485,17 +369,11 @@ case let .qrCode(productCode):
   ```
 -->
 
-## Raw Values
+## 原始值
 
-The barcode example in <doc:Enumerations#Associated-Values>
-shows how cases of an enumeration can declare that they store
-associated values of different types.
-As an alternative to associated values,
-enumeration cases can come prepopulated with default values
-(called *raw values*),
-which are all of the same type.
+在<doc:Enumerations#Associated-Values>小节的条形码例子中，演示了如何声明存储不同类型关联值的枚举成员。作为关联值的替代选择，枚举成员可以被默认值（称为*原始值*）预填充，这些原始值的类型必须相同。
 
-Here's an example that stores raw ASCII values alongside named enumeration cases:
+这是一个使用 ASCII 码作为原始值的枚举：
 
 ```swift
 enum ASCIIControlCharacter: Character {
@@ -517,36 +395,20 @@ enum ASCIIControlCharacter: Character {
   ```
 -->
 
-Here, the raw values for an enumeration called `ASCIIControlCharacter`
-are defined to be of type `Character`,
-and are set to some of the more common ASCII control characters.
-`Character` values are described in <doc:StringsAndCharacters>.
+上面的例子，中枚举类型 `ASCIIControlCharacter` 的原始值类型被定义为 `Character`，并设置了一些比较常见的 ASCII 控制字符。`Character` 的描述详见<doc:StringsAndCharacters>部分。
 
-Raw values can be
-strings, characters, or any of the integer or floating-point number types.
-Each raw value must be unique within its enumeration declaration.
+原始值可以是字符串、字符，或者任意整型值或浮点型值。每个原始值在枚举声明中必须是唯一的。
 
-> Note: Raw values are *not* the same as associated values.
-> Raw values are set to prepopulated values
-> when you first define the enumeration in your code,
-> like the three ASCII codes above.
-> The raw value for a particular enumeration case is always the same.
-> Associated values are set when you create a new constant or variable
-> based on one of the enumeration's cases,
-> and can be different each time you do so.
+>注意:
+>原始值和关联值是*不同*的。原始值是在定义枚举时被预先填充的值，像上述三个 ASCII 码。对于一个特定的枚举成员，它的原始值始终不变。关联值是创建一个基于枚举成员的常量或变量时才设置的值，枚举成员的关联值可以变化。
 
-### Implicitly Assigned Raw Values
+### 原始值的隐式赋值
 
-When you're working with enumerations that store integer or string raw values,
-you don't have to explicitly assign a raw value for each case.
-When you don't, Swift automatically assigns the values for you.
+在使用原始值为整数或者字符串类型的枚举时，不需要显式地为每一个枚举成员设置原始值，当你没有手动赋值时，Swift 将会自动为你赋值。
 
-For example, when integers are used for raw values,
-the implicit value for each case is one more than the previous case.
-If the first case doesn't have a value set, its value is `0`.
+例如，当使用整数作为原始值时，隐式赋值的值依次递增 1。如果第一个枚举成员没有设置原始值，其原始值将为 `0`。
 
-The enumeration below is a refinement of the earlier `Planet` enumeration,
-with integer raw values to represent each planet's order from the sun:
+下面的枚举是对之前 `Planet` 这个枚举的一个细化，利用整型的原始值来表示每个行星在太阳系中的顺序：
 
 ```swift
 enum Planet: Int {
@@ -564,15 +426,11 @@ enum Planet: Int {
   ```
 -->
 
-In the example above,
-`Planet.mercury` has an explicit raw value of `1`,
-`Planet.venus` has an implicit raw value of `2`, and so on.
+在上面的例子中，`Plant.mercury` 的显式原始值为 1，`Planet.venus` 的隐式原始值为 2，依次类推。
 
-When strings are used for raw values,
-the implicit value for each case is the text of that case's name.
+当使用字符串作为枚举类型的原始值时，每个枚举成员的隐式原始值为该枚举成员的名称。
 
-The enumeration below is a refinement of the earlier `CompassPoint` enumeration,
-with string raw values to represent each direction's name:
+下面的例子是前面 `CompassPoint` 枚举的细化，使用字符串类型的原始值来表示各个方向的名称：
 
 ```swift
 enum CompassPoint: String {
@@ -590,10 +448,9 @@ enum CompassPoint: String {
   ```
 -->
 
-In the example above,
-`CompassPoint.south` has an implicit raw value of `"south"`, and so on.
+上面例子中，`CompassPoint.south` 拥有隐式原始值 `south`，依此类推。
 
-You access the raw value of an enumeration case with its `rawValue` property:
+使用枚举成员的 `rawValue` 属性可以访问该枚举成员的原始值：
 
 ```swift
 let earthsOrder = Planet.earth.rawValue
@@ -617,15 +474,11 @@ let sunsetDirection = CompassPoint.west.rawValue
   ```
 -->
 
-### Initializing from a Raw Value
+### 使用原始值初始化枚举实例
 
-If you define an enumeration with a raw-value type,
-the enumeration automatically receives an initializer
-that takes a value of the raw value's type (as a parameter called `rawValue`)
-and returns either an enumeration case or `nil`.
-You can use this initializer to try to create a new instance of the enumeration.
+如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个构造器，这个构造器接收一个叫做 `rawValue` 的参数，参数类型即为原始值的类型，返回值则是枚举成员或 `nil`。你可以使用这个构造器来创建一个新的枚举实例。
 
-This example identifies Uranus from its raw value of `7`:
+这个例子利用原始值 `7` 创建了枚举成员 Uranus：
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
@@ -644,17 +497,12 @@ let possiblePlanet = Planet(rawValue: 7)
   ```
 -->
 
-Not all possible `Int` values will find a matching planet, however.
-Because of this, the raw value initializer always returns an *optional* enumeration case.
-In the example above, `possiblePlanet` is of type `Planet?`,
-or “optional `Planet`.”
+然而，并非所有 `Int` 值都可以找到一个匹配的行星。因此，原始值构造器总是返回一个*可选的*枚举成员。在上面的例子中，`possiblePlanet` 是 `Planet?` 类型，或者说“可选的 `Planet`”。
 
-> Note: The raw value initializer is a failable initializer,
-> because not every raw value will return an enumeration case.
-> For more information, see <doc:Declarations#Failable-Initializers>.
+>注意:
+>原始值构造器是一个可失败构造器，因为并不是每一个原始值都有与之对应的枚举成员。更多信息请参阅<doc:Declarations#Failable-Initializers>。
 
-If you try to find a planet with a position of `11`,
-the optional `Planet` value returned by the raw value initializer will be `nil`:
+如果你试图寻找一个位置为 `11` 的行星，通过原始值构造器返回的可选 `Planet` 值将是 `nil`：
 
 ```swift
 let positionToFind = 11
@@ -668,7 +516,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 } else {
     print("There isn't a planet at position \(positionToFind)")
 }
-// Prints "There isn't a planet at position 11"
+// 打印 "There isn't a planet at position 11"
 ```
 
 <!--
@@ -690,27 +538,18 @@ if let somePlanet = Planet(rawValue: positionToFind) {
   ```
 -->
 
-This example uses optional binding to try to access a planet with a raw value of `11`.
-The statement `if let somePlanet = Planet(rawValue: 11)` creates an optional `Planet`,
-and sets `somePlanet` to the value of that optional `Planet` if it can be retrieved.
-In this case, it isn't possible to retrieve a planet with a position of `11`,
-and so the `else` branch is executed instead.
+这个例子使用了可选绑定（optional binding），试图通过原始值 `11` 来访问一个行星。`if let somePlanet = Planet(rawValue: 11)` 语句创建了一个可选 `Planet`，如果可选 `Planet` 的值存在，就会赋值给 `somePlanet`。在这个例子中，无法检索到位置为 `11` 的行星，所以 `else` 分支被执行。
 
 <!--
   TODO: Switch around the order of this chapter so that all of the non-union stuff
   is together, and the union bits (aka Associated Values) come last.
 -->
 
-## Recursive Enumerations
+## 递归枚举
 
-A *recursive enumeration* is an enumeration
-that has another instance of the enumeration
-as the associated value for one or more of the enumeration cases.
-You indicate that an enumeration case is recursive
-by writing `indirect` before it,
-which tells the compiler to insert the necessary layer of indirection.
+*递归枚举*是一种枚举类型，其中一个或多个枚举成员的关联值是同一种枚举的另一个实例。你可以在枚举成员前加上 `indirect` 来表示该成员可递归。使用递归枚举时，编译器会插入一个间接层。
 
-For example, here is an enumeration that stores simple arithmetic expressions:
+例如，下面的例子中，枚举类型存储了简单的算术表达式：
 
 ```swift
 enum ArithmeticExpression {
@@ -732,8 +571,7 @@ enum ArithmeticExpression {
   ```
 -->
 
-You can also write `indirect` before the beginning of the enumeration
-to enable indirection for all of the enumeration's cases that have an associated value:
+你也可以在枚举类型前面加上 `indirect` 关键字来表明它的所有成员都是可递归的：
 
 ```swift
 indirect enum ArithmeticExpression {
@@ -755,21 +593,7 @@ indirect enum ArithmeticExpression {
   ```
 -->
 
-This enumeration can store three kinds of arithmetic expressions:
-a plain number,
-the addition of two expressions,
-and the multiplication of two expressions.
-The `addition` and `multiplication` cases have associated values
-that are also arithmetic expressions ---
-these associated values make it possible to nest expressions.
-For example, the expression `(5 + 4) * 2`
-has a number on the right-hand side of the multiplication
-and another expression on the left-hand side of the multiplication.
-Because the data is nested,
-the enumeration used to store the data also needs to support nesting ---
-this means the enumeration needs to be recursive.
-The code below shows the `ArithmeticExpression` recursive enumeration
-being created for `(5 + 4) * 2`:
+上面定义的枚举类型可以存储三种算术表达式：纯数字、两个表达式相加、两个表达式相乘。枚举成员 `addition` 和 `multiplication` 的关联值也是算术表达式——这些关联值可以嵌套表达式。例如，表达式 `(5 + 4) * 2`，乘号右边是一个数字，左边则是另一个表达式。因为数据是嵌套的，因而用来存储数据的枚举类型也需要支持这种嵌套——这意味着枚举类型需要支持递归。下面的代码展示了使用 `ArithmeticExpression` 这个递归枚举创建表达式 `(5 + 4) * 2`：
 
 ```swift
 let five = ArithmeticExpression.number(5)
@@ -789,9 +613,7 @@ let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.numb
   ```
 -->
 
-A recursive function is a straightforward way
-to work with data that has a recursive structure.
-For example, here's a function that evaluates an arithmetic expression:
+递归函数是一种处理具有递归结构数据的直接方式。例如，下面是一个对算术表达式求值的函数：
 
 ```swift
 func evaluate(_ expression: ArithmeticExpression) -> Int {
@@ -806,7 +628,7 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
 }
 
 print(evaluate(product))
-// Prints "18"
+// 打印 "18"
 ```
 
 <!--
@@ -829,18 +651,13 @@ print(evaluate(product))
   ```
 -->
 
-This function evaluates a plain number
-by simply returning the associated value.
-It evaluates an addition or multiplication
-by evaluating the expression on the left-hand side,
-evaluating the expression on the right-hand side,
-and then adding them or multiplying them.
+该函数如果遇到纯数字，就直接返回该数字的值。如果遇到的是加法或乘法运算，则分别计算左边表达式和右边表达式的值，然后相加或相乘。
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档开发的软件应与最终版本的操作系统一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 进一步了解如何使用 [Apple 的 Beta 版软件](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
