@@ -173,6 +173,8 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | variadic parameters| 可变参数 |
 | wrapped | 包装 |
 | wrapped value | 被包装值 |
+| superclass | 父类 |
+| subclass | 子类 |
 
 [published]: https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
 [docc]: https://github.com/apple/swift-docc
