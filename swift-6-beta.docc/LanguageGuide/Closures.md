@@ -1,77 +1,38 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Closures.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 闭包
 
-# Closures
+对一起执行的代码进行分组，而不创建命名函数。
 
-Group code that executes together, without creating a named function.
+*闭包*是自包含的函数代码块，可以在代码中被传递和使用。Swift 中的闭包类似于其他编程语言中的闭包、匿名函数、lambda和块。
 
-*Closures* are self-contained blocks of functionality
-that can be passed around and used in your code.
-Closures in Swift are similar
-to closures, anonymous functions, lambdas, and blocks
-in other programming languages.
+闭包可以捕获和存储其所在上下文中任意常量和变量的引用。被称为*包裹常量*和变量。 Swift 会为你管理在捕获过程中涉及到的所有内存操作。
 
-Closures can capture and store references to any constants and variables
-from the context in which they're defined.
-This is known as *closing over* those constants and variables.
-Swift handles all of the memory management of capturing for you.
+> Note: 如果你不熟悉捕获（capturing）这个概念也不用担心。
+> 在 <doc:Closures#Capturing-Values> 章节有它更详细的介绍。
 
-> Note: Don't worry if you aren't familiar with the concept of capturing.
-> It's explained in detail below in <doc:Closures#Capturing-Values>.
+在 函数 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采用如下三种形式之一：
 
-Global and nested functions, as introduced in <doc:Functions>,
-are actually special cases of closures.
-Closures take one of three forms:
+- 全局函数是一个有名字但不会捕获任何值的闭包
+- 嵌套函数是一个有名字并可以捕获其封闭函数域内值的闭包
+- 闭包表达式是一个利用轻量级语法所写的可以捕获其上下文中变量或常量值的匿名闭包
 
-- Global functions are closures that have a name
-  and don't capture any values.
-- Nested functions are closures that have a name
-  and can capture values from their enclosing function.
-- Closure expressions are unnamed closures written in a lightweight syntax
-  that can capture values from their surrounding context.
+Swift 的闭包表达式拥有简洁的风格，其优化鼓励在常见场景中使用简短、整洁的语法，主要优化如下：
 
-Swift's closure expressions have a clean, clear style,
-with optimizations that encourage brief, clutter-free syntax in common scenarios.
-These optimizations include:
+- 利用上下文推断参数和返回值类型
+- 隐式返回单表达式闭包，即单表达式闭包可以省略 return 关键字
+- 参数名称缩写
+- 尾随闭包语法
 
-- Inferring parameter and return value types from context
-- Implicit returns from single-expression closures
-- Shorthand argument names
-- Trailing closure syntax
+## 闭包表达式
 
-## Closure Expressions
+嵌套函数, 如 <doc:Functions#Nested-Functions> 中介绍的那样，是一种命名和定义自包含代码块作为更大函数的一部分的便捷方法。当然，编写未完整声明和没有函数名的类函数结构代码是很有用的，尤其是在编码中涉及到函数作为一个或多个参数的那些方法时。
 
-Nested functions, as introduced in <doc:Functions#Nested-Functions>,
-are a convenient means of naming and defining self-contained blocks of code
-as part of a larger function.
-However, it's sometimes useful to write shorter versions of function-like constructs
-without a full declaration and name.
-This is particularly true when you work with functions or methods that take functions
-as one or more of their arguments.
+*闭包表达式*是一种以简短、集中的语法编写内联闭包的方法。在保证不丢失它语法清晰和意图的同时，闭包表达式提供了几种优化的语法简写形式。下面的闭包表达式通过对 `sorted(by:)` 这一示例的多次迭代来展示这个过程，每次迭代都使用了更加简洁的方式描述了相同功能。
 
-*Closure expressions* are a way to write inline closures in a brief, focused syntax.
-Closure expressions provide several syntax optimizations
-for writing closures in a shortened form without loss of clarity or intent.
-The closure expression examples below illustrate these optimizations
-by refining a single example of the `sorted(by:)` method over several iterations,
-each of which expresses the same functionality in a more succinct way.
+### Sorted 方法
 
-### The Sorted Method
+Swift 标准库提供了名为 `sorted(by:)` 的方法，它会基于你提供的排序闭包表达式的判断结果对数组中的值（类型确定）进行排序。一旦它完成排序过程，`sorted(by:)` 方法会返回一个与旧数组类型大小相同类型的新数组，该数组的元素有着正确的排序顺序。原数组不会被 `sorted(by:)` 方法修改。
 
-Swift's standard library provides a method called `sorted(by:)`,
-which sorts an array of values of a known type,
-based on the output of a sorting closure that you provide.
-Once it completes the sorting process,
-the `sorted(by:)` method returns a new array of the same type and size as the old one,
-with its elements in the correct sorted order.
-The original array isn't modified by the `sorted(by:)` method.
-
-The closure expression examples below use the `sorted(by:)` method
-to sort an array of `String` values in reverse alphabetical order.
-Here's the initial array to be sorted:
+下面的闭包表达式示例使用 `sorted(by:)` 方法对一个 `String` 类型的数组进行字母逆序排序。以下是初始数组：
 
 ```swift
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -85,19 +46,11 @@ let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
   ```
 -->
 
-The `sorted(by:)` method accepts a closure that takes two arguments
-of the same type as the array's contents,
-and returns a `Bool` value to say whether the first value should appear
-before or after the second value once the values are sorted.
-The sorting closure needs to return `true`
-if the first value should appear *before* the second value,
-and `false` otherwise.
+`sorted(by:)` 方法接受一个闭包，该闭包函数需要传入与数组元素类型相同的两个值，并返回一个布尔类型值，来表明排序后第一个参数排在第二个参数前面还是后面。如果第一个参数值出现在第二个参数值*前面*，排序闭包函数需要返回 `true`，反之返回 `false`。
 
-This example is sorting an array of `String` values,
-and so the sorting closure needs to be a function of type `(String, String) -> Bool`.
+该例子对一个 `String` 类型的数组进行排序，因此排序闭包函数类型需为 `(String, String) -> Bool`。
 
-One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as an argument to the `sorted(by:)` method:
+提供排序闭包函数的一种方式是编写一个正确类型的普通函数，并将其作为 `sorted(by:)` 方法的参数传入：
 
 ```swift
 func backward(_ s1: String, _ s2: String) -> Bool {
@@ -120,22 +73,11 @@ var reversedNames = names.sorted(by: backward)
   ```
 -->
 
-If the first string (`s1`) is greater than the second string (`s2`),
-the `backward(_:_:)` function will return `true`,
-indicating that `s1` should appear before `s2` in the sorted array.
-For characters in strings,
-“greater than” means “appears later in the alphabet than”.
-This means that the letter `"B"` is “greater than” the letter `"A"`,
-and the string `"Tom"` is greater than the string `"Tim"`.
-This gives a reverse alphabetical sort,
-with `"Barry"` being placed before `"Alex"`, and so on.
+如果第一个字符串 （`s1`） 大于第二个字符串 （`s2`），`backward（_：_：）` 函数将返回 `true`，表示在新的数组中 `s1` 应该出现在 `s2` 前。对于字符串中的字符，“大于”表示“在字母顺序较晚出现”。这意味着字母`“B”`“大于”字母`“A”`，字符串`“Tom”`大于字符串`“Tim”。`这给出了一个字母逆序排序，`将“Barry”`放在`“Alex”`之前，依此类推。
 
-However, this is a rather long-winded way to write
-what is essentially a single-expression function (`a > b`).
-In this example, it would be preferable to write the sorting closure inline,
-using closure expression syntax.
+然而，这是一种相当繁琐的编写方式，本质上是一个单表达式函数 （`a > b`）。对于这个例子来说，利用闭包表达式语法可以更好地构造一个内联排序闭包。
 
-### Closure Expression Syntax
+### 闭包表达式语法
 
 Closure expression syntax has the following general form:
 
