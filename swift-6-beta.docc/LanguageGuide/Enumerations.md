@@ -8,7 +8,7 @@
 
 此外，枚举成员可以指定任意类型的关联值存储到枚举成员中，就像其他语言中的联合体（unions）或变体（variants）。每一个枚举成员都可以有适当类型的关联值。
 
-在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造器来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
+在 Swift 中，枚举类型是一等（first-class）类型。它们采用了很多在传统上只被类所支持的特性，例如计算属性（computed properties），用于提供枚举值的附加信息，实例方法（instance methods），用于提供和枚举值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始值；可以在原始实现的基础上扩展它们的功能；还可以遵循协议（protocols）来提供标准的功能。
 
 想了解更多相关信息，请参阅<doc:Properties>，<doc:Methods>，<doc:Initialization>，<doc:Extensions>，和<doc:Protocols>。
 
@@ -190,7 +190,7 @@ default:
 
 ## 枚举成员的遍历
 
-在一些情况下，你会需要得到一个包含枚举所有成员的集合。你可以这样实现：在枚举名的后面添加 `: CaseIterable` ——令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。下面是一个例子：
+在一些情况下，你会需要得到一个包含枚举所有成员的集合。你可以这样实现：在枚举的名称后编写 `: CaseIterable` 来启用此功能，令枚举遵循 `CaseIterable` 协议。Swift 会生成一个 `allCases` 属性，用于表示一个包含枚举所有成员的集合。下面是一个例子：
 
 ```swift
 enum Beverage: CaseIterable {
@@ -426,7 +426,7 @@ enum Planet: Int {
   ```
 -->
 
-在上面的例子中，`Plant.mercury` 的显式原始值为 1，`Planet.venus` 的隐式原始值为 2，依此类推。
+在上面的例子中，`Plant.mercury` 的显式原始值为 `1`，`Planet.venus` 的隐式原始值为 `2`，依此类推。
 
 当使用字符串作为枚举类型的原始值时，每个枚举成员的隐式原始值为该枚举成员的名称。
 
@@ -478,7 +478,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 
 如果在定义枚举类型的时候使用了原始值，那么将会自动获得一个构造器，这个构造器接收一个叫做 `rawValue` 的参数，参数类型即为原始值的类型，返回值则是枚举成员或 `nil`。你可以使用这个构造器来创建一个新的枚举实例。
 
-这个例子利用原始值 `7` 创建了枚举成员 Uranus：
+这个例子利用原始值 `7` 创建了枚举成员 `Uranus`：
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
@@ -613,7 +613,7 @@ let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.numb
   ```
 -->
 
-递归函数是一种处理具有递归结构数据的直接方式。例如，下面是一个对算术表达式求值的函数：
+要操作具有递归性质的数据结构，使用递归函数是一种直截了当的方式。。例如，下面是一个对算术表达式求值的函数：
 
 ```swift
 func evaluate(_ expression: ArithmeticExpression) -> Int {
