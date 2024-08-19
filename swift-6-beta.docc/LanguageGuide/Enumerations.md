@@ -454,10 +454,10 @@ enum CompassPoint: String {
 
 ```swift
 let earthsOrder = Planet.earth.rawValue
-// earthsOrder is 3
+// earthsOrder 值为 3
 
 let sunsetDirection = CompassPoint.west.rawValue
-// sunsetDirection is "west"
+// sunsetDirection 值为 "west"
 ```
 
 <!--
