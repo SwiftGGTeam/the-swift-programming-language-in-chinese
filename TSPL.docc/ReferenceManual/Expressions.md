@@ -1548,11 +1548,11 @@ When you use a macro as a default value,
 it's type checked without expanding the macro,
 to check the following requirements:
 
+- The macro's access level
+  is the same as or less restrictive than the function that uses it.
 - The macro either takes no arguments,
   or its arguments are literals without string interpolation.
 - The macro's return type matches the parameter's type.
-- The access level for the macro's return type
-  is the same as or less restrictive than the function that uses it.
 
 You use macro expressions to call freestanding macros.
 To call an attached macro,
