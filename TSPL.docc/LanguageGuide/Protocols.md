@@ -1420,6 +1420,11 @@ This replaces the existing `@available(*, unavailable)` example from the Concurr
 See also the comparison on this forum thread <https://forums.swift.org/t/70525/96>
 
 XREF new section in Generics about `~Foo` syntax in a requirement.
+
+Enums with no associated types are implicitly equatable and hashable.
+(TR: And also sendable?)
+This is an exception to the rule that public API
+must be declared explicitly.
 -->
 
 ## Collections of Protocol Types
