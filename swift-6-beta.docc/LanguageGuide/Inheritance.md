@@ -1,32 +1,32 @@
 # 继承
 
-通过子类来添加或重写功能。
+通过子类化来添加或重写功能。
 
 一个类可以从另一个类*继承*方法、属性和其他特性。
 当一个类从另一个类继承时，继承的类被称为*子类*，
-而被它继承的类被称为*超类*。
+而被它继承的类被称为*父类*。
 继承是 Swift 中区别类与其他类型的基本特性。
 
-Swift 中的类可以调用和访问属于其超类的方法、属性和下标，
+Swift 中的类可以调用和访问属于其父类的方法、属性和下标，
 并且可以通过重写这些方法、属性和下标来优化或修改他们的行为。
-Swift 通过检查重写定义是否与超类定义相匹配来帮助确保您的覆盖是正确的。
+Swift 通过检查重写定义是否与父类定义相匹配来帮助确保您的覆盖是正确的。
 
 类还可以为继承的属性添加属性观察器，以便在属性值发生变化时得到通知。
 无论最初是定义为存储属性还是计算属性，都可以为任何属性添加属性观察器。
 
 ## 定义基类
 
-任何不从其他类继承的类都被称为*基类*。
+任何没有被继承的类都被称作基类。
 
 > 注意: Swift 中没有统一的基类，所有类的起源都是平等的。
-> 您不指定超类的类会自动成为基类。
+> 您不指定父类的类会自动成为基类。
 
 下面的示例定义了一个名为 `Vehicle` 的基类。
 这个基类定义了一个名为 `currentSpeed` 的存储属性，默认值为 `0.0`（推断出属性类型为 `Double`）。
 `currentSpeed` 属性的值被一个只读计算 `String` 属性 `description` 用于创建车辆的描述。
 
 `Vehicle` 基类还定义了一个名为 `makeNoise()` 的方法。
-这个方法对于基本的 `Vehicle` 实例不会做任何事情，但稍后会被 `Vehicle` 的子类自定义：
+这个方法对于基类 Vehicle 的实例不会做任何事情，但稍后会被 `Vehicle` 的子类自定义：
 
 ```swift
 class Vehicle {
@@ -96,7 +96,7 @@ print("Vehicle: \(someVehicle.description)")
 子类继承现有类的特性，然后您可以对其进行完善。
 您还可以向子类添加新的特性。
 
-要指示子类有一个超类，请在超类名前写子类名，中间用冒号分隔：
+要指示子类有一个父类，请在父类名前写子类名，中间用冒号分隔：
 
 ```swift
 class SomeSubclass: SomeSuperclass {
@@ -115,7 +115,7 @@ class SomeSubclass: SomeSuperclass {
   ```
 -->
 
-下面的示例定义了一个名为 `Bicycle` 的子类，它的超类是 `Vehicle`：
+下面的示例定义了一个名为 `Bicycle` 的子类，它的父类是 `Vehicle`：
 
 ```swift
 class Bicycle: Vehicle {
@@ -139,7 +139,7 @@ class Bicycle: Vehicle {
 除了继承的特性之外，`Bicycle` 类还定义了一个新的存储属性 `hasBasket`，
 默认值为 `false` （推断该属性的类型为 `Bool`）。
 
-默认情况下，您创建的任何新 `Bicycle` 实例都没有篮子。
+默认情况下，您创建的任何新 `Bicycle` 实例都默认没有篮子。
 在创建实例后，您可以将特定 `Bicycle` 实例的 `hasBasket` 属性设置为 `true`：
 
 ```swift
@@ -199,7 +199,7 @@ class Tandem: Bicycle {
 `Tandem` 子类还添加了一个名为 `currentNumberOfPassengers` 的新存储属性，默认值为 `0`。
 
 如果您创建一个 `Tandem` 实例，您可以使用它的任何新属性和继承的属性，
-并查询它从 `Vehicle` 继承的只读 `description` 属性：
+并查询它从 `Vehicle` 继承的只读属性：`description`
 
 ```swift
 let tandem = Tandem()
@@ -225,32 +225,32 @@ print("Tandem: \(tandem.description)")
 
 ## 重写
 
-子类可以提供自己的自定义实现来覆盖它将从超类继承的实例方法、
+子类可以提供自己的自定义实现来覆盖它将从父类继承的实例方法、
 类型方法、实例属性、类型属性或下标。这被称为*重写*。
 
 要重写将被继承的特性，您需要在重写定义前加上 `override` 关键字。
-这样做可以明确您打算提供重写，而不是由于疏忽而提供了匹配的定义。
-意外重写可能会导致意外行为，任何没有 `override` 关键字的重写
+这样做可以明确您打算提供重写，而不是由于疏忽而提供了相同的定义。
+无意间的重写可能会导致意外行为，任何没有 `override` 关键字的重写
 在编译代码时都会被诊断为错误。
 
-`override` 关键字还会提示 Swift 编译器检查您的重写类的超类
+`override` 关键字还会提示 Swift 编译器检查您的重写类的父类
 （或其父类之一）是否有与您提供的重写定义相匹配的声明。
 这个检查可以确保您的重写定义是正确的。
 
-### 访问超类方法、属性和下标
+### 访问父类方法、属性和下标
 
 当您为子类提供方法、属性或下标重写时，
-有时使用现有超类实现作为重写的一部分是很有用的。
+有时使用现有父类实现作为重写的一部分是很有用的。
 例如，您可以改进现有实现的行为，或在现有继承的变量中存储修改后的值。
 
-在适当的情况下，您可以使用 `super` 前缀来访问方法、属性或下标的超类版本：
+在适当的情况下，您可以使用 `super` 前缀来访问父类的方法、属性或下标：
 
 - 一个被重写的名为 `someMethod()` 的方法可以在重写方法实现中
-通过调用 `super.someMethod()` 来调用超类版本的 `someMethod()`。
+通过调用 `super.someMethod()` 来调用父类版本的 `someMethod()`。
 - 一个被重写的名为 `someProperty` 的属性可以在重写的 getter 或 setter 实现中
-通过 `super.someProperty` 来访问超类版本的 `someProperty`。
+通过 `super.someProperty` 来访问父类版本的 `someProperty`。
 - 一个被重写的针对 `someIndex` 的下标可以在重写的下标实现中
-通过 `super[someIndex]` 来访问同一下标的超类版本。
+通过 `super[someIndex]` 来访问同一下标的父类版本。
 
 ### 重写方法
 
@@ -306,19 +306,20 @@ train.makeNoise()
 
 #### 重写属性 Getter 和 Setter
 
-您可以为任何继承的属性提供自定义 getter（如果适当的话还有 setter），
+您可以为任何继承的属性提供自定义 getter（如果需要的话还有 setter），
 无论继承的属性在源码中是作为存储属性还是计算属性实现的。
 子类不知道继承属性的存储或计算性质，
 它只知道继承的属性有一个特定的名称和类型。
 您必须始终声明要重写的属性的名称和类型，
-以便编译器检查您的重写与超类中具有相同名称和类型的属性相匹配。
+以便编译器检查您的重写与父类中具有相同名称和类型的属性相匹配。
 
 您可以通过在子类属性重写中提供 getter 和 setter 来将继承的只读属性表示为可读写属性。
-但是您不能将继承的可读写属性表示为只读属性。
-如果您在属性重写中提供了 setter，您也必须为该重写提供 getter。
-如果您不想在重写的 getter 中修改继承属性的值。
-您可以简单地通过从 getter 返回 `super.someProperty` 来传递继承的值。
-其中 `someProperty` 是您正在重写的属性的名称。
+但是您不能将继承的可读写属性声明为只读属性。
+
+> 如果您在属性重写中提供了 setter，您也必须为该重写提供 getter。
+> 如果您不想在重写的 getter 中修改继承属性的值。
+> 您可以简单地通过从 getter 返回 `super.someProperty` 来传递继承的值。
+> 其中 `someProperty` 是您正在重写的属性的名称。
 
 下面的示例定义了一个名为 `Car` 的新类，它是 `Vehicle` 的子类。
 `Car` 类引入了一个名为 `gear` 的新存储属性，默认整数值为 `1`。
@@ -377,8 +378,8 @@ print("Car: \(car.description)")
 
 #### 重写属性观察器
 
-您可以使用属性重写为继承的属性添加属性观察器。
-这使您能够在继承属性的值发生变化时得到通知，无论该属性最初是如何实现的。
+您可以使用属性重写的方式为继承的属性添加属性观察器。
+这样无论该属性最初是如何实现的，您都能够在继承属性的值发生变化时得到通知。
 有关属性观察器的更多信息，请参阅 <doc:Properties#Property-Observers>。
 
 > 注意: 你无法为继承的常量存储属性或继承的只读计算属性添加属性观察器。
@@ -420,13 +421,13 @@ class AutomaticCar: Car {
 该属性的 `didSet` 观察器会根据新速度为实例的 `gear` 属性设置一个合适的挡位。
 具体来说，属性观察器选择一个挡位，
 该挡位是新 `currentSpeed` 值除以 10 向下取整后加 1。
-速度为 35.0 时会挂 4 挡:
+速度为 `35.0` 时会挂 `4` 挡:
 
 ```swift
 let automatic = AutomaticCar()
 automatic.currentSpeed = 35.0
 print("AutomaticCar: \(automatic.description)")
-// AutomaticCar: 以 35.0 英里/小时的速度行驶,挂 4 挡
+// AutomaticCar: traveling at 35.0 miles per hour in gear 4
 ```
 
 <!--
@@ -436,7 +437,7 @@ print("AutomaticCar: \(automatic.description)")
   -> let automatic = AutomaticCar()
   -> automatic.currentSpeed = 35.0
   -> print("AutomaticCar: \(automatic.description)")
-  </ AutomaticCar: 以 35.0 英里/小时的速度行驶,挂 4 挡
+  </ AutomaticCar: traveling at 35.0 miles per hour in gear 4
   ```
 -->
 
