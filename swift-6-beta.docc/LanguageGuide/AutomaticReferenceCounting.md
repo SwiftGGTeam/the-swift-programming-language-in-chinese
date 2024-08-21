@@ -737,6 +737,7 @@ class City {
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
+
   ```swifttest
   -> class Country {
         let name: String
@@ -776,7 +777,8 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 
 <!--
   - test: `implicitlyUnwrappedOptionals`
-    ```swifttest
+
+  ```swifttest
   -> var country = Country(name: "Canada", capitalName: "Ottawa")
   -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
   <- Canada's capital city is called Ottawa
@@ -825,7 +827,8 @@ class HTMLElement {
 
 <!--
   - test: `strongReferenceCyclesForClosures`
-    ```swifttest
+
+  ```swifttest
   -> class HTMLElement {
   ---
         let name: String
