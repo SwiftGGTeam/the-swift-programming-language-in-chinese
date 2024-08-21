@@ -148,7 +148,7 @@ reference3 = nil
 
 在上面的例子中，ARC 能够跟踪你创建的新 `Person` 实例的引用数量，并在不再需要这个 `Person` 实例时将其释放。
 
-然而，可能会出现这样的情况:一个类的实例*永远*不会到达它有零个强引用的时刻。如果两个类实例彼此持有强引用，使得每个实例都使对方保持活跃，就可能发生这种情况。这被称为*强引用循环*。
+然而，可能会出现这样的情况：一个类的实例*永远*不会到达它有零个强引用的时刻。如果两个类实例彼此持有强引用，使得每个实例都使对方保持活跃，就可能发生这种情况。这被称为*强引用循环*。
 
 你可以通过将类之间的某些关系定义为弱引用或无主引用，而不是强引用，来解决强引用循环。这个过程在<doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-Between-Class-Instances>中描述。然而，在学习如何解决强引用循环之前，了解这种循环是如何产生的是很有用的。
 
@@ -278,7 +278,7 @@ unit4A = nil
 
 ## 解决类实例之间的强引用循环
 
-Swift 提供了两种方法来解决你使用类类型的属性时出现的强引用循环:弱引用和无主引用。
+Swift 提供了两种方法来解决你使用类类型的属性时出现的强引用循环：弱引用和无主引用。
 
 弱引用和无主引用使引用循环中的一个实例引用另一个实例而*不*对其保持强引用。这样，实例就可以相互引用而不创建强引用循环。
 
@@ -298,7 +298,7 @@ Swift 提供了两种方法来解决你使用类类型的属性时出现的强�
 
 你可以像检查任何其他可选值一样检查弱引用中值的存在，并且你永远不会遇到引用已不存在的无效实例的情况。
 
-> 注意:当 ARC 将弱引用设置为 `nil` 时，不会调用属性观察器。
+> 注意：当 ARC 将弱引用设置为 `nil` 时，不会调用属性观察器。
 
 <!--
   - test: `weak-reference-doesnt-trigger-didset`
@@ -429,7 +429,7 @@ unit4A = nil
 
 ![](weakReference03)
 
-> 注意:在使用垃圾收集的系统中，弱指针有时被用来实现简单的缓存机制，因为没有强引用的对象只有在内存压力触发垃圾收集时才会被释放。然而，对于 ARC，值会在它们的最后一个强引用被移除时立即被释放，使得弱引用不适合这种目的。
+> 注意：在使用垃圾收集的系统中，弱指针有时被用来实现简单的缓存机制，因为没有强引用的对象只有在内存压力触发垃圾收集时才会被释放。然而，对于 ARC，值会在它们的最后一个强引用被移除时立即被释放，使得弱引用不适合这种目的。
 
 ### 无主引用
 
@@ -441,10 +441,9 @@ unit4A = nil
   无主引用能做的一切，弱引用都可以做，只是速度更慢，更笨拙(但仍然是正确的)。无主引用之所以有趣，是因为它更快，更容易(没有可选项) ---在那些它实际上对你的数据是正确的情况下。
 -->
 
-> 重要:只有当你确定该引用*总是*指向一个尚未被释放的实例时，才使用无主引用。
+> 重要：只有当你确定该引用*总是*指向一个尚未被释放的实例时，才使用无主引用。
 >
-> 如果你在该实例被释放后尝试访问无主引用的值,
-> 你会得到一个运行时错误。
+> 如果你在该实例被释放后尝试访问无主引用的值，你会得到一个运行时错误。
 
 <!--
   满足该要求的一种方法是总是通过它们的所有者来访问具有非托管属性的对象，而不是直接保持对它们的引用，因为这些直接引用可能会比所有者存活得更久。然而...这种策略实际上只在无主引用是从一个对象向上到其所有者的反向指针时才有效。
@@ -566,7 +565,7 @@ john = nil
 
 上面的最后一个代码片段显示，在 `john` 变量被设置为 `nil` 后，`Customer` 实例和 `CreditCard` 实例的析构器都打印了它们的"deinitialized"消息。
 
-> 注意:上面的例子展示了如何使用*安全*的无主引用。Swift 还提供了*不安全*的无主引用，用于你需要禁用运行时安全检查的情况 --- 例如，出于性能原因。与所有不安全操作一样，你承担了检查代码安全性的责任。
+> 注意：上面的例子展示了如何使用*安全*的无主引用。Swift 还提供了*不安全*的无主引用，用于你需要禁用运行时安全检查的情况 --- 例如，出于性能原因。与所有不安全操作一样，你承担了检查代码安全性的责任。
 >
 > 你通过写 `unowned(unsafe)` 来表示一个不安全的无主引用。如果你在实例被释放后尝试访问不安全的无主引用，你的程序将尝试访问该实例曾经所在的内存位置，这是一个不安全的操作。
 
@@ -605,6 +604,32 @@ class Course {
 }
 ```
 
+<!--
+  - test: `unowned-optional-references`
+
+  ```swifttest
+  -> class Department {
+         var name: String
+         var courses: [Course]
+         init(name: String) {
+             self.name = name
+             self.courses = []
+         }
+     }
+  ---
+  -> class Course {
+         var name: String
+         unowned var department: Department
+         unowned var nextCourse: Course?
+         init(name: String, in department: Department) {
+             self.name = name
+             self.department = department
+             self.nextCourse = nil
+         }
+     }
+  ```
+-->
+
 `Department` 对它提供的每门课程保持强引用。在 ARC 所有权模型中，一个系拥有它的课程。`Course` 有两个无主引用，一个指向系，另一个指向学生应该学习的下一门课程; 一门课程不拥有这两个对象中的任何一个。每门课程都是某个系的一部分，所以 `department` 属性不是可选的。然而，因为有些课程没有推荐的后续课程，`nextCourse` 属性是可选的。
 
 这里是使用这些类的一个例子:
@@ -621,6 +646,21 @@ intermediate.nextCourse = advanced
 department.courses = [intro, intermediate, advanced]
 ```
 
+<!--
+  - test: `unowned-optional-references`
+    ```swifttest
+  -> let department = Department(name: "Horticulture")
+  ---
+  -> let intro = Course(name: "Survey of Plants", in: department)
+  -> let intermediate = Course(name: "Growing Common Herbs", in: department)
+  -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
+  ---
+  -> intro.nextCourse = intermediate
+  -> intermediate.nextCourse = advanced
+  -> department.courses = [intro, intermediate, advanced]
+  ```
+-->
+
 上面的代码创建了一个系和它的三门课程。入门和中级课程都在它们的 `nextCourse` 属性中
 存储了一个建议的下一门课程，这个属性维护了一个无主可选引用，指向学生完成这门课程后应该学习的课程。
 
@@ -630,9 +670,36 @@ department.courses = [intro, intermediate, advanced]
 
 像非可选的无主引用一样，你有责任确保 `nextCourse` 始终引用一个尚未被释放的课程。在这个例子中，当你从 `department.courses` 中删除一门课程时，你还需要移除其他课程可能对它的任何引用。
 
-> 注意:可选值的底层类型是 `Optional`，它是 Swift 标准库中的一个枚举。然而，可选类型是值类型不能被标记为 `unowned` 这个规则的一个例外。
+> 注意：可选值的底层类型是 `Optional`，它是 Swift 标准库中的一个枚举。然而，可选类型是值类型不能被标记为 `unowned` 这个规则的一个例外。
 >
 > 包装类的可选类型不使用引用计数，所以你不需要对可选类型保持强引用。
+
+<!--
+  - test: `unowned-can-be-optional`
+  ```swifttest
+  >> class C { var x = 100 }
+  >> class D {
+  >>     unowned var a: C
+  >>     unowned var b: C?
+  >>     init(value: C) {
+  >>         self.a = value
+  >>         self.b = value
+  >>     }
+  >> }
+  >> var c = C() as C?
+  >> let d = D(value: c! )
+  >> print(d.a.x, d.b?.x as Any)
+  << 100 Optional(100)
+  ---
+  >> c = nil
+  // Now that the C instance is deallocated, access to d.a is an error.
+  // We manually nil out d.b, which is safe because d.b is an Optional and the
+  // enum stays in memory regardless of ARC deallocating the C instance.
+  >> d.b = nil
+  >> print(d.b?.x as Any)
+  << nil
+  ```
+-->
 
 ### 无主引用和隐式解包可选属性
 
@@ -668,6 +735,29 @@ class City {
 }
 ```
 
+<!--
+  - test: `implicitlyUnwrappedOptionals`
+  ```swifttest
+  -> class Country {
+        let name: String
+        var capitalCity: City!
+        init(name: String, capitalName: String) {
+           self.name = name
+           self.capitalCity = City(name: capitalName, country: self)
+        }
+     }
+  ---
+  -> class City {
+        let name: String
+        unowned let country: Country
+        init(name: String, country: Country) {
+           self.name = name
+           self.country = country
+        }
+     }
+  ```
+-->
+
 为了建立两个类之间的相互依赖关系，`City` 的初始化器接受一个 `Country` 实例，并将这个实例存储在其 `country` 属性中。
 
 `City` 的初始化器是在 `Country` 的初始化器内部调用的。然而，`Country` 的初始化器在新的 `Country` 实例完全初始化之前，不能将 `self` 传递给 `City` 初始化器，如<doc:Initialization#Two-Phase-Initialization>中所述。
@@ -683,6 +773,15 @@ var country = Country(name: "Canada", capitalName: "Ottawa")
 print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // 打印 "Canada's capital city is called Ottawa"
 ```
+
+<!--
+  - test: `implicitlyUnwrappedOptionals`
+    ```swifttest
+  -> var country = Country(name: "Canada", capitalName: "Ottawa")
+  -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
+  <- Canada's capital city is called Ottawa
+  ```
+-->
 
 在上面的例子中，使用隐式解包可选类型意味着满足了所有两阶段类初始化器的要求。一旦初始化完成，`capitalCity` 属性就可以像非可选值一样使用和访问，同时仍然避免了强引用循环。
 
@@ -723,6 +822,35 @@ class HTMLElement {
 
 }
 ```
+
+<!--
+  - test: `strongReferenceCyclesForClosures`
+    ```swifttest
+  -> class HTMLElement {
+  ---
+        let name: String
+        let text: String?
+  ---
+        lazy var asHTML: () -> String = {
+           if let text = self.text {
+              return "<\(self.name)>\(text)</\(self.name)>"
+           } else {
+              return "<\(self.name) />"
+           }
+        }
+  ---
+        init(name: String, text: String? = nil) {
+           self.name = name
+           self.text = text
+        }
+  ---
+        deinit {
+           print("\(name) is being deinitialized")
+        }
+  ---
+     }
+  ```
+-->
 
 `HTMLElement` 类定义了一个 `name` 属性，表示元素的名称，例如用于标题元素的 `"h1"`，用于段落元素的 `"p"`，或用于换行元素的 `"br"`。`HTMLElement` 还定义了一个可选的 `text` 属性，你可以将其设置为一个字符串，该字符串表示要在该 HTML 元素内渲染的文本。
 
@@ -780,7 +908,7 @@ print(paragraph!.asHTML())
   ```
 -->
 
-> 注意:上面的 `paragraph` 变量被定义为一个可选的 `HTMLElement`，这样它就可以在下面被设置为 `nil` 以演示存在强引用循环。
+> 注意：上面的 `paragraph` 变量被定义为一个可选的 `HTMLElement`，这样它就可以在下面被设置为 `nil` 以演示存在强引用循环。
 
 不幸的是，上面编写的 `HTMLElement` 类在 `HTMLElement` 实例和用于其默认 `asHTML` 值的闭包之间创建了一个强引用循环。循环看起来是这样的:
 
@@ -788,7 +916,7 @@ print(paragraph!.asHTML())
 
 实例的 `asHTML` 属性持有对其闭包的强引用。然而，因为闭包在其主体内引用了 `self`(作为引用 `self.name` 和 `self.text` 的方式)，闭包*捕获*了 self，这意味着它持有对 `HTMLElement` 实例的强引用。两者之间创建了一个强引用循环。(关于在闭包中捕获值的更多信息，请参见<doc:Closures#Capturing-Values>。)
 
-> 注意:即使闭包多次引用 `self`，它也只捕获对 `HTMLElement` 实例的一个强引用。
+> 注意：即使闭包多次引用 `self`，它也只捕获对 `HTMLElement` 实例的一个强引用。
 
 如果你将 `paragraph` 变量设置为 `nil` 并打破其对 `HTMLElement` 实例的强引用，强引用循环会阻止 `HTMLElement` 实例及其闭包的释放:
 
@@ -876,7 +1004,7 @@ lazy var someClosure = {
   <rdar://problem/28812110> 重新框定弱/无主闭包捕获的讨论，以对象图为中心
 -->
 
-> 注意:如果被捕获的引用永远不会变为 `nil`，它应该始终被捕获为无主引用，而不是弱引用。
+> 注意：如果被捕获的引用永远不会变为 `nil`，它应该始终被捕获为无主引用，而不是弱引用。
 
 无主引用是解决<doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures> 中 `HTMLElement` 示例强引用循环的适当捕获方法。以下是如何编写 `HTMLElement` 类以避免循环:
 
