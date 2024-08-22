@@ -15,7 +15,7 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 但如果返回值未被使用，
 编译器不应生成警告。
 
-您通过写入 @ 符号后跟特性名称及特性接受的任何参数来指定一个属性：
+您通过写入 @ 符号后跟特性名称及特性接受的任何参数来指定一个特性：
 
 ```swift
 @<#attribute name#>
@@ -53,7 +53,7 @@ If there's a stable URL we can use, make the macro protocols below links.
 特性的第一个参数指明宏的角色：
 
 - 术语 Peer 宏：
-  将 `peer` 作为此属性的第一个参数。
+  将 `peer` 作为此特性的第一个参数。
   实现该宏的类型遵循 `PeerMacro` 协议。
   这些宏在与宏附加的声明相同的作用域中生成新的声明。
   例如，
@@ -132,8 +132,8 @@ TODO TR: Is there any more detail about this case?
 对于某些 Swift 语言版本
 或某些平台和操作系统版本。
 
-`available` 属性总是
-与两个或更多用逗号分隔的属性参数列表一起出现。
+`available` 特性总是
+与两个或更多用逗号分隔的特性参数列表一起出现。
 这些参数以以下平台或语言名称之一开头：
 
 - `iOS`
@@ -275,7 +275,7 @@ TODO TR: Is there any more detail about this case?
 以指定该声明在不同平台和不同版本的 Swift 上的可用性。
 如果 `available` 特性
 指定的平台或语言版本与当前目标不匹配，
-则该属性应用的声明将被忽略。
+则该特性应用的声明将被忽略。
 如果您使用多个 `available` 特性，
 则有效的可用性是平台和 Swift 可用性的组合。
 
@@ -299,7 +299,7 @@ TODO TR: Is there any more detail about this case?
 @available(swift <#version number#>)
 ```
 
- `available` 属性的简写语法
+ `available` 特性的简写语法
  简洁地表达了多个平台的可用性。
  尽管这两种形式在功能上是等效的，
  但在可能的情况下，
@@ -362,7 +362,7 @@ struct MyStruct {
 指定提供此符号的平台的第一个版本。
 这些平台版本与您为 `available` 特性的
 平台版本具有相同的含义。
-与 `available` 属性不同，
+与 `available` 特性不同，
 列表中不能包含星号 (`*`) 来指代所有版本。
 例如，考虑以下代码：
 
@@ -417,7 +417,7 @@ so we don't guarantee in docs that it always happens.
 
 ### discardableResult
 
-将此属性应用于函数或方法声明，
+将此特性应用于函数或方法声明，
 以在调用返回值的函数或方法
 而不使用其结果时抑制编译器警告。
 
