@@ -138,7 +138,7 @@ Specifically,
 a conflict occurs if you have two accesses
 that meet all of the following conditions:
 
-- At least one is a write access or a nonatomic access.
+- The accesses aren't both reads, and aren't both atomic.
 - They access the same location in memory.
 - Their durations overlap.
 
@@ -152,13 +152,18 @@ for example, a variable, constant, or property.
 The duration of a memory access
 is either instantaneous or long-term.
 
-An operation is *atomic*
-if it uses only C atomic operations;
+An access is *atomic* if
+it's a call to an atomic operation on [`Atomic`] or [`AtomicLazyReference`],
+or it it uses only C atomic operations;
 otherwise it's nonatomic.
-For a list of those functions, see the `stdatomic(3)` man page.
+For a list of C atomic functions, see the `stdatomic(3)` man page.
+
+[`Atomic`]: https://developer.apple.com/documentation/synchronization/atomic
+[`AtomicLazyReference`]: https://developer.apple.com/documentation/synchronization/atomiclazyreference
 
 <!--
-  Using these functions from Swift requires some shimming -- for example:
+  Using the C atomic functions from Swift
+  requires some shimming that's out of scope for TSPL - for example:
   https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
 -->
 
