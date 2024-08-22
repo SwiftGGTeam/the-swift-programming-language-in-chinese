@@ -1,57 +1,27 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Functions.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 函数
 
-# Functions
+定义和调用函数，标注参数并使用其返回值。
 
-Define and call functions, label their arguments, and use their return values.
+*函数(Functions)*是执行特定任务的独立代码块。
+你可以通过给函数命名来标识某个函数的功能，这个名字可以被用来在需要的时候“调用”这个函数来完成它的任务。
 
-*Functions* are self-contained chunks of code that perform a specific task.
-You give a function a name that identifies what it does,
-and this name is used to “call” the function to perform its task when needed.
+Swift 的统一函数语法非常灵活，从没有形参名称的简单 C 风格函数到每个形参都有局部和外部参数名的复杂 Objective-C 风格方法，它都能表达。
+形参可以提供默认值，以简化函数调用，也可以作为 in-out 参数传递，在函数执行完毕后，传入的变量值将被修改。
 
-Swift's unified function syntax is flexible enough to express anything from
-a simple C-style function with no parameter names
-to a complex Objective-C-style method
-with names and argument labels for each parameter.
-Parameters can provide default values to simplify function calls
-and can be passed as in-out parameters,
-which modify a passed variable once the function has completed its execution.
+Swift 中的每个函数都有一个类型，由函数的形参值类型和返回值类型组成。
+您可以像使用 Swift 中的其他类型一样使用该类型，这样就可以简单地将函数作为形参传递给其他函数，也可以从其他函数返回函数。
+或者还可以在其他函数中编写函数，以便在嵌套函数作用域中封装功能。
 
-Every function in Swift has a type,
-consisting of the function's parameter types and return type.
-You can use this type like any other type in Swift,
-which makes it easy to pass functions as parameters to other functions,
-and to return functions from functions.
-Functions can also be written within other functions
-to encapsulate useful functionality within a nested function scope.
+## 定义和调用函数
+定义函数时，您可以定义一个或多个有名字和类型的值，作为函数的输入，即 *形参*。
+您还可以选择性地定义某种类型的值作为函数执行结束时的输出，即函数的 *返回类型*。
 
-## Defining and Calling Functions
+每个函数都有一个 *函数名*，它描述了函数执行的任务。
+要使用函数，您需要使用函数名“调用”该函数，并向其传递与函数形参类型相匹配的输入值（称为 *实参*）。
+函数的实参必须与函数形参表里的顺序一致。
 
-When you define a function,
-you can optionally define one or more named, typed values that the function takes as input,
-known as *parameters*.
-You can also optionally define
-a type of value that the function will pass back as output when it's done,
-known as its *return type*.
-
-Every function has a *function name*,
-which describes the task that the function performs.
-To use a function, you “call” that function with its name
-and pass it input values (known as *arguments*)
-that match the types of the function's parameters.
-A function's arguments must always be provided in the same order
-as the function's parameter list.
-
-The function in the example below is called `greet(person:)`,
-because that's what it does ---
-it takes a person's name as input and returns a greeting for that person.
-To accomplish this, you define one input parameter ---
-a `String` value called `person` ---
-and a return type of `String`,
-which will contain a greeting for that person:
+下面示例中的函数名为 'greet(person:)'，因为它要做的就是接收一个人的姓名作为输入，并返回对这个人的问候语句。
+为此，您需要定义一个名为 `person` 的 `String` 输入参数值，以及一个包含对该人的问候语的 `String` 类型返回值：
 
 ```swift
 func greet(person: String) -> String {
@@ -71,17 +41,11 @@ func greet(person: String) -> String {
   ```
 -->
 
-All of this information is rolled up into the function's *definition*,
-which is prefixed with the `func` keyword.
-You indicate the function's return type with the *return arrow* `->`
-(a hyphen followed by a right angle bracket),
-which is followed by the name of the type to return.
+所有这些信息都汇总起来成为函数的 *定义(definition)* ，并以 *func* 作为前缀。
+使用 *返回箭头* `->`（连字符后跟一个直角括号），后面跟要返回的类型名称，来表示函数的返回类型。
 
-The definition describes what the function does,
-what it expects to receive,
-and what it returns when it's done.
-The definition makes it easy for the function to be called unambiguously
-from elsewhere in your code:
+定义描述了函数的作用、期望接收的内容以及完成后的返回内容。
+有了定义，就可以在代码的其他地方明确地调用函数：
 
 ```swift
 print(greet(person: "Anna"))
@@ -101,41 +65,28 @@ print(greet(person: "Brian"))
   ```
 -->
 
-You call the `greet(person:)` function
-by passing it a `String` value after the `person` argument label,
-such as `greet(person: "Anna")`.
-Because the function returns a `String` value,
-`greet(person:)` can be wrapped in a call to the `print(_:separator:terminator:)` function
-to print that string and see its return value, as shown above.
+调用 greet(person:) 函数时，请在 `person` 参数标签后传递 `String` 值，例如 greet(person: "Anna") 。
+由于函数返回的是 `String` 类型的值，
+因此 `greet(person:)` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值，如上所示。
 
-> Note: The `print(_:separator:terminator:)` function
-> doesn't have a label for its first argument,
-> and its other arguments are optional because they have a default value.
-> These variations on function syntax are discussed below
-> in <doc:Functions#Function-Argument-Labels-and-Parameter-Names>
-> and <doc:Functions#Default-Parameter-Values>.
+> 注意: print(_:separator:terminator:) 函数的第一个参数并没有设置一个标签，而其他的参数是可选的，因为他们已经有了默认值。
+> 关于这些函数语法上的变化详见下方 <doc:Functions#Function-Argument-Labels-and-Parameter-Names> 和 <doc:Functions#Default-Parameter-Values>。
 
-The body of the `greet(person:)` function starts by
-defining a new `String` constant called `greeting`
-and setting it to a simple greeting message.
-This greeting is then passed back out of the function using the `return` keyword.
-In the line of code that says `return greeting`,
-the function finishes its execution and returns the current value of `greeting`.
+在 `greet(person:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，并将其设置为简单的问候信息。
+然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数执行完毕并返回 `greeting` 的当前值。
 
-You can call the `greet(person:)` function multiple times with different input values.
-The example above shows what happens if it's called with an input value of `"Anna"`,
-and an input value of `"Brian"`.
-The function returns a tailored greeting in each case.
+您可以使用不同的输入值多次调用 `greet(person:)` 函数。
+上面的示例显示了在输入值为 `"Anna"` 和 `"Brian"` 时调用该函数的结果。
+在每种情况下，函数都会返回一个定制的问候语。
 
-To make the body of this function shorter,
-you can combine the message creation and the return statement into one line:
+为了简化这个函数的定义，可以将消息的创建和返回语句合并为一行：
 
 ```swift
 func greetAgain(person: String) -> String {
     return "Hello again, " + person + "!"
 }
 print(greetAgain(person: "Anna"))
-// Prints "Hello again, Anna!"
+// 打印 "Hello again, Anna!"
 ```
 
 <!--
@@ -150,24 +101,21 @@ print(greetAgain(person: "Anna"))
   ```
 -->
 
-## Function Parameters and Return Values
+## 函数参数与返回值
 
-Function parameters and return values are extremely flexible in Swift.
-You can define anything from a simple utility function with a single unnamed parameter
-to a complex function with expressive parameter names and different parameter options.
+Swift 中的函数形参和返回值非常灵活。
+您可以定义任何函数，从只带有单个未命名形参的简单实用程序函数，到带有丰富形参名和不同形参选项的复杂函数。
 
-### Functions Without Parameters
+### 无参数函数
 
-Functions aren't required to define input parameters.
-Here's a function with no input parameters,
-which always returns the same `String` message whenever it's called:
+函数可以没有形参。下面这个函数就是一个无形参函数，当被何时被调用，它总是返回固定的 `String` 消息：
 
 ```swift
 func sayHelloWorld() -> String {
     return "hello, world"
 }
 print(sayHelloWorld())
-// Prints "hello, world"
+// 打印 "hello, world"
 ```
 
 <!--
@@ -182,19 +130,14 @@ print(sayHelloWorld())
   ```
 -->
 
-The function definition still needs parentheses after the function's name,
-even though it doesn't take any parameters.
-The function name is also followed by
-an empty pair of parentheses when the function is called.
+虽然函数不带任何形参，但函数定义的名称后仍需要括号。
+在调用函数时，函数名后面也要加上一对空括号。
 
-### Functions With Multiple Parameters
+### 多参数函数
 
-Functions can have multiple input parameters,
-which are written within the function's parentheses, separated by commas.
+函数可以有多个输入参数，这些参数写在函数的括号内，用逗号隔开。
 
-This function takes a person's name
-and whether they have already been greeted as input,
-and returns an appropriate greeting for that person:
+下面的函数将一个人的名字和是否已经问候过该人作为输入，并返回适合该人的问候语：
 
 ```swift
 func greet(person: String, alreadyGreeted: Bool) -> String {
@@ -205,7 +148,7 @@ func greet(person: String, alreadyGreeted: Bool) -> String {
     }
 }
 print(greet(person: "Tim", alreadyGreeted: true))
-// Prints "Hello again, Tim!"
+// 打印 "Hello again, Tim!"
 ```
 
 <!--
@@ -224,28 +167,22 @@ print(greet(person: "Tim", alreadyGreeted: true))
   ```
 -->
 
-You call the `greet(person:alreadyGreeted:)` function
-by passing it both a `String` argument value labeled `person`
-and a `Bool` argument value labeled `alreadyGreeted`
-in parentheses, separated by commas.
-Note that this function is distinct from the `greet(person:)` function
-shown in an earlier section.
-Although both functions have names that begin with `greet`,
-the `greet(person:alreadyGreeted:)` function takes two arguments
-but the `greet(person:)` function takes only one.
+您通过将标有 `person` 的 `String` 参数值和标有 `alreadyGreeted` 的 `Bool` 参数值同时传递给 `greet(person:alreadyGreeted:)` 函数，并用逗号隔开来调用它。
+请注意，该函数不同于前面章节中的 `greet(person:)` 函数。
+虽然这两个函数的名称都以 `greet` 开头，但 `greet(person:alreadyGreeted:)` 函数需要两个参数，
+而 `greet(person:)` 函数只需要一个参数。
 
-### Functions Without Return Values
+### 无返回值函数
 
-Functions aren't required to define a return type.
-Here's a version of the `greet(person:)` function,
-which prints its own `String` value rather than returning it:
+函数无需定义返回类型。
+下面是 `greet(person:)` 函数的另一个版本，它直接打印了一个 `String` 值，而不是返回它：
 
 ```swift
 func greet(person: String) {
     print("Hello, \(person)!")
 }
 greet(person: "Dave")
-// Prints "Hello, Dave!"
+// 打印 "Hello, Dave!"
 ```
 
 <!--
@@ -260,17 +197,14 @@ greet(person: "Dave")
   ```
 -->
 
-Because it doesn't need to return a value,
-the function's definition doesn't include the return arrow (`->`)
-or a return type.
+因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（`->`）和返回类型。
 
-> Note: Strictly speaking, this version of the `greet(person:)` function *does* still return a value,
-> even though no return value is defined.
-> Functions without a defined return type return a special value of type `Void`.
-> This is simply an empty tuple,
-> which is written as `()`.
+> 注意:
+> 严格来说，这个版本的 `greet(person:)` 函数 *确实* 仍然返回一个值，即使没有定义返回值。
+> 没有定义返回类型的函数会返回 `Void` 类型的特殊值。
+> 这是一个空元组，写成 `()`。
 
-The return value of a function can be ignored when it's called:
+函数被调用时，其返回值可被忽略：
 
 ```swift
 func printAndCount(string: String) -> Int {
@@ -281,9 +215,9 @@ func printWithoutCounting(string: String) {
     let _ = printAndCount(string: string)
 }
 printAndCount(string: "hello, world")
-// prints "hello, world" and returns a value of 12
+// 打印 "hello, world" 并返回 12
 printWithoutCounting(string: "hello, world")
-// prints "hello, world" but doesn't return a value
+// 打印 "hello, world" 但没有返回值
 ```
 
 <!--
@@ -313,20 +247,12 @@ printWithoutCounting(string: "hello, world")
   Tracking bug is <rdar://problem/35301593>
 -->
 
-The first function, `printAndCount(string:)`,
-prints a string, and then returns its character count as an `Int`.
-The second function, `printWithoutCounting(string:)`,
-calls the first function, but ignores its return value.
-When the second function is called,
-the message is still printed by the first function,
-but the returned value isn't used.
+第一个函数 `printAndCount(string:)` 打印一个字符串并返回 `Int` 类型的字符数。
+第二个函数 `printWithoutCounting(string:)` 调用了第一个函数，但是忽略了它的返回值。
+当第二个函数被调用时，消息依然会被第一个函数打印，但是返回值不会被用到。
 
-> Note: Return values can be ignored,
-> but a function that says it will return a value must always do so.
-> A function with a defined return type
-> can't allow control to fall out of the bottom of the function
-> without returning a value,
-> and attempting to do so will result in a compile-time error.
+> 注意: 
+> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，将导致编译时错误。
 
 <!--
 FIXME Unless the function is marked @discardableResult,
@@ -338,13 +264,11 @@ like array.removeFirst(...) ---
 otherwise, using `_ = foo()` at the call site is better.
 -->
 
-### Functions with Multiple Return Values
+### 多重返回值函数
 
-You can use a tuple type as the return type for a function
-to return multiple values as part of one compound return value.
+你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
-The example below defines a function called `minMax(array:)`,
-which finds the smallest and largest numbers in an array of `Int` values:
+下面的示例定义了一个名为 `minMax(array:)` 的函数，用于查找 `Int` 数组中最小值和最大值：
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
@@ -380,26 +304,19 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
   ```
 -->
 
-The `minMax(array:)` function returns a tuple containing two `Int` values.
-These values are labeled `min` and `max`
-so that they can be accessed by name when querying the function's return value.
+`minMax(array:)` 函数返回一个包含两个 `Int` 值的元组。
+这些值被标记为 `min` 和 `max` 以便在查询函数返回值时可以通过名称访问它们。
 
-The body of the `minMax(array:)` function starts by setting
-two working variables called `currentMin` and `currentMax`
-to the value of the first integer in the array.
-The function then iterates over the remaining values in the array
-and checks each value to see if it's smaller or larger than
-the values of `currentMin` and `currentMax` respectively.
-Finally, the overall minimum and maximum values are returned as
-a tuple of two `Int` values.
+在 `minMax(array:)` 的函数体中，在开始的时候设置两个工作变量 `currentMin` 和 `currentMax` 的值为数组中的第一个数。
+然后函数会遍历数组中剩余的值并检查该值是否分别小于或大于 `currentMin` 和 `currentMax`。
+最后数组中的最小值与最大值作为一个包含两个 `Int` 值的元组返回。
 
-Because the tuple's member values are named as part of the function's return type,
-they can be accessed with dot syntax to retrieve the minimum and maximum found values:
+由于元组的成员值已经被命名，因此可以使用点语法访问它们，以获取最小值和最大值：
 
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
-// Prints "min is -6 and max is 109"
+// 打印 "min is -6 and max is 109"
 ```
 
 <!--
@@ -412,35 +329,21 @@ print("min is \(bounds.min) and max is \(bounds.max)")
   ```
 -->
 
-Note that the tuple's members don't need to be named
-at the point that the tuple is returned from the function,
-because their names are already specified as part of the function's return type.
+请注意，元组的成员无需在元组从函数中返回时命名，因为它们的名字已经在函数返回类型中指定了。
 
-#### Optional Tuple Return Types
+#### 可选元组返回类型
 
-If the tuple type to be returned from a function
-has the potential to have “no value” for the entire tuple,
-you can use an *optional* tuple return type to reflect the fact that
-the entire tuple can be `nil`.
-You write an optional tuple return type by placing a question mark
-after the tuple type's closing parenthesis,
-such as `(Int, Int)?` or `(String, Int, Bool)?`.
+如果函数返回的元组类型有可能整个元组都“没有值”，你可以使用 *可选* 元组返回类型反映整个元组可以是 `nil` 的事实。
+您可以通过在元组类型的结尾括号后放置问号来定义可选的元组返回类型，例如 `(Int, Int)?` 或 `(String, Int, Bool)?`。
 
-> Note: An optional tuple type such as `(Int, Int)?`
-> is different from a tuple that contains optional types
-> such as `(Int?, Int?)`.
-> With an optional tuple type, the entire tuple is optional,
-> not just each individual value within the tuple.
+> 注意: 可选元组类型如 `(Int, Int)?` 与元组包含可选类型如 `(Int?, Int?)` 是不同的。
+> 可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
 
-The `minMax(array:)` function above returns a tuple containing two `Int` values.
-However, the function doesn't perform any safety checks on the array it's passed.
-If the `array` argument contains an empty array,
-the `minMax(array:)` function, as defined above,
-will trigger a runtime error when attempting to access `array[0]`.
+上面的 `minMax(array:)` 函数返回一个包含两个 `Int` 值的元组。
+但是，该函数没有对传入的数组执行任何安全检查。
+如果 `array` 参数为一个空数组，则上面定义的 `minMax(array:)` 函数在尝试访问 `array[0]` 时将触发运行时错误。
 
-To handle an empty array safely,
-write the `minMax(array:)` function with an optional tuple return type
-and return a value of `nil` when the array is empty:
+为了安全地处理空数组问题，将 `minMax(array:)` 函数改写为使用可选元组返回类型，并且当数组为空时返回 `nil`：
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
@@ -478,14 +381,13 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
   ```
 -->
 
-You can use optional binding to check whether this version of the `minMax(array:)` function
-returns an actual tuple value or `nil`:
+您可以使用可选绑定来检查此版本的 `minMax(array:)` 函数是返回实际元组值还是 `nil` 值：
 
 ```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
-// Prints "min is -6 and max is 109"
+// 打印 "min is -6 and max is 109"
 ```
 
 <!--
@@ -499,25 +401,22 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
   ```
 -->
 
-### Functions With an Implicit Return
+### 隐式返回的函数
 
-If the entire body of the function is a single expression,
-the function implicitly returns that expression.
-For example,
-both functions below have the same behavior:
+如果函数的整个主体是一个表达式，则函数隐式返回该表达式。例如，下面的两个函数具有相同的行为：
 
 ```swift
 func greeting(for person: String) -> String {
     "Hello, " + person + "!"
 }
 print(greeting(for: "Dave"))
-// Prints "Hello, Dave!"
+// 打印 "Hello, Dave!"
 
 func anotherGreeting(for person: String) -> String {
     return "Hello, " + person + "!"
 }
 print(anotherGreeting(for: "Dave"))
-// Prints "Hello, Dave!"
+// 打印 "Hello, Dave!"
 ```
 
 <!--
@@ -538,25 +437,16 @@ print(anotherGreeting(for: "Dave"))
   ```
 -->
 
-The entire definition of the `greeting(for:)` function
-is the greeting message that it returns,
-which means it can use this shorter form.
-The `anotherGreeting(for:)` function returns the same greeting message,
-using the `return` keyword like a longer function.
-Any function that you write as just one `return` line can omit the `return`.
+`greeting(for:)` 函数的完整定义就是它返回的问候信息，这意味着它可以使用这种较短的形式。
+`anotherGreeting(for:)` 函数使用 `return` 关键字返回相同的问候信息但显得函数更长。
+如果您编写的函数只有一行 `return` ，则可以省略 `return` 。
 
-As you'll see in <doc:Properties#Shorthand-Getter-Declaration>,
-property getters can also use an implicit return.
+正如你将会在 <doc:Properties#Shorthand-Getter-Declaration> 里看到的，属性的 getter 也可以使用隐式返回。
 
-> Note: The code you write as an implicit return value
-> needs to return some value.
-> For example,
-> you can't use `print(13)`
-> as an implicit return value.
-> However, you can use a function that never returns
-> like `fatalError("Oh no!")`
-> as an implicit return value,
-> because Swift knows that the implicit return doesn't happen.
+> 注意: 
+> 作为隐式返回值编写的代码必须返回某个值。
+> 例如，你不能使用 `print(13)` 作为隐式返回值。
+> 然而，你可以使用不返回值的函数（如 `fatalError("Oh no!")`）作为隐式返回值，因为 Swift 知道它们并不会产生任何隐式返回。
 
 <!--
   - test: `implicit-return-print-instead`
@@ -577,20 +467,16 @@ property getters can also use an implicit return.
   ```
 -->
 
-## Function Argument Labels and Parameter Names
+## 函数参数标签和参数名称
 
-Each function parameter has both an *argument label*
-and a *parameter name*.
-The argument label is used when calling the function;
-each argument is written in the function call with its argument label before it.
-The parameter name is used in the implementation of the function.
-By default, parameters
-use their parameter name as their argument label.
+每个函数参数都有一个 *参数标签（argument label）* 和 *参数名称（parameter name）*。
+参数标签在调用函数时使用；调用的时候需要将函数的参数标签写在对应的参数前面。
+参数名称用于函数的实现；
+默认情况下，函数参数使用参数名称来作为它们的参数标签。
 
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
-    // In the function body, firstParameterName and secondParameterName
-    // refer to the argument values for the first and second parameters.
+    // 在函数体内，firstParameterName 和 secondParameterName 代表参数中的第一个和第二个参数值
 }
 someFunction(firstParameterName: 1, secondParameterName: 2)
 ```
@@ -607,10 +493,9 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
   ```
 -->
 
-All parameters must have unique names.
-Although it's possible for multiple parameters
-to have the same argument label,
-unique argument labels help make your code more readable.
+所有参数都必须有唯一的名称。
+虽然多个参数有可能具有相同的参数标签，
+但唯一的参数标签有助于提高代码的可读性。
 
 <!--
   - test: `non-unique-external-name`
@@ -621,10 +506,9 @@ unique argument labels help make your code more readable.
   ```
 -->
 
-### Specifying Argument Labels
+### 指定参数标签
 
-You write an argument label before the parameter name,
-separated by a space:
+在参数名之前写入参数标签，用空格隔开：
 
 ```swift
 func someFunction(argumentLabel parameterName: Int) {
@@ -644,16 +528,14 @@ func someFunction(argumentLabel parameterName: Int) {
   ```
 -->
 
-Here's a variation of the `greet(person:)` function
-that takes a person's name and hometown
-and returns a greeting:
+下面是 `greet(person:)` 函数的一个变体，它接收一个人的名字和家乡，并返回一个问候语：
 
 ```swift
 func greet(person: String, from hometown: String) -> String {
     return "Hello \(person)!  Glad you could visit from \(hometown)."
 }
 print(greet(person: "Bill", from: "Cupertino"))
-// Prints "Hello Bill!  Glad you could visit from Cupertino."
+// 打印 "Hello Bill!  Glad you could visit from Cupertino."
 ```
 
 <!--
@@ -668,19 +550,15 @@ print(greet(person: "Bill", from: "Cupertino"))
   ```
 -->
 
-The use of argument labels can allow a function
-to be called in an expressive, sentence-like manner,
-while still providing a function body that's readable and clear in intent.
+参数标签的使用能够让一个函数在调用时更有表达力，更类似自然语言，并且仍保持了函数内部的可读性以及清晰的意图。
 
-### Omitting Argument Labels
+### 省略参数标签
 
-If you don't want an argument label for a parameter,
-write an underscore (`_`) instead of an explicit argument label for that parameter.
+如果不需要参数的参数标签，请写一个下划线（`_`）来代替该参数的显式参数标签。
 
 ```swift
 func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
-    // In the function body, firstParameterName and secondParameterName
-    // refer to the argument values for the first and second parameters.
+    // 在函数体内，firstParameterName 和 secondParameterName 代表参数中的第一个和第二个参数值
 }
 someFunction(1, secondParameterName: 2)
 ```
@@ -697,19 +575,16 @@ someFunction(1, secondParameterName: 2)
   ```
 -->
 
-If a parameter has an argument label,
-the argument *must* be labeled when you call the function.
+如果参数有参数标签，则在调用函数时 *必须* 使用标签来标示参数。
 
-### Default Parameter Values
+### 默认参数值
 
-You can define a *default value* for any parameter in a function
-by assigning a value to the parameter after that parameter's type.
-If a default value is defined, you can omit that parameter when calling the function.
+你可以在函数体中通过给参数赋值来为任意一个 *参数定义默认值（Deafult Value）*。
+如果定义了默认值，您就可以在调用函数时省略该参数。
 
 ```swift
 func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
-    // If you omit the second argument when calling this function, then
-    // the value of parameterWithDefault is 12 inside the function body.
+    // 如果你在调用时候不传第二个参数，parameterWithDefault 会值为 12 传入到函数体中。
 }
 someFunction(parameterWithoutDefault: 3, parameterWithDefault: 6) // parameterWithDefault is 6
 someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
@@ -728,31 +603,19 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   ```
 -->
 
-Place parameters that don't have default values
-at the beginning of a function's parameter list,
-before the parameters that have default values.
-Parameters that don't have default values
-are usually more important to the function's meaning ---
-writing them first makes it easier to recognize
-that the same function is being called,
-regardless of whether any default parameters are omitted.
+将不带有默认值的参数放在函数参数列表的最前。
+没有缺省值的参数通常对函数的意义更为重要--将它们写在前面，无论是否省略了任何缺省参数，都能更容易地识别出调用的是同一个函数。
 
-### Variadic Parameters
+### 可变参数
 
-A *variadic parameter* accepts zero or more values of a specified type.
-You use a variadic parameter to specify that the parameter can be passed
-a varying number of input values when the function is called.
-Write variadic parameters by inserting three period characters (`...`)
-after the parameter's type name.
+*可变参数（variadic parameter）* 接受零个或多个指定类型的值。
+使用可变参数可以指定在调用函数时，参数可以传入不同数量的输入值。
+通过在参数类型名称后插入三个句点字符（`...`）来编写可变参数。
 
-The values passed to a variadic parameter are made available within the function's body
-as an array of the appropriate type.
-For example, a variadic parameter with a name of `numbers` and a type of `Double...`
-is made available within the function's body as
-a constant array called `numbers` of type `[Double]`.
+可变参数的值将在函数体中变为相应类型的数组。
+例如，名称为 `numbers` 和类型为 `Double...` 的可变参数，在函数体中以名为 `numbers` 类型为 `[Double]` 的数组常量形式提供。
 
-The example below calculates the *arithmetic mean*
-(also known as the *average*) for a list of numbers of any length:
+下面的示例计算任意长度数字列表的 *算术平均数（arithmetic mean）*（也称为 *平均值（average）*）：
 
 ```swift
 func arithmeticMean(_ numbers: Double...) -> Double {
@@ -763,9 +626,9 @@ func arithmeticMean(_ numbers: Double...) -> Double {
     return total / Double(numbers.count)
 }
 arithmeticMean(1, 2, 3, 4, 5)
-// returns 3.0, which is the arithmetic mean of these five numbers
+// 返回 3.0，是这 5 个数的平均数
 arithmeticMean(3, 8.25, 18.75)
-// returns 10.0, which is the arithmetic mean of these three numbers
+// 返回 10.0，是这 3 个数的平均数
 ```
 
 <!--
@@ -795,13 +658,9 @@ arithmeticMean(3, 8.25, 18.75)
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A function can have multiple variadic parameters.
-The first parameter that comes after a variadic parameter
-must have an argument label.
-The argument label makes it unambiguous
-which arguments are passed to the variadic parameter
-and which arguments are passed to the parameters
-that come after the variadic parameter.
+一个函数可以有多个可变参数。
+可变参数之后的第一个形参必须有参数标签。
+通过参数标签，可以清楚地知道哪些参数传递给可变参数，哪些参数传递给可变参数之后的形参。
 
 <!--
   - test: `variadic-parameters-and-labels`
@@ -830,37 +689,27 @@ that come after the variadic parameter.
   ```
 -->
 
-### In-Out Parameters
+### 输入输出参数
 
-Function parameters are constants by default.
-Trying to change the value of a function parameter
-from within the body of that function results in a compile-time error.
-This means that you can't change the value of a parameter by mistake.
-If you want a function to modify a parameter's value,
-and you want those changes to persist after the function call has ended,
-define that parameter as an *in-out parameter* instead.
+函数参数默认为常量。
+在函数体中更改函数参数的值会导致编译时错误。
+这意味着您不能错误地更改参数的值。
+如果您希望函数修改参数的值，并希望这些更改在函数调用结束后仍然有效，请将该参数定义为 *in-out parameter（输入输出参数）*。
 
-You write an in-out parameter by placing the `inout` keyword
-right before a parameter's type.
-An in-out parameter has a value that's passed *in* to the function,
-is modified by the function,
-and is passed back *out* of the function to replace the original value.
-For a detailed discussion of the behavior of in-out parameters
-and associated compiler optimizations,
-see <doc:Declarations#In-Out-Parameters>.
+一个 输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看 输入输出参数 一节。
 
-You can only pass a variable as the argument for an in-out parameter.
-You can't pass a constant or a literal value as the argument,
-because constants and literals can't be modified.
-You place an ampersand (`&`) directly before a variable's name
-when you pass it as an argument to an in-out parameter,
-to indicate that it can be modified by the function.
+您可以通过在参数类型前添加 `inout` 关键字来编写输入输出参数。
+输入输出参数有一个值，该值 *传入* 给函数，被函数修改后，然后被 *传出* 函数，以替换原来的值。
+有关传入传出参数行为及相关编译器优化的详细讨论，请参阅 <doc:Declarations#In-Out-Parameters>。
 
-> Note: In-out parameters can't have default values,
-> and variadic parameters can't be marked as `inout`.
+你只能传递变量给输入输出参数。
+不能传入常量或者字面量，因为这些是不能被修改的。
+当传入的参数作为输入输出参数时，需要在参数名前加 （`&`） 符，表示这个值可以被函数修改。
 
-Here's an example of a function called `swapTwoInts(_:_:)`,
-which has two in-out integer parameters called `a` and `b`:
+> 注意: 
+> 输入输出参数不能有默认值，而且可变参数不能标记为 `inout`。
+
+下例中，`swapTwoInts(_:_:)` 函数有两个分别叫做 `a` 和 `b` 的输入输出参数：
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
@@ -882,23 +731,18 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
   ```
 -->
 
-The `swapTwoInts(_:_:)` function simply swaps the value of `b` into `a`,
-and the value of `a` into `b`.
-The function performs this swap by storing the value of `a` in
-a temporary constant called `temporaryA`, assigning the value of `b` to `a`,
-and then assigning `temporaryA` to `b`.
+`swapTwoInts(_:_:)` 函数简单地交换 `a` 与 `b` 的值。
+该函数先将 `a` 的值存到一个临时常量 `temporaryA` 中，然后将 `b` 的值赋给 `a`，最后将 `temporaryA` 赋值给 `b`。
 
-You can call the `swapTwoInts(_:_:)` function with two variables of type `Int`
-to swap their values.
-Note that the names of `someInt` and `anotherInt` are prefixed with an ampersand
-when they're passed to the `swapTwoInts(_:_:)` function:
+您可以使用两个类型为 `Int` 的变量调用 `swapTwoInts(_:_:)` 函数来交换它们的值。
+请注意，`someInt` 和 `anotherInt` 在传递给 `swapTwoInts(_：_:)` 函数前，都加了 & 前缀：
 
 ```swift
 var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// Prints "someInt is now 107, and anotherInt is now 3"
+// 打印 "someInt is now 107, and anotherInt is now 3"
 ```
 
 <!--
@@ -913,28 +757,23 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   ```
 -->
 
-The example above shows that
-the original values of `someInt` and `anotherInt`
-are modified by the `swapTwoInts(_:_:)` function,
-even though they were originally defined outside of the function.
+上面的示例展示了 `someInt` 和 `anotherInt` 的原始值被 `swapTwoInt(_：_:)` 函数修改，即使它们是在函数体外定义的。
 
-> Note: In-out parameters aren't the same as returning a value from a function.
-> The `swapTwoInts` example above doesn't define a return type or return a value,
-> but it still modifies the values of `someInt` and `anotherInt`.
-> In-out parameters are an alternative way for a function to have an effect
-> outside of the scope of its function body.
+> 注意: 
+> 输入输出参数和返回值是不一样的。
+> 上面的 `swapTwoInts` 函数并没有定义任何返回类型或返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。
+> 输入输出参数是函数在其函数体范围之外产生影响的另一种方式。
 
 <!--
   TODO: you can pass a subproperty of something as an inout reference.
   Would be great to show an example of this as a way to avoid temporary variables.
 -->
 
-## Function Types
+## 函数类型
 
-Every function has a specific *function type*,
-made up of the parameter types and the return type of the function.
+每个函数都有一个特定的 *函数类型*，由函数的参数类型和返回类型组成。
 
-For example:
+例如：
 
 ```swift
 func addTwoInts(_ a: Int, _ b: Int) -> Int {
@@ -962,19 +801,15 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
   ```
 -->
 
-This example defines two simple mathematical functions
-called `addTwoInts` and `multiplyTwoInts`.
-These functions each take two `Int` values,
-and return an `Int` value, which is the result of
-performing an appropriate mathematical operation.
+此示例定义了两个简单的数学函数，分别称为 `addTwoInt` 和 `multiplyTwoInt`。
+这些函数分别接收两个 `Int` 值，并返回一个 `Int` 值，执行有关的数学运算的结果。
 
-The type of both of these functions is `(Int, Int) -> Int`.
-This can be read as:
+这两个函数的类型都是 `(Int, Int) -> Int`。
+这可以理解为：
 
-“A function that has two parameters, both of type `Int`,
-and that returns a value of type `Int`.”
+“这个函数类型有两个 `Int` 型的参数并返回一个 `Int` 型的值”。
 
-Here's another example, for a function with no parameters or return value:
+下面是另一个例子，一个没有参数或返回值的函数：
 
 ```swift
 func printHelloWorld() {
@@ -994,14 +829,12 @@ func printHelloWorld() {
   ```
 -->
 
-The type of this function is `() -> Void`,
-or “a function that has no parameters, and returns `Void`.”
+该函数的类型是 `() -> Void`，或“没有参数，并返回 `Void` 类型的函数”。
 
-### Using Function Types
+### 使用函数类型
 
-You use function types just like any other types in Swift.
-For example, you can define a constant or variable to be of a function type
-and assign an appropriate function to that variable:
+在 Swift 中，您可以像使用其他类型一样使用函数类型。
+例如，你可以定义一个类型为函数的常量或变量，并将适当的函数赋值给它：
 
 ```swift
 var mathFunction: (Int, Int) -> Int = addTwoInts
@@ -1015,17 +848,14 @@ var mathFunction: (Int, Int) -> Int = addTwoInts
   ```
 -->
 
-This can be read as:
+这可以理解为：
 
-“Define a variable called `mathFunction`,
-which has a type of ‘a function that takes two `Int` values,
-and returns an `Int` value.’
-Set this new variable to refer to the function called `addTwoInts`.”
+”定义一个叫做 `mathFunction` 的变量，类型是‘接收两个 `Int` 值并返回一个 `Int` 值的函数’。
+将此新变量设置为引用名为 `addTwoInts` 的函数"。
 
-The `addTwoInts(_:_:)` function has the same type as the `mathFunction` variable,
-and so this assignment is allowed by Swift's type-checker.
+`addTwoInts(_:_:)` 函数与 `mathFunction` 变量具有相同的类型，所以这个赋值过程在 Swift 类型检查（type-check）中是允许的。
 
-You can now call the assigned function with the name `mathFunction`:
+现在，你可以用 `mathFunction` 来调用被赋值的函数了：
 
 ```swift
 print("Result: \(mathFunction(2, 3))")
@@ -1041,13 +871,12 @@ print("Result: \(mathFunction(2, 3))")
   ```
 -->
 
-A different function with the same matching type can be assigned to the same variable,
-in the same way as for nonfunction types:
+与非函数类型相同，具有相同匹配类型的不同函数也可以分配给同一个变量：
 
 ```swift
 mathFunction = multiplyTwoInts
 print("Result: \(mathFunction(2, 3))")
-// Prints "Result: 6"
+// 打印 "Result: 6"
 ```
 
 <!--
@@ -1060,13 +889,11 @@ print("Result: \(mathFunction(2, 3))")
   ```
 -->
 
-As with any other type,
-you can leave it to Swift to infer the function type
-when you assign a function to a constant or variable:
+与其他类型一样，当您将函数赋值给常量或变量时，可以让 Swift 来推断函数类型：
 
 ```swift
 let anotherMathFunction = addTwoInts
-// anotherMathFunction is inferred to be of type (Int, Int) -> Int
+// anotherMathFunction 被推断为 (Int, Int) -> Int 类型
 ```
 
 <!--
@@ -1084,21 +911,19 @@ let anotherMathFunction = addTwoInts
   TODO: talk about defining typealiases for function types somewhere?
 -->
 
-### Function Types as Parameter Types
+### 函数类型作为参数类型
 
-You can use a function type such as `(Int, Int) -> Int`
-as a parameter type for another function.
-This enables you to leave some aspects of a function's implementation
-for the function's caller to provide when the function is called.
+您可以使用函数类型例如 `(Int, Int) -> Int` 作为另一个函数的参数类型。
+这样你可以将函数的一部分实现留给函数的调用者来提供。
 
-Here's an example to print the results of the math functions from above:
+下面是一个打印上述数学函数结果的示例：
 
 ```swift
 func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
     print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
-// Prints "Result: 8"
+// 打印 "Result: 8"
 ```
 
 <!--
@@ -1113,33 +938,27 @@ printMathResult(addTwoInts, 3, 5)
   ```
 -->
 
-This example defines a function called `printMathResult(_:_:_:)`, which has three parameters.
-The first parameter is called `mathFunction`, and is of type `(Int, Int) -> Int`.
-You can pass any function of that type as the argument for this first parameter.
-The second and third parameters are called `a` and `b`, and are both of type `Int`.
-These are used as the two input values for the provided math function.
+此示例定义了 `printMathResult(_:_:_:)` 函数，它有三个参数。
+第一个参数名为 `mathFunction`, 其类型为 `(Int, Int) -> Int`。
+您可以传入任何这种类型的函数作为第一个参数。
+第二个和第三个参数分别为 `a` 和 `b`，它们都是 `Int` 类型。
+这些值将用作所提供数学函数的两个输入值。
 
-When `printMathResult(_:_:_:)` is called,
-it's passed the `addTwoInts(_:_:)` function, and the integer values `3` and `5`.
-It calls the provided function with the values `3` and `5`, and prints the result of `8`.
+当 `printMathResult(_:_:_:)` 被调用时，它被传入 `addTwoInts(_:_:)` 函数以及整数值 `3` 和 `5`。
+它用传入的 `3` 和 `5` 调用传入的函数，并输出结果：`8`。
 
-The role of `printMathResult(_:_:_:)` is to print the result of
-a call to a math function of an appropriate type.
-It doesn't matter what that function's implementation actually does ---
-it matters only that the function is of the correct type.
-This enables `printMathResult(_:_:_:)` to hand off some of its functionality
-to the caller of the function in a type-safe way.
+`printMathResult(_:_:_:)` 的作用是打印调用适当类型数学函数的结果。
+它不关心传入函数是如何实现的，重要的是函数的类型是不是正确的。
+这使得 `printMathResult(_:_:_:)` 能够以类型安全的方式将其部分功能移交给函数的调用者。
 
-### Function Types as Return Types
+### 函数类型作为返回类型
 
-You can use a function type as the return type of another function.
-You do this by writing a complete function type
-immediately after the return arrow (`->`) of the returning function.
+你可以将函数类型作为另一个函数的返回类型。
+方法是在返回函数的返回箭头（`->`）后紧接着写入一个完整的函数类型。
 
-The next example defines two simple functions called `stepForward(_:)` and `stepBackward(_:)`.
-The `stepForward(_:)` function returns a value one more than its input value,
-and the `stepBackward(_:)` function returns a value one less than its input value.
-Both functions have a type of `(Int) -> Int`:
+下一个示例定义了两个简单函数，分别称为 `stepForward(_:)` 和 `stepBackward(_:)`。
+`stepForward(_:)` 函数返回的值比输入值大 1，而 `stepBackward(_:)` 函数返回的值比输入值小 1。
+这两个函数的类型都是 `(Int) -> Int`：
 
 ```swift
 func stepForward(_ input: Int) -> Int {
@@ -1163,10 +982,8 @@ func stepBackward(_ input: Int) -> Int {
   ```
 -->
 
-Here's a function called `chooseStepFunction(backward:)`,
-whose return type is `(Int) -> Int`.
-The `chooseStepFunction(backward:)` function returns the `stepForward(_:)` function
-or the `stepBackward(_:)` function based on a Boolean parameter called `backward`:
+如下名为 `chooseStepFunction(backward:)` 的函数，它的返回类型是 `(Int) -> Int`。
+`chooseStepFunction(backward:)` 根据布尔值 `backward` 来返回 `stepForward(_:)` 函数或 `stepBackward(_:)` 函数：
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
@@ -1184,13 +1001,12 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
   ```
 -->
 
-You can now use `chooseStepFunction(backward:)` to obtain a function
-that will step in one direction or the other:
+您现在可以用 `chooseStepFunction(backward:)` 来获得一个前进或后退方向的函数：
 
 ```swift
 var currentValue = 3
 let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-// moveNearerToZero now refers to the stepBackward() function
+// moveNearerToZero 现在指向 stepBackward() 函数。
 ```
 
 <!--
@@ -1205,15 +1021,11 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
   ```
 -->
 
-The example above determines whether a positive or negative step is needed
-to move a variable called `currentValue` progressively closer to zero.
-`currentValue` has an initial value of `3`,
-which means that `currentValue > 0` returns `true`,
-causing `chooseStepFunction(backward:)` to return the `stepBackward(_:)` function.
-A reference to the returned function is stored in a constant called `moveNearerToZero`.
+上面的示例确定是否需要一个正步长或负步长来使 `currentValue` 的变量逐渐趋近于零。
+`currentValue` 的初始值为 3，这意味着 `currentValue > 0` 返回 `true`，这使得 `chooseStepFunction(backward:)` 返回 `stepBackward(_:)` 函数。
+返回函数的引用存储在了 `moveNearerToZero` 的常量中。
 
-Now that `moveNearerToZero` refers to the correct function,
-it can be used to count to zero:
+现在， `moveNearerToZero` 指向了正确的函数，它可以用来计数归零：
 
 ```swift
 print("Counting to zero:")
@@ -1247,20 +1059,15 @@ print("zero!")
   ```
 -->
 
-## Nested Functions
+## 嵌套函数
 
-All of the functions you have encountered so far in this chapter
-have been examples of *global functions*, which are defined at a global scope.
-You can also define functions inside the bodies of other functions,
-known as *nested functions*.
+到目前为止，您在本章中遇到的所有函数都是 *全局函数（global functions）*，它们定义在全局域中。
+您还可以在其他函数的主体中定义函数，即 *嵌套函数（nested functions）*。
 
-Nested functions are hidden from the outside world by default,
-but can still be called and used by their enclosing function.
-An enclosing function can also return one of its nested functions
-to allow the nested function to be used in another scope.
+默认情况下，嵌套函数是对外界不可见的，但仍可被其外围函数（enclosing function）调用。
+外围函数也可以返回它的某个嵌套函数，以便在另一个作用域中使用这个函数。
 
-You can rewrite the `chooseStepFunction(backward:)` example above
-to use and return nested functions:
+您可以重写上面的 `chooseStepFunction(backward:)` 示例，以使用并返回嵌套函数：
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
@@ -1270,7 +1077,7 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
 }
 var currentValue = -4
 let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
-// moveNearerToZero now refers to the nested stepForward() function
+// moveNearerToZero 现在引用了嵌套的 stepForward() 函数
 while currentValue != 0 {
     print("\(currentValue)... ")
     currentValue = moveNearerToZero(currentValue)
@@ -1310,11 +1117,11 @@ print("zero!")
   ```
 -->
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档开发的软件应与最终的操作系统软件一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息。
 
 <!--
 This source file is part of the Swift.org open source project
