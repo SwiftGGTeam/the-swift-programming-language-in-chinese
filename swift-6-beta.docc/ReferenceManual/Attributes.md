@@ -4,150 +4,137 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 翻译估计用时：⭐️⭐️⭐️⭐️⭐️
 -->
 
-# Attributes
+# 特性
 
-Add information to declarations and types.
+为声明和类型添加信息。
 
-There are two kinds of attributes in Swift ---
-those that apply to declarations and those that apply to types.
-An attribute provides additional information about the declaration or type.
-For example,
-the `discardableResult` attribute on a function declaration indicates that,
-although the function returns a value,
-the compiler shouldn't generate a warning if the return value is unused.
+在 Swift 中有两种特性——
+适用于声明的特性和适用于类型的特性。特性提供有关声明或类型的附加信息。
+例如，函数声明上的 discardableResult 特性表示，
+尽管函数返回一个值，
+但如果返回值未被使用，
+编译器不应生成警告。
 
-You specify an attribute by writing the `@` symbol followed by the attribute's name
-and any arguments that the attribute accepts:
+您通过写入 @ 符号后跟特性名称及特性接受的任何参数来指定一个属性：
 
 ```swift
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
 
-Some declaration attributes accept arguments
-that specify more information about the attribute
-and how it applies to a particular declaration.
-These *attribute arguments* are enclosed in parentheses,
-and their format is defined by the attribute they belong to.
+有些声明特性接受参数，
+这些参数指定有关特性的更多信息以及它如何适用于特定声明。
+这些 *特性参数* 被括号括起来，
+其格式由它们所属的特性定义。
 
-Attached macros and property wrappers also use attribute syntax.
-For information about how macros expand,
-see <doc:Expressions#Macro-Expansion-Expression>.
-For information about property wrappers,
-see <doc:Attributes#propertyWrapper>.
+宏和属性包装器也使用特性语法。
+有关宏如何扩展的信息，
+参见 doc:Expressions#Macro-Expansion-Expression。
+有关属性包装器的信息，
+参见 doc:Attributes#propertyWrapper。
 
-## Declaration Attributes
+## 声明特性
 
-You can apply a declaration attribute to declarations only.
+您只能将声明特性应用于声明。
 
 ### attached
 
-Apply the `attached` attribute to a macro declaration.
-The arguments to this attribute indicate the macro's role.
-For a macro that has multiple roles,
-apply the `attached` macro multiple times, once for each role.
+将 `attached` macro multiple times, once for each role.
+将 attached 特性应用于宏声明。
+该特性的参数指示宏的角色。
+对于具有多个角色的宏，
+需应用 attached 宏，
+每个角色应用一次。
 
 <!-- TODO:
 If there's a stable URL we can use, make the macro protocols below links.
 -->
 
-The first argument to this attribute
-indicates the macros role:
+特性的第一个参数指明宏的角色：
 
-- term Peer macros:
-  Write `peer` as the first argument to this attribute.
-  The type that implements the macro conforms to the `PeerMacro` protocol.
-  These macros produce new declarations
-  in the same scope as the declaration
-  that the macro is attached to.
-  For example,
-  applying a peer macro to a method of a structure
-  can define additional methods and properties on that structure.
+- 术语 Peer 宏：
+  将 `peer` 作为此属性的第一个参数。
+  实现该宏的类型遵循 `PeerMacro` 协议。
+  这些宏在与宏附加的声明相同的作用域中生成新的声明。
+  例如，
+  将 peer 宏应用于结构体的方法可以在该结构体上定义额外的方法和属性。
 
-- term Member macros:
-  Write `member` as the first argument to this attribute.
-  The type that implements the macro conforms to the `MemberMacro` protocol.
-  These macros produce new declarations
-  that are members of the type or extension
-  that the macro is attached to.
-  For example,
-  applying a member macro to a structure declaration
-  can define additional methods and properties on that structure.
+- 术语 Member 宏：
+  将 `member` 作为此特性的第一个参数。
+  实现该宏的类型遵循 `MemberMacro` 协议。
+  这些宏生成的新声明是该宏所附加的类型或扩展的成员。
+  例如，
+  将 member 宏应用于结构体声明可以在该结构体上定义额外的方法和属性。
 
-- term Member attribute:
-  Write `memberAttribute` as the first argument to this attribute.
-  The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
-  These macros add attributes to members of the type or extension
-  that the macro is attached to.
+- 术语 Member 特性：
+  将 `memberAttribute` 作为此特性的第一个参数。
+  实现该宏的类型遵循 `MemberAttributeMacro` 协议。
+  这些宏将特性添加到该宏所附加的类型或扩展的成员上。
 
-- term Accessor macros:
-  Write `accessor` as the first argument to this attribute.
-  The type that implements the macro conforms to the `AccessorMacro` protocol.
-  These macros add accessors to the stored property they're attached to,
-  turning it into a computed property.
+- 术语 Accessor 宏：
+  将 `accessor` 作为此特性的第一个参数。
+  实现该宏的类型遵循 `AccessorMacro` 协议。
+  这些宏为它们附加的存储属性添加访问器，
+  将其转换为计算属性。
 
-- term Extension macros:
-  Write `extension` as the first argument to this attribute.
-  The type that implements the macro conforms to the `ExtensionMacro` protocol.
-  These macros can add protocol conformance,
-  a `where` clause,
-  and new declarations that are members of the type the macro is attached to.
-  If the macro adds protocol conformances,
-  include the `conformances:` argument and specify those protocols.
-  The conformance list contains protocol names,
-  type aliases that refer to conformance list items,
-  or protocol compositions of conformance list items.
-  An extension macro on a nested type
-  expands to an extension at the top level of that file.
-  You can't write an extension macro
-  on an extension, a type alias, or a type that's nested inside a function,
-  or use an extension macro to add an extension that has a peer macro.
+- 术语 Extension 展宏：
+  将 `extension` 作为此特性的第一个参数。
+  实现宏的类型遵循 `ExtensionMacro` 协议。
+  这些宏可以添加协议遵循、
+  where 从句，
+  以及宏附加的类型的成员的新声明。
+  如果宏添加了协议遵循，
+  请包含 `conformances`: 参数并指定这些协议。
+  遵循列表包含协议名称、
+  指向遵循列表项的类型别名，
+  或者是遵循列表项的协议组合。
+  嵌套类型上的扩展宏会展开为该文件顶层的扩展。
+  您不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，
+  也不能使用扩展宏添加具有 peer 宏的扩展。
 
-The peer, member, and accessor macro roles require a `names:` argument,
-listing the names of the symbols that the macro generates.
-The extension macro role also requires a `names:` argument
-if the macro adds declarations inside the extension.
-When a macro declaration includes the `names:` argument,
-the macro implementation must generate
-only symbol with names that match that list.
-That said,
-a macro need not generate a symbol for every listed name.
-The value for that argument is a list of one or more of the following:
+peer、member 和 accessor 宏角色需要一个 `names:` 参数，
+列出宏生成的符号名称。
+如果宏在扩展内部添加声明，
+扩展宏角色也需要一个 `names:` 参数。
+当宏声明包含 `names:` 参数时，
+宏实现必须仅生成与该列表匹配的名称的符号。
+也就是说，
+宏不必为每个列出的名称生成符号。
+该参数的值是以下一个或多个项的列表：
 
 - `named(<#name#>)`
-  where *name* is that fixed symbol name,
-  for a name that's known in advance.
+  其中 *name* 是那个固定的符号名称，
+  用于一个已知的名称。
 
 - `overloaded`
-  for a name that's the same as an existing symbol.
+  以便与现有符号同名。
 
 - `prefixed(<#prefix#>)`
-  where *prefix* is prepended to the symbol name,
-  for a name that starts with a fixed string.
+  其中 *prefix* 被添加到符号名称前，
+  用于以固定字符串开头的名称。
 
 - `suffixed(<#suffix#>)`
-  where *suffix* is appended to the symbol name,
-  for a name that ends with a fixed string.
+  其中 *suffix* 被附加到符号名称后，
+  用于以固定字符串结尾的名称。
 
 - `arbitrary`
-  for a name that can't be determined until macro expansion.
+  用于一个在宏展开之前无法确定的名称。
 
-As a special case,
-you can write `prefixed($)`
-for a macro that behaves similar to a property wrapper.
+作为一个特殊情况，
+您可以为一个行为类似于属性包装器的宏编写 `prefixed($)`。
 <!--
 TODO TR: Is there any more detail about this case?
 -->
 
 ### available
 
-Apply this attribute to indicate a declaration's life cycle
-relative to certain Swift language versions
-or certain platforms and operating system versions.
+应用此特性以表示声明的生命周期相
+对于某些 Swift 语言版本
+或某些平台和操作系统版本。
 
-The `available` attribute always appears
-with a list of two or more comma-separated attribute arguments.
-These arguments begin with one of the following platform or language names:
+`available` 属性总是
+与两个或更多用逗号分隔的属性参数列表一起出现。
+这些参数以以下平台或语言名称之一开头：
 
 - `iOS`
 - `iOSApplicationExtension`
@@ -172,76 +159,73 @@ These arguments begin with one of the following platform or language names:
   For the list in source, see include/swift/AST/PlatformKinds.def
 -->
 
-You can also use an asterisk (`*`) to indicate the
-availability of the declaration on all of the platform names listed above.
-An `available` attribute
-that specifies availability using a Swift version number
-can't use the asterisk.
+您还可以使用星号 (*) 来表示
+上述所有平台名称的声明可用性。
+使用 Swift 版本号指定可用性的 `available` 特性
+不能使用星号。
 
-The remaining arguments can appear in any order
-and specify additional information about the declaration's life cycle,
-including important milestones.
+其余参数可以以任何顺序出现，
+并指定有关声明生命周期的附加信息，
+包括重要的里程碑。
 
-- The `unavailable` argument indicates that the declaration
-  isn't available on the specified platform.
-  This argument can't be used when specifying Swift version availability.
-- The `introduced` argument indicates the first version
-  of the specified platform or language in which the declaration was introduced.
-  It has the following form:
+- `unavailable` 参数表示该声明
+  在指定平台上不可用。
+  指定 Swift 版本可用性时无法使用此参数。
+- `introduced` 参数表示声明引入的
+  指定平台或语言的第一个版本。
+  它具有以下形式：
 
   ```swift
   introduced: <#version number#>
   ```
-  The *version number* consists of one to three positive integers,
-  separated by periods.
-- The `deprecated` argument indicates the first version
-  of the specified platform or language in which the declaration was deprecated.
-  It has the following form:
+  *version number* 由一个到三个正整数组成，
+  数字之间用句点分隔。
+- `deprecated` 参数表示声明被弃用的
+  指定平台或语言的第一个版本。
+  它具有以下形式：
 
   ```swift
   deprecated: <#version number#>
   ```
-  The optional *version number* consists of one to three positive integers,
-  separated by periods.
-  Omitting the version number indicates that the declaration is currently deprecated,
-  without giving any information about when the deprecation occurred.
-  If you omit the version number, omit the colon (`:`) as well.
-- The `obsoleted` argument indicates the first version
-  of the specified platform or language in which the declaration was obsoleted.
-  When a declaration is obsoleted,
-  it's removed from the specified platform or language and can no longer be used.
-  It has the following form:
+  可选的 *version number* 由一个到三个正整数组成，
+  数字之间用句点分隔。
+  省略版本号表示该声明当前已被弃用，
+  但没有提供弃用发生的时间。
+  如果省略版本号，也要省略冒号 (`:`)。
+- 被废弃的指定平台或语言的第一个版本。
+  当声明被废弃时，
+  它将从指定的平台或语言中移除，无法再使用。
+  它具有以下形式：
 
   ```swift
   obsoleted: <#version number#>
   ```
-  The *version number* consists of one to three positive integers, separated by periods.
-- The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use of a deprecated or obsoleted declaration.
-  It has the following form:
+   *version number* 由一个到三个正整数组成，数字之间用句点分隔。
+- `message` 参数提供了一个文本消息，
+  当编译器发出关于使用已弃用或过时声明的警告或错误时，会显示该消息。
+  它具有以下形式：
 
   ```swift
   message: <#message#>
   ```
-  The *message* consists of a string literal.
-- The `renamed` argument provides a textual message
-  that indicates the new name for a declaration that's been renamed.
-  The compiler displays the new name
-  when emitting an error about the use of a renamed declaration.
-  It has the following form:
+   *message* 由一个字符串字面量组成。
+- `renamed` 参数提供了一个文本消息，
+  表示已重命名声明的新名称。
+  当编译器在发出关于使用重命名声明的错误时，
+  会显示新名称。
+  它具有以下形式：
 
   ```swift
   renamed: <#new name#>
   ```
-  The *new name* consists of a string literal.
+   *new name* 由一个字符串字面量组成。
 
-  You can apply the `available` attribute
-  with the `renamed` and `unavailable` arguments
-  to a type alias declaration, as shown below,
-  to indicate that the name of a declaration changed
-  between releases of a framework or library.
-  This combination results in a compile-time error
-  that the declaration has been renamed.
+  您可以将 `available` 特性
+  与 `renamed` 和 `unavailable` 参数
+  应用于类型别名声明，如下所示，
+  以指示声明的名称在框架或库的不同版本之间发生了变化。
+  此组合会导致编译时错误，
+  表明声明已被重命名。
 
   ```swift
   // First release
@@ -287,15 +271,13 @@ including important milestones.
     ```
   -->
 
-You can apply multiple `available` attributes on a single declaration
-to specify the declaration's availability on different platforms
-and different versions of Swift.
-The declaration that the `available` attribute applies to
-is ignored if the attribute specifies
-a platform or language version that doesn't match the current target.
-If you use multiple `available` attributes,
-the effective availability is the combination of
-the platform and Swift availabilities.
+您可以在单个声明上应用多个 `available` 特性，
+以指定该声明在不同平台和不同版本的 Swift 上的可用性。
+如果 `available` 特性
+指定的平台或语言版本与当前目标不匹配，
+则该属性应用的声明将被忽略。
+如果您使用多个 `available` 特性，
+则有效的可用性是平台和 Swift 可用性的组合。
 
 <!--
   - test: `multipleAvailableAttributes`
@@ -308,19 +290,20 @@ the platform and Swift availabilities.
   ```
 -->
 
-If an `available` attribute only specifies an `introduced` argument
-in addition to a platform or language name argument,
-you can use the following shorthand syntax instead:
+如果一个 `available` 特性仅指定一个 `introduced` 参数
+以及一个平台或语言名称参数，
+您可以使用以下简写语法：
 
 ```swift
 @available(<#platform name#> <#version number#>, *)
 @available(swift <#version number#>)
 ```
 
-The shorthand syntax for `available` attributes
-concisely expresses availability for multiple platforms.
-Although the two forms are functionally equivalent,
-the shorthand form is preferred whenever possible.
+ `available` 属性的简写语法
+ 简洁地表达了多个平台的可用性。
+ 尽管这两种形式在功能上是等效的，
+ 但在可能的情况下，
+ 优先使用简写形式。
 
 ```swift
 @available(iOS 10.0, macOS 10.12, *)
@@ -340,11 +323,11 @@ class MyClass {
   ```
 -->
 
-An `available` attribute
-that specifies availability using a Swift version number
-can't additionally specify a declaration's platform availability.
-Instead, use separate `available` attributes to specify a Swift
-version availability and one or more platform availabilities.
+一个 `available` 特性，
+用于使用 Swift 版本号指定可用性，
+不能额外指定声明的平台可用性。
+相反，使用单独的 `available` 特性来指定 Swift 版本
+的可用性和一个或多个平台的可用性。
 
 ```swift
 @available(swift 3.0.2)
@@ -368,22 +351,20 @@ struct MyStruct {
 
 ### backDeployed
 
-Apply this attribute to a function, method, subscript, or computed property
-to include a copy of the symbol's implementation
-in programs that call or access the symbol.
-You use this attribute to annotate symbols that ship as part of a platform,
-like the APIs that are included with an operating system.
-This attribute marks symbols that can be made available retroactively
-by including a copy of their implementation in programs that access them.
-Copying the implementation is also known as *emitting into the client*.
+将此特性应用于函数、方法、下标或计算属性，
+以在调用或访问该符号的程序中包含符号实现的副本。
+您使用此特性来标注作为平台一部分发布的符号，
+例如与操作系统一起提供的 API。
+此特性标记可以通过在访问它们的程序中包含其实现的副本而向后提供的符号。
+复制实现也称为 *emitting into the client*。
 
-This attribute takes a `before:` argument,
-specifying the first version of platforms that provide this symbol.
-These platform versions have the same meaning
-as the platform version you specify for the `available` attribute.
-Unlike the `available` attribute,
-the list can't contain an asterisk (`*`) to refer to all versions.
-For example, consider the following code:
+此特性接受一个 `before:` 参数，
+指定提供此符号的平台的第一个版本。
+这些平台版本与您为 `available` 特性的
+平台版本具有相同的含义。
+与 `available` 属性不同，
+列表中不能包含星号 (`*`) 来指代所有版本。
+例如，考虑以下代码：
 
 ```swift
 @available(iOS 16, *)
@@ -391,32 +372,31 @@ For example, consider the following code:
 func someFunction() { /* ... */ }
 ```
 
-In the example above,
-the iOS SDK provides `someFunction()` starting in iOS 17.
-In addition,
-the SDK makes `someFunction()` available on iOS 16 using back deployment.
+在上面的例子中，
+iOS SDK 从 iOS 17 开始提供 `someFunction()`。
+此外，
+SDK 通过向后兼容在 iOS 16 上提供 `someFunction()`。
 
-When compiling code that calls this function,
-Swift inserts a layer of indirection that finds the function's implementation.
-If the code is run using a version of the SDK that includes this function,
-the SDK's implementation is used.
-Otherwise, the copy included in the caller is used.
-In the example above,
-calling `someFunction()` uses the implementation from the SDK
-when running on iOS 17 or later,
-and when running on iOS 16
-it uses the copy of `someFunction()` that's included in the caller.
+在编译调用此函数的代码时，
+Swift 插入了一层间接调用，以找到该函数的实现。
+如果使用包含此函数的 SDK 版本运行代码，
+则使用 SDK 的实现。
+否则，将使用调用者中包含的副本。
+在上面的示例中，
+当在 iOS 17 或更高版本上运行时，
+调用 someFunction() 使用 SDK 的实现，
+而在 iOS 16 上运行时，
+则使用调用者中包含的 someFunction() 的副本。
 
-> Note:
-> When the caller's minimum deployment target
-> is the same as or greater than
-> the first version of the SDK that includes the symbol,
-> the compiler can optimize away the runtime check
-> and call the SDK's implementation directly.
-> In this case,
-> if you access the back-deployed symbol directly,
-> the compiler can also omit
-> the copy of the symbol's implementation from the client.
+> 注意：
+> 当调用者的最低部署目标
+> 与包含该符号的 SDK 的第一个版本
+> 相同或更高时，
+> 编译器可以优化掉运行时检查，
+> 直接调用 SDK 的实现。
+> 在这种情况下，
+> 如果您直接访问回退部署的符号，
+> 编译器也可以省略客户端中符号实现的副本。
 
 <!--
 Stripping out the copy emitted into the client
@@ -428,14 +408,12 @@ and the details could change over time,
 so we don't guarantee in docs that it always happens.
 -->
 
-Functions, methods, subscripts, and computed properties
-that meet the following criteria can be back deployed:
+满足以下标准的函数、方法、下标和计算属性可以进行回退部署：
 
-- The declaration is `public` or `@usableFromInline`.
-- For class instance methods and class type methods,
-  the method is marked `final` and isn't marked `@objc`.
-- The implementation satisfies the requirements for an inlinable function,
-  described in <doc:Attributes#inlinable>.
+- 声明是 `public` 或 `@usableFromInline`。
+- 对于实例方法和类方法，该方法被标记为final，
+  并且没有标记`@objc`。
+- 该实现满足<doc:Attributes#inlinable>中描述的可内联函数的要求。
 
 ### discardableResult
 
