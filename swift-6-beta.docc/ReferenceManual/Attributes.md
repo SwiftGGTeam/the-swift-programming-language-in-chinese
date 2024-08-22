@@ -880,9 +880,9 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### GKInspectable
 
-Apply this attribute to expose a custom GameplayKit component property
-to the SpriteKit editor UI.
-Applying this attribute also implies the `objc` attribute.
+将此特性应用于将自定义 GameplayKit 组件特性
+暴露给 SpriteKit 编辑器 UI。
+应用此特性还意味着 `objc` 特性。
 
 <!--
   See also <rdar://problem/27287369> Document @GKInspectable attribute
@@ -891,27 +891,24 @@ Applying this attribute also implies the `objc` attribute.
 
 ### inlinable
 
-Apply this attribute to a
-function, method, computed property, subscript,
-convenience initializer, or deinitializer declaration
-to expose that declaration's implementation
-as part of the module's public interface.
-The compiler is allowed to replace calls to an inlinable symbol
-with a copy of the symbol's implementation at the call site.
+将此特性应用于
+函数、方法、计算属性、下标、
+便利初始化器或析构器声明，
+以将该声明的实现公开为模块的公共接口的一部分。
+编译器可以允许在调用位置
+用符号实现的副本替换对可内联符号的调用。
 
-Inlinable code
-can interact with `open` and `public` symbols declared in any module,
-and it can interact with `internal` symbols
-declared in the same module
-that are marked with the `usableFromInline` attribute.
-Inlinable code can't interact with `private` or `fileprivate` symbols.
+可内联代码
+可以与任何模块中声明的 `open` 和 `public` 符号进行交互，
+并且可以与同一模块中
+标记为 `usableFromInline` 特性的 `internal` 符号进行交互。
+可内联代码无法与 `private` 或 `fileprivate` 符号进行交互。
 
-This attribute can't be applied
-to declarations that are nested inside functions
-or to `fileprivate` or `private` declarations.
-Functions and closures that are defined inside an inlinable function
-are implicitly inlinable,
-even though they can't be marked with this attribute.
+此特性不能应用于
+嵌套在函数内部的声明，
+也不能应用于 `fileprivate` 或 `private` 声明。
+定义在可内联函数内部的函数和闭包是隐式可内联的，
+即使它们不能被标记为此特性。
 
 <!--
   - test: `cant-inline-private`
