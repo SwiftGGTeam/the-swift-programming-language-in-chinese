@@ -14,7 +14,7 @@
 
 ## 下标语法
 
-下标使您能够通过在实例名称后将一个或多个值写在方括号中来查询类型的实例。它们的语法类似于实例方法语法和计算属性语法。您可以使用 `subscript` 关键字编写下标定义，并指定一个或多个输入参数和返回类型，其方式与实例方法相同。与实例方法不同，下标可以是读写或只读。此行为由 getter 和 setter 以与计算属性相同的方式进行传达:
+下标允许你通过在实例名称后面的方括号中传入一个或者多个索引值来对实例进行查询。它的语法类似于实例方法语法和计算型属性语法。定义下标使用 `subscript` 关键字，与定义实例方法类似，都是指定一个或多个输入参数和一个返回类型。与实例方法不同的是，下标可以设定为读写或只读。这种行为由 getter 和 setter 实现，类似计算型属性：
 
 ```swift
 subscript(index: Int) -> Int {
@@ -45,9 +45,9 @@ subscript(index: Int) -> Int {
   ```
 -->
 
-`newValue` 的类型与下标的返回值相同。与计算属性一样，您可以选择不指定 setter 的 `（newValue）` 参数。如果您自己不提供一个名为 `newValue` 的默认参数，则会提供给您的设置者。
+`newValue` 的类型与下标的返回值类型相同。如同计算型属性，可以不指定 setter 的参数（`newValue`）。如果不指定参数，setter 会提供一个名为 `newValue` 的默认参数。
 
-与只读计算属性一样，您可以通过删除 get 关键字及其大括号来简化只读下标的声明:
+如同只读计算型属性，对于只读下标的声明，你可以通过省略 `get` 关键字和对应的大括号组来进行简写:
 
 ```swift
 subscript(index: Int) -> Int {
@@ -68,7 +68,7 @@ subscript(index: Int) -> Int {
   ```
 -->
 
-以下是一个只读下标实现的示例，它定义了一个 `TimesTable` 结构体，用于表示一个整数的 n 倍表。
+下面代码演示了只读下标的实现，这里定义了一个 `TimesTable` 结构体，用来表示对应整数的乘法表。
 
 ```swift
 struct TimesTable {
@@ -98,18 +98,18 @@ print("six times three is \(threeTimesTable[6])")
   ```
 -->
 
-在此示例中，将创建 `TimesTable` 的新实例来表示三次表。通过将值 `3` 作为用于实例的乘数参数的值传递给结构的`初始值设定项`来指示这一点。
+在上例中，创建了一个 `TimesTable` 实例，用来表示整数 `3` 的乘法表。数值 `3` 被传递给结构体的构造函数，作为实例成员 `multiplier` 的值。
 
-您可以通过调用其下标来查询 `threeTimesTable` 实例，如对 `threeTimesTable[6]` 的调用中所示。这将请求 `three-times-table` 中的第 6 个条目，该条目返回值 `18`，即 `3` 乘以 `6`。
+你可以通过下标访问 `threeTimesTable` 实例，例如上面演示的 `threeTimesTable[6]`。这条语句查询了乘法表中 `3` 的第六个元素，返回 `3` 的 `6` 倍即 `18`。
 
 >注意:
-`TimesTable` 例子基于一个固定的数学公式。将 `threeTimesTable[someIndex]` 设置为新值是不合适的，因此 `TimesTable` 的下标被定义为只读下标。
+`TimesTable` 例子基于一个固定的数学公式。将 `threeTimesTable[someIndex]` 进行赋值操作并不合适，因此下标定义为只读的。
 
 ## 下标用法
 
-“下标”的确切含义取决于使用它的上下文。下标通常用作访问集合、列表或序列中的成员元素的快捷方式。您可以根据特定类或结构的功能以最合适的方式自由实现下标。
+“下标”的确切含义取决于使用场景。下标通常用作访问集合、列表或序列中的成员元素的快捷方式。你可以针对自己特定的类或结构体功能来以最恰当的方式实现下标。
 
-例如，Swift 的 `Dictionary` 类型实现了一个下标，用于设置和检索存储在 `Dictionary` 实例中的值。您可以通过在下标括号内提供字典的键类型键，并将字典的值类型的值分配给下标来在字典中设置值:
+例如，Swift 的 `Dictionary` 类型实现下标用于对实例中储存的值进行存取操作。为字典设值时，在下标中使用和字典的键类型相同的键，并把一个和字典的值类型相同的值赋给这个下标：
 
 ```swift
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -125,18 +125,18 @@ numberOfLegs["bird"] = 2
   ```
 -->
 
-上面的示例定义了一个名为 `numberOfLegs` 的变量，并使用包含三个键值对的字典文本对其进行初始化。`numberOfLegs` 字典的类型推断为 `[String: Int]`。创建字典后，此示例使用下标赋值将 `String` 键`bird`和 `Int` 值 `2` 添加到字典中。
+上面的示例定义了一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型推断为 `[String: Int]`。创建字典后，此示例使用下标赋值将`String`类型的键`bird`和 `Int`类型的值 `2` 添加到字典中。
 
-有关字典下标的更多信息，请参阅 doc: <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
+更多关于 `Dictionary` 下标的信息请参考 <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
 >注意:
->Swift 的 `Dictionary` 类型将其键值下标实现为接受并返回可选类型的下标。对于上面的 `numberOfLegs` 字典，键值下标接>受并返回 `Int?`（可选 int）类型的值。`Dictionary` 类型使用可选的下标类型来对并非每个键都有值这一事实进行建模，并通过为该>键分配 `nil` 值来提供删除该键的值的方法。
+>Swift 的 `Dictionary` 类型的下标接受并返回_可选_类型的值。对于上面的 `numberOfLegs` 字典通过下标返回的是一个 `Int?` 或者说“可选的 int”。`Dictionary` 类型之所以如此实现下标，是因为不是每个键都有对应的值，同时这也提供了一种通过键删除对应值的方式，只需将键对应的值赋值为 nil 即可。
 
 ## 下标选项
 
-下标可以采用任意数量的输入参数，这些输入参数可以是任何类型。下标还可以返回任何类型的值。
+下标可以接受任意数量的入参，并且这些入参可以是任何类型。下标的返回值也可以是任意类型。
 
-与函数一样，下标可以接受不同数量的参数并为其参数提供默认值，如 <doc:Functions#Variadic-Parameters> 和 <doc:Functions#Default-Parameter-Values>中所述。但是，与函数不同，下标不能使用 in-out 参数。
+与函数一样，下标可以接受不同数量的参数，并且为这些参数提供默认值，如 <doc:Functions#Variadic-Parameters> 和 <doc:Functions#Default-Parameter-Values>中所述。但是，与函数不同的是，下标不能使用 in-out 参数。
 
 <!--
   - test: `subscripts-can-have-default-arguments`
@@ -153,9 +153,9 @@ numberOfLegs["bird"] = 2
   ```
 -->
 
-类或结构可以根据需要提供任意数量的下标实现，并且将根据使用下标时下标括号中包含的值的类型推断要使用的相应下标。多个下标的这种定义称为*下标重载*。
+一个类或结构体可以根据自身需要提供多个下标实现，使用下标时将通过入参的数量和类型进行区分，自动匹配合适的下标。它通常被称为*下标重载*。
 
-虽然下标采用单个参数是最常见的，但如果它适合您的类型，您也可以定义具有多个参数的下标。下面的示例定义一个 `Matrix` 结构，该结构表示 `Double` 值的二维矩阵。`Matrix` 结构的下标采用两个整数参数:
+虽然下标采用单一入参是最常见的，但也可以根据情况定义接受多个入参的下标。下面的示例定义一个 `Matrix` 结构体，该结构体表示一个 `Double` 类型的二维矩阵。`Matrix` 结构体的下标接受两个整型参数:
 
 ```swift
 struct Matrix {
@@ -211,9 +211,9 @@ struct Matrix {
   ```
 -->
 
-`Matrix` 提供了一个初始值设定项，该初始值设定项采用两个称为 `rows` 和 `columns` 的参数，并创建一个足够大的数组来存储 `Double` 类型的`rows * columns`值。矩阵中的每个位置的初始值为 `0.0`。为了实现这一点，数组的大小和初始单元格值 `0.0` 被传递给数组初始值设定项，该初始值设定项创建并初始化正确大小的新数<doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.中对此初始值设定项进行了更详细的描述。
+`Matrix` 提供了一个接受两个入参的构造方法，入参分别是 `rows` 和 `columns`，创建了一个足够容纳 `rows * columns` 个 `Double` 类型的值的数组。通过传入数组长度和初始值 `0.0` 到数组的构造器，将矩阵中每个位置的值初始化为 `0.0`。关于数组的这种构造方法请参考<doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>。
 
-您可以通过将适当的 `row` 和 `column` 计数传递给其初始值设定项来构造新的 `Matrix` 实例:
+你可以通过传入合适的 `row` 和 `column` 数值来构造一个新的 `Matrix` 实例:
 
 ```swift
 var matrix = Matrix(rows: 2, columns: 2)
@@ -228,7 +228,7 @@ var matrix = Matrix(rows: 2, columns: 2)
   ```
 -->
 
-上面的示例创建了一个包含两行和两列的新 `Matrix` 实例。此 `Matrix` 实例的`grid`数组实际上是矩阵的扁平化版本，从左上角到右下角如下图所示:
+上例中创建了一个两行两列的 `Matrix` 实例。该 `Matrix` 实例的 `grid` 数组按照从左上到右下的阅读顺序将矩阵扁平化存储：
 
 将 `row` 和 `column` 的值传入下标来为矩阵设值，下标的入参使用逗号分隔:
 
@@ -291,7 +291,7 @@ let someValue = matrix[2, 2]
 
 ## 类型下标
 
-正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型自身上调用的下标。这种下标被称作_类型下标_。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类型可以使用 `class` 关键字来代替 `static`，它允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标:
+正如上节所述，实例下标是在特定类型的一个实例上调用的下标。你也可以定义一种在这个类型自身上调用的下标。这种下标被称作*类型下标*。你可以通过在 `subscript` 关键字之前写下 `static` 关键字的方式来表示一个类型下标。类型可以使用 `class` 关键字来代替 `static`，它允许子类重写父类中对那个下标的实现。下面的例子展示了如何定义和调用一个类型下标:
 
 ```swift
 enum Planet: Int {
