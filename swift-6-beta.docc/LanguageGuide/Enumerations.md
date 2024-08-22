@@ -4,7 +4,7 @@
 
 *枚举*为一组相关的值定义了一个共同的类型，并使你能够以类型安全的方式在代码中使用这些值。
 
-如果你对 C 语言很熟悉，你会知道 C 的枚举将相关的名称分配给一组整数值。Swift 中的枚举更加灵活，不必为每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为*原始*值），则该值的类型可以是字符串、字符，或是一个整型值或浮点数。
+如果你对 C 语言很熟悉，你会知道 C 的枚举将相关的名称分配给一组整数值。Swift 中的枚举更加灵活，不必为每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为*原始*值），则该值的类型可以是字符串、字符，或是一个整数或浮点数。
 
 此外，枚举成员可以指定*任意*类型的关联值存储到枚举成员中，就像其他语言中的联合体（unions）或变体（variants）。每一个枚举成员都可以有适当类型的关联值。
 
@@ -154,7 +154,7 @@ case .west:
 
 你可以这样理解这段代码：
 
-“判断 `directionToHead` 的值。当它等于 `.north`时，打印 `“Lots of planets have a north”`。当它等于 `.south`时，打印 `“Watch out for penguins”`。”
+“判断 `directionToHead` 的值。当它等于 `.north`时，打印 `“Lots of planets have a north”`。当它等于 `.south`时，打印 `"Watch out for penguins"`。”
 
 ……以此类推。
 
@@ -482,7 +482,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
-// possiblePlanet is of type Planet? and equals Planet.uranus
+// possiblePlanet 类型为 Planet? 值为 Planet.uranus
 ```
 
 <!--
