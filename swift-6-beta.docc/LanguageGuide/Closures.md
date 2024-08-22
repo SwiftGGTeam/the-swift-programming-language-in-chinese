@@ -611,23 +611,13 @@ incrementByTen()
 
 > 注意：如果将闭包赋值给类实例的属性，并且闭包通过引用实例或其成员来捕获该实例，则将在闭包和实例之间创建一个强引用循环。Swift 使用_捕获列表_来打破这些强引用循环。有关更多信息，请参阅 <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures>.
 
-## Closures Are Reference Types
+## 闭包是引用类型
 
-In the example above,
-`incrementBySeven` and `incrementByTen` are constants,
-but the closures these constants refer to are still able to increment
-the `runningTotal` variables that they have captured.
-This is because functions and closures are *reference types*.
+在上面的示例中，`incrementBySeven` 和 `incrementByTen` 是常量，但这些常量引用的闭包仍然能够递增它们捕获的 `runningTotal` 变量。这是因为函数和闭包是*引用类型*。
 
-Whenever you assign a function or a closure to a constant or a variable,
-you are actually setting that constant or variable to be
-a *reference* to the function or closure.
-In the example above,
-it's the choice of closure that `incrementByTen` *refers to* that's constant,
-and not the contents of the closure itself.
+每当你将函数或闭包赋值给一个常量或变量时，你实际上是在将该常量或变量设置为对函数或闭包的*引用*。在上面的示例中，`incrementByTen` *引用*的闭包选择是常量，而不是闭包本身的内容。
 
-This also means that if you assign a closure to two different constants or variables,
-both of those constants or variables refer to the same closure.
+这也意味着，如果将闭包分配给两个不同的常量或变量，则这两个常量或变量都引用同一闭包。
 
 ```swift
 let alsoIncrementByTen = incrementByTen
@@ -660,24 +650,15 @@ is the same as calling `incrementByTen`.
 Because both of them refer to the same closure,
 they both increment and return the same running total.
 
-## Escaping Closures
+上面的示例表明，调用 `alsoIncrementByTen` 与调用 `incrementByTen` 相同。由于它们都引用相同的闭包，因此它们都会递增并返回相同的 runningTotal 值。
 
-A closure is said to *escape* a function
-when the closure is passed as an argument to the function,
-but is called after the function returns.
-When you declare a function that takes a closure as one of its parameters,
-you can write `@escaping` before the parameter's type
-to indicate that the closure is allowed to escape.
+## 逃逸闭包
 
-One way that a closure can escape
-is by being stored in a variable that's defined outside the function.
-As an example,
-many functions that start an asynchronous operation
-take a closure argument as a completion handler.
-The function returns after it starts the operation,
-but the closure isn't called until the operation is completed ---
-the closure needs to escape, to be called later.
-For example:
+当一个闭包作为参数传到一个函数中，我们称该闭包从函数中逃逸。当你定义接受闭包作为参数的函数时，你可以在参数名之前标注 @escaping，用来指明这个闭包是允许“逃逸”出这个函数的。
+
+当闭包作为参数传递给函数，但是这个闭包在函数返回之后才被执行，该闭包被称为*逃逸*函数。当你声明一个将闭包作为其参数之一的函数时，你可以在参数的类型之前写入 `@escaping`，以表示这个闭包是允许逃逸的。
+
+闭包可以逃逸的一种方式是存储在函数外部定义的变量中。例如，许多启动异步操作的函数将闭包参数作为 completion handler。该函数在启动操作后返回，但在操作完成之前不会调用闭包，这种情况下闭包需要逃逸，以便在之后调用。例如：
 
 ```swift
 var completionHandlers: [() -> Void] = []
@@ -697,31 +678,13 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
   ```
 -->
 
-The `someFunctionWithEscapingClosure(_:)` function takes a closure as its argument
-and adds it to an array that's declared outside the function.
-If you didn't mark the parameter of this function with `@escaping`,
-you would get a compile-time error.
+`someFunctionWithEscapingClosure（_：）` 函数将闭包作为其参数，并将其添加到函数外部声明的数组中。如果不用 `@escaping` 标记此函数的参数，则会收到编译错误。
 
-An escaping closure that refers to `self`
-needs special consideration if `self` refers to an instance of a class.
-Capturing `self` in an escaping closure
-makes it easy to accidentally create a strong reference cycle.
-For information about reference cycles,
-see <doc:AutomaticReferenceCounting>.
 
-Normally, a closure captures variables implicitly
-by using them in the body of the closure,
-but in this case you need to be explicit.
-If you want to capture `self`,
-write `self` explicitly when you use it,
-or include `self` in the closure's capture list.
-Writing `self` explicitly lets you express your intent,
-and reminds you to confirm that there isn't a reference cycle.
-For example, in the code below,
-the closure passed to `someFunctionWithEscapingClosure(_:)`
-refers to `self` explicitly.
-In contrast, the closure passed to `someFunctionWithNonescapingClosure(_:)`
-is a nonescaping closure, which means it can refer to `self` implicitly.
+如果 `self` 引用类的实例，则引用 `self` 的逃逸闭包需要特别考虑。在逃逸闭合中捕获 `self`，很容易意外地创建一个强循环引用。有关参考循环引用的信息，请参阅 [doc：AutomaticReferenceCounting](doc:AutomaticReferenceCounting)。
+
+通常，闭包通过在闭包主体中使用变量来隐式捕获变量，但在这种情况下，您需要明确。如果要捕获 `self`，请在使用它时显式写入 `self`，或者在闭包的捕获列表中包含 `self`。明确的写出 `self` 更能表达你的意图，并提醒你确认没有产生循环引用。例如，在下面的代码中，传递给 `someFunctionWithEscapingClosure（_：）` 的闭包显式引用 `self`。相比之下，传递给 `someFunctionWithNonescapingClosure（_：）` 的闭包是非逃逸闭包，这意味着它可以隐式引用 `self`。
+
 
 ```swift
 func someFunctionWithNonescapingClosure(closure: () -> Void) {
@@ -773,9 +736,7 @@ print(instance.x)
   ```
 -->
 
-Here's a version of `doSomething()` that captures `self`
-by including it in the closure's capture list,
-and then refers to `self` implicitly:
+这是 `doSomething()` 的一个版本，它通过将 `self` 包含在闭包的捕获列表中来捕获 `self`，然后隐式引用 `self`：
 
 ```swift
 class SomeOtherClass {
@@ -809,13 +770,7 @@ class SomeOtherClass {
   ```
 -->
 
-If `self` is an instance of a structure or an enumeration,
-you can always refer to `self` implicitly.
-However,
-an escaping closure can't capture a mutable reference to `self`
-when `self` is an instance of a structure or an enumeration.
-Structures and enumerations don’t allow shared mutability,
-as discussed in <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
+如果 `self` 是结构体或枚举的实例，则始终可以隐式引用 `self`。但是转义闭包无法捕获其对 `self` 的可变引用。结构体和枚举不允许共享可变性，如 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types> 中所述。
 
 ```swift
 struct SomeStruct {
@@ -854,12 +809,7 @@ struct SomeStruct {
   ```
 -->
 
-The call to the `someFunctionWithEscapingClosure` function
-in the example above is an error
-because it's inside a mutating method,
-so `self` is mutable.
-That violates the rule that escaping closures can't capture
-a mutable reference to `self` for structures.
+在上面的示例中，对 `someFunctionWithEscapingClosure` 函数的调用是一个错误，因为它位于一个可变函数中，因此 `self` 是可变的。这违反了规则，即转义闭包不能捕获对结构的 `self` 的可变引用。
 
 <!--
   - test: `noescape-closure-as-argument`
@@ -901,30 +851,13 @@ a mutable reference to `self` for structures.
   ```
 -->
 
-## Autoclosures
+## 自动闭包
 
-An *autoclosure* is a closure that's automatically created
-to wrap an expression that's being passed as an argument to a function.
-It doesn't take any arguments,
-and when it's called, it returns the value
-of the expression that's wrapped inside of it.
-This syntactic convenience lets you omit braces around a function's parameter
-by writing a normal expression instead of an explicit closure.
+*自动闭包*是一种自动创建的闭包，用于包装作为参数传递给函数的表达式。它不接受任何参数，当它被调用时，它返回包裹在其内部的表达式的值。这种便利语法让你能够省略闭包的大括号，用一个普通的表达式来代替显式的闭包。
 
-It's common to *call* functions that take autoclosures,
-but it's not common to *implement* that kind of function.
-For example,
-the `assert(condition:message:file:line:)` function
-takes an autoclosure for its `condition` and `message` parameters;
-its `condition` parameter is evaluated only in debug builds
-and its `message` parameter is evaluated only if `condition` is `false`.
+我们经常会*调用*采用自动闭包的函数，但是很少去*实现*这样的函数。例如，`assert（condition：message：file：line：）` 函数接受自动闭包作为它的 `condition` 和 `message` 参数; 其 `condition` 参数仅在 Debug 版本中计算，而其 `message` 参数仅在 `condition` 为 `false` 时计算。
 
-An autoclosure lets you delay evaluation,
-because the code inside isn't run until you call the closure.
-Delaying evaluation is useful for code
-that has side effects or is computationally expensive,
-because it lets you control when that code is evaluated.
-The code below shows how a closure delays evaluation.
+自动闭包允许您延迟计算，因为在你调用这个闭包之前，内部代码不会运行。延迟计算对于有副作用或高计算成本的代码非常有用，因为它使得你能控制代码的执行时机。下面的代码展示了闭包如何延时计算。
 
 ```swift
 var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -974,18 +907,9 @@ print(customersInLine.count)
   TODO: It may be worth describing the differences between ``lazy`` and autoclousures.
 -->
 
-Even though the first element of the `customersInLine` array is removed
-by the code inside the closure,
-the array element isn't removed until the closure is actually called.
-If the closure is never called,
-the expression inside the closure is never evaluated,
-which means the array element is never removed.
-Note that the type of `customerProvider` isn't `String`
-but `() -> String` ---
-a function with no parameters that returns a string.
+即使 `customersInLine` 数组的第一个元素被闭包内的代码删除，但在实际调用闭包之前，不会删除数组中的元素。如果从不调用闭包，则永远不会计算闭包内的表达式，这意味着永远不会删除数组元素。请注意，`customerProvider` 的类型不是 `String`，而是 `（） -> String` --- 一个返回字符串的没有参数的函数。
 
-You get the same behavior of delayed evaluation
-when you pass a closure as an argument to a function.
+将闭包作为参数传递给函数时，你能获得同样的延时计算行为。
 
 ```swift
 // customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
@@ -1011,17 +935,7 @@ serve(customer: { customersInLine.remove(at: 0) } )
   ```
 -->
 
-The `serve(customer:)` function in the listing above
-takes an explicit closure that returns a customer's name.
-The version of `serve(customer:)` below
-performs the same operation but, instead of taking an explicit closure,
-it takes an autoclosure
-by marking its parameter's type with the `@autoclosure` attribute.
-Now you can call the function
-as if it took a `String` argument instead of a closure.
-The argument is automatically converted to a closure,
-because the `customerProvider` parameter's type is marked
-with the `@autoclosure` attribute.
+上面列表中的 `serve（customer：）` 函数采用显式闭包，返回客户的名称。下面的 `serve（customer：）` 版本执行相同的操作，但是，它不是采用显式闭包，而是通过使用 `@autoclosure` 属性标记其参数的类型来进行自动闭合。现在，您可以调用该函数，就好像它采用 `String` 参数而不是闭包一样。该参数会自动转换为闭包，因为 `customerProvider` 参数的类型用 `@autoclosure` 属性标记。
 
 ```swift
 // customersInLine is ["Ewa", "Barry", "Daniella"]
@@ -1047,13 +961,9 @@ serve(customer: customersInLine.remove(at: 0))
   ```
 -->
 
-> Note: Overusing autoclosures can make your code hard to understand.
-> The context and function name should make it clear
-> that evaluation is being deferred.
+> 注意：过度使用自动闭包可能会使您的代码难以理解。上下文和函数名称应明确表示计算正在被推迟。
 
-If you want an autoclosure that's allowed to escape,
-use both the `@autoclosure` and `@escaping` attributes.
-The `@escaping` attribute is described above in <doc:Closures#Escaping-Closures>.
+如果您想要允许一个自动闭包可以逃逸，请同时使用 `@autoclosure` 和 `@escaping` 属性。`@escaping` 属性在上面的 <doc:Closures#Escaping-Closures> 中进行了描述。
 
 ```swift
 // customersInLine is ["Barry", "Daniella"]
@@ -1097,22 +1007,13 @@ for customerProvider in customerProviders {
   ```
 -->
 
-In the code above,
-instead of calling the closure passed to it
-as its `customerProvider` argument,
-the `collectCustomerProviders(_:)` function
-appends the closure to the `customerProviders` array.
-The array is declared outside the scope of the function,
-which means the closures in the array can be executed after the function returns.
-As a result,
-the value of the `customerProvider` argument
-must be allowed to escape the function's scope.
+在上面的代码中，`collectCustomerProviders（_：）` 函数将闭包追加到 `customerProviders` 数组中，而不是调用作为其 `customerProvider` 参数传递给它的闭包。数组是在函数的作用域之外声明的，这意味着数组中的闭包可以在函数返回后执行。因此 `customerProvider` 参数必须允许逃逸出函数的作用域。
 
-> Beta Software:
+> 测试版软件: 
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
 
 <!--
 This source file is part of the Swift.org open source project
