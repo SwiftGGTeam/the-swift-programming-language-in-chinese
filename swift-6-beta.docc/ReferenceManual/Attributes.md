@@ -957,11 +957,10 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### main
 
-Apply this attribute to a structure, class, or enumeration declaration
-to indicate that it contains the top-level entry point for program flow.
-The type must provide a `main` type function
-that doesn't take any arguments and returns `Void`.
-For example:
+将此特性应用于结构、类或枚举声明，
+以表示它包含程序流程的顶级入口点。
+该类型必须提供一个不接受任何参数并返回Void的main类型函数。
+例如：
 
 ```swift
 @main
@@ -987,10 +986,9 @@ struct MyTopLevel {
   ```
 -->
 
-Another way to describe the requirements of the `main` attribute
-is that the type you write this attribute on
-must satisfy the same requirements
-as types that conform to the following hypothetical protocol:
+另一种描述main特性要求的方法是，
+您在其上编写此特性的类型
+必须满足与符合以下假设协议的类型相同的要求：
 
 ```swift
 protocol ProvidesMain {
@@ -1008,9 +1006,8 @@ protocol ProvidesMain {
   ```
 -->
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，
+正如文档中所讨论的 <doc:Declarations#Top-Level-Code>。
 
 <!--
   - test: `no-at-main-in-top-level-code`
