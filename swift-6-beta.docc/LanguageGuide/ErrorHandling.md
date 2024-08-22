@@ -8,7 +8,7 @@
 
 以从磁盘文件读取和处理数据为例。该任务失败的原因有很多，包括指定路径下的文件不存在、文件没有读取权限或文件编码格式不兼容。通过区分这些不同的失败情况来让程序处理和解决一些错误，并将无法解决的错误告知用户。
 
-> 注意
+> 注意:
 > Swift 中的错误处理与 Cocoa 和 Objective-C 中使用 NSError 类的错误处理模式互操作。
 > 有关该类的更多信息，请参阅 [在 Swift 中处理 Cocoa 错误](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift).
 
@@ -63,7 +63,7 @@ throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 要识别代码中的这些地方，请在调用可能抛出错误的函数、方法或构造器的代码之前加上 `try` 关键字或 `try?` 或 `try!` 变体。
 下文将对这些关键字进行说明。
 
-> 注意
+> 注意:
 > Swift 中的错误处理与其他语言中的错误处理类似，使用 `try`, `catch` and `throw` 关键字。
 > 区别于其他语言（包括 Objective-C ）的是，Swift 中的错误处理并不涉及解除调用栈,而解除调用栈的过程可能会耗费大量计算资源。
 > 因此，`throw` 语句的性能特征与 `return` 语句的性能特征相当。
@@ -129,7 +129,7 @@ func cannotThrowErrors() -> String
 
 抛错函数会将内部抛出的错误传递到调用它的作用域。
 
-> 注意
+> 注意:
 > 只有抛错函数可以传递错误。任何在非抛错函数中抛出的错误都必须在函数内部处理。
 
 在下面的示例中，
@@ -769,6 +769,7 @@ func processFile(filename: String) throws {
 即使不涉及错误处理代码，您也可以使用 `defer` 语句。
 有关详细信息，请参阅 <doc:ControlFlow#Deferred-Actions>。
 
+> 注意:
 > 测试版软件
 >
 > 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档开发实现的软件应与最终的操作系统软件一起进行测试。
