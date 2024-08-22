@@ -706,8 +706,7 @@ print(wrapper.x)
 
 ### freestanding
 
-Apply the `freestanding` attribute
-to the declaration of a freestanding macro.
+将 `freestanding` 属性应用于独立宏的声明。
 
 <!--
 
@@ -730,19 +729,17 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### frozen
 
-Apply this attribute to a structure or enumeration declaration
-to restrict the kinds of changes you can make to the type.
-This attribute is allowed only when compiling in library evolution mode.
-Future versions of the library can't change the declaration
-by adding, removing, or reordering
-an enumeration's cases
-or a structure's stored instance properties.
-These changes are allowed on nonfrozen types,
-but they break ABI compatibility for frozen types.
+将此特性应用于结构体或枚举声明，
+以限制您对类型所能进行的更改。
+此特性仅在以库演进模式编译时允许。
+库的未来版本不能通过添加、删除或重新排序枚举的case
+或结构体的存储实例属性来更改其声明。
+这些更改在非冻结类型上是允许的，
+但会破坏冻结类型的 ABI 兼容性。
 
-> Note: When the compiler isn't in library evolution mode,
-> all structures and enumerations are implicitly frozen,
-> and this attribute is ignored.
+> 注意：当编译器不处于库演进模式时，
+> 所有结构体和枚举都被隐式冻结，
+> 此属性将被忽略
 
 <!--
   - test: `can-use-frozen-without-evolution`
@@ -766,28 +763,21 @@ but they break ABI compatibility for frozen types.
   ```
 -->
 
-In library evolution mode,
-code that interacts with members of nonfrozen structures and enumerations
-is compiled in a way that allows it to continue working without recompiling
-even if a future version of the library
-adds, removes, or reorders some of that type's members.
-The compiler makes this possible using techniques like
-looking up information at runtime
-and adding a layer of indirection.
-Marking a structure or enumeration as frozen
-gives up this flexibility to gain performance:
-Future versions of the library can make only limited changes to the type,
-but the compiler can make additional optimizations
-in code that interacts with the type's members.
+在库演化模式下，
+与非冻结结构体和枚举的成员交互的代码以一种方式编译，
+使其即使在未来版本的库添加、删除或重新排序该类型的某些成员时，
+也能继续工作而无需重新编译。
+编译器通过在运行时查找信息和添加间接层等技术实现了这一点。
+将结构体或枚举标记为冻结放弃了这种灵活性以获得性能：
+库的未来版本只能对该类型进行有限的更改，
+但编译器可以对与该类型的成员交互的代码进行额外的优化。
 
-Frozen types,
-the types of the stored properties of frozen structures,
-and the associated values of frozen enumeration cases
-must be public or marked with the `usableFromInline` attribute.
-The properties of a frozen structure can't have property observers,
-and expressions that provide the initial value for stored instance properties
-must follow the same restrictions as inlinable functions,
-as discussed in <doc:Attributes#inlinable>.
+冻结类型、冻结结构体的存储属性类型
+以及冻结枚举的枚举关联值必须是 public 的或标记为 `usableFromInline` 特性。
+冻结结构体的属性不能有属性观察者，
+并且提供存储实例属性初始值的表达式
+必须遵循与内联函数相同的限制，
+如文档中所讨论的 <doc:Attributes#inlinable>。
 
 <!--
   - test: `frozen-struct-prop-init-cant-refer-to-private-type`
@@ -812,12 +802,12 @@ as discussed in <doc:Attributes#inlinable>.
   ```
 -->
 
-To enable library evolution mode on the command line,
-pass the `-enable-library-evolution` option to the Swift compiler.
-To enable it in Xcode,
-set the "Build Libraries for Distribution" build setting
-(`BUILD_LIBRARY_FOR_DISTRIBUTION`) to Yes,
-as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba).
+要在命令行上启用库演化模式，
+请将 `-enable-library-evolution` 选项传递给 Swift 编译器。
+要在 Xcode 中启用它，
+请将 "Build Libraries for Distribution" 构建设置
+(`BUILD_LIBRARY_FOR_DISTRIBUTION`) 设置 Yes，
+见：[Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba)。
 
 <!--
   This is the first time we're talking about a specific compiler flag/option.
@@ -827,11 +817,10 @@ as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
 -->
 
-A switch statement over a frozen enumeration doesn't require a `default` case,
-as discussed in <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
-Including a `default` or `@unknown default` case
-when switching over a frozen enumeration
-produces a warning because that code is never executed.
+对一个冻结的枚举进行的 switch 语句不需要一个 `default` case，
+如文档中所讨论的 <doc:Statements#Switching-Over-Future-Enumeration-Cases>。
+当在冻结的枚举上进行切换时，包括 `default` 或 `@unknown default` case会产生警告，
+因为那段代码永远不会被执行。
 
 <!--
   - test: `NoUnknownDefaultOverFrozenEnum`
