@@ -1,16 +1,8 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/GuidedTour/GuidedTour.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# Swift 导览
 
-# A Swift Tour
+探索 Swift 的特点和语法。
 
-Explore the features and syntax of Swift.
-
-Tradition suggests that the first program in a new language
-should print the words “Hello, world!” on the screen.
-In Swift, this can be done in a single line:
+按照传统，编程语言教程的第一个程序应该是在屏幕上打印出“Hello, world!”。在 Swift 中，这可以用一行代码实现：
 
 <!--
   K&R uses “hello, world”.
@@ -19,7 +11,7 @@ In Swift, this can be done in a single line:
 
 ```swift
 print("Hello, world!")
-// Prints "Hello, world!"
+// 输出 "Hello, world!"
 ```
 
 <!--
@@ -31,31 +23,13 @@ print("Hello, world!")
   ```
 -->
 
-This syntax should look familiar if you know another language ---
-in Swift, this line of code is a complete program.
-You don't need to import a separate library for functionality like
-outputting text or handling strings.
-Code written at global scope is used
-as the entry point for the program,
-so you don't need a `main()` function.
-You also don't need to write semicolons
-at the end of every statement.
+如果你了解其他编程语言，那么你应该很熟悉这种写法——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输出文本或处理字符串而导入一个单独的库。全局作用域中的代码会被当做程序的入口点，因此你不需要 `main()` 函数。你也不需要在每条语句的末尾添加分号。
 
-This tour gives you enough information
-to start writing code in Swift
-by showing you how to accomplish a variety of programming tasks.
-Don’t worry if you don’t understand something ---
-everything introduced in this tour
-is explained in detail in the rest of this book.
+本导览会通过一系列编程例子来提供给你足够的信息，让你能够开始使用 Swift 编程。如果你有什么不理解的地方也不要担心——本导览中介绍的所有内容都会在本书的后续章节中进行详细地讲解。
 
-## Simple Values
+## 简单值
 
-Use `let` to make a constant and `var` to make a variable.
-The value of a constant
-doesn't need to be known at compile time,
-but you must assign it a value exactly once.
-This means you can use constants to name a value
-that you determine once but use in many places.
+使用 `let` 来声明常量，使用 `var` 来声明变量。常量的值不需要在编译时确定，但是你必须且只能为它赋值一次。这意味着你可以用常量来命名那些只需确定一次但要在多处使用的值。
 
 ```swift
 var myVariable = 42
@@ -73,19 +47,9 @@ let myConstant = 42
   ```
 -->
 
-A constant or variable must have the same type
-as the value you want to assign to it.
-However, you don't always have to write the type explicitly.
-Providing a value when you create a constant or variable
-lets the compiler infer its type.
-In the example above,
-the compiler infers that `myVariable` is an integer
-because its initial value is an integer.
+常量或变量的类型必须与要赋予它的值的类型一致。不过，你不必总是显式地写出类型。在声明常量或变量时提供一个值，编译器会自动推断出它的类型。在上面的例子中，因为初始值是整数，所以编译器推断出 `myVariable` 是整数类型。
 
-If the initial value doesn't provide enough information
-(or if there isn't an initial value),
-specify the type by writing it after the variable,
-separated by a colon.
+如果初始值无法提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分隔。
 
 ```swift
 let implicitInteger = 70
@@ -103,12 +67,9 @@ let explicitDouble: Double = 70
   ```
 -->
 
-> Experiment: Create a constant with
-> an explicit type of `Float` and a value of `4`.
+> 练习: 创建一个常量，显式指定类型为 `Float`，并指定值为 4。
 
-Values are never implicitly converted to another type.
-If you need to convert a value to a different type,
-explicitly make an instance of the desired type.
+值不会被隐式转换为另一种类型。如果你需要把一个值转换成其他类型，需要显式地创建所需类型的实例。
 
 ```swift
 let label = "The width is "
@@ -128,8 +89,7 @@ let widthLabel = label + String(width)
   ```
 -->
 
-> Experiment: Try removing the conversion to `String` from the last line.
-> What error do you get?
+> 练习: 尝试移除最后一行中的 `String` 类型转换。会显示什么错误？
 
 <!--
   TODO: Discuss with Core Writers ---
@@ -137,10 +97,7 @@ let widthLabel = label + String(width)
   helping you learn something?
 -->
 
-There's an even simpler way to include values in strings:
-Write the value in parentheses,
-and write a backslash (`\`) before the parentheses.
-For example:
+有一种更简单的方法可以在字符串中包含值：将值写在括号中，并在括号前加上反斜杠（`\`）。例如：
 
 ```swift
 let apples = 3
@@ -164,15 +121,9 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
   ```
 -->
 
-> Experiment: Use `\()` to
-> include a floating-point calculation in a string
-> and to include someone’s name in a greeting.
+> 练习: 使用 `\()` 将一个浮点计算包含在字符串中，并在一句问候语中包含某人的名字。
 
-Use three double quotation marks (`"""`) for strings
-that take up multiple lines.
-Indentation at the start of each quoted line is removed,
-as long as it matches the indentation of the closing quotation marks.
-For example:
+对于占用多行的字符串，使用三个双引号（`"""`）来表示。每行开头的缩进只要与结尾引号的缩进相匹配，都会被移除。例如：
 
 ```swift
 let quotation = """
@@ -201,10 +152,7 @@ let quotation = """
   <rdar://problem/49129068> Swift code formatting damages indentation
 -->
 
-Create arrays and dictionaries using brackets (`[]`),
-and access their elements by writing
-the index or key in brackets.
-A comma is allowed after the last element.
+使用方括号（`[]`）来创建数组和字典，并通过在方括号内写上索引（index）或键（key）来访问它们的元素。最后一个元素后面允许有个逗号。
 
 <!--
   REFERENCE
@@ -272,12 +220,12 @@ occupations["Jayne"] = "Public Relations"
 
 <!-- Apple Books screenshot begins here. -->
 
-Arrays automatically grow as you add elements.
+数组在添加元素时会自动变大。
 
 ```swift
 fruits.append("blueberries")
 print(fruits)
-// Prints "["strawberries", "grapes", "tangerines", "blueberries"]"
+// 输出 "["strawberries", "grapes", "tangerines", "blueberries"]"
 ```
 
 <!--
@@ -290,9 +238,7 @@ print(fruits)
   ```
 -->
 
-You also use brackets to write an empty array or dictionary.
-For an array, write `[]`,
-and for a dictionary, write `[:]`.
+你也可以使用方括号来表示空数组或空字典。对于数组，使用 `[]`；对于字典，使用 `[:]`。
 
 ```swift
 fruits = []
@@ -308,9 +254,7 @@ occupations = [:]
   ```
 -->
 
-If you're assigning an empty array or dictionary to a new variable,
-or another place where there isn't any type information,
-you need to specify the type.
+如果你要将一个空数组或空字典赋值给一个新变量，或者赋值到没有任何类型信息的地方，那么你需要显式指定类型。
 
 ```swift
 let emptyArray: [String] = []
@@ -329,13 +273,9 @@ let emptyDictionary: [String: Float] = [:]
   ```
 -->
 
-## Control Flow
+## 控制流
 
-Use `if` and `switch` to make conditionals,
-and use `for`-`in`, `while`, and `repeat`-`while`
-to make loops.
-Parentheses around the condition or loop variable are optional.
-Braces around the body are required.
+使用 `if` 和 `switch` 来创建条件语句，使用 `for`-`in`、`while` 和 `repeat`-`while` 来创建循环。包裹条件或循环变量的圆括号是可选的，但包裹代码块的花括号是必须的。
 
 ```swift
 let individualScores = [75, 43, 103, 87, 12]
@@ -348,7 +288,7 @@ for score in individualScores {
     }
 }
 print(teamScore)
-// Prints "11"
+// 输出 "11"
 ```
 
 <!--
@@ -382,15 +322,9 @@ print(teamScore)
   << Would you like a jelly baby?
 -->
 
-In an `if` statement,
-the conditional must be a Boolean expression ---
-this means that code such as `if score { ... }` is an error,
-not an implicit comparison to zero.
+在 `if` 语句中，条件必须是一个布尔表达式——这意味着像 `if score { ... }` 这样的代码是错误的，而不是隐式地将 `score` 与零进行比较。
 
-You can write `if` or `switch`
-after the equal sign (`=`) of an assignment
-or after `return`,
-to choose a value based on the condition.
+你可以在赋值操作符（`=`）或 `return` 之后使用 `if` 或 `switch`，以根据条件选择一个值。
 
 ```swift
 let scoreDecoration = if teamScore > 10 {
@@ -399,16 +333,10 @@ let scoreDecoration = if teamScore > 10 {
     ""
 }
 print("Score:", teamScore, scoreDecoration)
-// Prints "Score: 11 🎉"
+// 输出 "Score: 11 🎉"
 ```
 
-You can use `if` and `let` together
-to work with values that might be missing.
-These values are represented as optionals.
-An optional value either contains a value
-or contains `nil` to indicate that a value is missing.
-Write a question mark (`?`) after the type of a value
-to mark the value as optional.
+你可以将 `if` 和 `let` 结合使用，来处理值可能缺失的情况。这些值用可选值来表示。一个可选值要么包含一个值，要么包含 `nil` 来表示值缺失。在一个值的类型后面加一个问号（`?`）来标记该值是可选值。
 
 <!-- Apple Books screenshot ends here. -->
 
@@ -422,7 +350,7 @@ to mark the value as optional.
 ```swift
 var optionalString: String? = "Hello"
 print(optionalString == nil)
-// Prints "false"
+// 输出 "false"
 
 var optionalName: String? = "John Appleseed"
 var greeting = "Hello!"
@@ -449,22 +377,11 @@ if let name = optionalName {
   ```
 -->
 
-> Experiment: Change `optionalName` to `nil`.
-> What greeting do you get?
-> Add an `else` clause that sets a different greeting
-> if `optionalName` is `nil`.
+> 练习: 将 `optionalName` 的值设置为 `nil`，`greeting` 会是什么？添加一个 `else` 分支，当 `optionalName` 是 `nil` 时，给 `greeting` 赋一个不同的值。
 
-If the optional value is `nil`,
-the conditional is `false` and the code in braces is skipped.
-Otherwise, the optional value is unwrapped and assigned
-to the constant after `let`,
-which makes the unwrapped value available
-inside the block of code.
+如果可选值是 `nil`，条件会判断为 `false`，花括号中的代码将被跳过。如果不是 `nil`，会将值解包并赋给 `let` 后面的常量，这样代码块中就可以使用这个解包后的值了。
 
-Another way to handle optional values
-is to provide a default value using the `??` operator.
-If the optional value is missing,
-the default value is used instead.
+另一种处理可选值的方法是使用 `??` 运算符提供一个默认值。如果可选值缺失的话，则使用默认值来代替。
 
 ```swift
 let nickname: String? = nil
@@ -484,14 +401,13 @@ let informalGreeting = "Hi \(nickname ?? fullName)"
   ```
 -->
 
-You can use a shorter spelling to unwrap a value,
-using the same name for that unwrapped value.
+你可以使用更简洁的写法来解包一个值，并使用相同的名称来表示解包后的值。
 
 ```swift
 if let nickname {
     print("Hey, \(nickname)")
 }
-// Doesn't print anything, because nickname is nil.
+// 不会输出任何东西，因为 nickname 为 nil 。
 ```
 
 <!--
@@ -504,10 +420,7 @@ if let nickname {
   ```
 -->
 
-Switches support any kind of data
-and a wide variety of comparison operations ---
-they aren't limited to integers
-and tests for equality.
+`switch` 语句支持任意类型的数据和多种比较操作——不仅限于整数和等值比较。
 
 <!--
   REFERENCE
@@ -529,7 +442,7 @@ case let x where x.hasSuffix("pepper"):
 default:
     print("Everything tastes good in soup.")
 }
-// Prints "Is it a spicy red pepper?"
+// 输出 "Is it a spicy red pepper?"
 ```
 
 <!--
@@ -551,30 +464,18 @@ default:
   ```
 -->
 
-> Experiment: Try removing the default case.
-> What error do you get?
+> 练习: 删除 `default` 分支，会显示什么错误？
 
-Notice how `let` can be used in a pattern
-to assign the value that matched the pattern
-to a constant.
+注意 `let` 在上述例子的匹配模式中是如何使用的，它将匹配到的值赋给常量 `x`。
 
-After executing the code inside the switch case that matched,
-the program exits from the switch statement.
-Execution doesn't continue to the next case,
-so you don't need to explicitly break out of the switch
-at the end of each case’s code.
+运行 `switch` 中匹配到的 `case` 语句之后，程序会退出 `switch` 语句，并不会继续向下运行，所以不需要在每个子句结尾写 `break`。
 
 <!--
   Omitting mention of "fallthrough" keyword.
   It's in the guide/reference if you need it.
 -->
 
-You use `for`-`in` to iterate over items in a dictionary
-by providing a pair of names to use
-for each key-value pair.
-Dictionaries are an unordered collection,
-so their keys and values are iterated over
-in an arbitrary order.
+你可以使用 `for-in` 来遍历字典，使用一对变量来表示每个键值对。字典是一个无序的集合，所以它们的键和值会以任意顺序遍历完。
 
 <!--
   REFERENCE
@@ -599,7 +500,7 @@ for (_, numbers) in interestingNumbers {
     }
 }
 print(largest)
-// Prints "25"
+// 输出 "25"
 ```
 
 <!--
@@ -624,12 +525,9 @@ print(largest)
   ```
 -->
 
-> Experiment: Replace the `_` with a variable name,
-> and keep track of which kind of number was the largest.
+> 练习: 将 `_` 替换成变量名，以便记录最大的数字是属于哪一类的。
 
-Use `while` to repeat a block of code until a condition changes.
-The condition of a loop can be at the end instead,
-ensuring that the loop is run at least once.
+使用 `while` 来重复运行一段代码，直到条件改变。循环条件也可以放在末尾，以确保至少循环一次。
 
 <!--
   REFERENCE
@@ -644,14 +542,14 @@ while n < 100 {
     n *= 2
 }
 print(n)
-// Prints "128"
+// 输出 "128"
 
 var m = 2
 repeat {
     m *= 2
 } while m < 100
 print(m)
-// Prints "128"
+// 输出 "128"
 ```
 
 <!--
@@ -674,13 +572,9 @@ print(m)
   ```
 -->
 
-> Experiment:
-> Change the condition from `m < 100` to `m < 0`
-> to see how `while` and `repeat`-`while` behave differently
-> when the loop condition is already false.
+> 练习: 将条件从 `m < 100` 改为 `m < 0`，以观察 `while` 和 `repeat-while` 在循环条件一开始就为假时的区别。
 
-You can keep an index in a loop
-by using `..<` to make a range of indexes.
+你可以在循环中使用 `..<` 来创建一个索引范围。
 
 ```swift
 var total = 0
@@ -688,7 +582,7 @@ for i in 0..<4 {
     total += i
 }
 print(total)
-// Prints "6"
+// 输出 "6"
 ```
 
 <!--
@@ -704,16 +598,11 @@ print(total)
   ```
 -->
 
-Use `..<` to make a range that omits its upper value,
-and use `...` to make a range that includes both values.
+使用 `..<` 创建不包含上限值的范围，使用 `...` 创建包含上限值的范围。
 
-## Functions and Closures
+## 函数和闭包
 
-Use `func` to declare a function.
-Call a function by following its name
-with a list of arguments in parentheses.
-Use `->` to separate the parameter names and types
-from the function's return type.
+使用 `func` 来声明一个函数。在函数名后面加上括号并传入参数列表来调用函数。使用 `->` 将参数名称和类型与函数的返回类型分隔开。
 
 <!--
   REFERENCE
@@ -744,14 +633,9 @@ greet(person: "Bob", day: "Tuesday")
   ```
 -->
 
-> Experiment: Remove the `day` parameter.
-> Add a parameter to include today’s lunch special in the greeting.
+> 练习: 删除参数 `day`，再添加一个参数，在欢迎语中包含今天的特价菜。
 
-By default,
-functions use their parameter names
-as labels for their arguments.
-Write a custom argument label before the parameter name,
-or write `_` to use no argument label.
+默认情况下，函数使用参数名作为参数的标签。可以在参数名之前自定义参数标签，或者使用 `_` 来表示不使用参数标签。
 
 ```swift
 func greet(_ person: String, on day: String) -> String {
@@ -774,10 +658,7 @@ greet("John", on: "Wednesday")
   ```
 -->
 
-Use a tuple to make a compound value ---
-for example, to return multiple values from a function.
-The elements of a tuple can be referred to
-either by name or by number.
+使用元组来创建复合值——例如，用于从函数中返回多个值。元组的元素可以通过名称或编号来引用。
 
 <!--
   REFERENCE
@@ -806,9 +687,9 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
 }
 let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
 print(statistics.sum)
-// Prints "120"
+// 输出 "120"
 print(statistics.2)
-// Prints "120"
+// 输出 "120"
 ```
 
 <!--
@@ -841,12 +722,7 @@ print(statistics.2)
   ```
 -->
 
-Functions can be nested.
-Nested functions have access to variables
-that were declared in the outer function.
-You can use nested functions
-to organize the code in a function
-that's long or complex.
+函数可以嵌套。嵌套函数可以访问外部函数中声明的变量。你可以使用嵌套函数来组织长或复杂的函数代码。
 
 ```swift
 func returnFifteen() -> Int {
@@ -879,8 +755,7 @@ returnFifteen()
   ```
 -->
 
-Functions are a first-class type.
-This means that a function can return another function as its value.
+函数是一等类型。这意味着函数可以作为另一个函数的返回值。
 
 ```swift
 func makeIncrementer() -> ((Int) -> Int) {
@@ -911,7 +786,7 @@ increment(7)
   ```
 -->
 
-A function can take another function as one of its arguments.
+函数可以将另一个函数作为参数传入。
 
 ```swift
 func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
@@ -952,15 +827,7 @@ hasAnyMatches(list: numbers, condition: lessThanTen)
   ```
 -->
 
-Functions are actually a special case of closures:
-blocks of code that can be called later.
-The code in a closure has access to things like variables and functions
-that were available in the scope where the closure was created,
-even if the closure is in a different scope when it's executed ---
-you saw an example of this already with nested functions.
-You can write a closure without a name
-by surrounding code with braces (`{}`).
-Use `in` to separate the arguments and return type from the body.
+函数实际上是一种特殊的闭包：它是能在之后被调用的代码块。闭包中的代码能访问闭包作用域中的变量和函数，即使闭包在执行时处于不同的作用域中——你在嵌套函数的例子中已经见过这种情况。你可以使用（`{}`）来创建一个匿名闭包。使用 `in` 将参数和返回类型与代码主体分隔开。
 
 ```swift
 numbers.map({ (number: Int) -> Int in
@@ -983,20 +850,14 @@ numbers.map({ (number: Int) -> Int in
   ```
 -->
 
-> Experiment: Rewrite the closure to return zero for all odd numbers.
+> 练习: 重写闭包，使其对所有奇数返回零。
 
-You have several options for writing closures more concisely.
-When a closure's type is already known,
-such as the callback for a delegate,
-you can omit the type of its parameters,
-its return type, or both.
-Single statement closures implicitly return the value
-of their only statement.
+你有多种方法可以更简洁地编写闭包。当闭包的类型已知时，比如作为代理的回调函数，你可以省略参数类型、返回类型，或者两者都省略。对于单个语句的闭包，它会隐式返回该语句的值。
 
 ```swift
 let mappedNumbers = numbers.map({ number in 3 * number })
 print(mappedNumbers)
-// Prints "[60, 57, 21, 36]"
+// 输出 "[60, 57, 21, 36]"
 ```
 
 <!--
@@ -1009,17 +870,12 @@ print(mappedNumbers)
   ```
 -->
 
-You can refer to parameters by number instead of by name ---
-this approach is especially useful in very short closures.
-A closure passed as the last argument to a function
-can appear immediately after the parentheses.
-When a closure is the only argument to a function,
-you can omit the parentheses entirely.
+你可以通过编号而不是名称来引用参数——这种方式在非常简短的闭包中特别有用。如果闭包是函数的最后一个参数，它可以直接写在括号后面。当闭包是函数的唯一参数时，甚至可以省略括号。
 
 ```swift
 let sortedNumbers = numbers.sorted { $0 > $1 }
 print(sortedNumbers)
-// Prints "[20, 19, 12, 7]"
+// 输出 "[20, 19, 12, 7]"
 ```
 
 <!--
@@ -1044,13 +900,9 @@ print(sortedNumbers)
   Omitted custom operators as "advanced" topics.
 -->
 
-## Objects and Classes
+## 对象和类
 
-Use `class` followed by the class's name to create a class.
-A property declaration in a class is written the same way
-as a constant or variable declaration,
-except that it's in the context of a class.
-Likewise, method and function declarations are written the same way.
+使用 `class` 和类名来创建一个类。类中属性的声明方式与常量或变量相同，只不过是在类的上下文中。同样，方法的声明方式也与函数相同。
 
 <!--
   REFERENCE
@@ -1086,13 +938,9 @@ class Shape {
   ```
 -->
 
-> Experiment: Add a constant property with `let`,
-> and add another method that takes an argument.
+> 练习: 使用 `let` 添加一个常量属性，再添加一个接收一个参数的方法。
 
-Create an instance of a class
-by putting parentheses after the class name.
-Use dot syntax to access
-the properties and methods of the instance.
+通过在类名后加括号来创建一个类的实例。使用点语法来访问该实例的属性和方法。
 
 ```swift
 var shape = Shape()
@@ -1112,9 +960,7 @@ var shapeDescription = shape.simpleDescription()
   ```
 -->
 
-This version of the `Shape` class is missing something important:
-an initializer to set up the class when an instance is created.
-Use `init` to create one.
+这个版本的 `Shape` 类缺少了一个重要的部分：用于在创建实例时初始化类的构造器。使用 `init` 来创建一个构造器。
 
 ```swift
 class NamedShape {
@@ -1154,30 +1000,13 @@ class NamedShape {
   ```
 -->
 
-Notice how `self` is used to distinguish the `name` property
-from the `name` argument to the initializer.
-The arguments to the initializer are passed like a function call
-when you create an instance of the class.
-Every property needs a value assigned ---
-either in its declaration (as with `numberOfSides`)
-or in the initializer (as with `name`).
+注意 `self` 是如何被用来区分 `name` 属性和构造器中的 `name` 参数。在创建类的实例时，像函数调用传入参数那样给构造器传入参数。每个属性都必须被赋值——要么在声明时赋值（如 `numberOfSides`），要么在构造器中赋值（如 `name`）。
 
-Use `deinit` to create a deinitializer
-if you need to perform some cleanup
-before the object is deallocated.
+如果需要在对象被释放之前执行一些清理操作，可以使用 `deinit` 来创建一个析构函数。
 
-Subclasses include their superclass name
-after their class name,
-separated by a colon.
-There's no requirement for classes to subclass any standard root class,
-so you can include or omit a superclass as needed.
+子类的定义方法是在它们的类名后面加上父类的名字，用冒号分割。创建类的时候并不需要一个标准的根类，因此你可以根据需要选择是否指定父类。
 
-Methods on a subclass that override the superclass's implementation
-are marked with `override` ---
-overriding a method by accident, without `override`,
-is detected by the compiler as an error.
-The compiler also detects methods with `override`
-that don't actually override any method in the superclass.
+在子类中重写父类的方法时需要使用 `override` 进行标记——如果不小心重写了方法但没有使用 `override`，编译器会报错。如果使用了 `override`，但实际上没有重写父类的任何方法，编译器也会检测到并报错。
 
 ```swift
 class Square: NamedShape {
@@ -1235,15 +1064,9 @@ test.simpleDescription()
   ```
 -->
 
-> Experiment: Make another subclass of `NamedShape`
-> called `Circle`
-> that takes a radius and a name
-> as arguments to its initializer.
-> Implement an `area()` and a `simpleDescription()` method
-> on the `Circle` class.
+> 练习: 创建 `NamedShape` 的另一个子类 `Circle`，它的构造器接受半径和名称作为参数。在 `Circle` 类中实现 `area()` 和 `simpleDescription()` 方法。
 
-In addition to simple properties that are stored,
-properties can have a getter and a setter.
+除了简单的存储属性，属性还可以有 getter 和 setter 方法。
 
 ```swift
 class EquilateralTriangle: NamedShape {
@@ -1270,10 +1093,10 @@ class EquilateralTriangle: NamedShape {
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
 print(triangle.perimeter)
-// Prints "9.3"
+// 输出 "9.3"
 triangle.perimeter = 9.9
 print(triangle.sideLength)
-// Prints "3.3000000000000003"
+// 输出 "3.3000000000000003"
 ```
 
 <!--
@@ -1311,26 +1134,15 @@ print(triangle.sideLength)
   ```
 -->
 
-In the setter for `perimeter`,
-the new value has the implicit name `newValue`.
-You can provide an explicit name in parentheses after `set`.
+在 `perimeter` 的 setter 中，新值有一个默认的名字 `newValue`。你可以在 `set` 后的括号中显式地指定一个名字。
 
-Notice that the initializer for the `EquilateralTriangle` class
-has three different steps:
+注意 `EquilateralTriangle` 类的构造器执行了三步：
 
-1. Setting the value of properties that the subclass declares.
-2. Calling the superclass's initializer.
-3. Changing the value of properties defined by the superclass.
-   Any additional setup work that uses methods, getters, or setters
-   can also be done at this point.
+1. 设置子类中声明的属性值。
+2. 调用父类的构造器。
+3. 修改父类中定义的属性值。其他的工作比如调用方法、getters 和 setters 也可以在这个阶段完成。
 
-If you don't need to compute the property
-but still need to provide code that's run before and after setting a new value,
-use `willSet` and `didSet`.
-The code you provide is run any time the value changes outside of an initializer.
-For example, the class below ensures
-that the side length of its triangle
-is always the same as the side length of its square.
+如果你不需要计算属性，但仍然需要在设置新值前后执行一些代码，可以使用 `willSet` 和 `didSet`。这些代码会在属性值发生变化时运行，但不包含构造器中发生值改变的情况。比如，下面的类确保其三角形的边长始终与正方形的边长相同。
 
 <!--
   This triangle + square example could use improvement.
@@ -1358,12 +1170,12 @@ class TriangleAndSquare {
 }
 var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
 print(triangleAndSquare.square.sideLength)
-// Prints "10.0"
+// 输出 "10.0"
 print(triangleAndSquare.triangle.sideLength)
-// Prints "10.0"
+// 输出 "10.0"
 triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
 print(triangleAndSquare.triangle.sideLength)
-// Prints "50.0"
+// 输出 "50.0"
 ```
 
 <!--
@@ -1404,15 +1216,7 @@ print(triangleAndSquare.triangle.sideLength)
   to use them outside a class or a struct.
 -->
 
-When working with optional values,
-you can write `?` before operations like methods, properties, and subscripting.
-If the value before the `?` is `nil`,
-everything after the `?` is ignored
-and the value of the whole expression is `nil`.
-Otherwise, the optional value is unwrapped,
-and everything after the `?` acts on the unwrapped value.
-In both cases,
-the value of the whole expression is an optional value.
+处理可选值时，可以在方法、属性或下标操作前加上 `?`。如果 `?` 前的值是 `nil`，那么 `?` 后的所有操作都会被忽略，整个表达式的结果为 `nil`。否则，可选值会被解包，`?` 后的操作会作用于解包后的值。在这两种情况下，整个表达式的值仍然是一个可选值。
 
 ```swift
 let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
@@ -1428,11 +1232,9 @@ let sideLength = optionalSquare?.sideLength
   ```
 -->
 
-## Enumerations and Structures
+## 枚举和结构体
 
-Use `enum` to create an enumeration.
-Like classes and all other named types,
-enumerations can have methods associated with them.
+使用 `enum` 来创建枚举。与类和其他所有命名类型一样，枚举也可以包含方法。
 
 <!--
   REFERENCE
@@ -1500,22 +1302,11 @@ let aceRawValue = ace.rawValue
   ```
 -->
 
-> Experiment: Write a function that compares two `Rank` values
-> by comparing their raw values.
+> 练习: 写一个函数，通过比较它们的原始值来比较两个 `Rank` 值。
 
-By default, Swift assigns the raw values starting at zero
-and incrementing by one each time,
-but you can change this behavior by explicitly specifying values.
-In the example above, `Ace` is explicitly given a raw value of `1`,
-and the rest of the raw values are assigned in order.
-You can also use strings or floating-point numbers
-as the raw type of an enumeration.
-Use the `rawValue` property to access the raw value of an enumeration case.
+默认情况下，Swift 按照从 0 开始每次加 1 的方式为原始值进行赋值，不过你可以通过显式赋值进行改变。在上面的例子中，`Ace` 被显式赋值为 `1`，剩下的原始值会按照顺序进行赋值。你也可以使用字符串或者浮点数作为枚举的原始值。使用 `rawValue` 属性来访问一个枚举成员的原始值。
 
-Use the `init?(rawValue:)` initializer
-to make an instance of an enumeration from a raw value.
-It returns either the enumeration case matching the raw value
-or `nil` if there's no matching `Rank`.
+要根据原始值创建枚举实例，可以使用 `init?(rawValue:)` 构造器。它会返回与该原始值匹配的枚举成员，如果没有匹配的 `Rank` 则返回 `nil`。
 
 ```swift
 if let convertedRank = Rank(rawValue: 3) {
@@ -1535,11 +1326,7 @@ if let convertedRank = Rank(rawValue: 3) {
   ```
 -->
 
-The case values of an enumeration are actual values,
-not just another way of writing their raw values.
-In fact,
-in cases where there isn't a meaningful raw value,
-you don't have to provide one.
+枚举值是实际值，并不是原始值的另一种表达方法。实际上，如果原始值没有意义，你就不需要提供原始值。
 
 ```swift
 enum Suit {
@@ -1589,8 +1376,7 @@ let heartsDescription = hearts.simpleDescription()
   ```
 -->
 
-> Experiment: Add a `color()` method to `Suit` that returns "black"
-> for spades and clubs, and returns "red" for hearts and diamonds.
+> 练习: 给 `Suit` 添加一个 `color()` 方法，对 spades 和 clubs 返回“black”，对 hearts 和 diamonds 返回“red”。
 
 <!--
   Suits are in Bridge order, which matches Unicode order.
@@ -1598,32 +1384,9 @@ let heartsDescription = hearts.simpleDescription()
   Wikipedia lists a good half dozen orders.
 -->
 
-Notice the two ways that the `hearts` case of the enumeration
-is referred to above:
-When assigning a value to the `hearts` constant,
-the enumeration case `Suit.hearts` is referred to by its full name
-because the constant doesn't have an explicit type specified.
-Inside the switch,
-the enumeration case is referred to by the abbreviated form `.hearts`
-because the value of `self` is already known to be a suit.
-You can use the abbreviated form
-anytime the value's type is already known.
+注意在上面的例子中用了两种方式引用 `hearts` 枚举成员：给 `hearts` 常量赋值时，由于没有显式指定常量的类型，因此使用了枚举成员的全名 `Suit.hearts` 来引用。在 `switch` 语句中，由于 `self` 的类型已经被确定为 `Suit`，因此枚举成员可以使用缩写 `.hearts` 来引用。只要值的类型已经明确就可以使用缩写。
 
-If an enumeration has raw values,
-those values are determined as part of the declaration,
-which means every instance of a particular enumeration case
-always has the same raw value.
-Another choice for enumeration cases
-is to have values associated with the case ---
-these values are determined when you make the instance,
-and they can be different for each instance of an enumeration case.
-You can think of the associated values
-as behaving like stored properties of the enumeration case instance.
-For example,
-consider the case of requesting
-the sunrise and sunset times from a server.
-The server either responds with the requested information,
-or it responds with a description of what went wrong.
+如果枚举成员有原始值，那么这些值是在声明的时候就已经确定了，这意味着每个枚举实例的枚举成员总是具有相同的原始值。我们也可以为枚举成员设定关联值——这些值是在创建实例时确定的，这样同一枚举成员在不同实例的关联值可以不相同。你可以将关联值理解为枚举成员实例的存储属性。例如，在从服务器请求日出和日落时间时，服务器可能会返回所请求的日出和日落时间，或者返回一个描述错误的消息。
 
 <!--
   REFERENCE
@@ -1674,7 +1437,7 @@ case let .result(sunrise, sunset):
 case let .failure(message):
     print("Failure...  \(message)")
 }
-// Prints "Sunrise is at 6:00 am and sunset is at 8:09 pm."
+// 输出 "Sunrise is at 6:00 am and sunset is at 8:09 pm."
 ```
 
 <!--
@@ -1699,19 +1462,11 @@ case let .failure(message):
   ```
 -->
 
-> Experiment: Add a third case to `ServerResponse` and to the switch.
+> 练习: 给 `ServerResponse` 和 switch 添加第三种情况。
 
-Notice how the sunrise and sunset times
-are extracted from the `ServerResponse` value
-as part of matching the value against the switch cases.
+注意在 `switch` 语句中匹配 `ServerResponse` 值时，是如何提取出日出和日落时间的。
 
-Use `struct` to create a structure.
-Structures support many of the same behaviors as classes,
-including methods and initializers.
-One of the most important differences
-between structures and classes is that
-structures are always copied when they're passed around in your code,
-but classes are passed by reference.
+使用 `struct` 来创建结构体。结构体和类有很多相同的地方，包括方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
 
 ```swift
 struct Card {
@@ -1743,13 +1498,11 @@ let threeOfSpadesDescription = threeOfSpades.simpleDescription()
   ```
 -->
 
-> Experiment: Write a function that returns an array containing
-> a full deck of cards,
-> with one card of each combination of rank and suit.
+> 练习: 写一个函数，返回一个的数组，数组中包含拥有所有花色和点数的整副扑克牌。
 
-## Concurrency
+## 并发性
 
-Use `async` to mark a function that runs asynchronously.
+使用 `async` 标记异步运行的函数。
 
 ```swift
 func fetchUserID(from server: String) async -> Int {
@@ -1773,7 +1526,7 @@ func fetchUserID(from server: String) async -> Int {
   ```
 -->
 
-You mark a call to an asynchronous function by writing `await` in front of it.
+你可以通过在函数名前添加 `await` 来标记对异步函数的调用。
 
 ```swift
 func fetchUsername(from server: String) async -> String {
@@ -1799,9 +1552,7 @@ func fetchUsername(from server: String) async -> String {
   ```
 -->
 
-Use `async let` to call an asynchronous function,
-letting it run in parallel with other asynchronous code.
-When you use the value it returns, write `await`.
+使用 `async let` 来调用异步函数，并让它与其它异步函数并行运行。如果要使用该异步函数的返回值，需要写上 `await`。
 
 ```swift
 func connectUser(to server: String) async {
@@ -1825,14 +1576,13 @@ func connectUser(to server: String) async {
   ```
 -->
 
-Use `Task` to call asynchronous functions from synchronous code,
-without waiting for them to return.
+使用 `Task` 从同步代码中调用异步函数且不等待它们的返回结果。
 
 ```swift
 Task {
     await connectUser(to: "primary")
 }
-// Prints "Hello Guest, user ID 97"
+// 输出 "Hello Guest, user ID 97"
 ```
 
 <!--
@@ -1847,7 +1597,7 @@ Task {
   ```
 -->
 
-Use task groups to structure concurrent code.
+使用任务组可以更好地组织并发代码。
 
 ```swift
 let userIDs = await withTaskGroup(of: Int.self) { group in
@@ -1865,9 +1615,7 @@ let userIDs = await withTaskGroup(of: Int.self) { group in
 }
 ```
 
-Actors are similar to classes,
-except they ensure that different asynchronous functions
-can safely interact with an instance of the same actor at the same time.
+actor 和类很相似，但它可以确保同一时刻不同的异步函数可以安全地与同一个 actor 的实例交互。
 
 ```swift
 actor ServerConnection {
@@ -1875,7 +1623,7 @@ actor ServerConnection {
     private var activeUsers: [Int] = []
     func connect() async -> Int {
         let userID = await fetchUserID(from: server)
-        // ... communicate with server ...
+        // ... 和服务器通讯 ...
         activeUsers.append(userID)
         return userID
     }
@@ -1897,10 +1645,7 @@ actor ServerConnection {
   ```
 -->
 
-When you call a method on an actor or access one of its properties,
-you mark that code with `await`
-to indicate that it might have to wait for other code
-that's already running on the actor to finish.
+当调用一个 actor 实例的方法或访问其属性时，用 `await` 来表示可能需要等待已经在 actor 实例中运行的其他代码完成。
 
 ```swift
 let server = ServerConnection()
@@ -1917,9 +1662,9 @@ let userID = await server.connect()
 -->
 
 
-## Protocols and Extensions
+## 协议和扩展
 
-Use `protocol` to declare a protocol.
+使用 `protocol` 来声明一个协议。
 
 ```swift
 protocol ExampleProtocol {
@@ -1939,7 +1684,7 @@ protocol ExampleProtocol {
   ```
 -->
 
-Classes, enumerations, and structures can all adopt protocols.
+类、枚举和结构体都可以遵循协议。
 
 <!--
   REFERENCE
@@ -2003,23 +1748,11 @@ let bDescription = b.simpleDescription
   ```
 -->
 
-> Experiment: Add another requirement to `ExampleProtocol`.
-> What changes do you need to make
-> to `SimpleClass` and `SimpleStructure`
-> so that they still conform to the protocol?
+> 练习: 给 `ExampleProtocol` 增加一个要求。你需要怎么修改 `SimpleClass` 和 `SimpleStructure` 才能保证它们仍旧遵循这个协议？
 
-Notice the use of the `mutating` keyword
-in the declaration of `SimpleStructure`
-to mark a method that modifies the structure.
-The declaration of `SimpleClass` doesn't need
-any of its methods marked as mutating
-because methods on a class can always modify the class.
+注意在 `SimpleStructure` 的声明中，使用了 `mutating` 关键字来标记那些会修改结构体的方法。而 `SimpleClass` 的声明中不需要将其方法标记为 `mutating`，因为类的方法总是可以修改类本身。
 
-Use `extension` to add functionality to an existing type,
-such as new methods and computed properties.
-You can use an extension to add protocol conformance
-to a type that's declared elsewhere,
-or even to a type that you imported from a library or framework.
+可以使用 `extension` 为已有的类型添加新功能，比如新的方法和计算属性。扩展（extension）还可以为在其他地方声明的类型添加需要遵循的协议，包括那些从库或框架中导入的类型。
 
 ```swift
 extension Int: ExampleProtocol {
@@ -2031,7 +1764,7 @@ extension Int: ExampleProtocol {
     }
  }
 print(7.simpleDescription)
-// Prints "The number 7"
+// 输出 "The number 7"
 ```
 
 <!--
@@ -2051,21 +1784,15 @@ print(7.simpleDescription)
   ```
 -->
 
-> Experiment: Write an extension for the `Double` type
-> that adds an `absoluteValue` property.
+> 练习: 给 `Double` 类型写一个扩展，添加一个 `absoluteValue` 属性。
 
-You can use a protocol name just like any other named type ---
-for example, to create a collection of objects
-that have different types
-but that all conform to a single protocol.
-When you work with values whose type is a boxed protocol type,
-methods outside the protocol definition aren't available.
+你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都遵循同一个协议的对象集合。当你处理的是一个封装的协议类型时，协议外定义的方法不可用。
 
 ```swift
 let protocolValue: any ExampleProtocol = a
 print(protocolValue.simpleDescription)
-// Prints "A very simple class.  Now 100% adjusted."
-// print(protocolValue.anotherProperty)  // Uncomment to see the error
+// 输出 "A very simple class.  Now 100% adjusted."
+// print(protocolValue.anotherProperty)  // 去掉注释可以看到错误
 ```
 
 <!--
@@ -2079,16 +1806,11 @@ print(protocolValue.simpleDescription)
   ```
 -->
 
-Even though the variable `protocolValue`
-has a runtime type of `SimpleClass`,
-the compiler treats it as the given type of `ExampleProtocol`.
-This means that you can't accidentally access
-methods or properties that the class implements
-in addition to its protocol conformance.
+尽管变量 `protocolValue` 的运行时类型是 `SimpleClass`，但编译器还是会将其视为 `ExampleProtocol` 类型。这意味着你不能访问在协议之外的方法或者属性。
 
-## Error Handling
+## 错误处理
 
-You represent errors using any type that adopts the `Error` protocol.
+你可以使用任何遵循 `Error` 协议的类型来表示错误。
 
 <!--
   REFERENCE
@@ -2129,11 +1851,7 @@ enum PrinterError: Error {
   ```
 -->
 
-Use `throw` to throw an error
-and `throws` to mark a function that can throw an error.
-If you throw an error in a function,
-the function returns immediately and the code that called the function
-handles the error.
+使用 `throw` 来抛出错误，并使用 `throws` 标记可能抛出错误的函数。如果在函数中抛出错误，函数会立即返回，并由调用该函数的代码来处理这个错误。
 
 ```swift
 func send(job: Int, toPrinter printerName: String) throws -> String {
@@ -2157,13 +1875,7 @@ func send(job: Int, toPrinter printerName: String) throws -> String {
   ```
 -->
 
-There are several ways to handle errors.
-One way is to use `do`-`catch`.
-Inside the `do` block,
-you mark code that can throw an error by writing `try` in front of it.
-Inside the `catch` block,
-the error is automatically given the name `error`
-unless you give it a different name.
+处理错误有多种方式，其中一种是使用 `do`-`catch`。在 `do` 代码块中，你需要在可以抛出错误的代码前加上 `try`。在 `catch` 代码块中，除非你另外命名，否则错误会被默认命名为 `error`。
 
 ```swift
 do {
@@ -2172,7 +1884,7 @@ do {
 } catch {
     print(error)
 }
-// Prints "Job sent"
+// 输出 "Job sent"
 ```
 
 <!--
@@ -2189,8 +1901,7 @@ do {
   ```
 -->
 
-> Experiment: Change the printer name to `"Never Has Toner"`,
-> so that the `send(job:toPrinter:)` function throws an error.
+> 练习: 将 printer name 改为 `"Never Has Toner"`，使 `send(job:toPrinter:)` 函数抛出错误。
 
 <!--
   Assertion tests the change that the Experiment box instructs you to make.
@@ -2210,10 +1921,7 @@ do {
   ```
 -->
 
-You can provide multiple `catch` blocks
-that handle specific errors.
-You write a pattern after `catch` just as you do
-after `case` in a switch.
+可以提供多个 `catch` 块来处理特定的错误。和 switch 中 `case` 的写法一样，在 `catch` 后写匹配模式。
 
 <!--
   REFERENCE
@@ -2231,7 +1939,7 @@ do {
 } catch {
     print(error)
 }
-// Prints "Job sent"
+// 输出 "Job sent"
 ```
 
 <!--
@@ -2252,17 +1960,9 @@ do {
   ```
 -->
 
-> Experiment: Add code to throw an error inside the `do` block.
-> What kind of error do you need to throw
-> so that the error is handled by the first `catch` block?
-> What about the second and third blocks?
+> 练习: 在 `do` 代码块中添加抛出错误的代码。你需要抛出哪种错误使其被第一个 `catch` 块处理？对于第二个和第三个 `catch` 块，又需要抛出哪种错误呢？
 
-Another way to handle errors
-is to use `try?` to convert the result to an optional.
-If the function throws an error,
-the specific error is discarded and the result is `nil`.
-Otherwise, the result is an optional containing
-the value that the function returned.
+另一种处理错误的方式是使用 `try?` 将结果转换为可选的。如果函数抛出错误，该错误会被抛弃并且结果为 `nil`。否则，结果会是一个包含函数返回值的可选值。
 
 ```swift
 let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
@@ -2282,12 +1982,7 @@ let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
   ```
 -->
 
-Use `defer` to write a block of code
-that's executed after all other code in the function,
-just before the function returns.
-The code is executed regardless of whether the function throws an error.
-You can use `defer` to write setup and cleanup code next to each other,
-even though they need to be executed at different times.
+使用 `defer` 代码块来表示在函数返回前，函数中最后执行的代码。无论函数是否会抛出错误，这段代码都将执行。使用 `defer` 可以把初始化代码和扫尾代码写在一起，即使它们在不同的时机执行。
 
 ```swift
 var fridgeIsOpen = false
@@ -2306,7 +2001,7 @@ if fridgeContains("banana") {
     print("Found a banana")
 }
 print(fridgeIsOpen)
-// Prints "false"
+// 输出 "false"
 ```
 
 <!--
@@ -2334,10 +2029,9 @@ print(fridgeIsOpen)
   ```
 -->
 
-## Generics
+## 泛型
 
-Write a name inside angle brackets
-to make a generic function or type.
+在尖括号里写一个名字来创建一个泛型函数或者泛型类型。
 
 <!--
   REFERENCE
@@ -2375,11 +2069,10 @@ makeArray(repeating: "knock", numberOfTimes: 4)
   ```
 -->
 
-You can make generic forms of functions and methods,
-as well as classes, enumerations, and structures.
+你可以为函数和方法创建泛型，也可以为类、枚举和结构体创建泛型。
 
 ```swift
-// Reimplement the Swift standard library's optional type
+// 重新实现 Swift 标准库中的可选类型
 enum OptionalValue<Wrapped> {
     case none
     case some(Wrapped)
@@ -2402,12 +2095,7 @@ possibleInteger = .some(100)
   ```
 -->
 
-Use `where` right before the body
-to specify a list of requirements ---
-for example,
-to require the type to implement a protocol,
-to require two types to be the same,
-or to require a class to have a particular superclass.
+在代码主体之前使用 `where` 来指定对类型的一系列要求——例如，要求类型实现特定协议，要求两个类型是相同的，或者要求某个类具有特定的父类。
 
 ```swift
 func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
@@ -2448,12 +2136,9 @@ anyCommonElements([1, 2, 3], [3])
   ```
 -->
 
-> Experiment: Modify the `anyCommonElements(_:_:)` function
-> to make a function that returns an array
-> of the elements that any two sequences have in common.
+> 练习: 修改 `anyCommonElements(_:_:)` 函数，使其返回一个数组，该数组包含任意两个序列中共有的元素。
 
-Writing `<T: Equatable>`
-is the same as writing `<T> ... where T: Equatable`.
+`<T: Equatable>` 和 `<T> ... where T: Equatable` 的写法是等价的。
 
 > Beta Software:
 >
