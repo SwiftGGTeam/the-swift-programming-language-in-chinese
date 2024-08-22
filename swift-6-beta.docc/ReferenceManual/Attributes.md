@@ -587,34 +587,33 @@ repeatLabels(a: "four") // Error
 
 ### dynamicMemberLookup
 
-Apply this attribute to a class, structure, enumeration, or protocol
-to enable members to be looked up by name at runtime.
-The type must implement a `subscript(dynamicMember:)` subscript.
+将此特性应用于类、结构、枚举或协议，
+以便在运行时按名称查找成员。
+该类型必须实现一个 `subscript(dynamicMember:)` 下标
 
-In an explicit member expression,
-if there isn't a corresponding declaration for the named member,
-the expression is understood as a call to
-the type's `subscript(dynamicMember:)` subscript,
-passing information about the member as the argument.
-The subscript can accept a parameter that's either a key path or a member name;
-if you implement both subscripts,
-the subscript that takes key path argument is used.
+在显式成员表达式中，
+如果没有对应的命名成员声明，
+则该表达式被理解为对类型的 `subscript(dynamicMember:)` 下标的调用，
+将有关成员的信息作为参数传递。
+下标可以接受一个参数，
+该参数可以是键路径或成员名称；
+如果您实现了两个下标，
+则使用接受键路径参数的下标。
 
-An implementation of `subscript(dynamicMember:)`
-can accept key paths using an argument of type
+`subscript(dynamicMember:)` 的实现可以接受
 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath),
 [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath),
-or [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath).
-It can accept member names using an argument of a type that conforms to the
-[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) protocol ---
-in most cases, `String`.
-The subscript's return type can be any type.
+或 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath)
+类型的参数来使用键路径。
+它可以接受遵循
+[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)
+协议的的成员名作为参数 --- 通常是 String。
+下标的返回类型可以是任何类型。
 
-Dynamic member lookup by member name
-can be used to create a wrapper type around data
-that can't be type checked at compile time,
-such as when bridging data from other languages into Swift.
-For example:
+通过成员名称的动态成员查找，
+可以创建一个包装类型，
+用于处理在编译时无法进行类型检查的数据，
+例如在将其他语言的数据桥接到 Swift 时。比如：
 
 ```swift
 @dynamicMemberLookup
@@ -664,10 +663,9 @@ print(dynamic == equivalent)
   ```
 -->
 
-Dynamic member lookup by key path
-can be used to implement a wrapper type
-in a way that supports compile-time type checking.
-For example:
+通过键路径的动态成员查找可以实现一种包装类型，
+支持编译时类型检查。
+例如：
 
 ```swift
 struct Point { var x, y: Int }
