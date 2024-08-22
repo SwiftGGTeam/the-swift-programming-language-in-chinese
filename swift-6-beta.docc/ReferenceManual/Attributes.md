@@ -417,10 +417,9 @@ so we don't guarantee in docs that it always happens.
 
 ### discardableResult
 
-Apply this attribute to a function or method declaration
-to suppress the compiler warning
-when the function or method that returns a value
-is called without using its result.
+将此属性应用于函数或方法声明，
+以在调用返回值的函数或方法
+而不使用其结果时抑制编译器警告。
 
 ### dynamicCallable
 
