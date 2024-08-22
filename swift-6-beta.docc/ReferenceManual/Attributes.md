@@ -423,14 +423,13 @@ so we don't guarantee in docs that it always happens.
 
 ### dynamicCallable
 
-Apply this attribute to a class, structure, enumeration, or protocol
-to treat instances of the type as callable functions.
-The type must implement either a `dynamicallyCall(withArguments:)` method,
-a `dynamicallyCall(withKeywordArguments:)` method,
-or both.
+将此特性应用于类、结构、枚举或协议，
+以将该类型的实例视为可调用函数。
+该类型必须实现 `dynamicallyCall(withArguments:)` 方法、
+`dynamicallyCall(withKeywordArguments:)` 方法或两者。
 
-You can call an instance of a dynamically callable type
-as if it's a function that takes any number of arguments.
+您可以像调用函数一样调用动态可调用类型的实例，
+该函数可以接受任意数量的参数。
 
 ```swift
 @dynamicCallable
@@ -487,14 +486,13 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
   ```
 -->
 
-The declaration of the `dynamicallyCall(withArguments:)` method
-must have a single parameter that conforms to the
+`dynamicallyCall(withArguments:)` 方法的声明必须有一个符合
 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral)
-protocol --- like `[Int]` in the example above.
-The return type can be any type.
+协议的单一参数——就像上面的例子中的 `[Int]`。
+返回类型可以是任何类型。
 
-You can include labels in a dynamic method call
-if you implement the `dynamicallyCall(withKeywordArguments:)` method.
+您可以在动态方法调用中包含实参标签，
+如果您实现了 `dynamicallyCall(withKeywordArguments:)` 方法。
 
 ```swift
 @dynamicCallable
@@ -542,30 +540,24 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   ```
 -->
 
-The declaration of the `dynamicallyCall(withKeywordArguments:)` method
-must have a single parameter that conforms to the
-[`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral)
-protocol,
-and the return type can be any type.
-The parameter's [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)
-must be
-[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral).
-The previous example uses [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)
-as the parameter type
-so that callers can include duplicate parameter labels ---
-`a` and `b` appear multiple times in the call to `repeat`.
+`dynamicallyCall(withKeywordArguments:)` 方法的声明
+必须有一个遵循 `ExpressibleByDictionaryLiteral` 协议的单一参数，
+返回类型可以是任何类型。
+参数的 `Key` 必须遵循 `ExpressibleByStringLiteral`。
+前面的例子使用 `KeyValuePairs` 作为参数类型，
+以便调用者可以包含重复的参数标签 ---
+`a` 和 `b` 在对 `repeat` 的调用中出现多次。
 
-If you implement both `dynamicallyCall` methods,
-`dynamicallyCall(withKeywordArguments:)` is called
-when the method call includes keyword arguments.
-In all other cases, `dynamicallyCall(withArguments:)` is called.
+如果您实现了两个 `dynamicallyCall` 方法，
+当方法调用包含关键字参数时，
+将调用 `dynamicallyCall(withKeywordArguments:)`。
+在所有其他情况下，将调用 `dynamicallyCall(withArguments:)`。
 
-You can only call a dynamically callable instance
-with arguments and a return value that match the types you specify
-in one of your `dynamicallyCall` method implementations.
-The call in the following example doesn't compile because
-there isn't an implementation of `dynamicallyCall(withArguments:)`
-that takes `KeyValuePairs<String, String>`.
+您只能使用与您在某个 `dynamicallyCall` 方法实现中
+指定的类型匹配的参数和返回值来调用动态可调用实例。
+以下示例中的调用无法编译，
+因为没有接受`KeyValuePairs<String, String>`的
+`dynamicallyCall(withArguments:)`的实现。
 
 ```swift
 repeatLabels(a: "four") // Error
