@@ -2314,16 +2314,13 @@ struct ArrayBuilder {
 
 ### testable
 
-Apply this attribute to an `import` declaration
-to import that module with changes to its access control
-that simplify testing the module's code.
-Entities in the imported module
-that are marked with the `internal` access-level modifier
-are imported as if they were declared with the `public` access-level modifier.
-Classes and class members
-that are marked with the `internal` or `public` access-level modifier
-are imported as if they were declared with the `open` access-level modifier.
-The imported module must be compiled with testing enabled.
+将此特性应用于导入声明时，
+可以通过修改访问控制来简化对模块代码的测试。
+导入的模块中标记为 `internal` 访问级别的实体
+将被导入并视为 `public` 访问级别声明的实体。
+标记为 `internal` 或 `public` 访问级别的类和类成员
+将被导入并视为 `open` 访问级别声明的实体。
+导入的模块必须在启用了测试的情况下编译。
 
 ### UIApplicationMain
 
