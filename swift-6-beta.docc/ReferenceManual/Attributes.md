@@ -732,7 +732,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 将此特性应用于结构体或枚举声明，
 以限制您对类型所能进行的更改。
 此特性仅在以库演进模式编译时允许。
-库的未来版本不能通过添加、删除或重新排序枚举的case
+库的未来版本不能通过添加、删除或重新排序枚举的成员
 或结构体的存储实例属性来更改其声明。
 这些更改在非冻结类型上是允许的，
 但会破坏冻结类型的 ABI 兼容性。
@@ -817,9 +817,9 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
 -->
 
-对一个冻结的枚举进行的 switch 语句不需要一个 `default` case，
+对一个冻结的枚举进行的 switch 语句不需要一个 `default` 枚举成员，
 如文档中所讨论的 <doc:Statements#Switching-Over-Future-Enumeration-Cases>。
-当在冻结的枚举上进行切换时，包括 `default` 或 `@unknown default` case会产生警告，
+当在冻结的枚举上进行切换时，包括 `default` 或 `@unknown default` 枚举成员会产生警告，
 因为那段代码永远不会被执行。
 
 <!--
