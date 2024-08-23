@@ -1077,20 +1077,20 @@ protocol ProvidesMain {
 
 ### NSApplicationMain
 
-> Deprecated:
-> This attribute is deprecated;
-> use the <doc:Attributes#main> attribute instead.
-> In Swift 6,
-> using this attribute will be an error.
+> 已弃用：
+> 此特性已弃用；
+> 请改用 <doc:Attributes#main> 特性。
+> 在 Swift 6 中，
+> 使用此特性将会导致错误。
 
-Apply this attribute to a class
-to indicate that it's the app delegate.
-Using this attribute is equivalent to calling the
-`NSApplicationMain(_:_:)` function.
+将此特性应用于一个类，
+以指示它是应用程序委托。
+使用此特性等同于调用
+`NSApplicationMain(_:_:)` 函数
 
-If you don't use this attribute,
-supply a `main.swift` file with code at the top level
-that calls the `NSApplicationMain(_:_:)` function as follows:
+如果您不使用此特性，
+请提供一个在顶层调用 `NSApplicationMain(_:_:)` 函数
+的 `main.swift` 文件，如下所示：
 
 ```swift
 import AppKit
@@ -1102,9 +1102,9 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
   which is correct behavior if you call a non-returning function like this.
 -->
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+你编译为可执行文件的 Swift 代码
+最多只能包含一个顶级入口点，
+见 <doc:Declarations#Top-Level-Code> 中的讨论。
 
 ### NSCopying
 
