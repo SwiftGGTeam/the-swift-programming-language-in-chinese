@@ -2345,11 +2345,11 @@ struct ArrayBuilder {
 
 ### unchecked
 
-Apply this attribute to a protocol type
-as part of a type declaration's list of adopted protocols
-to turn off enforcement of that protocol's requirements.
+将此属性应用于协议类型，
+作为类型声明中采用的协议列表的一部分，
+以关闭对该协议要求的强制执行
 
-The only supported protocol is [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
+唯一支持的协议是 [`Sendable`](https://developer.apple.com/documentation/swift/sendable)。
 
 ### usableFromInline
 
