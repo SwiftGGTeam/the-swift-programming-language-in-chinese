@@ -2353,33 +2353,26 @@ struct ArrayBuilder {
 
 ### usableFromInline
 
-Apply this attribute to a
-function, method, computed property, subscript,
-initializer, or deinitializer declaration
-to allow that symbol to be used in inlinable code
-that's defined in the same module as the declaration.
-The declaration must have the `internal` access-level modifier.
-A structure or class marked `usableFromInline`
-can use only types that are public or `usableFromInline` for its properties.
-An enumeration marked `usableFromInline`
-can use only types that are public or `usableFromInline`
-for the raw values and associated values of its cases.
+将此属性应用于函数、方法、计算属性、下标、构造器或析构器声明，
+以允许该符号在与声明位于同一模块中定义的内联代码中使用。
+声明必须具有 `internal` 访问级别修饰符。
+标记为 `usableFromInline` 的结构或类
+只能对其属性使用公共类型或 `usableFromInline` 类型。
+标记为 `usableFromInline` 的枚举
+只能对其枚举成员的原始值和关联值使用公共类型或 `usableFromInline` 类型。
 
-Like the `public` access-level modifier,
-this attribute
-exposes the declaration as part of the module's public interface.
-Unlike `public`,
-the compiler doesn't allow declarations marked with `usableFromInline`
-to be referenced by name in code outside the module,
-even though the declaration's symbol is exported.
-However, code outside the module might still be able
-to interact with the declaration's symbol by using runtime behavior.
+像 `public` 访问级别修饰符一样，
+这个属性将声明暴露为模块公共接口的一部分。
+与 `public` 不同，
+编译器不允许在模块外的代码中按名称引用标记为 `usableFromInline` 的声明，
+即使声明的符号已被导出。
+然而，模块外的代码仍然可以通过使用运行时行为与声明的符号进行交互。
 
-Declarations marked with the `inlinable` attribute
-are implicitly usable from inlinable code.
-Although either `inlinable` or `usableFromInline`
-can be applied to `internal` declarations,
-applying both attributes is an error.
+标记为 `inlinable` 特性的声明
+可以隐式地从可内联代码中使用。
+虽然 `inlinable` 或 `usableFromInline`
+都可以应用于 `internal` 声明，
+但同时应用这两个特性是错误的。
 
 <!--
   - test: `usableFromInline-and-inlinable-is-redundant`
