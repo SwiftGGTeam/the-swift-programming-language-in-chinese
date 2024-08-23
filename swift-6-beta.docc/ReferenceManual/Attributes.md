@@ -2485,9 +2485,9 @@ Swift 提供了以下 Interface Builder 特性：
 
 可发送函数类型是相应的不可发送函数类型的子类型。
 
-## Switch Case Attributes
+## Switch Case 特性
 
-You can apply switch case attributes to switch cases only.
+您只能将 switch case 特性应用于 switch case。
 
 ### unknown
 
