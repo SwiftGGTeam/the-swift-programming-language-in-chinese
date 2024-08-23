@@ -1124,13 +1124,13 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ### NSManaged
 
-Apply this attribute to an instance method or stored variable property
-of a class that inherits from `NSManagedObject`
-to indicate that Core Data dynamically provides its implementation at runtime,
-based on the associated entity description.
-For a property marked with the `NSManaged` attribute,
-Core Data also provides the storage at runtime.
-Applying this attribute also implies the `objc` attribute.
+将此特性应用于从 `NSManagedObject` 继承的类
+的实例方法或存储属性变量，
+以表明 Core Data 会在运行时
+根据关联的实体描述动态提供其实现。
+对于标有 `NSManaged` 特性的属性，
+Core Data 还会在运行时提供存储。
+应用此特性也隐含了 `objc` 特性。
 
 ### objc
 
