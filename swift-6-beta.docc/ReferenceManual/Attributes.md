@@ -1232,20 +1232,19 @@ class ExampleClass: NSObject {
 
 ### objcMembers
 
-Apply this attribute to a class declaration,
-to implicitly apply the `objc` attribute
-to all Objective-C compatible members of the class,
-its extensions, its subclasses, and all of the extensions of its subclasses.
+将此特性应用于类声明，
+以隐式地将 `objc` 特性
+应用于该类、其扩展、其子类
+及其子类的所有扩展的所有与 Objective-C 兼容的成员。
 
-Most code should use the `objc` attribute instead,
-to expose only the declarations that are needed.
-If you need to expose many declarations,
-you can group them in an extension that has the `objc` attribute.
-The `objcMembers` attribute is a convenience for
-libraries that make heavy use of
-the introspection facilities of the Objective-C runtime.
-Applying the `objc` attribute when it isn't needed
-can increase your binary size and adversely affect performance.
+大多数代码应该使用 `objc` 特性，
+以仅暴露所需的声明。
+如果需要暴露多个声明，
+可以将它们分组在一个具有 `objc` 特性的扩展中。
+`objcMembers`特性是一个方便的工具，
+适用于大量使用 Objective-C 运行时的自省功能的库。
+在不需要时应用 `obj`c 特性
+可能会增加您的二进制文件大小并对性能产生不利影响。
 
 <!--
   The binary size comes from the additional thunks
