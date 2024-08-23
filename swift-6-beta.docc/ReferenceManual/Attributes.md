@@ -2400,29 +2400,25 @@ struct ArrayBuilder {
 序列方法使用 `warn_unqualified_access` 特性声明，
 以帮助减少在 `Sequence` 扩展中尝试使用其中一个或另一个时的混淆。
 
-### Declaration Attributes Used by Interface Builder
+### Interface Builder 使用的声明特性
 
-Interface Builder attributes are declaration attributes
-used by Interface Builder to synchronize with Xcode.
-Swift provides the following Interface Builder attributes:
-`IBAction`, `IBSegueAction`, `IBOutlet`,
-`IBDesignable`, and `IBInspectable`.
-These attributes are conceptually the same as their
-Objective-C counterparts.
+Interface Builder 特性是用于 Interface Builder 的声明特性，
+用于与 Xcode 同步。
+Swift 提供了以下 Interface Builder 特性：
+`IBAction`、`IBSegueAction`、`IBOutlet`、
+`IBDesignable`和 `IBInspectable`。
+这些特性在概念上与其 Objective-C 对应项相同。
 
 <!--
   TODO: Need to link to the relevant discussion of these attributes in Objc.
 -->
 
-You apply the `IBOutlet` and `IBInspectable` attributes
-to property declarations of a class.
-You apply the `IBAction` and `IBSegueAction` attribute
-to method declarations of a class
-and the `IBDesignable` attribute to class declarations.
+您将 `IBOutlet` 和 `IBInspectable` 特性应用于类的属性声明。
+您将 `IBAction` 和 `IBSegueAction` 特性应用于类的方法声明，
+并将 `IBDesignable` 特性应用于类声明。
 
-Applying the `IBAction`, `IBSegueAction`, `IBOutlet`,
-`IBDesignable`, or `IBInspectable` attribute
-also implies the `objc` attribute.
+应用 `IBAction`, `IBSegueAction`, `IBOutlet`,
+`IBDesignable`, 或 `IBInspectable` 特性也意味着 `objc` 特性。
 
 ## Type Attributes
 
