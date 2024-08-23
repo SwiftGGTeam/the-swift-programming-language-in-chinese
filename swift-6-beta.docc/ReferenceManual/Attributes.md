@@ -1108,14 +1108,14 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ### NSCopying
 
-Apply this attribute to a stored variable property of a class.
-This attribute causes the property's setter to be synthesized with a *copy*
-of the property's value --- returned by the `copyWithZone(_:)` method --- instead of the
-value of the property itself.
-The type of the property must conform to the `NSCopying` protocol.
+将此特性应用于类的存储属性变量。
+此特性会导致属性的 setter
+被合成为使用通过 `copyWithZone(_:)` 方法
+返回的属性值*副本*，
+而不是属性值本身。
+属性的类型必须符合 NSCopying 协议。
 
-The `NSCopying` attribute behaves in a way similar to the Objective-C `copy`
-property attribute.
+`NSCopying` 特性的行为类似于 Objective-C 的 `copy` 属性特性。
 
 <!--
   TODO: If and when Dave includes a section about this in the Guide,
