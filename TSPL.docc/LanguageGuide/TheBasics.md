@@ -26,6 +26,24 @@ using optional types.
 Optionals say either “there *is* a value, which is *x*”
 or “there *isn't* a value at all”.
 
+XXX OUTLINE XXX
+
+* Swift is a safe language
+  It provides several kinds of safety guarantees
+    - Type safety means you can't accidentally use a value of the wrong type
+      and conversion between types is explicit
+      (use existing text below)
+    - Data safety means no out-of-bounds access, dangling pointers, etc.
+      (Fold discussion of optionals in here too)
+    - Concurrency safety means no overlapping access to shared mutable state
+      Not discussed here -- xref the concurrency chapter
+* Idea of safety: the code either does the right thing,
+  or the program stops with an error.
+  Unsafe code silently does the wrong thing,
+  or muddles on past errors and crashes later,
+  or similar.
+* Writing safe code eliminates categories of errors
+
 Swift is a type-safe language,
 which means the language helps you to be clear about
 the types of values your code works with.
@@ -1804,14 +1822,14 @@ if let definiteString = assumedString {
 
 XXX OUTLINE XXX
 
+* Call this memory safety?
 * “Safe” means the compiler verifies, at compile time:
     - Values are set before being read — no uninitialized data
     - Arrays and buffers are accessed only at valid indexes — no out-of-bounds access
     - Memory is accessed only during the value’s lifetime — no use-after-free errors or wild pointers
     - Access to memory overlaps only in provably safe ways — no races
-* In addition, for programs that use concurrency, XXX
 * When you see APIs whose name starts with “unsafe”
-  this means you take on the responsability for these guarantees
+  this means you take on the responsibility for these guarantees
 
 <!-- XXX Borrow terminology from this blog post
 https://www.swift.org/blog/swift-5.10-released/
