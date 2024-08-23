@@ -1307,15 +1307,15 @@ class ExampleClass: NSObject {
 
 ### propertyWrapper
 
-Apply this attribute to a class, structure, or enumeration declaration
-to use that type as a property wrapper.
-When you apply this attribute to a type,
-you create a custom attribute with the same name as the type.
-Apply that new attribute to a property of a class, structure, or enumeration
-to wrap access to the property through an instance of the wrapper type;
-apply the attribute to a local stored variable declaration
-to wrap access to the variable the same way.
-Computed variables, global variables, and constants can't use property wrappers.
+将此特性应用于类、结构或枚举声明，
+以将该类型用作属性包装。
+当您将此特性应用于某个类型时，
+您会创建一个与该类型同名的自定义特性。
+将该新特性应用于类、结构体的属性或枚举，
+以通过包装类型的实例包装对该属性的访问；
+将特性应用于局部存储变量声明，
+以以相同方式包装对变量的访问。
+计算变量、全局变量和常量不能使用属性包装。
 
 <!--
   - test: `property-wrappers-can-go-on-stored-variable`
@@ -1362,33 +1362,27 @@ Computed variables, global variables, and constants can't use property wrappers.
   ```
 -->
 
-The wrapper must define a `wrappedValue` instance property.
-The *wrapped value* of the property
-is the value that the getter and setter for this property expose.
-In most cases, `wrappedValue` is a computed value,
-but it can be a stored value instead.
-The wrapper defines and manages
-any underlying storage needed by its wrapped value.
-The compiler synthesizes storage for the instance of the wrapper type
-by prefixing the name of the wrapped property with an underscore (`_`) ---
-for example, the wrapper for `someProperty` is stored as `_someProperty`.
-The synthesized storage for the wrapper has an access control level of `private`.
+包装必须定义一个 `wrappedValue` 实例属性。
+该属性的 包装值 是 getter 和 setter 所暴露的值。
+在大多数情况下，*wrappedValue* 是一个计算值，
+但它也可以是一个存储值。
+包装定义并管理其包装值所需的任何底层存储。
+编译器通过在包装属性的名称前加下划线 (`_`)
+来合成包装器类型实例的存储——
+例如，`someProperty` 的包装器存储为 `_someProperty`。
+包装器的合成存储具有 `private` 的访问控制级别。
 
-A property that has a property wrapper
-can include `willSet` and `didSet` blocks,
-but it can't override the compiler-synthesized `get` or `set` blocks.
+一个具有属性包装的属性
+可以包含 willSet 和 didSet 块，
+但它不能覆盖编译器合成的 get 或 set 块。
 
-Swift provides two forms of syntactic sugar
-for initialization of a property wrapper.
-You can use assignment syntax in the definition of a wrapped value
-to pass the expression on the right-hand side of the assignment
-as the argument to the `wrappedValue` parameter
-of the property wrapper's initializer.
-You can also provide arguments to the attribute
-when you apply it to a property,
-and those arguments are passed to the property wrapper's initializer.
-For example, in the code below,
-`SomeStruct` calls each of the initializers that `SomeWrapper` defines.
+Swift 提供了两种语法糖形式用于初始化属性包装。
+您可以在包装值的定义中使用赋值语法，
+将赋值右侧的表达式作为参数传递
+给属性包装构造器的 wrappedValue 参数。
+您还可以在将特性应用于属性时提供参数，
+这些参数会传递给属性包装的构造器。
+例如，在下面的代码中，SomeStruct 调用 SomeWrapper 定义的每个初始化器。
 
 ```swift
 @propertyWrapper
@@ -1476,18 +1470,16 @@ struct SomeStruct {
   -> e = 30  // Uses the property setter
 -->
 
-The *projected value* for a wrapped property is a second value
-that a property wrapper can use to expose additional functionality.
-The author of a property wrapper type
-is responsible for determining the meaning of its projected value
-and defining the interface that the projected value exposes.
-To project a value from a property wrapper,
-define a `projectedValue` instance property on the wrapper type.
-The compiler synthesizes an identifier for the projected value
-by prefixing the name of the wrapped property with a dollar sign (`$`) ---
-for example, the projected value for `someProperty` is `$someProperty`.
-The projected value has the same access control level
-as the original wrapped property.
+对于一个包装属性，
+*投影值*是一个可以让属性包装用来暴露额外功能的第二个值。
+属性包装类型的作者负责确定其投影值的含义，
+并定义投影值所暴露的接口。
+要从属性包装中投影一个值，
+请在包装器类型上定义一个 `projectedValue` 实例属性。
+编译器通过在包装属性的名称前
+加上美元符号（`$`）来合成投影值的标识符——
+例如，`someProperty`的投影值是`$someProperty`。
+投影值具有与原始包装属性相同的访问控制级别。
 
 ```swift
 @propertyWrapper
