@@ -2465,13 +2465,13 @@ Swift 提供了以下 Interface Builder 特性：
 
 ### escaping
 
-Apply this attribute to a parameter's type in a function or method declaration
-to indicate that the parameter's value can be stored for later execution.
-This means that the value is allowed to outlive the lifetime of the call.
-Function type parameters with the `escaping` type attribute
-require explicit use of `self.` for properties or methods.
-For an example of how to use the `escaping` attribute,
-see <doc:Closures#Escaping-Closures>.
+将此特性应用于函数或方法声明中的参数类型，
+以指示参数的值可以存储以供后续执行。
+这意味着该值可以超出调用的生命周期。
+具有 `escaping` 类型特性的函数类型参数
+需要对特性或方法显式使用 `self.`。
+有关如何使用 `escaping` 特性的示例，
+见 <doc:Closures#Escaping-Closures>。
 
 ### Sendable
 
