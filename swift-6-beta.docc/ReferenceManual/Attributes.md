@@ -2286,11 +2286,10 @@ struct ArrayBuilder {
 
 ### requires_stored_property_inits
 
-Apply this attribute to a class declaration
-to require all stored properties within the class
-to provide default values as part of their definitions.
-This attribute is inferred for any class
-that inherits from `NSManagedObject`.
+将此特性应用于类声明，
+以要求类中的所有存储特性在其定义中提供默认值。
+对于任何继承自 NSManagedObject 的类，
+都会推断出此特性。
 
 <!--
   - test: `requires_stored_property_inits-requires-default-values`
