@@ -2324,30 +2324,24 @@ struct ArrayBuilder {
 
 ### UIApplicationMain
 
-> Deprecated:
-> This attribute is deprecated;
-> use the <doc:Attributes#main> attribute instead.
-> In Swift 6,
-> using this attribute will be an error.
+> 已弃用：此特性已弃用；
+> 请改用 <doc:Attributes#main> 特性。
+> 在 Swift 6 中，使用此特性将会导致错误。
 
-Apply this attribute to a class
-to indicate that it's the app delegate.
-Using this attribute is equivalent to calling the
-`UIApplicationMain` function and
-passing this class's name as the name of the delegate class.
+将此特性应用于一个类，
+以指示它是应用程序委托。
+使用此特性相当于调用 `UIApplicationMain` 函数，
+并将此类的名称作为委托类的名称传递。
 
-If you don't use this attribute,
-supply a `main.swift` file with code at the top level
-that calls the [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) function.
-For example,
-if your app uses a custom subclass of `UIApplication`
-as its principal class,
-call the `UIApplicationMain(_:_:_:_:)` function
-instead of using this attribute.
+如果您不使用此特性，
+请提供一个包含顶层代码的 `main.swift` 文件，
+该代码调用 `UIApplicationMain(_:_:_:_:)` 函数。
+例如，如果您的应用使用自定义的 `UIApplication` 子类作为其主类，
+请调用 `UIApplicationMain(_:_:_:_:)` 函数，
+而不是使用此特性。
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+编译为可执行文件的 Swift 代码最多只能包含一个顶级入口点，
+正如文档中所讨论的 <doc:Declarations#Top-Level-Code>。
 
 ### unchecked
 
