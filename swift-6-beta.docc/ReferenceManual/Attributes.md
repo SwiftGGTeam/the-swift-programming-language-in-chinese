@@ -1255,57 +1255,55 @@ class ExampleClass: NSObject {
 
 ### preconcurrency
 
-Apply this attribute to a declaration,
-to suppress strict concurrency checking.
-You can apply this attribute
-to the following kinds of declarations:
+将此特性应用于声明，
+以抑制严格的并发检查。
+您可以将此特性应用于以下类型的声明：
 
-- Imports
-- Structures, classes, and actors
-- Enumerations and enumeration cases
-- Protocols
-- Variables and constants
-- Subscripts
-- Initializers
-- Functions
+- 导入
+- 结构体, 类和 actors
+- 枚举和枚举成员
+- 协议
+- 变量和常量
+- 下标
+- 构造器
+- 函数
 
-On an import declaration,
-this attribute reduces the strictness of concurrency checking
-for code that uses types from the imported module.
-Specifically,
-types from the imported module
-that aren't explicitly marked as nonsendable
-can be used in a context that requires sendable types.
+在导入声明中，
+此特性降低了对使用导入模块类型
+的代码的并发检查的严格性。
+具体而言，
+未明确标记为不可发送的导入模块类型
+可以在需要可发送类型的上下文中使用。
 
-On other declarations,
-this attribute reduces the strictness of concurrency checking
-for code that uses the symbol being declared.
-When you use this symbol in a scope that has minimal concurrency checking,
-concurrency-related constraints specified by that symbol,
-such as `Sendable` requirements or global actors,
-aren't checked.
+在其他声明中，
+此特性降低了对使用被声明符号的代码
+的并发检查的严格性。
+当您在具有最小并发检查的范围内
+使用此符号时，
+该符号指定的与并发相关的约束，
+例如 Sendable 要求或全局演员，
+将不会被检查。
 
-You can use this attribute as follows,
-to aid in migrating code to strict concurrency checking:
+您可以按如下方式使用此特性，
+以帮助将代码迁移到严格的并发检查：
 
-1. Enable strict checking.
-1. Annotate imports with the `preconcurrency` attribute
-   for modules that haven't enabled strict checking.
-1. After migrating a module to strict checking,
-   remove the `preconcurrency` attribute.
-   The compiler warns you about
-   any places where the `preconcurrency` attribute on an import
-   no longer has an effect and should be removed.
+1. 启用严格检查。
+1. 对尚未启用严格检查的模块，
+   用 `preconcurrency` 特性注释导入。
+1. 在将模块迁移到严格检查后，
+   移除 `preconcurrency` 特性。
+   编译器会警告您关于导入中 `preconcurrency` 特性
+   不再有效并应被移除的任何地方。
 
-For other declarations,
-add the `preconcurrency` attribute
-when you add concurrency-related constraints to the declaration,
-if you still have clients
-that haven't migrated to strict checking.
-Remove the `preconcurrency` attribute after all your clients have migrated.
+对于其他声明，
+当您在声明中添加与并发相关的约束时，
+如果您仍有未迁移到严格检查的客户端，
+请添加 `preconcurrency` 特性。
+在所有客户端迁移后，
+删除 `preconcurrency` 特性。
 
-Declarations from Objective-C are always imported
-as if they were marked with the `preconcurrency` attribute.
+来自 Objective-C 的声明
+在导入时始终被视为带有 `preconcurrency` 特性标记。
 
 ### propertyWrapper
 
