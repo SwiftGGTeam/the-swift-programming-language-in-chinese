@@ -1541,20 +1541,16 @@ s.$x.wrapper  // WrapperWithProjection value
 有关如何使用 resultBuilder 属性的示例，
 见 <doc:AdvancedOperators#Result-Builders>。
 
-#### Result-Building Methods
+#### 结果构建方法
 
-A result builder implements static methods described below.
-Because all of the result builder's functionality
-is exposed through static methods,
-you don't ever initialize an instance of that type.
-A result builder must implement either the `buildBlock(_:)` method
-or both the `buildPartialBlock(first:)`
-and `buildPartialBlock(accumulated:next:)` methods.
-The other methods ---
-which enable additional functionality in the DSL ---
-are optional.
-The declaration of a result builder type
-doesn't actually have to include any protocol conformance.
+结果构建器实现了以下描述的静态方法。
+由于结果构建器的所有功能都是通过静态方法暴露的，
+因此您永远不需要初始化该类型的实例。
+结果构建器必须实现 `buildBlock(_:)` 方法，
+或者同时实现 `buildPartialBlock(first:)`
+和 `buildPartialBlock(accumulated:next:)` 方法。
+其他方法（这些方法在 DSL 中启用额外功能）是可选的。
+结果构建器类型的声明实际上不必包含任何协议一致性。
 
 The description of the static methods uses three types as placeholders.
 The type `Expression` is a placeholder
@@ -1567,81 +1563,85 @@ If your result-building methods
 don't specify a type for `Expression` or `FinalResult`,
 they default to being the same as `Component`.
 
-The block-building methods are as follows:
+静态方法的描述中使用了三种类型作为占位符。
+`Expression` 是构建器输入类型的占位符，
+`Component` 是部分结果类型的占位符，
+而 `FinalResult` 是构建器生成的结果类型的占位符。
+你需要用结果构建器实际使用的类型替换这些占位符。
+如果你的结果构建方法没有为 `Expression`
+或 `FinalResult` 指定类型，
+那么它们默认与 `Component` 类型相同。
 
-- term `static func buildBlock(_ components: Component...) -> Component`:
-  Combines an array of partial results into a single partial result.
+块的构建的方法如下：
 
-- term `static func buildPartialBlock(first: Component) -> Component`:
-  Builds a partial result component from the first component.
-  Implement both this method and `buildPartialBlock(accumulated:next:)`
-  to support building blocks one component at a time.
-  Compared to `buildBlock(_:)`,
-  this approach reduces the need for generic overloads
-  that handle different numbers of arguments.
+- `static func buildBlock(_ components: Component...) -> Component`:
+  将一组部分结果组合成一个单一的部分结果。
 
-- term `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
-  Builds a partial result component
-  by combining an accumulated component with a new component.
-  Implement both this method and `buildPartialBlock(first:)`
-  to support building blocks one component at a time.
-  Compared to `buildBlock(_:)`,
-  this approach reduces the need for generic overloads
-  that handle different numbers of arguments.
+- `static func buildPartialBlock(first: Component) -> Component`:
+  从第一个组件构建一个部分结果组件。
+  实现此方法和 `buildPartialBlock(accumulated:next:)`
+  以支持一次构建一个组件的块。
+  与 `buildBlock(_:)` 相比，
+  这种方法减少了处理不同数量参数的泛型重载的需求。
 
-A result builder can implement all three of the block-building methods listed above;
-in that case, availability determines which method is called.
-By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(accumulated:next:)`
-methods. To make Swift call `buildBlock(_:)` instead,
-mark the enclosing declaration as being available
-before the availability you write on `buildPartialBlock(first:)` and
-`buildPartialBlock(accumulated:next:)`.
+- `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
+  通过将一个累积的组件与一个新组件结合，
+  构建一个部分结果组件。
+  实现此方法和 `buildPartialBlock(first:)` 以支持一次构建一个组件的块。
+  与 `buildBlock(_:)` 相比，
+  这种方法减少了处理不同数量参数的泛型重载的需求。
 
-The additional result-building methods are as follows:
+结果构建器可以实现上述列出的所有三种块构建方法；
+在这种情况下，可用性决定调用哪个方法。
+默认情况下，Swift 调用 `buildPartialBlock(first:)`
+和 `buildPartialBlock(accumulated:next:)` 方法。
+要使 Swift 调用 `buildBlock(_:)`，
+请将封闭声明标记为在您为 `buildPartialBlock(first:)`
+和 `buildPartialBlock(accumulated:next:)` 上编写的可用性之前可用。
 
-- term `static func buildOptional(_ component: Component?) -> Component`:
-  Builds a partial result from a partial result that can be `nil`.
-  Implement this method to support `if` statements
-  that don’t include an `else` clause.
+附加的结果构建方法如下：
 
-- term `static func buildEither(first: Component) -> Component`:
-  Builds a partial result whose value varies depending on some condition.
-  Implement both this method and `buildEither(second:)`
-  to support `switch` statements
-  and `if` statements that include an `else` clause.
+`static func buildOptional(_ component: Component?) -> Component`:
+  从可以为 nil 的部分结果构建一个部分结果。
+  实现此方法以支持不包含 `else` 子句的 `if` 语句。
 
-- term `static func buildEither(second: Component) -> Component`:
-  Builds a partial result whose value varies depending on some condition.
-  Implement both this method and `buildEither(first:)`
-  to support `switch` statements
-  and `if` statements that include an `else` clause.
+- `static func buildEither(first: Component) -> Component`:
+  构建一个部分结果，
+  其值根据某些条件而变化。
+  实现此方法和 `buildEither(second:)`
+  以支持 `switch` 语句和包含 `else` 子句的 `if` 语句。
 
-- term `static func buildArray(_ components: [Component]) -> Component`:
-  Builds a partial result from an array of partial results.
-  Implement this method to support `for` loops.
+- `static func buildEither(second: Component) -> Component`:
+  构建一个部分结果，
+  其值根据某些条件而变化。
+  实现此方法和 `buildEither(first:)`
+  以支持 `switch` 语句和包含 `else` 子句的 `if` 语句。
 
-- term `static func buildExpression(_ expression: Expression) -> Component`:
-  Builds a partial result from an expression.
-  You can implement this method to perform preprocessing ---
-  for example, converting expressions to an internal type ---
-  or to provide additional information for type inference at use sites.
+- `static func buildArray(_ components: [Component]) -> Component`:
+  从部分结果的数组构建部分结果。
+  实现此方法以支持 `for` 循环。
 
-- term `static func buildFinalResult(_ component: Component) -> FinalResult`:
-  Builds a final result from a partial result.
-  You can implement this method as part of a result builder
-  that uses a different type for partial and final results,
-  or to perform other postprocessing on a result before returning it.
+- `static func buildExpression(_ expression: Expression) -> Component`:
+  从表达式构建部分结果。
+  您可以实现此方法以执行预处理——例如，
+  将表达式转换为内部类型——
+  或在使用站提供额外的信息以进行类型推断。
 
-- term `static func buildLimitedAvailability(_ component: Component) -> Component`:
-  Builds a partial result that erases type information.
-  You can implement this method to prevent type information
-  from propagating outside a compiler-control statement
-  that performs an availability check.
+- `static func buildFinalResult(_ component: Component) -> FinalResult`:
+  从部分结果构建最终结果。
+  您可以将此方法实现为使用不同类型的部分
+  和最终结果的结果构建器的一部分，
+  或者在返回结果之前对结果进行其他后处理。
 
-For example, the code below defines a simple result builder
-that builds an array of integers.
-This code defines `Component` and `Expression` as type aliases,
-to make it easier to match the examples below to the list of methods above.
+- `static func buildLimitedAvailability(_ component: Component) -> Component`:
+  构建一个擦除类型信息的部分结果。
+  您可以实现此方法，
+  以防止类型信息在执行可用性检查的编译器控制语句之外传播。
+
+例如，下面的代码定义了一个简单的结果构建器，
+用于构建一个整数数组。
+此代码将 `Component` 和 `Expression` 定义为类型别名，
+以便更容易将下面的示例与上面的函数列表进行匹配。
 
 ```swift
 @resultBuilder
@@ -1704,16 +1704,16 @@ struct ArrayBuilder {
   ```
 -->
 
-#### Result Transformations
+#### 结果转换
 
-The following syntactic transformations are applied recursively
-to turn code that uses result-builder syntax
-into code that calls the static methods of the result builder type:
+以下语法转换递归地应用于
+将使用结果构建器语法的代码
+转换为调用结果构建器类型的静态方法的代码：
 
-- If the result builder has a `buildExpression(_:)` method,
-  each expression becomes a call to that method.
-  This transformation is always first.
-  For example, the following declarations are equivalent:
+- 如果结果构建器有一个 `buildExpression(_:)` 方法，
+  则每个表达式都变成对该方法的调用。
+  这个转换总是首先进行。
+  例如，以下声明是等价的：
 
   ```swift
   @ArrayBuilder var builderNumber: [Int] { 10 }
@@ -1730,24 +1730,23 @@ into code that calls the static methods of the result builder type:
     >> assert(builderNumber == manualNumber)
     ```
   -->
-- An assignment statement is transformed like an expression,
-  but is understood to evaluate to `()`.
-  You can define an overload of `buildExpression(_:)`
-  that takes an argument of type `()` to handle assignments specifically.
-- A branch statement that checks an availability condition
-  becomes a call to the `buildLimitedAvailability(_:)` method,
-  if that method is implemented.
-  If you don't implement `buildLimitedAvailability(_:)`,
-  then branch statements that check availability
-  use the same transformations as other branch statements.
-  This transformation happens before the transformation into a call to
-  `buildEither(first:)`, `buildEither(second:)`, or `buildOptional(_:)`.
+- 赋值语句的转换方式类似于表达式，
+  但被理解为计算为 `()`。
+  您可以定义一个重载的 `buildExpression(_:)`，
+  该重载接受类型为 `()` 的参数，以专门处理赋值。
+- 当分支语句检查可用性条件时，
+  如果实现了 `buildLimitedAvailability(_:)` 方法，
+  该分支语句将被转换为对 `buildLimitedAvailability(_:)` 方法的调用。
+  如果未实现 `buildLimitedAvailability(_:)` 方法，
+  那么检查可用性的分支语句将使用与其他分支语句相同的转换。
+  这种转换发生在转换为调用
+  `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)`
+  方法之前。
 
-  You use the `buildLimitedAvailability(_:)` method to erase type information
-  that changes depending on which branch is taken.
-  For example,
-  the `buildEither(first:)` and  `buildEither(second:)` methods below
-  use a generic type that captures type information about both branches.
+  您使用 `buildLimitedAvailability(_:)` 方法
+  来擦除根据所采取的分支而变化的类型信息。
+  例如，下面的 `buildEither(first:)` 和 `buildEither(second:)` 方法
+  使用一个泛型类型，该类型捕获有关两个分支的类型信息。
 
   ```swift
   protocol Drawable {
@@ -1787,7 +1786,7 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  However, this approach causes a problem in code that has availability checks:
+  然而，这种方法在具有可用性检查的代码中会导致问题：
 
   ```swift
   @available(macOS 99, *)
@@ -1808,18 +1807,18 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  In the code above,
-  `FutureText` appears as part of the type of `brokenDrawing`
-  because it's one of the types in the `DrawEither` generic type.
-  This could cause your program to crash if `FutureText`
-  isn't available at runtime,
-  even in the case where that type is explicitly not being used.
+  在上面的代码中，
+  `FutureText` 作为 `brokenDrawing` 的一种类型出现，
+  因为它是 `DrawEither` 泛型类型中的一种。
+  如果在运行时 `FutureText` 不可用，
+  即使在该类型显式未被使用的情况下，
+  这可能会导致您的程序崩溃。
 
-  To solve this problem,
-  implement a `buildLimitedAvailability(_:)` method
-  to erase type information by returning a type that's always available.
-  For example, the code below builds an `AnyDrawable` value
-  from its availability check.
+  为了解决这个问题，
+  实现一个 `buildLimitedAvailability(_:)` 方法，
+  通过返回一个始终可用的类型来擦除类型信息。
+  例如，
+  下面的代码通过可用性检查构建一个 `AnyDrawable` 值。
 
   ```swift
   struct AnyDrawable: Drawable {
@@ -1844,22 +1843,19 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-- A branch statement becomes a series of nested calls to the
-  `buildEither(first:)` and `buildEither(second:)` methods.
-  The statements' conditions and cases are mapped onto
-  the leaf nodes of a binary tree,
-  and the statement becomes
-  a nested call to the `buildEither` methods
-  following the path to that leaf node from the root node.
+- 一个分支语句变成了一系列对 `buildEither(first:)`
+  和 `buildEither(second:)` 方法的嵌套调用。
+  语句的条件和分支情况被映射到二叉树的叶子节点上，
+  语句变成了一个嵌套调用buildEither方法，
+  沿着从根节点到该叶子节点的路径。
 
-  For example, if you write a switch statement that has three cases,
-  the compiler uses a binary tree with three leaf nodes.
-  Likewise,
-  because the path from the root node to the second case is
-  "second child" and then "first child",
-  that case becomes a nested call like
-  `buildEither(first: buildEither(second: ... ))`.
-  The following declarations are equivalent:
+  例如，如果您编写一个包含三个分支的 switch 语句，
+  编译器将使用一个具有三个叶节点的二叉树。
+  同样，由于从根节点到第二个案例的路径是第二个子节点”，
+  然后是“第一个子节点”，
+  该分支变成了一个嵌套调用，
+  如 `buildEither(first: buildEither(second: ... ))`。
+  以下声明是等效的：
 
   ```swift
   let someNumber = 19
@@ -1924,13 +1920,13 @@ into code that calls the static methods of the result builder type:
     << Building first... [32]
     ```
   -->
-- A branch statement that might not produce a value,
-  like an `if` statement without an `else` clause,
-  becomes a call to `buildOptional(_:)`.
-  If the `if` statement's condition is satisfied,
-  its code block is transformed and passed as the argument;
-  otherwise, `buildOptional(_:)` is called with `nil` as its argument.
-  For example, the following declarations are equivalent:
+- 一个可能不产生值的分支语句，
+  比如没有 `else` 子句的 `if` 语句，
+  变成了对 `buildOptional(_:)` 的调用。
+  如果 `if` 语句的条件满足，
+  它的代码块会被转换并作为参数传递；
+  否则，`buildOptional(_:)` 会以 `nil` 作为参数被调用。
+  例如，以下声明是等价的：
 
   ```swift
   @ArrayBuilder var builderOptional: [Int] {
@@ -1963,16 +1959,12 @@ into code that calls the static methods of the result builder type:
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- If the result builder implements
-  the `buildPartialBlock(first:)`
-  and `buildPartialBlock(accumulated:next:)` methods,
-  a code block or `do` statement becomes a call to those methods.
-  The first statement inside of the block
-  is transformed to become an argument
-  to the `buildPartialBlock(first:)` method,
-  and the remaining statements become nested calls
-  to the `buildPartialBlock(accumulated:next:)` method.
-  For example, the following declarations are equivalent:
+- 如果结果构建器实现了 `buildPartialBlock(first:)`
+  和 `buildPartialBlock(accumulated:next:)` 方法，
+  则代码块或 `do` 语句将变成对这些方法的调用。
+  块内的第一条语句被转换为 `buildPartialBlock(first:)` 方法的一个参数，
+  其余语句则变成对 `buildPartialBlock(accumulated:next:)` 方法的嵌套调用。
+  例如，以下声明是等效的：
 
   ```swift
   struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
@@ -2043,12 +2035,10 @@ into code that calls the static methods of the result builder type:
     >> assert(type(of: builderBlock) == type(of: manualResult))
     ```
   -->
-- Otherwise, a code block or `do` statement
-  becomes a call to the `buildBlock(_:)` method.
-  Each of the statements inside of the block is transformed,
-  one at a time,
-  and they become the arguments to the `buildBlock(_:)` method.
-  For example, the following declarations are equivalent:
+- 否则，代码块或 `do` 语句会变成对 `buildBlock(_:)` 方法的调用。
+  块内的每个语句都会逐个转换，
+  并成为 `buildBlock(_:)` 方法的参数。
+  例如，以下声明是等价的。
 
   ```swift
   @ArrayBuilder var builderBlock: [Int] {
@@ -2083,12 +2073,13 @@ into code that calls the static methods of the result builder type:
     >> assert(builderBlock == manualBlock)
     ```
   -->
-- A `for` loop becomes a temporary variable, a `for` loop,
-  and call to the `buildArray(_:)` method.
-  The new `for` loop iterates over the sequence
-  and appends each partial result to that array.
-  The temporary array is passed as the argument in the `buildArray(_:)` call.
-  For example, the following declarations are equivalent:
+- 一个 `for` 循环变成一个临时变量，
+  一个 `for` 循环，
+  以及对 `buildArray(_:)` 方法的调用。
+  新的 `for` 循环遍历序列，
+  并将每个部分结果附加到该数组中。
+  临时数组作为参数传递给 `buildArray(_:)` 调用。
+  例如，以下声明是等价的：
 
   ```swift
   @ArrayBuilder var builderArray: [Int] {
@@ -2125,9 +2116,9 @@ into code that calls the static methods of the result builder type:
     >> assert(builderArray == manualArray)
     ```
   -->
-- If the result builder has a `buildFinalResult(_:)` method,
-  the final result becomes a call to that method.
-  This transformation is always last.
+- 如果结果构建器有一个 `buildFinalResult(_:)` 方法，
+  则最终结果变为对该方法的调用。
+  此转换始终是最后进行的
 
 <!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
@@ -2236,29 +2227,24 @@ into code that calls the static methods of the result builder type:
   ```
 -->
 
-Although the transformation behavior is described in terms of temporary variables,
-using a result builder doesn't actually create any new declarations
-that are visible from the rest of your code.
+尽管转换行为是通过临时变量来描述的，
+但使用结果构建器实际上并不会
+创建任何在代码其他部分可见的新声明。
 
-You can't use
-`break`, `continue`, `defer`, `guard`, or `return` statements,
-`while` statements,
-or `do`-`catch` statements
-in the code that a result builder transforms.
+您不能在结果构建器转换的代码中
+使用 `break`、`continue`、`defer`、`guard`
+或 `return` 语句、`while` 语句或 `do-catch` 语句。
 
-The transformation process doesn't change declarations in the code,
-which lets you use temporary constants and variables
-to build up expressions piece by piece.
-It also doesn't change
-`throw` statements,
-compile-time diagnostic statements,
-or closures that contain a `return` statement.
+转换过程不会改变代码中的声明，
+这使得您可以使用临时常量和变量逐步构建表达式。
+它也不会改变throw语句、
+编译时诊断语句或包含return语句的闭包。
 
-Whenever possible, transformations are coalesced.
-For example, the expression `4 + 5 * 6` becomes
-`buildExpression(4 + 5 * 6)` rather multiple calls to that function.
-Likewise, nested branch statements become
-a single binary tree of calls to the `buildEither` methods.
+每当可能时，变换会被合并。
+例如，表达式 `4 + 5 * 6`
+变为 `buildExpression(4 + 5 * 6)`，
+而不是多次调用该函数。
+同样，嵌套的分支语句变为对 buildEither 方法的单一二叉树调用。
 
 <!--
   - test: `result-builder-transform-complex-expression`
@@ -2283,23 +2269,20 @@ a single binary tree of calls to the `buildEither` methods.
   ```
 -->
 
-#### Custom Result-Builder Attributes
+#### 自定义结果构建器特性
 
-Creating a result builder type creates a custom attribute with the same name.
-You can apply that attribute in the following places:
+创建结果构建器类型会创建一个同名的自定义特性。您可以在以下位置应用该特性：
 
-- On a function declaration,
-  the result builder builds the body of the function.
-- On a variable or subscript declaration that includes a getter,
-  the result builder builds the body of the getter.
-- On a parameter in a function declaration,
-  the result builder builds the body of a closure
-  that's passed as the corresponding argument.
+- 在函数声明中，
+  结果构建器构建函数的主体。
+- 在包含 getter 的变量或下标声明中，
+  结果构建器构建 getter 的主体
+- 在函数声明中的一个参数上，
+  结果构建器构建一个作为相应参数传递的闭包的主体。
 
-Applying a result builder attribute doesn't impact ABI compatibility.
-Applying a result builder attribute to a parameter
-makes that attribute part of the function's interface,
-which can affect source compatibility.
+应用结果构建器特性不会影响 ABI 兼容性。
+将结果构建器特性应用于参数使该特性成为函数接口的一部分，
+这可能会影响源兼容性。
 
 ### requires_stored_property_inits
 
