@@ -2435,37 +2435,33 @@ Swift 提供了以下 Interface Builder 特性：
 
 ### convention
 
-Apply this attribute to the type of a function
-to indicate its calling conventions.
+将此特性应用于函数的类型，以指示其调用约定。
 
-The `convention` attribute always appears with
-one of the following arguments:
+`convention` 特性总是与以下参数之一一起出现：
 
-- The `swift` argument indicates a Swift function reference.
-  This is the standard calling convention for function values in Swift.
-- The `block` argument indicates an Objective-C compatible block reference.
-  The function value is represented as a reference to the block object,
-  which is an `id`-compatible Objective-C object that embeds its invocation
-  function within the object.
-  The invocation function uses the C calling convention.
-- The `c` argument indicates a C function reference.
-  The function value carries no context and uses the C calling convention.
+- `swift` 参数表示一个 Swift 函数引用。这是 Swift 中函数值的标准调用约定。
+- `block` 参数表示一个与 Objective-C 兼容的块引用。
+  函数值表示为对块对象的引用，
+  该对象是一个 `id` 类型兼容的 Objective-C 对象，
+  嵌入了其调用函数。
+  调用函数使用 C 调用约定。
+- `c` 参数表示一个 C 函数引用。函数值不携带上下文，并使用 C 调用约定。
 
 <!--
   Note: @convention(thin) is private, even though it doesn't have an underscore
   https://forums.swift.org/t/12087/6
 -->
 
-With a few exceptions,
-a function of any calling convention can be used
-when a function any other calling convention is needed.
-A nongeneric global function,
-a local function that doesn't capture any local variables,
-or a closure that doesn't capture any local variables
-can be converted to the C calling convention.
-Other Swift functions can't be converted to the C calling convention.
-A function with the Objective-C block calling convention
-can't be converted to the C calling convention.
+除了少数例外，
+任何调用约定的函数都
+可以在需要其他调用约定的函数时使用。
+一个非泛型的全局函数、
+一个不捕获任何局部变量的局部函数，
+或者一个不捕获任何局部变量的闭包
+可以转换为 C 调用约定。
+其他 Swift 函数无法转换为 C 调用约定。
+具有 Objective-C 块调用约定的函数
+无法转换为 C 调用约定。
 
 ### escaping
 
