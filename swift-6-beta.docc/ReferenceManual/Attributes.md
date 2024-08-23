@@ -893,7 +893,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 将此特性应用于
 函数、方法、计算属性、下标、
-便利初始化器或析构器声明，
+便利构造器或析构器声明，
 以将该声明的实现公开为模块的公共接口的一部分。
 编译器可以允许在调用位置
 用符号实现的副本替换对可内联符号的调用。
@@ -1051,7 +1051,7 @@ protocol ProvidesMain {
 
 ### nonobjc
 
-将此特性应用于方法、属性、下标或初始化器声明，
+将此特性应用于方法、属性、下标或构造器声明，
 以抑制隐式 `objc` 特性。
 `nonobjc` 特性告诉编译器
 此声明在 Objective-C 代码中不可用，
@@ -1066,7 +1066,7 @@ protocol ProvidesMain {
 来解决标记为 `objc` 特性的类中
 的桥接方法的循环问题，
 并允许在标记为 `objc` 特性的类中
-重载方法和初始化器。
+重载方法和构造器。
 
 标记为 `nonobjc` 特性的方法
 不能被标记为 `objc` 特性的方法重写。
