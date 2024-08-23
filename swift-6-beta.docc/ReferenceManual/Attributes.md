@@ -1134,63 +1134,61 @@ Core Data 还会在运行时提供存储。
 
 ### objc
 
-Apply this attribute to any declaration that can be represented in Objective-C ---
-for example, nonnested classes, protocols,
-nongeneric enumerations (constrained to integer raw-value types),
-properties and methods (including getters and setters) of classes,
-protocols and optional members of a protocol,
-initializers, and subscripts.
-The `objc` attribute tells the compiler
-that a declaration is available to use in Objective-C code.
+将此特性应用于任何可以用 Objective-C 表示的声明——
+例如，非嵌套类、协议、
+非泛型枚举（限制为整数原始值类型）、
+类的属性和方法（包括 getter 和 setter）、
+协议的可选成员、构造化器和下标。
+`objc` 特性告诉编译器该声明可以在 Objective-C 代码中使用。
 
-Applying this attribute to an extension
-has the same effect as
-applying it to every member of that extension
-that isn't explicitly marked with the `nonobjc` attribute.
+将此特性应用于扩展的效果
+与将其应用于该扩展中
+未明确标记为 `nonobjc` 特性
+的每个成员相同。
 
-The compiler implicitly adds the `objc` attribute
-to subclasses of any class defined in Objective-C.
-However, the subclass must not be generic,
-and must not inherit from any generic classes.
-You can explicitly add the `objc` attribute
-to a subclass that meets these criteria,
-to specify its Objective-C name as discussed below.
-Protocols that are marked with the `objc` attribute can't inherit
-from protocols that aren't marked with this attribute.
+编译器隐式地将 `objc` 特性
+添加到任何在 Objective-C 中
+定义的类的子类中。
+然而，子类不能是泛型的，
+也不能继承任何泛型类。
+您可以显式地将 `objc` 特性添加
+到符合这些标准的子类，
+以指定其 Objective-C 名称，
+如下所述。
+标记为 `objc` 特性的协议
+不能继承未标记此特性的协议
 
-The `objc` attribute is also implicitly added in the following cases:
+`objc` 特性在以下情况下也会被隐式添加：
 
-- The declaration is an override in a subclass,
-  and the superclass's declaration has the `objc` attribute.
-- The declaration satisfies a requirement
-  from a protocol that has the `objc` attribute.
-- The declaration has the `IBAction`, `IBSegueAction`, `IBOutlet`,
-  `IBDesignable`, `IBInspectable`,
-  `NSManaged`, or `GKInspectable` attribute.
+- 该声明是在子类中的重写，
+  超类的声明具有 `objc` 特性。
+- 该声明满足具有 `objc` 特性的协议的要求。
+- 声明包含 IBAction、IBSegueAction、IBOutlet、
+  IBDesignable、IBInspectable、
+  NSManaged 或 GKInspectable 特性。
 
-If you apply the `objc` attribute to an enumeration,
-each enumeration case is exposed to Objective-C code
-as the concatenation of the enumeration name and the case name.
-The first letter of the case name is capitalized.
-For example, a case named `venus` in a Swift `Planet` enumeration
-is exposed to Objective-C code as a case named `PlanetVenus`.
+如果你将 `objc` 特性应用于枚举，
+每个枚举成员都会在 Objective-C 代码中
+以枚举名称和枚举成员名称的组合形式暴露出来，
+且枚举成员名称的首字母会大写。
+例如，在 Swift 中名为 `Planet` 的枚举
+中的一个名为 `venus` 的枚举成员
+在 Objective-C 代码中将会显示为 `PlanetVenus`。
 
-The `objc` attribute optionally accepts a single attribute argument,
-which consists of an identifier.
-The identifier specifies the name to be exposed to Objective-C
-for the entity that the `objc` attribute applies to.
-You can use this argument to name
-classes, enumerations, enumeration cases, protocols,
-methods, getters, setters, and initializers.
-If you specify the Objective-C name
-for a class, protocol, or enumeration,
-include a three-letter prefix on the name,
-as described in [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
-in [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210).
-The example below exposes
-the getter for the `enabled` property of the `ExampleClass`
-to Objective-C code as `isEnabled`
-rather than just as the name of the property itself.
+`objc` 特性可选地接受一个单一的特性参数，
+该参数由一个标识符组成。
+该标识符指定要暴露给 Objective-C 的实体名称，
+`objc` 特性适用于该实体。
+您可以使用此参数为类、枚举、枚举案例、协议、
+方法、getter、setter 构造器命名。
+如果您为类、协议或枚举指定 Objective-C 名称，
+请在名称前加上三个字母的前缀，
+如 [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
+和 [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中所述。
+下面的示例将 `ExampleClass`
+的 `enabled` 属性的 getter 暴露给
+Objective-C 代码，名称为 `isEnabled`，
+而不仅仅是属性本身的名称。
 
 ```swift
 class ExampleClass: NSObject {
@@ -1218,22 +1216,19 @@ class ExampleClass: NSObject {
   ```
 -->
 
-For more information, see
-[Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c).
+更多信息，请参见 [Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
 
-> Note: The argument to the `objc` attribute
-> can also change the runtime name for that declaration.
-> You use the runtime name when calling functions
-> that interact with the Objective-C runtime,
-> like [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring),
-> and when specifying class names in an app's Info.plist file.
-> If you specify a name by passing an argument,
-> that name is used as the name in Objective-C code
-> and as the runtime name.
-> If you omit the argument,
-> the name used in Objective-C code matches the name in Swift code,
-> and the runtime name follows the normal Swift compiler convention
-> of name mangling.
+> 注意：objc 特性的参数
+> 也可以更改该声明的运行时名称。
+> 当调用与 Objective-C 运行时交互的函数时，
+> 例如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，
+> 以及在应用的 Info.plist 文件中指定类名时，
+> 您会使用运行时名称。
+> 如果通过传递参数指定名称，
+> 则该名称将用作 Objective-C 代码中的名称和运行时名称。
+> 如果省略参数，
+> 则在 Objective-C 代码中使用的名称与 Swift 代码中的名称匹配，
+> 运行时名称遵循正常的 Swift 编译器名称修饰约定。
 
 ### objcMembers
 
