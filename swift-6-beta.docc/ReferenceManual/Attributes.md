@@ -1051,30 +1051,29 @@ protocol ProvidesMain {
 
 ### nonobjc
 
-Apply this attribute to a
-method, property, subscript, or initializer declaration
-to suppress an implicit `objc` attribute.
-The `nonobjc` attribute tells the compiler
-to make the declaration unavailable in Objective-C code,
-even though it's possible to represent it in Objective-C.
+将此特性应用于方法、属性、下标或初始化器声明，
+以抑制隐式 `objc` 特性。
+`nonobjc` 特性告诉编译器
+此声明在 Objective-C 代码中不可用，
+尽管在 Objective-C 中可以表示它。
 
-Applying this attribute to an extension
-has the same effect as
-applying it to every member of that extension
-that isn't explicitly marked with the `objc` attribute.
+将此特性应用于扩展的效果
+与将其应用于该扩展中
+未明确标记为 `objc` 特性
+的每个成员相同。
 
-You use the `nonobjc` attribute to resolve circularity
-for bridging methods in a class marked with the `objc` attribute,
-and to allow overloading of methods and initializers
-in a class marked with the `objc` attribute.
+您使用 `nonobjc` 特性
+来解决标记为 `objc` 特性的类中
+的桥接方法的循环问题，
+并允许在标记为 `objc` 特性的类中
+重载方法和初始化器。
 
-A method marked with the `nonobjc` attribute
-can't override a method marked with the `objc` attribute.
-However, a method marked with the `objc` attribute
-can override a method marked with the `nonobjc` attribute.
-Similarly, a method marked with the `nonobjc` attribute
-can't satisfy a protocol requirement
-for a method marked with the `objc` attribute.
+标记为 `nonobjc` 特性的方法
+不能被标记为 `objc` 特性的方法重写。
+然而，标记为 `objc` 特性的方法
+可以被标记为 `nonobjc` 特性的方法重写。
+同样，标记为 `nonobjc` 特性的方法
+不能满足标记为 `objc` 特性的方法的协议要求。
 
 ### NSApplicationMain
 
