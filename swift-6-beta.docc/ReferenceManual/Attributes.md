@@ -2387,23 +2387,18 @@ struct ArrayBuilder {
 
 ### warn_unqualified_access
 
-Apply this attribute to a
-top-level function, instance method, or class or static method
-to trigger warnings when that function or method is used
-without a preceding qualifier,
-such as a module name, type name, or instance variable or constant.
-Use this attribute to help discourage ambiguity between functions
-with the same name that are accessible from the same scope.
+将此特性应用于顶级函数、实例方法、类方法或静态方法，
+以在使用该函数或方法时触发警告，
+前提是没有前置限定符，
+例如模块名称、类型名称或实例变量或常量。
+使用此特性可以帮助减少在同一作用域中可访问的同名函数之间的歧义。
 
-For example,
-the Swift standard library includes both a top-level
+例如，Swift 标准库包括一个顶级函数
 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/)
-function and a
-[`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min)
-method for sequences with comparable elements.
-The sequence method is declared with the `warn_unqualified_access` attribute
-to help reduce confusion
-when attempting to use one or the other from within a `Sequence` extension.
+和一个用于具有可比较元素的序列的
+[`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 方法。
+序列方法使用 `warn_unqualified_access` 特性声明，
+以帮助减少在 `Sequence` 扩展中尝试使用其中一个或另一个时的混淆。
 
 ### Declaration Attributes Used by Interface Builder
 
