@@ -1532,14 +1532,14 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### resultBuilder
 
-Apply this attribute to a class, structure, enumeration
-to use that type as a result builder.
-A *result builder* is a type
-that builds a nested data structure step by step.
-You use result builders to implement a domain-specific language (DSL)
-for creating nested data structures in a natural, declarative way.
-For an example of how to use the `resultBuilder` attribute,
-see <doc:AdvancedOperators#Result-Builders>.
+将此特性应用于类、结构体或枚举，
+以将该类型用作结果构建器。
+*结果构建器*是一种逐步构建嵌套数据结构的类型。
+您可以使用结果构建器来实现
+一种用于以自然、声明式方式
+创建嵌套数据结构的领域特定语言（DSL）。
+有关如何使用 resultBuilder 属性的示例，
+见 <doc:AdvancedOperators#Result-Builders>。
 
 #### Result-Building Methods
 
