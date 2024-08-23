@@ -2420,19 +2420,18 @@ Swift 提供了以下 Interface Builder 特性：
 应用 `IBAction`, `IBSegueAction`, `IBOutlet`,
 `IBDesignable`, 或 `IBInspectable` 特性也意味着 `objc` 特性。
 
-## Type Attributes
+## 类型特性
 
-You can apply type attributes to types only.
+您只能将类型特性应用于类型。
 
 ### autoclosure
 
-Apply this attribute to delay the evaluation of an expression
-by automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter's type in a function or method declaration,
-for a parameter whose type is a function type that takes no arguments
-and that returns a value of the type of the expression.
-For an example of how to use the `autoclosure` attribute,
-see <doc:Closures#Autoclosures> and <doc:Types#Function-Type>.
+将此特性应用于延迟表达式的求值，
+通过自动将该表达式包装在一个没有参数的闭包中。
+您将其应用于函数或方法声明中的参数类型，
+适用于类型为不带参数且返回表达式类型值的函数类型的参数。
+有关如何使用 `autoclosure` 特性的示例，
+请参见文档：<doc:Closures#Autoclosures> 和文档：<doc:Types#Function-Type>。
 
 ### convention
 
