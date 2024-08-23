@@ -2475,19 +2475,15 @@ Swift 提供了以下 Interface Builder 特性：
 
 ### Sendable
 
-Apply this attribute to the type of a function
-to indicate that the function or closure is sendable.
-Applying this attribute to a function type
-has the same meaning as conforming a non–function type
-to the [`Sendable`](https://developer.apple.com/documentation/swift/sendable) protocol.
+将此特性应用于函数的类型，
+以指示该函数或闭包是可发送的。
+将此特性应用于函数类型的含义与将非函数类型符合 [`Sendable`](https://developer.apple.com/documentation/swift/sendable) 协议相同。
 
-This attribute is inferred on functions and closures
-if the function or closure is used in a context
-that expects a sendable value,
-and the function or closure satisfies the requirements to be sendable.
+如果函数或闭包在期望 sendable 值的上下文中使用，
+并且函数或闭包满足 sendable 的要求，
+那么该特性性会被推断到这些函数和闭包上。
 
-A sendable function type
-is a subtype of the corresponding nonsendable function type.
+可发送函数类型是相应的不可发送函数类型的子类型。
 
 ## Switch Case Attributes
 
