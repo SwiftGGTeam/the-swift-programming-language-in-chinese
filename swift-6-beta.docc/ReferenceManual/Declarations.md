@@ -35,7 +35,7 @@ Introduce types, operators, variables, and other names and constructs.
 
 ## 顶级代码
 
-Swift 源文件中的顶级代码由零个或多个语句、声明和表达式组成。默认情况下，在源文件顶层声明的变量、常量和其他命名声明可以被同一模块中每个源文件的代码访问。您可以通过使用访问级别修饰符来覆盖此默认行为，具体说明见 [doc:Declarations#Access-Control-Levels](doc:Declarations#Access-Control-Levels)。
+Swift 源文件中的顶级代码由零个或多个语句、声明和表达式组成。默认情况下，在源文件顶层声明的变量、常量和其他命名声明可以被同一模块中每个源文件的代码访问。您可以通过使用访问级别修饰符来覆盖此默认行为，具体说明见 <doc:Declarations#Access-Control-Levels>。
 
 有两种类型的顶级代码：顶级声明和可执行的顶级代码。顶级声明仅由声明组成，允许出现在所有 Swift 源文件中。可执行的顶级代码包含语句和表达式，而不仅仅是声明，仅允许作为程序的顶级入口点。
 
@@ -94,56 +94,23 @@ import <#module#>.<#submodule#>
 > *导入类型* → **`类型类型别名`** | **`结构体`** | **`类`** | **`枚举`** | **`协议`** | **`常量`** | **`变量`** | **`函数`** \
 > *导入路径* → *标识符* | *标识符* **`.`** *导入路径*
 
-## Constant Declaration
+## 常量声明
 
-A *constant declaration* introduces a constant named value into your program.
-Constant declarations are declared using the `let` keyword and have the following form:
+*常量声明*在您的程序中引入一个名为值的常量。常量声明使用 `let` 关键字声明，具有以下形式：
 
 ```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
 
-A constant declaration defines an immutable binding between the *constant name*
-and the value of the initializer *expression*;
-after the value of a constant is set, it can't be changed.
-That said, if a constant is initialized with a class object,
-the object itself can change,
-but the binding between the constant name and the object it refers to can't.
+常量声明定义了*常量名称*与构造器*表达式*的值之间的不可变绑定；一旦常量的值被设置，就无法更改。也就是说，如果常量是用类对象初始化的，对象本身可以改变，但常量名称与它所指向的对象之间的绑定不能改变。
 
-When a constant is declared at global scope,
-it must be initialized with a value.
-When a constant declaration occurs in the context of a function or method,
-it can be initialized later,
-as long as it's guaranteed to have a value set
-before the first time its value is read.
-If the compiler can prove that the constant's value is never read,
-the constant isn't required to have a value set at all.
-This analysis is called *definite initialization* ---
-the compiler proves that a value is definitely set before being read.
+当在全局范围内声明常量时，必须用一个值进行初始化。当在函数或方法的上下文中发生常量声明时，可以稍后初始化，只要在第一次读取其值之前保证已设置值。如果编译器能够证明常量的值从未被读取，则不要求该常量必须设置值。此分析称为*确定初始化*——编译器证明在读取之前值已被确定设置。
 
-> Note:
-> Definite initialization
-> can't construct proofs that require domain knowledge,
-> and its ability to track state across conditionals has a limit.
-> If you can determine that constant always has a value set,
-> but the compiler can't prove this is the case,
-> try simplifying the code paths that set the value,
-> or use a variable declaration instead.
+> 注意：确定性初始化无法构建需要领域知识的证明，并且它在条件语句中跟踪状态的能力是有限的。如果您可以确定常量始终有一个值，但编译器无法证明这一点，请尝试简化设置该值的代码路径，或改用变量声明。
 
-<!--
-In the most general case,
-DI reduces to the halting problem,
-as shown by Rice's theorem.
--->
+当常量声明出现在类或结构体声明的上下文中时，它被视为一个*常量属性*。常量声明不是计算属性，因此没有 getter 或 setter。
 
-When a constant declaration occurs in the context of a class or structure
-declaration, it's considered a *constant property*.
-Constant declarations aren't computed properties and therefore don't have getters
-or setters.
-
-If the *constant name* of a constant declaration is a tuple pattern,
-the name of each item in the tuple is bound to the corresponding value
-in the initializer *expression*.
+如果常量声明的*常量名称*是一个元组模式，则元组中每个项的名称都绑定到构造器*表达式*中相应的值。
 
 ```swift
 let (firstNumber, secondNumber) = (10, 42)
@@ -157,10 +124,7 @@ let (firstNumber, secondNumber) = (10, 42)
   ```
 -->
 
-In this example,
-`firstNumber` is a named constant for the value `10`,
-and `secondNumber` is a named constant for the value `42`.
-Both constants can now be used independently:
+在这个例子中，`firstNumber` 是值 `10` 的命名常量，而 `secondNumber` 是值 `42` 的命名常量。现在这两个常量可以独立使用：
 
 ```swift
 print("The first number is \(firstNumber).")
@@ -179,17 +143,9 @@ print("The second number is \(secondNumber).")
   <- The second number is 42.
   ```
 -->
+在常量声明中，当可以推断出*常量名称*的类型时，类型注释（`:` *类型*）是可选的，如<doc:Types#Type-Inference>中所述。
 
-The type annotation (`:` *type*) is optional in a constant declaration
-when the type of the *constant name* can be inferred,
-as described in <doc:Types#Type-Inference>.
-
-To declare a constant type property,
-mark the declaration with the `static` declaration modifier.
-A constant type property of a class is always implicitly final;
-you can't mark it with the `class` or `final` declaration modifier
-to allow or disallow overriding by subclasses.
-Type properties are discussed in <doc:Properties#Type-Properties>.
+要声明一个常量类型属性，请使用 `static` 声明修饰符标记该声明。类的常量类型属性总是隐式为 final；您不能使用 `class` 或 `final` 声明修饰符来允许或禁止子类重写。类型属性的讨论请参见 <doc:Properties#Type-Properties>。
 
 <!--
   - test: `class-constants-cant-have-class-or-final`
@@ -207,16 +163,15 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
   ```
 -->
 
-For more information about constants and for guidance about when to use them,
-see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Properties>.
+有关常量的更多信息以及何时使用它们的指导，请参见 <doc:TheBasics#Constants-and-Variables> 和 <doc:Properties#Stored-Properties>。
 
-> Grammar of a constant declaration:
+> 常量声明的语法：
 >
-> *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
+> *常量声明* → *属性*_?_ *声明修饰符*_?_ **`let`** *模式构造器列表*
 >
-> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
-> *pattern-initializer* → *pattern* *initializer*_?_ \
-> *initializer* → **`=`** *expression*
+> *模式构造器列表* → *模式构造器* | *模式构造器* **`,`** *模式构造器列表* \
+> *模式构造器* → *模式* *构造器*_?_ \
+> *构造器* → **`=`** *表达式*
 
 ## Variable Declaration
 
