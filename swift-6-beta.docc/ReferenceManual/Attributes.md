@@ -128,12 +128,10 @@ TODO TR: Is there any more detail about this case?
 
 ### available
 
-应用此特性以表示声明的生命周期相
-对于某些 Swift 语言版本
+应用此特性以表示声明的生命周期相对于某些 Swift 语言版本
 或某些平台和操作系统版本。
 
-`available` 特性总是
-与两个或更多用逗号分隔的特性参数列表一起出现。
+`available` 特性总是与两个或更多用逗号分隔的特性参数列表一起出现。
 这些参数以以下平台或语言名称之一开头：
 
 - `iOS`
@@ -159,8 +157,7 @@ TODO TR: Is there any more detail about this case?
   For the list in source, see include/swift/AST/PlatformKinds.def
 -->
 
-您还可以使用星号 (*) 来表示
-上述所有平台名称的声明可用性。
+您还可以使用星号 (*) 来表示上述所有平台名称的声明可用性。
 使用 Swift 版本号指定可用性的 `available` 特性
 不能使用星号。
 
@@ -168,11 +165,9 @@ TODO TR: Is there any more detail about this case?
 并指定有关声明生命周期的附加信息，
 包括重要的里程碑。
 
-- `unavailable` 参数表示该声明
-  在指定平台上不可用。
+- `unavailable` 参数表示该声明在指定平台上不可用。
   指定 Swift 版本可用性时无法使用此参数。
-- `introduced` 参数表示声明引入的
-  指定平台或语言的第一个版本。
+- `introduced` 参数表示声明引入的指定平台或语言的第一个版本。
   它具有以下形式：
 
   ```swift
@@ -220,8 +215,7 @@ TODO TR: Is there any more detail about this case?
   ```
    *new name* 由一个字符串字面量组成。
 
-  您可以将 `available` 特性
-  与 `renamed` 和 `unavailable` 参数
+  您可以将 `available` 特性与 `renamed` 和 `unavailable` 参数
   应用于类型别名声明，如下所示，
   以指示声明的名称在框架或库的不同版本之间发生了变化。
   此组合会导致编译时错误，
@@ -273,8 +267,7 @@ TODO TR: Is there any more detail about this case?
 
 您可以在单个声明上应用多个 `available` 特性，
 以指定该声明在不同平台和不同版本的 Swift 上的可用性。
-如果 `available` 特性
-指定的平台或语言版本与当前目标不匹配，
+如果 `available` 特性指定的平台或语言版本与当前目标不匹配，
 则该特性应用的声明将被忽略。
 如果您使用多个 `available` 特性，
 则有效的可用性是平台和 Swift 可用性的组合。
@@ -290,8 +283,7 @@ TODO TR: Is there any more detail about this case?
   ```
 -->
 
-如果一个 `available` 特性仅指定一个 `introduced` 参数
-以及一个平台或语言名称参数，
+如果一个 `available` 特性仅指定一个 `introduced` 参数以及一个平台或语言名称参数，
 您可以使用以下简写语法：
 
 ```swift
@@ -299,8 +291,7 @@ TODO TR: Is there any more detail about this case?
 @available(swift <#version number#>)
 ```
 
- `available` 特性的简写语法
- 简洁地表达了多个平台的可用性。
+ `available` 特性的简写语法简洁地表达了多个平台的可用性。
  尽管这两种形式在功能上是等效的，
  但在可能的情况下，
  优先使用简写形式。
@@ -326,8 +317,7 @@ class MyClass {
 一个 `available` 特性，
 用于使用 Swift 版本号指定可用性，
 不能额外指定声明的平台可用性。
-相反，使用单独的 `available` 特性来指定 Swift 版本
-的可用性和一个或多个平台的可用性。
+相反，使用单独的 `available` 特性来指定 Swift 版本的可用性和一个或多个平台的可用性。
 
 ```swift
 @available(swift 3.0.2)
@@ -360,8 +350,7 @@ struct MyStruct {
 
 此特性接受一个 `before:` 参数，
 指定提供此符号的平台的第一个版本。
-这些平台版本与您为 `available` 特性的
-平台版本具有相同的含义。
+这些平台版本与您为 `available` 特性的平台版本具有相同的含义。
 与 `available` 特性不同，
 列表中不能包含星号 (`*`) 来指代所有版本。
 例如，考虑以下代码：
@@ -389,9 +378,8 @@ Swift 插入了一层间接调用，以找到该函数的实现。
 则使用调用者中包含的 someFunction() 的副本。
 
 > 注意：
-> 当调用者的最低部署目标
-> 与包含该符号的 SDK 的第一个版本
-> 相同或更高时，
+> 当调用者的最低部署目标与包含该符号的
+> SDK 的第一个版本相同或更高时，
 > 编译器可以优化掉运行时检查，
 > 直接调用 SDK 的实现。
 > 在这种情况下，
@@ -418,8 +406,7 @@ so we don't guarantee in docs that it always happens.
 ### discardableResult
 
 将此特性应用于函数或方法声明，
-以在调用返回值的函数或方法
-而不使用其结果时抑制编译器警告。
+以在调用返回值的函数或方法而不使用其结果时抑制编译器警告。
 
 ### dynamicCallable
 
@@ -540,8 +527,8 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   ```
 -->
 
-`dynamicallyCall(withKeywordArguments:)` 方法的声明
-必须有一个遵循 `ExpressibleByDictionaryLiteral` 协议的单一参数，
+`dynamicallyCall(withKeywordArguments:)` 方法的声明必须有一个遵循
+`ExpressibleByDictionaryLiteral` 协议的单一参数，
 返回类型可以是任何类型。
 参数的 `Key` 必须遵循 `ExpressibleByStringLiteral`。
 前面的例子使用 `KeyValuePairs` 作为参数类型，
@@ -732,8 +719,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 将此特性应用于结构体或枚举声明，
 以限制您对类型所能进行的更改。
 此特性仅在以库演进模式编译时允许。
-库的未来版本不能通过添加、删除或重新排序枚举的成员
-或结构体的存储实例属性来更改其声明。
+库的未来版本不能通过添加、删除或重新排序枚举的成员或结构体的存储实例属性来更改其声明。
 这些更改在非冻结类型上是允许的，
 但会破坏冻结类型的 ABI 兼容性。
 
@@ -772,8 +758,8 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 库的未来版本只能对该类型进行有限的更改，
 但编译器可以对与该类型的成员交互的代码进行额外的优化。
 
-冻结类型、冻结结构体的存储属性类型
-以及冻结枚举的枚举关联值必须是 public 的或标记为 `usableFromInline` 特性。
+冻结类型、冻结结构体的存储属性类型以及冻结枚举的枚举关联值必须是
+public 的或标记为 `usableFromInline` 特性。
 冻结结构体的属性不能有属性观察者，
 并且提供存储实例属性初始值的表达式
 必须遵循与内联函数相同的限制，
@@ -880,8 +866,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### GKInspectable
 
-将此特性应用于将自定义 GameplayKit 组件特性
-暴露给 SpriteKit 编辑器 UI。
+将此特性应用于将自定义 GameplayKit 组件特性暴露给 SpriteKit 编辑器 UI。
 应用此特性还意味着 `objc` 特性。
 
 <!--
@@ -891,21 +876,18 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### inlinable
 
-将此特性应用于
-函数、方法、计算属性、下标、
+将此特性应用于函数、方法、计算属性、下标、
 便利构造器或析构器声明，
 以将该声明的实现公开为模块的公共接口的一部分。
-编译器可以允许在调用位置
-用符号实现的副本替换对可内联符号的调用。
+编译器可以允许在调用位置用符号实现的副本替换对可内联符号的调用。
 
-可内联代码
-可以与任何模块中声明的 `open` 和 `public` 符号进行交互，
-并且可以与同一模块中
-标记为 `usableFromInline` 特性的 `internal` 符号进行交互。
+可内联代码可以与任何模块中声明的
+`open` 和 `public` 符号进行交互，
+并且可以与同一模块中标记为
+`usableFromInline` 特性的 `internal` 符号进行交互。
 可内联代码无法与 `private` 或 `fileprivate` 符号进行交互。
 
-此特性不能应用于
-嵌套在函数内部的声明，
+此特性不能应用于嵌套在函数内部的声明，
 也不能应用于 `fileprivate` 或 `private` 声明。
 定义在可内联函数内部的函数和闭包是隐式可内联的，
 即使它们不能被标记为此特性。
@@ -987,8 +969,7 @@ struct MyTopLevel {
 -->
 
 另一种描述main特性要求的方法是，
-您在其上编写此特性的类型
-必须满足与符合以下假设协议的类型相同的要求：
+您在其上编写此特性的类型必须满足与符合以下假设协议的类型相同的要求：
 
 ```swift
 protocol ProvidesMain {
@@ -1053,27 +1034,21 @@ protocol ProvidesMain {
 
 将此特性应用于方法、属性、下标或构造器声明，
 以抑制隐式 `objc` 特性。
-`nonobjc` 特性告诉编译器
-此声明在 Objective-C 代码中不可用，
+`nonobjc` 特性告诉编译器此声明在 Objective-C 代码中不可用，
 尽管在 Objective-C 中可以表示它。
 
-将此特性应用于扩展的效果
-与将其应用于该扩展中
-未明确标记为 `objc` 特性
-的每个成员相同。
+将此特性应用于扩展的效果与将其应用于该扩展中未明确标记为
+`objc` 特性的每个成员相同。
 
-您使用 `nonobjc` 特性
-来解决标记为 `objc` 特性的类中
-的桥接方法的循环问题，
-并允许在标记为 `objc` 特性的类中
+您使用 `nonobjc` 特性来解决标记为
+`objc` 特性的类中的桥接方法的循环问题，
+并允许在标记为
+`objc` 特性的类中
 重载方法和构造器。
 
-标记为 `nonobjc` 特性的方法
-不能被标记为 `objc` 特性的方法重写。
-然而，标记为 `objc` 特性的方法
-可以被标记为 `nonobjc` 特性的方法重写。
-同样，标记为 `nonobjc` 特性的方法
-不能满足标记为 `objc` 特性的方法的协议要求。
+标记为 `nonobjc` 特性的方法不能被标记为`objc` 特性的方法重写。
+然而，标记为 `objc` 特性的方法可以被标记为 `nonobjc` 特性的方法重写。
+同样，标记为 `nonobjc` 特性的方法不能满足标记为 `objc` 特性的方法的协议要求。
 
 ### NSApplicationMain
 
@@ -1089,8 +1064,7 @@ protocol ProvidesMain {
 `NSApplicationMain(_:_:)` 函数
 
 如果您不使用此特性，
-请提供一个在顶层调用 `NSApplicationMain(_:_:)` 函数
-的 `main.swift` 文件，如下所示：
+请提供一个在顶层调用 `NSApplicationMain(_:_:)` 函数的 `main.swift` 文件，如下所示：
 
 ```swift
 import AppKit
@@ -1109,9 +1083,8 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 ### NSCopying
 
 将此特性应用于类的存储属性变量。
-此特性会导致属性的 setter
-被合成为使用通过 `copyWithZone(_:)` 方法
-返回的属性值*副本*，
+此特性会导致属性的 setter 被合成为使用通过
+`copyWithZone(_:)` 方法返回的属性值*副本*，
 而不是属性值本身。
 属性的类型必须符合 NSCopying 协议。
 
@@ -1124,39 +1097,30 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ### NSManaged
 
-将此特性应用于从 `NSManagedObject` 继承的类
-的实例方法或存储属性变量，
-以表明 Core Data 会在运行时
-根据关联的实体描述动态提供其实现。
+将此特性应用于从 `NSManagedObject` 继承的类的实例方法或存储属性变量，
+以表明 Core Data 会在运行时根据关联的实体描述动态提供其实现。
 对于标有 `NSManaged` 特性的属性，
 Core Data 还会在运行时提供存储。
 应用此特性也隐含了 `objc` 特性。
 
 ### objc
 
-将此特性应用于任何可以用 Objective-C 表示的声明——
+将此特性应用于任何可以用 Objective-C 表示的声明 ---
 例如，非嵌套类、协议、
 非泛型枚举（限制为整数原始值类型）、
 类的属性和方法（包括 getter 和 setter）、
 协议的可选成员、构造化器和下标。
 `objc` 特性告诉编译器该声明可以在 Objective-C 代码中使用。
 
-将此特性应用于扩展的效果
-与将其应用于该扩展中
-未明确标记为 `nonobjc` 特性
-的每个成员相同。
+将此特性应用于扩展的效果与将其应用于该扩展中未明确标记为
+`nonobjc` 特性的每个成员相同。
 
-编译器隐式地将 `objc` 特性
-添加到任何在 Objective-C 中
-定义的类的子类中。
+编译器隐式地将 `objc` 特性添加到任何在 Objective-C 中定义的类的子类中。
 然而，子类不能是泛型的，
 也不能继承任何泛型类。
-您可以显式地将 `objc` 特性添加
-到符合这些标准的子类，
+您可以显式地将 `objc` 特性添加到符合这些标准的子类，
 以指定其 Objective-C 名称，
-如下所述。
-标记为 `objc` 特性的协议
-不能继承未标记此特性的协议
+如下所述。标记为 `objc` 特性的协议不能继承未标记此特性的协议
 
 `objc` 特性在以下情况下也会被隐式添加：
 
@@ -1168,11 +1132,9 @@ Core Data 还会在运行时提供存储。
   NSManaged 或 GKInspectable 特性。
 
 如果你将 `objc` 特性应用于枚举，
-每个枚举成员都会在 Objective-C 代码中
-以枚举名称和枚举成员名称的组合形式暴露出来，
+每个枚举成员都会在 Objective-C 代码中以枚举名称和枚举成员名称的组合形式暴露出来，
 且枚举成员名称的首字母会大写。
-例如，在 Swift 中名为 `Planet` 的枚举
-中的一个名为 `venus` 的枚举成员
+例如，在 Swift 中名为 `Planet` 的枚举中的一个名为 `venus` 的枚举成员
 在 Objective-C 代码中将会显示为 `PlanetVenus`。
 
 `objc` 特性可选地接受一个单一的特性参数，
@@ -1218,8 +1180,7 @@ class ExampleClass: NSObject {
 
 更多信息，请参见 [Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
 
-> 注意：objc 特性的参数
-> 也可以更改该声明的运行时名称。
+> 注意：objc 特性的参数也可以更改该声明的运行时名称。
 > 当调用与 Objective-C 运行时交互的函数时，
 > 例如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，
 > 以及在应用的 Info.plist 文件中指定类名时，
@@ -1234,8 +1195,7 @@ class ExampleClass: NSObject {
 
 将此特性应用于类声明，
 以隐式地将 `objc` 特性
-应用于该类、其扩展、其子类
-及其子类的所有扩展的所有与 Objective-C 兼容的成员。
+应用于该类、其扩展、其子类及其子类的所有扩展的所有与 Objective-C 兼容的成员。
 
 大多数代码应该使用 `objc` 特性，
 以仅暴露所需的声明。
@@ -1269,17 +1229,13 @@ class ExampleClass: NSObject {
 - 函数
 
 在导入声明中，
-此特性降低了对使用导入模块类型
-的代码的并发检查的严格性。
+此特性降低了对使用导入模块类型的代码的并发检查的严格性。
 具体而言，
-未明确标记为不可发送的导入模块类型
-可以在需要可发送类型的上下文中使用。
+未明确标记为不可发送的导入模块类型可以在需要可发送类型的上下文中使用。
 
 在其他声明中，
-此特性降低了对使用被声明符号的代码
-的并发检查的严格性。
-当您在具有最小并发检查的范围内
-使用此符号时，
+此特性降低了对使用被声明符号的代码的并发检查的严格性。
+当您在具有最小并发检查的范围内使用此符号时，
 该符号指定的与并发相关的约束，
 例如 Sendable 要求或全局演员，
 将不会被检查。
@@ -1368,7 +1324,7 @@ class ExampleClass: NSObject {
 但它也可以是一个存储值。
 包装定义并管理其包装值所需的任何底层存储。
 编译器通过在包装属性的名称前加下划线 (`_`)
-来合成包装器类型实例的存储——
+来合成包装器类型实例的存储 ---
 例如，`someProperty` 的包装器存储为 `_someProperty`。
 包装器的合成存储具有 `private` 的访问控制级别。
 
@@ -1378,8 +1334,7 @@ class ExampleClass: NSObject {
 
 Swift 提供了两种语法糖形式用于初始化属性包装。
 您可以在包装值的定义中使用赋值语法，
-将赋值右侧的表达式作为参数传递
-给属性包装构造器的 wrappedValue 参数。
+将赋值右侧的表达式作为参数传递给属性包装构造器的 wrappedValue 参数。
 您还可以在将特性应用于属性时提供参数，
 这些参数会传递给属性包装的构造器。
 例如，在下面的代码中，SomeStruct 调用 SomeWrapper 定义的每个初始化器。
@@ -1477,8 +1432,8 @@ struct SomeStruct {
 要从属性包装中投影一个值，
 请在包装器类型上定义一个 `projectedValue` 实例属性。
 编译器通过在包装属性的名称前
-加上美元符号（`$`）来合成被呈现值的标识符——
-例如，`someProperty` 的被呈现值是 `$someProperty`。
+加上美元符号（`$`）来合成被呈现值的标识符 ---
+例如，`someProperty`的被呈现值是`$someProperty`。
 被呈现值具有与原始包装属性相同的访问控制级别。
 
 ```swift
@@ -1535,8 +1490,7 @@ s.$x.wrapper  // WrapperWithProjection value
 将此特性应用于类、结构体或枚举，
 以将该类型用作结果构造器。
 *结果构造器*是一种逐步构建嵌套数据结构的类型。
-您可以使用结果构造器来实现
-一种用于以自然、声明式方式
+您可以使用结果构造器来实现一种用于以自然、声明式方式
 创建嵌套数据结构的领域特定语言（DSL）。
 有关如何使用 resultBuilder 属性的示例，
 见 <doc:AdvancedOperators#Result-Builders>。
@@ -1551,17 +1505,6 @@ s.$x.wrapper  // WrapperWithProjection value
 和 `buildPartialBlock(accumulated:next:)` 方法。
 其他方法（这些方法在 DSL 中启用额外功能）是可选的。
 结果构造器类型的声明实际上不必包含任何协议一致性。
-
-The description of the static methods uses three types as placeholders.
-The type `Expression` is a placeholder
-for the type of the result builder's input,
-`Component` is a placeholder for the type of a partial result,
-and `FinalResult` is a placeholder
-for the type of the result that the result builder produces.
-You replace these types with the actual types that your result builder uses.
-If your result-building methods
-don't specify a type for `Expression` or `FinalResult`,
-they default to being the same as `Component`.
 
 静态方法的描述中使用了三种类型作为占位符。
 `Expression` 是构建器输入类型的占位符，
@@ -1624,13 +1567,11 @@ they default to being the same as `Component`.
 - `static func buildExpression(_ expression: Expression) -> Component`:
   从表达式构建部分结果。
   您可以实现此方法以执行预处理——例如，
-  将表达式转换为内部类型——
-  或在使用站提供额外的信息以进行类型推断。
+  将表达式转换为内部类型——或在使用站提供额外的信息以进行类型推断。
 
 - `static func buildFinalResult(_ component: Component) -> FinalResult`:
   从部分结果构建最终结果。
-  您可以将此方法实现为使用不同类型的部分
-  和最终结果的结果构造器的一部分，
+  您可以将此方法实现为使用不同类型的部分和最终结果的结果构造器的一部分，
   或者在返回结果之前对结果进行其他后处理。
 
 - `static func buildLimitedAvailability(_ component: Component) -> Component`:
@@ -1706,9 +1647,8 @@ struct ArrayBuilder {
 
 #### 结果转换
 
-以下语法转换递归地应用于
-将使用结果构造器语法的代码
-转换为调用结果构造器类型的静态方法的代码：
+以下语法转换会递归地应用，
+将使用结果构造器语法的代码转换为调用结果构造器类型的静态方法的代码：
 
 - 如果结果构造器有一个 `buildExpression(_:)` 方法，
   则每个表达式都变成对该方法的调用。
@@ -1743,8 +1683,7 @@ struct ArrayBuilder {
   `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)`
   方法之前。
 
-  您使用 `buildLimitedAvailability(_:)` 方法
-  来擦除根据所采取的分支而变化的类型信息。
+  您使用 `buildLimitedAvailability(_:)` 方法来擦除根据所采取的分支而变化的类型信息。
   例如，下面的 `buildEither(first:)` 和 `buildEither(second:)` 方法
   使用一个泛型类型，该类型捕获有关两个分支的类型信息。
 
@@ -2118,7 +2057,7 @@ struct ArrayBuilder {
   -->
 - 如果结果构造器有一个 `buildFinalResult(_:)` 方法，
   则最终结果变为对该方法的调用。
-  此转换始终是最后进行的
+  此转换始终是最后进行的。
 
 <!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
@@ -2228,11 +2167,9 @@ struct ArrayBuilder {
 -->
 
 尽管转换行为是通过临时变量来描述的，
-但使用结果构造器实际上并不会
-创建任何在代码其他部分可见的新声明。
+但使用结果构造器实际上并不会创建任何在代码其他部分可见的新声明。
 
-您不能在结果构造器转换的代码中
-使用 `break`、`continue`、`defer`、`guard`
+您不能在结果构造器转换的代码中使用 `break`、`continue`、`defer`、`guard`
 或 `return` 语句、`while` 语句或 `do-catch` 语句。
 
 转换过程不会改变代码中的声明，
@@ -2356,10 +2293,8 @@ struct ArrayBuilder {
 将此属性应用于函数、方法、计算属性、下标、构造器或析构器声明，
 以允许该符号在与声明位于同一模块中定义的内联代码中使用。
 声明必须具有 `internal` 访问级别修饰符。
-标记为 `usableFromInline` 的结构或类
-只能对其属性使用公共类型或 `usableFromInline` 类型。
-标记为 `usableFromInline` 的枚举
-只能对其枚举成员的原始值和关联值使用公共类型或 `usableFromInline` 类型。
+标记为 `usableFromInline` 的结构或类只能对其属性使用公共类型或 `usableFromInline` 类型。
+标记为 `usableFromInline` 的枚举只能对其枚举成员的原始值和关联值使用公共类型或 `usableFromInline` 类型。
 
 像 `public` 访问级别修饰符一样，
 这个属性将声明暴露为模块公共接口的一部分。
@@ -2467,7 +2402,7 @@ Swift 提供了以下 Interface Builder 特性：
 
 将此特性应用于函数或方法声明中的参数类型，
 以指示参数的值可以存储以供后续执行。
-这意味着该值可以超出调用的生命周期。
+这意味着该值可以超出这次调用的生命周期。
 具有 `escaping` 类型特性的函数类型参数
 需要对特性或方法显式使用 `self.`。
 有关如何使用 `escaping` 特性的示例，
@@ -2481,7 +2416,7 @@ Swift 提供了以下 Interface Builder 特性：
 
 如果函数或闭包在期望 sendable 值的上下文中使用，
 并且函数或闭包满足 sendable 的要求，
-那么该特性性会被推断到这些函数和闭包上。
+那么该特性会被推断到这些函数和闭包上。
 
 可发送函数类型是相应的不可发送函数类型的子类型。
 
@@ -2491,7 +2426,7 @@ Swift 提供了以下 Interface Builder 特性：
 
 ### unknown
 
-将此特性应用于开 switch case，
+将此特性应用于 switch case，
 以指示在代码编译时不期望与任何已知的枚举 case 匹配。
 有关如何使用 `unknown` 特性的示例，
 见 <doc:Statements#Switching-Over-Future-Enumeration-Cases>。
