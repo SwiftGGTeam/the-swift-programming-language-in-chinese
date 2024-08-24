@@ -224,39 +224,26 @@ getter 用于读取值，setter 用于写入值。setter 子句是可选的，�
 
 有关更多信息以及查看计算属性的示例，请参见 <doc:Properties#Computed-Properties>。
 
-### Stored Variable Observers and Property Observers
+### 存储变量观察者和属性观察者
 
-You can also declare a stored variable or property with `willSet` and `didSet` observers.
-A stored variable or property declared with observers has the following form:
+您还可以使用 `willSet` 和 `didSet` 观察者声明一个存储变量或属性。带有观察者的存储变量或属性具有以下形式：
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#> {
-   willSet(<#setter name#>) {
-      <#statements#>
-   }
-   didSet(<#setter name#>) {
-      <#statements#>
-   }
+    willSet(<#setter name#>) {
+        <#statements#>
+    }
+    didSet(<#setter name#>) {
+        <#statements#>
+    }
 }
 ```
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class or structure declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, the observers are referred to as *stored variable observers*.
-When it's declared in the context of a class or structure declaration,
-the observers are referred to as *property observers*.
+您可以在全局范围、函数的局部范围或类或结构体声明的上下文中定义这种变量声明形式。当这种形式的变量声明在全局范围或函数的局部范围内声明时，观察者被称为*存储变量观察者*。当它在类或结构声明的上下文中声明时，观察者被称为*属性观察者*。
 
-You can add property observers to any stored property. You can also add property
-observers to any inherited property (whether stored or computed) by overriding
-the property within a subclass, as described in <doc:Inheritance#Overriding-Property-Observers>.
+您可以为任何存储属性添加属性观察者。您还可以通过在子类中重写属性，为任何继承属性（无论是存储的还是计算的）添加属性观察者，如 <doc:Inheritance#Overriding-Property-Observers> 中所述。
 
-The initializer *expression* is optional in the context of a class or structure declaration,
-but required elsewhere. The *type* annotation is optional
-when the type can be inferred from the initializer *expression*.
-This expression is evaluated the first time you read the property's value.
-If you overwrite the property's initial value without reading it,
-this expression is evaluated before the first time you write to the property.
+构造器*表达式*在类或结构体声明的上下文中是可选的，但在其他地方是必需的。当类型可以从构造器*表达式*中推断时，*类型*标注是可选的。该表达式在您第一次读取属性值时被评估。如果您在读取属性之前覆盖了属性的初始值，则在第一次写入属性之前会评估该表达式。
 
 <!--
   - test: `overwriting-property-without-writing`
@@ -278,38 +265,15 @@ this expression is evaluated before the first time you write to the property.
   ```
 -->
 
-The `willSet` and `didSet` observers provide a way to observe (and to respond appropriately)
-when the value of a variable or property is being set.
-The observers aren't called when the variable or property
-is first initialized.
-Instead, they're called only when the value is set outside of an initialization context.
+`willSet` 和 `didSet` 观察者提供了一种观察（并适当地响应）变量或属性值被设置时的方式。当变量或属性首次初始化时，观察者不会被调用。相反，它们仅在初始化上下文之外设置值时被调用。
 
-A `willSet` observer is called just before the value of the variable or property
-is set. The new value is passed to the `willSet` observer as a constant,
-and therefore it can't be changed in the implementation of the `willSet` clause.
-The `didSet` observer is called immediately after the new value is set. In contrast
-to the `willSet` observer, the old value of the variable or property
-is passed to the `didSet` observer in case you still need access to it. That said,
-if you assign a value to a variable or property within its own `didSet` observer clause,
-that new value that you assign will replace the one that was just set and passed to
-the `willSet` observer.
+`willSet` 观察者在变量或属性的值被设置之前被调用。新值作为常量传递给 `willSet` 观察者，因此在 `willSet` 子句的实现中无法更改。`didSet` 观察者在新值被设置后立即被调用。与 `willSet` 观察者不同，变量或属性的旧值会传递给 `didSet` 观察者，以防你仍然需要访问它。也就是说，如果你在其自己的 `didSet` 观察者子句中给变量或属性赋值，那么你赋的这个新值将替代刚刚设置并传递给 `willSet` 观察者的值。
 
-The *setter name* and enclosing parentheses in the `willSet` and `didSet` clauses are optional.
-If you provide setter names,
-they're used as the parameter names to the `willSet` and `didSet` observers.
-If you don't provide setter names,
-the default parameter name to the `willSet` observer is `newValue`
-and the default parameter name to the `didSet` observer is `oldValue`.
+*setter 名称*和 `willSet` 与 `didSet` 子句中的括号是可选的。如果提供了 setter 名称，它们将作为 `willSet` 和 `didSet` 观察者的参数名称。如果不提供 setter 名称，`willSet` 观察者的默认参数名称是 `newValue`，而 `didSet` 观察者的默认参数名称是 `oldValue`。
 
-The `didSet` clause is optional when you provide a `willSet` clause.
-Likewise, the `willSet` clause is optional when you provide a `didSet` clause.
+`didSet` 子句在提供 `willSet` 子句时是可选的。同样，在提供 `didSet` 子句时，`willSet` 子句也是可选的。
 
-If the body of the `didSet` observer refers to the old value,
-the getter is called before the observer,
-to make the old value available.
-Otherwise, the new value is stored without calling the superclass's getter.
-The example below shows a computed property that's defined by the superclass
-and overridden by its subclasses to add an observer.
+如果 `didSet` 观察者的主体引用了旧值，则在调用观察者之前会调用 getter，以使旧值可用。否则，新的值会被存储，而不调用超类的 getter。下面的示例显示了一个由超类定义并被其子类重写以添加观察者的计算属性。
 
 ```swift
 class Superclass {
@@ -389,9 +353,8 @@ newAndOld.x = 200
   ```
 -->
 
-For more information and to see an example of how to use property observers,
-see <doc:Properties#Property-Observers>.
 
+有关更多信息以及如何使用属性观察者的示例，请参见 <doc:Properties#Property-Observers>。
 <!--
   - test: `cant-mix-get-set-and-didSet`
 
