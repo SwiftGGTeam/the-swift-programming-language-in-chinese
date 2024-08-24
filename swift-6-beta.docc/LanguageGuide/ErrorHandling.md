@@ -133,7 +133,7 @@ func cannotThrowErrors() -> String
 > 只有抛错函数可以传递错误。任何在非抛错函数中抛出的错误都必须在函数内部处理。
 
 在下面的示例中，
-`VendingMachine` 类有一个 `vend(itemNamed:)` 方法
+`VendingMachine` 类有一个 `vend(itemNamed:)` 方法。
 该方法会在请求物品不存在、缺货或者投入金额小于物品价格时，抛出相应的 `VendingMachineError`错误：
 
 ```swift
