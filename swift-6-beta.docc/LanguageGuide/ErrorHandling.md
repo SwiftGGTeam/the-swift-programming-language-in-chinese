@@ -705,11 +705,6 @@ do {
 
 尽管上面的 `do`-`catch` 块没有指定它抛出的错误类型，Swift 仍会推断它抛出 `StatisticsError` 。
 您可以显式地编写 `throws(any Error)` 以避免让 Swift 推断出指定类型抛错。
-Even though the `do`-`catch` block above
-doesn't specify what type of error it throws,
-Swift infers that it throws `StatisticsError`.
-You can explicitly write `throws(any Error)`
-to avoid letting Swift infer typed throws.
 
 ## 指定清理操作
 
