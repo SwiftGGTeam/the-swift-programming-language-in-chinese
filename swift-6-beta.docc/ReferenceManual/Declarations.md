@@ -7,72 +7,43 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 # Declarations
 
 Introduce types, operators, variables, and other names and constructs.
+引入类型、运算符、变量以及其他名称和构造。
 
-A *declaration* introduces a new name or construct into your program.
-For example, you use declarations to introduce functions and methods,
-to introduce variables and constants,
-and to define enumeration, structure, class, and protocol types.
-You can also use a declaration to extend the behavior
-of an existing named type and to import symbols into your program that are declared elsewhere.
+一个*声明*将一个新名称或构造引入到你的程序中。例如，你使用声明来引入函数和方法，引入变量和常量，以及定义枚举、结构体、类和协议类型。你还可以使用声明来扩展现有具名类型的行为，并将其他地方声明的符号引入到你的程序中。
 
-In Swift, most declarations are also definitions in the sense that they're implemented
-or initialized at the same time they're declared. That said, because protocols don't
-implement their members, most protocol members are declarations only. For convenience
-and because the distinction isn't that important in Swift,
-the term *declaration* covers both declarations and definitions.
+在 Swift 中，大多数声明也是定义，因为它们在声明的同时被实现或初始化。也就是说，由于协议不实现其成员，大多数协议成员仅仅是声明。为了方便起见，并且因为在 Swift 中这种区别并不是那么重要，术语*声明*涵盖了声明和定义。
 
-> Grammar of a declaration:
+> 声明的语法：
 >
-> *declaration* → *import-declaration* \
-> *declaration* → *constant-declaration* \
-> *declaration* → *variable-declaration* \
-> *declaration* → *typealias-declaration* \
-> *declaration* → *function-declaration* \
-> *declaration* → *enum-declaration* \
-> *declaration* → *struct-declaration* \
-> *declaration* → *class-declaration* \
-> *declaration* → *actor-declaration* \
-> *declaration* → *protocol-declaration* \
-> *declaration* → *initializer-declaration* \
-> *declaration* → *deinitializer-declaration* \
-> *declaration* → *extension-declaration* \
-> *declaration* → *subscript-declaration* \
-> *declaration* → *macro-declaration* \
-> *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *声明* → *导入声明*
+> *声明* → *常量声明*
+> *声明* → *变量声明*
+> *声明* → *类型别名声明*
+> *声明* → *函数声明*
+> *声明* → *枚举声明*
+> *声明* → *结构体声明*
+> *声明* → *类声明*
+> *声明* → *actor 声明*
+> *声明* → *协议声明*
+> *声明* → *构造器声明*
+> *声明* → *析构器声明*
+> *声明* → *扩展声明*
+> *声明* → *下标声明*
+> *声明* → *宏声明*
+> *声明* → *操作符声明*
+> *声明* → *优先级组声明*
 
-## Top-Level Code
+## 顶级代码
 
-The top-level code in a Swift source file consists of zero or more statements,
-declarations, and expressions.
-By default, variables, constants, and other named declarations that are declared
-at the top-level of a source file are accessible to code
-in every source file that's part of the same module.
-You can override this default behavior
-by marking the declaration with an access-level modifier,
-as described in <doc:Declarations#Access-Control-Levels>.
+Swift 源文件中的顶级代码由零个或多个语句、声明和表达式组成。默认情况下，在源文件顶层声明的变量、常量和其他命名声明可以被同一模块中每个源文件的代码访问。您可以通过使用访问级别修饰符来覆盖此默认行为，具体说明见 [doc:Declarations#Access-Control-Levels](doc:Declarations#Access-Control-Levels)。
 
-There are two kinds of top-level code:
-top-level declarations and executable top-level code.
-Top-level declarations consist of only declarations,
-and are allowed in all Swift source files.
-Executable top-level code contains statements and expressions,
-not just declarations,
-and is allowed only as the top-level entry point for the program.
+有两种类型的顶级代码：顶级声明和可执行的顶级代码。顶级声明仅由声明组成，允许出现在所有 Swift 源文件中。可执行的顶级代码包含语句和表达式，而不仅仅是声明，仅允许作为程序的顶级入口点。
 
-The Swift code you compile to make an executable
-can contain at most one of the following approaches
-to mark the top-level entry point,
-regardless of how the code is organized into files and modules:
-the `main` attribute,
-the `NSApplicationMain` attribute,
-the `UIApplicationMain` attribute,
-a `main.swift` file,
-or a file that contains top-level executable code.
+您编译的 Swift 代码可以包含最多以下一种方法来标记顶级入口点，无论代码如何组织成文件和模块：`main` 特性，`NSApplicationMain` 特性，`UIApplicationMain` 特性，`main.swift` 文件，或包含顶级可执行代码的文件。
 
-> Grammar of a top-level declaration:
+> 顶级声明的语法：
 >
-> *top-level-declaration* → *statements*_?_
+> *顶级声明* → *语句*_?_
 
 ## Code Blocks
 
