@@ -199,9 +199,9 @@ var <#variable name#>: <#type#> = <#expression#>
 
 如其名称所示，存储变量或存储变量属性的值存储在内存中。
 
-### Computed Variables and Computed Properties
+### 计算变量和计算属性
 
-The following form declares a computed variable or computed property:
+以下形式声明了一个计算变量或计算属性：
 
 ```swift
 var <#variable name#>: <#type#> {
@@ -214,32 +214,15 @@ var <#variable name#>: <#type#> {
 }
 ```
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class, structure, enumeration, or extension declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, it's referred to as a *computed variable*.
-When it's declared in the context of a class,
-structure, or extension declaration,
-it's referred to as a *computed property*.
+您可以在全局范围、函数的局部范围或类、结构体、枚举或扩展声明的上下文中定义这种形式的变量声明。当这种形式的变量声明在全局范围或函数的局部范围内声明时，它被称为*计算变量*。当它在类、结构体或扩展声明的上下文中声明时，它被称为*计算属性*。
 
-The getter is used to read the value,
-and the setter is used to write the value.
-The setter clause is optional,
-and when only a getter is needed, you can omit both clauses and simply
-return the requested value directly,
-as described in <doc:Properties#Read-Only-Computed-Properties>.
-But if you provide a setter clause, you must also provide a getter clause.
+getter 用于读取值，setter 用于写入值。setter 子句是可选的，当只需要 getter时，可以省略两个子句，直接返回请求的值，如 <doc:Properties#Read-Only-Computed-Properties> 中所述。但如果提供了 setter 子句，则必须同时提供 getter 子句。
 
-The *setter name* and enclosing parentheses is optional.
-If you provide a setter name, it's used as the name of the parameter to the setter.
-If you don't provide a setter name, the default parameter name to the setter is `newValue`,
-as described in <doc:Properties#Shorthand-Setter-Declaration>.
+*setter 名称*和括号是可选的。如果您提供了 setter 名称，它将用作 setter 参数的名称。如果您不提供 setter 名称，setter 的默认参数名称是 `newValue`，如 <doc:Properties#Shorthand-Setter-Declaration> 中所述。
 
-Unlike stored named values and stored variable properties,
-the value of a computed named value or a computed property isn't stored in memory.
+与存储的命名值和存储的变量属性不同，计算得出的命名值或计算得出的属性的值并不存储在内存中。
 
-For more information and to see examples of computed properties,
-see <doc:Properties#Computed-Properties>.
+有关更多信息以及查看计算属性的示例，请参见 <doc:Properties#Computed-Properties>。
 
 ### Stored Variable Observers and Property Observers
 
