@@ -45,11 +45,9 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 >
 > *顶级声明* → *语句*_?_
 
-## Code Blocks
+## 代码块
 
-A *code block* is used by a variety of declarations and control structures
-to group statements together.
-It has the following form:
+一个*代码块*被各种声明和控制结构用来将语句组合在一起。它具有以下形式：
 
 ```swift
 {
@@ -57,10 +55,7 @@ It has the following form:
 }
 ```
 
-The *statements* inside a code block include declarations,
-expressions, and other kinds of statements and are executed in order
-of their appearance in source code.
-
+代码块中的*语句*包括声明、表达式和其他类型的语句，并按它们在源代码中出现的顺序执行。
 <!--
   TR: What exactly are the scope rules for Swift?
 -->
@@ -69,9 +64,9 @@ of their appearance in source code.
   TODO: Discuss scope.  I assume a code block creates a new scope?
 -->
 
-> Grammar of a code block:
+> 代码块的语法：
 >
-> *code-block* → **`{`** *statements*_?_ **`}`**
+> *代码块* → **`{`** *语句*_?_ **`}`**
 
 ## Import Declaration
 
