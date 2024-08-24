@@ -125,7 +125,7 @@ numberOfLegs["bird"] = 2
   ```
 -->
 
-上面的示例定义了一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型推断为 `[String: Int]`。创建字典后，此示例使用下标赋值将`String`类型的键`bird`和 `Int`类型的值 `2` 添加到字典中。
+上面的示例定义了一个名为 `numberOfLegs` 的变量，并用一个包含三对键值的字典字面量初始化它。`numberOfLegs` 字典的类型推断为 `[String: Int]`。创建字典后，此示例使用下标赋值将 `String` 类型的键 `bird` 和 `Int` 类型的值 `2` 添加到字典中。
 
 更多关于 `Dictionary` 下标的信息请参考 <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
