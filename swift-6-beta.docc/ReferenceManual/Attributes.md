@@ -1533,9 +1533,9 @@ s.$x.wrapper  // WrapperWithProjection value
 ### resultBuilder
 
 将此特性应用于类、结构体或枚举，
-以将该类型用作结果构建器。
-*结果构建器*是一种逐步构建嵌套数据结构的类型。
-您可以使用结果构建器来实现
+以将该类型用作结果构造器。
+*结果构造器*是一种逐步构建嵌套数据结构的类型。
+您可以使用结果构造器来实现
 一种用于以自然、声明式方式
 创建嵌套数据结构的领域特定语言（DSL）。
 有关如何使用 resultBuilder 属性的示例，
@@ -1543,14 +1543,14 @@ s.$x.wrapper  // WrapperWithProjection value
 
 #### 结果构建方法
 
-结果构建器实现了以下描述的静态方法。
-由于结果构建器的所有功能都是通过静态方法暴露的，
+结果构造器实现了以下描述的静态方法。
+由于结果构造器的所有功能都是通过静态方法暴露的，
 因此您永远不需要初始化该类型的实例。
-结果构建器必须实现 `buildBlock(_:)` 方法，
+结果构造器必须实现 `buildBlock(_:)` 方法，
 或者同时实现 `buildPartialBlock(first:)`
 和 `buildPartialBlock(accumulated:next:)` 方法。
 其他方法（这些方法在 DSL 中启用额外功能）是可选的。
-结果构建器类型的声明实际上不必包含任何协议一致性。
+结果构造器类型的声明实际上不必包含任何协议一致性。
 
 The description of the static methods uses three types as placeholders.
 The type `Expression` is a placeholder
@@ -1567,7 +1567,7 @@ they default to being the same as `Component`.
 `Expression` 是构建器输入类型的占位符，
 `Component` 是部分结果类型的占位符，
 而 `FinalResult` 是构建器生成的结果类型的占位符。
-你需要用结果构建器实际使用的类型替换这些占位符。
+你需要用结果构造器实际使用的类型替换这些占位符。
 如果你的结果构建方法没有为 `Expression`
 或 `FinalResult` 指定类型，
 那么它们默认与 `Component` 类型相同。
@@ -1591,7 +1591,7 @@ they default to being the same as `Component`.
   与 `buildBlock(_:)` 相比，
   这种方法减少了处理不同数量参数的泛型重载的需求。
 
-结果构建器可以实现上述列出的所有三种块构建方法；
+结果构造器可以实现上述列出的所有三种块构建方法；
 在这种情况下，可用性决定调用哪个方法。
 默认情况下，Swift 调用 `buildPartialBlock(first:)`
 和 `buildPartialBlock(accumulated:next:)` 方法。
@@ -1630,7 +1630,7 @@ they default to being the same as `Component`.
 - `static func buildFinalResult(_ component: Component) -> FinalResult`:
   从部分结果构建最终结果。
   您可以将此方法实现为使用不同类型的部分
-  和最终结果的结果构建器的一部分，
+  和最终结果的结果构造器的一部分，
   或者在返回结果之前对结果进行其他后处理。
 
 - `static func buildLimitedAvailability(_ component: Component) -> Component`:
@@ -1638,7 +1638,7 @@ they default to being the same as `Component`.
   您可以实现此方法，
   以防止类型信息在执行可用性检查的编译器控制语句之外传播。
 
-例如，下面的代码定义了一个简单的结果构建器，
+例如，下面的代码定义了一个简单的结果构造器，
 用于构建一个整数数组。
 此代码将 `Component` 和 `Expression` 定义为类型别名，
 以便更容易将下面的示例与上面的函数列表进行匹配。
@@ -1707,10 +1707,10 @@ struct ArrayBuilder {
 #### 结果转换
 
 以下语法转换递归地应用于
-将使用结果构建器语法的代码
-转换为调用结果构建器类型的静态方法的代码：
+将使用结果构造器语法的代码
+转换为调用结果构造器类型的静态方法的代码：
 
-- 如果结果构建器有一个 `buildExpression(_:)` 方法，
+- 如果结果构造器有一个 `buildExpression(_:)` 方法，
   则每个表达式都变成对该方法的调用。
   这个转换总是首先进行。
   例如，以下声明是等价的：
@@ -1959,7 +1959,7 @@ struct ArrayBuilder {
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- 如果结果构建器实现了 `buildPartialBlock(first:)`
+- 如果结果构造器实现了 `buildPartialBlock(first:)`
   和 `buildPartialBlock(accumulated:next:)` 方法，
   则代码块或 `do` 语句将变成对这些方法的调用。
   块内的第一条语句被转换为 `buildPartialBlock(first:)` 方法的一个参数，
@@ -2116,7 +2116,7 @@ struct ArrayBuilder {
     >> assert(builderArray == manualArray)
     ```
   -->
-- 如果结果构建器有一个 `buildFinalResult(_:)` 方法，
+- 如果结果构造器有一个 `buildFinalResult(_:)` 方法，
   则最终结果变为对该方法的调用。
   此转换始终是最后进行的
 
@@ -2228,10 +2228,10 @@ struct ArrayBuilder {
 -->
 
 尽管转换行为是通过临时变量来描述的，
-但使用结果构建器实际上并不会
+但使用结果构造器实际上并不会
 创建任何在代码其他部分可见的新声明。
 
-您不能在结果构建器转换的代码中
+您不能在结果构造器转换的代码中
 使用 `break`、`continue`、`defer`、`guard`
 或 `return` 语句、`while` 语句或 `do-catch` 语句。
 
@@ -2269,19 +2269,19 @@ struct ArrayBuilder {
   ```
 -->
 
-#### 自定义结果构建器特性
+#### 自定义结果构造器特性
 
-创建结果构建器类型会创建一个同名的自定义特性。您可以在以下位置应用该特性：
+创建结果构造器类型会创建一个同名的自定义特性。您可以在以下位置应用该特性：
 
 - 在函数声明中，
-  结果构建器构建函数的主体。
+  结果构造器构建函数的主体。
 - 在包含 getter 的变量或下标声明中，
-  结果构建器构建 getter 的主体
+  结果构造器构建 getter 的主体
 - 在函数声明中的一个参数上，
-  结果构建器构建一个作为相应参数传递的闭包的主体。
+  结果构造器构建一个作为相应参数传递的闭包的主体。
 
-应用结果构建器特性不会影响 ABI 兼容性。
-将结果构建器特性应用于参数使该特性成为函数接口的一部分，
+应用结果构造器特性不会影响 ABI 兼容性。
+将结果构造器特性应用于参数使该特性成为函数接口的一部分，
 这可能会影响源兼容性。
 
 ### requires_stored_property_inits
