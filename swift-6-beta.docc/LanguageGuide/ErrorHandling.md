@@ -679,7 +679,7 @@ do throws(StatisticsError) {
 与其他 `do`-`catch` 语句一样，`catch` 子句可以处理所有可能的错误，也可以传递未处理的错误让周围的作用域处理。
 此代码使用 `switch` 语句处理所有错误，每个枚举值有一个分支(case)。
 与其他没有模式的 `catch` 子句一样，该子句匹配任何错误并将错误绑定到名为 `error` 的局部常量。
-`do`-`catch` 语句会抛出 `StatisticsError` 值，所以`error` 是 `StatisticsError` 类型的值。
+`do`-`catch` 语句会抛出 `StatisticsError` 值，所以 `error` 是 `StatisticsError` 类型的值。
 
 上述 `catch` 子句使用 `switch` 语句来匹配和处理每个可能的错误。
 如果您尝试在不更新错误处理代码的情况下为 `StatisticsError` 添加新的分支(case)，Swift 将提示您错误，因为 `switch` 语句不再穷尽所有分支。
