@@ -372,42 +372,38 @@ newAndOld.x = 200
   ```
 -->
 
-### Type Variable Properties
+### 类型变量属性
 
-To declare a type variable property,
-mark the declaration with the `static` declaration modifier.
-Classes can mark type computed properties with the `class` declaration modifier instead
-to allow subclasses to override the superclass’s implementation.
-Type properties are discussed in <doc:Properties#Type-Properties>.
+要声明一个类型变量属性，请使用 `static` 声明修饰符标记声明。类可以使用 `class` 声明修饰符标记类型计算属性，以允许子类覆盖超类的实现。类型属性的讨论请参见 <doc:Properties#Type-Properties>。
 
-> Grammar of a variable declaration:
+> 变量声明的语法：
 >
-> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
+> *变量-声明* → *变量-声明-头* *模式-初始化-列表* \
+> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *代码-块* \
+> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *getter-setter-块* \
+> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *getter-setter-关键字-块* \
+> *变量-声明* → *变量-声明-头* *变量-名* *构造器* *willSet-didSet-块* \
+> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *构造器*_?_ *willSet-didSet-块*
 >
-> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`** \
-> *variable-name* → *identifier*
+> *变量-声明-头* → *属性*_?_ *声明-修饰符*_?_ **`var`** \
+> *变量-名* → *标识符*
 >
-> *getter-setter-block* → *code-block* \
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
-> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
-> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block* \
-> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block* \
-> *setter-name* → **`(`** *identifier* **`)`**
+> *getter-setter-块* → *代码块* \
+> *getter-setter-块* → **`{`** *getter-子句* *setter-子句*_?_ **`}`** \
+> *getter-setter-块* → **`{`** *setter-子句* *getter-子句* **`}`** \
+> *getter-子句* → *特性*_?_ *可变-修饰符*_?_ **`get`** *代码-块* \
+> *setter-子句* → *特性*_?_ *可变-修饰符*_?_ **`set`** *setter-名称*_?_ *代码-块* \
+> *setter-名称* → **`(`** *标识符* **`)`**
 >
-> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`** \
-> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
-> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** \
-> *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
+> *getter-setter-关键字-块* → **`{`** *getter-关键字-子句* *setter-关键字-子句*_?_ **`}`** \
+> *getter-setter-关键字-块* → **`{`** *setter-关键字-子句* *getter-关键字-子句* **`}`** \
+> *getter-关键字-子句* → *属性*_?_ *可变-修饰符*_?_ **`get`** \
+> *setter-关键字-子句* → *属性*_?_ *可变-修饰符*_?_ **`set`**
 >
-> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`** \
-> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`** \
-> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block* \
-> *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
+> *willSet-didSet-block* → **`{`** *willSet-子句* *didSet-子句*_?_ **`}`** \
+> *willSet-didSet-block* → **`{`** *didSet-子句* *willSet-子句*_?_ **`}`** \
+> *willSet-子句* → *特性*_?_ **`willSet`** *setter-名称*_?_ *代码-块* \
+> *didSet-子句* → *特性*_?_ **`didSet`** *setter-名称*_?_ *代码-块*
 
 <!--
   NOTE: Type annotations are required for computed properties -- the
