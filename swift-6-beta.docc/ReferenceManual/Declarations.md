@@ -410,26 +410,18 @@ newAndOld.x = 200
   types of those properties aren't computed/inferred.
 -->
 
-## Type Alias Declaration
+## 类型别名声明
 
-A *type alias declaration* introduces a named alias of an existing type into your program.
-Type alias declarations are declared using the `typealias` keyword and have the following form:
+*类型别名声明*将现有类型的命名别名引入到您的程序中。类型别名声明使用 `typealias` 关键字声明，具有以下形式：
 
 ```swift
 typealias <#name#> = <#existing type#>
 ```
 
-After a type alias is declared, the aliased *name* can be used
-instead of the *existing type* everywhere in your program.
-The *existing type* can be a named type or a compound type.
-Type aliases don't create new types;
-they simply allow a name to refer to an existing type.
+在声明类型别名后，别名*名称*可以在程序中的任何地方替代*现有类型*使用。*现有类型*可以是命名类型或复合类型。类型别名不会创建新类型；它们只是允许一个名称引用现有类型。
 
-A type alias declaration can use generic parameters
-to give a name to an existing generic type. The type alias
-can provide concrete types for some or all of the generic parameters
-of the existing type.
-For example:
+A type alias declaration can use generic parameters to give a name to an existing generic type. The type alias can provide concrete types for some or all of the generic parameters of the existing type. For example:
+类型别名声明可以使用泛型参数为现有的泛型类型命名。类型别名可以为现有类型的某些或所有泛型参数提供具体类型。例如：
 
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
@@ -451,9 +443,7 @@ var dictionary2: Dictionary<String, Int> = [:]
   ```
 -->
 
-When a type alias is declared with generic parameters, the constraints on those
-parameters must match exactly the constraints on the existing type's generic parameters.
-For example:
+当声明一个带有泛型参数的类型别名时，这些参数的约束必须与现有类型的泛型参数的约束完全匹配。例如：
 
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
@@ -467,14 +457,9 @@ typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
   ```
 -->
 
-Because the type alias and the existing type can be used interchangeably,
-the type alias can't introduce additional generic constraints.
+因为类型别名和现有类型可以互换使用，类型别名不能引入额外的泛型约束。
 
-A type alias can forward an existing type's generic parameters
-by omitting all generic parameters from the declaration.
-For example,
-the `Diccionario` type alias declared here
-has the same generic parameters and constraints as `Dictionary`.
+类型别名可以通过省略声明中的所有泛型参数来转发现有类型的泛型参数。例如，这里声明的 `Diccionario` 类型别名具有与 `Dictionary` 相同的泛型参数和约束。
 
 ```swift
 typealias Diccionario = Dictionary
@@ -500,11 +485,7 @@ typealias Diccionario = Dictionary
   typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
   typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 -->
-
-Inside a protocol declaration,
-a type alias can give a shorter and more convenient name
-to a type that's used frequently.
-For example:
+在协议声明中，类型别名可以为经常使用的类型提供一个更短和更方便的名称。例如：
 
 ```swift
 protocol Sequence {
@@ -533,17 +514,15 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
   ```
 -->
 
-Without this type alias,
-the `sum` function would have to refer to the associated type
-as `T.Iterator.Element` instead of `T.Element`.
+没有这种类型别名，`sum` 函数必须将关联类型称为 `T.Iterator.Element`，而不是 `T.Element`。
 
-See also <doc:Declarations#Protocol-Associated-Type-Declaration>.
+另见 <doc:Declarations#Protocol-Associated-Type-Declaration>。
 
-> Grammar of a type alias declaration:
+> 类型别名声明的语法：
 >
-> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
-> *typealias-name* → *identifier* \
-> *typealias-assignment* → **`=`** *type*
+> *类型别名-声明* → *属性*_?_ *访问-级别-修饰符*_?_ **`typealias`** *typealias-名称* *泛型-参数-子句*_?_ *typealias-赋值* \
+> *typealias-名称* → *标识符* \
+> *typealias-赋值* → **`=`** *类型*
 
 <!--
   Old grammar:
