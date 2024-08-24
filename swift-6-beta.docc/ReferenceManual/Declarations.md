@@ -70,22 +70,13 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 ## Import Declaration
 
-An *import declaration* lets you access symbols
-that are declared outside the current file.
-The basic form imports the entire module;
-it consists of the `import` keyword followed by a module name:
+一个*导入声明*让你访问在当前文件外部声明的符号。基本形式导入整个模块；它由 `import` 关键字后跟模块名称组成：
 
 ```swift
 import <#module#>
 ```
 
-Providing more detail limits which symbols are imported ---
-you can specify a specific submodule
-or a specific declaration within a module or submodule.
-When this detailed form is used,
-only the imported symbol
-(and not the module that declares it)
-is made available in the current scope.
+提供更多细节可以限制导入哪些符号——你可以指定特定的子模块或模块或子模块内的特定声明。当使用这种详细形式时，只有被导入的符号（而非声明它的模块）在当前作用域中可用。
 
 ```swift
 import <#import kind#> <#module#>.<#symbol name#>
@@ -96,12 +87,12 @@ import <#module#>.<#submodule#>
   TODO: Need to add more to this section.
 -->
 
-> Grammar of an import declaration:
+> 导入声明的语法：
 >
-> *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
+> *导入声明* → *特性*_?_ **`导入`** *导入类型*_?_ *导入路径*
 >
-> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
-> *import-path* → *identifier* | *identifier* **`.`** *import-path*
+> *导入类型* → **`类型类型别名`** | **`结构体`** | **`类`** | **`枚举`** | **`协议`** | **`常量`** | **`变量`** | **`函数`** \
+> *导入路径* → *标识符* | *标识符* **`.`** *导入路径*
 
 ## Constant Declaration
 
