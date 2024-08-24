@@ -134,7 +134,7 @@ func cannotThrowErrors() -> String
 
 在下面的示例中，
 `VendingMachine` 类有一个 `vend(itemNamed:)` 方法。
-该方法会在请求物品不存在、缺货或者投入金额小于物品价格时，抛出相应的 `VendingMachineError`错误：
+该方法会在请求物品不存在、缺货或者投入金额小于物品价格时，抛出相应的 `VendingMachineError` 错误：
 
 ```swift
 struct Item {
