@@ -173,23 +173,15 @@ print("The second number is \(secondNumber).")
 > *模式构造器* → *模式* *构造器*_?_ \
 > *构造器* → **`=`** *表达式*
 
-## Variable Declaration
+## 变量声明
 
-A *variable declaration* introduces a variable named value into your program
-and is declared using the `var` keyword.
+*变量声明*在您的程序中引入了一个名为值的变量，并使用 `var` 关键字进行声明。
 
-Variable declarations have several forms that declare different kinds
-of named, mutable values,
-including stored and computed variables and properties,
-stored variable and property observers, and static variable properties.
-The appropriate form to use depends on
-the scope at which the variable is declared and the kind of variable you intend to declare.
+变量声明有几种形式，用于声明不同类型的命名可变值，包括存储变量和计算变量及属性、存储变量和属性观察者，以及静态变量属性。使用的适当形式取决于变量声明的范围和您打算声明的变量类型。
 
-> Note: You can also declare properties in the context of a protocol declaration,
-> as described in <doc:Declarations#Protocol-Property-Declaration>.
+> 注意：您还可以在协议声明的上下文中声明属性，如<doc:Declarations#Protocol-Property-Declaration> 中所述。
 
-You can override a property in a subclass by marking the subclass's property declaration
-with the `override` declaration modifier, as described in <doc:Inheritance#Overriding>.
+您可以通过在子类的属性声明中标记 `override` 声明修饰符来重写属性，如 <doc:Inheritance#Overriding> 中所述。
 
 ### Stored Variables and Stored Variable Properties
 
