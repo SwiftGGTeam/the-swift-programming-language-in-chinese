@@ -183,36 +183,21 @@ print("The second number is \(secondNumber).")
 
 您可以通过在子类的属性声明中标记 `override` 声明修饰符来重写属性，如 <doc:Inheritance#Overriding> 中所述。
 
-### Stored Variables and Stored Variable Properties
+### 存储变量和存储变量属性
 
-The following form declares a stored variable or stored variable property:
+以下形式声明了一个存储变量或存储变量属性：
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#>
 ```
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class or structure declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, it's referred to as a *stored variable*.
-When it's declared in the context of a class or structure declaration,
-it's referred to as a *stored variable property*.
+您可以在全局范围、函数的局部范围或类或结构体声明的上下文中定义这种形式的变量声明。当这种形式的变量声明在全局范围或函数的局部范围内声明时，它被称为*存储变量*。当它在类或结构体声明的上下文中声明时，它被称为*存储变量属性*。
 
-The initializer *expression* can't be present in a protocol declaration,
-but in all other contexts, the initializer *expression* is optional.
-That said, if no initializer *expression* is present,
-the variable declaration must include an explicit type annotation (`:` *type*).
+构造器*表达式*不能出现在协议声明中，但在所有其他上下文中，构造器*表达式*是可选的。也就是说，如果没有构造器*表达式*，变量声明必须包含显式类型注释（`:` *类型*）。
 
-As with constant declarations,
-if a variable declaration omits the initializer *expression*,
-the variable must have a value set before the first time it is read.
-Also like constant declarations,
-if the *variable name* is a tuple pattern,
-the name of each item in the tuple is bound to the corresponding value
-in the initializer *expression*.
+与常量声明一样，如果变量声明省略了构造器*表达式*，则在第一次读取该变量之前必须为其设置一个值。同样，像常量声明一样，如果*变量名*是一个元组模式，则元组中每个项的名称都绑定到构造器*表达式*中的相应值。
 
-As their names suggest, the value of a stored variable or a stored variable property
-is stored in memory.
+如其名称所示，存储变量或存储变量属性的值存储在内存中。
 
 ### Computed Variables and Computed Properties
 
