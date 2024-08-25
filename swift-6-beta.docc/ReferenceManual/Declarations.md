@@ -576,26 +576,17 @@ func <#function name#>(<#parameters#>) {
 
 如果一个嵌套函数捕获了一个保证不会逃逸的值——例如一个 in-out 参数——或者作为一个非逃逸函数参数传递，那么这个嵌套函数就是非逃逸的。否则，嵌套函数就是逃逸的。
 
-### Parameter Names
 有关嵌套函数的讨论，请参见 <doc:Functions#Nested-Functions>。
 
-Function parameters are a comma-separated list
-where each parameter has one of several forms.
-The order of arguments in a function call
-must match the order of parameters in the function's declaration.
-The simplest entry in a parameter list has the following form:
+### 参数名称
+
+函数参数是一个以逗号分隔的列表，其中每个参数都有几种形式之一。在函数调用中，参数的顺序必须与函数声明中的参数顺序匹配。参数列表中最简单的项具有以下形式：
 
 ```swift
 <#parameter name#>: <#parameter type#>
 ```
 
-A parameter has a name,
-which is used within the function body,
-as well as an argument label,
-which is used when calling the function or method.
-By default,
-parameter names are also used as argument labels.
-For example:
+一个参数有一个名称，在函数体内使用，以及一个实参标签，在调用函数或方法时使用。默认情况下，参数名称也用作实参标签。例如：
 
 ```swift
 func f(x: Int, y: Int) -> Int { return x + y }
@@ -618,23 +609,17 @@ f(x: 1, y: 2) // both x and y are labeled
   Tracking bug is <rdar://problem/35301593>
 -->
 
-You can override the default behavior for argument labels
-with one of the following forms:
+您可以使用以下形式之一覆盖参数标签的默认行为：
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter type#>
 _ <#parameter name#>: <#parameter type#>
 ```
 
-A name before the parameter name
-gives the parameter an explicit argument label,
-which can be different from the parameter name.
-The corresponding argument must use the given argument label
-in function or method calls.
 
-An underscore (`_`) before a parameter name
-suppresses the argument label.
-The corresponding argument must have no label in function or method calls.
+在参数名称之前添加一个名称为参数提供了一个显式的实参标签，该标签可以与参数名称不同。相应的参数在函数或方法调用中必须使用给定的实参标签。
+
+在参数名称前加下划线（`_`）可以抑制参数标签。相应的参数在函数或方法调用中必须没有标签。
 
 ```swift
 func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
