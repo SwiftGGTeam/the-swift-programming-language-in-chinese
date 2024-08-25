@@ -649,13 +649,9 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 func someFunction(a: inout A, b: consuming B, c: C) { ... }
 ```
 
-#### In-Out Parameters
+#### 输入输出参数
 
-By default, function arguments in Swift are passed by value:
-Any changes made within the function are not visible in the caller.
-To make an in-out parameter instead,
-you apply the `inout` parameter modifier.
-
+默认情况下，Swift 中的函数参数是按值传递的：在函数内部所做的任何更改在调用者中不可见。要改为使用输入输出参数，您需要应用 `inout` 参数修饰符。
 
 ```swift
 func someFunction(a: inout Int) {
@@ -663,9 +659,8 @@ func someFunction(a: inout Int) {
 }
 ```
 
-When calling a function that includes in-out parameters,
-the in-out argument must be prefixed with an ampersand (`&`)
-to mark that the function call can change the argument's value.
+
+在调用包含输入输出参数的函数时，输入输出参数必须以一个和号 (`&`) 开头，以标记该函数调用可以改变参数的值。
 
 ```swift
 var x = 7
@@ -673,38 +668,17 @@ someFunction(&x)
 print(x)  // Prints "8"
 ```
 
-In-out parameters are passed as follows:
+输入输出参数的传递方式如下：
 
-1. When the function is called,
-   the value of the argument is copied.
-2. In the body of the function,
-   the copy is modified.
-3. When the function returns,
-   the copy's value is assigned to the original argument.
+1. 当函数被调用时，参数的值会被复制。
+2. 在函数体内，副本被修改。
+3. 当函数返回时，副本的值被赋给原始参数。
 
-This behavior is known as *copy-in copy-out*
-or *call by value result*.
-For example,
-when a computed property or a property with observers
-is passed as an in-out parameter,
-its getter is called as part of the function call
-and its setter is called as part of the function return.
+这种行为被称为 *copy-in copy-out* 或 *值传递*。例如，当一个计算属性或一个带观察者的属性作为输入输出参数传递时，它的 getter 在函数调用中被调用，而它的 setter 在函数返回时被调用。
 
-As an optimization,
-when the argument is a value stored at a physical address in memory,
-the same memory location is used both inside and outside the function body.
-The optimized behavior is known as *call by reference*;
-it satisfies all of the requirements
-of the copy-in copy-out model
-while removing the overhead of copying.
-Write your code using the model given by copy-in copy-out,
-without depending on the call-by-reference optimization,
-so that it behaves correctly with or without the optimization.
+作为一种优化，当参数是存储在内存物理地址中的值时，函数体内外使用相同的内存位置。优化后的行为被称为 *引用传递*; 它满足了 copy-in copy-out 模型的所有要求，同时消除了复制的开销。请使用 copy-in copy-out 给出的模型编写代码，而不依赖于引用传递优化，以便在有或没有优化的情况下都能正确运行。
 
-Within a function, don't access a value that was passed as an in-out argument,
-even if the original value is available in the current scope.
-Accessing the original is a simultaneous access of the value,
-which violates memory exclusivity.
+在函数内，不要访问作为 in-out 参数传递的值，即使原始值在当前作用域中可用。访问原始值是对该值的同时访问，这违反了内存独占性。
 
 ```swift
 var someValue: Int
@@ -716,8 +690,7 @@ func someFunction(a: inout Int) {
 someFunction(&someValue)
 ```
 
-For the same reason,
-you can't pass the same value to multiple in-out parameters.
+出于同样的原因，您不能将相同的值传递给多个输入输出参数。
 
 ```swift
 var someValue: Int
@@ -730,9 +703,7 @@ func someFunction(a: inout Int, b: inout Int) {
 someFunction(&someValue, &someValue)
 ```
 
-For more information about memory safety and memory exclusivity,
-see <doc:MemorySafety>.
-
+有关内存安全和内存独占的更多信息，请参见 <doc:MemorySafety>。
 <!--
   When the call-by-reference optimization is in play,
   it would happen to do what you want.
@@ -741,11 +712,8 @@ see <doc:MemorySafety>.
   behavioral differences that happen because of call by reference.
 -->
 
-A closure or nested function
-that captures an in-out parameter must be nonescaping.
-If you need to capture an in-out parameter
-without mutating it,
-use a capture list to explicitly capture the parameter immutably.
+A closure or nested function that captures an in-out parameter must be nonescaping. If you need to capture an in-out parameter without mutating it, use a capture list to explicitly capture the parameter immutably.
+一个捕获输入输出参数的闭包或嵌套函数必须是非逃逸的。如果您需要捕获一个 in-out 参数而不对其进行修改，请使用捕获列表显式地以不可变方式捕获该参数。
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
@@ -770,11 +738,7 @@ func someFunction(a: inout Int) -> () -> Int {
   ```
 -->
 
-If you need to capture and mutate an in-out parameter,
-use an explicit local copy,
-such as in multithreaded code that ensures
-all mutation has finished before the function returns.
-
+如果您需要捕获并修改一个 in-out 参数，请使用一个显式的局部副本，例如在多线程代码中，确保所有修改在函数返回之前都已完成。
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
     // Make a local copy and manually copy it back.
@@ -805,8 +769,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   ```
 -->
 
-For more discussion and examples of in-out parameters,
-see <doc:Functions#In-Out-Parameters>.
+有关输入输出参数的更多讨论和示例，请参见 <doc:Functions#In-Out-Parameters>。
 
 <!--
   - test: `escaping-cant-capture-inout`
