@@ -108,6 +108,12 @@ let <#constant name#>: <#type#> = <#expression#>
 
 > 注意：确定性初始化无法构建需要领域知识的证明，并且它在条件语句中跟踪状态的能力是有限的。如果您可以确定常量始终有一个值，但编译器无法证明这一点，请尝试简化设置该值的代码路径，或改用变量声明。
 
+<!--
+In the most general case,
+DI reduces to the halting problem,
+as shown by Rice's theorem.
+-->
+
 当常量声明出现在类或结构体声明的上下文中时，它被视为一个*常量属性*。常量声明不是计算属性，因此没有 getter 或 setter。
 
 如果常量声明的*常量名称*是一个元组模式，则元组中每个项的名称都绑定到构造器*表达式*中相应的值。
@@ -353,7 +359,6 @@ newAndOld.x = 200
   ```
 -->
 
-
 有关更多信息以及如何使用属性观察者的示例，请参见 <doc:Properties#Property-Observers>。
 <!--
   - test: `cant-mix-get-set-and-didSet`
@@ -532,42 +537,28 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
   typealias-assignment -> ``=`` type
 -->
 
-## Function Declaration
+## 函数声明
 
-A *function declaration* introduces a function or method into your program.
-A function declared in the context of class, structure, enumeration, or protocol
-is referred to as a *method*.
-Function declarations are declared using the `func` keyword and have the following form:
+*函数声明*将一个函数或方法引入到你的程序中。在类、结构体、枚举或协议的上下文中声明的函数被称为*方法*。函数声明使用 `func` 关键字声明，具有以下形式：
 
 ```swift
 func <#function name#>(<#parameters#>) -> <#return type#> {
-   <#statements#>
+    <#statements#>
 }
 ```
 
-If the function has a return type of `Void`,
-the return type can be omitted as follows:
+如果函数的返回类型是 `Void` ，则可以省略返回类型，如下所示：
 
 ```swift
 func <#function name#>(<#parameters#>) {
-   <#statements#>
+    <#statements#>
 }
 ```
 
-The type of each parameter must be included ---
-it can't be inferred.
-If you write `inout` in front of a parameter's type,
-the parameter can be modified inside the scope of the function.
-In-out parameters are discussed in detail
-in <doc:Declarations#In-Out-Parameters>, below.
 
-A function declaration whose *statements*
-include only a single expression
-is understood to return the value of that expression.
-This implicit return syntax is considered
-only when the expression's type and the function's return type
-aren't `Void`
-and aren't an enumeration like `Never` that doesn't have any cases.
+每个参数的类型必须明确指定，而不能被推断出来。如果在参数类型前写上 `inout`，则该参数可以在函数的作用域内被修改。关于输入输出参数的详细讨论请参见下面的 <doc:Declarations#In-Out-Parameters>。
+
+如果一个函数声明中的*语句*只包含一个表达式，则默认返回该表达式的值。只有在表达式的类型和函数的返回类型不是 `Void`，并且不是像 `Never` 那样没有任何情况的枚举时，才会考虑这种隐式返回语法。
 
 <!--
   As of Swift 5.3,
@@ -575,26 +566,18 @@ and aren't an enumeration like `Never` that doesn't have any cases.
   so just say that directly instead of using & defining the compiler jargon.
 -->
 
-Functions can return multiple values using a tuple type
-as the return type of the function.
+函数可以使用元组类型作为返回类型来返回多个值。
 
 <!--
   TODO: ^-- Add some more here.
 -->
 
-A function definition can appear inside another function declaration.
-This kind of function is known as a *nested function*.
+一个函数定义可以出现在另一个函数声明内部。这种函数被称为*嵌套函数*。
 
-A nested function is nonescaping if it captures
-a value that's guaranteed to never escape ---
-such as an in-out parameter ---
-or passed as a nonescaping function argument.
-Otherwise, the nested function is an escaping function.
-
-For a discussion of nested functions,
-see <doc:Functions#Nested-Functions>.
+如果一个嵌套函数捕获了一个保证不会逃逸的值——例如一个 in-out 参数——或者作为一个非逃逸函数参数传递，那么这个嵌套函数就是非逃逸的。否则，嵌套函数就是逃逸的。
 
 ### Parameter Names
+有关嵌套函数的讨论，请参见 <doc:Functions#Nested-Functions>。
 
 Function parameters are a comma-separated list
 where each parameter has one of several forms.
