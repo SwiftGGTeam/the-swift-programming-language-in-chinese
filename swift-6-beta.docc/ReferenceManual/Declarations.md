@@ -635,17 +635,15 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
-### Parameter Modifiers
+### 参数修饰符
 
-A *parameter modifier* changes how an argument is passed to the function.
+*参数修饰符*改变了参数传递给函数的方式。
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
 ```
 
-To use a parameter modifier,
-write `inout`, `borrowing`, or `consuming`
-before the argument's type.
+要使用参数修饰符，请在参数类型之前写 `inout`、`borrowing` 或 `consuming`。
 
 ```swift
 func someFunction(a: inout A, b: consuming B, c: C) { ... }
