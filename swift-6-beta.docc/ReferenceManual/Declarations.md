@@ -1259,50 +1259,38 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
   ```
 -->
 
-### Functions that Never Return
+### 永不返回的函数
 
-Swift defines a [`Never`][] type,
-which indicates that a function or method doesn't return to its caller.
-Functions and methods with the `Never` return type are called *nonreturning*.
-Nonreturning functions and methods either cause an irrecoverable error
-or begin a sequence of work that continues indefinitely.
-This means that
-code that would otherwise run immediately after the call is never executed.
-Throwing and rethrowing functions can transfer program control
-to an appropriate `catch` block, even when they're nonreturning.
+Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返回给调用者。具有 `Never` 返回类型的函数和方法被称为 *非返回*。非返回的函数和方法要么导致不可恢复的错误，要么开始一个无限进行的工作序列。这意味着在调用后立即运行的代码永远不会被执行。抛出和重新抛出的函数可以将程序控制转移到适当的 `catch` 块，即使它们是非返回的。
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
-A nonreturning function or method can be called to conclude the `else` clause
-of a guard statement,
-as discussed in <doc:Statements#Guard-Statement>.
+不返回的函数或方法可以被调用，以结束守卫语句的 `else` 子句，如在 <doc:Statements#Guard-Statement>中讨论的。
 
-You can override a nonreturning method,
-but the new method must preserve its return type and nonreturning behavior.
+您可以重写一个不返回的方法，但新方法必须保持其返回类型和不返回值的行为。
 
-> Grammar of a function declaration:
+> 函数声明的语法：
 >
-> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
+> *函数声明* → *函数头* *函数名称* *泛型参数子句*_?_ *函数签名* *泛型约束子句*_?_ *函数主体*_?_
 >
-> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
-> *function-name* → *identifier* | *operator*
+> *函数头* → *属性*_?_ *声明修饰符*_?_ **`func`** \
+> *函数名* → *标识符* | *运算符*
 >
-> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
-> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
-> *function-result* → **`->`** *attributes*_?_ *type* \
-> *function-body* → *code-block*
+> *函数签名* → *参数子句* **`异步`**_?_ *抛出子句*_?_ *函数结果*_?_ \
+> *函数签名* → *参数子句* **`async`**_?_ **`rethrows`** *函数结果*_?_ \
+> *函数结果* → **`->`** *属性*_?_ *类型* \
+> *函数体* → *代码块*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
-> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
+> *参数子句* → **`(`** **`)`** | **`(`** *参数列表* **`)`** \
+> *参数列表* → *参数* | *参数* **`,`** *参数列表* \
+> *参数* → *外部参数名称*_?_ *本地参数名称* *参数类型注解* *默认参数子句*_?_ \
+> *参数* → *外部参数名称*_?_ *本地参数名称* *参数类型注解* \
+> *参数* → *外部参数名称*_?_ *本地参数名称* *参数类型注解* **`...`**
 >
-> *external-parameter-name* → *identifier* \
-> *local-parameter-name* → *identifier* \
-> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
-> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
-> *default-argument-clause* → **`=`** *expression*
+> *外部参数名称* → *标识符* \
+> *局部参数名称* → *标识符* \
+> *参数类型注解* → **`:`** *属性*_?_ *参数修饰符*_?_ *类型* \
+> *参数修饰符* → **`输入输出`** | **`借用`** | **`消耗`** *默认参数子句* → **`=`** *表达式*
 
 <!--
   NOTE: Code block is optional in the context of a protocol.
