@@ -1315,10 +1315,9 @@ Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返�
 
 您可以通过扩展声明扩展枚举类型的行为，如 <doc:Declarations#Extension-Declaration> 中所讨论的。
 
-### Enumerations with Cases of Any Type
+### 任意类型的枚举案例
 
-The following form declares an enumeration type that contains
-enumeration cases of any type:
+以下形式声明了一个枚举类型，其中包含任何类型的枚举案例：
 
 ```swift
 enum <#enumeration name#>: <#adopted protocols#> {
@@ -1327,20 +1326,11 @@ enum <#enumeration name#>: <#adopted protocols#> {
 }
 ```
 
-Enumerations declared in this form are sometimes called *discriminated unions*
-in other programming languages.
+在这种形式中声明的枚举有时在其他编程语言中被称为*区分联合*。
 
-In this form, each case block consists of the `case` keyword
-followed by one or more enumeration cases, separated by commas.
-The name of each case must be unique.
-Each case can also specify that it stores values of a given type.
-These types are specified in the *associated value types* tuple,
-immediately following the name of the case.
+在这种形式中，每个案例块由 `case` 关键字组成，后面跟着一个或多个枚举案例，用逗号分隔。每个案例的名称必须是唯一的。每个案例还可以指定它存储特定类型的值。这些类型在*关联值类型*元组中指定，紧接在案例名称之后。
 
-Enumeration cases that store associated values can be used as functions
-that create instances of the enumeration with the specified associated values.
-And just like functions,
-you can get a reference to an enumeration case and apply it later in your code.
+存储关联值的枚举案例可以用作函数，这些函数创建具有指定关联值的枚举实例。就像函数一样，您可以获取对枚举案例的引用，并在代码中稍后应用它。
 
 ```swift
 enum Number {
@@ -1377,8 +1367,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
   and assert() would require Number to conform to Equatable.
 -->
 
-For more information and to see examples of cases with associated value types,
-see <doc:Enumerations#Associated-Values>.
+有关更多信息以及查看与相关值类型相关的案例示例，请参见 <doc:Enumerations#Associated-Values>。
 
 #### Enumerations with Indirection
 
