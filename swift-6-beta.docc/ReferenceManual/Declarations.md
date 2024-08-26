@@ -1128,6 +1128,19 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 
 抛出方法不能覆盖非抛出方法，抛出方法也不能满足非抛出方法的协议要求。也就是说，非抛出方法可以覆盖抛出方法，非抛出方法可以满足抛出方法的协议要求。
 
+### 重新抛出函数和方法
+
+函数或方法可以使用 `rethrows` 关键字声明，以指示它仅在其一个函数参数抛出错误时才抛出错误。这些函数和方法被称为 *重新抛出函数* 和 *重新抛出方法*。重新抛出函数和方法必须至少有一个抛出错误的函数参数。
+
+```swift
+func someFunction(callback: () throws -> Void) rethrows {
+    try callback()
+}
+```
+
+<!--
+  - test: `rethrows`
+
   ```swifttest
   -> func someFunction(callback: () throws -> Void) rethrows {
          try callback()
@@ -1135,17 +1148,7 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
   ```
 -->
 
-A rethrowing function or method can contain a `throw` statement
-only inside a `catch` clause.
-This lets you call the throwing function inside a `do`-`catch` statement
-and handle errors in the `catch` clause by throwing a different error.
-In addition,
-the `catch` clause must handle
-only errors thrown by one of the rethrowing function's
-throwing parameters.
-For example, the following is invalid
-because the `catch` clause would handle
-the error thrown by `alwaysThrows()`.
+重新抛出的函数或方法只能在 `catch` 子句中包含 `throw` 语句。这使得您可以在 `do`-`catch` 语句中调用抛出函数，并通过抛出不同的错误在 `catch` 子句中处理错误。此外，`catch` 子句必须仅处理由重新抛出函数的抛出参数抛出的错误。例如，以下是无效的，因为 `catch` 子句将处理由 `alwaysThrows()` 抛出的错误。
 
 ```swift
 func alwaysThrows() throws {
@@ -1205,13 +1208,9 @@ func someFunction(callback: () throws -> Void) rethrows {
   ```
 -->
 
-A throwing method can't override a rethrowing method,
-and a throwing method can't satisfy a protocol requirement for a rethrowing method.
-That said, a rethrowing method can override a throwing method,
-and a rethrowing method can satisfy a protocol requirement for a throwing method.
+抛出方法不能覆盖重新抛出方法，抛出方法也不能满足重新抛出方法的协议要求。也就是说，重新抛出方法可以覆盖抛出方法，重新抛出方法可以满足抛出方法的协议要求。
 
-An alternative to rethrowing is throwing a specific error type in generic code.
-For example:
+在泛型代码中，抛出特定错误类型是重新抛出的替代方案。例如：
 
 ```swift
 func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
@@ -1219,11 +1218,7 @@ func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
 }
 ```
 
-This approach to propagating an error
-preserves type information about the error.
-However, unlike marking a function `rethrows`,
-this approach doesn't prevent the function
-from throwing an error of the same type.
+这种传播错误的方法保留了关于错误的类型信息。然而，与标记一个函数 `rethrows` 不同，这种方法并不阻止该函数抛出相同类型的错误。
 
 <!--
 TODO: Revisit the comparison between rethrows and throws(E) above,
