@@ -915,12 +915,9 @@ func consumingFunction3(a: consuming A) {
   TODO: Any change of parameter modifier is ABI-breaking
 -->
 
-### Special Kinds of Parameters
+### 特殊类型的参数
 
-Parameters can be ignored,
-take a variable number of values,
-and provide default values
-using the following forms:
+参数可以被忽略，接受可变数量的值，并使用以下形式提供默认值：
 
 ```swift
 _ : <#parameter type#>
@@ -928,24 +925,11 @@ _ : <#parameter type#>
 <#parameter name#>: <#parameter type#> = <#default argument value#>
 ```
 
-An underscore (`_`) parameter
-is explicitly ignored and can't be accessed within the body of the function.
+下划线 (`_`) 参数被明确忽略，无法在函数体内访问。
 
-A parameter with a base type name followed immediately by three dots (`...`)
-is understood as a variadic parameter.
-A parameter that immediately follows a variadic parameter
-must have an argument label.
-A function can have multiple variadic parameters.
-A variadic parameter is treated as an array that contains elements of the base type name.
-For example, the variadic parameter `Int...` is treated as `[Int]`.
-For an example that uses a variadic parameter,
-see <doc:Functions#Variadic-Parameters>.
+带有基本类型名称后面紧跟三个点（`...`）的参数被理解为可变参数。紧跟在可变参数后面的参数必须有一个参数标签。一个函数可以有多个可变参数。可变参数被视为包含基本类型名称元素的数组。例如，可变参数 `Int...` 被视为 `[Int]`。有关使用可变参数的示例，请参见 <doc:Functions#Variadic-Parameters>。
 
-A parameter with an equal sign (`=`) and an expression after its type
-is understood to have a default value of the given expression.
-The given expression is evaluated when the function is called.
-If the parameter is omitted when calling the function,
-the default value is used instead.
+一个带有等号 (`=`) 的参数及其类型后面的表达式被理解为具有给定表达式的默认值。给定的表达式在调用函数时被评估。如果在调用函数时省略了该参数，则使用默认值。
 
 ```swift
 func f(x: Int = 42) -> Int { return x }
