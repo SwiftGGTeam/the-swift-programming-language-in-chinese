@@ -1369,26 +1369,11 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 有关更多信息以及查看与相关值类型相关的案例示例，请参见 <doc:Enumerations#Associated-Values>。
 
-#### Enumerations with Indirection
+#### 间接枚举
 
-Enumerations can have a recursive structure,
-that is, they can have cases with associated values
-that are instances of the enumeration type itself.
-However, instances of enumeration types have value semantics,
-which means they have a fixed layout in memory.
-To support recursion,
-the compiler must insert a layer of indirection.
+枚举可以具有递归结构，也就是说，它们可以有与枚举类型本身实例相关联的值的情况。然而，枚举类型的实例具有值语义，这意味着它们在内存中具有固定的布局。为了支持递归，编译器必须插入一层间接性。
 
-To enable indirection for a particular enumeration case,
-mark it with the `indirect` declaration modifier.
-An indirect case must have an associated value.
-
-<!--
-  TODO The word "enable" is kind of a weasel word.
-  Better to have a more concrete discussion of exactly when
-  it is and isn't used.
-  For example, does "indirect enum { X(Int) } mark X as indirect?
--->
+要为特定的枚举案例启用间接性，请使用 `indirect` 声明修饰符进行标记。间接案例必须具有相关值。
 
 ```swift
 enum Tree<T> {
@@ -1411,16 +1396,9 @@ enum Tree<T> {
   ```
 -->
 
-To enable indirection for all the cases of an enumeration
-that have an associated value,
-mark the entire enumeration with the `indirect` modifier ---
-this is convenient when the enumeration contains many cases
-that would each need to be marked with the `indirect` modifier.
+要为所有具有关联值的枚举案例启用间接引用，请使用 `indirect` 修饰符标记整个枚举 --- 当枚举包含许多需要标记为 `indirect` 修饰符的情况时，这样做非常方便。
 
-An enumeration that's marked with the `indirect` modifier
-can contain a mixture of cases that have associated values and cases those that don't.
-That said,
-it can't contain any cases that are also marked with the `indirect` modifier.
+一个标记为 `indirect` 修饰符的枚举可以包含具有关联值的情况和没有关联值的情况的混合。然而，它不能包含任何也标记为 `indirect` 修饰符的案例。
 
 <!--
   It really should be an associated value **that includes the enum type**
