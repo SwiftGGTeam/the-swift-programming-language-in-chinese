@@ -1487,19 +1487,13 @@ enum GamePlayMode: String {
 
 在上述示例中，`GamePlayMode.cooperative` 的原始值是 `"cooperative"`，`GamePlayMode.individual` 的原始值是 `"individual"`，而 `GamePlayMode.competitive` 的原始值是 `"competitive"`。
 
-### Accessing Enumeration Cases
+具有原始值类型的枚举隐式符合在 Swift 标准库中定义的 `RawRepresentable` 协议。因此，它们具有 `rawValue` 属性和一个可失败的构造器，其签名为 `init?(rawValue: RawValue)`。您可以使用 `rawValue` 属性访问枚举案例的原始值，如 `ExampleEnum.b.rawValue`。您还可以使用原始值通过调用枚举的可失败构造器来查找相应的案例（如果存在），如 `ExampleEnum(rawValue: 5)`，这将返回一个可选的案例。有关更多信息以及查看具有原始值类型的案例示例，请参见 <doc:Enumerations#Raw-Values>。
 
-To reference the case of an enumeration type, use dot (`.`) syntax,
-as in `EnumerationType.enumerationCase`. When the enumeration type can be inferred
-from context, you can omit it (the dot is still required),
-as described in <doc:Enumerations#Enumeration-Syntax>
-and <doc:Expressions#Implicit-Member-Expression>.
+### 访问枚举案例
 
-To check the values of enumeration cases, use a `switch` statement,
-as shown in <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
-The enumeration type is pattern-matched against the enumeration case patterns
-in the case blocks of the `switch` statement,
-as described in <doc:Patterns#Enumeration-Case-Pattern>.
+要引用枚举类型的案例，请使用点（`.`）语法，如`EnumerationType.enumerationCase`所示。当枚举类型可以从上下文中推断时，可以省略它（仍然需要点），如 <doc:Enumerations#Enumeration-Syntax> 和 <doc:Expressions#Implicit-Member-Expression> 中所述。
+
+要检查枚举案例的值，请使用 `switch` 语句，如 <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement> 中所示。枚举类型与 `switch` 语句的案例块中的枚举案例模式进行模式匹配，如 <doc:Patterns#Enumeration-Case-Pattern> 中所述。
 
 <!--
   FIXME: Or use if-case:
@@ -1524,28 +1518,28 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   We removed it from our grammar, below.
 -->
 
-> Grammar of an enumeration declaration:
+> 枚举声明的语法：
 >
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
+> *枚举声明* → *属性*_?_ *访问级别修饰符*_?_ *联合样式枚举* \
+> *枚举声明* → *属性*_?_ *访问级别修饰符*_?_ *原始值样式枚举*
 >
-> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`** \
-> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_ \
-> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
-> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list* \
-> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
-> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_ \
-> *enum-name* → *identifier* \
-> *enum-case-name* → *identifier*
+> *联合样式枚举* → **`间接`**_?_ **`枚举`** *枚举名称* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ **`{`** *联合样式枚举成员*_?_ **`}`** \
+> *联合体样式枚举成员* → *联合体样式枚举成员* *联合体样式枚举成员*_?_ \
+> *联合体风格枚举成员* → *声明* | *联合体风格枚举案例子句* | *编译器控制语句* \
+> *联合样式枚举案例子句* → *属性*_?_ **`间接`**_?_ **`案例`** *联合样式枚举案例列表* \
+> *联合样式枚举案例列表* → *联合样式枚举案例* | *联合样式枚举案例* **`,`** *联合样式枚举案例列表* \
+> *联合样式枚举案例* → *枚举案例名称* *元组类型*_?_ \
+> *枚举名称* → *标识符* \
+> *枚举案例名称* → *标识符*
 >
-> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`** \
-> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_ \
-> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
-> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_ \
-> *raw-value-assignment* → **`=`** *raw-value-literal* \
-> *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
+> *原始值样式枚举* → **`枚举`** *枚举名称* *泛型参数子句*_?_ *类型继承子句* *泛型约束子句*_?_ **`{`** *原始值样式枚举成员* **`}`** \
+> *原始值样式枚举成员* → *原始值样式枚举成员* *原始值样式枚举成员*_?_ \
+> *原始值样式枚举成员* → *声明* | *原始值样式枚举案例条款* | *编译器控制语句* \
+> *原始值样式枚举案例条款* → *属性*_?_ **`案例`** *原始值样式枚举案例列表* \
+> *原始值样式枚举案例列表* → *原始值样式枚举案例* | *原始值样式枚举案例* **`,`** *原始值样式枚举案例列表* \
+> *原始值样式枚举案例* → *枚举案例名称* *原始值赋值*_?_ \
+> *原始值赋值* → **`=`** *原始值字面量* \
+> *原始值字面量* → *数值字面量* | *静态字符串字面量* | *布尔字面量*
 
 <!--
   NOTE: The two types of enums are sufficiently different enough to warrant separating
