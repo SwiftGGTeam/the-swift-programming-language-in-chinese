@@ -1429,10 +1429,9 @@ enum Tree<T> {
   -> indirect enum E3 { case x }
 -->
 
-### Enumerations with Cases of a Raw-Value Type
+### 带有原始值类型的枚举
 
-The following form declares an enumeration type that contains
-enumeration cases of the same basic type:
+以下表单声明了一个枚举类型，其中包含相同基本类型的枚举案例：
 
 ```swift
 enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
@@ -1441,32 +1440,14 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-In this form, each case block consists of the `case` keyword,
-followed by one or more enumeration cases, separated by commas.
-Unlike the cases in the first form, each case has an underlying
-value, called a *raw value*, of the same basic type.
-The type of these values is specified in the *raw-value type* and must represent an
-integer, floating-point number, string, or single character.
-In particular, the *raw-value type* must conform to the `Equatable` protocol
-and one of the following protocols:
-`ExpressibleByIntegerLiteral` for integer literals,
-`ExpressibleByFloatLiteral` for floating-point literals,
-`ExpressibleByStringLiteral` for string literals that contain any number of characters,
-and `ExpressibleByUnicodeScalarLiteral`
-or `ExpressibleByExtendedGraphemeClusterLiteral` for string literals
-that contain only a single character.
-Each case must have a unique name and be assigned a unique raw value.
+在这种形式中，每个案例块由`case`关键字组成，后面跟着一个或多个枚举案例，用逗号分隔。与第一种形式中的案例不同，每个案例都有一个基础值，称为*原始值*，其基本类型相同。这些值的类型在*原始值类型*中指定，必须表示整数、浮点数、字符串或单个字符。特别是，*原始值类型*必须符合`Equatable`协议，并且符合以下协议之一：`ExpressibleByIntegerLiteral` 用于整数字面量，`ExpressibleByFloatLiteral` 用于浮点字面量，`ExpressibleByStringLiteral` 用于包含任意数量字符的字符串字面量，以及 `ExpressibleByUnicodeScalarLiteral` 或 `ExpressibleByExtendedGraphemeClusterLiteral` 用于仅包含单个字符的字符串字面量。每个案例必须具有唯一名称并分配唯一的原始值。
 
 <!--
   The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
   This list is shorter because these five protocols are explicitly supported in the compiler.
 -->
 
-If the raw-value type is specified as `Int`
-and you don't assign a value to the cases explicitly,
-they're implicitly assigned the values `0`, `1`, `2`, and so on.
-Each unassigned case of type `Int` is implicitly assigned a raw value
-that's automatically incremented from the raw value of the previous case.
+如果原始值类型被指定为 `Int`，并且您没有显式地为这些情况分配值，它们将隐式地被分配值 `0`、`1`、`2`，依此类推。每个未分配的 `Int` 类型的情况将隐式地被分配一个原始值，该值是从前一个案例的原始值自动递增的。
 
 ```swift
 enum ExampleEnum: Int {
@@ -1484,14 +1465,9 @@ enum ExampleEnum: Int {
   ```
 -->
 
-In the above example, the raw value of `ExampleEnum.a` is `0` and the value of
-`ExampleEnum.b` is `1`. And because the value of `ExampleEnum.c` is
-explicitly set to `5`, the value of `ExampleEnum.d` is automatically incremented
-from `5` and is therefore `6`.
+在上述示例中，`ExampleEnum.a` 的原始值为 `0`，而 `ExampleEnum.b` 的值为 `1`。由于 `ExampleEnum.c` 的值被显式设置为 `5`，因此 `ExampleEnum.d` 的值自动从 `5` 增加，结果为 `6`。
 
-If the raw-value type is specified as `String`
-and you don't assign values to the cases explicitly,
-each unassigned case is implicitly assigned a string with the same text as the name of that case.
+如果原始值类型被指定为 `String`，并且您没有显式地为各个情况分配值，则每个未分配的案例会隐式地分配一个与该案例名称相同文本的字符串。
 
 ```swift
 enum GamePlayMode: String {
@@ -1509,21 +1485,7 @@ enum GamePlayMode: String {
   ```
 -->
 
-In the above example, the raw value of `GamePlayMode.cooperative` is `"cooperative"`,
-the raw value of `GamePlayMode.individual` is `"individual"`,
-and the raw value of `GamePlayMode.competitive` is `"competitive"`.
-
-Enumerations that have cases of a raw-value type implicitly conform to the
-`RawRepresentable` protocol, defined in the Swift standard library.
-As a result, they have a `rawValue` property
-and a failable initializer with the signature `init?(rawValue: RawValue)`.
-You can use the `rawValue` property to access the raw value of an enumeration case,
-as in `ExampleEnum.b.rawValue`.
-You can also use a raw value to find a corresponding case, if there is one,
-by calling the enumeration's failable initializer,
-as in `ExampleEnum(rawValue: 5)`, which returns an optional case.
-For more information and to see examples of cases with raw-value types,
-see <doc:Enumerations#Raw-Values>.
+在上述示例中，`GamePlayMode.cooperative` 的原始值是 `"cooperative"`，`GamePlayMode.individual` 的原始值是 `"individual"`，而 `GamePlayMode.competitive` 的原始值是 `"competitive"`。
 
 ### Accessing Enumeration Cases
 
