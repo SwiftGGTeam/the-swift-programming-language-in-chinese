@@ -1,39 +1,14 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/ReferenceManual/LexicalStructure.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/lexicalstructure
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 词法结构
 
-# Lexical Structure
+使用语法的最低层级组件。
 
-Use the lowest-level components of the syntax.
+Swift 的 *词法结构* 描述了哪些字符序列构成了语言中的合法标记（tokens）。这些合法标记构成了语言的最低层级构建块，并在后续章节中用于描述语言的其他部分。一个标记可以由标识符、关键字、标点符号、字面量或运算符组成。
 
-The *lexical structure* of Swift describes what sequence of characters
-form valid tokens of the language.
-These valid tokens form the lowest-level building blocks of the language
-and are used to describe the rest of the language in subsequent chapters.
-A token consists of an identifier, keyword, punctuation, literal, or operator.
+在大多数情况下，这些标记是从 Swift 源文件的字符中生成的，生成过程考虑了输入文本中最长的可能子字符串，并受以下语法规则的约束。这种行为策略被称为 *最长匹配策略（longest match）* 或 *最大吞噬策略（maximal munch）*。
 
-In most cases, tokens are generated from the characters of a Swift source file
-by considering the longest possible substring from the input text,
-within the constraints of the grammar that are specified below.
-This behavior is referred to as *longest match*
-or *maximal munch*.
+## 空白和注释
 
-## Whitespace and Comments
-
-Whitespace has two uses: to separate tokens in the source file
-and to distinguish between prefix, postfix, and infix operators
-(see <doc:LexicalStructure#Operators>),
-but is otherwise ignored.
-The following characters are considered whitespace:
-space (U+0020),
-line feed (U+000A),
-carriage return (U+000D),
-horizontal tab (U+0009),
-vertical tab (U+000B),
-form feed (U+000C)
-and null (U+0000).
+空白字符有两个用途：在源文件中分隔标记，并区分前缀、后缀和中缀运算符（参见 <doc:LexicalStructure#Operators>），除此之外，空白字符会被忽略。以下字符被视为空白字符：空格 (U+0020)、换行符 (U+000A)、回车符 (U+000D)、水平制表符 (U+0009)、垂直制表符 (U+000B)、换页符 (U+000C) 和空字符 (U+0000)。
 
 <!--
   Whitespace characters are listed roughly from
@@ -41,73 +16,44 @@ and null (U+0000).
   not in order of Unicode scalar value.
 -->
 
-Comments are treated as whitespace by the compiler.
-Single line comments begin with `//`
-and continue until a line feed (U+000A)  or carriage return (U+000D).
-Multiline comments begin with `/*` and end with `*/`.
-Nesting multiline comments is allowed,
-but the comment markers must be balanced.
+编译器将注释视为空白字符。单行注释以 `//` 开头，并持续到换行符 (U+000A) 或回车符 (U+000D)。多行注释以 `/*` 开头，以 `*/` 结束。多行注释可以嵌套，但注释符号必须头尾匹配。
 
-Comments can contain additional formatting and markup,
-as described in [Markup Formatting Reference](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html).
+注释中可以包含额外的格式和标记，如 [标记格式参考](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) 中所述。
 
-> Grammar of whitespace:
+> 空白字符的语法:
 >
 > *whitespace* → *whitespace-item* *whitespace*_?_ \
 > *whitespace-item* → *line-break* \
 > *whitespace-item* → *inline-space* \
 > *whitespace-item* → *comment* \
 > *whitespace-item* → *multiline-comment* \
-> *whitespace-item* → U+0000, U+000B, or U+000C
+> *whitespace-item* → U+0000、U+000B 或 U+000C
 >
 > *line-break* → U+000A \
 > *line-break* → U+000D \
-> *line-break* → U+000D followed by U+000A
+> *line-break* → U+000D 后跟 U+000A
 >
 > *inline-spaces* → *inline-space* *inline-spaces*_?_ \
-> *inline-space* → U+0009 or U+0020
+> *inline-space* → U+0009 或 U+0020
 >
 > *comment* → **`//`** *comment-text* *line-break* \
 > *multiline-comment* → **`/*`** *multiline-comment-text* **`*/`**
 >
 > *comment-text* → *comment-text-item* *comment-text*_?_ \
-> *comment-text-item* → Any Unicode scalar value except U+000A or U+000D
+> *comment-text-item* → 除 U+000A 或 U+000D 之外的任意 Unicode 标量值
 >
 > *multiline-comment-text* → *multiline-comment-text-item* *multiline-comment-text*_?_ \
 > *multiline-comment-text-item* → *multiline-comment* \
 > *multiline-comment-text-item* → *comment-text-item* \
-> *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
+> *multiline-comment-text-item* → 除 **`/*`** 或 **`*/`** 之外的任意 Unicode 标量值
 
-## Identifiers
+## 标识符
 
-*Identifiers* begin with
-an uppercase or lowercase letter A through Z,
-an underscore (`_`),
-a noncombining alphanumeric Unicode character
-in the Basic Multilingual Plane,
-or a character outside the Basic Multilingual Plane
-that isn't in a Private Use Area.
-After the first character,
-digits and combining Unicode characters are also allowed.
+*标识符* 以大写或小写字母 A 到 Z、下划线 (`_`)、基本多语言平面（Basic Multilingual Plane）的非组合字母数字 Unicode 字符（Noncombining Alphanumeric Unicode Character），或基本多语言平面之外但不在私用区（Private Use Area）的字符开头。在第一个字符之后，还允许使用数字和组合 Unicode 字符（Combining Unicode Character）。
 
-Treat identifiers that begin with an underscore,
-subscripts whose first argument label begins with an underscore,
-and initializers whose first argument label begins with an underscore,
-as internal,
-even if their declaration has the `public` access-level modifier.
-This convention lets framework authors mark part of an API
-that clients must not interact with or depend on,
-even though some limitation requires the declaration to be public.
-In addition,
-identifiers that begin with two underscores
-are reserved for the Swift compiler and standard library.
+即使声明具有 `public` 访问级别修饰符，也应将以下内容视为仅内部使用：以下划线开头的标识符、第一个参数标签以下划线开头的下标操作，以及第一个参数标签以下划线开头的构造函数。这个约定允许框架作者以此方式标记某个 API 的一部分内容，以防止客户端与之交互或依赖，尽管某些限制要求这些声明是公开可访问的。此外，以两个下划线开头的标识符需保留给 Swift 编译器和标准库使用。
 
-To use a reserved word as an identifier,
-put a backtick (\`) before and after it.
-For example, `class` isn't a valid identifier,
-but `` `class` `` is valid.
-The backticks aren't considered part of the identifier;
-`` `x` `` and `x` have the same meaning.
+要将保留字用作标识符，可以在其前后加上反引号（\`）。例如，`class` 不是一个合法的标识符，但 `` `class` `` 是合法的。反引号不被视为标识符的一部分；`` `x` `` 和 `x` 具有相同的指代含义。
 
 <!--
 The paragraph above produces a link-resolution warning
@@ -117,16 +63,9 @@ https://github.com/apple/swift-book/issues/71
 https://github.com/apple/swift-markdown/issues/93
 -->
 
-Inside a closure with no explicit parameter names,
-the parameters are implicitly named `$0`, `$1`, `$2`, and so on.
-These names are valid identifiers within the scope of the closure.
+在没有显式参数名称的闭包中，参数会被隐式命名为 `$0`、`$1`、`$2` 等。这些名称在闭包的范围内是合法的标识符。
 
-The compiler synthesizes identifiers that begin with a dollar sign (`$`)
-for properties that have a property wrapper projection.
-Your code can interact with these identifiers,
-but you can't declare identifiers with that prefix.
-For more information, see the <doc:Attributes#propertyWrapper> section
-of the <doc:Attributes> chapter.
+编译器会为具有属性包装器投射（Property Wrapper Projection）的属性合成以美元符号 (`$`) 开头的标识符。你的代码可以与这些标识符交互，但你不能声明带有该前缀的标识符。有关更多信息，请参阅 <doc:Attributes> 章节的 <doc:Attributes#propertyWrapper> 部分。
 
 <!--
   The cross reference above includes both the section and chapter because,
@@ -143,7 +82,7 @@ https://github.com/apple/swift-book/issues/71
 https://github.com/apple/swift-markdown/issues/93
 -->
 
-> Grammar of an identifier:
+> 标识符的语法:
 >
 > *identifier* → *identifier-head* *identifier-characters*_?_ \
 > *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``** \
@@ -151,25 +90,25 @@ https://github.com/apple/swift-markdown/issues/93
 > *identifier* → *property-wrapper-projection* \
 > *identifier-list* → *identifier* | *identifier* **`,`** *identifier-list*
 >
-> *identifier-head* → Upper- or lowercase letter A through Z \
+> *identifier-head* → 大写或小写字母 A 到 Z \
 > *identifier-head* → **`_`** \
-> *identifier-head* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA \
-> *identifier-head* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF \
-> *identifier-head* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF \
+> *identifier-head* → U+00A8、U+00AA、U+00AD、U+00AF、U+00B2–U+00B5 或 U+00B7–U+00BA \
+> *identifier-head* → U+00BC–U+00BE、U+00C0–U+00D6、U+00D8–U+00F6 或 U+00F8–U+00FF \
+> *identifier-head* → U+0100–U+02FF、U+0370–U+167F、U+1681–U+180D 或 U+180F–U+1DBF \
 > *identifier-head* → U+1E00–U+1FFF \
-> *identifier-head* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F \
-> *identifier-head* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793 \
-> *identifier-head* → U+2C00–U+2DFF or U+2E80–U+2FFF \
-> *identifier-head* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF \
-> *identifier-head* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44 \
+> *identifier-head* → U+200B–U+200D、U+202A–U+202E、U+203F–U+2040、U+2054 或 U+2060–U+206F \
+> *identifier-head* → U+2070–U+20CF、U+2100–U+218F、U+2460–U+24FF 或 U+2776–U+2793 \
+> *identifier-head* → U+2C00–U+2DFF 或 U+2E80–U+2FFF \
+> *identifier-head* → U+3004–U+3007、U+3021–U+302F、U+3031–U+303F 或 U+3040–U+D7FF \
+> *identifier-head* → U+F900–U+FD3D、U+FD40–U+FDCF、U+FDF0–U+FE1F 或 U+FE30–U+FE44 \
 > *identifier-head* → U+FE47–U+FFFD \
-> *identifier-head* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD \
-> *identifier-head* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD \
-> *identifier-head* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD \
-> *identifier-head* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
+> *identifier-head* → U+10000–U+1FFFD、U+20000–U+2FFFD、U+30000–U+3FFFD 或 U+40000–U+4FFFD \
+> *identifier-head* → U+50000–U+5FFFD、U+60000–U+6FFFD、U+70000–U+7FFFD 或 U+80000–U+8FFFD \
+> *identifier-head* → U+90000–U+9FFFD、U+A0000–U+AFFFD、U+B0000–U+BFFFD 或 U+C0000–U+CFFFD \
+> *identifier-head* → U+D0000–U+DFFFD 或 U+E0000–U+EFFFD
 >
-> *identifier-character* → Digit 0 through 9 \
-> *identifier-character* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F \
+> *identifier-character* → 数字 0 到 9 \
+> *identifier-character* → U+0300–U+036F、U+1DC0–U+1DFF、U+20D0–U+20FF 或 U+FE20–U+FE2F \
 > *identifier-character* → *identifier-head* \
 > *identifier-characters* → *identifier-character* *identifier-characters*_?_
 >
