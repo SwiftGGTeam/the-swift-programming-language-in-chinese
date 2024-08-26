@@ -1301,36 +1301,19 @@ Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返�
   Let's just deal with this difference in prose.
 -->
 
-## Enumeration Declaration
+## 枚举声明
 
-An *enumeration declaration* introduces a named enumeration type into your program.
+一个*枚举声明*将一个命名的枚举类型引入到你的程序中。
 
-Enumeration declarations have two basic forms and are declared using the `enum` keyword.
-The body of an enumeration declared using either form contains
-zero or more values --- called *enumeration cases* ---
-and any number of declarations,
-including computed properties,
-instance methods, type methods, initializers, type aliases,
-and even other enumeration, structure, class, and actor declarations.
-Enumeration declarations can't contain deinitializer or protocol declarations.
+枚举声明有两种基本形式，并使用 `enum` 关键字进行声明。使用任一形式声明的枚举的主体包含零个或多个值 --- 称为 *枚举案例* --- 以及任意数量的声明，包括计算属性、实例方法、类型方法、构造器、类型别名，甚至其他枚举、结构体、类和 actor 声明。枚举声明不能包含析构器或协议声明。
 
-Enumeration types can adopt any number of protocols, but can’t inherit from classes,
-structures, or other enumerations.
+枚举类型可以采用任意数量的协议，但不能从类、结构或其他枚举继承。
 
-Unlike classes and structures,
-enumeration types don't have an implicitly provided default initializer;
-all initializers must be declared explicitly. Initializers can delegate
-to other initializers in the enumeration, but the initialization process is complete
-only after an initializer assigns one of the enumeration cases to `self`.
+与类和结构体不同，枚举类型没有隐式提供的默认构造器；所有构造器必须显式声明。构造器可以委托给枚举中的其他构造器，但初始化过程只有在构造器将枚举的一个案例分配给 `self` 后才完成。
 
-Like structures but unlike classes, enumerations are value types;
-instances of an enumeration are copied when assigned to
-variables or constants, or when passed as arguments to a function call.
-For information about value types,
-see <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
+像结构体但不同于类，枚举是值类型；当枚举的实例被赋值给变量或常量，或作为参数传递给函数调用时，会被复制。有关值类型的信息，请参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>。
 
-You can extend the behavior of an enumeration type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+您可以通过扩展声明扩展枚举类型的行为，如 <doc:Declarations#Extension-Declaration> 中所讨论的。
 
 ### Enumerations with Cases of Any Type
 
