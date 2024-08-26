@@ -1555,63 +1555,42 @@ enum GamePlayMode: String {
   and they behave differently.
 -->
 
-## Structure Declaration
+## 结构体声明
 
-A *structure declaration* introduces a named structure type into your program.
-Structure declarations are declared using the `struct` keyword and have the following form:
+*结构体声明*将一个命名的结构体类型引入到你的程序中。结构体声明使用 `struct` 关键字声明，具有以下形式：
 
 ```swift
 struct <#structure name#>: <#adopted protocols#> {
-   <#declarations#>
+    <#declarations#>
 }
 ```
 
-The body of a structure contains zero or more *declarations*.
-These *declarations* can include both stored and computed properties,
-type properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, actor, and enumeration declarations.
-Structure declarations can't contain deinitializer or protocol declarations.
-For a discussion and several examples of structures
-that include various kinds of declarations,
-see <doc:ClassesAndStructures>.
+结构体的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、类型属性、实例方法、类型方法、构造器、下标、类型别名，甚至其他结构体、类、actor 和枚举声明。结构声明不能包含析构器或协议声明。有关包含各种类型声明的结构的讨论和多个示例，请参见 <doc:ClassesAndStructures>。
 
-Structure types can adopt any number of protocols,
-but can't inherit from classes, enumerations, or other structures.
+结构体类型可以采用任意数量的协议，但不能从类、枚举或其他结构继承。
 
-There are three ways to create an instance of a previously declared structure:
+有三种方法可以创建先前声明的结构体的实例：
 
-- Call one of the initializers declared within the structure,
-  as described in <doc:Initialization#Initializers>.
-- If no initializers are declared,
-  call the structure's memberwise initializer,
-  as described in <doc:Initialization#Memberwise-Initializers-for-Structure-Types>.
-- If no initializers are declared,
-  and all properties of the structure declaration were given initial values,
-  call the structure's default initializer,
-  as described in <doc:Initialization#Default-Initializers>.
+- 调用结构体中声明的某个构造器，如 <doc:Initialization#Initializers> 中所述。
+- 如果没有声明构造器，则调用结构体的成员遍历构造器，如 <doc:Initialization#Memberwise-Initializers-for-Structure-Types> 中所述。
+- 如果没有声明构造器，且结构体声明的所有属性都给定了初始值，则调用结构体的默认构造器，如 <doc:Initialization#Default-Initializers> 中所述。
 
-The process of initializing a structure's declared properties
-is described in <doc:Initialization>.
+初始化结构体中声明属性的过程在 <doc:Initialization> 中描述。
 
-Properties of a structure instance can be accessed using dot (`.`) syntax,
-as described in <doc:ClassesAndStructures#Accessing-Properties>.
+结构体实例的属性可以使用点 (`.`) 语法访问，如 <doc:ClassesAndStructures#Accessing-Properties> 中所述。
 
-Structures are value types; instances of a structure are copied when assigned to
-variables or constants, or when passed as arguments to a function call.
-For information about value types,
-see <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
+结构体是值类型；当结构的实例被赋值给变量或常量，或作为参数传递给函数调用时，会被复制。有关值类型的信息，请参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>。
 
-You can extend the behavior of a structure type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+您可以通过扩展声明扩展结构类型的行为，如在 <doc:Declarations#Extension-Declaration> 中讨论的。
 
-> Grammar of a structure declaration:
+> 结构体声明的语法：
 >
-> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
-> *struct-name* → *identifier* \
-> *struct-body* → **`{`** *struct-members*_?_ **`}`**
+> *结构声明* → *属性*_?_ *访问级别修饰符*_?_ **`struct`** *结构名称* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *结构体主体* \
+> *结构名称* → *标识符* \
+> *结构体主体* → **`{`** *结构体成员*_?_ **`}`**
 >
-> *struct-members* → *struct-member* *struct-members*_?_ \
-> *struct-member* → *declaration* | *compiler-control-statement*
+> *结构成员* → *结构成员* *结构成员*_?_ \
+> *结构成员* → *声明* | *编译器控制语句*
 
 ## Class Declaration
 
