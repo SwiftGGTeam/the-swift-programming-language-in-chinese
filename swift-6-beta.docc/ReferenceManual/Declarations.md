@@ -805,22 +805,11 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   ```
 -->
 
-#### Borrowing and Consuming Parameters
+#### 借用和消耗参数
 
-By default, Swift uses a set of rules
-to automatically manage object lifetime across function calls,
-copying values when required.
-The default rules are designed to minimize overhead in most cases ---
-if you want more specific control,
-you can apply the `borrowing` or `consuming` parameter modifier.
-In this case,
-use `copy` to explicitly mark copy operations.
+默认情况下，Swift 使用一套规则在函数调用之间自动管理对象生命周期，在需要时复制值。默认规则旨在在大多数情况下最小化开销——如果您想要更具体的控制，可以应用 `borrowing` 或 `consuming` 参数修饰符。在这种情况下，使用 `copy` 显式标记复制操作。
 
-Regardless of whether you use the default rules,
-Swift guarantees that object lifetime and
-ownership are correctly managed in all cases.
-These parameter modifiers impact only the relative efficiency
-of particular usage patterns, not correctness.
+无论您是否使用默认规则，Swift 确保在所有情况下对象的生命周期和所有权都得到正确管理。这些参数修饰符仅影响特定使用模式的相对效率，而不影响正确性。
 
 <!--
 TODO: Describe the default rules.
@@ -829,12 +818,7 @@ and everything else is borrowing.
 Where are copies implicitly inserted?
 -->
 
-The `borrowing` modifier indicates that the function
-does not keep the parameter's value.
-In this case, the caller maintains ownership of the object
-and the responsibility for the object's lifetime.
-Using `borrowing` minimizes overhead when the function
-uses the object only transiently.
+`borrowing` 修饰符表示该函数不保留参数的值。在这种情况下，调用者保持对象的所有权，并对对象的生命周期负责。使用 `borrowing` 可以在函数仅暂时使用对象时最小化开销。
 
 ```swift
 // `isLessThan` does not keep either argument
@@ -843,9 +827,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 }
 ```
 
-If the function needs to keep the parameter's value
-for example, by storing it in a global variable ---
-you use `copy` to explicitly copy that value.
+如果函数需要保持参数的值，例如，通过将其存储在全局变量中 --- 您可以使用 `copy` 明确地复制该值。
 
 ```swift
 // As above, but this `isLessThan` also wants to record the smallest value
@@ -859,11 +841,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 }
 ```
 
-Conversely,
-the `consuming` parameter modifier indicates
-that the function takes ownership of the value,
-accepting responsibility for either storing or destroying it
-before the function returns.
+相反，`consuming` 参数修饰符表示该函数拥有该值的所有权，负责在函数返回之前存储或销毁它。
 
 ```swift
 // `store` keeps its argument, so mark it `consuming`
@@ -872,17 +850,14 @@ func store(a: consuming A) {
 }
 ```
 
-Using `consuming` minimizes overhead when the caller no longer
-needs to use the object after the function call.
+使用 `consuming` 可以在调用者在函数调用后不再需要使用该对象时，最小化开销。
 
 ```swift
 // Usually, this is the last thing you do with a value
 store(a: value)
 ```
 
-If you keep using a copyable object after the function call,
-the compiler automatically makes a copy of that object
-before the function call.
+如果在函数调用后继续使用可复制对象，编译器会在函数调用之前自动复制该对象。
 
 ```swift
 // The compiler inserts an implicit copy here
@@ -890,9 +865,7 @@ store(a: someValue)  // This function consumes someValue
 print(someValue)  // This uses the copy of someValue
 ```
 
-Unlike `inout`, neither `borrowing` nor
-`consuming` parameters require any special
-notation when you call the function:
+与 `inout` 不同，`borrowing` 和 `consuming` 参数在调用函数时不需要任何特殊标记：
 
 ```swift
 func someFunction(a: borrowing A, b: consuming B) { ... }
@@ -900,14 +873,7 @@ func someFunction(a: borrowing A, b: consuming B) { ... }
 someFunction(a: someA, b: someB)
 ```
 
-The explicit use of either `borrowing` or `consuming`
-indicates your intention to more tightly control
-the overhead of runtime ownership management.
-Because copies can cause unexpected runtime ownership
-operations,
-parameters marked with either of these
-modifiers cannot be copied unless you
-use an explicit `copy` keyword:
+明确使用 `borrowing` 或 `consuming` 表示您希望更严格地控制运行时所有权管理的开销。因为复制可能导致意外的运行时所有权操作，所以标记为这两种修饰符的参数在没有使用显式的 `copy` 关键字的情况下不能被复制：
 
 ```swift
 func borrowingFunction1(a: borrowing A) {
