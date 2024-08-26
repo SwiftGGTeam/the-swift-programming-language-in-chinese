@@ -1227,41 +1227,23 @@ since it seems likely that the latter will generally replace the former.
 See also rdar://128972373
 -->
 
-### Asynchronous Functions and Methods
+### 异步函数和方法
 
-Functions and methods that run asynchronously must be marked with the `async` keyword.
-These functions and methods are known as *asynchronous functions*
-and *asynchronous methods*.
-They have the following form:
+运行异步的函数和方法必须标记为 `async` 关键字。这些函数和方法被称为 *异步函数* 和 *异步方法*。它们具有以下形式：
 
 ```swift
 func <#function name#>(<#parameters#>) async -> <#return type#> {
-   <#statements#>
+    <#statements#>
 }
 ```
 
-Calls to an asynchronous function or method
-must be wrapped in an `await` expression ---
-that is, they must be in the scope of an `await` operator.
+对异步函数或方法的调用必须包装在一个 `await` 表达式中 --- 也就是说，它们必须在 `await` 操作符的作用域内。
 
-The `async` keyword is part of the function's type,
-and synchronous functions are subtypes of asynchronous functions.
-As a result, you can use a synchronous function
-in a context where an asynchronous function is expected.
-For example,
-you can override an asynchronous method with a synchronous method,
-and a synchronous method can satisfy a protocol requirement
-that requires an asynchronous method.
+`async` 关键字是函数类型的一部分，同步函数是异步函数的子类型。因此，您可以覆盖异在期望异步函数的上下文中使用同步函数。例如，您可以用同步方法步方法，并且同步方法可以满足需要异步方法的协议要求。
 
-You can overload a function based on whether or not the function is asynchronous.
-At the call site, context determines which overload is used:
-In an asynchronous context, the asynchronous function is used,
-and in a synchronous context, the synchronous function is used.
+您可以根据函数是否是异步的来重载函数。在调用位置，上下文决定使用哪个重载：在异步上下文中，使用异步函数；在同步上下文中，使用同步函数。
 
-An asynchronous method can't override a synchronous method,
-and an asynchronous method can't satisfy a protocol requirement for a synchronous method.
-That said, a synchronous method can override an asynchronous method,
-and a synchronous method can satisfy a protocol requirement for an asynchronous method.
+一异步方法不能覆盖同步方法，异步方法也不能满足同步方法的协议要求。也就是说，同步方法可以覆盖异步方法，且同步方法可以满足异步方法的协议要求。
 
 <!--
   - test: `sync-satisfy-async-protocol-requirements`
