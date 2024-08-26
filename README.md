@@ -106,6 +106,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | availability-condition | 可用性条件 |
 | base class | 基类 |
 | binary operator | 二元运算符 |
+| boxed protocol type | 封装协议类型 |
 | branch statement | 分支语句 |
 | closure | 闭包 |
 | collection | 集合 |
