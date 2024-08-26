@@ -1592,46 +1592,23 @@ struct <#structure name#>: <#adopted protocols#> {
 > *结构成员* → *结构成员* *结构成员*_?_ \
 > *结构成员* → *声明* | *编译器控制语句*
 
-## Class Declaration
+##  类声明
 
-A *class declaration* introduces a named class type into your program.
-Class declarations are declared using the `class` keyword and have the following form:
+*类声明*将一个命名的类类型引入到你的程序中。类声明使用 `class` 关键字声明，具有以下形式：
 
 ```swift
 class <#class name#>: <#superclass#>, <#adopted protocols#> {
-   <#declarations#>
+    <#declarations#>
 }
 ```
 
-The body of a class contains zero or more *declarations*.
-These *declarations* can include both stored and computed properties,
-instance methods, type methods, initializers,
-a single deinitializer, subscripts, type aliases,
-and even other class, structure, actor, and enumeration declarations.
-Class declarations can't contain protocol declarations.
-For a discussion and several examples of classes
-that include various kinds of declarations,
-see <doc:ClassesAndStructures>.
+类的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、实例方法、类型方法、构造器、一个析构器、下标、类型别名，甚至其他类、结构、action 和枚举声明。类声明不能包含协议声明。有关包含各种类型声明的类的讨论和多个示例，请参见 <doc:ClassesAndStructures>。
 
-A class type can inherit from only one parent class, its *superclass*,
-but can adopt any number of protocols.
-The *superclass* appears first after the *class name* and colon,
-followed by any *adopted protocols*.
-Generic classes can inherit from other generic and nongeneric classes,
-but a nongeneric class can inherit only from other nongeneric classes.
-When you write the name of a generic superclass class after the colon,
-you must include the full name of that generic class,
-including its generic parameter clause.
+一个类类型只能继承自一个父类，即它的*超类*，但可以采用任意数量的协议。*超类*在*类名*和冒号之后首先出现，后面跟着任何*采用的协议*。泛型类可以继承其他泛型和非泛型类，但非泛型类只能继承其他非泛型类。当你在冒号后写泛型超类的名称时，必须包括该泛型类的全名，包括其泛型参数子句。
 
-As discussed in <doc:Declarations#Initializer-Declaration>,
-classes can have designated and convenience initializers.
-The designated initializer of a class must initialize all of the class's
-declared properties and it must do so before calling any of its superclass's
-designated initializers.
+如在 <doc:Declarations#Initializer-Declaration> 中讨论的，类可以有指定构造器和便利构造器。类的指定构造器必须初始化所有声明的属性，并且必须在调用任何超类的指定构造器之前完成此操作。
 
-A class can override properties, methods, subscripts, and initializers of its superclass.
-Overridden properties, methods, subscripts,
-and designated initializers must be marked with the `override` declaration modifier.
+一个类可以重写其超类的属性、方法、下标和构造器。重写的属性、方法、下标和指定构造器必须标记为 `override` 声明修饰符。
 
 <!--
   - test: `designatedInitializersRequireOverride`
@@ -1642,46 +1619,30 @@ and designated initializers must be marked with the `override` declaration modif
   ```
 -->
 
-To require that subclasses implement a superclass's initializer,
-mark the superclass's initializer with the `required` declaration modifier.
-The subclass's implementation of that initializer
-must also be marked with the `required` declaration modifier.
+要要求子类实现超类的构造器，请使用 `required` 声明修饰符标记超类的构造器。子类对该构造器的实现也必须使用 `required` 声明修饰符进行标记。
 
-Although properties and methods declared in the *superclass* are inherited by
-the current class, designated initializers declared in the *superclass* are only
-inherited when the subclass meets the conditions described in
-<doc:Initialization#Automatic-Initializer-Inheritance>.
-Swift classes don't inherit from a universal base class.
+尽管在*超类*中声明的属性和方法被当前类继承，但在*超类*中声明的指定构造器仅在子类满足 <doc:Initialization#Automatic-Initializer-Inheritance> 中描述的条件时才会被继承。Swift 类不从通用基类继承。
 
-There are two ways to create an instance of a previously declared class:
+有两种方法可以创建一个先前声明的类的实例：
 
-- Call one of the initializers declared within the class,
-  as described in <doc:Initialization#Initializers>.
-- If no initializers are declared,
-  and all properties of the class declaration were given initial values,
-  call the class's default initializer,
-  as described in <doc:Initialization#Default-Initializers>.
+- 调用类中声明的某个构造器，如 <doc:Initialization#Initializers> 中所述。
+- 如果没有声明构造器，且类声明的所有属性都给定了初始值，则调用类的默认构造器，如 <doc:Initialization#Default-Initializers> 中所述。
 
-Access properties of a class instance with dot (`.`) syntax,
-as described in <doc:ClassesAndStructures#Accessing-Properties>.
+使用点（`.`）语法访问类实例的属性，如 <doc:ClassesAndStructures#Accessing-Properties> 中所述。
 
-Classes are reference types; instances of a class are referred to, rather than copied,
-when assigned to variables or constants, or when passed as arguments to a function call.
-For information about reference types,
-see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
+类是引用类型；当类的实例被赋值给变量或常量，或作为参数传递给函数调用时，是引用而不是复制。有关引用类型的信息，请参见 <doc:ClassesAndStructures#Classes-Are-Reference-Types>。
 
-You can extend the behavior of a class type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+您可以通过扩展声明扩展类类型的行为，如 <doc:Declarations#Extension-Declaration> 中所讨论的。
 
-> Grammar of a class declaration:
+> 类声明的语法：
 >
-> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
-> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
-> *class-name* → *identifier* \
-> *class-body* → **`{`** *class-members*_?_ **`}`**
+> *类声明* → *属性*_?_ *访问级别修饰符*_?_ **`最终`**_?_ **`类`** *类名* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *类主体* \
+> *类声明* → *属性*_?_ **`最终`** *访问级别修饰符*_?_ **`类`** *类名* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *类体* \
+> *类名* → *标识符* \
+> *类主体* → **`{`** *类成员*_?_ **`}`**
 >
-> *class-members* → *class-member* *class-members*_?_ \
-> *class-member* → *declaration* | *compiler-control-statement*
+> *类成员* → *类成员* *类成员*_?_ \
+> *类成员* → *声明* | *编译器控制语句*
 
 ## Actor Declaration
 
