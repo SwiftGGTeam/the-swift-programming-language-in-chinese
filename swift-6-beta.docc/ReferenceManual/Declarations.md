@@ -1102,35 +1102,30 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 
 `subscript(dynamicMember:)` 下标为成员查找提供了语法糖，如 <doc:Attributes#dynamicMemberLookup> 中所述。
 
-### Throwing Functions and Methods
-抛出函数和方法
+### 抛出函数和方法
 
-Functions and methods that can throw an error must be marked with the `throws` keyword. These functions and methods are known as *throwing functions* and *throwing methods*. They have the following form:
 可以抛出错误的函数和方法必须标记为 `throws` 关键字。这些函数和方法被称为 *抛出函数* 和 *抛出方法*。它们具有以下形式：
 
-    func <#function name#>(<#parameters#>) throws -> <#return type#> {
-       <#statements#>
-    }
+```swift
+func <#function name#>(<#parameters#>) throws -> <#return type#> {
+    <#statements#>
+}
+```
 
-
-A function that throws a specific error type has the following form:
 抛出特定错误类型的函数具有以下形式：
 
-    func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
-       <#statements#>
-    }
+```swift
+func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
+    <#statements#>
+}
+```
 
-
-Calls to a throwing function or method must be wrapped in a `try` or `try!` expression (that is, in the scope of a `try` or `try!` operator).
 调用抛出函数或方法的必须被包裹在一个 `try` 或 `try!` 表达式中（即，在 `try` 或 `try!` 操作符的作用域内）。
 
-A function's type includes whether it can throw an error and what type of error it throws. This subtype relationship means, for example, you can use a nonthrowing function in a context where a throwing one is expected. For more information about the type of a throwing function, see [doc:Types#Function-Type](doc:Types#Function-Type). For examples of working with errors that have explicit types, see [doc:ErrorHandling#Specifying-the-Error-Type](doc:ErrorHandling#Specifying-the-Error-Type).
-一个函数的类型包括它是否可以抛出错误以及它抛出什么类型的错误。这种子类型关系意味着，例如，您可以在期望抛出错误的上下文中使用一个不抛出错误的函数。有关抛出函数类型的更多信息，请参见 [doc:Types#Function-Type](doc:Types#Function-Type)。有关处理具有显式类型的错误的示例，请参见 [doc:ErrorHandling#Specifying-the-Error-Type](doc:ErrorHandling#Specifying-the-Error-Type)。
+一个函数的类型包括它是否可以抛出错误以及它抛出什么类型的错误。这种子类型关系意味着，例如，您可以在期望抛出错误的上下文中使用一个不抛出错误的函数。有关抛出函数类型的更多信息，请参见 <doc:Types#Function-Type>。有关处理具有显式类型的错误的示例，请参见 <doc:ErrorHandling#Specifying-the-Error-Type>。
 
-You can't overload a function based only on whether the function can throw an error. That said, you can overload a function based on whether a function *parameter* can throw an error.
 您不能仅仅根据函数是否可以抛出错误来重载函数。也就是说，您可以根据函数的 *参数* 是否可以抛出错误来重载函数。
 
-A throwing method can't override a nonthrowing method, and a throwing method can't satisfy a protocol requirement for a nonthrowing method. That said, a nonthrowing method can override a throwing method, and a nonthrowing method can satisfy a protocol requirement for a throwing method.
 抛出方法不能覆盖非抛出方法，抛出方法也不能满足非抛出方法的协议要求。也就是说，非抛出方法可以覆盖抛出方法，非抛出方法可以满足抛出方法的协议要求。
 
   ```swifttest
