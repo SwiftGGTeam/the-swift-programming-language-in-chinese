@@ -981,24 +981,13 @@ f(7)      // Invalid, missing argument label
   ```
 -->
 
-### Special Kinds of Methods
+### 特殊类型的方法
 
-Methods on an enumeration or a structure
-that modify `self` must be marked with the `mutating` declaration modifier.
+对枚举或结构体的方法，如果修改了 `self`，必须标记为 `mutating` 声明修饰符。
 
-Methods that override a superclass method
-must be marked with the `override` declaration modifier.
-It's a compile-time error to override a method without the `override` modifier
-or to use the `override` modifier on a method
-that doesn't override a superclass method.
+重写超类方法的方法必须标记为 `override` 声明修饰符。没有 `override` 修饰符而重写方法，或者在不重写超类方法的情况下使用 `override` 修饰符，都是编译时错误。
 
-Methods associated with a type
-rather than an instance of a type
-must be marked with the `static` declaration modifier for enumerations and structures,
-or with either the `static` or `class` declaration modifier for classes.
-A class type method marked with the `class` declaration modifier
-can be overridden by a subclass implementation;
-a class type method marked with `class final` or `static` can't be overridden.
+与类型相关的方法，而不是与类型实例相关的方法，必须使用 static 声明修饰符来标记（枚举和结构体使用 static，类可以使用 static 或 class 声明修饰符）。用 class 声明修饰符标记的类类型方法可以被子类的实现重写；用 class final 或 static 标记的类类型方法则不能被重写。
 
 <!--
   - test: `overriding-class-methods-err`
