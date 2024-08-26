@@ -1023,32 +1023,13 @@ f(7)      // Invalid, missing argument label
   ```
 -->
 
-### Methods with Special Names
+### 特殊名称的方法
 
-Several methods that have special names
-enable syntactic sugar for function call syntax.
-If a type defines one of these methods,
-instances of the type can be used in function call syntax.
-The function call is understood to be a call to
-one of the specially named methods on that instance.
+几种具有特殊名称的方法使函数调用语法变得更加简洁。如果一个类型定义了这些方法之一，该类型的实例可以在函数调用语法中使用。函数调用被理解为对该实例上某个特殊命名方法的调用。
 
-A class, structure, or enumeration type
-can support function call syntax
-by defining a `dynamicallyCall(withArguments:)` method
-or a `dynamicallyCall(withKeywordArguments:)` method,
-as described in <doc:Attributes#dynamicCallable>,
-or by defining a call-as-function method, as described below.
-If the type defines
-both a call-as-function method
-and one of the methods used by the `dynamicCallable` attribute,
-the compiler gives preference to the call-as-function method
-in circumstances where either method could be used.
+类、结构体或枚举类型可以通过定义一个 `dynamicallyCall(withArguments:)` 方法或一个 `dynamicallyCall(withKeywordArguments:)` 方法来支持函数调用语法，如 <doc:Attributes#dynamicCallable> 中所述，或者通过定义一个 call-as-function 的方法，如下所述。如果该类型同时定义了一个作为函数调用的方法和 `dynamicCallable` 特性使用的其中一个方法，则在可以使用任一方法的情况下，编译器优先选择 call-as-function 的方法。
 
-The name of a call-as-function method is `callAsFunction()`,
-or another name that begins with `callAsFunction(`
-and adds labeled or unlabeled arguments ---
-for example, `callAsFunction(_:_:)` and `callAsFunction(something:)`
-are also valid call-as-function method names.
+call-as-function 的方法的名称是 `callAsFunction()`，或者另一个以 `callAsFunction(` 开头并添加带标签或不带标签的参数的名称——例如， `callAsFunction(_:_:)` 和 `callAsFunction(something:)` 也是有效的调用作为函数的方法名称。
 
 <!--
   Above, callAsFunction( is in code voice even though
@@ -1057,7 +1038,7 @@ are also valid call-as-function method names.
   to what we're trying to express here.
 -->
 
-The following function calls are equivalent:
+以下函数调用是等效的：
 
 ```swift
 struct CallableStruct {
@@ -1091,22 +1072,9 @@ callable.callAsFunction(4, scale: 2)
   ```
 -->
 
-The call-as-function methods
-and the methods from the `dynamicCallable` attribute
-make different trade-offs between
-how much information you encode into the type system
-and how much dynamic behavior is possible at runtime.
-When you declare a call-as-function method,
-you specify the number of arguments,
-and each argument's type and label.
-The `dynamicCallable` attribute's methods specify only the type
-used to hold the array of arguments.
+call-as-function 的方法和来自 `dynamicCallable` 特性的方法在将多少信息编码到类型系统与在运行时可能的动态行为之间做出了不同的权衡。当您声明一个 call-as-function 的方法时，您需要指定参数的数量，以及每个参数的类型和标签。`dynamicCallable` 特性的方法仅指定用于保存参数数组的类型。
 
-Defining a call-as-function method,
-or a method from the `dynamicCallable` attribute,
-doesn't let you use an instance of that type
-as if it were a function in any context other than a function call expression.
-For example:
+定义一个 call-as-function，或者来自 `dynamicCallable` 特性的方法，并不允许你在函数调用表达式以外的任何上下文中将该类型的实例用作函数。例如：
 
 ```swift
 let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
@@ -1132,69 +1100,38 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
   ```
 -->
 
-The `subscript(dynamicMember:)` subscript
-enables syntactic sugar for member lookup,
-as described in <doc:Attributes#dynamicMemberLookup>.
+`subscript(dynamicMember:)` 下标为成员查找提供了语法糖，如 <doc:Attributes#dynamicMemberLookup> 中所述。
 
 ### Throwing Functions and Methods
+抛出函数和方法
 
-Functions and methods that can throw an error must be marked with the `throws` keyword.
-These functions and methods are known as *throwing functions*
-and *throwing methods*.
-They have the following form:
+Functions and methods that can throw an error must be marked with the `throws` keyword. These functions and methods are known as *throwing functions* and *throwing methods*. They have the following form:
+可以抛出错误的函数和方法必须标记为 `throws` 关键字。这些函数和方法被称为 *抛出函数* 和 *抛出方法*。它们具有以下形式：
 
-```swift
-func <#function name#>(<#parameters#>) throws -> <#return type#> {
-   <#statements#>
-}
-```
+    func <#function name#>(<#parameters#>) throws -> <#return type#> {
+       <#statements#>
+    }
+
 
 A function that throws a specific error type has the following form:
+抛出特定错误类型的函数具有以下形式：
 
-```swift
-func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
-   <#statements#>
-}
-```
+    func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
+       <#statements#>
+    }
 
-Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
-(that is, in the scope of a `try` or `try!` operator).
 
-A function's type includes whether it can throw an error
-and what type of error it throws.
-This subtype relationship means, for example, you can use a nonthrowing function
-in a context where a throwing one is expected.
-For more information about the type of a throwing function,
-see <doc:Types#Function-Type>.
-For examples of working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-the-Error-Type>.
+Calls to a throwing function or method must be wrapped in a `try` or `try!` expression (that is, in the scope of a `try` or `try!` operator).
+调用抛出函数或方法的必须被包裹在一个 `try` 或 `try!` 表达式中（即，在 `try` 或 `try!` 操作符的作用域内）。
 
-You can't overload a function based only on whether the function can throw an error.
-That said,
-you can overload a function based on whether a function *parameter* can throw an error.
+A function's type includes whether it can throw an error and what type of error it throws. This subtype relationship means, for example, you can use a nonthrowing function in a context where a throwing one is expected. For more information about the type of a throwing function, see [doc:Types#Function-Type](doc:Types#Function-Type). For examples of working with errors that have explicit types, see [doc:ErrorHandling#Specifying-the-Error-Type](doc:ErrorHandling#Specifying-the-Error-Type).
+一个函数的类型包括它是否可以抛出错误以及它抛出什么类型的错误。这种子类型关系意味着，例如，您可以在期望抛出错误的上下文中使用一个不抛出错误的函数。有关抛出函数类型的更多信息，请参见 [doc:Types#Function-Type](doc:Types#Function-Type)。有关处理具有显式类型的错误的示例，请参见 [doc:ErrorHandling#Specifying-the-Error-Type](doc:ErrorHandling#Specifying-the-Error-Type)。
 
-A throwing method can't override a nonthrowing method,
-and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
-That said, a nonthrowing method can override a throwing method,
-and a nonthrowing method can satisfy a protocol requirement for a throwing method.
+You can't overload a function based only on whether the function can throw an error. That said, you can overload a function based on whether a function *parameter* can throw an error.
+您不能仅仅根据函数是否可以抛出错误来重载函数。也就是说，您可以根据函数的 *参数* 是否可以抛出错误来重载函数。
 
-### Rethrowing Functions and Methods
-
-A function or method can be declared with the `rethrows` keyword
-to indicate that it throws an error only if one of its function parameters throws an error.
-These functions and methods are known as *rethrowing functions*
-and *rethrowing methods*.
-Rethrowing functions and methods
-must have at least one throwing function parameter.
-
-```swift
-func someFunction(callback: () throws -> Void) rethrows {
-    try callback()
-}
-```
-
-<!--
-  - test: `rethrows`
+A throwing method can't override a nonthrowing method, and a throwing method can't satisfy a protocol requirement for a nonthrowing method. That said, a nonthrowing method can override a throwing method, and a nonthrowing method can satisfy a protocol requirement for a throwing method.
+抛出方法不能覆盖非抛出方法，抛出方法也不能满足非抛出方法的协议要求。也就是说，非抛出方法可以覆盖抛出方法，非抛出方法可以满足抛出方法的协议要求。
 
   ```swifttest
   -> func someFunction(callback: () throws -> Void) rethrows {
