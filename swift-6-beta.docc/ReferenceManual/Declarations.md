@@ -2575,60 +2575,36 @@ extension Array: Loggable where Element: MarkedLoggable { }
 > *扩展成员* → *扩展成员* *扩展成员*_?_ \
 > *扩展成员* → *声明* | *编译器控制语句*
 
+## 下标声明
+
+*下标*声明允许您为特定类型的对象添加下标支持，通常用于提供一种方便的语法来访问集合、列表或序列中的元素。下标声明使用 `subscript` 关键字声明，具有以下形式：
+
 ```swift
 subscript (<#parameters#>) -> <#return type#> {
-   get {
-      <#statements#>
-   }
-   set(<#setter name#>) {
-      <#statements#>
-   }
+    get {
+        <#statements#>
+    }
+    set(<#setter name#>) {
+        <#statements#>
+    }
 }
 ```
 
-Subscript declarations can appear only in the context of a class, structure,
-enumeration, extension, or protocol declaration.
+下标声明只能出现在类、结构体、枚举、扩展或协议声明的上下文中。
 
-The *parameters* specify one or more indexes used to access elements of the corresponding type
-in a subscript expression (for example, the `i` in the expression `object[i]`).
-Although the indexes used to access the elements can be of any type,
-each parameter must include a type annotation to specify the type of each index.
-The *return type* specifies the type of the element being accessed.
+*参数*指定了在下标表达式中用于访问对应类型元素的一个或多个索引（例如，在表达式 `object[i]` 中的 `i`）。尽管用于访问元素的索引可以是任意类型，但每个参数都必须包含一个类型注释，以指定每个索引的类型。*返回类型*指定了被访问元素的类型。
 
-As with computed properties,
-subscript declarations support reading and writing the value of the accessed elements.
-The getter is used to read the value,
-and the setter is used to write the value.
-The setter clause is optional,
-and when only a getter is needed, you can omit both clauses and simply
-return the requested value directly.
-That said, if you provide a setter clause, you must also provide a getter clause.
+与计算属性一样，下标声明支持读取和写入所访问元素的值。getter 用于读取值，setter 用于写入值。setter 子句是可选的，当只需要 getter 时，可以省略两个子句，直接返回请求的值。也就是说，如果提供了 setter 子句，则必须同时提供 getter 子句。
 
-The *setter name* and enclosing parentheses are optional.
-If you provide a setter name, it's used as the name of the parameter to the setter.
-If you don't provide a setter name, the default parameter name to the setter is `value`.
-The type of the parameter to the setter is the same as the *return type*.
+*setter 名称*和括号是可选的。如果您提供了 setter 名称，它将用作 setter 的参数名称。如果您不提供 setter 名称，setter 的默认参数名称是 `value`。setter 的参数类型与*返回类型* 同。
 
-You can overload a subscript declaration in the type in which it's declared,
-as long as the *parameters* or the *return type* differ from the one you're overloading.
-You can also override a subscript declaration inherited from a superclass. When you do so,
-you must mark the overridden subscript declaration with the `override` declaration modifier.
+您可以在声明它的类型中重载下标声明，只要*参数*或*返回类型*与您正在重载的不同。您还可以覆盖从超类继承的下标声明。当您这样做时，必须使用 `override` 声明修饰符标记被覆盖的下标声明。
 
-Subscript parameters follow the same rules as function parameters,
-with two exceptions.
-By default, the parameters used in subscripting don't have argument labels,
-unlike functions, methods, and initializers.
-However, you can provide explicit argument labels
-using the same syntax that functions, methods, and initializers use.
-In addition, subscripts can't have in-out parameters.
-A subscript parameter can have a default value,
-using the syntax described in <doc:Declarations#Special-Kinds-of-Parameters>.
+下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，使用下标的参数没有参数标签，这与函数、方法和构造器不同。然而，您可以使用与函数、方法和构造器相同的语法提供显式参数标签。此外，下标不能有输入输出参数。下标参数可以具有默认值，使用在 <doc:Declarations#Special-Kinds-of-Parameters> 中描述的语法。
 
-You can also declare subscripts in the context of a protocol declaration,
-as described in <doc:Declarations#Protocol-Subscript-Declaration>.
+您还可以在协议声明的上下文中声明下标，如 <doc:Declarations#Protocol-Subscript-Declaration> 中所述。
 
-For more information about subscripting and to see examples of subscript declarations,
-see <doc:Subscripts>.
+有关下标的更多信息以及下标声明的示例，请参见 <doc:Subscripts>。
 
 ### Type Subscript Declarations
 
