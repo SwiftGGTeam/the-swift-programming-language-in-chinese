@@ -2340,16 +2340,9 @@ doSomething(with: oneAndTwo)
 
 具体类型只能遵从某个协议一次。Swift 会将多余的协议遵从标记为错误。你可能会在两种情况下遇到这种错误。第一种情况是，当你以不同的要求多次显式地遵从同一个协议。第二种情况是，当你多次隐式地继承同一个协议。以下部分将讨论这些情况。
 
-#### Resolving Explicit Redundancy
+#### 解决显式冗余
 
-Multiple extensions on a concrete type
-can't add conformance to the same protocol,
-even if the extensions' requirements are mutually exclusive.
-This restriction is demonstrated in the example below.
-Two extension declarations attempt to add conditional conformance
-to the `Serializable` protocol,
-one for arrays with `Int` elements,
-and one for arrays with `String` elements.
+对一个具体类型的多个扩展不能添加对同一协议的遵循，即使这些扩展的要求是互斥的。以下示例展示了这一限制。两个扩展声明试图为 `Serializable` 协议添加条件遵循，一个是针对包含 `Int` 元素的数组，另一个是针对包含 `String` 元素的数组。
 
 ```swift
 protocol Serializable {
@@ -2399,9 +2392,7 @@ extension Array: Serializable where Element == String {
   ```
 -->
 
-If you need to add conditional conformance based on multiple concrete types,
-create a new protocol that each type can conform to
-and use that protocol as the requirement when declaring conditional conformance.
+如果您需要根据多个具体类型添加条件遵循，请创建一个每个类型都可以遵循的新协议，并在声明条件遵循时使用该协议作为要求。
 
 ```swift
 protocol SerializableInArray { }
