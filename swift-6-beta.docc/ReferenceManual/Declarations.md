@@ -2194,14 +2194,9 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
 
 扩展声明不能为现有类添加类继承，因此您只能在*类型名称*和冒号后指定协议列表。
 
-### Conditional Conformance
+### 条件遵循
 
-You can extend a generic type
-to conditionally conform to a protocol,
-so that instances of the type conform to the protocol
-only when certain requirements are met.
-You add conditional conformance to a protocol
-by including *requirements* in an extension declaration.
+您可以扩展一个泛型类型以有条件地遵循一个协议，从而使该类型的实例仅在满足某些要求时遵循该协议。您通过在扩展声明中包含*要求*来添加对协议的条件遵循。
 
 #### Overridden Requirements Aren't Used in Some Generic Contexts
 
