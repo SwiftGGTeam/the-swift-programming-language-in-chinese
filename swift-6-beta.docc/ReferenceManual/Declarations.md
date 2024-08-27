@@ -2634,39 +2634,29 @@ subscript (<#parameters#>) -> <#return type#> {
 > *下标头* → *属性*_?_ *声明修饰符*_?_ **`下标`** *泛型参数子句*_?_ *参数子句* \
 > *下标结果* → **`->`** *属性*_?_ *类型*
 
-## Macro Declaration
+## 宏声明
 
-A *macro declaration* introduces a new macro.
-It begins with the `macro` keyword
-and has the following form:
+一个*宏声明*引入一个新的宏。它以 `macro` 关键字开始，具有以下形式：
 
 ```swift
 macro <#name#> = <#macro implementation#>
 ```
 
-The *macro implementation* is another macro,
-and indicates the location of the code that performs this macro's expansion.
-The code that performs macro expansion is a separate Swift program,
-that uses the [SwiftSyntax][] module to interact with Swift code.
-Call the `externalMacro(module:type:)` macro from the Swift standard library,
-passing in the name of a type that contains the macro's implementation,
-and the name of the module that contains that type.
+*宏实现*是另一个宏，用于指示执行此宏扩展的代码位置。执行宏扩展的代码是一个独立的 Swift 程序，该程序使用 [SwiftSyntax][] 模块与 Swift 代码进行交互。调用 Swift 标准库中的 `externalMacro(module:type:)` 宏，并传入包含宏实现的类型名称以及包含该类型的模块名称。
 
 [SwiftSyntax]: http://github.com/apple/swift-syntax/
 
-Macros can be overloaded,
-following the same model used by functions.
-A macro declaration appears only at file scope.
+宏可以被重载，遵循与函数相同的模型。宏声明仅在文件作用域内出现。
 
-For an overview of macros in Swift, see <doc:Macros>.
+有关 Swift 中宏的概述，请参见 <doc:Macros>。
 
-> Grammar of a macro declaration:
+> 宏声明的语法：
 >
-> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
-> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** \
-> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
-> *macro-function-signature-result* → **`->`** *type* \
-> *macro-definition* → **`=`** *expression*
+> *宏声明* → *宏头* *标识符* *泛型参数子句*_?_ *宏签名* *宏定义*_?_ *泛型约束子句* \
+> *宏头* → *属性*_?_ *声明修饰符*_?_ **`宏`** \
+> *宏签名* → *参数子句* *宏函数签名结果*_?_ \
+> *宏函数签名结果* → **`->`** *类型* \
+> *宏定义* → **`=`** *表达式*
 
 ## Operator Declaration
 
