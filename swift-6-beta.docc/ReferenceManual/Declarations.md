@@ -2198,15 +2198,9 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
 
 您可以扩展一个泛型类型以有条件地遵循一个协议，从而使该类型的实例仅在满足某些要求时遵循该协议。您通过在扩展声明中包含*要求*来添加对协议的条件遵循。
 
-#### Overridden Requirements Aren't Used in Some Generic Contexts
+#### 重写的要求在某些泛型上下文中不会被使用
 
-In some generic contexts,
-types that get behavior from conditional conformance to a protocol
-don't always use the specialized implementations
-of that protocol's requirements.
-To illustrate this behavior,
-the following example defines two protocols
-and a generic type that conditionally conforms to both protocols.
+在某些泛型上下文中，通过条件遵循协议而获得行为的类型，并不总是使用该协议要求的特定实现。为了说明这种行为，以下示例定义了两个协议和一个有条件地遵循这两个协议的泛型类型。
 
 <!--
   This test needs to be compiled so that it will recognize Pair's
@@ -2300,14 +2294,7 @@ extension String: TitledLoggable {
   ```
 -->
 
-The `Pair` structure conforms to `Loggable` and `TitledLoggable`
-whenever its generic type conforms to `Loggable` or `TitledLoggable`, respectively.
-In the example below,
-`oneAndTwo` is an instance of `Pair<String>`,
-which conforms to `TitledLoggable`
-because `String` conforms to `TitledLoggable`.
-When the `log()` method is called on `oneAndTwo` directly,
-the specialized version containing the title string is used.
+`Pair` 结构在其泛型类型分别遵循 `Loggable` 或 `TitledLoggable` 时，也会相应地遵循 `Loggable` 和 `TitledLoggable`。在下面的示例中，`oneAndTwo` 是 `Pair<String>` 的一个实例，由于 `String` 遵循 `TitledLoggable`，因此 `oneAndTwo` 也遵循 `TitledLoggable`。当直接调用 `oneAndTwo` 的 `log()` 方法时，将使用包含标题字符串的特定版本。
 
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
@@ -2325,13 +2312,7 @@ oneAndTwo.log()
   ```
 -->
 
-However, when `oneAndTwo` is used in a generic context
-or as an instance of the `Loggable` protocol,
-the specialized version isn't used.
-Swift picks which implementation of `log()` to call
-by consulting only the minimum requirements that `Pair` needs to conform to `Loggable`.
-For this reason,
-the default implementation provided by the `Loggable` protocol is used instead.
+然而，当在泛型上下文中使用 `oneAndTwo` 或将其作为 `Loggable` 协议的一个实例时，特定的实现版本不会被使用。`Swift` 在选择调用哪个 `log()` 实现时，只参考 `Pair` 遵循 `Loggable` 所需的最低要求。因此，使用的是 `Loggable` 协议提供的默认实现。
 
 ```swift
 func doSomething<T: Loggable>(with x: T) {
@@ -2353,8 +2334,7 @@ doSomething(with: oneAndTwo)
   ```
 -->
 
-When `log()` is called on the instance that's passed to `doSomething(_:)`,
-the customized title is omitted from the logged string.
+当在传递给 `doSomething(_:)` 的实例上调用 `log()` 时，自定义标题会从日志字符串中省略。
 
 ### Protocol Conformance Must Not Be Redundant
 
