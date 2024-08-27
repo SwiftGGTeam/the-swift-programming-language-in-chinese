@@ -1695,63 +1695,27 @@ actor 是引用类型；当分配给变量或常量，或作为参数传递给�
 > *actor-成员* → *actor-成员* *actor-成员*_?_ \
 > *actor-成员* → *声明* | *编译器控制语句*
 
-## Protocol Declaration
+## 协议声明
 
-A *protocol declaration* introduces a named protocol type into your program.
-Protocol declarations are declared
-using the `protocol` keyword and have the following form:
+*协议声明*将一个命名的协议类型引入到您的程序中。协议声明使用 `protocol` 关键字声明，具有以下形式：
 
 ```swift
 protocol <#protocol name#>: <#inherited protocols#> {
-   <#protocol member declarations#>
+    <#protocol member declarations#>
 }
 ```
 
-Protocol declarations can appear at global scope,
-or nested inside a nongeneric type or nongeneric function.
+协议声明可以出现在全局范围内，或嵌套在非泛型类型或非泛型函数内部。
 
-The body of a protocol contains zero or more *protocol member declarations*,
-which describe the conformance requirements that any type adopting the protocol must fulfill.
-In particular, a protocol can declare that conforming types must
-implement certain properties, methods, initializers, and subscripts.
-Protocols can also declare special kinds of type aliases,
-called *associated types*, that can specify relationships
-among the various declarations of the protocol.
-Protocol declarations can't contain
-class, structure, enumeration, or other protocol declarations.
-The *protocol member declarations* are discussed in detail below.
+协议的主体包含零个或多个*协议成员声明*，这些声明描述了任何采用该协议的类型必须满足的符合性要求。特别是，协议可以声明符合的类型必须实现某些属性、方法、构造器和下标。协议还可以声明特殊类型的类型别名，称为*关联类型*，可以指定协议中各种声明之间的关系。协议声明不能包含类、结构体、枚举或其他协议声明。*协议成员声明*将在下面详细讨论。
 
-Protocol types can inherit from any number of other protocols.
-When a protocol type inherits from other protocols,
-the set of requirements from those other protocols are aggregated,
-and any type that inherits from the current protocol must conform to all those requirements.
-For an example of how to use protocol inheritance,
-see <doc:Protocols#Protocol-Inheritance>.
+协议类型可以从任意数量的其他协议继承。当一个协议类型从其他协议继承时，这些其他协议的要求集合会被聚合，任何从当前协议继承的类型必须符合所有这些要求。有关如何使用协议继承的示例，请参见 <doc:Protocols#Protocol-Inheritance>。
 
-> Note: You can also aggregate the conformance requirements of multiple
-> protocols using protocol composition types,
-> as described in <doc:Types#Protocol-Composition-Type>
-> and <doc:Protocols#Protocol-Composition>.
+> 注意：您还可以使用协议组合类型聚合多个协议的合规性要求，如 <doc:Types#Protocol-Composition-Type> 和 <doc:Protocols#Protocol-Composition> 中所述。
 
-You can add protocol conformance to a previously declared type
-by adopting the protocol in an extension declaration of that type.
-In the extension, you must implement all of the adopted protocol's
-requirements. If the type already implements all of the requirements,
-you can leave the body of the extension declaration empty.
+您可以通过在该类型的扩展声明中采用协议，为先前声明的类型添加协议符合性。在扩展中，您必须实现所采用协议的所有要求。如果该类型已经实现了所有要求，您可以将扩展声明的主体留空。
 
-By default, types that conform to a protocol must implement all
-properties, methods, and subscripts declared in the protocol.
-That said, you can mark these protocol member declarations with the `optional` declaration modifier
-to specify that their implementation by a conforming type is optional.
-The `optional` modifier can be applied
-only to members that are marked with the `objc` attribute,
-and only to members of protocols that are marked
-with the `objc` attribute. As a result, only class types can adopt and conform
-to a protocol that contains optional member requirements.
-For more information about how to use the `optional` declaration modifier
-and for guidance about how to access optional protocol members ---
-for example, when you're not sure whether a conforming type implements them ---
-see <doc:Protocols#Optional-Protocol-Requirements>.
+默认情况下，符合协议的类型必须实现协议中声明的所有属性、方法和下标。也就是说，您可以使用 `optional` 声明修饰符来标记这些协议成员声明，以指定符合类型的实现是可选的。`optional` 修饰符只能应用于标记为 `objc` 属性的成员，并且只能应用于标记为 `objc` 属性的协议成员。因此，只有类类型可以采用并符合包含可选成员要求的协议。有关如何使用 `optional` 声明修饰符的信息，以及如何访问可选协议成员的指导——例如，当您不确定符合类型是否实现它们时 --- 请参见 <doc:Protocols#Optional-Protocol-Requirements>。
 
 <!--
   TODO: Currently, you can't check for an optional initializer,
@@ -1761,17 +1725,7 @@ see <doc:Protocols#Optional-Protocol-Requirements>.
   properly for optional initializer requirements.
 -->
 
-The cases of an enumeration can satisfy
-protocol requirements for type members.
-Specifically,
-an enumeration case without any associated values
-satisfies a protocol requirement for
-a get-only type variable of type `Self`,
-and an enumeration case with associated values
-satisfies a protocol requirement for a function that returns `Self`
-whose parameters and their argument labels
-match the case's associated values.
-For example:
+枚举的案例可以满足类型成员的协议要求。具体来说，没有任何关联值的枚举案例满足类型 `Self` 的只读类型变量的协议要求，而具有关联值的枚举案例满足返回 `Self` 的函数的协议要求，该函数的参数及其实参标签与案例的关联值匹配。例如：
 
 ```swift
 protocol SomeProtocol {
@@ -1799,10 +1753,7 @@ enum MyEnum: SomeProtocol {
   ```
 -->
 
-To restrict the adoption of a protocol to class types only,
-include the `AnyObject` protocol in the *inherited protocols*
-list after the colon.
-For example, the following protocol can be adopted only by class types:
+要将协议的采用限制为类类型，只需在冒号后将 `AnyObject` 协议包含在*继承协议*列表中。例如，以下协议只能被类类型采用：
 
 ```swift
 protocol SomeProtocol: AnyObject {
@@ -1820,38 +1771,29 @@ protocol SomeProtocol: AnyObject {
   ```
 -->
 
-Any protocol that inherits from a protocol that's marked with the `AnyObject` requirement
-can likewise be adopted only by class types.
+任何从标记为 `AnyObject` 要求的协议继承的协议，也只能被类类型采用。
 
-> Note: If a protocol is marked with the `objc` attribute,
-> the `AnyObject` requirement is implicitly applied to that protocol;
-> there’s no need to mark the protocol with the `AnyObject` requirement explicitly.
+> 注意：如果一个协议标记了 `objc` 属性，则 `AnyObject` 要求隐式应用于该协议；无需明确将该协议标记为 `AnyObject` 要求。
 
-Protocols are named types, and thus they can appear in all the same places
-in your code as other named types, as discussed in <doc:Protocols#Protocols-as-Types>.
-However,
-you can't construct an instance of a protocol,
-because protocols don't actually provide the implementations for the requirements
-they specify.
+协议是命名类型，因此它们可以出现在代码中与其他命名类型相同的位置，如 <doc:Protocols#Protocols-as-Types> 中所讨论的。然而，您无法构造协议的实例，因为协议实际上并不提供它们所指定的要求的实现。
 
-You can use protocols to declare which methods a delegate of a class or structure
-should implement, as described in <doc:Protocols#Delegation>.
+您可以使用协议来声明类或结构体的代理应该实现哪些方法，如 <doc:Protocols#Delegation> 中所述。
 
-> Grammar of a protocol declaration:
+> 协议声明的语法：
 >
-> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
-> *protocol-name* → *identifier* \
-> *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
+> *协议声明* → *属性*_?_ *访问级别修饰符*_?_ **`协议`** *协议名称* *类型继承条款*_?_ *泛型约束条款*_?_ *协议主体* \
+> *协议名称* → *标识符* \
+> *协议主体* → **`{`** *协议成员*_?_ **`}`**
 >
-> *protocol-members* → *protocol-member* *protocol-members*_?_ \
-> *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
+> *协议成员* → *协议成员* *协议成员*_?_ \
+> *协议成员* → *协议成员声明* | *编译器控制语句*
 >
-> *protocol-member-declaration* → *protocol-property-declaration* \
-> *protocol-member-declaration* → *protocol-method-declaration* \
-> *protocol-member-declaration* → *protocol-initializer-declaration* \
-> *protocol-member-declaration* → *protocol-subscript-declaration* \
-> *protocol-member-declaration* → *protocol-associated-type-declaration* \
-> *protocol-member-declaration* → *typealias-declaration*
+> *协议成员声明* → *协议属性声明* \
+> *协议成员声明* → *协议方法声明* \
+> *协议成员声明* → *协议构造器声明* \
+> *协议成员声明* → *协议下标声明* \
+> *协议成员声明* → *协议关联类型声明* \
+> *协议成员声明* → *类型别名声明*
 
 ### Protocol Property Declaration
 
