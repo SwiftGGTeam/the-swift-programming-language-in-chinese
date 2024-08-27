@@ -2336,18 +2336,9 @@ doSomething(with: oneAndTwo)
 
 当在传递给 `doSomething(_:)` 的实例上调用 `log()` 时，自定义标题会从日志字符串中省略。
 
-### Protocol Conformance Must Not Be Redundant
+### 协议的遵循不应冗余
 
-A concrete type can conform to a particular protocol only once.
-Swift marks redundant protocol conformances as an error.
-You're likely to encounter this kind of error
-in two kinds of situations.
-The first situation is when
-you explicitly conform to the same protocol multiple times,
-but with different requirements.
-The second situation is when
-you implicitly inherit from the same protocol multiple times.
-These situations are discussed in the sections below.
+具体类型只能遵从某个协议一次。Swift 会将多余的协议遵从标记为错误。你可能会在两种情况下遇到这种错误。第一种情况是，当你以不同的要求多次显式地遵从同一个协议。第二种情况是，当你多次隐式地继承同一个协议。以下部分将讨论这些情况。
 
 #### Resolving Explicit Redundancy
 
