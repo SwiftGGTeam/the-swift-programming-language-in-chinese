@@ -1865,28 +1865,21 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 >
 > *协议方法声明* → *函数头* *函数名称* *泛型参数子句*_?_ *函数签名* *泛型约束子句*_?_
 
-### Protocol Initializer Declaration
+### 协议构造器声明
 
-Protocols declare that conforming types must implement an initializer
-by including a protocol initializer declaration in the body of the protocol declaration.
-Protocol initializer declarations have the same form as
-initializer declarations, except they don't include the initializer's body.
 
-A conforming type can satisfy a nonfailable protocol initializer requirement
-by implementing a nonfailable initializer or an `init!` failable initializer.
-A conforming type can satisfy a failable protocol initializer requirement
-by implementing any kind of initializer.
+协议通过在协议声明的主体中包含协议构造器声明，要求符合的类型必须实现一个构造器。协议构造器声明的形式与构造器声明相同，只是不包括构造器的主体。
 
-When a class implements an initializer to satisfy a protocol's initializer requirement,
-the initializer must be marked with the `required` declaration modifier
-if the class isn't already marked with the `final` declaration modifier.
+一个符合类型可以通过实现一个非可失败的构造器或一个 `init!` 可失败的构造器来满足非可失败协议构造器的要求。一个符合类型可以通过实现任何类型的构造器来满足可失败协议构造器的要求。
 
-See also <doc:Declarations#Initializer-Declaration>.
+当一个类实现一个构造器以满足协议的构造器要求时，如果该类尚未标记为 `final` 声明修饰符，则构造器必须标记为 `required` 声明修饰符。
 
-> Grammar of a protocol initializer declaration:
+另见 <doc:Declarations#Initializer-Declaration>。
+
+> 协议构造器声明的语法：
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
+> *协议构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* *抛出子句*_?_ *泛型约束子句*_?_\
+> *协议构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`重新抛出`** *泛型约束子句*_?_
 
 ### Protocol Subscript Declaration
 
