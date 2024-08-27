@@ -2024,7 +2024,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 一个*构造器声明*在您的程序中引入了一个类、结构或枚举的构造器。构造器声明使用 `init` 关键字声明，并有两种基本形式。
 
-结构、枚举和类类型可以有任意数量的构造器，但类构造器的规则和相关行为是不同的。与结构和枚举不同，类有两种类型的构造器：指定构造器和便利构造器，如 (doc:Initialization)中所述。
+结构体、枚举和类类型可以有任意数量的构造器，但类构造器的规则和相关行为是不同的。与结构和枚举不同，类有两种类型的构造器：指定构造器和便利构造器，如 <doc:Initialization> 中所述。
 
 以下形式声明了结构体、枚举和类的指定构造器的构造器：
 
@@ -2066,8 +2066,7 @@ convenience init(<#parameters#>) {
 
 一个*可失败的构造器*是一种构造器，它生成一个可选实例或一个隐式解包的可选实例，具体取决于构造器声明的类型。因此，可失败的构造器可以返回 `nil` 以表示初始化失败。
 
-To declare a failable initializer that produces an optional instance, append a question mark to the `init` keyword in the initializer declaration (`init?`). To declare a failable initializer that produces an implicitly unwrapped optional instance, append an exclamation point instead (`init!`). The example below shows an `init?` failable initializer that produces an optional instance of a structure.
-要声明一个可以失败的构造器，该构造器生成一个可选实例，请在构造器声明中的 `init` 关键字后附加一个问号（`init?`）。要声明一个可以失败的构造器，该构造器生成一个隐式解包的可选实例，请改为附加一个感叹号（`init!`）。下面的示例显示了一个 `init?` 可以失败的构造器，它生成一个结构的可选实例。
+要声明一个可失败的初始化器并生成一个可选实例，需要在初始化器声明中的 init 关键字后面加上问号（`init?`）。要声明一个可失败的初始化器并生成一个隐式解包的可选实例，则需要加上感叹号（`init!`）。下面的示例展示了一个 `init?` 可失败的初始化器，它生成了一个结构体的可选实例。
 
 ```swift
 struct SomeStruct {
@@ -2143,31 +2142,27 @@ if let actualInstance = SomeStruct(input: "Hello") {
 > *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** **`!`** \
 > *构造器主体* → *代码块*
 
+## 析构器声明
+
+*析构器声明*为类类型声明一个析构器。析构器不接受参数，具有以下形式：
+
 ```swift
 deinit {
-   <#statements#>
+    <#statements#>
 }
 ```
 
-A deinitializer is called automatically when there are no longer any references
-to a class object, just before the class object is deallocated.
-A deinitializer can be declared only in the body of a class declaration ---
-but not in an extension of a class ---
-and each class can have at most one.
+析构器在一个类对象不再有任何引用时，会在该对象被释放之前自动调用。析构器只能在类声明的主体内声明，不能在类的扩展中声明，并且每个类最多只能有一个析构器
 
-A subclass inherits its superclass's deinitializer,
-which is implicitly called just before the subclass object is deallocated.
-The subclass object isn't deallocated until all deinitializers in its inheritance chain
-have finished executing.
+子类继承其超类的析构器，该析构器在子类对象被释放之前隐式调用。子类对象在其继承链中的所有析构器执行完毕之前不会被释放。
 
-Deinitializers aren't called directly.
+析构器不会被直接调用。
 
-For an example of how to use a deinitializer in a class declaration,
-see <doc:Deinitialization>.
+在类声明中如何使用析构器的示例，请参见 <doc:Deinitialization>。
 
-> Grammar of a deinitializer declaration:
+> 析构器声明的语法：
 >
-> *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
+> *析构器声明* → *属性*_?_ **`deinit`** *代码块*
 
 ## Extension Declaration
 
