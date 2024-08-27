@@ -267,7 +267,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 在这个示例中， `buyFavoriteSnack(person: vendingMachine:)` 函数会查找某人最喜欢的零食并尝试通过调用 `vend(itemNamed:)` 方法为其购买。
 由于 `vend(itemNamed:)` 方法可能会出错，因此在调用该方法时会在前面加上 `try` 关键字。
 
-抛出构造器错误的方式与抛出函数错误的方式相同。例如，下表中的 `PurchasedSnack` 结构体的构造器在初始化过程中调用了一个throwing函数，并将抛出的错误传递给这个构造器的调用者来处理这些错误。
+throwing 构造器能像 throwing 函数一样传递错误。例如，下表中的 `PurchasedSnack` 结构体的构造器在初始化过程中调用了一个throwing函数，并将抛出的错误传递给这个构造器的调用者来处理这些错误。
 
 ```swift
 struct PurchasedSnack {
