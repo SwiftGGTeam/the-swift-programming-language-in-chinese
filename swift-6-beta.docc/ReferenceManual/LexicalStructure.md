@@ -376,23 +376,17 @@ true             // 布尔字面量
 > *floating-point-p* → **`p`** | **`P`** \
 > *sign* → **`+`** | **`-`**
 
-### String Literals
+### 字符串字面量
 
-A string literal is a sequence of characters surrounded by quotation marks.
-A single-line string literal is surrounded by double quotation marks
-and has the following form:
+字符串字面量是由引号包围的一串字符序列。单行字符串字面量由双引号包围，其形式如下：
 
 ```swift
 "<#characters#>"
 ```
 
-String literals can't contain
-an unescaped double quotation mark (`"`),
-an unescaped backslash (`\`),
-a carriage return, or a line feed.
+字符串字面量不能包含未转义的双引号（`"`）、未转义的反斜杠（`\`）、回车符或换行符。
 
-A multiline string literal is surrounded by three double quotation marks
-and has the following form:
+多行字符串字面量由三个双引号包围，其形式如下：
 
 ```swift
 """
@@ -400,61 +394,26 @@ and has the following form:
 """
 ```
 
-Unlike a single-line string literal,
-a multiline string literal can contain
-unescaped double quotation marks (`"`), carriage returns, and line feeds.
-It can't contain three unescaped double quotation marks next to each other.
+与单行字符串字面量不同，多行字符串字面量可以包含未转义的双引号（`"`）、回车符和换行符。但它不能包含连续三个未转义的双引号。
 
-The line break after the `"""`
-that begins the multiline string literal
-isn't part of the string.
-The line break before the `"""`
-that ends the literal is also not part of the string.
-To make a multiline string literal
-that begins or ends with a line feed,
-write a blank line as its first or last line.
+开启多行字符串字面量的 `"""` 之后的换行符不属于字符串的一部分。结束字面量的 `"""` 之前的换行符也不属于字符串的一部分。要创建一个以换行符开始或结束的多行字符串字面量，请在其第一行或最后一行写一个空行。
 
-A multiline string literal can be indented
-using any combination of spaces and tabs;
-this indentation isn't included in the string.
-The `"""` that ends the literal
-determines the indentation:
-Every nonblank line in the literal must begin
-with exactly the same indentation
-that appears before the closing `"""`;
-there's no conversion between tabs and spaces.
-You can include additional spaces and tabs after that indentation;
-those spaces and tabs appear in the string.
+多行字符串字面量可以使用任意组合的空格和制表符进行缩进，这些缩进不会包含在字符串中。结束字面量的 `"""` 确定了缩进的长度：字面量中的每一个非空行开头的缩进必须与结束 `"""` 之前的缩进完全相同。制表符和空格之间不会有相互转换。在该缩进之后可以包含额外的空格和制表符，这些空格和制表符会出现在字符串中。
 
-Line breaks in a multiline string literal are
-normalized to use the line feed character.
-Even if your source file has a mix of carriage returns and line feeds,
-all of the line breaks in the string will be the same.
+多行字符串字面量中的换行符会被标准化为使用行分隔符。即使源文件中包含混合的回车符和换行符，字符串中的所有换行符也会变为一致。
 
-In a multiline string literal,
-writing a backslash (`\`) at the end of a line
-omits that line break from the string.
-Any whitespace between the backslash and the line break
-is also omitted.
-You can use this syntax
-to hard wrap a multiline string literal in your source code,
-without changing the value of the resulting string.
+在多行字符串字面量中，在行末尾写一个反斜杠 (`\`) 会将其后的换行符从字符串中忽略。任何在反斜杠和换行符之间的空白也会被忽略。你可以使用这种语法在源代码中硬折叠一个多行字符串字面量，而不会改变结果字符串的值。
 
-Special characters
-can be included in string literals
-of both the single-line and multiline forms
-using the following escape sequences:
+特殊字符可以通过以下转义序列包含在单行和多行字符串字面量中：
 
-- Null character (`\0`)
-- Backslash (`\\`)
-- Horizontal tab (`\t`)
-- Line feed (`\n`)
-- Carriage return (`\r`)
-- Double quotation mark (`\"`)
-- Single quotation mark (`\'`)
-- Unicode scalar (`\u{`*n*`}`),
-  where *n* is a hexadecimal number
-  that has one to eight digits
+- 空字符 (`\0`)
+- 反斜杠 (`\\`)
+- 水平制表符 (`\t`)
+- 换行符 (`\n`)
+- 回车符 (`\r`)
+- 双引号 (`\"`)
+- 单引号 (`\'`)
+- Unicode 标量 (`\u{`*n*`}`)，其中 *n* 是一个包含一到八位数字的十六进制数字
 
 <!--
   The behavior of \n and \r isn't the same as C.
@@ -464,13 +423,9 @@ using the following escape sequences:
   which could be CR or LF or CRLF.
 -->
 
-The value of an expression can be inserted into a string literal
-by placing the expression in parentheses after a backslash (`\`).
-The interpolated expression can contain a string literal,
-but can't contain an unescaped backslash,
-a carriage return, or a line feed.
+表达式的值可以通过在反斜杠 (`\`) 后面加上用括号括起来的表达式插入到字符串字面量中。插值表达式可以包含字符串字面量，但不能包含未转义的反斜杠、回车符或换行符。
 
-For example, all of the following string literals have the same value:
+例如，以下所有字符串字面量具有相同的值：
 
 ```swift
 "1 2 3"
@@ -508,9 +463,7 @@ let x = 3; "1 2 \(x)"
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A string delimited by extended delimiters is a sequence of characters
-surrounded by quotation marks and a balanced set of one or more number signs (`#`).
-A string delimited by extended delimiters has the following forms:
+由扩展定界符包围的字符串是由引号和一组或多组配对的井号（`#`）包围的一串字符序列。由扩展定界符包围的字符串具有以下形式：
 
 ```swift
 #"<#characters#>"#
@@ -520,26 +473,17 @@ A string delimited by extended delimiters has the following forms:
 """#
 ```
 
-Special characters in a string delimited by extended delimiters
-appear in the resulting string as normal characters
-rather than as special characters.
-You can use extended delimiters to create strings with characters
-that would ordinarily have a special effect
-such as generating a string interpolation,
-starting an escape sequence,
-or terminating the string.
+由扩展定界符包围的字符串中的特殊字符在结果字符串中显示为普通字符而不是特殊字符。你可以使用扩展定界符来创建包含通常会产生特殊效果字符的字符串，这些特殊效果比如有生成字符串插值、开启转义序列或终止字符串。
 
-The following example shows a string literal
-and a string delimited by extended delimiters
-that create equivalent string values:
+以下示例展示了一个字符串字面量和一个由扩展定界符包围的字符串，它们创建了等价的字符串值：
 
 ```swift
 let string = #"\(x) \ " \u{2603}"#
 let escaped = "\\(x) \\ \" \\u{2603}"
 print(string)
-// Prints "\(x) \ " \u{2603}"
+// 打印 "\(x) \ " \u{2603}"
 print(string == escaped)
-// Prints "true"
+// 打印 "true"
 ```
 
 <!--
@@ -555,9 +499,7 @@ print(string == escaped)
   ```
 -->
 
-If you use more than one number sign to form
-a string delimited by extended delimiters,
-don't place whitespace in between the number signs:
+如果你使用多个井号来形成由扩展定界符包围的字符串，不要在井号之间放置空格：
 
 <!--
   - test: `extended-string-delimiters`
@@ -570,8 +512,8 @@ don't place whitespace in between the number signs:
 -->
 
 ```swift
-print(###"Line 1\###nLine 2"###) // OK
-print(# # #"Line 1\# # #nLine 2"# # #) // Error
+print(###"Line 1\###nLine 2"###) // 正确
+print(# # #"Line 1\# # #nLine 2"# # #) // 错误
 ```
 
 <!--
@@ -589,19 +531,14 @@ print(# # #"Line 1\# # #nLine 2"# # #) // Error
   ```
 -->
 
-Multiline string literals that you create using extended delimiters
-have the same indentation requirements as regular multiline string literals.
+使用扩展定界符创建的多行字符串字面量具有与常规多行字符串字面量相同的缩进要求。
 
-The default inferred type of a string literal is `String`.
-For more information about the `String` type,
-see <doc:StringsAndCharacters>
-and [`String`](https://developer.apple.com/documentation/swift/string).
+默认情况下，字符串字面量的推断类型为 `String`。
 
-String literals that are concatenated by the `+` operator
-are concatenated at compile time.
-For example, the values of `textA` and `textB`
-in the example below are identical ---
-no runtime concatenation is performed.
+有关 `String` 类型的更多信息，请参见 <doc:StringsAndCharacters> 和 [`String`](https://developer.apple.com/documentation/swift/string)。
+
+字符串字面量通过 `+` 运算符连接时，连接操作在编译时完成。
+例如，以下示例中 `textA` 和 `textB` 的值是相同的——没有发生运行时的连接操作。
 
 ```swift
 let textA = "Hello " + "world"
@@ -617,7 +554,7 @@ let textB = "Hello world"
   ```
 -->
 
-> Grammar of a string literal:
+> 字符串字面量的语法:
 >
 > *string-literal* → *static-string-literal* | *interpolated-string-literal*
 >
@@ -633,11 +570,11 @@ let textB = "Hello world"
 >
 > *quoted-text* → *quoted-text-item* *quoted-text*_?_ \
 > *quoted-text-item* → *escaped-character* \
-> *quoted-text-item* → Any Unicode scalar value except  **`"`**,  **`\`**, U+000A, or U+000D
+> *quoted-text-item* → 除 **`"`**、**`\`**、U+000A 或 U+000D 以外的任何 Unicode 标量值
 >
 > *multiline-quoted-text* → *multiline-quoted-text-item* *multiline-quoted-text*_?_ \
 > *multiline-quoted-text-item* → *escaped-character* \
-> *multiline-quoted-text-item* → Any Unicode scalar value except  **`\`** \
+> *multiline-quoted-text-item* → 除 **`\`** 以外的任何 Unicode 标量值 \
 > *multiline-quoted-text-item* → *escaped-newline*
 >
 > *interpolated-string-literal* → *string-literal-opening-delimiter* *interpolated-text*_?_ *string-literal-closing-delimiter* \
@@ -652,7 +589,7 @@ let textB = "Hello world"
 > *escape-sequence* → **`\`** *extended-string-literal-delimiter* \
 > *escaped-character* → *escape-sequence* **`0`** | *escape-sequence* **`\`** | *escape-sequence* **`t`** | *escape-sequence* **`n`** | *escape-sequence* **`r`** | *escape-sequence* **`"`** | *escape-sequence* **`'`** \
 > *escaped-character* → *escape-sequence* **`u`** **`{`** *unicode-scalar-digits* **`}`** \
-> *unicode-scalar-digits* → Between one and eight hexadecimal digits
+> *unicode-scalar-digits* → 一到八位十六进制数字
 >
 > *escaped-newline* → *escape-sequence* *inline-spaces*_?_ *line-break*
 
@@ -673,31 +610,17 @@ let textB = "Hello world"
   quoted-character -> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
 -->
 
-### Regular Expression Literals
+### 正则表达式字面量
 
-A regular expression literal is a sequence of characters
-surrounded by slashes (`/`) with the following form:
+正则表达式字面量是一串被斜杠（`/`）包围的一串字符序列，形式如下：
 
 ```swift
 /<#regular expression#>/
 ```
 
-Regular expression literals
-must not begin with an unescaped tab or space,
-and they can't contain
-an unescaped slash (`/`),
-a carriage return, or a line feed.
+正则表达式字面量不能以未转义的制表符或空格开头，也不能包含未转义的斜杠（`/`）、回车符或换行符。
 
-Within a regular expression literal,
-a backslash is understood as a part of that regular expression,
-not just as an escape character like in string literals.
-It indicates that the following special character
-should be interpreted literally,
-or that the following nonspecial character
-should be interpreted in a special way.
-For example,
-`/\(/` matches a single left parenthesis
-and `/\d/` matches a single digit.
+在正则表达式字面量中，反斜杠被视为正则表达式的一部分，而不仅仅是像在字符串字面量中那样作为转义字符。它表示后续的特殊字符应按字面理解，或者后续的非特殊字符应按特殊方式处理。例如，`/\(/` 匹配一个左括号，而 `/\d/` 匹配一个数字。
 
 <!--
   OUTLINE
@@ -723,11 +646,7 @@ and `/\d/` matches a single digit.
   and regex literal parsing continues as normal.
 -->
 
-A regular expression literal delimited by extended delimiters
-is a sequence of characters surrounded by slashes (`/`)
-and a balanced set of one or more number signs (`#`).
-A regular expression literal
-delimited by extended delimiters has the following forms:
+由扩展定界符包围的正则表达式字面量是一串被斜杠（`/`）和一组或多组配对的井号（`#`）包围的字符序列。使用扩展定界符包围的正则表达式字面量有以下形式：
 
 ```swift
 #/<#regular expression#>/#
@@ -737,16 +656,7 @@ delimited by extended delimiters has the following forms:
 /#
 ```
 
-A regular expression literal that uses extended delimiters
-can begin with an unescaped space or tab,
-contain unescaped slashes (`/`),
-and span across multiple lines.
-For a multiline regular expression literal,
-the opening delimiter must be at the end of a line,
-and the closing delimiter must be on its own line.
-Inside a multiline regular expression literal,
-the extended regular expression syntax is enabled by default ---
-specifically, whitespace is ignored and comments are allowed.
+使用扩展定界符的正则表达式字面量可以以未转义的空格或制表符开头，可以包含未转义的斜杠（`/`），并且可以跨多行。在多行正则表达式字面量中，开始定界符必须在一行的末尾，结束定界符必须独立占一行。在多行正则表达式字面量内部，扩展正则表达式语法默认启用——具体来说，空白字符将被忽略，并允许使用注释。
 
 <!--
   TODO As details about the multiline syntax shake out during SE review,
@@ -754,13 +664,11 @@ specifically, whitespace is ignored and comments are allowed.
   add them above or spin out a separate paragraph.
 -->
 
-If you use more than one number sign to form
-a regular expression literal delimited by extended delimiters,
-don't place whitespace in between the number signs:
+如果使用多个井号来形成由扩展定界符包围的正则表达式字面量，不要在井号之间留有空格：
 
 ```swift
-let regex1 = ##/abc/##       // OK
-let regex2 = # #/abc/# #     // Error
+let regex1 = ##/abc/##       // 正确
+let regex2 = # #/abc/# #     // 错误
 ```
 
 <!--
@@ -772,44 +680,25 @@ let regex2 = # #/abc/# #     // Error
   ```
 -->
 
-If you need to make an empty regular expression literal,
-you must use the extended delimiter syntax.
+如果你需要创建一个空的正则表达式字面量，则必须使用扩展定界符语法。
 
-> Grammar of a regular expression literal:
+> 正则表达式字面量的语法:
 >
 > *regular-expression-literal* → *regular-expression-literal-opening-delimiter* *regular-expression* *regular-expression-literal-closing-delimiter* \
-> *regular-expression* → Any regular expression
+> *regular-expression* → 任何正则表达式
 >
 > *regular-expression-literal-opening-delimiter* → *extended-regular-expression-literal-delimiter*_?_ **`/`** \
 > *regular-expression-literal-closing-delimiter* → **`/`** *extended-regular-expression-literal-delimiter*_?_
 >
 > *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
 
-## Operators
+## 运算符
 
-The Swift standard library defines a number of operators for your use,
-many of which are discussed in <doc:BasicOperators>
-and <doc:AdvancedOperators>.
-The present section describes which characters can be used to define custom operators.
+Swift 标准库定义了许多运算符供你使用，其中许多运算符在 <doc:BasicOperators> 和 <doc:AdvancedOperators> 中进行了讨论。本节描述了哪些字符可以用于定义自定义运算符。
 
-Custom operators can begin with one of the ASCII characters
-`/`, `=`, `-`, `+`, `!`, `*`, `%`, `<`, `>`,
-`&`, `|`, `^`, `?`, or `~`, or one of the Unicode characters
-defined in the grammar below
-(which include characters from the
-*Mathematical Operators*, *Miscellaneous Symbols*, and *Dingbats*
-Unicode blocks, among others).
-After the first character,
-combining Unicode characters are also allowed.
+自定义运算符可以用这些 ASCII 字符之一开头：`/`、`=`、`-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 或 `~`，或者是定义在下面语法中的 Unicode 字符（其中包括来自 *Mathematical Operators*、*Miscellaneous Symbols* 和 *Dingbats* Unicode 块的字符等）之一。在第一个字符之后，还允许使用组合 Unicode 字符（Combining Unicode Character）。
 
-You can also define custom operators
-that begin with a dot (`.`).
-These operators can contain additional dots.
-For example, `.+.` is treated as a single operator.
-If an operator doesn't begin with a dot,
-it can't contain a dot elsewhere.
-For example, `+.+` is treated as
-the `+` operator followed by the `.+` operator.
+你还可以定义以点（`.`）开头的自定义运算符。这些运算符可以包含额外的点。例如，`.+.` 被视为一个单一的运算符。如果一个运算符不是以点开头的，则它不能在其他地方包含点。例如，`+.+` 被视为 `+` 运算符后跟 `.+` 运算符。
 
 <!--
   - test: `dot-operator-must-start-with-dot`
@@ -831,10 +720,7 @@ the `+` operator followed by the `.+` operator.
   ```
 -->
 
-Although you can define custom operators that contain a question mark (`?`),
-they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation point (`!`),
-postfix operators can't begin with either a question mark or an exclamation point.
+虽然你可以定义包含问号 (`?`) 的自定义运算符，但它们不能仅由单个问号字符组成。此外，尽管运算符可以包含感叹号 (`!`)，但后缀运算符不能以问号或感叹号开头。
 
 <!--
   - test: `postfix-operators-dont-need-unique-prefix`
@@ -874,55 +760,23 @@ postfix operators can't begin with either a question mark or an exclamation poin
   ```
 -->
 
-> Note: The tokens `=`, `->`, `//`, `/*`, `*/`, `.`,
-> the prefix operators `<`, `&`, and `?`,
-> the infix operator `?`,
-> and the postfix operators `>`, `!`, and `?` are reserved.
-> These tokens can't be overloaded, nor can they be used as custom operators.
+> 注意: 标记符号 `=`、`->`、`//`、`/*`、`*/`、`.`，以及前缀运算符 `<`、`&` 和 `?`，中缀运算符 `?`，后缀运算符 `>`、`!` 和 `?` 都是保留标记符号。  
+> 这些标记符号不能被重载，也不能用作自定义运算符。
 
-The whitespace around an operator is used to determine
-whether an operator is used as a prefix operator, a postfix operator,
-or an infix operator. This behavior has the following rules:
+运算符周围的空白用来确定运算符是作为前缀运算符、后缀运算符还是中缀运算符使用。这种行为遵循以下规则：
 
-- If an operator has whitespace around both sides or around neither side,
-  it's treated as an infix operator.
-  As an example, the `+++` operator in `a+++b` and `a +++ b` is treated as an infix operator.
-- If an operator has whitespace on the left side only,
-  it's treated as a prefix unary operator.
-  As an example, the `+++` operator in `a +++b` is treated as a prefix unary operator.
-- If an operator has whitespace on the right side only,
-  it's treated as a postfix unary operator.
-  As an example, the `+++` operator in `a+++ b` is treated as a postfix unary operator.
-- If an operator has no whitespace on the left but is followed immediately by a dot (`.`),
-  it's treated as a postfix unary operator.
-  As an example, the  `+++` operator in `a+++.b` is treated as a postfix unary operator
-  (`a+++ .b` rather than `a +++ .b`).
+- 如果运算符两边都有空白或都没有空白，则它被视为中缀运算符。例如，表达式 `a+++b` 和 `a +++ b` 中的 `+++` 被视为中缀运算符。
+- 如果运算符左边有空白而右边没有空白，则它被视为前缀一元运算符。例如，表达式 `a +++b` 中的 `+++` 被视为前缀一元运算符。
+- 如果运算符右边有空白而左边没有空白，则它被视为后缀一元运算符。例如，表达式 `a+++ b` 中的 `+++` 被视为后缀一元运算符。
+- 如果运算符左边没有空白但紧跟在它后面的是一个点号 (`.`)，则它被视为后缀一元运算符。例如，表达式 `a+++.b` 中的 `+++` 被视为后缀一元运算符（解释为 `a+++ .b` 而非 `a +++ .b`）。
 
-For the purposes of these rules,
-the characters `(`, `[`, and `{` before an operator,
-the characters `)`, `]`, and `}` after an operator,
-and the characters `,`, `;`, and `:`
-are also considered whitespace.
+在这些规则中，运算符前的字符 `(`、`[` 和 `{`，运算符后的字符 `)`、`]` 和 `}`，以及字符 `,`、`;` 和 `:` 也被视为空白。
 
-If the `!` or `?` predefined operator has no whitespace on the left,
-it's treated as a postfix operator,
-regardless of whether it has whitespace on the right.
-To use the `?` as the optional-chaining operator,
-it must not have whitespace on the left.
-To use it in the ternary conditional (`?` `:`) operator,
-it must have whitespace around both sides.
+如果预定义的 `!` 或 `?` 运算符左边没有空白，无论右边是否有空白，它都会被视为后缀运算符。要使用 `?` 作为可选链运算符（Optional-Chaining Operator），它左边必须没有空白。要在三元条件运算符 (`?` `:`) 中使用它，则必须在左右两边都有空白。
 
-If one of the arguments to an infix operator is a regular expression literal,
-then the operator must have whitespace around both sides.
+如果中缀运算符的其中一个参数是正则表达式字面量，则该运算符的左右两边都必须有空白。
 
-In certain constructs, operators with a leading `<` or `>`
-may be split into two or more tokens. The remainder is treated the same way
-and may be split again.
-As a result, you don't need to add whitespace
-to disambiguate between the closing `>` characters in constructs like
-`Dictionary<String, Array<Int>>`.
-In this example, the closing `>` characters aren't treated as a single token
-that may then be misinterpreted as a bit shift `>>` operator.
+在某些构造中，以 `<` 或 `>` 开头的运算符可能会被拆分为两个或多个标记符号。拆分后剩余的部分会以同样的规则处理，并可能再次被拆分。这意味着在 `Dictionary<String, Array<Int>>` 这样的构造中，你不需要添加空白来消除闭合 `>` 符号之间的歧义。在这个例子中，闭合的 `>` 符号不会被视为单个标记符号，也不会被错误解释为位移 `>>` 运算符。
 
 <!--
   NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
@@ -937,10 +791,7 @@ that may then be misinterpreted as a bit shift `>>` operator.
   C++ typically needs whitespace to resolve the ambiguity.
 -->
 
-To learn how to define new, custom operators,
-see <doc:AdvancedOperators#Custom-Operators> and <doc:Declarations#Operator-Declaration>.
-To learn how to overload existing operators,
-see <doc:AdvancedOperators#Operator-Methods>.
+要了解如何定义新的自定义操作符，请参阅 <doc:AdvancedOperators#Custom-Operators> 和 <doc:Declarations#Operator-Declaration>。要了解如何重载现有的操作符，请参阅 <doc:AdvancedOperators#Operator-Methods>。
 
 <!--
   NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
@@ -948,17 +799,17 @@ see <doc:AdvancedOperators#Operator-Methods>.
   The current list of reserved punctuation is in Tokens.def.
 -->
 
-> Grammar of operators:
+> 操作符的语法:
 >
 > *operator* → *operator-head* *operator-characters*_?_ \
 > *operator* → *dot-operator-head* *dot-operator-characters*
 >
 > *operator-head* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
 > *operator-head* → U+00A1–U+00A7 \
-> *operator-head* → U+00A9 or U+00AB \
-> *operator-head* → U+00AC or U+00AE \
+> *operator-head* → U+00A9 或 U+00AB \
+> *operator-head* → U+00AC 或 U+00AE \
 > *operator-head* → U+00B0–U+00B1 \
-> *operator-head* → U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7 \
+> *operator-head* → U+00B6、U+00BB、U+00BF、U+00D7 或 U+00F7 \
 > *operator-head* → U+2016–U+2017 \
 > *operator-head* → U+2020–U+2027 \
 > *operator-head* → U+2030–U+203E \
@@ -989,11 +840,11 @@ see <doc:AdvancedOperators#Operator-Methods>.
 > *prefix-operator* → *operator* \
 > *postfix-operator* → *operator*
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档实施的软件应与最终的操作系统软件一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多有关使用 [Apple's beta software](https://developer.apple.com/support/beta-software/) 的信息。
 
 <!--
 This source file is part of the Swift.org open source project
