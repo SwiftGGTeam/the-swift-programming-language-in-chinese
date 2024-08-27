@@ -1795,44 +1795,19 @@ protocol SomeProtocol: AnyObject {
 > *协议成员声明* → *协议关联类型声明* \
 > *协议成员声明* → *类型别名声明*
 
-### Protocol Property Declaration
+### 协议属性声明
 
-Protocols declare that conforming types must implement a property
-by including a *protocol property declaration*
-in the body of the protocol declaration.
-Protocol property declarations have a special form of a variable
-declaration:
+协议声明符合的类型必须通过在协议声明的主体中包含一个*协议属性声明*来实现一个属性。协议属性声明具有变量声明的特殊形式：
 
 ```swift
 var <#property name#>: <#type#> { get set }
 ```
 
-As with other protocol member declarations, these property declarations
-declare only the getter and setter requirements for types
-that conform to the protocol. As a result, you don't implement the getter or setter
-directly in the protocol in which it's declared.
+与其他协议成员声明一样，这些属性声明仅声明符合该协议的类型的 getter 和 setter 要求。因此，您不会在声明它的协议中直接实现 getter 或 setter。
 
-The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
-If a property declaration includes both the `get` and `set` keywords,
-a conforming type can implement it with a stored variable property
-or a computed property that's both readable and writeable
-(that is, one that implements both a getter and a setter). However,
-that property declaration can't be implemented as a constant property
-or a read-only computed property. If a property declaration includes
-only the `get` keyword, it can be implemented as any kind of property.
-For examples of conforming types that implement the property requirements of a protocol,
-see <doc:Protocols#Property-Requirements>.
+getter 和 setter 的要求可以通过符合类型以多种方式满足。如果属性声明同时包含 `get` 和 `set` 关键字，则符合类型可以通过存储变量属性或可读可写的计算属性来实现（即实现了 getter 和 setter 的属性）。然而，该属性声明不能实现为常量属性或只读计算属性。如果属性声明仅包含 `get` 关键字，则可以实现为任何类型的属性。有关实现协议属性要求的符合类型的示例，请参见 <doc:Protocols#Property-Requirements>。
 
-To declare a type property requirement in a protocol declaration,
-mark the property declaration with the `static` keyword.
-Structures and enumerations that conform to the protocol
-declare the property with the `static` keyword,
-and classes that conform to the protocol
-declare the property with either the `static` or `class` keyword.
-Extensions that add protocol conformance to a structure, enumeration, or class
-use the same keyword as the type they extend uses.
-Extensions that provide a default implementation for a type property requirement
-use the `static` keyword.
+在协议声明中声明类型属性要求时，使用 `static` 关键字标记属性声明。符合该协议的结构体和枚举使用 `static` 关键字声明属性，而符合该协议的类则可以使用 `static` 或 `class` 关键字声明属性。为结构体、枚举或类添加协议遵循的扩展使用与其扩展的类型相同的关键字。为类型属性要求提供默认实现的扩展使用 `static` 关键字。
 
 <!--
   - test: `protocols-with-type-property-requirements`
@@ -1868,11 +1843,11 @@ use the `static` keyword.
   ```
 -->
 
-See also <doc:Declarations#Variable-Declaration>.
+另见 <doc:Declarations#Variable-Declaration>。
 
-> Grammar of a protocol property declaration:
+> 协议属性声明的语法：
 >
-> *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
+> *协议属性声明* → *变量-声明-头* *变量名称* *类型注解* *gettersetter关键字块*
 
 ### Protocol Method Declaration
 
