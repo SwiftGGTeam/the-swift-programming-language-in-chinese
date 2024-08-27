@@ -68,9 +68,9 @@ throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
 > 区别于其他语言（包括 Objective-C ）的是，Swift 中的错误处理并不涉及解除调用栈,而解除调用栈的过程可能会耗费大量计算资源。
 > 因此，`throw` 语句的性能特征与 `return` 语句的性能特征相当。
 
-### 用抛错函数传递错误
+### 用throwing函数传递错误
 
-为了表示函数、方法或构造器可以抛出错误，您可以在函数声明中的参数后写入 `throws` 关键字。标有 `throws` 的函数称为 **抛错函数(throwing function)**。如果该函数指定了返回类型，则应在返回箭头（`->`）之前写入 `throws` 关键字。
+为了表示函数、方法或构造器可以抛出错误，您可以在函数声明中的参数后写入 `throws` 关键字。标有 `throws` 的函数称为 **throwing函数**。如果该函数指定了返回类型，则应在返回箭头（`->`）之前写入 `throws` 关键字。
 
 <!--
   TODO Add discussion of throwing initializers
@@ -127,10 +127,10 @@ func cannotThrowErrors() -> String
   for throwing and nonthrowing functions.
 -->
 
-抛错函数会将内部抛出的错误传递到调用它的作用域。
+throwing会将内部抛出的错误传递到调用它的作用域。
 
 > 注意:
-> 只有抛错函数可以传递错误。任何在非抛错函数中抛出的错误都必须在函数内部处理。
+> 只有throwing函数可以传递错误。任何在非throwing函数中抛出的错误都必须在函数内部处理。
 
 在下面的示例中，
 `VendingMachine` 类有一个 `vend(itemNamed:)` 方法。
@@ -229,7 +229,7 @@ class VendingMachine {
 使用 `do`-`catch` 语句, `try?`, 或 `try!` ---
 或者把这些错误继续传递下去。
 例如,
-下面例子中的 `buyFavoriteSnack(person:vendingMachine:)` 也是一个抛错函数，
+下面例子中的 `buyFavoriteSnack(person:vendingMachine:)` 也是一个throwing函数，
 所以 `vend(itemNamed:)` 方法抛出的任何错误将传递到调用 `buyFavoriteSnack(person:vendingMachine:)` 函数的位置。
 
 ```swift
@@ -267,7 +267,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
 在这个示例中， `buyFavoriteSnack(person: vendingMachine:)` 函数会查找某人最喜欢的零食并尝试通过调用 `vend(itemNamed:)` 方法为其购买。
 由于 `vend(itemNamed:)` 方法可能会出错，因此在调用该方法时会在前面加上 `try` 关键字。
 
-抛出构造器错误的方式与抛出函数错误的方式相同。例如，下表中的 `PurchasedSnack` 结构体的构造器在初始化过程中调用了一个抛错函数，并将抛出的错误传递给这个构造器的调用者来处理这些错误。
+抛出构造器错误的方式与抛出函数错误的方式相同。例如，下表中的 `PurchasedSnack` 结构体的构造器在初始化过程中调用了一个throwing函数，并将抛出的错误传递给这个构造器的调用者来处理这些错误。
 
 ```swift
 struct PurchasedSnack {
@@ -384,7 +384,7 @@ do {
 如果没有错误抛出，则执行 `do` 语句中的其余语句。
 
 `catch` 子句不必处理 `do` 子句中的代码可能抛出的所有错误。如果没有 `catch` 子句处理错误，则错误会传播到周围的作用域。但是，传播的错误必须由 **某个** 周围作用域处理。
-在非抛错函数中， `do`-`catch` 语句必须处理错误。在抛错函数中，必须由 `do`-`catch` 语句或调用者处理错误。如果错误传递到了顶层作用域却依然没有被处理，则会出现运行时错误。
+在非throwing函数中， `do`-`catch` 语句必须处理错误。在throwing函数中，必须由 `do`-`catch` 语句或调用者处理错误。如果错误传递到了顶层作用域却依然没有被处理，则会出现运行时错误。
 
 例如，在编写上述示例时，只要不是 `VendingMachineError` 中声明的错误，都会被调用函数捕获：
 
@@ -544,7 +544,7 @@ func fetchData() -> Data? {
 
 ### 禁用错误传递
 
-有时，您知道一个抛错函数或方法实际上不会在运行时抛出错误。
+有时，您知道一个throwing函数或方法实际上不会在运行时抛出错误。
 在这种情况下，您可以在表达式之前写入 `try!` 以禁用错误传递，并在运行时断言不会抛出错误的情况下封装调用。
 如果实际抛出了错误，将会发生运行时错误。
 
@@ -626,7 +626,7 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 当您在函数开头指定错误类型时，Swift 会检查您是否抛出了其他错误。
 例如，如果您尝试在 `VendingMachineError` 函数中使用本章前面示例中的 `summarize(_:)` 函数，该代码将在编译时产生错误。
 
-您可以在普通的抛错函数中调用使用指定类型抛错的函数：
+您可以在普通的throwing函数中调用使用指定类型抛错的函数：
 
 ```swift
 func someThrowingFunction() -> throws {
@@ -649,14 +649,14 @@ func someThrowingFunction() -> throws(any Error) {
 `summarize(_：)` 抛出的错误总是 `StatisticsError` 值，这也是 `someThrowingFunction()` 可抛出的有效错误。
 
 就像您可以使用 `Never` 的返回类型编写一个永不返回的函数一样，
-您也可以使用 `throws(Never)` 编写一个永不抛错的函数：
+您也可以使用 `throws(Never)` 编写一个永不抛出错误的函数：
 
 ```swift
 func nonThrowingFunction() throws(Never) {
   // ...
 }
 ```
-这个函数不能抛错，因为不可能创建一个 `Never` 类型的值来抛出。
+这个函数不能抛出错误，因为不可能创建一个 `Never` 类型的值来抛出。
 
 除了指定函数的错误类型外，您还可以为 `do`-`catch` 语句编写特定的错误类型子句。例如：
 
