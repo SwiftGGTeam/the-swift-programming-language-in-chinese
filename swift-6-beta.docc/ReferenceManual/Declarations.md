@@ -1644,10 +1644,9 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 > *类成员* → *类成员* *类成员*_?_ \
 > *类成员* → *声明* | *编译器控制语句*
 
-## Actor Declaration
+## Actor 声明
 
-An *actor declaration* introduces a named actor type into your program.
-Actor declarations are declared using the `actor` keyword and have the following form:
+一个*actor 声明*将一个命名的actor类型引入到您的程序中。actor 声明使用 `actor` 关键字声明，具有以下形式：
 
 ```swift
 actor <#actor name#>: <#adopted protocols#> {
@@ -1655,64 +1654,29 @@ actor <#actor name#>: <#adopted protocols#> {
 }
 ```
 
-The body of an actor contains zero or more *declarations*.
-These *declarations* can include both stored and computed properties,
-instance methods, type methods, initializers,
-a single deinitializer, subscripts, type aliases,
-and even other class, structure, and enumeration declarations.
-For a discussion and several examples of actors
-that include various kinds of declarations,
-see <doc:Concurrency#Actors>.
 
-Actor types can adopt any number of protocols,
-but can't inherit from classes, enumerations, structures, or other actors.
-However, an actor that is marked with the `@objc` attribute
-implicitly conforms to the `NSObjectProtocol` protocol
-and is exposed to the Objective-C runtime as a subtype of `NSObject`.
+actor 的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、实例方法、类型方法、构造器、一个析构器、下标、类型别名，甚至其他类、结构体和枚举声明。有关包含各种声明的 actor 的讨论和多个示例，请参见 <doc:Concurrency#Actors>。
 
-There are two ways to create an instance of a previously declared actor:
+actor 类型可以采用任意数量的协议，但不能从类、枚举、结构体或其他actor继承。然而，标记为 `@objc` 属性的 actor 隐式地符合 `NSObjectProtocol` 协议，并作为 `NSObject` 的子类型暴露给 Objective-C 运行时。
 
-- Call one of the initializers declared within the actor,
-  as described in <doc:Initialization#Initializers>.
-- If no initializers are declared,
-  and all properties of the actor declaration were given initial values,
-  call the actor's default initializer,
-  as described in <doc:Initialization#Default-Initializers>.
+有两种方法可以创建一个先前声明的actor的实例：
 
-By default, members of an actor are isolated to that actor.
-Code, such as the body of a method or the getter for a property,
-is executed on that actor.
-Code within the actor can interact with them synchronously
-because that code is already running on the same actor,
-but code outside the actor must mark them with `await`
-to indicate that this code is asynchronously running code on another actor.
-Key paths can't refer to isolated members of an actor.
-Actor-isolated stored properties can be passed as in-out parameters
-to synchronous functions,
-but not to asynchronous functions.
+- 调用 actor 中声明的某个构造方法，如 <doc:Initialization#Initializers> 中所述。
+- 如果没有声明初始值，并且 actor 声明的所有属性都给定了初始值，则调用 actor 的默认构造器，如 <doc:Initialization#Default-Initializers> 中所述。
 
-Actors can also have nonisolated members,
-whose declarations are marked with the `nonisolated` keyword.
-A nonisolated member executes like code outside of the actor:
-It can't interact with any of the actor's isolated state,
-and callers don't mark it with `await` when using it.
+默认情况下，actor 的成员是与该 actor 隔离的。代码，例如方法的主体或属性的 getter，是在该actor上执行的。actor 内部的代码可以与它们同步交互，因为该代码已经在同一个 actor 上运行，但 actor 外部的代码必须用 `await` 标记它们，以指示该代码是异步在另一个 actor 上运行的。关键路径不能引用 actor 的隔离成员。actor 隔离的存储属性可以作为输入输出参数传递给同步函数，但不能传递给异步函数。
 
-Members of an actor can be marked with the `@objc` attribute
-only if they are nonisolated or asynchronous.
+actor 还可以拥有非隔离成员，其声明使用 `nonisolated` 关键字标记。非隔离成员的执行方式类似于actor外部的代码：它无法与 actor 的任何隔离状态交互，调用者在使用时也不需要使用 `await` 进行标记。
 
-The process of initializing an actor's declared properties
-is described in <doc:Initialization>.
+actor 的成员只有在它们是非隔离或异步的情况下才能标记为 `@objc` 属性。
 
-Properties of an actor instance can be accessed using dot (`.`) syntax,
-as described in <doc:ClassesAndStructures#Accessing-Properties>.
+初始化 actor 中声明的属性的过程在 <doc:Initialization> 中描述。
 
-Actors are reference types; instances of an actor are referred to, rather than copied,
-when assigned to variables or constants, or when passed as arguments to a function call.
-For information about reference types,
-see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
+actor 实例的属性可以使用点 (`.`) 语法访问，如 <doc:ClassesAndStructures#Accessing-Properties> 中所述。
 
-You can extend the behavior of an actor type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+actor 是引用类型；当分配给变量或常量，或作为参数传递给函数调用时，actor的实例是被引用而不是复制。有关引用类型的信息，请参见 <doc:ClassesAndStructures#Classes-Are-Reference-Types>。
+
+您可以通过扩展声明扩展 actor 类型的行为，如 <doc:Declarations#Extension-Declaration> 中所讨论的。
 
 <!--
   TODO Additional bits from the SE-0306 actors proposal:
@@ -1722,14 +1686,14 @@ as discussed in <doc:Declarations#Extension-Declaration>.
   whose corresponding parameter is non-escaping and non-Sendable.
 -->
 
-> Grammar of an actor declaration:
+> actor 声明的语法：
 >
-> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
-> *actor-name* → *identifier* \
-> *actor-body* → **`{`** *actor-members*_?_ **`}`**
+> *actor声明* → *属性*_?_ *访问级别修饰符*_?_ **`actor`** *actor名称* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *actor主体* \
+> *actor姓名* → *标识符*
+> *actor主体* → **`{`** *actor成员*_?_ **`}`** \
 >
-> *actor-members* → *actor-member* *actor-members*_?_ \
-> *actor-member* → *declaration* | *compiler-control-statement*
+> *actor-成员* → *actor-成员* *actor-成员*_?_ \
+> *actor-成员* → *声明* | *编译器控制语句*
 
 ## Protocol Declaration
 
