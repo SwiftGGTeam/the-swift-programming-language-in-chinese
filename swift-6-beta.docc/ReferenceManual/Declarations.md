@@ -1881,99 +1881,25 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 > *协议构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* *抛出子句*_?_ *泛型约束子句*_?_\
 > *协议构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`重新抛出`** *泛型约束子句*_?_
 
-### Protocol Subscript Declaration
+### 协议下标声明
 
-Protocols declare that conforming types must implement a subscript
-by including a protocol subscript declaration in the body of the protocol declaration.
-Protocol subscript declarations have a special form of a subscript declaration:
+协议声明符合的类型必须通过在协议声明的主体中包含协议下标声明来实现下标。协议下标声明具有下标声明的特殊形式：
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
-Subscript declarations only declare the minimum getter and setter implementation
-requirements for types that conform to the protocol.
-If the subscript declaration includes both the `get` and `set` keywords,
-a conforming type must implement both a getter and a setter clause.
-If the subscript declaration includes only the `get` keyword,
-a conforming type must implement *at least* a getter clause
-and optionally can implement a setter clause.
 
-To declare a static subscript requirement in a protocol declaration,
-mark the subscript declaration with the `static` declaration modifier.
-Structures and enumerations that conform to the protocol
-declare the subscript with the `static` keyword,
-and classes that conform to the protocol
-declare the subscript with either the `static` or `class` keyword.
-Extensions that add protocol conformance to a structure, enumeration, or class
-use the same keyword as the type they extend uses.
-Extensions that provide a default implementation for a static subscript requirement
-use the `static` keyword.
+下标声明仅声明符合协议的类型所需的最小 getter 和 setter 实现要求。如果下标声明同时包含 `get` 和 `set` 关键字，则符合的类型必须实现 getter 和 setter 子句。如果下标声明仅包含 `get` 关键字，则符合的类型必须实现*至少*一个 getter 子句，并且可以选择性地实现一个 setter 子句。
 
-See also <doc:Declarations#Subscript-Declaration>.
+在协议声明中声明静态下标要求时，使用 `static` 声明修饰符标记下标声明。符合该协议的结构体和枚举使用 `static` 关键字声明下标，而符合该协议的类则使用 `static` 或 `class` 关键字声明下标。为结构体、枚举或类添加协议符合性的扩展使用与其扩展的类型相同的关键字。为静态下标要求提供默认实现的扩展使用 `static` 关键字。
 
-> Grammar of a protocol subscript declaration:
+另见 <doc:Declarations#Subscript-Declaration>。
+
+> 协议下标声明的语法：
 >
-> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
+> *协议下标声明* → *下标头* *下标结果* *通用条件子句*_?_ *gettersetter关键字块*
 
-### Protocol Associated Type Declaration
-
-Protocols declare associated types using the `associatedtype` keyword.
-An associated type provides an alias for a type
-that's used as part of a protocol's declaration.
-Associated types are similar to type parameters in generic parameter clauses,
-but they're associated with `Self` in the protocol in which they're declared.
-In that context, `Self` refers to the eventual type that conforms to the protocol.
-For more information and examples,
-see <doc:Generics#Associated-Types>.
-
-You use a generic `where` clause in a protocol declaration
-to add constraints to an associated types inherited from another protocol,
-without redeclaring the associated types.
-For example, the declarations of `SubProtocol` below are equivalent:
-
-```swift
-protocol SomeProtocol {
-    associatedtype SomeType
-}
-
-protocol SubProtocolA: SomeProtocol {
-    // This syntax produces a warning.
-    associatedtype SomeType: Equatable
-}
-
-// This syntax is preferred.
-protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
-```
-
-<!--
-  - test: `protocol-associatedtype`
-
-  ```swifttest
-  -> protocol SomeProtocol {
-         associatedtype SomeType
-     }
-  ---
-  -> protocol SubProtocolA: SomeProtocol {
-         // This syntax produces a warning.
-         associatedtype SomeType: Equatable
-     }
-  !$ warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
-  !! associatedtype SomeType: Equatable
-  !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
-  !!-
-  !$ note: 'SomeType' declared here
-  !! associatedtype SomeType
-  !! ^
-  ---
-  // This syntax is preferred.
-  -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
-  ```
--->
-
-<!--
-  TODO: Finish writing this section after WWDC.
--->
 
 <!--
   NOTE:
