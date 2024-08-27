@@ -2062,6 +2062,58 @@ convenience init(<#parameters#>) {
 
 要查看各种类型声明中构造器的示例，请参见 <doc:Initialization>。
 
+### 可失败的构造器
+
+一个*可失败的构造器*是一种构造器，它生成一个可选实例或一个隐式解包的可选实例，具体取决于构造器声明的类型。因此，可失败的构造器可以返回 `nil` 以表示初始化失败。
+
+To declare a failable initializer that produces an optional instance, append a question mark to the `init` keyword in the initializer declaration (`init?`). To declare a failable initializer that produces an implicitly unwrapped optional instance, append an exclamation point instead (`init!`). The example below shows an `init?` failable initializer that produces an optional instance of a structure.
+要声明一个可以失败的构造器，该构造器生成一个可选实例，请在构造器声明中的 `init` 关键字后附加一个问号（`init?`）。要声明一个可以失败的构造器，该构造器生成一个隐式解包的可选实例，请改为附加一个感叹号（`init!`）。下面的示例显示了一个 `init?` 可以失败的构造器，它生成一个结构的可选实例。
+
+```swift
+struct SomeStruct {
+    let property: String
+    // produces an optional instance of 'SomeStruct'
+    init?(input: String) {
+        if input.isEmpty {
+            // discard 'self' and return 'nil'
+            return nil
+        }
+        property = input
+    }
+}
+```
+
+<!--
+  - test: `failable`
+
+  ```swifttest
+  -> struct SomeStruct {
+         let property: String
+         // produces an optional instance of 'SomeStruct'
+         init?(input: String) {
+             if input.isEmpty {
+                 // discard 'self' and return 'nil'
+                 return nil
+             }
+             property = input
+         }
+     }
+  ```
+-->
+
+调用 init? 可失败的初始化器与调用不可失败的初始化器的方式相同，只是你必须处理结果的可选性。
+
+```swift
+if let actualInstance = SomeStruct(input: "Hello") {
+    // do something with the instance of 'SomeStruct'
+} else {
+    // initialization of 'SomeStruct' failed and the initializer returned 'nil'
+}
+```
+
+<!--
+  - test: `failable`
+
   ```swifttest
   -> if let actualInstance = SomeStruct(input: "Hello") {
          // do something with the instance of 'SomeStruct'
@@ -2072,45 +2124,24 @@ convenience init(<#parameters#>) {
   ```
 -->
 
-A failable initializer can return `nil`
-at any point in the implementation of the initializer's body.
+可失败的构造器可以在构造器主体的实现中的任何时刻返回`nil`。
 
-A failable initializer can delegate to any kind of initializer.
-A nonfailable initializer can delegate to another nonfailable initializer
-or to an `init!` failable initializer.
-A nonfailable initializer can delegate to an `init?` failable initializer
-by force-unwrapping the result of the superclass's initializer ---
-for example, by writing `super.init()!`.
+可失败的构造器可以委托给任何类型的构造器。不可失败的构造器可以委托给另一个不可失败的构造器或一个 `init!` 可失败的构造器。不可失败的构造器可以通过强制解包超类构造器的结果来委托给一个 `init?` 可失败的构造器——例如，通过写 `super.init()!`。
 
-Initialization failure propagates through initializer delegation.
-Specifically,
-if a failable initializer delegates to an initializer that fails and returns `nil`,
-then the initializer that delegated also fails and implicitly returns `nil`.
-If a nonfailable initializer delegates to an `init!` failable initializer that fails and returns `nil`,
-then a runtime error is raised
-(as if you used the `!` operator to unwrap an optional that has a `nil` value).
+初始化失败会通过构造器委托传播。具体来说，如果一个可失败的构造器委托给一个失败并返回 `nil` 的构造器，那么委托的构造器也会失败并隐式返回 `nil`。如果一个不可失败的构造器委托给一个失败并返回 `nil` 的 `init!` 可失败构造器，那么会引发运行时错误（就像你使用`!`运算符来解包一个值为 `nil`的可选值一样）。
 
-A failable designated initializer can be overridden in a subclass
-by any kind of designated initializer.
-A nonfailable designated initializer can be overridden in a subclass
-by a nonfailable designated initializer only.
+一个可失败的指定构造器可以在子类中被任何类型的指定构造器重写。一个不可失败的指定构造器只能在子类中被不可失败的指定构造器重写。
 
-For more information and to see examples of failable initializers,
-see <doc:Initialization#Failable-Initializers>.
+有关更多信息以及可失败构造器的示例，请参见 <doc:Initialization#Failable-Initializers>。
 
-> Grammar of an initializer declaration:
+> 初始化声明的语法：
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
-> *initializer-body* → *code-block*
-
-## Deinitializer Declaration
-
-A *deinitializer declaration* declares a deinitializer for a class type.
-Deinitializers take no parameters and have the following form:
+> *构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`异步`**_?_ *抛出子句*_?_ *泛型约束子句*_?_ *构造器主体* \
+> *构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`异步`**_?_ **`重新抛出`** *泛型约束子句*_?_ *构造器主体* \
+> *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** \
+> *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** **`?`** \
+> *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** **`!`** \
+> *构造器主体* → *代码块*
 
 ```swift
 deinit {
