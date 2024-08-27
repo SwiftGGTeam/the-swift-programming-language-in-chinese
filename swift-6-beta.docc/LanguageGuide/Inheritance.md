@@ -46,7 +46,7 @@ class Vehicle {
   ```
 -->
 
-您可以使用*构造语法*创建一个新的 `Vehicle` 实例，写作类型名后跟一对空括号：
+您可以使用*初始化语法*创建一个新的 `Vehicle` 实例，写作类型名后跟一对空括号：
 
 ```swift
 let someVehicle = Vehicle()
