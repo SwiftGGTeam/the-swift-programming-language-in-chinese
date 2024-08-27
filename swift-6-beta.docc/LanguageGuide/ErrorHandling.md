@@ -9,7 +9,7 @@
 以从磁盘文件读取和处理数据为例。该任务失败的原因有很多，包括指定路径下的文件不存在、文件没有读取权限或文件编码格式不兼容。通过区分这些不同的失败情况来让程序处理和解决一些错误，并将无法解决的错误告知用户。
 
 > 注意:
-> Swift 中的错误处理与 Cocoa 和 Objective-C 中使用 NSError 类的错误处理模式互操作。
+> Swift 中的错误处理与 Cocoa 和 Objective-C 中使用 `NSError` 类的错误处理模式互操作。
 > 有关该类的更多信息，请参阅 [在 Swift 中处理 Cocoa 错误](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift).
 
 ## 表示与抛出错误
