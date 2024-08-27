@@ -1,39 +1,27 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/TypeCasting.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/typecasting
-翻译估计用时：⭐️⭐️⭐️⭐️
--->
+# 类型转换
 
-# Type Casting
+确定一个值的运行时类型，并为其提供更具体的类型信息。
 
-Determine a value's runtime type and give it more specific type information.
+*类型转换*是一种检查实例类型，
+或将该实例视为其类层次结构中不同父类或子类的方法。
 
-*Type casting* is a way to check the type of an instance,
-or to treat that instance as a different
-superclass or subclass from somewhere else in its own class hierarchy.
+Swift 中的类型转换是通过 `is` 和 `as` 操作符实现的。
+这两个操作符为值的类型检查或类型转换提供了一种简单而富有表现力的方法。
 
-Type casting in Swift is implemented with the `is` and `as` operators.
-These two operators provide a simple and expressive way
-to check the type of a value or cast a value to a different type.
+你还可以使用类型转换来检查类型是否遵循协议，
+如 <doc:Protocols#Checking-for-Protocol-Conformance> 中所述。
 
-You can also use type casting to check whether a type conforms to a protocol,
-as described in <doc:Protocols#Checking-for-Protocol-Conformance>.
+## 为类型转换定义类层次结构
 
-## Defining a Class Hierarchy for Type Casting
+你可以使用类型转换在类和子类的层次结构中检查某个类实例的类型，
+并将该实例转换为同一层次结构中的另一个类。
+下面的三个代码片段定义了一个类层次结构和一个包含这些类的实例的数组，
+作为类型转换示例。
 
-You can use type casting with a hierarchy of classes and subclasses
-to check the type of a particular class instance
-and to cast that instance to another class within the same hierarchy.
-The three code snippets below define a hierarchy of classes
-and an array containing instances of those classes,
-for use in an example of type casting.
-
-The first snippet defines a new base class called `MediaItem`.
-This class provides basic functionality for any kind of item that appears
-in a digital media library.
-Specifically, it declares a `name` property of type `String`,
-and an `init(name:)` initializer.
-(It's assumed that all media items, including all movies and songs, will have a name.)
+第一个代码片段定义了一个名为 `MediaItem` 的新基类。
+该类为数字媒体库中出现的任何类型项目提供基本功能。
+具体来说，它声明了一个字符串类型的 `name` 属性和一个 `init(name:)` 初始化器。
+（假设所有媒体项目，包括所有电影和歌曲，都有一个名称。）
 
 ```swift
 class MediaItem {
@@ -57,12 +45,10 @@ class MediaItem {
   ```
 -->
 
-The next snippet defines two subclasses of `MediaItem`.
-The first subclass, `Movie`, encapsulates additional information about a movie or film.
-It adds a `director` property on top of the base `MediaItem` class,
-with a corresponding initializer.
-The second subclass, `Song`, adds an `artist` property and initializer
-on top of the base class:
+下一个代码段定义了 `MediaItem` 的两个子类。
+第一个子类 `Movie` 封装了电影或影片的附加信息。
+它在基础 `MediaItem` 类的基础上添加了一个 `director` 属性和一个相应的初始化器。
+第二个子类 `Song` 在基类的基础上添加了 `artist` 属性和初始化器：
 
 ```swift
 class Movie: MediaItem {
@@ -104,13 +90,11 @@ class Song: MediaItem {
   ```
 -->
 
-The final snippet creates a constant array called `library`,
-which contains two `Movie` instances and three `Song` instances.
-The type of the `library` array is inferred
-by initializing it with the contents of an array literal.
-Swift's type checker is able to deduce that `Movie` and `Song` have
-a common superclass of `MediaItem`,
-and so it infers a type of `[MediaItem]` for the `library` array:
+最后一个代码段创建了一个名为 `library` 的常量数组，
+其中包含两个 `Movie` 实例和三个 `Song` 实例。
+`library` 数组的类型是通过使用数组字面值初始化来推断的。
+Swift 的类型检查程序能够推断出 `Movie` 和 `Song` 有一个共同的父类 `MediaItem`，
+因此推断出 library 数组的类型为 `[MediaItem]`：
 
 ```swift
 let library = [
@@ -120,7 +104,7 @@ let library = [
     Song(name: "The One And Only", artist: "Chesney Hawkes"),
     Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
 ]
-// the type of "library" is inferred to be [MediaItem]
+// "library" 的类型被推断为 [MediaItem]
 ```
 
 <!--
@@ -140,24 +124,23 @@ let library = [
   ```
 -->
 
-The items stored in `library` are still `Movie` and `Song` instances behind the scenes.
-However, if you iterate over the contents of this array,
-the items you receive back are typed as `MediaItem`,
-and not as `Movie` or `Song`.
-In order to work with them as their native type,
-you need to *check* their type,
-or *downcast* them to a different type,
-as described below.
+`library` 中存储的项目在幕后仍然是 `Movie` 和 `Song` 实例。
+但是，如果遍历该数组的内容，返回的项目类型是 `MediaItem`，
+而不是 `Movie` 或 `Song`。
+为了以原始类型处理它们，
+你需要*检查*它们的类型，
+或将它们*向下转型*为不同的类型，
+如下文所述。
 
-## Checking Type
+## 检查类型
 
-Use the *type check operator* (`is`) to check
-whether an instance is of a certain subclass type.
-The type check operator returns `true` if the instance is of that subclass type
-and `false` if it's not.
+使用*类型检查操作符* (`is`) 来检查实例是否属于某个子类类型。
+如果实例属于该子类类型，则类型检查操作符返回 `true`；
+如果不属于该子类类型，则返回 `false`。
 
-The example below defines two variables, `movieCount` and `songCount`,
-which count the number of `Movie` and `Song` instances in the `library` array:
+下面的示例定义了两个变量：
+`movieCount` 和 `songCount`，
+用于计算 `library` 数组中 `Movie` 和 `Song` 实例的数量：
 
 ```swift
 var movieCount = 0
@@ -172,7 +155,7 @@ for item in library {
 }
 
 print("Media library contains \(movieCount) movies and \(songCount) songs")
-// Prints "Media library contains 2 movies and 3 songs"
+// 打印 "Media library contains 2 movies and 3 songs"
 ```
 
 <!--
@@ -195,54 +178,37 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
   ```
 -->
 
-This example iterates through all items in the `library` array.
-On each pass, the `for`-`in` loop sets the `item` constant
-to the next `MediaItem` in the array.
+此示例遍历 `library` 数组中的所有项目。
+每次遍历时，`for`-`in` 循环都会将 `item` 常量设置为数组中的下一个 `MediaItem`。
 
-`item is Movie` returns `true` if the current `MediaItem`
-is a `Movie` instance and `false` if it's not.
-Similarly, `item is Song` checks whether the item is a `Song` instance.
-At the end of the `for`-`in` loop, the values of `movieCount` and `songCount`
-contain a count of how many `MediaItem` instances were found of each type.
+如果当前的 `MediaItem` 是 `Movie` 实例，`item is Movie` 返回 `true`；
+如果不是，则返回 `false`。
+同理，`item is Song` 会检查项目是否为 `Song` 实例。
+当 `for`-`in` 循环结束时，
+`movieCount` 和 `songCount` 的值包含了找到的每种类型的 `MediaItem` 实例的数量。
 
-## Downcasting
+## 向下转型
 
-A constant or variable of a certain class type may actually refer to
-an instance of a subclass behind the scenes.
-Where you believe this is the case,
-you can try to *downcast* to the subclass type
-with a *type cast operator* (`as?` or `as!`).
+某个类常量或变量实际上可能在幕后指向子类的实例。
+如果你认为情况确实如此，可以尝试使用*类型转换操作符*（`as?` 或 `as!`）来*向下转型*为子类类型。
 
-Because downcasting can fail,
-the type cast operator comes in two different forms.
-The conditional form, `as?`, returns an optional value of the type you are trying to downcast to.
-The forced form, `as!`, attempts the downcast and force-unwraps the result
-as a single compound action.
+由于向下转型可能失败，类型转换操作符有两种不同的形式。
+条件形式，即 `as?`，会返回一个与你尝试向下转型的类型相同的可选值。
+强制形式，即 `as!`，会执行尝试向下转型并将结果强制解包的复合操作。
 
-Use the conditional form of the type cast operator (`as?`)
-when you aren't sure if the downcast will succeed.
-This form of the operator will always return an optional value,
-and the value will be `nil` if the downcast was not possible.
-This enables you to check for a successful downcast.
+如果不确定向下转型能否成功，请使用类型转换操作符的条件形式（`as?`）。
+这种形式的操作符将始终返回一个可选值，如果向下转型不成功，该值将为 `nil`。
+这样，你就可以检查是否成功进行了向下转型。
 
-Use the forced form of the type cast operator (`as!`)
-only when you are sure that the downcast will always succeed.
-This form of the operator will trigger a runtime error
-if you try to downcast to an incorrect class type.
+只有在确定向下转型一定会成功时，才使用类型转换操作符的强制形式（`as!`）。
+如果尝试向下转型到一个不正确的类类型，这种形式的操作符会触发运行时错误。
 
-The example below iterates over each `MediaItem` in `library`,
-and prints an appropriate description for each item.
-To do this, it needs to access each item as a true `Movie` or `Song`,
-and not just as a `MediaItem`.
-This is necessary in order for it to be able to access
-the `director` or `artist` property of a `Movie` or `Song`
-for use in the description.
+下面的示例遍历 `library` 中的每个 `MediaItem`，并为每个项目打印适当的描述。
+为此，它需要将每个项目作为真正的 `Movie` 或 `Song`来访问，而不仅仅是作为一个 `MediaItem`。
+因为只有这样才能访问 `Movie` 的 `director` 或 `Song` 的 `artist` 属性，并在描述中使用。
 
-In this example, each item in the array might be a `Movie`,
-or it might be a `Song`.
-You don't know in advance which actual class to use for each item,
-and so it's appropriate to use the conditional form of the type cast operator (`as?`)
-to check the downcast each time through the loop:
+在本例中，数组中的每个项目可能是一部 `Movie`，也可能是一首 `Song`。
+我们事先并不知道要将哪个项转换成哪个类，因此这里较为恰当的做法，是使用类型转换操作符的条件形式（`as?`）在循环中进行向下转型。
 
 ```swift
 for item in library {
@@ -280,36 +246,24 @@ for item in library {
   ```
 -->
 
-The example starts by trying to downcast the current `item` as a `Movie`.
-Because `item` is a `MediaItem` instance, it's possible that it *might* be a `Movie`;
-equally, it's also possible that it might be a `Song`,
-or even just a base `MediaItem`.
-Because of this uncertainty, the `as?` form of the type cast operator returns an *optional* value
-when attempting to downcast to a subclass type.
-The result of `item as? Movie` is of type `Movie?`, or “optional `Movie`”.
+该示例首先尝试将当前 `item` 向下转型为 `Movie`。
+由于 `item` 是一个 `MediaItem` 实例，它有*可能*是一部 `Movie`；
+同样，它也有可能是一首 `Song`，或者只是一个基本的 `MediaItem`。
+由于这种不确定性，当尝试向下转型到子类类型时，类型转换运算符的 `as?` 形式会返回一个*可选*值。
+`item as? Movie` 的结果是 `Movie?`（“可选 `Movie`”）类型。
 
-Downcasting to `Movie` fails when applied to
-the `Song` instances in the library array.
-To cope with this, the example above uses optional binding
-to check whether the optional `Movie` actually contains a value
-(that is, to find out whether the downcast succeeded.)
-This optional binding is written “`if let movie = item as? Movie`”,
-which can be read as:
+当应用到库数组中的 `Song` 实例时，向下转型为 `Movie` 会失败。
+为了解决这个问题，上面的示例使用了可选绑定来检查可选 `Movie` 是否实际包含一个值（也就是说，找出向下转型是否成功。）
+这里的可选绑定写作“`if let movie = item as? Movie`”，可以理解为
 
-“Try to access `item` as a `Movie`.
-If this is successful,
-set a new temporary constant called `movie` to
-the value stored in the returned optional `Movie`.”
+“尝试将 `item` 作为 `Movie` 访问。
+如果成功，则将名为 `movie` 的新临时常量设置为存储在返回的可选 `Movie` 中的值。”
 
-If the downcasting succeeds, the properties of `movie` are then used
-to print a description for that `Movie` instance, including the name of its `director`.
-A similar principle is used to check for `Song` instances,
-and to print an appropriate description (including `artist` name)
-whenever a `Song` is found in the library.
+如果向下转型成功，`movie` 的属性将用于打印该 `Movie` 实例的说明，包括其导演的姓名。
+类似的原理也用于检查 `Song` 实例，并在库中找到歌曲时打印适当的描述（包括艺术家姓名）。
 
-> Note: Casting doesn't actually modify the instance or change its values.
-> The underlying instance remains the same; it's simply treated and accessed
-> as an instance of the type to which it has been cast.
+> 注意: 类型转换并不修改实例或更改其值。
+> 底层的实例保持不变，它们只是被作为转换后的类型实例来处理和访问。
 
 <!--
   TODO: This example should be followed by the same example written with switch,
@@ -323,20 +277,18 @@ whenever a `Song` is found in the library.
   The reference shows the behavior in a contrived example.
 -->
 
-## Type Casting for Any and AnyObject
+## Any 和 AnyObject 的类型转换
 
-Swift provides two special types for working with nonspecific types:
+Swift 为处理非特定类型提供了两种特殊类型：
 
-- `Any` can represent an instance of any type at all, including function types.
-- `AnyObject` can represent an instance of any class type.
+- `Any` 可以表示任何类型的实例，包括函数类型。
+- `AnyObject` 可以表示任何类类型的实例。
 
-Use `Any` and `AnyObject` only when you explicitly need
-the behavior and capabilities they provide.
-It's always better to be specific about the types you expect to work with in your code.
+只有在明确需要它们提供的行为和功能时，才使用 `Any` 和 `AnyObject`。
+在代码中最好明确指定你希望使用的类型。
 
-Here's an example of using `Any` to work with a mix of different types,
-including function types and nonclass types.
-The example creates an array called `things`, which can store values of type `Any`:
+下面是一个使用 `Any` 处理不同类型（包括函数类型和非类类型）的示例。
+该示例创建了一个名为 `things` 的数组，可以存储 `Any` 类型的值：
 
 ```swift
 var things: [Any] = []
@@ -368,20 +320,13 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
   ```
 -->
 
-The `things` array contains
-two `Int` values, two `Double` values, a `String` value,
-a tuple of type `(Double, Double)`,
-the movie “Ghostbusters”,
-and a closure expression that takes a `String` value
-and returns another `String` value.
+`things` 数组包含两个 `Int` 值、两个 `Double` 值、一个 `String` 值、一个类型为 `(Double, Double)` 的元组、电影 “捉鬼敢死队”，
+以及一个接收字符串值并返回另一个字符串值的闭包表达式。
 
-To discover the specific type of a constant or variable
-that's known only to be of type `Any` or `AnyObject`,
-you can use an `is` or `as` pattern in a `switch` statement's cases.
-The example below iterates over the items in the `things` array
-and queries the type of each item with a `switch` statement.
-Several of the `switch` statement's cases bind their matched value to
-a constant of the specified type to enable its value to be printed:
+
+如果常量或变量的已知类型是 `Any` 或 `AnyObject`，要确定其具体类型，可以在 switch 语句的情况下使用 `is` 或 `as` 模式。
+下面的示例遍历了 `things` 数组中的项目，并使用 `switch` 语句查询了每个项目的类型。
+该 `switch` 语句的一些情况将其匹配值与指定类型的常量绑定，以便打印其值：
 
 ```swift
 for thing in things {
@@ -459,17 +404,14 @@ for thing in things {
   ```
 -->
 
-> Note: The `Any` type represents values of any type, including optional types.
-> Swift gives you a warning if you use an optional value
-> where a value of type `Any` is expected.
-> If you really do need to use an optional value as an `Any` value,
-> you can use the `as` operator to explicitly cast the optional to `Any`,
-> as shown below.
+> 注意: `Any` 类型代表任何类型的值，包括可选类型。
+> 如果你使用的是可选值，而预期值是 `Any` 类型，Swift 会发出警告。
+> 如果您确实需要将可选值用作 `Any` 值，可以使用 `as` 操作符显式地将可选值转换为 `Any` 值，如下所示。
 >
 > ```swift
 > let optionalNumber: Int? = 3
-> things.append(optionalNumber)        // Warning
-> things.append(optionalNumber as Any) // No warning
+> things.append(optionalNumber)        // 会警告
+> things.append(optionalNumber as Any) // 不会警告
 > ```
 
 <!--
@@ -528,11 +470,11 @@ for thing in things {
   ```
 -->
 
-> Beta Software:
+> 测试版软件: 
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息。
 
 <!--
 This source file is part of the Swift.org open source project
