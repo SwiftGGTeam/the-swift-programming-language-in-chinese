@@ -2164,61 +2164,35 @@ deinit {
 >
 > *析构器声明* → *属性*_?_ **`deinit`** *代码块*
 
-## Extension Declaration
+## 扩展声明
 
-An *extension declaration* allows you to extend
-the behavior of existing types.
-Extension declarations are declared using the `extension` keyword
-and have the following form:
+*扩展声明*允许您扩展现有类型的行为。扩展声明使用 `extension` 关键字声明，具有以下形式：
 
 ```swift
 extension <#type name#> where <#requirements#> {
-   <#declarations#>
+    <#declarations#>
 }
 ```
 
-The body of an extension declaration contains zero or more *declarations*.
-These *declarations* can include computed properties, computed type properties,
-instance methods, type methods, initializers, subscript declarations,
-and even class, structure, and enumeration declarations.
-Extension declarations can't contain deinitializer or protocol declarations,
-stored properties, property observers, or other extension declarations.
-Declarations in a protocol extension can't be marked `final`.
-For a discussion and several examples of extensions that include various kinds of declarations,
-see <doc:Extensions>.
+扩展声明的主体包含零个或多个*声明*。这些*声明*可以包括计算属性、计算类型属性、实例方法、类型方法、构造器、下标声明，甚至类、结构体和枚举声明。扩展声明不能包含析构器或协议声明、存储属性、属性观察者或其他扩展声明。协议扩展中的声明不能标记为 `final`。有关包含各种类型声明的扩展的讨论和多个示例，请参见 <doc:Extensions>。
 
-If the *type name* is a class, structure, or enumeration type,
-the extension extends that type.
-If the *type name* is a protocol type,
-the extension extends all types that conform to that protocol.
+如果*类型名称*是类、结构体或枚举类型，则扩展该类型。如果*类型名称*是协议类型，则扩展所有符合该协议的类型。
 
-Extension declarations that extend a generic type
-or a protocol with associated types
-can include *requirements*.
-If an instance of the extended type
-or of a type that conforms to the extended protocol
-satisfies the *requirements*,
-the instance gains the behavior specified in the declaration.
+扩展声明可以扩展具有关联类型的泛型类型或协议，并可以包含*要求*。如果扩展类型的实例或遵循扩展协议的类型的实例满足*要求*，则该实例获得声明中指定的行为。
 
-Extension declarations can contain initializer declarations. That said,
-if the type you're extending is defined in another module,
-an initializer declaration must delegate to an initializer already defined in that module
-to ensure members of that type are properly initialized.
+扩展声明可以包含构造器声明。也就是说，如果您正在扩展的类型在另一个模块中定义，则构造器声明必须委托给该模块中已定义的构造器，以确保该类型的成员得到正确初始化。
 
-Properties, methods, and initializers of an existing type
-can't be overridden in an extension of that type.
+现有类型的属性、方法和构造器不能在该类型的扩展中被重写。
 
-Extension declarations can add protocol conformance to an existing
-class, structure, or enumeration type by specifying *adopted protocols*:
+扩展声明可以通过指定*采用的协议*，为现有的类、结构体或枚举类型添加协议符合性：
 
 ```swift
 extension <#type name#>: <#adopted protocols#> where <#requirements#> {
-   <#declarations#>
+    <#declarations#>
 }
 ```
 
-Extension declarations can't add class inheritance to an existing class,
-and therefore you can specify only a list of protocols after the *type name* and colon.
+扩展声明不能为现有类添加类继承，因此您只能在*类型名称*和冒号后指定协议列表。
 
 ### Conditional Conformance
 
