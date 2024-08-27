@@ -2606,16 +2606,9 @@ subscript (<#parameters#>) -> <#return type#> {
 
 有关下标的更多信息以及下标声明的示例，请参见 <doc:Subscripts>。
 
-### Type Subscript Declarations
+### 类型下标声明
 
-To declare a subscript that's exposed by the type,
-rather than by instances of the type,
-mark the subscript declaration with the `static` declaration modifier.
-Classes can mark type computed properties with the `class` declaration modifier instead
-to allow subclasses to override the superclass’s implementation.
-In a class declaration,
-the `static` keyword has the same effect as marking the declaration
-with both the `class` and `final` declaration modifiers.
+要声明由类型本身而非类型实例公开的下标，可以在下标声明中使用 `static` 声明修饰符。类可以使用 `class` 声明修饰符来标记类型计算属性，以允许子类重写超类的实现。在类声明中，`static` 关键字的效果与将声明标记为 `class` 和 `final` 声明修饰符相同。
 
 <!--
   - test: `cant-override-static-subscript-in-subclass`
@@ -2633,12 +2626,13 @@ with both the `class` and `final` declaration modifiers.
 -->
 
 > Grammar of a subscript declaration:
+> 下标声明的语法：
 >
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block* \
-> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
-> *subscript-result* → **`->`** *attributes*_?_ *type*
+> *下标声明* → *下标头* *下标结果* *通用 where 子句*_?_ *代码块* \
+> *下标声明* → *下标头* *下标结果* *通用条件子句*_?_ *getter-setter块* \
+> *下标声明* → *下标头* *下标结果* *通用 where 子句*_?_ *getter-setter-关键字-块* \
+> *下标头* → *属性*_?_ *声明修饰符*_?_ **`下标`** *泛型参数子句*_?_ *参数子句* \
+> *下标结果* → **`->`** *属性*_?_ *类型*
 
 ## Macro Declaration
 
