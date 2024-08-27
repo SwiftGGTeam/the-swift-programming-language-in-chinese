@@ -1849,36 +1849,21 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 >
 > *协议属性声明* → *变量-声明-头* *变量名称* *类型注解* *gettersetter关键字块*
 
-### Protocol Method Declaration
+### 协议方法声明
 
-Protocols declare that conforming types must implement a method
-by including a protocol method declaration in the body of the protocol declaration.
-Protocol method declarations have the same form as
-function declarations, with two exceptions: They don't include a function body,
-and you can't provide any default parameter values as part of the function declaration.
-For examples of conforming types that implement the method requirements of a protocol,
-see <doc:Protocols#Method-Requirements>.
+协议声明符合类型必须通过在协议声明的主体中包含协议方法声明来实现方法。协议方法声明的形式与函数声明相同，有两个例外：它们不包括函数体，并且您不能在函数声明中提供任何默认参数值。有关实现协议方法要求的符合类型的示例，请参见 <doc:Protocols#Method-Requirements>。
 
-To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the `static` declaration modifier.
-Structures and enumerations that conform to the protocol
-declare the method with the `static` keyword,
-and classes that conform to the protocol
-declare the method with either the `static` or `class` keyword.
-Extensions that add protocol conformance to a structure, enumeration, or class
-use the same keyword as the type they extend uses.
-Extensions that provide a default implementation for a type method requirement
-use the `static` keyword.
+在协议声明中声明类或静态方法的要求时，使用 `static` 修饰符标记方法声明。符合该协议的结构体和枚举使用 `static` 关键字声明该方法，而符合该协议的类则使用 `static` 或 `class` 关键字声明该方法。为结构体、枚举或类添加协议遵循的扩展使用与其扩展的类型相同的关键字。为类型方法要求提供默认实现的扩展使用 `static` 关键字。
 
-See also <doc:Declarations#Function-Declaration>.
+另见 <doc:Declarations#Function-Declaration>。
 
 <!--
   TODO: Talk about using ``Self`` in parameters and return types.
 -->
 
-> Grammar of a protocol method declaration:
+> 协议方法声明的语法：
 >
-> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
+> *协议方法声明* → *函数头* *函数名称* *泛型参数子句*_?_ *函数签名* *泛型约束子句*_?_
 
 ### Protocol Initializer Declaration
 
