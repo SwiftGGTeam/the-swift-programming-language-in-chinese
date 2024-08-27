@@ -2020,138 +2020,47 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 >
 > *协议关联类型声明* → *属性*_?_ *访问级别修饰符*_?_ **`关联类型`** *类型别名名称* *类型继承子句*_?_ *类型别名赋值*_?_ *泛型约束子句*_?_
 
+## 构造器声明
 
-Structure, enumeration, and class types can have any number of initializers,
-but the rules and associated behavior for class initializers are different.
-Unlike structures and enumerations, classes have two kinds of initializers:
-designated initializers and convenience initializers,
-as described in <doc:Initialization>.
+一个*构造器声明*在您的程序中引入了一个类、结构或枚举的构造器。构造器声明使用 `init` 关键字声明，并有两种基本形式。
 
-The following form declares initializers for structures, enumerations,
-and designated initializers of classes:
+结构、枚举和类类型可以有任意数量的构造器，但类构造器的规则和相关行为是不同的。与结构和枚举不同，类有两种类型的构造器：指定构造器和便利构造器，如 (doc:Initialization)中所述。
+
+以下形式声明了结构体、枚举和类的指定构造器的构造器：
 
 ```swift
 init(<#parameters#>) {
-   <#statements#>
+    <#statements#>
 }
 ```
 
-A designated initializer of a class initializes
-all of the class's properties directly. It can't call any other initializers
-of the same class, and if the class has a superclass, it must call one of
-the superclass's designated initializers.
-If the class inherits any properties from its superclass, one of the
-superclass's designated initializers must be called before any of these
-properties can be set or modified in the current class.
+类的指定构造器直接初始化类的所有属性。它不能调用同一类的其他构造器，如果该类有一个超类，则必须调用超类的一个指定构造器。如果该类从其超类继承了任何属性，则在当前类中设置或修改这些属性之前，必须调用超类的一个指定构造器。
 
-Designated initializers can be declared in the context of a class declaration only
-and therefore can't be added to a class using an extension declaration.
+只能在类声明的上下文中声明，因此不能通过扩展声明添加到类中。
 
-Initializers in structures and enumerations can call other declared initializers
-to delegate part or all of the initialization process.
+结构体和枚举中的构造器可以调用其他已声明的构造器，以委托部分或全部初始化过程。
 
-To declare convenience initializers for a class,
-mark the initializer declaration with the `convenience` declaration modifier.
+要为一个类声明便利构造器，请使用 `convenience` 声明修饰符标记构造器声明。
 
 ```swift
 convenience init(<#parameters#>) {
-   <#statements#>
+    <#statements#>
 }
 ```
 
-Convenience initializers can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
+便利构造器可以将初始化过程委托给另一个便利构造器或类的某个指定构造器。也就是说，初始化过程必须以调用一个指定构造器结束，该构造器最终初始化类的属性。便利构造器不能调用超类的构造器。
 
-You can mark designated and convenience initializers with the `required`
-declaration modifier to require that every subclass implement the initializer.
-A subclass’s implementation of that initializer
-must also be marked with the `required` declaration modifier.
+您可以使用 `required` 声明修饰符标记指定和便利构造器，以要求每个子类实现该构造器。子类对该构造器的实现也必须标记为 `required` 声明修饰符。
 
-By default, initializers declared in a superclass
-aren't inherited by subclasses.
-That said, if a subclass initializes all of its stored properties with default values
-and doesn't define any initializers of its own,
-it inherits all of the superclass's initializers.
-If the subclass overrides all of the superclass’s designated initializers,
-it inherits the superclass’s convenience initializers.
+默认情况下，超类中声明的构造器不会被子类继承。也就是说，如果子类用默认值初始化了所有存储属性，并且没有定义自己的构造器，它将继承超类的所有构造器。如果子类重写了超类的所有指定构造器，它将继承超类的便利构造器。
 
-As with methods, properties, and subscripts,
-you need to mark overridden designated initializers with the `override` declaration modifier.
+与方法、属性和下标一样，您需要使用 `override` 声明修饰符标记重写的指定构造器。
 
-> Note: If you mark an initializer with the `required` declaration modifier,
-> you don't also mark the initializer with the `override` modifier
-> when you override the required initializer in a subclass.
+> 注意：如果您使用 `required` 声明修饰符标记了一个构造器，则在子类中重写所需的构造器时，不要同时使用 `override` 修饰符标记该构造器。
 
-Just like functions and methods, initializers can throw or rethrow errors.
-And just like functions and methods,
-you use the `throws` or `rethrows` keyword after an initializer's parameters
-to indicate the appropriate behavior.
-Likewise, initializers can be asynchronous,
-and you use the `async` keyword to indicate this.
+就像函数和方法一样，构造器可以抛出或重新抛出错误。与函数和方法一样，您在构造器的参数后使用 `throws` 或 `rethrows` 关键字来指示适当的行为。同样，构造器可以是异步的，您使用 `async` 关键字来指示这一点。
 
-To see examples of initializers in various type declarations,
-see <doc:Initialization>.
-
-### Failable Initializers
-
-A *failable initializer* is a type of initializer that produces an optional instance
-or an implicitly unwrapped optional instance of the type the initializer is declared on.
-As a result, a failable initializer can return `nil` to indicate that initialization failed.
-
-To declare a failable initializer that produces an optional instance,
-append a question mark to the `init` keyword in the initializer declaration (`init?`).
-To declare a failable initializer that produces an implicitly unwrapped optional instance,
-append an exclamation point instead (`init!`). The example below shows an `init?`
-failable initializer that produces an optional instance of a structure.
-
-```swift
-struct SomeStruct {
-    let property: String
-    // produces an optional instance of 'SomeStruct'
-    init?(input: String) {
-        if input.isEmpty {
-            // discard 'self' and return 'nil'
-            return nil
-        }
-        property = input
-    }
-}
-```
-
-<!--
-  - test: `failable`
-
-  ```swifttest
-  -> struct SomeStruct {
-         let property: String
-         // produces an optional instance of 'SomeStruct'
-         init?(input: String) {
-             if input.isEmpty {
-                 // discard 'self' and return 'nil'
-                 return nil
-             }
-             property = input
-         }
-     }
-  ```
--->
-
-You call an `init?` failable initializer in the same way that you call a nonfailable initializer,
-except that you must deal with the optionality of the result.
-
-```swift
-if let actualInstance = SomeStruct(input: "Hello") {
-    // do something with the instance of 'SomeStruct'
-} else {
-    // initialization of 'SomeStruct' failed and the initializer returned 'nil'
-}
-```
-
-<!--
-  - test: `failable`
+要查看各种类型声明中构造器的示例，请参见 <doc:Initialization>。
 
   ```swifttest
   -> if let actualInstance = SomeStruct(input: "Hello") {
