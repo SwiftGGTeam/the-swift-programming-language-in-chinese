@@ -1900,6 +1900,54 @@ subscript (<#parameters#>) -> <#return type#> { get set }
 >
 > *协议下标声明* → *下标头* *下标结果* *通用条件子句*_?_ *gettersetter关键字块*
 
+### 协议关联类型声明
+
+协议使用 `associatedtype` 关键字声明关联类型。关联类型为作为协议声明一部分使用的类型提供了别名。关联类型类似于泛型参数子句中的类型参数，但它们与声明它们的协议中的 `Self` 相关联。在该上下文中，`Self` 指的是符合该协议的最终类型。有关更多信息和示例，请参见 <doc:Generics#Associated-Types>。
+
+您在协议声明中使用通用的 `where` 子句，以便为从另一个协议继承的关联类型添加约束，而无需重新声明关联类型。以下 `SubProtocol` 的声明是等效的：
+
+```swift
+protocol SomeProtocol {
+    associatedtype SomeType
+}
+
+protocol SubProtocolA: SomeProtocol {
+    // This syntax produces a warning.
+    associatedtype SomeType: Equatable
+}
+
+// This syntax is preferred.
+protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+```
+
+<!--
+  - test: `protocol-associatedtype`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+         associatedtype SomeType
+     }
+  ---
+  -> protocol SubProtocolA: SomeProtocol {
+         // This syntax produces a warning.
+         associatedtype SomeType: Equatable
+     }
+  !$ warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
+  !! associatedtype SomeType: Equatable
+  !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+  !!-
+  !$ note: 'SomeType' declared here
+  !! associatedtype SomeType
+  !! ^
+  ---
+  // This syntax is preferred.
+  -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+  ```
+-->
+
+<!--
+  TODO: Finish writing this section after WWDC.
+-->
 
 <!--
   NOTE:
@@ -1966,18 +2014,12 @@ subscript (<#parameters#>) -> <#return type#> { get set }
   Here you have to pick one or the other -- you can't have both.
 -->
 
-See also <doc:Declarations#Type-Alias-Declaration>.
+另见 <doc:Declarations#Type-Alias-Declaration>。
 
-> Grammar of a protocol associated type declaration:
+> 协议关联类型声明的语法：
 >
-> *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
+> *协议关联类型声明* → *属性*_?_ *访问级别修饰符*_?_ **`关联类型`** *类型别名名称* *类型继承子句*_?_ *类型别名赋值*_?_ *泛型约束子句*_?_
 
-## Initializer Declaration
-
-An *initializer declaration* introduces an initializer for a class,
-structure, or enumeration into your program.
-Initializer declarations are declared using the `init` keyword and have
-two basic forms.
 
 Structure, enumeration, and class types can have any number of initializers,
 but the rules and associated behavior for class initializers are different.
