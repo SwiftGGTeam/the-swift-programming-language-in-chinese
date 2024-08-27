@@ -2424,22 +2424,13 @@ extension Array: Serializable where Element: SerializableInArray {
   ```
 -->
 
-#### Resolving Implicit Redundancy
+#### 解决隐式冗余
 
-When a concrete type conditionally conforms to a protocol,
-that type implicitly conforms to any parent protocols
-with the same requirements.
+当一个具体类型有条件地遵循一个协议时，该类型隐式地遵循任何具有相同要求的父协议。
 
-If you need a type to conditionally conform to two protocols
-that inherit from a single parent,
-explicitly declare conformance to the parent protocol.
-This avoids implicitly conforming to the parent protocol twice
-with different requirements.
+如果您需要一个类型有条件地遵循两个继承自单一父协议的协议，请明确声明对父协议的遵循。这可以避免以不同的要求隐式地两次遵循父协议。
 
-The following example explicitly declares
-the conditional conformance of `Array` to `Loggable`
-to avoid a conflict when declaring its conditional conformance
-to both `TitledLoggable` and the new `MarkedLoggable` protocol.
+以下示例明确声明了`Array`对`Loggable`的条件遵循，以避免在声明其对`TitledLoggable`和新的`MarkedLoggable`协议的条件遵循时发生冲突。
 
 ```swift
 protocol MarkedLoggable: Loggable {
@@ -2487,10 +2478,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
   ```
 -->
 
-Without the extension
-to explicitly declare conditional conformance to `Loggable`,
-the other `Array` extensions would implicitly create these declarations,
-resulting in an error:
+在没有扩展明确声明对 `Loggable` 的条件遵循时，其他 `Array` 扩展会隐式创建这些声明，从而导致错误：
 
 ```swift
 extension Array: Loggable where Element: TitledLoggable { }
@@ -2579,21 +2567,13 @@ extension Array: Loggable where Element: MarkedLoggable { }
   ```
 -->
 
-> Grammar of an extension declaration:
+> 扩展声明的语法：
 >
-> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
-> *extension-body* → **`{`** *extension-members*_?_ **`}`**
+> *扩展声明* → *属性*_?_ *访问级别修饰符*_?_ **`扩展`** *类型标识符* *类型继承条款*_?_ *泛型约束条款*_?_ *扩展主体* \
+> *扩展主体* → **`{`** *扩展成员*_?_ **`}`**
 >
-> *extension-members* → *extension-member* *extension-members*_?_ \
-> *extension-member* → *declaration* | *compiler-control-statement*
-
-## Subscript Declaration
-
-A *subscript* declaration allows you to add subscripting support for objects
-of a particular type and are typically used to provide a convenient syntax
-for accessing the elements in a collection, list, or sequence.
-Subscript declarations are declared using the `subscript` keyword
-and have the following form:
+> *扩展成员* → *扩展成员* *扩展成员*_?_ \
+> *扩展成员* → *声明* | *编译器控制语句*
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> {
