@@ -115,22 +115,9 @@ https://github.com/apple/swift-markdown/issues/93
 > *implicit-parameter-name* → **`$`** *decimal-digits* \
 > *property-wrapper-projection* → **`$`** *identifier-characters*
 
-## Keywords and Punctuation
+## 关键字和标点符号
 
-The following keywords are reserved and can't be used as identifiers,
-unless they're escaped with backticks,
-as described above in <doc:LexicalStructure#Identifiers>.
-Keywords other than `inout`, `var`, and `let`
-can be used as parameter names
-in a function declaration or function call
-without being escaped with backticks.
-When a member has the same name as a keyword,
-references to that member don't need to be escaped with backticks,
-except when there's ambiguity between referring to the member
-and using the keyword ---
-for example, `self`, `Type`, and `Protocol`
-have special meaning in an explicit member expression,
-so they must be escaped with backticks in that context.
+以下关键字是保留字，不能用作标识符，除非用反引号将它们转义，如上文 <doc:LexicalStructure#Identifiers> 中所述。除了 `inout`、`var` 和 `let` 之外，其他关键字可以作为函数声明或函数调用中的参数名称，而无需使用反引号进行转义。当成员名称与关键字相同时，引用该成员时不需要使用反引号进行转义，除非在引用成员与使用关键字之间存在歧义——例如，`self`、`Type` 和 `Protocol` 在显式成员表达式中具有特殊含义，因此在这种情况下必须用反引号将它们转义。
 
 <!--
   - test: `keywords-without-backticks`
@@ -190,113 +177,20 @@ so they must be escaped with backticks in that context.
   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 -->
 
-- Keywords used in declarations:
-  `associatedtype`,
-  `borrowing`,
-  `class`,
-  `consuming`,
-  `deinit`,
-  `enum`,
-  `extension`,
-  `fileprivate`,
-  `func`,
-  `import`,
-  `init`,
-  `inout`,
-  `internal`,
-  `let`,
-  `nonisolated`,
-  `open`,
-  `operator`,
-  `private`,
-  `precedencegroup`,
-  `protocol`,
-  `public`,
-  `rethrows`,
-  `static`,
-  `struct`,
-  `subscript`,
-  `typealias`,
-  and `var`.
+- 用于声明的关键字：`associatedtype`、`borrowing`、`class`、`consuming`、`deinit`、`enum`、`extension`、`fileprivate`、`func`、`import`、`init`、`inout`、`internal`、`let`、`nonisolated`、`open`、`operator`、`private`、`precedencegroup`、`protocol`、`public`、`rethrows`、`static`、`struct`、`subscript`、`typealias` 和 `var`。
 
 <!--
   Token.py doesn't include 'open' but DeclNodes.py does.
 -->
 
-- Keywords used in statements:
-  `break`,
-  `case`,
-  `catch`,
-  `continue`,
-  `default`,
-  `defer`,
-  `do`,
-  `else`,
-  `fallthrough`,
-  `for`,
-  `guard`,
-  `if`,
-  `in`,
-  `repeat`,
-  `return`,
-  `throw`,
-  `switch`,
-  `where`,
-  and `while`.
-- Keywords used in expressions and types:
-  `Any`,
-  `as`,
-  `await`,
-  `catch`,
-  `false`,
-  `is`,
-  `nil`,
-  `rethrows`,
-  `self`,
-  `Self`,
-  `super`,
-  `throw`,
-  `throws`,
-  `true`,
-  and `try`.
-- Keywords used in patterns:
-  `_`.
-- Keywords that begin with a number sign (`#`):
-  `#available`,
-  `#colorLiteral`,
-  `#else`,
-  `#elseif`,
-  `#endif`,
-  `#fileLiteral`,
-  `#if`,
-  `#imageLiteral`,
-  `#keyPath`,
-  `#selector`,
-  `#sourceLocation`,
-  `#unavailable`.
+- 用于语句的关键字：`break`、`case`、`catch`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`throw`、`switch`、`where` 和 `while`。
+- 用于表达式和类型的关键字：`Any`、`as`、`await`、`catch`、`false`、`is`、`nil`、`rethrows`、`self`、`Self`、`super`、`throw`、`throws`、`true` 和 `try`。
+- 用于模式的关键字：`_`。
+- 以井号 (`#`) 开头的关键字：`#available`、`#colorLiteral`、`#else`、`#elseif`、`#endif`、`#fileLiteral`、`#if`、`#imageLiteral`、`#keyPath`、`#selector`、`#sourceLocation`、`#unavailable`。
 
-> Note:
-> Prior to Swift 5.9,
-> the following keywords were reserved:
-> `#column`,
-> `#dsohandle`,
-> `#error`,
-> `#fileID`,
-> `#filePath`,
-> `#file`,
-> `#function`,
-> `#line`,
-> and `#warning`.
-> These are now implemented as macros in the Swift standard library:
-> [`column`](https://developer.apple.com/documentation/swift/column()),
-> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
-> [`error(_:)`](https://developer.apple.com/documentation/swift/error(_:)),
-> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
-> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
-> [`file`](https://developer.apple.com/documentation/swift/file()),
-> [`function`](https://developer.apple.com/documentation/swift/function()),
-> [`line`](https://developer.apple.com/documentation/swift/line()),
-> and [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:)).
+> 注意:
+> 在 Swift 5.9 之前，以下关键字是保留字：`#column`、`#dsohandle`、`#error`、`#fileID`、`#filePath`、`#file`、`#function`、`#line` 和 `#warning`。  
+> 它们现在已经在 Swift 标准库中实现为宏：[`column`](https://developer.apple.com/documentation/swift/column())、[`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle())、[`error(_:)`](https://developer.apple.com/documentation/swift/error(_:))、[`fileID`](https://developer.apple.com/documentation/swift/fileID())、[`filePath`](https://developer.apple.com/documentation/swift/filePath())、[`file`](https://developer.apple.com/documentation/swift/file())、[`function`](https://developer.apple.com/documentation/swift/function())、[`line`](https://developer.apple.com/documentation/swift/line()) 以及 [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:))。
 
 <!--
   Token.py includes #assert,
@@ -316,37 +210,7 @@ so they must be escaped with backticks in that context.
   which looks like it's related to a future feature around memory ownership.
 -->
 
-- Keywords reserved in particular contexts:
-  `associativity`,
-  `convenience`,
-  `didSet`,
-  `dynamic`,
-  `final`,
-  `get`,
-  `indirect`,
-  `infix`,
-  `lazy`,
-  `left`,
-  `mutating`,
-  `none`,
-  `nonmutating`,
-  `optional`,
-  `override`,
-  `package`,
-  `postfix`,
-  `precedence`,
-  `prefix`,
-  `Protocol`,
-  `required`,
-  `right`,
-  `set`,
-  `some`,
-  `Type`,
-  `unowned`,
-  `weak`,
-  and `willSet`.
-  Outside the context in which they appear in the grammar,
-  they can be used as identifiers.
+- 在特定上下文中保留的关键字：`associativity`、`convenience`、`didSet`、`dynamic`、`final`、`get`、`indirect`、`infix`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`package`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`some`、`Type`、`unowned`、`weak` 和 `willSet`。除了在语法中的特定上下文出现之外，它们可以被当作标识符使用。
 
 <!--
   NOTE: The list of context-sensitive keywords above
@@ -355,26 +219,20 @@ so they must be escaped with backticks in that context.
   However, not all context-sensitive keywords appear there;
 -->
 
-The following tokens are reserved as punctuation
-and can't be used as custom operators:
-`(`, `)`, `{`, `}`, `[`, `]`,
-`.`, `,`, `:`, `;`, `=`, `@`, `#`,
-`&` (as a prefix operator), `->`, `` ` ``,
-`?`, and `!` (as a postfix operator).
+以下符号被保留为标点符号，不能用作自定义运算符：`(`、`)`、`{`、`}`、`[`、`]`、`.`、`,`、`:`、`;`、`=`、`@`、`#`、`&`（作为前缀运算符）、`->`、`` ` ``、`?` 和 `!`（作为后缀运算符）。
 
-## Literals
+## 字面量
 
-A *literal* is the source code representation of a value of a type,
-such as a number or string.
+*字面量* 是某种类型值的源代码表示形式，例如数字或字符串。
 
-The following are examples of literals:
+以下是一些字面量的示例：
 
 ```swift
-42               // Integer literal
-3.14159          // Floating-point literal
-"Hello, world!"  // String literal
-/Hello, .*/      // Regular expression literal
-true             // Boolean literal
+42               // 整数字面量
+3.14159          // 浮点数字面量
+"Hello, world!"  // 字符串字面量
+/Hello, .*/      // 正则表达式字面量
+true             // 布尔字面量
 ```
 
 <!--
@@ -404,35 +262,17 @@ true             // Boolean literal
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A literal doesn't have a type on its own.
-Instead, a literal is parsed as having infinite precision and Swift's type inference
-attempts to infer a type for the literal. For example,
-in the declaration `let x: Int8 = 42`,
-Swift uses the explicit type annotation (`: Int8`) to infer
-that the type of the integer literal `42` is `Int8`.
-If there isn't suitable type information available,
-Swift infers that the literal's type is one of the default literal types
-defined in the Swift standard library
-and listed in the table below.
-When specifying the type annotation for a literal value,
-the annotation's type must be a type that can be instantiated from that literal value.
-That is, the type must conform to the Swift standard library protocols
-listed in the table below.
+字面量本身没有类型。相反，字面量被解析为具有无限精度，Swift 的类型推断机制会尝试为字面量推断出一个类型。例如，在声明 `let x: Int8 = 42` 中，Swift 使用显式的类型注解（`: Int8`）来推断整数字面量 `42` 的类型为 `Int8`。如果没有适当的类型信息可用，Swift 会推断该字面量的类型为 Swift 标准库中定义的默认字面量类型之一，如下表所示。在为字面量值指定类型注解时，注解的类型必须是可以从该字面量值实例化的类型。也就是说，该类型必须遵循下表中列出的 Swift 标准库协议。
 
-| Literal | Default type | Protocol |
-| ------- | ------------ | -------- |
-| Integer | `Int` | `ExpressibleByIntegerLiteral` |
-| Floating-point | `Double` | `ExpressibleByFloatLiteral` |
-| String | `String` | `ExpressibleByStringLiteral`, `ExpressibleByUnicodeScalarLiteral` for string literals that contain only a single Unicode scalar, `ExpressibleByExtendedGraphemeClusterLiteral` for string literals that contain only a single extended grapheme cluster |
-| Regular expression | `Regex` | None |
-| Boolean | `Bool` | `ExpressibleByBooleanLiteral` |
+| 字面量 | 默认类型 | 协议 |
+| ----- | ------ | ---- |
+| 整数   | `Int`  | `ExpressibleByIntegerLiteral` |
+| 浮点数 | `Double` | `ExpressibleByFloatLiteral` |
+| 字符串 | `String` | `ExpressibleByStringLiteral`，对于只包含单个 Unicode 标量的字符串字面量，使用 `ExpressibleByUnicodeScalarLiteral`，对于只包含单个扩展字形簇（extended grapheme cluster）的字符串字面量，使用 `ExpressibleByExtendedGraphemeClusterLiteral` |
+| 正则表达式 | `Regex` | 无 |
+| 布尔值  | `Bool` | `ExpressibleByBooleanLiteral` |
 
-For example, in the declaration `let str = "Hello, world"`,
-the default inferred type of the string
-literal `"Hello, world"` is `String`.
-Also, `Int8` conforms to the `ExpressibleByIntegerLiteral` protocol,
-and therefore it can be used in the type annotation for the integer literal `42`
-in the declaration `let x: Int8 = 42`.
+例如，在声明 `let str = "Hello, world"` 中，字符串字面量 `"Hello, world"` 的默认推断类型是 `String`。同样，`Int8` 遵循 `ExpressibleByIntegerLiteral` 协议，因此可以在声明 `let x: Int8 = 42` 中用于整数字面量 `42` 的类型注解。
 
 <!--
   The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
@@ -440,7 +280,7 @@ in the declaration `let x: Int8 = 42`.
   There is no protocol for regex literal in the list because the stdlib intentionally omits that.
 -->
 
-> Grammar of a literal:
+> 字面量的语法:
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
@@ -448,34 +288,17 @@ in the declaration `let x: Int8 = 42`.
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
-### Integer Literals
+### 整数字面量
 
-*Integer literals* represent integer values of unspecified precision.
-By default, integer literals are expressed in decimal;
-you can specify an alternate base using a prefix.
-Binary literals begin with `0b`,
-octal literals begin with `0o`,
-and hexadecimal literals begin with `0x`.
+*整数字面量* 表示具有未指定精度的整数值。默认情况下，整数字面量以十进制表示；你可以使用前缀指定其他进制。二进制字面量以 `0b` 开头，八进制字面量以 `0o` 开头，十六进制字面量以 `0x` 开头。
 
-Decimal literals contain the digits `0` through `9`.
-Binary literals contain `0` and `1`,
-octal literals contain `0` through `7`,
-and hexadecimal literals contain `0` through `9`
-as well as `A` through `F` in upper- or lowercase.
+十进制字面量包含数字 `0` 到 `9`。二进制字面量包含 `0` 和 `1`，八进制字面量包含 `0` 到 `7`，而十六进制字面量则包含 `0` 到 `9` 以及大写或小写的 `A` 到 `F`。
 
-Negative integers literals are expressed by prepending a minus sign (`-`)
-to an integer literal, as in `-42`.
+负整数字面量通过在整数字面量前加上负号 (`-`) 来表示，如 `-42`。
 
-Underscores (`_`) are allowed between digits for readability,
-but they're ignored and therefore don't affect the value of the literal.
-Integer literals can begin with leading zeros (`0`),
-but they're likewise ignored and don't affect the base or value of the literal.
+为了提高可读性，数字之间允许使用下划线 (`_`)，但它们会被忽略，因此不会影响字面量的值。整数字面量可以以前导零 (`0`) 开头，但这些零同样会被忽略，不会影响字面量的进制或值。
 
-Unless otherwise specified,
-the default inferred type of an integer literal is the Swift standard library type `Int`.
-The Swift standard library also defines types for various sizes of
-signed and unsigned integers,
-as described in <doc:TheBasics#Integers>.
+除非另有说明，否则整数字面量的默认推断类型是 Swift 标准库类型 `Int`。Swift 标准库还定义了用于表示各种大小的有符号和无符号整数的类型，详细内容请参阅 <doc:TheBasics#Integers>。
 
 <!--
   TR: The prose assumes underscores only belong between digits.
@@ -494,7 +317,7 @@ as described in <doc:TheBasics#Integers>.
   (Doug confirmed this, 4/2/2014.)
 -->
 
-> Grammar of an integer literal:
+> 整数字面量的语法:
 >
 > *integer-literal* → *binary-literal* \
 > *integer-literal* → *octal-literal* \
@@ -502,73 +325,43 @@ as described in <doc:TheBasics#Integers>.
 > *integer-literal* → *hexadecimal-literal*
 >
 > *binary-literal* → **`0b`** *binary-digit* *binary-literal-characters*_?_ \
-> *binary-digit* → Digit 0 or 1 \
+> *binary-digit* → 数字 0 或 1 \
 > *binary-literal-character* → *binary-digit* | **`_`** \
 > *binary-literal-characters* → *binary-literal-character* *binary-literal-characters*_?_
 >
 > *octal-literal* → **`0o`** *octal-digit* *octal-literal-characters*_?_ \
-> *octal-digit* → Digit 0 through 7 \
+> *octal-digit* → 数字 0 到 7 \
 > *octal-literal-character* → *octal-digit* | **`_`** \
 > *octal-literal-characters* → *octal-literal-character* *octal-literal-characters*_?_
 >
 > *decimal-literal* → *decimal-digit* *decimal-literal-characters*_?_ \
-> *decimal-digit* → Digit 0 through 9 \
+> *decimal-digit* → 数字 0 到 9 \
 > *decimal-digits* → *decimal-digit* *decimal-digits*_?_ \
 > *decimal-literal-character* → *decimal-digit* | **`_`** \
 > *decimal-literal-characters* → *decimal-literal-character* *decimal-literal-characters*_?_
 >
 > *hexadecimal-literal* → **`0x`** *hexadecimal-digit* *hexadecimal-literal-characters*_?_ \
-> *hexadecimal-digit* → Digit 0 through 9, a through f, or A through F \
+> *hexadecimal-digit* → 数字 0 到 7, 字母 a 到 f 或字母 A 到 F \
 > *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`** \
 > *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
 
-### Floating-Point Literals
+### 浮点数字面量
 
-*Floating-point literals* represent floating-point values of unspecified precision.
+*浮点数字面量* 表示具有未指定精度的浮点值。
 
-By default, floating-point literals are expressed in decimal (with no prefix),
-but they can also be expressed in hexadecimal (with a `0x` prefix).
+默认情况下，浮点数字面量以十进制形式表示（无前缀），但也可以以十六进制形式表示（带有 `0x` 前缀）。
 
-Decimal floating-point literals consist of a sequence of decimal digits
-followed by either a decimal fraction, a decimal exponent, or both.
-The decimal fraction consists of a decimal point (`.`)
-followed by a sequence of decimal digits.
-The exponent consists of an upper- or lowercase `e` prefix
-followed by a sequence of decimal digits that indicates
-what power of 10 the value preceding the `e` is multiplied by.
-For example, `1.25e2` represents 1.25 x 10²,
-which evaluates to `125.0`.
-Similarly, `1.25e-2` represents 1.25 x 10⁻²,
-which evaluates to `0.0125`.
+十进制浮点数字面量由一串十进制数字序列组成，后面可以跟一个十进制小数部分、十进制指数部分或两者兼有。十进制小数部分由一个小数点 (`.`) 和紧随其后的一串十进制数字序列组成。指数部分以大写或小写的 `e` 为前缀，后面跟一串十进制数字，表示在 `e` 前面的值要乘以的 10 的幂。例如，`1.25e2` 表示 1.25 x 10²，结果为 `125.0`。类似地，`1.25e-2` 表示 1.25 x 10⁻²，结果为 `0.0125`。
 
-Hexadecimal floating-point literals consist of a `0x` prefix,
-followed by an optional hexadecimal fraction,
-followed by a hexadecimal exponent.
-The hexadecimal fraction consists of a decimal point
-followed by a sequence of hexadecimal digits.
-The exponent consists of an upper- or lowercase `p` prefix
-followed by a sequence of decimal digits that indicates
-what power of 2 the value preceding the `p` is multiplied by.
-For example, `0xFp2` represents 15 x 2²,
-which evaluates to `60`.
-Similarly, `0xFp-2` represents 15 x 2⁻²,
-which evaluates to `3.75`.
+十六进制浮点数字面量由一个 `0x` 前缀、一个可选的十六进制小数部分和一个十六进制指数部分组成。十六进制小数部分由一个小数点和紧随其后的一串十六进制数字序列组成。指数部分以大写或小写的 `p` 为前缀，后面跟一串十进制数字，表示在 `p` 前面的值要乘以的 2 的幂。例如，`0xFp2` 表示 15 x 2²，结果为 `60`。类似地，`0xFp-2` 表示 15 x 2⁻²，结果为 `3.75`。
 
-Negative floating-point literals are expressed by prepending a minus sign (`-`)
-to a floating-point literal, as in `-42.5`.
+负浮点数字面量通过在浮点数字面量前加上负号 (`-`) 来表示，如 `-42.5`。
 
-Underscores (`_`) are allowed between digits for readability,
-but they're ignored and therefore don't affect the value of the literal.
-Floating-point literals can begin with leading zeros (`0`),
-but they're likewise ignored and don't affect the base or value of the literal.
+为了提高可读性，数字之间允许使用下划线 (`_`)，但它们会被忽略，因此不会影响字面量的值。浮点数字面量可以以前导零 (`0`) 开头，但这些零同样会被忽略，不会影响字面量的进制或值。
 
-Unless otherwise specified,
-the default inferred type of a floating-point literal is the Swift standard library type `Double`,
-which represents a 64-bit floating-point number.
-The Swift standard library also defines a `Float` type,
-which represents a 32-bit floating-point number.
+除非另有说明，否则浮点数字面量的默认推断类型是 Swift 标准库类型 `Double`，它表示 64 位浮点数。Swift 标准库还定义了 `Float` 类型，它表示 32 位浮点数。
 
-> Grammar of a floating-point literal:
+> 浮点数字面量的语法:
 >
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
