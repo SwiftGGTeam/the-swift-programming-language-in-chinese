@@ -2658,84 +2658,56 @@ macro <#name#> = <#macro implementation#>
 > *宏函数签名结果* → **`->`** *类型* \
 > *宏定义* → **`=`** *表达式*
 
-## Operator Declaration
+## 操作符声明
 
-An *operator declaration* introduces a new infix, prefix,
-or postfix operator into your program
-and is declared using the `operator` keyword.
+*运算符声明*将新的中缀、前缀或后缀运算符引入到您的程序中，并使用 `operator` 关键字进行声明。
 
-You can declare operators of three different fixities:
-infix, prefix, and postfix.
-The *fixity* of an operator specifies the relative position of an operator
-to its operands.
+您可以声明三种不同优先级的运算符：中缀、前缀和后缀。运算符的*优先级*指定了运算符相对于其操作数的相对位置。
 
-There are three basic forms of an operator declaration,
-one for each fixity.
-The fixity of the operator is specified by marking the operator declaration with the
-`infix`, `prefix`, or `postfix` declaration modifier before the `operator` keyword.
-In each form, the name of the operator can contain only the operator characters
-defined in <doc:LexicalStructure#Operators>.
+运算符声明有三种基本形式，每种形式对应一种结合性（fixity）。运算符的结合性通过在 `operator` 关键字之前标注 `infix`、`prefix` 或 `postfix` 声明修饰符来指定。在每种形式中，运算符的名称只能包含 <doc:LexicalStructure#Operators> 中定义的运算符字符。
 
-The following form declares a new infix operator:
+以下形式声明了一个新的中缀运算符：
 
 ```swift
 infix operator <#operator name#>: <#precedence group#>
 ```
 
-An *infix operator* is a binary operator that's written between its two operands,
-such as the familiar addition operator (`+`) in the expression `1 + 2`.
+An *infix operator* is a binary operator that's written between its two operands, such as the familiar addition operator (`+`) in the expression `1 + 2`.
+一个*中缀运算符*是一个二元运算符，它写在两个操作数之间，例如在表达式`1 + 2`中熟悉的加法运算符`+`。
 
-Infix operators can optionally specify a precedence group.
-If you omit the precedence group for an operator,
-Swift uses the default precedence group, `DefaultPrecedence`,
-which specifies a precedence just higher than `TernaryPrecedence`.
-For more information, see <doc:Declarations#Precedence-Group-Declaration>.
+中缀运算符可以选择性地指定优先级组。如果您省略运算符的优先级组，Swift 将使用默认优先级组 `DefaultPrecedence`，该组的优先级仅高于 `TernaryPrecedence`。有关更多信息，请参见 <doc:Declarations#Precedence-Group-Declaration>。
 
-The following form declares a new prefix operator:
+以下形式声明了一个新的前缀运算符：
 
 ```swift
 prefix operator <#operator name#>
 ```
 
-A *prefix operator* is a unary operator that's written immediately before its operand,
-such as the prefix logical NOT operator (`!`) in the expression `!a`.
+*前缀运算符* 是一种一元运算符，它直接写在操作数之前，例如表达式 `!a` 中的前缀逻辑非运算符（`!`）。
 
-Prefix operators declarations don't specify a precedence level.
-Prefix operators are nonassociative.
+前缀运算符声明不指定优先级。前缀运算符是非结合的。
 
-The following form declares a new postfix operator:
+以下形式声明了一个新的后缀运算符：
 
 ```swift
 postfix operator <#operator name#>
 ```
 
-A *postfix operator* is a unary operator that's written immediately after its operand,
-such as the postfix forced-unwrap operator (`!`) in the expression `a!`.
+*后缀运算符*是一种一元运算符，它紧跟在操作数后面，例如在表达式 `a!` 中的后缀强制解包运算符 `!`。
 
-As with prefix operators, postfix operator declarations don't specify a precedence level.
-Postfix operators are nonassociative.
+与前缀运算符一样，后缀运算符声明不指定优先级。后缀运算符是非结合的。
 
-After declaring a new operator,
-you implement it by declaring a static method that has the same name as the operator.
-The static method is a member of
-one of the types whose values the operator takes as an argument ---
-for example, an operator that multiplies a `Double` by an `Int`
-is implemented as a static method on either the `Double` or `Int` structure.
-If you're implementing a prefix or postfix operator,
-you must also mark that method declaration with the corresponding `prefix` or `postfix`
-declaration modifier.
-To see an example of how to create and implement a new operator,
-see <doc:AdvancedOperators#Custom-Operators>.
+声明新运算符后，可以通过声明一个与运算符同名的静态方法来实现它。这个静态方法是运算符参数之一的类型的成员——例如，一个将 `Double` 与 `Int` 相乘的运算符可以在 `Double` 或 `Int` 结构上实现为静态方法。如果你要实现一个前缀或后缀运算符，还必须在方法声明中添加相应的 `prefix` 或 `postfix` 声明修饰符。要查看如何创建和实现新运算符的示例，请参阅 <doc:AdvancedOperators#Custom-Operators>。
 
-> Grammar of an operator declaration:
+> 操作符声明的语法：
 >
-> *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
+> *运算符声明* → *前缀运算符声明* | *后缀运算符声明* | *中缀运算符声明*
 >
-> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator* \
-> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator* \
-> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
+> *前缀运算符声明* → **`前缀`** **`运算符`** *运算符* \
+> *后缀运算符声明* → **`后缀`** **`运算符`** *运算符* \
+> *中缀运算符声明* → **`中缀`** **`运算符`** *运算符* *中缀运算符组*_?_
 >
-> *infix-operator-group* → **`:`** *precedence-group-name*
+> *中缀运算符组* → **`:`** *优先级组名称*
 
 ## Precedence Group Declaration
 
