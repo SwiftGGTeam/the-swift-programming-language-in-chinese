@@ -2709,14 +2709,11 @@ postfix operator <#operator name#>
 >
 > *中缀运算符组* → **`:`** *优先级组名称*
 
-## Precedence Group Declaration
+## 优先级组声明
 
-A *precedence group declaration* introduces
-a new grouping for infix operator precedence into your program.
-The precedence of an operator specifies how tightly the operator
-binds to its operands, in the absence of grouping parentheses.
+*优先级组声明*在程序中引入了一个新的中缀运算符优先级分组。运算符的优先级指定了在没有分组括号的情况下，运算符与其操作数的绑定紧密程度。
 
-A precedence group declaration has the following form:
+优先级组声明具有以下形式：
 
 ```swift
 precedencegroup <#precedence group name#> {
@@ -2727,82 +2724,36 @@ precedencegroup <#precedence group name#> {
 }
 ```
 
-The *lower group names* and *higher group names* lists specify
-the new precedence group's relation to existing precedence groups.
-The `lowerThan` precedence group attribute may only be used
-to refer to precedence groups declared outside of the current module.
-When two operators compete with each other for their operands,
-such as in the expression `2 + 3 * 5`,
-the operator with the higher relative precedence
-binds more tightly to its operands.
+*低级组名称*和*高级组名称*列表指定了新优先级组与现有优先级组的关系。`lowerThan` 优先级组属性只能用于引用当前模块外声明的优先级组。当两个运算符争夺其操作数时，如在表达式 `2 + 3 * 5` 中，具有较高相对优先级的运算符会更紧密地绑定到其操作数上。
 
-> Note: Precedence groups related to each other
-> using *lower group names* and *higher group names*
-> must fit into a single relational hierarchy,
-> but they *don't* have to form a linear hierarchy.
-> This means it's possible to have precedence groups
-> with undefined relative precedence.
-> Operators from those precedence groups
-> can't be used next to each other without grouping parentheses.
+> 注意：使用*低级组名称*和*高级组名称*相关联的优先级组必须适合于单一的关系层次结构，但它们*不*必形成线性层次结构。这意味着可以有相对优先级未定义的优先级组。来自这些优先级组的运算符不能在没有分组括号的情况下相互使用。
 
-Swift defines numerous precedence groups to go along
-with the operators provided by the Swift standard library.
-For example, the addition (`+`) and subtraction (`-`) operators
-belong to the `AdditionPrecedence` group,
-and the multiplication (`*`) and division (`/`) operators
-belong to the `MultiplicationPrecedence` group.
-For a complete list of precedence groups
-provided by the Swift standard library,
-see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符。例如，加法 (`+`) 和减法 (`-`) 运算符属于 `AdditionPrecedence` 组，而乘法 (`*`) 和除法 (`/`) 运算符属于 `MultiplicationPrecedence` 组。有关 Swift 标准库提供的优先级组的完整列表，请参见 [运算符声明](https://developer.apple.com/documentation/swift/operator*declarations)。
 
-The *associativity* of an operator specifies how a sequence of operators
-with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing
-one of the context-sensitive keywords `left`, `right`, or `none` ---
-if your omit the associativity, the default is `none`.
-Operators that are left-associative group left-to-right.
-For example,
-the subtraction operator (`-`) is left-associative,
-so the expression `4 - 5 - 6` is grouped as `(4 - 5) - 6`
-and evaluates to `-7`.
-Operators that are right-associative group right-to-left,
-and operators that are specified with an associativity of `none`
-don't associate at all.
-Nonassociative operators of the same precedence level
-can't appear adjacent to each to other.
-For example,
-the `<` operator has an associativity of `none`,
-which means `1 < 2 < 3` isn't a valid expression.
+运算符的*结合性*指定了在没有分组括号的情况下，具有相同优先级的运算符序列是如何分组的。通过写入上下文敏感的关键字之一来指定运算符的结合性：`left`、`right` 或 `none` ——如果您省略结合性，默认值为 `none`。左结合的运算符从左到右分组。例如，减法运算符（`-`）是左结合的，因此表达式`4 - 5 - 6` 被分组为 `(4 - 5) - 6`，并计算为 `-7`。右结合的运算符从右到左分组，而指定为 `none` 的运算符则完全不结合。相同优先级的非结合运算符不能相邻出现。例如，`<` 运算符的结合性为 `none`，这意味着 `1 < 2 < 3` 不是一个有效的表达式。
 
-The *assignment* of a precedence group specifies the precedence of an operator
-when used in an operation that includes optional chaining.
-When set to `true`, an operator in the corresponding precedence group
-uses the same grouping rules during optional chaining
-as the assignment operators from the Swift standard library.
-Otherwise, when set to `false` or omitted,
-operators in the precedence group follows the same optional chaining rules
-as operators that don't perform assignment.
+*赋值*优先级组的设置指定了运算符在包含可选链操作中的优先级。当设置为 `true` 时，对应优先级组中的运算符在可选链操作期间使用与 Swift 标准库中的赋值运算符相同的分组规则。否则，当设置为 `false` 或省略时，该优先级组中的运算符将遵循与不执行赋值的运算符相同的可选链规则。
 
-> Grammar of a precedence group declaration:
+> 优先级组声明的语法：
 >
-> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
+> *优先级组声明* → **`precedencegroup`** *优先级组名称* **`{`** *优先级组属性*_?_ **`}`**
 >
-> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_ \
-> *precedence-group-attribute* → *precedence-group-relation* \
-> *precedence-group-attribute* → *precedence-group-assignment* \
-> *precedence-group-attribute* → *precedence-group-associativity*
+> *优先级组属性* → *优先级组属性* *优先级组属性*_?_ \
+> *优先级组属性* → *优先级组关系* \
+> *优先级组属性* → *优先级组分配* \
+> *优先级组属性* → *优先级组结合性*
 >
-> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names* \
-> *precedence-group-relation* → **`lowerThan`** **`:`** *precedence-group-names*
+> *优先级组关系* → **`高于`** **`:`** *优先级组名称* \
+> *优先级组关系* → **`低于`** **`:`** *优先级组名称*
 >
-> *precedence-group-assignment* → **`assignment`** **`:`** *boolean-literal*
+> *优先级组分配* → **`分配`** **`:`** *布尔字面量*
 >
-> *precedence-group-associativity* → **`associativity`** **`:`** **`left`** \
-> *precedence-group-associativity* → **`associativity`** **`:`** **`right`** \
-> *precedence-group-associativity* → **`associativity`** **`:`** **`none`**
+> *优先级组结合性* → **`结合性`** **`:`** **`左`** \
+> *优先级组结合性* → **`结合性`** **`:`** **`右`** \
+> *优先级组关联性* → **`关联性`** **`:`** **`无`**
 >
-> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names* \
-> *precedence-group-name* → *identifier*
+> *优先级组名称* → *优先级组名称* | *优先级组名称* **`,`** *优先级组名称*
+> *优先级组名称* → *标识符*
 
 ## Declaration Modifiers
 
