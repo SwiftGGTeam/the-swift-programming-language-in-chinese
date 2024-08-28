@@ -15,7 +15,7 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 但如果返回值未被使用，
 编译器不应生成警告。
 
-您通过写入 @ 符号后跟特性名称及特性接受的任何参数来指定一个特性：
+你通过写入 @ 符号后跟特性名称及特性接受的任何参数来指定一个特性：
 
 ```swift
 @<#attribute name#>
@@ -35,7 +35,7 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 
 ## 声明特性
 
-您只能将声明特性应用于声明。
+你只能将声明特性应用于声明。
 
 ### attached
 
@@ -89,7 +89,7 @@ If there's a stable URL we can use, make the macro protocols below links.
   指向遵循列表项的类型别名，
   或者是遵循列表项的协议组合。
   嵌套类型上的扩展宏会展开为该文件顶层的扩展。
-  您不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，
+  你不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，
   也不能使用扩展宏添加具有 peer 宏的扩展。
 
 peer、member 和 accessor 宏角色需要一个 `names:` 参数，
@@ -121,7 +121,7 @@ peer、member 和 accessor 宏角色需要一个 `names:` 参数，
   用于一个在宏展开之前无法确定的名称。
 
 作为一个特殊情况，
-您可以为一个行为类似于属性包装器的宏编写 `prefixed($)`。
+你可以为一个行为类似于属性包装器的宏编写 `prefixed($)`。
 <!--
 TODO TR: Is there any more detail about this case?
 -->
@@ -157,7 +157,7 @@ TODO TR: Is there any more detail about this case?
   For the list in source, see include/swift/AST/PlatformKinds.def
 -->
 
-您还可以使用星号 (*) 来表示上述所有平台名称的声明可用性。
+你还可以使用星号 (*) 来表示上述所有平台名称的声明可用性。
 使用 Swift 版本号指定可用性的 `available` 特性
 不能使用星号。
 
@@ -215,7 +215,7 @@ TODO TR: Is there any more detail about this case?
   ```
    *new name* 由一个字符串字面量组成。
 
-  您可以将 `available` 特性与 `renamed` 和 `unavailable` 参数
+  你可以将 `available` 特性与 `renamed` 和 `unavailable` 参数
   应用于类型别名声明，如下所示，
   以指示声明的名称在框架或库的不同版本之间发生了变化。
   此组合会导致编译时错误，
@@ -265,11 +265,11 @@ TODO TR: Is there any more detail about this case?
     ```
   -->
 
-您可以在单个声明上应用多个 `available` 特性，
+你可以在单个声明上应用多个 `available` 特性，
 以指定该声明在不同平台和不同版本的 Swift 上的可用性。
 如果 `available` 特性指定的平台或语言版本与当前目标不匹配，
 则该特性应用的声明将被忽略。
-如果您使用多个 `available` 特性，
+如果你使用多个 `available` 特性，
 则有效的可用性是平台和 Swift 可用性的组合。
 
 <!--
@@ -284,7 +284,7 @@ TODO TR: Is there any more detail about this case?
 -->
 
 如果一个 `available` 特性仅指定一个 `introduced` 参数以及一个平台或语言名称参数，
-您可以使用以下简写语法：
+你可以使用以下简写语法：
 
 ```swift
 @available(<#platform name#> <#version number#>, *)
@@ -343,14 +343,14 @@ struct MyStruct {
 
 将此特性应用于函数、方法、下标或计算属性，
 以在调用或访问该符号的程序中包含符号实现的副本。
-您使用此特性来标注作为平台一部分发布的符号，
+你使用此特性来标注作为平台一部分发布的符号，
 例如与操作系统一起提供的 API。
 此特性标记可以通过在访问它们的程序中包含其实现的副本而向后提供的符号。
 复制实现也称为 *emitting into the client*。
 
 此特性接受一个 `before:` 参数，
 指定提供此符号的平台的第一个版本。
-这些平台版本与您为 `available` 特性的平台版本具有相同的含义。
+这些平台版本与你为 `available` 特性的平台版本具有相同的含义。
 与 `available` 特性不同，
 列表中不能包含星号 (`*`) 来指代所有版本。
 例如，考虑以下代码：
@@ -383,7 +383,7 @@ Swift 插入了一层间接调用，以找到该函数的实现。
 > 编译器可以优化掉运行时检查，
 > 直接调用 SDK 的实现。
 > 在这种情况下，
-> 如果您直接访问回退部署的符号，
+> 如果你直接访问回退部署的符号，
 > 编译器也可以省略客户端中符号实现的副本。
 
 <!--
@@ -415,7 +415,7 @@ so we don't guarantee in docs that it always happens.
 该类型必须实现 `dynamicallyCall(withArguments:)` 方法、
 `dynamicallyCall(withKeywordArguments:)` 方法或两者。
 
-您可以像调用函数一样调用动态可调用类型的实例，
+你可以像调用函数一样调用动态可调用类型的实例，
 该函数可以接受任意数量的参数。
 
 ```swift
@@ -478,8 +478,8 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 协议的单一参数——就像上面的例子中的 `[Int]`。
 返回类型可以是任何类型。
 
-您可以在动态方法调用中包含实参标签，
-如果您实现了 `dynamicallyCall(withKeywordArguments:)` 方法。
+你可以在动态方法调用中包含实参标签，
+如果你实现了 `dynamicallyCall(withKeywordArguments:)` 方法。
 
 ```swift
 @dynamicCallable
@@ -535,12 +535,12 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 以便调用者可以包含重复的参数标签 ---
 `a` 和 `b` 在对 `repeat` 的调用中出现多次。
 
-如果您实现了两个 `dynamicallyCall` 方法，
+如果你实现了两个 `dynamicallyCall` 方法，
 当方法调用包含关键字参数时，
 将调用 `dynamicallyCall(withKeywordArguments:)`。
 在所有其他情况下，将调用 `dynamicallyCall(withArguments:)`。
 
-您只能使用与您在某个 `dynamicallyCall` 方法实现中
+你只能使用与你在某个 `dynamicallyCall` 方法实现中
 指定的类型匹配的参数和返回值来调用动态可调用实例。
 以下示例中的调用无法编译，
 因为没有接受`KeyValuePairs<String, String>`的
@@ -584,7 +584,7 @@ repeatLabels(a: "four") // Error
 将有关成员的信息作为参数传递。
 下标可以接受一个参数，
 该参数可以是键路径或成员名称；
-如果您实现了两个下标，
+如果你实现了两个下标，
 则使用接受键路径参数的下标。
 
 `subscript(dynamicMember:)` 的实现可以接受
@@ -717,7 +717,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 ### frozen
 
 将此特性应用于结构体或枚举声明，
-以限制您对类型所能进行的更改。
+以限制你对类型所能进行的更改。
 此特性仅在以库演进模式编译时允许。
 库的未来版本不能通过添加、删除或重新排序枚举的成员或结构体的存储实例属性来更改其声明。
 这些更改在非冻结类型上是允许的，
@@ -969,7 +969,7 @@ struct MyTopLevel {
 -->
 
 另一种描述main特性要求的方法是，
-您在其上编写此特性的类型必须满足与符合以下假设协议的类型相同的要求：
+你在其上编写此特性的类型必须满足与符合以下假设协议的类型相同的要求：
 
 ```swift
 protocol ProvidesMain {
@@ -1040,7 +1040,7 @@ protocol ProvidesMain {
 将此特性应用于扩展的效果与将其应用于该扩展中未明确标记为
 `objc` 特性的每个成员相同。
 
-您使用 `nonobjc` 特性来解决标记为
+你使用 `nonobjc` 特性来解决标记为
 `objc` 特性的类中的桥接方法的循环问题，
 并允许在标记为
 `objc` 特性的类中
@@ -1063,7 +1063,7 @@ protocol ProvidesMain {
 使用此特性等同于调用
 `NSApplicationMain(_:_:)` 函数
 
-如果您不使用此特性，
+如果你不使用此特性，
 请提供一个在顶层调用 `NSApplicationMain(_:_:)` 函数的 `main.swift` 文件，如下所示：
 
 ```swift
@@ -1118,7 +1118,7 @@ Core Data 还会在运行时提供存储。
 编译器隐式地将 `objc` 特性添加到任何在 Objective-C 中定义的类的子类中。
 然而，子类不能是泛型的，
 也不能继承任何泛型类。
-您可以显式地将 `objc` 特性添加到符合这些标准的子类，
+你可以显式地将 `objc` 特性添加到符合这些标准的子类，
 以指定其 Objective-C 名称，
 如下所述。标记为 `objc` 特性的协议不能继承未标记此特性的协议
 
@@ -1141,9 +1141,9 @@ Core Data 还会在运行时提供存储。
 该参数由一个标识符组成。
 该标识符指定要暴露给 Objective-C 的实体名称，
 `objc` 特性适用于该实体。
-您可以使用此参数为类、枚举、枚举案例、协议、
+你可以使用此参数为类、枚举、枚举案例、协议、
 方法、getter、setter 构造器命名。
-如果您为类、协议或枚举指定 Objective-C 名称，
+如果你为类、协议或枚举指定 Objective-C 名称，
 请在名称前加上三个字母的前缀，
 如 [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
 和 [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中所述。
@@ -1184,7 +1184,7 @@ class ExampleClass: NSObject {
 > 当调用与 Objective-C 运行时交互的函数时，
 > 例如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，
 > 以及在应用的 Info.plist 文件中指定类名时，
-> 您会使用运行时名称。
+> 你会使用运行时名称。
 > 如果通过传递参数指定名称，
 > 则该名称将用作 Objective-C 代码中的名称和运行时名称。
 > 如果省略参数，
@@ -1204,7 +1204,7 @@ class ExampleClass: NSObject {
 `objcMembers`特性是一个方便的工具，
 适用于大量使用 Objective-C 运行时的自省功能的库。
 在不需要时应用 `obj`c 特性
-可能会增加您的二进制文件大小并对性能产生不利影响。
+可能会增加你的二进制文件大小并对性能产生不利影响。
 
 <!--
   The binary size comes from the additional thunks
@@ -1217,7 +1217,7 @@ class ExampleClass: NSObject {
 
 将此特性应用于声明，
 以抑制严格的并发检查。
-您可以将此特性应用于以下类型的声明：
+你可以将此特性应用于以下类型的声明：
 
 - 导入
 - 结构体, 类和 actors
@@ -1235,12 +1235,12 @@ class ExampleClass: NSObject {
 
 在其他声明中，
 此特性降低了对使用被声明符号的代码的并发检查的严格性。
-当您在具有最小并发检查的范围内使用此符号时，
+当你在具有最小并发检查的范围内使用此符号时，
 该符号指定的与并发相关的约束，
 例如 Sendable 要求或全局演员，
 将不会被检查。
 
-您可以按如下方式使用此特性，
+你可以按如下方式使用此特性，
 以帮助将代码迁移到严格的并发检查：
 
 1. 启用严格检查。
@@ -1248,12 +1248,12 @@ class ExampleClass: NSObject {
    用 `preconcurrency` 特性注释导入。
 1. 在将模块迁移到严格检查后，
    移除 `preconcurrency` 特性。
-   编译器会警告您关于导入中 `preconcurrency` 特性
+   编译器会警告你关于导入中 `preconcurrency` 特性
    不再有效并应被移除的任何地方。
 
 对于其他声明，
-当您在声明中添加与并发相关的约束时，
-如果您仍有未迁移到严格检查的客户端，
+当你在声明中添加与并发相关的约束时，
+如果你仍有未迁移到严格检查的客户端，
 请添加 `preconcurrency` 特性。
 在所有客户端迁移后，
 删除 `preconcurrency` 特性。
@@ -1265,8 +1265,8 @@ class ExampleClass: NSObject {
 
 将此特性应用于类、结构或枚举声明，
 以将该类型用作属性包装。
-当您将此特性应用于某个类型时，
-您会创建一个与该类型同名的自定义特性。
+当你将此特性应用于某个类型时，
+你会创建一个与该类型同名的自定义特性。
 将该新特性应用于类、结构体的属性或枚举，
 以通过包装类型的实例包装对该属性的访问；
 将特性应用于局部存储变量声明，
@@ -1333,9 +1333,9 @@ class ExampleClass: NSObject {
 但它不能覆盖编译器合成的 get 或 set 块。
 
 Swift 提供了两种语法糖形式用于初始化属性包装。
-您可以在包装值的定义中使用赋值语法，
+你可以在包装值的定义中使用赋值语法，
 将赋值右侧的表达式作为参数传递给属性包装构造器的 wrappedValue 参数。
-您还可以在将特性应用于属性时提供参数，
+你还可以在将特性应用于属性时提供参数，
 这些参数会传递给属性包装的构造器。
 例如，在下面的代码中，SomeStruct 调用 SomeWrapper 定义的每个初始化器。
 
@@ -1490,7 +1490,7 @@ s.$x.wrapper  // WrapperWithProjection value
 将此特性应用于类、结构体或枚举，
 以将该类型用作结果构造器。
 *结果构造器*是一种逐步构建嵌套数据结构的类型。
-您可以使用结果构造器来实现一种用于以自然、声明式方式
+你可以使用结果构造器来实现一种用于以自然、声明式方式
 创建嵌套数据结构的领域特定语言（DSL）。
 有关如何使用 resultBuilder 属性的示例，
 见 <doc:AdvancedOperators#Result-Builders>。
@@ -1499,7 +1499,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 结果构造器实现了以下描述的静态方法。
 由于结果构造器的所有功能都是通过静态方法暴露的，
-因此您永远不需要初始化该类型的实例。
+因此你永远不需要初始化该类型的实例。
 结果构造器必须实现 `buildBlock(_:)` 方法，
 或者同时实现 `buildPartialBlock(first:)`
 和 `buildPartialBlock(accumulated:next:)` 方法。
@@ -1539,7 +1539,7 @@ s.$x.wrapper  // WrapperWithProjection value
 默认情况下，Swift 调用 `buildPartialBlock(first:)`
 和 `buildPartialBlock(accumulated:next:)` 方法。
 要使 Swift 调用 `buildBlock(_:)`，
-请将封闭声明标记为在您为 `buildPartialBlock(first:)`
+请将封闭声明标记为在你为 `buildPartialBlock(first:)`
 和 `buildPartialBlock(accumulated:next:)` 上编写的可用性之前可用。
 
 附加的结果构建方法如下：
@@ -1566,17 +1566,17 @@ s.$x.wrapper  // WrapperWithProjection value
 
 - `static func buildExpression(_ expression: Expression) -> Component`:
   从表达式构建部分结果。
-  您可以实现此方法以执行预处理——例如，
+  你可以实现此方法以执行预处理——例如，
   将表达式转换为内部类型——或在使用站提供额外的信息以进行类型推断。
 
 - `static func buildFinalResult(_ component: Component) -> FinalResult`:
   从部分结果构建最终结果。
-  您可以将此方法实现为使用不同类型的部分和最终结果的结果构造器的一部分，
+  你可以将此方法实现为使用不同类型的部分和最终结果的结果构造器的一部分，
   或者在返回结果之前对结果进行其他后处理。
 
 - `static func buildLimitedAvailability(_ component: Component) -> Component`:
   构建一个擦除类型信息的部分结果。
-  您可以实现此方法，
+  你可以实现此方法，
   以防止类型信息在执行可用性检查的编译器控制语句之外传播。
 
 例如，下面的代码定义了一个简单的结果构造器，
@@ -1672,7 +1672,7 @@ struct ArrayBuilder {
   -->
 - 赋值语句的转换方式类似于表达式，
   但被理解为计算为 `()`。
-  您可以定义一个重载的 `buildExpression(_:)`，
+  你可以定义一个重载的 `buildExpression(_:)`，
   该重载接受类型为 `()` 的参数，以专门处理赋值。
 - 当分支语句检查可用性条件时，
   如果实现了 `buildLimitedAvailability(_:)` 方法，
@@ -1683,7 +1683,7 @@ struct ArrayBuilder {
   `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)`
   方法之前。
 
-  您使用 `buildLimitedAvailability(_:)` 方法来擦除根据所采取的分支而变化的类型信息。
+  你使用 `buildLimitedAvailability(_:)` 方法来擦除根据所采取的分支而变化的类型信息。
   例如，下面的 `buildEither(first:)` 和 `buildEither(second:)` 方法
   使用一个泛型类型，该类型捕获有关两个分支的类型信息。
 
@@ -1751,7 +1751,7 @@ struct ArrayBuilder {
   因为它是 `DrawEither` 泛型类型中的一种。
   如果在运行时 `FutureText` 不可用，
   即使在该类型显式未被使用的情况下，
-  这可能会导致您的程序崩溃。
+  这可能会导致你的程序崩溃。
 
   为了解决这个问题，
   实现一个 `buildLimitedAvailability(_:)` 方法，
@@ -1788,7 +1788,7 @@ struct ArrayBuilder {
   语句变成了一个嵌套调用buildEither方法，
   沿着从根节点到该叶子节点的路径。
 
-  例如，如果您编写一个包含三个分支的 switch 语句，
+  例如，如果你编写一个包含三个分支的 switch 语句，
   编译器将使用一个具有三个叶节点的二叉树。
   同样，由于从根节点到第二个案例的路径是第二个子节点”，
   然后是“第一个子节点”，
@@ -2169,11 +2169,11 @@ struct ArrayBuilder {
 尽管转换行为是通过临时变量来描述的，
 但使用结果构造器实际上并不会创建任何在代码其他部分可见的新声明。
 
-您不能在结果构造器转换的代码中使用 `break`、`continue`、`defer`、`guard`
+你不能在结果构造器转换的代码中使用 `break`、`continue`、`defer`、`guard`
 或 `return` 语句、`while` 语句或 `do-catch` 语句。
 
 转换过程不会改变代码中的声明，
-这使得您可以使用临时常量和变量逐步构建表达式。
+这使得你可以使用临时常量和变量逐步构建表达式。
 它也不会改变throw语句、
 编译时诊断语句或包含return语句的闭包。
 
@@ -2208,7 +2208,7 @@ struct ArrayBuilder {
 
 #### 自定义结果构造器特性
 
-创建结果构造器类型会创建一个同名的自定义特性。您可以在以下位置应用该特性：
+创建结果构造器类型会创建一个同名的自定义特性。你可以在以下位置应用该特性：
 
 - 在函数声明中，
   结果构造器构建函数的主体。
@@ -2270,10 +2270,10 @@ struct ArrayBuilder {
 使用此特性相当于调用 `UIApplicationMain` 函数，
 并将此类的名称作为委托类的名称传递。
 
-如果您不使用此特性，
+如果你不使用此特性，
 请提供一个包含顶层代码的 `main.swift` 文件，
 该代码调用 `UIApplicationMain(_:_:_:_:)` 函数。
-例如，如果您的应用使用自定义的 `UIApplication` 子类作为其主类，
+例如，如果你的应用使用自定义的 `UIApplication` 子类作为其主类，
 请调用 `UIApplicationMain(_:_:_:_:)` 函数，
 而不是使用此特性。
 
@@ -2348,8 +2348,8 @@ Swift 提供了以下 Interface Builder 特性：
   TODO: Need to link to the relevant discussion of these attributes in Objc.
 -->
 
-您将 `IBOutlet` 和 `IBInspectable` 特性应用于类的属性声明。
-您将 `IBAction` 和 `IBSegueAction` 特性应用于类的方法声明，
+你将 `IBOutlet` 和 `IBInspectable` 特性应用于类的属性声明。
+你将 `IBAction` 和 `IBSegueAction` 特性应用于类的方法声明，
 并将 `IBDesignable` 特性应用于类声明。
 
 应用 `IBAction`, `IBSegueAction`, `IBOutlet`,
@@ -2357,13 +2357,13 @@ Swift 提供了以下 Interface Builder 特性：
 
 ## 类型特性
 
-您只能将类型特性应用于类型。
+你只能将类型特性应用于类型。
 
 ### autoclosure
 
 将此特性应用于延迟表达式的求值，
 通过自动将该表达式包装在一个没有参数的闭包中。
-您将其应用于函数或方法声明中的参数类型，
+你将其应用于函数或方法声明中的参数类型，
 适用于类型为不带参数且返回表达式类型值的函数类型的参数。
 有关如何使用 `autoclosure` 特性的示例，
 请参见文档：<doc:Closures#Autoclosures> 和文档：<doc:Types#Function-Type>。
@@ -2422,7 +2422,7 @@ Swift 提供了以下 Interface Builder 特性：
 
 ## Switch Case 特性
 
-您只能将 switch case 特性应用于 switch case。
+你只能将 switch case 特性应用于 switch case。
 
 ### unknown
 
