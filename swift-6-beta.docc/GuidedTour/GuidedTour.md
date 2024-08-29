@@ -1,6 +1,6 @@
 # Swift 导览
 
-探索 Swift 的特点和语法。
+探索 Swift 的特性和语法。
 
 按照传统，编程语言教程的第一个程序应该是在屏幕上打印出“Hello, world!”。在 Swift 中，这可以用一行代码实现：
 
@@ -401,7 +401,7 @@ let informalGreeting = "Hi \(nickname ?? fullName)"
   ```
 -->
 
-你可以使用更简洁的写法来解包一个值，并使用相同的名称来表示解包后的值。
+你可以使用更简洁的写法来解包一个值，解包后的值用同样的名字来表示。
 
 ```swift
 if let nickname {
