@@ -363,7 +363,7 @@ Swift 插入了一层间接调用，以找到该函数的实现。
 而在 iOS 16 上运行时，
 则使用调用者中包含的 `someFunction()` 的副本。
 
-> 注意：
+> 注意:
 > 当调用者的最低部署目标与包含该符号的
 > SDK 的第一个版本相同或更高时，
 > 编译器可以优化掉运行时检查，
@@ -387,7 +387,7 @@ so we don't guarantee in docs that it always happens.
 - 声明是 `public` 或 `@usableFromInline`。
 - 对于实例方法和类方法，该方法被标记为 `final`，
   并且没有标记 `@objc`。
-- 该实现满足<doc:Attributes#inlinable>中描述的对内联函数的要求。
+- 该实现满足 <doc:Attributes#inlinable> 中描述的对内联函数的要求。
 
 ### discardableResult
 
@@ -674,7 +674,7 @@ print(wrapper.x)
 
 ### freestanding
 
-将 `freestanding` 属性应用于独立宏的声明。
+将 `freestanding` 特性应用于独立宏的声明。
 
 <!--
 
@@ -704,7 +704,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 这些更改在非冻结类型上是允许的，
 但会破坏冻结类型的 ABI 兼容性。
 
-> 注意：当编译器不处于库演进模式时，
+> 注意: 当编译器不处于库演进模式时，
 > 所有结构体和枚举都被隐式冻结，
 > 此特性将被忽略。
 
@@ -1014,8 +1014,8 @@ protocol ProvidesMain {
 
 ### NSApplicationMain
 
-> 已弃用：
-> 此特性已弃用：
+> 已弃用:
+> 此特性已弃用；
 > 请改用 <doc:Attributes#main> 特性。
 > 在 Swift 6 中，
 > 使用此特性将会导致错误。
@@ -1099,7 +1099,7 @@ Core Data 还会在运行时提供存储。
 
 `objc` 属性可以选择接受一个特性参数，
 该参数由一个标识符组成。
-该标识符指定了向 Objective-C 暴露的被 `objc` 属性所应用到的实体的名称。
+该标识符指定了向 Objective-C 暴露的被 `objc` 特性所应用到的实体的名称。
 你可以使用此参数为类、枚举、枚举成员、协议、
 方法、getter、setter 和构造器命名。
 如果你为类、协议或枚举指定 Objective-C 名称，
@@ -1139,7 +1139,7 @@ class ExampleClass: NSObject {
 
 更多信息，请参见 [Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
 
-> 注意：`objc` 特性的参数也可以更改该声明的运行时名称。
+> 注意: `objc` 特性的参数也可以更改该声明的运行时名称。
 > 当调用与 Objective-C 运行时交互的函数时，
 > 例如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，
 > 以及在应用的 Info.plist 文件中指定类名时，
@@ -2197,7 +2197,8 @@ struct ArrayBuilder {
 
 ### UIApplicationMain
 
-> 已弃用：此特性已弃用；
+> 已弃用:
+> 此特性已弃用；
 > 请改用 <doc:Attributes#main> 特性。
 > 在 Swift 6 中，使用此特性将会导致错误。
 
@@ -2352,7 +2353,7 @@ Interface Builder 属性是声明特性，供 Interface Builder 与 Xcode 同步
 有关如何使用 `unknown` 特性的示例，
 见 <doc:Statements#Switching-Over-Future-Enumeration-Cases>。
 
-> 特性的语法：
+> 特性的语法:
 >
 > *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_ \
 > *attribute-name* → *identifier* \
@@ -2366,7 +2367,7 @@ Interface Builder 属性是声明特性，供 Interface Builder 与 Xcode 同步
 > *balanced-token* → 任意标识符、关键字、字面量或运算符 \
 > *balanced-token* → 除了 **`(`**、**`)`**、**`[`**、**`]`**、**`{`** 或 **`}`** 之外的任何标点符号
 
-> Beta 软件：
+> Beta 软件:
 >
 > 本文档包含有关正在开发中的 API 或技术的初步信息。此信息可能会有所变更，并且根据本文档实现的软件应使用最终的操作系统软件进行测试。
 >
