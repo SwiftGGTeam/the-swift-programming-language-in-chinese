@@ -49,7 +49,7 @@ peer、member 和 accessor 宏角色需要一个 `names:` 参数，列出宏生�
 
 - `suffixed(<#suffix#>)` 其中 *suffix* 被附加到符号名称后，用于以固定字符串结尾的名称。
 
-- `arbitrary`用于一个在宏展开之前无法确定的名称。
+- `arbitrary` 用于一个在宏展开之前无法确定的名称。
 
 作为一个特殊情况，你可以为一个行为类似于属性包装器的宏编写 `prefixed($)`。
 <!--
@@ -1260,7 +1260,7 @@ struct ArrayBuilder {
     ```
   -->
 - 赋值语句的转换方式类似于表达式，但被理解为计算 `()`。你可以定义一个 `buildExpression(_:)` 的重载，它采用 `()` 类型的参数来专门处理赋值。
-- 检查可用性条件的分支语句将成为对 buildLimitedAvailability(_:) 方法的调用（如果该方法已实现）。如果未实现 `buildLimitedAvailability(_:)` 方法，那么检查可用性的分支语句将使用与其他分支语句相同的转换。这种转换发生在转换为对 `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)`的调用之前。
+- 检查可用性条件的分支语句将成为对 buildLimitedAvailability(_:) 方法的调用（如果该方法已实现）。如果未实现 `buildLimitedAvailability(_:)` 方法，那么检查可用性的分支语句将使用与其他分支语句相同的转换。这种转换发生在转换为对 `buildEither(first:)`、`buildEither(second:)` 或 `buildOptional(_:)` 的调用之前。
 
 你可以使用 `buildLimitedAvailability(_:)` 方法来擦除根据所采用的分支而变化的类型信息。例如，下面的 `buildEither(first:)` 和 `buildEither(second:)` 方法使用一个泛型类型，该类型捕获有关两个分支的类型信息。
 
@@ -1452,7 +1452,7 @@ struct ArrayBuilder {
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- 如果结果构造器实现了 `buildPartialBlock(first:)`和 `buildPartialBlock(accumulated:next:)` 方法，则代码块或 `do` 语句将变成对这些方法的调用。块内的第一条语句被转换为 `buildPartialBlock(first:)` 方法的一个参数，其余语句则变成对 `buildPartialBlock(accumulated:next:)` 方法的嵌套调用。例如，以下声明是等效的：
+- 如果结果构造器实现了 `buildPartialBlock(first:)` 和 `buildPartialBlock(accumulated:next:)` 方法，则代码块或 `do` 语句将变成对这些方法的调用。块内的第一条语句被转换为 `buildPartialBlock(first:)` 方法的一个参数，其余语句则变成对 `buildPartialBlock(accumulated:next:)` 方法的嵌套调用。例如，以下声明是等效的：
 
   ```swift
   struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
@@ -1706,7 +1706,7 @@ struct ArrayBuilder {
 
 尽管转换行为是通过临时变量来描述的，但使用结果构造器实际上并不会创建任何在代码其他部分可见的新声明。
 
-你不能在结果构造器转换的代码中使用 `break`、`continue`、`defer`、`guard`或 `return` 语句、`while` 语句或 `do`-`catch` 语句。
+你不能在结果构造器转换的代码中使用 `break`、`continue`、`defer`、`guard` 或 `return` 语句、`while` 语句或 `do`-`catch` 语句。
 
 转换过程不会改变代码中的声明，这使得你可以使用临时常量和变量逐步构建表达式。它也不会改变 `throw` 语句、编译时诊断语句或包含 `return` 语句的闭包。
 
@@ -1797,7 +1797,7 @@ struct ArrayBuilder {
 
 像 `public` 访问级别修饰符一样，这个属性将声明暴露为模块公共接口的一部分。与 `public` 不同，编译器不允许在模块外的代码中按名称引用标记为 `usableFromInline` 的声明，即使声明的符号已被导出。然而，模块外的代码仍然可以通过使用运行时行为与声明的符号进行交互。
 
-标记为 `inlinable` 特性的声明可以隐式地从可内联代码中使用。虽然 `inlinable` 或 `usableFromInline`都可以应用于 `internal` 声明，但同时应用这两个特性是错误的。
+标记为 `inlinable` 特性的声明可以隐式地从可内联代码中使用。虽然 `inlinable` 或 `usableFromInline` 都可以应用于 `internal` 声明，但同时应用这两个特性是错误的。
 
 <!--
   - test: `usableFromInline-and-inlinable-is-redundant`
