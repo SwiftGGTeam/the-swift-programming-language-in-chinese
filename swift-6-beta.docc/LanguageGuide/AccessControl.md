@@ -1,105 +1,40 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/AccessControl.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 访问控制
 
-# Access Control
+通过声明、文件和模块来管理代码的可见性
 
-Manage the visibility of code by declaration, file, and module.
+**访问控制**可以限制其它源文件或模块对你的代码的访问。这个特性让你能够隐藏代码的实现细节，并指定一个接口来让别人访问和使用你的代码。
 
-*Access control* restricts access to parts of your code
-from code in other source files and modules.
-This feature enables you to hide the implementation details of your code,
-and to specify a preferred interface through which that code can be accessed and used.
+你可以给单个类型（类、结构体和枚举）设置特定的访问级别，也可以给这些类型的属性、方法、初始化器、下标等设置访问级别。协议可以被限制在特定的上下文中，全局常量、变量和函数也可以如此。
 
-You can assign specific access levels to individual types
-(classes, structures, and enumerations),
-as well as to properties, methods, initializers, and subscripts belonging to those types.
-Protocols can be restricted to a certain context,
-as can global constants, variables, and functions.
+Swift 不仅提供了多种访问级别，还为典型场景提供了默认的访问级别，这样就减少了我们需要显式指定访问级别的情况。实际上，如果你在开发一个单 target 的应用程序，可能完全不需要显式指定访问级别。
 
-In addition to offering various levels of access control,
-Swift reduces the need to specify explicit access control levels
-by providing default access levels for typical scenarios.
-Indeed, if you are writing a single-target app,
-you may not need to specify explicit access control levels at all.
+> 注意: 为了简洁起见，代码里可以应用访问控制的各个部分（属性、类型、函数等）在接下来的内容中将被统称为“实体”。
 
-> Note: The various aspects of your code that can have access control applied to them
-> (properties, types, functions, and so on)
-> are referred to as “entities” in the sections below, for brevity.
+## 模块、源文件和包
 
-## Modules, Source Files, and Packages
+Swift 的访问控制模型是基于模块、源文件和包（packages）这三个概念的。
 
-Swift's access control model is based on the concept of
-modules, source files, and packages.
+**模块**是代码分发的独立单元——一个框架或应用程序作为一个整体构建和发布，并且可以通过 Swift 的 `import` 关键字被其他模块导入。
 
-A *module* is a single unit of code distribution ---
-a framework or application that's built and shipped as a single unit
-and that can be imported by another module with Swift's `import` keyword.
+在 Swift 中，Xcode 的每个构建目标（例如应用程序或框架）都被视为一个独立的模块。如果你将应用程序中的部分代码打包成一个独立的框架——以便封装这些代码并在多个应用程序中重用，那么当这个框架被导入到某个应用程序或其他框架中使用时，你在框架中定义的所有内容都将属于这个独立的模块。
 
-Each build target (such as an app bundle or framework) in Xcode
-is treated as a separate module in Swift.
-If you group together aspects of your app's code as a stand-alone framework ---
-perhaps to encapsulate and reuse that code across multiple applications ---
-then everything you define within that framework will be part of a separate module
-when it's imported and used within an app,
-or when it's used within another framework.
+**源文件**是模块中的一个 Swift 源代码文件（实际上是应用程序或框架中的一个文件）。虽然通常会将不同的类型分别定义在不同的源文件中，但同一个源文件也可以包含多个类型、函数等的定义。
 
-A *source file* is a single Swift source code file within a module
-(in effect, a single file within an app or framework).
-Although it's common to define individual types in separate source files,
-a single source file can contain definitions for multiple types, functions, and so on.
-
-A *package* is a group of modules that you develop as a unit.
-You define the modules that form a package
-as part of configuring the build system you're using,
-not as part of your Swift source code.
-For example, if you use Swift Package Manager to build your code,
-you define a package in your `Package.swift` file
-using APIs from the [PackageDescription][] module,
-and if you use Xcode, you specify the package name
-in the Package Access Identifier build setting.
+**包**是一组模块的集合，这些模块作为一个整体进行开发。选择哪些模块来构成一个包，是在我们所使用的构建系统中配置的，而不是在 Swift 源代码中。例如，如果使用 Swift Package Manager 构建代码，你会在 `Package.swift` 文件中使用 [PackageDescription][] 模块的 API 来定义包；如果使用 Xcode，你会在“Package Access Identifier”构建设置中指定包名。
 
 [PackageDescription]: https://developer.apple.com/documentation/packagedescription
 
-## Access Levels
+## 访问级别
 
-Swift provides six different *access levels* for entities within your code.
-These access levels are relative to the source file in which an entity is defined,
-the module that source file belongs to,
-and the package that the module belongs to.
+Swift 为代码中的实体提供了六种不同的**访问级别**。这些访问级别取决于实体所在的源文件、源文件所属的模块，以及模块所属的包。
 
-- *Open access* and *public access*
-  enable entities to be used within any source file from their defining module,
-  and also in a source file from another module that imports the defining module.
-  You typically use open or public access when specifying the public interface to a framework.
-  The difference between open and public access is described below.
-- *Package access*
-  enables entities to be used within
-  any source files from their defining package
-  but not in any source file outside of that package.
-  You typically use package access
-  within an app or framework that's structured into multiple modules.
-- *Internal access*
-  enables entities to be used within any source file from their defining module,
-  but not in any source file outside of that module.
-  You typically use internal access when defining
-  an app's or a framework's internal structure.
-- *File-private access*
-  restricts the use of an entity to its own defining source file.
-  Use file-private access to hide the implementation details of
-  a specific piece of functionality
-  when those details are used within an entire file.
-- *Private access*
-  restricts the use of an entity to the enclosing declaration,
-  and to extensions of that declaration that are in the same file.
-  Use private access to hide the implementation details of
-  a specific piece of functionality
-  when those details are used only within a single declaration.
+- *open* 和 *public* 允许实体在同一模块的任意源文件内使用，也可以在导入该模块的其他模块的源文件内使用。通常使用 open 或 public 访问级别来指定框架的公共接口。open 和 public 访问级别的区别将在下文中说明。
+- *package* 允许实体在同一包中的任意源文件内使用，但不能在包外的源文件内使用。通常在包含多个模块的应用或框架中使用 package。
+- *internal* 允许实体在同一模块的任意源文件内使用，但不能在模块外的源文件中使用。通常在定义应用或框架的内部结构体时使用 internal。
+- *fileprivate* 将实体的使用限制在定义它的源文件内。当某个功能的实现细节只需要在当前文件中使用时，可以使用 fileprivate 来隐藏这些实现细节。
+- *private* 将实体的使用限制在其声明的作用域内，以及同一文件中该声明的扩展（extension）内。当某个功能的实现细节只在单个声明内部使用时，可以使用 private 来隐藏这些实现细节。
 
-Open access is the highest (least restrictive) access level
-and private access is the lowest (most restrictive) access level.
+open 是最高（限制最少）的访问级别，而 private 是最低（限制最多）的访问级别。
 
 Open access applies only to classes and class members,
 and it differs from public access
@@ -109,74 +44,40 @@ Marking a class as open explicitly indicates
 that you've considered the impact of code from other modules
 using that class as a superclass,
 and that you've designed your class's code accordingly.
+open 仅适用于类及类的成员，它与 public 的不同之处在于 open 允许模块外的代码进行继承和重写，如下文 <doc:AccessControl#Subclassing> 中所述。将类显式指定为 open 表明你已考虑到其他模块的代码将该类用作父类的影响，并为此相应地设计了类的代码。
 
-### Guiding Principle of Access Levels
+### 访问级别的指导原则
 
-Access levels in Swift follow an overall guiding principle:
-*No entity can be defined in terms of another entity that has
-a lower (more restrictive) access level.*
+Swift 的访问级别遵循一个指导原则：**实体的定义都不能依赖于访问级别更低（更严格）的其他实体**。
 
-For example:
+例如:
 
-- A public variable can't be defined as having an internal, file-private, or private type,
-  because the type might not be available everywhere that the public variable is used.
-- A function can't have a higher access level than its parameter types and return type,
-  because the function could be used in situations where
-  its constituent types are unavailable to the surrounding code.
+- 一个 public 的变量，其类型的访问级别不能是 internal，fileprivate 或 private，因为在 public 变量被使用的地方，这些类型可能无法访问。
+- 函数的访问级别不能高于它的参数类型和返回类型的访问级别，因为函数可能会在这些类型不可用的情况下被调用。
 
-The specific implications of this guiding principle for different aspects of the language
-are covered in detail below.
+这一指导原则对语言不同方面的具体影响将在下文中详细说明。
 
-### Default Access Levels
+### 默认访问级别
 
-All entities in your code
-(with a few specific exceptions, as described later in this chapter)
-have a default access level of internal
-if you don't specify an explicit access level yourself.
-As a result, in many cases you don't need to specify
-an explicit access level in your code.
+在代码中，所有实体（除了一些本章稍后会提到的特例）如果没有显式指定访问级别，那么默认的访问级别是 internal。因此，在多数情况下你不需要在代码中显式指定访问级别。
 
-### Access Levels for Single-Target Apps
+### 单 Target 应用程序的访问级别
 
-When you write a simple single-target app,
-the code in your app is typically self-contained within the app
-and doesn't need to be made available outside of the app's module.
-The default access level of internal already matches this requirement.
-Therefore, you don't need to specify a custom access level.
-You may, however, want to mark some parts of your code as file private or private
-in order to hide their implementation details from other code within the app's module.
+当你编写一个简单的单 target 应用程序时，这些代码通常都是只供自己使用，而不需要在应用模块之外使用。因为默认的 internal 访问级别已经满足了这个需求，所以无需额外指定访问级别。但是，你也可以将某些代码的访问级别指定为 fileprivate 或 private，以便在模块内隐藏这部分代码的实现细节。
 
-### Access Levels for Frameworks
+### 框架的访问级别
 
-When you develop a framework,
-mark the public-facing interface to that framework
-as open or public so that it can be viewed and accessed by other modules,
-such as an app that imports the framework.
-This public-facing interface is the application programming interface
-(or API) for the framework.
+当你开发框架时，应将框架的对外接口指定为 open 或 public，以便其他模块（如导入该框架的应用）可以查看和访问这些接口。这个对外接口就是框架的应用程序接口（application programming interface，即API）。
 
-> Note: Any internal implementation details of your framework can still use
-> the default access level of internal,
-> or can be marked as private or file private if you want to hide them from
-> other parts of the framework's internal code.
-> You need to mark an entity as open or public only if you want it to become
-> part of your framework's API.
+> 注意: 框架的内部实现细节仍然可以使用默认的访问级别 internal，当你需要对框架内部其它部分隐藏细节时可以使用 private 或 fileprivate。对于框架的 API 部分，你就需要将它们设置为 open 或 public 了。
 
-### Access Levels for Unit Test Targets
+### 单元测试 Target 的访问级别
 
-When you write an app with a unit test target,
-the code in your app needs to be made available to that module in order to be tested.
-By default, only entities marked as open or public
-are accessible to other modules.
-However, a unit test target can access any internal entity,
-if you mark the import declaration for a product module with the `@testable` attribute
-and compile that product module with testing enabled.
+当你编写包含单元测试 target 的应用程序时，需要将应用程序中的代码暴露给该模块以便进行测试。默认情况下，只有指定为 open 或 public 的实体才能被其他模块访问。不过，如果你在导入产品模块时使用了 `@testable` 属性，并且在编译时启用了测试选项，那么单元测试 target 就可以访问所有 internal 实体。
 
-## Access Control Syntax
+## 访问控制语法
 
-Define the access level for an entity by placing
-one of the `open`, `public`, `internal`, `fileprivate`, or `private` modifiers
-at the beginning of the entity's declaration.
+在实体声明的前面添加修饰符 `open`、`public`、`internal`、`fileprivate` 或 `private` 来定义该实体的访问级别。
 
 ```swift
 open class SomeOpenClass {}
@@ -210,15 +111,11 @@ private func somePrivateFunction() {}
   ```
 -->
 
-Unless otherwise specified, the default access level is internal,
-as described in <doc:AccessControl#Default-Access-Levels>.
-This means that `SomeInternalClass` and `someInternalConstant` can be written
-without an explicit access-level modifier,
-and will still have an access level of internal:
+除非专门指定，否则默认的访问级别是 `internal`，如在 <doc:AccessControl#Default-Access-Levels> 中所述。这意味着在不使用修饰符显式指定访问级别的情况下，`SomeInternalClass` 和 `someInternalConstant` 的访问级别仍然是 `internal`：
 
 ```swift
-class SomeInternalClass {}              // implicitly internal
-let someInternalConstant = 0            // implicitly internal
+class SomeInternalClass {}              // 隐式指定为 internal
+let someInternalConstant = 0            // 隐式指定为 internal
 ```
 
 <!--
@@ -230,53 +127,35 @@ let someInternalConstant = 0            // implicitly internal
   ```
 -->
 
-## Custom Types
+## 自定义类型
 
-If you want to specify an explicit access level for a custom type,
-do so at the point that you define the type.
-The new type can then be used wherever its access level permits.
-For example, if you define a file-private class,
-that class can only be used as the type of a property,
-or as a function parameter or return type,
-in the source file in which the file-private class is defined.
+如果想为一个自定义类型指定访问级别，在定义类型时进行指定即可。这个新类型就可以在其访问级别允许的地方使用。例如，你定义了一个 fileprivate 访问级别的类，那么该类只能在定义它的源文件中使用——可以作为属性的类型、函数的参数类型或函数的返回类型。
 
-The access control level of a type also affects
-the default access level of that type's *members*
-(its properties, methods, initializers, and subscripts).
-If you define a type's access level as private or file private,
-the default access level of its members will also be private or file private.
-If you define a type's access level as internal or public
-(or use the default access level of internal
-without specifying an access level explicitly),
-the default access level of the type's members will be internal.
+一个类型的访问级别也会影响该类型的成员（其属性、方法、初始化器和下标）的默认访问级别。如果你将一个类型的访问级别定义为 `private` 或 `fileprivate`，那么该类型的成员的默认访问级别也会是 `private` 或 `fileprivate`。如果你将一个类型的访问级别定义为 `internal` 或 `public`（或者使用 `internal` 的默认访问级别，而不显式指定访问级别），那么该类型的成员的默认访问级别将是 `internal`。
 
-> Important: A public type defaults to having internal members, not public members.
-> If you want a type member to be public, you must explicitly mark it as such.
-> This requirement ensures that the public-facing API for a type is
-> something you opt in to publishing,
-> and avoids presenting the internal workings of a type as public API by mistake.
+> 重要提示: `public` 类型的成员默认具有 `internal` 访问级别，而不是 `public`。如果你想让某个成员是 `public`，必须显式地将其指定为 `public`。这样可以确保公共 API 都是你经过选择才发布的，避免错误地将内部使用的接口公开。
 
 ```swift
-public class SomePublicClass {                   // explicitly public class
-    public var somePublicProperty = 0            // explicitly public class member
-    var someInternalProperty = 0                 // implicitly internal class member
-    fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
-    private func somePrivateMethod() {}          // explicitly private class member
+public class SomePublicClass {                   // 显式指定为 public 类
+    public var somePublicProperty = 0            // 显式指定为 public 类成员
+    var someInternalProperty = 0                 // 隐式指定为 internal 类成员
+    fileprivate func someFilePrivateMethod() {}  // 显式指定为 fileprivate 类成员
+    private func somePrivateMethod() {}          // 显式指定为 private 类成员
 }
 
-class SomeInternalClass {                        // implicitly internal class
-    var someInternalProperty = 0                 // implicitly internal class member
-    fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
-    private func somePrivateMethod() {}          // explicitly private class member
+class SomeInternalClass {                        // 隐式指定为 internal 类
+    var someInternalProperty = 0                 // 隐式指定为 internal 类成员
+    fileprivate func someFilePrivateMethod() {}  // 显式指定为 fileprivate 类成员
+    private func somePrivateMethod() {}          // 显式指定为 private 类成员
 }
 
-fileprivate class SomeFilePrivateClass {         // explicitly file-private class
-    func someFilePrivateMethod() {}              // implicitly file-private class member
-    private func somePrivateMethod() {}          // explicitly private class member
+fileprivate class SomeFilePrivateClass {         // 显式指定为 fileprivate 类
+    func someFilePrivateMethod() {}              // 隐式指定为 fileprivate 类成员
+    private func somePrivateMethod() {}          // 显式指定为 private 类成员
 }
 
-private class SomePrivateClass {                 // explicitly private class
-    func somePrivateMethod() {}                  // implicitly private class member
+private class SomePrivateClass {                 // 显式指定为 private 类
+    func somePrivateMethod() {}                  // 隐式指定为 private 类成员
 }
 ```
 
@@ -308,13 +187,9 @@ private class SomePrivateClass {                 // explicitly private class
   ```
 -->
 
-### Tuple Types
+### 元组类型
 
-The access level for a tuple type is
-the most restrictive access level of all types used in that tuple.
-For example, if you compose a tuple from two different types,
-one with internal access and one with private access,
-the access level for that compound tuple type will be private.
+元组类型的访问级别是由元组中访问级别最严格的类型决定的。例如，你构建了一个包含两种不同类型的元组，其中一个是 `internal` 访问级别，另一个是 `private` 访问级别，那么这个元组的访问级别将是 `private`。
 
 <!--
   - test: `tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private`
@@ -384,28 +259,17 @@ the access level for that compound tuple type will be private.
   ```
 -->
 
-> Note: Tuple types don't have a standalone definition in the way that
-> classes, structures, enumerations, and functions do.
-> A tuple type's access level is determined automatically
-> from the types that make up the tuple type,
-> and can't be specified explicitly.
+> 注意: 元组类型不像类、结构体、枚举和函数那样有单独的定义。元组类型的访问级别是根据构成该元组类型的各个类型的访问级别自动确定的，不能显式指定。
 
-### Function Types
+### 函数类型
 
-The access level for a function type is calculated as
-the most restrictive access level of the function's parameter types and return type.
-You must specify the access level explicitly as part of the function's definition
-if the function's calculated access level doesn't match the contextual default.
+函数类型的访问级别是根据函数的参数类型和返回类型中最严格的访问级别计算得出的。如果函数计算出的访问级别与上下文默认值不匹配，则必须在函数定义中显式指定访问级别。
 
-The example below defines a global function called `someFunction()`,
-without providing a specific access-level modifier for the function itself.
-You might expect this function to have the default access level of “internal”,
-but this isn't the case.
-In fact, `someFunction()` won't compile as written below:
+下面的例子定义了一个名为 `someFunction()` 的全局函数，并且没有明确地指定其访问级别。你可能会认为这个函数会具有 `internal` 的默认访问级别，但事实并非如此。实际上，`someFunction()` 按照下面这种写法将无法编译：
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-    // function implementation goes here
+    // 此处是函数实现部分
 }
 ```
 
@@ -423,20 +287,13 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   ```
 -->
 
-The function's return type is
-a tuple type composed from two of the custom classes defined above in <doc:AccessControl#Custom-Types>.
-One of these classes is defined as internal,
-and the other is defined as private.
-Therefore, the overall access level of the compound tuple type is private
-(the minimum access level of the tuple's constituent types).
+该函数的返回类型是一个元组类型，由上面 <doc:AccessControl#Custom-Types> 中定义的两个自定义类组成。其中一个类被定义为 `internal`，另一个类被定义为 `private`。因此，这个元组类型的访问级别是 `private`（组成元组的类型中最严格的访问级别）。
 
-Because the function's return type is private,
-you must mark the function's overall access level with the `private` modifier
-for the function declaration to be valid:
+因为函数的返回类型是 `private`，所以你必须在函数声明中使用 `private` 修饰符指定函数的访问级别，这样才能使函数声明有效：
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
-    // function implementation goes here
+    // 此处是函数实现部分
 }
 ```
 
@@ -451,22 +308,13 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   ```
 -->
 
-It's not valid to mark the definition of `someFunction()`
-with the `public` or `internal` modifiers,
-or to use the default setting of internal,
-because public or internal users of the function might not have appropriate access
-to the private class used in the function's return type.
+将 `someFunction()` 函数指定为 `public` 或 `internal`，或者使用默认的 `internal` 访问级别都是非法的，因为函数的 `public` 或 `internal` 使用者可能无法访问函数返回类型中的 `private` 类。
 
-### Enumeration Types
+### 枚举类型
 
-The individual cases of an enumeration automatically receive the same access level as
-the enumeration they belong to.
-You can't specify a different access level for individual enumeration cases.
+枚举成员的访问级别和其所属的枚举类型相同。你不能为单个枚举成员指定不同的访问级别。
 
-In the example below,
-the `CompassPoint` enumeration has an explicit access level of public.
-The enumeration cases `north`, `south`, `east`, and `west`
-therefore also have an access level of public:
+在下面的例子中，`CompassPoint` 枚举被显式指定为 `public` 访问级别。因此，枚举成员 `north`、`south`、`east` 和 `west` 也具有 `public` 访问级别：
 
 ```swift
 public enum CompassPoint {
@@ -512,22 +360,13 @@ public enum CompassPoint {
   ```
 -->
 
-#### Raw Values and Associated Values
+#### 原始值和关联值
 
-The types used for any raw values or associated values in an enumeration definition
-must have an access level at least as high as the enumeration's access level.
-For example,
-you can't use a private type as the raw-value type of
-an enumeration with an internal access level.
+枚举定义中的原始值或关联值的类型，其访问级别至少不能低于该枚举的访问级别。例如，你不能在访问级别为 `internal` 的枚举中使用 `private` 类型作为原始值类型。
 
-### Nested Types
+### 嵌套类型
 
-The access level of a nested type is the same as its containing type,
-unless the containing type is public.
-Nested types defined within a public type
-have an automatic access level of internal.
-If you want a nested type within a public type to be publicly available,
-you must explicitly declare the nested type as public.
+嵌套类型的访问级别和包含它的类型的访问级别相同，除非包含它的类型是 `public`。定义在 `public` 类型中的嵌套类型，其访问级别默认是 `internal`。如果你想让这个嵌套类型拥有 `public` 访问级别，那么必须显式将其声明为 `public`。
 
 <!--
   - test: `nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private`
@@ -665,30 +504,13 @@ you must explicitly declare the nested type as public.
   ```
 -->
 
-## Subclassing
+## 子类
 
-You can subclass any class
-that can be accessed in the current access context
-and that's defined in the same module as the subclass.
-You can also subclass any open class
-that's defined in a different module.
-A subclass can't have a higher access level than its superclass ---
-for example, you can't write a public subclass of an internal superclass.
+你可以继承同一模块中的所有有访问权限的类，也可以继承不同模块中被 `open` 修饰的类。子类的访问级别不得高于父类的访问级别——例如，你不能写一个 `public` 的子类来继承 `internal` 的父类。
 
-In addition,
-for classes that are defined in the same module,
-you can override any class member
-(method, property, initializer, or subscript)
-that's visible in a certain access context.
-For classes that are defined in another module,
-you can override any open class member.
+此外，对于同一模块中定义的类，你可以重写在上下文中可访问的任意类成员（方法、属性、初始化器或下标）。对于在其他模块中定义的类，你可以重写访问级别为 `open` 的任意类成员。
 
-An override can make an inherited class member more accessible than its superclass version.
-In the example below, class `A` is a public class with a file-private method called `someMethod()`.
-Class `B` is a subclass of `A`, with a reduced access level of “internal”.
-Nonetheless, class `B` provides an override of `someMethod()`
-with an access level of “internal”, which is *higher* than
-the original implementation of `someMethod()`:
+通过重写可以给子类的成员提供更高的访问级别。下面的例子中，类 `A` 是一个 `public` 类，它有一个 `fileprivate` 的方法 `someMethod()`。类 `B` 是 `A` 的子类，其访问级别降低为 `internal`。但是，类 `B` 将 `someMethod()` 的访问级别重写为 `internal`，其访问级别高于原来的访问级别：
 
 ```swift
 public class A {
@@ -714,12 +536,7 @@ internal class B: A {
   ```
 -->
 
-It's even valid for a subclass member to call
-a superclass member that has lower access permissions than the subclass member,
-as long as the call to the superclass's member takes place within
-an allowed access level context
-(that is, within the same source file as the superclass for a file-private member call,
-or within the same module as the superclass for an internal member call):
+即使子类成员的访问级别高于父类成员，只要调用父类成员的操作发生在允许的访问级别上下文中（例如，在同一源文件中调用父类 `fileprivate` 成员，在同一模块内调用父类 `internal` 成员），那么子类成员调用访问权限较低的父类成员也是合法的：
 
 ```swift
 public class A {
@@ -749,18 +566,13 @@ internal class B: A {
   ```
 -->
 
-Because superclass `A` and subclass `B` are defined in the same source file,
-it's valid for the `B` implementation of `someMethod()` to call
-`super.someMethod()`.
+因为父类 `A` 和子类 `B` 定义在同一个源文件中，所以子类 `B` 可以在重写的 `someMethod()` 方法中调用 `super.someMethod()`。
 
-## Constants, Variables, Properties, and Subscripts
+## 常量、变量、属性、下标
 
-A constant, variable, or property can't be more public than its type.
-It's not valid to write a public property with a private type, for example.
-Similarly, a subscript can't be more public than either its index type or return type.
+常量、变量或属性的访问级别不能高于其类型的访问级别。例如，如果一个属性的类型的访问级别是 `private`，那么不能将这个属性的访问级别指定为 `public`。同样，下标的访问级别不能高于其索引类型或返回类型的访问级别。
 
-If a constant, variable, property, or subscript makes use of a private type,
-the constant, variable, property, or subscript must also be marked as `private`:
+如果常量、变量、属性或下标的类型的访问级别是 `private`，那么也必须将它们的访问级别指定为 `private`：
 
 ```swift
 private var privateInstance = SomePrivateClass()
@@ -807,29 +619,15 @@ private var privateInstance = SomePrivateClass()
   ```
 -->
 
-### Getters and Setters
+### Getters 和 Setters
 
-Getters and setters for constants, variables, properties, and subscripts
-automatically receive the same access level as
-the constant, variable, property, or subscript they belong to.
+常量、变量、属性和下标的 `getter` 和 `setter` 会自动获得与它们所属的常量、变量、属性或下标相同的访问级别。
 
-You can give a setter a *lower* access level than its corresponding getter,
-to restrict the read-write scope of that variable, property, or subscript.
-You assign a lower access level by writing
-`fileprivate(set)`, `private(set)`, `internal(set)`, or `package(set)`
-before the `var` or `subscript` introducer.
+你可以为 `setter` 指定一个比对应 `getter` 更低的访问级别，以限制该变量、属性或下标的读写范围。你可以通过在 `var` 或 `subscript` 关键字之前写上 `fileprivate(set)`、`private(set)`、`internal(set)` 或 `package(set)` 来指定较低的访问级别。
 
-> Note: This rule applies to stored properties as well as computed properties.
-> Even though you don't write an explicit getter and setter for a stored property,
-> Swift still synthesizes an implicit getter and setter for you
-> to provide access to the stored property's backing storage.
-> Use `fileprivate(set)`, `private(set)`, `internal(set)`, and `package(set)`
-> to change the access level
-> of this synthesized setter in exactly the same way as for an explicit setter
-> in a computed property.
+> 注意: 这个规则同时适用于存储属性和计算属性。即使你没有为存储属性显式编写 `getter` 和 `setter`，Swift 仍会为你合成一个隐式的 `getter` 和 `setter`，用于访问该属性的存储内容。无论是隐式合成的 `setter`，还是像计算属性中显式编写的 `setter`，使用 `fileprivate(set)`、`private(set)`、`internal(set)` 和 `package(set)` 都可以改变 `setter` 的访问级别。
 
-The example below defines a structure called `TrackedString`,
-which keeps track of the number of times a string property is modified:
+下面的例子定义了一个名为 `TrackedString` 的结构体，它记录了一个字符串属性被修改的次数：
 
 ```swift
 struct TrackedString {
@@ -857,26 +655,9 @@ struct TrackedString {
   ```
 -->
 
-The `TrackedString` structure defines a stored string property called `value`,
-with an initial value of `""` (an empty string).
-The structure also defines a stored integer property called `numberOfEdits`,
-which is used to track the number of times that `value` is modified.
-This modification tracking is implemented with
-a `didSet` property observer on the `value` property,
-which increments `numberOfEdits` every time the `value` property is set to a new value.
+`TrackedString` 结构体定义了一个用于存储 `String` 的属性 `value`，并将初始值设为 `""`（空字符串）。该结构体还定义了一个用于存储 `Int` 的属性 `numberOfEdits`，它用于记录属性 `value` 被修改的次数。这个功能是通过 `value` 属性上的 `didSet` 属性观察器实现的，每当给 `value` 赋新值时，`numberOfEdits` 都会递增。
 
-The `TrackedString` structure and the `value` property
-don't provide an explicit access-level modifier,
-and so they both receive the default access level of internal.
-However, the access level for the `numberOfEdits` property
-is marked with a `private(set)` modifier
-to indicate that
-the property's getter still has the default access level of internal,
-but the property is settable only from within
-code that's part of the `TrackedString` structure.
-This enables `TrackedString` to modify the `numberOfEdits` property internally,
-but to present the property as a read-only property
-when it's used outside the structure's definition.
+结构体 `TrackedString` 和它的属性 `value` 都没有显式指定访问级别，所以它们都具有默认的访问级别 `internal`。然而，`numberOfEdits` 属性的访问级别被指定为 `private(set)`，这意味该属性的 `getter` 仍然具有 `internal` 的默认访问级别，但只能在 `TrackedString` 结构体内部进行赋值。这使得该属性只能在结构体内部修改，而在结构体的外部呈现为一个只读属性。
 
 <!--
   - test: `reducedSetterScope_error`
@@ -899,8 +680,7 @@ when it's used outside the structure's definition.
   <rdar://problem/54089342> REPL fails to enforce private(set) on struct property
 -->
 
-If you create a `TrackedString` instance and modify its string value a few times,
-you can see the `numberOfEdits` property value update to match the number of modifications:
+如果你创建一个 `TrackedString` 实例并多次修改它的字符串值，你就会看到 `numberOfEdits` 属性的值和修改次数一致：
 
 ```swift
 var stringToEdit = TrackedString()
@@ -908,7 +688,7 @@ stringToEdit.value = "This string will be tracked."
 stringToEdit.value += " This edit will increment numberOfEdits."
 stringToEdit.value += " So will this one."
 print("The number of edits is \(stringToEdit.numberOfEdits)")
-// Prints "The number of edits is 3"
+// 输出 "The number of edits is 3"
 ```
 
 <!--
@@ -924,22 +704,9 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
   ```
 -->
 
-Although you can query the current value of the `numberOfEdits` property
-from within another source file,
-you can't *modify* the property from another source file.
-This restriction protects the implementation details of
-the `TrackedString` edit-tracking functionality,
-while still providing convenient access to an aspect of that functionality.
+虽然你可以从其他源文件中查询 `numberOfEdits` 属性的当前值，但不能从其他源文件中**修改**该属性。这个限制保护了 `TrackedString` 的编辑跟踪功能的实现细节，同时还提供了该功能方便的访问方式。
 
-Note that you can assign an explicit access level for both
-a getter and a setter if required.
-The example below shows a version of the `TrackedString` structure
-in which the structure is defined with an explicit access level of public.
-The structure's members (including the `numberOfEdits` property)
-therefore have an internal access level by default.
-You can make the structure's `numberOfEdits` property getter public,
-and its property setter private,
-by combining the `public` and `private(set)` access-level modifiers:
+需要注意的是，你可以在必要时为 `getter` 和 `setter` 分别指定显式的访问级别。下面的例子将 `TrackedString` 结构体显式指定为了 `public` 访问级别。结构体的成员（包括 `numberOfEdits` 属性）拥有默认的访问级别 `internal`。你可以组合 `public` 和 `private(set)` 修饰符把结构体中的 `numberOfEdits` 属性的 `getter` 的访问级别设置为 `public`，而 `setter` 的访问级别设置为 `private`：
 
 ```swift
 public struct TrackedString {
@@ -1024,61 +791,29 @@ public struct TrackedString {
   ```
 -->
 
-## Initializers
+## 初始化器
 
-Custom initializers can be assigned an access level less than or equal to
-the type that they initialize.
-The only exception is for required initializers
-(as defined in <doc:Initialization#Required-Initializers>).
-A required initializer must have the same access level as the class it belongs to.
+自定义初始化器的访问级别可以低于或等于它所初始化的类型。唯一的例外是必要初始化器（如 <doc:Initialization#Required-Initializers> 中定义的）。必要初始化器必须具有与其所属类相同的访问级别。
 
-As with function and method parameters,
-the types of an initializer's parameters can't be more private than
-the initializer's own access level.
+与函数和方法的参数一样，初始化器的参数类型的访问级别不能比初始化器自身的访问级别更严格。
 
-### Default Initializers
+### 默认初始化器
 
-As described in <doc:Initialization#Default-Initializers>,
-Swift automatically provides a *default initializer* without any arguments
-for any structure or base class
-that provides default values for all of its properties
-and doesn't provide at least one initializer itself.
+如 <doc:Initialization#Default-Initializers> 中所述，Swift 会为结构体和类自动生成一个不带参数的**默认初始化器**，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的初始化器。
 
-A default initializer has the same access level as the type it initializes,
-unless that type is defined as `public`.
-For a type that's defined as `public`,
-the default initializer is considered internal.
-If you want a public type to be initializable with a no-argument initializer
-when used in another module,
-you must explicitly provide a public no-argument initializer yourself
-as part of the type's definition.
+默认初始化器的访问级别与它所初始化的类型相同，除非该类型被定义为 `public`。对于 `public` 类型，默认初始化器的访问级别将为 `internal`。如果你想让 `public` 类型在另一个模块中可以通过无参数初始化器进行初始化，则必须在类型定义中显式提供一个 `public` 访问级别的无参数初始化器。
 
-### Default Memberwise Initializers for Structure Types
+### 结构体默认的成员逐一初始化器
 
-The default memberwise initializer for a structure type is considered private
-if any of the structure's stored properties are private.
-Likewise, if any of the structure's stored properties are file private,
-the initializer is file private.
-Otherwise, the initializer has an access level of internal.
+对于结构体类型，如果结构体中的任何一个存储属性是 `private`，则默认的成员逐一初始化器的为 `private`。同样，如果任何存储属性是 `fileprivate`，则默认的成员逐一初始化器为 `fileprivate`。否则，默认的成员逐一初始化器为 `internal`。
 
-As with the default initializer above,
-if you want a public structure type to be initializable with a memberwise initializer
-when used in another module,
-you must provide a public memberwise initializer yourself as part of the type's definition.
+与前面提到的默认初始化器一样，如果你想让 `public` 结构体类型在其他模块中可以通过成员逐一初始化器进行初始化，则必须在类型定义中显式提供一个 `public` 的成员逐一初始化器。
 
-## Protocols
+## 协议
 
-If you want to assign an explicit access level to a protocol type,
-do so at the point that you define the protocol.
-This enables you to create protocols that can only be adopted within
-a certain access context.
+如果你想为协议类型显式指定访问级别，需要在定义协议时进行指定。这将限制该协议只能在特定的访问级别范围内被遵循。
 
-The access level of each requirement within a protocol definition
-is automatically set to the same access level as the protocol.
-You can't set a protocol requirement to a different access level than
-the protocol it supports.
-This ensures that all of the protocol's requirements will be visible
-on any type that adopts the protocol.
+协议定义中的每个要求都必须具有和该协议相同的访问级别。你不能将协议要求的访问级别设置为其他访问级别。这样才能确保遵循该协议的任何类型都能访问协议中的所有要求。
 
 <!--
   - test: `protocolRequirementsCannotBeDifferentThanTheProtocol`
@@ -1121,12 +856,7 @@ on any type that adopts the protocol.
   ```
 -->
 
-> Note: If you define a public protocol,
-> the protocol's requirements require a public access level
-> for those requirements when they're implemented.
-> This behavior is different from other types,
-> where a public type definition implies
-> an access level of internal for the type's members.
+> 注意: 如果你定义了一个 `public` 协议，那么在实现该协议时，协议的所有要求也需要具有 `public` 访问级别。这点与其他类型不同，在其他类型中，如果类型的访问级别是 `public`，通常意味着该类型的成员具有 `internal` 访问级别。
 
 <!--
   - test: `protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private`
@@ -1260,58 +990,27 @@ on any type that adopts the protocol.
   ```
 -->
 
-### Protocol Inheritance
+### 协议继承
 
-If you define a new protocol that inherits from an existing protocol,
-the new protocol can have at most the same access level as the protocol it inherits from.
-For example,
-you can't write a public protocol that inherits from an internal protocol.
+如果你定义了一个继承自其他协议的新协议，那么新协议的访问级别最高也只能与其继承的协议相同。例如，你不能定义一个继承自 `internal` 协议的 `public` 协议。
 
-### Protocol Conformance
+### 协议遵循
 
-A type can conform to a protocol with a lower access level than the type itself.
-For example, you can define a public type that can be used in other modules,
-but whose conformance to an internal protocol can only be used
-within the internal protocol's defining module.
+一个类型可以遵循比其自身访问级别更低的协议。例如，你可以定义一个 `public` 类型，使其可以在其他模块中使用，但该类型对 `internal` 协议的遵循只能在定义该 `internal` 协议的模块中使用。
 
-The context in which a type conforms to a particular protocol
-is the minimum of the type's access level and the protocol's access level.
-For example, if a type is public, but a protocol it conforms to is internal,
-the type's conformance to that protocol is also internal.
+遵循协议时的上下文访问级别是类型和协议中访问级别最低的那个。例如，如果一个类型是 `public` 的，但它遵循 `internal` 协议，那么这个类型对该协议遵循的上下文访问级别也是 `internal` 的。
 
-When you write or extend a type to conform to a protocol,
-you must ensure that the type's implementation of each protocol requirement
-has at least the same access level as the type's conformance to that protocol.
-For example, if a public type conforms to an internal protocol,
-the type's implementation of each protocol requirement must be at least internal.
+当你编写或扩展一个类型让它遵循一个协议时，你必须确保该类型对协议每一个要求的实现至少与协议的访问级别一致。例如，如果一个 `public` 类型遵循一个 `internal` 协议，那么该类型对协议每一个要求的实现必须至少是 `internal`。
 
-> Note: In Swift, as in Objective-C, protocol conformance is global ---
-> it isn't possible for a type to conform to a protocol in two different ways
-> within the same program.
+> 注意: Swift 和 Objective-C 一样，协议遵循是全局的——在同一程序中，一个类型不可能用两种不同的方式遵循同一个协议。
 
-## Extensions
+## 扩展
 
-You can extend a class, structure, or enumeration in any access context
-in which the class, structure, or enumeration is available.
-Any type members added in an extension have the same default access level as
-type members declared in the original type being extended.
-If you extend a public or internal type, any new type members you add
-have a default access level of internal.
-If you extend a file-private type, any new type members you add
-have a default access level of file private.
-If you extend a private type, any new type members you add
-have a default access level of private.
+可以在访问级别允许的情况下对类、结构体或枚举进行扩展。在扩展中添加的类型成员具有与原始类型中声明的类型成员相同的默认访问级别。如果你扩展的是 `public` 或 `internal` 类型，那么任何新增的类型成员默认的访问级别是 `internal`。如果你扩展的是 `fileprivate` 类型，那么新增的类型成员默认的访问级别是 `fileprivate`。如果你扩展的是 `private` 类型，那么新增的类型成员默认的访问级别是 `private`。
 
-Alternatively, you can mark an extension with an explicit access-level modifier
-(for example, `private`)
-to set a new default access level for all members defined within the extension.
-This new default can still be overridden within the extension
-for individual type members.
+或者，你可以使用显式的访问级别修饰符（例如 `private`）标记一个扩展，从而为扩展内定义的所有成员指定一个新的默认访问级别。在此扩展内，这个新的默认级别仍然可以被单个类型成员显式指定的访问级别所覆盖。
 
-You can't provide an explicit access-level modifier for an extension
-if you're using that extension to add protocol conformance.
-Instead, the protocol's own access level is used to provide
-the default access level for each protocol requirement implementation within the extension.
+如果你使用扩展来遵循协议的话，就不能为扩展提供显式的访问级别修饰符。在这种情况下，协议自身的访问级别将被用作扩展中每个协议要求的实现的默认访问级别。
 
 <!--
   - test: `extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private`
@@ -1389,13 +1088,8 @@ the default access level for each protocol requirement implementation within the
   ```
 -->
 
-### Private Members in Extensions
+### 扩展的私有成员
 
-Extensions that are in the same file as
-the class, structure, or enumeration that they extend
-behave as if the code in the extension
-had been written as part of the original type's declaration.
-As a result, you can:
 
 - Declare a private member in the original declaration,
   and access that member from extensions in the same file.
@@ -1408,6 +1102,14 @@ This behavior means you can use extensions in the same way
 to organize your code,
 whether or not your types have private entities.
 For example, given the following simple protocol:
+
+扩展同一文件内的类，结构体或者枚举，扩展里的代码会表现得跟声明在原始类型里的一模一样。因此，你可以：
+
+- 在原始声明中声明一个 `private` 成员，并在同一文件中的扩展中访问该成员。
+- 在一个扩展中声明一个 `private` 成员，并在同一文件中的另一个扩展中访问该成员。
+- 在扩展中声明一个 `private` 成员，并在同一文件中的原始声明中访问该成员。
+
+这意味着你可以使用扩展来组织你的代码，无论你的类型是否包含 `private` 成员。例如，给定下面这样一个简单的协议：
 
 ```swift
 protocol SomeProtocol {
@@ -1425,7 +1127,7 @@ protocol SomeProtocol {
   ```
 -->
 
-You can use an extension to add protocol conformance, like this:
+你可以使用扩展来添加协议遵循，就像这样：
 
 ```swift
 struct SomeStruct {
@@ -1458,20 +1160,15 @@ extension SomeStruct: SomeProtocol {
   ```
 -->
 
-## Generics
+## 泛型
 
-The access level for a generic type or generic function is
-the minimum of the access level of the generic type or function itself
-and the access level of any type constraints on its type parameters.
+泛型类型或泛型函数的访问级别是本身的访问级别与其类型参数上的任何类型约束的访问级别中最低的那个。
 
-## Type Aliases
+## 类型别名
 
-Any type aliases you define are treated as distinct types for the purposes of access control.
-A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a private type alias can alias a private, file-private, internal, public, or open type,
-but a public type alias can't alias an internal, file-private, or private type.
+在访问控制层面，你定义的任何类型别名都被视为独立的类型。类型别名的访问级别不可以高于其表示的类型的访问级别。例如，一个 `private` 类型别名可以作为 `private`、`fileprivate`、`internal`、`public` 或 `open` 类型的别名，但一个 `public` 类型别名不能作为 `internal`、`fileprivate` 或 `private` 类型的别名。
 
-> Note: This rule also applies to type aliases for associated types used to satisfy protocol conformances.
+> 注意: 这条规则也适用于为满足协议遵循而将类型别名用于关联类型的情况。
 
 <!--
   - test: `typeAliases`
