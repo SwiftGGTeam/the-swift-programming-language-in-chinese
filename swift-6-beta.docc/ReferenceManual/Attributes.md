@@ -206,9 +206,9 @@ TODO TR: Is there any more detail about this case?
   表明声明已被重命名。
 
   ```swift
-  // First release
+  // 首个版本
   protocol MyProtocol {
-      // protocol definition
+      // 协议定义
   }
   ```
 
@@ -225,9 +225,9 @@ TODO TR: Is there any more detail about this case?
   -->
 
   ```swift
-  // Subsequent release renames MyProtocol
+  // 后续版本将 MyProtocol 重命名为 MyRenamedProtocol
   protocol MyRenamedProtocol {
-      // protocol definition
+      // 协议定义
   }
 
   @available(*, unavailable, renamed: "MyRenamedProtocol")
@@ -411,14 +411,14 @@ struct TelephoneExchange {
 
 let dial = TelephoneExchange()
 
-// Use a dynamic method call.
+// 使用动态方法调用
 dial(4, 1, 1)
-// Prints "Get Swift help on forums.swift.org"
+// 打印 "Get Swift help on forums.swift.org"
 
 dial(8, 6, 7, 5, 3, 0, 9)
-// Prints "Unrecognized number"
+// 打印 "Unrecognized number"
 
-// Call the underlying method directly.
+// 直接调用内部的方法
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
 
@@ -589,15 +589,16 @@ struct DynamicStruct {
 }
 let s = DynamicStruct()
 
-// Use dynamic member lookup.
+// 使用动态成员查询
 let dynamic = s.someDynamicMember
 print(dynamic)
-// Prints "325"
+// 打印 "325"
 
-// Call the underlying subscript directly.
+// 直接调用底层下标
 let equivalent = s[dynamicMember: "someDynamicMember"]
 print(dynamic == equivalent)
-// Prints "true"
+// 打印 "true"
+
 ```
 
 <!--
@@ -910,9 +911,10 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 @main
 struct MyTopLevel {
     static func main() {
-        // Top-level code goes here
+        // 顶层代码在此处编写
     }
 }
+
 ```
 
 <!--
@@ -1109,7 +1111,7 @@ Objective-C 代码，名称为 `isEnabled`，
 class ExampleClass: NSObject {
     @objc var enabled: Bool {
         @objc(isEnabled) get {
-            // Return the appropriate value
+            // 返回适当的值
         }
     }
 }
@@ -1307,13 +1309,13 @@ struct SomeWrapper {
 }
 
 struct SomeStruct {
-    // Uses init()
+    // 使用 init()
     @SomeWrapper var a: Int
 
-    // Uses init(wrappedValue:)
+    // 使用 init(wrappedValue:)
     @SomeWrapper var b = 10
 
-    // Both use init(wrappedValue:custom:)
+    // 二者都使用 init(wrappedValue:custom:)
     @SomeWrapper(custom: 98.7) var c = 30
     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
 }
@@ -1400,9 +1402,9 @@ struct SomeStruct {
     @WrapperWithProjection var x = 123
 }
 let s = SomeStruct()
-s.x           // Int value
-s.$x          // SomeProjection value
-s.$x.wrapper  // WrapperWithProjection value
+s.x           // Int 类型的值
+s.$x          // SomeProjection 类型的值
+s.$x.wrapper  // WrapperWithProjection 类型的值
 ```
 
 <!--
@@ -1672,14 +1674,15 @@ struct ArrayBuilder {
       init(_ content: String) { self.content = content }
       func draw() -> String { return content }
   }
+
   @DrawingBuilder var brokenDrawing: Drawable {
       if #available(macOS 99, *) {
-          FutureText("Inside.future")  // Problem
+          FutureText("Inside.future")  // 问题所在
       } else {
           Text("Inside.present")
       }
   }
-  // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+  // brokenDrawing 的类型是 Line<DrawEither<Line<FutureText>, Line<Text>>>
   ```
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
@@ -1714,7 +1717,7 @@ struct ArrayBuilder {
           Text("Inside.present")
       }
   }
-  // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  // typeErasedDrawing 的类型是 Line<DrawEither<AnyDrawable, Line<Text>>>
   ```
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
