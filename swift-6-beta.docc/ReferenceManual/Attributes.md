@@ -11,7 +11,7 @@
 @<#attribute name#>(<#attribute arguments#>)
 ```
 
-有些声明特性接受参数，这些参数指定有关特性的更多信息以及它如何适用于特定声明。这些 *特性参数* 被括号括起来，其格式由它们所属的特性定义。
+有些声明特性接受参数，这些参数指定有关特性的更多信息以及它如何适用于特定声明。这些*特性参数*被括号括起来，其格式由它们所属的特性定义。
 
 附加宏和属性包装器也使用特性语法。有关宏如何展开的信息，参见 <doc:Expressions#Macro-Expansion-Expression>。有关属性包装器的信息，参见 <doc:Attributes#propertyWrapper>。
 
@@ -37,7 +37,7 @@ If there's a stable URL we can use, make the macro protocols below links.
 
 - Accessor 宏：将 `accessor` 作为此特性的第一个参数。实现该宏的类型遵循 `AccessorMacro` 协议。这些宏为它们附加的存储属性添加访问器，将其转换为计算属性。
 
-- Extension 扩展宏：将 `extension` 作为此特性的第一个参数。实现宏的类型遵循 `ExtensionMacro` 协议。这些宏可以添加协议遵循、where 从句，以及宏所附加到的类型的成员的新声明。如果宏添加了协议遵循，请包含 `conformances:` 参数并指定这些协议。遵循列表包含协议名称、指向遵循列表项的类型别名，或者是遵循列表项的协议组合。嵌套类型上的扩展宏会展开为该文件顶层的扩展。你不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，也不能使用扩展宏添加具有 peer 宏的扩展。
+- Extension 扩展宏：将 `extension` 作为此特性的第一个参数。实现宏的类型遵循 `ExtensionMacro` 协议。这些宏可以添加协议遵循、`where` 从句，以及宏所附加到的类型的成员的新声明。如果宏添加了协议遵循，请包含 `conformances:` 参数并指定这些协议。遵循列表包含协议名称、指向遵循列表项的类型别名，或者是遵循列表项的协议组合。嵌套类型上的扩展宏会展开为该文件顶层的扩展。你不能在扩展、类型别名或嵌套在函数内的类型上编写扩展宏，也不能使用扩展宏添加具有 peer 宏的扩展。
 
 peer、member 和 accessor 宏角色需要一个 `names:` 参数，列出宏生成的符号名称。如果宏在扩展内部添加声明，扩展宏角色也需要一个 `names:` 参数。当宏声明包含 `names:` 参数时，宏实现必须仅生成与该列表匹配的名称的符号。也就是说，宏不必为每个列出的名称生成符号。该参数的值是以下一个或多个项的列表：
 
@@ -231,7 +231,7 @@ struct MyStruct {
 
 ### backDeployed
 
-将此特性应用于函数、方法、下标操作或计算属性，以在调用或访问该符号的程序中包含符号实现的副本。你使用此特性来标注作为平台一部分发布的符号，你可以使用此属性来标注作为某平台的一部分来发布的符号，例如某操作系统中所包含的 API。复制实现也称为 *emitting into the client*。此特性标注可以通过在访问它们的程序中包含其实现的副本来可追溯地使用这些符号。复制实现也称为 发送到客户端 *emitting into the client*。
+将此特性应用于函数、方法、下标操作或计算属性，以便在调用或访问该符号的程序中包含符号实现的副本。你使用此特性来标注作为平台一部分发布的符号，例如某操作系统中所包含的 API。此特性标注可以通过在访问它们的程序中包含其实现的副本来可追溯地使用这些符号。复制实现也称为*发送到客户端*。
 
 此特性接受一个 `before:` 参数，指定提供此符号的平台的第一个版本。这些平台版本与你为 `available` 特性的指定的平台版本具有相同的含义。与 `available` 特性不同，列表中不能包含星号 (`*`) 来指代所有版本。例如，考虑以下代码：
 
@@ -904,8 +904,7 @@ class ExampleClass: NSObject {
 更多信息，请参见 [Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c)。
 
 > 注意:
-> `objc` 特性的参数也可以更改该声明的运行时名称。
-当调用与 Objective-C 运行时交互的函数时，例如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)，以及在应用的 Info.plist 文件中指定类名时，你会使用运行时名称。如果通过传递参数指定名称，则该名称将用作 Objective-C 代码中的名称和运行时名称。如果省略参数，则在 Objective-C 代码中使用的名称与 Swift 代码中的名称匹配，运行时名称遵循正常的 Swift 编译器名称修饰约定。
+> `objc` 特性的参数也可以更改该声明的运行时名称。当调用与 Objective-C 运行时交互的函数（如 [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring)）时，以及在应用的 Info.plist 文件中指定类名时，使用运行时名称。如果通过传递参数指定名称，则该名称将用作 Objective-C 代码中的名称和运行时名称。如果省略参数，则 Objective-C 代码中使用的名称与 Swift 代码中的名称相匹配，并且运行时名称遵循 Swift 编译器的名称重整惯例。
 
 ### objcMembers
 
@@ -998,7 +997,7 @@ class ExampleClass: NSObject {
 
 包装器必须定义一个 `wrappedValue` 实例属性。该属性的*被包装值*是 getter 和 setter 所暴露的值。在大多数情况下，`wrappedValue` 是一个计算值，但它也可以是一个存储值。包装器定义并管理其被包装值所需的任何底层存储。编译器通过在包装属性的名称前加下划线 (`_`) 来合成包装器类型实例的存储——例如，`someProperty` 的包装器存储为 `_someProperty`。包装器的合成存储具有 `private` 的访问控制级别。
 
-一个具有属性包装器的属性可以包含 willSet 和 didSet 块，但它不能覆盖编译器合成的 get 或 set 块。
+一个具有属性包装器的属性可以包含 `willSet` 和 `didSet` 块，但它不能覆盖编译器合成的 `get` 或 `set` 块。
 
 Swift 提供了两种语法糖形式用于初始化属性包装器。你可以在被包装值的定义中使用赋值语法，将赋值右侧的表达式作为参数传递给属性包装器构造器的 `wrappedValue` 参数。你还可以在将特性应用于属性时提供参数，这些参数会传递给属性包装器的构造器。例如，在下面的代码中，`SomeStruct` 调用 `SomeWrapper` 定义的每个构造器。
 
@@ -1324,7 +1323,6 @@ struct ArrayBuilder {
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  在上面的代码中，
   在上面的代码中，`FutureText` 作为 `brokenDrawing` 类型的一部分出现，因为它是 DrawEither 泛型类型中的类型之一。如果在运行时 `FutureText` 不可用， 即使在该类型显式未被使用的情况下，这可能会导致你的程序崩溃。
 
   为了解决这个问题，实现一个 `buildLimitedAvailability(_:)` 方法，通过返回一个始终可用的类型来擦除类型信息。例如，下面的代码通过可用性检查构建一个 `AnyDrawable` 值。
