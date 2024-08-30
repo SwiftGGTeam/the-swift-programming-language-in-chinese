@@ -6,7 +6,6 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 
 # Declarations
 
-Introduce types, operators, variables, and other names and constructs.
 引入类型、运算符、变量以及其他名称和构造。
 
 一个*声明*将一个新名称或构造引入到你的程序中。例如，你使用声明来引入函数和方法，引入变量和常量，以及定义枚举、结构体、类和协议类型。你还可以使用声明来扩展现有具名类型的行为，并将其他地方声明的符号引入到你的程序中。
@@ -15,23 +14,23 @@ Introduce types, operators, variables, and other names and constructs.
 
 > 声明的语法：
 >
-> *声明* → *导入声明*
-> *声明* → *常量声明*
-> *声明* → *变量声明*
-> *声明* → *类型别名声明*
-> *声明* → *函数声明*
-> *声明* → *枚举声明*
-> *声明* → *结构体声明*
-> *声明* → *类声明*
-> *声明* → *actor 声明*
-> *声明* → *协议声明*
-> *声明* → *构造器声明*
-> *声明* → *析构器声明*
-> *声明* → *扩展声明*
-> *声明* → *下标声明*
-> *声明* → *宏声明*
-> *声明* → *操作符声明*
-> *声明* → *优先级组声明*
+> *declaration* → *import-declaration* \
+> *declaration* → *constant-declaration* \
+> *declaration* → *variable-declaration* \
+> *declaration* → *typealias-declaration* \
+> *declaration* → *function-declaration* \
+> *declaration* → *enum-declaration* \
+> *declaration* → *struct-declaration* \
+> *declaration* → *class-declaration* \
+> *declaration* → *actor-declaration* \
+> *declaration* → *protocol-declaration* \
+> *declaration* → *initializer-declaration* \
+> *declaration* → *deinitializer-declaration* \
+> *declaration* → *extension-declaration* \
+> *declaration* → *subscript-declaration* \
+> *declaration* → *macro-declaration* \
+> *declaration* → *operator-declaration* \
+> *declaration* → *precedence-group-declaration* \
 
 ## 顶级代码
 
@@ -43,7 +42,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 > 顶级声明的语法：
 >
-> *顶级声明* → *语句*_?_
+> *top-level-declaration* → *statements*_?_
 
 ## 代码块
 
@@ -66,7 +65,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 > 代码块的语法：
 >
-> *代码块* → **`{`** *语句*_?_ **`}`**
+> *code-block* → **`{`** *statements*_?_ **`}`**
 
 ## Import Declaration
 
@@ -89,10 +88,10 @@ import <#module#>.<#submodule#>
 
 > 导入声明的语法：
 >
-> *导入声明* → *特性*_?_ **`导入`** *导入类型*_?_ *导入路径*
+> *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
 >
-> *导入类型* → **`类型类型别名`** | **`结构体`** | **`类`** | **`枚举`** | **`协议`** | **`常量`** | **`变量`** | **`函数`** \
-> *导入路径* → *标识符* | *标识符* **`.`** *导入路径*
+> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
+> *import-path* → *identifier* | *identifier* **`.`** *import-path*
 
 ## 常量声明
 
@@ -149,7 +148,8 @@ print("The second number is \(secondNumber).")
   <- The second number is 42.
   ```
 -->
-在常量声明中，当可以推断出*常量名称*的类型时，类型注释（`:` *类型*）是可选的，如<doc:Types#Type-Inference>中所述。
+
+在常量声明中，当可以推断出*常量名称*的类型时，类型注释（`:` *type*）是可选的，如 <doc:Types#Type-Inference> 中所述。
 
 要声明一个常量类型属性，请使用 `static` 声明修饰符标记该声明。类的常量类型属性总是隐式为 final；您不能使用 `class` 或 `final` 声明修饰符来允许或禁止子类重写。类型属性的讨论请参见 <doc:Properties#Type-Properties>。
 
@@ -173,11 +173,11 @@ print("The second number is \(secondNumber).")
 
 > 常量声明的语法：
 >
-> *常量声明* → *属性*_?_ *声明修饰符*_?_ **`let`** *模式构造器列表*
+> *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
 >
-> *模式构造器列表* → *模式构造器* | *模式构造器* **`,`** *模式构造器列表* \
-> *模式构造器* → *模式* *构造器*_?_ \
-> *构造器* → **`=`** *表达式*
+> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
+> *pattern-initializer* → *pattern* *initializer*_?_ \
+> *initializer* → **`=`** *expression*
 
 ## 变量声明
 
@@ -199,7 +199,7 @@ var <#variable name#>: <#type#> = <#expression#>
 
 您可以在全局范围、函数的局部范围或类或结构体声明的上下文中定义这种形式的变量声明。当这种形式的变量声明在全局范围或函数的局部范围内声明时，它被称为*存储变量*。当它在类或结构体声明的上下文中声明时，它被称为*存储变量属性*。
 
-构造器*表达式*不能出现在协议声明中，但在所有其他上下文中，构造器*表达式*是可选的。也就是说，如果没有构造器*表达式*，变量声明必须包含显式类型注释（`:` *类型*）。
+构造器*表达式*不能出现在协议声明中，但在所有其他上下文中，构造器*表达式*是可选的。也就是说，如果没有构造器*表达式*，变量声明必须包含显式类型注释（`:` *type*）。
 
 与常量声明一样，如果变量声明省略了构造器*表达式*，则在第一次读取该变量之前必须为其设置一个值。同样，像常量声明一样，如果*变量名*是一个元组模式，则元组中每个项的名称都绑定到构造器*表达式*中的相应值。
 
@@ -381,34 +381,32 @@ newAndOld.x = 200
 
 要声明一个类型变量属性，请使用 `static` 声明修饰符标记声明。类可以使用 `class` 声明修饰符标记类型计算属性，以允许子类覆盖超类的实现。类型属性的讨论请参见 <doc:Properties#Type-Properties>。
 
-> 变量声明的语法：
+> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
 >
-> *变量-声明* → *变量-声明-头* *模式-初始化-列表* \
-> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *代码-块* \
-> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *getter-setter-块* \
-> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *getter-setter-关键字-块* \
-> *变量-声明* → *变量-声明-头* *变量-名* *构造器* *willSet-didSet-块* \
-> *变量-声明* → *变量-声明-头* *变量-名* *类型-注解* *构造器*_?_ *willSet-didSet-块*
+> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`** \
+> *variable-name* → *identifier*
 >
-> *变量-声明-头* → *属性*_?_ *声明-修饰符*_?_ **`var`** \
-> *变量-名* → *标识符*
+> *getter-setter-block* → *code-block* \
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
+> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
+> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block* \
+> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block* \
+> *setter-name* → **`(`** *identifier* **`)`**
 >
-> *getter-setter-块* → *代码块* \
-> *getter-setter-块* → **`{`** *getter-子句* *setter-子句*_?_ **`}`** \
-> *getter-setter-块* → **`{`** *setter-子句* *getter-子句* **`}`** \
-> *getter-子句* → *特性*_?_ *可变-修饰符*_?_ **`get`** *代码-块* \
-> *setter-子句* → *特性*_?_ *可变-修饰符*_?_ **`set`** *setter-名称*_?_ *代码-块* \
-> *setter-名称* → **`(`** *标识符* **`)`**
+> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`** \
+> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
+> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** \
+> *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
 >
-> *getter-setter-关键字-块* → **`{`** *getter-关键字-子句* *setter-关键字-子句*_?_ **`}`** \
-> *getter-setter-关键字-块* → **`{`** *setter-关键字-子句* *getter-关键字-子句* **`}`** \
-> *getter-关键字-子句* → *属性*_?_ *可变-修饰符*_?_ **`get`** \
-> *setter-关键字-子句* → *属性*_?_ *可变-修饰符*_?_ **`set`**
->
-> *willSet-didSet-block* → **`{`** *willSet-子句* *didSet-子句*_?_ **`}`** \
-> *willSet-didSet-block* → **`{`** *didSet-子句* *willSet-子句*_?_ **`}`** \
-> *willSet-子句* → *特性*_?_ **`willSet`** *setter-名称*_?_ *代码-块* \
-> *didSet-子句* → *特性*_?_ **`didSet`** *setter-名称*_?_ *代码-块*
+> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`** \
+> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`** \
+> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block* \
+> *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
 
 <!--
   NOTE: Type annotations are required for computed properties -- the
@@ -425,7 +423,6 @@ typealias <#name#> = <#existing type#>
 
 在声明类型别名后，别名*名称*可以在程序中的任何地方替代*现有类型*使用。*现有类型*可以是命名类型或复合类型。类型别名不会创建新类型；它们只是允许一个名称引用现有类型。
 
-A type alias declaration can use generic parameters to give a name to an existing generic type. The type alias can provide concrete types for some or all of the generic parameters of the existing type. For example:
 类型别名声明可以使用泛型参数为现有的泛型类型命名。类型别名可以为现有类型的某些或所有泛型参数提供具体类型。例如：
 
 ```swift
@@ -525,9 +522,9 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 > 类型别名声明的语法：
 >
-> *类型别名-声明* → *属性*_?_ *访问-级别-修饰符*_?_ **`typealias`** *typealias-名称* *泛型-参数-子句*_?_ *typealias-赋值* \
-> *typealias-名称* → *标识符* \
-> *typealias-赋值* → **`=`** *类型*
+> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
+> *typealias-name* → *identifier* \
+> *typealias-assignment* → **`=`** *type*
 
 <!--
   Old grammar:
@@ -616,7 +613,6 @@ f(x: 1, y: 2) // both x and y are labeled
 _ <#parameter name#>: <#parameter type#>
 ```
 
-
 在参数名称之前添加一个名称为参数提供了一个显式的实参标签，该标签可以与参数名称不同。相应的参数在函数或方法调用中必须使用给定的实参标签。
 
 在参数名称前加下划线（`_`）可以抑制参数标签。相应的参数在函数或方法调用中必须没有标签。
@@ -658,7 +654,6 @@ func someFunction(a: inout Int) {
     a += 1
 }
 ```
-
 
 在调用包含输入输出参数的函数时，输入输出参数必须以一个和号 (`&`) 开头，以标记该函数调用可以改变参数的值。
 
@@ -704,6 +699,7 @@ someFunction(&someValue, &someValue)
 ```
 
 有关内存安全和内存独占的更多信息，请参见 <doc:MemorySafety>。
+
 <!--
   When the call-by-reference optimization is in play,
   it would happen to do what you want.
@@ -712,7 +708,6 @@ someFunction(&someValue, &someValue)
   behavioral differences that happen because of call by reference.
 -->
 
-A closure or nested function that captures an in-out parameter must be nonescaping. If you need to capture an in-out parameter without mutating it, use a capture list to explicitly capture the parameter immutably.
 一个捕获输入输出参数的闭包或嵌套函数必须是非逃逸的。如果您需要捕获一个 in-out 参数而不对其进行修改，请使用捕获列表显式地以不可变方式捕获该参数。
 
 ```swift
@@ -739,6 +734,7 @@ func someFunction(a: inout Int) -> () -> Int {
 -->
 
 如果您需要捕获并修改一个 in-out 参数，请使用一个显式的局部副本，例如在多线程代码中，确保所有修改在函数返回之前都已完成。
+
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
     // Make a local copy and manually copy it back.
@@ -987,7 +983,7 @@ f(7)      // Invalid, missing argument label
 
 重写超类方法的方法必须标记为 `override` 声明修饰符。没有 `override` 修饰符而重写方法，或者在不重写超类方法的情况下使用 `override` 修饰符，都是编译时错误。
 
-与类型相关的方法，而不是与类型实例相关的方法，必须使用 static 声明修饰符来标记（枚举和结构体使用 static，类可以使用 static 或 class 声明修饰符）。用 class 声明修饰符标记的类类型方法可以被子类的实现重写；用 class final 或 static 标记的类类型方法则不能被重写。
+与类型相关的方法，而不是与类型实例相关的方法，必须使用 static 声明修饰符来标记（枚举和结构体使用 `static`，类可以使用 `static` 或 `class` 声明修饰符）。用 `class` 声明修饰符标记的类类型方法可以被子类的实现重写；用 `class final` 或 `static` 标记的类类型方法则不能被重写。
 
 <!--
   - test: `overriding-class-methods-err`
@@ -1100,7 +1096,7 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
   ```
 -->
 
-`subscript(dynamicMember:)` 下标为成员查找提供了语法糖，如 <doc:Attributes#dynamicMemberLookup> 中所述。
+`subscript(dynamicMember:)` 下标为成员查找提供了语法糖，详见 <doc:Attributes#dynamicMemberLookup>。
 
 ### 抛出函数和方法
 
@@ -1271,26 +1267,27 @@ Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返�
 
 > 函数声明的语法：
 >
-> *函数声明* → *函数头* *函数名称* *泛型参数子句*_?_ *函数签名* *泛型约束子句*_?_ *函数主体*_?_
+> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
 >
-> *函数头* → *属性*_?_ *声明修饰符*_?_ **`func`** \
-> *函数名* → *标识符* | *运算符*
+> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
+> *function-name* → *identifier* | *operator*
 >
-> *函数签名* → *参数子句* **`异步`**_?_ *抛出子句*_?_ *函数结果*_?_ \
-> *函数签名* → *参数子句* **`async`**_?_ **`rethrows`** *函数结果*_?_ \
-> *函数结果* → **`->`** *属性*_?_ *类型* \
-> *函数体* → *代码块*
+> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
+> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
+> *function-result* → **`->`** *attributes*_?_ *type* \
+> *function-body* → *code-block*
 >
-> *参数子句* → **`(`** **`)`** | **`(`** *参数列表* **`)`** \
-> *参数列表* → *参数* | *参数* **`,`** *参数列表* \
-> *参数* → *外部参数名称*_?_ *本地参数名称* *参数类型注解* *默认参数子句*_?_ \
-> *参数* → *外部参数名称*_?_ *本地参数名称* *参数类型注解* \
-> *参数* → *外部参数名称*_?_ *本地参数名称* *参数类型注解* **`...`**
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
+> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
 >
-> *外部参数名称* → *标识符* \
-> *局部参数名称* → *标识符* \
-> *参数类型注解* → **`:`** *属性*_?_ *参数修饰符*_?_ *类型* \
-> *参数修饰符* → **`输入输出`** | **`借用`** | **`消耗`** *默认参数子句* → **`=`** *表达式*
+> *external-parameter-name* → *identifier* \
+> *local-parameter-name* → *identifier* \
+> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
+> *default-argument-clause* → **`=`** *expression*
 
 <!--
   NOTE: Code block is optional in the context of a protocol.
@@ -1375,6 +1372,13 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 要为特定的枚举案例启用间接性，请使用 `indirect` 声明修饰符进行标记。间接案例必须具有相关值。
 
+<!--
+  TODO The word "enable" is kind of a weasel word.
+  Better to have a more concrete discussion of exactly when
+  it is and isn't used.
+  For example, does "indirect enum { X(Int) } mark X as indirect?
+-->
+
 ```swift
 enum Tree<T> {
     case empty
@@ -1440,7 +1444,7 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-在这种形式中，每个案例块由`case`关键字组成，后面跟着一个或多个枚举案例，用逗号分隔。与第一种形式中的案例不同，每个案例都有一个基础值，称为*原始值*，其基本类型相同。这些值的类型在*原始值类型*中指定，必须表示整数、浮点数、字符串或单个字符。特别是，*原始值类型*必须符合`Equatable`协议，并且符合以下协议之一：`ExpressibleByIntegerLiteral` 用于整数字面量，`ExpressibleByFloatLiteral` 用于浮点字面量，`ExpressibleByStringLiteral` 用于包含任意数量字符的字符串字面量，以及 `ExpressibleByUnicodeScalarLiteral` 或 `ExpressibleByExtendedGraphemeClusterLiteral` 用于仅包含单个字符的字符串字面量。每个案例必须具有唯一名称并分配唯一的原始值。
+在这种形式中，每个案例块由 `case` 关键字组成，后面跟着一个或多个枚举案例，用逗号分隔。与第一种形式中的案例不同，每个案例都有一个基础值，称为*原始值*，其基本类型相同。这些值的类型在*原始值类型*中指定，必须表示整数、浮点数、字符串或单个字符。特别是，*原始值类型*必须符合 `Equatable` 协议，并且符合以下协议之一：`ExpressibleByIntegerLiteral` 用于整数字面量，`ExpressibleByFloatLiteral` 用于浮点字面量，`ExpressibleByStringLiteral` 用于包含任意数量字符的字符串字面量，以及 `ExpressibleByUnicodeScalarLiteral` 或 `ExpressibleByExtendedGraphemeClusterLiteral` 用于仅包含单个字符的字符串字面量。每个案例必须具有唯一名称并分配唯一的原始值。
 
 <!--
   The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
@@ -1491,7 +1495,7 @@ enum GamePlayMode: String {
 
 ### 访问枚举案例
 
-要引用枚举类型的案例，请使用点（`.`）语法，如`EnumerationType.enumerationCase`所示。当枚举类型可以从上下文中推断时，可以省略它（仍然需要点），如 <doc:Enumerations#Enumeration-Syntax> 和 <doc:Expressions#Implicit-Member-Expression> 中所述。
+要引用枚举类型的案例，请使用点（`.`）语法，如 `EnumerationType.enumerationCase` 所示。当枚举类型可以从上下文中推断时，可以省略它（仍然需要点），如 <doc:Enumerations#Enumeration-Syntax> 和 <doc:Expressions#Implicit-Member-Expression> 中所述。
 
 要检查枚举案例的值，请使用 `switch` 语句，如 <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement> 中所示。枚举类型与 `switch` 语句的案例块中的枚举案例模式进行模式匹配，如 <doc:Patterns#Enumeration-Case-Pattern> 中所述。
 
@@ -1520,26 +1524,26 @@ enum GamePlayMode: String {
 
 > 枚举声明的语法：
 >
-> *枚举声明* → *属性*_?_ *访问级别修饰符*_?_ *联合样式枚举* \
-> *枚举声明* → *属性*_?_ *访问级别修饰符*_?_ *原始值样式枚举*
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
 >
-> *联合样式枚举* → **`间接`**_?_ **`枚举`** *枚举名称* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ **`{`** *联合样式枚举成员*_?_ **`}`** \
-> *联合体样式枚举成员* → *联合体样式枚举成员* *联合体样式枚举成员*_?_ \
-> *联合体风格枚举成员* → *声明* | *联合体风格枚举案例子句* | *编译器控制语句* \
-> *联合样式枚举案例子句* → *属性*_?_ **`间接`**_?_ **`案例`** *联合样式枚举案例列表* \
-> *联合样式枚举案例列表* → *联合样式枚举案例* | *联合样式枚举案例* **`,`** *联合样式枚举案例列表* \
-> *联合样式枚举案例* → *枚举案例名称* *元组类型*_?_ \
-> *枚举名称* → *标识符* \
-> *枚举案例名称* → *标识符*
+> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`** \
+> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_ \
+> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
+> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list* \
+> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
+> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_ \
+> *enum-name* → *identifier* \
+> *enum-case-name* → *identifier*
 >
-> *原始值样式枚举* → **`枚举`** *枚举名称* *泛型参数子句*_?_ *类型继承子句* *泛型约束子句*_?_ **`{`** *原始值样式枚举成员* **`}`** \
-> *原始值样式枚举成员* → *原始值样式枚举成员* *原始值样式枚举成员*_?_ \
-> *原始值样式枚举成员* → *声明* | *原始值样式枚举案例条款* | *编译器控制语句* \
-> *原始值样式枚举案例条款* → *属性*_?_ **`案例`** *原始值样式枚举案例列表* \
-> *原始值样式枚举案例列表* → *原始值样式枚举案例* | *原始值样式枚举案例* **`,`** *原始值样式枚举案例列表* \
-> *原始值样式枚举案例* → *枚举案例名称* *原始值赋值*_?_ \
-> *原始值赋值* → **`=`** *原始值字面量* \
-> *原始值字面量* → *数值字面量* | *静态字符串字面量* | *布尔字面量*
+> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`** \
+> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_ \
+> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
+> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_ \
+> *raw-value-assignment* → **`=`** *raw-value-literal* \
+> *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
 
 <!--
   NOTE: The two types of enums are sufficiently different enough to warrant separating
@@ -1581,18 +1585,18 @@ struct <#structure name#>: <#adopted protocols#> {
 
 结构体是值类型；当结构的实例被赋值给变量或常量，或作为参数传递给函数调用时，会被复制。有关值类型的信息，请参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>。
 
-您可以通过扩展声明扩展结构类型的行为，如在 <doc:Declarations#Extension-Declaration> 中讨论的。
+您可以通过扩展声明扩展结构类型的行为，详见 <doc:Declarations#Extension-Declaration>。
 
 > 结构体声明的语法：
 >
-> *结构声明* → *属性*_?_ *访问级别修饰符*_?_ **`struct`** *结构名称* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *结构体主体* \
-> *结构名称* → *标识符* \
-> *结构体主体* → **`{`** *结构体成员*_?_ **`}`**
+> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
+> *struct-name* → *identifier* \
+> *struct-body* → **`{`** *struct-members*_?_ **`}`**
 >
-> *结构成员* → *结构成员* *结构成员*_?_ \
-> *结构成员* → *声明* | *编译器控制语句*
+> *struct-members* → *struct-member* *struct-members*_?_ \
+> *struct-member* → *declaration* | *compiler-control-statement*
 
-##  类声明
+## 类声明
 
 *类声明*将一个命名的类类型引入到你的程序中。类声明使用 `class` 关键字声明，具有以下形式：
 
@@ -1636,17 +1640,17 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 
 > 类声明的语法：
 >
-> *类声明* → *属性*_?_ *访问级别修饰符*_?_ **`最终`**_?_ **`类`** *类名* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *类主体* \
-> *类声明* → *属性*_?_ **`最终`** *访问级别修饰符*_?_ **`类`** *类名* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *类体* \
-> *类名* → *标识符* \
-> *类主体* → **`{`** *类成员*_?_ **`}`**
+> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-name* → *identifier* \
+> *class-body* → **`{`** *class-members*_?_ **`}`**
 >
-> *类成员* → *类成员* *类成员*_?_ \
-> *类成员* → *声明* | *编译器控制语句*
+> *class-members* → *class-member* *class-members*_?_ \
+> *class-member* → *declaration* | *compiler-control-statement*
 
 ## Actor 声明
 
-一个*actor 声明*将一个命名的actor类型引入到您的程序中。actor 声明使用 `actor` 关键字声明，具有以下形式：
+一个 *actor 声明*将一个命名的 actor 类型引入到您的程序中。actor 声明使用 `actor` 关键字声明，具有以下形式：
 
 ```swift
 actor <#actor name#>: <#adopted protocols#> {
@@ -1654,15 +1658,14 @@ actor <#actor name#>: <#adopted protocols#> {
 }
 ```
 
-
 actor 的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、实例方法、类型方法、构造器、一个析构器、下标、类型别名，甚至其他类、结构体和枚举声明。有关包含各种声明的 actor 的讨论和多个示例，请参见 <doc:Concurrency#Actors>。
 
 actor 类型可以采用任意数量的协议，但不能从类、枚举、结构体或其他actor继承。然而，标记为 `@objc` 属性的 actor 隐式地符合 `NSObjectProtocol` 协议，并作为 `NSObject` 的子类型暴露给 Objective-C 运行时。
 
 有两种方法可以创建一个先前声明的actor的实例：
 
-- 调用 actor 中声明的某个构造方法，如 <doc:Initialization#Initializers> 中所述。
-- 如果没有声明初始值，并且 actor 声明的所有属性都给定了初始值，则调用 actor 的默认构造器，如 <doc:Initialization#Default-Initializers> 中所述。
+- 调用 actor 中声明的某个构造方法，详见 <doc:Initialization#Initializers>。
+- 如果没有声明初始值，并且 actor 声明的所有属性都给定了初始值，则调用 actor 的默认构造器，详见 <doc:Initialization#Default-Initializers>。
 
 默认情况下，actor 的成员是与该 actor 隔离的。代码，例如方法的主体或属性的 getter，是在该actor上执行的。actor 内部的代码可以与它们同步交互，因为该代码已经在同一个 actor 上运行，但 actor 外部的代码必须用 `await` 标记它们，以指示该代码是异步在另一个 actor 上运行的。关键路径不能引用 actor 的隔离成员。actor 隔离的存储属性可以作为输入输出参数传递给同步函数，但不能传递给异步函数。
 
@@ -1670,13 +1673,13 @@ actor 还可以拥有非隔离成员，其声明使用 `nonisolated` 关键字�
 
 actor 的成员只有在它们是非隔离或异步的情况下才能标记为 `@objc` 属性。
 
-初始化 actor 中声明的属性的过程在 <doc:Initialization> 中描述。
+初始化 actor 中声明的属性的过程，详见 <doc:Initialization>。
 
-actor 实例的属性可以使用点 (`.`) 语法访问，如 <doc:ClassesAndStructures#Accessing-Properties> 中所述。
+actor 实例的属性可以使用点 (`.`) 语法访问，详见 <doc:ClassesAndStructures#Accessing-Properties>。
 
 actor 是引用类型；当分配给变量或常量，或作为参数传递给函数调用时，actor的实例是被引用而不是复制。有关引用类型的信息，请参见 <doc:ClassesAndStructures#Classes-Are-Reference-Types>。
 
-您可以通过扩展声明扩展 actor 类型的行为，如 <doc:Declarations#Extension-Declaration> 中所讨论的。
+您可以通过扩展声明扩展 actor 类型的行为，详见 <doc:Declarations#Extension-Declaration>。
 
 <!--
   TODO Additional bits from the SE-0306 actors proposal:
@@ -1688,12 +1691,12 @@ actor 是引用类型；当分配给变量或常量，或作为参数传递给�
 
 > actor 声明的语法：
 >
-> *actor声明* → *属性*_?_ *访问级别修饰符*_?_ **`actor`** *actor名称* *泛型参数子句*_?_ *类型继承子句*_?_ *泛型约束子句*_?_ *actor主体* \
-> *actor姓名* → *标识符*
-> *actor主体* → **`{`** *actor成员*_?_ **`}`** \
+> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
+> *actor-name* → *identifier* \
+> *actor-body* → **`{`** *actor-members*_?_ **`}`**
 >
-> *actor-成员* → *actor-成员* *actor-成员*_?_ \
-> *actor-成员* → *声明* | *编译器控制语句*
+> *actor-members* → *actor-member* *actor-members*_?_ \
+> *actor-member* → *declaration* | *compiler-control-statement*
 
 ## 协议声明
 
@@ -1711,7 +1714,7 @@ protocol <#protocol name#>: <#inherited protocols#> {
 
 协议类型可以从任意数量的其他协议继承。当一个协议类型从其他协议继承时，这些其他协议的要求集合会被聚合，任何从当前协议继承的类型必须符合所有这些要求。有关如何使用协议继承的示例，请参见 <doc:Protocols#Protocol-Inheritance>。
 
-> 注意：您还可以使用协议组合类型聚合多个协议的合规性要求，如 <doc:Types#Protocol-Composition-Type> 和 <doc:Protocols#Protocol-Composition> 中所述。
+> 注意：您还可以使用协议组合类型聚合多个协议的合规性要求，详见 <doc:Types#Protocol-Composition-Type> 和 <doc:Protocols#Protocol-Composition>。
 
 您可以通过在该类型的扩展声明中采用协议，为先前声明的类型添加协议符合性。在扩展中，您必须实现所采用协议的所有要求。如果该类型已经实现了所有要求，您可以将扩展声明的主体留空。
 
@@ -1781,19 +1784,19 @@ protocol SomeProtocol: AnyObject {
 
 > 协议声明的语法：
 >
-> *协议声明* → *属性*_?_ *访问级别修饰符*_?_ **`协议`** *协议名称* *类型继承条款*_?_ *泛型约束条款*_?_ *协议主体* \
-> *协议名称* → *标识符* \
-> *协议主体* → **`{`** *协议成员*_?_ **`}`**
+> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
+> *protocol-name* → *identifier* \
+> *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
 >
-> *协议成员* → *协议成员* *协议成员*_?_ \
-> *协议成员* → *协议成员声明* | *编译器控制语句*
+> *protocol-members* → *protocol-member* *protocol-members*_?_ \
+> *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
 >
-> *协议成员声明* → *协议属性声明* \
-> *协议成员声明* → *协议方法声明* \
-> *协议成员声明* → *协议构造器声明* \
-> *协议成员声明* → *协议下标声明* \
-> *协议成员声明* → *协议关联类型声明* \
-> *协议成员声明* → *类型别名声明*
+> *protocol-member-declaration* → *protocol-property-declaration* \
+> *protocol-member-declaration* → *protocol-method-declaration* \
+> *protocol-member-declaration* → *protocol-initializer-declaration* \
+> *protocol-member-declaration* → *protocol-subscript-declaration* \
+> *protocol-member-declaration* → *protocol-associated-type-declaration* \
+> *protocol-member-declaration* → *typealias-declaration*
 
 ### 协议属性声明
 
@@ -1847,7 +1850,7 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 > 协议属性声明的语法：
 >
-> *协议属性声明* → *变量-声明-头* *变量名称* *类型注解* *gettersetter关键字块*
+> *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
 
 ### 协议方法声明
 
@@ -1863,10 +1866,9 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 > 协议方法声明的语法：
 >
-> *协议方法声明* → *函数头* *函数名称* *泛型参数子句*_?_ *函数签名* *泛型约束子句*_?_
+> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
 
 ### 协议构造器声明
-
 
 协议通过在协议声明的主体中包含协议构造器声明，要求符合的类型必须实现一个构造器。协议构造器声明的形式与构造器声明相同，只是不包括构造器的主体。
 
@@ -1878,8 +1880,8 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 > 协议构造器声明的语法：
 >
-> *协议构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* *抛出子句*_?_ *泛型约束子句*_?_\
-> *协议构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`重新抛出`** *泛型约束子句*_?_
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### 协议下标声明
 
@@ -1898,7 +1900,7 @@ subscript (<#parameters#>) -> <#return type#> { get set }
 
 > 协议下标声明的语法：
 >
-> *协议下标声明* → *下标头* *下标结果* *通用条件子句*_?_ *gettersetter关键字块*
+> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
 
 ### 协议关联类型声明
 
@@ -2018,7 +2020,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 > 协议关联类型声明的语法：
 >
-> *协议关联类型声明* → *属性*_?_ *访问级别修饰符*_?_ **`关联类型`** *类型别名名称* *类型继承子句*_?_ *类型别名赋值*_?_ *泛型约束子句*_?_
+> *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
 
 ## 构造器声明
 
@@ -2066,7 +2068,7 @@ convenience init(<#parameters#>) {
 
 一个*可失败的构造器*是一种构造器，它生成一个可选实例或一个隐式解包的可选实例，具体取决于构造器声明的类型。因此，可失败的构造器可以返回 `nil` 以表示初始化失败。
 
-要声明一个可失败的初始化器并生成一个可选实例，需要在初始化器声明中的 init 关键字后面加上问号（`init?`）。要声明一个可失败的初始化器并生成一个隐式解包的可选实例，则需要加上感叹号（`init!`）。下面的示例展示了一个 `init?` 可失败的初始化器，它生成了一个结构体的可选实例。
+要声明一个可失败的初始化器并生成一个可选实例，需要在初始化器声明中的 `init` 关键字后面加上问号（`init?`）。要声明一个可失败的初始化器并生成一个隐式解包的可选实例，则需要加上感叹号（`init!`）。下面的示例展示了一个 `init?` 可失败的初始化器，它生成了一个结构体的可选实例。
 
 ```swift
 struct SomeStruct {
@@ -2100,7 +2102,7 @@ struct SomeStruct {
   ```
 -->
 
-调用 init? 可失败的初始化器与调用不可失败的初始化器的方式相同，只是你必须处理结果的可选性。
+调用 `init?` 可失败的初始化器与调用不可失败的初始化器的方式相同，只是你必须处理结果的可选性。
 
 ```swift
 if let actualInstance = SomeStruct(input: "Hello") {
@@ -2123,7 +2125,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
   ```
 -->
 
-可失败的构造器可以在构造器主体的实现中的任何时刻返回`nil`。
+可失败的构造器可以在构造器主体的实现中的任何时刻返回 `nil`。
 
 可失败的构造器可以委托给任何类型的构造器。不可失败的构造器可以委托给另一个不可失败的构造器或一个 `init!` 可失败的构造器。不可失败的构造器可以通过强制解包超类构造器的结果来委托给一个 `init?` 可失败的构造器——例如，通过写 `super.init()!`。
 
@@ -2135,12 +2137,12 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 > 初始化声明的语法：
 >
-> *构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`异步`**_?_ *抛出子句*_?_ *泛型约束子句*_?_ *构造器主体* \
-> *构造器声明* → *构造器头* *泛型参数子句*_?_ *参数子句* **`异步`**_?_ **`重新抛出`** *泛型约束子句*_?_ *构造器主体* \
-> *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** \
-> *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** **`?`** \
-> *初始化头* → *属性*_?_ *声明修饰符*_?_ **`init`** **`!`** \
-> *构造器主体* → *代码块*
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
+> *initializer-body* → *code-block*
 
 ## 析构器声明
 
@@ -2162,7 +2164,7 @@ deinit {
 
 > 析构器声明的语法：
 >
-> *析构器声明* → *属性*_?_ **`deinit`** *代码块*
+> *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
 
 ## 扩展声明
 
@@ -2312,7 +2314,7 @@ oneAndTwo.log()
   ```
 -->
 
-然而，当在泛型上下文中使用 `oneAndTwo` 或将其作为 `Loggable` 协议的一个实例时，特定的实现版本不会被使用。`Swift` 在选择调用哪个 `log()` 实现时，只参考 `Pair` 遵循 `Loggable` 所需的最低要求。因此，使用的是 `Loggable` 协议提供的默认实现。
+然而，当在泛型上下文中使用 `oneAndTwo` 或将其作为 `Loggable` 协议的一个实例时，特定的实现版本不会被使用。Swift 在选择调用哪个 `log()` 实现时，只参考 `Pair` 遵循 `Loggable` 所需的最低要求。因此，使用的是 `Loggable` 协议提供的默认实现。
 
 ```swift
 func doSomething<T: Loggable>(with x: T) {
@@ -2430,7 +2432,7 @@ extension Array: Serializable where Element: SerializableInArray {
 
 如果您需要一个类型有条件地遵循两个继承自单一父协议的协议，请明确声明对父协议的遵循。这可以避免以不同的要求隐式地两次遵循父协议。
 
-以下示例明确声明了`Array`对`Loggable`的条件遵循，以避免在声明其对`TitledLoggable`和新的`MarkedLoggable`协议的条件遵循时发生冲突。
+以下示例明确声明了 `Array` 对 `Loggable` 的条件遵循，以避免在声明其对 `TitledLoggable` 和新的 `MarkedLoggable` 协议的条件遵循时发生冲突。
 
 ```swift
 protocol MarkedLoggable: Loggable {
@@ -2569,11 +2571,11 @@ extension Array: Loggable where Element: MarkedLoggable { }
 
 > 扩展声明的语法：
 >
-> *扩展声明* → *属性*_?_ *访问级别修饰符*_?_ **`扩展`** *类型标识符* *类型继承条款*_?_ *泛型约束条款*_?_ *扩展主体* \
-> *扩展主体* → **`{`** *扩展成员*_?_ **`}`**
+> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
+> *extension-body* → **`{`** *extension-members*_?_ **`}`**
 >
-> *扩展成员* → *扩展成员* *扩展成员*_?_ \
-> *扩展成员* → *声明* | *编译器控制语句*
+> *extension-members* → *extension-member* *extension-members*_?_ \
+> *extension-member* → *declaration* | *compiler-control-statement*
 
 ## 下标声明
 
@@ -2600,9 +2602,9 @@ subscript (<#parameters#>) -> <#return type#> {
 
 您可以在声明它的类型中重载下标声明，只要*参数*或*返回类型*与您正在重载的不同。您还可以覆盖从超类继承的下标声明。当您这样做时，必须使用 `override` 声明修饰符标记被覆盖的下标声明。
 
-下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，使用下标的参数没有参数标签，这与函数、方法和构造器不同。然而，您可以使用与函数、方法和构造器相同的语法提供显式参数标签。此外，下标不能有输入输出参数。下标参数可以具有默认值，使用在 <doc:Declarations#Special-Kinds-of-Parameters> 中描述的语法。
+下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，使用下标的参数没有参数标签，这与函数、方法和构造器不同。然而，您可以使用与函数、方法和构造器相同的语法提供显式参数标签。此外，下标不能有输入输出参数。下标参数可以具有默认值，详见 <doc:Declarations#Special-Kinds-of-Parameters>。
 
-您还可以在协议声明的上下文中声明下标，如 <doc:Declarations#Protocol-Subscript-Declaration> 中所述。
+您还可以在协议声明的上下文中声明下标，详见 <doc:Declarations#Protocol-Subscript-Declaration>。
 
 有关下标的更多信息以及下标声明的示例，请参见 <doc:Subscripts>。
 
@@ -2625,14 +2627,13 @@ subscript (<#parameters#>) -> <#return type#> {
   ```
 -->
 
-> Grammar of a subscript declaration:
 > 下标声明的语法：
 >
-> *下标声明* → *下标头* *下标结果* *通用 where 子句*_?_ *代码块* \
-> *下标声明* → *下标头* *下标结果* *通用条件子句*_?_ *getter-setter块* \
-> *下标声明* → *下标头* *下标结果* *通用 where 子句*_?_ *getter-setter-关键字-块* \
-> *下标头* → *属性*_?_ *声明修饰符*_?_ **`下标`** *泛型参数子句*_?_ *参数子句* \
-> *下标结果* → **`->`** *属性*_?_ *类型*
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block* \
+> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
+> *subscript-result* → **`->`** *attributes*_?_ *type*
 
 ## 宏声明
 
@@ -2652,11 +2653,11 @@ macro <#name#> = <#macro implementation#>
 
 > 宏声明的语法：
 >
-> *宏声明* → *宏头* *标识符* *泛型参数子句*_?_ *宏签名* *宏定义*_?_ *泛型约束子句* \
-> *宏头* → *属性*_?_ *声明修饰符*_?_ **`宏`** \
-> *宏签名* → *参数子句* *宏函数签名结果*_?_ \
-> *宏函数签名结果* → **`->`** *类型* \
-> *宏定义* → **`=`** *表达式*
+> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
+> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** \
+> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
+> *macro-function-signature-result* → **`->`** *type* \
+> *macro-definition* → **`=`** *expression*
 
 ## 操作符声明
 
@@ -2673,7 +2674,7 @@ infix operator <#operator name#>: <#precedence group#>
 ```
 
 An *infix operator* is a binary operator that's written between its two operands, such as the familiar addition operator (`+`) in the expression `1 + 2`.
-一个*中缀运算符*是一个二元运算符，它写在两个操作数之间，例如在表达式`1 + 2`中熟悉的加法运算符`+`。
+一个*中缀运算符*是一个二元运算符，它写在两个操作数之间，例如在表达式 `1 + 2` 中熟悉的加法运算符`+`。
 
 中缀运算符可以选择性地指定优先级组。如果您省略运算符的优先级组，Swift 将使用默认优先级组 `DefaultPrecedence`，该组的优先级仅高于 `TernaryPrecedence`。有关更多信息，请参见 <doc:Declarations#Precedence-Group-Declaration>。
 
@@ -2701,13 +2702,13 @@ postfix operator <#operator name#>
 
 > 操作符声明的语法：
 >
-> *运算符声明* → *前缀运算符声明* | *后缀运算符声明* | *中缀运算符声明*
+> *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
 >
-> *前缀运算符声明* → **`前缀`** **`运算符`** *运算符* \
-> *后缀运算符声明* → **`后缀`** **`运算符`** *运算符* \
-> *中缀运算符声明* → **`中缀`** **`运算符`** *运算符* *中缀运算符组*_?_
+> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator* \
+> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator* \
+> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
 >
-> *中缀运算符组* → **`:`** *优先级组名称*
+> *infix-operator-group* → **`:`** *precedence-group-name*
 
 ## 优先级组声明
 
@@ -2728,7 +2729,7 @@ precedencegroup <#precedence group name#> {
 
 > 注意：使用*低级组名称*和*高级组名称*相关联的优先级组必须适合于单一的关系层次结构，但它们*不*必形成线性层次结构。这意味着可以有相对优先级未定义的优先级组。来自这些优先级组的运算符不能在没有分组括号的情况下相互使用。
 
-Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符。例如，加法 (`+`) 和减法 (`-`) 运算符属于 `AdditionPrecedence` 组，而乘法 (`*`) 和除法 (`/`) 运算符属于 `MultiplicationPrecedence` 组。有关 Swift 标准库提供的优先级组的完整列表，请参见 [运算符声明](https://developer.apple.com/documentation/swift/operator*declarations)。
+Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符。例如，加法 (`+`) 和减法 (`-`) 运算符属于 `AdditionPrecedence` 组，而乘法 (`*`) 和除法 (`/`) 运算符属于 `MultiplicationPrecedence` 组。有关 Swift 标准库提供的优先级组的完整列表，请参见 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 运算符的*结合性*指定了在没有分组括号的情况下，具有相同优先级的运算符序列是如何分组的。通过写入上下文敏感的关键字之一来指定运算符的结合性：`left`、`right` 或 `none` ——如果您省略结合性，默认值为 `none`。左结合的运算符从左到右分组。例如，减法运算符（`-`）是左结合的，因此表达式`4 - 5 - 6` 被分组为 `(4 - 5) - 6`，并计算为 `-7`。右结合的运算符从右到左分组，而指定为 `none` 的运算符则完全不结合。相同优先级的非结合运算符不能相邻出现。例如，`<` 运算符的结合性为 `none`，这意味着 `1 < 2 < 3` 不是一个有效的表达式。
 
@@ -2736,24 +2737,24 @@ Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符�
 
 > 优先级组声明的语法：
 >
-> *优先级组声明* → **`precedencegroup`** *优先级组名称* **`{`** *优先级组属性*_?_ **`}`**
+> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
 >
-> *优先级组属性* → *优先级组属性* *优先级组属性*_?_ \
-> *优先级组属性* → *优先级组关系* \
-> *优先级组属性* → *优先级组分配* \
-> *优先级组属性* → *优先级组结合性*
+> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_ \
+> *precedence-group-attribute* → *precedence-group-relation* \
+> *precedence-group-attribute* → *precedence-group-assignment* \
+> *precedence-group-attribute* → *precedence-group-associativity*
 >
-> *优先级组关系* → **`高于`** **`:`** *优先级组名称* \
-> *优先级组关系* → **`低于`** **`:`** *优先级组名称*
+> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names* \
+> *precedence-group-relation* → **`lowerThan`** **`:`** *precedence-group-names*
 >
-> *优先级组分配* → **`分配`** **`:`** *布尔字面量*
+> *precedence-group-assignment* → **`assignment`** **`:`** *boolean-literal*
 >
-> *优先级组结合性* → **`结合性`** **`:`** **`左`** \
-> *优先级组结合性* → **`结合性`** **`:`** **`右`** \
-> *优先级组关联性* → **`关联性`** **`:`** **`无`**
+> *precedence-group-associativity* → **`associativity`** **`:`** **`left`** \
+> *precedence-group-associativity* → **`associativity`** **`:`** **`right`** \
+> *precedence-group-associativity* → **`associativity`** **`:`** **`none`**
 >
-> *优先级组名称* → *优先级组名称* | *优先级组名称* **`,`** *优先级组名称*
-> *优先级组名称* → *标识符*
+> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names* \
+> *precedence-group-name* → *identifier*
 
 ## 声明修饰符
 
