@@ -2755,58 +2755,23 @@ Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符�
 > *优先级组名称* → *优先级组名称* | *优先级组名称* **`,`** *优先级组名称*
 > *优先级组名称* → *标识符*
 
-## Declaration Modifiers
+## 声明修饰符
 
-*Declaration modifiers* are keywords or context-sensitive keywords that modify the behavior
-or meaning of a declaration. You specify a declaration modifier by writing the appropriate
-keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
-that introduces the declaration.
+*声明修饰符* 是修饰声明行为或含义的关键字或上下文敏感关键字。你可以通过在声明的属性（如果有的话）和引入声明的关键字之间，写上适当的关键字或上下文敏感关键字来指定声明修饰符。
 
-- term `class`:
-  Apply this modifier to a member of a class
-  to indicate that the member is a member of the class itself,
-  rather than a member of instances of the class.
-  Members of a superclass that have this modifier
-  and don't have the `final` modifier
-  can be overridden by subclasses.
+- `class`：将此修饰符应用于类的成员，以指示该成员是类本身的成员，而不是类实例的成员。具有此修饰符且没有 `final` 修饰符的超类成员可以被子类重写。
 
-- term `dynamic`:
-  Apply this modifier to any member of a class that can be represented by Objective-C.
-  When you mark a member declaration with the `dynamic` modifier,
-  access to that member is always dynamically dispatched using the Objective-C runtime.
-  Access to that member is never inlined or devirtualized by the compiler.
+- `dynamic`：将此修饰符应用于可以用 Objective-C 表示的类的任何成员。当您使用 `dynamic` 修饰符标记成员声明时，对该成员的访问始终通过 Objective-C 运行时动态分派。对该成员的访问永远不会被编译器内联或去虚拟化。
 
-  Because declarations marked with the `dynamic` modifier are dispatched
-  using the Objective-C runtime, they must be marked with the
-  `objc` attribute.
+因为带有 `dynamic` 修饰符的声明是通过 Objective-C 运行时进行调度的，因此它们必须标记为 `objc` 属性。
 
-- term `final`:
-  Apply this modifier to a class or to a property, method,
-  or subscript member of a class. It's applied to a class to indicate that the class
-  can't be subclassed. It's applied to a property, method, or subscript of a class
-  to indicate that a class member can't be overridden in any subclass.
-  For an example of how to use the `final` attribute,
-  see <doc:Inheritance#Preventing-Overrides>.
+- `final`：将此修饰符应用于类或类的属性、方法或下标成员。它应用于类以指示该类不能被子类化。它应用于类的属性、方法或下标，以指示类成员在任何子类中不能被重写。有关如何使用 `final` 属性的示例，请参见 <doc:Inheritance#Preventing-Overrides>。
 
-- term `lazy`:
-  Apply this modifier to a stored variable property of a class or structure
-  to indicate that the property's initial value is calculated and stored at most
-  once, when the property is first accessed.
-  For an example of how to use the `lazy` modifier,
-  see <doc:Properties#Lazy-Stored-Properties>.
+- `lazy`：将此修饰符应用于类或结构体的存储变量属性，以指示该属性的初始值在第一次访问该属性时最多计算并存储一次。有关如何使用 `lazy` 修饰符的示例，请参见 <doc:Properties#Lazy-Stored-Properties>。
 
-- term `optional`:
-  Apply this modifier to a protocol's property, method,
-  or subscript members to indicate that a conforming type isn't required
-  to implement those members.
+- `optional`：将此修饰符应用于协议的属性、方法或下标成员，表示实现该协议的类型不必实现这些成员。
 
-  You can apply the `optional` modifier only to protocols that are marked
-  with the `objc` attribute. As a result, only class types can adopt and conform
-  to a protocol that contains optional member requirements.
-  For more information about how to use the `optional` modifier
-  and for guidance about how to access optional protocol members ---
-  for example, when you're not sure whether a conforming type implements them ---
-  see <doc:Protocols#Optional-Protocol-Requirements>.
+你只能将 `optional` 修饰符应用于带有 `objc` 属性的协议。因此，只有类类型可以采用并遵循包含可选成员要求的协议。有关如何使用 `optional` 修饰符的更多信息，以及在不确定遵循类型是否实现了这些成员时如何访问可选协议成员的指导，请参见 <doc:Protocols#Optional-Protocol-Requirements>。
 
 <!--
   TODO: Currently, you can't check for an optional initializer,
@@ -2816,66 +2781,7 @@ that introduces the declaration.
   properly for optional initializer requirements.
 -->
 
-- term `required`:
-  Apply this modifier to a designated or convenience initializer
-  of a class to indicate that every subclass must implement that initializer.
-  The subclass's implementation of that initializer
-  must also be marked with the `required` modifier.
-
-- term `static`:
-  Apply this modifier to a member of a structure, class, enumeration, or protocol
-  to indicate that the member is a member of the type,
-  rather than a member of instances of that type.
-  In the scope of a class declaration,
-  writing the `static` modifier on a member declaration
-  has the same effect as writing the `class` and `final` modifiers
-  on that member declaration.
-  However, constant type properties of a class are an exception:
-  `static` has its normal, nonclass meaning there
-  because you can't write `class` or `final` on those declarations.
-
-- term `unowned`:
-  Apply this modifier to a stored variable, constant, or stored property
-  to indicate that the variable or property has an unowned reference
-  to the object stored as its value.
-  If you try to access the variable or property
-  after the object has been deallocated,
-  a runtime error is raised.
-  Like a weak reference,
-  the type of the property or value must be a class type;
-  unlike a weak reference,
-  the type is non-optional.
-  For an example and more information about the `unowned` modifier,
-  see <doc:AutomaticReferenceCounting#Unowned-References>.
-
-- term `unowned(safe)`:
-  An explicit spelling of `unowned`.
-
-- term `unowned(unsafe)`:
-  Apply this modifier to a stored variable, constant, or stored property
-  to indicate that the variable or property has an unowned reference
-  to the object stored as its value.
-  If you try to access the variable or property
-  after the object has been deallocated,
-  you'll access the memory at the location where the object used to be,
-  which is a memory-unsafe operation.
-  Like a weak reference,
-  the type of the property or value must be a class type;
-  unlike a weak reference,
-  the type is non-optional.
-  For an example and more information about the `unowned` modifier,
-  see <doc:AutomaticReferenceCounting#Unowned-References>.
-
-- term `weak`:
-  Apply this modifier to a stored variable or stored variable property
-  to indicate that the variable or property has a weak reference to the
-  object stored as its value. The type of the variable or property
-  must be an optional class type.
-  If you access the variable or property
-  after the object has been deallocated,
-  its value is `nil`.
-  For an example and more information about the `weak` modifier,
-  see <doc:AutomaticReferenceCounting#Weak-References>.
+- `required`：将此修饰符应用于类的指定或便利构造器，以指示每个子类必须实现该构造器。子类对该构造器的实现也必须标记为 `required` 修饰符。
 
 ### Access Control Levels
 
