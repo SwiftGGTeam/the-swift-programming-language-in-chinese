@@ -2783,77 +2783,44 @@ Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符�
 
 - `required`：将此修饰符应用于类的指定或便利构造器，以指示每个子类必须实现该构造器。子类对该构造器的实现也必须标记为 `required` 修饰符。
 
-### Access Control Levels
+- `static`：将此修饰符应用于结构体、类、枚举或协议的成员，以指示该成员属于类型本身，而不是该类型实例的成员。在类声明的范围内，将 `static` 修饰符应用于成员声明上，与在该成员声明上写 `class` 和 `final` 修饰符具有相同的效果。然而，类的常量类型属性是一个例外：在这种情况下，`static` 具有其通常的、非类相关的含义，因为在这些声明上不能使用 `class` 或 `final`。
 
-Swift provides five levels of access control: open, public, internal, file private, and private.
-You can mark a declaration with one of the access-level modifiers below
-to specify the declaration's access level.
-Access control is discussed in detail in <doc:AccessControl>.
+- `unowned`：将此修饰符应用于存储变量、常量或存储属性，以指示该变量或属性对作为其值存储的对象具有一个无主引用。如果在对象被释放后尝试访问该变量或属性，将会引发运行时错误。与弱引用类似，属性或值的类型必须是类类型；与弱引用不同，类型是非可选的。有关 `unowned` 修饰符的示例和更多信息，请参见 <doc:AutomaticReferenceCounting#Unowned-References>。
 
-- term `open`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
-  by code in the same module as the declaration.
-  Declarations marked with the `open` access-level modifier can also be accessed and subclassed
-  by code in a module that imports the module that contains that declaration.
+- `unowned(safe)`：`unowned` 的明确拼写。
 
-- term `public`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
-  by code in the same module as the declaration.
-  Declarations marked with the `public` access-level modifier can also be accessed (but not subclassed)
-  by code in a module that imports the module that contains that declaration.
+- `unowned(unsafe)`：将此修饰符应用于存储变量、常量或存储属性，以指示该变量或属性对作为其值存储的对象具有一个无主引用。如果在对象被释放后尝试访问该变量或属性，您将访问对象曾经所在位置的内存，这是一种不安全的内存操作。与弱引用类似，属性或值的类型必须是类类型；与弱引用不同，该类型是非可选的。有关 `unowned` 修饰符的示例和更多信息，请参见 <doc:AutomaticReferenceCounting#Unowned-References>。
 
-- term `package`:
-  Apply this modifier to a declaration
-  to indicate that the declaration can be accessed
-  only by code in the same package as the declaration.
-  A package is a unit of code distribution
-  that you define in the build system you're using.
-  When the build system compiles code,
-  it specifies the package name
-  by passing the `-package-name` flag to the Swift compiler.
-  Two modules are part of the same package
-  if the build system specifies the same package name when building them.
+- `weak`：将此修饰符应用于存储变量或存储变量属性，以指示该变量或属性对作为其值存储的对象具有弱引用。变量或属性的类型必须是可选类类型。如果在对象被释放后访问该变量或属性，其值为 `nil`。有关 `weak` 修饰符的示例和更多信息，请参见 <doc:AutomaticReferenceCounting#Weak-References>。
 
-- term `internal`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed
-  only by code in the same module as the declaration.
-  By default,
-  most declarations are implicitly marked with the `internal` access-level modifier.
 
-- term `fileprivate`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed
-  only by code in the same source file as the declaration.
+### 访问控制级别
 
-- term `private`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed
-  only by code within the declaration's immediate enclosing scope.
+Swift 提供五种访问控制级别：open、public、internal、file private 和 private。您可以使用以下访问级别修饰符之一标记声明，以指定声明的访问级别。访问控制的详细信息请参见 <doc:AccessControl>。
 
-For the purpose of access control,
-extensions behave as follows:
+- `open`：将此修饰符应用于声明，以指示该声明可以被与该声明位于同一模块中的代码访问和子类化。标记为 `open` 访问级别修饰符的声明也可以被导入包含该声明的模块的模块中的代码访问和子类化。
 
-- If there are multiple extensions in the same file,
-  and those extensions all extend the same type,
-  then all of those extensions have the same access-control scope.
-  The extensions and the type they extend can be in different files.
+- `public`：将此修饰符应用于声明，以指示该声明可以被与该声明位于同一模块中的代码访问和子类化。标记为 `public` 访问级别修饰符的声明也可以被导入包含该声明的模块的模块中的代码访问（但不能被子类化）。
 
-- If there are extensions in the same file as the type they extend,
-  the extensions have the same access-control scope as the type they extend.
+- `package`：将此修饰符应用于声明，以指示该声明只能被与声明在同一包中的代码访问。包是您在使用的构建系统中定义的代码分发单元。当构建系统编译代码时，它通过将 `-package-name` 标志传递给 Swift 编译器来指定包名称。如果构建系统在构建它们时指定相同的包名称，则两个模块属于同一个包。
 
-- Private members declared in a type's declaration
-  can be accessed from extensions to that type.
-  Private members declared in one extension
-  can be accessed from other extensions
-  and from the extended type's declaration.
+- `internal`：将此修饰符应用于声明，以指示该声明只能被与声明在同一模块中的代码访问。默认情况下，大多数声明隐式标记为 `internal` 访问级别修饰符。
 
-Each access-level modifier above optionally accepts a single argument,
-which consists of the `set` keyword enclosed in parentheses ---
-for example, `private(set)`.
-Use this form of an access-level modifier when you want to specify an access level
-for the setter of a variable or subscript that's less than or equal
-to the access level of the variable or subscript itself,
-as discussed in <doc:AccessControl#Getters-and-Setters>.
+- `fileprivate`：将此修饰符应用于声明，以指示该声明只能被与声明在同一源文件中的代码访问。
 
-> Grammar of a declaration modifier:
+- `private`：将此修饰符应用于声明，以指示该声明只能被声明的直接封闭范围内的代码访问。
+
+出于访问控制的目的，扩展的行为如下：
+
+- 如果同一个文件中有多个扩展，并且这些扩展都扩展了相同的类型，那么所有这些扩展具有相同的访问控制范围。这些扩展和它们扩展的类型可以在不同的文件中。
+
+- 如果扩展与其扩展的类型在同一文件中，则扩展具有与其扩展的类型相同的访问控制范围。
+
+- 在类型声明中声明的私有成员可以从该类型的扩展中访问。在一个扩展中声明的私有成员可以从其他扩展和扩展类型的声明中访问。
+
+每个上述访问级别修饰符可选择性地接受一个参数，该参数由括号中包含的 `set` 关键字组成——例如，`private(set)`。当您想要为变量或下标的setter指定一个小于或等于变量或下标本身的访问级别时，请使用这种形式的访问级别修饰符，如 <doc:AccessControl#Getters-and-Setters> 中所讨论的。
+
+> 声明修饰语的语法：
 >
 > *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
 > *declaration-modifier* → *access-level-modifier* \
@@ -2872,11 +2839,11 @@ as discussed in <doc:AccessControl#Getters-and-Setters>.
 >
 > *actor-isolation-modifier* → **`nonisolated`**
 
-> Beta Software:
+> Beta 软件：
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文件包含有关正在开发的 API 或技术的初步信息。此信息可能会更改，按照本文件实施的软件应与最终操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple Beta 软件](https://developer.apple.com/support/beta-software/) 的更多信息。
 
 <!--
 This source file is part of the Swift.org open source project
