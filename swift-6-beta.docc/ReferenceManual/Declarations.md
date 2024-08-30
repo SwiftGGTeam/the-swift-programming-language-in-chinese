@@ -6,7 +6,7 @@
 
 在 Swift 中，大多数声明也是定义，因为它们在声明的同时被实现或初始化。也就是说，由于协议不实现其成员，大多数协议成员仅仅是声明。为了方便起见，并且因为在 Swift 中这种区别并不是那么重要，术语*声明*涵盖了声明和定义。
 
-> 声明的语法：
+> 声明的语法:
 >
 > *declaration* → *import-declaration* \
 > *declaration* → *constant-declaration* \
@@ -34,7 +34,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 您编译的 Swift 代码可以包含最多以下一种方法来标记顶级入口点，无论代码如何组织成文件和模块：`main` 特性，`NSApplicationMain` 特性，`UIApplicationMain` 特性，`main.swift` 文件，或包含顶级可执行代码的文件。
 
-> 顶级声明的语法：
+> 顶级声明的语法:
 >
 > *top-level-declaration* → *statements*_?_
 
@@ -57,7 +57,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
   TODO: Discuss scope.  I assume a code block creates a new scope?
 -->
 
-> 代码块的语法：
+> 代码块的语法:
 >
 > *code-block* → **`{`** *statements*_?_ **`}`**
 
@@ -80,7 +80,7 @@ import <#module#>.<#submodule#>
   TODO: Need to add more to this section.
 -->
 
-> 导入声明的语法：
+> 导入声明的语法:
 >
 > *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
 >
@@ -99,7 +99,8 @@ let <#constant name#>: <#type#> = <#expression#>
 
 当在全局范围内声明常量时，必须用一个值进行初始化。当在函数或方法的上下文中发生常量声明时，可以稍后初始化，只要在第一次读取其值之前保证已设置值。如果编译器能够证明常量的值从未被读取，则不要求该常量必须设置值。此分析称为*确定初始化*——编译器证明在读取之前值已被确定设置。
 
-> 注意：确定性初始化无法构建需要领域知识的证明，并且它在条件语句中跟踪状态的能力是有限的。如果您可以确定常量始终有一个值，但编译器无法证明这一点，请尝试简化设置该值的代码路径，或改用变量声明。
+> 注意:
+> 确定性初始化无法构建需要领域知识的证明，并且它在条件语句中跟踪状态的能力是有限的。如果您可以确定常量始终有一个值，但编译器无法证明这一点，请尝试简化设置该值的代码路径，或改用变量声明。
 
 <!--
 In the most general case,
@@ -165,7 +166,7 @@ print("The second number is \(secondNumber).")
 
 有关常量的更多信息以及何时使用它们的指导，请参见 <doc:TheBasics#Constants-and-Variables> 和 <doc:Properties#Stored-Properties>。
 
-> 常量声明的语法：
+> 常量声明的语法
 >
 > *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
 >
@@ -179,7 +180,8 @@ print("The second number is \(secondNumber).")
 
 变量声明有几种形式，用于声明不同类型的命名可变值，包括存储变量和计算变量及属性、存储变量和属性观察者，以及静态变量属性。使用的适当形式取决于变量声明的范围和您打算声明的变量类型。
 
-> 注意：您还可以在协议声明的上下文中声明属性，如<doc:Declarations#Protocol-Property-Declaration> 中所述。
+> 注意:
+> 您还可以在协议声明的上下文中声明属性，如<doc:Declarations#Protocol-Property-Declaration> 中所述。
 
 您可以通过在子类的属性声明中标记 `override` 声明修饰符来重写属性，如 <doc:Inheritance#Overriding> 中所述。
 
@@ -514,7 +516,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 另见 <doc:Declarations#Protocol-Associated-Type-Declaration>。
 
-> 类型别名声明的语法：
+> 类型别名声明的语法:
 >
 > *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
 > *typealias-name* → *identifier* \
@@ -1259,7 +1261,7 @@ Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返�
 
 您可以重写一个不返回的方法，但新方法必须保持其返回类型和不返回值的行为。
 
-> 函数声明的语法：
+> 函数声明的语法:
 >
 > *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
 >
@@ -1516,7 +1518,7 @@ enum GamePlayMode: String {
   We removed it from our grammar, below.
 -->
 
-> 枚举声明的语法：
+> 枚举声明的语法:
 >
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
@@ -1581,7 +1583,7 @@ struct <#structure name#>: <#adopted protocols#> {
 
 您可以通过扩展声明扩展结构类型的行为，详见 <doc:Declarations#Extension-Declaration>。
 
-> 结构体声明的语法：
+> 结构体声明的语法:
 >
 > *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
 > *struct-name* → *identifier* \
@@ -1632,7 +1634,7 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 
 您可以通过扩展声明扩展类类型的行为，如 <doc:Declarations#Extension-Declaration> 中所讨论的。
 
-> 类声明的语法：
+> 类声明的语法:
 >
 > *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
 > *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
@@ -1683,7 +1685,7 @@ actor 是引用类型；当分配给变量或常量，或作为参数传递给�
   whose corresponding parameter is non-escaping and non-Sendable.
 -->
 
-> actor 声明的语法：
+> actor 声明的语法:
 >
 > *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
 > *actor-name* → *identifier* \
@@ -1708,7 +1710,8 @@ protocol <#protocol name#>: <#inherited protocols#> {
 
 协议类型可以从任意数量的其他协议继承。当一个协议类型从其他协议继承时，这些其他协议的要求集合会被聚合，任何从当前协议继承的类型必须符合所有这些要求。有关如何使用协议继承的示例，请参见 <doc:Protocols#Protocol-Inheritance>。
 
-> 注意：您还可以使用协议组合类型聚合多个协议的合规性要求，详见 <doc:Types#Protocol-Composition-Type> 和 <doc:Protocols#Protocol-Composition>。
+> 注意:
+> 您还可以使用协议组合类型聚合多个协议的合规性要求，详见 <doc:Types#Protocol-Composition-Type> 和 <doc:Protocols#Protocol-Composition>。
 
 您可以通过在该类型的扩展声明中采用协议，为先前声明的类型添加协议符合性。在扩展中，您必须实现所采用协议的所有要求。如果该类型已经实现了所有要求，您可以将扩展声明的主体留空。
 
@@ -1770,13 +1773,14 @@ protocol SomeProtocol: AnyObject {
 
 任何从标记为 `AnyObject` 要求的协议继承的协议，也只能被类类型采用。
 
-> 注意：如果一个协议标记了 `objc` 属性，则 `AnyObject` 要求隐式应用于该协议；无需明确将该协议标记为 `AnyObject` 要求。
+> 注意:
+> 如果一个协议标记了 `objc` 属性，则 `AnyObject` 要求隐式应用于该协议；无需明确将该协议标记为 `AnyObject` 要求。
 
 协议是命名类型，因此它们可以出现在代码中与其他命名类型相同的位置，如 <doc:Protocols#Protocols-as-Types> 中所讨论的。然而，您无法构造协议的实例，因为协议实际上并不提供它们所指定的要求的实现。
 
 您可以使用协议来声明类或结构体的代理应该实现哪些方法，如 <doc:Protocols#Delegation> 中所述。
 
-> 协议声明的语法：
+> 协议声明的语法:
 >
 > *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
 > *protocol-name* → *identifier* \
@@ -1842,7 +1846,7 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 另见 <doc:Declarations#Variable-Declaration>。
 
-> 协议属性声明的语法：
+> 协议属性声明的语法:
 >
 > *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
 
@@ -1858,7 +1862,7 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
   TODO: Talk about using ``Self`` in parameters and return types.
 -->
 
-> 协议方法声明的语法：
+> 协议方法声明的语法:
 >
 > *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
 
@@ -1872,7 +1876,7 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 另见 <doc:Declarations#Initializer-Declaration>。
 
-> 协议构造器声明的语法：
+> 协议构造器声明的语法:
 >
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
@@ -1892,7 +1896,7 @@ subscript (<#parameters#>) -> <#return type#> { get set }
 
 另见 <doc:Declarations#Subscript-Declaration>。
 
-> 协议下标声明的语法：
+> 协议下标声明的语法:
 >
 > *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
 
@@ -2012,7 +2016,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 另见 <doc:Declarations#Type-Alias-Declaration>。
 
-> 协议关联类型声明的语法：
+> 协议关联类型声明的语法:
 >
 > *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
 
@@ -2052,7 +2056,8 @@ convenience init(<#parameters#>) {
 
 与方法、属性和下标一样，您需要使用 `override` 声明修饰符标记重写的指定构造器。
 
-> 注意：如果您使用 `required` 声明修饰符标记了一个构造器，则在子类中重写所需的构造器时，不要同时使用 `override` 修饰符标记该构造器。
+> 注意:
+> 如果您使用 `required` 声明修饰符标记了一个构造器，则在子类中重写所需的构造器时，不要同时使用 `override` 修饰符标记该构造器。
 
 就像函数和方法一样，构造器可以抛出或重新抛出错误。与函数和方法一样，您在构造器的参数后使用 `throws` 或 `rethrows` 关键字来指示适当的行为。同样，构造器可以是异步的，您使用 `async` 关键字来指示这一点。
 
@@ -2129,7 +2134,7 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 有关更多信息以及可失败构造器的示例，请参见 <doc:Initialization#Failable-Initializers>。
 
-> 初始化声明的语法：
+> 初始化声明的语法:
 >
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
@@ -2156,7 +2161,7 @@ deinit {
 
 在类声明中如何使用析构器的示例，请参见 <doc:Deinitialization>。
 
-> 析构器声明的语法：
+> 析构器声明的语法:
 >
 > *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
 
@@ -2563,7 +2568,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
   ```
 -->
 
-> 扩展声明的语法：
+> 扩展声明的语法:
 >
 > *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
 > *extension-body* → **`{`** *extension-members*_?_ **`}`**
@@ -2621,7 +2626,7 @@ subscript (<#parameters#>) -> <#return type#> {
   ```
 -->
 
-> 下标声明的语法：
+> 下标声明的语法:
 >
 > *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
 > *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
@@ -2645,7 +2650,7 @@ macro <#name#> = <#macro implementation#>
 
 有关 Swift 中宏的概述，请参见 <doc:Macros>。
 
-> 宏声明的语法：
+> 宏声明的语法:
 >
 > *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
 > *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** \
@@ -2694,7 +2699,7 @@ postfix operator <#operator name#>
 
 声明新运算符后，可以通过声明一个与运算符同名的静态方法来实现它。这个静态方法是运算符参数之一的类型的成员——例如，一个将 `Double` 与 `Int` 相乘的运算符可以在 `Double` 或 `Int` 结构上实现为静态方法。如果你要实现一个前缀或后缀运算符，还必须在方法声明中添加相应的 `prefix` 或 `postfix` 声明修饰符。要查看如何创建和实现新运算符的示例，请参阅 <doc:AdvancedOperators#Custom-Operators>。
 
-> 操作符声明的语法：
+> 操作符声明的语法:
 >
 > *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
 >
@@ -2721,7 +2726,8 @@ precedencegroup <#precedence group name#> {
 
 *低级组名称*和*高级组名称*列表指定了新优先级组与现有优先级组的关系。`lowerThan` 优先级组属性只能用于引用当前模块外声明的优先级组。当两个运算符争夺其操作数时，如在表达式 `2 + 3 * 5` 中，具有较高相对优先级的运算符会更紧密地绑定到其操作数上。
 
-> 注意：使用*低级组名称*和*高级组名称*相关联的优先级组必须适合于单一的关系层次结构，但它们*不*必形成线性层次结构。这意味着可以有相对优先级未定义的优先级组。来自这些优先级组的运算符不能在没有分组括号的情况下相互使用。
+> 注意:
+> 使用*低级组名称*和*高级组名称*相关联的优先级组必须适合于单一的关系层次结构，但它们*不*必形成线性层次结构。这意味着可以有相对优先级未定义的优先级组。来自这些优先级组的运算符不能在没有分组括号的情况下相互使用。
 
 Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符。例如，加法 (`+`) 和减法 (`-`) 运算符属于 `AdditionPrecedence` 组，而乘法 (`*`) 和除法 (`/`) 运算符属于 `MultiplicationPrecedence` 组。有关 Swift 标准库提供的优先级组的完整列表，请参见 [运算符声明](https://developer.apple.com/documentation/swift/operator_declarations)。
 
@@ -2729,7 +2735,7 @@ Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符�
 
 *赋值*优先级组的设置指定了运算符在包含可选链操作中的优先级。当设置为 `true` 时，对应优先级组中的运算符在可选链操作期间使用与 Swift 标准库中的赋值运算符相同的分组规则。否则，当设置为 `false` 或省略时，该优先级组中的运算符将遵循与不执行赋值的运算符相同的可选链规则。
 
-> 优先级组声明的语法：
+> 优先级组声明的语法:
 >
 > *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
 >
@@ -2815,7 +2821,7 @@ Swift 提供五种访问控制级别：open、public、internal、file private �
 
 每个上述访问级别修饰符可选择性地接受一个参数，该参数由括号中包含的 `set` 关键字组成——例如，`private(set)`。当您想要为变量或下标的setter指定一个小于或等于变量或下标本身的访问级别时，请使用这种形式的访问级别修饰符，如 <doc:AccessControl#Getters-and-Setters> 中所讨论的。
 
-> 声明修饰语的语法：
+> 声明修饰语的语法:
 >
 > *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
 > *declaration-modifier* → *access-level-modifier* \
