@@ -1,30 +1,10 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/MemorySafety.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 内存安全
 
-# Memory Safety
+通过合理地组织代码来避免内存访问冲突。
 
-Structure your code to avoid conflicts when accessing memory.
+默认情况下，Swift 会阻止代码中不安全的行为。例如，Swift 会确保所有变量都在使用前被初始化、内存不可在被释放后访问，还会对数组的下标做越界检查。
 
-By default, Swift prevents unsafe behavior from happening in your code.
-For example,
-Swift ensures that variables are initialized before they're used,
-memory isn't accessed after it's been deallocated,
-and array indices are checked for out-of-bounds errors.
-
-Swift also makes sure that multiple accesses
-to the same area of memory don't conflict,
-by requiring code that modifies a location in memory
-to have exclusive access to that memory.
-Because Swift manages memory automatically,
-most of the time you don't have to think about accessing memory at all.
-However,
-it's important to understand where potential conflicts can occur,
-so you can avoid writing code that has conflicting access to memory.
-If your code does contain conflicts,
-you'll get a compile-time or runtime error.
+Swift 还会要求修改内存的代码拥有对被修改区域的独占访问权，以确保对同一块内存区域的多次访问不会产生冲突。由于 Swift 会自动管理内存，大多数情况下你不需要考虑内存访问相关的问题。但是，为了避免编写出会产生内存访问冲突的代码，你还是很有必要了解什么情况下会出现这种问题。如果你的代码有内存访问冲突的问题，系统会在编译时或运行时报错。
 
 <!--
   TODO: maybe re-introduce this text...
@@ -34,19 +14,15 @@ you'll get a compile-time or runtime error.
   Unsafe access to memory is available, if you ask for it explicitly...
 -->
 
-## Understanding Conflicting Access to Memory
+## 理解内存访问冲突
 
-Access to memory happens in your code
-when you do things like set the value of a variable
-or pass an argument to a function.
-For example,
-the following code contains both a read access and a write access:
+在做为变量赋值、给函数传参这样的事情时，你的代码会访问内存。举个例子，下面的代码包含了一次读操作和一次写操作：
 
 ```swift
-// A write access to the memory where one is stored.
+// 向 one 所在的内存区域发起一次写操作
 var one = 1
 
-// A read access from the memory where one is stored.
+// 向 one 所在的内存区域发起一次读操作
 print("We're number \(one)!")
 ```
 
@@ -68,113 +44,43 @@ print("We're number \(one)!")
   or else I'm going to keep getting "We are Number One" stuck in my head.
 -->
 
-A conflicting access to memory can occur
-when different parts of your code are trying
-to access the same location in memory at the same time.
-Multiple accesses to a location in memory at the same time
-can produce unpredictable or inconsistent behavior.
-In Swift, there are ways to modify a value
-that span several lines of code,
-making it possible to attempt to access a value
-in the middle of its own modification.
+当代码中的不同部分试图访问同一块内存区域时，访问冲突就有可能出现。对一块内存区域的同时访问可能导致程序出现无法预测或不稳定的行为。Swift 中有许多修改数值的方式，其中一些会横跨多行代码，这意味着修改某个数值的过程本身也有可能产生对此数值的访问。
 
-You can see a similar problem
-by thinking about how you update a budget
-that's written on a piece of paper.
-Updating the budget is a two-step process:
-First you add the items' names and prices,
-and then you change the total amount
-to reflect the items currently on the list.
-Before and after the update,
-you can read any information from the budget
-and get a correct answer,
-as shown in the figure below.
+要理解这个问题，你可以尝试想象一下在纸上更新一个预算表的流程。更新预算表分为两步，第一步你需要先添加每个预算项目的名字和数额，第二步才是更新预算总额。在整个更新流程的之前及之后，你可以从预算中读取任何信息，而这些信息都是正确的，就像下图所示一样。
 
 ![](memory_shopping)
 
-While you're adding items to the budget,
-it's in a temporary, invalid state
-because the total amount hasn't been updated
-to reflect the newly added items.
-Reading the total amount
-during the process of adding an item
-gives you incorrect information.
+但是，在你向预算表添加项目的过程中，它会短暂地处于一个临时、不合法的状态，因为预算总额此时还没有被更新以反映这些新添加的项目。在项目添加的过程中读取到的总额是不正确的。
 
-This example also demonstrates
-a challenge you may encounter
-when fixing conflicting access to memory:
-There are sometimes multiple ways to fix the conflict
-that produce different answers,
-and it's not always obvious which answer is correct.
-In this example,
-depending on whether you wanted the original total amount
-or the updated total amount,
-either $5 or $320 could be the correct answer.
-Before you can fix the conflicting access,
-you have to determine what it was intended to do.
+这个例子还展示了一个在你修复内存访问冲突问题中会遇到的挑战：有时可能存在多种修复冲突的方式，但它们最终产生的结果并不相同，且很难确定到底哪种结果是符合预期的。在这个例子中，$5 或者 $320 都可以是正确答案 —— 这取决于你的「预期」是读取到更新前的总额还是更新后的总额。在你修复访问冲突之前，你需要先明确内存访问的目的和预期结果是什么。
 
-> Note: If you've written concurrent or multithreaded code,
-> conflicting access to memory might be a familiar problem.
-> However,
-> the conflicting access discussed here can happen
-> on a single thread and
-> *doesn't* involve concurrent or multithreaded code.
+> 注意：如果你编写过并发或多线程代码，访问冲突问题可能对你来说并不陌生。但是，这里讨论的访问冲突即便在单线程环境中也有可能产生，而此时并没有并发或多线程的代码存在。
 >
-> If you have conflicting access to memory
-> from within a single thread,
-> Swift guarantees that you'll get an error
-> at either compile time or runtime.
-> For multithreaded code,
-> use [Thread Sanitizer](https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early)
-> to help detect conflicting access across threads.
+> 如果你的程序在单线程上运行时产生了内存访问冲突问题，Swift 保证会抛出编译时或运行时错误。对于多线程代码，你可以使用 [Thread Sanitizer](https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early) 来检测不同线程间的访问冲突。
 
 <!--
   TODO: The xref above doesn't seem to give enough information.
   What should I be looking for when I get to the linked page?
 -->
 
-### Characteristics of Memory Access
+### 内存访问的特点
 
-There are three characteristics of memory access
-to consider in the context of conflicting access:
-whether the access is a read or a write,
-the duration of the access,
-and the location in memory being accessed.
-Specifically,
-a conflict occurs if you have two accesses
-that meet all of the following conditions:
+在访问冲突的语境下，我们需要考虑内存访问的三个特点：此次访问是读还是写、访问的时长、被访问内存区域的位置。特别地，两次内存访问会在满足以下所有条件时产生冲突：
 
-- At least one is a write access or a nonatomic access.
-- They access the same location in memory.
-- Their durations overlap.
+- 至少其中一次访问是写入操作或非原子化访问。
+- 它们访问的是同一块内存区域。
+- 它们的时间窗口出现了重叠。
 
-The difference between a read and write access
-is usually obvious:
-a write access changes the location in memory,
-but a read access doesn't.
-The location in memory
-refers to what is being accessed ---
-for example, a variable, constant, or property.
-The duration of a memory access
-is either instantaneous or long-term.
+读操作和写操作之间的区别是显而易见的：写操作会改变内存区域，而读操作不会。「内存区域」指的是被访问的内容（例如变量、常量、属性）。内存访问的时长要么瞬间完成，要么持续较长时间。
 
-An operation is *atomic*
-if it uses only C atomic operations;
-otherwise it's nonatomic.
-For a list of those functions, see the `stdatomic(3)` man page.
+如果一项操作仅仅使用了 C 的原子化操作，则这项操作本身也是**原子化**的。请查看 `stdatomic(3)` 手册来了解有哪些函数满足这个定义。
 
 <!--
   Using these functions from Swift requires some shimming -- for example:
   https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
 -->
 
-An access is *instantaneous*
-if it's not possible for other code to run
-after that access starts but before it ends.
-By their nature, two instantaneous accesses can't happen at the same time.
-Most memory access is instantaneous.
-For example,
-all the read and write accesses in the code listing below are instantaneous:
+如果在一次内存访问的过程中没有任何其他代码可以在其开始后、结束前运行，则这次访问是**瞬时**完成的。其性质决定了两次瞬时访问不可能同时发生。大多数内存访问都是瞬时完成的。比如，下面这段代码中的所有读写操作都是瞬时完成的：
 
 ```swift
 func oneMore(than number: Int) -> Int {
@@ -202,39 +108,17 @@ print(myNumber)
   ```
 -->
 
-However,
-there are several ways to access memory,
-called *long-term* accesses,
-that span the execution of other code.
-The difference between instantaneous access and long-term access
-is that it’s possible for other code to run
-after a long-term access starts but before it ends,
-which is called *overlap*.
-A long-term access can overlap
-with other long-term accesses and instantaneous accesses.
+然而，也有其他被称作**长时访问**的内存访问 —— 它们的执行过程会「横跨」其它代码的执行。长时访问和瞬时访问的区别在于：前者执行开始后、结束前的这段时间内，其它的代码有可能会执行，我们称之为**重叠**。一次长时访问可以与其它的长时或瞬时访问重叠。
 
-Overlapping accesses appear primarily in code that uses
-in-out parameters in functions and methods
-or mutating methods of a structure.
-The specific kinds of Swift code that use long-term accesses
-are discussed in the sections below.
+重叠访问通常出现在函数和方法的 in-out 参数以及结构体的变值方法中。下文中会讨论 Swift 中具体哪些类型的代码会使用长时访问。
 
-## Conflicting Access to In-Out Parameters
 
-A function has long-term write access
-to all of its in-out parameters.
-The write access for an in-out parameter starts
-after all of the non-in-out parameters have been evaluated
-and lasts for the entire duration of that function call.
-If there are multiple in-out parameters,
-the write accesses start in the same order as the parameters appear.
 
-One consequence of this long-term write access
-is that you can't access the original
-variable that was passed as in-out,
-even if scoping rules and access control would otherwise permit it ---
-any access to the original creates a conflict.
-For example:
+## 对 In-Out 参数的访问冲突
+
+一个函数会对它所有的 in-out 参数保持长时写访问。in-out 参数的写访问会在所有非 in-out 参数处理完之后开始，直到函数执行完毕为止。如果存在多个 in-out 参数，则写访问的开始顺序和参数的排列顺序一致。
+
+这种长期保持的写访问带来的问题是：即便作用域和访问权限规则允许，你也不能再访问以 in-out 形式传入的原始变量。这是因为任何访问原始变量的行为都会造成冲突，例如：
 
 ```swift
 var stepSize = 1
@@ -244,7 +128,7 @@ func increment(_ number: inout Int) {
 }
 
 increment(&stepSize)
-// Error: conflicting accesses to stepSize
+// 错误：stepSize 访问冲突
 ```
 
 <!--
@@ -265,31 +149,20 @@ increment(&stepSize)
   ```
 -->
 
-In the code above,
-`stepSize` is a global variable,
-and it's normally accessible from within `increment(_:)`.
-However,
-the read access to `stepSize` overlaps with
-the write access to `number`.
-As shown in the figure below,
-both `number` and `stepSize` refer to the same location in memory.
-The read and write accesses
-refer to the same memory and they overlap,
-producing a conflict.
+在上面的代码里，`stepSize` 是一个全局变量，并且它可以通常可以在 `increment(_:)` 里被访问。然而，对于 `stepSize` 的读访问与 `number` 的写访问重叠了。就像下面展示的那样，`number` 和 `stepSize` 都指向了同一个内存区域。同一块内存区域的读和写访问重叠了，因此产生了冲突。
 
 ![](memory_increment)
 
-One way to solve this conflict
-is to make an explicit copy of `stepSize`:
+其中一个解决冲突的方式是显式地复制一份 `stepSize`：
 
 ```swift
-// Make an explicit copy.
+// 显式复制
 var copyOfStepSize = stepSize
 increment(&copyOfStepSize)
 
-// Update the original.
+// 更新原来的值
 stepSize = copyOfStepSize
-// stepSize is now 2
+// stepSize 现在的值是 2
 ```
 
 <!--
@@ -310,6 +183,8 @@ stepSize = copyOfStepSize
   </ stepSize is now 2
   ```
 -->
+
+当你在调用 `increment(_:)` 前复制了一份 `stepSize`，
 
 When you make a copy of `stepSize` before calling `increment(_:)`,
 it's clear that the value of `copyOfStepSize` is incremented
@@ -719,14 +594,14 @@ it doesn't allow the access.
   ::
 
       var global = 4
-
+    
       func foo(_ x: UnsafePointer<Int>){
           global = 7
       }
-
+    
       foo(&global)
       print(global)
-
+    
       // Simultaneous accesses to 0x106761618, but modification requires exclusive access.
       // Previous access (a read) started at temp2`main + 87 (0x10675e417).
       // Current access (a modification) started at:
