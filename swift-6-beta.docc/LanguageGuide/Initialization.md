@@ -1,55 +1,28 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Initialization.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 构造过程
 
-# Initialization
+设置类型的初始值并执行一次性构造过程。
 
-Set the initial values for a type's stored properties and perform one-time setup.
+*构造过程*是使用类、结构体或枚举等实例之前的准备过程。这个过程包括为该实例的每个存储属性设置初始值，并执行任何其他必要的设置或构造过程，以确保新实例在使用前已经完成正确的构造。
 
-*Initialization* is the process of preparing an instance of
-a class, structure, or enumeration for use.
-This process involves setting an initial value for each stored property on that instance
-and performing any other setup or initialization that's required
-before the new instance is ready for use.
+你可以通过定义*构造器*来实现这个构造过程，它就像是用来创建特定类型新实例的特殊方法。与Objective-C构造器不同，Swift构造器不返回值，它们的主要作用是确保新类型实例在首次使用前被正确构造。
 
-You implement this initialization process by defining *initializers*,
-which are like special methods that can be called
-to create a new instance of a particular type.
-Unlike Objective-C initializers, Swift initializers don't return a value.
-Their primary role is to ensure that new instances of a type
-are correctly initialized before they're used for the first time.
+类的实例在被释放之前，可以通过*析构器*进行任何自定义清理操作。想了解析构器的更多内容，请参见 <doc:Deinitialization>.
 
-Instances of class types can also implement a *deinitializer*,
-which performs any custom cleanup just before an instance of that class is deallocated.
-For more information about deinitializers, see <doc:Deinitialization>.
+## 存储属性的初始赋值
 
-## Setting Initial Values for Stored Properties
+类和结构体*必须*在其实例被创建时为所有的存储属性设置一个适当的初始值。存储属性不能处于不确定的状态。
 
-Classes and structures *must* set all of their stored properties
-to an appropriate initial value by the time
-an instance of that class or structure is created.
-Stored properties can't be left in an indeterminate state.
+你可以在构造器中为存储属性设置初始值，或者在定义属性时赋予默认值。以下部分将会详细介绍这两种方法。
 
-You can set an initial value for a stored property within an initializer,
-or by assigning a default property value as part of the property's definition.
-These actions are described in the following sections.
+> 注意：当你为存储属性赋予默认值，或者在构造器中设置其初始值时，该属性的值会被直接设置，而不会触发任何属性观察器。
 
-> Note: When you assign a default value to a stored property,
-> or set its initial value within an initializer,
-> the value of that property is set directly,
-> without calling any property observers.
+### 构造器
 
-### Initializers
-
-*Initializers* are called to create a new instance of a particular type.
-In its simplest form, an initializer is like an instance method with no parameters,
-written using the `init` keyword:
+*构造器* 被调用来创建某个特定类型的新实例。构造器在最简单的形式中就像一个没有参数的实例方法，以关键字`init` 来命名：
 
 ```swift
 init() {
-    // perform some initialization here
+    // 在此处执行构造过程
 }
 ```
 
@@ -65,10 +38,7 @@ init() {
   ```
 -->
 
-The example below defines a new structure called `Fahrenheit`
-to store temperatures expressed in the Fahrenheit scale.
-The `Fahrenheit` structure has one stored property,
-`temperature`, which is of type `Double`:
+下面例子中定义了一个用来保存华氏温度的结构体 `Fahrenheit`，它拥有一个 `Double` 类型的存储型属性 `temperature`：
 
 ```swift
 struct Fahrenheit {
@@ -79,7 +49,7 @@ struct Fahrenheit {
 }
 var f = Fahrenheit()
 print("The default temperature is \(f.temperature)° Fahrenheit")
-// Prints "The default temperature is 32.0° Fahrenheit"
+// 打印 "The default temperature is 32.0° Fahrenheit"
 ```
 
 <!--
@@ -98,32 +68,15 @@ print("The default temperature is \(f.temperature)° Fahrenheit")
   ```
 -->
 
-The structure defines a single initializer, `init`, with no parameters,
-which initializes the stored temperature with a value of `32.0`
-(the freezing point of water in degrees Fahrenheit).
+这个结构体定义了一个不带形参的构造器 `init`，并在里面将存储型属性 `temperature` 的值初始化为 `32.0`（华氏温度下水的冰点）。
 
-### Default Property Values
+### 默认属性值
 
-You can set the initial value of a stored property from within an initializer,
-as shown above.
-Alternatively, specify a *default property value*
-as part of the property's declaration.
-You specify a default property value by assigning an initial value to the property
-when it's defined.
+如上所示，你可以在构造器中设置存储属性的初始值。同样，你也可以在属性声明时为其设置默认值。
 
-> Note: If a property always takes the same initial value,
-> provide a default value rather than setting a value within an initializer.
-> The end result is the same,
-> but the default value ties the property's initialization more closely to its declaration.
-> It makes for shorter, clearer initializers
-> and enables you to infer the type of the property from its default value.
-> The default value also makes it easier for you to take advantage of
-> default initializers and initializer inheritance,
-> as described later in this chapter.
+> 注意：如果一个属性总是使用相同的初始值，建议直接提供一个默认值，而不是每次都在构造器中设置值。两种方法的最终结果是一样的，但默认值使属性的初始化与其声明结合的更加紧密。它能让你的构造器更简洁、更清晰，且能够通过默认值推断属性的类型。默认值还能使你更容易利用默认构造器和构造器继承等特性，如本章后面所述。
 
-You can write the `Fahrenheit` structure from above in a simpler form
-by providing a default value for its `temperature` property
-at the point that the property is declared:
+你可以通过在声明 `temperature` 属性时提供一个默认值，将上面的 `Fahrenheit` 结构体写成如下更简单的形式：
 
 ```swift
 struct Fahrenheit {
@@ -141,26 +94,15 @@ struct Fahrenheit {
   ```
 -->
 
-## Customizing Initialization
+## 自定义构造过程
 
-You can customize the initialization process
-with input parameters and optional property types,
-or by assigning constant properties during initialization,
-as described in the following sections.
+你可以通过输入形参和可选属性类型，或在初始化期间分配常量属性来定制初始化过程，这些都将在后面章节中提到。
 
-### Initialization Parameters
+### 形参的构造过程
 
-You can provide *initialization parameters* as part of an initializer's definition,
-to define the types and names of values that customize the initialization process.
-Initialization parameters have the same capabilities and syntax
-as function and method parameters.
+你可以在自定义构造过程的定义中提供*构造形参*，指定其值的类型和名字。构造形参的功能和语法与函数和方法的形参相同。
 
-The following example defines a structure called `Celsius`,
-which stores temperatures expressed in degrees Celsius.
-The `Celsius` structure implements two custom initializers called
-`init(fromFahrenheit:)` and `init(fromKelvin:)`,
-which initialize a new instance of the structure
-with a value from a different temperature scale:
+下面例子中定义了一个用来保存摄氏温度的结构体 `Celsius`。它定义了两个不同的构造器：`init(fromFahrenheit:)` 和 `init(fromKelvin:)`，二者分别通过接受不同温标下的温度值来创建新的实例：
 
 ```swift
 struct Celsius {
@@ -173,9 +115,9 @@ struct Celsius {
     }
 }
 let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-// boilingPointOfWater.temperatureInCelsius is 100.0
+// boilingPointOfWater.temperatureInCelsius 是 100.0
 let freezingPointOfWater = Celsius(fromKelvin: 273.15)
-// freezingPointOfWater.temperatureInCelsius is 0.0
+// freezingPointOfWater.temperatureInCelsius 是 0.0
 ```
 
 <!--
@@ -200,43 +142,22 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
   ```
 -->
 
-The first initializer has a single initialization parameter
-with an argument label of `fromFahrenheit` and a parameter name of `fahrenheit`.
-The second initializer has a single initialization parameter
-with an argument label of `fromKelvin` and a parameter name of `kelvin`.
-Both initializers convert their single argument into
-the corresponding Celsius value
-and store this value in a property called `temperatureInCelsius`.
+第一个构造器拥有一个构造形参，其实参标签为 `fromFahrenheit`，形参命名为 `fahrenheit`；第二个构造器也拥有一个构造形参，其实参标签为 `fromKelvin`，形参命名为 `kelvin`。这两个构造器都将单一的实参转换成摄氏温度值，并保存在属性 `temperatureInCelsius` 中。
 
 <!--
   TODO: I need to provide an example of default values for initializer parameters,
   to show they can help you to get multiple initializers "for free" (after a fashion).
 -->
 
-### Parameter Names and Argument Labels
+### 形参命名和实参标签
 
-As with function and method parameters,
-initialization parameters can have both a parameter name
-for use within the initializer's body
-and an argument label for use when calling the initializer.
+与函数和方法形参相同，构造形参可以同时具有在构造器内部使用的形参名称和在调用构造器时使用的实参标签。
 
-However, initializers don't have an identifying function name before their parentheses
-in the way that functions and methods do.
-Therefore, the names and types of an initializer's parameters
-play a particularly important role in identifying which initializer should be called.
-Because of this, Swift provides an automatic argument label
-for *every* parameter in an initializer if you don't provide one.
+然而，构造器在括号前没有像函数和方法那样的可辨别的方法名。因此，构造器的形参名称和类型在确定应调用哪个构造器时起着至关重要的作用。正因为如此，如果你没有提供实参标签，Swift会为构造器的每个形参自动提供一个实参标签。
 
-The following example defines a structure called `Color`,
-with three constant properties called `red`, `green`, and `blue`.
-These properties store a value between `0.0` and `1.0`
-to indicate the amount of red, green, and blue in the color.
 
-`Color` provides an initializer with
-three appropriately named parameters of type `Double`
-for its red, green, and blue components.
-`Color` also provides a second initializer with a single `white` parameter,
-which is used to provide the same value for all three color components.
+下面例子中的`Color`结构体包含了三个 `Double` 类型的常量（ `red` 、 `green`、 `blue` ）,表明颜色中红、绿、蓝成分的含量。
+Color 提供了一个构造器，为红蓝绿提供三个合适 Double 类型的形参命名。Color 也提供了第二个构造器，它只包含名为 white 的 Double 类型的形参，它为三个颜色的属性提供相同的值。
 
 ```swift
 struct Color {
@@ -274,8 +195,7 @@ struct Color {
   ```
 -->
 
-Both initializers can be used to create a new `Color` instance,
-by providing named values for each initializer parameter:
+两种构造器都能通过为每一个构造器形参提供命名值来创建一个新的 Color 实例：
 
 ```swift
 let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
@@ -294,14 +214,11 @@ let halfGray = Color(white: 0.5)
   ```
 -->
 
-Note that it isn't possible to call these initializers
-without using argument labels.
-Argument labels must always be used in an initializer if they're defined,
-and omitting them is a compile-time error:
+> 注意: 如果不通过实参标签传值，这个构造器是没法调用的。如果构造器定义了某个实参标签，就必须使用它，忽略它将导致编译期错误：
 
 ```swift
 let veryGreen = Color(0.0, 1.0, 0.0)
-// this reports a compile-time error - argument labels are required
+// 报编译期错误-需要实参标签
 ```
 
 <!--
@@ -317,16 +234,11 @@ let veryGreen = Color(0.0, 1.0, 0.0)
   ```
 -->
 
-### Initializer Parameters Without Argument Labels
+### 不带实参标签的构造器形参
 
-If you don't want to use an argument label for an initializer parameter,
-write an underscore (`_`) instead of an explicit argument label for that parameter
-to override the default behavior.
+如果你不希望构造器的某个形参使用实参标签，可以使用下划线 `（_）` 来代替显式的实参标签来重写默认行为。
 
-Here's an expanded version of the `Celsius` example
-from <doc:Initialization#Initialization-Parameters> above,
-with an additional initializer to create a new `Celsius` instance
-from a `Double` value that's already in the Celsius scale:
+接下来是 <doc:Initialization#Initialization-Parameters> 带来的扩展版本的 `Celsius`, 增加了一个构造器用于从已经是摄氏温标的 `Double` 值创建一个新的 `Celsius` 实例:
 
 ```swift
 struct Celsius {
@@ -342,7 +254,7 @@ struct Celsius {
     }
 }
 let bodyTemperature = Celsius(37.0)
-// bodyTemperature.temperatureInCelsius is 37.0
+// bodyTemperature.temperatureInCelsius 是 37.0
 ```
 
 <!--
@@ -367,23 +279,13 @@ let bodyTemperature = Celsius(37.0)
   ```
 -->
 
-The initializer call `Celsius(37.0)` is clear in its intent
-without the need for an argument label.
-It's therefore appropriate to write this initializer as `init(_ celsius: Double)`
-so that it can be called by providing an unnamed `Double` value.
+构造器调用 `Celsius(37.0)` 的意图非常明确，不需要实参标签。因此，适合使用构造器 `init(_ celsius: Double)`来通过未命名的 `Double` 值来构造 `Celsius` 。
 
-### Optional Property Types
+### 可选属性类型
 
-If your custom type has a stored property that's logically allowed to have “no value” ---
-perhaps because its value can't be set during initialization,
-or because it's allowed to have “no value” at some later point ---
-declare the property with an *optional* type.
-Properties of optional type are automatically initialized with a value of `nil`,
-indicating that the property is deliberately intended to have “no value yet”
-during initialization.
+如果你自定义的类型有一个逻辑上允许值为空的存储型属性——无论是因为它无法在初始化时赋值，还是因为它在之后某个时机可以赋值为空——都需要将它声明为 `可选类型`。可选类型的属性将自动初始化为 `nil`，表示这个属性是特意在构造过程设置为空。
 
-The following example defines a class called `SurveyQuestion`,
-with an optional `String` property called `response`:
+下面例子中定义了类 `SurveyQuestion`，它包含一个可选 `String` 属性 `response`：
 
 ```swift
 class SurveyQuestion {
@@ -398,7 +300,7 @@ class SurveyQuestion {
 }
 let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
 cheeseQuestion.ask()
-// Prints "Do you like cheese?"
+// 打印 "Do you like cheese?"
 cheeseQuestion.response = "Yes, I do like cheese."
 ```
 
@@ -423,19 +325,11 @@ cheeseQuestion.response = "Yes, I do like cheese."
   ```
 -->
 
-The response to a survey question can't be known until it's asked,
-and so the `response` property is declared with a type of `String?`,
-or “optional `String`”.
-It's automatically assigned a default value of `nil`, meaning “no string yet”,
-when a new instance of `SurveyQuestion` is initialized.
+对调查问题的回答在问题被问到之前是未知的，因此 `response` 属性被声明为 `String?` 类型，即“可选的 `String`”。当一个新的 `SurveyQuestion` 实例被初始化时，它会自动被赋予默认值 `nil`，表示“尚无字符串”。
 
-### Assigning Constant Properties During Initialization
+### 构造过程中常量属性的赋值
 
-You can assign a value to a constant property
-at any point during initialization,
-as long as it's set to a definite value by the time initialization finishes.
-Once a constant property is assigned a value,
-it can't be further modified.
+你可以在构造过程中的任意时间点给常量属性赋值，只要在构造过程结束时它设置成确定的值。一旦常量属性被赋值，它将永远不可更改。
 
 <!--
   - test: `constantPropertyAssignment`
@@ -481,16 +375,9 @@ it can't be further modified.
   ```
 -->
 
-> Note: For class instances,
-> a constant property can be modified during initialization
-> only by the class that introduces it.
-> It can't be modified by a subclass.
+> 注意: 对于类的实例来说，它的常量属性只能在定义它的类的构造过程中修改；不能在子类中修改。
 
-You can revise the `SurveyQuestion` example from above to use
-a constant property rather than a variable property for the `text` property of the question,
-to indicate that the question doesn't change once an instance of `SurveyQuestion` is created.
-Even though the `text` property is now a constant,
-it can still be set within the class's initializer:
+你可以修改上面的 `SurveyQuestion` 示例，将问题的 `text` 属性从变量属性改为常量属性，以表明一旦 `SurveyQuestion` 实例被创建，`text` 是不会改变的。即使 `text` 属性现在是一个常量，它仍然可以在类的构造器中被设置：
 
 ```swift
 class SurveyQuestion {
@@ -505,7 +392,7 @@ class SurveyQuestion {
 }
 let beetsQuestion = SurveyQuestion(text: "How about beets?")
 beetsQuestion.ask()
-// Prints "How about beets?"
+// 打印 "How about beets?"
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ```
 
@@ -530,14 +417,9 @@ beetsQuestion.response = "I also like beets. (But not with cheese.)"
   ```
 -->
 
-## Default Initializers
+## 默认构造器
 
-Swift provides a *default initializer*
-for any structure or class
-that provides default values for all of its properties
-and doesn't provide at least one initializer itself.
-The default initializer simply creates a new instance
-with all of its properties set to their default values.
+如果结构体或类为所有属性提供了默认值，又没有提供任何自定义的构造器，那么 Swift 会给这些结构体或类提供一个默认构造器。这个默认构造器将简单地创建一个所有属性值都设置为它们默认值的实例。
 
 <!--
   - test: `defaultInitializersForStructAndClass`
@@ -553,9 +435,7 @@ with all of its properties set to their default values.
   ```
 -->
 
-This example defines a class called `ShoppingListItem`,
-which encapsulates the name, quantity, and purchase state
-of an item in a shopping list:
+下面例子中定义了一个类 `ShoppingListItem`，它封装了购物清单中的某一物品的名字（`name`）、数量（`quantity`）和购买状态 `purchase state`：
 
 ```swift
 class ShoppingListItem {
@@ -579,17 +459,9 @@ var item = ShoppingListItem()
   ```
 -->
 
-Because all properties of the `ShoppingListItem` class have default values,
-and because it's a base class with no superclass,
-`ShoppingListItem` automatically gains a default initializer implementation
-that creates a new instance with all of its properties set to their default values.
-(The `name` property is an optional `String` property,
-and so it automatically receives a default value of `nil`,
-even though this value isn't written in the code.)
-The example above uses the default initializer for the `ShoppingListItem` class
-to create a new instance of the class with initializer syntax,
-written as `ShoppingListItem()`,
-and assigns this new instance to a variable called `item`.
+由于 `ShoppingListItem` 类的所有属性都有默认值，并且它是一个没有超类的基类。因此，`ShoppingListItem` 会自动获得一个默认构造器实现，该实现会创建一个新实例，并将其所有属性设置为默认值。（`name` 属性是一个可选的 `String` 属性，因此它会自动接收一个默认值 `nil`，即使这个值没有在代码中写出。）上面的示例使用 `ShoppingListItem` 类的默认构造器来创建一个类的新实例（ `ShoppingListItem()`形式的构造语法），并将其赋值给变量 `item` 。
+
+![](initializersExample03)
 
 ### Memberwise Initializers for Structure Types
 
