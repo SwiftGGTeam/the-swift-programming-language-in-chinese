@@ -379,8 +379,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   ```
 -->
 
-`dynamicallyCall(withKeywordArguments:)` 方法的声明必须有一个遵循 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 协议的单一参数，
-返回类型可以是任何类型。参数的 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 必须遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)。前面的例子使用 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 作为参数类型，以便调用者可以包含重复的参数标签——`a` 和 `b` 在对 `repeat` 的调用中出现多次。
+`dynamicallyCall(withKeywordArguments:)` 方法的声明必须有一个遵循 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 协议的单一参数，返回类型可以是任何类型。参数的 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 必须遵循 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)。前面的例子使用 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 作为参数类型，以便调用者可以包含重复的参数标签——`a` 和 `b` 在对 `repeat` 的调用中出现多次。
 
 如果你两种不同参数类型的 `dynamicallyCall` 方法，当方法调用包含关键字参数时，将调用 `dynamicallyCall(withKeywordArguments:)`。在所有其他情况下，将调用 `dynamicallyCall(withArguments:)`。
 
