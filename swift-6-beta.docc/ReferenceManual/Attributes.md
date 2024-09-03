@@ -270,7 +270,7 @@ so we don't guarantee in docs that it always happens.
 
 ### dynamicCallable
 
-将此特性应用于类、结构、枚举或协议，以将该类型的实例视为可调用函数。该类型必须实现 `dynamicallyCall(withArguments:)` 方法和 `dynamicallyCall(withKeywordArguments:)` 方法中的至少一个或都实现。
+将此特性应用于类、结构体、枚举或协议，以将该类型的实例视为可调用函数。该类型必须实现 `dynamicallyCall(withArguments:)` 方法和 `dynamicallyCall(withKeywordArguments:)` 方法中的至少一个或都实现。
 
 你可以像调用有任意数量参数的函数一样调用动态可调用类型的实例。
 
@@ -414,7 +414,7 @@ repeatLabels(a: "four") // 错误
 
 ### dynamicMemberLookup
 
-将此特性应用于类、结构、枚举或协议，以便在运行时按名称查找成员。该类型必须实现一个 `subscript(dynamicMember:)` 下标操作。
+将此特性应用于类、结构体、枚举或协议，以便在运行时按名称查找成员。该类型必须实现一个 `subscript(dynamicMember:)` 下标操作。
 
 在显式成员表达式中，如果没有对应的命名成员声明，则该表达式被理解为对类型的 `subscript(dynamicMember:)` 下标操作的调用，并将有关成员的信息作为参数传递。下标操作可以接受一个参数，该参数可以是键路径或成员名称；如果你实现了两个下标操作，则使用接受键路径参数的下标操作。
 
@@ -723,7 +723,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### main
 
-将此特性应用于结构、类或枚举声明，以表示它包含程序流程的顶级入口点。该类型必须提供一个不接受任何参数并返回 `Void` 的 `main` 类型函数。例如：
+将此特性应用于结构体、类或枚举声明，以表示它包含程序流程的顶级入口点。该类型必须提供一个不接受任何参数并返回 `Void` 的 `main` 类型函数。例如：
 
 ```swift
 @main
