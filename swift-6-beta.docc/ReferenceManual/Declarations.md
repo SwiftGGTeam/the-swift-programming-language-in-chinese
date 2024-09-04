@@ -583,7 +583,7 @@ func <#function name#>(<#parameters#>) {
 
 ```swift
 func f(x: Int, y: Int) -> Int { return x + y }
-f(x: 1, y: 2) // both x and y are labeled
+f(x: 1, y: 2) // x 和 y 都带有标签
 ```
 
 <!--
@@ -592,7 +592,7 @@ f(x: 1, y: 2) // both x and y are labeled
   ```swifttest
   -> func f(x: Int, y: Int) -> Int { return x + y }
   >> let r0 =
-  -> f(x: 1, y: 2) // both x and y are labeled
+  -> f(x: 1, y: 2) // x 和 y 都带有标签
   >> assert(r0 == 3)
   ```
 -->
@@ -614,8 +614,8 @@ _ <#parameter name#>: <#parameter type#>
 在参数名称前加下划线（`_`）可以抑制参数标签。相应的参数在函数或方法调用中必须没有标签。
 
 ```swift
-func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
-repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
+func repeatGreeting(_ greeting: String, count n: Int) { /* 打招呼 n 次 */ }
+repeatGreeting("Hello, world!", count: 2) //  count 带有标签，greeting 没有
 ```
 
 <!--
@@ -656,7 +656,7 @@ func someFunction(a: inout Int) {
 ```swift
 var x = 7
 someFunction(&x)
-print(x)  // Prints "8"
+print(x)  // 打印 "8"
 ```
 
 输入输出参数的传递方式如下：
@@ -677,7 +677,7 @@ func someFunction(a: inout Int) {
     a += someValue
 }
 
-// Error: This causes a runtime exclusivity violation
+// 错误：这会导致运行时排他性违规
 someFunction(&someValue)
 ```
 
@@ -690,7 +690,7 @@ func someFunction(a: inout Int, b: inout Int) {
     b += 1
 }
 
-// Error: Cannot pass the same value to multiple in-out parameters
+// 错误：不能将同一个值传递给多个 in-out 参数
 someFunction(&someValue, &someValue)
 ```
 
@@ -733,11 +733,11 @@ func someFunction(a: inout Int) -> () -> Int {
 
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
-    // Make a local copy and manually copy it back.
+    // 创建一个本地副本，并在函数结束时手动将其复制回去。
     var localX = x
     defer { x = localX }
 
-    // Operate on localX asynchronously, then wait before returning.
+    // 异步操作 localX，然后在返回之前等待。
     queue.async { someMutatingOperation(&localX) }
     queue.sync {}
 }
@@ -813,7 +813,7 @@ Where are copies implicitly inserted?
 `borrowing` 修饰符表示该函数不保留参数的值。在这种情况下，调用者保持对象的所有权，并对对象的生命周期负责。使用 `borrowing` 可以在函数仅暂时使用对象时最小化开销。
 
 ```swift
-// `isLessThan` does not keep either argument
+// `isLessThan` 不会保留任一参数
 func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
     ...
 }
@@ -822,7 +822,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 如果函数需要保持参数的值，例如，通过将其存储在全局变量中——你可以使用 `copy` 明确地复制该值。
 
 ```swift
-// As above, but this `isLessThan` also wants to record the smallest value
+// 如上所述，但这个 `isLessThan` 还需要记录最小值
 func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
     if lhs < storedValue {
         storedValue = copy lhs
@@ -836,7 +836,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 相反，`consuming` 参数修饰符表示该函数拥有该值的所有权，负责在函数返回之前存储或销毁它。
 
 ```swift
-// `store` keeps its argument, so mark it `consuming`
+// `store` 会保留它的参数，因此将其标记为 `consuming`
 func store(a: consuming A) {
     someGlobalVariable = a
 }
@@ -845,16 +845,16 @@ func store(a: consuming A) {
 使用 `consuming` 可以在调用者在函数调用后不再需要使用该对象时，最小化开销。
 
 ```swift
-// Usually, this is the last thing you do with a value
+// 通常，这是你对一个值执行的最后一件事
 store(a: value)
 ```
 
 如果在函数调用后继续使用可复制对象，编译器会在函数调用之前自动复制该对象。
 
 ```swift
-// The compiler inserts an implicit copy here
-store(a: someValue)  // This function consumes someValue
-print(someValue)  // This uses the copy of someValue
+// 编译器会在这里插入一个隐式副本
+store(a: someValue)  // 此函数消耗 someValue
+print(someValue)  // 这里使用的是 someValue 的副本
 ```
 
 与 `inout` 不同，`borrowing` 和 `consuming` 参数在调用函数时不需要任何特殊标记：
@@ -869,33 +869,31 @@ someFunction(a: someA, b: someB)
 
 ```swift
 func borrowingFunction1(a: borrowing A) {
-    // Error: Cannot implicitly copy a
-    // This assignment requires a copy because
-    // `a` is only borrowed from the caller.
+    // 错误：无法隐式复制 a
+    // 这个赋值操作需要复制，因为 `a` 只是从调用者那里借来的。
     someGlobalVariable = a
 }
 
 func borrowingFunction2(a: borrowing A) {
-    // OK: Explicit copying works
+    // 可以：显式复制是可以的
     someGlobalVariable = copy a
 }
 
 func consumingFunction1(a: consuming A) {
-    // Error: Cannot implicitly copy a
-    // This assignment requires a copy because
-    // of the following `print`
+    // 错误：无法隐式复制 a
+    // 这个赋值操作需要复制，因为后面有 `print`
     someGlobalVariable = a
     print(a)
 }
 
 func consumingFunction2(a: consuming A) {
-    // OK: Explicit copying works regardless
+    // 可以：显式复制在这种情况下有效
     someGlobalVariable = copy a
     print(a)
 }
 
 func consumingFunction3(a: consuming A) {
-    // OK: No copy needed here because this is the last use
+    // 可以：不需要复制，因为这是最后一次使用
     someGlobalVariable = a
 }
 ```
@@ -925,9 +923,9 @@ _ : <#parameter type#>
 
 ```swift
 func f(x: Int = 42) -> Int { return x }
-f()       // Valid, uses default value
-f(x: 7)   // Valid, uses the value provided
-f(7)      // Invalid, missing argument label
+f()       // 有效，使用默认值
+f(x: 7)   // 有效，使用提供的值
+f(7)      // 无效，缺少参数标签
 ```
 
 <!--
@@ -1042,7 +1040,7 @@ struct CallableStruct {
 let callable = CallableStruct(value: 100)
 callable(4, scale: 2)
 callable.callAsFunction(4, scale: 2)
-// Both function calls print 208.
+// 两个函数调用都打印 208。
 ```
 
 <!--
@@ -1069,7 +1067,7 @@ call-as-function 的方法和来自 `dynamicCallable` 特性的方法在将多�
 定义一个 call-as-function，或者来自 `dynamicCallable` 特性的方法，并不允许你在函数调用表达式以外的任何上下文中将该类型的实例用作函数。例如：
 
 ```swift
-let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // 错误
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
@@ -1149,7 +1147,7 @@ func alwaysThrows() throws {
 func someFunction(callback: () throws -> Void) rethrows {
     do {
         try callback()
-        try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+        try alwaysThrows()  // 无效，alwaysThrows() 不是一个抛出参数
     } catch {
         throw AnotherError.error
     }
@@ -1331,9 +1329,9 @@ enum Number {
     case real(Double)
 }
 let f = Number.integer
-// f is a function of type (Int) -> Number
+// f 是一个 (Int) -> Number 的函数类型
 
-// Apply f to create an array of Number instances with integer values
+// 应用函数 `f` 来创建一个包含整数值的 `Number` 实例数组
 let evenInts: [Number] = [0, 2, 4, 6].map(f)
 ```
 
@@ -1757,7 +1755,7 @@ enum MyEnum: SomeProtocol {
 
 ```swift
 protocol SomeProtocol: AnyObject {
-    /* Protocol members go here */
+    /* 协议成员写在这里 */
 }
 ```
 
@@ -1889,7 +1887,6 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
-
 下标声明仅声明符合协议的类型所需的最小 getter 和 setter 实现要求。如果下标声明同时包含 `get` 和 `set` 关键字，则符合的类型必须实现 getter 和 setter 子句。如果下标声明仅包含 `get` 关键字，则符合的类型必须实现*至少*一个 getter 子句，并且可以选择性地实现一个 setter 子句。
 
 在协议声明中声明静态下标要求时，使用 `static` 声明修饰符标记下标声明。符合该协议的结构体和枚举使用 `static` 关键字声明下标，而符合该协议的类则使用 `static` 或 `class` 关键字声明下标。为结构体、枚举或类添加协议符合性的扩展使用与其扩展的类型相同的关键字。为静态下标要求提供默认实现的扩展使用 `static` 关键字。
@@ -1912,11 +1909,11 @@ protocol SomeProtocol {
 }
 
 protocol SubProtocolA: SomeProtocol {
-    // This syntax produces a warning.
+    // 此语法会产生警告。
     associatedtype SomeType: Equatable
 }
 
-// This syntax is preferred.
+// 推荐使用此语法。
 protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 ```
 
@@ -2072,10 +2069,10 @@ convenience init(<#parameters#>) {
 ```swift
 struct SomeStruct {
     let property: String
-    // produces an optional instance of 'SomeStruct'
+    // 生成一个可选的 `SomeStruct` 实例
     init?(input: String) {
         if input.isEmpty {
-            // discard 'self' and return 'nil'
+            // 丢弃 'self' 并返回 'nil'
             return nil
         }
         property = input
@@ -2300,7 +2297,7 @@ extension String: TitledLoggable {
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
 oneAndTwo.log()
-// Prints "Pair of 'String': (one, two)"
+// 打印
 ```
 
 <!--
@@ -2320,7 +2317,7 @@ func doSomething<T: Loggable>(with x: T) {
     x.log()
 }
 doSomething(with: oneAndTwo)
-// Prints "(one, two)"
+// 打印 "(one, two)"
 ```
 
 <!--
@@ -2352,15 +2349,15 @@ protocol Serializable {
 
 extension Array: Serializable where Element == Int {
     func serialize() -> Any {
-        // implementation
+        // 实现
     }
 }
 extension Array: Serializable where Element == String {
     func serialize() -> Any {
-        // implementation
+        // 实现
     }
 }
-// Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+// 错误：'Array<Element>' 对协议 'Serializable' 的遵循是多余的
 ```
 
 <!--
@@ -2402,7 +2399,7 @@ extension String: SerializableInArray { }
 
 extension Array: Serializable where Element: SerializableInArray {
     func serialize() -> Any {
-        // implementation
+        // 实现
     }
 }
 ```
@@ -2484,7 +2481,7 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```swift
 extension Array: Loggable where Element: TitledLoggable { }
 extension Array: Loggable where Element: MarkedLoggable { }
-// Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+// 错误：'Array<Element>' 对协议 'Loggable' 的遵循是多余的
 ```
 
 <!--
@@ -2839,11 +2836,11 @@ Swift 提供五种访问控制级别：open、public、internal、file private �
 >
 > *actor-isolation-modifier* → **`nonisolated`**
 
-> Beta 软件:
+> 测试版软件:
 >
 > 本文件包含有关正在开发的 API 或技术的初步信息。此信息可能会更改，按照本文件实施的软件应与最终操作系统软件进行测试。
 >
-> 了解有关使用 [Apple Beta 软件](https://developer.apple.com/support/beta-software/) 的更多信息。
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息。
 
 <!--
 This source file is part of the Swift.org open source project
