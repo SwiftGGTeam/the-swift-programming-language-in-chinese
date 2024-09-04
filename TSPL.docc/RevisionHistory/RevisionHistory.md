@@ -2,17 +2,15 @@
 
 Review the recent changes to this book.
 
-**2024-08-05**
-
-- Minor corrections throughout.
-
-**2024-06-10**
+**XXX FCS date XXX**
 
 - Updated for Swift 6.
 - Added the <doc:Attributes#preconcurrency> section
   with information about migrating to strict concurrency checking.
 - Added the <doc:ErrorHandling#Specifying-the-Error-Type> section
   with information about throwing errors of a specific type.
+- Updated the <doc:Expressions#Macro-Expansion-Expression> section,
+  now that any macro can be used as a default value for a parameter.
 - Added information about package-level access
   to the <doc:AccessControl> chapter.
 
