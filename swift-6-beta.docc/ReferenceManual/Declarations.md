@@ -377,6 +377,8 @@ newAndOld.x = 200
 
 要声明一个类型变量属性，请使用 `static` 声明修饰符标记声明。类可以使用 `class` 声明修饰符标记类型计算属性，以允许子类覆盖超类的实现。类型属性的讨论请参见 <doc:Properties#Type-Properties>。
 
+> 变量声明的语法:
+>
 > *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
 > *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
 > *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
