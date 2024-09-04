@@ -4,7 +4,7 @@
 
 在 Swift 中有两种特性——适用于声明的特性和适用于类型的特性。特性提供有关声明或类型的附加信息。例如，函数声明上的 `discardableResult` 特性表示，尽管函数返回一个值，但如果返回值未被使用，编译器不应生成警告。
 
-你可以通过编写 `@` 符号，并在其后加上属性的名称以及属性接受的任何参数，来指定一个特性。
+你可以通过编写 `@` 符号，并在其后加上特性的名称以及特性接受的任何参数，来指定一个特性。
 
 ```swift
 @<#attribute name#>
@@ -660,7 +660,7 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 
 ### GKInspectable
 
-应用此特性可将自定义 GameplayKit 组件属性公开给 SpriteKit 编辑器 UI。应用此特性还意味着 `objc` 特性。
+应用此特性可将自定义 GameplayKit 组件属性公开给 SpriteKit 编辑器 UI。应用此特性还隐含着 `objc` 特性。
 
 <!--
   See also <rdar://problem/27287369> Document @GKInspectable attribute
@@ -749,7 +749,7 @@ struct MyTopLevel {
   ```
 -->
 
-描述 `main` 特性要求的另一种方法是，属性作用于的类型必须满足与遵循以下假设协议的类型相同的要求：
+描述 `main` 特性要求的另一种方法是，特性作用于的类型必须满足与遵循以下假设协议的类型相同的要求：
 
 ```swift
 protocol ProvidesMain {
@@ -871,8 +871,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 如果你将 `objc` 特性应用于枚举，每个枚举成员都会在 Objective-C 代码中以枚举名称和枚举成员名称的组合形式暴露出来，且枚举成员名称的首字母会大写。例如，在 Swift 中名为 `Planet` 的枚举中的一个名为 `venus` 的枚举成员在 Objective-C 代码中将会以名为 `PlanetVenus` 的成员暴露出来。
 
-`objc` 特性可以选择接受一个特性参数，该参数由一个标识符组成。该标识符指定了向 Objective-C 暴露的被 `objc` 特性所应用到的实体的名称。你可以使用此参数为类、枚举、枚举成员、协议、方法、getter、setter 和构造器命名。如果你为类、协议或枚举指定 Objective-C 名称，请在名称前加上三个字母的前缀，如 [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 和 [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中所述。下面的示例将 `ExampleClass`
-的 `enabled` 属性的 getter 暴露给 Objective-C 代码，名称为 `isEnabled`，而不仅仅是属性本身的名称。
+`objc` 特性可以选择接受一个特性参数，该参数由一个标识符组成。该标识符指定了向 Objective-C 暴露的被 `objc` 特性所应用到的实体的名称。你可以使用此参数为类、枚举、枚举成员、协议、方法、getter、setter 和构造器命名。如果你为类、协议或枚举指定 Objective-C 名称，请在名称前加上三个字母的前缀，如 [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 和 [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 中所述。下面的示例将 `ExampleClass` 的 `enabled` 属性的 getter 暴露给 Objective-C 代码，名称为 `isEnabled`，而不仅仅是属性本身的名称。
 
 ```swift
 class ExampleClass: NSObject {
@@ -1086,7 +1085,7 @@ struct SomeStruct {
   -> e = 30  // Uses the property setter
 -->
 
-对于一个属性包装器，*被呈现值*是一个可以让属性包装器用来暴露额外功能的第二个值。属性包装器类型的作者负责确定其被呈现值的含义，并定义被呈现值所暴露的接口。要从属性包装器中投射一个值，请在包装器类型上定义一个 `projectedValue` 实例属性。编译器通过在包装属性的名称前加上美元符号（`$`）来合成被呈现值的标识符——例如，`someProperty` 的被呈现值是 `$someProperty`。被呈现值具有与原始包装属性相同的访问控制级别。
+*被呈现值*对于一个被包装属性而言是可以让属性包装器用来暴露额外功能的第二个值。属性包装器类型的作者负责确定其被呈现值的含义，并定义被呈现值所暴露的接口。要从属性包装器中投射一个值，请在包装器类型上定义一个 `projectedValue` 实例属性。编译器通过在包装属性的名称前加上美元符号（`$`）来合成被呈现值的标识符——例如，`someProperty` 的被呈现值是 `$someProperty`。被呈现值具有与原始包装属性相同的访问控制级别。
 
 ```swift
 @propertyWrapper
