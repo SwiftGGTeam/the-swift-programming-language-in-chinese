@@ -696,7 +696,7 @@ let regex2 = # #/abc/# #     // 错误
 
 Swift 标准库定义了许多运算符供你使用，其中许多运算符在 <doc:BasicOperators> 和 <doc:AdvancedOperators> 中进行了讨论。本节描述了哪些字符可以用于定义自定义运算符。
 
-自定义运算符可以用这些 ASCII 字符之一开头：`/`、`=`、`-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 或 `~`，或者是定义在下面语法中的 Unicode 字符（其中包括来自 *Mathematical Operators*、*Miscellaneous Symbols* 和 *Dingbats* Unicode 块的字符等）之一。在第一个字符之后，还允许使用组合 Unicode 字符（Combining Unicode Character）。
+自定义运算符可以用这些 ASCII 字符之一开头：`/`、`=`、`-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 或 `~`，或者是定义在下面语法中的 Unicode 字符（其中包括来自 *数学运算符（Mathematical Operators）*、*杂项符号（Miscellaneous Symbols）* 和 *装饰符号（Dingbats）* Unicode 块的字符等）之一。在第一个字符之后，还允许使用组合 Unicode 字符（Combining Unicode Character）。
 
 你还可以定义以点（`.`）开头的自定义运算符。这些运算符可以包含额外的点。例如，`.+.` 被视为一个单一的运算符。如果一个运算符不是以点开头的，则它不能在其他地方包含点。例如，`+.+` 被视为 `+` 运算符后跟 `.+` 运算符。
 
