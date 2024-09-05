@@ -2,7 +2,7 @@
 
 定义遵循协议的类型必须实现的要求。
 
-**协议（Protocol）** 定义了满足特定任务或功能所需的方法、属性和其他要求的蓝图。类、结构体或枚举可以 **遵循（adopt）** 该协议，并提供协议要求的具体实现。任何满足协议要求的类型都被称为 **符合（conform）** 该协议。
+**协议（Protocol）** 定义了满足特定任务或功能所需的方法、属性和其他要求的蓝图。类、结构体或枚举可以 **采用（adopt）** 该协议，并提供协议要求的具体实现。任何满足协议要求的类型都被称为 **遵循（conform）** 该协议。
 
 除了声明所遵循类型必须实现的要求之外，你还可以通过对协议进行扩展来实现一部分要求或附加功能，这样遵循协议的类型就能够使用这些功能。
 
@@ -169,7 +169,7 @@ let john = Person(fullName: "John Appleseed")
 
 每个 `Person` 实例都有一个 `String` 类型的存储属性 `fullName`。这正好满足了 `FullyNamed` 协议的要求，也就意味着 `Person` 结构体正确地遵循了协议。（如果协议要求未被完全满足，Swift 在编译时会报错。）
 
-下面是一个更为复杂的类，它遵循并符合了 `FullyNamed` 协议：
+下面是一个更为复杂的类，它采用并遵循了 `FullyNamed` 协议：
 
 ```swift
 class Starship: FullyNamed {
@@ -258,7 +258,7 @@ protocol RandomNumberGenerator {
 
 `RandomNumberGenerator` 协议并不关心每一个随机数是怎样生成的 —— 它只要求生成器提供一种标准的方式来生成新的随机数。
 
-这里有一个遵循并符合 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 **线性同余生成器（linear congruential generator）** 的伪随机数算法。
+这里有一个采用并遵循 `RandomNumberGenerator` 协议的类。该类实现了一个叫做 **线性同余生成器（linear congruential generator）** 的伪随机数算法。
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
@@ -764,9 +764,9 @@ game.play(rounds: 3)
 
 ## 在扩展里添加协议遵循
 
-即便无法修改源代码，你依然可以通过扩展令已有类型遵循并符合协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中可能需要的任意要求。关于扩展的更多详情，参见 <doc:Extensions>。
+即便无法修改源代码，你依然可以通过扩展令已有类型采用并遵循协议。扩展可以为已有类型添加属性、方法、下标以及构造器，因此可以符合协议中可能需要的任意要求。关于扩展的更多详情，参见 <doc:Extensions>。
 
-> 注意: 当一个协议的遵循被添加到实例类型的扩展中时，现有的实例会自动遵循并符合该协议。
+> 注意: 当一个协议的遵循被添加到实例类型的扩展中时，现有的实例会自动采用并遵循该协议。
 
 例如下面这个 `TextRepresentable` 协议，任何想要通过文本表示一些内容的类型都可以实现该协议。这些想要表示的内容可以是实例本身的描述，也可以是实例当前状态的文本描述：
 
@@ -786,7 +786,7 @@ protocol TextRepresentable {
   ```
 -->
 
-上面提到的 `Dice` 类可以被扩展以遵循并符合 `TextRepresentable` 协议：
+上面提到的 `Dice` 类可以被扩展以采用并遵循 `TextRepresentable` 协议：
 
 <!--
   No "from above" xref because
@@ -814,7 +814,7 @@ extension Dice: TextRepresentable {
   ```
 -->
 
-通过扩展遵循并适配协议，和在原始定义中遵循并符合协议的效果完全相同。协议名称写在类型名之后，以冒号隔开，然后在扩展的大括号内实现协议要求的内容。
+通过扩展遵循并适配协议，和在原始定义中采用并遵循协议的效果完全相同。协议名称写在类型名之后，以冒号隔开，然后在扩展的大括号内实现协议要求的内容。
 
 现在所有 `Dice` 的实例都可以被看做 `TextRepresentable` 类型：
 
@@ -862,7 +862,7 @@ print(game.textualDescription)
 
 ### 有条件地遵循协议
 
-泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采纳协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，参见 <doc:Generics#Generic-Where-Clauses>。
+泛型类型可能只在某些情况下满足一个协议的要求，比如当类型的泛型形式参数遵循对应协议时。你可以通过在扩展类型时列出限制让泛型类型有条件地遵循某协议。在你采用协议的名字后面写泛型 `where` 分句。更多关于泛型 `where` 分句，参见 <doc:Generics#Generic-Where-Clauses>。
 
 下面的扩展让 `Array` 类型只要在存储遵循 `TextRepresentable` 协议的元素时，就遵循 `TextRepresentable` 协议。
 
@@ -1198,7 +1198,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 
 例子中定义了一个新的协议 `PrettyTextRepresentable`，它继承自 `TextRepresentable` 协议。任何遵循 `PrettyTextRepresentable` 协议的类型，除了必须满足 `TextRepresentable` 协议的要求，**还要** 额外满足 `PrettyTextRepresentable` 协议的要求。在这个例子中，`PrettyTextRepresentable` 协议额外要求遵循协议的类型提供一个返回值为 `String` 类型的 `prettyTextualDescription` 属性。
 
-如下所示，扩展 `SnakesAndLadders`，使其遵循并符合 `PrettyTextRepresentable` 协议：
+如下所示，扩展 `SnakesAndLadders`，使其采用并遵循 `PrettyTextRepresentable` 协议：
 
 ```swift
 extension SnakesAndLadders: PrettyTextRepresentable {
