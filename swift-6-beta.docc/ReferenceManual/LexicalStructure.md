@@ -1,39 +1,14 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/ReferenceManual/LexicalStructure.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/lexicalstructure
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 词法结构
 
-# Lexical Structure
+使用语法的最低层级组件。
 
-Use the lowest-level components of the syntax.
+Swift 的 *词法结构* 描述了哪些字符序列构成了语言中的合法标记（tokens）。这些合法标记构成了语言的最低层级构建块，并在后续章节中用于描述语言的其他部分。一个标记可以由标识符、关键字、标点符号、字面量或运算符组成。
 
-The *lexical structure* of Swift describes what sequence of characters
-form valid tokens of the language.
-These valid tokens form the lowest-level building blocks of the language
-and are used to describe the rest of the language in subsequent chapters.
-A token consists of an identifier, keyword, punctuation, literal, or operator.
+在大多数情况下，这些标记是从 Swift 源文件的字符中生成的，生成过程考虑了输入文本中最长的可能子字符串，并受以下语法规则的约束。这种行为策略被称为 *最长匹配策略（longest match）* 或 *最大吞噬策略（maximal munch）*。
 
-In most cases, tokens are generated from the characters of a Swift source file
-by considering the longest possible substring from the input text,
-within the constraints of the grammar that are specified below.
-This behavior is referred to as *longest match*
-or *maximal munch*.
+## 空白和注释
 
-## Whitespace and Comments
-
-Whitespace has two uses: to separate tokens in the source file
-and to distinguish between prefix, postfix, and infix operators
-(see <doc:LexicalStructure#Operators>),
-but is otherwise ignored.
-The following characters are considered whitespace:
-space (U+0020),
-line feed (U+000A),
-carriage return (U+000D),
-horizontal tab (U+0009),
-vertical tab (U+000B),
-form feed (U+000C)
-and null (U+0000).
+空白字符有两个用途：在源文件中分隔标记，并区分前缀、后缀和中缀运算符（参见 <doc:LexicalStructure#Operators>），除此之外，空白字符会被忽略。以下字符被视为空白字符：空格 (U+0020)、换行符 (U+000A)、回车符 (U+000D)、水平制表符 (U+0009)、垂直制表符 (U+000B)、换页符 (U+000C) 和空字符 (U+0000)。
 
 <!--
   Whitespace characters are listed roughly from
@@ -41,73 +16,44 @@ and null (U+0000).
   not in order of Unicode scalar value.
 -->
 
-Comments are treated as whitespace by the compiler.
-Single line comments begin with `//`
-and continue until a line feed (U+000A)  or carriage return (U+000D).
-Multiline comments begin with `/*` and end with `*/`.
-Nesting multiline comments is allowed,
-but the comment markers must be balanced.
+编译器将注释视为空白字符。单行注释以 `//` 开头，并持续到换行符 (U+000A) 或回车符 (U+000D)。多行注释以 `/*` 开头，以 `*/` 结束。多行注释可以嵌套，但注释符号必须头尾匹配。
 
-Comments can contain additional formatting and markup,
-as described in [Markup Formatting Reference](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html).
+注释中可以包含额外的格式和标记，如 [标记格式参考](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) 中所述。
 
-> Grammar of whitespace:
+> 空白字符的语法:
 >
 > *whitespace* → *whitespace-item* *whitespace*_?_ \
 > *whitespace-item* → *line-break* \
 > *whitespace-item* → *inline-space* \
 > *whitespace-item* → *comment* \
 > *whitespace-item* → *multiline-comment* \
-> *whitespace-item* → U+0000, U+000B, or U+000C
+> *whitespace-item* → U+0000、U+000B 或 U+000C
 >
 > *line-break* → U+000A \
 > *line-break* → U+000D \
-> *line-break* → U+000D followed by U+000A
+> *line-break* → U+000D 后跟 U+000A
 >
 > *inline-spaces* → *inline-space* *inline-spaces*_?_ \
-> *inline-space* → U+0009 or U+0020
+> *inline-space* → U+0009 或 U+0020
 >
 > *comment* → **`//`** *comment-text* *line-break* \
 > *multiline-comment* → **`/*`** *multiline-comment-text* **`*/`**
 >
 > *comment-text* → *comment-text-item* *comment-text*_?_ \
-> *comment-text-item* → Any Unicode scalar value except U+000A or U+000D
+> *comment-text-item* → 除 U+000A 或 U+000D 之外的任意 Unicode 标量值
 >
 > *multiline-comment-text* → *multiline-comment-text-item* *multiline-comment-text*_?_ \
 > *multiline-comment-text-item* → *multiline-comment* \
 > *multiline-comment-text-item* → *comment-text-item* \
-> *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
+> *multiline-comment-text-item* → 除 **`/*`** 或 **`*/`** 之外的任意 Unicode 标量值
 
-## Identifiers
+## 标识符
 
-*Identifiers* begin with
-an uppercase or lowercase letter A through Z,
-an underscore (`_`),
-a noncombining alphanumeric Unicode character
-in the Basic Multilingual Plane,
-or a character outside the Basic Multilingual Plane
-that isn't in a Private Use Area.
-After the first character,
-digits and combining Unicode characters are also allowed.
+*标识符* 以大写或小写字母 A 到 Z、下划线 (`_`)、基本多语言平面（Basic Multilingual Plane）的非组合字母数字 Unicode 字符（Noncombining Alphanumeric Unicode Character），或基本多语言平面之外但不在私用区（Private Use Area）的字符开头。在第一个字符之后，还允许使用数字和组合 Unicode 字符（Combining Unicode Character）。
 
-Treat identifiers that begin with an underscore,
-subscripts whose first argument label begins with an underscore,
-and initializers whose first argument label begins with an underscore,
-as internal,
-even if their declaration has the `public` access-level modifier.
-This convention lets framework authors mark part of an API
-that clients must not interact with or depend on,
-even though some limitation requires the declaration to be public.
-In addition,
-identifiers that begin with two underscores
-are reserved for the Swift compiler and standard library.
+即使声明具有 `public` 访问级别修饰符，也应将以下内容视为仅内部使用：以下划线开头的标识符、第一个参数标签以下划线开头的下标操作，以及第一个参数标签以下划线开头的构造函数。这个约定允许框架作者以此方式标记某个 API 的一部分内容，以防止客户端与之交互或依赖，尽管某些限制要求这些声明是公开可访问的。此外，以两个下划线开头的标识符需保留给 Swift 编译器和标准库使用。
 
-To use a reserved word as an identifier,
-put a backtick (\`) before and after it.
-For example, `class` isn't a valid identifier,
-but `` `class` `` is valid.
-The backticks aren't considered part of the identifier;
-`` `x` `` and `x` have the same meaning.
+要将保留字用作标识符，可以在其前后加上反引号（\`）。例如，`class` 不是一个合法的标识符，但 `` `class` `` 是合法的。反引号不被视为标识符的一部分；`` `x` `` 和 `x` 具有相同的指代含义。
 
 <!--
 The paragraph above produces a link-resolution warning
@@ -117,16 +63,9 @@ https://github.com/apple/swift-book/issues/71
 https://github.com/apple/swift-markdown/issues/93
 -->
 
-Inside a closure with no explicit parameter names,
-the parameters are implicitly named `$0`, `$1`, `$2`, and so on.
-These names are valid identifiers within the scope of the closure.
+在没有显式参数名称的闭包中，参数会被隐式命名为 `$0`、`$1`、`$2` 等。这些名称在闭包的范围内是合法的标识符。
 
-The compiler synthesizes identifiers that begin with a dollar sign (`$`)
-for properties that have a property wrapper projection.
-Your code can interact with these identifiers,
-but you can't declare identifiers with that prefix.
-For more information, see the <doc:Attributes#propertyWrapper> section
-of the <doc:Attributes> chapter.
+编译器会为具有属性包装器投射（Property Wrapper Projection）的属性合成以美元符号 (`$`) 开头的标识符。你的代码可以与这些标识符交互，但你不能声明带有该前缀的标识符。有关更多信息，请参阅 <doc:Attributes> 章节的 <doc:Attributes#propertyWrapper> 部分。
 
 <!--
   The cross reference above includes both the section and chapter because,
@@ -143,7 +82,7 @@ https://github.com/apple/swift-book/issues/71
 https://github.com/apple/swift-markdown/issues/93
 -->
 
-> Grammar of an identifier:
+> 标识符的语法:
 >
 > *identifier* → *identifier-head* *identifier-characters*_?_ \
 > *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``** \
@@ -151,47 +90,34 @@ https://github.com/apple/swift-markdown/issues/93
 > *identifier* → *property-wrapper-projection* \
 > *identifier-list* → *identifier* | *identifier* **`,`** *identifier-list*
 >
-> *identifier-head* → Upper- or lowercase letter A through Z \
+> *identifier-head* → 大写或小写字母 A 到 Z \
 > *identifier-head* → **`_`** \
-> *identifier-head* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA \
-> *identifier-head* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF \
-> *identifier-head* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF \
+> *identifier-head* → U+00A8、U+00AA、U+00AD、U+00AF、U+00B2–U+00B5 或 U+00B7–U+00BA \
+> *identifier-head* → U+00BC–U+00BE、U+00C0–U+00D6、U+00D8–U+00F6 或 U+00F8–U+00FF \
+> *identifier-head* → U+0100–U+02FF、U+0370–U+167F、U+1681–U+180D 或 U+180F–U+1DBF \
 > *identifier-head* → U+1E00–U+1FFF \
-> *identifier-head* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F \
-> *identifier-head* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793 \
-> *identifier-head* → U+2C00–U+2DFF or U+2E80–U+2FFF \
-> *identifier-head* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF \
-> *identifier-head* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44 \
+> *identifier-head* → U+200B–U+200D、U+202A–U+202E、U+203F–U+2040、U+2054 或 U+2060–U+206F \
+> *identifier-head* → U+2070–U+20CF、U+2100–U+218F、U+2460–U+24FF 或 U+2776–U+2793 \
+> *identifier-head* → U+2C00–U+2DFF 或 U+2E80–U+2FFF \
+> *identifier-head* → U+3004–U+3007、U+3021–U+302F、U+3031–U+303F 或 U+3040–U+D7FF \
+> *identifier-head* → U+F900–U+FD3D、U+FD40–U+FDCF、U+FDF0–U+FE1F 或 U+FE30–U+FE44 \
 > *identifier-head* → U+FE47–U+FFFD \
-> *identifier-head* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD \
-> *identifier-head* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD \
-> *identifier-head* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD \
-> *identifier-head* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
+> *identifier-head* → U+10000–U+1FFFD、U+20000–U+2FFFD、U+30000–U+3FFFD 或 U+40000–U+4FFFD \
+> *identifier-head* → U+50000–U+5FFFD、U+60000–U+6FFFD、U+70000–U+7FFFD 或 U+80000–U+8FFFD \
+> *identifier-head* → U+90000–U+9FFFD、U+A0000–U+AFFFD、U+B0000–U+BFFFD 或 U+C0000–U+CFFFD \
+> *identifier-head* → U+D0000–U+DFFFD 或 U+E0000–U+EFFFD
 >
-> *identifier-character* → Digit 0 through 9 \
-> *identifier-character* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F \
+> *identifier-character* → 数字 0 到 9 \
+> *identifier-character* → U+0300–U+036F、U+1DC0–U+1DFF、U+20D0–U+20FF 或 U+FE20–U+FE2F \
 > *identifier-character* → *identifier-head* \
 > *identifier-characters* → *identifier-character* *identifier-characters*_?_
 >
 > *implicit-parameter-name* → **`$`** *decimal-digits* \
 > *property-wrapper-projection* → **`$`** *identifier-characters*
 
-## Keywords and Punctuation
+## 关键字和标点符号
 
-The following keywords are reserved and can't be used as identifiers,
-unless they're escaped with backticks,
-as described above in <doc:LexicalStructure#Identifiers>.
-Keywords other than `inout`, `var`, and `let`
-can be used as parameter names
-in a function declaration or function call
-without being escaped with backticks.
-When a member has the same name as a keyword,
-references to that member don't need to be escaped with backticks,
-except when there's ambiguity between referring to the member
-and using the keyword ---
-for example, `self`, `Type`, and `Protocol`
-have special meaning in an explicit member expression,
-so they must be escaped with backticks in that context.
+以下关键字是保留字，不能用作标识符，除非用反引号将它们转义，如上文 <doc:LexicalStructure#Identifiers> 中所述。除了 `inout`、`var` 和 `let` 之外，其他关键字可以作为函数声明或函数调用中的参数名称，而无需使用反引号进行转义。当成员名称与关键字相同时，引用该成员时不需要使用反引号进行转义，除非在引用成员与使用关键字之间存在歧义——例如，`self`、`Type` 和 `Protocol` 在显式成员表达式中具有特殊含义，因此在这种情况下必须用反引号将它们转义。
 
 <!--
   - test: `keywords-without-backticks`
@@ -251,113 +177,20 @@ so they must be escaped with backticks in that context.
   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 -->
 
-- Keywords used in declarations:
-  `associatedtype`,
-  `borrowing`,
-  `class`,
-  `consuming`,
-  `deinit`,
-  `enum`,
-  `extension`,
-  `fileprivate`,
-  `func`,
-  `import`,
-  `init`,
-  `inout`,
-  `internal`,
-  `let`,
-  `nonisolated`,
-  `open`,
-  `operator`,
-  `private`,
-  `precedencegroup`,
-  `protocol`,
-  `public`,
-  `rethrows`,
-  `static`,
-  `struct`,
-  `subscript`,
-  `typealias`,
-  and `var`.
+- 用于声明的关键字：`associatedtype`、`borrowing`、`class`、`consuming`、`deinit`、`enum`、`extension`、`fileprivate`、`func`、`import`、`init`、`inout`、`internal`、`let`、`nonisolated`、`open`、`operator`、`private`、`precedencegroup`、`protocol`、`public`、`rethrows`、`static`、`struct`、`subscript`、`typealias` 和 `var`。
 
 <!--
   Token.py doesn't include 'open' but DeclNodes.py does.
 -->
 
-- Keywords used in statements:
-  `break`,
-  `case`,
-  `catch`,
-  `continue`,
-  `default`,
-  `defer`,
-  `do`,
-  `else`,
-  `fallthrough`,
-  `for`,
-  `guard`,
-  `if`,
-  `in`,
-  `repeat`,
-  `return`,
-  `throw`,
-  `switch`,
-  `where`,
-  and `while`.
-- Keywords used in expressions and types:
-  `Any`,
-  `as`,
-  `await`,
-  `catch`,
-  `false`,
-  `is`,
-  `nil`,
-  `rethrows`,
-  `self`,
-  `Self`,
-  `super`,
-  `throw`,
-  `throws`,
-  `true`,
-  and `try`.
-- Keywords used in patterns:
-  `_`.
-- Keywords that begin with a number sign (`#`):
-  `#available`,
-  `#colorLiteral`,
-  `#else`,
-  `#elseif`,
-  `#endif`,
-  `#fileLiteral`,
-  `#if`,
-  `#imageLiteral`,
-  `#keyPath`,
-  `#selector`,
-  `#sourceLocation`,
-  `#unavailable`.
+- 用于语句的关键字：`break`、`case`、`catch`、`continue`、`default`、`defer`、`do`、`else`、`fallthrough`、`for`、`guard`、`if`、`in`、`repeat`、`return`、`throw`、`switch`、`where` 和 `while`。
+- 用于表达式和类型的关键字：`Any`、`as`、`await`、`catch`、`false`、`is`、`nil`、`rethrows`、`self`、`Self`、`super`、`throw`、`throws`、`true` 和 `try`。
+- 用于模式的关键字：`_`。
+- 以井号 (`#`) 开头的关键字：`#available`、`#colorLiteral`、`#else`、`#elseif`、`#endif`、`#fileLiteral`、`#if`、`#imageLiteral`、`#keyPath`、`#selector`、`#sourceLocation`、`#unavailable`。
 
-> Note:
-> Prior to Swift 5.9,
-> the following keywords were reserved:
-> `#column`,
-> `#dsohandle`,
-> `#error`,
-> `#fileID`,
-> `#filePath`,
-> `#file`,
-> `#function`,
-> `#line`,
-> and `#warning`.
-> These are now implemented as macros in the Swift standard library:
-> [`column`](https://developer.apple.com/documentation/swift/column()),
-> [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
-> [`error(_:)`](https://developer.apple.com/documentation/swift/error(_:)),
-> [`fileID`](https://developer.apple.com/documentation/swift/fileID()),
-> [`filePath`](https://developer.apple.com/documentation/swift/filePath()),
-> [`file`](https://developer.apple.com/documentation/swift/file()),
-> [`function`](https://developer.apple.com/documentation/swift/function()),
-> [`line`](https://developer.apple.com/documentation/swift/line()),
-> and [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:)).
+> 注意:
+> 在 Swift 5.9 之前，以下关键字是保留字：`#column`、`#dsohandle`、`#error`、`#fileID`、`#filePath`、`#file`、`#function`、`#line` 和 `#warning`。  
+> 它们现在已经在 Swift 标准库中实现为宏：[`column`](https://developer.apple.com/documentation/swift/column())、[`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle())、[`error(_:)`](https://developer.apple.com/documentation/swift/error(_:))、[`fileID`](https://developer.apple.com/documentation/swift/fileID())、[`filePath`](https://developer.apple.com/documentation/swift/filePath())、[`file`](https://developer.apple.com/documentation/swift/file())、[`function`](https://developer.apple.com/documentation/swift/function())、[`line`](https://developer.apple.com/documentation/swift/line()) 以及 [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:))。
 
 <!--
   Token.py includes #assert,
@@ -377,37 +210,7 @@ so they must be escaped with backticks in that context.
   which looks like it's related to a future feature around memory ownership.
 -->
 
-- Keywords reserved in particular contexts:
-  `associativity`,
-  `convenience`,
-  `didSet`,
-  `dynamic`,
-  `final`,
-  `get`,
-  `indirect`,
-  `infix`,
-  `lazy`,
-  `left`,
-  `mutating`,
-  `none`,
-  `nonmutating`,
-  `optional`,
-  `override`,
-  `package`,
-  `postfix`,
-  `precedence`,
-  `prefix`,
-  `Protocol`,
-  `required`,
-  `right`,
-  `set`,
-  `some`,
-  `Type`,
-  `unowned`,
-  `weak`,
-  and `willSet`.
-  Outside the context in which they appear in the grammar,
-  they can be used as identifiers.
+- 在特定上下文中保留的关键字：`associativity`、`convenience`、`didSet`、`dynamic`、`final`、`get`、`indirect`、`infix`、`lazy`、`left`、`mutating`、`none`、`nonmutating`、`optional`、`override`、`package`、`postfix`、`precedence`、`prefix`、`Protocol`、`required`、`right`、`set`、`some`、`Type`、`unowned`、`weak` 和 `willSet`。除了在语法中的特定上下文出现之外，它们可以被当作标识符使用。
 
 <!--
   NOTE: The list of context-sensitive keywords above
@@ -416,26 +219,20 @@ so they must be escaped with backticks in that context.
   However, not all context-sensitive keywords appear there;
 -->
 
-The following tokens are reserved as punctuation
-and can't be used as custom operators:
-`(`, `)`, `{`, `}`, `[`, `]`,
-`.`, `,`, `:`, `;`, `=`, `@`, `#`,
-`&` (as a prefix operator), `->`, `` ` ``,
-`?`, and `!` (as a postfix operator).
+以下符号被保留为标点符号，不能用作自定义运算符：`(`、`)`、`{`、`}`、`[`、`]`、`.`、`,`、`:`、`;`、`=`、`@`、`#`、`&`（作为前缀运算符）、`->`、`` ` ``、`?` 和 `!`（作为后缀运算符）。
 
-## Literals
+## 字面量
 
-A *literal* is the source code representation of a value of a type,
-such as a number or string.
+*字面量* 是某种类型值的源代码表示形式，例如数字或字符串。
 
-The following are examples of literals:
+以下是一些字面量的示例：
 
 ```swift
-42               // Integer literal
-3.14159          // Floating-point literal
-"Hello, world!"  // String literal
-/Hello, .*/      // Regular expression literal
-true             // Boolean literal
+42               // 整数字面量
+3.14159          // 浮点数字面量
+"Hello, world!"  // 字符串字面量
+/Hello, .*/      // 正则表达式字面量
+true             // 布尔字面量
 ```
 
 <!--
@@ -465,35 +262,17 @@ true             // Boolean literal
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A literal doesn't have a type on its own.
-Instead, a literal is parsed as having infinite precision and Swift's type inference
-attempts to infer a type for the literal. For example,
-in the declaration `let x: Int8 = 42`,
-Swift uses the explicit type annotation (`: Int8`) to infer
-that the type of the integer literal `42` is `Int8`.
-If there isn't suitable type information available,
-Swift infers that the literal's type is one of the default literal types
-defined in the Swift standard library
-and listed in the table below.
-When specifying the type annotation for a literal value,
-the annotation's type must be a type that can be instantiated from that literal value.
-That is, the type must conform to the Swift standard library protocols
-listed in the table below.
+字面量本身没有类型。相反，字面量被解析为具有无限精度，Swift 的类型推断机制会尝试为字面量推断出一个类型。例如，在声明 `let x: Int8 = 42` 中，Swift 使用显式的类型注解（`: Int8`）来推断整数字面量 `42` 的类型为 `Int8`。如果没有适当的类型信息可用，Swift 会推断该字面量的类型为 Swift 标准库中定义的默认字面量类型之一，如下表所示。在为字面量值指定类型注解时，注解的类型必须是可以从该字面量值实例化的类型。也就是说，该类型必须遵循下表中列出的 Swift 标准库协议。
 
-| Literal | Default type | Protocol |
-| ------- | ------------ | -------- |
-| Integer | `Int` | `ExpressibleByIntegerLiteral` |
-| Floating-point | `Double` | `ExpressibleByFloatLiteral` |
-| String | `String` | `ExpressibleByStringLiteral`, `ExpressibleByUnicodeScalarLiteral` for string literals that contain only a single Unicode scalar, `ExpressibleByExtendedGraphemeClusterLiteral` for string literals that contain only a single extended grapheme cluster |
-| Regular expression | `Regex` | None |
-| Boolean | `Bool` | `ExpressibleByBooleanLiteral` |
+| 字面量 | 默认类型 | 协议 |
+| ----- | ------ | ---- |
+| 整数   | `Int`  | `ExpressibleByIntegerLiteral` |
+| 浮点数 | `Double` | `ExpressibleByFloatLiteral` |
+| 字符串 | `String` | `ExpressibleByStringLiteral`，对于只包含单个 Unicode 标量的字符串字面量，使用 `ExpressibleByUnicodeScalarLiteral`，对于只包含单个扩展字形簇（extended grapheme cluster）的字符串字面量，使用 `ExpressibleByExtendedGraphemeClusterLiteral` |
+| 正则表达式 | `Regex` | 无 |
+| 布尔值  | `Bool` | `ExpressibleByBooleanLiteral` |
 
-For example, in the declaration `let str = "Hello, world"`,
-the default inferred type of the string
-literal `"Hello, world"` is `String`.
-Also, `Int8` conforms to the `ExpressibleByIntegerLiteral` protocol,
-and therefore it can be used in the type annotation for the integer literal `42`
-in the declaration `let x: Int8 = 42`.
+例如，在声明 `let str = "Hello, world"` 中，字符串字面量 `"Hello, world"` 的默认推断类型是 `String`。同样，`Int8` 遵循 `ExpressibleByIntegerLiteral` 协议，因此可以在声明 `let x: Int8 = 42` 中用于整数字面量 `42` 的类型注解。
 
 <!--
   The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
@@ -501,7 +280,7 @@ in the declaration `let x: Int8 = 42`.
   There is no protocol for regex literal in the list because the stdlib intentionally omits that.
 -->
 
-> Grammar of a literal:
+> 字面量的语法:
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
@@ -509,34 +288,17 @@ in the declaration `let x: Int8 = 42`.
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
-### Integer Literals
+### 整数字面量
 
-*Integer literals* represent integer values of unspecified precision.
-By default, integer literals are expressed in decimal;
-you can specify an alternate base using a prefix.
-Binary literals begin with `0b`,
-octal literals begin with `0o`,
-and hexadecimal literals begin with `0x`.
+*整数字面量* 表示具有未指定精度的整数值。默认情况下，整数字面量以十进制表示；你可以使用前缀指定其他进制。二进制字面量以 `0b` 开头，八进制字面量以 `0o` 开头，十六进制字面量以 `0x` 开头。
 
-Decimal literals contain the digits `0` through `9`.
-Binary literals contain `0` and `1`,
-octal literals contain `0` through `7`,
-and hexadecimal literals contain `0` through `9`
-as well as `A` through `F` in upper- or lowercase.
+十进制字面量包含数字 `0` 到 `9`。二进制字面量包含 `0` 和 `1`，八进制字面量包含 `0` 到 `7`，而十六进制字面量则包含 `0` 到 `9` 以及大写或小写的 `A` 到 `F`。
 
-Negative integers literals are expressed by prepending a minus sign (`-`)
-to an integer literal, as in `-42`.
+负整数字面量通过在整数字面量前加上负号 (`-`) 来表示，如 `-42`。
 
-Underscores (`_`) are allowed between digits for readability,
-but they're ignored and therefore don't affect the value of the literal.
-Integer literals can begin with leading zeros (`0`),
-but they're likewise ignored and don't affect the base or value of the literal.
+为了提高可读性，数字之间允许使用下划线 (`_`)，但它们会被忽略，因此不会影响字面量的值。整数字面量可以以前导零 (`0`) 开头，但这些零同样会被忽略，不会影响字面量的进制或值。
 
-Unless otherwise specified,
-the default inferred type of an integer literal is the Swift standard library type `Int`.
-The Swift standard library also defines types for various sizes of
-signed and unsigned integers,
-as described in <doc:TheBasics#Integers>.
+除非另有说明，否则整数字面量的默认推断类型是 Swift 标准库类型 `Int`。Swift 标准库还定义了用于表示各种大小的有符号和无符号整数的类型，详细内容请参阅 <doc:TheBasics#Integers>。
 
 <!--
   TR: The prose assumes underscores only belong between digits.
@@ -555,7 +317,7 @@ as described in <doc:TheBasics#Integers>.
   (Doug confirmed this, 4/2/2014.)
 -->
 
-> Grammar of an integer literal:
+> 整数字面量的语法:
 >
 > *integer-literal* → *binary-literal* \
 > *integer-literal* → *octal-literal* \
@@ -563,73 +325,43 @@ as described in <doc:TheBasics#Integers>.
 > *integer-literal* → *hexadecimal-literal*
 >
 > *binary-literal* → **`0b`** *binary-digit* *binary-literal-characters*_?_ \
-> *binary-digit* → Digit 0 or 1 \
+> *binary-digit* → 数字 0 或 1 \
 > *binary-literal-character* → *binary-digit* | **`_`** \
 > *binary-literal-characters* → *binary-literal-character* *binary-literal-characters*_?_
 >
 > *octal-literal* → **`0o`** *octal-digit* *octal-literal-characters*_?_ \
-> *octal-digit* → Digit 0 through 7 \
+> *octal-digit* → 数字 0 到 7 \
 > *octal-literal-character* → *octal-digit* | **`_`** \
 > *octal-literal-characters* → *octal-literal-character* *octal-literal-characters*_?_
 >
 > *decimal-literal* → *decimal-digit* *decimal-literal-characters*_?_ \
-> *decimal-digit* → Digit 0 through 9 \
+> *decimal-digit* → 数字 0 到 9 \
 > *decimal-digits* → *decimal-digit* *decimal-digits*_?_ \
 > *decimal-literal-character* → *decimal-digit* | **`_`** \
 > *decimal-literal-characters* → *decimal-literal-character* *decimal-literal-characters*_?_
 >
 > *hexadecimal-literal* → **`0x`** *hexadecimal-digit* *hexadecimal-literal-characters*_?_ \
-> *hexadecimal-digit* → Digit 0 through 9, a through f, or A through F \
+> *hexadecimal-digit* → 数字 0 到 7, 字母 a 到 f 或字母 A 到 F \
 > *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`** \
 > *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
 
-### Floating-Point Literals
+### 浮点数字面量
 
-*Floating-point literals* represent floating-point values of unspecified precision.
+*浮点数字面量* 表示具有未指定精度的浮点值。
 
-By default, floating-point literals are expressed in decimal (with no prefix),
-but they can also be expressed in hexadecimal (with a `0x` prefix).
+默认情况下，浮点数字面量以十进制形式表示（无前缀），但也可以以十六进制形式表示（带有 `0x` 前缀）。
 
-Decimal floating-point literals consist of a sequence of decimal digits
-followed by either a decimal fraction, a decimal exponent, or both.
-The decimal fraction consists of a decimal point (`.`)
-followed by a sequence of decimal digits.
-The exponent consists of an upper- or lowercase `e` prefix
-followed by a sequence of decimal digits that indicates
-what power of 10 the value preceding the `e` is multiplied by.
-For example, `1.25e2` represents 1.25 x 10²,
-which evaluates to `125.0`.
-Similarly, `1.25e-2` represents 1.25 x 10⁻²,
-which evaluates to `0.0125`.
+十进制浮点数字面量由一串十进制数字序列组成，后面可以跟一个十进制小数部分、十进制指数部分或两者兼有。十进制小数部分由一个小数点 (`.`) 和紧随其后的一串十进制数字序列组成。指数部分以大写或小写的 `e` 为前缀，后面跟一串十进制数字，表示在 `e` 前面的值要乘以的 10 的幂。例如，`1.25e2` 表示 1.25 x 10²，结果为 `125.0`。类似地，`1.25e-2` 表示 1.25 x 10⁻²，结果为 `0.0125`。
 
-Hexadecimal floating-point literals consist of a `0x` prefix,
-followed by an optional hexadecimal fraction,
-followed by a hexadecimal exponent.
-The hexadecimal fraction consists of a decimal point
-followed by a sequence of hexadecimal digits.
-The exponent consists of an upper- or lowercase `p` prefix
-followed by a sequence of decimal digits that indicates
-what power of 2 the value preceding the `p` is multiplied by.
-For example, `0xFp2` represents 15 x 2²,
-which evaluates to `60`.
-Similarly, `0xFp-2` represents 15 x 2⁻²,
-which evaluates to `3.75`.
+十六进制浮点数字面量由一个 `0x` 前缀、一个可选的十六进制小数部分和一个十六进制指数部分组成。十六进制小数部分由一个小数点和紧随其后的一串十六进制数字序列组成。指数部分以大写或小写的 `p` 为前缀，后面跟一串十进制数字，表示在 `p` 前面的值要乘以的 2 的幂。例如，`0xFp2` 表示 15 x 2²，结果为 `60`。类似地，`0xFp-2` 表示 15 x 2⁻²，结果为 `3.75`。
 
-Negative floating-point literals are expressed by prepending a minus sign (`-`)
-to a floating-point literal, as in `-42.5`.
+负浮点数字面量通过在浮点数字面量前加上负号 (`-`) 来表示，如 `-42.5`。
 
-Underscores (`_`) are allowed between digits for readability,
-but they're ignored and therefore don't affect the value of the literal.
-Floating-point literals can begin with leading zeros (`0`),
-but they're likewise ignored and don't affect the base or value of the literal.
+为了提高可读性，数字之间允许使用下划线 (`_`)，但它们会被忽略，因此不会影响字面量的值。浮点数字面量可以以前导零 (`0`) 开头，但这些零同样会被忽略，不会影响字面量的进制或值。
 
-Unless otherwise specified,
-the default inferred type of a floating-point literal is the Swift standard library type `Double`,
-which represents a 64-bit floating-point number.
-The Swift standard library also defines a `Float` type,
-which represents a 32-bit floating-point number.
+除非另有说明，否则浮点数字面量的默认推断类型是 Swift 标准库类型 `Double`，它表示 64 位浮点数。Swift 标准库还定义了 `Float` 类型，它表示 32 位浮点数。
 
-> Grammar of a floating-point literal:
+> 浮点数字面量的语法:
 >
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
@@ -644,23 +376,17 @@ which represents a 32-bit floating-point number.
 > *floating-point-p* → **`p`** | **`P`** \
 > *sign* → **`+`** | **`-`**
 
-### String Literals
+### 字符串字面量
 
-A string literal is a sequence of characters surrounded by quotation marks.
-A single-line string literal is surrounded by double quotation marks
-and has the following form:
+字符串字面量是由引号包围的一串字符序列。单行字符串字面量由双引号包围，其形式如下：
 
 ```swift
 "<#characters#>"
 ```
 
-String literals can't contain
-an unescaped double quotation mark (`"`),
-an unescaped backslash (`\`),
-a carriage return, or a line feed.
+字符串字面量不能包含未转义的双引号（`"`）、未转义的反斜杠（`\`）、回车符或换行符。
 
-A multiline string literal is surrounded by three double quotation marks
-and has the following form:
+多行字符串字面量由三个双引号包围，其形式如下：
 
 ```swift
 """
@@ -668,61 +394,26 @@ and has the following form:
 """
 ```
 
-Unlike a single-line string literal,
-a multiline string literal can contain
-unescaped double quotation marks (`"`), carriage returns, and line feeds.
-It can't contain three unescaped double quotation marks next to each other.
+与单行字符串字面量不同，多行字符串字面量可以包含未转义的双引号（`"`）、回车符和换行符。但它不能包含连续三个未转义的双引号。
 
-The line break after the `"""`
-that begins the multiline string literal
-isn't part of the string.
-The line break before the `"""`
-that ends the literal is also not part of the string.
-To make a multiline string literal
-that begins or ends with a line feed,
-write a blank line as its first or last line.
+开启多行字符串字面量的 `"""` 之后的换行符不属于字符串的一部分。结束字面量的 `"""` 之前的换行符也不属于字符串的一部分。要创建一个以换行符开始或结束的多行字符串字面量，请在其第一行或最后一行写一个空行。
 
-A multiline string literal can be indented
-using any combination of spaces and tabs;
-this indentation isn't included in the string.
-The `"""` that ends the literal
-determines the indentation:
-Every nonblank line in the literal must begin
-with exactly the same indentation
-that appears before the closing `"""`;
-there's no conversion between tabs and spaces.
-You can include additional spaces and tabs after that indentation;
-those spaces and tabs appear in the string.
+多行字符串字面量可以使用任意组合的空格和制表符进行缩进，这些缩进不会包含在字符串中。结束字面量的 `"""` 确定了缩进的长度：字面量中的每一个非空行开头的缩进必须与结束 `"""` 之前的缩进完全相同。制表符和空格之间不会有相互转换。在该缩进之后可以包含额外的空格和制表符，这些空格和制表符会出现在字符串中。
 
-Line breaks in a multiline string literal are
-normalized to use the line feed character.
-Even if your source file has a mix of carriage returns and line feeds,
-all of the line breaks in the string will be the same.
+多行字符串字面量中的换行符会被标准化为使用行分隔符。即使源文件中包含混合的回车符和换行符，字符串中的所有换行符也会变为一致。
 
-In a multiline string literal,
-writing a backslash (`\`) at the end of a line
-omits that line break from the string.
-Any whitespace between the backslash and the line break
-is also omitted.
-You can use this syntax
-to hard wrap a multiline string literal in your source code,
-without changing the value of the resulting string.
+在多行字符串字面量中，在行末尾写一个反斜杠 (`\`) 会将其后的换行符从字符串中忽略。任何在反斜杠和换行符之间的空白也会被忽略。你可以使用这种语法在源代码中硬折叠一个多行字符串字面量，而不会改变结果字符串的值。
 
-Special characters
-can be included in string literals
-of both the single-line and multiline forms
-using the following escape sequences:
+特殊字符可以通过以下转义序列包含在单行和多行字符串字面量中：
 
-- Null character (`\0`)
-- Backslash (`\\`)
-- Horizontal tab (`\t`)
-- Line feed (`\n`)
-- Carriage return (`\r`)
-- Double quotation mark (`\"`)
-- Single quotation mark (`\'`)
-- Unicode scalar (`\u{`*n*`}`),
-  where *n* is a hexadecimal number
-  that has one to eight digits
+- 空字符 (`\0`)
+- 反斜杠 (`\\`)
+- 水平制表符 (`\t`)
+- 换行符 (`\n`)
+- 回车符 (`\r`)
+- 双引号 (`\"`)
+- 单引号 (`\'`)
+- Unicode 标量 (`\u{`*n*`}`)，其中 *n* 是一个包含一到八位数字的十六进制数字
 
 <!--
   The behavior of \n and \r isn't the same as C.
@@ -732,13 +423,9 @@ using the following escape sequences:
   which could be CR or LF or CRLF.
 -->
 
-The value of an expression can be inserted into a string literal
-by placing the expression in parentheses after a backslash (`\`).
-The interpolated expression can contain a string literal,
-but can't contain an unescaped backslash,
-a carriage return, or a line feed.
+表达式的值可以通过在反斜杠 (`\`) 后面加上用括号括起来的表达式插入到字符串字面量中。插值表达式可以包含字符串字面量，但不能包含未转义的反斜杠、回车符或换行符。
 
-For example, all of the following string literals have the same value:
+例如，以下所有字符串字面量具有相同的值：
 
 ```swift
 "1 2 3"
@@ -776,9 +463,7 @@ let x = 3; "1 2 \(x)"
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A string delimited by extended delimiters is a sequence of characters
-surrounded by quotation marks and a balanced set of one or more number signs (`#`).
-A string delimited by extended delimiters has the following forms:
+由扩展定界符包围的字符串是由引号和一组或多组配对的井号（`#`）包围的一串字符序列。由扩展定界符包围的字符串具有以下形式：
 
 ```swift
 #"<#characters#>"#
@@ -788,26 +473,17 @@ A string delimited by extended delimiters has the following forms:
 """#
 ```
 
-Special characters in a string delimited by extended delimiters
-appear in the resulting string as normal characters
-rather than as special characters.
-You can use extended delimiters to create strings with characters
-that would ordinarily have a special effect
-such as generating a string interpolation,
-starting an escape sequence,
-or terminating the string.
+由扩展定界符包围的字符串中的特殊字符在结果字符串中显示为普通字符而不是特殊字符。你可以使用扩展定界符来创建包含通常会产生特殊效果字符的字符串，这些特殊效果比如有生成字符串插值、开启转义序列或终止字符串。
 
-The following example shows a string literal
-and a string delimited by extended delimiters
-that create equivalent string values:
+以下示例展示了一个字符串字面量和一个由扩展定界符包围的字符串，它们创建了等价的字符串值：
 
 ```swift
 let string = #"\(x) \ " \u{2603}"#
 let escaped = "\\(x) \\ \" \\u{2603}"
 print(string)
-// Prints "\(x) \ " \u{2603}"
+// 打印 "\(x) \ " \u{2603}"
 print(string == escaped)
-// Prints "true"
+// 打印 "true"
 ```
 
 <!--
@@ -823,9 +499,7 @@ print(string == escaped)
   ```
 -->
 
-If you use more than one number sign to form
-a string delimited by extended delimiters,
-don't place whitespace in between the number signs:
+如果你使用多个井号来形成由扩展定界符包围的字符串，不要在井号之间放置空格：
 
 <!--
   - test: `extended-string-delimiters`
@@ -838,8 +512,8 @@ don't place whitespace in between the number signs:
 -->
 
 ```swift
-print(###"Line 1\###nLine 2"###) // OK
-print(# # #"Line 1\# # #nLine 2"# # #) // Error
+print(###"Line 1\###nLine 2"###) // 正确
+print(# # #"Line 1\# # #nLine 2"# # #) // 错误
 ```
 
 <!--
@@ -857,19 +531,14 @@ print(# # #"Line 1\# # #nLine 2"# # #) // Error
   ```
 -->
 
-Multiline string literals that you create using extended delimiters
-have the same indentation requirements as regular multiline string literals.
+使用扩展定界符创建的多行字符串字面量具有与常规多行字符串字面量相同的缩进要求。
 
-The default inferred type of a string literal is `String`.
-For more information about the `String` type,
-see <doc:StringsAndCharacters>
-and [`String`](https://developer.apple.com/documentation/swift/string).
+默认情况下，字符串字面量的推断类型为 `String`。
 
-String literals that are concatenated by the `+` operator
-are concatenated at compile time.
-For example, the values of `textA` and `textB`
-in the example below are identical ---
-no runtime concatenation is performed.
+有关 `String` 类型的更多信息，请参见 <doc:StringsAndCharacters> 和 [`String`](https://developer.apple.com/documentation/swift/string)。
+
+字符串字面量通过 `+` 运算符连接时，连接操作在编译时完成。
+例如，以下示例中 `textA` 和 `textB` 的值是相同的——没有发生运行时的连接操作。
 
 ```swift
 let textA = "Hello " + "world"
@@ -885,7 +554,7 @@ let textB = "Hello world"
   ```
 -->
 
-> Grammar of a string literal:
+> 字符串字面量的语法:
 >
 > *string-literal* → *static-string-literal* | *interpolated-string-literal*
 >
@@ -901,11 +570,11 @@ let textB = "Hello world"
 >
 > *quoted-text* → *quoted-text-item* *quoted-text*_?_ \
 > *quoted-text-item* → *escaped-character* \
-> *quoted-text-item* → Any Unicode scalar value except  **`"`**,  **`\`**, U+000A, or U+000D
+> *quoted-text-item* → 除 **`"`**、**`\`**、U+000A 或 U+000D 以外的任何 Unicode 标量值
 >
 > *multiline-quoted-text* → *multiline-quoted-text-item* *multiline-quoted-text*_?_ \
 > *multiline-quoted-text-item* → *escaped-character* \
-> *multiline-quoted-text-item* → Any Unicode scalar value except  **`\`** \
+> *multiline-quoted-text-item* → 除 **`\`** 以外的任何 Unicode 标量值 \
 > *multiline-quoted-text-item* → *escaped-newline*
 >
 > *interpolated-string-literal* → *string-literal-opening-delimiter* *interpolated-text*_?_ *string-literal-closing-delimiter* \
@@ -920,7 +589,7 @@ let textB = "Hello world"
 > *escape-sequence* → **`\`** *extended-string-literal-delimiter* \
 > *escaped-character* → *escape-sequence* **`0`** | *escape-sequence* **`\`** | *escape-sequence* **`t`** | *escape-sequence* **`n`** | *escape-sequence* **`r`** | *escape-sequence* **`"`** | *escape-sequence* **`'`** \
 > *escaped-character* → *escape-sequence* **`u`** **`{`** *unicode-scalar-digits* **`}`** \
-> *unicode-scalar-digits* → Between one and eight hexadecimal digits
+> *unicode-scalar-digits* → 一到八位十六进制数字
 >
 > *escaped-newline* → *escape-sequence* *inline-spaces*_?_ *line-break*
 
@@ -941,31 +610,17 @@ let textB = "Hello world"
   quoted-character -> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
 -->
 
-### Regular Expression Literals
+### 正则表达式字面量
 
-A regular expression literal is a sequence of characters
-surrounded by slashes (`/`) with the following form:
+正则表达式字面量是一串被斜杠（`/`）包围的一串字符序列，形式如下：
 
 ```swift
 /<#regular expression#>/
 ```
 
-Regular expression literals
-must not begin with an unescaped tab or space,
-and they can't contain
-an unescaped slash (`/`),
-a carriage return, or a line feed.
+正则表达式字面量不能以未转义的制表符或空格开头，也不能包含未转义的斜杠（`/`）、回车符或换行符。
 
-Within a regular expression literal,
-a backslash is understood as a part of that regular expression,
-not just as an escape character like in string literals.
-It indicates that the following special character
-should be interpreted literally,
-or that the following nonspecial character
-should be interpreted in a special way.
-For example,
-`/\(/` matches a single left parenthesis
-and `/\d/` matches a single digit.
+在正则表达式字面量中，反斜杠被视为正则表达式的一部分，而不仅仅是像在字符串字面量中那样作为转义字符。它表示后续的特殊字符应按字面理解，或者后续的非特殊字符应按特殊方式处理。例如，`/\(/` 匹配一个左括号，而 `/\d/` 匹配一个数字。
 
 <!--
   OUTLINE
@@ -991,11 +646,7 @@ and `/\d/` matches a single digit.
   and regex literal parsing continues as normal.
 -->
 
-A regular expression literal delimited by extended delimiters
-is a sequence of characters surrounded by slashes (`/`)
-and a balanced set of one or more number signs (`#`).
-A regular expression literal
-delimited by extended delimiters has the following forms:
+由扩展定界符包围的正则表达式字面量是一串被斜杠（`/`）和一组或多组配对的井号（`#`）包围的字符序列。使用扩展定界符包围的正则表达式字面量有以下形式：
 
 ```swift
 #/<#regular expression#>/#
@@ -1005,16 +656,7 @@ delimited by extended delimiters has the following forms:
 /#
 ```
 
-A regular expression literal that uses extended delimiters
-can begin with an unescaped space or tab,
-contain unescaped slashes (`/`),
-and span across multiple lines.
-For a multiline regular expression literal,
-the opening delimiter must be at the end of a line,
-and the closing delimiter must be on its own line.
-Inside a multiline regular expression literal,
-the extended regular expression syntax is enabled by default ---
-specifically, whitespace is ignored and comments are allowed.
+使用扩展定界符的正则表达式字面量可以以未转义的空格或制表符开头，可以包含未转义的斜杠（`/`），并且可以跨多行。在多行正则表达式字面量中，开始定界符必须在一行的末尾，结束定界符必须独立占一行。在多行正则表达式字面量内部，扩展正则表达式语法默认启用——具体来说，空白字符将被忽略，并允许使用注释。
 
 <!--
   TODO As details about the multiline syntax shake out during SE review,
@@ -1022,13 +664,11 @@ specifically, whitespace is ignored and comments are allowed.
   add them above or spin out a separate paragraph.
 -->
 
-If you use more than one number sign to form
-a regular expression literal delimited by extended delimiters,
-don't place whitespace in between the number signs:
+如果使用多个井号来形成由扩展定界符包围的正则表达式字面量，不要在井号之间留有空格：
 
 ```swift
-let regex1 = ##/abc/##       // OK
-let regex2 = # #/abc/# #     // Error
+let regex1 = ##/abc/##       // 正确
+let regex2 = # #/abc/# #     // 错误
 ```
 
 <!--
@@ -1040,44 +680,25 @@ let regex2 = # #/abc/# #     // Error
   ```
 -->
 
-If you need to make an empty regular expression literal,
-you must use the extended delimiter syntax.
+如果你需要创建一个空的正则表达式字面量，则必须使用扩展定界符语法。
 
-> Grammar of a regular expression literal:
+> 正则表达式字面量的语法:
 >
 > *regular-expression-literal* → *regular-expression-literal-opening-delimiter* *regular-expression* *regular-expression-literal-closing-delimiter* \
-> *regular-expression* → Any regular expression
+> *regular-expression* → 任何正则表达式
 >
 > *regular-expression-literal-opening-delimiter* → *extended-regular-expression-literal-delimiter*_?_ **`/`** \
 > *regular-expression-literal-closing-delimiter* → **`/`** *extended-regular-expression-literal-delimiter*_?_
 >
 > *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
 
-## Operators
+## 运算符
 
-The Swift standard library defines a number of operators for your use,
-many of which are discussed in <doc:BasicOperators>
-and <doc:AdvancedOperators>.
-The present section describes which characters can be used to define custom operators.
+Swift 标准库定义了许多运算符供你使用，其中许多运算符在 <doc:BasicOperators> 和 <doc:AdvancedOperators> 中进行了讨论。本节描述了哪些字符可以用于定义自定义运算符。
 
-Custom operators can begin with one of the ASCII characters
-`/`, `=`, `-`, `+`, `!`, `*`, `%`, `<`, `>`,
-`&`, `|`, `^`, `?`, or `~`, or one of the Unicode characters
-defined in the grammar below
-(which include characters from the
-*Mathematical Operators*, *Miscellaneous Symbols*, and *Dingbats*
-Unicode blocks, among others).
-After the first character,
-combining Unicode characters are also allowed.
+自定义运算符可以用这些 ASCII 字符之一开头：`/`、`=`、`-`、`+`、`!`、`*`、`%`、`<`、`>`、`&`、`|`、`^`、`?` 或 `~`，或者是定义在下面语法中的 Unicode 字符（其中包括来自 *数学运算符（Mathematical Operators）*、*杂项符号（Miscellaneous Symbols）* 和 *装饰符号（Dingbats）* Unicode 块的字符等）之一。在第一个字符之后，还允许使用组合 Unicode 字符（Combining Unicode Character）。
 
-You can also define custom operators
-that begin with a dot (`.`).
-These operators can contain additional dots.
-For example, `.+.` is treated as a single operator.
-If an operator doesn't begin with a dot,
-it can't contain a dot elsewhere.
-For example, `+.+` is treated as
-the `+` operator followed by the `.+` operator.
+你还可以定义以点（`.`）开头的自定义运算符。这些运算符可以包含额外的点。例如，`.+.` 被视为一个单一的运算符。如果一个运算符不是以点开头的，则它不能在其他地方包含点。例如，`+.+` 被视为 `+` 运算符后跟 `.+` 运算符。
 
 <!--
   - test: `dot-operator-must-start-with-dot`
@@ -1099,10 +720,7 @@ the `+` operator followed by the `.+` operator.
   ```
 -->
 
-Although you can define custom operators that contain a question mark (`?`),
-they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation point (`!`),
-postfix operators can't begin with either a question mark or an exclamation point.
+虽然你可以定义包含问号 (`?`) 的自定义运算符，但它们不能仅由单个问号字符组成。此外，尽管运算符可以包含感叹号 (`!`)，但后缀运算符不能以问号或感叹号开头。
 
 <!--
   - test: `postfix-operators-dont-need-unique-prefix`
@@ -1142,55 +760,23 @@ postfix operators can't begin with either a question mark or an exclamation poin
   ```
 -->
 
-> Note: The tokens `=`, `->`, `//`, `/*`, `*/`, `.`,
-> the prefix operators `<`, `&`, and `?`,
-> the infix operator `?`,
-> and the postfix operators `>`, `!`, and `?` are reserved.
-> These tokens can't be overloaded, nor can they be used as custom operators.
+> 注意: 标记符号 `=`、`->`、`//`、`/*`、`*/`、`.`，以及前缀运算符 `<`、`&` 和 `?`，中缀运算符 `?`，后缀运算符 `>`、`!` 和 `?` 都是保留标记符号。  
+> 这些标记符号不能被重载，也不能用作自定义运算符。
 
-The whitespace around an operator is used to determine
-whether an operator is used as a prefix operator, a postfix operator,
-or an infix operator. This behavior has the following rules:
+运算符周围的空白用来确定运算符是作为前缀运算符、后缀运算符还是中缀运算符使用。这种行为遵循以下规则：
 
-- If an operator has whitespace around both sides or around neither side,
-  it's treated as an infix operator.
-  As an example, the `+++` operator in `a+++b` and `a +++ b` is treated as an infix operator.
-- If an operator has whitespace on the left side only,
-  it's treated as a prefix unary operator.
-  As an example, the `+++` operator in `a +++b` is treated as a prefix unary operator.
-- If an operator has whitespace on the right side only,
-  it's treated as a postfix unary operator.
-  As an example, the `+++` operator in `a+++ b` is treated as a postfix unary operator.
-- If an operator has no whitespace on the left but is followed immediately by a dot (`.`),
-  it's treated as a postfix unary operator.
-  As an example, the  `+++` operator in `a+++.b` is treated as a postfix unary operator
-  (`a+++ .b` rather than `a +++ .b`).
+- 如果运算符两边都有空白或都没有空白，则它被视为中缀运算符。例如，表达式 `a+++b` 和 `a +++ b` 中的 `+++` 被视为中缀运算符。
+- 如果运算符左边有空白而右边没有空白，则它被视为前缀一元运算符。例如，表达式 `a +++b` 中的 `+++` 被视为前缀一元运算符。
+- 如果运算符右边有空白而左边没有空白，则它被视为后缀一元运算符。例如，表达式 `a+++ b` 中的 `+++` 被视为后缀一元运算符。
+- 如果运算符左边没有空白但紧跟在它后面的是一个点号 (`.`)，则它被视为后缀一元运算符。例如，表达式 `a+++.b` 中的 `+++` 被视为后缀一元运算符（解释为 `a+++ .b` 而非 `a +++ .b`）。
 
-For the purposes of these rules,
-the characters `(`, `[`, and `{` before an operator,
-the characters `)`, `]`, and `}` after an operator,
-and the characters `,`, `;`, and `:`
-are also considered whitespace.
+在这些规则中，运算符前的字符 `(`、`[` 和 `{`，运算符后的字符 `)`、`]` 和 `}`，以及字符 `,`、`;` 和 `:` 也被视为空白。
 
-If the `!` or `?` predefined operator has no whitespace on the left,
-it's treated as a postfix operator,
-regardless of whether it has whitespace on the right.
-To use the `?` as the optional-chaining operator,
-it must not have whitespace on the left.
-To use it in the ternary conditional (`?` `:`) operator,
-it must have whitespace around both sides.
+如果预定义的 `!` 或 `?` 运算符左边没有空白，无论右边是否有空白，它都会被视为后缀运算符。要使用 `?` 作为可选链运算符（Optional-Chaining Operator），它左边必须没有空白。要在三元条件运算符 (`?` `:`) 中使用它，则必须在左右两边都有空白。
 
-If one of the arguments to an infix operator is a regular expression literal,
-then the operator must have whitespace around both sides.
+如果中缀运算符的其中一个参数是正则表达式字面量，则该运算符的左右两边都必须有空白。
 
-In certain constructs, operators with a leading `<` or `>`
-may be split into two or more tokens. The remainder is treated the same way
-and may be split again.
-As a result, you don't need to add whitespace
-to disambiguate between the closing `>` characters in constructs like
-`Dictionary<String, Array<Int>>`.
-In this example, the closing `>` characters aren't treated as a single token
-that may then be misinterpreted as a bit shift `>>` operator.
+在某些构造中，以 `<` 或 `>` 开头的运算符可能会被拆分为两个或多个标记符号。拆分后剩余的部分会以同样的规则处理，并可能再次被拆分。这意味着在 `Dictionary<String, Array<Int>>` 这样的构造中，你不需要添加空白来消除闭合 `>` 符号之间的歧义。在这个例子中，闭合的 `>` 符号不会被视为单个标记符号，也不会被错误解释为位移 `>>` 运算符。
 
 <!--
   NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
@@ -1205,10 +791,7 @@ that may then be misinterpreted as a bit shift `>>` operator.
   C++ typically needs whitespace to resolve the ambiguity.
 -->
 
-To learn how to define new, custom operators,
-see <doc:AdvancedOperators#Custom-Operators> and <doc:Declarations#Operator-Declaration>.
-To learn how to overload existing operators,
-see <doc:AdvancedOperators#Operator-Methods>.
+要了解如何定义新的自定义操作符，请参阅 <doc:AdvancedOperators#Custom-Operators> 和 <doc:Declarations#Operator-Declaration>。要了解如何重载现有的操作符，请参阅 <doc:AdvancedOperators#Operator-Methods>。
 
 <!--
   NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
@@ -1216,17 +799,17 @@ see <doc:AdvancedOperators#Operator-Methods>.
   The current list of reserved punctuation is in Tokens.def.
 -->
 
-> Grammar of operators:
+> 操作符的语法:
 >
 > *operator* → *operator-head* *operator-characters*_?_ \
 > *operator* → *dot-operator-head* *dot-operator-characters*
 >
 > *operator-head* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
 > *operator-head* → U+00A1–U+00A7 \
-> *operator-head* → U+00A9 or U+00AB \
-> *operator-head* → U+00AC or U+00AE \
+> *operator-head* → U+00A9 或 U+00AB \
+> *operator-head* → U+00AC 或 U+00AE \
 > *operator-head* → U+00B0–U+00B1 \
-> *operator-head* → U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7 \
+> *operator-head* → U+00B6、U+00BB、U+00BF、U+00D7 或 U+00F7 \
 > *operator-head* → U+2016–U+2017 \
 > *operator-head* → U+2020–U+2027 \
 > *operator-head* → U+2030–U+203E \
@@ -1257,11 +840,11 @@ see <doc:AdvancedOperators#Operator-Methods>.
 > *prefix-operator* → *operator* \
 > *postfix-operator* → *operator*
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。这些信息可能会发生变化，根据本文档实施的软件应与最终的操作系统软件一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多有关使用 [Apple's beta software](https://developer.apple.com/support/beta-software/) 的信息。
 
 <!--
 This source file is part of the Swift.org open source project
