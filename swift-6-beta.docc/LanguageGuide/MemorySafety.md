@@ -149,7 +149,7 @@ increment(&stepSize)
   ```
 -->
 
-在上面的代码里，`stepSize` 是一个全局变量，并且它可以通常可以在 `increment(_:)` 里被访问。然而，对于 `stepSize` 的读访问与 `number` 的写访问重叠了。就像下面展示的那样，`number` 和 `stepSize` 都指向了同一个内存区域。同一块内存区域的读和写访问重叠了，因此产生了冲突。
+在上面的代码里，`stepSize` 是一个全局变量，并且它可以通常可以在 `increment(_:)` 里被访问。然而，对于 `stepSize` 的读访问与 `number` 的写访问重叠了。就像下面展示的那样，`number` 和 `stepSize` 都指向了同一个内存区域。针对同一块内存区域的读和写访问重叠了，因此产生了冲突。
 
 ![](memory_increment)
 
@@ -184,21 +184,9 @@ stepSize = copyOfStepSize
   ```
 -->
 
-当你在调用 `increment(_:)` 前复制了一份 `stepSize`，
+由于你在调用 `increment(_:)` 前复制了 `stepSize`，显然 `copyOfStepSize` 会以当前 `stepSize` 的值增加。读访问在写访问开始前就结束了，所以不会产生冲突。
 
-When you make a copy of `stepSize` before calling `increment(_:)`,
-it's clear that the value of `copyOfStepSize` is incremented
-by the current step size.
-The read access ends before the write access starts,
-so there isn't a conflict.
-
-Another consequence of long-term write access
-to in-out parameters is that
-passing a single variable
-as the argument for multiple in-out parameters
-of the same function
-produces a conflict.
-For example:
+对于 in-out 参数保持长期写访问的另一个后果是，往同一个函数的多个 in-out 参数里传入同一个变量也会产生冲突。例如：
 
 ```swift
 func balance(_ x: inout Int, _ y: inout Int) {
@@ -210,7 +198,7 @@ var playerOneScore = 42
 var playerTwoScore = 30
 balance(&playerOneScore, &playerTwoScore)  // OK
 balance(&playerOneScore, &playerOneScore)
-// Error: conflicting accesses to playerOneScore
+// 错误：playerOneScore 访问冲突
 ```
 
 <!--
@@ -242,27 +230,13 @@ balance(&playerOneScore, &playerOneScore)
   ```
 -->
 
-The `balance(_:_:)` function above
-modifies its two parameters
-to divide the total value evenly between them.
-Calling it with `playerOneScore` and `playerTwoScore` as arguments
-doesn't produce a conflict ---
-there are two write accesses that overlap in time,
-but they access different locations in memory.
-In contrast,
-passing `playerOneScore` as the value for both parameters
-produces a conflict
-because it tries to perform two write accesses
-to the same location in memory at the same time.
+上面的  `balance(_:_:)` 函数会将传入的两个参数平均化。将 `playerOneScore` 和 `playerTwoScore` 作为参数传入不会产生错误 —— 虽然这两个写访问在时间上重叠了，但它们访问的是不同的内存位置；相反，将 `playerOneScore` 同时传入两个参数则会冲突，因为这样会发起两次在时间上重叠、针对同一内存位置的写访问。
 
-> Note: Because operators are functions,
-> they can also have long-term accesses to their in-out parameters.
-> For example, if `balance(_:_:)` was an operator function named `<^>`,
-> writing `playerOneScore <^> playerOneScore`
-> would result in the same conflict
-> as `balance(&playerOneScore, &playerOneScore)`.
+> 因为操作符也是函数，它们也会对 in-out 参数保持长时访问。例如，假设 `balance(_:_:)` 是一个名为 `<^>` 的操作符函数，那么 `playerOneScore <^> playerOneScore` 也会造成像 `balance(&playerOneScore, &playerOneScore)` 一样的冲突。
 
-## Conflicting Access to self in Methods
+
+
+## 在方法中对 self 的访问冲突
 
 <!--
   This (probably?) applies to all value types,
@@ -277,11 +251,7 @@ to the same location in memory at the same time.
   because, under the hood, that's exactly what happens.
 -->
 
-A mutating method on a structure has write access to `self`
-for the duration of the method call.
-For example, consider a game where each player
-has a health amount, which decreases when taking damage,
-and an energy amount, which decreases when using special abilities.
+一个结构体的变值方法会在其被调用期间保持对于 `self` 的长时写访问。想象这样一个游戏：其中每个玩家都有一定的生命值，受到伤害时会减少；玩家还会有能量值，会在玩家使用特殊技能时减少。
 
 ```swift
 struct Player {
@@ -318,15 +288,7 @@ struct Player {
   ```
 -->
 
-In the `restoreHealth()` method above,
-a write access to `self` starts at the beginning of the method
-and lasts until the method returns.
-In this case, there's no other code
-inside `restoreHealth()`
-that could have an overlapping access to the properties of a `Player` instance.
-The `shareHealth(with:)` method below
-takes another `Player` instance as an in-out parameter,
-creating the possibility of overlapping accesses.
+在上面的 `restoreHealth()` 方法中，对于 `self` 的写访问开始于方法的开头，并持续到方法返回为止。在这个例子中，`restoreHealth()` 中没有任何其他的代码会对 `Player` 实例的属性产生重叠访问。但是，下面的 `shareHealth(with:)` 方法会将另一个 `Player` 实例作为 in-out 参数接受，这样则会产生重叠访问的可能性。
 
 ```swift
 extension Player {
@@ -355,6 +317,8 @@ oscar.shareHealth(with: &maria)  // OK
   -> oscar.shareHealth(with: &maria)  // OK
   ```
 -->
+
+在上面的例子中，通过调用 `shareHealth(with:)` 方法来将
 
 In the example above,
 calling the `shareHealth(with:)` method
