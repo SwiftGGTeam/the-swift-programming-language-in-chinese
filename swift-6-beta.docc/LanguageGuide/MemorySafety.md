@@ -2,9 +2,9 @@
 
 通过合理地组织代码来避免内存访问冲突。
 
-默认情况下，Swift 会阻止代码中不安全的行为。例如，Swift 会确保所有变量都在使用前被初始化、内存不可在被释放后访问，还会对数组的下标做越界检查。
+默认情况下，Swift 会阻止代码中不安全的行为。例如，Swift 会确保所有变量都在使用前被初始化、内存不可在被释放后访问、还会对数组的下标做越界检查。
 
-Swift 还会要求修改内存的代码拥有对被修改区域的独占访问权，以确保对同一块内存区域的多次访问不会产生冲突。由于 Swift 会自动管理内存，大多数情况下你不需要考虑内存访问相关的问题。但是，为了避免编写出会产生内存访问冲突的代码，你还是很有必要了解什么情况下会出现这种问题。如果你的代码有内存访问冲突的问题，系统会在编译时或运行时报错。
+Swift 会要求修改内存的代码拥有对被修改区域的独占访问权，以确保对同一块内存区域的多次访问不会产生冲突。由于 Swift 会自动管理内存，大多数情况下你不需要考虑内存访问相关的问题。但是，为了避免编写出会产生内存访问冲突的代码，你还是很有必要了解什么情况下会出现这种问题。如果你的代码有内存访问冲突的问题，系统会在编译时或运行时报错。
 
 <!--
   TODO: maybe re-introduce this text...
@@ -46,7 +46,7 @@ print("We're number \(one)!")
 
 当代码中的不同部分试图访问同一块内存区域时，访问冲突就有可能出现。对一块内存区域的同时访问可能导致程序出现无法预测或不稳定的行为。Swift 中有许多修改数值的方式，其中一些会横跨多行代码，这意味着修改某个数值的过程本身也有可能产生对此数值的访问。
 
-要理解这个问题，你可以尝试想象一下在纸上更新一个预算表的流程。更新预算表分为两步，第一步你需要先添加每个预算项目的名字和数额，第二步才是更新预算总额。在整个更新流程的之前及之后，你可以从预算中读取任何信息，而这些信息都是正确的，就像下图所示一样。
+要理解这个问题，你可以尝试想象一下在纸上更新一个预算表的流程。更新预算表分为两步：第一步你需要先添加每个预算项目的名字和数额，第二步才是更新预算总额。在整个更新流程的之前及之后，你可以从预算中读取任何信息，而这些信息都是正确的，就像下图所示一样。
 
 ![](memory_shopping)
 
@@ -71,7 +71,7 @@ print("We're number \(one)!")
 - 它们访问的是同一块内存区域。
 - 它们的时间窗口出现了重叠。
 
-读操作和写操作之间的区别是显而易见的：写操作会改变内存区域，而读操作不会。「内存区域」指的是被访问的内容（例如变量、常量、属性）。内存访问的时长要么瞬间完成，要么持续较长时间。
+读操作和写操作之间的区别是显而易见的：写操作会改变内存区域，而读操作不会。「内存区域」指的是被访问的内容（例如变量、常量、属性）。内存访问的要么瞬间完成，要么持续较长时间。
 
 如果一项操作仅仅使用了 C 的原子化操作，则这项操作本身也是**原子化**的。请查看 `stdatomic(3)` 手册来了解有哪些函数满足这个定义。
 
@@ -236,7 +236,7 @@ balance(&playerOneScore, &playerOneScore)
 
 
 
-## 在方法中对 self 的访问冲突
+## 方法中的 self 访问冲突
 
 <!--
   This (probably?) applies to all value types,
@@ -267,6 +267,7 @@ struct Player {
 ```
 
 <!--
+
   - test: `memory-player-share-with-self`
 
   ```swifttest
@@ -318,31 +319,15 @@ oscar.shareHealth(with: &maria)  // OK
   ```
 -->
 
-在上面的例子中，通过调用 `shareHealth(with:)` 方法来将
-
-In the example above,
-calling the `shareHealth(with:)` method
-for Oscar's player to share health with Maria's player
-doesn't cause a conflict.
-There's a write access to `oscar` during the method call
-because `oscar` is the value of `self` in a mutating method,
-and there's a write access to `maria`
-for the same duration
-because `maria` was passed as an in-out parameter.
-As shown in the figure below,
-they access different locations in memory.
-Even though the two write accesses overlap in time,
-they don't conflict.
+在上面的例子中，通过调用 `shareHealth(with:)` 方法来将 Oscar 的生命值分享给 Maria 并不会造成冲突。因为 `oscar` 是变值方法中 `self` 所对应的值，所以方法执行过程存在对于 `oscar` 的写访问；在相同的时间窗口内，方法对于 `maria` 也会有写访问，因为 `maria` 是作为 in-out 参数传入的。尽管这两次写访问在时间上发生了重叠，它们并不冲突。 
 
 ![](memory_share_health_maria)
 
-However,
-if you pass `oscar` as the argument to `shareHealth(with:)`,
-there's a conflict:
+然而，如果你将 `oscar` 所谓参数传入 `shareHealth(with:)`，就会产生冲突了：
 
 ```swift
 oscar.shareHealth(with: &oscar)
-// Error: conflicting accesses to oscar
+// 错误：对 oscar 的访问出现冲突
 ```
 
 <!--
@@ -366,37 +351,18 @@ oscar.shareHealth(with: &oscar)
   ```
 -->
 
-The mutating method needs write access to `self`
-for the duration of the method,
-and the in-out parameter needs write access to `teammate`
-for the same duration.
-Within the method,
-both `self` and `teammate` refer to
-the same location in memory ---
-as shown in the figure below.
-The two write accesses
-refer to the same memory and they overlap,
-producing a conflict.
+在整个变值方法执行期间，方法不仅需要对保持对 `self` 的写访问，其 in-out 参数还需要对 `teammate` 保持相同时长的写访问。在方法内，`self` 和 `teammate` 都指向了内存中的同一位置（如下图所示）。因为两次写访问不仅在时间上重叠，访问的内存区域也重叠了，所以产生了冲突。
 
 ![](memory_share_health_oscar)
 
-## Conflicting Access to Properties
+## 属性访问冲突
 
-Types like structures, tuples, and enumerations
-are made up of individual constituent values,
-such as the properties of a structure or the elements of a tuple.
-Because these are value types, mutating any piece of the value
-mutates the whole value,
-meaning read or write access to one of the properties
-requires read or write access to the whole value.
-For example,
-overlapping write accesses to the elements of a tuple
-produces a conflict:
+结构体、元组、枚举这样的类型是由多个独立的值构成的（例如结构题的属性、元组的元素）。它们都是值类型，所以修改值的任何一部分都是对于整个值的修改。这意味着对于其中任何一个属性的读或写访问，都需要对于整个值的访问。例如，对于元组元素的重叠写访问会造成冲突：
 
 ```swift
 var playerInformation = (health: 10, energy: 20)
 balance(&playerInformation.health, &playerInformation.energy)
-// Error: conflicting access to properties of playerInformation
+// 错误：对 playerInformation 的属性访问有冲突
 ```
 
 <!--
@@ -417,28 +383,13 @@ balance(&playerInformation.health, &playerInformation.energy)
   ```
 -->
 
-In the example above,
-calling `balance(_:_:)` on the elements of a tuple
-produces a conflict
-because there are overlapping write accesses to `playerInformation`.
-Both `playerInformation.health` and `playerInformation.energy`
-are passed as in-out parameters,
-which means `balance(_:_:)` needs write access to them
-for the duration of the function call.
-In both cases, a write access to the tuple element
-requires a write access to the entire tuple.
-This means there are two write accesses to `playerInformation`
-with durations that overlap,
-causing a conflict.
+在上方的示例中，因为出现了对于 `playerInformation` 的重叠写访问，对元组中的元素调用 `balance(_:_:)` 就会产生冲突。`playerInformation.health` 和 `playerInformation.energy` 都被作为 in-out 参数被传入了，这意味着 `balance(_:_:)` 在执行期间需要保持对它们的写访问，而这又意味着 `balance(_:_:)` 需要保持两次对 `playerInformation` 整体的重叠写访问，这样一来就发生了访问冲突。
 
-The code below shows that the same error appears
-for overlapping write accesses
-to the properties of a structure
-that's stored in a global variable.
+下方的代码展示了对一个存储在全局变量中的结构体的重叠写访问，这会导致相同的错误。
 
 ```swift
 var holly = Player(name: "Holly", health: 10, energy: 10)
-balance(&holly.health, &holly.energy)  // Error
+balance(&holly.health, &holly.energy)  // 错误
 ```
 
 <!--
@@ -463,14 +414,7 @@ balance(&holly.health, &holly.energy)  // Error
   ```
 -->
 
-In practice,
-most access to the properties of a structure
-can overlap safely.
-For example,
-if the variable `holly` in the example above
-is changed to a local variable instead of a global variable,
-the compiler can prove that overlapping access
-to stored properties of the structure is safe:
+在实践中，大多数时候对于结构体属性的重叠访问是安全的。举个例子，如果上方例子中的变量 `holly` 是一个本地变量而非全局变量，编译器可以「证明」对于该结构体的属性的重叠访问是安全的：
 
 ```swift
 func someFunction() {
@@ -480,6 +424,7 @@ func someFunction() {
 ```
 
 <!--
+
   - test: `memory-share-health-local`
 
   ```swifttest
@@ -501,34 +446,15 @@ func someFunction() {
   ```
 -->
 
-In the example above,
-Oscar's health and energy are passed
-as the two in-out parameters to `balance(_:_:)`.
-The compiler can prove that memory safety is preserved
-because the two stored properties don't interact in any way.
+在上方的例子中，Oscar 的生命值和能量值被作为两个 in-out 参数传递给了 `balance(_:_:)`。此时编译器能够证明内存是安全的，因为这两个属性并不会以任何方式交互。
 
-The restriction against
-overlapping access to properties of a structure
-isn't always necessary to preserve memory safety.
-Memory safety is the desired guarantee,
-but exclusive access is a stricter requirement than memory safety ---
-which means some code preserves memory safety,
-even though it violates exclusive access to memory.
-Swift allows this memory-safe code if the compiler can prove
-that the nonexclusive access to memory is still safe.
-Specifically, it can prove
-that overlapping access to properties of a structure is safe
-if the following conditions apply:
+要保证内存安全，限制结构体属性的重叠访问并不总是必要的。内存安全性是我们想获得的一种保证，但是「独占访问」是相比「内存安全」更加严格的一种要求 —— 这意味着即使有些代码违反了「独占访问」的原则，它也可以是内存安全的。只要编译器可以「证明」这种非专属的访问是内存安全的，Swift 就会允许这样的代码存在。特别地，在以下条件满足时，编译器就可以证明对结构体属性的重叠访问是安全的：
 
-- You're accessing only stored properties of an instance,
-  not computed properties or class properties.
-- The structure is the value of a local variable,
-  not a global variable.
-- The structure is either not captured by any closures,
-  or it's captured only by nonescaping closures.
+- 代码只访问了实例的存储属性，而没有访问计算属性或类属性
+- 结构体是本地变量，而非全局变量的值
+- 结构体要么没有被闭包捕获，要么只被非逃逸闭包捕获了
 
-If the compiler can't prove the access is safe,
-it doesn't allow the access.
+如果编译器无法证明访问安全性，它就会拒绝访问。
 
 <!--
   Because there's no syntax
