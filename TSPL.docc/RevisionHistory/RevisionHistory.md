@@ -2,7 +2,7 @@
 
 Review the recent changes to this book.
 
-**XXX FCS date XXX**
+**2024-09-23**
 
 - Updated for Swift 6.
 - Added the <doc:Attributes#preconcurrency> section
