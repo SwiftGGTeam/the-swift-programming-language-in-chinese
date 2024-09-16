@@ -28,7 +28,7 @@
 
 ## 顶级代码
 
-Swift 源文件中的顶级代码由零个或多个语句、声明和表达式组成。默认情况下，在源文件顶层声明的变量、常量和其他命名声明可以被同一模块中每个源文件的代码访问。你可以通过使用访问级别修饰符来覆盖此默认行为，具体说明见 <doc:Declarations#Access-Control-Levels>。
+Swift 源文件中的顶级代码由零个或多个语句、声明和表达式组成。默认情况下，在源文件顶层声明的变量、常量和其他具名声明可以被同一模块中每个源文件的代码访问。你可以通过使用访问级别修饰符来覆盖此默认行为，具体说明见 <doc:Declarations#Access-Control-Levels>。
 
 有两种类型的顶级代码：顶级声明和可执行的顶级代码。顶级声明仅由声明组成，允许出现在所有 Swift 源文件中。可执行的顶级代码包含语句和表达式，而不仅仅是声明，仅允许作为程序的顶级入口点。
 
@@ -40,7 +40,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 ## 代码块
 
-一个*代码块*被各种声明和控制结构用来将语句组合在一起。它具有以下形式：
+*代码块*被各种声明和控制结构用来将语句组合在一起。它具有以下形式：
 
 ```swift
 {
@@ -63,7 +63,7 @@ Swift 源文件中的顶级代码由零个或多个语句、声明和表达式�
 
 ## 导入声明
 
-一个*导入声明*让你访问在当前文件外部声明的符号。基本形式导入整个模块；它由 `import` 关键字后跟模块名称组成：
+*导入声明*允许你访问在当前文件之外声明的符号。基本形式是导入整个模块；它由 `import` 关键字后跟模块名称组成。
 
 ```swift
 import <#module#>
@@ -89,18 +89,18 @@ import <#module#>.<#submodule#>
 
 ## 常量声明
 
-*常量声明*在你的程序中引入一个名为值的常量。常量声明使用 `let` 关键字声明，具有以下形式：
+*常量声明*会在你的程序中引入一个具名的常量值。常量声明使用 `let` 关键字，形式如下：
 
 ```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
 
-常量声明定义了*常量名称*与构造器*表达式*的值之间的不可变绑定；一旦常量的值被设置，就无法更改。也就是说，如果常量是用类对象初始化的，对象本身可以改变，但常量名称与它所指向的对象之间的绑定不能改变。
+常量声明定义了*常量名称*与构造器*表达式*的值之间的不可变绑定；一旦常量的被赋值，就无法更改。也就是说，如果常量是用类对象初始化的，对象本身可以改变，但常量名称与它所指向的对象之间的绑定不能改变。
 
-当在全局范围内声明常量时，必须用一个值进行初始化。当在函数或方法的上下文中发生常量声明时，可以稍后初始化，只要在第一次读取其值之前保证已设置值。如果编译器能够证明常量的值从未被读取，则不要求该常量必须设置值。此分析称为*确定初始化*——编译器证明在读取之前值已被确定设置。
+当在全局范围内声明常量时，必须用一个值进行初始化。当在函数或方法的上下文中发生常量声明时，可以稍后初始化，只要保证在第一次读取其值之前已为其赋值。如果编译器能够证明常量的值从未被读取，则不要求该常量必须设置值。此分析称为*确定初始化*——编译器保证一个值在读取之前值已被赋值。
 
 > 注意:
-> 确定性初始化无法构建需要领域知识的证明，并且它在条件语句中跟踪状态的能力是有限的。如果你可以确定常量始终有一个值，但编译器无法证明这一点，请尝试简化设置该值的代码路径，或改用变量声明。
+> 确定初始化无法构建需要领域知识的证明，并且它在条件语句中跟踪状态的能力是有限的。如果你可以确定常量始终有一个值，但编译器无法证明这一点，请尝试简化设置该值的代码路径，或改用变量声明。
 
 <!--
 In the most general case,
@@ -124,13 +124,13 @@ let (firstNumber, secondNumber) = (10, 42)
   ```
 -->
 
-在这个例子中，`firstNumber` 是值 `10` 的命名常量，而 `secondNumber` 是值 `42` 的命名常量。现在这两个常量可以独立使用：
+在这个例子中，`firstNumber` 是值 `10` 的具名常量，而 `secondNumber` 是值 `42` 的具名常量。现在这两个常量可以独立使用：
 
 ```swift
 print("The first number is \(firstNumber).")
-// Prints "The first number is 10."
+// 打印 "The first number is 10."
 print("The second number is \(secondNumber).")
-// Prints "The second number is 42."
+// 打印 "The second number is 42."
 ```
 
 <!--
@@ -176,9 +176,9 @@ print("The second number is \(secondNumber).")
 
 ## 变量声明
 
-*变量声明*在你的程序中引入了一个名为值的变量，并使用 `var` 关键字进行声明。
+*变量声明*会在你的程序中引入一个具名的变量值，并使用 `var` 关键字进行声明。
 
-变量声明有几种形式，用于声明不同类型的命名可变值，包括存储变量和计算变量及属性、存储变量和属性观察者，以及静态变量属性。使用的适当形式取决于变量声明的范围和你打算声明的变量类型。
+变量声明有几种形式，用于声明不同类型的具名可变值，包括存储变量和计算变量及属性、存储变量和属性观察者，以及静态变量属性。使用何种适当的形式取决于变量声明的范围以及你打算声明的变量类型。
 
 > 注意:
 > 你还可以在协议声明的上下文中声明属性，参见 <doc:Declarations#Protocol-Property-Declaration>。
@@ -218,11 +218,11 @@ var <#variable name#>: <#type#> {
 
 你可以在全局范围、函数的局部范围或类、结构体、枚举或扩展声明的上下文中定义这种形式的变量声明。当这种形式的变量声明在全局范围或函数的局部范围内声明时，它被称为*计算变量*。当它在类、结构体或扩展声明的上下文中声明时，它被称为*计算属性*。
 
-getter 用于读取值，setter 用于写入值。setter 子句是可选的，当只需要 getter时，可以省略两个子句，直接返回请求的值，参见 <doc:Properties#Read-Only-Computed-Properties>。但如果提供了 setter 子句，则必须同时提供 getter 子句。
+getter 用于读取值，setter 用于写入值。setter 子句是可选的，当只需要 getter 时，可以省略两个子句，直接返回请求的值，参见 <doc:Properties#Read-Only-Computed-Properties>。但如果提供了 setter 子句，则必须同时提供 getter 子句。
 
 *setter 名称*和括号是可选的。如果你提供了 setter 名称，它将用作 setter 参数的名称。如果你不提供 setter 名称，setter 的默认参数名称是 `newValue`，参见 <doc:Properties#Shorthand-Setter-Declaration>。
 
-与存储的命名值和存储的变量属性不同，计算得出的命名值或计算得出的属性的值并不存储在内存中。
+与存储的具名值和存储的变量属性不同，计算的具名值或计算属性的值并不会存储在内存中。
 
 有关更多信息以及查看计算属性的示例，请参见 <doc:Properties#Computed-Properties>。
 
@@ -241,7 +241,7 @@ var <#variable name#>: <#type#> = <#expression#> {
 }
 ```
 
-你可以在全局范围、函数的局部范围或类或结构体声明的上下文中定义这种变量声明形式。当这种形式的变量声明在全局范围或函数的局部范围内声明时，观察者被称为*存储变量观察者*。当它在类或结构声明的上下文中声明时，观察者被称为*属性观察者*。
+你可以在全局范围、函数的局部范围或类或结构体声明的上下文中定义这种变量声明形式。当这种形式的变量声明在全局范围或函数的局部范围内声明时，观察者被称为*存储变量观察者*。当它在类或结构体声明的上下文中声明时，观察者被称为*属性观察者*。
 
 你可以为任何存储属性添加属性观察者。你还可以通过在子类中重写属性，为任何继承属性（无论是存储的还是计算的）添加属性观察者，参见 <doc:Inheritance#Overriding-Property-Observers>。
 
@@ -267,7 +267,7 @@ var <#variable name#>: <#type#> = <#expression#> {
   ```
 -->
 
-`willSet` 和 `didSet` 观察者提供了一种观察（并适当地响应）变量或属性值被设置时的方式。当变量或属性首次初始化时，观察者不会被调用。相反，它们仅在初始化上下文之外设置值时被调用。
+`willSet` 和 `didSet` 观察者提供了一种观察（并适当地响应）变量或属性值被设置时的方式。当变量或属性首次初始化时，观察者不会被调用。相反，它们仅在初始化上下文之外的情况下，值被设置时被调用。
 
 `willSet` 观察者在变量或属性的值被设置之前被调用。新值作为常量传递给 `willSet` 观察者，因此在 `willSet` 子句的实现中无法更改。`didSet` 观察者在新值被设置后立即被调用。与 `willSet` 观察者不同，变量或属性的旧值会传递给 `didSet` 观察者，以防你仍然需要访问它。也就是说，如果你在其自己的 `didSet` 观察者子句中给变量或属性赋值，那么你赋的这个新值将替代刚刚设置并传递给 `willSet` 观察者的值。
 
@@ -286,8 +286,8 @@ class Superclass {
     }
 }
 
-// This subclass doesn't refer to oldValue in its observer, so the
-// superclass's getter is called only once to print the value.
+// 这个子类在它的观察器中没有引用 oldValue，
+// 因此父类的 getter 只会被调用一次来打印
 class New: Superclass {
     override var x: Int {
         didSet { print("New value \(x)") }
@@ -295,12 +295,13 @@ class New: Superclass {
 }
 let new = New()
 new.x = 100
-// Prints "Setter was called"
-// Prints "Getter was called"
-// Prints "New value 100"
+// 打印 "Setter was called"
+// 打印 "Getter was called"
+// 打印 "New value 100"
 
-// This subclass refers to oldValue in its observer, so the superclass's
-// getter is called once before the setter, and again to print the value.
+// 这个子类在它的观察器中引用了 oldValue，
+// 因此父类的 getter 在 setter 之前会被调用一次，
+// 然后再次调用以打印该值。
 class NewAndOld: Superclass {
     override var x: Int {
         didSet { print("Old value \(oldValue) - new value \(x)") }
@@ -308,10 +309,10 @@ class NewAndOld: Superclass {
 }
 let newAndOld = NewAndOld()
 newAndOld.x = 200
-// Prints "Getter was called"
-// Prints "Setter was called"
-// Prints "Getter was called"
-// Prints "Old value 12 - new value 200"
+// 打印 "Getter was called"
+// 打印 "Setter was called"
+// 打印 "Getter was called"
+// 打印 "Old value 12 - new value 200"
 ```
 
 <!--
@@ -413,20 +414,20 @@ newAndOld.x = 200
 
 ## 类型别名声明
 
-*类型别名声明*将现有类型的命名别名引入到你的程序中。类型别名声明使用 `typealias` 关键字声明，具有以下形式：
+*类型别名声明*将现有类型的具名别名引入到你的程序中。类型别名声明使用 `typealias` 关键字声明，具有以下形式：
 
 ```swift
 typealias <#name#> = <#existing type#>
 ```
 
-在声明类型别名后，别名*名称*可以在程序中的任何地方替代*现有类型*使用。*现有类型*可以是命名类型或复合类型。类型别名不会创建新类型；它们只是允许一个名称引用现有类型。
+在声明类型别名后，别名*名称*可以在程序中的任何地方替代*现有类型*使用。*现有类型*可以是具名类型或复合类型。类型别名不会创建新类型；它们只是允许一个名称引用现有类型。
 
 类型别名声明可以使用泛型参数为现有的泛型类型命名。类型别名可以为现有类型的某些或所有泛型参数提供具体类型。例如：
 
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
 
-// The following dictionaries have the same type.
+// 接下来的两个字典是同一类型
 var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
 ```
@@ -550,10 +551,9 @@ func <#function name#>(<#parameters#>) {
 }
 ```
 
+每个参数的类型必须明确指定，而不能被推断出来。如果在参数类型前写上 `inout`，则该参数可以在函数的作用域内被修改。关于 in-out 参数的详细讨论请参见下面的 <doc:Declarations#In-Out-Parameters>。
 
-每个参数的类型必须明确指定，而不能被推断出来。如果在参数类型前写上 `inout`，则该参数可以在函数的作用域内被修改。关于输入输出参数的详细讨论请参见下面的 <doc:Declarations#In-Out-Parameters>。
-
-如果一个函数声明中的*语句*只包含一个表达式，则默认返回该表达式的值。只有在表达式的类型和函数的返回类型不是 `Void`，并且不是像 `Never` 那样没有任何情况的枚举时，才会考虑这种隐式返回语法。
+如果一个函数声明中的*语句*只包含一个表达式，则默认返回该表达式的值。只有在表达式的类型和函数的返回类型不是 `Void`，并且不是像 `Never` 那样没有任何枚举值的枚举时，才会考虑这种隐式返回语法。
 
 <!--
   As of Swift 5.3,
@@ -604,7 +604,7 @@ f(x: 1, y: 2) // x 和 y 都带有标签
   Tracking bug is <rdar://problem/35301593>
 -->
 
-你可以使用以下形式之一覆盖参数标签的默认行为：
+你可以使用以下形式之一覆盖实数标签的默认行为：
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter type#>
@@ -613,7 +613,7 @@ _ <#parameter name#>: <#parameter type#>
 
 在参数名称之前添加一个名称为参数提供了一个显式的实参标签，该标签可以与参数名称不同。相应的参数在函数或方法调用中必须使用给定的实参标签。
 
-在参数名称前加下划线（`_`）可以抑制参数标签。相应的参数在函数或方法调用中必须没有标签。
+在参数名称前加下划线（`_`）可以抑制实数标签。相应的参数在函数或方法调用中必须没有标签。
 
 ```swift
 func repeatGreeting(_ greeting: String, count n: Int) { /* 打招呼 n 次 */ }
@@ -643,9 +643,9 @@ repeatGreeting("Hello, world!", count: 2) //  count 带有标签，greeting 没�
 func someFunction(a: inout A, b: consuming B, c: C) { ... }
 ```
 
-#### 输入输出参数
+#### In-Out 参数
 
-默认情况下，Swift 中的函数参数是按值传递的：在函数内部所做的任何更改在调用者中不可见。要改为使用输入输出参数，你需要应用 `inout` 参数修饰符。
+默认情况下，Swift 中的函数参数是按值传递的：在函数内进行的任何更改对调用者都是不可见的。如果需要传入一个 in-out 参数，可以使用 `inout` 参数修饰符。
 
 ```swift
 func someFunction(a: inout Int) {
@@ -653,7 +653,7 @@ func someFunction(a: inout Int) {
 }
 ```
 
-在调用包含输入输出参数的函数时，输入输出参数必须以一个和号 (`&`) 开头，以标记该函数调用可以改变参数的值。
+当调用包含 in-out 参数的函数时，必须在 in-out 参数前加上 &（与符号），以表明函数调用可以更改该参数的值。
 
 ```swift
 var x = 7
@@ -661,15 +661,15 @@ someFunction(&x)
 print(x)  // 打印 "8"
 ```
 
-输入输出参数的传递方式如下：
+In-out 参数的传递方式如下：
 
 1. 当函数被调用时，参数的值会被复制。
 2. 在函数体内，副本被修改。
 3. 当函数返回时，副本的值被赋给原始参数。
 
-这种行为被称为 *copy-in copy-out* 或 *值传递*。例如，当一个计算属性或一个带观察者的属性作为输入输出参数传递时，它的 getter 在函数调用中被调用，而它的 setter 在函数返回时被调用。
+这种行为被称为 *copy-in copy-out* 或*按值结果调用*。例如，当一个计算属性或一个带观察者的属性作为 in-out 参数传递时，它的 getter 在函数调用中被调用，而它的 setter 在函数返回时被调用。
 
-作为一种优化，当参数是存储在内存物理地址中的值时，函数体内外使用相同的内存位置。优化后的行为被称为 *引用传递*; 它满足了 copy-in copy-out 模型的所有要求，同时消除了复制的开销。请使用 copy-in copy-out 给出的模型编写代码，而不依赖于引用传递优化，以便在有或没有优化的情况下都能正确运行。
+作为一种优化，当参数是存储在内存物理地址中的值时，函数体内外使用相同的内存位置。优化后的行为被称为*按引用调用*; 它满足了 copy-in copy-out 模型的所有要求，同时消除了复制的开销。请使用 copy-in copy-out 给出的模型编写代码，而不依赖于引用传递优化，以便在有或没有优化的情况下都能正确运行。
 
 在函数内，不要访问作为 in-out 参数传递的值，即使原始值在当前作用域中可用。访问原始值是对该值的同时访问，这违反了内存独占性。
 
@@ -683,7 +683,7 @@ func someFunction(a: inout Int) {
 someFunction(&someValue)
 ```
 
-出于同样的原因，你不能将相同的值传递给多个输入输出参数。
+出于同样的原因，你不能将相同的值传递给多个 in-out 参数。
 
 ```swift
 var someValue: Int
@@ -706,7 +706,7 @@ someFunction(&someValue, &someValue)
   behavioral differences that happen because of call by reference.
 -->
 
-一个捕获输入输出参数的闭包或嵌套函数必须是非逃逸的。如果你需要捕获一个 in-out 参数而不对其进行修改，请使用捕获列表显式地以不可变方式捕获该参数。
+捕获 in-out 参数的闭包或嵌套函数必须是非逃逸的。如果你需要捕获一个 in-out 参数而不对其进行修改，请使用捕获列表显式地以不可变方式捕获该参数。
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
@@ -763,7 +763,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   ```
 -->
 
-有关输入输出参数的更多讨论和示例，请参见 <doc:Functions#In-Out-Parameters>。
+有关 in-out 参数的更多讨论和示例，请参见 <doc:Functions#In-Out-Parameters>.。
 
 <!--
   - test: `escaping-cant-capture-inout`
@@ -919,7 +919,7 @@ _ : <#parameter type#>
 
 下划线 (`_`) 参数被明确忽略，无法在函数体内访问。
 
-带有基本类型名称后面紧跟三个点（`...`）的参数被理解为可变参数。紧跟在可变参数后面的参数必须有一个参数标签。一个函数可以有多个可变参数。可变参数被视为包含基本类型名称元素的数组。例如，可变参数 `Int...` 被视为 `[Int]`。有关使用可变参数的示例，请参见 <doc:Functions#Variadic-Parameters>。
+带有基本类型名称后面紧跟三个点（`...`）的参数被理解为可变参数。紧跟在可变参数后面的参数必须有一个实参标签。一个函数可以有多个可变参数。可变参数被视为包含基本类型名称元素的数组。例如，可变参数 `Int...` 被视为 `[Int]`。有关使用可变参数的示例，请参见 <doc:Functions#Variadic-Parameters>。
 
 一个带有等号 (`=`) 的参数及其类型后面的表达式被理解为具有给定表达式的默认值。给定的表达式在调用函数时被评估。如果在调用函数时省略了该参数，则使用默认值。
 
@@ -975,7 +975,7 @@ f(7)      // 无效，缺少参数标签
 
 ### 特殊类型的方法
 
-对枚举或结构体的方法，如果修改了 `self`，必须标记为 `mutating` 声明修饰符。
+枚举或结构体的方法，如果修改了 `self`，必须标记为 `mutating` 声明修饰符。
 
 重写超类方法的方法必须标记为 `override` 声明修饰符。没有 `override` 修饰符而重写方法，或者在不重写超类方法的情况下使用 `override` 修饰符，都是编译时错误。
 
@@ -1017,11 +1017,11 @@ f(7)      // 无效，缺少参数标签
 
 ### 特殊名称的方法
 
-几种具有特殊名称的方法使函数调用语法变得更加简洁。如果一个类型定义了这些方法之一，该类型的实例可以在函数调用语法中使用。函数调用被理解为对该实例上某个特殊命名方法的调用。
+几种具有特殊名称的方法使函数调用语法变得更加简洁。如果一个类型定义了这些方法之一，该类型的实例可以在函数调用语法中使用。函数调用被理解为对该实例上某个特殊具名方法的调用。
 
 类、结构体或枚举类型可以通过定义一个 `dynamicallyCall(withArguments:)` 方法或一个 `dynamicallyCall(withKeywordArguments:)` 方法来支持函数调用语法，参见 <doc:Attributes#dynamicCallable>，或者通过定义一个 call-as-function 的方法，如下所述。如果该类型同时定义了一个作为函数调用的方法和 `dynamicCallable` 特性使用的其中一个方法，则在可以使用任一方法的情况下，编译器优先选择 call-as-function 的方法。
 
-call-as-function 的方法的名称是 `callAsFunction()`，或者另一个以 `callAsFunction(` 开头并添加带标签或不带标签的参数的名称——例如， `callAsFunction(_:_:)` 和 `callAsFunction(something:)` 也是有效的调用作为函数的方法名称。
+call-as-function 方法的名称为 `callAsFunction()`，或其他以 `callAsFunction(` 开头并带有有标签或无标签参数的名称——例如，`callAsFunction(_:_:)` 和 `callAsFunction(something:)` 也是有效的 call-as-function 方法名称。
 
 <!--
   Above, callAsFunction( is in code voice even though
@@ -1096,7 +1096,7 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 
 ### 抛出函数和方法
 
-可以抛出错误的函数和方法必须标记为 `throws` 关键字。这些函数和方法被称为 *抛出函数* 和 *抛出方法*。它们具有以下形式：
+可以抛出错误的函数和方法必须标记为 `throws` 关键字。这些函数和方法被称为*抛出函数*和*抛出方法*。它们具有以下形式：
 
 ```swift
 func <#function name#>(<#parameters#>) throws -> <#return type#> {
@@ -1116,13 +1116,13 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 
 一个函数的类型包括它是否可以抛出错误以及它抛出什么类型的错误。这种子类型关系意味着，例如，你可以在期望抛出错误的上下文中使用一个不抛出错误的函数。有关抛出函数类型的更多信息，请参见 <doc:Types#Function-Type>。有关处理具有显式类型的错误的示例，请参见 <doc:ErrorHandling#Specifying-the-Error-Type>。
 
-你不能仅仅根据函数是否可以抛出错误来重载函数。也就是说，你可以根据函数的 *参数* 是否可以抛出错误来重载函数。
+你不能仅仅根据函数是否可以抛出错误来重载函数。也就是说，你可以根据函数的*参数*是否可以抛出错误来重载函数。
 
 抛出方法不能覆盖非抛出方法，抛出方法也不能满足非抛出方法的协议要求。也就是说，非抛出方法可以覆盖抛出方法，非抛出方法可以满足抛出方法的协议要求。
 
 ### 重新抛出函数和方法
 
-函数或方法可以使用 `rethrows` 关键字声明，以指示它仅在其一个函数参数抛出错误时才抛出错误。这些函数和方法被称为 *重新抛出函数* 和 *重新抛出方法*。重新抛出函数和方法必须至少有一个抛出错误的函数参数。
+函数或方法可以使用 `rethrows` 关键字声明，以指示它仅在其一个函数参数抛出错误时才抛出错误。这些函数和方法被称为*重新抛出函数*和*重新抛出方法*。重新抛出函数和方法必须至少有一个抛出错误的函数参数。
 
 ```swift
 func someFunction(callback: () throws -> Void) rethrows {
@@ -1253,13 +1253,13 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
 
 ### 永不返回的函数
 
-Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返回给调用者。具有 `Never` 返回类型的函数和方法被称为 *非返回*。非返回的函数和方法要么导致不可恢复的错误，要么开始一个无限进行的工作序列。这意味着在调用后立即运行的代码永远不会被执行。抛出和重新抛出的函数可以将程序控制转移到适当的 `catch` 块，即使它们是非返回的。
+Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返回给调用者。具有 `Never` 返回类型的函数和方法被称为*非返回*。非返回的函数和方法要么导致不可恢复的错误，要么开始一个无限进行的工作序列。这意味着在调用后立即运行的代码永远不会被执行。抛出和重新抛出的函数可以将程序控制转移到适当的 `catch` 块，即使它们是非返回的。
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
-不返回的函数或方法可以被调用，以结束守卫语句的 `else` 子句，如在 <doc:Statements#Guard-Statement>中讨论的。
+一个非返回的函数或方法可以在 guard 语句的 else 分支中调用，以结束该分支，见 <doc:Statements#Guard-Statement>。
 
-你可以重写一个不返回的方法，但新方法必须保持其返回类型和不返回值的行为。
+你可以重写一个非返回的方法，但新方法必须保持其返回类型和非返回的行为。
 
 > 函数声明的语法:
 >
@@ -1296,13 +1296,13 @@ Swift 定义了一个 [`Never`][] 类型，表示一个函数或方法不会返�
 
 ## 枚举声明
 
-一个*枚举声明*将一个命名的枚举类型引入到你的程序中。
+*枚举声明*将一个具名的枚举类型引入到你的程序中。
 
 枚举声明有两种基本形式，并使用 `enum` 关键字进行声明。使用任一形式声明的枚举的主体包含零个或多个值——称为*枚举成员*——以及任意数量的声明，包括计算属性、实例方法、类型方法、构造器、类型别名，甚至其他枚举、结构体、类和 actor 声明。枚举声明不能包含析构器或协议声明。
 
-枚举类型可以采用任意数量的协议，但不能从类、结构或其他枚举继承。
+枚举类型可以采用任意数量的协议，但不能从类、结构体或其他枚举继承。
 
-与类和结构体不同，枚举类型没有隐式提供的默认构造器；所有构造器必须显式声明。构造器可以委托给枚举中的其他构造器，但初始化过程只有在构造器将枚举的一个案例分配给 `self` 后才完成。
+与类和结构体不同，枚举类型没有隐式提供的默认构造器；所有构造器必须显式声明。构造器可以委托给枚举中的其他构造器，但初始化过程只有在构造器将枚举的一个成员分配给 `self` 后才完成。
 
 像结构体但不同于类，枚举是值类型；当枚举的实例被赋值给变量或常量，或作为参数传递给函数调用时，会被复制。有关值类型的信息，请参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>。
 
@@ -1360,13 +1360,13 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
   and assert() would require Number to conform to Equatable.
 -->
 
-有关更多信息以及查看与相关值类型相关的案例示例，请参见 <doc:Enumerations#Associated-Values>。
+有关更多信息以及查看枚举关联值的示例，请参见 <doc:Enumerations#Associated-Values>。
 
 #### 间接枚举
 
 枚举可以具有递归结构，也就是说，它们可以有与枚举类型本身实例相关联的值的情况。然而，枚举类型的实例具有值语义，这意味着它们在内存中具有固定的布局。为了支持递归，编译器必须插入一层间接性。
 
-要为特定的枚举成员启用间接性，请使用 `indirect` 声明修饰符进行标记。间接案例必须具有相关值。
+要为特定的枚举成员启用间接性，请使用 `indirect` 声明修饰符进行标记。间接枚举成员必须具有关联值。
 
 <!--
   TODO The word "enable" is kind of a weasel word.
@@ -1396,9 +1396,9 @@ enum Tree<T> {
   ```
 -->
 
-要为所有具有关联值的枚举成员启用间接引用，请使用 `indirect` 修饰符标记整个枚举——当枚举包含许多需要标记为 `indirect` 修饰符的情况时，这样做非常方便。
+要为所有具有关联值的枚举成员启用间接引用，请使用 `indirect` 修饰符标记整个枚举——当枚举包含许多需要标记为 `indirect` 修饰符的成员时，这样做非常方便。
 
-一个标记为 `indirect` 修饰符的枚举可以包含具有关联值的情况和没有关联值的情况的混合。然而，它不能包含任何也标记为 `indirect` 修饰符的案例。
+一个标记为 `indirect` 修饰符的枚举可以包含同时有关联值的成员和没有关联值的成员。然而，它不能包含任何也标记为 `indirect` 修饰符的成员。
 
 <!--
   It really should be an associated value **that includes the enum type**
@@ -1431,7 +1431,7 @@ enum Tree<T> {
 
 ### 带有原始值类型的枚举
 
-以下表单声明了一个枚举类型，其中包含相同基本类型的枚举成员：
+以下表单形式了一个枚举类型，其中包含相同基本类型的枚举成员：
 
 ```swift
 enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
@@ -1440,14 +1440,14 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-在这种形式中，每个案例块由 `case` 关键字组成，后面跟着一个或多个枚举成员，用逗号分隔。与第一种形式中的案例不同，每个案例都有一个基础值，称为*原始值*，其基本类型相同。这些值的类型在*原始值类型*中指定，必须表示整数、浮点数、字符串或单个字符。特别是，*原始值类型*必须符合 `Equatable` 协议，并且符合以下协议之一：`ExpressibleByIntegerLiteral` 用于整数字面量，`ExpressibleByFloatLiteral` 用于浮点字面量，`ExpressibleByStringLiteral` 用于包含任意数量字符的字符串字面量，以及 `ExpressibleByUnicodeScalarLiteral` 或 `ExpressibleByExtendedGraphemeClusterLiteral` 用于仅包含单个字符的字符串字面量。每个案例必须具有唯一名称并分配唯一的原始值。
+在这种形式中，每个 case 块由 `case` 关键字组成，后面跟着一个或多个枚举成员，用逗号分隔。与第一种形式中的成员不同，每个成员都有一个基础值，称为*原始值*，其基本类型相同。这些值的类型在*原始值类型*中指定，必须表示整数、浮点数、字符串或单个字符。特别是，*原始值类型*必须遵循 `Equatable` 协议，并且遵循以下协议之一：`ExpressibleByIntegerLiteral` 用于整数字面量，`ExpressibleByFloatLiteral` 用于浮点字面量，`ExpressibleByStringLiteral` 用于包含任意数量字符的字符串字面量，以及 `ExpressibleByUnicodeScalarLiteral` 或 `ExpressibleByExtendedGraphemeClusterLiteral` 用于仅包含单个字符的字符串字面量。每个成员必须具有唯一名称并分配唯一的原始值。
 
 <!--
   The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
   This list is shorter because these five protocols are explicitly supported in the compiler.
 -->
 
-如果原始值类型被指定为 `Int`，并且你没有显式地为这些情况分配值，它们将隐式地被分配值 `0`、`1`、`2`，依此类推。每个未分配的 `Int` 类型的情况将隐式地被分配一个原始值，该值是从前一个案例的原始值自动递增的。
+如果原始值类型被指定为 `Int`，并且你没有显式地为这些成员分配值，它们将隐式地被分配值 `0`、`1`、`2`，依此类推。每个未分配的 `Int` 类型的成员将隐式地被分配一个原始值，该值是从前一个成员的原始值自动递增的。
 
 ```swift
 enum ExampleEnum: Int {
@@ -1467,7 +1467,7 @@ enum ExampleEnum: Int {
 
 在上述示例中，`ExampleEnum.a` 的原始值为 `0`，而 `ExampleEnum.b` 的值为 `1`。由于 `ExampleEnum.c` 的值被显式设置为 `5`，因此 `ExampleEnum.d` 的值自动从 `5` 增加，结果为 `6`。
 
-如果原始值类型被指定为 `String`，并且你没有显式地为各个情况分配值，则每个未分配的案例会隐式地分配一个与该案例名称相同文本的字符串。
+如果原始值类型被指定为 `String`，并且你没有显式地为各个成员分配值，则每个未分配的成员会隐式地分配一个与该成员名称相同文本的字符串。
 
 ```swift
 enum GamePlayMode: String {
@@ -1487,13 +1487,13 @@ enum GamePlayMode: String {
 
 在上述示例中，`GamePlayMode.cooperative` 的原始值是 `"cooperative"`，`GamePlayMode.individual` 的原始值是 `"individual"`，而 `GamePlayMode.competitive` 的原始值是 `"competitive"`。
 
-具有原始值类型的枚举隐式符合在 Swift 标准库中定义的 `RawRepresentable` 协议。因此，它们具有 `rawValue` 属性和一个可失败的构造器，其签名为 `init?(rawValue: RawValue)`。你可以使用 `rawValue` 属性访问枚举成员的原始值，如 `ExampleEnum.b.rawValue`。你还可以使用原始值通过调用枚举的可失败构造器来查找相应的案例（如果存在），如 `ExampleEnum(rawValue: 5)`，这将返回一个可选的案例。有关更多信息以及查看具有原始值类型的案例示例，请参见 <doc:Enumerations#Raw-Values>。
+具有原始值类型的枚举隐式遵循在 Swift 标准库中定义的 `RawRepresentable` 协议。因此，它们具有 `rawValue` 属性和一个可失败构造器，其签名为 `init?(rawValue: RawValue)`。你可以使用 `rawValue` 属性访问枚举成员的原始值，如 `ExampleEnum.b.rawValue`。你还可以使用原始值通过调用枚举的可失败构造器来查找相应的成员（如果存在），如 `ExampleEnum(rawValue: 5)`，这将返回一个可选的案例。有关更多信息以及查看具有原始值类型的案例示例，请参见 <doc:Enumerations#Raw-Values>。
 
 ### 访问枚举成员
 
 要引用枚举类型的案例，请使用点（`.`）语法，如 `EnumerationType.enumerationCase` 所示。当枚举类型可以从上下文中推断时，可以省略它（仍然需要点），参见 <doc:Enumerations#Enumeration-Syntax> 和 <doc:Expressions#Implicit-Member-Expression>。
 
-要检查枚举成员的值，请使用 `switch` 语句，如 <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement> 中所示。枚举类型与 `switch` 语句的案例块中的枚举成员模式进行模式匹配，参见 <doc:Patterns#Enumeration-Case-Pattern>。
+要检查枚举成员的值，请使用 `switch` 语句，如 <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement> 中所示。枚举类型与 `switch` 语句的 case 块中的枚举成员模式进行模式匹配，参见 <doc:Patterns#Enumeration-Case-Pattern>。
 
 <!--
   FIXME: Or use if-case:
@@ -1557,7 +1557,7 @@ enum GamePlayMode: String {
 
 ## 结构体声明
 
-*结构体声明*将一个命名的结构体类型引入到你的程序中。结构体声明使用 `struct` 关键字声明，具有以下形式：
+*结构体声明*将一个具名的结构体类型引入到你的程序中。结构体声明使用 `struct` 关键字声明，具有以下形式：
 
 ```swift
 struct <#structure name#>: <#adopted protocols#> {
@@ -1565,9 +1565,9 @@ struct <#structure name#>: <#adopted protocols#> {
 }
 ```
 
-结构体的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、类型属性、实例方法、类型方法、构造器、下标、类型别名，甚至其他结构体、类、actor 和枚举声明。结构声明不能包含析构器或协议声明。有关包含各种类型声明的结构的讨论和多个示例，请参见 <doc:ClassesAndStructures>。
+结构体的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、类型属性、实例方法、类型方法、构造器、下标、类型别名，甚至其他结构体、类、actor 和枚举声明。结构体声明不能包含析构器或协议声明。有关包含各种类型声明的结构体的讨论和多个示例，请参见 <doc:ClassesAndStructures>。
 
-结构体类型可以采用任意数量的协议，但不能从类、枚举或其他结构继承。
+结构体类型可以采用任意数量的协议，但不能从类、枚举或其他结构体继承。
 
 有三种方法可以创建先前声明的结构体的实例：
 
@@ -1579,7 +1579,7 @@ struct <#structure name#>: <#adopted protocols#> {
 
 结构体实例的属性可以使用点 (`.`) 语法访问，参见 <doc:ClassesAndStructures#Accessing-Properties>。
 
-结构体是值类型；当结构的实例被赋值给变量或常量，或作为参数传递给函数调用时，会被复制。有关值类型的信息，请参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>。
+结构体是值类型；当结构体的实例被赋值给变量或常量，或作为参数传递给函数调用时，会被复制。有关值类型的信息，请参见 <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>。
 
 你可以通过扩展声明扩展结构类型的行为，参见 <doc:Declarations#Extension-Declaration>。
 
@@ -1594,7 +1594,7 @@ struct <#structure name#>: <#adopted protocols#> {
 
 ## 类声明
 
-*类声明*将一个命名的类类型引入到你的程序中。类声明使用 `class` 关键字声明，具有以下形式：
+*类声明*将一个具名的类类型引入到你的程序中。类声明使用 `class` 关键字声明，具有以下形式：
 
 ```swift
 class <#class name#>: <#superclass#>, <#adopted protocols#> {
@@ -1602,7 +1602,7 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 }
 ```
 
-类的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、实例方法、类型方法、构造器、一个析构器、下标、类型别名，甚至其他类、结构、action 和枚举声明。类声明不能包含协议声明。有关包含各种类型声明的类的讨论和多个示例，请参见 <doc:ClassesAndStructures>。
+类的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、实例方法、类型方法、构造器、一个析构器、下标、类型别名，甚至其他类、结构体、action 和枚举声明。类声明不能包含协议声明。有关包含各种类型声明的类的讨论和多个示例，请参见 <doc:ClassesAndStructures>。
 
 一个类类型只能继承自一个父类，即它的*超类*，但可以采用任意数量的协议。*超类*在*类名*和冒号之后首先出现，后面跟着任何*采用的协议*。泛型类可以继承其他泛型和非泛型类，但非泛型类只能继承其他非泛型类。当你在冒号后写泛型超类的名称时，必须包括该泛型类的全名，包括其泛型参数子句。
 
@@ -1646,7 +1646,7 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 
 ## Actor 声明
 
-一个 *actor 声明*将一个命名的 actor 类型引入到你的程序中。actor 声明使用 `actor` 关键字声明，具有以下形式：
+*actor 声明*将一个具名的 actor 类型引入到你的程序中。actor 声明使用 `actor` 关键字声明，具有以下形式：
 
 ```swift
 actor <#actor name#>: <#adopted protocols#> {
@@ -1656,16 +1656,16 @@ actor <#actor name#>: <#adopted protocols#> {
 
 actor 的主体包含零个或多个*声明*。这些*声明*可以包括存储属性和计算属性、实例方法、类型方法、构造器、一个析构器、下标、类型别名，甚至其他类、结构体和枚举声明。有关包含各种声明的 actor 的讨论和多个示例，请参见 <doc:Concurrency#Actors>。
 
-actor 类型可以采用任意数量的协议，但不能从类、枚举、结构体或其他actor继承。然而，标记为 `@objc` 属性的 actor 隐式地符合 `NSObjectProtocol` 协议，并作为 `NSObject` 的子类型暴露给 Objective-C 运行时。
+actor 类型可以采用任意数量的协议，但不能从类、枚举、结构体或其他 actor 继承。然而，标记为 `@objc` 特性的 actor 隐式地遵循 `NSObjectProtocol` 协议，并作为 `NSObject` 的子类型暴露给 Objective-C 运行时。
 
-有两种方法可以创建一个先前声明的actor的实例：
+有两种方法可以创建一个先前声明的 actor 的实例：
 
 - 调用 actor 中声明的某个构造方法，参见 <doc:Initialization#Initializers>。
 - 如果没有声明初始值，并且 actor 声明的所有属性都给定了初始值，则调用 actor 的默认构造器，参见 <doc:Initialization#Default-Initializers>。
 
-默认情况下，actor 的成员是与该 actor 隔离的。代码，例如方法的主体或属性的 getter，是在该actor上执行的。actor 内部的代码可以与它们同步交互，因为该代码已经在同一个 actor 上运行，但 actor 外部的代码必须用 `await` 标记它们，以指示该代码是异步在另一个 actor 上运行的。关键路径不能引用 actor 的隔离成员。actor 隔离的存储属性可以作为输入输出参数传递给同步函数，但不能传递给异步函数。
+默认情况下，actor 的成员是与该 actor 隔离的。方法体或属性的 getter 等代码是在该 actor 上执行的。actor 内部的代码可以同步地与这些成员交互，因为代码已经在同一个 actor 上运行；但 actor 外部的代码必须使用 `await` 标记，以表明该代码是异步地在另一个 actor 上运行的。键路径不能引用 actor 的隔离成员。actor 隔离的存储属性可以作为 输入输出参数 传递给同步函数，但不能传递给异步函数。
 
-actor 还可以拥有非隔离成员，其声明使用 `nonisolated` 关键字标记。非隔离成员的执行方式类似于actor外部的代码：它无法与 actor 的任何隔离状态交互，调用者在使用时也不需要使用 `await` 进行标记。
+actor 还可以拥有非隔离成员，其声明使用 `nonisolated` 关键字标记。非隔离成员的执行方式类似于 actor 外部的代码：它无法与 actor 的任何隔离状态交互，调用者在使用时也不需要使用 `await` 进行标记。
 
 actor 的成员只有在它们是非隔离或异步的情况下才能标记为 `@objc` 属性。
 
@@ -1673,7 +1673,7 @@ actor 的成员只有在它们是非隔离或异步的情况下才能标记为 `
 
 actor 实例的属性可以使用点 (`.`) 语法访问，参见 <doc:ClassesAndStructures#Accessing-Properties>。
 
-actor 是引用类型；当分配给变量或常量，或作为参数传递给函数调用时，actor的实例是被引用而不是复制。有关引用类型的信息，请参见 <doc:ClassesAndStructures#Classes-Are-Reference-Types>。
+actor 是引用类型；当分配给变量或常量，或作为参数传递给函数调用时，actor 的实例是被引用而不是复制。有关引用类型的信息，请参见 <doc:ClassesAndStructures#Classes-Are-Reference-Types>。
 
 你可以通过扩展声明扩展 actor 类型的行为，参见 <doc:Declarations#Extension-Declaration>。
 
@@ -1696,7 +1696,7 @@ actor 是引用类型；当分配给变量或常量，或作为参数传递给�
 
 ## 协议声明
 
-*协议声明*将一个命名的协议类型引入到你的程序中。协议声明使用 `protocol` 关键字声明，具有以下形式：
+*协议声明*将一个具名的协议类型引入到你的程序中。协议声明使用 `protocol` 关键字声明，具有以下形式：
 
 ```swift
 protocol <#protocol name#>: <#inherited protocols#> {
@@ -1706,16 +1706,16 @@ protocol <#protocol name#>: <#inherited protocols#> {
 
 协议声明可以出现在全局范围内，或嵌套在非泛型类型或非泛型函数内部。
 
-协议的主体包含零个或多个*协议成员声明*，这些声明描述了任何采用该协议的类型必须满足的符合性要求。特别是，协议可以声明符合的类型必须实现某些属性、方法、构造器和下标。协议还可以声明特殊类型的类型别名，称为*关联类型*，可以指定协议中各种声明之间的关系。协议声明不能包含类、结构体、枚举或其他协议声明。*协议成员声明*将在下面详细讨论。
+协议的主体包含零个或多个*协议成员声明*，这些声明描述了任何采用该协议的类型必须满足的遵循性要求。特别是，协议可以声明遵循的类型必须实现某些属性、方法、构造器和下标。协议还可以声明特殊类型的类型别名，称为*关联类型*，可以指定协议中各种声明之间的关系。协议声明不能包含类、结构体、枚举或其他协议声明。*协议成员声明*将在下面详细讨论。
 
-协议类型可以从任意数量的其他协议继承。当一个协议类型从其他协议继承时，这些其他协议的要求集合会被聚合，任何从当前协议继承的类型必须符合所有这些要求。有关如何使用协议继承的示例，请参见 <doc:Protocols#Protocol-Inheritance>。
+协议类型可以从任意数量的其他协议继承。当一个协议类型从其他协议继承时，这些其他协议的要求集合会被聚合，任何从当前协议继承的类型必须遵循所有这些要求。有关如何使用协议继承的示例，请参见 <doc:Protocols#Protocol-Inheritance>。
 
 > 注意:
 > 你还可以使用协议组合类型聚合多个协议的合规性要求，参见 <doc:Types#Protocol-Composition-Type> 和 <doc:Protocols#Protocol-Composition>。
 
-你可以通过在该类型的扩展声明中采用协议，为先前声明的类型添加协议符合性。在扩展中，你必须实现所采用协议的所有要求。如果该类型已经实现了所有要求，你可以将扩展声明的主体留空。
+你可以通过在该类型的扩展声明中采用协议，为先前声明的类型添加协议遵循性。在扩展中，你必须实现所采用协议的所有要求。如果该类型已经实现了所有要求，你可以将扩展声明的主体留空。
 
-默认情况下，符合协议的类型必须实现协议中声明的所有属性、方法和下标。也就是说，你可以使用 `optional` 声明修饰符来标记这些协议成员声明，以指定符合类型的实现是可选的。`optional` 修饰符只能应用于标记为 `objc` 属性的成员，并且只能应用于标记为 `objc` 属性的协议成员。因此，只有类类型可以采用并符合包含可选成员要求的协议。有关如何使用 `optional` 声明修饰符的信息，以及如何访问可选协议成员的指导——例如，当你不确定符合类型是否实现它们时——请参见 <doc:Protocols#Optional-Protocol-Requirements>。
+默认情况下，遵循协议的类型必须实现协议中声明的所有属性、方法和下标。也就是说，你可以使用 `optional` 声明修饰符来标记这些协议成员声明，以指定遵循类型的实现是可选的。`optional` 修饰符只能应用于标记为 `objc` 特性的成员，并且只能应用于标记为 `objc` 特性的协议成员。因此，只有类类型可以采用并遵循包含可选成员要求的协议。有关如何使用 `optional` 声明修饰符的信息，以及如何访问可选协议成员的指导——例如，当你不确定遵循类型是否实现它们时——请参见 <doc:Protocols#Optional-Protocol-Requirements>。
 
 <!--
   TODO: Currently, you can't check for an optional initializer,
@@ -1725,7 +1725,7 @@ protocol <#protocol name#>: <#inherited protocols#> {
   properly for optional initializer requirements.
 -->
 
-枚举的案例可以满足类型成员的协议要求。具体来说，没有任何关联值的枚举成员满足类型 `Self` 的只读类型变量的协议要求，而具有关联值的枚举成员满足返回 `Self` 的函数的协议要求，该函数的参数及其实参标签与案例的关联值匹配。例如：
+枚举的成员可以满足类型成员的协议要求。具体来说，没有任何关联值的枚举成员满足类型 `Self` 的只读类型变量的协议要求，而具有关联值的枚举成员满足返回 `Self` 的函数的协议要求，该函数的参数及其实参标签与枚举成员的关联值匹配。例如：
 
 ```swift
 protocol SomeProtocol {
@@ -1776,7 +1776,7 @@ protocol SomeProtocol: AnyObject {
 > 注意:
 > 如果一个协议标记了 `objc` 属性，则 `AnyObject` 要求隐式应用于该协议；无需明确将该协议标记为 `AnyObject` 要求。
 
-协议是命名类型，因此它们可以出现在代码中与其他命名类型相同的位置，如 <doc:Protocols#Protocols-as-Types> 中所讨论的。然而，你无法构造协议的实例，因为协议实际上并不提供它们所指定的要求的实现。
+协议是具名类型，因此它们可以出现在代码中与其他具名类型相同的位置，如 <doc:Protocols#Protocols-as-Types> 中所讨论的。然而，你无法构造协议的实例，因为协议实际上并不提供它们所指定的要求的实现。
 
 你可以使用协议来声明类或结构体的代理应该实现哪些方法，参见 <doc:Protocols#Delegation>。
 
@@ -1798,17 +1798,17 @@ protocol SomeProtocol: AnyObject {
 
 ### 协议属性声明
 
-协议声明符合的类型必须通过在协议声明的主体中包含一个*协议属性声明*来实现一个属性。协议属性声明具有变量声明的特殊形式：
+协议声明遵循的类型必须通过在协议声明的主体中包含一个*协议属性声明*来实现一个属性。协议属性声明具有变量声明的特殊形式：
 
 ```swift
 var <#property name#>: <#type#> { get set }
 ```
 
-与其他协议成员声明一样，这些属性声明仅声明符合该协议的类型的 getter 和 setter 要求。因此，你不会在声明它的协议中直接实现 getter 或 setter。
+与其他协议成员声明一样，这些属性声明仅声明遵循该协议的类型的 getter 和 setter 要求。因此，你不会在声明它的协议中直接实现 getter 或 setter。
 
-getter 和 setter 的要求可以通过符合类型以多种方式满足。如果属性声明同时包含 `get` 和 `set` 关键字，则符合类型可以通过存储变量属性或可读可写的计算属性来实现（即实现了 getter 和 setter 的属性）。然而，该属性声明不能实现为常量属性或只读计算属性。如果属性声明仅包含 `get` 关键字，则可以实现为任何类型的属性。有关实现协议属性要求的符合类型的示例，请参见 <doc:Protocols#Property-Requirements>。
+getter 和 setter 的要求可以通过遵循类型以多种方式满足。如果属性声明同时包含 `get` 和 `set` 关键字，则遵循类型可以通过存储变量属性或可读可写的计算属性来实现（即实现了 getter 和 setter 的属性）。然而，该属性声明不能实现为常量属性或只读计算属性。如果属性声明仅包含 `get` 关键字，则可以实现为任何类型的属性。有关实现协议属性要求的遵循类型的示例，请参见 <doc:Protocols#Property-Requirements>。
 
-在协议声明中声明类型属性要求时，使用 `static` 关键字标记属性声明。符合该协议的结构体和枚举使用 `static` 关键字声明属性，而符合该协议的类则可以使用 `static` 或 `class` 关键字声明属性。为结构体、枚举或类添加协议遵循的扩展使用与其扩展的类型相同的关键字。为类型属性要求提供默认实现的扩展使用 `static` 关键字。
+在协议声明中声明类型属性要求时，使用 `static` 关键字标记属性声明。遵循该协议的结构体和枚举使用 `static` 关键字声明属性，而遵循该协议的类则可以使用 `static` 或 `class` 关键字声明属性。为结构体、枚举或类添加协议遵循的扩展使用与其扩展的类型相同的关键字。为类型属性要求提供默认实现的扩展使用 `static` 关键字。
 
 <!--
   - test: `protocols-with-type-property-requirements`
@@ -1852,9 +1852,9 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 ### 协议方法声明
 
-协议声明符合类型必须通过在协议声明的主体中包含协议方法声明来实现方法。协议方法声明的形式与函数声明相同，有两个例外：它们不包括函数体，并且你不能在函数声明中提供任何默认参数值。有关实现协议方法要求的符合类型的示例，请参见 <doc:Protocols#Method-Requirements>。
+协议声明遵循类型必须通过在协议声明的主体中包含协议方法声明来实现方法。协议方法声明的形式与函数声明相同，有两个例外：它们不包括函数体，并且你不能在函数声明中提供任何默认参数值。有关实现协议方法要求的遵循类型的示例，请参见 <doc:Protocols#Method-Requirements>。
 
-在协议声明中声明类或静态方法的要求时，使用 `static` 修饰符标记方法声明。符合该协议的结构体和枚举使用 `static` 关键字声明该方法，而符合该协议的类则使用 `static` 或 `class` 关键字声明该方法。为结构体、枚举或类添加协议遵循的扩展使用与其扩展的类型相同的关键字。为类型方法要求提供默认实现的扩展使用 `static` 关键字。
+在协议声明中声明类或静态方法的要求时，使用 `static` 修饰符标记方法声明。遵循该协议的结构体和枚举使用 `static` 关键字声明该方法，而遵循该协议的类则使用 `static` 或 `class` 关键字声明该方法。为结构体、枚举或类添加协议遵循的扩展使用与其扩展的类型相同的关键字。为类型方法要求提供默认实现的扩展使用 `static` 关键字。
 
 另见 <doc:Declarations#Function-Declaration>。
 
@@ -1868,9 +1868,9 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 ### 协议构造器声明
 
-协议通过在协议声明的主体中包含协议构造器声明，要求符合的类型必须实现一个构造器。协议构造器声明的形式与构造器声明相同，只是不包括构造器的主体。
+协议通过在协议声明的主体中包含协议构造器声明，要求遵循的类型必须实现一个构造器。协议构造器声明的形式与构造器声明相同，只是不包括构造器的主体。
 
-一个符合类型可以通过实现一个非可失败的构造器或一个 `init!` 可失败的构造器来满足非可失败协议构造器的要求。一个符合类型可以通过实现任何类型的构造器来满足可失败协议构造器的要求。
+一个遵循类型可以通过实现一个非可失败构造器或一个 `init!` 可失败构造器来满足非可失败协议构造器的要求。一个遵循类型可以通过实现任何类型的构造器来满足可失败协议构造器的要求。
 
 当一个类实现一个构造器以满足协议的构造器要求时，如果该类尚未标记为 `final` 声明修饰符，则构造器必须标记为 `required` 声明修饰符。
 
@@ -1883,15 +1883,15 @@ getter 和 setter 的要求可以通过符合类型以多种方式满足。如�
 
 ### 协议下标声明
 
-协议声明符合的类型必须通过在协议声明的主体中包含协议下标声明来实现下标。协议下标声明具有下标声明的特殊形式：
+协议声明遵循的类型必须通过在协议声明的主体中包含协议下标声明来实现下标。协议下标声明具有下标声明的特殊形式：
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
-下标声明仅声明符合协议的类型所需的最小 getter 和 setter 实现要求。如果下标声明同时包含 `get` 和 `set` 关键字，则符合的类型必须实现 getter 和 setter 子句。如果下标声明仅包含 `get` 关键字，则符合的类型必须实现*至少*一个 getter 子句，并且可以选择性地实现一个 setter 子句。
+下标声明仅声明遵循协议的类型所需的最小 getter 和 setter 实现要求。如果下标声明同时包含 `get` 和 `set` 关键字，则遵循的类型必须实现 getter 和 setter 子句。如果下标声明仅包含 `get` 关键字，则遵循的类型必须实现*至少*一个 getter 子句，并且可以选择性地实现一个 setter 子句。
 
-在协议声明中声明静态下标要求时，使用 `static` 声明修饰符标记下标声明。符合该协议的结构体和枚举使用 `static` 关键字声明下标，而符合该协议的类则使用 `static` 或 `class` 关键字声明下标。为结构体、枚举或类添加协议符合性的扩展使用与其扩展的类型相同的关键字。为静态下标要求提供默认实现的扩展使用 `static` 关键字。
+在协议声明中声明静态下标要求时，使用 `static` 声明修饰符标记下标声明。遵循该协议的结构体和枚举使用 `static` 关键字声明下标，而遵循该协议的类则使用 `static` 或 `class` 关键字声明下标。为结构体、枚举或类添加协议遵循性的扩展使用与其扩展的类型相同的关键字。为静态下标要求提供默认实现的扩展使用 `static` 关键字。
 
 另见 <doc:Declarations#Subscript-Declaration>。
 
@@ -1901,7 +1901,7 @@ subscript (<#parameters#>) -> <#return type#> { get set }
 
 ### 协议关联类型声明
 
-协议使用 `associatedtype` 关键字声明关联类型。关联类型为作为协议声明一部分使用的类型提供了别名。关联类型类似于泛型参数子句中的类型参数，但它们与声明它们的协议中的 `Self` 相关联。在该上下文中，`Self` 指的是符合该协议的最终类型。有关更多信息和示例，请参见 <doc:Generics#Associated-Types>。
+协议使用 `associatedtype` 关键字声明关联类型。关联类型为作为协议声明一部分使用的类型提供了别名。关联类型类似于泛型参数子句中的类型参数，但它们与声明它们的协议中的 `Self` 相关联。在该上下文中，`Self` 指的是遵循该协议的最终类型。有关更多信息和示例，请参见 <doc:Generics#Associated-Types>。
 
 你在协议声明中使用通用的 `where` 子句，以便为从另一个协议继承的关联类型添加约束，而无需重新声明关联类型。以下 `SubProtocol` 的声明是等效的：
 
@@ -2021,9 +2021,9 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 ## 构造器声明
 
-一个*构造器声明*在你的程序中引入了一个类、结构或枚举的构造器。构造器声明使用 `init` 关键字声明，并有两种基本形式。
+*构造器声明*在你的程序中引入了一个类、结构体或枚举的构造器。构造器声明使用 `init` 关键字声明，并有两种基本形式。
 
-结构体、枚举和类类型可以有任意数量的构造器，但类构造器的规则和相关行为是不同的。与结构和枚举不同，类有两种类型的构造器：指定构造器和便利构造器，参见 <doc:Initialization>。
+结构体、枚举和类类型可以有任意数量的构造器，但类构造器的规则和相关行为是不同的。与结构体和枚举不同，类有两种类型的构造器：指定构造器和便利构造器，参见 <doc:Initialization>。
 
 以下形式声明了结构体、枚举和类的指定构造器的构造器：
 
@@ -2064,14 +2064,14 @@ convenience init(<#parameters#>) {
 
 ### 可失败的构造器
 
-一个*可失败的构造器*是一种构造器，它生成一个可选实例或一个隐式解包的可选实例，具体取决于构造器声明的类型。因此，可失败的构造器可以返回 `nil` 以表示初始化失败。
+*可失败的构造器*是一种生成一个可选实例或一个隐式解包的可选实例的构造器，具体取决于构造器声明的类型。因此，可失败的构造器可以返回 `nil` 以表示初始化失败。
 
-要声明一个可失败的初始化器并生成一个可选实例，需要在初始化器声明中的 `init` 关键字后面加上问号（`init?`）。要声明一个可失败的初始化器并生成一个隐式解包的可选实例，则需要加上感叹号（`init!`）。下面的示例展示了一个 `init?` 可失败的初始化器，它生成了一个结构体的可选实例。
+要声明一个可失败的构造器并生成一个可选实例，需要在构造器声明中的 `init` 关键字后面加上问号（`init?`）。要声明一个可失败构造器并生成一个隐式解包的可选实例，则需要加上感叹号（`init!`）。下面的示例展示了一个 `init?` 可失败的构造器，它生成了一个结构体的可选实例。
 
 ```swift
 struct SomeStruct {
     let property: String
-    // 生成一个可选的 `SomeStruct` 实例
+    // 生成一个 `SomeStruct` 可选实例
     init?(input: String) {
         if input.isEmpty {
             // 丢弃 'self' 并返回 'nil'
@@ -2100,13 +2100,13 @@ struct SomeStruct {
   ```
 -->
 
-调用 `init?` 可失败的初始化器与调用不可失败的初始化器的方式相同，只是你必须处理结果的可选性。
+调用 `init?` 可失败的构造器与调用不可失败的构造器的方式相同，只是你必须处理结果的可选性。
 
 ```swift
 if let actualInstance = SomeStruct(input: "Hello") {
-    // do something with the instance of 'SomeStruct'
+    // 使用 'SomeStruct' 的实例执行操作
 } else {
-    // initialization of 'SomeStruct' failed and the initializer returned 'nil'
+    // 'SomeStruct' 的初始化失败，初始化器返回了 'nil'
 }
 ```
 
@@ -2176,7 +2176,7 @@ extension <#type name#> where <#requirements#> {
 
 扩展声明的主体包含零个或多个*声明*。这些*声明*可以包括计算属性、计算类型属性、实例方法、类型方法、构造器、下标声明，甚至类、结构体和枚举声明。扩展声明不能包含析构器或协议声明、存储属性、属性观察者或其他扩展声明。协议扩展中的声明不能标记为 `final`。有关包含各种类型声明的扩展的讨论和多个示例，请参见 <doc:Extensions>。
 
-如果*类型名称*是类、结构体或枚举类型，则扩展该类型。如果*类型名称*是协议类型，则扩展所有符合该协议的类型。
+如果*类型名称*是类、结构体或枚举类型，则扩展该类型。如果*类型名称*是协议类型，则扩展所有遵循该协议的类型。
 
 扩展声明可以扩展具有关联类型的泛型类型或协议，并可以包含*要求*。如果扩展类型的实例或遵循扩展协议的类型的实例满足*要求*，则该实例获得声明中指定的行为。
 
@@ -2184,7 +2184,7 @@ extension <#type name#> where <#requirements#> {
 
 现有类型的属性、方法和构造器不能在该类型的扩展中被重写。
 
-扩展声明可以通过指定*采用的协议*，为现有的类、结构体或枚举类型添加协议符合性：
+扩展声明可以通过指定*采用的协议*，为现有的类、结构体或枚举类型添加协议遵循：
 
 ```swift
 extension <#type name#>: <#adopted protocols#> where <#requirements#> {
@@ -2600,7 +2600,7 @@ subscript (<#parameters#>) -> <#return type#> {
 
 你可以在声明它的类型中重载下标声明，只要*参数*或*返回类型*与你正在重载的不同。你还可以覆盖从超类继承的下标声明。当你这样做时，必须使用 `override` 声明修饰符标记被覆盖的下标声明。
 
-下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，使用下标的参数没有参数标签，这与函数、方法和构造器不同。然而，你可以使用与函数、方法和构造器相同的语法提供显式参数标签。此外，下标不能有输入输出参数。下标参数可以具有默认值，参见 <doc:Declarations#Special-Kinds-of-Parameters>。
+下标参数遵循与函数参数相同的规则，但有两个例外。默认情况下，使用下标的参数没有参数标签，这与函数、方法和构造器不同。然而，你可以使用与函数、方法和构造器相同的语法提供显式参数标签。此外，下标不能有 in-out 参数。下标参数可以具有默认值，参见 <doc:Declarations#Special-Kinds-of-Parameters>。
 
 你还可以在协议声明的上下文中声明下标，参见 <doc:Declarations#Protocol-Subscript-Declaration>。
 
@@ -2635,7 +2635,7 @@ subscript (<#parameters#>) -> <#return type#> {
 
 ## 宏声明
 
-一个*宏声明*引入一个新的宏。它以 `macro` 关键字开始，具有以下形式：
+*宏声明*引入一个新的宏。它以 `macro` 关键字开始，具有以下形式：
 
 ```swift
 macro <#name#> = <#macro implementation#>
@@ -2663,7 +2663,7 @@ macro <#name#> = <#macro implementation#>
 
 你可以声明三种不同优先级的运算符：中缀、前缀和后缀。运算符的*优先级*指定了运算符相对于其操作数的相对位置。
 
-运算符声明有三种基本形式，每种形式对应一种结合性（fixity）。运算符的结合性通过在 `operator` 关键字之前标注 `infix`、`prefix` 或 `postfix` 声明修饰符来指定。在每种形式中，运算符的名称只能包含 <doc:LexicalStructure#Operators> 中定义的运算符字符。
+运算符声明有三种基本形式，每种形式对应一种结合性。运算符的结合性通过在 `operator` 关键字之前标注 `infix`、`prefix` 或 `postfix` 声明修饰符来指定。在每种形式中，运算符的名称只能包含 <doc:LexicalStructure#Operators> 中定义的运算符字符。
 
 以下形式声明了一个新的中缀运算符：
 
@@ -2671,7 +2671,6 @@ macro <#name#> = <#macro implementation#>
 infix operator <#operator name#>: <#precedence group#>
 ```
 
-An *infix operator* is a binary operator that's written between its two operands, such as the familiar addition operator (`+`) in the expression `1 + 2`.
 一个*中缀运算符*是一个二元运算符，它写在两个操作数之间，例如在表达式 `1 + 2` 中熟悉的加法运算符`+`。
 
 中缀运算符可以选择性地指定优先级组。如果你省略运算符的优先级组，Swift 将使用默认优先级组 `DefaultPrecedence`，该组的优先级仅高于 `TernaryPrecedence`。有关更多信息，请参见 <doc:Declarations#Precedence-Group-Declaration>。
@@ -2757,7 +2756,7 @@ Swift 定义了许多优先级组，以配合 Swift 标准库提供的运算符�
 
 ## 声明修饰符
 
-*声明修饰符* 是修饰声明行为或含义的关键字或上下文敏感关键字。你可以通过在声明的属性（如果有的话）和引入声明的关键字之间，写上适当的关键字或上下文敏感关键字来指定声明修饰符。
+*声明修饰符*是一些关键字或上下文相关的关键字，用于修改声明的行为或含义。你可以通过在声明的属性（如果有的话）和引入声明的关键字之间编写适当的关键字或上下文相关的关键字来指定声明修饰符。
 
 - `class`：将此修饰符应用于类的成员，以指示该成员是类本身的成员，而不是类实例的成员。具有此修饰符且没有 `final` 修饰符的超类成员可以被子类重写。
 
