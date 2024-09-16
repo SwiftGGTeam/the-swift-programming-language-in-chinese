@@ -759,10 +759,10 @@ The code above makes several changes from the previous version:
 [`Task.isCancelled` instance]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.property
 
 For work that needs immediate notification of cancellation,
-use the [`Task.withTaskCancellationHandler(operation:onCancel:)`][] method.
+use the [`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`][] method.
 For example:
 
-[`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
+[`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:isolation:)
 
 ```swift
 let task = await Task.withTaskCancellationHandler {
@@ -1430,12 +1430,6 @@ preventing the type from being sendable.
   Probably don't cover unsafe continuations (SE-0300) in TSPL,
   but maybe link to them?
 -->
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

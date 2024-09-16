@@ -2,17 +2,15 @@
 
 Review the recent changes to this book.
 
-**2024-08-05**
-
-- Minor corrections throughout.
-
-**2024-06-10**
+**2024-09-23**
 
 - Updated for Swift 6.
 - Added the <doc:Attributes#preconcurrency> section
   with information about migrating to strict concurrency checking.
 - Added the <doc:ErrorHandling#Specifying-the-Error-Type> section
   with information about throwing errors of a specific type.
+- Updated the <doc:Expressions#Macro-Expansion-Expression> section,
+  now that any macro can be used as a default value for a parameter.
 - Added information about package-level access
   to the <doc:AccessControl> chapter.
 
@@ -851,12 +849,6 @@ Review the recent changes to this book.
 - Updated to `..<` rather than `..`
   for the <doc:BasicOperators#Half-Open-Range-Operator>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
-
-> Beta Software:
->
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
