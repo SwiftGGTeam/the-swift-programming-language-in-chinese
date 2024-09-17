@@ -748,7 +748,7 @@ make the same change here also.
 > *declaration* → *extension-declaration* \
 > *declaration* → *subscript-declaration* \
 > *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *declaration* → *precedence-group-declaration*
 
 > Grammar of a top-level declaration:
 >
