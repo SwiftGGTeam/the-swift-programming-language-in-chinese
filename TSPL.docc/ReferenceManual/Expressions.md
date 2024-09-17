@@ -20,7 +20,7 @@ in the sections below.
 
 > Grammar of an expression:
 >
-> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
+> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
 
 ## Prefix Expressions
 
