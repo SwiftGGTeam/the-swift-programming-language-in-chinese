@@ -315,7 +315,7 @@ make the same change here also.
 
 > Grammar of an expression:
 >
-> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
+> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
 
 > Grammar of a prefix expression:
 >
@@ -748,7 +748,7 @@ make the same change here also.
 > *declaration* → *extension-declaration* \
 > *declaration* → *subscript-declaration* \
 > *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *declaration* → *precedence-group-declaration*
 
 > Grammar of a top-level declaration:
 >

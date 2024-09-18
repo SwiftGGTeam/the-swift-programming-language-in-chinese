@@ -33,7 +33,7 @@ the term *declaration* covers both declarations and definitions.
 > *declaration* → *subscript-declaration* \
 > *declaration* → *macro-declaration* \
 > *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *declaration* → *precedence-group-declaration*
 
 ## Top-Level Code
 
