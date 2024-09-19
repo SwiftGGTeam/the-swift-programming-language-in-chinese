@@ -1,51 +1,22 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/Inheritance.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance
-翻译估计用时：⭐️⭐️⭐️⭐️
--->
+# 继承
 
-# Inheritance
+通过子类化来添加或重写功能。
 
-Subclass to add or override functionality.
+一个类可以从另一个类*继承*方法、属性和其他特性。当一个类从另一个类继承时，继承的类被称为*子类*，而被它继承的类被称为*父类*。继承是 Swift 中区别类与其他类型的基本特性。
 
-A class can *inherit* methods, properties, and other characteristics
-from another class.
-When one class inherits from another,
-the inheriting class is known as a *subclass*,
-and the class it inherits from is known as its *superclass*.
-Inheritance is a fundamental behavior that differentiates classes
-from other types in Swift.
+Swift 中的类可以调用和访问属于其父类的方法、属性和下标，并且可以通过重写这些方法、属性和下标来优化或修改他们的行为。Swift 通过检查重写定义是否与父类定义相匹配来帮助确保您的覆盖是正确的。
 
-Classes in Swift can call and access
-methods, properties, and subscripts belonging to their superclass
-and can provide their own overriding versions of those methods, properties, and subscripts
-to refine or modify their behavior.
-Swift helps to ensure your overrides are correct
-by checking that the override definition has a matching superclass definition.
+类还可以为继承的属性添加属性观察器，以便在属性值发生变化时得到通知。无论最初是定义为存储属性还是计算属性，都可以为任何属性添加属性观察器。
 
-Classes can also add property observers to inherited properties
-in order to be notified when the value of a property changes.
-Property observers can be added to any property,
-regardless of whether it was originally defined as a stored or computed property.
+## 定义基类
 
-## Defining a Base Class
+如果一个类没有继承其他类，那他就是一个基类。
 
-Any class that doesn't inherit from another class is known as a *base class*.
+> 注意: Swift 中没有统一的基类，所有类的起源都是平等的。您不指定父类的类会自动成为基类。
 
-> Note: Swift classes don't inherit from a universal base class.
-> Classes you define without specifying a superclass
-> automatically become base classes for you to build upon.
+下面的示例定义了一个名为 `Vehicle` 的基类。这个基类定义了一个名为 `currentSpeed` 的存储属性，默认值为 `0.0`（推断出属性类型为 `Double`）。`currentSpeed` 属性的值被一个只读计算 `String` 属性 `description` 用于创建车辆的描述。
 
-The example below defines a base class called `Vehicle`.
-This base class defines a stored property called `currentSpeed`,
-with a default value of `0.0` (inferring a property type of `Double`).
-The `currentSpeed` property's value is used by
-a read-only computed `String` property called `description`
-to create a description of the vehicle.
-
-The `Vehicle` base class also defines a method called `makeNoise`.
-This method doesn't actually do anything for a base `Vehicle` instance,
-but will be customized by subclasses of `Vehicle` later on:
+`Vehicle` 基类还定义了一个名为 `makeNoise()` 的方法。这个方法对于基类 Vehicle 的实例不会做任何事情，但稍后会被 `Vehicle` 的子类自定义：
 
 ```swift
 class Vehicle {
@@ -54,7 +25,7 @@ class Vehicle {
         return "traveling at \(currentSpeed) miles per hour"
     }
     func makeNoise() {
-        // do nothing - an arbitrary vehicle doesn't necessarily make a noise
+        // 不做任何事情 - 不是任何一辆车都会发出噪音。
     }
 }
 ```
@@ -69,14 +40,13 @@ class Vehicle {
            return "traveling at \(currentSpeed) miles per hour"
         }
         func makeNoise() {
-           // do nothing - an arbitrary vehicle doesn't necessarily make a noise
+           // 不做任何事情 - 不是任何一辆车都会发出噪音。
         }
      }
   ```
 -->
 
-You create a new instance of `Vehicle` with *initializer syntax*,
-which is written as a type name followed by empty parentheses:
+您可以使用*初始化语法*创建一个新的 `Vehicle` 实例，写作类型名后跟一对空括号：
 
 ```swift
 let someVehicle = Vehicle()
@@ -90,12 +60,10 @@ let someVehicle = Vehicle()
   ```
 -->
 
-Having created a new `Vehicle` instance,
-you can access its `description` property to print
-a human-readable description of the vehicle's current speed:
+创建了一个新的 `Vehicle` 实例后，您可以访问它的 `description` 属性来打印车辆当前速度的描述:
 
 ```swift
-print("Vehicle: \(someVehicle.description)")
+print("Vehicle: \(someVehicle.description)") 
 // Vehicle: traveling at 0.0 miles per hour
 ```
 
@@ -108,24 +76,17 @@ print("Vehicle: \(someVehicle.description)")
   ```
 -->
 
-The `Vehicle` class defines common characteristics for an arbitrary vehicle,
-but isn't much use in itself.
-To make it more useful,
-you need to refine it to describe more specific kinds of vehicles.
+`Vehicle` 类定义了任意车辆的通用特性，但本身并不太有用。要使其更有用，您需要对其进行完善以描述更具体的车辆类型。
 
-## Subclassing
+## 子类化
 
-*Subclassing* is the act of basing a new class on an existing class.
-The subclass inherits characteristics from the existing class, which you can then refine.
-You can also add new characteristics to the subclass.
+*子类化*是基于现有类创建新类的行为。子类继承现有类的特性，然后您可以对其进行完善。您还可以向子类添加新的特性。
 
-To indicate that a subclass has a superclass,
-write the subclass name before the superclass name,
-separated by a colon:
+要指示子类有一个父类，请在父类名前写子类名，中间用冒号分隔：
 
 ```swift
 class SomeSubclass: SomeSuperclass {
-    // subclass definition goes here
+    // 子类定义在这里
 }
 ```
 
@@ -140,8 +101,7 @@ class SomeSubclass: SomeSuperclass {
   ```
 -->
 
-The following example defines a subclass called `Bicycle`,
-with a superclass of `Vehicle`:
+下面的示例定义了一个名为 `Bicycle` 的子类，它的父类是 `Vehicle`：
 
 ```swift
 class Bicycle: Vehicle {
@@ -159,17 +119,11 @@ class Bicycle: Vehicle {
   ```
 -->
 
-The new `Bicycle` class automatically gains all of the characteristics of `Vehicle`,
-such as its `currentSpeed` and `description` properties and its `makeNoise()` method.
+新的 `Bicycle` 类自动获得了 `Vehicle` 的所有特性，例如它的 `currentSpeed` 和 `description` 属性以及 `makeNoise()` 方法。
 
-In addition to the characteristics it inherits,
-the `Bicycle` class defines a new stored property,
-`hasBasket`, with a default value of `false`
-(inferring a type of `Bool` for the property).
+除了继承的特性之外，`Bicycle` 类还定义了一个新的存储属性 `hasBasket`，默认值为 `false` （推断该属性的类型为 `Bool`）。
 
-By default, any new `Bicycle` instance you create will not have a basket.
-You can set the `hasBasket` property to `true` for a particular `Bicycle` instance
-after that instance is created:
+默认情况下，您创建的任何新 `Bicycle` 实例都默认没有篮子。在创建实例后，您可以将特定 `Bicycle` 实例的 `hasBasket` 属性设置为 `true`：
 
 ```swift
 let bicycle = Bicycle()
@@ -185,8 +139,7 @@ bicycle.hasBasket = true
   ```
 -->
 
-You can also modify the inherited `currentSpeed` property of a `Bicycle` instance,
-and query the instance's inherited `description` property:
+您还可以修改 `Bicycle` 实例继承的 `currentSpeed` 属性，并查询实例继承的 `description` 属性：
 
 ```swift
 bicycle.currentSpeed = 15.0
@@ -204,9 +157,7 @@ print("Bicycle: \(bicycle.description)")
   ```
 -->
 
-Subclasses can themselves be subclassed.
-The next example creates a subclass of `Bicycle` for a two-seater bicycle
-known as a “tandem”:
+子类本身也可以被子类化。下一个示例创建了一个 `Bicycle` 的子类，用于双人自行车，称为 “tandem”：
 
 ```swift
 class Tandem: Bicycle {
@@ -224,14 +175,9 @@ class Tandem: Bicycle {
   ```
 -->
 
-`Tandem` inherits all of the properties and methods from `Bicycle`,
-which in turn inherits all of the properties and methods from `Vehicle`.
-The `Tandem` subclass also adds a new stored property called `currentNumberOfPassengers`,
-with a default value of `0`.
+`Tandem` 继承了 `Bicycle` 的所有属性和方法，而 `Bicycle` 又继承了 `Vehicle` 的所有属性和方法。`Tandem` 子类还添加了一个名为 `currentNumberOfPassengers` 的新存储属性，默认值为 `0`。
 
-If you create an instance of `Tandem`,
-you can work with any of its new and inherited properties,
-and query the read-only `description` property it inherits from `Vehicle`:
+如果您创建一个 `Tandem` 实例，您可以使用它的任何新属性和继承的属性，并查询它从 `Vehicle` 继承的只读属性：`description`
 
 ```swift
 let tandem = Tandem()
@@ -255,52 +201,29 @@ print("Tandem: \(tandem.description)")
   ```
 -->
 
-## Overriding
+## 重写
 
-A subclass can provide its own custom implementation of
-an instance method, type method, instance property, type property, or subscript
-that it would otherwise inherit from a superclass.
-This is known as *overriding*.
+子类可以提供自己的自定义实现来覆盖它将从父类继承的实例方法、类型方法、实例属性、类型属性或下标。这被称为*重写*。
 
-To override a characteristic that would otherwise be inherited,
-you prefix your overriding definition with the `override` keyword.
-Doing so clarifies that you intend to provide an override
-and haven't provided a matching definition by mistake.
-Overriding by accident can cause unexpected behavior,
-and any overrides without the `override` keyword are
-diagnosed as an error when your code is compiled.
+要重写将被继承的特性，您需要在重写定义前加上 `override` 关键字。这样做可以明确您打算提供重写，而不是由于疏忽而提供了相同的定义。无意间的重写可能会导致意外行为，任何没有 `override` 关键字的重写在编译代码时都会被诊断为错误。
 
-The `override` keyword also prompts the Swift compiler
-to check that your overriding class's superclass (or one of its parents)
-has a declaration that matches the one you provided for the override.
-This check ensures that your overriding definition is correct.
+`override` 关键字还会提示 Swift 编译器检查您的重写类的父类（或其父类之一）是否有与您提供的重写定义相匹配的声明。这个检查可以确保您的重写定义是正确的。
 
-### Accessing Superclass Methods, Properties, and Subscripts
+### 访问父类方法、属性和下标
 
-When you provide a method, property, or subscript override for a subclass,
-it's sometimes useful to use the existing superclass implementation
-as part of your override.
-For example, you can refine the behavior of that existing implementation,
-or store a modified value in an existing inherited variable.
+当您为子类提供方法、属性或下标重写时，有时使用现有父类实现作为重写的一部分是很有用的。例如，您可以改进现有实现的行为，或在现有继承的变量中存储修改后的值。
 
-Where this is appropriate,
-you access the superclass version of a method, property, or subscript
-by using the `super` prefix:
+在适当的情况下，您可以使用 `super` 前缀来访问父类的方法、属性或下标：
 
-- An overridden method named `someMethod()` can call the superclass version of `someMethod()`
-  by calling `super.someMethod()` within the overriding method implementation.
-- An overridden property called `someProperty` can access the superclass version of `someProperty`
-  as `super.someProperty` within the overriding getter or setter implementation.
-- An overridden subscript for `someIndex` can access the superclass version of the same subscript
-  as `super[someIndex]` from within the overriding subscript implementation.
+- 一个被重写的名为 `someMethod()` 的方法可以在重写方法实现中通过调用 `super.someMethod()` 来调用父类版本的 `someMethod()`。
+- 一个被重写的名为 `someProperty` 的属性可以在重写的 getter 或 setter 实现中通过 `super.someProperty` 来访问父类版本的 `someProperty`。
+- 一个被重写的针对 `someIndex` 的下标可以在重写的下标实现中通过 `super[someIndex]` 来访问同一下标的父类版本。
 
-### Overriding Methods
+### 重写方法
 
-You can override an inherited instance or type method
-to provide a tailored or alternative implementation of the method within your subclass.
+您可以重写继承的实例或类型方法，以在子类中提供该方法的定制或替代实现。
 
-The following example defines a new subclass of `Vehicle` called `Train`,
-which overrides the `makeNoise()` method that `Train` inherits from `Vehicle`:
+下面的示例定义了一个名为 `Train` 的新 `Vehicle` 子类，它重写了从 `Vehicle` 继承的 `makeNoise()` 方法:
 
 ```swift
 class Train: Vehicle {
@@ -322,13 +245,12 @@ class Train: Vehicle {
   ```
 -->
 
-If you create a new instance of `Train` and call its `makeNoise()` method,
-you can see that the `Train` subclass version of the method is called:
+如果您创建一个新的 `Train` 实例并调用它的 `makeNoise()` 方法，您可以看到调用了 `Train` 子类版本的方法:
 
 ```swift
 let train = Train()
 train.makeNoise()
-// Prints "Choo Choo"
+// 打印 "Choo Choo"
 ```
 
 <!--
@@ -341,42 +263,19 @@ train.makeNoise()
   ```
 -->
 
-### Overriding Properties
+### 重写属性
 
-You can override an inherited instance or type property
-to provide your own custom getter and setter for that property,
-or to add property observers to enable the overriding property
-to observe when the underlying property value changes.
+您可以重写继承的实例或类型属性，为该属性提供自己的自定义 getter 和 setter，或添加属性观察器以使重写的属性能够观察底层属性值的变化。
 
-#### Overriding Property Getters and Setters
+#### 重写属性 Getter 和 Setter
 
-You can provide a custom getter (and setter, if appropriate)
-to override *any* inherited property,
-regardless of whether the inherited property is implemented as
-a stored or computed property at source.
-The stored or computed nature of an inherited property isn't known by a subclass ---
-it only knows that the inherited property has a certain name and type.
-You must always state both the name and the type of the property you are overriding,
-to enable the compiler to check that your override matches
-a superclass property with the same name and type.
+您可以为任何继承的属性提供自定义 getter（如果需要的话还有 setter），无论继承的属性在源码中是作为存储属性还是计算属性实现的。子类不知道继承属性的存储或计算性质，它只知道继承的属性有一个特定的名称和类型。您必须始终声明要重写的属性的名称和类型，以便编译器检查您的重写与父类中具有相同名称和类型的属性相匹配。
 
-You can present an inherited read-only property as a read-write property
-by providing both a getter and a setter in your subclass property override.
-You can't, however, present an inherited read-write property as a read-only property.
+您可以通过在子类属性重写中提供 getter 和 setter 来将继承的只读属性表示为可读写属性。但是您不能将继承的可读写属性声明为只读属性。
 
-> Note: If you provide a setter as part of a property override,
-> you must also provide a getter for that override.
-> If you don't want to modify the inherited property's value within the overriding getter,
-> you can simply pass through the inherited value
-> by returning `super.someProperty` from the getter,
-> where `someProperty` is the name of the property you are overriding.
+> 如果您在属性重写中提供了 setter，您也必须为该重写提供 getter。如果您不想在重写的 getter 中修改继承属性的值。您可以简单地通过从 getter 返回 `super.someProperty` 来传递继承的值。其中 `someProperty` 是您正在重写的属性的名称。
 
-The following example defines a new class called `Car`,
-which is a subclass of `Vehicle`.
-The `Car` class introduces a new stored property called `gear`,
-with a default integer value of `1`.
-The `Car` class also overrides the `description` property it inherits from `Vehicle`,
-to provide a custom description that includes the current gear:
+下面的示例定义了一个名为 `Car` 的新类，它是 `Vehicle` 的子类。`Car` 类引入了一个名为 `gear` 的新存储属性，默认整数值为 `1`。`Car` 类还重写了它从 `Vehicle` 继承的 `description` 属性，以提供包含当前档位的自定义描述:
 
 ```swift
 class Car: Vehicle {
@@ -400,22 +299,16 @@ class Car: Vehicle {
   ```
 -->
 
-The override of the `description` property starts by calling `super.description`,
-which returns the `Vehicle` class's `description` property.
-The `Car` class's version of `description` then adds some extra text onto
-the end of this description to provide information about the current gear.
+`description` 属性的重写首先调用 `super.description`，它返回 `Vehicle` 类的 `description` 属性。然后,`Car` 类的 `description` 版本在此描述的末尾添加了一些额外文本，以提供有关当前档位的信息。
 
-If you create an instance of the `Car` class
-and set its `gear` and `currentSpeed` properties,
-you can see that its `description` property returns
-the tailored description defined within the `Car` class:
+如果您创建 `Car` 类的实例并设置其 `gear` 和 `currentSpeed` 属性，您可以看到它的 `description` 属性返回在 `Car` 类中定义的定制描述：
 
 ```swift
 let car = Car()
 car.currentSpeed = 25.0
 car.gear = 3
 print("Car: \(car.description)")
-// Car: traveling at 25.0 miles per hour in gear 3
+// 打印 "Car: traveling at 25.0 miles per hour in gear 3"
 ```
 
 <!--
@@ -430,29 +323,15 @@ print("Car: \(car.description)")
   ```
 -->
 
-#### Overriding Property Observers
+#### 重写属性观察器
 
-You can use property overriding to add property observers to an inherited property.
-This enables you to be notified when the value of an inherited property changes,
-regardless of how that property was originally implemented.
-For more information on property observers, see <doc:Properties#Property-Observers>.
+您可以使用属性重写的方式为继承的属性添加属性观察器。这样无论该属性最初是如何实现的，您都能够在继承属性的值发生变化时得到通知。有关属性观察器的更多信息，请参阅 <doc:Properties#Property-Observers>。
 
-> Note: You can't add property observers to
-> inherited constant stored properties or inherited read-only computed properties.
-> The value of these properties can't be set,
-> and so it isn't appropriate to provide a `willSet` or `didSet` implementation
-> as part of an override.
->
-> Note also that you can't provide both
-> an overriding setter and an overriding property observer for the same property.
-> If you want to observe changes to a property's value,
-> and you are already providing a custom setter for that property,
-> you can simply observe any value changes from within the custom setter.
+> 注意: 你无法为继承的常量存储属性或继承的只读计算属性添加属性观察器。这些属性的值无法被修改，所以在重写时提供 `willSet` 或 `didSet` 实现是不合适的。
+> 
+> 另请注意，你不能为同一属性提供重写的 setter 和重写的属性观察器。如果你想观察属性值的变化，并且你已经为该属性提供了自定义 setter，你可以简单地在自定义 setter 中观察任何值的变化。
 
-The following example defines a new class called `AutomaticCar`,
-which is a subclass of `Car`.
-The `AutomaticCar` class represents a car with an automatic gearbox,
-which automatically selects an appropriate gear to use based on the current speed:
+以下示例创建了一个名为 `AutomaticCar` 的新类，它继承自 `Car` 类。`AutomaticCar` 类表示一辆带有自动变速箱的汽车，根据当前速度自动选择合适的挡位：
 
 ```swift
 class AutomaticCar: Car {
@@ -478,13 +357,7 @@ class AutomaticCar: Car {
   ```
 -->
 
-Whenever you set the `currentSpeed` property of an `AutomaticCar` instance,
-the property's `didSet` observer sets the instance's `gear` property to
-an appropriate choice of gear for the new speed.
-Specifically, the property observer chooses a gear that's
-the new `currentSpeed` value divided by `10`,
-rounded down to the nearest integer, plus `1`.
-A speed of `35.0` produces a gear of `4`:
+每当你设置 `AutomaticCar` 实例的 `currentSpeed` 属性时，该属性的 `didSet` 观察器会根据新速度为实例的 `gear` 属性设置一个合适的挡位。具体来说，属性观察器选择一个挡位，该挡位是新 `currentSpeed` 值除以 10 向下取整后加 1。速度为 `35.0` 时会挂 `4` 挡:
 
 ```swift
 let automatic = AutomaticCar()
@@ -504,19 +377,12 @@ print("AutomaticCar: \(automatic.description)")
   ```
 -->
 
-## Preventing Overrides
+## 防止重写
 
-You can prevent a method, property, or subscript from being overridden
-by marking it as *final*.
-Do this by writing the `final` modifier before
-the method, property, or subscript's introducer keyword
-(such as `final var`, `final func`, `final class func`, and `final subscript`).
+你可以通过将其标记为 *final* 来防止方法、属性或下标被重写。在方法、属性或下标的引入关键字前写 `final` 修饰符。（如 `final var`、`final func`、`final class func` 和 `final subscript`）
 
-Any attempt to override a final method, property, or subscript in a subclass
-is reported as a compile-time error.
-Methods, properties, or subscripts that you add to a class in an extension
-can also be marked as final within the extension's definition.
-For more information, see <doc:Extensions>.
+
+任何尝试在子类中重写 final 方法、属性或下标的行为都会在编译时报错。你在扩展中添加到类的方法、属性或下标也可以在扩展的定义中标记为 final。有关更多信息，请参阅 <doc:Extensions>。
 
 <!--
   - test: `finalPreventsOverriding`
@@ -552,9 +418,7 @@ For more information, see <doc:Extensions>.
   ```
 -->
 
-You can mark an entire class as final by writing the `final` modifier
-before the `class` keyword in its class definition (`final class`).
-Any attempt to subclass a final class is reported as a compile-time error.
+你可以通过在类定义（`final class`）中在 `class` 关键字前写 `final` 修饰符来将整个类标记为 final。任何尝试子类化 final 类的行为都会在编译时报错。
 
 <!--
   - test: `finalClassPreventsOverriding`
@@ -594,37 +458,36 @@ Any attempt to subclass a final class is reported as a compile-time error.
 -->
 
 <!--
-  TODO: I should probably provide an example here.
+  TODO: 我应该在这里提供一个示例。
 -->
 
 <!--
-  TODO: provide more information about function signatures,
-  and what does / doesn't make them unique.
-  For example, the parameter names don't have to match
-  in order for a function to override a similar signature in its parent.
-  (This is true for both of the function declaration syntaxes.)
+  TODO: 提供有关函数签名的更多信息，
+  以及什么构成了函数签名的唯一性。
+  例如，参数名称不需要与父类中的类似签名匹配才能重写。
+  （这对于两种函数声明语法都是正确的）
 -->
 
 <!--
-  TODO: Mention that you can return more-specific types, and take less-specific types,
-  when overriding methods that use optionals / unchecked optionals.
-
-  TODO: Overriding Type Methods
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  TODO: 提及在重写使用可选类型或未经检查的可选类型的方法时，
+  可以返回更具体的类型，并接受更不具体的类型。
+  TODO: 重写类型方法
+  ~~~~~~~~~~~~~~~~~
 -->
 
-> Beta Software:
+> 测试版软件: 
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
+
 
 <!--
-This source file is part of the Swift.org open source project
+此源文件属于 Swift.org 开源项目的一部分
 
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
+版权所有 (c) 2014 - 2022 Apple Inc. 及 Swift 项目作者
+根据 Apache License v2.0 许可证及运行库例外条款授权
 
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+有关许可证信息，请参见 https://swift.org/LICENSE.txt
+有关 Swift 项目作者的列表，请参见 https://swift.org/CONTRIBUTORS.txt
 -->
