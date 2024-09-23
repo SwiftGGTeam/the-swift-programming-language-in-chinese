@@ -83,56 +83,56 @@ make the same change here also.
 > *隐式参数名* → **`$`** *十进制数字* \
 > *属性包装器呈现值* → **`$`** *标识符字符集*
 
-> Grammar of a literal:
+> 字面量的语法：
 >
-> *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
+> *字面量* → *数字字面量* | *字符串字面量* | *正则表达式字面量* | *布尔字面量* | *空字面量*
 >
-> *numeric-literal* → **`-`**可选 *integer-literal* | **`-`**可选 *floating-point-literal* \
-> *boolean-literal* → **`true`** | **`false`** \
-> *nil-literal* → **`nil`**
+> *数字字面量* → **`-`** 可选 *整型字面量* | **`-`** 可选 *浮点型字面量* \
+> *布尔字面量* → **`true`** | **`false`** \
+> *空字面量* → **`nil`**
 
-> Grammar of an integer literal:
+> 整型字面量的语法：
 >
-> *integer-literal* → *binary-literal* \
-> *integer-literal* → *octal-literal* \
-> *integer-literal* → *decimal-literal* \
-> *integer-literal* → *hexadecimal-literal*
+> *整型字面量* → *二进制字面量* \
+> *整型字面量* → *八进制字面量* \
+> *整型字面量* → *十进制字面量* \
+> *整型字面量* → *十六进制字面量*
 >
-> *binary-literal* → **`0b`** *binary-digit* *binary-literal-characters*可选 \
-> *binary-digit* → Digit 0 or 1 \
-> *binary-literal-character* → *binary-digit* | **`_`** \
-> *binary-literal-characters* → *binary-literal-character* *binary-literal-characters*可选
+> *二进制字面量* → **`0b`** *二进制数字* *二进制字面量字符* 可选 \
+> *二进制数字* → 数字 0 或 1 \
+> *二进制字面量字符* → *二进制数字* | **`_`** \
+> *二进制字面量字符* → *二进制字面量字符* *二进制字面量字符* 可选
 >
-> *octal-literal* → **`0o`** *octal-digit* *octal-literal-characters*可选 \
-> *octal-digit* → Digit 0 through 7 \
-> *octal-literal-character* → *octal-digit* | **`_`** \
-> *octal-literal-characters* → *octal-literal-character* *octal-literal-characters*可选
+> *八进制字面量* → **`0o`** *八进制数字* *八进制字面量字符* 可选 \
+> *八进制数字* → 数字 0 到 7 \
+> *八进制字面量字符* → *八进制数字* | **`_`** \
+> *八进制字面量字符* → *八进制字面量字符* *八进制字面量字符* 可选
 >
-> *decimal-literal* → *decimal-digit* *decimal-literal-characters*可选 \
-> *decimal-digit* → Digit 0 through 9 \
-> *decimal-digits* → *decimal-digit* *decimal-digits*可选 \
-> *decimal-literal-character* → *decimal-digit* | **`_`** \
-> *decimal-literal-characters* → *decimal-literal-character* *decimal-literal-characters*可选
+> *十进制字面量* → *十进制数字* *十进制字面量字符* 可选 \
+> *十进制数字* → 数字 0 到 9 \
+> *十进制数字* → *十进制数字* *十进制数字* 可选 \
+> *十进制字面量字符* → *十进制数字* | **`_`** \
+> *十进制字面量字符* → *十进制字面量字符* *十进制字面量字符* 可选
 >
-> *hexadecimal-literal* → **`0x`** *hexadecimal-digit* *hexadecimal-literal-characters*可选 \
-> *hexadecimal-digit* → Digit 0 through 9, a through f, or A through F \
-> *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`** \
-> *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*可选
+> *十六进制字面量* → **`0x`** *十六进制数字* *十六进制字面量字符* 可选 \
+> *十六进制数字* → 数字 0 到 9，a 到 f，或 A 到 F \
+> *十六进制字面量字符* → *十六进制数字* | **`_`** \
+> *十六进制字面量字符* → *十六进制字面量字符* *十六进制字面量字符* 可选
 
-> Grammar of a floating-point literal:
+> 浮点型字面量的语法：
 >
-> *floating-point-literal* → *decimal-literal* *decimal-fraction*可选 *decimal-exponent*可选 \
-> *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*可选 *hexadecimal-exponent*
+> *浮点型字面量* → *十进制字面量* *十进制分数* 可选 *十进制指数* 可选 \
+> *浮点型字面量* → *十六进制字面量* *十六进制分数* 可选 *十六进制指数*
 >
-> *decimal-fraction* → **`.`** *decimal-literal* \
-> *decimal-exponent* → *floating-point-e* *sign*可选 *decimal-literal*
+> *十进制分数* → **`.`** *十进制字面量* \
+> *十进制指数* → *浮点数 e* *正负号* 可选 *十进制字面量*
 >
-> *hexadecimal-fraction* → **`.`** *hexadecimal-digit* *hexadecimal-literal-characters*可选 \
-> *hexadecimal-exponent* → *floating-point-p* *sign*可选 *decimal-literal*
+> *十六进制分数* → **`.`** *十六进制数字* *十六进制字面量字符* 可选 \
+> *十六进制指数* → *浮点数 p* *正负号* 可选 *十进制字面量*
 >
-> *floating-point-e* → **`e`** | **`E`** \
-> *floating-point-p* → **`p`** | **`P`** \
-> *sign* → **`+`** | **`-`**
+> *浮点数 e* → **`e`** | **`E`** \
+> *浮点数 p* → **`p`** | **`P`** \
+> *正负号* → **`+`** | **`-`**
 
 > Grammar of a string literal:
 >
