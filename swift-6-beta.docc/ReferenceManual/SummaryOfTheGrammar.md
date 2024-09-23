@@ -21,73 +21,73 @@ make the same change here also.
 
 -->
 
-## Lexical Structure
+## 词法结构
 
-> Grammar of whitespace:
+> 空白符的语法：
 >
-> *whitespace* → *whitespace-item* *whitespace*_?_ \
-> *whitespace-item* → *line-break* \
-> *whitespace-item* → *inline-space* \
-> *whitespace-item* → *comment* \
-> *whitespace-item* → *multiline-comment* \
-> *whitespace-item* → U+0000, U+000B, or U+000C
+> *空白符* → *空白符项* *空白符*可选 \
+> *空白符项* → *换行符* \
+> *空白符项* → *行内空格* \
+> *空白符项* → *注释* \
+> *空白符项* → *多行注释* \
+> *空白符项* → U+0000, U+000B, 或 U+000C
 >
-> *line-break* → U+000A \
-> *line-break* → U+000D \
-> *line-break* → U+000D followed by U+000A
+> *换行符* → U+000A \
+> *换行符* → U+000D \
+> *换行符* → U+000D 后接 U+000A
 >
-> *inline-spaces* → *inline-space* *inline-spaces*_?_ \
-> *inline-space* → U+0009 or U+0020
+> *行内空格* → *行内空格符* *行内空格*可选 \
+> *行内空格符* → U+0009 或 U+0020
 >
-> *comment* → **`//`** *comment-text* *line-break* \
-> *multiline-comment* → **`/*`** *multiline-comment-text* **`*/`**
+> *注释* → **`//`** *注释文本* *换行符* \
+> *多行注释* → **`/*`** *多行注释文本* **`*/`**
 >
-> *comment-text* → *comment-text-item* *comment-text*_?_ \
-> *comment-text-item* → Any Unicode scalar value except U+000A or U+000D
+> *注释文本* → *注释文本项* *注释文本*可选 \
+> *注释文本项* → 除 U+000A 或 U+000D 外的任意 Unicode 标量值
 >
-> *multiline-comment-text* → *multiline-comment-text-item* *multiline-comment-text*_?_ \
-> *multiline-comment-text-item* → *multiline-comment* \
-> *multiline-comment-text-item* → *comment-text-item* \
-> *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
+> *多行注释文本* → *多行注释文本项* *多行注释文本*可选 \
+> *多行注释文本项* → *多行注释* \
+> *多行注释文本项* → *注释文本项* \
+> *多行注释文本项* → 除 **`/*`** 或 **`*/`** 外的任意 Unicode 标量值
 
-> Grammar of an identifier:
+> 标识符的语法：
 >
-> *identifier* → *identifier-head* *identifier-characters*_?_ \
-> *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``** \
-> *identifier* → *implicit-parameter-name* \
-> *identifier* → *property-wrapper-projection* \
-> *identifier-list* → *identifier* | *identifier* **`,`** *identifier-list*
+> *标识符* → *标识符头（Head）* *标识符字符集*可选 \
+> *标识符* → **`` ` ``** *标识符头（Head）* *标识符字符集*可选 **`` ` ``** \
+> *标识符* → *隐式参数名* \
+> *标识符* → *属性包装器呈现值* \
+> *标识符列表* → *标识符* | *标识符* **`,`** *标识符列表*
 >
-> *identifier-head* → Upper- or lowercase letter A through Z \
-> *identifier-head* → **`_`** \
-> *identifier-head* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, or U+00B7–U+00BA \
-> *identifier-head* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, or U+00F8–U+00FF \
-> *identifier-head* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, or U+180F–U+1DBF \
-> *identifier-head* → U+1E00–U+1FFF \
-> *identifier-head* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, or U+2060–U+206F \
-> *identifier-head* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, or U+2776–U+2793 \
-> *identifier-head* → U+2C00–U+2DFF or U+2E80–U+2FFF \
-> *identifier-head* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, or U+3040–U+D7FF \
-> *identifier-head* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, or U+FE30–U+FE44 \
-> *identifier-head* → U+FE47–U+FFFD \
-> *identifier-head* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, or U+40000–U+4FFFD \
-> *identifier-head* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, or U+80000–U+8FFFD \
-> *identifier-head* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, or U+C0000–U+CFFFD \
-> *identifier-head* → U+D0000–U+DFFFD or U+E0000–U+EFFFD
+> *标识符头（Head）* → A 到 Z 的大写或小写字母 \
+> *标识符头（Head）* → **`_`** \
+> *标识符头（Head）* → U+00A8, U+00AA, U+00AD, U+00AF, U+00B2–U+00B5, 或 U+00B7–U+00BA \
+> *标识符头（Head）* → U+00BC–U+00BE, U+00C0–U+00D6, U+00D8–U+00F6, 或 U+00F8–U+00FF \
+> *标识符头（Head）* → U+0100–U+02FF, U+0370–U+167F, U+1681–U+180D, 或 U+180F–U+1DBF \
+> *标识符头（Head）* → U+1E00–U+1FFF \
+> *标识符头（Head）* → U+200B–U+200D, U+202A–U+202E, U+203F–U+2040, U+2054, 或 U+2060–U+206F \
+> *标识符头（Head）* → U+2070–U+20CF, U+2100–U+218F, U+2460–U+24FF, 或 U+2776–U+2793 \
+> *标识符头（Head）* → U+2C00–U+2DFF 或 U+2E80–U+2FFF \
+> *标识符头（Head）* → U+3004–U+3007, U+3021–U+302F, U+3031–U+303F, 或 U+3040–U+D7FF \
+> *标识符头（Head）* → U+F900–U+FD3D, U+FD40–U+FDCF, U+FDF0–U+FE1F, 或 U+FE30–U+FE44 \
+> *标识符头（Head）* → U+FE47–U+FFFD \
+> *标识符头（Head）* → U+10000–U+1FFFD, U+20000–U+2FFFD, U+30000–U+3FFFD, 或 U+40000–U+4FFFD \
+> *标识符头（Head）* → U+50000–U+5FFFD, U+60000–U+6FFFD, U+70000–U+7FFFD, 或 U+80000–U+8FFFD \
+> *标识符头（Head）* → U+90000–U+9FFFD, U+A0000–U+AFFFD, U+B0000–U+BFFFD, 或 U+C0000–U+CFFFD \
+> *标识符头（Head）* → U+D0000–U+DFFFD 或 U+E0000–U+EFFFD
 >
-> *identifier-character* → Digit 0 through 9 \
-> *identifier-character* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, or U+FE20–U+FE2F \
-> *identifier-character* → *identifier-head* \
-> *identifier-characters* → *identifier-character* *identifier-characters*_?_
+> *标识符字符* → 数字 0 到 9 \
+> *标识符字符* → U+0300–U+036F, U+1DC0–U+1DFF, U+20D0–U+20FF, 或 U+FE20–U+FE2F \
+> *标识符字符* → *标识符头（Head）* \
+> *标识符字符集* → *标识符字符项* *标识符字符集*可选
 >
-> *implicit-parameter-name* → **`$`** *decimal-digits* \
-> *property-wrapper-projection* → **`$`** *identifier-characters*
+> *隐式参数名* → **`$`** *十进制数字* \
+> *属性包装器呈现值* → **`$`** *标识符字符集*
 
 > Grammar of a literal:
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal* \
+> *numeric-literal* → **`-`**可选 *integer-literal* | **`-`**可选 *floating-point-literal* \
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
@@ -98,37 +98,37 @@ make the same change here also.
 > *integer-literal* → *decimal-literal* \
 > *integer-literal* → *hexadecimal-literal*
 >
-> *binary-literal* → **`0b`** *binary-digit* *binary-literal-characters*_?_ \
+> *binary-literal* → **`0b`** *binary-digit* *binary-literal-characters*可选 \
 > *binary-digit* → Digit 0 or 1 \
 > *binary-literal-character* → *binary-digit* | **`_`** \
-> *binary-literal-characters* → *binary-literal-character* *binary-literal-characters*_?_
+> *binary-literal-characters* → *binary-literal-character* *binary-literal-characters*可选
 >
-> *octal-literal* → **`0o`** *octal-digit* *octal-literal-characters*_?_ \
+> *octal-literal* → **`0o`** *octal-digit* *octal-literal-characters*可选 \
 > *octal-digit* → Digit 0 through 7 \
 > *octal-literal-character* → *octal-digit* | **`_`** \
-> *octal-literal-characters* → *octal-literal-character* *octal-literal-characters*_?_
+> *octal-literal-characters* → *octal-literal-character* *octal-literal-characters*可选
 >
-> *decimal-literal* → *decimal-digit* *decimal-literal-characters*_?_ \
+> *decimal-literal* → *decimal-digit* *decimal-literal-characters*可选 \
 > *decimal-digit* → Digit 0 through 9 \
-> *decimal-digits* → *decimal-digit* *decimal-digits*_?_ \
+> *decimal-digits* → *decimal-digit* *decimal-digits*可选 \
 > *decimal-literal-character* → *decimal-digit* | **`_`** \
-> *decimal-literal-characters* → *decimal-literal-character* *decimal-literal-characters*_?_
+> *decimal-literal-characters* → *decimal-literal-character* *decimal-literal-characters*可选
 >
-> *hexadecimal-literal* → **`0x`** *hexadecimal-digit* *hexadecimal-literal-characters*_?_ \
+> *hexadecimal-literal* → **`0x`** *hexadecimal-digit* *hexadecimal-literal-characters*可选 \
 > *hexadecimal-digit* → Digit 0 through 9, a through f, or A through F \
 > *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`** \
-> *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
+> *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*可选
 
 > Grammar of a floating-point literal:
 >
-> *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
-> *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
+> *floating-point-literal* → *decimal-literal* *decimal-fraction*可选 *decimal-exponent*可选 \
+> *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*可选 *hexadecimal-exponent*
 >
 > *decimal-fraction* → **`.`** *decimal-literal* \
-> *decimal-exponent* → *floating-point-e* *sign*_?_ *decimal-literal*
+> *decimal-exponent* → *floating-point-e* *sign*可选 *decimal-literal*
 >
-> *hexadecimal-fraction* → **`.`** *hexadecimal-digit* *hexadecimal-literal-characters*_?_ \
-> *hexadecimal-exponent* → *floating-point-p* *sign*_?_ *decimal-literal*
+> *hexadecimal-fraction* → **`.`** *hexadecimal-digit* *hexadecimal-literal-characters*可选 \
+> *hexadecimal-exponent* → *floating-point-p* *sign*可选 *decimal-literal*
 >
 > *floating-point-e* → **`e`** | **`E`** \
 > *floating-point-p* → **`p`** | **`P`** \
@@ -138,32 +138,32 @@ make the same change here also.
 >
 > *string-literal* → *static-string-literal* | *interpolated-string-literal*
 >
-> *string-literal-opening-delimiter* → *extended-string-literal-delimiter*_?_ **`"`** \
-> *string-literal-closing-delimiter* → **`"`** *extended-string-literal-delimiter*_?_
+> *string-literal-opening-delimiter* → *extended-string-literal-delimiter*可选 **`"`** \
+> *string-literal-closing-delimiter* → **`"`** *extended-string-literal-delimiter*可选
 >
-> *static-string-literal* → *string-literal-opening-delimiter* *quoted-text*_?_ *string-literal-closing-delimiter* \
-> *static-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-quoted-text*_?_ *multiline-string-literal-closing-delimiter*
+> *static-string-literal* → *string-literal-opening-delimiter* *quoted-text*可选 *string-literal-closing-delimiter* \
+> *static-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-quoted-text*可选 *multiline-string-literal-closing-delimiter*
 >
-> *multiline-string-literal-opening-delimiter* → *extended-string-literal-delimiter*_?_ **`"""`** \
-> *multiline-string-literal-closing-delimiter* → **`"""`** *extended-string-literal-delimiter*_?_ \
-> *extended-string-literal-delimiter* → **`#`** *extended-string-literal-delimiter*_?_
+> *multiline-string-literal-opening-delimiter* → *extended-string-literal-delimiter*可选 **`"""`** \
+> *multiline-string-literal-closing-delimiter* → **`"""`** *extended-string-literal-delimiter*可选 \
+> *extended-string-literal-delimiter* → **`#`** *extended-string-literal-delimiter*可选
 >
-> *quoted-text* → *quoted-text-item* *quoted-text*_?_ \
+> *quoted-text* → *quoted-text-item* *quoted-text*可选 \
 > *quoted-text-item* → *escaped-character* \
 > *quoted-text-item* → Any Unicode scalar value except  **`"`**,  **`\`**, U+000A, or U+000D
 >
-> *multiline-quoted-text* → *multiline-quoted-text-item* *multiline-quoted-text*_?_ \
+> *multiline-quoted-text* → *multiline-quoted-text-item* *multiline-quoted-text*可选 \
 > *multiline-quoted-text-item* → *escaped-character* \
 > *multiline-quoted-text-item* → Any Unicode scalar value except  **`\`** \
 > *multiline-quoted-text-item* → *escaped-newline*
 >
-> *interpolated-string-literal* → *string-literal-opening-delimiter* *interpolated-text*_?_ *string-literal-closing-delimiter* \
-> *interpolated-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-interpolated-text*_?_ *multiline-string-literal-closing-delimiter*
+> *interpolated-string-literal* → *string-literal-opening-delimiter* *interpolated-text*可选 *string-literal-closing-delimiter* \
+> *interpolated-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-interpolated-text*可选 *multiline-string-literal-closing-delimiter*
 >
-> *interpolated-text* → *interpolated-text-item* *interpolated-text*_?_ \
+> *interpolated-text* → *interpolated-text-item* *interpolated-text*可选 \
 > *interpolated-text-item* → **`\(`** *expression* **`)`** | *quoted-text-item*
 >
-> *multiline-interpolated-text* → *multiline-interpolated-text-item* *multiline-interpolated-text*_?_ \
+> *multiline-interpolated-text* → *multiline-interpolated-text-item* *multiline-interpolated-text*可选 \
 > *multiline-interpolated-text-item* → **`\(`** *expression* **`)`** | *multiline-quoted-text-item*
 >
 > *escape-sequence* → **`\`** *extended-string-literal-delimiter* \
@@ -171,21 +171,21 @@ make the same change here also.
 > *escaped-character* → *escape-sequence* **`u`** **`{`** *unicode-scalar-digits* **`}`** \
 > *unicode-scalar-digits* → Between one and eight hexadecimal digits
 >
-> *escaped-newline* → *escape-sequence* *inline-spaces*_?_ *line-break*
+> *escaped-newline* → *escape-sequence* *inline-spaces*可选 *line-break*
 
 > Grammar of a regular expression literal:
 >
 > *regular-expression-literal* → *regular-expression-literal-opening-delimiter* *regular-expression* *regular-expression-literal-closing-delimiter* \
 > *regular-expression* → Any regular expression
 >
-> *regular-expression-literal-opening-delimiter* → *extended-regular-expression-literal-delimiter*_?_ **`/`** \
-> *regular-expression-literal-closing-delimiter* → **`/`** *extended-regular-expression-literal-delimiter*_?_
+> *regular-expression-literal-opening-delimiter* → *extended-regular-expression-literal-delimiter*可选 **`/`** \
+> *regular-expression-literal-closing-delimiter* → **`/`** *extended-regular-expression-literal-delimiter*可选
 >
-> *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
+> *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*可选
 
 > Grammar of operators:
 >
-> *operator* → *operator-head* *operator-characters*_?_ \
+> *operator* → *operator-head* *operator-characters*可选 \
 > *operator* → *dot-operator-head* *dot-operator-characters*
 >
 > *operator-head* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
@@ -214,11 +214,11 @@ make the same change here also.
 > *operator-character* → U+FE00–U+FE0F \
 > *operator-character* → U+FE20–U+FE2F \
 > *operator-character* → U+E0100–U+E01EF \
-> *operator-characters* → *operator-character* *operator-characters*_?_
+> *operator-characters* → *operator-character* *operator-characters*可选
 >
 > *dot-operator-head* → **`.`** \
 > *dot-operator-character* → **`.`** | *operator-character* \
-> *dot-operator-characters* → *dot-operator-character* *dot-operator-characters*_?_
+> *dot-operator-characters* → *dot-operator-character* *dot-operator-characters*可选
 >
 > *infix-operator* → *operator* \
 > *prefix-operator* → *operator* \
@@ -244,11 +244,11 @@ make the same change here also.
 
 > Grammar of a type annotation:
 >
-> *type-annotation* → **`:`** *attributes*_?_ **`inout`**_?_ *type*
+> *type-annotation* → **`:`** *attributes*可选 **`inout`**可选 *type*
 
 > Grammar of a type identifier:
 >
-> *type-identifier* → *type-name* *generic-argument-clause*_?_ | *type-name* *generic-argument-clause*_?_ **`.`** *type-identifier* \
+> *type-identifier* → *type-name* *generic-argument-clause*可选 | *type-name* *generic-argument-clause*可选 **`.`** *type-identifier* \
 > *type-name* → *identifier*
 
 > Grammar of a tuple type:
@@ -260,13 +260,13 @@ make the same change here also.
 
 > Grammar of a function type:
 >
-> *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
+> *function-type* → *attributes*可选 *function-type-argument-clause* **`async`**可选 *throws-clause*可选 **`->`** *type*
 >
 > *function-type-argument-clause* → **`(`** **`)`** \
-> *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**_?_ **`)`**
+> *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**可选 **`)`**
 >
 > *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
-> *function-type-argument* → *attributes*_?_ **`inout`**_?_ *type* | *argument-label* *type-annotation* \
+> *function-type-argument* → *attributes*可选 **`inout`**可选 *type* | *argument-label* *type-annotation* \
 > *argument-label* → *identifier*
 >
 > *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
@@ -315,17 +315,17 @@ make the same change here also.
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*可选 *type-identifier* | *attributes*可选 *type-identifier* **`,`** *type-inheritance-list*
 
 ## Expressions
 
 > Grammar of an expression:
 >
-> *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
+> *expression* → *try-operator*可选 *await-operator*可选 *prefix-expression* *infix-expressions*可选 \
 
 > Grammar of a prefix expression:
 >
-> *prefix-expression* → *prefix-operator*_?_ *postfix-expression* \
+> *prefix-expression* → *prefix-operator*可选 *postfix-expression* \
 > *prefix-expression* → *in-out-expression*
 
 > Grammar of an in-out expression:
@@ -343,10 +343,10 @@ make the same change here also.
 > Grammar of an infix expression:
 >
 > *infix-expression* → *infix-operator* *prefix-expression* \
-> *infix-expression* → *assignment-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
-> *infix-expression* → *conditional-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
+> *infix-expression* → *assignment-operator* *try-operator*可选 *await-operator*可选 *prefix-expression* \
+> *infix-expression* → *conditional-operator* *try-operator*可选 *await-operator*可选 *prefix-expression* \
 > *infix-expression* → *type-casting-operator* \
-> *infix-expressions* → *infix-expression* *infix-expressions*_?_
+> *infix-expressions* → *infix-expression* *infix-expressions*可选
 
 > Grammar of an assignment operator:
 >
@@ -365,7 +365,7 @@ make the same change here also.
 
 > Grammar of a primary expression:
 >
-> *primary-expression* → *identifier* *generic-argument-clause*_?_ \
+> *primary-expression* → *identifier* *generic-argument-clause*可选 \
 > *primary-expression* → *literal-expression* \
 > *primary-expression* → *self-expression* \
 > *primary-expression* → *superclass-expression* \
@@ -385,12 +385,12 @@ make the same change here also.
 > *literal-expression* → *literal* \
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
 >
-> *array-literal* → **`[`** *array-literal-items*_?_ **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items* \
+> *array-literal* → **`[`** *array-literal-items*可选 **`]`** \
+> *array-literal-items* → *array-literal-item* **`,`**可选 | *array-literal-item* **`,`** *array-literal-items* \
 > *array-literal-item* → *expression*
 >
 > *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
+> *dictionary-literal-items* → *dictionary-literal-item* **`,`**可选 | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
 > *dictionary-literal-item* → *expression* **`:`** *expression*
 >
 > *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
@@ -422,28 +422,28 @@ make the same change here also.
 > *if-expression-tail* → **`else`** **`{`** *statement* **`}`**
 >
 > *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`** \
-> *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*_?_ \
+> *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*可选 \
 > *switch-expression-case* → *case-label* *statement* \
 > *switch-expression-case* → *default-label* *statement*
 
 > Grammar of a closure expression:
 >
-> *closure-expression* → **`{`** *attributes*_?_ *closure-signature*_?_ *statements*_?_ **`}`**
+> *closure-expression* → **`{`** *attributes*可选 *closure-signature*可选 *statements*可选 **`}`**
 >
-> *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
+> *closure-signature* → *capture-list*可选 *closure-parameter-clause* **`async`**可选 *throws-clause*可选 *function-result*可选 **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
 > *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
-> *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
+> *closure-parameter* → *closure-parameter-name* *type-annotation*可选 \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
 > *closure-parameter-name* → *identifier*
 >
 > *capture-list* → **`[`** *capture-list-items* **`]`** \
 > *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
-> *capture-list-item* → *capture-specifier*_?_ *identifier* \
-> *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
-> *capture-list-item* → *capture-specifier*_?_ *self-expression* \
+> *capture-list-item* → *capture-specifier*可选 *identifier* \
+> *capture-list-item* → *capture-specifier*可选 *identifier* **`=`** *expression* \
+> *capture-list-item* → *capture-specifier*可选 *self-expression* \
 > *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
 
 > Grammar of an implicit member expression:
@@ -467,15 +467,15 @@ make the same change here also.
 
 > Grammar of a macro-expansion expression:
 >
-> *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
+> *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*可选 *function-call-argument-clause*可选 *trailing-closures*可选
 
 > Grammar of a key-path expression:
 >
-> *key-path-expression* → **`\`** *type*_?_ **`.`** *key-path-components* \
+> *key-path-expression* → **`\`** *type*可选 **`.`** *key-path-components* \
 > *key-path-components* → *key-path-component* | *key-path-component* **`.`** *key-path-components* \
-> *key-path-component* → *identifier* *key-path-postfixes*_?_ | *key-path-postfixes*
+> *key-path-component* → *identifier* *key-path-postfixes*可选 | *key-path-postfixes*
 >
-> *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_ \
+> *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*可选 \
 > *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
 
 > Grammar of a selector expression:
@@ -503,15 +503,15 @@ make the same change here also.
 > Grammar of a function call expression:
 >
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
-> *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
+> *function-call-expression* → *postfix-expression* *function-call-argument-clause*可选 *trailing-closures*
 >
 > *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
 > *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
 > *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
 > *function-call-argument* → *operator* | *identifier* **`:`** *operator*
 >
-> *trailing-closures* → *closure-expression* *labeled-trailing-closures*_?_ \
-> *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*_?_ \
+> *trailing-closures* → *closure-expression* *labeled-trailing-closures*可选 \
+> *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*可选 \
 > *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
 
 > Grammar of an initializer expression:
@@ -522,11 +522,11 @@ make the same change here also.
 > Grammar of an explicit member expression:
 >
 > *explicit-member-expression* → *postfix-expression* **`.`** *decimal-digits* \
-> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* *generic-argument-clause*_?_ \
+> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* *generic-argument-clause*可选 \
 > *explicit-member-expression* → *postfix-expression* **`.`** *identifier* **`(`** *argument-names* **`)`** \
 > *explicit-member-expression* → *postfix-expression* *conditional-compilation-block*
 >
-> *argument-names* → *argument-name* *argument-names*_?_ \
+> *argument-names* → *argument-name* *argument-names*可选 \
 > *argument-name* → *identifier* **`:`**
 
 > Grammar of a postfix self expression:
@@ -549,16 +549,16 @@ make the same change here also.
 
 > Grammar of a statement:
 >
-> *statement* → *expression* **`;`**_?_ \
-> *statement* → *declaration* **`;`**_?_ \
-> *statement* → *loop-statement* **`;`**_?_ \
-> *statement* → *branch-statement* **`;`**_?_ \
-> *statement* → *labeled-statement* **`;`**_?_ \
-> *statement* → *control-transfer-statement* **`;`**_?_ \
-> *statement* → *defer-statement* **`;`**_?_ \
-> *statement* → *do-statement* **`;`**_?_ \
+> *statement* → *expression* **`;`**可选 \
+> *statement* → *declaration* **`;`**可选 \
+> *statement* → *loop-statement* **`;`**可选 \
+> *statement* → *branch-statement* **`;`**可选 \
+> *statement* → *labeled-statement* **`;`**可选 \
+> *statement* → *control-transfer-statement* **`;`**可选 \
+> *statement* → *defer-statement* **`;`**可选 \
+> *statement* → *do-statement* **`;`**可选 \
 > *statement* → *compiler-control-statement* \
-> *statements* → *statement* *statements*_?_
+> *statements* → *statement* *statements*可选
 
 > Grammar of a loop statement:
 >
@@ -568,7 +568,7 @@ make the same change here also.
 
 > Grammar of a for-in statement:
 >
-> *for-in-statement* → **`for`** **`case`**_?_ *pattern* **`in`** *expression* *where-clause*_?_ *code-block*
+> *for-in-statement* → **`for`** **`case`**可选 *pattern* **`in`** *expression* *where-clause*可选 *code-block*
 
 > Grammar of a while statement:
 >
@@ -578,7 +578,7 @@ make the same change here also.
 > *condition* → *expression* | *availability-condition* | *case-condition* | *optional-binding-condition*
 >
 > *case-condition* → **`case`** *pattern* *initializer* \
-> *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
+> *optional-binding-condition* → **`let`** *pattern* *initializer*可选 | **`var`** *pattern* *initializer*可选
 
 > Grammar of a repeat-while statement:
 >
@@ -592,7 +592,7 @@ make the same change here also.
 
 > Grammar of an if statement:
 >
-> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_ \
+> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*可选 \
 > *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
 
 > Grammar of a guard statement:
@@ -601,24 +601,24 @@ make the same change here also.
 
 > Grammar of a switch statement:
 >
-> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`** \
-> *switch-cases* → *switch-case* *switch-cases*_?_ \
+> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*可选 **`}`** \
+> *switch-cases* → *switch-case* *switch-cases*可选 \
 > *switch-case* → *case-label* *statements* \
 > *switch-case* → *default-label* *statements* \
 > *switch-case* → *conditional-switch-case*
 >
-> *case-label* → *attributes*_?_ **`case`** *case-item-list* **`:`** \
-> *case-item-list* → *pattern* *where-clause*_?_ | *pattern* *where-clause*_?_ **`,`** *case-item-list* \
-> *default-label* → *attributes*_?_ **`default`** **`:`**
+> *case-label* → *attributes*可选 **`case`** *case-item-list* **`:`** \
+> *case-item-list* → *pattern* *where-clause*可选 | *pattern* *where-clause*可选 **`,`** *case-item-list* \
+> *default-label* → *attributes*可选 **`default`** **`:`**
 >
 > *where-clause* → **`where`** *where-expression* \
 > *where-expression* → *expression*
 >
-> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*_?_ *switch-else-directive-clause*_?_ *endif-directive* \
-> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*_?_ \
-> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*_?_ \
-> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_ \
-> *switch-else-directive-clause* → *else-directive* *switch-cases*_?_
+> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*可选 *switch-else-directive-clause*可选 *endif-directive* \
+> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*可选 \
+> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*可选 \
+> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*可选 \
+> *switch-else-directive-clause* → *else-directive* *switch-cases*可选
 
 > Grammar of a labeled statement:
 >
@@ -640,11 +640,11 @@ make the same change here also.
 
 > Grammar of a break statement:
 >
-> *break-statement* → **`break`** *label-name*_?_
+> *break-statement* → **`break`** *label-name*可选
 
 > Grammar of a continue statement:
 >
-> *continue-statement* → **`continue`** *label-name*_?_
+> *continue-statement* → **`continue`** *label-name*可选
 
 > Grammar of a fallthrough statement:
 >
@@ -652,7 +652,7 @@ make the same change here also.
 
 > Grammar of a return statement:
 >
-> *return-statement* → **`return`** *expression*_?_
+> *return-statement* → **`return`** *expression*可选
 
 > Grammar of a throw statement:
 >
@@ -664,11 +664,11 @@ make the same change here also.
 
 > Grammar of a do statement:
 >
-> *do-statement* → **`do`** *throws-clause*_?_ *code-block* *catch-clauses*_?_ \
-> *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
-> *catch-clause* → **`catch`** *catch-pattern-list*_?_ *code-block* \
+> *do-statement* → **`do`** *throws-clause*可选 *code-block* *catch-clauses*可选 \
+> *catch-clauses* → *catch-clause* *catch-clauses*可选 \
+> *catch-clause* → **`catch`** *catch-pattern-list*可选 *code-block* \
 > *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \
-> *catch-pattern* → *pattern* *where-clause*_?_
+> *catch-pattern* → *pattern* *where-clause*可选
 
 > Grammar of a compiler control statement:
 >
@@ -678,12 +678,12 @@ make the same change here also.
 
 > Grammar of a conditional compilation block:
 >
-> *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*_?_ *else-directive-clause*_?_ *endif-directive*
+> *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*可选 *else-directive-clause*可选 *endif-directive*
 >
-> *if-directive-clause* → *if-directive* *compilation-condition* *statements*_?_ \
-> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*_?_ \
-> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*_?_ \
-> *else-directive-clause* → *else-directive* *statements*_?_ \
+> *if-directive-clause* → *if-directive* *compilation-condition* *statements*可选 \
+> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*可选 \
+> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*可选 \
+> *else-directive-clause* → *else-directive* *statements*可选 \
 > *if-directive* → **`#if`** \
 > *elseif-directive* → **`#elseif`** \
 > *else-directive* → **`#else`** \
@@ -706,8 +706,8 @@ make the same change here also.
 >
 > *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
 > *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
-> *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
-> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
+> *swift-version* → *decimal-digits* *swift-version-continuation*可选 \
+> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*可选 \
 > *environment* → **`simulator`** | **`macCatalyst`**
 
 > Grammar of a line control statement:
@@ -758,25 +758,25 @@ make the same change here also.
 
 > Grammar of a top-level declaration:
 >
-> *top-level-declaration* → *statements*_?_
+> *top-level-declaration* → *statements*可选
 
 > Grammar of a code block:
 >
-> *code-block* → **`{`** *statements*_?_ **`}`**
+> *code-block* → **`{`** *statements*可选 **`}`**
 
 > Grammar of an import declaration:
 >
-> *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
+> *import-declaration* → *attributes*可选 **`import`** *import-kind*可选 *import-path*
 >
 > *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
 > *import-path* → *identifier* | *identifier* **`.`** *import-path*
 
 > Grammar of a constant declaration:
 >
-> *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
+> *constant-declaration* → *attributes*可选 *declaration-modifiers*可选 **`let`** *pattern-initializer-list*
 >
 > *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
-> *pattern-initializer* → *pattern* *initializer*_?_ \
+> *pattern-initializer* → *pattern* *initializer*可选 \
 > *initializer* → **`=`** *expression*
 
 > Grammar of a variable declaration:
@@ -786,116 +786,116 @@ make the same change here also.
 > *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
 > *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
 > *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*可选 *willSet-didSet-block*
 >
-> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`** \
+> *variable-declaration-head* → *attributes*可选 *declaration-modifiers*可选 **`var`** \
 > *variable-name* → *identifier*
 >
 > *getter-setter-block* → *code-block* \
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*可选 **`}`** \
 > *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
-> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block* \
-> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block* \
+> *getter-clause* → *attributes*可选 *mutation-modifier*可选 **`get`** *code-block* \
+> *setter-clause* → *attributes*可选 *mutation-modifier*可选 **`set`** *setter-name*可选 *code-block* \
 > *setter-name* → **`(`** *identifier* **`)`**
 >
-> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`** \
+> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*可选 **`}`** \
 > *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
-> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** \
-> *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
+> *getter-keyword-clause* → *attributes*可选 *mutation-modifier*可选 **`get`** \
+> *setter-keyword-clause* → *attributes*可选 *mutation-modifier*可选 **`set`**
 >
-> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`** \
-> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`** \
-> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block* \
-> *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
+> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*可选 **`}`** \
+> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*可选 **`}`** \
+> *willSet-clause* → *attributes*可选 **`willSet`** *setter-name*可选 *code-block* \
+> *didSet-clause* → *attributes*可选 **`didSet`** *setter-name*可选 *code-block*
 
 > Grammar of a type alias declaration:
 >
-> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
+> *typealias-declaration* → *attributes*可选 *access-level-modifier*可选 **`typealias`** *typealias-name* *generic-parameter-clause*可选 *typealias-assignment* \
 > *typealias-name* → *identifier* \
 > *typealias-assignment* → **`=`** *type*
 
 > Grammar of a function declaration:
 >
-> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
+> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*可选 *function-signature* *generic-where-clause*可选 *function-body*可选
 >
-> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
+> *function-head* → *attributes*可选 *declaration-modifiers*可选 **`func`** \
 > *function-name* → *identifier* | *operator*
 >
-> *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
-> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
-> *function-result* → **`->`** *attributes*_?_ *type* \
+> *function-signature* → *parameter-clause* **`async`**可选 *throws-clause*可选 *function-result*可选 \
+> *function-signature* → *parameter-clause* **`async`**可选 **`rethrows`** *function-result*可选 \
+> *function-result* → **`->`** *attributes*可选 *type* \
 > *function-body* → *code-block*
 >
 > *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
-> *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
+> *parameter* → *external-parameter-name*可选 *local-parameter-name* *parameter-type-annotation* *default-argument-clause*可选 \
+> *parameter* → *external-parameter-name*可选 *local-parameter-name* *parameter-type-annotation* \
+> *parameter* → *external-parameter-name*可选 *local-parameter-name* *parameter-type-annotation* **`...`**
 >
 > *external-parameter-name* → *identifier* \
 > *local-parameter-name* → *identifier* \
-> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-type-annotation* → **`:`** *attributes*可选 *parameter-modifier*可选 *type* \
 > *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
 > *default-argument-clause* → **`=`** *expression*
 
 > Grammar of an enumeration declaration:
 >
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
-> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
+> *enum-declaration* → *attributes*可选 *access-level-modifier*可选 *union-style-enum* \
+> *enum-declaration* → *attributes*可选 *access-level-modifier*可选 *raw-value-style-enum*
 >
-> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`** \
-> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_ \
+> *union-style-enum* → **`indirect`**可选 **`enum`** *enum-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 **`{`** *union-style-enum-members*可选 **`}`** \
+> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*可选 \
 > *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
-> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list* \
+> *union-style-enum-case-clause* → *attributes*可选 **`indirect`**可选 **`case`** *union-style-enum-case-list* \
 > *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
-> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_ \
+> *union-style-enum-case* → *enum-case-name* *tuple-type*可选 \
 > *enum-name* → *identifier* \
 > *enum-case-name* → *identifier*
 >
-> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`** \
-> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_ \
+> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*可选 *type-inheritance-clause* *generic-where-clause*可选 **`{`** *raw-value-style-enum-members* **`}`** \
+> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*可选 \
 > *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
-> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case-clause* → *attributes*可选 **`case`** *raw-value-style-enum-case-list* \
 > *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_ \
+> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*可选 \
 > *raw-value-assignment* → **`=`** *raw-value-literal* \
 > *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
 
 > Grammar of a structure declaration:
 >
-> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
+> *struct-declaration* → *attributes*可选 *access-level-modifier*可选 **`struct`** *struct-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *struct-body* \
 > *struct-name* → *identifier* \
-> *struct-body* → **`{`** *struct-members*_?_ **`}`**
+> *struct-body* → **`{`** *struct-members*可选 **`}`**
 >
-> *struct-members* → *struct-member* *struct-members*_?_ \
+> *struct-members* → *struct-member* *struct-members*可选 \
 > *struct-member* → *declaration* | *compiler-control-statement*
 
 > Grammar of a class declaration:
 >
-> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
-> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-declaration* → *attributes*可选 *access-level-modifier*可选 **`final`**可选 **`class`** *class-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *class-body* \
+> *class-declaration* → *attributes*可选 **`final`** *access-level-modifier*可选 **`class`** *class-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *class-body* \
 > *class-name* → *identifier* \
-> *class-body* → **`{`** *class-members*_?_ **`}`**
+> *class-body* → **`{`** *class-members*可选 **`}`**
 >
-> *class-members* → *class-member* *class-members*_?_ \
+> *class-members* → *class-member* *class-members*可选 \
 > *class-member* → *declaration* | *compiler-control-statement*
 
 > Grammar of an actor declaration:
 >
-> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
+> *actor-declaration* → *attributes*可选 *access-level-modifier*可选 **`actor`** *actor-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *actor-body* \
 > *actor-name* → *identifier* \
-> *actor-body* → **`{`** *actor-members*_?_ **`}`**
+> *actor-body* → **`{`** *actor-members*可选 **`}`**
 >
-> *actor-members* → *actor-member* *actor-members*_?_ \
+> *actor-members* → *actor-member* *actor-members*可选 \
 > *actor-member* → *declaration* | *compiler-control-statement*
 
 > Grammar of a protocol declaration:
 >
-> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
+> *protocol-declaration* → *attributes*可选 *access-level-modifier*可选 **`protocol`** *protocol-name* *type-inheritance-clause*可选 *generic-where-clause*可选 *protocol-body* \
 > *protocol-name* → *identifier* \
-> *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
+> *protocol-body* → **`{`** *protocol-members*可选 **`}`**
 >
-> *protocol-members* → *protocol-member* *protocol-members*_?_ \
+> *protocol-members* → *protocol-member* *protocol-members*可选 \
 > *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
 >
 > *protocol-member-declaration* → *protocol-property-declaration* \
@@ -911,55 +911,55 @@ make the same change here also.
 
 > Grammar of a protocol method declaration:
 >
-> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
+> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*可选 *function-signature* *generic-where-clause*可选
 
 > Grammar of a protocol initializer declaration:
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* *throws-clause*可选 *generic-where-clause*可选 \
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* **`rethrows`** *generic-where-clause*可选
 
 > Grammar of a protocol subscript declaration:
 >
-> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
+> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *getter-setter-keyword-block*
 
 > Grammar of a protocol associated type declaration:
 >
-> *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
+> *protocol-associated-type-declaration* → *attributes*可选 *access-level-modifier*可选 **`associatedtype`** *typealias-name* *type-inheritance-clause*可选 *typealias-assignment*可选 *generic-where-clause*可选
 
 > Grammar of an initializer declaration:
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
-> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* **`async`**可选 *throws-clause*可选 *generic-where-clause*可选 *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* **`async`**可选 **`rethrows`** *generic-where-clause*可选 *initializer-body* \
+> *initializer-head* → *attributes*可选 *declaration-modifiers*可选 **`init`** \
+> *initializer-head* → *attributes*可选 *declaration-modifiers*可选 **`init`** **`?`** \
+> *initializer-head* → *attributes*可选 *declaration-modifiers*可选 **`init`** **`!`** \
 > *initializer-body* → *code-block*
 
 > Grammar of a deinitializer declaration:
 >
-> *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
+> *deinitializer-declaration* → *attributes*可选 **`deinit`** *code-block*
 
 > Grammar of an extension declaration:
 >
-> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
-> *extension-body* → **`{`** *extension-members*_?_ **`}`**
+> *extension-declaration* → *attributes*可选 *access-level-modifier*可选 **`extension`** *type-identifier* *type-inheritance-clause*可选 *generic-where-clause*可选 *extension-body* \
+> *extension-body* → **`{`** *extension-members*可选 **`}`**
 >
-> *extension-members* → *extension-member* *extension-members*_?_ \
+> *extension-members* → *extension-member* *extension-members*可选 \
 > *extension-member* → *declaration* | *compiler-control-statement*
 
 > Grammar of a subscript declaration:
 >
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block* \
-> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
-> *subscript-result* → **`->`** *attributes*_?_ *type*
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *code-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *getter-setter-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *getter-setter-keyword-block* \
+> *subscript-head* → *attributes*可选 *declaration-modifiers*可选 **`subscript`** *generic-parameter-clause*可选 *parameter-clause* \
+> *subscript-result* → **`->`** *attributes*可选 *type*
 
 > Grammar of a macro declaration:
 >
-> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
-> *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`**  \
-> *macro-signature* → *parameter-clause* *macro-function-signature-result*_?_ \
+> *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*可选 *macro-signature* *macro-definition*可选 *generic-where-clause* \
+> *macro-head* → *attributes*可选 *declaration-modifiers*可选 **`macro`**  \
+> *macro-signature* → *parameter-clause* *macro-function-signature-result*可选 \
 > *macro-function-signature-result* → **`->`** *type* \
 > *macro-definition* → **`=`** *expression*
 
@@ -969,15 +969,15 @@ make the same change here also.
 >
 > *prefix-operator-declaration* → **`prefix`** **`operator`** *operator* \
 > *postfix-operator-declaration* → **`postfix`** **`operator`** *operator* \
-> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
+> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*可选
 >
 > *infix-operator-group* → **`:`** *precedence-group-name*
 
 > Grammar of a precedence group declaration:
 >
-> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
+> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*可选 **`}`**
 >
-> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_ \
+> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*可选 \
 > *precedence-group-attribute* → *precedence-group-relation* \
 > *precedence-group-attribute* → *precedence-group-assignment* \
 > *precedence-group-attribute* → *precedence-group-associativity*
@@ -1000,7 +1000,7 @@ make the same change here also.
 > *declaration-modifier* → *access-level-modifier* \
 > *declaration-modifier* → *mutation-modifier* \
 > *declaration-modifier* → *actor-isolation-modifier* \
-> *declaration-modifiers* → *declaration-modifier* *declaration-modifiers*_?_
+> *declaration-modifiers* → *declaration-modifier* *declaration-modifiers*可选
 >
 > *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
 > *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
@@ -1017,15 +1017,15 @@ make the same change here also.
 
 > Grammar of an attribute:
 >
-> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_ \
+> *attribute* → **`@`** *attribute-name* *attribute-argument-clause*可选 \
 > *attribute-name* → *identifier* \
-> *attribute-argument-clause* → **`(`** *balanced-tokens*_?_ **`)`** \
-> *attributes* → *attribute* *attributes*_?_
+> *attribute-argument-clause* → **`(`** *balanced-tokens*可选 **`)`** \
+> *attributes* → *attribute* *attributes*可选
 >
-> *balanced-tokens* → *balanced-token* *balanced-tokens*_?_ \
-> *balanced-token* → **`(`** *balanced-tokens*_?_ **`)`** \
-> *balanced-token* → **`[`** *balanced-tokens*_?_ **`]`** \
-> *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
+> *balanced-tokens* → *balanced-token* *balanced-tokens*可选 \
+> *balanced-token* → **`(`** *balanced-tokens*可选 **`)`** \
+> *balanced-token* → **`[`** *balanced-tokens*可选 **`]`** \
+> *balanced-token* → **`{`** *balanced-tokens*可选 **`}`** \
 > *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
 
@@ -1033,10 +1033,10 @@ make the same change here also.
 
 > Grammar of a pattern:
 >
-> *pattern* → *wildcard-pattern* *type-annotation*_?_ \
-> *pattern* → *identifier-pattern* *type-annotation*_?_ \
+> *pattern* → *wildcard-pattern* *type-annotation*可选 \
+> *pattern* → *identifier-pattern* *type-annotation*可选 \
 > *pattern* → *value-binding-pattern* \
-> *pattern* → *tuple-pattern* *type-annotation*_?_ \
+> *pattern* → *tuple-pattern* *type-annotation*可选 \
 > *pattern* → *enum-case-pattern* \
 > *pattern* → *optional-pattern* \
 > *pattern* → *type-casting-pattern* \
@@ -1056,13 +1056,13 @@ make the same change here also.
 
 > Grammar of a tuple pattern:
 >
-> *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`** \
+> *tuple-pattern* → **`(`** *tuple-pattern-element-list*可选 **`)`** \
 > *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list* \
 > *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
 > Grammar of an enumeration case pattern:
 >
-> *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
+> *enum-case-pattern* → *type-identifier*可选 **`.`** *enum-case-name* *tuple-pattern*可选
 
 > Grammar of an optional pattern:
 >
