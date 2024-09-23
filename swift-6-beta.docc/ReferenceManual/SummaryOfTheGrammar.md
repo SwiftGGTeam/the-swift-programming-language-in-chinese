@@ -553,7 +553,7 @@ make the same change here also.
 > *语句* → *声明* **`;`** 可选 \
 > *语句* → *循环语句* **`;`** 可选 \
 > *语句* → *分支语句* **`;`** 可选 \
-> *语句* → *带标签的语句* **`;`** 可选 \
+> *语句* → *标签语句* **`;`** 可选 \
 > *语句* → *控制转移语句* **`;`** 可选 \
 > *语句* → *延迟语句* **`;`** 可选 \
 > *语句* → *执行语句* **`;`** 可选 \
@@ -620,120 +620,119 @@ make the same change here also.
 > *switch-elseif 指令子句* → *elseif 指令* *编译条件* *switch-case 集* 可选 \
 > *switch-else 指令子句* → *else 指令* *switch-case 集* 可选
 
-> Grammar of a labeled statement:
+> 标签语句的语法：
 >
-> *labeled-statement* → *statement-label* *loop-statement* \
-> *labeled-statement* → *statement-label* *if-statement* \
-> *labeled-statement* → *statement-label* *switch-statement* \
-> *labeled-statement* → *statement-label* *do-statement*
+> *标签语句* → *语句标签* *循环语句* \
+> *标签语句* → *语句标签* *if 语句* \
+> *标签语句* → *语句标签* *switch 语句* \
+> *标签语句* → *语句标签* *do 语句*
 >
-> *statement-label* → *label-name* **`:`** \
-> *label-name* → *identifier*
+> *语句标签* → *标签名称* **`:`** \
+> *标签名称* → *标识符*
 
-> Grammar of a control transfer statement:
+> 控制转移语句的语法：
 >
-> *control-transfer-statement* → *break-statement* \
-> *control-transfer-statement* → *continue-statement* \
-> *control-transfer-statement* → *fallthrough-statement* \
-> *control-transfer-statement* → *return-statement* \
-> *control-transfer-statement* → *throw-statement*
+> *控制转移语句* → *break 语句* \
+> *控制转移语句* → *continue 语句* \
+> *控制转移语句* → *fallthrough 语句* \
+> *控制转移语句* → *return 语句* \
+> *控制转移语句* → *throw 语句*
 
-> Grammar of a break statement:
+> break 语句的语法：
 >
-> *break-statement* → **`break`** *label-name*可选
+> *break 语句* → **`break`** *标签名称* 可选
 
-> Grammar of a continue statement:
+> continue 语句的语法：
 >
-> *continue-statement* → **`continue`** *label-name*可选
+> *continue 语句* → **`continue`** *标签名称* 可选
 
-> Grammar of a fallthrough statement:
+> fallthrough 语句的语法：
 >
-> *fallthrough-statement* → **`fallthrough`**
+> *fallthrough 语句* → **`fallthrough`**
 
-> Grammar of a return statement:
+> return 语句的语法：
 >
-> *return-statement* → **`return`** *expression*可选
+> *return 语句* → **`return`** *表达式* 可选
 
-> Grammar of a throw statement:
+> throw 语句的语法：
 >
-> *throw-statement* → **`throw`** *expression*
+> *throw 语句* → **`throw`** *表达式*
 
-> Grammar of a defer statement:
+> defer 语句的语法：
 >
-> *defer-statement* → **`defer`** *code-block*
+> *defer 语句* → **`defer`** *代码块*
 
-> Grammar of a do statement:
+> do 语句的语法：
 >
-> *do-statement* → **`do`** *throws-clause*可选 *code-block* *catch-clauses*可选 \
-> *catch-clauses* → *catch-clause* *catch-clauses*可选 \
-> *catch-clause* → **`catch`** *catch-pattern-list*可选 *code-block* \
-> *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \
-> *catch-pattern* → *pattern* *where-clause*可选
+> *do 语句* → **`do`** *throws 子句* 可选 *代码块* *catch 子句* 可选 \
+> *catch 子句集* → *catch 子句* *catch 子句* 可选 \
+> *catch 子句* → **`catch`** *catch 模式列表* 可选 *代码块* \
+> *catch 模式列表* → *catch 模式* | *catch 模式* **`,`** *catch 模式列表* \
+> *catch 模式* → *模式* *where 子句* 可选
 
-> Grammar of a compiler control statement:
+> 编译器控制语句的语法：
 >
-> *compiler-control-statement* → *conditional-compilation-block* \
-> *compiler-control-statement* → *line-control-statement* \
-> *compiler-control-statement* → *diagnostic-statement*
+> *编译器控制语句* → *条件编译块* \
+> *编译器控制语句* → *行控制语句* \
+> *编译器控制语句* → *诊断语句*
 
-> Grammar of a conditional compilation block:
+> 条件编译块的语法：
 >
-> *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*可选 *else-directive-clause*可选 *endif-directive*
+> *条件编译块* → *if 指令子句* *elseif 指令子句集* 可选 *else 指令子句* 可选 *endif 指令* \
+> *if 指令子句* → *if 指令* *编译条件* *语句集合* 可选 \
+> *elseif 指令子句* → *elseif 指令子句* *elseif 指令子句集* 可选 \
+> *elseif 指令子句* → *elseif 指令* *编译条件* *语句集* 可选 \
+> *else 指令子句* → *else 指令* *语句集* 可选 \
+> *if 指令* → **`#if`** \
+> *elseif 指令* → **`#elseif`** \
+> *else 指令* → **`#else`** \
+> *endif 指令* → **`#endif`**
 >
-> *if-directive-clause* → *if-directive* *compilation-condition* *statements*可选 \
-> *elseif-directive-clauses* → *elseif-directive-clause* *elseif-directive-clauses*可选 \
-> *elseif-directive-clause* → *elseif-directive* *compilation-condition* *statements*可选 \
-> *else-directive-clause* → *else-directive* *statements*可选 \
-> *if-directive* → **`#if`** \
-> *elseif-directive* → **`#elseif`** \
-> *else-directive* → **`#else`** \
-> *endif-directive* → **`#endif`**
+> *编译条件* → *平台条件* \
+> *编译条件* → *标识符* \
+> *编译条件* → *布尔字面量* \
+> *编译条件* → **`(`** *编译条件* **`)`** \
+> *编译条件* → **`!`** *编译条件* \
+> *编译条件* → *编译条件* **`&&`** *编译条件* \
+> *编译条件* → *编译条件* **`||`** *编译条件*
 >
-> *compilation-condition* → *platform-condition* \
-> *compilation-condition* → *identifier* \
-> *compilation-condition* → *boolean-literal* \
-> *compilation-condition* → **`(`** *compilation-condition* **`)`** \
-> *compilation-condition* → **`!`** *compilation-condition* \
-> *compilation-condition* → *compilation-condition* **`&&`** *compilation-condition* \
-> *compilation-condition* → *compilation-condition* **`||`** *compilation-condition*
+> *平台条件* → **`os`** **`(`** *操作系统* **`)`** \
+> *平台条件* → **`arch`** **`(`** *体系结构* **`)`** \
+> *平台条件* → **`swift`** **`(`** **`>=`** *swift 版本* **`)`** | **`swift`** **`(`** **`<`** *swift 版本* **`)`** \
+> *平台条件* → **`compiler`** **`(`** **`>=`** *swift 版本* **`)`** | **`compiler`** **`(`** **`<`** *swift 版本* **`)`** \
+> *平台条件* → **`canImport`** **`(`** *导入路径* **`)`** \
+> *平台条件* → **`targetEnvironment`** **`(`** *环境* **`)`**
 >
-> *platform-condition* → **`os`** **`(`** *operating-system* **`)`** \
-> *platform-condition* → **`arch`** **`(`** *architecture* **`)`** \
-> *platform-condition* → **`swift`** **`(`** **`>=`** *swift-version* **`)`** | **`swift`** **`(`** **`<`** *swift-version* **`)`** \
-> *platform-condition* → **`compiler`** **`(`** **`>=`** *swift-version* **`)`** | **`compiler`** **`(`** **`<`** *swift-version* **`)`** \
-> *platform-condition* → **`canImport`** **`(`** *import-path* **`)`** \
-> *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
->
-> *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
-> *swift-version* → *decimal-digits* *swift-version-continuation*可选 \
-> *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*可选 \
-> *environment* → **`simulator`** | **`macCatalyst`**
+> *操作系统* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
+> *体系结构* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *swift 版本* → *十进制数字* *swift 版本延续* 可选 \
+> *swift 版本延续* → **`.`** *十进制数字* *swift 版本延续* 可选 \
+> *环境* → **`simulator`** | **`macCatalyst`**
 
-> Grammar of a line control statement:
+> 行控制语句的语法：
 >
-> *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`** \
-> *line-control-statement* → **`#sourceLocation`** **`(`** **`)`** \
-> *line-number* → A decimal integer greater than zero \
-> *file-path* → *static-string-literal*
+> *行控制语句* → **`#sourceLocation`** **`(`** **`file:`** *文件路径* **`,`** **`line:`** *行号* **`)`** \
+> *行控制语句* → **`#sourceLocation`** **`(`** **`)`** \
+> *行号* → 大于零的十进制整数 \
+> *文件路径* → *静态字符串字面量*
 
-> Grammar of an availability condition:
+> 可用性条件的语法：
 >
-> *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`** \
-> *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`** \
-> *availability-arguments* → *availability-argument* | *availability-argument* **`,`** *availability-arguments* \
-> *availability-argument* → *platform-name* *platform-version* \
-> *availability-argument* → **`*`**
+> *可用性条件* → **`#available`** **`(`** *可用性参数* **`)`** \
+> *可用性条件* → **`#unavailable`** **`(`** *可用性参数* **`)`** \
+> *可用性参数* → *可用性参数* | *可用性参数* **`,`** *可用性参数* \
+> *可用性参数* → *平台名称* *平台版本* \
+> *可用性参数* → **`*`**
 >
-> *platform-name* → **`iOS`** | **`iOSApplicationExtension`** \
-> *platform-name* → **`macOS`** | **`macOSApplicationExtension`** \
-> *platform-name* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
-> *platform-name* → **`watchOS`** | **`watchOSApplicationExtension`** \
-> *platform-name* → **`tvOS`** | **`tvOSApplicationExtension`** \
-> *platform-name* → **`visionOS`** | **`visionOSApplicationExtension`** \
-> *platform-version* → *decimal-digits* \
-> *platform-version* → *decimal-digits* **`.`** *decimal-digits* \
-> *platform-version* → *decimal-digits* **`.`** *decimal-digits* **`.`** *decimal-digits*
+> *平台名称* → **`iOS`** | **`iOSApplicationExtension`** \
+> *平台名称* → **`macOS`** | **`macOSApplicationExtension`** \
+> *平台名称* → **`macCatalyst`** | **`macCatalystApplicationExtension`** \
+> *平台名称* → **`watchOS`** | **`watchOSApplicationExtension`** \
+> *平台名称* → **`tvOS`** | **`tvOSApplicationExtension`** \
+> *平台名称* → **`visionOS`** | **`visionOSApplicationExtension`** \
+> *平台版本* → *十进制数字* \
+> *平台版本* → *十进制数字* **`.`** *十进制数字* \
+> *平台版本* → *十进制数字* **`.`** *十进制数字* **`.`** *十进制数字*
 
 ## Declarations
 
