@@ -421,8 +421,8 @@ make the same change here also.
 > *if 表达式尾* → **`else`** *if 表达式* \
 > *if 表达式尾* → **`else`** **`{`** *语句* **`}`**
 >
-> *switch 表达式* → **`switch`** *表达式* **`{`** *switch表 达式案例* **`}`** \
-> *switch 表达式案例* → *switch 表达式案例* *switch 表达式案例* 可选 \
+> *switch 表达式* → **`switch`** *表达式* **`{`** *switch表 达式 case * **`}`** \
+> *switch 表达式 case * → *switch 表达式 case * *switch 表达式 case * 可选 \
 > *switch case 表达式* → *case 标签* *语句* \
 > *switch case 表达式* → *default 标签* *语句*
 
@@ -734,124 +734,124 @@ make the same change here also.
 > *平台版本* → *十进制数字* **`.`** *十进制数字* \
 > *平台版本* → *十进制数字* **`.`** *十进制数字* **`.`** *十进制数字*
 
-## Declarations
+## 声明
 
-> Grammar of a declaration:
+> 声明的语法：
 >
-> *declaration* → *import-declaration* \
-> *declaration* → *constant-declaration* \
-> *declaration* → *variable-declaration* \
-> *declaration* → *typealias-declaration* \
-> *declaration* → *function-declaration* \
-> *declaration* → *enum-declaration* \
-> *declaration* → *struct-declaration* \
-> *declaration* → *class-declaration* \
-> *declaration* → *actor-declaration* \
-> *declaration* → *protocol-declaration* \
-> *declaration* → *initializer-declaration* \
-> *declaration* → *deinitializer-declaration* \
-> *declaration* → *extension-declaration* \
-> *declaration* → *subscript-declaration* \
-> *declaration* → *operator-declaration* \
-> *declaration* → *precedence-group-declaration* \
+> *声明* → *导入声明* \
+> *声明* → *常量声明* \
+> *声明* → *变量声明* \
+> *声明* → *类型别名声明* \
+> *声明* → *函数声明* \
+> *声明* → *枚举声明* \
+> *声明* → *结构体声明* \
+> *声明* → *类声明* \
+> *声明* → *actor 声明* \
+> *声明* → *协议声明* \
+> *声明* → *构造器声明* \
+> *声明* → *析构器声明* \
+> *声明* → *扩展声明* \
+> *声明* → *下标声明* \
+> *声明* → *运算符声明* \
+> *声明* → *优先级组声明*
 
-> Grammar of a top-level declaration:
+> 顶级声明的语法：
 >
-> *top-level-declaration* → *statements*可选
+> *顶级声明* → *语句集合* 可选
 
-> Grammar of a code block:
+> 代码块的语法：
 >
-> *code-block* → **`{`** *statements*可选 **`}`**
+> *代码块* → **`{`** *语句集* 可选 **`}`**
 
-> Grammar of an import declaration:
+> 导入声明的语法：
 >
-> *import-declaration* → *attributes*可选 **`import`** *import-kind*可选 *import-path*
+> *导入声明* → *属性* 可选 **`import`** *导入类型* 可选 *导入路径*
 >
-> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
-> *import-path* → *identifier* | *identifier* **`.`** *import-path*
+> *导入类型* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
+> *导入路径* → *标识符* | *标识符* **`.`** *导入路径*
 
-> Grammar of a constant declaration:
+> 常量声明的语法：
 >
-> *constant-declaration* → *attributes*可选 *declaration-modifiers*可选 **`let`** *pattern-initializer-list*
+> *常量声明* → *属性* 可选 *声明修饰符* 可选 **`let`** *模式构造器列表*
 >
-> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
-> *pattern-initializer* → *pattern* *initializer*可选 \
-> *initializer* → **`=`** *expression*
+> *模式构造器列表* → *模式构造器* | *模式构造器* **`,`** *模式构造器列表* \
+> *模式构造器* → *模式* *初始化器* 可选 \
+> *初始化器* → **`=`** *表达式*
 
-> Grammar of a variable declaration:
+> 变量声明的语法：
 >
-> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
-> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*可选 *willSet-didSet-block*
+> *变量声明* → *变量声明头* *模式构造器列表* \
+> *变量声明* → *变量声明头* *变量名称* *类型注解* *代码块* \
+> *变量声明* → *变量声明头* *变量名称* *类型注解* *getter-setter * \
+> *变量声明* → *变量声明头* *变量名称* *类型注解* *getter-setter 关键字（Keyword）块* \
+> *变量声明* → *变量声明头* *变量名称* *初始化器* *willSet-didSet 块* \
+> *变量声明* → *变量声明头* *变量名称* *类型注解* *构造器* 可选 *willSet-didSet 块*
 >
-> *variable-declaration-head* → *attributes*可选 *declaration-modifiers*可选 **`var`** \
-> *variable-name* → *identifier*
+> *变量声明头* → *属性* 可选 *声明修饰符* 可选 **`var`** \
+> *变量名称* → *标识符*
 >
-> *getter-setter-block* → *code-block* \
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*可选 **`}`** \
-> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
-> *getter-clause* → *attributes*可选 *mutation-modifier*可选 **`get`** *code-block* \
-> *setter-clause* → *attributes*可选 *mutation-modifier*可选 **`set`** *setter-name*可选 *code-block* \
-> *setter-name* → **`(`** *identifier* **`)`**
+> *getter-setter * → *代码块* \
+> *getter-setter * → **`{`** *getter 子句* *setter 子句* 可选 **`}`** \
+> *getter-setter * → **`{`** *setter 子句* *getter 子句* **`}`** \
+> *getter 子句* → *属性* 可选 *可变性修饰符* 可选 **`get`** *代码块* \
+> *setter 子句* → *属性* 可选 *可变性修饰符* 可选 **`set`** *setter 名称* 可选 *代码块* \
+> *setter 名称* → **`(`** *标识符* **`)`**
 >
-> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*可选 **`}`** \
-> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
-> *getter-keyword-clause* → *attributes*可选 *mutation-modifier*可选 **`get`** \
-> *setter-keyword-clause* → *attributes*可选 *mutation-modifier*可选 **`set`**
+> *getter-setter 关键字（Keyword）块* → **`{`** *getter 关键字子句* *setter 关键字子句* 可选 **`}`** \
+> *getter-setter 关键字（Keyword）块* → **`{`** *setter关键字子句* *getter 关键字子句* **`}`** \
+> *getter 关键字子句* → *属性* 可选 *可变性修饰符* 可选 **`get`** \
+> *setter 关键字子句* → *属性* 可选 *可变性修饰符* 可选 **`set`**
 >
-> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*可选 **`}`** \
-> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*可选 **`}`** \
-> *willSet-clause* → *attributes*可选 **`willSet`** *setter-name*可选 *code-block* \
-> *didSet-clause* → *attributes*可选 **`didSet`** *setter-name*可选 *code-block*
+> *willSet-didSet 块* → **`{`** *willSet 子句* *didSet 子句* 可选 **`}`** \
+> *willSet-didSet 块* → **`{`** *didSet 子句* *willSet 子句* 可选 **`}`** \
+> *willSet 子句* → *属性* 可选 **`willSet`** *setter 名称* 可选 *代码块* \
+> *didSet 子句* → *属性* 可选 **`didSet`** *setter 名称* 可选 *代码块*
 
-> Grammar of a type alias declaration:
+> 类型别名声明的语法：
 >
-> *typealias-declaration* → *attributes*可选 *access-level-modifier*可选 **`typealias`** *typealias-name* *generic-parameter-clause*可选 *typealias-assignment* \
-> *typealias-name* → *identifier* \
-> *typealias-assignment* → **`=`** *type*
+> *类型别名声明* → *属性* 可选 *访问级别修饰符* 可选 **`typealias`** *类型别名名称* *泛型参数子句* 可选 *类型别名赋值* \
+> *类型别名名称* → *标识符* \
+> *类型别名赋值* → **`=`** *类型*
 
-> Grammar of a function declaration:
+> 函数声明的语法：
 >
-> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*可选 *function-signature* *generic-where-clause*可选 *function-body*可选
+> *函数声明* → *函数头* *函数名称* *泛型参数子句* 可选 *函数签名* *泛型 where 子句* 可选 *函数体* 可选
 >
-> *function-head* → *attributes*可选 *declaration-modifiers*可选 **`func`** \
-> *function-name* → *identifier* | *operator*
+> *函数头* → *属性* 可选 *声明修饰符* 可选 **`func`** \
+> *函数名称* → *标识符* | *运算符*
 >
-> *function-signature* → *parameter-clause* **`async`**可选 *throws-clause*可选 *function-result*可选 \
-> *function-signature* → *parameter-clause* **`async`**可选 **`rethrows`** *function-result*可选 \
-> *function-result* → **`->`** *attributes*可选 *type* \
-> *function-body* → *code-block*
+> *函数签名* → *参数子句* **`async`** 可选 *throws 子句* 可选 *函数结果* 可选 \
+> *函数签名* → *参数子句* **`async`** 可选 **`rethrows`** *函数结果* 可选 \
+> *函数结果* → **`->`** *属性* 可选 *类型* \
+> *函数体* → *代码块*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
-> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
-> *parameter* → *external-parameter-name*可选 *local-parameter-name* *parameter-type-annotation* *default-argument-clause*可选 \
-> *parameter* → *external-parameter-name*可选 *local-parameter-name* *parameter-type-annotation* \
-> *parameter* → *external-parameter-name*可选 *local-parameter-name* *parameter-type-annotation* **`...`**
+> *参数子句* → **`(`** **`)`** | **`(`** *参数列表* **`)`** \
+> *参数列表* → *参数* | *参数* **`,`** *参数列表* \
+> *参数* → *外部参数名* 可选 *本地参数名* *参数类型注解* *默认参数子句* 可选 \
+> *参数* → *外部参数名* 可选 *本地参数名* *参数类型注解* \
+> *参数* → *外部参数名* 可选 *本地参数名* *参数类型注解* **`...`**
 >
-> *external-parameter-name* → *identifier* \
-> *local-parameter-name* → *identifier* \
-> *parameter-type-annotation* → **`:`** *attributes*可选 *parameter-modifier*可选 *type* \
-> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
-> *default-argument-clause* → **`=`** *expression*
+> *外部参数名* → *标识符* \
+> *本地参数名* → *标识符* \
+> *参数类型注解* → **`:`** *属性* 可选 *参数修饰符* 可选 *类型* \
+> *参数修饰符* → **`inout`** | **`borrowing`** | **`consuming`** \
+> *默认参数子句* → **`=`** *表达式*
 
-> Grammar of an enumeration declaration:
+> 枚举声明的语法：
 >
-> *enum-declaration* → *attributes*可选 *access-level-modifier*可选 *union-style-enum* \
-> *enum-declaration* → *attributes*可选 *access-level-modifier*可选 *raw-value-style-enum*
+> *枚举声明* → *属性* 可选 *访问级别修饰符* 可选 *联合式枚举* \
+> *枚举声明* → *属性* 可选 *访问级别修饰符* 可选 *原始值式枚举*
 >
-> *union-style-enum* → **`indirect`**可选 **`enum`** *enum-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 **`{`** *union-style-enum-members*可选 **`}`** \
-> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*可选 \
-> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
-> *union-style-enum-case-clause* → *attributes*可选 **`indirect`**可选 **`case`** *union-style-enum-case-list* \
-> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
-> *union-style-enum-case* → *enum-case-name* *tuple-type*可选 \
-> *enum-name* → *identifier* \
-> *enum-case-name* → *identifier*
+> *联合式枚举* → **`indirect`** 可选 **`enum`** *枚举名称* *泛型参数子句* 可选 *类型继承子句* 可选 *泛型 where 子句* 可选 **`{`** *联合式枚举成员* 可选 **`}`** \
+> *联合式枚举成员* → *联合式枚举成员* *联合式枚举成员* 可选 \
+> *联合式枚举成员* → *声明* | *联合式枚举 case 子句* | *编译控制语句* \
+> *联合式枚举 case 子句* → *属性* 可选 **`indirect`** 可选 **`case`** *联合式枚举 case 列表* \
+> *联合式枚举 case 列表* → *联合式枚举 case * | *联合式枚举 case * **`,`** *联合式枚举 case 列表* \
+> *联合式枚举 case * → *枚举case名称* *元组类型* 可选 \
+> *枚举名称* → *标识符* \
+> *枚举 case 名称* → *标识符*
 >
-> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*可选 *type-inheritance-clause* *generic-where-clause*可选 **`{`** *raw-value-style-enum-members* **`}`** \
+> *原始值式枚举* → **`enum`** *枚举名称* *泛型参数子句* 可选 *类型继承子句* *泛型 where 子句* 可选 **`{`** *原始值式枚举成员
 > *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*可选 \
 > *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
 > *raw-value-style-enum-case-clause* → *attributes*可选 **`case`** *raw-value-style-enum-case-list* \
