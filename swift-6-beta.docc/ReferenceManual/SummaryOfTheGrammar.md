@@ -134,54 +134,54 @@ make the same change here also.
 > *浮点数 p* → **`p`** | **`P`** \
 > *正负号* → **`+`** | **`-`**
 
-> Grammar of a string literal:
+> 字符串字面量的语法：
 >
-> *string-literal* → *static-string-literal* | *interpolated-string-literal*
+> *字符串字面量* → *静态字符串字面量* | *插值字符串字面量*
 >
-> *string-literal-opening-delimiter* → *extended-string-literal-delimiter*可选 **`"`** \
-> *string-literal-closing-delimiter* → **`"`** *extended-string-literal-delimiter*可选
+> *字符串开分隔定界符* → *字符串扩展分隔符* 可选 **`"`** \
+> *字符串闭分隔定界符* → **`"`** *字符串扩展分隔符* 可选
 >
-> *static-string-literal* → *string-literal-opening-delimiter* *quoted-text*可选 *string-literal-closing-delimiter* \
-> *static-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-quoted-text*可选 *multiline-string-literal-closing-delimiter*
+> *静态字符串字面量* → *字符串开分隔定界符* *引用文本* 可选 *字符串闭分隔定界符* \
+> *静态字符串字面量* → *多行字符串开分隔定界符* *多行引用文本* 可选 *多行字符串闭分隔定界符*
 >
-> *multiline-string-literal-opening-delimiter* → *extended-string-literal-delimiter*可选 **`"""`** \
-> *multiline-string-literal-closing-delimiter* → **`"""`** *extended-string-literal-delimiter*可选 \
-> *extended-string-literal-delimiter* → **`#`** *extended-string-literal-delimiter*可选
+> *多行字符串开分隔定界符* → *字符串扩展分隔符* 可选 **`"""`** \
+> *多行字符串闭分隔定界符* → **`"""`** *字符串扩展分隔符* 可选 \
+> * 字符串扩展分隔符* → **`#`** *字符串扩展分隔符* 可选
 >
-> *quoted-text* → *quoted-text-item* *quoted-text*可选 \
-> *quoted-text-item* → *escaped-character* \
-> *quoted-text-item* → Any Unicode scalar value except  **`"`**,  **`\`**, U+000A, or U+000D
+> *引用文本* → *引用文本项* *引用文本* 可选 \
+> *引用文本项* → *转义字符* \
+> *引用文本项* → 任何 Unicode 标量值，除了 **`"`**、**`\`**、U+000A 或 U+000D
 >
-> *multiline-quoted-text* → *multiline-quoted-text-item* *multiline-quoted-text*可选 \
-> *multiline-quoted-text-item* → *escaped-character* \
-> *multiline-quoted-text-item* → Any Unicode scalar value except  **`\`** \
-> *multiline-quoted-text-item* → *escaped-newline*
+> *多行引用文本* → *多行引用文本项* *多行引用文本* 可选 \
+> *多行引用文本项* → *转义字符* \
+> *多行引用文本项* → 任何 Unicode 标量值，除了 **`\`** \
+> *多行引用文本项* → *转义换行符*
 >
-> *interpolated-string-literal* → *string-literal-opening-delimiter* *interpolated-text*可选 *string-literal-closing-delimiter* \
-> *interpolated-string-literal* → *multiline-string-literal-opening-delimiter* *multiline-interpolated-text*可选 *multiline-string-literal-closing-delimiter*
+> *插值字符串字面量* → *字符串开分隔定界符* *插值文本* 可选 *字符串闭分隔定界符* \
+> *插值字符串字面量* → *多行字符串开分隔定界符* *多行插值文本* 可选 *多行字符串闭分隔定界符*
 >
-> *interpolated-text* → *interpolated-text-item* *interpolated-text*可选 \
-> *interpolated-text-item* → **`\(`** *expression* **`)`** | *quoted-text-item*
+> *插值文本* → *插值文本项* *插值文本* 可选 \
+> *插值文本项* → **`\(`** *表达式* **`)`** | *引用文本项*
 >
-> *multiline-interpolated-text* → *multiline-interpolated-text-item* *multiline-interpolated-text*可选 \
-> *multiline-interpolated-text-item* → **`\(`** *expression* **`)`** | *multiline-quoted-text-item*
+> *多行插值文本* → *多行插值文本项* *多行插值文本* 可选 \
+> *多行插值文本项* → **`\(`** *表达式* **`)`** | *多行引用文本项*
 >
-> *escape-sequence* → **`\`** *extended-string-literal-delimiter* \
-> *escaped-character* → *escape-sequence* **`0`** | *escape-sequence* **`\`** | *escape-sequence* **`t`** | *escape-sequence* **`n`** | *escape-sequence* **`r`** | *escape-sequence* **`"`** | *escape-sequence* **`'`** \
-> *escaped-character* → *escape-sequence* **`u`** **`{`** *unicode-scalar-digits* **`}`** \
-> *unicode-scalar-digits* → Between one and eight hexadecimal digits
+> *转义序列* → **`\`** * 字符串扩展分隔符* \
+> *转义字符* → *转义序列* **`0`** | *转义序列* **`\`** | *转义序列* **`t`** | *转义序列* **`n`** | *转义序列* **`r`** | *转义序列* **`"`** | *转义序列* **`'`** \
+> *转义字符* → *转义序列* **`u`** **`{`** *unicode-标量-数字* **`}`** \
+> *unicode-标量-数字* → 一到八个十六进制数字
 >
-> *escaped-newline* → *escape-sequence* *inline-spaces*可选 *line-break*
+> *转义换行符* → *转义序列* *内联空格* 可选 *换行符*
 
-> Grammar of a regular expression literal:
+> 正则表达式字面量的语法：
 >
-> *regular-expression-literal* → *regular-expression-literal-opening-delimiter* *regular-expression* *regular-expression-literal-closing-delimiter* \
-> *regular-expression* → Any regular expression
+> *正则表达式字面量* → *正则表达式字面量开分隔定界符* *正则表达式* *正则表达式字面量闭分隔定界符* \
+> *正则表达式* → 任何正则表达式
 >
-> *regular-expression-literal-opening-delimiter* → *extended-regular-expression-literal-delimiter*可选 **`/`** \
-> *regular-expression-literal-closing-delimiter* → **`/`** *extended-regular-expression-literal-delimiter*可选
+> *正则表达式字面量开分隔定界符* → *正则表达式扩展分隔符* 可选 **`/`** \
+> *正则表达式字面量闭分隔定界符* → **`/`** *正则表达式扩展分隔符* 可选
 >
-> *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*可选
+> *正则表达式扩展分隔符* → **`#`** *正则表达式扩展分隔符* 可选
 
 > Grammar of operators:
 >
