@@ -248,7 +248,7 @@ make the same change here also.
 
 > 类型标识符的语法：
 >
-> *类型标识符* → *类型名称* *泛型参数子句* 可选 | *类型名称* *泛型参数子句* 可选 **`.`** *类型标识符* \
+> *类型标识符* → *类型名称* *泛型实参子句* 可选 | *类型名称* *泛型实参子句* 可选 **`.`** *类型标识符* \
 > *类型名称* → *标识符*
 
 > 元组类型的语法：
@@ -317,114 +317,114 @@ make the same change here also.
 > *类型继承从句* → **`:`** *类型继承集* \
 > *类型继承集* → *属性* 可选 *类型标识符* | *属性* 可选 *类型标识符* **`,`** *类型继承集*
 
-## Expressions
+## 表达式
 
-> Grammar of an expression:
+> 表达式的语法：
 >
-> *expression* → *try-operator*可选 *await-operator*可选 *prefix-expression* *infix-expressions*可选 \
+> *表达式* → *try 运算符* 可选 *await 运算符* 可选 *前缀表达式* *中缀表达式* 可选 \
 
-> Grammar of a prefix expression:
+> 前缀表达式的语法：
 >
-> *prefix-expression* → *prefix-operator*可选 *postfix-expression* \
-> *prefix-expression* → *in-out-expression*
+> *前缀表达式* → *前缀运算符* 可选 *后缀表达式* \
+> *前缀表达式* → *输入输出表达式*
 
-> Grammar of an in-out expression:
+> 输入输出表达式的语法：
 >
-> *in-out-expression* → **`&`** *primary-expression*
+> *输入输出表达式* → **`&`** *基础表达式*
 
-> Grammar of a try expression:
+> try 表达式的语法：
 >
-> *try-operator* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
+> *try 运算符* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
 
-> Grammar of an await expression:
+> await 表达式的语法：
 >
-> *await-operator* → **`await`**
+> *await 运算符* → **`await`**
 
-> Grammar of an infix expression:
+> 中缀表达式的语法：
 >
-> *infix-expression* → *infix-operator* *prefix-expression* \
-> *infix-expression* → *assignment-operator* *try-operator*可选 *await-operator*可选 *prefix-expression* \
-> *infix-expression* → *conditional-operator* *try-operator*可选 *await-operator*可选 *prefix-expression* \
-> *infix-expression* → *type-casting-operator* \
-> *infix-expressions* → *infix-expression* *infix-expressions*可选
+> *中缀表达式* → *中缀运算符* *前缀表达式* \
+> *中缀表达式* → *赋值运算符* *try 运算符* 可选 *await 运算符* 可选 *前缀表达式* \
+> *中缀表达式* → *条件运算符* *try 运算符* 可选 *await 运算符* 可选 *前缀表达式* \
+> *中缀表达式* → *类型转换运算符* \
+> *中缀表达式* → *中缀表达式* *中缀表达式* 可选
 
-> Grammar of an assignment operator:
+> 赋值运算符的语法：
 >
-> *assignment-operator* → **`=`**
+> *赋值运算符* → **`=`**
 
-> Grammar of a conditional operator:
+> 条件运算符的语法：
 >
-> *conditional-operator* → **`?`** *expression* **`:`**
+> *条件运算符* → **`?`** *表达式* **`:`**
 
-> Grammar of a type-casting operator:
+> 类型转换运算符的语法：
 >
-> *type-casting-operator* → **`is`** *type* \
-> *type-casting-operator* → **`as`** *type* \
-> *type-casting-operator* → **`as`** **`?`** *type* \
-> *type-casting-operator* → **`as`** **`!`** *type*
+> *类型转换运算符* → **`is`** *类型* \
+> *类型转换运算符* → **`as`** *类型* \
+> *类型转换运算符* → **`as`** **`?`** *类型* \
+> *类型转换运算符* → **`as`** **`!`** *类型*
 
-> Grammar of a primary expression:
+> 基础表达式的语法：
 >
-> *primary-expression* → *identifier* *generic-argument-clause*可选 \
-> *primary-expression* → *literal-expression* \
-> *primary-expression* → *self-expression* \
-> *primary-expression* → *superclass-expression* \
-> *primary-expression* → *conditional-expression* \
-> *primary-expression* → *closure-expression* \
-> *primary-expression* → *parenthesized-expression* \
-> *primary-expression* → *tuple-expression* \
-> *primary-expression* → *implicit-member-expression* \
-> *primary-expression* → *wildcard-expression* \
-> *primary-expression* → *macro-expansion-expression* \
-> *primary-expression* → *key-path-expression* \
-> *primary-expression* → *selector-expression* \
-> *primary-expression* → *key-path-string-expression*
+> *基础表达式* → *标识符* *泛型实参子句* 可选 \
+> *基础表达式* → *字面量表达式* \
+> *基础表达式* → *self 表达式* \
+> *基础表达式* → *父类表达式* \
+> *基础表达式* → *条件表达式* \
+> *基础表达式* → *闭包表达式* \
+> *基础表达式* → *圆括号表达式* \
+> *基础表达式* → *元组表达式* \
+> *基础表达式* → *隐式成员表达式* \
+> *基础表达式* → *通配符表达式* \
+> *基础表达式* → *宏展开表达式* \
+> *基础表达式* → *key-path 表达式* \
+> *基础表达式* → *选择器表达式* \
+> *基础表达式* → *key-path字符串表达式*
 
-> Grammar of a literal expression:
+> 字面量表达式的语法：
 >
-> *literal-expression* → *literal* \
-> *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
+> *字面量表达式* → *字面量* \
+> *字面量表达式* → *数组字面量* | *字典字面量* | *playground 字面量*
 >
-> *array-literal* → **`[`** *array-literal-items*可选 **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**可选 | *array-literal-item* **`,`** *array-literal-items* \
-> *array-literal-item* → *expression*
+> *数组字面量* → **`[`** *数组字面量项* 可选 **`]`** \
+> *数组字面量项* → *数组字面量项* **`,`** 可选 | *数组字面量项* **`,`** *数组字面量项* \
+> *数组字面量项* → *表达式*
 >
-> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**可选 | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
-> *dictionary-literal-item* → *expression* **`:`** *expression*
+> *字典字面量* → **`[`** *字典字面量项* **`]`** | **`[`** **`:`** **`]`** \
+> *字典字面量项* → *字典字面量项* **`,`** 可选 | *字典字面量项* **`,`** *字典字面量项* \
+> *字典字面量项* → *表达式* **`:`** *表达式*
 >
-> *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
-> *playground-literal* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`** \
-> *playground-literal* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *expression* **`)`**
+> *playground 字面量* → **`#colorLiteral`** **`(`** **`red`** **`:`** *表达式* **`,`** **`green`** **`:`** *表达式* **`,`** **`blue`** **`:`** *表达式* **`,`** **`alpha`** **`:`** *表达式* **`)`** \
+> *playground 字面量* → **`#fileLiteral`** **`(`** **`resourceName`** **`:`** *表达式* **`)`** \
+> *playground 字面量* → **`#imageLiteral`** **`(`** **`resourceName`** **`:`** *表达式* **`)`**
 
-> Grammar of a self expression:
+> self 表达式的语法：
 >
-> *self-expression* → **`self`** | *self-method-expression* | *self-subscript-expression* | *self-initializer-expression*
+> *self 表达式* → **`self`** | *self 方法表达式* | *self 下标表达式* | *self 构造器表达式*
 >
-> *self-method-expression* → **`self`** **`.`** *identifier* \
-> *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`** \
-> *self-initializer-expression* → **`self`** **`.`** **`init`**
+> *self 方法表达式* → **`self`** **`.`** *标识符* \
+> *self 下标表达式* → **`self`** **`[`** *函数调用参数表* **`]`** \
+> *self 构造器表达式* → **`self`** **`.`** **`init`**
 
-> Grammar of a superclass expression:
+> 父类表达式的语法：
 >
-> *superclass-expression* → *superclass-method-expression* | *superclass-subscript-expression* | *superclass-initializer-expression*
+> *父类表达式* → *父类方法表达式* | *父类下标表达式* | *父类构造器表达式*
 >
-> *superclass-method-expression* → **`super`** **`.`** *identifier* \
-> *superclass-subscript-expression* → **`super`** **`[`** *function-call-argument-list* **`]`** \
-> *superclass-initializer-expression* → **`super`** **`.`** **`init`**
+> *父类方法表达式* → **`super`** **`.`** *标识符* \
+> *父类下标表达式* → **`super`** **`[`** *函数调用参数表* **`]`** \
+> *父类构造器表达式* → **`super`** **`.`** **`init`**
 
-> Grammar of a conditional expression:
+> 条件表达式的语法：
 >
-> *conditional-expression* → *if-expression* | *switch-expression*
+> *条件表达式* → *if 表达式* | *switch 表达式*
 >
-> *if-expression* → **`if`** *condition-list* **`{`** *statement* **`}`** *if-expression-tail* \
-> *if-expression-tail* → **`else`** *if-expression* \
-> *if-expression-tail* → **`else`** **`{`** *statement* **`}`**
+> *if 表达式* → **`if`** *条件列表* **`{`** *语句* **`}`** *if 表达式尾* \
+> *if 表达式尾* → **`else`** *if 表达式* \
+> *if 表达式尾* → **`else`** **`{`** *语句* **`}`**
 >
-> *switch-expression* → **`switch`** *expression* **`{`** *switch-expression-cases* **`}`** \
-> *switch-expression-cases* → *switch-expression-case* *switch-expression-cases*可选 \
-> *switch-expression-case* → *case-label* *statement* \
-> *switch-expression-case* → *default-label* *statement*
+> *switch 表达式* → **`switch`** *表达式* **`{`** *switch表 达式案例* **`}`** \
+> *switch 表达式案例* → *switch 表达式案例* *switch 表达式案例* 可选 \
+> *switch case 表达式* → *case 标签* *语句* \
+> *switch case 表达式* → *default 标签* *语句*
 
 > Grammar of a closure expression:
 >
