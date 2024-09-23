@@ -493,7 +493,7 @@ make the same change here also.
 > *后缀表达式* → *基本表达式* \
 > *后缀表达式* → *后缀表达式* *后缀运算符* \
 > *后缀表达式* → *函数调用表达式* \
-> *后缀表达式* → *初始化表达式* \
+> *后缀表达式* → *构造器表达式* \
 > *后缀表达式* → *显式成员表达式* \
 > *后缀表达式* → *后缀 self 表达式* \
 > *后缀表达式* → *下标表达式* \
@@ -514,111 +514,111 @@ make the same change here also.
 > *带标签的尾随闭包* → *带标签的尾随闭包* *带标签的尾随闭包* 可选 \
 > *带标签的尾随闭包* → *标识符* **`:`** *闭包表达式*
 
-> Grammar of an initializer expression:
+> 构造器表达式的语法：
 >
-> *initializer-expression* → *postfix-expression* **`.`** **`init`** \
-> *initializer-expression* → *postfix-expression* **`.`** **`init`** **`(`** *argument-names* **`)`**
+> *构造器表达式* → *后缀表达式* **`.`** **`init`** \
+> *构造器表达式* → *后缀表达式* **`.`** **`init`** **`(`** *参数名称* **`)`**
 
-> Grammar of an explicit member expression:
+> 显式成员表达式的语法：
 >
-> *explicit-member-expression* → *postfix-expression* **`.`** *decimal-digits* \
-> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* *generic-argument-clause*可选 \
-> *explicit-member-expression* → *postfix-expression* **`.`** *identifier* **`(`** *argument-names* **`)`** \
-> *explicit-member-expression* → *postfix-expression* *conditional-compilation-block*
+> *显式成员表达式* → *后缀表达式* **`.`** *十进制数字* \
+> *显式成员表达式* → *后缀表达式* **`.`** *标识符* *泛型参数子句* 可选 \
+> *显式成员表达式* → *后缀表达式* **`.`** *标识符* **`(`** *参数名称* **`)`** \
+> *显式成员表达式* → *后缀表达式* *条件编译块*
 >
-> *argument-names* → *argument-name* *argument-names*可选 \
-> *argument-name* → *identifier* **`:`**
+> *参数名称* → *参数名称* *参数名称* 可选 \
+> *参数名称* → *标识符* **`:`**
 
-> Grammar of a postfix self expression:
+> 后缀 self表达式的语法：
 >
-> *postfix-self-expression* → *postfix-expression* **`.`** **`self`**
+> *后缀 self 表达式* → *后缀表达式* **`.`** **`self`**
 
-> Grammar of a subscript expression:
+> 下标表达式的语法：
 >
-> *subscript-expression* → *postfix-expression* **`[`** *function-call-argument-list* **`]`**
+> *下标表达式* → *后缀表达式* **`[`** *函数调用参数列表* **`]`**
 
-> Grammar of a forced-value expression:
+> 强制取值表达式的语法：
 >
-> *forced-value-expression* → *postfix-expression* **`!`**
+> *强制取值表达式* → *后缀表达式* **`!`**
 
-> Grammar of an optional-chaining expression:
+> 可选链式表达式的语法：
 >
-> *optional-chaining-expression* → *postfix-expression* **`?`**
+> *可选链式表达式* → *后缀表达式* **`?`**
 
-## Statements
+## 语句
 
-> Grammar of a statement:
+> 语句的语法：
 >
-> *statement* → *expression* **`;`**可选 \
-> *statement* → *declaration* **`;`**可选 \
-> *statement* → *loop-statement* **`;`**可选 \
-> *statement* → *branch-statement* **`;`**可选 \
-> *statement* → *labeled-statement* **`;`**可选 \
-> *statement* → *control-transfer-statement* **`;`**可选 \
-> *statement* → *defer-statement* **`;`**可选 \
-> *statement* → *do-statement* **`;`**可选 \
-> *statement* → *compiler-control-statement* \
-> *statements* → *statement* *statements*可选
+> *语句* → *表达式* **`;`** 可选 \
+> *语句* → *声明* **`;`** 可选 \
+> *语句* → *循环语句* **`;`** 可选 \
+> *语句* → *分支语句* **`;`** 可选 \
+> *语句* → *带标签的语句* **`;`** 可选 \
+> *语句* → *控制转移语句* **`;`** 可选 \
+> *语句* → *延迟语句* **`;`** 可选 \
+> *语句* → *执行语句* **`;`** 可选 \
+> *语句* → *编译器控制语句* \
+> *语句集合* → *语句* *语句集合* 可选
 
-> Grammar of a loop statement:
+> 循环语句的语法：
 >
-> *loop-statement* → *for-in-statement* \
-> *loop-statement* → *while-statement* \
-> *loop-statement* → *repeat-while-statement*
+> *循环语句* → *for-in 语句* \
+> *循环语句* → *while 语句* \
+> *循环语句* → *repeat-while 语句*
 
-> Grammar of a for-in statement:
+> for-in 语句的语法：
 >
-> *for-in-statement* → **`for`** **`case`**可选 *pattern* **`in`** *expression* *where-clause*可选 *code-block*
+> *for-in 语句* → **`for`** **`case`** 可选 *模式* **`in`** *表达式* *where 子句* 可选 *代码块*
 
-> Grammar of a while statement:
+> while 语句的语法：
 >
-> *while-statement* → **`while`** *condition-list* *code-block*
+> *while 语句* → **`while`** *条件列表* *代码块*
 >
-> *condition-list* → *condition* | *condition* **`,`** *condition-list* \
-> *condition* → *expression* | *availability-condition* | *case-condition* | *optional-binding-condition*
+> *条件列表* → *条件* | *条件* **`,`** *条件列表* \
+> *条件* → *表达式* | *可用性条件* | *case条件* | *可选绑定条件*
 >
-> *case-condition* → **`case`** *pattern* *initializer* \
-> *optional-binding-condition* → **`let`** *pattern* *initializer*可选 | **`var`** *pattern* *initializer*可选
+> *case条件* → **`case`** *模式* *初始化器* \
+> *可选绑定条件* → **`let`** *模式* *初始化器* 可选 | **`var`** *模式* *初始化器* 可选
 
-> Grammar of a repeat-while statement:
+> repeat-while 语句的语法：
 >
-> *repeat-while-statement* → **`repeat`** *code-block* **`while`** *expression*
+> *repeat-while 语句* → **`repeat`** *代码块* **`while`** *表达式*
 
-> Grammar of a branch statement:
+> 分支语句的语法：
 >
-> *branch-statement* → *if-statement* \
-> *branch-statement* → *guard-statement* \
-> *branch-statement* → *switch-statement*
+> *分支语句* → *if 语句* \
+> *分支语句* → *guard 语句* \
+> *分支语句* → *switch 语句*
 
-> Grammar of an if statement:
+> if 语句的语法：
 >
-> *if-statement* → **`if`** *condition-list* *code-block* *else-clause*可选 \
-> *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
+> *if 语句* → **`if`** *条件列表* *代码块* *else 子句* 可选 \
+> *else 子句* → **`else`** *代码块* | **`else`** *if 语句*
 
-> Grammar of a guard statement:
+> guard 语句的语法：
 >
-> *guard-statement* → **`guard`** *condition-list* **`else`** *code-block*
+> *guard 语句* → **`guard`** *条件列表* **`else`** *代码块*
 
-> Grammar of a switch statement:
+> switch 语句的语法：
 >
-> *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*可选 **`}`** \
-> *switch-cases* → *switch-case* *switch-cases*可选 \
-> *switch-case* → *case-label* *statements* \
-> *switch-case* → *default-label* *statements* \
-> *switch-case* → *conditional-switch-case*
+> *switch 语句* → **`switch`** *表达式* **`{`** *switch 语句* 可选 **`}`** \
+> *switch 语句* → *switch 语句* *switch 语句* 可选 \
+> *switch 语句* → *case 标签* *语句集合* \
+> *switch 语句* → *default 标签* *语句集合* \
+> *switch 语句* → *条件 switch 语句*
 >
-> *case-label* → *attributes*可选 **`case`** *case-item-list* **`:`** \
-> *case-item-list* → *pattern* *where-clause*可选 | *pattern* *where-clause*可选 **`,`** *case-item-list* \
-> *default-label* → *attributes*可选 **`default`** **`:`**
+> *case 标签* → *属性* 可选 **`case`** *case 项列表* **`:`** \
+> *case 项列表* → *模式* *where 子句* 可选 | *模式* *where 子句* 可选 **`,`** *case 项列表* \
+> *default 标签* → *属性* 可选 **`default`** **`:`**
 >
-> *where-clause* → **`where`** *where-expression* \
-> *where-expression* → *expression*
+> *where 子句* → **`where`** *where 表达式* \
+> *where 表达式* → *表达式*
 >
-> *conditional-switch-case* → *switch-if-directive-clause* *switch-elseif-directive-clauses*可选 *switch-else-directive-clause*可选 *endif-directive* \
-> *switch-if-directive-clause* → *if-directive* *compilation-condition* *switch-cases*可选 \
-> *switch-elseif-directive-clauses* → *elseif-directive-clause* *switch-elseif-directive-clauses*可选 \
-> *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*可选 \
-> *switch-else-directive-clause* → *else-directive* *switch-cases*可选
+> *条件 switch 语句* → *switch-if 指令子句* *switch-elseif 指令子句集* 可选 *switch-else 指令子句* 可选 *endif 指令* \
+> *switch-if 指令子句* → *if 指令* *编译条件* *switch-case 集* 可选 \
+> *switch-elseif 指令子句* → *elseif 指令子句* *switch-elseif 指令子句集* 可选 \
+> *switch-elseif 指令子句* → *elseif 指令* *编译条件* *switch-case 集* 可选 \
+> *switch-else 指令子句* → *else 指令* *switch-case 集* 可选
 
 > Grammar of a labeled statement:
 >
