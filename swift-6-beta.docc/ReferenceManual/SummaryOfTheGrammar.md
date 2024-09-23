@@ -269,7 +269,7 @@ make the same change here also.
 > *函数类型参数* → *属性* 可选 **`inout`** 可选 *类型* | *参数标签* *类型注释* \
 > *参数标签* → *标识符*
 >
-> *异常抛出子句* → **`throws`** | **`throws`** **`(`** *类型* **`)`**
+> *异常throws* → **`throws`** | **`throws`** **`(`** *类型* **`)`**
 
 > 数组类型的语法：
 >
@@ -426,93 +426,93 @@ make the same change here also.
 > *switch case 表达式* → *case 标签* *语句* \
 > *switch case 表达式* → *default 标签* *语句*
 
-> Grammar of a closure expression:
+> 闭包表达式的语法：
 >
-> *closure-expression* → **`{`** *attributes*可选 *closure-signature*可选 *statements*可选 **`}`**
+> *闭包表达式* → **`{`** *属性* 可选 *闭包签名* 可选 *语句* 可选 **`}`**
 >
-> *closure-signature* → *capture-list*可选 *closure-parameter-clause* **`async`**可选 *throws-clause*可选 *function-result*可选 **`in`** \
-> *closure-signature* → *capture-list* **`in`**
+> *闭包签名* → *捕获列表* 可选 *闭包参数子句* **`async`** 可选 *throws* 可选 *函数结果* 可选 **`in`** \
+> *闭包签名* → *捕获列表* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
-> *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
-> *closure-parameter* → *closure-parameter-name* *type-annotation*可选 \
-> *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
-> *closure-parameter-name* → *identifier*
+> *闭包参数子句* → **`(`** **`)`** | **`(`** *闭包参数列表* **`)`** | *标识符列表* \
+> *闭包参数列表* → *闭包参数* | *闭包参数* **`,`** *闭包参数列表* \
+> *闭包参数* → *闭包参数名* *类型注释* 可选 \
+> *闭包参数* → *闭包参数名* *类型注释* **`...`** \
+> *闭包参数名* → *标识符*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
-> *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
-> *capture-list-item* → *capture-specifier*可选 *identifier* \
-> *capture-list-item* → *capture-specifier*可选 *identifier* **`=`** *expression* \
-> *capture-list-item* → *capture-specifier*可选 *self-expression* \
-> *capture-specifier* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
+> *捕获列表* → **`[`** *捕获列表项* **`]`** \
+> *捕获列表项* → *捕获列表项* | *捕获列表项* **`,`** *捕获列表项* \
+> *捕获列表项* → *捕获说明符* 可选 *标识符* \
+> *捕获列表项* → *捕获说明符* 可选 *标识符* **`=`** *表达式* \
+> *捕获列表项* → *捕获说明符* 可选 *self 表达式* \
+> *捕获说明符* → **`weak`** | **`unowned`** | **`unowned(safe)`** | **`unowned(unsafe)`**
 
-> Grammar of an implicit member expression:
+> 隐式成员表达式的语法：
 >
-> *implicit-member-expression* → **`.`** *identifier* \
-> *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
+> *隐式成员表达式* → **`.`** *标识符* \
+> *隐式成员表达式* → **`.`** *标识符* **`.`** *后缀表达式*
 
-> Grammar of a parenthesized expression:
+> 圆括号表达式的语法：
 >
-> *parenthesized-expression* → **`(`** *expression* **`)`**
+> *圆括号表达式* → **`(`** *表达式* **`)`**
 
-> Grammar of a tuple expression:
+> 元组表达式的语法：
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
-> *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
-> *tuple-element* → *expression* | *identifier* **`:`** *expression*
+> *元组表达式* → **`(`** **`)`** | **`(`** *元组元素* **`,`** *元组元素列表* **`)`** \
+> *元组元素列表* → *元组元素* | *元组元素* **`,`** *元组元素列表* \
+> *元组元素* → *表达式* | *标识符* **`:`** *表达式*
 
-> Grammar of a wildcard expression:
+> 通配符表达式的语法：
 >
-> *wildcard-expression* → **`_`**
+> *通配符表达式* → **`_`**
 
-> Grammar of a macro-expansion expression:
+> 宏展开表达式的语法：
 >
-> *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*可选 *function-call-argument-clause*可选 *trailing-closures*可选
+> *宏展开表达式* → **`#`** *标识符* *泛型参数子句* 可选 *函数调用参数子句* 可选 *尾随闭包* 可选
 
-> Grammar of a key-path expression:
+> ke'y表达式的语法：
 >
-> *key-path-expression* → **`\`** *type*可选 **`.`** *key-path-components* \
-> *key-path-components* → *key-path-component* | *key-path-component* **`.`** *key-path-components* \
-> *key-path-component* → *identifier* *key-path-postfixes*可选 | *key-path-postfixes*
+> *key-path 表达式* → **`\`** *类型* 可选 **`.`** *key-path 组件* \
+> *key-path 组件* → *key-path 组件* | *key-path 组件* **`.`** *key-path 组件* \
+> *key-path 组件* → *标识符* *key-path 后缀* 可选 | *key-path 后缀*
 >
-> *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*可选 \
-> *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
+> *key-path 后缀* → *key-path 后缀* *key-path 后缀* 可选 \
+> *key-path 后缀* → **`?`** | **`!`** | **`self`** | **`[`** *函数调用参数列表* **`]`**
 
-> Grammar of a selector expression:
+> 选择器表达式的语法：
 >
-> *selector-expression* → **`#selector`** **`(`** *expression* **`)`** \
-> *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`** \
-> *selector-expression* → **`#selector`** **`(`** **`setter:`** *expression* **`)`**
+> *选择器表达式* → **`#selector`** **`(`** *表达式* **`)`** \
+> *选择器表达式* → **`#selector`** **`(`** **`getter:`** *表达式* **`)`** \
+> *选择器表达式* → **`#selector`** **`(`** **`setter:`** *表达式* **`)`**
 
-> Grammar of a key-path string expression:
+> key-path 字符串表达式的语法：
 >
-> *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
+> *key-path 字符串表达式* → **`#keyPath`** **`(`** *表达式* **`)`**
 
-> Grammar of a postfix expression:
+> 后缀表达式的语法：
 >
-> *postfix-expression* → *primary-expression* \
-> *postfix-expression* → *postfix-expression* *postfix-operator* \
-> *postfix-expression* → *function-call-expression* \
-> *postfix-expression* → *initializer-expression* \
-> *postfix-expression* → *explicit-member-expression* \
-> *postfix-expression* → *postfix-self-expression* \
-> *postfix-expression* → *subscript-expression* \
-> *postfix-expression* → *forced-value-expression* \
-> *postfix-expression* → *optional-chaining-expression*
+> *后缀表达式* → *基本表达式* \
+> *后缀表达式* → *后缀表达式* *后缀运算符* \
+> *后缀表达式* → *函数调用表达式* \
+> *后缀表达式* → *初始化表达式* \
+> *后缀表达式* → *显式成员表达式* \
+> *后缀表达式* → *后缀 self 表达式* \
+> *后缀表达式* → *下标表达式* \
+> *后缀表达式* → *强制取值表达式* \
+> *后缀表达式* → *可选链式表达式*
 
-> Grammar of a function call expression:
+> 函数调用表达式的语法：
 >
-> *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
-> *function-call-expression* → *postfix-expression* *function-call-argument-clause*可选 *trailing-closures*
+> *函数调用表达式* → *后缀表达式* *函数调用参数子句* \
+> *函数调用表达式* → *后缀表达式* *函数调用参数子句* 可选 *尾随闭包*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
-> *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
-> *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
-> *function-call-argument* → *operator* | *identifier* **`:`** *operator*
+> *函数调用参数子句* → **`(`** **`)`** | **`(`** *函数调用参数列表* **`)`** \
+> *函数调用参数列表* → *函数调用参数* | *函数调用参数* **`,`** *函数调用参数列表* \
+> *函数调用参数* → *表达式* | *标识符* **`:`** *表达式* \
+> *函数调用参数* → *运算符* | *标识符* **`:`** *运算符*
 >
-> *trailing-closures* → *closure-expression* *labeled-trailing-closures*可选 \
-> *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*可选 \
-> *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
+> *尾随闭包* → *闭包表达式* *带标签的尾随闭包* 可选 \
+> *带标签的尾随闭包* → *带标签的尾随闭包* *带标签的尾随闭包* 可选 \
+> *带标签的尾随闭包* → *标识符* **`:`** *闭包表达式*
 
 > Grammar of an initializer expression:
 >
