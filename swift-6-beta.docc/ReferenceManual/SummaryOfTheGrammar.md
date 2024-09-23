@@ -557,7 +557,7 @@ make the same change here also.
 > *语句* → *控制转移语句* **`;`** 可选 \
 > *语句* → *延迟语句* **`;`** 可选 \
 > *语句* → *执行语句* **`;`** 可选 \
-> *语句* → *编译器控制语句* \
+> *语句* → *编译控制语句* \
 > *语句集合* → *语句* *语句集合* 可选
 
 > 循环语句的语法：
@@ -577,8 +577,8 @@ make the same change here also.
 > *条件列表* → *条件* | *条件* **`,`** *条件列表* \
 > *条件* → *表达式* | *可用性条件* | *case条件* | *可选绑定条件*
 >
-> *case条件* → **`case`** *模式* *初始化器* \
-> *可选绑定条件* → **`let`** *模式* *初始化器* 可选 | **`var`** *模式* *初始化器* 可选
+> *case条件* → **`case`** *模式* *构造器* \
+> *可选绑定条件* → **`let`** *模式* *构造器* 可选 | **`var`** *模式* *构造器* 可选
 
 > repeat-while 语句的语法：
 >
@@ -670,11 +670,11 @@ make the same change here also.
 > *catch 模式列表* → *catch 模式* | *catch 模式* **`,`** *catch 模式列表* \
 > *catch 模式* → *模式* *where 子句* 可选
 
-> 编译器控制语句的语法：
+> 编译控制语句的语法：
 >
-> *编译器控制语句* → *条件编译块* \
-> *编译器控制语句* → *行控制语句* \
-> *编译器控制语句* → *诊断语句*
+> *编译控制语句* → *条件编译块* \
+> *编译控制语句* → *行控制语句* \
+> *编译控制语句* → *诊断语句*
 
 > 条件编译块的语法：
 >
@@ -775,8 +775,8 @@ make the same change here also.
 > *常量声明* → *属性* 可选 *声明修饰符* 可选 **`let`** *模式构造器列表*
 >
 > *模式构造器列表* → *模式构造器* | *模式构造器* **`,`** *模式构造器列表* \
-> *模式构造器* → *模式* *初始化器* 可选 \
-> *初始化器* → **`=`** *表达式*
+> *模式构造器* → *模式* *构造器* 可选 \
+> *构造器* → **`=`** *表达式*
 
 > 变量声明的语法：
 >
@@ -784,7 +784,7 @@ make the same change here also.
 > *变量声明* → *变量声明头* *变量名称* *类型注解* *代码块* \
 > *变量声明* → *变量声明头* *变量名称* *类型注解* *getter-setter * \
 > *变量声明* → *变量声明头* *变量名称* *类型注解* *getter-setter 关键字（Keyword）块* \
-> *变量声明* → *变量声明头* *变量名称* *初始化器* *willSet-didSet 块* \
+> *变量声明* → *变量声明头* *变量名称* *构造器* *willSet-didSet 块* \
 > *变量声明* → *变量声明头* *变量名称* *类型注解* *构造器* 可选 *willSet-didSet 块*
 >
 > *变量声明头* → *属性* 可选 *声明修饰符* 可选 **`var`** \
@@ -852,107 +852,108 @@ make the same change here also.
 > *枚举 case 名称* → *标识符*
 >
 > *原始值式枚举* → **`enum`** *枚举名称* *泛型参数子句* 可选 *类型继承子句* *泛型 where 子句* 可选 **`{`** *原始值式枚举成员
-> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*可选 \
-> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
-> *raw-value-style-enum-case-clause* → *attributes*可选 **`case`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
-> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*可选 \
-> *raw-value-assignment* → **`=`** *raw-value-literal* \
-> *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
+> *原始值式枚举成员集* → *原始值式枚举成员* *原始值式枚举成员集*可选 \
+> *原始值式枚举成员集* → *声明* | *原始值式枚举 case 子句* | *编译控制语句* \
+> *原始值式枚举 case 子句* → *属性*可选 **`case`** *原始值式枚举 case 列表* \
+> *原始值式枚举 case 列表* → *原始值式枚举 case * | *原始值式枚举 case * **`,`** *原始值式枚举 case 列表* \
+> *原始值式枚举 case * → *枚举 case 名称* *原始值赋值*可选 \
+> *原始值赋值* → **`=`** *原始值字面量* \
+> *原始值文字* → *数值字面量* | *静态字符串字面量* | *布尔字面量*
 
-> Grammar of a structure declaration:
+> 结构声明的语法：
 >
-> *struct-declaration* → *attributes*可选 *access-level-modifier*可选 **`struct`** *struct-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *struct-body* \
-> *struct-name* → *identifier* \
-> *struct-body* → **`{`** *struct-members*可选 **`}`**
+> *结构声明* → *属性*可选 *访问级别修饰符*可选 **`struct`** *结构名称* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where 子句*可选 *结构主体* \
+> *结构名称* → *标识符* \
+> *结构主体* → **`{`** *结构成员集*可选 **`}`**
 >
-> *struct-members* → *struct-member* *struct-members*可选 \
-> *struct-member* → *declaration* | *compiler-control-statement*
+> *结构成员集* → *结构成员* *结构成员集*可选 \
+> *结构成员* → *声明* | *编译控制语句*
 
-> Grammar of a class declaration:
+> 类声明的语法：
 >
-> *class-declaration* → *attributes*可选 *access-level-modifier*可选 **`final`**可选 **`class`** *class-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *class-body* \
-> *class-declaration* → *attributes*可选 **`final`** *access-level-modifier*可选 **`class`** *class-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *class-body* \
-> *class-name* → *identifier* \
-> *class-body* → **`{`** *class-members*可选 **`}`**
+> *类声明* → *属性*可选 *访问级别修饰符*可选 **`final`**可选 **`class`** *类名称* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where 子句*可选 *类主体* \
+> *类声明* → *属性*可选 **`final`** *访问级别修饰符*可选 **`class`** *类名称* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where子句*可选 *类主体* \
+> *类名称* → *标识符* \
+> *类主体* → **`{`** *类成员*可选 **`}`**
 >
-> *class-members* → *class-member* *class-members*可选 \
-> *class-member* → *declaration* | *compiler-control-statement*
+> *类成员* → *类成员* *类成员*可选 \
+> *类成员* → *声明* | *编译控制语句*
 
-> Grammar of an actor declaration:
+> actor 声明的语法：
 >
-> *actor-declaration* → *attributes*可选 *access-level-modifier*可选 **`actor`** *actor-name* *generic-parameter-clause*可选 *type-inheritance-clause*可选 *generic-where-clause*可选 *actor-body* \
-> *actor-name* → *identifier* \
-> *actor-body* → **`{`** *actor-members*可选 **`}`**
+> *actor 声明* → *属性*可选 *访问级别修饰符*可选 **`actor`** *actor 名称* *泛型参数子句*可选 *类型继承子句*可选 *泛型 where 子句*可选 *actor 主体* \
+> *actor 名称* → *标识符* \
+> *actor 主体* → **`{`** *actor 成员*可选 **`}`**
 >
-> *actor-members* → *actor-member* *actor-members*可选 \
-> *actor-member* → *declaration* | *compiler-control-statement*
+> *actor 成员* → *actor 成员* *actor 成员*可选 \
+> *actor 成员* → *声明* | *编译控制语句*
 
-> Grammar of a protocol declaration:
+> 协议声明的语法：
 >
-> *protocol-declaration* → *attributes*可选 *access-level-modifier*可选 **`protocol`** *protocol-name* *type-inheritance-clause*可选 *generic-where-clause*可选 *protocol-body* \
-> *protocol-name* → *identifier* \
-> *protocol-body* → **`{`** *protocol-members*可选 **`}`**
+> *协议声明* → *属性*可选 *访问级别修饰符*可选 **`protocol`** *协议名称* *类型继承子句*可选 *泛型 where 子句*可选 *协议主体* \
+> *协议名称* → *标识符* \
+> *协议主体* → **`{`** *协议成员*可选 **`}`**
 >
-> *protocol-members* → *protocol-member* *protocol-members*可选 \
-> *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
+> *协议成员* → *协议成员* *协议成员*可选 \
+> *协议成员* → *协议成员声明* | *编译控制语句*
 >
-> *protocol-member-declaration* → *protocol-property-declaration* \
-> *protocol-member-declaration* → *protocol-method-declaration* \
-> *protocol-member-declaration* → *protocol-initializer-declaration* \
-> *protocol-member-declaration* → *protocol-subscript-declaration* \
-> *protocol-member-declaration* → *protocol-associated-type-declaration* \
-> *protocol-member-declaration* → *typealias-declaration*
+> *协议成员声明* → *协议属性声明* \
+> *协议成员声明* → *协议方法声明* \
+> *协议成员声明* → *协议构造器声明* \
+> *协议成员声明* → *协议下标声明* \
+> *协议成员声明* → *协议关联类型声明* \
+> *协议成员声明* → *类型别名声明*
 
-> Grammar of a protocol property declaration:
+> 协议属性声明的语法：
 >
-> *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
+> *协议属性声明* → *变量声明头* *变量名称* *类型注解* *getter-setter 关键字块*
 
-> Grammar of a protocol method declaration:
+> 协议方法声明的语法：
 >
-> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*可选 *function-signature* *generic-where-clause*可选
+> *协议方法声明* → *函数头* *函数名称* *泛型参数子句*可选 *函数签名* *泛型 where 子句*可选
 
-> Grammar of a protocol initializer declaration:
+> 协议构造器声明的语法：
 >
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* *throws-clause*可选 *generic-where-clause*可选 \
-> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* **`rethrows`** *generic-where-clause*可选
+> *协议构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* *抛出子句*可选 *泛型 where 子句*可选 \
+> *协议构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* **`rethrows`** *泛型 where 子句*可选
 
-> Grammar of a protocol subscript declaration:
+> 协议下标声明的语法：
 >
-> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *getter-setter-keyword-block*
+> *协议下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *getter-setter 关键字块*
 
-> Grammar of a protocol associated type declaration:
+> 协议关联类型声明的语法：
 >
-> *protocol-associated-type-declaration* → *attributes*可选 *access-level-modifier*可选 **`associatedtype`** *typealias-name* *type-inheritance-clause*可选 *typealias-assignment*可选 *generic-where-clause*可选
+> *协议关联类型声明* → *属性*可选 *访问级别修饰符*可选 **`associatedtype`** *类型别名名称* *类型继承子句*可选 *类型别名赋值*可选 *泛型 where 子句*可选
 
-> Grammar of an initializer declaration:
+> 构造器声明的语法：
 >
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* **`async`**可选 *throws-clause*可选 *generic-where-clause*可选 *initializer-body* \
-> *initializer-declaration* → *initializer-head* *generic-parameter-clause*可选 *parameter-clause* **`async`**可选 **`rethrows`** *generic-where-clause*可选 *initializer-body* \
-> *initializer-head* → *attributes*可选 *declaration-modifiers*可选 **`init`** \
-> *initializer-head* → *attributes*可选 *declaration-modifiers*可选 **`init`** **`?`** \
-> *initializer-head* → *attributes*可选 *declaration-modifiers*可选 **`init`** **`!`** \
-> *initializer-body* → *code-block*
+> *构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* **`async`**可选 *抛出子句*可选 *泛型 where 子句*可选 *构造器主体* \
+> *构造器声明* → *构造器头* *泛型参数子句*可选 *参数子句* **`async`**可选 **`rethrows`** *泛型 where 子句*可选 *构造器主体* \
+> *构造器头* → *属性*可选 *声明修饰符*可选 **`init`** \
+> *构造器头* → *属性*可选 *声明修饰符*可选 **`init`** **`?`** \
+> *构造器头* → *属性*可选 *声明修饰符*可选 **`init`** **`!`** \
+> *构造器主体* → *代码块*
 
-> Grammar of a deinitializer declaration:
+> 析构器声明的语法：
 >
-> *deinitializer-declaration* → *attributes*可选 **`deinit`** *code-block*
+> *析构器声明* → *属性*可选 **`deinit`** *代码块*
 
-> Grammar of an extension declaration:
+> 扩展声明的语法：
 >
-> *extension-declaration* → *attributes*可选 *access-level-modifier*可选 **`extension`** *type-identifier* *type-inheritance-clause*可选 *generic-where-clause*可选 *extension-body* \
-> *extension-body* → **`{`** *extension-members*可选 **`}`**
+> *扩展声明* → *属性*可选 *访问级别修饰符*可选 **`extension`** *类型标识符* *类型继承子句*可选 *泛型 where 子句*可选 *扩展主体* \
+> *扩展主体* → **`{`** *扩展成员*可选 **`}`**
 >
-> *extension-members* → *extension-member* *extension-members*可选 \
-> *extension-member* → *declaration* | *compiler-control-statement*
+> *扩展成员* → *扩展成员* *扩展成员*可选 \
+> *扩展成员* → *声明集* | *编译控制语句*
 
-> Grammar of a subscript declaration:
+> 下标声明的语法：
 >
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *code-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *getter-setter-block* \
-> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*可选 *getter-setter-keyword-block* \
-> *subscript-head* → *attributes*可选 *declaration-modifiers*可选 **`subscript`** *generic-parameter-clause*可选 *parameter-clause* \
-> *subscript-result* → **`->`** *attributes*可选 *type*
+> *下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *代码块* \
+> *下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *getter-setter 块* \
+> *下标声明* → *下标头* *下标结果* *泛型 where 子句*可选 *getter-setter 关键字块* \
+> *下标头* → *属性*可选 *声明修饰符*可选 **`subscript`** *泛型参数子句*可选 *参数子句* \
+> *下标结果* → **`->`** *特性*可选 *类型*
+```
 
 > Grammar of a macro declaration:
 >
