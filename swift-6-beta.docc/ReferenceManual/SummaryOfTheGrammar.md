@@ -183,139 +183,139 @@ make the same change here also.
 >
 > *正则表达式扩展分隔符* → **`#`** *正则表达式扩展分隔符* 可选
 
-> Grammar of operators:
+> 运算符的语法：
 >
-> *operator* → *operator-head* *operator-characters*可选 \
-> *operator* → *dot-operator-head* *dot-operator-characters*
+> *运算符* → *运算符头* *运算符字符集* 可选 \
+> *运算符* → *点运算符头* *点运算符字符集*
 >
-> *operator-head* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
-> *operator-head* → U+00A1–U+00A7 \
-> *operator-head* → U+00A9 or U+00AB \
-> *operator-head* → U+00AC or U+00AE \
-> *operator-head* → U+00B0–U+00B1 \
-> *operator-head* → U+00B6, U+00BB, U+00BF, U+00D7, or U+00F7 \
-> *operator-head* → U+2016–U+2017 \
-> *operator-head* → U+2020–U+2027 \
-> *operator-head* → U+2030–U+203E \
-> *operator-head* → U+2041–U+2053 \
-> *operator-head* → U+2055–U+205E \
-> *operator-head* → U+2190–U+23FF \
-> *operator-head* → U+2500–U+2775 \
-> *operator-head* → U+2794–U+2BFF \
-> *operator-head* → U+2E00–U+2E7F \
-> *operator-head* → U+3001–U+3003 \
-> *operator-head* → U+3008–U+3020 \
-> *operator-head* → U+3030
+> *运算符头* → **`/`** | **`=`** | **`-`** | **`+`** | **`!`** | **`*`** | **`%`** | **`<`** | **`>`** | **`&`** | **`|`** | **`^`** | **`~`** | **`?`** \
+> *运算符头* → U+00A1–U+00A7 \
+> *运算符头* → U+00A9 或 U+00AB \
+> *运算符头* → U+00AC 或 U+00AE \
+> *运算符头* → U+00B0–U+00B1 \
+> *运算符头* → U+00B6、U+00BB、U+00BF、U+00D7 或 U+00F7 \
+> *运算符头* → U+2016–U+2017 \
+> *运算符头* → U+2020–U+2027 \
+> *运算符头* → U+2030–U+203E \
+> *运算符头* → U+2041–U+2053 \
+> *运算符头* → U+2055–U+205E \
+> *运算符头* → U+2190–U+23FF \
+> *运算符头* → U+2500–U+2775 \
+> *运算符头* → U+2794–U+2BFF \
+> *运算符头* → U+2E00–U+2E7F \
+> *运算符头* → U+3001–U+3003 \
+> *运算符头* → U+3008–U+3020 \
+> *运算符头* → U+3030
 >
-> *operator-character* → *operator-head* \
-> *operator-character* → U+0300–U+036F \
-> *operator-character* → U+1DC0–U+1DFF \
-> *operator-character* → U+20D0–U+20FF \
-> *operator-character* → U+FE00–U+FE0F \
-> *operator-character* → U+FE20–U+FE2F \
-> *operator-character* → U+E0100–U+E01EF \
-> *operator-characters* → *operator-character* *operator-characters*可选
+> *运算符字符* → *运算符头* \
+> *运算符字符* → U+0300–U+036F \
+> *运算符字符* → U+1DC0–U+1DFF \
+> *运算符字符* → U+20D0–U+20FF \
+> *运算符字符* → U+FE00–U+FE0F \
+> *运算符字符* → U+FE20–U+FE2F \
+> *运算符字符* → U+E0100–U+E01EF \
+> *运算符字符集* → *运算符字符* *运算符字符集* 可选
 >
-> *dot-operator-head* → **`.`** \
-> *dot-operator-character* → **`.`** | *operator-character* \
-> *dot-operator-characters* → *dot-operator-character* *dot-operator-characters*可选
+> *点运算符头* → **`.`** \
+> *点运算符字符* → **`.`** | *运算符字符* \
+> *点运算符字符集* → *点运算符字符* *点运算符字符集* 可选
 >
-> *infix-operator* → *operator* \
-> *prefix-operator* → *operator* \
-> *postfix-operator* → *operator*
+> *中缀运算符* → *运算符* \
+> *前缀运算符* → *运算符* \
+> *后缀运算符* → *运算符*
 
-## Types
+## 类型
 
-> Grammar of a type:
+> 类型的语法：
 >
-> *type* → *function-type* \
-> *type* → *array-type* \
-> *type* → *dictionary-type* \
-> *type* → *type-identifier* \
-> *type* → *tuple-type* \
-> *type* → *optional-type* \
-> *type* → *implicitly-unwrapped-optional-type* \
-> *type* → *protocol-composition-type* \
-> *type* → *opaque-type* \
-> *type* → *metatype-type* \
-> *type* → *any-type* \
-> *type* → *self-type* \
-> *type* → **`(`** *type* **`)`**
+> *类型* → *函数类型* \
+> *类型* → *数组类型* \
+> *类型* → *字典类型* \
+> *类型* → *类型标识符* \
+> *类型* → *元组类型* \
+> *类型* → *可选类型* \
+> *类型* → *隐式解析可选类型* \
+> *类型* → *协议合成类型* \
+> *类型* → *不透明类型* \
+> *类型* → *元类型* \
+> *类型* → *任意类型* \
+> *类型* → *自身类型* \
+> *类型* → **`(`** *type* **`)`**
 
-> Grammar of a type annotation:
+> 类型注释的语法：
 >
-> *type-annotation* → **`:`** *attributes*可选 **`inout`**可选 *type*
+> *类型注释* → **`:`** *属性（Attributes）* 可选 **`inout`** 可选 *类型*
 
-> Grammar of a type identifier:
+> 类型标识符的语法：
 >
-> *type-identifier* → *type-name* *generic-argument-clause*可选 | *type-name* *generic-argument-clause*可选 **`.`** *type-identifier* \
-> *type-name* → *identifier*
+> *类型标识符* → *类型名称* *泛型参数子句* 可选 | *类型名称* *泛型参数子句* 可选 **`.`** *类型标识符* \
+> *类型名称* → *标识符*
 
-> Grammar of a tuple type:
+> 元组类型的语法：
 >
-> *tuple-type* → **`(`** **`)`** | **`(`** *tuple-type-element* **`,`** *tuple-type-element-list* **`)`** \
-> *tuple-type-element-list* → *tuple-type-element* | *tuple-type-element* **`,`** *tuple-type-element-list* \
-> *tuple-type-element* → *element-name* *type-annotation* | *type* \
-> *element-name* → *identifier*
+> *元组类型* → **`(`** **`)`** | **`(`** *元组类型元素* **`,`** *元组类型元素列表* **`)`** \
+> *元组类型元素列表* → *元组类型元素* | *元组类型元素* **`,`** *元组类型元素列表* \
+> *元组类型元素* → *元素名称* *类型注释* | *类型* \
+> *元素名称* → *标识符*
 
-> Grammar of a function type:
+> 函数类型的语法：
 >
-> *function-type* → *attributes*可选 *function-type-argument-clause* **`async`**可选 *throws-clause*可选 **`->`** *type*
+> *函数类型* → *属性* 可选 *函数类型子句* **`async`** 可选 *throws* 可选 **`->`** *类型*
 >
-> *function-type-argument-clause* → **`(`** **`)`** \
-> *function-type-argument-clause* → **`(`** *function-type-argument-list* **`...`**可选 **`)`**
+> *函数类型子句* → **`(`** **`)`** \
+> *函数类型子句* → **`(`** *函数类型参数列表* **`...`** 可选 **`)`**
 >
-> *function-type-argument-list* → *function-type-argument* | *function-type-argument* **`,`** *function-type-argument-list* \
-> *function-type-argument* → *attributes*可选 **`inout`**可选 *type* | *argument-label* *type-annotation* \
-> *argument-label* → *identifier*
+> *函数类型参数列表* → *函数类型参数* | *函数类型参数* **`,`** *函数类型参数列表* \
+> *函数类型参数* → *属性* 可选 **`inout`** 可选 *类型* | *参数标签* *类型注释* \
+> *参数标签* → *标识符*
 >
-> *throws-clause* → **`throws`** | **`throws`** **`(`** *type* **`)`**
+> *异常抛出子句* → **`throws`** | **`throws`** **`(`** *类型* **`)`**
 
-> Grammar of an array type:
+> 数组类型的语法：
 >
-> *array-type* → **`[`** *type* **`]`**
+> *数组类型* → **`[`** *类型* **`]`**
 
-> Grammar of a dictionary type:
+> 字典类型的语法：
 >
-> *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
+> *字典类型* → **`[`** *类型* **`:`** *类型* **`]`**
 
-> Grammar of an optional type:
+> 可选类型的语法：
 >
-> *optional-type* → *type* **`?`**
+> *可选类型* → *类型* **`?`**
 
-> Grammar of an implicitly unwrapped optional type:
+> 隐式解析可选类型的语法：
 >
-> *implicitly-unwrapped-optional-type* → *type* **`!`**
+> *隐式解析可选类型* → *类型* **`!`**
 
-> Grammar of a protocol composition type:
+> 协议合成类型的语法：
 >
-> *protocol-composition-type* → *type-identifier* **`&`** *protocol-composition-continuation* \
-> *protocol-composition-continuation* → *type-identifier* | *protocol-composition-type*
+> *协议合成类型* → *类型标识符* **`&`** *协议合成延续* \
+> *协议合成延续* → *类型标识符* | *协议合成类型*
 
-> Grammar of an opaque type:
+> 不透明类型的语法：
 >
-> *opaque-type* → **`some`** *type*
+> *不透明类型* → **`some`** *类型*
 
-> Grammar of a boxed protocol type:
+> 被包装的协议类型的语法：
 >
-> *boxed-protocol-type* → **`any`** *type*
+> *被包装的协议类型* → **`any`** *类型*
 
-> Grammar of a metatype type:
+> 元类型的语法：
 >
-> *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**
+> *元类型* → *类型* **`.`** **`Type`** | *类型* **`.`** **`Protocol`**
 
-> Grammar of an Any type:
+> 任意类型的语法：
 >
-> *any-type* → **`Any`**
+> *任意类型* → **`Any`**
 
-> Grammar of a Self type:
+> 自身类型的语法：
 >
-> *self-type* → **`Self`**
+> *自身类型* → **`Self`**
 
-> Grammar of a type inheritance clause:
+> 类型继承从句的语法：
 >
-> *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*可选 *type-identifier* | *attributes*可选 *type-identifier* **`,`** *type-inheritance-list*
+> *类型继承从句* → **`:`** *类型继承集* \
+> *类型继承集* → *属性* 可选 *类型标识符* | *属性* 可选 *类型标识符* **`,`** *类型继承集*
 
 ## Expressions
 
