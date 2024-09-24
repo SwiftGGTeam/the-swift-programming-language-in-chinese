@@ -263,8 +263,8 @@ so they must be escaped with backticks in that context.
   `nonisolated`,
   `open`,
   `operator`,
-  `private`,
   `precedencegroup`,
+  `private`,
   `protocol`,
   `public`,
   `rethrows`,
@@ -294,8 +294,8 @@ so they must be escaped with backticks in that context.
   `in`,
   `repeat`,
   `return`,
-  `throw`,
   `switch`,
+  `throw`,
   `where`,
   and `while`.
 - Keywords used in expressions and types:
