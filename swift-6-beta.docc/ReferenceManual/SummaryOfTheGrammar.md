@@ -1,24 +1,5 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/ReferenceManual/SummaryOfTheGrammar.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/summaryofthegrammar
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
-
 # 语法总结
 阅读完整的形式语法。
-
-<!--
-
-=== IMPORTANT ===
-
-This file is manually updated.
-
-If you edit formal grammar elsewhere in the reference,
-make the same change here also.
-
-=== IMPORTANT ===
-
--->
 
 ## 词法结构
 
@@ -1107,13 +1088,3 @@ make the same change here also.
 >
 > 了解更多关于使用 [苹果的测试版软件](https://developer.apple.com/support/beta-software/) 的信息。
 ```
-
-<!--
-This source file is part of the Swift.org open source project
-
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
-
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
--->
