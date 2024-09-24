@@ -373,6 +373,7 @@ so they must be escaped with backticks in that context.
 
 - Keywords reserved in particular contexts:
   `associativity`,
+  `async`,
   `convenience`,
   `didSet`,
   `dynamic`,
