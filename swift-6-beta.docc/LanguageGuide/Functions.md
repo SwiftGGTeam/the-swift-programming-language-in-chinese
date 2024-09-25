@@ -55,9 +55,9 @@ print(greet(person: "Brian"))
   ```
 -->
 
-调用 greet(person:) 函数时，请在 `person` 参数标签后传递 `String` 值，例如 greet(person: "Anna") 。由于函数返回的是 `String` 类型的值，因此 `greet(person:)` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值，如上所示。
+调用 `greet(person:)` 函数时，请在 `person` 参数标签后传递 `String` 值，例如 `greet(person: "Anna")` 。由于函数返回的是 `String` 类型的值，因此 `greet(person:)` 可以被包含在 `print(_:separator:terminator:)` 的调用中，用来输出这个函数的返回值，如上所示。
 
-> 注意: print(_:separator:terminator:) 函数的第一个参数并没有设置一个标签，而其他的参数是可选的，因为他们已经有了默认值。
+> 注意: `print(_:separator:terminator:)` 函数的第一个参数并没有设置一个标签，而其他的参数是可选的，因为他们已经有了默认值。
 > 关于这些函数语法上的变化详见下方 <doc:Functions#Function-Argument-Labels-and-Parameter-Names> 和 <doc:Functions#Default-Parameter-Values>。
 
 在 `greet(person:)` 的函数体中，先定义了一个新的名为 `greeting` 的 `String` 常量，并将其设置为简单的问候信息。然后用 `return` 关键字把这个问候返回出去。一旦 `return greeting` 被调用，该函数执行完毕并返回 `greeting` 的当前值。
@@ -92,7 +92,7 @@ Swift 中的函数参数和返回值非常灵活。您可以定义任何函数�
 
 ### 无参数函数
 
-函数可以没有参数。下面这个函数就是一个无参数函数，当被何时被调用，它总是返回固定的 `String` 消息：
+函数可以没有参数。下面这个函数就是一个无参数函数，每次它被调用时，总是返回固定的 `String` 消息：
 
 ```swift
 func sayHelloWorld() -> String {
@@ -114,13 +114,13 @@ print(sayHelloWorld())
   ```
 -->
 
-虽然函数不带任何参数，但函数定义的名称后仍需要括号。在调用函数时，函数名后面也要加上一对空括号。
+即使函数不需要任何参数，在函数定义的名称后仍需要加上括号。在调用函数时，函数名后面也要加上一对空括号。
 
 ### 多参数函数
 
 函数可以有多个输入参数，这些参数写在函数的括号内，用逗号隔开。
 
-下面的函数将一个人的名字和是否已经问候过该人作为输入，并返回适合该人的问候语：
+下面的函数将一个人的名字和他是否被问候过作为输入，并返回适合该人的问候语：
 
 ```swift
 func greet(person: String, alreadyGreeted: Bool) -> String {
@@ -650,8 +650,6 @@ arithmeticMean(3, 8.25, 18.75)
 
 函数参数默认为常量。在函数体中更改函数参数的值会导致编译时错误。这意味着您不能错误地更改参数的值。如果您希望函数修改参数的值，并希望这些更改在函数调用结束后仍然有效，请将该参数定义为 **in-out parameter（输入输出参数）**。
 
-一个 输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。想获取更多的关于输入输出参数的细节和相关的编译器优化，请查看 输入输出参数 一节。
-
 您可以通过在参数类型前添加 `inout` 关键字来编写输入输出参数。输入输出参数有一个值，该值 **传入** 给函数，被函数修改后，然后被 **传出** 函数，以替换原来的值。有关传入传出参数行为及相关编译器优化的详细讨论，请参阅 <doc:Declarations#In-Out-Parameters>。
 
 你只能传递变量给输入输出参数。不能传入常量或者字面量，因为这些是不能被修改的。当传入的参数作为输入输出参数时，需要在参数名前加 （`&`） 符，表示这个值可以被函数修改。
@@ -708,7 +706,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 上面的示例展示了 `someInt` 和 `anotherInt` 的原始值被 `swapTwoInt(_：_:)` 函数修改，即使它们是在函数体外定义的。
 
 > 注意: 
-> 输入输出参数和返回值是不一样的。
+> 输入输出参数和函数的返回值是不一样的。
 > 上面的 `swapTwoInts` 函数并没有定义任何返回类型或返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。
 > 输入输出参数是函数在其函数体范围之外产生影响的另一种方式。
 
