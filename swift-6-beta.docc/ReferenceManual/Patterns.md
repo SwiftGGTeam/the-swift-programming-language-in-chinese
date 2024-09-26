@@ -1,37 +1,16 @@
-# Patterns
+# 图案
 
-Match and destructure values.
+匹配和解构值.
 
-A *pattern* represents the structure of a single value
-or a composite value.
-For example, the structure of a tuple `(1, 2)` is a comma-separated list of two
-elements. Because patterns represent the structure of a value rather than any
-one particular value, you can match them with a variety of values.
-For instance, the pattern `(x, y)` matches the tuple `(1, 2)` and any other
-two-element tuple. In addition to matching a pattern with a value,
-you can extract part or all of a composite value and bind each part
-to a constant or variable name.
+*模式* 表示单个值或复合值的结构。例如，元组`(1, 2)` 的结构是两个元素的逗号分隔列表。由于模式代表值的结构而不是任何一个特定值，因此您可以将它们与多种值进行匹配。例如，模式 `(x, y)`与元组 `(1, 2)` 和任何其他二元素元组匹配。除了将模式与值进行匹配之外，您还可以提取复合值的部分或全部并将每个部分绑定到常量或变量名称。
 
-In Swift, there are two basic kinds of patterns:
-those that successfully match any kind of value,
-and those that may fail to match a specified value at runtime.
+在 Swift 中，有两种基本类型的模式：那些成功匹配任何类型值的模式，以及那些在运行时可能无法匹配指定值的模式。
 
-The first kind of pattern is used for destructuring values
-in simple variable, constant, and optional bindings.
-These include wildcard patterns, identifier patterns,
-and any value binding or tuple patterns containing
-them. You can specify a type annotation for these patterns
-to constrain them to match only values of a certain type.
+第一种模式用于解构简单变量、常量和可选绑定中的值。其中包括通配符模式、标识符模式以及包含它们的任何值绑定或元组模式。您可以为这些模式指定类型注释，以限制它们仅匹配特定类型的值。
 
-The second kind of pattern is used for full pattern matching,
-where the values you're trying to match against may not be there at runtime.
-These include enumeration case patterns, optional patterns, expression patterns,
-and type-casting patterns. You use these patterns in a case label of a `switch`
-statement, a `catch` clause of a `do` statement,
-or in the case condition of an `if`, `while`,
-`guard`, or `for`-`in` statement.
+第二种模式用于完整模式匹配，其中您尝试匹配的值在运行时可能不存在。其中包括枚举案例模式、可选模式、表达式模式和类型转换模式。您可以在 `switch` 语句的 case 标签、 `do` 语句的 `catch`子句或 `if` 、 `while`  、 `guard` 或 `for`  - `in` 语句的 case 条件中使用这些模式。
 
-> Grammar of a pattern:
+> 模式语法:
 >
 > *pattern* → *wildcard-pattern* *type-annotation*_?_ \
 > *pattern* → *identifier-pattern* *type-annotation*_?_ \
@@ -42,12 +21,9 @@ or in the case condition of an `if`, `while`,
 > *pattern* → *type-casting-pattern* \
 > *pattern* → *expression-pattern*
 
-## Wildcard Pattern
+## 通配符模式
 
-A *wildcard pattern* matches and ignores any value and consists of an underscore
-(`_`). Use a wildcard pattern when you don't care about the values being
-matched against. For example, the following code iterates through the closed range `1...3`,
-ignoring the current value of the range on each iteration of the loop:
+*通配符模式* 匹配并忽略任何值，并由下划线(`_`) 组成. 当您不关心要匹配的值时，请使用通配符模式。例如，以下代码迭代封闭范围 `1...3`,忽略循环每次迭代中范围的当前值:
 
 ```swift
 for _ in 1...3 {
@@ -65,16 +41,13 @@ for _ in 1...3 {
   ```
 -->
 
-> Grammar of a wildcard pattern:
+> 通配符模式的语法:
 >
 > *wildcard-pattern* → **`_`**
 
-## Identifier Pattern
+## 标识符模式
 
-An *identifier pattern* matches any value and binds the matched value to a
-variable or constant name.
-For example, in the following constant declaration, `someValue` is an identifier pattern
-that matches the value `42` of type `Int`:
+*标识符模式* 匹配任何值并将匹配的值绑定到变量或常量名称.例如，在以下常量声明中`someValue` 是与 `Int` 类型的值 `42` 匹配的标识符模式:
 
 ```swift
 let someValue = 42
@@ -88,28 +61,19 @@ let someValue = 42
   ```
 -->
 
-When the match succeeds, the value `42` is bound (assigned)
-to the constant name `someValue`.
+当匹配成功时,值 `42` 被绑定（分配）到常量名称 `someValue` .
 
-When the pattern on the left-hand side of a variable or constant declaration
-is an identifier pattern,
-the identifier pattern is implicitly a subpattern of a value-binding pattern.
+当变量或常量声明左侧的模式是标识符模式时，标识符模式隐式是值绑定模式的子模式.
 
-> Grammar of an identifier pattern:
+> 标识符模式的语法:
 >
 > *identifier-pattern* → *identifier*
 
-## Value-Binding Pattern
+## 价值绑定模式
 
-A *value-binding pattern* binds matched values to variable or constant names.
-Value-binding patterns that bind a matched value to the name of a constant
-begin with the `let` keyword; those that bind to the name of variable
-begin with the `var` keyword.
+*值绑定模式* 将匹配的值绑定到变量或常量名称。将匹配值绑定到常量名称的值绑定模式以 `let` 关键字开头；那些绑定到变量名称的变量以`var`关键字开头.
 
-Identifiers patterns within a value-binding pattern
-bind new named variables or constants to their matching values. For example,
-you can decompose the elements of a tuple and bind the value of each element to a
-corresponding identifier pattern.
+值绑定模式中的标识符模式将新的命名变量或常量绑定到其匹配值。例如，您可以分解元组的元素并将每个元素的值绑定到相应的标识符模式
 
 ```swift
 let point = (3, 2)
@@ -135,11 +99,9 @@ case let (x, y):
   ```
 -->
 
-In the example above, `let` distributes to each identifier pattern in the
-tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
-`case let (x, y):` and `case (let x, let y):` match the same values.
+在上面的示例中， `let` 分配给元组模式`(x, y)` 中的每个标识符模式。由于此行为， `switch`  case `case let (x, y):` 和`case (let x, let y):` 匹配相同的值
 
-> Grammar of a value-binding pattern:
+> 值绑定模式的语法:
 >
 > *value-binding-pattern* → **`var`** *pattern* | **`let`** *pattern*
 
@@ -151,23 +113,13 @@ tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
   "Variable pattern" is ambiguous between those two meanings.
 -->
 
-## Tuple Pattern
+## 元组模式
 
-A *tuple pattern* is a comma-separated list of zero or more patterns, enclosed in
-parentheses. Tuple patterns match values of corresponding tuple types.
+*元组模式* 是零个或多个模式的逗号分隔列表，括在括号中。元组模式匹配相应元组类型的值
 
-You can constrain a tuple pattern to match certain kinds of tuple types
-by using type annotations.
-For example, the tuple pattern `(x, y): (Int, Int)` in the constant declaration
-`let (x, y): (Int, Int) = (1, 2)` matches only tuple types in which
-both elements are of type `Int`.
+您可以使用类型注释来约束元组模式以匹配某些类型的元组类型。例如，常量声明中的元组模式`(x, y): (Int, Int)`  `let (x, y): (Int, Int) = (1, 2)`  仅匹配两个元素均为 `Int` 类型的元组类型`.
 
-When a tuple pattern is used as the pattern in a `for`-`in` statement
-or in a variable or constant declaration, it can contain only wildcard patterns,
-identifier patterns, optional patterns, or other tuple patterns that contain those.
-For example,
-the following code isn't valid because the element `0` in the tuple pattern `(x, 0)` is
-an expression pattern:
+当元组模式用作 `for`  - `in` 语句或变量或常量声明中的模式时，它只能包含通配符模式、标识符模式、可选模式或包含这些模式的其他元组模式。例如，以下代码无效，因为元组模式 `(x, 0)` 中的元素0是表达式模式:
 
 ```swift
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
@@ -193,9 +145,7 @@ for (x, 0) in points {
   ```
 -->
 
-The parentheses around a tuple pattern that contains a single element have no effect.
-The pattern matches values of that single element's type. For example, the following are
-equivalent:
+包含单个元素的元组模式周围的括号不起作用。该模式与该单个元素类型的值相匹配。例如，以下内容是等效的:
 
 <!--
   This test needs to be compiled.
@@ -237,26 +187,13 @@ let (a): Int = 2 // a: Int = 2
 > *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list* \
 > *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
-## Enumeration Case Pattern
+## 枚举案例模式
 
-An *enumeration case pattern* matches a case of an existing enumeration type.
-Enumeration case patterns appear in `switch` statement
-case labels and in the case conditions of `if`, `while`, `guard`, and `for`-`in`
-statements.
+*枚举大小写模式*  与现有枚举类型的大小写匹配。枚举 case 模式出现在 `switch` 语句 case 标签以及 `if`  、 `while`  、 `guard` 和`for`  - `in` 语句的 case 条件中。
 
-If the enumeration case you're trying to match has any associated values,
-the corresponding enumeration case pattern must specify a tuple pattern that contains
-one element for each associated value. For an example that uses a `switch` statement
-to match enumeration cases containing associated values,
-see <doc:Enumerations#Associated-Values>.
+如果您尝试匹配的枚举大小写具有任何关联值，则相应的枚举大小写模式必须指定一种元组模式，其中每个关联值都包含一个元素。有关使用`switch` 语句来匹配包含关联值的枚举情况的示例，请参阅 <doc:Enumerations#Associated-Values>.
 
-An enumeration case pattern also matches
-values of that case wrapped in an optional.
-This simplified syntax lets you omit an optional pattern.
-Note that,
-because `Optional` is implemented as an enumeration,
-`.none` and `.some` can appear
-in the same switch as the cases of the enumeration type.
+枚举大小写模式还匹配包装在可选值中的该大小写的值。这种简化的语法允许您省略可选模式。请注意，由于 `Optional` 是作为枚举实现的，因此 `.none` 和 `.some` 可以与枚举类型的情况出现在同一开关中
 
 ```swift
 enum SomeEnum { case left, right }
@@ -294,16 +231,11 @@ case nil:
 >
 > *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
 
-## Optional Pattern
+## 可选图案
 
-An *optional pattern* matches values wrapped in a `some(Wrapped)` case
-of an `Optional<Wrapped>` enumeration.
-Optional patterns consist of an identifier pattern followed immediately by a question mark
-and appear in the same places as enumeration case patterns.
+可选模式与包含在 `Optional<Wrapped>` 枚举的 `some(Wrapped)` 情况中的值相匹配。可选模式由标识符模式组成，后面紧跟一个问号，并出现在与枚举案例模式相同的位置
 
-Because optional patterns are syntactic sugar for `Optional`
-enumeration case patterns,
-the following are equivalent:
+由于可选模式是 `Optional`枚举案例模式的语法糖，因此以下内容是等效的：
 
 ```swift
 let someOptional: Int? = 42
@@ -337,9 +269,7 @@ if case let x? = someOptional {
   ```
 -->
 
-The optional pattern provides a convenient way to
-iterate over an array of optional values in a `for`-`in` statement,
-executing the body of the loop only for non-`nil` elements.
+可选模式提供了一种方便的方法来迭代 `for` - `in`语句中的可选值数组，仅对非 `nil` 元素执行循环体
 
 ```swift
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
@@ -371,31 +301,20 @@ for case let number? in arrayOfOptionalInts {
 >
 > *optional-pattern* → *identifier-pattern* **`?`**
 
-## Type-Casting Patterns
+## 类型转换模式
 
-There are two type-casting patterns, the `is` pattern and the `as` pattern.
-The `is` pattern appears only in `switch` statement
-case labels. The `is` and `as` patterns have the following form:
+有两种类型转换模式： `is` 模式和`as` 模式。 `is` 模式仅出现在`switch` 语句 case 标签中. `is` 和 `as` 模式具有以下形式:
 
 ```swift
 is <#type#>
 <#pattern#> as <#type#>
 ```
 
-The `is` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the `is` pattern --- or a subclass of that type.
-The `is` pattern behaves like the `is` operator in that they both perform a type cast
-but discard the returned type.
+如果运行时值的 `is` 与 `is` 模式与该值匹配 - 或者该类型的子类。 `is` 模式的行为类似于 `is` 运算符，因为它们都执行类型转换但丢弃返回的类型。
 
-The `as` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the `as` pattern --- or a subclass of that type.
-If the match succeeds,
-the type of the matched value is cast to the *pattern* specified in the right-hand side
-of the `as` pattern.
+如果运行时该值的类型与`as模` 式右侧指定的类型相同，则 `as` 模式与该值匹配 - 或者该类型的子类。如果匹配成功，则匹配值的类型将转换为 `as` 模式右侧指定的模式
 
-For an example that uses a `switch` statement
-to match values with `is` and `as` patterns,
-see <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
+有关使用 `switch` 语句将值与 `is` 和 `as` 模式进行匹配的示例，请参阅 <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
 
 > Grammar of a type casting pattern:
 >
@@ -403,21 +322,11 @@ see <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
 > *is-pattern* → **`is`** *type* \
 > *as-pattern* → *pattern* **`as`** *type*
 
-## Expression Pattern
+## 表达模式
 
-An *expression pattern* represents the value of an expression.
-Expression patterns appear only in `switch` statement
-case labels.
+*表达式模式* 表示表达式的值。表达式模式仅出现在*switch* 语句 *case*  标签中
 
-The expression represented by the expression pattern
-is compared with the value of an input expression
-using the pattern-matching operator (`~=`) from the Swift standard library.
-The matches succeeds
-if the `~=` operator returns `true`. By default, the `~=` operator compares
-two values of the same type using the `==` operator.
-It can also match a value with a range of values,
-by checking whether the value is contained within the range,
-as the following example shows.
+使用 Swift 标准库中的模式匹配运算符 ( `~=` ) 将表达式模式表示的表达式与输入表达式的值进行比较。如果`~=` 运算符返回`true` 则匹配成功。默认情况下， `~= ` 运算符使用`==`运算符比较相同类型的两个值。它还可以通过检查值是否包含在范围内来将值与值范围匹配，如以下示例所示。
 
 ```swift
 let point = (1, 2)
@@ -449,9 +358,7 @@ default:
   ```
 -->
 
-You can overload the `~=` operator to provide custom expression matching behavior.
-For example, you can rewrite the above example to compare the `point` expression
-with a string representations of points.
+您可以重载`~=` 运算符以提供自定义表达式匹配行为。例如，您可以重写上面的示例，以将`point`表达式与点的字符串表示形式进行比较.
 
 ```swift
 // Overload the ~= operator to match a string with an integer.
@@ -485,15 +392,15 @@ default:
   ```
 -->
 
-> Grammar of an expression pattern:
+> 表达式模式的语法:
 >
 > *expression-pattern* → *expression*
 
-> Beta Software:
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。该信息可能会发生变化，并且根据本文档实现的软件应使用最终操作系统软件进行测试.
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试软件的](https://developer.apple.com/support/beta-software/)更多信息.
 
 <!--
 This source file is part of the Swift.org open source project
