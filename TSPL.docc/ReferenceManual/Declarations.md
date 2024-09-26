@@ -3582,7 +3582,7 @@ Call the `externalMacro(module:type:)` macro from the Swift standard library,
 passing in the name of a type that contains the macro's implementation,
 and the name of the module that contains that type.
 
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
+[SwiftSyntax]: https://github.com/apple/swift-syntax/
 
 Macros can be overloaded,
 following the same model used by functions.

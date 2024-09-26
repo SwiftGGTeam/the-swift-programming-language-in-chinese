@@ -520,7 +520,7 @@ automatically includes a dependency on SwiftSyntax.
 If you're adding macros to an existing project,
 add a dependency on SwiftSyntax in your `Package.swift` file:
 
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
+[SwiftSyntax]: https://github.com/apple/swift-syntax/
 
 ```swift
 dependencies: [
