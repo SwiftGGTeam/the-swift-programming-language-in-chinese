@@ -255,7 +255,7 @@ occupations["Jayne"] = "Public Relations"
   ```swifttest
   -> var fruits = ["strawberries", "limes", "tangerines"]
   -> fruits[1] = "grapes"
-  ---
+
   -> var occupations = [
          "Malcolm": "Captain",
          "Kaylee": "Mechanic",
@@ -317,7 +317,7 @@ let emptyDictionary: [String: Float] = [:]
   ```swifttest
   -> let emptyArray: [String] = []
   -> let emptyDictionary: [String: Float] = [:]
-  ---
+
   -> let anotherEmptyArray = [String]()
   -> let emptyDictionary = [String: Float]()
   ```
@@ -432,7 +432,7 @@ if let name = optionalName {
   -> var optionalString: String? = "Hello"
   -> print(optionalString == nil)
   <- false
-  ---
+
   -> var optionalName: String? = "John Appleseed"
   -> var greeting = "Hello!"
   -> if let name = optionalName {
@@ -658,7 +658,7 @@ print(m)
      }
   -> print(n)
   <- 128
-  ---
+
   -> var m = 2
   -> repeat {
          m *= 2
@@ -1132,11 +1132,11 @@ class NamedShape {
   -> class NamedShape {
          var numberOfSides: Int = 0
          var name: String
-  ---
+
          init(name: String) {
             self.name = name
          }
-  ---
+
          func simpleDescription() -> String {
             return "A shape with \(numberOfSides) sides."
          }
@@ -1202,17 +1202,17 @@ test.simpleDescription()
   ```swifttest
   -> class Square: NamedShape {
          var sideLength: Double
-  ---
+
          init(sideLength: Double, name: String) {
              self.sideLength = sideLength
              super.init(name: name)
              numberOfSides = 4
          }
-  ---
+
          func area() -> Double {
              return sideLength * sideLength
          }
-  ---
+
          override func simpleDescription() -> String {
              return "A square with sides of length \(sideLength)."
          }
@@ -1276,13 +1276,13 @@ print(triangle.sideLength)
   ```swifttest
   -> class EquilateralTriangle: NamedShape {
          var sideLength: Double = 0.0
-  ---
+
          init(sideLength: Double, name: String) {
              self.sideLength = sideLength
              super.init(name: name)
              numberOfSides = 3
          }
-  ---
+
          var perimeter: Double {
              get {
                   return 3.0 * sideLength
@@ -1291,7 +1291,7 @@ print(triangle.sideLength)
                  sideLength = newValue / 3.0
              }
          }
-  ---
+
          override func simpleDescription() -> String {
              return "An equilateral triangle with sides of length \(sideLength)."
          }
@@ -1471,7 +1471,7 @@ let aceRawValue = ace.rawValue
          case ace = 1
          case two, three, four, five, six, seven, eight, nine, ten
          case jack, queen, king
-  ---
+
          func simpleDescription() -> String {
              switch self {
                  case .ace:
@@ -1562,7 +1562,7 @@ let heartsDescription = hearts.simpleDescription()
   ```swifttest
   -> enum Suit {
          case spades, hearts, diamonds, clubs
-  ---
+
          func simpleDescription() -> String {
              switch self {
                  case .spades:
@@ -1679,10 +1679,10 @@ case let .failure(message):
          case result(String, String)
          case failure(String)
      }
-  ---
+
   -> let success = ServerResponse.result("6:00 am", "8:09 pm")
   -> let failure = ServerResponse.failure("Out of cheese.")
-  ---
+
   -> switch success {
          case let .result(sunrise, sunset):
              print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
@@ -1982,7 +1982,7 @@ let bDescription = b.simpleDescription
   -> let aDescription = a.simpleDescription
   >> print(aDescription)
   << A very simple class.  Now 100% adjusted.
-  ---
+
   -> struct SimpleStructure: ExampleProtocol {
           var simpleDescription: String = "A simple structure"
           mutating func adjust() {
@@ -2309,13 +2309,13 @@ print(fridgeIsOpen)
   ```swifttest
   -> var fridgeIsOpen = false
   -> let fridgeContent = ["milk", "eggs", "leftovers"]
-  ---
+
   -> func fridgeContains(_ food: String) -> Bool {
          fridgeIsOpen = true
          defer {
              fridgeIsOpen = false
          }
-  ---
+
          let result = fridgeContent.contains(food)
          return result
      }

@@ -392,7 +392,7 @@ for try await line in handle.bytes.lines {
 
   ```swifttest
   -> import Foundation
-  ---
+
   >> func f() async throws {
   -> let handle = FileHandle.standardInput
   -> for try await line in handle.bytes.lines {
@@ -477,7 +477,7 @@ show(photos)
   -> let firstPhoto = await downloadPhoto(named: photoNames[0])
   -> let secondPhoto = await downloadPhoto(named: photoNames[1])
   -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -518,7 +518,7 @@ show(photos)
   -> async let firstPhoto = downloadPhoto(named: photoNames[0])
   -> async let secondPhoto = downloadPhoto(named: photoNames[1])
   -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -1286,13 +1286,13 @@ await logger.addReading(from: reading)
   -> struct TemperatureReading: Sendable {
          var measurement: Int
      }
-  ---
+
   -> extension TemperatureLogger {
          func addReading(from reading: TemperatureReading) {
              measurements.append(reading.measurement)
          }
      }
-  ---
+
   -> let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
   -> let reading = TemperatureReading(measurement: 45)
   -> await logger.addReading(from: reading)
@@ -1351,7 +1351,7 @@ a file descriptor isn't safe to send across concurrency domains.
   -> struct FileDescriptor {
   ->     let rawValue: CInt
   -> }
-  ---
+
   -> @available(*, unavailable)
   -> extension FileDescriptor: Sendable { }
   >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)

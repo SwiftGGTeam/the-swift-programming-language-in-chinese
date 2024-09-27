@@ -249,7 +249,7 @@ For example:
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   >> print(type(of: f))
   << (Int, Int) -> ()
@@ -281,17 +281,17 @@ f = functionWithDifferentNumberOfArguments // Error
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   -> f = anotherFunction              // OK
   -> f = functionWithDifferentLabels  // OK
-  ---
+
   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
   -> f = functionWithDifferentArgumentTypes     // Error
   !$ error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
   !! f = functionWithDifferentArgumentTypes     // Error
   !! ^
-  ---
+
   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
   -> f = functionWithDifferentNumberOfArguments // Error
   !$ error: type of expression is ambiguous without more context
@@ -406,11 +406,11 @@ see <doc:Declarations#Asynchronous-Functions-and-Methods>.
   >>     }
   >>     return g
   >> }
-  ---
+
   >> let a: (Int) -> (Int) -> Int = f
   >> let r0 = a(3)(5)
   >> assert(r0 == 8)
-  ---
+
   >> let b: (Int) -> ((Int) -> Int) = f
   >> let r1 = b(3)(5)
   >> assert(r1 == 8)
@@ -1242,12 +1242,12 @@ print(type(of: z.f()))
   -> let x = Superclass()
   -> print(type(of: x.f()))
   <- Superclass
-  ---
+
   -> class Subclass: Superclass { }
   -> let y = Subclass()
   -> print(type(of: y.f()))
   <- Subclass
-  ---
+
   -> let z: Superclass = Subclass()
   -> print(type(of: z.f()))
   <- Subclass
