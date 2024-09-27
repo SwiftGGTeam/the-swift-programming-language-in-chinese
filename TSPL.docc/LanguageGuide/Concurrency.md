@@ -630,7 +630,7 @@ For a task group that returns a result,
 you add code that accumulates its result
 inside the closure you pass to `withTaskGroup(of:returning:body:)`.
 
-```
+```swift
 let photos = await withTaskGroup(of: Data.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
@@ -708,7 +708,7 @@ like closing network connections and deleting temporary files.
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
-```
+```swift
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {

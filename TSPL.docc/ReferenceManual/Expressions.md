@@ -1528,7 +1528,7 @@ However, when a default value is a larger expression
 that contains a macro in addition to other code,
 those macros are evaluated where they appear in the function definition.
 
-```
+```swift
 func f(a: Int = #line, b: Int = (#line), c: Int = 100 + #line) {
     print(a, b, c)
 }
