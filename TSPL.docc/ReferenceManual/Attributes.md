@@ -752,7 +752,7 @@ Or are those supported today?
 I see #error and #warning as @freestanding(declaration)
 in the stdlib already:
 
-https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
+https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L102
 -->
 
 ### frozen

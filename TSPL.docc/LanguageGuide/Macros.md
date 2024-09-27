@@ -520,11 +520,11 @@ automatically includes a dependency on SwiftSyntax.
 If you're adding macros to an existing project,
 add a dependency on SwiftSyntax in your `Package.swift` file:
 
-[SwiftSyntax]: https://github.com/apple/swift-syntax/
+[SwiftSyntax]: https://github.com/swiftlang/swift-syntax
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0")
+    .package(url: "https://github.com/swiftlang/swift-syntax", from: "509.0.0")
 ],
 ```
 
@@ -633,7 +633,7 @@ so you can use this approach when implementing any kind of macro.
 <!--
 The return-a-string APIs come from here
 
-https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
+https://github.com/swiftlang/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 -->
 
 
