@@ -994,7 +994,7 @@ func allItemsMatch<C1: Container, C2: Container>
 - `someContainer` 是一个 `C1` 类型的容器。
 - `anotherContainer` 是一个 `C2` 类型的容器。
 - `someContainer` 和 `anotherContainer` 包含相同类型的元素。
-- `someContainer` 中的元素可以通过不等于操作符（!=）来检查它们是否相同。
+- `someContainer` 中的元素可以通过不等于操作符（`!=`）来检查它们是否相同。
 
 第三个和第四个要求结合起来意味着 `anotherContainer` 中的项也可以使用 `!=` 操作符进行检查，因为它们与 `someContainer` 中的项类型完全相同。
 
@@ -1313,11 +1313,11 @@ extension Container where Item: Equatable {
   ```
 -->
 
-在使用上下文 `where` 子句的示例中，由于每个方法的泛型 `where` 子句都声明了需要满足的要求，因此`average()` 和 `endsWith(_:)` 的实现都可以放在在同一个扩展中。将这些要求移动到扩展的泛型 `where` 子句进行声明也能起到同样的效果，但每一个扩展只能有一个必备条件。
+在使用上下文 `where` 子句的示例中，由于每个方法的泛型 `where` 子句都声明了需要满足的要求，因此 `average()` 和 `endsWith(_:)` 的实现都可以放在在同一个扩展中。将这些要求移动到扩展的泛型 `where` 子句进行声明也能起到同样的效果，但每个要求需要一个扩展。
 
 ## 具有泛型 Where 子句的关联类型
 
-你可以在关联类型上后面加上一个泛型 `where` 子句。例如，假设你想创建一个包含迭代器（`Iterator`）的 `Container`，类似于 Swift 标准库中的 `Sequence` 协议。你可以这样编写：
+你可以在关联类型上后面添加一个泛型 `where` 子句。例如，假设你想创建一个包含迭代器 `Iterator` 的 `Container`，类似于 Swift 标准库中的 `Sequence` 协议。你可以这样编写：
 
 ```swift
 protocol Container {
@@ -1522,11 +1522,11 @@ extension Container {
   TODO: Describe how Optional<Wrapped> works
 -->
 
-> Beta Software:
+Beta 软件：
+
+> 本文档包含关于正在开发中的 API 或技术的初步信息。这些信息可能会发生变化，依据本文档实现的软件应与最终操作系统软件一起进行测试。
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
->
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多使用信息 [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
