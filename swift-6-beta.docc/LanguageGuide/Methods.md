@@ -1,37 +1,27 @@
-# Methods
+# 方法
 
-Define and call functions that are part of an instance or type.
+定义并调用属于实例或类型的函数。
 
-*Methods* are functions that are associated with a particular type.
-Classes, structures, and enumerations can all define instance methods,
-which encapsulate specific tasks and functionality for working with an instance of a given type.
-Classes, structures, and enumerations can also define type methods,
-which are associated with the type itself.
-Type methods are similar to class methods in Objective-C.
+*方法*是与特定类型关联的函数。
+类、结构体和枚举都可以定义实例方法，这些方法封装了处理给定类型实例的特定任务和功能。
+类、结构体和枚举还可以定义类型方法，这些方法与类型本身相关联。
+类型方法类似于 Objective-C 中的类方法。
 
-The fact that structures and enumerations can define methods in Swift
-is a major difference from C and Objective-C.
-In Objective-C, classes are the only types that can define methods.
-In Swift, you can choose whether to define a class, structure, or enumeration,
-and still have the flexibility to define methods on the type you create.
+结构体和枚举在 Swift 中能够定义方法，这是与 C 和 Objective-C 的一个重大区别。
+在 Objective-C 中，只有类可以定义方法。
+而在 Swift 中，无论你选择定义类、结构体或枚举，你都可以灵活地为你创建的类型定义方法。
 
-## Instance Methods
+## 实例方法
 
-*Instance methods* are functions that belong to instances of
-a particular class, structure, or enumeration.
-They support the functionality of those instances,
-either by providing ways to access and modify instance properties,
-or by providing functionality related to the instance's purpose.
-Instance methods have exactly the same syntax as functions,
-as described in <doc:Functions>.
+*实例方法*是属于某个类、结构体或枚举实例的函数。
+它们通过提供访问和修改实例属性的方法，或者提供与实例功能相关的操作，来支持实例的整体功能。
+实例方法的语法与函数完全相同，具体描述可以参见 <doc:Functions>。
 
-You write an instance method within the opening and closing braces of the type it belongs to.
-An instance method has implicit access to all other instance methods and properties of that type.
-An instance method can be called only on a specific instance of the type it belongs to.
-It can't be called in isolation without an existing instance.
+你在定义类型时，将实例方法写在类型的大括号内。
+实例方法可以隐式访问该类型的所有其他实例方法和属性。
+实例方法只能在该类型的特定实例上调用，而不能在没有实例的情况下独立调用。
 
-Here's an example that defines a simple `Counter` class,
-which can be used to count the number of times an action occurs:
+这是一个定义简单“Counter”类的示例，可用于计算某个动作发生的次数：
 
 ```swift
 class Counter {
