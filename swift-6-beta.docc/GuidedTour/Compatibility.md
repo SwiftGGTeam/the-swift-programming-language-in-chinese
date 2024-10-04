@@ -1,59 +1,26 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/GuidedTour/Compatibility.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/compatibility
-翻译估计用时：⭐️
--->
+# 版本兼容性
 
-# Version Compatibility
+了解在旧版本中可用的功能。
 
-Learn what functionality is available in older language modes.
+本书介绍了 Swift 6，这是 Xcode 16 中包含的默认 Swift 版本。你可以使用 Swift 6 编译器来构建 Swift 6、Swift 5、Swift 4.2 或 Swift 4 编写的代码。
 
-This book describes Swift 6,
-the default version of Swift that's included in Xcode 16.
-You can use the Swift 6 compiler to build code
-that's written in Swift 6, Swift 5, Swift 4.2, or Swift 4.
+当你使用 Swift 6 编译器构建 Swift 5 的代码时，你可以使用 Swift 6 的新功能 —— 这些功能要么默认启用，要么通过即将推出的功能标志启用。然而，要启用严格的并发检查，你需要升级到 Swift 6。
 
-When you use the Swift 6 compiler
-to build code that uses the Swift 5 language mode,
-you can use the new features from Swift 6 ---
-they're enabled either by default or by an upcoming feature flag.
-However, to enable strict concurrency checking,
-you need to upgrade to the Swift 6 language mode.
+此外，当你使用 Xcode 15.3 构建 Swift 4 和 Swift 4.2 的代码时，大部分 Swift 5 的功能仍然可用。不过，以下更改仅适用于使用 Swift 5 的代码：
 
-In addition,
-when you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
-most Swift 5 functionality is still available.
-That said,
-the following changes are available only to code
-that uses the Swift 5 language mode:
+- 返回不透明类型的函数需要 Swift 5.1 的运行时支持。
+- `try?` 表达式不会为已经返回可选值的表达式引入额外的可选性的层级。
+- 大型整数字面量初始化表达式会被推断为正确的整数类型。例如，`UInt64(0xffff_ffff_ffff_ffff)` 会计算出正确的值，而不是发生溢出。
 
-- Functions that return an opaque type require the Swift 5.1 runtime.
-- The `try?` expression doesn't introduce an extra level of optionality
-  to expressions that already return optionals.
-- Large integer literal initialization expressions are inferred
-  to be of the correct integer type.
-  For example, `UInt64(0xffff_ffff_ffff_ffff)` evaluates to the correct value
-  rather than overflowing.
+并发功能需要 Swift 5 版本以及提供相应并发类型的 Swift 标准库版本。在 Apple 平台上，部署的目标版本需设置为 iOS 13、macOS 10.15、tvOS 13、watchOS 6 或 visionOS 1 以上。
 
-Concurrency requires the Swift 5 language mode
-and a version of the Swift standard library
-that provides the corresponding concurrency types.
-On Apple platforms, set a deployment target
-of at least iOS 13, macOS 10.15, tvOS 13, watchOS 6, or visionOS 1.
+用 Swift 6 编写的项目可以依赖 Swift 5、Swift 4.2 或 Swift 4 编写的项目，反之亦然。这意味着，如果你有一个大型项目，并将其分为多个框架，你可以逐个框架地将代码迁移到新版本。
 
-A target written in Swift 6 can depend on
-a target that's written in Swift 5, Swift 4.2 or Swift 4,
-and vice versa.
-This means, if you have a large project
-that's divided into multiple frameworks,
-you can migrate your code to a newer language version
-one framework at a time.
-
-> Beta Software:
+> Beta 版软件：
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含关于正在开发的 API 或技术的初步信息。这些信息可能会发生变化，并且根据本文档实现的软件应与最终的操作系统软件一起进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 点击了解更多关于使用 [Apple Beta 版本软件](https://developer.apple.com/support/beta-software/) 的信息。
 
 <!--
 This source file is part of the Swift.org open source project

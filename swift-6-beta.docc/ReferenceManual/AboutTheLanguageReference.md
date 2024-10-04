@@ -1,71 +1,40 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/ReferenceManual/AboutTheLanguageReference.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/aboutthelanguagereference
-翻译估计用时：⭐️
--->
+# 关于语言参考
 
-# About the Language Reference
+理解 Swift 语法描述中使用的标注。
 
-Read the notation that the formal grammar uses.
+本书的这一部分介绍了 Swift 编程语言的语法结构。这里描述的语法旨在帮助你更深入地理解 Swift 语言的特性，而不是让你直接实现相关的解析器或编译器。
 
-This part of the book describes the formal grammar of the Swift programming language.
-The grammar described here is intended to help you understand the language in more
-detail, rather than to allow you to directly implement a parser or compiler.
+与其他语言相比，Swift 语言还是相对精简的，这是因为 Swift 代码里的很多常见类型、函数和运算符实际上是在 Swift 标准库中定义的。尽管它们并不是 Swift 语言本身的一部分，但它们在本书的讨论和代码示例中被广泛使用。
 
-The Swift language is relatively small, because many common types, functions, and operators
-that appear virtually everywhere in Swift code
-are actually defined in the Swift standard library. Although these types, functions,
-and operators aren't part of the Swift language itself,
-they're used extensively in the discussions and code examples in this part of the book.
+## 如何阅读语法
 
-## How to Read the Grammar
+用于描述 Swift 编程语言的语法结构标注需要遵循以下几条约定：
 
-The notation used to describe the formal grammar of the Swift programming language
-follows a few conventions:
+- 箭头（→）用于标记语法生成规则，可以理解为“可以由……组成”。
+- 语法类别以 *斜体* 文本表示，并出现在语法生成规则的两边。
+- 字面单词和标点符用 **`加粗等宽字体`** 表示，并仅出现在语法生成规则的右侧。
+- 可选的语法生成规则由竖线（|）分隔。当可选的生成规则过长而难以阅读时，它们会被拆分为多行新的语法生成规则。
+- 在少数情况下，普通字体文本用于描述语法生成规则右侧的内容。
+- 可选的语法类别和字面量由后缀问号 *?* 标记。
 
-- An arrow (→) is used to mark grammar productions and can be read as "can consist of."
-- Syntactic categories are indicated by *italic* text and appear on both sides
-  of a grammar production rule.
-- Literal words and punctuation are indicated by **`boldface constant width`** text
-  and appear only on the right-hand side of a grammar production rule.
-- Alternative grammar productions are separated by vertical
-  bars (|). When alternative productions are too long to read easily,
-  they're broken into multiple grammar production rules on new lines.
-- In a few cases, regular font text is used to describe the right-hand side
-  of a grammar production rule.
-- Optional syntactic categories and literals are marked by a trailing
-  question mark, *?*.
-
-As an example, the grammar of a getter-setter block is defined as follows:
+例如，getter-setter 代码块的语法定义如下：
 
 > Grammar of a getter-setter block:
 >
 > *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** | **`{`** *setter-clause* *getter-clause* **`}`**
 
-This definition indicates that a getter-setter block can consist of a getter clause
-followed by an optional setter clause, enclosed in braces,
-*or* a setter clause followed by a getter clause, enclosed in braces.
-The grammar production above is equivalent to the following two productions,
-where the alternatives are spelled out explicitly:
+这个定义表明 getter-setter 代码块可以由一个 getter 子句后跟一个可选的 setter 子句构成，并用大括号括起来， *或者* 由一个 setter 子句后跟一个 getter 子句构成，并用大括号括起来。上面的语法生成规则等价于以下两个生成规则，其中备选项也被明确列出：
 
 > Grammar of a getter-setter block:
 >
->
-> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** 
 > *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`**
 
-> Beta Software:
+
+
+> 测试版软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
 
-<!--
-This source file is part of the Swift.org open source project
-
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
-
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
--->

@@ -1,69 +1,28 @@
-<!--
-要翻译的文件：https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese/blob/swift-6-beta-translation/swift-6-beta.docc/LanguageGuide/AutomaticReferenceCounting.md
-Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting
-翻译估计用时：⭐️⭐️⭐️⭐️⭐️
--->
+# 自动引用计数
 
-# Automatic Reference Counting
+管理对象及其关系的生命周期。
 
-Model the lifetime of objects and their relationships.
+Swift 使用 *自动引用计数* （ARC）来跟踪和管理应用的内存使用。在大多数情况下，这意味着 Swift 中的内存管理"自动运行"，你不需要自己考虑内存管理。当类实例不再需要时，ARC 会自动释放这些实例使用的内存。
 
-Swift uses *Automatic Reference Counting* (ARC)
-to track and manage your app's memory usage.
-In most cases, this means that memory management “just works” in Swift,
-and you don't need to think about memory management yourself.
-ARC automatically frees up the memory used by class instances
-when those instances are no longer needed.
+然而，在少数情况下，ARC 需要更多关于代码各部分之间关系的信息，以便为你管理内存。本章描述了这些情况，并展示了如何使 ARC 管理应用的所有内存。Swift 中使用 ARC 的方法与[过渡到 ARC 发布说明](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)中描述的在 Objective-C 中使用 ARC 的方法非常相似。
 
-However, in a few cases ARC requires more information
-about the relationships between parts of your code
-in order to manage memory for you.
-This chapter describes those situations
-and shows how you enable ARC to manage all of your app's memory.
-Using ARC in Swift is very similar to the approach described in
-[Transitioning to ARC Release Notes](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)
-for using ARC with Objective-C.
+引用计数只适用于类的实例。结构体和枚举是值类型，不是引用类型，它们不是通过引用存储和传递的。
 
-Reference counting applies only to instances of classes.
-Structures and enumerations are value types, not reference types,
-and aren't stored and passed by reference.
+## ARC 如何工作
 
-## How ARC Works
+每次创建一个类的新实例时，ARC 都会分配一块内存来存储该实例的信息。这块内存保存了实例的类型信息，以及与该实例相关的所有存储属性的值。
 
-Every time you create a new instance of a class,
-ARC allocates a chunk of memory to store information about that instance.
-This memory holds information about the type of the instance,
-together with the values of any stored properties associated with that instance.
+此外，当一个实例不再需要时，ARC 会释放该实例使用的内存，以便内存可以用于其他目的。这确保了类实例在不再需要时不会占用内存空间。
 
-Additionally, when an instance is no longer needed,
-ARC frees up the memory used by that instance
-so that the memory can be used for other purposes instead.
-This ensures that class instances don't take up space in memory
-when they're no longer needed.
+然而，如果 ARC 在一个实例仍在使用时就将其释放，那么将无法再访问该实例的属性或调用该实例的方法。实际上，如果你试图访问该实例，你的应用很可能会崩溃。
 
-However, if ARC were to deallocate an instance that was still in use,
-it would no longer be possible to access that instance's properties,
-or call that instance's methods.
-Indeed, if you tried to access the instance, your app would most likely crash.
+为了确保实例在仍然需要时不会消失，ARC 会跟踪当前有多少属性、常量和变量正在引用每个类实例。只要至少还存在一个对该实例的活动引用，ARC 就不会释放该实例。
 
-To make sure that instances don't disappear while they're still needed,
-ARC tracks how many properties, constants, and variables
-are currently referring to each class instance.
-ARC will not deallocate an instance
-as long as at least one active reference to that instance still exists.
+为了实现这一点，每当你将类实例分配给属性、常量或变量时，该属性、常量或变量就会对该实例进行 *强引用* 。之所以称之为"强"引用，是因为它牢牢地持有该实例，只要该强引用存在，就不允许释放该实例。
 
-To make this possible,
-whenever you assign a class instance to a property, constant, or variable,
-that property, constant, or variable makes a *strong reference* to the instance.
-The reference is called a "strong" reference because
-it keeps a firm hold on that instance,
-and doesn't allow it to be deallocated for as long as that strong reference remains.
+## ARC 的实际应用
 
-## ARC in Action
-
-Here's an example of how Automatic Reference Counting works.
-This example starts with a simple class called `Person`,
-which defines a stored constant property called `name`:
+下面是一个自动引用计数如何工作的例子。这个例子从一个简单的 `Person` 类开始，该类定义了一个名为 `name` 的存储常量属性:
 
 ```swift
 class Person {
@@ -95,17 +54,9 @@ class Person {
   ```
 -->
 
-The `Person` class has an initializer that sets the instance's `name` property
-and prints a message to indicate that initialization is underway.
-The `Person` class also has a deinitializer
-that prints a message when an instance of the class is deallocated.
+`Person` 类有一个初始化器，用于设置实例的 `name` 属性并打印一条消息，表示初始化正在进行。`Person` 类还有一个析构器，当类的实例被释放时打印一条消息。
 
-The next code snippet defines three variables of type `Person?`,
-which are used to set up multiple references to a new `Person` instance
-in subsequent code snippets.
-Because these variables are of an optional type (`Person?`, not `Person`),
-they're automatically initialized with a value of `nil`,
-and don't currently reference a `Person` instance.
+下面的代码片段定义了三个 `Person?` 类型的变量，这些变量在后续的代码片段中用于设置对新的 `Person` 实例的多个引用。因为这些变量是可选类型(`Person?`，而不是 `Person`)，它们会自动初始化为 `nil` 值，目前并不引用 `Person` 实例。
 
 ```swift
 var reference1: Person?
@@ -123,8 +74,7 @@ var reference3: Person?
   ```
 -->
 
-You can now create a new `Person` instance
-and assign it to one of these three variables:
+现在你可以创建一个新的 `Person` 实例并将其分配给这三个变量之一:
 
 ```swift
 reference1 = Person(name: "John Appleseed")
@@ -140,17 +90,11 @@ reference1 = Person(name: "John Appleseed")
   ```
 -->
 
-Note that the message `"John Appleseed is being initialized"` is printed
-at the point that you call the `Person` class's initializer.
-This confirms that initialization has taken place.
+注意，当你调用 `Person` 类的初始化器时，会打印消息 `"John Appleseed is being initialized"`。这确认了初始化已经发生。
 
-Because the new `Person` instance has been assigned to the `reference1` variable,
-there's now a strong reference from `reference1` to the new `Person` instance.
-Because there's at least one strong reference,
-ARC makes sure that this `Person` is kept in memory and isn't deallocated.
+因为新的 `Person` 实例已被分配给 `reference1` 变量，所以现在从 `reference1` 到新的 `Person` 实例有了一个强引用。因为至少存在一个强引用，ARC 会确保这个 `Person` 被保留在内存中而不被释放。
 
-If you assign the same `Person` instance to two more variables,
-two more strong references to that instance are established:
+如果你将同一个 `Person` 实例分配给另外两个变量，就会建立两个对该实例的额外强引用:
 
 ```swift
 reference2 = reference1
@@ -166,12 +110,9 @@ reference3 = reference1
   ```
 -->
 
-There are now *three* strong references to this single `Person` instance.
+现在这个单一的 `Person` 实例有 *三个* 强引用。
 
-If you break two of these strong references (including the original reference)
-by assigning `nil` to two of the variables,
-a single strong reference remains,
-and the `Person` instance isn't deallocated:
+如果你通过将 `nil` 分配给两个变量来打破这些强引用中的两个（包括原始引用），一个强引用仍然存在，`Person` 实例不会被释放:
 
 ```swift
 reference1 = nil
@@ -187,9 +128,7 @@ reference2 = nil
   ```
 -->
 
-ARC doesn't deallocate the `Person` instance until
-the third and final strong reference is broken,
-at which point it's clear that you are no longer using the `Person` instance:
+ARC 不会释放 `Person` 实例，直到第三个也是最后一个强引用被打破，这时很明显你不再使用 `Person` 实例:
 
 ```swift
 reference3 = nil
@@ -205,29 +144,15 @@ reference3 = nil
   ```
 -->
 
-## Strong Reference Cycles Between Class Instances
+## 类实例之间的强引用循环
 
-In the examples above,
-ARC is able to track the number of references to the new `Person` instance you create
-and to deallocate that `Person` instance when it's no longer needed.
+在上面的例子中，ARC 能够跟踪你创建的新 `Person` 实例的引用数量，并在不再需要这个 `Person` 实例时将其释放。
 
-However, it's possible to write code in which an instance of a class
-*never* gets to a point where it has zero strong references.
-This can happen if two class instances hold a strong reference to each other,
-such that each instance keeps the other alive.
-This is known as a *strong reference cycle*.
+然而，可能会出现这样的情况：一个类的实例 *永远* 不会到达它有零个强引用的时刻。如果两个类实例彼此持有强引用，使得每个实例都使对方保持活跃，就可能发生这种情况。这被称为 *强引用循环* 。
 
-You resolve strong reference cycles
-by defining some of the relationships between classes
-as weak or unowned references instead of as strong references.
-This process is described in
-<doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-Between-Class-Instances>.
-However, before you learn how to resolve a strong reference cycle,
-it's useful to understand how such a cycle is caused.
+你可以通过将类之间的某些关系定义为弱引用或无主引用，而不是强引用，来解决强引用循环。这个过程在<doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-Between-Class-Instances>中描述。然而，在学习如何解决强引用循环之前，了解这种循环是如何产生的是很有用的。
 
-Here's an example of how a strong reference cycle can be created by accident.
-This example defines two classes called `Person` and `Apartment`,
-which model a block of apartments and its residents:
+这里有一个例子，展示了如何意外创建强引用循环。这个例子定义了两个名为 `Person` 和 `Apartment` 的类，用于模拟一个公寓楼及其居民:
 
 ```swift
 class Person {
@@ -265,23 +190,13 @@ class Apartment {
   ```
 -->
 
-Every `Person` instance has a `name` property of type `String`
-and an optional `apartment` property that's initially `nil`.
-The `apartment` property is optional, because a person may not always have an apartment.
+每个 `Person` 实例都有一个 `String` 类型的 `name` 属性和一个初始为 `nil` 的可选 `apartment` 属性。`apartment` 属性是可选的，因为一个人可能并不总是有公寓。
 
-Similarly, every `Apartment` instance has a `unit` property of type `String`
-and has an optional `tenant` property that's initially `nil`.
-The tenant property is optional because an apartment may not always have a tenant.
+同样，每个 `Apartment` 实例都有一个 `String` 类型的 `unit` 属性和一个初始为 `nil` 的可选 `tenant` 属性。租户属性是可选的，因为一个公寓可能并不总是有租户。
 
-Both of these classes also define a deinitializer,
-which prints the fact that an instance of that class is being deinitialized.
-This enables you to see whether
-instances of `Person` and `Apartment` are being deallocated as expected.
+这两个类还定义了一个析构器，它打印一条消息，表明该类的一个实例正在被释放。这使你能够看到 `Person` 和 `Apartment` 实例是否如预期那样被释放。
 
-This next code snippet defines two variables of optional type
-called `john` and `unit4A`,
-which will be set to a specific `Apartment` and `Person` instance below.
-Both of these variables have an initial value of `nil`, by virtue of being optional:
+下一个代码片段定义了两个可选类型的变量 `john` 和 `unit4A`，它们将在下面被设置为特定的 `Apartment` 和 `Person` 实例。由于是可选类型，这两个变量的初始值都是 `nil`:
 
 ```swift
 var john: Person?
@@ -297,8 +212,7 @@ var unit4A: Apartment?
   ```
 -->
 
-You can now create a specific `Person` instance and `Apartment` instance
-and assign these new instances to the `john` and `unit4A` variables:
+现在你可以创建特定的 `Person` 实例和 `Apartment` 实例，并将这些新实例分配给 `john` 和 `unit4A` 变量:
 
 ```swift
 john = Person(name: "John Appleseed")
@@ -314,17 +228,11 @@ unit4A = Apartment(unit: "4A")
   ```
 -->
 
-Here's how the strong references look after creating and assigning these two instances.
-The `john` variable now has a strong reference to the new `Person` instance,
-and the `unit4A` variable has a strong reference to the new `Apartment` instance:
+以下是创建并分配这两个实例后强引用的样子。`john` 变量现在对新的 `Person` 实例有一个强引用，而 `unit4A` 变量对新的 `Apartment` 实例有一个强引用:
 
 ![](referenceCycle01)
 
-You can now link the two instances together
-so that the person has an apartment, and the apartment has a tenant.
-Note that an exclamation point (`!`) is used to unwrap and access
-the instances stored inside the `john` and `unit4A` optional variables,
-so that the properties of those instances can be set:
+现在你可以将这两个实例链接在一起，使这个人有一个公寓，而这个公寓有一个租户。注意使用感叹号（ `!` ）来解包和访问存储在 `john` 和 `unit4A` 可选变量中的实例，以便可以设置这些实例的属性:
 
 ```swift
 john!.apartment = unit4A
@@ -340,18 +248,11 @@ unit4A!.tenant = john
   ```
 -->
 
-Here's how the strong references look after you link the two instances together:
+以下是你将两个实例链接在一起后强引用的样子:
 
 ![](referenceCycle02)
 
-Unfortunately, linking these two instances creates
-a strong reference cycle between them.
-The `Person` instance now has a strong reference to the `Apartment` instance,
-and the `Apartment` instance has a strong reference to the `Person` instance.
-Therefore, when you break the strong references held by
-the `john` and `unit4A` variables,
-the reference counts don't drop to zero,
-and the instances aren't deallocated by ARC:
+不幸的是，链接这两个实例在它们之间创建了一个强引用循环。`Person` 实例现在对 `Apartment` 实例有一个强引用，而 `Apartment` 实例对 `Person` 实例有一个强引用。因此，当你打破 `john` 和 `unit4A` 变量持有的强引用时，引用计数不会降到零，实例不会被 ARC 释放:
 
 ```swift
 john = nil
@@ -367,37 +268,21 @@ unit4A = nil
   ```
 -->
 
-Note that neither deinitializer was called
-when you set these two variables to `nil`.
-The strong reference cycle prevents the `Person` and `Apartment` instances
-from ever being deallocated, causing a memory leak in your app.
+注意，当你将这两个变量设置为 `nil` 时，两个析构器都没有被调用。强引用循环阻止了 `Person` 和 `Apartment` 实例被释放，导致你的应用出现内存泄漏。
 
-Here's how the strong references look after you set
-the `john` and `unit4A` variables to `nil`:
+以下是你将 `john` 和 `unit4A` 变量设置为 `nil` 后强引用的样子:
 
 ![](referenceCycle03)
 
-The strong references between the `Person` instance
-and the `Apartment` instance remain and can't be broken.
+`Person` 实例和 `Apartment` 实例之间的强引用仍然存在，无法被打破。
 
-## Resolving Strong Reference Cycles Between Class Instances
+## 解决类实例之间的强引用循环
 
-Swift provides two ways to resolve strong reference cycles
-when you work with properties of class type:
-weak references and unowned references.
+Swift 提供了两种方法来解决你使用类类型的属性时出现的强引用循环：弱引用和无主引用。
 
-Weak and unowned references enable one instance in a reference cycle
-to refer to the other instance *without* keeping a strong hold on it.
-The instances can then refer to each other without creating a strong reference cycle.
+弱引用和无主引用使引用循环中的一个实例引用另一个实例而 *不* 对其保持强引用。这样，实例就可以相互引用而不创建强引用循环。
 
-Use a weak reference when the other instance has a shorter lifetime ---
-that is, when the other instance can be deallocated first.
-In the `Apartment` example above,
-it's appropriate for an apartment to be able to have
-no tenant at some point in its lifetime,
-and so a weak reference is an appropriate way to break the reference cycle in this case.
-In contrast, use an unowned reference when the other instance
-has the same lifetime or a longer lifetime.
+当另一个实例可能先被释放时————或者说，生命周期更短时，使用弱引用。在上面的 `Apartment` 例子中，公寓在其生命周期的某个时刻可能没有租户，所以在这种情况下，弱引用是打破引用循环的适当方式。相比之下，当另一个实例具有相同或更长的生命周期时，使用无主引用。
 
 <!--
   QUESTION: how do I answer the question
@@ -405,31 +290,15 @@ has the same lifetime or a longer lifetime.
   should be marked as weak or unowned?"
 -->
 
-### Weak References
+### 弱引用
 
-A *weak reference* is a reference that doesn't keep a strong hold
-on the instance it refers to,
-and so doesn't stop ARC from disposing of the referenced instance.
-This behavior prevents the reference from becoming part of a strong reference cycle.
-You indicate a weak reference by placing the `weak` keyword
-before a property or variable declaration.
+ *弱引用* 是一种不会对其引用的实例保持强持有的引用，因此不会阻止 ARC 处置被引用的实例。这种行为可以防止引用成为强引用循环的一部分。你可以通过在属性或变量声明前放置 `weak` 关键字来表示一个弱引用。
 
-Because a weak reference doesn't keep a strong hold on the instance it refers to,
-it's possible for that instance to be deallocated
-while the weak reference is still referring to it.
-Therefore, ARC automatically sets a weak reference to `nil`
-when the instance that it refers to is deallocated.
-And, because weak references need to allow
-their value to be changed to `nil` at runtime,
-they're always declared as variables, rather than constants, of an optional type.
+因为弱引用不会对其引用的实例保持强持有，所以有可能在弱引用仍然引用该实例时，该实例被释放。因此，当弱引用所引用的实例被释放时，ARC 会自动将弱引用设置为 `nil`。而且，由于弱引用需要允许它们的值在运行时被更改为 `nil`，它们总是被声明为可选类型的变量，而不是常量。
 
-You can check for the existence of a value in the weak reference,
-just like any other optional value,
-and you will never end up with
-a reference to an invalid instance that no longer exists.
+你可以像检查任何其他可选值一样检查弱引用中值的存在，并且你永远不会遇到引用已不存在的无效实例的情况。
 
-> Note: Property observers aren't called
-> when ARC sets a weak reference to `nil`.
+> 注意：当 ARC 将弱引用设置为 `nil` 时，不会调用属性观察器。
 
 <!--
   - test: `weak-reference-doesnt-trigger-didset`
@@ -450,10 +319,7 @@ a reference to an invalid instance that no longer exists.
   ```
 -->
 
-The example below is identical to the `Person` and `Apartment` example from above,
-with one important difference.
-This time around, the `Apartment` type's `tenant` property
-is declared as a weak reference:
+下面的例子与上面的 `Person` 和 `Apartment` 例子相同，只有一个重要的区别。这次，`Apartment` 类型的 `tenant` 属性被声明为弱引用:
 
 ```swift
 class Person {
@@ -491,8 +357,7 @@ class Apartment {
   ```
 -->
 
-The strong references from the two variables (`john` and `unit4A`)
-and the links between the two instances are created as before:
+两个变量（ `john` 和 `unit4A` ）的强引用以及两个实例之间的链接像之前一样被创建:
 
 ```swift
 var john: Person?
@@ -506,6 +371,7 @@ unit4A!.tenant = john
 ```
 
 <!--
+
   - test: `weakReferences`
 
   ```swifttest
@@ -520,15 +386,11 @@ unit4A!.tenant = john
   ```
 -->
 
-Here's how the references look now that you've linked the two instances together:
+现在你已经将两个实例链接在一起，引用看起来是这样的:
 
 ![](weakReference01)
 
-The `Person` instance still has a strong reference to the `Apartment` instance,
-but the `Apartment` instance now has a *weak* reference to the `Person` instance.
-This means that when you break the strong reference held by
-the `john` variable by setting it to `nil`,
-there are no more strong references to the `Person` instance:
+`Person` 实例仍然对 `Apartment` 实例有一个强引用，但 `Apartment` 实例现在对 `Person` 实例有一个 *弱* 引用。这意味着当你通过将 `john` 变量设置为 `nil` 来打破它所持有的强引用时，不再有对 `Person` 实例的强引用:
 
 ```swift
 john = nil
@@ -544,16 +406,11 @@ john = nil
   ```
 -->
 
-Because there are no more strong references to the `Person` instance,
-it's deallocated
-and the `tenant` property is set to `nil`:
+因为不再有对 `Person` 实例的强引用，它被释放，`tenant` 属性被设置为 `nil`:
 
 ![](weakReference02)
 
-The only remaining strong reference to the `Apartment` instance
-is from the `unit4A` variable.
-If you break *that* strong reference,
-there are no more strong references to the `Apartment` instance:
+唯一剩下的对 `Apartment` 实例的强引用来自 `unit4A` 变量。如果你打破 *那个* 强引用，就不再有对 `Apartment` 实例的强引用:
 
 ```swift
 unit4A = nil
@@ -569,35 +426,17 @@ unit4A = nil
   ```
 -->
 
-Because there are no more strong references to the `Apartment` instance,
-it too is deallocated:
+因为不再有对 `Apartment` 实例的强引用，它也被释放:
 
 ![](weakReference03)
 
-> Note: In systems that use garbage collection,
-> weak pointers are sometimes used to implement a simple caching mechanism
-> because objects with no strong references are deallocated
-> only when memory pressure triggers garbage collection.
-> However, with ARC, values are deallocated
-> as soon as their last strong reference is removed,
-> making weak references unsuitable for such a purpose.
+> 注意：在使用垃圾回收的系统中，弱指针有时被用来实现简单的缓存机制，因为没有强引用的对象只有在内存压力触发垃圾收集时才会被释放。然而，对于 ARC，值会在它们的最后一个强引用被移除时立即被释放，使得弱引用不适合这种目的。
 
-### Unowned References
+### 无主引用
 
-Like a weak reference,
-an *unowned reference* doesn't keep
-a strong hold on the instance it refers to.
-Unlike a weak reference, however,
-an unowned reference is used when the other instance
-has the same lifetime or a longer lifetime.
-You indicate an unowned reference by placing the `unowned` keyword
-before a property or variable declaration.
+像弱引用一样， *无主引用* 不会对它引用的实例保持强持有。然而，与弱引用不同，无主引用是在另一个实例具有相同或更长的生命周期时使用的。你通过在属性或变量声明前放置 `unowned` 关键字来表示一个无主引用。
 
-Unlike a weak reference,
-an unowned reference is expected to always have a value.
-As a result,
-marking a value as unowned doesn't make it optional,
-and ARC never sets an unowned reference's value to `nil`.
+与弱引用不同，无主引用总是被期望有一个值。因此，将一个值标记为无主不会使它成为可选的，ARC 也永远不会将无主引用的值设置为 `nil`。
 
 <!--
   Everything that unowned can do, weak can do slower and more awkwardly
@@ -606,12 +445,9 @@ and ARC never sets an unowned reference's value to `nil`.
   in the cases where it's actually correct for your data.
 -->
 
-> Important: Use an unowned reference only when you are sure that
-> the reference *always* refers to an instance that hasn't been deallocated.
+> 重要：只有当你确定该引用 *总是* 指向一个尚未被释放的实例时，才使用无主引用。
 >
-> If you try to access the value of an unowned reference
-> after that instance has been deallocated,
-> you'll get a runtime error.
+> 如果你在该实例被释放后尝试访问无主引用的值，你会得到一个运行时错误。
 
 <!--
   One way to satisfy that requirement is to
@@ -622,29 +458,13 @@ and ARC never sets an unowned reference's value to `nil`.
   is a backpointer from an object up to its owner.
 -->
 
-The following example defines two classes, `Customer` and `CreditCard`,
-which model a bank customer and a possible credit card for that customer.
-These two classes each store an instance of the other class as a property.
-This relationship has the potential to create a strong reference cycle.
+下面的例子定义了两个类，`Customer` 和 `CreditCard`，它们模拟了一个银行客户和该客户可能拥有的信用卡。这两个类各自将另一个类的实例存储为属性。这种关系有可能创建一个强引用循环。
 
-The relationship between `Customer` and `CreditCard` is slightly different from
-the relationship between `Apartment` and `Person`
-seen in the weak reference example above.
-In this data model, a customer may or may not have a credit card,
-but a credit card will *always* be associated with a customer.
-A `CreditCard` instance never outlives the `Customer` that it refers to.
-To represent this, the `Customer` class has an optional `card` property,
-but the `CreditCard` class has an unowned (and non-optional) `customer` property.
+`Customer` 和 `CreditCard` 之间的关系与上面弱引用例子中看到的 `Apartment` 和 `Person` 之间的关系略有不同。在这个数据模型中，一个客户可能有也可能没有信用卡，但一张信用卡将 *总是* 与一个客户相关联。`CreditCard` 实例永远不会比它引用的 `Customer` 存活得更久。为了表示这一点，`Customer` 类有一个可选的 `card` 属性，但 `CreditCard` 类有一个无主的(且非可选的) `customer` 属性。
 
-Furthermore, a new `CreditCard` instance can *only* be created
-by passing a `number` value and a `customer` instance
-to a custom `CreditCard` initializer.
-This ensures that a `CreditCard` instance always has
-a `customer` instance associated with it when the `CreditCard` instance is created.
+此外，只能通过将 `number` 值和 `customer` 实例传递给自定义 `CreditCard` 初始化器来创建新的 `CreditCard` 实例。这确保了当 `CreditCard` 实例被创建时，它总是有一个与之关联的 `customer` 实例。
 
-Because a credit card will always have a customer,
-you define its `customer` property as an unowned reference,
-to avoid a strong reference cycle:
+因为信用卡总是会有一个客户，你将其 `customer` 属性定义为无主引用，以避免强引用循环:
 
 ```swift
 class Customer {
@@ -692,14 +512,9 @@ class CreditCard {
   ```
 -->
 
-> Note: The `number` property of the `CreditCard` class is defined with
-> a type of `UInt64` rather than `Int`,
-> to ensure that the `number` property's capacity is large enough to store
-> a 16-digit card number on both 32-bit and 64-bit systems.
+> 注意:`CreditCard` 类的 `number` 属性被定义为 `UInt64` 类型而不是 `Int`，以确保 `number` 属性的容量足够大，可以在 32 位和 64 位系统上存储 16 位卡号。
 
-This next code snippet defines an optional `Customer` variable called `john`,
-which will be used to store a reference to a specific customer.
-This variable has an initial value of nil, by virtue of being optional:
+下一个代码片段定义了一个名为 `john` 的可选 `Customer` 变量，它将用于存储对特定客户的引用。由于是可选的，这个变量的初始值为 nil:
 
 ```swift
 var john: Customer?
@@ -713,9 +528,7 @@ var john: Customer?
   ```
 -->
 
-You can now create a `Customer` instance,
-and use it to initialize and assign a new `CreditCard` instance
-as that customer's `card` property:
+现在你可以创建一个 `Customer` 实例，并用它来初始化和分配一个新的 `CreditCard` 实例作为该客户的 `card` 属性:
 
 ```swift
 john = Customer(name: "John Appleseed")
@@ -731,24 +544,17 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
   ```
 -->
 
-Here's how the references look, now that you've linked the two instances:
+现在你已经链接了两个实例，引用看起来是这样的:
 
 ![](unownedReference01)
 
-The `Customer` instance now has a strong reference to the `CreditCard` instance,
-and the `CreditCard` instance has an unowned reference to the `Customer` instance.
+`Customer` 实例现在对 `CreditCard` 实例有一个强引用，而 `CreditCard` 实例对 `Customer` 实例有一个无主引用。
 
-Because of the unowned `customer` reference,
-when you break the strong reference held by the `john` variable,
-there are no more strong references to the `Customer` instance:
+由于无主的 `customer` 引用，当你打破 `john` 变量持有的强引用时，不再有对 `Customer` 实例的强引用:
 
 ![](unownedReference02)
 
-Because there are no more strong references to the `Customer` instance,
-it's deallocated.
-After this happens,
-there are no more strong references to the `CreditCard` instance,
-and it too is deallocated:
+因为不再有对 `Customer` 实例的强引用，它被释放。在这之后，不再有对 `CreditCard` 实例的强引用，它也被释放:
 
 ```swift
 john = nil
@@ -766,42 +572,24 @@ john = nil
   ```
 -->
 
-The final code snippet above shows that
-the deinitializers for the `Customer` instance and `CreditCard` instance
-both print their “deinitialized” messages
-after the `john` variable is set to `nil`.
+上面的最后一个代码片段显示，在 `john` 变量被设置为 `nil` 后，`Customer` 实例和 `CreditCard` 实例的析构器都打印了它们的 "deinitialized" 消息。
 
-> Note: The examples above show how to use *safe* unowned references.
-> Swift also provides *unsafe* unowned references for cases where
-> you need to disable runtime safety checks ---
-> for example, for performance reasons.
-> As with all unsafe operations,
-> you take on the responsibility for checking that code for safety.
+> 注意：上面的例子展示了如何使用 *安全* 的无主引用。Swift 还提供了 *不安全* 的无主引用，用于你需要禁用运行时安全检查的情况 --- 例如，出于性能原因。与所有不安全操作一样，你承担了检查代码安全性的责任。
 >
-> You indicate an unsafe unowned reference by writing `unowned(unsafe)`.
-> If you try to access an unsafe unowned reference
-> after the instance that it refers to is deallocated,
-> your program will try to access the memory location
-> where the instance used to be,
-> which is an unsafe operation.
+> 你通过写 `unowned(unsafe)` 来表示一个不安全的无主引用。如果你在实例被释放后尝试访问不安全的无主引用，你的程序将尝试访问该实例曾经所在的内存位置，这是一个不安全的操作。
 
 <!--
   <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
   Try expanding the example above so each customer has an array of credit cards.
 -->
 
-### Unowned Optional References
+### 无主可选引用
 
-You can mark an optional reference to a class as unowned.
-In terms of the ARC ownership model,
-an unowned optional reference and a weak reference
-can both be used in the same contexts.
-The difference is that when you use an unowned optional reference,
-you're responsible for making sure it always
-refers to a valid object or is set to `nil`.
+你可以将对类的可选引用标记为无主的。在 ARC 所有权模型中，无主可选引用和弱引用可以在相同的上下文中使用。
 
-Here's an example that keeps track of the courses
-offered by a particular department at a school:
+不同之处在于，当你使用无主可选引用时，你有责任确保它始终引用一个有效的对象或被设置为 `nil`。
+
+这里有一个例子，用于跟踪学校某个特定系的提供的课程:
 
 ```swift
 class Department {
@@ -851,20 +639,9 @@ class Course {
   ```
 -->
 
-`Department` maintains a strong reference
-to each course that the department offers.
-In the ARC ownership model, a department owns its courses.
-`Course` has two unowned references,
-one to the department
-and one to the next course a student should take;
-a course doesn't own either of these objects.
-Every course is part of some department
-so the `department` property isn't an optional.
-However,
-because some courses don't have a recommended follow-on course,
-the `nextCourse` property is an optional.
+`Department` 对它提供的每门课程保持强引用。在 ARC 所有权模型中，一个系拥有它的课程。`Course` 有两个无主引用，一个指向系，另一个指向学生应该学习的下一门课程; 一门课程不拥有这两个对象中的任何一个。每门课程都是某个系的一部分，所以 `department` 属性不是可选的。然而，因为有些课程没有推荐的后续课程，`nextCourse` 属性是可选的。
 
-Here's an example of using these classes:
+这里是使用这些类的一个例子:
 
 ```swift
 let department = Department(name: "Horticulture")
@@ -880,10 +657,9 @@ department.courses = [intro, intermediate, advanced]
 
 <!--
   - test: `unowned-optional-references`
-
-  ```swifttest
-  -> let department = Department(name: "Horticulture")
-  ---
+    ```swifttest
+    -> let department = Department(name: "Horticulture")
+---
   -> let intro = Course(name: "Survey of Plants", in: department)
   -> let intermediate = Course(name: "Growing Common Herbs", in: department)
   -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
@@ -894,40 +670,21 @@ department.courses = [intro, intermediate, advanced]
   ```
 -->
 
-The code above creates a department and its three courses.
-The intro and intermediate courses both have a suggested next course
-stored in their `nextCourse` property,
-which maintains an unowned optional reference to
-the course a student should take after completing this one.
+上面的代码创建了一个系和它的三门课程。入门和中级课程都在它们的 `nextCourse` 属性中
+存储了一个建议的下一门课程，这个属性维护了一个无主可选引用，指向学生完成这门课程后应该学习的课程。
 
 ![](unownedOptionalReference)
 
-An unowned optional reference doesn't keep a strong hold
-on the instance of the class that it wraps,
-and so it doesn't prevent ARC from deallocating the instance.
-It behaves the same as an unowned reference does under ARC,
-except that an unowned optional reference can be `nil`.
+无主可选引用不会对它包装的类实例保持强持有，因此它不会阻止 ARC 释放该实例。它在 ARC 下的行为与无主引用相同，除了无主可选引用可以是 `nil`。
 
-Like non-optional unowned references,
-you're responsible for ensuring that `nextCourse`
-always refers to a course that hasn't been deallocated.
-In this case, for example,
-when you delete a course from `department.courses`
-you also need to remove any references to it
-that other courses might have.
+像非可选的无主引用一样，你有责任确保 `nextCourse` 始终引用一个尚未被释放的课程。在这个例子中，当你从 `department.courses` 中删除一门课程时，你还需要移除其他课程可能对它的任何引用。
 
-> Note: The underlying type of an optional value is `Optional`,
-> which is an enumeration in the Swift standard library.
-> However, optionals are an exception to the rule that
-> value types can't be marked with `unowned`.
+> 注意：可选值的底层类型是 `Optional`，它是 Swift 标准库中的一个枚举。然而，可选类型是值类型不能被标记为 `unowned` 这个规则的一个例外。
 >
-> The optional that wraps the class
-> doesn't use reference counting,
-> so you don't need to maintain a strong reference to the optional.
+> 包装类的可选类型不使用引用计数，所以你不需要对可选类型保持强引用。
 
 <!--
   - test: `unowned-can-be-optional`
-
   ```swifttest
   >> class C { var x = 100 }
   >> class D {
@@ -953,40 +710,19 @@ that other courses might have.
   ```
 -->
 
-### Unowned References and Implicitly Unwrapped Optional Properties
+### 无主引用和隐式解包可选属性
 
-The examples for weak and unowned references above
-cover two of the more common scenarios
-in which it's necessary to break a strong reference cycle.
+上面的弱引用和无主引用的例子涵盖了两种更常见的场景，在这些场景中需要打破强引用循环。
 
-The `Person` and `Apartment` example shows
-a situation where two properties, both of which are allowed to be `nil`,
-have the potential to cause a strong reference cycle.
-This scenario is best resolved with a weak reference.
+`Person` 和 `Apartment` 的例子展示了一种情况，其中两个属性都允许为 `nil`，有可能造成强引用循环。这种情况最好用弱引用来解决。
 
-The `Customer` and `CreditCard` example
-shows a situation where one property that's allowed to be `nil`
-and another property that can't be `nil`
-have the potential to cause a strong reference cycle.
-This scenario is best resolved with an unowned reference.
+`Customer` 和 `CreditCard` 的例子展示了一种情况，其中一个属性允许为 `nil`，而另一个属性不能为 `nil`，有可能造成强引用循环。这种情况最好用无主引用来解决。
 
-However, there's a third scenario,
-in which *both* properties should always have a value,
-and neither property should ever be `nil` once initialization is complete.
-In this scenario, it's useful to combine an unowned property on one class
-with an implicitly unwrapped optional property on the other class.
+然而，还有第三种情况，其中 *两个* 属性都应该始终有值，一旦初始化完成，两个属性都不应该为 `nil`。在这种情况下，将一个类上的无主属性与另一个类上的隐式解包可选属性结合使用是很有用的。
 
-This enables both properties to be accessed directly
-(without optional unwrapping) once initialization is complete,
-while still avoiding a reference cycle.
-This section shows you how to set up such a relationship.
+这使得两个属性在初始化完成后都可以直接访问（无需可选解包），同时仍然避免了引用循环。本节将向你展示如何设置这样的关系。
 
-The example below defines two classes, `Country` and `City`,
-each of which stores an instance of the other class as a property.
-In this data model, every country must always have a capital city,
-and every city must always belong to a country.
-To represent this, the `Country` class has a `capitalCity` property,
-and the `City` class has a `country` property:
+下面的例子定义了两个类，`Country` 和 `City`，每个类都将另一个类的实例存储为属性。在这个数据模型中，每个国家必须始终有一个首都，每个城市必须始终属于一个国家。为了表示这一点，`Country` 类有一个 `capitalCity` 属性，`City` 类有一个 `country` 属性:
 
 ```swift
 class Country {
@@ -1032,37 +768,15 @@ class City {
   ```
 -->
 
-To set up the interdependency between the two classes,
-the initializer for `City` takes a `Country` instance,
-and stores this instance in its `country` property.
+为了建立两个类之间的相互依赖关系，`City` 的初始化器接受一个 `Country` 实例，并将这个实例存储在其 `country` 属性中。
 
-The initializer for `City` is called from within the initializer for `Country`.
-However, the initializer for `Country` can't pass `self` to the `City` initializer
-until a new `Country` instance is fully initialized,
-as described in <doc:Initialization#Two-Phase-Initialization>.
+`City` 的初始化器是在 `Country` 的初始化器内部调用的。然而，`Country` 的初始化器在新的 `Country` 实例完全初始化之前，不能将 `self` 传递给 `City` 初始化器，如<doc:Initialization#Two-Phase-Initialization>中所述。
 
-To cope with this requirement,
-you declare the `capitalCity` property of `Country` as
-an implicitly unwrapped optional property,
-indicated by the exclamation point at the end of its type annotation (`City!`).
-This means that the `capitalCity` property has a default value of `nil`,
-like any other optional,
-but can be accessed without the need to unwrap its value
-as described in <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
+为了应对这个要求，你将 `Country` 的 `capitalCity` 属性声明为隐式解包可选属性，通过在其类型注解末尾加上感叹号(`City!`)来表示。这意味着 `capitalCity` 属性有一个默认值 `nil`，像任何其他可选类型一样，但可以在不需要解包其值的情况下访问，如<doc:TheBasics#Implicitly-Unwrapped-Optionals>中所述。
 
-Because `capitalCity` has a default `nil` value,
-a new `Country` instance is considered fully initialized
-as soon as the `Country` instance sets its `name` property within its initializer.
-This means that the `Country` initializer can start to reference and pass around
-the implicit `self` property as soon as the `name` property is set.
-The `Country` initializer can therefore pass `self` as one of the parameters for
-the `City` initializer when the `Country` initializer is setting
-its own `capitalCity` property.
+因为 `capitalCity` 有一个默认的 `nil` 值，一旦 `Country` 实例在其初始化器中设置了 `name` 属性，新的 `Country` 实例就被认为是完全初始化的。这意味着 `Country` 初始化器可以在 `name` 属性被设置后，立即开始引用和传递隐式的 `self` 属性。因此，当 `Country` 初始化器设置自己的 `capitalCity` 属性时，`Country` 初始化器可以将 `self` 作为参数之一传递给 `City` 初始化器。
 
-All of this means that you can create the `Country` and `City` instances
-in a single statement, without creating a strong reference cycle,
-and the `capitalCity` property can be accessed directly,
-without needing to use an exclamation point to unwrap its optional value:
+所有这些意味着你可以在一个语句中创建 `Country` 和 `City` 实例，而不会创建强引用循环，并且可以直接访问 `capitalCity` 属性，而不需要使用感叹号来解包其可选值:
 
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
@@ -1080,45 +794,19 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
   ```
 -->
 
-In the example above, the use of an implicitly unwrapped optional
-means that all of the two-phase class initializer requirements are satisfied.
-The `capitalCity` property can be used and accessed like a non-optional value
-once initialization is complete,
-while still avoiding a strong reference cycle.
+在上面的例子中，使用隐式解包可选类型意味着满足了所有两阶段类初始化器的要求。一旦初始化完成，`capitalCity` 属性就可以像非可选值一样使用和访问，同时仍然避免了强引用循环。
 
-## Strong Reference Cycles for Closures
+## 闭包的强引用循环
 
-You saw above how a strong reference cycle can be created
-when two class instance properties hold a strong reference to each other.
-You also saw how to use weak and unowned references to break these strong reference cycles.
+你在上面看到了当两个类实例属性相互保持强引用时如何创建强引用循环。你还看到了如何使用弱引用和无主引用来打破这些强引用循环。
 
-A strong reference cycle can also occur
-if you assign a closure to a property of a class instance,
-and the body of that closure captures the instance.
-This capture might occur because the closure's body accesses a property of the instance,
-such as `self.someProperty`,
-or because the closure calls a method on the instance,
-such as `self.someMethod()`.
-In either case, these accesses cause the closure to “capture” `self`,
-creating a strong reference cycle.
+如果你将一个闭包分配给类实例的一个属性，并且该闭包的主体捕获了该实例，也可能发生强引用循环。这种捕获可能发生是因为闭包的主体访问了该实例的一个属性，例如 `self.someProperty`，或者因为闭包在该实例上调用了一个方法，例如 `self.someMethod()`。无论哪种情况，这些访问都导致闭包"捕获"`self`，创建了一个强引用循环。
 
-This strong reference cycle occurs because closures, like classes, are *reference types*.
-When you assign a closure to a property,
-you are assigning a *reference* to that closure.
-In essence, it's the same problem as above ---
-two strong references are keeping each other alive.
-However, rather than two class instances,
-this time it's a class instance and a closure that are keeping each other alive.
+这个强引用循环发生是因为闭包像类一样，都是 *引用类型* 。你将一个闭包赋值给属性时，实际上是在赋值该闭包的 *引用* 。本质上，这个问题与之前的情况相同 --- 两个强引用相互保持对方存活。不同的是，这次不是两个类实例，而是一个类实例和一个闭包在相互保持对方存活。
 
-Swift provides an elegant solution to this problem,
-known as a *closure capture list*.
-However, before you learn how to break a strong reference cycle with a closure capture list,
-it's useful to understand how such a cycle can be caused.
+Swift 为这个问题提供了一个优雅的解决方案，称为 *闭包捕获列表* 。然而，在你学习如何用闭包捕获列表打破强引用循环之前，先了解一下如何造成这样的循环是很有用的。
 
-The example below shows how you can create a strong reference cycle
-when using a closure that references `self`.
-This example defines a class called `HTMLElement`,
-which provides a simple model for an individual element within an HTML document:
+下面的例子展示了当使用引用 `self` 的闭包时，如何创建强引用循环。这个例子定义了一个名为 `HTMLElement` 的类，它为 HTML 文档中的单个元素提供了一个简单的模型:
 
 ```swift
 class HTMLElement {
@@ -1176,37 +864,15 @@ class HTMLElement {
   ```
 -->
 
-The `HTMLElement` class defines a `name` property,
-which indicates the name of the element,
-such as `"h1"` for a heading element,
-`"p"` for a paragraph element,
-or `"br"` for a line break element.
-`HTMLElement` also defines an optional `text` property,
-which you can set to a string that represents
-the text to be rendered within that HTML element.
+`HTMLElement` 类定义了一个 `name` 属性，表示元素的名称，例如用于标题元素的 `"h1"`，用于段落元素的 `"p"`，或用于换行元素的 `"br"`。`HTMLElement` 还定义了一个可选的 `text` 属性，你可以将其设置为一个字符串，该字符串表示要在该 HTML 元素内渲染的文本。
 
-In addition to these two simple properties,
-the `HTMLElement` class defines a lazy property called `asHTML`.
-This property references a closure that combines `name` and `text`
-into an HTML string fragment.
-The `asHTML` property is of type `() -> String`,
-or “a function that takes no parameters, and returns a `String` value”.
+除了这两个简单的属性，`HTMLElement` 类还定义了一个名为 `asHTML` 的延迟属性。这个属性引用了一个闭包，该闭包将 `name` 和 `text` 组合成一个 HTML 字符串片段。`asHTML` 属性的类型是 `() -> String`，或者说"一个不接受参数并返回 `String` 值的函数"。
 
-By default, the `asHTML` property is assigned a closure that returns
-a string representation of an HTML tag.
-This tag contains the optional `text` value if it exists,
-or no text content if `text` doesn't exist.
-For a paragraph element, the closure would return `"<p>some text</p>"` or `"<p />"`,
-depending on whether the `text` property equals `"some text"` or `nil`.
+默认情况下，`asHTML` 属性被分配了一个返回 HTML 标签字符串表示的闭包。如果 `text` 值存在，这个标签包含可选的 `text` 值，如果 `text` 不存在，则不包含文本内容。对于段落元素，闭包会返回 `"<p>some text</p>"` 或 `"<p />"`，这取决于 `text` 属性是等于 `"some text"` 还是 `nil`。
 
-The `asHTML` property is named and used somewhat like an instance method.
-However, because `asHTML` is a closure property rather than an instance method,
-you can replace the default value of the `asHTML` property with a custom closure,
-if you want to change the HTML rendering for a particular HTML element.
+`asHTML` 属性的命名和使用有点像实例方法。然而，因为 `asHTML` 是一个闭包属性而不是实例方法，如果你想为特定的 HTML 元素更改 HTML 渲染，你可以用自定义闭包替换 `asHTML` 属性的默认值。
 
-For example, the `asHTML` property could be set to a closure
-that defaults to some text if the `text` property is `nil`,
-in order to prevent the representation from returning an empty HTML tag:
+例如，可以将 `asHTML` 属性设置为一个闭包，如果 `text` 属性为 `nil`，则默认返回一些文本，以防止表示返回一个空的 HTML 标签:
 
 ```swift
 let heading = HTMLElement(name: "h1")
@@ -1232,21 +898,11 @@ print(heading.asHTML())
   ```
 -->
 
-> Note: The `asHTML` property is declared as a lazy property,
-> because it's only needed if and when the element actually needs to be rendered
-> as a string value for some HTML output target.
-> The fact that `asHTML` is a lazy property means that you can refer to `self`
-> within the default closure,
-> because the lazy property will not be accessed until
-> after initialization has been completed and `self` is known to exist.
+> 注意:`asHTML` 属性被声明为惰性属性，因为只有在元素实际需要被渲染为某个 HTML 输出目标的字符串值时才需要它。`asHTML` 是惰性属性这一事实意味着你可以在默认闭包中引用 `self`，因为直到初始化完成且确知 `self` 存在之前，惰性属性都不会被访问。
 
-The `HTMLElement` class provides a single initializer,
-which takes a `name` argument and (if desired) a `text` argument
-to initialize a new element.
-The class also defines a deinitializer,
-which prints a message to show when an `HTMLElement` instance is deallocated.
+`HTMLElement` 类提供了一个单一的初始化器，它接受一个 `name` 参数和一个可选的 `text` 参数来初始化一个新元素。该类还定义了一个析构器，用于在 `HTMLElement` 实例被释放时打印一条消息。
 
-Here's how you use the `HTMLElement` class to create and print a new instance:
+下面是如何使用 `HTMLElement` 类来创建和打印一个新实例:
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
@@ -1264,33 +920,17 @@ print(paragraph!.asHTML())
   ```
 -->
 
-> Note: The `paragraph` variable above is defined as an *optional* `HTMLElement`,
-> so that it can be set to `nil` below to demonstrate
-> the presence of a strong reference cycle.
+> 注意：上面的 `paragraph` 变量被定义为一个可选的 `HTMLElement`，这样它就可以在下面被设置为 `nil` 以演示存在强引用循环。
 
-Unfortunately, the `HTMLElement` class, as written above,
-creates a strong reference cycle between
-an `HTMLElement` instance and the closure used for its default `asHTML` value.
-Here's how the cycle looks:
+不幸的是，上面编写的 `HTMLElement` 类在 `HTMLElement` 实例和用于其默认 `asHTML` 值的闭包之间创建了一个强引用循环。循环看起来是这样的:
 
 ![](closureReferenceCycle01)
 
-The instance's `asHTML` property holds a strong reference to its closure.
-However, because the closure refers to `self` within its body
-(as a way to reference `self.name` and `self.text`),
-the closure *captures* self,
-which means that it holds a strong reference back to the `HTMLElement` instance.
-A strong reference cycle is created between the two.
-(For more information about capturing values in a closure,
-see <doc:Closures#Capturing-Values>.)
+实例的 `asHTML` 属性持有对其闭包的强引用。然而，因为闭包在其主体内引用了 `self`(作为引用 `self.name` 和 `self.text` 的方式)，闭包 *捕获* 了 self，这意味着它持有对 `HTMLElement` 实例的强引用。两者之间创建了一个强引用循环。(关于在闭包中捕获值的更多信息，请参见<doc:Closures#Capturing-Values>。)
 
-> Note: Even though the closure refers to `self` multiple times,
-> it only captures one strong reference to the `HTMLElement` instance.
+> 注意：即使闭包多次引用 `self`，它也只捕获对 `HTMLElement` 实例的一个强引用。
 
-If you set the `paragraph` variable to `nil`
-and break its strong reference to the `HTMLElement` instance,
-the strong reference cycle prevents deallocating
-both the `HTMLElement` instance and its closure:
+如果你将 `paragraph` 变量设置为 `nil` 并打破其对 `HTMLElement` 实例的强引用，强引用循环会阻止 `HTMLElement` 实例及其闭包的释放:
 
 ```swift
 paragraph = nil
@@ -1304,35 +944,19 @@ paragraph = nil
   ```
 -->
 
-Note that the message in the `HTMLElement` deinitializer isn't printed,
-which shows that the `HTMLElement` instance isn't deallocated.
+注意 `HTMLElement` 析构器中的消息没有被打印，这表明 `HTMLElement` 实例没有被释放。
 
-## Resolving Strong Reference Cycles for Closures
+## 解决闭包的强引用循环
 
-You resolve a strong reference cycle between a closure and a class instance
-by defining a *capture list* as part of the closure's definition.
-A capture list defines the rules to use when capturing one or more reference types
-within the closure's body.
-As with strong reference cycles between two class instances,
-you declare each captured reference to be a weak or unowned reference
-rather than a strong reference.
-The appropriate choice of weak or unowned depends on
-the relationships between the different parts of your code.
+你可以通过在闭包的定义中定义一个 *捕获列表* 来解决闭包和类实例之间的强引用循环。捕获列表定义了在闭包体内捕获一个或多个引用类型时要使用的规则。就像两个类实例之间的强引用循环一样，你声明每个被捕获的引用为弱引用或无主引用，而不是强引用。选择弱引用还是无主引用取决于代码不同部分之间的关系。
 
-> Note: Swift requires you to write `self.someProperty` or `self.someMethod()`
-> (rather than just `someProperty` or `someMethod()`)
-> whenever you refer to a member of `self` within a closure.
-> This helps you remember that it's possible to capture `self` by accident.
+> 注意:Swift 要求你在闭包内引用 `self` 的成员时写成 `self.someProperty` 或 `self.someMethod()`(而不仅仅是 `someProperty` 或 `someMethod()`)。这有助于提醒你可能会意外捕获 `self`。
 
-### Defining a Capture List
+### 定义捕获列表
 
-Each item in a capture list is a pairing of the `weak` or `unowned` keyword
-with a reference to a class instance (such as `self`)
-or a variable initialized with some value (such as `delegate = self.delegate`).
-These pairings are written within a pair of square braces, separated by commas.
+捕获列表中的每个项目都是 `weak` 或 `unowned` 关键字与对类实例的引用（如 `self` ）或初始化为某个值的变量（如 `delegate = self.delegate` ）的配对。这些配对写在一对方括号内，用逗号分隔。
 
-Place the capture list before a closure's parameter list and return type
-if they're provided:
+如果提供了闭包的参数列表和返回类型，则将捕获列表放在它们之前:
 
 ```swift
 lazy var someClosure = {
@@ -1358,10 +982,7 @@ lazy var someClosure = {
   ```
 -->
 
-If a closure doesn't specify a parameter list or return type
-because they can be inferred from context,
-place the capture list at the very start of the closure,
-followed by the `in` keyword:
+如果闭包没有指定参数列表或返回类型，因为它们可以从上下文推断出来，则将捕获列表放在闭包的最开始，后面跟着 `in` 关键字:
 
 ```swift
 lazy var someClosure = {
@@ -1385,30 +1006,19 @@ lazy var someClosure = {
   ```
 -->
 
-### Weak and Unowned References
+### 弱引用和无主引用
 
-Define a capture in a closure as an unowned reference
-when the closure and the instance it captures will always refer to each other,
-and will always be deallocated at the same time.
+当闭包和它捕获的实例总是相互引用，并且总是同时被释放时，将闭包中的捕获定义为无主引用。
 
-Conversely, define a capture as a weak reference when the captured reference
-may become `nil` at some point in the future.
-Weak references are always of an optional type,
-and automatically become `nil` when the instance they reference is deallocated.
-This enables you to check for their existence within the closure's body.
+相反，当被捕获的引用在将来的某个时刻可能变为 `nil` 时，将捕获定义为弱引用。弱引用总是可选类型，并且当它们引用的实例被释放时自动变为 `nil`。这使你能够在闭包体内检查它们是否存在。
 
 <!--
   <rdar://problem/28812110> Reframe discussion of weak/unowned closure capture in terms of object graph
 -->
 
-> Note: If the captured reference will never become `nil`,
-> it should always be captured as an unowned reference,
-> rather than a weak reference.
+> 注意：如果被捕获的引用永远不会变为 `nil`，它应该始终被捕获为无主引用，而不是弱引用。
 
-An unowned reference is the appropriate capture method to use to resolve
-the strong reference cycle in the `HTMLElement` example
-from <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures> above.
-Here's how you write the `HTMLElement` class to avoid the cycle:
+无主引用是解决<doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures> 中 `HTMLElement` 示例强引用循环的适当捕获方法。以下是如何编写 `HTMLElement` 类以避免循环:
 
 ```swift
 class HTMLElement {
@@ -1468,12 +1078,9 @@ class HTMLElement {
   ```
 -->
 
-This implementation of `HTMLElement` is identical to the previous implementation,
-apart from the addition of a capture list within the `asHTML` closure.
-In this case, the capture list is `[unowned self]`,
-which means “capture self as an unowned reference rather than a strong reference”.
+这个 `HTMLElement` 的实现与之前的实现完全相同，除了在 `asHTML` 闭包内添加了一个捕获列表。在这种情况下，捕获列表是 `[unowned self]`，这意味着“将 self 捕获为无主引用而不是强引用”。
 
-You can create and print an `HTMLElement` instance as before:
+你可以像之前一样创建和打印 `HTMLElement` 实例:
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
@@ -1491,15 +1098,11 @@ print(paragraph!.asHTML())
   ```
 -->
 
-Here's how the references look with the capture list in place:
+这是有捕获列表时引用的样子:
 
 ![](closureReferenceCycle02)
 
-This time, the capture of `self` by the closure is an unowned reference,
-and doesn't keep a strong hold on the `HTMLElement` instance it has captured.
-If you set the strong reference from the `paragraph` variable to `nil`,
-the `HTMLElement` instance is deallocated,
-as can be seen from the printing of its deinitializer message in the example below:
+这次，闭包对 `self` 的捕获是一个无主引用，并且不会对它捕获的 `HTMLElement` 实例保持强引用。如果你将 `paragraph` 变量的强引用设置为 `nil`，`HTMLElement` 实例就会被释放，从下面示例中打印的析构器消息可以看出这一点:
 
 ```swift
 paragraph = nil
@@ -1515,21 +1118,18 @@ paragraph = nil
   ```
 -->
 
-For more information about capture lists,
-see <doc:Expressions#Capture-Lists>.
+关于捕获列表的更多信息，请参见<doc:Expressions#Capture-Lists>。
 
-> Beta Software:
+> 测试软件:
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据此文档实现的软件应该使用最终的操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解更多关于使用[Apple 的测试软件](https://developer.apple.com/support/beta-software/)的信息。
 
 <!--
 This source file is part of the Swift.org open source project
-
 Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
 Licensed under Apache License v2.0 with Runtime Library Exception
-
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->

@@ -1,9 +1,10 @@
 # 泛型
-编写适用于多种类型的代码，并指定这些类型的要求。
+
+编写适用于多种类型的代码，并指定对这些类型的要求。
 
 泛型代码让你能根据自定义的需求，编写出适用于任意类型的、灵活可复用的函数及类型。你可避免编写重复的代码，而是用一种清晰抽象的方式来表达代码的意图。
 
-泛型是 Swift 最强大的特性之一，很多 Swift 标准库是基于泛型代码构建的。实际上，即使你没有意识到，在语言指南中也是一直使用泛型。例如，Swift 的 `Array` 和 `Dictionary` 都是泛型集合。你可以创建一个 `Int` 类型数组，也可创建一个 String 类型数组，甚至可以是任意其他 Swift 类型的数组。同样，你也可以创建一个存储任意指定类型的字典，并对该类型没有限制。
+泛型是 Swift 最强大的特性之一，很多 Swift 标准库是基于泛型代码构建的。实际上，即使你没有意识到，在 *语言指南* 中也是一直使用泛型。例如，Swift 的 `Array` 和 `Dictionary` 都是泛型集合。你可以创建一个 `Int` 类型数组，也可创建一个 `String` 类型数组，甚至可以是任意其他 Swift 类型的数组。同样，你也可以创建一个存储任意指定类型的字典，并对该类型没有限制。
 
 ## 泛型解决的问题
 
@@ -29,16 +30,16 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
   ```
 -->
 
-这个函数使用输入输出参数（inout）来交换 a 和 b 的值，具体请参考 <doc:Functions#In-Out-Parameters>.
+这个函数使用输入输出参数（inout）来交换 `a` 和 `b` 的值，具体请参考 <doc:Functions#In-Out-Parameters>.
 
-`swapTwoInts(_:_:)` 函数将 `b` 的原始值换成了 `a`，将 `a` 的原始值换成了 `b`，你可以调用这个函数来交换两个 `Int` 类型变量：
+`swapTwoInts(_:_:)` 函数将 `b` 的原始值换给了 `a`，将 `a` 的原始值换给了 `b`，你可以调用这个函数来交换两个 `Int` 类型变量：
 
 ```swift
 var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// 输出 "someInt is now 107, and anotherInt is now 3"
+// 打印 "someInt is now 107, and anotherInt is now 3"
 ```
 
 <!--
@@ -53,7 +54,7 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   ```
 -->
 
-`swapTwoInts(_:_:)` 函数很实用，但它只能作用于 `Int` 类型。如果你想交换两个 `String` 类型值，或者 `Doubl` 类型值，你必须编写对应的函数，类似下面 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数：
+`swapTwoInts(_:_:)` 函数很实用，但它只能作用于 `Int` 类型。如果你想交换两个 `String` 类型值，或者 `Double` 类型值，你必须编写对应的函数，类似下面 `swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数：
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
@@ -87,16 +88,16 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
   ```
 -->
 
-你可能注意到了，`swapTwoInts(_:_:)`、`swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数体是一样的，唯一的区别是它们接受的参数类型`（Int、String 和 Double）`。
+你可能注意到了，`swapTwoInts(_:_:)`、`swapTwoStrings(_:_:)` 和 `swapTwoDoubles(_:_:)` 函数体是一样的，唯一的区别是它们接受的参数类型`（`Int`、`String` 和 `Double`）`。
 
-在实际应用中，通常需要一个更实用更灵活的函数来交换两个任意类型的值，幸运的是，泛型代码帮你解决了这种问题。（这些函数的泛型版本已经在下面定义好了。）
+在实际应用中，通常需要一个更实用更灵活的函数来交换两个*任意*类型的值，幸运的是，泛型代码帮你解决了这种问题。（这些函数的泛型版本已经在下面定义好了。）
 
 > 注意: 在上面三个函数中,
-> a 和 b 类型必须相同。如果 a 和 b 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 String 类型的变量和一个 Double 类型的变量互换值。试图这样做将导致编译错误。
+> `a` 和 `b` 类型必须相同。如果 `a` 和 `b` 类型不同，那它们俩就不能互换值。Swift 是类型安全的语言，所以它不允许一个 `String` 类型的变量和一个 `Double` 类型的变量互换值。试图这样做将导致编译错误。
 
 ## 泛型函数
 
-泛型函数可适用于任意类型，下面是函数 swapTwoInts(_:_:) 的泛型版本，命名为 swapTwoValues(_:_:)：
+*泛型函数*可适用于任意类型，下面是函数 `swapTwoInts(_:_:)` 的泛型版本，命名为 `swapTwoValues(_:_:)`：
 
 ```swift
 func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
@@ -151,11 +152,11 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
   ```
 -->
 
-泛型版本的函数使用了一个占位符类型名称（这里叫做`T`），而不是一个实际的类型名称（例如`Int`、`String`或`Double`）。`占位符类型`名称并不关心`Tv必须是什么类型，但它要求`a`和`b`必须是相同类型的`T`，无论T代表什么。每次调用`swapTwoValues(_:_:)`函数时，都会确定`T`的实际类型。`
+泛型版本的函数使用了一个*占位符*类型名称（这里叫做`T`），而不是一个*实际*的类型名称（例如`Int`、`String`或`Double`）。`占位符类型`名称并不关心 `T` 必须是什么类型，但它要求 `a` 和 `b` 必须是相同类型的 `T`，无论 `T` 代表什么。每次调用 `swapTwoValues(_:_:)` 函数时，都会确定`T`的实际类型。`
 
 泛型函数和非泛型函数的另外一个不同之处在于这个泛型函数名`swapTwoValues(_:_:)`后面跟着占位类型名（`T`），并用尖括号括起来（`<T>`）。这个尖括号告诉 Swift 那个 `T` 是 `swapTwoValues(_:_:)` 函数定义内的一个占位类型名，因此 Swift 不会去查找名为 `T` 的实际类型。
 
-`swapTwoValues(_:_:)` 函数现在可以像 `swapTwoInts(_:_:)` 那样调用，不同的是它能接受两个任意类型的值，条件是这两个值有着相同的类型。`swapTwoValues(_:_:)` 函数被调用时，T 所代表的类型都会由传入的值的类型推断出来。
+`swapTwoValues(_:_:)` 函数现在可以像 `swapTwoInts(_:_:)` 那样调用，不同的是它能接受两个*任意*类型的值，条件是这两个值有着相同的类型。`swapTwoValues(_:_:)` 函数被调用时，`T` 所代表的类型都会由传入的值的类型推断出来。
 
 在下面的两个例子中，`T` 分别代表 `Int` 和 `String`：
 
@@ -163,12 +164,12 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 var someInt = 3
 var anotherInt = 107
 swapTwoValues(&someInt, &anotherInt)
-// someInt 现在是 107, and anotherInt 现在是 3
+// someInt 现在是 107, 而 anotherInt 现在是 3
 
 var someString = "hello"
 var anotherString = "world"
 swapTwoValues(&someString, &anotherString)
-// someString 现在是 "world", and anotherString 现在是 "hello"
+// someString 现在是 "world", 而 anotherString 现在是 "hello"
 ```
 
 <!--
@@ -193,23 +194,23 @@ swapTwoValues(&someString, &anotherString)
 
 ## 类型参数
 
-上面 `swapTwoValues(_:_:)` 例子中，占位类型 `T` 是一个类型参数的例子，类型参数指定并命名一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（例如 `<T>`）。
+上面 `swapTwoValues(_:_:)` 例子中，占位类型 `T` 是一个*类型参数*的例子，类型参数指定并命名一个占位类型，并且紧随在函数名后面，使用一对尖括号括起来（例如 `<T>`）。
 
-一旦一个类型参数被指定，你可以用它来定义一个函数的参数类型（例如 `swapTwoValues(_:_:)` 函数中的参数 `a` 和 `b`），或者作为函数的返回类型，还可以用作函数主体中的注释类型。在这些情况下，类型参数会在函数调用时被实际类型所替换。（在上面的 `swapTwoValues(_:_:)` 例子中，当函数第一次被调用时，`T` 被 `Int` 替换，第二次调用时，被 `String` 替换。）
+一旦一个类型参数被指定，你可以用它来定义一个函数的参数类型（例如 `swapTwoValues(_:_:)` 函数中的参数 `a` 和 `b`），或者作为函数的返回类型，还可以用作函数主体中的类型注解。在这些情况下，类型参数会在函数调用时被实际类型所替换。（在上面的 `swapTwoValues(_:_:)` 例子中，当函数第一次被调用时，`T` 被 `Int` 替换，第二次调用时，被 `String` 替换。）
 
 你可以通过在尖括号内写多个类型参数名称，并用逗号分隔，来提供多个类型参数。
 
 ## 命名类型参数
 
-大多情况下，类型参数具有描述下的名称，例如字典 `Dictionary<Key, Value>` 中的 `Key` 和 `Value` 及数组 `Array<Element>` 中的 `Element`，这能告诉阅读代码的人这些参数类型与泛型类型或函数之间的关系。然而，当它们之间没有有意义的关系时，通常使用单个字符来表示，例如 `T`、`U`、`V`，例如上面演示函数 `swapTwoValues(_:_:)` 中的 `T`。
+大多情况下，类型参数具有描述性的名称，例如字典 `Dictionary<Key, Value>` 中的 `Key` 和 `Value` 及数组 `Array<Element>` 中的 `Element`，这能告诉阅读代码的人这些类型参数与泛型类型或函数之间的关系。然而，当它们之间没有有意义的关系时，通常使用单个字符来表示，例如 `T`、`U`、`V`，例如上面演示函数 `swapTwoValues(_:_:)` 中的 `T`。
 
-> 注意: 请始终使用大写字母开头的驼峰命名法（例如 `T` 和 `MyTypeParameter`）来为类型参数命名，以表明它们是占位类型，而不是一个值。
+> 注意: 请始终使用大写字母开头的驼峰命名法（例如 `T` 和 `MyTypeParameter`）来为类型参数命名，以表明它们是占位*类型*，而不是一个值。
 
 ## 泛型类型
 
-除了泛型函数，Swift 还允许自定义泛型类型。这些自定义类、结构体和枚举可以适用于任意类型，类似于 `Array` 和 `Dictionary`。
+除了泛型函数，Swift 还允许自定义*泛型类型*。这些自定义类、结构体和枚举可以适用于*任意*类型，类似于 `Array` 和 `Dictionary`。
 
-本节将向你展示如何编写一个名为 `Stack`（栈）的泛型集合类型。栈是值的有序集合，和数组类似，但比数组有更严格的操作限制。数组允许在其中任意位置插入或是删除元素。而栈只允许在集合的末端添加新的元素（称之为入栈）。类似的，栈也只能从末端移除元素（称之为出栈）。
+本节将向你展示如何编写一个名为 `Stack`（栈）的泛型集合类型。栈是值的有序集合，和数组类似，但比数组有更严格的操作限制。数组允许在其中任意位置插入或是删除元素。而栈只允许在集合的末端添加新的元素（称之为*入栈*）。类似的，栈也只能从末端移除元素（称之为*出栈*）。
 
 > 注意: 栈的概念已被 `UINavigationController` 类用来构造视图控制器的导航结构。你通过调用 `UINavigationController` 的 `pushViewController(_:animated:)` 方法来添加新的视图控制器到导航栈，通过 `popViewControllerAnimated(_:)` 方法来从导航栈中移除视图控制器。每当你需要一个严格的“后进先出”方式来管理集合，栈都是最实用的模型。
 
@@ -260,11 +261,11 @@ struct IntStack {
   ```
 -->
 
-这个结构体在栈中使用一个名为 items 的数组属性来存储值。栈提供了两个方法：`push(_:)` 和 `pop()`，用来向栈中压入值以及从栈中移除值。这些方法被标记为 `mutating`，因为它们需要修改结构体的 `items` 数组。
+这个结构体在栈中使用一个名为 `items` 的`Array`属性来存储值。栈提供了两个方法：`push(_:)` 和 `pop()`，用来向栈中压入值以及从 `Stack` 中移除值。这些方法被标记为 `mutating`，因为它们需要*修改*结构体的 `items` 数组。
 
 上面的 `IntStack` 结构体只能用于 `Int` 类型。可以定义一个泛型 `Stack` 结构体，从而能够处理任意类型的值。
 
-下面是Stack的泛型版本：
+下面是 `Stack` 的泛型版本：
 
 ```swift
 struct Stack<Element> {
@@ -301,7 +302,7 @@ struct Stack<Element> {
 - 指定 `push(_:)` 方法的唯一参数 `item` 的类型必须是 `Element` 类型。
 - 指定 `pop()` 方法的返回值类型必须是 `Element` 类型。
 
-由于 `Stack` 是泛型类型，因此可以用来创建适用于 Swift 中任意有效类型的栈，就像 `Array` 和 `Dictionary` 那样。
+由于 `Stack` 是泛型类型，因此可以用来创建适用于 Swift 中*任意*有效类型的栈，就像 `Array` 和 `Dictionary` 那样。
 
 你可以通过在尖括号中写出栈中需要存储的数据类型来创建并初始化一个 `Stack` 实例。例如，要创建一个 `String` 类型的栈，可以写成 `Stack<String>()`：
 
@@ -332,11 +333,11 @@ stackOfStrings.push("cuatro")
 
 ![](stackPushedFourStrings)
 
-从泛型 `Stack<Element>` 结构中弹出一个值会移除并返回堆栈顶部的值，例如 "cuatro"：
+从栈中移除并返回栈顶部的值，例如 `"cuatro"`：
 
 ```swift
 let fromTheTop = stackOfStrings.pop()
-// fromTheTop 的值为“cuatro”，现在栈中还有 3 个字符串
+// fromTheTop 的值为 “cuatro”，现在栈中还有 3 个字符串
 ```
 
 <!--
@@ -349,16 +350,16 @@ let fromTheTop = stackOfStrings.pop()
   ```
 -->
 
-下图展示了堆栈顶部的 "cuatro" 出栈的过程：
+下图展示了栈顶部的 `"cuatro"` 出栈的过程：
 
 ![](stackPoppedOneString)
 
 ## 泛型扩展
 
 当对泛型类型进行扩展时，你并不需要提供类型参数列表作为定义的一部分。
-相反，可以在扩展中直接使用原始类型定义中的类型参数列表，并且这些来自原始类型中的参数名称会被用作原始定义中类型参数的引用。
+相反，可以在扩展中直接使用*原始*类型定义中的类型参数列表，并且这些来自原始类型中的参数名称会被用作原始定义中类型参数的引用。
 
-下面的例子扩展了泛型类型 `Stack`，为其添加了一个名为 `topItem` 的只读计算型属性，它将会返回当前栈顶元素且不会将其从栈中移除：
+下面的例子扩展了泛型类型 `Stack`，为其添加了一个名为 `topItem` 的只读计算属性，它将会返回当前栈顶元素且不会将其从栈中移除：
 
 ```swift
 extension Stack {
@@ -381,12 +382,12 @@ extension Stack {
 -->
 
 `topItem` 属性会返回 `Element` 类型的可选值。
-- 当栈为空的时候，`topItem` 会返回 nil；
+- 当栈为空的时候，`topItem` 会返回 `nil`；
 - 当栈不为空的时候，`topItem` 会返回 `items` 数组中的最后一个元素。
 
-> 注意: 这个扩展并没有定义类型参数列表。相反的，Stack 类型已有的类型参数名称 Element，被用在扩展中来表示计算型属性 topItem 的可选类型。
+> 注意: 这个扩展并没有定义类型参数列表。相反的，`Stack` 类型已有的类型参数名称 `Element`，被用在扩展中来表示计算属性 `topItem` 的可选类型。
 
-计算属性 `topItem` 现在可以直接使用以访问和查询 `Stack` 的顶部元素，而无需将其移除。
+计算属性 `topItem` 现在可以直接用来访问和查询 `Stack` 的顶部元素，而不会将这个顶部元素移除。
 
 ```swift
 if let topItem = stackOfStrings.topItem {
@@ -406,26 +407,24 @@ if let topItem = stackOfStrings.topItem {
   ```
 -->
 
-泛型类型的扩展，还可以包括类型扩展需要额外满足的条件，从而对类型添加新功能，这一部分将在 <doc:Generics#具有泛型-Where-子句的扩展> 中进行讨论.
+泛型类型的扩展也可以包括对扩展类型实例的要求，以便这些实例可以获得新的功能，这一部分将在 <doc:Generics#具有泛型-Where-子句的扩展> 中进行讨论.
 
 ## 类型约束
 
-`swapTwoValues(_:_:)` 函数和 `Stack` 类型可以与任何类型一起使用。
-然而，有时对可以与泛型函数和泛型类型一起使用的类型强制执行某些类型约束是有用的。
-类型约束指定类型参数必须继承自特定类，或者符合特定协议或协议组合。
+`swapTwoValues(_:_:)` 函数和 `Stack` 类可以与任何类型一起使用。
+然而，有时对可以与泛型函数和泛型类型一起使用的类型强制执行某些*类型约束*是有用的。
+类型约束指定类型参数必须继承自特定的类，或者遵循特定协议或协议组合。
 
-例如, Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 <doc:CollectionTypes#Dictionaries> 中，字典键的类型必须是可哈希（`hashable`）的。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
+例如, Swift 的 `Dictionary` 类型对字典的键的类型做了些限制。在 <doc:CollectionTypes#Dictionaries> 中，字典键的类型必须是*可哈希的（hashable）*。也就是说，必须有一种方法能够唯一地表示它。字典键之所以要是可哈希的，是为了便于检查字典中是否已经包含某个特定键的值。若没有这个要求，字典将无法判断是否可以插入或替换某个指定键的值，也不能查找到已经存储在字典中的指定键的值。
 
-字典（`Dictionary`）需要其键是可哈希的（`hashable`），以便它可以检查是否已经包含某个特定键的值。如果没有这个要求，字典就无法判断是否应该为某个特定键插入或替换一个值，也无法找到字典中已存在的某个键的值。
+这个要求通过对字典键类型的类型约束来强制执行，该约束指定键类型必须遵循Swift标准库中定义的 `Hashable` 协议。Swift的所有基本类型（如 `String`、`Int`、`Double` 和`Bool`）默认都是可哈希的。
+如何让自定义类型遵循 `Hashable` 协议，可以查看文档 [遵循 Hashable 协议](https://developer.apple.com/documentation/swift/hashable#2849490).
 
-这个要求通过对字典键类型的类型约束来强制执行，该约束指定键类型必须符合Swift标准库中定义的Hashable协议。Swift的所有基本类型（如 `String`、`Int`、`Double` 和`Bool`）默认都是可哈希的。
-如何让自定义类型遵循 Hashable 协议，可以查看文档 [遵循 Hashable 协议](https://developer.apple.com/documentation/swift/hashable#2849490).
-
-你可以在创建自定义泛型类型时定义自己的类型约束，这些约束提供了泛型编程的大部分功能。像 `Hashable` 这样的抽象概念根据类型的概念特征而不是其具体类型来描述类型。
+你可以在创建自定义泛型类型时定义自己的类型约束，这些约束为泛型编程提供了强大的功能。像 `Hashable` 这样的抽象概念根据类型的概念特征而不是其具体类型来描述类型。
 
 ### 类型约束语法
 
-在一个类型参数名后面放置一个类名或者协议名，并用冒号进行分隔，来定义类型约束。下面将展示泛型函数约束的基本语法（与泛型类型的语法相同）：
+你可以通过在类型参数的名称后添加一个类或协议约束，并用冒号分隔，来编写类型约束。下面将展示泛型函数中类型约束的基本语法（与泛型类型的语法相同）：
 
 
 ```swift
@@ -446,11 +445,11 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
   ```
 -->
 
-上面这个函数有两个类型参数。第一个类型参数 T 必须是 SomeClass 子类；第二个类型参数 U 必须符合 SomeProtocol 协议
+上面这个函数有两个类型参数。第一个类型参数 `T` 必须是 `SomeClass` 子类；第二个类型参数 `U` 必须遵循 `SomeProtocol` 协议。
 
 ### 类型约束实践
 
-这是一个`findIndex(ofString:in:)`的非泛型函数，该函数的功能是在一个`String`数组中查找输入`String`值的索引。若查找到匹配的字符串，`findIndex(ofString:in:)` 函数返回该字符串在数组中的索引值，否则返回 nil：
+这是一个 `findIndex(ofString:in:)` 的非泛型函数，该函数的功能是在一个 `String` 数组中查找输入 `String` 值的索引。若查找到匹配的字符串，`findIndex(ofString:in:)` 函数返回该字符串在数组中的索引值，否则返回 `nil` ：
 
 ```swift
 func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
@@ -478,7 +477,7 @@ func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
   ```
 -->
 
-`findIndex(ofString:in:)` 函数可以用于查找字符串数组中的某个字符串值：
+`findIndex(ofString:in:)` 函数可以用于查找字符串数组中的某个字符串的第一个索引值：
 
 ```swift
 let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
@@ -502,7 +501,7 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
 
 如果只能查找字符串在数组中的索引，用处不是很大。不过，你可以用占位类型 `T` 替换 `String` 类型来写出具有相同功能的泛型函数 `findIndex(_:_:)`。
 
-下面展示了 `findIndex(ofString:in:)` 函数的泛型版本 `findIndex(of:in:)`。请注意这个函数返回值的类型仍然是 `Int?`，这是因为函数返回的是一个可选的索引数，而不是从数组中得到的一个可选值。需要提醒的是，这个函数无法通过编译，原因将在函数后说明：
+下面展示了 `findIndex(ofString:in:)` 函数的泛型版本 `findIndex(of:in:)`。请注意这个函数返回值的类型仍然是 `Int?`，这是因为函数返回的是一个可选的索引值，而不是从数组中得到的一个可选值。需要提醒的是，这个函数无法通过编译，原因将在函数后说明：
 
 ```swift
 func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
@@ -533,9 +532,9 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
   ```
 -->
 
-上面所写的函数无法通过编译。问题出在相等性检查上，即 "`if value == valueToFind`"。不是所有的 Swift 类型都可以用等式符（`==`）进行比较。例如，如果你自定义类或结构体来描述复杂的数据模型，对于这个类或结构体而言，Swift 无法明确知道“相等”意味着什么。正因如此，这部分代码无法保证适用于任意类型 `T`，当你试图编译这部分代码时就会出现相应的错误。
+上面所写的函数无法通过编译。问题出在相等性判定上，即 "`if value == valueToFind`"。不是所有的 Swift 类型都可以用等式符（`==`）进行比较。例如，如果你自定义类或结构体来描述复杂的数据模型，对于这个类或结构体而言，Swift 无法明确知道“相等”意味着什么。正因如此，无法保证这段代码适用于*每一个*可能的类型 `T`，当你试图编译这部分代码时就会出现相应的错误。
 
-不过，Swift并不会让我们对所有这类问题无从下手。Swift 标准库中定义了一个 Equatable 协议，该协议要求任何遵循该协议的类型必须实现等式符（==）及不等符（!=），从而能对该类型的任意两个值进行比较。所有的 Swift 标准类型自动支持 Equatable 协议。
+不过，Swift 并不会让我们对所有这类问题无从下手。Swift 标准库中定义了一个 `Equatable` 协议，该协议要求任何遵循该协议的类型必须实现等式符（`==`）及不等符（`!=`），从而能对该类型的任意两个值进行比较。所有的 Swift 标准类型自动支持 `Equatable` 协议。
 
 <!--
   TODO: write about how to make your own types conform to Equatable
@@ -545,7 +544,7 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
   as described in <link>.
 -->
 
-遵循 Equatable 协议的类型都可以安全地用于 `findIndex(of:in:)` 函数，因为其保证支持等式操作符。为了说明这个事情，当定义一个函数时，你可以定义一个 `Equatable` 类型约束作为类型参数定义的一部分：
+任何遵循 `Equatable` 的类型都可以安全地与 `findIndex(of:in:)` 函数一起使用，因为它们保证支持等于操作符。为了表明这一点，你需要在定义函数时将 `Equatable` 作为类型参数的约束来写入：
 
 ```swift
 func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
@@ -573,9 +572,9 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
   ```
 -->
 
-`findIndex(of:in:)` 类型参数写做 `T: Equatable`，表示“任何符合 `Equatable` 协议的类型 `T`”。
+`findIndex(of:in:)` 类型参数写做 `T: Equatable`，表示“任何遵循 `Equatable` 协议的类型 `T`”。
 
-`findIndex(of:in:)` 函数现在可以成功编译了，并且适用于任何符合 `Equatable` 的类型，如 `Double` 或 `String`：
+`findIndex(of:in:)` 函数现在可以成功编译了，并且适用于任何遵循 `Equatable` 的类型，如 `Double` 或 `String`：
 
 ```swift
 let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
@@ -607,7 +606,7 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
 
 ## 关联类型
 
-定义一个协议时，声明一个或多个关联类型作为协议定义的一部分将会非常有用。关联类型为协议中的某个类型提供了一个占位符名称，其代表的实际类型在协议被遵循时才会被指定。关联类型通过 associatedtype 关键字来指定。
+定义一个协议时，声明一个或多个关联类型作为协议定义的一部分将会非常有用。*关联类型*为协议中的某个类型提供了一个占位符名称，其代表的实际类型在协议被遵循时才会被指定。关联类型通过 `associatedtype` 关键字来指定。
 
 ### 关联类型实践
 
@@ -641,20 +640,19 @@ protocol Container {
 - 必须可以通过 `count` 属性获取容器中元素的数量，并返回一个 `Int` 值。
 - 必须可以通过索引值类型为 `Int` 的下标检索到容器中的每一个元素。
 
-该协议没有指定容器中的元素的类型以及如何存储。该协议只指定了任何遵从 `Container` 协议的类型必现提供上述三个功能。在遵从该协议的前提下，容器也可以提供其他额外的功能。
+该协议没有指定容器中的元素的类型以及如何存储。该协议只指定了任何遵循 `Container` 协议的类型必现提供上述三个功能。在遵循该协议的前提下，容器也可以提供其他额外的功能。
 
-任何遵从 `Container` 协议的类型必须能够指定它存储的值的类型。具体来说，它必须确保添加到容器内的元素以及下标返回的元素类型都是正确的。
+任何遵循 `Container` 协议的类型必须能够指定它存储的值的类型。具体来说，它必须确保添加到容器内的元素以及下标返回的元素类型都是正确的。
 
 为了定义这些条件，`Container` 协议需要在不知道容器中元素的具体类型的情况下引用这种类型。`Container` 协议需要指定任何通过 `append(_:)` 方法添加到容器中的元素和容器内的元素是相同类型，并且通过容器下标返回的元素的类型也是这种类型。
 
+为此，`Container` 协议声明了一个关联类型 `Item`，写作 `associatedtype Item`。协议没有定义 `Item` 是什么，这个信息留给遵循协议的类型来提供。尽管如此，`Item` 别名提供了一种方式来引用 `Container` 中元素的类型，并将之用于 `append(_:)` 方法和下标，从而保证任何 `Container` 的行为都能如预期。
 
-为此，`Container` 协议声明了一个关联类型 `Item`，写作 `associatedtype Item`。协议没有定义 `Item` 是什么，这个信息留给遵从协议的类型来提供。尽管如此，`Item` 别名提供了一种方式来引用 `Container` 中元素的类型，并将之用于 `append(_:)` 方法和下标，从而保证任何 `Container` 的行为都能如预期。
-
-以下是上文中非泛型的 IntStack，通过遵循 Container 协议，修改后的版本：
+以下是上文中非泛型的 IntStack<doc:Generics#Generic-Types>，通过遵循 Container 协议，修改后的版本：
 
 ```swift
 struct IntStack: Container {
-    // IntStack原始实现
+    // IntStack 原始实现
     var items: [Int] = []
     mutating func push(_ item: Int) {
         items.append(item)
@@ -662,7 +660,7 @@ struct IntStack: Container {
     mutating func pop() -> Int {
         return items.removeLast()
     }
-    // Container 协议的实现部分
+    // 遵循Container 协议的实现部分
     typealias Item = Int
     mutating func append(_ item: Int) {
         self.push(item)
@@ -704,12 +702,12 @@ struct IntStack: Container {
   ```
 -->
 
-`IntStack` 结构体实现了 `Container` 协议的三个要求，其原有功能也不会和这些要求相冲突。
+`IntStack` 类型实现了 `Container` 协议的三项要求，，并且在每种情况下都封装了 `IntStack` 类型的现有功能的一部分，以满足这些要求。
 
-此外，`IntStack` 在实现 `Container` 协议的要求时，指定 `Item` 为 `Int` 类型，即 `typealias Item = Int`，从而将 `Container` 协议中抽象的 `Item` 类型转换为具体的 Int 类型。
+此外，`IntStack` 在实现 `Container` 协议的要求时，指定 `Item` 为 `Int` 类型，即 `typealias Item = Int`，从而将 `Container` 协议中抽象的 `Item` 类型转换为具体的 `Int` 类型。
 
-由于 Swift 的类型推断，
-实际上在 `IntStack` 的定义中不需要声明 `Item` 为 `Int`。因为 `IntStack` 符合 `Container` 协议的所有要求，`Swift` 只需通过 `append(_:)` 方法的 `item` 参数类型和下标返回值的类型，就可以推断出 `Item` 的具体类型。事实上，如果你在上面的代码中删除了 `typealias Item = Int` 这一行，一切也可正常工作，因为 Swift 清楚地知道 `Item` 应该是哪种类型。
+得益于 Swift 的类型推断机制，
+实际上在 `IntStack` 的定义中不需要声明 `Item` 为 `Int`。因为 `IntStack` 遵循 `Container` 协议的所有要求，`Swift` 只需通过 `append(_:)` 方法的 `item` 参数类型和下标返回值的类型，就可以推断出 `Item` 的具体类型。事实上，如果你在上面的代码中删除了 `typealias Item = Int` 这一行，一切也可正常工作，因为 Swift 清楚地知道 `Item` 应该是哪种类型。
 
 你也可以让泛型 `Stack` 结构体遵循 `Container` 协议:
 
@@ -769,7 +767,7 @@ struct Stack<Element>: Container {
 
 在<doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>中描述了如何利用扩展让一个已存在的类型遵循一个协议，这包括使用了关联类型协议
 
-Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都符合 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循 `Container` 协议，就可以扩展 `Array`，使其遵从 `Container` 协议。你可以通过一个空扩展来实现这点，正如<doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>中的描述:
+Swift 的 `Array` 类型已经提供 `append(_:)` 方法，`count` 属性，以及带有 `Int` 索引的下标来检索其元素。这三个功能都遵循 `Container` 协议的要求，也就意味着你只需声明 `Array` 遵循 `Container` 协议，就可以扩展 `Array`，使其遵循 `Container` 协议。你可以通过一个空扩展来实现这点，正如<doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>中的描述
 
 ```swift
 extension Array: Container {}
@@ -783,12 +781,12 @@ extension Array: Container {}
   ```
 -->
 
-Array 已有的 `append(_:)` 方法和下标使 Swift 能够推断出 `Item` 的具体类型，就像上面提到的泛型 `Stack` 类型一样。在定义此扩展后，你可以将任何 Array 作为 `Container` 使用。
+`Array` 已有的 `append(_:)` 方法和下标使 Swift 能够推断出 `Item` 的具体类型，就像上面提到的泛型 `Stack` 类型一样。在定义此扩展后，你可以将任何 Array 作为 `Container` 使用。
 
 
 ### 给关联类型添加约束
 
-你可以在协议里给关联类型添加约束来要求遵循的类型满足约束。例如，下面的代码定义了 `Container` 协议， 要求关联类型 `Item` 必须遵循 `Equatable` 协议：
+你可以在协议中为关联类型添加类型约束，以要求遵循该协议的类型满足这些约束。。例如，下面的代码定义了 `Container` 协议， 其要求关联类型 `Item` 必须遵循 `Equatable` 协议：
 
 ```swift
 protocol Container {
@@ -812,7 +810,7 @@ protocol Container {
   ```
 -->
 
-要遵守 `Container` 协议，`Item` 类型也必须遵守 `Equatable` 协议。
+为了遵守 `Container` 协议，`Item` 类型也必须遵守 `Equatable` 协议。
 
 ### 在关联类型约束里使用协议
 
@@ -926,7 +924,7 @@ extension IntStack: SuffixableContainer {
 
 <doc:Generics#类型约束>让你能够为泛型函数、下标、类型的类型参数定义一些强制要求。
 
-对关联类型添加约束通常是非常有用的。你可以通过定义一个泛型 `where` 子句来实现。通过泛型 `where` 子句让关联类型遵从某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 `where` 子句。
+对关联类型添加约束通常是非常有用的。你可以通过定义一个泛型 `where` 子句来实现。通过泛型 `where` 子句让关联类型遵循某个特定的协议，以及某个特定的类型参数和关联类型必须类型相同。你可以通过将 `where` 关键字紧跟在类型参数列表后面来定义 `where` 子句，`where` 子句后跟一个或者多个针对关联类型的约束，以及一个或多个类型参数和关联类型间的相等关系。你可以在函数体或者类型的大括号之前添加 `where` 子句。
 
 下面的例子定义了一个名为 `allItemsMatch` 的泛型函数，用来检查两个 `Container` 实例是否包含相同顺序的相同元素。如果所有的元素能够匹配，那么返回 `true`，否则返回 `false`。
 
@@ -984,10 +982,10 @@ func allItemsMatch<C1: Container, C2: Container>
 
 这个函数的类型参数列表还定义了对两个类型参数的要求：
 
-- `C1` 必须符合 `Container` 协议（写作 `C1: Container`）。
-- `C2` 必须符合 `Container` 协议（写作 `C2: Container`）。
+- `C1` 必须遵循 `Container` 协议（写作 `C1: Container`）。
+- `C2` 必须遵循 `Container` 协议（写作 `C2: Container`）。
 - `C1` 的 `Item` 必须和 `C2` 的 `Item` 类型相同（写作 `C1.Item == C2.Item`）。
-- `C1` 的 `Item` 必须符合 `Equatable` 协议（写作 `C1.Item: Equatable`）。
+- `C1` 的 `Item` 必须遵循 `Equatable` 协议（写作 `C1.Item: Equatable`）。
 
 前两个要求定义在函数的类型形式参数列表里，后两个要求定义在函数的泛型 where 分句中。
 
@@ -1046,7 +1044,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   ```
 -->
 
-上述示例创建了一个 `Stack` 实例来存储 `String` 值，并将三个字符串压入栈中。该示例还使用包含与栈中相同的三个字符串的数组字面量创建了一个 `Array` 实例。即使栈和数组类型不同，但它们都遵从 `Container` 协议，并且都包含相同类型的值。因此，你可以将这两个容器作为参数来调用 `allItemsMatch(_:_:)` 函数。在上述示例中，`allItemsMatch(_:_:)` 函数正确地报告了两个容器中的所有元素都是相互匹配的。
+上述示例创建了一个 `Stack` 实例来存储 `String` 值，并将三个字符串压入栈中。该示例还使用包含与栈中相同的三个字符串的数组字面量创建了一个 `Array` 实例。即使栈和数组类型不同，但它们都遵循 `Container` 协议，并且都包含相同类型的值。因此，你可以将这两个容器作为参数来调用 `allItemsMatch(_:_:)` 函数。在上述示例中，`allItemsMatch(_:_:)` 函数正确地报告了两个容器中的所有元素都是相互匹配的。
 
 ## 具有泛型 Where 子句的扩展
 
@@ -1078,7 +1076,7 @@ extension Stack where Element: Equatable {
   ```
 -->
 
-这个新的 `isTop(_:)` 方法首先检查栈是否为空，然后将给定的元素与栈顶的元素进行比较。如果你尝试在没有泛型 `where` 子句的情况下这样做，你会遇到一个问题：`isTop(_:)` 的实现使用了 `==` 操作符，但 `Stack` 的定义并不要求其元素符合 `Equatable` 协议的，因此使用 `==` 操作符会导致编译时错误。使用泛型 `where` 子句可以为扩展添加新的条件，这样扩展只在栈中的元素符合 `Equatable` 协议时才添加 `isTop(_:)` 方法。
+这个新的 `isTop(_:)` 方法首先检查栈是否为空，然后将给定的元素与栈顶的元素进行比较。如果你尝试在没有泛型 `where` 子句的情况下这样做，你会遇到一个问题：`isTop(_:)` 的实现使用了 `==` 操作符，但 `Stack` 的定义并不要求其元素遵循 `Equatable` 协议的，因此使用 `==` 操作符会导致编译时错误。使用泛型 `where` 子句可以为扩展添加新的条件，这样扩展只在栈中的元素遵循 `Equatable` 协议时才添加 `isTop(_:)` 方法。
 
 以下是 `isTop(_:)` 方法的实际运行方式：
 
@@ -1104,7 +1102,7 @@ if stackOfStrings.isTop("tres") {
   ```
 -->
 
-如果尝试在其元素不符合 `Equatable` 协议的栈上调用 `isTop(_:)` 方法，则会收到编译时错误。
+如果尝试在其元素不遵循 `Equatable` 协议的栈上调用 `isTop(_:)` 方法，则会收到编译时错误。
 
 ```swift
 struct NotEquatable { }
@@ -1157,7 +1155,7 @@ extension Container where Item: Equatable {
   This does, however, mean I can't use a for-in loop.
 -->
 
-`startsWith(_:)` 方法首先确保容器中至少有一个元素，然后检查容器中的第一个元素是否与给定的元素相匹配。这个新的 `startsWith(_:)` 方法可以用于任何符合 `Container` 协议的类型，包括上面使用的栈和数组，只要容器中的元素是符合 `Equatable` 的。
+`startsWith(_:)` 方法首先确保容器中至少有一个元素，然后检查容器中的第一个元素是否与给定的元素相匹配。这个新的 `startsWith(_:)` 方法可以用于任何遵循 `Container` 协议的类型，包括上面使用的栈和数组，只要容器中的元素是遵循 `Equatable` 的。
 
 ```swift
 if [9, 9, 9].startsWith(42) {
@@ -1194,7 +1192,7 @@ extension Container where Item == Double {
     }
 }
 print([1260.0, 1200.0, 98.6, 37.0].average())
-// 输出 "648.9"
+// 打印 "648.9"
 ```
 
 <!--
@@ -1273,7 +1271,7 @@ print(numbers.endsWith(37))
   ```
 -->
 
-这个示例在 `Container` 中添加了一个当元素是整数时可使用的 `average()` 方法；还添加了一个当元素符合 `equatable` 协议时使用 `endsWith(_:)` 方法。这两个函数都包含一个泛型 `where` 子句，该子句为 `Container` 原始声明中的泛型 `Item` 类型参数添加了类型约束。
+这个示例在 `Container` 中添加了一个当元素是整数时可使用的 `average()` 方法；还添加了一个当元素遵循 `equatable` 协议时使用 `endsWith(_:)` 方法。这两个函数都包含一个泛型 `where` 子句，该子句为 `Container` 原始声明中的泛型 `Item` 类型参数添加了类型约束。
 
 如果你想在不使用上下文 `where` 子句的情况下编写这段代码，你需要为每个泛型 `where` 子句编写两个扩展。上面的示例和下面的示例具有相同的行为。
 
@@ -1509,7 +1507,7 @@ extension Container {
 
 这个对 `Container` 协议的扩展添加了一个下标，该下标接受一个索引序列并返回一个包含每个给定索引所在的值的数组。这个泛型下标的约束如下：
 
-- 尖括号中的泛型参数 `Indices` 必须是符合 Swift 标准库中 `Sequence` 协议的类型。
+- 尖括号中的泛型参数 `Indices` 必须是遵循 Swift 标准库中 `Sequence` 协议的类型。
 - 下标接受一个单一参数 `indices`，它是该 `Indices` 类型的一个实例。
 - 泛型 `where` 子句要求序列的迭代器必须遍历 `Int` 类型的元素。这确保了序列中的索引与用于容器的索引类型相同。
 
