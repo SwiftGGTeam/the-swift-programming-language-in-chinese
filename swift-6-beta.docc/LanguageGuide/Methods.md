@@ -57,16 +57,15 @@ class Counter {
   ```
 -->
 
-The `Counter` class defines three instance methods:
+`Counter` 类定义了三个实例方法：
 
-- `increment()` increments the counter by `1`.
-- `increment(by: Int)` increments the counter by a specified integer amount.
-- `reset()` resets the counter to zero.
+- `increment()` 将计数器增加 `1`。
+- `increment(by: Int)` 将计数器增加指定的整数值。
+- `reset()` 将计数器重置为零。
 
-The `Counter` class also declares a variable property, `count`,
-to keep track of the current counter value.
+`Counter` 类还声明了一个变量属性 `count`，用于跟踪当前的计数器值。
 
-You call instance methods with the same dot syntax as properties:
+你可以使用与属性相同的点语法来调用实例方法：
 
 ```swift
 let counter = Counter()
@@ -98,20 +97,15 @@ counter.reset()
   ```
 -->
 
-Function parameters can have both a name (for use within the function's body)
-and an argument label (for use when calling the function),
-as described in <doc:Functions#Function-Argument-Labels-and-Parameter-Names>.
-The same is true for method parameters,
-because methods are just functions that are associated with a type.
+函数参数可以同时拥有一个参数名称（在函数体内使用）和一个参数标签（在调用函数时使用），参见<doc:Functions#Function-Argument-Labels-and-Parameter-Names>。
+方法参数也是如此，因为方法只是与某种类型关联的函数。
 
-### The self Property
+### self 属性
 
-Every instance of a type has an implicit property called `self`,
-which is exactly equivalent to the instance itself.
-You use the `self` property to refer to the current instance
-within its own instance methods.
+每个类型的实例都有一个隐式属性，称为 `self`，它与实例本身完全等同。
+你可以在实例方法中使用 `self` 属性来引用当前实例。
 
-The `increment()` method in the example above could have been written like this:
+上面示例中的 `increment()` 方法可以这样编写：
 
 ```swift
 func increment() {
@@ -136,22 +130,14 @@ func increment() {
   NOTE: I'm slightly cheating with my testing of this excerpt, but it works!
 -->
 
-In practice, you don't need to write `self` in your code very often.
-If you don't explicitly write `self`,
-Swift assumes that you are referring to a property or method of the current instance
-whenever you use a known property or method name within a method.
-This assumption is demonstrated by the use of `count` (rather than `self.count`)
-inside the three instance methods for `Counter`.
+实际上，在代码中你不需要经常写 `self`。
+如果你没有显式地写出 `self`，Swift会假定你在方法内部使用已知的属性或方法名时，指的是当前实例的属性或方法。
+这种假设在 `Counter` 类的三个实例方法中通过直接使用 `count`（而非 `self.count`）得到了体现。
 
-The main exception to this rule occurs when a parameter name for an instance method
-has the same name as a property of that instance.
-In this situation, the parameter name takes precedence,
-and it becomes necessary to refer to the property in a more qualified way.
-You use the `self` property to
-distinguish between the parameter name and the property name.
+此规则的主要例外情况发生在实例方法的形参名称与该实例的属性名称相同时。
+在这种情况下，形参名称优先，此时就需要以更明确的方式引用属性。你可以使用 `self` 属性来区分形参名称和属性名称。
 
-Here, `self` disambiguates between
-a method parameter called `x` and an instance property that's also called `x`:
+在如下情况中，`self` 用于区分一个名为 x 的方法形参和一个同样名为 x 的实例属性：
 
 ```swift
 struct Point {
@@ -185,29 +171,21 @@ if somePoint.isToTheRightOf(x: 1.0) {
   ```
 -->
 
-Without the `self` prefix,
-Swift would assume that both uses of `x` referred to the method parameter called `x`.
+如果没有 `self` 前缀，Swift 会假定 `x` 的两个使用都指的是名为 `x` 的方法形参。
 
-### Modifying Value Types from Within Instance Methods
+### 从实例方法内部修改值类型
 
-Structures and enumerations are *value types*.
-By default, the properties of a value type can't be modified from within its instance methods.
+结构体和枚举是 *值类型*。默认情况下，值类型的属性不能在其实例方法内部被修改。
 
 <!--
   TODO: find out why.  once I actually know why, explain it.
 -->
 
-However, if you need to modify the properties of your structure or enumeration
-within a particular method,
-you can opt in to *mutating* behavior for that method.
-The method can then mutate (that is, change)
-its properties from within the method,
-and any changes that it makes are written back to the original structure when the method ends.
-The method can also assign a completely new instance to its implicit `self` property,
-and this new instance will replace the existing one when the method ends.
+然而，如果你需要在特定方法内部修改结构体或枚举的属性，你可以为该方法启用 *mutating* 行为。
+这样方法就可以在内部改变其属性，并且所有的更改在方法结束时会写回到原始结构体中。
+该方法还可以将一个全新的实例赋值给隐式的 `self` 属性，并且这个新实例将在方法结束时替换现有实例。
 
-You can opt in to this behavior by placing the `mutating` keyword
-before the `func` keyword for that method:
+你可以通过在该方法的 `func` 关键字前添加 `mutating` 关键字来启用这种行为：
 
 ```swift
 struct Point {
@@ -241,16 +219,11 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
   ```
 -->
 
-The `Point` structure above defines a mutating `moveBy(x:y:)` method,
-which moves a `Point` instance by a certain amount.
-Instead of returning a new point,
-this method actually modifies the point on which it's called.
-The `mutating` keyword is added to its definition
-to enable it to modify its properties.
+上面的 `Point` 结构体定义了一个 mutating 的 `moveBy(x:y:)` 方法，该方法可以将一个 `Point` 实例移动一定的距离。
+这个方法直接修改其调用的点，而不是返回一个新的点。为了使该方法能够修改其属性，`mutating` 关键字被添加到它的定义中。
 
-Note that you can't call a mutating method on a constant of structure type,
-because its properties can't be changed, even if they're variable properties,
-as described in <doc:Properties#Stored-Properties-of-Constant-Structure-Instances>:
+请注意，你不能在结构体类型的常量上调用 mutating 方法，因为其属性不能被改变，即使它们是可变属性，
+参见：<doc:Properties#Stored-Properties-of-Constant-Structure-Instances>
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -289,10 +262,9 @@ fixedPoint.moveBy(x: 2.0, y: 3.0)
   if the setter for the computed property is explicitly defined as @!mutating.
 -->
 
-### Assigning to self Within a Mutating Method
+### 在 mutating 方法中给 self 赋值
 
-Mutating methods can assign an entirely new instance to the implicit `self` property.
-The `Point` example shown above could have been written in the following way instead:
+mutating 方法可以将一个全新的实例赋值给隐式的 `self` 属性。上面的 `Point` 示例可以改写为以下方式：
 
 ```swift
 struct Point {
@@ -320,13 +292,10 @@ struct Point {
   ```
 -->
 
-This version of the mutating `moveBy(x:y:)` method creates a new structure
-whose `x` and `y` values are set to the target location.
-The end result of calling this alternative version of the method
-will be exactly the same as for calling the earlier version.
+这个版本的 mutating `moveBy(x:y:)` 方法创建了一个新的结构体，其 `x` 和 `y` 值被设置为目标位置。
+调用这个替代版本方法与调用早期版本方法的最终结果完全相同。
 
-Mutating methods for enumerations can set the implicit `self` parameter to be
-a different case from the same enumeration:
+枚举的 mutating 方法可以将隐式的 `self` 参数设置为同一枚举的不同case：
 
 ```swift
 enum TriStateSwitch {
@@ -374,10 +343,7 @@ ovenLight.next()
   ```
 -->
 
-This example defines an enumeration for a three-state switch.
-The switch cycles between three different power states
-(`off`, `low` and `high`)
-every time its `next()` method is called.
+这个示例定义了一个三状态开关的枚举。每次调用其 `next()` 方法时，开关将在三种不同的电源状态（`off`, `low` 和 `high`）之间循环切换。
 
 ## Type Methods
 
