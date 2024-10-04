@@ -345,24 +345,20 @@ ovenLight.next()
 
 这个示例定义了一个三状态开关的枚举。每次调用其 `next()` 方法时，开关将在三种不同的电源状态（`off`, `low` 和 `high`）之间循环切换。
 
-## Type Methods
+## 类型方法
 
-Instance methods, as described above,
-are methods that you call on an instance of a particular type.
-You can also define methods that are called on the type itself.
-These kinds of methods are called *type methods*.
-You indicate type methods by writing
-the `static` keyword before the method's `func` keyword.
-Classes can use the `class` keyword instead,
-to allow subclasses to override the superclass’s implementation of that method.
+如上所述，实例方法是在特定类型的实例上调用的方法。
+你还可以定义在类型本身上调用的方法。这类方法称为 *类型方法*。
+你可以通过在方法的 `func` 关键字前添加 `static` 关键字来标识类型方法。
+类可以使用 `class` 关键字代替 `static` ，以允许子类覆盖父类对该方法的实现。
 
-> Note: In Objective-C, you can define type-level methods only for Objective-C classes.
-> In Swift, you can define type-level methods for all classes, structures, and enumerations.
-> Each type method is explicitly scoped to the type it supports.
+> 注意：在 Objective-C 中，你只能为 Objective-C 类定义类型级方法。
+> 在 Swift 中，你可以为所有类、结构体和枚举定义类型级方法。
+> 每个类型方法都明确作用于其对应的类型。
 
-Type methods are called with dot syntax, like instance methods.
-However, you call type methods on the type, not on an instance of that type.
-Here's how you call a type method on a class called `SomeClass`:
+类型方法与实例方法一样，使用点语法调用。
+然而你是在类型上调用类型方法，而不是在该类型的实例上调用。
+下面是如何在一个名为 `SomeClass`的类上调用类型方法的示例：
 
 ```swift
 class SomeClass {
@@ -386,31 +382,20 @@ SomeClass.someTypeMethod()
   ```
 -->
 
-Within the body of a type method,
-the implicit `self` property refers to the type itself,
-rather than an instance of that type.
-This means that you can use `self` to disambiguate between
-type properties and type method parameters,
-just as you do for instance properties and instance method parameters.
+在类型方法的主体内部，隐式的 `self` 属性指的是类型本身，而不是该类型的实例。
+这意味着你可以使用 `self` 来区分类型属性和类型方法形参，正如你在实例属性和实例方法形参中所做的那样。
 
-More generally, any unqualified method and property names that you use
-within the body of a type method will refer to other type-level methods and properties.
-A type method can call another type method with the other method's name,
-without needing to prefix it with the type name.
-Similarly, type methods on structures and enumerations can access type properties
-by using the type property's name without a type name prefix.
+更一般地说，在类型方法的主体内使用的任何未限定的方法和属性名称，都将指向其他类型级的方法和属性。
+类型方法可以直接调用另一个类型方法，而无需在其名称前添加类型名称。
+类似地，结构体和枚举上的类型方法可以通过使用类型属性的名称来访问类型属性，无需加类型名称前缀。
 
-The example below defines a structure called `LevelTracker`,
-which tracks a player's progress through the different levels or stages of a game.
-It's a single-player game,
-but can store information for multiple players on a single device.
+下面的示例定义了一个名为 `LevelTracker` 的结构，用于跟踪玩家在游戏不同关卡或阶段的进度。
+这是一个单人游戏，但可以在单个设备上存储多个玩家的信息。
 
-All of the game's levels (apart from level one) are locked when the game is first played.
-Every time a player finishes a level,
-that level is unlocked for all players on the device.
-The `LevelTracker` structure uses type properties and methods
-to keep track of which levels of the game have been unlocked.
-It also tracks the current level for an individual player.
+游戏的所有关卡（除了第一关）在首次游玩时都是锁定的。
+每当一个玩家完成一个关卡，该关卡将对设备上的所有玩家解锁。
+`LevelTracker` 结构使用类型属性和方法来跟踪游戏中哪些关卡已被解锁。
+同时，它还跟踪每个玩家的当前关卡。
 
 ```swift
 struct LevelTracker {
@@ -466,38 +451,24 @@ struct LevelTracker {
   ```
 -->
 
-The `LevelTracker` structure keeps track of the highest level that any player has unlocked.
-This value is stored in a type property called `highestUnlockedLevel`.
+`LevelTracker` 结构跟踪所有玩家已解锁的最高关卡。
+该值存储在名为 `highestUnlockedLevel` 的类型属性中。
 
-`LevelTracker` also defines two type functions to work with
-the `highestUnlockedLevel` property.
-The first is a type function called `unlock(_:)`,
-which updates the value of `highestUnlockedLevel` whenever a new level is unlocked.
-The second is a convenience type function called `isUnlocked(_:)`,
-which returns `true` if a particular level number is already unlocked.
-(Note that these type methods can access the `highestUnlockedLevel` type property
-without your needing to write it as `LevelTracker.highestUnlockedLevel`.)
+`LevelTracker` 还定义了两个类型函数来处理 `highestUnlockedLevel` 属性。
+第一个是名为 `unlock(_:)` 的类型函数，它在解锁新关卡时更新 `highestUnlockedLevel` 的值。
+第二个是名为 `isUnlocked(_:)` 的便利类型函数，如果特定关卡编号已经解锁，则返回 `true`。
+（请注意，这些类型方法可以直接访问 `highestUnlockedLevel` 类型属性，而不需要写成 `LevelTracker.highestUnlockedLevel`。）
 
-In addition to its type property and type methods,
-`LevelTracker` tracks an individual player's progress through the game.
-It uses an instance property called `currentLevel` to track
-the level that a player is currently playing.
+除了类型属性和类型方法，`LevelTracker` 还跟踪每个玩家在游戏中的进度。
+它使用一个名为 `currentLevel` 的实例属性来记录玩家当前正在玩的关卡。
 
-To help manage the `currentLevel` property,
-`LevelTracker` defines an instance method called `advance(to:)`.
-Before updating `currentLevel`,
-this method checks whether the requested new level is already unlocked.
-The `advance(to:)` method returns a Boolean value to indicate
-whether or not it was actually able to set `currentLevel`.
-Because it's not necessarily a mistake for
-code that calls the `advance(to:)` method
-to ignore the return value,
-this function is marked with the `@discardableResult` attribute.
-For more information about this attribute,
-see <doc:Attributes>.
+为了帮助管理 `currentLevel` 属性，`LevelTracker` 定义了一个名为 `advance(to:)` 的实例方法。
+在更新 `currentLevel` 之前，该方法会检查请求的新关卡是否已经解锁。
+`advance(to:)` 方法返回一个布尔值，以指示是否成功设置了 `currentLevel`。
+由于调用 `advance(to:)` 方法的代码不一定会关注返回值，因此该函数被标记为 `@discardableResult` 属性。
+有关此属性的更多信息，请参见 <doc:Attributes>。
 
-The `LevelTracker` structure is used with the `Player` class, shown below,
-to track and update the progress of an individual player:
+`LevelTracker` 结构与下面展示的 `Player` 类一起使用，用于跟踪和更新每个玩家的进度：
 
 ```swift
 class Player {
@@ -531,18 +502,12 @@ class Player {
   ```
 -->
 
-The `Player` class creates a new instance of `LevelTracker`
-to track that player's progress.
-It also provides a method called `complete(level:)`,
-which is called whenever a player completes a particular level.
-This method unlocks the next level for all players
-and updates the player's progress to move them to the next level.
-(The Boolean return value of `advance(to:)` is ignored,
-because the level is known to have been unlocked
-by the call to `LevelTracker.unlock(_:)` on the previous line.)
+`Player` 类创建了一个新的 `LevelTracker` 实例来跟踪该玩家的进度。
+它还提供了一个名为 `complete(level:)`的方法，每当玩家完成某个关卡时调用。
+此方法为所有玩家解锁下一个关卡，并更新该玩家的进度，使其进入下一个关卡。
+（ `advance(to:)` 的Boolean返回值被忽略，因为通过前一行对 `LevelTracker.unlock(_:)` 的调用，关卡已被解锁。）
 
-You can create an instance of the `Player` class for a new player,
-and see what happens when the player completes level one:
+你可以为一个新玩家创建 `Player` 类的实例，并查看当该玩家完成第一关时会发生什么：
 
 ```swift
 var player = Player(name: "Argyrios")
@@ -562,9 +527,7 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
   ```
 -->
 
-If you create a second player, whom you try to move to a level
-that's not yet unlocked by any player in the game,
-the attempt to set the player's current level fails:
+如果你创建第二个玩家，并尝试将其移动到尚未被任何玩家解锁的关卡，则设置该玩家当前关卡的尝试将失败：
 
 ```swift
 player = Player(name: "Beto")
