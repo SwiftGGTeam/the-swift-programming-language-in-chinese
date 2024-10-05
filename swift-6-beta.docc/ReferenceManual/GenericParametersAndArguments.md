@@ -8,12 +8,7 @@ Swift 文档源文件地址：https://docs.swift.org/swift-book/documentation/th
 
 Generalize declarations to abstract away concrete types.
 
-This chapter describes parameters and arguments for generic types, functions, and
-initializers. When you declare a generic type, function, subscript, or initializer,
-you specify the type parameters that the generic type, function, or initializer
-can work with. These type parameters act as placeholders that
-are replaced by actual concrete type arguments when an instance of a generic type is
-created or a generic function or initializer is called.
+本节涉及泛型类型、函数和构造器的参数，包括形参和实参。在声明泛型类型、函数或构造器时，需要指定泛型可处理的类型参数。这些类型参数相当于占位符，当实例化泛型类型或调用泛型函数、初始化器时，会被具体的类型实参替换。
 
 For an overview of generics in Swift, see <doc:Generics>.
 
