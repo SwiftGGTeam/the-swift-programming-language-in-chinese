@@ -2,7 +2,7 @@
 
 访问属于实例或类型的存储值和计算值。
 
-*属性*将值与特定的类、结构或枚举关联。存储属性将常量和变量值作为实例的一部分进行存储，而计算属性则计算（而不是存储）一个值。计算属性由类、结构和枚举提供。存储属性仅由类和结构提供。
+**属性**将值与特定的类、结构或枚举关联。存储属性将常量和变量值作为实例的一部分进行存储，而计算属性则计算（而不是存储）一个值。计算属性由类、结构和枚举提供。存储属性仅由类和结构体提供。
 
 <!--
   - test: `enumerationsCantProvideStoredProperties`
@@ -63,7 +63,7 @@ struct FixedLengthRange {
     let length: Int
 }
 var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-// 该区间表示整数 0，1，2，3
+// 该区间表示整数 0，1，2
 rangeOfThreeItems.firstValue = 6
 // 该区间现在表示整数 6，7，8
 ```
@@ -77,9 +77,9 @@ rangeOfThreeItems.firstValue = 6
         let length: Int
      }
   -> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-  // 该区间表示整数 0，1，2
+  // the range represents integer values 0, 1, and 2
   -> rangeOfThreeItems.firstValue = 6
-  // 该区间现在表示整数 6，7，8
+  // the range now represents integer values 6, 7, and 8
   ```
 -->
 
@@ -101,7 +101,7 @@ rangeOfFourItems.firstValue = 6
 
   ```swifttest
   -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-  // 该区间表示整数 0，1，2，3
+  // this range represents integer values 0, 1, 2, and 3
   -> rangeOfFourItems.firstValue = 6
   !$ error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant
   !! rangeOfFourItems.firstValue = 6
@@ -116,7 +116,7 @@ rangeOfFourItems.firstValue = 6
 
 因为 `rangeOfFourItems` 被声明为常量（使用 `let` 关键字），所以即使 `firstValue` 是一个可变属性，也无法再修改它了。
 
-这种行为是由于结构体属于*值类型*。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量。
+这种行为是由于结构体属于**值类型**。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量。
 
 属于*引用类型*的类别则不一样，把一个引用类型的实例赋给一个常量后，依然可以修改该实例的可变属性。
 
