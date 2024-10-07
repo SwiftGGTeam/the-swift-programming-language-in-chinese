@@ -4,7 +4,7 @@
 
 **访问控制**可以限制其它源文件或模块对你的代码的访问。这个特性让你能够隐藏代码的实现细节，并指定一个接口来让别人访问和使用你的代码。
 
-你可以给单个类型（类、结构体和枚举）设置特定的访问级别，也可以给这些类型的属性、方法、初始化器、下标等设置访问级别。协议可以被限制在特定的上下文中，全局常量、变量和函数也可以如此。
+你可以给单个类型（类、结构体和枚举）设置特定的访问级别，也可以给这些类型的属性、方法、构造器、下标等设置访问级别。协议可以被限制在特定的上下文中，全局常量、变量和函数也可以如此。
 
 Swift 不仅提供了多种访问级别，还为典型场景提供了默认的访问级别，这样就减少了我们需要显式指定访问级别的情况。实际上，如果你在开发一个单 target 的应用程序，可能完全不需要显式指定访问级别。
 
@@ -14,7 +14,7 @@ Swift 不仅提供了多种访问级别，还为典型场景提供了默认的�
 
 Swift 的访问控制模型是基于模块、源文件和包（packages）这三个概念的。
 
-**模块**是代码分发的独立单元——一个框架或应用程序作为一个整体构建和发布，并且可以通过 Swift 的 `import` 关键字被其他模块导入。
+**模块**是代码分发的独立单元，例如将一个框架或应用程序作为一个整体构建和发布，并且可以通过 Swift 的 `import` 关键字被其他模块导入。
 
 在 Swift 中，Xcode 的每个构建目标（例如应用程序或框架）都被视为一个独立的模块。如果你将应用程序中的部分代码打包成一个独立的框架——以便封装这些代码并在多个应用程序中重用，那么当这个框架被导入到某个应用程序或其他框架中使用时，你在框架中定义的所有内容都将属于这个独立的模块。
 
@@ -28,22 +28,14 @@ Swift 的访问控制模型是基于模块、源文件和包（packages）这三
 
 Swift 为代码中的实体提供了六种不同的**访问级别**。这些访问级别取决于实体所在的源文件、源文件所属的模块，以及模块所属的包。
 
-- *open* 和 *public* 允许实体在同一模块的任意源文件内使用，也可以在导入该模块的其他模块的源文件内使用。通常使用 open 或 public 访问级别来指定框架的公共接口。open 和 public 访问级别的区别将在下文中说明。
-- *package* 允许实体在同一包中的任意源文件内使用，但不能在包外的源文件内使用。通常在包含多个模块的应用或框架中使用 package。
-- *internal* 允许实体在同一模块的任意源文件内使用，但不能在模块外的源文件中使用。通常在定义应用或框架的内部结构体时使用 internal。
-- *fileprivate* 将实体的使用限制在定义它的源文件内。当某个功能的实现细节只需要在当前文件中使用时，可以使用 fileprivate 来隐藏这些实现细节。
-- *private* 将实体的使用限制在其声明的作用域内，以及同一文件中该声明的扩展（extension）内。当某个功能的实现细节只在单个声明内部使用时，可以使用 private 来隐藏这些实现细节。
+- *open* 和 *public* 允许实体被同一模块内的任意源文件使用，也可以在导入该模块的其他模块的源文件内使用。通常使用 open 或 public 访问级别来指定框架的公共接口。open 和 public 访问级别的区别将在下文中说明。
+- *package* 允许实体被同一模块内的任意源文件使用，但不能在包外的源文件内使用。通常在包含多个模块的应用或框架中使用 package。
+- *internal* 允许实体被同一模块内的任意源文件使用，但不能在模块外的源文件中使用。通常在定义应用或框架的内部结构体时使用 internal。
+- *fileprivate* 将对实体的使用限制在定义它的源文件内。当某个功能的实现细节只需要在当前文件中使用时，可以使用 fileprivate 来隐藏这些实现细节。
+- *private* 将对实体的使用限制在其声明的作用域内，以及同一文件中该声明的扩展（extension）内。当某个功能的实现细节只在单个声明内部使用时，可以使用 private 来隐藏这些实现细节。
 
 open 是最高（限制最少）的访问级别，而 private 是最低（限制最多）的访问级别。
 
-Open access applies only to classes and class members,
-and it differs from public access
-by allowing code outside the module to subclass and override,
-as discussed below in <doc:AccessControl#Subclassing>.
-Marking a class as open explicitly indicates
-that you've considered the impact of code from other modules
-using that class as a superclass,
-and that you've designed your class's code accordingly.
 open 仅适用于类及类的成员，它与 public 的不同之处在于 open 允许模块外的代码进行继承和重写，如下文 <doc:AccessControl#Subclassing> 中所述。将类显式指定为 open 表明你已考虑到其他模块的代码将该类用作父类的影响，并为此相应地设计了类的代码。
 
 ### 访问级别的指导原则
@@ -67,7 +59,7 @@ Swift 的访问级别遵循一个指导原则：**实体的定义都不能依赖
 
 ### 框架的访问级别
 
-当你开发框架时，应将框架的对外接口指定为 open 或 public，以便其他模块（如导入该框架的应用）可以查看和访问这些接口。这个对外接口就是框架的应用程序接口（application programming interface，即API）。
+当你开发框架时，应将框架的对外接口指定为 open 或 public，以便其他模块（如导入该框架的应用）可以查看和访问这些接口。这个对外接口就是框架的应用程序接口（application programming interface，即 API）。
 
 > 注意: 框架的内部实现细节仍然可以使用默认的访问级别 internal，当你需要对框架内部其它部分隐藏细节时可以使用 private 或 fileprivate。对于框架的 API 部分，你就需要将它们设置为 open 或 public 了。
 
@@ -131,7 +123,7 @@ let someInternalConstant = 0            // 隐式指定为 internal
 
 如果想为一个自定义类型指定访问级别，在定义类型时进行指定即可。这个新类型就可以在其访问级别允许的地方使用。例如，你定义了一个 fileprivate 访问级别的类，那么该类只能在定义它的源文件中使用——可以作为属性的类型、函数的参数类型或函数的返回类型。
 
-一个类型的访问级别也会影响该类型的成员（其属性、方法、初始化器和下标）的默认访问级别。如果你将一个类型的访问级别定义为 `private` 或 `fileprivate`，那么该类型的成员的默认访问级别也会是 `private` 或 `fileprivate`。如果你将一个类型的访问级别定义为 `internal` 或 `public`（或者使用 `internal` 的默认访问级别，而不显式指定访问级别），那么该类型的成员的默认访问级别将是 `internal`。
+一个类型的访问级别也会影响该类型的成员（其属性、方法、构造器和下标）的默认访问级别。如果你将一个类型的访问级别定义为 `private` 或 `fileprivate`，那么该类型的成员的默认访问级别也会是 `private` 或 `fileprivate`。如果你将一个类型的访问级别定义为 `internal` 或 `public`（或者使用 `internal` 的默认访问级别，而不显式指定访问级别），那么该类型的成员的默认访问级别将是 `internal`。
 
 > 重要提示: `public` 类型的成员默认具有 `internal` 访问级别，而不是 `public`。如果你想让某个成员是 `public`，必须显式地将其指定为 `public`。这样可以确保公共 API 都是你经过选择才发布的，避免错误地将内部使用的接口公开。
 
@@ -506,9 +498,9 @@ public enum CompassPoint {
 
 ## 子类
 
-你可以继承同一模块中的所有有访问权限的类，也可以继承不同模块中被 `open` 修饰的类。子类的访问级别不得高于父类的访问级别——例如，你不能写一个 `public` 的子类来继承 `internal` 的父类。
+你可以继承同一模块中的所有有访问权限的类，也可以继承不同模块中被 `open` 修饰的类。子类的访问级别不得高于父类的访问级别。例如，你不能写一个 `public` 的子类来继承 `internal` 的父类。
 
-此外，对于同一模块中定义的类，你可以重写在上下文中可访问的任意类成员（方法、属性、初始化器或下标）。对于在其他模块中定义的类，你可以重写访问级别为 `open` 的任意类成员。
+此外，对于同一模块中定义的类，你可以重写在上下文中可访问的任意类成员（方法、属性、构造器或下标）。对于在其他模块中定义的类，你可以重写访问级别为 `open` 的任意类成员。
 
 通过重写可以给子类的成员提供更高的访问级别。下面的例子中，类 `A` 是一个 `public` 类，它有一个 `fileprivate` 的方法 `someMethod()`。类 `B` 是 `A` 的子类，其访问级别降低为 `internal`。但是，类 `B` 将 `someMethod()` 的访问级别重写为 `internal`，其访问级别高于原来的访问级别：
 
@@ -791,23 +783,23 @@ public struct TrackedString {
   ```
 -->
 
-## 初始化器
+## 构造器
 
-自定义初始化器的访问级别可以低于或等于它所初始化的类型。唯一的例外是必要初始化器（如 <doc:Initialization#Required-Initializers> 中定义的）。必要初始化器必须具有与其所属类相同的访问级别。
+自定义构造器的访问级别可以低于或等于它所初始化的类型。唯一的例外是必要构造器（如 <doc:Initialization#Required-Initializers> 中定义的）。必要构造器必须具有与其所属类相同的访问级别。
 
-与函数和方法的参数一样，初始化器的参数类型的访问级别不能比初始化器自身的访问级别更严格。
+与函数和方法的参数一样，构造器的参数类型的访问级别不能比构造器自身的访问级别更严格。
 
-### 默认初始化器
+### 默认构造器
 
-如 <doc:Initialization#Default-Initializers> 中所述，Swift 会为结构体和类自动生成一个不带参数的**默认初始化器**，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的初始化器。
+如 <doc:Initialization#Default-Initializers> 中所述，Swift 会为结构体和类自动生成一个不带参数的**默认构造器**，只要它们为所有存储型属性设置了默认初始值，并且未提供自定义的构造器。
 
-默认初始化器的访问级别与它所初始化的类型相同，除非该类型被定义为 `public`。对于 `public` 类型，默认初始化器的访问级别将为 `internal`。如果你想让 `public` 类型在另一个模块中可以通过无参数初始化器进行初始化，则必须在类型定义中显式提供一个 `public` 访问级别的无参数初始化器。
+默认构造器的访问级别与它所初始化的类型相同，除非该类型被定义为 `public`。对于 `public` 类型，默认构造器的访问级别将为 `internal`。如果你想让 `public` 类型在另一个模块中可以通过无参数构造器进行初始化，则必须在类型定义中显式提供一个 `public` 访问级别的无参数构造器。
 
-### 结构体默认的成员逐一初始化器
+### 结构体默认的成员逐一构造器
 
-对于结构体类型，如果结构体中的任何一个存储属性是 `private`，则默认的成员逐一初始化器的为 `private`。同样，如果任何存储属性是 `fileprivate`，则默认的成员逐一初始化器为 `fileprivate`。否则，默认的成员逐一初始化器为 `internal`。
+对于结构体类型，如果结构体中的任何一个存储属性是 `private`，则默认的成员逐一构造器的为 `private`。同样，如果任何存储属性是 `fileprivate`，则默认的成员逐一构造器为 `fileprivate`。否则，默认的成员逐一构造器为 `internal`。
 
-与前面提到的默认初始化器一样，如果你想让 `public` 结构体类型在其他模块中可以通过成员逐一初始化器进行初始化，则必须在类型定义中显式提供一个 `public` 的成员逐一初始化器。
+与前面提到的默认构造器一样，如果你想让 `public` 结构体类型在其他模块中可以通过成员逐一构造器进行初始化，则必须在类型定义中显式提供一个 `public` 的成员逐一构造器。
 
 ## 协议
 
@@ -1002,7 +994,7 @@ public struct TrackedString {
 
 当你编写或扩展一个类型让它遵循一个协议时，你必须确保该类型对协议每一个要求的实现至少与协议的访问级别一致。例如，如果一个 `public` 类型遵循一个 `internal` 协议，那么该类型对协议每一个要求的实现必须至少是 `internal`。
 
-> 注意: Swift 和 Objective-C 一样，协议遵循是全局的——在同一程序中，一个类型不可能用两种不同的方式遵循同一个协议。
+> 注意: Swift 和 Objective-C 一样，协议遵循是全局的。在同一程序中，一个类型不可能用两种不同的方式遵循同一个协议。
 
 ## 扩展
 
@@ -1090,19 +1082,6 @@ public struct TrackedString {
 
 ### 扩展的私有成员
 
-
-- Declare a private member in the original declaration,
-  and access that member from extensions in the same file.
-- Declare a private member in one extension,
-  and access that member from another extension in the same file.
-- Declare a private member in an extension,
-  and access that member from the original declaration in the same file.
-
-This behavior means you can use extensions in the same way
-to organize your code,
-whether or not your types have private entities.
-For example, given the following simple protocol:
-
 扩展同一文件内的类，结构体或者枚举，扩展里的代码会表现得跟声明在原始类型里的一模一样。因此，你可以：
 
 - 在原始声明中声明一个 `private` 成员，并在同一文件中的扩展中访问该成员。
@@ -1162,7 +1141,7 @@ extension SomeStruct: SomeProtocol {
 
 ## 泛型
 
-泛型类型或泛型函数的访问级别是本身的访问级别与其类型参数上的任何类型约束的访问级别中最低的那个。
+泛型类型或泛型函数的访问级别取决于它本身的访问级别和其类型参数的类型约束的访问级别，最终由这些访问级别中的最低者决定。
 
 ## 类型别名
 
