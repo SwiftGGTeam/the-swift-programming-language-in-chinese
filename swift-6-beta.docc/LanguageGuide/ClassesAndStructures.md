@@ -1,80 +1,66 @@
-# Structures and Classes
+# 结构体和类
 
-Model custom types that encapsulate data.
+封装数据的自定义模型类型。
 
-*Structures* and *classes* are general-purpose,
-flexible constructs that become the building blocks of your program's code.
-You define properties and methods to add functionality to your structures and classes
-using the same syntax you use to define constants, variables, and functions.
+*结构体*和*类*是通用、灵活的构造，是程序代码的基石。
+你可以使用与定义常量、变量和函数相同的语法，
+为结构体和类添加属性和方法以增加功能。
 
-Unlike other programming languages,
-Swift doesn't require you to create separate interface and implementation files
-for custom structures and classes.
-In Swift, you define a structure or class in a single file,
-and the external interface to that class or structure is
-automatically made available for other code to use.
+与其他编程语言不同，Swift 不需要为自定义结构体和类创建单独的接口和实现文件。
+在 Swift 中，当你在单个文件中定义结构体或类，
+该类或结构体的外部接口会自动提供给其他代码使用。
 
-> Note: An instance of a class is traditionally known as an *object*.
-> However, Swift structures and classes
-> are much closer in functionality than in other languages,
-> and much of this chapter describes functionality that applies to
-> instances of *either* a class or a structure type.
-> Because of this, the more general term *instance* is used.
+> 注意: 类的实例我们通常称为*对象*。
+> 但是，与其他语言相比，Swift 中的*结构体*和*类*在功能上更为接近，
+> 本章大部分介绍的功能都适用于结构体*或*类的实例，
+> 因此，本章使用了更通用的术语：*实例*。
 
-## Comparing Structures and Classes
+## 比较结构体和类
 
-Structures and classes in Swift have many things in common.
-Both can:
+Swift 中的结构体和类有许多共同点。两者都可以:
 
-- Define properties to store values
-- Define methods to provide functionality
-- Define subscripts to provide access to their values using subscript syntax
-- Define initializers to set up their initial state
-- Be extended to expand their functionality beyond a default implementation
-- Conform to protocols to provide standard functionality of a certain kind
+- 定义属性来存储值
+- 定义方法来提供功能  
+- 定义下标来使用下标语法访问其值
+- 定义构造器来设置初始状态
+- 被扩展以增加默认实现之外的功能
+- 遵循协议以提供某种标准功能
 
-For more information, see
-<doc:Properties>, <doc:Methods>, <doc:Subscripts>, <doc:Initialization>,
-<doc:Extensions>, and <doc:Protocols>.
+更多信息，请参阅 <doc:Properties>、<doc:Methods>、<doc:Subscripts>、<doc:Initialization>、<doc:Extensions> 和 <doc:Protocols>。
 
-Classes have additional capabilities that structures don't have:
+相比结构体,类有一些额外的功能:
 
-- Inheritance enables one class to inherit the characteristics of another.
-- Type casting enables you to check and interpret the type of a class instance at runtime.
-- Deinitializers enable an instance of a class to free up any resources it has assigned.
-- Reference counting allows more than one reference to a class instance.
+- 一个类可以继承另一个类的特征。
+- 类型转换允许你在运行时检查和解释类实例的类型。
+- 析构器允许一个类的实例释放其分配的任何资源。
+- 引用计数允许对类实例有多个引用。
 
-For more information, see
-<doc:Inheritance>, <doc:TypeCasting>, <doc:Deinitialization>,
-and <doc:AutomaticReferenceCounting>.
+更多信息，请参阅 <doc:Inheritance>、<doc:TypeCasting>、<doc:Deinitialization> 和 <doc:AutomaticReferenceCounting>。
 
-The additional capabilities that classes support
-come at the cost of increased complexity.
-As a general guideline,
-prefer structures because they're easier to reason about,
-and use classes when they're appropriate or necessary.
-In practice, this means most of the custom types you define
-will be structures and enumerations.
-For a more detailed comparison,
-see [Choosing Between Structures and Classes](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes).
+类支持的额外功能以增加其复杂性为代价。
+作为一般准则，我们会优先使用结构体，
+因为它们更易于理解，并在适当或必要时使用类。
+在实践中，这意味着你定义的大多数自定义类型将是结构体和枚举。
+有关更详细的比较，请参阅 [选择结构体和类](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes)。
 
-> Note: Classes and actors share many of the same characteristics and behaviors.
-> For information about actors, see <doc:Concurrency>.
+> 注意: 类和 actor 共享许多相同的特征和行为。
+> 有关 actor 的信息，请参阅 <doc:Concurrency>。
 
-### Definition Syntax
+### 定义语法  
 
-Structures and classes have a similar definition syntax.
-You introduce structures with the `struct` keyword
-and classes with the `class` keyword.
-Both place their entire definition within a pair of braces:
+结构体和类有类似的定义语法。
+你使用 `struct` 关键字引入结构体，
+使用 `class` 关键字引入类。
+两者都将整个定义放在一对大括号中：
 
 ```swift
 struct SomeStructure {
-    // structure definition goes here
+    // 结构体定义在这里
 }
+
 class SomeClass {
-    // class definition goes here
-}
+    // 类定义在这里
+} 
 ```
 
 <!--
@@ -82,29 +68,28 @@ class SomeClass {
 
   ```swifttest
   -> struct SomeStructure {
-        // structure definition goes here
+        // 结构体定义在这里
      }
   -> class SomeClass {
-        // class definition goes here
-     }
+        // 类定义在这里
   ```
 -->
 
-> Note: Whenever you define a new structure or class,
-> you define a new Swift type.
-> Give types `UpperCamelCase` names
-> (such as `SomeStructure` and `SomeClass` here)
-> to match the capitalization of standard Swift types
-> (such as `String`, `Int`, and `Bool`).
-> Give properties and methods `lowerCamelCase` names
-> (such as `frameRate` and `incrementCount`)
-> to differentiate them from type names.
+> 注意: 每当你定义新的结构体或类时，
+> 你就定义了一个新的 Swift 类型。
+> 使用 `UpperCamelCase` 来命名类型
+> （如此处的 `SomeStructure` 和 `SomeClass`），
+> 以匹配标准 Swift 类型的大小写
+> （如 `String`、`Int` 和 `Bool`）。
+> 使用 `lowerCamelCase` 来命名属性和方法
+> （如 `frameRate` 和 `incrementCount`），
+> 以便将它们与类型名称区分开。
 
-Here's an example of a structure definition and a class definition:
+下面是结构体定义和类定义的示例：
 
 ```swift
 struct Resolution {
-    var width = 0
+    var width = 0 
     var height = 0
 }
 class VideoMode {
@@ -132,35 +117,30 @@ class VideoMode {
   ```
 -->
 
-The example above defines a new structure called `Resolution`,
-to describe a pixel-based display resolution.
-This structure has two stored properties called `width` and `height`.
-Stored properties are constants or variables that are bundled up and stored
-as part of the structure or class.
-These two properties are inferred to be of type `Int`
-by setting them to an initial integer value of `0`.
+上面的示例定义了一个名为 `Resolution` 的新结构体，
+用于描述基于像素的显示分辨率。
+该结构体包含了名为 `width` 和 `height` 的两个储存属性。
+存储属性是作为结构体或类的一部分绑定存储的常量或变量。
+当这两个属性初始整数值为 `0` 时，他们会被推断为 `Int` 类型。
 
-The example above also defines a new class called `VideoMode`,
-to describe a specific video mode for video display.
-This class has four variable stored properties.
-The first, `resolution`, is initialized with a new `Resolution` structure instance,
-which infers a property type of `Resolution`.
-For the other three properties,
-new `VideoMode` instances will be initialized with
-an `interlaced` setting of `false` (meaning “noninterlaced video”),
-a playback frame rate of `0.0`,
-and an optional `String` value called `name`.
-The `name` property is automatically given a default value of `nil`,
-or “no `name` value”, because it's of an optional type.
+上面的示例还定义了一个名为 `VideoMode` 的类，
+用于描述视频显示的特定视频模式。
+该结构体有四个变量存储属性。
+第一个 `resolution` 被初始化为一个新的 `Resolution` 结构体实例，
+它的属性类型被推断为 `Resolution`。
+新的 `VideoMode` 实例还会初始化其他三个属性。
+分别是初始化为 `false` 的 `interlaced`（表示 “非隔行扫描视频”）、
+初始化为 `0.0` 的播放帧率和一个值为可选 `String` 的 `name`。
+由于 `name` 属性是可选类型，它会自动获得默认值 `nil`，又称 “空 `name` 值”。
 
-### Structure and Class Instances
+### 结构体和类的实例
 
-The `Resolution` structure definition and the `VideoMode` class definition
-only describe what a `Resolution` or `VideoMode` will look like.
-They themselves don't describe a specific resolution or video mode.
-To do that, you need to create an instance of the structure or class.
+`Resolution` 结构体定义和 `VideoMode` 类定义本身
+只描述了 `Resolution` 或 `VideoMode` 将是什么样子。
+它们并不描述特定的分辨率或视频模式。
+要做到这一点，你需要创建结构体的实例。
 
-The syntax for creating instances is very similar for both structures and classes:
+创建实例的语法对于结构体和类都非常相似：
 
 ```swift
 let someResolution = Resolution()
@@ -176,28 +156,26 @@ let someVideoMode = VideoMode()
   ```
 -->
 
-Structures and classes both use initializer syntax for new instances.
-The simplest form of initializer syntax uses the type name of the class or structure
-followed by empty parentheses, such as `Resolution()` or `VideoMode()`.
-This creates a new instance of the class or structure,
-with any properties initialized to their default values.
-Class and structure initialization is described in more detail
-in <doc:Initialization>.
+结构体和类都使用构造器语法来创建新实例。
+最简单的初始化语法形式是使用结构体的类型名后跟空括号，
+例如 `Resolution()` 或 `VideoMode()`。
+这将创建类或结构体的新实例，并将任何属性初始化为其默认值。
+类和结构体的初始化在 <doc:Initialization> 中有更详细的描述。
 
 <!--
-  TODO: note that you can only use the default constructor if you provide default values
-  for all properties on a structure or class.
+  TODO: 需要注意的是，
+  只有为结构体或类的所有属性提供默认值时，才能使用默认构造函数。
 -->
 
-### Accessing Properties
+### 访问属性
 
-You can access the properties of an instance using *dot syntax*.
-In dot syntax, you write the property name immediately after the instance name,
-separated by a period (`.`), without any spaces:
+你可以使用*点语法*访问实例的属性。
+在点语法中，实例名后面紧跟属性名，
+中间用句点（`.`）分隔，不留任何空格：
 
 ```swift
 print("The width of someResolution is \(someResolution.width)")
-// Prints "The width of someResolution is 0"
+// 打印 "The width of someResolution is 0" 
 ```
 
 <!--
@@ -209,16 +187,16 @@ print("The width of someResolution is \(someResolution.width)")
   ```
 -->
 
-In this example,
-`someResolution.width` refers to the `width` property of `someResolution`,
-and returns its default initial value of `0`.
+在这个例子中，`someResolution.width` 指的是 
+`someResolution` 的 `width` 属性，
+并返回其默认初始值 `0`。
 
-You can drill down into subproperties,
-such as the `width` property in the `resolution` property of a `VideoMode`:
+你可以深入到子属性，
+例如 `VideoMode` 中 `resolution` 属性的 `width` 属性：
 
 ```swift
 print("The width of someVideoMode is \(someVideoMode.resolution.width)")
-// Prints "The width of someVideoMode is 0"
+// 打印 "The width of someVideoMode is 0"
 ```
 
 <!--
@@ -230,12 +208,12 @@ print("The width of someVideoMode is \(someVideoMode.resolution.width)")
   ```
 -->
 
-You can also use dot syntax to assign a new value to a variable property:
+你还可以使用点语法为可变属性赋值：
 
 ```swift
 someVideoMode.resolution.width = 1280
-print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
-// Prints "The width of someVideoMode is now 1280"
+print("The width of someVideoMode is now \(someVideoMode.resolution.width)") 
+// 打印 "The width of someVideoMode is now 1280"
 ```
 
 <!--
@@ -248,12 +226,11 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
   ```
 -->
 
-### Memberwise Initializers for Structure Types
+### 结构体逐一成员构造器
 
-All structures have an automatically generated *memberwise initializer*,
-which you can use to initialize the member properties of new structure instances.
-Initial values for the properties of the new instance
-can be passed to the memberwise initializer by name:
+所有结构体都有一个自动生成的*逐一成员构造器*，
+你可以使用它来初始化新结构体实例的成员属性。
+可以通过属性成员名称将新实例的属性初始值传递给成员构造器：
 
 ```swift
 let vga = Resolution(width: 640, height: 480)
@@ -267,8 +244,8 @@ let vga = Resolution(width: 640, height: 480)
   ```
 -->
 
-Unlike structures, class instances don't receive a default memberwise initializer.
-Initializers are described in more detail in <doc:Initialization>.
+与结构体不同，类实例没有默认的逐一成员构造器。
+构造器在 <doc:Initialization> 中有更详细的描述。
 
 <!--
   - test: `classesDontHaveADefaultMemberwiseInitializer`
@@ -283,44 +260,34 @@ Initializers are described in more detail in <doc:Initialization>.
   ```
 -->
 
-## Structures and Enumerations Are Value Types
+## 结构体和枚举是值类型
 
-A *value type* is a type whose value is *copied*
-when it's assigned to a variable or constant,
-or when it's passed to a function.
+*值类型*是一种在被赋值给变量或常量时，
+或者在传递给函数时，其值会被*复制*的类型。
 
 <!--
-  Alternate definition:
-  A type has value semantics when
-  mutation of one variable of that type
-  can never be observed through a different variable of the same type.
+  替代定义：
+  当某个类型的一个变量的变体永远无法通过同一类型的其他变量观察到时，
+  该类型就具有值语义。
 -->
 
-You've actually been using value types extensively throughout the previous chapters.
-In fact, all of the basic types in Swift ---
-integers, floating-point numbers, Booleans, strings, arrays and dictionaries ---
-are value types, and are implemented as structures behind the scenes.
+在前面的章节中，您实际上已经广泛使用了值类型。
+事实上，Swift 中所有的基本类型：整数、浮点数、布尔值、字符串、数组和字典都是值类型，
+在底层它们都是以结构体的形式实现的。
 
-All structures and enumerations are value types in Swift.
-This means that any structure and enumeration instances you create ---
-and any value types they have as properties ---
-are always copied when they're passed around in your code.
+在 Swift 中，所有的结构体和枚举都是值类型。
+这意味着它们的实例，以及实例中所包含的任何值类型的属性在代码中传递时都会被复制。
 
-> Note: Collections defined by the Swift standard library
-> like arrays, dictionaries, and strings
-> use an optimization to reduce the performance cost of copying.
-> Instead of making a copy immediately,
-> these collections share the memory where the elements are stored
-> between the original instance and any copies.
-> If one of the copies of the collection is modified,
-> the elements are copied just before the modification.
-> The behavior you see in your code
-> is always as if a copy took place immediately.
+> 注意: Swift 标准库定义的集合类型，如数组、字典和字符串，
+> 使用了一种优化技术来降低复制操作的性能消耗。它们不会立即进行复制，
+> 而是共享了原始实例和任何副本之间存储元素的内存。
+> 如果集合的某个副本被修改，则在修改之前会复制元素。
+> 您在代码中看到的样子就像立即进行了复制一样。
 
-Consider this example, which uses the `Resolution` structure from the previous example:
+考虑下面这个使用前面示例中的 `Resolution` 结构体的例子：
 
 ```swift
-let hd = Resolution(width: 1920, height: 1080)
+let hd = Resolution(width: 1920, height: 1080) 
 var cinema = hd
 ```
 
@@ -333,22 +300,17 @@ var cinema = hd
   ```
 -->
 
-This example declares a constant called `hd`
-and sets it to a `Resolution` instance initialized with
-the width and height of full HD video
-(1920 pixels wide by 1080 pixels high).
+这个例子声明了一个名为 `hd` 的常量，
+并将其设置为一个使用全高清视频宽度和高度 
+(1920 像素宽、1080 像素高) 初始化的 `Resolution` 实例。
 
-It then declares a variable called `cinema`
-and sets it to the current value of `hd`.
-Because `Resolution` is a structure,
-a *copy* of the existing instance is made,
-and this new copy is assigned to `cinema`.
-Even though `hd` and `cinema` now have the same width and height,
-they're two completely different instances behind the scenes.
+然后，它声明了一个名为 `cinema` 的变量，
+并将其设置为 `hd` 的当前值。因为 `Resolution` 是一个结构体，
+所以会对现有实例进行*复制*，并将这个新副本赋值给 `cinema`。
+尽管 `hd` 和 `cinema` 现在具有相同的宽度和高度，
+但在底层它们是两个完全不同的实例。
 
-Next, the `width` property of `cinema` is amended to be
-the width of the slightly wider 2K standard used for digital cinema projection
-(2048 pixels wide and 1080 pixels high):
+接下来，为符合数字电影放映的需求（2048 像素宽、1080 像素高），`cinema` 的 `width` 属性被修改为稍微宽一点的 2K 标准：
 
 ```swift
 cinema.width = 2048
@@ -362,12 +324,11 @@ cinema.width = 2048
   ```
 -->
 
-Checking the `width` property of `cinema`
-shows that it has indeed changed to be `2048`:
+检查 `cinema` 的 `width` 属性会发现它确实已经变为 `2048`：
 
 ```swift
 print("cinema is now \(cinema.width) pixels wide")
-// Prints "cinema is now 2048 pixels wide"
+// 打印 "cinema is now 2048 pixels wide"
 ```
 
 <!--
@@ -379,12 +340,11 @@ print("cinema is now \(cinema.width) pixels wide")
   ```
 -->
 
-However, the `width` property of the original `hd` instance
-still has the old value of `1920`:
+然而,原始 `hd` 实例的 `width` 属性仍然保持旧值 `1920`:
 
-```swift
+```swift 
 print("hd is still \(hd.width) pixels wide")
-// Prints "hd is still 1920 pixels wide"
+// 打印 "hd is still 1920 pixels wide"
 ```
 
 <!--
@@ -396,21 +356,18 @@ print("hd is still \(hd.width) pixels wide")
   ```
 -->
 
-When `cinema` was given the current value of `hd`,
-the *values* stored in `hd` were copied into the new `cinema` instance.
-The end result was two completely separate instances
-that contained the same numeric values.
-However, because they're separate instances,
-setting the width of `cinema` to `2048`
-doesn't affect the width stored in `hd`,
-as shown in the figure below:
+当 `hd` 赋值给 `cinema` 时，
+存储在 `hd` 中的*值*被复制到了新的 `cinema` 实例中。
+最终结果是拥有完全相同值的两个独立的实例。
+然而，由于它们是独立的实例，将 `cinema` 的宽度设置为 `2048` 
+并不会影响存储在 `hd` 中的宽度，如下图所示：
 
 ![](sharedStateStruct)
 
-The same behavior applies to enumerations:
+枚举的行为也是一样的：
 
 ```swift
-enum CompassPoint {
+enum CompassPoint { 
     case north, south, east, west
     mutating func turnNorth() {
         self = .north
@@ -421,9 +378,9 @@ let rememberedDirection = currentDirection
 currentDirection.turnNorth()
 
 print("The current direction is \(currentDirection)")
+// 打印 "The current direction is north"
 print("The remembered direction is \(rememberedDirection)")
-// Prints "The current direction is north"
-// Prints "The remembered direction is west"
+// 打印 "The current direction is west"
 ```
 
 <!--
@@ -447,23 +404,23 @@ print("The remembered direction is \(rememberedDirection)")
   ```
 -->
 
-When `rememberedDirection` is assigned the value of `currentDirection`,
-it's actually set to a copy of that value.
-Changing the value of `currentDirection` thereafter doesn't affect
-the copy of the original value that was stored in `rememberedDirection`.
+当 `currentDirection` 赋值给 `rememberedDirection`，
+它实际上是拷贝了这个值。
+赋值过程结束后再修改 `currentDirection` 的值并不影响 
+`rememberedDirection`所储存的原始值的拷贝。
 
 <!--
-  TODO: Should I give an example of passing a value type to a function here?
+  TODO: 我是否应该举例说明如何将值类型传递给函数？
 -->
 
-## Classes Are Reference Types
+## 类是引用类型
 
-Unlike value types, *reference types* are *not* copied
-when they're assigned to a variable or constant,
-or when they're passed to a function.
-Rather than a copy, a reference to the same existing instance is used.
+不同于值类型每次都会创建一个新的副本，
+引用类型在被赋值给变量或常量，
+或者在被传递给函数时不会被复制。
+而是指向同一个现有实例的引用。
 
-Here's an example, using the `VideoMode` class defined above:
+下面通过一个例子来说明引用类型的工作原理：
 
 ```swift
 let tenEighty = VideoMode()
@@ -485,15 +442,13 @@ tenEighty.frameRate = 25.0
   ```
 -->
 
-This example declares a new constant called `tenEighty`
-and sets it to refer to a new instance of the `VideoMode` class.
-The video mode is assigned a copy of the HD resolution of `1920` by `1080` from before.
-It's set to be interlaced,
-its name is set to `"1080i"`,
-and its frame rate is set to `25.0` frames per second.
+这个例子声明了一个名为 `tenEighty` 的新常量，
+并将其设置为指向 `VideoMode` 类的一个新实例。
+视频模式的分辨率被设置为之前的 HD 分辨率 `1920` x `1080`，
+它被设置为逐行扫描模式，名称设置为 `"1080i"`，
+帧率设置为每秒 25.0 帧。
 
-Next, `tenEighty` is assigned to a new constant, called `alsoTenEighty`,
-and the frame rate of `alsoTenEighty` is modified:
+接下来，将 `tenEighty` 赋值给一个名为 `alsoTenEighty` 的新常量，并修改 `alsoTenEighty` 的帧率：
 
 ```swift
 let alsoTenEighty = tenEighty
@@ -509,20 +464,18 @@ alsoTenEighty.frameRate = 30.0
   ```
 -->
 
-Because classes are reference types,
-`tenEighty` and `alsoTenEighty` actually both refer to the *same* `VideoMode` instance.
-Effectively, they're just two different names for the same single instance,
-as shown in the figure below:
+由于类是引用类型，tenEighty 和 alsoTenEighty 实际上
+指向的是同一个 `VideoMode` 实例。
+换句话说，它们只是同一个实例的两个不同名称，如下图所示：
 
 ![](sharedStateClass)
 
-Checking the `frameRate` property of `tenEighty`
-shows that it correctly reports the new frame rate of `30.0`
-from the underlying `VideoMode` instance:
+通过检查 `tenEighty` 的 `frameRate`，
+可以看到它正确地显示了 `VideoMode` 实例的新帧率 `30.0`。
 
 ```swift
 print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-// Prints "The frameRate property of tenEighty is now 30.0"
+// 打印 "The frameRate property of tenEighty is now 30.0"
 ```
 
 <!--
@@ -534,49 +487,39 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
   ```
 -->
 
-This example also shows how reference types can be harder to reason about.
-If `tenEighty` and `alsoTenEighty` were far apart in your program's code,
-it could be difficult to find all the ways that the video mode is changed.
-Wherever you use `tenEighty`,
-you also have to think about the code that uses `alsoTenEighty`,
-and vice versa.
-In contrast, value types are easier to reason about
-because all of the code that interacts with the same value
-is close together in your source files.
+这个例子也展示了引用类型更难理解和维护。
+如果 `tenEighty` 和 `alsoTenEighty` 在你程序的代码中相距很远，
+那么很难找到所有改变视频模式的方式。
+无论你在哪里使用 `tenEighty`，
+你也必须考虑使用 `alsoTenEighty` 的代码，反之亦然。
+相比之下，值类型更容易理解，因为操作同一个值的代码都集中在一起。
 
-Note that `tenEighty` and `alsoTenEighty` are declared as *constants*,
-rather than variables.
-However, you can still change `tenEighty.frameRate` and `alsoTenEighty.frameRate` because
-the values of the `tenEighty` and `alsoTenEighty` constants themselves don't actually change.
-`tenEighty` and `alsoTenEighty` themselves don't “store” the `VideoMode` instance ---
-instead, they both *refer* to a `VideoMode` instance behind the scenes.
-It's the `frameRate` property of the underlying `VideoMode` that's changed,
-not the values of the constant references to that `VideoMode`.
+需要注意的是，`tenEighty` 和 `alsoTenEighty` 虽然被声明为常量而不是变量，
+但你仍然可以修改 `tenEighty.frameRate` 和 `alsoTenEighty.frameRate`，
+tenEighty 和 alsoTenEighty 常量的值本身并没有变化。
+它们并不“存储”这个 VideoMode 实例，
+而仅仅是对 VideoMode 实例的引用。
+所以，改变的是底层 `VideoMode` 实例的 `frameRate` 属性，
+而不是指向 `VideoMode` 的常量引用的值。
 
 <!--
-  TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
-  and demonstrate what that means for the values they store
-  when they themselves are value types or reference types.
-  Also make a note about what this means for key copying,
-  as per the swift-discuss email thread "Dictionaries and key copying"
-  started by Alex Migicovsky on Mar 1 2014.
+  TODO: 在此重申数组和字典是值类型而不是引用类型，
+  并演示当它们本身是值类型或引用类型时，这对它们存储的值意味着什么。
+  此外，根据 Alex Migicovsky 于 2014 年 3 月 1 日发起的 
+  swift-discuss 电子邮件主题 "Dictionaries and key copying"，
+  请注意这对键复制意味着什么。
 -->
 
 <!--
-  TODO: Add discussion about how
-  a struct that has a member of some reference type
-  is itself actually a reference type,
-  and about how you can make a class that's a value type.
+  TODO: 增加关于具有某种引用类型成员的结构体本身实际上是一种引用类型的讨论，
+  以及关于如何创建一个值类型的类的讨论。
 -->
 
-### Identity Operators
+### 恒等运算符
 
-Because classes are reference types,
-it's possible for multiple constants and variables to refer to
-the same single instance of a class behind the scenes.
-(The same isn't true for structures and enumerations,
-because they're always copied when they're assigned to a constant or variable,
-or passed to a function.)
+因为类是引用类型，所以多个常量和变量在底层可能会引用同一个类实例。
+（对于结构体和枚举来说则不是这样，因为它们在被赋值给常量、
+变量或传递给函数时，总是会被复制。
 
 <!--
   - test: `structuresDontSupportTheIdentityOperators`
@@ -612,20 +555,19 @@ or passed to a function.)
   ```
 -->
 
-It can sometimes be useful to find out whether two constants or variables refer to
-exactly the same instance of a class.
-To enable this, Swift provides two identity operators:
+有时需要找出两个常量或变量是否引用了同一个类的实例。
+为了实现这一点，Swift 提供了两个恒等运算符：
 
-- Identical to (`===`)
-- Not identical to (`!==`)
+- 恒等 (`===`) 
+- 不恒等 (`!==`)
 
-Use these operators to check whether two constants or variables refer to the same single instance:
+使用这些运算符来检查两个常量或变量是否引用了同一个实例：
 
 ```swift
 if tenEighty === alsoTenEighty {
     print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
-}
-// Prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
+} 
+// 打印 "tenEighty and alsoTenEighty refer to the same VideoMode instance."
 ```
 
 <!--
@@ -639,18 +581,14 @@ if tenEighty === alsoTenEighty {
   ```
 -->
 
-Note that *identical to* (represented by three equal signs, or `===`)
-doesn't mean the same thing as *equal to* (represented by two equal signs, or `==`).
-*Identical to* means that
-two constants or variables of class type refer to exactly the same class instance.
-*Equal to* means that
-two instances are considered equal or equivalent in value,
-for some appropriate meaning of *equal*, as defined by the type's designer.
+注意*恒等*（用三个等号 `===` 表示）与*相等*（用两个等号`==`表示）意义不同。
+*恒等*意味着两个类型的常量或变量引用了完全相同的类实例。
+*相等*意味着两个实例在值上被认为是相等或等价的，
+具体的*相等*定义由类型的设计者决定。
 
-When you define your own custom structures and classes,
-it's your responsibility to decide what qualifies as two instances being equal.
-The process of defining your own implementations of the `==` and `!=` operators
-is described in <doc:AdvancedOperators#Equivalence-Operators>.
+当你定义自己的自定义结构体和类时，
+你有责任决定什么才算作两个实例相等。
+定义自己的 `==` 和 `!=` 运算符实现的过程在 <doc:AdvancedOperators#Equivalence-Operators> 中有描述。
 
 <!--
   - test: `classesDontGetEqualityByDefault`
@@ -681,47 +619,44 @@ is described in <doc:AdvancedOperators#Equivalence-Operators>.
 -->
 
 <!--
-  TODO: This needs clarifying with regards to function references.
+  TODO: 这需要对功能引用进行澄清。
 -->
 
-### Pointers
+### 指针
 
-If you have experience with C, C++, or Objective-C,
-you may know that these languages use *pointers* to refer to addresses in memory.
-A Swift constant or variable that refers to an instance of some reference type
-is similar to a pointer in C,
-but isn't a direct pointer to an address in memory,
-and doesn't require you to write an asterisk (`*`)
-to indicate that you are creating a reference.
-Instead, these references are defined like any other constant or variable in Swift.
-The Swift standard library provides pointer and buffer types
-that you can use if you need to interact with pointers directly ---
-see [Manual Memory Management](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management).
+如果你有 C、C++ 或 Objective-C 的经验，
+你可能知道这些语言使用指针来引用内存中的地址。
+一个指向某个引用类型实例的 Swift 常量或变量相当于 C 中的指针，
+但它不是直接指向内存地址，也不需要使用星号（`*`）来表示创建引用。
+相反，这些引用像 Swift 中任何其他常量或变量一样定义。
+Swift 标准库提供了指针和缓冲区类型，
+如果你需要直接与指针交互，请参阅 [手动内存管理](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management)。
 
 <!--
-  TODO: functions aren't "instances". This needs clarifying.
+  TODO: Swift 中的函数不是"实例"。这需要进一步阐明。
 -->
 
 <!--
-  TODO: Add a justification here to say why this is a good thing.
+  TODO: 在这里添加理由说明使用引用类型和值类型是一个好的设计
 -->
 
 <!--
-  QUESTION: what's the deal with tuples and reference types / value types?
+  问题: 元组与引用类型/值类型之间的关系是
 -->
 
-> Beta Software:
+> 测试版软件: 
 >
-> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+> 本文档包含有关正在开发的 API 或技术的初步信息。此信息可能会发生变化，根据本文档实施的软件应使用最终操作系统软件进行测试。
 >
-> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
+> 了解有关使用 [Apple 测试版软件](https://developer.apple.com/support/beta-software/) 的更多信息.
+
 
 <!--
-This source file is part of the Swift.org open source project
+此源文件属于 Swift.org 开源项目的一部分
 
-Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
-Licensed under Apache License v2.0 with Runtime Library Exception
+版权所有 (c) 2014 - 2022 Apple Inc. 及 Swift 项目作者
+根据 Apache License v2.0 许可证及运行库例外条款授权
 
-See https://swift.org/LICENSE.txt for license information
-See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+有关许可证信息，请参见 https://swift.org/LICENSE.txt
+有关 Swift 项目作者的列表，请参见 https://swift.org/CONTRIBUTORS.txt
 -->
