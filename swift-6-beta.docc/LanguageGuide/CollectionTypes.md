@@ -2,11 +2,11 @@
 
 使用数组、集合和字典组织数据。
 
-Swift 提供了三种主要的 **集合类型**，分别是数组、集合和字典，用于存储值集合。数组是有序的值集合。集合是无序的唯一值集合。字典是无序的键值关联集合。
+Swift 提供了三种主要的 **集合类型**，分别是数组、集合和字典，用于存储值集合。数组是有序的值集合。集合是无序的唯一值集合。字典是无序的键值对关联集合。
 
 ![](CollectionTypes_intro)
 
-Swift 中的数组、集合和字典始终清楚它们可以存储的值和键的类型。这意味着您不能错误地将一个错误类型的值插入到集合中。这也意味着您可以对将从集合中检索的值类型充满信心。
+Swift 中的数组、集合和字典对于它们可以存储的值和键的类型始终是明确的。这意味着你不能错误地将一个类型不匹配的值插入到集合中。同时，这也意味着你可以放心地知道从集合中取出的值的类型。
 
 > 提醒: Swift 的数组、集合和字典类型是作为 **泛型集合** 实现的。
 > 有关泛型类型和集合的更多信息，请参阅 <doc:Generics>.
@@ -25,9 +25,9 @@ Swift 中的数组、集合和字典始终清楚它们可以存储的值和键�
 
 ## 集合的可变性
 
-如果您创建一个数组、一个集合或一个字典，并将其分配给一个变量，则创建的集合将是 **可变的**。这意味着，在创建集合后，您可以通过添加、删除或更改集合中的项目来改变（或 **更改**）集合。如果您将数组、集合或字典分配给常量，则该集合是 **不可变的**，并且其大小和内容无法更改。
+如果您创建一个数组、集合或字典，并将其赋值给一个变量，则创建的集合将是 **可变的**。这意味着，在创建集合后，您可以通过添加、删除或更改集合中的元素来改变（或称为 **变异**）集合。如果您将数组、集合或字典分配给常量，则该集合是 **不可变的**，并且其大小和内容无法更改。
 
-> 注意: 在所有不需要更改的情况下，创建不可变集合是一种良好的实践。这样做可以使你更容易理解代码，并使Swift编译器能够优化你创建的集合的性能。
+> 注意: 在所有不需要更改的情况下，创建不可变集合是一种良好的实践。这样做可以使你更容易理解代码，并使 Swift 编译器能够优化你创建的集合的性能。
 
 ## 数组
 
@@ -39,16 +39,16 @@ Swift 中的数组、集合和字典始终清楚它们可以存储的值和键�
 
 ### 数组类型简写语法
 
-Swift 数组的类型完整写作 `Array<Element>`，其中 `Element` 是数组允许存储的值的类型。你也可以以简写形式 `[Element]` 来写数组类型。尽管这两种形式在功能上是相同的，但简写形式更受欢迎，并且在本指南中引用数组的类型时，会使用简写形式。
+Swift 数组的类型完整写作 `Array<Element>`，其中 `Element` 是数组允许存储的值的类型。你也可以以简写形式 `[Element]` 来表示数组的类型。虽然这两种形式在功能上是相同的，但简写形式更受欢迎，并且在本指南中提到数组类型时将优先使用这种形式。
 
 ### 创建空数组
 
-你可以使用初始化语法创建某种类型的空数组：
+您可以使用构造器语法创建某种类型的空数组：
 
 ```swift
 var someInts: [Int] = []
 print("someInts is of type [Int] with \(someInts.count) items.")
-// Prints "someInts is of type [Int] with 0 items."
+// 打印 "someInts is of type [Int] with 0 items."
 ```
 
 <!--
@@ -61,15 +61,15 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-请注意，`someInts` 变量的类型是从初始值设定项的类型推断为 `[Int]。`
+请注意，`someInts` 变量的类型根据初始化器的类型推断为 `[Int]`。
 
-另外，如果上下文已经提供了类型信息，例如函数参数或已经定义类型的变量或常量，你可以使用空数组字面量创建一个空数组，这个字面量表示为 `[]`（一对空的方括号）。
+或者，如果上下文已经提供了类型信息，例如函数参数或已经定义类型的变量或常量，你可以使用空数组字面量 `[]`（一对空的方括号）来创建一个空数组：
 
 ```swift
 someInts.append(3)
-// someInts now contains 1 value of type Int
+// someInts 现在包含 1 个类型为 Int 的值。
 someInts = []
-// someInts is now an empty array, but is still of type [Int]
+// someInts 现在是一个空数组, 但它仍是 [Int] 类型的
 ```
 
 <!--
@@ -84,13 +84,13 @@ someInts = []
   ```
 -->
 
-### 创建具有默认值的数组
+### 使用默认值创建数组
 
-Swift 的 `Array` 类型还提供了一个构造器，用于创建特定大小的数组，其所有值都设置为相同的默认值。您向此初始值设定项传递适当类型的默认值（称为 `repeating`）：以及该值在新数组中重复的次数（称为 `count`）：
+Swift 的 `Array` 类型还提供了一个构造器，用于创建特定大小的数组，其所有值都设置为相同的默认值。您向此构造器传递适当类型的默认值（称为 `repeating`）：以及该值在新数组中重复的次数（称为 `count`）：
 
 ```swift
 var threeDoubles = Array(repeating: 0.0, count: 3)
-// threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]
+// threeDoubles 的类型是 [Double]，并且等于 [0.0, 0.0, 0.0]
 ```
 
 <!--
@@ -103,16 +103,16 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
   ```
 -->
 
-### 通过将两个数组相加来创建数组
+### 通过合并两个数组创建一个新数组
 
 您可以通过使用加法运算符 `（+）` 将两个具有兼容类型的现有数组相加来创建新数组。新数组的类型是从您相加的两个数组的类型推断出来的：
 
 ```swift
 var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
-// anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
+// anotherThreeDoubles 的类型是 [Double]，并且等于 [2.5, 2.5, 2.5]
 
 var sixDoubles = threeDoubles + anotherThreeDoubles
-// sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+// sixDoubles 被推断为 [Double] 类型，并且等于 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 ```
 
 <!--
@@ -142,9 +142,9 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   Likewise I'm holding off writing about it until NewArray lands.
 -->
 
-### 使用 Array Literal 创建 Array
+### 使用数组字面量创建数组
 
-您还可以使用 **数组文本** 初始化数组，这是将一个或多个值写入数组集合的简写方法。数组文字以值列表的形式写入，用逗号分隔，用一对方括号括起来：
+您还可以使用 **数组字面量** 来初始化数组，这是将一个或多个值写入数组集合的简写方法。数组字面量以值列表的形式写入，用逗号分隔，用一对方括号括起来：
 
 ```swift
 [<#value 1#>, <#value 2#>, <#value 3#>]
@@ -166,13 +166,13 @@ var shoppingList: [String] = ["Eggs", "Milk"]
   ```
 -->
 
-`shoppingList` 变量声明为“字符串值数组”，作为 `[String]` 写入。由于此特定数组已指定 `String` 的值类型，因此仅允许存储 `String` 值。在这里，`shoppingList` 数组使用两个 `String` 值（`“Eggs”` 和 `“Milk”`）进行初始化，这些值将被写入数组文本中。
+`shoppingList` 变量被声明为“字符串值数组”，写作 `[String]`。由于该数组指定了值类型为 `String`，因此它只允许存储 `String` 类型的值。在这里，`shoppingList` 数组通过数组字面量初始化了两个 `String` 值（`"Eggs"` 和 `"Milk"`）。
 
-> 注意: `shoppingList` 数组被声明为变量（使用 `var` 声明）而不是常量（使用 `let` 声明），因为在下面的示例中，更多的商品要被添加到购物清单中。
+> 注意: `shoppingList` 数组被声明为变量（使用 `var` 关键字）而不是常量（使用 `let` 关键字），因为在下面的示例中，更多的商品要被添加到购物清单中。
 
-在本例中，数组文本包含两个 `String` 值，不包含任何其他值。这与 `shoppingList` 变量的声明类型（只能包含 `String` 值的数组）匹配，因此允许分配数组文本作为使用两个初始项初始化 `shoppingList` 的一种方式。
+在这个例子中，数组字面量只包含两个 `String` 值，且没有其他内容。这与 `shoppingList` 变量的声明类型（一个只能包含 `String` 值的数组）相匹配，因此允许使用这个数组字面量来初始化 `shoppingList`，并包含两个初始项目。
 
-多亏了 Swift 的类型推断，如果您使用包含相同类型值的数组字面量来初始化数组，则不必编写数组的类型。`shoppingList` 的初始化可以改为以更短的形式编写：
+得益于 Swift 的类型推断功能，如果您使用包含相同类型值的数组字面量进行初始化，则无需显式地写出数组的类型。`shoppingList` 的初始化可以改为以更简短的形式编写：
 
 ```swift
 var shoppingList = ["Eggs", "Milk"]
@@ -192,11 +192,11 @@ var shoppingList = ["Eggs", "Milk"]
 
 您可以通过数组的方法和属性或使用下标语法来访问和修改数组。
 
-要找出数组中的项数，请检查其 read-only `count` 属性：
+要找出数组中的项数，可以检查其只读属性 `count`：
 
 ```swift
 print("The shopping list contains \(shoppingList.count) items.")
-// Prints "The shopping list contains 2 items."
+// 打印 "The shopping list contains 2 items."
 ```
 
 <!--
@@ -216,7 +216,7 @@ if shoppingList.isEmpty {
 } else {
     print("The shopping list isn't empty.")
 }
-// Prints "The shopping list isn't empty."
+// 打印 "The shopping list isn't empty."
 ```
 
 <!--
@@ -232,11 +232,11 @@ if shoppingList.isEmpty {
   ```
 -->
 
-您可以通过调用数组的 `append(_:)` 方法将新项添加到数组的末尾：
+您可以通过调用数组的 `append(_:)` 方法将新元素添加到数组的末尾：
 
 ```swift
 shoppingList.append("Flour")
-// shoppingList now contains 3 items, and someone is making pancakes
+// shoppingList 现在包含 3 个项目，而有人正在做煎饼
 ```
 
 <!--
@@ -249,13 +249,13 @@ shoppingList.append("Flour")
   ```
 -->
 
-或者使用加法赋值运算符 （`+=`） 附加一个或多个兼容项的数组：
+或者，可以使用加法赋值运算符（`+=`）将一个或多个兼容项的数组追加到现有数组中：
 
 ```swift
 shoppingList += ["Baking Powder"]
-// shoppingList now contains 4 items
+// shoppingList 现在包含 4 个项目
 shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
-// shoppingList now contains 7 items
+// shoppingList 现在包含 7 个项目
 ```
 
 <!--
@@ -275,7 +275,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
 
 ```swift
 var firstItem = shoppingList[0]
-// firstItem is equal to "Eggs"
+// firstItem 的值为 "Eggs"
 ```
 
 <!--
@@ -483,7 +483,7 @@ for (index, value) in shoppingList.enumerated() {
 
 > 注意: Swift 的 `Set` 类型桥接到 Foundation 的 `NSSet` 类。
 >
-> 有关将 `Set` 与 Foundation 和 Cocoa 一起使用的更多信息，请参见 [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530).
+> 有关将 `Set` 与 Foundation 和 Cocoa 一起使用的更多信息，请参阅 [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#2845530).
 
 <!--
   TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
