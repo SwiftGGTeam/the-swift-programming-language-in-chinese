@@ -1521,8 +1521,7 @@ assert(age >= 0)
   ```
 -->
 
-如果代码已经检查了条件，则使用 [`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539616-assertionfailure) 函数来表示断言失败。
-例如：
+如果代码已经检查了条件，则使用 [`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539616-assertionfailure) 函数来表示断言失败。例如：
 
 ```swift
 if age > 10 {
