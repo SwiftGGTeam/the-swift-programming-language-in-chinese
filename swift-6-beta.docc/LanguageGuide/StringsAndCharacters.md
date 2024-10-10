@@ -2,11 +2,11 @@
 
 存储和操作文本
 
-**字符串** 是一系列字符的集合，例如 `"hello, world"`，`"albatross"`。Swift 的字符串通过 `String` 类型来表示。而 `String` 内容的访问方式有多种，例如以 `Character` 值的集合
+**字符串** 是一系列字符的集合，例如 `"hello, world"`，`"albatross"`。Swift 的字符串通过 `String` 类型来表示。而 `String` 内容的访问方式有多种，例如以 `Character` 值的集合。
 
-Swift 的 `String` 和 `Character` 类型提供了一种快速且兼容 Unicode 的方式来处理代码中的文本内容。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。通过 `+` 符号就可以非常简单的实现两个字符串的拼接操作。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你可以在已有字符串中插入常量、变量、字面量和表达式从而形成更长的字符串，这一过程也被称为字符串插值。尤其是在为显示、存储和打印创建自定义字符串值时，字符串插值操作尤其有用。
+Swift 的 `String` 和 `Character` 类型提供了一种快速且兼容 Unicode 的方式来处理代码中的文本内容。创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。通过 `+` 符号就可以非常简单的实现两个字符串的拼接操作。与 Swift 中其他值一样，能否更改字符串的值，取决于其被定义为常量还是变量。你可以在已有字符串中插入常量、变量、字面量和表达式从而形成更长的字符串，这一过程也被称为字符串插值。在显示、存储和打印创建自定义字符串值时，字符串插值操作尤其有用。
 
-尽管语法简易，但 Swift 中的 `String` 类型的实现却很快速和现代化。每一个字符串都是由编码无关的 Unicode 字符组成，并支持访问字符的多种 Unicode 表示形式。
+尽管语法简易，但 Swift 中的 `String` 类型的实现却很快速和现代化。每一个字符串都是由编码无关的 Unicode 字符组成，并支持以多种 Unicode 表示形式访问字符。
 
 > 注意:
 > Swift 的 `String` 类型与 Foundation `NSString` 类进行了无缝桥接。
@@ -33,11 +33,11 @@ let someString = "Some string literal value"
   ```
 -->
 
-注意，Swift 之所以推断 `someString` 常量为`String`类型，是因为它使用了字面量方式进行初始化。
+注意，Swift 之所以推断 `someString` 常量为 `String` 类型，是因为它使用了字面量方式进行初始化。
 
 ### 多行字符串字面量
 
-如果你需要一个字符串是跨越多行的，那就使用多行字符串字面量 — 由一对三个双引号包裹着的具有固定顺序的文本字符集
+如果你需要一个多行字符串，那就使用多行字符串字面量 — 由一对三个双引号包裹着的具有固定顺序的文本字符集:
 
 <!--
   Quote comes from "Alice's Adventures in Wonderland",
@@ -171,15 +171,15 @@ It also ends with a line break.
   ```
 -->
 
-在上面的例子中，尽管整个多行字符串字面量都是缩进的（源代码缩进），第一行和最后一行没有以空白字符串开始（实际的变量值）。中间一行的缩进用空白字符串（源代码缩进）比关闭引号（`"""`）之前的空白字符串多，所以，它的行首将有4个空格。
+在上面的例子中，尽管整个多行字符串字面量都是缩进的（源代码缩进），第一行和最后一行没有以空白字符串开始（实际的变量值）。中间一行的缩进用空白字符串（源代码缩进）比关闭引号（`"""`）之前的空白字符串多，所以，它的行首将有 4 个空格。
 
 ### 字符串字面量的特殊字符
 
 字符串字面量可以包含以下特殊字符：
 
-- 转义字符 `\0`(空字符)、`\\`(反斜线)、(水平制表符)、(换行符)、(回车符)、`\"`(双引号)、`\'`(单引号)。
+- 转义字符 `\0`(空字符)、`\\`(反斜线)、`\r`(水平制表符)、`\t`(换行符)、`\n`(回车符)、`\"`(双引号)、`\'`(单引号)。
 
-- Unicode 标量，写成 `\u{`n`}`(u 为小写)，其中n为任意一到八位十六进制数且可用的 Unicode 位码。
+- 任意的 Unicode 标量，可以写成 `\u{`n`}`(u 为小写)，其中n为任意一到八位十六进制数且可用的 Unicode 位码。
   (Unicode在文档<doc:StringsAndCharacters#Unicode> 中进行解析讨论)
 
 <!--
@@ -253,9 +253,9 @@ Escaping all three quotation marks \"\"\"
 
 您可以将字符串字面值置于扩展分隔符内，以便在字符串中包含特殊字符而不触发其转义效果。您将字符串置于双引号（`"`）内，并在其周围加上井号（`#`）。例如，打印字符串字面值 `#"Line 1\nLine 2"#` 会打印出换行符转义序列（`\n`），而不是将字符串打印在两行上。
 
-在字符串字面值中，如果您需要某个字符的特殊效果，需使字符串中紧跟转义字符（`\`）后的井号（`#`）数量相匹配。例如，如果您的字符串是 `#"Line 1\nLine 2"#` 并且您想要换行，可以使用 `#"Line 1#nLine 2"#` 替代。同样，`###"Line1###nLine2"###` 也能实现换行效果。
+在字符串字面值中，如果您需要某个字符的特殊效果，需使字符串中紧跟转义字符（`\`）后的井号（`#`）数量相匹配。例如，如果您的字符串是 `#"Line 1\nLine 2"#` 并且您想要换行，可以使用 `#"Line 1\#nLine 2"#` 替代。同样，`###"Line1###nLine2"###` 也能实现换行效果。
 
-扩展分隔符创建的字符串文字也可以是多行字符串文字。 您可以使用扩展分隔符在多行字符串中包含文本 `"""`，覆盖原有的结束文字的默认行为。例如：
+扩展分隔符创建的字符串文字也可以是多行字符串文字。您可以使用扩展分隔符在多行字符串中包含文本 `"""`，覆盖原有的结束文字的默认行为。例如：
 
 ```swift
 let threeMoreDoubleQuotationMarks = #"""
@@ -373,7 +373,7 @@ constantString += " and another Highlander"
 
 在 Swift 中 `String` 类型是值类型。如果你创建了一个新的字符串，那么当其进行常量、变量赋值操作，或在函数/方法中传递时，会进行值拷贝。在前述任一情况下，都会对已有字符串值创建新副本，并对该新副本而非原始字符串进行传递或赋值操作。值类型在<doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>中进行了详细描述。
 
-Swift 默认拷贝`String`的行为保证了在函数/方法向你传递的`String`所属权属于你，无论该值来自于哪里。你可以确信传递的`String`不会被修改，除非你自己去修改它。
+Swift 默认拷贝 `String` 的行为保证了在函数/方法向你传递的 `String` 所属权属于你，无论该值来自于哪里。你可以确信传递的 `String` 不会被修改，除非你自己去修改它。
 
 在实际编译时，Swift 编译器会优化字符串的使用，使实际的复制只发生在绝对必要的情况下，这意味着你将字符串作为值类型的同时可以获得极高的性能。
 
@@ -586,9 +586,9 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
   ```
 -->
 
-在上面的例子中，`multiplier` 作为 `\(multiplier)` 被插入到一个字符串常量量中。当创建字符串执行插值计算时此占位符会被替换为 `multiplier` 实际的值。
+在上面的例子中，`multiplier` 的值以 `\(multiplier)` 的形式被插入到一个字符串常量中。当创建字符串执行插值计算时此占位符会被替换为 `multiplier` 实际的值。
 
-`multiplier` 的值也作为字符串中后面表达式的一部分。该表达式计算 `Double(multiplier) *2.5` 的值并将结果（`7.5`）插入到字符串中。在这个例子中，表达式写为 `\(Double(multiplier)* 2.5)` 并包含在字符串字面量中。
+`multiplier` 的值也作为字符串中后面表达式的一部分。该表达式计算 `Double(multiplier) * 2.5` 的值并将结果（`7.5`）插入到字符串中。在这个例子中，表达式写为 `\(Double(multiplier) * 2.5)` 并包含在字符串字面量中。
 
 你可以使用扩展字符串分隔符创建字符串，来包含不想作为字符串插值处理的字符。例如：
 
@@ -627,11 +627,11 @@ print(#"6 times 7 is \#(6 * 7)."#)
 
 ## Unicode
 
-`Unicode`是一个用于在不同书写系统中对文本进行编码、表示和处理的国际标准。它使你可以用标准格式表示来自任意语言几乎所有的字符，并能够对文本文件或网页这样的外部资源中的字符进行读写操作。Swift 的 `String` 和 `Character` 类型是完全兼容 Unicode 标准的。
+`Unicode` 是一个用于在不同书写系统中对文本进行编码、表示和处理的国际标准。它使你可以用标准格式表示来自任意语言几乎所有的字符，并能够对文本文件或网页这样的外部资源中的字符进行读写操作。Swift 的 `String` 和 `Character` 类型是完全兼容 Unicode 标准的。
 
 ### Unicode 标量
 
-Swift 的 `String` 类型是基于 Unicode 标量 建立的。Unicode 标量是对应字符或者修饰符的唯一的 21 位数字，例如 `U+0061` 表示小写的拉丁字母（`LATIN SMALL LETTER A`）（"`a`"），`U+1F425` 表示小鸡表情（`FRONT-FACING BABY CHICK`）（"`🐥`"）。
+Swift 的 `String` 类型是基于 Unicode 标量建立的。Unicode 标量是对应字符或者修饰符的唯一的 21 位数字，例如 `U+0061` 表示小写的拉丁字母（`LATIN SMALL LETTER A`）（"`a`"），`U+1F425` 表示小鸡表情（`FRONT-FACING BABY CHICK`）（"`🐥`"）。
 
 请注意，并非所有 21 位 Unicode 标量值都分配给字符，某些标量被保留用于将来分配或用于 UTF-16 编码。已分配的标量值通常也有一个名称，例如上面示例中的 `LATIN SMALL LETTER A` 和 `FRONT-FACING BABY CHICK`。
 
@@ -883,7 +883,7 @@ for index in greeting.indices {
 -->
 
 > 注意:
-> 你可以使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法在任意一个确认的并遵循 `Collection` 协议的类型里面，如上文所示是使用在 `String` 中，你也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
+> 你可以在任意一个确认的并遵循 `Collection` 协议的类型里面使用 `startIndex` 和 `endIndex` 属性或者 `index(before:)` 、`index(after:)` 和 `index(_:offsetBy:)` 方法，如上文所示是使用在 `String` 中，你也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
 
 ### 插入和删除
 
@@ -944,12 +944,12 @@ welcome.removeSubrange(range)
 -->
 
 > 注意:
-> 你可以使用 `insert(*:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(*:)` 方法在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面，如上文所示是使用在 `String` 中，你也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
+> 你可以在任意一个确认的并遵循 `RangeReplaceableCollection` 协议的类型里面使用 `insert(*:at:)`、`insert(contentsOf:at:)`、`remove(at:)` 和 `removeSubrange(*:)` 方法，如上文所示是使用在 `String` 中，你也可以使用在 `Array`、`Dictionary` 和 `Set` 中。
 
 ## 子字符串
 
 当你从字符串中获取一个子字符串 —— 例如，使用下标或者 `prefix(_:)` 之类的方法 —— 就可以得到一个 [`Substring`](https://developer.apple.com/documentation/swift/substring) 的实例，而非另外一个 `String`。
-Swift 里的 `Substring` 绝大部分函数都跟 `String` 一样，意味着你可以使用同样的方式去操作 `Substring` 和 `String`。然而，跟 `String` 不同的是，你只有在短时间内需要操作字符串时，才会使用 `Substring`。当你需要长时间保存结果时，就把 `Substring` 转化为 `String`, 事例如下：
+Swift 里的 `Substring` 绝大部分函数都跟 `String` 一样，意味着你可以使用同样的方式去操作 `Substring` 和 `String`。然而，跟 `String` 不同的是，你只有在短时间内需要操作字符串时，才会使用 `Substring`。当你需要长时间保存结果时，就把 `Substring` 转化为 `String`, 示例如下：
 
 ```swift
 let greeting = "Hello, world!"
@@ -989,7 +989,7 @@ let newString = String(beginning)
 
 > 注意:
 > `String` 和 `Substring` 都遵循
-> [`StringProtocol`](https://developer.apple.com/documentation/swift/stringprotocol)协议,这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `Substring` 去调用函数。
+> [`StringProtocol`](https://developer.apple.com/documentation/swift/stringprotocol)协议, 这意味着操作字符串的函数使用 `StringProtocol` 会更加方便。你可以传入 `String` 或 `Substring` 去调用函数。
 
 ## 比较字符串
 
@@ -1272,7 +1272,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 
 ## 字符串的 Unicode 表示形式
 
-当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种 `编码格式`（encoding forms）编码。每一个字符串中的小块编码都被称 `代码单元`（code units）。这些包括 UTF-8 编码格式（编码字符串为 8 位的代码单元）， UTF-16 编码格式（编码字符串位 16 位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
+当一个 Unicode 字符串被写进文本文件或者其他储存时，字符串中的 Unicode 标量会用 Unicode 定义的几种 `编码格式`（encoding forms）编码。每一个字符串中的小块编码都被称 `代码单元`（code units）。这些包括 UTF-8 编码格式（编码字符串为 8 位的代码单元），UTF-16 编码格式（编码字符串位 16 位的代码单元），以及 UTF-32 编码格式（编码字符串32位的代码单元）。
 
 Swift 提供了几种不同的方式来访问字符串的 Unicode 表示形式。你可以利用 `for-in` 来对字符串进行遍历，从而以 Unicode 可扩展的字符群集的方式访问每一个 `Character` 值。该过程在 <doc:StringsAndCharacters#Working-with-Characters>中进行了描述。
 
