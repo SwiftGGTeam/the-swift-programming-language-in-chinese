@@ -116,6 +116,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | control transfer statement | 控制传递语句 |
 | convenience initializer | 便利构造器 |
 | convention | 约定 |
+| decompose | 分解 |
 | deinitialization | 析构过程 |
 | deinitializer | 析构器 |
 | designated initializer | 指定构造器 |
@@ -123,6 +124,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | enumeration | 枚举 |
 | expression | 表达式 |
 | extension | 扩展 |
+| fallback (value) | 后备值 ?? 回退值 |
 | fallthrough | 贯穿 |
 | first-class | 一等 |
 | function | 函数 |
@@ -135,10 +137,11 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | iterate | 迭代 |
 | labeled statement | 具名语句 |
 | list | 列表 |
-| literal value | 字面量 |
+| literal (value) | 字面量 |
 | metatype type | 元类型 |
 | method | 方法 |
 | nest | 嵌套 |
+| nil-coalescing | 不译 |
 | note | 注意 |
 | opaque type | 不透明类型 |
 | operator | 运算符 |
@@ -157,13 +160,16 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | range | 区间 |
 | raw value | 原始值 |
 | runtime | 运行时 |
+| scope | 作用域 |
 | setter | 不翻译 |
 | statement | 语句 |
 | stored property | 存储属性 |
+| string interpolation | 字符串插值 |
 | structure | 结构体 |
 | subscript | 下标 |
 | ternary operator | 三元运算符 |
 | tuple | 元组 |
+| type alias | 类型别名 |
 | type annotation | 类型注解 |
 | type identifier | 类型标识符 |
 | type property | 类型属性 |
