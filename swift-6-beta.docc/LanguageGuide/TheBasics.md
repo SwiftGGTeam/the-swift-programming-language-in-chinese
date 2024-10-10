@@ -2,7 +2,7 @@
 
 处理常见数据类型并编写基本语法。
 
-Swift 提供了许多基本数据类型，包括表示整数的 `Int`、表示浮点数的 `Double`、表示布尔值的 `Bool` 和表示文本的 `String`。Swift 还提供了三种主要集合类型（`Array`（数组），`Set`（集合），和 `Dictionary`（字典））的强大版本，详见<doc:CollectionTypes>。
+Swift 提供了许多基本数据类型，包括表示整数的 `Int`、表示浮点数的 `Double`、表示布尔值的 `Bool` 和表示文本的 `String`。Swift 还提供了三种主要集合类型（`Array`（数组），`Set`（集合），和 `Dictionary`（字典））的强大版本，详见 <doc:CollectionTypes>。
 
 Swift 使用变量来存储值，并通过标识名称来引用值。Swift 还广泛使用不可更改其值的变量。这些变量被称为常量，在整个 Swift 中都有使用，以便在处理无需更改的值时使代码更安全、更清晰。
 
