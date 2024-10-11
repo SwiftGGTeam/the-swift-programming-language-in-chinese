@@ -46,7 +46,7 @@ If there's a stable URL we can use, make the macro protocols below links.
 -->
 
 The first argument to this attribute
-indicates the macros role:
+indicates the macro’s role:
 
 - term Peer macros:
   Write `peer` as the first argument to this attribute.
