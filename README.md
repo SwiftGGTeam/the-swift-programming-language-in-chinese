@@ -108,6 +108,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | binary operator | 二元运算符 |
 | boxed protocol type | 封装协议类型 |
 | branch statement | 分支语句 |
+| Class Hierarchy | 类层次结构 |
 | closure | 闭包 |
 | collection | 集合 |
 | computed property | 计算属性 |
@@ -121,6 +122,7 @@ We extend our heartfelt thanks to all our contributors. You can find the [list o
 | deinitializer | 析构器 |
 | designated initializer | 指定构造器 |
 | dictionary | 字典 |
+| downcast | 向下转型 |
 | enumeration | 枚举 |
 | expression | 表达式 |
 | extension | 扩展 |
