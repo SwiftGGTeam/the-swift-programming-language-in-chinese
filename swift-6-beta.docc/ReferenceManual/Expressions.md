@@ -1,103 +1,73 @@
-# 表达
+# 表达式
 
-访问,修改和赋值. 
+访问、修改和分配值。
 
-在Swift中,有四种表达式:
-前缀表达式,中缀表达式,主表达式和后缀表达式
-计算表达式会返回一个值,
-产生一个副作用,或同时产生这两个结果。
+在 Swift 中，有四种表达式：前缀表达式、中缀表达式、主表达式和后缀表达式。计算表达式会返回一个值、导致副作用，或两者兼而有之。
 
-前缀和中间缀表达式允许您
-将运算符应用于更小的表达式。
-主表达式在概念上是最简单的表达式,
-它们提供了一种访问值的方法。
-后缀表达式
-与前缀和中间缀表达式一样
-允许您使用后缀(如函数调用和成员访问)
-构建更复杂的表达式。
-每种表达式都将在
-以下部分中详细描述。
+前缀和中缀表达式允许您将运算符应用于较小的表达式。主表达式在概念上是最简单的表达式，它们提供了一种访问值的方法。后缀表达式与前缀和中缀表达式一样，允许您使用后缀构建更复杂的表达式，例如函数调用和成员访问。下面各节详细描述了每种表达式。
 
-> 表达语法:
+> 表达式的语法：
 >
 > *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_ \
 
-## 前缀表达式
+##  前缀表达式
 
-*前缀表达式* 将
-可选的前缀运算符与表达式结合在一起。
-前缀运算符接受一个参数,
-即紧随其后的表达式
+前缀表达式将可选的前缀运算符与表达式结合起来。前缀运算符采用一个参数，即它们后面的表达式。
 
-有关这些运营商行为的信息,
-看 <doc:BasicOperators> 和 <doc:AdvancedOperators>.
+有关这些运算符的行为的信息，请参阅<doc:BasicOperators> 和 <doc:AdvancedOperators>。
 
-有关Swift标准库提供的操作符的信息,
-看[Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+有关 Swift 标准库提供的运算符的信息，请参阅[Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations)。
 
-> 前缀表达的语法:
+> 前缀表达式的语法：
 >
 > *prefix-expression* → *prefix-operator*_?_ *postfix-expression* \
 > *prefix-expression* → *in-out-expression*
 
 ### 输入输出表达式
 
-*输入输出表达式* 标记作为输入输出参数传递给函数调用表达式的变量.
+输入输出表达式标记作为输入输出参数传递给函数调用表达式的变量。
 
 ```swift
 &<#expression#>
 ```
 
-如需了解进出参数的更多信息并查看示例,
-看 <doc:Functions#In-Out-Parameters>.
+有关输入输出参数的更多信息以及查看示例，请参阅<doc:Functions#In-Out-Parameters>.
 
-在需要指针的上下文中提供非指针参数时，也会使用输入输出表达式，如 <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>.
+在需要指针的上下文中提供非指针参数时，也会使用输入输出表达式，如 <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type>中所述。
 
-> 输入输出表达式的语法:
+> 输入输出表达式的语法：
 >
 > *in-out-expression* → **`&`** *primary-expression*
 
 ### 尝试操作员
 
- *try 表达式* 由 try 操作符
-后跟一个可能引发错误的表达式组成。
-其格式如下:
+ try 表达式由`try` 运算符后跟一个可能引发错误的表达式组成。它具有以下形式：
 
 ```swift
 try <#expression#>
 ```
 `try` 表达式的值是 *表达式*的值.
 
-可选尝试表达式由`try?` 操作符
-后跟可能引发错误的表达式组成。
-其形式如下:
+可选的 try 表达式由`try?` 组成。运算符后跟可能引发错误的表达式。它具有以下形式：
 
 
 ```swift
 try? <#expression#>
 ```
 
-如果 *表达式* 没有引发错误,
-可选-尝试表达式的值
-是一个可选的,包含 *表达式的值* .
-否则,可选-尝试表达式的值为`nil`.
+如果表达式没有抛出错误，则可选尝试表达式的值是包含表达式值的可选值。否则，可选尝试表达式的值为 `nil`。
 
-一个*强制-尝试表达式*由`try!`操作符
-后跟一个可能引发错误的表达式组成。
-它具有以下形式:
+强制尝试表达式由`try!` 组成。运算符后跟可能引发错误的表达式。它具有以下形式：
+
+
 
 ```swift
 try! <#expression#>
 ```
 
-强制尝试表达式的值就是*表达式的值。
-如果*表达式*抛出错误,
-就会产生运行时错误。
+强制尝试表达式的值是表达式的值。如果表达式抛出错误，则会产生运行时错误。
 
-当中缀运算符左侧的表达式
-带有 `try`、`try?`或 `try!`标记时,
-该运算符将应用于整个中缀表达式。
-也就是说,你可以使用括号来明确运算符的应用范围.
+当中缀运算符左侧的表达式标有 `try` 时， `try?` ，或者 `try!` ，该运算符适用于整个中缀表达式。也就是说，您可以使用括号来明确运算符应用程序的范围。
 
 ```swift
 // try applies to both function calls
@@ -143,9 +113,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   ```
 -->
 
-`try`表达式不能出现在中缀运算符的右侧,
-除非中缀运算符是赋值运算符,
-或者`try`表达式被括在括号内
+`try` 表达式不能出现在中缀运算符的右侧，除非中缀运算符是赋值运算符或者 `try`表达式括在括号中。
 
 
 <!--
@@ -162,8 +130,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   ```
 -->
 
-如果一个表达式同时包含`try`和`await`操作符,
-则`try`操作符必须出现在前面。
+如果表达式同时包含`try`和`await`运算符,则`try`运算符必须首先出现。
 
 
 <!--
@@ -171,42 +138,26 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   but it's important enough to be worth re-stating in prose.
 -->
 
-欲了解更多信息,并查看如何使用`try`、`try?`和`try!`的示例,
-请参阅 <doc:ErrorHandling>.
+有关更多信息并查看如何使用`try`、`try?`的示例,并 `try! ` 请参阅 <doc:ErrorHandling>.
 
-> 尝试表达的语法:
+> try 表达式的语法:
 >
 > *try-operator* → **`try`** | **`try`** **`?`** | **`try`** **`!`**
 
-### 等待操作员
+### 等待接线员
 
-*等待表达式*由`await`操作符
-后跟使用异步操作结果的表达式组成.
-其形式如下:
+*wait*  表达式由`await`运算符后跟一个使用异步操作结果的表达式组成。它具有以下形式
 
 ```swift
 await <#expression#>
 ```
-带有`await`的表达式称为*潜在暂停点*。
-异步函数的执行可以暂停
-在每个带有`await`的表达式。
-此外,
-并发代码的执行永远不会暂停在任何其他点。
-这意味着潜在暂停点之间的代码
-可以安全地更新需要暂时打破不变量的状态,
-前提是它完成更新
-在下一个潜在暂停点之前。
+`await`表达式的值是expression的值。标有await表达式称为 *潜在挂起点* 。异步函数的执行可以在每个用 `await`标记的表达式处暂停。此外，并发代码的执行永远不会在任何其他点暂停。这意味着潜在挂起点之间的代码可以安全地更新需要暂时破坏不变量的状态，前提是它在下一个潜在挂起点之前完成更新。
 
-`await` 表达式只能出现在异步上下文中,
-例如传递给 `async(priority:operation:)` 函数的尾部闭包。
-它不能出现在 `defer` 语句的体内,
-也不能出现在同步函数类型的自动闭包中。
 
-当中缀运算符左侧的表达式
-带有`await`运算符时,
-该运算符将应用于整个中缀表达式。
-也就是说,你可以使用括号
-来明确运算符的应用范围。
+
+`await` 表达式只能出现在异步上下文中，例如传递给 `async(priority:operation:)`函数的尾随闭包。它不能出现在defer语句的主体中，也不能出现在同步函数类型的自动闭包中。
+
+当中缀运算符左侧的表达式用`await`运算符标记时，该运算符适用于整个中缀表达式。也就是说，您可以使用括号来明确运算符应用程序的范围。
 
 ```swift
 // await applies to both function calls
@@ -247,9 +198,7 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   ```
 -->
 
-`await`表达式不能出现在中缀运算符的右侧,
-除非中缀运算符是赋值运算符,
-或者”等待"表达式被括在括号内。
+`await`表达式不能出现在中缀运算符的右侧，除非中缀运算符是赋值运算符或者将await表达式括在括号中。
 
 <!--
   - test: `await-on-right`
@@ -268,8 +217,7 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   ```
 -->
 
-如果一个表达式同时包含`await`和`try`操作符,
-则`try`操作符必须放在前面.
+如果表达式同时包含 `await`和try运算符，则try运算符必须首先出现。
 
 <!--
   The "try await" ordering is also part of the grammar for 'expression',
@@ -278,24 +226,19 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 
 > 等待表达的语法:
 >
-> *await-operator* → **`await`**
+> *等待运算符* → **`await`**
 
-## 中间词表达
+## 中缀表达式
 
-*中缀表达式*将
-中缀二元运算符与其
-作为左右参数的表达式结合在一起。
-其形式如下:
+*中缀表达式* 将中缀二元运算符与其作为其左侧和右侧参数的表达式组合起来。它具有以下形式：
 
 ```swift
 <#left-hand argument#> <#operator#> <#right-hand argument#>
 ```
 
-关于这些运营商的行为,
-请参阅 <doc:BasicOperators> 和 <doc:AdvancedOperators>.
+有关这些运算符的行为的信息，请参阅 <doc:BasicOperators> 和 <doc:AdvancedOperators>.
 
-有关Swift标准库提供的操作符的信息,
-请参阅 [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+有关 Swift 标准库提供的运算符的信息，请参阅 [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
 
 <!--
   You have essentially expression sequences here, and within it are
@@ -307,17 +250,9 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   something that's a more traditional tree.
 -->
 
-> 备注:解析时,
-> 由中缀运算符组成的表达式用
-> 作为一张平面列表.
-> 这个列表会变成一棵树
-> 通过应用运算符优先级.
-> 例如,表达 `2 + 3 * 5`
-> 最初被理解为五个项目的列表,
-> `2`, `+`, `3`, `*`, 和 `5`.
-> 这个过程将树木转化成 (2 + (3 * 5)).
+> 注意：在解析时，由中缀运算符组成的表达式表示为平面列表。通过应用运算符优先级将该列表转换为树。例如，表达式2 + 3 * 5最初被理解为五个项目2 、 + 、 3 、 *和5的平面列表。此过程将其转换为树 (2 + (3 * 5))。
 
-> 中缀表达的语法:
+> 中缀表达式的语法：
 >
 > *infix-expression* → *infix-operator* *prefix-expression* \
 > *infix-expression* → *assignment-operator* *try-operator*_?_ *await-operator*_?_ *prefix-expression* \
@@ -325,25 +260,15 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 > *infix-expression* → *type-casting-operator* \
 > *infix-expressions* → *infix-expression* *infix-expressions*_?_
 
-### 作业员
+### 赋值运算符
 
-*赋值运算符*为给定的表达式设置新的值。
-
-其形式如下:
+*赋值运算符* 为给定表达式设置新值。它具有以下形式：
 
 ```swift
 <#expression#> = <#value#>
 ```
 
-*表达式*的值
-由计算*值*得到的值确定。
-如果*表达式*是一个元组,
-*value*必须是一个
-元素数量相同的元组
-(允许嵌套元组)。
-赋值从*value*的每个部分
-到*表达式*的对应部分。
-例如:
+*表达式* 的值设置为通过计算*value* 获得的值。如果表达式是元组，则值必须是具有相同元素数量的元组。 （允许嵌套元组。）从值的每个部分到表达式的相应部分执行赋值。例如：
 
 ```swift
 (a, _, (b, c)) = ("test", 9.45, (12, 3))
@@ -361,45 +286,33 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   ```
 -->
 
-赋值运算符不返回任何值.
+赋值运算符不返回任何值。
 
-> 赋值运算符的语法:
+> 赋值运算符的语法：
 >
-> *assignment-operator* → **`=`**
+> *赋值运算符* → **`=`**
 
 ### 三元条件运算符
 
-*三元条件运算符* 根据条件值
-计算两个给定值之一。
-其形式如下:
+*三元条件运算符*根据条件值计算两个给定值之一。它具有以下形式：
 
 ```swift
 <#condition#> ? <#expression used if true#> : <#expression used if false#>
 ```
 
-如果*条件*的值为`true`,
-则条件运算符将计算第一个表达式
-并返回其值。
-否则,它将计算第二个表达式
-并返回其值。
-未使用的表达式将不进行计算
+如果*条件*计算结果为`true` ，则条件运算符计算第一个表达式并返回其值。否则，它计算第二个表达式并返回其值。不计算未使用的表达式。
 
-For an example that uses the ternary conditional operator,
-see <doc:BasicOperators#Ternary-Conditional-Operator>.
+有关使用三元条件运算符的示例，请参阅文档： <doc:BasicOperators#Ternary-Conditional-Operator>.
 
-> 条件运算符的语法:
+> 条件运算符的语法：
 >
-> *conditional-operator* → **`?`** *expression* **`:`**
+> *条件运算符* → **`?`** *表达* **`:`**
 
-### 类型铸造操作员
+###  类型转换运算符
 
-有四种类型转换操作符:
-`is`操作符、
-`as`操作符、
-`as?`操作符、
-以及`as!`操作符
+有四种类型转换运算符： `is`运算符、`as`运算符、`as?`运算符和`as!`操作员。
 
-它们具有以下形式:
+它们具有以下形式：
 
 ```swift
 <#expression#> is <#type#>
@@ -408,10 +321,7 @@ see <doc:BasicOperators#Ternary-Conditional-Operator>.
 <#expression#> as! <#type#>
 ```
 
-`is`运算符在运行时检查*表达式*
-是否可以转换为指定的*类型*。
-如果*表达式*可以转换为指定的*类型*,则返回`true`;
-否则返回`false`.
+`is`运算符在运行时检查表达式是否可以转换为指定类型。如果*表达式*可以转换为指定*类型*，则返回`true` ；否则，返回`false` 。
 
 <!--
   - test: `triviallyTrueIsAndAs`
@@ -444,13 +354,7 @@ see <doc:BasicOperators#Ternary-Conditional-Operator>.
   ```
 -->
 
-当在编译时
-已知转换总是成功时,
-`as` 运算符执行转换,
-例如上转换或桥接。
-上转换允许您将表达式用作其类型超类型的实例,
-而无需使用中间变量。
-以下方法等效:
+当在编译时已知转换始终成功时，`as`运算符会执行转换，例如向上转换或桥接。向上转换允许您使用表达式作为其类型的超类型的实例，而无需使用中间变量。以下方法是等效的：
 
 ```swift
 func f(_ any: Any) { print("Function for Any") }
@@ -486,49 +390,26 @@ f(x as Any)
   ```
 -->
 
-桥接功能允许您将Swift标准库类型
-(如String)
-作为其对应的Foundation类型(如NSString)
-使用,而无需创建新实例。
-有关桥接的更多信息,
-请参阅[Working with Foundation Types](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
+桥接允许您使用`Swift` 标准库类型（例如String的表达式作为其相应的基础类型（例如NSString ，而无需创建新实例。有关桥接的更多信息，请参阅[Working with Foundation Types](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
 
-`as?` 运算符
-将 *表达式*
-转换为指定的 *类型*。
-`as?` 运算符返回指定 *类型* 的可选值。
-在运行时,如果转换成功,
-*表达式* 的值将被封装为可选值并返回;
-否则,返回的值为 `nil`。
-如果转换为指定的 *类型*
-保证失败或保证成功,
-将引发编译时错误。
+`as?`运算符执行表达式到指定类型的条件转换。 `as?`运算符返回指定类型的可选值。在运行时，如果转换成功，则将表达式的值包装在可选值中并返回；否则，返回值为`nil` 。如果强制转换为指定类型肯定会失败或一定会成功，则会引发编译时错误。
 
-`as!` 运算符强制将 *expression* 转换为指定的 *type*。
-`as!` 运算符返回指定 *type* 的值,而非可选类型。
-如果转换失败,将引发运行时错误。
-`x as! T`  的行为与 `(x as? T)!` 的行为相同。
+`as!`运算符将表达式强制转换为指定类型。 `as!`运算符返回指定类型的值，而不是可选类型。如果转换失败，则会引发运行时错误。 `x as! T`与 `(x as? T)!` 。
 
-如需了解有关类型转换的更多信息
-并查看使用类型转换运算符的示例,
-请参阅<doc:TypeCasting>.
+有关类型转换的更多信息以及查看使用类型转换运算符的示例，请参阅<doc:TypeCasting>.
 
-> 类型转换运算符的语法:
+> 类型转换运算符的语法：
 >
-> *type-casting-operator* → **`is`** *type* \
-> *type-casting-operator* → **`as`** *type* \
-> *type-casting-operator* → **`as`** **`?`** *type* \
-> *type-casting-operator* → **`as`** **`!`** *type*
+> *类型转换运算符* → **`is`** *类型* \
+> *类型转换运算符* → **`as`** *类型* \
+> *类型转换运算符* → **`as`** **`?`** *类型* \
+> *类型转换运算符* → **`as`** **`!`** *类型*
 
-## 主要表达方式
+## 主要表达
 
-*基本表达式*
-是最基本的表达式。
-它们可以单独使用,
-也可以与其他标记结合,
-构成前缀表达式、中缀表达式和后缀表达式。
+*初级表达式*是最基本的表达式。它们可以单独用作表达式，也可以与其他标记组合以构成前缀表达式、中缀表达式和后缀表达式。
 
-> 初级表达语法:
+> 基本表达式的语法：
 >
 > *primary-expression* → *identifier* *generic-argument-clause*_?_ \
 > *primary-expression* → *literal-expression* \
@@ -558,12 +439,9 @@ f(x as Any)
   is a *type* identifier.
 -->
 
-### 字面表达
+### 文字表达
 
-一个*字面表达式*由
-普通字面(如字符串或数字)、
-数组或字典字面、
-或游戏字面.
+文字表达式由普通文字（例如字符串或数字）、数组或字典文字或游乐场文字组成
 
 > Note:
 > Prior to Swift 5.9,
@@ -595,21 +473,13 @@ f(x as Any)
   ```
 -->
 
-*数组字面量*是
-有序的数值集合。
-它具有以下形式:
+*数组文字*是值的有序集合。它具有以下形式：
 
 ```swift
 [<#value 1#>, <#value 2#>, <#...#>]
 ```
 
-数组中的最后一个表达式后面可以跟一个可选的逗号。
-数组字面值的类型为`[T]`,
-其中`T`是数组中表达式的类型。
-如果有多种类型的表达式,
-`T`是它们最接近的公共超类型。
-空数组字面值用一对空
-方括号表示,可用于创建指定类型的空数组.
+数组中的最后一个表达式后面可以跟一个可选的逗号。数组文字的值具有类型`[T]`  ，其中T是其中表达式的类型。如果存在多种类型的表达式，则`T` 是它们最接近的公共超类型。空数组文字使用一对空方括号编写，可用于创建指定类型的空数组。
 
 ```swift
 var emptyArray: [Double] = []
@@ -623,26 +493,13 @@ var emptyArray: [Double] = []
   ```
 -->
 
-*字典字面意思*是
-一个无序的键值对集合。
-它具有以下形式:
+*字典文字* 是键值对的无序集合。它具有以下形式：
 
 ```swift
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 ```
 
-字典中的最后一个表达式后面可以跟一个可选的逗号。
-字典字面值的类型为[键:值],
-其中键是其键表达式的类型,
-值是其值表达式的类型。
-如果有多种类型的表达式,
-键和值是各自值的最接近的公共超类型。
-
-空字典字面值用
-,放在一对括号(`[:]`)内,
-以区别于空数组字面量。
-您可以使用空字典字面量创建
-具有指定键和值类型的.
+字典中的最后一个表达式后面可以跟一个可选的逗号。字典文字的值具有类型`[Key: Value]` ，其中 `Key`是其键表达式的类型， `Value` 是其值表达式的类型。如果存在多种类型的表达式，则`Key`和`Value`是其各自值最接近的公共超类型。空字典文字被写为一对括号 `( [:] )` 内的冒号，以将其与空数组文字区分开。您可以使用空字典文字来创建指定键和值类型的空字典文字。
 
 ```swift
 var emptyDictionary: [String: Double] = [:]
@@ -656,17 +513,11 @@ var emptyDictionary: [String: Double] = [:]
   ```
 -->
 
-Xcode使用*playground literal*
-在程序编辑器中创建
-颜色、文件或图像的交互式表示。
-Xcode之外的纯文本playground literal
-使用特殊的文字语法表示。
+Xcode 使用 *Playground* 文字在程序编辑器中创建颜色、文件或图像的交互式表示。 Xcode 之外的纯文本 Playground 文字使用特殊的文字语法表示。
 
-有关在Xcode中使用playground literal的信息,
-请参阅[Add a color, file, or image literal](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)
-在Xcode帮助中
+有关在 Xcode 中使用 Playground 文字的信息，请参阅 Xcode 帮助中[Add a color, file, or image literal](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)
 
-> 字面表达的语法:
+> 文字表达式的语法：
 >
 > *literal-expression* → *literal* \
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
@@ -685,9 +536,7 @@ Xcode之外的纯文本playground literal
 
 ### 自我表达
 
-`self` 表达是指对当前类型
-或类型实例的明确引用。
-它有以下几种形式:
+`self`表达式是对当前类型或它所在类型的实例的显式引用。它有以下几种形式：
 
 ```swift
 self
@@ -701,16 +550,9 @@ self.init(<#initializer arguments#>)
   TODO: Come back and explain the second to last form (i.e., self(arg: value)).
 -->
 
-在初始化器、下标或实例方法中,`self` 指的是当前
-出现的类型实例。在类型方法中,
-`self` 指的是当前出现的类型。
+在初始值设定项、下标或实例方法中， `self`指的是它出现的类型的当前实例。在类型方法中， `self`指的是它出现的当前类型。
 
-`self` 表达式用于在访问成员时指定作用域,
-当作用域中存在
-另一个同名变量时,
-例如函数参数,
-提供消除歧义的功能。
-例如:
+`self`表达式用于在访问成员时指定作用域，当作用域中存在另一个同名变量（例如函数参数）时，可以消除歧义。例如：
 
 ```swift
 class SomeClass {
@@ -734,9 +576,7 @@ class SomeClass {
   ```
 -->
 
-在值类型的变体方法中,
-您可以将值类型的新实例赋值给`self`。
-例如:
+在值类型的变异方法中，您可以将该值类型的新实例分配给 `self` 。例如：
 
 ```swift
 struct Point {
@@ -766,7 +606,7 @@ struct Point {
 
 <!-- Apple Books screenshot begins here. -->
 
-> 自我表达的语法:
+> 自我表达的语法：
 >
 > *self-expression* → **`self`** | *self-method-expression* | *self-subscript-expression* | *self-initializer-expression*
 >
@@ -774,11 +614,9 @@ struct Point {
 > *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`** \
 > *self-initializer-expression* → **`self`** **`.`** **`init`**
 
-### 超级表达
+### 超类表达式
 
-*超类表达式*允许类
-与其超类进行交互。
-它有以下几种形式:
+*超类表达式*允许类与其超类交互。它具有以下形式之一：
 
 ```swift
 super.<#member name#>
@@ -786,14 +624,11 @@ super[<#subscript index#>]
 super.init(<#initializer arguments#>)
 ```
 
-第一种形式用于访问超类的成员。
-第二种形式用于访问超类的下标实现。
-第三种形式用于访问超类的初始化器。
+第一种形式用于访问超类的成员。第二种形式用于访问超类的下标实现。第三种形式用于访问超类的初始值设定项。
 
-子类可以在成员、下标和初始化器的实现中使用超类表达式,
-以利用其超类的实现.
+子类可以在其成员、下标和初始化器的实现中使用超类表达式，以利用其超类中的实现。
 
-> 超级表达的语法:
+> 超类表达式的语法：
 >
 > *superclass-expression* → *superclass-method-expression* | *superclass-subscript-expression* | *superclass-initializer-expression*
 >
@@ -803,9 +638,7 @@ super.init(<#initializer arguments#>)
 
 ### 条件表达式
 
-一个*条件表达式*根据条件值计算出几个给定值中的一个.
-
-它有以下几种形式:
+*条件表达式*根据条件值计算为多个给定值之一。它具有以下形式之一：
 
 ```swift
 if <#condition 1#> {
@@ -826,53 +659,30 @@ default:
 }
 ```
 
-条件表达式
-的行为和语法与`if`语句或`switch`语句相同,
-但以下段落描述的差异除外。
+除了以下段落描述的差异之外，条件表达式与`if`语句或`switch`语句具有相同的行为和语法。
 
-条件表达式仅出现在以下几种情况下:
+条件表达式仅出现在以下上下文中：
 
-- 作为赋给变量的值。
+- 作为分配给变量的值。
 - 作为变量或常量声明中的初始值。
-- 作为`throw`表达式抛出的错误。
-- 作为函数、闭包或属性getter返回的值。
-- 作为条件表达式分支中的值。
+- 作为由 `throw `表达式引发的错​​误。
+- 作为函数、闭包或属性 `getter` 返回的值。
+- 作为条件表达式分支内的值。
 
-条件表达式的分支是穷举的,
-确保表达式总是产生一个值,
-无论条件如何。
-这意味着每个`if`分支都需要一个对应的`else`分支。
+条件表达式的分支是详尽的，确保无论条件如何，表达式始终生成一个值。这意味着每个if分支都需要一个相应的else分支。
 
-每个分支包含一个表达式,
-当分支的条件为真时,该表达式用作条件表达式的值,
+每个分支包含一个表达式（当该分支的条件为 true 时用作条件表达式的值）、一个 `throw`语句或对永不返回的函数的调用。
 
-一个`throw`语句,
-或对从不返回的函数的调用。
-
-每个分支必须产生相同类型的值。
-由于每个分支的类型检查都是独立的,
-有时需要明确指定值的类型,
-例如当分支包含不同类型的字面量时,
-或者当分支的值为`nil`时。
-当需要提供此信息时,
-请在结果被分配到的变量上添加类型注释,
-或者在分支的值上添加`as`转换.
+每个分支必须产生相同类型的值。由于每个分支的类型检查是独立的，因此有时需要显式指定值的类型，例如当分支包含不同类型的文字时，或者当分支的值为`nil`时。当您需要提供此信息时，请向结果分配到的变量添加类型注释，或向分支的值添加`as`强制转换。
 
 ```swift
 let number: Double = if someCondition { 10 } else { 12.34 }
 let number = if someCondition { 10 as Double } else { 12.34 }
 ```
 
-在结果生成器中,
-条件表达式只能
-作为变量或常量的初始值出现。
-这意味着,当您在结果生成器中编写`if`或`switch`语句时——
-在变量或常量声明之外——
-该代码将被视为分支语句,
-结果生成器的某个方法将转换该代码。
+在结果生成器中，条件表达式只能显示为变量或常量的初始值。此行为意味着当您在结果生成器中编写`if`或`switch` 时（在变量或常量声明之外），该代码将被理解为分支语句，并且结果生成器的方法之一会转换该代码。
 
-不要在`try`表达式中放置条件表达式,
-即使条件表达式的分支之一正在抛出异常。
+不要将条件表达式放入try表达式中，即使条件表达式的分支之一抛出异常。
 
 > 条件句语法:
 >
@@ -887,15 +697,9 @@ let number = if someCondition { 10 as Double } else { 12.34 }
 > *switch-expression-case* → *case-label* *statement* \
 > *switch-expression-case* → *default-label* *statement*
 
-### 结束语 表达
+### 闭包表达式
 
-*闭包表达式*用于创建闭包,
-在其他编程语言中也被称为*lambda*或*匿名函数*。
-
-与函数声明类似,
-闭包包含语句,
-并捕获其外围作用域中的常量和变量。
-其形式如下:
+闭包表达式创建一个闭包，在其他编程语言中也称为*lambda*或匿名函数。与函数声明一样，闭包包含语句，并且它从其封闭范围捕获常量和变量。它具有以下形式：
 
 ```swift
 { (<#parameters#>) -> <#return type#> in
@@ -903,12 +707,9 @@ let number = if someCondition { 10 as Double } else { 12.34 }
 }
 ```
 
-*参数*的形式
-与函数声明中的参数相同,
-如 <doc:Declarations#Function-Declaration>.
+这些参数与函数声明中的参数具有相同的形式，如<doc:Declarations#Function-Declaration>。
 
-在闭包表达式中写上`throws`或 `async`,
-即可明确标记闭包为抛出或异步。
+在闭包表达式中写入`throws`或`async`显式地将闭包标记为抛出或异步。
 
 ```swift
 { (<#parameters#>) async throws -> <#return type#> in
@@ -916,35 +717,19 @@ let number = if someCondition { 10 as Double } else { 12.34 }
 }
 ```
 
-如果闭包的体包含一个`throws`语句或一个`try`表达式,
-且该语句或表达式未嵌套在具有详尽错误处理的`do`语句中,
-则该闭包被视为抛出。
-如果抛出闭包仅抛出一种类型的错误,
-则该闭包被视为抛出该错误类型;
-否则,则被视为抛出“任何错误”。
-同样,如果体包含一个`await`表达式,
-则理解为异步。
+如果闭包的主体包含一个`throws`语句或一个未嵌套在具有详尽错误处理的`do`语句内的`try`表达式，则该闭包被理解为抛出。如果抛出闭包仅抛出单一类型的错误，则该闭包被理解为抛出该错误类型；否则，它被理解为抛出 `any Error` 。同样，如果主体包含`await`表达式，则它被理解为异步的。
 
-有几种特殊形式
-可以更简洁地编写闭包:
+有几种特殊的形式可以让闭包写得更简洁：
 
 <!-- Apple Books screenshot ends here. -->
 
-- 闭包可以省略
-参数类型、返回类型或两者。
-如果省略了参数名称和两种类型,
-请省略语句前的`in`关键字。
-如果省略的类型无法推断,
-则会产生编译时错误。
-- 闭包可以省略参数名称。
-此时,参数的隐式命名
-为`$`后跟位置:
-`$0`、`$1`、`$2`,以此类推。
-- 仅包含单个表达式的闭包
-会被理解为返回该表达式的值。
-在对周围表达式进行类型推断时,也会考虑该表达式的内容
+- 闭包可以省略其参数类型、返回类型或两者。如果省略参数名称和两种类型，请省略语句前的`in`关键字。如果无法推断省略的类型，则会引发编译时错误。
 
-以下闭包表达式是等价的:
+- 闭包可以省略其参数的名称。然后，其参数隐式命名为`$`后跟其位置： `$0` 、 `$1 ` 、 `$2`等。
+
+- 仅包含单个表达式的闭包被理解为返回该表达式的值。对周围表达式执行类型推断时，也会考虑该表达式的内容。
+
+以下闭包表达式是等效的：
 
 ```swift
 myFunction { (x: Int, y: Int) -> Int in
@@ -979,45 +764,19 @@ myFunction { $0 + $1 }
   ```
 -->
 
-有关将闭合传递给函数的更多信息,
-请参阅 <doc:Expressions#Function-Call-Expression>.
+有关将闭包作为参数传递给函数的信息，请参阅 <doc:Expressions#Function-Call-Expression>.
 
-闭包表达式可以
-不存储在变量或常量中,
-例如,当您立即将闭包用作函数调用的一部分时。
-在上述代码中传递给`myFunction`的闭包表达式是
-这种立即使用的示例。
-因此,
-闭包表达式是转义还是非转义取决于
-表达式的上下文。
-如果立即调用
-或作为非转义函数参数传递。
-否则,闭包表达式为转义
-有关转义闭包的更多信息,请参阅<doc:Closures#Escaping-Closures>.
+闭包表达式可以在不存储在变量或常量中的情况下使用，例如当您立即使用闭包作为函数调用的一部分时。上面代码中传递给`myFunction`闭包表达式就是这种立即使用的示例。因此，闭包表达式是转义还是非转义取决于表达式的周围上下文。如果立即调用闭包表达式或作为非转义函数参数传递，则闭包表达式是非转义的。否则，闭包表达式就会转义。
 
-#### 捕捉列表
+有关转义闭包的更多信息，请参阅文档：<doc:Closures#Escaping-Closures>.
 
-默认情况下,闭包表达式捕获
-其周围作用域中的常量和变量,
-并对这些值进行强引用。
-您可以使用*捕获列表*来明确控制
-闭包中如何捕获值。
+#### 捕获列表
 
-捕获列表以逗号分隔的表达式列表的形式书写,
-用方括号括起来,
-放在参数列表之前。
-如果使用捕获列表,则必须同时使用`in`关键字,
-即使省略了参数名称、参数类型和返回类型。
+默认情况下，闭包表达式从其周围范围捕获常量和变量，并对这些值进行强引用。您可以使用捕获列表来显式控制如何在闭包中捕获值。
 
-捕获列表中的条目在
-创建闭包时初始化。
-对于捕获列表中的每个条目,
-一个常量被初始化为
-周围作用域中具有相同名称的常量或变量的值。
+捕获列表写为以逗号分隔的表达式列表，并用方括号括起来，位于参数列表之前。如果使用捕获列表，则即使省略参数名称、参数类型和返回类型，也必须使用`in`关键字。
 
-例如,在下面的代码中,
-`a`包含在捕获列表中,但`b`没有,
-这导致它们的行为不同。
+捕获列表中的条目在创建闭包时被初始化。对于捕获列表中的每个条目，常量被初始化为周围范围中具有相同名称的常量或变量的值。例如，在下面的代码中， `a`包含在捕获列表中，但`b`不包含在捕获列表中，这使它们具有不同的行为。
 
 ```swift
 var a = 0
@@ -1049,20 +808,7 @@ closure()
   ```
 -->
 
-有两个不同的东西名为`a`,
-一个是周围作用域中的变量,
-一个是闭包作用域中的常量,
-但只有一个变量名为`b`。
-当闭包创建时,内部作用域中的`a`
-使用外部作用域中`a`的值进行初始化,
-但它们的值没有以特殊方式连接。
-这意味着外部作用域中`a`的值发生变化
-不会影响内部作用域中`a`的值,
-也不会影响闭包内部`a`的值。
-
-相反,只有一个名为`b`的变量——
-外部作用域中的`b`——
-因此,闭包内部或外部所做的更改在两个地方都可见。
+有两种不同的东西，名为`a` ，周围作用域中的变量和闭包作用域中的常量，但只有一个名为`b` 变量。创建闭包时，内部作用域中的`a`会使用外部作用域中a的值进行初始化，但它们的值不会以任何特殊方式连接。这意味着外部作用域中a值的更改不会影响内部作用域中`a`的值，闭包内部a的更改也不会影响闭包外部a的值。相比之下，只有一个名为b的变量——外部作用域中的`b`因此来自闭包内部或外部的更改在两个地方都可见。
 
 <!--
   [Contributor 6004] also describes the distinction as
@@ -1073,13 +819,7 @@ closure()
   so that description's not likely to be very helpful for developers.
 -->
 
-当捕获的变量的类型具有引用语义时,这种区别是不可见的。
-
-例如,
-在下面的代码中,有两个名为`x`的东西,
-一个是外层作用域中的变量,一个是内层作用域中的常量,
-但它们都引用同一个对象,
-因为引用语义
+当捕获的变量的类型具有引用语义时，这种区别不可见。例如，下面的代码中有两个名为`x`的东西，外部作用域中的变量和内部作用域中的常量，但由于引用语义，它们都引用同一个对象。
 
 ```swift
 class SimpleClass {
@@ -1150,10 +890,7 @@ closure()
   ```
 -->
 
-如果表达式值的类型是类,
-则可以在捕获列表中用
-`weak`或`unowned`标记表达式,以捕获
-对表达式值的弱引用或非自有引用。.
+如果表达式值的类型是类，则可以使用`weak`或`unowned`标记捕获列表中的表达式，以捕获对该表达式值的弱或无主引用。
 
 ```swift
 myFunction { print(self.title) }                    // implicit strong capture
@@ -1183,11 +920,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
   ```
 -->
 
-您还可以将任意表达式
-绑定到捕获列表中的命名值。
-表达式将在创建闭包时进行求值,
-并以指定的强度捕获值。
-例如:
+您还可以将任意表达式绑定到捕获列表中的命名值。创建闭包时将对表达式求值，并以指定的强度捕获该值。例如：
 
 ```swift
 // Weak capture of "self.parent" as "parent"
@@ -1211,10 +944,8 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
   ```
 -->
 
-欲了解更多关于结束语的表达方式和示例,
-请参阅 <doc:Closures#Closure-Expressions>.
-如需了解更多信息以及捕获列表示例,
-请参阅<doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
+有关闭包表达式的更多信息和示例，请参阅文档： <doc:Closures#Closure-Expressions>.
+关捕获列表的更多信息和示例，请参阅文档：<doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
 
 <!--
   - test: `async-throwing-closure-syntax`
@@ -1235,7 +966,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
   ```
 -->
 
-> 封闭表达的语法:
+> 闭包表达式的语法：
 >
 > *closure-expression* → **`{`** *attributes*_?_ *closure-signature*_?_ *statements*_?_ **`}`**
 >
@@ -1257,12 +988,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 ### 隐式成员表达式
 
-*隐式成员表达式*
-是一种访问类型成员的简写方式,
-例如枚举情况或类型方法,
-在类型推断
-可以确定隐式类型的情况下。
-它具有以下形式:
+*隐式成员*表达式是在类型推断可以确定隐含类型的上下文中访问类型成员（例如枚举情况或类型方法）的缩写方式。它具有以下形式：
 
 ```swift
 .<#member name#>
@@ -1285,8 +1011,7 @@ x = .anotherValue
   ```
 -->
 
-如果推断的类型是可选的,
-你也可以在隐式成员表达式中使用非可选类型的成员.
+如果推断类型是可选类型，则还可以在隐式成员表达式中使用非可选类型的成员。
 
 ```swift
 var someOptional: MyEnumeration? = .someValue
@@ -1300,20 +1025,7 @@ var someOptional: MyEnumeration? = .someValue
   ```
 -->
 
-隐式成员表达式后面可以跟
-后缀运算符或《指南》中列出的其他后缀语法
-<doc:Expressions#Postfix-Expressions>.
-这被称为“链式隐式成员表达式”。
-虽然所有链式后缀表达式通常
-具有相同的类型,
-但唯一的要求是整个链式隐式成员表达式
-必须能够转换为其上下文隐含的类型。
-具体来说,
-如果隐含类型是可选的,
-则可以使用非可选类型的值,
-如果隐含类型是类类型,
-则可以使用其子类之一的值。
-例如:
+隐式成员表达式后面可以跟后缀运算符或<doc:Expressions#Postfix-Expressions>中列出的其他后缀语法。这称为*链式隐式成员表达式*。尽管所有链接的后缀表达式都具有相同的类型是很常见的，但唯一的要求是整个链接的隐式成员表达式需要可转换为其上下文隐含的类型。具体来说，如果隐含类型是可选类型，则可以使用非可选类型的值，如果隐含类型是类类型，则可以使用其子类之一的值。例如：
 
 ```swift
 class SomeClass {
@@ -1351,12 +1063,9 @@ let z: SomeClass = .sharedSubclass
   ```
 -->
 
-在上面的代码中,
-`x`的类型与其上下文隐含的类型完全匹配,
-`y`的类型可以从`SomeClass`转换为`SomeClass?`,
-而`z`的类型可以从`SomeSubclass`转换为`SomeClass`。
+在上面的代码中， `x` 的类型与其上下文隐含的类型完全匹配， `y` 的类型可以从 `SomeClass` 转换为 `SomeClass?` ，并且 `z` 的类型可以从 `SomeSubclass` 转换为 `SomeClass` 。
 
-> 隐式成员表达式的语法:
+> 隐式成员表达式的语法：
 >
 > *implicit-member-expression* → **`.`** *identifier* \
 > *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
@@ -1402,43 +1111,25 @@ let z: SomeClass = .sharedSubclass
 
 ### 带括号的表达式
 
-A带*括号的表达式*由
-带括号的表达式组成。
-您可以使用括号来明确分组表达式,
-从而指定运算的优先级。
-括号分组不会改变表达式的类型——
-例如,(1)的类型就是Int。
+带括号的表达式由括号包围的表达式组成。您可以使用括号通过显式分组表达式来指定运算的优先级。分组括号不会更改表达式的类型 --- 例如， `(1)` 的类型只是 `Int`
 
 <!--
   See "Tuple Expression" below for langref grammar.
 -->
 
-> 带括号的表达式的语法:
+> 括号表达式的语法
 >
 > *parenthesized-expression* → **`(`** *expression* **`)`**
 
 ### 元组表达式
 
-一个*元组表达式*由
-一组用逗号分隔的表达式组成,并用括号括起来。
-每个表达式前都可以有一个可选的标识符,
-用冒号(`:`)隔开。
-其格式如下:
+*元组表达式*由逗号分隔的表达式列表组成，并用括号括起来。每个表达式前面可以有一个可选标识符，用冒号 (`:`) 分隔。它具有以下形式：
 
 ```swift
 (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 ```
 
-元组表达式中的每个标识符在
-元组表达式的范围内必须是唯一的。
-在嵌套元组表达式中,
-同一嵌套级别的标识符必须是唯一的。
-例如,
-`(a: 10, a: 20)` 是无效的,
-因为标签 `a` 在同一级别出现了两次。
-然而,`(a: 10, b: (a: 1, x: 2))`是有效的——
-尽管`a`出现了两次,
-但一次出现在外层元组中,一次出现在内层元组中。
+元组表达式中的每个标识符在元组表达式的范围内必须是唯一的。在嵌套元组表达式中，同一嵌套级别的标识符必须是唯一的。例如， `(a: 10, a: 20)` 是无效的，因为标签 `a` 在同一级别出现了两次。然而， `(a: 10, b: (a: 1, x: 2))` 是有效的——虽然 `a`出现了两次，但它在外元组中出现一次，在内元组中出现一次。
 
 <!--
   - test: `tuple-labels-must-be-unique`
@@ -1452,18 +1143,11 @@ A带*括号的表达式*由
   ```
 -->
 
-一个元组表达式可以包含零个表达式,
-也可以包含两个或更多表达式。
-括号内的单个表达式是一个带括号的表达式。
+元组表达式可以包含零个表达式，也可以包含两个或多个表达式。括号内的单个表达式是括号表达式。
 
-> 注意:在Swift中,空元组表达式和空元组类型
-> 都写成`()`。
-> 因为`Void`是`()`的类型别名,
-> 所以可以用它来表示空元组类型。
-> 然而,像所有类型别名一样,`Void`始终是一个类型——
-> 不能用它来表示空元组表达式。
+> 注意：Swift 中空元组表达式和空元组类型都写成 `()` 。因为 `Void` 是 `()` 的类型别名，所以您可以使用它来编写空元组类型。然而，像所有类型别名一样， `Void` 始终是一种类型——您不能使用它来编写空元组表达式。
 
-> 元组表达式的语法:
+> 元组表达式的语法：
 >
 > *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
@@ -1471,10 +1155,9 @@ A带*括号的表达式*由
 
 ### 通配符表达式
 
-*通配符表达式*
-用于在赋值期间明确忽略某个值。
-例如,在以下赋值中
-10被赋给`x`,而20被忽略:
+*通配符表达式* 用于在赋值期间显式忽略某个值。例如，在以下赋值中，`10` 被分配给x ，20 被忽略：
+
+
 
 ```swift
 (x, _) = (10, 20)
@@ -1495,106 +1178,59 @@ A带*括号的表达式*由
 >
 > *wildcard-expression* → **`_`**
 
-### 宏扩展表达式
+### 宏展开表达式
 
-*宏扩展表达式*由宏名称
-后跟以逗号分隔的宏参数列表(括号内)组成。
-宏在编译时扩展。
-宏扩展表达式具有以下形式:
+*宏扩展表达式* 由宏名称和后跟括号中的以逗号分隔的宏参数列表组成。宏在编译时展开。宏展开表达式具有以下形式：
 
 ```swift
 <#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
 ```
 
-宏扩展表达式省略了宏名称后的括号,
-如果宏不接收任何参数。
-
-宏扩展表达式不能作为参数的默认值出现,
-Swift标准库中的[`file()`][]和[`line()`][]宏除外。
-当用作函数或方法参数的默认值时,
-这些宏的计算使用调用位置的源代码位置,
-而不是它们在函数定义中的位置.
+宏扩展表达式不能作为参数的默认值出现，除了 Swift 标准库中的 `file()` 和 `line()` 宏。当用作函数或方法参数的默认值时，这些宏将使用调用站点的源代码位置（而不是它们在函数定义中出现的位置）进行计算。
 
 [`file()`]: https://developer.apple.com/documentation/swift/file()
 [`line()`]: https://developer.apple.com/documentation/swift/line()
 
-使用宏表达式调用独立宏。
-要调用附加宏,
-请使用自定义属性语法,如 <doc:Attributes>.
-独立宏和附加宏的扩展方式如下:
+您可以使用宏表达式来调用独立宏。要调用附加的宏，请使用  <doc:Attributes>中描述的自定义属性语法。独立宏和附加宏都扩展如下：
 
-1.  Swift解析源代码
-以生成抽象语法树(AST)。
 
-2. 宏执行将AST节点作为输入
-并执行该宏所需的转换。
+1. Swift 解析源代码以生成抽象语法树（AST）。
 
-3. 宏执行生成的转换后的AST节点
-将添加到原始的AST中。
+2. 宏实现接收 AST 节点作为其输入并执行该宏所需的转换。
 
-每个宏的扩展都是独立且自包含的。
-然而,作为性能优化,
-Swift可能会启动一个外部进程来执行宏,
-并重复使用相同的进程来扩展多个宏。
-当您执行宏时,
-该代码不能依赖于您的代码之前扩展的宏,
-或任何其他外部状态,如当前时间。
+3. 宏实现生成的转换后的 AST 节点将添加到原始 AST 中。
 
-对于具有多重作用的嵌套宏和附加宏,
-扩展过程会重复进行。
-嵌套宏扩展表达式从外向内扩展。
-例如,在以下代码中
-`outerMacro(_:)`首先扩展,而未扩展的`innerMacro(_:)`调用
-出现在抽象语法树中,
-作为输入传递给`outerMacro(_:)`
+每个宏的扩展都是独立且自成体系的。但是，作为性能优化，Swift 可能会启动一个实现宏的外部进程，并重用同一进程来扩展多个宏。当您实现宏时，该代码不得依赖于您的代码之前扩展的宏，或任何其他外部状态（例如当前时间）。
+
+对于具有多个角色的嵌套宏和附加宏，会重复展开过程。嵌套宏展开表达式从外向内展开。例如，在下面的代码中， `outerMacro(_:) `首先展开，未展开的对`innerMacro(_:)`调用出现在 `outerMacro(_:)`接收的抽象语法树中。输入
 
 ```swift
 #outerMacro(12, #innerMacro(34), "some text")
 ```
 
-一个具有多种作用的附加宏会为每个作用扩展一次。
-每次扩展都会收到相同的原始抽象语法树作为输入。
-Swift通过收集所有生成的抽象语法树节点
-并将其放置在抽象语法树中的相应位置
-来形成整体扩展.
+具有多个角色的附加宏将为每个角色扩展一次。每个扩展都接收相同的原始 AST 作为其输入。 Swift 通过收集所有生成的 AST 节点并将它们放在 AST 中相应的位置来形成整体扩展。
 
-有关Swift宏的概述,请参阅 <doc:Macros>.
+有关 Swift 中宏的概述，请参阅 <doc:Macros>.
 
-> 宏扩展表达式的语法:
+> 宏展开表达式的语法：
 >
 > *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
 
-### 关键路径表达式
+### 键路径表达式
 
-*键路径表达式*
-是指一个类型的属性或下标。
-您可以在动态编程任务中使用键路径表达式,
-例如键值观察。
-它们具有以下形式:
+*键路径表达式*指的是类型的属性或下标。您可以在动态编程任务中使用键路径表达式，例如键值观察。它们具有以下形式：
 
 ```swift
 \<#type name#>.<#path#>
 ```
 
-*类型名称*是具体类型的名称,
-包括任何通用参数,
-例如`String`、`[Int]`或`Set<Int>`。
+*类型名称*是具体类型的名称，包括任何泛型参数，例如 `String` 、 `[Int]` 或 `Set<Int>` 。
 
-*路径*由
-属性名称、下标、可选链式表达式和
-强制解包表达式组成。
-这些关键路径组件中的每一个
-都可以根据需要重复任意次数,
-且顺序不限。
+该*路径*由属性名称、下标、可选链表达式和强制展开表达式组成。这些关键路径组件中的每一个都可以根据需要以任何顺序重复多次。
 
-在编译时,关键路径表达式
-会被替换为
- [`KeyPath`](https://developer.apple.com/documentation/swift/keypath)  类
+在编译时，键路径表达式被[`KeyPath`](https://developer.apple.com/documentation/swift/keypath)   类的实例替换。
 
-要使用键路径访问一个值,
-请将键路径传递给`下标(keyPath:)`下标,
-该下标适用于所有类型。
-例如:
+要使用键路径访问值，请将键路径传递给 `subscript(keyPath:)` 下标，该下标适用于所有类型。例如：
 
 <!--
   The subscript name subscript(keyPath:) above is a little odd,
@@ -1632,11 +1268,7 @@ let value = s[keyPath: pathToProperty]
   ```
 -->
 
-在类型推断
-可以确定隐含类型的情况下,可以省略
-类型名称。
-以下代码使用`\.someProperty`
-代替`\SomeClass.someProperty` :
+在类型推断可以确定隐含类型的上下文中，可以省略类型名称。以下代码使用 `\.someProperty` 而不是 `\SomeClass.someProperty` ：
 
 ```swift
 class SomeClass: NSObject {
@@ -1677,14 +1309,7 @@ c.observe(\.someProperty) { object, change in
   Tracking bug is <rdar://problem/35301593>
 -->
 
-*路径*可以包含多个属性名称,
-以句点分隔,
-以引用属性值的属性。
-此代码使用关键路径表达式
-`\OuterStructure.outer.someValue`
-来访问
-`OuterStructure`类型`outer`属性的
-`someValue`属性:
+该*路径* 可以引用self来创建身份密钥路径 `( \.self )`。身份键路径引用整个实例，因此您可以使用它一步来访问和更改存储在变量中的所有数据。例如：
 
 ```swift
 var compoundValue = (a: 1, b: 2)
@@ -1702,14 +1327,7 @@ compoundValue[keyPath: \.self] = (a: 10, b: 20)
   ```
 -->
 
-*路径*可以包含多个属性名称,
-以句点分隔,
-以引用属性值的属性。
-此代码使用关键路径表达式
-`\OuterStructure.outer.someValue`
-来访问
-`OuterStructure`类型`outer`属性的
-`someValue`属性:
+该路径可以包含多个属性名称，以句点分隔，以引用属性值的属性。此代码使用关键路径表达式 `\OuterStructure.outer.someValue` 访问 `OuterStructure` 类型的 `outer` 属性的 `someValue` 属性：
 
 ```swift
 struct OuterStructure {
@@ -1746,10 +1364,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
   ```
 -->
 
-*路径*可以使用括号包含下标,
-只要下标的参数类型符合可哈希(Hashable)协议即可。
-本例在键路径中使用下标
-来访问数组的第二个元素:
+*路径*可以包含使用括号的下标，只要下标的参数类型符合 `Hashable` 协议即可。此示例使用键路径中的下标来访问数组的第二个元素：
 
 ```swift
 let greetings = ["hello", "hola", "bonjour", "안녕"]
@@ -1775,14 +1390,7 @@ let myGreeting = greetings[keyPath: \[String].[1]]
   <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
 -->
 
-下标中使用的值可以是命名值或文字。
-使用值语义在键路径中捕获值。
-以下代码在键路径表达式和闭包中均使用变量`index`
-来访问
-`greetings`数组的第三个元素。
-当修改`index`时,
-键路径表达式仍引用第三个元素,
-而闭包使用新的索引.
+下标中使用的值可以是命名值或文字。使用值语义在关键路径中捕获值。以下代码在键路径表达式和闭包中使用变量 `index` 来访问 `greetings` 数组的第三个元素。当 `index` 被修改时，键路径表达式仍然引用第三个元素，而闭包使用新索引。
 
 ```swift
 var index = 2
@@ -1828,8 +1436,7 @@ print(fn(greetings))
   ```
 -->
 
-*路径*可以使用可选链和强制解包。
-这段代码在键:
+该路径可以使用可选链接和强制展开。此代码在键路径中使用可选链接来访问可选字符串的属性：
 
 ```swift
 let firstGreeting: String? = greetings.first
@@ -1862,11 +1469,7 @@ print(count as Any)
   <rdar://problem/58484319> Swift 5.2 regression in keypaths
 -->
 
-您可以混合和匹配关键路径的组件,以访问
-嵌套在类型中的
-值。以下代码通过组合这些组件的关键路径表达式
-访问数组字典
-的不同值和属性.
+您可以混合和匹配关键路径的组件来访问深度嵌套在类型中的值。以下代码通过使用组合这些组件的键路径表达式来访问数组字典的不同值和属性。
 
 ```swift
 let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
@@ -1900,14 +1503,7 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
   ```
 -->
 
-您可以在通常提供函数或闭包的上下文中使用键路径表达式。
-
-具体来说,
-您可以使用
-根类型为 `SomeType` 
-且路径生成`Value`类型值的
-键路径表达式,
-而不是`(SomeType) -> Value`类型的函数或闭包.
+您可以在通常提供函数或闭包的上下文中使用键路径表达式。具体来说，您可以使用根类型为 `SomeType` 且其路径生成 `Value` 类型的值的键路径表达式，而不是 `(SomeType) -> Value` 类型的函数或闭包。
 
 ```swift
 struct Task {
@@ -1952,12 +1548,7 @@ let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
   "The Pirates Who Don't Do Anything".
 -->
 
-关键路径表达式的任何副作用
-仅在表达式被评估时进行评估。
-例如,
-如果您在关键路径表达式中的下标内进行函数调用,
-则该函数仅在评估表达式时调用一次,
-而不是在每次使用关键路径时调用.
+关键路径表达式的任何副作用仅在计算表达式的点进行计算。例如，如果您在关键路径表达式的下标内进行函数调用，则该函数仅在计算表达式时调用一次，而不是每次使用关键路径时都被调用。
 
 ```swift
 func makeIndex() -> Int {
@@ -1991,11 +1582,8 @@ let someTask = toDoList[keyPath: taskKeyPath]
   ```
 -->
 
-如需了解有关在
-与Objective-C API交互的代码中使用关键路径的更多信息,
-请参阅 [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
-有关键值编码和键值观察的信息,
-请参阅[Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
+有关在与 Objective-C API 交互的代码中使用关键路径的更多信息，请参阅 [Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
+有关键值编码和键值观察的信息，请参阅[Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
 和 [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
 
 > 键路径表达式的语法:
@@ -2007,12 +1595,9 @@ let someTask = toDoList[keyPath: taskKeyPath]
 > *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_ \
 > *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
 
-### 选择器 表达
+### 选择器表达式
 
-选择器表达式允许您访问
-Objective-C中用于引用方法或属性
-getter或setter的选择器。
-其格式如下:
+选择器表达式允许您访问用于引用 Objective-C 中的方法或属性的 getter 或 setter 的选择器。它具有以下形式：
 
 ```swift
 #selector(<#method name#>)
@@ -2020,10 +1605,7 @@ getter或setter的选择器。
 #selector(setter: <#property name#>)
 ```
 
-*方法名*和*属性名*必须引用
-Objective-C运行时中可用
-的某个方法或属性。选择器表达式的值是`Selector`类型的实例。
-例如:
+方法名称和属性名称必须是对 Objective-C 运行时中可用的方法或属性的引用。选择器表达式的值是 `Selector` 类型的实例。例如：
 
 ```swift
 class SomeClass: NSObject {
@@ -2060,15 +1642,9 @@ let selectorForPropertyGetter = #selector(getter: SomeClass.property)
   ```
 -->
 
-在为属性的getter创建选择器时,
-*属性名称*可以是指向变量或常量属性的引用。
-相反,在为属性的setter创建选择器时,
-*属性名称*必须仅是指向变量属性的引用。
+为属性的 getter 创建选择器时，*属性名称*可以是对变量或常量属性的引用。相反，当为属性的设置器创建选择器时，*属性名称* 必须仅是对变量属性的引用。
 
-*方法名称*可以包含用于分组的括号,
-以及用于区分同名但类型不同的方法的`as`运算符
-
-例如:
+*方法名称*可以包含用于分组的括号，以及用于消除共享名称但具有不同类型签名的方法之间的歧义的 `as`运算符。例如：
 
 ```swift
 extension SomeClass {
@@ -2099,18 +1675,13 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
   ```
 -->
 
-因为选择器是在编译时创建的,而不是在运行时创建的,
-编译器可以检查方法或属性是否存在
-以及它们是否暴露给Objective-C运行时.
+因为选择器是在编译时创建的，而不是在运行时创建的，所以编译器可以检查方法或属性是否存在以及它们是否暴露给 Objective-C 运行时。
 
-> Note: Although the *method name* and the *property name* are expressions,
-> they're never evaluated.
+> 注意：虽然*方法名称*和*属性名称*是表达式，但它们永远不会被求值
 
-如需了解如何使用选择器
-在Swift代码中与Objective-C API交互,
-请参阅[Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
+有关在与 Objective-C API 交互的 Swift 代码中使用选择器的更多信息，请参阅[Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
 
-> Grammar of a selector expression:
+> 选择器表达式的语法:
 >
 > *selector-expression* → **`#selector`** **`(`** *expression* **`)`** \
 > *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`** \
@@ -2125,19 +1696,13 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 
 ### 键路径字符串表达式
 
-键路径字符串表达式允许您访问
-用于在Objective-C中引用属性的字符串,
-用于键值编码和键值观察API。
-其格式如下:
+键路径字符串表达式允许您访问用于引用 Objective-C 中的属性的字符串，以用于键值编码和键值观察 API。它具有以下形式：
 
 ```swift
 #keyPath(<#property name#>)
 ```
 
-*属性名称*必须引用
-Objective-C运行时中可用的
-属性。在编译时,键路径字符串表达式将被替换为字符串字面量。
-例如:
+*属性名称*必须是对 Objective-C 运行时中可用的属性的引用。在编译时，键路径字符串表达式被替换为字符串文字。例如：
 
 ```swift
 class SomeClass: NSObject {
@@ -2178,9 +1743,7 @@ if let value = c.value(forKey: keyPath) {
   ```
 -->
 
-当您在类中使用键路径字符串表达式时,
-只需写上属性名称即可引用该类的属性,
-而无需写上类名称
+当您在类中使用键路径字符串表达式时，您可以通过仅编写属性名称而不编写类名称来引用该类的属性。
 
 ```swift
 extension SomeClass {
@@ -2206,35 +1769,25 @@ print(keyPath == c.getSomeKeyPath())
   ```
 -->
 
-因为键路径字符串是在编译时创建的,而不是在运行时创建的,
-编译器可以检查属性是否存在
-以及该属性是否暴露给Objective-C运行时。
+由于关键路径字符串是在编译时而不是运行时创建的，因此编译器可以检查该属性是否存在以及该属性是否公开给 Objective-C 运行时。
 
-如需了解如何使用
-Swift代码中的关键路径与Objective-C API交互,
-请参阅[Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift).
-有关键值编码和键值观察的信息,
-请参阅 [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
-和 [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
+有关在与 Objective-C API 交互的 Swift 代码中使用关键路径的更多信息，请参阅[Using Objective-C Runtime Features in Swift](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)。
+有关键值编码和键值观察的信息，请参阅 [Key-Value Coding Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
+和 [Key-Value Observing Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)。
 
-> Note: Although the *property name* is an expression, it's never evaluated.
+> 注意：虽然*属性名称*是一个表达式，但它永远不会被计算。
 
-> Grammar of a key-path string expression:
+> 键路径字符串表达式的语法：
 >
-> *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
+> *键路径字符串表达式* → **`#keyPath`** **`(`** *表达式* **`)`**
 
 ## 后缀表达式
 
-*后缀表达式*是通过
-将后缀运算符或其他后缀语法
-应用到表达式来形成的。
-从语法上讲,每个主要表达式也是后缀表达式。
+*后缀表达式*是通过对表达式应用后缀运算符或其他后缀语法来形成的。从语法上来说，每个主表达式也是一个后缀表达式。
 
-有关这些运算符的行为,
-请参阅<doc:BasicOperators> and <doc:AdvancedOperators>.
+有关这些运算符的行为的信息，请参阅<doc:BasicOperators> 和<doc:AdvancedOperators>。
 
-有关Swift标准库提供的操作符的信息,
-请参阅[Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+有关 Swift 标准库提供的运算符的信息，请参阅[Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations)。
 
 > 后缀表达式的语法:
 >
@@ -2255,33 +1808,22 @@ Swift代码中的关键路径与Objective-C API交互,
   revisit this section to make sure that the names for things match.
 -->
 
-*函数调用表达式*由函数名称
-后跟以逗号分隔的函数参数列表组成,参数列表放在括号内。
-函数调用表达式具有以下形式:
+函数调用*表达式*由函数名称和后跟括号中的以逗号分隔的函数参数列表组成。函数调用表达式具有以下形式：
 
 ```swift
 <#function name#>(<#argument value 1#>, <#argument value 2#>)
 ```
 
-*函数名称*可以是任何表达式,其值是函数类型。
+*函数名称*可函数名可以是任何其值是函数类型的表达式。
 
-如果函数定义包括其参数的名称,
-则函数调用必须在参数值之前包含名称,
-并用冒号(`:`)分隔。
+如果函数定义包含其参数名称，则函数调用必须在其参数值之前包含名称，并用冒号(`:`)分隔。
 这种函数调用表达式具有以下形式:
 
 ```swift
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
-函数调用表达式可以包含
-紧接在右括号之后的闭包表达式形式的尾部闭包。
-尾部闭包被理解为函数的参数,
-添加在最后一个带括号的参数之后。
-第一个闭包表达式没有标签;
-任何附加的闭包表达式前面都有其参数标签。
-下面的示例显示了
-使用和不使用尾部闭包语法的函数调用的等效版本:
+函数调用表达式可以在紧跟在右括号之后以闭包表达式的形式包含尾随闭包。尾随闭包被理解为函数的参数，添加在最后一个带括号的参数之后。第一个闭包表达式是无标签的；任何其他闭包表达式前面都有其参数标签。下面的示例显示了使用和不使用尾随闭包语法的函数调用的等效版本：
 
 ```swift
 // someFunction takes an integer and a closure as its arguments
@@ -2329,8 +1871,7 @@ anotherFunction(x: x) { $0 == 13 } g: { print(99) }
   Tracking bug is <rdar://problem/35301593>
 -->
 
-如果尾随闭合是该函数的唯一参数,
-则可以省略括号.
+如果尾随闭包是函数的唯一参数，则可以省略括号。
 
 ```swift
 // someMethod takes a closure as its only argument
@@ -2364,46 +1905,25 @@ myData.someMethod { $0 == 13 }
   Tracking bug is <rdar://problem/35301593>
 -->
 
-为了在参数中包含尾部闭合,
-编译器从左到右检查函数的参数,如下所示:
+为了在参数中包含尾随闭包，编译器从左到右检查函数的参数，如下所示：
 
-| 尾随关闭 | 参数 | 行为 |
+| 尾随闭包 | 范围 | 行动 |
 | ---------------- | --------- | ------ |
-| 贴标签 | 贴标签| 如果标签相同,则封口与参数匹配; 否则,参数将被跳过. |
-| 有标签 | 无标签 | 跳过参数 |
-| 无标签 | 有标签或无标签 | 如果参数在结构上类似于如下定义的函数类型,则闭包与参数匹配;否则,跳过该参数. |
+| 贴上标签 | 贴上标签 | 如果标签相同，则闭包与参数匹配；否则，该参数将被跳过。|
+| 贴上标签 | 未标记 | 该参数被跳过。 |
+| 未标记 | 有标签或无标签 | 如果参数在结构上类似于函数类型（如下定义），则闭包与参数匹配；否则，该参数将被跳过。 |
 
-尾随闭包作为参数传递给它匹配的参数。
-在扫描过程中跳过的参数
-没有传递给它们的参数 ---
-例如,它们可以使用默认参数。
-找到匹配项后,扫描继续
-下一个尾随闭包和下一个参数。
-在匹配过程结束时,
-所有尾随闭包都必须有匹配项。
+尾随闭包作为其匹配参数的参数传递。在扫描过程中跳过的参数没有传递给它们的参数——例如，它们可以使用默认参数。找到匹配项后，将继续扫描下一个尾随闭包和下一个参数。在匹配过程结束时，所有尾随闭包都必须有匹配项。
 
-如果参数不是输入输出参数,则该参数在结构上与函数类型
-类似,
-且该参数属于以下类型之一:
+如果参数不是输入输出参数，并且参数是以下之一，则该参数在结构上类似于函数类型：
 
-- 类型为函数类型的参数,
-如 `(Bool) -> Int`
-- 自动闭包参数,
-其包装表达式的类型为函数类型,
-如 `@autoclosure () -> ((Bool) -> Int)`
-- 可变参数,
-其数组元素类型为函数类型,
-如 `((Bool) -> Int)...`
-- 类型被一层或多层可选包装的参数,
-如 `Optional<(Bool) -> Int>`
-- 参数类型结合了这些允许的类型,
-如 `(Optional<(Bool) -> Int>)...`
+- 类型为函数类型的参数，如`(Bool) -> Int`
+- 一个自动闭包参数，其包装表达式的类型是函数类型，例如 `@autoclosure () -> ((Bool) -> Int)`
+- 数组元素类型为函数类型的可变参数，例如`((Bool) -> Int)...`
+- 其类型被包裹在一层或多层可选中的参数，例如`Optional<(Bool) -> Int>`
+- 其类型组合了这些允许类型的参数，例如 `(Optional<(Bool) -> Int>)...`
 
-当尾随闭包与参数匹配时,
-其类型在结构上类似于函数类型,但不是函数,
-则根据需要包装闭包。
-例如,如果参数的类型是可选类型,
-则自动将闭包包装在 `Optional` 中.
+当尾随闭包与结构上类似于函数类型但不是函数的参数匹配时，闭包将根据需要进行包装。例如，如果参数的类型是可选类型，则闭包会自动包装在 `Optional` 中.
 
 <!--
   - test: `when-can-you-use-trailing-closure`
@@ -2430,13 +1950,7 @@ myData.someMethod { $0 == 13 }
   ```
 -->
 
-为了简化从Swift 5.3之前的版本迁移代码的过程——
-该版本从右向左进行匹配——
-编译器会同时检查从左向右和从右向左的顺序。
-如果扫描方向产生不同的结果,
-则使用旧的从右向左顺序,
-编译器会生成警告。
-未来的Swift版本将始终使用从左向右的顺序.
+为了简化从 5.3 之前的 Swift 版本（执行从右到左的匹配）的代码迁移，编译器会检查从左到右和从右到左的顺序。如果扫描方向产生不同的结果，则使用旧的从右到左排序，并且编译器会生成警告。 Swift 的未来版本将始终使用从左到右的排序。
 
 ```swift
 typealias Callback = (Int) -> Int
@@ -2480,27 +1994,18 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
   ```
 -->
 
-在上面的例子中,
-标记为'Ambiguous'的函数调用
-在Swift 5.3上打印“- 120”并产生编译器警告。
-未来版本的Swift将打印'110 -'.
+在上面的示例中，标记为“Ambigitude”的函数调用会打印“- 120”，并在 Swift 5.3 上生成编译器警告。 Swift 的未来版本将打印“110 -”。
 
 <!--
   Smart quotes on the line above are needed
   because the regex heuristics gets the close quote wrong.
 -->
 
-类、结构或枚举类型
-可通过声明多种方法之一,
-为函数调用语法提供语法糖,
-如 <doc:Declarations#Methods-with-Special-Names>.
+类、结构或枚举类型可以通过声明多种方法之一来启用函数调用语法的语法糖，如 <doc:Declarations#Methods-with-Special-Names>中所述。
 
 #### 隐式转换为指针类型
 
-在函数调用表达式中,
-如果参数和参数的类型不同,
-编译器会尝试通过
-应用以下列表中的隐式转换之一来使它们的类型匹配:
+在函数调用表达式中，如果参数和参数具有不同的类型，编译器会尝试通过应用以下列表中的隐式转换之一来使它们的类型匹配：
 
 - `inout SomeType` 可以成为
 `UnsafePointer<SomeType>` 或 `UnsafeMutablePointer<SomeType>`
@@ -2509,7 +2014,7 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
 - `Array<SomeType>`可以成为`UnsafePointer<SomeType>`
 - `String`可以成为`UnsafePointer<CChar>`
 
-以下两个函数调用是等价的:
+以下两个函数调用是等效的：
 
 ```swift
 func unsafeFunction(pointer: UnsafePointer<Int>) {
@@ -2538,27 +2043,11 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
   ```
 -->
 
-这些隐式转换创建的指针
-仅在函数调用期间有效。
-为避免出现未定义行为,
-请确保您的代码
-在函数调用结束后不会保留指针.
+通过这些隐式转换创建的指针仅在函数调用期间有效。为了避免未定义的行为，请确保您的代码在函数调用结束后永远不会保留指针。
 
-> Note: When implicitly converting an array to an unsafe pointer,
-> Swift ensures that the array's storage is contiguous
-> by converting or copying the array as needed.
-> For example, you can use this syntax
-> with an array that was bridged to `Array`
-> from an `NSArray` subclass that makes no API contract about its storage.
-> If you need to guarantee that the array's storage is already contiguous,
-> so the implicit conversion never needs to do this work,
-> use `ContiguousArray` instead of `Array`.
+> 当将数组隐式转换为不安全指针时，Swift 通过根据需要转换或复制数组来确保数组的存储是连续的。例如，您可以将此语法与从 `NSArray` 子类桥接到 `Array` 的数组一起使用，该子类不对其存储制定任何 API 约定。如果您需要保证数组的存储已经是连续的，因此隐式转换永远不需要执行此工作，请使用 `ContiguousArray` 而不是 `Array` 。
 
-使用`&`代替`withUnsafePointer(to:)`等显式函数
-有助于提高低级C函数调用的可读性,
-尤其是当函数需要多个指针参数时。
-然而,当从其他Swift代码调用函数时,
-应避免使用`&`代替显式使用不安全的API.
+使用`&`而不是像`withUnsafePointer(to:)`这样的显式函数可以帮助提高对低级 C 函数的调用的可读性，特别是当函数采用多个指针参数时。但是，当从其他 Swift 代码调用函数时，请避免使用`&`而应显式使用不安全的 API。
 
 <!--
   - test: `implicit-conversion-to-pointer`
@@ -2604,7 +2093,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
   ```
 -->
 
-> 函数调用表达式的语法:
+> 函数调用表达式的语法：
 >
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
@@ -2620,18 +2109,13 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 
 ### 初始化表达式
 
-*初始化表达式*用于访问
-类型的初始化器。
-其形式如下:
+初始值设定项表达式提供对类型的初始值设定项的访问。它具有以下形式：
 
 ```swift
 <#expression#>.init(<#initializer arguments#>)
 ```
 
-在函数调用表达式中使用初始化表达式
-来初始化一个类型的新实例。
-还可以使用初始化表达式
-来委托给超类的初始化器.
+您可以在函数调用表达式中使用初始化表达式来初始化类型的新实例。您还可以使用初始值设定项表达式来委托给超类的初始值设定项。
 
 ```swift
 class SomeSubClass: SomeSuperClass {
@@ -2656,8 +2140,7 @@ class SomeSubClass: SomeSuperClass {
   ```
 -->
 
-初始化器可以像函数一样用作值。
-例如:
+与函数一样，初始化器可以用作值。例如：
 
 ```swift
 // Type annotation is required because String has multiple initializers.
@@ -2679,9 +2162,7 @@ print(oneTwoThree)
   ```
 -->
 
-如果您指定了类型名称,
-则无需使用初始化表达式即可访问该类型的初始化程序。
-在其他情况下,您必须使用初始化表达式.
+如果按名称指定类型，则可以访问该类型的初始值设定项，而无需使用初始值设定项表达式。在所有其他情况下，您必须使用初始化表达式。
 
 ```swift
 let s1 = SomeType.init(data: 3)  // Valid
@@ -2711,25 +2192,20 @@ let s4 = type(of: someValue)(data: 5)       // Error
   ```
 -->
 
-> 初始化表达式的语法:
+> 初始化表达式的语法：
 >
 > *initializer-expression* → *postfix-expression* **`.`** **`init`** \
 > *initializer-expression* → *postfix-expression* **`.`** **`init`** **`(`** *argument-names* **`)`**
 
-### 明确的会员表达
+### 显式成员表达式
 
-*显式成员表达式*允许访问
-已命名类型、元组或模块的成员。
-它由句点(`.`)分隔,
-位于项目与其成员标识符之间.
+*显式成员表达式*允许访问命名类型、元组或模块的成员。它由项目与其成员标识符之间的句点 ( `.` ) 组成。
 
 ```swift
 <#expression#>.<#member name#>
 ```
 
-命名类型的成员在
-类型声明或扩展中命名。
-例如:
+命名类型的成员被命名为类型声明或扩展的一部分。例如：
 
 ```swift
 class SomeClass {
@@ -2751,10 +2227,7 @@ let y = c.someProperty  // Member access
   ```
 -->
 
-元组的成员
-按出现顺序用整数隐式命名,
-从0开始。
-例如:
+元组的成员按照它们出现的顺序使用整数隐式命名，从零开始。例如：
 
 ```swift
 var t = (10, 20, 30)
@@ -2772,21 +2245,13 @@ t.0 = t.1
   ```
 -->
 
-模块的成员可以访问
-该模块的顶层声明。
+模块的成员访问该模块的顶级声明。
 
-使用`dynamicMemberLookup`属性声明的类型
-包括在运行时查找的成员,
-如 <doc:Attributes>.
+使用`dynamicMemberLookup`属性声明的类型包括在运行时查找的成员，如 <doc:Attributes>中所述。
 
 为了区分名称仅因参数名称而不同的方法或初始化器,
 
-请将参数名称放在括号内,
-每个参数名称后加一个冒号(`:`)。
-对于没有名称的参数,请写一个下划线(`_`)。
-为了区分重载方法,
-请使用类型注释。
-例如:
+要区分名称仅因参数名称不同的方法或初始值设定项，请将参数名称包含在括号中，每个参数名称后跟一个冒号 `:` )。为没有名称的参数写入下划线 ( `_` )。要区分重载方法，请使用类型注释。例如：
 
 ```swift
 class SomeClass {
@@ -2853,11 +2318,7 @@ let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
   ```
 -->
 
-如果一行开头出现句点,
-则应理解为显式成员表达式的一部分,
-而非隐式成员表达式。
-例如,以下列表显示了
-分几行显示的链式方法调用:
+如果句点出现在行的开头，则它将被理解为显式成员表达式的一部分，而不是隐式成员表达式。例如，以下清单显示了分为几行的链式方法调用：
 
 ```swift
 let x = [10, 3, 20, 15, 4]
@@ -2879,11 +2340,7 @@ let x = [10, 3, 20, 15, 4]
   ```
 -->
 
-您可以将这种多行链式语法
-与编译器控制语句
-相结合,以控制每个方法的调用时间。
-例如,
-以下代码在iOS上使用不同的过滤规则:
+您可以将此多行链式语法与编译器控制语句结合起来，以控制每个方法的调用时间。例如，以下代码在 iOS 上使用不同的过滤规则：
 
 ```swift
 let numbers = [10, 20, 33, 43, 50]
@@ -2909,23 +2366,11 @@ let numbers = [10, 20, 33, 43, 50]
   ```
 -->
 
-在`#if`、`#endif`和其他编译指令之间,
-条件编译块可以包含
-一个隐式成员表达式,
-后面可以跟零个或多个后缀,
-以形成后缀表达式。
-它也可以包含
-另一个条件编译块,
-或这些表达式和块的组合。
+在 `#if` 、 `#endif`和其他编译指令之间，条件编译块可以包含隐式成员表达式，后跟零个或多个后缀，以形成后缀表达式。它还可以包含另一个条件编译块，或这些表达式和块的组合。
 
-您可以在任何可以编写
-显式成员表达式的
-地方使用这种语法,而不仅仅局限于顶层代码。
+您可以在任何可以编写显式成员表达式的地方使用此语法，而不仅仅是在顶级代码中。
 
-在条件编译块中,
-`#if`编译指令的分支
-必须至少包含一个表达式。
-其他分支可以留空
+在条件编译块中， `#if` 编译指令的分支必须至少包含一个表达式。其他分支可以为空。
 
 <!--
   - test: `pound-if-empty-if-not-allowed`
@@ -2991,23 +2436,18 @@ let numbers = [10, 20, 33, 43, 50]
   See grammar for initializer-expression for the related "argument name" production there.
 -->
 
-### 后缀自我表达
+### 自我表达
 
-后缀`self`表达式由表达式或类型名称组成,
-后跟:
+后缀`self` 表达式由表达式或类型名称组成，后跟 `.self` 。它有以下几种形式：
 
 ```swift
 <#expression#>.self
 <#type#>.self
 ```
 
-第一种形式计算表达式的值。
-例如,`x.self`计算为`x`。
+第一种形式计算表达式的值。例如， `x.self` 计算结果为 `x` 。
 
-第二种形式计算类型的值。使用这种形式
-可以访问类型作为值。例如,
-因为`SomeClass.self`计算为`SomeClass`类型本身,
-你可以将它传递给接受类型级参数的函数或方法。
+第二种形式求值为*type*的值。使用此形式将类型作为值进行访问。例如，由于 `SomeClass.self` 计算结果为 `SomeClass` 类型本身，因此您可以将其传递给接受类型级参数的函数或方法。
 
 > 后缀自我表达的语法:
 >
@@ -3015,20 +2455,13 @@ let numbers = [10, 20, 33, 43, 50]
 
 ### 下标表达式
 
-*下标表达式*通过
-相应的下标声明的getter和setter
-提供下标访问。
-其形式如下:
+*下标表达式*使用相应下标声明的 getter 和 setter 提供下标访问。它具有以下形式：
 
 ```swift
 <#expression#>[<#index expressions#>]
 ```
 
-为了评估下标表达式的值,
-调用下标获取器,获取*表达式*的类型,
-并将*索引表达式*作为下标参数传递。
-为了设置其值,
-以相同的方式调用下标设置器.
+为了计算下标表达式的值，需要调用表达式类型的下标 getter，并将索引表达式作为下标参数传递。为了设置它的值，以同样的方式调用下标设置器。
 
 <!--
   TR: Confirm that indexing on
@@ -3044,8 +2477,7 @@ let numbers = [10, 20, 33, 43, 50]
   // r0 : Int = 12
 -->
 
-有关下标声明的信息,
-请参阅 <doc:Declarations#Protocol-Subscript-Declaration>.
+有关下标声明的信息，请参阅 <doc:Declarations#Protocol-Subscript-Declaration>.
 
 > 下标表达式的语法:
 >
@@ -3067,25 +2499,17 @@ let numbers = [10, 20, 33, 43, 50]
   ```
 -->
 
-### 强制值表达式
+###  强制值表达
 
-*强制值表达式*用于展开一个可选值,
-您确定该值不是`null`
-其形式如下:
+*强制值表达式*会解包您确定不是 `nil` 的可选值。它具有以下形式：
 
 ```swift
 <#expression#>!
 ```
 
-如果*表达式*的值不为`nil`,
-则可选值将被解包
-并以相应的非可选类型返回。
-否则,将引发运行时错误。
+如果表达式的值不是 `nil` ，则可选值将被解包并以相应的非可选类型返回。否则，会引发运行时错误。
 
-强制值表达式的解包值可以被修改,
-通过改变值本身,
-或通过赋值给值的某个成员。
-例如:
+可以通过改变值本身或分配给值的成员之一来修改强制值表达式的展开值。例如：
 
 ```swift
 var x: Int? = 0
@@ -3115,41 +2539,21 @@ someDictionary["a"]![0] = 100
 
 > 强制值表达式的语法:
 >
-> *forced-value-expression* → *postfix-expression* **`!`**
+> *强制值表达式* → *后缀表达式* **`!`**
 
 ### 可选链式表达式
 
-一个*可选链式表达式*提供了
-在后缀表达式中使用可选值的简化语法。
-它具有以下形式:
+*可选链表达式*提供了在后缀表达式中使用可选值的简化语法。它具有以下形式：
 
 ```swift
 <#expression#>?
 ```
 
-后缀`?`运算符使一个可选链式表达式
-从一个表达式中产生,而不改变表达式的值。
+后缀 `?` 运算符从表达式创建可选链表达式而不更改表达式的值。
 
-可选链式表达式必须出现在后缀表达式中,
-它们以特殊的方式导致后缀表达式的计算。
-如果可选链式表达式的值为`nil`,
-后缀表达式中的所有其他操作将被忽略,
-整个后缀表达式的计算结果为`nil`。
-如果可选链表达式的值不是`nil`,
-则可选链表达式的值将被展开
-并用于计算后缀表达式的其余部分。
-无论哪种情况,
-后缀表达式的值仍然是可选类型。
+可选链表达式必须出现在后缀表达式中，并且它们会导致后缀表达式以特殊方式进行计算。如果可选链表达式的值为 `nil` ，则后缀表达式中的所有其他操作都将被忽略，并且整个后缀表达式的计算结果为 `nil` 。如果可选链表达式的值不是 `nil` ，则可选链表达式的值将被展开并用于计算后缀表达式的其余部分。无论哪种情况，后缀表达式的值仍然是可选类型。
 
-如果包含可选链表达式的后缀表达式
-嵌套在其他后缀表达式中,
-则只有最外层的表达式返回可选类型。
-在下面的例子中,
-当`c`不为`nil`时,
-其值被解包并用于计算`.property`,
-而`.property`的值则用于计算`.performAction()`。
-整个表达式`c?.property.performAction()`
-的值为可选类型
+如果包含可选链表达式的后缀表达式嵌套在其他后缀表达式中，则只有最外面的表达式返回可选类型。在下面的示例中，当 `c `不为 `nil`时，其值将被展开并用于计算 `.property` ，其值用于计算 `.performAction()` 。整个表达式 `c?.property.performAction()`具有可选类型的值。
 
 ```swift
 var c: SomeClass?
@@ -3168,9 +2572,7 @@ var result: Bool? = c?.property.performAction()
   ```
 -->
 
-以下示例显示了
-上述示例
-在不使用可选链式操作时的行为.
+以下示例显示了上面示例的行为，而不使用可选链。
 
 ```swift
 var result: Bool?
@@ -3193,13 +2595,7 @@ if let unwrappedC = c {
   ```
 -->
 
-可选链表达式的未包装值可以修改,
-通过改变值本身,
-或通过赋值给值的成员之一。
-如果可选链表达式的值为“nil”,
-赋值运算符右侧的表达式
-将不会计算。
-例如:
+可以通过改变值本身或分配给值的成员之一来修改可选链表达式的展开值。如果可选链表达式的值为nil ，则不计算赋值运算符右侧的表达式。例如：
 
 ```swift
 func someFunctionWithSideEffects() -> Int {
@@ -3238,13 +2634,13 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
   ```
 -->
 
-> 选链式表达式的语法:
+> 可选链表达式的语法：
 >
 > *optional-chaining-expression* → *postfix-expression* **`?`**
 
 > 测试版软件:
 >
-> 本文件包含有关开发中的API或技术的初步信息。这些信息可能会发生变化,根据本文件实施的软件应与最终操作系统软件一起测试。.
+> 本文档包含有关正在开发的 API 或技术的初步信息。该信息可能会发生变化，并且根据本文档实现的软件应使用最终操作系统软件进行测试。.
 >
 > 了解更多关于使用 [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
